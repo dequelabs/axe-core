@@ -1,0 +1,15 @@
+{
+  "name": "node-uuid",
+  "homepage": "https://github.com/broofa/node-uuid",
+  "version": "1.4.1",
+  "_release": "1.4.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.4.1",
+    "commit": "38ac27d89f6f880e0f42b17aa89921d490692bbf"
+  },
+  "_source": "git://github.com/broofa/node-uuid.git",
+  "_target": "~1.4.1",
+  "_originalSource": "node-uuid",
+  "_direct": true
+}

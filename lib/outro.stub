@@ -1,0 +1,3 @@
+
+	dqre.version = '<%= pkg.version %>';
+}(this));

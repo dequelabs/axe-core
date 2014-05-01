@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Test</title>
+</head>
+<body>
+	<h1>COURIER respondable?</h1>
+	<script src="../bower_components/node-uuid/uuid.js"></script>
+	<script src="../lib/utils/index.js"></script>
+	<script src="../lib/utils/respondable.js"></script>
+	<iframe src="mock/frames/respondable.html"></iframe>
+	<script>
+	setTimeout(function () {
+		utils.respondable.subscribe('batman', function (data, respond) {
+			if (data.you === 'too') {
+				respond('nanananana');
+			}
+		});
+
+		utils.respondable(document.querySelector('iframe').contentWindow, 'robin', { you: true }, function (data) {
+			console.log('not batman', data);
+		});
+
+		utils.respondable(document.querySelector('iframe').contentWindow, 'batman', { you: true }, function (data) {
+			console.log('batman', data);
+		});
+		utils.respondable(document.querySelector('iframe').contentWindow, 'batman', { too: true }, function (data) {
+			console.log('batman2', data);
+		});
+
+	}, 250);
+	</script>
+</body>
+</html>

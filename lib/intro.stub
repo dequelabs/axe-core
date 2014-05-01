@@ -1,0 +1,4 @@
+/*! Deque Rule Engine v<%= pkg.version %>
+ * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.organization %>
+ */
+(function (global) {
