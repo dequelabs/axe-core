@@ -120,7 +120,7 @@ describe('configure', function () {
 					if (topic === 'dqre.analysis.start') {
 						assert.equal(data, expected);
 					} else if (topic === 'dqre.analysis.ping') {
-						assert.deepEqual(data, {});
+						assert.deepEqual(data, {dqre:true});
 					} else {
 						assert.ok(false);
 					}

@@ -7,12 +7,12 @@ describe('dqre.run', function () {
 
 		function onLoad() {
 			loaded++;
-			if (loaded >= num) {
+			if (loaded >= (num + 1)) {
 				callback();
 			}
 		}
 
-		for (var i = 0; i < num-1; i++) {
+		for (var i = 0; i < num; i++) {
 			frame = document.createElement('frame');
 			frame.src = '../mock/frames/e2e.html';
 
