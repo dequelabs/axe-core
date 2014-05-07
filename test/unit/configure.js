@@ -50,7 +50,7 @@ describe('configure', function () {
 			var orig = window.utils.respondable.subscribe;
 
 			utils.respondable.subscribe = function (topic, callback) {
-				assert.equal(topic, 'dqre.analysis.start');
+				assert.ok(topic.indexOf('dqre.analysis.') === 0);
 				assert.isFunction(callback);
 			};
 			dqre.configure(mockAudit);
@@ -71,7 +71,10 @@ describe('configure', function () {
 			};
 
 			utils.respondable.subscribe = function (topic, callback) {
-				callback({data: 'iscool'});
+				callback({data: 'iscool'}, function (response) {
+					// ping callback will call this response function
+					assert.ok(response);
+				});
 
 			};
 			dqre.configure(mockAudit);
@@ -90,7 +93,9 @@ describe('configure', function () {
 			};
 
 			utils.respondable.subscribe = function (topic, callback) {
-				callback({context: 'monkeys'});
+				callback({context: 'monkeys'}, function (response) {
+					assert.ok(response);
+				});
 
 			};
 			dqre.configure({
@@ -112,7 +117,13 @@ describe('configure', function () {
 
 			utils.respondable.subscribe = function (topic, callback) {
 				callback({}, function responder(data) {
-					assert.equal(data, expected);
+					if (topic === 'dqre.analysis.start') {
+						assert.equal(data, expected);
+					} else if (topic === 'dqre.analysis.ping') {
+						assert.deepEqual(data, {dqre:true});
+					} else {
+						assert.ok(false);
+					}
 					done();
 				});
 

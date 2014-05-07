@@ -7,7 +7,7 @@ describe('dqre.run', function () {
 
 		function onLoad() {
 			loaded++;
-			if (loaded >= num) {
+			if (loaded >= (num + 1)) {
 				callback();
 			}
 		}
@@ -20,7 +20,10 @@ describe('dqre.run', function () {
 			fixture.appendChild(frame);
 
 		}
-
+		frame = document.createElement('frame');
+		frame.src = '../mock/frames/nocode.html';
+		frame.addEventListener('load', onLoad);
+		fixture.appendChild(frame);
 	}
 
 	var fixture = document.getElementById('fixture');

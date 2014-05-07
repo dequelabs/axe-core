@@ -186,6 +186,4 @@ describe('utils.getSelector', function () {
 		assert.lengthOf(result, 1);
 		assert.equal(result[0], document.body);
 	});
-
-	it('should get the most specific selector possible');
 });
