@@ -16,16 +16,38 @@ describe('RuleResult', function () {
 	});
 
 	describe('addResults', function () {
+		var result, div;
+		beforeEach(function () {
+			result = new RuleResult({id: 'monkeys'});
+			div = document.getElementById('fixture');
+		});
 		it('should push to details', function () {
-			var result = new RuleResult({id: 'monkeys'}),
-				checks = [{result: 'PASS', value: true}, {result: 'FAIL', value: true}, {result: 'PASS', value: true}],
-				div = document.getElementById('fixture');
+			var	checks = [{result: 'PASS', value: true}, {result: 'PASS', value: true}, {result: 'PASS', value: true}];
 
 			result.addResults(div, checks);
 
 			assert.deepEqual(result.details[0].node, new DqNode(div));
 			assert.deepEqual(result.details[0].checks, checks);
+			assert.equal(result.details[0].value, true);
+			assert.deepEqual(result.details[0].result, 'PASS');
+
+		});
+		it('should fail if all checks have value of false', function () {
+			var checks = [{result: 'PASS', value: false}, {result: 'PASS', value: false}, {result: 'PASS', value: false}];
+
+			result.addResults(div, checks);
+
+			assert.equal(result.details[0].value, false);
 			assert.deepEqual(result.details[0].result, 'FAIL');
+
+		});
+		it('should pass if one check has value of true', function () {
+			var checks = [{result: 'PASS', value: false}, {result: 'PASS', value: true}, {result: 'PASS', value: false}];
+
+			result.addResults(div, checks);
+
+			assert.equal(result.details[0].value, true);
+			assert.deepEqual(result.details[0].result, 'PASS');
 
 		});
 

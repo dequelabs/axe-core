@@ -107,7 +107,7 @@ describe('configure', function () {
 		});
 
 
-		it('should respond', function (done) {
+		it('should respond', function () {
 			var origSub = window.utils.respondable.subscribe;
 			var orig = window.dqre.run;
 			var expected = {data: 'monkeys'};
@@ -124,7 +124,6 @@ describe('configure', function () {
 					} else {
 						assert.ok(false);
 					}
-					done();
 				});
 
 			};
