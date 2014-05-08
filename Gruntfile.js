@@ -8,6 +8,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-blanket-mocha');
 	grunt.loadTasks('build/tasks');
 
 	grunt.initConfig({
@@ -68,6 +69,19 @@ module.exports = function (grunt) {
 					testCwd: 'test/integration'
 				}
 			}
+		},
+		blanket_mocha: {
+			source: {
+				options: {
+					urls: [
+						'http://localhost:9876/test/unit',
+						'http://localhost:9876/test/integration'
+					],
+					reporter: grunt.option("reporter") || (process.env.XUNIT_FILE ? 'xunit-file' : 'Spec'),
+					timeout: 10000,
+					threshold: 90
+				}
+			}
 		}
 	});
 
@@ -75,5 +89,5 @@ module.exports = function (grunt) {
 	grunt.registerTask('test', ['fixture']);
 	grunt.registerTask('build', ['concat', 'uglify']);
 	grunt.registerTask('default', ['build']);
-
+	grunt.registerTask('runtests', ['fixture', 'connect:test', 'blanket_mocha']);
 };
