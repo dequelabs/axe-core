@@ -1,0 +1,5 @@
+{
+	"id": "help-same-as-label",
+	"result": "WARN",
+	"execute": "help-same-as-label.js"
+}

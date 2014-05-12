@@ -1,0 +1,5 @@
+{
+	"id": "title-only",
+	"result": "WARN",
+	"execute": "title-only.js"
+}
