@@ -5,5 +5,11 @@
 	"checks": ["aria-label", "aria-labelledby", "implicit-label", "explicit-label", "aria-hidden", "help-same-as-label", {
 		"id": "title-only",
 		"option": ["a", 2, ["c"]]
-	}]
+	}],
+	"tags": [
+		"wcag2a",
+		"wcag332",
+		"section508",
+		"section508n"
+	]
 }
