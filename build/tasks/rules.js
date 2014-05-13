@@ -16,7 +16,7 @@ module.exports = function (grunt) {
 	}
 
 	function replaceFunctions(string) {
-		return string.replace(/"(?:execute|after)":\s*("[^"]+")/g, function (m, p1) {
+		return string.replace(/"(?:evaluate|after)":\s*("[^"]+")/g, function (m, p1) {
 			return m.replace(p1, getSource(p1.replace(/^"|"$/g, '')));
 		});
 	}
