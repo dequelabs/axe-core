@@ -1,4 +1,4 @@
 {
 	"id": "aria-hidden",
-	"execute": "aria-hidden.js"
+	"evaluate": "aria-hidden.js"
 }

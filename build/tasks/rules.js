@@ -34,8 +34,8 @@ module.exports = function (grunt) {
 		return files.map(function (file) {
 			var json = grunt.file.readJSON(file);
 			var dirname = path.dirname(file);
-			if (json.execute) {
-				json.execute = path.resolve(dirname, json.execute);
+			if (json.evaluate) {
+				json.evaluate = path.resolve(dirname, json.evaluate);
 			}
 			if (json.after) {
 				json.after = path.resolve(dirname, json.after);
