@@ -1,4 +1,4 @@
-/*global Rule, Check */
+/*global Rule, Check, RuleFrameResult */
 describe('Rule', function () {
 	'use strict';
 
@@ -94,46 +94,124 @@ describe('Rule', function () {
 			});
 
 			it('should execute Check#run on its child checks', function () {
-				var orig = Check.prototype.run;
+				var orig = Check.prototype.runEvaluate;
 				var success = false;
-				Check.prototype.run = function () { success = true; };
+				Check.prototype.runEvaluate = function () { success = true; };
 
-				var rule = new Rule({ checks: [{ name: 'cats' }]});
+				var rule = new Rule({ checks: [{ id: 'cats' }]});
 
 				rule.run();
 				assert.isTrue(success);
-				Check.prototype.run = orig;
+				Check.prototype.runEvaluate = orig;
 
 			});
 
-			it('should create a RuleResult', function () {
-				var orig = window.RuleResult;
-				var success = false;
-				window.RuleResult = function (r) {
-					this.details = [];
-					assert.equal(rule, r);
-					success = true;
-				};
-				window.RuleResult.prototype.addResults = orig.prototype.addResults;
+			describe('NODE rule', function () {
+				it('should create a RuleResult', function () {
+					var orig = window.RuleResult;
+					var success = false;
+					window.RuleResult = function (r) {
+						this.details = [];
+						assert.equal(rule, r);
+						success = true;
+					};
+					window.RuleResult.prototype.addResults = orig.prototype.addResults;
 
-				var rule = new Rule({ checks: [{ fn: function () {}, name: 'cats' }]});
-				rule.run(null, function () {});
-				assert.isTrue(success);
+					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats' }]});
+					rule.run(null, function () {});
+					assert.isTrue(success);
 
 
-				window.RuleResult = orig;
-			});
-
-			it('should execute rule callback', function () {
-				var success = false;
-
-				var rule = new Rule({ checks: [{ fn: function () {}, name: 'cats' }]});
-				rule.run(null, function () {
-					success = true;
+					window.RuleResult = orig;
 				});
-				assert.isTrue(success);
+				it('should execute rule callback', function () {
+					var success = false;
+
+					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats' }]});
+					rule.run(null, function () {
+						success = true;
+					});
+					assert.isTrue(success);
+				});
 			});
 
+			describe('PAGE rule', function () {
+				it('should create a RuleFrameResult', function () {
+					var orig = window.RuleFrameResult;
+					var success = false;
+					window.RuleFrameResult = function (r) {
+						this.details = [];
+						assert.equal(rule, r);
+						success = true;
+					};
+					window.RuleFrameResult.prototype.addResults = orig.prototype.addResults;
+
+					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats'}], type: 'PAGE' });
+					rule.run(null, function () {});
+					assert.isTrue(success);
+					window.RuleFrameResult = orig;
+				});
+				it('should execute rule callback', function () {
+					var success = false;
+
+					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats'}], type: 'PAGE'});
+					rule.run(null, function () {
+						success = true;
+					});
+					assert.isTrue(success);
+				});
+			});
+		});
+		describe('after', function () {
+			var rfr, rule, data, afterResult = false;
+			beforeEach(function () {
+				rule = new Rule({
+					checks: [{
+						after: function (ruleData) {
+							data = ruleData;
+							return afterResult;
+						},
+						id: 'cats'
+					}],
+					type: 'PAGE',
+					id: 'tests'
+				});
+				rfr = new RuleFrameResult(rule);
+			});
+			afterEach(function () {
+				data = undefined;
+			});
+			it('should pass the check data to the check\'s after function', function (done) {
+				rfr.addResults(document.documentElement, [{id: 'cats', data: 'dogs'}]);
+				rule.after(document.documentElement, rfr, function () {
+					assert.deepEqual(data, ['dogs']);
+					done();
+				});
+			});
+			it('should return a new RuleResult object', function (done) {
+				rfr.addResults(document.documentElement, [{id: 'cats', data: 'dogs'}]);
+				rule.after(document.documentElement, rfr, function (rr) {
+					assert.ok(rr);
+					assert.ok(rfr !== rr);
+					done();
+				});
+			});
+			it('should RuleResult must be a PASS if the after function returns true', function (done) {
+				afterResult = true;
+				rfr.addResults(document.documentElement, [{id: 'cats', data: 'dogs'}]);
+				rule.after(document.documentElement, rfr, function (rr) {
+					assert.equal(rr.result, 'PASS');
+					done();
+				});
+			});
+			it('should RuleResult must be a FAIL if the after function returns false', function (done) {
+				afterResult = false;
+				rfr.addResults(document.documentElement, [{id: 'cats', data: 'dogs'}]);
+				rule.after(document.documentElement, rfr, function (rr) {
+					assert.equal(rr.result, 'FAIL');
+					done();
+				});
+			});
 		});
 	});
 
@@ -226,6 +304,19 @@ describe('Rule', function () {
 			it('should default to prototype', function () {
 				var spec = {};
 				assert.equal(new Rule(spec).gather, Rule.prototype.gather);
+			});
+		});
+		describe('.type', function () {
+			it('should be set to "NODE" by default', function () {
+				var spec = {};
+				assert.equal(new Rule(spec).type, 'NODE');
+			});
+
+			it('should be overridden if passed in', function () {
+				var spec = {
+					type : 'PAGE'
+				};
+				assert.equal(new Rule(spec).type, spec.type);
 			});
 		});
 

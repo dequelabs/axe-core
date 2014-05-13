@@ -42,9 +42,9 @@ describe('Check', function () {
 			});
 		});
 
-		describe('run', function () {
+		describe('runEvaluate', function () {
 			it('should accept 2 parameters', function () {
-				assert.lengthOf(new Check({}).run, 2);
+				assert.lengthOf(new Check({}).runEvaluate, 2);
 			});
 
 			it('should call matches', function (done) {
@@ -55,21 +55,21 @@ describe('Check', function () {
 						success = true;
 						return true;
 					},
-					fn: function () {
+					evaluate: function () {
 						assert.isTrue(success);
 						done();
 					}
-				}).run(fixture, function () {});
+				}).runEvaluate(fixture, function () {});
 
 			});
 
 			it('should pass the node through', function (done) {
 				new Check({
-					fn: function (node) {
+					evaluate: function (node) {
 						assert.equal(node, fixture);
 						done();
 					}
-				}).run(fixture, function () {});
+				}).runEvaluate(fixture, function () {});
 
 			});
 
@@ -78,11 +78,11 @@ describe('Check', function () {
 
 				new Check({
 					options: expected,
-					fn: function (node, options) {
+					evaluate: function (node, options) {
 						assert.deepEqual(options, expected);
 						done();
 					}
-				}).run(fixture, function () {});
+				}).runEvaluate(fixture, function () {});
 
 			});
 
@@ -99,12 +99,12 @@ describe('Check', function () {
 				};
 
 				new Check({
-					fn: function () {
+					evaluate: function () {
 						assert.deepEqual(result, this);
 						utils.checkHelper = orig;
 						done();
 					}
-				}).run(fixture, cb);
+				}).runEvaluate(fixture, cb);
 
 			});
 
@@ -112,10 +112,10 @@ describe('Check', function () {
 
 				var data = { monkeys: 'bananas' };
 				new Check({
-					fn: function () {
+					evaluate: function () {
 						this.async()(data);
 					}
-				}).run(fixture, function (d) {
+				}).runEvaluate(fixture, function (d) {
 					assert.instanceOf(d, CheckResult);
 					assert.deepEqual(d.value, data);
 					done();
@@ -127,8 +127,8 @@ describe('Check', function () {
 
 				new Check({
 					selector: '#monkeys',
-					fn: function () {}
-				}).run(fixture, function (data) {
+					evaluate: function () {}
+				}).runEvaluate(fixture, function (data) {
 					assert.isNull(data);
 					done();
 				});
@@ -140,10 +140,10 @@ describe('Check', function () {
 					var error = new Error('oh noes');
 
 					new Check({
-						fn: function () {
+						evaluate: function () {
 							throw error;
 						}
-					}).run(fixture, function (data) {
+					}).runEvaluate(fixture, function (data) {
 						assert.deepEqual(data.error, { message: error.message, stack: error.stack });
 						done();
 					});
@@ -157,11 +157,11 @@ describe('Check', function () {
 					var error = new Error('oh noes');
 
 					new Check({
-						fn: function () {
+						evaluate: function () {
 							this.async();
 							throw error;
 						}
-					}).run(fixture, function (data) {
+					}).runEvaluate(fixture, function (data) {
 						assert.deepEqual(data.error, { message: error.message, stack: error.stack });
 					});
 
@@ -172,14 +172,76 @@ describe('Check', function () {
 			it('should return a result', function (done) {
 
 				new Check({
-					fn: function () {
+					evaluate: function () {
 						return true;
 					}
-				}).run(fixture, function (data) {
+				}).runEvaluate(fixture, function (data) {
 					assert.instanceOf(data, CheckResult);
 					done();
 				});
 
+			});
+		});
+		describe('runAfter', function () {
+			it('should call the "after" function', function (done) {
+				new Check({
+					after: function () {
+						assert.ok(true);
+						done();
+					}
+				}).runAfter([], function () {});
+			});
+			it('should bind context to `bindCheckResult`', function (done) {
+				var orig = utils.checkHelper,
+					cb = function () { return true; },
+					data = { monkeys: 'bananas' };
+
+				utils.checkHelper = function (checkResult, callback) {
+					assert.instanceOf(checkResult, window.CheckResult);
+					assert.equal(callback, cb);
+					return data;
+				};
+				new Check({
+					after: function () {
+						assert.deepEqual(data, this);
+						utils.checkHelper = orig;
+						done();
+					}
+				}).runAfter(data, cb);
+			});
+			it('should set the value attribute of the check to true', function (done) {
+				new Check({
+					after: function () {
+						return true;
+					}
+				}).runAfter([], function (check) {
+					assert.equal(check.value, true);
+					done();
+				});
+			});
+			it('should set the value attribute of the check to false', function (done) {
+				new Check({
+					after: function () {
+						return false;
+					}
+				}).runAfter([], function (check) {
+					assert.equal(check.value, false);
+					done();
+				});
+
+			});
+			it('should set the error attribute if the after function throws', function (done) {
+				assert.doesNotThrow(function () {
+					var error = new Error('oh noes');
+					new Check({
+						after: function () {
+							throw error;
+						}
+					}).runAfter([], function (check) {
+						assert.deepEqual(check.error, { message: error.message, stack: error.stack });
+						done();
+					});
+				});
 			});
 		});
 	});
@@ -242,6 +304,22 @@ describe('Check', function () {
 			it('should have no default', function () {
 				var spec = {};
 				assert.equal(new Check(spec).id, spec.id);
+
+			});
+
+		});
+
+		describe('.after', function () {
+			it('should be set', function () {
+				var spec = {
+					after: 'monkeys'
+				};
+				assert.equal(new Check(spec).after, spec.after);
+			});
+
+			it('should have no default', function () {
+				var spec = {};
+				assert.equal(new Check(spec).after, spec.after);
 
 			});
 
