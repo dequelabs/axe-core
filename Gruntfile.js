@@ -89,8 +89,8 @@ module.exports = function (grunt) {
 			source: {
 				options: {
 					urls: [
-						'http://localhost:9876/test/unit',
-						'http://localhost:9876/test/integration'
+						'http://localhost:9876/test/rules',
+						'http://localhost:9876/test/checks'
 					],
 					reporter: grunt.option("reporter") || (process.env.XUNIT_FILE ? 'xunit-file' : 'Spec'),
 					timeout: 10000,
