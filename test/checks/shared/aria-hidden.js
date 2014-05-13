@@ -12,7 +12,7 @@ describe('aria-hidden', function () {
 		node.setAttribute('aria-hidden', 'true');
 		fixture.appendChild(node);
 
-		assert.isTrue(checks['aria-hidden'].execute(node));
+		assert.isTrue(checks['aria-hidden'].evaluate(node));
 
 	});
 
@@ -21,7 +21,7 @@ describe('aria-hidden', function () {
 		node.setAttribute('aria-hidden', 'false');
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['aria-hidden'].execute(node));
+		assert.isFalse(checks['aria-hidden'].evaluate(node));
 
 	});
 
@@ -32,7 +32,7 @@ describe('aria-hidden', function () {
 		parent.appendChild(node);
 		fixture.appendChild(parent);
 
-		assert.isTrue(checks['aria-hidden'].execute(node));
+		assert.isTrue(checks['aria-hidden'].evaluate(node));
 
 	});
 
@@ -43,7 +43,7 @@ describe('aria-hidden', function () {
 		parent.appendChild(node);
 		fixture.appendChild(parent);
 
-		assert.isFalse(checks['aria-hidden'].execute(node));
+		assert.isFalse(checks['aria-hidden'].evaluate(node));
 
 	});
 
@@ -56,7 +56,7 @@ describe('aria-hidden', function () {
 		parent.appendChild(node);
 		fixture.appendChild(grandParent);
 
-		assert.isTrue(checks['aria-hidden'].execute(node));
+		assert.isTrue(checks['aria-hidden'].evaluate(node));
 
 	});
 
@@ -69,7 +69,7 @@ describe('aria-hidden', function () {
 		parent.appendChild(node);
 		fixture.appendChild(grandParent);
 
-		assert.isFalse(checks['aria-hidden'].execute(node));
+		assert.isFalse(checks['aria-hidden'].evaluate(node));
 
 	});
 

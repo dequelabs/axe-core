@@ -17,7 +17,7 @@ describe('explicit-label', function () {
 		label.htmlFor = 'input';
 		fixture.appendChild(label);
 
-		assert.isTrue(checks['explicit-label'].execute(node));
+		assert.isTrue(checks['explicit-label'].evaluate(node));
 	});
 
 	it('should return false if a label is not present', function () {
@@ -25,7 +25,7 @@ describe('explicit-label', function () {
 		node.type = 'text';
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['explicit-label'].execute(node));
+		assert.isFalse(checks['explicit-label'].evaluate(node));
 	});
 
 });

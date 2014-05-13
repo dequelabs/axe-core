@@ -15,14 +15,14 @@ describe('aria-labelledby', function () {
 		target.id = 'woohoo';
 		fixture.appendChild(target);
 
-		assert.isTrue(checks['aria-labelledby'].execute(node));
+		assert.isTrue(checks['aria-labelledby'].evaluate(node));
 	});
 
 	it('should return false if an aria-labelledby is not present', function () {
 		var node = document.createElement('div');
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['aria-labelledby'].execute(node));
+		assert.isFalse(checks['aria-labelledby'].evaluate(node));
 	});
 
 	it('should return false if an aria-label is present, but references an element that is not present', function () {
@@ -33,6 +33,6 @@ describe('aria-labelledby', function () {
 		target.id = 'woohoo';
 		fixture.appendChild(target);
 
-		assert.isFalse(checks['aria-labelledby'].execute(node));
+		assert.isFalse(checks['aria-labelledby'].evaluate(node));
 	});
 });

@@ -15,7 +15,7 @@ describe('help-same-as-label', function () {
 
 		fixture.appendChild(node);
 
-		assert.isTrue(checks['help-same-as-label'].execute(node));
+		assert.isTrue(checks['help-same-as-label'].evaluate(node));
 	});
 
 	it('should return true if an element has a label and aria-describedby with the same text', function () {
@@ -30,7 +30,7 @@ describe('help-same-as-label', function () {
 		fixture.appendChild(node);
 		fixture.appendChild(dby);
 
-		assert.isTrue(checks['help-same-as-label'].execute(node));
+		assert.isTrue(checks['help-same-as-label'].evaluate(node));
 	});
 
 
@@ -41,7 +41,7 @@ describe('help-same-as-label', function () {
 
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['help-same-as-label'].execute(node));
+		assert.isFalse(checks['help-same-as-label'].evaluate(node));
 
 	});
 
@@ -56,7 +56,7 @@ describe('help-same-as-label', function () {
 		fixture.appendChild(node);
 		fixture.appendChild(dby);
 
-		assert.isFalse(checks['help-same-as-label'].execute(node));
+		assert.isFalse(checks['help-same-as-label'].evaluate(node));
 	});
 
 });

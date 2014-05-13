@@ -12,14 +12,14 @@ describe('aria-label', function () {
 		node.setAttribute('aria-label', 'woohoo');
 		fixture.appendChild(node);
 
-		assert.isTrue(checks['aria-label'].execute(node));
+		assert.isTrue(checks['aria-label'].evaluate(node));
 	});
 
 	it('should return false if an aria-label is not present', function () {
 		var node = document.createElement('div');
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['aria-label'].execute(node));
+		assert.isFalse(checks['aria-label'].evaluate(node));
 	});
 
 	it('should return false if an aria-label is present, but empty', function () {
@@ -27,6 +27,6 @@ describe('aria-label', function () {
 		node.setAttribute('aria-label', ' ');
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['aria-label'].execute(node));
+		assert.isFalse(checks['aria-label'].evaluate(node));
 	});
 });

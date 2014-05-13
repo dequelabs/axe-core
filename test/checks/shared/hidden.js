@@ -19,7 +19,7 @@ describe('hidden', function () {
 		var node = document.createElement('div');
 		fixture.appendChild(node);
 
-		checks['hidden'].execute(node);
+		checks['hidden'].evaluate(node);
 		assert.isTrue(success);
 
 		felib.dom.isVisible = orig;

@@ -14,9 +14,9 @@ describe('title-only', function () {
 
 		fixture.appendChild(node);
 
-		assert.isTrue(checks['title-only'].execute(node));
+		assert.isTrue(checks['title-only'].evaluate(node));
 		node.setAttribute('aria-label', 'woop');
-		assert.isFalse(checks['title-only'].execute(node));
+		assert.isFalse(checks['title-only'].evaluate(node));
 	});
 
 	it('should return true if an element only has aria-describedby', function () {
@@ -30,9 +30,9 @@ describe('title-only', function () {
 		fixture.appendChild(node);
 		fixture.appendChild(dby);
 
-		assert.isTrue(checks['title-only'].execute(node));
+		assert.isTrue(checks['title-only'].evaluate(node));
 		node.setAttribute('aria-label', 'woop');
-		assert.isFalse(checks['title-only'].execute(node));
+		assert.isFalse(checks['title-only'].evaluate(node));
 	});
 
 });

@@ -15,7 +15,7 @@ describe('implicit-label', function () {
 		label.appendChild(node);
 		fixture.appendChild(label);
 
-		assert.isTrue(checks['implicit-label'].execute(node));
+		assert.isTrue(checks['implicit-label'].evaluate(node));
 	});
 
 	it('should return false if a label is not present', function () {
@@ -23,7 +23,7 @@ describe('implicit-label', function () {
 		node.type = 'text';
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['implicit-label'].execute(node));
+		assert.isFalse(checks['implicit-label'].evaluate(node));
 	});
 
 });
