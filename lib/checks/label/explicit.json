@@ -1,4 +1,4 @@
 {
 	"id": "explicit-label",
-	"execute": "explicit.js"
+	"evaluate": "explicit.js"
 }
