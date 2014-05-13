@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>FireEyes Rules Lib Tests</title>
+
+		<link rel="stylesheet" type="text/css" href="../../node_modules/mocha/mocha.css" />
+		<script src="../../node_modules/mocha/mocha.js"></script>
+		<script data-cover-flags="branchTracking" src="../../node_modules/blanket/dist/qunit/blanket.js"></script>
+		<script src="../../node_modules/blanket/src/adapters/mocha-blanket.js"></script>
+		<script src="../../node_modules/chai/chai.js"></script>
+		<% files.forEach(function (file) { %>
+			<script data-cover src="../../<%=file%>"></script>
+		<%  }); %>
+		<script>
+			mocha.setup('bdd');
+			var assert = chai.assert;
+		</script>
+	</head>
+
+	<body>
+		<div id="mocha"></div>
+		<div id="fixture"></div>
+		<% tests.forEach(function (file) { %>
+			<script src="<%=file%>"></script>
+		<%  }); %>
+		<script>
+			if (window.PHANTOMJS) {
+				blanket.options("reporter", "../../node_modules/grunt-blanket-mocha/support/grunt-reporter.js");
+			}
+		</script>
+	</body>
+
+</html>

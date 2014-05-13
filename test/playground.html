@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+	<script src="../dist/felib.js"></script>
+</head>
+<body>
+	<img src="/test/fixtures/test.gif" id="i">
+	<script>
+		var i = document.getElementById('i'),
+			num = 0;
+		var gif = new felib.image.DqGif({ gif: i });
+
+		function bench() {
+			console.time('DqGif' + num);
+			console.time('DqGif' + num + '.init');
+			var gif = new felib.image.DqGif({ gif: i });
+			console.timeEnd('DqGif' + num + '.init');
+			console.time('DqGif' + num + '.getFlickerRate');
+			gif.getFlickerRate();
+			console.timeEnd('DqGif' + num + '.getFlickerRate');
+			console.timeEnd('DqGif' + num);
+
+			num++;
+		}
+
+		function profile() {
+			console.profile('DqGif' + num);
+			gif.getFlickerRate();
+			console.profileEnd('DqGif' + num);
+
+			num++;
+		}
+	</script>
+</body>
+</html>
