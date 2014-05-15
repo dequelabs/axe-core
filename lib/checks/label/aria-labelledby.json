@@ -1,4 +1,4 @@
 {
 	"id": "aria-labelledby",
-	"evaluate": "aria-label.js"
+	"evaluate": "aria-labelledby.js"
 }
