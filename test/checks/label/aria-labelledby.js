@@ -35,4 +35,6 @@ describe('aria-labelledby', function () {
 
 		assert.isFalse(checks['aria-labelledby'].evaluate(node));
 	});
+
+	it('should check referenced elements have text visible to screen readers');
 });
