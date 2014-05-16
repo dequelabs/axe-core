@@ -6,8 +6,6 @@
 
 		<link rel="stylesheet" type="text/css" href="../../node_modules/mocha/mocha.css" />
 		<script src="../../node_modules/mocha/mocha.js"></script>
-		<script data-cover-flags="branchTracking" src="../../node_modules/blanket/dist/qunit/blanket.js"></script>
-		<script src="../../node_modules/blanket/src/adapters/mocha-blanket.js"></script>
 		<script src="../../node_modules/chai/chai.js"></script>
 		<% files.forEach(function (file) { %>
 			<script data-cover src="../../<%=file%>"></script>
@@ -24,9 +22,20 @@
 		<% tests.forEach(function (file) { %>
 			<script src="<%=file%>"></script>
 		<%  }); %>
+
 		<script>
-			if (window.PHANTOMJS) {
-				blanket.options("reporter", "../../node_modules/grunt-blanket-mocha/support/grunt-reporter.js");
+			if (window.location.search.indexOf('nocov=true') === -1) {
+				var s = document.createElement('script');
+				if (window.PHANTOMJS) {
+					s.addEventListener('load', function () {
+						blanket.options("reporter", "../../node_modules/grunt-blanket-mocha/support/grunt-reporter.js");
+					});
+				}
+				s.setAttribute('data-cover-flags', 'branchTracking');
+				s.src = '../../build/blanket_mocha.js';
+				document.head.appendChild(s);
+			} else {
+				mocha.run();
 			}
 		</script>
 	</body>

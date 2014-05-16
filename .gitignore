@@ -1,5 +1,4 @@
-coverage
 dist
+bower_components
 node_modules
-test/unit/index.html
-test/integration/index.html
+test/unit/*.html
