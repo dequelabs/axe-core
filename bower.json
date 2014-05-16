@@ -1,0 +1,19 @@
+{
+  "name": "ks-integration",
+  "version": "0.0.0",
+  "authors": [
+    "Mike Kozlowski <mike.kozlowski@deque.com>"
+  ],
+  "description": "Kensington Integration",
+  "license": "Commercial",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "ks-rules": "git@bitbucket.org:dmusser/ks-rules.git#master",
+    "rule-engine": "git@bitbucket.org:dmusser/rule-engine.git#master"
+  }
+}
