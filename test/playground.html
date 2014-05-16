@@ -1,19 +1,19 @@
 <!doctype html>
 <html>
 <head>
-	<script src="../dist/felib.js"></script>
+	<script src="../dist/kslib.js"></script>
 </head>
 <body>
 	<img src="/test/fixtures/test.gif" id="i">
 	<script>
 		var i = document.getElementById('i'),
 			num = 0;
-		var gif = new felib.image.DqGif({ gif: i });
+		var gif = new kslib.image.DqGif({ gif: i });
 
 		function bench() {
 			console.time('DqGif' + num);
 			console.time('DqGif' + num + '.init');
-			var gif = new felib.image.DqGif({ gif: i });
+			var gif = new kslib.image.DqGif({ gif: i });
 			console.timeEnd('DqGif' + num + '.init');
 			console.time('DqGif' + num + '.getFlickerRate');
 			gif.getFlickerRate();

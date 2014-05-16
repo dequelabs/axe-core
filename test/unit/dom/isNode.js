@@ -1,7 +1,7 @@
 describe('dom.isNode', function () {
 	'use strict';
 
-	var isNode = felib.dom.isNode;
+	var isNode = kslib.dom.isNode;
 
 	it('nodes', function () {
 		var node;
