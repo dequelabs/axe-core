@@ -29,6 +29,11 @@
 		<script>
 			if (window.location.search.indexOf('nocov=true') === -1) {
 				var s = document.createElement('script');
+				if (window.PHANTOMJS) {
+					s.addEventListener('load', function () {
+						blanket.options("reporter", "../../node_modules/grunt-blanket-mocha/support/grunt-reporter.js");
+					});
+				}
 				s.setAttribute('data-cover-flags', 'branchTracking');
 				s.src = '../../build/blanket_mocha.js';
 				document.head.appendChild(s);
