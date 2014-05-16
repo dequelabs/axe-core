@@ -1,4 +1,4 @@
-
+/* global dqreConfiguration */
 describe('configure', function () {
 	'use strict';
 
@@ -13,13 +13,15 @@ describe('configure', function () {
 	it('should create a new audit', function () {
 		var success = false;
 		var orig = window.Audit;
+		var audit = {rules: []};
 		window.Audit = function () {
 			success = true;
 		};
 
-		dqre.configure({rules: []});
+		assert.isUndefined(dqreConfiguration);
+		dqre.configure(audit);
 		assert.isTrue(success);
-
+		assert.deepEqual(dqreConfiguration, audit);
 		window.Audit = orig;
 
 	});
@@ -64,7 +66,7 @@ describe('configure', function () {
 			};
 			var origSub = window.utils.respondable.subscribe;
 			var orig = window.dqre.run;
-			window.dqre.run = function (context, callback) {
+			window.dqre.run = function (context, options, callback) {
 				assert.equal(context, document);
 				assert.isFunction(callback);
 				done();
@@ -86,7 +88,7 @@ describe('configure', function () {
 		it('should pass data.context to dqre.run', function (done) {
 			var origSub = window.utils.respondable.subscribe;
 			var orig = window.dqre.run;
-			window.dqre.run = function (context, callback) {
+			window.dqre.run = function (context, options, callback) {
 				assert.equal(context, 'monkeys');
 				assert.isFunction(callback);
 				done();
@@ -111,7 +113,7 @@ describe('configure', function () {
 			var origSub = window.utils.respondable.subscribe;
 			var orig = window.dqre.run;
 			var expected = {data: 'monkeys'};
-			window.dqre.run = function (context, callback) {
+			window.dqre.run = function (context, options, callback) {
 				callback(expected);
 			};
 
@@ -120,7 +122,7 @@ describe('configure', function () {
 					if (topic === 'dqre.analysis.start') {
 						assert.equal(data, expected);
 					} else if (topic === 'dqre.analysis.ping') {
-						assert.deepEqual(data, {dqre:true});
+						assert.deepEqual(data, {dqre: true});
 					} else {
 						assert.ok(false);
 					}

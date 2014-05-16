@@ -31,8 +31,65 @@ describe('Audit', function () {
 				'<div id="monkeys">bananas</div>' +
 				'<input type="text" aria-labelledby="monkeys">' +
 				'<blink>FAIL ME</blink>';
-			a.run(document, function () {
+			a.run(document, {}, function () {
 				assert.ok('yay');
+				done();
+			});
+		});
+		it('should run all the rules', function (done) {
+			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
+				'<div id="monkeys">bananas</div>' +
+				'<input type="text" aria-labelledby="monkeys">' +
+				'<blink>FAIL ME</blink>';
+			a.run(document, {}, function (results) {
+				assert.equal(results.length, 7);
+				done();
+			});
+		});
+		it('should not run rules disabled by the options', function (done) {
+			var options = [{id: 'bypass', enabled: false}];
+			fixture.innerHTML = '<a href="#">link</a>';
+			a.run(document, options, function (results) {
+				assert.equal(results.length, 6);
+				done();
+			});
+		});
+		it('should call the rule\'s run function', function (done) {
+			var targetRule = mockRules[mockRules.length - 1],
+				rule = a.findRule(targetRule.id),
+				called = false,
+				orig;
+
+			fixture.innerHTML = '<a href="#">link</a>';
+			orig = rule.run;
+			rule.run = function (node, options, callback) {
+				called = true;
+				callback({});
+			};
+			a.run(document, {}, function () {
+				rule.run = orig;
+				done();
+			});
+		});
+		it('should pass the option to the run function', function (done) {
+			var targetRule = mockRules[mockRules.length - 1],
+				rule = a.findRule(targetRule.id),
+				passed = false,
+				orig, options;
+
+			fixture.innerHTML = '<a href="#">link</a>';
+			orig = rule.run;
+			rule.run = function (node, options, callback) {
+				assert.ok(options);
+				assert.equal(options.id, targetRule.id);
+				assert.equal(options.data, 'monkeys');
+				passed = true;
+				callback({});
+			};
+			options = [{id: targetRule.id, data: 'monkeys'}];
+			a.run(document, options, function (result) {
+				assert.ok(passed);
+				rule.run = orig;
 				done();
 			});
 		});
@@ -61,13 +118,41 @@ describe('Audit', function () {
 				'<blink>FAIL ME</blink>';
 
 			orig = rule.after;
-			rule.after = function (node, ruleResult, callback) {
+			rule.after = function (node, options, ruleResult, callback) {
 				called = true;
 				callback(ruleResult);
 			};
-			a.run(document, function (result) {
-				a.after(document, result, function () {
+			a.run(document, {}, function (result) {
+				a.after(document, {}, result, function () {
 					assert.ok(called);
+					rule.after = orig;
+					done();
+				});
+			});
+		});
+		it('should pass the option to the after function', function (done) {
+			var targetRule = mockRules[mockRules.length - 1],
+				rule = a.findRule(targetRule.id),
+				passed = false,
+				orig,
+				options;
+			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
+				'<div id="monkeys">bananas</div>' +
+				'<input type="text" aria-labelledby="monkeys">' +
+				'<blink>FAIL ME</blink>';
+
+			orig = rule.after;
+			options = [{id: targetRule.id, data: 'monkeys'}];
+			rule.after = function (node, options, ruleResult, callback) {
+				assert.ok(options);
+				assert.equal(options.id, targetRule.id);
+				assert.equal(options.data, 'monkeys');
+				passed = true;
+				callback(ruleResult);
+			};
+			a.run(document, options, function (result) {
+				a.after(document, options, result, function () {
+					assert.ok(passed);
 					rule.after = orig;
 					done();
 				});
@@ -76,14 +161,14 @@ describe('Audit', function () {
 		it('should replace the FrameRuleResult object', function (done) {
 			fixture.innerHTML = '<a href="#">link</a>';
 
-			a.run(document, function (result) {
+			a.run(document, {}, function (result) {
 				var rfr;
 				result.forEach(function (r) {
 					if (r.id === 'bypass') {
 						rfr = r;
 					}
 				});
-				a.after(document, result, function () {
+				a.after(document, {}, result, function () {
 					var nrfr;
 					result.forEach(function (r) {
 						if (r.id === 'bypass') {
