@@ -28,7 +28,7 @@ describe('dom.getElementCoordinates', function () {
 			'</div>';
 
 		el = document.getElementById('coords0');
-		coords = felib.dom.getElementCoordinates(el);
+		coords = kslib.dom.getElementCoordinates(el);
 		assert.equal(coords.left, -1000);
 		assert.equal(coords.top, -1000);
 		assert.equal(coords.width, 1000);
@@ -37,14 +37,14 @@ describe('dom.getElementCoordinates', function () {
 		assert.equal(coords.bottom, 0);
 
 		el = document.getElementById('div');
-		coords = felib.dom.getElementCoordinates(el);
+		coords = kslib.dom.getElementCoordinates(el);
 		assert.equal(Math.floor(coords.left), -1);
 		assert.equal(Math.floor(coords.top), -1);
 	});
 
 	it('should take into account scroll offsets', function () {
 		var el, coords,
-			offset = felib.dom.getScrollOffset(window.document);
+			offset = kslib.dom.getScrollOffset(window.document);
 
 		fixture.innerHTML = '<div id="div" style="position: absolute; top: -1px; left: -1px;">' +
 			'<span id="coords0" style="position:absolute; top: -999px; left: -999px; width: 1000px; height: 1000px;">' +
@@ -52,7 +52,7 @@ describe('dom.getElementCoordinates', function () {
 			'</div>';
 
 		el = document.getElementById('coords0');
-		coords = felib.dom.getElementCoordinates(el);
+		coords = kslib.dom.getElementCoordinates(el);
 		assert.equal(coords.left, -1000);
 		assert.equal(coords.top, -1000);
 		assert.equal(coords.width, 1000);
@@ -61,7 +61,7 @@ describe('dom.getElementCoordinates', function () {
 		assert.equal(coords.bottom, 0);
 
 		window.scrollTo(0, 150);
-		coords = felib.dom.getElementCoordinates(el);
+		coords = kslib.dom.getElementCoordinates(el);
 		assert.equal(coords.left, -1000);
 		assert.equal(coords.top, -1000);
 		assert.equal(coords.width, 1000);
@@ -89,7 +89,7 @@ describe('dom.getElementCoordinates', function () {
 				var nestedIframe = win.document.getElementsByTagName('iframe')[0];
 				iframeReady(nestedIframe, function (win2) {
 					var target = win2.document.getElementById('target'),
-						result = felib.dom.getElementCoordinates(target, true);
+						result = kslib.dom.getElementCoordinates(target, true);
 
 					assert.equal(result.top, 20);
 					assert.equal(result.left, 20);
@@ -126,7 +126,7 @@ describe('dom.getElementCoordinates', function () {
 					win2.scrollTo(0, 150);
 
 					var target = win2.document.getElementById('target'),
-						result = felib.dom.getElementCoordinates(target, true);
+						result = kslib.dom.getElementCoordinates(target, true);
 
 					assert.equal(result.top, 20);
 					assert.equal(result.left, 20);
