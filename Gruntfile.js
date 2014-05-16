@@ -75,21 +75,12 @@ module.exports = function (grunt) {
 					fixture: 'test/checks/runner.tmpl',
 					testCwd: 'test/checks'
 				}
-			},
-			rules: {
-				src: '<%= rules.lib.dest.rules %>',
-				dest: 'test/rules/index.html',
-				options: {
-					fixture: 'test/rules/runner.tmpl',
-					testCwd: 'test/rules'
-				}
 			}
 		},
 		blanket_mocha: {
 			source: {
 				options: {
 					urls: [
-						'http://localhost:9876/test/rules',
 						'http://localhost:9876/test/checks'
 					],
 					reporter: grunt.option("reporter") || (process.env.XUNIT_FILE ? 'xunit-file' : 'Spec'),
