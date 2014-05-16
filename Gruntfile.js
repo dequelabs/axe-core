@@ -15,7 +15,7 @@ module.exports = function (grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 
 		watch: {
-			files: ['test/**/*'],
+			files: ['test/**/*', 'lib/**/*'],
 			tasks: ['fixture', 'build']
 		},
 		rules: {

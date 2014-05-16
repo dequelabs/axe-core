@@ -1,4 +1,4 @@
 {
 	"id": "hidden",
-	"execute": "hidden.js"
+	"evaluate": "hidden.js"
 }

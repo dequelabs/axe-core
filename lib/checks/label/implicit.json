@@ -1,4 +1,4 @@
 {
 	"id": "implicit-label",
-	"execute": "implicit.js"
+	"evaluate": "implicit.js"
 }
