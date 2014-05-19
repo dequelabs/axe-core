@@ -9,6 +9,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-blanket-mocha');
+	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadTasks('build/tasks');
 
 	grunt.initConfig({
@@ -70,14 +71,21 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		blanket_mocha: {
-			source: {
+		mocha: {
+			test: {
 				options: {
-					urls: [
-						'http://localhost:9876/test/unit'
-					],
-					reporter: grunt.option("reporter") || (process.env.XUNIT_FILE ? 'xunit-file' : 'Spec'),
-					timeout: 10000,
+					urls: ['http://localhost:9876/test/unit/index.html'],
+					reporter: 'XUnit',
+					threshold: 90
+				},
+				dest: 'xunit.xml'
+			}
+		},
+		blanket_mocha: {
+			test: {
+				options: {
+					urls: ['http://localhost:9876/test/unit/index.html'],
+					reporter: 'Spec',
 					threshold: 90
 				}
 			}
@@ -85,7 +93,7 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
-	grunt.registerTask('test', ['build', 'fixture', 'connect:test', 'blanket_mocha']);
+	grunt.registerTask('test', ['build', 'fixture', 'connect:test', 'mocha']);
 	grunt.registerTask('build', ['concat', 'uglify']);
 	grunt.registerTask('default', ['build']);
 };
