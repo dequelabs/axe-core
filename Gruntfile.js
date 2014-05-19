@@ -85,7 +85,7 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
-	grunt.registerTask('test', ['fixture', 'connect:test', 'blanket_mocha']);
+	grunt.registerTask('test', ['build', 'fixture', 'connect:test', 'blanket_mocha']);
 	grunt.registerTask('build', ['concat', 'uglify']);
 	grunt.registerTask('default', ['build']);
 };
