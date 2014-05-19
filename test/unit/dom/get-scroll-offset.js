@@ -42,4 +42,19 @@ describe('dom.getScrollOffset', function () {
 		assert.equal(offset.top, 42);
 	});
 
+	it('should work on a window object', function () {
+		var offset = kslib.dom.getScrollOffset({
+			document: {
+				nodeType: 9,
+				documentElement: {
+					scrollTop: 42,
+					scrollLeft: 98
+				}
+			}
+		});
+
+		assert.equal(offset.left, 98);
+		assert.equal(offset.top, 42);
+	});
+
 });
