@@ -86,7 +86,7 @@ describe('Rule', function () {
 						}
 					});
 
-				rule.run(document, function () {
+				rule.run(document, {}, function () {
 					assert.isTrue(success);
 					done();
 				});
@@ -100,10 +100,45 @@ describe('Rule', function () {
 
 				var rule = new Rule({ checks: [{ id: 'cats' }]});
 
-				rule.run();
+				rule.run(undefined, {});
 				assert.isTrue(success);
 				Check.prototype.runEvaluate = orig;
 
+			});
+
+			it('should NOT execute Check#run on checks that are disabled', function () {
+				var orig = Check.prototype.runEvaluate;
+				var success = false;
+				Check.prototype.runEvaluate = function () { success = this.id !== 'dogs'; };
+
+				var rule = new Rule({ checks: [{ id: 'cats' }, { id: 'dogs' }]});
+
+				rule.run(undefined, {checks: [{ id: 'dogs', enabled: false }]});
+				assert.isTrue(success);
+				Check.prototype.runEvaluate = orig;
+
+			});
+
+			it('should pass the matching option to runEvaluate', function () {
+				var orig = Check.prototype.runEvaluate,
+					option = {id: 'cats', data: 'minkeys'};
+
+				Check.prototype.runEvaluate = function (node, options) {
+					assert.deepEqual(options, option);
+					Check.prototype.runEvaluate = orig;
+				};
+
+				var rule = new Rule({ checks: [{ id: 'cats' }]});
+				rule.run(undefined, {
+					checks: [option]
+				});
+			});
+			it('should not throw if the options object is undefined', function () {
+				var rule = new Rule({ checks: [{ id: 'cats' }]});
+				assert.doesNotThrow(function () {
+					rule.run(undefined, undefined, function () {
+					});
+				});
 			});
 
 			describe('NODE rule', function () {
@@ -118,7 +153,7 @@ describe('Rule', function () {
 					window.RuleResult.prototype.addResults = orig.prototype.addResults;
 
 					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats' }]});
-					rule.run(null, function () {});
+					rule.run(null, {}, function () {});
 					assert.isTrue(success);
 
 
@@ -128,7 +163,7 @@ describe('Rule', function () {
 					var success = false;
 
 					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats' }]});
-					rule.run(null, function () {
+					rule.run(null, {}, function () {
 						success = true;
 					});
 					assert.isTrue(success);
@@ -147,7 +182,7 @@ describe('Rule', function () {
 					window.RuleFrameResult.prototype.addResults = orig.prototype.addResults;
 
 					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats'}], type: 'PAGE' });
-					rule.run(null, function () {});
+					rule.run(null, {}, function () {});
 					assert.isTrue(success);
 					window.RuleFrameResult = orig;
 				});
@@ -155,7 +190,7 @@ describe('Rule', function () {
 					var success = false;
 
 					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats'}], type: 'PAGE'});
-					rule.run(null, function () {
+					rule.run(null, {}, function () {
 						success = true;
 					});
 					assert.isTrue(success);
@@ -183,14 +218,14 @@ describe('Rule', function () {
 			});
 			it('should pass the check data to the check\'s after function', function (done) {
 				rfr.addResults(document.documentElement, [{id: 'cats', data: 'dogs'}]);
-				rule.after(document.documentElement, rfr, function () {
+				rule.after(document.documentElement, {}, rfr, function () {
 					assert.deepEqual(data, ['dogs']);
 					done();
 				});
 			});
 			it('should return a new RuleResult object', function (done) {
 				rfr.addResults(document.documentElement, [{id: 'cats', data: 'dogs'}]);
-				rule.after(document.documentElement, rfr, function (rr) {
+				rule.after(document.documentElement, {}, rfr, function (rr) {
 					assert.ok(rr);
 					assert.ok(rfr !== rr);
 					done();
@@ -199,7 +234,7 @@ describe('Rule', function () {
 			it('should RuleResult must be a PASS if the after function returns true', function (done) {
 				afterResult = true;
 				rfr.addResults(document.documentElement, [{id: 'cats', data: 'dogs'}]);
-				rule.after(document.documentElement, rfr, function (rr) {
+				rule.after(document.documentElement, {}, rfr, function (rr) {
 					assert.equal(rr.result, 'PASS');
 					done();
 				});
@@ -207,9 +242,32 @@ describe('Rule', function () {
 			it('should RuleResult must be a FAIL if the after function returns false', function (done) {
 				afterResult = false;
 				rfr.addResults(document.documentElement, [{id: 'cats', data: 'dogs'}]);
-				rule.after(document.documentElement, rfr, function (rr) {
+				rule.after(document.documentElement, {}, rfr, function (rr) {
 					assert.equal(rr.result, 'FAIL');
 					done();
+				});
+			});
+			it('should not throw if the options object is undefined', function () {
+				afterResult = false;
+				rfr.addResults(document.documentElement, [{id: 'cats', data: 'dogs'}]);
+				assert.doesNotThrow(function () {
+					rule.after(document.documentElement, undefined, rfr, function () {
+					});
+				});
+			});
+			it('should pass the matching option to runAfter', function () {
+				var orig = Check.prototype.runAfter,
+					option = {id: 'cats', data: 'minkeys'};
+
+				Check.prototype.runAfter = function (data, options) {
+					assert.deepEqual(options, option);
+					Check.prototype.runAfter = orig;
+				};
+
+				afterResult = true;
+				rfr.addResults(document.documentElement, [{id: 'cats', data: 'dogs'}]);
+				rule.after(document.documentElement, { checks: [option] }, rfr, function (rr) {
+					assert.equal(rr.result, 'PASS');
 				});
 			});
 		});
