@@ -1,3 +1,4 @@
+/* global mergeResults, CheckResult, RuleResult, Rule, failureSummary, ruleHelp, nodeSelectorArray */
 describe('dqre.run', function () {
 	'use strict';
 
@@ -36,7 +37,7 @@ describe('dqre.run', function () {
 	it('should throw if no audit is configured', function () {
 
 		assert.throws(function () {
-			dqre.run(document);
+			dqre.run(document, {});
 		}, Error, /^No audit configured/);
 	});
 
@@ -44,8 +45,7 @@ describe('dqre.run', function () {
 		dqre.configure(window.mockAudit);
 
 		createFrames(2, function () {
-			dqre.run(document, function (result) {
-				console.log(result);
+			dqre.run(document, {}, function () {
 				done();
 			});
 
@@ -56,21 +56,270 @@ describe('dqre.run', function () {
 		var called = false;
 		dqre.configure(window.mockAudit);
 
-		dqre.audit.after = function (context, results, fn) {
+		dqre.audit.after = function (context, options, results, fn) {
 			called = true;
 			fn(results);
 		};
 		createFrames(2, function () {
-			dqre.run(document, function () {
+			dqre.run(document, {}, function () {
 				assert.ok(called);
 				done();
 			});
 		});
 	});
+});
 
+describe('dqre.a11yCheck', function () {
+	'use strict';
+	var orig,
+		results = [{
+			id: 'gimmeLabel',
+			result: dqre.constants.result.PASS,
+			details: [{
+				checks: [{data: 'minkey'}],
+				node: {
+					source: '<minkey>chimp</minky>'
+				}
+			}]
+		}, {
+			id: 'idkStuff',
+			result: dqre.constants.result.NA,
+			details: [{
+				checks: [{data: 'pillock'}],
+				node: {
+					source: '<pillock>george bush</pillock>'
+				}
+			}]
+		}, {
+			id: 'bypass',
+			result: dqre.constants.result.WARN,
+			details: [{
+				checks: [{data: 'foon'}],
+				node: {
+					source: '<foon>telephone</foon>'
+				}
+			}]
+		}, {
+			id: 'blinky',
+			result: dqre.constants.result.FAIL,
+			details: [{
+				checks: [{data: 'clueso'}],
+				node: {
+					source: '<clueso>nincompoop</clueso>'
+				}
+			}]
+		}];
+	beforeEach(function () {
+		dqre.configure(window.mockAudit);
+		orig = dqre.run;
+		dqre.run = function (ctxt, options, cb) {
+			cb(results);
+		};
+	});
+	afterEach(function () {
+		dqre.audit = null;
+		dqre.run = orig;
+	});
+	it('should merge the dqre.run results into violations, passes and warnings', function (done) {
+		dqre.a11yCheck(document, {}, function (results) {
+			assert.ok(results);
+			assert.ok(results.violations);
+			assert.equal(results.violations.length, 1);
+			assert.ok(results.passes);
+			assert.equal(results.passes.length, 2);
+			assert.ok(results.warnings);
+			assert.equal(results.warnings.length, 1);
+			done();
+		});
+	});
+	it('should add the rule id to the rule result', function (done) {
+		dqre.a11yCheck(document, {}, function (results) {
+			assert.equal(results.violations[0].id, 'blinky');
+			assert.equal(results.passes[0].id, 'gimmeLabel');
+			assert.equal(results.passes[1].id, 'idkStuff');
+			assert.equal(results.warnings[0].id, 'bypass');
+			done();
+		});
+	});
+	it('should add the rule help to the rule result', function (done) {
+		var origFn = ruleHelp;
+		ruleHelp = function () { return 'your foon is ringing'; };
+		dqre.a11yCheck(document, {}, function (results) {
+			assert.equal(results.violations[0].help, 'your foon is ringing');
+			ruleHelp = origFn;
+			done();
+		});
+	});
+	it('should add the checks to the node data', function (done) {
+		dqre.a11yCheck(document, {}, function (results) {
+			assert.ok(results.violations[0].nodes);
+			assert.equal(results.violations[0].nodes.length, 1);
+			assert.ok(results.violations[0].nodes[0].checks);
+			assert.equal(results.violations[0].nodes[0].checks[0].data, 'clueso');
+			assert.equal(results.passes[0].nodes[0].checks[0].data, 'minkey');
+			assert.equal(results.passes[1].nodes[0].checks[0].data, 'pillock');
+			assert.equal(results.warnings[0].nodes[0].checks[0].data, 'foon');
+			done();
+		});
+	});
+	it('should add the html to the node data', function (done) {
+		dqre.a11yCheck(document, {}, function (results) {
+			assert.ok(results.violations[0].nodes);
+			assert.equal(results.violations[0].nodes.length, 1);
+			assert.equal(results.violations[0].nodes[0].html, '<clueso>nincompoop</clueso>');
+			assert.equal(results.passes[0].nodes[0].html, '<minkey>chimp</minky>');
+			assert.equal(results.passes[1].nodes[0].html, '<pillock>george bush</pillock>');
+			assert.equal(results.warnings[0].nodes[0].html, '<foon>telephone</foon>');
+			done();
+		});
+	});
+	it('should add the failure summary to the node data', function (done) {
+		var origFn = failureSummary;
+		failureSummary = function () { return 'your foon is ringing'; };
+		dqre.a11yCheck(document, {}, function (results) {
+			assert.ok(results.violations[0].nodes);
+			assert.equal(results.violations[0].nodes.length, 1);
+			assert.equal(results.violations[0].nodes[0].failureSummary, 'your foon is ringing');
+			failureSummary = origFn;
+			done();
+		});
+	});
+	it('should add the target selector array to the node data', function (done) {
+		var origFn = nodeSelectorArray;
+		nodeSelectorArray = function () { return ['your foon is ringing']; };
+		dqre.a11yCheck(document, {}, function (results) {
+			assert.ok(results.violations[0].nodes);
+			assert.equal(results.violations[0].nodes.length, 1);
+			assert.deepEqual(results.violations[0].nodes[0].target, ['your foon is ringing']);
+			nodeSelectorArray = origFn;
+			done();
+		});
+	});
+});
+
+describe('nodeSelectorArray', function () {
+	'use strict';
+	it('should return an array with only the selector in it if the element is in the top window', function () {
+		assert.deepEqual(nodeSelectorArray({node: {
+			frames: [],
+			selector: 'hehe'
+		}}), ['hehe']);
+	});
+	it('should return an array of strings with the iframe selectors first and the selector last', function () {
+		assert.deepEqual(nodeSelectorArray({node: {
+			frames: ['first', 'second'],
+			selector: 'hehe'
+		}}), ['first', 'second', 'hehe']);
+	});
+	it('should return an empty array if passed undefined', function () {
+		assert.deepEqual(nodeSelectorArray(), []);
+	});
+	it('should return an empty array if passed no node', function () {
+		assert.deepEqual(nodeSelectorArray({}), []);
+	});
+	it('should return an empty array if passed no frames array', function () {
+		assert.deepEqual(nodeSelectorArray({node: {}}), []);
+	});
+	it('should return an empty array if passed no selector', function () {
+		assert.deepEqual(nodeSelectorArray({node: {frames: []}}), []);
+	});
+	it('should return an empty array if passed an empty selector', function () {
+		assert.deepEqual(nodeSelectorArray({node: {frames: [], selector: ''}}), []);
+	});
+});
+
+describe('failureSummary', function () {
+	'use strict';
+	var ruleResult, nodeData;
+	beforeEach(function () {
+		dqreConfiguration = {
+			messages: {
+				checkHelp: {
+					'1': '1',
+					'2': '2',
+					'3': '3'
+				}
+			}
+		};
+		ruleResult = {
+			result: dqre.constants.result.FAIL
+		};
+		nodeData = {
+			checks: [{
+				id: '1',
+				value: false,
+				result: dqre.constants.result.PASS,
+			}, {
+				id: '2',
+				value: false,
+				result: dqre.constants.result.PASS,
+			}, {
+				id: '3',
+				value: false,
+				result: dqre.constants.result.PASS,
+			}]
+		};
+	});
+	it('should return undefined if the rule passed', function () {
+		assert.isUndefined(failureSummary({
+			result: dqre.constants.result.PASS
+		}, {}));
+	});
+	it('should return a concatenation of the failed/warning check messages if the rule failed or warned', function () {
+		assert.equal(failureSummary(ruleResult, nodeData), '1, 2 & 3');
+	});
+	it('should only concatenate failed check messages, if its a FAIL', function () {
+		nodeData.checks[0].value = true;
+		assert.equal(failureSummary(ruleResult, nodeData), '2 & 3');
+	});
+	it('should only concatenate failed check messages, if its a FAIL', function () {
+		nodeData.checks[2].value = true;
+		assert.equal(failureSummary(ruleResult, nodeData), '1 & 2');
+	});
+	it('should only concatenate failed check messages, if its a FAIL', function () {
+		nodeData.checks[0].value = true;
+		nodeData.checks[2].value = true;
+		assert.equal(failureSummary(ruleResult, nodeData), '2');
+	});
+	it('should only concatenate failed check messages, if its a FAIL', function () {
+		nodeData.checks[0].value = true;
+		nodeData.checks[1].value = true;
+		nodeData.checks[2].value = true;
+		assert.equal(failureSummary(ruleResult, nodeData), '');
+	});
+	it('should only concatenate warn check messages, if its a WARN', function () {
+		ruleResult.result = dqre.constants.result.WARN;
+		nodeData.checks[0].value = true;
+		nodeData.checks[1].result = dqre.constants.result.WARN;
+		nodeData.checks[2].value = true;
+		assert.equal(failureSummary(ruleResult, nodeData), '2');
+	});
+});
+
+describe('ruleHelp', function () {
+	'use strict';
+	beforeEach(function () {
+		dqreConfiguration = {
+			messages: {
+				ruleHelp: {
+					'1': '1',
+					'2': '2',
+					'3': '3'
+				}
+			}
+		};
+	});
+	it('should return an empty string if the rule id does not match a help', function () {
+		assert.equal(ruleHelp('4'), '');
+	});
+	it('should return the rule help string', function () {
+		assert.equal(ruleHelp('3'), '3');
+	});
 });
 
 describe('mergeResults', function () {
+	'use strict';
+
 	var results, one, two;
 	function makeResults(oneResult, twoResult) {
 		var check, results = [];
