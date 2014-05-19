@@ -6,6 +6,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
+	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-blanket-mocha');
 	grunt.loadTasks('build/tasks');
 
@@ -41,11 +42,21 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		blanket_mocha: {
-			source: {
+		mocha: {
+			test: {
 				options: {
 					urls: ['http://localhost:9876/test/unit/src.html'],
-					reporter: process.env.XUNIT_FILE ? 'xunit-file' : 'Spec',
+					reporter: 'XUnit',
+					threshold: 90
+				},
+				dest: 'xunit.xml'
+			}
+		},
+		blanket_mocha: {
+			test: {
+				options: {
+					urls: ['http://localhost:9876/test/unit/src.html'],
+					reporter: 'Spec',
 					threshold: 90
 				}
 			}
@@ -63,7 +74,7 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
-	grunt.registerTask('test', ['fixture', 'connect', 'blanket_mocha']);
+	grunt.registerTask('test', ['fixture', 'connect', 'mocha']);
 	grunt.registerTask('build', ['concat']);
 	grunt.registerTask('default', ['build']);
 
