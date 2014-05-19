@@ -1,54 +1,52 @@
 describe('dom.isNode', function () {
 	'use strict';
 
-	var isNode = kslib.dom.isNode;
-
 	it('nodes', function () {
 		var node;
 		node = document;
-		assert.ok(isNode(node), 'Document');
+		assert.isTrue(kslib.dom.isNode(node), 'Document');
 
 		node = document.body;
-		assert.ok(isNode(node), 'Body');
+		assert.isTrue(kslib.dom.isNode(node), 'Body');
 
 		node = document.documentElement;
-		assert.ok(isNode(node), 'Document Element');
+		assert.isTrue(kslib.dom.isNode(node), 'Document Element');
 
 		node = document.createTextNode('cats');
-		assert.ok(isNode(node), 'Text Nodes');
+		assert.isTrue(kslib.dom.isNode(node), 'Text Nodes');
 
 		node = document.createElement('div');
-		assert.ok(isNode(node), 'Elements');
+		assert.isTrue(kslib.dom.isNode(node), 'Elements');
 
 		node = document.createComment('div');
-		assert.ok(isNode(node), 'Comment nodes');
+		assert.isTrue(kslib.dom.isNode(node), 'Comment nodes');
 
 		node = document.createDocumentFragment();
-		assert.ok(isNode(node), 'Document fragments');
+		assert.isTrue(kslib.dom.isNode(node), 'Document fragments');
 	});
 
 	it('non-nodes', function () {
 		var node;
 
 		node = {};
-		assert.ok(!isNode(node));
+		assert.isFalse(kslib.dom.isNode(node));
 
 		node = null;
-		assert.ok(!isNode(node));
+		assert.isFalse(kslib.dom.isNode(node));
 
 		node = window;
-		assert.ok(!isNode(node));
+		assert.isFalse(kslib.dom.isNode(node));
 
 		node = [];
-		assert.ok(!isNode(node));
+		assert.isFalse(kslib.dom.isNode(node));
 
 		node = 'cats';
-		assert.ok(!isNode(node));
+		assert.isFalse(kslib.dom.isNode(node));
 
 		node = undefined;
-		assert.ok(!isNode(node));
+		assert.isFalse(kslib.dom.isNode(node));
 
 		node = false;
-		assert.ok(!isNode(node));
+		assert.isFalse(kslib.dom.isNode(node));
 	});
 });

@@ -1,7 +1,6 @@
 describe('dom.getViewportSize', function () {
 	'use strict';
 
-	/* @todo pleaes let me know if there is a reliable way to test the actual values cross-browser */
 	it('should return an object with width and height', function () {
 
 		var result = kslib.dom.getViewportSize(window);
@@ -11,6 +10,43 @@ describe('dom.getViewportSize', function () {
 
 		assert.isNumber(result.width);
 		assert.isNumber(result.height);
+	});
+
+	it('should have some fallbacks for old browsers', function () {
+
+		var result = kslib.dom.getViewportSize({
+			document: {},
+			innerWidth: 12,
+			innerHeight: 47
+		});
+
+		assert.equal(result.width, 12);
+		assert.equal(result.height, 47);
+
+		result = kslib.dom.getViewportSize({
+			document: {
+				documentElement: {
+					clientWidth: 13,
+					clientHeight: 48
+				}
+			}
+		});
+
+		assert.equal(result.width, 13);
+		assert.equal(result.height, 48);
+
+		result = kslib.dom.getViewportSize({
+			document: {
+				body: {
+					clientWidth: 22,
+					clientHeight: 41
+				}
+			}
+		});
+
+		assert.equal(result.width, 22);
+		assert.equal(result.height, 41);
+
 	});
 
 });

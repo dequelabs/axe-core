@@ -1,18 +1,6 @@
 //@todo better coverage
 describe('dom.getElementCoordinates', function () {
 	'use strict';
-
-	function iframeReady(iframe, cb) {
-		var doc = iframe.contentDocument;
-		if (!doc || (doc && doc.readyState !== 'complete')) {
-			iframe.addEventListener('load', function () {
-				cb(this.contentWindow);
-			});
-		} else {
-			cb(iframe.contentWindow);
-		}
-	}
-
 	var fixture = document.getElementById('fixture');
 
 	afterEach(function () {
@@ -71,76 +59,5 @@ describe('dom.getElementCoordinates', function () {
 
 		window.scrollTo(offset.left, offset.top);
 
-	});
-
-	describe('iframes', function () {
-		it('should include frame\'s offset', function (done) {
-			var iframe = document.createElement('iframe');
-			iframe.src = '../fixtures/iframe1.html';
-
-			// set absolute position so we can properly calculate offsets
-			iframe.style.position = 'absolute';
-			iframe.style.top = 0;
-			iframe.style.left = 0;
-			iframe.style.height = '50px';
-			iframe.style.width = '150px';
-
-			iframeReady(iframe, function (win) {
-				var nestedIframe = win.document.getElementsByTagName('iframe')[0];
-				iframeReady(nestedIframe, function (win2) {
-					var target = win2.document.getElementById('target'),
-						result = kslib.dom.getElementCoordinates(target, true);
-
-					assert.equal(result.top, 20);
-					assert.equal(result.left, 20);
-					assert.equal(result.bottom, 40);
-					assert.equal(result.right, 120);
-					assert.equal(result.width, 100);
-					assert.equal(result.height, 20);
-					done();
-				});
-			});
-
-			fixture.appendChild(iframe);
-
-		});
-
-		it('should calculate the frame\'s scrollOffset', function (done) {
-			var iframe = document.createElement('iframe');
-
-			iframe.src = '../fixtures/iframe1.html';
-
-			// set absolute position so we can properly calculate offsets
-			iframe.style.position = 'absolute';
-			iframe.style.top = 0;
-			iframe.style.left = 0;
-			iframe.style.height = '50px';
-			iframe.style.width = '150px';
-
-			iframeReady(iframe, function (win) {
-				win.scrollTo(0, 100);
-
-				var nestedIframe = win.document.getElementsByTagName('iframe')[0];
-				iframeReady(nestedIframe, function (win2) {
-
-					win2.scrollTo(0, 150);
-
-					var target = win2.document.getElementById('target'),
-						result = kslib.dom.getElementCoordinates(target, true);
-
-					assert.equal(result.top, 20);
-					assert.equal(result.left, 20);
-					assert.equal(result.bottom, 40);
-					assert.equal(result.right, 120);
-					assert.equal(result.width, 100);
-					assert.equal(result.height, 20);
-
-					done();
-				});
-			});
-
-			fixture.appendChild(iframe);
-
-		});
 	});
 });
