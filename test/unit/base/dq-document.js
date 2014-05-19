@@ -22,7 +22,7 @@ describe('DqDocument', function () {
 		assert.equal(result.location, window.location.href);
 	});
 
-	it('should return location as `location`', function () {
+	it('should return location as `location` - bananas', function () {
 		var doc = {
 			location: {
 				href: 'bananas'

@@ -268,15 +268,15 @@ describe('failureSummary', function () {
 	it('should return a concatenation of the failed/warning check messages if the rule failed or warned', function () {
 		assert.equal(failureSummary(ruleResult, nodeData), '1, 2 & 3');
 	});
-	it('should only concatenate failed check messages, if its a FAIL', function () {
+	it('should only concatenate failed check messages, if its a FAIL (2 & 3)', function () {
 		nodeData.checks[0].value = true;
 		assert.equal(failureSummary(ruleResult, nodeData), '2 & 3');
 	});
-	it('should only concatenate failed check messages, if its a FAIL', function () {
+	it('should only concatenate failed check messages, if its a FAIL (1 & 2)', function () {
 		nodeData.checks[2].value = true;
 		assert.equal(failureSummary(ruleResult, nodeData), '1 & 2');
 	});
-	it('should only concatenate failed check messages, if its a FAIL', function () {
+	it('should only concatenate failed check messages, if its a FAIL (2)', function () {
 		nodeData.checks[0].value = true;
 		nodeData.checks[2].value = true;
 		assert.equal(failureSummary(ruleResult, nodeData), '2');
