@@ -3,3 +3,4 @@ dist
 node_modules
 test/unit/index.html
 test/integration/index.html
+xunit.xml

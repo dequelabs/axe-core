@@ -83,25 +83,6 @@ describe('utils.getSelector', function () {
 
 	});
 
-	it('should not use ids if they are not unique', function () {
-		var node = document.createElement('div');
-		node.id = 'monkeys';
-		fixture.appendChild(node);
-
-		node = document.createElement('div');
-		node.id = 'monkeys';
-		fixture.appendChild(node);
-
-		var sel = utils.getSelector(node);
-
-		assert.equal(sel, '#fixture > div:nth-of-type(2)');
-
-		var result = document.querySelectorAll(sel);
-		assert.lengthOf(result, 1);
-		assert.equal(result[0], node);
-
-	});
-
 	it('should use classes if available and unique', function () {
 		var node = document.createElement('div');
 		node.className = 'monkeys simian';
