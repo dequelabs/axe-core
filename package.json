@@ -8,11 +8,7 @@
     "organization": "Deque Systems, Inc.",
     "url": "http://deque.com/"
   },
-  "dependencies": {
-    "grunt": "0.4.x",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-uglify": "~0.2.4"
-  },
+  "dependencies": {},
   "scripts": {
     "build": "grunt"
   },
@@ -23,9 +19,9 @@
     "grunt-blanket-mocha": "~0.3.1",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-connect": "~0.7.1",
+    "grunt-contrib-uglify": "~0.2.4",
     "grunt-contrib-watch": "~0.6.1",
-    "mocha": "~1.18.2",
-    "xunit-file": "0.0.5",
-    "grunt-mocha": "~0.4.10"
+    "grunt-mocha": "~0.4.10",
+    "mocha": "~1.18.2"
   }
 }
