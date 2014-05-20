@@ -2,3 +2,5 @@ dist
 node_modules
 bower_components
 test/*/index.html
+test/*/index.html
+xunit.xml
