@@ -9,6 +9,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-blanket-mocha');
+	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadTasks('build/tasks');
 
 	grunt.initConfig({
@@ -77,13 +78,22 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		blanket_mocha: {
-			source: {
+		mocha: {
+			test: {
 				options: {
-					urls: [
-						'http://localhost:9876/test/checks'
-					],
-					reporter: grunt.option("reporter") || (process.env.XUNIT_FILE ? 'xunit-file' : 'Spec'),
+					urls: ['http://localhost:9876/test/checks'],
+					reporter: 'XUnit',
+					timeout: 10000,
+					threshold: 90
+				},
+				dest: 'xunit.xml'
+			}
+		},
+		blanket_mocha: {
+			test: {
+				options: {
+					urls: ['http://localhost:9876/test/checks'],
+					reporter: 'Spec',
 					timeout: 10000,
 					threshold: 90
 				}
@@ -92,7 +102,7 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
-	grunt.registerTask('test', ['fixture', 'connect:test', 'blanket_mocha']);
+	grunt.registerTask('test', ['build', 'fixture', 'connect:test', 'mocha']);
 	grunt.registerTask('build', ['rules', 'uglify']);
 	grunt.registerTask('default', ['build']);
 
