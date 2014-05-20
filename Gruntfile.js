@@ -6,6 +6,7 @@ module.exports = function (grunt) {
 	grunt.loadTasks('build/tasks');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
+	grunt.loadNpmTasks('grunt-contrib-qunit');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 
 	grunt.initConfig({
@@ -30,6 +31,9 @@ module.exports = function (grunt) {
 			'ks-rules': {
 				src: 'bower_components/ks-rules/'
 			}
+		},
+		qunit: {
+			all: ['test/examples/qunit/**/*.html']
 		},
 		jasmine: {
 			test: {
