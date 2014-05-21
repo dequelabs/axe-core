@@ -93,11 +93,11 @@ module.exports = function (grunt) {
 		jshint: {
 			rules: {
 				options: {
-					jshintrc: 'lib/.jshintrc',
+					jshintrc: true,
 					reporter: grunt.option('report') ? 'checkstyle' : undefined,
 					reporterOutput: grunt.option('report') ? 'dist/lint.xml' : undefined
 				},
-				src: ['lib/**/*.js']
+				src: ['lib/**/*.js', 'test/**/*.js', 'Gruntfile.js', '!test/mock/**/*.js']
 			}
 		}
 	});
