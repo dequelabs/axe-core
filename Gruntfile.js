@@ -8,6 +8,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	grunt.loadNpmTasks('grunt-contrib-qunit');
 	grunt.loadNpmTasks('grunt-contrib-connect');
+	grunt.loadNpmTasks('grunt-mocha');
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -43,6 +44,14 @@ module.exports = function (grunt) {
 					specs: 'test/examples/jasmine/*spec.js'
 				}
 			}
+		},
+		mocha: {
+			test: {
+				src: ['test/examples/mocha/**/*.html'],
+				options: {
+					run: true,
+				},
+			},
 		},
 		connect: {
 			test: {

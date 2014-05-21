@@ -19,6 +19,8 @@
     "jasmine-node": "^1.14.3",
     "grunt-contrib-jasmine": "^0.6.4",
     "grunt-contrib-qunit": "^0.4.0",
-    "qunitjs": "^1.14.0"
+    "qunitjs": "^1.14.0",
+    "grunt-mocha": "^0.4.10",
+    "chai": "^1.9.1"
   }
 }
