@@ -3,7 +3,6 @@
 module.exports = function (grunt) {
 	'use strict';
 
-	grunt.loadTasks('build/tasks');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	grunt.loadNpmTasks('grunt-contrib-qunit');
@@ -72,5 +71,5 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('build', ['npminstall', 'rungrunt']);
 	grunt.registerTask('default', ['build']);
-	grunt.registerTask('sample', ['jasmine']);
+	grunt.registerTask('sample', ['jasmine', 'mocha', 'qunit']);
 };
