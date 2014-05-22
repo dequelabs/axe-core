@@ -13,7 +13,7 @@
     "bower_components"
   ],
   "dependencies": {
-    "ks-rules": "git@bitbucket.org:dmusser/ks-rules.git#master",
-    "rule-engine": "git@bitbucket.org:dmusser/rule-engine.git#master"
+    "ks-rules": "git@bitbucket.org:dmusser/ks-artifact-rules.git#master",
+    "rule-engine": "git@bitbucket.org:dmusser/ks-artifact-rule-engine.git#master"
   }
 }
