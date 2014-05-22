@@ -21,6 +21,8 @@
     "grunt-contrib-qunit": "^0.4.0",
     "qunitjs": "^1.14.0",
     "grunt-mocha": "^0.4.10",
-    "chai": "^1.9.1"
+    "chai": "^1.9.1",
+    "selenium-webdriver": "^2.41.0",
+    "grunt-curl": "^1.5.1"
   }
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Example Selenium Test</title>
+</head>
+<body>
+<script src="../felib.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../bower_components/ks-rules/dist/rules.full.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../bower_components/rule-engine/dist/dqre.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Spec files -->
+<div id="working">
+	<label for="labelfld">Label for this text field.</label>
+	<input type="text" id="labelfld">
+</div>
+<div id="broken">
+	<p>Label for this text field.</p>
+	<input type="text" id="nolabelfld">
+</div>
+</body>
+</html>

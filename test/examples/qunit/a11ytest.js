@@ -11,11 +11,19 @@ test("should be able to see a11ycheck", function() {
 	ok(dqre.a11yCheck);
 });
 
-test("should be able to run a11yCheck", function() {
-	var n = document.createElement("div");
+test("should report that good HTML is good", function() {
+	var n = document.getElementById("working");
 	dqre.configure(dqreRules);
-	dqre.a11yCheck(n, null, function() {
-		ok(true);
+	dqre.a11yCheck(n, null, function(result) {
+		equal(result.violations.length, 0);
+	});
+});
+
+test("should report that bad HTML is bad", function() {
+	var n = document.getElementById("broken");
+	dqre.configure(dqreRules);
+	dqre.a11yCheck(n, null, function(result) {
+		equal(result.violations.length, 1);
 	});
 });
 

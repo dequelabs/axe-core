@@ -13,11 +13,19 @@ describe("dqre", function() {
 		expect(dqre.a11yCheck).not.to.be.an('undefined');
 	});
 
-	it("should be able to run a11yCheck", function() {
-		var n = document.createElement("div");
+	it("should report that good HTML is good", function() {
+		var n = document.getElementById("working");
 		dqre.configure(dqreRules);
-		dqre.a11yCheck(n, null, function() {
-			expect(true).to.be(true);
+		dqre.a11yCheck(n, null, function(result) {
+			expect(result.violations.length).to.equal(0);
+		});
+	});
+
+	it("should report that bad HTML is bad", function() {
+		var n = document.getElementById("broken");
+		dqre.configure(dqreRules);
+		dqre.a11yCheck(n, null, function(result) {
+			expect(result.violations.length).to.equal(1);
 		});
 	});
 });

@@ -9,6 +9,8 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-qunit');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-mocha');
+	grunt.loadNpmTasks('grunt-curl');
+	
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -38,7 +40,8 @@ module.exports = function (grunt) {
 		},
 		jasmine: {
 			test: {
-				src: ['bower_components/rule-engine/dist/dqre.js',
+				src: ['test/examples/felib.js',
+					'bower_components/rule-engine/dist/dqre.js',
 					'bower_components/ks-rules/dist/rules.full.js'],
 				options: {
 					specs: 'test/examples/jasmine/*spec.js'
@@ -49,9 +52,12 @@ module.exports = function (grunt) {
 			test: {
 				src: ['test/examples/mocha/**/*.html'],
 				options: {
-					run: true,
+					run: true
 				},
 			},
+		},
+				curl: {
+			'test/examples/selenium/selenium-server-standalone-2.41.0.jar': 'http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar'
 		},
 		connect: {
 			test: {
