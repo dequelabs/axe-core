@@ -132,7 +132,6 @@ describe('Rule', function () {
 				rule.run({ include: [document] }, {
 					checks: [option]
 				});
-				Check.prototype.runEvaluate = orig;
 			});
 			it('should not throw if the options object is undefined', function () {
 				var rule = new Rule({ checks: [{ id: 'cats' }]});

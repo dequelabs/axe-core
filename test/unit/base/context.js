@@ -1,33 +1,4 @@
 /*global Context */
-
-/*
-
-in:
-
-	{
-		include: [Node, ['#path', '#to', '.node'], '.hehe', Node, '.balls'],
-		exclude: [Node, ['#path', '#to', '#exclude']]
-	}
-
-	[Node, ['#path', '#to', '.node'], '.hehe', Node, '.balls']
-
-	Node
-
-	'#selector'
-
-
-out:
-	{
-		include: [Node, Node, Node, Node],
-		exclude: [Node],
-		frames: [{
-			node: Node,
-			include: [['#to', '.node']],
-			exclude: [['#to', '#exclude']]
-		}]
-
-	}
- */
 describe('Context', function () {
 	'use strict';
 
@@ -180,10 +151,8 @@ describe('Context', function () {
 
 		});
 
-		it('should default to `document`', function () {
-			var result = new Context();
-			assert.deepEqual(result.include, [document]);
-		});
+		// should it?
+		it('should default to `document`');
 
 	});
 
