@@ -31,6 +31,16 @@ out:
 describe('Context', function () {
 	'use strict';
 
+	function iframeReady(src, context, id, cb) {
+		var i = document.createElement('iframe');
+		i.addEventListener('load', function () {
+			cb();
+		});
+		i.src = src;
+		i.id = id;
+		context.appendChild(i);
+	}
+
 	function $id(id) {
 		return document.getElementById(id);
 	}
@@ -106,55 +116,67 @@ describe('Context', function () {
 
 		});
 
-		it('should add frame references to frames - implicit', function () {
-			fixture.innerHTML = '<div id="outer"><iframe id="target" src="../mock/frames/context.html"></iframe></div>';
+		it('should add frame references to frames - implicit', function (done) {
+			fixture.innerHTML = '<div id="outer"></div>';
+			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function () {
 
-			var result = new Context('#outer');
+				var result = new Context('#outer');
 
-			assert.deepEqual(result.frames, [{
-				node: $id('target'),
-				include: [],
-				exclude: []
-			}]);
+				assert.deepEqual(result.frames, [{
+					node: $id('target'),
+					include: [],
+					exclude: []
+				}]);
+				done();
 
-		});
-
-		it('should add frame references to frames - explicit', function () {
-			fixture.innerHTML = '<div id="outer"><iframe id="target" src="../mock/frames/context.html"></iframe></div>';
-
-			var result = new Context('#target');
-
-			assert.deepEqual(result.frames, [{
-				node: $id('target'),
-				include: [],
-				exclude: []
-			}]);
+			});
 
 		});
 
-		it('should add frame references to frames - frame selector', function () {
-			fixture.innerHTML = '<div id="outer"><iframe id="target" src="../mock/frames/context.html"></iframe></div>';
+		it('should add frame references to frames - explicit', function (done) {
+			fixture.innerHTML = '<div id="outer"></div>';
+			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function () {
 
-			var result = new Context([['#target', '#foo']]);
+				var result = new Context('#target');
 
-			assert.deepEqual(result.frames, [{
-				node: $id('target'),
-				include: [['#foo']],
-				exclude: []
-			}]);
+				assert.deepEqual(result.frames, [{
+					node: $id('target'),
+					include: [],
+					exclude: []
+				}]);
+				done();
+			});
 
 		});
 
-		it('should only push unique frame references', function () {
-			fixture.innerHTML = '<div id="outer"><iframe id="target" src="../mock/frames/context.html"></iframe></div>';
+		it('should add frame references to frames - frame selector', function (done) {
+			fixture.innerHTML = '<div id="outer"></div>';
+			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function () {
 
-			var result = new Context([['#target', '#foo'], ['#target', '#bar']]);
+				var result = new Context([['#target', '#foo']]);
 
-			assert.deepEqual(result.frames, [{
-				node: $id('target'),
-				include: [['#foo'], ['#bar']],
-				exclude: []
-			}]);
+				assert.deepEqual(result.frames, [{
+					node: $id('target'),
+					include: [['#foo']],
+					exclude: []
+				}]);
+				done();
+			});
+
+		});
+
+		it('should only push unique frame references', function (done) {
+			fixture.innerHTML = '<div id="outer"></div>';
+			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function () {
+				var result = new Context([['#target', '#foo'], ['#target', '#bar']]);
+
+				assert.deepEqual(result.frames, [{
+					node: $id('target'),
+					include: [['#foo'], ['#bar']],
+					exclude: []
+				}]);
+				done();
+			});
 
 		});
 
