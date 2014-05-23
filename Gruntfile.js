@@ -8,6 +8,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-blanket-mocha');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadTasks('build/tasks');
@@ -75,10 +76,9 @@ module.exports = function (grunt) {
 			test: {
 				options: {
 					urls: ['http://localhost:9876/test/unit/index.html'],
-					reporter: 'XUnit',
-					threshold: 90
+					reporter: grunt.option('report') ? 'XUnit' : 'Spec'
 				},
-				dest: 'xunit.xml'
+				dest: grunt.option('report') ? 'xunit.xml' : undefined
 			}
 		},
 		blanket_mocha: {
@@ -89,11 +89,21 @@ module.exports = function (grunt) {
 					threshold: 90
 				}
 			}
+		},
+		jshint: {
+			rules: {
+				options: {
+					jshintrc: true,
+					reporter: grunt.option('report') ? require('jshint-junit-reporter') : undefined,
+					reporterOutput: grunt.option('report') ? 'lint.xml' : undefined
+				},
+				src: ['lib/**/*.js', 'test/**/*.js', 'Gruntfile.js', '!test/mock/**/*.js']
+			}
 		}
 	});
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
-	grunt.registerTask('test', ['build', 'fixture', 'connect:test', 'mocha']);
+	grunt.registerTask('test', ['build', 'fixture', 'connect:test', grunt.option('report') ? 'mocha' : 'blanket_mocha']);
 	grunt.registerTask('build', ['concat', 'uglify']);
 	grunt.registerTask('default', ['build']);
 };
