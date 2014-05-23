@@ -96,7 +96,7 @@ describe('utils.select', function () {
 
 
 			var result = utils.select('.bananas', {
-				include: [$id('include1'), $id('include2'), $id('include3')],
+				include: [$id('include3'), $id('include2'), $id('include1')],
 				exclude: [$id('exclude1'), $id('exclude2')]
 			});
 
@@ -113,6 +113,17 @@ describe('utils.select', function () {
 
 		assert.lengthOf(result, 1);
 		assert.equal(result[0], $id('bananas'));
+
+	});
+
+	it('should sort by DOM order', function () {
+		fixture.innerHTML = '<div id="one"><div id="target1" class="bananas"></div></div>' +
+			'<div id="two"><div id="target2" class="bananas"></div></div>';
+
+		var result = utils.select('.bananas', { include: [$id('two'), $id('one')] });
+
+		assert.deepEqual(result, utils.toArray(document.querySelectorAll('.bananas')));
+
 
 	});
 

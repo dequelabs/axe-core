@@ -136,7 +136,7 @@ describe('Context', function () {
 
 		});
 
-		it('should only push unique frame references', function (done) {
+		it('should only push unique frame references - frame selector', function (done) {
 			fixture.innerHTML = '<div id="outer"></div>';
 			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function () {
 				var result = new Context([['#target', '#foo'], ['#target', '#bar']]);
@@ -151,13 +151,62 @@ describe('Context', function () {
 
 		});
 
+		it('should only push unique frame references - node reference', function (done) {
+			fixture.innerHTML = '<div id="outer"></div>';
+			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function () {
+				var result = new Context([$id('target'), $id('target')]);
+
+				assert.deepEqual(result.frames, [{
+					node: $id('target'),
+					include: [],
+					exclude: []
+				}]);
+				done();
+			});
+
+		});
+
 		// should it?
-		it('should default to `document`');
+		it('should default to empty object');
 
 	});
 
 	describe('object definition', function () {
-		it('should accept include array of selectors');
+		it('should assign include/exclude', function () {
+
+			assert.deepEqual(new Context({
+					include: ['#fixture'],
+					exclude: ['#mocha']
+				}),
+				{
+					include: [document.getElementById('fixture')],
+					exclude: [document.getElementById('mocha')],
+					frames: []
+				});
+
+		});
+		it('should disregard bad input, non-matching selectors', function () {
+
+			assert.deepEqual(new Context({
+					include: ['#monkeys'],
+					exclude: ['#bananas']
+				}),
+				{
+					include: [],
+					exclude: [],
+					frames: []
+				});
+		});
+		it('should disregard bad input (null)', function () {
+
+			assert.deepEqual(new Context(),
+				{
+					include: [],
+					exclude: [],
+					frames: []
+				});
+		});
+
 
 	});
 });
