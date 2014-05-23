@@ -44,6 +44,7 @@
 							e.target.search += (e.target.search ? '&' : '?') + 'nocov=true';
 						}
 					});
+					mocha.checkLeaks();
 					mocha.run();
 				}
 			}());

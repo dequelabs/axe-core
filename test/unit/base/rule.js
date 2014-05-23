@@ -98,7 +98,7 @@ describe('Rule', function () {
 				var success = false;
 				Check.prototype.runEvaluate = function () { success = true; };
 
-				var rule = new Rule({ checks: [{ id: 'cats' }]});
+				var rule = new Rule({ checks: [{ id: 'cats', evaluate: function () {} }]});
 
 				rule.run({ include: [document] }, {});
 				assert.isTrue(success);
@@ -132,6 +132,7 @@ describe('Rule', function () {
 				rule.run({ include: [document] }, {
 					checks: [option]
 				});
+				Check.prototype.runEvaluate = orig;
 			});
 			it('should not throw if the options object is undefined', function () {
 				var rule = new Rule({ checks: [{ id: 'cats' }]});
@@ -150,7 +151,6 @@ describe('Rule', function () {
 						assert.equal(rule, r);
 						success = true;
 					};
-					window.RuleResult.prototype.addResults = orig.prototype.addResults;
 
 					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats' }]});
 					rule.run({ include: document }, {}, function () {});
@@ -179,7 +179,6 @@ describe('Rule', function () {
 						assert.equal(rule, r);
 						success = true;
 					};
-					window.RuleFrameResult.prototype.addResults = orig.prototype.addResults;
 
 					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats'}], type: 'PAGE' });
 					rule.run({ include: document }, {}, function () {});

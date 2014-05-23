@@ -86,7 +86,7 @@
 				}
 			}
 
-			return felib.text.sanitize(check) === felib.text.sanitize(labelText);
+			return check ? felib.text.sanitize(check) : '' === felib.text.sanitize(labelText);
 		}
 	};
 
@@ -169,8 +169,8 @@
 		evaluate: function (node) {
 			var role = node.getAttribute('role').toLowerCase().trim(),
 				nodeData;
-			if (role === 'search' || role === 'main' || role === 'contentinfo' || role === 'banner'
-				|| role === 'region' || role === 'complementary' || role === 'form' || role === 'navigation' ||
+			if (role === 'search' || role === 'main' || role === 'contentinfo' || role === 'banner' ||
+				role === 'region' || role === 'complementary' || role === 'form' || role === 'navigation' ||
 				role === 'application') {
 				nodeData = dqre.DqNode(node);
 				nodeData.role = role;
@@ -181,7 +181,7 @@
 			var found = false,
 				toomany = false;
 			// must have one and only one main role
-			data.forEach(function(node) {
+			data.forEach(function (node) {
 				if (node.role === 'main') {
 					if (found) {
 						toomany = true;
@@ -224,14 +224,14 @@
 		help: 'there is no skip navigation link at the very top of the page',
 		after: function (data) {
 			var that = this;
-			console.log('skipnav: ', data);
-			data &&
-			data.forEach(function(nodeData) {
-				that.data(nodeData);
-				if (nodeData.target && nodeData.target.focussable) {
-					return true;
-				}
-			});
+			if (data) {
+				data.forEach(function (nodeData) {
+					that.data(nodeData);
+					if (nodeData.target && nodeData.target.focussable) {
+						return true;
+					}
+				});
+			}
 			return false;
 		}
 	};

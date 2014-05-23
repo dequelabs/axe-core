@@ -1,4 +1,4 @@
-
+/*global mockAudit */
 describe('dqre.configure', function () {
 	'use strict';
 
@@ -28,10 +28,9 @@ describe('dqre.configure', function () {
 		it('should be accessible', function () {
 
 			rules.forEach(function (rule) {
-					rule.details.forEach(function (check) {
-								assert.ok(false, rule.id);
-
-					});
+				rule.details.forEach(function () {
+					assert.ok(false, rule.id);
+				});
 			});
 
 		});

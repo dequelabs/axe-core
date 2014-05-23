@@ -18,7 +18,6 @@ describe('configure', function () {
 			success = true;
 		};
 
-		assert.isUndefined(dqreConfiguration);
 		dqre.configure(audit);
 		assert.isTrue(success);
 		assert.deepEqual(dqreConfiguration, audit);
