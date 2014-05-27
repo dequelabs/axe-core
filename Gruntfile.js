@@ -35,28 +35,28 @@ module.exports = function (grunt) {
 			}
 		},
 		qunit: {
-			all: ['test/examples/qunit/**/*.html']
+			all: ['doc/examples/qunit/**/*.html']
 		},
 		jasmine: {
 			test: {
-				src: ['test/examples/felib.js',
+				src: ['doc/examples/felib.js',
 					'bower_components/rule-engine/dist/dqre.js',
 					'bower_components/ks-rules/dist/rules.full.js'],
 				options: {
-					specs: 'test/examples/jasmine/*spec.js'
+					specs: 'doc/examples/jasmine/*spec.js'
 				}
 			}
 		},
 		mocha: {
 			test: {
-				src: ['test/examples/mocha/**/*.html'],
+				src: ['doc/examples/mocha/**/*.html'],
 				options: {
 					run: true
 				},
 			},
 		},
 				curl: {
-			'test/examples/selenium/selenium-server-standalone-2.41.0.jar': 'http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar'
+			'doc/examples/selenium/selenium-server-standalone-2.41.0.jar': 'http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar'
 		},
 		connect: {
 			test: {
@@ -69,7 +69,6 @@ module.exports = function (grunt) {
 		},
 	});
 
-	grunt.registerTask('build', ['npminstall', 'rungrunt']);
-	grunt.registerTask('default', ['build']);
+	grunt.registerTask('default', ['sample']);
 	grunt.registerTask('sample', ['jasmine', 'mocha', 'qunit']);
 };

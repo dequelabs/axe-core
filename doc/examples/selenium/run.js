@@ -19,7 +19,7 @@ var driver = new WebDriver.Builder()
 .build();
 
 
-driver.get("http://localhost:9876/test/examples/selenium/test.html")
+driver.get("http://localhost:9876/doc/examples/selenium/test.html")
 .then(function() {
 	//should give an error
 	driver.executeAsyncScript(function() {
