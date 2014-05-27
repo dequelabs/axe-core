@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<title>Example Mocha Test</title>
+<link rel="stylesheet" href="../../../node_modules/mocha/mocha.css" type="text/css" charset="utf-8" />
+</head>
+<body>
+<!-- Required for browser reporter -->
+<div id="mocha"></div>
+
+<script src="../../../node_modules/mocha/mocha.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../node_modules/chai/chai.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+mocha.setup('bdd');
+var expect = chai.expect;
+</script>
+
+<!-- Include anything you want to test -->
+<script src="../felib.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../bower_components/ks-rules/dist/rules.full.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../bower_components/rule-engine/dist/dqre.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Spec files -->
+<script src="a11yspec.js" type="text/javascript" charset="utf-8"></script>
+<div id="working">
+	<label for="labelfld">Label for this text field.</label>
+	<input type="text" id="labelfld">
+</div>
+<div id="broken">
+	<p>Label for this text field.</p>
+	<input type="text" id="nolabelfld">
+</div>
+</body>
+</html>

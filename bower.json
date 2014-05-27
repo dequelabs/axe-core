@@ -13,7 +13,7 @@
     "bower_components"
   ],
   "dependencies": {
-    "ks-rules": "git@bitbucket.org:dmusser/ks-rules.git#master",
-    "rule-engine": "git@bitbucket.org:dmusser/rule-engine.git#master"
+    "ks-rules": "http://builds.dequecloud.com:8088/bamboo/browse/KSD-RULE/latestSuccessful/artifact/shared/dist-zip/KSD-RULE-JOB1.zip",
+    "rule-engine": "http://builds.dequecloud.com:8088/bamboo/browse/KSD-ENG/latestSuccessful/artifact/shared/dist-zip/KSD-ENG-JOB1.zip"
   }
 }
