@@ -71,6 +71,11 @@ module.exports = function (grunt) {
 			return v;
 		}
 
+		var messages = {
+			ruleHelp: {},
+			checkHelp: {}
+		};
+
 		var options = this.options({
 			rules: ['lib/rules/**/*.json'],
 			checks: ['lib/checks/**/*.json'],
@@ -85,16 +90,21 @@ module.exports = function (grunt) {
 				var c = findCheck(checks, id);
 				c.options = check.options || c.options;
 
+				if (c.help && !messages.checkHelp[id ]) {
+					messages.checkHelp[id] = c.help;
+				}
+
 				return c;
 			});
+			if (rule.help && !messages.ruleHelp[rule.id]) {
+				messages.ruleHelp[rule.id] = rule.help;
+			}
 			return rule;
 		});
-		var r = replaceFunctions(JSON.stringify(rules, blacklist));
-		var r2 = replaceFunctions(JSON.stringify(rules));
+		var r = replaceFunctions(JSON.stringify({ messages: messages, rules: rules }, blacklist));
 		var c = replaceFunctions(JSON.stringify(createCheckObject(checks), blacklist));
 
-		grunt.file.write(this.data.dest.rules, 'var dqreRules = ' + r + ';');
-		grunt.file.write(this.data.dest.full, 'var dqreRules = ' + r2 + ';');
+		grunt.file.write(this.data.dest.rules, 'dqre.configure(' + r + ');');
 		grunt.file.write(this.data.dest.checks, 'var checks = ' + c + ';');
 
 	});
