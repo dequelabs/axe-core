@@ -166,9 +166,6 @@ describe('Context', function () {
 
 		});
 
-		// should it?
-		it('should default to empty object');
-
 	});
 
 	describe('object definition', function () {
@@ -181,6 +178,7 @@ describe('Context', function () {
 				{
 					include: [document.getElementById('fixture')],
 					exclude: [document.getElementById('mocha')],
+					page: false,
 					frames: []
 				});
 
@@ -194,6 +192,7 @@ describe('Context', function () {
 				{
 					include: [],
 					exclude: [],
+					page: false,
 					frames: []
 				});
 		});
@@ -203,10 +202,23 @@ describe('Context', function () {
 				{
 					include: [],
 					exclude: [],
+					page: true,
 					frames: []
 				});
 		});
 
+
+	});
+
+	describe('page', function () {
+		it('should be true if given an entire document', function () {
+			assert.isTrue(new Context(document).page);
+		});
+		it('should be true if given falsey parameter', function () {
+			assert.isTrue(new Context(null).page);
+			assert.isTrue(new Context().page);
+			assert.isTrue(new Context(false).page);
+		});
 
 	});
 });
