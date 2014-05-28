@@ -62,14 +62,6 @@ module.exports = function (grunt) {
 					fixture: 'test/unit/runner.tmpl',
 					testCwd: 'test/unit'
 				}
-			},
-			integration: {
-				src: '<%= concat.lib.dest %>',
-				dest: 'test/integration/index.html',
-				options: {
-					fixture: 'test/integration/runner.tmpl',
-					testCwd: 'test/integration'
-				}
 			}
 		},
 		mocha: {
