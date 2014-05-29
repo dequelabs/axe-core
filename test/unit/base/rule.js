@@ -24,20 +24,20 @@ describe('Rule', function () {
 				fixture.appendChild(node);
 
 				var rule = new Rule({ selector: '#monkeys' }),
-					nodes = rule.gather({ include: [document], exclude: [], frames: [] });
+					nodes = rule.gather({ include: [fixture], exclude: [], frames: [] });
 
 				assert.lengthOf(nodes, 1);
 				assert.equal(nodes[0], node);
 
 				node.id = 'bananas';
-				nodes = rule.gather({ include: [document], exclude: [], frames: [] });
+				nodes = rule.gather({ include: [fixture], exclude: [], frames: [] });
 
 				assert.lengthOf(nodes, 0);
 			});
 
 			it('should return a real array', function () {
 				var rule = new Rule({selector: 'div'}),
-					result = rule.gather({ include: [document], exclude: [], frames: [] });
+					result = rule.gather({ include: [fixture], exclude: [], frames: [] });
 
 				assert.isArray(result);
 			});
@@ -80,61 +80,82 @@ describe('Rule', function () {
 				var success = false,
 					rule = new Rule({
 						gather: function (context) {
-							assert.deepEqual(context, { include: [document] });
+							assert.deepEqual(context, { include: [fixture] });
 							success = true;
 							return [];
 						}
 					});
 
-				rule.run({ include: [document] }, {}, function () {
+				rule.run({ include: [fixture] }, {}, function () {
 					assert.isTrue(success);
 					done();
 				});
 
 			});
 
-			it('should execute Check#run on its child checks', function () {
+			it('should execute Check#runEvaluate on its child checks', function (done) {
+				fixture.innerHTML = '<blink>Hi</blink>';
 				var orig = Check.prototype.runEvaluate;
 				var success = false;
-				Check.prototype.runEvaluate = function () { success = true; };
+				Check.prototype.runEvaluate = function (_, __, cb) {
+					success = true;
+					cb(true);
+				};
 
 				var rule = new Rule({ checks: [{ id: 'cats', evaluate: function () {} }]});
 
-				rule.run({ include: [document] }, {});
-				assert.isTrue(success);
-				Check.prototype.runEvaluate = orig;
+				rule.run({ include: [fixture] }, {}, function () {
+					assert.isTrue(success);
+					Check.prototype.runEvaluate = orig;
+					done();
+				});
 
 			});
 
-			it('should NOT execute Check#run on checks that are disabled', function () {
+			it('should NOT execute Check#run on checks that are disabled', function (done) {
+				fixture.innerHTML = '<blink>Hi</blink>';
 				var orig = Check.prototype.runEvaluate;
-				var success = false;
-				Check.prototype.runEvaluate = function () { success = this.id !== 'dogs'; };
+				var success = true;
+				var ran = 0;
+				Check.prototype.runEvaluate = function (_, __, cb) {
+					ran++;
+					if (this.id === 'dogs') {
+						success = false;
+					}
+					cb(true);
+				};
 
 				var rule = new Rule({ checks: [{ id: 'cats' }, { id: 'dogs' }]});
+				rule.run({ include: [fixture] }, {checks: [{ id: 'dogs', enabled: false }]}, function () {
 
-				rule.run({ include: [document] }, {checks: [{ id: 'dogs', enabled: false }]});
-				assert.isTrue(success);
-				Check.prototype.runEvaluate = orig;
+					assert.isTrue(success);
+					assert.equal(ran, 1);
+					Check.prototype.runEvaluate = orig;
+					done();
+				});
 
 			});
 
-			it('should pass the matching option to runEvaluate', function () {
+			it('should pass the matching option to runEvaluate', function (done) {
+				fixture.innerHTML = '<blink>Hi</blink>';
 				var orig = Check.prototype.runEvaluate,
 					option = {id: 'cats', data: 'minkeys'};
 
-				Check.prototype.runEvaluate = function (node, options) {
+				Check.prototype.runEvaluate = function (node, options, cb) {
 					assert.deepEqual(options, option);
-					Check.prototype.runEvaluate = orig;
+					cb(true);
 				};
 
 				var rule = new Rule({ checks: [{ id: 'cats' }]});
 				rule.run({ include: [document] }, {
 					checks: [option]
+				}, function () {
+					Check.prototype.runEvaluate = orig;
+					done();
 				});
 			});
 			it('should not throw if the options object is undefined', function () {
-				var rule = new Rule({ checks: [{ id: 'cats' }]});
+				var rule = new Rule({ checks: [{ id: 'cats', evaluate: function () {} }]});
 				assert.doesNotThrow(function () {
 					rule.run({ include: [document] }, undefined, function () {
 					});

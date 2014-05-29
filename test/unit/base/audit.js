@@ -1,7 +1,49 @@
-/*global Audit, DqDocument, mockRules */
+/*global Audit, RuleResult */
 describe('Audit', function () {
 	'use strict';
 	var a;
+
+	var mockRules = [{
+		id: 'positive1',
+		selector: 'input',
+		checks: [{
+			id: 'positive1-check1',
+			evaluate: function () {
+				return true;
+			}
+		}]
+	}, {
+		id: 'positive2',
+		selector: '#monkeys',
+		result: 'FAIL',
+		checks: [{
+			id: 'positive2-check1',
+			evaluate: function () {
+				return true;
+			}
+		}]
+	}, {
+		id: 'negative1',
+		selector: 'div',
+		result: 'FAIL',
+		checks: [{
+			id: 'negative1-check1',
+			evaluate: function () {
+				return false;
+			}
+		}]
+	}, {
+		id: 'positive3',
+		selector: 'blink',
+		result: 'FAIL',
+		type: 'PAGE',
+		checks: [{
+			id: 'positive3-check1',
+			evaluate: function () {
+				return true;
+			}
+		}]
+	}];
 
 	var fixture = document.getElementById('fixture');
 
@@ -21,7 +63,18 @@ describe('Audit', function () {
 
 	describe('document', function () {
 		it('should create a document based on the current window.document', function () {
-			assert.deepEqual(new Audit({}).document, new DqDocument(document));
+			var orig = window.DqDocument;
+			var called = false;
+			window.DqDocument = function () {
+				called = true;
+				assert.notEqual(this, window, 'invoked with `new`');
+				return { bananas: 'monkeys' };
+			};
+			var a = new Audit({});
+
+			assert.isTrue(called);
+			assert.deepEqual(a.document, { bananas: 'monkeys' });
+			window.DqDocument = orig;
 		});
 	});
 
@@ -31,7 +84,7 @@ describe('Audit', function () {
 				'<div id="monkeys">bananas</div>' +
 				'<input type="text" aria-labelledby="monkeys">' +
 				'<blink>FAIL ME</blink>';
-			a.run({ include: [document] }, {}, function () {
+			a.run({ include: [fixture] }, {}, function () {
 				assert.ok('yay');
 				done();
 			});
@@ -41,16 +94,117 @@ describe('Audit', function () {
 				'<div id="monkeys">bananas</div>' +
 				'<input type="text" aria-labelledby="monkeys">' +
 				'<blink>FAIL ME</blink>';
-			a.run({ include: [document] }, {}, function (results) {
-				assert.equal(results.length, 7);
+
+			a.run({ include: [fixture] }, {}, function (results) {
+				var expected = [{
+					addResults: RuleResult.prototype.addResults,
+					id: 'positive1',
+					type: 'NODE',
+					details: [{
+						node: {
+							selector: '#fixture > input:nth-of-type(1)',
+							source: '<input type="text" aria-label="monkeys">',
+							frames: []
+						},
+						result: 'PASS',
+						value: true,
+						checks: [{
+							id: 'positive1-check1',
+							result: 'PASS',
+							data: null,
+							async: false,
+							value: true,
+							error: null
+						}]
+					}, {
+						node: {
+							selector: '#fixture > input:nth-of-type(2)',
+							source: '<input type="text" aria-labelledby="monkeys">',
+							frames: []
+						},
+						result: 'PASS',
+						value: true,
+						checks: [{
+							id: 'positive1-check1',
+							result: 'PASS',
+							data: null,
+							async: false,
+							value: true,
+							error: null
+						}]
+					}],
+					result: 'PASS'
+				}, {
+					addResults: RuleResult.prototype.addResults,
+					id: 'positive2',
+					type: 'NODE',
+					details: [{
+						node: {
+							selector: '#monkeys',
+							source: '<div id="monkeys">bananas</div>',
+							frames: []
+						},
+						result: 'PASS',
+						value: true,
+						checks: [{
+							id: 'positive2-check1',
+							result: 'PASS',
+							data: null,
+							async: false,
+							value: true,
+							error: null
+						}]
+					}],
+					result: 'PASS'
+				}, {
+					addResults: RuleResult.prototype.addResults,
+					id: 'negative1',
+					type: 'NODE',
+					details: [{
+						node: {
+							selector: '#monkeys',
+							source: '<div id="monkeys">bananas</div>',
+							frames: []
+						},
+						result: 'FAIL',
+						value: false,
+						checks: [{
+							id: 'negative1-check1',
+							result: 'PASS',
+							data: null,
+							async: false,
+							value: false,
+							error: null
+						}]
+					}],
+					result: 'FAIL'
+				}, {
+					addResults: RuleFrameResult.prototype.addResults,
+					id: 'positive3',
+					type: 'PAGE',
+					details: [{
+						node: {
+							selector: '#fixture > blink',
+							source: '<blink>FAIL ME</blink>',
+							frames: []
+						},
+						checks: [{
+							id: 'positive3-check1',
+							result: 'PASS',
+							data: null,
+							async: false,
+							value: true,
+							error: null
+						}]
+					}]
+				}];
+				assert.deepEqual(results, expected);
 				done();
 			});
 		});
 		it('should not run rules disabled by the options', function (done) {
-			var options = [{id: 'bypass', enabled: false}];
-			fixture.innerHTML = '<a href="#">link</a>';
-			a.run({ include: [document] }, options, function (results) {
-				assert.equal(results.length, 6);
+			a.run({ include: [document] }, [{id: 'positive3', enabled: false}], function (results) {
+				assert.equal(results.length, 3);
 				done();
 			});
 		});
@@ -122,7 +276,7 @@ describe('Audit', function () {
 				called = true;
 				callback(ruleResult);
 			};
-			a.run({ include: [document] }, {}, function (result) {
+			a.run({ include: [fixture] }, {}, function (result) {
 				a.after(document, {}, result, function () {
 					assert.ok(called);
 					rule.after = orig;
@@ -150,7 +304,7 @@ describe('Audit', function () {
 				passed = true;
 				callback(ruleResult);
 			};
-			a.run({ include: [document] }, options, function (result) {
+			a.run({ include: [fixture] }, options, function (result) {
 				a.after(null, options, result, function () {
 					assert.ok(passed);
 					rule.after = orig;
@@ -161,21 +315,21 @@ describe('Audit', function () {
 		it('should replace the FrameRuleResult object', function (done) {
 			fixture.innerHTML = '<a href="#">link</a>';
 
-			a.run({ include: [document] }, {}, function (result) {
+			a.run({ include: [fixture] }, {}, function (result) {
 				var rfr;
 				result.forEach(function (r) {
-					if (r.id === 'bypass') {
+					if (r.id === 'positive3') {
 						rfr = r;
 					}
 				});
 				a.after(null, {}, result, function () {
 					var nrfr;
 					result.forEach(function (r) {
-						if (r.id === 'bypass') {
+						if (r.id === 'positive3') {
 							nrfr = r;
 						}
 					});
-					assert.ok(rfr !== nrfr);
+					assert.notEqual(rfr, nrfr);
 					done();
 				});
 			});
