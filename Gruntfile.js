@@ -7,6 +7,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-blanket-mocha');
 	grunt.loadTasks('build/tasks');
@@ -32,6 +33,14 @@ module.exports = function (grunt) {
 			},
 			options: {
 				process: true
+			}
+		},
+		uglify: {
+			minify: {
+				files: [{
+					src: ['<%= concat.lib.dest %>'],
+					dest: 'dist/ks-cf.min.js'
+				}]
 			}
 		},
 		connect: {
@@ -76,7 +85,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
 	grunt.registerTask('test', ['fixture', 'connect', 'mocha']);
-	grunt.registerTask('build', ['concat']);
+	grunt.registerTask('build', ['concat', 'uglify']);
 	grunt.registerTask('default', ['build']);
 
 };
