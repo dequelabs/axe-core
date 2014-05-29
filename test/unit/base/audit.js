@@ -31,7 +31,7 @@ describe('Audit', function () {
 				'<div id="monkeys">bananas</div>' +
 				'<input type="text" aria-labelledby="monkeys">' +
 				'<blink>FAIL ME</blink>';
-			a.run(document, {}, function () {
+			a.run({ include: [document] }, {}, function () {
 				assert.ok('yay');
 				done();
 			});
@@ -41,7 +41,7 @@ describe('Audit', function () {
 				'<div id="monkeys">bananas</div>' +
 				'<input type="text" aria-labelledby="monkeys">' +
 				'<blink>FAIL ME</blink>';
-			a.run(document, {}, function (results) {
+			a.run({ include: [document] }, {}, function (results) {
 				assert.equal(results.length, 7);
 				done();
 			});
@@ -49,7 +49,7 @@ describe('Audit', function () {
 		it('should not run rules disabled by the options', function (done) {
 			var options = [{id: 'bypass', enabled: false}];
 			fixture.innerHTML = '<a href="#">link</a>';
-			a.run(document, options, function (results) {
+			a.run({ include: [document] }, options, function (results) {
 				assert.equal(results.length, 6);
 				done();
 			});
@@ -66,7 +66,7 @@ describe('Audit', function () {
 				called = true;
 				callback({});
 			};
-			a.run(document, {}, function () {
+			a.run({ include: [document] }, {}, function () {
 				rule.run = orig;
 				done();
 			});
@@ -87,7 +87,7 @@ describe('Audit', function () {
 				callback({});
 			};
 			options = [{id: targetRule.id, data: 'monkeys'}];
-			a.run(document, options, function (result) {
+			a.run({ include: [document] }, options, function () {
 				assert.ok(passed);
 				rule.run = orig;
 				done();
@@ -122,7 +122,7 @@ describe('Audit', function () {
 				called = true;
 				callback(ruleResult);
 			};
-			a.run(document, {}, function (result) {
+			a.run({ include: [document] }, {}, function (result) {
 				a.after(document, {}, result, function () {
 					assert.ok(called);
 					rule.after = orig;
@@ -150,8 +150,8 @@ describe('Audit', function () {
 				passed = true;
 				callback(ruleResult);
 			};
-			a.run(document, options, function (result) {
-				a.after(document, options, result, function () {
+			a.run({ include: [document] }, options, function (result) {
+				a.after(null, options, result, function () {
 					assert.ok(passed);
 					rule.after = orig;
 					done();
@@ -161,14 +161,14 @@ describe('Audit', function () {
 		it('should replace the FrameRuleResult object', function (done) {
 			fixture.innerHTML = '<a href="#">link</a>';
 
-			a.run(document, {}, function (result) {
+			a.run({ include: [document] }, {}, function (result) {
 				var rfr;
 				result.forEach(function (r) {
 					if (r.id === 'bypass') {
 						rfr = r;
 					}
 				});
-				a.after(document, {}, result, function () {
+				a.after(null, {}, result, function () {
 					var nrfr;
 					result.forEach(function (r) {
 						if (r.id === 'bypass') {

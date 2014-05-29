@@ -1,4 +1,4 @@
-/*global RuleFrameResult */
+/*global RuleFrameResult, DqNode */
 describe('RuleFrameResult', function () {
 	'use strict';
 

@@ -76,7 +76,9 @@ module.exports = function (grunt) {
 			test: {
 				options: {
 					urls: ['http://localhost:9876/test/unit/index.html'],
-					reporter: grunt.option('report') ? 'XUnit' : 'Spec'
+					reporter: grunt.option('report') ? 'XUnit' : 'Spec',
+					logErrors: true,
+					log: true
 				},
 				dest: grunt.option('report') ? 'xunit.xml' : undefined
 			}
