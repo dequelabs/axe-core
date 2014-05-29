@@ -11,8 +11,6 @@
 			mocha.setup('bdd');
 			var assert = chai.assert;
 		</script>
-		<script src="../mock/audit.js"></script>
-		<script src="../mock/felib.js"></script>
 		<% files.forEach(function (file) { %>
 			<script src="../../<%=file%>"
 				<% if (file.indexOf('bower_components') === -1) { %>data-cover<% } %>></script>

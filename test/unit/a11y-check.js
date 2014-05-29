@@ -40,7 +40,7 @@ describe('dqre.a11yCheck', function () {
 			}]
 		}];
 	beforeEach(function () {
-		dqre.configure(window.mockAudit);
+		dqre.configure({ messages: {}, rules: [] });
 		orig = dqre.run;
 		dqre.run = function (ctxt, options, cb) {
 			cb(results);
