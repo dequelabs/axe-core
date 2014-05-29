@@ -17,7 +17,6 @@ describe("dqre", function() {
 
 	it("should report that good HTML is good", function() {
 		var n = document.getElementById("working");
-		dqre.configure(dqreRules);
 		dqre.a11yCheck(n, null, function(result) {
 			expect(result.violations.length).toBe(0);
 		});
@@ -25,7 +24,6 @@ describe("dqre", function() {
 
 	it("should report that bad HTML is bad", function() {
 		var n = document.getElementById("broken");
-		dqre.configure(dqreRules);
 		dqre.a11yCheck(n, null, function(result) {
 			expect(result.violations.length).toBe(1);
 		});

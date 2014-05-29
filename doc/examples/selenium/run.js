@@ -24,7 +24,6 @@ driver.get("http://localhost:9876/doc/examples/selenium/test.html")
 	//should give an error
 	driver.executeAsyncScript(function() {
 		var callback = arguments[arguments.length - 1];
-		dqre.configure(dqreRules);
 		dqre.a11yCheck(document.getElementById("broken"), null, callback);
 	})
 	.then(function(result) {
@@ -35,7 +34,6 @@ driver.get("http://localhost:9876/doc/examples/selenium/test.html")
 	//should not give an error
 	driver.executeAsyncScript(function() {
 		var callback = arguments[arguments.length - 1];
-		dqre.configure(dqreRules);
 		dqre.a11yCheck(document.getElementById("working"), null, callback);
 	})
 	.then(function(result) {

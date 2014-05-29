@@ -41,7 +41,7 @@ module.exports = function (grunt) {
 			test: {
 				src: ['doc/examples/felib.js',
 					'bower_components/rule-engine/dist/dqre.js',
-					'bower_components/ks-rules/dist/rules.full.js'],
+					'bower_components/ks-rules/dist/rules.js'],
 				options: {
 					specs: 'doc/examples/jasmine/*spec.js'
 				}
