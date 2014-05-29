@@ -1,4 +1,4 @@
-/*global RuleResult */
+/*global RuleResult, DqNode */
 describe('RuleResult', function () {
 	'use strict';
 
