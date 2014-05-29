@@ -4,6 +4,7 @@
 module.exports = function (grunt) {
 	'use strict';
 
+	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
@@ -14,7 +15,7 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-
+		clean: ["dist"],
 		watch: {
 			files: ['test/**/*', 'lib/**/*'],
 			tasks: ['fixture', 'build']
