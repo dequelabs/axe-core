@@ -1,4 +1,5 @@
 {
 	"id": "aria-labelledby",
+	"help": "`aria-labelledby` on input associated to visible elements with visible text",
 	"evaluate": "aria-labelledby.js"
 }
