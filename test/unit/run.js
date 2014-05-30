@@ -41,7 +41,7 @@ describe('dqre.run', function () {
 	});
 
 	it('should work', function (done) {
-		dqre.configure(window.mockAudit);
+		dqre.configure({ rules: [], messagse: {}});
 
 		createFrames(2, function () {
 			dqre.run(document, {}, function () {
@@ -53,7 +53,7 @@ describe('dqre.run', function () {
 
 	it('should call audit.after', function (done) {
 		var called = false;
-		dqre.configure(window.mockAudit);
+		dqre.configure({ rules: [], messagse: {}});
 
 		dqre.audit.after = function (context, options, results, fn) {
 			called = true;
