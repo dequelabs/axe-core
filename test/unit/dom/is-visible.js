@@ -6,6 +6,20 @@ describe('dom.isVisible', function () {
 	});
 	describe('default usage', function () {
 
+		// Firefox returns `null` if accessed inside a hidden iframe
+		it('should return false if computedStyle return null for whatever reason', function () {
+			assert.isFalse(kslib.dom.isVisible({
+				nodeType: Node.ELEMENT_NODE,
+				ownerDocument: {
+					defaultView: {
+						getComputedStyle: function () {
+							return null;
+						}
+					}
+				}
+			}));
+		});
+
 		it('should return true on staticly-positioned, visible elements', function () {
 			fixture.innerHTML = '<div id="target">Hello!</div>';
 			var el = document.getElementById('target');
@@ -144,6 +158,20 @@ describe('dom.isVisible', function () {
 	});
 
 	describe('screen readers', function () {
+
+		// Firefox returns `null` if accessed inside a hidden iframe
+		it('should return false if computedStyle return null for whatever reason', function () {
+			assert.isFalse(kslib.dom.isVisible({
+				nodeType: Node.ELEMENT_NODE,
+				ownerDocument: {
+					defaultView: {
+						getComputedStyle: function () {
+							return null;
+						}
+					}
+				}
+			}, true));
+		});
 
 		it('should return true on staticly-positioned, visible elements', function () {
 			fixture.innerHTML = '<div id="target">Hello!</div>';
