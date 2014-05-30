@@ -2,7 +2,7 @@
 	"globals": {
 		"node": true,
 		"options": true,
-		"felib": true
+		"kslib": true
 	},
 
 	"browser" : true,
@@ -28,7 +28,7 @@
 	"regexp": true,
 	"undef": true,
 	"unused": true,
-	"strict": true,
+	"strict": false,
 	"trailing": true,
 
 	"maxparams": 5,
@@ -47,7 +47,7 @@
 	"evil": false,
 	"expr": false,
 	"funcscope": false,
-	"globalstrict": true,
+	"globalstrict": false,
 	"iterator": false,
 	"lastsemic": false,
 	"laxbreak": false,
