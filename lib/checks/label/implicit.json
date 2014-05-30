@@ -1,4 +1,5 @@
 {
 	"id": "implicit-label",
+	"help": "Label associated implicitly; or wrapped around input",
 	"evaluate": "implicit.js"
 }

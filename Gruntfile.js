@@ -4,6 +4,7 @@
 module.exports = function (grunt) {
 	'use strict';
 
+	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
@@ -14,7 +15,7 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-
+		clean: ["dist"],
 		watch: {
 			files: ['test/**/*', 'lib/**/*'],
 			tasks: ['fixture', 'build']
@@ -23,7 +24,6 @@ module.exports = function (grunt) {
 			lib: {
 				dest: {
 					rules: 'dist/rules.js',
-					full: 'dist/rules.full.js',
 					checks: 'dist/checks.js'
 				}
 			}
@@ -34,9 +34,6 @@ module.exports = function (grunt) {
 					src: ['<%= rules.lib.dest.rules %>'],
 					dest: 'dist/rules.min.js'
 				}, {
-					src: ['<%= rules.lib.dest.full %>'],
-					dest: 'dist/rules.full.min.js'
-				}, {
 					src: ['<%= rules.lib.dest.checks %>'],
 					dest: 'dist/checks.min.js'
 				}]
@@ -45,9 +42,6 @@ module.exports = function (grunt) {
 				files: [{
 					src: ['<%= rules.lib.dest.rules %>'],
 					dest: '<%= rules.lib.dest.rules %>'
-				}, {
-					src: ['<%= rules.lib.dest.full %>'],
-					dest: '<%= rules.lib.dest.full %>'
 				}, {
 					src: ['<%= rules.lib.dest.checks %>'],
 					dest: '<%= rules.lib.dest.checks %>'

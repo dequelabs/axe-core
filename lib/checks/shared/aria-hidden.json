@@ -1,4 +1,5 @@
 {
 	"id": "aria-hidden",
+	"help": "Element hidden with aria-hidden=\"true\"",
 	"evaluate": "aria-hidden.js"
 }
