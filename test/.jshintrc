@@ -10,7 +10,8 @@
 		"chai": true,
 		"assert": true,
 		"checks": true,
-		"dqreRules": true
+		"dqreRules": true,
+		"kslib": true
 	},
 
 	"browser" : true,

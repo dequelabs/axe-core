@@ -1,4 +1,5 @@
 describe('hidden', function () {
+	'use strict';
 
 	var fixture = document.getElementById('fixture');
 
@@ -6,11 +7,11 @@ describe('hidden', function () {
 		fixture.innerHTML = '';
 	});
 
-	it('should call felib.dom.isVisible', function () {
-		var orig = felib.dom.isVisible;
+	it('should call kslib.dom.isVisible', function () {
+		var orig = kslib.dom.isVisible;
 		var success = false;
 
-		felib.dom.isVisible = function (n, sr) {
+		kslib.dom.isVisible = function (n, sr) {
 			assert.equal(n, node);
 			assert.isTrue(sr, 'should pass `true` as second parameter (screenreader)');
 			success = true;
@@ -22,7 +23,7 @@ describe('hidden', function () {
 		checks['hidden'].evaluate(node);
 		assert.isTrue(success);
 
-		felib.dom.isVisible = orig;
+		kslib.dom.isVisible = orig;
 
 	});
 
