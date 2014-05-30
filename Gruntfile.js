@@ -7,6 +7,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	grunt.loadNpmTasks('grunt-contrib-qunit');
 	grunt.loadNpmTasks('grunt-contrib-connect');
+	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-curl');
 	
@@ -14,6 +15,14 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
+		concat: {
+			test: {
+				src: ['bower_components/rule-engine/dist/dqre.js',
+					'bower_components/ks-common-functions/dist/ks-cf.js',
+					'bower_components/ks-rules/dist/rules.js'],
+				dest: 'dist/kensington.js'
+			}
+		},
 		watch: {
 			files: ['bower_components/rule-engine/dist/dqre.js', 'test/**/*'],
 			tasks: ['jasmine:test:build']
@@ -39,9 +48,7 @@ module.exports = function (grunt) {
 		},
 		jasmine: {
 			test: {
-				src: ['doc/examples/felib.js',
-					'bower_components/rule-engine/dist/dqre.js',
-					'bower_components/ks-rules/dist/rules.js'],
+				src: ['<%= concat.test.dest %>'],
 				options: {
 					specs: 'doc/examples/jasmine/*spec.js'
 				}
@@ -69,6 +76,6 @@ module.exports = function (grunt) {
 		},
 	});
 
-	grunt.registerTask('default', ['sample']);
+	grunt.registerTask('default', ['concat', 'sample']);
 	grunt.registerTask('sample', ['jasmine', 'mocha', 'qunit']);
 };

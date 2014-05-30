@@ -23,6 +23,7 @@
     "grunt-mocha": "~0.4.10",
     "chai": "~1.9.1",
     "selenium-webdriver": "~2.41.0",
-    "grunt-curl": "~1.5.1"
+    "grunt-curl": "~1.5.1",
+    "grunt-contrib-concat": "~0.4.0"
   }
 }
