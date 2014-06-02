@@ -5,8 +5,8 @@
 	"checks": ["caption"],
 	"tags": [
 		"wcag2a",
-		"wcag332",
+		"wcag122",
 		"section508",
-		"section508n"
+		"section508a"
 	]
 }
