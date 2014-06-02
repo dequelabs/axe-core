@@ -1,0 +1,12 @@
+{
+	"id": "blink",
+	"help": "Blink tags should not be visible",
+	"selector": "blink",
+	"checks": ["hidden"],
+	"tags": [
+		"wcag2a",
+		"wcag231",
+		"section508",
+		"section508j"
+	]
+}
