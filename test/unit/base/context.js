@@ -166,8 +166,60 @@ describe('Context', function () {
 
 		});
 
-		// should it?
-		it('should default to empty object');
+		it('should filter out invisible frames', function (done) {
+
+			fixture.innerHTML = '<div id="outer"></div>';
+			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function () {
+				var frame = $id('target');
+				var orig = utils.isHidden;
+				var success = false;
+
+				utils.isHidden = function (actual) {
+					assert.equal(actual, frame);
+					success = true;
+
+					return true;
+				};
+
+				var result = new Context([$id('target')]);
+
+				assert.deepEqual(result.frames, []);
+				utils.isHidden = orig;
+				assert.isTrue(success, 'utils.isHidden was called');
+				done();
+			});
+
+		});
+
+		it('should not filter out visible frames', function (done) {
+
+			fixture.innerHTML = '<div id="outer"></div>';
+			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function () {
+				var frame = $id('target');
+				var orig = utils.isHidden;
+				var success = false;
+
+				utils.isHidden = function (actual) {
+					assert.equal(actual, frame);
+					success = true;
+
+					return false;
+				};
+
+				var result = new Context([$id('target')]);
+
+				assert.deepEqual(result.frames, [{
+					include: [],
+					exclude: [],
+					node: $id('target')
+				}]);
+
+				utils.isHidden = orig;
+				assert.isTrue(success, 'utils.isHidden was called');
+				done();
+			});
+
+		});
 
 	});
 

@@ -78,6 +78,10 @@ describe('Audit', function () {
 		});
 	});
 
+	describe('Audit#findRule', function () {
+		it('should have tests');
+	});
+
 	describe('Audit#run', function () {
 		it('should work', function (done) {
 			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
