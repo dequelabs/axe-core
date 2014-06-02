@@ -29,4 +29,13 @@ describe('alt', function () {
 
 		assert.isFalse(checks.alt.evaluate(node));
 	});
+
+	it('should collapse whitespace', function () {
+		var node = document.createElement('div');
+		node.setAttribute('alt', ' \t \n \r \t  \t\r\n ');
+		fixture.appendChild(node);
+
+		assert.isFalse(checks.alt.evaluate(node));
+
+	});
 });
