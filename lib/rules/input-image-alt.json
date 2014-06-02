@@ -1,6 +1,6 @@
 {
 	"id": "input-image-alt",
-	"help": "Image buttons need alterate text",
+	"help": "Image buttons need alternate text",
 	"selector": "input[type=\"image\"]",
 	"checks": ["non-empty-alt", "aria-label", "aria-labelledby"],
 	"tags": [
