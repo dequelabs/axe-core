@@ -1,0 +1,10 @@
+{
+	"id": "document-title",
+	"help": "Documents must have title element to aid in navigation",
+	"selector": "html",
+	"checks": ["doc-has-title"],
+	"tags": [
+		"wcag2a",
+		"wcag242"
+	]
+}
