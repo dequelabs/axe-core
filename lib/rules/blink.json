@@ -5,7 +5,7 @@
 	"checks": ["hidden"],
 	"tags": [
 		"wcag2a",
-		"wcag231",
+		"wcag222",
 		"section508",
 		"section508j"
 	]
