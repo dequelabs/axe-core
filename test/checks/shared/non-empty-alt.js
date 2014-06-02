@@ -1,4 +1,4 @@
-describe('alt', function () {
+describe('non-empty-alt', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
@@ -12,14 +12,14 @@ describe('alt', function () {
 		node.setAttribute('alt', 'woohoo');
 		fixture.appendChild(node);
 
-		assert.isTrue(checks.alt.evaluate(node));
+		assert.isTrue(checks['non-empty-alt'].evaluate(node));
 	});
 
 	it('should return false if an alt is not present', function () {
 		var node = document.createElement('img');
 		fixture.appendChild(node);
 
-		assert.isFalse(checks.alt.evaluate(node));
+		assert.isFalse(checks['non-empty-alt'].evaluate(node));
 	});
 
 	it('should return false if an alt is present, but empty', function () {
@@ -27,7 +27,7 @@ describe('alt', function () {
 		node.setAttribute('alt', ' ');
 		fixture.appendChild(node);
 
-		assert.isFalse(checks.alt.evaluate(node));
+		assert.isFalse(checks['non-empty-alt'].evaluate(node));
 	});
 
 	it('should collapse whitespace', function () {
@@ -35,7 +35,7 @@ describe('alt', function () {
 		node.setAttribute('alt', ' \t \n \r \t  \t\r\n ');
 		fixture.appendChild(node);
 
-		assert.isFalse(checks.alt.evaluate(node));
+		assert.isFalse(checks['non-empty-alt'].evaluate(node));
 
 	});
 });

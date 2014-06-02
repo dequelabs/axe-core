@@ -1,7 +1,7 @@
 {
-	"id": "area-alt",
-	"help": "Active area elements need alterate text",
-	"selector": "map area[href]",
+	"id": "input-image-alt",
+	"help": "Image buttons need alterate text",
+	"selector": "input[type=\"image\"]",
 	"checks": ["non-empty-alt", "aria-label", "aria-labelledby"],
 	"tags": [
 		"wcag2a",

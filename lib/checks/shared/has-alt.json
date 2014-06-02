@@ -1,0 +1,5 @@
+{
+	"id": "has-alt",
+	"help": "Element has alt attribute",
+	"evaluate": "has-alt.js"
+}

@@ -1,0 +1,12 @@
+{
+	"id": "image-alt",
+	"help": "Images need alternate text",
+	"selector": "img",
+	"checks": ["has-alt", "aria-label", "aria-labelledby"],
+	"tags": [
+		"wcag2a",
+		"wcag111",
+		"section508",
+		"section508a"
+	]
+}
