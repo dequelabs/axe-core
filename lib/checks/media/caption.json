@@ -1,0 +1,5 @@
+{
+	"id": "caption",
+	"help": "Element has a caption",
+	"evaluate": "caption.js"
+}
