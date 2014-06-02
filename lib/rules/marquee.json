@@ -1,0 +1,12 @@
+{
+	"id": "marquee",
+	"help": "Marquee tags should not be visible",
+	"selector": "marquee",
+	"checks": ["hidden"],
+	"tags": [
+		"wcag2a",
+		"wcag222",
+		"section508",
+		"section508j"
+	]
+}
