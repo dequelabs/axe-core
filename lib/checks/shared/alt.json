@@ -1,0 +1,5 @@
+{
+	"id": "alt",
+	"help": "Alternate text provided with alt attribute",
+	"evaluate": "alt.js"
+}

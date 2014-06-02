@@ -1,0 +1,12 @@
+{
+	"id": "area-alt",
+	"help": "Active area elements need alterate text",
+	"selector": "map area[href]",
+	"checks": ["alt", "aria-label", "aria-labelledby"],
+	"tags": [
+		"wcag2a",
+		"wcag332",
+		"section508",
+		"section508n"
+	]
+}
