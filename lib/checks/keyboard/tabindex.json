@@ -1,0 +1,5 @@
+{
+	"id": "tabindex",
+	"help": "Element has a tabindex <= 0",
+	"evaluate": "tabindex.js"
+}
