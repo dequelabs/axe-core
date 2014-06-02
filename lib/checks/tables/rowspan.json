@@ -1,6 +1,5 @@
 {
 	"id": "rowspan",
-	"result": "FAIL",
 	"help": "rowspan should be avoided",
 	"evaluate": "rowspan.js"
 }
