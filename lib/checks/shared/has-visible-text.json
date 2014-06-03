@@ -1,0 +1,5 @@
+{
+	"id": "has-visible-text",
+	"help": "Element has inner text that is visible to a screen reader",
+	"evaluate": "has-visible-text.js"
+}
