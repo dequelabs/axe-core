@@ -24,20 +24,20 @@ describe('Rule', function () {
 				fixture.appendChild(node);
 
 				var rule = new Rule({ selector: '#monkeys' }),
-					nodes = rule.gather();
+					nodes = rule.gather({ include: [fixture], exclude: [], frames: [] });
 
 				assert.lengthOf(nodes, 1);
 				assert.equal(nodes[0], node);
 
 				node.id = 'bananas';
-				nodes = rule.gather();
+				nodes = rule.gather({ include: [fixture], exclude: [], frames: [] });
 
 				assert.lengthOf(nodes, 0);
 			});
 
 			it('should return a real array', function () {
 				var rule = new Rule({selector: 'div'}),
-					result = rule.gather();
+					result = rule.gather({ include: [fixture], exclude: [], frames: [] });
 
 				assert.isArray(result);
 			});
@@ -47,7 +47,7 @@ describe('Rule', function () {
 				fixture.appendChild(node);
 
 				var rule = new Rule({ selector: 'div' }),
-					nodes = rule.gather(fixture);
+					nodes = rule.gather({ include: [document.getElementById('fixture')] });
 
 				assert.deepEqual(nodes, [node]);
 			});
@@ -65,7 +65,7 @@ describe('Rule', function () {
 				nodes.push(node);
 
 				var rule = new Rule({}),
-					result = rule.gather(fixture);
+					result = rule.gather({ include: [document.getElementById('fixture')] });
 
 				assert.lengthOf(result, 2);
 				assert.sameMembers(result, nodes);
@@ -80,63 +80,84 @@ describe('Rule', function () {
 				var success = false,
 					rule = new Rule({
 						gather: function (context) {
-							assert.equal(context, document);
+							assert.deepEqual(context, { include: [fixture] });
 							success = true;
 							return [];
 						}
 					});
 
-				rule.run(document, {}, function () {
+				rule.run({ include: [fixture] }, {}, function () {
 					assert.isTrue(success);
 					done();
 				});
 
 			});
 
-			it('should execute Check#run on its child checks', function () {
+			it('should execute Check#runEvaluate on its child checks', function (done) {
+				fixture.innerHTML = '<blink>Hi</blink>';
 				var orig = Check.prototype.runEvaluate;
 				var success = false;
-				Check.prototype.runEvaluate = function () { success = true; };
+				Check.prototype.runEvaluate = function (_, __, cb) {
+					success = true;
+					cb(true);
+				};
 
-				var rule = new Rule({ checks: [{ id: 'cats' }]});
+				var rule = new Rule({ checks: [{ id: 'cats', evaluate: function () {} }]});
 
-				rule.run(undefined, {});
-				assert.isTrue(success);
-				Check.prototype.runEvaluate = orig;
+				rule.run({ include: [fixture] }, {}, function () {
+					assert.isTrue(success);
+					Check.prototype.runEvaluate = orig;
+					done();
+				});
 
 			});
 
-			it('should NOT execute Check#run on checks that are disabled', function () {
+			it('should NOT execute Check#run on checks that are disabled', function (done) {
+				fixture.innerHTML = '<blink>Hi</blink>';
 				var orig = Check.prototype.runEvaluate;
-				var success = false;
-				Check.prototype.runEvaluate = function () { success = this.id !== 'dogs'; };
+				var success = true;
+				var ran = 0;
+				Check.prototype.runEvaluate = function (_, __, cb) {
+					ran++;
+					if (this.id === 'dogs') {
+						success = false;
+					}
+					cb(true);
+				};
 
 				var rule = new Rule({ checks: [{ id: 'cats' }, { id: 'dogs' }]});
+				rule.run({ include: [fixture] }, {checks: [{ id: 'dogs', enabled: false }]}, function () {
 
-				rule.run(undefined, {checks: [{ id: 'dogs', enabled: false }]});
-				assert.isTrue(success);
-				Check.prototype.runEvaluate = orig;
+					assert.isTrue(success);
+					assert.equal(ran, 1);
+					Check.prototype.runEvaluate = orig;
+					done();
+				});
 
 			});
 
-			it('should pass the matching option to runEvaluate', function () {
+			it('should pass the matching option to runEvaluate', function (done) {
+				fixture.innerHTML = '<blink>Hi</blink>';
 				var orig = Check.prototype.runEvaluate,
 					option = {id: 'cats', data: 'minkeys'};
 
-				Check.prototype.runEvaluate = function (node, options) {
+				Check.prototype.runEvaluate = function (node, options, cb) {
 					assert.deepEqual(options, option);
-					Check.prototype.runEvaluate = orig;
+					cb(true);
 				};
 
 				var rule = new Rule({ checks: [{ id: 'cats' }]});
-				rule.run(undefined, {
+				rule.run({ include: [document] }, {
 					checks: [option]
+				}, function () {
+					Check.prototype.runEvaluate = orig;
+					done();
 				});
 			});
 			it('should not throw if the options object is undefined', function () {
-				var rule = new Rule({ checks: [{ id: 'cats' }]});
+				var rule = new Rule({ checks: [{ id: 'cats', evaluate: function () {} }]});
 				assert.doesNotThrow(function () {
-					rule.run(undefined, undefined, function () {
+					rule.run({ include: [document] }, undefined, function () {
 					});
 				});
 			});
@@ -150,10 +171,9 @@ describe('Rule', function () {
 						assert.equal(rule, r);
 						success = true;
 					};
-					window.RuleResult.prototype.addResults = orig.prototype.addResults;
 
 					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats' }]});
-					rule.run(null, {}, function () {});
+					rule.run({ include: document }, {}, function () {});
 					assert.isTrue(success);
 
 
@@ -163,7 +183,7 @@ describe('Rule', function () {
 					var success = false;
 
 					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats' }]});
-					rule.run(null, {}, function () {
+					rule.run({ include: document }, {}, function () {
 						success = true;
 					});
 					assert.isTrue(success);
@@ -179,10 +199,9 @@ describe('Rule', function () {
 						assert.equal(rule, r);
 						success = true;
 					};
-					window.RuleFrameResult.prototype.addResults = orig.prototype.addResults;
 
 					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats'}], type: 'PAGE' });
-					rule.run(null, {}, function () {});
+					rule.run({ include: document }, {}, function () {});
 					assert.isTrue(success);
 					window.RuleFrameResult = orig;
 				});
@@ -190,7 +209,7 @@ describe('Rule', function () {
 					var success = false;
 
 					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats'}], type: 'PAGE'});
-					rule.run(null, {}, function () {
+					rule.run({ include: document }, {}, function () {
 						success = true;
 					});
 					assert.isTrue(success);
@@ -308,6 +327,28 @@ describe('Rule', function () {
 			it('should default to true if given a bad value', function () {
 				var spec = { enabled: 'monkeys' };
 				assert.isTrue(new Rule(spec).enabled);
+
+			});
+
+		});
+
+		describe('.pageLevel', function () {
+			it('should be set', function () {
+				var spec = {
+					pageLevel: false
+				};
+				assert.equal(new Rule(spec).pageLevel, spec.pageLevel);
+			});
+
+			it('should default to false', function () {
+				var spec = {};
+				assert.isFalse(new Rule(spec).pageLevel);
+
+			});
+
+			it('should default to false if given a bad value', function () {
+				var spec = { pageLevel: 'monkeys' };
+				assert.isFalse(new Rule(spec).pageLevel);
 
 			});
 
