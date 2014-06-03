@@ -1,0 +1,5 @@
+{
+	"id": "meta-viewport",
+	"help": "Zooming and scaling should not disabled",
+	"evaluate": "meta-viewport.js"
+}
