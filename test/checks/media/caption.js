@@ -11,20 +11,20 @@ describe('hidden', function () {
 		fixture.innerHTML = '<audio></audio>';
 		var node = fixture.querySelector('audio');
 
-		assert.isFalse(checks['caption'].evaluate(node));
+		assert.isTrue(checks['caption'].evaluate(node));
 	});
 
 	it('should fail if there is no kind=caption attribute', function () {
 		fixture.innerHTML = '<audio><track kind=descriptions></track></audio>';
 		var node = fixture.querySelector('audio');
 
-		assert.isFalse(checks['caption'].evaluate(node));
+		assert.isTrue(checks['caption'].evaluate(node));
 	});
 
 	it('should pass if there is a kind=caption attribute', function () {
 		fixture.innerHTML = '<audio><track kind=captions></track></audio>';
 		var node = fixture.querySelector('audio');
 
-		assert.isTrue(checks['caption'].evaluate(node));
+		assert.isFalse(checks['caption'].evaluate(node));
 	});
 });

@@ -1,7 +1,7 @@
 {
 	"id": "caption",
 	"help": "HTML5 audio and video elements need captions",
-	"selector": "audio, video",
+	"selector": "audio",
 	"checks": ["caption"],
 	"tags": [
 		"wcag2a",
