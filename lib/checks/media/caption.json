@@ -1,6 +1,6 @@
 {
 	"id": "caption",
-	"help": "Element has a caption",
+	"help": "Element does not have a caption",
 	"result": "FAIL",
 	"evaluate": "caption.js"
 }
