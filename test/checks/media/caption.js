@@ -1,4 +1,4 @@
-describe('hidden', function () {
+describe('caption', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
@@ -14,14 +14,14 @@ describe('hidden', function () {
 		assert.isTrue(checks['caption'].evaluate(node));
 	});
 
-	it('should fail if there is no kind=caption attribute', function () {
+	it('should fail if there is no kind=captions attribute', function () {
 		fixture.innerHTML = '<audio><track kind=descriptions></track></audio>';
 		var node = fixture.querySelector('audio');
 
 		assert.isTrue(checks['caption'].evaluate(node));
 	});
 
-	it('should pass if there is a kind=caption attribute', function () {
+	it('should pass if there is a kind=captions attribute', function () {
 		fixture.innerHTML = '<audio><track kind=captions></track></audio>';
 		var node = fixture.querySelector('audio');
 

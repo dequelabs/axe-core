@@ -1,0 +1,6 @@
+{
+	"id": "description",
+	"help": "Element does not have a description",
+	"result": "FAIL",
+	"evaluate": "description.js"
+}
