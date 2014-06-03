@@ -4,14 +4,12 @@
 	<title>Message Iframe Fixture</title>
 </head>
 <body>
-	<script src="../felib.js"></script>
 	<script src="../../../dist/dqre.js"></script>
-	<script src="../audit.js"></script>
 
 	<input type="text">
 	<a href="#">link</a>
 	<script>
-		dqre.configure(mockAudit);
+		dqre.configure({ rules: [] });
 	</script>
 </body>
 </html>
