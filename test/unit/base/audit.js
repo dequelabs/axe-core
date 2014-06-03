@@ -251,6 +251,23 @@ describe('Audit', function () {
 				done();
 			});
 		});
+
+		it('should skip pageLevel rules if context is not set to entire page', function () {
+			var audit = new Audit();
+
+			audit.addRule({
+				pageLevel: true,
+				enabled: true,
+				evaluate: function () {
+					assert.ok(false, 'Should not run');
+				}
+			});
+
+			audit.run({ include: [ document.body ], page: false }, {}, function (results) {
+				assert.deepEqual(results, []);
+			});
+
+		});
 	});
 	describe('Audit#findRule', function () {
 		it('should return the rule object by its id', function () {

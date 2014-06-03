@@ -332,6 +332,28 @@ describe('Rule', function () {
 
 		});
 
+		describe('.pageLevel', function () {
+			it('should be set', function () {
+				var spec = {
+					pageLevel: false
+				};
+				assert.equal(new Rule(spec).pageLevel, spec.pageLevel);
+			});
+
+			it('should default to false', function () {
+				var spec = {};
+				assert.isFalse(new Rule(spec).pageLevel);
+
+			});
+
+			it('should default to false if given a bad value', function () {
+				var spec = { pageLevel: 'monkeys' };
+				assert.isFalse(new Rule(spec).pageLevel);
+
+			});
+
+		});
+
 		describe('.id', function () {
 			it('should be set', function () {
 				var spec = {
