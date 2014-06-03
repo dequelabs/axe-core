@@ -1,0 +1,10 @@
+{
+	"id": "html-lang",
+	"help": "documentElement (<html>) should have a lang attribute",
+	"selector": "html",
+	"checks": ["has-lang"],
+	"tags": [
+		"wcag2a",
+		"wcag311"
+	]
+}
