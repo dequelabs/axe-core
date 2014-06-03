@@ -1,0 +1,5 @@
+{
+	"id": "html5-scope",
+	"help": "scope attribute should only be used on table headers (TH)",
+	"evaluate": "html5-scope.js"
+}
