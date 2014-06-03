@@ -1,0 +1,12 @@
+{
+	"id": "server-side-image-map",
+	"help": "Server-side image maps should not be used",
+	"selector": "img[ismap]",
+	"checks": ["exists"],
+	"tags": [
+		"wcag2a",
+		"wcag211",
+		"section508",
+		"section508f"
+	]
+}
