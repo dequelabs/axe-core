@@ -1,0 +1,6 @@
+{
+	"id": "skip-link",
+	"selector": "a[href]",
+	"help": "Page has a skip link",
+	"evaluate": "skip-link.js"
+}
