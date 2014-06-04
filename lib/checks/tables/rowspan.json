@@ -1,5 +1,6 @@
 {
 	"id": "rowspan",
-	"help": "rowspan should be avoided",
+	"result": "FAIL",
+	"help": "Element has a rowspan value that is not equal to 1",
 	"evaluate": "rowspan.js"
 }
