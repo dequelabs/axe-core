@@ -7,7 +7,7 @@ describe('has-lang', function () {
 		fixture.innerHTML = '';
 	});
 
-	it('should return true if an lang is present', function () {
+	it('should return true if a lang attribute is present', function () {
 		var node = document.createElement('div');
 		node.setAttribute('lang', 'woohoo');
 		fixture.appendChild(node);
@@ -15,7 +15,7 @@ describe('has-lang', function () {
 		assert.isTrue(checks['has-lang'].evaluate(node));
 	});
 
-	it('should return false if an lang is not present', function () {
+	it('should return false if a lang attribute is not present', function () {
 		var node = document.createElement('div');
 		fixture.appendChild(node);
 

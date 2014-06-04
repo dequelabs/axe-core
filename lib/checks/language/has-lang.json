@@ -1,5 +1,5 @@
 {
 	"id": "has-lang",
-	"help": "Element has lang attribute",
+	"help": "The <html> element does not have a lang attribute",
 	"evaluate": "has-lang.js"
 }
