@@ -8,8 +8,32 @@ describe('dom.isFocusable', function () {
 	});
 
 
+	it('should return true for visible, enabled textareas', function () {
+		fixture.innerHTML = '<textarea id="target"></textarea>';
+		var el = document.getElementById('target');
+
+		assert.isTrue(kslib.dom.isFocusable(el));
+
+	});
+
+	it('should return true for visible, enabled selects', function () {
+		fixture.innerHTML = '<select id="target"></select>';
+		var el = document.getElementById('target');
+
+		assert.isTrue(kslib.dom.isFocusable(el));
+
+	});
+
+	it('should return true for visible, enabled buttons', function () {
+		fixture.innerHTML = '<button id="target"></button>';
+		var el = document.getElementById('target');
+
+		assert.isTrue(kslib.dom.isFocusable(el));
+
+	});
+
 	it('should return true for visible, enabled, non-hidden inputs', function () {
-		fixture.innerHTML = '<input type="text" id="target"></input>';
+		fixture.innerHTML = '<input type="text" id="target">';
 		var el = document.getElementById('target');
 
 		assert.isTrue(kslib.dom.isFocusable(el));
@@ -17,7 +41,7 @@ describe('dom.isFocusable', function () {
 	});
 
 	it('should return false for disabled elements', function () {
-		fixture.innerHTML = '<input type="text" id="target" disabled></input>';
+		fixture.innerHTML = '<input type="text" id="target" disabled>';
 		var el = document.getElementById('target');
 
 		assert.isFalse(kslib.dom.isFocusable(el));
@@ -25,7 +49,7 @@ describe('dom.isFocusable', function () {
 	});
 
 	it('should return false for hidden inputs', function () {
-		fixture.innerHTML = '<input type="hidden" id="target"></input>';
+		fixture.innerHTML = '<input type="hidden" id="target">';
 		var el = document.getElementById('target');
 
 		assert.isFalse(kslib.dom.isFocusable(el));
@@ -33,7 +57,7 @@ describe('dom.isFocusable', function () {
 	});
 
 	it('should return false for non-visible elements', function () {
-		fixture.innerHTML = '<input type="text" id="target" style="display: none"></input>';
+		fixture.innerHTML = '<input type="text" id="target" style="display: none">';
 		var el = document.getElementById('target');
 
 		assert.isFalse(kslib.dom.isFocusable(el));
