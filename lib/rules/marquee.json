@@ -1,6 +1,6 @@
 {
 	"id": "marquee",
-	"help": "Marquee tags should not be visible",
+	"help": "<marquee> elements are deprecated and must not be used",
 	"selector": "marquee",
 	"checks": ["hidden"],
 	"tags": [
