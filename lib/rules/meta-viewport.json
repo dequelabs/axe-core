@@ -3,5 +3,8 @@
 	"help": "Zooming and scaling should not disabled",
 	"selector": "meta[name=\"viewport\"]",
 	"checks": ["meta-viewport"],
-	"tags": []
+	"tags": [
+		"wcag2aa",
+		"wcag144"
+	]
 }
