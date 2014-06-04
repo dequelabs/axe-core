@@ -1,11 +1,11 @@
 {
 	"id": "blink",
-	"help": "Blink tags should not be visible",
+	"help": "The <blink> tag is deprecated and must not be used",
 	"selector": "blink",
 	"checks": ["hidden"],
 	"tags": [
 		"wcag2a",
-		"wcag222",
+		"wcag231",
 		"section508",
 		"section508j"
 	]
