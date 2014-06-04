@@ -1,5 +1,5 @@
 {
 	"id": "html5-scope",
-	"help": "scope attribute should only be used on table headers (TH)",
+	"help": "In HTML 5, scope attributes may only be used on table header elements <th>",
 	"evaluate": "html5-scope.js"
 }
