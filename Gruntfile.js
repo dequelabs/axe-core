@@ -8,6 +8,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-blanket-mocha');
 	grunt.loadNpmTasks('grunt-mocha');
@@ -91,6 +92,16 @@ module.exports = function (grunt) {
 					timeout: 10000,
 					threshold: 90
 				}
+			}
+		},
+		jshint: {
+			rules: {
+				options: {
+					jshintrc: true,
+					reporter: grunt.option('report') ? require('jshint-junit-reporter') : undefined,
+					reporterOutput: grunt.option('report') ? 'lint.xml' : undefined
+				},
+				src: ['lib/**/*.js', 'test/**/*.js', 'Gruntfile.js', '!test/mock/**/*.js']
 			}
 		}
 	});

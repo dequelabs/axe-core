@@ -1,0 +1,5 @@
+{
+	"id": "html4-scope",
+	"help": "In HTML 4, the scope attribute may only be used on table cell elements (<th> and <td>)",
+	"evaluate": "html4-scope.js"
+}
