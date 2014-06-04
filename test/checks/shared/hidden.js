@@ -20,7 +20,7 @@ describe('hidden', function () {
 		var node = document.createElement('div');
 		fixture.appendChild(node);
 
-		checks['hidden'].evaluate(node);
+		checks.hidden.evaluate(node);
 		assert.isTrue(success);
 
 		kslib.dom.isVisible = orig;
