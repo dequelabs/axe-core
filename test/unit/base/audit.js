@@ -94,9 +94,9 @@ describe('Audit', function () {
 			});
 		});
 		it('should run all the rules', function (done) {
-			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
+			fixture.innerHTML = '<input aria-label="monkeys" type="text">' +
 				'<div id="monkeys">bananas</div>' +
-				'<input type="text" aria-labelledby="monkeys">' +
+				'<input aria-labelledby="monkeys" type="text">' +
 				'<blink>FAIL ME</blink>';
 
 			a.run({ include: [fixture] }, {}, function (results) {
@@ -107,7 +107,7 @@ describe('Audit', function () {
 					details: [{
 						node: {
 							selector: '#fixture > input:nth-of-type(1)',
-							source: '<input type="text" aria-label="monkeys">',
+							source: '<input aria-label="monkeys" type="text">',
 							frames: []
 						},
 						result: 'PASS',
@@ -123,7 +123,7 @@ describe('Audit', function () {
 					}, {
 						node: {
 							selector: '#fixture > input:nth-of-type(2)',
-							source: '<input type="text" aria-labelledby="monkeys">',
+							source: '<input aria-labelledby="monkeys" type="text">',
 							frames: []
 						},
 						result: 'PASS',
