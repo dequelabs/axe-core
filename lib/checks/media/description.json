@@ -1,6 +1,6 @@
 {
 	"id": "description",
-	"help": "Element does not have a description",
+	"help": "The multimedia element does not have an audio description track",
 	"result": "FAIL",
 	"evaluate": "description.js"
 }

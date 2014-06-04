@@ -1,6 +1,6 @@
 {
 	"id": "caption",
-	"help": "HTML5 video elements need captions and description",
+	"help": "HTML5 video elements need a captions and an audio description track",
 	"selector": "video",
 	"checks": ["caption", "description"],
 	"tags": [
