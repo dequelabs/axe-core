@@ -3,7 +3,7 @@
 		"kslib": true
 	},
 
-	"browser" : true,
+	"browser" : false,
 	"node" : false,
 	"devel" : false,
 
