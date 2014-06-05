@@ -25,6 +25,15 @@ describe('only-listitems', function () {
 
 	});
 
+	it('should return false if the list has only an li with child content', function () {
+		fixture.innerHTML = '<ol id="target"><li>A <i>list</i></li></ol>';
+		var node = fixture.querySelector('#target');
+
+		assert.isFalse(checks['only-listitems'].evaluate(node));
+
+
+	});
+
 	it('should return false if the list has only an li', function () {
 		fixture.innerHTML = '<ol id="target"><li>A list</li></ol>';
 		var node = fixture.querySelector('#target');

@@ -52,6 +52,15 @@ describe('has-dlitems', function () {
 
 	});
 
+	it('should return true if the list has dt and dd in the correct order as non-child descendants', function () {
+		fixture.innerHTML = '<dl id="target"><dd><dl>><dt>An item</dt><dd>A list</dd></dl></dd></dl>';
+		var node = fixture.querySelector('#target');
+
+		assert.isTrue(checks['has-dlitems'].evaluate(node));
+
+
+	});
+
 	it('should return false if the list has dt and dd in the correct order', function () {
 		fixture.innerHTML = '<dl id="target"><dt>An item</dt><dd>A list</dd></dl>';
 		var node = fixture.querySelector('#target');

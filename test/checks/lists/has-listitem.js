@@ -16,6 +16,15 @@ describe('has-listitem', function () {
 
 	});
 
+	it('should return true if the list has non-li contents with li children', function () {
+		fixture.innerHTML = '<ol id="target"><p>Not a list <ul><li>item</li></ul></p></ol>';
+		var node = fixture.querySelector('#target');
+
+		assert.isTrue(checks['has-listitem'].evaluate(node));
+
+
+	});
+
 	it('should return true if the list has non-li contents', function () {
 		fixture.innerHTML = '<ol id="target"><p>Not a list</p></ol>';
 		var node = fixture.querySelector('#target');

@@ -43,6 +43,15 @@ describe('only-dlitems', function () {
 
 	});
 
+	it('should return false if the list has dt and dd with child content', function () {
+		fixture.innerHTML = '<dl id="target"><dt><p>An item</p></dt><dd>A list</dd></dl>';
+		var node = fixture.querySelector('#target');
+
+		assert.isFalse(checks['only-dlitems'].evaluate(node));
+
+
+	});
+
 	it('should return false if the list has dt and dd', function () {
 		fixture.innerHTML = '<dl id="target"><dt>An item</dt><dd>A list</dd></dl>';
 		var node = fixture.querySelector('#target');
