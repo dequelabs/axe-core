@@ -80,11 +80,27 @@ describe('dom.isFocusable', function () {
 
 	});
 
+	it('should return true for a div with a tabindex with spaces', function () {
+		fixture.innerHTML = '<div id="target" tabindex="	  0   "></div>';
+		var el = document.getElementById('target');
+
+		assert.isTrue(kslib.dom.isFocusable(el));
+
+	});
+
 	it('should return true for a div with a tabindex', function () {
 		fixture.innerHTML = '<div id="target" tabindex="0"></div>';
 		var el = document.getElementById('target');
 
 		assert.isTrue(kslib.dom.isFocusable(el));
+
+	});
+
+	it('should return false for a div with a non-numeric tabindex', function () {
+		fixture.innerHTML = '<div id="target" tabindex="x"></div>';
+		var el = document.getElementById('target');
+
+		assert.isFalse(kslib.dom.isFocusable(el));
 
 	});
 
