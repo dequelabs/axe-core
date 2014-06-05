@@ -1,0 +1,11 @@
+{
+	"id": "description-list",
+	"help": "<dl> elements must contain properly-ordered <dt> and <dd> elements",
+	"selector": "dl",
+	"checks": ["has-dlitems", "only-dlitems"],
+	"tags": [
+		"wcaga",
+		"wcag2a",
+		"wcag131"
+	]
+}

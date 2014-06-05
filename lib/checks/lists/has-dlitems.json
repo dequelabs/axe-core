@@ -1,0 +1,6 @@
+{
+	"id": "has-dlitems",
+	"help": "Element does not have at least one <dt> element followed by at least one <dd> element",
+	"result": "FAIL",
+	"evaluate": "has-dlitems.js"
+}

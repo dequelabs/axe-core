@@ -1,0 +1,6 @@
+{
+	"id": "only-dlitems",
+	"help": "Element has elements that are not <dt> or <dd> elements",
+	"result": "FAIL",
+	"evaluate": "only-dlitems.js"
+}
