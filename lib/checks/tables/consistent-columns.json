@@ -1,5 +1,5 @@
 {
 	"id": "consistent-columns",
-	"help": "Tables must have the same number of columns in every row",
+	"help": "The table does not have the same number of columns in every row",
 	"evaluate": "consistent-columns.js"
 }
