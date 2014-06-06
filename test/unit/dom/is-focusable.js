@@ -104,6 +104,14 @@ describe('dom.isFocusable', function () {
 
 	});
 
+	it('should return true for a details element', function () {
+		fixture.innerHTML = '<details id="target"><p>Detail</p></details>';
+		var el = document.getElementById('target');
+
+		assert.isTrue(kslib.dom.isFocusable(el));
+
+	});
+
 	it('should return false for a div with no tabindex', function () {
 		fixture.innerHTML = '<div id="target"></div>';
 		var el = document.getElementById('target');
