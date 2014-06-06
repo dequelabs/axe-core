@@ -65,4 +65,40 @@ describe('consistent-columns', function () {
 		assert.isTrue(checks['consistent-columns'].evaluate(node));
 	});
 
+	it('should return true row widths are made the same with rowspan', function () {
+		fixture.innerHTML = '<table>' +
+				'<thead><tr><td rowspan="2"></td><td></td><td></td></tr></thead>' +
+				'<tbody><tr><td></td><td></td></tr></tbody>' +
+				'<tbody><tr><th></th><td></td><td></td></tr></tbody>' +
+			'</table>';
+
+		var node = fixture.querySelector('table');
+
+		assert.isTrue(checks['consistent-columns'].evaluate(node));
+	});
+
+	it('should return true row widths are made the same with rowspan and colspan', function () {
+		fixture.innerHTML = '<table>' +
+				'<thead><tr><td rowspan="2" colspan="2"></td><td></td></tr></thead>' +
+				'<tbody><tr><td></td></tr></tbody>' +
+				'<tbody><tr><th></th><td></td><td></td></tr></tbody>' +
+			'</table>';
+
+		var node = fixture.querySelector('table');
+
+		assert.isTrue(checks['consistent-columns'].evaluate(node));
+	});
+
+	it('should return false row widths are made the different with rowspan and colspan', function () {
+		fixture.innerHTML = '<table>' +
+				'<thead><tr><td rowspan="2" colspan="2"></td><td></td></tr></thead>' +
+				'<tbody><tr><td></td><td></td></tr></tbody>' +
+				'<tbody><tr><th></th><td></td><td></td></tr></tbody>' +
+			'</table>';
+
+		var node = fixture.querySelector('table');
+
+		assert.isFalse(checks['consistent-columns'].evaluate(node));
+	});
+
 });
