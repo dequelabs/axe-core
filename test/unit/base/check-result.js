@@ -26,4 +26,9 @@ describe('CheckResult', function () {
 		assert.isFalse(result.async);
 	});
 
+	it('should set `relatedNodes` to `[]`', function () {
+		var result = new CheckResult({});
+		assert.deepEqual(result.relatedNodes, []);
+	});
+
 });

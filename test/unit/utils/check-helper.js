@@ -48,6 +48,18 @@ describe('utils.checkHelper', function () {
 
 			});
 		});
+		describe('relatedNodes', function () {
+			it('should set relatedNodes property on target when called', function () {
+				var target = {},
+					expected = [{monkeys: 'bananas' }],
+					helper = utils.checkHelper(target, noop);
+
+				assert.notProperty(target, 'relatedNodes');
+				helper.relatedNodes(expected);
+				assert.deepEqual(target.relatedNodes, expected);
+
+			});
+		});
 
 	});
 
