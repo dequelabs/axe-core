@@ -13,6 +13,19 @@ describe('aria-labelledby', function () {
 		fixture.appendChild(node);
 		var target = document.createElement('div');
 		target.id = 'woohoo';
+		target.innerHTML = 'bananas';
+		fixture.appendChild(target);
+
+		assert.isTrue(checks['aria-labelledby'].evaluate(node));
+	});
+
+	it('should return true if only one element referenced by aria-labelledby has visible text', function () {
+		var node = document.createElement('div');
+		node.setAttribute('aria-labelledby', 'woohoo noexist hehe');
+		fixture.appendChild(node);
+		var target = document.createElement('div');
+		target.id = 'woohoo';
+		target.innerHTML = 'bananas';
 		fixture.appendChild(target);
 
 		assert.isTrue(checks['aria-labelledby'].evaluate(node));
@@ -25,16 +38,15 @@ describe('aria-labelledby', function () {
 		assert.isFalse(checks['aria-labelledby'].evaluate(node));
 	});
 
-	it('should return false if an aria-label is present, but references an element that is not present', function () {
+	it('should return false if an aria-labelledby is present, but references elements who have no visible text', function () {
 		var node = document.createElement('div');
-		node.setAttribute('aria-labelledby', 'noexist woohoo');
+		node.setAttribute('aria-labelledby', 'woohoo');
 		fixture.appendChild(node);
 		var target = document.createElement('div');
 		target.id = 'woohoo';
+		target.innerHTML = '<span style="display: none">bananas</span>';
 		fixture.appendChild(target);
 
 		assert.isFalse(checks['aria-labelledby'].evaluate(node));
 	});
-
-	it('should check referenced elements have text visible to screen readers');
 });

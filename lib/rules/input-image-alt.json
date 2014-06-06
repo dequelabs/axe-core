@@ -1,0 +1,12 @@
+{
+	"id": "input-image-alt",
+	"help": "Image buttons need alternate text",
+	"selector": "input[type=\"image\"]",
+	"checks": ["non-empty-alt", "aria-label", "aria-labelledby"],
+	"tags": [
+		"wcag2a",
+		"wcag111",
+		"section508",
+		"section508a"
+	]
+}
