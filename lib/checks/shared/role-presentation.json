@@ -1,0 +1,5 @@
+{
+	"id": "role-presentation",
+	"help": "The default semantics were not overridden with role=\"presentation\"",
+	"evaluate": "role-presentation.js"
+}
