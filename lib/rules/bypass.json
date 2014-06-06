@@ -1,7 +1,7 @@
 {
 	"id": "bypass",
 	"help": "Page must have means to bypass content",
-	"selector": "a[href]:first-of-type, h1, [role=main]",
+	"selector": "a[href], h1, [role=main]",
 	"checks": ["skip-link", "header-present", "landmark"],
 	"tags": [
 		"wcaga",
