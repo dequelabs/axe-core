@@ -24,6 +24,7 @@
     "grunt-contrib-watch": "~0.6.1",
     "grunt-mocha": "~0.4.10",
     "mocha": "~1.18.2",
-    "xunit-file": "0.0.5"
+    "xunit-file": "0.0.5",
+    "grunt-contrib-jshint": "~0.10.0"
   }
 }
