@@ -223,6 +223,7 @@ describe('Check', function () {
 					}
 				}).runEvaluate(fixture, {}, function (data) {
 					assert.instanceOf(data, CheckResult);
+					assert.isTrue(data.result);
 					done();
 				});
 
@@ -255,13 +256,13 @@ describe('Check', function () {
 					}
 				}).runAfter(data, {}, cb);
 			});
-			it('should set the value attribute of the check to true', function (done) {
+			it('should set the result attribute of the check to true', function (done) {
 				new Check({
 					after: function () {
 						return true;
 					}
 				}).runAfter([], {}, function (check) {
-					assert.equal(check.value, true);
+					assert.isTrue(check.result);
 					done();
 				});
 			});
@@ -289,16 +290,15 @@ describe('Check', function () {
 					}
 				}).runAfter(fixture, expected, function () {});
 			});
-			it('should set the value attribute of the check to false', function (done) {
+			it('should set the result attribute of the check to undefined', function (done) {
 				new Check({
 					after: function () {
 						return false;
 					}
 				}).runAfter([], {}, function (check) {
-					assert.equal(check.value, false);
+					assert.isUndefined(check.result);
 					done();
 				});
-
 			});
 			it('should set the error attribute if the after function throws', function (done) {
 				assert.doesNotThrow(function () {
@@ -318,31 +318,63 @@ describe('Check', function () {
 
 
 	describe('spec object', function () {
-		describe('.result', function () {
+		describe('.type', function () {
 			it('should be set', function () {
 				var spec = {
-					result: 'bananas'
+					type: 'bananas'
 				};
-				assert.equal(new Check(spec).result, spec.result);
+				assert.equal(new Check(spec).type, spec.type);
 			});
 
 			it('should have no (defaults to rule\'s result)', function () {
 				var spec = {};
-				assert.equal(new Check(spec).result, dqre.constants.result.PASS);
+				assert.equal(new Check(spec).type, dqre.constants.type.PASS);
 
 			});
 		});
-		describe('.priority', function () {
+		describe('.impact', function () {
 			it('should be set', function () {
 				var spec = {
-					priority: 'bananas'
+					impact: 'bananas'
 				};
-				assert.equal(new Check(spec).priority, spec.priority);
+				assert.equal(new Check(spec).impact, spec.impact);
 			});
 
-			it('should have no default (defaults to rule\'s priority)', function () {
+			it('should ddefault to MAJOR', function () {
 				var spec = {};
-				assert.equal(new Check(spec).priority, spec.priority);
+				assert.equal(new Check(spec).impact, 'MAJOR');
+
+			});
+
+		});
+
+		describe('.interpretation', function () {
+			it('should be set', function () {
+				var spec = {
+					interpretation: 'bananas'
+				};
+				assert.equal(new Check(spec).interpretation, spec.interpretation);
+			});
+
+			it('should have default of VIOLATION', function () {
+				var spec = {};
+				assert.equal(new Check(spec).interpretation, 'VIOLATION');
+
+			});
+
+		});
+
+		describe('.certainty', function () {
+			it('should be set', function () {
+				var spec = {
+					certainty: 'bananas'
+				};
+				assert.equal(new Check(spec).certainty, spec.certainty);
+			});
+
+			it('should have default of VIOLATION', function () {
+				var spec = {};
+				assert.equal(new Check(spec).certainty, 'DEFINITE');
 
 			});
 
@@ -410,6 +442,13 @@ describe('Check', function () {
 			});
 
 		});
-	});
 
+		describe('constructor', function () {
+			it('should throw an exception if constructed with a result', function () {
+				assert.throws(function () {
+					return new Check({result: 'PASS'});
+				});
+			});
+		});
+	});
 });
