@@ -1,0 +1,5 @@
+{
+	"id": "aria-labelledby",
+	"help": "aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible",
+	"evaluate": "aria-labelledby.js"
+}

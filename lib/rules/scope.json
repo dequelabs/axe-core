@@ -1,0 +1,10 @@
+{
+	"id": "scope",
+	"help": "scope attribute is used correctly",
+	"selector": "[scope]",
+	"checks": ["html5-scope", "html4-scope", "scope-value"],
+	"tags": [
+		"wcag2a",
+		"wcag411"
+	]
+}

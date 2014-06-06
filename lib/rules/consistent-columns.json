@@ -1,0 +1,10 @@
+{
+	"id": "consistent-columns",
+	"help": "Tables should have the same number of columns for each row",
+	"selector": "table",
+	"checks": ["consistent-columns", "role-presentation"],
+	"tags": [
+		"wcag2a",
+		"wcag131"
+	]
+}

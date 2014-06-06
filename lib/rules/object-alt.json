@@ -1,0 +1,10 @@
+{
+	"id": "object-alt",
+	"help": "Embedded object requires text alternative",
+	"selector": "object",
+	"checks": ["has-visible-text"],
+	"tags": [
+		"wcag2a",
+		"wcag111"
+	]
+}

@@ -1,0 +1,6 @@
+{
+	"id": "caption",
+	"help": "The multimedia element does not have a captions track",
+	"result": "FAIL",
+	"evaluate": "caption.js"
+}

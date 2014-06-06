@@ -1,5 +1,5 @@
 {
 	"id": "non-empty-title",
-	"help": "Element does not have a non-empty title attribute",
+	"help": "Element has no title attribute or the title attribute is empty",
 	"evaluate": "non-empty-title.js"
 }

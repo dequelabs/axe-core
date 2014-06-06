@@ -1,0 +1,10 @@
+{
+	"id": "rowspan",
+	"help": "Avoid use of rowspan on tables",
+	"selector": "[rowspan]",
+	"checks": ["rowspan"],
+	"tags": [
+		"wcag2a",
+		"wcag132"
+	]
+}
