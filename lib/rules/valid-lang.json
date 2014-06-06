@@ -1,0 +1,10 @@
+{
+	"id": "valid-lang",
+	"help": "lang attribute has a valid value",
+	"selector": "[lang]",
+	"checks": ["valid-lang"],
+	"tags": [
+		"wcag2aa",
+		"wcag312"
+	]
+}
