@@ -7,7 +7,7 @@ describe('non-empty-title', function () {
 		fixture.innerHTML = '';
 	});
 
-	it('should return true if an title is present', function () {
+	it('should return true if a title is present', function () {
 		var node = document.createElement('img');
 		node.setAttribute('title', 'woohoo');
 		fixture.appendChild(node);
@@ -15,14 +15,14 @@ describe('non-empty-title', function () {
 		assert.isTrue(checks['non-empty-title'].evaluate(node));
 	});
 
-	it('should return false if an title is not present', function () {
+	it('should return false if a title is not present', function () {
 		var node = document.createElement('img');
 		fixture.appendChild(node);
 
 		assert.isFalse(checks['non-empty-title'].evaluate(node));
 	});
 
-	it('should return false if an title is present, but empty', function () {
+	it('should return false if a title is present, but empty', function () {
 		var node = document.createElement('img');
 		node.setAttribute('title', ' ');
 		fixture.appendChild(node);
