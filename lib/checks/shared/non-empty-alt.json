@@ -1,5 +1,5 @@
 {
 	"id": "non-empty-alt",
-	"help": "Alternate text provided with alt attribute",
+	"help": "Element has no alt attribute or the alt attribute is empty",
 	"evaluate": "non-empty-alt.js"
 }

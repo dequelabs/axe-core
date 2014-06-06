@@ -2,7 +2,7 @@
 	"id": "image-alt",
 	"help": "Images need alternate text",
 	"selector": "img",
-	"checks": ["has-alt", "aria-label", "aria-labelledby"],
+	"checks": ["has-alt", "aria-label", "aria-labelledby", "non-empty-title"],
 	"tags": [
 		"wcag2a",
 		"wcag111",
