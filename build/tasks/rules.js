@@ -3,8 +3,12 @@
 
 var path = require('path');
 
-var CHECK_TEMPLATE = 'function (node, options) {\n<%=source%>\n}';
-
+var templates = {
+	evaluate: 'function (node, options) {\n<%=source%>\n}',
+	after: 'function (data, options) {\n<%=source%>\n}',
+	gather: 'function (context) {\n<%=source%>\n}',
+	matches: 'function (node) {\n<%=source%>\n}',
+};
 module.exports = function (grunt) {
 
 	function createCheckObject(checks) {
@@ -16,13 +20,13 @@ module.exports = function (grunt) {
 	}
 
 	function replaceFunctions(string) {
-		return string.replace(/"(?:evaluate|after)":\s*("[^"]+")/g, function (m, p1) {
-			return m.replace(p1, getSource(p1.replace(/^"|"$/g, '')));
+		return string.replace(/"(evaluate|after|gather|matches)":\s*("[^"]+")/g, function (m, p1, p2) {
+			return m.replace(p2, getSource(p2.replace(/^"|"$/g, ''), p1));
 		});
 	}
 
-	function getSource(file) {
-		return grunt.template.process(CHECK_TEMPLATE, {
+	function getSource(file, type) {
+		return grunt.template.process(templates[type], {
 			data: {
 				source: grunt.file.read(file)
 			}
@@ -40,6 +44,9 @@ module.exports = function (grunt) {
 			if (json.after) {
 				json.after = path.resolve(dirname, json.after);
 			}
+			if (json.matches) {
+				json.matches = path.resolve(dirname, json.matches);
+			}
 
 			return json;
 		});
@@ -48,7 +55,11 @@ module.exports = function (grunt) {
 	function getRules(src) {
 		var files = grunt.file.expand(src);
 		return files.map(function (file) {
+			var dirname = path.dirname(file);
 			var json = grunt.file.readJSON(file);
+			if (json.gather) {
+				json.gather = path.resolve(dirname, json.gather);
+			}
 			return json;
 		});
 
