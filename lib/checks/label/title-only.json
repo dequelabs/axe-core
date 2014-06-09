@@ -2,5 +2,5 @@
 	"id": "title-only",
 	"help": "Only title used to generate alternate text for input",
 	"evaluate": "title-only.js",
-	"type": "WARN"
+	"type": "FAIL"
 }
