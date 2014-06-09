@@ -1,6 +1,6 @@
 {
 	"id": "has-listitem",
 	"help": "List element does not have an <li> element",
-	"result": "FAIL",
+	"type": "FAIL",
 	"evaluate": "has-listitem.js"
 }

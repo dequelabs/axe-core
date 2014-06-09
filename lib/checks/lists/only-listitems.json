@@ -1,6 +1,6 @@
 {
 	"id": "only-listitems",
 	"help": "List element contains elements that are not <li> elements",
-	"result": "FAIL",
+	"type": "FAIL",
 	"evaluate": "only-listitems.js"
 }
