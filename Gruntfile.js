@@ -110,8 +110,10 @@ module.exports = function (grunt) {
 		var files = grunt.file.expand(['lib/checks/**/*.json']);
 		files.forEach(function (file) {
 			var src = grunt.file.readJSON(file);
-			src.type = src.result;
-			delete src.result;
+			if (src.result) {
+				src.type = src.result;
+				delete src.result;
+			}
 			grunt.file.write(file, JSON.stringify(src, null, '\t'));
 		});
 	});
