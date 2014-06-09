@@ -49,7 +49,14 @@ describe('utils.checkHelper', function () {
 			});
 		});
 		describe('relatedNodes', function () {
-			it('should set relatedNodes property on target when called', function () {
+			it('should set relatedNodes property on target when called and pass each node into DqNode', function () {
+				var orig = window.DqNode;
+				var success = false;
+				window.DqNode = function (n) {
+					assert.equal(n, expected[0]);
+					success = true;
+					return n;
+				};
 				var target = {},
 					expected = [{monkeys: 'bananas' }],
 					helper = utils.checkHelper(target, noop);
@@ -57,7 +64,24 @@ describe('utils.checkHelper', function () {
 				assert.notProperty(target, 'relatedNodes');
 				helper.relatedNodes(expected);
 				assert.deepEqual(target.relatedNodes, expected);
+				assert.isTrue(success);
 
+				window.DqNode = orig;
+			});
+			it('should cast the object to an array', function () {
+				var orig = window.DqNode;
+				window.DqNode = function (n) {
+					return n;
+				};
+				var target = {},
+					expected = [{monkeys: 'bananas' }],
+					helper = utils.checkHelper(target, noop);
+
+				helper.relatedNodes(expected[0]);
+				assert.isArray(target.relatedNodes);
+				assert.deepEqual(target.relatedNodes, expected);
+
+				window.DqNode = orig;
 			});
 		});
 
