@@ -106,17 +106,6 @@ module.exports = function (grunt) {
 		}
 	});
 
-	grunt.registerTask('convert-check', function () {
-		var files = grunt.file.expand(['lib/checks/**/*.json']);
-		files.forEach(function (file) {
-			var src = grunt.file.readJSON(file);
-			if (src.result) {
-				src.type = src.result;
-				delete src.result;
-			}
-			grunt.file.write(file, JSON.stringify(src, null, '\t'));
-		});
-	});
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
 	grunt.registerTask('test', ['build', 'fixture', 'connect:test', 'mocha']);
 	grunt.registerTask('build', ['rules', 'uglify']);
