@@ -1,4 +1,4 @@
-/*global Audit, RuleResult */
+/*global Audit, RuleResult, CheckResult, RuleFrameResult */
 describe('Audit', function () {
 	'use strict';
 	var a;
@@ -15,7 +15,6 @@ describe('Audit', function () {
 	}, {
 		id: 'positive2',
 		selector: '#monkeys',
-		result: 'FAIL',
 		checks: [{
 			id: 'positive2-check1',
 			evaluate: function () {
@@ -25,18 +24,17 @@ describe('Audit', function () {
 	}, {
 		id: 'negative1',
 		selector: 'div',
-		result: 'FAIL',
 		checks: [{
 			id: 'negative1-check1',
+			type: 'FAIL',
 			evaluate: function () {
-				return false;
+				return true;
 			}
 		}]
 	}, {
 		id: 'positive3',
 		selector: 'blink',
-		result: 'FAIL',
-		type: 'PAGE',
+		type: 'XFRAME',
 		checks: [{
 			id: 'positive3-check1',
 			evaluate: function () {
@@ -111,13 +109,15 @@ describe('Audit', function () {
 							frames: []
 						},
 						result: 'PASS',
-						value: true,
 						checks: [{
+							setResult: CheckResult.prototype.setResult,
 							id: 'positive1-check1',
-							result: 'PASS',
+							certainty: 'DEFINITE',
+							interpretation: 'VIOLATION',
+							type: 'PASS',
+							result: true,
 							data: null,
 							async: false,
-							value: true,
 							error: null
 						}]
 					}, {
@@ -127,13 +127,15 @@ describe('Audit', function () {
 							frames: []
 						},
 						result: 'PASS',
-						value: true,
 						checks: [{
+							setResult: CheckResult.prototype.setResult,
 							id: 'positive1-check1',
-							result: 'PASS',
+							certainty: 'DEFINITE',
+							interpretation: 'VIOLATION',
+							type: 'PASS',
+							result: true,
 							data: null,
 							async: false,
-							value: true,
 							error: null
 						}]
 					}],
@@ -149,13 +151,15 @@ describe('Audit', function () {
 							frames: []
 						},
 						result: 'PASS',
-						value: true,
 						checks: [{
+							setResult: CheckResult.prototype.setResult,
 							id: 'positive2-check1',
-							result: 'PASS',
+							certainty: 'DEFINITE',
+							interpretation: 'VIOLATION',
+							type: 'PASS',
+							result: true,
 							data: null,
 							async: false,
-							value: true,
 							error: null
 						}]
 					}],
@@ -171,13 +175,15 @@ describe('Audit', function () {
 							frames: []
 						},
 						result: 'FAIL',
-						value: false,
 						checks: [{
+							setResult: CheckResult.prototype.setResult,
 							id: 'negative1-check1',
-							result: 'PASS',
+							certainty: 'DEFINITE',
+							interpretation: 'VIOLATION',
+							type: 'FAIL',
+							result: true,
 							data: null,
 							async: false,
-							value: false,
 							error: null
 						}]
 					}],
@@ -185,7 +191,7 @@ describe('Audit', function () {
 				}, {
 					addResults: RuleFrameResult.prototype.addResults,
 					id: 'positive3',
-					type: 'PAGE',
+					type: 'XFRAME',
 					details: [{
 						node: {
 							selector: '#fixture > blink',
@@ -193,11 +199,14 @@ describe('Audit', function () {
 							frames: []
 						},
 						checks: [{
+							setResult: CheckResult.prototype.setResult,
 							id: 'positive3-check1',
-							result: 'PASS',
+							certainty: 'DEFINITE',
+							interpretation: 'VIOLATION',
+							type: 'PASS',
+							result: true,
 							data: null,
 							async: false,
-							value: true,
 							error: null
 						}]
 					}]

@@ -190,7 +190,7 @@ describe('Rule', function () {
 				});
 			});
 
-			describe('PAGE rule', function () {
+			describe('XFRAME rule', function () {
 				it('should create a RuleFrameResult', function () {
 					var orig = window.RuleFrameResult;
 					var success = false;
@@ -200,7 +200,7 @@ describe('Rule', function () {
 						success = true;
 					};
 
-					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats'}], type: 'PAGE' });
+					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats'}], type: 'XFRAME' });
 					rule.run({ include: document }, {}, function () {});
 					assert.isTrue(success);
 					window.RuleFrameResult = orig;
@@ -208,7 +208,7 @@ describe('Rule', function () {
 				it('should execute rule callback', function () {
 					var success = false;
 
-					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats'}], type: 'PAGE'});
+					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats'}], type: 'XFRAME'});
 					rule.run({ include: document }, {}, function () {
 						success = true;
 					});
@@ -227,7 +227,7 @@ describe('Rule', function () {
 						},
 						id: 'cats'
 					}],
-					type: 'PAGE',
+					type: 'XFRAME',
 					id: 'tests'
 				});
 				rfr = new RuleFrameResult(rule);
@@ -413,7 +413,7 @@ describe('Rule', function () {
 
 			it('should be overridden if passed in', function () {
 				var spec = {
-					type : 'PAGE'
+					type : 'XFRAME'
 				};
 				assert.equal(new Rule(spec).type, spec.type);
 			});
