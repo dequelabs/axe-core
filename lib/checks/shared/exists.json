@@ -1,6 +1,6 @@
 {
 	"id": "exists",
 	"help": "Element exists",
-	"result": "FAIL",
-	"evaluate": "exists.js"
+	"evaluate": "exists.js",
+	"type": "FAIL"
 }
