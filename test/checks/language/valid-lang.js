@@ -15,6 +15,23 @@ describe('valid-lang', function () {
 		assert.isTrue(checks['valid-lang'].evaluate(node, ['blah', 'blah', 'woohoo']));
 	});
 
+	it('should lowercase options and attribute first', function () {
+		var node = document.createElement('div');
+		node.setAttribute('lang', 'wooHOo');
+		fixture.appendChild(node);
+
+		assert.isTrue(checks['valid-lang'].evaluate(node, ['blah', 'blah', 'wOohoo']));
+
+	});
+
+	it('should also check xml:lang', function () {
+		var node = document.createElement('div');
+		node.setAttribute('xml:lang', 'woohoo');
+		fixture.appendChild(node);
+
+		assert.isTrue(checks['valid-lang'].evaluate(node, ['blah', 'blah', 'woohoo']));
+	});
+
 	it('should return false if a lang attribute is not present in options', function () {
 		var node = document.createElement('div');
 		node.setAttribute('lang', 'en-FOO');
