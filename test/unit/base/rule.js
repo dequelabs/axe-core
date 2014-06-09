@@ -1,4 +1,4 @@
-/*global Rule, Check, RuleFrameResult */
+/*global Rule, Check */
 describe('Rule', function () {
 	'use strict';
 
@@ -93,11 +93,11 @@ describe('Rule', function () {
 
 			});
 
-			it('should execute Check#runEvaluate on its child checks', function (done) {
+			it('should execute Check#run on its child checks', function (done) {
 				fixture.innerHTML = '<blink>Hi</blink>';
-				var orig = Check.prototype.runEvaluate;
+				var orig = Check.prototype.run;
 				var success = false;
-				Check.prototype.runEvaluate = function (_, __, cb) {
+				Check.prototype.run = function (_, __, cb) {
 					success = true;
 					cb(true);
 				};
@@ -106,7 +106,7 @@ describe('Rule', function () {
 
 				rule.run({ include: [fixture] }, {}, function () {
 					assert.isTrue(success);
-					Check.prototype.runEvaluate = orig;
+					Check.prototype.run = orig;
 					done();
 				});
 
@@ -114,10 +114,10 @@ describe('Rule', function () {
 
 			it('should NOT execute Check#run on checks that are disabled', function (done) {
 				fixture.innerHTML = '<blink>Hi</blink>';
-				var orig = Check.prototype.runEvaluate;
+				var orig = Check.prototype.run;
 				var success = true;
 				var ran = 0;
-				Check.prototype.runEvaluate = function (_, __, cb) {
+				Check.prototype.run = function (_, __, cb) {
 					ran++;
 					if (this.id === 'dogs') {
 						success = false;
@@ -130,18 +130,18 @@ describe('Rule', function () {
 
 					assert.isTrue(success);
 					assert.equal(ran, 1);
-					Check.prototype.runEvaluate = orig;
+					Check.prototype.run = orig;
 					done();
 				});
 
 			});
 
-			it('should pass the matching option to runEvaluate', function (done) {
+			it('should pass the matching option to run', function (done) {
 				fixture.innerHTML = '<blink>Hi</blink>';
-				var orig = Check.prototype.runEvaluate,
+				var orig = Check.prototype.run,
 					option = {id: 'cats', data: 'minkeys'};
 
-				Check.prototype.runEvaluate = function (node, options, cb) {
+				Check.prototype.run = function (node, options, cb) {
 					assert.deepEqual(options, option);
 					cb(true);
 				};
@@ -150,7 +150,7 @@ describe('Rule', function () {
 				rule.run({ include: [document] }, {
 					checks: [option]
 				}, function () {
-					Check.prototype.runEvaluate = orig;
+					Check.prototype.run = orig;
 					done();
 				});
 			});
@@ -187,106 +187,6 @@ describe('Rule', function () {
 						success = true;
 					});
 					assert.isTrue(success);
-				});
-			});
-
-			describe('XFRAME rule', function () {
-				it('should create a RuleFrameResult', function () {
-					var orig = window.RuleFrameResult;
-					var success = false;
-					window.RuleFrameResult = function (r) {
-						this.details = [];
-						assert.equal(rule, r);
-						success = true;
-					};
-
-					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats'}], type: 'XFRAME' });
-					rule.run({ include: document }, {}, function () {});
-					assert.isTrue(success);
-					window.RuleFrameResult = orig;
-				});
-				it('should execute rule callback', function () {
-					var success = false;
-
-					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats'}], type: 'XFRAME'});
-					rule.run({ include: document }, {}, function () {
-						success = true;
-					});
-					assert.isTrue(success);
-				});
-			});
-		});
-		describe('after', function () {
-			var rfr, rule, data, afterResult = false;
-			beforeEach(function () {
-				rule = new Rule({
-					checks: [{
-						after: function (ruleData) {
-							data = ruleData;
-							return afterResult;
-						},
-						id: 'cats'
-					}],
-					type: 'XFRAME',
-					id: 'tests'
-				});
-				rfr = new RuleFrameResult(rule);
-			});
-			afterEach(function () {
-				data = undefined;
-			});
-			it('should pass the check data to the check\'s after function', function (done) {
-				rfr.addResults(document.documentElement, [{id: 'cats', data: 'dogs'}]);
-				rule.after(document.documentElement, {}, rfr, function () {
-					assert.deepEqual(data, ['dogs']);
-					done();
-				});
-			});
-			it('should return a new RuleResult object', function (done) {
-				rfr.addResults(document.documentElement, [{id: 'cats', data: 'dogs'}]);
-				rule.after(document.documentElement, {}, rfr, function (rr) {
-					assert.ok(rr);
-					assert.ok(rfr !== rr);
-					done();
-				});
-			});
-			it('should RuleResult must be a PASS if the after function returns true', function (done) {
-				afterResult = true;
-				rfr.addResults(document.documentElement, [{id: 'cats', data: 'dogs'}]);
-				rule.after(document.documentElement, {}, rfr, function (rr) {
-					assert.equal(rr.result, 'PASS');
-					done();
-				});
-			});
-			it('should RuleResult must be a FAIL if the after function returns false', function (done) {
-				afterResult = false;
-				rfr.addResults(document.documentElement, [{id: 'cats', data: 'dogs'}]);
-				rule.after(document.documentElement, {}, rfr, function (rr) {
-					assert.equal(rr.result, 'FAIL');
-					done();
-				});
-			});
-			it('should not throw if the options object is undefined', function () {
-				afterResult = false;
-				rfr.addResults(document.documentElement, [{id: 'cats', data: 'dogs'}]);
-				assert.doesNotThrow(function () {
-					rule.after(document.documentElement, undefined, rfr, function () {
-					});
-				});
-			});
-			it('should pass the matching option to runAfter', function () {
-				var orig = Check.prototype.runAfter,
-					option = {id: 'cats', data: 'minkeys'};
-
-				Check.prototype.runAfter = function (data, options) {
-					assert.deepEqual(options, option);
-					Check.prototype.runAfter = orig;
-				};
-
-				afterResult = true;
-				rfr.addResults(document.documentElement, [{id: 'cats', data: 'dogs'}]);
-				rule.after(document.documentElement, { checks: [option] }, rfr, function (rr) {
-					assert.equal(rr.result, 'PASS');
 				});
 			});
 		});
@@ -403,19 +303,6 @@ describe('Rule', function () {
 			it('should default to prototype', function () {
 				var spec = {};
 				assert.equal(new Rule(spec).gather, Rule.prototype.gather);
-			});
-		});
-		describe('.type', function () {
-			it('should be set to "NODE" by default', function () {
-				var spec = {};
-				assert.equal(new Rule(spec).type, 'NODE');
-			});
-
-			it('should be overridden if passed in', function () {
-				var spec = {
-					type : 'XFRAME'
-				};
-				assert.equal(new Rule(spec).type, spec.type);
 			});
 		});
 

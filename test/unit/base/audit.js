@@ -193,7 +193,7 @@ describe('Audit', function () {
 					}],
 					result: 'FAIL'
 				}, {
-					addResults: RuleFrameResult.prototype.addResults,
+					addResults: RuleResult.prototype.addResults,
 					id: 'positive3',
 					type: 'XFRAME',
 					details: [{
@@ -295,79 +295,5 @@ describe('Audit', function () {
 			assert.equal(rule, undefined);
 		});
 	});
-	describe('Audit#after', function () {
-		it('should call the rule\'s after function', function (done) {
-			var targetRule = mockRules[mockRules.length - 1],
-				rule = a.findRule(targetRule.id),
-				called = false,
-				orig;
-			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
-				'<div id="monkeys">bananas</div>' +
-				'<input type="text" aria-labelledby="monkeys">' +
-				'<blink>FAIL ME</blink>';
 
-			orig = rule.after;
-			rule.after = function (node, options, ruleResult, callback) {
-				called = true;
-				callback(ruleResult);
-			};
-			a.run({ include: [fixture] }, {}, function (result) {
-				a.after(document, {}, result, function () {
-					assert.ok(called);
-					rule.after = orig;
-					done();
-				});
-			});
-		});
-		it('should pass the option to the after function', function (done) {
-			var targetRule = mockRules[mockRules.length - 1],
-				rule = a.findRule(targetRule.id),
-				passed = false,
-				orig,
-				options;
-			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
-				'<div id="monkeys">bananas</div>' +
-				'<input type="text" aria-labelledby="monkeys">' +
-				'<blink>FAIL ME</blink>';
-
-			orig = rule.after;
-			options = [{id: targetRule.id, data: 'monkeys'}];
-			rule.after = function (node, options, ruleResult, callback) {
-				assert.ok(options);
-				assert.equal(options.id, targetRule.id);
-				assert.equal(options.data, 'monkeys');
-				passed = true;
-				callback(ruleResult);
-			};
-			a.run({ include: [fixture] }, options, function (result) {
-				a.after(null, options, result, function () {
-					assert.ok(passed);
-					rule.after = orig;
-					done();
-				});
-			});
-		});
-		it('should replace the FrameRuleResult object', function (done) {
-			fixture.innerHTML = '<a href="#">link</a>';
-
-			a.run({ include: [fixture] }, {}, function (result) {
-				var rfr;
-				result.forEach(function (r) {
-					if (r.id === 'positive3') {
-						rfr = r;
-					}
-				});
-				a.after(null, {}, result, function () {
-					var nrfr;
-					result.forEach(function (r) {
-						if (r.id === 'positive3') {
-							nrfr = r;
-						}
-					});
-					assert.notEqual(rfr, nrfr);
-					done();
-				});
-			});
-		});
-	});
 });

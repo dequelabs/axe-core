@@ -51,19 +51,4 @@ describe('dqre.run', function () {
 		});
 	});
 
-	it('should call audit.after', function (done) {
-		var called = false;
-		dqre.configure({ rules: [], messagse: {}});
-
-		dqre.audit.after = function (context, options, results, fn) {
-			called = true;
-			fn(results);
-		};
-		createFrames(2, function () {
-			dqre.run(document, {}, function () {
-				assert.ok(called);
-				done();
-			});
-		});
-	});
 });

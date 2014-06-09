@@ -394,7 +394,7 @@ describe('mergeResults', function () {
 			one.addResults(document.body, []);
 		} else {
 			check = new CheckResult({id: 'check', type: oneResult});
-			check.setResult(true);
+			check.result = true;
 			one.addResults(document.body, [check]);
 		}
 		one.result = utils.bubbleRuleResult(one.details);
@@ -402,7 +402,7 @@ describe('mergeResults', function () {
 			two.addResults(document.body, []);
 		} else {
 			check = new CheckResult({id: 'check', type: twoResult});
-			check.setResult(true);
+			check.result = true;
 			two.addResults(document.body, [check]);
 		}
 		two.result = utils.bubbleRuleResult(two.details);
@@ -419,8 +419,8 @@ describe('mergeResults', function () {
 		var merged,
 			check1 = new CheckResult({id: 'check', type: dqre.constants.type.PASS}),
 			check2 = new CheckResult({id: 'check', type: dqre.constants.type.FAIL});
-		check1.setResult(true);
-		check2.setResult(true);
+		check1.result = true;
+		check2.result = true;
 		one.addResults(document.body, [check1]);
 		two.addResults(document.body, [check2]);
 		one.result = utils.bubbleRuleResult(one.details) || one.result;

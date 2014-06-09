@@ -44,24 +44,6 @@ describe('dqre.constants', function () {
 			assert.equal(dqre.constants.result.NA, 'NA');
 		});
 	});
-	describe('checkResult', function () {
-
-		it('should be an object', function () {
-			assert.isObject(dqre.constants.result);
-		});
-
-		it('should have PASS', function () {
-			assert.equal(dqre.constants.result.PASS, 'PASS');
-		});
-
-		it('should have FAIL', function () {
-			assert.equal(dqre.constants.result.FAIL, 'FAIL');
-		});
-
-		it('should have NA', function () {
-			assert.equal(dqre.constants.result.NA, 'NA');
-		});
-	});
 	describe('certainty', function () {
 
 		it('should be an object', function () {
@@ -92,20 +74,6 @@ describe('dqre.constants', function () {
 
 		it('should have FAIL', function () {
 			assert.equal(dqre.constants.type.FAIL, 'FAIL');
-		});
-	});
-	describe('rule', function () {
-
-		it('should be an object', function () {
-			assert.isObject(dqre.constants.rule);
-		});
-
-		it('should have NODE', function () {
-			assert.equal(dqre.constants.rule.NODE, 'NODE');
-		});
-
-		it('should have XFRAME', function () {
-			assert.equal(dqre.constants.rule.XFRAME, 'XFRAME');
 		});
 	});
 });

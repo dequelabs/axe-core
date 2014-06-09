@@ -41,4 +41,4 @@ describe('CheckResult', function () {
 	});
 
 
-});});
+});
