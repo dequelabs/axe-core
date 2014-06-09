@@ -1,0 +1,5 @@
+{
+	"id": "consistent-columns",
+	"help": "The table does not have the same number of columns in every row",
+	"evaluate": "consistent-columns.js"
+}

@@ -1,5 +1,0 @@
-{
-	"id": "aria-label",
-	"help": "Non-empty `aria-label` used on input",
-	"evaluate": "aria-label.js"
-}

@@ -29,4 +29,13 @@ describe('aria-label', function () {
 
 		assert.isFalse(checks['aria-label'].evaluate(node));
 	});
+
+	it('should collapse whitespace', function () {
+		var node = document.createElement('div');
+		node.setAttribute('aria-label', ' \t \n \r \t  \t\r\n ');
+		fixture.appendChild(node);
+
+		assert.isFalse(checks['aria-label'].evaluate(node));
+
+	});
 });

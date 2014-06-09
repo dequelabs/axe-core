@@ -1,0 +1,5 @@
+{
+	"id": "meta-viewport",
+	"help": "The meta tag being used disables zooming",
+	"evaluate": "meta-viewport.js"
+}

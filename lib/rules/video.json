@@ -1,0 +1,13 @@
+{
+	"id": "caption",
+	"help": "HTML5 video elements need a captions and an audio description track",
+	"selector": "video",
+	"checks": ["caption", "description"],
+	"tags": [
+		"wcag2a",
+		"wcag122",
+		"wcag123",
+		"section508",
+		"section508a"
+	]
+}

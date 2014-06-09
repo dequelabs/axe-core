@@ -1,0 +1,12 @@
+{
+	"id": "caption",
+	"help": "HTML5 audio elements need a captions track",
+	"selector": "audio",
+	"checks": ["caption"],
+	"tags": [
+		"wcag2a",
+		"wcag122",
+		"section508",
+		"section508a"
+	]
+}
