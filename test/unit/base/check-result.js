@@ -11,9 +11,9 @@ describe('CheckResult', function () {
 		assert.equal(result.id, 'monkeys');
 	});
 
-	it('should default `result` to `PASS`', function () {
+	it('should default `type` to `PASS`', function () {
 		var result = new CheckResult({});
-		assert.equal(result.result, 'PASS');
+		assert.equal(result.type, 'PASS');
 	});
 
 	it('should set `data` to `null`', function () {
@@ -24,6 +24,15 @@ describe('CheckResult', function () {
 	it('should set `async` to `false`', function () {
 		var result = new CheckResult({});
 		assert.isFalse(result.async);
+	});
+
+	it('should inherit certainty from check', function () {
+		var result = new CheckResult({certainty: 'monkeys'});
+		assert.equal(result.certainty, 'monkeys');
+	});
+	it('should inherit interpretation from check', function () {
+		var result = new CheckResult({interpretation: 'monkeys'});
+		assert.equal(result.interpretation, 'monkeys');
 	});
 
 });
