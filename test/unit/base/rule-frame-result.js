@@ -18,7 +18,7 @@ describe('RuleFrameResult', function () {
 	describe('addResults', function () {
 		it('should push to details', function () {
 			var result = new RuleFrameResult({id: 'monkeys'}),
-				checks = [{result: 'PASS', value: true}, {result: 'FAIL', value: true}, {result: 'PASS', value: true}],
+				checks = [{result: 'PASS'}, {result: 'FAIL'}, {result: 'PASS'}],
 				div = document.getElementById('fixture');
 
 			result.addResults(div, checks);
