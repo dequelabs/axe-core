@@ -1,11 +1,21 @@
 
-describe('utils.bubbleCheckResult', function () {
+describe('utils.calculateRuleResult', function () {
 	'use strict';
 
 	it('should be a function', function () {
-		assert.isFunction(utils.bubbleCheckResult);
+		assert.isFunction(utils.calculateRuleResult);
 	});
 
+});
+describe('utils.calculateCheckResult', function () {
+	'use strict';
+
+	it('should be a function', function () {
+		assert.isFunction(utils.calculateCheckResult);
+	});
+
+});
+/*
 	it('should return result: NA with empty checks', function () {
 		var result = utils.bubbleCheckResult([]);
 		assert.deepEqual(result, 'NA');
@@ -56,3 +66,4 @@ describe('utils.bubbleCheckResult', function () {
 		assert.equal(result, 'FAIL');
 	});
 });
+*/

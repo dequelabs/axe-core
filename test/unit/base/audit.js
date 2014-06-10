@@ -34,7 +34,6 @@ describe('Audit', function () {
 	}, {
 		id: 'positive3',
 		selector: 'blink',
-		type: 'XFRAME',
 		checks: [{
 			id: 'positive3-check1',
 			evaluate: function () {
@@ -76,10 +75,6 @@ describe('Audit', function () {
 		});
 	});
 
-	describe('Audit#findRule', function () {
-		it('should have tests');
-	});
-
 	describe('Audit#run', function () {
 		it('should work', function (done) {
 			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
@@ -100,17 +95,18 @@ describe('Audit', function () {
 			a.run({ include: [fixture] }, {}, function (results) {
 				var expected = [{
 					id: 'positive1',
+					result: 'NA',
 					details: [{
 						node: {
 							selector: '#fixture > input:nth-of-type(1)',
 							source: '<input aria-label="monkeys" type="text">',
 							frames: []
 						},
-						result: 'PASS',
 						checks: [{
 							id: 'positive1-check1',
 							certainty: 'DEFINITE',
 							interpretation: 'VIOLATION',
+							impact: 'MAJOR',
 							type: 'PASS',
 							result: true,
 							data: null,
@@ -124,11 +120,11 @@ describe('Audit', function () {
 							source: '<input aria-labelledby="monkeys" type="text">',
 							frames: []
 						},
-						result: 'PASS',
 						checks: [{
 							id: 'positive1-check1',
 							certainty: 'DEFINITE',
 							interpretation: 'VIOLATION',
+							impact: 'MAJOR',
 							type: 'PASS',
 							result: true,
 							data: null,
@@ -136,22 +132,21 @@ describe('Audit', function () {
 							error: null,
 							relatedNodes: []
 						}]
-					}],
-					result: 'PASS'
+					}]
 				}, {
-
 					id: 'positive2',
+					result: 'NA',
 					details: [{
 						node: {
 							selector: '#monkeys',
 							source: '<div id="monkeys">bananas</div>',
 							frames: []
 						},
-						result: 'PASS',
 						checks: [{
 							id: 'positive2-check1',
 							certainty: 'DEFINITE',
 							interpretation: 'VIOLATION',
+							impact: 'MAJOR',
 							type: 'PASS',
 							result: true,
 							data: null,
@@ -159,22 +154,21 @@ describe('Audit', function () {
 							error: null,
 							relatedNodes: []
 						}]
-					}],
-					result: 'PASS'
+					}]
 				}, {
-
 					id: 'negative1',
+					result: 'NA',
 					details: [{
 						node: {
 							selector: '#monkeys',
 							source: '<div id="monkeys">bananas</div>',
 							frames: []
 						},
-						result: 'FAIL',
 						checks: [{
 							id: 'negative1-check1',
 							certainty: 'DEFINITE',
 							interpretation: 'VIOLATION',
+							impact: 'MAJOR',
 							type: 'FAIL',
 							result: true,
 							data: null,
@@ -182,11 +176,10 @@ describe('Audit', function () {
 							error: null,
 							relatedNodes: []
 						}]
-					}],
-					result: 'FAIL'
+					}]
 				}, {
-
 					id: 'positive3',
+					result: 'NA',
 					details: [{
 						node: {
 							selector: '#fixture > blink',
@@ -197,6 +190,7 @@ describe('Audit', function () {
 							id: 'positive3-check1',
 							certainty: 'DEFINITE',
 							interpretation: 'VIOLATION',
+							impact: 'MAJOR',
 							type: 'PASS',
 							result: true,
 							data: null,
@@ -218,7 +212,7 @@ describe('Audit', function () {
 		});
 		it('should call the rule\'s run function', function (done) {
 			var targetRule = mockRules[mockRules.length - 1],
-				rule = a.findRule(targetRule.id),
+				rule = utils.findBy(a.rules, 'id', targetRule.id),
 				called = false,
 				orig;
 
@@ -236,7 +230,7 @@ describe('Audit', function () {
 		});
 		it('should pass the option to the run function', function (done) {
 			var targetRule = mockRules[mockRules.length - 1],
-				rule = a.findRule(targetRule.id),
+				rule = utils.findBy(a.rules, 'id', targetRule.id),
 				passed = false,
 				orig, options;
 
@@ -272,18 +266,6 @@ describe('Audit', function () {
 				assert.deepEqual(results, []);
 			});
 
-		});
-	});
-	describe('Audit#findRule', function () {
-		it('should return the rule object by its id', function () {
-			var targetRule = mockRules[mockRules.length - 1],
-				rule = a.findRule(targetRule.id);
-			assert.ok(rule);
-			assert.equal(rule.id, targetRule.id);
-		});
-		it('should return undefined if the id does not exist', function () {
-			var rule = a.findRule('somefalseid');
-			assert.equal(rule, undefined);
 		});
 	});
 

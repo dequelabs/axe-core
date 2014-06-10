@@ -69,55 +69,6 @@ describe('dqre.run', function () {
 				checks: [{
 					id: 'has-target',
 					evaluate: function () {
-						return true;
-					}
-				}]
-			}],
-			messages: {}
-		});
-
-		iframeReady('../mock/frames/context.html', fixture, 'context-test', function () {
-
-			dqre.run('#fixture', {}, function (results) {
-				assert.deepEqual(results, [{
-					id: 'div#target',
-					type: 'NODE',
-					details: [{
-						node: {
-							selector: '#target',
-							source: '<div id="target"></div>',
-							frames: ['#context-test']
-						},
-						result: 'PASS',
-						checks: [{
-							certainty: 'DEFINITE',
-							interpretation: 'VIOLATION',
-							id: 'has-target',
-							type: 'PASS',
-							data: null,
-							async: false,
-							result: true,
-							error: null,
-							relatedNodes: []
-						}]
-					}],
-					result: 'PASS'
-				}]);
-
-				done();
-			});
-
-		});
-	});
-	it('should properly calculate context and return results from matching frames - after', function (done) {
-
-		dqre.configure({
-			rules: [{
-				id: 'div#target',
-				selector: '#target',
-				checks: [{
-					id: 'has-target',
-					evaluate: function () {
 						return false;
 					},
 					after: function (results) {
@@ -151,7 +102,6 @@ describe('dqre.run', function () {
 			dqre.run('#fixture', {}, function (results) {
 				assert.deepEqual(results, [{
 					id: 'div#target',
-					type: 'NODE',
 					details: [{
 						node: {
 							selector: '#target',
@@ -162,7 +112,31 @@ describe('dqre.run', function () {
 						checks: [{
 							certainty: 'DEFINITE',
 							interpretation: 'VIOLATION',
+							impact: 'MAJOR',
 							id: 'has-target',
+							type: 'PASS',
+							data: null,
+							async: false,
+							result: true,
+							error: null,
+							relatedNodes: []
+						}]
+					}],
+					result: 'PASS'
+				}, {
+					id: 'first-div',
+					details: [{
+						node: {
+							selector: '#foo',
+							source: '<div id="foo">\n		<div id="bar"></div>\n	</div>',
+							frames: ['#context-test']
+						},
+						result: 'PASS',
+						checks: [{
+							certainty: 'DEFINITE',
+							interpretation: 'VIOLATION',
+							impact: 'MAJOR',
+							id: 'first-div',
 							type: 'PASS',
 							data: null,
 							async: false,
