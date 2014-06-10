@@ -1,6 +1,16 @@
 describe('dqre.run', function () {
 	'use strict';
 
+	function iframeReady(src, context, id, cb) {
+		var i = document.createElement('iframe');
+		i.addEventListener('load', function () {
+			cb();
+		});
+		i.src = src;
+		i.id = id;
+		context.appendChild(i);
+	}
+
 	function createFrames(num, callback) {
 		var frame,
 			loaded = 0;
@@ -41,7 +51,7 @@ describe('dqre.run', function () {
 	});
 
 	it('should work', function (done) {
-		dqre.configure({ rules: [], messagse: {}});
+		dqre.configure({ rules: [], messages: {}});
 
 		createFrames(2, function () {
 			dqre.run(document, {}, function () {
@@ -50,6 +60,52 @@ describe('dqre.run', function () {
 
 		});
 	});
+	it('should properly calculate context and return results from matching frames', function (done) {
 
-});
+		dqre.configure({
+			rules: [{
+				id: 'div#target',
+				selector: '#target',
+				checks: [{
+					id: 'has-target',
+					evaluate: function () {
+						return true;
+					}
+				}]
+			}],
+			messages: {}
+		});
 
+		iframeReady('../mock/frames/context.html', fixture, 'context-test', function () {
+
+			dqre.run('#fixture', {}, function (results) {
+				assert.deepEqual(results, [{
+					id: 'div#target',
+					type: 'NODE',
+					details: [{
+						node: {
+							selector: '#target',
+							source: '<div id="target"></div>',
+							frames: ['#context-test']
+						},
+						result: 'PASS',
+						checks: [{
+							certainty: 'DEFINITE',
+							interpretation: 'VIOLATION',
+							id: 'has-target',
+							type: 'PASS',
+							data: null,
+							async: false,
+							result: true,
+							error: null/*, @todo add back when it starts to fail (PR-22 / KSD-98)
+							relatedNodes: [] */
+						}]
+					}],
+					result: 'PASS'
+				}]);
+
+				done();
+			});
+
+		});
+	});});
