@@ -102,6 +102,7 @@ describe('dqre.run', function () {
 			dqre.run('#fixture', {}, function (results) {
 				assert.deepEqual(results, [{
 					id: 'div#target',
+					pageLevel: false,
 					details: [{
 						node: {
 							selector: '#target',
@@ -125,6 +126,7 @@ describe('dqre.run', function () {
 					result: 'PASS'
 				}, {
 					id: 'first-div',
+					pageLevel: false,
 					details: [{
 						node: {
 							selector: '#foo',
