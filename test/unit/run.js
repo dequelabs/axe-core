@@ -52,3 +52,4 @@ describe('dqre.run', function () {
 	});
 
 });
+

@@ -1,4 +1,4 @@
-/*global Audit, RuleResult, CheckResult, RuleFrameResult */
+/*global Audit */
 describe('Audit', function () {
 	'use strict';
 	var a;
@@ -99,9 +99,7 @@ describe('Audit', function () {
 
 			a.run({ include: [fixture] }, {}, function (results) {
 				var expected = [{
-					addResults: RuleResult.prototype.addResults,
 					id: 'positive1',
-					type: 'NODE',
 					details: [{
 						node: {
 							selector: '#fixture > input:nth-of-type(1)',
@@ -110,7 +108,6 @@ describe('Audit', function () {
 						},
 						result: 'PASS',
 						checks: [{
-							setResult: CheckResult.prototype.setResult,
 							id: 'positive1-check1',
 							certainty: 'DEFINITE',
 							interpretation: 'VIOLATION',
@@ -129,7 +126,6 @@ describe('Audit', function () {
 						},
 						result: 'PASS',
 						checks: [{
-							setResult: CheckResult.prototype.setResult,
 							id: 'positive1-check1',
 							certainty: 'DEFINITE',
 							interpretation: 'VIOLATION',
@@ -143,9 +139,8 @@ describe('Audit', function () {
 					}],
 					result: 'PASS'
 				}, {
-					addResults: RuleResult.prototype.addResults,
+
 					id: 'positive2',
-					type: 'NODE',
 					details: [{
 						node: {
 							selector: '#monkeys',
@@ -154,7 +149,6 @@ describe('Audit', function () {
 						},
 						result: 'PASS',
 						checks: [{
-							setResult: CheckResult.prototype.setResult,
 							id: 'positive2-check1',
 							certainty: 'DEFINITE',
 							interpretation: 'VIOLATION',
@@ -168,9 +162,8 @@ describe('Audit', function () {
 					}],
 					result: 'PASS'
 				}, {
-					addResults: RuleResult.prototype.addResults,
+
 					id: 'negative1',
-					type: 'NODE',
 					details: [{
 						node: {
 							selector: '#monkeys',
@@ -179,7 +172,6 @@ describe('Audit', function () {
 						},
 						result: 'FAIL',
 						checks: [{
-							setResult: CheckResult.prototype.setResult,
 							id: 'negative1-check1',
 							certainty: 'DEFINITE',
 							interpretation: 'VIOLATION',
@@ -193,9 +185,8 @@ describe('Audit', function () {
 					}],
 					result: 'FAIL'
 				}, {
-					addResults: RuleResult.prototype.addResults,
+
 					id: 'positive3',
-					type: 'XFRAME',
 					details: [{
 						node: {
 							selector: '#fixture > blink',
@@ -203,7 +194,6 @@ describe('Audit', function () {
 							frames: []
 						},
 						checks: [{
-							setResult: CheckResult.prototype.setResult,
 							id: 'positive3-check1',
 							certainty: 'DEFINITE',
 							interpretation: 'VIOLATION',
@@ -239,6 +229,7 @@ describe('Audit', function () {
 				callback({});
 			};
 			a.run({ include: [document] }, {}, function () {
+				assert.isTrue(called);
 				rule.run = orig;
 				done();
 			});

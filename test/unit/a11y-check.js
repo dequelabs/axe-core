@@ -1,4 +1,4 @@
-/* global mergeResults, CheckResult, RuleResult, Rule, nodeSelectorArray, failureSummary, failureLevel, ruleHelp */
+/* global nodeSelectorArray, failureSummary, failureLevel, ruleHelp */
 
 describe('failureLevel', function () {
 	'use strict';
@@ -383,6 +383,7 @@ describe('ruleHelp', function () {
 	});
 });
 
+/*
 describe('mergeResults', function () {
 	'use strict';
 
@@ -474,3 +475,4 @@ describe('mergeResults', function () {
 	});
 });
 
+*/
