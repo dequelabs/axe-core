@@ -20,6 +20,21 @@
 						return true;
 					}
 				}]
+			}, {
+				id: 'first-div',
+				selector: 'div',
+				checks: [{
+					id: 'first-div',
+					evaluate: function () {
+						return false;
+					},
+					after: function (results) {
+						if (results.length) {
+							results[0].result = true;
+						}
+						return [results[0]];
+					}
+				}]
 			}],
 			messages: {}
 		});

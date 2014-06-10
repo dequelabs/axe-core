@@ -97,8 +97,8 @@ describe('dqre.run', function () {
 							data: null,
 							async: false,
 							result: true,
-							error: null/*, @todo add back when it starts to fail (PR-22 / KSD-98)
-							relatedNodes: [] */
+							error: null,
+							relatedNodes: []
 						}]
 					}],
 					result: 'PASS'
@@ -108,4 +108,75 @@ describe('dqre.run', function () {
 			});
 
 		});
-	});});
+	});
+	it('should properly calculate context and return results from matching frames - after', function (done) {
+
+		dqre.configure({
+			rules: [{
+				id: 'div#target',
+				selector: '#target',
+				checks: [{
+					id: 'has-target',
+					evaluate: function () {
+						return false;
+					},
+					after: function (results) {
+						if (results.length) {
+							results[0].result = true;
+						}
+						return results;
+					}
+				}]
+			}, {
+				id: 'first-div',
+				selector: 'div',
+				checks: [{
+					id: 'first-div',
+					evaluate: function () {
+						return false;
+					},
+					after: function (results) {
+						if (results.length) {
+							results[0].result = true;
+						}
+						return [results[0]];
+					}
+				}]
+			}],
+			messages: {}
+		});
+
+		iframeReady('../mock/frames/context.html', fixture, 'context-test', function () {
+
+			dqre.run('#fixture', {}, function (results) {
+				assert.deepEqual(results, [{
+					id: 'div#target',
+					type: 'NODE',
+					details: [{
+						node: {
+							selector: '#target',
+							source: '<div id="target"></div>',
+							frames: ['#context-test']
+						},
+						result: 'PASS',
+						checks: [{
+							certainty: 'DEFINITE',
+							interpretation: 'VIOLATION',
+							id: 'has-target',
+							type: 'PASS',
+							data: null,
+							async: false,
+							result: true,
+							error: null,
+							relatedNodes: []
+						}]
+					}],
+					result: 'PASS'
+				}]);
+
+				done();
+			});
+
+		});
+	});
+});
