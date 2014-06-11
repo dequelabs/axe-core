@@ -1,171 +1,39 @@
-/* global nodeSelectorArray, failureSummary, failureLevel, ruleHelp */
-
-describe('failureLevel', function () {
-	'use strict';
-	it('should return definite if one of the failed checks is definite', function () {
-		var checks = [
-			{type: 'FAIL', result: 'FAIL', certainty: 'DEFINITE', impact: 'CRITICAL', interpretation: 'VIOLATION'}
-		],
-		level;
-		level = failureLevel({result: 'FAIL'}, {checks: checks});
-		assert.equal(level.certainty, 'DEFINITE');
-	});
-	it('should return potential if none of the failed checks is definite', function () {
-		var checks = [
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'CRITICAL', interpretation: 'VIOLATION'}
-		],
-		level;
-		level = failureLevel({result: 'FAIL'}, {checks: checks});
-		assert.equal(level.certainty, 'POTENTIAL');
-	});
-	it('should return violation if one of the failed checks is a violation', function () {
-		var checks = [
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'CRITICAL', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'CRITICAL', interpretation: 'VIOLATION'}
-		],
-		level;
-		level = failureLevel({result: 'FAIL'}, {checks: checks});
-		assert.equal(level.interpretation, 'VIOLATION');
-	});
-	it('should return best practice if none of the failed checks is a violation', function () {
-		var checks = [
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'CRITICAL', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'CRITICAL', interpretation: 'BESTPRACTICE'}
-		],
-		level;
-		level = failureLevel({result: 'FAIL'}, {checks: checks});
-		assert.equal(level.interpretation, 'BESTPRACTICE');
-	});
-	it('should return critical if one of the failed checks is critical', function () {
-		var checks = [
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'TRIVIAL', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'MINOR', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'MAJOR', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'CRITICAL', interpretation: 'BESTPRACTICE'}
-		],
-		level;
-		level = failureLevel({result: 'FAIL'}, {checks: checks});
-		assert.equal(level.impact, 'CRITICAL');
-	});
-	it('should return major if one of the failed checks is major and none critical', function () {
-		var checks = [
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'TRIVIAL', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'MINOR', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'MAJOR', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'MINOR', interpretation: 'BESTPRACTICE'}
-		],
-		level;
-		level = failureLevel({result: 'FAIL'}, {checks: checks});
-		assert.equal(level.impact, 'MAJOR');
-	});
-	it('should return minor if one of the failed checks is minor and none major and none critical', function () {
-		var checks = [
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'TRIVIAL', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'MINOR', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'TRIVIAL', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'MINOR', interpretation: 'BESTPRACTICE'}
-		],
-		level;
-		level = failureLevel({result: 'FAIL'}, {checks: checks});
-		assert.equal(level.impact, 'MINOR');
-	});
-	it('should return trivial if the failed checks are all trivial', function () {
-		var checks = [
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'TRIVIAL', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'TRIVIAL', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'TRIVIAL', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'FAIL', certainty: 'POTENTIAL', impact: 'TRIVIAL', interpretation: 'BESTPRACTICE'}
-		],
-		level;
-		level = failureLevel({result: 'FAIL'}, {checks: checks});
-		assert.equal(level.impact, 'TRIVIAL');
-	});
-	it('should return undefineds if the result is not a fail', function () {
-		var checks = [
-			{type: 'FAIL', result: 'PASS', certainty: 'POTENTIAL', impact: 'TRIVIAL', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'PASS', certainty: 'POTENTIAL', impact: 'TRIVIAL', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'PASS', certainty: 'POTENTIAL', impact: 'TRIVIAL', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'PASS', certainty: 'POTENTIAL', impact: 'TRIVIAL', interpretation: 'BESTPRACTICE'}
-		],
-		level;
-		level = failureLevel({result: 'PASS'}, {checks: checks});
-		assert.equal(level.impact, undefined);
-		assert.equal(level.certainty, undefined);
-		assert.equal(level.interpretation, undefined);
-	});
-	it('should return potential, bestpractices, trivial if there are no failed checks despite a failed result', function () {
-		var checks = [
-			{type: 'FAIL', result: 'PASS', certainty: 'POTENTIAL', impact: 'TRIVIAL', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'PASS', certainty: 'POTENTIAL', impact: 'TRIVIAL', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'PASS', certainty: 'POTENTIAL', impact: 'TRIVIAL', interpretation: 'BESTPRACTICE'},
-			{type: 'FAIL', result: 'PASS', certainty: 'POTENTIAL', impact: 'TRIVIAL', interpretation: 'BESTPRACTICE'}
-		],
-		level;
-		level = failureLevel({result: 'FAIL'}, {checks: checks});
-		assert.equal(level.impact, 'TRIVIAL');
-		assert.equal(level.certainty, 'POTENTIAL');
-		assert.equal(level.interpretation, 'BESTPRACTICE');
-	});
-});
-describe('dqre.a11yCheck file', function () {
+/* global mergeResults, CheckResult, RuleResult, Rule, nodeSelectorArray, failureSummary, ruleHelp */
+describe('dqre.a11yCheck', function () {
 	'use strict';
 	var orig,
 		results = [{
 			id: 'gimmeLabel',
 			result: dqre.constants.result.PASS,
 			details: [{
-				checks: [{
-					data: 'minkey',
-					type: 'PASS',
-					result: 'PASS',
-					interpretation: 'VIOLATION',
-					certainty: 'POTENTIAL',
-					impact: 'CRITICAL'
-				}],
+				checks: [{data: 'minkey'}],
 				node: {
 					source: '<minkey>chimp</minky>'
 				}
 			}]
 		}, {
 			id: 'idkStuff',
-			result: dqre.constants.result.FAIL,
+			result: dqre.constants.result.NA,
 			details: [{
-				checks: [{
-					data: 'pillock',
-					type: 'PASS',
-					result: 'FAIL',
-					interpretation: 'VIOLATION',
-					certainty: 'POTENTIAL',
-					impact: 'CRITICAL'
-				}],
+				checks: [{data: 'pillock'}],
 				node: {
 					source: '<pillock>george bush</pillock>'
 				}
-			}, {
-				checks: [{
-					data: 'pillock',
-					type: 'PASS',
-					result: 'FAIL',
-					interpretation: 'BESTPRACTICE',
-					certainty: 'DEFINITE',
-					impact: 'CRITICAL'
-				}],
+			}]
+		}, {
+			id: 'bypass',
+			result: dqre.constants.result.WARN,
+			details: [{
+				checks: [{data: 'foon'}],
 				node: {
-					source: '<pillock>george bush</pillock>'
+					source: '<foon>telephone</foon>'
 				}
 			}]
 		}, {
 			id: 'blinky',
 			result: dqre.constants.result.FAIL,
 			details: [{
-				checks: [{
-					data: 'clueso',
-					type: 'FAIL',
-					result: 'FAIL',
-					interpretation: 'VIOLATION',
-					certainty: 'DEFINITE',
-					impact: 'CRITICAL'
-				}],
+				checks: [{data: 'clueso'}],
 				node: {
 					source: '<clueso>nincompoop</clueso>'
 				}
@@ -182,17 +50,15 @@ describe('dqre.a11yCheck file', function () {
 		dqre.audit = null;
 		dqre.run = orig;
 	});
-	it('should merge the dqre.run results into violations, passes, bestpractices and potentials', function (done) {
+	it('should merge the dqre.run results into violations, passes and warnings', function (done) {
 		dqre.a11yCheck(document, {}, function (results) {
 			assert.ok(results);
 			assert.ok(results.violations);
 			assert.equal(results.violations.length, 1);
 			assert.ok(results.passes);
-			assert.equal(results.passes.length, 1);
-			assert.ok(results.potentials);
-			assert.equal(results.potentials.length, 1);
-			assert.ok(results.bestpractices);
-			assert.equal(results.bestpractices.length, 1);
+			assert.equal(results.passes.length, 2);
+			assert.ok(results.warnings);
+			assert.equal(results.warnings.length, 1);
 			done();
 		});
 	});
@@ -200,8 +66,8 @@ describe('dqre.a11yCheck file', function () {
 		dqre.a11yCheck(document, {}, function (results) {
 			assert.equal(results.violations[0].id, 'blinky');
 			assert.equal(results.passes[0].id, 'gimmeLabel');
-			assert.equal(results.potentials[0].id, 'idkStuff');
-			assert.equal(results.bestpractices[0].id, 'idkStuff');
+			assert.equal(results.passes[1].id, 'idkStuff');
+			assert.equal(results.warnings[0].id, 'bypass');
 			done();
 		});
 	});
@@ -221,7 +87,8 @@ describe('dqre.a11yCheck file', function () {
 			assert.ok(results.violations[0].nodes[0].checks);
 			assert.equal(results.violations[0].nodes[0].checks[0].data, 'clueso');
 			assert.equal(results.passes[0].nodes[0].checks[0].data, 'minkey');
-			assert.equal(results.potentials[0].nodes[0].checks[0].data, 'pillock');
+			assert.equal(results.passes[1].nodes[0].checks[0].data, 'pillock');
+			assert.equal(results.warnings[0].nodes[0].checks[0].data, 'foon');
 			done();
 		});
 	});
@@ -231,7 +98,8 @@ describe('dqre.a11yCheck file', function () {
 			assert.equal(results.violations[0].nodes.length, 1);
 			assert.equal(results.violations[0].nodes[0].html, '<clueso>nincompoop</clueso>');
 			assert.equal(results.passes[0].nodes[0].html, '<minkey>chimp</minky>');
-			assert.equal(results.potentials[0].nodes[0].html, '<pillock>george bush</pillock>');
+			assert.equal(results.passes[1].nodes[0].html, '<pillock>george bush</pillock>');
+			assert.equal(results.warnings[0].nodes[0].html, '<foon>telephone</foon>');
 			done();
 		});
 	});
@@ -311,16 +179,16 @@ describe('failureSummary', function () {
 		nodeData = {
 			checks: [{
 				id: '1',
-				result: dqre.constants.result.FAIL,
-				type: dqre.constants.result.FAIL,
+				value: false,
+				result: dqre.constants.result.PASS,
 			}, {
 				id: '2',
-				result: dqre.constants.result.FAIL,
-				type: dqre.constants.result.FAIL,
+				value: false,
+				result: dqre.constants.result.PASS,
 			}, {
 				id: '3',
-				result: dqre.constants.result.FAIL,
-				type: dqre.constants.result.FAIL,
+				value: false,
+				result: dqre.constants.result.PASS,
 			}]
 		};
 	});
@@ -334,27 +202,33 @@ describe('failureSummary', function () {
 		}, {}));
 	});
 	it('should return a concatenation of the failed/warning check messages if the rule failed or warned', function () {
-		var res = failureSummary(ruleResult, nodeData);
-		assert.deepEqual(res, ['1', '2', '3']);
+		assert.equal(failureSummary(ruleResult, nodeData), '1, 2 & 3');
 	});
-	it('should only return failed check messages, if its a FAIL (2 & 3)', function () {
-		nodeData.checks[0].result = dqre.constants.result.PASS;
-		assert.deepEqual(failureSummary(ruleResult, nodeData), ['2', '3']);
+	it('should only concatenate failed check messages, if its a FAIL (2 & 3)', function () {
+		nodeData.checks[0].value = true;
+		assert.equal(failureSummary(ruleResult, nodeData), '2 & 3');
 	});
-	it('should only return failed check messages, if its a FAIL (1 & 2)', function () {
-		nodeData.checks[2].result = dqre.constants.result.PASS;
-		assert.deepEqual(failureSummary(ruleResult, nodeData), ['1', '2']);
+	it('should only concatenate failed check messages, if its a FAIL (1 & 2)', function () {
+		nodeData.checks[2].value = true;
+		assert.equal(failureSummary(ruleResult, nodeData), '1 & 2');
 	});
-	it('should only return failed check messages, if its a FAIL (2)', function () {
-		nodeData.checks[0].result = dqre.constants.result.PASS;
-		nodeData.checks[2].result = dqre.constants.result.PASS;
-		assert.deepEqual(failureSummary(ruleResult, nodeData), ['2']);
+	it('should only concatenate failed check messages, if its a FAIL (2)', function () {
+		nodeData.checks[0].value = true;
+		nodeData.checks[2].value = true;
+		assert.equal(failureSummary(ruleResult, nodeData), '2');
 	});
-	it('should only return failed check messages, if its a FAIL', function () {
-		nodeData.checks[0].result = dqre.constants.result.PASS;
-		nodeData.checks[1].result = dqre.constants.result.PASS;
-		nodeData.checks[2].result = dqre.constants.result.PASS;
-		assert.deepEqual(failureSummary(ruleResult, nodeData), []);
+	it('should only concatenate failed check messages, if its a FAIL', function () {
+		nodeData.checks[0].value = true;
+		nodeData.checks[1].value = true;
+		nodeData.checks[2].value = true;
+		assert.equal(failureSummary(ruleResult, nodeData), '');
+	});
+	it('should only concatenate warn check messages, if its a WARN', function () {
+		ruleResult.result = dqre.constants.result.WARN;
+		nodeData.checks[0].value = true;
+		nodeData.checks[1].result = dqre.constants.result.WARN;
+		nodeData.checks[2].value = true;
+		assert.equal(failureSummary(ruleResult, nodeData), '2');
 	});
 });
 
@@ -383,7 +257,6 @@ describe('ruleHelp', function () {
 	});
 });
 
-/*
 describe('mergeResults', function () {
 	'use strict';
 
@@ -391,22 +264,16 @@ describe('mergeResults', function () {
 	function makeResults(oneResult, twoResult) {
 		var check, results = [];
 
-		if (oneResult === 'NA') {
-			one.addResults(document.body, []);
-		} else {
-			check = new CheckResult({id: 'check', type: oneResult});
-			check.result = true;
-			one.addResults(document.body, [check]);
-		}
-		one.result = utils.bubbleRuleResult(one.details);
-		if (twoResult === 'NA') {
-			two.addResults(document.body, []);
-		} else {
-			check = new CheckResult({id: 'check', type: twoResult});
-			check.result = true;
-			two.addResults(document.body, [check]);
-		}
-		two.result = utils.bubbleRuleResult(two.details);
+		check = new CheckResult({id: 'check', result: oneResult});
+		check.value = true;
+		one.addResults(document.body, [check]);
+		one.details[0].value = true;
+		one.result = utils.bubbleResult(one.details) || dqre.constants.result.NA;
+		check = new CheckResult({id: 'check', result: twoResult});
+		check.value = true;
+		two.addResults(document.body, [check]);
+		two.details[0].value = true;
+		two.result = utils.bubbleResult(two.details) || dqre.constants.result.NA;
 		results.push([one]);
 		results.push([two]);
 		return results;
@@ -417,15 +284,9 @@ describe('mergeResults', function () {
 		two = new RuleResult(new Rule({id: 'this'}));
 	});
 	it('Should merge two results into a single object', function () {
-		var merged,
-			check1 = new CheckResult({id: 'check', type: dqre.constants.type.PASS}),
-			check2 = new CheckResult({id: 'check', type: dqre.constants.type.FAIL});
-		check1.result = true;
-		check2.result = true;
-		one.addResults(document.body, [check1]);
-		two.addResults(document.body, [check2]);
-		one.result = utils.bubbleRuleResult(one.details) || one.result;
-		two.result = utils.bubbleRuleResult(two.details) || two.result;
+		var merged;
+		one.addResults(document.body, [new CheckResult({id: 'check', result: dqre.constants.result.PASS})]);
+		two.addResults(document.body, [new CheckResult({id: 'check', result: dqre.constants.result.FAIL})]);
 		results.push([one]);
 		results.push([two]);
 		merged = mergeResults(results);
@@ -459,6 +320,48 @@ describe('mergeResults', function () {
 			assert.equal(merged[0].result, dqre.constants.result.FAIL);
 		});
 	});
+	describe('cascade FAIL over WARN', function () {
+		it('two overrides one', function () {
+			var merged;
+			results = makeResults(dqre.constants.result.WARN, dqre.constants.result.FAIL);
+			merged = mergeResults(results);
+			assert.equal(merged[0].result, dqre.constants.result.FAIL);
+		});
+		it('one overrides two', function () {
+			var merged;
+			results = makeResults(dqre.constants.result.FAIL, dqre.constants.result.WARN);
+			merged = mergeResults(results);
+			assert.equal(merged[0].result, dqre.constants.result.FAIL);
+		});
+	});
+	describe('cascade WARN over PASS', function () {
+		it('two overrides one', function () {
+			var merged;
+			results = makeResults(dqre.constants.result.PASS, dqre.constants.result.WARN);
+			merged = mergeResults(results);
+			assert.equal(merged[0].result, dqre.constants.result.WARN);
+		});
+		it('one overrides two', function () {
+			var merged;
+			results = makeResults(dqre.constants.result.WARN, dqre.constants.result.PASS);
+			merged = mergeResults(results);
+			assert.equal(merged[0].result, dqre.constants.result.WARN);
+		});
+	});
+	describe('cascade WARN over NA', function () {
+		it('two overrides one', function () {
+			var merged;
+			results = makeResults(dqre.constants.result.NA, dqre.constants.result.WARN);
+			merged = mergeResults(results);
+			assert.equal(merged[0].result, dqre.constants.result.WARN);
+		});
+		it('one overrides two', function () {
+			var merged;
+			results = makeResults(dqre.constants.result.WARN, dqre.constants.result.NA);
+			merged = mergeResults(results);
+			assert.equal(merged[0].result, dqre.constants.result.WARN);
+		});
+	});
 	describe('cascade PASS over NA', function () {
 		it('two overrides one', function () {
 			var merged;
@@ -475,4 +378,3 @@ describe('mergeResults', function () {
 	});
 });
 
-*/
