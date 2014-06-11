@@ -111,9 +111,6 @@ describe('dqre.run', function () {
 						},
 						result: 'PASS',
 						checks: [{
-							certainty: 'DEFINITE',
-							interpretation: 'VIOLATION',
-							impact: 'MAJOR',
 							id: 'has-target',
 							type: 'PASS',
 							data: null,
@@ -135,9 +132,6 @@ describe('dqre.run', function () {
 						},
 						result: 'PASS',
 						checks: [{
-							certainty: 'DEFINITE',
-							interpretation: 'VIOLATION',
-							impact: 'MAJOR',
 							id: 'first-div',
 							type: 'PASS',
 							data: null,

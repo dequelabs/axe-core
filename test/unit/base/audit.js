@@ -105,9 +105,6 @@ describe('Audit', function () {
 						},
 						checks: [{
 							id: 'positive1-check1',
-							certainty: 'DEFINITE',
-							interpretation: 'VIOLATION',
-							impact: 'MAJOR',
 							type: 'PASS',
 							result: true,
 							data: null,
@@ -123,9 +120,6 @@ describe('Audit', function () {
 						},
 						checks: [{
 							id: 'positive1-check1',
-							certainty: 'DEFINITE',
-							interpretation: 'VIOLATION',
-							impact: 'MAJOR',
 							type: 'PASS',
 							result: true,
 							data: null,
@@ -146,9 +140,6 @@ describe('Audit', function () {
 						},
 						checks: [{
 							id: 'positive2-check1',
-							certainty: 'DEFINITE',
-							interpretation: 'VIOLATION',
-							impact: 'MAJOR',
 							type: 'PASS',
 							result: true,
 							data: null,
@@ -169,9 +160,6 @@ describe('Audit', function () {
 						},
 						checks: [{
 							id: 'negative1-check1',
-							certainty: 'DEFINITE',
-							interpretation: 'VIOLATION',
-							impact: 'MAJOR',
 							type: 'FAIL',
 							result: true,
 							data: null,
@@ -192,9 +180,6 @@ describe('Audit', function () {
 						},
 						checks: [{
 							id: 'positive3-check1',
-							certainty: 'DEFINITE',
-							interpretation: 'VIOLATION',
-							impact: 'MAJOR',
 							type: 'PASS',
 							result: true,
 							data: null,

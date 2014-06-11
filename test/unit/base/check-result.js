@@ -31,14 +31,4 @@ describe('CheckResult', function () {
 		assert.deepEqual(result.relatedNodes, []);
 	});
 
-	it('should inherit certainty from check', function () {
-		var result = new CheckResult({certainty: 'monkeys'});
-		assert.equal(result.certainty, 'monkeys');
-	});
-	it('should inherit interpretation from check', function () {
-		var result = new CheckResult({interpretation: 'monkeys'});
-		assert.equal(result.interpretation, 'monkeys');
-	});
-
-
 });

@@ -247,53 +247,6 @@ describe('Check', function () {
 
 			});
 		});
-		describe('.impact', function () {
-			it('should be set', function () {
-				var spec = {
-					impact: 'bananas'
-				};
-				assert.equal(new Check(spec).impact, spec.impact);
-			});
-
-			it('should ddefault to MAJOR', function () {
-				var spec = {};
-				assert.equal(new Check(spec).impact, 'MAJOR');
-
-			});
-
-		});
-
-		describe('.interpretation', function () {
-			it('should be set', function () {
-				var spec = {
-					interpretation: 'bananas'
-				};
-				assert.equal(new Check(spec).interpretation, spec.interpretation);
-			});
-
-			it('should have default of VIOLATION', function () {
-				var spec = {};
-				assert.equal(new Check(spec).interpretation, 'VIOLATION');
-
-			});
-
-		});
-
-		describe('.certainty', function () {
-			it('should be set', function () {
-				var spec = {
-					certainty: 'bananas'
-				};
-				assert.equal(new Check(spec).certainty, spec.certainty);
-			});
-
-			it('should have default of VIOLATION', function () {
-				var spec = {};
-				assert.equal(new Check(spec).certainty, 'DEFINITE');
-
-			});
-
-		});
 
 		describe('.matches', function () {
 			it('should be set', function () {
