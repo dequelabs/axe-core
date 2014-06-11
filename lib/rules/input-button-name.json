@@ -1,0 +1,12 @@
+{
+	"id": "input-button-name",
+	"help": "Button inputs must have a name",
+	"selector": "input[type=\"button\"]",
+	"checks": ["non-empty-value", "aria-label", "aria-labelledby"],
+	"tags": [
+		"wcag2a",
+		"wcag111",
+		"section508",
+		"section508a"
+	]
+}
