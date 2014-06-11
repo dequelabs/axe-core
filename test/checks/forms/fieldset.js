@@ -58,8 +58,30 @@ describe('fieldset', function () {
 		assert.isTrue(checks['radio-fieldset'].evaluate(node, 'radio'));
 	});
 
-	it('should return true if an ARIA group contains only the right elements', function () {
+	it('should return false if an unlabelled ARIA group contains only the right elements', function () {
 		fixture.innerHTML = '<div role="group"><input type="radio" id="target" name="uniqueradioname">Choice one<input type="radio" name="uniqueradioname">Choice 1a</div>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks['radio-fieldset'].evaluate(node, 'radio'));
+	});
+
+	it('should return false if an improperly labelled-by ARIA group contains only the right elements', function () {
+		fixture.innerHTML = '<div id="grouplabel"></div><div role="group" aria-labelledby="grouplabel">' +
+			'<input type="radio" id="target" name="uniqueradioname">Choice one<input type="radio" name="uniqueradioname">Choice 1a</div>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks['radio-fieldset'].evaluate(node, 'radio'));
+	});
+
+
+	it('should return true if a properly labelled-by ARIA group contains only the right elements', function () {
+		fixture.innerHTML = '<div id="grouplabel">Label</div><div role="group" aria-labelledby="grouplabel">' +
+			'<input type="radio" id="target" name="uniqueradioname">Choice one<input type="radio" name="uniqueradioname">Choice 1a</div>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['radio-fieldset'].evaluate(node, 'radio'));
+	});
+
+	it('should return true if a properly labelled ARIA group contains only the right elements', function () {
+		fixture.innerHTML = '<div role="group" aria-label="group label"><input type="radio" id="target" name="uniqueradioname">' +
+			'Choice one<input type="radio" name="uniqueradioname">Choice 1a</div>';
 		var node = fixture.querySelector('#target');
 		assert.isTrue(checks['radio-fieldset'].evaluate(node, 'radio'));
 	});
