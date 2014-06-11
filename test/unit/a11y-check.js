@@ -129,8 +129,7 @@ describe('dqre.a11yCheck', function () {
 
 describe('failureSummary', function () {
 	'use strict';
-	var ruleResult, nodeData,
-		orig = window.dqreConfiguration;
+	var orig = window.dqreConfiguration;
 	beforeEach(function () {
 
 		window.dqreConfiguration = {
@@ -138,14 +137,20 @@ describe('failureSummary', function () {
 				checkHelp: {
 					'1': '1',
 					'2': '2',
-					'3': '3'
+					'3': '3',
+					'4': '4',
+					'5': '5',
+					'6': '6',
+					'7': '7',
+					'8': '8'
 				}
 			}
 		};
-		ruleResult = {
-			result: dqre.constants.result.FAIL
-		};
+	});
+
+	/*
 		nodeData = {
+			result: 'FAIL',
 			checks: [{
 				id: '1',
 				value: false,
@@ -159,45 +164,128 @@ describe('failureSummary', function () {
 				value: false,
 				result: dqre.constants.result.PASS,
 			}]
-		};
-	});
+		}; */
 
 	after(function () {
 		window.dqreConfiguration = orig;
 	});
-	it('should return undefined if the rule passed', function () {
-		assert.isUndefined(failureSummary({
-			result: dqre.constants.result.PASS
-		}, {}));
+	it('should return an empty array if result: PASS', function () {
+		var summary = failureSummary({
+			result: 'PASS'
+		});
+		assert.deepEqual(summary, []);
 	});
-	it('should return a concatenation of the failed/warning check messages if the rule failed or warned', function () {
-		assert.equal(failureSummary(ruleResult, nodeData), '1, 2 & 3');
+
+	it('should return a list of all FAILs which return true', function () {
+		var summary = failureSummary({
+			result: 'FAIL',
+			checks: [{
+				id: '1',
+				result: true,
+				type: 'FAIL'
+			}, {
+				id: '2',
+				result: false,
+				type: 'FAIL'
+			}, {
+				id: '3',
+				result: true,
+				type: 'FAIL'
+			}]
+		});
+
+		assert.deepEqual(summary, ['1', '3']);
 	});
-	it('should only concatenate failed check messages, if its a FAIL (2 & 3)', function () {
-		nodeData.checks[0].value = true;
-		assert.equal(failureSummary(ruleResult, nodeData), '2 & 3');
+
+	it('should return a list of PASSes if none return true', function () {
+		var summary = failureSummary({
+			result: 'FAIL',
+			checks: [{
+				id: '1',
+				result: false,
+				type: 'PASS'
+			}, {
+				id: '2',
+				result: false,
+				type: 'PASS'
+			}, {
+				id: '3',
+				result: false,
+				type: 'PASS'
+			}, {
+				id: '4',
+				result: false,
+				type: 'FAIL'
+			}]
+		});
+
+		assert.deepEqual(summary, ['1', '2', '3']);
 	});
-	it('should only concatenate failed check messages, if its a FAIL (1 & 2)', function () {
-		nodeData.checks[2].value = true;
-		assert.equal(failureSummary(ruleResult, nodeData), '1 & 2');
+
+	it('should not return any PASSes if any of them return true', function () {
+		var summary = failureSummary({
+			result: 'FAIL',
+			checks: [{
+				id: '1',
+				result: false,
+				type: 'PASS'
+			}, {
+				id: '2',
+				result: true,
+				type: 'PASS'
+			}, {
+				id: '3',
+				result: false,
+				type: 'PASS'
+			}, {
+				id: '4',
+				result: false,
+				type: 'FAIL'
+			}]
+		});
+
+		assert.deepEqual(summary, []);
+
 	});
-	it('should only concatenate failed check messages, if its a FAIL (2)', function () {
-		nodeData.checks[0].value = true;
-		nodeData.checks[2].value = true;
-		assert.equal(failureSummary(ruleResult, nodeData), '2');
+
+	it('should concatenate failing passes', function () {
+		var summary = failureSummary({
+			result: 'FAIL',
+			checks: [{
+				id: '1',
+				result: false,
+				type: 'PASS'
+			}, {
+				id: '2',
+				result: false,
+				type: 'PASS'
+			}, {
+				id: '3',
+				result: false,
+				type: 'PASS'
+			}, {
+				id: '4',
+				result: true,
+				type: 'FAIL'
+			}]
+		});
+
+		assert.deepEqual(summary, ['4', '1', '2', '3']);
+
 	});
-	it('should only concatenate failed check messages, if its a FAIL', function () {
-		nodeData.checks[0].value = true;
-		nodeData.checks[1].value = true;
-		nodeData.checks[2].value = true;
-		assert.equal(failureSummary(ruleResult, nodeData), '');
-	});
-	it('should only concatenate warn check messages, if its a WARN', function () {
-		ruleResult.result = dqre.constants.result.WARN;
-		nodeData.checks[0].value = true;
-		nodeData.checks[1].result = dqre.constants.result.WARN;
-		nodeData.checks[2].value = true;
-		assert.equal(failureSummary(ruleResult, nodeData), '2');
+
+	it('should skip checks that have no help', function () {
+		var summary = failureSummary({
+			result: 'FAIL',
+			checks: [{
+				id: 'NOMATCHY',
+				result: true,
+				type: 'FAIL'
+			}]
+		});
+
+		assert.deepEqual(summary, []);
+
 	});
 });
 
@@ -224,11 +312,5 @@ describe('findHelp', function () {
 	it('should return the rule help string', function () {
 		assert.equal(findHelp('foo', '3'), '3');
 	});
-});
-
-describe('mergeResults', function () {
-	'use strict';
-
-	it('should test the correct thing');
 });
 
