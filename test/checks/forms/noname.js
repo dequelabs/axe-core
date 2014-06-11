@@ -8,13 +8,13 @@ describe('noname', function () {
 	});
 
 	it('should return true if the radio element has no name', function () {
-		fixture.innerHTML = '<input type="radio" id="target">Choice one</input>';
+		fixture.innerHTML = '<input type="radio" id="target">Choice one';
 		var node = fixture.querySelector('#target');
 		assert.isTrue(checks.noname.evaluate(node));
 	});
 
 	it('should return false if the radio element has a name', function () {
-		fixture.innerHTML = '<input type="radio" id="target" name="uniqueradioname">Choice one</input><input type="radio" name="differentname">Choice 1a</input>';
+		fixture.innerHTML = '<input type="radio" id="target" name="uniqueradioname">Choice one<input type="radio" name="differentname">Choice 1a';
 		var node = fixture.querySelector('#target');
 		assert.isFalse(checks.noname.evaluate(node));
 	});

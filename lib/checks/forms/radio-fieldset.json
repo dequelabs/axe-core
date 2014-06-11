@@ -1,6 +1,6 @@
 {
 	"id": "radio-fieldset",
 	"help": "Element does not have proper containing fieldset",
-    "options": "radio",
+	"options": "radio",
 	"evaluate": "fieldset.js"
 }

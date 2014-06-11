@@ -1,6 +1,6 @@
 {
 	"id": "radio-nogroup",
 	"help": "Element is not part of a proper group of radio inputs",
-    "options": "radio",
+	"options": "radio",
 	"evaluate": "nogroup.js"
 }
