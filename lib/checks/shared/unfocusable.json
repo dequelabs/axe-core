@@ -1,0 +1,5 @@
+{
+	"id": "unfocusable",
+	"help": "Element can be focused",
+	"evaluate": "unfocusable.js"
+}
