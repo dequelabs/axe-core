@@ -1,0 +1,5 @@
+{
+	"id": "dlitem",
+	"help": "Description list item does not have a <dl> parent element",
+	"evaluate": "dlitem.js"
+}
