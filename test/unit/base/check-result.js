@@ -26,6 +26,11 @@ describe('CheckResult', function () {
 		assert.isFalse(result.async);
 	});
 
+	it('should set `relatedNodes` to `[]`', function () {
+		var result = new CheckResult({});
+		assert.deepEqual(result.relatedNodes, []);
+	});
+
 	it('should inherit certainty from check', function () {
 		var result = new CheckResult({certainty: 'monkeys'});
 		assert.equal(result.certainty, 'monkeys');
@@ -35,4 +40,5 @@ describe('CheckResult', function () {
 		assert.equal(result.interpretation, 'monkeys');
 	});
 
-});
+
+});});
