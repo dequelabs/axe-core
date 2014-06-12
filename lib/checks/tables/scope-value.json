@@ -1,6 +1,6 @@
 {
 	"id": "scope-value",
-	"result": "FAIL",
 	"help": "The value of the scope attribute may only be 'row' or 'col'",
-	"evaluate": "scope-value.js"
+	"evaluate": "scope-value.js",
+	"type": "FAIL"
 }

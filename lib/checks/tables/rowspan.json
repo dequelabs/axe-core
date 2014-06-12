@@ -1,6 +1,6 @@
 {
 	"id": "rowspan",
-	"result": "FAIL",
 	"help": "Element has a rowspan value that is not equal to 1",
-	"evaluate": "rowspan.js"
+	"evaluate": "rowspan.js",
+	"type": "FAIL"
 }

@@ -1,6 +1,6 @@
 {
 	"id": "help-same-as-label",
 	"help": "Help text (title or aria-describedby) text is the same as the label text",
-	"result": "WARN",
-	"evaluate": "help-same-as-label.js"
+	"evaluate": "help-same-as-label.js",
+	"type": "FAIL"
 }
