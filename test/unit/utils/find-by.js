@@ -1,19 +1,37 @@
-
-/**
- * Iterates an array of objects looking for a property with a specific value
- * @param  {Array} array  The array of objects to iterate
- * @param  {String} key   The property name to test against
- * @param  {Mixed} value  The value to find
- * @return {Object}       The first matching object or `undefined` if no match
- */
-utils.findBy = function (array, key, value) {
+describe('utils.findBy', function () {
 	'use strict';
-	array = array || [];
 
-	var index, length;
-	for (index = 0, length = array.length; index < length; index++) {
-		if (array[index][key] === value) {
-			return array[index];
-		}
-	}
-};
+	it('should find the first matching object', function () {
+		var array = [{
+				id: 'monkeys',
+				foo: 'bar'
+			}, {
+				id: 'bananas'
+			}, {
+				id: 'monkeys',
+				bar: 'baz'
+			}];
+
+		assert.equal(utils.findBy(array, 'id', 'monkeys'), array[0]);
+	});
+
+	it('should return undefined with no match', function () {
+		var array = [{
+				id: 'monkeys',
+				foo: 'bar'
+			}, {
+				id: 'bananas'
+			}, {
+				id: 'monkeys',
+				bar: 'baz'
+			}];
+
+		assert.isUndefined(utils.findBy(array, 'id', 'macaque'));
+
+	});
+
+	it('should not throw if passed falsey first parameter', function () {
+		assert.isUndefined(utils.findBy(null, 'id', 'macaque'));
+	});
+
+});
