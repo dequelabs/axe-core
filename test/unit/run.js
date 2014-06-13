@@ -98,6 +98,8 @@ describe('dqre.run', function () {
 		});
 
 		iframeReady('../mock/frames/context.html', fixture, 'context-test', function () {
+			var div = document.createElement('div');
+			fixture.appendChild(div);
 
 			dqre.run('#fixture', {}, function (results) {
 				assert.deepEqual(results, [{
