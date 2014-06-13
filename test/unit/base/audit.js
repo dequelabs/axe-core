@@ -58,23 +58,6 @@ describe('Audit', function () {
 		assert.isFunction(Audit);
 	});
 
-	describe('document', function () {
-		it('should create a document based on the current window.document', function () {
-			var orig = window.DqDocument;
-			var called = false;
-			window.DqDocument = function () {
-				called = true;
-				assert.notEqual(this, window, 'invoked with `new`');
-				return { bananas: 'monkeys' };
-			};
-			var a = new Audit({});
-
-			assert.isTrue(called);
-			assert.deepEqual(a.document, { bananas: 'monkeys' });
-			window.DqDocument = orig;
-		});
-	});
-
 	describe('Audit#run', function () {
 		it('should run all the rules', function (done) {
 			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
