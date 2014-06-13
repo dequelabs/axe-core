@@ -76,18 +76,8 @@ describe('Audit', function () {
 	});
 
 	describe('Audit#run', function () {
-		it('should work', function (done) {
-			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
-				'<div id="monkeys">bananas</div>' +
-				'<input type="text" aria-labelledby="monkeys">' +
-				'<blink>FAIL ME</blink>';
-			a.run({ include: [fixture] }, {}, function () {
-				assert.ok('yay');
-				done();
-			});
-		});
 		it('should run all the rules', function (done) {
-			fixture.innerHTML = '<input aria-label="monkeys" type="text">' +
+			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
 				'<div id="monkeys">bananas</div>' +
 				'<input aria-labelledby="monkeys" type="text">' +
 				'<blink>FAIL ME</blink>';
@@ -100,7 +90,7 @@ describe('Audit', function () {
 					details: [{
 						node: {
 							selector: '#fixture > input:nth-of-type(1)',
-							source: '<input aria-label="monkeys" type="text">',
+							source: '<input type="text" aria-label="monkeys">',
 							frames: []
 						},
 						checks: [{
