@@ -1,10 +1,10 @@
 {
-    "id": "radiogroup",
-    "help": "Radio inputs with the same name must be part of a group",
-    "selector": "input[type=radio]",
-    "checks": ["noname", "radio-nogroup", "radio-labelledby", "radio-fieldset"],
-    "tags": [
-        "wcag2a",
+	"id": "radiogroup",
+	"help": "Radio inputs with the same name must be part of a group",
+	"selector": "input[type=radio]",
+	"checks": ["noname", "radio-nogroup", "radio-labelledby", "radio-fieldset"],
+	"tags": [
+		"wcag2a",
 		"wcag131"
-    ]
+	]
 }
