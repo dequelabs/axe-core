@@ -4,6 +4,7 @@
     "selector": "input[type=checkbox]",
     "checks": ["noname", "checkbox-nogroup", "checkbox-labelledby", "checkbox-fieldset"],
     "tags": [
-        "wcag2a"
+        "wcag2a",
+        "wcag131"
     ]
 }

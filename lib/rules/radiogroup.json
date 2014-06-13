@@ -4,6 +4,7 @@
     "selector": "input[type=radio]",
     "checks": ["noname", "radio-nogroup", "radio-labelledby", "radio-fieldset"],
     "tags": [
-        "wcag2a"
+        "wcag2a",
+		"wcag131"
     ]
 }
