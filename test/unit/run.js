@@ -114,7 +114,6 @@ describe('dqre.run', function () {
 							id: 'has-target',
 							type: 'PASS',
 							data: null,
-							async: false,
 							result: true,
 							error: null,
 							relatedNodes: []
@@ -135,7 +134,6 @@ describe('dqre.run', function () {
 							id: 'first-div',
 							type: 'PASS',
 							data: null,
-							async: false,
 							result: true,
 							error: null,
 							relatedNodes: []

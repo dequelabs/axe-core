@@ -17,13 +17,12 @@ describe('utils.checkHelper', function () {
 
 	describe('return value', function () {
 		describe('async', function () {
-			it('should set async property on target to `true` when called', function () {
+			it('should set isAsync property on returned object to `true` when called', function () {
 				var target = {},
 					helper = utils.checkHelper(target, noop);
 
-				assert.notProperty(target, 'async');
 				helper.async();
-				assert.isTrue(target.async);
+				assert.isTrue(helper.isAsync);
 			});
 			it('should call the second parameter of `utils.checkHelper` when invoked', function () {
 				function fn() { success = true; }

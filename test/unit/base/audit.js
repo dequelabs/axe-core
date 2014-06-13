@@ -108,7 +108,6 @@ describe('Audit', function () {
 							type: 'PASS',
 							result: true,
 							data: null,
-							async: false,
 							error: null,
 							relatedNodes: []
 						}]
@@ -123,7 +122,6 @@ describe('Audit', function () {
 							type: 'PASS',
 							result: true,
 							data: null,
-							async: false,
 							error: null,
 							relatedNodes: []
 						}]
@@ -143,7 +141,6 @@ describe('Audit', function () {
 							type: 'PASS',
 							result: true,
 							data: null,
-							async: false,
 							error: null,
 							relatedNodes: []
 						}]
@@ -163,7 +160,6 @@ describe('Audit', function () {
 							type: 'FAIL',
 							result: true,
 							data: null,
-							async: false,
 							error: null,
 							relatedNodes: []
 						}]
@@ -183,7 +179,6 @@ describe('Audit', function () {
 							type: 'PASS',
 							result: true,
 							data: null,
-							async: false,
 							error: null,
 							relatedNodes: []
 						}]
@@ -255,6 +250,30 @@ describe('Audit', function () {
 				assert.deepEqual(results, []);
 			});
 
+		});
+	});
+	describe('Audit#after', function () {
+		it('should run Rule#after on any rule whose result is passed in', function () {
+			var audit = new Audit();
+			var success = false;
+			var options = [{ id: 'hehe', enabled: true, monkeys: 'bananas' }];
+			var results = [{
+				id: 'hehe',
+				monkeys: 'bananas'
+			}];
+			audit.addRule({
+				id: 'hehe',
+				pageLevel: false,
+				enabled: false
+			});
+
+			audit.rules[0].after = function (res, opts) {
+				assert.equal(res, results[0]);
+				assert.equal(opts, options[0]);
+				success = true;
+			};
+
+			audit.after(results, options);
 		});
 	});
 
