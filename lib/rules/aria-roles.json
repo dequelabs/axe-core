@@ -1,0 +1,9 @@
+{
+	"id": "aria-roles",
+	"help": "ARIA roles used must conform to valid values",
+	"selector": "[role]",
+	"checks": ["invalidrole","abstractrole"],
+	"tags": [
+		"wcag2a"
+	]
+}
