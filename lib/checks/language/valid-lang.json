@@ -1,6 +1,6 @@
 {
 	"id": "valid-lang",
 	"help": "Value of lang attribute not included in list of allowable languages",
-	"options": ["en", "es", "ja", "en-US", "en-CA", "en-GB", "ja-JP"],
+	"options": ["en", "es", "ja"],
 	"evaluate": "valid-lang.js"
 }
