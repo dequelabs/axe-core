@@ -1,0 +1,6 @@
+{
+	"id": "invalidrole",
+	"help": "Role must be one of the valid ARIA roles",
+	"type": "FAIL",
+	"evaluate": "invalidrole.js"
+}
