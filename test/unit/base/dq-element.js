@@ -1,5 +1,5 @@
-/*global DqNode */
-describe('DqNode', function () {
+/*global DqElement */
+describe('DqElement', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
@@ -9,12 +9,12 @@ describe('DqNode', function () {
 	});
 
 	it('should be a function', function () {
-		assert.isFunction(DqNode);
+		assert.isFunction(DqElement);
 	});
 
 	it('should take a node as a parameter and return an object', function () {
 		var node = document.createElement('div');
-		var result = new DqNode(node);
+		var result = new DqElement(node);
 
 		assert.isObject(result);
 	});
@@ -31,7 +31,7 @@ describe('DqNode', function () {
 				return expected;
 			};
 
-			var result = new DqNode(fixture);
+			var result = new DqElement(fixture);
 			assert.equal(result.selector, expected);
 			utils.getSelector = orig;
 
@@ -42,7 +42,7 @@ describe('DqNode', function () {
 	describe('frames', function () {
 		it('should be an empty array', function () {
 			var node = document.createElement('div');
-			var result = new DqNode(node);
+			var result = new DqElement(node);
 
 			assert.deepEqual(result.frames, []);
 
