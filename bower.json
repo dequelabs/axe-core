@@ -15,6 +15,7 @@
   "dependencies": {
     "node-uuid": "~1.4.1",
     "escape-selector": "git@bitbucket.org:dmusser/escape-selector.git#v0.0.1",
-    "matches-selector": "git@bitbucket.org:dmusser/matches-selector.git#v0.0.1"
+    "matches-selector": "git@bitbucket.org:dmusser/matches-selector.git#v0.0.1",
+    "clone": "git@bitbucket.org:dmusser/clone.git#v0.0.1"
   }
 }

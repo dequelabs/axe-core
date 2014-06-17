@@ -21,3 +21,11 @@ describe('utils.matchesSelector', function () {
 		assert.isFunction(utils.matchesSelector);
 	});
 });
+
+describe('utils.clone', function () {
+	'use strict';
+
+	it('should be a function', function () {
+		assert.isFunction(utils.clone);
+	});
+});
