@@ -8,7 +8,8 @@
 		<script src="../../node_modules/mocha/mocha.js"></script>
 		<script src="../../node_modules/chai/chai.js"></script>
 		<% files.forEach(function (file) { %>
-			<script data-cover src="../../<%=file%>"></script>
+			<script src="../../<%=file%>"
+				<% if (file.indexOf('bower_components') === -1) { %>data-cover<% } %>></script>
 		<%  }); %>
 		<script>
 			mocha.setup('bdd');
