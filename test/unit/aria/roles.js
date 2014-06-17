@@ -112,7 +112,7 @@ describe('aria.implicitNodes', function () {
 		kslib.aria._lut.role = orig;
 	});
 
-	it('should returned the implicit property for the proper role', function () {
+	it('should return the implicit property for the proper role', function () {
 		kslib.aria._lut.role = {
 			'cats': {
 				implicit: 'yes'
@@ -122,9 +122,50 @@ describe('aria.implicitNodes', function () {
 
 	});
 
-	it('should return null if there are no required implicit nodes', function () {
+	it('should return null if there are no implicit roles', function () {
 		kslib.aria._lut.role = {};
 		var result = kslib.aria.implicitNodes('cats');
+
+		assert.isNull(result);
+
+	});
+});
+
+describe('aria.implicitRole', function () {
+	'use strict';
+
+	var fixture = document.getElementById('fixture');
+	var orig;
+	beforeEach(function () {
+		orig = kslib.aria._lut.role;
+	});
+
+	afterEach(function () {
+		fixture.innerHTML = '';
+		kslib.aria._lut.role = orig;
+	});
+
+	it('should find the first matching role', function () {
+		var node = document.createElement('div');
+		node.id = 'cats';
+		fixture.appendChild(node);
+
+		kslib.aria._lut.role = {
+			'cats': {
+				implicit: ['div[id="cats"]']
+			}
+		};
+		assert.equal(kslib.aria.implicitRole(node), 'cats');
+
+	});
+
+	it('should return null if there is no matching implicit role', function () {
+		var node = document.createElement('div');
+		node.id = 'cats';
+		fixture.appendChild(node);
+
+		kslib.aria._lut.role = {};
+		var result = kslib.aria.implicitRole(node);
 
 		assert.isNull(result);
 
