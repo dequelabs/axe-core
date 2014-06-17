@@ -1,9 +1,14 @@
 # Kensington Rule Engine
 
+## Requirements
+
+1. NodeJS
+2. Bower (after installing Node and NPM run `npm install -g bower`)
+
 ## Building
 
 1.  Clone this repo
-2.  Open a Terminal or Command Prompt and run `npm install`
+2.  Open a Terminal or Command Prompt and run `npm install && bower install`
 3.  `grunt build` to build distributables
 
 ## Testing
