@@ -1,0 +1,5 @@
+{
+	"id": "aria-required-attr",
+	"help": "Required ARIA attribute is not present",
+	"evaluate": "required-attr.js"
+}
