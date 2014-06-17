@@ -1,6 +1,6 @@
-coverage
 dist
 node_modules
+bower_components
 test/unit/index.html
 xunit.xml
 lint.xml
