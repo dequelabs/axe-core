@@ -1,0 +1,19 @@
+{
+  "name": "kensington-common-functions",
+  "description": "Kensington Common Functions",
+  "version": "0.0.1",
+  "authors": [
+    "David Sturley <david.sturley@deque.com>"
+  ],
+  "private": true,
+  "main": "lib/index.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test"
+  ],
+  "dependencies": {
+    "escape-selector": "git@bitbucket.org:dmusser/escape-selector.git#v0.0.1",
+    "matches-selector": "git@bitbucket.org:dmusser/matches-selector.git#v0.0.1"
+  }
+}
