@@ -1,0 +1,5 @@
+{
+	"id": "aria-allowed-attr",
+	"help": "ARIA attribute is not allowed",
+	"evaluate": "allowed-attr.js"
+}
