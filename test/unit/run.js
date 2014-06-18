@@ -69,13 +69,7 @@ describe('dqre.run', function () {
 				checks: [{
 					id: 'has-target',
 					evaluate: function () {
-						return false;
-					},
-					after: function (results) {
-						if (results.length) {
-							results[0].result = true;
-						}
-						return results;
+						return true;
 					}
 				}]
 			}, {
@@ -83,7 +77,8 @@ describe('dqre.run', function () {
 				selector: 'div',
 				checks: [{
 					id: 'first-div',
-					evaluate: function () {
+					evaluate: function (node) {
+						this.relatedNodes([node]);
 						return false;
 					},
 					after: function (results) {
@@ -138,7 +133,11 @@ describe('dqre.run', function () {
 							data: null,
 							result: true,
 							error: null,
-							relatedNodes: []
+							relatedNodes: [{
+								selector: '#foo',
+								source: '<div id="foo">\n		<div id="bar"></div>\n	</div>',
+								frames: ['#context-test']
+							}]
 						}]
 					}],
 					result: 'PASS'

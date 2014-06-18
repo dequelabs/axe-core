@@ -76,11 +76,13 @@ describe('Rule', function () {
 				assert.isFunction(Rule.prototype.run);
 			});
 
-			it('should run #gather', function (done) {
+			it('should run #matches', function (done) {
+				var div = document.createElement('div');
+				fixture.appendChild(div);
 				var success = false,
 					rule = new Rule({
-						gather: function (context) {
-							assert.deepEqual(context, { include: [fixture] });
+						matches: function (node) {
+							assert.equal(node, div);
 							success = true;
 							return [];
 						}
@@ -292,17 +294,17 @@ describe('Rule', function () {
 
 			});
 		});
-		describe('.gather', function () {
+		describe('.matches', function () {
 			it('should be set', function () {
 				var spec = {
-					gather: function () {}
+					matches: function () {}
 				};
-				assert.equal(new Rule(spec).gather, spec.gather);
+				assert.equal(new Rule(spec).matches, spec.matches);
 			});
 
 			it('should default to prototype', function () {
 				var spec = {};
-				assert.equal(new Rule(spec).gather, Rule.prototype.gather);
+				assert.equal(new Rule(spec).matches, Rule.prototype.matches);
 			});
 		});
 

@@ -25,7 +25,8 @@
 				selector: 'div',
 				checks: [{
 					id: 'first-div',
-					evaluate: function () {
+					evaluate: function (node) {
+						this.relatedNodes([node]);
 						return false;
 					},
 					after: function (results) {
