@@ -52,23 +52,13 @@ describe('Rule', function () {
 				assert.deepEqual(nodes, [node]);
 			});
 
-			it('should default to all nodes if selector is not specified', function () {
-				var nodes = [],
-					node = document.createElement('div');
-
-				fixture.appendChild(node);
-				nodes.push(node);
-
-				node = document.createElement('div');
-
-				fixture.appendChild(node);
-				nodes.push(node);
-
+			it('should default to no nodes if selector is not specified', function () {
+				fixture.innerHTML = '<div><div></div></div>';
 				var rule = new Rule({}),
 					result = rule.gather({ include: [document.getElementById('fixture')] });
 
-				assert.lengthOf(result, 2);
-				assert.sameMembers(result, nodes);
+				assert.lengthOf(result, 0);
+				assert.sameMembers(result, []);
 			});
 		});
 		describe('run', function () {
@@ -102,7 +92,10 @@ describe('Rule', function () {
 					cb(true);
 				};
 
-				var rule = new Rule({ checks: [{ id: 'cats', evaluate: function () {} }]});
+				var rule = new Rule({
+					selector: '*',
+					checks: [{ id: 'cats', evaluate: function () {} }]
+				});
 
 				rule.run({ include: [fixture] }, {}, function () {
 					assert.isTrue(success);
@@ -125,7 +118,10 @@ describe('Rule', function () {
 					cb(true);
 				};
 
-				var rule = new Rule({ checks: [{ id: 'cats' }, { id: 'dogs' }]});
+				var rule = new Rule({
+					selector: '*',
+					checks: [{ id: 'cats' }, { id: 'dogs' }]
+				});
 				rule.run({ include: [fixture] }, {checks: [{ id: 'dogs', enabled: false }]}, function () {
 
 					assert.isTrue(success);
@@ -202,9 +198,9 @@ describe('Rule', function () {
 				assert.equal(new Rule(spec).selector, spec.selector);
 			});
 
-			it('should default to *', function () {
+			it('should default to `null`', function () {
 				var spec = {};
-				assert.equal(new Rule(spec).selector, '*');
+				assert.isNull(new Rule(spec).selector);
 
 			});
 
