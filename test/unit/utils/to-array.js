@@ -17,6 +17,7 @@ describe('utils.toArray', function () {
 
 		Array.prototype.slice = orig;
 	});
+
 	it('should return an array', function () {
 		var arrayLike = {'0': 'cats', length: 1};
 

@@ -267,10 +267,6 @@ describe('utils.calculateRuleResult', function () {
 			assert.equal(ruleResult.result, 'PASS');
 
 		});
-
-
-
 	});
-
 
 });
