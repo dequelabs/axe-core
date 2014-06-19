@@ -1,0 +1,5 @@
+{
+	"id": "aria-valid-attr",
+	"help": "Invalid ARIA attribute name",
+	"evaluate": "valid-attr.js"
+}
