@@ -1,6 +1,6 @@
 {
 	"id": "aria-valid-attr-value",
 	"help": "Invalid ARIA attribute value",
-	"matches": "valid-attr-value-matches.js",
+	"matches": "has-attr-matches.js",
 	"evaluate": "valid-attr-value.js"
 }
