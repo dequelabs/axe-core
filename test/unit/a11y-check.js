@@ -148,24 +148,6 @@ describe('failureSummary', function () {
 		};
 	});
 
-	/*
-		nodeData = {
-			result: 'FAIL',
-			checks: [{
-				id: '1',
-				value: false,
-				result: dqre.constants.result.PASS,
-			}, {
-				id: '2',
-				value: false,
-				result: dqre.constants.result.PASS,
-			}, {
-				id: '3',
-				value: false,
-				result: dqre.constants.result.PASS,
-			}]
-		}; */
-
 	after(function () {
 		window.dqreConfiguration = orig;
 	});

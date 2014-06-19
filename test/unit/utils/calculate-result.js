@@ -44,26 +44,6 @@ describe('utils.calculateRuleResult', function () {
 		window.calculateNodeRuleResult = orig;
 	});
 
-	/*
-
-function calculateNodeRuleResult(ruleResult) {
-	'use strict';
-
-	var calculatedResult;
-	ruleResult.details.forEach(function (detail) {
-		var result = utils.calculateCheckResult(detail.checks);
-		detail.result = result;
-		if (calculatedResult !== dqre.constants.type.FAIL) {
-			calculatedResult = result;
-		}
-	});
-
-	if (calculatedResult) {
-		ruleResult.result = calculatedResult;
-	}
-
-} */
-
 	describe('node level', function () {
 
 		it('should iterate details calling calculateCheckResult on each, assigning output to result', function () {
