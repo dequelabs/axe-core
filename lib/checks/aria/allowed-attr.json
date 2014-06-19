@@ -1,5 +1,6 @@
 {
 	"id": "aria-allowed-attr",
 	"help": "ARIA attribute is not allowed",
+	"matches": "allowed-attr-matches.js",
 	"evaluate": "allowed-attr.js"
 }

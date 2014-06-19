@@ -80,4 +80,49 @@ describe('aria-allowed-attr', function () {
 		kslib.aria.allowedAttr = orig;
 	});
 
+	describe('matches', function () {
+		it('should return false on elements with no role or no implicit role', function () {
+			var orig = kslib.aria.implicitRole;
+			kslib.aria.implicitRole = function (nd) {
+				assert.equal(nd, div);
+				return null;
+			};
+			var div = document.createElement('div');
+			fixture.appendChild(div);
+
+			assert.isFalse(checks['aria-allowed-attr'].matches(div));
+			kslib.aria.implicitRole = orig;
+		});
+
+		it('should return false on elements that have no allowed attributes', function () {
+			var orig = kslib.aria.allowedAttr;
+			kslib.aria.allowedAttr = function (role) {
+				assert.equal(role, 'button');
+				return null;
+			};
+			var div = document.createElement('div');
+			div.setAttribute('role', 'button');
+			fixture.appendChild(div);
+
+			assert.isFalse(checks['aria-allowed-attr'].matches(div));
+			kslib.aria.allowedAttr = orig;
+		});
+
+		it('should return true on elements that have a role', function () {
+			var div = document.createElement('div');
+			div.setAttribute('role', 'button');
+			fixture.appendChild(div);
+
+			assert.isTrue(checks['aria-allowed-attr'].matches(div));
+		});
+
+		it('should return true on elements that have an implicit role', function () {
+			var div = document.createElement('a');
+			div.setAttribute('href', '#monkeys');
+			fixture.appendChild(div);
+
+			assert.isTrue(checks['aria-allowed-attr'].matches(div));
+		});
+	});
+
 });
