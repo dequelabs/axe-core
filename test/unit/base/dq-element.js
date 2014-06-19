@@ -18,6 +18,22 @@ describe('DqElement', function () {
 
 		assert.isObject(result);
 	});
+	describe('element', function () {
+		it('should store reference to the element', function () {
+			var div = document.createElement('div');
+			var dqEl = new DqElement(div);
+			assert.equal(dqEl.element, div);
+		});
+
+		it('should not be writable', function () {
+			var div = document.createElement('div');
+			var dqEl = new DqElement(div);
+			assert.throws(function () {
+				dqEl.element = null;
+			}, TypeError);
+		});
+	});
+
 	describe('selector', function () {
 
 		it('should call utils.getSelector', function () {
@@ -34,7 +50,6 @@ describe('DqElement', function () {
 			var result = new DqElement(fixture);
 			assert.equal(result.selector, expected);
 			utils.getSelector = orig;
-
 
 		});
 
