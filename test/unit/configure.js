@@ -59,14 +59,14 @@ describe('configure', function () {
 			window.utils.respondable.subscribe = orig;
 		});
 
-		it('should call dqre.run', function (done) {
+		it('should call dqre.run and default context to empty object', function (done) {
 			var mockAudit = {
 				rules: []
 			};
 			var origSub = window.utils.respondable.subscribe;
 			var orig = window.dqre.run;
 			window.dqre.run = function (context, options, callback) {
-				assert.equal(context, document);
+				assert.deepEqual(context, {});
 				assert.isFunction(callback);
 				done();
 			};
@@ -88,13 +88,13 @@ describe('configure', function () {
 			var origSub = window.utils.respondable.subscribe;
 			var orig = window.dqre.run;
 			window.dqre.run = function (context, options, callback) {
-				assert.equal(context, 'monkeys');
+				assert.deepEqual(context, {include: ['monkeys']});
 				assert.isFunction(callback);
 				done();
 			};
 
 			utils.respondable.subscribe = function (topic, callback) {
-				callback({context: 'monkeys'}, function (response) {
+				callback({context: { include: ['monkeys'] }}, function (response) {
 					assert.ok(response);
 				});
 
@@ -111,7 +111,7 @@ describe('configure', function () {
 		it('should respond', function () {
 			var origSub = window.utils.respondable.subscribe;
 			var orig = window.dqre.run;
-			var expected = {data: 'monkeys'};
+			var expected = {data: {include: ['monkeys']}};
 			window.dqre.run = function (context, options, callback) {
 				callback(expected);
 			};
