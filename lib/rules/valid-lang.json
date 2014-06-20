@@ -1,7 +1,7 @@
 {
 	"id": "valid-lang",
 	"help": "lang attribute has a valid value",
-	"selector": "[lang], [xml:lang]",
+	"selector": "[lang], [xml\\:lang]",
 	"checks": ["valid-lang"],
 	"tags": [
 		"wcag2aa",
