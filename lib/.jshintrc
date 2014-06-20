@@ -1,5 +1,6 @@
 {
 	"globals": {
+		"results": true,
 		"node": true,
 		"options": true,
 		"kslib": true
