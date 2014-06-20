@@ -5,7 +5,7 @@ var path = require('path');
 
 var templates = {
 	evaluate: 'function (node, options) {\n<%=source%>\n}',
-	after: 'function (data, options) {\n<%=source%>\n}',
+	after: 'function (results, options) {\n<%=source%>\n}',
 	gather: 'function (context) {\n<%=source%>\n}',
 	matches: 'function (node) {\n<%=source%>\n}',
 };
