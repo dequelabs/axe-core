@@ -1,0 +1,12 @@
+{
+	"id": "button-name",
+	"help": "Button elements must have a name",
+	"selector": "button",
+	"checks": ["has-visible-text", "aria-label", "aria-labelledby"],
+	"tags": [
+		"wcag2a",
+		"wcag111",
+		"section508",
+		"section508a"
+	]
+}
