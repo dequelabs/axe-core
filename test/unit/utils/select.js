@@ -122,7 +122,7 @@ describe('utils.select', function () {
 
 		var result = utils.select('.bananas', { include: [$id('two'), $id('one')] });
 
-		assert.deepEqual(result, utils.toArray(document.querySelectorAll('.bananas')));
+		assert.deepEqual(result, [$id('target1'), $id('target2')]);
 
 
 	});

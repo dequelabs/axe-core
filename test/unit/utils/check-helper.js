@@ -17,13 +17,12 @@ describe('utils.checkHelper', function () {
 
 	describe('return value', function () {
 		describe('async', function () {
-			it('should set async property on target to `true` when called', function () {
+			it('should set isAsync property on returned object to `true` when called', function () {
 				var target = {},
 					helper = utils.checkHelper(target, noop);
 
-				assert.notProperty(target, 'async');
 				helper.async();
-				assert.isTrue(target.async);
+				assert.isTrue(helper.isAsync);
 			});
 			it('should call the second parameter of `utils.checkHelper` when invoked', function () {
 				function fn() { success = true; }
@@ -49,10 +48,10 @@ describe('utils.checkHelper', function () {
 			});
 		});
 		describe('relatedNodes', function () {
-			it('should set relatedNodes property on target when called and pass each node into DqNode', function () {
-				var orig = window.DqNode;
+			it('should set relatedNodes property on target when called and pass each node into DqElement', function () {
+				var orig = window.DqElement;
 				var success = false;
-				window.DqNode = function (n) {
+				window.DqElement = function (n) {
 					assert.equal(n, expected[0]);
 					success = true;
 					return n;
@@ -66,11 +65,11 @@ describe('utils.checkHelper', function () {
 				assert.deepEqual(target.relatedNodes, expected);
 				assert.isTrue(success);
 
-				window.DqNode = orig;
+				window.DqElement = orig;
 			});
 			it('should cast the object to an array', function () {
-				var orig = window.DqNode;
-				window.DqNode = function (n) {
+				var orig = window.DqElement;
+				window.DqElement = function (n) {
 					return n;
 				};
 				var target = {},
@@ -81,7 +80,7 @@ describe('utils.checkHelper', function () {
 				assert.isArray(target.relatedNodes);
 				assert.deepEqual(target.relatedNodes, expected);
 
-				window.DqNode = orig;
+				window.DqElement = orig;
 			});
 		});
 

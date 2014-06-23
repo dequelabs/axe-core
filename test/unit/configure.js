@@ -136,6 +136,27 @@ describe('configure', function () {
 			window.dqre.run = orig;
 		});
 
+
+		it('should default include to current document if none are found', function (done) {
+			var origSub = utils.respondable.subscribe;
+			var orig = window.dqre.run;
+			var expected = {include: [document]};
+			window.dqre.run = function (context) {
+				assert.deepEqual(context, expected);
+				done();
+			};
+
+			utils.respondable.subscribe = function (topic, callback) {
+				callback({ context: { include: [] }}, function () {});
+
+			};
+			dqre.configure({
+				rules: []
+			});
+			window.dqre.run = orig;
+			utils.respondable.subscribe = origSub;
+		});
+
 	});
 
 });

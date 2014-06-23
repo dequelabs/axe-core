@@ -21,24 +21,14 @@ describe('CheckResult', function () {
 		assert.isNull(result.data);
 	});
 
-	it('should set `async` to `false`', function () {
-		var result = new CheckResult({});
-		assert.isFalse(result.async);
-	});
-
 	it('should set `relatedNodes` to `[]`', function () {
 		var result = new CheckResult({});
 		assert.deepEqual(result.relatedNodes, []);
 	});
 
-	it('should inherit certainty from check', function () {
-		var result = new CheckResult({certainty: 'monkeys'});
-		assert.equal(result.certainty, 'monkeys');
-	});
-	it('should inherit interpretation from check', function () {
-		var result = new CheckResult({interpretation: 'monkeys'});
-		assert.equal(result.interpretation, 'monkeys');
+	it('should set `result` to `null`', function () {
+		var result = new CheckResult({});
+		assert.isNull(result.result);
 	});
 
-
-});});
+});

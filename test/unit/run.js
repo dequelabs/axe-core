@@ -60,23 +60,6 @@ describe('dqre.run', function () {
 
 		});
 	});
-
-	it('should call audit.after', function (done) {
-		var called = false;
-		dqre.configure({ rules: [], messages: {}});
-
-		dqre.audit.after = function (context, options, results, fn) {
-			called = true;
-			fn(results);
-		};
-		createFrames(2, function () {
-			dqre.run(document, {}, function () {
-				assert.ok(called);
-				done();
-			});
-		});
-	});
-
 	it('should properly calculate context and return results from matching frames', function (done) {
 
 		dqre.configure({
@@ -89,16 +72,34 @@ describe('dqre.run', function () {
 						return true;
 					}
 				}]
+			}, {
+				id: 'first-div',
+				selector: 'div',
+				checks: [{
+					id: 'first-div',
+					evaluate: function (node) {
+						this.relatedNodes([node]);
+						return false;
+					},
+					after: function (results) {
+						if (results.length) {
+							results[0].result = true;
+						}
+						return [results[0]];
+					}
+				}]
 			}],
 			messages: {}
 		});
 
 		iframeReady('../mock/frames/context.html', fixture, 'context-test', function () {
+			var div = document.createElement('div');
+			fixture.appendChild(div);
 
 			dqre.run('#fixture', {}, function (results) {
 				assert.deepEqual(results, [{
 					id: 'div#target',
-					type: 'NODE',
+					pageLevel: false,
 					details: [{
 						node: {
 							selector: '#target',
@@ -107,15 +108,36 @@ describe('dqre.run', function () {
 						},
 						result: 'PASS',
 						checks: [{
-							certainty: 'DEFINITE',
-							interpretation: 'VIOLATION',
 							id: 'has-target',
 							type: 'PASS',
 							data: null,
-							async: false,
 							result: true,
-							error: null/*, @todo add back when it starts to fail (PR-22 / KSD-98)
-							relatedNodes: [] */
+							error: null,
+							relatedNodes: []
+						}]
+					}],
+					result: 'PASS'
+				}, {
+					id: 'first-div',
+					pageLevel: false,
+					details: [{
+						node: {
+							selector: '#foo',
+							source: '<div id="foo">\n		<div id="bar"></div>\n	</div>',
+							frames: ['#context-test']
+						},
+						result: 'PASS',
+						checks: [{
+							id: 'first-div',
+							type: 'PASS',
+							data: null,
+							result: true,
+							error: null,
+							relatedNodes: [{
+								selector: '#foo',
+								source: '<div id="foo">\n		<div id="bar"></div>\n	</div>',
+								frames: ['#context-test']
+							}]
 						}]
 					}],
 					result: 'PASS'
