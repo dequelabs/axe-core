@@ -1,0 +1,10 @@
+{
+	"id": "checkboxgroup",
+	"help": "Checkbox inputs with the same name must be part of a group",
+	"selector": "input[type=checkbox]",
+	"checks": ["noname", "checkbox-nogroup", "checkbox-labelledby", "checkbox-fieldset"],
+	"tags": [
+		"wcag2a",
+		"wcag131"
+	]
+}
