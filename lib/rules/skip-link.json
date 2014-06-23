@@ -1,0 +1,10 @@
+{
+	"id": "skip-link",
+	"help": "Page should have a skip link as its first link",
+	"selector": "a[href]",
+	"checks": ["skip-link"],
+	"pageLevel": "true",
+	"tags": [
+		"best-practice"
+	]
+}

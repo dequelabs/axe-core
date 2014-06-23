@@ -1,0 +1,6 @@
+{
+	"id": "landmark",
+	"selector": "[role=main]",
+	"help": "Page has a main region",
+	"evaluate": "../shared/exists.js"
+}
