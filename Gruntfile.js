@@ -10,6 +10,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-curl');
+	grunt.loadTasks('build/tasks');
 	
 
 	grunt.initConfig({
@@ -61,9 +62,28 @@ module.exports = function (grunt) {
 					run: true
 				},
 			},
+			integration: {
+				options: {
+					urls: ['http://localhost:9876/test/integration/rules'],
+					reporter: 'XUnit',
+					timeout: 10000,
+					threshold: 90
+				},
+				dest: 'xunit.xml'
+			}
 		},
 				curl: {
 			'doc/examples/selenium/selenium-server-standalone-2.41.0.jar': 'http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar'
+		},
+		fixture: {
+			checks: {
+				src: '<%= concat.test.dest %>',
+				dest: 'test/integration/rules/index.html',
+				options: {
+					fixture: 'test/integration/rules/runner.tmpl',
+					testCwd: 'test/integration/rules'
+				}
+			}
 		},
 		connect: {
 			test: {
@@ -77,5 +97,6 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('default', ['concat', 'sample']);
-	grunt.registerTask('sample', ['jasmine', 'mocha', 'qunit']);
+	grunt.registerTask('sample', ['jasmine', 'mocha:test', 'qunit']);
+	grunt.registerTask('test', ['concat', 'fixture', 'connect:test', 'mocha:integration']);
 };
