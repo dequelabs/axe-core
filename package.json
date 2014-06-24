@@ -25,6 +25,7 @@
     "selenium-webdriver": "~2.41.0",
     "grunt-curl": "~1.5.1",
     "grunt-contrib-concat": "~0.4.0",
-    "grunt-mocha-test": "~0.11.0"
+    "grunt-mocha-test": "~0.11.0",
+    "mocha": "~1.20.1"
   }
 }
