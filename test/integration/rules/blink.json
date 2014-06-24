@@ -2,5 +2,5 @@
 	"description": "Blink test",
 	"url": "blink.html",
 	"rule": "blink",
-	"violations": [["#xlinky"]]
+	"violations": [["#blinky"]]
 }
