@@ -11,7 +11,8 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-curl');
 	grunt.loadNpmTasks('grunt-mocha-test');
-
+	grunt.loadTasks('build/tasks');
+	
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -22,23 +23,11 @@ module.exports = function (grunt) {
 					'bower_components/ks-common-functions/dist/ks-cf.js',
 					'bower_components/ks-rules/dist/rules.js'],
 					dest: 'dist/kensington.js'
-			},
-			json: {
-				src: ['test/integration/rules/*.json'],
-				options: {
-					separator: ',',
-				},
-				dest: 'test/integration/rules/json.tmpl'
-			},
-			integration: {
-				src: ['test/integration/rules/header.tmpl', 'test/integration/rules/json.tmpl',
-					'test/integration/rules/footer.tmpl'],
-				dest: 'test/integration/rules/test.js'
 			}
 		},
 		watch: {
-			files: ['<%= concat.test.src %>'],
-			tasks: ['concat']
+			files: ['<%= concat.test.src %>', '<%= testconfig.test.src %>'],
+			tasks: ['concat', 'testconfig']
 		},
 		qunit: {
 			all: ['doc/examples/qunit/**/*.html']
@@ -64,7 +53,16 @@ module.exports = function (grunt) {
 				options: {
 					reporter: 'spec'
 				},
-				src: ['test/integration/rules/test.js']
+				src: ['test/integration/testrunner.js']
+			}
+		},
+		testconfig: {
+			test: {
+				src: ['test/integration/rules/**/*.json'],
+				dest: 'build/test.json',
+				options: {
+					port: '<%= connect.test.options.port %>'
+				}
 			}
 		},
 		curl: {
@@ -81,7 +79,7 @@ module.exports = function (grunt) {
 		},
 	});
 
-	grunt.registerTask('default', ['concat:kensington', 'sample']);
+	grunt.registerTask('default', ['concat', 'sample']);
 	grunt.registerTask('sample', ['jasmine', 'mocha', 'qunit']);
-	grunt.registerTask('test', ['concat:kensington', 'concat:json', 'concat:integration', 'connect', 'mochaTest']);
+	grunt.registerTask('test', ['concat', 'testconfig', 'connect', 'mochaTest']);
 };
