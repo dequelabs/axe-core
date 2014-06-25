@@ -35,29 +35,41 @@ function runTest(driver, i) {
 		})
 		.then(function(result) {
 			if (config[i].violations) {
-				assert.equal(resultCount(result.violations, config[i].rule, config[i].violations), 
-							config[i].violations.length);
+				checkIdenticality(result.violations, config[i].rule, config[i].violations);
 			}
 			if (config[i].passes) {
-				assert.equal(resultCount(result.passes, config[i].rule, config[i].passes), 
-							config[i].passes.length);
+				checkIdenticality(result.passes, config[i].rule, config[i].passes);
 			}
 		});
 	});
 }
 
 
-function resultCount(result, rule, selectors) {
+function checkIdenticality(result, rule, selectors) {
 	'use strict';
-	return result.filter(function (r) {
-		if (r.id !== rule) { return false; }
-		for (var i = 0; i < selectors.length; i++) {
-			for (var j = 0; j  < r.nodes.length; j++) {
-				if (arraysEqual(selectors[i], r.nodes[j].target)) { return true; }
+	result.forEach(function (r) {
+		var found = false, i = 0, j = 0;
+		if (r.id !== rule) { return; }
+		for (i = 0; i < selectors.length; i++) {
+			found = false;
+			for (j = 0; j  < r.nodes.length; j++) {
+				if (arraysEqual(selectors[i], r.nodes[j].target)) { found = true; }
+			}
+			if (!found) {
+				assert.equal(null, selectors[i], 'Expected node not found');
 			}
 		}
-		return false;	
-	}).length;
+
+		for (i = 0; i < r.nodes.length; i++) {
+			found = false;
+			for (j = 0; j < selectors.length; j++) {
+				if (arraysEqual(selectors[j], r.nodes[i].target)) { found = true; }
+			}
+			if (!found) {
+				assert.equal(r.nodes[i].target, null, 'Unexpected node found');
+			}
+		}	
+	});
 }
 
 function arraysEqual(a, b) {
