@@ -15,3 +15,11 @@ describe('utils.matchesSelector', function () {
 	});
 
 });
+describe('utils.clone', function () {
+	'use strict';
+
+	it('should be a function', function () {
+		assert.isFunction(kslib.utils.clone);
+	});
+
+});
