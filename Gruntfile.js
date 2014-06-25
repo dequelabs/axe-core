@@ -12,7 +12,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-curl');
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadTasks('build/tasks');
-	
+
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -80,7 +80,8 @@ module.exports = function (grunt) {
 		},
 	});
 
-	grunt.registerTask('default', ['concat', 'sample']);
 	grunt.registerTask('sample', ['jasmine', 'mocha', 'qunit']);
-	grunt.registerTask('test', ['concat', 'testconfig', 'connect', 'mochaTest']);
+	grunt.registerTask('default', ['build']);
+	grunt.registerTask('build', ['concat']);
+	grunt.registerTask('test', ['build', 'testconfig', 'connect', 'mochaTest']);
 };
