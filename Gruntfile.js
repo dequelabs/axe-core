@@ -26,7 +26,7 @@ module.exports = function (grunt) {
 			}
 		},
 		watch: {
-			files: ['<%= concat.test.src %>', '<%= testconfig.test.src %>'],
+			files: ['<%= concat.kensington.src %>', '<%= testconfig.test.src %>'],
 			tasks: ['concat', 'testconfig']
 		},
 		qunit: {
