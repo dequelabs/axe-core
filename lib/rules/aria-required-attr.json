@@ -1,0 +1,10 @@
+{
+	"id": "aria-required-attr",
+	"help": "Required ARIA attributes are defined",
+	"selector": "[role]",
+	"checks": ["aria-required-attr"],
+	"tags": [
+		"wcag2a",
+		"wcag411"
+	]
+}
