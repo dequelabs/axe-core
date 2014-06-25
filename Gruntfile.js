@@ -10,39 +10,35 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-curl');
-	grunt.loadTasks('build/tasks');
-	
+	grunt.loadNpmTasks('grunt-mocha-test');
+
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
 		concat: {
-			test: {
+			kensington: {
 				src: ['bower_components/rule-engine/dist/dqre.js',
 					'bower_components/ks-common-functions/dist/ks-cf.js',
 					'bower_components/ks-rules/dist/rules.js'],
-				dest: 'dist/kensington.js'
+					dest: 'dist/kensington.js'
+			},
+			json: {
+				src: ['test/integration/rules/*.json'],
+				options: {
+					separator: ',',
+				},
+				dest: 'test/integration/rules/json.tmpl'
+			},
+			integration: {
+				src: ['test/integration/rules/header.tmpl', 'test/integration/rules/json.tmpl',
+					'test/integration/rules/footer.tmpl'],
+				dest: 'test/integration/rules/test.js'
 			}
 		},
 		watch: {
-			files: ['bower_components/rule-engine/dist/dqre.js', 'test/**/*'],
-			tasks: ['jasmine:test:build']
-		},
-		npminstall: {
-			'rule-engine': {
-				src: 'bower_components/rule-engine/'
-			},
-			'ks-rules': {
-				src: 'bower_components/ks-rules/'
-			}
-		},
-		rungrunt: {
-			'rule-engine': {
-				src: 'bower_components/rule-engine/'
-			},
-			'ks-rules': {
-				src: 'bower_components/ks-rules/'
-			}
+			files: ['<%= concat.test.src %>'],
+			tasks: ['concat']
 		},
 		qunit: {
 			all: ['doc/examples/qunit/**/*.html']
@@ -62,28 +58,17 @@ module.exports = function (grunt) {
 					run: true
 				},
 			},
-			integration: {
+		},
+		mochaTest: {
+			test: {
 				options: {
-					urls: ['http://localhost:9876/test/integration/rules'],
-					reporter: 'XUnit',
-					timeout: 10000,
-					threshold: 90
+					reporter: 'spec'
 				},
-				dest: 'xunit.xml'
+				src: ['test/integration/rules/test.js']
 			}
 		},
-				curl: {
-			'doc/examples/selenium/selenium-server-standalone-2.41.0.jar': 'http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar'
-		},
-		fixture: {
-			checks: {
-				src: '<%= concat.test.dest %>',
-				dest: 'test/integration/rules/index.html',
-				options: {
-					fixture: 'test/integration/rules/runner.tmpl',
-					testCwd: 'test/integration/rules'
-				}
-			}
+		curl: {
+			'build/selenium-server-standalone-2.41.0.jar': 'http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar'
 		},
 		connect: {
 			test: {
@@ -96,7 +81,7 @@ module.exports = function (grunt) {
 		},
 	});
 
-	grunt.registerTask('default', ['concat', 'sample']);
-	grunt.registerTask('sample', ['jasmine', 'mocha:test', 'qunit']);
-	grunt.registerTask('test', ['concat', 'fixture', 'connect:test', 'mocha:integration']);
+	grunt.registerTask('default', ['concat:kensington', 'sample']);
+	grunt.registerTask('sample', ['jasmine', 'mocha', 'qunit']);
+	grunt.registerTask('test', ['concat:kensington', 'concat:json', 'concat:integration', 'connect', 'mochaTest']);
 };

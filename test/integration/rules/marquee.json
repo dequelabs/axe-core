@@ -1,0 +1,6 @@
+{
+	"description": "Marquee Test",
+	"url": "marquee.html",
+	"rule": "marquee",
+	"violations": [["#marqueemarq"]]
+}
