@@ -1,4 +1,9 @@
-];
+var WebDriver = require('selenium-webdriver'),
+assert = require('chai').assert,
+test = require('selenium-webdriver/testing'),
+SeleniumServer = require('selenium-webdriver/remote').SeleniumServer,
+jar = 'build/selenium-server-standalone-2.41.0.jar',
+config = require('../../build/test.json');
 
 
 test.describe('Integration', function () {
@@ -26,7 +31,7 @@ test.describe('Integration', function () {
 
 function runTest(driver, i) {
 	'use strict';
-	driver.get('http://localhost:9876/test/integration/rules/' + config[i].url)
+	driver.get(config[i].url)
 	.then(function() {
 		//should give an error
 		driver.executeAsyncScript(function() {
