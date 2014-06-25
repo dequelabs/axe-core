@@ -1,0 +1,9 @@
+{
+	"id": "aria-allowed-attr",
+	"help": "Only allowed ARIA attributes are used",
+	"checks": ["aria-allowed-attr"],
+	"tags": [
+		"wcag2a",
+		"wcag411"
+	]
+}
