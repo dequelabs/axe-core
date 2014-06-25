@@ -30,10 +30,10 @@ describe('heading-order', function () {
 
 	});
 
-	it('should return false and put nothing in data for non-headers', function () {
+	it('should return true and put nothing in data for non-headers', function () {
 		fixture.innerHTML = '<div id="target">One</div><h3>Three</h3>';
 		var node = fixture.querySelector('#target');
-		assert.isFalse(checks['heading-order'].evaluate.call(checkContext, node));
+		assert.isTrue(checks['heading-order'].evaluate.call(checkContext, node));
 		assert.equal(checkContext._data, null);
 	});
 
