@@ -51,7 +51,7 @@ module.exports = function (grunt) {
 		mochaTest: {
 			test: {
 				options: {
-					reporter: grunt.option('report') ? 'XUnit' : 'spec',
+					reporter: grunt.option('report') ? 'xunit' : 'spec',
 					captureFile: grunt.option('report') ? 'dist/xunit.xml' : undefined
 				},
 				src: ['test/integration/testrunner.js']
