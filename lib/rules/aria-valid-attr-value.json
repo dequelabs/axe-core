@@ -1,0 +1,9 @@
+{
+	"id": "aria-valid-attr-value",
+	"help": "ARIA attributes used must conform to valid values",
+	"checks": ["aria-valid-attr-value"],
+	"tags": [
+		"wcag2a",
+		"wcag411"
+	]
+}
