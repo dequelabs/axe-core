@@ -47,8 +47,8 @@ function runTest(driver, i) {
 			dqre.a11yCheck(document, null, callback);
 		})
 		.then(function(result) {
-			checkIdenticality(result.violations, config[i].rule, config[i].violations);
-			checkIdenticality(result.passes, config[i].rule, config[i].passes);
+			checkIdenticality(result.violations, config[i].rule, config[i].violations || []);
+			checkIdenticality(result.passes, config[i].rule, config[i].passes || []);
 		});
 	});
 }
