@@ -47,14 +47,14 @@ function runTest(driver, i) {
 			dqre.a11yCheck(document, null, callback);
 		})
 		.then(function(result) {
-			checkIdenticality(result.violations, config[i].rule, config[i].violations || []);
-			checkIdenticality(result.passes, config[i].rule, config[i].passes || []);
+			checkIdenticality('violations', result.violations, config[i].rule, config[i].violations || []);
+			checkIdenticality('passes', result.passes, config[i].rule, config[i].passes || []);
 		});
 	});
 }
 
 
-function checkIdenticality(result, rule, selectors) {
+function checkIdenticality(checkType, result, rule, selectors) {
 	'use strict';
 	result.forEach(function (r) {
 		var found = false, i = 0, j = 0;
@@ -65,7 +65,7 @@ function checkIdenticality(result, rule, selectors) {
 				if (arraysEqual(selectors[i], r.nodes[j].target)) { found = true; }
 			}
 			if (!found) {
-				assert.equal(null, selectors[i], 'Expected node not found');
+				assert.equal(null, selectors[i], 'Expected node not found for ' + checkType);
 			}
 		}
 
@@ -75,7 +75,7 @@ function checkIdenticality(result, rule, selectors) {
 				if (arraysEqual(selectors[j], r.nodes[i].target)) { found = true; }
 			}
 			if (!found) {
-				assert.equal(r.nodes[i].target, null, 'Unexpected node found');
+				assert.equal(r.nodes[i].target, null, 'Unexpected node found for ' + checkType);
 			}
 		}	
 	});
