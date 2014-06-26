@@ -1,6 +1,5 @@
 {
 	"description": "area-alt tests",
-	"url": "area-alt/area-alt.html",
 	"rule": "area-alt",
 	"violations": [["#violation1"], ["#violation2"], ["#violation3"], ["#violation4"]],
 	"passes":  [["#pass1"], ["#pass2"], ["#pass3"]]
