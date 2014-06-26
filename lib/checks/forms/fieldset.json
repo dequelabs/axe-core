@@ -1,0 +1,6 @@
+{
+	"id": "fieldset",
+	"help": "Element does not have proper containing fieldset",
+	"options": "checkbox",
+	"evaluate": "fieldset.js"
+}
