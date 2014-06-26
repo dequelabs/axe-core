@@ -1,15 +1,17 @@
 var WebDriver = require('selenium-webdriver'),
-assert = require('chai').assert,
-test = require('selenium-webdriver/testing'),
-SeleniumServer = require('selenium-webdriver/remote').SeleniumServer,
-jar = 'build/selenium-server-standalone-2.41.0.jar',
-config = require('../../build/test.json');
+	assert = require('chai').assert,
+	test = require('selenium-webdriver/testing'),
+	SeleniumServer = require('selenium-webdriver/remote').SeleniumServer,
+	jar = 'build/selenium-server-standalone-2.41.0.jar',
+	config = require('../../build/test.json');
 
 
 test.describe('Integration', function () {
 	'use strict';
 
+	var driver;
 
+	test.before(function() {
 		var server = new SeleniumServer(jar, {
 			port: 4444,
 			args: ['-Xmx512m']
@@ -17,16 +19,22 @@ test.describe('Integration', function () {
 
 		server.start();
 
-		var driver = new WebDriver.Builder()
-		.usingServer(server.address())
-		.withCapabilities(WebDriver.Capabilities.firefox())
-		.build();
+		driver = new WebDriver.Builder()
+			.usingServer(server.address())
+			.withCapabilities(WebDriver.Capabilities.firefox())
+			.build();
+	});
 
-		for (var i = 0; i < config.length; i++) {
-			test.it(config[i].description, function(testIndex) {
-				return function() { runTest(driver, testIndex); };
-			}(i));
-		}
+
+	test.after(function() {
+		driver.quit();
+	});
+
+	for (var i = 0; i < config.length; i++) {
+		test.it(config[i].description, function(testIndex) {
+			return function() { runTest(driver, testIndex); };
+		}(i));
+	}
 });
 
 function runTest(driver, i) {
@@ -39,18 +47,14 @@ function runTest(driver, i) {
 			dqre.a11yCheck(document, null, callback);
 		})
 		.then(function(result) {
-			if (config[i].violations) {
-				checkIdenticality(result.violations, config[i].rule, config[i].violations);
-			}
-			if (config[i].passes) {
-				checkIdenticality(result.passes, config[i].rule, config[i].passes);
-			}
+			checkIdenticality('violations', result.violations, config[i].rule, config[i].violations || []);
+			checkIdenticality('passes', result.passes, config[i].rule, config[i].passes || []);
 		});
 	});
 }
 
 
-function checkIdenticality(result, rule, selectors) {
+function checkIdenticality(checkType, result, rule, selectors) {
 	'use strict';
 	result.forEach(function (r) {
 		var found = false, i = 0, j = 0;
@@ -61,7 +65,7 @@ function checkIdenticality(result, rule, selectors) {
 				if (arraysEqual(selectors[i], r.nodes[j].target)) { found = true; }
 			}
 			if (!found) {
-				assert.equal(null, selectors[i], 'Expected node not found');
+				assert.equal(null, selectors[i], 'Expected node not found for ' + checkType);
 			}
 		}
 
@@ -71,7 +75,7 @@ function checkIdenticality(result, rule, selectors) {
 				if (arraysEqual(selectors[j], r.nodes[i].target)) { found = true; }
 			}
 			if (!found) {
-				assert.equal(r.nodes[i].target, null, 'Unexpected node found');
+				assert.equal(r.nodes[i].target, null, 'Unexpected node found for ' + checkType);
 			}
 		}	
 	});
