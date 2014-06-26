@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<script src="/dist/kensington.js" type="text/javascript"></script>
+	<title>Fixture</title>
+</head>
+<body>
+	<h2>Violations</h2>
+	<div>
+		<div aria-activedescendant="Idonotexist" id="violation0">hi</div>
+		<div aria-activedescendant="" id="violation1">hi</div>
+		<div aria-activedescendant="ref noexist ref2" id="violation2">hi</div>
+
+		<div aria-atomic="blah" id="violation3">hi</div>
+
+		<div aria-autocomplete="stuff" id="violation4">none</div>
+
+		<div aria-busy="blah" id="violation5">hi</div>
+
+		<div aria-checked="stuff" id="violation6">hi</div>
+		<div aria-controls="stuff" id="violation7">hi</div>
+		<div aria-describedby="stuff" id="violation8">hi</div>
+		<div aria-disabled="stuff" id="violation9">hi</div>
+		<div aria-dropeffect="stuff" id="violation10">hi</div>
+		<div aria-expanded="stuff" id="violation11">hi</div>
+		<div aria-flowto="stuff" id="violation12">hi</div>
+		<div aria-grabbed="stuff" id="violation13">hi</div>
+		<div aria-haspopup="stuff" id="violation14">hi</div>
+		<div aria-hidden="stuff" id="violation15">hi</div>
+		<div aria-invalid="stuff" id="violation16">hi</div>
+		<div aria-labelledby="stuff" id="violation17">hi</div>
+		<div aria-level="stuff" id="violation18">hi</div>
+		<div aria-live="stuff" id="violation19">hi</div>
+		<div aria-multiline="stuff" id="violation20">hi</div>
+		<div aria-multiselectable="stuff" id="violation21">hi</div>
+		<div aria-owns="stuff" id="violation22">hi</div>
+		<div aria-posinset="stuff" id="violation23">hi</div>
+		<div aria-pressed="stuff" id="violation24">hi</div>
+		<div aria-readonly="stuff" id="violation25">hi</div>
+		<div aria-relevant="stuff" id="violation26">hi</div>
+		<div aria-required="stuff" id="violation27">hi</div>
+		<div aria-selected="stuff" id="violation28">hi</div>
+		<div aria-setsize="stuff" id="violation29">hi</div>
+		<div aria-sort="stuff" id="violation30">hi</div>
+		<div aria-valuemax="stuff" id="violation31">hi</div>
+		<div aria-valuemin="stuff" id="violation32">hi</div>
+		<div aria-valuenow="stuff" id="violation33">hi</div>
+	</div>
+	<h2>Possible False Positives</h2>
+	<div>
+		<div aria-activedescendant="ref" id="pass1">hi</div>
+
+		<div aria-atomic="true" id="pass2">hi</div>
+		<div aria-atomic="false" id="pass3">hi</div>
+
+		<div aria-autocomplete="inline" id="pass4">inline</div>
+		<div aria-autocomplete="list" id="pass5">list</div>
+		<div aria-autocomplete="both" id="pass6">both</div>
+		<div aria-autocomplete="none" id="pass7">none</div>
+
+		<div aria-busy="true" id="pass8">hi</div>
+		<div aria-busy="false" id="pass9">hi</div>
+
+		<div aria-checked="true" id="pass10">hi</div>
+		<div aria-checked="false" id="pass11">hi</div>
+		<div aria-checked="mixed" id="pass12">hi</div>
+		<div aria-checked="undefined" id="pass13">hi</div>
+
+		<div aria-controls="ref" id="pass14">hi</div>
+		<div aria-controls="ref ref2" id="pass15">hi</div>
+		<div aria-controls=" ref ref2 " id="pass16">hi</div>
+
+		<div aria-describedby="ref" id="pass17">hi</div>
+		<div aria-describedby="ref ref2" id="pass18">hi</div>
+		<div aria-describedby=" ref ref2 " id="pass19">hi</div>
+
+		<div aria-disabled="true" id="pass20">hi</div>
+		<div aria-disabled="false" id="pass21">hi</div>
+
+		<div aria-dropeffect="copy" id="pass22">hi</div>
+		<div aria-dropeffect="move" id="pass23">hi</div>
+		<div aria-dropeffect="reference" id="pass24">hi</div>
+		<div aria-dropeffect="execute" id="pass25">hi</div>
+		<div aria-dropeffect="popup" id="pass26">hi</div>
+		<div aria-dropeffect="none" id="pass27">hi</div>
+
+		<div aria-expanded="true" id="pass28">hi</div>
+		<div aria-expanded="false" id="pass29">hi</div>
+		<div aria-expanded="undefined" id="pass30">hi</div>
+
+		<div aria-flowto="ref" id="pass31">hi</div>
+		<div aria-flowto="ref ref2" id="pass32">hi</div>
+		<div aria-flowto=" ref ref2 " id="pass33">hi</div>
+
+		<div aria-grabbed="true" id="pass34">hi</div>
+		<div aria-grabbed="false" id="pass35">hi</div>
+		<div aria-grabbed="undefined" id="pass36">hi</div>
+
+		<div aria-haspopup="true" id="pass37">hi</div>
+		<div aria-haspopup="false" id="pass38">hi</div>
+
+		<div aria-hidden="true" id="pass39">hi</div>
+		<div aria-hidden="false" id="pass40">hi</div>
+
+		<div aria-invalid="true" id="pass41">hi</div>
+		<div aria-invalid="false" id="pass42">hi</div>
+		<div aria-invalid="spelling" id="pass43">hi</div>
+		<div aria-invalid="grammar" id="pass44">hi</div>
+
+		<div aria-label="stuff" id="pass45">hi</div>
+
+		<div aria-labelledby="ref" id="pass46">hi</div>
+		<div aria-labelledby="ref ref2" id="pass47">hi</div>
+		<div aria-labelledby=" ref ref2 " id="pass48">hi</div>
+
+		<div aria-level="0" id="pass49">hi</div>
+		<div aria-level="1" id="pass50">hi</div>
+		<div aria-level="22" id="pass51">hi</div>
+		<div aria-level="-1" id="pass52">hi</div>
+		<div aria-level="-22" id="pass53">hi</div>
+		<div aria-level="+1" id="pass54">hi</div>
+		<div aria-level="+22" id="pass55">hi</div>
+
+		<div aria-live="off" id="pass56">hi</div>
+		<div aria-live="polite" id="pass57">hi</div>
+		<div aria-live="assertive" id="pass58">hi</div>
+
+		<div aria-multiline="true" id="pass59">hi</div>
+		<div aria-multiline="false" id="pass60">hi</div>
+
+		<div aria-multiselectable="true" id="pass61">hi</div>
+		<div aria-multiselectable="false" id="pass62">hi</div>
+
+		<div aria-orientation="horizontal" id="pass63">hi</div>
+		<div aria-orientation="vertical" id="pass64">hi</div>
+
+		<div aria-owns="ref" id="pass65">hi</div>
+		<div aria-owns="ref ref2" id="pass66">hi</div>
+		<div aria-owns=" ref ref2 " id="pass67">hi</div>
+
+		<div aria-posinset="0" id="pass68">hi</div>
+		<div aria-posinset="1" id="pass69">hi</div>
+		<div aria-posinset="22" id="pass70">hi</div>
+		<div aria-posinset="-1" id="pass71">hi</div>
+		<div aria-posinset="-22" id="pass72">hi</div>
+		<div aria-posinset="+1" id="pass73">hi</div>
+		<div aria-posinset="+22" id="pass74">hi</div>
+
+		<div aria-pressed="true" id="pass75">hi</div>
+		<div aria-pressed="false" id="pass76">hi</div>
+		<div aria-pressed="mixed" id="pass77">hi</div>
+		<div aria-pressed="undefined" id="pass78">hi</div>
+
+		<div aria-readonly="true" id="pass79">hi</div>
+		<div aria-readonly="false" id="pass80">hi</div>
+
+		<div aria-relevant="additions" id="pass81">hi</div>
+		<div aria-relevant="removals" id="pass82">hi</div>
+		<div aria-relevant="text" id="pass83">hi</div>
+		<div aria-relevant="all" id="pass84">hi</div>
+
+		<div aria-required="true" id="pass85">hi</div>
+		<div aria-required="false" id="pass86">hi</div>
+
+		<div aria-selected="true" id="pass87">hi</div>
+		<div aria-selected="false" id="pass88">hi</div>
+		<div aria-selected="undefined" id="pass89">hi</div>
+
+		<div aria-setsize="0" id="pass90">hi</div>
+		<div aria-setsize="1" id="pass91">hi</div>
+		<div aria-setsize="22" id="pass92">hi</div>
+		<div aria-setsize="-1" id="pass93">hi</div>
+		<div aria-setsize="-22" id="pass94">hi</div>
+		<div aria-setsize="+1" id="pass95">hi</div>
+		<div aria-setsize="+22" id="pass96">hi</div>
+
+		<div aria-sort="ascending" id="pass97">hi</div>
+		<div aria-sort="descending" id="pass98">hi</div>
+		<div aria-sort="other" id="pass99">hi</div>
+		<div aria-sort="none" id="pass100">hi</div>
+
+		<div aria-valuemax="0.1" id="pass101">hi</div>
+		<div aria-valuemax="1.1" id="pass102">hi</div>
+		<div aria-valuemax="12.22" id="pass103">hi</div>
+		<div aria-valuemax="1." id="pass104">hi</div>
+		<div aria-valuemax=".1" id="pass105">hi</div>
+		<div aria-valuemax="412" id="pass106">hi</div>
+		<div aria-valuemax="+0.1" id="pass107">hi</div>
+		<div aria-valuemax="+1.1" id="pass108">hi</div>
+		<div aria-valuemax="+12.22" id="pass109">hi</div>
+		<div aria-valuemax="+1." id="pass110">hi</div>
+		<div aria-valuemax="+.1" id="pass111">hi</div>
+		<div aria-valuemax="+412" id="pass112">hi</div>
+		<div aria-valuemax="-0.1" id="pass113">hi</div>
+		<div aria-valuemax="-1.1" id="pass114">hi</div>
+		<div aria-valuemax="-12.22" id="pass115">hi</div>
+		<div aria-valuemax="-1." id="pass116">hi</div>
+		<div aria-valuemax="-.1" id="pass117">hi</div>
+		<div aria-valuemax="-412" id="pass118">hi</div>
+
+		<div aria-valuemin="0.1" id="pass119">hi</div>
+		<div aria-valuemin="1.1" id="pass120">hi</div>
+		<div aria-valuemin="12.22" id="pass121">hi</div>
+		<div aria-valuemin="1." id="pass122">hi</div>
+		<div aria-valuemin=".1" id="pass123">hi</div>
+		<div aria-valuemin="412" id="pass124">hi</div>
+		<div aria-valuemin="+0.1" id="pass125">hi</div>
+		<div aria-valuemin="+1.1" id="pass126">hi</div>
+		<div aria-valuemin="+12.22" id="pass127">hi</div>
+		<div aria-valuemin="+1." id="pass128">hi</div>
+		<div aria-valuemin="+.1" id="pass129">hi</div>
+		<div aria-valuemin="+412" id="pass130">hi</div>
+		<div aria-valuemin="-0.1" id="pass131">hi</div>
+		<div aria-valuemin="-1.1" id="pass132">hi</div>
+		<div aria-valuemin="-12.22" id="pass133">hi</div>
+		<div aria-valuemin="-1." id="pass134">hi</div>
+		<div aria-valuemin="-.1" id="pass135">hi</div>
+		<div aria-valuemin="-412" id="pass136">hi</div>
+		<!-- VALUENOW -->
+		<div aria-valuenow="0.1" id="pass137">hi</div>
+		<div aria-valuenow="1.1" id="pass138">hi</div>
+		<div aria-valuenow="12.22" id="pass139">hi</div>
+		<div aria-valuenow="1." id="pass140">hi</div>
+		<div aria-valuenow=".1" id="pass141">hi</div>
+		<div aria-valuenow="412" id="pass142">hi</div>
+		<div aria-valuenow="+0.1" id="pass143">hi</div>
+		<div aria-valuenow="+1.1" id="pass144">hi</div>
+		<div aria-valuenow="+12.22" id="pass145">hi</div>
+		<div aria-valuenow="+1." id="pass146">hi</div>
+		<div aria-valuenow="+.1" id="pass147">hi</div>
+		<div aria-valuenow="+412" id="pass148">hi</div>
+		<div aria-valuenow="-0.1" id="pass149">hi</div>
+		<div aria-valuenow="-1.1" id="pass150">hi</div>
+		<div aria-valuenow="-12.22" id="pass151">hi</div>
+		<div aria-valuenow="-1." id="pass152">hi</div>
+		<div aria-valuenow="-.1" id="pass153">hi</div>
+		<div aria-valuenow="-412" id="pass154">hi</div>
+		<div aria-valuetext="stuff" id="pass155">hi</div>
+
+		<div id="ref">Hi</div>
+		<div id="ref2">Hi2</div>
+	</div>
+</body>
+</html>
