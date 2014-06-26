@@ -52,7 +52,8 @@ module.exports = function (grunt) {
 			test: {
 				options: {
 					reporter: grunt.option('report') ? 'xunit' : 'spec',
-					captureFile: grunt.option('report') ? 'dist/xunit.xml' : undefined
+					captureFile: grunt.option('report') ? 'dist/xunit.xml' : undefined,
+					grep: grunt.option('grep')
 				},
 				src: ['test/integration/testrunner.js']
 			}
