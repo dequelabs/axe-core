@@ -25,6 +25,11 @@ describe('skip-link', function () {
 		assert.isFalse(checks['skip-link'].evaluate(node));
 	});
 
+	it('should return first result of an array', function () {
+		var results = [1, 2, 3];
+		assert.equal(checks['skip-link'].after(results), 1);
+	});
+
 	it('should return true if the href points to a focusable element', function () {
 		fixture.innerHTML = '<a href="#mainheader">Click Here</a><h1 id="mainheader" tabindex="0">Introduction</h1>';
 		var node = fixture.querySelector('a');
