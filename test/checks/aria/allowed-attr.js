@@ -93,6 +93,20 @@ describe('aria-allowed-attr', function () {
 		kslib.aria.allowedAttr = orig;
 	});
 
+	it('should not report on invalid attributes', function () {
+		var node = document.createElement('div');
+		node.id = 'test';
+		node.tabIndex = 1;
+		node.setAttribute('aria-cats', 'true');
+		node.setAttribute('role', 'dialog');
+		fixture.appendChild(node);
+
+		assert.isTrue(checks['aria-allowed-attr'].evaluate.call(checkContext, node));
+		assert.isNull(checkContext._data);
+
+
+	});
+
 	describe('matches', function () {
 		it('should return false on elements with no role or no implicit role', function () {
 			var orig = kslib.aria.implicitRole;
