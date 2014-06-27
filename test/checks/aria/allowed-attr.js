@@ -29,6 +29,19 @@ describe('aria-allowed-attr', function () {
 
 	});
 
+	it('should not report on required attributes', function () {
+		var node = document.createElement('div');
+		node.setAttribute('role', 'checkbox');
+		node.id = 'test';
+		node.tabIndex = 1;
+		node.setAttribute('aria-checked', 'true');
+		fixture.appendChild(node);
+
+		assert.isTrue(checks['aria-allowed-attr'].evaluate.call(checkContext, node));
+
+
+	});
+
 	it('should detect incorrectly used attributes - implicit role', function () {
 		var node = document.createElement('a');
 		node.href = '#';
