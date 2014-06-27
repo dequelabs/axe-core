@@ -1,0 +1,7 @@
+{
+	"description": "aria-allowed-attr failing tests",
+	"rule": "aria-allowed-attr",
+	"violations": [
+		["#fail1"], ["#fail2"]
+	]
+}
