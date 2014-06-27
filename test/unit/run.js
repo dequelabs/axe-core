@@ -11,25 +11,24 @@ describe('dqre.run', function () {
 		context.appendChild(i);
 	}
 
-	function createFrames(num, callback) {
-		var frame,
+	function createFrames(callback) {
+		var frame, num = 2,
 			loaded = 0;
 
 		function onLoad() {
 			loaded++;
-			if (loaded >= (num + 1)) {
+			if (loaded >= (num)) {
 				callback();
 			}
 		}
 
-		for (var i = 0; i < num; i++) {
-			frame = document.createElement('frame');
-			frame.src = '../mock/frames/e2e.html';
+		frame = document.createElement('frame');
+		frame.src = '../mock/frames/frame-frame.html';
 
-			frame.addEventListener('load', onLoad);
-			fixture.appendChild(frame);
+		frame.addEventListener('load', onLoad);
+		fixture.appendChild(frame);
 
-		}
+
 		frame = document.createElement('frame');
 		frame.src = '../mock/frames/nocode.html';
 		frame.addEventListener('load', onLoad);
@@ -51,12 +50,25 @@ describe('dqre.run', function () {
 	});
 
 	it('should work', function (done) {
-		dqre.configure({ rules: [], messages: {}});
+		dqre.configure({ rules: [{
+			id: 'html',
+			selector: 'html',
+			checks: [{
+				id: 'html',
+				evaluate: function () {
+					return true;
+				}
+			}]
+		}], messages: {}});
 
-		createFrames(2, function () {
-			dqre.run(document, {}, function () {
-				done();
-			});
+		createFrames(function () {
+			setTimeout(function () {
+				dqre.run(document, {}, function (r) {
+					assert.lengthOf(r[0].details, 3);
+					done();
+				});
+
+			}, 500);
 
 		});
 	});
