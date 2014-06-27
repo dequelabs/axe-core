@@ -121,9 +121,19 @@ describe('aria-allowed-attr', function () {
 			kslib.aria.allowedAttr = orig;
 		});
 
+		it('should return false on elements that have a role but no aria attributes', function () {
+			var div = document.createElement('div');
+			div.setAttribute('role', 'button');
+			fixture.appendChild(div);
+
+			assert.isFalse(checks['aria-allowed-attr'].matches(div));
+		});
+
+
 		it('should return true on elements that have a role', function () {
 			var div = document.createElement('div');
 			div.setAttribute('role', 'button');
+			div.setAttribute('aria-cats', 'meow');
 			fixture.appendChild(div);
 
 			assert.isTrue(checks['aria-allowed-attr'].matches(div));
@@ -132,6 +142,7 @@ describe('aria-allowed-attr', function () {
 		it('should return true on elements that have an implicit role', function () {
 			var div = document.createElement('a');
 			div.setAttribute('href', '#monkeys');
+			div.setAttribute('aria-cats', 'meow');
 			fixture.appendChild(div);
 
 			assert.isTrue(checks['aria-allowed-attr'].matches(div));
