@@ -2,7 +2,20 @@
 	"id": "checkboxgroup",
 	"help": "Checkbox inputs with the same name must be part of a group",
 	"selector": "input[type=checkbox]",
-	"checks": ["noname", "checkbox-nogroup", "checkbox-labelledby", "checkbox-fieldset"],
+	"checks": ["noname", 
+		{
+			"id" : "nogroup",
+			"options": "checkbox"
+		},
+		{
+			"id": "labelledby", 
+			"options": "checkbox"
+		},
+		{
+			"id" : "fieldset", 
+			"options": "checkbox"
+		}
+	],
 	"tags": [
 		"wcag2a",
 		"wcag131"

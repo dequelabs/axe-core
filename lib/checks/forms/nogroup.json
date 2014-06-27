@@ -1,5 +1,5 @@
 {
-	"id": "checkbox-nogroup",
+	"id": "nogroup",
 	"help": "Element is not part of a proper group of checkbox inputs",
 	"options": "checkbox",
 	"evaluate": "nogroup.js"

@@ -60,6 +60,11 @@ describe('heading-order', function () {
 		assert.isTrue(checks['heading-order'].after(results)[1].result);
 	});
 
+	it('should return true when there is only one header', function () {
+		var results = [{data: 1, result: true}];
+		assert.isTrue(checks['heading-order'].after(results)[0].result);
+	});
+
 	it('should return true when header level increases by 1', function () {
 		var results = [{data: 1, result: true}, {data: 2, result: true}];
 		assert.isTrue(checks['heading-order'].after(results)[1].result);

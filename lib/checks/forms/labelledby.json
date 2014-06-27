@@ -1,5 +1,5 @@
 {
-	"id": "checkbox-labelledby",
+	"id": "labelledby",
 	"help": "Element does not have proper aria-labelledby values for all group members",
 	"options": "checkbox",
 	"evaluate": "labelledby.js"
