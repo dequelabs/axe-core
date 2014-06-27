@@ -2,14 +2,23 @@
 <html>
 <head>
 	<title>Message Iframe Fixture</title>
+	<script src="../../../dist/dqre.js"></script>
+	<script>
+		dqre.configure({ rules: [{
+			id: 'html',
+			selector: 'html',
+			checks: [{
+				id: 'html',
+				evaluate: function () {
+					return true;
+				}
+			}]
+		}], messages: {}});
+	</script>
 </head>
 <body>
-	<script src="../../../dist/dqre.js"></script>
 
 	<input type="text">
 	<a href="#">link</a>
-	<script>
-		dqre.configure({ rules: [] });
-	</script>
 </body>
 </html>

@@ -50,6 +50,7 @@ describe('dqre.run', function () {
 	});
 
 	it('should work', function (done) {
+		this.timeout(50000);
 		dqre.configure({ rules: [{
 			id: 'html',
 			selector: 'html',
