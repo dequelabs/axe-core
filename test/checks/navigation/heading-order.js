@@ -22,6 +22,14 @@ describe('heading-order', function () {
 
 	});
 
+	it('should store the header level as a number', function () {
+		fixture.innerHTML = '<h1 id="target">One</h1><h3>Three</h3>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['heading-order'].evaluate.call(checkContext, node));
+		assert.isNumber(checkContext._data);
+
+	});
+
 	it('should store the correct header level for hn tags and return true', function () {
 		fixture.innerHTML = '<h1 id="target">One</h1><h3>Three</h3>';
 		var node = fixture.querySelector('#target');
