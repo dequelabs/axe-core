@@ -1,0 +1,13 @@
+{
+	"description": "heading-order test",
+	"rule": "heading-order",
+	"violations": [["#heading6"]],
+	"passes": [
+		["#heading1"],
+		["#heading2"],
+		["#heading3"],
+		["#heading4"],
+		["#heading5"],
+		["#heading7"]
+	]
+}

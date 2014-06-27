@@ -1,0 +1,6 @@
+{
+	"description": "tabindex test",
+	"rule": "tabindex",
+	"violations": [["#positive"]],
+	"passes": [["#negative"], ["#zero"]]
+}

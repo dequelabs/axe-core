@@ -1,0 +1,5 @@
+{
+	"description": "bypass-skip-link pass test",
+	"rule": "bypass",
+	"passes": [["#firstlink"]]
+}

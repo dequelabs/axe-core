@@ -1,0 +1,5 @@
+{
+	"description": "bypass fail test",
+	"rule": "bypass",
+	"violations": [["#randomlink"]]
+}
