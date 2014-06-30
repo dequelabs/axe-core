@@ -23,6 +23,7 @@ test.describe('Integration', function () {
 			.usingServer(server.address())
 			.withCapabilities(WebDriver.Capabilities.firefox())
 			.build();
+		driver.manage().timeouts().setScriptTimeout(10000);
 	});
 
 
@@ -77,7 +78,7 @@ function checkIdenticality(checkType, result, rule, selectors) {
 			if (!found) {
 				assert.equal(r.nodes[i].target, null, 'Unexpected node found for ' + checkType);
 			}
-		}	
+		}
 	});
 }
 
