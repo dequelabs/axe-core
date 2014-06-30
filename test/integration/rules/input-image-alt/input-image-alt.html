@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf8">
+<title>INPUT IMAGE ALT test</title>
+<script src="/dist/kensington.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div id="monkeys">Bananas</div>
+<form action="#">
+	<input type="image" src="img.jpg" id="violation1">
+	<input type="image" src="img.jpg" id="violation2" aria-label="">
+	<input type="image" src="img.jpg" id="violation3" aria-labelledby="nomatchy">
+	<input type="image" src="img.jpg" id="violation4" aria-labelledby="">
+	<input type="image" src="img.jpg" id="pass1" alt="monkeys">
+	<input type="image" src="img.jpg" id="pass2" aria-label="monkeys">
+	<input type="image" src="img.jpg" id="pass3" aria-labelledby="monkeys">
+	<input type="image" src="img.jpg" id="violation5" alt="">
+</form>
+</body>
+</html>
