@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf8">
+	<title>IMG ALT test</title>
+	<script src="/dist/kensington.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<a href="#" id="violation1"></a>
+<a href="#" id="pass1">This link has text</a>
+<a href="#" id="pass2" style="display: none"></a>
+<a href="#" id="pass3" aria-label="link text"></a>
+<a href="#" id="pass4" aria-labelledby="linklabel"></a>
+<a href="#" id="violation2" aria-labelledby="nonexistent"></a>
+<a href="#" id="violation3" aria-labelledby="badlabel"></a>
+<div id="linklabel">Text</div>
+<div id="badlabel"></div>
+<span role="link" href="#" id="pass5"></span>
+<span role="link" href="#" tabindex="0" id="violation4"></span>
+<span role="link" href="#" tabindex="0" id="pass6" aria-labelledby="linklabel"></span>
+<span role="link" href="#" tabindex="0" id="pass7" aria-label="Link text"></span>
+<span role="link" href="#" tabindex="0" id="violation5" aria-labelledby="badlabel"></span>
+<span role="link" href="#" tabindex="0" id="violation6" aria-labelledby="nonexistent"></span>
+<span role="link" href="#" tabindex="0" id="pass8" style="display:none">Text</span>
+</body>
+</html>
