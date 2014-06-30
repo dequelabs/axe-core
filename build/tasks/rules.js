@@ -11,6 +11,15 @@ var templates = {
 };
 module.exports = function (grunt) {
 
+	function clone(obj) {
+		if (null == obj || "object" != typeof obj) return obj;
+		var copy = obj.constructor();
+		for (var attr in obj) {
+			if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+		}
+		return copy;
+	}
+
 	function createCheckObject(checks) {
 		var result = {};
 		checks.forEach(function (check) {
@@ -98,7 +107,7 @@ module.exports = function (grunt) {
 		rules.map(function (rule) {
 			rule.checks = rule.checks.map(function (check) {
 				var id = typeof check === 'string' ? check : check.id;
-				var c = findCheck(checks, id);
+				var c = clone(findCheck(checks, id));
 				c.options = check.options || c.options;
 
 				if (c.help && !messages.checkHelp[id ]) {
