@@ -1,0 +1,7 @@
+{
+	"description": "list test",
+	"rule": "list",
+	"violations": [["#emptyul"], ["#divul"], ["#mixedul"],
+		["#emptyol"], ["#divol"], ["#mixedol"]],
+	"passes": [["#properul"], ["#properol"]]
+}
