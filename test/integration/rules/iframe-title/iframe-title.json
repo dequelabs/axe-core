@@ -1,0 +1,12 @@
+{
+	"description": "iframe-title test",
+	"rule": "iframe-title",
+	"violations": [
+		["#violation1"],
+		["#frame1", "#violation2"]
+	],
+	"passes": [
+		["#pass1"],
+		["#frame1", "#pass1"]
+	]
+}
