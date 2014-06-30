@@ -1,0 +1,6 @@
+{
+	"description": "object-alt tests",
+	"rule": "object-alt",
+	"violations": [["#violation1"], ["#violation2"], ["#violation3"]],
+	"passes":  [["#pass1"]]
+}
