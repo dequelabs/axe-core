@@ -30,65 +30,63 @@ test.describe('Integration', function () {
 	test.after(function() {
 		driver.quit();
 	});
-
+	function r(testIndex) {
+		return function() { runTest(driver, testIndex); };
+	}
 	for (var i = 0; i < config.length; i++) {
-		test.it(config[i].description, function(testIndex) {
-			return function() { runTest(driver, testIndex); };
-		}(i));
+		test.it(config[i].description, r(i));
 	}
 });
 
 function runTest(driver, i) {
 	'use strict';
-	driver.get(config[i].url)
-	.then(function() {
-		//should give an error
-		driver.executeAsyncScript(function() {
-			var callback = arguments[arguments.length - 1];
-			dqre.a11yCheck(document, null, callback);
-		})
-		.then(function(result) {
-			checkIdenticality('violations', result.violations, config[i].rule, config[i].violations || []);
-			checkIdenticality('passes', result.passes, config[i].rule, config[i].passes || []);
-		});
-	});
-}
 
-
-function checkIdenticality(checkType, result, rule, selectors) {
-	'use strict';
-	result.forEach(function (r) {
-		var found = false, i = 0, j = 0;
-		if (r.id !== rule) { return; }
-		for (i = 0; i < selectors.length; i++) {
-			found = false;
-			for (j = 0; j  < r.nodes.length; j++) {
-				if (arraysEqual(selectors[i], r.nodes[j].target)) { found = true; }
-			}
-			if (!found) {
-				assert.equal(null, selectors[i], 'Expected node not found for ' + checkType);
-			}
-		}
-
-		for (i = 0; i < r.nodes.length; i++) {
-			found = false;
-			for (j = 0; j < selectors.length; j++) {
-				if (arraysEqual(selectors[j], r.nodes[i].target)) { found = true; }
-			}
-			if (!found) {
-				assert.equal(r.nodes[i].target, null, 'Unexpected node found for ' + checkType);
-			}
-		}
-	});
-}
-
-function arraysEqual(a, b) {
-	'use strict';
-	if (a === b) return true;
-	if (a === null || b === null) return false;
-	if (a.length != b.length) return false;
-	for (var i = 0; i < a.length; ++i) {
-		if (a[i] !== b[i]) return false;
+	function filterRule (r) {
+		return r.id === conf.rule;
 	}
-	return true;
+
+	var conf = config[i];
+	driver.get(conf.url)
+		.then(function() {
+			//should give an error
+			driver.executeAsyncScript(function() {
+				var callback = arguments[arguments.length - 1];
+				dqre.a11yCheck(document, null, callback);
+			})
+			.then(function(result) {
+				var violations = result.violations.filter(filterRule),
+					passes = result.passes.filter(filterRule);
+
+				if (conf.violations) {
+					test.describe('should find violations', function () {
+						assert.equal(violations.length, 1, 'No violation results found for rule "' + conf.rule + '"');
+						checkIdenticality(violations[0], conf.violations);
+					});
+				}
+				if (conf.passes) {
+					test.describe('should find passes', function () {
+						assert.equal(passes.length, 1, 'No pass results found for rule "' + conf.rule + '"');
+						checkIdenticality(passes[0], conf.passes);
+					});
+				}
+
+				test.describe('should have a result', function () {
+					assert.ok(violations.length + passes.length > 0, 'No result found for rule "' + conf.rule + '"');
+				});
+			});
+		});
 }
+
+function checkIdenticality(r, selectors) {
+	'use strict';
+
+	var i;
+	for (i = 0; i < selectors.length; i++) {
+		assert.deepEqual(selectors[i], (r.nodes[i] || {}).target, 'Expected node not found');
+	}
+
+	for (i = 0; i < r.nodes.length; i++) {
+		assert.deepEqual(r.nodes[i].target, selectors[i], 'Node not expected');
+	}
+}
+
