@@ -1,6 +1,6 @@
 {
-	"description": "html-title test",
-	"rule": "html-title",
+	"description": "document-title test",
+	"rule": "document-title",
 	"violations": [
 		["#frame1", "#violation1"],
 		["#frame1", "#frame2", "#violation2"]
