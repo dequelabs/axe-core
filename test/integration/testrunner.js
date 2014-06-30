@@ -80,7 +80,7 @@ function checkIdenticality(r, conf, type) {
 	}
 
 	for (i = 0; i < r.nodes.length; i++) {
-		assert.deepEqual(r.nodes[i].target, selectors[i], 'Node not expected of type' + type);
+		assert.deepEqual(r.nodes[i].target, selectors[i], 'Node not expected of type ' + type);
 	}
 }
 
