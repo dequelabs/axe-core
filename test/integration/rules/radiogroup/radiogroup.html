@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Group Test</title>
+<script src="../../../../dist/kensington.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<form action="#">
+	<input type="radio" id="noname">
+	<input type="radio" id="dupe1" name="dupe">
+	<input type="radio" id="dupe2" name="dupe">
+	<input type="radio" id="single" name="single">
+	<input type="radio" id="label1" name="label" aria-labelledby="grouplabel">
+	<input type="radio" id="label2" name="label" aria-labelledby="grouplabel">
+	<div id="grouplabel">Label</div>
+	<fieldset>
+		<legend>Name</legend>
+		<input type="radio" id="fieldset1" name="fieldset">
+		<input type="radio" id="fieldset2" name="fieldset">
+	</fieldset>
+</form>
+</body>
+</html>
