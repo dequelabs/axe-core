@@ -1,6 +1,5 @@
 {
 	"description": "server-side-image-map test",
 	"rule": "server-side-image-map",
-	"violations": [["#fail"]],
-	"passes": [["#pass"]]
+	"violations": [["#fail"]]
 }

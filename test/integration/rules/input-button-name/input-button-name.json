@@ -2,5 +2,5 @@
 	"description": "input-button-name test",
 	"rule": "input-button-name",
 	"violations": [["#empty"], ["#alempty"], ["#albmissing"], ["#albempty"]],
-	"passes": [["#alb"], ["#al"], ["#val"], ["#combo"]]
+	"passes": [["#val"], ["#al"], ["#alb"], ["#combo"]]
 }
