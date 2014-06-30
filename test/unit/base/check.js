@@ -95,6 +95,7 @@ describe('Check', function () {
 				}).run(fixture, {}, function () {});
 
 			});
+
 			it('should pass the options through modified by the ones passed into the call', function (done) {
 				var configured = { monkeys: 'bananas' },
 					expected = { monkeys: 'bananas', dogs: 'cats' };
@@ -105,7 +106,7 @@ describe('Check', function () {
 						assert.deepEqual(options, expected);
 						done();
 					}
-				}).run(fixture, expected, function () {});
+				}).run(fixture, { options: expected }, function () {});
 
 			});
 
