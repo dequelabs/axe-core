@@ -1,6 +1,6 @@
 {
-	"description": "video test",
-	"rule": "video",
+	"description": "video-caption test",
+	"rule": "video-caption",
 	"violations": [["#empty"], ["#onlycaption"], ["#onlydescription"]],
 	"passes": [["#both"]]
 }
