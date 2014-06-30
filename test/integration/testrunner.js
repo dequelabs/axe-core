@@ -57,30 +57,23 @@ function runTest(driver, i) {
 				var violations = result.violations.filter(filterRule),
 					passes = result.passes.filter(filterRule);
 
-				if (conf.violations) {
-					assert.equal(violations.length, 1, 'No violation results found for rule "' + conf.rule + '"');
-					checkIdenticality(violations[0], conf, 'violations');
-				}
-				if (conf.passes) {
-					assert.equal(passes.length, 1, 'No pass results found for rule "' + conf.rule + '"');
-					checkIdenticality(passes[0], conf, 'passes');
-				}
+				checkIdenticality(conf, violations, 'violations');
+				checkIdenticality(conf, passes, 'passes');
 
 				assert.ok(violations.length + passes.length > 0, 'No result found for rule "' + conf.rule + '"');
 			});
 		});
 }
 
-function checkIdenticality(r, conf, type) {
+function checkIdenticality(conf, actual, type) {
 	'use strict';
-	var selectors = conf[type];
-	var i;
-	for (i = 0; i < selectors.length; i++) {
-		assert.deepEqual(selectors[i], (r.nodes[i] || {}).target, 'Expected node not found of type ' + type);
+
+	if (conf[type]) {
+		assert.ok(actual.length === 1, 'No ' + type + ' results found for rule "' + conf.rule + '"');
 	}
 
-	for (i = 0; i < r.nodes.length; i++) {
-		assert.deepEqual(r.nodes[i].target, selectors[i], 'Node not expected of type ' + type);
-	}
+	var v = ((actual[0] || {}).nodes || []).map(function (t) { return t.target; });
+	assert.deepEqual(v, conf[type] || [], type);
+
 }
 
