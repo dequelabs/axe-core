@@ -50,7 +50,7 @@ describe('dqre.run', function () {
 	});
 
 	it('should work', function (done) {
-		this.timeout(50000);
+		this.timeout(5000);
 		dqre.configure({ rules: [{
 			id: 'html',
 			selector: 'html',
@@ -72,6 +72,44 @@ describe('dqre.run', function () {
 			}, 500);
 
 		});
+	});
+
+	it('should properly order iframes', function (done) {
+		this.timeout(5000);
+		dqre.configure({ rules: [{
+			id: 'iframe',
+			selector: 'iframe',
+			checks: [{
+				id: 'iframe',
+				evaluate: function () {
+					return true;
+				}
+			}]
+		}], messages: {}});
+
+		var frame = document.createElement('iframe');
+		frame.addEventListener('load', function () {
+			setTimeout(function () {
+				dqre.run(document, {}, function (r) {
+					var nodes = r[0].details.map(function (detail) {
+						return [].concat(detail.node.frames, detail.node.selector);
+					});
+
+					assert.deepEqual(nodes, [
+						['#level0'],
+						['#level0', '#level1'],
+						['#level0', '#level1', '#level2a'],
+						['#level0', '#level1', '#level2b']
+					]);
+					done();
+				});
+
+			}, 500);
+
+		});
+		frame.id = 'level0';
+		frame.src = '../mock/frames/nested0.html';
+		fixture.appendChild(frame);
 	});
 	it('should properly calculate context and return results from matching frames', function (done) {
 
