@@ -12,7 +12,6 @@ ks-integration allows integration tests to be run with Mocha and Selenium.
 * In `test/integration/rules` create a full HTML page with your test cases (e.g., `test.html`)
 * In that same directory, create a JSON file with:
   * `description` - Test name
-  * `url` - The name of the page you created
-  * `rule` - The name of the rule you're testing
+  * `rule` - The id of the rule you're testing
   * `violations` - An array of selector arrays in the same format that is returned by a11ycheck, for those nodes that are expected to give violations
   * `passes` - The same array of arrays, for those nodes that are expected to pass
