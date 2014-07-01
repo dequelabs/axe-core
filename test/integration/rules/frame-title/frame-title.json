@@ -1,0 +1,11 @@
+{
+	"description": "frame-title test",
+	"rule": "frame-title",
+	"violations": [
+		["#violation1"],
+		["#violation1", "#violation2"]
+	],
+	"passes": [
+		["#violation1", "#pass1"]
+	]
+}
