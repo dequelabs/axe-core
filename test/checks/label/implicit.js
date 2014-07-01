@@ -13,6 +13,12 @@ describe('implicit-label', function () {
 		assert.isFalse(checks['implicit-label'].evaluate(node));
 	});
 
+	it('should return false if an invisible non-empty label is present', function () {
+		fixture.innerHTML = '<label><span style="display: none">Text</span> <input type="text" id="target"></label>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks['implicit-label'].evaluate(node));
+	});
+
 	it('should return true if a non-empty label is present', function () {
 		fixture.innerHTML = '<label>Text <input type="text" id="target"></label>';
 		var node = fixture.querySelector('#target');
