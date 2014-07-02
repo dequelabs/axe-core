@@ -29,6 +29,16 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+		validatechecks: {
+			checks: {
+				src: 'lib/checks/**/*.json'
+			}
+		},
+		validaterules: {
+			rules: {
+				src: 'lib/rules/*.json'
+			}
+		},
 		uglify: {
 			minify: {
 				files: [{
@@ -108,7 +118,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
 	grunt.registerTask('test', ['build', 'fixture', 'connect:test', grunt.option('report') ? 'mocha' : 'blanket_mocha']);
-	grunt.registerTask('build', ['rules', 'uglify']);
+	grunt.registerTask('build', ['validaterules', 'validatechecks', 'rules', 'uglify']);
 	grunt.registerTask('default', ['build']);
 
 };
