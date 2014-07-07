@@ -12,7 +12,7 @@ var templates = {
 module.exports = function (grunt) {
 
 	function clone(obj) {
-		if (null == obj || "object" != typeof obj) return obj;
+		if (null === obj || "object" != typeof obj) return obj;
 		var copy = obj.constructor();
 		for (var attr in obj) {
 			if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
@@ -99,9 +99,21 @@ module.exports = function (grunt) {
 		var options = this.options({
 			rules: ['lib/rules/**/*.json'],
 			checks: ['lib/checks/**/*.json'],
-			blacklist: ['help', 'title']
+			blacklist: ['help', 'title'],
+			standards: ''
 		});
+
+		var standards = options.standards ? options.standards.split(/\s*,\s*/) : [];
+
 		var rules = getRules(options.rules);
+		
+		if (standards.length) {
+			rules = rules.filter(function (r) {
+				return r.tags.filter(function (t) {
+					return standards.indexOf(t) !== -1;	
+				}).length;
+			});
+		}
 		var checks = getChecks(options.checks);
 
 		rules.map(function (rule) {

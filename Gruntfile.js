@@ -23,6 +23,9 @@ module.exports = function (grunt) {
 		},
 		rules: {
 			lib: {
+				options: {
+					standards: grunt.option('standards')
+				},
 				dest: {
 					rules: 'dist/rules.js',
 					checks: 'dist/checks.js'

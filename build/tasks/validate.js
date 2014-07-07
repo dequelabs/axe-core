@@ -1,6 +1,9 @@
 /*jshint node: true */
 'use strict';
 
+var rulesSeen = [],
+	checksSeen = [];
+
 var validateProperties = function (actual, expected, objName, error) {
 	for (var prop in actual) {
 		if (expected.indexOf(prop) === -1) {
@@ -50,6 +53,14 @@ module.exports = function (grunt) {
 
 				//verify that non-permitted elements are not there
 				validateProperties(check, ['id', 'help', 'evaluate', 'after', 'selector', 'type', 'matches', 'options'], 'check', error);
+
+				if (check.id) {
+					if (checksSeen.indexOf(check.id) !== -1) {
+						error('Duplicate check ID');
+					} else {
+						checksSeen.push(check.id);
+					}
+				}
 
 				grunt.verbose.ok(filepath + ": Checked");
 			});
@@ -108,6 +119,15 @@ module.exports = function (grunt) {
 				//verify that non-permitted elements are not there
 				validateProperties(rule, ['id', 'help', 'checks', 'tags', 'selector', 'pageLevel'], 'rule', error);
 
+				//verify that the rule is not a duplicate
+				if (rule.id) {
+					if (rulesSeen.indexOf(rule.id) !== -1) {
+						error('Duplicate rule ID');
+					} else {
+						rulesSeen.push(rule.id);
+					}
+				}
+				
 				//verify that checks is an array of the right things	
 				if (rule.checks) {
 					if (!Array.isArray(rule.checks)) {
