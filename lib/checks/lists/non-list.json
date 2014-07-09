@@ -1,0 +1,5 @@
+{
+	"id": "non-list",
+	"help": "Text element has list-like content",
+	"evaluate": "non-list.js"
+}
