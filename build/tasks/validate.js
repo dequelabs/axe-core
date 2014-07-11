@@ -1,20 +1,18 @@
 /*jshint node: true */
 'use strict';
 
-var rulesSeen = [],
-	checksSeen = [];
+var rulesSeen = {},
+	checksSeen = {};
 
 var validateProperties = function (actual, expected, objName, error) {
 	for (var prop in actual) {
-		if (expected.indexOf(prop) === -1) {
+		if (!expected.hasOwnProperty(prop)) {
 			error('Invalid "' + prop + '" property on ' + objName);
+		} else if (expected[prop]) {
+			if (typeof(actual[prop]) !== expected[prop]) {
+				error('The "' + prop + '" property must be a ' + expected[prop]);
+			}
 		}
-	}
-};
-
-var verifyString = function(val, name, error) {
-	if (val && typeof val !== 'string') {
-		error('The "' + name + '" property must be a string');
 	}
 };
 
@@ -22,7 +20,7 @@ module.exports = function (grunt) {
 	grunt.registerMultiTask('validatechecks', function() {
 		var success = true;
 		this.files.forEach(function (f) { 
-			f.src.map(function(filepath) {
+			f.src.forEach(function(filepath) {
 				var error = function (msg) {
 					grunt.log.error(filepath + ': ' + msg);
 					success = false;
@@ -42,23 +40,26 @@ module.exports = function (grunt) {
 				if (!check.help) { error('Missing required "help" property'); }
 				if (!check.evaluate) { error('Missing required "evaluate" property'); }
 
-				//verify that simple elements are the correct type
-				verifyString(check.id, 'id', error);
-				verifyString(check.help, 'help', error);
-				verifyString(check.selector, 'selector', error);
-				verifyString(check.evaluate, 'evaluate', error);
-				verifyString(check.after, 'after', error);
-				verifyString(check.matches, 'matches', error);
-				verifyString(check.type, 'type', error);
 
-				//verify that non-permitted elements are not there
-				validateProperties(check, ['id', 'help', 'evaluate', 'after', 'selector', 'type', 'matches', 'options'], 'check', error);
+				//verify that non-permitted elements aren't there, and all elements are proper type
+				validateProperties(check, {
+					'id': 'string',
+					'help': 'string',
+					'evaluate': 'string',
+					'after': 'string',
+					'selector': 'string',
+					'type': 'string',
+					'matches': 'string',
+					'options': null }, 
+					'check', 
+					error);
 
+				//verify that the check is not a duplicate
 				if (check.id) {
-					if (checksSeen.indexOf(check.id) !== -1) {
-						error('Duplicate check ID');
+					if (checksSeen.hasOwnProperty(check.id)) {
+						error('Duplicate check ID: ' + check.id + '. Also in: ' + checksSeen[check.id]);
 					} else {
-						checksSeen.push(check.id);
+						checksSeen[check.id] = filepath;
 					}
 				}
 
@@ -72,7 +73,7 @@ module.exports = function (grunt) {
 	grunt.registerMultiTask('validaterules', function () {
 		var success = true;
 		this.files.forEach(function (f) {
-			f.src.map(function (filepath) {
+			f.src.forEach(function (filepath) {
 				var error = function (msg) {
 					grunt.log.error(filepath + ': ' + msg);
 					success = false;
@@ -93,15 +94,16 @@ module.exports = function (grunt) {
 				if (!rule.checks) { error('Missing required "checks" property'); }
 				if (!rule.tags) { error('Missing required "tags" property'); }
 
-				//verify that simple elements are the correct type
-				verifyString(rule.id, 'id', error);
-				verifyString(rule.help, 'help', error);
-				verifyString(rule.selector, 'selector', error);
-
-				//verify that pageLevel is true or false, as a string
-				if (rule.pageLevel && rule.pageLevel !== 'true' && rule.pageLevel !== 'false') {
-					error('The "pageLevel" property must be "true" or "false"');
-				}
+				//verify that non-permitted elements aren't there, and all elements are proper type
+				validateProperties(rule, {
+					'id': 'string',
+					'help': 'string',
+					'checks': null,
+					'tags': null,
+					'selector': 'string',
+					'pageLevel': 'boolean'},
+					'rule',
+					error);
 
 				//verify that 'tags' is an array of strings
 				if (rule.tags) {
@@ -116,15 +118,12 @@ module.exports = function (grunt) {
 					}
 				}
 
-				//verify that non-permitted elements are not there
-				validateProperties(rule, ['id', 'help', 'checks', 'tags', 'selector', 'pageLevel'], 'rule', error);
-
 				//verify that the rule is not a duplicate
 				if (rule.id) {
-					if (rulesSeen.indexOf(rule.id) !== -1) {
-						error('Duplicate rule ID');
+					if (rulesSeen.hasOwnProperty(rule.id)) {
+						error('Duplicate rule ID: ' + rule.id + '. Also in: ' + rulesSeen[rule.id]);
 					} else {
-						rulesSeen.push(rule.id);
+						rulesSeen[rule.id] = filepath;
 					}
 				}
 				
@@ -140,8 +139,7 @@ module.exports = function (grunt) {
 
 							if (typeof c === 'object') {
 								if (!c.id) { error('Missing required "id" property on check'); }
-								verifyString(c.id, 'checks.id', error);
-								validateProperties(c, ['id', 'options'], 'check', error);
+								validateProperties(c, {'id': 'string', 'options': null}, 'rules.check', error);
 							}
 						});
 					}

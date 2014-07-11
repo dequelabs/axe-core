@@ -2,6 +2,7 @@
 'use strict';
 
 var path = require('path');
+var clone = require('clone');
 
 var templates = {
 	evaluate: 'function (node, options) {\n<%=source%>\n}',
@@ -10,15 +11,6 @@ var templates = {
 	matches: 'function (node) {\n<%=source%>\n}',
 };
 module.exports = function (grunt) {
-
-	function clone(obj) {
-		if (null === obj || "object" != typeof obj) return obj;
-		var copy = obj.constructor();
-		for (var attr in obj) {
-			if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-		}
-		return copy;
-	}
 
 	function createCheckObject(checks) {
 		var result = {};
