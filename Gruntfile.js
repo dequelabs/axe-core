@@ -23,10 +23,23 @@ module.exports = function (grunt) {
 		},
 		rules: {
 			lib: {
+				options: {
+					standards: grunt.option('standards')
+				},
 				dest: {
 					rules: 'dist/rules.js',
 					checks: 'dist/checks.js'
 				}
+			}
+		},
+		validatechecks: {
+			checks: {
+				src: 'lib/checks/**/*.json'
+			}
+		},
+		validaterules: {
+			rules: {
+				src: 'lib/rules/*.json'
 			}
 		},
 		uglify: {
@@ -108,7 +121,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
 	grunt.registerTask('test', ['build', 'fixture', 'connect:test', grunt.option('report') ? 'mocha' : 'blanket_mocha']);
-	grunt.registerTask('build', ['rules', 'uglify']);
+	grunt.registerTask('build', ['validaterules', 'validatechecks', 'rules', 'uglify']);
 	grunt.registerTask('default', ['build']);
 
 };

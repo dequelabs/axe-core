@@ -26,6 +26,7 @@
     "mocha": "~1.18.2",
     "xunit-file": "0.0.5",
     "grunt-contrib-jshint": "~0.10.0",
-    "jshint-junit-reporter": "0.0.6"
+    "jshint-junit-reporter": "0.0.6",
+    "clone": "~0.1.17"
   }
 }
