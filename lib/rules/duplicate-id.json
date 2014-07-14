@@ -1,0 +1,9 @@
+{
+	"id": "duplicate-id",
+	"help": "document should have only one element with each ID",
+	"selector": "[id]",
+	"checks": ["duplicate-id"],
+	"tags": [
+		"todo"
+	]
+}
