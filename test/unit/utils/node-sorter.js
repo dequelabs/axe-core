@@ -35,4 +35,10 @@ describe('utils.nodeSorter', function () {
 
 		assert.equal(utils.nodeSorter($id('a'), $id('b')), 1);
 	});
+
+	it('should return 0 if a === b', function () {
+		fixture.innerHTML = '<div id="a"></div>';
+
+		assert.equal(utils.nodeSorter($id('a'), $id('a')), 0);
+	});
 });

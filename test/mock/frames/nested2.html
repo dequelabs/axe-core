@@ -1,14 +1,14 @@
 <!doctype html>
 <html>
 <head>
-	<title>Message Iframe Fixture</title>
+	<title>Test Nest Frame</title>
 	<script src="../../../dist/dqre.js"></script>
 	<script>
 		dqre.configure({ rules: [{
-			id: 'html',
-			selector: 'html',
+			id: 'iframe',
+			selector: 'iframe',
 			checks: [{
-				id: 'html',
+				id: 'iframe',
 				evaluate: function () {
 					return true;
 				}
@@ -17,8 +17,6 @@
 	</script>
 </head>
 <body>
-
-	<input type="text">
-	<a href="#">link</a>
+	Hi
 </body>
 </html>

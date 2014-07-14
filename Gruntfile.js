@@ -24,6 +24,9 @@ module.exports = function (grunt) {
 			lib: {
 				src: [
 					'lib/intro.stub',
+					'bower_components/clone/lib/index.js',
+					'bower_components/matches-selector/lib/index.js',
+					'bower_components/escape-selector/lib/index.js',
 					'bower_components/node-uuid/uuid.js',
 					'lib/index.js',
 					'lib/*/index.js',

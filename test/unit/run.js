@@ -11,25 +11,24 @@ describe('dqre.run', function () {
 		context.appendChild(i);
 	}
 
-	function createFrames(num, callback) {
-		var frame,
+	function createFrames(callback) {
+		var frame, num = 2,
 			loaded = 0;
 
 		function onLoad() {
 			loaded++;
-			if (loaded >= (num + 1)) {
+			if (loaded >= (num)) {
 				callback();
 			}
 		}
 
-		for (var i = 0; i < num; i++) {
-			frame = document.createElement('frame');
-			frame.src = '../mock/frames/e2e.html';
+		frame = document.createElement('frame');
+		frame.src = '../mock/frames/frame-frame.html';
 
-			frame.addEventListener('load', onLoad);
-			fixture.appendChild(frame);
+		frame.addEventListener('load', onLoad);
+		fixture.appendChild(frame);
 
-		}
+
 		frame = document.createElement('frame');
 		frame.src = '../mock/frames/nocode.html';
 		frame.addEventListener('load', onLoad);
@@ -51,14 +50,66 @@ describe('dqre.run', function () {
 	});
 
 	it('should work', function (done) {
-		dqre.configure({ rules: [], messages: {}});
+		this.timeout(5000);
+		dqre.configure({ rules: [{
+			id: 'html',
+			selector: 'html',
+			checks: [{
+				id: 'html',
+				evaluate: function () {
+					return true;
+				}
+			}]
+		}], messages: {}});
 
-		createFrames(2, function () {
-			dqre.run(document, {}, function () {
-				done();
-			});
+		createFrames(function () {
+			setTimeout(function () {
+				dqre.run(document, {}, function (r) {
+					assert.lengthOf(r[0].details, 3);
+					done();
+				});
+
+			}, 500);
 
 		});
+	});
+
+	it('should properly order iframes', function (done) {
+		this.timeout(5000);
+		dqre.configure({ rules: [{
+			id: 'iframe',
+			selector: 'iframe',
+			checks: [{
+				id: 'iframe',
+				evaluate: function () {
+					return true;
+				}
+			}]
+		}], messages: {}});
+
+		var frame = document.createElement('iframe');
+		frame.addEventListener('load', function () {
+			setTimeout(function () {
+				dqre.run(document, {}, function (r) {
+					var nodes = r[0].details.map(function (detail) {
+						return [].concat(detail.node.frames, detail.node.selector);
+					});
+
+					assert.deepEqual(nodes, [
+						['#level0'],
+						['#level0', '#level1'],
+						['#level0', '#level1', '#level2a'],
+						['#level0', '#level1', '#level2b']
+					]);
+					done();
+				});
+
+			}, 500);
+
+		});
+		frame.id = 'level0';
+		frame.src = '../mock/frames/nested0.html';
+		fixture.appendChild(frame);
 	});
 	it('should properly calculate context and return results from matching frames', function (done) {
 
