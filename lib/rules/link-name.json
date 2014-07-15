@@ -2,7 +2,7 @@
 	"id": "link-name",
 	"help": "Links must have an accessible name",
 	"selector": "a[href],[role=link][href]",
-	"checks": ["hidden", "unfocusable", "has-visible-text", "aria-label", "aria-labelledby"],
+	"checks": ["unfocusable", "has-visible-text", "aria-label", "aria-labelledby"],
 	"tags": [
 		"wcag2a",
 		"wcag111",

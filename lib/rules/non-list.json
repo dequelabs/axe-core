@@ -2,7 +2,6 @@
 	"id": "non-list",
 	"help": "List-like content should be marked up as a list",
 	"selector": "div, p, span",
-	"options": [["1.", "2.", "3."], ["1)", "2)", "3)"]],
 	"checks": ["non-list"],
 	"tags": [
 		"wcaga",

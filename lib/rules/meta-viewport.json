@@ -2,6 +2,7 @@
 	"id": "meta-viewport",
 	"help": "Zooming and scaling should not disabled",
 	"selector": "meta[name=\"viewport\"]",
+	"excludeHidden": false,
 	"checks": ["meta-viewport"],
 	"tags": [
 		"wcag2aa",

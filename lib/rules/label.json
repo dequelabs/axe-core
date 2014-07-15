@@ -2,7 +2,7 @@
 	"id": "label",
 	"help": "Form inputs need labels",
 	"selector": "input:not([type='hidden']):not([type='image']):not([type='button']):not([type='submit']):not([type='reset']), select, textarea",
-	"checks": ["aria-label", "aria-labelledby", "implicit-label", "explicit-label", "hidden", "aria-hidden", "help-same-as-label", "title-only"],
+	"checks": ["aria-label", "aria-labelledby", "implicit-label", "explicit-label", "help-same-as-label", "title-only"],
 	"tags": [
 		"wcag2a",
 		"wcag332",

@@ -2,7 +2,7 @@
 	"id": "blink",
 	"help": "The <blink> tag is deprecated and must not be used",
 	"selector": "blink",
-	"checks": ["hidden"],
+	"checks": ["exists"],
 	"tags": [
 		"wcag2a",
 		"wcag231",
