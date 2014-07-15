@@ -13,7 +13,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadTasks('build/tasks');
 
-
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
@@ -63,7 +62,8 @@ module.exports = function (grunt) {
 				src: ['test/integration/rules/**/*.json'],
 				dest: 'build/test.json',
 				options: {
-					port: '<%= connect.test.options.port %>'
+					port: '<%= connect.test.options.port %>',
+					seleniumServer: grunt.option('selenium')
 				}
 			}
 		},
