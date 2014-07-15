@@ -70,6 +70,14 @@ describe('Rule', function () {
 				assert.lengthOf(result, 2);
 				assert.sameMembers(result, nodes);
 			});
+			it('should exclude hidden elements', function () {
+				fixture.innerHTML = '<div style="display: none"><span>HEHEHE</span></div>';
+
+				var rule = new Rule({}),
+					result = rule.gather({ include: [document.getElementById('fixture')] });
+
+				assert.lengthOf(result, 0);
+			});
 		});
 		describe('run', function () {
 			it('should be a function', function () {
@@ -229,6 +237,28 @@ describe('Rule', function () {
 			it('should default to true if given a bad value', function () {
 				var spec = { enabled: 'monkeys' };
 				assert.isTrue(new Rule(spec).enabled);
+
+			});
+
+		});
+
+		describe('.excludeHidden', function () {
+			it('should be set', function () {
+				var spec = {
+					excludeHidden: false
+				};
+				assert.equal(new Rule(spec).excludeHidden, spec.excludeHidden);
+			});
+
+			it('should default to true', function () {
+				var spec = {};
+				assert.isTrue(new Rule(spec).excludeHidden);
+
+			});
+
+			it('should default to true if given a bad value', function () {
+				var spec = { excludeHidden: 'monkeys' };
+				assert.isTrue(new Rule(spec).excludeHidden);
 
 			});
 
