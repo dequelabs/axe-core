@@ -19,6 +19,7 @@ describe('dqre.a11yCheck', function () {
 			}]
 		}, {
 			id: 'idkStuff',
+			pageLevel: true,
 			details: [{
 				result: 'FAIL',
 				checks: [{
@@ -70,10 +71,12 @@ describe('dqre.a11yCheck', function () {
 			cb(results);
 		};
 	});
+
 	afterEach(function () {
 		dqre.audit = null;
 		dqre.run = orig;
 	});
+
 	it('should merge the dqre.run results into violations and passes', function (done) {
 		var orig = window.findHelp;
 		window.findHelp = function () {
@@ -183,14 +186,14 @@ describe('failureSummary', function () {
 		window.dqreConfiguration = orig;
 	});
 	it('should return an empty array if result: PASS', function () {
-		var summary = failureSummary({
+		var summary = failureSummary('PASS', {
 			result: 'PASS'
 		});
 		assert.deepEqual(summary, []);
 	});
 
 	it('should return a list of all FAILs which return true', function () {
-		var summary = failureSummary({
+		var summary = failureSummary('FAIL', {
 			result: 'FAIL',
 			checks: [{
 				id: '1',
@@ -211,7 +214,7 @@ describe('failureSummary', function () {
 	});
 
 	it('should return a list of PASSes if none return true', function () {
-		var summary = failureSummary({
+		var summary = failureSummary('FAIL', {
 			result: 'FAIL',
 			checks: [{
 				id: '1',
@@ -236,7 +239,7 @@ describe('failureSummary', function () {
 	});
 
 	it('should not return any PASSes if any of them return true', function () {
-		var summary = failureSummary({
+		var summary = failureSummary('FAIL', {
 			result: 'FAIL',
 			checks: [{
 				id: '1',
@@ -262,7 +265,7 @@ describe('failureSummary', function () {
 	});
 
 	it('should concatenate failing passes', function () {
-		var summary = failureSummary({
+		var summary = failureSummary('FAIL', {
 			result: 'FAIL',
 			checks: [{
 				id: '1',
@@ -288,7 +291,7 @@ describe('failureSummary', function () {
 	});
 
 	it('should NOT skip checks that have no help', function () {
-		var summary = failureSummary({
+		var summary = failureSummary('FAIL', {
 			result: 'FAIL',
 			checks: [{
 				id: 'NOMATCHY',
