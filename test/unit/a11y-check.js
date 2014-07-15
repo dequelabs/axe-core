@@ -20,8 +20,8 @@ describe('dqre.a11yCheck', function () {
 		}, {
 			id: 'idkStuff',
 			pageLevel: true,
+			result: 'FAIL',
 			details: [{
-				result: 'FAIL',
 				checks: [{
 					type: 'PASS',
 					result: false,
