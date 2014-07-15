@@ -2,7 +2,7 @@
 	"id": "tabindex",
 	"help": "Elements should not have tabindex > 0",
 	"selector": "[tabindex]",
-	"checks": ["hidden", "tabindex"],
+	"checks": ["tabindex"],
 	"tags": [
 		"wcag2a",
 		"wcag243"

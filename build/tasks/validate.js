@@ -19,7 +19,7 @@ var validateProperties = function (actual, expected, objName, error) {
 module.exports = function (grunt) {
 	grunt.registerMultiTask('validatechecks', function() {
 		var success = true;
-		this.files.forEach(function (f) { 
+		this.files.forEach(function (f) {
 			f.src.forEach(function(filepath) {
 				var error = function (msg) {
 					grunt.log.error(filepath + ': ' + msg);
@@ -50,8 +50,8 @@ module.exports = function (grunt) {
 					'selector': 'string',
 					'type': 'string',
 					'matches': 'string',
-					'options': null }, 
-					'check', 
+					'options': null },
+					'check',
 					error);
 
 				//verify that the check is not a duplicate
@@ -101,7 +101,8 @@ module.exports = function (grunt) {
 					'checks': null,
 					'tags': null,
 					'selector': 'string',
-					'pageLevel': 'boolean'},
+					'pageLevel': 'boolean',
+					'excludeHidden': 'boolean'},
 					'rule',
 					error);
 
@@ -126,8 +127,8 @@ module.exports = function (grunt) {
 						rulesSeen[rule.id] = filepath;
 					}
 				}
-				
-				//verify that checks is an array of the right things	
+
+				//verify that checks is an array of the right things
 				if (rule.checks) {
 					if (!Array.isArray(rule.checks)) {
 						error('The "checks" property must be an array');

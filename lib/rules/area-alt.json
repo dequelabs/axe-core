@@ -2,6 +2,7 @@
 	"id": "area-alt",
 	"help": "Active area elements need alternate text",
 	"selector": "map area[href]",
+	"excludeHidden": false,
 	"checks": ["non-empty-alt", "aria-label", "aria-labelledby"],
 	"tags": [
 		"wcag2a",

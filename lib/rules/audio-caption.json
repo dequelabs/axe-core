@@ -2,6 +2,7 @@
 	"id": "audio-caption",
 	"help": "HTML5 audio elements need a captions track",
 	"selector": "audio",
+	"excludeHidden": false,
 	"checks": ["caption"],
 	"tags": [
 		"wcag2a",

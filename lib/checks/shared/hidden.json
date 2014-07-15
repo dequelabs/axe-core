@@ -1,5 +1,0 @@
-{
-	"id": "hidden",
-	"help": "Element hidden from screen reader",
-	"evaluate": "hidden.js"
-}
