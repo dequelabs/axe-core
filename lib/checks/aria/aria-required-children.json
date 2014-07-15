@@ -1,0 +1,5 @@
+{
+	"id": "aria-required-children",
+	"help": "Role has missing required children.",
+	"evaluate": "required-children.js"
+}
