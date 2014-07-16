@@ -169,14 +169,14 @@ describe('failureSummary', function () {
 		window.dqreConfiguration = {
 			messages: {
 				checkHelp: {
-					'1': '1',
-					'2': '2',
-					'3': '3',
-					'4': '4',
-					'5': '5',
-					'6': '6',
-					'7': '7',
-					'8': '8'
+					'1': function () { return '1'; },
+					'2': function () { return '2'; },
+					'3': function () { return '3'; },
+					'4': function () { return '4'; },
+					'5': function () { return '5'; },
+					'6': function () { return '6'; },
+					'7': function () { return '7'; },
+					'8': function () { return '8'; }
 				}
 			}
 		};
@@ -312,9 +312,9 @@ describe('findHelp', function () {
 		window.dqreConfiguration = {
 			messages: {
 				fooHelp: {
-					'1': '1',
-					'2': '2',
-					'3': '3'
+					'1': function () { return '1'; },
+					'2': function () { return '2'; },
+					'3': function () { return '3'; }
 				}
 			}
 		};
