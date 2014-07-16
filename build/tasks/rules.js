@@ -3,6 +3,7 @@
 
 var path = require('path');
 var clone = require('clone');
+var dot = require('dot');
 
 var templates = {
 	evaluate: 'function (node, options) {\n<%=source%>\n}',
@@ -20,9 +21,12 @@ module.exports = function (grunt) {
 		return result;
 	}
 
+
 	function replaceFunctions(string) {
 		return string.replace(/"(evaluate|after|gather|matches)":\s*("[^"]+")/g, function (m, p1, p2) {
 			return m.replace(p2, getSource(p2.replace(/^"|"$/g, ''), p1));
+		}).replace(/"(function anonymous\(it\) {)(.+?)(})"/g, function (m, p1, p2, p3) {
+			return p1 + (p2.replace(/\\(n|r|t)/g, ' ').replace(/\\\\/g, '\\')) + p3;
 		});
 	}
 
@@ -98,11 +102,11 @@ module.exports = function (grunt) {
 		var standards = options.standards ? options.standards.split(/\s*,\s*/) : [];
 
 		var rules = getRules(options.rules);
-		
+
 		if (standards.length) {
 			rules = rules.filter(function (r) {
 				return r.tags.filter(function (t) {
-					return standards.indexOf(t) !== -1;	
+					return standards.indexOf(t) !== -1;
 				}).length;
 			});
 		}
@@ -115,13 +119,13 @@ module.exports = function (grunt) {
 				c.options = check.options || c.options;
 
 				if (c.help && !messages.checkHelp[id ]) {
-					messages.checkHelp[id] = c.help;
+					messages.checkHelp[id] = dot.template(c.help).toString();
 				}
 
 				return c;
 			});
 			if (rule.help && !messages.ruleHelp[rule.id]) {
-				messages.ruleHelp[rule.id] = rule.help;
+				messages.ruleHelp[rule.id] = dot.template(rule.help).toString();
 			}
 			return rule;
 		});
