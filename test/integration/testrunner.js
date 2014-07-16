@@ -5,22 +5,25 @@ var WebDriver = require('selenium-webdriver'),
 	jar = 'build/selenium-server-standalone-2.41.0.jar',
 	config = require('../../build/test.json');
 
-
 test.describe('Integration', function () {
 	'use strict';
 
 	var driver;
 
 	test.before(function() {
-		var server = new SeleniumServer(jar, {
-			port: 4444,
-			args: ['-Xmx512m']
-		});
+		if (undefined === config.options.seleniumServer) {
+			var server = new SeleniumServer(jar, {
+				port: 4444,
+				args: ['-Xmx512m']
+			});
 
-		server.start();
+			server.start();
+
+			config.options.seleniumServer = server.address();
+		}
 
 		driver = new WebDriver.Builder()
-			.usingServer(server.address())
+			.usingServer(config.options.seleniumServer)
 			.withCapabilities(WebDriver.Capabilities.firefox())
 			.build();
 		driver.manage().timeouts().setScriptTimeout(10000);
@@ -30,11 +33,13 @@ test.describe('Integration', function () {
 	test.after(function() {
 		driver.quit();
 	});
+	
 	function r(testIndex) {
 		return function() { runTest(driver, testIndex); };
 	}
-	for (var i = 0; i < config.length; i++) {
-		test.it(config[i].description, r(i));
+
+	for (var i = 0; i < config.tests.length; i++) {
+		test.it(config.tests[i].description, r(i));
 	}
 });
 
@@ -45,7 +50,7 @@ function runTest(driver, i) {
 		return r.id === conf.rule;
 	}
 
-	var conf = config[i];
+	var conf = config.tests[i];
 	driver.get(conf.url)
 		.then(function() {
 			//should give an error
@@ -74,6 +79,4 @@ function checkIdenticality(conf, actual, type) {
 
 	var v = ((actual[0] || {}).nodes || []).map(function (t) { return t.target; });
 	assert.deepEqual(v, conf[type] || [], type);
-
 }
-
