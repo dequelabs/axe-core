@@ -276,6 +276,10 @@ describe('dom.isDataTable', function () {
 	});
 
 	it('should be true if it has zebra rows', function () {
+		if (window.PHANTOMJS) {
+			assert.ok('PhantomJS is a liar');
+			return;
+		}
 		fixture.innerHTML = '<table>' +
 			'<tr><td></td><td></td></tr>' +
 			'<tr style="background: #fc0"><td></td><td></td></tr>' +
