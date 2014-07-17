@@ -81,7 +81,6 @@ describe('Audit', function () {
 							type: 'PASS',
 							result: true,
 							data: null,
-							error: null,
 							relatedNodes: []
 						}]
 					}, {
@@ -95,7 +94,6 @@ describe('Audit', function () {
 							type: 'PASS',
 							result: true,
 							data: null,
-							error: null,
 							relatedNodes: []
 						}]
 					}]
@@ -114,7 +112,6 @@ describe('Audit', function () {
 							type: 'PASS',
 							result: true,
 							data: null,
-							error: null,
 							relatedNodes: []
 						}]
 					}]
@@ -133,7 +130,6 @@ describe('Audit', function () {
 							type: 'FAIL',
 							result: true,
 							data: null,
-							error: null,
 							relatedNodes: []
 						}]
 					}]
@@ -152,7 +148,6 @@ describe('Audit', function () {
 							type: 'PASS',
 							result: true,
 							data: null,
-							error: null,
 							relatedNodes: []
 						}]
 					}]

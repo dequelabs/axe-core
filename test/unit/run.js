@@ -163,7 +163,6 @@ describe('dqre.run', function () {
 							type: 'PASS',
 							data: null,
 							result: true,
-							error: null,
 							relatedNodes: []
 						}]
 					}],
@@ -183,7 +182,6 @@ describe('dqre.run', function () {
 							type: 'PASS',
 							data: null,
 							result: true,
-							error: null,
 							relatedNodes: [{
 								selector: '#foo',
 								source: '<div id="foo">\n		<div id="bar"></div>\n	</div>',
