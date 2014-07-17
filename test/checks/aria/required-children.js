@@ -49,6 +49,19 @@ describe('aria-required-children', function () {
 		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
 	});
 
+	it('should pass one indirectly aria-owned child when one required', function () {
+		fixture.innerHTML = '<div role="grid" id="target" aria-owns="r"></div><div id="r"><div role="row">Nothing here.</div></div>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
+	});
+
+
+	it('should pass one existing aria-owned child when one required', function () {
+		fixture.innerHTML = '<div role="grid" id="target" aria-owns="r"></div><p id="r" role="row">Nothing here.</p>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
+	});
+
 	it('should pass one existing required child when one required', function () {
 		fixture.innerHTML = '<div role="grid" id="target"><p role="row">Nothing here.</p></div>';
 		var node = fixture.querySelector('#target');
