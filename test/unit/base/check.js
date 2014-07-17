@@ -183,36 +183,50 @@ describe('Check', function () {
 			});
 
 			it('should not throw, but add any raised error as `error` on the returned object', function (done) {
+
+				var error = new Error('oh noes');
+				var orig = dqre.log;
+				dqre.log = function (msg, stack) {
+					assert.equal(msg, error.message);
+					assert.equal(stack, error.stack);
+
+					dqre.log = orig;
+					done();
+				};
 				assert.doesNotThrow(function () {
-					var error = new Error('oh noes');
 
 					new Check({
 						evaluate: function () {
 							throw error;
 						}
-					}).run(fixture, {}, function (data) {
-						assert.deepEqual(data.error, { message: error.message, stack: error.stack });
-						done();
-					});
+					}).run(fixture, {}, function () {});
 
 				});
 
 			});
 
-			it('should not throw, but pass any raised error as the first parameter to callback - async', function () {
+			it('should not throw, but pass any raised error as the first parameter to callback - async', function (done) {
+
+				var error = new Error('oh noes');
+				var orig = dqre.log;
+				dqre.log = function (msg, stack) {
+					assert.equal(msg, error.message);
+					assert.equal(stack, error.stack);
+
+					dqre.log = orig;
+					done();
+				};
 				assert.doesNotThrow(function () {
-					var error = new Error('oh noes');
 
 					new Check({
 						evaluate: function () {
 							this.async();
 							throw error;
 						}
-					}).run(fixture, {}, function (data) {
-						assert.deepEqual(data.error, { message: error.message, stack: error.stack });
-					});
+					}).run(fixture, {}, function () {});
 
 				});
+
 
 			});
 
