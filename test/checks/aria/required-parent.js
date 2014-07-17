@@ -37,7 +37,7 @@ describe('aria-required-parent', function () {
 
 
 	it('should pass when required parent is present in an aria-owns context', function () {
-		fixture.innerHTML = '<div role="list" ><div aria-owns="target"></div></div><div><p role="listitem" id="target">Nothing here.</p></div>';
+		fixture.innerHTML = '<div role="list" aria-owns="target"></div><div><p role="listitem" id="target">Nothing here.</p></div>';
 		var node = fixture.querySelector('#target');
 		assert.isTrue(checks['aria-required-parent'].evaluate.call(checkContext, node));
 	});
