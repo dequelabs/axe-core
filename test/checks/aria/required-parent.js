@@ -28,8 +28,16 @@ describe('aria-required-parent', function () {
 		assert.isTrue(checks['aria-required-parent'].evaluate.call(checkContext, node));
 	});
 
+	it('should fail when wrong role is present in an aria-owns context', function () {
+		fixture.innerHTML = '<div role="menu" ><div aria-owns="target"></div></div><div><p role="listitem" id="target">Nothing here.</p></div>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks['aria-required-parent'].evaluate.call(checkContext, node));
+		assert.deepEqual(checkContext._data, ['list']);
+	});
+
+
 	it('should pass when required parent is present in an aria-owns context', function () {
-		fixture.innerHTML = '<div role="list" ><div aria-owns="target"></div></div><div><p role="listitem" id="target">Nothing here.</p></div>';
+		fixture.innerHTML = '<div role="list" aria-owns="target"></div><div><p role="listitem" id="target">Nothing here.</p></div>';
 		var node = fixture.querySelector('#target');
 		assert.isTrue(checks['aria-required-parent'].evaluate.call(checkContext, node));
 	});
