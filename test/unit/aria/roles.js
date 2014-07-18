@@ -18,6 +18,29 @@ describe('aria.isValidRole', function () {
 	});
 });
 
+describe('aria.getRolesByType', function () {
+	'use strict';
+
+	it('should return array if roletype is found in the lookup table', function () {
+		var orig = kslib.aria._lut.role;
+		kslib.aria._lut.role = {
+			'dogs': {
+				type: 'things'
+			},
+			'cats': {
+				type: 'stuff'
+			}
+		};
+		assert.deepEqual(kslib.aria.getRolesByType('stuff'), ['cats']);
+		kslib.aria._lut.role = orig;
+
+	});
+
+	it('should return empty array if role is not found in the lut', function () {
+		assert.deepEqual(kslib.aria.getRolesByType('blahblahblah'), []);
+	});
+});
+
 describe('aria.getRoleType', function () {
 	'use strict';
 
