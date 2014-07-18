@@ -33,7 +33,7 @@ module.exports = function (grunt) {
 		},
 		jasmine: {
 			test: {
-				src: ['<%= concat.test.dest %>'],
+				src: ['<%= concat.kensington.dest %>'],
 				options: {
 					specs: 'doc/examples/jasmine/*spec.js'
 				}
