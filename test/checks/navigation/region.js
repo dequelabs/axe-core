@@ -21,7 +21,7 @@ describe('region', function () {
 	});
 
 	it('should return true when all content is inside the region', function () {
-		fixture.innerHTML = '<div id="target" role="main"><a href="#mainheader">Click Here</a><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div></div>';
+		fixture.innerHTML = '<div id="target"><div role="main"><a href="a.html#mainheader">Click Here</a><div><h1 id="mainheader" tabindex="0">Introduction</h1></div></div></div>';
 		var node = fixture.querySelector('#target');
 		assert.isTrue(checks.region.evaluate.call(checkContext, node));
 		assert.equal(checkContext._relatedNodes.length, 0);
