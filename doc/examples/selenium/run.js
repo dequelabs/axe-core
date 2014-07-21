@@ -4,7 +4,7 @@
 
 var WebDriver = require('selenium-webdriver'),
 	SeleniumServer = require('selenium-webdriver/remote').SeleniumServer,
-	jar = 'selenium-server-standalone-2.41.0.jar';
+	jar = '../../../build/selenium-server-standalone-2.41.0.jar';
 
 var server = new SeleniumServer(jar, {
 	port: 4444,
