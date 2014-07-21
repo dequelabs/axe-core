@@ -77,7 +77,7 @@ describe('dom.isOffscreen', function () {
 
 	it('should detect elements positioned outside the right edge on RTL documents', function () {
 		document.body.style.direction = 'rtl';
-		fixture.innerHTML = '<div id="target" style="position: absolute; width: 50px; right: -51px;">Offscreen?</div>';
+		fixture.innerHTML = '<div id="target" style="position: absolute; width: 50px; right: -151px;">Offscreen?</div>';
 		var el = document.getElementById('target');
 
 		assert.isTrue(kslib.dom.isOffscreen(el));

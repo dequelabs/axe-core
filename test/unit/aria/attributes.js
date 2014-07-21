@@ -58,6 +58,21 @@ describe('aria.allowedAttr', function () {
 		kslib.aria._lut.globalAttributes = orig;
 	});
 
+	it('should also check required attributes', function () {
+		var orig = kslib.aria._lut.globalAttributes = ['world'];
+		kslib.aria._lut.role = {
+			'cats': {
+				attributes: {
+					required: ['hello'],
+					allowed: ['ok']
+				}
+			}
+		};
+
+		assert.deepEqual(kslib.aria.allowedAttr('cats'), ['ok', 'world', 'hello']);
+		kslib.aria._lut.globalAttributes = orig;
+	});
+
 	it('should return an array with globally allowed attributes', function () {
 		var result,
 			orig = kslib.aria._lut.globalAttributes = ['world'];
