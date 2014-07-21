@@ -1,0 +1,10 @@
+{
+	"id": "region",
+	"help": "Content must be contained in a region",
+	"selector": "html",
+	"checks": ["region"],
+	"pageLevel": true,
+	"tags": [
+		"best-practice"
+	]
+}
