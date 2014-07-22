@@ -27,6 +27,27 @@ describe('region', function () {
 		assert.equal(checkContext._relatedNodes.length, 0);
 	});
 
+	it('should return false when img content is outside the region', function () {
+		fixture.innerHTML = '<div id="target"><img src="something.jpg"><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div></div>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks.region.evaluate.call(checkContext, node));
+		assert.equal(checkContext._relatedNodes.length, 1);
+	});
+
+	it('should return true when textless text content is outside the region', function () {
+		fixture.innerHTML = '<div id="target"><p></p><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div></div>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks.region.evaluate.call(checkContext, node));
+		assert.equal(checkContext._relatedNodes.length, 0);
+	});
+
+	it('should return true when wrapper content is outside the region', function () {
+		fixture.innerHTML = '<div id="target"><div><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div></div></div>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks.region.evaluate.call(checkContext, node));
+		assert.equal(checkContext._relatedNodes.length, 0);
+	});
+
 	it('should return true when invisible content is outside the region', function () {
 		fixture.innerHTML = '<div id="target"><p style="display: none">Click Here</p><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div></div>';
 		var node = fixture.querySelector('#target');
