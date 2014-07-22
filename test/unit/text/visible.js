@@ -14,6 +14,21 @@ describe('text.visible', function () {
 			assert.equal(kslib.text.visible(fixture), 'Hello');
 		});
 
+		it('should handle implicitly recursive calls', function () {
+			fixture.innerHTML = 'Hello<span><span>Hi</span></span>';
+			assert.equal(kslib.text.visible(fixture), 'HelloHi');
+		});
+
+		it('should handle explicitly recursive calls', function () {
+			fixture.innerHTML = 'Hello<span><span>Hi</span></span>';
+			assert.equal(kslib.text.visible(fixture, null, false), 'HelloHi');
+		});
+
+		it('should handle non-recursive calls', function () {
+			fixture.innerHTML = 'Hello<span><span>Hi</span></span>';
+			assert.equal(kslib.text.visible(fixture, null, true), 'Hello');
+		});
+
 		it('should know how visibility works', function () {
 			fixture.innerHTML = 'Hello <span style="visibility: hidden;">' +
 					'<span style="visibility: visible;">Hi</span>' +
@@ -21,7 +36,6 @@ describe('text.visible', function () {
 
 			assert.equal(kslib.text.visible(fixture), 'Hello Hi');
 		});
-
 
 		it('should not return elements with display: none', function () {
 			fixture.innerHTML = 'Hello<span style="display: none;"><span>Hi</span></span>';
