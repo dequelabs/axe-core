@@ -47,6 +47,7 @@ module.exports = function (grunt) {
 					'help': 'string',
 					'evaluate': 'string',
 					'after': 'string',
+					'url': 'string',
 					'selector': 'string',
 					'type': 'string',
 					'matches': 'string',
@@ -98,6 +99,8 @@ module.exports = function (grunt) {
 				validateProperties(rule, {
 					'id': 'string',
 					'help': 'string',
+					'matches': 'string',
+					'url': 'string',
 					'checks': null,
 					'tags': null,
 					'selector': 'string',

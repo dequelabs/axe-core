@@ -1,6 +1,7 @@
 {
 	"id": "image-alt",
 	"help": "Images need alternate text",
+	"url": "https://dequeuniversity.com/courses/html-css/images/alt-text",
 	"selector": "img",
 	"checks": ["has-alt", "aria-label", "aria-labelledby", "non-empty-title"],
 	"tags": [

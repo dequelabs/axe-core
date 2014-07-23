@@ -1,6 +1,7 @@
 {
 	"id": "html-lang",
 	"help": "documentElement (<html>) should have a lang attribute",
+	"url": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/language",
 	"selector": "html",
 	"checks": ["has-lang"],
 	"tags": [
