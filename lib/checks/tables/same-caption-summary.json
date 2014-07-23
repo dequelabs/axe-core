@@ -1,0 +1,7 @@
+{
+	"id": "same-caption-summary",
+	"help": "The content of summary attribute and caption element are indentical",
+	"type": "FAIL",
+	"selector": "table",
+	"evaluate": "same-caption-summary.js"
+}

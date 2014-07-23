@@ -1,0 +1,6 @@
+{
+	"id": "th-scope",
+	"help": "TH elements must use scope attribute",
+	"evaluate": "th-scope.js",
+	"type": "FAIL"
+}

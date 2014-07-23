@@ -1,0 +1,6 @@
+{
+	"id": "th-headers-attr",
+	"help": "TH element should not use headers attribute",
+	"evaluate": "th-headers-attr.js",
+	"type": "FAIL"
+}
