@@ -9,27 +9,27 @@ describe('dom.isVisualContent', function () {
 
 	describe('isVisualContent', function () {
 		it('should return true for img', function () {
-			fixture.innerHTML = '<img src="something.jpg">';
+			fixture.innerHTML = '<img src="">';
 			assert.isTrue(kslib.dom.isVisualContent(fixture.children[0]));
 		});
 
 		it('should return true for iframe', function () {
-			fixture.innerHTML = '<iframe src="something.html"></iframe>';
+			fixture.innerHTML = '<iframe src=""></iframe>';
 			assert.isTrue(kslib.dom.isVisualContent(fixture.children[0]));
 		});
 
 		it('should return true for object', function () {
-			fixture.innerHTML = '<object data="something.swf"></object>';
+			fixture.innerHTML = '<object data=""></object>';
 			assert.isTrue(kslib.dom.isVisualContent(fixture.children[0]));
 		});
 
 		it('should return true for video', function () {
-			fixture.innerHTML = '<video src="something.mp4"></video>';
+			fixture.innerHTML = '<video src=""></video>';
 			assert.isTrue(kslib.dom.isVisualContent(fixture.children[0]));
 		});
 
 		it('should return true for audio', function () {
-			fixture.innerHTML = '<audio src="something.mp3"></audio>';
+			fixture.innerHTML = '<audio src=""></audio>';
 			assert.isTrue(kslib.dom.isVisualContent(fixture.children[0]));
 		});
 
