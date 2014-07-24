@@ -1,59 +1,35 @@
 describe('color.Color', function () {
 	'use strict';
 
-	it('should set values properly via hex', function () {
-		var c = new kslib.color.Color();
-		c.setHex('#112233');
-		assert.equal(c.red(), 17);
-		assert.equal(c.green(), 34);
-		assert.equal(c.blue(), 51);
-		assert.equal(c.alpha(), 255);
-	});
-
 	it('should set values properly via RGB', function () {
 		var c = new kslib.color.Color();
-		c.setRGB('rgb(17, 34, 51)');
-		assert.equal(c.red(), 17);
-		assert.equal(c.green(), 34);
-		assert.equal(c.blue(), 51);
-		assert.equal(c.alpha(), 255);
+		c.parseRgbString('rgb(17, 34, 51)');
+		assert.equal(c.red, 17);
+		assert.equal(c.green, 34);
+		assert.equal(c.blue, 51);
+		assert.equal(c.alpha, 1);
 	});
 
 	it('should set values properly via RGBA', function () {
 		var c = new kslib.color.Color();
-		c.setRGB('rgba(17, 34, 51, 0)');
-		assert.equal(c.red(), 17);
-		assert.equal(c.green(), 34);
-		assert.equal(c.blue(), 51);
-		assert.equal(c.alpha(), 0);
+		c.parseRgbString('rgba(17, 34, 51, 0)');
+		assert.equal(c.red, 17);
+		assert.equal(c.green, 34);
+		assert.equal(c.blue, 51);
+		assert.equal(c.alpha, 0);
 	});
 
-	it('should return hex values properly', function () {
-		var c = new kslib.color.Color();
-		c.setRGB('rgba(17, 34, 51, 0)');
-		assert.equal(c.red(), 17);
-		assert.equal(c.green(), 34);
-		assert.equal(c.blue(), 51);
-		assert.equal(c.alpha(), 0);
-		assert.equal(c.hexString(), '#112233');
-	});
-	
 	it('should calculate luminance sensibly', function () {
-		var black = new kslib.color.Color();
-		var white = new kslib.color.Color();
-		var yellow = new kslib.color.Color();
-		var darkyellow = new kslib.color.Color();
-		var blue = new kslib.color.Color();
-		black.setHex('#000000');
-		white.setHex('#ffffff');
-		yellow.setHex('#ffff00');
-		darkyellow.setHex('#999900');
-		blue.setHex('#0000ff');
-		var lBlack = kslib.color.getRelativeLuminance(black);
-		var lWhite = kslib.color.getRelativeLuminance(white);
-		var lYellow = kslib.color.getRelativeLuminance(yellow);
-		var lDarkyellow = kslib.color.getRelativeLuminance(darkyellow);
-		var lBlue = kslib.color.getRelativeLuminance(blue);
+		var black = new kslib.color.Color(0, 0, 0, 1);
+		var white = new kslib.color.Color(255, 255, 255, 1);
+		var yellow = new kslib.color.Color(255, 255, 0, 1);
+		var darkyellow = new kslib.color.Color(128, 128, 0, 1);
+		var blue = new kslib.color.Color(0, 0, 255, 1);
+		var lBlack = black.getRelativeLuminance();
+		var lWhite = white.getRelativeLuminance();
+		var lYellow = yellow.getRelativeLuminance();
+		var lDarkyellow = darkyellow.getRelativeLuminance();
+		var lBlue = blue.getRelativeLuminance();
 
 		//values range from zero to one
 		assert.equal(lBlack, 0);
@@ -67,12 +43,9 @@ describe('color.Color', function () {
 	});
 
 	it('should calculate contrast sensibly', function () {
-		var black = new kslib.color.Color();
-		var white = new kslib.color.Color();
-		var yellow = new kslib.color.Color();
-		black.setHex('#000000');
-		white.setHex('#ffffff');
-		yellow.setHex('#ffff00');
+		var black = new kslib.color.Color(0, 0, 0, 1);
+		var white = new kslib.color.Color(255, 255, 255, 1);
+		var yellow = new kslib.color.Color(255, 255, 0, 1);
 
 		//Same foreground/background gives 1
 		assert.equal(kslib.color.getContrast(black, black), 1);
@@ -89,11 +62,15 @@ describe('color.Color', function () {
 	});
 
 	it('should give sensible results for WCAG compliance', function () {
-		assert.isTrue(kslib.color.areInGoodContrastWCAG2('black', 'white', 16, true)[0]);
-		assert.isFalse(kslib.color.areInGoodContrastWCAG2('black', 'black', 16, true)[0]);
-		assert.isTrue(kslib.color.areInGoodContrastWCAG2('white', 'gray', 24, false)[0]);
-		assert.isTrue(kslib.color.areInGoodContrastWCAG2('white', 'gray', 20, true)[0]);
-		assert.isFalse(kslib.color.areInGoodContrastWCAG2('white', 'gray', 8, false)[0]);
+		var black = new kslib.color.Color(0, 0, 0, 1);
+		var white = new kslib.color.Color(255, 255, 255, 1);
+		var gray = new kslib.color.Color(128, 128, 128, 1);
+
+		assert.isTrue(kslib.color.hasValidContrastRatio(black, white, 16, true));
+		assert.isFalse(kslib.color.hasValidContrastRatio(black, black, 16, true));
+		assert.isTrue(kslib.color.hasValidContrastRatio(white, gray, 24, false));
+		assert.isTrue(kslib.color.hasValidContrastRatio(white, gray, 20, true));
+		assert.isFalse(kslib.color.hasValidContrastRatio(white, gray, 8, false));
 	});
 
 });
