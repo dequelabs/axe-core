@@ -14,30 +14,31 @@ var server = new SeleniumServer(jar, {
 server.start();
 
 var driver = new WebDriver.Builder()
-.usingServer(server.address())
-.withCapabilities(WebDriver.Capabilities.firefox())
-.build();
+	.usingServer(server.address())
+	.withCapabilities(WebDriver.Capabilities.firefox())
+	.build();
 
 
-driver.get("http://localhost:9876/doc/examples/selenium/test.html")
-.then(function() {
-	//should give an error
-	driver.executeAsyncScript(function() {
-		var callback = arguments[arguments.length - 1];
-		dqre.a11yCheck(document.getElementById("broken"), null, callback);
+driver.get('http://localhost:9876/doc/examples/selenium/test.html')
+	.then(function () {
+		/*global dqre, document */
+		//should give an error
+		driver.executeAsyncScript(function () {
+			var callback = arguments[arguments.length - 1];
+			dqre.a11yCheck(document.getElementById('broken'), null, callback);
+		})
+		.then(function (result) {
+			console.log(result.violations.length === 1 ? 'PASS' : 'FAIL');
+		});
 	})
-	.then(function(result) {
-		console.log(result.violations.length === 1 ? "PASS" : "FAIL");
+	.then(function () {
+		//should not give an error
+		driver.executeAsyncScript(function () {
+			var callback = arguments[arguments.length - 1];
+			dqre.a11yCheck(document.getElementById('working'), null, callback);
+		})
+		.then(function (result) {
+			console.log(result.violations.length === 0 ? 'PASS' : 'FAIL');
+		});
 	});
-})
-.then(function() {
-	//should not give an error
-	driver.executeAsyncScript(function() {
-		var callback = arguments[arguments.length - 1];
-		dqre.a11yCheck(document.getElementById("working"), null, callback);
-	})
-	.then(function(result) {
-		console.log(result.violations.length === 0 ? "PASS" : "FAIL");
-	});
-});
 

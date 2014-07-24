@@ -1,26 +1,17 @@
-/* global describe, it, expect, dqre, document */
+/* global module, test, equal, document, dqre */
 
-module("dqre");
-test("should be able to load a dom", function() {
-	var n = document.createElement("div");
-	ok(n);
-});
+module('dqre');
 
-test("should be able to see a11ycheck", function() {
-	ok(dqre);
-	ok(dqre.a11yCheck);
-});
-
-test("should report that good HTML is good", function() {
-	var n = document.getElementById("working");
-	dqre.a11yCheck(n, null, function(result) {
+test('should report that good HTML is good', function () {
+	var n = document.getElementById('working');
+	dqre.a11yCheck(n, null, function (result) {
 		equal(result.violations.length, 0);
 	});
 });
 
-test("should report that bad HTML is bad", function() {
-	var n = document.getElementById("broken");
-	dqre.a11yCheck(n, null, function(result) {
+test('should report that bad HTML is bad', function () {
+	var n = document.getElementById('broken');
+	dqre.a11yCheck(n, null, function (result) {
 		equal(result.violations.length, 1);
 	});
 });
