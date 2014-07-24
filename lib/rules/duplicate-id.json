@@ -1,6 +1,7 @@
 {
 	"id": "duplicate-id",
 	"help": "document should have only one element with each ID",
+	"url": "https://dequeuniversity.com/courses/html-css/robust-compatibility/markup-validation",
 	"selector": "[id]",
 	"checks": ["duplicate-id"],
 	"tags": [

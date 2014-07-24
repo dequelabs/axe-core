@@ -1,6 +1,7 @@
 {
 	"id": "input-image-alt",
 	"help": "Image buttons need alternate text",
+	"url": "https://dequeuniversity.com/courses/html-css/images/alt-text#id57_active_images_links_and_buttons",
 	"selector": "input[type=\"image\"]",
 	"checks": ["non-empty-alt", "aria-label", "aria-labelledby"],
 	"tags": [

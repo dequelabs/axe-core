@@ -1,6 +1,7 @@
 {
 	"id": "listitem",
 	"help": "<li> elements must be contained in a <ul> or <ol>",
+	"url": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/lists-links-blockquote#id38_lists",
 	"selector": "li",
 	"checks": ["listitem"],
 	"tags": [

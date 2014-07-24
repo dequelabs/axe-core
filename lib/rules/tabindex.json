@@ -1,6 +1,7 @@
 {
 	"id": "tabindex",
 	"help": "Elements should not have tabindex > 0",
+	"url": "https://dequeuniversity.com/courses/html-css/device-independence/keyboard-tab-order",
 	"selector": "[tabindex]",
 	"checks": ["tabindex"],
 	"tags": [

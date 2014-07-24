@@ -1,6 +1,7 @@
 {
 	"id": "valid-lang",
 	"help": "lang attribute has a valid value",
+	"url": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/language#id35__language_codes",
 	"selector": "[lang], [xml\\:lang]",
 	"checks": ["valid-lang"],
 	"tags": [

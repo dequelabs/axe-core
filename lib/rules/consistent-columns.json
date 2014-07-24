@@ -1,6 +1,7 @@
 {
 	"id": "consistent-columns",
 	"help": "Tables should have the same number of columns for each row",
+	"url": "https://dequeuniversity.com/courses/html-css/data-tables/",
 	"selector": "table",
 	"checks": ["consistent-columns", "role-presentation"],
 	"tags": [
