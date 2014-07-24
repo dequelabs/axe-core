@@ -8,6 +8,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-qunit');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-curl');
 	grunt.loadNpmTasks('grunt-mocha-test');
@@ -68,7 +69,8 @@ module.exports = function (grunt) {
 			}
 		},
 		curl: {
-			'build/selenium-server-standalone-2.41.0.jar': 'http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar'
+			'build/selenium-server-standalone-2.41.0.jar':
+				'http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar'
 		},
 		connect: {
 			test: {
@@ -79,6 +81,16 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+		jshint: {
+			rules: {
+				options: {
+					jshintrc: true,
+					reporter: grunt.option('report') ? require('jshint-junit-reporter') : undefined,
+					reporterOutput: grunt.option('report') ? 'lint.xml' : undefined
+				},
+				src: ['test/**/*.js', 'build/tasks/**/*.js', 'doc/**/*.js', 'Gruntfile.js']
+			}
+		}
 	});
 
 	grunt.registerTask('sample', ['jasmine', 'mocha', 'qunit']);
