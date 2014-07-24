@@ -99,7 +99,6 @@ module.exports = function (grunt) {
 				validateProperties(rule, {
 					'id': 'string',
 					'help': 'string',
-					'matches': 'string',
 					'url': 'string',
 					'checks': null,
 					'tags': null,

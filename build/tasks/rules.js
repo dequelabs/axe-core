@@ -65,9 +65,6 @@ module.exports = function (grunt) {
 			if (json.gather) {
 				json.gather = path.resolve(dirname, json.gather);
 			}
-			if (json.matches) {
-				json.matches = path.resolve(dirname, json.matches);
-			}
 			return json;
 		});
 
@@ -119,7 +116,6 @@ module.exports = function (grunt) {
 			rule.checks = rule.checks.map(function (check) {
 				var id = typeof check === 'string' ? check : check.id;
 				var c = clone(findCheck(checks, id));
-				if (!c)  throw new Error('check ' + id + ' not found');
 				c.options = check.options || c.options;
 
 				if (c.help && !messages.checkHelp[id ]) {
