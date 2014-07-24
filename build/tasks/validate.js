@@ -100,6 +100,7 @@ module.exports = function (grunt) {
 					'id': 'string',
 					'help': 'string',
 					'url': 'string',
+					'matches': 'string',
 					'checks': null,
 					'tags': null,
 					'selector': 'string',
