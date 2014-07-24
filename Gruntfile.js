@@ -15,10 +15,10 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		clean: ["dist"],
+		clean: ['dist'],
 		watch: {
-			files: '<%= concat.lib.src %>',
-			tasks: ['concat']
+			files: ['<%= concat.lib.src %>', 'test/**/*'],
+			tasks: ['build', 'fixture']
 		},
 		concat: {
 			lib: {
