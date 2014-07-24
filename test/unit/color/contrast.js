@@ -44,11 +44,13 @@ describe('color.Color', function () {
 
 	it('should calculate contrast sensibly', function () {
 		var black = new kslib.color.Color(0, 0, 0, 1);
+		var transparent = new kslib.color.Color(0, 0, 0, 0);
 		var white = new kslib.color.Color(255, 255, 255, 1);
 		var yellow = new kslib.color.Color(255, 255, 0, 1);
 
 		//Same foreground/background gives 1
 		assert.equal(kslib.color.getContrast(black, black), 1);
+		assert.equal(kslib.color.getContrast(transparent, black), 1);
 		assert.equal(kslib.color.getContrast(white, white), 1);
 		assert.equal(kslib.color.getContrast(yellow, yellow), 1);
 
@@ -59,6 +61,28 @@ describe('color.Color', function () {
 		//things that are more contrasty return higher values than things that are less contrasty
 		assert.isTrue(kslib.color.getContrast(yellow, white) < kslib.color.getContrast(yellow, black));
 		assert.isTrue(kslib.color.getContrast(yellow, black) < kslib.color.getContrast(white, black));
+	});
+
+	it('should flatten colors properly', function () {
+		var halfblack = new kslib.color.Color(0, 0, 0, 0.5);
+		var fullblack = new kslib.color.Color(0, 0, 0, 1);
+		var transparent = new kslib.color.Color(0, 0, 0, 0);
+		var white = new kslib.color.Color(255, 255, 255, 1);
+		var gray = new kslib.color.Color(127.5, 127.5, 127.5, 1);
+		var flat = kslib.color.flattenColors(halfblack, white);
+		assert.equal(flat.red, gray.red);
+		assert.equal(flat.green, gray.green);
+		assert.equal(flat.blue, gray.blue);
+
+		var flat2 = kslib.color.flattenColors(fullblack, white);
+		assert.equal(flat2.red, fullblack.red);
+		assert.equal(flat2.green, fullblack.green);
+		assert.equal(flat2.blue, fullblack.blue);
+
+		var flat3 = kslib.color.flattenColors(transparent, white);
+		assert.equal(flat3.red, white.red);
+		assert.equal(flat3.green, white.green);
+		assert.equal(flat3.blue, white.blue);
 	});
 
 	it('should give sensible results for WCAG compliance', function () {
