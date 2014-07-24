@@ -1,15 +1,22 @@
 /*jshint node: true */
 'use strict';
 
-
 var WebDriver = require('selenium-webdriver'),
 	SeleniumServer = require('selenium-webdriver/remote').SeleniumServer,
-	jar = '../../../build/selenium-server-standalone-2.41.0.jar';
+	path = require('path'),
+	jar = path.resolve(__dirname, '../../../build/selenium-server-standalone-2.41.0.jar'),
+	// start a static server to serve our test file
+	staticServer = require('./static-server')(path.resolve(__dirname, '../../../'), 1337);
 
+
+
+// start the selenium server
 var server = new SeleniumServer(jar, {
 	port: 4444,
 	args: ['-Xmx512m']
 });
+
+
 
 server.start();
 
@@ -19,7 +26,7 @@ var driver = new WebDriver.Builder()
 	.build();
 
 
-driver.get('http://localhost:9876/doc/examples/selenium/test.html')
+driver.get('http://localhost:1337/doc/examples/selenium/test.html')
 	.then(function () {
 		/*global dqre, document */
 		//should give an error
@@ -40,5 +47,9 @@ driver.get('http://localhost:9876/doc/examples/selenium/test.html')
 		.then(function (result) {
 			console.log(result.violations.length === 0 ? 'PASS' : 'FAIL');
 		});
+	})
+	.then(function () {
+		driver.quit();
+		staticServer.close();
 	});
 
