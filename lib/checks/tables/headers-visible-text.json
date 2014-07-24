@@ -1,0 +1,6 @@
+{
+	"id": "headers-visible-text",
+	"help": "Header cell does not have visible text",
+	"type": "FAIL",
+	"evaluate": "headers-visible-text.js"
+}

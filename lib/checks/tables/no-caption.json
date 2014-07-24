@@ -1,0 +1,6 @@
+{
+	"id": "no-caption",
+	"help": "The table does not have a caption",
+	"type": "FAIL",
+	"evaluate": "no-caption.js"
+}

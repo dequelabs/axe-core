@@ -1,0 +1,6 @@
+{
+	"id": "headers-attr-reference",
+	"help": "headers attribute references element that is not screen reader visible",
+	"evaluate": "headers-attr-reference.js",
+	"type": "FAIL"
+}

@@ -1,0 +1,6 @@
+{
+	"id": "cell-no-header",
+	"help": "All data cells must have a table header",
+	"type": "FAIL",
+	"evaluate": "cell-no-header.js"
+}
