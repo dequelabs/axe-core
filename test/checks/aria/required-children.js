@@ -55,6 +55,11 @@ describe('aria-required-children', function () {
 		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
 	});
 
+	it('should not break if aria-owns points to non-existent node', function () {
+		fixture.innerHTML = '<div role="grid" id="target" aria-owns="nonexistent"></div>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks['aria-required-children'].evaluate.call(checkContext, node));
+	});
 
 	it('should pass one existing aria-owned child when one required', function () {
 		fixture.innerHTML = '<div role="grid" id="target" aria-owns="r"></div><p id="r" role="row">Nothing here.</p>';
