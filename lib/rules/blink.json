@@ -1,6 +1,7 @@
 {
 	"id": "blink",
 	"help": "The <blink> tag is deprecated and must not be used",
+	"url": "https://dequeuniversity.com/courses/html-css/visual-layout/fonts-and-typography#id55_avoid_blink_marquee",
 	"selector": "blink",
 	"checks": ["exists"],
 	"tags": [

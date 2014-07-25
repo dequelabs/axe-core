@@ -12,7 +12,7 @@ describe('hidden', function () {
 		node.setAttribute('tabindex', '1');
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['tabindex'].evaluate(node));
+		assert.isFalse(checks.tabindex.evaluate(node));
 
 
 	});
@@ -21,7 +21,7 @@ describe('hidden', function () {
 		node.setAttribute('tabindex', '0');
 		fixture.appendChild(node);
 
-		assert.isTrue(checks['tabindex'].evaluate(node));
+		assert.isTrue(checks.tabindex.evaluate(node));
 
 
 	});

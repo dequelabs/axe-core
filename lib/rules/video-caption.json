@@ -1,6 +1,7 @@
 {
 	"id": "video-caption",
 	"help": "HTML5 video elements need a captions and an audio description track",
+	"url": "https://dequeuniversity.com/courses/html-css/video-audio-multimedia/",
 	"selector": "video",
 	"checks": ["caption", "description"],
 	"tags": [
