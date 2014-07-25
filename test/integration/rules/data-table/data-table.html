@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Data Table Test</title>
+<script src="../../../../dist/kensington.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<!-- no caption -->
+	<table id="fail1">
+		<tr>
+			<th scope="col">1</th>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+	<!-- table cell with no header -->
+	<table id="fail2">
+		<caption>Hello</caption>
+		<tr>
+			<td>1</td>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+	<!-- no visible text -->
+	<table id="fail3">
+		<caption>Hello</caption>
+		<tr>
+			<th scope="col"><span style="display: none">1</span></th>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+	<!-- bad headers reference -->
+	<table id="fail4">
+		<caption>Hello</caption>
+		<tr>
+			<td headers="foo">1</td>
+			<td headers="bar">2</td>
+		</tr>
+	</table>
+
+	<!-- no scope on TH -->
+	<table id="fail5">
+		<caption>Hello</caption>
+		<tr>
+			<th>1</th>
+			<th>2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+	<!-- headers attr on TH -->
+	<div id="exist">Hi</div>
+	<table id="fail6">
+		<caption>Hello</caption>
+		<tr>
+			<th headers="exist">1</th>
+			<th headers="exist">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+
+
+	<!-- more than one row of TH column headers -->
+	<table id="fail7">
+		<caption>Hello</caption>
+		<tr>
+			<th scope="col">1</th>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<th scope="col">1</th>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+	<!-- more than one column of TH row headers -->
+	<table id="fail8">
+		<caption>Hello</caption>
+		<tr>
+			<th scope="row">1</th>
+			<th scope="row">2</th>
+			<td>3</td>
+		</tr>
+		<tr>
+			<th scope="row">1</th>
+			<th scope="row">2</th>
+			<td>3</td>
+		</tr>
+	</table>
+
+	<!-- same caption as summary -->
+	<table id="fail9" summary="Hello">
+		<caption>Hello</caption>
+		<tr>
+			<th scope="col">1</th>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+
+	<!-- layout tables -->
+	<table role="presentation">
+		<tr>
+			<th scope="col">1</th>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+	<table>
+		<tr>
+			<td>hi</td>
+		</tr>
+		<tr>
+			<td>hi</td>
+		</tr>
+		<tr>
+			<td>hi</td>
+		</tr>
+	</table>
+
+	<table>
+		<tr>
+			<td>hi</td>
+			<td>hi</td>
+			<td>hi</td>
+		</tr>
+	</table>
+
+
+	<table id="pass1">
+		<caption>Hello</caption>
+		<tr>
+			<th scope="col">1</th>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+</body>
+</html>
