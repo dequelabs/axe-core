@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Color-Contrast Test</title>
+<script src="/dist/kensington.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body style="background-image: url('')">
+<div id="pass1" style="background-color: white; color: black">This is a pass.</div>
+<div id="pass2" style="background-color: gray; color: white; font-size: 40px;">This is a pass.</div>
+<div id="pass3" style="background-color: gray; color: white; font-size: 20px; font-weight: bold">This is a pass.</div>
+<div id="fail1" style="background-color: gray; color: white; font-size: 20px;">This is a fail.<b id="pass4">But this is a pass.</b></div>
+<div id="fail2" style="background-color: gray; color: white; font-size: 8px;">This is a fail.</div>
+<div id="fail3" style="background-color: yellow; color: white; font-size: 40px;">This is a fail.</div>
+<div style="background-color: black;"><div style="background-color: rgba(255, 255, 255, 0.1); color: white" id="pass5">Pass.</div></div>
+<div style="background-color: rgba(255, 255, 255, 0.1); color: white" id="pass6">Pass by default.</div>
+<div style="background-color: white;"><div style="background-color: rgba(255, 255, 255, 0.1); color: white" id="fail4">Fail.</div></div>
+<div style="background-color: white; height: 20px; width: 80px;"><div id="pass7" style="color: white; height: 40px; width: 60px;">Hi</div></div>
+<div style="background-color: white; height: 60px; width: 40px;"><div id="pass8" style="color: white; height: 40px; width: 60px;">Hi</div></div>
+<div style="background-color: white; height: 60px; width: 80px;"><div id="fail5" style="color: white; height: 40px; width: 60px;">Hi</div></div>
+<div style="background-color: white; height: 60px; width: 80px;"><div id="pass9" style="margin-left: 80px; color: white; height: 40px; width: 60px;">Hi</div></div>
+<div style="background-color: white"><div id="fail6" style="opacity: 0.1; background-color: white; color: black">This is a fail.</div></div>
+<div style="background-color: white; height: 60px; width: 80px; overflow: hidden"><div id="fail7" style="margin-left: 80px; color: white; height: 80px; width: 90px;">Hi</div></div>
+<div style="background-color: white; height: 60px; width: 80px; overflow: scroll"><div id="fail8" style="margin-left: 80px; color: white; height: 80px; width: 90px;">Hi</div></div>
+</body>
+</html>
