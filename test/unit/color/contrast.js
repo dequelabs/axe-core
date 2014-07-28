@@ -19,6 +19,20 @@ describe('color.Color', function () {
 		assert.equal(c.alpha, 0);
 	});
 
+	it('should return hex values properly', function () {
+		var black = new kslib.color.Color(0, 0, 0, 1);
+		var white = new kslib.color.Color(255, 255, 255, 1);
+		var yellow = new kslib.color.Color(255, 255, 0, 1);
+		var darkyellow = new kslib.color.Color(128, 128, 0, 1);
+		var blue = new kslib.color.Color(0, 0, 255, 1);
+		assert.equal(black.toHexString(), '#000000');
+		assert.equal(white.toHexString(), '#ffffff');
+		assert.equal(yellow.toHexString(), '#ffff00');
+		assert.equal(darkyellow.toHexString(), '#808000');
+		assert.equal(blue.toHexString(), '#0000ff');
+
+	});
+
 	it('should calculate luminance sensibly', function () {
 		var black = new kslib.color.Color(0, 0, 0, 1);
 		var white = new kslib.color.Color(255, 255, 255, 1);
@@ -90,11 +104,16 @@ describe('color.Color', function () {
 		var white = new kslib.color.Color(255, 255, 255, 1);
 		var gray = new kslib.color.Color(128, 128, 128, 1);
 
-		assert.isTrue(kslib.color.hasValidContrastRatio(black, white, 16, true));
-		assert.isFalse(kslib.color.hasValidContrastRatio(black, black, 16, true));
-		assert.isTrue(kslib.color.hasValidContrastRatio(white, gray, 24, false));
-		assert.isTrue(kslib.color.hasValidContrastRatio(white, gray, 20, true));
-		assert.isFalse(kslib.color.hasValidContrastRatio(white, gray, 8, false));
+		assert.isTrue(kslib.color.hasValidContrastRatio(black, white, 8, false).isValid);
+		assert.isTrue(kslib.color.hasValidContrastRatio(black, white, 8, false).contrastRatio > 4.5);
+		assert.isFalse(kslib.color.hasValidContrastRatio(black, black, 16, true).isValid);
+		assert.isTrue(kslib.color.hasValidContrastRatio(black, black, 16, true).contrastRatio < 3);
+		assert.isTrue(kslib.color.hasValidContrastRatio(white, gray, 24, false).isValid);
+		assert.isTrue(kslib.color.hasValidContrastRatio(white, gray, 24, false).contrastRatio > 3);
+		assert.isTrue(kslib.color.hasValidContrastRatio(white, gray, 20, true).isValid);
+		assert.isTrue(kslib.color.hasValidContrastRatio(white, gray, 20, true).contrastRatio > 3);
+		assert.isFalse(kslib.color.hasValidContrastRatio(white, gray, 8, false).isValid);
+		assert.isTrue(kslib.color.hasValidContrastRatio(white, gray, 8, false).contrastRatio < 4.5);
 	});
 
 });
