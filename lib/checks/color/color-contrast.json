@@ -1,0 +1,6 @@
+{
+	"id": "color-contrast",
+	"help": "Element has insufficient color contrast",
+	"matches": "color-contrast-matches.js",
+	"evaluate": "color-contrast.js"
+}
