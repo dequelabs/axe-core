@@ -19,8 +19,9 @@ describe('dqre.a11yCheck', function () {
 			}]
 		}, {
 			id: 'idkStuff',
+			pageLevel: true,
+			result: 'FAIL',
 			details: [{
-				result: 'FAIL',
 				checks: [{
 					type: 'PASS',
 					result: false,
@@ -70,10 +71,12 @@ describe('dqre.a11yCheck', function () {
 			cb(results);
 		};
 	});
+
 	afterEach(function () {
 		dqre.audit = null;
 		dqre.run = orig;
 	});
+
 	it('should merge the dqre.run results into violations and passes', function (done) {
 		var orig = window.findHelp;
 		window.findHelp = function () {
@@ -166,14 +169,14 @@ describe('failureSummary', function () {
 		window.dqreConfiguration = {
 			messages: {
 				checkHelp: {
-					'1': '1',
-					'2': '2',
-					'3': '3',
-					'4': '4',
-					'5': '5',
-					'6': '6',
-					'7': '7',
-					'8': '8'
+					'1': function () { return '1'; },
+					'2': function () { return '2'; },
+					'3': function () { return '3'; },
+					'4': function () { return '4'; },
+					'5': function () { return '5'; },
+					'6': function () { return '6'; },
+					'7': function () { return '7'; },
+					'8': function () { return '8'; }
 				}
 			}
 		};
@@ -183,14 +186,14 @@ describe('failureSummary', function () {
 		window.dqreConfiguration = orig;
 	});
 	it('should return an empty array if result: PASS', function () {
-		var summary = failureSummary({
+		var summary = failureSummary('PASS', {
 			result: 'PASS'
 		});
 		assert.deepEqual(summary, []);
 	});
 
 	it('should return a list of all FAILs which return true', function () {
-		var summary = failureSummary({
+		var summary = failureSummary('FAIL', {
 			result: 'FAIL',
 			checks: [{
 				id: '1',
@@ -211,7 +214,7 @@ describe('failureSummary', function () {
 	});
 
 	it('should return a list of PASSes if none return true', function () {
-		var summary = failureSummary({
+		var summary = failureSummary('FAIL', {
 			result: 'FAIL',
 			checks: [{
 				id: '1',
@@ -236,7 +239,7 @@ describe('failureSummary', function () {
 	});
 
 	it('should not return any PASSes if any of them return true', function () {
-		var summary = failureSummary({
+		var summary = failureSummary('FAIL', {
 			result: 'FAIL',
 			checks: [{
 				id: '1',
@@ -262,7 +265,7 @@ describe('failureSummary', function () {
 	});
 
 	it('should concatenate failing passes', function () {
-		var summary = failureSummary({
+		var summary = failureSummary('FAIL', {
 			result: 'FAIL',
 			checks: [{
 				id: '1',
@@ -288,7 +291,7 @@ describe('failureSummary', function () {
 	});
 
 	it('should NOT skip checks that have no help', function () {
-		var summary = failureSummary({
+		var summary = failureSummary('FAIL', {
 			result: 'FAIL',
 			checks: [{
 				id: 'NOMATCHY',
@@ -309,9 +312,9 @@ describe('findHelp', function () {
 		window.dqreConfiguration = {
 			messages: {
 				fooHelp: {
-					'1': '1',
-					'2': '2',
-					'3': '3'
+					'1': function () { return '1'; },
+					'2': function () { return '2'; },
+					'3': function () { return '3'; }
 				}
 			}
 		};
