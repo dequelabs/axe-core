@@ -1,5 +1,7 @@
 {
 	"id": "has-visible-text",
-	"help": "The element does not have inner text that is visible to a screen reader",
-	"evaluate": "has-visible-text.js"
+	"evaluate": "has-visible-text.js",
+	"metadata": {
+		"failureMessage": "The element does not have inner text that is visible to a screen reader"
+	}
 }

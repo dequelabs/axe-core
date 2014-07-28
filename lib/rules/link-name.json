@@ -1,13 +1,20 @@
 {
 	"id": "link-name",
-	"help": "Links must have an accessible name",
-	"url": "https://dequeuniversity.com/courses/html-css/navigation/links",
 	"selector": "a[href],[role=link][href]",
-	"checks": ["unfocusable", "has-visible-text", "aria-label", "aria-labelledby"],
+	"checks": [
+		"unfocusable",
+		"has-visible-text",
+		"aria-label",
+		"aria-labelledby"
+	],
 	"tags": [
 		"wcag2a",
 		"wcag111",
 		"section508",
 		"section508a"
-	]
+	],
+	"metadata": {
+		"failureMessage": "Links must have an accessible name",
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/links"
+	}
 }

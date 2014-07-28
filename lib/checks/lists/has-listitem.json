@@ -1,6 +1,8 @@
 {
 	"id": "has-listitem",
-	"help": "List element does not have an <li> element",
 	"type": "FAIL",
-	"evaluate": "has-listitem.js"
+	"evaluate": "has-listitem.js",
+	"metadata": {
+		"failureMessage": "List element does not have an <li> element"
+	}
 }

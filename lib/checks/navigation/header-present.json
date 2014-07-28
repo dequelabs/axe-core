@@ -1,6 +1,8 @@
 {
 	"id": "header-present",
 	"selector": "h1",
-	"help": "Page has a header",
-	"evaluate": "../shared/exists.js"
+	"evaluate": "../shared/exists.js",
+	"metadata": {
+		"failureMessage": "Page has a header"
+	}
 }

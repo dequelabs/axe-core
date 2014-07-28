@@ -1,6 +1,8 @@
 {
 	"id": "description",
-	"help": "The multimedia element does not have an audio description track",
 	"evaluate": "description.js",
-	"type": "FAIL"
+	"type": "FAIL",
+	"metadata": {
+		"failureMessage": "The multimedia element does not have an audio description track"
+	}
 }

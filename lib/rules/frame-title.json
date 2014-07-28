@@ -1,11 +1,15 @@
 {
 	"id": "frame-title",
-	"help": "Frames must have title attribute to aid in navigation",
 	"selector": "frame, iframe",
-	"checks": ["non-empty-title"],
+	"checks": [
+		"non-empty-title"
+	],
 	"tags": [
 		"wcag2a",
 		"wcag241",
 		"wcag412"
-	]
+	],
+	"metadata": {
+		"failureMessage": "Frames must have title attribute to aid in navigation"
+	}
 }

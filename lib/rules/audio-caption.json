@@ -1,13 +1,17 @@
 {
 	"id": "audio-caption",
-	"help": "HTML5 audio elements need a captions track",
 	"selector": "audio",
 	"excludeHidden": false,
-	"checks": ["caption"],
+	"checks": [
+		"caption"
+	],
 	"tags": [
 		"wcag2a",
 		"wcag122",
 		"section508",
 		"section508a"
-	]
+	],
+	"metadata": {
+		"failureMessage": "HTML5 audio elements need a captions track"
+	}
 }

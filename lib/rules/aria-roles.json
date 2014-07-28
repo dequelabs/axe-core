@@ -1,9 +1,14 @@
 {
 	"id": "aria-roles",
-	"help": "ARIA roles used must conform to valid values",
 	"selector": "[role]",
-	"checks": ["invalidrole","abstractrole"],
+	"checks": [
+		"invalidrole",
+		"abstractrole"
+	],
 	"tags": [
 		"wcag2a"
-	]
+	],
+	"metadata": {
+		"failureMessage": "ARIA roles used must conform to valid values"
+	}
 }

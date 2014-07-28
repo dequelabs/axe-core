@@ -1,6 +1,8 @@
 {
 	"id": "title-only",
-	"help": "Only title used to generate alternate text for input",
 	"evaluate": "title-only.js",
-	"type": "FAIL"
+	"type": "FAIL",
+	"metadata": {
+		"failureMessage": "Only title used to generate alternate text for input"
+	}
 }

@@ -1,13 +1,23 @@
 {
 	"id": "data-table",
-	"help": "Data tables should be marked up properly",
-	"url": "https://dequeuniversity.com/courses/html-css/data-tables/",
 	"selector": "table",
 	"matches": "data-table-matches.js",
-	"checks": ["cell-no-header", "headers-visible-text", "headers-attr-reference",
-		"th-scope", "no-caption", "th-headers-attr", "th-single-row-column", "same-caption-summary"],
+	"checks": [
+		"cell-no-header",
+		"headers-visible-text",
+		"headers-attr-reference",
+		"th-scope",
+		"no-caption",
+		"th-headers-attr",
+		"th-single-row-column",
+		"same-caption-summary"
+	],
 	"tags": [
 		"wcag2a",
 		"wcag131"
-	]
+	],
+	"metadata": {
+		"failureMessage": "Data tables should be marked up properly",
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/data-tables/"
+	}
 }

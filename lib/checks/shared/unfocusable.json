@@ -1,5 +1,7 @@
 {
 	"id": "unfocusable",
-	"help": "Element can be focused",
-	"evaluate": "unfocusable.js"
+	"evaluate": "unfocusable.js",
+	"metadata": {
+		"failureMessage": "Element can be focused"
+	}
 }

@@ -1,6 +1,8 @@
 {
 	"id": "no-caption",
-	"help": "The table does not have a caption",
 	"type": "FAIL",
-	"evaluate": "no-caption.js"
+	"evaluate": "no-caption.js",
+	"metadata": {
+		"failureMessage": "The table does not have a caption"
+	}
 }

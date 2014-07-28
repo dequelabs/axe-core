@@ -1,11 +1,15 @@
 {
 	"id": "document-title",
-	"help": "Documents must have title element to aid in navigation",
-	"url": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/page-title",
 	"selector": "html",
-	"checks": ["doc-has-title"],
+	"checks": [
+		"doc-has-title"
+	],
 	"tags": [
 		"wcag2a",
 		"wcag242"
-	]
+	],
+	"metadata": {
+		"failureMessage": "Documents must have title element to aid in navigation",
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/page-title"
+	}
 }

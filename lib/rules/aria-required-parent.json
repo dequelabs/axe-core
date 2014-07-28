@@ -1,9 +1,13 @@
 {
 	"id": "aria-required-parent",
-	"help": "Certain ARIA roles must be contained by particular parents",
 	"selector": "[role]",
-	"checks": ["aria-required-parent"],
+	"checks": [
+		"aria-required-parent"
+	],
 	"tags": [
 		"todo"
-	]
+	],
+	"metadata": {
+		"failureMessage": "Certain ARIA roles must be contained by particular parents"
+	}
 }

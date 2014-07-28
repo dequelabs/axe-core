@@ -1,6 +1,8 @@
 {
 	"id": "has-dlitems",
-	"help": "Element does not have at least one <dt> element followed by at least one <dd> element",
 	"type": "FAIL",
-	"evaluate": "has-dlitems.js"
+	"evaluate": "has-dlitems.js",
+	"metadata": {
+		"failureMessage": "Element does not have at least one <dt> element followed by at least one <dd> element"
+	}
 }

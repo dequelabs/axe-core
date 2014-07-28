@@ -1,5 +1,7 @@
 {
 	"id": "doc-has-title",
-	"help": "Document has a non-empty title element",
-	"evaluate": "doc-has-title.js"
+	"evaluate": "doc-has-title.js",
+	"metadata": {
+		"failureMessage": "Document has a non-empty title element"
+	}
 }

@@ -1,6 +1,8 @@
 {
 	"id": "help-same-as-label",
-	"help": "Help text (title or aria-describedby) text is the same as the label text",
 	"evaluate": "help-same-as-label.js",
-	"type": "FAIL"
+	"type": "FAIL",
+	"metadata": {
+		"failureMessage": "Help text (title or aria-describedby) text is the same as the label text"
+	}
 }

@@ -1,12 +1,16 @@
 {
 	"id": "listitem",
-	"help": "<li> elements must be contained in a <ul> or <ol>",
-	"url": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/lists-links-blockquote#id38_lists",
 	"selector": "li",
-	"checks": ["listitem"],
+	"checks": [
+		"listitem"
+	],
 	"tags": [
 		"wcaga",
 		"wcag2a",
 		"wcag131"
-	]
+	],
+	"metadata": {
+		"failureMessage": "<li> elements must be contained in a <ul> or <ol>",
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/lists-links-blockquote#id38_lists"
+	}
 }

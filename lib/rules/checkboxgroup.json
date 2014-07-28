@@ -1,11 +1,10 @@
 {
 	"id": "checkboxgroup",
-	"help": "Checkbox inputs with the same name must be part of a group",
-	"url": "https://dequeuniversity.com/courses/html-css/forms/form-labels#id84_labels_for_checkboxes",
 	"selector": "input[type=checkbox]",
-	"checks": ["noname",
+	"checks": [
+		"noname",
 		{
-			"id" : "nogroup",
+			"id": "nogroup",
 			"options": "checkbox"
 		},
 		{
@@ -13,12 +12,16 @@
 			"options": "checkbox"
 		},
 		{
-			"id" : "fieldset",
+			"id": "fieldset",
 			"options": "checkbox"
 		}
 	],
 	"tags": [
 		"wcag2a",
 		"wcag131"
-	]
+	],
+	"metadata": {
+		"failureMessage": "Checkbox inputs with the same name must be part of a group",
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/forms/form-labels#id84_labels_for_checkboxes"
+	}
 }

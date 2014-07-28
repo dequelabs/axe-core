@@ -1,13 +1,20 @@
 {
 	"id": "image-alt",
-	"help": "Images need alternate text",
-	"url": "https://dequeuniversity.com/courses/html-css/images/alt-text",
 	"selector": "img",
-	"checks": ["has-alt", "aria-label", "aria-labelledby", "non-empty-title"],
+	"checks": [
+		"has-alt",
+		"aria-label",
+		"aria-labelledby",
+		"non-empty-title"
+	],
 	"tags": [
 		"wcag2a",
 		"wcag111",
 		"section508",
 		"section508a"
-	]
+	],
+	"metadata": {
+		"failureMessage": "Images need alternate text",
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/alt-text"
+	}
 }

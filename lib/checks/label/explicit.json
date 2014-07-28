@@ -1,5 +1,7 @@
 {
 	"id": "explicit-label",
-	"help": "Label associated explicitly; `for` attribute associated to input's ID",
-	"evaluate": "explicit.js"
+	"evaluate": "explicit.js",
+	"metadata": {
+		"failureMessage": "Label associated explicitly; `for` attribute associated to input's ID"
+	}
 }
