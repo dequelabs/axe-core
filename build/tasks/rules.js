@@ -21,8 +21,8 @@ module.exports = function (grunt) {
 
 	function parseMetaData(data) {
 		var result = clone(data) || {};
-		if (result.help) {
-			result.help = dot.template(result.help).toString();
+		if (result.failureMessage) {
+			result.failureMessage = dot.template(result.failureMessage).toString();
 		}
 		return result;
 	}
