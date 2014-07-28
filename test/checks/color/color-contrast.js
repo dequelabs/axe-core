@@ -8,34 +8,41 @@ describe('color-contrast', function () {
 	});
 
 	it('should return true when there is sufficient contrast because of bold tag', function () {
-		fixture.innerHTML = '<div style="color: gray; background-color: white; font-size: 20px"><b id="target">' +
+		fixture.innerHTML = '<div style="color: gray; background-color: white; font-size: 14pt"><b id="target">' +
 			'My text</b></div>';
 		var target = fixture.querySelector('#target');
 		assert.isTrue(checks['color-contrast'].evaluate(target));
 	});
 
 	it('should return true when there is sufficient contrast because of font weight', function () {
-		fixture.innerHTML = '<div style="color: gray; background-color: white; font-size: 20px; font-weight: bold" id="target">' +
+		fixture.innerHTML = '<div style="color: gray; background-color: white; font-size: 14pt; font-weight: bold" id="target">' +
 			'My text</div>';
 		var target = fixture.querySelector('#target');
 		assert.isTrue(checks['color-contrast'].evaluate(target));
 	});
 
 	it('should return true when there is sufficient contrast because of font size', function () {
-		fixture.innerHTML = '<div style="color: gray; background-color: white; font-size: 40px;" id="target">' +
+		fixture.innerHTML = '<div style="color: gray; background-color: white; font-size: 18pt;" id="target">' +
 			'My text</div>';
 		var target = fixture.querySelector('#target');
 		assert.isTrue(checks['color-contrast'].evaluate(target));
 	});
 
 	it('should return false when there is not sufficient contrast because of font size', function () {
-		fixture.innerHTML = '<div style="color: gray; background-color: white; font-size: 8px;" id="target">' +
+		fixture.innerHTML = '<div style="color: gray; background-color: white; font-size: 8pt;" id="target">' +
 			'My text</div>';
 		var target = fixture.querySelector('#target');
 		assert.isFalse(checks['color-contrast'].evaluate(target));
 	});
 
-	it('should return true when there is sufficient contrast with transparency', function () {
+	it('should return true when there is sufficient contrast with explicit transparency', function () {
+		fixture.innerHTML = '<div style="color: white; background-color: white;">' +
+			'<span style="color: black; background-color: rgba(0,0,0,0)" id="target">My text</span></div>';
+		var target = fixture.querySelector('#target');
+		assert.isTrue(checks['color-contrast'].evaluate(target));
+	});
+
+	it('should return true when there is sufficient contrast with implicit transparency', function () {
 		fixture.innerHTML = '<div style="color: white; background-color: white;">' +
 			'<span style="color: black;" id="target">My text</span></div>';
 		var target = fixture.querySelector('#target');
