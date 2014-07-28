@@ -94,26 +94,11 @@ describe('dqre.a11yCheck', function () {
 		});
 	});
 	it('should add the rule id to the rule result', function (done) {
-		var orig = window.findHelp;
-		window.findHelp = function () {
-			return 'HALP US';
-		};
 		dqre.a11yCheck(document, {}, function (results) {
 			assert.equal(results.violations[0].id, 'idkStuff');
 			assert.equal(results.violations[1].id, 'bypass');
 			assert.equal(results.passes[0].id, 'gimmeLabel');
 			assert.equal(results.passes[1].id, 'blinky');
-
-			window.findHelp = orig;
-			done();
-		});
-	});
-	it('should add the rule help to the rule result', function (done) {
-		var origFn = window.findHelp;
-		window.findHelp = function () { return 'your foon is ringing'; };
-		dqre.a11yCheck(document, {}, function (results) {
-			assert.equal(results.violations[0].help, 'your foon is ringing');
-			window.findHelp = origFn;
 			done();
 		});
 	});
@@ -163,28 +148,6 @@ describe('dqre.a11yCheck', function () {
 
 describe('failureSummary', function () {
 	'use strict';
-	var orig = window.dqreConfiguration;
-	beforeEach(function () {
-
-		window.dqreConfiguration = {
-			messages: {
-				checkHelp: {
-					'1': function () { return '1'; },
-					'2': function () { return '2'; },
-					'3': function () { return '3'; },
-					'4': function () { return '4'; },
-					'5': function () { return '5'; },
-					'6': function () { return '6'; },
-					'7': function () { return '7'; },
-					'8': function () { return '8'; }
-				}
-			}
-		};
-	});
-
-	after(function () {
-		window.dqreConfiguration = orig;
-	});
 	it('should return an empty array if result: PASS', function () {
 		var summary = failureSummary('PASS', {
 			result: 'PASS'
@@ -198,6 +161,7 @@ describe('failureSummary', function () {
 			checks: [{
 				id: '1',
 				result: true,
+				failureMessage: '1',
 				type: 'FAIL'
 			}, {
 				id: '2',
@@ -206,6 +170,7 @@ describe('failureSummary', function () {
 			}, {
 				id: '3',
 				result: true,
+				failureMessage: '3',
 				type: 'FAIL'
 			}]
 		});
@@ -219,14 +184,17 @@ describe('failureSummary', function () {
 			checks: [{
 				id: '1',
 				result: false,
+				failureMessage: '1',
 				type: 'PASS'
 			}, {
 				id: '2',
 				result: false,
+				failureMessage: '2',
 				type: 'PASS'
 			}, {
 				id: '3',
 				result: false,
+				failureMessage: '3',
 				type: 'PASS'
 			}, {
 				id: '4',
@@ -270,18 +238,22 @@ describe('failureSummary', function () {
 			checks: [{
 				id: '1',
 				result: false,
+				failureMessage: '1',
 				type: 'PASS'
 			}, {
 				id: '2',
 				result: false,
+				failureMessage: '2',
 				type: 'PASS'
 			}, {
 				id: '3',
 				result: false,
+				failureMessage: '3',
 				type: 'PASS'
 			}, {
 				id: '4',
 				result: true,
+				failureMessage: '4',
 				type: 'FAIL'
 			}]
 		});
@@ -304,29 +276,3 @@ describe('failureSummary', function () {
 
 	});
 });
-
-describe('findHelp', function () {
-	'use strict';
-	var orig = window.dqreConfiguration;
-	beforeEach(function () {
-		window.dqreConfiguration = {
-			messages: {
-				fooHelp: {
-					'1': function () { return '1'; },
-					'2': function () { return '2'; },
-					'3': function () { return '3'; }
-				}
-			}
-		};
-	});
-	after(function () {
-		window.dqreConfiguration = orig;
-	});
-	it('should return an empty string if the rule id does not match a help', function () {
-		assert.equal(findHelp('blah', '4'), '');
-	});
-	it('should return the rule help string', function () {
-		assert.equal(findHelp('foo', '3'), '3');
-	});
-});
-
