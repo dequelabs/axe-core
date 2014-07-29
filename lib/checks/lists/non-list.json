@@ -1,6 +1,19 @@
 {
 	"id": "non-list",
-	"help": "Text element has list-like content",
-	"options": [["1.", "2.", "3."], ["1)", "2)", "3)"]],
-	"evaluate": "non-list.js"
+	"options": [
+		[
+			"1.",
+			"2.",
+			"3."
+		],
+		[
+			"1)",
+			"2)",
+			"3)"
+		]
+	],
+	"evaluate": "non-list.js",
+	"metadata": {
+		"failureMessage": "Text element has list-like content"
+	}
 }

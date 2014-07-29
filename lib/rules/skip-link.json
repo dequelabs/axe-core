@@ -1,11 +1,15 @@
 {
 	"id": "skip-link",
-	"help": "Page should have a skip link as its first link",
-	"url": "https://dequeuniversity.com/courses/html-css/navigation/skip-navigation",
 	"selector": "a[href]",
-	"checks": ["skip-link"],
+	"checks": [
+		"skip-link"
+	],
 	"pageLevel": true,
 	"tags": [
 		"best-practice"
-	]
+	],
+	"metadata": {
+		"failureMessage": "Page should have a skip link as its first link",
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/skip-navigation"
+	}
 }

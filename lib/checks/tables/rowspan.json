@@ -1,6 +1,8 @@
 {
 	"id": "rowspan",
-	"help": "Element has a rowspan value that is not equal to 1",
 	"evaluate": "rowspan.js",
-	"type": "FAIL"
+	"type": "FAIL",
+	"metadata": {
+		"failureMessage": "Element has a rowspan value that is not equal to 1"
+	}
 }

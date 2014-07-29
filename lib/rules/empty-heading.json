@@ -1,10 +1,14 @@
 {
 	"id": "empty-heading",
-	"help": "Headings must have an accessible name",
 	"selector": "h1, h2, h3, h4, h5, h6, [role=\"heading\"]",
-	"checks": ["has-visible-text"],
+	"checks": [
+		"has-visible-text"
+	],
 	"tags": [
 		"wcag2a",
 		"wcag131"
-	]
+	],
+	"metadata": {
+		"failureMessage": "Headings must have an accessible name"
+	}
 }

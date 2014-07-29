@@ -1,14 +1,20 @@
 {
 	"id": "area-alt",
-	"help": "Active area elements need alternate text",
-	"url": "https://dequeuniversity.com/courses/html-css/images/image-maps",
 	"selector": "map area[href]",
 	"excludeHidden": false,
-	"checks": ["non-empty-alt", "aria-label", "aria-labelledby"],
+	"checks": [
+		"non-empty-alt",
+		"aria-label",
+		"aria-labelledby"
+	],
 	"tags": [
 		"wcag2a",
 		"wcag111",
 		"section508",
 		"section508a"
-	]
+	],
+	"metadata": {
+		"failureMessage": "Active area elements need alternate text",
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/image-maps"
+	}
 }

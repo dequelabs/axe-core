@@ -1,10 +1,14 @@
 {
 	"id": "aria-required-attr",
-	"help": "Required ARIA attributes are defined",
 	"selector": "[role]",
-	"checks": ["aria-required-attr"],
+	"checks": [
+		"aria-required-attr"
+	],
 	"tags": [
 		"wcag2a",
 		"wcag411"
-	]
+	],
+	"metadata": {
+		"failureMessage": "Required ARIA attributes are defined"
+	}
 }

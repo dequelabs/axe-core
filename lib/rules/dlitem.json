@@ -1,11 +1,15 @@
 {
 	"id": "dlitem",
-	"help": "<dd> and <dt> elements must be contained in a <dl>",
 	"selector": "dd, dt",
-	"checks": ["dlitem"],
+	"checks": [
+		"dlitem"
+	],
 	"tags": [
 		"wcaga",
 		"wcag2a",
 		"wcag131"
-	]
+	],
+	"metadata": {
+		"failureMessage": "<dd> and <dt> elements must be contained in a <dl>"
+	}
 }

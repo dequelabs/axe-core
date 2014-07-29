@@ -1,5 +1,7 @@
 {
 	"id": "aria-label",
-	"help": "aria-label attribute does not exist or is empty",
-	"evaluate": "aria-label.js"
+	"evaluate": "aria-label.js",
+	"metadata": {
+		"failureMessage": "aria-label attribute does not exist or is empty"
+	}
 }

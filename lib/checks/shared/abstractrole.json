@@ -1,6 +1,8 @@
 {
 	"id": "abstractrole",
-	"help": "Abstract roles cannot be directly used",
 	"type": "FAIL",
-	"evaluate": "abstractrole.js"
+	"evaluate": "abstractrole.js",
+	"metadata": {
+		"failureMessage": "Abstract roles cannot be directly used"
+	}
 }

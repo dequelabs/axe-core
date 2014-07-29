@@ -1,6 +1,8 @@
 {
 	"id": "duplicate-id",
-	"help": "Document has multiple elements with the same ID",
 	"evaluate": "duplicate-id.js",
-	"after": "duplicate-id-after.js"
+	"after": "duplicate-id-after.js",
+	"metadata": {
+		"failureMessage": "Document has multiple elements with the same ID"
+	}
 }

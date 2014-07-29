@@ -1,12 +1,17 @@
 {
 	"id": "list",
-	"help": "<ul> and <ol> lists must contain only <li> listitems",
-	"url": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/lists-links-blockquote#id38_lists",
 	"selector": "ul, ol",
-	"checks": ["has-listitem", "only-listitems"],
+	"checks": [
+		"has-listitem",
+		"only-listitems"
+	],
 	"tags": [
 		"wcaga",
 		"wcag2a",
 		"wcag131"
-	]
+	],
+	"metadata": {
+		"failureMessage": "<ul> and <ol> lists must contain only <li> listitems",
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/lists-links-blockquote#id38_lists"
+	}
 }

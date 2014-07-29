@@ -1,6 +1,8 @@
 {
 	"id": "scope-value",
-	"help": "The value of the scope attribute may only be 'row' or 'col'",
 	"evaluate": "scope-value.js",
-	"type": "FAIL"
+	"type": "FAIL",
+	"metadata": {
+		"failureMessage": "The value of the scope attribute may only be 'row' or 'col'"
+	}
 }

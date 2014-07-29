@@ -1,5 +1,7 @@
 {
 	"id": "has-lang",
-	"help": "The <html> element does not have a lang attribute",
-	"evaluate": "has-lang.js"
+	"evaluate": "has-lang.js",
+	"metadata": {
+		"failureMessage": "The <html> element does not have a lang attribute"
+	}
 }

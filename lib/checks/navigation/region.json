@@ -1,6 +1,8 @@
 {
 	"id": "region",
-	"help": "Content not contained in a region",
 	"evaluate": "region.js",
-	"after": "region-after.js"
+	"after": "region-after.js",
+	"metadata": {
+		"failureMessage": "Content not contained in a region"
+	}
 }
