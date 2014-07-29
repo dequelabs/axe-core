@@ -1,0 +1,8 @@
+{
+	"id": "has-summary",
+	"evaluate": "has-summary.js",
+	"type": "FAIL",
+	"metadata": {
+		"failureMessage": "The layout table should not use summary attribute"
+	}
+}
