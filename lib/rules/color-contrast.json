@@ -1,7 +1,7 @@
 {
 	"id": "color-contrast",
 	"help": "Elements must have sufficient color contrast",
-	"url": "",
+	"url": "https://dequeuniversity.com/courses/html-css/visual-layout/color-contrast",
 	"selector": "*",
 	"checks": ["color-contrast"],
 	"tags": [
