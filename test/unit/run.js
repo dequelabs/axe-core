@@ -197,4 +197,136 @@ describe('dqre.run', function () {
 
 		});
 	});
+
+	it('should pull metadata from configuration', function (done) {
+		dqre.configure({
+			rules: [{
+				id: 'div#target',
+				selector: '#target',
+				checks: [{
+					id: 'has-target',
+					evaluate: function () {
+						return true;
+					}
+				}]
+			}, {
+				id: 'first-div',
+				selector: 'div',
+				checks: [{
+					id: 'first-div',
+					evaluate: function (node) {
+						this.relatedNodes([node]);
+						return false;
+					},
+					after: function (results) {
+						if (results.length) {
+							results[0].result = true;
+						}
+						return [results[0]];
+					}
+				}]
+			}],
+			data: {
+				rules: {
+					'div#target': {
+						foo: 'bar',
+						stuff: 'blah',
+						failureMessage: function (ruleResult) {
+							if (ruleResult.id === 'div#target') {
+								return 'yay';
+							}
+							return 'boo';
+						}
+					},
+					'first-div': {
+						bar: 'foo',
+						stuff: 'no',
+						failureMessage: function (ruleResult) {
+							if (ruleResult.id === 'first-div') {
+								return 'yay';
+							}
+							return 'boo';
+						}
+					}
+				},
+				checks: {
+					'first-div': {
+						thingy: true,
+						failureMessage: function (checkResult) {
+							if (checkResult.id === 'first-div') {
+								return 'yay';
+							}
+							return 'boo';
+						}
+					},
+					'has-target': {
+						otherThingy: true,
+						failureMessage: function (checkResult) {
+							if (checkResult.id === 'has-target') {
+								return 'yay';
+							}
+							return 'boo';
+						}
+					}
+				}
+			}
+		});
+		fixture.innerHTML = '<div id="target">Target!</div><div>ok</div>';
+		dqre.run('#fixture', {}, function (results) {
+			assert.deepEqual(results, [{
+					id: 'div#target',
+					pageLevel: false,
+					failureMessage: 'yay',
+					foo: 'bar',
+					stuff: 'blah',
+					details: [{
+						node: {
+							selector: '#target',
+							source: '<div id="target">Target!</div>',
+							frames: []
+						},
+						result: 'PASS',
+						checks: [{
+							otherThingy: true,
+							failureMessage: 'yay',
+							id: 'has-target',
+							type: 'PASS',
+							data: null,
+							result: true,
+							relatedNodes: []
+						}]
+					}],
+					result: 'PASS'
+				}, {
+					id: 'first-div',
+					pageLevel: false,
+					failureMessage: 'yay',
+					bar: 'foo',
+					stuff: 'no',
+					details: [{
+						node: {
+							selector: '#target',
+							source: '<div id="target">Target!</div>',
+							frames: []
+						},
+						result: 'PASS',
+						checks: [{
+							id: 'first-div',
+							thingy: true,
+							failureMessage: 'yay',
+							type: 'PASS',
+							data: null,
+							result: true,
+							relatedNodes: [{
+								selector: '#target',
+								source: '<div id="target">Target!</div>',
+								frames: []
+							}]
+						}]
+					}],
+					result: 'PASS'
+				}]);
+			done();
+		});
+	});
 });
