@@ -162,6 +162,28 @@ describe('text.accessibleText', function () {
 		assert.equal(kslib.text.accessibleText(target), 'This is the value of everything');
 	});
 
+	it('should use ignore hidden inputs', function () {
+		fixture.innerHTML = '<div id="t2label">This is <input type="hidden" value="the value" ' +
+			'Label" id="t1"> of <i>everything</i></div>' +
+			'<div id="t1label">This is a <b>label</b></div>' +
+			'<label for="t1">HTML Label</label>' +
+			'<input type="text" id="t2" aria-labelledby="t2label">';
+
+		var target = fixture.querySelector('#t2');
+		assert.equal(kslib.text.accessibleText(target), 'This is of everything');
+	});
+
+	it('should use handle inputs with no type as if they were text inputs', function () {
+		fixture.innerHTML = '<div id="t2label">This is <input value="the value" ' +
+			'aria-labelledby="t1label" aria-label="ARIA Label" id="t1"> of <i>everything</i></div>' +
+			'<div id="t1label">This is a <b>label</b></div>' +
+			'<label for="t1">HTML Label</label>' +
+			'<input type="text" id="t2" aria-labelledby="t2label">';
+
+		var target = fixture.querySelector('#t2');
+		assert.equal(kslib.text.accessibleText(target), 'This is the value of everything');
+	});
+
 	it('should use handle nested selects properly in labelledby context', function () {
 		fixture.innerHTML = '<div id="t2label">This is <select multiple ' +
 			'aria-labelledby="t1label" aria-label="ARIA Label" id="t1">' +
