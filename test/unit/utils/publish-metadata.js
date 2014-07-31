@@ -71,15 +71,20 @@ describe('utils.publishMetaData', function () {
 			data: {
 				rules: {
 					cats: {
-						failureMessage: function () {
+						help: function () {
 							return 'cats-rule';
 						}
 					}
 				},
 				checks: {
-					cats: {
+					'cats-FAIL': {
 						failureMessage: function () {
 							return 'cats-check';
+						}
+					},
+					'cats-PASS': {
+						failureMessage: function () {
+							throw new Error('should not execute');
 						}
 					}
 				}
@@ -90,17 +95,30 @@ describe('utils.publishMetaData', function () {
 			id: 'cats',
 			details: [{
 				checks: [{
-					id: 'cats'
+					result: true,
+					type: 'PASS',
+					id: 'cats-PASS'
+				}, {
+					result: true,
+					type: 'FAIL',
+					id: 'cats-FAIL'
 				}]
 			}]
 		};
 		utils.publishMetaData(result);
 		assert.deepEqual(result, {
 			id: 'cats',
-			failureMessage: 'cats-rule',
+			help: 'cats-rule',
 			details: [{
 				checks: [{
-					id: 'cats',
+					result: true,
+					type: 'PASS',
+					id: 'cats-PASS',
+					failureMessage: null
+				}, {
+					result: true,
+					type: 'FAIL',
+					id: 'cats-FAIL',
 					failureMessage: 'cats-check'
 				}]
 			}]

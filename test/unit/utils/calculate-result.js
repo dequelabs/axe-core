@@ -270,3 +270,83 @@ describe('utils.calculateRuleResult', function () {
 	});
 
 });
+
+describe('utils.isCheckFailing', function () {
+	'use strict';
+
+	it('should return true if type == FAIL and result is truthy', function () {
+		assert.isTrue(utils.isCheckFailing({
+			type: 'FAIL',
+			result: 'hehe'
+		}));
+		assert.isTrue(utils.isCheckFailing({
+			type: 'FAIL',
+			result: 1
+		}));
+		assert.isTrue(utils.isCheckFailing({
+			type: 'FAIL',
+			result: true
+		}));
+	});
+
+	it('should return true if type == PASS and result is falsey', function () {
+		assert.isTrue(utils.isCheckFailing({
+			type: 'PASS',
+			result: 0
+		}));
+
+		assert.isTrue(utils.isCheckFailing({
+			type: 'PASS',
+			result: null
+		}));
+
+		assert.isTrue(utils.isCheckFailing({
+			type: 'PASS',
+			result: false
+		}));
+
+		assert.isTrue(utils.isCheckFailing({
+			type: 'PASS',
+			result: ''
+		}));
+	});
+
+
+	it('should return false if type == FAIL and result is falsey', function () {
+		assert.isFalse(utils.isCheckFailing({
+			type: 'FAIL',
+			result: 0
+		}));
+
+		assert.isFalse(utils.isCheckFailing({
+			type: 'FAIL',
+			result: null
+		}));
+
+		assert.isFalse(utils.isCheckFailing({
+			type: 'FAIL',
+			result: false
+		}));
+
+		assert.isFalse(utils.isCheckFailing({
+			type: 'FAIL',
+			result: ''
+		}));
+	});
+
+	it('should return false if type == PASS and result is truthy', function () {
+		assert.isFalse(utils.isCheckFailing({
+			type: 'PASS',
+			result: 'hehe'
+		}));
+		assert.isFalse(utils.isCheckFailing({
+			type: 'PASS',
+			result: 1
+		}));
+		assert.isFalse(utils.isCheckFailing({
+			type: 'PASS',
+			result: true
+		}));
+	});
+
+});
