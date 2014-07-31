@@ -1,5 +1,5 @@
 {
-	"id": "description-list",
+	"id": "definition-list",
 	"selector": "dl",
 	"checks": [
 		"has-dlitems",
@@ -11,6 +11,6 @@
 		"wcag131"
 	],
 	"metadata": {
-		"failureMessage": "<dl> elements must contain properly-ordered <dt> and <dd> elements"
+		"help": "<dl> elements must contain properly-ordered <dt> and <dd> elements"
 	}
 }
