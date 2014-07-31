@@ -161,6 +161,7 @@ describe('dqre.run', function () {
 						checks: [{
 							id: 'has-target',
 							type: 'PASS',
+							failureMessage: null,
 							data: null,
 							result: true,
 							relatedNodes: []
@@ -182,6 +183,7 @@ describe('dqre.run', function () {
 							type: 'PASS',
 							data: null,
 							result: true,
+							failureMessage: null,
 							relatedNodes: [{
 								selector: '#foo',
 								source: '<div id="foo">\n		<div id="bar"></div>\n	</div>',
@@ -206,7 +208,7 @@ describe('dqre.run', function () {
 				checks: [{
 					id: 'has-target',
 					evaluate: function () {
-						return true;
+						return false;
 					}
 				}]
 			}, {
@@ -285,18 +287,18 @@ describe('dqre.run', function () {
 							source: '<div id="target">Target!</div>',
 							frames: []
 						},
-						result: 'PASS',
+						result: 'FAIL',
 						checks: [{
 							otherThingy: true,
 							failureMessage: 'yay',
 							id: 'has-target',
 							type: 'PASS',
 							data: null,
-							result: true,
+							result: false,
 							relatedNodes: []
 						}]
 					}],
-					result: 'PASS'
+					result: 'FAIL'
 				}, {
 					id: 'first-div',
 					pageLevel: false,
@@ -313,7 +315,7 @@ describe('dqre.run', function () {
 						checks: [{
 							id: 'first-div',
 							thingy: true,
-							failureMessage: 'yay',
+							failureMessage: null,
 							type: 'PASS',
 							data: null,
 							result: true,
