@@ -33,6 +33,14 @@ describe('color.Color', function () {
 
 	});
 
+	it('should return hex values properly when they are non-integery', function () {
+		var black = new kslib.color.Color(0, 0, 0, 1);
+		var white = new kslib.color.Color(255, 255, 255, 0.1);
+		var grayish = kslib.color.flattenColors(white, black);
+		assert.equal(grayish.toHexString(), '#1a1a1a');
+
+	});
+
 	it('should calculate luminance sensibly', function () {
 		var black = new kslib.color.Color(0, 0, 0, 1);
 		var white = new kslib.color.Color(255, 255, 255, 1);
