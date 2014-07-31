@@ -9,6 +9,6 @@
 		"wcag132"
 	],
 	"metadata": {
-		"failureMessage": "Avoid use of rowspan on tables"
+		"help": "Avoid use of rowspan on tables"
 	}
 }

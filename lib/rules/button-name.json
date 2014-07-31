@@ -13,6 +13,6 @@
 		"section508a"
 	],
 	"metadata": {
-		"failureMessage": "Button elements must have a name"
+		"help": "Button elements must have a name"
 	}
 }

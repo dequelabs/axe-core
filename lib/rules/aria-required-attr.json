@@ -9,6 +9,6 @@
 		"wcag411"
 	],
 	"metadata": {
-		"failureMessage": "Required ARIA attributes are defined"
+		"help": "Required ARIA attributes are defined"
 	}
 }

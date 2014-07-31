@@ -14,7 +14,7 @@
 		"section508a"
 	],
 	"metadata": {
-		"failureMessage": "Active area elements need alternate text",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/image-maps"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/image-maps",
+		"help": "Active area elements need alternate text"
 	}
 }

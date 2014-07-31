@@ -14,7 +14,7 @@
 		"section508a"
 	],
 	"metadata": {
-		"failureMessage": "Images need alternate text",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/alt-text"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/alt-text",
+		"help": "Images need alternate text"
 	}
 }
