@@ -37,20 +37,21 @@ module.exports = function (grunt) {
 
 				//verify that mandatory elements are there
 				if (!check.id) { error('Missing required "id" property'); }
-				if (!check.help) { error('Missing required "help" property'); }
+				if (!check.metadata) { error('Missing required "metadata" property'); }
+				if (!check.metadata.failureMessage) { error('Missing required "metadata.failureMessage" property'); }
 				if (!check.evaluate) { error('Missing required "evaluate" property'); }
 
 
 				//verify that non-permitted elements aren't there, and all elements are proper type
 				validateProperties(check, {
 					'id': 'string',
-					'help': 'string',
 					'evaluate': 'string',
 					'after': 'string',
 					'url': 'string',
 					'selector': 'string',
 					'type': 'string',
 					'matches': 'string',
+					'metadata': 'object',
 					'options': null },
 					'check',
 					error);
@@ -91,14 +92,15 @@ module.exports = function (grunt) {
 
 				//verify that mandatory elements are there
 				if (!rule.id) { error('Missing required "id" property'); }
-				if (!rule.help) { error('Missing required "help" property'); }
+				if (!rule.metadata) { error('Missing required "metadata" property'); }
+				if (!rule.metadata.failureMessage) { error('Missing required "metadata.failureMessage" property'); }
 				if (!rule.checks) { error('Missing required "checks" property'); }
 				if (!rule.tags) { error('Missing required "tags" property'); }
 
 				//verify that non-permitted elements aren't there, and all elements are proper type
 				validateProperties(rule, {
 					'id': 'string',
-					'help': 'string',
+					'metadata': 'object',
 					'url': 'string',
 					'matches': 'string',
 					'checks': null,

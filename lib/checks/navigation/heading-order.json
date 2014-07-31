@@ -1,6 +1,8 @@
 {
 	"id": "heading-order",
-	"help": "Heading order invalid",
 	"evaluate": "heading-order.js",
-	"after": "heading-order-after.js"
+	"after": "heading-order-after.js",
+	"metadata": {
+		"failureMessage": "Heading order invalid"
+	}
 }

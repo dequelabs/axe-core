@@ -1,6 +1,8 @@
 {
 	"id": "headers-visible-text",
-	"help": "Header cell does not have visible text",
 	"type": "FAIL",
-	"evaluate": "headers-visible-text.js"
+	"evaluate": "headers-visible-text.js",
+	"metadata": {
+		"failureMessage": "Header cell does not have visible text"
+	}
 }

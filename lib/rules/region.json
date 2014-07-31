@@ -1,10 +1,14 @@
 {
 	"id": "region",
-	"help": "Content must be contained in a region",
 	"selector": "html",
-	"checks": ["region"],
+	"checks": [
+		"region"
+	],
 	"pageLevel": true,
 	"tags": [
 		"best-practice"
-	]
+	],
+	"metadata": {
+		"failureMessage": "Content must be contained in a region"
+	}
 }

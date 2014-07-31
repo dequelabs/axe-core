@@ -1,12 +1,16 @@
 {
 	"id": "non-list",
-	"help": "List-like content should be marked up as a list",
-	"url": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/lists-links-blockquote#id38_lists",
 	"selector": "div, p, span",
-	"checks": ["non-list"],
+	"checks": [
+		"non-list"
+	],
 	"tags": [
 		"wcaga",
 		"wcag2a",
 		"wcag131"
-	]
+	],
+	"metadata": {
+		"failureMessage": "List-like content should be marked up as a list",
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/lists-links-blockquote#id38_lists"
+	}
 }

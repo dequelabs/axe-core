@@ -1,11 +1,17 @@
 {
 	"id": "scope",
-	"help": "scope attribute is used correctly",
-	"url": "https://dequeuniversity.com/courses/html-css/data-tables/row-and-column-headers#id81_associate_header_cells_with_data_cells",
 	"selector": "[scope]",
-	"checks": ["html5-scope", "html4-scope", "scope-value"],
+	"checks": [
+		"html5-scope",
+		"html4-scope",
+		"scope-value"
+	],
 	"tags": [
 		"wcag2a",
 		"wcag411"
-	]
+	],
+	"metadata": {
+		"failureMessage": "scope attribute is used correctly",
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/data-tables/row-and-column-headers#id81_associate_header_cells_with_data_cells"
+	}
 }

@@ -1,5 +1,7 @@
 {
 	"id": "non-empty-value",
-	"help": "Element has no value attribute or the value attribute is empty",
-	"evaluate": "non-empty-value.js"
+	"evaluate": "non-empty-value.js",
+	"metadata": {
+		"failureMessage": "Element has no value attribute or the value attribute is empty"
+	}
 }

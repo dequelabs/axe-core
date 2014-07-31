@@ -1,6 +1,8 @@
 {
 	"id": "exists",
-	"help": "Element exists",
 	"evaluate": "exists.js",
-	"type": "FAIL"
+	"type": "FAIL",
+	"metadata": {
+		"failureMessage": "Element exists"
+	}
 }

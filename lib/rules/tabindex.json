@@ -1,11 +1,15 @@
 {
 	"id": "tabindex",
-	"help": "Elements should not have tabindex > 0",
-	"url": "https://dequeuniversity.com/courses/html-css/device-independence/keyboard-tab-order",
 	"selector": "[tabindex]",
-	"checks": ["tabindex"],
+	"checks": [
+		"tabindex"
+	],
 	"tags": [
 		"wcag2a",
 		"wcag243"
-	]
+	],
+	"metadata": {
+		"failureMessage": "Elements should not have tabindex > 0",
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/device-independence/keyboard-tab-order"
+	}
 }

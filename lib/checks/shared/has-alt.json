@@ -1,5 +1,7 @@
 {
 	"id": "has-alt",
-	"help": "Element does not have an alt attribute",
-	"evaluate": "has-alt.js"
+	"evaluate": "has-alt.js",
+	"metadata": {
+		"failureMessage": "Element does not have an alt attribute"
+	}
 }

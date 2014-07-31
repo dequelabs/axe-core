@@ -1,7 +1,9 @@
 {
 	"id": "skip-link",
 	"selector": "a[href]",
-	"help": "No valid skip link found",
 	"evaluate": "skip-link.js",
-	"after": "skip-link-after.js"
+	"after": "skip-link-after.js",
+	"metadata": {
+		"failureMessage": "No valid skip link found"
+	}
 }

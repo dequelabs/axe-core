@@ -1,13 +1,17 @@
 {
 	"id": "server-side-image-map",
-	"help": "Server-side image maps should not be used",
-	"url": "https://dequeuniversity.com/courses/html-css/images/image-maps#id63_avoid_use_of_server_side_image_maps",
 	"selector": "img[ismap]",
-	"checks": ["exists"],
+	"checks": [
+		"exists"
+	],
 	"tags": [
 		"wcag2a",
 		"wcag211",
 		"section508",
 		"section508f"
-	]
+	],
+	"metadata": {
+		"failureMessage": "Server-side image maps should not be used",
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/image-maps#id63_avoid_use_of_server_side_image_maps"
+	}
 }

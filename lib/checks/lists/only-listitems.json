@@ -1,6 +1,8 @@
 {
 	"id": "only-listitems",
-	"help": "List element contains elements that are not <li> elements",
 	"type": "FAIL",
-	"evaluate": "only-listitems.js"
+	"evaluate": "only-listitems.js",
+	"metadata": {
+		"failureMessage": "List element contains elements that are not <li> elements"
+	}
 }

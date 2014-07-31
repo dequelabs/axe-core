@@ -1,6 +1,8 @@
 {
 	"id": "only-dlitems",
-	"help": "Element has elements that are not <dt> or <dd> elements",
 	"type": "FAIL",
-	"evaluate": "only-dlitems.js"
+	"evaluate": "only-dlitems.js",
+	"metadata": {
+		"failureMessage": "Element has elements that are not <dt> or <dd> elements"
+	}
 }

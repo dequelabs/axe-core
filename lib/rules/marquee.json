@@ -1,13 +1,17 @@
 {
 	"id": "marquee",
-	"help": "<marquee> elements are deprecated and must not be used",
-	"url": "https://dequeuniversity.com/courses/html-css/visual-layout/fonts-and-typography#id55_avoid_blink_marquee",
 	"selector": "marquee",
-	"checks": ["exists"],
+	"checks": [
+		"exists"
+	],
 	"tags": [
 		"wcag2a",
 		"wcag222",
 		"section508",
 		"section508j"
-	]
+	],
+	"metadata": {
+		"failureMessage": "<marquee> elements are deprecated and must not be used",
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/visual-layout/fonts-and-typography#id55_avoid_blink_marquee"
+	}
 }

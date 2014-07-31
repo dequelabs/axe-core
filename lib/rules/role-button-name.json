@@ -1,12 +1,18 @@
 {
 	"id": "role-button-name",
-	"help": "Elements with button role must have a name",
 	"selector": "[role=button]",
-	"checks": ["has-visible-text", "aria-label", "aria-labelledby"],
+	"checks": [
+		"has-visible-text",
+		"aria-label",
+		"aria-labelledby"
+	],
 	"tags": [
 		"wcag2a",
 		"wcag111",
 		"section508",
 		"section508a"
-	]
+	],
+	"metadata": {
+		"failureMessage": "Elements with button role must have a name"
+	}
 }

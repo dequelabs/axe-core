@@ -1,5 +1,7 @@
 {
 	"id": "role-presentation",
-	"help": "The default semantics were not overridden with role=\"presentation\"",
-	"evaluate": "role-presentation.js"
+	"evaluate": "role-presentation.js",
+	"metadata": {
+		"failureMessage": "The default semantics were not overridden with role=\"presentation\""
+	}
 }

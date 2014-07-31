@@ -1,6 +1,8 @@
 {
 	"id": "invalidrole",
-	"help": "Role must be one of the valid ARIA roles",
 	"type": "FAIL",
-	"evaluate": "invalidrole.js"
+	"evaluate": "invalidrole.js",
+	"metadata": {
+		"failureMessage": "Role must be one of the valid ARIA roles"
+	}
 }

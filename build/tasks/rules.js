@@ -11,7 +11,21 @@ var templates = {
 	gather: 'function (context) {\n<%=source%>\n}',
 	matches: 'function (node) {\n<%=source%>\n}',
 };
+
+var fns = {
+	check: ['evaluate', 'after', 'matches'],
+	rule: ['matches']
+};
+
 module.exports = function (grunt) {
+
+	function parseMetaData(data) {
+		var result = clone(data) || {};
+		if (result.failureMessage) {
+			result.failureMessage = dot.template(result.failureMessage).toString();
+		}
+		return result;
+	}
 
 	function createCheckObject(checks) {
 		var result = {};
@@ -38,39 +52,18 @@ module.exports = function (grunt) {
 		});
 	}
 
-	function getChecks(src) {
+	function parseObject(src, type) {
 		var files = grunt.file.expand(src);
 		return files.map(function (file) {
 			var json = grunt.file.readJSON(file);
 			var dirname = path.dirname(file);
-			if (json.evaluate) {
-				json.evaluate = path.resolve(dirname, json.evaluate);
-			}
-			if (json.after) {
-				json.after = path.resolve(dirname, json.after);
-			}
-			if (json.matches) {
-				json.matches = path.resolve(dirname, json.matches);
-			}
-
+			fns[type].forEach(function (name) {
+				if (json[name]) {
+					json[name] = path.resolve(dirname, json[name]);
+				}
+			});
 			return json;
 		});
-	}
-
-	function getRules(src) {
-		var files = grunt.file.expand(src);
-		return files.map(function (file) {
-			var dirname = path.dirname(file);
-			var json = grunt.file.readJSON(file);
-			if (json.gather) {
-				json.gather = path.resolve(dirname, json.gather);
-			}
-			if (json.matches) {
-				json.matches = path.resolve(dirname, json.matches);
-			}
-			return json;
-		});
-
 	}
 
 	function findCheck(checks, id) {
@@ -90,21 +83,21 @@ module.exports = function (grunt) {
 			return v;
 		}
 
-		var messages = {
-			ruleHelp: {},
-			checkHelp: {}
+		var metadata = {
+			rules: {},
+			checks: {}
 		};
 
 		var options = this.options({
 			rules: ['lib/rules/**/*.json'],
 			checks: ['lib/checks/**/*.json'],
-			blacklist: ['help', 'title'],
+			blacklist: ['metadata', 'tags'],
 			standards: ''
 		});
 
 		var standards = options.standards ? options.standards.split(/\s*,\s*/) : [];
 
-		var rules = getRules(options.rules);
+		var rules = parseObject(options.rules, 'rule');
 
 		if (standards.length) {
 			rules = rules.filter(function (r) {
@@ -113,27 +106,28 @@ module.exports = function (grunt) {
 				}).length;
 			});
 		}
-		var checks = getChecks(options.checks);
+		var checks = parseObject(options.checks, 'check');
 
 		rules.map(function (rule) {
 			rule.checks = rule.checks.map(function (check) {
+
 				var id = typeof check === 'string' ? check : check.id;
 				var c = clone(findCheck(checks, id));
-				if (!c)  throw new Error('check ' + id + ' not found');
+				if (!c) throw new Error('check ' + id + ' not found');
 				c.options = check.options || c.options;
 
-				if (c.help && !messages.checkHelp[id ]) {
-					messages.checkHelp[id] = dot.template(c.help).toString();
+				if (c.metadata && !metadata.checks[id]) {
+					metadata.checks[id] = parseMetaData(c.metadata);
 				}
 
 				return c;
 			});
-			if (rule.help && !messages.ruleHelp[rule.id]) {
-				messages.ruleHelp[rule.id] = dot.template(rule.help).toString();
+			if (rule.metadata && !metadata.rules[rule.id]) {
+				metadata.rules[rule.id] = parseMetaData(rule.metadata);
 			}
 			return rule;
 		});
-		var r = replaceFunctions(JSON.stringify({ messages: messages, rules: rules }, blacklist));
+		var r = replaceFunctions(JSON.stringify({ data: metadata, rules: rules }, blacklist));
 		var c = replaceFunctions(JSON.stringify(createCheckObject(checks), blacklist));
 
 		grunt.file.write(this.data.dest.rules, 'dqre.configure(' + r + ');');
