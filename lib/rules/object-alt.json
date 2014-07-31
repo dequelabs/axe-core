@@ -9,6 +9,6 @@
 		"wcag111"
 	],
 	"metadata": {
-		"failureMessage": "Embedded object requires text alternative"
+		"help": "Embedded object requires text alternative"
 	}
 }

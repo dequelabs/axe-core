@@ -9,6 +9,6 @@
 		"best-practice"
 	],
 	"metadata": {
-		"failureMessage": "Content must be contained in a region"
+		"help": "Content must be contained in a region"
 	}
 }

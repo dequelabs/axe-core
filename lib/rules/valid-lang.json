@@ -9,7 +9,7 @@
 		"wcag312"
 	],
 	"metadata": {
-		"failureMessage": "lang attribute has a valid value",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/language#id35__language_codes"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/language#id35__language_codes",
+		"help": "lang attribute has a valid value"
 	}
 }

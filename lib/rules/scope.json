@@ -11,7 +11,7 @@
 		"wcag411"
 	],
 	"metadata": {
-		"failureMessage": "scope attribute is used correctly",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/data-tables/row-and-column-headers#id81_associate_header_cells_with_data_cells"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/data-tables/row-and-column-headers#id81_associate_header_cells_with_data_cells",
+		"help": "scope attribute is used correctly"
 	}
 }

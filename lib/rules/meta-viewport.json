@@ -10,6 +10,6 @@
 		"wcag144"
 	],
 	"metadata": {
-		"failureMessage": "Zooming and scaling should not disabled"
+		"help": "Zooming and scaling should not disabled"
 	}
 }

@@ -14,7 +14,7 @@
 		"section508a"
 	],
 	"metadata": {
-		"failureMessage": "Links must have an accessible name",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/links"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/links",
+		"help": "Links must have an accessible name"
 	}
 }

@@ -9,6 +9,6 @@
 		"wcag131"
 	],
 	"metadata": {
-		"failureMessage": "Headings must have an accessible name"
+		"help": "Headings must have an accessible name"
 	}
 }

@@ -16,7 +16,7 @@
 		"section508n"
 	],
 	"metadata": {
-		"failureMessage": "Form inputs need labels",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/forms/form-labels"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/forms/form-labels",
+		"help": "Form inputs need labels"
 	}
 }
