@@ -8,7 +8,7 @@
 		"todo"
 	],
 	"metadata": {
-		"failureMessage": "document should have only one element with each ID",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/robust-compatibility/markup-validation"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/robust-compatibility/markup-validation",
+		"help": "document should have only one element with each ID"
 	}
 }

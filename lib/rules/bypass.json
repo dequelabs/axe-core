@@ -15,7 +15,7 @@
 		"section508o"
 	],
 	"metadata": {
-		"failureMessage": "Page must have means to bypass content",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/",
+		"help": "Page must have means to bypass content"
 	}
 }

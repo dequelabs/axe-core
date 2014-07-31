@@ -13,7 +13,7 @@
 		"section508a"
 	],
 	"metadata": {
-		"failureMessage": "Image buttons need alternate text",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/alt-text#id57_active_images_links_and_buttons"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/alt-text#id57_active_images_links_and_buttons",
+		"help": "Image buttons need alternate text"
 	}
 }

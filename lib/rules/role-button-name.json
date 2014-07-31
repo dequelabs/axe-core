@@ -13,6 +13,6 @@
 		"section508a"
 	],
 	"metadata": {
-		"failureMessage": "Elements with button role must have a name"
+		"help": "Elements with button role must have a name"
 	}
 }

@@ -13,7 +13,7 @@
 		"section508a"
 	],
 	"metadata": {
-		"failureMessage": "HTML5 video elements need a captions and an audio description track",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/video-audio-multimedia/"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/video-audio-multimedia/",
+		"help": "HTML5 video elements need a captions and an audio description track"
 	}
 }

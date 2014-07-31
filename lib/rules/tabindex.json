@@ -9,7 +9,7 @@
 		"wcag243"
 	],
 	"metadata": {
-		"failureMessage": "Elements should not have tabindex > 0",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/device-independence/keyboard-tab-order"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/device-independence/keyboard-tab-order",
+		"help": "Elements should not have tabindex > 0"
 	}
 }

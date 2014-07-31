@@ -9,7 +9,7 @@
 		"wcag242"
 	],
 	"metadata": {
-		"failureMessage": "Documents must have title element to aid in navigation",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/page-title"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/page-title",
+		"help": "Documents must have title element to aid in navigation"
 	}
 }

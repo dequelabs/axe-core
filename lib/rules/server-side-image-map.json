@@ -11,7 +11,7 @@
 		"section508f"
 	],
 	"metadata": {
-		"failureMessage": "Server-side image maps should not be used",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/image-maps#id63_avoid_use_of_server_side_image_maps"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/image-maps#id63_avoid_use_of_server_side_image_maps",
+		"help": "Server-side image maps should not be used"
 	}
 }
