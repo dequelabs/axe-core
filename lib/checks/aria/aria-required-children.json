@@ -1,7 +1,0 @@
-{
-	"id": "aria-required-children",
-	"evaluate": "required-children.js",
-	"metadata": {
-		"failureMessage": "Role has missing required children."
-	}
-}

@@ -3,6 +3,6 @@
 	"matches": "has-attr-matches.js",
 	"evaluate": "valid-attr.js",
 	"metadata": {
-		"failureMessage": "Invalid ARIA attribute name"
+		"failureMessage": "Invalid ARIA attribute name{{=it.data && it.data.length > 1 ? 's' : ''}}:{{~it.data:value}} {{=value}}{{~}}"
 	}
 }

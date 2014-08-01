@@ -3,6 +3,6 @@
 	"matches": "allowed-attr-matches.js",
 	"evaluate": "allowed-attr.js",
 	"metadata": {
-		"failureMessage": "ARIA attribute is not allowed"
+		"failureMessage": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}"
 	}
 }
