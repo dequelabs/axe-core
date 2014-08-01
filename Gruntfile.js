@@ -51,7 +51,7 @@ module.exports = function (grunt) {
 			test: {
 				options: {
 					hostname: '0.0.0.0',
-					port: 9876,
+					port: 9877,
 					base: ['.']
 				}
 			}
@@ -59,7 +59,7 @@ module.exports = function (grunt) {
 		mocha: {
 			test: {
 				options: {
-					urls: ['http://localhost:9876/test/unit/src.html'],
+					urls: ['http://localhost:9877/test/unit/src.html'],
 					reporter: 'XUnit',
 					threshold: 90
 				},
@@ -69,7 +69,7 @@ module.exports = function (grunt) {
 		blanket_mocha: {
 			test: {
 				options: {
-					urls: ['http://localhost:9876/test/unit/src.html'],
+					urls: ['http://localhost:9877/test/unit/src.html'],
 					reporter: 'Spec',
 					threshold: 90
 				}
