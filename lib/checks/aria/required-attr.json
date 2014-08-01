@@ -2,6 +2,6 @@
 	"id": "aria-required-attr",
 	"evaluate": "required-attr.js",
 	"metadata": {
-		"failureMessage": "Required ARIA attribute is not present"
+		"failureMessage": "Required ARIA attribute{{=it.data && it.data.length > 1 ? 's' : ''}} not present:{{~it.data:value}} {{=value}}{{~}}"
 	}
 }

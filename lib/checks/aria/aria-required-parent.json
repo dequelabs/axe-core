@@ -1,7 +1,0 @@
-{
-	"id": "aria-required-parent",
-	"evaluate": "required-parent.js",
-	"metadata": {
-		"failureMessage": "Role has missing required parent."
-	}
-}
