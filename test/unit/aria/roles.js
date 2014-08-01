@@ -18,6 +18,27 @@ describe('aria.isValidRole', function () {
 	});
 });
 
+describe('aria.getRolesWithNameFromContents', function () {
+	'use strict';
+
+	it('should return array if nameFrom contents is found in the lookup table', function () {
+		var orig = kslib.aria._lut.role;
+		kslib.aria._lut.role = {
+			'dogs': {
+				type: 'things',
+				nameFrom: ['author', 'contents']
+			},
+			'cats': {
+				type: 'stuff',
+				nameFrom: ['author']
+			}
+		};
+		assert.deepEqual(kslib.aria.getRolesWithNameFromContents(), ['dogs']);
+		kslib.aria._lut.role = orig;
+
+	});
+});
+
 describe('aria.getRolesByType', function () {
 	'use strict';
 
