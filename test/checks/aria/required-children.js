@@ -85,4 +85,10 @@ describe('aria-required-children', function () {
 		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
 	});
 
+	it('should return true when a role has no required owned', function () {
+		fixture.innerHTML = '<div role="listitem" id="target"><p>Nothing here.</p></div>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
+	});
+
 });
