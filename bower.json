@@ -15,6 +15,6 @@
     "tests"
   ],
   "dependencies": {
-    "ks-common-functions": "http://builds.dequecloud.com:8088/bamboo/browse/KSD-COM/latestSuccessful/artifact/shared/dist-zip/KSD-COM-JOB1.zip"
+    "ks-common-functions": "http://anon:a3285ff5848608eb0e6930a2b65a8acc@builds.dequecloud.com:8088/jenkins/job/ks-commons/lastSuccessfulBuild/artifact/*zip*/archive.zip"
   }
 }
