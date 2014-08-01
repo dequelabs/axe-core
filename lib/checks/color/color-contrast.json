@@ -1,6 +1,8 @@
 {
 	"id": "color-contrast",
-	"help": "Element has insufficient color contrast of {{=it.data.contrastRatio}} (foreground color: {{=it.data.fgColor}}, background color: {{=it.data.bgColor}})",
 	"matches": "color-contrast-matches.js",
-	"evaluate": "color-contrast.js"
+	"evaluate": "color-contrast.js",
+	"metadata": {
+		"failureMessage": "Element has insufficient color contrast of {{=it.data.contrastRatio}} (foreground color: {{=it.data.fgColor}}, background color: {{=it.data.bgColor}})"
+	}
 }
