@@ -10,6 +10,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 
 	grunt.loadNpmTasks('grunt-curl');
+	grunt.loadNpmTasks('grunt-if-missing');
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadTasks('build/tasks');
 
@@ -55,8 +56,10 @@ module.exports = function (grunt) {
 			}
 		},
 		curl: {
-			'build/selenium-server-standalone-2.41.0.jar':
-				'http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar'
+			selenium: {
+				dest: 'build/selenium-server-standalone-2.41.0.jar',
+				src: 'http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar'
+			}
 		},
 		connect: {
 			test: {
@@ -79,8 +82,7 @@ module.exports = function (grunt) {
 		}
 	});
 
-	grunt.registerTask('sample', ['jasmine', 'mocha', 'qunit']);
 	grunt.registerTask('default', ['build']);
 	grunt.registerTask('build', ['concat', 'copy']);
-	grunt.registerTask('test', ['build', 'testconfig', 'connect', 'mochaTest']);
+	grunt.registerTask('test', ['build', 'if-missing:curl', 'testconfig', 'connect', 'mochaTest']);
 };

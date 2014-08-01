@@ -13,8 +13,9 @@
     "build": "grunt"
   },
   "devDependencies": {
-    "grunt": "~0.4.4",
+    "grunt": "~0.4.5",
     "selenium-webdriver": "~2.41.0",
-    "grunt-curl": "~1.5.1"
+    "grunt-curl": "~1.5.1",
+    "grunt-if-missing": "~1.0.0"
   }
 }
