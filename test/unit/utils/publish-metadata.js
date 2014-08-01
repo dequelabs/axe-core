@@ -1,3 +1,4 @@
+/*global dqreConfiguration */
 
 describe('utils.publishMetaData', function () {
 	'use strict';
@@ -123,6 +124,52 @@ describe('utils.publishMetaData', function () {
 				}]
 			}]
 		});
+
+	});
+
+
+	it('should not modify base configuration', function () {
+		dqre.configure({
+			rules: [],
+			data: {
+				rules: {
+					cats: {
+						help: function () {
+							return 'cats-rule';
+						}
+					}
+				},
+				checks: {
+					0: {
+						failureMessage: function () {
+							return 'cats-check';
+						}
+					},
+					1: {
+						failureMessage: function () {
+							return 'cats-check2';
+						}
+					}
+				}
+			}
+		});
+		utils.publishMetaData({
+			id: 'cats',
+			details: [{
+				checks: [{
+					result: false,
+					type: 'PASS',
+					id: 'cats-PASS'
+				}, {
+					result: true,
+					type: 'FAIL',
+					id: 'cats-FAIL'
+				}]
+			}]
+		});
+
+		assert.isNotNull(dqreConfiguration.data.checks[0].failureMessage);
+		assert.isNotNull(dqreConfiguration.data.checks[1].failureMessage);
 
 	});
 
