@@ -67,6 +67,11 @@ describe('dom.getBackgroundColor', function () {
 	});
 
 
+	it('should return null if transparency goes all the way up to document', function () {
+		var actual = kslib.dom.getBackgroundColor(fixture);
+		assert.isNull(actual);
+	});
+
 	it('should return null if there is a background image', function () {
 		fixture.innerHTML = '<div style="height: 40px; width: 30px; background-color: #800000;">' +
 			'<div id="target" style="height: 20px; width: 15px; background-color: green; background-image: url(image.png);">' +
