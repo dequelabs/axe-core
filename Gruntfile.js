@@ -4,12 +4,11 @@ module.exports = function (grunt) {
 	'use strict';
 
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-jasmine');
-	grunt.loadNpmTasks('grunt-contrib-qunit');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-mocha');
+
 	grunt.loadNpmTasks('grunt-curl');
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadTasks('build/tasks');
@@ -19,34 +18,21 @@ module.exports = function (grunt) {
 
 		concat: {
 			kensington: {
-				src: ['bower_components/rule-engine/dist/dqre.js',
-					'bower_components/ks-common-functions/dist/ks-cf.js',
-					'bower_components/ks-rules/dist/rules.js'],
-					dest: 'dist/kensington.js'
+				src: ['../rule-engine/dist/dqre.js',
+					'../ks-common-functions/dist/ks-cf.js',
+					'../ks-rules/dist/rules.js'],
+				dest: 'dist/kensington.js'
+			}
+		},
+		copy: {
+			docs: {
+				src: ['doc/**/*'],
+				dest: 'dist/'
 			}
 		},
 		watch: {
-			files: ['<%= concat.kensington.src %>', '<%= testconfig.test.src %>'],
-			tasks: ['concat', 'testconfig']
-		},
-		qunit: {
-			all: ['doc/examples/qunit/**/*.html']
-		},
-		jasmine: {
-			test: {
-				src: ['<%= concat.kensington.dest %>'],
-				options: {
-					specs: 'doc/examples/jasmine/*spec.js'
-				}
-			}
-		},
-		mocha: {
-			test: {
-				src: ['doc/examples/mocha/**/*.html'],
-				options: {
-					run: true
-				},
-			},
+			files: ['<%= concat.kensington.src %>', '<%= testconfig.test.src %>', '<%= copy.docs.src %>'],
+			tasks: ['build']
 		},
 		mochaTest: {
 			test: {
@@ -95,6 +81,6 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('sample', ['jasmine', 'mocha', 'qunit']);
 	grunt.registerTask('default', ['build']);
-	grunt.registerTask('build', ['concat']);
+	grunt.registerTask('build', ['concat', 'copy']);
 	grunt.registerTask('test', ['build', 'testconfig', 'connect', 'mochaTest']);
 };

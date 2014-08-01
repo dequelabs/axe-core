@@ -1,0 +1,19 @@
+{
+  "name": "ks-jasmine-example",
+  "description": "Kensington Jasmine Example",
+  "version": "0.0.1",
+  "private": true,
+  "author": {
+    "name": "David Sturley",
+    "organization": "Deque Systems, Inc.",
+    "url": "http://deque.com/"
+  },
+  "dependencies": {},
+  "scripts": {
+    "build": "grunt"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-contrib-jasmine": "~0.6.4"
+  }
+}
