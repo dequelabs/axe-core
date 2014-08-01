@@ -25,26 +25,4 @@ describe('has-visible-text', function () {
 		assert.isTrue(checks['has-visible-text'].evaluate(node));
 	});
 
-	it('should call kslib.text.visible', function () {
-		var orig = kslib.text.visible;
-		var success = false;
-
-		kslib.text.visible = function (n, sr) {
-			assert.equal(n, node);
-			assert.isTrue(sr, 'should pass `true` as second parameter (screenreader)');
-			success = true;
-
-			return '';
-		};
-
-		var node = document.createElement('div');
-		fixture.appendChild(node);
-
-		checks['has-visible-text'].evaluate(node);
-		assert.isTrue(success);
-
-		kslib.text.visible = orig;
-
-	});
-
 });
