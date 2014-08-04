@@ -43,9 +43,10 @@ module.exports = function (grunt) {
 							});
 						})
 						.then(function (result) {
-							console.log(result);
+							grunt.file.write(result.url.replace(/[^a-z0-9]/gi, '-')
+								.replace(/-{2,}/g, '-').replace(/^-|-$/g, '').toLowerCase() + '.json',
+								JSON.stringify(result.results, null, '  '));
 
-							console.log(count);
 							if (!--count) {
 								driver.quit();
 								done();
