@@ -13,7 +13,7 @@
     "bower_components"
   ],
   "dependencies": {
-    "ks-rules": "http://builds.dequecloud.com:8088/bamboo/browse/KSD-RULE/latestSuccessful/artifact/shared/dist-zip/KSD-RULE-JOB1.zip",
-    "rule-engine": "http://builds.dequecloud.com:8088/bamboo/browse/KSD-ENG/latestSuccessful/artifact/shared/dist-zip/KSD-ENG-JOB1.zip"
+    "ks-rules": "http://anon:a3285ff5848608eb0e6930a2b65a8acc@builds.dequecloud.com:8088/jenkins/job/ks-rules/lastSuccessfulBuild/artifact/*zip*/archive.zip",
+    "rule-engine": "http://anon:a3285ff5848608eb0e6930a2b65a8acc@builds.dequecloud.com:8088/jenkins/job/ks-engine/lastSuccessfulBuild/artifact/*zip*/archive.zip"
   }
 }
