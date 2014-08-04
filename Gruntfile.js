@@ -19,9 +19,9 @@ module.exports = function (grunt) {
 
 		concat: {
 			kensington: {
-				src: ['../rule-engine/dist/dqre.js',
-					'../ks-common-functions/dist/ks-cf.js',
-					'../ks-rules/dist/rules.js'],
+				src: ['bower_components/rule-engine/dist/dqre.js',
+					'bower_components/ks-common-functions/dist/ks-cf.js',
+					'bower_components/ks-rules/dist/rules.js'],
 				dest: 'dist/kensington.js'
 			}
 		},
