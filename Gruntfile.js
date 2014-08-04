@@ -59,7 +59,7 @@ module.exports = function (grunt) {
 		mocha: {
 			test: {
 				options: {
-					urls: ['http://localhost:9877/test/unit/src.html'],
+					urls: ['http://localhost:9877/test/unit/'],
 					reporter: 'XUnit',
 					threshold: 90
 				},
@@ -69,7 +69,7 @@ module.exports = function (grunt) {
 		blanket_mocha: {
 			test: {
 				options: {
-					urls: ['http://localhost:9877/test/unit/src.html'],
+					urls: ['http://localhost:9877/test/unit/'],
 					reporter: 'Spec',
 					threshold: 90
 				}
@@ -78,11 +78,7 @@ module.exports = function (grunt) {
 		fixture: {
 			src: {
 				src: '<%= concat.lib.src %>',
-				dest: 'test/unit/src.html'
-			},
-			compiled: {
-				src: '<%= concat.lib.dest %>',
-				dest: 'test/unit/compiled.html'
+				dest: 'test/unit/index.html'
 			}
 		},
 		jshint: {
