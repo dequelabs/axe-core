@@ -74,7 +74,7 @@ module.exports = function (grunt) {
 			rules: {
 				options: {
 					jshintrc: true,
-					reporter: grunt.option('report') ? require('jshint-junit-reporter') : undefined,
+					reporter: grunt.option('report') ? 'checkstyle' : undefined,
 					reporterOutput: grunt.option('report') ? 'lint.xml' : undefined
 				},
 				src: ['test/**/*.js', 'build/tasks/**/*.js', 'doc/**/*.js', 'Gruntfile.js']
