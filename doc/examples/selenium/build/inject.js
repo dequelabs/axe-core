@@ -1,5 +1,3 @@
-var fs = require('fs');
-
 /**
  * Recursively find frames and inject a script into them
  * @private
@@ -36,27 +34,24 @@ function findFramesAndInject(parent, script, driver) {
  * @param  {WebDriver}   driver   Instance of WebDriver to inject into
  * @param  {Function} callback    Callback to execute when Kensington has been injected
  */
-module.exports = function (filepath, driver, callback) {
-	fs.readFile(filepath, { encoding: 'utf8' }, function (err, ksSource) {
+module.exports = function (ksSource, driver, callback) {
 
-		var script = '(function () {' +
-			'var s = document.createElement("script");' +
-			's.innerHTML = ' + JSON.stringify(ksSource) + ';' +
-			'document.body.appendChild(s);' +
-			'}());';
+	var script = '(function () {' +
+		'var s = document.createElement("script");' +
+		's.innerHTML = ' + JSON.stringify(ksSource) + ';' +
+		'document.body.appendChild(s);' +
+		'}());';
 
-		driver
-			.switchTo().defaultContent();
+	driver
+		.switchTo().defaultContent();
 
-		driver
-			.executeScript(script)
-			.then(function () {
-				findFramesAndInject(null, script, driver);
-			})
-			.then(function () {
-				driver.switchTo().defaultContent();
-				callback();
-			});
-
-	});
+	driver
+		.executeScript(script)
+		.then(function () {
+			findFramesAndInject(null, script, driver);
+		})
+		.then(function () {
+			driver.switchTo().defaultContent();
+			callback();
+		});
 };
