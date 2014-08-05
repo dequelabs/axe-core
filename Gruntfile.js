@@ -19,9 +19,9 @@ module.exports = function (grunt) {
 
 		concat: {
 			kensington: {
-				src: ['../rule-engine/dist/dqre.js',
-					'../ks-common-functions/dist/ks-cf.js',
-					'../ks-rules/dist/rules.js'],
+				src: ['bower_components/rule-engine/dist/dqre.js',
+					'bower_components/ks-common-functions/dist/ks-cf.js',
+					'bower_components/ks-rules/dist/rules.js'],
 				dest: 'dist/kensington.js'
 			}
 		},
@@ -74,7 +74,7 @@ module.exports = function (grunt) {
 			rules: {
 				options: {
 					jshintrc: true,
-					reporter: grunt.option('report') ? require('jshint-junit-reporter') : undefined,
+					reporter: grunt.option('report') ? 'checkstyle' : undefined,
 					reporterOutput: grunt.option('report') ? 'lint.xml' : undefined
 				},
 				src: ['test/**/*.js', 'build/tasks/**/*.js', 'doc/**/*.js', 'Gruntfile.js']
