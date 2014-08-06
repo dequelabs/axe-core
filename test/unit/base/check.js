@@ -199,7 +199,9 @@ describe('Check', function () {
 						evaluate: function () {
 							throw error;
 						}
-					}).run(fixture, {}, function () {});
+					}).run(fixture, {}, function (result) {
+						assert.isNull(result);
+					});
 
 				});
 
@@ -223,7 +225,9 @@ describe('Check', function () {
 							this.async();
 							throw error;
 						}
-					}).run(fixture, {}, function () {});
+					}).run(fixture, {}, function (result) {
+						assert.isNull(result);
+					});
 
 				});
 
