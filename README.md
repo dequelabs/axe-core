@@ -4,7 +4,6 @@ ks-integration allows integration tests to be run with Mocha and Selenium.
 
 ### To run integration tests ###
 
-* One time only: grunt curl
 * grunt test
 
 ### To write integration tests ###
