@@ -39,7 +39,7 @@ module.exports = function (grunt) {
 	function replaceFunctions(string) {
 		return string.replace(/"(evaluate|after|gather|matches)":\s*("[^"]+")/g, function (m, p1, p2) {
 			return m.replace(p2, getSource(p2.replace(/^"|"$/g, ''), p1));
-		}).replace(/"(function anonymous\(it\) {)(.+?)(})"/g, function (m, p1, p2, p3) {
+		}).replace(/"(function anonymous\(it(?:\n?\/\*\*\/)?\) {)(.+?)(})"/g, function (m, p1, p2, p3) {
 			return p1 + (p2.replace(/\\(n|r|t)/g, ' ').replace(/\\\\/g, '\\')) + p3;
 		});
 	}
