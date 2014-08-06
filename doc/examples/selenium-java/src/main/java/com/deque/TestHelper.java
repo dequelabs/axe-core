@@ -13,11 +13,11 @@ import java.io.*;
 
 public class TestHelper {
 
-	private String getScriptFilename() { 
+	private static String getScriptFilename() { 
 		return "../../../kensington.js";
 	}
 
-	private String readFile(String fileName) {
+	private static String readFile(String fileName) {
 		String returnValue = "";
 		FileReader file = null;
 
@@ -42,11 +42,11 @@ public class TestHelper {
 		return returnValue;
 	} 
 
-	public String getUrl() { 
+	public static String getUrl() { 
 		return "http://www.amazon.com";
 	}
 
-	public void injectScript(WebDriver driver) {
+	public static void injectScript(WebDriver driver) {
 		String ksSource = readFile(getScriptFilename());
 		String injectionScript = "(function () { var s = document.createElement('script'); " +
 			"s.innerHTML = " + ksSource + "; document.body.appendChild(s); }())";

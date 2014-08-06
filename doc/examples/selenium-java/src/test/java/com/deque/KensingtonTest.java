@@ -37,11 +37,10 @@ public class KensingtonTest
 
     public void testAccessibility()
     {
-		TestHelper helper = new TestHelper();
         WebDriver driver = new FirefoxDriver();
-        driver.get(helper.getUrl());
+        driver.get(TestHelper.getUrl());
 
-		helper.injectScript(driver);
+		TestHelper.injectScript(driver);
 
         Object response = ((JavascriptExecutor)driver).executeAsyncScript(
                 "var callback = arguments[arguments.length - 1];\n" +
