@@ -65,7 +65,7 @@ module.exports = function (grunt) {
 			test: {
 				options: {
 					hostname: '0.0.0.0',
-					port: 9876,
+					port: grunt.option('port') || 9876,
 					base: ['.']
 				}
 			}
