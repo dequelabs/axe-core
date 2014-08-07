@@ -8,6 +8,6 @@
 		"wcag411"
 	],
 	"metadata": {
-		"failureMessage": "Only allowed ARIA attributes are used"
+		"help": "Only allowed ARIA attributes are used"
 	}
 }

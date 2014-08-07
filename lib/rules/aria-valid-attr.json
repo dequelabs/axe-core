@@ -8,6 +8,6 @@
 		"wcag411"
 	],
 	"metadata": {
-		"failureMessage": "ARIA attributes used must conform to valid names"
+		"help": "ARIA attributes used must conform to valid names"
 	}
 }

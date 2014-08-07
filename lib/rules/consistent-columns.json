@@ -10,7 +10,7 @@
 		"wcag131"
 	],
 	"metadata": {
-		"failureMessage": "Tables should have the same number of columns for each row",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/data-tables/"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/data-tables/",
+		"help": "Tables should have the same number of columns for each row"
 	}
 }

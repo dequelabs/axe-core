@@ -37,5 +37,12 @@ describe('non-list', function () {
 		assert.isTrue(checks['non-list'].evaluate(node, [['1.', '2.', '3.']]));
 	});
 
+	it('should return true if given bad options?', function () {
+		fixture.innerHTML = '<div id="target">NO thanks</div>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['non-list'].evaluate(node, [1, 2, 3]));
+	});
+
+
 
 });

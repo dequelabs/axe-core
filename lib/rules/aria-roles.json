@@ -9,6 +9,6 @@
 		"wcag2a"
 	],
 	"metadata": {
-		"failureMessage": "ARIA roles used must conform to valid values"
+		"help": "ARIA roles used must conform to valid values"
 	}
 }

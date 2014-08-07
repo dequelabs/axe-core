@@ -1,10 +1,7 @@
 /*jshint node: true */
 'use strict';
 
-var rulesSeen = {},
-	checksSeen = {};
-
-var validateProperties = function (actual, expected, objName, error) {
+function validateProperties(actual, expected, objName, error) {
 	for (var prop in actual) {
 		if (!expected.hasOwnProperty(prop)) {
 			error('Invalid "' + prop + '" property on ' + objName);
@@ -14,10 +11,14 @@ var validateProperties = function (actual, expected, objName, error) {
 			}
 		}
 	}
-};
+}
+
 
 module.exports = function (grunt) {
 	grunt.registerMultiTask('validatechecks', function() {
+
+		var checksSeen = {};
+
 		var success = true;
 		this.files.forEach(function (f) {
 			f.src.forEach(function(filepath) {
@@ -73,6 +74,7 @@ module.exports = function (grunt) {
 
 
 	grunt.registerMultiTask('validaterules', function () {
+		var rulesSeen = {};
 		var success = true;
 		this.files.forEach(function (f) {
 			f.src.forEach(function (filepath) {
@@ -93,7 +95,7 @@ module.exports = function (grunt) {
 				//verify that mandatory elements are there
 				if (!rule.id) { error('Missing required "id" property'); }
 				if (!rule.metadata) { error('Missing required "metadata" property'); }
-				if (!rule.metadata.failureMessage) { error('Missing required "metadata.failureMessage" property'); }
+				if (!rule.metadata.help) { error('Missing required "metadata.help" property'); }
 				if (!rule.checks) { error('Missing required "checks" property'); }
 				if (!rule.tags) { error('Missing required "tags" property'); }
 

@@ -17,7 +17,7 @@
 		"wcag131"
 	],
 	"metadata": {
-		"failureMessage": "Data tables should be marked up properly",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/data-tables/"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/data-tables/",
+		"help": "Data tables should be marked up properly"
 	}
 }

@@ -1,0 +1,18 @@
+{
+	"id": "layout-table",
+	"selector": "table",
+	"matches": "layout-table-matches.js",
+	"checks": [
+		"has-th",
+		"has-caption",
+		"has-summary"
+	],
+	"tags": [
+		"wcag2a",
+		"wcag131"
+	],
+	"metadata": {
+		"help": "Layout tables should not use data table elements",
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/data-tables/"
+	}
+}

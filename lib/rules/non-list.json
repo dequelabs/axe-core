@@ -10,7 +10,7 @@
 		"wcag131"
 	],
 	"metadata": {
-		"failureMessage": "List-like content should be marked up as a list",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/lists-links-blockquote#id38_lists"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/lists-links-blockquote#id38_lists",
+		"help": "List-like content should be marked up as a list"
 	}
 }

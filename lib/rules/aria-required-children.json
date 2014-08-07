@@ -8,6 +8,6 @@
 		"todo"
 	],
 	"metadata": {
-		"failureMessage": "Certain ARIA roles must contain particular children"
+		"help": "Certain ARIA roles must contain particular children"
 	}
 }

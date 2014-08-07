@@ -11,7 +11,7 @@
 		"section508j"
 	],
 	"metadata": {
-		"failureMessage": "The <blink> tag is deprecated and must not be used",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/visual-layout/fonts-and-typography#id55_avoid_blink_marquee"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/visual-layout/fonts-and-typography#id55_avoid_blink_marquee",
+		"help": "The <blink> tag is deprecated and must not be used"
 	}
 }

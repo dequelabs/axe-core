@@ -8,7 +8,7 @@
 		"todo"
 	],
 	"metadata": {
-		"failureMessage": "Headings should not skip levels",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/headings#id37_use_headings_in_order"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/headings#id37_use_headings_in_order",
+		"help": "Headings should not skip levels"
 	}
 }
