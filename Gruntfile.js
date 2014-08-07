@@ -52,7 +52,7 @@ module.exports = function (grunt) {
 			test: {
 				options: {
 					hostname: '0.0.0.0',
-					port: 9878,
+					port: grunt.option('port') || 9876,
 					base: ['.']
 				}
 			}
@@ -70,7 +70,7 @@ module.exports = function (grunt) {
 		mocha: {
 			test: {
 				options: {
-					urls: ['http://localhost:9878/test/unit/index.html'],
+					urls: ['http://localhost:<%= connect.test.options.port %>/test/unit/index.html'],
 					reporter: grunt.option('report') ? 'XUnit' : 'Spec',
 					logErrors: true,
 					log: true
@@ -81,7 +81,7 @@ module.exports = function (grunt) {
 		blanket_mocha: {
 			test: {
 				options: {
-					urls: ['http://localhost:9878/test/unit/index.html'],
+					urls: ['http://localhost:<%= connect.test.options.port %>/test/unit/index.html'],
 					reporter: 'Spec',
 					threshold: 90
 				}
