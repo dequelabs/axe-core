@@ -122,30 +122,6 @@ describe('Rule', function () {
 
 			});
 
-			it('should NOT execute Check#run on checks that are disabled', function (done) {
-				fixture.innerHTML = '<blink>Hi</blink>';
-				var orig = Check.prototype.run;
-				var success = true;
-				var ran = 0;
-				Check.prototype.run = function (_, __, cb) {
-					ran++;
-					if (this.id === 'dogs') {
-						success = false;
-					}
-					cb(true);
-				};
-
-				var rule = new Rule({ checks: [{ id: 'cats' }, { id: 'dogs' }]});
-				rule.run({ include: [fixture] }, {checks: [{ id: 'dogs', enabled: false }]}, function () {
-
-					assert.isTrue(success);
-					assert.equal(ran, 1);
-					Check.prototype.run = orig;
-					done();
-				});
-
-			});
-
 			it('should pass the matching option to run', function (done) {
 				fixture.innerHTML = '<blink>Hi</blink>';
 				var orig = Check.prototype.run,
@@ -164,12 +140,28 @@ describe('Rule', function () {
 					done();
 				});
 			});
+
 			it('should not throw if the options object is undefined', function () {
 				var rule = new Rule({ checks: [{ id: 'cats', evaluate: function () {} }]});
 				assert.doesNotThrow(function () {
 					rule.run({ include: [document] }, undefined, function () {
 					});
 				});
+			});
+
+			it('should filter out null results', function () {
+				var rule = new Rule({
+					checks: [{
+						id: 'cats',
+						evaluate: function () {
+							throw new Error('uh oh');
+						}
+					}]
+				});
+				rule.run({ include: [document] }, null, function (r) {
+					assert.lengthOf(r.details, 0);
+				});
+
 			});
 
 			describe('NODE rule', function () {
