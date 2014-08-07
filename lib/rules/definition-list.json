@@ -1,5 +1,5 @@
 {
-	"id": "description-list",
+	"id": "definition-list",
 	"selector": "dl",
 	"checks": [
 		"has-dlitems",
