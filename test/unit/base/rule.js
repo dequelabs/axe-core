@@ -149,6 +149,21 @@ describe('Rule', function () {
 				});
 			});
 
+			it('should filter out null results', function () {
+				var rule = new Rule({
+					checks: [{
+						id: 'cats',
+						evaluate: function () {
+							throw new Error('uh oh');
+						}
+					}]
+				});
+				rule.run({ include: [document] }, null, function (r) {
+					assert.lengthOf(r.details, 0);
+				});
+
+			});
+
 			describe('NODE rule', function () {
 				it('should create a RuleResult', function () {
 					var orig = window.RuleResult;
