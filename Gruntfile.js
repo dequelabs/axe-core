@@ -8,7 +8,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
-
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-curl');
 	grunt.loadNpmTasks('grunt-if-missing');
 	grunt.loadNpmTasks('grunt-mocha-test');
@@ -23,6 +23,14 @@ module.exports = function (grunt) {
 					'bower_components/ks-common-functions/dist/ks-cf.js',
 					'bower_components/ks-rules/dist/rules.js'],
 				dest: 'dist/kensington.js'
+			}
+		},
+		uglify: {
+			lib: {
+				files: [{
+					src: ['<%= concat.kensington.dest %>'],
+					dest: 'dist/kensington.min.js'
+				}]
 			}
 		},
 		copy: {
@@ -83,6 +91,6 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('default', ['build']);
-	grunt.registerTask('build', ['concat', 'copy']);
+	grunt.registerTask('build', ['concat', 'copy', 'uglify']);
 	grunt.registerTask('test', ['build', 'if-missing:curl', 'testconfig', 'connect', 'mochaTest']);
 };
