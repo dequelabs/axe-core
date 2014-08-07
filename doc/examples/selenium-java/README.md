@@ -8,7 +8,7 @@ Selenium integration enables testing of full pages and sites.
 ## To configure the example ##
 
 * Firefox must be installed; follow the directions at http://getfirefox.com to
-  install it.
+  install it.  On Unix, ensure that Firefox is on your path.
 * The Java SE Development Kit must be installed; follow the directions at
   http://www.oracle.com/technetwork/java/javase/downloads/index.html to install
   it. 
@@ -31,5 +31,5 @@ To run the example on your own web pages, change the method used to get URLs
 
 The example is simply printing the count of violations if any are detected.
 The Kensington Automated Testing documentation should be consulted for more
-details on customizing and analyzing calls to `dqre.a11ycheck`.
+details on customizing and analyzing calls to `dqre.a11yCheck`.
 

@@ -29,11 +29,11 @@ failures.
 To run the example on your own HTML, such as widgets or controls, insert the
 HTML into the document, retrieve the root element of your widget (with e.g.,
 `document.getElementById()`), and pass that as the first argument into a call
-to `dqre.allyCheck`.  
+to `dqre.a11yCheck`.  
 
 The third argument to the `dqre.a11yCheck` call should be the function to test
 the results. The example is simply looking at the count of violations, but much
 more detailed information is available if desired.  The Kensington Automated
 Testing documentation should be consulted for more details on customizing and
-analyzing calls to `dqre.a11ycheck`.
+analyzing calls to `dqre.a11yCheck`.
 

@@ -10,7 +10,7 @@ Selenium integration enables testing of full pages and sites.
 * Node must be installed; please follow the directions at http://www.nodejs.org
   to install it.
 * Firefox must be installed; please follow the directions at http://getfirefox.com
-  to install it.
+  to install it. On Unix, ensure that Firefox is on your path.
 * `npm install -g grunt-cli` to install the Grunt task runner (may need to be
   run with `sudo` on Unix or as Administrator on Windows)
 * Move to the `doc/examples/selenium` directory
@@ -33,5 +33,5 @@ so simply edit that property to put in the URLs you wish to test.
 
 The example is simply logging the analysis results to files.  The Kensington
 Automated Testing documentation should be consulted for more details on
-customizing and analyzing calls to `dqre.a11ycheck`.
+customizing and analyzing calls to `dqre.a11yCheck`.
 
