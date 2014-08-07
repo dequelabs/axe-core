@@ -1,9 +1,10 @@
-/* global failureSummary, findHelp */
+/* global failureSummary */
 describe('dqre.a11yCheck', function () {
 	'use strict';
 	var orig,
 		results = [{
 			id: 'gimmeLabel',
+			helpUrl: 'things',
 			details: [{
 				result: 'PASS',
 				checks: [{
@@ -78,10 +79,6 @@ describe('dqre.a11yCheck', function () {
 	});
 
 	it('should merge the dqre.run results into violations and passes', function (done) {
-		var orig = window.findHelp;
-		window.findHelp = function () {
-			return 'HALP US';
-		};
 		dqre.a11yCheck(document, {}, function (results) {
 			assert.isObject(results);
 			assert.isArray(results.violations);
@@ -89,7 +86,6 @@ describe('dqre.a11yCheck', function () {
 			assert.isArray(results.passes);
 			assert.lengthOf(results.passes, 2);
 
-			window.findHelp = orig;
 			done();
 		});
 	});
@@ -99,6 +95,15 @@ describe('dqre.a11yCheck', function () {
 			assert.equal(results.violations[1].id, 'bypass');
 			assert.equal(results.passes[0].id, 'gimmeLabel');
 			assert.equal(results.passes[1].id, 'blinky');
+			done();
+		});
+	});
+	it('should add the rule help to the rule result', function (done) {
+		dqre.a11yCheck(document, {}, function (results) {
+			assert.isUndefined(results.violations[0].helpUrl);
+			assert.isUndefined(results.violations[1].helpUrl);
+			assert.equal(results.passes[0].helpUrl, 'things');
+			assert.isUndefined(results.passes[1].helpUrl);
 			done();
 		});
 	});
