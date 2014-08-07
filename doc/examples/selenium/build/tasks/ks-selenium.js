@@ -36,7 +36,7 @@ module.exports = function (grunt) {
 				.then(function () {
 					ksInject(ksSource, driver, function () {
 						driver.executeAsyncScript(function () {
-							/*global document, dqre */
+							/*global document, dqre, window */
 							var callback = arguments[arguments.length - 1];
 							dqre.a11yCheck(document, null, function (results) {
 								callback({results: results, url: window.location.href});

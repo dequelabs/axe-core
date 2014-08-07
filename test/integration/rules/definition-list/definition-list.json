@@ -1,6 +1,6 @@
 {
-	"description": "description-list test",
-	"rule": "description-list",
+	"description": "definition-list test",
+	"rule": "definition-list",
 	"violations": [["#emptydl"], ["#divdl"], ["#mixeddl"], ["#unordereddl"]],
 	"passes": [["#repeatdl"], ["#properdl"]]
 }
