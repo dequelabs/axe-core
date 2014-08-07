@@ -1,0 +1,15 @@
+{
+  "name": "ks-phantomjs-example",
+  "description": "Kensington PhantomJS Example",
+  "version": "0.0.1",
+  "private": true,
+  "author": {
+    "name": "David Sturley",
+    "organization": "Deque Systems, Inc.",
+    "url": "http://deque.com/"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "phantomjs": "~1.9.7-15"
+  }
+}
