@@ -29,7 +29,6 @@ page.open(args[1], function (status) {
 		});
 	});
 
-
 	page.onCallback = function (msg) {
 		if (args[2]) {
 			fs.write(args[2], JSON.stringify(msg, null, '  '), 'w');
