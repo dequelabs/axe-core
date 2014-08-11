@@ -17,12 +17,12 @@ describe('dom.getElementCoordinates', function () {
 
 		el = document.getElementById('coords0');
 		coords = kslib.dom.getElementCoordinates(el);
-		assert.equal(coords.left, -1000);
-		assert.equal(coords.top, -1000);
-		assert.equal(coords.width, 1000);
-		assert.equal(coords.height, 1000);
-		assert.equal(coords.right, 0);
-		assert.equal(coords.bottom, 0);
+		assert.closeTo(coords.left, -1000, 0.1);
+		assert.closeTo(coords.top, -1000, 0.1);
+		assert.closeTo(coords.width, 1000, 0.1);
+		assert.closeTo(coords.height, 1000, 0.1);
+		assert.closeTo(coords.right, 0, 0.1);
+		assert.closeTo(coords.bottom, 0, 0.1);
 
 		el = document.getElementById('div');
 		coords = kslib.dom.getElementCoordinates(el);
@@ -41,21 +41,21 @@ describe('dom.getElementCoordinates', function () {
 
 		el = document.getElementById('coords0');
 		coords = kslib.dom.getElementCoordinates(el);
-		assert.equal(coords.left, -1000);
-		assert.equal(coords.top, -1000);
-		assert.equal(coords.width, 1000);
-		assert.equal(coords.height, 1000);
-		assert.equal(coords.right, 0);
-		assert.equal(coords.bottom, 0);
+		assert.closeTo(coords.left, -1000, 0.1);
+		assert.closeTo(coords.top, -1000, 0.1);
+		assert.closeTo(coords.width, 1000, 0.1);
+		assert.closeTo(coords.height, 1000, 0.1);
+		assert.closeTo(coords.right, 0, 0.1);
+		assert.closeTo(coords.bottom, 0, 0.1);
 
 		window.scrollTo(0, 150);
 		coords = kslib.dom.getElementCoordinates(el);
-		assert.equal(coords.left, -1000);
-		assert.equal(coords.top, -1000);
-		assert.equal(coords.width, 1000);
-		assert.equal(coords.height, 1000);
-		assert.equal(coords.right, 0);
-		assert.equal(coords.bottom, 0);
+		assert.closeTo(coords.left, -1000, 0.1);
+		assert.closeTo(coords.top, -1000, 0.1);
+		assert.closeTo(coords.width, 1000, 0.1);
+		assert.closeTo(coords.height, 1000, 0.1);
+		assert.closeTo(coords.right, 0, 0.1);
+		assert.closeTo(coords.bottom, 0, 0.1);
 
 		window.scrollTo(offset.left, offset.top);
 
