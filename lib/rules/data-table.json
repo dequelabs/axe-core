@@ -10,7 +10,9 @@
 		"no-caption",
 		"th-headers-attr",
 		"th-single-row-column",
-		"same-caption-summary"
+		"same-caption-summary",
+		"rowspan",
+		"consistent-columns"
 	],
 	"tags": [
 		"wcag2a",
