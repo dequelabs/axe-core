@@ -3,8 +3,16 @@ describe('only-listitems', function () {
 
 	var fixture = document.getElementById('fixture');
 
+	var checkContext = {
+		_relatedNodes: [],
+		relatedNodes: function (rn) {
+			this._relatedNodes = rn;
+		}
+	};
+
 	afterEach(function () {
 		fixture.innerHTML = '';
+		checkContext._relatedNodes = [];
 	});
 
 	it('should return false if the list has no contents', function () {
@@ -47,7 +55,8 @@ describe('only-listitems', function () {
 		fixture.innerHTML = '<ol id="target"><p>Not a list</p></ol>';
 		var node = fixture.querySelector('#target');
 
-		assert.isTrue(checks['only-listitems'].evaluate(node));
+		assert.isTrue(checks['only-listitems'].evaluate.call(checkContext, node));
+		assert.deepEqual(checkContext._relatedNodes, [node.querySelector('p')]);
 
 
 	});
@@ -74,7 +83,8 @@ describe('only-listitems', function () {
 		fixture.innerHTML = '<ol id="target"><li>A list</li><p>Not a list</p></ol>';
 		var node = fixture.querySelector('#target');
 
-		assert.isTrue(checks['only-listitems'].evaluate(node));
+		assert.isTrue(checks['only-listitems'].evaluate.call(checkContext, node));
+		assert.deepEqual(checkContext._relatedNodes, [node.querySelector('p')]);
 
 
 	});
