@@ -1,6 +1,0 @@
-{
-	"description": "rowspan test",
-	"rule": "rowspan",
-	"violations": [["#fail1"]],
-	"passes": [["#pass1"]]
-}
