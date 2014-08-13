@@ -3,8 +3,16 @@ describe('only-dlitems', function () {
 
 	var fixture = document.getElementById('fixture');
 
+	var checkContext = {
+		_relatedNodes: [],
+		relatedNodes: function (rn) {
+			this._relatedNodes = rn;
+		}
+	};
+
 	afterEach(function () {
 		fixture.innerHTML = '';
+		checkContext._relatedNodes = [];
 	});
 
 	it('should return false if the list has no contents', function () {
@@ -20,7 +28,8 @@ describe('only-dlitems', function () {
 		fixture.innerHTML = '<dl id="target"><p>Not a list</p></dl>';
 		var node = fixture.querySelector('#target');
 
-		assert.isTrue(checks['only-dlitems'].evaluate(node));
+		assert.isTrue(checks['only-dlitems'].evaluate.call(checkContext, node));
+		assert.deepEqual(checkContext._relatedNodes, [node.querySelector('p')]);
 
 
 	});
@@ -61,11 +70,31 @@ describe('only-dlitems', function () {
 
 	});
 
+	it('should return false if the list has dt, dd and a comment', function () {
+		fixture.innerHTML = '<dl id="target"><dt>An item</dt><dd>A list</dd><!-- foo --></dl>';
+		var node = fixture.querySelector('#target');
+
+		assert.isFalse(checks['only-dlitems'].evaluate(node));
+
+
+	});
+
 	it('should return true if the list has a dt and dd with other content', function () {
 		fixture.innerHTML = '<dl id="target"><dt>Item one</dt><dd>Description</dd><p>Not a list</p></dl>';
 		var node = fixture.querySelector('#target');
 
-		assert.isTrue(checks['only-dlitems'].evaluate(node));
+		assert.isTrue(checks['only-dlitems'].evaluate.call(checkContext, node));
+		assert.deepEqual(checkContext._relatedNodes, [node.querySelector('p')]);
+
+
+	});
+
+	it('should return true if the list has a textNode as a child', function () {
+		fixture.innerHTML = '<dl id="target"><!--hi--><dt>hi</dt>hello<dd>hi</dd></dl>';
+		var node = fixture.querySelector('#target');
+
+		assert.isTrue(checks['only-dlitems'].evaluate.call(checkContext, node));
+		assert.deepEqual(checkContext._relatedNodes, []);
 
 
 	});
