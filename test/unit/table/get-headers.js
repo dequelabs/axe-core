@@ -92,4 +92,16 @@ describe('table.getHeaders', function () {
 
 	});
 
+	it('should work with tables that have inconsistent columns', function () {
+		fixture.innerHTML = '<table>' +
+			'<tr><td id="t1">t1</td><td id="t2">t2</td></tr>' +
+			'<tr><td id="t3">t3</td><td headers="t1 t2 t3"></td><td id="target"></td></tr>' +
+			'</table>';
+
+		var target = $id('target');
+
+		assert.deepEqual(kslib.table.getHeaders(target), []);
+
+	});
+
 });
