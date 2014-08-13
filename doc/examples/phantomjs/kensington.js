@@ -7,6 +7,7 @@ var page = require('webpage').create();
 
 if (args.length < 2) {
 	console.log('kensington.js accepts 1 argument, the URL to test');
+	phantom.exit(1);
 }
 
 page.open(args[1], function (status) {
