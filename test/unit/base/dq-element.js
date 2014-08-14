@@ -28,9 +28,14 @@ describe('DqElement', function () {
 		it('should not be writable', function () {
 			var div = document.createElement('div');
 			var dqEl = new DqElement(div);
-			assert.throws(function () {
+
+			try {
 				dqEl.element = null;
-			}, TypeError);
+			} catch (e) {
+				assert.ok('real browsers will throw');
+				return;
+			}
+			assert.equal(dqEl.element, div, 'IE does not throw, but still does not allow writing');
 		});
 	});
 

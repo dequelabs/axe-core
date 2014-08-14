@@ -151,6 +151,7 @@ describe('Rule', function () {
 
 			it('should filter out null results', function () {
 				var rule = new Rule({
+					selector: '#fixture',
 					checks: [{
 						id: 'cats',
 						evaluate: function () {

@@ -73,7 +73,7 @@ describe('Audit', function () {
 					details: [{
 						node: {
 							selector: '#fixture > input:nth-of-type(1)',
-							source: '<input type="text" aria-label="monkeys">',
+							source: null,
 							frames: []
 						},
 						checks: [{
@@ -152,7 +152,10 @@ describe('Audit', function () {
 						}]
 					}]
 				}];
+				var out = results[0].details[0].node.source;
+				results[0].details[0].node.source = null;
 				assert.deepEqual(results, expected);
+				assert.match(out, /^<input(\s+type="text"|\s+aria-label="monkeys"){2,}>/);
 				done();
 			});
 		});
