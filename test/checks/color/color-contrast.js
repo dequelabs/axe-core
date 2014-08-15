@@ -114,4 +114,18 @@ describe('color-contrast', function () {
 		var target = fixture.querySelector('#target');
 		assert.isTrue(checks['color-contrast'].matches(target));
 	});
+	
+	it('should not match when there is text that is out of the container', function () {
+		fixture.innerHTML = '<div style="color: yellow; text-indent: -9999px; background-color: white;" id="target">' +
+			'My text</div>';
+		var target = fixture.querySelector('#target');
+		assert.isFalse(checks['color-contrast'].matches(target));
+	});
+	
+	it('should match when there is text that is only partially out of the container', function () {
+		fixture.innerHTML = '<div style="color: yellow; text-indent: -20px; background-color: white;" id="target">' +
+			'My text</div>';
+		var target = fixture.querySelector('#target');
+		assert.isTrue(checks['color-contrast'].matches(target));
+	});
 });
