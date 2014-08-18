@@ -34,6 +34,16 @@ describe('utils.getSelector', function () {
 		assert.equal(result[0], node);
 	});
 
+	it('should handle special characters in className', function () {
+		var node = document.createElement('div');
+		node.className = '.  bb-required';
+		fixture.appendChild(node);
+
+		var result = document.querySelectorAll(utils.getSelector(node));
+		assert.lengthOf(result, 1);
+		assert.equal(result[0], node);
+	});
+
 	it('should be able to fall back to positional selectors', function () {
 		var node, expected;
 		for (var i = 0; i < 10; i++) {
