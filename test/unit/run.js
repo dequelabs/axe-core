@@ -22,14 +22,14 @@ describe('dqre.run', function () {
 			}
 		}
 
-		frame = document.createElement('frame');
+		frame = document.createElement('iframe');
 		frame.src = '../mock/frames/frame-frame.html';
 
 		frame.addEventListener('load', onLoad);
 		fixture.appendChild(frame);
 
 
-		frame = document.createElement('frame');
+		frame = document.createElement('iframe');
 		frame.src = '../mock/frames/nocode.html';
 		frame.addEventListener('load', onLoad);
 		fixture.appendChild(frame);
