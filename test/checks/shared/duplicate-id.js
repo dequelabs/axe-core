@@ -26,7 +26,7 @@ describe('duplicate-id', function () {
 		var node = fixture.querySelector('#target');
 		assert.isTrue(checks['duplicate-id'].evaluate.call(checkContext, node));
 		assert.equal(checkContext._data, node.id);
-		assert.equal(checkContext._relatedNodes.length, 0);
+		assert.deepEqual(checkContext._relatedNodes, []);
 
 	});
 
@@ -35,11 +35,20 @@ describe('duplicate-id', function () {
 		var node = fixture.querySelector('#target');
 		assert.isFalse(checks['duplicate-id'].evaluate.call(checkContext, node));
 		assert.equal(checkContext._data, node.id);
-		assert.equal(checkContext._relatedNodes.length, 1);
+		assert.deepEqual(checkContext._relatedNodes, [node.nextSibling]);
 	});
 
 	it('should return remove duplicates', function () {
 		assert.deepEqual(checks['duplicate-id'].after([{data: 'a'}, {data: 'b'}, {data: 'b'}]), [{data: 'a'}, {data: 'b'}]);
+	});
+
+	it('should work with empty ids', function () {
+		fixture.innerHTML = '<div id=""></div><div id=""></div>';
+		var node = fixture.querySelector('[id=""]');
+
+		assert.isFalse(checks['duplicate-id'].evaluate.call(checkContext, node));
+		assert.equal(checkContext._data, node.id);
+		assert.deepEqual(checkContext._relatedNodes, [node.nextSibling]);
 	});
 
 });
