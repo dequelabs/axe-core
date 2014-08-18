@@ -177,4 +177,14 @@ describe('utils.getSelector', function () {
 		assert.lengthOf(result, 1);
 		assert.equal(result[0], document.body);
 	});
+
+	it('should work on namespaced elements', function () {
+		fixture.innerHTML = '<hx:include>Hello</hx:include>';
+		var node = fixture.firstChild;
+		var sel = utils.getSelector(node);
+		var result = document.querySelectorAll(sel);
+		assert.lengthOf(result, 1);
+		assert.equal(result[0], node);
+	});
+
 });
