@@ -109,6 +109,7 @@ module.exports = function (grunt) {
 					'tags': null,
 					'selector': 'string',
 					'pageLevel': 'boolean',
+					'enabled': 'boolean',
 					'excludeHidden': 'boolean'},
 					'rule',
 					error);
