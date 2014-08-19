@@ -165,6 +165,25 @@ describe('Audit', function () {
 				done();
 			});
 		});
+		it('should not run rules disabled by the configuration', function (done) {
+			var a = new Audit();
+			var success = true;
+			a.addRule({
+				id: 'positive1',
+				selector: '*',
+				enabled: false,
+				checks: [{
+					id: 'positive1-check1',
+					evaluate: function () {
+						success = false;
+					}
+				}]
+			});
+			a.run({ include: [document] }, null, function () {
+				assert.ok(success);
+				done();
+			});
+		});
 		it('should call the rule\'s run function', function (done) {
 			var targetRule = mockRules[mockRules.length - 1],
 				rule = utils.findBy(a.rules, 'id', targetRule.id),
