@@ -177,7 +177,7 @@ describe('Audit', function () {
 				}]
 			});
 			a.run({ include: [document] }, null, function () {
-				assert.ok(success, 'Should not have ran');
+				assert.ok(success);
 				done();
 			});
 		});
