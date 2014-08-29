@@ -13,7 +13,7 @@ describe('dqre.a11yCheck', function () {
 					data: 'minkey'
 				}],
 				node: {
-					selector: 'minkey',
+					selector: ['minkey'],
 					frames: [],
 					source: '<minkey>chimp</minky>'
 				}
@@ -29,8 +29,7 @@ describe('dqre.a11yCheck', function () {
 					data: 'pillock'
 				}],
 				node: {
-					selector: 'pillock',
-					frames: ['q', 'r'],
+					selector: ['q', 'r', 'pillock'],
 					source: '<pillock>george bush</pillock>'
 				}
 			}]
@@ -44,8 +43,7 @@ describe('dqre.a11yCheck', function () {
 					result: true
 				}],
 				node: {
-					selector: 'foon',
-					frames: [],
+					selector: ['foon'],
 					source: '<foon>telephone</foon>'
 				}
 			}]
@@ -59,8 +57,7 @@ describe('dqre.a11yCheck', function () {
 					result: true
 				}],
 				node: {
-					selector: 'clueso',
-					frames: ['a', 'b'],
+					selector: ['a', 'b', 'clueso'],
 					source: '<clueso>nincompoop</clueso>'
 				}
 			}]

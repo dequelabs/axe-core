@@ -92,7 +92,7 @@ describe('dqre.run', function () {
 			setTimeout(function () {
 				dqre.run(document, {}, function (r) {
 					var nodes = r[0].details.map(function (detail) {
-						return [].concat(detail.node.frames, detail.node.selector);
+						return detail.node.selector;
 					});
 
 					assert.deepEqual(nodes, [
@@ -153,9 +153,8 @@ describe('dqre.run', function () {
 					pageLevel: false,
 					details: [{
 						node: {
-							selector: '#target',
-							source: '<div id="target"></div>',
-							frames: ['#context-test']
+							selector: ['#context-test', '#target'],
+							source: '<div id="target"></div>'
 						},
 						result: 'PASS',
 						checks: [{
@@ -173,9 +172,8 @@ describe('dqre.run', function () {
 					pageLevel: false,
 					details: [{
 						node: {
-							selector: '#foo',
-							source: '<div id="foo">\n		<div id="bar"></div>\n	</div>',
-							frames: ['#context-test']
+							selector: ['#context-test', '#foo'],
+							source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
 						},
 						result: 'PASS',
 						checks: [{
@@ -185,9 +183,8 @@ describe('dqre.run', function () {
 							result: true,
 							failureMessage: null,
 							relatedNodes: [{
-								selector: '#foo',
-								source: '<div id="foo">\n		<div id="bar"></div>\n	</div>',
-								frames: ['#context-test']
+								selector: ['#context-test', '#foo'],
+								source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
 							}]
 						}]
 					}],
@@ -283,9 +280,8 @@ describe('dqre.run', function () {
 					stuff: 'blah',
 					details: [{
 						node: {
-							selector: '#target',
-							source: '<div id="target">Target!</div>',
-							frames: []
+							selector: ['#target'],
+							source: '<div id="target">Target!</div>'
 						},
 						result: 'FAIL',
 						checks: [{
@@ -307,9 +303,8 @@ describe('dqre.run', function () {
 					stuff: 'no',
 					details: [{
 						node: {
-							selector: '#target',
-							source: '<div id="target">Target!</div>',
-							frames: []
+							selector: ['#target'],
+							source: '<div id="target">Target!</div>'
 						},
 						result: 'PASS',
 						checks: [{
@@ -320,9 +315,8 @@ describe('dqre.run', function () {
 							data: null,
 							result: true,
 							relatedNodes: [{
-								selector: '#target',
-								source: '<div id="target">Target!</div>',
-								frames: []
+								selector: ['#target'],
+								source: '<div id="target">Target!</div>'
 							}]
 						}]
 					}],

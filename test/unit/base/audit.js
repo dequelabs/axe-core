@@ -72,9 +72,8 @@ describe('Audit', function () {
 					pageLevel: false,
 					details: [{
 						node: {
-							selector: '#fixture > input:nth-of-type(1)',
-							source: null,
-							frames: []
+							selector: ['#fixture > input:nth-of-type(1)'],
+							source: null
 						},
 						checks: [{
 							id: 'positive1-check1',
@@ -85,9 +84,8 @@ describe('Audit', function () {
 						}]
 					}, {
 						node: {
-							selector: '#fixture > input:nth-of-type(2)',
-							source: '<input aria-labelledby="monkeys" type="text">',
-							frames: []
+							selector: ['#fixture > input:nth-of-type(2)'],
+							source: '<input aria-labelledby="monkeys" type="text">'
 						},
 						checks: [{
 							id: 'positive1-check1',
@@ -103,9 +101,8 @@ describe('Audit', function () {
 					pageLevel: false,
 					details: [{
 						node: {
-							selector: '#monkeys',
-							source: '<div id="monkeys">bananas</div>',
-							frames: []
+							selector: ['#monkeys'],
+							source: '<div id="monkeys">bananas</div>'
 						},
 						checks: [{
 							id: 'positive2-check1',
@@ -121,9 +118,8 @@ describe('Audit', function () {
 					pageLevel: false,
 					details: [{
 						node: {
-							selector: '#monkeys',
-							source: '<div id="monkeys">bananas</div>',
-							frames: []
+							selector: ['#monkeys'],
+							source: '<div id="monkeys">bananas</div>'
 						},
 						checks: [{
 							id: 'negative1-check1',
@@ -139,9 +135,8 @@ describe('Audit', function () {
 					pageLevel: false,
 					details: [{
 						node: {
-							selector: '#fixture > blink',
-							source: '<blink>FAIL ME</blink>',
-							frames: []
+							selector: ['#fixture > blink'],
+							source: '<blink>FAIL ME</blink>'
 						},
 						checks: [{
 							id: 'positive3-check1',
