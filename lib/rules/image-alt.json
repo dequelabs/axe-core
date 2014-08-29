@@ -15,6 +15,6 @@
 	],
 	"metadata": {
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/alt-text",
-		"help": "Images need alternate text"
+		"help": "Images must have alternate text"
 	}
 }

@@ -10,6 +10,6 @@
 		"wcag412"
 	],
 	"metadata": {
-		"help": "Frames must have title attribute to aid in navigation"
+		"help": "Frames must have title attribute"
 	}
 }
