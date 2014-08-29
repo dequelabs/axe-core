@@ -104,18 +104,6 @@ describe('dqre.a11yCheck', function () {
 			done();
 		});
 	});
-	it('should add the checks to the node data', function (done) {
-		dqre.a11yCheck(document, {}, function (results) {
-			assert.ok(results.violations[0].nodes);
-			assert.equal(results.violations[0].nodes.length, 1);
-			assert.ok(results.violations[0].nodes[0].checks);
-			assert.equal(results.violations[0].nodes[0].checks[0].data, 'pillock');
-			assert.equal(results.violations[1].nodes[0].checks[0].data, 'foon');
-			assert.equal(results.passes[0].nodes[0].checks[0].data, 'minkey');
-			assert.equal(results.passes[1].nodes[0].checks[0].data, 'clueso');
-			done();
-		});
-	});
 	it('should add the html to the node data', function (done) {
 		dqre.a11yCheck(document, {}, function (results) {
 			assert.ok(results.violations[0].nodes);
