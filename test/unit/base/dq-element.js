@@ -53,19 +53,10 @@ describe('DqElement', function () {
 			};
 
 			var result = new DqElement(fixture);
-			assert.equal(result.selector, expected);
+			assert.deepEqual(result.selector, [expected]);
 			utils.getSelector = orig;
 
 		});
 
-	});
-	describe('frames', function () {
-		it('should be an empty array', function () {
-			var node = document.createElement('div');
-			var result = new DqElement(node);
-
-			assert.deepEqual(result.frames, []);
-
-		});
 	});
 });
