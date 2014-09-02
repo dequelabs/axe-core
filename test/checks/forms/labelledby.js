@@ -53,4 +53,11 @@ describe('labelledby', function () {
 		assert.isTrue(checks.labelledby.evaluate(node, 'radio'));
 	});
 
+	it('should return true if there are ungrouped radio elements with the same name and with shared labelledby pointing to a node with text content - SPECIAL CHARACTERS', function () {
+		fixture.innerHTML = '<p id="shared">Label</p><input type="radio" id="target" aria-labelledby="shared one" name="s$.#0">Choice one' +
+			'<input type="radio" aria-labelledby="shared two" name="s$.#0">Choice 1a<input type="radio" aria-labelledby="shared three" name="s$.#0">Choice 1b';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks.labelledby.evaluate(node, 'radio'));
+	});
+
 });
