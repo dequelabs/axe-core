@@ -25,4 +25,11 @@ describe('nogroup', function () {
 		assert.isFalse(checks.nogroup.evaluate(node, 'radio'));
 	});
 
+	it('should work with elements that have special characters in name', function () {
+
+		fixture.innerHTML = '<input type="radio" id="target" name="s.3@$#">Choice one<input type="radio" name="s.3@$#">Choice 1a';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks.nogroup.evaluate(node, 'radio'));
+	});
+
 });
