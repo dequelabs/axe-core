@@ -1,8 +1,0 @@
-{
-	"id": "nogroup",
-	"options": "checkbox",
-	"evaluate": "nogroup.js",
-	"metadata": {
-		"failureMessage": "Element is not part of a proper group of checkbox inputs"
-	}
-}

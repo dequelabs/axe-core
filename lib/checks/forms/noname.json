@@ -1,7 +1,0 @@
-{
-	"id": "noname",
-	"evaluate": "noname.js",
-	"metadata": {
-		"failureMessage": "Element has a name"
-	}
-}

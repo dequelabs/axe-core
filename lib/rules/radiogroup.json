@@ -1,21 +1,7 @@
 {
 	"id": "radiogroup",
-	"selector": "input[type=radio]",
-	"checks": [
-		"noname",
-		{
-			"id": "nogroup",
-			"options": "radio"
-		},
-		{
-			"id": "labelledby",
-			"options": "radio"
-		},
-		{
-			"id": "fieldset",
-			"options": "radio"
-		}
-	],
+	"selector": "input[type=radio][name]",
+	"checks": ["labelledby", "fieldset"],
 	"tags": [
 		"wcag2a",
 		"wcag131"
