@@ -12,6 +12,6 @@
 		"section508a"
 	],
 	"metadata": {
-		"help": "HTML5 audio elements need a captions track"
+		"help": "HTML5 <audio> elements need a captions track"
 	}
 }

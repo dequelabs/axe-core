@@ -13,6 +13,6 @@
 		"section508a"
 	],
 	"metadata": {
-		"help": "Button elements must have alternate text"
+		"help": "<button> elements must have alternate text"
 	}
 }

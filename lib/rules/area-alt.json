@@ -15,6 +15,6 @@
 	],
 	"metadata": {
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/image-maps",
-		"help": "Active area elements need alternate text"
+		"help": "Active <area> elements need alternate text"
 	}
 }

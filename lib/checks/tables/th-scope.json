@@ -3,6 +3,6 @@
 	"evaluate": "th-scope.js",
 	"type": "FAIL",
 	"metadata": {
-		"failureMessage": "TH elements must use scope attribute"
+		"failureMessage": "<th> elements must use scope attribute"
 	}
 }

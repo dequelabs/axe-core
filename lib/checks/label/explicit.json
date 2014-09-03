@@ -3,6 +3,6 @@
 	"evaluate": "explicit.js",
 	"selector": "[id]",
 	"metadata": {
-		"failureMessage": "Form element does not have an explicit label"
+		"failureMessage": "Form element does not have an explicit <label>"
 	}
 }

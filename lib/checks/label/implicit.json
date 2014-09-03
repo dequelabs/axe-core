@@ -2,6 +2,6 @@
 	"id": "implicit-label",
 	"evaluate": "implicit.js",
 	"metadata": {
-		"failureMessage": "Form element does not have an implicit (wrapped) label"
+		"failureMessage": "Form element does not have an implicit (wrapped) <label>"
 	}
 }
