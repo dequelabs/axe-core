@@ -13,6 +13,6 @@
 		"section508a"
 	],
 	"metadata": {
-		"help": "Button inputs must have a name"
+		"help": "Button inputs must have alternate text"
 	}
 }

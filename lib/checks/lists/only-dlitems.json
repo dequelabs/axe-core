@@ -3,6 +3,6 @@
 	"type": "FAIL",
 	"evaluate": "only-dlitems.js",
 	"metadata": {
-		"failureMessage": "Element has elements that are not <dt> or <dd> elements"
+		"failureMessage": "Element has children that are not <dt> or <dd> elements"
 	}
 }

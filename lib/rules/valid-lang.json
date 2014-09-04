@@ -10,6 +10,6 @@
 	],
 	"metadata": {
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/language#id35__language_codes",
-		"help": "lang attribute has a valid value"
+		"help": "lang attribute must have a valid value"
 	}
 }

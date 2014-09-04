@@ -3,6 +3,6 @@
 	"type": "FAIL",
 	"evaluate": "no-caption.js",
 	"metadata": {
-		"failureMessage": "The table does not have a caption"
+		"failureMessage": "Table does not have a <caption>"
 	}
 }

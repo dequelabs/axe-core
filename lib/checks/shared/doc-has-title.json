@@ -2,6 +2,6 @@
 	"id": "doc-has-title",
 	"evaluate": "doc-has-title.js",
 	"metadata": {
-		"failureMessage": "Document has a non-empty title element"
+		"failureMessage": "Document does not have a non-empty <title> element"
 	}
 }

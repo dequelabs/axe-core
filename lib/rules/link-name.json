@@ -15,6 +15,6 @@
 	],
 	"metadata": {
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/links",
-		"help": "Links must have an accessible name"
+		"help": "Links must have alternate text"
 	}
 }

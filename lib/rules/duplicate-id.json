@@ -9,6 +9,6 @@
 	],
 	"metadata": {
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/robust-compatibility/markup-validation",
-		"help": "document should have only one element with each ID"
+		"help": "ID attribute value should be unique"
 	}
 }

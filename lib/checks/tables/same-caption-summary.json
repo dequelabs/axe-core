@@ -4,6 +4,6 @@
 	"selector": "table",
 	"evaluate": "same-caption-summary.js",
 	"metadata": {
-		"failureMessage": "The content of summary attribute and caption element are indentical"
+		"failureMessage": "The content of summary attribute and <caption> element are indentical"
 	}
 }

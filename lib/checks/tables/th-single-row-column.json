@@ -3,6 +3,6 @@
 	"evaluate": "th-single-row-column.js",
 	"type": "FAIL",
 	"metadata": {
-		"failureMessage": "TH elements should only be used when there is a single row and single column of headers"
+		"failureMessage": "<th> elements should only be used when there is a single row and single column of headers"
 	}
 }

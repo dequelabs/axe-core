@@ -3,6 +3,6 @@
 	"evaluate": "region.js",
 	"after": "region-after.js",
 	"metadata": {
-		"failureMessage": "Content not contained in a region"
+		"failureMessage": "Content not contained by an ARIA landmark"
 	}
 }

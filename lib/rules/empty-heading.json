@@ -9,6 +9,6 @@
 		"wcag131"
 	],
 	"metadata": {
-		"help": "Headings must have an accessible name"
+		"help": "Headings should not be empty"
 	}
 }

@@ -3,6 +3,6 @@
 	"selector": "h1",
 	"evaluate": "../shared/exists.js",
 	"metadata": {
-		"failureMessage": "Page has a header"
+		"failureMessage": "Page does not have a header"
 	}
 }
