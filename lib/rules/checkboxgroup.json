@@ -1,21 +1,7 @@
 {
 	"id": "checkboxgroup",
-	"selector": "input[type=checkbox]",
-	"checks": [
-		"noname",
-		{
-			"id": "nogroup",
-			"options": "checkbox"
-		},
-		{
-			"id": "labelledby",
-			"options": "checkbox"
-		},
-		{
-			"id": "fieldset",
-			"options": "checkbox"
-		}
-	],
+	"selector": "input[type=checkbox][name]",
+	"checks": ["labelledby", "fieldset"],
 	"tags": [
 		"wcag2a",
 		"wcag131"

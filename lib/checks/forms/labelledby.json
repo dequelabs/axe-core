@@ -2,6 +2,7 @@
 	"id": "labelledby",
 	"options": "checkbox",
 	"evaluate": "labelledby.js",
+	"after": "group-after.js",
 	"metadata": {
 		"failureMessage": "Element does not have proper aria-labelledby values for all group members"
 	}
