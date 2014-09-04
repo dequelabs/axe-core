@@ -1,6 +1,6 @@
 {
 	"description": "checkboxgroup test",
 	"rule": "checkboxgroup",
-	"violations": [["#dupe1"], ["#dupe2"]],
-	"passes": [["#noname"], ["#single"], ["#label1"], ["#label2"], ["#fieldset1"], ["#fieldset2"]]
+	"violations": [["#fail1"]],
+	"passes": [["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"], ["#pass5"]]
 }
