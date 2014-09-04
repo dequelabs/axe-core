@@ -7,17 +7,30 @@
 <body>
 <form action="#">
 	<input type="radio" id="noname">
-	<input type="radio" id="dupe1" name="dupe">
-	<input type="radio" id="dupe2" name="dupe">
-	<input type="radio" id="single" name="single">
-	<input type="radio" id="label1" name="label" aria-labelledby="grouplabel">
-	<input type="radio" id="label2" name="label" aria-labelledby="grouplabel">
+	<input type="radio" name="dupe" id="fail1">
+	<input type="radio" name="dupe">
+
+	<input type="radio" name="single" id="pass1">
+
+	<input type="radio" name="label" id="pass2" aria-labelledby="grouplabel">
+	<input type="radio" name="label" aria-labelledby="grouplabel">
 	<div id="grouplabel">Label</div>
 	<fieldset>
 		<legend>Name</legend>
-		<input type="radio" id="fieldset1" name="fieldset">
-		<input type="radio" id="fieldset2" name="fieldset">
+		<input type="radio" name="fieldset" id="pass3">
+		<input type="radio"name="fieldset">
+		<input type="hidden" name="hiddeninput">
 	</fieldset>
+
+	<div role="group" aria-label="Test">
+		<input type="radio" name="fieldset2" id="pass4">
+		<input type="radio"name="fieldset2">
+	</div>
+
+	<div role="group" aria-labelledby="grouplabel">
+		<input type="radio" name="fieldset3" id="pass5">
+		<input type="radio"name="fieldset3">
+	</div>
 </form>
 </body>
 </html>
