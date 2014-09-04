@@ -148,7 +148,7 @@ describe('dqre.run', function () {
 			fixture.appendChild(div);
 
 			dqre.run('#fixture', {}, function (results) {
-				assert.deepEqual(results, [{
+				assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
 					pageLevel: false,
 					details: [{
@@ -272,7 +272,7 @@ describe('dqre.run', function () {
 		});
 		fixture.innerHTML = '<div id="target">Target!</div><div>ok</div>';
 		dqre.run('#fixture', {}, function (results) {
-			assert.deepEqual(results, [{
+			assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
 					pageLevel: false,
 					failureMessage: 'yay',

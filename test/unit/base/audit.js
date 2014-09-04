@@ -149,7 +149,7 @@ describe('Audit', function () {
 				}];
 				var out = results[0].details[0].node.source;
 				results[0].details[0].node.source = null;
-				assert.deepEqual(results, expected);
+				assert.deepEqual(JSON.parse(JSON.stringify(results)), expected);
 				assert.match(out, /^<input(\s+type="text"|\s+aria-label="monkeys"){2,}>/);
 				done();
 			});

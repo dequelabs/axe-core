@@ -25,17 +25,11 @@ describe('DqElement', function () {
 			assert.equal(dqEl.element, div);
 		});
 
-		it('should not be writable', function () {
+		it('should not be present in stringified version', function () {
 			var div = document.createElement('div');
 			var dqEl = new DqElement(div);
 
-			try {
-				dqEl.element = null;
-			} catch (e) {
-				assert.ok('real browsers will throw');
-				return;
-			}
-			assert.equal(dqEl.element, div, 'IE does not throw, but still does not allow writing');
+			assert.isUndefined(JSON.parse(JSON.stringify(dqEl)).element);
 		});
 	});
 
