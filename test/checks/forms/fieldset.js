@@ -87,7 +87,8 @@ describe('fieldset', function () {
 			});
 
 			it('should return true if the group contains only the right elements and has legend', function () {
-				fixture.innerHTML = '<fieldset><legend>Legendary</legend><input type="' + type + '" id="target" name="uniqueyname">' +
+				fixture.innerHTML = '<fieldset><legend>Legendary</legend>' +
+					'<input type="' + type + '" id="target" name="uniqueyname">' +
 					'<input type="' + type + '" name="uniqueyname"></fieldset>';
 				var node = fixture.querySelector('#target');
 				assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
@@ -157,6 +158,17 @@ describe('fieldset', function () {
 					'<input type="' + type + '" name="uniqueyname"></div>';
 				var node = fixture.querySelector('#target');
 				assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+			});
+
+
+			it('should ignore hidden inputs', function () {
+				fixture.innerHTML = '<fieldset><legend>Legendary</legend>' +
+					'<input type="' + type + '" id="target" name="uniqueyname">' +
+					'<input type="' + type + '" name="uniqueyname"></div>' +
+					'<input type="hidden" name="things"></fieldset>';
+				var node = fixture.querySelector('#target');
+				assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+
 			});
 		};
 	}
