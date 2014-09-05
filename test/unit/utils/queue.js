@@ -53,21 +53,6 @@ describe('utils.queue', function () {
 
 		});
 
-		it('should allow parameters to be passed', function (done) {
-			var q = utils.queue(),
-				expected = { monkeys: 'bananas' };
-
-			q.defer(function (data, callback) {
-				assert.deepEqual(data, expected);
-				callback(data);
-			}, expected);
-
-			q.then(function (data) {
-				assert.deepEqual(data, [expected]);
-				done();
-			});
-		});
-
 	});
 
 	describe('then', function () {
