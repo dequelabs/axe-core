@@ -10,6 +10,6 @@
 	],
 	"metadata": {
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/language",
-		"help": "documentElement (<html>) should have a lang attribute"
+		"help": "documentElement (<html>) must have a lang attribute"
 	}
 }

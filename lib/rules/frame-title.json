@@ -10,6 +10,7 @@
 		"wcag412"
 	],
 	"metadata": {
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/frames/titles",
 		"help": "Frames must have title attribute"
 	}
 }
