@@ -9,6 +9,7 @@
 		"wcag411"
 	],
 	"metadata": {
-		"help": "Required ARIA attributes are defined"
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/forms/special-input-attributes",		
+		"help": "ARIA attribute not provided for element with given role"
 	}
 }
