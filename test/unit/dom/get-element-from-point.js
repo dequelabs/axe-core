@@ -32,25 +32,6 @@ describe('dom.elementsFromPoint', function () {
 		}
 	});
 
-	it('may or may not actually handle inlines that contain blocks properly', function () {
-		fixture.innerHTML = '<div style="background:red">' +
-			'<span id="linky" style="background: rgba(255, 255, 0, 0.5)">' +
-			'<div id="target">Im not visible</div>' +
-			'</span></div>';
-		var target = fixture.querySelector('#target');
-		var linky = fixture.querySelector('#linky');
-		target.scrollIntoView();
-		var rect = target.getBoundingClientRect();
-
-		if (kslib.dom.supportsElementsFromPoint(target.ownerDocument)) {
-			var visualParents = kslib.dom.elementsFromPoint(target.ownerDocument,
-															Math.ceil(rect.left + 1),
-															Math.ceil(rect.top + 1));
-			assert.deepEqual(visualParents.slice(0, 2), [target, linky]);
-		}
-	});
-
-
 	it('should return inline elements properly', function () {
 		fixture.innerHTML = '<div id="container" style="position: absolute; top: 0px; left: 0px; height: 100px; ' +
 			'width: 90px; background-color: rgba(0, 128, 0, 0.5);">' +
