@@ -8,6 +8,6 @@
 		"wcag411"
 	],
 	"metadata": {
-		"help": "ARIA attributes not allowed for role assigned to this element"
+		"help": "Only allowed ARIA attributes are used"
 	}
 }

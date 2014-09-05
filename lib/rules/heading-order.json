@@ -9,6 +9,6 @@
 	],
 	"metadata": {
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/headings#id37_use_headings_in_order",
-		"help": "Heading levels must only increase by one"
+		"help": "Headings should not skip levels"
 	}
 }

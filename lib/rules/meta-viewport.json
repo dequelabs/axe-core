@@ -10,7 +10,6 @@
 		"wcag144"
 	],
 	"metadata": {
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/visual-layout/fonts-and-typography#id55_ensure_text_resize_to_200_percent",
-		"help": "Zooming and scaling must not disabled"
+		"help": "Zooming and scaling should not disabled"
 	}
 }
