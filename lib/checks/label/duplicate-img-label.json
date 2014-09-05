@@ -1,0 +1,8 @@
+{
+	"id": "duplicate-img-label",
+	"evaluate": "duplicate-img-label.js",
+	"type": "FAIL",
+	"metadata": {
+		"failureMessage": "Element contains <img> element with alt text that duplicates existing text"
+	}
+}

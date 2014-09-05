@@ -2,6 +2,7 @@
 	"id": "button-name",
 	"selector": "button",
 	"checks": [
+		"duplicate-img-label",
 		"has-visible-text",
 		"aria-label",
 		"aria-labelledby"
