@@ -9,6 +9,6 @@
 		"wcag111"
 	],
 	"metadata": {
-		"help": "Embedded object requires text alternative"
+		"help": "An embedded object must have a text alternative"
 	}
 }

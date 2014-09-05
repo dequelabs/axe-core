@@ -12,7 +12,7 @@
 		"wcag131"
 	],
 	"metadata": {
-		"help": "Layout tables should not use data table elements",
+		"help": "Layout tables must not use data table elements",
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/data-tables/"
 	}
 }
