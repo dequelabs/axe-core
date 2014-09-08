@@ -2,7 +2,6 @@
 	"id": "input-button-name",
 	"selector": "input[type=\"button\"]",
 	"checks": [
-		"duplicate-img-label",
 		"non-empty-value",
 		"aria-label",
 		"aria-labelledby"
