@@ -28,7 +28,8 @@ module.exports = function (grunt) {
 				},
 				dest: {
 					rules: 'dist/rules.js',
-					checks: 'dist/checks.js'
+					checks: 'dist/checks.js',
+					misc: 'dist/misc.js'
 				}
 			}
 		},
@@ -50,6 +51,9 @@ module.exports = function (grunt) {
 				}, {
 					src: ['<%= rules.lib.dest.checks %>'],
 					dest: 'dist/checks.min.js'
+				}, {
+					src: ['<%= rules.lib.dest.misc %>'],
+					dest: 'dist/misc.min.js'
 				}]
 			},
 			beautify: {
@@ -59,6 +63,9 @@ module.exports = function (grunt) {
 				}, {
 					src: ['<%= rules.lib.dest.checks %>'],
 					dest: '<%= rules.lib.dest.checks %>'
+				}, {
+					src: ['<%= rules.lib.dest.misc %>'],
+					dest: '<%= rules.lib.dest.misc %>'
 				}],
 				options: {
 					mangle: false,

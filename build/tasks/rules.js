@@ -14,7 +14,8 @@ var templates = {
 
 var fns = {
 	check: ['evaluate', 'after', 'matches'],
-	rule: ['matches']
+	rule: ['matches'],
+	failureSummary: []
 };
 
 module.exports = function (grunt) {
@@ -31,6 +32,14 @@ module.exports = function (grunt) {
 		var result = {};
 		checks.forEach(function (check) {
 			result[check.id] = check;
+		});
+		return result;
+	}
+
+	function createFailureSummaryObject(summaries) {
+		var result = {};
+		summaries.forEach(function (summary) {
+			result[summary.type] = parseMetaData(summary.metadata);
 		});
 		return result;
 	}
@@ -91,6 +100,7 @@ module.exports = function (grunt) {
 		var options = this.options({
 			rules: ['lib/rules/**/*.json'],
 			checks: ['lib/checks/**/*.json'],
+			misc: ['lib/misc/*.json'],
 			blacklist: ['metadata', 'tags'],
 			standards: ''
 		});
@@ -127,11 +137,15 @@ module.exports = function (grunt) {
 			}
 			return rule;
 		});
+		var failureSummaries = parseObject(options.misc, 'failureSummary');
+		metadata.failureSummaries = createFailureSummaryObject(failureSummaries);
 		var r = replaceFunctions(JSON.stringify({ data: metadata, rules: rules }, blacklist));
 		var c = replaceFunctions(JSON.stringify(createCheckObject(checks), blacklist));
 
 		grunt.file.write(this.data.dest.rules, 'dqre.configure(' + r + ');');
 		grunt.file.write(this.data.dest.checks, 'var checks = ' + c + ';');
+
+
 
 	});
 };
