@@ -22,7 +22,7 @@ describe('valid-lang', function () {
 			node.setAttribute('lang', 'woohoo');
 			fixture.appendChild(node);
 
-			assert.isTrue(checks['valid-lang'].evaluate.call(checkContext, node, ['blah', 'blah', 'woohoo']));
+			assert.isFalse(checks['valid-lang'].evaluate.call(checkContext, node, ['blah', 'blah', 'woohoo']));
 		});
 
 		it('should lowercase options and attribute first', function () {
@@ -30,7 +30,7 @@ describe('valid-lang', function () {
 			node.setAttribute('lang', 'wooHOo');
 			fixture.appendChild(node);
 
-			assert.isTrue(checks['valid-lang'].evaluate.call(checkContext, node, ['blah', 'blah', 'wOohoo']));
+			assert.isFalse(checks['valid-lang'].evaluate.call(checkContext, node, ['blah', 'blah', 'wOohoo']));
 
 		});
 
@@ -39,7 +39,7 @@ describe('valid-lang', function () {
 			node.setAttribute('lang', 'en-FOO');
 			fixture.appendChild(node);
 
-			assert.isFalse(checks['valid-lang'].evaluate.call(checkContext, node, []));
+			assert.isTrue(checks['valid-lang'].evaluate.call(checkContext, node, []));
 			assert.deepEqual(checkContext._data, ['lang="en-foo"']);
 		});
 
@@ -48,7 +48,7 @@ describe('valid-lang', function () {
 			node.setAttribute('lang', 'en-US');
 			fixture.appendChild(node);
 
-			assert.isFalse(checks['valid-lang'].evaluate.call(checkContext, node));
+			assert.isTrue(checks['valid-lang'].evaluate.call(checkContext, node));
 			assert.deepEqual(checkContext._data, ['lang="en-us"']);
 		});
 
@@ -57,7 +57,7 @@ describe('valid-lang', function () {
 			node.setAttribute('lang', 'en_US');
 			fixture.appendChild(node);
 
-			assert.isFalse(checks['valid-lang'].evaluate.call(checkContext, node, ['en']));
+			assert.isTrue(checks['valid-lang'].evaluate.call(checkContext, node, ['en']));
 			assert.deepEqual(checkContext._data, ['lang="en_us"']);
 
 		});
@@ -67,7 +67,7 @@ describe('valid-lang', function () {
 			node.setAttribute('lang', 'en-LOL');
 			fixture.appendChild(node);
 
-			assert.isTrue(checks['valid-lang'].evaluate.call(checkContext, node, ['en']));
+			assert.isFalse(checks['valid-lang'].evaluate.call(checkContext, node, ['en']));
 
 		});
 
@@ -80,7 +80,7 @@ describe('valid-lang', function () {
 			node.setAttribute('xml:lang', 'woohoo');
 			fixture.appendChild(node);
 
-			assert.isTrue(checks['valid-lang'].evaluate.call(checkContext, node, ['blah', 'blah', 'woohoo']));
+			assert.isFalse(checks['valid-lang'].evaluate.call(checkContext, node, ['blah', 'blah', 'woohoo']));
 		});
 
 		it('should lowercase options and attribute first', function () {
@@ -88,7 +88,7 @@ describe('valid-lang', function () {
 			node.setAttribute('xml:lang', 'wooHOo');
 			fixture.appendChild(node);
 
-			assert.isTrue(checks['valid-lang'].evaluate.call(checkContext, node, ['blah', 'blah', 'wOohoo']));
+			assert.isFalse(checks['valid-lang'].evaluate.call(checkContext, node, ['blah', 'blah', 'wOohoo']));
 
 		});
 
@@ -97,7 +97,7 @@ describe('valid-lang', function () {
 			node.setAttribute('xml:lang', 'en-FOO');
 			fixture.appendChild(node);
 
-			assert.isFalse(checks['valid-lang'].evaluate.call(checkContext, node, []));
+			assert.isTrue(checks['valid-lang'].evaluate.call(checkContext, node, []));
 			assert.deepEqual(checkContext._data, ['xml:lang="en-foo"']);
 		});
 
@@ -106,7 +106,7 @@ describe('valid-lang', function () {
 			node.setAttribute('xml:lang', 'en-US');
 			fixture.appendChild(node);
 
-			assert.isFalse(checks['valid-lang'].evaluate.call(checkContext, node));
+			assert.isTrue(checks['valid-lang'].evaluate.call(checkContext, node));
 			assert.deepEqual(checkContext._data, ['xml:lang="en-us"']);
 		});
 
@@ -115,7 +115,7 @@ describe('valid-lang', function () {
 			node.setAttribute('xml:lang', 'en_US');
 			fixture.appendChild(node);
 
-			assert.isFalse(checks['valid-lang'].evaluate.call(checkContext, node, ['en']));
+			assert.isTrue(checks['valid-lang'].evaluate.call(checkContext, node, ['en']));
 			assert.deepEqual(checkContext._data, ['xml:lang="en_us"']);
 
 		});
@@ -125,7 +125,7 @@ describe('valid-lang', function () {
 			node.setAttribute('xml:lang', 'en-LOL');
 			fixture.appendChild(node);
 
-			assert.isTrue(checks['valid-lang'].evaluate.call(checkContext, node, ['en']));
+			assert.isFalse(checks['valid-lang'].evaluate.call(checkContext, node, ['en']));
 
 		});
 
