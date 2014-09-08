@@ -37,6 +37,12 @@ describe('duplicate-img-label', function () {
 		assert.isTrue(checks['duplicate-img-label'].evaluate(node));
 	});
 
+	it('should return true if img has ARIA label with the same text', function () {
+		fixture.innerHTML = '<button id="target"><img aria-label="Plain text">Plain text</button>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['duplicate-img-label'].evaluate(node));
+	});
+
 	it('should return false if img and text have superset/subset text', function () {
 		fixture.innerHTML = '<button id="target"><img alt="Plain text and more">Plain text</button>';
 		var node = fixture.querySelector('#target');
