@@ -1,5 +1,6 @@
 {
 	"id": "valid-lang",
+	"type": "FAIL",
 	"options": [
 		"en",
 		"es",
