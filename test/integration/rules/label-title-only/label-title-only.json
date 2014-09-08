@@ -1,0 +1,20 @@
+{
+	"description": "label-title-only test",
+	"rule": "label-title-only",
+	"violations": [
+		["#fail1"],
+		["#fail2"],
+		["#fail3"],
+		["#fail4"]
+	],
+	"passes": [
+		["#pass1"],
+		["#pass2"],
+		["#pass3"],
+		["#pass4"],
+		["#pass5"],
+		["#pass6"],
+		["#pass7"],
+		["#pass8"]
+	]
+}
