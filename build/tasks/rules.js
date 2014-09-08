@@ -102,7 +102,7 @@ module.exports = function (grunt) {
 		var options = this.options({
 			rules: ['lib/rules/**/*.json'],
 			checks: ['lib/checks/**/*.json'],
-			blacklist: ['metadata', 'tags'],
+			blacklist: ['metadata'],
 			standards: ''
 		});
 
