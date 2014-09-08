@@ -5,7 +5,8 @@
 		"aria-required-children"
 	],
 	"tags": [
-		"todo"
+		"wcag2a",
+		"wcag411"
 	],
 	"metadata": {
 		"help": "Certain ARIA roles must contain particular children"

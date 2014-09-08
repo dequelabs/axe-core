@@ -6,7 +6,8 @@
 		"abstractrole"
 	],
 	"tags": [
-		"wcag2a"
+		"wcag2a",
+		"wcag411"
 	],
 	"metadata": {
 		"help": "ARIA roles used must conform to valid values"
