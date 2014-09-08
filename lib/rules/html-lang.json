@@ -2,7 +2,8 @@
 	"id": "html-lang",
 	"selector": "html",
 	"checks": [
-		"has-lang"
+		"has-lang",
+		"valid-lang"
 	],
 	"tags": [
 		"wcag2a",

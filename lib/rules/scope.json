@@ -8,7 +8,8 @@
 	],
 	"tags": [
 		"wcag2a",
-		"wcag411"
+		"wcag411",
+		"wcag131"
 	],
 	"metadata": {
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/data-tables/row-and-column-headers#id81_associate_header_cells_with_data_cells",

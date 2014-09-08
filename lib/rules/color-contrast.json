@@ -3,8 +3,7 @@
 	"selector": "*",
 	"checks": ["color-contrast"],
 	"tags": [
-		"wcaga",
-		"wcag2a",
+		"wcag2aa",
 		"wcag143"
 	],
 	"metadata": {

@@ -5,7 +5,8 @@
 		"heading-order"
 	],
 	"tags": [
-		"todo"
+		"wcag2a",
+		"wcag131"
 	],
 	"metadata": {
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/headings#id37_use_headings_in_order",

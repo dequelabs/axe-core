@@ -102,7 +102,6 @@ module.exports = function (grunt) {
 		var options = this.options({
 			rules: ['lib/rules/**/*.json'],
 			checks: ['lib/checks/**/*.json'],
-			misc: ['lib/misc/*.json'],
 			blacklist: ['metadata', 'tags'],
 			standards: ''
 		});

@@ -6,7 +6,8 @@
 	],
 	"pageLevel": true,
 	"tags": [
-		"best-practice"
+		"wcag2a",
+		"wcag241"
 	],
 	"metadata": {
 		"help": "Content must be contained in a region"

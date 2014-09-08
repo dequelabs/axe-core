@@ -1,6 +1,6 @@
 {
 	"id": "valid-lang",
-	"selector": "[lang], [xml\\:lang]",
+	"selector": "[lang]:not(html), [xml\\:lang]:not(html)",
 	"checks": [
 		"valid-lang"
 	],
