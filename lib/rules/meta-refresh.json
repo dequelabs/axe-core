@@ -1,0 +1,17 @@
+{
+	"id": "meta-refresh",
+	"selector": "meta[http-equiv=\"refresh\"]",
+	"excludeHidden": false,
+	"checks": [
+		"meta-refresh"
+	],
+	"tags": [
+		"wcag2aa",
+		"wcag221",
+		"wcag224",
+		"wcag325"
+	],
+	"metadata": {
+		"help": "Timed refresh must not exist"
+	}
+}
