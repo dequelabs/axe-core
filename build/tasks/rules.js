@@ -5,6 +5,8 @@ var path = require('path');
 var clone = require('clone');
 var dot = require('dot');
 
+dot.templateSettings.strip = false;
+
 var templates = {
 	evaluate: 'function (node, options) {\n<%=source%>\n}',
 	after: 'function (results, options) {\n<%=source%>\n}',
