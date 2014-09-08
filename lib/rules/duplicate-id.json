@@ -5,7 +5,8 @@
 		"duplicate-id"
 	],
 	"tags": [
-		"todo"
+		"wcag2a",
+		"wcag411"
 	],
 	"metadata": {
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/robust-compatibility/markup-validation",
