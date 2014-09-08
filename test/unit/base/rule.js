@@ -330,6 +330,19 @@ describe('Rule', function () {
 				assert.equal(new Rule(spec).matches, Rule.prototype.matches);
 			});
 		});
+		describe('.tags', function () {
+			it('should be set', function () {
+				var spec = {
+					tags: ['foo', 'bar']
+				};
+				assert.deepEqual(new Rule(spec).tags, spec.tags);
+			});
+
+			it('should default to empty array', function () {
+				var spec = {};
+				assert.deepEqual(new Rule(spec).tags, []);
+			});
+		});
 
 
 	});
