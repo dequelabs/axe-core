@@ -9,11 +9,11 @@ describe('dom.elementsFromPoint', function () {
 
 	it('should return positioned elements properly', function () {
 		fixture.innerHTML = '<div id="container" style="position: absolute; top: 0px; left: 0px; height: 100px; ' +
-			'width: 90px; background-color: #000080;">' +
+			'width: 90px; background-color: rgba(0, 128, 0, 0.5);">' +
 			'<div id="pos" style="position: absolute; top: 50px; left: 40px; height: 40px; ' +
-			'width: 30px; background-color: #800000;"></div>' +
+			'width: 30px; background-color: rgba(0, 128, 0, 0.5);"></div>' +
 			'<div id="parent" style="position: absolute; top: 0px; left: 0px; height: 40px; ' +
-			'width: 30px; background-color: #ffffff">' +
+			'width: 30px; background-color: rgba(0, 128, 0, 0.5);">' +
 			'<div id="target" style="position: absolute; top: 60px; left: 45px; height: 20px; ' +
 			'width: 15px; background-color: rgba(0, 128, 0, 0.5);">' +
 			'</div></div></div>';
@@ -32,9 +32,34 @@ describe('dom.elementsFromPoint', function () {
 		}
 	});
 
+	it('should return inline elements properly', function () {
+		fixture.innerHTML = '<div id="container" style="position: absolute; top: 0px; left: 0px; height: 100px; ' +
+			'width: 90px; background-color: rgba(0, 128, 0, 0.5);">' +
+			'<span id="pos" style="position: absolute; top: 60px; left: 45px;' +
+			'background-color: rgba(0, 128, 0, 0.5);">Text goes here</span>' +
+			'<span id="parent" style="position: absolute; top: 0px; left: 0px;' +
+			'background-color: rgba(0, 128, 0, 0.5);">' +
+			'<span id="target" style="position: absolute; top: 60px; left: 45px;' +
+			'background-color: rgba(0, 128, 0, 0.5);">Text goes here' +
+			'</span></span></div>';
+		var target = fixture.querySelector('#target');
+		var pos = fixture.querySelector('#pos');
+		var container = fixture.querySelector('#container');
+
+		target.scrollIntoView();
+		var rect = target.getBoundingClientRect();
+
+		if (kslib.dom.supportsElementsFromPoint(target.ownerDocument)) {
+			var visualParents = kslib.dom.elementsFromPoint(target.ownerDocument,
+															Math.ceil(rect.left + 1),
+															Math.ceil(rect.top + 1));
+			assert.deepEqual(visualParents.slice(0, 3), [target, pos, container]);
+		}
+	});
+
 	it('should return normal flow elements properly', function () {
-		fixture.innerHTML = '<div id="parent" style="height: 40px; width: 30px;">' +
-			'<div id="target" style="height: 20px; width: 15px;">' +
+		fixture.innerHTML = '<div id="parent" style="background-color: rgba(0, 128, 0, 0.5); height: 40px; width: 30px;">' +
+			'<div id="target" style="background-color: rgba(0, 128, 0, 0.5); height: 20px; width: 15px;">' +
 			'</div></div>';
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');

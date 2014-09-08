@@ -20,7 +20,7 @@ describe('dom.getBackgroundColor', function () {
 		assert.closeTo(actual.green, expected.green, 0.5);
 		assert.closeTo(actual.blue, expected.blue, 0.5);
 		assert.closeTo(actual.alpha, expected.alpha, 0.1);
-		assert.deepEqual(bgNodes, [target, parent]);
+		assert.deepEqual(bgNodes, [parent]);
 	});
 
 	it('should return the blended color if it is transparent and positioned', function () {
@@ -55,7 +55,6 @@ describe('dom.getBackgroundColor', function () {
 			'<div id="target" style="height: 20px; width: 15px; background-color: rgba(0, 128, 0, 0.5);">' +
 			'</div></div></div>';
 		var target = fixture.querySelector('#target');
-		var transparent = fixture.querySelector('#transparent');
 		var under = fixture.querySelector('#under');
 		var bgNodes = [];
 		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
@@ -64,7 +63,7 @@ describe('dom.getBackgroundColor', function () {
 		assert.closeTo(actual.green, expected.green, 0.5);
 		assert.closeTo(actual.blue, expected.blue, 0.5);
 		assert.closeTo(actual.alpha, expected.alpha, 0.1);
-		assert.deepEqual(bgNodes, [target, transparent, under]);
+		assert.deepEqual(bgNodes, [target, under]);
 	});
 
 	it('should only look at what is underneath original element when blended and positioned', function () {
@@ -80,7 +79,6 @@ describe('dom.getBackgroundColor', function () {
 			'width: 15px; background-color: rgba(0, 128, 0, 0.5);">' +
 			'</div></div></div>';
 		var target = fixture.querySelector('#target');
-		var pos = fixture.querySelector('#pos');
 		var under = fixture.querySelector('#under');
 		var bgNodes = [];
 		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
@@ -90,7 +88,7 @@ describe('dom.getBackgroundColor', function () {
 			assert.closeTo(actual.green, expected.green, 0.5);
 			assert.closeTo(actual.blue, expected.blue, 0.5);
 			assert.closeTo(actual.alpha, expected.alpha, 0.1);
-			assert.deepEqual(bgNodes, [target, pos, under]);
+			assert.deepEqual(bgNodes, [target, under]);
 		} else {
 			assert.isNull(actual);
 		}
@@ -147,16 +145,17 @@ describe('dom.getBackgroundColor', function () {
 			'<div id="target" style="height: 20px; width: 15px; background-color: green; opacity: 0.5;">' +
 			'</div></div></div>';
 		var target = fixture.querySelector('#target');
-		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
 		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
 		assert.isNull(actual);
-		assert.deepEqual(bgNodes, [target, parent]);
+		assert.deepEqual(bgNodes, [target]);
 	});
 
 
 	it('should return white if transparency goes all the way up to document', function () {
-		var actual = kslib.dom.getBackgroundColor(fixture);
+		fixture.innerHTML = '<div id="target" style="height: 10px; width: 30px;">';
+		var target = fixture.querySelector('#target');
+		var actual = kslib.dom.getBackgroundColor(target);
 		var expected = new kslib.color.Color(255, 255, 255, 1);
 		assert.equal(actual.red, expected.red);
 		assert.equal(actual.green, expected.green);
@@ -189,5 +188,70 @@ describe('dom.getBackgroundColor', function () {
 		assert.equal(actual.alpha, expected.alpha);
 		assert.deepEqual(bgNodes, [target]);
 	});
+
+	it('should work properly with inlines containing blocks in any browser', function () {
+		fixture.innerHTML = '<div style="background: rgba(128, 0, 0, 1)">' +
+			'<span id="linky" style="background: rgba(0, 128, 0, 0.5)">' +
+			'<div id="target">Im not visible</div>' +
+			'</span></div>';
+		var target = fixture.querySelector('#target');
+		var bgNodes = [];
+
+		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
+		if (bgNodes.length === 1) {
+			assert.isNull(actual);
+		} else {
+			var expected = new kslib.color.Color(64, 64, 0, 1);
+			assert.closeTo(actual.red, expected.red, 0.5);
+			assert.closeTo(actual.green, expected.green, 0.5);
+			assert.closeTo(actual.blue, expected.blue, 0.5);
+			assert.closeTo(actual.alpha, expected.alpha, 0.1);
+		}
+	});
+
+	it('should use hierarchical DOM traversal if possible', function () {
+		fixture.innerHTML = '<div id="parent" style="height: 40px; width: 30px; ' +
+			'background-color: white; position: relative; z-index: 5">' +
+			'<div id="target" style="height: 20px; width: 25px; z-index: 25;">' +
+			'</div></div>' +
+			'<div id="shifted" style="position: relative; top: -30px; height: 40px; width: 35px; ' +
+			'background-color: black; z-index: 15;"></div>';
+		var target = fixture.querySelector('#target');
+		var parent = fixture.querySelector('#parent');
+		var bgNodes = [];
+		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
+		var expected = new kslib.color.Color(255, 255, 255, 1);
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+		assert.deepEqual(bgNodes, [parent]);
+	});
+
+	it('should use visual traversal when needed', function () {
+		fixture.innerHTML = '<div id="parent" style="height: 40px; width: 30px; ' +
+			'background-color: white; position: relative; z-index: 5">' +
+			'<div id="target" style="position: relative; top: 1px; height: 20px; width: 25px; z-index: 25;">' +
+			'</div>' +
+			'<div id="shifted" style="position: relative; top: -30px; height: 40px; width: 35px; ' +
+			'background-color: black; z-index: 15;"></div></div>';
+		var target = fixture.querySelector('#target');
+		var shifted = fixture.querySelector('#shifted');
+		var bgNodes = [];
+		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
+		var expected = new kslib.color.Color(0, 0, 0, 1);
+		if (kslib.dom.supportsElementsFromPoint(document)) {
+			assert.deepEqual(bgNodes, [shifted]);
+		} else {
+			expected = new kslib.color.Color(255, 255, 255, 1);
+			assert.deepEqual(bgNodes, [parent]);
+		}
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+	});
+
+
 
 });
