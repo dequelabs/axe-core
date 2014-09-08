@@ -1,18 +1,17 @@
 {
-	"id": "video-caption",
+	"id": "video-description",
 	"selector": "video",
 	"checks": [
-		"caption"
+		"description"
 	],
 	"tags": [
-		"wcag2a",
-		"wcag122",
-		"wcag123",
+		"wcag2aa",
+		"wcag125",
 		"section508",
 		"section508a"
 	],
 	"metadata": {
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/video-audio-multimedia/",
-		"help": "HTML5 video elements need captions"
+		"help": "HTML5 video elements need an audio description track"
 	}
 }
