@@ -31,7 +31,7 @@ describe('color-contrast', function () {
 		assert.equal(checkContext._data.bgColor, white.toHexString());
 		assert.equal(checkContext._data.fgColor, black.toHexString());
 		assert.equal(checkContext._data.contrastRatio, '21.00');
-		assert.deepEqual(checkContext._relatedNodes, [target, parent]);
+		assert.deepEqual(checkContext._relatedNodes, [parent]);
 	});
 
 	it('should return true when there is sufficient contrast because of bold tag', function () {
@@ -40,7 +40,7 @@ describe('color-contrast', function () {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
-		assert.deepEqual(checkContext._relatedNodes, [target, parent]);
+		assert.deepEqual(checkContext._relatedNodes, [parent]);
 	});
 
 	it('should return true when there is sufficient contrast because of font weight', function () {
@@ -73,7 +73,7 @@ describe('color-contrast', function () {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
-		assert.deepEqual(checkContext._relatedNodes, [target, parent]);
+		assert.deepEqual(checkContext._relatedNodes, [parent]);
 	});
 
 	it('should return true when there is sufficient contrast with implicit transparency', function () {
@@ -82,7 +82,7 @@ describe('color-contrast', function () {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
-		assert.deepEqual(checkContext._relatedNodes, [target, parent]);
+		assert.deepEqual(checkContext._relatedNodes, [parent]);
 	});
 
 	it('should return true when there is sufficient contrast', function () {
