@@ -1,23 +1,14 @@
 {
-	"id": "label",
+	"id": "label-title-only",
 	"selector": "input:not([type='hidden']):not([type='image']):not([type='button']):not([type='submit']):not([type='reset']), select, textarea",
 	"checks": [
-		"aria-label",
-		"aria-labelledby",
-		"implicit-label",
-		"explicit-label",
-		"help-same-as-label",
-		"non-empty-title"
+		"title-only"
 	],
 	"tags": [
-		"wcag2a",
-		"wcag332",
-		"wcag131",
-		"section508",
-		"section508n"
+		"best-practice"
 	],
 	"metadata": {
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/forms/form-labels",
-		"help": "Form elements must have labels"
+		"help": "Only title or aria-describedby used to generate label for form element"
 	}
 }
