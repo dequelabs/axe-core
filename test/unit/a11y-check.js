@@ -67,13 +67,13 @@ describe('dqre.a11yCheck', function () {
 		dqreConfiguration.data.failureSummaries = {
 			FAIL: {
 				failureMessage: function anonymous(it) {
-					var out = "Fix any of the following: \n";
+					var out = 'Fix any of the following: \n';
 					var arr1 = it;
 					if (arr1) {
 						var value, i1 = -1, l1 = arr1.length - 1;
 						while (i1 < l1) {
 							value = arr1[i1 += 1];
-							out += " " + value + "\n";
+							out += ' ' + value + '\n';
 						}
 					}
 					return out;
@@ -81,13 +81,13 @@ describe('dqre.a11yCheck', function () {
 			},
 			PASS: {
 				failureMessage: function anonymous(it) {
-					var out = "Fix all of the following: \n";
+					var out = 'Fix all of the following: \n';
 					var arr1 = it;
 					if (arr1) {
 						var value, i1 = -1, l1 = arr1.length - 1;
 						while (i1 < l1) {
 							value = arr1[i1 += 1];
-							out += " " + value + "\n";
+							out += ' ' + value + '\n';
 						}
 					}
 					return out;
