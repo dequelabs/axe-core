@@ -7,6 +7,7 @@
 		"implicit-label",
 		"explicit-label",
 		"help-same-as-label",
+		"multiple-label",
 		"non-empty-title"
 	],
 	"tags": [
