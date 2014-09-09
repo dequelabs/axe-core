@@ -6,18 +6,31 @@
 </head>
 <body>
 <form action="#">
-<input type="checkbox" id="noname">
-<input type="checkbox" id="dupe1" name="dupe">
-<input type="checkbox" id="dupe2" name="dupe">
-<input type="checkbox" id="single" name="single">
-<input type="checkbox" id="label1" name="label" aria-labelledby="grouplabel">
-<input type="checkbox" id="label2" name="label" aria-labelledby="grouplabel">
-<div id="grouplabel">Label</div>
-<fieldset>
-	<legend>Name</legend>
-<input type="checkbox" id="fieldset1" name="fieldset">
-<input type="checkbox" id="fieldset2" name="fieldset">
-</fieldset>
+	<input type="checkbox" id="noname">
+	<input type="checkbox" name="dupe" id="fail1">
+	<input type="checkbox" name="dupe">
+
+	<input type="checkbox" name="single" id="pass1">
+
+	<input type="checkbox" name="label" id="pass2" aria-labelledby="grouplabel">
+	<input type="checkbox" name="label" aria-labelledby="grouplabel">
+	<div id="grouplabel">Label</div>
+	<fieldset>
+		<legend>Name</legend>
+		<input type="checkbox" name="fieldset" id="pass3">
+		<input type="checkbox"name="fieldset">
+		<input type="hidden" name="hiddeninput">
+	</fieldset>
+
+	<div role="group" aria-label="Test">
+		<input type="checkbox" name="fieldset2" id="pass4">
+		<input type="checkbox"name="fieldset2">
+	</div>
+
+	<div role="group" aria-labelledby="grouplabel">
+		<input type="checkbox" name="fieldset3" id="pass5">
+		<input type="checkbox"name="fieldset3">
+	</div>
 </form>
 </body>
 </html>

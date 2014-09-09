@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Label Test</title>
+<script src="/dist/kensington.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<form action="#">
+
+	<input type="text" id="fail1" title="Label">
+	<select id="fail2" title="Label"></select>
+	<textarea id="fail3" title="Label"></textarea>
+	<input type="text" id="fail4" aria-describedby="hi">
+
+	<label for="pass1">Hi</label>
+	<input type="text" id="pass1" title="Hello">
+
+	<label>
+		Hi
+		<input type="text" id="pass2" title="Hello">
+	</label>
+
+	<input type="text" id="pass3" title="Hello" aria-label="Hi">
+
+	<div id="hi">Hi</div>
+	<input type="text" id="pass4" title="Hello" aria-labelledby="hi">
+
+
+	<label for="pass5">Hi</label>
+	<input type="text" id="pass5" aria-describedby="hi">
+
+	<label>
+		Hi
+		<input type="text" id="pass6" aria-describedby="hi">
+	</label>
+
+	<input type="text" id="pass7" aria-describedby="hi" aria-label="Hi">
+	<input type="text" id="pass8" aria-describedby="hi" aria-labelledby="hi">
+
+</form>
+</body>
+</html>
