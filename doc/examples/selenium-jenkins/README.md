@@ -1,7 +1,8 @@
 # Selenium README #
 
 This example demonstrates how to use Kensington Automated Testing with the
-Selenium browser automation tool and Node development tools.
+Selenium browser automation tool and Node development tools.  This example will generate XML that can
+be utilized by Jenkins to control build success or failure.
 
 Selenium integration enables testing of full pages and sites.
 
@@ -13,16 +14,16 @@ Selenium integration enables testing of full pages and sites.
   to install it. On Unix, ensure that Firefox is on your path.
 * `npm install -g grunt-cli` to install the Grunt task runner (may need to be
   run with `sudo` on Unix or as Administrator on Windows)
-* Move to the `doc/examples/selenium` directory
+* Move to the `doc/examples/selenium-jenkins` directory
 * `npm install` to install dependencies
 
 ## To run the example ##
 
-* Move to the `doc/examples/selenium` directory
+* Move to the `doc/examples/selenium-jenkins` directory
 * `grunt test` to run Selenium
 
 This should launch an automated Firefox window, load and analyze the
-configured web pages, and then output Kensington Automated Test results to JSON
+configured web pages, and then output Kensington Automated Test results to XML
 files, one per URL.
 
 ## To modify the example ##
