@@ -1,6 +1,0 @@
-{
-	"type": "PASS",
-	"metadata": {
-		"failureMessage": "Fix all of the following: {{~it:value}}\n{{=value}}{{~}}"
-	}
-}
