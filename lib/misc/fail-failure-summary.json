@@ -1,6 +1,6 @@
 {
 	"type": "FAIL",
 	"metadata": {
-		"failureMessage": "Fix any of the following:{{~it:value}}\n{{=value}}{{~}}"
+		"failureMessage": "Fix all of the following:{{~it:value}}\n{{=value}}{{~}}"
 	}
 }
