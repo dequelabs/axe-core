@@ -78,6 +78,16 @@ describe('Rule', function () {
 
 				assert.lengthOf(result, 0);
 			});
+			it('should include hidden elements if excludeHidden is false', function () {
+				fixture.innerHTML = '<div style="display: none"></div>';
+
+				var rule = new Rule({
+						excludeHidden: false
+					}),
+					result = rule.gather({ include: [document.getElementById('fixture')] });
+
+				assert.deepEqual(result, [fixture.firstChild]);
+			});
 		});
 		describe('run', function () {
 			it('should be a function', function () {
