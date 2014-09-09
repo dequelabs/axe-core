@@ -135,27 +135,60 @@ describe('Rule', function () {
 			it('should pass the matching option to run', function (done) {
 				fixture.innerHTML = '<blink>Hi</blink>';
 				var orig = Check.prototype.run,
-					option = {id: 'cats', data: 'minkeys'};
+					options = {
+						checks: {
+							cats: {
+								enabled: 'bananas',
+								options: 'minkeys'
+							}
+						}
+					};
 
 				Check.prototype.run = function (node, options, cb) {
-					assert.deepEqual(options, option);
+					assert.equal(options.enabled, 'bananas');
+					assert.equal(options.options, 'minkeys');
 					cb(true);
 				};
 
-				var rule = new Rule({ checks: [{ id: 'cats' }]});
-				rule.run({ include: [document] }, {
-					checks: [option]
-				}, function () {
+				var rule = new Rule({ id: 'cats', checks: [{ id: 'cats' }]});
+				rule.run({ include: [document] }, options, function () {
 					Check.prototype.run = orig;
 					done();
 				});
 			});
 
-			it('should not throw if the options object is undefined', function () {
-				var rule = new Rule({ checks: [{ id: 'cats', evaluate: function () {} }]});
-				assert.doesNotThrow(function () {
-					rule.run({ include: [document] }, undefined, function () {
-					});
+			it('should pass the matching option to run defined on the rule over global', function (done) {
+				fixture.innerHTML = '<blink>Hi</blink>';
+				var orig = Check.prototype.run,
+					options = {
+						rules: {
+							cats: {
+								checks: {
+									cats: {
+										enabled: 'apples',
+										options: 'apes'
+									}
+								}
+							}
+						},
+						checks: {
+							cats: {
+								enabled: 'bananas',
+								options: 'minkeys'
+							}
+						}
+					};
+
+				Check.prototype.run = function (node, options, cb) {
+					assert.equal(options.enabled, 'apples');
+					assert.equal(options.options, 'apes');
+					cb(true);
+				};
+
+				var rule = new Rule({ id: 'cats', checks: [{ id: 'cats' }]});
+				rule.run({ include: [document] }, options, function () {
+					Check.prototype.run = orig;
+					done();
 				});
 			});
 
@@ -169,7 +202,7 @@ describe('Rule', function () {
 						}
 					}]
 				});
-				rule.run({ include: [document] }, null, function (r) {
+				rule.run({ include: [document] }, {}, function (r) {
 					assert.lengthOf(r.details, 0);
 				});
 

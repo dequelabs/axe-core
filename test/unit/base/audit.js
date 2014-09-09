@@ -155,10 +155,16 @@ describe('Audit', function () {
 			});
 		});
 		it('should not run rules disabled by the options', function (done) {
-			a.run({ include: [document] }, [{id: 'positive3', enabled: false}], function (results) {
-				assert.equal(results.length, 3);
-				done();
-			});
+			a.run({ include: [document] }, {
+					rules: {
+						'positive3': {
+							enabled: false
+						}
+					}
+				}, function (results) {
+					assert.equal(results.length, 3);
+					done();
+				});
 		});
 		it('should not run rules disabled by the configuration', function (done) {
 			var a = new Audit();
@@ -174,7 +180,7 @@ describe('Audit', function () {
 					}
 				}]
 			});
-			a.run({ include: [document] }, null, function () {
+			a.run({ include: [document] }, {}, function () {
 				assert.ok(success);
 				done();
 			});
@@ -205,14 +211,13 @@ describe('Audit', function () {
 
 			fixture.innerHTML = '<a href="#">link</a>';
 			orig = rule.run;
-			rule.run = function (node, options, callback) {
-				assert.ok(options);
-				assert.equal(options.id, targetRule.id);
-				assert.equal(options.data, 'monkeys');
+			rule.run = function (node, o, callback) {
+				assert.deepEqual(o, options);
 				passed = true;
 				callback({});
 			};
-			options = [{id: targetRule.id, data: 'monkeys'}];
+			options = {rules: {}};
+			(options.rules[targetRule.id] = {}).data = 'monkeys';
 			a.run({ include: [document] }, options, function () {
 				assert.ok(passed);
 				rule.run = orig;
@@ -254,7 +259,7 @@ describe('Audit', function () {
 
 			audit.rules[0].after = function (res, opts) {
 				assert.equal(res, results[0]);
-				assert.equal(opts, options[0]);
+				assert.deepEqual(opts, options);
 				success = true;
 			};
 
