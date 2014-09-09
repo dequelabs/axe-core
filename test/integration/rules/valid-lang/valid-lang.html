@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" id="pass1">
+<html lang="en">
 <head>
 <title>Valid Lang Test</title>
 <script src="../../../../dist/kensington.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-<p lang="en-US" id="pass2">English</p>
+<p lang="en-US" id="pass1">English</p>
+<p xml:lang="en-US" id="pass2">English</p>
+<p xml:lang="en-US" lang="en-US" id="pass3">Mix</p>
+
 <p lang="gibberish-US" id="fail1">Not English</p>
 <p xml:lang="gibberish-US" id="fail2">Not English</p>
-<p xml:lang="en-US" id="pass3">English</p>
 <p xml:lang="en-US" lang="gibberish-US" id="fail3">Mix</p>
-<p xml:lang="en-US" lang="en-US" id="pass4">Mix</p>
 </body>
 </html>
