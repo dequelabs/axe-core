@@ -93,11 +93,9 @@ module.exports = function (grunt) {
 										var testCase;
 										for (var i = 0; i < rules[rule].errors.length; i++) {
 											testCase = '<testcase name="' + safe_tags_replace(rules[rule].label) + '[' + safe_tags_replace(rules[rule].errors[i].target.toString()) + ']" classname="' + rules[rule].name + '.' + site + '">';
-											if (rules[rule].errors[i].messages.length) {
+											if (rules[rule].errors[i].messages) {
 												testCase += '<failure type="failure">';
-												for (var j = 0; j < rules[rule].errors[i].messages.length; j++) {
-													testCase += safe_tags_replace(rules[rule].errors[i].messages[j]) + '\n';
-												}
+												testCase += safe_tags_replace(rules[rule].errors[i].messages[j]) + '\n';
 												testCase += '</failure>';
 											}
 											testCase += '</testcase>';
