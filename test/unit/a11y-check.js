@@ -63,8 +63,7 @@ describe('dqre.a11yCheck', function () {
 			}]
 		}];
 	beforeEach(function () {
-		dqre.configure({ messages: {}, rules: []});
-		dqreConfiguration.data.failureSummaries = {
+		dqre.configure({ messages: {}, rules: [], data: {failureSummaries: {
 			FAIL: {
 				failureMessage: function anonymous(it) {
 					var out = 'Fix any of the following: \n';
@@ -93,7 +92,7 @@ describe('dqre.a11yCheck', function () {
 					return out;
 				}
 			}
-		};
+		}}});
 		orig = dqre.run;
 		dqre.run = function (ctxt, options, cb) {
 			cb(results);
