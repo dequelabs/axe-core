@@ -63,7 +63,36 @@ describe('dqre.a11yCheck', function () {
 			}]
 		}];
 	beforeEach(function () {
-		dqre.configure({ messages: {}, rules: [] });
+		dqre.configure({ messages: {}, rules: [], data: {failureSummaries: {
+			FAIL: {
+				failureMessage: function anonymous(it) {
+					var out = 'Fix any of the following: \n';
+					var arr1 = it;
+					if (arr1) {
+						var value, i1 = -1, l1 = arr1.length - 1;
+						while (i1 < l1) {
+							value = arr1[i1 += 1];
+							out += ' ' + value + '\n';
+						}
+					}
+					return out;
+				}
+			},
+			PASS: {
+				failureMessage: function anonymous(it) {
+					var out = 'Fix all of the following: \n';
+					var arr1 = it;
+					if (arr1) {
+						var value, i1 = -1, l1 = arr1.length - 1;
+						while (i1 < l1) {
+							value = arr1[i1 += 1];
+							out += ' ' + value + '\n';
+						}
+					}
+					return out;
+				}
+			}
+		}}});
 		orig = dqre.run;
 		dqre.run = function (ctxt, options, cb) {
 			cb(results);
@@ -142,7 +171,7 @@ describe('failureSummary', function () {
 		var summary = failureSummary('PASS', {
 			result: 'PASS'
 		});
-		assert.deepEqual(summary, []);
+		assert.equal(summary, '');
 	});
 
 	it('should return a list of all FAILs which return true', function () {
@@ -165,7 +194,7 @@ describe('failureSummary', function () {
 			}]
 		});
 
-		assert.deepEqual(summary, ['1', '3']);
+		assert.equal(summary, 'Fix any of the following: \n 1\n 3\n');
 	});
 
 	it('should return a list of PASSes if none return true', function () {
@@ -193,7 +222,7 @@ describe('failureSummary', function () {
 			}]
 		});
 
-		assert.deepEqual(summary, ['1', '2', '3']);
+		assert.equal(summary, 'Fix all of the following: \n 1\n 2\n 3\n');
 	});
 
 	it('should not return any PASSes if any of them return true', function () {
@@ -218,7 +247,7 @@ describe('failureSummary', function () {
 			}]
 		});
 
-		assert.deepEqual(summary, []);
+		assert.equal(summary, '');
 
 	});
 
@@ -248,21 +277,9 @@ describe('failureSummary', function () {
 			}]
 		});
 
-		assert.deepEqual(summary, ['4', '1', '2', '3']);
+		assert.equal(summary, 'Fix any of the following: \n 4\n\nFix all of the following: \n 1\n 2\n 3\n');
 
 	});
 
-	it('should NOT skip checks that have no help', function () {
-		var summary = failureSummary('FAIL', {
-			result: 'FAIL',
-			checks: [{
-				id: 'NOMATCHY',
-				result: true,
-				type: 'FAIL'
-			}]
-		});
 
-		assert.deepEqual(summary, ['']);
-
-	});
 });
