@@ -3,6 +3,6 @@
 	"matches": "color-contrast-matches.js",
 	"evaluate": "color-contrast.js",
 	"metadata": {
-		"failureMessage": "Element has insufficient color contrast of {{=it.data.contrastRatio}} (foreground color: {{=it.data.fgColor}}, background color: {{=it.data.bgColor}})"
+		"failureMessage": "Element has insufficient color contrast of {{=it.data.contrastRatio}} (foreground color: {{=it.data.fgColor}}, background color: {{=it.data.bgColor}}). Background detected on:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
 	}
 }
