@@ -43,6 +43,15 @@ describe('configure', function () {
 
 	});
 
+	it('should add the version of rules to dqre.audit', function () {
+		dqre.configure({
+			data: {},
+			rules: [],
+			version: 'monkeys'
+		});
+		assert.equal(dqre.audit.version, 'monkeys');
+	});
+
 	describe('respondable subscriber', function () {
 		it('should add a respondable subscriber', function () {
 			var mockAudit = {
