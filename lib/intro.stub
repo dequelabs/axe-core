@@ -1,4 +1,5 @@
 /*! Kensington Rule Library v<%= pkg.version %>
  * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.organization %>
  */
+var kslib = {};
 (function (global) {
