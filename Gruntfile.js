@@ -23,11 +23,11 @@ module.exports = function (grunt) {
 		concat: {
 			lib: {
 				src: [
+					'lib/index.js',
 					'lib/intro.stub',
 					'bower_components/clone/lib/index.js',
 					'bower_components/matches-selector/lib/index.js',
 					'bower_components/escape-selector/lib/index.js',
-					'lib/index.js',
 					'lib/*/index.js',
 					'lib/*/**/*.js',
 					'lib/export.js',
