@@ -43,6 +43,12 @@ describe('duplicate-img-label', function () {
 		assert.isTrue(checks['duplicate-img-label'].evaluate(node));
 	});
 
+	it('should return false if img and text are both blank', function () {
+		fixture.innerHTML = '<button id="target"><img alt=""></button>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks['duplicate-img-label'].evaluate(node));
+	});
+
 	it('should return false if img and text have superset/subset text', function () {
 		fixture.innerHTML = '<button id="target"><img alt="Plain text and more">Plain text</button>';
 		var node = fixture.querySelector('#target');
