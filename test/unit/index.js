@@ -7,4 +7,8 @@ describe('index', function () {
 	it('should redefine `require`', function () {
 		assert.equal(typeof require, 'undefined');
 	});
+
+	it('should add kslib to dqre', function () {
+		assert.isDefined(dqre.kslib);
+	});
 });
