@@ -19,10 +19,13 @@ module.exports = function (grunt) {
 
 		concat: {
 			kensington: {
-				src: ['bower_components/rule-engine/dist/dqre.js',
+				src: ['lib/intro.stub',
+					'bower_components/rule-engine/dist/dqre.js',
 					'bower_components/ks-common-functions/dist/ks-cf.js',
-					'bower_components/ks-rules/dist/rules.js'],
-				dest: 'dist/kensington.js'
+					'bower_components/ks-rules/dist/rules.js',
+					'lib/outro.stub'
+				],
+				dest: 'build/kensington.js'
 			}
 		},
 		uglify: {
