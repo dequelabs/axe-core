@@ -31,7 +31,7 @@ describe('color-contrast', function () {
 		assert.equal(checkContext._data.bgColor, white.toHexString());
 		assert.equal(checkContext._data.fgColor, black.toHexString());
 		assert.equal(checkContext._data.contrastRatio, '21.00');
-		assert.isTrue(checkContext._data.fontWeight === '700' || checkContext._data.fontWeight === 'bold');
+		assert.equal(checkContext._data.fontWeight, 'bold');
 		assert.closeTo(parseFloat(checkContext._data.fontSize), 14, 0.5);
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
