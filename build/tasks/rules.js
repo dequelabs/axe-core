@@ -104,6 +104,7 @@ module.exports = function (grunt) {
 			checks: ['lib/checks/**/*.json'],
 			misc: ['lib/misc/**/*.json'],
 			blacklist: ['metadata'],
+			version: 'dev',
 			standards: ''
 		});
 
@@ -141,7 +142,11 @@ module.exports = function (grunt) {
 		});
 		var failureSummaries = parseObject(options.misc, 'failureSummary');
 		metadata.failureSummaries = createFailureSummaryObject(failureSummaries);
-		var r = replaceFunctions(JSON.stringify({ data: metadata, rules: rules }, blacklist));
+		var r = replaceFunctions(JSON.stringify({
+			data: metadata,
+			rules: rules,
+			version: options.version
+		}, blacklist));
 		var c = replaceFunctions(JSON.stringify(createCheckObject(checks), blacklist));
 
 		grunt.file.write(this.data.dest.rules, 'dqre.configure(' + r + ');');
