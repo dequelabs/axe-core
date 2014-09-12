@@ -10,6 +10,7 @@
 		"wcag131"
 	],
 	"metadata": {
+		"description": "Ensures that lists are structured correctly",
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/lists-links-blockquote#id38_lists",
 		"help": "<ul> and <ol> lists must contain only <li> listitems"
 	}

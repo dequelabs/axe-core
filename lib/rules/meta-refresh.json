@@ -13,6 +13,7 @@
 		"wcag325"
 	],
 	"metadata": {
+		"description": "Ensures that <meta> refresh is not used",
 		"help": "Timed refresh must not exist"
 	}
 }

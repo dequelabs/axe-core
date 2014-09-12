@@ -13,6 +13,7 @@
 		"section508a"
 	],
 	"metadata": {
+		"description": "Ensures that every <input> that represents an image button has an accessible name",
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/alt-text#id57_active_images_links_and_buttons",
 		"help": "Image buttons must have alternate text"
 	}

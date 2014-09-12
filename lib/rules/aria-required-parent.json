@@ -9,6 +9,7 @@
 		"wcag411"
 	],
 	"metadata": {
+		"description": "Checks all elements that contain a WAI-ARIA role to ensure that all required parent roles are present",
 		"help": "Certain ARIA roles must be contained by particular parents"
 	}
 }

@@ -12,6 +12,7 @@
 		"wcag131"
 	],
 	"metadata": {
+		"description": "Ensures that <table> elements that are being used for layout do not contain markup only relevant for data tables",
 		"help": "Layout tables must not use data table elements",
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/data-tables/"
 	}

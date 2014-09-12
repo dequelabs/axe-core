@@ -9,6 +9,7 @@
 		"wcag131"
 	],
 	"metadata": {
+		"description": "Ensures that all <dd> and <dt> elements have a <dl> as a parent",
 		"help": "<dd> and <dt> elements must be contained in a <dl>"
 	}
 }

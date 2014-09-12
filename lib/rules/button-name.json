@@ -14,6 +14,7 @@
 		"section508a"
 	],
 	"metadata": {
+		"description": "Checks all <button> elements to ensure that they have a discernable accessible name",
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/forms/form-labels#id84_example_button",
 		"help": "<button> elements must have alternate text"
 	}
