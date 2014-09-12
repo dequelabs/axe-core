@@ -14,7 +14,7 @@
 		"section508a"
 	],
 	"metadata": {
-		"description": "Ensures that every <IMG> element has an alternative text or is marked as presentational",
+		"description": "Ensures that every <img> element has an alternative text or is marked as presentational",
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/alt-text",
 		"help": "Images must have alternate text"
 	}

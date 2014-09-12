@@ -14,7 +14,7 @@
 		"section508a"
 	],
 	"metadata": {
-		"description": "Ensures that every <INPUT> that represents a text button has an accessible name",
+		"description": "Ensures that every <input> that represents a text button has an accessible name",
 		"help": "Button inputs must have alternate text"
 	}
 }

@@ -11,7 +11,7 @@
 		"section508a"
 	],
 	"metadata": {
-		"description": "Ensures that every <VIDEO> tag has an audio description",
+		"description": "Ensures that every <video> tag has an audio description",
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/video-audio-multimedia/",
 		"help": "HTML5 video elements need an audio description track"
 	}
