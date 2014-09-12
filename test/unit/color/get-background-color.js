@@ -1,4 +1,4 @@
-describe('dom.getBackgroundColor', function () {
+describe('color.getBackgroundColor', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
@@ -14,7 +14,7 @@ describe('dom.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
+		var actual = kslib.color.getBackgroundColor(target, bgNodes);
 		var expected = new kslib.color.Color(128, 0, 0, 1);
 		assert.closeTo(actual.red, expected.red, 0.5);
 		assert.closeTo(actual.green, expected.green, 0.5);
@@ -36,7 +36,7 @@ describe('dom.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var pos = fixture.querySelector('#pos');
 		var bgNodes = [];
-		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
+		var actual = kslib.color.getBackgroundColor(target, bgNodes);
 		var expected = new kslib.color.Color(64, 64, 0, 1);
 		if (kslib.dom.supportsElementsFromPoint(target.ownerDocument)) {
 			assert.closeTo(actual.red, expected.red, 0.5);
@@ -57,7 +57,7 @@ describe('dom.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var under = fixture.querySelector('#under');
 		var bgNodes = [];
-		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
+		var actual = kslib.color.getBackgroundColor(target, bgNodes);
 		var expected = new kslib.color.Color(64, 64, 0, 1);
 		assert.closeTo(actual.red, expected.red, 0.5);
 		assert.closeTo(actual.green, expected.green, 0.5);
@@ -81,7 +81,7 @@ describe('dom.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var under = fixture.querySelector('#under');
 		var bgNodes = [];
-		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
+		var actual = kslib.color.getBackgroundColor(target, bgNodes);
 		var expected = new kslib.color.Color(64, 64, 0, 1);
 		if (kslib.dom.supportsElementsFromPoint(target.ownerDocument)) {
 			assert.closeTo(actual.red, expected.red, 0.5);
@@ -101,7 +101,7 @@ describe('dom.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
+		var actual = kslib.color.getBackgroundColor(target, bgNodes);
 		var expected = new kslib.color.Color(64, 64, 0, 1);
 		assert.closeTo(actual.red, expected.red, 0.5);
 		assert.closeTo(actual.green, expected.green, 0.5);
@@ -117,7 +117,7 @@ describe('dom.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
+		var actual = kslib.color.getBackgroundColor(target, bgNodes);
 		var expected = new kslib.color.Color(64, 64, 0, 1);
 		assert.equal(actual.red, expected.red);
 		assert.equal(actual.green, expected.green);
@@ -134,7 +134,7 @@ describe('dom.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
+		var actual = kslib.color.getBackgroundColor(target, bgNodes);
 		assert.isNull(actual);
 		assert.deepEqual(bgNodes, [target, parent]);
 	});
@@ -146,7 +146,7 @@ describe('dom.getBackgroundColor', function () {
 			'</div></div></div>';
 		var target = fixture.querySelector('#target');
 		var bgNodes = [];
-		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
+		var actual = kslib.color.getBackgroundColor(target, bgNodes);
 		assert.isNull(actual);
 		assert.deepEqual(bgNodes, [target]);
 	});
@@ -155,7 +155,7 @@ describe('dom.getBackgroundColor', function () {
 	it('should return white if transparency goes all the way up to document', function () {
 		fixture.innerHTML = '<div id="target" style="height: 10px; width: 30px;">';
 		var target = fixture.querySelector('#target');
-		var actual = kslib.dom.getBackgroundColor(target);
+		var actual = kslib.color.getBackgroundColor(target);
 		var expected = new kslib.color.Color(255, 255, 255, 1);
 		assert.equal(actual.red, expected.red);
 		assert.equal(actual.green, expected.green);
@@ -169,7 +169,7 @@ describe('dom.getBackgroundColor', function () {
 			'</div></div>';
 		var target = fixture.querySelector('#target');
 		var bgNodes = [];
-		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
+		var actual = kslib.color.getBackgroundColor(target, bgNodes);
 		assert.isNull(actual);
 		assert.deepEqual(bgNodes, [target]);
 	});
@@ -180,7 +180,7 @@ describe('dom.getBackgroundColor', function () {
 			'</div></div>';
 		var target = fixture.querySelector('#target');
 		var bgNodes = [];
-		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
+		var actual = kslib.color.getBackgroundColor(target, bgNodes);
 		var expected = new kslib.color.Color(0, 128, 0, 1);
 		assert.equal(actual.red, expected.red);
 		assert.equal(actual.green, expected.green);
@@ -197,7 +197,7 @@ describe('dom.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var bgNodes = [];
 
-		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
+		var actual = kslib.color.getBackgroundColor(target, bgNodes);
 		if (bgNodes.length === 1) {
 			assert.isNull(actual);
 		} else {
@@ -219,7 +219,7 @@ describe('dom.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
+		var actual = kslib.color.getBackgroundColor(target, bgNodes);
 		var expected = new kslib.color.Color(255, 255, 255, 1);
 		assert.closeTo(actual.red, expected.red, 0.5);
 		assert.closeTo(actual.green, expected.green, 0.5);
@@ -238,7 +238,7 @@ describe('dom.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var shifted = fixture.querySelector('#shifted');
 		var bgNodes = [];
-		var actual = kslib.dom.getBackgroundColor(target, bgNodes);
+		var actual = kslib.color.getBackgroundColor(target, bgNodes);
 		var expected = new kslib.color.Color(0, 0, 0, 1);
 		if (kslib.dom.supportsElementsFromPoint(document)) {
 			assert.deepEqual(bgNodes, [shifted]);
