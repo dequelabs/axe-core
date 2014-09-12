@@ -10,7 +10,7 @@
 		"wcag311"
 	],
 	"metadata": {
-		"description": "Ensures that every HTML document has a lang attrbute and that it contains a valid value",
+		"description": "Ensures that every HTML document has a lang attribute and that it contains a valid value",
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/language",
 		"help": "documentElement (<html>) must have a valid 'lang' attribute"
 	}
