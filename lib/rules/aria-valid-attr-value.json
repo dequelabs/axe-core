@@ -8,6 +8,7 @@
 		"wcag411"
 	],
 	"metadata": {
+		"description": "Checks all elements that contain WAI-ARIA atributes to ensure that the values of the attributes are valid",
 		"help": "ARIA attributes used must conform to valid values"
 	}
 }

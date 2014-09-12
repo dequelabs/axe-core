@@ -10,6 +10,7 @@
 		"wcag131"
 	],
 	"metadata": {
+		"description": "Ensures that all <DL> elements are structured correctly",
 		"help": "<dl> elements must contain properly-ordered <dt> and <dd> elements"
 	}
 }

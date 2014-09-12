@@ -8,6 +8,7 @@
 		"best-practice"
 	],
 	"metadata": {
+		"description": "Ensures that every <INPUT> that requires a label is not only labeled using the title attribute",
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/forms/form-labels",
 		"help": "Only title or aria-describedby used to generate label for form element"
 	}

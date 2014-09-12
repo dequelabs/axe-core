@@ -11,6 +11,7 @@
 		"section508j"
 	],
 	"metadata": {
+		"description": "Ensures that the deprecated <MARQUEE> tag is not used",
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/visual-layout/fonts-and-typography#id55_avoid_blink_marquee",
 		"help": "<marquee> elements are deprecated and must not be used"
 	}

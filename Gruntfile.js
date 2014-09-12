@@ -28,7 +28,8 @@ module.exports = function (grunt) {
 				},
 				dest: {
 					rules: 'dist/rules.js',
-					checks: 'dist/checks.js'
+					checks: 'dist/checks.js',
+					descriptions: 'dist/descriptions.html'
 				}
 			}
 		},

@@ -18,6 +18,7 @@
 		"section508n"
 	],
 	"metadata": {
+		"description": "Ensures that every <INPUT> that requires a label, has an appropriate label",
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/forms/form-labels",
 		"help": "Form elements must have labels"
 	}

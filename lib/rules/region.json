@@ -10,6 +10,7 @@
 		"wcag241"
 	],
 	"metadata": {
+		"description": "Ensures that all content on a page is contained within a landmark region",
 		"help": "Content must be contained in a region"
 	}
 }

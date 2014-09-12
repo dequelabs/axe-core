@@ -4,6 +4,8 @@
 var path = require('path');
 var clone = require('clone');
 var dot = require('dot');
+var Encoder = require('node-html-encoder').Encoder;
+var encoder = new Encoder('entity');
 
 dot.templateSettings.strip = false;
 
@@ -12,6 +14,8 @@ var templates = {
 	after: 'function (results, options) {\n<%=source%>\n}',
 	gather: 'function (context) {\n<%=source%>\n}',
 	matches: 'function (node) {\n<%=source%>\n}',
+	description: '<tr><td><%=id%></td><td><%=description%></td></tr>\n',
+	descriptions: '<!DOCTYPE html>\n<html>\n<head></head>\n<body>\n<table>\n<thead><tr><th scope="col">Rule ID</th><th scope="col">Description</th></tr></thead>\n<tbody><%=descriptions%></tbody>\n</table>\n</body>\n</html>'
 };
 
 var fns = {
@@ -99,6 +103,8 @@ module.exports = function (grunt) {
 			checks: {}
 		};
 
+		var descriptions = '';
+
 		var options = this.options({
 			rules: ['lib/rules/**/*.json'],
 			checks: ['lib/checks/**/*.json'],
@@ -137,6 +143,12 @@ module.exports = function (grunt) {
 			if (rule.metadata && !metadata.rules[rule.id]) {
 				metadata.rules[rule.id] = parseMetaData(rule.metadata);
 			}
+			descriptions += grunt.template.process(templates['description'], {
+				data: {
+					id: rule.id,
+					description: encoder.htmlEncode(rule.metadata.description)
+				}
+			});
 			return rule;
 		});
 		var failureSummaries = parseObject(options.misc, 'failureSummary');
@@ -146,6 +158,11 @@ module.exports = function (grunt) {
 
 		grunt.file.write(this.data.dest.rules, 'dqre.configure(' + r + ');');
 		grunt.file.write(this.data.dest.checks, 'var checks = ' + c + ';');
+		grunt.file.write(this.data.dest.descriptions, grunt.template.process(templates['descriptions'], {
+			data: {
+				descriptions: descriptions
+			}
+		}));
 
 
 

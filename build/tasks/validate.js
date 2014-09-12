@@ -94,6 +94,7 @@ module.exports = function (grunt) {
 
 				//verify that mandatory elements are there
 				if (!rule.id) { error('Missing required "id" property'); }
+				if (!rule.metadata.description) { error('Missing required "metadata.description" property'); }
 				if (!rule.metadata) { error('Missing required "metadata" property'); }
 				if (!rule.metadata.help) { error('Missing required "metadata.help" property'); }
 				if (!rule.checks) { error('Missing required "checks" property'); }

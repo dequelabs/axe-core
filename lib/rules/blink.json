@@ -12,6 +12,7 @@
 		"section508j"
 	],
 	"metadata": {
+		"description": "Checks to make sure that the <BLINK> tag is never used",
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/visual-layout/fonts-and-typography#id55_avoid_blink_marquee",
 		"help": "The <blink> tag is deprecated and must not be used"
 	}
