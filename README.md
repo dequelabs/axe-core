@@ -4,6 +4,8 @@ ks-integration allows integration tests to be run with Mocha and Selenium.
 
 ### To run integration tests ###
 
+Make sure that Firefox is installed and on the path. Currently does not work with any version of Firefox above 31.
+
 * grunt test
 
 ### To write integration tests ###

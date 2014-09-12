@@ -37,6 +37,12 @@ module.exports = function (grunt) {
 			docs: {
 				src: ['doc/**/*'],
 				dest: 'dist/'
+			},
+			descriptions: {
+				src: ['*.html'],
+				expand: true,
+				cwd: 'bower_components/ks-rules/dist/',
+				dest: 'dist/doc/'
 			}
 		},
 		watch: {
