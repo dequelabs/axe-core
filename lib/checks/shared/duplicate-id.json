@@ -3,6 +3,6 @@
 	"evaluate": "duplicate-id.js",
 	"after": "duplicate-id-after.js",
 	"metadata": {
-		"failureMessage": "Document has multiple elements with the same ID"
+		"failureMessage": "Document has multiple elements with the same ID:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
 	}
 }

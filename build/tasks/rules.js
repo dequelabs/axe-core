@@ -104,20 +104,13 @@ module.exports = function (grunt) {
 			checks: ['lib/checks/**/*.json'],
 			misc: ['lib/misc/**/*.json'],
 			blacklist: ['metadata'],
-			standards: ''
+			version: 'dev',
+			tags: ''
 		});
 
-		var standards = options.standards ? options.standards.split(/\s*,\s*/) : [];
+		var tags = options.tags ? options.tags.split(/\s*,\s*/) : [];
 
 		var rules = parseObject(options.rules, 'rule');
-
-		if (standards.length) {
-			rules = rules.filter(function (r) {
-				return r.tags.filter(function (t) {
-					return standards.indexOf(t) !== -1;
-				}).length;
-			});
-		}
 		var checks = parseObject(options.checks, 'check');
 
 		rules.map(function (rule) {
@@ -137,17 +130,24 @@ module.exports = function (grunt) {
 			if (rule.metadata && !metadata.rules[rule.id]) {
 				metadata.rules[rule.id] = parseMetaData(rule.metadata);
 			}
+			if (tags.length) {
+				rule.enabled = !!rule.tags.filter(function (t) {
+					return tags.indexOf(t) !== -1;
+				}).length;
+			}
 			return rule;
 		});
 		var failureSummaries = parseObject(options.misc, 'failureSummary');
 		metadata.failureSummaries = createFailureSummaryObject(failureSummaries);
-		var r = replaceFunctions(JSON.stringify({ data: metadata, rules: rules }, blacklist));
+		var r = replaceFunctions(JSON.stringify({
+			data: metadata,
+			rules: rules,
+			version: options.version
+		}, blacklist));
 		var c = replaceFunctions(JSON.stringify(createCheckObject(checks), blacklist));
 
 		grunt.file.write(this.data.dest.rules, 'dqre.configure(' + r + ');');
 		grunt.file.write(this.data.dest.checks, 'var checks = ' + c + ';');
-
-
 
 	});
 };
