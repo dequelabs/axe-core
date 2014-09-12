@@ -6,11 +6,11 @@
 	],
 	"pageLevel": true,
 	"tags": [
-		"wcag2a",
-		"wcag241"
+		"best-practice"
 	],
 	"metadata": {
 		"description": "Ensures that all content on a page is contained within a landmark region",
-		"help": "Content must be contained in a region"
+		"help": "Content must be contained in a region",
+		"helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/html5-aria-landmarks"
 	}
 }
