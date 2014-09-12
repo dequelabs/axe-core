@@ -105,20 +105,12 @@ module.exports = function (grunt) {
 			misc: ['lib/misc/**/*.json'],
 			blacklist: ['metadata'],
 			version: 'dev',
-			standards: ''
+			tags: ''
 		});
 
-		var standards = options.standards ? options.standards.split(/\s*,\s*/) : [];
+		var tags = options.tags ? options.tags.split(/\s*,\s*/) : [];
 
 		var rules = parseObject(options.rules, 'rule');
-
-		if (standards.length) {
-			rules = rules.filter(function (r) {
-				return r.tags.filter(function (t) {
-					return standards.indexOf(t) !== -1;
-				}).length;
-			});
-		}
 		var checks = parseObject(options.checks, 'check');
 
 		rules.map(function (rule) {
@@ -138,6 +130,11 @@ module.exports = function (grunt) {
 			if (rule.metadata && !metadata.rules[rule.id]) {
 				metadata.rules[rule.id] = parseMetaData(rule.metadata);
 			}
+			if (tags.length) {
+				rule.enabled = !!rule.tags.filter(function (t) {
+					return tags.indexOf(t) !== -1;
+				}).length;
+			}
 			return rule;
 		});
 		var failureSummaries = parseObject(options.misc, 'failureSummary');
@@ -151,8 +148,6 @@ module.exports = function (grunt) {
 
 		grunt.file.write(this.data.dest.rules, 'dqre.configure(' + r + ');');
 		grunt.file.write(this.data.dest.checks, 'var checks = ' + c + ';');
-
-
 
 	});
 };

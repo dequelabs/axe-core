@@ -24,7 +24,7 @@ module.exports = function (grunt) {
 		rules: {
 			lib: {
 				options: {
-					standards: grunt.option('standards'),
+					tags: grunt.option('tags'),
 					version: '<%= pkg.version %>'
 				},
 				dest: {
