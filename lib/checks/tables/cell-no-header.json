@@ -3,6 +3,6 @@
 	"type": "FAIL",
 	"evaluate": "cell-no-header.js",
 	"metadata": {
-		"failureMessage": "All data cells must have a table header"
+		"failureMessage": "All data cells must have a table header:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
 	}
 }

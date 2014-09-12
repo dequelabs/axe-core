@@ -1,0 +1,8 @@
+{
+	"id": "multiple-label",
+	"evaluate": "multiple-label.js",
+	"type": "FAIL",
+	"metadata": {
+		"failureMessage": "Form element has multiple <label> elements: {{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
+	}
+}

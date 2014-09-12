@@ -2,7 +2,8 @@
 	"id": "frame-title",
 	"selector": "frame, iframe",
 	"checks": [
-		"non-empty-title"
+		"non-empty-title",
+		"unique-frame-title"
 	],
 	"tags": [
 		"wcag2a",
@@ -10,6 +11,6 @@
 	],
 	"metadata": {
 		"helpUrl": "https://dequeuniversity.com/courses/html-css/frames/titles",
-		"help": "Frames must have title attribute"
+		"help": "Frames must have unique title attribute"
 	}
 }

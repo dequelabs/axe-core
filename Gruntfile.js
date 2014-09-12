@@ -24,7 +24,8 @@ module.exports = function (grunt) {
 		rules: {
 			lib: {
 				options: {
-					tags: grunt.option('tags')
+					tags: grunt.option('tags'),
+					version: '<%= pkg.version %>'
 				},
 				dest: {
 					rules: 'dist/rules.js',
