@@ -1,0 +1,8 @@
+{
+	"id": "present-and-non-empty-value",
+	"evaluate": "present-and-non-empty-value.js",
+	"selector": "[type=\"submit\"],[type=\"reset\"]",
+	"metadata": {
+		"failureMessage": "Element has a value attribute and the value attribute is empty"
+	}
+}

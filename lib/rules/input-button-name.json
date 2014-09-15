@@ -1,7 +1,8 @@
 {
 	"id": "input-button-name",
-	"selector": "input[type=\"button\"]",
+	"selector": "input[type=\"button\"],input[type=\"submit\"],input[type=\"reset\"]",
 	"checks": [
+		"present-and-non-empty-value",
 		"non-empty-value",
 		"aria-label",
 		"aria-labelledby"
