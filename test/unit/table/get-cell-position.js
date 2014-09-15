@@ -67,5 +67,23 @@ describe('table.getCellPosition', function () {
 		});
 	});
 
+	it('should handle intermittent empty rows', function () {
+		fixture.innerHTML = '<table>' +
+			'<tr><td></td><td></td><td></td></tr>' +
+			'<tr></tr>' +
+			'<tr><td></td><td id="target"></td><td></td></tr>' +
+			'<tr><td></td><td></td><td></td></tr>' +
+			'<tr></tr>' +
+			'</table>';
+
+		var target = document.getElementById('target');
+
+		assert.deepEqual(kslib.table.getCellPosition(target), {
+			x: 1,
+			y: 2
+		});
+
+	});
+
 
 });
