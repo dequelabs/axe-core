@@ -171,6 +171,16 @@ describe('utils.getSelector', function () {
 		assert.equal(result[0], document.documentElement);
 	});
 
+	it('should work on the documentElement with classes', function () {
+		var orig = document.documentElement.className;
+		document.documentElement.className = 'stuff and other things';
+		var sel = utils.getSelector(document.documentElement);
+		var result = document.querySelectorAll(sel);
+		assert.lengthOf(result, 1);
+		assert.equal(result[0], document.documentElement);
+		document.documentElement.className = orig;
+	});
+
 	it('should work on the body', function () {
 		var sel = utils.getSelector(document.body);
 		var result = document.querySelectorAll(sel);
