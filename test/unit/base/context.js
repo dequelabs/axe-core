@@ -233,6 +233,7 @@ describe('Context', function () {
 				{
 					include: [document.getElementById('fixture')],
 					exclude: [document.getElementById('mocha')],
+					initiator: true,
 					page: false,
 					frames: []
 				});
@@ -247,6 +248,7 @@ describe('Context', function () {
 				{
 					include: [],
 					exclude: [],
+					initiator: true,
 					page: false,
 					frames: []
 				});
@@ -257,11 +259,11 @@ describe('Context', function () {
 				{
 					include: [],
 					exclude: [],
+					initiator: true,
 					page: true,
 					frames: []
 				});
 		});
-
 
 	});
 
