@@ -9,6 +9,7 @@
 		"wcag411"
 	],
 	"metadata": {
+		"helpURL": "https://dequeuniversity.com/issues/aria-required-children",		
 		"description": "Checks all elements that contain a WAI-ARIA role to ensure that all required children roles are present",
 		"help": "Certain ARIA roles must contain particular children"
 	}
