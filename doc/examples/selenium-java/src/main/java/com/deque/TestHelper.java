@@ -14,7 +14,7 @@ import java.io.*;
 public class TestHelper {
 
 	private static String getScriptFilename() { 
-		return "../../../kensington.js";
+		return "../../../kensington.min.js";
 	}
 
 	private static String readFile(String fileName) {

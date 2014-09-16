@@ -30,7 +30,7 @@ function findFramesAndInject(parent, script, driver) {
 
 /**
  * Recursively inject Kensington into all iframes and top level document, then execute a callback when complete
- * @param  {String}   filepath    The path to kensington.js distribution file
+ * @param  {String}   filepath    The path to kensington.min.js distribution file
  * @param  {WebDriver}   driver   Instance of WebDriver to inject into
  * @param  {Function} callback    Callback to execute when Kensington has been injected
  */
