@@ -5,7 +5,7 @@ var WebDriver = require('selenium-webdriver'),
 	SeleniumServer = require('selenium-webdriver/remote').SeleniumServer,
 	path = require('path'),
 	ksInject = require('../inject'),
-	ks = path.resolve(__dirname, '../../../../../kensington.js'),
+	ks = path.resolve(__dirname, '../../../../../kensington.min.js'),
 	jar = path.resolve(__dirname, '../../build/selenium-server-standalone-2.41.0.jar');
 
 module.exports = function (grunt) {
