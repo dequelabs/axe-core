@@ -1,4 +1,4 @@
-/* global module, test, equal, document, dqre */
+/* global module, asyncTest, expect, start, document, dqre */
 
 module('dqre');
 
