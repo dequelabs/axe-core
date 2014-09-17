@@ -12,6 +12,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class KensingtonTest
     extends TestCase
@@ -40,13 +41,14 @@ public class KensingtonTest
         WebDriver driver = new FirefoxDriver();
         driver.get(TestHelper.getUrl());
 
-		TestHelper.injectScript(driver);
+        TestHelper.injectScript(driver);
 
+        driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
         Object response = ((JavascriptExecutor)driver).executeAsyncScript(
                 "var callback = arguments[arguments.length - 1];\n" +
                 "dqre.a11yCheck(document, null, callback);");
         JSONObject responseJSON = new JSONObject((Map) response);
-		int violationCount = responseJSON.getJSONArray("violations").length(); 
+        int violationCount = responseJSON.getJSONArray("violations").length(); 
         if (violationCount == 1) {
             assertTrue("No violations found", true);
         } else {
