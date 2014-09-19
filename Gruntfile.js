@@ -25,7 +25,10 @@ module.exports = function (grunt) {
 					'bower_components/ks-rules/dist/rules.js',
 					'lib/outro.stub'
 				],
-				dest: 'build/kensington.js'
+				dest: 'build/kensington.js',
+				options: {
+					process: true
+				}
 			}
 		},
 		uglify: {
@@ -33,7 +36,10 @@ module.exports = function (grunt) {
 				files: [{
 					src: ['<%= concat.kensington.dest %>'],
 					dest: 'dist/kensington.min.js'
-				}]
+				}],
+				options: {
+					banner: '/*!\n * Copyright (C) ' + new Date().getFullYear() + ' Deque Systems Inc. All Rights Reserved\n */\n'
+				}
 			}
 		},
 		copy: {
