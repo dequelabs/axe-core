@@ -1,4 +1,4 @@
-/*jshint node: true */
+/*jshint node: true, maxstatements: 56, maxcomplexity: 11 */
 'use strict';
 
 var WebDriver = require('selenium-webdriver'),
@@ -7,6 +7,22 @@ var WebDriver = require('selenium-webdriver'),
 	ksInject = require('../inject'),
 	ks = path.resolve(__dirname, '../../../../../kensington.js'),
 	jar = path.resolve(__dirname, '../../build/selenium-server-standalone-2.41.0.jar');
+
+
+var tagsToReplace = {
+	'&': '&amp;',
+	'<': '&lt;',
+	'>': '&gt;',
+	'.': '&#46;'
+};
+
+function replaceTag(tag) {
+	return tagsToReplace[tag] || tag;
+}
+
+function safeTagsReplace(str) {
+	return str.replace(/[&<>.]/g, replaceTag);
+}
 
 module.exports = function (grunt) {
 	var ksSource = grunt.file.read(ks);
@@ -43,68 +59,74 @@ module.exports = function (grunt) {
 							});
 						})
 						.then(function (result) {
-								var violations = result.results.violations;
-								var passes = result.results.passes;
-								var rules = {};
-								var totalTests = 0;
-								var totalRules = 0;
-								var totalErrors = 0;
-								var site = result.url.replace(/[^a-z0-9]/gi, '-')
-									.replace(/-{2,}/g, '-').replace(/^-|-$/g, '').toLowerCase();
-								for (var i = 0; i < violations.length; i++) {
-									rules[violations[i].id] = {};
-									rules[violations[i].id].name = violations[i].id;
-									rules[violations[i].id].label = violations[i].help;
-									rules[violations[i].id].testCases = violations[i].nodes.length;
-									totalTests += violations[i].nodes.length;
+							var violations = result.results.violations;
+							var passes = result.results.passes;
+							var rules = {};
+							var totalTests = 0;
+							var totalRules = 0;
+							var totalErrors = 0;
+							var site = result.url.replace(/[^a-z0-9]/gi, '-')
+								.replace(/-{2,}/g, '-').replace(/^-|-$/g, '').toLowerCase();
+
+							var i, j, nodes, start;
+							for (i = 0; i < violations.length; i++) {
+								rules[violations[i].id] = {};
+								rules[violations[i].id].name = violations[i].id;
+								rules[violations[i].id].label = violations[i].help;
+								rules[violations[i].id].testCases = violations[i].nodes.length;
+								totalTests += violations[i].nodes.length;
+								totalRules++;
+								nodes = violations[i].nodes;
+								rules[violations[i].id].errors = [];
+								for (j = 0; j < nodes.length; j++) {
+									rules[violations[i].id].errors[j] = {messages: nodes[j].failureSummary, target: nodes[j].target};
+								}
+								rules[violations[i].id].errorCount = nodes.length;
+								totalErrors += nodes.length;
+							}
+							for (i = 0; i < passes.length; i++) {
+								if (rules[passes[i].id]) {
+									rules[passes[i].id].testCases += passes[i].nodes.length;
+								} else {
 									totalRules++;
-									var nodes = violations[i].nodes;
-									rules[violations[i].id].errors = [];
-									for (var j = 0; j < nodes.length; j++) {
-										rules[violations[i].id].errors[j] = {messages: nodes[j].failureSummary, target: nodes[j].target};
-									}
-									rules[violations[i].id].errorCount = nodes.length;
-									totalErrors += nodes.length;
+									rules[passes[i].id] = {};
+									rules[passes[i].id].name = passes[i].id;
+									rules[passes[i].id].label = passes[i].help;
+									rules[passes[i].id].errors = [];
+									rules[passes[i].id].errorCount = 0;
+									rules[passes[i].id].testCases = passes[i].nodes.length;
 								}
-								for (var i = 0; i < passes.length; i++) {
-									if (rules[passes[i].id]) {
-										rules[passes[i].id].testCases += passes[i].nodes.length;
-									} else {
-										totalRules++;
-										rules[passes[i].id] = {};
-										rules[passes[i].id].name = passes[i].id;
-										rules[passes[i].id].label = passes[i].help;
-										rules[passes[i].id].errors = [];
-										rules[passes[i].id].errorCount = 0;
-										rules[passes[i].id].testCases = passes[i].nodes.length;
-									}
-									var nodes = passes[i].nodes;
-									var start = rules[passes[i].id].errors.length;
-									for (var j = start; j < start + nodes.length; j++) {
-										rules[passes[i].id].errors[j] = {messages: [], target: nodes[j - start].target};
-									}
-									totalTests += passes[i].nodes.length;
+								nodes = passes[i].nodes;
+								start = rules[passes[i].id].errors.length;
+								for (j = start; j < start + nodes.length; j++) {
+									rules[passes[i].id].errors[j] = {messages: [], target: nodes[j - start].target};
 								}
-								var report = '<testsuites failures="' + totalErrors + '" errors="0" tests="' + totalTests + '">';
+								totalTests += passes[i].nodes.length;
+							}
+							var report = '<testsuites failures="' + totalErrors + '" errors="0" tests="' + totalTests + '">';
 
-								for (var rule in rules) {
-									if (rules.hasOwnProperty(rule)) {
-										report += '<testsuite failures="' + rules[rule].errorCount + '" errors="0" tests="' + rules[rule].errors.length + '" package="' + rules[rule].name + '">';
-										var testCase;
-										for (var i = 0; i < rules[rule].errors.length; i++) {
-											testCase = '<testcase name="' + safe_tags_replace(rules[rule].label) + '[' + safe_tags_replace(rules[rule].errors[i].target.toString()) + ']" classname="' + rules[rule].name + '.' + site + '">';
-											if (rules[rule].errors[i].messages) {
-												testCase += '<failure type="failure">';
-												testCase += safe_tags_replace(rules[rule].errors[i].messages[j]) + '\n';
-												testCase += '</failure>';
-											}
-											testCase += '</testcase>';
-											report += testCase;
+							for (var rule in rules) {
+								if (rules.hasOwnProperty(rule)) {
+									report += '<testsuite failures="' + rules[rule].errorCount + '" errors="0" tests="' +
+										rules[rule].errors.length + '" package="' + rules[rule].name + '">';
+									var testCase;
+									for (i = 0; i < rules[rule].errors.length; i++) {
+										testCase = '<testcase name="' + safeTagsReplace(rules[rule].label) + '[' +
+											safeTagsReplace(rules[rule].errors[i].target.toString()) + ']" classname="' +
+											rules[rule].name + '.' + site + '">';
+
+										if (rules[rule].errors[i].messages) {
+											testCase += '<failure type="failure">';
+											testCase += safeTagsReplace(rules[rule].errors[i].messages[j]) + '\n';
+											testCase += '</failure>';
 										}
-										report += '</testsuite>';
-
+										testCase += '</testcase>';
+										report += testCase;
 									}
+									report += '</testsuite>';
+
 								}
+							}
 
 							report += '</testsuites>';
 							grunt.file.write(site + '.xml', report);
@@ -122,18 +144,3 @@ module.exports = function (grunt) {
 
 	});
 };
-
-var tagsToReplace = {
-	'&': '&amp;',
-	'<': '&lt;',
-	'>': '&gt;',
-	'.': '&#46;'
-};
-
-function replaceTag(tag) {
-	return tagsToReplace[tag] || tag;
-}
-
-function safe_tags_replace(str) {
-	return str.replace(/[&<>.]/g, replaceTag);
-}
