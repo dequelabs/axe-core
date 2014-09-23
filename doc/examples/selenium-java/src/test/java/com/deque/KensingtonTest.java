@@ -14,9 +14,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class KensingtonTest
-    extends TestCase
+public class KensingtonTest extends TestCase
 {
+	private WebDriver driver;
+
     /**
      * Create the test case
      *
@@ -35,10 +36,18 @@ public class KensingtonTest
         return new TestSuite( KensingtonTest.class );
     }
 
+	public void setUp()
+	{
+		driver = new FirefoxDriver();
+	}
+
+	public void tearDown()
+	{
+		driver.quit();
+	}
 
     public void testAccessibility()
     {
-        WebDriver driver = new FirefoxDriver();
         driver.get(TestHelper.getUrl());
 
         TestHelper.injectScript(driver);
@@ -54,7 +63,5 @@ public class KensingtonTest
         } else {
             assertTrue(Integer.toString(violationCount) + " violations found", false);
         }
-
-        driver.quit();
     }
 }
