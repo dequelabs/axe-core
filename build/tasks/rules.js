@@ -14,8 +14,8 @@ var templates = {
 	after: 'function (results, options) {\n<%=source%>\n}',
 	gather: 'function (context) {\n<%=source%>\n}',
 	matches: 'function (node) {\n<%=source%>\n}',
-	description: '<tr><td><%=id%></td><td><%=description%></td></tr>\n',
-	descriptions: '<!DOCTYPE html>\n<html>\n<head></head>\n<body>\n<table>\n<thead><tr><th scope="col">Rule ID</th><th scope="col">Description</th></tr></thead>\n<tbody><%=descriptions%></tbody>\n</table>\n</body>\n</html>'
+	description: '<tr><td><%=id%></td><td><%=description%></td><td><%=tags%></td></tr>\n',
+	descriptions: '<!DOCTYPE html>\n<html>\n<head></head>\n<body>\n<table>\n<thead><tr><th scope="col">Rule ID</th><th scope="col">Description</th><th scope="col">Tags</th></tr></thead>\n<tbody><%=descriptions%></tbody>\n</table>\n</body>\n</html>'
 };
 
 var fns = {
@@ -139,7 +139,8 @@ module.exports = function (grunt) {
 			descriptions += grunt.template.process(templates['description'], {
 				data: {
 					id: rule.id,
-					description: encoder.htmlEncode(rule.metadata.description)
+					description: encoder.htmlEncode(rule.metadata.description),
+					tags: rule.tags.join(', ')
 				}
 			});
 			if (tags.length) {
