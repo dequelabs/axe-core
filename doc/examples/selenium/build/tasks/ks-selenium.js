@@ -49,7 +49,8 @@ module.exports = function (grunt) {
 
 							if (!--count) {
 								driver.quit();
-								done(result.results.violations === 0);
+								server.stop();
+								done(result.results.violations.length === 0);
 							}
 						});
 
