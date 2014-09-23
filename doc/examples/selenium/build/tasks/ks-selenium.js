@@ -49,7 +49,7 @@ module.exports = function (grunt) {
 
 							if (!--count) {
 								driver.quit();
-								done();
+								done(result.results.violations === 0);
 							}
 						});
 

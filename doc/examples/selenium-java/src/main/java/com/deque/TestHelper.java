@@ -13,7 +13,7 @@ import java.io.*;
 
 public class TestHelper {
 
-	private static String getScriptFilename() { 
+	private static String getScriptFilename() {
 		return "../../../kensington.min.js";
 	}
 
@@ -35,15 +35,15 @@ public class TestHelper {
 				try {
 					file.close();
 				} catch (IOException e) {
-					// Ignore issues during closing 
+					// Ignore issues during closing
 				}
 			}
 		}
 		return returnValue;
-	} 
+	}
 
-	public static String getUrl() { 
-		return "http://www.amazon.com";
+	public static String getUrl() {
+		return "http://localhost:5005";
 	}
 
 	public static void injectScript(WebDriver driver) {

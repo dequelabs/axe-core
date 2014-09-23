@@ -15,8 +15,7 @@ module.exports = function (grunt) {
 		},
 		'ks-selenium': {
 			urls: [
-				'http://www.deque.com/',
-				'http://www.amazon.com/'
+				'http://localhost:5005/'
 			]
 		}
 	});

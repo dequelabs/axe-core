@@ -57,8 +57,8 @@ public class KensingtonTest extends TestCase
                 "var callback = arguments[arguments.length - 1];\n" +
                 "dqre.a11yCheck(document, null, callback);");
         JSONObject responseJSON = new JSONObject((Map) response);
-        int violationCount = responseJSON.getJSONArray("violations").length(); 
-        if (violationCount == 1) {
+        int violationCount = responseJSON.getJSONArray("violations").length();
+        if (violationCount == 0) {
             assertTrue("No violations found", true);
         } else {
             assertTrue(Integer.toString(violationCount) + " violations found", false);
