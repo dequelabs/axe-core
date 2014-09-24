@@ -15,7 +15,8 @@ module.exports = function (grunt) {
 		},
 		'ks-selenium': {
 			urls: [
-				'http://xyzcomputech.dequecloud.com'
+				'http://xyzcomputech.dequecloud.com',
+				'http://www.deque.com'
 			]
 		}
 	});
