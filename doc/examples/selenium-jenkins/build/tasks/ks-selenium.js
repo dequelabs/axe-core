@@ -5,7 +5,7 @@ var WebDriver = require('selenium-webdriver'),
 	SeleniumServer = require('selenium-webdriver/remote').SeleniumServer,
 	path = require('path'),
 	ksInject = require('../inject'),
-	ks = path.resolve(__dirname, '../../../../../kensington.js'),
+	ks = path.resolve(__dirname, '../../../../../kensington.min.js'),
 	jar = path.resolve(__dirname, '../../build/selenium-server-standalone-2.41.0.jar');
 
 
@@ -21,7 +21,11 @@ function replaceTag(tag) {
 }
 
 function safeTagsReplace(str) {
-	return str.replace(/[&<>.]/g, replaceTag);
+	if (str) {
+		return str.replace(/[&<>.]/g, replaceTag);
+	} else {
+		return '';
+	}
 }
 
 module.exports = function (grunt) {
@@ -132,9 +136,10 @@ module.exports = function (grunt) {
 							grunt.file.write(site + '.xml', report);
 
 							if (!--count) {
-								driver.quit();
-								server.stop();
-								done();
+								driver.quit().then(function () {
+									server.stop();
+									done();
+								});
 							}
 						});
 
