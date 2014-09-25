@@ -25,9 +25,12 @@
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-uglify": "~0.2.4",
     "grunt-contrib-watch": "~0.6.1",
-    "grunt-mocha": "~0.4.10",
-    "mocha": "~1.18.2",
+    "grunt-mocha": "~0.4.11",
+    "mocha": "~1.20.0",
     "node-html-encoder": "0.0.2",
-    "xunit-file": "0.0.5"
+    "xunit-file": "0.0.5",
+    "sinon": "~1.10.3",
+    "grunt-mocha-test": "~0.12.0"
+
   }
 }

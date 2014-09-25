@@ -12,6 +12,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-blanket-mocha');
 	grunt.loadNpmTasks('grunt-mocha');
+	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadTasks('build/tasks');
 
 	grunt.initConfig({
@@ -99,6 +100,14 @@ module.exports = function (grunt) {
 				dest: 'xunit.xml'
 			}
 		},
+		mochaTest: {
+			test: {
+				options: {
+					reporter: 'spec'
+				},
+				src: ['test/tasks/*.js']
+			}
+		},
 		blanket_mocha: {
 			test: {
 				options: {
@@ -122,7 +131,7 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
-	grunt.registerTask('test', ['build', 'fixture', 'connect:test', grunt.option('report') ? 'mocha' : 'blanket_mocha']);
+	grunt.registerTask('test', ['mochaTest', 'build', 'fixture', 'connect:test', grunt.option('report') ? 'mocha' : 'blanket_mocha']);
 	grunt.registerTask('build', ['validaterules', 'validatechecks', 'rules', 'uglify']);
 	grunt.registerTask('default', ['build']);
 
