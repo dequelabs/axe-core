@@ -189,26 +189,6 @@ describe('color.getBackgroundColor', function () {
 		assert.deepEqual(bgNodes, [target]);
 	});
 
-	it('should work properly with inlines containing blocks in any browser', function () {
-		fixture.innerHTML = '<div style="background: rgba(128, 0, 0, 1)">' +
-			'<span id="linky" style="background: rgba(0, 128, 0, 0.5)">' +
-			'<div id="target">Im not visible</div>' +
-			'</span></div>';
-		var target = fixture.querySelector('#target');
-		var bgNodes = [];
-
-		var actual = kslib.color.getBackgroundColor(target, bgNodes);
-		if (bgNodes.length === 1) {
-			assert.isNull(actual);
-		} else {
-			var expected = new kslib.color.Color(64, 64, 0, 1);
-			assert.closeTo(actual.red, expected.red, 0.5);
-			assert.closeTo(actual.green, expected.green, 0.5);
-			assert.closeTo(actual.blue, expected.blue, 0.5);
-			assert.closeTo(actual.alpha, expected.alpha, 0.1);
-		}
-	});
-
 	it('should use hierarchical DOM traversal if possible', function () {
 		fixture.innerHTML = '<div id="parent" style="height: 40px; width: 30px; ' +
 			'background-color: white; position: relative; z-index: 5">' +
@@ -216,6 +196,24 @@ describe('color.getBackgroundColor', function () {
 			'</div></div>' +
 			'<div id="shifted" style="position: relative; top: -30px; height: 40px; width: 35px; ' +
 			'background-color: black; z-index: 15;"></div>';
+		var target = fixture.querySelector('#target');
+		var parent = fixture.querySelector('#parent');
+		var bgNodes = [];
+		var actual = kslib.color.getBackgroundColor(target, bgNodes);
+		var expected = new kslib.color.Color(255, 255, 255, 1);
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+		assert.deepEqual(bgNodes, [parent]);
+	});
+
+	it('should ignore 0-height elements', function () {
+		fixture.innerHTML = '<div id="parent" style="height: 40px; width: 30px; ' +
+			'background-color: white; position: relative; z-index: 5">' +
+			'<div float="left" style="height: 0px; background-color: black">' + 
+			'<div id="target" style="height: 20px; width: 25px; z-index: 25;">' +
+			'</div></div></div>';
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
