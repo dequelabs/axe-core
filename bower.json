@@ -1,6 +1,6 @@
 {
   "name": "ks-rules",
-  "version": "0.0.0",
+  "version": "0.1.0-rc1",
   "authors": [
     "Mike Kozlowski <mike.kozlowski@deque.com>"
   ],
@@ -15,6 +15,6 @@
     "tests"
   ],
   "dependencies": {
-    "ks-common-functions": "http://anon:a3285ff5848608eb0e6930a2b65a8acc@builds.dequecloud.com:8088/jenkins/job/ks-commons/lastSuccessfulBuild/artifact/*zip*/archive.zip"
+    "ks-common-functions": "git@bitbucket.org:dmusser/ks-common-functions.git#v0.1.0-rc1"
   }
 }
