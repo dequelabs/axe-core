@@ -173,4 +173,35 @@ describe('utils.publishMetaData', function () {
 
 	});
 
+	it('should pull tags off rule object', function () {
+		var expected = {
+			foo: 'bar',
+			bob: 'loblaw'
+		};
+
+		dqre.configure({
+			rules: [{
+				id: 'foo',
+				tags: ['hai']
+			}],
+			data: {
+				checks: {
+					cats: expected
+				}
+			}
+		});
+
+		var result = {
+			id: 'foo',
+			details: [{
+				checks: [{
+					id: 'cats'
+				}]
+			}]
+		};
+		utils.publishMetaData(result);
+		assert.deepEqual(result.tags, ['hai']);
+
+	});
+
 });
