@@ -5,6 +5,7 @@ describe('dqre.a11yCheck', function () {
 		results = [{
 			id: 'gimmeLabel',
 			helpUrl: 'things',
+			tags: ['tag1'],
 			details: [{
 				result: 'PASS',
 				checks: [{
@@ -22,6 +23,7 @@ describe('dqre.a11yCheck', function () {
 			id: 'idkStuff',
 			pageLevel: true,
 			result: 'FAIL',
+			tags: ['tag2'],
 			details: [{
 				checks: [{
 					type: 'PASS',
@@ -35,6 +37,7 @@ describe('dqre.a11yCheck', function () {
 			}]
 		}, {
 			id: 'bypass',
+			tags: ['tag3'],
 			details: [{
 				result: 'FAIL',
 				checks: [{
@@ -49,6 +52,7 @@ describe('dqre.a11yCheck', function () {
 			}]
 		}, {
 			id: 'blinky',
+			tags: ['tag4'],
 			details: [{
 				result: 'FAO:',
 				checks: [{
@@ -121,6 +125,15 @@ describe('dqre.a11yCheck', function () {
 			assert.equal(results.violations[1].id, 'bypass');
 			assert.equal(results.passes[0].id, 'gimmeLabel');
 			assert.equal(results.passes[1].id, 'blinky');
+			done();
+		});
+	});
+	it('should add tags to the rule result', function (done) {
+		dqre.a11yCheck(document, {}, function (results) {
+			assert.deepEqual(results.violations[0].tags, ['tag2']);
+			assert.deepEqual(results.violations[1].tags, ['tag3']);
+			assert.deepEqual(results.passes[0].tags, ['tag1']);
+			assert.deepEqual(results.passes[1].tags, ['tag4']);
 			done();
 		});
 	});
