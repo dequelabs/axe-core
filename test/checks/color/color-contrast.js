@@ -103,31 +103,95 @@ describe('color-contrast', function () {
 		assert.deepEqual(checkContext._relatedNodes, [target]);
 	});
 
-	it('should not match when there is no text', function () {
-		fixture.innerHTML = '<div style="color: yellow; background-color: white;" id="target">' +
-			' </div>';
-		var target = fixture.querySelector('#target');
-		assert.isFalse(checks['color-contrast'].matches(target));
+	describe('matches', function () {
+
+		it('should not match when there is no text', function () {
+			fixture.innerHTML = '<div style="color: yellow; background-color: white;" id="target">' +
+				' </div>';
+			var target = fixture.querySelector('#target');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
+
+		it('should match when there is text', function () {
+			fixture.innerHTML = '<div style="color: yellow; background-color: white;" id="target">' +
+				'My text</div>';
+			var target = fixture.querySelector('#target');
+			assert.isTrue(checks['color-contrast'].matches(target));
+		});
+
+		it('should not match when there is text that is out of the container', function () {
+			fixture.innerHTML = '<div style="color: yellow; text-indent: -9999px; background-color: white;" id="target">' +
+				'My text</div>';
+			var target = fixture.querySelector('#target');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
+
+		it('should match when there is text that is only partially out of the container', function () {
+			fixture.innerHTML = '<div style="color: yellow; text-indent: -20px; background-color: white;" id="target">' +
+				'My text</div>';
+			var target = fixture.querySelector('#target');
+			assert.isTrue(checks['color-contrast'].matches(target));
+		});
+
+		it('should match <input type="text">', function () {
+			fixture.innerHTML = '<input type="text">';
+			var target = fixture.querySelector('input');
+			assert.isTrue(checks['color-contrast'].matches(target));
+		});
+
+		it('should not match <input type="hidden">', function () {
+			fixture.innerHTML = '<input type="hidden">';
+			var target = fixture.querySelector('input');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
+
+		it('should not match <input type="checkbox">', function () {
+			fixture.innerHTML = '<input type="checkbox">';
+			var target = fixture.querySelector('input');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
+
+		it('should not match <input type="radio">', function () {
+			fixture.innerHTML = '<input type="radio">';
+			var target = fixture.querySelector('input');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
+
+		it('should not match <input type="color">', function () {
+			fixture.innerHTML = '<input type="color">';
+			var target = fixture.querySelector('input');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
+
+		it('should not match <input type="range">', function () {
+			fixture.innerHTML = '<input type="range">';
+			var target = fixture.querySelector('input');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
+
+		it('should match <select> with options', function () {
+			fixture.innerHTML = '<select><option>Hello</option></select>';
+			var target = fixture.querySelector('select');
+			assert.isTrue(checks['color-contrast'].matches(target));
+		});
+
+		it('should not match <select> with no options', function () {
+			fixture.innerHTML = '<select></select>';
+			var target = fixture.querySelector('select');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
+
+		it('should match <textarea>', function () {
+			fixture.innerHTML = '<textarea></textarea>';
+			var target = fixture.querySelector('textarea');
+			assert.isTrue(checks['color-contrast'].matches(target));
+		});
+
+		it('should not match <option>', function () {
+			fixture.innerHTML = '<select><option>hi</option></select>';
+			var target = fixture.querySelector('option');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
 	});
 
-	it('should match when there is text', function () {
-		fixture.innerHTML = '<div style="color: yellow; background-color: white;" id="target">' +
-			'My text</div>';
-		var target = fixture.querySelector('#target');
-		assert.isTrue(checks['color-contrast'].matches(target));
-	});
-
-	it('should not match when there is text that is out of the container', function () {
-		fixture.innerHTML = '<div style="color: yellow; text-indent: -9999px; background-color: white;" id="target">' +
-			'My text</div>';
-		var target = fixture.querySelector('#target');
-		assert.isFalse(checks['color-contrast'].matches(target));
-	});
-
-	it('should match when there is text that is only partially out of the container', function () {
-		fixture.innerHTML = '<div style="color: yellow; text-indent: -20px; background-color: white;" id="target">' +
-			'My text</div>';
-		var target = fixture.querySelector('#target');
-		assert.isTrue(checks['color-contrast'].matches(target));
-	});
 });
