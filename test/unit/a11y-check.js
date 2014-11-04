@@ -5,6 +5,7 @@ describe('dqre.a11yCheck', function () {
 		results = [{
 			id: 'gimmeLabel',
 			helpUrl: 'things',
+			description: 'something nifty',
 			tags: ['tag1'],
 			details: [{
 				result: 'PASS',
@@ -21,6 +22,7 @@ describe('dqre.a11yCheck', function () {
 			}]
 		}, {
 			id: 'idkStuff',
+			description: 'something more nifty',
 			pageLevel: true,
 			result: 'FAIL',
 			tags: ['tag2'],
@@ -37,6 +39,7 @@ describe('dqre.a11yCheck', function () {
 			}]
 		}, {
 			id: 'bypass',
+			description: 'something even more nifty',
 			tags: ['tag3'],
 			details: [{
 				result: 'FAIL',
@@ -52,6 +55,7 @@ describe('dqre.a11yCheck', function () {
 			}]
 		}, {
 			id: 'blinky',
+			description: 'something awesome',
 			tags: ['tag4'],
 			details: [{
 				result: 'FAO:',
@@ -173,6 +177,15 @@ describe('dqre.a11yCheck', function () {
 			assert.ok(results.violations[0].nodes);
 			assert.equal(results.violations[0].nodes.length, 1);
 			assert.deepEqual(results.violations[0].nodes[0].target, ['q', 'r', 'pillock']);
+			done();
+		});
+	});
+	it('should add the description to the rule result', function (done) {
+		dqre.a11yCheck(document, {}, function (results) {
+			assert.equal(results.violations[0].description, 'something more nifty');
+			assert.equal(results.violations[1].description, 'something even more nifty');
+			assert.equal(results.passes[0].description, 'something nifty');
+			assert.equal(results.passes[1].description, 'something awesome');
 			done();
 		});
 	});
