@@ -1,7 +1,7 @@
 {
   "name": "kensington-common-functions",
   "description": "Kensington Common Functions",
-  "version": "0.1.0-rc1",
+  "version": "0.1.0-rc2",
   "private": true,
   "author": {
     "name": "David Sturley",
