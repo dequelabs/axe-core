@@ -1,6 +1,6 @@
 {
   "name": "ks-integration",
-  "version": "0.1.0-rc2",
+  "version": "0.1.0-rc3",
   "authors": [
     "Mike Kozlowski <mike.kozlowski@deque.com>"
   ],
@@ -13,7 +13,7 @@
     "bower_components"
   ],
   "dependencies": {
-    "ks-rules": "git@bitbucket.org:dmusser/ks-rules.git#v0.1.0-rc2",
-    "rule-engine": "git@bitbucket.org:dmusser/rule-engine.git#v0.1.0-rc2"
+    "ks-rules": "git@bitbucket.org:dmusser/ks-rules.git#v0.1.0-rc3",
+    "rule-engine": "git@bitbucket.org:dmusser/rule-engine.git#v0.1.0-rc3"
   }
 }
