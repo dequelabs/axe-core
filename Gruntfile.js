@@ -38,7 +38,8 @@ module.exports = function (grunt) {
 					dest: 'dist/kensington.min.js'
 				}],
 				options: {
-					banner: '/*!\n * Copyright (C) ' + new Date().getFullYear() + ' Deque Systems Inc. All Rights Reserved\n */\n'
+					banner: '/*!\n * Copyright (C) ' + new Date().getFullYear() +
+						' Deque Systems Inc. All Rights Reserved\n * v<%=pkg.version %>\n */\n'
 				}
 			}
 		},
