@@ -47,4 +47,13 @@ describe('dom.visuallyOverlaps', function () {
 		assert.isTrue(kslib.dom.visuallyOverlaps(targetRect, target.parentNode));
 	});
 
+	it('should return false when container has overflow hidden and rect is in the scroll area', function () {
+		fixture.innerHTML = '<div style="position: relative; height: 40px; width: 30px; overflow: hidden;">' +
+			'<div id="target" style="position: absolute; top: 60px; height: 20px; width: 45px;">' +
+			'</div></div>';
+		var target = fixture.querySelector('#target');
+		var targetRect = target.getBoundingClientRect();
+		assert.isFalse(kslib.dom.visuallyOverlaps(targetRect, target.parentNode));
+	});
+
 });
