@@ -120,10 +120,17 @@ describe('color-contrast', function () {
 		});
 
 		it('should not match when there is text that is out of the container', function () {
-			fixture.innerHTML = '<div style="color: yellow; text-indent: -9999px; background-color: white;" id="target">' +
-				'My text</div>';
+			fixture.innerHTML = '<div style="color: yellow; width: 100px; overflow: hidden; text-indent: 200px; background-color: white;" id="target">' +
+				'text</div>';
 			var target = fixture.querySelector('#target');
 			assert.isFalse(checks['color-contrast'].matches(target));
+		});
+
+		it('should match when there is text that is in the scroll reach of container', function () {
+			fixture.innerHTML = '<div style="color: yellow; width: 100px; overflow: scroll; text-indent: 200px; background-color: white;" id="target">' +
+				'text</div>';
+			var target = fixture.querySelector('#target');
+			assert.isTrue(checks['color-contrast'].matches(target));
 		});
 
 		it('should match when there is text that is only partially out of the container', function () {
