@@ -31,8 +31,7 @@ files, one per URL.
 * Log into Jenkins - ensure you have Administrator privileges
 * Click 'Manage Jenkins'
 * Click 'Manage Plugins'
-* Browse the 'Available' tab and install the NodeJS plugin
-* Additionally, install the Xvfb and xUnit plugins
+* Browse the 'Available' tab and install the NodeJS, Xvfb and xUnit plugins
 * Click 'New Item'
 * Enter a build name and pick 'Build a free-style software project'
 * Click 'OK'
