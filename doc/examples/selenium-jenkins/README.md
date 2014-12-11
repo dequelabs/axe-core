@@ -36,7 +36,7 @@ files, one per URL.
 * Click 'New Item'
 * Enter a build name and pick 'Build a free-style software project'
 * Click 'OK'
-* Setup the appropriate SCM software
+* Set up the appropriate SCM software
 * Under 'Build Environment', check 'Start Xvfb before the build and shut it down after'
 * Add a 'Build Step' and pick 'Execute NodeJS script'
 * Add a line to change the current directory to the path mentioned in the previous section
