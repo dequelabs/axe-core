@@ -31,19 +31,20 @@ files, one per URL.
 * Log into Jenkins - ensure you have Administrator privileges
 * Click 'Manage Jenkins'
 * Click 'Manage Plugins'
-* Browse the 'Available' tab and install the NodeJS plugin.
+* Browse the 'Available' tab and install the NodeJS plugin
+* Additionally, install the Xvfb and xUnit plugins
 * Click 'New Item'
-* Enter a build name and pick 'Build a free-style-software project'
+* Enter a build name and pick 'Build a free-style software project'
 * Click 'OK'
 * Setup the appropriate SCM software
 * Under 'Build Environment', check 'Start Xvfb before the build and shut it down after'
-* Add a 'Build Step' and pick 'Execute NodeJS script
-* Add a line to change the current directory to the path mentioned in the previous section.
+* Add a 'Build Step' and pick 'Execute NodeJS script'
+* Add a line to change the current directory to the path mentioned in the previous section
 * Add a line 'grunt test'
 * Add another 'Build Step' and pick 'Process xUnit test result report'
-* Set any desired thresholds.
+* Set any desired thresholds
 * Click 'Save'
-* You can now run the build.
+* You can now run the build
 
 ## To modify the example ##
 
