@@ -41,7 +41,7 @@ files, one per URL.
 * Add a line to change the current directory to the path mentioned in the previous section
 * Add a line `grunt test`
 * Add another `Build Step` and pick `Process xUnit test result report`
-    * The xUnit test results will be generated under dist/doc/examples/selenium-jenkins
+    * The xUnit test results will be generated under `dist/doc/examples/selenium-jenkins`
     * The files will be .xml files with the url of the site that was scanned as the file name
 * Set any desired thresholds
 * Click `Save`
