@@ -29,20 +29,22 @@ files, one per URL.
 ## To configure the example to run in Jenkins ##
 
 * Log into Jenkins - ensure you have Administrator privileges
-* Click 'Manage Jenkins'
-* Click 'Manage Plugins'
-* Browse the 'Available' tab and install the NodeJS, Xvfb and xUnit plugins
-* Click 'New Item'
-* Enter a build name and pick 'Build a free-style software project'
-* Click 'OK'
+* Click `Manage Jenkins`
+* Click `Manage Plugins`
+* Browse the `Available` tab and install the NodeJS, Xvfb and xUnit plugins
+* Click `New Item`
+* Enter a build name and pick `Build a free-style software project`
+* Click `OK`
 * Set up the appropriate SCM software
-* Under 'Build Environment', check 'Start Xvfb before the build and shut it down after'
-* Add a 'Build Step' and pick 'Execute NodeJS script'
+* Under `Build Environment`, check `Start Xvfb before the build and shut it down after`
+* Add a `Build Step` and pick `Execute NodeJS script`
 * Add a line to change the current directory to the path mentioned in the previous section
-* Add a line 'grunt test'
-* Add another 'Build Step' and pick 'Process xUnit test result report'
+* Add a line `grunt test`
+* Add another `Build Step` and pick `Process xUnit test result report`
+    * The xUnit test results will be generated under dist/doc/examples/selenium-jenkins
+    * The files will be .xml files with the url of the site that was scanned
 * Set any desired thresholds
-* Click 'Save'
+* Click `Save`
 * You can now run the build
 
 ## To modify the example ##
