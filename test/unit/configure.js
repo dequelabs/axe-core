@@ -68,13 +68,13 @@ describe('configure', function () {
 			window.utils.respondable.subscribe = orig;
 		});
 
-		it('should call dqre.run and default context to empty object', function (done) {
+		it('should call `runAnalysis` and default context to empty object', function (done) {
 			var mockAudit = {
 				rules: []
 			};
 			var origSub = window.utils.respondable.subscribe;
-			var orig = window.dqre.run;
-			window.dqre.run = function (context, options, callback) {
+			var orig = window.runAnalysis;
+			window.runAnalysis = function (context, options, callback) {
 				assert.deepEqual(context, {});
 				assert.isFunction(callback);
 				done();
@@ -90,13 +90,13 @@ describe('configure', function () {
 			dqre.configure(mockAudit);
 
 			window.utils.respondable.subscribe = origSub;
-			window.dqre.run = orig;
+			window.runAnalysis = orig;
 		});
 
-		it('should pass data.context to dqre.run', function (done) {
+		it('should pass data.context to `runAnalysis`', function (done) {
 			var origSub = window.utils.respondable.subscribe;
-			var orig = window.dqre.run;
-			window.dqre.run = function (context, options, callback) {
+			var orig = window.runAnalysis;
+			window.runAnalysis = function (context, options, callback) {
 				assert.deepEqual(context, {include: ['monkeys']});
 				assert.isFunction(callback);
 				done();
@@ -113,15 +113,15 @@ describe('configure', function () {
 			});
 
 			window.utils.respondable.subscribe = origSub;
-			window.dqre.run = orig;
+			window.runAnalysis = orig;
 		});
 
 
 		it('should respond', function () {
 			var origSub = window.utils.respondable.subscribe;
-			var orig = window.dqre.run;
+			var orig = window.runAnalysis;
 			var expected = {data: {include: ['monkeys']}};
-			window.dqre.run = function (context, options, callback) {
+			window.runAnalysis = function (context, options, callback) {
 				callback(expected);
 			};
 
@@ -142,15 +142,15 @@ describe('configure', function () {
 			});
 
 			window.utils.respondable.subscribe = origSub;
-			window.dqre.run = orig;
+			window.runAnalysis = orig;
 		});
 
 
 		it('should default include to current document if none are found', function (done) {
 			var origSub = utils.respondable.subscribe;
-			var orig = window.dqre.run;
+			var orig = window.runAnalysis;
 			var expected = {include: [document]};
-			window.dqre.run = function (context) {
+			window.runAnalysis = function (context) {
 				assert.deepEqual(context, expected);
 				done();
 			};
@@ -162,7 +162,7 @@ describe('configure', function () {
 			dqre.configure({
 				rules: []
 			});
-			window.dqre.run = orig;
+			window.runAnalysis = orig;
 			utils.respondable.subscribe = origSub;
 		});
 

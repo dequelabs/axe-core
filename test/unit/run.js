@@ -1,4 +1,5 @@
-describe('dqre.run', function () {
+/*global runAnalysis */
+describe('runAnalysis', function () {
 	'use strict';
 
 	function iframeReady(src, context, id, cb) {
@@ -45,7 +46,7 @@ describe('dqre.run', function () {
 	it('should throw if no audit is configured', function () {
 
 		assert.throws(function () {
-			dqre.run(document, {});
+			runAnalysis(document, {});
 		}, Error, /^No audit configured/);
 	});
 
@@ -64,7 +65,7 @@ describe('dqre.run', function () {
 
 		createFrames(function () {
 			setTimeout(function () {
-				dqre.run(document, {}, function (r) {
+				runAnalysis(document, {}, function (r) {
 					assert.lengthOf(r[0].details, 3);
 					done();
 				});
@@ -90,7 +91,7 @@ describe('dqre.run', function () {
 		var frame = document.createElement('iframe');
 		frame.addEventListener('load', function () {
 			setTimeout(function () {
-				dqre.run(document, {}, function (r) {
+				runAnalysis(document, {}, function (r) {
 					var nodes = r[0].details.map(function (detail) {
 						return detail.node.selector;
 					});
@@ -147,7 +148,7 @@ describe('dqre.run', function () {
 			var div = document.createElement('div');
 			fixture.appendChild(div);
 
-			dqre.run('#fixture', {}, function (results) {
+			runAnalysis('#fixture', {}, function (results) {
 				assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
 					pageLevel: false,
@@ -271,7 +272,7 @@ describe('dqre.run', function () {
 			}
 		});
 		fixture.innerHTML = '<div id="target">Target!</div><div>ok</div>';
-		dqre.run('#fixture', {}, function (results) {
+		runAnalysis('#fixture', {}, function (results) {
 			assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
 					pageLevel: false,
