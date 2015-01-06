@@ -307,5 +307,9 @@ describe('failureSummary', function () {
 
 	});
 
+	it('should alias to dqre.run', function () {
+		assert.equal(dqre.run, dqre.a11yCheck);
+	});
+
 
 });

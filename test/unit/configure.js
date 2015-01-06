@@ -1,4 +1,4 @@
-/* global dqreConfiguration */
+/* global dqreConfiguration, Rule, Classifier */
 describe('configure', function () {
 	'use strict';
 
@@ -25,21 +25,31 @@ describe('configure', function () {
 
 	});
 
-	it('should call addRule on the Audit for each rule', function () {
+	it('should push rules on the Audit', function () {
 		var mockAudit = {
 			rules: [{ id: 'monkeys' }, { id: 'bananas' }]
 		};
-		var called = 0;
-		var orig = window.Audit.prototype.addRule;
-		window.Audit.prototype.addRule = function (rule) {
-			assert.equal(mockAudit.rules[called], rule);
-			called++;
+
+		dqre.configure(mockAudit);
+		assert.instanceOf(dqre.audit.rules[0], Rule);
+		assert.instanceOf(dqre.audit.rules[1], Rule);
+		assert.equal(dqre.audit.rules[0].id, 'monkeys');
+		assert.equal(dqre.audit.rules[1].id, 'bananas');
+
+
+	});
+
+	it('should push classifiers on the Audit', function () {
+		var mockAudit = {
+			classifiers: [{ id: 'monkeys' }, { id: 'bananas' }]
 		};
 
 		dqre.configure(mockAudit);
-		assert.equal(mockAudit.rules.length, called);
+		assert.instanceOf(dqre.audit.classifiers[0], Classifier);
+		assert.instanceOf(dqre.audit.classifiers[1], Classifier);
+		assert.equal(dqre.audit.classifiers[0].id, 'monkeys');
+		assert.equal(dqre.audit.classifiers[1].id, 'bananas');
 
-		window.Audit.prototype.addRule = orig;
 
 	});
 
@@ -60,7 +70,7 @@ describe('configure', function () {
 			var orig = window.utils.respondable.subscribe;
 
 			utils.respondable.subscribe = function (topic, callback) {
-				assert.ok(topic.indexOf('dqre.analysis.') === 0);
+				assert.ok(topic.indexOf('dqre.') === 0);
 				assert.isFunction(callback);
 			};
 			dqre.configure(mockAudit);
@@ -127,9 +137,9 @@ describe('configure', function () {
 
 			utils.respondable.subscribe = function (topic, callback) {
 				callback({}, function responder(data) {
-					if (topic === 'dqre.analysis.start') {
+					if (topic === 'dqre.start') {
 						assert.equal(data, expected);
-					} else if (topic === 'dqre.analysis.ping') {
+					} else if (topic === 'dqre.ping') {
 						assert.deepEqual(data, {dqre: true});
 					} else {
 						assert.ok(false);
