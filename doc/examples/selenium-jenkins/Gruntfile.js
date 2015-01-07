@@ -9,8 +9,8 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		curl: {
 			selenium: {
-				dest: 'build/selenium-server-standalone-2.41.0.jar',
-				src: 'http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar'
+				dest: 'build/selenium-server-standalone-2.44.0.jar',
+				src: 'http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar'
 			}
 		},
 		'ks-selenium': {
