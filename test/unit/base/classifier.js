@@ -130,14 +130,17 @@ describe('Classifier', function () {
         fixture.innerHTML = '<div class="t"></div><div class="t"></div><div class="b"></div>';
 
         var called = 0;
-        new Classifier({
+        var result = (new Classifier({
           selector: '.t',
           evaluate: function (node) {
-            called++;
             assert.equal(node.className, 't');
-            return 'stuff';
+            return 'stuff' + called++;
           }
-        }).run({ include: [fixture] });
+        }).run({ include: [fixture] }));
+
+        assert.equal(called, 2);
+        assert.equal(result.details[0].result, 'stuff0');
+        assert.equal(result.details[1].result, 'stuff1');
       });
     });
   });

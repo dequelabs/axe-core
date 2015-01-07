@@ -11,14 +11,10 @@ describe('ClassifierResult', function () {
     assert.equal(result.id, 'monkeys');
   });
 
-  it('should set `result` to `null`', function () {
+  it('should set `details` to `[]`', function () {
     var result = new ClassifierResult({});
-    assert.isNull(result.result);
-  });
-
-  it('should set `node` to `null`', function () {
-    var result = new ClassifierResult({});
-    assert.isNull(result.node);
+    assert.isArray(result.details);
+    assert.lengthOf(result.details, 0);
   });
 
 });
