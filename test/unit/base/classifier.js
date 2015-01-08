@@ -1,4 +1,4 @@
-/*global Classifier, ClassifierResult */
+/*global Classifier */
 describe('Classifier', function () {
   'use strict';
 

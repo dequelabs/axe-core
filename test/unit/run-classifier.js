@@ -2,16 +2,6 @@
 describe('runClassifier', function () {
   'use strict';
 
-  function iframeReady(src, context, id, cb) {
-    var i = document.createElement('iframe');
-    i.addEventListener('load', function () {
-      cb();
-    });
-    i.src = src;
-    i.id = id;
-    context.appendChild(i);
-  }
-
   function createFrames(callback) {
     var frame, num = 2,
     loaded = 0;
