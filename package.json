@@ -1,7 +1,7 @@
 {
   "name": "deque-rule-engine",
   "description": "Deque Rule Engine",
-  "version": "0.1.0-rc4",
+  "version": "0.2.0-dev",
   "private": true,
   "author": {
     "name": "David Sturley",
