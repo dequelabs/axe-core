@@ -4,16 +4,26 @@
 	<title>Test Nest Frame</title>
 	<script src="../../../dist/dqre.js"></script>
 	<script>
-		dqre.configure({ rules: [{
-			id: 'iframe',
-			selector: 'iframe',
-			checks: [{
+		dqre.configure({
+			rules: [{
 				id: 'iframe',
+				selector: 'iframe',
+				checks: [{
+					id: 'iframe',
+					evaluate: function () {
+						return true;
+					}
+				}]
+			}],
+			classifiers: [{
+				id: 'iframe',
+				selector: 'iframe',
 				evaluate: function () {
 					return true;
 				}
-			}]
-		}], messages: {}});
+			}],
+			messages: {}
+		});
 	</script>
 </head>
 <body>
