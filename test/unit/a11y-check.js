@@ -101,18 +101,18 @@ describe('dqre.a11yCheck', function () {
 				}
 			}
 		}}});
-		orig = dqre.run;
-		dqre.run = function (ctxt, options, cb) {
+		orig = window.runAnalysis;
+		window.runAnalysis = function (ctxt, options, cb) {
 			cb(results);
 		};
 	});
 
 	afterEach(function () {
 		dqre.audit = null;
-		dqre.run = orig;
+		window.runAnalysis = orig;
 	});
 
-	it('should merge the dqre.run results into violations and passes', function (done) {
+	it('should merge the runAnalysis results into violations and passes', function (done) {
 		dqre.a11yCheck(document, {}, function (results) {
 			assert.isObject(results);
 			assert.isArray(results.violations);
@@ -305,6 +305,10 @@ describe('failureSummary', function () {
 
 		assert.equal(summary, 'Fix any of the following: \n 4\n\nFix all of the following: \n 1\n 2\n 3\n');
 
+	});
+
+	it('should alias to dqre.run', function () {
+		assert.equal(dqre.run, dqre.a11yCheck);
 	});
 
 

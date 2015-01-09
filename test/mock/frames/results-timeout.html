@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+  <title>Message Iframe Fixture</title>
+</head>
+<body>
+<script src="../../../bower_components/node-uuid/uuid.js"></script>
+<script src="../../../lib/utils/index.js"></script>
+<script src="../../../lib/utils/respondable.js"></script>
+
+<script>
+  utils.respondable.subscribe('dqre.ping', function (data, respond) {
+    respond({dqre: true});
+  });
+</script>
+</body>
+</html>

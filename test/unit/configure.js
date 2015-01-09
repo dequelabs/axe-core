@@ -1,4 +1,4 @@
-/* global dqreConfiguration */
+/* global dqreConfiguration, Rule, Classifier */
 describe('configure', function () {
 	'use strict';
 
@@ -25,21 +25,31 @@ describe('configure', function () {
 
 	});
 
-	it('should call addRule on the Audit for each rule', function () {
+	it('should push rules on the Audit', function () {
 		var mockAudit = {
 			rules: [{ id: 'monkeys' }, { id: 'bananas' }]
 		};
-		var called = 0;
-		var orig = window.Audit.prototype.addRule;
-		window.Audit.prototype.addRule = function (rule) {
-			assert.equal(mockAudit.rules[called], rule);
-			called++;
+
+		dqre.configure(mockAudit);
+		assert.instanceOf(dqre.audit.rules[0], Rule);
+		assert.instanceOf(dqre.audit.rules[1], Rule);
+		assert.equal(dqre.audit.rules[0].id, 'monkeys');
+		assert.equal(dqre.audit.rules[1].id, 'bananas');
+
+
+	});
+
+	it('should add classifiers on the Audit', function () {
+		var mockAudit = {
+			classifiers: [{ id: 'monkeys' }, { id: 'bananas' }]
 		};
 
 		dqre.configure(mockAudit);
-		assert.equal(mockAudit.rules.length, called);
+		assert.instanceOf(dqre.audit.classifiers.monkeys, Classifier);
+		assert.instanceOf(dqre.audit.classifiers.bananas, Classifier);
+		assert.equal(dqre.audit.classifiers.monkeys.id, 'monkeys');
+		assert.equal(dqre.audit.classifiers.bananas.id, 'bananas');
 
-		window.Audit.prototype.addRule = orig;
 
 	});
 
@@ -60,7 +70,7 @@ describe('configure', function () {
 			var orig = window.utils.respondable.subscribe;
 
 			utils.respondable.subscribe = function (topic, callback) {
-				assert.ok(topic.indexOf('dqre.analysis.') === 0);
+				assert.ok(topic.indexOf('dqre.') === 0);
 				assert.isFunction(callback);
 			};
 			dqre.configure(mockAudit);
@@ -68,68 +78,140 @@ describe('configure', function () {
 			window.utils.respondable.subscribe = orig;
 		});
 
-		it('should call dqre.run and default context to empty object', function (done) {
-			var mockAudit = {
-				rules: []
-			};
-			var origSub = window.utils.respondable.subscribe;
-			var orig = window.dqre.run;
-			window.dqre.run = function (context, options, callback) {
-				assert.deepEqual(context, {});
-				assert.isFunction(callback);
-				done();
-			};
+		describe('given command analyze', function () {
 
-			utils.respondable.subscribe = function (topic, callback) {
-				callback({data: 'iscool'}, function (response) {
-					// ping callback will call this response function
-					assert.ok(response);
-				});
 
-			};
-			dqre.configure(mockAudit);
+			it('should call `runAnalysis` and default context to empty object', function (done) {
+				var mockAudit = {
+					rules: []
+				};
+				var origSub = window.utils.respondable.subscribe;
+				var orig = window.runAnalysis;
+				window.runAnalysis = function (context, options, callback) {
+					assert.deepEqual(context, {});
+					assert.isFunction(callback);
+					done();
+				};
 
-			window.utils.respondable.subscribe = origSub;
-			window.dqre.run = orig;
-		});
+				utils.respondable.subscribe = function (topic, callback) {
+					callback({data: 'iscool', command: 'analyze'}, function (response) {
+						// ping callback will call this response function
+						assert.ok(response);
+					});
 
-		it('should pass data.context to dqre.run', function (done) {
-			var origSub = window.utils.respondable.subscribe;
-			var orig = window.dqre.run;
-			window.dqre.run = function (context, options, callback) {
-				assert.deepEqual(context, {include: ['monkeys']});
-				assert.isFunction(callback);
-				done();
-			};
+				};
+				dqre.configure(mockAudit);
 
-			utils.respondable.subscribe = function (topic, callback) {
-				callback({context: { include: ['monkeys'] }}, function (response) {
-					assert.ok(response);
-				});
-
-			};
-			dqre.configure({
-				rules: []
+				window.utils.respondable.subscribe = origSub;
+				window.runAnalysis = orig;
 			});
 
-			window.utils.respondable.subscribe = origSub;
-			window.dqre.run = orig;
+			it('should pass data.context to `runAnalysis`', function (done) {
+				var origSub = window.utils.respondable.subscribe;
+				var orig = window.runAnalysis;
+				window.runAnalysis = function (context, options, callback) {
+					assert.deepEqual(context, {include: ['monkeys']});
+					assert.isFunction(callback);
+					done();
+				};
+
+				utils.respondable.subscribe = function (topic, callback) {
+					callback({ command: 'analyze', context: { include: ['monkeys'] }}, function (response) {
+						assert.ok(response);
+					});
+
+				};
+				dqre.configure({
+					rules: []
+				});
+
+				window.utils.respondable.subscribe = origSub;
+				window.runAnalysis = orig;
+			});
+			it('should default include to current document if none are found', function (done) {
+				var origSub = utils.respondable.subscribe;
+				var orig = window.runAnalysis;
+				var expected = {include: [document]};
+				window.runAnalysis = function (context) {
+					assert.deepEqual(context, expected);
+					done();
+				};
+
+				utils.respondable.subscribe = function (topic, callback) {
+					callback({ command: 'analyze', context: { include: [] }}, function () {});
+
+				};
+				dqre.configure({
+					rules: []
+				});
+				window.runAnalysis = orig;
+				utils.respondable.subscribe = origSub;
+			});
+		});
+
+		describe('given command classify', function () {
+			it('should call `runClassifier` and default context to empty object', function (done) {
+				var mockAudit = {
+					rules: []
+				};
+				var origSub = window.utils.respondable.subscribe;
+				var orig = window.runClassifier;
+				window.runClassifier = function (id, context, options, callback) {
+					assert.equal(id, 'bananas');
+					assert.deepEqual(context, {});
+					assert.isFunction(callback);
+					done();
+				};
+
+				utils.respondable.subscribe = function (topic, callback) {
+					callback({parameter: 'bananas', data: 'iscool', command: 'classify'}, function (response) {
+						// ping callback will call this response function
+						assert.ok(response);
+					});
+
+				};
+				dqre.configure(mockAudit);
+
+				window.utils.respondable.subscribe = origSub;
+				window.runClassifier = orig;
+			});
+
+			it('should pass data.context to `runClassifier`', function (done) {
+				var origSub = window.utils.respondable.subscribe;
+				var orig = window.runClassifier;
+				window.runClassifier = function (id, context, options, callback) {
+					assert.equal(id, 'bananas');
+					assert.deepEqual(context, {include: ['monkeys']});
+					assert.isFunction(callback);
+					done();
+				};
+
+				utils.respondable.subscribe = function (topic, callback) {
+					callback({parameter: 'bananas', command: 'classify', context: { include: ['monkeys'] }}, function (response) {
+						assert.ok(response);
+					});
+
+				};
+				dqre.configure({
+					rules: []
+				});
+
+				window.utils.respondable.subscribe = origSub;
+				window.runClassifier = orig;
+			});
+
 		});
 
 
 		it('should respond', function () {
 			var origSub = window.utils.respondable.subscribe;
-			var orig = window.dqre.run;
 			var expected = {data: {include: ['monkeys']}};
-			window.dqre.run = function (context, options, callback) {
-				callback(expected);
-			};
 
 			utils.respondable.subscribe = function (topic, callback) {
 				callback({}, function responder(data) {
-					if (topic === 'dqre.analysis.start') {
+					if (topic === 'dqre.start') {
 						assert.equal(data, expected);
-					} else if (topic === 'dqre.analysis.ping') {
+					} else if (topic === 'dqre.ping') {
 						assert.deepEqual(data, {dqre: true});
 					} else {
 						assert.ok(false);
@@ -142,29 +224,9 @@ describe('configure', function () {
 			});
 
 			window.utils.respondable.subscribe = origSub;
-			window.dqre.run = orig;
 		});
 
 
-		it('should default include to current document if none are found', function (done) {
-			var origSub = utils.respondable.subscribe;
-			var orig = window.dqre.run;
-			var expected = {include: [document]};
-			window.dqre.run = function (context) {
-				assert.deepEqual(context, expected);
-				done();
-			};
-
-			utils.respondable.subscribe = function (topic, callback) {
-				callback({ context: { include: [] }}, function () {});
-
-			};
-			dqre.configure({
-				rules: []
-			});
-			window.dqre.run = orig;
-			utils.respondable.subscribe = origSub;
-		});
 
 	});
 

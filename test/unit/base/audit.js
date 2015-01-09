@@ -1,4 +1,4 @@
-/*global Audit */
+/*global Audit, Rule */
 describe('Audit', function () {
 	'use strict';
 	var a;
@@ -47,7 +47,7 @@ describe('Audit', function () {
 	beforeEach(function () {
 		a = new Audit();
 		mockRules.forEach(function (rule) {
-			a.addRule(rule);
+			a.rules.push(new Rule(rule));
 		});
 	});
 	afterEach(function () {
@@ -169,7 +169,7 @@ describe('Audit', function () {
 		it('should not run rules disabled by the configuration', function (done) {
 			var a = new Audit();
 			var success = true;
-			a.addRule({
+			a.rules.push(new Rule({
 				id: 'positive1',
 				selector: '*',
 				enabled: false,
@@ -179,7 +179,7 @@ describe('Audit', function () {
 						success = false;
 					}
 				}]
-			});
+			}));
 			a.run({ include: [document] }, {}, function () {
 				assert.ok(success);
 				done();
@@ -228,13 +228,13 @@ describe('Audit', function () {
 		it('should skip pageLevel rules if context is not set to entire page', function () {
 			var audit = new Audit();
 
-			audit.addRule({
+			audit.rules.push(new Rule({
 				pageLevel: true,
 				enabled: true,
 				evaluate: function () {
 					assert.ok(false, 'Should not run');
 				}
-			});
+			}));
 
 			audit.run({ include: [ document.body ], page: false }, {}, function (results) {
 				assert.deepEqual(results, []);
@@ -251,11 +251,11 @@ describe('Audit', function () {
 				id: 'hehe',
 				monkeys: 'bananas'
 			}];
-			audit.addRule({
+			audit.rules.push(new Rule({
 				id: 'hehe',
 				pageLevel: false,
 				enabled: false
-			});
+			}));
 
 			audit.rules[0].after = function (res, opts) {
 				assert.equal(res, results[0]);
