@@ -1,5 +1,5 @@
-/*global runAnalysis */
-describe('runAnalysis', function () {
+/*global runRules */
+describe('runRules', function () {
 	'use strict';
 
 	function iframeReady(src, context, id, cb) {
@@ -46,7 +46,7 @@ describe('runAnalysis', function () {
 	it('should throw if no audit is configured', function () {
 
 		assert.throws(function () {
-			runAnalysis(document, {});
+			runRules(document, {});
 		}, Error, /^No audit configured/);
 	});
 
@@ -65,7 +65,7 @@ describe('runAnalysis', function () {
 
 		createFrames(function () {
 			setTimeout(function () {
-				runAnalysis(document, {}, function (r) {
+				runRules(document, {}, function (r) {
 					assert.lengthOf(r[0].details, 3);
 					done();
 				});
@@ -91,7 +91,7 @@ describe('runAnalysis', function () {
 		var frame = document.createElement('iframe');
 		frame.addEventListener('load', function () {
 			setTimeout(function () {
-				runAnalysis(document, {}, function (r) {
+				runRules(document, {}, function (r) {
 					var nodes = r[0].details.map(function (detail) {
 						return detail.node.selector;
 					});
@@ -148,7 +148,7 @@ describe('runAnalysis', function () {
 			var div = document.createElement('div');
 			fixture.appendChild(div);
 
-			runAnalysis('#fixture', {}, function (results) {
+			runRules('#fixture', {}, function (results) {
 				assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
 					pageLevel: false,
@@ -272,7 +272,7 @@ describe('runAnalysis', function () {
 			}
 		});
 		fixture.innerHTML = '<div id="target">Target!</div><div>ok</div>';
-		runAnalysis('#fixture', {}, function (results) {
+		runRules('#fixture', {}, function (results) {
 			assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
 					pageLevel: false,
