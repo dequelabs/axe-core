@@ -1,4 +1,4 @@
-/* global dqreConfiguration, Rule, Classifier */
+/* global dqreConfiguration, Rule, Classifier, AnalysisRule */
 describe('configure', function () {
 	'use strict';
 
