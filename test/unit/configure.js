@@ -53,6 +53,20 @@ describe('configure', function () {
 
 	});
 
+	it('should add analysis rules on the Audit', function () {
+		var mockAudit = {
+			analyzers: [{ id: 'monkeys' }, { id: 'bananas' }]
+		};
+
+		dqre.configure(mockAudit);
+		assert.instanceOf(dqre.audit.analyzers.monkeys, AnalysisRule);
+		assert.instanceOf(dqre.audit.analyzers.bananas, AnalysisRule);
+		assert.equal(dqre.audit.analyzers.monkeys.id, 'monkeys');
+		assert.equal(dqre.audit.analyzers.bananas.id, 'bananas');
+
+
+	});
+
 	it('should add the version of rules to dqre.audit', function () {
 		dqre.configure({
 			data: {},
