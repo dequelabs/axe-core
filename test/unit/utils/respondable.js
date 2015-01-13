@@ -135,6 +135,24 @@ describe('utils.respondable', function () {
 			assert.isFunction(utils.respondable.subscribe);
 		});
 
+		it('should receive messages', function (done) {
+			var expected = null;
+			utils.respondable.subscribe('catman', function (data) {
+				assert.equal(data, expected);
+				if (data === 'yay') {
+					done();
+				}
+			});
+			utils.respondable(window, 'catman', null, function (data, respond) {
+				assert.isNull(data);
+				setTimeout(function () {
+					respond('yay');
+					expected = 'yay';
+
+				}, 0);
+			});
+		});
+
 	});
 
 });
