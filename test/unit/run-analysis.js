@@ -42,7 +42,28 @@ describe('runAnalysis', function () {
     }, Error, /^No audit configured/);
   });
 
-  it('should work', function (done) {
+  it('should work without frames', function (done) {
+    this.timeout(5000);
+    var target = document.createElement('div');
+    target.id = 'target';
+    fixture.appendChild(target);
+
+    dqre.configure({
+      rules: [],
+      analyzers: [{
+        id: 'html',
+        evaluate: function (node) {
+          assert.equal(node, target);
+          return 'result!';
+        }
+      }], messages: {}});
+      runAnalysis('html', ['#target'], {}, function (r) {
+        assert.equal(r.result, 'result!');
+        done();
+      });
+  });
+
+  it('should work across frames', function (done) {
     this.timeout(5000);
     dqre.configure({
       rules: [],

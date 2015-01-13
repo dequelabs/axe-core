@@ -126,6 +126,20 @@ describe('Classifier', function () {
 
       });
 
+      it('should pull options from spec if not defined locally', function (done) {
+        var div = document.createElement('div');
+        fixture.appendChild(div);
+        var classifier = new Classifier({
+          options: 'monkeys',
+          evaluate: function (node, options) {
+            assert.equal(options, 'monkeys');
+            done();
+          }
+        });
+
+        classifier.run({ include: [fixture] });
+      });
+
       it('should run evaluate on each matching node', function () {
         fixture.innerHTML = '<div class="t"></div><div class="t"></div><div class="b"></div>';
 
