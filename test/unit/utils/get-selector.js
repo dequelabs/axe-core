@@ -197,4 +197,13 @@ describe('utils.getSelector', function () {
 		assert.equal(result[0], node);
 	});
 
+	it('shouldn\'t fail if the node\'s parentNode doesnt have children, somehow (Firefox bug)', function () {
+		var sel = utils.getSelector({
+			nodeName: 'a',
+			parentNode: {
+				nodeName: 'b'
+			}
+		});
+		assert.equal(sel, 'a');
+	});
 });
