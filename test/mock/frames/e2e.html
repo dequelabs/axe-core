@@ -14,9 +14,21 @@
 				}
 			}]
 		}],
+		tools: [{
+			id: 'html',
+			run: function (node, options, callback) {
+				if (node.nodeName !== 'A') {
+					callback('nope!');
+				}
+				callback('result!');
+			}
+		}],
 		analyzers: [{
 			id: 'html',
-			evaluate: function () {
+			evaluate: function (node) {
+				if (node.nodeName !== 'A') {
+					return 'uh oh';
+				}
 				return 'result!';
 			}
 		}],

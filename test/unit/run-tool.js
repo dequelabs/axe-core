@@ -1,5 +1,5 @@
-/*global runAnalysis */
-describe('runAnalysis', function () {
+/*global runTool */
+describe('runTool', function () {
   'use strict';
 
   function createFrames(callback) {
@@ -35,14 +35,14 @@ describe('runAnalysis', function () {
     dqre.audit = null;
   });
 
-  it('should publish itself as dqre.analyze', function () {
-    assert.equal(runAnalysis, dqre.analyze);
+  it('should publish itself as dqre.tool', function () {
+    assert.equal(runTool, dqre.tool);
   });
 
   it('should throw if no audit is configured', function () {
 
     assert.throws(function () {
-      runAnalysis();
+      runTool();
     }, Error, /^No audit configured/);
   });
 
@@ -54,37 +54,38 @@ describe('runAnalysis', function () {
 
     dqre.configure({
       rules: [],
-      analyzers: [{
+      tools: [{
         id: 'html',
-        evaluate: function (node) {
+        run: function (node, options, callback) {
           assert.equal(node, target);
-          return 'result!';
+          callback('result!');
         }
-      }], messages: {}});
-      runAnalysis('html', ['#target'], {}, function (r) {
-        assert.equal(r.result, 'result!');
-        done();
-      });
+    }], messages: {}});
+    runTool('html', ['#target'], {}, function (r) {
+      assert.equal(r, 'result!');
+      done();
+    });
   });
 
   it('should work across frames', function (done) {
     this.timeout(5000);
     dqre.configure({
       rules: [],
-      analyzers: [{
+      tools: [{
         id: 'html',
-        evaluate: function (node) {
+        run: function (node, options, callback) {
           if (node.nodeName !== 'A') {
-            return 'uh oh';
+            callback('nope!');
           }
-          return 'result!';
+          callback('result!');
         }
-      }], messages: {}});
+    }], messages: {}});
 
     createFrames(function () {
       setTimeout(function () {
-        runAnalysis('html', ['#target', 'iframe', 'a'], {}, function (r) {
-          assert.equal(r.result, 'result!');
+        runTool('html', ['#target', 'iframe', 'a'], {}, function (r) {
+          console.log(r);
+          assert.equal(r, 'result!');
           done();
         });
 
