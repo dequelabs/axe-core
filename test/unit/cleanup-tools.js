@@ -17,6 +17,13 @@ describe('cleanupTools', function () {
     fixture.innerHTML = '';
     dqre.audit = null;
   });
+  
+  it('should throw if no audit is configured', function () {
+
+    assert.throws(function () {
+      cleanupTools(document, {});
+    }, Error, /^No audit configured/);
+  });
 
   it('should call cleanup on all active tools', function (done) {
     var cleaned = 0;
