@@ -1,4 +1,4 @@
-/* global dqreConfiguration, Rule, Classifier, AnalysisRule */
+/* global dqreConfiguration, Rule, Classifier, AnalysisRule, Tool */
 describe('configure', function () {
 	'use strict';
 
@@ -63,8 +63,18 @@ describe('configure', function () {
 		assert.instanceOf(dqre.audit.analyzers.bananas, AnalysisRule);
 		assert.equal(dqre.audit.analyzers.monkeys.id, 'monkeys');
 		assert.equal(dqre.audit.analyzers.bananas.id, 'bananas');
+	});
 
+	it('should add tools to the Audit', function () {
+		var mockAudit = {
+			tools: [{ id: 'monkeys' }, { id: 'bananas' }]
+		};
 
+		dqre.configure(mockAudit);
+		assert.instanceOf(dqre.audit.tools.monkeys, Tool);
+		assert.instanceOf(dqre.audit.tools.bananas, Tool);
+		assert.equal(dqre.audit.tools.monkeys.id, 'monkeys');
+		assert.equal(dqre.audit.tools.bananas.id, 'bananas');
 	});
 
 	it('should add the version of rules to dqre.audit', function () {
@@ -93,7 +103,6 @@ describe('configure', function () {
 		});
 
 		describe('given command rules', function () {
-
 
 			it('should call `runRules` and default context to empty object', function (done) {
 				var mockAudit = {
@@ -216,6 +225,104 @@ describe('configure', function () {
 
 		});
 
+		describe('given command analysis', function () {
+			it('should call `runAnalysis`, passing parameter and selectorArray', function (done) {
+				var mockAudit = {
+					rules: []
+				};
+				var origSub = window.utils.respondable.subscribe;
+				var orig = window.runAnalysis;
+				window.runAnalysis = function (id, selectorArray, options, callback) {
+					assert.equal(id, 'bananas');
+					assert.deepEqual(selectorArray, ['cats', 'dogs', 'monkeys']);
+					assert.equal(options, 'apples');
+					assert.isFunction(callback);
+					done();
+				};
+
+				utils.respondable.subscribe = function (topic, callback) {
+					callback({
+						parameter: 'bananas',
+						command: 'analysis',
+						options: 'apples',
+						selectorArray: ['cats', 'dogs', 'monkeys']
+					}, function (response) {
+						// ping callback will call this response function
+						assert.ok(response);
+					});
+
+				};
+				dqre.configure(mockAudit);
+
+				window.utils.respondable.subscribe = origSub;
+				window.runAnalysis = orig;
+			});
+
+		});
+
+		describe('given command run-tool', function () {
+			it('should call `runTool`, passing parameter and selectorArray', function (done) {
+				var mockAudit = {
+					rules: []
+				};
+				var origSub = window.utils.respondable.subscribe;
+				var orig = window.runTool;
+				window.runTool = function (id, selectorArray, options, callback) {
+					assert.equal(id, 'bananas');
+					assert.deepEqual(selectorArray, ['cats', 'dogs', 'monkeys']);
+					assert.equal(options, 'apples');
+					assert.isFunction(callback);
+					done();
+				};
+
+				utils.respondable.subscribe = function (topic, callback) {
+					callback({
+						parameter: 'bananas',
+						command: 'run-tool',
+						options: 'apples',
+						selectorArray: ['cats', 'dogs', 'monkeys']
+					}, function (response) {
+						// ping callback will call this response function
+						assert.ok(response);
+					});
+
+				};
+				dqre.configure(mockAudit);
+
+				window.utils.respondable.subscribe = origSub;
+				window.runTool = orig;
+			});
+
+		});
+
+		describe('given command cleanup-tool', function () {
+			it('should call `cleanupTools`', function (done) {
+				var mockAudit = {
+					rules: []
+				};
+				var origSub = window.utils.respondable.subscribe;
+				var orig = window.cleanupTools;
+				window.cleanupTools = function (callback) {
+					assert.isFunction(callback);
+					done();
+				};
+
+				utils.respondable.subscribe = function (topic, callback) {
+					callback({
+						command: 'cleanup-tool'
+					}, function (response) {
+						// ping callback will call this response function
+						assert.ok(response);
+					});
+					
+				};
+				dqre.configure(mockAudit);
+
+				window.utils.respondable.subscribe = origSub;
+				window.cleanupTools = orig;
+			});
+
+		});
 
 		it('should respond', function () {
 			var origSub = window.utils.respondable.subscribe;

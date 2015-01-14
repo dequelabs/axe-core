@@ -19,6 +19,21 @@ describe('AnalysisRule', function () {
         assert.isFunction(AnalysisRule.prototype.run);
       });
 
+      it('should pull options from spec if not defined locally', function (done) {
+        var div = document.createElement('div');
+        fixture.appendChild(div);
+        var analysisRule = new AnalysisRule({
+          options: 'monkeys',
+          evaluate: function (node, options) {
+            assert.equal(options, 'monkeys');
+          }
+        });
+
+        analysisRule.run(div, undefined, function () {
+          done();
+        });
+      });
+
       it('should run #evaluate', function (done) {
         var div = document.createElement('div');
         fixture.appendChild(div);
