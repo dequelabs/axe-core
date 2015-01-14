@@ -101,18 +101,18 @@ describe('dqre.a11yCheck', function () {
 				}
 			}
 		}}});
-		orig = window.runAnalysis;
-		window.runAnalysis = function (ctxt, options, cb) {
+		orig = window.runRules;
+		window.runRules = function (ctxt, options, cb) {
 			cb(results);
 		};
 	});
 
 	afterEach(function () {
 		dqre.audit = null;
-		window.runAnalysis = orig;
+		window.runRules = orig;
 	});
 
-	it('should merge the runAnalysis results into violations and passes', function (done) {
+	it('should merge the runRules results into violations and passes', function (done) {
 		dqre.a11yCheck(document, {}, function (results) {
 			assert.isObject(results);
 			assert.isArray(results.violations);

@@ -1,329 +1,68 @@
 /*global runAnalysis */
 describe('runAnalysis', function () {
-	'use strict';
+  'use strict';
 
-	function iframeReady(src, context, id, cb) {
-		var i = document.createElement('iframe');
-		i.addEventListener('load', function () {
-			cb();
-		});
-		i.src = src;
-		i.id = id;
-		context.appendChild(i);
-	}
+  function createFrames(callback) {
+    var frame, num = 2,
+    loaded = 0;
 
-	function createFrames(callback) {
-		var frame, num = 2,
-			loaded = 0;
+    function onLoad() {
+      loaded++;
+      if (loaded >= (num)) {
+        callback();
+      }
+    }
 
-		function onLoad() {
-			loaded++;
-			if (loaded >= (num)) {
-				callback();
-			}
-		}
+    frame = document.createElement('iframe');
+    frame.id = 'target';
+    frame.src = '../mock/frames/frame-frame.html';
 
-		frame = document.createElement('iframe');
-		frame.src = '../mock/frames/frame-frame.html';
-
-		frame.addEventListener('load', onLoad);
-		fixture.appendChild(frame);
+    frame.addEventListener('load', onLoad);
+    fixture.appendChild(frame);
 
 
-		frame = document.createElement('iframe');
-		frame.src = '../mock/frames/nocode.html';
-		frame.addEventListener('load', onLoad);
-		fixture.appendChild(frame);
-	}
+    frame = document.createElement('iframe');
+    frame.src = '../mock/frames/nocode.html';
+    frame.addEventListener('load', onLoad);
+    fixture.appendChild(frame);
+  }
 
-	var fixture = document.getElementById('fixture');
 
-	afterEach(function () {
-		fixture.innerHTML = '';
-		dqre.audit = null;
-	});
+  var fixture = document.getElementById('fixture');
 
-	it('should throw if no audit is configured', function () {
+  afterEach(function () {
+    fixture.innerHTML = '';
+    dqre.audit = null;
+  });
 
-		assert.throws(function () {
-			runAnalysis(document, {});
-		}, Error, /^No audit configured/);
-	});
+  it('should throw if no audit is configured', function () {
 
-	it('should work', function (done) {
-		this.timeout(5000);
-		dqre.configure({ rules: [{
-			id: 'html',
-			selector: 'html',
-			checks: [{
-				id: 'html',
-				evaluate: function () {
-					return true;
-				}
-			}]
-		}], messages: {}});
+    assert.throws(function () {
+      runAnalysis();
+    }, Error, /^No audit configured/);
+  });
 
-		createFrames(function () {
-			setTimeout(function () {
-				runAnalysis(document, {}, function (r) {
-					assert.lengthOf(r[0].details, 3);
-					done();
-				});
+  it('should work', function (done) {
+    this.timeout(5000);
+    dqre.configure({
+      rules: [],
+      analyzers: [{
+        id: 'html',
+        evaluate: function () {
+          return 'result!';
+        }
+      }], messages: {}});
 
-			}, 500);
+    createFrames(function () {
+      setTimeout(function () {
+        runAnalysis('html', ['#target', 'iframe', 'a'], {}, function (r) {
+          assert.equal(r.result, 'result!');
+          done();
+        });
 
-		});
-	});
+      }, 500);
 
-	it('should properly order iframes', function (done) {
-		this.timeout(5000);
-		dqre.configure({ rules: [{
-			id: 'iframe',
-			selector: 'iframe',
-			checks: [{
-				id: 'iframe',
-				evaluate: function () {
-					return true;
-				}
-			}]
-		}], messages: {}});
+    });
+  });
 
-		var frame = document.createElement('iframe');
-		frame.addEventListener('load', function () {
-			setTimeout(function () {
-				runAnalysis(document, {}, function (r) {
-					var nodes = r[0].details.map(function (detail) {
-						return detail.node.selector;
-					});
-
-					assert.deepEqual(nodes, [
-						['#level0'],
-						['#level0', '#level1'],
-						['#level0', '#level1', '#level2a'],
-						['#level0', '#level1', '#level2b']
-					]);
-					done();
-				});
-
-			}, 500);
-
-		});
-		frame.id = 'level0';
-		frame.src = '../mock/frames/nested0.html';
-		fixture.appendChild(frame);
-	});
-	it('should properly calculate context and return results from matching frames', function (done) {
-
-		dqre.configure({
-			rules: [{
-				id: 'div#target',
-				selector: '#target',
-				checks: [{
-					id: 'has-target',
-					evaluate: function () {
-						return true;
-					}
-				}]
-			}, {
-				id: 'first-div',
-				selector: 'div',
-				checks: [{
-					id: 'first-div',
-					evaluate: function (node) {
-						this.relatedNodes([node]);
-						return false;
-					},
-					after: function (results) {
-						if (results.length) {
-							results[0].result = true;
-						}
-						return [results[0]];
-					}
-				}]
-			}],
-			messages: {}
-		});
-
-		iframeReady('../mock/frames/context.html', fixture, 'context-test', function () {
-			var div = document.createElement('div');
-			fixture.appendChild(div);
-
-			runAnalysis('#fixture', {}, function (results) {
-				assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
-					id: 'div#target',
-					pageLevel: false,
-					details: [{
-						node: {
-							selector: ['#context-test', '#target'],
-							source: '<div id="target"></div>'
-						},
-						result: 'PASS',
-						checks: [{
-							id: 'has-target',
-							type: 'PASS',
-							failureMessage: null,
-							data: null,
-							result: true,
-							relatedNodes: []
-						}]
-					}],
-					result: 'PASS'
-				}, {
-					id: 'first-div',
-					pageLevel: false,
-					details: [{
-						node: {
-							selector: ['#context-test', '#foo'],
-							source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
-						},
-						result: 'PASS',
-						checks: [{
-							id: 'first-div',
-							type: 'PASS',
-							data: null,
-							result: true,
-							failureMessage: null,
-							relatedNodes: [{
-								selector: ['#context-test', '#foo'],
-								source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
-							}]
-						}]
-					}],
-					result: 'PASS'
-				}]);
-
-				done();
-			});
-
-		});
-	});
-
-	it('should pull metadata from configuration', function (done) {
-		dqre.configure({
-			rules: [{
-				id: 'div#target',
-				selector: '#target',
-				checks: [{
-					id: 'has-target',
-					evaluate: function () {
-						return false;
-					}
-				}]
-			}, {
-				id: 'first-div',
-				selector: 'div',
-				checks: [{
-					id: 'first-div',
-					evaluate: function (node) {
-						this.relatedNodes([node]);
-						return false;
-					},
-					after: function (results) {
-						if (results.length) {
-							results[0].result = true;
-						}
-						return [results[0]];
-					}
-				}]
-			}],
-			data: {
-				rules: {
-					'div#target': {
-						foo: 'bar',
-						stuff: 'blah',
-						failureMessage: function (ruleResult) {
-							if (ruleResult.id === 'div#target') {
-								return 'yay';
-							}
-							return 'boo';
-						}
-					},
-					'first-div': {
-						bar: 'foo',
-						stuff: 'no',
-						failureMessage: function (ruleResult) {
-							if (ruleResult.id === 'first-div') {
-								return 'yay';
-							}
-							return 'boo';
-						}
-					}
-				},
-				checks: {
-					'first-div': {
-						thingy: true,
-						failureMessage: function (checkResult) {
-							if (checkResult.id === 'first-div') {
-								return 'yay';
-							}
-							return 'boo';
-						}
-					},
-					'has-target': {
-						otherThingy: true,
-						failureMessage: function (checkResult) {
-							if (checkResult.id === 'has-target') {
-								return 'yay';
-							}
-							return 'boo';
-						}
-					}
-				}
-			}
-		});
-		fixture.innerHTML = '<div id="target">Target!</div><div>ok</div>';
-		runAnalysis('#fixture', {}, function (results) {
-			assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
-					id: 'div#target',
-					pageLevel: false,
-					failureMessage: 'yay',
-					foo: 'bar',
-					stuff: 'blah',
-					details: [{
-						node: {
-							selector: ['#target'],
-							source: '<div id="target">Target!</div>'
-						},
-						result: 'FAIL',
-						checks: [{
-							otherThingy: true,
-							failureMessage: 'yay',
-							id: 'has-target',
-							type: 'PASS',
-							data: null,
-							result: false,
-							relatedNodes: []
-						}]
-					}],
-					result: 'FAIL'
-				}, {
-					id: 'first-div',
-					pageLevel: false,
-					failureMessage: 'yay',
-					bar: 'foo',
-					stuff: 'no',
-					details: [{
-						node: {
-							selector: ['#target'],
-							source: '<div id="target">Target!</div>'
-						},
-						result: 'PASS',
-						checks: [{
-							id: 'first-div',
-							thingy: true,
-							failureMessage: null,
-							type: 'PASS',
-							data: null,
-							result: true,
-							relatedNodes: [{
-								selector: ['#target'],
-								source: '<div id="target">Target!</div>'
-							}]
-						}]
-					}],
-					result: 'PASS'
-				}]);
-			done();
-		});
-	});
 });

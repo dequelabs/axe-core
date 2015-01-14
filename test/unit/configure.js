@@ -1,4 +1,4 @@
-/* global dqreConfiguration, Rule, Classifier */
+/* global dqreConfiguration, Rule, Classifier, AnalysisRule */
 describe('configure', function () {
 	'use strict';
 
@@ -53,6 +53,20 @@ describe('configure', function () {
 
 	});
 
+	it('should add analysis rules on the Audit', function () {
+		var mockAudit = {
+			analyzers: [{ id: 'monkeys' }, { id: 'bananas' }]
+		};
+
+		dqre.configure(mockAudit);
+		assert.instanceOf(dqre.audit.analyzers.monkeys, AnalysisRule);
+		assert.instanceOf(dqre.audit.analyzers.bananas, AnalysisRule);
+		assert.equal(dqre.audit.analyzers.monkeys.id, 'monkeys');
+		assert.equal(dqre.audit.analyzers.bananas.id, 'bananas');
+
+
+	});
+
 	it('should add the version of rules to dqre.audit', function () {
 		dqre.configure({
 			data: {},
@@ -78,23 +92,23 @@ describe('configure', function () {
 			window.utils.respondable.subscribe = orig;
 		});
 
-		describe('given command analyze', function () {
+		describe('given command rules', function () {
 
 
-			it('should call `runAnalysis` and default context to empty object', function (done) {
+			it('should call `runRules` and default context to empty object', function (done) {
 				var mockAudit = {
 					rules: []
 				};
 				var origSub = window.utils.respondable.subscribe;
-				var orig = window.runAnalysis;
-				window.runAnalysis = function (context, options, callback) {
+				var orig = window.runRules;
+				window.runRules = function (context, options, callback) {
 					assert.deepEqual(context, {});
 					assert.isFunction(callback);
 					done();
 				};
 
 				utils.respondable.subscribe = function (topic, callback) {
-					callback({data: 'iscool', command: 'analyze'}, function (response) {
+					callback({data: 'iscool', command: 'rules'}, function (response) {
 						// ping callback will call this response function
 						assert.ok(response);
 					});
@@ -103,20 +117,20 @@ describe('configure', function () {
 				dqre.configure(mockAudit);
 
 				window.utils.respondable.subscribe = origSub;
-				window.runAnalysis = orig;
+				window.runRules = orig;
 			});
 
-			it('should pass data.context to `runAnalysis`', function (done) {
+			it('should pass data.context to `runRules`', function (done) {
 				var origSub = window.utils.respondable.subscribe;
-				var orig = window.runAnalysis;
-				window.runAnalysis = function (context, options, callback) {
+				var orig = window.runRules;
+				window.runRules = function (context, options, callback) {
 					assert.deepEqual(context, {include: ['monkeys']});
 					assert.isFunction(callback);
 					done();
 				};
 
 				utils.respondable.subscribe = function (topic, callback) {
-					callback({ command: 'analyze', context: { include: ['monkeys'] }}, function (response) {
+					callback({ command: 'rules', context: { include: ['monkeys'] }}, function (response) {
 						assert.ok(response);
 					});
 
@@ -126,25 +140,25 @@ describe('configure', function () {
 				});
 
 				window.utils.respondable.subscribe = origSub;
-				window.runAnalysis = orig;
+				window.runRules = orig;
 			});
 			it('should default include to current document if none are found', function (done) {
 				var origSub = utils.respondable.subscribe;
-				var orig = window.runAnalysis;
+				var orig = window.runRules;
 				var expected = {include: [document]};
-				window.runAnalysis = function (context) {
+				window.runRules = function (context) {
 					assert.deepEqual(context, expected);
 					done();
 				};
 
 				utils.respondable.subscribe = function (topic, callback) {
-					callback({ command: 'analyze', context: { include: [] }}, function () {});
+					callback({ command: 'rules', context: { include: [] }}, function () {});
 
 				};
 				dqre.configure({
 					rules: []
 				});
-				window.runAnalysis = orig;
+				window.runRules = orig;
 				utils.respondable.subscribe = origSub;
 			});
 		});
