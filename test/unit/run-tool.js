@@ -84,7 +84,6 @@ describe('runTool', function () {
     createFrames(function () {
       setTimeout(function () {
         runTool('html', ['#target', 'iframe', 'a'], {}, function (r) {
-          console.log(r);
           assert.equal(r, 'result!');
           done();
         });

@@ -29,7 +29,7 @@ describe('AnalysisRule', function () {
           }
         });
 
-        analysisRule.run(div, undefined, function (result) {
+        analysisRule.run(div, undefined, function () {
           done();
         });
       });
