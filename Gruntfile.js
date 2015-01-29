@@ -35,6 +35,14 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+		manual: {
+			lib: {
+				options: {
+					version: '<%= pkg.version %>'
+				},
+				dest: 'dist/manual.js'
+			}
+		},
 		validatechecks: {
 			checks: {
 				src: 'lib/checks/**/*.json'

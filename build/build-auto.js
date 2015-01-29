@@ -6,17 +6,15 @@ var clone = require('clone');
 var dot = require('dot');
 var Encoder = require('node-html-encoder').Encoder;
 var encoder = new Encoder('entity');
+var templates = require('./templates');
+
+var descriptionTmpl = '<tr><td><%=id%></td><td><%=description%></td><td><%=tags%></td></tr>\n',
+	descriptionsTmpl = '<!DOCTYPE html>\n<html>\n<head></head>\n<body>\n<table>\n<thead><tr>' +
+		'<th scope="col">Rule ID</th><th scope="col">Description</th><th scope="col">Tags</th></tr>' +
+		'</thead>\n<tbody><%=descriptions%></tbody>\n</table>\n</body>\n</html>';
 
 dot.templateSettings.strip = false;
 
-var templates = {
-	evaluate: 'function (node, options) {\n<%=source%>\n}',
-	after: 'function (results, options) {\n<%=source%>\n}',
-	gather: 'function (context) {\n<%=source%>\n}',
-	matches: 'function (node) {\n<%=source%>\n}',
-	description: '<tr><td><%=id%></td><td><%=description%></td><td><%=tags%></td></tr>\n',
-	descriptions: '<!DOCTYPE html>\n<html>\n<head></head>\n<body>\n<table>\n<thead><tr><th scope="col">Rule ID</th><th scope="col">Description</th><th scope="col">Tags</th></tr></thead>\n<tbody><%=descriptions%></tbody>\n</table>\n</body>\n</html>'
-};
 
 var fns = {
 	check: ['evaluate', 'after', 'matches'],
@@ -127,7 +125,7 @@ function buildRules(grunt, options) {
 		if (rule.metadata && !metadata.rules[rule.id]) {
 			metadata.rules[rule.id] = parseMetaData(rule.metadata);
 		}
-		descriptions += grunt.template.process(templates['description'], {
+		descriptions += grunt.template.process(descriptionTmpl, {
 			data: {
 				id: rule.id,
 				description: encoder.htmlEncode(rule.metadata.description),
@@ -152,7 +150,7 @@ function buildRules(grunt, options) {
 	return {
 		rules: r,
 		checks: c,
-		descriptions: grunt.template.process(templates['descriptions'], {
+		descriptions: grunt.template.process(descriptionsTmpl, {
 			data: {
 				descriptions: descriptions
 			}
