@@ -30,7 +30,7 @@
     "node-html-encoder": "0.0.2",
     "xunit-file": "0.0.5",
     "sinon": "~1.10.3",
-    "grunt-mocha-test": "~0.12.0"
-
+    "grunt-mocha-test": "~0.12.0",
+    "revalidator": "~0.3.1"
   }
 }

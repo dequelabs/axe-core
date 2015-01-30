@@ -43,14 +43,36 @@ module.exports = function (grunt) {
 				dest: 'dist/manual.js'
 			}
 		},
-		validatechecks: {
-			checks: {
+		validate: {
+			tools: {
+				options: {
+					type: 'tool'
+				},
+				src: 'lib/tools/**/*.json'
+			},
+			classifiers: {
+				options: {
+					type: 'classifier'
+				},
+				src: 'lib/classifiers/**/*.json'
+			},
+			analyzers: {
+				options: {
+					type: 'analyzer'
+				},
+				src: 'lib/analyzers/**/*.json'
+			},
+			check: {
+				options: {
+					type: 'check'
+				},
 				src: 'lib/checks/**/*.json'
-			}
-		},
-		validaterules: {
-			rules: {
-				src: 'lib/rules/*.json'
+			},
+			rule: {
+				options: {
+					type: 'rule'
+				},
+				src: 'lib/rules/**/*.json'
 			}
 		},
 		uglify: {
@@ -140,7 +162,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
 	grunt.registerTask('test', ['mochaTest', 'build', 'fixture', 'connect:test', grunt.option('report') ? 'mocha' : 'blanket_mocha']);
-	grunt.registerTask('build', ['validaterules', 'validatechecks', 'auto', 'uglify']);
+	grunt.registerTask('build', ['validate', 'auto', 'manual', 'uglify']);
 	grunt.registerTask('default', ['build']);
 
 };
