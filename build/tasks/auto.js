@@ -14,7 +14,6 @@ module.exports = function (grunt) {
 		});
 		var compiledStuff = buildRules(grunt, options);
 		grunt.file.write(this.data.dest.rules, 'dqre.configure(' + compiledStuff.rules + ');');
-		grunt.file.write(this.data.dest.checks, 'var checks = ' + compiledStuff.checks + ';');
 		grunt.file.write(this.data.dest.descriptions, compiledStuff.descriptions);
 	});
 };
