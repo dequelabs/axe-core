@@ -146,10 +146,8 @@ function buildRules(grunt, options) {
 		rules: rules,
 		version: options.version
 	}, blacklist));
-	var c = replaceFunctions(JSON.stringify(createCheckObject(checks), blacklist));
 	return {
 		rules: r,
-		checks: c,
 		descriptions: grunt.template.process(descriptionsTmpl, {
 			data: {
 				descriptions: descriptions

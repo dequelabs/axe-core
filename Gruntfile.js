@@ -30,7 +30,6 @@ module.exports = function (grunt) {
 				},
 				dest: {
 					rules: 'dist/rules.js',
-					checks: 'dist/checks.js',
 					descriptions: 'dist/descriptions.html'
 				}
 			}
@@ -80,18 +79,12 @@ module.exports = function (grunt) {
 				files: [{
 					src: ['<%= auto.lib.dest.rules %>'],
 					dest: 'dist/rules.min.js'
-				}, {
-					src: ['<%= auto.lib.dest.checks %>'],
-					dest: 'dist/checks.min.js'
 				}]
 			},
 			beautify: {
 				files: [{
 					src: ['<%= auto.lib.dest.rules %>'],
 					dest: '<%= auto.lib.dest.rules %>'
-				}, {
-					src: ['<%= auto.lib.dest.checks %>'],
-					dest: '<%= auto.lib.dest.checks %>'
 				}],
 				options: {
 					mangle: false,
@@ -111,7 +104,7 @@ module.exports = function (grunt) {
 		},
 		fixture: {
 			checks: {
-				src: '<%= auto.lib.dest.checks %>',
+				src: ['build/test/exports.js', '<%= manual.lib.dest %>', 'build/test/eval.js'],
 				dest: 'test/checks/index.html',
 				options: {
 					fixture: 'test/checks/runner.tmpl',
