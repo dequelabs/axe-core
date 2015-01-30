@@ -33,6 +33,7 @@ module.exports = function build(grunt, options) {
     checks: parseObject(options.checks),
     tools: parseObject(options.tools),
     classifiers: parseObject(options.classifiers),
+    analyzers: parseObject(options.analyzers),
     version: options.version
   };
 
