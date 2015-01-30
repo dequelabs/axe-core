@@ -1,0 +1,5 @@
+{
+  "id": "image",
+  "selector": "img, input[type=\"image\"]",
+  "evaluate": "image.js"
+}

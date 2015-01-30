@@ -1,8 +1,8 @@
 /*jshint node: true */
 'use strict';
-var buildRules = require('../build-rules');
+var buildRules = require('../build-auto');
 module.exports = function (grunt) {
-	grunt.registerMultiTask('rules', function () {
+	grunt.registerMultiTask('auto', function () {
 
 		var options = this.options({
 			rules: ['lib/rules/**/*.json'],

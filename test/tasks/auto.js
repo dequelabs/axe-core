@@ -3,7 +3,7 @@
 
 var assert = require('chai').assert;
 var sinon = require('sinon');
-var buildRules = require('../../build/build-rules');
+var buildRules = require('../../build/build-auto');
 
 var grunt = {
 	file: {
@@ -201,4 +201,3 @@ describe('buildRules', function () {
 	});
 
 });
-

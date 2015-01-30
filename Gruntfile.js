@@ -22,7 +22,7 @@ module.exports = function (grunt) {
 			files: ['test/**/*', 'lib/**/*'],
 			tasks: ['fixture', 'build']
 		},
-		rules: {
+		auto: {
 			lib: {
 				options: {
 					tags: grunt.option('tags'),
@@ -35,33 +35,63 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		validatechecks: {
-			checks: {
-				src: 'lib/checks/**/*.json'
+		manual: {
+			lib: {
+				options: {
+					version: '<%= pkg.version %>'
+				},
+				dest: 'dist/manual.js'
 			}
 		},
-		validaterules: {
-			rules: {
-				src: 'lib/rules/*.json'
+		validate: {
+			tools: {
+				options: {
+					type: 'tool'
+				},
+				src: 'lib/tools/**/*.json'
+			},
+			classifiers: {
+				options: {
+					type: 'classifier'
+				},
+				src: 'lib/classifiers/**/*.json'
+			},
+			analyzers: {
+				options: {
+					type: 'analyzer'
+				},
+				src: 'lib/analyzers/**/*.json'
+			},
+			check: {
+				options: {
+					type: 'check'
+				},
+				src: 'lib/checks/**/*.json'
+			},
+			rule: {
+				options: {
+					type: 'rule'
+				},
+				src: 'lib/rules/**/*.json'
 			}
 		},
 		uglify: {
 			minify: {
 				files: [{
-					src: ['<%= rules.lib.dest.rules %>'],
+					src: ['<%= auto.lib.dest.rules %>'],
 					dest: 'dist/rules.min.js'
 				}, {
-					src: ['<%= rules.lib.dest.checks %>'],
+					src: ['<%= auto.lib.dest.checks %>'],
 					dest: 'dist/checks.min.js'
 				}]
 			},
 			beautify: {
 				files: [{
-					src: ['<%= rules.lib.dest.rules %>'],
-					dest: '<%= rules.lib.dest.rules %>'
+					src: ['<%= auto.lib.dest.rules %>'],
+					dest: '<%= auto.lib.dest.rules %>'
 				}, {
-					src: ['<%= rules.lib.dest.checks %>'],
-					dest: '<%= rules.lib.dest.checks %>'
+					src: ['<%= auto.lib.dest.checks %>'],
+					dest: '<%= auto.lib.dest.checks %>'
 				}],
 				options: {
 					mangle: false,
@@ -81,7 +111,7 @@ module.exports = function (grunt) {
 		},
 		fixture: {
 			checks: {
-				src: '<%= rules.lib.dest.checks %>',
+				src: '<%= auto.lib.dest.checks %>',
 				dest: 'test/checks/index.html',
 				options: {
 					fixture: 'test/checks/runner.tmpl',
@@ -132,7 +162,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
 	grunt.registerTask('test', ['mochaTest', 'build', 'fixture', 'connect:test', grunt.option('report') ? 'mocha' : 'blanket_mocha']);
-	grunt.registerTask('build', ['validaterules', 'validatechecks', 'rules', 'uglify']);
+	grunt.registerTask('build', ['validate', 'auto', 'manual', 'uglify']);
 	grunt.registerTask('default', ['build']);
 
 };

@@ -1,163 +1,255 @@
 /*jshint node: true */
 'use strict';
 
-function validateProperties(actual, expected, objName, error) {
-	for (var prop in actual) {
-		if (!expected.hasOwnProperty(prop)) {
-			error('Invalid "' + prop + '" property on ' + objName);
-		} else if (expected[prop]) {
-			if (typeof(actual[prop]) !== expected[prop]) {
-				error('The "' + prop + '" property must be a ' + expected[prop]);
-			}
+var revalidator = require('revalidator').validate,
+	fs = require('fs'),
+	path = require('path');
+
+
+function fileExists(v, o) {
+	var file = path.resolve(path.dirname(o._path), v);
+	try {
+		var exists = fs.existsSync(file);
+	} catch(e) {
+		return false;
+	}
+	return exists;
+}
+
+function hasUniqueId() {
+	var seen = {};
+	return function (v, o) {
+		if (!seen[v]) {
+			seen[v] = o;
+			return true;
 		}
+		return false;
 	}
 }
 
+var schemas = {};
+schemas.classifier = {
+	properties: {
+		id: {
+			required: true,
+			type: 'string',
+			conform: hasUniqueId()
+		},
+		options: {
+			type: 'object'
+		},
+		excludeHidden: {
+			type: 'boolean'
+		},
+		evaluate: {
+			type: 'string',
+			required: true,
+			conform: fileExists,
+			messages: {
+				conform: 'File does not exist'
+			}
+		},
+		matches: {
+			type: 'string',
+			required: false,
+			conform: fileExists,
+			messages: {
+				conform: 'File does not exist'
+			}
+		}
+	}
+};
+
+schemas.tool = {
+	properties: {
+		id: {
+			required: true,
+			type: 'string',
+			conform: hasUniqueId()
+		},
+		options: {
+			type: 'object'
+		},
+		source: {
+			type: 'string',
+			required: true,
+			conform: fileExists,
+			messages: {
+				conform: 'File does not exist'
+			}
+		}
+	}
+};
+
+schemas.analyzer = {
+	properties: {
+		id: {
+			required: true,
+			type: 'string',
+			conform: hasUniqueId()
+		},
+		options: {
+			type: 'object'
+		},
+		excludeHidden: {
+			type: 'boolean'
+		},
+		evaluate: {
+			type: 'string',
+			required: true,
+			conform: fileExists,
+			messages: {
+				conform: 'File does not exist'
+			}
+		},
+		matches: {
+			type: 'string',
+			required: false,
+			conform: fileExists,
+			messages: {
+				conform: 'File does not exist'
+			}
+		}
+	}
+};
+
+schemas.check = {
+	properties: {
+		id: {
+			required: true,
+			type: 'string',
+			conform: hasUniqueId()
+		},
+		excludeHidden: {
+			type: 'boolean'
+		},
+		evaluate: {
+			type: 'string',
+			required: true,
+			conform: fileExists,
+			messages: {
+				conform: 'File does not exist'
+			}
+		},
+		matches: {
+			type: 'string',
+			required: false,
+			conform: fileExists,
+			messages: {
+				conform: 'File does not exist'
+			}
+		},
+		metadata: {
+			type: 'object',
+			required: true,
+			properties: {
+				failureMessage: {
+					required: true,
+					type: 'string'
+				}
+			}
+		}
+	}
+};
+
+schemas.rule = {
+	seen: {},
+	properties: {
+		id: {
+			required: true,
+			type: 'string',
+			conform: hasUniqueId()
+		},
+		selector: {
+			type: 'string'
+		},
+		excludeHidden: {
+			type: 'boolean'
+		},
+		enabled: {
+			type: 'boolean'
+		},
+		pageLevel: {
+			type: 'boolean'
+		},
+		checks: {
+			type: 'array',
+			items: {
+				type: ['string', 'object'],
+				conform: function (v, o) {
+					if (typeof v === 'string') return true;
+					if (typeof v === 'object' && typeof v.id === 'string') return true;
+					return false;
+				},
+				message: 'must be a string or an object with a key of id'
+			}
+		},
+		tags: {
+			type: 'array',
+			items: {
+				type: 'string'
+			}
+		},
+		matches: {
+			type: 'string',
+			required: false,
+			conform: fileExists,
+			messages: {
+				conform: 'File does not exist'
+			}
+		},
+		metadata: {
+			type: 'object',
+			required: true,
+			properties: {
+				help: {
+					required: true,
+					type: 'string'
+				},
+				helpUrl: {
+					required: false, //TODO Should be required; but some are missing
+					type: 'string',
+					format: 'url'
+				},
+				description: {
+					required: true,
+					type: 'string'
+				}
+			}
+		}
+	}
+};
+
+
+function validateFiles(grunt, files, schema) {
+	var valid = true;
+	files.forEach(function (f) {
+		f.src.forEach(function (path) {
+			var file = grunt.file.readJSON(path);
+			file._path = path;
+			var result = revalidator(file, schema);
+
+			if (!result.valid) {
+				result.errors.forEach(function (err) {
+					grunt.log.error(path, err.property + ' ' + err.message);
+				});
+				valid = false;
+			} else {
+				grunt.verbose.ok();
+			}
+		});
+	});
+	return valid;
+}
 
 module.exports = function (grunt) {
-	grunt.registerMultiTask('validatechecks', function() {
-
-		var checksSeen = {};
-
-		var success = true;
-		this.files.forEach(function (f) {
-			f.src.forEach(function(filepath) {
-				var error = function (msg) {
-					grunt.log.error(filepath + ': ' + msg);
-					success = false;
-				};
-
-				//verify legit JSON
-				var check;
-				try {
-					check = grunt.file.readJSON(filepath);
-				} catch (e) {
-					error('Invalid JSON');
-					return;
-				}
-
-				//verify that mandatory elements are there
-				if (!check.id) { error('Missing required "id" property'); }
-				if (!check.metadata) { error('Missing required "metadata" property'); }
-				if (!check.metadata.failureMessage) { error('Missing required "metadata.failureMessage" property'); }
-				if (!check.evaluate) { error('Missing required "evaluate" property'); }
-
-
-				//verify that non-permitted elements aren't there, and all elements are proper type
-				validateProperties(check, {
-					'id': 'string',
-					'evaluate': 'string',
-					'after': 'string',
-					'url': 'string',
-					'selector': 'string',
-					'type': 'string',
-					'matches': 'string',
-					'metadata': 'object',
-					'options': null },
-					'check',
-					error);
-
-				//verify that the check is not a duplicate
-				if (check.id) {
-					if (checksSeen.hasOwnProperty(check.id)) {
-						error('Duplicate check ID: ' + check.id + '. Also in: ' + checksSeen[check.id]);
-					} else {
-						checksSeen[check.id] = filepath;
-					}
-				}
-
-				grunt.verbose.ok(filepath + ": Checked");
-			});
-		});
-		return success;
-	});
-
-
-	grunt.registerMultiTask('validaterules', function () {
-		var rulesSeen = {};
-		var success = true;
-		this.files.forEach(function (f) {
-			f.src.forEach(function (filepath) {
-				var error = function (msg) {
-					grunt.log.error(filepath + ': ' + msg);
-					success = false;
-				};
-
-				//verify legit JSON
-				var rule;
-				try {
-					rule = grunt.file.readJSON(filepath);
-				} catch (e) {
-					error('Invalid JSON');
-					return;
-				}
-
-				//verify that mandatory elements are there
-				if (!rule.id) { error('Missing required "id" property'); }
-				if (!rule.metadata.description) { error('Missing required "metadata.description" property'); }
-				if (!rule.metadata) { error('Missing required "metadata" property'); }
-				if (!rule.metadata.help) { error('Missing required "metadata.help" property'); }
-				if (!rule.checks) { error('Missing required "checks" property'); }
-				if (!rule.tags) { error('Missing required "tags" property'); }
-
-				//verify that non-permitted elements aren't there, and all elements are proper type
-				validateProperties(rule, {
-					'id': 'string',
-					'metadata': 'object',
-					'url': 'string',
-					'matches': 'string',
-					'checks': null,
-					'tags': null,
-					'selector': 'string',
-					'pageLevel': 'boolean',
-					'enabled': 'boolean',
-					'excludeHidden': 'boolean'},
-					'rule',
-					error);
-
-				//verify that 'tags' is an array of strings
-				if (rule.tags) {
-					if (!Array.isArray(rule.tags)) {
-						error('The "tags" property must be an array');
-					} else {
-						rule.tags.map(function (t) {
-							if (typeof t !== 'string') {
-								error('Elements of the "tags" array must be strings');
-							}
-						});
-					}
-				}
-
-				//verify that the rule is not a duplicate
-				if (rule.id) {
-					if (rulesSeen.hasOwnProperty(rule.id)) {
-						error('Duplicate rule ID: ' + rule.id + '. Also in: ' + rulesSeen[rule.id]);
-					} else {
-						rulesSeen[rule.id] = filepath;
-					}
-				}
-
-				//verify that checks is an array of the right things
-				if (rule.checks) {
-					if (!Array.isArray(rule.checks)) {
-						error('The "checks" property must be an array');
-					} else {
-						rule.checks.map(function (c) {
-							if (typeof c !== 'object' && typeof c !== 'string') {
-								error('Elements of the "checks" array must be strings or objects');
-							}
-
-							if (typeof c === 'object') {
-								if (!c.id) { error('Missing required "id" property on check'); }
-								validateProperties(c, {'id': 'string', 'options': null}, 'rules.check', error);
-							}
-						});
-					}
-				}
-
-				grunt.verbose.ok(filepath + ": Checked");
-			});
-		});
-		return success;
+	grunt.registerMultiTask('validate', function () {
+		var options = this.options();
+		if (!options.type || !schemas[options.type]) {
+			grunt.log.error('Please specify a valid type to validate: ' + Object.keys(schemas));
+			return false;
+		}
+		validateFiles(grunt, this.files, schemas[options.type]);
+		schemas[options.type].seen = {};
 	});
 };
