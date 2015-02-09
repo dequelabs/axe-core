@@ -22,14 +22,15 @@ module.exports = function (grunt) {
 			files: ['test/**/*', 'lib/**/*'],
 			tasks: ['fixture', 'build']
 		},
-		auto: {
+		configure: {
 			lib: {
 				options: {
 					tags: grunt.option('tags'),
 					version: '<%= pkg.version %>'
 				},
 				dest: {
-					rules: 'dist/rules.js',
+					auto: 'dist/rules.js',
+					manual: 'dist/manual.js',
 					descriptions: 'dist/descriptions.html'
 				}
 			}
@@ -39,7 +40,7 @@ module.exports = function (grunt) {
 				options: {
 					version: '<%= pkg.version %>'
 				},
-				dest: 'dist/manual.js'
+				dest: 'dist/manual-source.js'
 			}
 		},
 		validate: {
@@ -77,14 +78,17 @@ module.exports = function (grunt) {
 		uglify: {
 			minify: {
 				files: [{
-					src: ['<%= auto.lib.dest.rules %>'],
+					src: ['<%= configure.lib.dest.auto %>'],
 					dest: 'dist/rules.min.js'
+				}, {
+					src: ['<%= configure.lib.dest.manual %>'],
+					dest: 'dist/manual.min.js'
 				}]
 			},
 			beautify: {
 				files: [{
-					src: ['<%= auto.lib.dest.rules %>'],
-					dest: '<%= auto.lib.dest.rules %>'
+					src: ['<%= configure.lib.dest.auto %>'],
+					dest: '<%= configure.lib.dest.auto %>'
 				}],
 				options: {
 					mangle: false,
@@ -155,7 +159,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
 	grunt.registerTask('test', ['mochaTest', 'build', 'fixture', 'connect:test', grunt.option('report') ? 'mocha' : 'blanket_mocha']);
-	grunt.registerTask('build', ['validate', 'auto', 'manual', 'uglify']);
+	grunt.registerTask('build', ['validate', 'configure', 'manual', 'uglify']);
 	grunt.registerTask('default', ['build']);
 
 };
