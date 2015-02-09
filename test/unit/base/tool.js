@@ -25,7 +25,9 @@ describe('Tool', function () {
 
       it('should set active to true', function () {
         var tool = new Tool({
-          run: function () {}
+          source: {
+            run: function () {}
+          }
         });
         tool.run(null, null, function () {
           assert.isTrue(tool.active);
@@ -39,11 +41,13 @@ describe('Tool', function () {
         var called = false;
 
         var tool = new Tool({
-          run: function (node, options, callback) {
-            assert.equal(node, div);
-            assert.equal(options, 'monkeys');
-            assert.equal(callback, expectedCb);
-            called = true;
+          source: {
+            run: function (node, options, callback) {
+              assert.equal(node, div);
+              assert.equal(options, 'monkeys');
+              assert.equal(callback, expectedCb);
+              called = true;
+            }
           }
         });
 
@@ -58,7 +62,9 @@ describe('Tool', function () {
 
       it('should set active to false', function () {
         var tool = new Tool({
-          cleanup: function () {}
+          source: {
+            cleanup: function () {}
+          }
         });
         tool.active = true;
         tool.cleanup(function () {});
@@ -70,9 +76,11 @@ describe('Tool', function () {
         var called = false;
 
         var tool = new Tool({
-          cleanup: function (callback) {
-            assert.equal(callback, expectedCb);
-            called = true;
+          source: {
+            cleanup: function (callback) {
+              assert.equal(callback, expectedCb);
+              called = true;
+            }
           }
         });
 
