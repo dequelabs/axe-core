@@ -124,6 +124,7 @@ function buildRules(grunt, options, callback) {
 				tools: result.tools,
 				classifiers: result.classifiers,
 				analyzers: result.analyzers,
+				style: result.style,
 				version: options.version
 			}, blacklist)),
 			descriptions: grunt.template.process(descriptionsTmpl, {
