@@ -41,7 +41,10 @@ function buildRules(grunt, options, callback) {
 		function replaceFunctions(string) {
 			return string.replace(/"(evaluate|after|gather|matches|source)":\s*("[^"]+")/g, function (m, p1, p2) {
 				return m.replace(p2, getSource(p2.replace(/^"|"$/g, ''), p1));
+			}).replace(/"(function anonymous\([\s\S]+?\) {)([\s\S]+?)(})"/g, function (m, p1, p2, p3) {
+				return JSON.parse(m);
 			});
+
 		}
 
 		function getSource(file, type) {
@@ -124,6 +127,7 @@ function buildRules(grunt, options, callback) {
 				tools: result.tools,
 				classifiers: result.classifiers,
 				analyzers: result.analyzers,
+				style: result.style,
 				version: options.version
 			}, blacklist)),
 			descriptions: grunt.template.process(descriptionsTmpl, {
