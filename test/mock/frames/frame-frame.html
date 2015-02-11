@@ -16,11 +16,13 @@
 		}],
 		tools: [{
 			id: 'html',
-			run: function (node, options, callback) {
-				if (node.nodeName !== 'A') {
-					callback('nope!');
+			source: {
+				run: function (node, options, callback) {
+					if (node.nodeName !== 'A') {
+						callback('nope!');
+					}
+					callback('result!');
 				}
-				callback('result!');
 			}
 		}],
 		classifiers: [{

@@ -17,7 +17,7 @@ describe('cleanupTools', function () {
     fixture.innerHTML = '';
     dqre.audit = null;
   });
-  
+
   it('should throw if no audit is configured', function () {
 
     assert.throws(function () {
@@ -30,24 +30,30 @@ describe('cleanupTools', function () {
     dqre.configure({
       tools: [{
         id: 'one',
-        run: function () {},
-        cleanup: function (callback) {
-          cleaned++;
-          callback();
+        source: {
+          run: function () {},
+          cleanup: function (callback) {
+            cleaned++;
+            callback();
+          }
         }
       }, {
         id: 'two',
-        run: function () {},
-        cleanup: function (callback) {
-          cleaned++;
-          callback();
+        source: {
+          run: function () {},
+          cleanup: function (callback) {
+            cleaned++;
+            callback();
+          }
         }
       }, {
         id: 'three',
-        run: function () {},
-        cleanup: function (callback) {
-          cleaned++;
-          callback();
+        source: {
+          run: function () {},
+          cleanup: function (callback) {
+            cleaned++;
+            callback();
+          }
         }
       }]
     });
@@ -66,9 +72,11 @@ describe('cleanupTools', function () {
       dqre.configure({
         tools: [{
           id: 'one',
-          run: function () {},
-          cleanup: function (callback) {
-            callback();
+          source: {
+            run: function () {},
+            cleanup: function (callback) {
+              callback();
+            }
           }
         }]
       });

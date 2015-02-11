@@ -56,9 +56,11 @@ describe('runTool', function () {
       rules: [],
       tools: [{
         id: 'html',
-        run: function (node, options, callback) {
-          assert.equal(node, target);
-          callback('result!');
+        source: {
+          run: function (node, options, callback) {
+            assert.equal(node, target);
+            callback('result!');
+          }
         }
     }], messages: {}});
     runTool('html', ['#target'], {}, function (r) {
@@ -73,11 +75,13 @@ describe('runTool', function () {
       rules: [],
       tools: [{
         id: 'html',
-        run: function (node, options, callback) {
-          if (node.nodeName !== 'A') {
-            callback('nope!');
+        source: {
+          run: function (node, options, callback) {
+            if (node.nodeName !== 'A') {
+              callback('nope!');
+            }
+            callback('result!');
           }
-          callback('result!');
         }
     }], messages: {}});
 

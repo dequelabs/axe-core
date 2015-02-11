@@ -314,7 +314,7 @@ describe('configure', function () {
 						// ping callback will call this response function
 						assert.ok(response);
 					});
-					
+
 				};
 				dqre.configure(mockAudit);
 
@@ -347,8 +347,55 @@ describe('configure', function () {
 			window.utils.respondable.subscribe = origSub;
 		});
 
+	});
 
+	describe('style', function () {
+		afterEach(function () {
+			dqre.configure({});
+		});
+		it('should not throw if not given style', function () {
+			assert.doesNotThrow(function () {
+				dqre.configure({});
+			});
+		});
 
+		it('should inject a stylesheet', function () {
+			var styles = document.getElementsByTagName('style');
+			var length = styles.length;
+			dqre.configure({
+				style: '.foo { color: red; }'
+			});
+			assert.lengthOf(styles, length + 1);
+			assert.match(styles[length].textContent || styles[length].styleSheet.cssText,
+				/\.foo[\r\n\s]*?\{[\r\n\s]*color:[\r\n\s]+?red;?[\r\n\s]*?\}[\r\n\s]*?/);
+		});
+
+		it('should remove previously injected sheets if no style is given', function () {
+			var styles = document.getElementsByTagName('style');
+			var length = styles.length;
+			dqre.configure({
+				style: '.foo { color: red; }'
+			});
+			assert.lengthOf(styles, length + 1);
+			dqre.configure({});
+			assert.lengthOf(styles, length);
+		});
+
+		it('should replace previously injected styleSheets', function () {
+			var styles = document.getElementsByTagName('style');
+			var length = styles.length;
+			dqre.configure({
+				style: '.foo { color: red; }'
+			});
+			assert.lengthOf(styles, length + 1);
+			dqre.configure({
+				style: '.bar { color: red; }'
+			});
+			assert.lengthOf(styles, length + 1);
+			assert.match(styles[length].textContent || styles[length].styleSheet.cssText,
+				/\.bar[\r\n\s]*?\{[\r\n\s]*color:[\r\n\s]*?red;?[\r\n\s]*?\}[\r\n\s]*?/);
+
+		});
 	});
 
 });
