@@ -2,6 +2,7 @@
 	"id": "no-caption",
 	"type": "FAIL",
 	"evaluate": "no-caption.js",
+	"enabled": false,
 	"metadata": {
 		"failureMessage": "Table does not have a <caption>"
 	}
