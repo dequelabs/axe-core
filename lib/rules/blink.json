@@ -6,10 +6,7 @@
 	],
 	"tags": [
 		"wcag2a",
-		"wcag411",
-		"wcag231",
-		"section508",
-		"section508j"
+		"wcag411"
 	],
 	"metadata": {
 		"description": "Checks to make sure that the <blink> tag is never used",
