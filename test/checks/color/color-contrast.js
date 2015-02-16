@@ -206,6 +206,37 @@ describe('color-contrast', function () {
 			var target = fixture.querySelector('option');
 			assert.isFalse(checks['color-contrast'].matches(target));
 		});
+
+		it('should not match inputs that are disabled', function () {
+			fixture.innerHTML = '<input type="text" disabled>';
+			var target = fixture.querySelector('input');
+			assert.isFalse(checks['color-contrast'].matches(target));
+
+		});
+
+		it('should not match <textarea disabled>', function () {
+			fixture.innerHTML = '<textarea disabled></textarea>';
+			var target = fixture.querySelector('textarea');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
+
+		it('should not match <select> with options', function () {
+			fixture.innerHTML = '<select disabled><option>Hello</option></select>';
+			var target = fixture.querySelector('select');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
+
+		it('should match <button>', function () {
+			fixture.innerHTML = '<button>hi</button>';
+			var target = fixture.querySelector('button');
+			assert.isTrue(checks['color-contrast'].matches(target));
+		});
+
+		it('should not match <button disabled>', function () {
+			fixture.innerHTML = '<button disabled>hi</button>';
+			var target = fixture.querySelector('button');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
 	});
 
 });
