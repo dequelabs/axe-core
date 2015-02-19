@@ -2,6 +2,7 @@
 	"id": "dlitem",
 	"evaluate": "dlitem.js",
 	"metadata": {
+		"impact": "serious",
 		"failureMessage": "Description list item does not have a <dl> parent element"
 	}
 }

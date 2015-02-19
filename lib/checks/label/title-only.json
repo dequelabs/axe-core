@@ -3,6 +3,7 @@
 	"evaluate": "title-only.js",
 	"type": "FAIL",
 	"metadata": {
+		"impact": "serious",
 		"failureMessage": "Only title used to generate label for form element"
 	}
 }

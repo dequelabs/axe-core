@@ -4,6 +4,7 @@
 	"evaluate": "fieldset.js",
 	"after": "group-after.js",
 	"metadata": {
+		"impact": "critical",
 		"failureMessage": "Element does not have proper containing fieldset"
 	}
 }

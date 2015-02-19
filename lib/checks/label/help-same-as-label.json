@@ -4,6 +4,7 @@
 	"enabled": false,
 	"type": "FAIL",
 	"metadata": {
+		"impact": "minor",
 		"failureMessage": "Help text (title or aria-describedby) text is the same as the label text"
 	}
 }

@@ -3,6 +3,7 @@
 	"matches": "has-attr-matches.js",
 	"evaluate": "valid-attr-value.js",
 	"metadata": {
+		"impact": "critical",
 		"failureMessage": "Invalid ARIA attribute value{{=it.data && it.data.length > 1 ? 's' : ''}}:{{~it.data:value}} {{=value}}{{~}}"
 	}
 }

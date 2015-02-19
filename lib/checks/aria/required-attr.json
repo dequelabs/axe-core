@@ -2,6 +2,7 @@
 	"id": "aria-required-attr",
 	"evaluate": "required-attr.js",
 	"metadata": {
+		"impact": "critical",
 		"failureMessage": "Required ARIA attribute{{=it.data && it.data.length > 1 ? 's' : ''}} not present:{{~it.data:value}} {{=value}}{{~}}"
 	}
 }

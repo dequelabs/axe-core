@@ -3,6 +3,7 @@
 	"evaluate": "description.js",
 	"type": "FAIL",
 	"metadata": {
+		"impact": "serious",
 		"failureMessage": "The multimedia element does not have an audio description track"
 	}
 }

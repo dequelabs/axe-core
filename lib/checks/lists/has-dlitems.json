@@ -3,6 +3,7 @@
 	"type": "FAIL",
 	"evaluate": "has-dlitems.js",
 	"metadata": {
+		"impact": "serious",
 		"failureMessage": "Element does not have at least one <dt> element followed by at least one <dd> element"
 	}
 }

@@ -3,6 +3,7 @@
 	"evaluate": "scope-value.js",
 	"type": "FAIL",
 	"metadata": {
+		"impact": "crtical",
 		"failureMessage": "The value of the scope attribute may only be 'row' or 'col'"
 	}
 }
