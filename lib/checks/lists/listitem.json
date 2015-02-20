@@ -2,6 +2,7 @@
 	"id": "listitem",
 	"evaluate": "listitem.js",
 	"metadata": {
+		"impact": "critical",
 		"failureMessage": "List item does not have a <ul> or <ol> parent element"
 	}
 }

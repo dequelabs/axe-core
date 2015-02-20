@@ -3,6 +3,7 @@
 	"type": "FAIL",
 	"evaluate": "abstractrole.js",
 	"metadata": {
+		"impact": "serious",
 		"failureMessage": "Abstract roles cannot be directly used"
 	}
 }

@@ -3,6 +3,7 @@
 	"type": "FAIL",
 	"evaluate": "only-listitems.js",
 	"metadata": {
+		"impact" :"serious",
 		"failureMessage": "List element has children that are not <li> elements:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
 	}
 }

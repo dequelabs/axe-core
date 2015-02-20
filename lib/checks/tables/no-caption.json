@@ -4,6 +4,7 @@
 	"evaluate": "no-caption.js",
 	"enabled": false,
 	"metadata": {
+		"impact": "serious",
 		"failureMessage": "Table does not have a <caption>"
 	}
 }

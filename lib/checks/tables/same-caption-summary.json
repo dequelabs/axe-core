@@ -4,6 +4,7 @@
 	"selector": "table",
 	"evaluate": "same-caption-summary.js",
 	"metadata": {
+		"impact": "moderate",
 		"failureMessage": "The content of summary attribute and <caption> element are indentical"
 	}
 }

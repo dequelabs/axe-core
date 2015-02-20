@@ -2,6 +2,7 @@
 	"id": "html5-scope",
 	"evaluate": "html5-scope.js",
 	"metadata": {
+		"impact": "serious",
 		"failureMessage": "In HTML 5, scope attributes may only be used on table header elements <th>"
 	}
 }

@@ -3,6 +3,7 @@
 	"type": "FAIL",
 	"evaluate": "headers-visible-text.js",
 	"metadata": {
+		"impact": "critical",
 		"failureMessage": "Header cell does not have visible text"
 	}
 }

@@ -3,6 +3,7 @@
 	"selector": "[role=main]",
 	"evaluate": "../shared/exists.js",
 	"metadata": {
+		"impact": "serious",
 		"failureMessage": "Page does not have a main region"
 	}
 }

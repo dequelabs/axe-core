@@ -2,6 +2,7 @@
 	"id": "meta-viewport",
 	"evaluate": "meta-viewport.js",
 	"metadata": {
+		"impact": "critical",
 		"failureMessage": "<meta> tag disables zooming"
 	}
 }

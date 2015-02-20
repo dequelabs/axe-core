@@ -2,6 +2,7 @@
 	"id": "role-presentation",
 	"evaluate": "role-presentation.js",
 	"metadata": {
+		"impact": "moderate",
 		"failureMessage": "The default semantics were not overridden with role=\"presentation\""
 	}
 }

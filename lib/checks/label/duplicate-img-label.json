@@ -4,6 +4,7 @@
 	"type": "FAIL",
 	"enabled": false,
 	"metadata": {
+		"impact": "minor",
 		"failureMessage": "Element contains <img> element with alt text that duplicates existing text"
 	}
 }

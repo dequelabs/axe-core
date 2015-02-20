@@ -146,6 +146,11 @@ schemas.check = {
 				failureMessage: {
 					required: true,
 					type: 'string'
+				},
+				impact: {
+					required: true,
+					type: 'string',
+					enum: ['minor', 'moderate', 'serious', 'critical']
 				}
 			}
 		}

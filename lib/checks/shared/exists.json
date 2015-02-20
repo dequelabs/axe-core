@@ -3,6 +3,7 @@
 	"evaluate": "exists.js",
 	"type": "FAIL",
 	"metadata": {
+		"impact": "minor",
 		"failureMessage": "Element exists"
 	}
 }
