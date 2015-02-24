@@ -1,10 +1,9 @@
 {
-	"id": "no-caption",
-	"type": "FAIL",
-	"evaluate": "no-caption.js",
-	"enabled": false,
-	"metadata": {
-		"impact": "serious",
-		"failureMessage": "Table does not have a <caption>"
-	}
+  "id": "no-caption",
+  "evaluate": "no-caption.js",
+  "enabled": false,
+  "metadata": {
+    "impact": "serious",
+    "failureMessage": "Table does not have a <caption>"
+  }
 }

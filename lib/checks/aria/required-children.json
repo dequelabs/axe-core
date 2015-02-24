@@ -1,8 +1,8 @@
 {
-	"id": "aria-required-children",
-	"evaluate": "required-children.js",
-	"metadata": {
-		"impact": "critical",
-		"failureMessage": "Required ARIA {{=it.data && it.data.length > 1 ? 'children' : 'child'}} role not present:{{~it.data:value}} {{=value}}{{~}}"
-	}
+  "id": "aria-required-children",
+  "evaluate": "required-children.js",
+  "metadata": {
+    "impact": "critical",
+    "failureMessage": "Required ARIA {{=it.data && it.data.length > 1 ? 'children' : 'child'}} role not present:{{~it.data:value}} {{=value}}{{~}}"
+  }
 }

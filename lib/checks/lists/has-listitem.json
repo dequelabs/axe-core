@@ -1,9 +1,8 @@
 {
-	"id": "has-listitem",
-	"type": "FAIL",
-	"evaluate": "has-listitem.js",
-	"metadata": {
-		"impact": "minor",
-		"failureMessage": "List element does not have an <li> element"
-	}
+  "id": "has-listitem",
+  "evaluate": "has-listitem.js",
+  "metadata": {
+    "impact": "minor",
+    "failureMessage": "List element does not have an <li> element"
+  }
 }

@@ -1,9 +1,8 @@
 {
-	"id": "title-only",
-	"evaluate": "title-only.js",
-	"type": "FAIL",
-	"metadata": {
-		"impact": "serious",
-		"failureMessage": "Only title used to generate label for form element"
-	}
+  "id": "title-only",
+  "evaluate": "title-only.js",
+  "metadata": {
+    "impact": "serious",
+    "failureMessage": "Only title used to generate label for form element"
+  }
 }

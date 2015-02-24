@@ -1,9 +1,8 @@
 {
-	"id": "caption",
-	"evaluate": "caption.js",
-	"type": "FAIL",
-	"metadata": {
-		"impact": "critical",
-		"failureMessage": "The multimedia element does not have a captions track"
-	}
+  "id": "caption",
+  "evaluate": "caption.js",
+  "metadata": {
+    "impact": "critical",
+    "failureMessage": "The multimedia element does not have a captions track"
+  }
 }

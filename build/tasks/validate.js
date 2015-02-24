@@ -177,7 +177,31 @@ schemas.rule = {
 		pageLevel: {
 			type: 'boolean'
 		},
-		checks: {
+		any: {
+			type: 'array',
+			items: {
+				type: ['string', 'object'],
+				conform: function (v, o) {
+					if (typeof v === 'string') return true;
+					if (typeof v === 'object' && typeof v.id === 'string') return true;
+					return false;
+				},
+				message: 'must be a string or an object with a key of id'
+			}
+		},
+		all: {
+			type: 'array',
+			items: {
+				type: ['string', 'object'],
+				conform: function (v, o) {
+					if (typeof v === 'string') return true;
+					if (typeof v === 'object' && typeof v.id === 'string') return true;
+					return false;
+				},
+				message: 'must be a string or an object with a key of id'
+			}
+		},
+		none: {
 			type: 'array',
 			items: {
 				type: ['string', 'object'],

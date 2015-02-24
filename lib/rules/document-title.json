@@ -1,16 +1,18 @@
 {
-	"id": "document-title",
-	"selector": "html",
-	"checks": [
-		"doc-has-title"
-	],
-	"tags": [
-		"wcag2a",
-		"wcag242"
-	],
-	"metadata": {
-		"description": "Ensures that each HTML document contains a title",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/page-title",
-		"help": "Documents must have <title> element to aid in navigation"
-	}
+  "id": "document-title",
+  "selector": "html",
+  "tags": [
+    "wcag2a",
+    "wcag242"
+  ],
+  "metadata": {
+    "description": "Ensures that each HTML document contains a title",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/page-title",
+    "help": "Documents must have <title> element to aid in navigation"
+  },
+  "all": [],
+  "any": [
+    "doc-has-title"
+  ],
+  "none": []
 }

@@ -1,18 +1,20 @@
 {
-	"id": "video-description",
-	"selector": "video",
-	"checks": [
-		"description"
-	],
-	"tags": [
-		"wcag2aa",
-		"wcag125",
-		"section508",
-		"section508a"
-	],
-	"metadata": {
-		"description": "Ensures that every <video> tag has an audio description",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/video-audio-multimedia/",
-		"help": "HTML5 video elements need an audio description track"
-	}
+  "id": "video-description",
+  "selector": "video",
+  "tags": [
+    "wcag2aa",
+    "wcag125",
+    "section508",
+    "section508a"
+  ],
+  "metadata": {
+    "description": "Ensures that every <video> tag has an audio description",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/video-audio-multimedia/",
+    "help": "HTML5 video elements need an audio description track"
+  },
+  "all": [],
+  "any": [],
+  "none": [
+    "description"
+  ]
 }

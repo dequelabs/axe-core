@@ -1,8 +1,8 @@
 {
-	"id": "has-lang",
-	"evaluate": "has-lang.js",
-	"metadata": {
-		"impact": "serious",
-		"failureMessage": "The <html> element does not have a lang attribute"
-	}
+  "id": "has-lang",
+  "evaluate": "has-lang.js",
+  "metadata": {
+    "impact": "serious",
+    "failureMessage": "The <html> element does not have a lang attribute"
+  }
 }

@@ -1,9 +1,8 @@
 {
-	"id": "th-scope",
-	"evaluate": "th-scope.js",
-	"type": "FAIL",
-	"metadata": {
-		"impact": "serious",
-		"failureMessage": "<th> elements must use scope attribute:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
-	}
+  "id": "th-scope",
+  "evaluate": "th-scope.js",
+  "metadata": {
+    "impact": "serious",
+    "failureMessage": "<th> elements must use scope attribute:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
+  }
 }

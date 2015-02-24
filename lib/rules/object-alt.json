@@ -1,15 +1,17 @@
 {
-	"id": "object-alt",
-	"selector": "object",
-	"checks": [
-		"has-visible-text"
-	],
-	"tags": [
-		"wcag2a",
-		"wcag111"
-	],
-	"metadata": {
-		"description": "Ensures that every <object> element has a text alternative",
-		"help": "An embedded object must have a text alternative"
-	}
+  "id": "object-alt",
+  "selector": "object",
+  "tags": [
+    "wcag2a",
+    "wcag111"
+  ],
+  "metadata": {
+    "description": "Ensures that every <object> element has a text alternative",
+    "help": "An embedded object must have a text alternative"
+  },
+  "all": [],
+  "any": [
+    "has-visible-text"
+  ],
+  "none": []
 }

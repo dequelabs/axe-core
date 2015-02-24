@@ -1,8 +1,8 @@
 {
-	"id": "unfocusable",
-	"evaluate": "unfocusable.js",
-	"metadata": {
-		"impact": "serious",
-		"failureMessage": "Element can be focused"
-	}
+  "id": "unfocusable",
+  "evaluate": "unfocusable.js",
+  "metadata": {
+    "impact": "serious",
+    "failureMessage": "Element can be focused"
+  }
 }

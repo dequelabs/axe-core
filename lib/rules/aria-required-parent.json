@@ -1,16 +1,18 @@
 {
-	"id": "aria-required-parent",
-	"selector": "[role]",
-	"checks": [
-		"aria-required-parent"
-	],
-	"tags": [
-		"wcag2a",
-		"wcag411"
-	],
-	"metadata": {
-		"helpUrl": "https://dequeuniversity.com/issues/aria-required-parent",
-		"description": "Checks all elements that contain a WAI-ARIA role to ensure that all required parent roles are present",
-		"help": "Certain ARIA roles must be contained by particular parents"
-	}
+  "id": "aria-required-parent",
+  "selector": "[role]",
+  "tags": [
+    "wcag2a",
+    "wcag411"
+  ],
+  "metadata": {
+    "helpUrl": "https://dequeuniversity.com/issues/aria-required-parent",
+    "description": "Checks all elements that contain a WAI-ARIA role to ensure that all required parent roles are present",
+    "help": "Certain ARIA roles must be contained by particular parents"
+  },
+  "all": [],
+  "any": [
+    "aria-required-parent"
+  ],
+  "none": []
 }

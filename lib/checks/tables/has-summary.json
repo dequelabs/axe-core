@@ -1,9 +1,8 @@
 {
-	"id": "has-summary",
-	"evaluate": "has-summary.js",
-	"type": "FAIL",
-	"metadata": {
-		"impact": "serious",
-		"failureMessage": "The layout table should not use summary attribute"
-	}
+  "id": "has-summary",
+  "evaluate": "has-summary.js",
+  "metadata": {
+    "impact": "serious",
+    "failureMessage": "The layout table should not use summary attribute"
+  }
 }

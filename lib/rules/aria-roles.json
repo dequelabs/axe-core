@@ -1,16 +1,18 @@
 {
-	"id": "aria-roles",
-	"selector": "[role]",
-	"checks": [
-		"invalidrole",
-		"abstractrole"
-	],
-	"tags": [
-		"wcag2a",
-		"wcag411"
-	],
-	"metadata": {
-		"description": "Checks all elements that contain the WAI-ARIA role attribute to ensure that the role value is valid",
-		"help": "ARIA roles used must conform to valid values"
-	}
+  "id": "aria-roles",
+  "selector": "[role]",
+  "tags": [
+    "wcag2a",
+    "wcag411"
+  ],
+  "metadata": {
+    "description": "Checks all elements that contain the WAI-ARIA role attribute to ensure that the role value is valid",
+    "help": "ARIA roles used must conform to valid values"
+  },
+  "all": [],
+  "any": [],
+  "none": [
+    "invalidrole",
+    "abstractrole"
+  ]
 }

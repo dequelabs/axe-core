@@ -1,10 +1,9 @@
 {
-	"id": "duplicate-img-label",
-	"evaluate": "duplicate-img-label.js",
-	"type": "FAIL",
-	"enabled": false,
-	"metadata": {
-		"impact": "minor",
-		"failureMessage": "Element contains <img> element with alt text that duplicates existing text"
-	}
+  "id": "duplicate-img-label",
+  "evaluate": "duplicate-img-label.js",
+  "enabled": false,
+  "metadata": {
+    "impact": "minor",
+    "failureMessage": "Element contains <img> element with alt text that duplicates existing text"
+  }
 }

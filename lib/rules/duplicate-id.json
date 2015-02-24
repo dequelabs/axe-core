@@ -1,16 +1,18 @@
 {
-	"id": "duplicate-id",
-	"selector": "[id]",
-	"checks": [
-		"duplicate-id"
-	],
-	"tags": [
-		"wcag2a",
-		"wcag411"
-	],
-	"metadata": {
-		"description": "Ensures that each element on the page with an ID attribute has a unique ID attribute value",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/robust-compatibility/markup-validation",
-		"help": "ID attribute value must be unique"
-	}
+  "id": "duplicate-id",
+  "selector": "[id]",
+  "tags": [
+    "wcag2a",
+    "wcag411"
+  ],
+  "metadata": {
+    "description": "Ensures that each element on the page with an ID attribute has a unique ID attribute value",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/robust-compatibility/markup-validation",
+    "help": "ID attribute value must be unique"
+  },
+  "all": [],
+  "any": [
+    "duplicate-id"
+  ],
+  "none": []
 }

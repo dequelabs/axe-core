@@ -1,9 +1,8 @@
 {
-	"id": "has-caption",
-	"evaluate": "has-caption.js",
-	"type": "FAIL",
-	"metadata": {
-		"impact": "serious",
-		"failureMessage": "Layout tables should not use <caption> elements"
-	}
+  "id": "has-caption",
+  "evaluate": "has-caption.js",
+  "metadata": {
+    "impact": "serious",
+    "failureMessage": "Layout tables should not use <caption> elements"
+  }
 }

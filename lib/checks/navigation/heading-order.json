@@ -1,9 +1,9 @@
 {
-	"id": "heading-order",
-	"evaluate": "heading-order.js",
-	"after": "heading-order-after.js",
-	"metadata": {
-		"impact": "minor",
-		"failureMessage": "Heading order invalid"
-	}
+  "id": "heading-order",
+  "evaluate": "heading-order.js",
+  "after": "heading-order-after.js",
+  "metadata": {
+    "impact": "minor",
+    "failureMessage": "Heading order invalid"
+  }
 }

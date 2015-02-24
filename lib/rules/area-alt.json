@@ -1,21 +1,23 @@
 {
-	"id": "area-alt",
-	"selector": "map area[href]",
-	"excludeHidden": false,
-	"checks": [
-		"non-empty-alt",
-		"aria-label",
-		"aria-labelledby"
-	],
-	"tags": [
-		"wcag2a",
-		"wcag111",
-		"section508",
-		"section508a"
-	],
-	"metadata": {
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/image-maps",
-		"help": "Active <area> elements need alternate text",
-		"description": "Checks the <area> elements of image maps to ensure that they have an alternative text"
-	}
+  "id": "area-alt",
+  "selector": "map area[href]",
+  "excludeHidden": false,
+  "tags": [
+    "wcag2a",
+    "wcag111",
+    "section508",
+    "section508a"
+  ],
+  "metadata": {
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/images/image-maps",
+    "help": "Active <area> elements need alternate text",
+    "description": "Checks the <area> elements of image maps to ensure that they have an alternative text"
+  },
+  "all": [],
+  "any": [
+    "non-empty-alt",
+    "aria-label",
+    "aria-labelledby"
+  ],
+  "none": []
 }
