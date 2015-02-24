@@ -1,8 +1,8 @@
 {
-	"id": "aria-label",
-	"evaluate": "aria-label.js",
-	"metadata": {
-		"impact": "critical",
-		"failureMessage": "aria-label attribute does not exist or is empty"
-	}
+  "id": "aria-label",
+  "evaluate": "aria-label.js",
+  "metadata": {
+    "impact": "critical",
+    "failureMessage": "aria-label attribute does not exist or is empty"
+  }
 }

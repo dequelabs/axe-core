@@ -1,19 +1,21 @@
 {
-	"id": "video-caption",
-	"selector": "video",
-	"checks": [
-		"caption"
-	],
-	"tags": [
-		"wcag2a",
-		"wcag122",
-		"wcag123",
-		"section508",
-		"section508a"
-	],
-	"metadata": {
-		"description": "Ensures that the HTML5 <video> tag is captioned",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/video-audio-multimedia/",
-		"help": "HTML5 video elements need captions"
-	}
+  "id": "video-caption",
+  "selector": "video",
+  "tags": [
+    "wcag2a",
+    "wcag122",
+    "wcag123",
+    "section508",
+    "section508a"
+  ],
+  "metadata": {
+    "description": "Ensures that the HTML5 <video> tag is captioned",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/video-audio-multimedia/",
+    "help": "HTML5 video elements need captions"
+  },
+  "all": [],
+  "any": [],
+  "none": [
+    "caption"
+  ]
 }

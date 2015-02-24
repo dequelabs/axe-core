@@ -1,9 +1,9 @@
 {
-	"id": "aria-allowed-attr",
-	"matches": "allowed-attr-matches.js",
-	"evaluate": "allowed-attr.js",
-	"metadata": {
-		"impact": "critical",
-		"failureMessage": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}"
-	}
+  "id": "aria-allowed-attr",
+  "matches": "allowed-attr-matches.js",
+  "evaluate": "allowed-attr.js",
+  "metadata": {
+    "impact": "critical",
+    "failureMessage": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}"
+  }
 }

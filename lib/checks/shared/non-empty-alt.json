@@ -1,8 +1,8 @@
 {
-	"id": "non-empty-alt",
-	"evaluate": "non-empty-alt.js",
-	"metadata": {
-		"impact": "critical",
-		"failureMessage": "Element has no alt attribute or the alt attribute is empty"
-	}
+  "id": "non-empty-alt",
+  "evaluate": "non-empty-alt.js",
+  "metadata": {
+    "impact": "critical",
+    "failureMessage": "Element has no alt attribute or the alt attribute is empty"
+  }
 }

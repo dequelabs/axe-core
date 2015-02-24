@@ -1,8 +1,8 @@
 {
-	"id": "html4-scope",
-	"evaluate": "html4-scope.js",
-	"metadata": {
-		"impact": "serious",
-		"failureMessage": "In HTML 4, the scope attribute may only be used on table cell elements (<th> and <td>)"
-	}
+  "id": "html4-scope",
+  "evaluate": "html4-scope.js",
+  "metadata": {
+    "impact": "serious",
+    "failureMessage": "In HTML 4, the scope attribute may only be used on table cell elements (<th> and <td>)"
+  }
 }

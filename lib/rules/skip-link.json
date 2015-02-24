@@ -1,16 +1,18 @@
 {
-	"id": "skip-link",
-	"selector": "a[href]",
-	"checks": [
-		"skip-link"
-	],
-	"pageLevel": true,
-	"tags": [
-		"best-practice"
-	],
-	"metadata": {
-		"description": "Ensures that the best practice of having a skip link as the very first link in a page, is adhered-to",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/skip-navigation",
-		"help": "The page must have a skip link as its first link"
-	}
+  "id": "skip-link",
+  "selector": "a[href]",
+  "pageLevel": true,
+  "tags": [
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "Ensures that the best practice of having a skip link as the very first link in a page, is adhered-to",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/skip-navigation",
+    "help": "The page must have a skip link as its first link"
+  },
+  "all": [],
+  "any": [
+    "skip-link"
+  ],
+  "none": []
 }

@@ -1,16 +1,18 @@
 {
-	"id": "blink",
-	"selector": "blink",
-	"checks": [
-		"exists"
-	],
-	"tags": [
-		"wcag2a",
-		"wcag411"
-	],
-	"metadata": {
-		"description": "Checks to make sure that the <blink> tag is never used",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/visual-layout/fonts-and-typography#id55_avoid_blink_marquee",
-		"help": "The <blink> tag is deprecated and must not be used"
-	}
+  "id": "blink",
+  "selector": "blink",
+  "tags": [
+    "wcag2a",
+    "wcag411"
+  ],
+  "metadata": {
+    "description": "Checks to make sure that the <blink> tag is never used",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/visual-layout/fonts-and-typography#id55_avoid_blink_marquee",
+    "help": "The <blink> tag is deprecated and must not be used"
+  },
+  "all": [],
+  "any": [],
+  "none": [
+    "exists"
+  ]
 }

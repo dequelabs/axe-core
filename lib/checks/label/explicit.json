@@ -1,9 +1,9 @@
 {
-	"id": "explicit-label",
-	"evaluate": "explicit.js",
-	"selector": "[id]",
-	"metadata": {
-		"impact": "critical",
-		"failureMessage": "Form element does not have an explicit <label>"
-	}
+  "id": "explicit-label",
+  "evaluate": "explicit.js",
+  "selector": "[id]",
+  "metadata": {
+    "impact": "critical",
+    "failureMessage": "Form element does not have an explicit <label>"
+  }
 }

@@ -1,16 +1,18 @@
 {
-	"id": "valid-lang",
-	"selector": "[lang]:not(html), [xml\\:lang]:not(html)",
-	"checks": [
-		"valid-lang"
-	],
-	"tags": [
-		"wcag2aa",
-		"wcag312"
-	],
-	"metadata": {
-		"description": "Ensures that when the 'lang' attribute is used, it has a valid value",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/language#id35__language_codes",
-		"help": "lang attribute must have a valid value"
-	}
+  "id": "valid-lang",
+  "selector": "[lang]:not(html), [xml\\:lang]:not(html)",
+  "tags": [
+    "wcag2aa",
+    "wcag312"
+  ],
+  "metadata": {
+    "description": "Ensures that when the 'lang' attribute is used, it has a valid value",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/language#id35__language_codes",
+    "help": "lang attribute must have a valid value"
+  },
+  "all": [],
+  "any": [],
+  "none": [
+    "valid-lang"
+  ]
 }

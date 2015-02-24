@@ -1,9 +1,8 @@
 {
-	"id": "exists",
-	"evaluate": "exists.js",
-	"type": "FAIL",
-	"metadata": {
-		"impact": "minor",
-		"failureMessage": "Element exists"
-	}
+  "id": "exists",
+  "evaluate": "exists.js",
+  "metadata": {
+    "impact": "minor",
+    "failureMessage": "Element exists"
+  }
 }

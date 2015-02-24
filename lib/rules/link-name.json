@@ -1,23 +1,26 @@
 {
-	"id": "link-name",
-	"selector": "a[href],[role=link][href]",
-	"checks": [
-		"duplicate-img-label",
-		"unfocusable",
-		"has-visible-text",
-		"aria-label",
-		"aria-labelledby"
-	],
-	"tags": [
-		"wcag2a",
-		"wcag111",
-		"wcag412",
-		"section508",
-		"section508a"
-	],
-	"metadata": {
-		"description": "Ensures that every link has an accessible name",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/links",
-		"help": "Links must have alternate text"
-	}
+  "id": "link-name",
+  "selector": "a[href],[role=link][href]",
+  "tags": [
+    "wcag2a",
+    "wcag111",
+    "wcag412",
+    "section508",
+    "section508a"
+  ],
+  "metadata": {
+    "description": "Ensures that every link has an accessible name",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/links",
+    "help": "Links must have alternate text"
+  },
+  "all": [],
+  "any": [
+    "unfocusable",
+    "has-visible-text",
+    "aria-label",
+    "aria-labelledby"
+  ],
+  "none": [
+    "duplicate-img-label"
+  ]
 }

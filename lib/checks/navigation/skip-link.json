@@ -1,10 +1,10 @@
 {
-	"id": "skip-link",
-	"selector": "a[href]",
-	"evaluate": "skip-link.js",
-	"after": "skip-link-after.js",
-	"metadata": {
-		"impact": "critical",
-		"failureMessage": "No valid skip link found"
-	}
+  "id": "skip-link",
+  "selector": "a[href]",
+  "evaluate": "skip-link.js",
+  "after": "skip-link-after.js",
+  "metadata": {
+    "impact": "critical",
+    "failureMessage": "No valid skip link found"
+  }
 }

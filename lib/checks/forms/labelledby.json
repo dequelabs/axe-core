@@ -1,10 +1,10 @@
 {
-	"id": "labelledby",
-	"options": "checkbox",
-	"evaluate": "labelledby.js",
-	"after": "group-after.js",
-	"metadata": {
-		"impact": "critical",
-		"failureMessage": "Element does not have proper aria-labelledby values for all group members"
-	}
+  "id": "labelledby",
+  "options": "checkbox",
+  "evaluate": "labelledby.js",
+  "after": "group-after.js",
+  "metadata": {
+    "impact": "critical",
+    "failureMessage": "Element does not have proper aria-labelledby values for all group members"
+  }
 }

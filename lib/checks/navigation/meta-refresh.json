@@ -1,8 +1,8 @@
 {
-	"id": "meta-refresh",
-	"evaluate": "meta-refresh.js",
-	"metadata": {
-		"impact": "critical",
-		"failureMessage": "<meta> tag forces timed refresh of page"
-	}
+  "id": "meta-refresh",
+  "evaluate": "meta-refresh.js",
+  "metadata": {
+    "impact": "critical",
+    "failureMessage": "<meta> tag forces timed refresh of page"
+  }
 }

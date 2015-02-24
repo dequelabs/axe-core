@@ -1,10 +1,9 @@
 {
-	"id": "unique-frame-title",
-	"evaluate": "unique-frame-title.js",
-	"after": "unique-frame-title-after.js",
-	"type": "FAIL",
-	"metadata": {
-		"impact": "serious",
-		"failureMessage": "Element's title attribute is not unique"
-	}
+  "id": "unique-frame-title",
+  "evaluate": "unique-frame-title.js",
+  "after": "unique-frame-title-after.js",
+  "metadata": {
+    "impact": "serious",
+    "failureMessage": "Element's title attribute is not unique"
+  }
 }

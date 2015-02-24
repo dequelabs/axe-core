@@ -1,9 +1,9 @@
 {
-	"id": "duplicate-id",
-	"evaluate": "duplicate-id.js",
-	"after": "duplicate-id-after.js",
-	"metadata": {
-		"impact": "critical",
-		"failureMessage": "Document has multiple elements with the same ID:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
-	}
+  "id": "duplicate-id",
+  "evaluate": "duplicate-id.js",
+  "after": "duplicate-id-after.js",
+  "metadata": {
+    "impact": "critical",
+    "failureMessage": "Document has multiple elements with the same ID:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
+  }
 }

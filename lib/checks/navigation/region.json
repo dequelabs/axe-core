@@ -1,9 +1,9 @@
 {
-	"id": "region",
-	"evaluate": "region.js",
-	"after": "region-after.js",
-	"metadata": {
-		"impact": "moderate",
-		"failureMessage": "Content not contained by an ARIA landmark:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
-	}
+  "id": "region",
+  "evaluate": "region.js",
+  "after": "region-after.js",
+  "metadata": {
+    "impact": "moderate",
+    "failureMessage": "Content not contained by an ARIA landmark:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
+  }
 }

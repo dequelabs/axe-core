@@ -1,21 +1,23 @@
 {
-	"id": "role-button-name",
-	"selector": "[role=button]",
-	"checks": [
-		"has-visible-text",
-		"aria-label",
-		"aria-labelledby"
-	],
-	"tags": [
-		"wcag2a",
-		"wcag111",
-		"wcag412",
-		"section508",
-		"section508a"
-	],
-	"metadata": {
-		"helpUrl": "https://dequeuniversity.com/issues/role-button-name",
-		"description": "Ensures that every element with a WAI-ARIA role of button has an accessible name",
-		"help": "Elements with button role must have alternate text"
-	}
+  "id": "role-button-name",
+  "selector": "[role=button]",
+  "tags": [
+    "wcag2a",
+    "wcag111",
+    "wcag412",
+    "section508",
+    "section508a"
+  ],
+  "metadata": {
+    "helpUrl": "https://dequeuniversity.com/issues/role-button-name",
+    "description": "Ensures that every element with a WAI-ARIA role of button has an accessible name",
+    "help": "Elements with button role must have alternate text"
+  },
+  "all": [],
+  "any": [
+    "has-visible-text",
+    "aria-label",
+    "aria-labelledby"
+  ],
+  "none": []
 }

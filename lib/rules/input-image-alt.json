@@ -1,20 +1,22 @@
 {
-	"id": "input-image-alt",
-	"selector": "input[type=\"image\"]",
-	"checks": [
-		"non-empty-alt",
-		"aria-label",
-		"aria-labelledby"
-	],
-	"tags": [
-		"wcag2a",
-		"wcag111",
-		"section508",
-		"section508a"
-	],
-	"metadata": {
-		"description": "Ensures that every <input> that represents an image button has an accessible name",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/alt-text#id57_active_images_links_and_buttons",
-		"help": "Image buttons must have alternate text"
-	}
+  "id": "input-image-alt",
+  "selector": "input[type=\"image\"]",
+  "tags": [
+    "wcag2a",
+    "wcag111",
+    "section508",
+    "section508a"
+  ],
+  "metadata": {
+    "description": "Ensures that every <input> that represents an image button has an accessible name",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/images/alt-text#id57_active_images_links_and_buttons",
+    "help": "Image buttons must have alternate text"
+  },
+  "all": [],
+  "any": [
+    "non-empty-alt",
+    "aria-label",
+    "aria-labelledby"
+  ],
+  "none": []
 }

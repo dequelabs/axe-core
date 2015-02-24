@@ -1,8 +1,8 @@
 {
-	"id": "tabindex",
-	"evaluate": "tabindex.js",
-	"metadata": {
-		"impact": "serious",
-		"failureMessage": "Element has a tabindex > 0"
-	}
+  "id": "tabindex",
+  "evaluate": "tabindex.js",
+  "metadata": {
+    "impact": "serious",
+    "failureMessage": "Element has a tabindex > 0"
+  }
 }

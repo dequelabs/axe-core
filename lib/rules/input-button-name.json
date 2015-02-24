@@ -1,22 +1,24 @@
 {
-	"id": "input-button-name",
-	"selector": "input[type=\"button\"],input[type=\"submit\"],input[type=\"reset\"]",
-	"checks": [
-		"non-empty-if-present",
-		"non-empty-value",
-		"aria-label",
-		"aria-labelledby"
-	],
-	"tags": [
-		"wcag2a",
-		"wcag111",
-		"wcag412",
-		"section508",
-		"section508a"
-	],
-	"metadata": {
-		"helpUrl": "https://dequeuniversity.com/issues/role-button-name",
-		"description": "Ensures that every <input> that represents a text button has an accessible name",
-		"help": "Button inputs must have alternate text"
-	}
+  "id": "input-button-name",
+  "selector": "input[type=\"button\"],input[type=\"submit\"],input[type=\"reset\"]",
+  "tags": [
+    "wcag2a",
+    "wcag111",
+    "wcag412",
+    "section508",
+    "section508a"
+  ],
+  "metadata": {
+    "helpUrl": "https://dequeuniversity.com/issues/role-button-name",
+    "description": "Ensures that every <input> that represents a text button has an accessible name",
+    "help": "Button inputs must have alternate text"
+  },
+  "all": [],
+  "any": [
+    "non-empty-if-present",
+    "non-empty-value",
+    "aria-label",
+    "aria-labelledby"
+  ],
+  "none": []
 }

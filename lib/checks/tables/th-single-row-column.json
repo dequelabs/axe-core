@@ -1,9 +1,8 @@
 {
-	"id": "th-single-row-column",
-	"evaluate": "th-single-row-column.js",
-	"type": "FAIL",
-	"metadata": {
-		"impact": "serious",
-		"failureMessage": "<th> elements should only be used when there is a single row and single column of headers"
-	}
+  "id": "th-single-row-column",
+  "evaluate": "th-single-row-column.js",
+  "metadata": {
+    "impact": "serious",
+    "failureMessage": "<th> elements should only be used when there is a single row and single column of headers"
+  }
 }

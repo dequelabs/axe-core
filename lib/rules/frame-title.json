@@ -1,17 +1,20 @@
 {
-	"id": "frame-title",
-	"selector": "frame, iframe",
-	"checks": [
-		"non-empty-title",
-		"unique-frame-title"
-	],
-	"tags": [
-		"wcag2a",
-		"wcag412"
-	],
-	"metadata": {
-		"description": "Ensure that all iframe and frame elements contain a unique and non-empty title attribute",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/frames/titles",
-		"help": "Frames must have unique title attribute"
-	}
+  "id": "frame-title",
+  "selector": "frame, iframe",
+  "tags": [
+    "wcag2a",
+    "wcag412"
+  ],
+  "metadata": {
+    "description": "Ensure that all iframe and frame elements contain a unique and non-empty title attribute",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/frames/titles",
+    "help": "Frames must have unique title attribute"
+  },
+  "all": [],
+  "any": [
+    "non-empty-title"
+  ],
+  "none": [
+    "unique-frame-title"
+  ]
 }

@@ -1,8 +1,8 @@
 {
-	"id": "has-visible-text",
-	"evaluate": "has-visible-text.js",
-	"metadata": {
-		"impact": "critical",
-		"failureMessage": "The element does not have inner text that is visible to a screen reader"
-	}
+  "id": "has-visible-text",
+  "evaluate": "has-visible-text.js",
+  "metadata": {
+    "impact": "critical",
+    "failureMessage": "The element does not have inner text that is visible to a screen reader"
+  }
 }

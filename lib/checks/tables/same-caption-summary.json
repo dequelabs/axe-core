@@ -1,10 +1,9 @@
 {
-	"id": "same-caption-summary",
-	"type": "FAIL",
-	"selector": "table",
-	"evaluate": "same-caption-summary.js",
-	"metadata": {
-		"impact": "moderate",
-		"failureMessage": "The content of summary attribute and <caption> element are indentical"
-	}
+  "id": "same-caption-summary",
+  "selector": "table",
+  "evaluate": "same-caption-summary.js",
+  "metadata": {
+    "impact": "moderate",
+    "failureMessage": "The content of summary attribute and <caption> element are indentical"
+  }
 }

@@ -1,18 +1,20 @@
 {
-	"id": "server-side-image-map",
-	"selector": "img[ismap]",
-	"checks": [
-		"exists"
-	],
-	"tags": [
-		"wcag2a",
-		"wcag211",
-		"section508",
-		"section508f"
-	],
-	"metadata": {
-		"description": "Ensures that server-side image maps are never used",
-		"helpUrl": "https://dequeuniversity.com/courses/html-css/images/image-maps#id63_avoid_use_of_server_side_image_maps",
-		"help": "Server-side image maps should not be used"
-	}
+  "id": "server-side-image-map",
+  "selector": "img[ismap]",
+  "tags": [
+    "wcag2a",
+    "wcag211",
+    "section508",
+    "section508f"
+  ],
+  "metadata": {
+    "description": "Ensures that server-side image maps are never used",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/images/image-maps#id63_avoid_use_of_server_side_image_maps",
+    "help": "Server-side image maps should not be used"
+  },
+  "all": [],
+  "any": [],
+  "none": [
+    "exists"
+  ]
 }
