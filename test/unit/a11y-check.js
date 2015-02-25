@@ -13,6 +13,8 @@ describe('dqre.a11yCheck', function () {
 					result: true,
 					data: 'minkey'
 				}],
+				all: [],
+				none: [],
 				node: {
 					selector: ['minkey'],
 					frames: [],
@@ -30,6 +32,8 @@ describe('dqre.a11yCheck', function () {
 					result: false,
 					data: 'pillock'
 				}],
+				any: [],
+				none: [],
 				node: {
 					selector: ['q', 'r', 'pillock'],
 					source: '<pillock>george bush</pillock>'
@@ -45,6 +49,8 @@ describe('dqre.a11yCheck', function () {
 					data: 'foon',
 					result: true
 				}],
+				any: [],
+				all: [],
 				node: {
 					selector: ['foon'],
 					source: '<foon>telephone</foon>'
@@ -68,7 +74,7 @@ describe('dqre.a11yCheck', function () {
 		}];
 	beforeEach(function () {
 		dqre.configure({ messages: {}, rules: [], data: {failureSummaries: {
-			FAIL: {
+			none: {
 				failureMessage: function anonymous(it) {
 					var out = 'Fix any of the following: \n';
 					var arr1 = it;
@@ -82,7 +88,21 @@ describe('dqre.a11yCheck', function () {
 					return out;
 				}
 			},
-			PASS: {
+			all: {
+				failureMessage: function anonymous(it) {
+					var out = 'Fix any of the following: \n';
+					var arr1 = it;
+					if (arr1) {
+						var value, i1 = -1, l1 = arr1.length - 1;
+						while (i1 < l1) {
+							value = arr1[i1 += 1];
+							out += ' ' + value + '\n';
+						}
+					}
+					return out;
+				}
+			},
+			any: {
 				failureMessage: function anonymous(it) {
 					var out = 'Fix all of the following: \n';
 					var arr1 = it;
@@ -106,6 +126,10 @@ describe('dqre.a11yCheck', function () {
 	afterEach(function () {
 		dqre.audit = null;
 		window.runRules = orig;
+	});
+
+	it('should alias to dqre.run', function () {
+		assert.equal(dqre.run, dqre.a11yCheck);
 	});
 
 	it('should merge the runRules results into violations and passes', function (done) {
@@ -189,16 +213,67 @@ describe('dqre.a11yCheck', function () {
 
 describe('failureSummary', function () {
 	'use strict';
-	it('should return an empty array if result: PASS', function () {
-		var summary = failureSummary('PASS', {
-			result: 'PASS'
+	before(function () {
+		dqre.configure({ messages: {}, rules: [], data: {failureSummaries: {
+			none: {
+				failureMessage: function anonymous(it) {
+					var out = 'Fix all of the following: \n';
+					var arr1 = it;
+					if (arr1) {
+						var value, i1 = -1, l1 = arr1.length - 1;
+						while (i1 < l1) {
+							value = arr1[i1 += 1];
+							out += ' ' + value + '\n';
+						}
+					}
+					return out;
+				}
+			},
+			all: {
+				failureMessage: function anonymous(it) {
+					var out = 'Fix all of the following: \n';
+					var arr1 = it;
+					if (arr1) {
+						var value, i1 = -1, l1 = arr1.length - 1;
+						while (i1 < l1) {
+							value = arr1[i1 += 1];
+							out += ' ' + value + '\n';
+						}
+					}
+					return out;
+				}
+			},
+			any: {
+				failureMessage: function anonymous(it) {
+					var out = 'Fix any of the following: \n';
+					var arr1 = it;
+					if (arr1) {
+						var value, i1 = -1, l1 = arr1.length - 1;
+						while (i1 < l1) {
+							value = arr1[i1 += 1];
+							out += ' ' + value + '\n';
+						}
+					}
+					return out;
+				}
+			}
+		}}});
+	});
+	it('should return an empty string if result: PASS', function () {
+		var summary = failureSummary({
+			result: 'PASS',
+			any: [{result: true}],
+			all: [],
+			none: []
 		});
 		assert.equal(summary, '');
 	});
 
 	it('should return a list of all NONEs which return true', function () {
-		var summary = failureSummary('FAIL', {
+		var summary = failureSummary({
 			result: 'FAIL',
+			all: [],
+			any: [],
 			none: [{
 				id: '1',
 				result: true,
@@ -213,11 +288,11 @@ describe('failureSummary', function () {
 			}]
 		});
 
-		assert.equal(summary, 'Fix any of the following: \n 1\n 3\n');
+		assert.equal(summary, 'Fix all of the following: \n 1\n 3\n');
 	});
 
 	it('should return a list of ANYs if none return true', function () {
-		var summary = failureSummary('FAIL', {
+		var summary = failureSummary({
 			result: 'FAIL',
 			any: [{
 				id: '1',
@@ -235,15 +310,16 @@ describe('failureSummary', function () {
 			none: [{
 				id: '4',
 				result: false
-			}]
+			}],
+			all: []
 		});
 
-		assert.equal(summary, 'Fix all of the following: \n 1\n 2\n 3\n');
+		assert.equal(summary, 'Fix any of the following: \n 1\n 2\n 3\n');
 	});
 
 	it('should not return any "anys" if any of them return true', function () {
-		var summary = failureSummary('FAIL', {
-			result: 'FAIL',
+		var summary = failureSummary({
+			result: 'PASS',
 			any: [{
 				id: '1',
 				result: false
@@ -256,7 +332,9 @@ describe('failureSummary', function () {
 			}, {
 				id: '4',
 				result: false
-			}]
+			}],
+			all: [],
+			none: []
 		});
 
 		assert.equal(summary, '');
@@ -264,7 +342,7 @@ describe('failureSummary', function () {
 	});
 
 	it('should concatenate failing anys', function () {
-		var summary = failureSummary('FAIL', {
+		var summary = failureSummary({
 			result: 'FAIL',
 			any: [{
 				id: '1',
@@ -279,20 +357,16 @@ describe('failureSummary', function () {
 				result: false,
 				failureMessage: '3'
 			}],
+			all: [],
 			none: [{
 				id: '4',
 				result: true,
-				failureMessage: '4',
-				type: 'FAIL'
+				failureMessage: '4'
 			}]
 		});
 
-		assert.equal(summary, 'Fix any of the following: \n 4\n\nFix all of the following: \n 1\n 2\n 3\n');
+		assert.equal(summary, 'Fix any of the following: \n 1\n 2\n 3\n\n\nFix all of the following: \n 4\n');
 
-	});
-
-	it('should alias to dqre.run', function () {
-		assert.equal(dqre.run, dqre.a11yCheck);
 	});
 
 

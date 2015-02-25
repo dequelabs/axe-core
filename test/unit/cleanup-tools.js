@@ -15,8 +15,12 @@ describe('cleanupTools', function () {
 
   afterEach(function () {
     fixture.innerHTML = '';
-    dqre.audit = null;
   });
+
+  beforeEach(function () {
+    dqre.audit = null;
+  })
+
 
   it('should throw if no audit is configured', function () {
 
