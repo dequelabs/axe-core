@@ -113,7 +113,7 @@ describe('Rule', function () {
 
 			});
 
-			it('should execute Check#run on its child checks', function (done) {
+			it('should execute Check#run on its child checks - any', function (done) {
 				fixture.innerHTML = '<blink>Hi</blink>';
 				var orig = Check.prototype.run;
 				var success = false;
@@ -122,7 +122,45 @@ describe('Rule', function () {
 					cb(true);
 				};
 
-				var rule = new Rule({ checks: [{ id: 'cats', evaluate: function () {} }]});
+				var rule = new Rule({ any: [{ id: 'cats', evaluate: function () {} }]});
+
+				rule.run({ include: [fixture] }, {}, function () {
+					assert.isTrue(success);
+					Check.prototype.run = orig;
+					done();
+				});
+
+			});
+
+			it('should execute Check#run on its child checks - all', function (done) {
+				fixture.innerHTML = '<blink>Hi</blink>';
+				var orig = Check.prototype.run;
+				var success = false;
+				Check.prototype.run = function (_, __, cb) {
+					success = true;
+					cb(true);
+				};
+
+				var rule = new Rule({ all: [{ id: 'cats', evaluate: function () {} }]});
+
+				rule.run({ include: [fixture] }, {}, function () {
+					assert.isTrue(success);
+					Check.prototype.run = orig;
+					done();
+				});
+
+			});
+
+			it('should execute Check#run on its child checks - none', function (done) {
+				fixture.innerHTML = '<blink>Hi</blink>';
+				var orig = Check.prototype.run;
+				var success = false;
+				Check.prototype.run = function (_, __, cb) {
+					success = true;
+					cb(true);
+				};
+
+				var rule = new Rule({ none: [{ id: 'cats', evaluate: function () {} }]});
 
 				rule.run({ include: [fixture] }, {}, function () {
 					assert.isTrue(success);
@@ -150,7 +188,7 @@ describe('Rule', function () {
 					cb(true);
 				};
 
-				var rule = new Rule({ id: 'cats', checks: [{ id: 'cats' }]});
+				var rule = new Rule({ id: 'cats', any: [{ id: 'cats' }]});
 				rule.run({ include: [document] }, options, function () {
 					Check.prototype.run = orig;
 					done();
@@ -185,7 +223,7 @@ describe('Rule', function () {
 					cb(true);
 				};
 
-				var rule = new Rule({ id: 'cats', checks: [{ id: 'cats' }]});
+				var rule = new Rule({ id: 'cats', any: [{ id: 'cats' }]});
 				rule.run({ include: [document] }, options, function () {
 					Check.prototype.run = orig;
 					done();
@@ -195,7 +233,7 @@ describe('Rule', function () {
 			it('should filter out null results', function () {
 				var rule = new Rule({
 					selector: '#fixture',
-					checks: [{
+					any: [{
 						id: 'cats',
 						evaluate: function () {
 							throw new Error('uh oh');
@@ -203,7 +241,7 @@ describe('Rule', function () {
 					}]
 				});
 				rule.run({ include: [document] }, {}, function (r) {
-					assert.lengthOf(r.details, 0);
+					assert.lengthOf(r.nodes, 0);
 				});
 
 			});
@@ -213,12 +251,12 @@ describe('Rule', function () {
 					var orig = window.RuleResult;
 					var success = false;
 					window.RuleResult = function (r) {
-						this.details = [];
+						this.nodes = [];
 						assert.equal(rule, r);
 						success = true;
 					};
 
-					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats' }]});
+					var rule = new Rule({ any: [{ evaluate: function () {}, id: 'cats' }]});
 					rule.run({ include: document }, {}, function () {});
 					assert.isTrue(success);
 
@@ -228,7 +266,7 @@ describe('Rule', function () {
 				it('should execute rule callback', function () {
 					var success = false;
 
-					var rule = new Rule({ checks: [{ evaluate: function () {}, id: 'cats' }]});
+					var rule = new Rule({ any: [{ evaluate: function () {}, id: 'cats' }]});
 					rule.run({ include: document }, {}, function () {
 						success = true;
 					});
@@ -338,28 +376,77 @@ describe('Rule', function () {
 
 		});
 
-		describe('.checks', function () {
+		describe('.any', function () {
 			it('should be set', function () {
 				var spec = {
-					checks: [{ name: 'monkeys'}, { name: 'bananas'}, { name: 'pajamas' }]
+					any: [{ name: 'monkeys'}, { name: 'bananas'}, { name: 'pajamas' }]
 				};
-				assert.property(new Rule(spec), 'checks');
+				assert.property(new Rule(spec), 'any');
 			});
 
 			it('should contain instances of Check', function () {
 				var spec = {
-					checks: [{ name: 'monkeys'}, { name: 'bananas'}, { name: 'pajamas' }]
+					any: [{ name: 'monkeys'}, { name: 'bananas'}, { name: 'pajamas' }]
 				};
 				var rule = new Rule(spec);
 
-				for (var i = 0, l = spec.checks.length; i < l; i++) {
+				for (var i = 0, l = spec.any.length; i < l; i++) {
 
-					assert.instanceOf(rule.checks[i], Check);
-					assert.deepEqual(rule.checks[i], new Check(spec.checks[i]));
+					assert.instanceOf(rule.any[i], Check);
+					assert.deepEqual(rule.any[i], new Check(spec.any[i]));
 				}
 
 			});
 		});
+
+
+		describe('.all', function () {
+			it('should be set', function () {
+				var spec = {
+					all: [{ name: 'monkeys'}, { name: 'bananas'}, { name: 'pajamas' }]
+				};
+				assert.property(new Rule(spec), 'all');
+			});
+
+			it('should contain instances of Check', function () {
+				var spec = {
+					all: [{ name: 'monkeys'}, { name: 'bananas'}, { name: 'pajamas' }]
+				};
+				var rule = new Rule(spec);
+
+				for (var i = 0, l = spec.all.length; i < l; i++) {
+
+					assert.instanceOf(rule.all[i], Check);
+					assert.deepEqual(rule.all[i], new Check(spec.all[i]));
+				}
+
+			});
+		});
+
+
+		describe('.none', function () {
+			it('should be set', function () {
+				var spec = {
+					none: [{ name: 'monkeys'}, { name: 'bananas'}, { name: 'pajamas' }]
+				};
+				assert.property(new Rule(spec), 'none');
+			});
+
+			it('should contain instances of Check', function () {
+				var spec = {
+					none: [{ name: 'monkeys'}, { name: 'bananas'}, { name: 'pajamas' }]
+				};
+				var rule = new Rule(spec);
+
+				for (var i = 0, l = spec.none.length; i < l; i++) {
+
+					assert.instanceOf(rule.none[i], Check);
+					assert.deepEqual(rule.none[i], new Check(spec.none[i]));
+				}
+
+			});
+		});
+
 		describe('.matches', function () {
 			it('should be set', function () {
 				var spec = {

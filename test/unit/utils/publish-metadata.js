@@ -28,7 +28,7 @@ describe('utils.publishMetaData', function () {
 
 		var result = {
 			id: 'cats',
-			details: []
+			nodes: []
 		};
 		utils.publishMetaData(result);
 
@@ -53,15 +53,17 @@ describe('utils.publishMetaData', function () {
 
 		var result = {
 			id: 'foo',
-			details: [{
-				checks: [{
+			nodes: [{
+				any: [{
 					id: 'cats'
-				}]
+				}],
+				all: [],
+				none: []
 			}]
 		};
 		utils.publishMetaData(result);
-		assert.equal(result.details[0].checks[0].foo, expected.foo);
-		assert.equal(result.details[0].checks[0].bar, expected.bar);
+		assert.equal(result.nodes[0].any[0].foo, expected.foo);
+		assert.equal(result.nodes[0].any[0].bar, expected.bar);
 	});
 
 
@@ -94,34 +96,34 @@ describe('utils.publishMetaData', function () {
 
 		var result = {
 			id: 'cats',
-			details: [{
-				checks: [{
+			nodes: [{
+				any: [{
 					result: true,
-					type: 'PASS',
 					id: 'cats-PASS'
-				}, {
+				}],
+				none: [{
 					result: true,
-					type: 'FAIL',
 					id: 'cats-FAIL'
-				}]
+				}],
+				all: []
 			}]
 		};
 		utils.publishMetaData(result);
 		assert.deepEqual(result, {
 			id: 'cats',
 			help: 'cats-rule',
-			details: [{
-				checks: [{
+			nodes: [{
+				any: [{
 					result: true,
-					type: 'PASS',
 					id: 'cats-PASS',
 					failureMessage: null
-				}, {
+				}],
+				none: [{
 					result: true,
-					type: 'FAIL',
 					id: 'cats-FAIL',
 					failureMessage: 'cats-check'
-				}]
+				}],
+				all: []
 			}]
 		});
 
@@ -155,16 +157,18 @@ describe('utils.publishMetaData', function () {
 		});
 		utils.publishMetaData({
 			id: 'cats',
-			details: [{
-				checks: [{
+			nodes: [{
+				any: [{
 					result: false,
 					type: 'PASS',
 					id: 'cats-PASS'
-				}, {
+				}],
+				none: [{
 					result: true,
 					type: 'FAIL',
 					id: 'cats-FAIL'
-				}]
+				}],
+				all: []
 			}]
 		});
 
@@ -193,10 +197,12 @@ describe('utils.publishMetaData', function () {
 
 		var result = {
 			id: 'foo',
-			details: [{
-				checks: [{
+			nodes: [{
+				any: [{
 					id: 'cats'
-				}]
+				}],
+				all: [],
+				none: []
 			}]
 		};
 		utils.publishMetaData(result);

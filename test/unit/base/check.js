@@ -252,20 +252,6 @@ describe('Check', function () {
 
 
 	describe('spec object', function () {
-		describe('.type', function () {
-			it('should be set', function () {
-				var spec = {
-					type: 'bananas'
-				};
-				assert.equal(new Check(spec).type, spec.type);
-			});
-
-			it('should have no (defaults to rule\'s result)', function () {
-				var spec = {};
-				assert.equal(new Check(spec).type, dqre.constants.type.PASS);
-
-			});
-		});
 
 		describe('.matches', function () {
 			it('should be set', function () {
