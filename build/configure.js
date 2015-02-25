@@ -70,25 +70,12 @@ function buildRules(grunt, options, callback) {
 			return v;
 		}
 
-		var metadata = {
-			rules: {},
-			checks: {}
-		};
-
-		var descriptions = '';
-
-
-		var tags = options.tags ? options.tags.split(/\s*,\s*/) : [];
-
-		var rules = result.rules;
-		var checks = result.checks;
-
-		rules.map(function (rule) {
-			rule.checks = rule.checks.map(function (check) {
+		function parseChecks(collection) {
+			return collection.map(function (check) {
 
 				var id = typeof check === 'string' ? check : check.id;
 				var c = clone(findCheck(checks, id));
-				if (!c) throw new Error('check ' + id + ' not found');
+				if (!c) grunt.log.error('check ' + id + ' not found');
 				c.options = check.options || c.options;
 
 				if (c.metadata && !metadata.checks[id]) {
@@ -97,6 +84,27 @@ function buildRules(grunt, options, callback) {
 
 				return c;
 			});
+
+		}
+
+		var metadata = {
+			rules: {},
+			checks: {}
+		};
+
+		var descriptions = '';
+
+		var tags = options.tags ? options.tags.split(/\s*,\s*/) : [];
+
+		var rules = result.rules;
+		var checks = result.checks;
+
+		rules.map(function (rule) {
+
+			rule.any = parseChecks(rule.any);
+			rule.all = parseChecks(rule.all);
+			rule.none = parseChecks(rule.none);
+
 			if (rule.metadata && !metadata.rules[rule.id]) {
 				metadata.rules[rule.id] = parseMetaData(rule.metadata);
 			}
@@ -114,6 +122,7 @@ function buildRules(grunt, options, callback) {
 			}
 			return rule;
 		});
+
 		metadata.failureSummaries = createFailureSummaryObject(result.misc);
 		callback({
 			auto: replaceFunctions(JSON.stringify({
