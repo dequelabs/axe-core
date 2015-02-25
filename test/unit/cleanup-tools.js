@@ -19,7 +19,7 @@ describe('cleanupTools', function () {
 
   beforeEach(function () {
     dqre.audit = null;
-  })
+  });
 
 
   it('should throw if no audit is configured', function () {
