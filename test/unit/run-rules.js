@@ -164,7 +164,9 @@ describe('runRules', function () {
 							data: null,
 							result: true,
 							relatedNodes: []
-						}]
+						}],
+						all: [],
+						none: []
 					}],
 					result: 'PASS'
 				}, {
@@ -185,7 +187,9 @@ describe('runRules', function () {
 								selector: ['#context-test', '#foo'],
 								source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
 							}]
-						}]
+						}],
+						all: [],
+						none: []
 					}],
 					result: 'PASS'
 				}]);
@@ -290,7 +294,9 @@ describe('runRules', function () {
 							data: null,
 							result: false,
 							relatedNodes: []
-						}]
+						}],
+						all: [],
+						none: []
 					}],
 					result: 'FAIL'
 				}, {
@@ -315,7 +321,9 @@ describe('runRules', function () {
 								selector: ['#target'],
 								source: '<div id="target">Target!</div>'
 							}]
-						}]
+						}],
+						all: [],
+						none: []
 					}],
 					result: 'PASS'
 				}]);

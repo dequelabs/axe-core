@@ -79,7 +79,9 @@ describe('Audit', function () {
 							result: true,
 							data: null,
 							relatedNodes: []
-						}]
+						}],
+						all: [],
+						none: []
 					}, {
 						node: {
 							selector: ['#fixture > input:nth-of-type(2)'],
@@ -90,7 +92,9 @@ describe('Audit', function () {
 							result: true,
 							data: null,
 							relatedNodes: []
-						}]
+						}],
+						all: [],
+						none: []
 					}]
 				}, {
 					id: 'positive2',
@@ -106,7 +110,9 @@ describe('Audit', function () {
 							result: true,
 							data: null,
 							relatedNodes: []
-						}]
+						}],
+						all: [],
+						none: []
 					}]
 				}, {
 					id: 'negative1',
@@ -122,7 +128,9 @@ describe('Audit', function () {
 							result: true,
 							data: null,
 							relatedNodes: []
-						}]
+						}],
+						all: [],
+						any: []
 					}]
 				}, {
 					id: 'positive3',
@@ -138,7 +146,9 @@ describe('Audit', function () {
 							result: true,
 							data: null,
 							relatedNodes: []
-						}]
+						}],
+						all: [],
+						none: []
 					}]
 				}];
 				var out = results[0].nodes[0].node.source;
