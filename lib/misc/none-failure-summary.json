@@ -1,5 +1,5 @@
 {
-	"type": "FAIL",
+	"type": "none",
 	"metadata": {
 		"failureMessage": "Fix all of the following:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 	}
