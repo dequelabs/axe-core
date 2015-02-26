@@ -153,8 +153,8 @@ describe('Classifier', function () {
         }).run({ include: [fixture] }));
 
         assert.equal(called, 2);
-        assert.equal(result.details[0].result, 'stuff0');
-        assert.equal(result.details[1].result, 'stuff1');
+        assert.equal(result.nodes[0].result, 'stuff0');
+        assert.equal(result.nodes[1].result, 'stuff1');
       });
     });
   });

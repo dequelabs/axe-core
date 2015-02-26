@@ -6,11 +6,11 @@ describe('dqre.getRules', function () {
 			id: 'awesomeRule1',
 			selector: '',
 			excludeHidden: false,
-			checks: [],
+			any: [],
 			tags: [ 'tag1']
 		}, {
 			id: 'awesomeRule2',
-			checks: [ ],
+			any: [],
 			tags: [ 'tag1', 'tag2' ]
 		}], data: {rules: { awesomeRule1: {description: 'some interesting information'}, awesomeRule2: {description: 'also some interesting information'}}}});
 	});

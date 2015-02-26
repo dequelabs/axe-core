@@ -55,7 +55,7 @@ describe('runRules', function () {
 		dqre.configure({ rules: [{
 			id: 'html',
 			selector: 'html',
-			checks: [{
+			any: [{
 				id: 'html',
 				evaluate: function () {
 					return true;
@@ -66,7 +66,7 @@ describe('runRules', function () {
 		createFrames(function () {
 			setTimeout(function () {
 				runRules(document, {}, function (r) {
-					assert.lengthOf(r[0].details, 3);
+					assert.lengthOf(r[0].nodes, 3);
 					done();
 				});
 
@@ -80,7 +80,7 @@ describe('runRules', function () {
 		dqre.configure({ rules: [{
 			id: 'iframe',
 			selector: 'iframe',
-			checks: [{
+			any: [{
 				id: 'iframe',
 				evaluate: function () {
 					return true;
@@ -92,7 +92,7 @@ describe('runRules', function () {
 		frame.addEventListener('load', function () {
 			setTimeout(function () {
 				runRules(document, {}, function (r) {
-					var nodes = r[0].details.map(function (detail) {
+					var nodes = r[0].nodes.map(function (detail) {
 						return detail.node.selector;
 					});
 
@@ -118,7 +118,7 @@ describe('runRules', function () {
 			rules: [{
 				id: 'div#target',
 				selector: '#target',
-				checks: [{
+				any: [{
 					id: 'has-target',
 					evaluate: function () {
 						return true;
@@ -127,7 +127,7 @@ describe('runRules', function () {
 			}, {
 				id: 'first-div',
 				selector: 'div',
-				checks: [{
+				any: [{
 					id: 'first-div',
 					evaluate: function (node) {
 						this.relatedNodes([node]);
@@ -152,34 +152,34 @@ describe('runRules', function () {
 				assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
 					pageLevel: false,
-					details: [{
+					nodes: [{
 						node: {
 							selector: ['#context-test', '#target'],
 							source: '<div id="target"></div>'
 						},
 						result: 'PASS',
-						checks: [{
+						any: [{
 							id: 'has-target',
-							type: 'PASS',
 							failureMessage: null,
 							data: null,
 							result: true,
 							relatedNodes: []
-						}]
+						}],
+						all: [],
+						none: []
 					}],
 					result: 'PASS'
 				}, {
 					id: 'first-div',
 					pageLevel: false,
-					details: [{
+					nodes: [{
 						node: {
 							selector: ['#context-test', '#foo'],
 							source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
 						},
 						result: 'PASS',
-						checks: [{
+						any: [{
 							id: 'first-div',
-							type: 'PASS',
 							data: null,
 							result: true,
 							failureMessage: null,
@@ -187,7 +187,9 @@ describe('runRules', function () {
 								selector: ['#context-test', '#foo'],
 								source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
 							}]
-						}]
+						}],
+						all: [],
+						none: []
 					}],
 					result: 'PASS'
 				}]);
@@ -203,7 +205,7 @@ describe('runRules', function () {
 			rules: [{
 				id: 'div#target',
 				selector: '#target',
-				checks: [{
+				any: [{
 					id: 'has-target',
 					evaluate: function () {
 						return false;
@@ -212,7 +214,7 @@ describe('runRules', function () {
 			}, {
 				id: 'first-div',
 				selector: 'div',
-				checks: [{
+				any: [{
 					id: 'first-div',
 					evaluate: function (node) {
 						this.relatedNodes([node]);
@@ -279,21 +281,22 @@ describe('runRules', function () {
 					failureMessage: 'yay',
 					foo: 'bar',
 					stuff: 'blah',
-					details: [{
+					nodes: [{
 						node: {
 							selector: ['#target'],
 							source: '<div id="target">Target!</div>'
 						},
 						result: 'FAIL',
-						checks: [{
+						any: [{
 							otherThingy: true,
 							failureMessage: 'yay',
 							id: 'has-target',
-							type: 'PASS',
 							data: null,
 							result: false,
 							relatedNodes: []
-						}]
+						}],
+						all: [],
+						none: []
 					}],
 					result: 'FAIL'
 				}, {
@@ -302,24 +305,25 @@ describe('runRules', function () {
 					failureMessage: 'yay',
 					bar: 'foo',
 					stuff: 'no',
-					details: [{
+					nodes: [{
 						node: {
 							selector: ['#target'],
 							source: '<div id="target">Target!</div>'
 						},
 						result: 'PASS',
-						checks: [{
+						any: [{
 							id: 'first-div',
 							thingy: true,
 							failureMessage: null,
-							type: 'PASS',
 							data: null,
 							result: true,
 							relatedNodes: [{
 								selector: ['#target'],
 								source: '<div id="target">Target!</div>'
 							}]
-						}]
+						}],
+						all: [],
+						none: []
 					}],
 					result: 'PASS'
 				}]);

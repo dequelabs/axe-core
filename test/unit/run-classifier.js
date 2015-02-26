@@ -84,7 +84,7 @@ describe('runClassifier', function () {
     frame.addEventListener('load', function () {
       setTimeout(function () {
         runClassifier('iframe', document, {}, function (r) {
-          var nodes = r.details.map(function (detail) {
+          var nodes = r.nodes.map(function (detail) {
             return detail.node.selector;
           });
 
@@ -120,7 +120,7 @@ describe('runClassifier', function () {
     createFrames(function () {
       setTimeout(function () {
         runClassifier('html', document, {}, function (r) {
-          assert.lengthOf(r.details, 3);
+          assert.lengthOf(r.nodes, 3);
           done();
         });
 

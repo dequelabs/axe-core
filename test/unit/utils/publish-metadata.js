@@ -28,7 +28,7 @@ describe('utils.publishMetaData', function () {
 
 		var result = {
 			id: 'cats',
-			details: []
+			nodes: []
 		};
 		utils.publishMetaData(result);
 
@@ -53,15 +53,17 @@ describe('utils.publishMetaData', function () {
 
 		var result = {
 			id: 'foo',
-			details: [{
-				checks: [{
+			nodes: [{
+				any: [{
 					id: 'cats'
-				}]
+				}],
+				all: [],
+				none: []
 			}]
 		};
 		utils.publishMetaData(result);
-		assert.equal(result.details[0].checks[0].foo, expected.foo);
-		assert.equal(result.details[0].checks[0].bar, expected.bar);
+		assert.equal(result.nodes[0].any[0].foo, expected.foo);
+		assert.equal(result.nodes[0].any[0].bar, expected.bar);
 	});
 
 
@@ -78,14 +80,19 @@ describe('utils.publishMetaData', function () {
 					}
 				},
 				checks: {
-					'cats-FAIL': {
+					'cats-NONE': {
 						failureMessage: function () {
-							return 'cats-check';
+							return 'cats-NONE';
 						}
 					},
-					'cats-PASS': {
+					'cats-ANY': {
 						failureMessage: function () {
-							throw new Error('should not execute');
+							return 'cats-ANY';
+						}
+					},
+					'cats-ALL': {
+						failureMessage: function () {
+							return 'cats-ALL';
 						}
 					}
 				}
@@ -94,15 +101,18 @@ describe('utils.publishMetaData', function () {
 
 		var result = {
 			id: 'cats',
-			details: [{
-				checks: [{
+			nodes: [{
+				any: [{
+					result: false,
+					id: 'cats-ANY'
+				}],
+				none: [{
 					result: true,
-					type: 'PASS',
-					id: 'cats-PASS'
-				}, {
-					result: true,
-					type: 'FAIL',
-					id: 'cats-FAIL'
+					id: 'cats-NONE'
+				}],
+				all: [{
+					result: false,
+					id: 'cats-ALL'
 				}]
 			}]
 		};
@@ -110,20 +120,99 @@ describe('utils.publishMetaData', function () {
 		assert.deepEqual(result, {
 			id: 'cats',
 			help: 'cats-rule',
-			details: [{
-				checks: [{
+			nodes: [{
+				any: [{
+					result: false,
+					id: 'cats-ANY',
+					failureMessage: 'cats-ANY'
+				}],
+				none: [{
 					result: true,
-					type: 'PASS',
-					id: 'cats-PASS',
-					failureMessage: null
-				}, {
-					result: true,
-					type: 'FAIL',
-					id: 'cats-FAIL',
-					failureMessage: 'cats-check'
+					id: 'cats-NONE',
+					failureMessage: 'cats-NONE'
+				}],
+				all: [{
+					result: false,
+					id: 'cats-ALL',
+					failureMessage: 'cats-ALL'
 				}]
 			}]
 		});
+
+	});
+
+	it('should set failureMessage to null if check is passing', function () {
+
+		dqre.configure({
+			rules: [],
+			data: {
+				rules: {
+					cats: {
+						help: function () {
+							return 'cats-rule';
+						}
+					}
+				},
+				checks: {
+					'cats-NONE': {
+						failureMessage: function () {
+							return 'cats-NONE';
+						}
+					},
+					'cats-ANY': {
+						failureMessage: function () {
+							return 'cats-ANY';
+						}
+					},
+					'cats-ALL': {
+						failureMessage: function () {
+							return 'cats-ALL';
+						}
+					}
+				}
+			}
+		});
+
+		var result = {
+			id: 'cats',
+			nodes: [{
+				any: [{
+					result: true,
+					id: 'cats-ANY'
+				}],
+				none: [{
+					result: false,
+					id: 'cats-NONE'
+				}],
+				all: [{
+					result: true,
+					id: 'cats-ALL'
+				}]
+			}]
+		};
+		utils.publishMetaData(result);
+		assert.deepEqual(result, {
+			id: 'cats',
+			help: 'cats-rule',
+			nodes: [{
+				any: [{
+					result: true,
+					id: 'cats-ANY',
+					failureMessage: null
+				}],
+				none: [{
+					result: false,
+					id: 'cats-NONE',
+					failureMessage: null
+				}],
+				all: [{
+					result: true,
+					id: 'cats-ALL',
+					failureMessage: null
+				}]
+			}]
+		});
+
 
 	});
 
@@ -140,12 +229,17 @@ describe('utils.publishMetaData', function () {
 					}
 				},
 				checks: {
-					0: {
+					'cats-PASS': {
 						failureMessage: function () {
 							return 'cats-check';
 						}
 					},
-					1: {
+					'cats-ANY': {
+						failureMessage: function () {
+							return 'cats-check2';
+						}
+					},
+					'cats-ALL': {
 						failureMessage: function () {
 							return 'cats-check2';
 						}
@@ -155,21 +249,25 @@ describe('utils.publishMetaData', function () {
 		});
 		utils.publishMetaData({
 			id: 'cats',
-			details: [{
-				checks: [{
+			nodes: [{
+				any: [{
 					result: false,
-					type: 'PASS',
 					id: 'cats-PASS'
-				}, {
+				}],
+				none: [{
 					result: true,
-					type: 'FAIL',
 					id: 'cats-FAIL'
+				}],
+				all: [{
+					result: false,
+					id: 'cats-ALL'
 				}]
 			}]
 		});
 
-		assert.isNotNull(dqreConfiguration.data.checks[0].failureMessage);
-		assert.isNotNull(dqreConfiguration.data.checks[1].failureMessage);
+		assert.isNotNull(dqreConfiguration.data.checks['cats-PASS'].failureMessage);
+		assert.isNotNull(dqreConfiguration.data.checks['cats-ANY'].failureMessage);
+		assert.isNotNull(dqreConfiguration.data.checks['cats-ALL'].failureMessage);
 
 	});
 
@@ -193,10 +291,12 @@ describe('utils.publishMetaData', function () {
 
 		var result = {
 			id: 'foo',
-			details: [{
-				checks: [{
+			nodes: [{
+				any: [{
 					id: 'cats'
-				}]
+				}],
+				all: [],
+				none: []
 			}]
 		};
 		utils.publishMetaData(result);

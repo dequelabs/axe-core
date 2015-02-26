@@ -11,11 +11,6 @@ describe('CheckResult', function () {
 		assert.equal(result.id, 'monkeys');
 	});
 
-	it('should default `type` to `PASS`', function () {
-		var result = new CheckResult({});
-		assert.equal(result.type, 'PASS');
-	});
-
 	it('should set `data` to `null`', function () {
 		var result = new CheckResult({});
 		assert.isNull(result.data);

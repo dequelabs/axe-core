@@ -22,18 +22,4 @@ describe('dqre.constants', function () {
 			assert.equal(dqre.constants.result.NA, 'NA');
 		});
 	});
-	describe('type', function () {
-
-		it('should be an object', function () {
-			assert.isObject(dqre.constants.type);
-		});
-
-		it('should have PASS', function () {
-			assert.equal(dqre.constants.type.PASS, 'PASS');
-		});
-
-		it('should have FAIL', function () {
-			assert.equal(dqre.constants.type.FAIL, 'FAIL');
-		});
-	});
 });

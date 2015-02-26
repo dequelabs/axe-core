@@ -46,44 +46,50 @@ describe('utils.calculateRuleResult', function () {
 
 	describe('node level', function () {
 
-		it('should iterate details calling calculateCheckResult on each, assigning output to result', function () {
+		it('should iterate nodes calling calculateCheckResult on each, assigning output to result', function () {
 
 			var orig = window.calculateCheckResult;
-			window.calculateCheckResult = function (checks) {
-				assert.equal(checks, ruleResult.details[i].checks);
+			window.calculateCheckResult = function (detail) {
+				assert.equal(detail, ruleResult.nodes[i]);
 				return i++;
 			};
 			var i = 0;
 			var ruleResult = {
 				pageLevel: false,
-				details: [{
-					checks: [{monkeys: 'bananas'}]
+				nodes: [{
+					all: [{monkeys: 'bananas'}]
 				}, {
-					checks: [{rabbits: 'cabbage'}]
+					all: [{rabbits: 'cabbage'}]
 				}, {
-					checks: [{fox: 'rabbit'}]
+					all: [{fox: 'rabbit'}]
 				}]
 			};
 			utils.calculateRuleResult(ruleResult);
 
 			assert.equal(i, 3);
-			assert.equal(ruleResult.details[0].result, 0);
-			assert.equal(ruleResult.details[1].result, 1);
-			assert.equal(ruleResult.details[2].result, 2);
+			assert.equal(ruleResult.nodes[0].result, 0);
+			assert.equal(ruleResult.nodes[1].result, 1);
+			assert.equal(ruleResult.nodes[2].result, 2);
 
 
 			window.calculateCheckResult = orig;
 		});
 
-		it('should assign FAIL to ruleResult if a FAIL is found', function () {
+		it('should FAIL ruleResult if a failing (return true) none is found', function () {
 			var ruleResult = {
 				pageLevel: false,
-				details: [{
-					checks: [{ type: 'FAIL', result: false }]
+				nodes: [{
+					none: [{ result: false }],
+					all: [],
+					any: []
 				}, {
-					checks: [{ type: 'FAIL', result: true }]
+					none: [{ result: true }],
+					all: [],
+					any: []
 				}, {
-					checks: [{ type: 'FAIL', result: true }]
+					none: [{ result: true }],
+					all: [],
+					any: []
 				}]
 			};
 			utils.calculateRuleResult(ruleResult);
@@ -94,12 +100,18 @@ describe('utils.calculateRuleResult', function () {
 		it('should assign FAIL to ruleResult over PASS', function () {
 			var ruleResult = {
 				pageLevel: false,
-				details: [{
-					checks: [{ type: 'FAIL', result: false }]
+				nodes: [{
+					none: [{ result: false }],
+					any: [],
+					all: []
 				}, {
-					checks: [{ type: 'PASS', result: true }]
+					none: [],
+					any: [{ result: true }],
+					all: []
 				}, {
-					checks: [{ type: 'FAIL', result: true }]
+					none: [{ result: true }],
+					any: [],
+					all: []
 				}]
 			};
 			utils.calculateRuleResult(ruleResult);
@@ -107,15 +119,21 @@ describe('utils.calculateRuleResult', function () {
 
 		});
 
-		it('should assign PASS to ruleResult over if theres a PASS', function () {
+		it('should assign PASS to ruleResult if there are only passing anys', function () {
 			var ruleResult = {
 				pageLevel: false,
-				details: [{
-					checks: [{ type: 'FAIL', result: false }]
+				nodes: [{
+					none: [{ result: false }],
+					any: [],
+					all: []
 				}, {
-					checks: [{ type: 'PASS', result: true }]
+					any: [{ result: true }],
+					all: [],
+					none: []
 				}, {
-					checks: [{ type: 'FAIL', result: false }]
+					none: [{ result: false }],
+					any: [],
+					all: []
 				}]
 			};
 			utils.calculateRuleResult(ruleResult);
@@ -123,15 +141,43 @@ describe('utils.calculateRuleResult', function () {
 
 		});
 
-		it('should assign FAIL if there are PASSes that none pass', function () {
+		it('should assign FAIL if there are no passing anys', function () {
 			var ruleResult = {
 				pageLevel: false,
-				details: [{
-					checks: [{ type: 'PASS', result: false }]
+				nodes: [{
+					any: [{ result: false }],
+					all: [],
+					none: []
 				}, {
-					checks: [{ type: 'PASS', result: false }]
+					any: [{ result: false }],
+					all: [],
+					none: []
 				}, {
-					checks: [{ type: 'PASS', result: false }]
+					any: [{ result: false }],
+					all: [],
+					none: []
+				}]
+			};
+			utils.calculateRuleResult(ruleResult);
+			assert.equal(ruleResult.result, 'FAIL');
+
+		});
+
+		it('should assign FAIL if there is a single non-passing all', function () {
+			var ruleResult = {
+				pageLevel: false,
+				nodes: [{
+					any: [{ result: false }],
+					all: [],
+					none: []
+				}, {
+					any: [{ result: false }],
+					all: [{ result: false }, { result: true }],
+					none: []
+				}, {
+					any: [{ result: true }],
+					all: [],
+					none: []
 				}]
 			};
 			utils.calculateRuleResult(ruleResult);
@@ -142,12 +188,18 @@ describe('utils.calculateRuleResult', function () {
 		it('should PASS if there are no PASSes and only falsey FAILs', function () {
 			var ruleResult = {
 				pageLevel: false,
-				details: [{
-					checks: [{ type: 'FAIL', result: false }]
+				nodes: [{
+					none: [{ result: false }],
+					any: [],
+					all: []
 				}, {
-					checks: [{ type: 'FAIL', result: false }]
+					none: [{ result: false }],
+					any: [],
+					all: []
 				}, {
-					checks: [{ type: 'FAIL', result: false }]
+					none: [{ result: false }],
+					any: [],
+					all: []
 				}]
 			};
 			utils.calculateRuleResult(ruleResult);
@@ -159,7 +211,7 @@ describe('utils.calculateRuleResult', function () {
 
 	describe('page level', function () {
 
-		it('should concanenate all checks before passing to calculateCheckResult', function () {
+		it('should concatenate all checks before passing to calculateCheckResult', function () {
 
 			var orig = window.calculateCheckResult;
 			window.calculateCheckResult = function (checks) {
@@ -170,15 +222,26 @@ describe('utils.calculateRuleResult', function () {
 			var i = 0;
 			var ruleResult = {
 				pageLevel: true,
-				details: [{
-					checks: [{monkeys: 'bananas'}]
+				nodes: [{
+					all: [{ monkeys: 'all:bananas' }],
+					any: [{ monkeys: 'any:bananas' }],
+					none: [{ monkeys: 'none:bananas' }]
 				}, {
-					checks: [{rabbits: 'cabbage'}]
+					any: [{ rabbits: 'any:cabbage' }],
+					all: [{ rabbits: 'all:cabbage' }],
+					none: [{ rabbits: 'none:cabbage' }]
 				}, {
-					checks: [{fox: 'rabbit'}]
+					none: [{ fox: 'none:rabbit' }],
+					any: [{ fox: 'any:rabbit' }],
+					all: [{ fox: 'all:rabbit' }]
 				}]
 			};
-			var allChecks = ruleResult.details[0].checks.concat(ruleResult.details[1].checks).concat(ruleResult.details[2].checks);
+			var allChecks = {
+				none: ruleResult.nodes[0].none.concat(ruleResult.nodes[1].none).concat(ruleResult.nodes[2].none),
+				all: ruleResult.nodes[0].all.concat(ruleResult.nodes[1].all).concat(ruleResult.nodes[2].all),
+				any: ruleResult.nodes[0].any.concat(ruleResult.nodes[1].any).concat(ruleResult.nodes[2].any)
+			};
+
 			utils.calculateRuleResult(ruleResult);
 
 			assert.equal(i, 1, 'called once');
@@ -188,15 +251,22 @@ describe('utils.calculateRuleResult', function () {
 			window.calculateCheckResult = orig;
 		});
 
-		it('should assign FAIL to ruleResult if a FAIL is found', function () {
+
+		it('should FAIL ruleResult if a failing (return true) none is found', function () {
 			var ruleResult = {
 				pageLevel: true,
-				details: [{
-					checks: [{ type: 'FAIL', result: false }]
+				nodes: [{
+					none: [{ result: false }],
+					all: [],
+					any: []
 				}, {
-					checks: [{ type: 'FAIL', result: true }]
+					none: [{ result: true }],
+					all: [],
+					any: []
 				}, {
-					checks: [{ type: 'FAIL', result: true }]
+					none: [{ result: true }],
+					all: [],
+					any: []
 				}]
 			};
 			utils.calculateRuleResult(ruleResult);
@@ -207,12 +277,18 @@ describe('utils.calculateRuleResult', function () {
 		it('should assign FAIL to ruleResult over PASS', function () {
 			var ruleResult = {
 				pageLevel: true,
-				details: [{
-					checks: [{ type: 'FAIL', result: false }]
+				nodes: [{
+					none: [{ result: false }],
+					any: [],
+					all: []
 				}, {
-					checks: [{ type: 'PASS', result: true }]
+					none: [],
+					any: [{ result: true }],
+					all: []
 				}, {
-					checks: [{ type: 'FAIL', result: true }]
+					none: [{ result: true }],
+					any: [],
+					all: []
 				}]
 			};
 			utils.calculateRuleResult(ruleResult);
@@ -220,15 +296,21 @@ describe('utils.calculateRuleResult', function () {
 
 		});
 
-		it('should assign PASS to ruleResult over if theres a PASS', function () {
+		it('should assign PASS to ruleResult if there are only passing anys', function () {
 			var ruleResult = {
 				pageLevel: true,
-				details: [{
-					checks: [{ type: 'FAIL', result: false }]
+				nodes: [{
+					none: [{ result: false }],
+					any: [],
+					all: []
 				}, {
-					checks: [{ type: 'PASS', result: true }]
+					any: [{ result: true }],
+					all: [],
+					none: []
 				}, {
-					checks: [{ type: 'FAIL', result: false }]
+					none: [{ result: false }],
+					any: [],
+					all: []
 				}]
 			};
 			utils.calculateRuleResult(ruleResult);
@@ -236,15 +318,43 @@ describe('utils.calculateRuleResult', function () {
 
 		});
 
-		it('should assign FAIL if there are PASSes that none pass', function () {
+		it('should assign FAIL if there are no passing anys', function () {
 			var ruleResult = {
 				pageLevel: true,
-				details: [{
-					checks: [{ type: 'PASS', result: false }]
+				nodes: [{
+					any: [{ result: false }],
+					all: [],
+					none: []
 				}, {
-					checks: [{ type: 'PASS', result: false }]
+					any: [{ result: false }],
+					all: [],
+					none: []
 				}, {
-					checks: [{ type: 'PASS', result: false }]
+					any: [{ result: false }],
+					all: [],
+					none: []
+				}]
+			};
+			utils.calculateRuleResult(ruleResult);
+			assert.equal(ruleResult.result, 'FAIL');
+
+		});
+
+		it('should assign FAIL if there is a single non-passing all', function () {
+			var ruleResult = {
+				pageLevel: true,
+				nodes: [{
+					any: [{ result: false }],
+					all: [],
+					none: []
+				}, {
+					any: [{ result: false }],
+					all: [{ result: false }, { result: true }],
+					none: []
+				}, {
+					any: [{ result: true }],
+					all: [],
+					none: []
 				}]
 			};
 			utils.calculateRuleResult(ruleResult);
@@ -255,98 +365,25 @@ describe('utils.calculateRuleResult', function () {
 		it('should PASS if there are no PASSes and only falsey FAILs', function () {
 			var ruleResult = {
 				pageLevel: true,
-				details: [{
-					checks: [{ type: 'FAIL', result: false }]
+				nodes: [{
+					none: [{ result: false }],
+					any: [],
+					all: []
 				}, {
-					checks: [{ type: 'FAIL', result: false }]
+					none: [{ result: false }],
+					any: [],
+					all: []
 				}, {
-					checks: [{ type: 'FAIL', result: false }]
+					none: [{ result: false }],
+					any: [],
+					all: []
 				}]
 			};
 			utils.calculateRuleResult(ruleResult);
 			assert.equal(ruleResult.result, 'PASS');
 
 		});
-	});
 
-});
-
-describe('utils.isCheckFailing', function () {
-	'use strict';
-
-	it('should return true if type == FAIL and result is truthy', function () {
-		assert.isTrue(utils.isCheckFailing({
-			type: 'FAIL',
-			result: 'hehe'
-		}));
-		assert.isTrue(utils.isCheckFailing({
-			type: 'FAIL',
-			result: 1
-		}));
-		assert.isTrue(utils.isCheckFailing({
-			type: 'FAIL',
-			result: true
-		}));
-	});
-
-	it('should return true if type == PASS and result is falsey', function () {
-		assert.isTrue(utils.isCheckFailing({
-			type: 'PASS',
-			result: 0
-		}));
-
-		assert.isTrue(utils.isCheckFailing({
-			type: 'PASS',
-			result: null
-		}));
-
-		assert.isTrue(utils.isCheckFailing({
-			type: 'PASS',
-			result: false
-		}));
-
-		assert.isTrue(utils.isCheckFailing({
-			type: 'PASS',
-			result: ''
-		}));
-	});
-
-
-	it('should return false if type == FAIL and result is falsey', function () {
-		assert.isFalse(utils.isCheckFailing({
-			type: 'FAIL',
-			result: 0
-		}));
-
-		assert.isFalse(utils.isCheckFailing({
-			type: 'FAIL',
-			result: null
-		}));
-
-		assert.isFalse(utils.isCheckFailing({
-			type: 'FAIL',
-			result: false
-		}));
-
-		assert.isFalse(utils.isCheckFailing({
-			type: 'FAIL',
-			result: ''
-		}));
-	});
-
-	it('should return false if type == PASS and result is truthy', function () {
-		assert.isFalse(utils.isCheckFailing({
-			type: 'PASS',
-			result: 'hehe'
-		}));
-		assert.isFalse(utils.isCheckFailing({
-			type: 'PASS',
-			result: 1
-		}));
-		assert.isFalse(utils.isCheckFailing({
-			type: 'PASS',
-			result: true
-		}));
 	});
 
 });

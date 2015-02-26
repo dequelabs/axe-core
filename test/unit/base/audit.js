@@ -6,7 +6,7 @@ describe('Audit', function () {
 	var mockRules = [{
 		id: 'positive1',
 		selector: 'input',
-		checks: [{
+		any: [{
 			id: 'positive1-check1',
 			evaluate: function () {
 				return true;
@@ -15,7 +15,7 @@ describe('Audit', function () {
 	}, {
 		id: 'positive2',
 		selector: '#monkeys',
-		checks: [{
+		any: [{
 			id: 'positive2-check1',
 			evaluate: function () {
 				return true;
@@ -24,9 +24,8 @@ describe('Audit', function () {
 	}, {
 		id: 'negative1',
 		selector: 'div',
-		checks: [{
+		none: [{
 			id: 'negative1-check1',
-			type: 'FAIL',
 			evaluate: function () {
 				return true;
 			}
@@ -34,7 +33,7 @@ describe('Audit', function () {
 	}, {
 		id: 'positive3',
 		selector: 'blink',
-		checks: [{
+		any: [{
 			id: 'positive3-check1',
 			evaluate: function () {
 				return true;
@@ -70,85 +69,90 @@ describe('Audit', function () {
 					id: 'positive1',
 					result: 'NA',
 					pageLevel: false,
-					details: [{
+					nodes: [{
 						node: {
 							selector: ['#fixture > input:nth-of-type(1)'],
 							source: null
 						},
-						checks: [{
+						any: [{
 							id: 'positive1-check1',
-							type: 'PASS',
 							result: true,
 							data: null,
 							relatedNodes: []
-						}]
+						}],
+						all: [],
+						none: []
 					}, {
 						node: {
 							selector: ['#fixture > input:nth-of-type(2)'],
 							source: '<input aria-labelledby="monkeys" type="text">'
 						},
-						checks: [{
+						any: [{
 							id: 'positive1-check1',
-							type: 'PASS',
 							result: true,
 							data: null,
 							relatedNodes: []
-						}]
+						}],
+						all: [],
+						none: []
 					}]
 				}, {
 					id: 'positive2',
 					result: 'NA',
 					pageLevel: false,
-					details: [{
+					nodes: [{
 						node: {
 							selector: ['#monkeys'],
 							source: '<div id="monkeys">bananas</div>'
 						},
-						checks: [{
+						any: [{
 							id: 'positive2-check1',
-							type: 'PASS',
 							result: true,
 							data: null,
 							relatedNodes: []
-						}]
+						}],
+						all: [],
+						none: []
 					}]
 				}, {
 					id: 'negative1',
 					result: 'NA',
 					pageLevel: false,
-					details: [{
+					nodes: [{
 						node: {
 							selector: ['#monkeys'],
 							source: '<div id="monkeys">bananas</div>'
 						},
-						checks: [{
+						none: [{
 							id: 'negative1-check1',
-							type: 'FAIL',
 							result: true,
 							data: null,
 							relatedNodes: []
-						}]
+						}],
+						all: [],
+						any: []
 					}]
 				}, {
 					id: 'positive3',
 					result: 'NA',
 					pageLevel: false,
-					details: [{
+					nodes: [{
 						node: {
 							selector: ['#fixture > blink'],
 							source: '<blink>FAIL ME</blink>'
 						},
-						checks: [{
+						any: [{
 							id: 'positive3-check1',
-							type: 'PASS',
 							result: true,
 							data: null,
 							relatedNodes: []
-						}]
+						}],
+						all: [],
+						none: []
 					}]
 				}];
-				var out = results[0].details[0].node.source;
-				results[0].details[0].node.source = null;
+				var out = results[0].nodes[0].node.source;
+				results[0].nodes[0].node.source = null;
 				assert.deepEqual(JSON.parse(JSON.stringify(results)), expected);
 				assert.match(out, /^<input(\s+type="text"|\s+aria-label="monkeys"){2,}>/);
 				done();
@@ -173,7 +177,7 @@ describe('Audit', function () {
 				id: 'positive1',
 				selector: '*',
 				enabled: false,
-				checks: [{
+				any: [{
 					id: 'positive1-check1',
 					evaluate: function () {
 						success = false;

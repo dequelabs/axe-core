@@ -6,8 +6,8 @@ describe('RuleResult', function () {
 		assert.isFunction(RuleResult);
 	});
 
-	it('should have an empty array for details', function () {
-		assert.deepEqual(new RuleResult({id: 'monkeys'}).details, []);
+	it('should have an empty array for nodes', function () {
+		assert.deepEqual(new RuleResult({id: 'monkeys'}).nodes, []);
 	});
 
 	it('should grab id from passed in rule', function () {

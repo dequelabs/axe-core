@@ -14,7 +14,7 @@
 			rules: [{
 				id: 'div#target',
 				selector: '#target',
-				checks: [{
+				any: [{
 					id: 'has-target',
 					evaluate: function () {
 						return true;
@@ -23,7 +23,7 @@
 			}, {
 				id: 'first-div',
 				selector: 'div',
-				checks: [{
+				any: [{
 					id: 'first-div',
 					evaluate: function (node) {
 						this.relatedNodes([node]);
