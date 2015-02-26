@@ -231,16 +231,7 @@ describe('failureSummary', function () {
 			},
 			all: {
 				failureMessage: function anonymous(it) {
-					var out = 'Fix all of the following: \n';
-					var arr1 = it;
-					if (arr1) {
-						var value, i1 = -1, l1 = arr1.length - 1;
-						while (i1 < l1) {
-							value = arr1[i1 += 1];
-							out += ' ' + value + '\n';
-						}
-					}
-					return out;
+					throw new Error('shouldnt be executed');
 				}
 			},
 			any: {
@@ -366,6 +357,34 @@ describe('failureSummary', function () {
 		});
 
 		assert.equal(summary, 'Fix any of the following: \n 1\n 2\n 3\n\n\nFix all of the following: \n 4\n');
+
+	});
+
+	it('should combine alls and nones', function () {
+		var summary = failureSummary({
+			result: 'FAIL',
+			none: [{
+				id: '1',
+				result: true,
+				failureMessage: '1'
+			}, {
+				id: '2',
+				result: true,
+				failureMessage: '2'
+			}, {
+				id: '3',
+				result: true,
+				failureMessage: '3'
+			}],
+			any: [],
+			all: [{
+				id: '4',
+				result: false,
+				failureMessage: '4'
+			}]
+		});
+
+		assert.equal(summary, 'Fix all of the following: \n 1\n 2\n 3\n 4\n');
 
 	});
 
