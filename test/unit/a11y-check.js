@@ -230,7 +230,7 @@ describe('failureSummary', function () {
 				}
 			},
 			all: {
-				failureMessage: function anonymous(it) {
+				failureMessage: function anonymous() {
 					throw new Error('shouldnt be executed');
 				}
 			},
