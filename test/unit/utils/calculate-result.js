@@ -50,18 +50,24 @@ describe('utils.calculateRuleResult', function () {
 
 			var orig = window.calculateCheckResult;
 			window.calculateCheckResult = function (detail) {
-				assert.equal(detail, ruleResult.nodes[i]);
+				assert.deepEqual(detail, ruleResult.nodes[i]);
 				return i++;
 			};
 			var i = 0;
 			var ruleResult = {
 				pageLevel: false,
 				nodes: [{
-					all: [{monkeys: 'bananas'}]
+					all: [{monkeys: 'bananas'}],
+					any: [],
+					none: []
 				}, {
-					all: [{rabbits: 'cabbage'}]
+					all: [{rabbits: 'cabbage'}],
+					any: [],
+					none: []
 				}, {
-					all: [{fox: 'rabbit'}]
+					all: [{fox: 'rabbit'}],
+					any: [],
+					none: []
 				}]
 			};
 			utils.calculateRuleResult(ruleResult);
@@ -207,11 +213,54 @@ describe('utils.calculateRuleResult', function () {
 
 		});
 
+		it('should raise the highest "raisedMetadata" on failing checks', function () {
+			var ruleResult = {
+				pageLevel: false,
+				nodes: [{
+					none: [{
+						result: true,
+						impact: 'moderate'
+					}],
+					any: [{
+						result: true,
+						impact: 'minor'
+					}],
+					all: [{
+						result: true,
+						impact: 'critical'
+					}, {
+						result: false,
+						impact: 'serious'
+					}]
+				}, {
+					none: [{
+						result: false,
+						impact: 'critical'
+					}],
+					any: [],
+					all: []
+				}, {
+					none: [{
+						result: false,
+						impact: 'critical'
+					}],
+					any: [],
+					all: []
+				}]
+			};
+			utils.calculateRuleResult(ruleResult);
+			assert.equal(ruleResult.impact, 'serious');
+			assert.equal(ruleResult.nodes[0].impact, 'serious');
+			assert.isUndefined(ruleResult.nodes[1].impact);
+			assert.isUndefined(ruleResult.nodes[2].impact);
+
+		});
+
 	});
 
 	describe('page level', function () {
 
-		it('should concatenate all checks before passing to calculateCheckResult', function () {
+		it('should concatenate all failing checks before passing to calculateCheckResult', function () {
 
 			var orig = window.calculateCheckResult;
 			window.calculateCheckResult = function (checks) {
@@ -223,17 +272,17 @@ describe('utils.calculateRuleResult', function () {
 			var ruleResult = {
 				pageLevel: true,
 				nodes: [{
-					all: [{ monkeys: 'all:bananas' }],
-					any: [{ monkeys: 'any:bananas' }],
-					none: [{ monkeys: 'none:bananas' }]
+					all: [{ monkeys: 'all:bananas', result: false }],
+					any: [{ monkeys: 'any:bananas', result: false }],
+					none: [{ monkeys: 'none:bananas', result: true }]
 				}, {
-					any: [{ rabbits: 'any:cabbage' }],
-					all: [{ rabbits: 'all:cabbage' }],
-					none: [{ rabbits: 'none:cabbage' }]
+					any: [{ rabbits: 'any:cabbage', result: false }],
+					all: [{ rabbits: 'all:cabbage', result: false }],
+					none: [{ rabbits: 'none:cabbage', result: true }]
 				}, {
-					none: [{ fox: 'none:rabbit' }],
-					any: [{ fox: 'any:rabbit' }],
-					all: [{ fox: 'all:rabbit' }]
+					none: [{ fox: 'none:rabbit', result: true }],
+					any: [{ fox: 'any:rabbit', result: false }],
+					all: [{ fox: 'all:rabbit', result: false }]
 				}]
 			};
 			var allChecks = {
@@ -381,6 +430,49 @@ describe('utils.calculateRuleResult', function () {
 			};
 			utils.calculateRuleResult(ruleResult);
 			assert.equal(ruleResult.result, 'PASS');
+
+		});
+
+		it('should raise the highest "raisedMetadata" on failing checks', function () {
+			var ruleResult = {
+				pageLevel: true,
+				nodes: [{
+					none: [{
+						result: true,
+						impact: 'moderate'
+					}],
+					any: [{
+						result: true,
+						impact: 'minor'
+					}],
+					all: [{
+						result: true,
+						impact: 'critical'
+					}, {
+						result: false,
+						impact: 'serious'
+					}]
+				}, {
+					none: [{
+						result: false,
+						impact: 'critical'
+					}],
+					any: [],
+					all: []
+				}, {
+					none: [{
+						result: false,
+						impact: 'critical'
+					}],
+					any: [],
+					all: []
+				}]
+			};
+			utils.calculateRuleResult(ruleResult);
+			assert.equal(ruleResult.impact, 'serious');
+			assert.isUndefined(ruleResult.nodes[0].impact);
+			assert.isUndefined(ruleResult.nodes[1].impact);
+			assert.isUndefined(ruleResult.nodes[2].impact);
 
 		});
 
