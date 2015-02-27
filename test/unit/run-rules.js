@@ -254,6 +254,7 @@ describe('runRules', function () {
 				checks: {
 					'first-div': {
 						thingy: true,
+						impact: 'serious',
 						failureMessage: function (checkResult) {
 							if (checkResult.id === 'first-div') {
 								return 'yay';
@@ -263,6 +264,7 @@ describe('runRules', function () {
 					},
 					'has-target': {
 						otherThingy: true,
+						impact: 'moderate',
 						failureMessage: function (checkResult) {
 							if (checkResult.id === 'has-target') {
 								return 'yay';
@@ -281,13 +283,16 @@ describe('runRules', function () {
 					failureMessage: 'yay',
 					foo: 'bar',
 					stuff: 'blah',
+					impact: 'moderate',
 					nodes: [{
 						node: {
 							selector: ['#target'],
 							source: '<div id="target">Target!</div>'
 						},
+						impact: 'moderate',
 						result: 'FAIL',
 						any: [{
+							impact: 'moderate',
 							otherThingy: true,
 							failureMessage: 'yay',
 							id: 'has-target',
@@ -312,6 +317,7 @@ describe('runRules', function () {
 						},
 						result: 'PASS',
 						any: [{
+							impact: 'serious',
 							id: 'first-div',
 							thingy: true,
 							failureMessage: null,

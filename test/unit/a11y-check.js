@@ -26,27 +26,33 @@ describe('dqre.a11yCheck', function () {
 			description: 'something more nifty',
 			pageLevel: true,
 			result: 'FAIL',
+			impact: 'cats',
 			tags: ['tag2'],
 			nodes: [{
 				all: [{
 					result: false,
-					data: 'pillock'
+					data: 'pillock',
+					impact: 'cats'
 				}],
 				any: [],
 				none: [],
 				node: {
 					selector: ['q', 'r', 'pillock'],
 					source: '<pillock>george bush</pillock>'
-				}
+				},
+				impact: 'cats'
 			}]
 		}, {
 			id: 'bypass',
 			description: 'something even more nifty',
 			tags: ['tag3'],
+			impact: 'monkeys',
 			nodes: [{
 				result: 'FAIL',
+				impact: 'monkeys',
 				none: [{
 					data: 'foon',
+					impact: 'monkeys',
 					result: true
 				}],
 				any: [],
@@ -89,17 +95,8 @@ describe('dqre.a11yCheck', function () {
 				}
 			},
 			all: {
-				failureMessage: function anonymous(it) {
-					var out = 'Fix any of the following: \n';
-					var arr1 = it;
-					if (arr1) {
-						var value, i1 = -1, l1 = arr1.length - 1;
-						while (i1 < l1) {
-							value = arr1[i1 += 1];
-							out += ' ' + value + '\n';
-						}
-					}
-					return out;
+				failureMessage: function anonymous() {
+					throw new Error('shouldnt be executed');
 				}
 			},
 			any: {
@@ -206,6 +203,15 @@ describe('dqre.a11yCheck', function () {
 			assert.equal(results.violations[1].description, 'something even more nifty');
 			assert.equal(results.passes[0].description, 'something nifty');
 			assert.equal(results.passes[1].description, 'something awesome');
+			done();
+		});
+	});
+	it('should add the impact to the rule result', function (done) {
+		dqre.a11yCheck(document, {}, function (results) {
+			assert.equal(results.violations[0].impact, 'cats');
+			assert.equal(results.violations[0].nodes[0].impact, 'cats');
+			assert.equal(results.violations[1].impact, 'monkeys');
+			assert.equal(results.violations[1].nodes[0].impact, 'monkeys');
 			done();
 		});
 	});
