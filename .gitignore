@@ -1,6 +1,6 @@
 dist
 bower_components
 node_modules
-build/selenium-server-standalone-2.41.0.jar
+build/selenium-server-standalone-*.jar
 build/test.json
 build/kensington.js
