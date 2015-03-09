@@ -63,4 +63,10 @@ describe('multiple-label', function () {
 		assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
 	});
 
+	it('should return false if there an implicit label uses for attribute', function () {
+		fixture.innerHTML = '<label for="target">Foo<input type="text" id="target"></label>';
+		var target = fixture.querySelector('#target');
+		assert.isFalse(checks['multiple-label'].evaluate.call(checkContext, target));
+	});
+
 });
