@@ -2,6 +2,7 @@
   "id": "skip-link",
   "selector": "a[href]",
   "pageLevel": true,
+  "enabled": false,
   "tags": [
     "best-practice"
   ],

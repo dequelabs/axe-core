@@ -1,9 +1,9 @@
 {
   "id": "heading-order",
   "selector": "h1,h2,h3,h4,h5,h6,[role=heading]",
+  "enabled": false,
   "tags": [
-    "wcag2a",
-    "wcag131"
+    "best-practice"
   ],
   "metadata": {
     "description": "Ensure that the order in which the headings appear in the DOM is semantically correct",
