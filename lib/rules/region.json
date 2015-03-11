@@ -2,6 +2,7 @@
   "id": "region",
   "selector": "html",
   "pageLevel": true,
+  "enabled": false,
   "tags": [
     "best-practice"
   ],
