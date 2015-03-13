@@ -69,4 +69,20 @@ describe('table.toArray', function () {
 
 	});
 
+	it('should insert an empty array for empty rows', function () {
+			fixture.innerHTML = '<table>' +
+				'<tr></tr>' +
+				'<tr><td id="t1">ok</td></tr>' +
+				'</table>';
+
+			var target = fixture.querySelector('table');
+
+			assert.deepEqual(kslib.table.toArray(target), [
+				[],
+				[$id('t1')]
+			]);
+
+
+	});
+
 });
