@@ -40,7 +40,6 @@ describe('aria-valid-attr-value', function () {
 		assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, node));
 		assert.isNull(checkContext._data);
 
-
 	});
 
 	it('should return false if any values are invalid', function () {
@@ -76,6 +75,16 @@ describe('aria-valid-attr-value', function () {
 		assert.equal(called, 2);
 
 		kslib.aria.validateAttrValue = orig;
+	});
+
+	describe('options', function () {
+		it('should exclude supplied attributes', function () {
+			fixture.innerHTML = '<div id="target" aria-live="nope" aria-describedby="no exist k thx"></div>';
+			var target = fixture.querySelector('#target');
+			assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, target, ['aria-live', 'aria-describedby']));
+
+
+		});
 	});
 
 	describe('matches', function () {
