@@ -63,6 +63,14 @@ describe('aria-valid-attr', function () {
 		kslib.aria.validateAttr = orig;
 	});
 
+	describe('options', function () {
+		it('should exclude provided attribute names', function () {
+			fixture.innerHTML = '<div id="target" aria-bats="cats" aria-puppies="2"></div>';
+			var target = fixture.children[0];
+			assert.isTrue(checks['aria-valid-attr'].evaluate.call(checkContext, target, ['aria-bats', 'aria-puppies']));
+		});
+	});
+
 	describe('matches', function () {
 		it('should return false if an element has no attributes', function () {
 			var div = document.createElement('div');
