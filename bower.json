@@ -15,6 +15,6 @@
     "tests"
   ],
   "dependencies": {
-    "ks-common-functions": "git@bitbucket.org:dmusser/ks-common-functions.git#v0.1.0-rc4"
+    "ks-common-functions": "git@bitbucket.org:dmusser/ks-common-functions.git#v0.1.1"
   }
 }
