@@ -39,32 +39,6 @@ describe('configure', function () {
 
 	});
 
-	it('should add classifiers on the Audit', function () {
-		var mockAudit = {
-			classifiers: [{ id: 'monkeys' }, { id: 'bananas' }]
-		};
-
-		dqre.configure(mockAudit);
-		assert.instanceOf(dqre.audit.classifiers.monkeys, Classifier);
-		assert.instanceOf(dqre.audit.classifiers.bananas, Classifier);
-		assert.equal(dqre.audit.classifiers.monkeys.id, 'monkeys');
-		assert.equal(dqre.audit.classifiers.bananas.id, 'bananas');
-
-
-	});
-
-	it('should add analysis rules on the Audit', function () {
-		var mockAudit = {
-			analyzers: [{ id: 'monkeys' }, { id: 'bananas' }]
-		};
-
-		dqre.configure(mockAudit);
-		assert.instanceOf(dqre.audit.analyzers.monkeys, AnalysisRule);
-		assert.instanceOf(dqre.audit.analyzers.bananas, AnalysisRule);
-		assert.equal(dqre.audit.analyzers.monkeys.id, 'monkeys');
-		assert.equal(dqre.audit.analyzers.bananas.id, 'bananas');
-	});
-
 	it('should add tools to the Audit', function () {
 		var mockAudit = {
 			tools: [{ id: 'monkeys' }, { id: 'bananas' }]
@@ -162,7 +136,6 @@ describe('configure', function () {
 
 				utils.respondable.subscribe = function (topic, callback) {
 					callback({ command: 'rules', context: { include: [] }}, function () {});
-
 				};
 				dqre.configure({
 					rules: []
@@ -170,94 +143,6 @@ describe('configure', function () {
 				window.runRules = orig;
 				utils.respondable.subscribe = origSub;
 			});
-		});
-
-		describe('given command classify', function () {
-			it('should call `runClassifier` and default context to empty object', function (done) {
-				var mockAudit = {
-					rules: []
-				};
-				var origSub = window.utils.respondable.subscribe;
-				var orig = window.runClassifier;
-				window.runClassifier = function (id, context, options, callback) {
-					assert.equal(id, 'bananas');
-					assert.deepEqual(context, {});
-					assert.isFunction(callback);
-					done();
-				};
-
-				utils.respondable.subscribe = function (topic, callback) {
-					callback({parameter: 'bananas', data: 'iscool', command: 'classify'}, function (response) {
-						// ping callback will call this response function
-						assert.ok(response);
-					});
-
-				};
-				dqre.configure(mockAudit);
-
-				window.utils.respondable.subscribe = origSub;
-				window.runClassifier = orig;
-			});
-
-			it('should pass data.context to `runClassifier`', function (done) {
-				var origSub = window.utils.respondable.subscribe;
-				var orig = window.runClassifier;
-				window.runClassifier = function (id, context, options, callback) {
-					assert.equal(id, 'bananas');
-					assert.deepEqual(context, {include: ['monkeys']});
-					assert.isFunction(callback);
-					done();
-				};
-
-				utils.respondable.subscribe = function (topic, callback) {
-					callback({parameter: 'bananas', command: 'classify', context: { include: ['monkeys'] }}, function (response) {
-						assert.ok(response);
-					});
-
-				};
-				dqre.configure({
-					rules: []
-				});
-
-				window.utils.respondable.subscribe = origSub;
-				window.runClassifier = orig;
-			});
-
-		});
-
-		describe('given command analysis', function () {
-			it('should call `runAnalysis`, passing parameter and selectorArray', function (done) {
-				var mockAudit = {
-					rules: []
-				};
-				var origSub = window.utils.respondable.subscribe;
-				var orig = window.runAnalysis;
-				window.runAnalysis = function (id, selectorArray, options, callback) {
-					assert.equal(id, 'bananas');
-					assert.deepEqual(selectorArray, ['cats', 'dogs', 'monkeys']);
-					assert.equal(options, 'apples');
-					assert.isFunction(callback);
-					done();
-				};
-
-				utils.respondable.subscribe = function (topic, callback) {
-					callback({
-						parameter: 'bananas',
-						command: 'analysis',
-						options: 'apples',
-						selectorArray: ['cats', 'dogs', 'monkeys']
-					}, function (response) {
-						// ping callback will call this response function
-						assert.ok(response);
-					});
-
-				};
-				dqre.configure(mockAudit);
-
-				window.utils.respondable.subscribe = origSub;
-				window.runAnalysis = orig;
-			});
-
 		});
 
 		describe('given command run-tool', function () {
