@@ -131,25 +131,49 @@ describe('aria.validateAttrValue', function () {
 		assert.isTrue(kslib.aria.validateAttrValue(node, 'cats'));
 	});
 
-
-	it('should validate against enumerated .values if present', function () {
-		kslib.aria._lut.attributes = {
-			cats: {
-				values: ['valid']
-			}
-		};
-		var node = document.createElement('div');
-		node.setAttribute('cats', 'valid');
-
-		assert.isTrue(kslib.aria.validateAttrValue(node, 'cats'));
-
-		node.setAttribute('cats', 'invalid');
-
-		assert.isFalse(kslib.aria.validateAttrValue(node, 'cats'));
-
-	});
-
 	describe('schema defintions', function () {
+
+		describe('enumerated values', function () {
+			it('should validate against enumerated .values if present', function () {
+				kslib.aria._lut.attributes = {
+					cats: {
+						values: ['valid']
+					}
+				};
+				var node = document.createElement('div');
+				node.setAttribute('cats', 'valid');
+
+				assert.isTrue(kslib.aria.validateAttrValue(node, 'cats'));
+
+				node.setAttribute('cats', 'invalid');
+
+				assert.isFalse(kslib.aria.validateAttrValue(node, 'cats'));
+
+			});
+			it('should be case-insensitive for enumerated values', function () {
+				kslib.aria._lut.attributes = {
+					cats: {
+						values: ['valid']
+					}
+				};
+				var node = document.createElement('div');
+				node.setAttribute('cats', 'vaLiD');
+
+				assert.isTrue(kslib.aria.validateAttrValue(node, 'cats'));
+
+			});
+			it('should reject empty strings', function () {
+				kslib.aria._lut.attributes = {
+					cats: {
+						values: ['valid']
+					}
+				};
+				var node = document.createElement('div');
+				node.setAttribute('cats', '');
+
+				assert.isFalse(kslib.aria.validateAttrValue(node, 'cats'));
+			});
+		});
 		describe('http://www.w3.org/2001/XMLSchema#idref', function () {
 			it('should validate the referenced node exists', function () {
 				kslib.aria._lut.attributes = {
