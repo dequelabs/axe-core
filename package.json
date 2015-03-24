@@ -1,7 +1,7 @@
 {
   "name": "deque-rules",
   "description": "Deque Rules",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "private": true,
   "author": {
     "name": "David Sturley",
