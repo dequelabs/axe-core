@@ -1,7 +1,7 @@
 {
   "id": "header-present",
-  "selector": "h1",
-  "evaluate": "../shared/exists.js",
+  "selector": "html",
+  "evaluate": "header-present.js",
   "metadata": {
     "impact": "moderate",
     "failureMessage": "Page does not have a header"
