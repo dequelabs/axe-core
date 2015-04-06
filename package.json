@@ -1,7 +1,7 @@
 {
   "name": "ks-integration",
   "description": "Kensington Integration",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
   "author": {
     "name": "David Sturley",
