@@ -1,7 +1,8 @@
 {
   "id": "bypass",
-  "selector": "a[href], h1, [role=main]",
+  "selector": "html",
   "pageLevel": true,
+  "matches": "bypass-matches.js",
   "tags": [
     "wcag2a",
     "wcag241",
@@ -15,7 +16,7 @@
   },
   "all": [],
   "any": [
-    "skip-link",
+    "internal-link-present",
     "header-present",
     "landmark"
   ],

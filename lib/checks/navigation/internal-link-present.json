@@ -1,0 +1,9 @@
+{
+  "id": "internal-link-present",
+  "selector": "html",
+  "evaluate": "internal-link-present.js",
+  "metadata": {
+    "impact": "critical",
+    "failureMessage": "No valid skip link found"
+  }
+}
