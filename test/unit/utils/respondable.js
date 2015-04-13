@@ -82,6 +82,39 @@ describe('utils.respondable', function () {
 		window.uuid.v1 = orig;
 	});
 
+	it('should reject messages that are that are not strings', function () {
+		var success = true;
+		var event = document.createEvent('Event');
+		// Define that the event name is 'build'.
+		event.initEvent('message', true, true);
+		event.data = { uuid: 1, _respondable: true};
+		event.source = window;
+
+		utils.respondable(window, 'batman', 'nananana', function () {
+			success = false;
+		});
+		document.dispatchEvent(event);
+		assert.isTrue(success);
+
+	});
+
+
+	it('should reject messages that are invalid stringified objects', function () {
+		var success = true;
+		var event = document.createEvent('Event');
+		// Define that the event name is 'build'.
+		event.initEvent('message', true, true);
+		event.data = '{ invalid object }';
+		event.source = window;
+
+		utils.respondable(window, 'batman', 'nananana', function () {
+			success = false;
+		});
+		document.dispatchEvent(event);
+		assert.isTrue(success);
+
+	});
+
 	it('should reject messages that do not have a uuid', function () {
 		var success = true;
 		var event = document.createEvent('Event');
