@@ -46,15 +46,18 @@ describe('accesskeys', function () {
 			assert.equal(result[0].relatedNodes[0], 'fred');
 		});
 
-		it('should remove unique accesskeys', function () {
+		it('should remove non-unique accesskeys and toggle result', function () {
 			var results = [
 				{ data: 'A', relatedNodes: ['bob'] },
+				{ data: 'A', relatedNodes: ['joe'] },
 				{ data: 'B', relatedNodes: ['fred'] }
 			];
 
 			var result = checks.accesskeys.after(results);
 
-			assert.lengthOf(result, 0);
+			assert.lengthOf(result, 2);
+			assert.isTrue(result[0].result);
+			assert.isFalse(result[1].result);
 		});
 	});
 
