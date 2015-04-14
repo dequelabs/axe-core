@@ -267,6 +267,20 @@ describe('Context', function () {
 
 	});
 
+	describe('initiator', function () {
+		it('should not be clobbered', function () {
+			assert.deepEqual(new Context({ initiator: false }),
+				{
+					include: [],
+					exclude: [],
+					initiator: false,
+					page: false,
+					frames: []
+				});
+
+		});
+	});
+
 	describe('page', function () {
 		it('should be true if given an entire document', function () {
 			assert.isTrue(new Context(document).page);
