@@ -48,6 +48,14 @@ module.exports = function (grunt) {
 				src: ['doc/**/*'],
 				dest: 'dist/'
 			},
+			rspec: {
+				src: ['bower_components/ks-testdouble/dist/**/*'],
+				dest: 'dist/doc/rspec-a11y'
+			},
+			fixture: {
+				src: ['<%= uglify.lib.files.dest %>'],
+				dest: 'dist/doc/rspec-a11y/features/fixtures/public/'
+			},
 			descriptions: {
 				src: ['*.html'],
 				expand: true,
@@ -107,6 +115,6 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('default', ['build']);
-	grunt.registerTask('build', ['concat', 'copy', 'uglify']);
+	grunt.registerTask('build', ['concat', 'uglify', 'copy']);
 	grunt.registerTask('test', ['build', 'if-missing:curl', 'testconfig', 'connect', 'mochaTest']);
 };
