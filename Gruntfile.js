@@ -49,12 +49,16 @@ module.exports = function (grunt) {
 				dest: 'dist/'
 			},
 			rspec: {
-				src: ['bower_components/ks-testdouble/dist/**/*'],
-				dest: 'dist/doc/rspec-a11y'
+				src: ['*.gem'],
+				expand: true,
+				cwd: 'bower_components/ks-testdouble/dist/',
+				dest: 'dist/doc/examples/rspec-a11y/'
 			},
 			fixture: {
-				src: ['<%= uglify.lib.files.dest %>'],
-				dest: 'dist/doc/rspec-a11y/features/fixtures/public/'
+				src: 'kensington.min.js',
+				expand: true,
+				cwd: 'dist',
+				dest: 'dist/doc/examples/rspec-a11y/features/fixtures/public/'
 			},
 			descriptions: {
 				src: ['*.html'],
@@ -89,8 +93,8 @@ module.exports = function (grunt) {
 		},
 		curl: {
 			selenium: {
-				dest: 'build/selenium-server-standalone-2.41.0.jar',
-				src: 'http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar'
+				dest: 'build/selenium-server-standalone-2.44.0.jar',
+				src: 'http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar'
 			}
 		},
 		connect: {

@@ -12,7 +12,9 @@ function checkIdenticality(conf, actual, type) {
 		assert.ok(actual.length === 1, 'No ' + type + ' results found for rule "' + conf.rule + '"');
 	}
 
-	var v = ((actual[0] || {}).nodes || []).map(function (t) { return t.target; });
+	var v = ((actual[0] || {}).nodes || []).map(function(t) {
+		return t.target;
+	});
 	assert.deepEqual(v, conf[type] || [], type);
 }
 
@@ -25,31 +27,36 @@ function runTest(driver, i) {
 
 	var conf = config.tests[i];
 	driver.get(conf.url)
-		.then(function () {
+		.then(function() {
 			//should give an error
-			driver.executeAsyncScript(function () {
-				/*global dqre, document */
-				var callback = arguments[arguments.length - 1];
-				dqre.a11yCheck(document, null, callback);
-			})
-			.then(function (result) {
-				var violations = result.violations.filter(filterRule),
-					passes = result.passes.filter(filterRule);
+			driver.executeAsyncScript(function(rule) {
+					/*global dqre, document */
+					var callback = arguments[arguments.length - 1];
+					dqre.a11yCheck(document, {
+						runOnly: {
+							type: 'rule',
+							values: [rule]
+						}
+					}, callback);
+				}, conf.rule)
+				.then(function(result) {
+					var violations = result.violations.filter(filterRule),
+						passes = result.passes.filter(filterRule);
 
-				checkIdenticality(conf, violations, 'violations');
-				checkIdenticality(conf, passes, 'passes');
+					checkIdenticality(conf, violations, 'violations');
+					checkIdenticality(conf, passes, 'passes');
 
-				assert.ok(violations.length + passes.length > 0, 'No result found for rule "' + conf.rule + '"');
-			});
+					assert.ok(violations.length + passes.length > 0, 'No result found for rule "' + conf.rule + '"');
+				});
 		});
 }
 
-test.describe('Integration', function () {
+test.describe('Integration', function() {
 	'use strict';
 
 	var driver;
 
-	test.before(function () {
+	test.before(function() {
 		if (config.options.seleniumServer === undefined) {
 			var server = new SeleniumServer(jar, {
 				port: 4444,
@@ -69,12 +76,14 @@ test.describe('Integration', function () {
 	});
 
 
-	test.after(function () {
+	test.after(function() {
 		driver.quit();
 	});
 
 	function r(testIndex) {
-		return function () { runTest(driver, testIndex); };
+		return function() {
+			runTest(driver, testIndex);
+		};
 	}
 
 	for (var i = 0; i < config.tests.length; i++) {
