@@ -1,0 +1,6 @@
+{
+  "description": "accesskeys tests",
+  "rule": "accesskeys",
+  "violations": [["#violation1"], ["#violation2"]],
+  "passes": [["#pass1"], ["#frame", "#pass2"]]
+}
