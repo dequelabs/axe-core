@@ -8,7 +8,9 @@ Defines custom RSpec matchers and Cucumber steps for testing page accessibility 
 
 2. Ensure that a supported version of Ruby is installed.  RVM (http://rvm.io) can be used to install Ruby if it's not currently present.
 
-3. Install bundler: `$ gem install bundler`
+3. Ensure that your system has all the needed development tools to compile C++ programs, as some Ruby modules will require this. On OSX, this means making sure that XCode is installed; on Linux, make sure that the relevant system packages including g++/make/etc. are installed.
+
+4. Install bundler: `gem install bundler` (Note: Depending on your system configuration, you may need to do this as root or via sudo.)
 
 ## Installing the gem
 
@@ -22,9 +24,9 @@ To run this example, ensure that the above prerequisites are met, then install t
 
 1. Install the qt libraries following the instructions at the website for your platform: https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit
 
-2. Install the Ruby depdencies using Bundler: `$ bundle`
+2. Install the Ruby depdencies using Bundler: `bundle` (Note: Some dependencies need to compile on your local machine, and depending on the details of your OS and development infrastructure, you may encounter some issues. In general, the homepage for each gem will have instructions for resolving these issues. In particular, Nokogiri on OS X Yosemite may require some additional steps: http://www.nokogiri.org/tutorials/installing_nokogiri.html#mac_os_x)
 
-To run the example tests, use: `$ cucumber`; for illustrative purposes, one of the tests will fail, to display the expected output of a failure.
+To run the example tests, use: `cucumber`; for illustrative purposes, one of the tests will fail, to display the expected output of a failure.
 
 ## Using in an app
 
