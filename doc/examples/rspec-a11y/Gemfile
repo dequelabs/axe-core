@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+
+gem 'rspec', '>= 2.0.0'
+gem 'rspec-a11y'
+gem 'rake'
+gem 'cucumber'
+gem 'capybara'
+gem 'capybara-webkit'
+gem 'sinatra'
+gem 'slim'
