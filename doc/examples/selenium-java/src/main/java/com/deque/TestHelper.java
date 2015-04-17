@@ -16,6 +16,7 @@ import java.io.*;
 public class TestHelper {
 
 	private static String scriptFileName = "../../../kensington.min.js";
+	private static String lineSeparator = System.getProperty("line.separator");
 
 	/**
 	 * @return Contents of the K-Auto script
@@ -23,7 +24,6 @@ public class TestHelper {
 	private static String getContents() {
 		StringBuilder sb = new StringBuilder();
 		BufferedReader reader = null;
-		String lineSeparator = System.getProperty("line.separator");
 		try {
 			reader = new BufferedReader(new FileReader(scriptFileName));
 			String line = "";
@@ -56,20 +56,23 @@ public class TestHelper {
 		sb.append(" accessibility violations:");
 		for (int i = 0; i < violations.length(); i++) {
 			JSONObject violation = violations.getJSONObject(i);
-			sb.append("\n\n");
+			sb.append(lineSeparator);
+			sb.append(lineSeparator);
 			sb.append(i + 1);
 			sb.append(") ");
 			sb.append(violation.getString("help"));
 			JSONArray nodes = violation.getJSONArray("nodes");
 			for (int j = 0; j < nodes.length(); j++) {
 				JSONObject node = nodes.getJSONObject(j);
-				sb.append("\n  ");
+				sb.append(lineSeparator);
+				sb.append("  ");
 				sb.append((char) (j + 97));
 				sb.append(") ");
 				sb.append(node.getJSONArray("target"));
-				sb.append("\n   ");
-				sb.append(node.getString("failureSummary").replaceAll("\n", "\n    "));
-				sb.append("\n");
+				sb.append(lineSeparator);
+				sb.append("   ");
+				sb.append(node.getString("failureSummary").replaceAll("\n", lineSeparator + "    "));
+				sb.append(lineSeparator);
 			}
 		}
 		
@@ -84,8 +87,7 @@ public class TestHelper {
 	public static JSONObject analyze(WebDriver driver) {
 		driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
 		Object response = ((JavascriptExecutor)driver).executeAsyncScript(
-				"var callback = arguments[arguments.length - 1];\n" +
-				"dqre.a11yCheck(document, null, callback);");
+			"dqre.a11yCheck(document, null, arguments[arguments.length - 1]);");
 		return new JSONObject((Map) response);
 	}
 	
