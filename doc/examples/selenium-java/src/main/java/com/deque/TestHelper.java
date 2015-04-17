@@ -23,12 +23,13 @@ public class TestHelper {
 	private static String getContents() {
 		StringBuilder sb = new StringBuilder();
 		BufferedReader reader = null;
+		String lineSeparator = System.getProperty("line.separator");
 		try {
 			reader = new BufferedReader(new FileReader(scriptFileName));
 			String line = "";
 			while ((line = reader.readLine()) != null) {
 				sb.append(line);
-				sb.append("\n");
+				sb.append(lineSeparator);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
