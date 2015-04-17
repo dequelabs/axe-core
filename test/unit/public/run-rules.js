@@ -1,4 +1,86 @@
 /*global runRules */
+describe('dqre.a11yCheck', function () {
+	'use strict';
+
+	describe('reporter', function () {
+
+		it('should throw if no audit is configured', function () {
+			dqre.audit = null;
+
+			assert.throws(function () {
+				dqre.a11yCheck(document, {});
+			}, Error, /^No audit configured/);
+		});
+
+		it('should allow for option-less invocation', function (done) {
+
+			dqre.configure({ reporter: function (r, c) {
+				c(r);
+			}});
+			dqre.a11yCheck(document, function (result) {
+				assert.isArray(result);
+				assert.lengthOf(result, 0);
+				done();
+			});
+		});
+
+		it('should use specified reporter via options - anon function', function (done) {
+
+			dqre.configure({
+				reporter: function () {
+					assert.fail('should not be called');
+				}
+			});
+			dqre.a11yCheck(document, { reporter: function (result) {
+				assert.isArray(result);
+				assert.lengthOf(result, 0);
+				done();
+			}});
+		});
+
+		it('should use specified reporter via options by name', function (done) {
+
+			var orig = window.reporters;
+			dqre.configure({
+				reporter: function () {
+					assert.fail('should not be called');
+				}
+			});
+			dqre.reporter('foo', function (result) {
+				assert.isArray(result);
+				assert.lengthOf(result, 0);
+				window.reporters = orig;
+				done();
+			});
+			dqre.a11yCheck(document, { reporter: 'foo' });
+		});
+
+		it('should check configured reporter', function (done) {
+
+			dqre.configure({
+				reporter: function (result) {
+					assert.isArray(result);
+					assert.lengthOf(result, 0);
+					done();
+				}
+			});
+			dqre.a11yCheck(document, null);
+		});
+
+		it('fallback to default configured reporter', function (done) {
+			var orig = window.defaultReporter;
+			window.defaultReporter = function (result) {
+				assert.isArray(result);
+				assert.lengthOf(result, 0);
+				done();
+			};
+
+			dqre.configure({});
+			dqre.a11yCheck(document, null);
+			window.defaultReporter = orig;
+		});
+	});
+});
 describe('runRules', function () {
 	'use strict';
 
@@ -41,13 +123,6 @@ describe('runRules', function () {
 	afterEach(function () {
 		fixture.innerHTML = '';
 		dqre.audit = null;
-	});
-
-	it('should throw if no audit is configured', function () {
-
-		assert.throws(function () {
-			runRules(document, {});
-		}, Error, /^No audit configured/);
 	});
 
 	it('should work', function (done) {
