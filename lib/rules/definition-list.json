@@ -7,7 +7,8 @@
   ],
   "metadata": {
     "description": "Ensures that all <dl> elements are structured correctly",
-    "help": "<dl> elements must contain properly-ordered <dt> and <dd> elements"
+    "help": "<dl> elements must contain properly-ordered <dt> and <dd> elements",
+    "helpUrl": "https://dequeuniversity.com/issues/definition-list"
   },
   "all": [],
   "any": [],
