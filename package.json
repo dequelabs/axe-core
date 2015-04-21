@@ -16,7 +16,7 @@
     "grunt": "~0.4.4",
     "grunt-contrib-connect": "~0.7.1",
     "grunt-contrib-watch": "~0.6.1",
-    "selenium-webdriver": "~2.41.0",
+    "selenium-webdriver": "~2.45.0",
     "grunt-curl": "~1.5.1",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-concat": "~0.4.0",
