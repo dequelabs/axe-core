@@ -94,7 +94,7 @@ module.exports = function (grunt) {
 		curl: {
 			selenium: {
 				dest: 'build/selenium-server-standalone-2.45.0.jar',
-				src: 'http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.45.0.jar'
+				src: 'http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar'
 			}
 		},
 		connect: {
