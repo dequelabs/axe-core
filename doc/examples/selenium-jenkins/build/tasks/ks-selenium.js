@@ -6,7 +6,7 @@ var WebDriver = require('selenium-webdriver'),
 	path = require('path'),
 	ksInject = require('../inject'),
 	ks = path.resolve(__dirname, '../../../../../kensington.min.js'),
-	jar = path.resolve(__dirname, '../../build/selenium-server-standalone-2.44.0.jar');
+	jar = path.resolve(__dirname, '../../build/selenium-server-standalone-2.45.0.jar');
 
 
 var tagsToReplace = {
