@@ -57,6 +57,7 @@ test.describe('Integration', function() {
 	var driver;
 
 	test.before(function() {
+		this.timeout(10000);
 		if (config.options.seleniumServer === undefined) {
 			var server = new SeleniumServer(jar, {
 				port: 4444,
