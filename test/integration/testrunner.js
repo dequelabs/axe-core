@@ -2,7 +2,7 @@ var WebDriver = require('selenium-webdriver'),
 	assert = require('chai').assert,
 	test = require('selenium-webdriver/testing'),
 	SeleniumServer = require('selenium-webdriver/remote').SeleniumServer,
-	jar = 'build/selenium-server-standalone-2.41.0.jar',
+	jar = 'build/selenium-server-standalone-2.45.0.jar',
 	config = require('../../build/test.json');
 
 function checkIdenticality(conf, actual, type) {
