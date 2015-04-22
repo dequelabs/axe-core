@@ -26,10 +26,13 @@ there are any accessibility violations detected.
 
 ## To modify the example ##
 
-To run the example on your own web pages, change the method used to get URLs
-(this is currently the `getUrl()` method of the `TestHelper` class). 
+To run the example on your own web pages, change the URL passed to `driver.get` in the `testAccessibility` method of the `KensingtonTest` class.
 
-The example is simply printing the count of violations if any are detected.
+There are three methods defined in the `TestHelper` class:
+* `inject` will inject the required script into the page under test and any iframes.  This only needs to be run against a given page once.
+* `analyze` will run analysis and return the result structure as a `JSONObject`
+* `report` will pretty-print a list of violations.
+
 The Kensington Automated Testing documentation should be consulted for more
 details on customizing and analyzing calls to `dqre.a11yCheck`.
 

@@ -51,7 +51,7 @@ public class KensingtonTest extends TestCase {
 	public void testAccessibility() {
 		driver.get("http://localhost:5005/");
 
-		TestHelper.injectScript(driver);
+		TestHelper.inject(driver);
 		JSONObject responseJSON = TestHelper.analyze(driver);
 		JSONArray violations = responseJSON.getJSONArray("violations");
 		if (violations.length() == 0) {
