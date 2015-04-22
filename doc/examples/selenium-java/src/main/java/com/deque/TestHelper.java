@@ -61,6 +61,11 @@ public class TestHelper {
 			sb.append(i + 1);
 			sb.append(") ");
 			sb.append(violation.getString("help"));
+			if (violation.has("helpUrl")) {
+				String helpUrl = violation.getString("helpUrl");
+				sb.append(": ");
+				sb.append(helpUrl);
+			}
 			JSONArray nodes = violation.getJSONArray("nodes");
 			for (int j = 0; j < nodes.length(); j++) {
 				JSONObject node = nodes.getJSONObject(j);
@@ -95,7 +100,7 @@ public class TestHelper {
 	 * Recursively injects K-Auto into all iframes and the top level document 
 	 * @param driver WebDriver instance to inject into
 	 */
-	public static void injectScript(WebDriver driver) {
+	public static void inject(WebDriver driver) {
 		String script = getContents();
 		ArrayList<WebElement> parents = new ArrayList<WebElement>();
 		injectIntoFrames(driver, script, parents);
