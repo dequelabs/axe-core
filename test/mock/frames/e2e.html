@@ -25,22 +25,6 @@
 				}
 			}
 		}],
-		analyzers: [{
-			id: 'html',
-			evaluate: function (node) {
-				if (node.nodeName !== 'A') {
-					return 'uh oh';
-				}
-				return 'result!';
-			}
-		}],
-		classifiers: [{
-			id: 'html',
-			selector: 'html',
-			evaluate: function () {
-				return true;
-			}
-		}],
 		messages: {}});
 	</script>
 </head>

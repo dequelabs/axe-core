@@ -1,9 +1,13 @@
 
-describe('utils.calculateRuleResult', function () {
+describe('utils.finalizeRuleResult', function () {
 	'use strict';
+	
+	beforeEach(function () {
+		dqre.configure({});
+	});
 
 	it('should be a function', function () {
-		assert.isFunction(utils.calculateRuleResult);
+		assert.isFunction(utils.finalizeRuleResult);
 	});
 
 	it('should call calculatePageRuleResult if pageLevel == true', function () {
@@ -18,7 +22,7 @@ describe('utils.calculateRuleResult', function () {
 				pageLevel: true
 			};
 
-		utils.calculateRuleResult(ruleResult);
+		utils.finalizeRuleResult(ruleResult);
 		assert.isTrue(success);
 
 
@@ -37,7 +41,7 @@ describe('utils.calculateRuleResult', function () {
 				pageLevel: false
 			};
 
-		utils.calculateRuleResult(ruleResult);
+		utils.finalizeRuleResult(ruleResult);
 		assert.isTrue(success);
 
 
@@ -70,7 +74,7 @@ describe('utils.calculateRuleResult', function () {
 					none: []
 				}]
 			};
-			utils.calculateRuleResult(ruleResult);
+			utils.finalizeRuleResult(ruleResult);
 
 			assert.equal(i, 3);
 			assert.equal(ruleResult.nodes[0].result, 0);
@@ -98,7 +102,7 @@ describe('utils.calculateRuleResult', function () {
 					any: []
 				}]
 			};
-			utils.calculateRuleResult(ruleResult);
+			utils.finalizeRuleResult(ruleResult);
 			assert.equal(ruleResult.result, 'FAIL');
 
 		});
@@ -120,7 +124,7 @@ describe('utils.calculateRuleResult', function () {
 					all: []
 				}]
 			};
-			utils.calculateRuleResult(ruleResult);
+			utils.finalizeRuleResult(ruleResult);
 			assert.equal(ruleResult.result, 'FAIL');
 
 		});
@@ -142,7 +146,7 @@ describe('utils.calculateRuleResult', function () {
 					all: []
 				}]
 			};
-			utils.calculateRuleResult(ruleResult);
+			utils.finalizeRuleResult(ruleResult);
 			assert.equal(ruleResult.result, 'PASS');
 
 		});
@@ -164,7 +168,7 @@ describe('utils.calculateRuleResult', function () {
 					none: []
 				}]
 			};
-			utils.calculateRuleResult(ruleResult);
+			utils.finalizeRuleResult(ruleResult);
 			assert.equal(ruleResult.result, 'FAIL');
 
 		});
@@ -186,7 +190,7 @@ describe('utils.calculateRuleResult', function () {
 					none: []
 				}]
 			};
-			utils.calculateRuleResult(ruleResult);
+			utils.finalizeRuleResult(ruleResult);
 			assert.equal(ruleResult.result, 'FAIL');
 
 		});
@@ -208,7 +212,7 @@ describe('utils.calculateRuleResult', function () {
 					all: []
 				}]
 			};
-			utils.calculateRuleResult(ruleResult);
+			utils.finalizeRuleResult(ruleResult);
 			assert.equal(ruleResult.result, 'PASS');
 
 		});
@@ -248,7 +252,7 @@ describe('utils.calculateRuleResult', function () {
 					all: []
 				}]
 			};
-			utils.calculateRuleResult(ruleResult);
+			utils.finalizeRuleResult(ruleResult);
 			assert.equal(ruleResult.impact, 'serious');
 			assert.equal(ruleResult.nodes[0].impact, 'serious');
 			assert.isUndefined(ruleResult.nodes[1].impact);
@@ -291,7 +295,7 @@ describe('utils.calculateRuleResult', function () {
 				any: ruleResult.nodes[0].any.concat(ruleResult.nodes[1].any).concat(ruleResult.nodes[2].any)
 			};
 
-			utils.calculateRuleResult(ruleResult);
+			utils.finalizeRuleResult(ruleResult);
 
 			assert.equal(i, 1, 'called once');
 			assert.equal(ruleResult.result, 'okie');
@@ -318,7 +322,7 @@ describe('utils.calculateRuleResult', function () {
 					any: []
 				}]
 			};
-			utils.calculateRuleResult(ruleResult);
+			utils.finalizeRuleResult(ruleResult);
 			assert.equal(ruleResult.result, 'FAIL');
 
 		});
@@ -340,7 +344,7 @@ describe('utils.calculateRuleResult', function () {
 					all: []
 				}]
 			};
-			utils.calculateRuleResult(ruleResult);
+			utils.finalizeRuleResult(ruleResult);
 			assert.equal(ruleResult.result, 'FAIL');
 
 		});
@@ -362,7 +366,7 @@ describe('utils.calculateRuleResult', function () {
 					all: []
 				}]
 			};
-			utils.calculateRuleResult(ruleResult);
+			utils.finalizeRuleResult(ruleResult);
 			assert.equal(ruleResult.result, 'PASS');
 
 		});
@@ -384,7 +388,7 @@ describe('utils.calculateRuleResult', function () {
 					none: []
 				}]
 			};
-			utils.calculateRuleResult(ruleResult);
+			utils.finalizeRuleResult(ruleResult);
 			assert.equal(ruleResult.result, 'FAIL');
 
 		});
@@ -406,7 +410,7 @@ describe('utils.calculateRuleResult', function () {
 					none: []
 				}]
 			};
-			utils.calculateRuleResult(ruleResult);
+			utils.finalizeRuleResult(ruleResult);
 			assert.equal(ruleResult.result, 'FAIL');
 
 		});
@@ -428,7 +432,7 @@ describe('utils.calculateRuleResult', function () {
 					all: []
 				}]
 			};
-			utils.calculateRuleResult(ruleResult);
+			utils.finalizeRuleResult(ruleResult);
 			assert.equal(ruleResult.result, 'PASS');
 
 		});
@@ -468,7 +472,7 @@ describe('utils.calculateRuleResult', function () {
 					all: []
 				}]
 			};
-			utils.calculateRuleResult(ruleResult);
+			utils.finalizeRuleResult(ruleResult);
 			assert.equal(ruleResult.impact, 'serious');
 			assert.isUndefined(ruleResult.nodes[0].impact);
 			assert.isUndefined(ruleResult.nodes[1].impact);

@@ -1,4 +1,3 @@
-/* global failureSummary */
 describe('reporters - combined', function() {
 	'use strict';
 	var orig,
@@ -7,7 +6,8 @@ describe('reporters - combined', function() {
 			helpUrl: 'things',
 			description: 'something nifty',
 			tags: ['tag1'],
-			nodes: [{
+			violations: [],
+			passes: [{
 				result: 'PASS',
 				any: [{
 					result: true,
@@ -28,7 +28,9 @@ describe('reporters - combined', function() {
 			result: 'FAIL',
 			impact: 'cats',
 			tags: ['tag2'],
-			nodes: [{
+			passes: [],
+			violations: [{
+				result: 'FAIL',
 				all: [{
 					result: false,
 					data: 'pillock',
@@ -47,7 +49,8 @@ describe('reporters - combined', function() {
 			description: 'something even more nifty',
 			tags: ['tag3'],
 			impact: 'monkeys',
-			nodes: [{
+			passes: [],
+			violations: [{
 				result: 'FAIL',
 				impact: 'monkeys',
 				none: [{
@@ -66,7 +69,8 @@ describe('reporters - combined', function() {
 			id: 'blinky',
 			description: 'something awesome',
 			tags: ['tag4'],
-			nodes: [{
+			violations: [],
+			passes: [{
 				result: 'FAO:',
 				none: [{
 					data: 'clueso',
@@ -165,10 +169,10 @@ describe('reporters - combined', function() {
 	});
 	it('should add the rule help to the rule result', function(done) {
 		dqre.a11yCheck(document, {}, function(results) {
-			assert.isUndefined(results.violations[0].helpUrl);
-			assert.isUndefined(results.violations[1].helpUrl);
+			assert.isNull(results.violations[0].helpUrl);
+			assert.isNull(results.violations[1].helpUrl);
 			assert.equal(results.passes[0].helpUrl, 'things');
-			assert.isUndefined(results.passes[1].helpUrl);
+			assert.isNull(results.passes[1].helpUrl);
 			done();
 		});
 	});
@@ -184,15 +188,15 @@ describe('reporters - combined', function() {
 		});
 	});
 	it('should add the failure summary to the node data', function(done) {
-		var origFn = window.failureSummary;
-		window.failureSummary = function() {
+		var origFn = window.helpers.failureSummary;
+		window.helpers.failureSummary = function() {
 			return 'your foon is ringing';
 		};
 		dqre.a11yCheck(document, {}, function(results) {
 			assert.ok(results.violations[0].nodes);
 			assert.equal(results.violations[0].nodes.length, 1);
 			assert.equal(results.violations[0].nodes[0].failureSummary, 'your foon is ringing');
-			window.failureSummary = origFn;
+			window.helpers.failureSummary = origFn;
 			done();
 		});
 	});
@@ -272,7 +276,7 @@ describe('failureSummary', function() {
 		});
 	});
 	it('should return an empty string if result: PASS', function() {
-		var summary = failureSummary({
+		var summary = helpers.failureSummary({
 			result: 'PASS',
 			any: [{
 				result: true
@@ -284,7 +288,7 @@ describe('failureSummary', function() {
 	});
 
 	it('should return a list of all NONEs which return true', function() {
-		var summary = failureSummary({
+		var summary = helpers.failureSummary({
 			result: 'FAIL',
 			all: [],
 			any: [],
@@ -306,7 +310,7 @@ describe('failureSummary', function() {
 	});
 
 	it('should return a list of ANYs if none return true', function() {
-		var summary = failureSummary({
+		var summary = helpers.failureSummary({
 			result: 'FAIL',
 			any: [{
 				id: '1',
@@ -332,7 +336,7 @@ describe('failureSummary', function() {
 	});
 
 	it('should not return any "anys" if any of them return true', function() {
-		var summary = failureSummary({
+		var summary = helpers.failureSummary({
 			result: 'PASS',
 			any: [{
 				id: '1',
@@ -356,7 +360,7 @@ describe('failureSummary', function() {
 	});
 
 	it('should concatenate failing anys', function() {
-		var summary = failureSummary({
+		var summary = helpers.failureSummary({
 			result: 'FAIL',
 			any: [{
 				id: '1',
@@ -384,7 +388,7 @@ describe('failureSummary', function() {
 	});
 
 	it('should combine alls and nones', function() {
-		var summary = failureSummary({
+		var summary = helpers.failureSummary({
 			result: 'FAIL',
 			none: [{
 				id: '1',

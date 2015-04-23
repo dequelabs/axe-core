@@ -10,6 +10,7 @@
 		"chai": true,
 		"assert": true,
 		"dqre": true,
+		"helpers": true,
 		"utils": true
     },
 

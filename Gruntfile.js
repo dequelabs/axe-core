@@ -30,6 +30,7 @@ module.exports = function (grunt) {
 					'bower_components/node-uuid/uuid.js',
 					'lib/index.js',
 					'lib/*/index.js',
+					'lib/**/index.js',
 					'lib/**/*.js',
 					'lib/export.js',
 					'lib/outro.stub'

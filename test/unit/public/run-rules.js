@@ -141,7 +141,7 @@ describe('runRules', function () {
 		createFrames(function () {
 			setTimeout(function () {
 				runRules(document, {}, function (r) {
-					assert.lengthOf(r[0].nodes, 3);
+					assert.lengthOf(r[0].passes, 3);
 					done();
 				});
 
@@ -167,7 +167,7 @@ describe('runRules', function () {
 		frame.addEventListener('load', function () {
 			setTimeout(function () {
 				runRules(document, {}, function (r) {
-					var nodes = r[0].nodes.map(function (detail) {
+					var nodes = r[0].passes.map(function (detail) {
 						return detail.node.selector;
 					});
 
@@ -227,7 +227,8 @@ describe('runRules', function () {
 				assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
 					pageLevel: false,
-					nodes: [{
+					violations: [],
+					passes: [{
 						node: {
 							selector: ['#context-test', '#target'],
 							source: '<div id="target"></div>'
@@ -243,11 +244,13 @@ describe('runRules', function () {
 						all: [],
 						none: []
 					}],
-					result: 'PASS'
+					result: 'PASS',
+					tags: []
 				}, {
 					id: 'first-div',
 					pageLevel: false,
-					nodes: [{
+					violations: [],
+					passes: [{
 						node: {
 							selector: ['#context-test', '#foo'],
 							source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
@@ -266,7 +269,8 @@ describe('runRules', function () {
 						all: [],
 						none: []
 					}],
-					result: 'PASS'
+					result: 'PASS',
+					tags: []
 				}]);
 
 				done();
@@ -359,7 +363,8 @@ describe('runRules', function () {
 					foo: 'bar',
 					stuff: 'blah',
 					impact: 'moderate',
-					nodes: [{
+					passes: [],
+					violations: [{
 						node: {
 							selector: ['#target'],
 							source: '<div id="target">Target!</div>'
@@ -378,14 +383,16 @@ describe('runRules', function () {
 						all: [],
 						none: []
 					}],
-					result: 'FAIL'
+					result: 'FAIL',
+					tags: []
 				}, {
 					id: 'first-div',
 					pageLevel: false,
 					failureMessage: 'yay',
 					bar: 'foo',
 					stuff: 'no',
-					nodes: [{
+					violations: [],
+					passes: [{
 						node: {
 							selector: ['#target'],
 							source: '<div id="target">Target!</div>'
@@ -406,7 +413,8 @@ describe('runRules', function () {
 						all: [],
 						none: []
 					}],
-					result: 'PASS'
+					result: 'PASS',
+					tags: []
 				}]);
 			done();
 		});
