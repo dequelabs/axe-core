@@ -237,6 +237,12 @@ describe('color-contrast', function () {
 			var target = fixture.querySelector('button');
 			assert.isFalse(checks['color-contrast'].matches(target));
 		});
+
+		it('should not match <input type=image>', function () {
+			fixture.innerHTML = '<input type="image">';
+			var target = fixture.querySelector('input');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
 	});
 
 });
