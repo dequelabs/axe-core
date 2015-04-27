@@ -69,6 +69,7 @@ describe('Audit', function () {
 					id: 'positive1',
 					result: 'NA',
 					pageLevel: false,
+					impact: null,
 					nodes: [{
 						node: {
 							selector: ['#fixture > input:nth-of-type(1)'],
@@ -100,6 +101,7 @@ describe('Audit', function () {
 					id: 'positive2',
 					result: 'NA',
 					pageLevel: false,
+					impact: null,
 					nodes: [{
 						node: {
 							selector: ['#monkeys'],
@@ -118,6 +120,7 @@ describe('Audit', function () {
 					id: 'negative1',
 					result: 'NA',
 					pageLevel: false,
+					impact: null,
 					nodes: [{
 						node: {
 							selector: ['#monkeys'],
@@ -136,6 +139,7 @@ describe('Audit', function () {
 					id: 'positive3',
 					result: 'NA',
 					pageLevel: false,
+					impact: null,
 					nodes: [{
 						node: {
 							selector: ['#fixture > blink'],

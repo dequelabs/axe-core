@@ -227,18 +227,17 @@ describe('runRules', function () {
 				assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
 					pageLevel: false,
+					impact: null,
 					violations: [],
 					passes: [{
 						node: {
 							selector: ['#context-test', '#target'],
 							source: '<div id="target"></div>'
 						},
-						result: 'PASS',
 						any: [{
 							id: 'has-target',
 							failureMessage: null,
 							data: null,
-							result: true,
 							relatedNodes: []
 						}],
 						all: [],
@@ -249,17 +248,16 @@ describe('runRules', function () {
 				}, {
 					id: 'first-div',
 					pageLevel: false,
+					impact: null,
 					violations: [],
 					passes: [{
 						node: {
 							selector: ['#context-test', '#foo'],
 							source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
 						},
-						result: 'PASS',
 						any: [{
 							id: 'first-div',
 							data: null,
-							result: true,
 							failureMessage: null,
 							relatedNodes: [{
 								selector: ['#context-test', '#foo'],
@@ -370,14 +368,12 @@ describe('runRules', function () {
 							source: '<div id="target">Target!</div>'
 						},
 						impact: 'moderate',
-						result: 'FAIL',
 						any: [{
 							impact: 'moderate',
 							otherThingy: true,
 							failureMessage: 'yay',
 							id: 'has-target',
 							data: null,
-							result: false,
 							relatedNodes: []
 						}],
 						all: [],
@@ -391,20 +387,19 @@ describe('runRules', function () {
 					failureMessage: 'yay',
 					bar: 'foo',
 					stuff: 'no',
+					impact: null,
 					violations: [],
 					passes: [{
 						node: {
 							selector: ['#target'],
 							source: '<div id="target">Target!</div>'
 						},
-						result: 'PASS',
 						any: [{
 							impact: 'serious',
 							id: 'first-div',
 							thingy: true,
 							failureMessage: null,
 							data: null,
-							result: true,
 							relatedNodes: [{
 								selector: ['#target'],
 								source: '<div id="target">Target!</div>'
