@@ -120,6 +120,7 @@ describe('utils.publishMetaData', function () {
 		assert.deepEqual(result, {
 			id: 'cats',
 			help: 'cats-rule',
+			tags: [],
 			nodes: [{
 				any: [{
 					result: false,
@@ -194,6 +195,7 @@ describe('utils.publishMetaData', function () {
 		assert.deepEqual(result, {
 			id: 'cats',
 			help: 'cats-rule',
+			tags: [],
 			nodes: [{
 				any: [{
 					result: true,

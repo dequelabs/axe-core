@@ -1,4 +1,86 @@
 /*global runRules */
+describe('dqre.a11yCheck', function () {
+	'use strict';
+
+	describe('reporter', function () {
+
+		it('should throw if no audit is configured', function () {
+			dqre.audit = null;
+
+			assert.throws(function () {
+				dqre.a11yCheck(document, {});
+			}, Error, /^No audit configured/);
+		});
+
+		it('should allow for option-less invocation', function (done) {
+
+			dqre.configure({ reporter: function (r, c) {
+				c(r);
+			}});
+			dqre.a11yCheck(document, function (result) {
+				assert.isArray(result);
+				assert.lengthOf(result, 0);
+				done();
+			});
+		});
+
+		it('should use specified reporter via options - anon function', function (done) {
+
+			dqre.configure({
+				reporter: function () {
+					assert.fail('should not be called');
+				}
+			});
+			dqre.a11yCheck(document, { reporter: function (result) {
+				assert.isArray(result);
+				assert.lengthOf(result, 0);
+				done();
+			}});
+		});
+
+		it('should use specified reporter via options by name', function (done) {
+
+			var orig = window.reporters;
+			dqre.configure({
+				reporter: function () {
+					assert.fail('should not be called');
+				}
+			});
+			dqre.reporter('foo', function (result) {
+				assert.isArray(result);
+				assert.lengthOf(result, 0);
+				window.reporters = orig;
+				done();
+			});
+			dqre.a11yCheck(document, { reporter: 'foo' });
+		});
+
+		it('should check configured reporter', function (done) {
+
+			dqre.configure({
+				reporter: function (result) {
+					assert.isArray(result);
+					assert.lengthOf(result, 0);
+					done();
+				}
+			});
+			dqre.a11yCheck(document, null);
+		});
+
+		it('fallback to default configured reporter', function (done) {
+			var orig = window.defaultReporter;
+			window.defaultReporter = function (result) {
+				assert.isArray(result);
+				assert.lengthOf(result, 0);
+				done();
+			};
+
+			dqre.configure({});
+			dqre.a11yCheck(document, null);
+			window.defaultReporter = orig;
+		});
+	});
+});
 describe('runRules', function () {
 	'use strict';
 
@@ -43,13 +125,6 @@ describe('runRules', function () {
 		dqre.audit = null;
 	});
 
-	it('should throw if no audit is configured', function () {
-
-		assert.throws(function () {
-			runRules(document, {});
-		}, Error, /^No audit configured/);
-	});
-
 	it('should work', function (done) {
 		this.timeout(5000);
 		dqre.configure({ rules: [{
@@ -66,7 +141,7 @@ describe('runRules', function () {
 		createFrames(function () {
 			setTimeout(function () {
 				runRules(document, {}, function (r) {
-					assert.lengthOf(r[0].nodes, 3);
+					assert.lengthOf(r[0].passes, 3);
 					done();
 				});
 
@@ -92,7 +167,7 @@ describe('runRules', function () {
 		frame.addEventListener('load', function () {
 			setTimeout(function () {
 				runRules(document, {}, function (r) {
-					var nodes = r[0].nodes.map(function (detail) {
+					var nodes = r[0].passes.map(function (detail) {
 						return detail.node.selector;
 					});
 
@@ -152,36 +227,37 @@ describe('runRules', function () {
 				assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
 					pageLevel: false,
-					nodes: [{
+					impact: null,
+					violations: [],
+					passes: [{
 						node: {
 							selector: ['#context-test', '#target'],
 							source: '<div id="target"></div>'
 						},
-						result: 'PASS',
 						any: [{
 							id: 'has-target',
 							failureMessage: null,
 							data: null,
-							result: true,
 							relatedNodes: []
 						}],
 						all: [],
 						none: []
 					}],
-					result: 'PASS'
+					result: 'PASS',
+					tags: []
 				}, {
 					id: 'first-div',
 					pageLevel: false,
-					nodes: [{
+					impact: null,
+					violations: [],
+					passes: [{
 						node: {
 							selector: ['#context-test', '#foo'],
 							source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
 						},
-						result: 'PASS',
 						any: [{
 							id: 'first-div',
 							data: null,
-							result: true,
 							failureMessage: null,
 							relatedNodes: [{
 								selector: ['#context-test', '#foo'],
@@ -191,7 +267,8 @@ describe('runRules', function () {
 						all: [],
 						none: []
 					}],
-					result: 'PASS'
+					result: 'PASS',
+					tags: []
 				}]);
 
 				done();
@@ -284,45 +361,45 @@ describe('runRules', function () {
 					foo: 'bar',
 					stuff: 'blah',
 					impact: 'moderate',
-					nodes: [{
+					passes: [],
+					violations: [{
 						node: {
 							selector: ['#target'],
 							source: '<div id="target">Target!</div>'
 						},
 						impact: 'moderate',
-						result: 'FAIL',
 						any: [{
 							impact: 'moderate',
 							otherThingy: true,
 							failureMessage: 'yay',
 							id: 'has-target',
 							data: null,
-							result: false,
 							relatedNodes: []
 						}],
 						all: [],
 						none: []
 					}],
-					result: 'FAIL'
+					result: 'FAIL',
+					tags: []
 				}, {
 					id: 'first-div',
 					pageLevel: false,
 					failureMessage: 'yay',
 					bar: 'foo',
 					stuff: 'no',
-					nodes: [{
+					impact: null,
+					violations: [],
+					passes: [{
 						node: {
 							selector: ['#target'],
 							source: '<div id="target">Target!</div>'
 						},
-						result: 'PASS',
 						any: [{
 							impact: 'serious',
 							id: 'first-div',
 							thingy: true,
 							failureMessage: null,
 							data: null,
-							result: true,
 							relatedNodes: [{
 								selector: ['#target'],
 								source: '<div id="target">Target!</div>'
@@ -331,7 +408,8 @@ describe('runRules', function () {
 						all: [],
 						none: []
 					}],
-					result: 'PASS'
+					result: 'PASS',
+					tags: []
 				}]);
 			done();
 		});
