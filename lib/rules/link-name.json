@@ -1,6 +1,6 @@
 {
   "id": "link-name",
-  "selector": "a[href],[role=link][href]",
+  "selector": "a[href]:not([role=\"button\"]), [role=link][href]",
   "tags": [
     "wcag2a",
     "wcag111",
@@ -15,7 +15,6 @@
   },
   "all": [],
   "any": [
-    "unfocusable",
     "has-visible-text",
     "aria-label",
     "aria-labelledby"

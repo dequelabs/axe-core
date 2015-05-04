@@ -28,37 +28,6 @@ function hasUniqueId() {
 }
 
 var schemas = {};
-schemas.classifier = {
-	properties: {
-		id: {
-			required: true,
-			type: 'string',
-			conform: hasUniqueId()
-		},
-		options: {
-			type: 'object'
-		},
-		excludeHidden: {
-			type: 'boolean'
-		},
-		evaluate: {
-			type: 'string',
-			required: true,
-			conform: fileExists,
-			messages: {
-				conform: 'File does not exist'
-			}
-		},
-		matches: {
-			type: 'string',
-			required: false,
-			conform: fileExists,
-			messages: {
-				conform: 'File does not exist'
-			}
-		}
-	}
-};
 
 schemas.tool = {
 	properties: {
@@ -73,38 +42,6 @@ schemas.tool = {
 		source: {
 			type: 'string',
 			required: true,
-			conform: fileExists,
-			messages: {
-				conform: 'File does not exist'
-			}
-		}
-	}
-};
-
-schemas.analyzer = {
-	properties: {
-		id: {
-			required: true,
-			type: 'string',
-			conform: hasUniqueId()
-		},
-		options: {
-			type: 'object'
-		},
-		excludeHidden: {
-			type: 'boolean'
-		},
-		evaluate: {
-			type: 'string',
-			required: true,
-			conform: fileExists,
-			messages: {
-				conform: 'File does not exist'
-			}
-		},
-		matches: {
-			type: 'string',
-			required: false,
 			conform: fileExists,
 			messages: {
 				conform: 'File does not exist'
