@@ -50,18 +50,6 @@ module.exports = function (grunt) {
 				},
 				src: 'lib/tools/**/*.json'
 			},
-			classifiers: {
-				options: {
-					type: 'classifier'
-				},
-				src: 'lib/classifiers/**/*.json'
-			},
-			analyzers: {
-				options: {
-					type: 'analyzer'
-				},
-				src: 'lib/analyzers/**/*.json'
-			},
 			check: {
 				options: {
 					type: 'check'

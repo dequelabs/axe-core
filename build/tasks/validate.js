@@ -8,8 +8,9 @@ var revalidator = require('revalidator').validate,
 
 function fileExists(v, o) {
 	var file = path.resolve(path.dirname(o._path), v);
+	var exists;
 	try {
-		var exists = fs.existsSync(file);
+		exists = fs.existsSync(file);
 	} catch(e) {
 		return false;
 	}
@@ -24,7 +25,7 @@ function hasUniqueId() {
 			return true;
 		}
 		return false;
-	}
+	};
 }
 
 var schemas = {};
