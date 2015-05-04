@@ -1,7 +1,7 @@
 {
   "id": "button-has-visible-text",
   "evaluate": "has-visible-text.js",
-	"selector": "button",
+	"selector": "button, [role=\"button\"]:not(input)",
   "metadata": {
     "impact": "critical",
     "failureMessage": "The element does not have inner text that is visible to a screen reader"

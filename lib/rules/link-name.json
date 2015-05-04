@@ -15,6 +15,7 @@
   },
   "all": [],
   "any": [
+    "unfocusable",
     "has-visible-text",
     "aria-label",
     "aria-labelledby"
