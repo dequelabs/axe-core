@@ -1,6 +1,6 @@
 {
 	"description": "input-button-name test",
-	"rule": "input-button-name",
+	"rule": "button-name",
 	"violations": [
 		["#fail1"],
 		["#fail2"],
