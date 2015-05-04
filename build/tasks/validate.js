@@ -8,8 +8,9 @@ var revalidator = require('revalidator').validate,
 
 function fileExists(v, o) {
 	var file = path.resolve(path.dirname(o._path), v);
+	var exists;
 	try {
-		var exists = fs.existsSync(file);
+		exists = fs.existsSync(file);
 	} catch(e) {
 		return false;
 	}
@@ -24,41 +25,10 @@ function hasUniqueId() {
 			return true;
 		}
 		return false;
-	}
+	};
 }
 
 var schemas = {};
-schemas.classifier = {
-	properties: {
-		id: {
-			required: true,
-			type: 'string',
-			conform: hasUniqueId()
-		},
-		options: {
-			type: 'object'
-		},
-		excludeHidden: {
-			type: 'boolean'
-		},
-		evaluate: {
-			type: 'string',
-			required: true,
-			conform: fileExists,
-			messages: {
-				conform: 'File does not exist'
-			}
-		},
-		matches: {
-			type: 'string',
-			required: false,
-			conform: fileExists,
-			messages: {
-				conform: 'File does not exist'
-			}
-		}
-	}
-};
 
 schemas.tool = {
 	properties: {
@@ -73,38 +43,6 @@ schemas.tool = {
 		source: {
 			type: 'string',
 			required: true,
-			conform: fileExists,
-			messages: {
-				conform: 'File does not exist'
-			}
-		}
-	}
-};
-
-schemas.analyzer = {
-	properties: {
-		id: {
-			required: true,
-			type: 'string',
-			conform: hasUniqueId()
-		},
-		options: {
-			type: 'object'
-		},
-		excludeHidden: {
-			type: 'boolean'
-		},
-		evaluate: {
-			type: 'string',
-			required: true,
-			conform: fileExists,
-			messages: {
-				conform: 'File does not exist'
-			}
-		},
-		matches: {
-			type: 'string',
-			required: false,
 			conform: fileExists,
 			messages: {
 				conform: 'File does not exist'

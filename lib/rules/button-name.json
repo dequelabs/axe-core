@@ -1,6 +1,6 @@
 {
   "id": "button-name",
-  "selector": "button",
+  "selector": "button, [role=\"button\"], input[type=\"button\"], input[type=\"submit\"], input[type=\"reset\"]",
   "tags": [
     "wcag2a",
     "wcag111",
@@ -14,7 +14,9 @@
   },
   "all": [],
   "any": [
-    "has-visible-text",
+    "non-empty-if-present",
+    "non-empty-value",
+    "button-has-visible-text",
     "aria-label",
     "aria-labelledby"
   ],
