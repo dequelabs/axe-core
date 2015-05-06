@@ -24,6 +24,20 @@ describe('utils.getSelector', function () {
 		assert.equal(result[0], node);
 	});
 
+	it('should still work if an element has nothing but whitespace as a className', function () {
+		var node = document.createElement('div');
+		node.className = '    ';
+		fixture.appendChild(node);
+
+		var sel = utils.getSelector(node);
+
+		assert.equal(sel, '#fixture > div');
+
+		var result = document.querySelectorAll(sel);
+		assert.lengthOf(result, 1);
+		assert.equal(result[0], node);
+	});
+
 	it('should handle special characters', function () {
 		var node = document.createElement('div');
 		node.id = 'monkeys#are.animals\\ok';
