@@ -49,10 +49,26 @@ public class KensingtonTest extends TestCase {
 	 * Example test
 	 */
 	public void testAccessibility() {
-		driver.get("http://localhost:5005/");
+		driver.get("http://localhost:5005");
 
 		TestHelper.inject(driver);
 		JSONObject responseJSON = TestHelper.analyze(driver);
+		JSONArray violations = responseJSON.getJSONArray("violations");
+		if (violations.length() == 0) {
+			assertTrue("No violations found", true);
+		} else {
+			assertTrue(TestHelper.report(violations), false);
+		}
+	}
+
+	/**
+	 * Example test
+	 */
+	public void testAccessibilityWithSelector() {
+		driver.get("http://localhost:5005");
+
+		TestHelper.inject(driver);
+		JSONObject responseJSON = TestHelper.analyze(driver, "#exampleNode");
 		JSONArray violations = responseJSON.getJSONArray("violations");
 		if (violations.length() == 0) {
 			assertTrue("No violations found", true);
