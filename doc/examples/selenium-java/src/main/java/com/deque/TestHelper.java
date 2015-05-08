@@ -76,11 +76,7 @@ public class TestHelper {
 				sb.append(node.getJSONArray("target"));
 				sb.append(lineSeparator);
 				sb.append("   ");
-				JSONArray summaries = node.getJSONArray("failureSummary");
-				for (int k = 0; k < summaries.length(); k++) {
-					sb.append(summaries.getString(k).replaceAll("\n", lineSeparator + "    "));
-				}
-
+				sb.append(node.getString("failureSummary").replaceAll("\n", lineSeparator + "    "));
 				sb.append(lineSeparator);
 			}
 		}

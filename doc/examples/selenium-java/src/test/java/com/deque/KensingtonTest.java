@@ -68,7 +68,7 @@ public class KensingtonTest extends TestCase {
 		driver.get("http://localhost:5005");
 
 		TestHelper.inject(driver);
-		JSONObject responseJSON = TestHelper.analyze(driver, "#exampleNode");
+		JSONObject responseJSON = TestHelper.analyze(driver, "#errorLongDesc");
 		JSONArray violations = responseJSON.getJSONArray("violations");
 		if (violations.length() == 0) {
 			assertTrue("No violations found", true);
