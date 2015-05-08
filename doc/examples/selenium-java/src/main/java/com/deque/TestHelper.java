@@ -44,7 +44,7 @@ public class TestHelper {
 		}
 		return sb.toString();
 	}
-	
+
 	/**
 	 * @param violations JSONArray of violations
 	 * @return readable report of accessibility violations found
@@ -80,36 +80,52 @@ public class TestHelper {
 				sb.append(lineSeparator);
 			}
 		}
-		
+
 		return sb.toString();
 	}
 
 	/**
 	 * Perform analysis using K-Auto
-	 * @param driver WebDriver instance to test
+	 *
+	 * @param driver   WebDriver instance to test
+	 * @param selector for which part of the page to analyze
+	 * @return JSONObject of the found violations and passes
+	 */
+	public static JSONObject analyze(WebDriver driver, String selector) {
+		String command = String.format("dqre.a11yCheck('%s', null, arguments[arguments.length - 1]);", selector.replace("'", ""));
+		return executeScript(driver, command);
+	}
+
+	/**
+	 * Perform analysis using K-Auto
+	 *
+	 * @param driver   WebDriver instance to test
 	 * @return JSONObject of the found violations and passes
 	 */
 	public static JSONObject analyze(WebDriver driver) {
+		return executeScript(driver, "dqre.a11yCheck(document, null, arguments[arguments.length - 1]);");
+	}
+
+	private static JSONObject executeScript(WebDriver driver, String command) {
 		driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
-		Object response = ((JavascriptExecutor)driver).executeAsyncScript(
-			"dqre.a11yCheck(document, null, arguments[arguments.length - 1]);");
+		Object response = ((JavascriptExecutor) driver).executeAsyncScript(command);
 		return new JSONObject((Map) response);
 	}
-	
+
 	/**
-	 * Recursively injects K-Auto into all iframes and the top level document 
+	 * Recursively injects K-Auto into all iframes and the top level document
 	 * @param driver WebDriver instance to inject into
 	 */
 	public static void inject(WebDriver driver) {
 		String script = getContents();
 		ArrayList<WebElement> parents = new ArrayList<WebElement>();
 		injectIntoFrames(driver, script, parents);
-		
+
 	    JavascriptExecutor js = (JavascriptExecutor) driver;
 		driver.switchTo().defaultContent();
 		js.executeScript(script);
 	}
-	
+
 	/**
 	 * Recursively find frames and inject a script into them
 	 * @param driver
@@ -118,7 +134,7 @@ public class TestHelper {
 	 */
 	private static void injectIntoFrames(WebDriver driver, String script, ArrayList<WebElement> parents) {
 	    JavascriptExecutor js = (JavascriptExecutor) driver;
-		
+
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
 		for (WebElement frame : frames) {
 			driver.switchTo().defaultContent();
@@ -129,11 +145,11 @@ public class TestHelper {
 			}
 			driver.switchTo().frame(frame);
 			js.executeScript(script);
-			
+
 			ArrayList<WebElement> localParents = (ArrayList<WebElement>) parents.clone();
 			localParents.add(frame);
 			injectIntoFrames(driver, script, localParents);
 		}
-		
+
 	}
 }
