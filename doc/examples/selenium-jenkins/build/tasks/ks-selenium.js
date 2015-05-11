@@ -5,9 +5,7 @@ var WebDriver = require('selenium-webdriver'),
 	SeleniumServer = require('selenium-webdriver/remote').SeleniumServer,
 	path = require('path'),
 	ksInject = require('../inject'),
-	ks = path.resolve(__dirname, '../../../../../kensington.min.js'),
-	jar = path.resolve(__dirname, '../../build/selenium-server-standalone-2.45.0.jar');
-
+	ks = path.resolve(__dirname, '../../../../../kensington.min.js');
 
 var tagsToReplace = {
 	'&': '&amp;',
@@ -32,11 +30,12 @@ module.exports = function (grunt) {
 	var ksSource = grunt.file.read(ks);
 	grunt.registerMultiTask('ks-selenium', function () {
 
-		var done = this.async(),
+		var jar = this.options({jar: 'build/selenium-server-standalone-2.45.0.jar'}).jar,
+			done = this.async(),
 			count = this.data.length;
 
 		// start the selenium server
-		var server = new SeleniumServer(jar, {
+		var server = new SeleniumServer(path.resolve(__dirname, '../../', jar), {
 			port: 4444,
 			args: ['-Xmx512m']
 		});

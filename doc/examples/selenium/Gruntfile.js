@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = function (grunt) {
 	'use strict';
 
@@ -8,7 +10,7 @@ module.exports = function (grunt) {
 
 	var url = grunt.option('url') ||
 		'http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar';
-	var jar = url.split('/').pop();
+	var jar = path.basename(url);
 
 	grunt.initConfig({
 		curl: {
@@ -20,7 +22,10 @@ module.exports = function (grunt) {
 		'ks-selenium': {
 			urls: [
 				'http://localhost:5005/'
-			]
+			],
+			options: {
+				jar: '<%=curl.selenium.dest%>'
+			}
 		}
 	});
 
