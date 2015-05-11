@@ -10,8 +10,11 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.io.*;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class TestHelper {
 
@@ -88,22 +91,53 @@ public class TestHelper {
 	 * Perform analysis using K-Auto
 	 *
 	 * @param driver   WebDriver instance to test
+	 * @return JSONObject of the found violations and passes
+	 */
+	public static JSONObject analyze(WebDriver driver) {
+		return executeScript(driver, "dqre.a11yCheck(document, null, arguments[arguments.length - 1]);");
+	}
+
+	/**
+	 * Perform analysis of part of a page using K-Auto
+	 *
+	 * @param driver   WebDriver instance to test
 	 * @param selector for which part of the page to analyze
 	 * @return JSONObject of the found violations and passes
 	 */
 	public static JSONObject analyze(WebDriver driver, String selector) {
 		String command = String.format("dqre.a11yCheck('%s', null, arguments[arguments.length - 1]);", selector.replace("'", ""));
+
 		return executeScript(driver, command);
 	}
 
 	/**
-	 * Perform analysis using K-Auto
+	 * Perform analysis of part of a page using K-Auto
 	 *
 	 * @param driver   WebDriver instance to test
+	 * @param include  Selectors defining parts of the page to include
+	 * @param exclude  Selectors defining parts of the page to exclude
 	 * @return JSONObject of the found violations and passes
 	 */
-	public static JSONObject analyze(WebDriver driver) {
-		return executeScript(driver, "dqre.a11yCheck(document, null, arguments[arguments.length - 1]);");
+	public static JSONObject analyze(WebDriver driver, String[] include, String[] exclude) {
+		String command = String.format("dqre.a11yCheck({include: ['%s'], exclude: ['%s']}, null, arguments[arguments.length - 1]);",
+			StringUtils.join(include, "','"),
+			StringUtils.join(exclude, "','"));
+
+		return executeScript(driver, command);
+	}
+
+	/**
+	 * Perform analysis of a single element using K-Auto
+	 * @param  driver  WebDriver instance to test
+	 * @param  context WebElement to test
+	 * @return JSONObject of the found violations and passes
+	 */
+	public static JSONObject analyze(WebDriver driver, WebElement context) {
+		String identifier = "test-" + UUID.randomUUID().toString();
+
+		((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute(arguments[1], arguments[0].getAttribute(arguments[1]) + ' ' + arguments[2]);", context, "class", identifier);
+
+		return analyze(driver, "." + identifier);
 	}
 
 	private static JSONObject executeScript(WebDriver driver, String command) {

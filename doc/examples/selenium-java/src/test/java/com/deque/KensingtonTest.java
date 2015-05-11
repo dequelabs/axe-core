@@ -6,8 +6,10 @@ import junit.framework.TestSuite;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.Map;
@@ -68,8 +70,41 @@ public class KensingtonTest extends TestCase {
 		driver.get("http://localhost:5005");
 
 		TestHelper.inject(driver);
-		JSONObject responseJSON = TestHelper.analyze(driver, "#errorLongDesc");
+		JSONObject responseJSON = TestHelper.analyze(driver, "p");
 		JSONArray violations = responseJSON.getJSONArray("violations");
+		if (violations.length() == 0) {
+			assertTrue("No violations found", true);
+		} else {
+			assertTrue(TestHelper.report(violations), false);
+		}
+	}
+
+	/**
+	 * Example test
+	 */
+	public void testAccessibilityWithIncludesAndExcludes() {
+		driver.get("http://localhost:5005");
+
+		TestHelper.inject(driver);
+		JSONObject responseJSON = TestHelper.analyze(driver, new String[]{"div"}, new String[]{"h1"});
+		JSONArray violations = responseJSON.getJSONArray("violations");
+		if (violations.length() == 0) {
+			assertTrue("No violations found", true);
+		} else {
+			assertTrue(TestHelper.report(violations), false);
+		}
+	}
+
+	/**
+	 * Example test
+	 */
+	public void testAccessibilityWithWebElement() {
+		driver.get("http://localhost:5005");
+
+		TestHelper.inject(driver);
+		JSONObject responseJSON = TestHelper.analyze(driver, driver.findElement(By.tagName("p")));
+		JSONArray violations = responseJSON.getJSONArray("violations");
+
 		if (violations.length() == 0) {
 			assertTrue("No violations found", true);
 		} else {
