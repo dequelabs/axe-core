@@ -6,11 +6,15 @@ module.exports = function (grunt) {
 
 	grunt.loadTasks('build/tasks');
 
+	var url = grunt.option('url') ||
+		'http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar';
+	var jar = url.split('/').pop();
+
 	grunt.initConfig({
 		curl: {
 			selenium: {
-				dest: 'build/selenium-server-standalone-2.45.0.jar',
-				src: 'http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar'
+				dest: 'build/' + jar,
+				src: url
 			}
 		},
 		'ks-selenium': {
