@@ -3,6 +3,6 @@
   "evaluate": "headers-attr-reference.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "headers attribute references element that is not screen reader visible:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
+    "failureMessage": "headers attribute references element that is not screen reader visible"
   }
 }

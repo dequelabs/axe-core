@@ -3,6 +3,6 @@
   "evaluate": "rowspan.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "Element has a rowspan value that is not equal to 1:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
+    "failureMessage": "Element has a rowspan value that is not equal to 1"
   }
 }
