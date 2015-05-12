@@ -3,6 +3,6 @@
   "evaluate": "has-th.js",
   "metadata": {
     "impact": "serious",
-    "failureMessage": "Layout tables should not use <th> elements:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
+    "failureMessage": "Layout tables should not use <th> elements"
   }
 }

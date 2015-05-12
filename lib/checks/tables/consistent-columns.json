@@ -3,6 +3,6 @@
   "evaluate": "consistent-columns.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "The table does not have the same number of columns in every row:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
+    "failureMessage": "The table does not have the same number of columns in every row"
   }
 }

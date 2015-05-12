@@ -4,6 +4,6 @@
   "after": "duplicate-id-after.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "Document has multiple elements with the same ID:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
+    "failureMessage": "Document has multiple elements with the same ID"
   }
 }

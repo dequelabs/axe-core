@@ -3,6 +3,6 @@
   "evaluate": "only-dlitems.js",
   "metadata": {
     "impact": "serious",
-    "failureMessage": "Element has children that are not <dt> or <dd> elements:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
+    "failureMessage": "Element has children that are not <dt> or <dd> elements"
   }
 }

@@ -3,6 +3,6 @@
   "evaluate": "th-headers-attr.js",
   "metadata": {
     "impact": "serious",
-    "failureMessage": "<th> elements should not use headers attribute:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
+    "failureMessage": "<th> elements should not use headers attribute"
   }
 }

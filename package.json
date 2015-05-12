@@ -1,7 +1,7 @@
 {
   "name": "deque-rules",
   "description": "Deque Rules",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "private": true,
   "author": {
     "name": "David Sturley",
@@ -13,26 +13,25 @@
     "build": "grunt"
   },
   "devDependencies": {
-    "blanket": "~1.1.6",
-    "chai": "~1.9.1",
-    "clone": "~0.1.17",
-    "dot": "~1.0.2",
+    "blanket": "~1.1.7",
+    "chai": "~2.3.0",
+    "clone": "~1.0.2",
+    "dot": "~1.0.3",
     "grunt": "~0.4.5",
-    "grunt-blanket-mocha": "~0.3.1",
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-connect": "~0.7.1",
-    "grunt-contrib-jshint": "~0.10.0",
-    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-blanket-mocha": "~0.5.0",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-concat": "~0.5.1",
+    "grunt-contrib-connect": "~0.10.1",
+    "grunt-contrib-jshint": "~0.11.2",
+    "grunt-contrib-uglify": "~0.9.1",
     "grunt-contrib-watch": "~0.6.1",
-    "grunt-mocha": "~0.4.11",
-    "mocha": "~1.20.0",
+    "grunt-mocha": "~0.4.12",
+    "mocha": "~2.2.4",
     "node-html-encoder": "0.0.2",
-    "xunit-file": "0.0.5",
-    "sinon": "~1.10.3",
-    "grunt-mocha-test": "~0.12.0",
+    "xunit-file": "0.0.6",
+    "grunt-mocha-test": "~0.12.7",
     "revalidator": "~0.3.1",
-    "less": "~2.3.1",
-    "promise": "~6.1.0"
+    "less": "~2.5.0",
+    "promise": "~7.0.1"
   }
 }

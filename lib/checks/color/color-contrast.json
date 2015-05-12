@@ -4,6 +4,6 @@
   "evaluate": "color-contrast.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "Element has insufficient color contrast of {{=it.data.contrastRatio}} (foreground color: {{=it.data.fgColor}}, background color: {{=it.data.bgColor}}, font size: {{=it.data.fontSize}}, font weight: {{=it.data.fontWeight}}) Background detected on:{{~it.relatedNodes :node}}\n  {{=JSON.stringify(node.selector)}}{{~}}"
+    "failureMessage": "Element has insufficient color contrast of {{=it.data.contrastRatio}} (foreground color: {{=it.data.fgColor}}, background color: {{=it.data.bgColor}}, font size: {{=it.data.fontSize}}, font weight: {{=it.data.fontWeight}})"
   }
 }
