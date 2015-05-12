@@ -10,8 +10,11 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.io.*;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class TestHelper {
 
@@ -26,7 +29,7 @@ public class TestHelper {
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new FileReader(scriptFileName));
-			String line = "";
+			String line;
 			while ((line = reader.readLine()) != null) {
 				sb.append(line);
 				sb.append(lineSeparator);
@@ -85,31 +88,95 @@ public class TestHelper {
 	}
 
 	/**
-	 * Perform analysis using K-Auto
-	 *
-	 * @param driver   WebDriver instance to test
-	 * @param selector for which part of the page to analyze
-	 * @return JSONObject of the found violations and passes
+	 * Chainable builder for invoking K-Auto. Instantiate a new Builder and configure testing with the include(),
+	 * exclude(), and options() methods before calling analyze() to run.
 	 */
-	public static JSONObject analyze(WebDriver driver, String selector) {
-		String command = String.format("dqre.a11yCheck('%s', null, arguments[arguments.length - 1]);", selector.replace("'", ""));
-		return executeScript(driver, command);
-	}
+	public static class Builder {
+		private final WebDriver driver;
+		private final List<String> includes = new ArrayList<String>();
+		private final List<String> excludes = new ArrayList<String>();
+		private String options = "null";
 
-	/**
-	 * Perform analysis using K-Auto
-	 *
-	 * @param driver   WebDriver instance to test
-	 * @return JSONObject of the found violations and passes
-	 */
-	public static JSONObject analyze(WebDriver driver) {
-		return executeScript(driver, "dqre.a11yCheck(document, null, arguments[arguments.length - 1]);");
-	}
+		/**
+		 * Get a new Builder object, navigate the driver to the location, and inject the K-Auto script.
+		 * @param driver 	An initialized WebDriver
+		 * @param location	URL to test
+		 */
+		public Builder(final WebDriver driver) {
+			this.driver = driver;
 
-	private static JSONObject executeScript(WebDriver driver, String command) {
-		driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
-		Object response = ((JavascriptExecutor) driver).executeAsyncScript(command);
-		return new JSONObject((Map) response);
+			TestHelper.inject(this.driver);
+		}
+
+		/**
+		 * Set the K-Auto options.
+		 * @param options Options object as a JSON string
+		 */
+		public Builder options(final String options) {
+			this.options = options;
+
+			return this;
+		}
+
+		/**
+		 * Include a selector.
+		 * @param selector Any valid CSS selector
+		 */
+		public Builder include(final String selector) {
+			this.includes.add(selector);
+
+			return this;
+		}
+
+		/**
+		 * Exclude a selector.
+		 * @param selector Any valid CSS selector
+		 */
+		public Builder exclude(final String selector) {
+			this.excludes.add(selector);
+
+			return this;
+		}
+
+		/**
+		 * Run K-Auto against the page.
+		 * @return K-Auto results
+		 */
+		public JSONObject analyze() {
+			if (includes.size() == 0) { includes.add("document"); }
+
+			String command;
+
+			if (includes.size() > 1 || excludes.size() > 0) {
+				command = String.format("dqre.a11yCheck({include: [%s], exclude: [%s]}, %s, arguments[arguments.length - 1]);",
+						"'" + StringUtils.join(includes, "','") + "'",
+						excludes.size() == 0 ? "" : "'" + StringUtils.join(excludes, "','") + "'",
+						options);
+			} else {
+				command = String.format("dqre.a11yCheck('%s', %s, arguments[arguments.length - 1]);", includes.get(0).replace("'", ""), options);
+			}
+
+			return execute(command);
+		}
+
+		/**
+		 * Run K-Auto against a specific WebElement.
+		 * @param  context A WebElement to test
+		 * @return         K-Auto results
+		 */
+		public JSONObject analyze(final WebElement context) {
+			String command = String.format("dqre.a11yCheck(arguments[0], %s, arguments[arguments.length - 1]);", options);
+
+			return execute(command, context);
+		}
+
+		private JSONObject execute(final String command, final Object... args) {
+			this.driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
+
+			Object response = ((JavascriptExecutor) this.driver).executeAsyncScript(command, args);
+
+			return new JSONObject((Map) response);
+		}
 	}
 
 	/**
