@@ -46,7 +46,7 @@ describe('Audit', function () {
 	beforeEach(function () {
 		a = new Audit();
 		mockRules.forEach(function (rule) {
-			a.rules.push(new Rule(rule));
+			a.addRule(rule);
 		});
 	});
 	afterEach(function () {
@@ -55,6 +55,90 @@ describe('Audit', function () {
 
 	it('should be a function', function () {
 		assert.isFunction(Audit);
+	});
+
+	describe('Audit#addRule', function () {
+		it('should override existing rule', function () {
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				selector: 'bob'
+			});
+			assert.lengthOf(audit.rules, 1);
+			assert.equal(audit.rules[0].selector, 'bob');
+
+			audit.addRule({
+				id: 'target',
+				selector: 'fred'
+			});
+
+			assert.lengthOf(audit.rules, 1);
+			assert.equal(audit.rules[0].selector, 'fred');
+		});
+		it('should otherwise push new rule', function () {
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				selector: 'bob'
+			});
+			assert.lengthOf(audit.rules, 1);
+			assert.equal(audit.rules[0].id, 'target');
+			assert.equal(audit.rules[0].selector, 'bob');
+
+			audit.addRule({
+				id: 'target2',
+				selector: 'fred'
+			});
+
+			assert.lengthOf(audit.rules, 2);
+			assert.equal(audit.rules[1].id, 'target2');
+			assert.equal(audit.rules[1].selector, 'fred');
+		});
+
+	});
+
+	describe('Audit#addTool', function () {
+		it('should override existing tool', function () {
+			var audit = new Audit();
+			audit.addTool({
+				id: 'target',
+				options: 'bob',
+				source: {}
+			});
+			assert.lengthOf(Object.keys(audit.tools), 1);
+			assert.equal(audit.tools.target.options, 'bob');
+
+			audit.addTool({
+				id: 'target',
+				options: 'fred',
+				source: {}
+			});
+
+			assert.lengthOf(Object.keys(audit.tools), 1);
+			assert.equal(audit.tools.target.options, 'fred');
+		});
+		it('should otherwise push new tool', function () {
+			var audit = new Audit();
+			audit.addTool({
+				id: 'target',
+				options: 'bob',
+				source: {}
+			});
+			assert.lengthOf(Object.keys(audit.tools), 1);
+			assert.equal(audit.tools.target.id, 'target');
+			assert.equal(audit.tools.target.options, 'bob');
+
+			audit.addTool({
+				id: 'target2',
+				options: 'fred',
+				source: {}
+			});
+
+			assert.lengthOf(Object.keys(audit.tools), 2);
+			assert.equal(audit.tools.target2.id, 'target2');
+			assert.equal(audit.tools.target2.options, 'fred');
+		});
+
 	});
 
 	describe('Audit#run', function () {
