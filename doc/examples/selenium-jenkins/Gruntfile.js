@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = function (grunt) {
 	'use strict';
 
@@ -6,18 +8,25 @@ module.exports = function (grunt) {
 
 	grunt.loadTasks('build/tasks');
 
+	var url = grunt.option('url') ||
+		'http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar';
+	var jar = path.basename(url);
+
 	grunt.initConfig({
 		curl: {
 			selenium: {
-				dest: 'build/selenium-server-standalone-2.45.0.jar',
-				src: 'http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar'
+				dest: 'build/' + jar,
+				src: url
 			}
 		},
 		'ks-selenium': {
 			urls: [
 				'http://xyzcomputech.dequecloud.com',
 				'http://www.deque.com'
-			]
+			],
+			options: {
+				jar: '<%=curl.selenium.dest%>'
+			}
 		}
 	});
 
