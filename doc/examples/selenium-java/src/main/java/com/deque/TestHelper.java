@@ -102,9 +102,8 @@ public class TestHelper {
 		 * @param driver 	An initialized WebDriver
 		 * @param location	URL to test
 		 */
-		public Builder(final WebDriver driver, final String location) {
+		public Builder(final WebDriver driver) {
 			this.driver = driver;
-			this.driver.get(location);
 
 			TestHelper.inject(this.driver);
 		}
@@ -130,22 +129,6 @@ public class TestHelper {
 		}
 
 		/**
-		 * Include a WebElement by finding it in the page under test.
-		 * @param by An instance of any of the Selenium By nested classes, eg By.ById
-		 */
-		public Builder include(final By by) {
-			final WebElement element = driver.findElement(by);
-
-			String identifier = "test-" + UUID.randomUUID().toString();
-
-			((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute(arguments[1], arguments[0].getAttribute(arguments[1]) + ' ' + arguments[2]);", element, "class", identifier);
-
-			this.includes.add("." + identifier);
-
-			return this;
-		}
-
-		/**
 		 * Exclude a selector.
 		 * @param selector Any valid CSS selector
 		 */
@@ -157,7 +140,7 @@ public class TestHelper {
 
 		/**
 		 * Run K-Auto against the page.
-		 * @return K-Auto results.
+		 * @return K-Auto results
 		 */
 		public JSONObject analyze() {
 			if (includes.size() == 0) { includes.add("document"); }
@@ -175,6 +158,19 @@ public class TestHelper {
 
 			driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
 			Object response = ((JavascriptExecutor) driver).executeAsyncScript(command);
+			return new JSONObject((Map) response);
+		}
+
+		/**
+		 * Run K-Auto against a specific WebElement.
+		 * @param  context A WebElement to test
+		 * @return         K-Auto results
+		 */
+		public JSONObject analyze(final WebElement context) {
+			String command = String.format("dqre.a11yCheck(arguments[0], %s, arguments[arguments.length - 1]);", options);
+
+			driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
+			Object response = ((JavascriptExecutor) driver).executeAsyncScript(command, context);
 			return new JSONObject((Map) response);
 		}
 	}

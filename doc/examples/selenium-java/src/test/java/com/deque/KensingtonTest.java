@@ -33,6 +33,8 @@ public class KensingtonTest extends TestCase {
 	 */
 	public void setUp() {
 		driver = new FirefoxDriver();
+
+		driver.get("http://localhost:5005");
 	}
 
 	/**
@@ -46,7 +48,7 @@ public class KensingtonTest extends TestCase {
 	 * Basic test
 	 */
 	public void testAccessibility() {
-		JSONObject responseJSON = new TestHelper.Builder(driver, "http://localhost:5005").analyze();
+		JSONObject responseJSON = new TestHelper.Builder(driver).analyze();
 
 		JSONArray violations = responseJSON.getJSONArray("violations");
 
@@ -61,7 +63,7 @@ public class KensingtonTest extends TestCase {
 	 * Test with options
 	 */
 	public void testAccessibilityWithOptions() {
-		JSONObject responseJSON = new TestHelper.Builder(driver, "http://localhost:5005")
+		JSONObject responseJSON = new TestHelper.Builder(driver)
 				.options("{ rules: { 'accesskeys': { enabled: false } } }")
 				.analyze();
 
@@ -78,7 +80,7 @@ public class KensingtonTest extends TestCase {
 	 * Test a specific selector or selectors
 	 */
 	public void testAccessibilityWithSelector() {
-		JSONObject responseJSON = new TestHelper.Builder(driver, "http://localhost:5005")
+		JSONObject responseJSON = new TestHelper.Builder(driver)
 				.include("title")
 				.include("p")
 				.analyze();
@@ -96,7 +98,7 @@ public class KensingtonTest extends TestCase {
 	 * Test includes and excludes
 	 */
 	public void testAccessibilityWithIncludesAndExcludes() {
-		JSONObject responseJSON = new TestHelper.Builder(driver, "http://localhost:5005")
+		JSONObject responseJSON = new TestHelper.Builder(driver)
 				.include("div")
 				.exclude("h1")
 				.analyze();
@@ -114,11 +116,8 @@ public class KensingtonTest extends TestCase {
 	 * Include a WebElement
 	 */
 	public void testAccessibilityWithWebElement() {
-		driver.get("http://localhost:5005");
-
-		JSONObject responseJSON = new TestHelper.Builder(driver, "http://localhost:5005")
-				.include(By.tagName("p"))
-				.analyze();
+		JSONObject responseJSON = new TestHelper.Builder(driver)
+				.analyze(driver.findElement(By.tagName("p")));
 
 		JSONArray violations = responseJSON.getJSONArray("violations");
 
