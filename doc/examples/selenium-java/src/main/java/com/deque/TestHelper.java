@@ -29,7 +29,7 @@ public class TestHelper {
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new FileReader(scriptFileName));
-			String line = "";
+			String line;
 			while ((line = reader.readLine()) != null) {
 				sb.append(line);
 				sb.append(lineSeparator);
@@ -88,62 +88,95 @@ public class TestHelper {
 	}
 
 	/**
-	 * Perform analysis using K-Auto
-	 *
-	 * @param driver   WebDriver instance to test
-	 * @return JSONObject of the found violations and passes
+	 * Chainable builder for invoking K-Auto. Instantiate a new Builder and configure testing with the include(),
+	 * exclude(), and options() methods before calling analyze() to run.
 	 */
-	public static JSONObject analyze(WebDriver driver) {
-		return executeScript(driver, "dqre.a11yCheck(document, null, arguments[arguments.length - 1]);");
-	}
+	public static class Builder {
+		private final WebDriver driver;
+		private final List<String> includes = new ArrayList<String>();
+		private final List<String> excludes = new ArrayList<String>();
+		private String options = "null";
 
-	/**
-	 * Perform analysis of part of a page using K-Auto
-	 *
-	 * @param driver   WebDriver instance to test
-	 * @param selector for which part of the page to analyze
-	 * @return JSONObject of the found violations and passes
-	 */
-	public static JSONObject analyze(WebDriver driver, String selector) {
-		String command = String.format("dqre.a11yCheck('%s', null, arguments[arguments.length - 1]);", selector.replace("'", ""));
+		/**
+		 * Get a new Builder object, navigate the driver to the location, and inject the K-Auto script.
+		 * @param driver 	An initialized WebDriver
+		 * @param location	URL to test
+		 */
+		public Builder(final WebDriver driver, final String location) {
+			this.driver = driver;
+			this.driver.get(location);
 
-		return executeScript(driver, command);
-	}
+			TestHelper.inject(this.driver);
+		}
 
-	/**
-	 * Perform analysis of part of a page using K-Auto
-	 *
-	 * @param driver   WebDriver instance to test
-	 * @param include  Selectors defining parts of the page to include
-	 * @param exclude  Selectors defining parts of the page to exclude
-	 * @return JSONObject of the found violations and passes
-	 */
-	public static JSONObject analyze(WebDriver driver, String[] include, String[] exclude) {
-		String command = String.format("dqre.a11yCheck({include: ['%s'], exclude: ['%s']}, null, arguments[arguments.length - 1]);",
-			StringUtils.join(include, "','"),
-			StringUtils.join(exclude, "','"));
+		/**
+		 * Set the K-Auto options.
+		 * @param options Options object as a JSON string
+		 */
+		public Builder options(final String options) {
+			this.options = options;
 
-		return executeScript(driver, command);
-	}
+			return this;
+		}
 
-	/**
-	 * Perform analysis of a single element using K-Auto
-	 * @param  driver  WebDriver instance to test
-	 * @param  context WebElement to test
-	 * @return JSONObject of the found violations and passes
-	 */
-	public static JSONObject analyze(WebDriver driver, WebElement context) {
-		String identifier = "test-" + UUID.randomUUID().toString();
+		/**
+		 * Include a selector.
+		 * @param selector Any valid CSS selector
+		 */
+		public Builder include(final String selector) {
+			this.includes.add(selector);
 
-		((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute(arguments[1], arguments[0].getAttribute(arguments[1]) + ' ' + arguments[2]);", context, "class", identifier);
+			return this;
+		}
 
-		return analyze(driver, "." + identifier);
-	}
+		/**
+		 * Include a WebElement by finding it in the page under test.
+		 * @param by An instance of any of the Selenium By nested classes, eg By.ById
+		 */
+		public Builder include(final By by) {
+			final WebElement element = driver.findElement(by);
 
-	private static JSONObject executeScript(WebDriver driver, String command) {
-		driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
-		Object response = ((JavascriptExecutor) driver).executeAsyncScript(command);
-		return new JSONObject((Map) response);
+			String identifier = "test-" + UUID.randomUUID().toString();
+
+			((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute(arguments[1], arguments[0].getAttribute(arguments[1]) + ' ' + arguments[2]);", element, "class", identifier);
+
+			this.includes.add("." + identifier);
+
+			return this;
+		}
+
+		/**
+		 * Exclude a selector.
+		 * @param selector Any valid CSS selector
+		 */
+		public Builder exclude(final String selector) {
+			this.excludes.add(selector);
+
+			return this;
+		}
+
+		/**
+		 * Run K-Auto against the page.
+		 * @return K-Auto results.
+		 */
+		public JSONObject analyze() {
+			if (includes.size() == 0) { includes.add("document"); }
+
+			String command;
+
+			if (includes.size() > 1 || excludes.size() > 0) {
+				command = String.format("dqre.a11yCheck({include: [%s], exclude: [%s]}, %s, arguments[arguments.length - 1]);",
+						"'" + StringUtils.join(includes, "','") + "'",
+						excludes.size() == 0 ? "" : "'" + StringUtils.join(excludes, "','") + "'",
+						options);
+			} else {
+				command = String.format("dqre.a11yCheck('%s', %s, arguments[arguments.length - 1]);", includes.get(0).replace("'", ""), options);
+			}
+
+			driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
+			Object response = ((JavascriptExecutor) driver).executeAsyncScript(command);
+			return new JSONObject((Map) response);
+		}
 	}
 
 	/**
