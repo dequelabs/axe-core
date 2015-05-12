@@ -5,3 +5,5 @@ build/selenium-server-standalone-*.jar
 build/test.json
 build/kensington.js
 doc/examples/selenium-java/.idea
+.grunt
+doc/examples/selenium-java/target
