@@ -113,7 +113,7 @@ public class KensingtonTest extends TestCase {
 	}
 
 	/**
-	 * Include a WebElement
+	 * Test a WebElement
 	 */
 	public void testAccessibilityWithWebElement() {
 		JSONObject responseJSON = new TestHelper.Builder(driver)

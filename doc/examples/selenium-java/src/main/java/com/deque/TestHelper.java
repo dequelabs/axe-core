@@ -156,9 +156,7 @@ public class TestHelper {
 				command = String.format("dqre.a11yCheck('%s', %s, arguments[arguments.length - 1]);", includes.get(0).replace("'", ""), options);
 			}
 
-			driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
-			Object response = ((JavascriptExecutor) driver).executeAsyncScript(command);
-			return new JSONObject((Map) response);
+			return execute(command);
 		}
 
 		/**
@@ -169,8 +167,14 @@ public class TestHelper {
 		public JSONObject analyze(final WebElement context) {
 			String command = String.format("dqre.a11yCheck(arguments[0], %s, arguments[arguments.length - 1]);", options);
 
-			driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
-			Object response = ((JavascriptExecutor) driver).executeAsyncScript(command, context);
+			return execute(command, context);
+		}
+
+		private JSONObject execute(final String command, final Object... args) {
+			this.driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
+
+			Object response = ((JavascriptExecutor) this.driver).executeAsyncScript(command, args);
+
 			return new JSONObject((Map) response);
 		}
 	}
