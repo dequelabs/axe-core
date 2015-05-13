@@ -86,7 +86,7 @@ public class TestHelper {
 		return sb.toString();
 	}
 
-	public static void raw(final String name, final JSONArray violations) {
+	public static void writeResults(final String name, final JSONArray violations) {
 		Writer writer = null;
 
 		try {

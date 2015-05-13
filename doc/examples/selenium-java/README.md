@@ -36,8 +36,8 @@ unit tests.
 iframes.  This only needs to be run against a given page once, and `Builder`
 will take care of it for you if you use that.
 * `report` will pretty-print a list of violations.
-* `raw` will write the JSON violations list out to a file with the specified
-name in the current working directory.
+* `writeResults` will write the JSON violations list out to a file with the
+specified name in the current working directory.
 
 The `Builder` class allows tests to chain configuration and analyze pages. The
 constructor takes in a `WebDriver` that has already navigated to the page under
