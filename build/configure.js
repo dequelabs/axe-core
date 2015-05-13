@@ -28,6 +28,10 @@ function buildRules(grunt, options, callback) {
 					result.messages[key] = dot.template(result.messages[key]).toString();
 				});
 			}
+			//TODO this is actually failureSummaries, property name should better reflect that
+			if (result.failureMessage) {
+				result.failureMessage = dot.template(result.failureMessage).toString();
+			}
 			return result;
 		}
 
