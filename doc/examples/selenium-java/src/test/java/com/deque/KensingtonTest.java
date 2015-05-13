@@ -69,7 +69,7 @@ public class KensingtonTest {
 		if (violations.length() == 0) {
 			assertTrue("No violations found", true);
 		} else {
-			TestHelper.writeResults("testAccessibilityWithOptions", violations);
+			TestHelper.writeResults(testName.getMethodName(), violations);
 
 			assertTrue(TestHelper.report(violations), false);
 		}
@@ -90,7 +90,7 @@ public class KensingtonTest {
 		if (violations.length() == 0) {
 			assertTrue("No violations found", true);
 		} else {
-			TestHelper.writeResults("testAccessibilityWithSelector", violations);
+			TestHelper.writeResults(testName.getMethodName(), violations);
 
 			assertTrue(TestHelper.report(violations), false);
 		}
@@ -111,7 +111,7 @@ public class KensingtonTest {
 		if (violations.length() == 0) {
 			assertTrue("No violations found", true);
 		} else {
-			TestHelper.writeResults("testAccessibilityWithIncludesAndExcludes", violations);
+			TestHelper.writeResults(testName.getMethodName(), violations);
 
 			assertTrue(TestHelper.report(violations), false);
 		}
@@ -130,7 +130,7 @@ public class KensingtonTest {
 		if (violations.length() == 0) {
 			assertTrue("No violations found", true);
 		} else {
-			TestHelper.writeResults("testAccessibilityWithWebElement", violations);
+			TestHelper.writeResults(testName.getMethodName(), violations);
 
 			assertTrue(TestHelper.report(violations), false);
 		}
