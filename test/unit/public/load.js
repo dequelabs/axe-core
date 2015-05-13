@@ -7,7 +7,7 @@ describe('configure', function () {
 	});
 
 	it('should be a function', function () {
-		assert.isFunction(load);
+		assert.isFunction(dqre._load);
 	});
 
 	it('should create a new audit', function () {
