@@ -1,25 +1,38 @@
-describe('dqre.getRules', function () {
+describe('dqre.getRules', function() {
 	'use strict';
 
-	beforeEach(function () {
-		dqre._load({messages: [], rules: [{
-			id: 'awesomeRule1',
-			selector: '',
-			excludeHidden: false,
-			any: [],
-			tags: [ 'tag1']
-		}, {
-			id: 'awesomeRule2',
-			any: [],
-			tags: [ 'tag1', 'tag2' ]
-		}], data: {rules: { awesomeRule1: {description: 'some interesting information'}, awesomeRule2: {description: 'also some interesting information'}}}});
+	beforeEach(function() {
+		dqre._load({
+			messages: [],
+			rules: [{
+				id: 'awesomeRule1',
+				selector: '',
+				excludeHidden: false,
+				any: [],
+				tags: ['tag1']
+			}, {
+				id: 'awesomeRule2',
+				any: [],
+				tags: ['tag1', 'tag2']
+			}],
+			data: {
+				rules: {
+					awesomeRule1: {
+						description: 'some interesting information'
+					},
+					awesomeRule2: {
+						description: 'also some interesting information'
+					}
+				}
+			}
+		});
 	});
 
-	afterEach(function () {
+	afterEach(function() {
 		dqre._audit = null;
 	});
 
-	it('should return rules', function () {
+	it('should return rules', function() {
 		var retValue = dqre.getRules(['tag1']);
 		assert.isArray(retValue);
 		assert.lengthOf(retValue, 2);
@@ -35,13 +48,13 @@ describe('dqre.getRules', function () {
 		assert.equal(retValue[0].description, 'also some interesting information');
 	});
 
-	it('should not return nothing', function () {
+	it('should not return nothing', function() {
 		var retValue = dqre.getRules(['bob']);
 		assert.isArray(retValue);
 		assert.lengthOf(retValue, 0);
 	});
 
-	it('should return all rules if given no tags - undefined', function () {
+	it('should return all rules if given no tags - undefined', function() {
 		var retValue = dqre.getRules();
 		assert.equal(retValue[0].ruleId, 'awesomeRule1');
 		assert.equal(retValue[0].description, 'some interesting information');
@@ -49,7 +62,7 @@ describe('dqre.getRules', function () {
 		assert.equal(retValue[1].description, 'also some interesting information');
 	});
 
-	it('should return all rules if given empty array', function () {
+	it('should return all rules if given empty array', function() {
 		var retValue = dqre.getRules([]);
 		assert.equal(retValue[0].ruleId, 'awesomeRule1');
 		assert.equal(retValue[0].description, 'some interesting information');

@@ -1,4 +1,4 @@
-/* global dqreConfiguration, Rule, Tool */
+/* global Rule, Tool */
 describe('configure', function () {
 	'use strict';
 
@@ -20,7 +20,6 @@ describe('configure', function () {
 
 		dqre._load(audit);
 		assert.isTrue(success);
-		assert.deepEqual(dqreConfiguration, audit);
 		window.Audit = orig;
 
 	});

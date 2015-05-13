@@ -11,7 +11,7 @@ describe('utils.publishMetaData', function () {
 		assert.isFunction(utils.publishMetaData);
 	});
 
-	it('should pull data from rules from dqreConfiguration.data', function () {
+	it('should pull data from rules from dqre._audit.data', function () {
 		var expected = {
 			foo: 'bar',
 			bob: 'loblaw'
@@ -36,7 +36,7 @@ describe('utils.publishMetaData', function () {
 		assert.equal(result.bob, expected.bob);
 	});
 
-	it('should pull data from checks from dqreConfiguration.data', function () {
+	it('should pull data from checks from dqre._audit.data', function () {
 		var expected = {
 			foo: 'bar',
 			bob: 'loblaw'
@@ -267,9 +267,9 @@ describe('utils.publishMetaData', function () {
 			}]
 		});
 
-		assert.isNotNull(dqreConfiguration.data.checks['cats-PASS'].failureMessage);
-		assert.isNotNull(dqreConfiguration.data.checks['cats-ANY'].failureMessage);
-		assert.isNotNull(dqreConfiguration.data.checks['cats-ALL'].failureMessage);
+		assert.isNotNull(dqre._audit.data.checks['cats-PASS'].failureMessage);
+		assert.isNotNull(dqre._audit.data.checks['cats-ANY'].failureMessage);
+		assert.isNotNull(dqre._audit.data.checks['cats-ALL'].failureMessage);
 
 	});
 
