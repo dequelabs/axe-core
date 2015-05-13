@@ -9,7 +9,7 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "Value of lang attribtue is included in the list of allowable languages",
+      "pass": "Value of lang attribute is included in the list of allowable languages",
       "fail": "Value of lang attribute not included in the list of allowable languages"
     }
   }
