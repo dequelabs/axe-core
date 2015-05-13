@@ -23,9 +23,9 @@ function buildRules(grunt, options, callback) {
 
 		function parseMetaData(data) {
 			var result = clone(data) || {};
-			if (result.failureMessage) {
-				result.failureMessage = dot.template(result.failureMessage).toString();
-			}
+			Object.keys(result.messages).forEach(function (key) {
+				result.messages[key] = dot.template(result.messages[key]).toString();
+			});
 			return result;
 		}
 
@@ -134,8 +134,6 @@ function buildRules(grunt, options, callback) {
 				data: metadata,
 				rules: rules,
 				tools: result.tools,
-				classifiers: result.classifiers,
-				analyzers: result.analyzers,
 				style: result.style,
 				version: options.version
 			}, blacklist)),
