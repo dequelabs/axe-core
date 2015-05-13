@@ -1,4 +1,4 @@
-describe('reporters - combined', function() {
+describe('reporters - v1', function() {
 	'use strict';
 	var orig,
 		results = [{
@@ -84,7 +84,7 @@ describe('reporters - combined', function() {
 		}];
 	beforeEach(function() {
 		dqre._load({
-			reporter: 'combined',
+			reporter: 'v1',
 			messages: {},
 			rules: [],
 			data: {

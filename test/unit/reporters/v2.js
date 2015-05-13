@@ -1,4 +1,4 @@
-describe('reporters - extended', function() {
+describe('reporters - v2', function() {
 	'use strict';
 	var orig,
 		results = [{
@@ -64,7 +64,7 @@ describe('reporters - extended', function() {
 		}];
 	beforeEach(function() {
 		dqre._load({
-			reporter: 'extended',
+			reporter: 'v2',
 			messages: {},
 			rules: [],
 			data: {}
