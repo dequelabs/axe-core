@@ -4,6 +4,9 @@
   "evaluate": "allowed-attr.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}"
+    "messages": {
+      "pass": "ARIA attributes are used correctly for the defined role",
+      "fail": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}"
+    }
   }
 }

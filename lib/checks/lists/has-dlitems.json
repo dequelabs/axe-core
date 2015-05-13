@@ -3,6 +3,9 @@
   "evaluate": "has-dlitems.js",
   "metadata": {
     "impact": "serious",
-    "failureMessage": "Element does not have at least one <dt> element followed by at least one <dd> element"
+    "messages": {
+      "pass": "Element has both <dt> and <dd> elements",
+      "fail": "Element does not have at least one <dt> element followed by at least one <dd> element"
+    }
   }
 }

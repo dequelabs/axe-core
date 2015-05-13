@@ -4,6 +4,9 @@
   "after": "duplicate-id-after.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "Document has multiple elements with the same ID"
+    "messages": {
+      "pass": "Element's id attribute is unique",
+      "fail": "Document has multiple elements with the same id attribute"
+    }
   }
 }

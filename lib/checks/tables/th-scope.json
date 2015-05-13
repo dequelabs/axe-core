@@ -3,6 +3,9 @@
   "evaluate": "th-scope.js",
   "metadata": {
     "impact": "serious",
-    "failureMessage": "<th> elements must use scope attribute"
+    "messages": {
+      "pass": "<th> elements use scope attribute",
+      "fail": "<th> elements must use scope attribute"
+    }
   }
 }

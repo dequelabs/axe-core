@@ -4,6 +4,9 @@
   "evaluate": "header-present.js",
   "metadata": {
     "impact": "moderate",
-    "failureMessage": "Page does not have a header"
+    "messages": {
+      "pass": "Page has a header",
+      "fail": "Page does not have a header"
+    }
   }
 }

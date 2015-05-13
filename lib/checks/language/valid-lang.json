@@ -8,6 +8,9 @@
   "evaluate": "valid-lang.js",
   "metadata": {
     "impact": "serious",
-    "failureMessage": "Value of lang attribute not included in list of allowable languages"
+    "messages": {
+      "pass": "Value of lang attribtue is included in the list of allowable languages",
+      "fail": "Value of lang attribute not included in the list of allowable languages"
+    }
   }
 }

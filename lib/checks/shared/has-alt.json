@@ -3,6 +3,9 @@
   "evaluate": "has-alt.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "Element does not have an alt attribute"
+    "messages": {
+      "pass": "Element has an alt attribute",
+      "fail": "Element does not have an alt attribute"
+    }
   }
 }

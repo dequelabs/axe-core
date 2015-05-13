@@ -3,6 +3,9 @@
   "evaluate": "role-presentation.js",
   "metadata": {
     "impact": "moderate",
-    "failureMessage": "The default semantics were not overridden with role=\"presentation\""
+    "messages": {
+      "pass": "Element's default semantics were overriden with role=\"presentation\"",
+      "fail": "Element's default semantics were not overridden with role=\"presentation\""
+    }
   }
 }

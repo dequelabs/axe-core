@@ -4,6 +4,9 @@
   "evaluate": "same-caption-summary.js",
   "metadata": {
     "impact": "moderate",
-    "failureMessage": "The content of summary attribute and <caption> element are indentical"
+    "messages": {
+      "pass": "Content of summary attribute and <caption> are not duplicated",
+      "fail": "Content of summary attribute and <caption> element are indentical"
+    }
   }
 }

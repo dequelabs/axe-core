@@ -4,6 +4,9 @@
   "selector": "[id]",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "Form element does not have an explicit <label>"
+    "messages": {
+      "pass": "Form element has an explicit <label>",
+      "fail": "Form element does not have an explicit <label>"
+    }
   }
 }

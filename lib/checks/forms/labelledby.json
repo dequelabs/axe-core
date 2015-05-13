@@ -5,6 +5,9 @@
   "after": "group-after.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "Element does not have proper aria-labelledby values for all group members"
+    "messages": {
+      "pass": "All elements with the name \"{{=it.data.name}}\" reference the same element with aria-labelledby",
+      "fail": "All elements with the name \"{{=it.data.name}}\" do not reference the same element with aria-labelledby"
+    }
   }
 }

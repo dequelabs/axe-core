@@ -3,6 +3,9 @@
   "evaluate": "aria-label.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "aria-label attribute does not exist or is empty"
+    "messages": {
+      "pass": "aria-label attribute exists and is not empty",
+      "fail": "aria-label attribute does not exist or is empty"
+    }
   }
 }

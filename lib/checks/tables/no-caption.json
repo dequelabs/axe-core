@@ -4,6 +4,9 @@
   "enabled": false,
   "metadata": {
     "impact": "serious",
-    "failureMessage": "Table does not have a <caption>"
+    "messages": {
+      "pass": "Table has a <caption>",
+      "fail": "Table does not have a <caption>"
+    }
   }
 }

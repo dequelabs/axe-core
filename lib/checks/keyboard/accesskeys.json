@@ -4,6 +4,9 @@
   "after": "accesskeys-after.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "Document has multiple elements with the same accesskey"
+    "messages": {
+      "pass": "All accesskeys are unique",
+      "fail": "Document has multiple elements with the same accesskey"
+    }
   }
 }

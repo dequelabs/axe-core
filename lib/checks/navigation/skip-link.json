@@ -5,6 +5,9 @@
   "after": "skip-link-after.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "No valid skip link found"
+    "messages": {
+      "pass": "Valid skip link found",
+      "fail": "No valid skip link found"
+    }
   }
 }

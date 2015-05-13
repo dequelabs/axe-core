@@ -3,6 +3,9 @@
   "evaluate": "required-children.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "Required ARIA {{=it.data && it.data.length > 1 ? 'children' : 'child'}} role not present:{{~it.data:value}} {{=value}}{{~}}"
+    "messages": {
+      "pass": "Required ARIA children are present",
+      "fail": "Required ARIA {{=it.data && it.data.length > 1 ? 'children' : 'child'}} role not present:{{~it.data:value}} {{=value}}{{~}}"
+    }
   }
 }

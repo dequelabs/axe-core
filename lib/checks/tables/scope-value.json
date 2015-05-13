@@ -3,6 +3,9 @@
   "evaluate": "scope-value.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "The value of the scope attribute may only be 'row' or 'col'"
+    "messages": {
+      "pass": "scope attribute used correctly",
+      "fail": "The value of the scope attribute may only be 'row' or 'col'"
+    }
   }
 }

@@ -3,6 +3,9 @@
   "evaluate": "title-only.js",
   "metadata": {
     "impact": "serious",
-    "failureMessage": "Only title used to generate label for form element"
+    "messages": {
+      "pass": "Form element does not solely use title attribute for its label",
+      "fail": "Only title used to generate label for form element"
+    }
   }
 }

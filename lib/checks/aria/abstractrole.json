@@ -3,6 +3,9 @@
   "evaluate": "abstractrole.js",
   "metadata": {
     "impact": "serious",
-    "failureMessage": "Abstract roles cannot be directly used"
+    "messages": {
+      "pass": "Abstract roles are not used",
+      "fail": "Abstract roles cannot be directly used"
+    }
   }
 }

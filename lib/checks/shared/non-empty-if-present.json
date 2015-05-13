@@ -4,6 +4,9 @@
   "selector": "[type=\"submit\"], [type=\"reset\"]",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "Element has a value attribute and the value attribute is empty"
+    "messages": {
+      "pass": "Element {{?it.data}}has a non-empty value attribute{{??}}does not have a value attribute{{?}}",
+      "fail": "Element has a value attribute and the value attribute is empty"
+    }
   }
 }

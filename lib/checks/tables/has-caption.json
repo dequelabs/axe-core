@@ -3,6 +3,9 @@
   "evaluate": "has-caption.js",
   "metadata": {
     "impact": "serious",
-    "failureMessage": "Layout tables should not use <caption> elements"
+    "messages": {
+      "pass": "Layout table does not use <caption> element",
+      "fail": "Layout table uses <caption> element"
+    }
   }
 }

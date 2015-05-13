@@ -3,6 +3,9 @@
   "evaluate": "caption.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "The multimedia element does not have a captions track"
+    "messages": {
+      "pass": "The multimedia element has a captions track",
+      "fail": "The multimedia element does not have a captions track"
+    }
   }
 }
