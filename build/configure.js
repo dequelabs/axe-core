@@ -23,9 +23,11 @@ function buildRules(grunt, options, callback) {
 
 		function parseMetaData(data) {
 			var result = clone(data) || {};
-			Object.keys(result.messages).forEach(function (key) {
-				result.messages[key] = dot.template(result.messages[key]).toString();
-			});
+			if (result.messages) {
+				Object.keys(result.messages).forEach(function (key) {
+					result.messages[key] = dot.template(result.messages[key]).toString();
+				});
+			}
 			return result;
 		}
 
