@@ -10,7 +10,6 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.io.*;
 
@@ -52,7 +51,7 @@ public class TestHelper {
 	 * @param violations JSONArray of violations
 	 * @return readable report of accessibility violations found
 	 */
-	public static String report(JSONArray violations) {
+	public static String report(final JSONArray violations) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Found ");
 		sb.append(violations.length());
@@ -87,6 +86,21 @@ public class TestHelper {
 		return sb.toString();
 	}
 
+	public static void raw(final String name, final JSONArray violations) {
+		Writer writer = null;
+
+		try {
+			writer = new BufferedWriter(
+					new OutputStreamWriter(
+					new FileOutputStream(name + ".json"), "utf-8"));
+
+			writer.write(violations.toString());
+		} catch (IOException ignored) {
+		} finally {
+			try {writer.close();} catch (Exception ignored) {}
+		}
+	}
+
 	/**
 	 * Chainable builder for invoking K-Auto. Instantiate a new Builder and configure testing with the include(),
 	 * exclude(), and options() methods before calling analyze() to run.
@@ -100,7 +114,6 @@ public class TestHelper {
 		/**
 		 * Get a new Builder object, navigate the driver to the location, and inject the K-Auto script.
 		 * @param driver 	An initialized WebDriver
-		 * @param location	URL to test
 		 */
 		public Builder(final WebDriver driver) {
 			this.driver = driver;

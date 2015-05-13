@@ -29,13 +29,15 @@ there are any accessibility violations detected.
 To run the example tests on your own web page, change the URL passed to
 `driver.get` in `KensingtonTest.setUp()`.
 
-`TestHelper` defines two public methods and a nested `Builder` class for your
+`TestHelper` defines three public methods and a nested `Builder` class for your
 unit tests.
 
 * `inject` will inject the required script into the page under test and any
 iframes.  This only needs to be run against a given page once, and `Builder`
 will take care of it for you if you use that.
 * `report` will pretty-print a list of violations.
+* `raw` will write the JSON violations list out to a file with the specified
+name in the current working directory.
 
 The `Builder` class allows tests to chain configuration and analyze pages. The
 constructor takes in a `WebDriver` that has already navigated to the page under
