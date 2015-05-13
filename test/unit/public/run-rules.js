@@ -5,7 +5,7 @@ describe('dqre.a11yCheck', function () {
 	describe('reporter', function () {
 
 		it('should throw if no audit is configured', function () {
-			dqre.audit = null;
+			dqre._audit = null;
 
 			assert.throws(function () {
 				dqre.a11yCheck(document, {});
@@ -14,7 +14,7 @@ describe('dqre.a11yCheck', function () {
 
 		it('should allow for option-less invocation', function (done) {
 
-			dqre.configure({ reporter: function (r, c) {
+			dqre._load({ reporter: function (r, c) {
 				c(r);
 			}});
 			dqre.a11yCheck(document, function (result) {
@@ -26,7 +26,7 @@ describe('dqre.a11yCheck', function () {
 
 		it('should use specified reporter via options - anon function', function (done) {
 
-			dqre.configure({
+			dqre._load({
 				reporter: function () {
 					assert.fail('should not be called');
 				}
@@ -41,7 +41,7 @@ describe('dqre.a11yCheck', function () {
 		it('should use specified reporter via options by name', function (done) {
 
 			var orig = window.reporters;
-			dqre.configure({
+			dqre._load({
 				reporter: function () {
 					assert.fail('should not be called');
 				}
@@ -57,7 +57,7 @@ describe('dqre.a11yCheck', function () {
 
 		it('should check configured reporter', function (done) {
 
-			dqre.configure({
+			dqre._load({
 				reporter: function (result) {
 					assert.isArray(result);
 					assert.lengthOf(result, 0);
@@ -75,7 +75,7 @@ describe('dqre.a11yCheck', function () {
 				done();
 			};
 
-			dqre.configure({});
+			dqre._load({});
 			dqre.a11yCheck(document, null);
 			window.defaultReporter = orig;
 		});
@@ -122,12 +122,12 @@ describe('runRules', function () {
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		dqre.audit = null;
+		dqre._audit = null;
 	});
 
 	it('should work', function (done) {
 		this.timeout(5000);
-		dqre.configure({ rules: [{
+		dqre._load({ rules: [{
 			id: 'html',
 			selector: 'html',
 			any: [{
@@ -152,7 +152,7 @@ describe('runRules', function () {
 
 	it('should properly order iframes', function (done) {
 		this.timeout(5000);
-		dqre.configure({ rules: [{
+		dqre._load({ rules: [{
 			id: 'iframe',
 			selector: 'iframe',
 			any: [{
@@ -189,7 +189,7 @@ describe('runRules', function () {
 	});
 	it('should properly calculate context and return results from matching frames', function (done) {
 
-		dqre.configure({
+		dqre._load({
 			rules: [{
 				id: 'div#target',
 				selector: '#target',
@@ -278,7 +278,7 @@ describe('runRules', function () {
 	});
 
 	it('should pull metadata from configuration', function (done) {
-		dqre.configure({
+		dqre._load({
 			rules: [{
 				id: 'div#target',
 				selector: '#target',

@@ -3,7 +3,7 @@ describe('utils.finalizeRuleResult', function () {
 	'use strict';
 
 	beforeEach(function () {
-		dqre.configure({});
+		dqre._load({});
 	});
 
 	it('should be a function', function () {

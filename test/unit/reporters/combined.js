@@ -83,7 +83,7 @@ describe('reporters - combined', function() {
 			}]
 		}];
 	beforeEach(function() {
-		dqre.configure({
+		dqre._load({
 			reporter: 'combined',
 			messages: {},
 			rules: [],
@@ -134,7 +134,7 @@ describe('reporters - combined', function() {
 	});
 
 	afterEach(function() {
-		dqre.audit = null;
+		dqre._audit = null;
 		window.runRules = orig;
 	});
 

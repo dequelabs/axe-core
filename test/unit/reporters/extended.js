@@ -63,7 +63,7 @@ describe('reporters - extended', function() {
 			}]
 		}];
 	beforeEach(function() {
-		dqre.configure({
+		dqre._load({
 			reporter: 'extended',
 			messages: {},
 			rules: [],
@@ -76,7 +76,7 @@ describe('reporters - extended', function() {
 	});
 
 	afterEach(function() {
-		dqre.audit = null;
+		dqre._audit = null;
 		window.runRules = orig;
 	});
 

@@ -2,7 +2,7 @@ describe('dqre.getRules', function () {
 	'use strict';
 
 	beforeEach(function () {
-		dqre.configure({messages: [], rules: [{
+		dqre._load({messages: [], rules: [{
 			id: 'awesomeRule1',
 			selector: '',
 			excludeHidden: false,
@@ -16,7 +16,7 @@ describe('dqre.getRules', function () {
 	});
 
 	afterEach(function () {
-		dqre.audit = null;
+		dqre._audit = null;
 	});
 
 	it('should return rules', function () {

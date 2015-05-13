@@ -18,7 +18,7 @@ describe('cleanupTools', function () {
   });
 
   beforeEach(function () {
-    dqre.audit = null;
+    dqre._audit = null;
   });
 
 
@@ -31,7 +31,7 @@ describe('cleanupTools', function () {
 
   it('should call cleanup on all active tools', function (done) {
     var cleaned = 0;
-    dqre.configure({
+    dqre._load({
       tools: [{
         id: 'one',
         source: {
@@ -61,9 +61,9 @@ describe('cleanupTools', function () {
         }
       }]
     });
-    dqre.audit.tools.one.active = true;
-    dqre.audit.tools.two.active = false;
-    dqre.audit.tools.three.active = true;
+    dqre._audit.tools.one.active = true;
+    dqre._audit.tools.two.active = false;
+    dqre._audit.tools.three.active = true;
 
     cleanupTools(function () {
       assert.equal(cleaned, 2);
@@ -73,7 +73,7 @@ describe('cleanupTools', function () {
 
   it('should send command to frames to cleanup', function (done) {
     createFrames(function () {
-      dqre.configure({
+      dqre._load({
         tools: [{
           id: 'one',
           source: {

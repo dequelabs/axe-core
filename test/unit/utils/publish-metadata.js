@@ -4,7 +4,7 @@ describe('utils.publishMetaData', function () {
 	'use strict';
 
 	afterEach(function () {
-		dqre.audit = null;
+		dqre._audit = null;
 	});
 
 	it('should be a function', function () {
@@ -17,7 +17,7 @@ describe('utils.publishMetaData', function () {
 			bob: 'loblaw'
 		};
 
-		dqre.configure({
+		dqre._load({
 			rules: [],
 			data: {
 				rules: {
@@ -42,7 +42,7 @@ describe('utils.publishMetaData', function () {
 			bob: 'loblaw'
 		};
 
-		dqre.configure({
+		dqre._load({
 			rules: [],
 			data: {
 				checks: {
@@ -69,7 +69,7 @@ describe('utils.publishMetaData', function () {
 
 	it('should execute failureMessage', function () {
 
-		dqre.configure({
+		dqre._load({
 			rules: [],
 			data: {
 				rules: {
@@ -144,7 +144,7 @@ describe('utils.publishMetaData', function () {
 
 	it('should set failureMessage to null if check is passing', function () {
 
-		dqre.configure({
+		dqre._load({
 			rules: [],
 			data: {
 				rules: {
@@ -220,7 +220,7 @@ describe('utils.publishMetaData', function () {
 
 
 	it('should not modify base configuration', function () {
-		dqre.configure({
+		dqre._load({
 			rules: [],
 			data: {
 				rules: {
@@ -279,7 +279,7 @@ describe('utils.publishMetaData', function () {
 			bob: 'loblaw'
 		};
 
-		dqre.configure({
+		dqre._load({
 			rules: [{
 				id: 'foo',
 				tags: ['hai']

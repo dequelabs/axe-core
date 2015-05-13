@@ -2,7 +2,7 @@
 describe('helpers.failureSummary', function() {
 	'use strict';
 	before(function() {
-		dqre.configure({
+		dqre._load({
 			messages: {},
 			rules: [],
 			data: {
