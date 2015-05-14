@@ -1,36 +1,28 @@
 package com.deque;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TestName;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class KensingtonTest extends TestCase {
+public class KensingtonTest {
+	@Rule
+	public TestName testName = new TestName();
+
 	private WebDriver driver;
-
-	/**
-	 * Create the test case
-	 * @param testName name of the test case
-	 */
-	public KensingtonTest(String testName) {
-		super(testName);
-	}
-
-	/**
-	 * @return the suite of tests being tested
-	 */
-	public static Test suite() {
-		return new TestSuite(KensingtonTest.class);
-	}
 
 	/**
 	 * Setup the test; instantiate instance of WebDriver
 	 */
+	@Before
 	public void setUp() {
 		driver = new FirefoxDriver();
 
@@ -40,6 +32,7 @@ public class KensingtonTest extends TestCase {
 	/**
 	 * Tear down for tests; make sure to close WebDriver when tests are done
 	 */
+	@After
 	public void tearDown() {
 		driver.quit();
 	}
@@ -47,6 +40,7 @@ public class KensingtonTest extends TestCase {
 	/**
 	 * Basic test
 	 */
+	@Test
 	public void testAccessibility() {
 		JSONObject responseJSON = new TestHelper.Builder(driver).analyze();
 
@@ -55,6 +49,8 @@ public class KensingtonTest extends TestCase {
 		if (violations.length() == 0) {
 			assertTrue("No violations found", true);
 		} else {
+			TestHelper.writeResults(testName.getMethodName(), violations);
+
 			assertTrue(TestHelper.report(violations), false);
 		}
 	}
@@ -62,6 +58,7 @@ public class KensingtonTest extends TestCase {
 	/**
 	 * Test with options
 	 */
+	@Test
 	public void testAccessibilityWithOptions() {
 		JSONObject responseJSON = new TestHelper.Builder(driver)
 				.options("{ rules: { 'accesskeys': { enabled: false } } }")
@@ -72,6 +69,8 @@ public class KensingtonTest extends TestCase {
 		if (violations.length() == 0) {
 			assertTrue("No violations found", true);
 		} else {
+			TestHelper.writeResults(testName.getMethodName(), violations);
+
 			assertTrue(TestHelper.report(violations), false);
 		}
 	}
@@ -79,6 +78,7 @@ public class KensingtonTest extends TestCase {
 	/**
 	 * Test a specific selector or selectors
 	 */
+	@Test
 	public void testAccessibilityWithSelector() {
 		JSONObject responseJSON = new TestHelper.Builder(driver)
 				.include("title")
@@ -90,6 +90,8 @@ public class KensingtonTest extends TestCase {
 		if (violations.length() == 0) {
 			assertTrue("No violations found", true);
 		} else {
+			TestHelper.writeResults(testName.getMethodName(), violations);
+
 			assertTrue(TestHelper.report(violations), false);
 		}
 	}
@@ -97,6 +99,7 @@ public class KensingtonTest extends TestCase {
 	/**
 	 * Test includes and excludes
 	 */
+	@Test
 	public void testAccessibilityWithIncludesAndExcludes() {
 		JSONObject responseJSON = new TestHelper.Builder(driver)
 				.include("div")
@@ -108,6 +111,8 @@ public class KensingtonTest extends TestCase {
 		if (violations.length() == 0) {
 			assertTrue("No violations found", true);
 		} else {
+			TestHelper.writeResults(testName.getMethodName(), violations);
+
 			assertTrue(TestHelper.report(violations), false);
 		}
 	}
@@ -115,6 +120,7 @@ public class KensingtonTest extends TestCase {
 	/**
 	 * Test a WebElement
 	 */
+	@Test
 	public void testAccessibilityWithWebElement() {
 		JSONObject responseJSON = new TestHelper.Builder(driver)
 				.analyze(driver.findElement(By.tagName("p")));
@@ -124,6 +130,8 @@ public class KensingtonTest extends TestCase {
 		if (violations.length() == 0) {
 			assertTrue("No violations found", true);
 		} else {
+			TestHelper.writeResults(testName.getMethodName(), violations);
+
 			assertTrue(TestHelper.report(violations), false);
 		}
 	}
