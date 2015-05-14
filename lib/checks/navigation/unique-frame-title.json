@@ -4,6 +4,9 @@
   "after": "unique-frame-title-after.js",
   "metadata": {
     "impact": "serious",
-    "failureMessage": "Element's title attribute is not unique"
+    "messages": {
+      "pass": "Element's title attribute is unique",
+      "fail": "Element's title attribute is not unique"
+    }
   }
 }

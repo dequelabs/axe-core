@@ -3,6 +3,9 @@
   "evaluate": "has-summary.js",
   "metadata": {
     "impact": "serious",
-    "failureMessage": "The layout table should not use summary attribute"
+    "messages": {
+      "pass": "Layout table does not use summary attribute",
+      "fail": "Layout table uses summary attribute"
+    }
   }
 }

@@ -3,6 +3,9 @@
   "evaluate": "rowspan.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "Element has a rowspan value that is not equal to 1"
+    "messages": {
+      "pass": "Table does not have cells with rowspan attribute greater than 1",
+      "fail": "Table has cells whose rowspan attribute is not equal to 1"
+    }
   }
 }

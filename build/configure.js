@@ -23,6 +23,12 @@ function buildRules(grunt, options, callback) {
 
 		function parseMetaData(data) {
 			var result = clone(data) || {};
+			if (result.messages) {
+				Object.keys(result.messages).forEach(function (key) {
+					result.messages[key] = dot.template(result.messages[key]).toString();
+				});
+			}
+			//TODO this is actually failureSummaries, property name should better reflect that
 			if (result.failureMessage) {
 				result.failureMessage = dot.template(result.failureMessage).toString();
 			}
@@ -134,8 +140,6 @@ function buildRules(grunt, options, callback) {
 				data: metadata,
 				rules: rules,
 				tools: result.tools,
-				classifiers: result.classifiers,
-				analyzers: result.analyzers,
 				style: result.style,
 				version: options.version
 			}, blacklist)),

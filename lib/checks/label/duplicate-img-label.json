@@ -4,6 +4,9 @@
   "enabled": false,
   "metadata": {
     "impact": "minor",
-    "failureMessage": "Element contains <img> element with alt text that duplicates existing text"
+    "messages": {
+      "pass": "Element does not duplicate existing text in <img> alt text",
+      "fail": "Element contains <img> element with alt text that duplicates existing text"
+    }
   }
 }

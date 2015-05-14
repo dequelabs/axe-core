@@ -81,9 +81,19 @@ schemas.check = {
 			type: 'object',
 			required: true,
 			properties: {
-				failureMessage: {
+				messages: {
 					required: true,
-					type: 'string'
+					type: 'object',
+					properties: {
+						fail: {
+							required: true,
+							type: 'string'
+						},
+						pass: {
+							required: true,
+							type: 'string'
+						}
+					}
 				},
 				impact: {
 					required: true,

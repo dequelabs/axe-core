@@ -3,6 +3,9 @@
   "evaluate": "has-listitem.js",
   "metadata": {
     "impact": "minor",
-    "failureMessage": "List element does not have an <li> element"
+    "messages": {
+      "pass": "List element contain a <li> element",
+      "fail": "List element does not contain a <li> element"
+    }
   }
 }

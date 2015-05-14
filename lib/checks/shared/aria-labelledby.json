@@ -3,6 +3,9 @@
   "evaluate": "aria-labelledby.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible"
+    "messages": {
+      "pass": "aria-labelledby attribute exists and references elements that are visible to screen readers",
+      "fail": "aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible"
+    }
   }
 }

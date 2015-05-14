@@ -5,6 +5,9 @@
   "after": "group-after.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "Element does not have proper containing fieldset"
+    "messages": {
+      "pass": "Element is contained in a fieldset",
+      "fail": "Element does not have proper containing fieldset"
+    }
   }
 }

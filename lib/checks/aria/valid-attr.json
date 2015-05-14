@@ -5,6 +5,9 @@
   "options": [],
   "metadata": {
     "impact": "critical",
-    "failureMessage": "Invalid ARIA attribute name{{=it.data && it.data.length > 1 ? 's' : ''}}:{{~it.data:value}} {{=value}}{{~}}"
+    "messages": {
+      "pass": "ARIA attribute name{{=it.data && it.data.length > 1 ? 's' : ''}} are valid",
+      "fail": "Invalid ARIA attribute name{{=it.data && it.data.length > 1 ? 's' : ''}}:{{~it.data:value}} {{=value}}{{~}}"
+    }
   }
 }

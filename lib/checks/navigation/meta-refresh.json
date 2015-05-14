@@ -3,6 +3,9 @@
   "evaluate": "meta-refresh.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "<meta> tag forces timed refresh of page"
+    "messages": {
+      "pass": "<meta> tag does not immediately refresh the page",
+      "fail": "<meta> tag forces timed refresh of page"
+    }
   }
 }

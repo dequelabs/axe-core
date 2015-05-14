@@ -3,6 +3,9 @@
   "evaluate": "cell-no-header.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "All data cells must have a table header"
+    "messages": {
+      "pass": "All data cells have table headers",
+      "fail": "Some data cells do not have table headers"
+    }
   }
 }

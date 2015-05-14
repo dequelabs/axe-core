@@ -3,6 +3,9 @@
   "evaluate": "th-single-row-column.js",
   "metadata": {
     "impact": "serious",
-    "failureMessage": "<th> elements should only be used when there is a single row and single column of headers"
+    "messages": {
+      "pass": "<th> elements are used when there is only a single row and single column of headers",
+      "fail": "<th> elements should only be used when there is a single row and single column of headers"
+    }
   }
 }

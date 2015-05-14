@@ -3,6 +3,9 @@
   "evaluate": "meta-viewport.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "<meta> tag disables zooming"
+    "messages": {
+      "pass": "<meta> tag does not disable zooming",
+      "fail": "<meta> tag disables zooming"
+    }
   }
 }

@@ -3,6 +3,9 @@
   "evaluate": "exists.js",
   "metadata": {
     "impact": "minor",
-    "failureMessage": "Element exists"
+    "messages": {
+      "pass": "Element does not exist",
+      "fail": "Element exists"
+    }
   }
 }

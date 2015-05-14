@@ -4,6 +4,9 @@
   "after": "heading-order-after.js",
   "metadata": {
     "impact": "minor",
-    "failureMessage": "Heading order invalid"
+    "messages": {
+      "pass": "Heading order valid",
+      "fail": "Heading order invalid"
+    }
   }
 }

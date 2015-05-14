@@ -3,6 +3,9 @@
   "evaluate": "consistent-columns.js",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "The table does not have the same number of columns in every row"
+    "messages": {
+      "pass": "Table has consistent column widths",
+      "fail": "Table does not have the same number of columns in every row"
+    }
   }
 }

@@ -34,7 +34,7 @@ module.exports = function build(grunt, options, callback) {
             if (err) return reject(err);
             resolve(result.css);
           });
-        })
+        });
       }))
       .then(function (values) {
         callback(values.join('\n'));
@@ -64,4 +64,4 @@ module.exports = function build(grunt, options, callback) {
 
   });
 
-}
+};

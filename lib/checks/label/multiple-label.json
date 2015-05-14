@@ -3,6 +3,9 @@
   "evaluate": "multiple-label.js",
   "metadata": {
     "impact": "serious",
-    "failureMessage": "Form element has multiple <label> elements"
+    "messages": {
+      "pass": "Form element does not have multiple <label> elements",
+      "fail": "Form element has multiple <label> elements"
+    }
   }
 }

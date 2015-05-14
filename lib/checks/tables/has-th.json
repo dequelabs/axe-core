@@ -3,6 +3,9 @@
   "evaluate": "has-th.js",
   "metadata": {
     "impact": "serious",
-    "failureMessage": "Layout tables should not use <th> elements"
+    "messages": {
+      "pass": "Layout table does not use <th> elements",
+      "fail": "Layout table uses <th> elements"
+    }
   }
 }

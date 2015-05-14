@@ -4,6 +4,9 @@
   "selector": "[type=\"button\"]",
   "metadata": {
     "impact": "critical",
-    "failureMessage": "Element has no value attribute or the value attribute is empty"
+    "messages": {
+      "pass": "Element has a non-empty value attribute",
+      "fail": "Element has no value attribute or the value attribute is empty"
+    }
   }
 }

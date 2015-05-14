@@ -3,6 +3,9 @@
   "evaluate": "has-lang.js",
   "metadata": {
     "impact": "serious",
-    "failureMessage": "The <html> element does not have a lang attribute"
+    "messages": {
+      "pass": "The <html> element has a lang attribute",
+      "fail": "The <html> element does not have a lang attribute"
+    }
   }
 }
