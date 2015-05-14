@@ -5,7 +5,7 @@
   "metadata": {
     "impact": "critical",
     "messages": {
-      "pass": "{{?it.data && it.data.contrastRatio}}Element has sufficient color contrast of {{=it.data.contrastRatio}}{{??}}Contrast ratio undetermined{{?}}",
+      "pass": "{{?it.data && it.data.contrastRatio}}Element has sufficient color contrast of {{=it.data.contrastRatio}}{{??}}Unable to determine contrast ratio{{?}}",
       "fail": "Element has insufficient color contrast of {{=it.data.contrastRatio}} (foreground color: {{=it.data.fgColor}}, background color: {{=it.data.bgColor}}, font size: {{=it.data.fontSize}}, font weight: {{=it.data.fontWeight}})"
     }
   }

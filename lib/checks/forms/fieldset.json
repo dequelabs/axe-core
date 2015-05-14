@@ -6,7 +6,7 @@
   "metadata": {
     "impact": "critical",
     "messages": {
-      "pass": "Element is contained by a fieldset",
+      "pass": "Element is contained in a fieldset",
       "fail": "Element does not have proper containing fieldset"
     }
   }
