@@ -4,7 +4,7 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "scope attribute only used on table header elements (<th>)",
+      "pass": "Scope attribute is only used on table header elements (<th>)",
       "fail": "In HTML 5, scope attributes may only be used on table header elements (<th>)"
     }
   }

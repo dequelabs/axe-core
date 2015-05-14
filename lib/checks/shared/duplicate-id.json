@@ -5,7 +5,7 @@
   "metadata": {
     "impact": "critical",
     "messages": {
-      "pass": "Element's id attribute is unique",
+      "pass": "Document has no elements that share the same id attribute",
       "fail": "Document has multiple elements with the same id attribute"
     }
   }

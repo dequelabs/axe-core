@@ -4,7 +4,7 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "scope attribute only used on table cell elements (<th> and <td>)",
+      "pass": "Scope attribute is only used on table cell elements (<th> and <td>)",
       "fail": "In HTML 4, the scope attribute may only be used on table cell elements (<th> and <td>)"
     }
   }
