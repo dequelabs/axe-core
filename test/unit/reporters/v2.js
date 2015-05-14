@@ -1,4 +1,4 @@
-describe('reporters - extended', function() {
+describe('reporters - v2', function() {
 	'use strict';
 	var orig,
 		results = [{
@@ -63,8 +63,8 @@ describe('reporters - extended', function() {
 			}]
 		}];
 	beforeEach(function() {
-		dqre.configure({
-			reporter: 'extended',
+		dqre._load({
+			reporter: 'v2',
 			messages: {},
 			rules: [],
 			data: {}
@@ -76,7 +76,7 @@ describe('reporters - extended', function() {
 	});
 
 	afterEach(function() {
-		dqre.audit = null;
+		dqre._audit = null;
 		window.runRules = orig;
 	});
 

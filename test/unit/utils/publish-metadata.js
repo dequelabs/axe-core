@@ -1,23 +1,21 @@
-/*global dqreConfiguration */
-
 describe('utils.publishMetaData', function () {
 	'use strict';
 
 	afterEach(function () {
-		dqre.audit = null;
+		dqre._audit = null;
 	});
 
 	it('should be a function', function () {
 		assert.isFunction(utils.publishMetaData);
 	});
 
-	it('should pull data from rules from dqreConfiguration.data', function () {
+	it('should pull data from rules from dqre._audit.data', function () {
 		var expected = {
 			foo: 'bar',
 			bob: 'loblaw'
 		};
 
-		dqre.configure({
+		dqre._load({
 			rules: [],
 			data: {
 				rules: {
@@ -36,13 +34,13 @@ describe('utils.publishMetaData', function () {
 		assert.equal(result.bob, expected.bob);
 	});
 
-	it('should pull data from checks from dqreConfiguration.data', function () {
+	it('should pull data from checks from dqre._audit.data', function () {
 		var expected = {
 			foo: 'bar',
 			bob: 'loblaw'
 		};
 
-		dqre.configure({
+		dqre._load({
 			rules: [],
 			data: {
 				checks: {
@@ -67,9 +65,9 @@ describe('utils.publishMetaData', function () {
 	});
 
 
-	it('should execute failureMessage', function () {
+	it('should execute messages', function () {
 
-		dqre.configure({
+		dqre._load({
 			rules: [],
 			data: {
 				rules: {
@@ -81,18 +79,33 @@ describe('utils.publishMetaData', function () {
 				},
 				checks: {
 					'cats-NONE': {
-						failureMessage: function () {
-							return 'cats-NONE';
+						messages: {
+							fail: function () {
+								return 'fail-NONE';
+							},
+							pass: function () {
+								return 'pass-NONE';
+							}
 						}
 					},
 					'cats-ANY': {
-						failureMessage: function () {
-							return 'cats-ANY';
+						messages: {
+							fail: function () {
+								return 'fail-ANY';
+							},
+							pass: function () {
+								return 'pass-ANY';
+							}
 						}
 					},
 					'cats-ALL': {
-						failureMessage: function () {
-							return 'cats-ALL';
+						messages: {
+							fail: function () {
+								return 'fail-ALL';
+							},
+							pass: function () {
+								return 'pass-ALL';
+							}
 						}
 					}
 				}
@@ -114,69 +127,7 @@ describe('utils.publishMetaData', function () {
 					result: false,
 					id: 'cats-ALL'
 				}]
-			}]
-		};
-		utils.publishMetaData(result);
-		assert.deepEqual(result, {
-			id: 'cats',
-			help: 'cats-rule',
-			tags: [],
-			nodes: [{
-				any: [{
-					result: false,
-					id: 'cats-ANY',
-					failureMessage: 'cats-ANY'
-				}],
-				none: [{
-					result: true,
-					id: 'cats-NONE',
-					failureMessage: 'cats-NONE'
-				}],
-				all: [{
-					result: false,
-					id: 'cats-ALL',
-					failureMessage: 'cats-ALL'
-				}]
-			}]
-		});
-
-	});
-
-	it('should set failureMessage to null if check is passing', function () {
-
-		dqre.configure({
-			rules: [],
-			data: {
-				rules: {
-					cats: {
-						help: function () {
-							return 'cats-rule';
-						}
-					}
-				},
-				checks: {
-					'cats-NONE': {
-						failureMessage: function () {
-							return 'cats-NONE';
-						}
-					},
-					'cats-ANY': {
-						failureMessage: function () {
-							return 'cats-ANY';
-						}
-					},
-					'cats-ALL': {
-						failureMessage: function () {
-							return 'cats-ALL';
-						}
-					}
-				}
-			}
-		});
-
-		var result = {
-			id: 'cats',
-			nodes: [{
+			}, {
 				any: [{
 					result: true,
 					id: 'cats-ANY'
@@ -198,29 +149,44 @@ describe('utils.publishMetaData', function () {
 			tags: [],
 			nodes: [{
 				any: [{
+					result: false,
+					id: 'cats-ANY',
+					message: 'fail-ANY'
+				}],
+				none: [{
+					result: true,
+					id: 'cats-NONE',
+					message: 'fail-NONE'
+				}],
+				all: [{
+					result: false,
+					id: 'cats-ALL',
+					message: 'fail-ALL'
+				}]
+			}, {
+				any: [{
 					result: true,
 					id: 'cats-ANY',
-					failureMessage: null
+					message: 'pass-ANY'
 				}],
 				none: [{
 					result: false,
 					id: 'cats-NONE',
-					failureMessage: null
+					message: 'pass-NONE'
 				}],
 				all: [{
 					result: true,
 					id: 'cats-ALL',
-					failureMessage: null
+					message: 'pass-ALL'
 				}]
 			}]
 		});
-
 
 	});
 
 
 	it('should not modify base configuration', function () {
-		dqre.configure({
+		dqre._load({
 			rules: [],
 			data: {
 				rules: {
@@ -267,9 +233,9 @@ describe('utils.publishMetaData', function () {
 			}]
 		});
 
-		assert.isNotNull(dqreConfiguration.data.checks['cats-PASS'].failureMessage);
-		assert.isNotNull(dqreConfiguration.data.checks['cats-ANY'].failureMessage);
-		assert.isNotNull(dqreConfiguration.data.checks['cats-ALL'].failureMessage);
+		assert.isNotNull(dqre._audit.data.checks['cats-PASS'].failureMessage);
+		assert.isNotNull(dqre._audit.data.checks['cats-ANY'].failureMessage);
+		assert.isNotNull(dqre._audit.data.checks['cats-ALL'].failureMessage);
 
 	});
 
@@ -279,7 +245,7 @@ describe('utils.publishMetaData', function () {
 			bob: 'loblaw'
 		};
 
-		dqre.configure({
+		dqre._load({
 			rules: [{
 				id: 'foo',
 				tags: ['hai']

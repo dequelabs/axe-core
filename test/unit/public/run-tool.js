@@ -32,7 +32,7 @@ describe('runTool', function () {
 
   afterEach(function () {
     fixture.innerHTML = '';
-    dqre.audit = null;
+    dqre._audit = null;
   });
 
   it('should publish itself as dqre.tool', function () {
@@ -52,7 +52,7 @@ describe('runTool', function () {
     target.id = 'target';
     fixture.appendChild(target);
 
-    dqre.configure({
+    dqre._load({
       rules: [],
       tools: [{
         id: 'html',
@@ -71,7 +71,7 @@ describe('runTool', function () {
 
   it('should work across frames', function (done) {
     this.timeout(5000);
-    dqre.configure({
+    dqre._load({
       rules: [],
       tools: [{
         id: 'html',

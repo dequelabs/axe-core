@@ -5,7 +5,7 @@ describe('dqre.a11yCheck', function () {
 	describe('reporter', function () {
 
 		it('should throw if no audit is configured', function () {
-			dqre.audit = null;
+			dqre._audit = null;
 
 			assert.throws(function () {
 				dqre.a11yCheck(document, {});
@@ -14,7 +14,7 @@ describe('dqre.a11yCheck', function () {
 
 		it('should allow for option-less invocation', function (done) {
 
-			dqre.configure({ reporter: function (r, c) {
+			dqre._load({ reporter: function (r, c) {
 				c(r);
 			}});
 			dqre.a11yCheck(document, function (result) {
@@ -26,7 +26,7 @@ describe('dqre.a11yCheck', function () {
 
 		it('should use specified reporter via options - anon function', function (done) {
 
-			dqre.configure({
+			dqre._load({
 				reporter: function () {
 					assert.fail('should not be called');
 				}
@@ -41,7 +41,7 @@ describe('dqre.a11yCheck', function () {
 		it('should use specified reporter via options by name', function (done) {
 
 			var orig = window.reporters;
-			dqre.configure({
+			dqre._load({
 				reporter: function () {
 					assert.fail('should not be called');
 				}
@@ -57,7 +57,7 @@ describe('dqre.a11yCheck', function () {
 
 		it('should check configured reporter', function (done) {
 
-			dqre.configure({
+			dqre._load({
 				reporter: function (result) {
 					assert.isArray(result);
 					assert.lengthOf(result, 0);
@@ -75,7 +75,7 @@ describe('dqre.a11yCheck', function () {
 				done();
 			};
 
-			dqre.configure({});
+			dqre._load({});
 			dqre.a11yCheck(document, null);
 			window.defaultReporter = orig;
 		});
@@ -122,12 +122,12 @@ describe('runRules', function () {
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		dqre.audit = null;
+		dqre._audit = null;
 	});
 
 	it('should work', function (done) {
 		this.timeout(5000);
-		dqre.configure({ rules: [{
+		dqre._load({ rules: [{
 			id: 'html',
 			selector: 'html',
 			any: [{
@@ -152,7 +152,7 @@ describe('runRules', function () {
 
 	it('should properly order iframes', function (done) {
 		this.timeout(5000);
-		dqre.configure({ rules: [{
+		dqre._load({ rules: [{
 			id: 'iframe',
 			selector: 'iframe',
 			any: [{
@@ -189,7 +189,7 @@ describe('runRules', function () {
 	});
 	it('should properly calculate context and return results from matching frames', function (done) {
 
-		dqre.configure({
+		dqre._load({
 			rules: [{
 				id: 'div#target',
 				selector: '#target',
@@ -236,7 +236,6 @@ describe('runRules', function () {
 						},
 						any: [{
 							id: 'has-target',
-							failureMessage: null,
 							data: null,
 							relatedNodes: []
 						}],
@@ -258,7 +257,6 @@ describe('runRules', function () {
 						any: [{
 							id: 'first-div',
 							data: null,
-							failureMessage: null,
 							relatedNodes: [{
 								selector: ['#context-test', '#foo'],
 								source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
@@ -278,7 +276,7 @@ describe('runRules', function () {
 	});
 
 	it('should pull metadata from configuration', function (done) {
-		dqre.configure({
+		dqre._load({
 			rules: [{
 				id: 'div#target',
 				selector: '#target',
@@ -309,44 +307,36 @@ describe('runRules', function () {
 				rules: {
 					'div#target': {
 						foo: 'bar',
-						stuff: 'blah',
-						failureMessage: function (ruleResult) {
-							if (ruleResult.id === 'div#target') {
-								return 'yay';
-							}
-							return 'boo';
-						}
+						stuff: 'blah'
 					},
 					'first-div': {
 						bar: 'foo',
-						stuff: 'no',
-						failureMessage: function (ruleResult) {
-							if (ruleResult.id === 'first-div') {
-								return 'yay';
-							}
-							return 'boo';
-						}
+						stuff: 'no'
 					}
 				},
 				checks: {
 					'first-div': {
 						thingy: true,
 						impact: 'serious',
-						failureMessage: function (checkResult) {
-							if (checkResult.id === 'first-div') {
-								return 'yay';
+						messages: {
+							fail: function (checkResult) {
+								return checkResult.id === 'first-div' ? 'failing is not good' : 'y u wrong rule?';
+							},
+							pass: function (checkResult) {
+								return checkResult.id === 'first-div' ? 'passing is good' : 'y u wrong rule?';
 							}
-							return 'boo';
 						}
 					},
 					'has-target': {
 						otherThingy: true,
 						impact: 'moderate',
-						failureMessage: function (checkResult) {
-							if (checkResult.id === 'has-target') {
-								return 'yay';
+						messages: {
+							fail: function (checkResult) {
+								return checkResult.id === 'has-target' ? 'failing is not good' : 'y u wrong rule?';
+							},
+							pass: function (checkResult) {
+								return checkResult.id === 'has-target' ? 'passing is good' : 'y u wrong rule?';
 							}
-							return 'boo';
 						}
 					}
 				}
@@ -357,7 +347,6 @@ describe('runRules', function () {
 			assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
 					pageLevel: false,
-					failureMessage: 'yay',
 					foo: 'bar',
 					stuff: 'blah',
 					impact: 'moderate',
@@ -371,7 +360,7 @@ describe('runRules', function () {
 						any: [{
 							impact: 'moderate',
 							otherThingy: true,
-							failureMessage: 'yay',
+							message: 'failing is not good',
 							id: 'has-target',
 							data: null,
 							relatedNodes: []
@@ -384,7 +373,6 @@ describe('runRules', function () {
 				}, {
 					id: 'first-div',
 					pageLevel: false,
-					failureMessage: 'yay',
 					bar: 'foo',
 					stuff: 'no',
 					impact: null,
@@ -398,7 +386,7 @@ describe('runRules', function () {
 							impact: 'serious',
 							id: 'first-div',
 							thingy: true,
-							failureMessage: null,
+							message: 'passing is good',
 							data: null,
 							relatedNodes: [{
 								selector: ['#target'],

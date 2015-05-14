@@ -1,4 +1,4 @@
-describe('reporters - combined', function() {
+describe('reporters - v1', function() {
 	'use strict';
 	var orig,
 		results = [{
@@ -83,8 +83,8 @@ describe('reporters - combined', function() {
 			}]
 		}];
 	beforeEach(function() {
-		dqre.configure({
-			reporter: 'combined',
+		dqre._load({
+			reporter: 'v1',
 			messages: {},
 			rules: [],
 			data: {
@@ -134,7 +134,7 @@ describe('reporters - combined', function() {
 	});
 
 	afterEach(function() {
-		dqre.audit = null;
+		dqre._audit = null;
 		window.runRules = orig;
 	});
 
