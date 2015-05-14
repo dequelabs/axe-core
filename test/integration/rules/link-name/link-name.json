@@ -2,5 +2,5 @@
 	"description": "link-name tests",
 	"rule": "link-name",
 	"violations": [["#violation1"], ["#violation2"], ["#violation3"], ["#violation4"], ["#violation5"], ["#violation6"]],
-	"passes":  [["#pass1"], ["#pass3"], ["#pass4"], ["#pass5"], ["#pass6"], ["#pass7"], ["#bestpractice1"], ["#pass8"]]
+	"passes":  [["#pass1"], ["#pass3"], ["#pass4"], ["#pass6"], ["#pass7"], ["#bestpractice1"], ["#pass8"]]
 }
