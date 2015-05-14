@@ -53,14 +53,14 @@ describe('helpers.failureSummary', function() {
 			any: [],
 			all: [{
 				id: '3',
-				failureMessage: '3'
+				message: '3'
 			}],
 			none: [{
 				id: '1',
-				failureMessage: '1'
+				message: '1'
 			}, {
 				id: '2',
-				failureMessage: '2'
+				message: '2'
 			}]
 		});
 
@@ -72,13 +72,13 @@ describe('helpers.failureSummary', function() {
 			result: 'FAIL',
 			any: [{
 				id: '1',
-				failureMessage: '1'
+				message: '1'
 			}, {
 				id: '2',
-				failureMessage: '2'
+				message: '2'
 			}, {
 				id: '3',
-				failureMessage: '3'
+				message: '3'
 			}],
 			none: [],
 			all: []
@@ -92,18 +92,18 @@ describe('helpers.failureSummary', function() {
 			result: 'FAIL',
 			any: [{
 				id: '1',
-				failureMessage: '1'
+				message: '1'
 			}, {
 				id: '2',
-				failureMessage: '2'
+				message: '2'
 			}, {
 				id: '3',
-				failureMessage: '3'
+				message: '3'
 			}],
 			all: [],
 			none: [{
 				id: '4',
-				failureMessage: '4'
+				message: '4'
 			}]
 		});
 
