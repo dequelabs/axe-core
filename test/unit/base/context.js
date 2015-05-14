@@ -283,7 +283,7 @@ describe('Context', function () {
 		// document.hasOwnProperty is undefined in Firefox content scripts
 		it('should not throw given really weird circumstances when hasOwnProperty is deleted from a document node?', function () {
 			//jshint -W001
-			var spec = document.implementation.createHTMLDocument();
+			var spec = document.implementation.createHTMLDocument('ie is dumb');
 			spec.hasOwnProperty = undefined;
 			assert.deepEqual(new Context(spec), {
 				initiator: true,

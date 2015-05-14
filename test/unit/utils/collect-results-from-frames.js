@@ -4,6 +4,10 @@ describe('utils.collectResultsFromFrames', function () {
 
   var fixture = document.getElementById('fixture');
 
+	afterEach(function () {
+		fixture.innerHTML = '';
+	});
+
   it('should timeout after 30s', function (done) {
     this.timeout(5000);
     var orig = window.setTimeout;
@@ -29,7 +33,7 @@ describe('utils.collectResultsFromFrames', function () {
       var context = new Context(document);
       utils.collectResultsFromFrames(context, {}, 'stuff', 'morestuff', function () {
         assert.isTrue(logCalled);
-        delete window.setTimeout;
+        window.setTimeout = orig;
         dqre.log = origLog;
         done();
       });
@@ -40,4 +44,33 @@ describe('utils.collectResultsFromFrames', function () {
     fixture.appendChild(frame);
 
   });
+
+	it('should not throw given a recursive iframe', function (done) {
+		dqre._load({
+			rules: [{
+				id: 'iframe',
+				selector: 'iframe',
+				any: [{
+					id: 'iframe',
+					evaluate: function () {
+						return true;
+					}
+				}]
+			}],
+			messages: {}
+		});
+
+		var frame = document.createElement('iframe');
+		frame.addEventListener('load', function () {
+			var context = new Context(document);
+			utils.collectResultsFromFrames(context, {}, 'rules', 'morestuff', function () {
+				done();
+			});
+		});
+
+		frame.id = 'level0';
+		frame.src = '../mock/frames/recursive.html';
+		fixture.appendChild(frame);
+
+	});
 });
