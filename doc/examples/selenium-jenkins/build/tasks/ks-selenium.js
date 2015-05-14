@@ -57,7 +57,7 @@ module.exports = function (grunt) {
 						driver.executeAsyncScript(function () {
 							/*global document, dqre, window */
 							var callback = arguments[arguments.length - 1];
-							dqre.a11yCheck(document, null, function (results) {
+							dqre.a11yCheck(document, { reporter: 'v1' }, function (results) {
 								callback({results: results, url: window.location.href});
 							});
 						})

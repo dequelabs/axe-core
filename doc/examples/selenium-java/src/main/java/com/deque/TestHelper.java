@@ -44,6 +44,8 @@ public class TestHelper {
 				}
 			}
 		}
+		sb.append(lineSeparator);
+		sb.append("dqre.configure({reporter: 'v1'})");
 		return sb.toString();
 	}
 
