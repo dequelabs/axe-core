@@ -4,7 +4,7 @@
   "metadata": {
     "impact": "minor",
     "messages": {
-      "pass": "List element contain a <li> element",
+      "pass": "List element contains a <li> element",
       "fail": "List element does not contain a <li> element"
     }
   }
