@@ -1,4 +1,4 @@
-describe('hidden', function () {
+describe('tabindex', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
