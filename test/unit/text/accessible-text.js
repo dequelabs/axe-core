@@ -357,6 +357,12 @@ describe('text.accessibleText', function () {
 			assert.equal(kslib.text.accessibleText(target), 'This not a span is the value of everything');
 		});
 
+		it('shoud properly fall back to title', function () {
+			fixture.innerHTML = '<a href="#" role="presentation" title="Hello"></a>';
+			var target = fixture.querySelector('a');
+			assert.equal(kslib.text.accessibleText(target), 'Hello');
+		});
+
 	});
 
 });

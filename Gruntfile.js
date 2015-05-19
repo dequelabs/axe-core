@@ -17,7 +17,7 @@ module.exports = function (grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		clean: ['dist'],
 		watch: {
-			files: ['<%= concat.lib.src %>', 'test/**/*'],
+			files: ['<%= concat.lib.src %>', 'test/**/*.js'],
 			tasks: ['build', 'fixture']
 		},
 		concat: {
