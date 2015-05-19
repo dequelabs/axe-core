@@ -1,4 +1,4 @@
-describe('unique-frame-title', function () {
+describe('unique-frame-title-after', function () {
 	'use strict';
 
 	var checkContext = {

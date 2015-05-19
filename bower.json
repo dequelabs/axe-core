@@ -1,6 +1,6 @@
 {
   "name": "ks-rules",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "authors": [
     "Mike Kozlowski <mike.kozlowski@deque.com>"
   ],
@@ -15,6 +15,6 @@
     "tests"
   ],
   "dependencies": {
-    "ks-common-functions": "git@bitbucket.org:dmusser/ks-common-functions.git#v0.1.2"
+    "ks-common-functions": "git@bitbucket.org:dmusser/ks-common-functions.git#v0.1.3"
   }
 }

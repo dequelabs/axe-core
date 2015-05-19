@@ -1,4 +1,4 @@
-describe('landmark', function () {
+describe('internal-link-present', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');

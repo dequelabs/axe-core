@@ -17,9 +17,11 @@
   "any": [
     "has-visible-text",
     "aria-label",
-    "aria-labelledby"
+    "aria-labelledby",
+    "role-presentation"
   ],
   "none": [
-    "duplicate-img-label"
+    "duplicate-img-label",
+    "focusable-no-name"
   ]
 }
