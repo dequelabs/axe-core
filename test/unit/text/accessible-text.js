@@ -357,6 +357,48 @@ describe('text.accessibleText', function () {
 			assert.equal(kslib.text.accessibleText(target), 'This not a span is the value of everything');
 		});
 
+		it('shoud properly fall back to title', function () {
+			fixture.innerHTML = '<a href="#" role="presentation" title="Hello"></a>';
+			var target = fixture.querySelector('a');
+			assert.equal(kslib.text.accessibleText(target), 'Hello');
+		});
+
+		it('should give text even for role=presentation on anchors', function () {
+			fixture.innerHTML = '<a href="#" role="presentation">Hello</a>';
+			var target = fixture.querySelector('a');
+			assert.equal(kslib.text.accessibleText(target), 'Hello');
+		});
+
+		it('should give text even for role=presentation on buttons', function () {
+			fixture.innerHTML = '<button role="presentation">Hello</button>';
+			var target = fixture.querySelector('button');
+			assert.equal(kslib.text.accessibleText(target), 'Hello');
+		});
+
+		it('should give text even for role=presentation on summary', function () {
+			fixture.innerHTML = '<summary role="presentation">Hello</summary>';
+			var target = fixture.querySelector('summary');
+			assert.equal(kslib.text.accessibleText(target), 'Hello');
+		});
+
+		it('shoud work with figure', function () {
+			fixture.innerHTML = '<figure>Not part of a11yName <figcaption>Hello</figcaption></figure>';
+			var target = fixture.querySelector('figure');
+			assert.equal(kslib.text.accessibleText(target), 'Hello');
+		});
+
+		it('shoud check title on figure', function () {
+			fixture.innerHTML = '<figure title="Hello">Not part of a11yName <figcaption></figcaption></figure>';
+			var target = fixture.querySelector('figure');
+			assert.equal(kslib.text.accessibleText(target), 'Hello');
+		});
+
+		it('should not visit innerText of figure', function () {
+			fixture.innerHTML = '<figure>Hello<figcaption></figcaption></figure>';
+			var target = fixture.querySelector('figure');
+			assert.equal(kslib.text.accessibleText(target), '');
+		});
+
 	});
 
 });
