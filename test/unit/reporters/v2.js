@@ -140,6 +140,8 @@ describe('reporters - v2', function() {
 		dqre.a11yCheck(document, {}, function(results) {
 			assert.equal(results.violations[0].impact, 'cats');
 			assert.equal(results.violations[0].nodes[0].impact, 'cats');
+			assert.isNull(results.passes[0].impact);
+			assert.isNull(results.passes[0].nodes[0].impact);
 			done();
 		});
 	});
