@@ -381,10 +381,16 @@ describe('text.accessibleText', function () {
 			assert.equal(kslib.text.accessibleText(target), 'Hello');
 		});
 
-		it('should not add extra spaces', function () {
+		it('should not add extra spaces around phrasing elements', function () {
 			fixture.innerHTML = '<a href="#">Hello<span>World</span></a>';
 			var target = fixture.querySelector('a');
 			assert.equal(kslib.text.accessibleText(target), 'HelloWorld');
+		});
+
+		it('should add spaces around non-phrasing elements', function () {
+			fixture.innerHTML = '<a href="#">Hello<div>World</div></a>';
+			var target = fixture.querySelector('a');
+			assert.equal(kslib.text.accessibleText(target), 'Hello World');
 		});
 
 		it('should not look at scripts', function () {
