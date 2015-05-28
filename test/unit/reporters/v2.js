@@ -172,7 +172,8 @@ describe('reporters - v2', function() {
 	});
 	it('should include timestamp', function(done) {
 		dqre.a11yCheck(document, {}, function(results) {
-			assert.closeTo(results.time.getTime(), Date.now(), 50);
+			assert.instanceOf(results.timestamp, Date);
+			assert.closeTo(results.timestamp.getTime(), Date.now(), 50);
 			done();
 		});
 	});
