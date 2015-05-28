@@ -381,24 +381,483 @@ describe('text.accessibleText', function () {
 			assert.equal(kslib.text.accessibleText(target), 'Hello');
 		});
 
-		it('shoud work with figure', function () {
-			fixture.innerHTML = '<figure>Not part of a11yName <figcaption>Hello</figcaption></figure>';
-			var target = fixture.querySelector('figure');
-			assert.equal(kslib.text.accessibleText(target), 'Hello');
+		it('should not add extra spaces', function () {
+			fixture.innerHTML = '<a href="#">Hello<span>World</span></a>';
+			var target = fixture.querySelector('a');
+			assert.equal(kslib.text.accessibleText(target), 'HelloWorld');
 		});
 
-		it('shoud check title on figure', function () {
-			fixture.innerHTML = '<figure title="Hello">Not part of a11yName <figcaption></figcaption></figure>';
-			var target = fixture.querySelector('figure');
-			assert.equal(kslib.text.accessibleText(target), 'Hello');
-		});
-
-		it('should not visit innerText of figure', function () {
-			fixture.innerHTML = '<figure>Hello<figcaption></figcaption></figure>';
-			var target = fixture.querySelector('figure');
+		it('should not look at scripts', function () {
+			fixture.innerHTML = '<a href="#"><script> var ajiasdf = true; </script></a>';
+			var target = fixture.querySelector('a');
 			assert.equal(kslib.text.accessibleText(target), '');
 		});
 
+		it('should use <label> for input buttons', function () {
+			fixture.innerHTML = '<label><input type="button"></label>';
+			var target = fixture.querySelector('input');
+			assert.equal(kslib.text.accessibleText(target), '');
+		});
+
+		describe('figure', function () {
+
+			it('shoud check aria-labelledby', function () {
+				fixture.innerHTML = '<div id="t1">Hello</div>' +
+					'<figure aria-labelledby="t1">Not part of a11yName <figcaption>Fail</figcaption></figure>';
+				var target = fixture.querySelector('figure');
+				assert.equal(kslib.text.accessibleText(target), 'Hello');
+			});
+
+			it('shoud check aria-label', function () {
+				fixture.innerHTML = '<figure aria-label="Hello">Not part of a11yName <figcaption>Fail</figcaption></figure>';
+				var target = fixture.querySelector('figure');
+				assert.equal(kslib.text.accessibleText(target), 'Hello');
+			});
+
+			it('shoud check the figures figcaption', function () {
+				fixture.innerHTML = '<figure>Not part of a11yName <figcaption>Hello</figcaption></figure>';
+				var target = fixture.querySelector('figure');
+				assert.equal(kslib.text.accessibleText(target), 'Hello');
+			});
+
+			it('shoud check title on figure', function () {
+				fixture.innerHTML = '<figure title="Hello">Not part of a11yName <figcaption></figcaption></figure>';
+				var target = fixture.querySelector('figure');
+				assert.equal(kslib.text.accessibleText(target), 'Hello');
+			});
+
+			it('should not visit innerText of figure', function () {
+				fixture.innerHTML = '<figure>Hello<figcaption></figcaption></figure>';
+				var target = fixture.querySelector('figure');
+				assert.equal(kslib.text.accessibleText(target), '');
+			});
+		});
+
+		describe('img', function () {
+			it('should work with aria-labelledby attribute', function () {
+				fixture.innerHTML = '<div id="t1">Hello</div><div id="t2">World</div>' +
+					'<img aria-labelledby="t1 t2">';
+
+				var target = fixture.querySelector('img');
+				assert.equal(kslib.text.accessibleText(target), 'Hello World');
+			});
+
+			it('should work with aria-label attribute', function () {
+				fixture.innerHTML = '<img aria-label="Hello World">';
+
+				var target = fixture.querySelector('img');
+				assert.equal(kslib.text.accessibleText(target), 'Hello World');
+			});
+
+			it('should work with alt attribute', function () {
+				fixture.innerHTML = '<img alt="Hello World">';
+
+				var target = fixture.querySelector('img');
+				assert.equal(kslib.text.accessibleText(target), 'Hello World');
+			});
+
+			it('should work with title attribute', function () {
+				fixture.innerHTML = '<img title="Hello World">';
+
+				var target = fixture.querySelector('img');
+				assert.equal(kslib.text.accessibleText(target), 'Hello World');
+			});
+		});
+
+		describe('input buttons', function () {
+			it('should find value for input type=button', function () {
+				fixture.innerHTML = '<input type="button" value="Hello">';
+				var target = fixture.querySelector('input');
+				assert.equal(kslib.text.accessibleText(target), 'Hello');
+			});
+
+			it('should find value for input type=reset', function () {
+				fixture.innerHTML = '<input type="reset" value="Hello">';
+				var target = fixture.querySelector('input');
+				assert.equal(kslib.text.accessibleText(target), 'Hello');
+			});
+
+			it('should find value for input type=submit', function () {
+				fixture.innerHTML = '<input type="submit" value="Hello">';
+				var target = fixture.querySelector('input');
+				assert.equal(kslib.text.accessibleText(target), 'Hello');
+			});
+
+			it('should provide a default value for input type="submit"', function () {
+				fixture.innerHTML = '<input type="submit">';
+				var target = fixture.querySelector('input');
+				assert.equal(kslib.text.accessibleText(target), 'Submit');
+			});
+
+			it('should provide a default value for input type="reset"', function () {
+				fixture.innerHTML = '<input type="reset">';
+				var target = fixture.querySelector('input');
+				assert.equal(kslib.text.accessibleText(target), 'Reset');
+			});
+
+			it('should find title for input type=button', function () {
+				fixture.innerHTML = '<input type="button" title="Hello">';
+				var target = fixture.querySelector('input');
+				assert.equal(kslib.text.accessibleText(target), 'Hello');
+			});
+
+			it('should find title for input type=reset', function () {
+				fixture.innerHTML = '<input type="reset" title="Hello">';
+				var target = fixture.querySelector('input');
+				assert.equal(kslib.text.accessibleText(target), 'Hello');
+			});
+
+			it('should find title for input type=submit', function () {
+				fixture.innerHTML = '<input type="submit" title="Hello">';
+				var target = fixture.querySelector('input');
+				assert.equal(kslib.text.accessibleText(target), 'Hello');
+			});
+		});
+
+		describe('tables', function () {
+			it('should work with aria-labelledby', function () {
+				fixture.innerHTML = '<div id="t1">Hello</div><div id="t2">World</div>' +
+					'<table aria-labelledby="t1 t2"></table>';
+
+				var target = fixture.querySelector('table');
+				assert.equal(kslib.text.accessibleText(target), 'Hello World');
+			});
+
+			it('should work with aria-label', function () {
+				fixture.innerHTML = '<table aria-label="Hello World"></table>';
+
+				var target = fixture.querySelector('table');
+				assert.equal(kslib.text.accessibleText(target), 'Hello World');
+			});
+
+			it('should work with the caption element', function () {
+				fixture.innerHTML = '<table><caption>Hello World</caption><tr><td>Stuff</td></tr></table>';
+
+				var target = fixture.querySelector('table');
+				assert.equal(kslib.text.accessibleText(target), 'Hello World');
+			});
+
+			it('should work with the title attribute', function () {
+				fixture.innerHTML = '<table title="Hello World"></table>';
+
+				var target = fixture.querySelector('table');
+				assert.equal(kslib.text.accessibleText(target), 'Hello World');
+			});
+
+			it('should work with the summary attribute', function () {
+				fixture.innerHTML = '<table summary="Hello World"></table>';
+
+				var target = fixture.querySelector('table');
+				assert.equal(kslib.text.accessibleText(target), 'Hello World');
+			});
+
+			it('should prefer title attribute over summary attribute', function () {
+				fixture.innerHTML = '<table title="Hello World" summary="FAIL"></table>';
+
+				var target = fixture.querySelector('table');
+				assert.equal(kslib.text.accessibleText(target), 'Hello World');
+			});
+		});
 	});
+
+	describe('text inputs', function () {
+		var types = ['text', 'password', 'search', 'tel', 'email', 'url', null];
+
+		it('should find aria-labelledby', function () {
+			types.forEach(function (type) {
+				var t = type ? ' type="' + type + '"' : '';
+				fixture.innerHTML = '<div id="t1">Hello</div><div id="t2">World</div>' +
+					'<input' + t + ' aria-labelledby="t1 t2">';
+
+				var target = fixture.querySelector('input');
+				assert.equal(kslib.text.accessibleText(target), 'Hello World', type);
+			});
+		});
+
+		it('should find aria-label', function () {
+			types.forEach(function (type) {
+				var t = type ? ' type="' + type + '"' : '';
+				fixture.innerHTML = '<input' + t + ' aria-label="Hello World">';
+
+				var target = fixture.querySelector('input');
+				assert.equal(kslib.text.accessibleText(target), 'Hello World', type);
+			});
+		});
+
+		it('should find an implicit label', function () {
+			types.forEach(function (type) {
+				var t = type ? ' type="' + type + '"' : '';
+				fixture.innerHTML = '<label for="t1">Hello World' +
+					'<input' + t + '></label>';
+
+				var target = fixture.querySelector('input');
+				assert.equal(kslib.text.accessibleText(target), 'Hello World', type);
+			});
+		});
+
+		it('should find an explicit label', function () {
+			types.forEach(function (type) {
+				var t = type ? ' type="' + type + '"' : '';
+				fixture.innerHTML = '<label for="t1">Hello World</label>' +
+					'<input' + t + ' id="t1">';
+
+				var target = fixture.querySelector('input');
+				assert.equal(kslib.text.accessibleText(target), 'Hello World', type);
+			});
+		});
+
+		// not implemented yet, doesn't work accross ATs
+		it.skip('should find a placeholder attribute', function () {
+			types.forEach(function (type) {
+				var t = type ? ' type="' + type + '"' : '';
+				fixture.innerHTML = '<input' + t + ' placeholder="Hello World">';
+
+				var target = fixture.querySelector('input');
+				assert.equal(kslib.text.accessibleText(target), 'Hello World', type);
+			});
+		});
+
+		it('should find a title attribute', function () {
+			types.forEach(function (type) {
+				var t = type ? ' type="' + type + '"' : '';
+				fixture.innerHTML = '<input' + t + ' title="Hello World">';
+
+				var target = fixture.querySelector('input');
+				assert.equal(kslib.text.accessibleText(target), 'Hello World', type);
+			});
+		});
+
+		it('should otherwise be empty string', function () {
+			types.forEach(function (type) {
+				var t = type ? ' type="' + type + '"' : '';
+				fixture.innerHTML = '<input' + t + '>';
+
+				var target = fixture.querySelector('input');
+				assert.equal(kslib.text.accessibleText(target), '');
+			});
+		});
+	});
+
+	describe('textarea', function () {
+
+		it('should find aria-labelledby', function () {
+			fixture.innerHTML = '<div id="t1">Hello</div><div id="t2">World</div>' +
+				'<textarea aria-labelledby="t1 t2"></textarea>';
+
+			var target = fixture.querySelector('textarea');
+			assert.equal(kslib.text.accessibleText(target), 'Hello World');
+		});
+
+		it('should find aria-label', function () {
+			fixture.innerHTML = '<textarea aria-label="Hello World"></textarea>';
+
+			var target = fixture.querySelector('textarea');
+			assert.equal(kslib.text.accessibleText(target), 'Hello World');
+		});
+
+		it('should find an implicit label', function () {
+			fixture.innerHTML = '<label for="t1">Hello World' +
+				'<textarea></textarea></label>';
+
+			var target = fixture.querySelector('textarea');
+			assert.equal(kslib.text.accessibleText(target), 'Hello World');
+		});
+
+		it('should find an explicit label', function () {
+			fixture.innerHTML = '<label for="t1">Hello World</label>' +
+				'<textarea id="t1"></textarea>';
+
+			var target = fixture.querySelector('textarea');
+			assert.equal(kslib.text.accessibleText(target), 'Hello World');
+		});
+
+		// not implemented yet, doesn't work accross ATs
+		it.skip('should find a placeholder attribute', function () {
+			fixture.innerHTML = '<textarea placeholder="Hello World"></textarea>';
+
+			var target = fixture.querySelector('textarea');
+			assert.equal(kslib.text.accessibleText(target), 'Hello World');
+		});
+
+		it('should find a title attribute', function () {
+			fixture.innerHTML = '<textarea title="Hello World"></textarea>';
+
+			var target = fixture.querySelector('textarea');
+			assert.equal(kslib.text.accessibleText(target), 'Hello World');
+		});
+
+		it('should otherwise be empty string', function () {
+			fixture.innerHTML = '<textarea></textarea>';
+
+			var target = fixture.querySelector('textarea');
+			assert.equal(kslib.text.accessibleText(target), '');
+		});
+	});
+
+	describe('image inputs', function () {
+
+	  it('should find aria-labelledby', function () {
+	    fixture.innerHTML = '<div id="t1">Hello</div><div id="t2">World</div>' +
+	      '<input type="image" aria-labelledby="t1 t2">';
+
+	    var target = fixture.querySelector('input');
+	    assert.equal(kslib.text.accessibleText(target), 'Hello World');
+	  });
+
+	  it('should find aria-label', function () {
+	    fixture.innerHTML = '<input type="image" aria-label="Hello World">';
+
+	    var target = fixture.querySelector('input');
+	    assert.equal(kslib.text.accessibleText(target), 'Hello World');
+	  });
+
+	  it('should find an alt attribute', function () {
+	    fixture.innerHTML = '<input type="image" alt="Hello World">';
+
+	    var target = fixture.querySelector('input');
+	    assert.equal(kslib.text.accessibleText(target), 'Hello World');
+	  });
+
+		// doesn't work consistently across ATs yet
+	  it.skip('should find a value attribute', function () {
+	    fixture.innerHTML = '<input type="image" value="Hello World">';
+
+	    var target = fixture.querySelector('input');
+	    assert.equal(kslib.text.accessibleText(target), 'Hello World');
+	  });
+
+	  it('should find a title attribute', function () {
+	    fixture.innerHTML = '<input type="image" title="Hello World">';
+
+	    var target = fixture.querySelector('input');
+	    assert.equal(kslib.text.accessibleText(target), 'Hello World');
+	  });
+
+	  it('should otherwise be empty string', function () {
+	    fixture.innerHTML = '<input type="image">';
+
+	    var target = fixture.querySelector('input');
+	    assert.equal(kslib.text.accessibleText(target), '');
+	  });
+	});
+
+	describe('a', function () {
+	  it('should find aria-labelledby', function () {
+	    fixture.innerHTML = '<div id="t1">Hello</div><div id="t2">World</div>' +
+	      '<a aria-labelledby="t1 t2"></a>';
+
+	    var target = fixture.querySelector('a');
+	    assert.equal(kslib.text.accessibleText(target), 'Hello World');
+	  });
+
+	  it('should find aria-label', function () {
+	    fixture.innerHTML = '<a aria-label="Hello World"></a>';
+
+	    var target = fixture.querySelector('a');
+	    assert.equal(kslib.text.accessibleText(target), 'Hello World');
+	  });
+
+	  it('should check subtree', function () {
+	    fixture.innerHTML = '<a><span>Hello<span> World</span></span></a>';
+
+	    var target = fixture.querySelector('a');
+	    assert.equal(kslib.text.accessibleText(target), 'Hello World');
+	  });
+
+	  it('should find a title attribute', function () {
+	    fixture.innerHTML = '<a title="Hello World"></a>';
+
+	    var target = fixture.querySelector('a');
+	    assert.equal(kslib.text.accessibleText(target), 'Hello World');
+	  });
+
+	  it('should otherwise be empty string', function () {
+	    fixture.innerHTML = '<a></a>';
+
+	    var target = fixture.querySelector('a');
+	    assert.equal(kslib.text.accessibleText(target), '');
+	  });
+	});
+
+	describe('button', function () {
+	  it('should find aria-labelledby', function () {
+	    fixture.innerHTML = '<div id="t1">Hello</div><div id="t2">World</div>' +
+	      '<button aria-labelledby="t1 t2"></button>';
+
+	    var target = fixture.querySelector('button');
+	    assert.equal(kslib.text.accessibleText(target), 'Hello World');
+	  });
+
+	  it('should find aria-label', function () {
+	    fixture.innerHTML = '<button aria-label="Hello World"></button>';
+
+	    var target = fixture.querySelector('button');
+	    assert.equal(kslib.text.accessibleText(target), 'Hello World');
+	  });
+
+	  it('should check subtree', function () {
+	    fixture.innerHTML = '<button><span>Hello<span> World</span></span></button>';
+
+	    var target = fixture.querySelector('button');
+	    assert.equal(kslib.text.accessibleText(target), 'Hello World');
+	  });
+
+	  it('should find a title attribute', function () {
+	    fixture.innerHTML = '<button title="Hello World"></button>';
+
+	    var target = fixture.querySelector('button');
+	    assert.equal(kslib.text.accessibleText(target), 'Hello World');
+	  });
+
+	  it('should otherwise be empty string', function () {
+	    fixture.innerHTML = '<button></button>';
+
+	    var target = fixture.querySelector('button');
+	    assert.equal(kslib.text.accessibleText(target), '');
+	  });
+	});
+
+	describe('text level semantics', function () {
+		var tags = ['em', 'strong', 'small', 's', 'cite', 'q', 'dfn', 'abbr', 'time', 'code', 'var', 'samp', 'kbd',
+			'sub', 'sup', 'i', 'b', 'u', 'mark', 'ruby', 'rt', 'rp', 'bdi', 'bdo', 'br', 'wbr'];
+
+		it('should find aria-labelledby', function () {
+		  tags.forEach(function (tag) {
+		    fixture.innerHTML = '<div id="t1">Hello</div><div id="t2">World</div>' +
+		      '<' + tag + ' aria-labelledby="t1 t2"></' + tag + '>';
+
+		    var target = fixture.querySelector(tag);
+		    assert.equal(kslib.text.accessibleText(target), 'Hello World');
+		  });
+		});
+
+		it('should find aria-label', function () {
+		  tags.forEach(function (tag) {
+		    fixture.innerHTML = '<' + tag + ' aria-label="Hello World"></' + tag + '>';
+
+		    var target = fixture.querySelector(tag);
+		    assert.equal(kslib.text.accessibleText(target), 'Hello World');
+		  });
+		});
+
+		it('should find a title attribute', function () {
+		  tags.forEach(function (tag) {
+		    fixture.innerHTML = '<' + tag + ' title="Hello World"></' + tag + '>';
+
+		    var target = fixture.querySelector(tag);
+		    assert.equal(kslib.text.accessibleText(target), 'Hello World');
+		  });
+		});
+
+		it('should otherwise be empty string', function () {
+		  tags.forEach(function (tag) {
+		    fixture.innerHTML = '<' + tag + '></' + tag + '>';
+
+		    var target = fixture.querySelector(tag);
+		    assert.equal(kslib.text.accessibleText(target), '');
+		  });
+		});
+	});
+
 
 });
