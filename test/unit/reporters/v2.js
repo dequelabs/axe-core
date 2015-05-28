@@ -164,4 +164,16 @@ describe('reporters - v2', function() {
 			done();
 		});
 	});
+	it('should include URL', function(done) {
+		dqre.a11yCheck(document, {}, function(results) {
+			assert.equal(results.url, window.location.href);
+			done();
+		});
+	});
+	it('should include timestamp', function(done) {
+		dqre.a11yCheck(document, {}, function(results) {
+			assert.closeTo(results.time.getTime(), Date.now(), 50);
+			done();
+		});
+	});
 });
