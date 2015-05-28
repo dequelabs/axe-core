@@ -290,6 +290,25 @@ describe('table.isDataTable', function () {
 		assert.isTrue(kslib.table.isDataTable(node));
 
 	});
+
+	it('should be true if it has zebra rows - background image', function () {
+		if (window.PHANTOMJS) {
+			assert.ok('PhantomJS is a liar');
+			return;
+		}
+		fixture.innerHTML = '<table>' +
+			'<tr><td></td><td></td></tr>' +
+			'<tr style="background-image: url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOy' +
+			'DZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' +
+			'AAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQ' +
+			'KGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)"><td></td><td></td></tr>' +
+			'<tr><td></td><td></td></tr>' +
+			'</table>';
+
+		var node = fixture.querySelector('table');
+		assert.isTrue(kslib.table.isDataTable(node));
+
+	});
 	it('should be true if it has 20 or more rows', function () {
 		fixture.innerHTML = '<table>' +
 			(new Array(21).join('<tr><td></td><td></td><td></td></tr>')) +
