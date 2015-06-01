@@ -136,7 +136,7 @@ describe('fieldset', function () {
 			var node = fixture.querySelector('#target');
 			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node));
 			assert.deepEqual(checkContext._data, {
-				failureCode: 'mixed-inputs',
+				failureCode: 'group-mixed-inputs',
 				type: type,
 				name: 'uniqueyname'
 			});
