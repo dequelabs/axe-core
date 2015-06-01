@@ -21,6 +21,7 @@ module.exports = function (grunt) {
 		buildRules(grunt, options, function (result) {
 			grunt.file.write(that.data.dest.auto, 'dqre._load(' + result.auto + ');');
 			grunt.file.write(that.data.dest.manual, 'dqre._load(' + result.manual + ');');
+			grunt.file.write(that.data.dest.test, 'dqre._load(' + result.test + ');');
 			grunt.file.write(that.data.dest.descriptions, result.descriptions);
 			done();
 		});

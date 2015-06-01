@@ -31,6 +31,7 @@ module.exports = function (grunt) {
 				dest: {
 					auto: 'dist/rules.js',
 					manual: 'dist/manual.js',
+					test: 'dist/test.js',
 					descriptions: 'dist/descriptions.html'
 				}
 			}
@@ -96,7 +97,7 @@ module.exports = function (grunt) {
 		},
 		fixture: {
 			checks: {
-				src: ['build/test/exports.js', '<%= manual.lib.dest %>', 'build/test/eval.js'],
+				src: ['build/test/engine.js', '<%= configure.lib.dest.test %>'],
 				dest: 'test/checks/index.html',
 				options: {
 					fixture: 'test/checks/runner.tmpl',

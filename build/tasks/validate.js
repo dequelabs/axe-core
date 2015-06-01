@@ -28,174 +28,179 @@ function hasUniqueId() {
 	};
 }
 
-var schemas = {};
+function createSchemas() {
 
-schemas.tool = {
-	properties: {
-		id: {
-			required: true,
-			type: 'string',
-			conform: hasUniqueId()
-		},
-		options: {
-			type: 'object'
-		},
-		source: {
-			type: 'string',
-			required: true,
-			conform: fileExists,
-			messages: {
-				conform: 'File does not exist'
-			}
-		}
-	}
-};
+	var schemas = {};
 
-schemas.check = {
-	properties: {
-		id: {
-			required: true,
-			type: 'string',
-			conform: hasUniqueId()
-		},
-		excludeHidden: {
-			type: 'boolean'
-		},
-		evaluate: {
-			type: 'string',
-			required: true,
-			conform: fileExists,
-			messages: {
-				conform: 'File does not exist'
-			}
-		},
-		matches: {
-			type: 'string',
-			required: false,
-			conform: fileExists,
-			messages: {
-				conform: 'File does not exist'
-			}
-		},
-		metadata: {
-			type: 'object',
-			required: true,
-			properties: {
+	schemas.tool = {
+		properties: {
+			id: {
+				required: true,
+				type: 'string',
+				conform: hasUniqueId()
+			},
+			options: {
+				type: 'object'
+			},
+			source: {
+				type: 'string',
+				required: true,
+				conform: fileExists,
 				messages: {
-					required: true,
-					type: 'object',
-					properties: {
-						fail: {
-							required: true,
-							type: 'string'
-						},
-						pass: {
-							required: true,
-							type: 'string'
-						}
-					}
-				},
-				impact: {
-					required: true,
-					type: 'string',
-					enum: ['minor', 'moderate', 'serious', 'critical']
+					conform: 'File does not exist'
 				}
 			}
 		}
-	}
-};
+	};
 
-schemas.rule = {
-	seen: {},
-	properties: {
-		id: {
-			required: true,
-			type: 'string',
-			conform: hasUniqueId()
-		},
-		selector: {
-			type: 'string'
-		},
-		excludeHidden: {
-			type: 'boolean'
-		},
-		enabled: {
-			type: 'boolean'
-		},
-		pageLevel: {
-			type: 'boolean'
-		},
-		any: {
-			type: 'array',
-			items: {
-				type: ['string', 'object'],
-				conform: function (v, o) {
-					if (typeof v === 'string') return true;
-					if (typeof v === 'object' && typeof v.id === 'string') return true;
-					return false;
-				},
-				message: 'must be a string or an object with a key of id'
-			}
-		},
-		all: {
-			type: 'array',
-			items: {
-				type: ['string', 'object'],
-				conform: function (v, o) {
-					if (typeof v === 'string') return true;
-					if (typeof v === 'object' && typeof v.id === 'string') return true;
-					return false;
-				},
-				message: 'must be a string or an object with a key of id'
-			}
-		},
-		none: {
-			type: 'array',
-			items: {
-				type: ['string', 'object'],
-				conform: function (v, o) {
-					if (typeof v === 'string') return true;
-					if (typeof v === 'object' && typeof v.id === 'string') return true;
-					return false;
-				},
-				message: 'must be a string or an object with a key of id'
-			}
-		},
-		tags: {
-			type: 'array',
-			items: {
-				type: 'string'
-			}
-		},
-		matches: {
-			type: 'string',
-			required: false,
-			conform: fileExists,
-			messages: {
-				conform: 'File does not exist'
-			}
-		},
-		metadata: {
-			type: 'object',
-			required: true,
-			properties: {
-				help: {
-					required: true,
-					type: 'string'
-				},
-				helpUrl: {
-					required: false, //TODO Should be required; but some are missing
-					type: 'string',
-					format: 'url'
-				},
-				description: {
-					required: true,
-					type: 'string'
+	schemas.check = {
+		properties: {
+			id: {
+				required: true,
+				type: 'string',
+				conform: hasUniqueId()
+			},
+			excludeHidden: {
+				type: 'boolean'
+			},
+			evaluate: {
+				type: 'string',
+				required: true,
+				conform: fileExists,
+				messages: {
+					conform: 'File does not exist'
+				}
+			},
+			matches: {
+				type: 'string',
+				required: false,
+				conform: fileExists,
+				messages: {
+					conform: 'File does not exist'
+				}
+			},
+			metadata: {
+				type: 'object',
+				required: true,
+				properties: {
+					messages: {
+						required: true,
+						type: 'object',
+						properties: {
+							fail: {
+								required: true,
+								type: 'string'
+							},
+							pass: {
+								required: true,
+								type: 'string'
+							}
+						}
+					},
+					impact: {
+						required: true,
+						type: 'string',
+						enum: ['minor', 'moderate', 'serious', 'critical']
+					}
 				}
 			}
 		}
-	}
-};
+	};
+
+	schemas.rule = {
+		seen: {},
+		properties: {
+			id: {
+				required: true,
+				type: 'string',
+				conform: hasUniqueId()
+			},
+			selector: {
+				type: 'string'
+			},
+			excludeHidden: {
+				type: 'boolean'
+			},
+			enabled: {
+				type: 'boolean'
+			},
+			pageLevel: {
+				type: 'boolean'
+			},
+			any: {
+				type: 'array',
+				items: {
+					type: ['string', 'object'],
+					conform: function (v, o) {
+						if (typeof v === 'string') return true;
+						if (typeof v === 'object' && typeof v.id === 'string') return true;
+						return false;
+					},
+					message: 'must be a string or an object with a key of id'
+				}
+			},
+			all: {
+				type: 'array',
+				items: {
+					type: ['string', 'object'],
+					conform: function (v, o) {
+						if (typeof v === 'string') return true;
+						if (typeof v === 'object' && typeof v.id === 'string') return true;
+						return false;
+					},
+					message: 'must be a string or an object with a key of id'
+				}
+			},
+			none: {
+				type: 'array',
+				items: {
+					type: ['string', 'object'],
+					conform: function (v, o) {
+						if (typeof v === 'string') return true;
+						if (typeof v === 'object' && typeof v.id === 'string') return true;
+						return false;
+					},
+					message: 'must be a string or an object with a key of id'
+				}
+			},
+			tags: {
+				type: 'array',
+				items: {
+					type: 'string'
+				}
+			},
+			matches: {
+				type: 'string',
+				required: false,
+				conform: fileExists,
+				messages: {
+					conform: 'File does not exist'
+				}
+			},
+			metadata: {
+				type: 'object',
+				required: true,
+				properties: {
+					help: {
+						required: true,
+						type: 'string'
+					},
+					helpUrl: {
+						required: false, //TODO Should be required; but some are missing
+						type: 'string',
+						format: 'url'
+					},
+					description: {
+						required: true,
+						type: 'string'
+					}
+				}
+			}
+		}
+	};
+
+	return schemas;
+}
 
 
 function validateFiles(grunt, files, schema) {
@@ -221,6 +226,7 @@ function validateFiles(grunt, files, schema) {
 
 module.exports = function (grunt) {
 	grunt.registerMultiTask('validate', function () {
+		var schemas = createSchemas();
 		var options = this.options();
 		if (!options.type || !schemas[options.type]) {
 			grunt.log.error('Please specify a valid type to validate: ' + Object.keys(schemas));
