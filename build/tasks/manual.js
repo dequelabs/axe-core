@@ -16,7 +16,7 @@ module.exports = function (grunt) {
     });
     var that = this;
     buildRules(grunt, options, function (result) {
-      grunt.file.write(that.data.dest, 'module.exports = ' + JSON.stringify(result) + ';');
+      grunt.file.write(that.data.dest, 'module.exports = ' + JSON.stringify(result, null, '  ') + ';');
       done();
     });
 

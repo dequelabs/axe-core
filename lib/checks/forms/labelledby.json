@@ -1,8 +1,7 @@
 {
-  "id": "labelledby",
-  "options": "checkbox",
+  "id": "group-labelledby",
   "evaluate": "labelledby.js",
-  "after": "group-after.js",
+  "after": "labelledby-after.js",
   "metadata": {
     "impact": "critical",
     "messages": {

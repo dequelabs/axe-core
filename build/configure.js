@@ -143,6 +143,7 @@ function buildRules(grunt, options, callback) {
 				style: result.style,
 				version: options.version
 			}, blacklist)),
+			test: replaceFunctions(JSON.stringify(result.checks, blacklist, '  ')),
 			descriptions: grunt.template.process(descriptionsTmpl, {
 				data: {
 					descriptions: descriptions

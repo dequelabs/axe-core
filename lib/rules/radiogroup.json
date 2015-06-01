@@ -12,7 +12,7 @@
   },
   "all": [],
   "any": [
-    "labelledby",
+    "group-labelledby",
     "fieldset"
   ],
   "none": []

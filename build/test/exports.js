@@ -1,1 +1,0 @@
-var module = { exports: {} };
