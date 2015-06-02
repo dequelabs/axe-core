@@ -8,6 +8,8 @@
 	],
 	"passes": [
 		["#bestpractice1"],
-		["#pass1"]
+		["#pass1"],
+		["#pass2"],
+		["#pass3"]
 	]
 }

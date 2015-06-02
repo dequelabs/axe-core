@@ -201,5 +201,79 @@
 			<td>2</td>
 		</tr>
 	</table>
+
+	<!-- table w/ aria-label -->
+  <table id="pass2" role="grid">
+   <tbody><tr role="row">
+    <td class="text" role="gridcell" aria-label="Text-level semantics"><a href="javascript:;"><span>link</span></a></td>
+    <td class="interactive" role="gridcell" aria-label="Interactive"><a href="javascript:;"><span>alert</span></a></td>
+    <td class="interactive" role="gridcell" aria-label="Interactive"><a href="javascript:;"><span>alertdialog</span></a></td>
+    <td class="invisible" role="presentation"></td>
+    <td class="invisible" role="presentation"></td>
+    <td class="invisible" role="presentation"></td>
+    <td class="invisible" role="presentation"></td>
+    <td class="invisible" role="presentation"></td>
+    <td class="structure" role="gridcell" aria-label="Document structure"><a href="javascript:;"><span>none</span></a></td>
+    <td class="structure" role="gridcell" aria-label="Document structure"><a href="javascript:;"><span>presen-tation</span></a></td>
+    <td class="structure" role="gridcell" aria-label="Document structure"><a href="javascript:;"><span>main</span></a></td>
+    <td class="embedding" role="gridcell" aria-label="Embedding content"><a href="javascript:;"><span>img</span></a></td>
+   </tr>
+   <tr role="row">
+    <td class="interactive" role="gridcell" aria-label="Interactive"><a href="javascript:;"><span>log</span></a></td>
+    <td class="interactive" role="gridcell" aria-label="Interactive"><a href="javascript:;"><span>menuitem-radio</span></a></td>
+    <td class="interactive" role="gridcell" aria-label="Interactive"><a href="javascript:;"><span>tab</span></a></td>
+    <td class="interactive" role="gridcell" aria-label="Interactive"><a href="javascript:;"><span>treeitem</span></a></td>
+    <td class="form" role="gridcell" aria-label="Forms"><a href="javascript:;"><span>form</span></a></td>
+    <td class="form" role="gridcell" aria-label="Forms"><a href="javascript:;"><span>textbox</span></a></td>
+    <td class="form" role="gridcell" aria-label="Forms"><a href="javascript:;"><span>searchbox</span></a></td>
+    <td class="structure" role="gridcell" aria-label="Document structure"><a href="javascript:;"><span>article</span></a></td>
+    <td class="structure" role="gridcell" aria-label="Document structure"><a href="javascript:;"><span>group</span></a></td>
+    <td class="structure" role="gridcell" aria-label="Document structure"><a href="javascript:;"><span>text</span></a></td>
+    <td class="structure" role="gridcell" aria-label="Document structure"><a href="javascript:;"><span>banner</span></a></td>
+    <td class="table" role="gridcell" aria-label="Tabular data"><a href="javascript:;"><span>grid</span></a></td>
+   </tr>
+  </tbody></table>
+
+	<!-- aria-labelledby -->
+    <table id="pass3" role="grid">
+     <tbody><tr role="row">
+      <td class="text" role="gridcell" aria-labelledby="text"><a href="javascript:;"><span>link</span></a></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="sections" role="gridcell" aria-labelledby="sections"><a href="javascript:;"><span>main</span></a></td>
+      <td class="embedding" role="gridcell" aria-labelledby="embedding"><a href="javascript:;"><span>img</span></a></td>
+     </tr>
+     <tr role="row">
+      <td class="interactive" role="gridcell" aria-labelledby="interactive"><a href="javascript:;"><span>alert</span></a></td>
+      <td class="interactive" role="gridcell" aria-labelledby="interactive"><a href="javascript:;"><span>alertdialog</span></a></td>
+      <td class="interactive" role="gridcell" aria-labelledby="interactive"><a href="javascript:;"><span>menuitem-radio</span></a></td>
+      <td class="interactive" role="gridcell" aria-labelledby="interactive"><a href="javascript:;"><span>tab</span></a></td>
+      <td class="interactive" role="gridcell" aria-labelledby="interactive"><a href="javascript:;"><span>treeitem</span></a></td>
+      <td class="form" role="gridcell" aria-labelledby="form"><a href="javascript:;"><span>form</span></a></td>
+      <td class="form" role="gridcell" aria-labelledby="form"><a href="javascript:;"><span>textbox</span></a></td>
+      <td class="sections" role="gridcell" aria-labelledby="sections"><a href="javascript:;"><span>article</span></a></td>
+      <td class="sections" role="gridcell" aria-labelledby="sections"><a href="javascript:;"><span>group</span></a></td>
+      <td class="sections" role="gridcell" aria-labelledby="sections"><a href="javascript:;"><span>presen-tation</span></a></td>
+      <td class="sections" role="gridcell" aria-labelledby="sections"><a href="javascript:;"><span>banner</span></a></td>
+      <td class="table" role="gridcell" aria-labelledby="table"><a href="javascript:;"><span>grid</span></a></td>
+     </tr>
+    </tbody></table>
+  <h3>Legend</h3>
+  <ul id="legend" class="clearfix">
+    <li class="form" id="form"><div class="icon"></div>Forms</li>
+    <li class="table" id="table"><div class="icon"></div>Tabular data</li>
+    <li class="sections" id="sections"><div class="icon"></div>Document sections</li>
+    <li class="interactive" id="interactive"><div class="icon"></div>Interactive elements</li>
+    <li class="embedding" id="embedding"><div class="icon"></div>Embedding content</li>
+    <li class="text" id="text"><div class="icon"></div>Text-level semantics</li>
+  </ul>
+
 </body>
 </html>
