@@ -25,7 +25,6 @@ describe('cell-no-header', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-
 		assert.isFalse(checks['cell-no-header'].evaluate.call(checkContext, node));
 	});
 
@@ -36,7 +35,27 @@ describe('cell-no-header', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
+		assert.isFalse(checks['cell-no-header'].evaluate.call(checkContext, node));
+	});
 
+	it('should return false each non-empty cell has aria-label', function () {
+		fixture.innerHTML = '<table>' +
+				'<tr><td aria-label="one">hi</td><td aria-label="two">hello</td></tr>' +
+				'<tr><td aria-label="one">hi</td><td aria-label="two">hello</td></tr>' +
+			'</table>';
+
+		var node = fixture.querySelector('table');
+		assert.isFalse(checks['cell-no-header'].evaluate.call(checkContext, node));
+	});
+
+	it('should return false each non-empty cell has aria-labelledby', function () {
+		fixture.innerHTML = '<div id="one">one</div><div id="two">two</div>' +
+			'<table>' +
+				'<tr><td aria-labelledby="one">hi</td><td aria-labelledby="two">hello</td></tr>' +
+				'<tr><td aria-labelledby="one">hi</td><td aria-labelledby="two">hello</td></tr>' +
+			'</table>';
+
+		var node = fixture.querySelector('table');
 		assert.isFalse(checks['cell-no-header'].evaluate.call(checkContext, node));
 	});
 
@@ -46,9 +65,7 @@ describe('cell-no-header', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-
 		assert.isFalse(checks['cell-no-header'].evaluate.call(checkContext, node));
-
 	});
 
 	it('should return true if a cell has no headers', function () {
@@ -62,8 +79,6 @@ describe('cell-no-header', function () {
 		assert.deepEqual(checkContext._relatedNodes, [
 			node.rows[0].cells[0], node.rows[0].cells[1]
 		]);
-
-
 	});
 
 	it('should return true if a cell has no headers - complex table', function () {
@@ -78,7 +93,5 @@ describe('cell-no-header', function () {
 		assert.deepEqual(checkContext._relatedNodes, [
 			node.rows[0].cells[0], node.rows[1].cells[0], node.rows[1].cells[1], node.rows[1].cells[2]
 		]);
-
-
 	});
 });
