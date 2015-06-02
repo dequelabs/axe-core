@@ -12,7 +12,6 @@ describe('text.label', function () {
 				'<input id="target" aria-labelledby="monkeys bananas">';
 
 			var target = document.getElementById('target');
-
 			assert.equal(kslib.text.label(target), 'monkeys bananas');
 		});
 
@@ -21,9 +20,7 @@ describe('text.label', function () {
 				'<input id="target" aria-labelledby="monkeys bananas">';
 
 			var target = document.getElementById('target');
-
 			assert.equal(kslib.text.label(target), 'monkeys');
-
 		});
 
 		it('should take precedence over aria-label', function () {
@@ -31,9 +28,7 @@ describe('text.label', function () {
 				'<input id="target" aria-labelledby="monkeys bananas" aria-label="nope">';
 
 			var target = document.getElementById('target');
-
 			assert.equal(kslib.text.label(target), 'monkeys bananas');
-
 		});
 
 		it('should take precedence over explicit labels', function () {
@@ -42,9 +37,7 @@ describe('text.label', function () {
 				'<input id="target" aria-labelledby="monkeys bananas">';
 
 			var target = document.getElementById('target');
-
 			assert.equal(kslib.text.label(target), 'monkeys bananas');
-
 		});
 
 		it('should take precedence over implicit labels', function () {
@@ -53,21 +46,16 @@ describe('text.label', function () {
 				'<input id="target" aria-labelledby="monkeys bananas"></label>';
 
 			var target = document.getElementById('target');
-
 			assert.equal(kslib.text.label(target), 'monkeys bananas');
-
 		});
+
 		it('should ignore whitespace only labels', function () {
 			fixture.innerHTML = '<div id="monkeys">	\n  </div><div id="bananas"></div>' +
 				'<input id="target" aria-labelledby="monkeys bananas">';
 
 			var target = document.getElementById('target');
-
 			assert.isNull(kslib.text.label(target));
-
 		});
-
-
 	});
 
 	describe('aria-label', function () {
@@ -75,17 +63,14 @@ describe('text.label', function () {
 			fixture.innerHTML = '<input id="target" aria-label="monkeys">';
 
 			var target = document.getElementById('target');
-
 			assert.equal(kslib.text.label(target), 'monkeys');
-
 		});
+
 		it('should ignore whitespace only labels', function () {
 			fixture.innerHTML = '<input id="target" aria-label="   \n	">';
 
 			var target = document.getElementById('target');
-
 			assert.isNull(kslib.text.label(target));
-
 		});
 
 		it('should take precedence over explicit labels', function () {
@@ -93,9 +78,7 @@ describe('text.label', function () {
 				'<input id="target" aria-label="monkeys">';
 
 			var target = document.getElementById('target');
-
 			assert.equal(kslib.text.label(target), 'monkeys');
-
 		});
 
 		it('should take precedence over implicit labels', function () {
@@ -103,9 +86,7 @@ describe('text.label', function () {
 				'<input id="target" aria-label="monkeys"></label>';
 
 			var target = document.getElementById('target');
-
 			assert.equal(kslib.text.label(target), 'monkeys');
-
 		});
 	});
 
@@ -115,18 +96,15 @@ describe('text.label', function () {
 				'<input id="target">';
 
 			var target = document.getElementById('target');
-
 			assert.equal(kslib.text.label(target), 'monkeys');
-
 		});
+
 		it('should ignore whitespace only or empty labels', function () {
 			fixture.innerHTML = '<label for="target">	\n\r  </label>' +
 				'<input id="target">';
 
 			var target = document.getElementById('target');
-
 			assert.isNull(kslib.text.label(target));
-
 		});
 
 		it('should take precedence over implicit labels', function () {
@@ -135,33 +113,26 @@ describe('text.label', function () {
 				'<input id="target"></label>';
 
 			var target = document.getElementById('target');
-
 			assert.equal(kslib.text.label(target), 'monkeys');
 
 		});
-
 	});
 
-	describe('explicit label', function () {
+	describe('implicit label', function () {
 		it('should detect it', function () {
 			fixture.innerHTML = '<label>monkeys' +
 				'<input id="target"><label>';
 
 			var target = document.getElementById('target');
-
 			assert.equal(kslib.text.label(target), 'monkeys');
-
 		});
+
 		it('should ignore whitespace only or empty labels', function () {
 			fixture.innerHTML = '<label> ' +
 				'<input id="target"><label>';
 
 			var target = document.getElementById('target');
-
 			assert.isNull(kslib.text.label(target));
-
 		});
 	});
-
-
 });
