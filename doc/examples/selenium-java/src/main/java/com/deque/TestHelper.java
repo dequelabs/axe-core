@@ -166,7 +166,7 @@ public class TestHelper {
 						excludes.size() == 0 ? "" : "'" + StringUtils.join(excludes, "','") + "'",
 						options);
 			} else if (includes.size() == 1) {
-				command = String.format("dqre.a11yCheck(%s, %s, arguments[arguments.length - 1]);", includes.get(0).replace("'", ""), options);
+				command = String.format("dqre.a11yCheck('%s', %s, arguments[arguments.length - 1]);", includes.get(0).replace("'", ""), options);
 			} else {
 				command = String.format("dqre.a11yCheck(document, %s, arguments[arguments.length - 1]);", options);
 			}
