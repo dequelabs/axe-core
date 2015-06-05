@@ -21,30 +21,22 @@ module.exports = function (grunt) {
 			tasks: ['build', 'fixture']
 		},
 		concat: {
-			lib: {
+			commons: {
 				src: [
-					'lib/index.js',
-					'lib/intro.stub',
+					'lib/commons/index.js',
+					'lib/commons/intro.stub',
 					'bower_components/clone/lib/index.js',
 					'bower_components/matches-selector/lib/index.js',
 					'bower_components/escape-selector/lib/index.js',
-					'lib/*/index.js',
-					'lib/*/**/*.js',
-					'lib/export.js',
-					'lib/outro.stub'
+					'lib/commons/*/index.js',
+					'lib/commons/**/*.js',
+					'lib/commons/export.js',
+					'lib/commons/outro.stub'
 				],
-				dest: 'dist/ks-cf.js'
+				dest: 'tmp/commons.js'
 			},
 			options: {
 				process: true
-			}
-		},
-		uglify: {
-			minify: {
-				files: [{
-					src: ['<%= concat.lib.dest %>'],
-					dest: 'dist/ks-cf.min.js'
-				}]
 			}
 		},
 		connect: {
@@ -57,9 +49,9 @@ module.exports = function (grunt) {
 			}
 		},
 		mocha: {
-			test: {
+			commons: {
 				options: {
-					urls: ['http://localhost:<%= connect.test.options.port %>/test/unit/'],
+					urls: ['http://localhost:<%= connect.test.options.port %>/test/commons/'],
 					reporter: 'XUnit',
 					threshold: 90
 				},
@@ -67,18 +59,18 @@ module.exports = function (grunt) {
 			}
 		},
 		blanket_mocha: {
-			test: {
+			commons: {
 				options: {
-					urls: ['http://localhost:<%= connect.test.options.port %>/test/unit/'],
+					urls: ['http://localhost:<%= connect.test.options.port %>/test/commons/'],
 					reporter: 'Spec',
 					threshold: 90
 				}
 			}
 		},
 		fixture: {
-			src: {
+			commons: {
 				src: '<%= concat.lib.src %>',
-				dest: 'test/unit/index.html'
+				dest: 'test/commons/index.html'
 			}
 		},
 		jshint: {
@@ -95,7 +87,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
 	grunt.registerTask('test', ['build', 'fixture', 'connect:test', grunt.option('report') ? 'mocha' : 'blanket_mocha']);
-	grunt.registerTask('build', ['concat', 'uglify']);
+	grunt.registerTask('build', ['concat']);
 	grunt.registerTask('default', ['build']);
 
 };
