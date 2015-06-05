@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Tests</title>
+
+		<link rel="stylesheet" type="text/css" href="../../node_modules/mocha/mocha.css" />
+		<script src="../../node_modules/mocha/mocha.js"></script>
+		<script src="../../node_modules/chai/chai.js"></script>
+		<% files.forEach(function (file) { %>
+			<script src="../../<%=file%>"
+				<% if (file.indexOf('bower_components') === -1) { %>data-cover<% } %>></script>
+		<%  }); %>
+		<script>
+			mocha.setup('bdd');
+			var assert = chai.assert;
+		</script>
+	</head>
+
+	<body>
+		<div id="mocha"></div>
+		<div id="fixture"></div>
+		<% tests.forEach(function (file) { %>
+			<script src="<%=file%>"></script>
+		<%  }); %>
+
+		<script>
+			if (window.location.search.indexOf('nocov=true') === -1) {
+				var s = document.createElement('script');
+				if (window.PHANTOMJS) {
+					s.addEventListener('load', function () {
+						blanket.options("reporter", "../../node_modules/grunt-blanket-mocha/support/grunt-reporter.js");
+					});
+				}
+				s.setAttribute('data-cover-flags', 'branchTracking');
+				s.src = '../../node_modules/blanket/dist/mocha/blanket_mocha.js';
+				document.head.appendChild(s);
+			} else {
+				mocha.run();
+			}
+		</script>
+	</body>
+
+</html>

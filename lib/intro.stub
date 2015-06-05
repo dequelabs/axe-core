@@ -1,0 +1,4 @@
+/*! WorldSpace Attest Common Functions v<%= pkg.version %>
+ * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.organization %>
+ */
+(function (global) {

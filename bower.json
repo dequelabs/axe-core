@@ -1,0 +1,20 @@
+{
+  "name": "attest-commons",
+  "description": "WorldSpace Attest Common Functions",
+  "version": "0.1.5",
+  "authors": [
+    "David Sturley <david.sturley@deque.com>"
+  ],
+  "private": true,
+  "main": "lib/index.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test"
+  ],
+  "devDependencies": {
+    "escape-selector": "git@bitbucket.org:dmusser/escape-selector.git#v0.0.1",
+    "matches-selector": "git@bitbucket.org:dmusser/matches-selector.git#v0.0.1",
+    "clone": "git@bitbucket.org:dmusser/clone.git#v0.0.1"
+  }
+}
