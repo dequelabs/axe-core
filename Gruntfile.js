@@ -36,14 +36,6 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		manual: {
-			lib: {
-				options: {
-					version: '<%= pkg.version %>'
-				},
-				dest: 'dist/manual-source.js'
-			}
-		},
 		validate: {
 			tools: {
 				options: {
@@ -148,7 +140,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
 	grunt.registerTask('test', ['mochaTest', 'build', 'fixture', 'connect:test', grunt.option('report') ? 'mocha' : 'blanket_mocha']);
-	grunt.registerTask('build', ['validate', 'configure', 'manual', 'uglify']);
+	grunt.registerTask('build', ['validate', 'configure', 'uglify']);
 	grunt.registerTask('default', ['build']);
 
 };

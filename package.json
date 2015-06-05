@@ -1,6 +1,6 @@
 {
-  "name": "deque-rules",
-  "description": "Deque Rules",
+  "name": "attest-rules",
+  "description": "WorldSpace Attest Rules",
   "version": "0.6.3",
   "private": true,
   "author": {

@@ -1,10 +1,10 @@
 {
-  "name": "ks-rules",
+  "name": "attest-rules",
   "version": "0.6.3",
   "authors": [
     "Mike Kozlowski <mike.kozlowski@deque.com>"
   ],
-  "description": "Kensington Rules",
+  "description": "WorldSpace Attest Rules",
   "license": "Commercial",
   "private": true,
   "ignore": [
