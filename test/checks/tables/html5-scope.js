@@ -24,8 +24,8 @@ describe('html5-scope', function () {
 	});
 
 	it('should return false on non-HTML5 documents', function () {
-		var orig = kslib.dom.isHTML5;
-		kslib.dom.isHTML5 = function () {
+		var orig = commons.dom.isHTML5;
+		commons.dom.isHTML5 = function () {
 			return false;
 		};
 
@@ -34,7 +34,7 @@ describe('html5-scope', function () {
 
 		assert.isFalse(checks['html5-scope'].evaluate(node));
 
-		kslib.dom.isHTML5 = orig;
+		commons.dom.isHTML5 = orig;
 	});
 
 });

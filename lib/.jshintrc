@@ -3,7 +3,7 @@
 		"results": true,
 		"node": true,
 		"options": true,
-		"kslib": true
+		"commons": true
 	},
 
 	"browser" : false,

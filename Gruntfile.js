@@ -1,6 +1,4 @@
 /*jshint node: true, camelcase: false */
-
-
 module.exports = function (grunt) {
 	'use strict';
 
@@ -10,9 +8,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-blanket-mocha');
 	grunt.loadNpmTasks('grunt-mocha');
-	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadTasks('build/tasks');
 
 	grunt.initConfig({
@@ -24,6 +20,7 @@ module.exports = function (grunt) {
 		},
 		configure: {
 			lib: {
+				src: ['<%= concat.commons.dest %>'],
 				options: {
 					tags: grunt.option('tags'),
 					version: '<%= pkg.version %>'
@@ -34,6 +31,22 @@ module.exports = function (grunt) {
 					test: 'dist/test.js',
 					descriptions: 'dist/descriptions.html'
 				}
+			}
+		},
+		concat: {
+			commons: {
+				src: [
+					'lib/commons/intro.stub',
+					'lib/commons/index.js',
+					'bower_components/clone/lib/index.js',
+					'bower_components/matches-selector/lib/index.js',
+					'bower_components/escape-selector/lib/index.js',
+					'lib/commons/*/index.js',
+					'lib/commons/**/*.js',
+					'lib/commons/export.js',
+					'lib/commons/outro.stub'
+				],
+				dest: 'tmp/commons.js'
 			}
 		},
 		validate: {
@@ -92,46 +105,43 @@ module.exports = function (grunt) {
 				src: ['build/test/engine.js', '<%= configure.lib.dest.test %>'],
 				dest: 'test/checks/index.html',
 				options: {
-					fixture: 'test/checks/runner.tmpl',
+					fixture: 'test/runner.tmpl',
 					testCwd: 'test/checks'
+				}
+			},
+			commons: {
+				src: '<%= concat.commons.src %>',
+				dest: 'test/commons/index.html',
+				options: {
+					fixture: 'test/runner.tmpl',
+					testCwd: 'test/commons'
 				}
 			}
 		},
 		mocha: {
-			test: {
+			checks: {
 				options: {
 					urls: ['http://localhost:<%= connect.test.options.port %>/test/checks/'],
-					reporter: 'XUnit',
-					timeout: 10000,
-					threshold: 90
+					run: true,
+					reporter: grunt.option('report') ? 'XUnit' : 'Spec'
 				},
-				dest: 'xunit.xml'
-			}
-		},
-		mochaTest: {
-			test: {
+				dest: grunt.option('report') ? 'tmp/checks-xunit.xml' : undefined
+			},
+			commons: {
 				options: {
-					reporter: 'spec'
+					urls: ['http://localhost:<%= connect.test.options.port %>/test/commons/'],
+					run: true,
+					reporter: grunt.option('report') ? 'XUnit' : 'Spec'
 				},
-				src: ['test/tasks/*.js']
-			}
-		},
-		blanket_mocha: {
-			test: {
-				options: {
-					urls: ['http://localhost:<%= connect.test.options.port %>/test/checks/'],
-					reporter: 'Spec',
-					timeout: 10000,
-					threshold: 90
-				}
+				dest: grunt.option('report') ? 'tmp/commons-xunit.xml' : undefined
 			}
 		},
 		jshint: {
-			rules: {
+			all: {
 				options: {
 					jshintrc: true,
 					reporter: grunt.option('report') ? 'checkstyle' : undefined,
-					reporterOutput: grunt.option('report') ? 'lint.xml' : undefined
+					reporterOutput: grunt.option('report') ? 'tmp/lint.xml' : undefined
 				},
 				src: ['lib/**/*.js', 'test/**/*.js', 'Gruntfile.js', '!test/mock/**/*.js']
 			}
@@ -139,8 +149,8 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
-	grunt.registerTask('test', ['mochaTest', 'build', 'fixture', 'connect:test', grunt.option('report') ? 'mocha' : 'blanket_mocha']);
-	grunt.registerTask('build', ['validate', 'configure', 'uglify']);
+	grunt.registerTask('test', ['build', 'fixture', 'connect:test', 'mocha']);
+	grunt.registerTask('build', ['validate', 'concat', 'configure', 'uglify']);
 	grunt.registerTask('default', ['build']);
 
 };

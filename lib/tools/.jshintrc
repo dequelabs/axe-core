@@ -2,7 +2,7 @@
   "globals": {
     "node": true,
     "options": true,
-    "kslib": true
+    "commons": true
   },
 
   "browser" : true,

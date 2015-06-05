@@ -54,7 +54,7 @@ describe('aria-valid-attr-value', function () {
 		assert.deepEqual(checkContext._data, ['aria-selected="0"']);
 	});
 
-	it('should determine attribute validity by calling kslib.aria.validateAttrValue', function () {
+	it('should determine attribute validity by calling commons.aria.validateAttrValue', function () {
 		var node = document.createElement('div');
 		node.id = 'test';
 		node.tabIndex = 1;
@@ -62,9 +62,9 @@ describe('aria-valid-attr-value', function () {
 		node.setAttribute('aria-live', 'dead');
 		fixture.appendChild(node);
 
-		var orig = kslib.aria.validateAttrValue;
+		var orig = commons.aria.validateAttrValue;
 		var called = 0;
-		kslib.aria.validateAttrValue = function (nd, attrName) {
+		commons.aria.validateAttrValue = function (nd, attrName) {
 			assert.equal(nd, node);
 			assert.match(attrName, /^aria-/);
 			called++;
@@ -74,7 +74,7 @@ describe('aria-valid-attr-value', function () {
 		assert.isNull(checkContext._data);
 		assert.equal(called, 2);
 
-		kslib.aria.validateAttrValue = orig;
+		commons.aria.validateAttrValue = orig;
 	});
 
 	describe('options', function () {

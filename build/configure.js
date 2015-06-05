@@ -16,10 +16,10 @@ var descriptionTmpl = '<tr><td><%=id%></td><td><%=description%></td><td><%=tags%
 
 dot.templateSettings.strip = false;
 
-function buildRules(grunt, options, callback) {
+function buildRules(grunt, options, commons, callback) {
 
 	options.getFiles = false;
-	buildManual(grunt, options, function (result) {
+	buildManual(grunt, options, commons, function (result) {
 
 		function parseMetaData(data) {
 			var result = clone(data) || {};
@@ -44,10 +44,12 @@ function buildRules(grunt, options, callback) {
 		}
 
 
-		function replaceFunctions(string) {
-			return string.replace(/"(evaluate|after|gather|matches|source)":\s*("[^"]+")/g, function (m, p1, p2) {
+		function replaceFunctions(string, excludeCommons) {
+			return string.replace(/"(evaluate|after|gather|matches|source|commons)":\s*("[^"]+?")/g, function (m, p1, p2) {
 				return m.replace(p2, getSource(p2.replace(/^"|"$/g, ''), p1));
 			}).replace(/"(function anonymous\([\s\S]+?\) {)([\s\S]+?)(})"/g, function (m, p1, p2, p3) {
+				return JSON.parse(m);
+			}).replace(/"(\(function \(\) {)([\s\S]+?)(}\)\(\))"/g, function (m, p1, p2, p3) {
 				return JSON.parse(m);
 			});
 
@@ -134,16 +136,21 @@ function buildRules(grunt, options, callback) {
 			auto: replaceFunctions(JSON.stringify({
 				data: metadata,
 				rules: rules,
+				commons: result.commons,
 				version: options.version
 			}, blacklist)),
 			manual: replaceFunctions(JSON.stringify({
 				data: metadata,
 				rules: rules,
+				commons: result.commons,
 				tools: result.tools,
 				style: result.style,
 				version: options.version
 			}, blacklist)),
-			test: replaceFunctions(JSON.stringify(result.checks, blacklist, '  ')),
+			test: replaceFunctions(JSON.stringify({
+				checks: result.checks,
+				commons: result.commons
+			}, blacklist), true),
 			descriptions: grunt.template.process(descriptionsTmpl, {
 				data: {
 					descriptions: descriptions

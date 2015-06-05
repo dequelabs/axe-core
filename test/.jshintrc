@@ -11,7 +11,7 @@
 		"assert": true,
 		"checks": true,
 		"dqreRules": true,
-		"kslib": true
+		"commons": true
 	},
 
 	"browser" : true,

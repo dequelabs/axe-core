@@ -37,7 +37,7 @@ describe('aria-required-attr', function () {
 
 	});
 
-	it('should determine attribute validity by calling kslib.aria.requiredAttr', function () {
+	it('should determine attribute validity by calling commons.aria.requiredAttr', function () {
 		var node = document.createElement('div');
 		node.id = 'test';
 		node.tabIndex = 1;
@@ -45,9 +45,9 @@ describe('aria-required-attr', function () {
 		node.setAttribute('aria-cats', 'maybe');
 		fixture.appendChild(node);
 
-		var orig = kslib.aria.requiredAttr;
+		var orig = commons.aria.requiredAttr;
 		var called = 0;
-		kslib.aria.requiredAttr = function (role) {
+		commons.aria.requiredAttr = function (role) {
 			assert.equal(role, 'cats');
 			called++;
 			return ['aria-cats', 'aria-bats'];
@@ -56,7 +56,7 @@ describe('aria-required-attr', function () {
 		assert.deepEqual(checkContext._data, ['aria-bats']);
 		assert.equal(called, 1);
 
-		kslib.aria.requiredAttr = orig;
+		commons.aria.requiredAttr = orig;
 	});
 
 });

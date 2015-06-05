@@ -1,7 +1,8 @@
-var checks;
+var checks, commons;
 var attest = {
-	_load: function (c) {
-		checks = c.reduce(function (acc, check) {
+	_load: function (r) {
+		commons = r.commons;
+		checks = r.checks.reduce(function (acc, check) {
 			acc[check.id] = check;
 			return acc;
 		}, {});

@@ -6,9 +6,8 @@ var templates = require('./templates');
 var less = require('less');
 var Promise = require('promise');
 
-module.exports = function build(grunt, options, callback) {
+module.exports = function build(grunt, options, commons, callback) {
   options.getFiles = options.hasOwnProperty('getFiles') ? options.getFiles : true;
-
   function parseObject(src) {
     var files = grunt.file.expand(src);
     return files.map(function (file) {
@@ -55,9 +54,8 @@ module.exports = function build(grunt, options, callback) {
       rules: parseObject(options.rules),
       checks: parseObject(options.checks),
       tools: parseObject(options.tools),
-      classifiers: parseObject(options.classifiers),
-      analyzers: parseObject(options.analyzers),
       misc: parseObject(options.misc),
+			commons: commons,
       style: styles,
       version: options.version
     });

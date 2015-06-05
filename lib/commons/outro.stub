@@ -1,3 +1,2 @@
-
-	commons.version = '<%= pkg.version %>';
-}(this));
+	return commons;
+}())

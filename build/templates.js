@@ -4,4 +4,5 @@ module.exports = {
   gather: 'function (context) {\n<%=source%>\n}',
   matches: 'function (node) {\n<%=source%>\n}',
   source: '(function () {\n<%=source%>\n}())',
+	commons: '<%=source%>'
 };
