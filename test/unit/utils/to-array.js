@@ -11,7 +11,7 @@ describe('utils.toArray', function () {
 			assert.equal(this, arrayLike);
 		};
 
-		kslib.utils.toArray(arrayLike);
+		commons.utils.toArray(arrayLike);
 
 		Array.prototype.slice = orig;
 
@@ -20,7 +20,7 @@ describe('utils.toArray', function () {
 	it('should return an array', function () {
 		var arrayLike = {'0': 'cats', length: 1};
 
-		var result = kslib.utils.toArray(arrayLike);
+		var result = commons.utils.toArray(arrayLike);
 		assert.isArray(result);
 	});
 });

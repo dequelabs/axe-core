@@ -1,6 +1,6 @@
 {
 	"globals": {
-		"kslib": true
+		"commons": true
 	},
 
 	"browser" : false,

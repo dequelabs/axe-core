@@ -1,11 +1,11 @@
-describe('kslib', function () {
+describe('commons', function () {
 	'use strict';
 
 	it('should be an object', function () {
-		assert.isObject(kslib);
+		assert.isObject(commons);
 	});
 
 	it('should have a version property', function () {
-		assert.isString(kslib.version);
+		assert.isString(commons.version);
 	});
 });

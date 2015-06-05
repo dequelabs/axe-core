@@ -24,8 +24,8 @@ describe('dom.elementsFromPoint', function () {
 		target.scrollIntoView();
 		var rect = target.getBoundingClientRect();
 
-		if (kslib.dom.supportsElementsFromPoint(target.ownerDocument)) {
-			var visualParents = kslib.dom.elementsFromPoint(target.ownerDocument,
+		if (commons.dom.supportsElementsFromPoint(target.ownerDocument)) {
+			var visualParents = commons.dom.elementsFromPoint(target.ownerDocument,
 															Math.ceil(rect.left + 1),
 															Math.ceil(rect.top + 1));
 			assert.deepEqual(visualParents.slice(0, 3), [target, pos, container]);
@@ -49,8 +49,8 @@ describe('dom.elementsFromPoint', function () {
 		target.scrollIntoView();
 		var rect = target.getBoundingClientRect();
 
-		if (kslib.dom.supportsElementsFromPoint(target.ownerDocument)) {
-			var visualParents = kslib.dom.elementsFromPoint(target.ownerDocument,
+		if (commons.dom.supportsElementsFromPoint(target.ownerDocument)) {
+			var visualParents = commons.dom.elementsFromPoint(target.ownerDocument,
 															Math.ceil(rect.left + 1),
 															Math.ceil(rect.top + 1));
 			assert.deepEqual(visualParents.slice(0, 3), [target, pos, container]);
@@ -67,8 +67,8 @@ describe('dom.elementsFromPoint', function () {
 		target.scrollIntoView();
 		var rect = target.getBoundingClientRect();
 
-		if (kslib.dom.supportsElementsFromPoint(target.ownerDocument)) {
-			var visualParents = kslib.dom.elementsFromPoint(target.ownerDocument, Math.ceil(rect.left), Math.ceil(rect.top));
+		if (commons.dom.supportsElementsFromPoint(target.ownerDocument)) {
+			var visualParents = commons.dom.elementsFromPoint(target.ownerDocument, Math.ceil(rect.left), Math.ceil(rect.top));
 			assert.deepEqual(visualParents.slice(0, 3), [target, parent, fixture]);
 		}
 	});
@@ -83,12 +83,12 @@ describe('dom.elementsFromPoint', function () {
 		var rect = target.getBoundingClientRect();
 		var visualParents = null;
 
-		if (kslib.dom.supportsElementsFromPoint(target.ownerDocument)) {
+		if (commons.dom.supportsElementsFromPoint(target.ownerDocument)) {
 			if (!target.ownerDocument.msElementsFromPoint) {
 				target.ownerDocument.msElementsFromPoint = function () {
 					return ['a', 'b', 'c'];
 				};
-				visualParents = kslib.dom.elementsFromPoint(target.ownerDocument, Math.ceil(rect.left), Math.ceil(rect.top));
+				visualParents = commons.dom.elementsFromPoint(target.ownerDocument, Math.ceil(rect.left), Math.ceil(rect.top));
 				delete target.ownerDocument.msElementsFromPoint;
 				assert.deepEqual(visualParents.slice(0, 3), ['a', 'b', 'c']);
 			}
