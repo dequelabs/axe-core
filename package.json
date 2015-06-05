@@ -1,6 +1,6 @@
 {
-  "name": "kensington-common-functions",
-  "description": "Kensington Common Functions",
+  "name": "attest-commons",
+  "description": "WorldSpace Attest Common Functions",
   "version": "0.1.5",
   "private": true,
   "author": {
