@@ -1,0 +1,17 @@
+{
+  "id": "aria-allowed-attr",
+  "tags": [
+    "wcag2a",
+    "wcag411"
+  ],
+  "metadata": {
+    "helpUrl": "https://dequeuniversity.com/issues/aria-allowed-attr",
+    "help": "ARIA attributes not allowed for role assigned to this element",
+    "description": "Checks all attributes that start with 'aria-' to ensure that they are all official WAI-ARIA attributes"
+  },
+  "all": [],
+  "any": [
+    "aria-allowed-attr"
+  ],
+  "none": []
+}

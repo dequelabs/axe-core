@@ -2,6 +2,6 @@ tmp
 dist
 bower_components
 node_modules
-test/unit/*.html
+test/*/index.html
 xunit.xml
 lint.xml

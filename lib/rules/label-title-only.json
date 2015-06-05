@@ -1,0 +1,18 @@
+{
+  "id": "label-title-only",
+  "selector": "input:not([type='hidden']):not([type='image']):not([type='button']):not([type='submit']):not([type='reset']), select, textarea",
+  "enabled": false,
+  "tags": [
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "Ensures that every <input> that requires a label is not only labeled using the title attribute",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/forms/form-labels",
+    "help": "Only title or aria-describedby used to generate label for form element"
+  },
+  "all": [],
+  "any": [],
+  "none": [
+    "title-only"
+  ]
+}

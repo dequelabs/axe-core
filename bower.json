@@ -1,12 +1,12 @@
 {
-  "name": "attest-commons",
-  "description": "WorldSpace Attest Common Functions",
-  "version": "0.1.5",
+  "name": "attest-rules",
+  "description": "WorldSpace Attest Rules",
+  "version": "1.0.0",
   "authors": [
     "David Sturley <david.sturley@deque.com>"
   ],
   "private": true,
-  "main": "lib/index.js",
+  "main": "dist/attest-rules.js",
   "ignore": [
     "**/.*",
     "node_modules",

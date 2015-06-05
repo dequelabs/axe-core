@@ -1,0 +1,11 @@
+{
+  "id": "has-listitem",
+  "evaluate": "has-listitem.js",
+  "metadata": {
+    "impact": "minor",
+    "messages": {
+      "pass": "List element contains a <li> element",
+      "fail": "List element does not contain a <li> element"
+    }
+  }
+}

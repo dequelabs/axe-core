@@ -1,0 +1,11 @@
+{
+  "id": "aria-required-parent",
+  "evaluate": "required-parent.js",
+  "metadata": {
+    "impact": "critical",
+    "messages": {
+      "pass": "Required ARIA parent role present",
+      "fail": "Required ARIA parent{{=it.data && it.data.length > 1 ? 's' : ''}} role not present:{{~it.data:value}} {{=value}}{{~}}"
+    }
+  }
+}

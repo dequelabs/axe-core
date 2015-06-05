@@ -1,0 +1,18 @@
+{
+  "id": "listitem",
+  "selector": "li",
+  "tags": [
+    "wcag2a",
+    "wcag131"
+  ],
+  "metadata": {
+    "description": "Ensures that every list item is used semantically",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/lists-links-blockquote#id38_lists",
+    "help": "All <li> elements must be contained in a <ul> or <ol>"
+  },
+  "all": [],
+  "any": [
+    "listitem"
+  ],
+  "none": []
+}

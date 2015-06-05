@@ -1,5 +1,6 @@
 /*jshint node: true, camelcase: false */
 
+
 module.exports = function (grunt) {
 	'use strict';
 
@@ -9,34 +10,72 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-blanket-mocha');
+	grunt.loadNpmTasks('grunt-mocha');
+	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadTasks('build/tasks');
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		clean: ['dist'],
+		clean: ["dist"],
 		watch: {
-			files: ['<%= concat.lib.src %>', 'test/**/*.js'],
-			tasks: ['build', 'fixture']
+			files: ['test/**/*', 'lib/**/*'],
+			tasks: ['fixture', 'build']
 		},
-		concat: {
-			commons: {
-				src: [
-					'lib/commons/index.js',
-					'lib/commons/intro.stub',
-					'bower_components/clone/lib/index.js',
-					'bower_components/matches-selector/lib/index.js',
-					'bower_components/escape-selector/lib/index.js',
-					'lib/commons/*/index.js',
-					'lib/commons/**/*.js',
-					'lib/commons/export.js',
-					'lib/commons/outro.stub'
-				],
-				dest: 'tmp/commons.js'
+		configure: {
+			lib: {
+				options: {
+					tags: grunt.option('tags'),
+					version: '<%= pkg.version %>'
+				},
+				dest: {
+					auto: 'dist/rules.js',
+					manual: 'dist/manual.js',
+					test: 'dist/test.js',
+					descriptions: 'dist/descriptions.html'
+				}
+			}
+		},
+		validate: {
+			tools: {
+				options: {
+					type: 'tool'
+				},
+				src: 'lib/tools/**/*.json'
 			},
-			options: {
-				process: true
+			check: {
+				options: {
+					type: 'check'
+				},
+				src: 'lib/checks/**/*.json'
+			},
+			rule: {
+				options: {
+					type: 'rule'
+				},
+				src: 'lib/rules/**/*.json'
+			}
+		},
+		uglify: {
+			minify: {
+				files: [{
+					src: ['<%= configure.lib.dest.auto %>'],
+					dest: 'dist/rules.min.js'
+				}, {
+					src: ['<%= configure.lib.dest.manual %>'],
+					dest: 'dist/manual.min.js'
+				}]
+			},
+			beautify: {
+				files: [{
+					src: ['<%= configure.lib.dest.auto %>'],
+					dest: '<%= configure.lib.dest.auto %>'
+				}],
+				options: {
+					mangle: false,
+					compress: false,
+					beautify: true
+				}
 			}
 		},
 		connect: {
@@ -48,29 +87,43 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		mocha: {
-			commons: {
+		fixture: {
+			checks: {
+				src: ['build/test/engine.js', '<%= configure.lib.dest.test %>'],
+				dest: 'test/checks/index.html',
 				options: {
-					urls: ['http://localhost:<%= connect.test.options.port %>/test/commons/'],
+					fixture: 'test/checks/runner.tmpl',
+					testCwd: 'test/checks'
+				}
+			}
+		},
+		mocha: {
+			test: {
+				options: {
+					urls: ['http://localhost:<%= connect.test.options.port %>/test/checks/'],
 					reporter: 'XUnit',
+					timeout: 10000,
 					threshold: 90
 				},
 				dest: 'xunit.xml'
 			}
 		},
-		blanket_mocha: {
-			commons: {
+		mochaTest: {
+			test: {
 				options: {
-					urls: ['http://localhost:<%= connect.test.options.port %>/test/commons/'],
-					reporter: 'Spec',
-					threshold: 90
-				}
+					reporter: 'spec'
+				},
+				src: ['test/tasks/*.js']
 			}
 		},
-		fixture: {
-			commons: {
-				src: '<%= concat.lib.src %>',
-				dest: 'test/commons/index.html'
+		blanket_mocha: {
+			test: {
+				options: {
+					urls: ['http://localhost:<%= connect.test.options.port %>/test/checks/'],
+					reporter: 'Spec',
+					timeout: 10000,
+					threshold: 90
+				}
 			}
 		},
 		jshint: {
@@ -86,8 +139,8 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
-	grunt.registerTask('test', ['build', 'fixture', 'connect:test', grunt.option('report') ? 'mocha' : 'blanket_mocha']);
-	grunt.registerTask('build', ['concat']);
+	grunt.registerTask('test', ['mochaTest', 'build', 'fixture', 'connect:test', grunt.option('report') ? 'mocha' : 'blanket_mocha']);
+	grunt.registerTask('build', ['validate', 'configure', 'uglify']);
 	grunt.registerTask('default', ['build']);
 
 };

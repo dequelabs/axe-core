@@ -1,0 +1,12 @@
+{
+  "id": "fieldset",
+  "evaluate": "fieldset.js",
+  "after": "fieldset-after.js",
+  "metadata": {
+    "impact": "critical",
+    "messages": {
+      "pass": "Element is contained in a fieldset",
+      "fail": "{{? it.data && it.data.failureCode }}{{? it.data.failureCode === 'no-legend'}}Fieldset does not have a legend as its first child{{?? it.data.failureCode === 'empty-legend'}}Legend does not have text that is visible to screen readers{{?? it.data.failureCode === 'mixed-inputs'}}Fieldset contains unrelated inputs{{?? it.data.failureCode === 'no-group-label'}}ARIA group does not have aria-label or aria-labelledby{{?? it.data.failureCode === 'group-mixed-inputs'}}ARIA group contains unrelated inputs{{?}}{{??}}Element does not have a containing fieldset or ARIA group{{?}}"
+    }
+  }
+}

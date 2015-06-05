@@ -1,0 +1,19 @@
+{
+  "id": "region",
+  "selector": "html",
+  "pageLevel": true,
+  "enabled": false,
+  "tags": [
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "Ensures that all content on a page is contained within a landmark region",
+    "help": "Content must be contained in a region",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/html5-aria-landmarks"
+  },
+  "all": [],
+  "any": [
+    "region"
+  ],
+  "none": []
+}
