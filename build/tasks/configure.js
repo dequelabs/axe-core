@@ -19,9 +19,9 @@ module.exports = function (grunt) {
 		});
 		var that = this;
 		buildRules(grunt, options, function (result) {
-			grunt.file.write(that.data.dest.auto, 'dqre._load(' + result.auto + ');');
-			grunt.file.write(that.data.dest.manual, 'dqre._load(' + result.manual + ');');
-			grunt.file.write(that.data.dest.test, 'dqre._load(' + result.test + ');');
+			grunt.file.write(that.data.dest.auto, 'attest._load(' + result.auto + ');');
+			grunt.file.write(that.data.dest.manual, 'attest._load(' + result.manual + ');');
+			grunt.file.write(that.data.dest.test, 'attest._load(' + result.test + ');');
 			grunt.file.write(that.data.dest.descriptions, result.descriptions);
 			done();
 		});
