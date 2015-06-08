@@ -1,12 +1,12 @@
 {
-  "name": "attest-rules",
-  "description": "WorldSpace Attest Rules",
+  "name": "axe-rules",
+  "description": "aXe Rules",
   "version": "1.0.0",
   "authors": [
     "David Sturley <david.sturley@deque.com>"
   ],
   "private": true,
-  "main": "dist/attest-rules.js",
+  "main": "dist/axe-rules.js",
   "ignore": [
     "**/.*",
     "node_modules",

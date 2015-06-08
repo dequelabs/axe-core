@@ -18,9 +18,9 @@ module.exports = function (grunt) {
 		this.files.forEach(function (file) {
 			var commons = file.src[0];
 			buildRules(grunt, options, commons, function (result) {
-				grunt.file.write(that.data.dest.auto, 'attest._load(' + result.auto + ');');
-				grunt.file.write(that.data.dest.manual, 'attest._load(' + result.manual + ');');
-				grunt.file.write(that.data.dest.test, 'attest._load(' + result.test + ');');
+				grunt.file.write(that.data.dest.auto, 'axe._load(' + result.auto + ');');
+				grunt.file.write(that.data.dest.manual, 'axe._load(' + result.manual + ');');
+				grunt.file.write(that.data.dest.test, 'axe._load(' + result.test + ');');
 				grunt.file.write(that.data.dest.descriptions, result.descriptions);
 				done();
 			});

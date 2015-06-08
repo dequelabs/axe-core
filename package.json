@@ -1,7 +1,7 @@
 {
-  "name": "attest-rules",
-  "description": "WorldSpace Attest Rules",
-  "version": "0.7.0",
+  "name": "axe-rules",
+  "description": "aXe Rules",
+  "version": "1.0.0",
   "private": true,
   "author": {
     "name": "David Sturley",
