@@ -45,7 +45,22 @@ module.exports = function (grunt) {
 				files: [{
 					src: ['<%= concat.engine.dest %>'],
 					dest: 'dist/axe.min.js'
-				}]
+				}],
+				options: {
+					preserveComments: 'some'
+				}
+			}
+		},
+		copy: {
+			docs: {
+				src: ['doc/**/*'],
+				dest: 'dist/'
+			},
+			descriptions: {
+				src: ['*.html'],
+				expand: true,
+				cwd: 'bower_components/ks-rules/dist/',
+				dest: 'dist/doc/'
 			}
 		},
 		watch: {
@@ -122,6 +137,6 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('default', ['build']);
-	grunt.registerTask('build', ['concat', 'uglify']);
+	grunt.registerTask('build', ['concat', 'uglify', 'copy']);
 	grunt.registerTask('test', ['build', 'fixture', 'connect', 'if-missing:curl', 'testconfig', 'mocha', 'mochaTest']);
 };
