@@ -1,13 +1,13 @@
-/* global Rule, Tool */
-describe('configure', function () {
+/* global Rule, Tool, commons */
+describe('axe._load', function () {
 	'use strict';
 
 	afterEach(function () {
-		dqre._audit = null;
+		axe._audit = null;
 	});
 
 	it('should be a function', function () {
-		assert.isFunction(dqre._load);
+		assert.isFunction(axe._load);
 	});
 
 	it('should create a new audit', function () {
@@ -18,7 +18,7 @@ describe('configure', function () {
 			success = true;
 		};
 
-		dqre._load(audit);
+		axe._load(audit);
 		assert.isTrue(success);
 		window.Audit = orig;
 
@@ -29,13 +29,11 @@ describe('configure', function () {
 			rules: [{ id: 'monkeys' }, { id: 'bananas' }]
 		};
 
-		dqre._load(mockAudit);
-		assert.instanceOf(dqre._audit.rules[0], Rule);
-		assert.instanceOf(dqre._audit.rules[1], Rule);
-		assert.equal(dqre._audit.rules[0].id, 'monkeys');
-		assert.equal(dqre._audit.rules[1].id, 'bananas');
-
-
+		axe._load(mockAudit);
+		assert.instanceOf(axe._audit.rules[0], Rule);
+		assert.instanceOf(axe._audit.rules[1], Rule);
+		assert.equal(axe._audit.rules[0].id, 'monkeys');
+		assert.equal(axe._audit.rules[1].id, 'bananas');
 	});
 
 	it('should add tools to the Audit', function () {
@@ -43,20 +41,27 @@ describe('configure', function () {
 			tools: [{ id: 'monkeys' }, { id: 'bananas' }]
 		};
 
-		dqre._load(mockAudit);
-		assert.instanceOf(dqre._audit.tools.monkeys, Tool);
-		assert.instanceOf(dqre._audit.tools.bananas, Tool);
-		assert.equal(dqre._audit.tools.monkeys.id, 'monkeys');
-		assert.equal(dqre._audit.tools.bananas.id, 'bananas');
+		axe._load(mockAudit);
+		assert.instanceOf(axe._audit.tools.monkeys, Tool);
+		assert.instanceOf(axe._audit.tools.bananas, Tool);
+		assert.equal(axe._audit.tools.monkeys.id, 'monkeys');
+		assert.equal(axe._audit.tools.bananas.id, 'bananas');
 	});
 
-	it('should add the version of rules to dqre._audit', function () {
-		dqre._load({
+	it('should locally define commons', function () {
+		axe._load({
+			commons: 'foo'
+		});
+		assert.equal(commons, 'foo')
+	});
+
+	it('should add the version of rules to axe._audit', function () {
+		axe._load({
 			data: {},
 			rules: [],
 			version: 'monkeys'
 		});
-		assert.equal(dqre._audit.version, 'monkeys');
+		assert.equal(axe._audit.version, 'monkeys');
 	});
 
 	describe('respondable subscriber', function () {
@@ -67,10 +72,10 @@ describe('configure', function () {
 			var orig = window.utils.respondable.subscribe;
 
 			utils.respondable.subscribe = function (topic, callback) {
-				assert.ok(topic.indexOf('dqre.') === 0);
+				assert.ok(topic.indexOf('axe.') === 0);
 				assert.isFunction(callback);
 			};
-			dqre._load(mockAudit);
+			axe._load(mockAudit);
 
 			window.utils.respondable.subscribe = orig;
 		});
@@ -96,7 +101,7 @@ describe('configure', function () {
 					});
 
 				};
-				dqre._load(mockAudit);
+				axe._load(mockAudit);
 
 				window.utils.respondable.subscribe = origSub;
 				window.runRules = orig;
@@ -117,7 +122,7 @@ describe('configure', function () {
 					});
 
 				};
-				dqre._load({
+				axe._load({
 					rules: []
 				});
 
@@ -136,7 +141,7 @@ describe('configure', function () {
 				utils.respondable.subscribe = function (topic, callback) {
 					callback({ command: 'rules', context: { include: [] }}, function () {});
 				};
-				dqre._load({
+				axe._load({
 					rules: []
 				});
 				window.runRules = orig;
@@ -171,7 +176,7 @@ describe('configure', function () {
 					});
 
 				};
-				dqre._load(mockAudit);
+				axe._load(mockAudit);
 
 				window.utils.respondable.subscribe = origSub;
 				window.runTool = orig;
@@ -200,7 +205,7 @@ describe('configure', function () {
 					});
 
 				};
-				dqre._load(mockAudit);
+				axe._load(mockAudit);
 
 				window.utils.respondable.subscribe = origSub;
 				window.cleanupTools = orig;
@@ -214,17 +219,17 @@ describe('configure', function () {
 
 			utils.respondable.subscribe = function (topic, callback) {
 				callback({}, function responder(data) {
-					if (topic === 'dqre.start') {
+					if (topic === 'axe.start') {
 						assert.equal(data, expected);
-					} else if (topic === 'dqre.ping') {
-						assert.deepEqual(data, {dqre: true});
+					} else if (topic === 'axe.ping') {
+						assert.deepEqual(data, {axe: true});
 					} else {
 						assert.ok(false);
 					}
 				});
 
 			};
-			dqre._load({
+			axe._load({
 				rules: []
 			});
 
@@ -235,18 +240,18 @@ describe('configure', function () {
 
 	describe('style', function () {
 		afterEach(function () {
-			dqre._load({});
+			axe._load({});
 		});
 		it('should not throw if not given style', function () {
 			assert.doesNotThrow(function () {
-				dqre._load({});
+				axe._load({});
 			});
 		});
 
 		it('should inject a stylesheet', function () {
 			var styles = document.getElementsByTagName('style');
 			var length = styles.length;
-			dqre._load({
+			axe._load({
 				style: '.foo { color: red; }'
 			});
 			assert.lengthOf(styles, length + 1);
@@ -257,22 +262,22 @@ describe('configure', function () {
 		it('should remove previously injected sheets if no style is given', function () {
 			var styles = document.getElementsByTagName('style');
 			var length = styles.length;
-			dqre._load({
+			axe._load({
 				style: '.foo { color: red; }'
 			});
 			assert.lengthOf(styles, length + 1);
-			dqre._load({});
+			axe._load({});
 			assert.lengthOf(styles, length);
 		});
 
 		it('should replace previously injected styleSheets', function () {
 			var styles = document.getElementsByTagName('style');
 			var length = styles.length;
-			dqre._load({
+			axe._load({
 				style: '.foo { color: red; }'
 			});
 			assert.lengthOf(styles, length + 1);
-			dqre._load({
+			axe._load({
 				style: '.bar { color: red; }'
 			});
 			assert.lengthOf(styles, length + 1);

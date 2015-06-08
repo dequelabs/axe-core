@@ -5,7 +5,7 @@ var WebDriver = require('selenium-webdriver'),
 	SeleniumServer = require('selenium-webdriver/remote').SeleniumServer,
 	path = require('path'),
 	ksInject = require('../inject'),
-	ks = path.resolve(__dirname, '../../../../../kensington.min.js');
+	ks = path.resolve(__dirname, '../../../../../axe.min.js');
 
 var tagsToReplace = {
 	'&': '&amp;',

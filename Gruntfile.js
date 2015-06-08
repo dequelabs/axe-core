@@ -1,8 +1,9 @@
-/*jshint node: true, camelcase: false */
+/*jshint node: true, camelcase: false, maxstatements: false */
 
 module.exports = function (grunt) {
 	'use strict';
 
+	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-concat');
@@ -10,22 +11,30 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-curl');
+	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-if-missing');
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadTasks('build/tasks');
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-
+		clean: ['dist'],
 		concat: {
-			kensington: {
+			engine: {
 				src: ['lib/intro.stub',
-					'bower_components/ks-common-functions/dist/ks-cf.js',
-					'bower_components/rule-engine/dist/dqre.js',
-					'bower_components/ks-rules/dist/rules.js',
+					'bower_components/clone/lib/index.js',
+					'bower_components/matches-selector/lib/index.js',
+					'bower_components/escape-selector/lib/index.js',
+					'bower_components/node-uuid/uuid.js',
+					'lib/index.js',
+					'lib/*/index.js',
+					'lib/**/index.js',
+					'lib/**/*.js',
+					'bower_components/axe-rules/dist/axe-rules.js',
+					'lib/export.js',
 					'lib/outro.stub'
 				],
-				dest: 'build/kensington.js',
+				dest: 'dist/axe.js',
 				options: {
 					process: true
 				}
@@ -34,42 +43,36 @@ module.exports = function (grunt) {
 		uglify: {
 			lib: {
 				files: [{
-					src: ['<%= concat.kensington.dest %>'],
-					dest: 'dist/kensington.min.js'
-				}],
-				options: {
-					banner: '/*!\n * Copyright (C) ' + new Date().getFullYear() +
-						' Deque Systems Inc. All Rights Reserved\n * v<%=pkg.version %>\n */\n'
-				}
-			}
-		},
-		copy: {
-			docs: {
-				src: ['doc/**/*'],
-				dest: 'dist/'
-			},
-			rspec: {
-				src: ['*.gem'],
-				expand: true,
-				cwd: 'bower_components/ks-testdouble/dist/',
-				dest: 'dist/doc/examples/rspec-a11y/'
-			},
-			fixture: {
-				src: 'kensington.min.js',
-				expand: true,
-				cwd: 'dist',
-				dest: 'dist/doc/examples/rspec-a11y/features/fixtures/public/'
-			},
-			descriptions: {
-				src: ['*.html'],
-				expand: true,
-				cwd: 'bower_components/ks-rules/dist/',
-				dest: 'dist/doc/'
+					src: ['<%= concat.engine.dest %>'],
+					dest: 'dist/axe.min.js'
+				}]
 			}
 		},
 		watch: {
-			files: ['<%= concat.kensington.src %>', '<%= testconfig.test.src %>', '<%= copy.docs.src %>'],
+			files: ['<%= concat.engine.src %>', '<%= testconfig.test.src %>'],
 			tasks: ['build']
+		},
+		fixture: {
+			unit: {
+				src: '<%= concat.engine.src %>',
+				dest: 'test/unit/index.html',
+				options: {
+					fixture: 'test/unit/runner.tmpl',
+					testCwd: 'test/unit'
+				}
+			}
+		},
+		mocha: {
+			test: {
+				options: {
+					urls: ['http://localhost:<%= connect.test.options.port %>/test/unit/index.html'],
+					reporter: grunt.option('report') ? 'XUnit' : 'Spec',
+					run: true,
+					logErrors: true,
+					log: true
+				},
+				dest: grunt.option('report') ? 'xunit.xml' : undefined
+			}
 		},
 		mochaTest: {
 			test: {
@@ -119,6 +122,6 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('default', ['build']);
-	grunt.registerTask('build', ['concat', 'uglify', 'copy']);
-	grunt.registerTask('test', ['build', 'if-missing:curl', 'testconfig', 'connect', 'mochaTest']);
+	grunt.registerTask('build', ['concat', 'uglify']);
+	grunt.registerTask('test', ['build', 'fixture', 'connect', 'if-missing:curl', 'testconfig', 'mocha', 'mochaTest']);
 };

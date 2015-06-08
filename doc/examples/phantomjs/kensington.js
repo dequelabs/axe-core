@@ -17,10 +17,10 @@ page.open(args[1], function (status) {
 		return;
 	}
 
-	page.injectJs('../../../kensington.min.js');
+	page.injectJs('../../../axe.min.js');
 	page.framesName.forEach(function (name) {
 		page.switchToFrame(name);
-		page.injectJs('../../../kensington.min.js');
+		page.injectJs('../../../axe.min.js');
 	});
 	page.switchToMainFrame();
 	page.evaluateAsync(function () {

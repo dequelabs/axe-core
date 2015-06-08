@@ -32,11 +32,11 @@ describe('runTool', function () {
 
   afterEach(function () {
     fixture.innerHTML = '';
-    dqre._audit = null;
+    axe._audit = null;
   });
 
-  it('should publish itself as dqre.tool', function () {
-    assert.equal(runTool, dqre.tool);
+  it('should publish itself as axe.tool', function () {
+    assert.equal(runTool, axe.tool);
   });
 
   it('should throw if no audit is configured', function () {
@@ -52,7 +52,7 @@ describe('runTool', function () {
     target.id = 'target';
     fixture.appendChild(target);
 
-    dqre._load({
+    axe._load({
       rules: [],
       tools: [{
         id: 'html',
@@ -71,7 +71,7 @@ describe('runTool', function () {
 
   it('should work across frames', function (done) {
     this.timeout(5000);
-    dqre._load({
+    axe._load({
       rules: [],
       tools: [{
         id: 'html',

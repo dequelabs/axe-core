@@ -1,8 +1,8 @@
-describe('dqre.log', function () {
+describe('axe.log', function () {
 	'use strict';
 
 	it('should be a function', function () {
-		assert.isFunction(dqre.log);
+		assert.isFunction(axe.log);
 	});
 	it('should invoke console.log', function () {
 		if (!window.console || window.console.log) {
@@ -18,7 +18,7 @@ describe('dqre.log', function () {
 			assert.equal(arguments[1], expected[1]);
 		};
 
-		dqre.log.apply(dqre.log, expected);
+		axe.log.apply(axe.log, expected);
 		assert.isTrue(success);
 
 		window.console.log = orig;

@@ -7,7 +7,7 @@ describe('reporters - raw', function () {
 			cb('foo');
 		};
 
-		dqre.a11yCheck(document, { reporter: 'raw'}, function (r) {
+		axe.a11yCheck(document, { reporter: 'raw'}, function (r) {
 			assert.equal(r, 'foo');
 		});
 

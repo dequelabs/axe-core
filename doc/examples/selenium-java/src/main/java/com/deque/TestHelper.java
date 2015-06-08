@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class TestHelper {
 
-	private static String scriptFileName = "../../../kensington.min.js";
+	private static String scriptFileName = "../../../axe.min.js";
 	private static String lineSeparator = System.getProperty("line.separator");
 
 	/**

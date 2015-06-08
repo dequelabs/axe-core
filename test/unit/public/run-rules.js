@@ -1,23 +1,23 @@
 /*global runRules */
-describe('dqre.a11yCheck', function () {
+describe('axe.a11yCheck', function () {
 	'use strict';
 
 	describe('reporter', function () {
 
 		it('should throw if no audit is configured', function () {
-			dqre._audit = null;
+			axe._audit = null;
 
 			assert.throws(function () {
-				dqre.a11yCheck(document, {});
+				axe.a11yCheck(document, {});
 			}, Error, /^No audit configured/);
 		});
 
 		it('should allow for option-less invocation', function (done) {
 
-			dqre._load({ reporter: function (r, c) {
+			axe._load({ reporter: function (r, c) {
 				c(r);
 			}});
-			dqre.a11yCheck(document, function (result) {
+			axe.a11yCheck(document, function (result) {
 				assert.isArray(result);
 				assert.lengthOf(result, 0);
 				done();
@@ -26,12 +26,12 @@ describe('dqre.a11yCheck', function () {
 
 		it('should use specified reporter via options - anon function', function (done) {
 
-			dqre._load({
+			axe._load({
 				reporter: function () {
 					assert.fail('should not be called');
 				}
 			});
-			dqre.a11yCheck(document, { reporter: function (result) {
+			axe.a11yCheck(document, { reporter: function (result) {
 				assert.isArray(result);
 				assert.lengthOf(result, 0);
 				done();
@@ -41,30 +41,30 @@ describe('dqre.a11yCheck', function () {
 		it('should use specified reporter via options by name', function (done) {
 
 			var orig = window.reporters;
-			dqre._load({
+			axe._load({
 				reporter: function () {
 					assert.fail('should not be called');
 				}
 			});
-			dqre.reporter('foo', function (result) {
+			axe.reporter('foo', function (result) {
 				assert.isArray(result);
 				assert.lengthOf(result, 0);
 				window.reporters = orig;
 				done();
 			});
-			dqre.a11yCheck(document, { reporter: 'foo' });
+			axe.a11yCheck(document, { reporter: 'foo' });
 		});
 
 		it('should check configured reporter', function (done) {
 
-			dqre._load({
+			axe._load({
 				reporter: function (result) {
 					assert.isArray(result);
 					assert.lengthOf(result, 0);
 					done();
 				}
 			});
-			dqre.a11yCheck(document, null);
+			axe.a11yCheck(document, null);
 		});
 
 		it('fallback to default configured reporter', function (done) {
@@ -75,8 +75,8 @@ describe('dqre.a11yCheck', function () {
 				done();
 			};
 
-			dqre._load({});
-			dqre.a11yCheck(document, null);
+			axe._load({});
+			axe.a11yCheck(document, null);
 			window.defaultReporter = orig;
 		});
 	});
@@ -122,12 +122,12 @@ describe('runRules', function () {
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		dqre._audit = null;
+		axe._audit = null;
 	});
 
 	it('should work', function (done) {
 		this.timeout(5000);
-		dqre._load({ rules: [{
+		axe._load({ rules: [{
 			id: 'html',
 			selector: 'html',
 			any: [{
@@ -152,7 +152,7 @@ describe('runRules', function () {
 
 	it('should properly order iframes', function (done) {
 		this.timeout(5000);
-		dqre._load({ rules: [{
+		axe._load({ rules: [{
 			id: 'iframe',
 			selector: 'iframe',
 			any: [{
@@ -189,7 +189,7 @@ describe('runRules', function () {
 	});
 	it('should properly calculate context and return results from matching frames', function (done) {
 
-		dqre._load({
+		axe._load({
 			rules: [{
 				id: 'div#target',
 				selector: '#target',
@@ -276,7 +276,7 @@ describe('runRules', function () {
 	});
 
 	it('should pull metadata from configuration', function (done) {
-		dqre._load({
+		axe._load({
 			rules: [{
 				id: 'div#target',
 				selector: '#target',

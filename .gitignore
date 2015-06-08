@@ -3,7 +3,6 @@ bower_components
 node_modules
 build/selenium-server-standalone-*.jar
 build/test.json
-build/kensington.js
 doc/examples/selenium-java/.idea
 doc/examples/selenium-java/target
 test/unit/index.html

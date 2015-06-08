@@ -30,9 +30,9 @@ function runTest(driver, i) {
 		.then(function() {
 			//should give an error
 			driver.executeAsyncScript(function(rule) {
-					/*global dqre, document */
+					/*global axe, document */
 					var callback = arguments[arguments.length - 1];
-					dqre.a11yCheck(document, {
+					axe.a11yCheck(document, {
 						runOnly: {
 							type: 'rule',
 							values: [rule]

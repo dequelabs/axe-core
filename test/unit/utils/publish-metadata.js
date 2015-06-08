@@ -2,20 +2,20 @@ describe('utils.publishMetaData', function () {
 	'use strict';
 
 	afterEach(function () {
-		dqre._audit = null;
+		axe._audit = null;
 	});
 
 	it('should be a function', function () {
 		assert.isFunction(utils.publishMetaData);
 	});
 
-	it('should pull data from rules from dqre._audit.data', function () {
+	it('should pull data from rules from axe._audit.data', function () {
 		var expected = {
 			foo: 'bar',
 			bob: 'loblaw'
 		};
 
-		dqre._load({
+		axe._load({
 			rules: [],
 			data: {
 				rules: {
@@ -34,13 +34,13 @@ describe('utils.publishMetaData', function () {
 		assert.equal(result.bob, expected.bob);
 	});
 
-	it('should pull data from checks from dqre._audit.data', function () {
+	it('should pull data from checks from axe._audit.data', function () {
 		var expected = {
 			foo: 'bar',
 			bob: 'loblaw'
 		};
 
-		dqre._load({
+		axe._load({
 			rules: [],
 			data: {
 				checks: {
@@ -67,7 +67,7 @@ describe('utils.publishMetaData', function () {
 
 	it('should execute messages', function () {
 
-		dqre._load({
+		axe._load({
 			rules: [],
 			data: {
 				rules: {
@@ -186,7 +186,7 @@ describe('utils.publishMetaData', function () {
 
 
 	it('should not modify base configuration', function () {
-		dqre._load({
+		axe._load({
 			rules: [],
 			data: {
 				rules: {
@@ -233,9 +233,9 @@ describe('utils.publishMetaData', function () {
 			}]
 		});
 
-		assert.isNotNull(dqre._audit.data.checks['cats-PASS'].failureMessage);
-		assert.isNotNull(dqre._audit.data.checks['cats-ANY'].failureMessage);
-		assert.isNotNull(dqre._audit.data.checks['cats-ALL'].failureMessage);
+		assert.isNotNull(axe._audit.data.checks['cats-PASS'].failureMessage);
+		assert.isNotNull(axe._audit.data.checks['cats-ANY'].failureMessage);
+		assert.isNotNull(axe._audit.data.checks['cats-ALL'].failureMessage);
 
 	});
 
@@ -245,7 +245,7 @@ describe('utils.publishMetaData', function () {
 			bob: 'loblaw'
 		};
 
-		dqre._load({
+		axe._load({
 			rules: [{
 				id: 'foo',
 				tags: ['hai']

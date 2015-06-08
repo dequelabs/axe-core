@@ -1,7 +1,7 @@
 {
-  "name": "ks-integration",
-  "description": "Kensington Integration",
-  "version": "0.7.3",
+  "name": "axe-core",
+  "description": "aXe Core",
+  "version": "1.0.0",
   "private": true,
   "author": {
     "name": "David Sturley",

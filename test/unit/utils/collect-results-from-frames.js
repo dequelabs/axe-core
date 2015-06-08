@@ -20,9 +20,9 @@ describe('utils.collectResultsFromFrames', function () {
       }
       return 'cats';
     };
-    var origLog = dqre.log,
+    var origLog = axe.log,
       logCalled = false;
-    dqre.log = function (msg, actualFrame) {
+    axe.log = function (msg, actualFrame) {
       assert.equal(msg, 'Error returning results from frame: ');
       assert.equal(actualFrame, frame);
       logCalled = true;
@@ -34,7 +34,7 @@ describe('utils.collectResultsFromFrames', function () {
       utils.collectResultsFromFrames(context, {}, 'stuff', 'morestuff', function () {
         assert.isTrue(logCalled);
         window.setTimeout = orig;
-        dqre.log = origLog;
+        axe.log = origLog;
         done();
       });
     });
@@ -46,7 +46,7 @@ describe('utils.collectResultsFromFrames', function () {
   });
 
 	it('should not throw given a recursive iframe', function (done) {
-		dqre._load({
+		axe._load({
 			rules: [{
 				id: 'iframe',
 				selector: 'iframe',

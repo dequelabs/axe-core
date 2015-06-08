@@ -185,12 +185,12 @@ describe('Check', function () {
 			it('should not throw, but add any raised error as `error` on the returned object', function (done) {
 
 				var error = new Error('oh noes');
-				var orig = dqre.log;
-				dqre.log = function (msg, stack) {
+				var orig = axe.log;
+				axe.log = function (msg, stack) {
 					assert.equal(msg, error.message);
 					assert.equal(stack, error.stack);
 
-					dqre.log = orig;
+					axe.log = orig;
 					done();
 				};
 				assert.doesNotThrow(function () {
@@ -210,12 +210,12 @@ describe('Check', function () {
 			it('should not throw, but pass any raised error as the first parameter to callback - async', function (done) {
 
 				var error = new Error('oh noes');
-				var orig = dqre.log;
-				dqre.log = function (msg, stack) {
+				var orig = axe.log;
+				axe.log = function (msg, stack) {
 					assert.equal(msg, error.message);
 					assert.equal(stack, error.stack);
 
-					dqre.log = orig;
+					axe.log = orig;
 					done();
 				};
 				assert.doesNotThrow(function () {

@@ -1,8 +1,8 @@
-describe('dqre.getRules', function() {
+describe('axe.getRules', function() {
 	'use strict';
 
 	beforeEach(function() {
-		dqre._load({
+		axe._load({
 			messages: [],
 			rules: [{
 				id: 'awesomeRule1',
@@ -29,11 +29,11 @@ describe('dqre.getRules', function() {
 	});
 
 	afterEach(function() {
-		dqre._audit = null;
+		axe._audit = null;
 	});
 
 	it('should return rules', function() {
-		var retValue = dqre.getRules(['tag1']);
+		var retValue = axe.getRules(['tag1']);
 		assert.isArray(retValue);
 		assert.lengthOf(retValue, 2);
 		assert.equal(retValue[0].ruleId, 'awesomeRule1');
@@ -41,7 +41,7 @@ describe('dqre.getRules', function() {
 		assert.equal(retValue[1].ruleId, 'awesomeRule2');
 		assert.equal(retValue[1].description, 'also some interesting information');
 
-		retValue = dqre.getRules(['tag2']);
+		retValue = axe.getRules(['tag2']);
 		assert.isArray(retValue);
 		assert.lengthOf(retValue, 1);
 		assert.equal(retValue[0].ruleId, 'awesomeRule2');
@@ -49,13 +49,13 @@ describe('dqre.getRules', function() {
 	});
 
 	it('should not return nothing', function() {
-		var retValue = dqre.getRules(['bob']);
+		var retValue = axe.getRules(['bob']);
 		assert.isArray(retValue);
 		assert.lengthOf(retValue, 0);
 	});
 
 	it('should return all rules if given no tags - undefined', function() {
-		var retValue = dqre.getRules();
+		var retValue = axe.getRules();
 		assert.equal(retValue[0].ruleId, 'awesomeRule1');
 		assert.equal(retValue[0].description, 'some interesting information');
 		assert.equal(retValue[1].ruleId, 'awesomeRule2');
@@ -63,7 +63,7 @@ describe('dqre.getRules', function() {
 	});
 
 	it('should return all rules if given empty array', function() {
-		var retValue = dqre.getRules([]);
+		var retValue = axe.getRules([]);
 		assert.equal(retValue[0].ruleId, 'awesomeRule1');
 		assert.equal(retValue[0].description, 'some interesting information');
 		assert.equal(retValue[1].ruleId, 'awesomeRule2');

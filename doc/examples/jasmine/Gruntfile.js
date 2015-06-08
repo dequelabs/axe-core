@@ -6,7 +6,7 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		jasmine: {
 			test: {
-				src: ['../../../kensington.min.js'],
+				src: ['../../../axe.min.js'],
 				options: {
 					specs: 'spec/**/*.js'
 				}
