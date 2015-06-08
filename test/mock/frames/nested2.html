@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+	<title>Test Nest Frame</title>
+	<script src="../../../dist/dqre.js"></script>
+	<script>
+		dqre._load({
+			rules: [{
+				id: 'iframe',
+				selector: 'iframe',
+				any: [{
+					id: 'iframe',
+					evaluate: function () {
+						return true;
+					}
+				}]
+			}],
+			messages: {}
+		});
+	</script>
+</head>
+<body>
+	Hi
+</body>
+</html>

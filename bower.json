@@ -1,19 +1,23 @@
 {
-  "name": "ks-integration",
-  "version": "0.7.3",
+  "name": "axe-core",
+  "description": "aXe",
+  "version": "1.0.0",
   "authors": [
-    "Mike Kozlowski <mike.kozlowski@deque.com>"
+    "David Sturley <david.sturley@deque.com>"
   ],
-  "description": "Kensington Integration",
-  "license": "Commercial",
+  "main": "dist/axe.js",
   "private": true,
   "ignore": [
-    "**/.*",
     "node_modules",
-    "bower_components"
+    "bower_components",
+    "test",
+    "build"
   ],
-  "dependencies": {
-    "ks-rules": "git@bitbucket.org:dmusser/ks-rules.git#v0.6.3",
-    "rule-engine": "git@bitbucket.org:dmusser/rule-engine.git#v0.6.2"
+  "devDependencies": {
+    "node-uuid": "~1.4.1",
+    "axe-rules": "git@bitbucket.org:dmusser/axe-rules.git",
+    "escape-selector": "git@bitbucket.org:dmusser/escape-selector.git#v0.0.1",
+    "matches-selector": "git@bitbucket.org:dmusser/matches-selector.git#v0.0.1",
+    "clone": "git@bitbucket.org:dmusser/clone.git#v0.0.1"
   }
 }
