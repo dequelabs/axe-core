@@ -30,7 +30,7 @@ module.exports = function (grunt) {
 					'lib/*/index.js',
 					'lib/**/index.js',
 					'lib/**/*.js',
-					'bower_components/axe-rules/dist/axe-rules.js',
+					'bower_components/axe-rules/dist/rules.js',
 					'lib/export.js',
 					'lib/outro.stub'
 				],

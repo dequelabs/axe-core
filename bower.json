@@ -5,6 +5,7 @@
   "authors": [
     "David Sturley <david.sturley@deque.com>"
   ],
+
   "main": "dist/axe.js",
   "private": true,
   "ignore": [
@@ -15,7 +16,7 @@
   ],
   "devDependencies": {
     "node-uuid": "~1.4.1",
-    "axe-rules": "git@bitbucket.org:dmusser/axe-rules.git",
+    "axe-rules": "http://anon:83071a2e17ba24bdb4fb7af22c53e23b@kmbuilds.dequecloud.com:8088/job/axe-rules/lastSuccessfulBuild/artifact/*zip*/archive.zip",
     "escape-selector": "git@bitbucket.org:dmusser/escape-selector.git#v0.0.1",
     "matches-selector": "git@bitbucket.org:dmusser/matches-selector.git#v0.0.1",
     "clone": "git@bitbucket.org:dmusser/clone.git#v0.0.1"
