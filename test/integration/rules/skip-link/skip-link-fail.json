@@ -1,0 +1,5 @@
+{
+	"description": "skip-link fail test",
+	"rule": "skip-link",
+	"violations": [["#firstlink"]]
+}

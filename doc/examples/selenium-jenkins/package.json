@@ -1,0 +1,21 @@
+{
+  "name": "ks-webdriverjs-example",
+  "description": "Kensington WebDriverJS Example",
+  "version": "0.0.1",
+  "private": true,
+  "author": {
+    "name": "David Sturley",
+    "organization": "Deque Systems, Inc.",
+    "url": "http://deque.com/"
+  },
+  "dependencies": {},
+  "scripts": {
+    "build": "grunt"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "selenium-webdriver": "~2.45.0",
+    "grunt-curl": "~1.5.1",
+    "grunt-if-missing": "~1.0.0"
+  }
+}

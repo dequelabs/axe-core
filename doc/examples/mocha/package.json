@@ -1,0 +1,20 @@
+{
+  "name": "ks-mocha-example",
+  "description": "Kensington Mocha Example",
+  "version": "0.0.1",
+  "private": true,
+  "author": {
+    "name": "David Sturley",
+    "organization": "Deque Systems, Inc.",
+    "url": "http://deque.com/"
+  },
+  "dependencies": {},
+  "scripts": {
+    "build": "grunt"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-mocha": "~0.4.10",
+    "chai": "~1.9.1"
+  }
+}

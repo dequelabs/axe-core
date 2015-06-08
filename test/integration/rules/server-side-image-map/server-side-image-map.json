@@ -1,0 +1,5 @@
+{
+	"description": "server-side-image-map test",
+	"rule": "server-side-image-map",
+	"violations": [["#fail"]]
+}

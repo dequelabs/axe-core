@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Data Table Test</title>
+<script src="/dist/kensington.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<!-- no caption - disabled by default -->
+<table id="bestpractice1">
+		<tr>
+			<th scope="col">1</th>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+	<!-- table cell with no header -->
+	<table id="fail2">
+		<caption>Hello</caption>
+		<tr>
+			<td>1</td>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+	<!-- no visible text -->
+	<table id="fail3">
+		<caption>Hello</caption>
+		<tr>
+			<th scope="col"><span style="display: none">1</span></th>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+	<!-- bad headers reference -->
+	<table id="fail4">
+		<caption>Hello</caption>
+		<tr>
+			<td headers="foo">1</td>
+			<td headers="bar">2</td>
+		</tr>
+	</table>
+
+	<!-- no scope on TH -->
+	<table id="fail5">
+		<caption>Hello</caption>
+		<tr>
+			<th>1</th>
+			<th>2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+	<!-- headers attr on TH -->
+	<div id="exist">Hi</div>
+	<table id="fail6">
+		<caption>Hello</caption>
+		<tr>
+			<th headers="exist">1</th>
+			<th headers="exist">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+
+
+	<!-- more than one row of TH column headers -->
+	<table id="fail7">
+		<caption>Hello</caption>
+		<tr>
+			<th scope="col">1</th>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<th scope="col">1</th>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+	<!-- more than one column of TH row headers -->
+	<table id="fail8">
+		<caption>Hello</caption>
+		<tr>
+			<th scope="row">1</th>
+			<th scope="row">2</th>
+			<td>3</td>
+		</tr>
+		<tr>
+			<th scope="row">1</th>
+			<th scope="row">2</th>
+			<td>3</td>
+		</tr>
+	</table>
+
+	<!-- same caption as summary -->
+	<table id="fail9" summary="Hello">
+		<caption>Hello</caption>
+		<tr>
+			<th scope="col">1</th>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+	<!-- rowspan -->
+	<table id="fail10">
+		<caption>Hello</caption>
+		<tr>
+			<th scope="col">1</th>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<td rowspan="2">1</td>
+			<td>2</td>
+		</tr>
+		<tr>
+			<td>22</td>
+		</tr>
+	</table>
+
+	<!-- consistent columns -->
+	<table id="fail11">
+		<caption>Hello</caption>
+		<tr>
+			<th scope="col">1</th>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+			<td>3</td>
+		</tr>
+	</table>
+
+
+	<!-- layout tables -->
+	<table role="presentation">
+		<tr>
+			<th scope="col">1</th>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+	<table>
+		<tr>
+			<td>hi</td>
+		</tr>
+		<tr>
+			<td>hi</td>
+		</tr>
+		<tr>
+			<td>hi</td>
+		</tr>
+	</table>
+
+	<table>
+		<tr>
+			<td>hi</td>
+			<td>hi</td>
+			<td>hi</td>
+		</tr>
+	</table>
+
+
+	<table id="pass1">
+		<caption>Hello</caption>
+		<tr>
+			<th scope="col">1</th>
+			<th scope="col">2</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+	<!-- table w/ aria-label -->
+  <table id="pass2" role="grid">
+   <tbody><tr role="row">
+    <td class="text" role="gridcell" aria-label="Text-level semantics"><a href="javascript:;"><span>link</span></a></td>
+    <td class="interactive" role="gridcell" aria-label="Interactive"><a href="javascript:;"><span>alert</span></a></td>
+    <td class="interactive" role="gridcell" aria-label="Interactive"><a href="javascript:;"><span>alertdialog</span></a></td>
+    <td class="invisible" role="presentation"></td>
+    <td class="invisible" role="presentation"></td>
+    <td class="invisible" role="presentation"></td>
+    <td class="invisible" role="presentation"></td>
+    <td class="invisible" role="presentation"></td>
+    <td class="structure" role="gridcell" aria-label="Document structure"><a href="javascript:;"><span>none</span></a></td>
+    <td class="structure" role="gridcell" aria-label="Document structure"><a href="javascript:;"><span>presen-tation</span></a></td>
+    <td class="structure" role="gridcell" aria-label="Document structure"><a href="javascript:;"><span>main</span></a></td>
+    <td class="embedding" role="gridcell" aria-label="Embedding content"><a href="javascript:;"><span>img</span></a></td>
+   </tr>
+   <tr role="row">
+    <td class="interactive" role="gridcell" aria-label="Interactive"><a href="javascript:;"><span>log</span></a></td>
+    <td class="interactive" role="gridcell" aria-label="Interactive"><a href="javascript:;"><span>menuitem-radio</span></a></td>
+    <td class="interactive" role="gridcell" aria-label="Interactive"><a href="javascript:;"><span>tab</span></a></td>
+    <td class="interactive" role="gridcell" aria-label="Interactive"><a href="javascript:;"><span>treeitem</span></a></td>
+    <td class="form" role="gridcell" aria-label="Forms"><a href="javascript:;"><span>form</span></a></td>
+    <td class="form" role="gridcell" aria-label="Forms"><a href="javascript:;"><span>textbox</span></a></td>
+    <td class="form" role="gridcell" aria-label="Forms"><a href="javascript:;"><span>searchbox</span></a></td>
+    <td class="structure" role="gridcell" aria-label="Document structure"><a href="javascript:;"><span>article</span></a></td>
+    <td class="structure" role="gridcell" aria-label="Document structure"><a href="javascript:;"><span>group</span></a></td>
+    <td class="structure" role="gridcell" aria-label="Document structure"><a href="javascript:;"><span>text</span></a></td>
+    <td class="structure" role="gridcell" aria-label="Document structure"><a href="javascript:;"><span>banner</span></a></td>
+    <td class="table" role="gridcell" aria-label="Tabular data"><a href="javascript:;"><span>grid</span></a></td>
+   </tr>
+  </tbody></table>
+
+	<!-- aria-labelledby -->
+    <table id="pass3" role="grid">
+     <tbody><tr role="row">
+      <td class="text" role="gridcell" aria-labelledby="text"><a href="javascript:;"><span>link</span></a></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="invisible" role="presentation"></td>
+      <td class="sections" role="gridcell" aria-labelledby="sections"><a href="javascript:;"><span>main</span></a></td>
+      <td class="embedding" role="gridcell" aria-labelledby="embedding"><a href="javascript:;"><span>img</span></a></td>
+     </tr>
+     <tr role="row">
+      <td class="interactive" role="gridcell" aria-labelledby="interactive"><a href="javascript:;"><span>alert</span></a></td>
+      <td class="interactive" role="gridcell" aria-labelledby="interactive"><a href="javascript:;"><span>alertdialog</span></a></td>
+      <td class="interactive" role="gridcell" aria-labelledby="interactive"><a href="javascript:;"><span>menuitem-radio</span></a></td>
+      <td class="interactive" role="gridcell" aria-labelledby="interactive"><a href="javascript:;"><span>tab</span></a></td>
+      <td class="interactive" role="gridcell" aria-labelledby="interactive"><a href="javascript:;"><span>treeitem</span></a></td>
+      <td class="form" role="gridcell" aria-labelledby="form"><a href="javascript:;"><span>form</span></a></td>
+      <td class="form" role="gridcell" aria-labelledby="form"><a href="javascript:;"><span>textbox</span></a></td>
+      <td class="sections" role="gridcell" aria-labelledby="sections"><a href="javascript:;"><span>article</span></a></td>
+      <td class="sections" role="gridcell" aria-labelledby="sections"><a href="javascript:;"><span>group</span></a></td>
+      <td class="sections" role="gridcell" aria-labelledby="sections"><a href="javascript:;"><span>presen-tation</span></a></td>
+      <td class="sections" role="gridcell" aria-labelledby="sections"><a href="javascript:;"><span>banner</span></a></td>
+      <td class="table" role="gridcell" aria-labelledby="table"><a href="javascript:;"><span>grid</span></a></td>
+     </tr>
+    </tbody></table>
+  <h3>Legend</h3>
+  <ul id="legend" class="clearfix">
+    <li class="form" id="form"><div class="icon"></div>Forms</li>
+    <li class="table" id="table"><div class="icon"></div>Tabular data</li>
+    <li class="sections" id="sections"><div class="icon"></div>Document sections</li>
+    <li class="interactive" id="interactive"><div class="icon"></div>Interactive elements</li>
+    <li class="embedding" id="embedding"><div class="icon"></div>Embedding content</li>
+    <li class="text" id="text"><div class="icon"></div>Text-level semantics</li>
+  </ul>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Button Test</title>
+<script src="/dist/kensington.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<button id="empty"></button>
+<button id="text">Name</button>
+<button id="val" value="Button Name"></button>
+<button id="al" aria-label="Name"></button>
+<button id="alempty" aria-label=""></button>
+<button id="alb" aria-labelledby="labeldiv"></button>
+<button id="albmissing" aria-labelledby="nonexistent"></button>
+<button id="albempty" aria-labelledby="emptydiv"></button>
+<div id="labeldiv">Button label</div>
+<div id="emptydiv"></div>
+<button id="combo" aria-label="Aria Name">Name</button>
+<button id="dupetext"><img alt="Link text">Link text</button>
+<button id="oktext"><img alt="Img alt text">Link text</button>
+</body>
+</html>
