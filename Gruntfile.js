@@ -2,7 +2,6 @@
 module.exports = function (grunt) {
 	'use strict';
 
-	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
@@ -39,7 +38,7 @@ module.exports = function (grunt) {
 					'lib/commons/intro.stub',
 					'lib/commons/index.js',
 					'bower_components/clone/lib/index.js',
-					'bower_components/matches-selector/lib/index.js',
+					'bower_components/element-matches/lib/index.js',
 					'bower_components/escape-selector/lib/index.js',
 					'lib/commons/*/index.js',
 					'lib/commons/**/*.js',

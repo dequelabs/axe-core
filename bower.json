@@ -13,8 +13,8 @@
     "test"
   ],
   "devDependencies": {
-    "escape-selector": "git@bitbucket.org:dmusser/escape-selector.git#v0.0.1",
-    "matches-selector": "git@bitbucket.org:dmusser/matches-selector.git#v0.0.1",
-    "clone": "git@bitbucket.org:dmusser/clone.git#v0.0.1"
+    "escape-selector": "0.0.1",
+    "element-matches": "0.0.1",
+    "simple-clone": "0.0.1"
   }
 }
