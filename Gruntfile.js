@@ -76,7 +76,10 @@ module.exports = function (grunt) {
 				}, {
 					src: ['<%= configure.lib.dest.manual %>'],
 					dest: 'dist/manual.min.js'
-				}]
+				}],
+				options: {
+					preserveComments: 'some'
+				}
 			},
 			beautify: {
 				files: [{
@@ -86,7 +89,8 @@ module.exports = function (grunt) {
 				options: {
 					mangle: false,
 					compress: false,
-					beautify: true
+					beautify: true,
+					preserveComments: 'some'
 				}
 			}
 		},
