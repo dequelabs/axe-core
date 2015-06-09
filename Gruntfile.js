@@ -37,7 +37,7 @@ module.exports = function (grunt) {
 				src: [
 					'lib/commons/intro.stub',
 					'lib/commons/index.js',
-					'bower_components/clone/lib/index.js',
+					'bower_components/simple-clone/lib/index.js',
 					'bower_components/element-matches/lib/index.js',
 					'bower_components/escape-selector/lib/index.js',
 					'lib/commons/*/index.js',
