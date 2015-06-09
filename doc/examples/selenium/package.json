@@ -1,6 +1,6 @@
 {
-  "name": "ks-webdriverjs-example",
-  "description": "Kensington WebDriverJS Example",
+  "name": "axe-webdriverjs-example",
+  "description": "aXe WebDriverJS Example",
   "version": "0.0.1",
   "private": true,
   "author": {

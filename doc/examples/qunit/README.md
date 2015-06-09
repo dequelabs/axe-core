@@ -1,7 +1,6 @@
 # QUnit README #
 
-This example demonstrates how to use Kensington Automated Testing with the
-QUnit unit testing framework. 
+This example demonstrates how to use aXe with the QUnit unit testing framework.
 
 The unit test is in `test/a11y.js`, and has two test cases: One that shows the
 expected results from HTML with no errors, and one that shows the expected
@@ -29,11 +28,10 @@ failures.
 To run the example on your own HTML, such as widgets or controls, insert the
 HTML into the document, retrieve the root element of your widget (with e.g.,
 `document.getElementById()`), and pass that as the first argument into a call
-to `dqre.a11yCheck`.  
+to `axe.a11yCheck`.  
 
-The third argument to the `dqre.a11yCheck` call should be the function to test
+The third argument to the `axe.a11yCheck` call should be the function to test
 the results. The example is simply looking at the count of violations, but much
-more detailed information is available if desired.  The Kensington Automated
-Testing documentation should be consulted for more details on customizing and
-analyzing calls to `dqre.a11yCheck`.
-
+more detailed information is available if desired.  The aXe documentation
+should be consulted for more details on customizing and
+analyzing calls to `axe.a11yCheck`.

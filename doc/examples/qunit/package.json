@@ -1,6 +1,6 @@
 {
-  "name": "ks-qunit-example",
-  "description": "Kensington QUnit Example",
+  "name": "axe-qunit-example",
+  "description": "aXe QUnit Example",
   "version": "0.0.1",
   "private": true,
   "author": {

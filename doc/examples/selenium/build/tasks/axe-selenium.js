@@ -9,7 +9,7 @@ var WebDriver = require('selenium-webdriver'),
 
 module.exports = function (grunt) {
 	var ksSource = grunt.file.read(ks);
-	grunt.registerMultiTask('ks-selenium', function () {
+	grunt.registerMultiTask('axe-selenium', function () {
 
 		var jar = this.options({jar: 'build/selenium-server-standalone-2.45.0.jar'}).jar,
 			done = this.async(),
@@ -36,9 +36,9 @@ module.exports = function (grunt) {
 				.then(function () {
 					ksInject(ksSource, driver, function () {
 						driver.executeAsyncScript(function () {
-							/*global document, dqre, window */
+							/*global document, axe, window */
 							var callback = arguments[arguments.length - 1];
-							dqre.a11yCheck(document, null, function (results) {
+							axe.a11yCheck(document, null, function (results) {
 								callback({results: results, url: window.location.href});
 							});
 						})

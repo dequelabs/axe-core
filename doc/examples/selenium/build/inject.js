@@ -29,16 +29,16 @@ function findFramesAndInject(parent, script, driver) {
 }
 
 /**
- * Recursively inject Kensington into all iframes and top level document, then execute a callback when complete
+ * Recursively inject aXe into all iframes and top level document, then execute a callback when complete
  * @param  {String}   filepath    The path to axe.min.js distribution file
  * @param  {WebDriver}   driver   Instance of WebDriver to inject into
- * @param  {Function} callback    Callback to execute when Kensington has been injected
+ * @param  {Function} callback    Callback to execute when aXe has been injected
  */
-module.exports = function (ksSource, driver, callback) {
+module.exports = function (axeSource, driver, callback) {
 
 	var script = '(function () {' +
 		'var s = document.createElement("script");' +
-		's.innerHTML = ' + JSON.stringify(ksSource) + ';' +
+		's.innerHTML = ' + JSON.stringify(axeSource) + ';' +
 		'document.body.appendChild(s);' +
 		'}());';
 

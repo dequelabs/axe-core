@@ -1,6 +1,6 @@
 {
-  "name": "ks-mocha-example",
-  "description": "Kensington Mocha Example",
+  "name": "axe-mocha-example",
+  "description": "aXe Mocha Example",
   "version": "0.0.1",
   "private": true,
   "author": {

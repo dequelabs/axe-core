@@ -59,7 +59,7 @@ module.exports = function (grunt) {
 			descriptions: {
 				src: ['*.html'],
 				expand: true,
-				cwd: 'bower_components/ks-rules/dist/',
+				cwd: 'bower_components/axe-rules/dist/',
 				dest: 'dist/doc/'
 			}
 		},

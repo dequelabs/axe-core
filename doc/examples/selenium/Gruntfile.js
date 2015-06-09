@@ -19,7 +19,7 @@ module.exports = function (grunt) {
 				src: url
 			}
 		},
-		'ks-selenium': {
+		'axe-selenium': {
 			urls: [
 				'http://localhost:5005/'
 			],
@@ -30,5 +30,5 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('dependencies', ['if-missing:curl']);
-	grunt.registerTask('test', ['dependencies', 'ks-selenium']);
+	grunt.registerTask('test', ['dependencies', 'axe-selenium']);
 };

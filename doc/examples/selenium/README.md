@@ -1,7 +1,7 @@
 # Selenium README #
 
-This example demonstrates how to use Kensington Automated Testing with the
-Selenium browser automation tool and Node development tools.
+This example demonstrates how to use aXe with the Selenium browser automation
+tool and Node development tools.
 
 Selenium integration enables testing of full pages and sites.
 
@@ -22,16 +22,15 @@ Selenium integration enables testing of full pages and sites.
 * `grunt test` to run Selenium
 
 This should launch an automated Firefox window, load and analyze the
-configured web pages, and then output Kensington Automated Test results to JSON
+configured web pages, and then output aXe test results to JSON
 files, one per URL.
 
 ## To modify the example ##
 
 To run the example on your own web pages, edit Gruntfile.js. The `urls`
 property of the ks-selenium task controls which URLs the example will run on,
-so simply edit that property to put in the URLs you wish to test. 
+so simply edit that property to put in the URLs you wish to test.
 
-The example is simply logging the analysis results to files.  The Kensington
-Automated Testing documentation should be consulted for more details on
-customizing and analyzing calls to `dqre.a11yCheck`.
-
+The example is simply logging the analysis results to files.  The aXe
+documentation should be consulted for more details on customizing and
+analyzing calls to `axe.a11yCheck`.

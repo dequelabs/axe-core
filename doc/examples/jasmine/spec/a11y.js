@@ -1,6 +1,6 @@
-/* global describe, it, expect, dqre, document */
+/* global describe, it, expect, axe, document */
 
-describe('dqre', function () {
+describe('axe', function () {
 	'use strict';
 
 	document.getElementsByTagName('body')[0].insertAdjacentHTML('beforeend',
@@ -14,7 +14,7 @@ describe('dqre', function () {
 
 	it('should report that good HTML is good', function (done) {
 		var n = document.getElementById('working');
-		dqre.a11yCheck(n, null, function (result) {
+		axe.a11yCheck(n, null, function (result) {
 			expect(result.violations.length).toBe(0);
 			done();
 		});
@@ -22,10 +22,9 @@ describe('dqre', function () {
 
 	it('should report that bad HTML is bad', function (done) {
 		var n = document.getElementById('broken');
-		dqre.a11yCheck(n, null, function (result) {
+		axe.a11yCheck(n, null, function (result) {
 			expect(result.violations.length).toBe(1);
 			done();
 		});
 	});
 });
-
