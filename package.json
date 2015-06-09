@@ -2,7 +2,7 @@
   "name": "axe-rules",
   "description": "aXe Rules",
   "version": "1.0.0",
-  "private": true,
+  "license": "MPL-2.0",
   "author": {
     "name": "David Sturley",
     "organization": "Deque Systems, Inc.",
