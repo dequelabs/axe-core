@@ -52,7 +52,7 @@ describe('axe._load', function () {
 		axe._load({
 			commons: 'foo'
 		});
-		assert.equal(commons, 'foo')
+		assert.equal(commons, 'foo');
 	});
 
 	it('should add the version of rules to axe._audit', function () {

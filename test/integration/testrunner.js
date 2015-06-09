@@ -1,3 +1,4 @@
+/*jshint node: true */
 var WebDriver = require('selenium-webdriver'),
 	assert = require('chai').assert,
 	test = require('selenium-webdriver/testing'),
