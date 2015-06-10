@@ -22,8 +22,6 @@ module.exports = function (grunt) {
 			var commons = file.src[0];
 			buildRules(grunt, options, commons, function (result) {
 				grunt.file.write(that.data.dest.auto, copyright + '\naxe._load(' + result.auto + ');');
-				grunt.file.write(that.data.dest.manual, copyright + '\naxe._load(' + result.manual + ');');
-				grunt.file.write(that.data.dest.test, copyright + '\naxe._load(' + result.test + ');');
 				grunt.file.write(that.data.dest.descriptions, result.descriptions);
 				done();
 			});

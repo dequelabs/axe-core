@@ -2,6 +2,8 @@
 module.exports = function (grunt) {
 	'use strict';
 
+	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
@@ -12,10 +14,24 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		clean: ["dist"],
+		clean: ['dist'],
 		watch: {
 			files: ['test/**/*', 'lib/**/*'],
 			tasks: ['fixture', 'build']
+		},
+		copy: {
+			manifests: {
+				files: [{
+					src: ['package.json'],
+					dest: 'dist/'
+				}, {
+					src: ['README.md'],
+					dest: 'dist/'
+				}, {
+					src: ['bower.json'],
+					dest: 'dist/'
+				}]
+			}
 		},
 		configure: {
 			lib: {
@@ -153,7 +169,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
 	grunt.registerTask('test', ['build', 'fixture', 'connect:test', 'mocha']);
-	grunt.registerTask('build', ['validate', 'concat', 'configure', 'uglify']);
+	grunt.registerTask('build', ['clean', 'validate', 'concat', 'copy', 'configure']);
 	grunt.registerTask('default', ['build']);
 
 };
