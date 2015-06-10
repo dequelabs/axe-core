@@ -1,12 +1,28 @@
 {
   "name": "axe-rules",
-  "description": "aXe Rules",
-  "version": "1.0.0",
+  "description": "The Accessibility Rules for automated testing of HTML-based user interfaces",
+  "version": "1.0.1",
   "license": "MPL-2.0",
   "author": {
     "name": "David Sturley",
     "organization": "Deque Systems, Inc.",
     "url": "http://deque.com/"
+  },
+  "keywords": [
+    "Accessibility",
+    "a11y",
+    "testing",
+    "unit",
+    "testing",
+    "tdd",
+    "bdd",
+    "accessibility",
+    "testing",
+    "aXe"
+  ],
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/dequelabs/axe-rules.git"
   },
   "dependencies": {},
   "scripts": {
