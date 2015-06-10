@@ -1,0 +1,6 @@
+{
+	"description": "video-description test",
+	"rule": "video-description",
+	"violations": [["#fail1"], ["#fail2"]],
+	"passes": [["#pass1"], ["#pass2"]]
+}

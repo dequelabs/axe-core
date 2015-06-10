@@ -1,0 +1,6 @@
+{
+	"description": "audio-caption test",
+	"rule": "audio-caption",
+	"violations": [["#empty"]],
+	"passes": [["#caption"]]
+}

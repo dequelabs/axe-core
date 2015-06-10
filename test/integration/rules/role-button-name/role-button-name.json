@@ -1,0 +1,6 @@
+{
+	"description": "role-button-name test",
+	"rule": "button-name",
+	"violations": [["#empty"], ["#alempty"], ["#albmissing"], ["#albempty"]],
+	"passes": [["#text"], ["#al"], ["#alb"], ["#combo"]]
+}

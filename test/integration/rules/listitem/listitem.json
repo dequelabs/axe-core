@@ -1,0 +1,6 @@
+{
+	"description": "listitem test",
+	"rule": "listitem",
+	"violations": [["#uncontained"]],
+	"passes": [["#contained"], ["#alsocontained"]]
+}

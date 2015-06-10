@@ -1,0 +1,15 @@
+{
+	"description": "aria-valid-attr tests",
+	"rule": "aria-valid-attr",
+	"violations": [
+		["#violation1"], ["#violation2"], ["#violation3"], ["#violation4"], ["#violation5"],
+		["#violation6"], ["#violation7"], ["#violation8"]
+	],
+	"passes":  [
+		["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"], ["#pass5"], ["#pass6"], ["#pass7"],
+		["#pass8"], ["#pass9"], ["#pass10"], ["#pass11"], ["#pass12"], ["#pass13"], ["#pass14"],
+		["#pass15"], ["#pass16"], ["#pass17"], ["#pass18"], ["#pass19"], ["#pass20"], ["#pass21"],
+		["#pass22"], ["#pass23"], ["#pass24"], ["#pass25"], ["#pass26"], ["#pass27"], ["#pass28"],
+		["#pass29"], ["#pass30"], ["#pass31"], ["#pass32"], ["#pass33"], ["#pass34"], ["#pass35"]
+	]
+}

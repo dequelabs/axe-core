@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+	<title>Message Iframe Fixture</title>
+	<script src="../../../dist/axe.js"></script>
+	<script>
+		axe._load({ rules: [{
+			id: 'html',
+			selector: 'html',
+			any: [{
+				id: 'html',
+				evaluate: function () {
+					return true;
+				}
+			}]
+		}],
+		tools: [{
+			id: 'html',
+			source: {
+				run: function (node, options, callback) {
+					if (node.nodeName !== 'A') {
+						callback('nope!');
+					}
+					callback('result!');
+				}
+			}
+		}],
+		messages: {}});
+	</script>
+</head>
+<body>
+
+	<input type="text">
+	<a href="#">link</a>
+</body>
+</html>

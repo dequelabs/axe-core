@@ -1,0 +1,3 @@
+
+	axe.version = '<%= pkg.version %>';
+}(this));

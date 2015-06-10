@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Button Test</title>
+<script src="/dist/axe.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<form action="#">
+<input type="button" id="fail1">
+<input type="button" id="pass1" value="Button Name">
+<input type="button" id="pass2" aria-label="Name">
+<input type="button" id="fail2" aria-label="">
+<input type="button" id="pass3" aria-labelledby="labeldiv">
+<input type="button" id="fail3" aria-labelledby="nonexistent">
+<input type="button" id="fail4" aria-labelledby="emptydiv">
+<div id="labeldiv">Button label</div>
+<div id="emptydiv"></div>
+<input type="button" id="pass4" value="Name" aria-label="Aria Name">
+<input type="submit" id="pass5">
+<input type="submit" value="" id="fail5">
+<input type="submit" value="Something" id="pass6">
+<input type="reset" id="pass7">
+<input type="reset" value="" id="fail6">
+<input type="reset" value="Something" id="pass8">
+</form>
+</body>
+</html>

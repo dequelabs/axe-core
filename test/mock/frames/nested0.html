@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+	<title>Test Nest Frame</title>
+	<script src="../../../dist/axe.js"></script>
+	<script>
+		axe._load({
+			rules: [{
+				id: 'iframe',
+				selector: 'iframe',
+				any: [{
+					id: 'iframe',
+					evaluate: function () {
+						return true;
+					}
+				}]
+			}],
+			messages: {}
+		});
+	</script>
+</head>
+<body>
+	<iframe src="nested1.html" id="level1"></iframe>
+</body>
+</html>

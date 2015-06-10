@@ -1,0 +1,5 @@
+{
+	"description": "bypass-header pass test",
+	"rule": "bypass",
+	"passes": [["html"]]
+}

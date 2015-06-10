@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf8">
+	<title>OBJECT ALT test</title>
+	<script src="/dist/axe.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<object id="pass1">This object has text.</object>
+	<object id="violation1"></object>
+	<object id="violation2"><div> </div></object>
+	<object id="violation3"><p style="display: none;">This object has no text.</p></object>
+</body>
+</html>

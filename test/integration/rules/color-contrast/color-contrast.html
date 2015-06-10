@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Color-Contrast Test</title>
+<script src="/dist/axe.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body style="background-image: url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)">
+<div id="pass1" style="background-color: white; color: black">This is a pass.</div>
+<div id="pass2" style="background-color: gray; color: white; font-size: 40px;">This is a pass.</div>
+<div id="pass3" style="background-color: gray; color: white; font-size: 20px; font-weight: bold">This is a pass.</div>
+<div id="fail1" style="background-color: gray; color: white; font-size: 20px;">This is a fail.<b id="pass4">But this is a pass.</b></div>
+<div id="fail2" style="background-color: gray; color: white; font-size: 8px;">This is a fail.</div>
+<div id="fail3" style="background-color: yellow; color: white; font-size: 40px;">This is a fail.</div>
+<div style="background-color: black;"><div style="background-color: rgba(255, 255, 255, 0.1); color: white" id="pass5">Pass.</div></div>
+<div style="background-color: rgba(255, 255, 255, 0.1); color: white" id="pass6">Pass by default.</div>
+<div style="background-color: white;"><div style="background-color: rgba(255, 255, 255, 0.1); color: white" id="fail4">Fail.</div></div>
+<div style="background-color: white; height: 20px; width: 80px;"><div id="pass7" style="color: white; height: 40px; width: 60px;">Hi</div></div>
+<div style="background-color: white; height: 60px; width: 40px;"><div id="pass8" style="color: white; height: 40px; width: 60px;">Hi</div></div>
+<div style="background-color: white; height: 60px; width: 80px;"><div id="fail5" style="color: white; height: 40px; width: 60px;">Hi</div></div>
+<div style="background-color: white; height: 60px; width: 80px;"><div id="pass9" style="margin-left: 80px; color: white; height: 40px; width: 60px;">Hi</div></div>
+<div style="background-color: white"><div id="fail6" style="opacity: 0.1; background-color: white; color: black">This is a fail.</div></div>
+<div style="background-color: white; height: 60px; width: 80px; overflow: scroll"><div id="fail7" style="margin-left: 80px; color: white; height: 80px; width: 90px;">Hi</div></div>
+
+<input id="fail8" style="background: #000; color: #000" value="hello" type="text">
+<input id="fail9" style="background: #000; color: #000" value="hello" type="button">
+<input id="fail10" style="background: #000; color: #000" value="hello" type="submit">
+<input id="fail11" style="background: #000; color: #000" value="hello" type="reset">
+<select id="fail12" style="background: #000; color: #000">
+  <option>Hello</option>
+</select>
+<textarea id="fail13" style="background: #000; color: #000">hello</textarea>
+<input id="fail14" type="button" style="background: #000; color: #000" value="hello">
+<input id="fail15" type="reset" style="background: #000; color: #000" value="hello">
+<input id="fail16" type="submit" style="background: #000; color: #000" value="hello">
+<input id="fail17" style="background: #000; color: #000" value="hello">
+
+<!-- shouldnt run -->
+<input id="ignore0" style="background: #000; color: #000" value="hello" type="hidden">
+<input id="ignore1" style="background: #000; color: #000" value="hello" type="radio">
+<input id="ignore2" style="background: #000; color: #000" value="hello" type="checkbox">
+<input id="ignore3" style="background: #000; color: #000" value="hello" type="range">
+<input id="ignore4" style="background: #000; color: #000" value="hello" type="hidden">
+<select id="ignore5" style="background: #000; color: #000"></select>
+<div id="ignore6" style="color: yellow; width: 100px; overflow: hidden; text-indent: 200px; background-color: white;">text</div>
+</body>
+</html>

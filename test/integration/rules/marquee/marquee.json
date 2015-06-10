@@ -1,0 +1,5 @@
+{
+	"description": "marquee Test",
+	"rule": "marquee",
+	"violations": [["#marqueemarq"]]
+}

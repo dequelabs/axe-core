@@ -1,0 +1,6 @@
+{
+	"description": "input-image-alt tests",
+	"rule": "input-image-alt",
+	"violations": [["#violation1"], ["#violation2"], ["#violation3"], ["#violation4"], ["#violation5"]],
+	"passes":  [["#pass1"], ["#pass2"], ["#pass3"]]
+}

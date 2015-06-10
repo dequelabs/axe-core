@@ -1,0 +1,5 @@
+{
+	"description": "bypass-region pass test",
+	"rule": "bypass",
+	"passes": [["html"]]
+}

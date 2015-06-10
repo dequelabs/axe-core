@@ -1,0 +1,6 @@
+{
+	"description": "button-name test",
+	"rule": "button-name",
+	"violations": [["#empty"], ["#val"], ["#alempty"], ["#albmissing"], ["#albempty"]],
+	"passes": [["#text"], ["#al"], ["#alb"], ["#combo"], ["#dupetext"], ["#oktext"]]
+}

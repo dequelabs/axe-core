@@ -1,0 +1,34 @@
+{
+	"description": "label test",
+	"rule": "label",
+	"violations": [
+		["#fail1"],
+		["#fail2"],
+		["#fail3"],
+		["#fail4"],
+		["#fail5"],
+		["#fail6"],
+		["#fail7"],
+		["#fail8"],
+		["#fail9"],
+		["#fail22"],
+		["#fail23"]
+	],
+	"passes": [
+		["#pass1"],
+		["#pass2"],
+		["#pass3"],
+		["#pass4"],
+		["#pass5"],
+		["#pass6"],
+		["#pass7"],
+		["#pass8"],
+		["#pass9"],
+		["#pass10"],
+		["#pass11"],
+		["#pass12"],
+		["#pass13"],
+		["#pass14"],
+		["#pass15"]
+	]
+}

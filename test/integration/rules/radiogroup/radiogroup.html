@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Group Test</title>
+<script src="/dist/axe.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<form action="#">
+	<input type="radio" id="noname">
+	<input type="radio" name="dupe" id="fail1">
+	<input type="radio" name="dupe">
+
+	<input type="radio" name="single" id="pass1">
+
+	<input type="radio" name="label" id="pass2" aria-labelledby="grouplabel">
+	<input type="radio" name="label" aria-labelledby="grouplabel">
+	<div id="grouplabel">Label</div>
+	<fieldset>
+		<legend>Name</legend>
+		<input type="radio" name="fieldset" id="pass3">
+		<input type="radio" name="fieldset" id="pass3a">
+		<input type="hidden" name="hiddeninput">
+	</fieldset>
+
+	<div role="group" aria-label="Test">
+		<input type="radio" name="fieldset2" id="pass4">
+		<input type="radio"name="fieldset2" id="pass4a">
+	</div>
+
+	<div role="group" aria-labelledby="grouplabel">
+		<input type="radio" name="fieldset3" id="pass5">
+		<input type="radio"name="fieldset3" id="pass5a">
+	</div>
+
+	<fieldset>
+		<legend>Hello</legend>
+		<input type="radio" name="fieldset4" id="pass6">
+		<input type="radio" name="fieldset4" id="pass6a">
+	</fieldset>
+
+	<fieldset>
+		<legend>Hello Again</legend>
+		<input type="radio" name="fieldset4" id="pass6b">
+		<input type="radio" name="fieldset4" id="pass6c">
+	</fieldset>
+</form>
+</body>
+</html>

@@ -1,0 +1,5 @@
+{
+	"description": "meta-refresh test",
+	"rule": "meta-refresh",
+	"violations": [["#fail1"]]
+}

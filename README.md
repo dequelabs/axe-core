@@ -66,3 +66,8 @@ The aXe API package consists of:
 
 * `axe.js` - the javascript file that should be included in your web site under test (API)
 * `axe.min.js` - a minified version of the above file
+
+
+## Contributing
+
+This repository is available for download and enhancement. We will accept pull requests once we publish our Contributor agreement.

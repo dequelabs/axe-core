@@ -1,0 +1,5 @@
+{
+	"description": "blink test",
+	"rule": "blink",
+	"violations": [["#blinky"]]
+}

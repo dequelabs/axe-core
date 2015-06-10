@@ -19,7 +19,6 @@
   ],
   "devDependencies": {
     "node-uuid": "~1.4.1",
-    "axe-rules": "~1.0.1",
     "escape-selector": "0.0.1",
     "element-matches": "0.0.1",
     "simple-clone": "0.0.1"

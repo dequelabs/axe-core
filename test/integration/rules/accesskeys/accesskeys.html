@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf8">
+	<title>ACCCESKEYS test</title>
+	<script src="/dist/axe.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+  <div id="violation1" accesskey="B">violation 1</div>
+  <div id="violation2" accesskey="A">violation 1</div>
+  <div id="pass1" accesskey="C">pass 1</div>
+  <div accesskey="B"></div>
+  <iframe src="accesskeys-frame.html" title="violation test" id="frame"></iframe>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf8">
+	<title>aria-required-attr test</title>
+	<script src="/dist/axe.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div role="checkbox" id="pass1" aria-checked="value">ok</div>
+	<div role="combobox" id="pass2" aria-expanded="value">ok</div>
+	<div role="menuitemcheckbox" id="pass3" aria-checked="value">ok</div>
+	<div role="menuitemradio" id="pass4" aria-checked="value">ok</div>
+	<div role="radio" id="pass5" aria-checked="value">ok</div>
+	<div role="scrollbar" id="pass6" aria-controls="value" aria-orientation="value" aria-valuenow="value" aria-valuemax="value" aria-valuemin="value">ok</div>
+	<div role="slider" id="pass7" aria-valuenow="value" aria-valuemax="value" aria-valuemin="value">ok</div>
+	<div role="spinbutton" id="pass8" aria-valuenow="value" aria-valuemax="value" aria-valuemin="value">ok</div>
+
+
+	<div role="checkbox" id="violation1">fail</div>
+	<div role="combobox" id="violation2">fail</div>
+	<div role="menuitemcheckbox" id="violation3">fail</div>
+	<div role="menuitemradio" id="violation4">fail</div>
+	<div role="radio" id="violation5">fail</div>
+	<div role="scrollbar" id="violation6">fail</div>
+	<div role="slider" id="violation7">fail</div>
+	<div role="spinbutton" id="violation8">fail</div>
+</body>
+</html>
