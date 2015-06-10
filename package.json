@@ -1,13 +1,29 @@
 {
   "name": "axe-core",
-  "description": "aXe Core",
-  "version": "1.0.0",
+  "description": "Accessibility engine for automated Web UI testing",
+  "version": "1.0.1",
   "license": "MPL-2.0",
   "author": {
     "name": "David Sturley",
     "organization": "Deque Systems, Inc.",
     "url": "http://deque.com/"
   },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/dequelabs/axe-core.git"
+  },
+  "keywords": [
+    "Accessibility",
+    "a11y",
+    "testing",
+    "unit",
+    "testing",
+    "tdd",
+    "bdd",
+    "accessibility",
+    "testing",
+    "aXe"
+  ],
   "dependencies": {},
   "scripts": {
     "build": "grunt"

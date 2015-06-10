@@ -1,12 +1,15 @@
 {
   "name": "axe-core",
-  "description": "aXe Core",
-  "version": "1.0.0",
+  "description": "Accessibility engine for automated Web UI testing",
+  "version": "1.0.1",
   "authors": [
     "David Sturley <david.sturley@deque.com>"
   ],
-
-  "main": "dist/axe.js",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/dequelabs/axe-core.git"
+  },
+  "main": "axe.js",
   "license": "MPL-2.0",
   "ignore": [
     "node_modules",
@@ -16,7 +19,7 @@
   ],
   "devDependencies": {
     "node-uuid": "~1.4.1",
-    "axe-rules": "http://anon:83071a2e17ba24bdb4fb7af22c53e23b@kmbuilds.dequecloud.com:8088/job/axe-rules/lastSuccessfulBuild/artifact/*zip*/archive.zip",
+    "axe-rules": "~1.0.1",
     "escape-selector": "0.0.1",
     "element-matches": "0.0.1",
     "simple-clone": "0.0.1"
