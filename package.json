@@ -29,6 +29,7 @@
     "build": "grunt"
   },
   "devDependencies": {
+    "axe-rules": "~1.0.2",
     "blanket": "~1.1.7",
     "chai": "~2.3.0",
     "grunt": "~0.4.5",

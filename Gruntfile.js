@@ -30,7 +30,7 @@ module.exports = function (grunt) {
 					'lib/*/index.js',
 					'lib/**/index.js',
 					'lib/**/*.js',
-					'bower_components/axe-rules/dist/rules.js',
+					'node_modules/axe-rules/rules.js',
 					'lib/export.js',
 					'lib/outro.stub'
 				],
@@ -52,15 +52,20 @@ module.exports = function (grunt) {
 			}
 		},
 		copy: {
-			docs: {
-				src: ['doc/**/*'],
-				dest: 'dist/'
-			},
-			descriptions: {
-				src: ['*.html'],
-				expand: true,
-				cwd: 'bower_components/axe-rules/dist/',
-				dest: 'dist/doc/'
+			manifests: {
+				files: [{
+					src: ['package.json'],
+					dest: 'dist/'
+				}, {
+					src: ['README.md'],
+					dest: 'dist/'
+				}, {
+					src: ['bower.json'],
+					dest: 'dist/'
+				}, {
+					src: ['LICENSE'],
+					dest: 'dist/'
+				}]
 			}
 		},
 		watch: {
@@ -137,6 +142,6 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('default', ['build']);
-	grunt.registerTask('build', ['concat', 'uglify', 'copy']);
+	grunt.registerTask('build', ['clean', 'concat', 'uglify', 'copy']);
 	grunt.registerTask('test', ['build', 'fixture', 'connect', 'if-missing:curl', 'testconfig', 'mocha', 'mochaTest']);
 };
