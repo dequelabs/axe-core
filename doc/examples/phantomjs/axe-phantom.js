@@ -1,12 +1,12 @@
 /*global phantom */
-
+var PATH_TO_AXE = 'node_modules/axe-core/axe.min.js';
 
 var args = require('system').args;
 var fs = require('fs');
 var page = require('webpage').create();
 
 if (args.length < 2) {
-	console.log('axe.js accepts 1 argument, the URL to test');
+	console.log('axe-phantomjs.js accepts 1 argument, the URL to test');
 	phantom.exit(1);
 }
 
@@ -17,10 +17,10 @@ page.open(args[1], function (status) {
 		return;
 	}
 
-	page.injectJs('../../../axe.min.js');
+	page.injectJs(PATH_TO_AXE);
 	page.framesName.forEach(function (name) {
 		page.switchToFrame(name);
-		page.injectJs('../../../axe.min.js');
+		page.injectJs(PATH_TO_AXE);
 	});
 	page.switchToMainFrame();
 	page.evaluateAsync(function () {
