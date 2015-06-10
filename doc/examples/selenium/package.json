@@ -13,6 +13,7 @@
     "build": "grunt"
   },
   "devDependencies": {
+    "axe-core": "~1.0.1",
     "grunt": "~0.4.5",
     "selenium-webdriver": "~2.45.0",
     "grunt-curl": "~1.5.1",

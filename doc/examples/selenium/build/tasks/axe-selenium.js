@@ -5,7 +5,7 @@ var WebDriver = require('selenium-webdriver'),
 	SeleniumServer = require('selenium-webdriver/remote').SeleniumServer,
 	path = require('path'),
 	ksInject = require('../inject'),
-	ks = path.resolve(__dirname, '../../../../../axe.min.js');
+	ks = path.resolve(__dirname, '../../node_modules/axe-core/axe.min.js');
 
 module.exports = function (grunt) {
 	var ksSource = grunt.file.read(ks);

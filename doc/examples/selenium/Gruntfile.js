@@ -21,7 +21,7 @@ module.exports = function (grunt) {
 		},
 		'axe-selenium': {
 			urls: [
-				'http://localhost:5005/'
+				'https://github.com/dequelabs/axe-core'
 			],
 			options: {
 				jar: '<%=curl.selenium.dest%>'
