@@ -121,7 +121,7 @@ module.exports = function (grunt) {
 		},
 		fixture: {
 			checks: {
-				src: ['build/test/engine.js', '<%= configure.lib.dest.test %>'],
+				src: ['build/test/engine.js', '<%= configure.lib.dest.auto %>'],
 				dest: 'test/checks/index.html',
 				options: {
 					fixture: 'test/runner.tmpl',

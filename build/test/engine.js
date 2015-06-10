@@ -2,8 +2,10 @@ var checks, commons;
 var axe = {
 	_load: function (r) {
 		commons = r.commons;
-		checks = r.checks.reduce(function (acc, check) {
-			acc[check.id] = check;
+		checks = r.rules.reduce(function (acc, rule) {
+			(rule.any.concat(rule.all).concat(rule.none)).forEach(function (check) {
+				acc[check.id] = check;
+			});
 			return acc;
 		}, {});
 	}
