@@ -1,0 +1,21 @@
+{
+  "id": "audio-caption",
+  "selector": "audio",
+  "excludeHidden": false,
+  "tags": [
+    "wcag2a",
+    "wcag122",
+    "section508",
+    "section508a"
+  ],
+  "metadata": {
+    "helpUrl": "https://dequeuniversity.com/issues/audio-caption",
+    "description": "Checks the use of all <audio> element to ensure that the element contains a <caption> element",
+    "help": "HTML5 <audio> elements need a captions track"
+  },
+  "all": [],
+  "any": [],
+  "none": [
+    "caption"
+  ]
+}

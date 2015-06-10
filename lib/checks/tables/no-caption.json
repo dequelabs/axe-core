@@ -1,0 +1,12 @@
+{
+  "id": "no-caption",
+  "evaluate": "no-caption.js",
+  "enabled": false,
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "Table has a <caption>",
+      "fail": "Table does not have a <caption>"
+    }
+  }
+}

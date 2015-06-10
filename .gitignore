@@ -1,0 +1,7 @@
+tmp
+dist
+bower_components
+node_modules
+test/*/index.html
+xunit.xml
+lint.xml

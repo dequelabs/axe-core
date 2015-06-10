@@ -1,0 +1,29 @@
+{
+  "id": "data-table",
+  "selector": "table",
+  "matches": "data-table-matches.js",
+  "tags": [
+    "wcag2a",
+    "wcag131"
+  ],
+  "metadata": {
+    "description": "Checks that data tables are marked up semantically and have the correct header structure",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/data-tables/",
+    "help": "Data tables should be marked up properly"
+  },
+  "all": [],
+  "any": [
+    "consistent-columns"
+  ],
+  "none": [
+    "cell-no-header",
+    "headers-visible-text",
+    "headers-attr-reference",
+    "th-scope",
+    "no-caption",
+    "th-headers-attr",
+    "th-single-row-column",
+    "same-caption-summary",
+    "rowspan"
+  ]
+}

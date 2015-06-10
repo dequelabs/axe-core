@@ -1,0 +1,11 @@
+{
+  "id": "only-dlitems",
+  "evaluate": "only-dlitems.js",
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "Element only has children that are <dt> or <dd> elements",
+      "fail": "Element has children that are not <dt> or <dd> elements"
+    }
+  }
+}

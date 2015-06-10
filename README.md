@@ -30,3 +30,7 @@ aXe is the third generation of accessibility rules for HTML-based user interface
 ## Getting started
 
 The Accessibility Rules are used with axe-core and cannot be used stand alone. Please see [axe-core](https://github.com/dequelabs/axe-core) for additional information
+
+## Contributing
+
+This repository is available for download and enhancement. We will accept pull requests once we publish our Contributor agreement.
