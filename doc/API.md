@@ -3,24 +3,17 @@
 ## Table of Contents
 
 
-### Section 1: Getting Started
-
-1. [Introduction](#introduction)
+1. [Section 1: Introduction](#section-1:-introduction)
 1. [Get Started](#getting-started)
-
-### Section 2: API Reference
-
+1. [Section 2: API Reference](#section-2:-api-reference)
 1. [Overview](#overview)
 1. [API Notes](#api-notes)
 1. [API Name: axe.getRules](#api-name-axe.getrules)
 1. [API Name: axe.configure](#api-name-axe.configure)
 1. [API Name: axe.a11yCheck](#api-name-axe.a11ycheck)
+1. [Section 3: Example Reference](#section-3:-example-reference)
 
-### Section 3. Example Reference
-
-# Getting Started
-
-## Introduction
+## Section 1: Introduction
 
 The aXe API is designed to be an improvement over the previous generation of accessibility APIs. It provides the following benefits:
 
@@ -52,13 +45,13 @@ The aXe API can be used as part of a broader process that is performed on many, 
 6. Do other processing required by your testing process
 
 
-# API Reference
+## Section 2: API Reference
 
-## Overview
+### Overview
 
 The aXe APIs are provided in the javascript file axe.js. It must be included in the web page under test. Parameters are sent as javascript function parameters. Results are returned in JSON format.
 
-## API Notes
+### API Notes
 
 * All requests and parameters are case sensitive
 
@@ -68,7 +61,7 @@ The aXe APIs are provided in the javascript file axe.js. It must be included in 
 
 * The "helpUrl" in the results object is a link to a broader description of the accessibility issue and suggested remediation. All of the links point to Deque University help pages and require a valid login to that system
 
-## API Name: axe.getRules
+### API Name: axe.getRules
 
 #### Purpose
 
@@ -115,7 +108,7 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
 ]
 ```
 
-## API Name: axe.configure
+### API Name: axe.configure
 
 #### Purpose
 
@@ -139,31 +132,31 @@ User configures the format of the JSON structure passed by the API to the callba
 **Returns:** Nothing
 
 
-## API Name: axe.a11yCheck
+### API Name: axe.a11yCheck
 
-### Purpose
+#### Purpose
 
 Analyze currently loaded page
 
-### Description
+#### Description
 
 Runs a number of rules against the provided HTML page and returns the resulting issue list
 
-### Synopsis
+#### Synopsis
 
 `axe.a11yCheck(context, options, callback)`
 
-### Parameters
+#### Parameters
 
 * `context`: Defines the scope of the analysis - the part of the DOM that you would like to analyze. This will typically be a document name or a specific selector such as class name, ID, selector, etc.
 * `options`: Set of options passed into rules or checks. See below for more information (optional).
 * `callback`: the callback function is passed in as an argument; this function runs on the results object (see below) when the check is complete
 
-### Results Object
+#### Results Object
 
 The callback function passed in as the third parameter of axe.allyCheck runs on the results object. This object has two components – a passes array and a violations array.  The passes array keeps track of all the passed tests, along with detailed information on each one. This leads to more efficient testing, especially when used in conjunction with manual testing, as the user can easily find out what tests have already been passed. Similarly, the violations array keeps track of all the failed tests, along with detailed information on each one.
 
-##### `passes`
+###### `passes`
 
   * `description` - text string that describes what the rule does
 
@@ -185,7 +178,7 @@ The callback function passed in as the third parameter of axe.allyCheck runs on 
 
      * `target` - array of selectors that has each element correspond to one level of iframe or frame. If there is one iframe or frame, there should be two entries in `target`. If there are three iframe levels, there should be four entries in `target`.
 
-##### `violations`
+###### `violations`
 
   * `description` - text string that describes what the rule does
 
@@ -210,9 +203,9 @@ The callback function passed in as the third parameter of axe.allyCheck runs on 
      * `target` - array of selectors that has each element correspond to one level of iframe or frame. If there is one iframe or frame, there should be two entries in `target`. If there are three iframe levels, there should be four entries in `target`.
 
 
-### a11yCheck Parameters
+#### a11yCheck Parameters
 
-#### A. Context Parameter
+##### A. Context Parameter
 
 The context object can be passed one of the following:
 
@@ -230,7 +223,7 @@ The context object can be passed one of the following:
 
 3. An include-exclude object (see below)
 
-##### Include-Exclude Object
+###### Include-Exclude Object
 
 The include exclude object is a JSON object with two attributes: include and exclude. The include attribute must always be supplied, whereas the exclude attribute is optional. Each attribute is of Mixed type and can either be:
 
@@ -240,7 +233,7 @@ The include exclude object is a JSON object with two attributes: include and exc
 
 In most cases, the component arrays will contain only one CSS selector. Multiple CSS selectors are only required if you want to include or exclude regions of a page that are inside iframes (or iframes within iframes within iframes). In this case, the first n-1 selectors are selectors that select the iframe(s) and the nth selector, selects the region(s) within the iframe.
 
-##### Context Parameter Examples
+###### Context Parameter Examples
 
 1. Include the first item in the `$fixture `nodelist but exclude its first child
 ```
@@ -266,7 +259,7 @@ exclude: [['.exclude1'],['.exclude2']]
 }
 ```
 
-#### B. Options Parameter
+##### B. Options Parameter
 
 The options parameter is flexible way to configure how a11yCheck operates. The different modes of operation are:
 
@@ -276,7 +269,7 @@ The options parameter is flexible way to configure how a11yCheck operates. The d
 
 * Run a specific set of rules provided as a list of rule ids
 
-##### Options Parameter Examples
+###### Options Parameter Examples
 
 1. Run all Rules for an Accessibility Standard
 
@@ -317,12 +310,12 @@ If you only want certain rules to be run, specify options as:
 This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `ruleId3`. No other rule will run.
 
 
-#### C. Callback Parameter
+##### C. Callback Parameter
 
 The callback parameter is a function that will be called when the asynchronous `axe.a11yCheck` function completes. The callback function is passed a single parameter - the results object of the `axe.a11yCheck` call.
 
 
-### Example 2
+#### Example 2
 
 In this example, we will pass the selector for the entire document, pass no options, which means all rules will be run, and have a simple callback function that logs the entire results object to the console log:
 
@@ -364,7 +357,7 @@ In this example, we will pass the selector for the entire document, pass no opti
 * `violations[1]` ...
 
 
-#### `passes` Results Array
+##### `passes` Results Array
 
 In the example above, the `passes` array contains two entries that correspond to the two rules tested. The first element in the array describes a color contrast check. It relays the information that a list of nodes was checked and subsequently passed. The `help`, `helpUrl`, and `id` fields are returned as expected for each of the entries in the `passes` array. The `target` array has one element in it with a value of
 
@@ -374,7 +367,7 @@ This indicates that the element selected by the entry in `target[0]` was checked
 
 Each subsequent entry in the passes array has the same format, but will detail the different rules that were run as part of this call to `axe.a11yCheck()`.
 
-#### `violations` Results Array
+##### `violations` Results Array
 
 The array of `violations` contains one entry; this entry describes a test that check if buttons have valid alternate text (button-name).  This first entry in the array has the `help`, `helpUrl` and `id` fields returned as expected.
 
@@ -383,13 +376,13 @@ The `target` array demonstrates how we specify the selectors when the node speci
 Each subsequent entry in the violations array has the same format, but will detail the different rules that were run that generated Accessibility violations as part of this call to `axe.a11yCheck()`.
 
 
-### Example 3
+#### Example 3
 
 In this example, we pass the selector for the entire document, enable two rules to be run, and have a simple callback function that logs the entire results object to the console log:
 
 `axe.a11yCheck(document, rules: { "button-check":  {enabled: true}, "color-contrast": {enabled: true}}, function(results) { console.log(results);});`
 
 
-# Section 3: Example Reference
+## Section 3: Example Reference
 
 The distribution package contains examples for jasmine, mocha, phantomjs, qunit, selenium using javascript, selenium using java. Each of these examples is in the dist/doc/examples folder. In each folder, there is a README.md file that contains specific information about each example.
