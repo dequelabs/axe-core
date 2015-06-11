@@ -3,13 +3,13 @@
 ## Table of Contents
 
 1. [Section 1: Introduction](#section-1-introduction)
-1. [Get Started](#getting-started)
+	1. [Get Started](#getting-started)
 1. [Section 2: API Reference](#section-2-api-reference)
-1. [Overview](#overview)
-1. [API Notes](#api-notes)
-1. [API Name: axe.getRules](#api-name-axegetrules)
-1. [API Name: axe.configure](#api-name-axeconfigure)
-1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
+	1. [Overview](#overview)
+	1. [API Notes](#api-notes)
+	1. [API Name: axe.getRules](#api-name-axegetrules)
+	1. [API Name: axe.configure](#api-name-axeconfigure)
+	1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
 1. [Section 3: Example Reference](#section-3-example-reference)
 
 ## Section 1: Introduction
@@ -22,7 +22,7 @@ The aXe API is designed to be an improvement over the previous generation of acc
 * Performs violation checking on multiple levels of iframes, not just one
 * Provides list of rules and elements that passed accessibility checking, ensuring rules have been run against entire document
 
-## Getting Started
+### Getting Started
 This section gives a quick description of how to use the aXe APIs to analyze web page content and return a JSON object that lists any Accessibility violations found.
 
 The aXe API can be used as part of a broader process that is performed on many, if not all, pages of a website. The API is used to analyze web page content and return a JSON object that lists any accessibility violations found. Here is how to get started:
