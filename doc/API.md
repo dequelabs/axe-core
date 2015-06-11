@@ -3,15 +3,15 @@
 ## Table of Contents
 
 
-1. [Section 1: Introduction](#section-1:-introduction)
+1. [Section 1: Introduction](#section-1-introduction)
 1. [Get Started](#getting-started)
-1. [Section 2: API Reference](#section-2:-api-reference)
+1. [Section 2: API Reference](#section-2-api-reference)
 1. [Overview](#overview)
 1. [API Notes](#api-notes)
-1. [API Name: axe.getRules](#api-name-axe.getrules)
-1. [API Name: axe.configure](#api-name-axe.configure)
-1. [API Name: axe.a11yCheck](#api-name-axe.a11ycheck)
-1. [Section 3: Example Reference](#section-3:-example-reference)
+1. [API Name: axe.getRules](#api-name-axegetrules)
+1. [API Name: axe.configure](#api-name-axeconfigure)
+1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
+1. [Section 3: Example Reference](#section-3-example-reference)
 
 ## Section 1: Introduction
 
@@ -156,53 +156,61 @@ Runs a number of rules against the provided HTML page and returns the resulting 
 
 The callback function passed in as the third parameter of axe.allyCheck runs on the results object. This object has two components – a passes array and a violations array.  The passes array keeps track of all the passed tests, along with detailed information on each one. This leads to more efficient testing, especially when used in conjunction with manual testing, as the user can easily find out what tests have already been passed. Similarly, the violations array keeps track of all the failed tests, along with detailed information on each one.
 
-###### `passes`
+###### `passes` array
 
   * `description` - text string that describes what the rule does
-
   * `help` - help text that describes the test that was performed
-
   * `helpURL` - URL that provides more information about the specifics of the violation. Links to a page on the Deque University site.
-
   * `id` - unique identifier for this test rule; see the list of rules in the Rules Overview section below
-
   * `impact` - since the test passed, impact is always null
-
   * `tags` - array of tags that this rule is assigned. These tags can be used in the option structure to select which rules are run (see `allyCheck` parameters below for more information).
 
   * `nodes` - array of all checks performed as part of this test. Each entry in the array has the following fields:
-
      * `html` - snippet of HTML where the violation occurred
-
      * `impact` - since the test passed, impact is always null
+     * `target` - array of selectors that were tested. Each element corresponds to one level of iframe or frame. If there is one iframe or frame, there should be two entries in `target`. If there are three iframe levels, there should be four entries in `target`.
 
-     * `target` - array of selectors that has each element correspond to one level of iframe or frame. If there is one iframe or frame, there should be two entries in `target`. If there are three iframe levels, there should be four entries in `target`.
+     * `any` - array of checks that were made where at least one must have passed. Each entry in the array contains:
+      * `id` - unique identifier for this check. Check ids may be the same as Rule ids
+      * `impact` - how serious this particular check is. Can be one of "minor", "moderate", "serious", or "critical". Each check that is part of a rule can have different impacts. The highest impact of all the checks that fail is reported for the rule
+      * `message` - description of why this check passed
+      * `data` - additional information that is specific to the type of Check which is optional. For example, a color contrast check would include the foreground color, background color, contrast ratio, etc.
+      * `relatedNodes` - optional array of information about other nodes that are related to this check. For example, a duplicate id check violation would list the other selectors that had this same duplicate id.Each entry in the array contains the following information:
+        * `target` - selector to the related node
+        * `html` - html source of the related node
 
-###### `violations`
+     * `all` - array of checks that were made where all  passed. Each entry in the array contains the same information as the 'any' array
+
+     * `none` - array of checks that were made where all did not not passed. Each entry in the array contains the same information as the 'any' array
+
+###### `violations` array
 
   * `description` - text string that describes what the rule does
-
   * `help` - help text that describes the test that was performed
-
   * `helpURL` - URL that provides more information about the specifics of the violation. Links to a page on the Deque University site.
-
   * `id` - unique identifier for this test rule; see the list of rules in the Rules Overview section below
-
   * `impact` - how serious the violation is. Can be one of "minor", "moderate", "serious", or "critical".
-
   * `tags` - array of tags that this rule is assigned. These tags can be used in the option structure to select which rules are run (see `allyCheck` parameters below for more information).
-
   * `nodes` - array of all instances of violations of the specified type on the tested page
 
      * `failureSummary` - string that provides a readable explanation of the failure as well as suggestions for the different ways a violation may be remediated, if more than one is possible.
-
      * `html` - snippet of HTML where the violation occurred
-
      * `impact` - how serious the violation is. Can be one of "minor", "moderate", "serious", or "critical".
-
      * `target` - array of selectors that has each element correspond to one level of iframe or frame. If there is one iframe or frame, there should be two entries in `target`. If there are three iframe levels, there should be four entries in `target`.
 
+     * `any` - array of checks that were made where at least one must have passed. Each entry in the array contains:
+      * `id` - unique identifier for this check. Check ids may be the same as Rule ids
+      * `impact` - how serious this particular check is. Can be one of "minor", "moderate", "serious", or "critical". Each check that is part of a rule can have different impacts. The highest impact of all the checks that fail is reported for the rule
+      * `message` - description of why this check failed
+      * `data` - additional information that is specific to the type of Check which is optional. For example, a color contrast check would include the foreground color, background color, contrast ratio, etc.
+      * `relatedNodes` - optional array of information about other nodes that are related to this check. For example, a duplicate id check violation would list the other selectors that had this same duplicate id.Each entry in the array contains the following information:
+        * `target` - selector to the related node
+        * `html` - html source of the related node
 
+     * `all` - array of checks that were made where all must have passed. Each entry in the array contains the same information as the 'any' array
+
+     * `none` - array of checks that were made where all must have not passed. Each entry in the array contains the same information as the 'any' array
+     
 #### a11yCheck Parameters
 
 ##### A. Context Parameter
@@ -293,8 +301,8 @@ This tells a11yCheck that only the specific rules should be run corresponding to
 The default operation for a11yCheck is to run all rules. If certain rules should be disabled from being run, specify `options` as:
 ```
 { rules: {
-	      "ruleId1": { enabled: false },
-	      "ruleId2": { enabled: false}
+        "ruleId1": { enabled: false },
+        "ruleId2": { enabled: false}
          }
 }
 ```
