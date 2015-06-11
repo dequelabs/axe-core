@@ -375,7 +375,7 @@ In this example, we pass the selector for the entire document, enable two rules 
 axe.a11yCheck(document, {
   rules: {
     "button-name": { enabled: true },
-		"color-contrast": { enabled: true }
+	  "color-contrast": { enabled: true }
   }
 }, function(results) {
   console.log(results);
