@@ -42,8 +42,6 @@ module.exports = function (grunt) {
 				},
 				dest: {
 					auto: 'dist/rules.js',
-					manual: 'dist/manual.js',
-					test: 'dist/test.js',
 					descriptions: 'dist/descriptions.html'
 				}
 			}
@@ -89,9 +87,6 @@ module.exports = function (grunt) {
 				files: [{
 					src: ['<%= configure.lib.dest.auto %>'],
 					dest: 'dist/rules.min.js'
-				}, {
-					src: ['<%= configure.lib.dest.manual %>'],
-					dest: 'dist/manual.min.js'
 				}],
 				options: {
 					preserveComments: 'some'
@@ -169,7 +164,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('server', ['fixture', 'connect:test:keepalive']);
 	grunt.registerTask('test', ['build', 'fixture', 'connect:test', 'mocha']);
-	grunt.registerTask('build', ['clean', 'validate', 'concat', 'copy', 'configure']);
+	grunt.registerTask('build', ['clean', 'validate', 'concat', 'copy', 'configure', 'uglify']);
 	grunt.registerTask('default', ['build']);
 
 };
