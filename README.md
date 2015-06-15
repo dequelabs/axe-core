@@ -1,4 +1,4 @@
-# axe-core
+# axe-core [![Build Status](https://travis-ci.org/dequelabs/axe-core.svg?branch=master)](https://travis-ci.org/dequelabs/axe-core)
 
 The Accessibility Engine for automated testing of HTML-based user interfaces. Drop the aXe on your accessibility defects!
 
