@@ -26,7 +26,8 @@
   ],
   "dependencies": {},
   "scripts": {
-    "build": "grunt"
+    "build": "grunt",
+    "test": "grunt test"
   },
   "devDependencies": {
     "axe-rules": "~1.0.2",
