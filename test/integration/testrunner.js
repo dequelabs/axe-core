@@ -2,8 +2,6 @@
 var WebDriver = require('selenium-webdriver'),
 	assert = require('chai').assert,
 	test = require('selenium-webdriver/testing'),
-	SeleniumServer = require('selenium-webdriver/remote').SeleniumServer,
-	jar = 'build/selenium-server-standalone-2.45.0.jar',
 	config = require('../../build/test.json');
 
 function checkIdenticality(conf, actual, type) {
@@ -59,17 +57,6 @@ test.describe('Integration', function() {
 
 	test.before(function() {
 		this.timeout(10000);
-		if (config.options.seleniumServer === undefined) {
-			var server = new SeleniumServer(jar, {
-				port: 4444,
-				args: ['-Xmx512m']
-			});
-
-			server.start();
-
-			config.options.seleniumServer = server.address();
-		}
-
 		driver = new WebDriver.Builder()
 			.forBrowser('firefox')
 			.build();
