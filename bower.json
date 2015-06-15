@@ -18,7 +18,7 @@
     "build"
   ],
   "devDependencies": {
-    "node-uuid": "~1.4.1",
+    "node-uuid": "git://github.com/dequelabs/node-uuid#3872fdd5e9c60bd24fe6493b6812140cb4a92657",
     "escape-selector": "0.0.1",
     "element-matches": "0.0.1",
     "simple-clone": "0.0.1"
