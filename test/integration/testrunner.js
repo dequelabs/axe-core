@@ -71,8 +71,7 @@ test.describe('Integration', function() {
 		}
 
 		driver = new WebDriver.Builder()
-			.usingServer(config.options.seleniumServer)
-			.withCapabilities(WebDriver.Capabilities.firefox())
+			.forBrowser('firefox')
 			.build();
 		driver.manage().timeouts().setScriptTimeout(10000);
 	});

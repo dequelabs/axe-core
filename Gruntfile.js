@@ -10,9 +10,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-curl');
 	grunt.loadNpmTasks('grunt-mocha');
-	grunt.loadNpmTasks('grunt-if-missing');
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadTasks('build/tasks');
 
@@ -109,15 +107,8 @@ module.exports = function (grunt) {
 				src: ['test/integration/rules/**/*.json'],
 				dest: 'build/test.json',
 				options: {
-					port: '<%= connect.test.options.port %>',
-					seleniumServer: grunt.option('selenium')
+					port: '<%= connect.test.options.port %>'
 				}
-			}
-		},
-		curl: {
-			selenium: {
-				dest: 'build/selenium-server-standalone-2.45.0.jar',
-				src: 'http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar'
 			}
 		},
 		connect: {
@@ -143,5 +134,5 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', ['build']);
 	grunt.registerTask('build', ['clean', 'concat', 'uglify', 'copy']);
-	grunt.registerTask('test', ['build', 'fixture', 'connect', 'if-missing:curl', 'testconfig', 'mocha', 'mochaTest']);
+	grunt.registerTask('test', ['build', 'fixture', 'connect', 'testconfig', 'mocha', 'mochaTest']);
 };
