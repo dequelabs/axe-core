@@ -1,0 +1,11 @@
+{
+  "id": "has-summary",
+  "evaluate": "has-summary.js",
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "Layout table does not use summary attribute",
+      "fail": "Layout table uses summary attribute"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "region",
+  "evaluate": "region.js",
+  "after": "region-after.js",
+  "metadata": {
+    "impact": "moderate",
+    "messages": {
+      "pass": "Content contained by ARIA landmark",
+      "fail": "Content not contained by an ARIA landmark"
+    }
+  }
+}

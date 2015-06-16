@@ -1,0 +1,27 @@
+{
+  "id": "link-name",
+  "selector": "a[href]:not([role=\"button\"]), [role=link][href]",
+  "tags": [
+    "wcag2a",
+    "wcag111",
+    "wcag412",
+    "section508",
+    "section508a"
+  ],
+  "metadata": {
+    "description": "Ensures that every link has an accessible name",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/links",
+    "help": "Links must have alternate text"
+  },
+  "all": [],
+  "any": [
+    "has-visible-text",
+    "aria-label",
+    "aria-labelledby",
+    "role-presentation"
+  ],
+  "none": [
+    "duplicate-img-label",
+    "focusable-no-name"
+  ]
+}

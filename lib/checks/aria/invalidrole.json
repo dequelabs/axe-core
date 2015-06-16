@@ -1,0 +1,11 @@
+{
+  "id": "invalidrole",
+  "evaluate": "invalidrole.js",
+  "metadata": {
+    "impact": "critical",
+    "messages": {
+      "pass": "ARIA role is valid",
+      "fail": "Role must be one of the valid ARIA roles"
+    }
+  }
+}

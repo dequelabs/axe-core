@@ -4,7 +4,7 @@
 module.exports = function (grunt) {
 	grunt.registerMultiTask('fixture', function () {
 		var options = this.options({
-			fixture: 'test/unit/runner.tmpl',
+			fixture: 'test/runner.tmpl',
 			testCwd: 'test/unit',
 			tests: ['**/*.js']
 		});

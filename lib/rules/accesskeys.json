@@ -1,0 +1,18 @@
+{
+  "id": "accesskeys",
+  "selector": "[accesskey]",
+  "tags": [
+    "wcag2a",
+    "wcag211"
+  ],
+  "metadata": {
+    "description": "Ensures that each element on the page with an accesskey attribute has a unique value",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/robust-compatibility/markup-validation",
+    "help": "accesskey attribute value must be unique"
+  },
+  "all": [],
+  "any": [],
+  "none": [
+    "accesskeys"
+  ]
+}

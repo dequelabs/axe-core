@@ -1,0 +1,19 @@
+{
+  "id": "definition-list",
+  "selector": "dl",
+  "tags": [
+    "wcag2a",
+    "wcag131"
+  ],
+  "metadata": {
+    "description": "Ensures that all <dl> elements are structured correctly",
+    "help": "<dl> elements must contain properly-ordered <dt> and <dd> elements",
+    "helpUrl": "https://dequeuniversity.com/issues/definition-list"
+  },
+  "all": [],
+  "any": [],
+  "none": [
+    "has-dlitems",
+    "only-dlitems"
+  ]
+}

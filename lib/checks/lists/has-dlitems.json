@@ -1,0 +1,11 @@
+{
+  "id": "has-dlitems",
+  "evaluate": "has-dlitems.js",
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "Element has both <dt> and <dd> elements",
+      "fail": "Element does not have at least one <dt> element followed by at least one <dd> element"
+    }
+  }
+}
