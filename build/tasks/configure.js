@@ -12,16 +12,13 @@ module.exports = function (grunt) {
       style: ['lib/**/*.less'],
       misc: ['lib/misc/**/*.json'],
 			blacklist: ['metadata'],
-			copyright: ['lib/copyright.stub'],
-			version: 'dev',
 			tags: ''
 		});
-		var copyright = grunt.template.process(grunt.file.read(options.copyright));
 		var that = this;
 		this.files.forEach(function (file) {
 			var commons = file.src[0];
 			buildRules(grunt, options, commons, function (result) {
-				grunt.file.write(that.data.dest.auto, copyright + '\naxe._load(' + result.auto + ');');
+				grunt.file.write(that.data.dest.auto, 'axe._load(' + result.auto + ');');
 				grunt.file.write(that.data.dest.descriptions, result.descriptions);
 				done();
 			});

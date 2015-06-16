@@ -4,8 +4,4 @@ describe('commons', function () {
 	it('should be an object', function () {
 		assert.isObject(commons);
 	});
-
-	it('should have a version property', function () {
-		assert.isString(commons.version);
-	});
 });

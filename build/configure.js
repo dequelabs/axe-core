@@ -1,18 +1,12 @@
-/*jshint node: true */
+/*jshint node: true, maxstatements: 20 */
 'use strict';
 
-var path = require('path');
 var clone = require('clone');
 var dot = require('dot');
-var Encoder = require('node-html-encoder').Encoder;
-var encoder = new Encoder('entity');
 var templates = require('./templates');
 var buildManual = require('./build-manual');
 
-var descriptionTmpl = '<tr><td><%=id%></td><td><%=description%></td><td><%=tags%></td></tr>\n',
-	descriptionsTmpl = '<!DOCTYPE html>\n<html>\n<head></head>\n<body>\n<table>\n<thead><tr>' +
-		'<th scope="col">Rule ID</th><th scope="col">Description</th><th scope="col">Tags</th></tr>' +
-		'</thead>\n<tbody><%=descriptions%></tbody>\n</table>\n</body>\n</html>';
+var descriptionHeaders = '| Rule ID | Description | Tags |';
 
 dot.templateSettings.strip = false;
 
@@ -44,12 +38,12 @@ function buildRules(grunt, options, commons, callback) {
 		}
 
 
-		function replaceFunctions(string, excludeCommons) {
+		function replaceFunctions(string) {
 			return string.replace(/"(evaluate|after|gather|matches|source|commons)":\s*("[^"]+?")/g, function (m, p1, p2) {
 				return m.replace(p2, getSource(p2.replace(/^"|"$/g, ''), p1));
-			}).replace(/"(function anonymous\([\s\S]+?\) {)([\s\S]+?)(})"/g, function (m, p1, p2, p3) {
+			}).replace(/"(function anonymous\([\s\S]+?\) {)([\s\S]+?)(})"/g, function (m) {
 				return JSON.parse(m);
-			}).replace(/"(\(function \(\) {)([\s\S]+?)(}\)\(\))"/g, function (m, p1, p2, p3) {
+			}).replace(/"(\(function \(\) {)([\s\S]+?)(}\)\(\))"/g, function (m) {
 				return JSON.parse(m);
 			});
 
@@ -83,7 +77,9 @@ function buildRules(grunt, options, commons, callback) {
 
 				var id = typeof check === 'string' ? check : check.id;
 				var c = clone(findCheck(checks, id));
-				if (!c) grunt.log.error('check ' + id + ' not found');
+				if (!c) {
+					grunt.log.error('check ' + id + ' not found');
+				}
 				c.options = check.options || c.options;
 
 				if (c.metadata && !metadata.checks[id]) {
@@ -100,7 +96,7 @@ function buildRules(grunt, options, commons, callback) {
 			checks: {}
 		};
 
-		var descriptions = '';
+		var descriptions = [];
 
 		var tags = options.tags ? options.tags.split(/\s*,\s*/) : [];
 
@@ -116,13 +112,7 @@ function buildRules(grunt, options, commons, callback) {
 			if (rule.metadata && !metadata.rules[rule.id]) {
 				metadata.rules[rule.id] = parseMetaData(rule.metadata);
 			}
-			descriptions += grunt.template.process(descriptionTmpl, {
-				data: {
-					id: rule.id,
-					description: encoder.htmlEncode(rule.metadata.description),
-					tags: rule.tags.join(', ')
-				}
-			});
+			descriptions.push([rule.id, rule.metadata.description, rule.tags.join(', ')]);
 			if (tags.length) {
 				rule.enabled = !!rule.tags.filter(function (t) {
 					return tags.indexOf(t) !== -1;
@@ -136,26 +126,18 @@ function buildRules(grunt, options, commons, callback) {
 			auto: replaceFunctions(JSON.stringify({
 				data: metadata,
 				rules: rules,
-				commons: result.commons,
-				version: options.version
+				commons: result.commons
 			}, blacklist)),
 			manual: replaceFunctions(JSON.stringify({
 				data: metadata,
 				rules: rules,
 				commons: result.commons,
 				tools: result.tools,
-				style: result.style,
-				version: options.version
+				style: result.style
 			}, blacklist)),
-			test: replaceFunctions(JSON.stringify({
-				checks: result.checks,
-				commons: result.commons
-			}, blacklist), true),
-			descriptions: grunt.template.process(descriptionsTmpl, {
-				data: {
-					descriptions: descriptions
-				}
-			})
+			descriptions: descriptionHeaders + descriptions.map(function (row) {
+				return '| ' + row.join(' | ') + ' |';
+			}).join('\n')
 		});
 
 	});

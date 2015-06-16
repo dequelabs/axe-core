@@ -1,4 +1,4 @@
-/*! aXe Rules v<%= pkg.version %>
+/*! aXe v<%= pkg.version %>
  * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.organization %>
  *
  * Your use of this Source Code Form is subject to the terms of the Mozilla Public

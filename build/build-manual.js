@@ -7,59 +7,61 @@ var less = require('less');
 var Promise = require('promise');
 
 module.exports = function build(grunt, options, commons, callback) {
-  options.getFiles = options.hasOwnProperty('getFiles') ? options.getFiles : true;
-  function parseObject(src) {
-    var files = grunt.file.expand(src);
-    return files.map(function (file) {
-      var json = grunt.file.readJSON(file);
-      var dirname = path.dirname(file);
-      Object.keys(templates).forEach(function (templateName) {
-        if (json[templateName]) {
-          json[templateName] = path.resolve(dirname, json[templateName]);
-          if (options.getFiles) {
-            json[templateName] = getSource(json[templateName], templateName);
-          }
-        }
-      });
-      return json;
-    });
-  }
+	options.getFiles = options.hasOwnProperty('getFiles') ? options.getFiles : true;
 
-  function parseStyle(src, callback) {
-    Promise
-      .all(grunt.file.expand(src).map(function (file) {
-        return new Promise(function (resolve, reject) {
-          less.render(grunt.file.read(file), function (err, result) {
-            if (err) return reject(err);
-            resolve(result.css);
-          });
-        });
-      }))
-      .then(function (values) {
-        callback(values.join('\n'));
-      });
-  }
+	function parseObject(src) {
+		var files = grunt.file.expand(src);
+		return files.map(function(file) {
+			var json = grunt.file.readJSON(file);
+			var dirname = path.dirname(file);
+			Object.keys(templates).forEach(function(templateName) {
+				if (json[templateName]) {
+					json[templateName] = path.resolve(dirname, json[templateName]);
+					if (options.getFiles) {
+						json[templateName] = getSource(json[templateName], templateName);
+					}
+				}
+			});
+			return json;
+		});
+	}
 
-  function getSource(file, type) {
-    return grunt.template.process(templates[type], {
-      data: {
-        source: grunt.file.read(file)
-      }
-    });
-  }
+	function parseStyle(src, callback) {
+		Promise
+			.all(grunt.file.expand(src).map(function(file) {
+				return new Promise(function(resolve, reject) {
+					less.render(grunt.file.read(file), function(err, result) {
+						if (err) {
+							return reject(err);
+						}
+						resolve(result.css);
+					});
+				});
+			}))
+			.then(function(values) {
+				callback(values.join('\n'));
+			});
+	}
 
-  parseStyle(options.style, function (styles) {
+	function getSource(file, type) {
+		return grunt.template.process(templates[type], {
+			data: {
+				source: grunt.file.read(file)
+			}
+		});
+	}
 
-    callback({
-      rules: parseObject(options.rules),
-      checks: parseObject(options.checks),
-      tools: parseObject(options.tools),
-      misc: parseObject(options.misc),
+	parseStyle(options.style, function(styles) {
+
+		callback({
+			rules: parseObject(options.rules),
+			checks: parseObject(options.checks),
+			tools: parseObject(options.tools),
+			misc: parseObject(options.misc),
 			commons: commons,
-      style: styles,
-      version: options.version
-    });
+			style: styles
+		});
 
-  });
+	});
 
 };

@@ -131,9 +131,13 @@ function createSchemas() {
 				type: 'array',
 				items: {
 					type: ['string', 'object'],
-					conform: function (v, o) {
-						if (typeof v === 'string') return true;
-						if (typeof v === 'object' && typeof v.id === 'string') return true;
+					conform: function (v) {
+						if (typeof v === 'string') {
+							return true;
+						}
+						if (typeof v === 'object' && typeof v.id === 'string') {
+							return true;
+						}
 						return false;
 					},
 					message: 'must be a string or an object with a key of id'
@@ -143,9 +147,13 @@ function createSchemas() {
 				type: 'array',
 				items: {
 					type: ['string', 'object'],
-					conform: function (v, o) {
-						if (typeof v === 'string') return true;
-						if (typeof v === 'object' && typeof v.id === 'string') return true;
+					conform: function (v) {
+						if (typeof v === 'string') {
+							return true;
+						}
+						if (typeof v === 'object' && typeof v.id === 'string') {
+							return true;
+						}
 						return false;
 					},
 					message: 'must be a string or an object with a key of id'
@@ -155,9 +163,13 @@ function createSchemas() {
 				type: 'array',
 				items: {
 					type: ['string', 'object'],
-					conform: function (v, o) {
-						if (typeof v === 'string') return true;
-						if (typeof v === 'object' && typeof v.id === 'string') return true;
+					conform: function (v) {
+						if (typeof v === 'string') {
+							return true;
+						}
+						if (typeof v === 'object' && typeof v.id === 'string') {
+							return true;
+						}
 						return false;
 					},
 					message: 'must be a string or an object with a key of id'
