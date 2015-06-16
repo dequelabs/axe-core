@@ -1,0 +1,11 @@
+{
+  "id": "listitem",
+  "evaluate": "listitem.js",
+  "metadata": {
+    "impact": "critical",
+    "messages": {
+      "pass": "List item has a <ul> or <ol> parent element",
+      "fail": "List item does not have a <ul> or <ol> parent element"
+    }
+  }
+}

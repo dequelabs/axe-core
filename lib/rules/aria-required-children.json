@@ -1,0 +1,18 @@
+{
+  "id": "aria-required-children",
+  "selector": "[role]",
+  "tags": [
+    "wcag2a",
+    "wcag411"
+  ],
+  "metadata": {
+    "helpUrl": "https://dequeuniversity.com/issues/aria-required-children",
+    "description": "Checks all elements that contain a WAI-ARIA role to ensure that all required children roles are present",
+    "help": "Certain ARIA roles must contain particular children"
+  },
+  "all": [],
+  "any": [
+    "aria-required-children"
+  ],
+  "none": []
+}

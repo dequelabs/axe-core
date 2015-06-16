@@ -1,0 +1,12 @@
+{
+  "id": "group-labelledby",
+  "evaluate": "labelledby.js",
+  "after": "labelledby-after.js",
+  "metadata": {
+    "impact": "critical",
+    "messages": {
+      "pass": "All elements with the name \"{{=it.data.name}}\" reference the same element with aria-labelledby",
+      "fail": "All elements with the name \"{{=it.data.name}}\" do not reference the same element with aria-labelledby"
+    }
+  }
+}

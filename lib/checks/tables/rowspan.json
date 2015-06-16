@@ -1,0 +1,11 @@
+{
+  "id": "rowspan",
+  "evaluate": "rowspan.js",
+  "metadata": {
+    "impact": "critical",
+    "messages": {
+      "pass": "Table does not have cells with rowspan attribute greater than 1",
+      "fail": "Table has cells whose rowspan attribute is not equal to 1"
+    }
+  }
+}

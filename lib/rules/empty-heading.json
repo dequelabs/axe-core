@@ -1,0 +1,18 @@
+{
+  "id": "empty-heading",
+  "selector": "h1, h2, h3, h4, h5, h6, [role=\"heading\"]",
+  "tags": [
+    "wcag2a",
+    "wcag131"
+  ],
+  "metadata": {
+    "helpUrl": "https://dequeuniversity.com/issues/empty-heading",
+    "description": "Ensures that headings on the page do not contain empty text",
+    "help": "Headings should not be empty"
+  },
+  "all": [],
+  "any": [
+    "has-visible-text"
+  ],
+  "none": []
+}

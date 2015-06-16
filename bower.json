@@ -12,6 +12,7 @@
   "main": "axe.js",
   "license": "MPL-2.0",
   "ignore": [
+    "**/.*",
     "node_modules",
     "bower_components",
     "test",

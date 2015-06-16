@@ -55,15 +55,6 @@ describe('axe._load', function () {
 		assert.equal(commons, 'foo');
 	});
 
-	it('should add the version of rules to axe._audit', function () {
-		axe._load({
-			data: {},
-			rules: [],
-			version: 'monkeys'
-		});
-		assert.equal(axe._audit.version, 'monkeys');
-	});
-
 	describe('respondable subscriber', function () {
 		it('should add a respondable subscriber', function () {
 			var mockAudit = {

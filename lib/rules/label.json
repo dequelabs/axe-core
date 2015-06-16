@@ -1,0 +1,28 @@
+{
+  "id": "label",
+  "selector": "input:not([type='hidden']):not([type='image']):not([type='button']):not([type='submit']):not([type='reset']), select, textarea",
+  "tags": [
+    "wcag2a",
+    "wcag332",
+    "wcag131",
+    "section508",
+    "section508n"
+  ],
+  "metadata": {
+    "description": "Ensures that every input element that requires a label, has an appropriate label",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/forms/form-labels",
+    "help": "Form elements must have labels"
+  },
+  "all": [],
+  "any": [
+    "aria-label",
+    "aria-labelledby",
+    "implicit-label",
+    "explicit-label",
+    "non-empty-title"
+  ],
+  "none": [
+    "help-same-as-label",
+    "multiple-label"
+  ]
+}

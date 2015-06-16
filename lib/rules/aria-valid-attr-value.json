@@ -1,0 +1,17 @@
+{
+  "id": "aria-valid-attr-value",
+  "tags": [
+    "wcag2a",
+    "wcag411"
+  ],
+  "metadata": {
+    "helpUrl": "https://dequeuniversity.com/issues/aria-valid-attr-value",
+    "description": "Checks all elements that contain WAI-ARIA atributes to ensure that the values of the attributes are valid",
+    "help": "ARIA attributes used must conform to valid values"
+  },
+  "all": [],
+  "any": [
+    "aria-valid-attr-value"
+  ],
+  "none": []
+}

@@ -1,10 +1,5 @@
+tmp
 dist
 bower_components
 node_modules
-build/selenium-server-standalone-*.jar
-build/test.json
-doc/examples/selenium-java/.idea
-doc/examples/selenium-java/target
-test/unit/index.html
-xunit.xml
-lint.xml
+test/*/index.html
