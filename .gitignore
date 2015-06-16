@@ -2,8 +2,4 @@ tmp
 dist
 bower_components
 node_modules
-
-build/test.json
 test/*/index.html
-xunit.xml
-lint.xml

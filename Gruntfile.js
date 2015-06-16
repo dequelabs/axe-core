@@ -15,7 +15,7 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		clean: ['dist'],
+		clean: ['dist', 'tmp'],
 		concat: {
 			engine: {
 				src: [
@@ -146,7 +146,7 @@ module.exports = function (grunt) {
 				}
 			},
 			commons: {
-				src: '<%= concat.commons.src %>',
+				src: ['build/test/engine.js', '<%= configure.rules.dest.auto %>'],
 				dest: 'test/commons/index.html',
 				options: {
 					fixture: 'test/runner.tmpl',
@@ -195,7 +195,7 @@ module.exports = function (grunt) {
 		testconfig: {
 			test: {
 				src: ['test/integration/rules/**/*.json'],
-				dest: 'build/test.json',
+				dest: 'tmp/test.json',
 				options: {
 					port: '<%= connect.test.options.port %>'
 				}
@@ -211,11 +211,11 @@ module.exports = function (grunt) {
 			}
 		},
 		jshint: {
-			rules: {
+			axe: {
 				options: {
 					jshintrc: true,
 					reporter: grunt.option('report') ? 'checkstyle' : undefined,
-					reporterOutput: grunt.option('report') ? 'lint.xml' : undefined
+					reporterOutput: grunt.option('report') ? 'tmp/lint.xml' : undefined
 				},
 				src: ['lib/**/*.js', 'test/**/*.js', 'build/tasks/**/*.js', 'doc/**/*.js', 'Gruntfile.js']
 			}
@@ -223,6 +223,6 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('default', ['build']);
-	grunt.registerTask('build', ['clean', 'validate', 'configure', 'concat', 'copy', 'uglify']);
+	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure', 'concat:engine', 'copy', 'uglify']);
 	grunt.registerTask('test', ['build', 'fixture', 'connect', 'testconfig', 'mocha', 'mochaTest', 'jshint']);
 };

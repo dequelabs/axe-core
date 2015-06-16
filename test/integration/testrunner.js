@@ -2,7 +2,7 @@
 var WebDriver = require('selenium-webdriver'),
 	assert = require('chai').assert,
 	test = require('selenium-webdriver/testing'),
-	config = require('../../build/test.json');
+	config = require('../../tmp/test.json');
 
 function checkIdenticality(conf, actual, type) {
 	'use strict';
