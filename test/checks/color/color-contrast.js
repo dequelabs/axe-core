@@ -174,13 +174,19 @@ describe('color-contrast', function () {
 		it('should not match <input type="color">', function () {
 			fixture.innerHTML = '<input type="color">';
 			var target = fixture.querySelector('input');
-			assert.isFalse(checks['color-contrast'].matches(target));
+			// Some browsers will fallback to type=text for unknown input types (looking at you IE)
+			if (target.type === 'color') {
+				assert.isFalse(checks['color-contrast'].matches(target));
+			}
 		});
 
 		it('should not match <input type="range">', function () {
 			fixture.innerHTML = '<input type="range">';
 			var target = fixture.querySelector('input');
-			assert.isFalse(checks['color-contrast'].matches(target));
+			// Some browsers will fallback to type=text for unknown input types (looking at you IE)
+			if (target.type === 'range') {
+				assert.isFalse(checks['color-contrast'].matches(target));
+			}
 		});
 
 		it('should match <select> with options', function () {
