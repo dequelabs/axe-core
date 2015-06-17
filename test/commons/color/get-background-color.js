@@ -211,7 +211,7 @@ describe('color.getBackgroundColor', function () {
 	it('should ignore 0-height elements', function () {
 		fixture.innerHTML = '<div id="parent" style="height: 40px; width: 30px; ' +
 			'background-color: white; position: relative; z-index: 5">' +
-			'<div float="left" style="height: 0px; background-color: black">' + 
+			'<div float="left" style="height: 0px; background-color: black">' +
 			'<div id="target" style="height: 20px; width: 25px; z-index: 25;">' +
 			'</div></div></div>';
 		var target = fixture.querySelector('#target');
@@ -235,6 +235,7 @@ describe('color.getBackgroundColor', function () {
 			'background-color: black; z-index: 15;"></div></div>';
 		var target = fixture.querySelector('#target');
 		var shifted = fixture.querySelector('#shifted');
+		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
 		var actual = commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new commons.color.Color(0, 0, 0, 1);

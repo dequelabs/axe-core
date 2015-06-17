@@ -125,7 +125,7 @@ module.exports = function (grunt) {
 			}
 		},
 		watch: {
-			files: ['<%= concat.engine.src %>', '<%= testconfig.test.src %>'],
+			files: ['lib/**/*', 'test/**/*.js'],
 			tasks: ['build']
 		},
 		fixture: {
