@@ -17,7 +17,8 @@
     "has-alt",
     "aria-label",
     "aria-labelledby",
-    "non-empty-title"
+    "non-empty-title",
+    "role-presentation"
   ],
   "none": []
 }
