@@ -41,9 +41,6 @@ module.exports = function (grunt) {
 				src: [
 					'lib/commons/intro.stub',
 					'lib/commons/index.js',
-					'bower_components/simple-clone/lib/index.js',
-					'bower_components/element-matches/lib/index.js',
-					'bower_components/escape-selector/lib/index.js',
 					'lib/commons/*/index.js',
 					'lib/commons/**/*.js',
 					'lib/commons/export.js',
@@ -138,7 +135,13 @@ module.exports = function (grunt) {
 				}
 			},
 			checks: {
-				src: ['build/test/engine.js', '<%= configure.rules.dest.auto %>'],
+				src: [
+					'bower_components/simple-clone/lib/index.js',
+					'bower_components/element-matches/lib/index.js',
+					'bower_components/escape-selector/lib/index.js',
+					'build/test/engine.js',
+					'<%= configure.rules.dest.auto %>'
+				],
 				dest: 'test/checks/index.html',
 				options: {
 					fixture: 'test/runner.tmpl',
@@ -146,7 +149,13 @@ module.exports = function (grunt) {
 				}
 			},
 			commons: {
-				src: ['build/test/engine.js', '<%= configure.rules.dest.auto %>'],
+				src: [
+					'bower_components/simple-clone/lib/index.js',
+					'bower_components/element-matches/lib/index.js',
+					'bower_components/escape-selector/lib/index.js',
+					'build/test/engine.js',
+					'<%= configure.rules.dest.auto %>'
+				],
 				dest: 'test/commons/index.html',
 				options: {
 					fixture: 'test/runner.tmpl',
@@ -157,11 +166,14 @@ module.exports = function (grunt) {
 		mocha: {
 			test: {
 				options: {
-					urls: ['http://localhost:<%= connect.test.options.port %>/test/unit/index.html'],
+					urls: ['http://localhost:<%= connect.test.options.port %>/test/unit/'],
 					reporter: grunt.option('report') ? 'XUnit' : 'Spec',
 					run: true,
 					logErrors: true,
-					log: true
+					log: true,
+					mocha: {
+						grep: grunt.option('grep')
+					}
 				},
 				dest: grunt.option('report') ? 'tmp/xunit.xml' : undefined
 			},
@@ -169,7 +181,10 @@ module.exports = function (grunt) {
 				options: {
 					urls: ['http://localhost:<%= connect.test.options.port %>/test/checks/'],
 					run: true,
-					reporter: grunt.option('report') ? 'XUnit' : 'Spec'
+					reporter: grunt.option('report') ? 'XUnit' : 'Spec',
+					mocha: {
+						grep: grunt.option('grep')
+					}
 				},
 				dest: grunt.option('report') ? 'tmp/checks-xunit.xml' : undefined
 			},
@@ -177,7 +192,10 @@ module.exports = function (grunt) {
 				options: {
 					urls: ['http://localhost:<%= connect.test.options.port %>/test/commons/'],
 					run: true,
-					reporter: grunt.option('report') ? 'XUnit' : 'Spec'
+					reporter: grunt.option('report') ? 'XUnit' : 'Spec',
+					mocha: {
+						grep: grunt.option('grep')
+					}
 				},
 				dest: grunt.option('report') ? 'tmp/commons-xunit.xml' : undefined
 			}
