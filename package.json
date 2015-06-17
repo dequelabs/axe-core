@@ -1,0 +1,60 @@
+{
+  "name": "axe-core",
+  "description": "Accessibility engine for automated Web UI testing",
+  "version": "1.0.1",
+  "license": "MPL-2.0",
+  "author": {
+    "name": "David Sturley",
+    "url": "http://deque.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dequelabs/axe-core.git"
+  },
+  "keywords": [
+    "Accessibility",
+    "a11y",
+    "testing",
+    "unit",
+    "testing",
+    "tdd",
+    "bdd",
+    "accessibility",
+    "testing",
+    "aXe"
+  ],
+  "dependencies": {},
+  "scripts": {
+    "build": "grunt"
+  },
+  "devDependencies": {
+    "axe-rules": "~1.0.2",
+    "blanket": "~1.1.7",
+    "chai": "~2.3.0",
+    "grunt": "~0.4.5",
+    "grunt-blanket-mocha": "~0.5.0",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-concat": "~0.5.1",
+    "grunt-contrib-connect": "~0.10.1",
+    "grunt-contrib-copy": "~0.7.0",
+    "grunt-contrib-jshint": "~0.11.2",
+    "grunt-contrib-uglify": "~0.9.1",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-curl": "~2.2.0",
+    "grunt-if-missing": "~1.0.0",
+    "grunt-mocha-test": "~0.12.7",
+    "grunt-mocha": "~0.4.12",
+    "mocha": "~2.2.4",
+    "selenium-webdriver": "~2.45.1"
+  },
+  "readme": "# axe-core\n\nThe Accessibility Engine for automated testing of HTML-based user interfaces. Drop the aXe on your accessibility defects!\n\n## Philosophy\n\nWe believe that automated testing has an important role to play in achieving digital equality and that in order to do that, it must achieve mainstream adoption by professional web developers. That means that the tests must inspire trust, must be fast, must work everywhere and must be available everywhere.\n\n## Manifesto\n\n1. Automated accessibility testing rules must have a zero false positive rate\n2. Automated accessibility testing rules must be lightweight and fast\n3. Automated accessibility testing rules must work in all modern browsers\n4. Automated accessibility testing rules must, themselves, be tested automatically\n\n## The sharp edge of the aXe\n\naXe is the third generation of accessibility rules for HTML-based user interfaces that differentiates itself from other approaches and rules repositories in the following ways:\n\n1. It works on all modern browsers,\n2. It supports in-memory fixtures, static fixtures, integration tests and iframes of infinite depth\n3. It has zero false positives (bugs notwithstanding)\n4. It is open source\n5. It is actively supported by a major accessibility vendor\n6. It is designed to work with whatever tools, frameworks, libraries and environments you have today\n7. It is designed to be integrated into your existing functional/acceptance automated tests\n8. It automatically determines which rules to run based on the evaluation context\n9. It is highly configurable\n\n## Getting started\n\nFirst download the package:\n\n```\nnpm install axe-core --save-dev\n```\n\nNow include the javascript file in each of your iframes in you fixtures or test systems:\n\n```html\n<script src=\"node_modules/axe-core/axe.min.js\" ></script>\n```\n\nNow insert calls at each point in your tests where a new piece of UI becomes visible or exposed:\n\n```\naxe.a11yCheck(document, function (results) {\n    ok(results.violations.length === 0, 'Should be no accessibility issues');\n    // complete the async call\n    ...\n});\n```\n## Supported Browsers\n\nThe aXe API supports the following browsers:\n\n* Internet Explorer v9, 10, 11\n\n* Google Chrome v35 and above\n\n* Mozilla Firefox v24 and above\n\n* Apple Safari v7 and above\n\n\n## Contents of the API Package\n\nThe aXe API package consists of:\n\n* `axe.js` - the javascript file that should be included in your web site under test (API)\n\n* `axe.min.js` - a minified version of the above file\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/dequelabs/axe-core/issues"
+  },
+  "homepage": "https://github.com/dequelabs/axe-core",
+  "_id": "axe-core@1.0.1",
+  "_shasum": "ba7ddb12ffd1d7e2cf8916abebf4d227fd7c4df1",
+  "_from": "axe-core@*",
+  "_resolved": "file:dist"
+}
