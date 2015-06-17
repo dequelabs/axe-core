@@ -39,7 +39,7 @@
 | scope | Ensures that the scope attribute is used correctly on tables | wcag2a, wcag411, wcag131 |
 | server-side-image-map | Ensures that server-side image maps are never used | wcag2a, wcag211, section508, section508f |
 | skip-link | Ensures that the best practice of having a skip link as the very first link in a page, is adhered-to | best-practice |
-| tabindex | Ensures that explicit tabindex attributes that are greater than 0 are never used | wcag2a, wcag243 |
+| tabindex | Ensures that explicit tabindex attributes that are greater than 0 are never used | best-practice |
 | valid-lang | Ensures that when the 'lang' attribute is used, it has a valid value | wcag2aa, wcag312 |
 | video-caption | Ensures that the HTML5 <video> tag is captioned | wcag2a, wcag122, wcag123, section508, section508a |
 | video-description | Ensures that every <video> tag has an audio description | wcag2aa, wcag125, section508, section508a |
