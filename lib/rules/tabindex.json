@@ -2,8 +2,7 @@
   "id": "tabindex",
   "selector": "[tabindex]",
   "tags": [
-    "wcag2a",
-    "wcag243"
+    "best-practice"
   ],
   "metadata": {
     "description": "Ensures that explicit tabindex attributes that are greater than 0 are never used",
