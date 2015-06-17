@@ -733,12 +733,6 @@ describe('text.accessibleText', function() {
 			'sub', 'sup', 'i', 'b', 'u', 'mark', 'ruby', 'rt', 'rp', 'bdi', 'bdo', 'br', 'wbr'
 		];
 
-		before(function() {
-			tags.forEach(function(tag) {
-				document.createElement(tag);
-			});
-		});
-
 		it('should find aria-labelledby', function() {
 			tags.forEach(function(tag) {
 				fixture.innerHTML = '<div id="t1">Hello</div><div id="t2">World</div>';
