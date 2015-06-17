@@ -87,6 +87,21 @@ describe('Context', function () {
 
 		});
 
+		it('should support jQuery-like objects', function () {
+			fixture.innerHTML = '<div id="foo"></div><div id="bar"></div><div id="baz"></div>';
+			var $test = {
+				0: $id('foo'),
+				1: $id('bar'),
+				2: $id('baz'),
+				length: 3
+			};
+
+			var result = new Context($test);
+
+			assert.deepEqual(result.include, [$id('foo'), $id('bar'), $id('baz')]);
+
+		});
+
 		it('should add frame references to frames - implicit', function (done) {
 			fixture.innerHTML = '<div id="outer"></div>';
 			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function () {

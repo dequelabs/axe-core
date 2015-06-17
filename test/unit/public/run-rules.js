@@ -275,6 +275,61 @@ describe('runRules', function () {
 		});
 	});
 
+	it('should accept a jQuery-like object', function (done) {
+		axe._load({
+			rules: [{
+				id: 'test',
+				selector: '*',
+				none: [{
+					evaluate: function () {
+					return true;
+					}
+				}]
+			}]
+		});
+
+		fixture.innerHTML = '<div id="t1"><span></span></div><div id="t2"><em></em></div>';
+
+		var $test = {
+			0: fixture.querySelector('#t1'),
+			1: fixture.querySelector('#t2'),
+			length: 2
+		};
+
+		axe.a11yCheck($test, function (results) {
+			assert.lengthOf(results.violations, 1);
+			assert.lengthOf(results.violations[0].nodes, 2);
+			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1 > span']);
+			assert.deepEqual(results.violations[0].nodes[1].target, ['#t2 > em']);
+			done();
+		});
+	});
+
+	it('should accept a NodeLists', function (done) {
+		axe._load({
+			rules: [{
+				id: 'test',
+				selector: '*',
+				none: [{
+					evaluate: function () {
+					return true;
+					}
+				}]
+			}]
+		});
+
+		fixture.innerHTML = '<div class="foo" id="t1"><span></span></div><div class="foo" id="t2"><em></em></div>';
+
+		var test = fixture.querySelectorAll('.foo');
+		axe.a11yCheck(test, function (results) {
+			assert.lengthOf(results.violations, 1);
+			assert.lengthOf(results.violations[0].nodes, 2);
+			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1 > span']);
+			assert.deepEqual(results.violations[0].nodes[1].target, ['#t2 > em']);
+			done();
+		});
+	});
+
 	it('should pull metadata from configuration', function (done) {
 		axe._load({
 			rules: [{
