@@ -126,7 +126,6 @@ describe('runRules', function () {
 	});
 
 	it('should work', function (done) {
-		this.timeout(5000);
 		axe._load({ rules: [{
 			id: 'html',
 			selector: 'html',
@@ -151,7 +150,6 @@ describe('runRules', function () {
 	});
 
 	it('should properly order iframes', function (done) {
-		this.timeout(5000);
 		axe._load({ rules: [{
 			id: 'iframe',
 			selector: 'iframe',

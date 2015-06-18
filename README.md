@@ -1,7 +1,9 @@
 # axe-core
 [![Version](https://img.shields.io/npm/v/axe-core.svg)](https://www.npmjs.com/package/axe-core)
-![Bower](https://img.shields.io/bower/v/axe-core.svg)
+[![Bower](https://img.shields.io/bower/v/axe-core.svg)](http://bower.io/search)
+[![License](https://img.shields.io/npm/l/axe-core.svg)](LICENSE)
 [![Build Status](https://travis-ci.org/dequelabs/axe-core.svg?branch=master)](https://travis-ci.org/dequelabs/axe-core)
+[![Sauce Test Status](https://saucelabs.com/buildstatus/dequelabs-axe)](https://saucelabs.com/u/dequelabs-axe)
 [![Dependency Status](https://gemnasium.com/dequelabs/axe-core.svg)](https://gemnasium.com/dequelabs/axe-core)
 [![Codacy Badge](https://www.codacy.com/project/badge/c2d7835387dd41b3a77eafd439fba559)](https://www.codacy.com/app/dsturley/axe-core)
 

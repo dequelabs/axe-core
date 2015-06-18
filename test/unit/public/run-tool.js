@@ -47,7 +47,6 @@ describe('runTool', function () {
   });
 
   it('should work without frames', function (done) {
-    this.timeout(5000);
     var target = document.createElement('div');
     target.id = 'target';
     fixture.appendChild(target);
@@ -70,7 +69,6 @@ describe('runTool', function () {
   });
 
   it('should work across frames', function (done) {
-    this.timeout(5000);
     axe._load({
       rules: [],
       tools: [{

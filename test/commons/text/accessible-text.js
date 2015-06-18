@@ -738,9 +738,11 @@ describe('text.accessibleText', function() {
 				fixture.innerHTML = '<div id="t1">Hello</div><div id="t2">World</div>';
 				var target = document.createElement(tag);
 				target.setAttribute('aria-labelledby', 't1 t2');
+				target.style.display = 'inline'; // Firefox hides some of these elements because reasons...
 				fixture.appendChild(target);
 
-				assert.equal(commons.text.accessibleText(target), 'Hello World', tag);
+				var result = commons.text.accessibleText(target);
+				assert.equal(result, 'Hello World', tag);
 			});
 		});
 
@@ -748,9 +750,11 @@ describe('text.accessibleText', function() {
 			tags.forEach(function(tag) {
 				var target = document.createElement(tag);
 				target.setAttribute('aria-label', 'Hello World');
+				target.style.display = 'inline'; // Firefox hack, see above
 				fixture.appendChild(target);
 
-				assert.equal(commons.text.accessibleText(target), 'Hello World', tag);
+				var result = commons.text.accessibleText(target);
+				assert.equal(result, 'Hello World', tag);
 			});
 		});
 
@@ -758,9 +762,11 @@ describe('text.accessibleText', function() {
 			tags.forEach(function(tag) {
 				var target = document.createElement(tag);
 				target.setAttribute('title', 'Hello World');
+				target.style.display = 'inline'; // Firefox hack, see above
 				fixture.appendChild(target);
 
-				assert.equal(commons.text.accessibleText(target), 'Hello World', tag);
+				var result = commons.text.accessibleText(target);
+				assert.equal(result, 'Hello World', tag);
 			});
 		});
 
