@@ -18,18 +18,6 @@ var browsers = exports.browsers = [{
 	browserName: 'firefox',
 	platform: 'Windows 8.1'
 }, {
-	browserName: 'iphone',
-	platform: 'OS X 10.10',
-	version: '8.2',
-	deviceName: 'iPhone Simulator',
-	deviceOrientation: 'portrait'
-}, {
-	browserName: 'android',
-	platform: 'Linux',
-	version: '5.1',
-	deviceName: 'Android Emulator',
-	deviceOrientation: 'portrait'
-}, {
 	browserName: 'safari',
 	platform: 'OS X 10.10'
 }];
@@ -50,10 +38,6 @@ exports = module.exports = function (name, url) {
 			build: process.env.TRAVIS_JOB_ID,
 			concurrency: 3,
 			browsers: browsers,
-			tunneled: false,
-			sauceConfig: {
-				'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER
-			},
 			testname: name || 'mocha tests',
 			public: 'public',
 			tags: tags.length ? tags : ['local']
