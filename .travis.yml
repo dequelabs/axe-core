@@ -12,7 +12,7 @@ branches:
   except:
     - release
 script:
-  - grunt test-ci
+  - grunt test-ci --verbose --debug
 env:
   global:
     - secure: qjMwfcWDzEhGWxVhmGi5s0MlsU4N/SI96mx6Gj36/GySxgIUU9EFXeN4SZS2OvRmy2/+l0XSt5ln9PWp4Suh2LM8/GaR5I6FALs/9rOLU9py0/G9V1ImqNN9Z6Nk6PvS71SAwP7xOtR+xsywnUEdHZ7dCA3fYEIsOkyq4KRQ9M7JHWogP+h+WsHPcznjPeNxVBCfYCXW0KhrLDzL4ZA+b2UY/IMZDXITdZ99TZQA6XSKTfJg3xs/jqXEo91igHNKN6VxappBqPbDiFxf7az1RExq3oHAawCDTaKE7xxip+6UIxAeo63tiM0vgp92HVrVsIQETSQFBP4aqhl/pfxQ7d9lto7Mz5AlxKvJ3CIwDD/hspPzG5SNrj/FgQLgK7LrUOomMOjf8giRUg8XXLe7Rb1jmbePP3Z9DIEg4Z+ar3dpC2dNiWYFwBM14wY39GuU6tJpzImGRRUGCMPiO55TVTdRZacVeIq1XWRecIH0CabZThJCwOxyiGIT5ETiT5CVs0CgnbVe99l1qyi8wrMnbw4m4UAlMQ/5kytqtsL957RwxvcctCtX+LlshAgC3m1Aq/aF8V/wIYDcRlwOY2HbGiFQJewV7Aeln3t/S8VFjP9hHn8ZTsH9ez3VB57Q53YgrxFCr6CXEK4X3dkmRpx9in3oDI51TxW32tInwGTukSg=
