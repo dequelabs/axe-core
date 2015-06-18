@@ -51,6 +51,8 @@ exports = module.exports = function (name, url) {
 			build: process.env.TRAVIS_JOB_ID,
 			concurrency: 3,
 			browsers: browsers,
+			tunneled: false,
+			identifier: process.env.TRAVIS_JOB_NUMBER,
 			testname: name || 'mocha tests',
 			public: 'public',
 			tags: tags.length ? tags : ['local']
