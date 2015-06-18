@@ -42,7 +42,6 @@ function pushIfDefined(a, b) {
 
 exports = module.exports = function (name, url) {
 	var tags = [];
-	pushIfDefined(tags, process.env.TRAVIS_PULL_REQUEST);
 	pushIfDefined(tags, process.env.TRAVIS_BRANCH);
 
 	return {
