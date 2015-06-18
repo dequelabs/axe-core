@@ -9,7 +9,6 @@ describe('utils.collectResultsFromFrames', function () {
 	});
 
   it('should timeout after 30s', function (done) {
-    this.timeout(5000);
     var orig = window.setTimeout;
     window.setTimeout = function (fn, to) {
       if (to === 30000) {

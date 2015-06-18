@@ -1,4 +1,6 @@
-//jshint maxcomplexity: 12
+//jshint maxcomplexity: 12, maxstatements: false
+
+var sauceConfig = require('./build/sauce.conf');
 module.exports = function (grunt) {
 	'use strict';
 
@@ -9,8 +11,10 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-continue');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-mocha-test');
+	grunt.loadNpmTasks('grunt-saucelabs');
 	grunt.loadTasks('build/tasks');
 
 	grunt.initConfig({
@@ -167,37 +171,29 @@ module.exports = function (grunt) {
 			test: {
 				options: {
 					urls: ['http://localhost:<%= connect.test.options.port %>/test/unit/'],
-					reporter: grunt.option('report') ? 'XUnit' : 'Spec',
 					run: true,
-					logErrors: true,
-					log: true,
 					mocha: {
 						grep: grunt.option('grep')
 					}
-				},
-				dest: grunt.option('report') ? 'tmp/xunit.xml' : undefined
+				}
 			},
 			checks: {
 				options: {
 					urls: ['http://localhost:<%= connect.test.options.port %>/test/checks/'],
 					run: true,
-					reporter: grunt.option('report') ? 'XUnit' : 'Spec',
 					mocha: {
 						grep: grunt.option('grep')
 					}
-				},
-				dest: grunt.option('report') ? 'tmp/checks-xunit.xml' : undefined
+				}
 			},
 			commons: {
 				options: {
 					urls: ['http://localhost:<%= connect.test.options.port %>/test/commons/'],
 					run: true,
-					reporter: grunt.option('report') ? 'XUnit' : 'Spec',
 					mocha: {
 						grep: grunt.option('grep')
 					}
-				},
-				dest: grunt.option('report') ? 'tmp/commons-xunit.xml' : undefined
+				}
 			}
 		},
 		mochaTest: {
@@ -209,6 +205,11 @@ module.exports = function (grunt) {
 				},
 				src: ['test/integration/testrunner.js']
 			}
+		},
+		'saucelabs-mocha': {
+			core: sauceConfig('core', 'http://localhost:<%= connect.test.options.port %>/test/unit/'),
+			commons: sauceConfig('commons', 'http://localhost:<%= connect.test.options.port %>/test/commons/'),
+			checks: sauceConfig('checks', 'http://localhost:<%= connect.test.options.port %>/test/checks/')
 		},
 		testconfig: {
 			test: {
@@ -241,6 +242,13 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('default', ['build']);
-	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure', 'concat:engine', 'copy', 'uglify']);
-	grunt.registerTask('test', ['build', 'fixture', 'connect', 'testconfig', 'mocha', 'mochaTest', 'jshint']);
+
+	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
+		'concat:engine', 'copy', 'uglify']);
+
+	grunt.registerTask('test', ['build', 'fixture', 'connect', 'testconfig',
+		'mocha', 'mochaTest', 'jshint']);
+
+	grunt.registerTask('test-ci', ['build', 'fixture', 'connect', 'continue:on',
+		'saucelabs-mocha', 'continue:off', 'jshint', 'continue:fail-on-warning']);
 };

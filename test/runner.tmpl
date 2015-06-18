@@ -2,19 +2,21 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>Rule Engine Tests</title>
+		<title>aXe Tests</title>
 
 		<link rel="stylesheet" type="text/css" href="../../node_modules/mocha/mocha.css" />
 		<script src="../../node_modules/mocha/mocha.js"></script>
 		<script src="../../node_modules/chai/chai.js"></script>
 		<script>
-			mocha.setup('bdd');
+			mocha.setup({
+				timeout: 10000,
+				ui: 'bdd'
+			});
 			var assert = chai.assert;
 			var global = {};
 		</script>
 		<% files.forEach(function (file) { %>
-			<script src="../../<%=file%>"
-				<% if (file.indexOf('bower_components') === -1) { %>data-cover<% } %>></script>
+			<script src="../../<%=file%>"></script>
 		<%  }); %>
 
 	</head>
@@ -27,9 +29,29 @@
 		<%  }); %>
 
 		<script>
-		  if (navigator.userAgent.indexOf('PhantomJS') < 0) {
-				mocha.run();
-			}
+			var runner = mocha.run();
+			var failedTests = [];
+			runner.on('end', function() {
+				window.mochaResults = runner.stats;
+				window.mochaResults.reports = failedTests;
+			});
+			runner.on('fail', function logFailure(test, err) {
+				var flattenTitles = function(test) {
+					var titles = [];
+					while (test.parent.title) {
+						titles.push(test.parent.title);
+						test = test.parent;
+					}
+					return titles.reverse();
+				}
+				failedTests.push({
+					name: test.title,
+					result: false,
+					message: err.message,
+					stack: err.stack,
+					titles: flattenTitles(test)
+				});
+			});
 		</script>
 	</body>
 
