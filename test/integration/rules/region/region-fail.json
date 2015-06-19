@@ -1,6 +1,7 @@
 {
 	"description": "region fail test",
 	"rule": "region",
+	"standalone": true,
 	"violations": [
 		["html"]
 	]

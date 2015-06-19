@@ -1,5 +1,6 @@
 {
 	"description": "skip-link fail test",
 	"rule": "skip-link",
+	"standalone": true,
 	"violations": [["#firstlink"]]
 }

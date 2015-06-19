@@ -1,6 +1,7 @@
 {
 	"description": "region pass test",
 	"rule": "region",
+	"standalone": true,
 	"passes": [
 		["html"]
 	]

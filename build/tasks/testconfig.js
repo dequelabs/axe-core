@@ -12,7 +12,11 @@ module.exports = function (grunt) {
 				options: options,
 				tests: f.src.map(function (filepath) {
 					var testConfig = grunt.file.readJSON(filepath);
-					testConfig.url = 'http://localhost:' + options.port + '/' + filepath.replace(/json$/, 'html');
+					if (testConfig.standalone) {
+						testConfig.url = 'http://localhost:' + options.port + '/' + filepath.replace(/json$/, 'html');
+					} else {
+						testConfig.content = grunt.file.read(filepath.replace(/json$/, 'html'));
+					}
 					return testConfig;
 				})
 			}));

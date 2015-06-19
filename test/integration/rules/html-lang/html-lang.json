@@ -1,6 +1,7 @@
 {
 	"description": "html-lang test",
 	"rule": "html-lang",
+	"standalone": true,
 	"violations": [
 		["#frame1", "#violation1"],
 		["#frame1", "#frame2", "#violation2"]

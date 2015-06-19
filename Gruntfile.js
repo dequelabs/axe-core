@@ -199,11 +199,10 @@ module.exports = function (grunt) {
 		mochaTest: {
 			test: {
 				options: {
-					reporter: grunt.option('report') ? 'xunit' : 'spec',
-					captureFile: grunt.option('report') ? 'dist/xunit.xml' : undefined,
+					reporter: 'Spec',
 					grep: grunt.option('grep')
 				},
-				src: ['test/integration/testrunner.js']
+				src: ['test/integration/rules/testrunner.js']
 			}
 		},
 		'saucelabs-mocha': {
