@@ -1,4 +1,4 @@
-# axe-core!
+# axe-core
 
 The Accessibility Engine for automated testing of HTML-based user interfaces. Drop the aXe on your accessibility defects!
 
