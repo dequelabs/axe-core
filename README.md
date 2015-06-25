@@ -78,3 +78,7 @@ The aXe API package consists of:
 ## Contributing
 
 This repository is available for download and enhancement. We will accept pull requests once we publish our Contributor agreement.
+
+## Projects using axe-core
+
+[list of projects using axe-core](projects.md)
