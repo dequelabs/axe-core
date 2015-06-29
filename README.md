@@ -59,7 +59,7 @@ axe.a11yCheck(document, function (results) {
 ```
 ## Supported Browsers
 
-The aXe API supports the following browsers:
+The [aXe API](doc/API.md) supports the following browsers:
 
 * Internet Explorer v9, 10, 11
 * Google Chrome v35 and above
@@ -69,7 +69,7 @@ The aXe API supports the following browsers:
 
 ## Contents of the API Package
 
-The aXe API package consists of:
+The [aXe API](doc/API.md) package consists of:
 
 * `axe.js` - the javascript file that should be included in your web site under test (API)
 * `axe.min.js` - a minified version of the above file
