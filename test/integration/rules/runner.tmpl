@@ -4,9 +4,9 @@
 		<meta charset="utf-8" />
 		<title>aXe Tests</title>
 
-		<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
-		<script src="/node_modules/mocha/mocha.js"></script>
-		<script src="/node_modules/chai/chai.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../../node_modules/mocha/mocha.css" />
+		<script src="../../../node_modules/mocha/mocha.js"></script>
+		<script src="../../../node_modules/chai/chai.js"></script>
 		<script>
 			mocha.setup({
 				timeout: 10000,
@@ -16,7 +16,7 @@
 			var global = {};
 		</script>
 		<% files.forEach(function (file) { %>
-			<script src="/<%=file%>"></script>
+			<script src="../../<%=file%>"></script>
 		<%  }); %>
 
 	</head>

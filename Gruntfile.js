@@ -127,7 +127,16 @@ module.exports = function (grunt) {
 		},
 		watch: {
 			files: ['lib/**/*', 'test/**/*.js'],
-			tasks: ['build']
+			tasks: ['build', 'testconfig', 'fixture']
+		},
+		testconfig: {
+			test: {
+				src: ['test/integration/rules/**/*.json'],
+				dest: 'tmp/integration-tests.js',
+				options: {
+					port: '<%= connect.test.options.port %>'
+				}
+			}
 		},
 		fixture: {
 			engine: {
@@ -164,6 +173,15 @@ module.exports = function (grunt) {
 				options: {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/commons'
+				}
+			},
+			integration: {
+				src: ['<%= concat.engine.dest %>'],
+				dest: 'test/integration/rules/index.html',
+				options: {
+					fixture: 'test/runner.tmpl',
+					testCwd: 'test/integration/rules',
+					tests: ['../../../tmp/integration-tests.js', 'runner.js']
 				}
 			}
 		},
@@ -209,15 +227,6 @@ module.exports = function (grunt) {
 			core: sauceConfig('core', 'http://localhost:<%= connect.test.options.port %>/test/unit/'),
 			commons: sauceConfig('commons', 'http://localhost:<%= connect.test.options.port %>/test/commons/'),
 			checks: sauceConfig('checks', 'http://localhost:<%= connect.test.options.port %>/test/checks/')
-		},
-		testconfig: {
-			test: {
-				src: ['test/integration/rules/**/*.json'],
-				dest: 'tmp/test.json',
-				options: {
-					port: '<%= connect.test.options.port %>'
-				}
-			}
 		},
 		connect: {
 			test: {

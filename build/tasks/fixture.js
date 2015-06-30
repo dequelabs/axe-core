@@ -6,7 +6,8 @@ module.exports = function (grunt) {
 		var options = this.options({
 			fixture: 'test/runner.tmpl',
 			testCwd: 'test/unit',
-			tests: ['**/*.js']
+			tests: ['**/*.js'],
+			data: {}
 		});
 
 		this.files.forEach(function (f) {
@@ -17,7 +18,8 @@ module.exports = function (grunt) {
 				result = grunt.template.process(source, {
 					data: {
 						files: files,
-						tests: grunt.file.expand({cwd: options.testCwd}, options.tests)
+						tests: grunt.file.expand({cwd: options.testCwd}, options.tests),
+						data: options.data
 					}
 				});
 
