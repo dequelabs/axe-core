@@ -249,6 +249,36 @@ describe('color-contrast', function () {
 			var target = fixture.querySelector('input');
 			assert.isFalse(checks['color-contrast'].matches(target));
 		});
+
+		it('should not match a disabled input\'s label - explicit label', function () {
+			fixture.innerHTML = '<label for="t1">Test</label><input type="text" id="t1" disabled>';
+			var target = fixture.querySelector('label');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
+
+		it('should not match a disabled input\'s label - implicit label (input)', function () {
+			fixture.innerHTML = '<label>Test<input type="text" disabled></label>';
+			var target = fixture.querySelector('label');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
+
+		it('should not match a disabled input\'s label - implicit label (textarea)', function () {
+			fixture.innerHTML = '<label>Test<textarea disabled>Hi</textarea></label>';
+			var target = fixture.querySelector('label');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
+
+		it('should not match a disabled input\'s label - implicit label (select)', function () {
+			fixture.innerHTML = '<label>Test<select disabled><option>Test</option></select></label>';
+			var target = fixture.querySelector('label');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
+
+		it('should not match a disabled input\'s label - aria-labelledby', function () {
+			fixture.innerHTML = '<div id="t1">Test</div><input type="text" aria-labelledby="bob t1 fred" disabled>';
+			var target = fixture.querySelector('div');
+			assert.isFalse(checks['color-contrast'].matches(target));
+		});
 	});
 
 });
