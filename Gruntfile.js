@@ -5,8 +5,8 @@ module.exports = function (grunt) {
 	'use strict';
 
 	function mapToUrl(files, port) {
-    return grunt.file.expand(files).map(function (file) {
-      return 'http://localhost:' + port + '/' + file;
+		return grunt.file.expand(files).map(function (file) {
+			return 'http://localhost:' + port + '/' + file;
 		});
 	}
 
@@ -19,7 +19,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-continue');
 	grunt.loadNpmTasks('grunt-mocha');
-	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadNpmTasks('grunt-saucelabs');
 	grunt.loadTasks('build/tasks');
 
