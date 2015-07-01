@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Region Test</title>
+<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
+<script src="/node_modules/mocha/mocha.js"></script>
+<script src="/node_modules/chai/chai.js"></script>
+<script src="/dist/axe.js"></script>
+<script>
+	mocha.setup({
+		timeout: 10000,
+		ui: 'bdd'
+	});
+	var assert = chai.assert;
+</script>
+</head>
+<body>
+<a href="stuff.html#mainheader" id="notskiplink">This is not a skip link.</a>
+<div id="wrapper">
+	<div>
+		<h1 id="mainheader" tabindex="0">This is a header.</h1>
+	</div>
+</div>
+<ul>
+	<li>Home</li>
+	<li>Other</li>
+</ul>
+<div id="mocha"></div>
+<script src="region-fail.js"></script>
+<script src="/test/integration/adapter.js"></script>
+</body>
+</html>

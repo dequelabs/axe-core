@@ -1,6 +1,0 @@
-{
-	"description": "skip-link pass test",
-	"rule": "skip-link",
-	"standalone": true,
-	"passes": [["#firstlink"]]
-}

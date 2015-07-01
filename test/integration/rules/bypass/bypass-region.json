@@ -1,6 +1,0 @@
-{
-	"description": "bypass-region pass test",
-	"rule": "bypass",
-	"standalone": true,
-	"passes": [["html"]]
-}

@@ -10,7 +10,20 @@
 	}
 
 	function waitForFrames(context, cb) {
-		context.querySelectorAll('iframe')
+		function loadListener() {
+			loaded++;
+			if (loaded === length) {
+				cb();
+			}
+		}
+		var loaded = 0;
+		var frames = context.querySelectorAll('iframe');
+		if (!frames.length) {
+			return cb();
+		}
+		for (var index = 0, length = frames.length; index < length; index++) {
+			frames[index].addEventListener('load', loadListener);
+		}
 	}
 
 	var fixture = document.getElementById('fixture');
@@ -23,7 +36,7 @@
 						if (test[collection]) {
 							describe(collection, function () {
 								test[collection].forEach(function (selector, index) {
-									it('should find ' + selector, function () {
+									it('should find ' + JSON.stringify(selector), function () {
 										assert.deepEqual(results[collection].nodes[index].target, selector);
 									});
 								});
@@ -50,31 +63,3 @@
 	});
 
 }());
-
-
-/*
-function filterRule(r) {
-	return r.id === conf.rule;
-}
-
-function checkIdenticality(conf, actual, type) {
-	'use strict';
-
-	if (conf[type]) {
-		assert.ok(actual.length === 1, 'No ' + type + ' results found for rule "' + conf.rule + '"');
-	}
-
-	var v = ((actual[0] || {}).nodes || []).map(function(t) {
-		return t.target;
-	});
-	assert.deepEqual(v, conf[type] || [], type);
-}
-var violations = result.violations.filter(filterRule),
-	passes = result.passes.filter(filterRule);
-
-checkIdenticality(conf, violations, 'violations');
-checkIdenticality(conf, passes, 'passes');
-
-assert.ok(violations.length + passes.length > 0, 'No result found for rule "' + conf.rule + '"');
-
-*/

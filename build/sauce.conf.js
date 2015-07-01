@@ -34,7 +34,7 @@ exports = module.exports = function (name, url) {
 
 	return {
 		options: {
-			urls: [ url ],
+			urls: Array.isArray(url) ? url : [ url ],
 			build: process.env.TRAVIS_JOB_ID,
 			concurrency: 3,
 			browsers: browsers,

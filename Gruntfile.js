@@ -4,6 +4,12 @@ var sauceConfig = require('./build/sauce.conf');
 module.exports = function (grunt) {
 	'use strict';
 
+	function mapToUrl(files, port) {
+    return grunt.file.expand(files).map(function (file) {
+      return 'http://localhost:' + port + '/' + file;
+		});
+	}
+
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
@@ -132,10 +138,7 @@ module.exports = function (grunt) {
 		testconfig: {
 			test: {
 				src: ['test/integration/rules/**/*.json'],
-				dest: 'tmp/integration-tests.js',
-				options: {
-					port: '<%= connect.test.options.port %>'
-				}
+				dest: 'tmp/integration-tests.js'
 			}
 		},
 		fixture: {
@@ -212,6 +215,25 @@ module.exports = function (grunt) {
 						grep: grunt.option('grep')
 					}
 				}
+			},
+			rules: {
+				options: {
+					urls: ['http://localhost:<%= connect.test.options.port %>/test/integration/rules/'],
+					run: true,
+					mocha: {
+						grep: grunt.option('grep')
+					}
+				}
+			},
+			integration: {
+				options: {
+					urls: mapToUrl(['test/integration/full/**/*.html', '!test/integration/full/**/frames/**/*.html'],
+						'<%= connect.test.options.port %>'),
+					run: true,
+					mocha: {
+						grep: grunt.option('grep')
+					}
+				}
 			}
 		},
 		mochaTest: {
@@ -226,7 +248,10 @@ module.exports = function (grunt) {
 		'saucelabs-mocha': {
 			core: sauceConfig('core', 'http://localhost:<%= connect.test.options.port %>/test/unit/'),
 			commons: sauceConfig('commons', 'http://localhost:<%= connect.test.options.port %>/test/commons/'),
-			checks: sauceConfig('checks', 'http://localhost:<%= connect.test.options.port %>/test/checks/')
+			checks: sauceConfig('checks', 'http://localhost:<%= connect.test.options.port %>/test/checks/'),
+			rules: sauceConfig('rules', 'http://localhost:<%= connect.test.options.port %>/test/integration/'),
+			integration: sauceConfig('integration', mapToUrl(['test/integration/full/**/*.html',
+				'!test/integration/full/**/frames/**/*.html'], '<%= connect.test.options.port %>'))
 		},
 		connect: {
 			test: {
@@ -254,8 +279,8 @@ module.exports = function (grunt) {
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
 		'concat:engine', 'copy', 'uglify']);
 
-	grunt.registerTask('test', ['build', 'fixture', 'connect', 'testconfig',
-		'mocha', 'mochaTest', 'jshint']);
+	grunt.registerTask('test', ['build',  'testconfig', 'fixture', 'connect',
+		'mocha', 'jshint']);
 
 	grunt.registerTask('test-ci', ['build', 'fixture', 'connect', 'continue:on',
 		'saucelabs-mocha', 'continue:off', 'jshint', 'continue:fail-on-warning']);
