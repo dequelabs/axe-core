@@ -235,15 +235,6 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		mochaTest: {
-			test: {
-				options: {
-					reporter: 'Spec',
-					grep: grunt.option('grep')
-				},
-				src: ['test/integration/rules/testrunner.js']
-			}
-		},
 		'saucelabs-mocha': {
 			core: sauceConfig('core', 'http://localhost:<%= connect.test.options.port %>/test/unit/'),
 			commons: sauceConfig('commons', 'http://localhost:<%= connect.test.options.port %>/test/commons/'),
