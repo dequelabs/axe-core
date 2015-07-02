@@ -77,7 +77,7 @@ The [aXe API](doc/API.md) package consists of:
 
 ## Contributing
 
-This repository is available for download and enhancement. We will accept pull requests once we publish our Contributor agreement.
+Read the [documentation on contributing](contributing.md)
 
 ## Projects using axe-core
 
