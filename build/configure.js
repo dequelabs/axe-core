@@ -5,8 +5,9 @@ var clone = require('clone');
 var dot = require('dot');
 var templates = require('./templates');
 var buildManual = require('./build-manual');
+var entities =  new (require('html-entities').AllHtmlEntities)();
 
-var descriptionHeaders = '| Rule ID | Description | Tags |';
+var descriptionHeaders = '| Rule ID | Description | Tags |\n| :------- | :------- | :------- |\n';
 
 dot.templateSettings.strip = false;
 
@@ -112,7 +113,7 @@ function buildRules(grunt, options, commons, callback) {
 			if (rule.metadata && !metadata.rules[rule.id]) {
 				metadata.rules[rule.id] = parseMetaData(rule.metadata);
 			}
-			descriptions.push([rule.id, rule.metadata.description, rule.tags.join(', ')]);
+			descriptions.push([rule.id, entities.encode(rule.metadata.description), rule.tags.join(', ')]);
 			if (tags.length) {
 				rule.enabled = !!rule.tags.filter(function (t) {
 					return tags.indexOf(t) !== -1;
