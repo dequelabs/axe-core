@@ -1,8 +1,8 @@
 | Rule ID | Description | Tags |
-| :------- | :----------- | :---- |
+| :------- | :------- | :------- |
 | accesskeys | Ensures that each element on the page with an accesskey attribute has a unique value | wcag2a, wcag211 |
 | area-alt | Checks the &lt;area&gt; elements of image maps to ensure that they have an alternative text | wcag2a, wcag111, section508, section508a |
-| aria-allowed-attr | Checks all attributes that start with 'aria-' to ensure that they are all official WAI-ARIA attributes | wcag2a, wcag411 |
+| aria-allowed-attr | Checks all attributes that start with &apos;aria-&apos; to ensure that they are all official WAI-ARIA attributes | wcag2a, wcag411 |
 | aria-required-attr | Checks all elements that contain WAI-ARIA roles to ensure that all required aria- attributes are present | wcag2a, wcag411 |
 | aria-required-children | Checks all elements that contain a WAI-ARIA role to ensure that all required children roles are present | wcag2a, wcag411 |
 | aria-required-parent | Checks all elements that contain a WAI-ARIA role to ensure that all required parent roles are present | wcag2a, wcag411 |
@@ -42,6 +42,6 @@
 | server-side-image-map | Ensures that server-side image maps are never used | wcag2a, wcag211, section508, section508f |
 | skip-link | Ensures that the best practice of having a skip link as the very first link in a page, is adhered-to | best-practice |
 | tabindex | Ensures that explicit tabindex attributes that are greater than 0 are never used | best-practice |
-| valid-lang | Ensures that when the 'lang' attribute is used, it has a valid value | wcag2aa, wcag312 |
+| valid-lang | Ensures that when the &apos;lang&apos; attribute is used, it has a valid value | wcag2aa, wcag312 |
 | video-caption | Ensures that the HTML5 &lt;video&gt; tag is captioned | wcag2a, wcag122, wcag123, section508, section508a |
 | video-description | Ensures that every &lt;video&gt; tag has an audio description | wcag2aa, wcag125, section508, section508a |
