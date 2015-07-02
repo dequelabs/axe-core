@@ -270,6 +270,6 @@ module.exports = function (grunt) {
 	grunt.registerTask('test', ['build',  'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
 
-	grunt.registerTask('test-ci', ['build', 'fixture', 'connect', 'continue:on',
-		'saucelabs-mocha', 'continue:off', 'jshint', 'continue:fail-on-warning']);
+	grunt.registerTask('test-ci', ['build', 'fixture', 'connect', 'continue:on', 'saucelabs-mocha',
+		'continue:off', 'mocha:integration', 'jshint', 'continue:fail-on-warning']);
 };
