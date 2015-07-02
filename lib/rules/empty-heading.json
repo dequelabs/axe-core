@@ -12,7 +12,8 @@
   },
   "all": [],
   "any": [
-    "has-visible-text"
+    "has-visible-text",
+    "role-presentation"
   ],
   "none": []
 }
