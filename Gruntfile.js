@@ -143,10 +143,10 @@ module.exports = function (grunt) {
 		fixture: {
 			engine: {
 				src: '<%= concat.engine.src %>',
-				dest: 'test/unit/index.html',
+				dest: 'test/core/index.html',
 				options: {
 					fixture: 'test/runner.tmpl',
-					testCwd: 'test/unit'
+					testCwd: 'test/core'
 				}
 			},
 			checks: {
@@ -190,7 +190,7 @@ module.exports = function (grunt) {
 		mocha: {
 			test: {
 				options: {
-					urls: ['http://localhost:<%= connect.test.options.port %>/test/unit/'],
+					urls: ['http://localhost:<%= connect.test.options.port %>/test/core/'],
 					run: true,
 					mocha: {
 						grep: grunt.option('grep')
@@ -236,7 +236,7 @@ module.exports = function (grunt) {
 			}
 		},
 		'saucelabs-mocha': {
-			core: sauceConfig('core', 'http://localhost:<%= connect.test.options.port %>/test/unit/'),
+			core: sauceConfig('core', 'http://localhost:<%= connect.test.options.port %>/test/core/'),
 			commons: sauceConfig('commons', 'http://localhost:<%= connect.test.options.port %>/test/commons/'),
 			checks: sauceConfig('checks', 'http://localhost:<%= connect.test.options.port %>/test/checks/'),
 			rules: sauceConfig('rules', 'http://localhost:<%= connect.test.options.port %>/test/integration/')
