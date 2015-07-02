@@ -248,9 +248,7 @@ module.exports = function (grunt) {
 			core: sauceConfig('core', 'http://localhost:<%= connect.test.options.port %>/test/unit/'),
 			commons: sauceConfig('commons', 'http://localhost:<%= connect.test.options.port %>/test/commons/'),
 			checks: sauceConfig('checks', 'http://localhost:<%= connect.test.options.port %>/test/checks/'),
-			rules: sauceConfig('rules', 'http://localhost:<%= connect.test.options.port %>/test/integration/'),
-			integration: sauceConfig('integration', mapToUrl(['test/integration/full/**/*.html',
-				'!test/integration/full/**/frames/**/*.html'], '<%= connect.test.options.port %>'))
+			rules: sauceConfig('rules', 'http://localhost:<%= connect.test.options.port %>/test/integration/')
 		},
 		connect: {
 			test: {
