@@ -1,7 +1,0 @@
-{
-	"description": "region fail test",
-	"rule": "region",
-	"violations": [
-		["html"]
-	]
-}

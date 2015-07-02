@@ -1,5 +1,0 @@
-{
-	"description": "bypass fail test",
-	"rule": "bypass",
-	"violations": [["html"]]
-}

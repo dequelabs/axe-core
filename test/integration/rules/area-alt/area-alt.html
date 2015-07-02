@@ -1,26 +1,17 @@
-<!doctype html>
-<html lang="en">
-<head>
-	<meta charset="utf8">
-	<title>AREA ALT test</title>
-	<script src="/dist/axe.min.js" type="text/javascript" charset="utf-8"></script>
-</head>
-<body>
-	<div id="monkeys">Bananas</div>
-	<map>
-		<area href="#" id="violation1" alt="">
-		<area href="#" id="violation2" aria-label="">
-		<area href="#" id="violation3" aria-labelledby="nomatchy">
-		<area href="#" id="violation4" aria-labelledby="">
-		<area href="#" id="pass1" alt="monkeys">
-		<area href="#" id="pass2" aria-label="monkeys">
-		<area href="#" id="pass3" aria-labelledby="monkeys">
 
-		<!-- no HREF, not violations -->
-		<area alt="">
-		<area aria-label="">
-		<area aria-labelledby="">
-		<area aria-labelledby="nomatchy">
-	</map>
-</body>
-</html>
+<div id="monkeys">Bananas</div>
+<map>
+	<area href="#" id="violation1" alt="">
+	<area href="#" id="violation2" aria-label="">
+	<area href="#" id="violation3" aria-labelledby="nomatchy">
+	<area href="#" id="violation4" aria-labelledby="">
+	<area href="#" id="pass1" alt="monkeys">
+	<area href="#" id="pass2" aria-label="monkeys">
+	<area href="#" id="pass3" aria-labelledby="monkeys">
+
+	<!-- no HREF, not violations -->
+	<area alt="">
+	<area aria-label="">
+	<area aria-labelledby="">
+	<area aria-labelledby="nomatchy">
+</map>

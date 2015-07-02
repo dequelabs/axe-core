@@ -1,91 +1,81 @@
-<!doctype html>
-<html lang="en">
-<head>
-	<meta charset="utf8">
-	<title>aria-roles test</title>
-	<script src="/dist/axe.min.js" type="text/javascript" charset="utf-8"></script>
-</head>
-<body>
-	<div id="ok">
-		<div role="alert" id="pass1">ok</div>
-		<div role="alertdialog" id="pass2">ok</div>
-		<div role="application" id="pass3">ok</div>
-		<div role="article" id="pass4">ok</div>
-		<div role="banner" id="pass5">ok</div>
-		<div role="button" id="pass6">ok</div>
-		<div role="checkbox" id="pass7">ok</div>
-		<div role="columnheader" id="pass8">ok</div>
-		<div role="combobox" id="pass9">ok</div>
-		<div role="complementary" id="pass10">ok</div>
-		<div role="contentinfo" id="pass11">ok</div>
-		<div role="definition" id="pass12">ok</div>
-		<div role="dialog" id="pass13">ok</div>
-		<div role="directory" id="pass14">ok</div>
-		<div role="document" id="pass15">ok</div>
-		<div role="form" id="pass16">ok</div>
-		<div role="grid" id="pass17">ok</div>
-		<div role="gridcell" id="pass18">ok</div>
-		<div role="group" id="pass19">ok</div>
-		<div role="heading" id="pass20">ok</div>
-		<div role="img" id="pass21">ok</div>
-		<div role="link" id="pass22">ok</div>
-		<div role="list" id="pass23">ok</div>
-		<div role="listbox" id="pass24">ok</div>
-		<div role="listitem" id="pass25">ok</div>
-		<div role="log" id="pass26">ok</div>
-		<div role="main" id="pass27">ok</div>
-		<div role="marquee" id="pass28">ok</div>
-		<div role="math" id="pass29">ok</div>
-		<div role="menu" id="pass30">ok</div>
-		<div role="menubar" id="pass31">ok</div>
-		<div role="menuitem" id="pass32">ok</div>
-		<div role="menuitemcheckbox" id="pass33">ok</div>
-		<div role="menuitemradio" id="pass34">ok</div>
-		<div role="navigation" id="pass35">ok</div>
-		<div role="note" id="pass36">ok</div>
-		<div role="option" id="pass37">ok</div>
-		<div role="presentation" id="pass38">ok</div>
-		<div role="progressbar" id="pass39">ok</div>
-		<div role="radio" id="pass40">ok</div>
-		<div role="radiogroup" id="pass41">ok</div>
-		<div role="region" id="pass42">ok</div>
-		<div role="row" id="pass43">ok</div>
-		<div role="rowgroup" id="pass44">ok</div>
-		<div role="rowheader" id="pass45">ok</div>
-		<div role="scrollbar" id="pass46">ok</div>
-		<div role="search" id="pass47">ok</div>
-		<div role="separator" id="pass48">ok</div>
-		<div role="slider" id="pass49">ok</div>
-		<div role="spinbutton" id="pass50">ok</div>
-		<div role="status" id="pass51">ok</div>
-		<div role="tab" id="pass52">ok</div>
-		<div role="tablist" id="pass53">ok</div>
-		<div role="tabpanel" id="pass54">ok</div>
-		<div role="textbox" id="pass55">ok</div>
-		<div role="timer" id="pass56">ok</div>
-		<div role="toolbar" id="pass57">ok</div>
-		<div role="tooltip" id="pass58">ok</div>
-		<div role="tree" id="pass59">ok</div>
-		<div role="treegrid" id="pass60">ok</div>
-		<div role="treeitem" id="pass61">ok</div>
-	</div>
-	<div id="violation">
-		<!-- abstract roles -->
-		<div role="command" id="fail1">fail</div>
-		<div role="composite" id="fail2">fail</div>
-		<div role="input" id="fail3">fail</div>
-		<div role="landmark" id="fail4">fail</div>
-		<div role="range" id="fail5">fail</div>
-		<div role="roletype" id="fail6">fail</div>
-		<div role="section" id="fail7">fail</div>
-		<div role="sectionhead" id="fail8">fail</div>
-		<div role="select" id="fail9">fail</div>
-		<div role="structure" id="fail10">fail</div>
-		<div role="widget" id="fail11">fail</div>
-		<div role="window" id="fail12">fail</div>
-		<!-- invalid roles -->
-		<div role="lol" id="fail13">fail</div>
-	</div>
 
-</body>
-</html>
+<div id="ok">
+	<div role="alert" id="pass1">ok</div>
+	<div role="alertdialog" id="pass2">ok</div>
+	<div role="application" id="pass3">ok</div>
+	<div role="article" id="pass4">ok</div>
+	<div role="banner" id="pass5">ok</div>
+	<div role="button" id="pass6">ok</div>
+	<div role="checkbox" id="pass7">ok</div>
+	<div role="columnheader" id="pass8">ok</div>
+	<div role="combobox" id="pass9">ok</div>
+	<div role="complementary" id="pass10">ok</div>
+	<div role="contentinfo" id="pass11">ok</div>
+	<div role="definition" id="pass12">ok</div>
+	<div role="dialog" id="pass13">ok</div>
+	<div role="directory" id="pass14">ok</div>
+	<div role="document" id="pass15">ok</div>
+	<div role="form" id="pass16">ok</div>
+	<div role="grid" id="pass17">ok</div>
+	<div role="gridcell" id="pass18">ok</div>
+	<div role="group" id="pass19">ok</div>
+	<div role="heading" id="pass20">ok</div>
+	<div role="img" id="pass21">ok</div>
+	<div role="link" id="pass22">ok</div>
+	<div role="list" id="pass23">ok</div>
+	<div role="listbox" id="pass24">ok</div>
+	<div role="listitem" id="pass25">ok</div>
+	<div role="log" id="pass26">ok</div>
+	<div role="main" id="pass27">ok</div>
+	<div role="marquee" id="pass28">ok</div>
+	<div role="math" id="pass29">ok</div>
+	<div role="menu" id="pass30">ok</div>
+	<div role="menubar" id="pass31">ok</div>
+	<div role="menuitem" id="pass32">ok</div>
+	<div role="menuitemcheckbox" id="pass33">ok</div>
+	<div role="menuitemradio" id="pass34">ok</div>
+	<div role="navigation" id="pass35">ok</div>
+	<div role="note" id="pass36">ok</div>
+	<div role="option" id="pass37">ok</div>
+	<div role="presentation" id="pass38">ok</div>
+	<div role="progressbar" id="pass39">ok</div>
+	<div role="radio" id="pass40">ok</div>
+	<div role="radiogroup" id="pass41">ok</div>
+	<div role="region" id="pass42">ok</div>
+	<div role="row" id="pass43">ok</div>
+	<div role="rowgroup" id="pass44">ok</div>
+	<div role="rowheader" id="pass45">ok</div>
+	<div role="scrollbar" id="pass46">ok</div>
+	<div role="search" id="pass47">ok</div>
+	<div role="separator" id="pass48">ok</div>
+	<div role="slider" id="pass49">ok</div>
+	<div role="spinbutton" id="pass50">ok</div>
+	<div role="status" id="pass51">ok</div>
+	<div role="tab" id="pass52">ok</div>
+	<div role="tablist" id="pass53">ok</div>
+	<div role="tabpanel" id="pass54">ok</div>
+	<div role="textbox" id="pass55">ok</div>
+	<div role="timer" id="pass56">ok</div>
+	<div role="toolbar" id="pass57">ok</div>
+	<div role="tooltip" id="pass58">ok</div>
+	<div role="tree" id="pass59">ok</div>
+	<div role="treegrid" id="pass60">ok</div>
+	<div role="treeitem" id="pass61">ok</div>
+</div>
+<div id="violation">
+	<!-- abstract roles -->
+	<div role="command" id="fail1">fail</div>
+	<div role="composite" id="fail2">fail</div>
+	<div role="input" id="fail3">fail</div>
+	<div role="landmark" id="fail4">fail</div>
+	<div role="range" id="fail5">fail</div>
+	<div role="roletype" id="fail6">fail</div>
+	<div role="section" id="fail7">fail</div>
+	<div role="sectionhead" id="fail8">fail</div>
+	<div role="select" id="fail9">fail</div>
+	<div role="structure" id="fail10">fail</div>
+	<div role="widget" id="fail11">fail</div>
+	<div role="window" id="fail12">fail</div>
+	<!-- invalid roles -->
+	<div role="lol" id="fail13">fail</div>
+</div>

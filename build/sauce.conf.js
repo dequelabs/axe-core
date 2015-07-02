@@ -34,9 +34,9 @@ exports = module.exports = function (name, url) {
 
 	return {
 		options: {
-			urls: [ url ],
+			urls: Array.isArray(url) ? url : [ url ],
 			build: process.env.TRAVIS_JOB_ID,
-			concurrency: 3,
+			throttled: 5,
 			browsers: browsers,
 			testname: name || 'mocha tests',
 			public: 'public',

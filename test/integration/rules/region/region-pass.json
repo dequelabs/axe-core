@@ -1,7 +1,0 @@
-{
-	"description": "region pass test",
-	"rule": "region",
-	"passes": [
-		["html"]
-	]
-}

@@ -4,6 +4,12 @@ var sauceConfig = require('./build/sauce.conf');
 module.exports = function (grunt) {
 	'use strict';
 
+	function mapToUrl(files, port) {
+		return grunt.file.expand(files).map(function (file) {
+			return 'http://localhost:' + port + '/' + file;
+		});
+	}
+
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
@@ -13,7 +19,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-continue');
 	grunt.loadNpmTasks('grunt-mocha');
-	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadNpmTasks('grunt-saucelabs');
 	grunt.loadTasks('build/tasks');
 
@@ -127,7 +132,13 @@ module.exports = function (grunt) {
 		},
 		watch: {
 			files: ['lib/**/*', 'test/**/*.js'],
-			tasks: ['build']
+			tasks: ['build', 'testconfig', 'fixture']
+		},
+		testconfig: {
+			test: {
+				src: ['test/integration/rules/**/*.json'],
+				dest: 'tmp/integration-tests.js'
+			}
 		},
 		fixture: {
 			engine: {
@@ -165,6 +176,15 @@ module.exports = function (grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/commons'
 				}
+			},
+			integration: {
+				src: ['<%= concat.engine.dest %>'],
+				dest: 'test/integration/rules/index.html',
+				options: {
+					fixture: 'test/runner.tmpl',
+					testCwd: 'test/integration/rules',
+					tests: ['../../../tmp/integration-tests.js', 'runner.js']
+				}
 			}
 		},
 		mocha: {
@@ -194,31 +214,32 @@ module.exports = function (grunt) {
 						grep: grunt.option('grep')
 					}
 				}
-			}
-		},
-		mochaTest: {
-			test: {
+			},
+			rules: {
 				options: {
-					reporter: grunt.option('report') ? 'xunit' : 'spec',
-					captureFile: grunt.option('report') ? 'dist/xunit.xml' : undefined,
-					grep: grunt.option('grep')
-				},
-				src: ['test/integration/testrunner.js']
+					urls: ['http://localhost:<%= connect.test.options.port %>/test/integration/rules/'],
+					run: true,
+					mocha: {
+						grep: grunt.option('grep')
+					}
+				}
+			},
+			integration: {
+				options: {
+					urls: mapToUrl(['test/integration/full/**/*.html', '!test/integration/full/**/frames/**/*.html'],
+						'<%= connect.test.options.port %>'),
+					run: true,
+					mocha: {
+						grep: grunt.option('grep')
+					}
+				}
 			}
 		},
 		'saucelabs-mocha': {
 			core: sauceConfig('core', 'http://localhost:<%= connect.test.options.port %>/test/unit/'),
 			commons: sauceConfig('commons', 'http://localhost:<%= connect.test.options.port %>/test/commons/'),
-			checks: sauceConfig('checks', 'http://localhost:<%= connect.test.options.port %>/test/checks/')
-		},
-		testconfig: {
-			test: {
-				src: ['test/integration/rules/**/*.json'],
-				dest: 'tmp/test.json',
-				options: {
-					port: '<%= connect.test.options.port %>'
-				}
-			}
+			checks: sauceConfig('checks', 'http://localhost:<%= connect.test.options.port %>/test/checks/'),
+			rules: sauceConfig('rules', 'http://localhost:<%= connect.test.options.port %>/test/integration/')
 		},
 		connect: {
 			test: {
@@ -246,9 +267,9 @@ module.exports = function (grunt) {
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
 		'concat:engine', 'copy', 'uglify']);
 
-	grunt.registerTask('test', ['build', 'fixture', 'connect', 'testconfig',
-		'mocha', 'mochaTest', 'jshint']);
+	grunt.registerTask('test', ['build',  'testconfig', 'fixture', 'connect',
+		'mocha', 'jshint']);
 
-	grunt.registerTask('test-ci', ['build', 'fixture', 'connect', 'continue:on',
-		'saucelabs-mocha', 'continue:off', 'jshint', 'continue:fail-on-warning']);
+	grunt.registerTask('test-ci', ['build', 'fixture', 'connect', 'continue:on', 'saucelabs-mocha',
+		'continue:off', 'mocha:integration', 'jshint', 'continue:fail-on-warning']);
 };
