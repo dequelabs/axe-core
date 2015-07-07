@@ -173,7 +173,7 @@ The callback function passed in as the third parameter of `axe.allyCheck` runs o
 
 ###### `violations` array
 
-[An example of generating HTML from the violations array](handlebars_reason.md)
+[An example of generating HTML from the violations array](handlebars-reason.md)
 
 * `description` - text string that describes what the rule does
 * `help` - help text that describes the test that was performed

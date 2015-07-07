@@ -76,8 +76,8 @@ The [aXe API](doc/API.md) package consists of:
 
 ## Contributing
 
-Read the [documentation on contributing](contributing.md)
+Read the [documentation on contributing](CONTRIBUTING.md)
 
 ## Projects using axe-core
 
-[list of projects using axe-core](projects.md)
+[List of projects using axe-core](doc/projects.md)
