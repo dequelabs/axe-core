@@ -234,7 +234,7 @@ The options parameter is flexible way to configure how `a11yCheck` operates. The
 
 ###### Options Parameter Examples
 
-1. Run all Rules for an Accessibility Standard
+1. Run all Rules for an accessibility standard
 
 	There are certain standards defined that can be used to select a set of rules to be run. The defined standards and tag string are defined as follows:
 
