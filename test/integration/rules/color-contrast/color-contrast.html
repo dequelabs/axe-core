@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>Color-Contrast Test</title>
-<script src="/dist/axe.min.js" type="text/javascript" charset="utf-8"></script>
-</head>
-<body style="background-image: url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)">
+<div style="background-image: url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)">
 <div id="pass1" style="background-color: white; color: black">This is a pass.</div>
 <div id="pass2" style="background-color: gray; color: white; font-size: 40px;">This is a pass.</div>
 <div id="pass3" style="background-color: gray; color: white; font-size: 20px; font-weight: bold">This is a pass.</div>
@@ -42,5 +36,11 @@
 <input id="ignore4" style="background: #000; color: #000" value="hello" type="hidden">
 <select id="ignore5" style="background: #000; color: #000"></select>
 <div id="ignore6" style="color: yellow; width: 100px; overflow: hidden; text-indent: 200px; background-color: white;">text</div>
-</body>
-</html>
+<label style="color: #fff">
+	Test
+	<input type="text" disabled>
+</label>
+<label for="disabled1">Hello</label>
+<input id="disabled1" disabled>
+<div id="disabled2">Hello</div>
+<input aria-labelledby="disabled2" disabled>

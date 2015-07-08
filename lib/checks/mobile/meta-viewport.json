@@ -1,0 +1,11 @@
+{
+  "id": "meta-viewport",
+  "evaluate": "meta-viewport.js",
+  "metadata": {
+    "impact": "critical",
+    "messages": {
+      "pass": "<meta> tag does not disable zooming",
+      "fail": "<meta> tag disables zooming"
+    }
+  }
+}

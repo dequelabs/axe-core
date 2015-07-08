@@ -1,0 +1,18 @@
+{
+  "id": "object-alt",
+  "selector": "object",
+  "tags": [
+    "wcag2a",
+    "wcag111"
+  ],
+  "metadata": {
+    "description": "Ensures that every <object> element has a text alternative",
+    "help": "An embedded object must have a text alternative",
+    "helpUrl": "https://dequeuniversity.com/issues/object-alt"
+  },
+  "all": [],
+  "any": [
+    "has-visible-text"
+  ],
+  "none": []
+}

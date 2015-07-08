@@ -1,0 +1,18 @@
+{
+  "id": "dlitem",
+  "selector": "dd, dt",
+  "tags": [
+    "wcag2a",
+    "wcag131"
+  ],
+  "metadata": {
+    "helpUrl": "https://dequeuniversity.com/issues/dlitem",
+    "description": "Ensures that all <dd> and <dt> elements have a <dl> as a parent",
+    "help": "<dd> and <dt> elements must be contained in a <dl>"
+  },
+  "all": [],
+  "any": [
+    "dlitem"
+  ],
+  "none": []
+}

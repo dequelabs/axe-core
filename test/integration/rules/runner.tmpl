@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>aXe Tests</title>
+
+		<link rel="stylesheet" type="text/css" href="../../../node_modules/mocha/mocha.css" />
+		<script src="../../../node_modules/mocha/mocha.js"></script>
+		<script src="../../../node_modules/chai/chai.js"></script>
+		<script>
+			mocha.setup({
+				timeout: 10000,
+				ui: 'bdd'
+			});
+			var assert = chai.assert;
+			var global = {};
+		</script>
+		<% files.forEach(function (file) { %>
+			<script src="../../<%=file%>"></script>
+		<%  }); %>
+
+	</head>
+
+	<body>
+		<div id="mocha"></div>
+		<div id="fixture"></div>
+		<% tests.forEach(function (file) { %>
+			<script src="<%=file%>"></script>
+		<%  }); %>
+
+		<script src="/test/integration/adapter.js"></script>
+	</body>
+</html>

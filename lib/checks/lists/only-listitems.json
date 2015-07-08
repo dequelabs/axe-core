@@ -1,0 +1,11 @@
+{
+  "id": "only-listitems",
+  "evaluate": "only-listitems.js",
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "List element only has children that are <li> elements",
+      "fail": "List element has children that are not <li> elements"
+    }
+  }
+}

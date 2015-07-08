@@ -1,0 +1,22 @@
+{
+  "id": "scope",
+  "selector": "[scope]",
+  "tags": [
+    "wcag2a",
+    "wcag411",
+    "wcag131"
+  ],
+  "metadata": {
+    "description": "Ensures that the scope attribute is used correctly on tables",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/data-tables/row-and-column-headers#id81_associate_header_cells_with_data_cells",
+    "help": "scope attribute is used correctly"
+  },
+  "all": [],
+  "any": [
+    "html5-scope",
+    "html4-scope"
+  ],
+  "none": [
+    "scope-value"
+  ]
+}

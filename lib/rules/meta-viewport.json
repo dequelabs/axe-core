@@ -1,0 +1,19 @@
+{
+  "id": "meta-viewport",
+  "selector": "meta[name=\"viewport\"]",
+  "excludeHidden": false,
+  "tags": [
+    "wcag2aa",
+    "wcag144"
+  ],
+  "metadata": {
+    "description": "Ensures that when <meta> viewport is used, it does not cause text scaling problems",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/visual-layout/fonts-and-typography#id55_ensure_text_resize_to_200_percent",
+    "help": "Zooming and scaling must not disabled"
+  },
+  "all": [],
+  "any": [
+    "meta-viewport"
+  ],
+  "none": []
+}

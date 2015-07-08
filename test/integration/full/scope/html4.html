@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML+ARIA 1.0//EN" "http://www.w3.org/WAI/ARIA/schemata/html4-aria-1.dtd">
+<html lang="en">
+<head>
+<title>Scope HTML4 Test</title>
+
+<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
+<script src="/node_modules/mocha/mocha.js"></script>
+<script src="/node_modules/chai/chai.js"></script>
+<script src="/dist/axe.js"></script>
+<script>
+	mocha.setup({
+		timeout: 10000,
+		ui: 'bdd'
+	});
+	var assert = chai.assert;
+</script>
+</head>
+<body>
+	<div id="fixture">
+		<table><tr><th id="badvalue" scope="whatever"></th></tr></table>
+		<table><tr><td id="tdrow" scope="row"></td></tr></table>
+		<table><tr><th id="throw" scope="row"></th></tr></table>
+		<table><tr><td id="tdcol" scope="col"></td></tr></table>
+		<table><tr><th id="thcol" scope="col"></th></tr></table>
+	</div>
+	<div id="mocha"></div>
+	<script src="html4.js"></script>
+	<script src="/test/integration/adapter.js"></script>
+</body>
+</html>

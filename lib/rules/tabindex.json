@@ -1,0 +1,17 @@
+{
+  "id": "tabindex",
+  "selector": "[tabindex]",
+  "tags": [
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "Ensures that explicit tabindex attributes that are greater than 0 are never used",
+    "helpUrl": "https://dequeuniversity.com/courses/html-css/device-independence/keyboard-tab-order",
+    "help": "Elements must not have tabindex greater than zero"
+  },
+  "all": [],
+  "any": [
+    "tabindex"
+  ],
+  "none": []
+}
