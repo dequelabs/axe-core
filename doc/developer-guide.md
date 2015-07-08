@@ -129,8 +129,8 @@ When a Check is executed, its result is then added to a [CheckResult object](../
 A CheckResult has the following properties:
 * `id` - `String`  The ID of the Check this CheckResult belongs to.
 * `data` - `Mixed`  Any data the Check's evaluate function added with `this.data()`.  Typically used to insert data from analysis into a message or to perform further tests in the post-processing function.
-* `relatedNodes` - `Array`  Nodes that are related to the current Check as defined by [check#evaluate](#check-evaluate).
-* `result` - `Boolean`  The return value of [check#evaluate](#check-evaluate).
+* `relatedNodes` - `Array`  Nodes that are related to the current Check as defined by [check.evaluate](#check-evaluate).
+* `result` - `Boolean`  The return value of [check.evaluate](#check-evaluate).
 
 
 ### Common Functions
