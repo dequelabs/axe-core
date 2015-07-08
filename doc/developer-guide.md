@@ -1,140 +1,138 @@
-put into axe-core on bitbucket
+# aXe Developer Guide
 
-
-# Architecture Overview
-
-aXe runs a series of tests to check for accessibility of content and functionality on a website. A test is made up of a series of Rules which are, themselves, made up of Checks. aXe executes these Rules asynchronously and, when the Rules are finished running, runs a callback function which is passed a Result structure. Since some Rules run on the page level while otheres do not, tests will also run in one of two ways. If a document is specified, the page level rules will run, otherwise they will not.
-
-## Test Structure
-
-aXe tests for accessibility using objects called Rules. Each Rule tests for a high-level aspect of accessibility, such as color contrast, button labels, and alternate text for images. Each rule is made up of a series of Checks. Depending on the rule, all, some, or none of these checks must pass in order for the rule to pass. 
-
-## Running Rules
-
-A syntax check runs on all Rules. For this reason, a valid Rule must have each of the following elements in its JSON file: 
-
-* an `id` that represents the name of the Rule
-
-* a `selector` which is a CSS selectors that specifies the elements of the page on which the Rule runs
-
-* a `tags` section that lists the accessibility guidelines the Rule, if passed, fulfills. This field is not necessary for the Rule to run, though it is very helpful. 
-
-* a `metadata` section consisting of `description`, `helpUrl`, and `help`. Except for the `helpUrl`, all of these fields are required.
-
-* an array of checks that make up this Rule; a Check can be stored in one of the `all`, `some`, or `none` arrays, depending on what results constitute a passing Rule
-
-## Execution of Checks
-
-A syntax check runs on all Checks. For this reason, a valid Check has a number of elements in its JSON file: 
-
-* an `id` that represents the name of the Check
-
-* an `evaluate` field that contains the name of the javascript file to be executed for the Check to run
-
-* a `metadata` field consisting of `impact` (one of minor, moderate, serious, or critical) and `messages` - one if the check passes and one if it fails. 
-
-Upon execution, a Rule runs each of its Checks against all relevant nodes in the HTML file. Which nodes are "relevant" is determined by the given Rule and/or Check; both of these objects can filter which nodes are tested. 
-
-After execution, a Check will return `true` or `false` depending on whether or not it passed. The result, as well as more information on what caused the Check to pass or fail, will be stored in either the `passes` array or the `violations` array
-.
-
-For more information on Rules and their Checks, see the [Rule and Check Structure document](rule_and_check_structure.md)
-
-## Callback Function
-
-The call to `axe.allyCheck` produces a result object containing details on which Rules and Checks passed or failed. The callback function passed into `axe.a11yCheck` runs on this object in the same frame as the test. For example, if the test was initiated inside an iframe, the after function will run there; if initiated in the main window, the function will run in the main window. 
-
-This function is necessary to access the results object produced by the call to the API. The user determines what the function does - it can be as simple as checking if the violations array has zero elements or printing the entire results object to the console log.
-
-# Examples
-
-There are a number of ways to further customize the checks that aXe performs. The developer can specifying related Nodes, give the Check additional data, or include a list of valid options.
-
-## Related Nodes
-
-When writing a check, a user can specify nodes that may not be central to the Check, but are nevertheless necessary for the Check to accurately run. Related nodes can be used to specify information, to check for duplicate violations, etc. You can expose the related nodes by writing `this.relatedNodes()` in the Check's javascript file. The related nodes are contained in an array that is passed as a parameter to the `relatedNodes()` function.
-
-The `duplicate-id` Check makes use of the related nodes feature to see if the same violation appears more than once. Instead of printing multiple error messages for the same violation, it uses the related nodes to check if the violation has already appeared in a node, printing only if it has not.
-
-## Data
-
-A user can also add a data object to the Check's javascript file. This object contains additional information that a Check may need to run successfully. 
-
-There are two main uses for data:
-
-* Cross-Frame Rules: if a Rule runs on more than one frame, the data object can store information from one frame that is used in another frame to determine if the Check passes.
-
-* Message: if you want to include information from a frame in a message printed by the after-function, you can store this in the data object. For example, the `color-contrast` check stores the hexadecimal color value of its fore- and background colors so this information is available to the callback function. 
-
-The [`color-contrast`](color-contrast.js) check has a `data` object with the following contents:
-
-```javascript
-this.data({
-	fgColor: fgColor.toHexString(),
-	bgColor: bgColor.toHexString(),
-	contrastRatio: cr.contrastRatio.toFixed(2),
-	fontSize: (fontSize * 72 / 96).toFixed(1) + 'pt',
-	fontWeight: bold ? 'bold' : 'normal',
-});
-```
-
-## Options
-
-The `options` object is useful if there is a relatively short list of possible "correct" values. Such is the case for the language check, which ensures that the page has a valid language in the html language tag. This check has all valid language options specified in the `options` array inside the [`valid-lang.json` file](valid-lang.json):
-
-can also be anything
-
-```javascript
-{
-  "id": "valid-lang",
-  "options": [
-    "en",
-    "es",
-    "ja"
-  ],
-  "evaluate": ...
-}
-```
-
-The [`valid-lang.js` file](valid-lang.js) checks if the language value specified matches one of the options: 
-
-```javascript
-(options || []).forEach(function (cc) {
-	cc = cc.toLowerCase();
-	if (lang && (lang === cc || lang.indexOf(cc.toLowerCase() + '-') === 0)) {
-		lang = null;
-	}
-	if (xmlLang && (xmlLang === cc || xmlLang.indexOf(cc.toLowerCase() + '-') === 0)) {
-		xmlLang = null;
-	}
-});
-```
-
-The options array specifies that "en", "es", and "ja" are the only acceptable values for the language tag; if the language tag contains some other value, the check will not pass.
-
-## Common Functions
-
-internal library for all the rules and checks
-documented in the source code 
-
-If you have code repeated across rules and checks, you can use these functions and contribute to them
+aXe runs a series of tests to check for accessibility of content and functionality on a website. A test is made up of a series of Rules which are, themselves, made up of Checks. aXe executes these Rules asynchronously and, when the Rules are finished running, runs a callback function which is passed a Result structure. Since some Rules run on the page level while others do not, tests will also run in one of two ways. If a document is specified, the page level rules will run, otherwise they will not.
 
 ## Getting Started
 
-David will find the readme
+### Environment Pre-requisites
 
-## Unit and Integration Tests
+1.  You must have NodeJS installed.
+2.  Bower must be installed globally.  `npm install -g bower`
+3.  Grunt must be installed globally.  `npm install -g grunt-cli`
+4.  Install npm development dependencies.  `npm install`
+5.  Install bower development dependencies.  `bower install`
 
-next week
+### Building axe.js
 
-## More Information
+To build axe.js, simply run `grunt build`.  axe.js and axe.min.js are placed into the `dist` folder.
 
-* See the [aXe README](README.md) for an overview of aXe and instructions on getting started
+### Running Tests
 
-* See the [aXe Glossary](Glossary.md) for definitions of commonly used terms in aXe documentation
+To run all tests from the command line you can run `grunt test`, which will run all unit and integration tests using PhantomJS.
 
-* See detailed information on Rules and Checks in the [Rule and Check structure document](rule_and_check_structure.md)
+You can also load tests in any supported browser, which is helpful for debugging.  Tests require a local server to run, you must first start a local server to serve files.  You can use Grunt to start one by running `grunt connect watch`.  Once your local server is running you can load the following pages in any browser to run tests:
 
-* See an [example](Example.md) of a Rule and its Checks 
+1.  [Core Tests](http://localhost:9876/test/core/)
+2.  [Commons Tests](http://localhost:9876/test/commons/)
+3.  [Check Tests](http://localhost:9876/test/checks/)
+4.  [Integration Tests](http://localhost:9876/test/integration/rules/)
+5.  There are additional tests located in [test/integration/full/](http://localhost:9876/test/integration/full/) for tests that need to be run against their own document.
 
-* See a [tutorial](Tutorial.md) on creating a new Rule
+
+## Architecture Overview
+
+aXe tests for accessibility using objects called Rules. Each Rule tests for a high-level aspect of accessibility, such as color contrast, button labels, and alternate text for images. Each rule is made up of a series of Checks. Depending on the rule; all, some, or none of these checks must pass in order for the rule to pass.
+
+Upon execution, a Rule runs each of its Checks against all relevant nodes. Which nodes are relevant is determined by the Rule's `selector` property and `matches` function.  A Check can also further limit which nodes it applies to by specifying a `selector` property or `matches` function.  If a Rule has no Checks that apply to a given node, the Rule will neither pass or fail.
+
+After execution, a Check will return `true` or `false` depending on whether or not the tested condition was satisfied. The result, as well as more information on what caused the Check to pass or fail, will be stored in either the `passes` array or the `violations` array.
+
+
+### Rules
+
+Rules are defined by JSON files in the [lib/rules directory](../lib/rules).  The JSON object is used to seed the [Rule object](../lib/core/base/rule.js).  A valid Rule JSON consists of the following:
+
+* `id` - `String` A unique name of the Rule.
+* `selector` - **optional** `String` which is a CSS selector that specifies the elements of the page on which the Rule runs.  If omitted, the rule will run against every node.
+* `excludeHidden` - **optional** `Boolean` Whether the rule should exclude hidden elements.  Defaults to `true`.
+* `enabled` - **optional** `Boolean`  Whether the rule is enabled by default.  Defaults to `true`.
+* `pageLevel` - **optional** `Boolean`  Whether the rule is page level.  Page level rules will only run if given an entire `document` as context.
+* `matches` - **optional** `String`  Relative path to the JavaScript file of a custom matching function.  See [matches function](#matches-function) for more information.
+* `tags` - **optional** `Array` Strings of the accessibility guidelines of which the Rule applies.
+* `metadata` - `Object` Consisting of:
+	* `description` - `String` Text string that describes what the rule does.
+	* `helpUrl` - `String` **optional** URL that provides more information about the specifics of the violation. Links to a page on the Deque University site.
+	* `help` - `String` Help text that describes the test that was performed.
+* `any` - `Array` Checks that make up this Rule; one of these checks must return `true` for a Rule to pass.
+* `all` - `Array` Checks that make up this Rule; all these checks must return `true` for a Rule to pass.
+* `none` - `Array` Checks that make up this Rule; none of these checks must return `true` for a Rule to pass.
+
+The `any`, `all` and `none` arrays must contain either a `String` which references the `id` of the Check; or an object of the following format:
+* `id` - `String` The unique ID of the Check.
+* `options` - `Mixed` Any options the Check requires that are specific to the Rule.
+
+There is a Grunt target which will ensure each Rule has a valid format, which can be run with `grunt validate`.
+
+#### Matches Function
+
+Custom `matches` functions are executed against each node which matches the Rule's `selector` and receive a single parameter named `node`, which is the Node to test.  The function must return either `true` or `false`.  Common functions are provided as `commons`. [See the data-table matches function for an example.](../lib/rules/data-table-matches.js)
+
+### Checks
+
+Similar to Rules, Checks are defined by JSON files in the [lib/checks directory](../lib/checks).  The JSON object is used to seed the [Check object](../lib/core/base/check.js).  A valid Check JSON consists of the following:
+
+* `id` - `String` A unique name of the Check
+* `evaluate` - `String` Relative path to the JavaScript file which contains the function body of the Check itself
+* `after` - **optional** `String` Relative path to the JavaScript file which contains the function body of a Check's after (or post-processing) function.
+* `matches` - **optional** `String`  Relative path to the JavaScript file of a custom matching function.  It is functionally the same as a Rule's matches function.  See [matches function](#matches-function) for more information.
+* `options` - **optional** `Mixed` Any information the Check needs that you might need to customize and/or is locale specific.  Options can be overridden at runtime (with the options parameter) or config-time.  For example, the [valid-lang](lib/checks/language/valid-lang.json) Check defines what ISO 639-1 language codes it should accept as valid.  Options do not need to follow any specific format or type; it is up to the author of a Check to determine the most appropriate format.
+* `metadata` - `Object` Consisting of:
+	* `impact` - `String` (one of `minor`, `moderate`, `serious`, or `critical`)
+	* `messages` - `Object` These messages are displayed when the Check passes or fails
+		* `pass` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check passes
+		* `fail` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check fails
+
+#### Check#evaluate
+
+A Check's evaluate function is run a special context in order to give access to APIs which provide more information.  Checks will run against a single node and do not have access to other frames.  A Check must either return `true` or `false`.
+
+The following variables are defined for `Check#evaluate`:
+
+* `node` - `HTMLElement`  The element that the Check is run against
+* `options` - `Mixed`  Any options specific to this Check that may be necessary.  If not specified by the user at run-time or configure-time; it will use `options` as defined by the Check's JSON file.
+* `this.data()` - `Function`  Free-form data that either the Check message requires or is presented as `data` in the CheckResult object.  Subsequent calls to `this.data()` will overwrite previous.  See [aria-valid-attr](../lib/checks/aria/valid-attr.js) for example usage.
+* `this.relatedNodes()` - `Function`  Array or NodeList of elements that are related to this Check.  For example the [duplicate-id](../lib/checks/shared/duplicate-id.js) Check will add all Elements which share the same ID.
+* `commons` - Common functions that may be used across multiple Checks.  See [Common Functions](#common-functions) for more information.
+
+#### Check#after
+
+You can use the `after` function to evaluate nodes that might be in other frames or to filter the number of violations or passes produced.  The `after` function runs once for each Rule in the top-most (or originating) frame.  Due to this, you should not perform DOM operations in after functions, but instead operate on `data` defined by the Check.
+
+For example, the [duplicate-id](../lib/checks/shared/duplicate-id.json) Check include an [after function]((../lib/checks/shared/duplicate-id-after.js)) which reduces the number of violations so that only one violation per instance of a duplicate ID is found.
+
+The following variables are defined for `Check#after`:
+
+* `results` - `Array` Contains [CheckResults](#checkresult) for every matching node.
+* `commons` - Common functions that may be used across multiple Checks.  See [Common Functions](#common-functions) for more information.
+
+The after function must return an `Array` of CheckResults, due to this, it is a very common pattern to just use `Array#filter` to filter results:
+
+```javascript
+var uniqueIds = [];
+return results.filter(function (r) {
+	if (uniqueIds.indexOf(r.data) === -1) {
+		uniqueIds.push(r.data);
+		return true;
+	}
+	return false;
+});
+```
+
+#### Pass and Fail Templates
+
+Occasionally, you may want to add additional information about why a Check passed or failed into its message.  For example, the [aria-valid-attr](../lib/checks/aria/valid-attr.json) will add information about any invalid ARIA attributes to its fail message.  The message uses the [doT.js](http://olado.github.io/doT/) and is compiled to a JavaScript function at build-time.  In the Check message, you have access to the `CheckResult` as `it`.
+
+#### CheckResult
+
+When a Check is executed, its result is then added to a [CheckResult object](../lib/core/base/check-result.js).  Much like the RuleResult object, the CheckResult object only contains information that is required to determine whether a Check, and its parent Rule passed or failed.  `metadata` from the originating Check is combined later and will not be available until aXe reaches the reporting stage.
+
+A CheckResult has the following properties:
+* `id` - `String`  The ID of the Check this CheckResult belongs to.
+* `data` - `Mixed`  Any data the Check's evaluate function added with `this.data()`.  Typically used to insert data from analysis into a message or to perform further tests in the post-processing function.
+* `relatedNodes` - `Array`  Nodes that are related to the current Check as defined by [check#evaluate](#check-evaluate).
+* `result` - `Boolean`  The return value of [check#evaluate](#check-evaluate).
+
+
+### Common Functions
+
+Common functions are an internal library used by the rules and checks.  If you have code repeated across rules and checks, you can use these functions and contribute to them.  They are made available to every function as `commons`.  Documentation is available in [source code](../lib/commons/).
