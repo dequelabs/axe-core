@@ -40,7 +40,7 @@ After execution, a Check will return `true` or `false` depending on whether or n
 
 ### Rules
 
-Rules are defined by JSON files in the [lib/rules directory](../lib/rules).  The JSON object is used to seed the [Rule object](../lib/core/base/rule.js).  A valid Rule JSON consists of the following:
+Rules are defined by JSON files in the [lib/rules directory](../lib/rules).  The JSON object is used to seed the [Rule object](../lib/core/base/rule.js#L30).  A valid Rule JSON consists of the following:
 
 * `id` - `String` A unique name of the Rule.
 * `selector` - **optional** `String` which is a CSS selector that specifies the elements of the page on which the Rule runs.  If omitted, the rule will run against every node.
@@ -75,14 +75,14 @@ Similar to Rules, Checks are defined by JSON files in the [lib/checks directory]
 * `evaluate` - `String` Relative path to the JavaScript file which contains the function body of the Check itself
 * `after` - **optional** `String` Relative path to the JavaScript file which contains the function body of a Check's after (or post-processing) function.
 * `matches` - **optional** `String`  Relative path to the JavaScript file of a custom matching function.  It is functionally the same as a Rule's matches function.  See [matches function](#matches-function) for more information.
-* `options` - **optional** `Mixed` Any information the Check needs that you might need to customize and/or is locale specific.  Options can be overridden at runtime (with the options parameter) or config-time.  For example, the [valid-lang](lib/checks/language/valid-lang.json) Check defines what ISO 639-1 language codes it should accept as valid.  Options do not need to follow any specific format or type; it is up to the author of a Check to determine the most appropriate format.
+* `options` - **optional** `Mixed` Any information the Check needs that you might need to customize and/or is locale specific.  Options can be overridden at runtime (with the options parameter) or config-time.  For example, the [valid-lang](../lib/checks/language/valid-lang.json) Check defines what ISO 639-1 language codes it should accept as valid.  Options do not need to follow any specific format or type; it is up to the author of a Check to determine the most appropriate format.
 * `metadata` - `Object` Consisting of:
 	* `impact` - `String` (one of `minor`, `moderate`, `serious`, or `critical`)
 	* `messages` - `Object` These messages are displayed when the Check passes or fails
 		* `pass` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check passes
 		* `fail` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check fails
 
-#### Check#evaluate
+#### Check `evaluate`
 
 A Check's evaluate function is run a special context in order to give access to APIs which provide more information.  Checks will run against a single node and do not have access to other frames.  A Check must either return `true` or `false`.
 
@@ -94,7 +94,7 @@ The following variables are defined for `Check#evaluate`:
 * `this.relatedNodes()` - `Function`  Array or NodeList of elements that are related to this Check.  For example the [duplicate-id](../lib/checks/shared/duplicate-id.js) Check will add all Elements which share the same ID.
 * `commons` - Common functions that may be used across multiple Checks.  See [Common Functions](#common-functions) for more information.
 
-#### Check#after
+#### Check `after`
 
 You can use the `after` function to evaluate nodes that might be in other frames or to filter the number of violations or passes produced.  The `after` function runs once for each Rule in the top-most (or originating) frame.  Due to this, you should not perform DOM operations in after functions, but instead operate on `data` defined by the Check.
 
