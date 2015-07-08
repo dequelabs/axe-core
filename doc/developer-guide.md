@@ -98,7 +98,7 @@ The following variables are defined for `Check#evaluate`:
 
 You can use the `after` function to evaluate nodes that might be in other frames or to filter the number of violations or passes produced.  The `after` function runs once for each Rule in the top-most (or originating) frame.  Due to this, you should not perform DOM operations in after functions, but instead operate on `data` defined by the Check.
 
-For example, the [duplicate-id](../lib/checks/shared/duplicate-id.json) Check include an [after function]((../lib/checks/shared/duplicate-id-after.js)) which reduces the number of violations so that only one violation per instance of a duplicate ID is found.
+For example, the [duplicate-id](../lib/checks/shared/duplicate-id.json) Check include an [after function](../lib/checks/shared/duplicate-id-after.js) which reduces the number of violations so that only one violation per instance of a duplicate ID is found.
 
 The following variables are defined for `Check#after`:
 
