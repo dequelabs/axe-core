@@ -49,8 +49,12 @@ describe('Audit', function () {
 
 	beforeEach(function () {
 		a = new Audit();
-		mockRules.forEach(a.addRule.bind(a));
-		mockChecks.forEach(a.addCheck.bind(a));
+		mockRules.forEach(function (r) {
+			a.addRule(r);
+		});
+		mockChecks.forEach(function (c) {
+			a.addCheck(c);
+		});
 	});
 	afterEach(function () {
 		fixture.innerHTML = '';

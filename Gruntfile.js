@@ -105,7 +105,12 @@ module.exports = function (grunt) {
 				options: {
 					mangle: false,
 					compress: false,
-					beautify: true,
+					beautify: {
+						beautify: true,
+						indent_level: 2,
+						bracketize: true,
+						quote_style: 1
+					},
 					preserveComments: 'some'
 				}
 			}
@@ -128,7 +133,7 @@ module.exports = function (grunt) {
 			}
 		},
 		watch: {
-			files: ['lib/**/*', 'test/**/*.js'],
+			files: ['lib/**/*', 'test/**/*.js', 'Gruntfile.js'],
 			tasks: ['build', 'testconfig', 'fixture']
 		},
 		testconfig: {
@@ -193,36 +198,14 @@ module.exports = function (grunt) {
 			}
 		},
 		mocha: {
-			test: {
+			unit: {
 				options: {
-					urls: ['http://localhost:<%= connect.test.options.port %>/test/core/'],
-					run: true,
-					mocha: {
-						grep: grunt.option('grep')
-					}
-				}
-			},
-			checks: {
-				options: {
-					urls: ['http://localhost:<%= connect.test.options.port %>/test/checks/'],
-					run: true,
-					mocha: {
-						grep: grunt.option('grep')
-					}
-				}
-			},
-			commons: {
-				options: {
-					urls: ['http://localhost:<%= connect.test.options.port %>/test/commons/'],
-					run: true,
-					mocha: {
-						grep: grunt.option('grep')
-					}
-				}
-			},
-			rules: {
-				options: {
-					urls: ['http://localhost:<%= connect.test.options.port %>/test/integration/rules/'],
+					urls: [
+						'http://localhost:<%= connect.test.options.port %>/test/core/',
+						'http://localhost:<%= connect.test.options.port %>/test/checks/',
+						'http://localhost:<%= connect.test.options.port %>/test/commons/',
+						'http://localhost:<%= connect.test.options.port %>/test/integration/rules/'
+					],
 					run: true,
 					mocha: {
 						grep: grunt.option('grep')

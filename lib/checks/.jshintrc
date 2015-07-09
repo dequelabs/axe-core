@@ -3,10 +3,11 @@
 		"results": true,
 		"node": true,
 		"options": true,
-		"commons": true
+		"commons": true,
+		"document": true,
+		"window": true
 	},
 
-	"browser" : true,
 	"node" : false,
 	"devel" : false,
 
