@@ -8,12 +8,13 @@
 			rules: [{
 				id: 'iframe',
 				selector: 'iframe',
-				any: [{
-					id: 'iframe',
-					evaluate: function () {
-						return true;
-					}
-				}]
+				any: ['iframe']
+			}],
+			checks: [{
+				id: 'iframe',
+				evaluate: function () {
+					return true;
+				}
 			}],
 			messages: {}
 		});
