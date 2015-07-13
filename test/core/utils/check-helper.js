@@ -1,3 +1,4 @@
+/*global DqElement */
 describe('utils.checkHelper', function () {
 	'use strict';
 
@@ -48,39 +49,56 @@ describe('utils.checkHelper', function () {
 			});
 		});
 		describe('relatedNodes', function () {
-			it('should set relatedNodes property on target when called and pass each node into DqElement', function () {
-				var orig = window.DqElement;
-				var success = false;
-				window.DqElement = function (n) {
-					assert.equal(n, expected[0]);
-					success = true;
-					return n;
-				};
-				var target = {},
-					expected = [{monkeys: 'bananas' }],
-					helper = utils.checkHelper(target, noop);
-
-				assert.notProperty(target, 'relatedNodes');
-				helper.relatedNodes(expected);
-				assert.deepEqual(target.relatedNodes, expected);
-				assert.isTrue(success);
-
-				window.DqElement = orig;
+			var fixture = document.getElementById('fixture');
+			afterEach(function () {
+				fixture.innerHTML = '';
 			});
-			it('should cast the object to an array', function () {
-				var orig = window.DqElement;
-				window.DqElement = function (n) {
-					return n;
-				};
-				var target = {},
-					expected = [{monkeys: 'bananas' }],
-					helper = utils.checkHelper(target, noop);
-
-				helper.relatedNodes(expected[0]);
-				assert.isArray(target.relatedNodes);
-				assert.deepEqual(target.relatedNodes, expected);
-
-				window.DqElement = orig;
+			it('should accept NodeList', function () {
+				fixture.innerHTML = '<div id="t1"></div><div id="t2"></div>';
+					var target = {},
+						helper = utils.checkHelper(target, noop);
+					helper.relatedNodes(fixture.children);
+					assert.lengthOf(target.relatedNodes, 2);
+					assert.instanceOf(target.relatedNodes[0], DqElement);
+					assert.instanceOf(target.relatedNodes[1], DqElement);
+					assert.equal(target.relatedNodes[0].element, fixture.children[0]);
+					assert.equal(target.relatedNodes[1].element, fixture.children[1]);
+			});
+			it('should accept a single Node', function () {
+				fixture.innerHTML = '<div id="t1"></div><div id="t2"></div>';
+					var target = {},
+						helper = utils.checkHelper(target, noop);
+					helper.relatedNodes(fixture.firstChild);
+					assert.lengthOf(target.relatedNodes, 1);
+					assert.instanceOf(target.relatedNodes[0], DqElement);
+					assert.equal(target.relatedNodes[0].element, fixture.firstChild);
+			});
+			it('should accept an Array', function () {
+				fixture.innerHTML = '<div id="t1"></div><div id="t2"></div>';
+					var target = {},
+						helper = utils.checkHelper(target, noop);
+					helper.relatedNodes(Array.prototype.slice.call(fixture.children));
+					assert.lengthOf(target.relatedNodes, 2);
+					assert.instanceOf(target.relatedNodes[0], DqElement);
+					assert.instanceOf(target.relatedNodes[1], DqElement);
+					assert.equal(target.relatedNodes[0].element, fixture.children[0]);
+					assert.equal(target.relatedNodes[1].element, fixture.children[1]);
+			});
+			it('should accept an array-like Object', function () {
+				fixture.innerHTML = '<div id="t1"></div><div id="t2"></div>';
+					var target = {},
+						helper = utils.checkHelper(target, noop);
+					var nodes = {
+						0: fixture.children[0],
+						1: fixture.children[1],
+						length: 2
+					};
+					helper.relatedNodes(nodes);
+					assert.lengthOf(target.relatedNodes, 2);
+					assert.instanceOf(target.relatedNodes[0], DqElement);
+					assert.instanceOf(target.relatedNodes[1], DqElement);
+					assert.equal(target.relatedNodes[0].element, fixture.children[0]);
+					assert.equal(target.relatedNodes[1].element, fixture.children[1]);
 			});
 		});
 
