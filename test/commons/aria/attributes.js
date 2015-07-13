@@ -174,11 +174,11 @@ describe('aria.validateAttrValue', function () {
 				assert.isFalse(commons.aria.validateAttrValue(node, 'cats'));
 			});
 		});
-		describe('http://www.w3.org/2001/XMLSchema#idref', function () {
+		describe('idref', function () {
 			it('should validate the referenced node exists', function () {
 				commons.aria._lut.attributes = {
 					cats: {
-						type: 'http://www.w3.org/2001/XMLSchema#idref'
+						type: 'idref'
 					}
 				};
 
@@ -191,13 +191,13 @@ describe('aria.validateAttrValue', function () {
 				assert.isFalse(commons.aria.validateAttrValue(node, 'cats'));
 			});
 		});
-		describe('http://www.w3.org/2001/XMLSchema#idrefs', function () {
+		describe('idrefs', function () {
 
 			var node = document.createElement('div');
 			beforeEach(function () {
 				commons.aria._lut.attributes = {
 					cats: {
-						type: 'http://www.w3.org/2001/XMLSchema#idrefs'
+						type: 'idrefs'
 					}
 				};
 			});
@@ -231,11 +231,11 @@ describe('aria.validateAttrValue', function () {
 
 		});
 
-		describe('http://www.w3.org/2001/XMLSchema#string', function () {
+		describe('string', function () {
 			it('should always return true', function () {
 				commons.aria._lut.attributes = {
 					cats: {
-						type: 'http://www.w3.org/2001/XMLSchema#string'
+						type: 'string'
 					}
 				};
 				var node = document.createElement('div');
@@ -244,12 +244,12 @@ describe('aria.validateAttrValue', function () {
 			});
 		});
 
-		describe('http://www.w3.org/2001/XMLSchema#decimal', function () {
+		describe('decimal', function () {
 			var node = document.createElement('div');
 			beforeEach(function () {
 				commons.aria._lut.attributes = {
 					cats: {
-						type: 'http://www.w3.org/2001/XMLSchema#decimal'
+						type: 'decimal'
 					}
 				};
 			});
@@ -345,12 +345,12 @@ describe('aria.validateAttrValue', function () {
 			});
 		});
 
-		describe('http://www.w3.org/2001/XMLSchema#int', function () {
+		describe('int', function () {
 			var node = document.createElement('div');
 			beforeEach(function () {
 				commons.aria._lut.attributes = {
 					cats: {
-						type: 'http://www.w3.org/2001/XMLSchema#int'
+						type: 'int'
 					}
 				};
 			});
