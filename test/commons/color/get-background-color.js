@@ -38,7 +38,7 @@ describe('color.getBackgroundColor', function () {
 		var bgNodes = [];
 		var actual = commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new commons.color.Color(64, 64, 0, 1);
-		if (commons.dom.supportsElementsFromPoint(target.ownerDocument)) {
+		if (commons.dom.supportsElementsFromPoint(document)) {
 			assert.closeTo(actual.red, expected.red, 0.5);
 			assert.closeTo(actual.green, expected.green, 0.5);
 			assert.closeTo(actual.blue, expected.blue, 0.5);
@@ -83,7 +83,7 @@ describe('color.getBackgroundColor', function () {
 		var bgNodes = [];
 		var actual = commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new commons.color.Color(64, 64, 0, 1);
-		if (commons.dom.supportsElementsFromPoint(target.ownerDocument)) {
+		if (commons.dom.supportsElementsFromPoint(document)) {
 			assert.closeTo(actual.red, expected.red, 0.5);
 			assert.closeTo(actual.green, expected.green, 0.5);
 			assert.closeTo(actual.blue, expected.blue, 0.5);

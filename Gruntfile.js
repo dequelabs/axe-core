@@ -1,6 +1,5 @@
-//jshint maxcomplexity: 12, maxstatements: false
+//jshint maxcomplexity: 12, maxstatements: false, camelcase: false
 
-var sauceConfig = require('./build/sauce.conf');
 module.exports = function (grunt) {
 	'use strict';
 
@@ -17,9 +16,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-continue');
 	grunt.loadNpmTasks('grunt-mocha');
-	grunt.loadNpmTasks('grunt-saucelabs');
 	grunt.loadTasks('build/tasks');
 
 	grunt.initConfig({
@@ -108,7 +105,12 @@ module.exports = function (grunt) {
 				options: {
 					mangle: false,
 					compress: false,
-					beautify: true,
+					beautify: {
+						beautify: true,
+						indent_level: 2,
+						bracketize: true,
+						quote_style: 1
+					},
 					preserveComments: 'some'
 				}
 			}
@@ -131,7 +133,7 @@ module.exports = function (grunt) {
 			}
 		},
 		watch: {
-			files: ['lib/**/*', 'test/**/*.js'],
+			files: ['lib/**/*', 'test/**/*.js', 'Gruntfile.js'],
 			tasks: ['build', 'testconfig', 'fixture']
 		},
 		testconfig: {
@@ -146,35 +148,40 @@ module.exports = function (grunt) {
 				dest: 'test/core/index.html',
 				options: {
 					fixture: 'test/runner.tmpl',
-					testCwd: 'test/core'
+					testCwd: 'test/core',
+					data: {
+						title: 'aXe Core Tests'
+					}
 				}
 			},
 			checks: {
 				src: [
-					'bower_components/simple-clone/lib/index.js',
-					'bower_components/element-matches/lib/index.js',
-					'bower_components/escape-selector/lib/index.js',
+					'<%= concat.engine.dest %>',
 					'build/test/engine.js',
 					'<%= configure.rules.dest.auto %>'
 				],
 				dest: 'test/checks/index.html',
 				options: {
 					fixture: 'test/runner.tmpl',
-					testCwd: 'test/checks'
+					testCwd: 'test/checks',
+					data: {
+						title: 'aXe Check Tests'
+					}
 				}
 			},
 			commons: {
 				src: [
-					'bower_components/simple-clone/lib/index.js',
-					'bower_components/element-matches/lib/index.js',
-					'bower_components/escape-selector/lib/index.js',
+					'<%= concat.engine.dest %>',
 					'build/test/engine.js',
 					'<%= configure.rules.dest.auto %>'
 				],
 				dest: 'test/commons/index.html',
 				options: {
 					fixture: 'test/runner.tmpl',
-					testCwd: 'test/commons'
+					testCwd: 'test/commons',
+					data: {
+						title: 'aXe Commons Tests'
+					}
 				}
 			},
 			integration: {
@@ -183,42 +190,24 @@ module.exports = function (grunt) {
 				options: {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/integration/rules',
-					tests: ['../../../tmp/integration-tests.js', 'runner.js']
+					tests: ['../../../tmp/integration-tests.js', 'runner.js'],
+					data: {
+						title: 'aXe Integration Tests'
+					}
 				}
 			}
 		},
 		mocha: {
-			test: {
+			unit: {
 				options: {
-					urls: ['http://localhost:<%= connect.test.options.port %>/test/core/'],
+					urls: [
+						'http://localhost:<%= connect.test.options.port %>/test/core/',
+						'http://localhost:<%= connect.test.options.port %>/test/checks/',
+						'http://localhost:<%= connect.test.options.port %>/test/commons/',
+						'http://localhost:<%= connect.test.options.port %>/test/integration/rules/'
+					],
 					run: true,
-					mocha: {
-						grep: grunt.option('grep')
-					}
-				}
-			},
-			checks: {
-				options: {
-					urls: ['http://localhost:<%= connect.test.options.port %>/test/checks/'],
-					run: true,
-					mocha: {
-						grep: grunt.option('grep')
-					}
-				}
-			},
-			commons: {
-				options: {
-					urls: ['http://localhost:<%= connect.test.options.port %>/test/commons/'],
-					run: true,
-					mocha: {
-						grep: grunt.option('grep')
-					}
-				}
-			},
-			rules: {
-				options: {
-					urls: ['http://localhost:<%= connect.test.options.port %>/test/integration/rules/'],
-					run: true,
+					reporter: 'Spec',
 					mocha: {
 						grep: grunt.option('grep')
 					}
@@ -234,12 +223,6 @@ module.exports = function (grunt) {
 					}
 				}
 			}
-		},
-		'saucelabs-mocha': {
-			core: sauceConfig('core', 'http://localhost:<%= connect.test.options.port %>/test/core/'),
-			commons: sauceConfig('commons', 'http://localhost:<%= connect.test.options.port %>/test/commons/'),
-			checks: sauceConfig('checks', 'http://localhost:<%= connect.test.options.port %>/test/checks/'),
-			rules: sauceConfig('rules', 'http://localhost:<%= connect.test.options.port %>/test/integration/')
 		},
 		connect: {
 			test: {
@@ -269,7 +252,4 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('test', ['build',  'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
-
-	grunt.registerTask('test-ci', ['build', 'fixture', 'connect', 'continue:on', 'saucelabs-mocha',
-		'continue:off', 'mocha:integration', 'jshint', 'continue:fail-on-warning']);
 };

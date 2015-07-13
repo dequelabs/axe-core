@@ -8,16 +8,14 @@ describe('dom.isVisible', function () {
 
 		// Firefox returns `null` if accessed inside a hidden iframe
 		it('should return false if computedStyle return null for whatever reason', function () {
+			var orig = window.getComputedStyle;
+			window.getComputedStyle = function () {
+				return null;
+			};
 			assert.isFalse(commons.dom.isVisible({
-				nodeType: Node.ELEMENT_NODE,
-				ownerDocument: {
-					defaultView: {
-						getComputedStyle: function () {
-							return null;
-						}
-					}
-				}
+				nodeType: Node.ELEMENT_NODE
 			}));
+			window.getComputedStyle = orig;
 		});
 
 		it('should return true on staticly-positioned, visible elements', function () {
@@ -161,16 +159,14 @@ describe('dom.isVisible', function () {
 
 		// Firefox returns `null` if accessed inside a hidden iframe
 		it('should return false if computedStyle return null for whatever reason', function () {
+			var orig = window.getComputedStyle;
+			window.getComputedStyle = function () {
+				return null;
+			};
 			assert.isFalse(commons.dom.isVisible({
-				nodeType: Node.ELEMENT_NODE,
-				ownerDocument: {
-					defaultView: {
-						getComputedStyle: function () {
-							return null;
-						}
-					}
-				}
+				nodeType: Node.ELEMENT_NODE
 			}, true));
+			window.getComputedStyle = orig;
 		});
 
 		it('should return true on staticly-positioned, visible elements', function () {

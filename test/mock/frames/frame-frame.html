@@ -7,12 +7,13 @@
 		axe._load({ rules: [{
 			id: 'html',
 			selector: 'html',
-			any: [{
-				id: 'html',
-				evaluate: function () {
-					return true;
-				}
-			}]
+			any: ['html']
+		}],
+		checks: [{
+			id: 'html',
+			evaluate: function () {
+				return true;
+			}
 		}],
 		tools: [{
 			id: 'html',

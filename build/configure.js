@@ -75,19 +75,20 @@ function buildRules(grunt, options, commons, callback) {
 
 		function parseChecks(collection) {
 			return collection.map(function (check) {
-
+				var c = {};
 				var id = typeof check === 'string' ? check : check.id;
-				var c = clone(findCheck(checks, id));
-				if (!c) {
+				var definition = clone(findCheck(checks, id));
+				if (!definition) {
 					grunt.log.error('check ' + id + ' not found');
 				}
-				c.options = check.options || c.options;
+				c.options = check.options || definition.options;
+				c.id = id;
 
-				if (c.metadata && !metadata.checks[id]) {
-					metadata.checks[id] = parseMetaData(c.metadata);
+				if (definition.metadata && !metadata.checks[id]) {
+					metadata.checks[id] = parseMetaData(definition.metadata);
 				}
 
-				return c;
+				return c.options === undefined ? id : c;
 			});
 
 		}
@@ -127,11 +128,13 @@ function buildRules(grunt, options, commons, callback) {
 			auto: replaceFunctions(JSON.stringify({
 				data: metadata,
 				rules: rules,
+				checks: checks,
 				commons: result.commons
 			}, blacklist)),
 			manual: replaceFunctions(JSON.stringify({
 				data: metadata,
 				rules: rules,
+				checks: checks,
 				commons: result.commons,
 				tools: result.tools,
 				style: result.style
