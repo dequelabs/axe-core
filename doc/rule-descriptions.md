@@ -24,7 +24,7 @@
 | frame-title | Ensure that all iframe and frame elements contain a unique and non-empty title attribute | wcag2a, wcag241 |
 | heading-order | Ensure that the order in which the headings appear in the DOM is semantically correct | best-practice |
 | html-lang | Ensures that every HTML document has a lang attribute and that it contains a valid value | wcag2a, wcag311 |
-| image-alt | Ensures that every &lt;img&gt; element has alternative text or is marked as presentational | wcag2a, wcag111, section508, section508a |
+| image-alt | Ensures that every &lt;img&gt; element has alternative text or is marked as none or presentational | wcag2a, wcag111, section508, section508a |
 | input-image-alt | Ensures that every &lt;input&gt; that represents an image button has an accessible name | wcag2a, wcag111, section508, section508a |
 | label-title-only | Ensures that every &lt;input&gt; that requires a label is not only labeled using the title attribute | best-practice |
 | label | Ensures that every input element that requires a label, has an appropriate label | wcag2a, wcag332, wcag131, section508, section508n |
