@@ -13,7 +13,8 @@
   "all": [],
   "any": [
     "has-visible-text",
-    "role-presentation"
+    "role-presentation",
+    "role-none"
   ],
   "none": []
 }

@@ -19,7 +19,8 @@
     "button-has-visible-text",
     "aria-label",
     "aria-labelledby",
-    "role-presentation"
+    "role-presentation",
+    "role-none"
   ],
   "none": [
     "duplicate-img-label",
