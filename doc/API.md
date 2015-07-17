@@ -156,7 +156,7 @@ The date and time that analysis was completed.
 
 * `description` - Text string that describes what the rule does
 * `help` - Help text that describes the test that was performed
-* `helpURL` - URL that provides more information about the specifics of the violation. Links to a page on the Deque University site.
+* `helpUrl` - URL that provides more information about the specifics of the violation. Links to a page on the Deque University site.
 * `id` - Unique identifier for the rule; [see the list of rules](rule-descriptions.md)
 * `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the Rule failed or `null` if the check passed
 * `tags` - Array of tags that this rule is assigned. These tags can be used in the option structure to select which rules are run ([see `axe.allyCheck` parameters below for more information](#a11ycheck-parameters)).
