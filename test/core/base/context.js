@@ -288,38 +288,51 @@ describe('Context', function() {
 		});
 		it('should disregard bad input (null)', function() {
 
-			assert.deepEqual(new Context(), {
-				include: [document],
-				exclude: [],
-				initiator: true,
-				page: true,
-				frames: []
-			});
+			var result = new Context();
+
+			assert.lengthOf(result.include, 1);
+			assert.equal(result.include[0], document);
+
+			assert.lengthOf(result.exclude, 0);
+
+			assert.isTrue(result.initiator);
+			assert.isTrue(result.page);
+
+			assert.lengthOf(result.frames, 0);
 		});
 
 		it('should default include to document', function () {
-				assert.deepEqual(new Context({ exclude: ['#fixture'] }), {
-					include: [document],
-					exclude: [$id('fixture')],
-					initiator: true,
-					page: true,
-					frames: []
-				});
+			var result = new Context({ exclude: ['#fixture'] });
+			assert.lengthOf(result.include, 1);
+			assert.equal(result.include[0], document);
+
+			assert.lengthOf(result.exclude, 1);
+			assert.equal(result.exclude[0], $id('fixture'));
+
+			assert.isTrue(result.initiator);
+			assert.isTrue(result.page);
+
+			assert.lengthOf(result.frames, 0);
+
 		});
 
 	});
 
 	describe('initiator', function() {
 		it('should not be clobbered', function() {
-			assert.deepEqual(new Context({
+
+			var result = new Context({
 				initiator: false
-			}), {
-				include: [document],
-				exclude: [],
-				initiator: false,
-				page: true,
-				frames: []
 			});
+			assert.lengthOf(result.include, 1);
+			assert.equal(result.include[0], document);
+
+			assert.lengthOf(result.exclude, 0);
+
+			assert.isFalse(result.initiator);
+			assert.isTrue(result.page);
+
+			assert.lengthOf(result.frames, 0);
 
 		});
 
@@ -328,13 +341,17 @@ describe('Context', function() {
 			//jshint -W001
 			var spec = document.implementation.createHTMLDocument('ie is dumb');
 			spec.hasOwnProperty = undefined;
-			assert.deepEqual(new Context(spec), {
-				initiator: true,
-				page: false,
-				include: [spec],
-				exclude: [],
-				frames: []
-			});
+			var result = new Context(spec);
+			
+			assert.lengthOf(result.include, 1);
+			assert.equal(result.include[0], spec);
+
+			assert.lengthOf(result.exclude, 0);
+
+			assert.isTrue(result.initiator);
+			assert.isFalse(result.page);
+
+			assert.lengthOf(result.frames, 0);
 		});
 	});
 
