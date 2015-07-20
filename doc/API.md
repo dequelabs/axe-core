@@ -358,13 +358,13 @@ Each subsequent entry in the violations array has the same format, but will deta
 
 #### Example 3
 
-In this example, we pass the selector for the entire document, enable two additional rules, and have a simple callback function that logs the entire results object to the console log:
+In this example, we pass the selector for the entire document, enable two additional best practice rules, and have a simple callback function that logs the entire results object to the console log:
 
 ```javascript
 axe.a11yCheck(document, {
   rules: {
     "heading-order": { enabled: true },
-    "color-contrast": { enabled: true }
+    "label-title-only": { enabled: true }
   }
 }, function(results) {
   console.log(results);
