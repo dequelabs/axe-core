@@ -18,10 +18,14 @@ describe('axe.getRules', function() {
 			data: {
 				rules: {
 					awesomeRule1: {
-						description: 'some interesting information'
+						description: 'some interesting information',
+						helpUrl: 'some location somewhere',
+						help: 'halp'
 					},
 					awesomeRule2: {
-						description: 'also some interesting information'
+						description: 'also some interesting information',
+						helpUrl: 'some location somewhere else',
+						help: 'halp me!'
 					}
 				}
 			}
@@ -38,14 +42,24 @@ describe('axe.getRules', function() {
 		assert.lengthOf(retValue, 2);
 		assert.equal(retValue[0].ruleId, 'awesomeRule1');
 		assert.equal(retValue[0].description, 'some interesting information');
+		assert.equal(retValue[0].help, 'halp');
+		assert.equal(retValue[0].helpUrl, 'some location somewhere');
+		assert.deepEqual(retValue[0].tags, ['tag1']);
+
 		assert.equal(retValue[1].ruleId, 'awesomeRule2');
 		assert.equal(retValue[1].description, 'also some interesting information');
+		assert.equal(retValue[1].help, 'halp me!');
+		assert.equal(retValue[1].helpUrl, 'some location somewhere else');
+		assert.deepEqual(retValue[1].tags, ['tag1', 'tag2']);
 
 		retValue = axe.getRules(['tag2']);
 		assert.isArray(retValue);
 		assert.lengthOf(retValue, 1);
 		assert.equal(retValue[0].ruleId, 'awesomeRule2');
 		assert.equal(retValue[0].description, 'also some interesting information');
+		assert.equal(retValue[0].help, 'halp me!');
+		assert.equal(retValue[0].helpUrl, 'some location somewhere else');
+		assert.deepEqual(retValue[0].tags, ['tag1', 'tag2']);
 	});
 
 	it('should not return nothing', function() {
@@ -58,16 +72,30 @@ describe('axe.getRules', function() {
 		var retValue = axe.getRules();
 		assert.equal(retValue[0].ruleId, 'awesomeRule1');
 		assert.equal(retValue[0].description, 'some interesting information');
+		assert.equal(retValue[0].help, 'halp');
+		assert.equal(retValue[0].helpUrl, 'some location somewhere');
+		assert.deepEqual(retValue[0].tags, ['tag1']);
+
 		assert.equal(retValue[1].ruleId, 'awesomeRule2');
 		assert.equal(retValue[1].description, 'also some interesting information');
+		assert.equal(retValue[1].help, 'halp me!');
+		assert.equal(retValue[1].helpUrl, 'some location somewhere else');
+		assert.deepEqual(retValue[1].tags, ['tag1', 'tag2']);
 	});
 
 	it('should return all rules if given empty array', function() {
 		var retValue = axe.getRules([]);
 		assert.equal(retValue[0].ruleId, 'awesomeRule1');
 		assert.equal(retValue[0].description, 'some interesting information');
+		assert.equal(retValue[0].help, 'halp');
+		assert.equal(retValue[0].helpUrl, 'some location somewhere');
+		assert.deepEqual(retValue[0].tags, ['tag1']);
+
 		assert.equal(retValue[1].ruleId, 'awesomeRule2');
 		assert.equal(retValue[1].description, 'also some interesting information');
+		assert.equal(retValue[1].help, 'halp me!');
+		assert.equal(retValue[1].helpUrl, 'some location somewhere else');
+		assert.deepEqual(retValue[1].tags, ['tag1', 'tag2']);
 	});
 
 });
