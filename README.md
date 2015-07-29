@@ -78,6 +78,7 @@ The [aXe API](doc/API.md) package consists of:
 
 ## Contributing
 
+Read the [documentation on the architecture](./doc/developer-guide.md)
 Read the [documentation on contributing](CONTRIBUTING.md)
 
 ## Projects using axe-core
