@@ -12,6 +12,10 @@ describe('DqElement', function () {
 		assert.isFunction(DqElement);
 	});
 
+	it('should be exposed to utils', function () {
+		assert.equal(utils.DqElement, DqElement);
+	});
+
 	it('should take a node as a parameter and return an object', function () {
 		var node = document.createElement('div');
 		var result = new DqElement(node);
