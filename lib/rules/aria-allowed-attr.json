@@ -7,7 +7,7 @@
   "metadata": {
     "helpUrl": "https://dequeuniversity.com/issues/aria-allowed-attr",
     "help": "ARIA attributes not allowed for role assigned to this element",
-    "description": "Checks all attributes that start with 'aria-' to ensure that they are all official WAI-ARIA attributes"
+    "description": "Checks all attributes that start with 'aria-' are valid for an element's role"
   },
   "all": [],
   "any": [
