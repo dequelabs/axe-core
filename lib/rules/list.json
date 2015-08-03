@@ -8,12 +8,11 @@
   "metadata": {
     "description": "Ensures that lists are structured correctly",
     "helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/lists-links-blockquote#id38_lists",
-    "help": "<ul> and <ol> lists must contain only <li> listitems"
+    "help": "<ul> and <ol> lists may only directly contain zero or more <li> listitems, <script> or <template> tags"
   },
   "all": [],
   "any": [],
   "none": [
-    "has-listitem",
     "only-listitems"
   ]
 }

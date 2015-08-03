@@ -7,13 +7,13 @@
   ],
   "metadata": {
     "description": "Ensures that all <dl> elements are structured correctly",
-    "help": "<dl> elements must contain properly-ordered <dt> and <dd> elements",
+    "help": "<dl> elements may only contain zero or more properly-ordered <dt> and <dd> groups, <script> or <template> elements",
     "helpUrl": "https://dequeuniversity.com/issues/definition-list"
   },
   "all": [],
   "any": [],
   "none": [
-    "has-dlitems",
+    "structured-dlitems",
     "only-dlitems"
   ]
 }
