@@ -170,7 +170,7 @@ The date and time that analysis was completed.
 		* `message` - Description of why this check passed or failed
 		* `data` - Additional information that is specific to the type of Check which is optional. For example, a color contrast check would include the foreground color, background color, contrast ratio, etc.
 		* `relatedNodes` - Optional array of information about other nodes that are related to this check. For example, a duplicate id check violation would list the other selectors that had this same duplicate id. Each entry in the array contains the following information:
-			* `target` - Selector to the related node
+			* `target` - Array of selectors for the related node
 			* `html` - HTML source of the related node
 	* `all` - Array of checks that were made where all must have passed. Each entry in the array contains the same information as the 'any' array
 	* `none` - Array of checks that were made where all must have not passed. Each entry in the array contains the same information as the 'any' array
