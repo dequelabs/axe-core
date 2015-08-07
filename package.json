@@ -21,6 +21,7 @@
     "bdd",
     "aXe"
   ],
+  "main": "index.js",
   "dependencies": {},
   "scripts": {
     "build": "grunt",
