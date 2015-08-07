@@ -2,7 +2,7 @@
 | :------- | :------- | :------- |
 | accesskeys | Ensures that each element on the page with an accesskey attribute has a unique value | wcag2a, wcag211 |
 | area-alt | Checks the &lt;area&gt; elements of image maps to ensure that they have an alternative text | wcag2a, wcag111, section508, section508a |
-| aria-allowed-attr | Checks all attributes that start with &apos;aria-&apos; to ensure that they are all official WAI-ARIA attributes | wcag2a, wcag411 |
+| aria-allowed-attr | Checks all attributes that start with &apos;aria-&apos; are valid for an element&apos;s role | wcag2a, wcag411 |
 | aria-required-attr | Checks all elements that contain WAI-ARIA roles to ensure that all required aria- attributes are present | wcag2a, wcag411 |
 | aria-required-children | Checks all elements that contain a WAI-ARIA role to ensure that all required children roles are present | wcag2a, wcag411 |
 | aria-required-parent | Checks all elements that contain a WAI-ARIA role to ensure that all required parent roles are present | wcag2a, wcag411 |

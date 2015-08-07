@@ -67,6 +67,11 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+		langs : {
+			generate: {
+				check: 'lib/checks/language/valid-lang'
+			}
+		},
 		validate: {
 			tools: {
 				options: {
