@@ -22,6 +22,14 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		clean: ['dist', 'tmp'],
+		'update-help': {
+			options: {
+				version: '<%=pkg.version%>'
+			},
+			rules: {
+				src: ['lib/rules/**/*.json']
+			}
+		},
 		concat: {
 			engine: {
 				src: [
