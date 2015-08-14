@@ -7,9 +7,9 @@
     "best-practice"
   ],
   "metadata": {
-    "description": "Ensures that all content on a page is contained within a landmark region",
-    "help": "Content must be contained in a region",
-    "helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/html5-aria-landmarks"
+    "description": "Ensures all content on the page is contained within a landmark region",
+    "help": "Content should be contained in a landmark region",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/region"
   },
   "all": [],
   "any": [

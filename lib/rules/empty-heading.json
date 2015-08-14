@@ -6,9 +6,9 @@
     "wcag131"
   ],
   "metadata": {
-    "helpUrl": "https://dequeuniversity.com/issues/empty-heading",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/empty-heading",
     "description": "Ensures that headings on the page do not contain empty text",
-    "help": "Headings should not be empty"
+    "help": "Headings must not be empty"
   },
   "all": [],
   "any": [

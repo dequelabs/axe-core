@@ -6,8 +6,8 @@
     "wcag242"
   ],
   "metadata": {
-    "description": "Ensures that each HTML document contains a title",
-    "helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/page-title",
+    "description": "Ensures each HTML document contains a non-empty <title> element",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/document-title",
     "help": "Documents must have <title> element to aid in navigation"
   },
   "all": [],

@@ -6,7 +6,7 @@
     "wcag411"
   ],
   "metadata": {
-    "helpUrl": "https://dequeuniversity.com/issues/aria-required-parent",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/aria-required-parent",
     "description": "Checks all elements that contain a WAI-ARIA role to ensure that all required parent roles are present",
     "help": "Certain ARIA roles must be contained by particular parents"
   },
