@@ -45,6 +45,19 @@ describe('DqElement', function () {
 			assert.equal(result.source, fixture.firstChild.outerHTML);
 		});
 
+		it('should work with SVG elements', function () {
+			fixture.innerHTML = '<svg aria-label="foo"></svg>';
+
+			var result = new DqElement(fixture.firstChild);
+			assert.isString(result.source);
+		});
+		it('should work with MathML', function () {
+			fixture.innerHTML = '<math display="block"><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></math>';
+
+			var result = new DqElement(fixture.firstChild);
+			assert.isString(result.source);
+		});
+
 		it('should truncate large elements', function () {
 			var div = '<div class="foo" id="foo">';
 			for (var i = 0; i < 300; i++) {
