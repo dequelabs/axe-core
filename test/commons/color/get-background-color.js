@@ -174,6 +174,14 @@ describe('color.getBackgroundColor', function () {
 		assert.deepEqual(bgNodes, [target]);
 	});
 
+	it('should return null if something is obscuring it', function () {
+		fixture.innerHTML = '<div style="position: absolute; top:0; left: 0; right: 0; bottom:0; background: #000"></div>' +
+			'<div id="target" style="position: relative; left: 1px;">Hello</div>';
+		var actual = commons.color.getBackgroundColor(document.getElementById('target'), []);
+		assert.isNull(actual);
+
+	});
+
 	it('should return the bgcolor if it is solid', function () {
 		fixture.innerHTML = '<div style="height: 40px; width: 30px; background-color: red;">' +
 			'<div id="target" style="height: 20px; width: 15px; background-color: green;">' +
