@@ -9,8 +9,8 @@
     "section508a"
   ],
   "metadata": {
-    "description": "Ensures that every link has an accessible name",
-    "helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/links",
+    "description": "Ensures that every link has discernible text",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/link-name",
     "help": "Links must contain discernible text"
   },
   "all": [],

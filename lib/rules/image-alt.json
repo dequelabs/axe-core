@@ -8,8 +8,8 @@
     "section508a"
   ],
   "metadata": {
-    "description": "Ensures that every <img> element has alternative text or is marked as none or presentational",
-    "helpUrl": "https://dequeuniversity.com/courses/html-css/images/alt-text",
+    "description": "Ensures that every <img> element has alternate text or has a role of none or presentational",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/image-alt",
     "help": "Images must have alternate text"
   },
   "all": [],

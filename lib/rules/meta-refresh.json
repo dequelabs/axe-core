@@ -10,8 +10,9 @@
     "wcag325"
   ],
   "metadata": {
-    "description": "Ensures that <meta> refresh is not used",
-    "help": "Timed refresh must not exist"
+    "description": "Ensures that <meta http-equiv=\"refresh\"> is not used",
+    "help": "Timed refresh must not exist",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/meta-refresh"
   },
   "all": [],
   "any": [

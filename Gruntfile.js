@@ -28,6 +28,14 @@ module.exports = function (grunt) {
 				dest: 'dist/index.js'
 			}
 		},
+		'update-help': {
+			options: {
+				version: '<%=pkg.version%>'
+			},
+			rules: {
+				src: ['lib/rules/**/*.json']
+			}
+		},
 		concat: {
 			engine: {
 				src: [
