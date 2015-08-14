@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Test Page</title>
+	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
+	<script src="/node_modules/mocha/mocha.js"></script>
+	<script src="/node_modules/chai/chai.js"></script>
+	<script src="/dist/axe.js"></script>
+	<script>
+		mocha.setup({
+			timeout: 10000,
+			ui: 'bdd'
+		});
+		var assert = chai.assert;
+	</script>
+	<script src="/test/integration/no-ui-reporter.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      background: #fff;
+      color: #000;
+    }
+
+    header {
+      top: 0;
+    }
+
+    footer {
+      bottom: 0;
+    }
+
+    header, footer {
+      padding: 20px;
+      position: fixed;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: #000;
+      color: #fff;
+			z-index: 2;
+    }
+
+    main {
+      position: relative;
+			z-index: 1;
+      left: 1px;
+      padding: 80px 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hi</h1>
+  </header>
+  <main>
+    <p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p>
+    <p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p>
+    <p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p>
+    <p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p><p>Some content</p>
+  </main>
+  <footer>
+    Footer
+  </footer>
+</div>
+<script src="sticky-header.js"></script>
+<script src="/test/integration/adapter.js"></script>
+
+</body>
+</html>
