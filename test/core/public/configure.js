@@ -28,17 +28,24 @@ describe('axe.configure', function() {
 		axe._load({});
 		axe.configure({
 			rules: [{
-				id: 'bob'
+				id: 'bob',
+				metadata: 'joe'
 			}]
 		});
 
 		assert.lengthOf(axe._audit.rules, 1);
 		assert.instanceOf(axe._audit.rules[0], Rule);
 		assert.equal(axe._audit.rules[0].id, 'bob');
+		assert.equal(axe._audit.data.rules.bob, 'joe');
 	});
 
 	it('should allow for overwriting of rules', function () {
 		axe._load({
+			data: {
+				rules: {
+					bob: 'not-joe'
+				}
+			},
 			rules: {
 				id: 'bob',
 				selector: 'fail'
@@ -47,7 +54,8 @@ describe('axe.configure', function() {
 		axe.configure({
 			rules: [{
 				id: 'bob',
-				selector: 'pass'
+				selector: 'pass',
+				metadata: 'joe'
 			}]
 		});
 
@@ -55,6 +63,7 @@ describe('axe.configure', function() {
 		assert.instanceOf(axe._audit.rules[0], Rule);
 		assert.equal(axe._audit.rules[0].id, 'bob');
 		assert.equal(axe._audit.rules[0].selector, 'pass');
+		assert.equal(axe._audit.data.rules.bob, 'joe');
 	});
 
 	it('should allow for the addition of checks', function () {
@@ -62,18 +71,25 @@ describe('axe.configure', function() {
 		axe.configure({
 			checks: [{
 				id: 'bob',
-				options: true
+				options: true,
+				metadata: 'joe'
 			}]
 		});
 
 		assert.instanceOf(axe._audit.checks.bob, Check);
 		assert.equal(axe._audit.checks.bob.id, 'bob');
 		assert.isTrue(axe._audit.checks.bob.options);
+		assert.equal(axe._audit.data.checks.bob, 'joe');
 
 	});
 
 	it('should allow for the overwriting of checks', function () {
 		axe._load({
+			data: {
+				checks: {
+					bob: 'not-joe'
+				}
+			},
 			checks: [{
 				id: 'bob',
 				options: false,
@@ -84,7 +100,8 @@ describe('axe.configure', function() {
 			checks: [{
 				id: 'bob',
 				options: true,
-				selector: 'pass'
+				selector: 'pass',
+				metadata: 'joe'
 			}]
 		});
 
@@ -92,6 +109,7 @@ describe('axe.configure', function() {
 		assert.equal(axe._audit.checks.bob.id, 'bob');
 		assert.isTrue(axe._audit.checks.bob.options);
 		assert.equal(axe._audit.checks.bob.selector, 'pass');
+		assert.equal(axe._audit.data.checks.bob, 'joe');
 
 	});
 

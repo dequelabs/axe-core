@@ -55,6 +55,13 @@ describe('axe._load', function () {
 		assert.equal(commons, 'foo');
 	});
 
+	it('should define commons on axe', function () {
+		axe._load({
+			commons: 'foo'
+		});
+		assert.equal(axe.commons, 'foo');
+	});
+
 	describe('respondable subscriber', function () {
 		it('should add a respondable subscriber', function () {
 			var mockAudit = {
