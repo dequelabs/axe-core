@@ -7,9 +7,9 @@
     "wcag131"
   ],
   "metadata": {
-    "description": "Ensures that data tables are marked up semantically and have the correct header structure",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/data-table",
-    "help": "Data tables should be marked up properly"
+    "description": "Ensures data tables are marked up semantically and have the correct header structure",
+    "help": "Data tables should be marked up properly",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/data-table"
   },
   "all": [],
   "any": [

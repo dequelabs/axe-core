@@ -7,7 +7,7 @@
     "best-practice"
   ],
   "metadata": {
-    "description": "Ensures all content on the page is contained within a landmark region",
+    "description": "Ensures all content is contained within a landmark region",
     "help": "Content should be contained in a landmark region",
     "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/region"
   },

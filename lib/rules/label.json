@@ -9,9 +9,9 @@
     "section508n"
   ],
   "metadata": {
-    "description": "Ensures every form element has an appropriate label",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/label",
-    "help": "Form elements must have labels"
+    "description": "Ensures every form element has a label",
+    "help": "Form elements must have labels",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/label"
   },
   "all": [],
   "any": [

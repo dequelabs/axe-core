@@ -5,9 +5,9 @@
     "wcag411"
   ],
   "metadata": {
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/aria-valid-attr-value",
-    "description": "Ensures all WAI-ARIA atributes to have valid values",
-    "help": "ARIA attributes must conform to valid values"
+    "description": "Ensures all ARIA attributes have valid values",
+    "help": "ARIA attributes must conform to valid values",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/aria-valid-attr-value"
   },
   "all": [],
   "any": [

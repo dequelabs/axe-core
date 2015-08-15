@@ -6,9 +6,9 @@
     "wcag131"
   ],
   "metadata": {
-    "description": "Ensures that all <input type=\"radio\"> groups have a group and that that group designation is consistent",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/radiogroup",
-    "help": "Radio inputs with the same name attribute value must be part of a group"
+    "description": "Ensures related <input type=\"radio\"> elements have a group and that the group designation is consistent",
+    "help": "Radio inputs with the same name attribute value must be part of a group",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/radiogroup"
   },
   "all": [],
   "any": [
