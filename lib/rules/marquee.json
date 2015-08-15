@@ -8,9 +8,9 @@
     "section508j"
   ],
   "metadata": {
-    "description": "Ensures that the <marquee> element is not used",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/marquee",
-    "help": "<marquee> elements are deprecated and must not be used"
+    "description": "Ensures <marquee> elements are not used",
+    "help": "<marquee> elements are deprecated and must not be used",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/marquee"
   },
   "all": [],
   "any": [],

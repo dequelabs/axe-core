@@ -8,9 +8,9 @@
     "section508a"
   ],
   "metadata": {
-    "description": "Ensures all buttons have a discernible alternate text",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/button-name",
-    "help": "Buttons must have discernible text"
+    "description": "Ensures buttons have discernible text",
+    "help": "Buttons must have discernible text",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/button-name"
   },
   "all": [],
   "any": [

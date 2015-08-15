@@ -8,9 +8,9 @@
     "section508a"
   ],
   "metadata": {
-    "description": "Ensures <video> elements have an audio description",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/video-description",
-    "help": "<video> elements must have an audio description track"
+    "description": "Ensures <video> elements have audio descriptions",
+    "help": "<video> elements must have an audio description track",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/video-description"
   },
   "all": [],
   "any": [],

@@ -7,8 +7,8 @@
   ],
   "metadata": {
     "description": "Ensures each HTML document contains a non-empty <title> element",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/document-title",
-    "help": "Documents must have <title> element to aid in navigation"
+    "help": "Documents must have <title> element to aid in navigation",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/document-title"
   },
   "all": [],
   "any": [

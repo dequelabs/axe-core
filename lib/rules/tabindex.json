@@ -5,9 +5,9 @@
     "best-practice"
   ],
   "metadata": {
-    "description": "Ensures that explicit tabindex attributes that are greater than 0 are not used",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/tabindex",
-    "help": "Elements should not have tabindex greater than zero"
+    "description": "Ensures tabindex attribute values are not greater than 0",
+    "help": "Elements should not have tabindex greater than zero",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/tabindex"
   },
   "all": [],
   "any": [

@@ -6,9 +6,9 @@
     "wcag131"
   ],
   "metadata": {
-    "description": "Ensures that all <input type=\"checkbox\"> groups have a group and that that group designation is consistent",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/checkboxgroup",
-    "help": "Checkbox inputs with the same name attribute value must be part of a group"
+    "description": "Ensures related <input type=\"checkbox\"> elements have a group and that that group designation is consistent",
+    "help": "Checkbox inputs with the same name attribute value must be part of a group",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/checkboxgroup"
   },
   "all": [],
   "any": [

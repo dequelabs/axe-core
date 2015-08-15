@@ -9,8 +9,8 @@
   ],
   "metadata": {
     "description": "Ensures that server-side image maps are not used",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/server-side-image-map",
-    "help": "Server-side image maps must not be used"
+    "help": "Server-side image maps must not be used",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/server-side-image-map"
   },
   "all": [],
   "any": [],

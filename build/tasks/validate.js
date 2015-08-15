@@ -198,7 +198,7 @@ function createSchemas() {
 						type: 'string'
 					},
 					helpUrl: {
-						required: false, //TODO Should be required; but some are missing
+						required: true,
 						type: 'string',
 						format: 'url'
 					},
