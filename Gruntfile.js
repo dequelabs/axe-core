@@ -1,13 +1,7 @@
 //jshint maxcomplexity: 12, maxstatements: false, camelcase: false
-
+var testConfig = require('./build/test/config');
 module.exports = function (grunt) {
 	'use strict';
-
-	function mapToUrl(files, port) {
-		return grunt.file.expand(files).map(function (file) {
-			return 'http://localhost:' + port + '/' + file;
-		});
-	}
 
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-concat');
@@ -216,33 +210,10 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		mocha: {
-			unit: {
-				options: {
-					urls: [
-						'http://localhost:<%= connect.test.options.port %>/test/core/',
-						'http://localhost:<%= connect.test.options.port %>/test/checks/',
-						'http://localhost:<%= connect.test.options.port %>/test/commons/',
-						'http://localhost:<%= connect.test.options.port %>/test/integration/rules/'
-					],
-					run: true,
-					reporter: 'Spec',
-					mocha: {
-						grep: grunt.option('grep')
-					}
-				}
-			},
-			integration: {
-				options: {
-					urls: mapToUrl(['test/integration/full/**/*.html', '!test/integration/full/**/frames/**/*.html'],
-						'<%= connect.test.options.port %>'),
-					run: true,
-					mocha: {
-						grep: grunt.option('grep')
-					}
-				}
-			}
-		},
+		mocha: testConfig(grunt),
+		'test-webdriver': testConfig(grunt, {
+			browser: grunt.option('browser') || 'firefox'
+		}),
 		connect: {
 			test: {
 				options: {
@@ -271,4 +242,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('test', ['build',  'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
+
+	grunt.registerTask('test-browser', ['build',  'testconfig', 'fixture', 'connect',
+		'test-webdriver', 'jshint']);
 };
