@@ -9,5 +9,4 @@ Add your project/integration to this file and submit a pull request.
 5. [axe-selenium-java](https://github.com/dequelabs/axe-selenium-java)
 6. [a11yChromePlugin - not the official Chrome plugin source code](https://github.com/ptrstpp950/a11yChromePlugin)
 7. [grunt-axe-webdriver](https://www.npmjs.com/package/grunt-axe-webdriver)
-8. [R-Spec](https://github.com/dequelabs/axe-matchers)
-9. [Cucumber](https://github.com/dequelabs/axe-matchers)
+8. [R-Spec and Cucumber](https://github.com/dequelabs/axe-matchers)
