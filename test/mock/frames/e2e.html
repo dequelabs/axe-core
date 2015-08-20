@@ -26,6 +26,16 @@
 				}
 			}
 		}],
+		finders: [{
+			id: 'html',
+			source: {
+				run: function (node, options, callback) {
+					callback({
+						href: node.getAttribute('href')
+					});
+				}
+			}
+		}],
 		messages: {}});
 	</script>
 </head>

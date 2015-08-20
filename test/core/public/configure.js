@@ -148,4 +148,37 @@ describe('axe.configure', function() {
 
 	});
 
+	it('should allow for the addition of finders', function () {
+		axe._load({});
+		axe.configure({
+			finders: [{
+				id: 'bob'
+			}]
+		});
+
+		assert.instanceOf(axe._audit.finders.bob, Tool);
+		assert.equal(axe._audit.finders.bob.id, 'bob');
+
+	});
+
+	it('should allow for the overwriting of finders', function () {
+		axe._load({
+			finders: [{
+				id: 'bob',
+				options: false
+			}]
+		});
+		axe.configure({
+			finders: [{
+				id: 'bob',
+				options: true
+			}]
+		});
+
+		assert.instanceOf(axe._audit.finders.bob, Tool);
+		assert.equal(axe._audit.finders.bob.id, 'bob');
+		assert.isTrue(axe._audit.finders.bob.options);
+
+	});
+
 });
