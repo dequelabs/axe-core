@@ -26,6 +26,34 @@
 				}
 			}
 		}],
+		listeners : [{
+			id: 'html',
+			source: {
+				run: function (options, callback) {
+					var input;
+					this.results = [];
+					input = document.querySelector('input');
+					if (input) {
+						this.results = [{
+							node: {
+								element: input,
+								source: '<html></html>',
+								selector: [axe.utils.getSelector(input)]
+							}
+						}];
+					}
+					this.callback = callback;
+				},
+				end: function () {
+					this.callback(this.results);
+				},
+				control: function (callback) {
+					setTimeout(function () {
+						callback();
+					}, 500);
+				}
+			}
+		}],
 		messages: {}});
 	</script>
 </head>
