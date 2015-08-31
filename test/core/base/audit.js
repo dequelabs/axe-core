@@ -214,6 +214,19 @@ describe('Audit', function () {
 					impact: null,
 					nodes: [{
 						node: {
+							selector: ['#fixture'],
+							source: '<div id="fixture"><input type="text" aria-label="monkeys"><div id="monkeys">bananas</div><input aria-labelledby="monkeys" type="text"><blink>FAIL ME</blink></div>'
+						},
+						none: [{
+							id: 'negative1-check1',
+							result: true,
+							data: null,
+							relatedNodes: []
+						}],
+						all: [],
+						any: []
+					}, {
+						node: {
 							selector: ['#monkeys'],
 							source: '<div id="monkeys">bananas</div>'
 						},
