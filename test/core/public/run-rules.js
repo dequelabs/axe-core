@@ -204,6 +204,7 @@ describe('runRules', function () {
 				}
 			}, {
 				id: 'first-div',
+				selector: ':not(#fixture)',
 				evaluate: function (node) {
 					this.relatedNodes([node]);
 					return false;
@@ -299,9 +300,11 @@ describe('runRules', function () {
 
 		axe.a11yCheck($test, function (results) {
 			assert.lengthOf(results.violations, 1);
-			assert.lengthOf(results.violations[0].nodes, 2);
-			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1 > span']);
-			assert.deepEqual(results.violations[0].nodes[1].target, ['#t2 > em']);
+			assert.lengthOf(results.violations[0].nodes, 4);
+			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);
+			assert.deepEqual(results.violations[0].nodes[1].target, ['#t1 > span']);
+			assert.deepEqual(results.violations[0].nodes[2].target, ['#t2']);
+			assert.deepEqual(results.violations[0].nodes[3].target, ['#t2 > em']);
 			done();
 		});
 	});
@@ -326,9 +329,11 @@ describe('runRules', function () {
 		var test = fixture.querySelectorAll('.foo');
 		axe.a11yCheck(test, function (results) {
 			assert.lengthOf(results.violations, 1);
-			assert.lengthOf(results.violations[0].nodes, 2);
-			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1 > span']);
-			assert.deepEqual(results.violations[0].nodes[1].target, ['#t2 > em']);
+			assert.lengthOf(results.violations[0].nodes, 4);
+			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);
+			assert.deepEqual(results.violations[0].nodes[1].target, ['#t1 > span']);
+			assert.deepEqual(results.violations[0].nodes[2].target, ['#t2']);
+			assert.deepEqual(results.violations[0].nodes[3].target, ['#t2 > em']);
 			done();
 		});
 	});
@@ -351,6 +356,7 @@ describe('runRules', function () {
 				}
 			}, {
 				id: 'first-div',
+				selector: ':not(#fixture)',
 				evaluate: function (node) {
 					this.relatedNodes([node]);
 					return false;

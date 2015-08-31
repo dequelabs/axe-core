@@ -66,14 +66,14 @@ describe('Rule', function() {
 						selector: 'div'
 					}),
 					nodes = rule.gather({
-						include: [document.getElementById('fixture')]
+						include: [document.getElementById('fixture').firstChild]
 					});
 
 				assert.deepEqual(nodes, [node]);
 			});
 
 			it('should default to all nodes if selector is not specified', function() {
-				var nodes = [],
+				var nodes = [fixture],
 					node = document.createElement('div');
 
 				fixture.appendChild(node);
@@ -89,7 +89,7 @@ describe('Rule', function() {
 						include: [document.getElementById('fixture')]
 					});
 
-				assert.lengthOf(result, 2);
+				assert.lengthOf(result, 3);
 				assert.sameMembers(result, nodes);
 			});
 			it('should exclude hidden elements', function() {
@@ -97,7 +97,7 @@ describe('Rule', function() {
 
 				var rule = new Rule({}),
 					result = rule.gather({
-						include: [document.getElementById('fixture')]
+						include: [document.getElementById('fixture').firstChild]
 					});
 
 				assert.lengthOf(result, 0);
@@ -109,7 +109,7 @@ describe('Rule', function() {
 						excludeHidden: false
 					}),
 					result = rule.gather({
-						include: [document.getElementById('fixture')]
+						include: [document.getElementById('fixture').firstChild]
 					});
 
 				assert.deepEqual(result, [fixture.firstChild]);
@@ -133,7 +133,7 @@ describe('Rule', function() {
 					});
 
 				rule.run({
-					include: [fixture]
+					include: [div]
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
