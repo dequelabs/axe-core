@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" id="pass1">
+<html lang="en" id="main">
 <head>
 	<title>frame exclude test</title>
 	<meta charset="utf8">
@@ -16,11 +16,11 @@
 	</script>
 </head>
 <body>
-	<div id="frame">
-		<iframe id="frame1" src="frames/level1.html"></iframe>
+	<div id="frame-container">
+		<iframe id="frame" src="frames/level1.html"></iframe>
 	</div>
 	<div id="mocha"></div>
-	<script src="frame-exclude.js"></script>
+	<script src="context.js"></script>
 	<script src="/test/integration/adapter.js"></script>
 </body>
 </html>
