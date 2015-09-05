@@ -117,7 +117,7 @@ describe('runFinder', function () {
           done();
         });
 
-      }, 500);
+      }, 100);
 
     });
   });

@@ -126,7 +126,7 @@ describe('runListener', function () {
           control: function (callback) {
             setTimeout(function () {
               callback();
-            }, 500);
+            }, 50);
           }
         }
       }],
@@ -140,10 +140,10 @@ describe('runListener', function () {
           assert.deepEqual(r[0].node.selector, ['#target', 'body > iframe', 'body > input']);
           setTimeout(function () {
             done();
-          }, 100);
+          }, 1);
         });
 
-      }, 500);
+      }, 10);
 
     });
   });
