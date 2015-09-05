@@ -97,9 +97,6 @@ describe('plugins', function () {
         run: function (id, action, options, callback) {
           this._registry[id][action].call(this._registry[id], options, callback);
         },
-        add: function (impl) {
-          this._registry[impl.id] = impl;
-        },
         commands: [{
           id: 'run-multi',
           callback: function (data, callback) {
