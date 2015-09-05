@@ -86,6 +86,7 @@ describe('plugins', function () {
     afterEach(function () {
       fixture.innerHTML = '';
       axe._audit = null;
+      axe.plugins = {};
     });
     beforeEach(function () {
       axe._load({
@@ -108,6 +109,9 @@ describe('plugins', function () {
       });
       axe.plugins.multi.add({
         id: 'hideall',
+        cleanup: function (done) {
+          done();
+        },
         run: function (options, callback) {
           var frames;
           var q = axe.utils.queue();
@@ -156,6 +160,17 @@ describe('plugins', function () {
             done();
           });
         }, 500);
+      });
+    });
+    it('should call the implementation\'s cleanup function', function (done) {
+      var called = false;
+      axe.plugins.multi.cleanup = function(done) {
+        called = true;
+        done();
+      };
+      axe.plugins.multi.cleanup(function () {
+        assert.ok(called);
+        done();
       });
     });
   });

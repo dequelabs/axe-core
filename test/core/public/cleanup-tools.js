@@ -15,6 +15,7 @@ describe('cleanupTools', function () {
 
   afterEach(function () {
     fixture.innerHTML = '';
+    axe.plugins = {};
   });
 
   beforeEach(function () {
@@ -67,6 +68,29 @@ describe('cleanupTools', function () {
 
     cleanupTools(function () {
       assert.equal(cleaned, 2);
+      done();
+    });
+  });
+
+  it('should call cleanup on all plugins', function (done) {
+    var cleaned = false;
+    axe._load({
+      rules: []
+    });
+    axe.registerPlugin({
+      id: 'p',
+      run: function () {},
+      add: function (impl) {
+        this._registry[impl.id] = impl;
+      },
+      commands: []
+    });
+    axe.plugins.p.cleanup = function (done) {
+      cleaned = true;
+      done();
+    };
+    cleanupTools(function () {
+      assert.equal(cleaned, true);
       done();
     });
   });
