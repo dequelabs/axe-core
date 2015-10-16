@@ -9,7 +9,7 @@
 <script src="../../../lib/core/utils/respondable.js"></script>
 
 <script>
-  utils.respondable.subscribe('axe.ping', function (data, respond) {
+  utils.respondable.subscribe('axe.ping', function (data, keepalive, respond) {
     respond({axe: true});
   });
 </script>

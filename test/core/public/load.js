@@ -93,7 +93,7 @@ describe('axe._load', function () {
 				};
 
 				utils.respondable.subscribe = function (topic, callback) {
-					callback({data: 'iscool', command: 'rules'}, function (response) {
+					callback({data: 'iscool', command: 'rules'}, undefined, function (response) {
 						// ping callback will call this response function
 						assert.ok(response);
 					});
@@ -115,7 +115,7 @@ describe('axe._load', function () {
 				};
 
 				utils.respondable.subscribe = function (topic, callback) {
-					callback({ command: 'rules', context: { include: ['monkeys'] }}, function (response) {
+					callback({ command: 'rules', context: { include: ['monkeys'] }}, undefined, function (response) {
 						assert.ok(response);
 					});
 
@@ -137,7 +137,7 @@ describe('axe._load', function () {
 				};
 
 				utils.respondable.subscribe = function (topic, callback) {
-					callback({ command: 'rules', context: { include: [] }}, function () {});
+					callback({ command: 'rules', context: { include: [] }}, undefined, function () {});
 				};
 				axe._load({
 					rules: []
@@ -168,7 +168,7 @@ describe('axe._load', function () {
 						command: 'run-tool',
 						options: 'apples',
 						selectorArray: ['cats', 'dogs', 'monkeys']
-					}, function (response) {
+					}, undefined, function (response) {
 						// ping callback will call this response function
 						assert.ok(response);
 					});
@@ -197,7 +197,7 @@ describe('axe._load', function () {
 				utils.respondable.subscribe = function (topic, callback) {
 					callback({
 						command: 'cleanup-tool'
-					}, function (response) {
+					}, undefined, function (response) {
 						// ping callback will call this response function
 						assert.ok(response);
 					});
@@ -216,7 +216,7 @@ describe('axe._load', function () {
 			var expected = {data: {include: ['monkeys']}};
 
 			utils.respondable.subscribe = function (topic, callback) {
-				callback({}, function responder(data) {
+				callback({}, undefined, function responder(data) {
 					if (topic === 'axe.start') {
 						assert.equal(data, expected);
 					} else if (topic === 'axe.ping') {

@@ -72,4 +72,5 @@ describe('utils.collectResultsFromFrames', function () {
 		fixture.appendChild(frame);
 
 	});
+
 });
