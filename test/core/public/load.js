@@ -1,4 +1,4 @@
-/* global Rule, Tool, commons */
+/* global Rule, commons */
 describe('axe._load', function () {
 	'use strict';
 
@@ -34,18 +34,6 @@ describe('axe._load', function () {
 		assert.instanceOf(axe._audit.rules[1], Rule);
 		assert.equal(axe._audit.rules[0].id, 'monkeys');
 		assert.equal(axe._audit.rules[1].id, 'bananas');
-	});
-
-	it('should add tools to the Audit', function () {
-		var mockAudit = {
-			tools: [{ id: 'monkeys' }, { id: 'bananas' }]
-		};
-
-		axe._load(mockAudit);
-		assert.instanceOf(axe._audit.tools.monkeys, Tool);
-		assert.instanceOf(axe._audit.tools.bananas, Tool);
-		assert.equal(axe._audit.tools.monkeys.id, 'monkeys');
-		assert.equal(axe._audit.tools.bananas.id, 'bananas');
 	});
 
 	it('should locally define commons', function () {
@@ -147,27 +135,21 @@ describe('axe._load', function () {
 			});
 		});
 
-		describe('given command run-tool', function () {
-			it('should call `runTool`, passing parameter and selectorArray', function (done) {
+		describe('given command cleanup-plugins', function () {
+			it('should call `cleanupPlugins`', function (done) {
 				var mockAudit = {
 					rules: []
 				};
 				var origSub = window.utils.respondable.subscribe;
-				var orig = window.runTool;
-				window.runTool = function (id, selectorArray, options, callback) {
-					assert.equal(id, 'bananas');
-					assert.deepEqual(selectorArray, ['cats', 'dogs', 'monkeys']);
-					assert.equal(options, 'apples');
+				var orig = window.cleanupPlugins;
+				window.cleanupPlugins = function (callback) {
 					assert.isFunction(callback);
 					done();
 				};
 
 				utils.respondable.subscribe = function (topic, callback) {
 					callback({
-						parameter: 'bananas',
-						command: 'run-tool',
-						options: 'apples',
-						selectorArray: ['cats', 'dogs', 'monkeys']
+						command: 'cleanup-plugin'
 					}, undefined, function (response) {
 						// ping callback will call this response function
 						assert.ok(response);
@@ -177,36 +159,7 @@ describe('axe._load', function () {
 				axe._load(mockAudit);
 
 				window.utils.respondable.subscribe = origSub;
-				window.runTool = orig;
-			});
-
-		});
-
-		describe('given command cleanup-tool', function () {
-			it('should call `cleanupTools`', function (done) {
-				var mockAudit = {
-					rules: []
-				};
-				var origSub = window.utils.respondable.subscribe;
-				var orig = window.cleanupTools;
-				window.cleanupTools = function (callback) {
-					assert.isFunction(callback);
-					done();
-				};
-
-				utils.respondable.subscribe = function (topic, callback) {
-					callback({
-						command: 'cleanup-tool'
-					}, undefined, function (response) {
-						// ping callback will call this response function
-						assert.ok(response);
-					});
-
-				};
-				axe._load(mockAudit);
-
-				window.utils.respondable.subscribe = origSub;
-				window.cleanupTools = orig;
+				window.cleanupPlugins = orig;
 			});
 
 		});
@@ -234,55 +187,6 @@ describe('axe._load', function () {
 			window.utils.respondable.subscribe = origSub;
 		});
 
-	});
-
-	describe('style', function () {
-		afterEach(function () {
-			axe._load({});
-		});
-		it('should not throw if not given style', function () {
-			assert.doesNotThrow(function () {
-				axe._load({});
-			});
-		});
-
-		it('should inject a stylesheet', function () {
-			var styles = document.getElementsByTagName('style');
-			var length = styles.length;
-			axe._load({
-				style: '.foo { color: red; }'
-			});
-			assert.lengthOf(styles, length + 1);
-			assert.match(styles[length].textContent || styles[length].styleSheet.cssText,
-				/\.foo[\r\n\s]*?\{[\r\n\s]*color:[\r\n\s]+?red;?[\r\n\s]*?\}[\r\n\s]*?/);
-		});
-
-		it('should remove previously injected sheets if no style is given', function () {
-			var styles = document.getElementsByTagName('style');
-			var length = styles.length;
-			axe._load({
-				style: '.foo { color: red; }'
-			});
-			assert.lengthOf(styles, length + 1);
-			axe._load({});
-			assert.lengthOf(styles, length);
-		});
-
-		it('should replace previously injected styleSheets', function () {
-			var styles = document.getElementsByTagName('style');
-			var length = styles.length;
-			axe._load({
-				style: '.foo { color: red; }'
-			});
-			assert.lengthOf(styles, length + 1);
-			axe._load({
-				style: '.bar { color: red; }'
-			});
-			assert.lengthOf(styles, length + 1);
-			assert.match(styles[length].textContent || styles[length].styleSheet.cssText,
-				/\.bar[\r\n\s]*?\{[\r\n\s]*color:[\r\n\s]*?red;?[\r\n\s]*?\}[\r\n\s]*?/);
-
-		});
 	});
 
 });

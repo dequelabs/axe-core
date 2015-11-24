@@ -1,4 +1,4 @@
-/*global Rule, Check, Tool */
+/*global Rule, Check */
 describe('axe.configure', function() {
 	'use strict';
 
@@ -110,74 +110,6 @@ describe('axe.configure', function() {
 		assert.isTrue(axe._audit.checks.bob.options);
 		assert.equal(axe._audit.checks.bob.selector, 'pass');
 		assert.equal(axe._audit.data.checks.bob, 'joe');
-
-	});
-
-	it('should allow for the addition of tools', function () {
-		axe._load({});
-		axe.configure({
-			tools: [{
-				id: 'bob',
-				options: true
-			}]
-		});
-
-		assert.instanceOf(axe._audit.tools.bob, Tool);
-		assert.equal(axe._audit.tools.bob.id, 'bob');
-		assert.isTrue(axe._audit.tools.bob.options);
-
-	});
-
-	it('should allow for the overwriting of tools', function () {
-		axe._load({
-			tools: [{
-				id: 'bob',
-				options: false
-			}]
-		});
-		axe.configure({
-			tools: [{
-				id: 'bob',
-				options: true
-			}]
-		});
-
-		assert.instanceOf(axe._audit.tools.bob, Tool);
-		assert.equal(axe._audit.tools.bob.id, 'bob');
-		assert.isTrue(axe._audit.tools.bob.options);
-
-	});
-
-	it('should allow for the addition of finders', function () {
-		axe._load({});
-		axe.configure({
-			finders: [{
-				id: 'bob'
-			}]
-		});
-
-		assert.instanceOf(axe._audit.finders.bob, Tool);
-		assert.equal(axe._audit.finders.bob.id, 'bob');
-
-	});
-
-	it('should allow for the overwriting of finders', function () {
-		axe._load({
-			finders: [{
-				id: 'bob',
-				options: false
-			}]
-		});
-		axe.configure({
-			finders: [{
-				id: 'bob',
-				options: true
-			}]
-		});
-
-		assert.instanceOf(axe._audit.finders.bob, Tool);
-		assert.equal(axe._audit.finders.bob.id, 'bob');
-		assert.isTrue(axe._audit.finders.bob.options);
 
 	});
 
