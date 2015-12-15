@@ -75,7 +75,7 @@ describe('runTool', function () {
         id: 'html',
         source: {
           run: function (node, options, callback) {
-            if (node.nodeName !== 'A') {
+            if (node.nodeName.toUpperCase() !== 'A') {
               callback('nope!');
             }
             callback('result!');
