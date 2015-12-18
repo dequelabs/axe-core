@@ -11,6 +11,7 @@
 	1. [API Name: axe.configure](#api-name-axeconfigure)
 	1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
 		1. [Results Object](#results-object)
+	1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
 1. [Section 3: Example Reference](#section-3-example-reference)
 
 ## Section 1: Introduction
@@ -370,6 +371,13 @@ axe.a11yCheck(document, {
   console.log(results);
 });
 ```
+### API Name: axe.registerPlugin
+
+Register a plugin with the aXe plugin system. See [implementing a plugin](plugins.md) for more information on the plugin system
+
+### API Name: axe.cleanup
+
+Call the plugin system's cleanup function. See [implementing a plugin](plugins.md).
 
 
 ## Section 3: Example Reference
