@@ -63,8 +63,8 @@ axe.a11yCheck(document, function (results) {
 The [aXe API](doc/API.md) supports the following browsers:
 
 * Internet Explorer v9, 10, 11
-* Google Chrome v35 and above
-* Mozilla Firefox v24 and above
+* Google Chrome v42 and above
+* Mozilla Firefox v38 and above
 * Apple Safari v7 and above
 
 

@@ -104,50 +104,6 @@ describe('Audit', function () {
 
 	});
 
-	describe('Audit#addTool', function () {
-		it('should override existing tool', function () {
-			var audit = new Audit();
-			audit.addTool({
-				id: 'target',
-				options: 'bob',
-				source: {}
-			});
-			assert.lengthOf(Object.keys(audit.tools), 1);
-			assert.equal(audit.tools.target.options, 'bob');
-
-			audit.addTool({
-				id: 'target',
-				options: 'fred',
-				source: {}
-			});
-
-			assert.lengthOf(Object.keys(audit.tools), 1);
-			assert.equal(audit.tools.target.options, 'fred');
-		});
-		it('should otherwise push new tool', function () {
-			var audit = new Audit();
-			audit.addTool({
-				id: 'target',
-				options: 'bob',
-				source: {}
-			});
-			assert.lengthOf(Object.keys(audit.tools), 1);
-			assert.equal(audit.tools.target.id, 'target');
-			assert.equal(audit.tools.target.options, 'bob');
-
-			audit.addTool({
-				id: 'target2',
-				options: 'fred',
-				source: {}
-			});
-
-			assert.lengthOf(Object.keys(audit.tools), 2);
-			assert.equal(audit.tools.target2.id, 'target2');
-			assert.equal(audit.tools.target2.options, 'fred');
-		});
-
-	});
-
 	describe('Audit#run', function () {
 		it('should run all the rules', function (done) {
 			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
@@ -213,6 +169,19 @@ describe('Audit', function () {
 					pageLevel: false,
 					impact: null,
 					nodes: [{
+						node: {
+							selector: ['#fixture'],
+							source: '<div id="fixture"><input type="text" aria-label="monkeys"><div id="monkeys">bananas</div><input aria-labelledby="monkeys" type="text"><blink>FAIL ME</blink></div>'
+						},
+						none: [{
+							id: 'negative1-check1',
+							result: true,
+							data: null,
+							relatedNodes: []
+						}],
+						all: [],
+						any: []
+					}, {
 						node: {
 							selector: ['#monkeys'],
 							source: '<div id="monkeys">bananas</div>'

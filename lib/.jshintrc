@@ -30,7 +30,7 @@
 	"strict": true,
 	"trailing": true,
 
-	"maxparams": 5,
+	"maxparams": 6,
 	"maxdepth": 5,
 	"maxstatements": 15,
 	"maxcomplexity": 10,
