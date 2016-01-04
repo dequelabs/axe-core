@@ -69,10 +69,12 @@ describe('Audit', function () {
 			var audit = new Audit();
 			audit.addRule({
 				id: 'target',
+				matches: 'hello',
 				selector: 'bob'
 			});
 			assert.lengthOf(audit.rules, 1);
 			assert.equal(audit.rules[0].selector, 'bob');
+			assert.equal(audit.rules[0].matches, 'hello');
 
 			audit.addRule({
 				id: 'target',
@@ -81,6 +83,7 @@ describe('Audit', function () {
 
 			assert.lengthOf(audit.rules, 1);
 			assert.equal(audit.rules[0].selector, 'fred');
+			assert.equal(audit.rules[0].matches, 'hello');
 		});
 		it('should otherwise push new rule', function () {
 			var audit = new Audit();
@@ -102,6 +105,48 @@ describe('Audit', function () {
 			assert.equal(audit.rules[1].selector, 'fred');
 		});
 
+	});
+
+	describe('Audit#addCheck', function () {
+		it('should create a new check', function () {
+			var audit = new Audit();
+			assert.equal(audit.checks.target, undefined);
+			audit.addCheck({
+				id: 'target',
+				selector: 'bob',
+				options: 'jane'
+			});
+			assert.ok(audit.checks.target);
+			assert.equal(audit.checks.target.selector, 'bob');
+		});
+		it('should configure the metadata, if passed', function () {
+			var audit = new Audit();
+			assert.equal(audit.checks.target, undefined);
+			audit.addCheck({
+				id: 'target',
+				metadata: 'bob'
+			});
+			assert.ok(audit.checks.target);
+			assert.equal(audit.data.checks.target, 'bob');
+		});
+		it('should reconfigure existing check', function () {
+			var audit = new Audit();
+			audit.addCheck({
+				id: 'target',
+				selector: 'bob',
+				options: 'jane'
+			});
+			assert.equal(audit.checks.target.selector, 'bob');
+			assert.equal(audit.checks.target.options, 'jane');
+
+			audit.addCheck({
+				id: 'target',
+				selector: 'fred'
+			});
+
+			assert.equal(audit.checks.target.selector, 'fred');
+			assert.equal(audit.checks.target.options, 'jane');
+		});
 	});
 
 	describe('Audit#run', function () {

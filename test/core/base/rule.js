@@ -656,4 +656,95 @@ describe('Rule', function() {
 
 	});
 
+	describe('configure', function () {
+		beforeEach(function () {
+			Rule.prototype._get = function (attr) {
+				return this[attr];
+			};
+		});
+		afterEach(function () {
+			delete Rule.prototype._get;
+		});
+		it('should be a function that takes one argument', function() {
+			assert.isFunction(Rule.prototype.configure);
+			assert.lengthOf(new Rule({}).configure, 1);
+		});
+		it('should NOT override the id', function () {
+			var rule = new Rule({id: 'foo'});
+
+			assert.equal(rule._get('id'), 'foo');
+			rule.configure({id: 'fong'});
+			assert.equal(rule._get('id'), 'foo');
+		});
+		it('should NOT override a random property', function () {
+			var rule = new Rule({id: 'foo'});
+
+			rule.configure({fong: 'fong'});
+			assert.equal(rule._get('fong'), undefined);
+		});
+		it('should override the selector', function () {
+			var rule = new Rule({selector: 'foo'});
+
+			assert.equal(rule._get('selector'), 'foo');
+			rule.configure({selector: 'fong'});
+			assert.equal(rule._get('selector'), 'fong');
+		});
+		it('should override excludeHidden', function () {
+			var rule = new Rule({excludeHidden: false});
+
+			assert.equal(rule._get('excludeHidden'), false);
+			rule.configure({excludeHidden: true});
+			assert.equal(rule._get('excludeHidden'), true);
+		});
+		it('should override enabled', function () {
+			var rule = new Rule({enabled: false});
+
+			assert.equal(rule._get('enabled'), false);
+			rule.configure({enabled: true});
+			assert.equal(rule._get('enabled'), true);
+		});
+		it('should override pageLevel', function () {
+			var rule = new Rule({pageLevel: false});
+
+			assert.equal(rule._get('pageLevel'), false);
+			rule.configure({pageLevel: true});
+			assert.equal(rule._get('pageLevel'), true);
+		});
+		it('should override any', function () {
+			var rule = new Rule({any: ['one', 'two']});
+
+			assert.deepEqual(rule._get('any'), ['one', 'two']);
+			rule.configure({any: []});
+			assert.deepEqual(rule._get('any'), []);
+		});
+		it('should override all', function () {
+			var rule = new Rule({all: ['one', 'two']});
+
+			assert.deepEqual(rule._get('all'), ['one', 'two']);
+			rule.configure({all: []});
+			assert.deepEqual(rule._get('all'), []);
+		});
+		it('should override none', function () {
+			var rule = new Rule({none: ['none', 'two']});
+
+			assert.deepEqual(rule._get('none'), ['none', 'two']);
+			rule.configure({none: []});
+			assert.deepEqual(rule._get('none'), []);
+		});
+		it('should override tags', function () {
+			var rule = new Rule({tags: ['tags', 'two']});
+
+			assert.deepEqual(rule._get('tags'), ['tags', 'two']);
+			rule.configure({tags: []});
+			assert.deepEqual(rule._get('tags'), []);
+		});
+		it('should override matches', function () {
+			var rule = new Rule({matches: 'matches'});
+
+			assert.deepEqual(rule._get('matches'), 'matches');
+			rule.configure({matches: 'does not match'});
+			assert.deepEqual(rule._get('matches'), 'does not match');
+		});
+	});
+
 });
