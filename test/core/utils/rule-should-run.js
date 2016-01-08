@@ -143,4 +143,39 @@ describe('utils.ruleShouldRun', function () {
 
 	});
 
+	it('should use option.rules.enabled over option.runOnly tags', function () {
+		assert.isTrue(utils.ruleShouldRun({
+			id: 'bananas',
+			enabled: true,
+			tags: ['fruit']
+		}, {}, {
+			rules: {
+				bananas: {
+					enabled: true
+				}
+			},
+			runOnly: {
+				type: 'tag',
+				values: ['meat']
+			}
+		}));
+
+		assert.isFalse(utils.ruleShouldRun({
+			id: 'bananas',
+			enabled: true,
+			tags: ['fruit']
+		}, {}, {
+			rules: {
+				bananas: {
+					enabled: false
+				}
+			},
+			runOnly: {
+				type: 'tag',
+				values: ['fruit']
+			}
+		}));
+
+	});
+
 });
