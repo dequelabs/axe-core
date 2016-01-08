@@ -70,7 +70,6 @@ describe('accesskeys', function () {
 			assert.equal(result[0].data, 'A');
 			assert.lengthOf(result[0].relatedNodes, 1);
 			assert.equal(result[0].relatedNodes[0], 'fred');
-
 		});
 	});
 
