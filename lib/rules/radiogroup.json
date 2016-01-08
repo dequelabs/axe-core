@@ -4,6 +4,8 @@
   "tags": [
     "wcag2a",
     "wcag131"
+    "section508",
+    "section508d"
   ],
   "metadata": {
     "description": "Ensures related <input type=\"radio\"> elements have a group and that the group designation is consistent",

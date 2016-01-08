@@ -3,7 +3,9 @@
   "selector": "blink",
   "tags": [
     "wcag2a",
-    "wcag222"
+    "wcag222",
+    "section508",
+    "section508j"
   ],
   "metadata": {
     "description": "Ensures <blink> elements are not used",

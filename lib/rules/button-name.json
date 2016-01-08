@@ -5,7 +5,7 @@
     "wcag2a",
     "wcag412",
     "section508",
-    "section508a"
+    "section508n"
   ],
   "metadata": {
     "description": "Ensures buttons have discernible text",
