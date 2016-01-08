@@ -25,8 +25,6 @@ describe('aria-valid-attr-value', function () {
 
 		assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, node));
 		assert.isNull(checkContext._data);
-
-
 	});
 
 	it('should return true if all values are valid', function () {
@@ -35,6 +33,7 @@ describe('aria-valid-attr-value', function () {
 		node.tabIndex = 1;
 		node.setAttribute('aria-selected', 'true');
 		node.setAttribute('aria-checked', 'true');
+		node.setAttribute('aria-relevant', 'additions removals');
 		fixture.appendChild(node);
 
 		assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, node));
