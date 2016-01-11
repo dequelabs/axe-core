@@ -256,6 +256,14 @@ describe('Context', function() {
 
 		});
 
+		it('should throw when no elements match the context', function () {
+			fixture.innerHTML = '<div id="foo"></div>';
+			assert.throws(function () {
+				var ctxt;
+				ctxt = new Context('div#bar');
+			}, Error, 'No elements found for include in Context');
+		});
+
 	});
 
 	describe('object definition', function() {
@@ -342,7 +350,7 @@ describe('Context', function() {
 			var spec = document.implementation.createHTMLDocument('ie is dumb');
 			spec.hasOwnProperty = undefined;
 			var result = new Context(spec);
-			
+
 			assert.lengthOf(result.include, 1);
 			assert.equal(result.include[0], spec);
 
