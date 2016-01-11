@@ -284,10 +284,10 @@ describe('Context', function() {
 		it('should disregard bad input, non-matching selectors', function() {
 
 			assert.deepEqual(new Context({
-				include: ['#monkeys'],
+				include: ['#fixture', '#monkeys'],
 				exclude: ['#bananas']
 			}), {
-				include: [],
+				include: [document.getElementById('fixture')],
 				exclude: [],
 				initiator: true,
 				page: false,
