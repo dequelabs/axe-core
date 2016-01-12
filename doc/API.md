@@ -308,7 +308,7 @@ The options parameter is flexible way to configure how `a11yCheck` operates. The
 
 	This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `ruleId3`. No other rule will run.
 
-2. Run all enabled Rules except for a list of rules
+3. Run all enabled Rules except for a list of rules
 
 	The default operation for a11yCheck is to run all WCAG 2.0 Level A and Level AA rules. If certain rules should be disabled from being run, specify `options` as:
 	```javascript
@@ -321,6 +321,24 @@ The options parameter is flexible way to configure how `a11yCheck` operates. The
 	```
 
 	This example will disable the rules with the id of `color-contrast` and `valid-lang`. All other rules will run. The list of valid rule IDs is specified in the section below.
+
+4. Run a modified set or rules using tags and rule enable
+	
+	By combining runOnly with type: tags and the rules option, a modified set can be defined. This lets you include rules with unspecified tags, and exclude rules that do have the specified tag(s).
+	```javascript
+	{
+	  runOnly: {
+	    type: "tag",
+	    values: ["wcag2a"]
+	  },
+	  "rules": {
+	    "color-contrast": { enabled: true },
+	    "valid-lang": { enabled: false }
+	  }
+	}
+	```
+
+	This example includes all level A rules except for valid-lang, and in addition will include the level AA color-contrast rule.
 
 ##### C. Callback Parameter
 
