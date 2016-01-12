@@ -320,7 +320,7 @@ The options parameter is flexible way to configure how `a11yCheck` operates. The
 	}
 	```
 
-	This example will disable the rules with the id of `ruleId1` and `ruleId2`. All other rules will run. The list of valid rule IDs is specified in the section below.
+	This example will disable the rules with the id of `color-contrast` and `valid-lang`. All other rules will run. The list of valid rule IDs is specified in the section below.
 
 ##### C. Callback Parameter
 
