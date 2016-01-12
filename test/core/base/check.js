@@ -52,6 +52,98 @@ describe('Check', function () {
 			});
 		});
 
+		describe('configure', function () {
+			it('should accept one parameter', function () {
+				assert.lengthOf(new Check({}).configure, 1);
+			});
+			it('should override options', function () {
+				Check.prototype.test = function () {
+					return this.options;
+				};
+				var check = new Check({
+					options: ['foo']
+				});
+				check.configure({options: 'fong'});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should override selector', function () {
+				Check.prototype.test = function () {
+					return this.selector;
+				};
+				var check = new Check({
+					selector: 'foo'
+				});
+				check.configure({selector: 'fong'});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should override evaluate', function () {
+				Check.prototype.test = function () {
+					return this.evaluate;
+				};
+				var check = new Check({
+					evaluate: 'foo'
+				});
+				check.configure({evaluate: 'fong'});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should override matches', function () {
+				Check.prototype.test = function () {
+					return this.matches;
+				};
+				var check = new Check({
+					matches: 'foo'
+				});
+				check.configure({matches: 'fong'});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should override after', function () {
+				Check.prototype.test = function () {
+					return this.after;
+				};
+				var check = new Check({
+					after: 'foo'
+				});
+				check.configure({after: 'fong'});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should override enabled', function () {
+				Check.prototype.test = function () {
+					return this.enabled;
+				};
+				var check = new Check({
+					enabled: true
+				});
+				check.configure({enabled: false});
+				assert.equal(false, check.test());
+				delete Check.prototype.test;
+			});
+			it('should NOT override id', function () {
+				Check.prototype.test = function () {
+					return this.id;
+				};
+				var check = new Check({
+					id: 'fong'
+				});
+				check.configure({id: 'foo'});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should NOT override any random property', function () {
+				Check.prototype.test = function () {
+					return this.random;
+				};
+				var check = new Check({});
+				check.configure({random: 'foo'});
+				assert.equal(undefined, check.test());
+				delete Check.prototype.test;
+			});
+		});
+
 		describe('run', function () {
 			it('should accept 3 parameters', function () {
 				assert.lengthOf(new Check({}).run, 3);

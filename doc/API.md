@@ -106,7 +106,10 @@ User specifies the format of the JSON structure passed to the callback of `axe.a
 #### Synopsis
 
 ```javascript
-axe.configure({ reporter: "option" });
+axe.configure({
+	reporter: "option",
+	checks: [Object],
+	rules: [Object]});
 ```
 
 #### Parameters
@@ -115,6 +118,28 @@ axe.configure({ reporter: "option" });
   * `reporter` - Used to set the output format that the axe.a11yCheck function will pass to the callback function
      * `v1` to use the previous version's format: `axe.configure({ reporter: "v1" });`
      * `v2` to use the current version's format: `axe.configure({ reporter: "v2" });`
+  * `checks` - Used to add checks to the list of checks used by rules, or to override the properties of existing checks
+  	 * The checks attribute is an array of check objects
+  	 * Each check object can contain the following attributes
+  	 	 * `id` - string(required). This uniquely identifies the check. If the check already exists, this will result in any supplied check properties being overridden. The properties below that are marked required if new are optional when the check is being overridden.
+  	 	 * `evaluate` - function(required for new). This is the function that implements the check's functionality.
+  	 	 * `after` - function(optional). This is the function that gets called for checks that operate on a page-level basis, to process the results from the iframes.
+  	 	 * `options` - mixed(optional). This is the options structure that is passed to the evaluate function and is intended to be used to configure checks. It is the most common property that is intended to be overridden for existing checks.
+  	 	 * `matches` - string(optional). This string will filter the nodes that are passed into the evaluate function. It is a CSS selector.
+  	 	 * `enabled` - boolean(optional, default `true`). This is used to indicate whether the check is on or off by default. Checks that are off are not evaluated, even when included in a rule. Overriding this is a common way to disable a particular check across multiple rules.
+  * `rules` - Used to add rules to the existing set of rules, or to override the properties of existing rules
+  	 * The rules attribute is an Array of rule objects
+  	 * each rule object can contain the following attributes
+  	 	 * `id` - string(required). This uniquely identifies the rule. If the rule already exists, it will be overridden with any of the attributes supplied. The attributes below that are marked required, are only required for new rules.
+  	 	 * `selector` - string(optional, default `*`). A CSS selector used to identify the elements that are passed into the rule for evaluation.
+  	 	 * `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
+  	 	 * `enabled` - boolean(optional, default `true`). Whether the rule is turned on. This is a common attribute for overriding.
+  	 	 * `pageLevel` - boolean(optional, default `false`). This indicates whether the page operates only when the scope is the entire page. An example of a rule like this is the skip link rule. It is not recommended to override this property unless also changing the implementation.
+  	 	 * `any` -  array(optional, default `[]`). This is the list of checks that must all "pass" or else there is a violation.
+  	 	 * `all` - array(optional, default `[]`). This is the list of checks that, if any "fails", will generate a violation.
+  	 	 * `none` - array(optional, default `[]`). This is a list of the checks that, if none "pass", will generate a violation.
+  	 	 * `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. In practice, you must supply some valid tags or the default evaluation will not invoke the rule. The convention is to include the standard (WCAG 2 and/or section 508), the WCAG 2 level, Section 508 paragraph, and the WCAG 2 success criteria. Tags are constructed by converting all letters to lower case, removing spaces and periods and concatinating the result. E.g. WCAG 2 A success criteria 1.1.1 would become ["wcag2a", "wcag111"]
+  	 	 * `matches` - string(optional, default `*`). A filtering CSS selector that will exclude elements that do not match the CSS selector.
 
 **Returns:** Nothing
 
@@ -283,7 +308,7 @@ The options parameter is flexible way to configure how `a11yCheck` operates. The
 
 	This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `ruleId3`. No other rule will run.
 
-2. Run all enabled Rules except for a list of rules
+3. Run all enabled Rules except for a list of rules
 
 	The default operation for a11yCheck is to run all WCAG 2.0 Level A and Level AA rules. If certain rules should be disabled from being run, specify `options` as:
 	```javascript
@@ -296,6 +321,24 @@ The options parameter is flexible way to configure how `a11yCheck` operates. The
 	```
 
 	This example will disable the rules with the id of `color-contrast` and `valid-lang`. All other rules will run. The list of valid rule IDs is specified in the section below.
+
+4. Run a modified set or rules using tags and rule enable
+	
+	By combining runOnly with type: tags and the rules option, a modified set can be defined. This lets you include rules with unspecified tags, and exclude rules that do have the specified tag(s).
+	```javascript
+	{
+	  runOnly: {
+	    type: "tag",
+	    values: ["wcag2a"]
+	  },
+	  "rules": {
+	    "color-contrast": { enabled: true },
+	    "valid-lang": { enabled: false }
+	  }
+	}
+	```
+
+	This example includes all level A rules except for valid-lang, and in addition will include the level AA color-contrast rule.
 
 ##### C. Callback Parameter
 
