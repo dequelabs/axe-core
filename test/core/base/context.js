@@ -260,8 +260,33 @@ describe('Context', function() {
 			fixture.innerHTML = '<div id="foo"></div>';
 			assert.throws(function () {
 				var ctxt;
-				ctxt = new Context('div#bar');
+				ctxt = new Context('#notAnElement');
 			}, Error, 'No elements found for include in Context');
+		});
+
+		it('should throw when frame content can\'t be found', function (done) {
+			fixture.innerHTML = '<div id="outer"></div>';
+			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function() {
+				assert.throws(function () {
+					var ctxt;
+					ctxt = new Context([
+						['#target', '#notAnElement']
+					]);
+				});
+				done();
+			});
+		});
+
+		it('should throw when frame could not be found', function (done) {
+			fixture.innerHTML = '<div id="outer"></div>';
+			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function() {
+				assert.throws(function () {
+					var ctxt;
+					ctxt = new Context(['#notAFrame', '#foo']);
+				});
+				done();
+			});
+
 		});
 
 	});
