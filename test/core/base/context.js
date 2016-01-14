@@ -264,17 +264,17 @@ describe('Context', function() {
 			}, Error, 'No elements found for include in Context');
 		});
 
-		it('should throw when frame content can\'t be found', function (done) {
-			fixture.innerHTML = '<div id="outer"></div>';
-			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function() {
-				assert.throws(function () {
-					var ctxt;
-					ctxt = new Context([
-						['#target', '#notAnElement']
-					]);
-				});
-				done();
-			});
+		it('returns an empty context when no element is found inside a frame', function () {
+			var isInFrame = utils.respondable.isInFrame;
+			utils.respondable.isInFrame = function () {
+				return true;
+			};
+
+			fixture.innerHTML = '<div id="foo"></div>';
+			var result = new Context('#notAnElement');
+			assert.deepEqual(result.include, []);
+
+			utils.respondable.isInFrame = isInFrame;
 		});
 
 		it('should throw when frame could not be found', function (done) {
