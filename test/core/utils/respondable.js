@@ -176,6 +176,17 @@ describe('utils.respondable', function () {
 
 	});
 
+	it('uses respondable.isInFrame() to check if the page is in a frame or not', function() {
+		assert.equal(utils.respondable.isInFrame(), !!window.frameElement);
+
+		assert.isFalse(utils.respondable.isInFrame({
+			frameElement: null
+		}));
+		assert.isTrue(utils.respondable.isInFrame({
+			frameElement: document.createElement('iframe')
+		}));
+	});
+
 	describe('subscribe', function () {
 		it('should be a function', function () {
 			assert.isFunction(utils.respondable.subscribe);
