@@ -2,9 +2,6 @@
   "id": "meta-viewport",
   "selector": "meta[name=\"viewport\"]",
   "excludeHidden": false,
-  "options": {
-    "scaleMinimum": 2
-  },
   "tags": [
     "wcag2aa",
     "wcag144"

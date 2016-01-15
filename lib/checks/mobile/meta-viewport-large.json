@@ -1,0 +1,14 @@
+{
+  "id": "meta-viewport-large",
+  "evaluate": "meta-viewport-scale.js",
+  "options": {
+  	"scaleMinimum": 5
+  },
+  "metadata": {
+    "impact": "minor",
+    "messages": {
+      "pass": "<meta> tag does not prevent significant zooming",
+      "fail": "<meta> tag limits zooming"
+    }
+  }
+}
