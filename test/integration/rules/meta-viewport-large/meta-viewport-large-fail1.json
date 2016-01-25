@@ -1,5 +1,5 @@
 {
-	"description": "meta-viewport-large fail test",
+	"description": "meta-viewport-large fail test 1",
 	"rule": "meta-viewport-large",
 	"violations": [["#mvp"]]
 }
