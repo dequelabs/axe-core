@@ -78,8 +78,17 @@ describe('text.accessibleText', function() {
 			'<span aria-hidden="true">secret</span></div>'+
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t1" aria-labelledby="t1label">';
+
 		var target = fixture.querySelector('#t1');
  		assert.equal(commons.text.accessibleText(target), 'This is a hidden secret');
+	});
+
+	it('should allow setting the initial inLabelledbyContext value', function () {
+		fixture.innerHTML = '<label id="lbl1" style="display:none;">hidden label</label>';
+
+		var target = fixture.querySelector('#lbl1');
+ 		assert.equal(commons.text.accessibleText(target, false), '');
+ 		assert.equal(commons.text.accessibleText(target, true), 'hidden label');
 	});
 
 	it('should use aria-label if present with no labelledby', function() {
