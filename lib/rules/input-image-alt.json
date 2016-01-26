@@ -16,7 +16,8 @@
   "any": [
     "non-empty-alt",
     "aria-label",
-    "aria-labelledby"
+    "aria-labelledby",
+    "non-empty-title"
   ],
   "none": []
 }
