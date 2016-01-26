@@ -72,6 +72,16 @@ describe('text.accessibleText', function() {
 		assert.equal(commons.text.accessibleText(target), 'ARIA Label This is a label');
 	});
 
+	it('should include hidden text referred to with aria-labelledby', function () {
+		fixture.innerHTML = '<div id="t1label" style="display:none">This is a ' +
+			'<span style="visibility:hidden">hidden </span>' +
+			'<span aria-hidden="true">secret</span></div>'+
+			'<label for="t1">HTML Label</label>' +
+			'<input type="text" id="t1" aria-labelledby="t1label">';
+		var target = fixture.querySelector('#t1');
+ 		assert.equal(commons.text.accessibleText(target), 'This is a hidden secret');
+	});
+
 	it('should use aria-label if present with no labelledby', function() {
 		fixture.innerHTML = '<div id="t2label">This is <input type="text" value="the value" ' +
 			'aria-label="ARIA Label" id="t1"> of <i>everything</i></div>' +
