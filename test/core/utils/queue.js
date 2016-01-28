@@ -80,25 +80,94 @@ describe('utils.queue', function () {
 			assert.isFunction(q.abort);
 		});
 
-		it('should remove the `then` callback and pass all tasks as they are', function (done) {
+
+		it('stops `then` from being called', function (done) {
 			var q = utils.queue();
 
-			q.defer(function (callback) {
+			q.defer(function (resolve) {
 				setTimeout(function () {
-					callback(true);
-				}, 1);
+					assert.ok(true, 'will run');
+					resolve();
+				}, 100);
+			});
+
+			q.defer(function (resolve) {
+				assert.ok(false, 'should not run');
+				resolve();
 			});
 
 			q.then(function () {
-				assert.ok(false, 'should not execute');
-			});
+				assert.ok(false, 'should not run either');
 
-			q.abort(function (data) {
-				assert.ok(true, 'Queue aborted');
-				assert.isFunction(data[0][0]);
+			});
+			q.catch(function (e) {});
+
+			setTimeout(function () {
+				var unfinished = q.abort();
+				assert.equal(unfinished.length, 2);
+				assert.isFunction(unfinished[0]);
+				assert.isFunction(unfinished[1]);
+				done();
+			}, 1);
+		});
+
+		it('sends a message to `catch`', function (done) {
+			var q = utils.queue();
+			q.defer(function () {});
+
+			q.then(function () {});
+			q.catch(function (err) {
+				assert.equal(err, 'Super sheep');
 				done();
 			});
 
+			q.abort('Super sheep');
+		});
+
+	});
+
+	describe('catch', function () {
+		it('is called when defer throws an error', function (done) {
+			var q = utils.queue();
+			q.defer(function () {
+				throw 'error! 1';
+			});
+
+			q.catch(function (e) {
+				assert.equal(e, 'error! 1');
+				done();
+			});
+		});
+
+		it('is called when the reject method is called', function (done) {
+			var q = utils.queue();
+			var errorsCaught = 0;
+
+			q.defer(function (resolve, reject) {
+				setTimeout(function () {
+					reject('error! 2');
+				}, 1);
+			});
+
+			q.catch(function (e) {
+				assert.equal(e, 'error! 2');
+				errorsCaught += 1;
+				done();
+			});
+		});
+
+		it('will not run `then` if an error is thrown', function (done) {
+			var q = utils.queue();
+			q.defer(function () {
+				throw 'error! 3';
+
+			}).then(function () {
+				assert.ok(false, 'Should not be called');
+
+			}).catch(function (e) {
+				assert.equal(e, 'error! 3');
+				done();
+			});
 		});
 
 	});
