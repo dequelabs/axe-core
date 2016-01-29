@@ -14,15 +14,15 @@ describe('utils.queue', function () {
 		it('should push onto the "utils.queue"', function (done) {
 			var q = utils.queue();
 
-			q.defer(function (callback) {
+			q.defer(function (resolve) {
 				setTimeout(function () {
-					callback(1);
+					resolve(1);
 				}, 0);
 			});
 
-			q.defer(function (callback) {
+			q.defer(function (resolve) {
 				setTimeout(function () {
-					callback(2);
+					resolve(2);
 				}, 0);
 			});
 
@@ -32,16 +32,16 @@ describe('utils.queue', function () {
 			});
 		});
 
-		it('should execute callback immediately if defered functions are already complete', function () {
+		it('should execute resolve immediately if defered functions are already complete', function () {
 			var q = utils.queue(),
 				complete = false;
 
-			q.defer(function (callback) {
-				callback(1);
+			q.defer(function (resolve) {
+				resolve(1);
 			});
 
-			q.defer(function (callback) {
-				callback(2);
+			q.defer(function (resolve) {
+				resolve(2);
 			});
 
 			q.then(function (data) {
@@ -86,29 +86,22 @@ describe('utils.queue', function () {
 
 			q.defer(function (resolve) {
 				setTimeout(function () {
-					assert.ok(true, 'will run');
-					resolve();
+					resolve(true);
 				}, 100);
 			});
 
-			q.defer(function (resolve) {
-				assert.ok(false, 'should not run');
-				resolve();
-			});
-
 			q.then(function () {
-				assert.ok(false, 'should not run either');
-
+				assert.ok(false, 'should not execute');
 			});
-			q.catch(function (e) {});
+			q.catch(function () {});
 
 			setTimeout(function () {
-				var unfinished = q.abort();
-				assert.equal(unfinished.length, 2);
-				assert.isFunction(unfinished[0]);
-				assert.isFunction(unfinished[1]);
+				var data = q.abort();
+				assert.ok(true, 'Queue aborted');
+				assert.isFunction(data[0]);
 				done();
 			}, 1);
+
 		});
 
 		it('sends a message to `catch`', function (done) {
@@ -139,6 +132,21 @@ describe('utils.queue', function () {
 			});
 		});
 
+		it('can catch error synchronously', function (done) {
+			var q = utils.queue();
+			var sync = true;
+			q.defer(function () {
+				throw 'error! 2';
+			});
+
+			q.catch(function (e) {
+				assert.equal(e, 'error! 2');
+				assert.ok(sync, 'error caught in sync');
+				done();
+			});
+			sync = false;
+		});
+
 		it('is called when the reject method is called', function (done) {
 			var q = utils.queue();
 			var errorsCaught = 0;
@@ -160,11 +168,11 @@ describe('utils.queue', function () {
 			var q = utils.queue();
 			q.defer(function () {
 				throw 'error! 3';
+			});
 
-			}).then(function () {
+			q.then(function () {
 				assert.ok(false, 'Should not be called');
-
-			}).catch(function (e) {
+			});.catch(function (e) {
 				assert.equal(e, 'error! 3');
 				done();
 			});
