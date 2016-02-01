@@ -326,7 +326,7 @@ describe('Check', function () {
 
 			});
 
-			it('should return a result', function (done) {
+			it('passes a result to the callback', function (done) {
 
 				new Check({
 					evaluate: function () {
@@ -339,6 +339,52 @@ describe('Check', function () {
 				});
 
 			});
+
+			describe('returned queue', function () {
+
+				it('has valid methods', function () {
+					var testCheck = new Check({
+						evaluate: function () {
+							return true;
+						}
+					});
+
+					var q = testCheck.run(fixture, {});
+					assert.isFunction (q.defer);
+					assert.isFunction (q.then);
+					assert.isFunction (q.catch);
+				});
+
+				it('calls `then` when check is finished', function (done) {
+					var testCheck = new Check({
+						evaluate: function () {
+							return true;
+						}
+					});
+
+					var q = testCheck.run(fixture, {});
+					q.then(function () {
+						assert.ok(true, '`then` was called');
+						done();
+					});
+				});
+
+				it('calls `catch` when check throws', function (done) {
+					new Check({
+						evaluate: function () {
+							throw 'error!';
+						}
+
+					}).run(fixture, {})
+					.catch(function (err) {
+						assert.isEqual(err, 'error!');
+						done();
+					});
+
+				});
+
+			});
+
 		});
 	});
 
