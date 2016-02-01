@@ -172,7 +172,8 @@ describe('utils.queue', function () {
 
 			q.then(function () {
 				assert.ok(false, 'Should not be called');
-			});.catch(function (e) {
+			});
+			q.catch(function (e) {
 				assert.equal(e, 'error! 3');
 				done();
 			});

@@ -229,13 +229,39 @@ describe('Check', function () {
 				var data = { monkeys: 'bananas' };
 				new Check({
 					evaluate: function () {
-						this.async()(data);
+						var ready = this.async();
+						setTimeout(function () {
+							ready(data);
+						}, 10);
 					}
 				}).run(fixture, {}, function (d) {
 					assert.instanceOf(d, CheckResult);
 					assert.deepEqual(d.value, data);
 					done();
 				});
+
+			});
+			it('should allow for asynchronous checks through a queue', function (done) {
+				var data = { monkeys: 'bananas' };
+				var ck = new Check({
+					evaluate: function () {
+						this.defer(function (resolve) {
+							setTimeout(function () {
+								resolve(data);
+							}, 10);
+						});
+					}
+				});
+				var q = ck.run(fixture, {});
+
+				q.then(function (d) {
+					console.log(d);
+					assert.instanceOf(d[0], CheckResult);
+					assert.deepEqual(d[0].value, data);
+					done();
+				});
+				q.catch(console.error.bind(console));
+
 
 			});
 
@@ -271,58 +297,6 @@ describe('Check', function () {
 					assert.isNull(data);
 					done();
 				});
-
-			});
-
-			it('should not throw, but add any raised error as `error` on the returned object', function (done) {
-
-				var error = new Error('oh noes');
-				var orig = axe.log;
-				axe.log = function (msg, stack) {
-					assert.equal(msg, error.message);
-					assert.equal(stack, error.stack);
-
-					axe.log = orig;
-					done();
-				};
-				assert.doesNotThrow(function () {
-
-					new Check({
-						evaluate: function () {
-							throw error;
-						}
-					}).run(fixture, {}, function (result) {
-						assert.isNull(result);
-					});
-
-				});
-
-			});
-
-			it('should not throw, but pass any raised error as the first parameter to callback - async', function (done) {
-
-				var error = new Error('oh noes');
-				var orig = axe.log;
-				axe.log = function (msg, stack) {
-					assert.equal(msg, error.message);
-					assert.equal(stack, error.stack);
-
-					axe.log = orig;
-					done();
-				};
-				assert.doesNotThrow(function () {
-
-					new Check({
-						evaluate: function () {
-							this.async();
-							throw error;
-						}
-					}).run(fixture, {}, function (result) {
-						assert.isNull(result);
-					});
-
-				});
-
 
 			});
 
@@ -377,7 +351,7 @@ describe('Check', function () {
 
 					}).run(fixture, {})
 					.catch(function (err) {
-						assert.isEqual(err, 'error!');
+						assert.equal(err, 'error!');
 						done();
 					});
 
