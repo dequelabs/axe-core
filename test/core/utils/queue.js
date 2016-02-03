@@ -74,6 +74,23 @@ describe('utils.queue', function () {
 			});
 		});
 
+		it('can await another queue', function (done) {
+			var q1 = utils.queue();
+			var q2 = utils.queue();
+
+			q1.defer(function (resolve) {
+				setTimeout(function () {
+					resolve(123);
+				}, 10);
+			});
+
+			q2.defer(q1);
+			q2.then(function (res) {
+				// unwrap both queue results
+				assert.equal(res[0][0], 123);
+				done();
+			});
+		});
 	});
 
 	describe('then', function () {
