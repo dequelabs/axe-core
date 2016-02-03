@@ -137,6 +137,7 @@ describe('aria.validateAttrValue', function () {
 			it('should validate against enumerated .values if present', function () {
 				commons.aria._lut.attributes = {
 					cats: {
+						type: 'nmtoken',
 						values: ['valid']
 					}
 				};
@@ -153,6 +154,7 @@ describe('aria.validateAttrValue', function () {
 			it('should be case-insensitive for enumerated values', function () {
 				commons.aria._lut.attributes = {
 					cats: {
+						type: 'nmtoken',
 						values: ['valid']
 					}
 				};
@@ -165,6 +167,7 @@ describe('aria.validateAttrValue', function () {
 			it('should reject empty strings', function () {
 				commons.aria._lut.attributes = {
 					cats: {
+						type: 'nmtoken',
 						values: ['valid']
 					}
 				};
