@@ -53,6 +53,27 @@ describe('utils.queue', function () {
 
 		});
 
+		it('is chainable', function () {
+			var q = utils.queue();
+			assert.equal(q, q.defer(function () {}));
+		});
+
+		it('throws if then was already called', function () {
+			assert.throws(function () {
+
+				var q = utils.queue();
+				q.defer(function (resolve) {
+					resolve();
+				});
+
+				q.then(function () { });
+
+				q.defer(function (resolve) {
+					resolve();
+				});
+			});
+		});
+
 	});
 
 	describe('then', function () {
@@ -70,6 +91,20 @@ describe('utils.queue', function () {
 			});
 
 			assert.isTrue(result);
+		});
+
+		it('is chainable', function () {
+			var q = utils.queue();
+			assert.equal(q, q.then(function () {}));
+		});
+
+		it('throws when called more than once', function () {
+			assert.throws(function () {
+				var q = utils.queue();
+				q.defer(function () {});
+				q.then(function () {});
+				q.then(function () {});
+			});
 		});
 
 	});
@@ -176,6 +211,20 @@ describe('utils.queue', function () {
 			q.catch(function (e) {
 				assert.equal(e, 'error! 3');
 				done();
+			});
+		});
+
+		it('is chainable', function () {
+			var q = utils.queue();
+			assert.equal(q, q.catch(function () {}));
+		});
+
+		it('throws when called more than once', function () {
+			assert.throws(function () {
+				var q = utils.queue();
+				q.defer(function () {});
+				q.catch(function () {});
+				q.catch(function () {});
 			});
 		});
 
