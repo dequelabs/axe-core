@@ -255,13 +255,10 @@ describe('Check', function () {
 				var q = ck.run(fixture, {});
 
 				q.then(function (d) {
-					console.log(d);
 					assert.instanceOf(d[0], CheckResult);
-					assert.deepEqual(d[0].value, data);
+					assert.deepEqual(d[0].result, data);
 					done();
 				});
-				q.catch(console.error.bind(console));
-
 
 			});
 
