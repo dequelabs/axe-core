@@ -1,4 +1,126 @@
 /*global runRules */
+describe('axe.run', function () {
+	'use strict';
+
+	var fixture = document.getElementById('fixture');
+
+	beforeEach(function () {
+		axe._load({
+			rules: [{
+				id: 'test',
+				selector: '*',
+				none: ['fred']
+			}],
+			checks: [{
+				id: 'fred',
+				evaluate: function () {
+					return true;
+				}
+			}]
+		});
+	});
+
+	afterEach(function () {
+		fixture.innerHTML = '';
+		axe._audit = null;
+	});
+
+
+	it('takes context, options and callback as parameters', function () {
+		fixture.innerHTML = '<div id="t1"></div>';
+		var options = {
+			runOnly: {
+			    type: 'rule',
+			    values: ['test']
+			  }
+		};
+
+		var ready = false;
+		axe.run(['#t1'], options, function () {
+			ready = true;
+		});
+		assert.ok(ready, 'callback did not run');
+	});
+
+	it('uses document as content if it is not specified', function () {
+		var ready = false;
+		axe._runRules = function (ctxt) {
+			assert.equal(ctxt, document);
+			ready = true;
+		};
+
+		axe.run({}, function (){});
+		assert.ok(ready, 'axe._runRules was not called');
+	});
+
+	it('uses an empty object as options if it is not specified', function () {
+		var ready = false;
+		axe._runRules = function (ctxt, opt) {
+			assert.equal({}, opt);
+			ready = true;
+		};
+
+		axe.run(document, function (){});
+		assert.ok(ready, 'axe._runRules was not called');
+	});
+
+	it('treats objects with neither include or exclude as the option object', function (done) {
+		axe._runRules = function (ctxt, opt) {
+			assert.equal({HHG: 'hallelujah'}, opt);
+		};
+		axe.run({HHG: 'hallelujah'}, function (){});
+
+		axe._runRules = function (ctxt) {
+			assert.equal({include: '#BoggyB'}, ctxt);
+			done();
+		};
+		axe.run({include: '#BoggyB'}, function (){});
+	});
+
+	it('does not fail if no callback is specified', function () {
+		assert.doesNotThrow(function () {
+			axe.run(document, {});
+		});
+	});
+
+	it('gives errors to the first argument on the callback', function (done) {
+		axe.run(function (err) {
+			assert.equal(err, null);
+		});
+
+		axe._runRules = function () {
+			throw 'Error!';
+		};
+		axe.run(function (err) {
+			assert.equal(err, 'Error!');
+			done();
+		});
+	});
+
+	it('gives results to the second argument on the callback', function (done) {
+		axe.run(function (err, results) {
+			assert.typeOf(results, 'object');
+			done();
+		});
+	});
+
+	it('returns a promise if Promises are supported', function (done) {
+		if (window.Promise) {
+			var cbRunsFirst = false;
+			var p = axe.run(document, {}, function () {
+				cbRunsFirst = true;
+			});
+			assert.instanceOf(p, window.Promise);
+
+			p.then(function () {
+				assert.ok(cbRunsFirst);
+				done();
+			});
+		}
+	});
+
+});
+
 describe('axe.a11yCheck', function () {
 	'use strict';
 
