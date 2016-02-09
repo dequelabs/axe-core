@@ -467,4 +467,29 @@ describe('runRules', function () {
 			done();
 		});
 	});
+
+	it('should call the reject argument if an error occurs', function (done) {
+		axe._load({ rules: [{
+			id: 'html',
+			selector: 'html',
+			any: ['html']
+		}], checks: [{
+			id: 'html',
+			evaluate: function () {
+				throw new Error('Release the worms of war!');
+			}
+		}], messages: {}});
+
+		createFrames(function () {
+			setTimeout(function () {
+				runRules(document, {}, function () {},
+				function (err) {
+					assert.equal(err.message, 'Release the worms of war!');
+					done();
+				});
+			}, 500);
+		});
+	});
+
+
 });

@@ -354,6 +354,33 @@ describe('Audit', function () {
 			});
 
 		});
+
+		it('should call the reject argument if it failed', function (done) {
+			a.addRule({
+				id: 'throw1',
+				selector: '*',
+				any: [{
+					id: 'throw1-check1',
+				}]
+			});
+			a.addCheck({
+				id: 'throw1-check1',
+				evaluate: function () {
+					throw new Error('Launch the super sheep!');
+				}
+			});
+
+			a.run({ include: [fixture] }, {
+				runOnly: {
+					'type': 'rule',
+					'values': ['throw1']
+				}
+			}, function () {},
+			function (err) {
+				assert.equal(err.message, 'Launch the super sheep!');
+				done();
+			});
+		});
 	});
 	describe('Audit#after', function () {
 		it('should run Rule#after on any rule whose result is passed in', function () {
