@@ -1,6 +1,7 @@
 /*global Check, CheckResult */
 describe('Check', function () {
 	'use strict';
+	var noop = function () {};
 
 	var fixture = document.getElementById('fixture');
 
@@ -145,8 +146,8 @@ describe('Check', function () {
 		});
 
 		describe('run', function () {
-			it('should accept 3 parameters', function () {
-				assert.lengthOf(new Check({}).run, 3);
+			it('should accept 4 parameters', function () {
+				assert.lengthOf(new Check({}).run, 4);
 			});
 
 			it('should call matches', function (done) {
@@ -161,7 +162,7 @@ describe('Check', function () {
 						assert.isTrue(success);
 						done();
 					}
-				}).run(fixture, {}, function () {});
+				}).run(fixture, {}, noop);
 
 			});
 
@@ -171,7 +172,7 @@ describe('Check', function () {
 						assert.equal(node, fixture);
 						done();
 					}
-				}).run(fixture, {}, function () {});
+				}).run(fixture, {}, noop);
 
 			});
 
@@ -184,7 +185,7 @@ describe('Check', function () {
 						assert.deepEqual(options, expected);
 						done();
 					}
-				}).run(fixture, {}, function () {});
+				}).run(fixture, {}, noop);
 
 			});
 
@@ -198,7 +199,7 @@ describe('Check', function () {
 						assert.deepEqual(options, expected);
 						done();
 					}
-				}).run(fixture, { options: expected }, function () {});
+				}).run(fixture, { options: expected }, noop);
 
 			});
 
@@ -237,26 +238,6 @@ describe('Check', function () {
 				}).run(fixture, {}, function (d) {
 					assert.instanceOf(d, CheckResult);
 					assert.deepEqual(d.value, data);
-					done();
-				});
-
-			});
-			it('should allow for asynchronous checks through a queue', function (done) {
-				var data = { monkeys: 'bananas' };
-				var ck = new Check({
-					evaluate: function () {
-						this.defer(function (resolve) {
-							setTimeout(function () {
-								resolve(data);
-							}, 10);
-						});
-					}
-				});
-				var q = ck.run(fixture, {});
-
-				q.then(function (d) {
-					assert.instanceOf(d[0], CheckResult);
-					assert.deepEqual(d[0].result, data);
 					done();
 				});
 
@@ -307,51 +288,6 @@ describe('Check', function () {
 					assert.instanceOf(data, CheckResult);
 					assert.isTrue(data.result);
 					done();
-				});
-
-			});
-
-			describe('returned queue', function () {
-
-				it('has valid methods', function () {
-					var testCheck = new Check({
-						evaluate: function () {
-							return true;
-						}
-					});
-
-					var q = testCheck.run(fixture, {});
-					assert.isFunction (q.defer);
-					assert.isFunction (q.then);
-					assert.isFunction (q.catch);
-				});
-
-				it('calls `then` when check is finished', function (done) {
-					var testCheck = new Check({
-						evaluate: function () {
-							return true;
-						}
-					});
-
-					var q = testCheck.run(fixture, {});
-					q.then(function () {
-						assert.ok(true, '`then` was called');
-						done();
-					});
-				});
-
-				it('calls `catch` when check throws', function (done) {
-					new Check({
-						evaluate: function () {
-							throw 'error!';
-						}
-
-					}).run(fixture, {})
-					.catch(function (err) {
-						assert.equal(err, 'error!');
-						done();
-					});
-
 				});
 
 			});

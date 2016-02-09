@@ -8,8 +8,8 @@ describe('utils.checkHelper', function () {
 		assert.isFunction(utils.checkHelper);
 	});
 
-	it('should accept 2 named parameters', function () {
-		assert.lengthOf(utils.checkHelper, 2);
+	it('should accept 3 named parameters', function () {
+		assert.lengthOf(utils.checkHelper, 3);
 	});
 
 	it('should return an object', function () {
