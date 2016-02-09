@@ -231,6 +231,29 @@ describe('utils.queue', function () {
 			});
 		});
 
+		it('does not continue other tasks if an error occurs', function (done) {
+			var q = utils.queue();
+			var aborted;
+			q.defer(function () {
+				throw 'error! 3';
+			});
+			q.defer(function () {
+				console.log(new Error('wtf'));
+				aborted = false;
+			});
+
+			q.then(function () {
+				assert.ok(false, 'Should not be called');
+			});
+			q.catch(function (e) {
+				assert.equal(e, 'error! 3');
+			});
+			setTimeout(function () {
+				assert.notEqual(aborted, false);
+				done();
+			}, 30);
+		});
+
 		it('is chainable', function () {
 			var q = utils.queue();
 			assert.equal(q, q.catch(function () {}));
