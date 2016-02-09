@@ -278,7 +278,7 @@ describe('Check', function () {
 
 			});
 
-			it('passes a result to the callback', function (done) {
+			it('passes a result to the resolve argument', function (done) {
 
 				new Check({
 					evaluate: function () {
@@ -290,6 +290,18 @@ describe('Check', function () {
 					done();
 				});
 
+			});
+
+			it('should pass errors to the reject argument', function (done) {
+				new Check({
+					evaluate: function () {
+						throw new Error('Grenade!');
+					}
+				}).run(fixture, {}, noop, function (err) {
+					assert.instanceOf(err, Error);
+					assert.equal(err.message, 'Grenade!');
+					done();
+				});
 			});
 
 		});

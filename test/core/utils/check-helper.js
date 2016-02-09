@@ -35,6 +35,21 @@ describe('utils.checkHelper', function () {
 
 				assert.isTrue(success);
 			});
+
+			it('should call the third parameter of `utils.checkHelper` when returning an error', function () {
+				var success = false;
+				function reject(e) {
+					success = true;
+					assert.equal(e.message, 'Concrete donkey!');
+				}
+
+				var helper = utils.checkHelper({}, noop, reject);
+				var done = helper.async();
+				done( new Error('Concrete donkey!'));
+
+				assert.isTrue(success);
+			});
+
 		});
 		describe('data', function () {
 			it('should set data property on target when called', function () {
