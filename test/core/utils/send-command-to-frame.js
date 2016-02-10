@@ -18,20 +18,16 @@ describe('utils.sendCommandToFrame', function () {
       }
       return 'cats';
     };
-    var origLog = axe.log,
-      logCalled = false;
-    axe.log = function (msg, actualFrame) {
-      assert.equal(msg, 'No response from frame: ');
-      assert.equal(actualFrame, frame);
-      logCalled = true;
-    };
 
     var frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
       utils.sendCommandToFrame(frame, {}, function () {
-        assert.isTrue(logCalled);
+        assert.ok(false, 'should not be called');
+
+      }, function (err) {
+        assert.instanceOf(err, Error);
+        assert.equal(err.message.split(/: /)[0], 'No response from frame');
         window.setTimeout = orig;
-        axe.log = origLog;
         done();
       });
     });
