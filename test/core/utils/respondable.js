@@ -241,7 +241,7 @@ describe('utils.respondable', function () {
 			_respondable: true,
 			topic: 'Death star',
 			error: {
-				type: 'ReferenceError',
+				name: 'ReferenceError',
 				message: 'The exhaust port is open!',
 				trail: '... boom'
 			},
@@ -328,41 +328,47 @@ describe('utils.respondable', function () {
 				published = true;
 			});
 
-			utils.respondable(window, 'catman', null, undefined, function (data, keepalive, respond) {
-				assert.isNull(data);
-				respond(new ReferenceError('whoopsy'));
-				setTimeout(function () {
-					assert.ok(!published, 'Error events should not trigger');
-					done();
-				}, 10);
-			});
-		});
-
-		it('returns an error if the subscribe method throws', function (done) {
-			var expected = 'Expected owlman to be batman';
-			utils.respondable.subscribe('owlman', function () {
-				throw new TypeError(expected);
-			});
-
-			utils.respondable(window, 'owlman', null, undefined,
-			function (data) {
-				assert.instanceOf(data, TypeError);
-				assert.equal(data.message, expected);
+			var err = new ReferenceError('whoopsy');
+			utils.respondable(window, 'catman', err);
+			setTimeout(function () {
+				assert.ok(!published, 'Error events should not trigger');
 				done();
-			});
+			}, 10);
 		});
 
 		it('returns an error if the subscribe method responds with an error', function (done) {
 			var expected = 'Expected owlman to be batman';
+			var wait = true;
 			utils.respondable.subscribe('owlman', function (data, keepalive, respond) {
+				wait = false;
 				respond(new TypeError(expected));
 			});
 
-			utils.respondable(window, 'owlman', null, undefined,
+			utils.respondable(window, 'owlman', 'help!', true,
 			function (data) {
-				assert.instanceOf(data, TypeError);
-				assert.equal(data.message, expected);
-				done();
+				if (!wait) {
+					assert.instanceOf(data, TypeError);
+					assert.equal(data.message.split(/\n/)[0], expected);
+					done();
+				}
+			});
+		});
+
+		it('returns an error if the subscribe method throws', function (done) {
+			var wait = true;
+			var expected = 'Expected owlman to be batman';
+			utils.respondable.subscribe('owlman', function () {
+				wait = false;
+				throw new TypeError(expected);
+			});
+
+			utils.respondable(window, 'owlman', null, false,
+			function (data) {
+				if (!wait) {
+					assert.instanceOf(data, TypeError);
+					assert.equal(data.message.split(/\n/)[0], expected);
+					done();
+				}
 			});
 		});
 
