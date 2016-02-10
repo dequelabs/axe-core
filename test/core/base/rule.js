@@ -166,7 +166,7 @@ describe('Rule', function() {
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
-				});
+				}, isNotCalled);
 
 			});
 
@@ -191,7 +191,7 @@ describe('Rule', function() {
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
-				});
+				}, isNotCalled);
 
 			});
 
@@ -209,14 +209,14 @@ describe('Rule', function() {
 							}
 						}
 					}
-				});
+				}, isNotCalled);
 
 				rule.run({
 					include: [fixture]
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
-				});
+				}, isNotCalled);
 
 			});
 
@@ -248,7 +248,7 @@ describe('Rule', function() {
 					include: [document]
 				}, options, function() {
 					done();
-				});
+				}, isNotCalled);
 			});
 
 			it('should pass the matching option to check.run defined on the rule over global', function(done) {
@@ -293,7 +293,7 @@ describe('Rule', function() {
 					include: [document]
 				}, options, function() {
 					done();
-				});
+				}, isNotCalled);
 			});
 
 			it('should filter out null results', function() {
@@ -335,7 +335,7 @@ describe('Rule', function() {
 				}, {}, noop, function(err) {
 					assert.equal(err.message, 'Holy hand grenade');
 					done();
-				});
+				}, isNotCalled);
 			});
 
 			it('should pass reject calls to the reject param', function (done) {
@@ -357,7 +357,7 @@ describe('Rule', function() {
 				}, {}, noop, function(err) {
 					assert.equal(err.message, 'your reality');
 					done();
-				});
+				}, isNotCalled);
 			});
 
 			describe('NODE rule', function() {

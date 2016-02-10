@@ -4,10 +4,11 @@ describe('cleanupPlugins', function () {
 
   function createFrames(callback) {
     var frame;
-
     frame = document.createElement('iframe');
-    frame.src = '../mock/frames/nocode.html';
-    frame.addEventListener('load', callback);
+    frame.src = '../mock/frames/nested1.html';
+    frame.addEventListener('load', function () {
+      setTimeout(callback, 500);
+    });
     fixture.appendChild(frame);
   }
 
@@ -24,7 +25,6 @@ describe('cleanupPlugins', function () {
 
 
   it('should throw if no audit is configured', function () {
-
     assert.throws(function () {
       cleanupPlugins(document, {});
     }, Error, /^No audit configured/);
@@ -54,6 +54,7 @@ describe('cleanupPlugins', function () {
     });
   });
 
+
   it('should send command to frames to cleanup', function (done) {
     createFrames(function () {
       axe._load({});
@@ -64,11 +65,11 @@ describe('cleanupPlugins', function () {
         assert.deepEqual(opts, {
           command: 'cleanup-plugin'
         });
+        utils.sendCommandToFrame = orig;
         done();
       };
       cleanupPlugins();
-      utils.sendCommandToFrame = orig;
     });
-
   });
+
 });

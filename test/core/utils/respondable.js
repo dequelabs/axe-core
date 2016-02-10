@@ -322,7 +322,7 @@ describe('utils.respondable', function () {
 			});
 		});
 
-		it('does not trigger for error messages', function done() {
+		it('does not trigger for error messages', function (done) {
 			var published = false;
 			utils.respondable.subscribe('catman', function () {
 				published = true;
