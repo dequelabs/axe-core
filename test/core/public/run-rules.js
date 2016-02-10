@@ -120,6 +120,13 @@ describe('runRules', function () {
 
 	var fixture = document.getElementById('fixture');
 
+	var isNotCalled;
+	beforeEach(function () {
+		isNotCalled = function () {
+			assert.ok(false, 'Reject should not be called');
+		};
+	});
+
 	afterEach(function () {
 		fixture.innerHTML = '';
 		axe._audit = null;
@@ -137,16 +144,19 @@ describe('runRules', function () {
 			}
 		}], messages: {}});
 
-		createFrames(function () {
+
+		var frame = document.createElement('iframe');
+		frame.src = '../mock/frames/frame-frame.html';
+
+		frame.addEventListener('load', function () {
 			setTimeout(function () {
 				runRules(document, {}, function (r) {
 					assert.lengthOf(r[0].passes, 3);
 					done();
-				});
-
+				}, isNotCalled);
 			}, 500);
-
 		});
+		fixture.appendChild(frame);
 	});
 
 	it('should properly order iframes', function (done) {
@@ -176,7 +186,7 @@ describe('runRules', function () {
 						['#level0', '#level1', '#level2b']
 					]);
 					done();
-				});
+				}, isNotCalled);
 
 			}, 500);
 
@@ -270,7 +280,7 @@ describe('runRules', function () {
 				}]);
 
 				done();
-			});
+			}, isNotCalled);
 
 		});
 	});
@@ -465,7 +475,7 @@ describe('runRules', function () {
 					tags: []
 				}]);
 			done();
-		});
+		}, isNotCalled);
 	});
 
 	it('should call the reject argument if an error occurs', function (done) {
@@ -486,7 +496,7 @@ describe('runRules', function () {
 				function (err) {
 					assert.equal(err.message, 'Release the worms of war!');
 					done();
-				});
+				}, isNotCalled);
 			}, 500);
 		});
 	});

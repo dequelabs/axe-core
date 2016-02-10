@@ -2,6 +2,9 @@
 describe('Audit', function () {
 	'use strict';
 	var a;
+	var isNotCalled = function () {
+		assert.ok(false, 'Function should not be called');
+	};
 
 	var mockChecks = [{
 		id: 'positive1-check1',
@@ -265,19 +268,19 @@ describe('Audit', function () {
 				assert.deepEqual(JSON.parse(JSON.stringify(results)), expected);
 				assert.match(out, /^<input(\s+type="text"|\s+aria-label="monkeys"){2,}>/);
 				done();
-			});
+			}, isNotCalled);
 		});
 		it('should not run rules disabled by the options', function (done) {
 			a.run({ include: [document] }, {
-					rules: {
-						'positive3': {
-							enabled: false
-						}
+				rules: {
+					'positive3': {
+						enabled: false
 					}
-				}, function (results) {
-					assert.equal(results.length, 3);
-					done();
-				});
+				}
+			}, function (results) {
+				assert.equal(results.length, 3);
+				done();
+			}, isNotCalled);
 		});
 		it('should not run rules disabled by the configuration', function (done) {
 			var a = new Audit();
@@ -296,7 +299,7 @@ describe('Audit', function () {
 			a.run({ include: [document] }, {}, function () {
 				assert.ok(success);
 				done();
-			});
+			}, isNotCalled);
 		});
 		it('should call the rule\'s run function', function (done) {
 			var targetRule = mockRules[mockRules.length - 1],
@@ -314,7 +317,7 @@ describe('Audit', function () {
 				assert.isTrue(called);
 				rule.run = orig;
 				done();
-			});
+			}, isNotCalled);
 		});
 		it('should pass the option to the run function', function (done) {
 			var targetRule = mockRules[mockRules.length - 1],
@@ -335,7 +338,7 @@ describe('Audit', function () {
 				assert.ok(passed);
 				rule.run = orig;
 				done();
-			});
+			}, isNotCalled);
 		});
 
 		it('should skip pageLevel rules if context is not set to entire page', function () {
@@ -351,7 +354,7 @@ describe('Audit', function () {
 
 			audit.run({ include: [ document.body ], page: false }, {}, function (results) {
 				assert.deepEqual(results, []);
-			});
+			}, isNotCalled);
 
 		});
 
@@ -379,7 +382,7 @@ describe('Audit', function () {
 			function (err) {
 				assert.equal(err.message, 'Launch the super sheep!');
 				done();
-			});
+			}, isNotCalled);
 		});
 	});
 	describe('Audit#after', function () {

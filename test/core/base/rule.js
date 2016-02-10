@@ -4,6 +4,9 @@ describe('Rule', function() {
 
 	var fixture = document.getElementById('fixture');
 	var noop = function () {};
+	var isNotCalled = function () {
+		assert.ok(false, 'Function should not be called');
+	};
 
 	afterEach(function() {
 		fixture.innerHTML = '';
@@ -138,7 +141,7 @@ describe('Rule', function() {
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
-				});
+				}, isNotCalled);
 
 			});
 
@@ -309,7 +312,7 @@ describe('Rule', function() {
 					include: [document]
 				}, {}, function(r) {
 					assert.lengthOf(r.nodes, 0);
-				});
+				}, isNotCalled);
 
 			});
 
@@ -375,7 +378,7 @@ describe('Rule', function() {
 					});
 					rule.run({
 						include: document
-					}, {}, function() {});
+					}, {}, noop, isNotCalled);
 					assert.isTrue(success);
 
 
@@ -394,7 +397,7 @@ describe('Rule', function() {
 						include: document
 					}, {}, function() {
 						success = true;
-					});
+					}, isNotCalled);
 					assert.isTrue(success);
 				});
 			});
