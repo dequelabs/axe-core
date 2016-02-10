@@ -362,7 +362,10 @@ describe('utils.respondable', function () {
 				throw new TypeError(expected);
 			});
 
-			utils.respondable(window, 'owlman', null, false,
+			// use keepalive, because we're running on the same window,
+			// otherwise it would delete the response before subscribe
+			// gets to react
+			utils.respondable(window, 'owlman', null, true,
 			function (data) {
 				if (!wait) {
 					assert.instanceOf(data, TypeError);

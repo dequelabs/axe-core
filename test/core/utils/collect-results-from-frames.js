@@ -73,4 +73,20 @@ describe('utils.collectResultsFromFrames', function () {
 
 	});
 
+  it('returns errors send from the frame', function (done) {
+    window.axeName = 'pageContent';
+
+    var frame = document.createElement('iframe');
+    frame.addEventListener('load', function () {
+      var context = new Context(document);
+      utils.collectResultsFromFrames(context, {}, 'command', 'params', function () {
+        done();
+      });
+    });
+
+    frame.id = 'level0';
+    frame.src = '../mock/frames/throwing.html';
+    fixture.appendChild(frame);
+  });
+
 });

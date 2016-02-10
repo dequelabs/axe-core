@@ -26,12 +26,6 @@
 	}, i*50);
   });
 
-  utils.respondable.subscribe('axe.throw', function (data, keepalive, respond) {
-  	setTimeout(function () {
-  		respond(new Error('I died!'));
-  	}, 10);
-  });
-
 </script>
 </body>
 </html>

@@ -238,7 +238,6 @@ describe('utils.queue', function () {
 				throw 'error! 3';
 			});
 			q.defer(function () {
-				console.log(new Error('wtf'));
 				aborted = false;
 			});
 
