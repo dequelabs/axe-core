@@ -4,8 +4,8 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "Element has content that is only inside <dt> or <dd> elements",
-      "fail": "Element has content that is not inside <dt> or <dd>  elements"
+      "pass": "List element only has direct children that are allowed inside <dt> or <dd> elements",
+      "fail": "List element has direct children that are not allowed inside <dt> or <dd> elements"
     }
   }
 }
