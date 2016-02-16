@@ -1,0 +1,18 @@
+{
+  "id": "meta-viewport-large",
+  "selector": "meta[name=\"viewport\"]",
+  "excludeHidden": false,
+  "tags": [
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "Ensures <meta name=\"viewport\"> can sale a significant amount",
+    "help": "Users should be able to zoom and scale the up to 500%",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/meta-viewport-large"
+  },
+  "all": [],
+  "any": [
+    "meta-viewport-large"
+  ],
+  "none": []
+}

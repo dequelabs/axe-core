@@ -1,6 +1,9 @@
 {
   "id": "meta-viewport",
-  "evaluate": "meta-viewport.js",
+  "evaluate": "meta-viewport-scale.js",
+  "options": {
+  	"scaleMinimum": 2
+  },
   "metadata": {
     "impact": "critical",
     "messages": {
