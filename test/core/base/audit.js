@@ -5,6 +5,7 @@ describe('Audit', function () {
 	var isNotCalled = function () {
 		assert.ok(false, 'Function should not be called');
 	};
+	var noop = function () {};
 
 	var mockChecks = [{
 		id: 'positive1-check1',
@@ -358,7 +359,14 @@ describe('Audit', function () {
 
 		});
 
-		it('should call the reject argument if it failed', function (done) {
+		it('should pass errors to axe.log', function (done) {
+			var orig = axe.log;
+			axe.log = function (err) {
+				assert.equal(err.message, 'Launch the super sheep!');
+				axe.log = orig;
+				done();
+			};
+
 			a.addRule({
 				id: 'throw1',
 				selector: '*',
@@ -372,18 +380,69 @@ describe('Audit', function () {
 					throw new Error('Launch the super sheep!');
 				}
 			});
-
 			a.run({ include: [fixture] }, {
 				runOnly: {
 					'type': 'rule',
 					'values': ['throw1']
 				}
-			}, function () {},
-			function (err) {
-				assert.equal(err.message, 'Launch the super sheep!');
+			}, noop, isNotCalled);
+		});
+
+		it('should not halt if errors occur', function (done) {
+			a.addRule({
+				id: 'throw1',
+				selector: '*',
+				any: [{
+					id: 'throw1-check1',
+				}]
+			});
+			a.addCheck({
+				id: 'throw1-check1',
+				evaluate: function () {
+					throw new Error('Launch the super sheep!');
+				}
+			});
+			a.run({ include: [fixture] }, {
+				runOnly: {
+					'type': 'rule',
+					'values': ['throw1', 'positive1']
+				}
+			}, function (results) {
+				results = results.filter(function (result) {
+					return !!result;
+				});
+				assert.equal(results.length, 1);
+				assert.equal(results[0].id, 'positive1');
 				done();
 			}, isNotCalled);
 		});
+
+		it('should halt if an error occurs when debug is set', function (done) {
+			a.addRule({
+				id: 'throw1',
+				selector: '*',
+				any: [{
+					id: 'throw1-check1',
+				}]
+			});
+			a.addCheck({
+				id: 'throw1-check1',
+				evaluate: function () {
+					throw new Error('Launch the super sheep!');
+				}
+			});
+			a.run({ include: [fixture] }, {
+				debug: true,
+				runOnly: {
+					'type': 'rule',
+					'values': ['throw1']
+				}
+			}, noop, function (err) {
+				assert.equal(err.message, 'Launch the super sheep!');
+				done();
+			});
+		});
+
 	});
 	describe('Audit#after', function () {
 		it('should run Rule#after on any rule whose result is passed in', function () {
