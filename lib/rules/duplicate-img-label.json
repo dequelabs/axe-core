@@ -1,0 +1,21 @@
+{
+  "id": "duplicate-img-label",
+  "selector": "button, [role=\"button\"], a[href]",
+  "tags": [
+    "wcag2a",
+    "wcag111",
+    "section508",
+    "section508a"
+  ],
+  "metadata": {
+    "description": "Ensure button and link text is not repeated as image alternative",
+    "help": "Text of buttons and links should not be repeated in the image alternative",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/duplicate-img-label"
+  },
+  "all": [],
+  "any": [],
+  "none": [
+    "duplicate-img-label"
+  ]
+}
+

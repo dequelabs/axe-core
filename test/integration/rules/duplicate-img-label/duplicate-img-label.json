@@ -1,0 +1,6 @@
+{
+	"description": "duplicate-img-label test",
+	"rule": "duplicate-img-label",
+	"violations": [["#fail1"], ["#fail2"]],
+	"passes": [["#pass1"], ["#pass2"]]
+}

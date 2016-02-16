@@ -20,6 +20,7 @@
 | dlitem | Ensures &lt;dt&gt; and &lt;dd&gt; elements are contained by a &lt;dl&gt; | wcag2a, wcag131 |
 | document-title | Ensures each HTML document contains a non-empty &lt;title&gt; element | wcag2a, wcag242 |
 | duplicate-id | Ensures every id attribute value is unique | wcag2a, wcag411 |
+| duplicate-img-label | Ensure button and link text is not repeated as image alternative | wcag2a, wcag111, section508, section508a |
 | empty-heading | Ensures headings have discernible text | best-practice |
 | frame-title | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a unique and non-empty title attribute | wcag2a, wcag241 |
 | heading-order | Ensures the order of headings is semantically correct | best-practice |
