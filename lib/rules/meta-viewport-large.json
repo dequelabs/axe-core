@@ -7,7 +7,7 @@
   ],
   "metadata": {
     "description": "Ensures <meta name=\"viewport\"> can sale a significant amount",
-    "help": "Users should be able to zoom and scale the up to 500%",
+    "help": "Users should be able to zoom and scale the text up to 500%",
     "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/meta-viewport-large"
   },
   "all": [],
