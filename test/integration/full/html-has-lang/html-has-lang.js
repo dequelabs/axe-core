@@ -1,10 +1,10 @@
 
-describe('html-lang test', function () {
+describe('html-has-lang test', function () {
 	'use strict';
 	var results;
 	before(function (done) {
 		window.addEventListener('load', function () {
-			axe.a11yCheck(document, { runOnly: { type: 'rule', values: ['html-lang'] } }, function (r) {
+			axe.a11yCheck(document, { runOnly: { type: 'rule', values: ['html-has-lang'] } }, function (r) {
 				results = r;
 				done();
 			});

@@ -23,7 +23,8 @@
 | empty-heading | Ensures headings have discernible text | best-practice |
 | frame-title | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a unique and non-empty title attribute | wcag2a, wcag241 |
 | heading-order | Ensures the order of headings is semantically correct | best-practice |
-| html-lang | Ensures every HTML document has a lang attribute and its value is valid | wcag2a, wcag311 |
+| html-has-lang | Ensures every HTML document has a lang attribute | wcag2a, wcag311 |
+| html-lang-valid | Ensures the lang attribute of the &lt;html&gt; element has a valid value | wcag2a, wcag311 |
 | image-alt | Ensures &lt;img&gt; elements have alternate text or a role of none or presentation | wcag2a, wcag111, section508, section508a |
 | input-image-alt | Ensures &lt;input type=&quot;image&quot;&gt; elements have alternate text | wcag2a, wcag111, section508, section508a |
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | best-practice |
