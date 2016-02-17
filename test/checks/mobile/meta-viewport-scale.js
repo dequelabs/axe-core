@@ -13,7 +13,6 @@ describe('meta-viewport', function () {
 			var node = fixture.querySelector('meta');
 
 			assert.isFalse(checks['meta-viewport'].evaluate(node));
-
 		});
 
 		it('should return false on user-scalable=no', function () {
@@ -32,24 +31,24 @@ describe('meta-viewport', function () {
 
 		});
 
-		it('should return true if maximum-scale >= 5', function () {
+		it('should return true if maximum-scale >= options.scaleMinimum', function () {
 			fixture.innerHTML = '<meta name="viewport" content="foo=bar; maximum-scale=5; cats= dogs;">';
 			var node = fixture.querySelector('meta');
 
-			assert.isTrue(checks['meta-viewport'].evaluate(node));
+			assert.isTrue(checks['meta-viewport'].evaluate(node, { scaleMinimum: 2 }));
 
-			fixture.innerHTML = '<meta name="viewport" content="foo=bar; maximum-scale=6; cats= dogs;">';
+			fixture.innerHTML = '<meta name="viewport" content="foo=bar; maximum-scale=3; cats= dogs;">';
 			node = fixture.querySelector('meta');
 
 			assert.isTrue(checks['meta-viewport'].evaluate(node));
 
 		});
 
-		it('should return false on maximum-scale < 5', function () {
-			fixture.innerHTML = '<meta name="viewport" content="foo=bar; cats= dogs; user-scalable=yes; maximum-scale=4">';
+		it('should return false on maximum-scale < options.scaleMinimum', function () {
+			fixture.innerHTML = '<meta name="viewport" content="foo=bar; cats= dogs; user-scalable=yes; maximum-scale=1.5">';
 			var node = fixture.querySelector('meta');
 
-			assert.isFalse(checks['meta-viewport'].evaluate(node));
+			assert.isFalse(checks['meta-viewport'].evaluate(node, { scaleMinimum: 2 }));
 
 		});
 
@@ -89,24 +88,24 @@ describe('meta-viewport', function () {
 
 		});
 
-		it('should return true if maximum-scale >= 5', function () {
+		it('should return true if maximum-scale >= options.scaleMinimum', function () {
 			fixture.innerHTML = '<meta name="viewport" content="foo=bar, maximum-scale=5, cats= dogs;">';
 			var node = fixture.querySelector('meta');
 
 			assert.isTrue(checks['meta-viewport'].evaluate(node));
 
-			fixture.innerHTML = '<meta name="viewport" content="foo=bar, maximum-scale=6, cats= dogs;">';
+			fixture.innerHTML = '<meta name="viewport" content="foo=bar, maximum-scale=2, cats= dogs;">';
 			node = fixture.querySelector('meta');
 
-			assert.isTrue(checks['meta-viewport'].evaluate(node));
+			assert.isTrue(checks['meta-viewport'].evaluate(node, { scaleMinimum: 2 }));
 
 		});
 
-		it('should return false on maximum-scale < 5', function () {
-			fixture.innerHTML = '<meta name="viewport" content="foo=bar, cats= dogs, user-scalable=yes, maximum-scale=4">';
+		it('should return false on maximum-scale < options.scaleMinimum', function () {
+			fixture.innerHTML = '<meta name="viewport" content="foo=bar, cats= dogs, user-scalable=yes, maximum-scale=1.5">';
 			var node = fixture.querySelector('meta');
 
-			assert.isFalse(checks['meta-viewport'].evaluate(node));
+			assert.isFalse(checks['meta-viewport'].evaluate(node, { scaleMinimum: 2 }));
 
 		});
 

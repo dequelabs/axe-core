@@ -35,6 +35,7 @@
 | listitem | Ensures &lt;li&gt; elements are used semantically | wcag2a, wcag131 |
 | marquee | Ensures &lt;marquee&gt; elements are not used | wcag2a, wcag222, section508, section508j |
 | meta-refresh | Ensures &lt;meta http-equiv=&quot;refresh&quot;&gt; is not used | wcag2a, wcag2aaa, wcag221, wcag224, wcag325 |
+| meta-viewport-large | Ensures &lt;meta name=&quot;viewport&quot;&gt; can sale a significant amount | best-practice |
 | meta-viewport | Ensures &lt;meta name=&quot;viewport&quot;&gt; does not disable text scaling and zooming | wcag2aa, wcag144 |
 | object-alt | Ensures &lt;object&gt; elements have alternate text | wcag2a, wcag111 |
 | radiogroup | Ensures related &lt;input type=&quot;radio&quot;&gt; elements have a group and that the group designation is consistent | wcag2a, wcag131 |
