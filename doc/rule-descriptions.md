@@ -20,12 +20,12 @@
 | dlitem | Ensures &lt;dt&gt; and &lt;dd&gt; elements are contained by a &lt;dl&gt; | wcag2a, wcag131 |
 | document-title | Ensures each HTML document contains a non-empty &lt;title&gt; element | wcag2a, wcag242 |
 | duplicate-id | Ensures every id attribute value is unique | wcag2a, wcag411 |
-| duplicate-img-label | Ensure button and link text is not repeated as image alternative | wcag2a, wcag111, section508, section508a |
 | empty-heading | Ensures headings have discernible text | best-practice |
 | frame-title | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a unique and non-empty title attribute | wcag2a, wcag241 |
 | heading-order | Ensures the order of headings is semantically correct | best-practice |
 | html-lang | Ensures every HTML document has a lang attribute and its value is valid | wcag2a, wcag311 |
 | image-alt | Ensures &lt;img&gt; elements have alternate text or a role of none or presentation | wcag2a, wcag111, section508, section508a |
+| image-redundant-alt | Ensure button and link text is not repeated as image alternative | best-practice |
 | input-image-alt | Ensures &lt;input type=&quot;image&quot;&gt; elements have alternate text | wcag2a, wcag111, section508, section508a |
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | best-practice |
 | label | Ensures every form element has a label | wcag2a, wcag332, wcag131, section508, section508n |

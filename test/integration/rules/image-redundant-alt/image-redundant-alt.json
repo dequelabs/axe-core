@@ -1,0 +1,6 @@
+{
+	"description": "image-redundant-alt test",
+	"rule": "image-redundant-alt",
+	"violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"], ["#fail5"], ["#fail6"]],
+	"passes": [["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"]]
+}
