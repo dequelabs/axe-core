@@ -127,11 +127,6 @@ module.exports = function (grunt) {
 					dest: 'tmp/index.js'
 				}],
 				options: {
-					mangle: false,
-					compress: true,
-					beautify: {
-						beautify: false
-					},
 					preserveComments: 'some'
 				}
 			}
