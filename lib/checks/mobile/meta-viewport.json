@@ -2,7 +2,7 @@
   "id": "meta-viewport",
   "evaluate": "meta-viewport-scale.js",
   "options": {
-  	"scaleMinimum": 2
+    "scaleMinimum": 2
   },
   "metadata": {
     "impact": "critical",

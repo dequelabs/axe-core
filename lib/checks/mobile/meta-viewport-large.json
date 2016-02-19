@@ -2,7 +2,7 @@
   "id": "meta-viewport-large",
   "evaluate": "meta-viewport-scale.js",
   "options": {
-  	"scaleMinimum": 5,
+    "scaleMinimum": 5,
     "lowerBound": 2
   },
   "metadata": {
