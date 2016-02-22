@@ -15,7 +15,7 @@ describe('link-in-text-block', function () {
 	};
 
 	beforeEach(function () {
-		styleElm.innerText += createStyleString('p', defaultStyle);
+		createStyleString('p', defaultStyle);
 	});
 
 	afterEach(function () {
@@ -44,7 +44,8 @@ describe('link-in-text-block', function () {
 			return '  ' + cssPropName + ':' + styleObj[prop] + ';';
 		}).join('\n');
 
-		return selector + ' {\n' + cssLines + '\n}\n';
+		// Add to the style element
+		styleElm.innerText += selector + ' {\n' + cssLines + '\n}\n';
 	}
 
 	function getLinkElm(linkStyle, paragraphStyle) {
@@ -52,8 +53,8 @@ describe('link-in-text-block', function () {
 		var linkId = 'linkid-' + Math.floor(Math.random() * 100000);
 		var parId = 'parid-' + Math.floor(Math.random() * 100000);
 
-		styleElm.innerText += createStyleString('#' + linkId, linkStyle);
-		styleElm.innerText += createStyleString('#' + parId, paragraphStyle);
+		createStyleString('#' + linkId, linkStyle);
+		createStyleString('#' + parId, paragraphStyle);
 
 		fixture.innerHTML += '<p id="' + parId + '"> Text ' +
 			'<a href="/" id="' + linkId + '">link</a>' +
@@ -69,12 +70,11 @@ describe('link-in-text-block', function () {
 			color: '#000'
 		});
 		assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
-
 	});
 
 	describe('default style', function () {
 		beforeEach(function () {
-			styleElm.innerText += createStyleString('a', {
+			createStyleString('a', {
 				color: '#100' // insufficeint contrast
 			});
 		});
@@ -98,6 +98,13 @@ describe('link-in-text-block', function () {
 			assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
 		});
 
+		it('returns true with border-bottom: dashed 1px black', function () {
+			var linkElm = getLinkElm({
+				borderBottom: 'dashed 1px black'
+			});
+			assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
+		});
+
 		it('returns false with border: solid 0px black', function () {
 			var linkElm = getLinkElm({
 				border: 'solid 0px black'
@@ -117,6 +124,13 @@ describe('link-in-text-block', function () {
 				border: 'solid 1px transparant'
 			});
 			assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
+		});
+
+		it('returns true with outline: solid 1px black', function () {
+			var linkElm = getLinkElm({
+				outline: 'solid 1px black'
+			});
+			assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
 		});
 
 		it('returns true if font-weight is different', function () {
@@ -163,7 +177,21 @@ describe('link-in-text-block', function () {
 			});
 			assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
 		});
-
 	});
+
+
+	describe('links with hover and focus', function () {
+		it('has tests', function () {
+			assert.ok(false, 'nope');
+		});
+	});
+
+
+	describe('links distinguished through color', function () {
+		it('has tests', function () {
+			assert.ok(false, 'nope');
+		});
+	});
+
 
 });
