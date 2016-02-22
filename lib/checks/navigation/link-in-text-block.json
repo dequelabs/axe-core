@@ -1,0 +1,11 @@
+{
+  "id": "link-in-text-block",
+  "evaluate": "link-in-text-block.js",
+  "metadata": {
+    "impact": "critical",
+    "messages": {
+      "pass": "",
+      "fail": ""
+    }
+  }
+}
