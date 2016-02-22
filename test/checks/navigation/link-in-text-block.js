@@ -189,11 +189,20 @@ describe('link-in-text-block', function () {
 
 		it('returns true if font-family is different', function () {
 			var linkElm = getLinkElm({
-				fontFamily: 'arial'
+				fontFamily: 'Arial'
 			}, {
-				fontFamily: 'arial-black'
+				fontFamily: 'Arial-black'
 			});
 			assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
+		});
+
+		it('returns false if the first font-family is identical', function () {
+			var linkElm = getLinkElm({
+				fontFamily: 'Arial-black, Arial'
+			}, {
+				fontFamily: 'Arial-black, sans-serif'
+			});
+			assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
 		});
 	});
 
@@ -296,5 +305,16 @@ describe('link-in-text-block', function () {
 		});
 	});
 
+	it('looks at the :visited state', function () {
+		assert.ok(false, 'nope, not yet');
+	});
+
+	it('looks at selectors using :link', function () {
+		assert.ok(false, 'nope, not yet');
+	});
+
+	it('looks at initial & inherited values', function () {
+		assert.ok(false, 'nope, not yet');
+	});
 
 });
