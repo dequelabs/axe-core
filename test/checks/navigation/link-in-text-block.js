@@ -72,7 +72,7 @@ describe('link-in-text-block', function () {
 		assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
 	});
 
-	describe('default style', function () {
+	describe('link default state', function () {
 		beforeEach(function () {
 			createStyleString('a', {
 				color: '#100' // insufficeint contrast
@@ -177,17 +177,120 @@ describe('link-in-text-block', function () {
 			});
 			assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
 		});
+
+		it('returns true if font-size is different', function () {
+			var linkElm = getLinkElm({
+				fontSize: '14px'
+			}, {
+				fontSize: '12px'
+			});
+			assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
+		});
+
+		it('returns true if font-family is different', function () {
+			var linkElm = getLinkElm({
+				fontFamily: 'arial'
+			}, {
+				fontFamily: 'arial-black'
+			});
+			assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
+		});
 	});
 
 
 	describe('links with hover and focus', function () {
-		it('has tests', function () {
-			assert.ok(false, 'nope');
+
+		beforeEach(function () {
+			createStyleString('a', {
+				color: '#F00' // sufficeint contrast
+			});
+		});
+
+		it('returns false if neither hover and focus are defined', function () {
+			var linkElm = getLinkElm();
+			assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
+		});
+
+		it('returns false if only hover is defined', function () {
+			var linkElm = getLinkElm();
+			createStyleString('#' + linkElm.id + ':active', {
+				textDecoration: 'underline'
+			});
+			assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
+		});
+
+		it('returns false if only focus is defined', function () {
+			var linkElm = getLinkElm();
+			createStyleString('#' + linkElm.id + ':focus', {
+				textDecoration: 'underline'
+			});
+			assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
+		});
+
+		it('returns true if both hover and focus are defined', function () {
+			var linkElm = getLinkElm();
+			createStyleString('#' + linkElm.id + ':active', {
+				textDecoration: 'underline'
+			});
+			createStyleString('#' + linkElm.id + ':focus', {
+				textDecoration: 'underline'
+			});
+			assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
+		});
+
+		it('returns true if hover and focus are defined in the same rule', function () {
+			var linkElm = getLinkElm();
+			createStyleString(
+				'#' + linkElm.id + ':active, ' +
+				'#' + linkElm.id + ':focus', {
+				textDecoration: 'underline'
+			});
+			assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
 		});
 	});
 
 
 	describe('links distinguished through color', function () {
+		beforeEach(function () {
+			createStyleString('a:active, a:focus', {
+				textDecoration: 'underline'
+			});
+		});
+
+		it('returns true if text contrast <= 3:0', function() {
+			var linkElm = getLinkElm({
+				color: 'cyan'
+			}, {
+				color: 'black'
+			});
+			assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
+		});
+
+		it('returns false if text contrast > 3:0', function() {
+			var linkElm = getLinkElm({
+				color: '#000010'
+			}, {
+				color: '#000000'
+			});
+			assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
+		});
+
+		it('returns true if background contrast <= 3:0', function() {
+			var linkElm = getLinkElm({
+				backgroundColor: 'cyan'
+			});
+			document.body.background = 'black';
+			assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
+		});
+
+		it('returns false if background contrast > 3:0', function() {
+			var linkElm = getLinkElm({
+				backgroundColor: '#000010'
+			});
+			document.body.background = '#000000';
+			assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
+		});
+
 		it('has tests', function () {
 			assert.ok(false, 'nope');
 		});
