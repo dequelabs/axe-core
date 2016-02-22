@@ -1,0 +1,17 @@
+{
+  "id": "link-in-text",
+  "selector": "a[href]:not(*[role]), *[role=link]",
+  "matches": "link-in-text-matches.js",
+  "tags": [
+    "wcag2a",
+    "wcag141"
+  ],
+  "metadata": {
+    "description": "",
+    "help": "",
+    "helpUrl": ""
+  },
+  "all": [],
+  "any": ["exists"],
+  "none": []
+}
