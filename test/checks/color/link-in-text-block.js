@@ -79,6 +79,27 @@ describe('link-in-text-block', function () {
 			});
 		});
 
+		it('uses color.elementIsDistinct to test the initial state', function () {
+			var expect, actual;
+			var orig = commons.color.elementIsDistinct;
+
+			commons.color.elementIsDistinct = function () {
+				return expect;
+			};
+
+			expect = true;
+			actual = checks['link-in-text-block'].evaluate();
+			assert.equal(actual, expect);
+
+			expect = false;
+			actual = checks['link-in-text-block'].evaluate();
+			assert.equal(actual, expect);
+
+			commons.color.elementIsDistinct = orig;
+		});
+
+		it('passes the selected node and closest ancestral block element');
+
 	});
 
 
