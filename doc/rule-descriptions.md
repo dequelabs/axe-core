@@ -31,7 +31,7 @@
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | best-practice |
 | label | Ensures every form element has a label | wcag2a, wcag332, wcag131, section508, section508n |
 | layout-table | Ensures presentational &lt;table&gt; elements do not use &lt;th&gt;, &lt;caption&gt; elements or the summary attribute | wcag2a, wcag131 |
-| link-in-text-block |  | wcag2a, wcag141 |
+| link-in-text-block | Links can be distinguished without relying on color | wcag2a, wcag141 |
 | link-name | Ensures links have discernible text | wcag2a, wcag111, wcag412, section508, section508a |
 | list | Ensures that lists are structured correctly | wcag2a, wcag131 |
 | listitem | Ensures &lt;li&gt; elements are used semantically | wcag2a, wcag131 |

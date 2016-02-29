@@ -4,8 +4,8 @@
   "metadata": {
     "impact": "critical",
     "messages": {
-      "pass": "",
-      "fail": ""
+      "pass": "Links can be distinguished from surrounding text in a way that does not rely on color",
+      "fail": "Links can not be distinguished from surrounding text in a way that does not rely on color"
     }
   }
 }

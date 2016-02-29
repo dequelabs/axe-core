@@ -7,11 +7,11 @@
     "wcag141"
   ],
   "metadata": {
-    "description": "",
-    "help": "",
-    "helpUrl": ""
+    "description": "Links can be distinguished without relying on color",
+    "help": "Links must be distinguished from surrounding text in a way that does not rely on color",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/link-in-text-block"
   },
-  "all": [],
-  "any": ["exists"],
+  "all": ["link-in-text-block"],
+  "any": [],
   "none": []
 }
