@@ -28,10 +28,20 @@ describe('color.elementIsDistinct', function () {
 		styleElm.parentNode.removeChild(styleElm);
 	});
 
-	function createStyleString(selector, styleObj) {
-
+	function createStyleString(selector, outerStyle) {
 		// Merge style with the default
-		styleObj = Object.assign({}, defaultStyle, styleObj);
+		var prop;
+		var styleObj = {};
+		for (prop in defaultStyle) {
+			if (defaultStyle.hasOwnProperty(prop)) {
+				styleObj[prop] = defaultStyle[prop];
+			}
+    	}
+		for (prop in outerStyle) {
+			if (outerStyle.hasOwnProperty(prop)) {
+				styleObj[prop] = outerStyle[prop];
+			}
+    	}
 
 		var cssLines = Object.keys(styleObj).map(function (prop) {
 			// Make camelCase prop dash separated
