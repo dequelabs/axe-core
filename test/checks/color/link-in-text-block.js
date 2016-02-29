@@ -23,6 +23,9 @@ describe('link-in-text-block', function () {
 		styleElm.innerText = '';
 	});
 
+	after(function () {
+		styleElm.parentNode.removeChild(styleElm);
+	});
 
 	function createStyleString(selector, styleObj) {
 		// Merge style with the default
@@ -80,25 +83,41 @@ describe('link-in-text-block', function () {
 		});
 
 		it('uses color.elementIsDistinct to test the initial state', function () {
-			var expect, actual;
+			var isCalled;
 			var orig = commons.color.elementIsDistinct;
+			var linkElm = getLinkElm();
 
-			commons.color.elementIsDistinct = function () {
-				return expect;
+			commons.color.elementIsDistinct = function (arg1, arg2) {
+				isCalled = true;
+				return orig(arg1, arg2);
 			};
 
-			expect = true;
-			actual = checks['link-in-text-block'].evaluate();
-			assert.equal(actual, expect);
-
-			expect = false;
-			actual = checks['link-in-text-block'].evaluate();
-			assert.equal(actual, expect);
-
+			checks['link-in-text-block'].evaluate(linkElm);
+			assert.ok(isCalled);
 			commons.color.elementIsDistinct = orig;
 		});
 
-		it('passes the selected node and closest ancestral block element');
+		it('passes the selected node and closest ancestral block element', function () {
+			fixture.innerHTML =
+			'<div> <span style="display:block" id="parent">' +
+			'  <p style="display:inline"><a href="" id="link">' +
+			'     link text ' +
+			'  </a> inside block </p> inside block' +
+			'</span> outside block </div>';
+
+			var orig = commons.color.elementIsDistinct;
+			var linkElm = document.getElementById('link');
+			var parentElm = document.getElementById('parent');
+
+			commons.color.elementIsDistinct = function (arg1, arg2) {
+				assert.deepEqual(arg1, linkElm);
+				assert.deepEqual(arg2, parentElm);
+				return orig(arg1, arg2);
+			};
+
+			checks['link-in-text-block'].evaluate(linkElm);
+			commons.color.elementIsDistinct = orig;
+		});
 
 	});
 
@@ -110,7 +129,7 @@ describe('link-in-text-block', function () {
 			});
 		});
 
-		it('returns true if text contrast <= 3:0', function() {
+		it('returns true if text contrast >= 3:0', function() {
 			var linkElm = getLinkElm({
 				color: 'cyan'
 			}, {
@@ -119,7 +138,7 @@ describe('link-in-text-block', function () {
 			assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
 		});
 
-		it('returns false if text contrast > 3:0', function() {
+		it('returns false if text contrast < 3:0', function() {
 			var linkElm = getLinkElm({
 				color: '#000010'
 			}, {
@@ -128,37 +147,28 @@ describe('link-in-text-block', function () {
 			assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
 		});
 
-		it('returns true if background contrast <= 3:0', function() {
+		it('returns true if background contrast >= 3:0', function() {
 			var linkElm = getLinkElm({
-				backgroundColor: 'cyan'
+				backgroundColor: 'purple'
+			}, {
+				backgroundColor: 'white'
 			});
-			document.body.background = 'black';
 			assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
 		});
 
-		it('returns false if background contrast > 3:0', function() {
+		it('returns false if background contrast < 3:0', function() {
 			var linkElm = getLinkElm({
-				backgroundColor: '#000010'
+				backgroundColor: '#FFE'
+			}, {
+				backgroundColor: '#FFF'
 			});
-			document.body.background = '#000000';
 			assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
 		});
 
-		it('has tests', function () {
-			assert.ok(false, 'nope');
-		});
 	});
 
-	it('looks at the :visited state', function () {
-		assert.ok(false, 'nope, not yet');
-	});
+	it('looks at the :visited state');
 
-	it('looks at selectors using :link', function () {
-		assert.ok(false, 'nope, not yet');
-	});
-
-	it('looks at initial & inherited values', function () {
-		assert.ok(false, 'nope, not yet');
-	});
+	it('looks at selectors using :link');
 
 });
