@@ -20,7 +20,7 @@ describe('link-in-text-block', function () {
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		styleElm.innerText = '';
+		styleElm.innerHTML = '';
 	});
 
 	after(function () {
@@ -48,7 +48,7 @@ describe('link-in-text-block', function () {
 		}).join('\n');
 
 		// Add to the style element
-		styleElm.innerText += selector + ' {\n' + cssLines + '\n}\n';
+		styleElm.innerHTML += selector + ' {\n' + cssLines + '\n}\n';
 	}
 
 	function getLinkElm(linkStyle, paragraphStyle) {

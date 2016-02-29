@@ -1,6 +1,6 @@
 {
   "id": "link-in-text-block",
-  "selector": "a[href]:not(*[role]), *[role=link]",
+  "selector": "a[href]:not([role]), *[role=link]",
   "matches": "link-in-text-block-matches.js",
   "tags": [
     "wcag2a",

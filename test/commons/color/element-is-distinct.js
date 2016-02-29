@@ -21,11 +21,15 @@ describe('color.elementIsDistinct', function () {
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		styleElm.innerText = '';
+		styleElm.innerHTML = '';
 	});
 
+	after(function () {
+		styleElm.parentNode.removeChild(styleElm);
+	});
 
 	function createStyleString(selector, styleObj) {
+
 		// Merge style with the default
 		styleObj = Object.assign({}, defaultStyle, styleObj);
 
@@ -46,7 +50,7 @@ describe('color.elementIsDistinct', function () {
 		}).join('\n');
 
 		// Add to the style element
-		styleElm.innerText += selector + ' {\n' + cssLines + '\n}\n';
+		styleElm.innerHTML += selector + ' {\n' + cssLines + '\n}\n';
 	}
 
 	function getLinkElm(linkStyle, paragraphStyle) {
@@ -68,8 +72,8 @@ describe('color.elementIsDistinct', function () {
 
 	it('returns false without style adjustments', function () {
 		var elms = getLinkElm({});
-
 		var result = elementIsDistinct(elms.link, elms.par);
+
 		assert.isFalse(result);
 	});
 
