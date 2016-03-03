@@ -136,9 +136,9 @@ axe.a11yCheck(context, options, callback);
 
 #### Parameters
 
-* `context`: Defines the scope of the analysis - the part of the DOM that you would like to analyze. This will typically be the `document` or a specific selector such as class name, ID, selector, etc.
-* `options`: (optional) Set of options passed into rules or checks. [See below for more information](#a11ycheck-parameters)
-* `callback`: The callback function which receives on the [results object](#results-object) as a parameter when analysis is complete
+* [`context`](#context-parameter): Defines the scope of the analysis - the part of the DOM that you would like to analyze. This will typically be the `document` or a specific selector such as class name, ID, selector, etc.
+* [`options`](#options-parameter): (optional) Set of options passed into rules or checks.
+* [`callback`](#callback-parameter): The callback function which receives on the [results object](#results-object) as a parameter when analysis is complete
 
 ##### Context Parameter
 
