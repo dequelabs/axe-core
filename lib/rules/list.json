@@ -1,6 +1,6 @@
 {
   "id": "list",
-  "selector": "ul, ol",
+  "selector": "ul:not([role]), ol:not([role])",
   "tags": [
     "wcag2a",
     "wcag131"

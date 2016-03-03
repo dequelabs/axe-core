@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>dl aria test</title>
+	<meta charset="utf8">
+	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
+	<script src="/node_modules/mocha/mocha.js"></script>
+	<script src="/node_modules/chai/chai.js"></script>
+	<script src="/dist/axe.js"></script>
+	<script>
+		mocha.setup({
+			timeout: 10000,
+			ui: 'bdd'
+		});
+		var assert = chai.assert;
+	</script>
+</head>
+<body>
+<div role="list" id="target">
+	<dl role="listitem">
+	  <dd role="presentation">
+			<a href="#somethin">Stuff</a>
+		</dd>
+	</dl>
+</div>
+<div id="mocha"></div>
+<script src="dl-role.js"></script>
+<script src="/test/integration/adapter.js"></script>
+</body>
+</html>
