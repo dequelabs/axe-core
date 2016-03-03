@@ -132,9 +132,9 @@ describe('color.elementIsDistinct', function () {
 		assert.isFalse(result);
 	});
 
-	it('returns false with border: solid 1px transparant', function () {
+	it('returns false with border: solid 1px transparent', function () {
 		var elms = getLinkElm({
-			border: 'solid 1px transparant'
+			border: 'solid 1px transparent'
 		});
 
 		var result = elementIsDistinct(elms.link, elms.par);
