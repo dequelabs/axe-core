@@ -10,6 +10,10 @@
 	1. [API Name: axe.getRules](#api-name-axegetrules)
 	1. [API Name: axe.configure](#api-name-axeconfigure)
 	1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
+		1. [Parameters](#parameters-2)
+			1. [Context Parameter](#context-parameter)
+			2. [Options Parameter](#options-parameter)
+			3. [Callback Parameter](#callback-parameter)
 		1. [Results Object](#results-object)
 1. [Section 3: Example Reference](#section-3-example-reference)
 
