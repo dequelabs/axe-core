@@ -686,6 +686,13 @@ describe('Rule', function() {
 				var spec = {};
 				assert.equal(new Rule(spec).matches, Rule.prototype.matches);
 			});
+
+			it('should turn a string into a function', function () {
+				var spec = {
+					matches: 'function() {return "blah";}'
+				};
+				assert.equal(new Rule(spec).matches(), 'blah');
+			});
 		});
 		describe('.tags', function() {
 			it('should be set', function() {
@@ -700,7 +707,6 @@ describe('Rule', function() {
 				assert.deepEqual(new Rule(spec).tags, []);
 			});
 		});
-
 
 	});
 
@@ -787,11 +793,11 @@ describe('Rule', function() {
 			assert.deepEqual(rule._get('tags'), []);
 		});
 		it('should override matches', function () {
-			var rule = new Rule({matches: 'matches'});
+			var rule = new Rule({matches: 'function () {return "matches";}'});
 
-			assert.deepEqual(rule._get('matches'), 'matches');
-			rule.configure({matches: 'does not match'});
-			assert.deepEqual(rule._get('matches'), 'does not match');
+			assert.equal(rule._get('matches')(), 'matches');
+			rule.configure({matches: 'function () {return "does not match";}'});
+			assert.equal(rule._get('matches')(), 'does not match');
 		});
 	});
 

@@ -323,7 +323,7 @@ The options parameter is flexible way to configure how `a11yCheck` operates. The
 	This example will disable the rules with the id of `color-contrast` and `valid-lang`. All other rules will run. The list of valid rule IDs is specified in the section below.
 
 4. Run a modified set or rules using tags and rule enable
-	
+
 	By combining runOnly with type: tags and the rules option, a modified set can be defined. This lets you include rules with unspecified tags, and exclude rules that do have the specified tag(s).
 	```javascript
 	{
@@ -339,6 +339,23 @@ The options parameter is flexible way to configure how `a11yCheck` operates. The
 	```
 
 	This example includes all level A rules except for valid-lang, and in addition will include the level AA color-contrast rule.
+
+5. Run only some tags, bug exclude others
+
+	Similar to scope, the runOnly option can accept an object with an 'include' and 'exclude' property. Only those checks that match an included tag will run, except those that share a tag from the exclude list.
+	```javascript
+	{
+	  runOnly: {
+	    type: 'tags',
+	    value: {
+	      include: ['wcag2a', 'wcag2aa'],
+	      exclude: ['experimental']
+	    }
+	  }
+	}
+	```
+
+	This example first includes all `wcag2a` and `wcag2aa` rules. All rules that are tagged as `experimental` are than removed from the list of rules to run.
 
 ##### C. Callback Parameter
 

@@ -1,5 +1,8 @@
 {
   "id": "color-contrast",
+  "options": {
+    "noScroll": false
+  },
   "selector": "*",
   "tags": [
     "wcag2aa",

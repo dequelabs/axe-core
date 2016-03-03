@@ -1,6 +1,6 @@
 {
   "id": "dlitem",
-  "selector": "dd, dt",
+  "selector": "dd:not([role]), dt:not([role])",
   "tags": [
     "wcag2a",
     "wcag131"

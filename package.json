@@ -1,13 +1,29 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "license": "MPL-2.0",
-  "author": {
+  "contributors": [{
     "name": "David Sturley",
     "organization": "Deque Systems, Inc.",
     "url": "http://deque.com/"
-  },
+  },{
+    "name": "Dylan Barrell",
+    "organization": "Deque Systems, Inc.",
+    "url": "http://deque.com/"
+  },{
+    "name": "Wilco Fiers",
+    "organization": "Deque Systems, Inc.",
+    "url": "http://deque.com/"
+  },{
+    "name": "Dian Fay",
+    "organization": "Deque Systems, Inc.",
+    "url": "http://deque.com/"
+  },{
+    "name": "Marcy Sutton",
+    "organization": "Deque Systems, Inc.",
+    "url": "http://deque.com/"
+  }],
   "repository": {
     "type": "git",
     "url": "https://github.com/dequelabs/axe-core.git"

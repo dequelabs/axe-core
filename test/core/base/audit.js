@@ -73,12 +73,12 @@ describe('Audit', function () {
 			var audit = new Audit();
 			audit.addRule({
 				id: 'target',
-				matches: 'hello',
+				matches: 'function () {return "hello";}',
 				selector: 'bob'
 			});
 			assert.lengthOf(audit.rules, 1);
 			assert.equal(audit.rules[0].selector, 'bob');
-			assert.equal(audit.rules[0].matches, 'hello');
+			assert.equal(audit.rules[0].matches(), 'hello');
 
 			audit.addRule({
 				id: 'target',
@@ -87,7 +87,7 @@ describe('Audit', function () {
 
 			assert.lengthOf(audit.rules, 1);
 			assert.equal(audit.rules[0].selector, 'fred');
-			assert.equal(audit.rules[0].matches, 'hello');
+			assert.equal(audit.rules[0].matches(), 'hello');
 		});
 		it('should otherwise push new rule', function () {
 			var audit = new Audit();
