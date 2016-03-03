@@ -259,6 +259,10 @@ The options parameter is flexible way to configure how `a11yCheck` operates. The
 
 	This example will disable the rules with the ids of `color-contrast` and `valid-lang`. All other rules will run. The list of valid rule ids is specified in the section below.
 
+##### Callback Parameter
+
+The callback parameter is a function that will be called when the asynchronous `axe.a11yCheck` function completes. The callback function is passed a single parameter - the results object of the `axe.a11yCheck` call.
+
 
 #### Results Object
 
@@ -294,13 +298,6 @@ The date and time that analysis was completed.
 			* `html` - HTML source of the related node
 	* `all` - Array of checks that were made where all must have passed. Each entry in the array contains the same information as the 'any' array
 	* `none` - Array of checks that were made where all must have not passed. Each entry in the array contains the same information as the 'any' array
-
-#### a11yCheck Parameters
-
-##### C. Callback Parameter
-
-The callback parameter is a function that will be called when the asynchronous `axe.a11yCheck` function completes. The callback function is passed a single parameter - the results object of the `axe.a11yCheck` call.
-
 
 #### Example 2
 
