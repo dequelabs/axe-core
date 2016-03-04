@@ -50,7 +50,6 @@ describe('cleanupPlugins', function () {
     });
     axe.plugins.p.cleanup = function (res) {
       cleaned = true;
-      console.log('running');
       res();
     };
     cleanupPlugins(function () {
