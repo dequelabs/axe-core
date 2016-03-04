@@ -16,7 +16,6 @@
     "consistent-columns"
   ],
   "none": [
-    "cell-no-header",
     "headers-visible-text",
     "headers-attr-reference",
     "th-scope",

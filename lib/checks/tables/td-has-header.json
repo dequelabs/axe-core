@@ -1,6 +1,6 @@
 {
-  "id": "cell-no-header",
-  "evaluate": "cell-no-header.js",
+  "id": "td-has-header",
+  "evaluate": "td-has-header.js",
   "metadata": {
     "impact": "critical",
     "messages": {

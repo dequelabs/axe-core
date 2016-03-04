@@ -1,4 +1,4 @@
-describe('cell-no-header', function () {
+describe('td-has-header', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
@@ -19,36 +19,36 @@ describe('cell-no-header', function () {
 		checkContext._data = null;
 	});
 
-	it('should return false each non-empty cell has a row header', function () {
+	it('should return true each non-empty cell has a row header', function () {
 		fixture.innerHTML = '<table>' +
 				'<tr><th>hi</th><td>hello</td></tr>' +
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(checks['cell-no-header'].evaluate.call(checkContext, node));
+		assert.isTrue(checks['td-has-header'].evaluate.call(checkContext, node));
 	});
 
-	it('should return false each non-empty cell has a column header', function () {
+	it('should return true each non-empty cell has a column header', function () {
 		fixture.innerHTML = '<table>' +
 				'<tr><th></th><th></th></tr>' +
 				'<tr><td>hi</td><td>hello</td></tr>' +
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(checks['cell-no-header'].evaluate.call(checkContext, node));
+		assert.isTrue(checks['td-has-header'].evaluate.call(checkContext, node));
 	});
 
-	it('should return false each non-empty cell has aria-label', function () {
+	it('should return true each non-empty cell has aria-label', function () {
 		fixture.innerHTML = '<table>' +
 				'<tr><td aria-label="one">hi</td><td aria-label="two">hello</td></tr>' +
 				'<tr><td aria-label="one">hi</td><td aria-label="two">hello</td></tr>' +
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(checks['cell-no-header'].evaluate.call(checkContext, node));
+		assert.isTrue(checks['td-has-header'].evaluate.call(checkContext, node));
 	});
 
-	it('should return false each non-empty cell has aria-labelledby', function () {
+	it('should return true each non-empty cell has aria-labelledby', function () {
 		fixture.innerHTML = '<div id="one">one</div><div id="two">two</div>' +
 			'<table>' +
 				'<tr><td aria-labelledby="one">hi</td><td aria-labelledby="two">hello</td></tr>' +
@@ -56,32 +56,32 @@ describe('cell-no-header', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(checks['cell-no-header'].evaluate.call(checkContext, node));
+		assert.isTrue(checks['td-has-header'].evaluate.call(checkContext, node));
 	});
 
-	it('should return false if the only data cells are empty', function () {
+	it('should return true if the only data cells are empty', function () {
 		fixture.innerHTML = '<table>' +
 				'<tr><td></td><td></td></tr>' +
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(checks['cell-no-header'].evaluate.call(checkContext, node));
+		assert.isTrue(checks['td-has-header'].evaluate.call(checkContext, node));
 	});
 
-	it('should return true if a cell has no headers', function () {
+	it('should return false if a cell has no headers', function () {
 		fixture.innerHTML = '<table>' +
 				'<tr><td>hi</td><td>hello</td></tr>' +
 			'</table>';
 
 		var node = fixture.querySelector('table');
 
-		assert.isTrue(checks['cell-no-header'].evaluate.call(checkContext, node));
+		assert.isFalse(checks['td-has-header'].evaluate.call(checkContext, node));
 		assert.deepEqual(checkContext._relatedNodes, [
 			node.rows[0].cells[0], node.rows[0].cells[1]
 		]);
 	});
 
-	it('should return true if a cell has no headers - complex table', function () {
+	it('should return false if a cell has no headers - complex table', function () {
 		fixture.innerHTML = '<table>' +
 				'<tr><td colspan="3">Psuedo-Caption</td></tr>' +
 				'<tr><td>hi</td><td>hello</td><td>Ok</td></tr>' +
@@ -89,7 +89,7 @@ describe('cell-no-header', function () {
 
 		var node = fixture.querySelector('table');
 
-		assert.isTrue(checks['cell-no-header'].evaluate.call(checkContext, node));
+		assert.isFalse(checks['td-has-header'].evaluate.call(checkContext, node));
 		assert.deepEqual(checkContext._relatedNodes, [
 			node.rows[0].cells[0], node.rows[1].cells[0], node.rows[1].cells[1], node.rows[1].cells[2]
 		]);
