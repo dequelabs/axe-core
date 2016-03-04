@@ -95,4 +95,13 @@ describe('th-has-data-cells', function () {
 		assert.isFalse(checks['th-has-data-cells'].evaluate.call(checkContext, node));
 	});
 
+	it('should return false if a td with role=columnheader is used that has no data cells', function (){
+		fixture.innerHTML =
+			'<table id="fail4">' +
+			'  <tr> <td>aXe</td> <td role="columnheader">AXE</th> </tr>' +
+			'</table>';
+
+		var node = fixture.querySelector('table');
+		assert.isFalse(checks['th-has-data-cells'].evaluate.call(checkContext, node));
+	});
 });

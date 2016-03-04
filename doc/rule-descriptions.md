@@ -46,6 +46,7 @@
 | skip-link | Ensures the first link on the page is a skip link | best-practice |
 | tabindex | Ensures tabindex attribute values are not greater than 0 | best-practice |
 | td-has-header | Ensure that each data cell in a large table has one or more table headers | wcag2a, wcag131 |
+| th-has-data-cells | Ensure that each table header in a data table refers to data cells | wcag2a, wcag131 |
 | valid-lang | Ensures lang attributes have valid values | wcag2aa, wcag312 |
 | video-caption | Ensures &lt;video&gt; elements have captions | wcag2a, wcag122, wcag123, section508, section508a |
 | video-description | Ensures &lt;video&gt; elements have audio descriptions | wcag2aa, wcag125, section508, section508a |
