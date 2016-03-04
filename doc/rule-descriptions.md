@@ -45,6 +45,7 @@
 | server-side-image-map | Ensures that server-side image maps are not used | wcag2a, wcag211, section508, section508f |
 | skip-link | Ensures the first link on the page is a skip link | best-practice |
 | tabindex | Ensures tabindex attribute values are not greater than 0 | best-practice |
+| td-has-header |  | wcag2a, wcag131 |
 | valid-lang | Ensures lang attributes have valid values | wcag2aa, wcag312 |
 | video-caption | Ensures &lt;video&gt; elements have captions | wcag2a, wcag122, wcag123, section508, section508a |
 | video-description | Ensures &lt;video&gt; elements have audio descriptions | wcag2aa, wcag125, section508, section508a |
