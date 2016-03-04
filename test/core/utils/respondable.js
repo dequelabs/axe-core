@@ -1,6 +1,22 @@
 describe('utils.respondable', function () {
 	'use strict';
 
+	var mockUUID;
+	var originalUUID;
+	var getMockUUID = function () {
+		return mockUUID;
+	};
+
+	beforeEach(function () {
+		originalUUID = window.uuid.v1;
+		window.uuid.v1 = getMockUUID;
+		mockUUID = originalUUID();
+	});
+
+	afterEach(function () {
+		window.uuid.v1 = originalUUID;
+	});
+
 	it('should be a function', function () {
 		assert.isFunction(utils.respondable);
 	});
@@ -95,15 +111,40 @@ describe('utils.respondable', function () {
 		window.uuid.v1 = orig;
 	});
 
+	it('should pass messages that have all required properties', function () {
+		var success = false;
+		var event = document.createEvent('Event');
+		// Define that the event name is 'build'.
+		event.initEvent('message', true, true);
+		event.data = JSON.stringify({
+			_respondable: true,
+			topic: 'Death star',
+			message: 'Help us Obi-Wan',
+			uuid: mockUUID
+		});
+		event.source = window;
+
+		utils.respondable(window, 'Death star', null, true, function (data) {
+			success = true;
+			assert.equal(data, 'Help us Obi-Wan');
+		});
+		document.dispatchEvent(event);
+		assert.isTrue(success);
+	});
+
 	it('should reject messages that are that are not strings', function () {
 		var success = true;
 		var event = document.createEvent('Event');
 		// Define that the event name is 'build'.
 		event.initEvent('message', true, true);
-		event.data = { uuid: 1, _respondable: true};
+		event.data = {
+			_respondable: true,
+			topic: 'batman',
+			uuid: mockUUID
+		};
 		event.source = window;
 
-		utils.respondable(window, 'batman', 'nananana', function () {
+		utils.respondable(window, 'batman', 'nananana', true, function () {
 			success = false;
 		});
 		document.dispatchEvent(event);
@@ -111,16 +152,19 @@ describe('utils.respondable', function () {
 
 	});
 
-
 	it('should reject messages that are invalid stringified objects', function () {
 		var success = true;
 		var event = document.createEvent('Event');
 		// Define that the event name is 'build'.
 		event.initEvent('message', true, true);
-		event.data = '{ invalid object }';
+		event.data = JSON.stringify({
+			_respondable: true,
+			topic: 'batman',
+			uuid: mockUUID
+		}) + 'joker tricks!';
 		event.source = window;
 
-		utils.respondable(window, 'batman', 'nananana', function () {
+		utils.respondable(window, 'batman', 'nananana', true, function () {
 			success = false;
 		});
 		document.dispatchEvent(event);
@@ -134,9 +178,13 @@ describe('utils.respondable', function () {
 		// Define that the event name is 'build'.
 		event.initEvent('message', true, true);
 		event.data = '{ "_respondable": true, "topic": "batman" }';
+		event.data = JSON.stringify({
+			_respondable: true,
+			topic: 'batman'
+		});
 		event.source = window;
 
-		utils.respondable(window, 'batman', 'nananana', function () {
+		utils.respondable(window, 'batman', 'nananana', true, function () {
 			success = false;
 		});
 		document.dispatchEvent(event);
@@ -150,9 +198,14 @@ describe('utils.respondable', function () {
 		// Define that the event name is 'build'.
 		event.initEvent('message', true, true);
 		event.data = '{ "_respondable": true, "topic": "batman", "uuid": "12" }';
+		event.data = JSON.stringify({
+			_respondable: true,
+			topic: 'batman',
+			uuid: 'not-' + mockUUID
+		});
 		event.source = window;
 
-		utils.respondable(window, 'batman', 'nananana', function () {
+		utils.respondable(window, 'batman', 'nananana', true, function () {
 			success = false;
 		});
 		document.dispatchEvent(event);
@@ -166,15 +219,46 @@ describe('utils.respondable', function () {
 		// Define that the event name is 'build'.
 		event.initEvent('message', true, true);
 		event.data = '{ "uuid": "48", "topic": "batman" }';
+		event.data = JSON.stringify({
+			topic: 'batman',
+			uuid: mockUUID
+		});
 		event.source = window;
 
-		utils.respondable(window, 'batman', 'nananana', function () {
+		utils.respondable(window, 'batman', 'nananana', true, function () {
 			success = false;
 		});
 		document.dispatchEvent(event);
 		assert.isTrue(success);
-
 	});
+
+	it('should throw if an error message was send', function () {
+		var success = false;
+		var event = document.createEvent('Event');
+		// Define that the event name is 'build'.
+		event.initEvent('message', true, true);
+		event.data = JSON.stringify({
+			_respondable: true,
+			topic: 'Death star',
+			error: {
+				name: 'ReferenceError',
+				message: 'The exhaust port is open!',
+				trail: '... boom'
+			},
+			uuid: mockUUID
+		});
+		event.source = window;
+
+		utils.respondable(window, 'Death star', null, true, function (data) {
+			success = true;
+			assert.instanceOf(data, ReferenceError);
+			assert.equal(data.message, 'The exhaust port is open!');
+		});
+
+		document.dispatchEvent(event);
+		assert.isTrue(success);
+	});
+
 
 	describe('subscribe', function () {
 		it('should be a function', function () {
@@ -235,6 +319,59 @@ describe('utils.respondable', function () {
 				setTimeout(function () {
 					respond('yayyayyay', true);
 				}, 100);
+			});
+		});
+
+		it('does not trigger for error messages', function (done) {
+			var published = false;
+			utils.respondable.subscribe('catman', function () {
+				published = true;
+			});
+
+			var err = new ReferenceError('whoopsy');
+			utils.respondable(window, 'catman', err);
+			setTimeout(function () {
+				assert.ok(!published, 'Error events should not trigger');
+				done();
+			}, 10);
+		});
+
+		it('returns an error if the subscribe method responds with an error', function (done) {
+			var expected = 'Expected owlman to be batman';
+			var wait = true;
+			utils.respondable.subscribe('owlman', function (data, keepalive, respond) {
+				wait = false;
+				respond(new TypeError(expected));
+			});
+
+			utils.respondable(window, 'owlman', 'help!', true,
+			function (data) {
+				if (!wait) {
+					assert.instanceOf(data, TypeError);
+					assert.equal(data.message.split(/\n/)[0], expected);
+					done();
+				}
+			});
+		});
+
+		it('returns an error if the subscribe method throws', function (done) {
+			var wait = true;
+			var expected = 'Expected owlman to be batman';
+			utils.respondable.subscribe('owlman', function () {
+				wait = false;
+				throw new TypeError(expected);
+			});
+
+			// use keepalive, because we're running on the same window,
+			// otherwise it would delete the response before subscribe
+			// gets to react
+			utils.respondable(window, 'owlman', null, true,
+			function (data) {
+				if (!wait) {
+					assert.instanceOf(data, TypeError);
+					assert.equal(data.message.split(/\n/)[0], expected);
+					done();
+				}
 			});
 		});
 

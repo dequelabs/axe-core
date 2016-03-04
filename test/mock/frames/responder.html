@@ -13,7 +13,6 @@
     respond({axe: true});
   });
   utils.respondable.subscribe('axe.start', function (data, ignore, respond) {
-  	console.error(data);
   	// respond the number of times requested, keeping alive if requested
 	var number = data.number || 1;
 	var keepalive = data.keepalive;
@@ -26,6 +25,7 @@
 		respond({axe: true});
 	}, i*50);
   });
+
 </script>
 </body>
 </html>
