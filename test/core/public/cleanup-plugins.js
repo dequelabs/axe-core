@@ -48,9 +48,10 @@ describe('cleanupPlugins', function () {
       },
       commands: []
     });
-    axe.plugins.p.cleanup = function (done) {
+    axe.plugins.p.cleanup = function (res) {
       cleaned = true;
-      done();
+      console.log('running');
+      res();
     };
     cleanupPlugins(function () {
       assert.equal(cleaned, true);
