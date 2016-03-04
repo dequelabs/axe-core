@@ -2,32 +2,6 @@
 (function () {
 	'use strict';
 
-
-	var deepEqual = function (x, y) {
-	  if ((typeof x === 'object' && x !== null) && (typeof y === 'object' && y !== null)) {
-	    if (Object.keys(x).length !== Object.keys(y).length) {
-	      return false;
-	    }
-
-	    for (var prop in x) {
-	      if (y.hasOwnProperty(prop)) {
-	        if (! deepEqual(x[prop], y[prop])){
-	          return false;
-	        }
-	      }
-	      else {
-	        return false;
-	      }
-	    }
-
-	    return true;
-	  } else if (x !== y) {
-	    return false;
-	  } else {
-	    return true;
-	  }
-	};
-
 	function flattenResult(results) {
 		return {
 			passes: results.passes[0],
@@ -56,7 +30,8 @@
 	Object.keys(tests).forEach(function (ruleId) {
 		describe(ruleId, function () {
 			tests[ruleId].forEach(function (test) {
-				describe(test.description, function () {
+				var testName = test.description || ruleId + ' test';
+				describe(testName, function () {
 
 					function runTest(test, collection) {
 						if (!test[collection]) {
@@ -80,7 +55,12 @@
 									}
 
 									var matches = nodes.filter(function (node) {
-										return deepEqual(node.target, selector);
+										for (var i=0; i < selector.length; i++) {
+											if (node.target[i] !== selector[i]) {
+												return false;
+											}
+										}
+										return node.target.length === selector.length;
 									});
 									matches.forEach(function (node) {
 										// remove each node we find
@@ -102,7 +82,7 @@
 							it('should not return other results', function () {
 								if (typeof nodes !== 'undefined') {
 									// check that all nodes are removed
-									assert.deepEqual(nodes, []);
+									assert.equal(nodes.length, 0);
 								} else {
 									assert(false, 'there are no ' + collection);
 								}
