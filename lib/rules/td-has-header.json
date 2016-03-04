@@ -1,6 +1,6 @@
 {
   "id": "td-has-header",
-  "selector": "table td",
+  "selector": "table",
   "matches": "large-data-table-matches.js",
   "tags": [
     "wcag2a",
