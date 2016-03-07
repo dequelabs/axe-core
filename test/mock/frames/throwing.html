@@ -1,7 +1,7 @@
 <!doctype html>
-<html>
+<html id="frameContent">
 <head>
-  <title>Message Iframe Fixture</title>
+  <title>Error returning frame frame</title>
 </head>
 <body>
 <script src="../../../lib/core/utils/uuid.js"></script>
@@ -9,9 +9,15 @@
 <script src="../../../lib/core/utils/respondable.js"></script>
 
 <script>
+  window.axeName = 'frameContent';
   utils.respondable.subscribe('axe.ping', function (data, keepalive, respond) {
     respond({axe: true});
   });
+  utils.respondable.subscribe('axe.start', function () {
+    // respond the number of times requested, keeping alive if requested
+    throw new Error('error in axe.throw');
+  });
+
 </script>
 </body>
 </html>

@@ -217,15 +217,17 @@ describe('color.getBackgroundColor', function () {
 	});
 
 	it('should ignore 0-height elements', function () {
-		fixture.innerHTML = '<div id="parent" style="height: 40px; width: 30px; ' +
+		fixture.innerHTML =
+			'<div id="parent" style="height: 40px; width: 30px; ' +
 			'background-color: white; position: relative; z-index: 5">' +
-			'<div float="left" style="height: 0px; background-color: black">' +
-			'<div id="target" style="height: 20px; width: 25px; z-index: 25;">' +
+			'  <div float="left" style="height: 0px; background-color: black">' +
+			'    <div id="target" style="height: 20px; width: 25px; z-index: 25;">' +
 			'</div></div></div>';
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
 		var actual = commons.color.getBackgroundColor(target, bgNodes);
+
 		var expected = new commons.color.Color(255, 255, 255, 1);
 		assert.closeTo(actual.red, expected.red, 0.5);
 		assert.closeTo(actual.green, expected.green, 0.5);
@@ -245,7 +247,7 @@ describe('color.getBackgroundColor', function () {
 		var shifted = fixture.querySelector('#shifted');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		var actual = commons.color.getBackgroundColor(target, bgNodes);
+		var actual = commons.color.getBackgroundColor(target, bgNodes, false);
 		var expected = new commons.color.Color(0, 0, 0, 1);
 		if (commons.dom.supportsElementsFromPoint(document)) {
 			assert.deepEqual(bgNodes, [shifted]);
@@ -259,6 +261,67 @@ describe('color.getBackgroundColor', function () {
 		assert.closeTo(actual.alpha, expected.alpha, 0.1);
 	});
 
+	it('should return null when encountering background images during visual traversal', function () {
+		fixture.innerHTML =
+		'<div id="parent" style="height: 40px; width: 30px; ' +
+		' background-color: white; position: relative; z-index: 5"> ' +
+		'	<div id="target" style="position: relative; top: 1px; height: 20px;' +
+		'	 width: 25px; z-index: 25; background:rgba(0,125,0,0.5);"></div> ' +
+		'	<div id="shifted" style="position: absolute; top: -30px; height: 40px; ' +
+		'    background-image: url(foobar.png);'+
+		'	 width: 35px; z-index: 15;">' +
+		'	</div>'+
+		'</div>';
 
+		var target = fixture.querySelector('#target');
+		var bgNodes = [];
+		var outcome = commons.color.getBackgroundColor(target, bgNodes, false);
+		assert.isNull(outcome);
+	});
 
+	it('should return null when encountering image nodes during visual traversal', function () {
+		fixture.innerHTML =
+		'<div id="parent" style="height: 40px; width: 30px; ' +
+		' background-color: white; position: relative; z-index: 5"> ' +
+		'	<div id="shifted" style="position: absolute; top: -10px; height: 40px; ' +
+		'	 width: 35px; z-index: 15;">' +
+		'		<img src="some-img.png" width="35" height="40">' +
+		'	</div>'+
+		'	<div id="target" style="position: relative; top: 1px; height: 20px;' +
+		'	 width: 25px; z-index: 25; background:rgba(0,125,0,0.5);"></div> ' +
+		'</div>';
+
+		var target = fixture.querySelector('#target');
+		var bgNodes = [];
+		var outcome = commons.color.getBackgroundColor(target, bgNodes, false);
+		assert.isNull(outcome);
+	});
+
+	it('does not change the scroll when scroll is disabled', function() {
+		fixture.innerHTML = '<div id="parent" style="height: 40px; width: 30px; ' +
+		'background-color: white; position: relative; z-index: 5">' +
+		'<div id="target" style="position: relative; top: 1px; height: 20px; ' +
+		'width: 25px; z-index: 25;">' + '</div>';
+		var targetEl = fixture.querySelector('#target');
+		var bgNodes = [];
+		window.scroll(0, 0);
+
+		commons.color.getBackgroundColor(targetEl, bgNodes, true);
+
+		assert.equal(window.pageYOffset, 0);
+	});
+
+	it('scrolls into view when scroll is enabled', function() {
+		fixture.innerHTML = '<div id="parent" style="height: 5000px; width: 30px; ' +
+		'background-color: white; position: relative; z-index: 5">' +
+		'<div id="target" style="position: absolute; bottom: 0; height: 20px; ' +
+		'width: 25px; z-index: 25;">' + '</div>';
+		var targetEl = fixture.querySelector('#target');
+		var bgNodes = [];
+		window.scroll(0, 0);
+
+		commons.color.getBackgroundColor(targetEl, bgNodes, false);
+
+		assert.notEqual(window.pageYOffset, 0);
+	});
 });

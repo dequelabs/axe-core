@@ -7,10 +7,8 @@ aXe runs a series of tests to check for accessibility of content and functionali
 ### Environment Pre-requisites
 
 1.  You must have NodeJS installed.
-2.  Bower must be installed globally.  `npm install -g bower`
-3.  Grunt must be installed globally.  `npm install -g grunt-cli`
-4.  Install npm development dependencies.  `npm install`
-5.  Install bower development dependencies.  `bower install`
+2.  Grunt must be installed globally.  `npm install -g grunt-cli`
+3.  Install npm development dependencies.  `npm install`
 
 ### Building axe.js
 

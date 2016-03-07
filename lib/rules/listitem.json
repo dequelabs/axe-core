@@ -1,6 +1,6 @@
 {
   "id": "listitem",
-  "selector": "li",
+  "selector": "li:not([role])",
   "tags": [
     "wcag2a",
     "wcag131"
