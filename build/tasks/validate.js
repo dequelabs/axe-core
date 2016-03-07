@@ -22,7 +22,11 @@ function hasUniqueId() {
 	return function (v, o) {
 		if (!seen[v]) {
 			seen[v] = o;
-			return true;
+			if (o.metadata && o.metadata.helpUrl) {
+				return (o.metadata.helpUrl.indexOf(v) !== -1);
+			} else {
+				return true;
+			}
 		}
 		return false;
 	};
