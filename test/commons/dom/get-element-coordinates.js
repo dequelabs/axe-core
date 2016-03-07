@@ -17,12 +17,12 @@ describe('dom.getElementCoordinates', function () {
 
 		el = document.getElementById('coords0');
 		coords = commons.dom.getElementCoordinates(el);
-		assert.closeTo(coords.left, -1000, 0.3);
-		assert.closeTo(coords.top, -1000, 0.3);
-		assert.closeTo(coords.width, 1000, 0.3);
-		assert.closeTo(coords.height, 1000, 0.3);
-		assert.closeTo(coords.right, 0, 0.3);
-		assert.closeTo(coords.bottom, 0, 0.3);
+		assert.closeTo(coords.left, -1000, 0.5);
+		assert.closeTo(coords.top, -1000, 0.5);
+		assert.closeTo(coords.width, 1000, 0.5);
+		assert.closeTo(coords.height, 1000, 0.5);
+		assert.closeTo(coords.right, 0, 0.5);
+		assert.closeTo(coords.bottom, 0, 0.5);
 
 		el = document.getElementById('div');
 		coords = commons.dom.getElementCoordinates(el);
@@ -41,21 +41,21 @@ describe('dom.getElementCoordinates', function () {
 
 		el = document.getElementById('coords0');
 		coords = commons.dom.getElementCoordinates(el);
-		assert.closeTo(coords.left, -1000, 0.3);
-		assert.closeTo(coords.top, -1000, 0.3);
-		assert.closeTo(coords.width, 1000, 0.3);
-		assert.closeTo(coords.height, 1000, 0.3);
-		assert.closeTo(coords.right, 0, 0.3);
-		assert.closeTo(coords.bottom, 0, 0.3);
+		assert.closeTo(coords.left, -1000, 0.5);
+		assert.closeTo(coords.top, -1000, 0.5);
+		assert.closeTo(coords.width, 1000, 0.5);
+		assert.closeTo(coords.height, 1000, 0.5);
+		assert.closeTo(coords.right, 0, 0.5);
+		assert.closeTo(coords.bottom, 0, 0.5);
 
 		window.scrollTo(0, 150);
 		coords = commons.dom.getElementCoordinates(el);
-		assert.closeTo(coords.left, -1000, 0.3);
-		assert.closeTo(coords.top, -1000, 0.3);
-		assert.closeTo(coords.width, 1000, 0.3);
-		assert.closeTo(coords.height, 1000, 0.3);
-		assert.closeTo(coords.right, 0, 0.3);
-		assert.closeTo(coords.bottom, 0, 0.3);
+		assert.closeTo(coords.left, -1000, 0.5);
+		assert.closeTo(coords.top, -1000, 0.5);
+		assert.closeTo(coords.width, 1000, 0.5);
+		assert.closeTo(coords.height, 1000, 0.5);
+		assert.closeTo(coords.right, 0, 0.5);
+		assert.closeTo(coords.bottom, 0, 0.5);
 
 		window.scrollTo(offset.left, offset.top);
 
