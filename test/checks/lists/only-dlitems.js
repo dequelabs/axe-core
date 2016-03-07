@@ -123,7 +123,7 @@ describe('only-dlitems', function () {
 	});
 
 	it('should return false if <template> is used along side dt', function () {
-		fixture.innerHTML = '<dl id="target"><template></template<dt>A list</dt></dl>';
+		fixture.innerHTML = '<dl id="target"><template></template><dt>A list</dt></dl>';
 		var node = fixture.querySelector('#target');
 		assert.isFalse(checks['only-dlitems'].evaluate.call(checkContext, node));
 	});
