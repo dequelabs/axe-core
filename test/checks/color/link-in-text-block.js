@@ -176,6 +176,13 @@ describe('link-in-text-block', function () {
 			assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
 		});
 
+		it('returns true if the background contrast can not be determined', function () {
+			var linkElm = getLinkElm({ }, {
+				backgroundImage: 'url(photo.jpg)'
+			});
+			assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
+		});
+
 	});
 
 	it('looks at the :visited state');
