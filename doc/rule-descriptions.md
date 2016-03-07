@@ -23,8 +23,10 @@
 | empty-heading | Ensures headings have discernible text | best-practice |
 | frame-title | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a unique and non-empty title attribute | wcag2a, wcag241 |
 | heading-order | Ensures the order of headings is semantically correct | best-practice |
-| html-lang | Ensures every HTML document has a lang attribute and its value is valid | wcag2a, wcag311 |
+| html-has-lang | Ensures every HTML document has a lang attribute | wcag2a, wcag311 |
+| html-lang-valid | Ensures the lang attribute of the &lt;html&gt; element has a valid value | wcag2a, wcag311 |
 | image-alt | Ensures &lt;img&gt; elements have alternate text or a role of none or presentation | wcag2a, wcag111, section508, section508a |
+| image-redundant-alt | Ensure button and link text is not repeated as image alternative | best-practice |
 | input-image-alt | Ensures &lt;input type=&quot;image&quot;&gt; elements have alternate text | wcag2a, wcag111, section508, section508a |
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | best-practice |
 | label | Ensures every form element has a label | wcag2a, wcag332, wcag131, section508, section508n |
@@ -34,6 +36,7 @@
 | listitem | Ensures &lt;li&gt; elements are used semantically | wcag2a, wcag131 |
 | marquee | Ensures &lt;marquee&gt; elements are not used | wcag2a, wcag222, section508, section508j |
 | meta-refresh | Ensures &lt;meta http-equiv=&quot;refresh&quot;&gt; is not used | wcag2a, wcag2aaa, wcag221, wcag224, wcag325 |
+| meta-viewport-large | Ensures &lt;meta name=&quot;viewport&quot;&gt; can sale a significant amount | best-practice |
 | meta-viewport | Ensures &lt;meta name=&quot;viewport&quot;&gt; does not disable text scaling and zooming | wcag2aa, wcag144 |
 | object-alt | Ensures &lt;object&gt; elements have alternate text | wcag2a, wcag111 |
 | radiogroup | Ensures related &lt;input type=&quot;radio&quot;&gt; elements have a group and that the group designation is consistent | wcag2a, wcag131 |

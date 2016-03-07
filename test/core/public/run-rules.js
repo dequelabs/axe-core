@@ -111,7 +111,6 @@ describe('runRules', function () {
 		frame.addEventListener('load', onLoad);
 		fixture.appendChild(frame);
 
-
 		frame = document.createElement('iframe');
 		frame.src = '../mock/frames/nocode.html';
 		frame.addEventListener('load', onLoad);
@@ -480,24 +479,20 @@ describe('runRules', function () {
 
 	it('should call the reject argument if an error occurs', function (done) {
 		axe._load({ rules: [{
-			id: 'html',
-			selector: 'html',
-			any: ['html']
-		}], checks: [{
-			id: 'html',
-			evaluate: function () {
-				throw new Error('Release the worms of war!');
-			}
-		}], messages: {}});
+			id: 'invalidRule'
+		}], checks: [], messages: {}});
 
 		createFrames(function () {
 			setTimeout(function () {
-				runRules(document, {}, function () {},
+				runRules(document, {}, function () {
+					assert.ok(false, 'You shall not pass!');
+					done();
+				},
 				function (err) {
-					assert.equal(err.message, 'Release the worms of war!');
+					assert.instanceOf(err, Error);
 					done();
 				}, isNotCalled);
-			}, 500);
+			}, 100);
 		});
 	});
 

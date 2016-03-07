@@ -4,8 +4,8 @@
   "metadata": {
     "impact": "critical",
     "messages": {
-      "pass": "List item has a <ul> or <ol> parent element",
-      "fail": "List item does not have a <ul> or <ol> parent element"
+      "pass": "List item has a <ul>, <ol> or role=\"list\" parent element",
+      "fail": "List item does not have a <ul>, <ol> or role=\"list\" parent element"
     }
   }
 }

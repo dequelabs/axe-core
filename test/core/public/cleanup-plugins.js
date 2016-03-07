@@ -14,6 +14,10 @@ describe('cleanupPlugins', function () {
 
   var fixture = document.getElementById('fixture');
 
+  var assertNotCalled = function () {
+    assert.ok(false, 'Should not be called');
+  };
+
   afterEach(function () {
     fixture.innerHTML = '';
     axe.plugins = {};
@@ -44,14 +48,14 @@ describe('cleanupPlugins', function () {
       },
       commands: []
     });
-    axe.plugins.p.cleanup = function (done) {
+    axe.plugins.p.cleanup = function (res) {
       cleaned = true;
-      done();
+      res();
     };
     cleanupPlugins(function () {
       assert.equal(cleaned, true);
       done();
-    });
+    }, assertNotCalled);
   });
 
 
@@ -68,7 +72,7 @@ describe('cleanupPlugins', function () {
         utils.sendCommandToFrame = orig;
         done();
       };
-      cleanupPlugins();
+      cleanupPlugins(function () {}, assertNotCalled);
     });
   });
 

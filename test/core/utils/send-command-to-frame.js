@@ -4,8 +4,12 @@ describe('utils.sendCommandToFrame', function () {
   var fixture = document.getElementById('fixture');
 
 	afterEach(function () {
-		fixture.innerHTML = '';
-	});
+    fixture.innerHTML = '';
+  });
+
+  var assertNotCalled = function () {
+    assert.ok(false, 'should not be called');
+  };
 
   it('should timeout if there is no response from frame', function (done) {
     var orig = window.setTimeout;
@@ -21,15 +25,11 @@ describe('utils.sendCommandToFrame', function () {
 
     var frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
-      utils.sendCommandToFrame(frame, {}, function () {
-        assert.ok(false, 'should not be called');
-
-      }, function (err) {
-        assert.instanceOf(err, Error);
-        assert.equal(err.message.split(/: /)[0], 'No response from frame');
-        window.setTimeout = orig;
+      utils.sendCommandToFrame(frame, {}, function (result) {
+        assert.equal(result, null);
         done();
-      });
+      }, assertNotCalled);
+      window.setTimeout = orig;
     });
 
     frame.id = 'level0';
@@ -46,7 +46,7 @@ describe('utils.sendCommandToFrame', function () {
       }, function () {
         assert.isTrue(true);
         done();
-      });
+      }, assertNotCalled);
     });
 
     frame.id = 'level0';
@@ -69,7 +69,7 @@ describe('utils.sendCommandToFrame', function () {
           assert.isTrue(true);
           done();
         }
-      });
+      }, assertNotCalled);
     });
 
     frame.id = 'level0';
@@ -92,7 +92,7 @@ describe('utils.sendCommandToFrame', function () {
           assert.isTrue(false);
           done();
         }
-      });
+      }, assertNotCalled);
     });
     var timer = setTimeout(function () {
       assert.isTrue(true);

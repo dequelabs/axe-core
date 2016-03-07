@@ -16,12 +16,6 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		clean: ['dist', 'tmp'],
-		nodeify: {
-			core: {
-				src: ['<%= concat.engine.dest %>'],
-				dest: 'dist/index.js'
-			}
-		},
 		'update-help': {
 			options: {
 				version: '<%=pkg.version%>'
@@ -34,10 +28,6 @@ module.exports = function (grunt) {
 			engine: {
 				src: [
 					'lib/intro.stub',
-					'bower_components/simple-clone/lib/index.js',
-					'bower_components/element-matches/lib/index.js',
-					'bower_components/escape-selector/lib/index.js',
-					'bower_components/node-uuid/uuid.js',
 					'lib/core/index.js',
 					'lib/core/*/index.js',
 					'lib/core/**/index.js',
@@ -101,15 +91,6 @@ module.exports = function (grunt) {
 			}
 		},
 		uglify: {
-			lib: {
-				files: [{
-					src: ['<%= concat.engine.dest %>'],
-					dest: 'dist/axe.min.js'
-				}],
-				options: {
-					preserveComments: 'some'
-				}
-			},
 			beautify: {
 				files: [{
 					src: ['<%= concat.engine.dest %>'],
@@ -126,9 +107,39 @@ module.exports = function (grunt) {
 					},
 					preserveComments: 'some'
 				}
+			},
+			lib: {
+				files: [{
+					src: ['<%= concat.engine.dest %>'],
+					dest: 'dist/axe.min.js'
+				}],
+				options: {
+					preserveComments: 'some'
+				}
+			},
+			index: {
+				files: [{
+					src: ['tmp/index.js'],
+					dest: 'tmp/index.js'
+				}],
+				options: {
+					preserveComments: 'some'
+				}
+			}
+		},
+		nodeify: {
+			core: {
+				src: ['tmp/index.js'],
+				dest: 'dist/index.js'
 			}
 		},
 		copy: {
+			index: {
+				files: [{
+					src: ['<%= concat.engine.dest %>'],
+					dest: 'tmp/index.js'
+				}]
+			},
 			manifests: {
 				files: [{
 					src: ['package.json'],
@@ -238,7 +249,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build']);
 
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
-		'concat:engine', 'copy', 'nodeify', 'uglify']);
+		'concat:engine', 'copy', 'uglify', 'nodeify']);
 
 	grunt.registerTask('test', ['build',  'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);

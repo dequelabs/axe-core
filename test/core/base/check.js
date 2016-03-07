@@ -81,34 +81,67 @@ describe('Check', function () {
 			});
 			it('should override evaluate', function () {
 				Check.prototype.test = function () {
-					return this.evaluate;
+					return this.evaluate();
 				};
 				var check = new Check({
-					evaluate: 'foo'
+					evaluate: 'function () { return "foo"; }'
 				});
-				check.configure({evaluate: 'fong'});
+				check.configure({evaluate: 'function () { return "fong"; }'});
 				assert.equal('fong', check.test());
 				delete Check.prototype.test;
 			});
 			it('should override matches', function () {
 				Check.prototype.test = function () {
-					return this.matches;
+					return this.matches();
 				};
 				var check = new Check({
-					matches: 'foo'
+					matches: 'function () { return "foo"; }'
 				});
-				check.configure({matches: 'fong'});
+				check.configure({matches: 'function () { return "fong"; }'});
 				assert.equal('fong', check.test());
 				delete Check.prototype.test;
 			});
 			it('should override after', function () {
 				Check.prototype.test = function () {
-					return this.after;
+					return this.after();
 				};
 				var check = new Check({
-					after: 'foo'
+					after: 'function () { return "foo"; }'
 				});
-				check.configure({after: 'fong'});
+				check.configure({after: 'function () { return "fong"; }'});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should override evaluate as a function', function () {
+				Check.prototype.test = function () {
+					return this.evaluate();
+				};
+				var check = new Check({
+					evaluate: function () { return 'foo'; }
+				});
+				check.configure({evaluate: function () { return 'fong'; }});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should override matches as a function', function () {
+				Check.prototype.test = function () {
+					return this.matches();
+				};
+				var check = new Check({
+					matches: function () { return 'foo'; }
+				});
+				check.configure({matches: function () { return 'fong'; }});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should override after as a function', function () {
+				Check.prototype.test = function () {
+					return this.after();
+				};
+				var check = new Check({
+					after: function () { return 'foo'; }
+				});
+				check.configure({after: function () { return 'fong'; }});
 				assert.equal('fong', check.test());
 				delete Check.prototype.test;
 			});
@@ -323,6 +356,13 @@ describe('Check', function () {
 				assert.equal(new Check(spec).matches, Check.prototype.matches);
 			});
 
+			it('should be able to take a string and turn it into a function', function () {
+				var spec = {
+					matches: 'function () {return "blah";}'
+				};
+				assert.equal(typeof new Check(spec).matches, 'function');
+				assert.equal(new Check(spec).matches(), 'blah');
+			});
 		});
 
 		describe('.id', function () {
@@ -344,7 +384,7 @@ describe('Check', function () {
 		describe('.after', function () {
 			it('should be set', function () {
 				var spec = {
-					after: 'monkeys'
+					after: function () {}
 				};
 				assert.equal(new Check(spec).after, spec.after);
 			});
@@ -355,6 +395,13 @@ describe('Check', function () {
 
 			});
 
+			it('should be able to take a string and turn it into a function', function () {
+				var spec = {
+					after: 'function () {return "blah";}'
+				};
+				assert.equal(typeof new Check(spec).after, 'function');
+				assert.equal(new Check(spec).after(), 'blah');
+			});
 		});
 
 		describe('.options', function () {
@@ -371,6 +418,23 @@ describe('Check', function () {
 
 			});
 
+		});
+
+		describe('.evaluate', function () {
+			it('should be set', function () {
+				var spec = {
+					evaluate: function () {}
+				};
+				assert.equal(typeof new Check(spec).evaluate, 'function');
+				assert.equal(new Check(spec).evaluate, spec.evaluate);
+			});
+			it('should turn a string into a function', function () {
+				var spec = {
+					evaluate: 'function () { return "blah";}'
+				};
+				assert.equal(typeof new Check(spec).evaluate, 'function');
+				assert.equal(new Check(spec).evaluate(), 'blah');
+			});
 		});
 
 	});

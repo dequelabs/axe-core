@@ -75,8 +75,6 @@ describe('only-listitems', function () {
 		var node = fixture.querySelector('#target');
 
 		assert.isFalse(checks['only-listitems'].evaluate(node));
-
-
 	});
 
 	it('should return true if the list has an li with other content', function () {
@@ -85,8 +83,36 @@ describe('only-listitems', function () {
 
 		assert.isTrue(checks['only-listitems'].evaluate.call(checkContext, node));
 		assert.deepEqual(checkContext._relatedNodes, [node.querySelector('p')]);
+	});
 
+	it('should return false if <link> is used along side li', function () {
+		fixture.innerHTML = '<ol id="target"><link rel="stylesheet" href="theme.css"><li>A list</li></ol>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks['only-listitems'].evaluate.call(checkContext, node));
+	});
 
+	it('should return false if <meta> is used along side li', function () {
+		fixture.innerHTML = '<ol id="target"><meta name="description" content=""><li>A list</li></ol>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks['only-listitems'].evaluate.call(checkContext, node));
+	});
+
+	it('should return false if <script> is used along side li', function () {
+		fixture.innerHTML = '<ol id="target"><script src="script.js"></script><li>A list</li></ol>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks['only-listitems'].evaluate.call(checkContext, node));
+	});
+
+	it('should return false if <style> is used along side li', function () {
+		fixture.innerHTML = '<ol id="target"><style></style><li>A list</li></ol>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks['only-listitems'].evaluate.call(checkContext, node));
+	});
+
+	it('should return false if <template> is used along side li', function () {
+		fixture.innerHTML = '<ol id="target"><template></template<li>A list</li></ol>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks['only-listitems'].evaluate.call(checkContext, node));
 	});
 
 });
