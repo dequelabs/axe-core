@@ -9,8 +9,7 @@
   ],
   "metadata": {
     "description": "Ensures <img> elements have alternate text or a role of none or presentation",
-    "help": "Images must have alternate text",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/image-alt"
+    "help": "Images must have alternate text"
   },
   "all": [],
   "any": [

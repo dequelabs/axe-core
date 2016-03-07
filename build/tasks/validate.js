@@ -22,11 +22,7 @@ function hasUniqueId() {
 	return function (v, o) {
 		if (!seen[v]) {
 			seen[v] = o;
-			if (o.metadata && o.metadata.helpUrl) {
-				return (o.metadata.helpUrl.indexOf(v) !== -1);
-			} else {
-				return true;
-			}
+			return true;
 		}
 		return false;
 	};
@@ -196,15 +192,11 @@ function createSchemas() {
 			metadata: {
 				type: 'object',
 				required: true,
+				additionalProperties: false,
 				properties: {
 					help: {
 						required: true,
 						type: 'string'
-					},
-					helpUrl: {
-						required: true,
-						type: 'string',
-						format: 'url'
 					},
 					description: {
 						required: true,

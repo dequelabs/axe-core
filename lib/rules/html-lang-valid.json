@@ -7,8 +7,7 @@
   ],
   "metadata": {
     "description": "Ensures the lang attribute of the <html> element has a valid value",
-    "help": "<html> element must have a valid value for the lang attribute",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/html-lang-valid"
+    "help": "<html> element must have a valid value for the lang attribute"
   },
   "all": [],
   "any": [],
