@@ -13,7 +13,7 @@
 | blink | Ensures &lt;blink&gt; elements are not used | wcag2a, wcag222 |
 | button-name | Ensures buttons have discernible text | wcag2a, wcag412, section508, section508a |
 | bypass | Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content | wcag2a, wcag241, section508, section508o |
-| checkboxgroup | Ensures related &lt;input type=&quot;checkbox&quot;&gt; elements have a group and that that group designation is consistent | wcag2a, wcag131 |
+| checkboxgroup | Ensures related &lt;input type=&quot;checkbox&quot;&gt; elements have a group and that that group designation is consistent | best-practice |
 | color-contrast | Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds | wcag2aa, wcag143 |
 | data-table | Ensures data tables are marked up semantically and have the correct header structure | wcag2a, wcag131 |
 | definition-list | Ensures &lt;dl&gt; elements are structured correctly | wcag2a, wcag131 |
@@ -40,7 +40,7 @@
 | meta-viewport-large | Ensures &lt;meta name=&quot;viewport&quot;&gt; can sale a significant amount | best-practice |
 | meta-viewport | Ensures &lt;meta name=&quot;viewport&quot;&gt; does not disable text scaling and zooming | wcag2aa, wcag144 |
 | object-alt | Ensures &lt;object&gt; elements have alternate text | wcag2a, wcag111 |
-| radiogroup | Ensures related &lt;input type=&quot;radio&quot;&gt; elements have a group and that the group designation is consistent | wcag2a, wcag131 |
+| radiogroup | Ensures related &lt;input type=&quot;radio&quot;&gt; elements have a group and that the group designation is consistent | best-practice |
 | region | Ensures all content is contained within a landmark region | best-practice |
 | scope | Ensures the scope attribute is used correctly on tables | best-practice |
 | server-side-image-map | Ensures that server-side image maps are not used | wcag2a, wcag211, section508, section508f |
