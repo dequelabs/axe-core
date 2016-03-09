@@ -42,13 +42,11 @@ describe('duplicate-id', function () {
 		assert.deepEqual(checks['duplicate-id'].after([{data: 'a'}, {data: 'b'}, {data: 'b'}]), [{data: 'a'}, {data: 'b'}]);
 	});
 
-	it('should work with empty ids', function () {
-		fixture.innerHTML = '<div id=""></div><div id=""></div>';
-		var node = fixture.querySelector('[id=""]');
+	it('should ignore empty ids', function () {
+		fixture.innerHTML = '<div data-testelm="1" id=""></div><div data-testelm="2"  id=""></div>';
+		var node = fixture.querySelector('[data-testelm="1"]');
 
-		assert.isFalse(checks['duplicate-id'].evaluate.call(checkContext, node));
-		assert.equal(checkContext._data, node.id);
-		assert.deepEqual(checkContext._relatedNodes, [node.nextSibling]);
+		assert.isTrue(checks['duplicate-id'].evaluate.call(checkContext, node));
 	});
 
 });

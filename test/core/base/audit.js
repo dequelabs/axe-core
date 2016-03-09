@@ -155,7 +155,7 @@ describe('Audit', function () {
 
 	describe('Audit#run', function () {
 		it('should run all the rules', function (done) {
-			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
+			fixture.innerHTML = '<input aria-label="monkeys" type="text">' +
 				'<div id="monkeys">bananas</div>' +
 				'<input aria-labelledby="monkeys" type="text">' +
 				'<blink>FAIL ME</blink>';
@@ -220,7 +220,7 @@ describe('Audit', function () {
 					nodes: [{
 						node: {
 							selector: ['#fixture'],
-							source: '<div id="fixture"><input type="text" aria-label="monkeys"><div id="monkeys">bananas</div><input aria-labelledby="monkeys" type="text"><blink>FAIL ME</blink></div>'
+							source: '<div id="fixture"><input aria-label="monkeys" type="text"><div id="monkeys">bananas</div><input aria-labelledby="monkeys" type="text"><blink>FAIL ME</blink></div>'
 						},
 						none: [{
 							id: 'negative1-check1',
