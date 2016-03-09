@@ -16,6 +16,12 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		clean: ['dist', 'tmp'],
+		nodeify: {
+			core: {
+				src: ['<%= concat.engine.dest %>'],
+				dest: 'dist/index.js'
+			}
+		},
 		'update-help': {
 			options: {
 				version: '<%=pkg.version%>'
@@ -136,6 +142,9 @@ module.exports = function (grunt) {
 				}, {
 					src: ['LICENSE'],
 					dest: 'dist/'
+				}, {
+					src: ['dist/axe.js'],
+					dest: 'dist/index.js'
 				}]
 			}
 		},
@@ -232,7 +241,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build']);
 
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
-		'concat:engine', 'copy', 'uglify']);
+		'concat:engine', 'copy', 'nodeify', 'uglify']);
 
 	grunt.registerTask('test', ['build',  'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
