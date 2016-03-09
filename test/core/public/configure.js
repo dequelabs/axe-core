@@ -39,6 +39,27 @@ describe('axe.configure', function() {
 		assert.equal(axe._audit.data.rules.bob, 'joe');
 	});
 
+	it('should call setBranding when passed options', function () {
+		axe._load({});
+		axe.configure({
+			rules: [{
+				id: 'bob',
+				selector: 'pass',
+			}]
+		});
+		assert.lengthOf(axe._audit.rules, 1);
+		assert.equal(axe._audit.data.rules.bob.helpUrl,
+			'https://dequeuniversity.com/rules/axe/2.0/bob?application=axeAPI');
+		axe.configure({
+			branding: {
+				application: 'thing',
+				brand: 'thung'
+			}
+		});
+		assert.equal(axe._audit.data.rules.bob.helpUrl,
+			'https://dequeuniversity.com/rules/thung/2.0/bob?application=thing');
+	});
+
 	it('should allow for overwriting of rules', function () {
 		axe._load({
 			data: {

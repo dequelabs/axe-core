@@ -8,8 +8,7 @@
   ],
   "metadata": {
     "description": "Ensures data tables are marked up semantically and have the correct header structure",
-    "help": "Data tables should be marked up properly",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/data-table"
+    "help": "Data tables should be marked up properly"
   },
   "all": [],
   "any": [

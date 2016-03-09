@@ -107,6 +107,10 @@ User specifies the format of the JSON structure passed to the callback of `axe.a
 
 ```javascript
 axe.configure({
+	branding: {
+		brand: String,
+		application: String
+	},
 	reporter: "option",
 	checks: [Object],
 	rules: [Object]});
@@ -115,6 +119,9 @@ axe.configure({
 #### Parameters
 
 * `configurationOptions` - Options object; where the valid name, value pairs are:
+  * `branding` - mixed(optional) Used to set the branding of the helpUrls
+     * `brand` - string(optional) sets the brand string - default "axe"
+     * `application` - string(optional) sets the application string - default "axeAPI"
   * `reporter` - Used to set the output format that the axe.a11yCheck function will pass to the callback function
      * `v1` to use the previous version's format: `axe.configure({ reporter: "v1" });`
      * `v2` to use the current version's format: `axe.configure({ reporter: "v2" });`

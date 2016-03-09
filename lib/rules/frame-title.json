@@ -7,8 +7,7 @@
   ],
   "metadata": {
     "description": "Ensures <iframe> and <frame> elements contain a unique and non-empty title attribute",
-    "help": "Frames must have unique title attribute",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/frame-title"
+    "help": "Frames must have unique title attribute"
   },
   "all": [],
   "any": [
