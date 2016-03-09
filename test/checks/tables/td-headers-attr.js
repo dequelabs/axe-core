@@ -1,4 +1,4 @@
-describe('th-has-data-cells', function () {
+describe('td-headers-attr', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
@@ -71,7 +71,7 @@ describe('th-has-data-cells', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(checks['td-headers-attr'].evaluate.call(checkContext, node));
+		assert.isTrue(checks['td-headers-attr'].evaluate.call(checkContext, node));
 	});
 
 	it('returns false if the header is a table cell', function () {
