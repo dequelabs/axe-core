@@ -2,7 +2,7 @@
   "id": "aria-allowed-attr",
   "tags": [
     "wcag2a",
-    "wcag411"
+    "wcag412"
   ],
   "metadata": {
     "description": "Ensures ARIA attributes are allowed for an element's role",

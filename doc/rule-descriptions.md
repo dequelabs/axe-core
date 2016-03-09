@@ -2,13 +2,13 @@
 | :------- | :------- | :------- |
 | accesskeys | Ensures every accesskey attribute value is unique | wcag2a, wcag211 |
 | area-alt | Ensures &lt;area&gt; elements of image maps have alternate text | wcag2a, wcag111, section508, section508a |
-| aria-allowed-attr | Ensures ARIA attributes are allowed for an element&apos;s role | wcag2a, wcag411 |
-| aria-required-attr | Ensures elements with ARIA roles have all required ARIA attributes | wcag2a, wcag411 |
-| aria-required-children | Ensures elements with an ARIA role that require child roles contain them | wcag2a, wcag411 |
-| aria-required-parent | Ensures elements with an ARIA role that require parent roles are contained by them | wcag2a, wcag411 |
-| aria-roles | Ensures all elements with a role attribute use a valid value | wcag2a, wcag411 |
-| aria-valid-attr-value | Ensures all ARIA attributes have valid values | wcag2a, wcag411 |
-| aria-valid-attr | Ensures attributes that begin with aria- are valid ARIA attributes | wcag2a, wcag411 |
+| aria-allowed-attr | Ensures ARIA attributes are allowed for an element&apos;s role | wcag2a, wcag412 |
+| aria-required-attr | Ensures elements with ARIA roles have all required ARIA attributes | wcag2a, wcag412 |
+| aria-required-children | Ensures elements with an ARIA role that require child roles contain them | wcag2a, wcag412 |
+| aria-required-parent | Ensures elements with an ARIA role that require parent roles are contained by them | wcag2a, wcag412 |
+| aria-roles | Ensures all elements with a role attribute use a valid value | wcag2a, wcag412 |
+| aria-valid-attr-value | Ensures all ARIA attributes have valid values | wcag2a, wcag412 |
+| aria-valid-attr | Ensures attributes that begin with aria- are valid ARIA attributes | wcag2a, wcag412 |
 | audio-caption | Ensures &lt;audio&gt; elements have captions | wcag2a, wcag122, section508, section508a |
 | blink | Ensures &lt;blink&gt; elements are not used | wcag2a, wcag222 |
 | button-name | Ensures buttons have discernible text | wcag2a, wcag412, section508, section508a |

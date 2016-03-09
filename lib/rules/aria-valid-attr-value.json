@@ -2,7 +2,7 @@
   "id": "aria-valid-attr-value",
   "tags": [
     "wcag2a",
-    "wcag411"
+    "wcag412"
   ],
   "metadata": {
     "description": "Ensures all ARIA attributes have valid values",
