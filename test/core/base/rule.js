@@ -3,6 +3,10 @@ describe('Rule', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var noop = function () {};
+	var isNotCalled = function () {
+		assert.ok(false, 'Function should not be called');
+	};
 
 	afterEach(function() {
 		fixture.innerHTML = '';
@@ -137,7 +141,7 @@ describe('Rule', function() {
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
-				});
+				}, isNotCalled);
 
 			});
 
@@ -149,9 +153,9 @@ describe('Rule', function() {
 				}, {
 					checks: {
 						cats: {
-							run: function (node, options, cb) {
+							run: function (node, options, resolve) {
 								success = true;
-								cb(true);
+								resolve(true);
 							}
 						}
 					}
@@ -162,7 +166,7 @@ describe('Rule', function() {
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
-				});
+				}, isNotCalled);
 
 			});
 
@@ -174,9 +178,9 @@ describe('Rule', function() {
 				}, {
 					checks: {
 						cats: {
-							run: function (node, options, cb) {
+							run: function (node, options, resolve) {
 								success = true;
-								cb(true);
+								resolve(true);
 							}
 						}
 					}
@@ -187,7 +191,7 @@ describe('Rule', function() {
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
-				});
+				}, isNotCalled);
 
 			});
 
@@ -199,24 +203,24 @@ describe('Rule', function() {
 				}, {
 					checks: {
 						cats: {
-							run: function (node, options, cb) {
+							run: function (node, options, resolve) {
 								success = true;
-								cb(true);
+								resolve(true);
 							}
 						}
 					}
-				});
+				}, isNotCalled);
 
 				rule.run({
 					include: [fixture]
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
-				});
+				}, isNotCalled);
 
 			});
 
-			it('should pass the matching option to run', function(done) {
+			it('should pass the matching option to check.run', function(done) {
 				fixture.innerHTML = '<blink>Hi</blink>';
 				var options = {
 					checks: {
@@ -232,10 +236,10 @@ describe('Rule', function() {
 					checks: {
 						cats: {
 							id: 'cats',
-							run: function (node, options, cb) {
+							run: function (node, options, resolve) {
 								assert.equal(options.enabled, 'bananas');
 								assert.equal(options.options, 'minkeys');
-								cb(true);
+								resolve(true);
 							}
 						}
 					}
@@ -244,10 +248,10 @@ describe('Rule', function() {
 					include: [document]
 				}, options, function() {
 					done();
-				});
+				}, isNotCalled);
 			});
 
-			it('should pass the matching option to run defined on the rule over global', function(done) {
+			it('should pass the matching option to check.run defined on the rule over global', function(done) {
 				fixture.innerHTML = '<blink>Hi</blink>';
 				var options = {
 					rules: {
@@ -277,10 +281,10 @@ describe('Rule', function() {
 					checks: {
 						cats: {
 							id: 'cats',
-							run: function (node, options, cb) {
+							run: function (node, options, resolve) {
 								assert.equal(options.enabled, 'apples');
 								assert.equal(options.options, 'apes');
-								cb(true);
+								resolve(true);
 							}
 						}
 					}
@@ -289,7 +293,7 @@ describe('Rule', function() {
 					include: [document]
 				}, options, function() {
 					done();
-				});
+				}, isNotCalled);
 			});
 
 			it('should filter out null results', function() {
@@ -308,8 +312,52 @@ describe('Rule', function() {
 					include: [document]
 				}, {}, function(r) {
 					assert.lengthOf(r.nodes, 0);
+				}, isNotCalled);
+
+			});
+
+			it('should pass thrown errors to the reject param', function (done) {
+				fixture.innerHTML = '<blink>Hi</blink>';
+				var rule = new Rule({
+					none: ['cats']
+				}, {
+					checks: {
+						cats: {
+							run: function () {
+								throw new Error('Holy hand grenade');
+							}
+						}
+					}
 				});
 
+				rule.run({
+					include: [fixture]
+				}, {}, noop, function(err) {
+					assert.equal(err.message, 'Holy hand grenade');
+					done();
+				}, isNotCalled);
+			});
+
+			it('should pass reject calls to the reject param', function (done) {
+				fixture.innerHTML = '<blink>Hi</blink>';
+				var rule = new Rule({
+					none: ['cats']
+				}, {
+					checks: {
+						cats: {
+							run: function (nope, options, resolve, reject) {
+								reject(new Error('your reality'));
+							}
+						}
+					}
+				});
+
+				rule.run({
+					include: [fixture]
+				}, {}, noop, function(err) {
+					assert.equal(err.message, 'your reality');
+					done();
+				}, isNotCalled);
 			});
 
 			describe('NODE rule', function() {
@@ -330,7 +378,7 @@ describe('Rule', function() {
 					});
 					rule.run({
 						include: document
-					}, {}, function() {});
+					}, {}, noop, isNotCalled);
 					assert.isTrue(success);
 
 
@@ -349,7 +397,7 @@ describe('Rule', function() {
 						include: document
 					}, {}, function() {
 						success = true;
-					});
+					}, isNotCalled);
 					assert.isTrue(success);
 				});
 			});

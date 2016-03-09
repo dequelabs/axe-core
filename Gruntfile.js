@@ -28,10 +28,6 @@ module.exports = function (grunt) {
 			engine: {
 				src: [
 					'lib/intro.stub',
-					'bower_components/simple-clone/lib/index.js',
-					'bower_components/element-matches/lib/index.js',
-					'bower_components/escape-selector/lib/index.js',
-					'bower_components/node-uuid/uuid.js',
 					'lib/core/index.js',
 					'lib/core/*/index.js',
 					'lib/core/**/index.js',

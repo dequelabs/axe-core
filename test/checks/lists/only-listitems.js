@@ -110,7 +110,7 @@ describe('only-listitems', function () {
 	});
 
 	it('should return false if <template> is used along side li', function () {
-		fixture.innerHTML = '<ol id="target"><template></template<li>A list</li></ol>';
+		fixture.innerHTML = '<ol id="target"><template></template><li>A list</li></ol>';
 		var node = fixture.querySelector('#target');
 		assert.isFalse(checks['only-listitems'].evaluate.call(checkContext, node));
 	});

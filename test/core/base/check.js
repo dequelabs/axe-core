@@ -1,6 +1,7 @@
 /*global Check, CheckResult */
 describe('Check', function () {
 	'use strict';
+	var noop = function () {};
 
 	var fixture = document.getElementById('fixture');
 
@@ -178,8 +179,8 @@ describe('Check', function () {
 		});
 
 		describe('run', function () {
-			it('should accept 3 parameters', function () {
-				assert.lengthOf(new Check({}).run, 3);
+			it('should accept 4 parameters', function () {
+				assert.lengthOf(new Check({}).run, 4);
 			});
 
 			it('should call matches', function (done) {
@@ -194,7 +195,7 @@ describe('Check', function () {
 						assert.isTrue(success);
 						done();
 					}
-				}).run(fixture, {}, function () {});
+				}).run(fixture, {}, noop);
 
 			});
 
@@ -204,7 +205,7 @@ describe('Check', function () {
 						assert.equal(node, fixture);
 						done();
 					}
-				}).run(fixture, {}, function () {});
+				}).run(fixture, {}, noop);
 
 			});
 
@@ -217,7 +218,7 @@ describe('Check', function () {
 						assert.deepEqual(options, expected);
 						done();
 					}
-				}).run(fixture, {}, function () {});
+				}).run(fixture, {}, noop);
 
 			});
 
@@ -231,7 +232,7 @@ describe('Check', function () {
 						assert.deepEqual(options, expected);
 						done();
 					}
-				}).run(fixture, { options: expected }, function () {});
+				}).run(fixture, { options: expected }, noop);
 
 			});
 
@@ -262,7 +263,10 @@ describe('Check', function () {
 				var data = { monkeys: 'bananas' };
 				new Check({
 					evaluate: function () {
-						this.async()(data);
+						var ready = this.async();
+						setTimeout(function () {
+							ready(data);
+						}, 10);
 					}
 				}).run(fixture, {}, function (d) {
 					assert.instanceOf(d, CheckResult);
@@ -307,59 +311,7 @@ describe('Check', function () {
 
 			});
 
-			it('should not throw, but add any raised error as `error` on the returned object', function (done) {
-
-				var error = new Error('oh noes');
-				var orig = axe.log;
-				axe.log = function (msg, stack) {
-					assert.equal(msg, error.message);
-					assert.equal(stack, error.stack);
-
-					axe.log = orig;
-					done();
-				};
-				assert.doesNotThrow(function () {
-
-					new Check({
-						evaluate: function () {
-							throw error;
-						}
-					}).run(fixture, {}, function (result) {
-						assert.isNull(result);
-					});
-
-				});
-
-			});
-
-			it('should not throw, but pass any raised error as the first parameter to callback - async', function (done) {
-
-				var error = new Error('oh noes');
-				var orig = axe.log;
-				axe.log = function (msg, stack) {
-					assert.equal(msg, error.message);
-					assert.equal(stack, error.stack);
-
-					axe.log = orig;
-					done();
-				};
-				assert.doesNotThrow(function () {
-
-					new Check({
-						evaluate: function () {
-							this.async();
-							throw error;
-						}
-					}).run(fixture, {}, function (result) {
-						assert.isNull(result);
-					});
-
-				});
-
-
-			});
-
-			it('should return a result', function (done) {
+			it('passes a result to the resolve argument', function (done) {
 
 				new Check({
 					evaluate: function () {
@@ -372,6 +324,19 @@ describe('Check', function () {
 				});
 
 			});
+
+			it('should pass errors to the reject argument', function (done) {
+				new Check({
+					evaluate: function () {
+						throw new Error('Grenade!');
+					}
+				}).run(fixture, {}, noop, function (err) {
+					assert.instanceOf(err, Error);
+					assert.equal(err.message, 'Grenade!');
+					done();
+				});
+			});
+
 		});
 	});
 

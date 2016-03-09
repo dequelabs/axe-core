@@ -2,6 +2,10 @@
 describe('Audit', function () {
 	'use strict';
 	var a;
+	var isNotCalled = function () {
+		assert.ok(false, 'Function should not be called');
+	};
+	var noop = function () {};
 
 	var mockChecks = [{
 		id: 'positive1-check1',
@@ -151,7 +155,7 @@ describe('Audit', function () {
 
 	describe('Audit#run', function () {
 		it('should run all the rules', function (done) {
-			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
+			fixture.innerHTML = '<input aria-label="monkeys" type="text">' +
 				'<div id="monkeys">bananas</div>' +
 				'<input aria-labelledby="monkeys" type="text">' +
 				'<blink>FAIL ME</blink>';
@@ -216,7 +220,7 @@ describe('Audit', function () {
 					nodes: [{
 						node: {
 							selector: ['#fixture'],
-							source: '<div id="fixture"><input type="text" aria-label="monkeys"><div id="monkeys">bananas</div><input aria-labelledby="monkeys" type="text"><blink>FAIL ME</blink></div>'
+							source: '<div id="fixture"><input aria-label="monkeys" type="text"><div id="monkeys">bananas</div><input aria-labelledby="monkeys" type="text"><blink>FAIL ME</blink></div>'
 						},
 						none: [{
 							id: 'negative1-check1',
@@ -265,19 +269,19 @@ describe('Audit', function () {
 				assert.deepEqual(JSON.parse(JSON.stringify(results)), expected);
 				assert.match(out, /^<input(\s+type="text"|\s+aria-label="monkeys"){2,}>/);
 				done();
-			});
+			}, isNotCalled);
 		});
 		it('should not run rules disabled by the options', function (done) {
 			a.run({ include: [document] }, {
-					rules: {
-						'positive3': {
-							enabled: false
-						}
+				rules: {
+					'positive3': {
+						enabled: false
 					}
-				}, function (results) {
-					assert.equal(results.length, 3);
-					done();
-				});
+				}
+			}, function (results) {
+				assert.equal(results.length, 3);
+				done();
+			}, isNotCalled);
 		});
 		it('should not run rules disabled by the configuration', function (done) {
 			var a = new Audit();
@@ -296,7 +300,7 @@ describe('Audit', function () {
 			a.run({ include: [document] }, {}, function () {
 				assert.ok(success);
 				done();
-			});
+			}, isNotCalled);
 		});
 		it('should call the rule\'s run function', function (done) {
 			var targetRule = mockRules[mockRules.length - 1],
@@ -314,7 +318,7 @@ describe('Audit', function () {
 				assert.isTrue(called);
 				rule.run = orig;
 				done();
-			});
+			}, isNotCalled);
 		});
 		it('should pass the option to the run function', function (done) {
 			var targetRule = mockRules[mockRules.length - 1],
@@ -335,7 +339,7 @@ describe('Audit', function () {
 				assert.ok(passed);
 				rule.run = orig;
 				done();
-			});
+			}, isNotCalled);
 		});
 
 		it('should skip pageLevel rules if context is not set to entire page', function () {
@@ -351,9 +355,94 @@ describe('Audit', function () {
 
 			audit.run({ include: [ document.body ], page: false }, {}, function (results) {
 				assert.deepEqual(results, []);
-			});
+			}, isNotCalled);
 
 		});
+
+		it('should pass errors to axe.log', function (done) {
+			var orig = axe.log;
+			axe.log = function (err) {
+				assert.equal(err.message, 'Launch the super sheep!');
+				axe.log = orig;
+				done();
+			};
+
+			a.addRule({
+				id: 'throw1',
+				selector: '*',
+				any: [{
+					id: 'throw1-check1',
+				}]
+			});
+			a.addCheck({
+				id: 'throw1-check1',
+				evaluate: function () {
+					throw new Error('Launch the super sheep!');
+				}
+			});
+			a.run({ include: [fixture] }, {
+				runOnly: {
+					'type': 'rule',
+					'values': ['throw1']
+				}
+			}, noop, isNotCalled);
+		});
+
+		it('should not halt if errors occur', function (done) {
+			a.addRule({
+				id: 'throw1',
+				selector: '*',
+				any: [{
+					id: 'throw1-check1',
+				}]
+			});
+			a.addCheck({
+				id: 'throw1-check1',
+				evaluate: function () {
+					throw new Error('Launch the super sheep!');
+				}
+			});
+			a.run({ include: [fixture] }, {
+				runOnly: {
+					'type': 'rule',
+					'values': ['throw1', 'positive1']
+				}
+			}, function (results) {
+				results = results.filter(function (result) {
+					return !!result;
+				});
+				assert.equal(results.length, 1);
+				assert.equal(results[0].id, 'positive1');
+				done();
+			}, isNotCalled);
+		});
+
+		it('should halt if an error occurs when debug is set', function (done) {
+			a.addRule({
+				id: 'throw1',
+				selector: '*',
+				any: [{
+					id: 'throw1-check1',
+				}]
+			});
+			a.addCheck({
+				id: 'throw1-check1',
+				evaluate: function () {
+					throw new Error('Launch the super sheep!');
+				}
+			});
+			a.run({ include: [fixture] }, {
+				debug: true,
+				runOnly: {
+					'type': 'rule',
+					'values': ['throw1']
+				}
+			}, noop, function (err) {
+				assert.equal(err.message, 'Launch the super sheep!');
+				done();
+			});
+		});
+
 	});
 	describe('Audit#after', function () {
 		it('should run Rule#after on any rule whose result is passed in', function () {
