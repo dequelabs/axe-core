@@ -64,6 +64,7 @@ describe('td-headers-attr', function () {
 	});
 
 	it('returns true if no headers are present', function () {
+		// this is a failure for td-has-header
 		fixture.innerHTML =
 			'<table>' +
 			'  <tr> <th id="hi"> </th> </tr>' +
