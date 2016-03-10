@@ -22,11 +22,11 @@ To run all tests from the command line you can run `grunt test`, which will run 
 
 You can also load tests in any supported browser, which is helpful for debugging.  Tests require a local server to run, you must first start a local server to serve files.  You can use Grunt to start one by running `grunt connect watch`.  Once your local server is running you can load the following pages in any browser to run tests:
 
-1.  [Core Tests](http://localhost:9876/test/core/)
-2.  [Commons Tests](http://localhost:9876/test/commons/)
-3.  [Check Tests](http://localhost:9876/test/checks/)
-4.  [Integration Tests](http://localhost:9876/test/integration/rules/)
-5.  There are additional tests located in [test/integration/full/](http://localhost:9876/test/integration/full/) for tests that need to be run against their own document.
+1.  [Core Tests](../test/core/)
+2.  [Commons Tests](../test/commons/)
+3.  [Check Tests](../test/checks/)
+4.  [Integration Tests](../test/integration/rules/)
+5.  There are additional tests located in [test/integration/full/](../test/integration/full/) for tests that need to be run against their own document.
 
 
 ## Architecture Overview
