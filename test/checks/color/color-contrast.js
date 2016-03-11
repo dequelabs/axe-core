@@ -103,6 +103,20 @@ describe('color-contrast', function () {
 		assert.deepEqual(checkContext._relatedNodes, [target]);
 	});
 
+	it('should return true when there is not sufficient contrast, but the element has been disabled with the disabled attribute', function() {
+		fixture.innerHTML = '<a style="color: yellow; background-color: white;" id="target" disabled>My text</a>';
+		var target = fixture.querySelector('#target');
+		assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
+	it('should return true when there is not sufficient contrast, but the element has been disabled with the aria-disabled attribute', function() {
+		fixture.innerHTML = '<a style="color: yellow; background-color: white;" id="target" aria-disabled="true">My text</a>';
+		var target = fixture.querySelector('#target');
+		assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
 	describe('matches', function () {
 
 		it('should not match when there is no text', function () {
