@@ -79,17 +79,10 @@ function CheckResult(check) {
 
 In order to get going, fork and clone the repository. Then, if you do not have [Node.js](https://nodejs.org/download/) installed, install it!
 
-Once you have Node.js installed, if you do not have Bower installed do:
-
-```
-npm install -g bower
-```
-
 Once the basic infrastructure is installed, from the repository root, do the following:
 
 ```
 npm install
-bower install
 ```
 
 To run tests:

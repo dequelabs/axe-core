@@ -1,6 +1,11 @@
 describe('dom.isVisible', function () {
 	'use strict';
 	var fixture = document.getElementById('fixture');
+	var fakeNode = {
+		nodeType: Node.ELEMENT_NODE,
+		nodeName: 'div'
+	};
+
 	afterEach(function () {
 		document.getElementById('fixture').innerHTML = '';
 	});
@@ -12,9 +17,7 @@ describe('dom.isVisible', function () {
 			window.getComputedStyle = function () {
 				return null;
 			};
-			assert.isFalse(commons.dom.isVisible({
-				nodeType: Node.ELEMENT_NODE
-			}));
+			assert.isFalse(commons.dom.isVisible(fakeNode));
 			window.getComputedStyle = orig;
 		});
 
@@ -163,9 +166,7 @@ describe('dom.isVisible', function () {
 			window.getComputedStyle = function () {
 				return null;
 			};
-			assert.isFalse(commons.dom.isVisible({
-				nodeType: Node.ELEMENT_NODE
-			}, true));
+			assert.isFalse(commons.dom.isVisible(fakeNode, true));
 			window.getComputedStyle = orig;
 		});
 

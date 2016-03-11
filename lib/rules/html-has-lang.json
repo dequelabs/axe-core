@@ -1,0 +1,18 @@
+{
+  "id": "html-has-lang",
+  "selector": "html",
+  "tags": [
+    "wcag2a",
+    "wcag311"
+  ],
+  "metadata": {
+    "description": "Ensures every HTML document has a lang attribute",
+    "help": "<html> element must have a lang attribute",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/html-has-lang"
+  },
+  "all": [],
+  "any": [
+    "has-lang"
+  ],
+  "none": []
+}

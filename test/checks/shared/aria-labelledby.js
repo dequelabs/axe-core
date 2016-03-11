@@ -38,7 +38,7 @@ describe('aria-labelledby', function () {
 		assert.isFalse(checks['aria-labelledby'].evaluate(node));
 	});
 
-	it('should return false if an aria-labelledby is present, but references elements who have no visible text', function () {
+	it('should return true if an aria-labelledby is present, but references elements who have no visible text', function () {
 		var node = document.createElement('div');
 		node.setAttribute('aria-labelledby', 'woohoo');
 		fixture.appendChild(node);
@@ -47,6 +47,6 @@ describe('aria-labelledby', function () {
 		target.innerHTML = '<span style="display: none">bananas</span>';
 		fixture.appendChild(target);
 
-		assert.isFalse(checks['aria-labelledby'].evaluate(node));
+		assert.isTrue(checks['aria-labelledby'].evaluate(node));
 	});
 });

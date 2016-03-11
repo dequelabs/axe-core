@@ -25,8 +25,6 @@ describe('aria-valid-attr-value', function () {
 
 		assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, node));
 		assert.isNull(checkContext._data);
-
-
 	});
 
 	it('should return true if all values are valid', function () {
@@ -35,11 +33,31 @@ describe('aria-valid-attr-value', function () {
 		node.tabIndex = 1;
 		node.setAttribute('aria-selected', 'true');
 		node.setAttribute('aria-checked', 'true');
+		node.setAttribute('aria-relevant', 'additions removals');
 		fixture.appendChild(node);
 
 		assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, node));
 		assert.isNull(checkContext._data);
+	});
 
+	it('should return true if idref(s) values are valid', function () {
+		var node = document.createElement('div');
+		var testTgt1 = document.createElement('div');
+		var testTgt2 = document.createElement('div');
+
+		node.id = 'test';
+		testTgt1.id = 'test_tgt1';
+		testTgt2.id = 'test_tgt2';
+		node.setAttribute('aria-owns', 'test_tgt1 test_tgt2');
+		node.setAttribute('aria-activedescendant', 'test_tgt1');
+
+		node.tabIndex = 1;
+		fixture.appendChild(node);
+		fixture.appendChild(testTgt1);
+		fixture.appendChild(testTgt2);
+
+		assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, node));
+		assert.isNull(checkContext._data);
 	});
 
 	it('should return false if any values are invalid', function () {

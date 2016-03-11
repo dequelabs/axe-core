@@ -95,8 +95,36 @@ describe('only-dlitems', function () {
 
 		assert.isTrue(checks['only-dlitems'].evaluate.call(checkContext, node));
 		assert.deepEqual(checkContext._relatedNodes, []);
-
-
 	});
 
+
+	it('should return false if <link> is used along side dt', function () {
+		fixture.innerHTML = '<dl id="target"><link rel="stylesheet" href="theme.css"><dt>A list</dt></dl>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks['only-dlitems'].evaluate.call(checkContext, node));
+	});
+
+	it('should return false if <meta> is used along side dt', function () {
+		fixture.innerHTML = '<dl id="target"><meta name="description" content=""><dt>A list</dt></dl>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks['only-dlitems'].evaluate.call(checkContext, node));
+	});
+
+	it('should return false if <script> is used along side dt', function () {
+		fixture.innerHTML = '<dl id="target"><script src="script.js"></script><dt>A list</dt></dl>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks['only-dlitems'].evaluate.call(checkContext, node));
+	});
+
+	it('should return false if <style> is used along side dt', function () {
+		fixture.innerHTML = '<dl id="target"><style></style><dt>A list</dt></dl>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks['only-dlitems'].evaluate.call(checkContext, node));
+	});
+
+	it('should return false if <template> is used along side dt', function () {
+		fixture.innerHTML = '<dl id="target"><template></template><dt>A list</dt></dl>';
+		var node = fixture.querySelector('#target');
+		assert.isFalse(checks['only-dlitems'].evaluate.call(checkContext, node));
+	});
 });

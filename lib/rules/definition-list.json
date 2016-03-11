@@ -1,6 +1,6 @@
 {
   "id": "definition-list",
-  "selector": "dl",
+  "selector": "dl:not([role])",
   "tags": [
     "wcag2a",
     "wcag131"

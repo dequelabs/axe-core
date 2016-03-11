@@ -68,34 +68,6 @@ describe('utils.ruleShouldRun', function () {
 		}));
 	});
 
-	it('should return true if runOnly tags are present in rule definition', function () {
-		assert.isTrue(utils.ruleShouldRun({
-			id: 'bananas',
-			enabled: false,
-			tags: ['fruit']
-		}, {}, {
-			runOnly: {
-				type: 'tag',
-				values: ['fruit']
-			}
-		}));
-
-	});
-
-	it('should return false if runOnly tags are not present in rule definition', function () {
-		assert.isFalse(utils.ruleShouldRun({
-			id: 'bananas',
-			enabled: true,
-			tags: ['fruit']
-		}, {}, {
-			runOnly: {
-				type: 'tag',
-				values: ['meat']
-			}
-		}));
-
-	});
-
 	it('should return false if rule.enabled is false', function () {
 		assert.isFalse(utils.ruleShouldRun({
 			id: 'bananas',
@@ -142,5 +114,184 @@ describe('utils.ruleShouldRun', function () {
 		}));
 
 	});
+
+	it('should use option.rules.enabled over option.runOnly tags', function () {
+		assert.isTrue(utils.ruleShouldRun({
+			id: 'bananas',
+			enabled: true,
+			tags: ['fruit']
+		}, {}, {
+			rules: {
+				bananas: {
+					enabled: true
+				}
+			},
+			runOnly: {
+				type: 'tag',
+				values: ['meat']
+			}
+		}));
+
+		assert.isFalse(utils.ruleShouldRun({
+			id: 'bananas',
+			enabled: true,
+			tags: ['fruit']
+		}, {}, {
+			rules: {
+				bananas: {
+					enabled: false
+				}
+			},
+			runOnly: {
+				type: 'tag',
+				values: ['fruit']
+			}
+		}));
+
+	});
+
+
+
+	describe('runOnly type:tag', function () {
+
+		it('should return true if passed an array with a matching tag', function () {
+			assert.isTrue(utils.ruleShouldRun({
+				id: 'bananas',
+				enabled: false,
+				tags: ['fruit']
+			}, {}, {
+				runOnly: {
+					type: 'tag',
+					values: ['fruit']
+				}
+			}));
+
+		});
+
+		it('should return false if passed an array with a matching tag', function () {
+			assert.isFalse(utils.ruleShouldRun({
+				id: 'bananas',
+				enabled: true,
+				tags: ['fruit']
+			}, {}, {
+				runOnly: {
+					type: 'tag',
+					values: ['meat']
+				}
+			}));
+
+		});
+
+		it('should accept string as an include value', function () {
+			assert.isTrue(utils.ruleShouldRun({
+				id: 'bananas',
+				enabled: false,
+				tags: ['fruit']
+			}, {}, {
+				runOnly: {
+					type: 'tag',
+					values: {
+						include: 'fruit'
+					}
+				}
+			}));
+		});
+
+		it('should accept array as an include value', function () {
+			assert.isTrue(utils.ruleShouldRun({
+				id: 'bananas',
+				enabled: false,
+				tags: ['fruit']
+			}, {}, {
+				runOnly: {
+					type: 'tag',
+					values: {
+						include: ['fruit', 'veggie']
+					}
+				}
+			}));
+		});
+
+		it('should accept string as an exclude value', function () {
+			assert.isFalse(utils.ruleShouldRun({
+				id: 'bananas',
+				enabled: false,
+				tags: ['fruit', 'tasty']
+			}, {}, {
+				runOnly: {
+					type: 'tag',
+					values: {
+						exclude: 'tasty'
+					}
+				}
+			}));
+		});
+
+		it('should accept array as an exclude value', function () {
+			assert.isFalse(utils.ruleShouldRun({
+				id: 'bananas',
+				enabled: false,
+				tags: ['fruit']
+			}, {}, {
+				runOnly: {
+					type: 'tag',
+					values: {
+						exclude: ['fruit', 'tasty']
+					}
+				}
+			}));
+		});
+
+		it('should return true if it matches include but not exclude', function () {
+			assert.isTrue(utils.ruleShouldRun({
+				id: 'cabbage',
+				enabled: false,
+				tags: ['veggie']
+			}, {}, {
+				runOnly: {
+					type: 'tag',
+					values: {
+						include: ['fruit', 'veggie'],
+						exclude: ['tasty']
+					}
+				}
+			}));
+		});
+
+		it('should return false if it matches no include', function () {
+			assert.isFalse(utils.ruleShouldRun({
+				id: 'bananas',
+				enabled: false,
+				tags: ['fruit']
+			}, {}, {
+				runOnly: {
+					type: 'tag',
+					values: {
+						include: ['veggies'],
+						exclude: ['fruit', 'tasty']
+					}
+				}
+			}));
+		});
+
+		it('should return false if it matches include and exclude', function () {
+			assert.isFalse(utils.ruleShouldRun({
+				id: 'bananas',
+				enabled: false,
+				tags: ['fruit', 'tasty']
+			}, {}, {
+				runOnly: {
+					type: 'tag',
+					values: {
+						include: ['fruit', 'veggies'],
+						exclude: ['tasty']
+					}
+				}
+			}));
+		});
+
+
+	});
+
 
 });
