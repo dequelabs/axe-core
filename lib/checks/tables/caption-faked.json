@@ -1,0 +1,11 @@
+{
+  "id": "caption-faked",
+  "evaluate": "caption-faked.js",
+  "metadata": {
+    "impact": "critical",
+    "messages": {
+      "pass": "",
+      "fail": ""
+    }
+  }
+}
