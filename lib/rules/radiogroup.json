@@ -3,7 +3,7 @@
   "selector": "input[type=radio][name]",
   "tags": [
     "wcag2a",
-    "wcag131"
+    "wcag131",
     "section508",
     "section508d"
   ],

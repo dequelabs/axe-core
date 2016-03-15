@@ -15,7 +15,7 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		clean: ['dist', 'tmp'],
+		clean: ['tmp'],
 		'update-help': {
 			options: {
 				version: '<%=pkg.version%>'
@@ -36,7 +36,7 @@ module.exports = function (grunt) {
 					'lib/core/export.js',
 					'lib/outro.stub'
 				],
-				dest: 'dist/axe.js',
+				dest: 'axe.js',
 				options: {
 					process: true
 				}
@@ -111,49 +111,11 @@ module.exports = function (grunt) {
 			lib: {
 				files: [{
 					src: ['<%= concat.engine.dest %>'],
-					dest: 'dist/axe.min.js'
+					dest: 'axe.min.js'
 				}],
 				options: {
 					preserveComments: 'some'
 				}
-			},
-			index: {
-				files: [{
-					src: ['tmp/index.js'],
-					dest: 'tmp/index.js'
-				}],
-				options: {
-					preserveComments: 'some'
-				}
-			}
-		},
-		nodeify: {
-			core: {
-				src: ['tmp/index.js'],
-				dest: 'dist/index.js'
-			}
-		},
-		copy: {
-			index: {
-				files: [{
-					src: ['<%= concat.engine.dest %>'],
-					dest: 'tmp/index.js'
-				}]
-			},
-			manifests: {
-				files: [{
-					src: ['package.json'],
-					dest: 'dist/'
-				}, {
-					src: ['README.md'],
-					dest: 'dist/'
-				}, {
-					src: ['bower.json'],
-					dest: 'dist/'
-				}, {
-					src: ['LICENSE'],
-					dest: 'dist/'
-				}]
 			}
 		},
 		watch: {
@@ -249,7 +211,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build']);
 
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
-		'concat:engine', 'copy', 'uglify', 'nodeify']);
+		'concat:engine', 'uglify']);
 
 	grunt.registerTask('test', ['build',  'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);

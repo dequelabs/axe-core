@@ -9,4 +9,4 @@
  * distribute or in any file that contains substantial portions of this source
  * code.
  */
-(function (window, document) {
+(function axeFunction (window, document) {
