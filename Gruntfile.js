@@ -256,6 +256,4 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('test-browser', ['build',  'testconfig', 'fixture', 'connect',
 		'test-webdriver', 'jshint']);
-
-	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
 };
