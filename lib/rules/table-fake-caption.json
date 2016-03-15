@@ -1,0 +1,19 @@
+{
+  "id": "table-fake-caption",
+  "selector": "table",
+  "matches": "data-table-matches.js",
+  "tags": [
+    "wcag2a",
+    "wcag131"
+  ],
+  "metadata": {
+    "description": "Ensure that tables with a caption use the <caption> element.",
+    "help": "Data or header cells should not be used to give caption to a data table.",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/table-fake-caption"
+  },
+  "all": [
+    "caption-faked"
+  ],
+  "any": [],
+  "none": []
+}

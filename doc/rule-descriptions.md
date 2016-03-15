@@ -46,6 +46,7 @@
 | server-side-image-map | Ensures that server-side image maps are not used | wcag2a, wcag211, section508, section508f |
 | skip-link | Ensures the first link on the page is a skip link | best-practice |
 | tabindex | Ensures tabindex attribute values are not greater than 0 | best-practice |
+| table-fake-caption | Ensure that tables with a caption use the &lt;caption&gt; element. | wcag2a, wcag131 |
 | td-has-header | Ensure that each data cell in a large table has one or more table headers | wcag2a, wcag131 |
 | td-headers-attr | Ensure that each cell in a table using the headers refers to another cell in that table | wcag2a, wcag131 |
 | th-has-data-cells | Ensure that each table header in a data table refers to data cells | wcag2a, wcag131 |
