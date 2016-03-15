@@ -3,7 +3,9 @@
   "selector": "[accesskey]",
   "tags": [
     "wcag2a",
-    "wcag211"
+    "wcag211",
+    "section508",
+    "section508o"
   ],
   "metadata": {
     "description": "Ensures every accesskey attribute value is unique",
