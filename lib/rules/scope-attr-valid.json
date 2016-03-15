@@ -1,6 +1,6 @@
 {
-  "id": "scope",
-  "selector": "[scope]",
+  "id": "scope-attr-valid",
+  "selector": "td[scope], th[scope]",
   "enabled": false,
   "tags": [
     "best-practice"
@@ -10,12 +10,10 @@
     "help": "scope attribute should be used correctly",
     "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/scope"
   },
-  "all": [],
-  "any": [
+  "all": [
     "html5-scope",
-    "html4-scope"
-  ],
-  "none": [
     "scope-value"
-  ]
+  ],
+  "any": [],
+  "none": []
 }

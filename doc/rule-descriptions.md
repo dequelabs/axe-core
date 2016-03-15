@@ -41,7 +41,7 @@
 | object-alt | Ensures &lt;object&gt; elements have alternate text | wcag2a, wcag111 |
 | radiogroup | Ensures related &lt;input type=&quot;radio&quot;&gt; elements have a group and that the group designation is consistent | wcag2a, wcag131 |
 | region | Ensures all content is contained within a landmark region | best-practice |
-| scope | Ensures the scope attribute is used correctly on tables | best-practice |
+| scope-attr-valid | Ensures the scope attribute is used correctly on tables | best-practice |
 | server-side-image-map | Ensures that server-side image maps are not used | wcag2a, wcag211, section508, section508f |
 | skip-link | Ensures the first link on the page is a skip link | best-practice |
 | tabindex | Ensures tabindex attribute values are not greater than 0 | best-practice |

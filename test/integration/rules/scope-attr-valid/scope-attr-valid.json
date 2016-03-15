@@ -1,6 +1,5 @@
 {
-	"description": "scope test",
-	"rule": "scope",
+	"rule": "scope-attr-valid",
 	"violations": [["#badvalue"], ["#tdrow"], ["#tdcol"]],
 	"passes": [["#throw"], ["#thcol"]]
 }
