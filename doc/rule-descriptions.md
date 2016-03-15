@@ -15,7 +15,6 @@
 | bypass | Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content | wcag2a, wcag241, section508, section508o |
 | checkboxgroup | Ensures related &lt;input type=&quot;checkbox&quot;&gt; elements have a group and that that group designation is consistent | wcag2a, wcag131 |
 | color-contrast | Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds | wcag2aa, wcag143 |
-| data-table | Ensures data tables are marked up semantically and have the correct header structure | wcag2a, wcag131 |
 | definition-list | Ensures &lt;dl&gt; elements are structured correctly | wcag2a, wcag131 |
 | dlitem | Ensures &lt;dt&gt; and &lt;dd&gt; elements are contained by a &lt;dl&gt; | wcag2a, wcag131 |
 | document-title | Ensures each HTML document contains a non-empty &lt;title&gt; element | wcag2a, wcag242 |
