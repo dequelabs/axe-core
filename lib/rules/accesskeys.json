@@ -5,7 +5,7 @@
     "wcag2a",
     "wcag211",
     "section508",
-    "section508o"
+    "section508a"
   ],
   "metadata": {
     "description": "Ensures every accesskey attribute value is unique",
