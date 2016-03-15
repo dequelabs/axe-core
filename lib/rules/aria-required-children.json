@@ -7,8 +7,7 @@
   ],
   "metadata": {
     "description": "Ensures elements with an ARIA role that require child roles contain them",
-    "help": "Certain ARIA roles must contain particular children",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/aria-required-children"
+    "help": "Certain ARIA roles must contain particular children"
   },
   "all": [],
   "any": [

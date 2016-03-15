@@ -7,8 +7,7 @@
   ],
   "metadata": {
     "description": "Ensures the scope attribute is used correctly on tables",
-    "help": "scope attribute should be used correctly",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/scope"
+    "help": "scope attribute should be used correctly"
   },
   "all": [],
   "any": [

@@ -7,8 +7,7 @@
   ],
   "metadata": {
     "description": "Ensures elements with ARIA roles have all required ARIA attributes",
-    "help": "Required ARIA attributes must be provided",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/aria-required-attr"
+    "help": "Required ARIA attributes must be provided"
   },
   "all": [],
   "any": [

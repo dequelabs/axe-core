@@ -1,3 +1,2 @@
 
-	axe.version = '<%= pkg.version %>';
 }(window, window.document));

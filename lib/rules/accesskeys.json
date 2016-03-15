@@ -9,8 +9,7 @@
   ],
   "metadata": {
     "description": "Ensures every accesskey attribute value is unique",
-    "help": "accesskey attribute value must be unique",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/accesskeys"
+    "help": "accesskey attribute value must be unique"
   },
   "all": [],
   "any": [],

@@ -8,8 +8,7 @@
   ],
   "metadata": {
     "description": "Ensures the first link on the page is a skip link",
-    "help": "The page should have a skip link as its first link",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/skip-link"
+    "help": "The page should have a skip link as its first link"
   },
   "all": [],
   "any": [

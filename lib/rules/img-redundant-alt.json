@@ -6,8 +6,7 @@
   ],
   "metadata": {
     "description": "Ensure button and link text is not repeated as image alternative",
-    "help": "Text of buttons and links should not be repeated in the image alternative",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/image-redundant-alt"
+    "help": "Text of buttons and links should not be repeated in the image alternative"
   },
   "all": [],
   "any": [],
