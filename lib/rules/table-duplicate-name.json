@@ -5,7 +5,7 @@
     "best-practice"
   ],
   "metadata": {
-    "description": "Avoid giving tables a duplicate name by passing the same value in the summary and caption",
+    "description": "Ensure that tables do not have the same summary and caption",
     "help": "The <caption> element should not contain the same text as the summary attribute",
     "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/table-duplicate-name"
   },
