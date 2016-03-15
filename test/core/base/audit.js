@@ -68,6 +68,107 @@ describe('Audit', function () {
 		assert.isFunction(Audit);
 	});
 
+	describe('Audit#_constructHelpUrls', function () {
+		it('should create default help URLS', function () {
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				matches: 'function () {return "hello";}',
+				selector: 'bob'
+			});
+			assert.lengthOf(audit.rules, 1);
+			assert.equal(audit.data.rules.target, undefined);
+			audit._constructHelpUrls();
+			assert.deepEqual(audit.data.rules.target, {
+				helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/target?application=axeAPI'
+			});
+		});
+		it('should use changed branding', function () {
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				matches: 'function () {return "hello";}',
+				selector: 'bob'
+			});
+			assert.lengthOf(audit.rules, 1);
+			assert.equal(audit.data.rules.target, undefined);
+			audit.brand = 'thing';
+			audit._constructHelpUrls();
+			assert.deepEqual(audit.data.rules.target, {
+				helpUrl: 'https://dequeuniversity.com/rules/thing/2.0/target?application=axeAPI'
+			});
+		});
+		it('should use changed application', function () {
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				matches: 'function () {return "hello";}',
+				selector: 'bob'
+			});
+			assert.lengthOf(audit.rules, 1);
+			assert.equal(audit.data.rules.target, undefined);
+			audit.application = 'thing';
+			audit._constructHelpUrls();
+			assert.deepEqual(audit.data.rules.target, {
+				helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/target?application=thing'
+			});
+		});
+	});
+
+	describe('Audit#setBranding', function () {
+		it('should change the brand', function () {
+			var audit = new Audit();
+			assert.equal(audit.brand, 'axe');
+			assert.equal(audit.application, 'axeAPI');
+			audit.setBranding({
+				brand: 'thing'
+			});
+			assert.equal(audit.brand, 'thing');
+			assert.equal(audit.application, 'axeAPI');
+		});
+		it('should change the application', function () {
+			var audit = new Audit();
+			assert.equal(audit.brand, 'axe');
+			assert.equal(audit.application, 'axeAPI');
+			audit.setBranding({
+				application: 'thing'
+			});
+			assert.equal(audit.brand, 'axe');
+			assert.equal(audit.application, 'thing');
+		});
+		it('should call _constructHelpUrls', function () {
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				matches: 'function () {return "hello";}',
+				selector: 'bob'
+			});
+			assert.lengthOf(audit.rules, 1);
+			assert.equal(audit.data.rules.target, undefined);
+			audit.setBranding({
+				application: 'thing'
+			});
+			assert.deepEqual(audit.data.rules.target, {
+				helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/target?application=thing'
+			});
+		});
+		it('should call _constructHelpUrls even when nothing changed', function () {
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				matches: 'function () {return "hello";}',
+				selector: 'bob'
+			});
+			assert.lengthOf(audit.rules, 1);
+			assert.equal(audit.data.rules.target, undefined);
+			audit.setBranding(undefined);
+			assert.deepEqual(audit.data.rules.target, {
+				helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/target?application=axeAPI'
+			});
+		});
+	});
+
+
 	describe('Audit#addRule', function () {
 		it('should override existing rule', function () {
 			var audit = new Audit();

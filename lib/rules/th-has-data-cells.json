@@ -8,8 +8,7 @@
   ],
   "metadata": {
     "description": "Ensure that each table header in a data table refers to data cells",
-    "help": "All th element and elements with role=columnheader/rowheader must data cells which it describes",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/td-has-header"
+    "help": "All th element and elements with role=columnheader/rowheader must data cells which it describes"
   },
   "all": [
     "th-has-data-cells"

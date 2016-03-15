@@ -10,8 +10,7 @@
   ],
   "metadata": {
     "description": "Ensures <area> elements of image maps have alternate text",
-    "help": "Active <area> elements must have alternate text",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/area-alt"
+    "help": "Active <area> elements must have alternate text"
   },
   "all": [],
   "any": [
