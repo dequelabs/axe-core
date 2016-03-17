@@ -32,7 +32,7 @@ describe('td-has-header', function () {
 	it('should return true each non-empty cell has a column header', function () {
 		fixture.innerHTML =
 			'<table>' +
-			'  <tr> <th></th> <th></th> </tr>' +
+			'  <tr> <th>hi</th> <th>hello</th> </tr>' +
 			'  <tr> <td>hi</td> <td>hello</td> </tr>' +
 			'</table>';
 
@@ -68,6 +68,17 @@ describe('td-has-header', function () {
 			'<table>' +
 			'  <tr> <td headers="one">hi</td> <td headers="two">hello</td> </tr>' +
 			'  <tr> <td headers="one">hi</td> <td headers="two">hello</td> </tr>' +
+			'</table>';
+
+		var node = fixture.querySelector('table');
+		assert.isTrue(checks['td-has-header'].evaluate.call(checkContext, node));
+	});
+
+	it('should return true there is at least one non-empty header', function () {
+		fixture.innerHTML =
+			'<table>' +
+			'  <tr> <th>hi</th> <th>hello</th> </tr>' +
+			'  <tr> <th></th> <td>hello</td> </tr>' +
 			'</table>';
 
 		var node = fixture.querySelector('table');
@@ -136,4 +147,14 @@ describe('td-has-header', function () {
 		assert.isFalse(checks['td-has-header'].evaluate.call(checkContext, node));
 	});
 
+	it('should return false if all headers are empty', function () {
+		fixture.innerHTML =
+			'<table>' +
+			'  <tr> <th></th> <th></th> </tr>' +
+			'  <tr> <td>hi</td> <td>hello</td> </tr>' +
+			'</table>';
+
+		var node = fixture.querySelector('table');
+		assert.isFalse(checks['td-has-header'].evaluate.call(checkContext, node));
+	});
 });

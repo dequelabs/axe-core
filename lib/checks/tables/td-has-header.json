@@ -4,8 +4,8 @@
   "metadata": {
     "impact": "critical",
     "messages": {
-      "pass": "All data cells have table headers",
-      "fail": "Some data cells do not have table headers"
+      "pass": "All non-empty data cells have table headers",
+      "fail": "Some non-empty data cells do not have table headers"
     }
   }
 }
