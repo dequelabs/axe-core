@@ -7,8 +7,8 @@
     "wcag131"
   ],
   "metadata": {
-    "description": "Ensure that each data cell in a large table has one or more table headers",
-    "help": "All td element in table larger than 3 by 3 must have an associated table header"
+    "description": "Ensure that each non-empty data cell in a large table has one or more table headers",
+    "help": "All non-empty td element in table larger than 3 by 3 must have an associated table header"
   },
   "all": [
     "td-has-header"
