@@ -212,6 +212,22 @@ describe('Audit', function () {
 
 	});
 
+	describe('Audit#resetRulesAndChecks', function () {
+		it('should override newly created check', function () {
+			var audit = new Audit();
+			assert.equal(audit.checks.target, undefined);
+			audit.addCheck({
+				id: 'target',
+				selector: 'bob',
+				options: 'jane'
+			});
+			assert.ok(audit.checks.target);
+			assert.equal(audit.checks.target.selector, 'bob');
+			audit.resetRulesAndChecks();
+			assert.equal(audit.checks.target, undefined);
+		});
+	});
+
 	describe('Audit#addCheck', function () {
 		it('should create a new check', function () {
 			var audit = new Audit();
