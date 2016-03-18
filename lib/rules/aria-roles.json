@@ -3,7 +3,9 @@
   "selector": "[role]",
   "tags": [
     "wcag2a",
-    "wcag411"
+    "wcag131",
+    "wcag411",
+    "wcag412"
   ],
   "metadata": {
     "description": "Ensures all elements with a role attribute use a valid value",

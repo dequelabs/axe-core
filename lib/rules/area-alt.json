@@ -15,6 +15,7 @@
   "all": [],
   "any": [
     "non-empty-alt",
+    "non-empty-title",
     "aria-label",
     "aria-labelledby"
   ],
