@@ -3,6 +3,7 @@
   "selector": "[role]",
   "tags": [
     "wcag2a",
+    "wcag411",
     "wcag412"
   ],
   "metadata": {
