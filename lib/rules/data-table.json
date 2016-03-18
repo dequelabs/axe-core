@@ -4,12 +4,13 @@
   "matches": "data-table-matches.js",
   "tags": [
     "wcag2a",
-    "wcag131"
+    "wcag131",
+    "section508",
+    "section508g"
   ],
   "metadata": {
     "description": "Ensures data tables are marked up semantically and have the correct header structure",
-    "help": "Data tables should be marked up properly",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/data-table"
+    "help": "Data tables should be marked up properly"
   },
   "all": [],
   "any": [

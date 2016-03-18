@@ -11,8 +11,7 @@
   ],
   "metadata": {
     "description": "Ensures <meta http-equiv=\"refresh\"> is not used",
-    "help": "Timed refresh must not exist",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/meta-refresh"
+    "help": "Timed refresh must not exist"
   },
   "all": [],
   "any": [

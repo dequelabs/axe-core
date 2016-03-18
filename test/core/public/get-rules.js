@@ -19,12 +19,10 @@ describe('axe.getRules', function() {
 				rules: {
 					awesomeRule1: {
 						description: 'some interesting information',
-						helpUrl: 'some location somewhere',
 						help: 'halp'
 					},
 					awesomeRule2: {
 						description: 'also some interesting information',
-						helpUrl: 'some location somewhere else',
 						help: 'halp me!'
 					}
 				}
@@ -43,13 +41,13 @@ describe('axe.getRules', function() {
 		assert.equal(retValue[0].ruleId, 'awesomeRule1');
 		assert.equal(retValue[0].description, 'some interesting information');
 		assert.equal(retValue[0].help, 'halp');
-		assert.equal(retValue[0].helpUrl, 'some location somewhere');
+		assert.equal(retValue[0].helpUrl, 'https://dequeuniversity.com/rules/axe/2.0/awesomeRule1?application=axeAPI');
 		assert.deepEqual(retValue[0].tags, ['tag1']);
 
 		assert.equal(retValue[1].ruleId, 'awesomeRule2');
 		assert.equal(retValue[1].description, 'also some interesting information');
 		assert.equal(retValue[1].help, 'halp me!');
-		assert.equal(retValue[1].helpUrl, 'some location somewhere else');
+		assert.equal(retValue[1].helpUrl, 'https://dequeuniversity.com/rules/axe/2.0/awesomeRule2?application=axeAPI');
 		assert.deepEqual(retValue[1].tags, ['tag1', 'tag2']);
 
 		retValue = axe.getRules(['tag2']);
@@ -58,7 +56,7 @@ describe('axe.getRules', function() {
 		assert.equal(retValue[0].ruleId, 'awesomeRule2');
 		assert.equal(retValue[0].description, 'also some interesting information');
 		assert.equal(retValue[0].help, 'halp me!');
-		assert.equal(retValue[0].helpUrl, 'some location somewhere else');
+		assert.equal(retValue[0].helpUrl, 'https://dequeuniversity.com/rules/axe/2.0/awesomeRule2?application=axeAPI');
 		assert.deepEqual(retValue[0].tags, ['tag1', 'tag2']);
 	});
 
@@ -73,13 +71,13 @@ describe('axe.getRules', function() {
 		assert.equal(retValue[0].ruleId, 'awesomeRule1');
 		assert.equal(retValue[0].description, 'some interesting information');
 		assert.equal(retValue[0].help, 'halp');
-		assert.equal(retValue[0].helpUrl, 'some location somewhere');
+		assert.equal(retValue[0].helpUrl, 'https://dequeuniversity.com/rules/axe/2.0/awesomeRule1?application=axeAPI');
 		assert.deepEqual(retValue[0].tags, ['tag1']);
 
 		assert.equal(retValue[1].ruleId, 'awesomeRule2');
 		assert.equal(retValue[1].description, 'also some interesting information');
 		assert.equal(retValue[1].help, 'halp me!');
-		assert.equal(retValue[1].helpUrl, 'some location somewhere else');
+		assert.equal(retValue[1].helpUrl, 'https://dequeuniversity.com/rules/axe/2.0/awesomeRule2?application=axeAPI');
 		assert.deepEqual(retValue[1].tags, ['tag1', 'tag2']);
 	});
 
@@ -88,13 +86,13 @@ describe('axe.getRules', function() {
 		assert.equal(retValue[0].ruleId, 'awesomeRule1');
 		assert.equal(retValue[0].description, 'some interesting information');
 		assert.equal(retValue[0].help, 'halp');
-		assert.equal(retValue[0].helpUrl, 'some location somewhere');
+		assert.equal(retValue[0].helpUrl, 'https://dequeuniversity.com/rules/axe/2.0/awesomeRule1?application=axeAPI');
 		assert.deepEqual(retValue[0].tags, ['tag1']);
 
 		assert.equal(retValue[1].ruleId, 'awesomeRule2');
 		assert.equal(retValue[1].description, 'also some interesting information');
 		assert.equal(retValue[1].help, 'halp me!');
-		assert.equal(retValue[1].helpUrl, 'some location somewhere else');
+		assert.equal(retValue[1].helpUrl, 'https://dequeuniversity.com/rules/axe/2.0/awesomeRule2?application=axeAPI');
 		assert.deepEqual(retValue[1].tags, ['tag1', 'tag2']);
 	});
 

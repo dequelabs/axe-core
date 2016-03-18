@@ -192,15 +192,11 @@ function createSchemas() {
 			metadata: {
 				type: 'object',
 				required: true,
+				additionalProperties: false,
 				properties: {
 					help: {
 						required: true,
 						type: 'string'
-					},
-					helpUrl: {
-						required: true,
-						type: 'string',
-						format: 'url'
 					},
 					description: {
 						required: true,
