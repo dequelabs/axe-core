@@ -3,7 +3,9 @@
   "selector": "frame, iframe",
   "tags": [
     "wcag2a",
-    "wcag241"
+    "wcag241",
+    "section508",
+    "section508i"
   ],
   "metadata": {
     "description": "Ensures <iframe> and <frame> elements contain a unique and non-empty title attribute",

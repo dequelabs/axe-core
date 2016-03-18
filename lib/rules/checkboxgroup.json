@@ -3,7 +3,9 @@
   "selector": "input[type=checkbox][name]",
   "tags": [
     "wcag2a",
-    "wcag131"
+    "wcag131",
+    "section508",
+    "section508n"
   ],
   "metadata": {
     "description": "Ensures related <input type=\"checkbox\"> elements have a group and that that group designation is consistent",

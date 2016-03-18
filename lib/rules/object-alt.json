@@ -3,7 +3,9 @@
   "selector": "object",
   "tags": [
     "wcag2a",
-    "wcag111"
+    "wcag111",
+    "section508",
+    "section508a"
   ],
   "metadata": {
     "description": "Ensures <object> elements have alternate text",
