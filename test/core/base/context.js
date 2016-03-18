@@ -316,6 +316,12 @@ describe('Context', function() {
 
 		});
 
+		it('should default empty-object include to document', function () {
+			var result = new Context({ include: {}, exclude: {} });
+			assert.lengthOf(result.include, 1);
+			assert.equal(result.include[0], document);
+		});
+
 	});
 
 	describe('initiator', function() {
@@ -342,7 +348,7 @@ describe('Context', function() {
 			var spec = document.implementation.createHTMLDocument('ie is dumb');
 			spec.hasOwnProperty = undefined;
 			var result = new Context(spec);
-			
+
 			assert.lengthOf(result.include, 1);
 			assert.equal(result.include[0], spec);
 
