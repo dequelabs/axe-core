@@ -16,7 +16,7 @@
     "has-visible-text",
     "aria-label",
     "aria-labelledby",
-    "has-title"
+    "non-empty-title"
   ],
   "none": []
 }
