@@ -1,5 +1,6 @@
 {
   "id": "color-contrast",
+  "excludeHidden": false,
   "options": {
     "noScroll": false
   },
