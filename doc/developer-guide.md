@@ -156,7 +156,7 @@ The DqElement is a "serialized" `HTMLElement`. It will calculate the CSS selecto
 
 ```javascript
 var firstH1 = document.getElementByTagName('h1')[0];
-var dqH1 = new utils.DqElement(firstH1);
+var dqH1 = new axe.utils.DqElement(firstH1);
 ```
 
 Elements returned by the DqElement class have the following methods and properties:

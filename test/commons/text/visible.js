@@ -11,22 +11,22 @@ describe('text.visible', function () {
 		it('should not return elements with visibility: hidden', function () {
 			fixture.innerHTML = 'Hello<span style="visibility: hidden;">Hi</span>';
 
-			assert.equal(commons.text.visible(fixture), 'Hello');
+			assert.equal(axe.commons.text.visible(fixture), 'Hello');
 		});
 
 		it('should handle implicitly recursive calls', function () {
 			fixture.innerHTML = 'Hello<span><span>Hi</span></span>';
-			assert.equal(commons.text.visible(fixture), 'HelloHi');
+			assert.equal(axe.commons.text.visible(fixture), 'HelloHi');
 		});
 
 		it('should handle explicitly recursive calls', function () {
 			fixture.innerHTML = 'Hello<span><span>Hi</span></span>';
-			assert.equal(commons.text.visible(fixture, null, false), 'HelloHi');
+			assert.equal(axe.commons.text.visible(fixture, null, false), 'HelloHi');
 		});
 
 		it('should handle non-recursive calls', function () {
 			fixture.innerHTML = 'Hello<span><span>Hi</span></span>';
-			assert.equal(commons.text.visible(fixture, null, true), 'Hello');
+			assert.equal(axe.commons.text.visible(fixture, null, true), 'Hello');
 		});
 
 		it('should know how visibility works', function () {
@@ -34,25 +34,25 @@ describe('text.visible', function () {
 					'<span style="visibility: visible;">Hi</span>' +
 				'</span>';
 
-			assert.equal(commons.text.visible(fixture), 'Hello Hi');
+			assert.equal(axe.commons.text.visible(fixture), 'Hello Hi');
 		});
 
 		it('should not return elements with display: none', function () {
 			fixture.innerHTML = 'Hello<span style="display: none;"><span>Hi</span></span>';
 
-			assert.equal(commons.text.visible(fixture), 'Hello');
+			assert.equal(axe.commons.text.visible(fixture), 'Hello');
 		});
 
 		it('should trim the result', function () {
 			fixture.innerHTML = '   &nbsp;\u00A0    Hello  &nbsp;\r\n   Hi     \n \n &nbsp; \n   ';
-			assert.equal(commons.text.visible(fixture), 'Hello Hi');
+			assert.equal(axe.commons.text.visible(fixture), 'Hello Hi');
 		});
 
 		it('should ignore script and style tags', function () {
 			fixture.innerHTML = '<script> // hello </script><style> /*hello */</style>' +
 				'Hello';
 
-			assert.equal(commons.text.visible(fixture), 'Hello');
+			assert.equal(axe.commons.text.visible(fixture), 'Hello');
 		});
 
 
@@ -61,7 +61,7 @@ describe('text.visible', function () {
 					'<div style="position: absolute; top: 10000px;">Hello</div>' +
 				'</div>';
 
-			assert.equal(commons.text.visible(fixture), 'Hello');
+			assert.equal(axe.commons.text.visible(fixture), 'Hello');
 
 		});
 
@@ -71,7 +71,7 @@ describe('text.visible', function () {
 		it('should not return elements with visibility: hidden', function () {
 			fixture.innerHTML = 'Hello<span style="visibility: hidden;">Hi</span>';
 
-			assert.equal(commons.text.visible(fixture, true), 'Hello');
+			assert.equal(axe.commons.text.visible(fixture, true), 'Hello');
 		});
 
 		it('should know how visibility works', function () {
@@ -79,26 +79,26 @@ describe('text.visible', function () {
 					'<span style="visibility: visible;">Hi</span>' +
 				'</span>';
 
-			assert.equal(commons.text.visible(fixture, true), 'Hello Hi');
+			assert.equal(axe.commons.text.visible(fixture, true), 'Hello Hi');
 		});
 
 
 		it('should not return elements with display: none', function () {
 			fixture.innerHTML = 'Hello<span style="display: none;"><span>Hi</span></span>';
 
-			assert.equal(commons.text.visible(fixture, true), 'Hello');
+			assert.equal(axe.commons.text.visible(fixture, true), 'Hello');
 		});
 
 		it('should trim the result', function () {
 			fixture.innerHTML = '   &nbsp;\u00A0    Hello  &nbsp;\r\n   Hi     \n \n &nbsp; \n   ';
-			assert.equal(commons.text.visible(fixture, true), 'Hello Hi');
+			assert.equal(axe.commons.text.visible(fixture, true), 'Hello Hi');
 		});
 
 		it('should ignore script and style tags', function () {
 			fixture.innerHTML = '<script> // hello </script><style> /*hello */</style>' +
 				'Hello';
 
-			assert.equal(commons.text.visible(fixture, true), 'Hello');
+			assert.equal(axe.commons.text.visible(fixture, true), 'Hello');
 		});
 
 
@@ -107,7 +107,7 @@ describe('text.visible', function () {
 					'<div>Hello</div>' +
 				'</div>';
 
-			assert.equal(commons.text.visible(fixture, true), 'Hello');
+			assert.equal(axe.commons.text.visible(fixture, true), 'Hello');
 
 		});
 
@@ -116,7 +116,7 @@ describe('text.visible', function () {
 			fixture.innerHTML = '<div style="text-indent: -9999px;">' +
 					'Hello</div>';
 
-			assert.equal(commons.text.visible(fixture, true), 'Hello');
+			assert.equal(axe.commons.text.visible(fixture, true), 'Hello');
 
 		});
 	});

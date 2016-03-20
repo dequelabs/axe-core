@@ -1,5 +1,5 @@
 
-describe('utils.finalizeRuleResult', function () {
+describe('axe.utils.finalizeRuleResult', function () {
 	'use strict';
 
 	beforeEach(function () {
@@ -7,11 +7,11 @@ describe('utils.finalizeRuleResult', function () {
 	});
 
 	it('should be a function', function () {
-		assert.isFunction(utils.finalizeRuleResult);
+		assert.isFunction(axe.utils.finalizeRuleResult);
 	});
 
 	it('should FAIL ruleResult if a failing (return true) none is found', function () {
-		var ruleResult = utils.finalizeRuleResult({
+		var ruleResult = axe.utils.finalizeRuleResult({
 			pageLevel: false,
 			nodes: [{
 				none: [{ result: false }],
@@ -34,7 +34,7 @@ describe('utils.finalizeRuleResult', function () {
 	});
 
 	it('should assign FAIL to ruleResult over PASS', function () {
-		var ruleResult = utils.finalizeRuleResult({
+		var ruleResult = axe.utils.finalizeRuleResult({
 			pageLevel: false,
 			nodes: [{
 				none: [{ result: false }],
@@ -57,7 +57,7 @@ describe('utils.finalizeRuleResult', function () {
 	});
 
 	it('should assign PASS to ruleResult if there are only passing anys', function () {
-		var ruleResult = utils.finalizeRuleResult({
+		var ruleResult = axe.utils.finalizeRuleResult({
 			pageLevel: false,
 			nodes: [{
 				none: [{ result: false }],
@@ -80,7 +80,7 @@ describe('utils.finalizeRuleResult', function () {
 	});
 
 	it('should assign FAIL if there are no passing anys', function () {
-		var ruleResult = utils.finalizeRuleResult({
+		var ruleResult = axe.utils.finalizeRuleResult({
 			pageLevel: false,
 			nodes: [{
 				any: [{ result: false }],
@@ -103,7 +103,7 @@ describe('utils.finalizeRuleResult', function () {
 	});
 
 	it('should assign FAIL if there is a single non-passing all', function () {
-		var ruleResult = utils.finalizeRuleResult({
+		var ruleResult = axe.utils.finalizeRuleResult({
 			pageLevel: false,
 			nodes: [{
 				any: [{ result: false }],
@@ -126,7 +126,7 @@ describe('utils.finalizeRuleResult', function () {
 	});
 
 	it('should PASS if there are only falsey nones', function () {
-		var ruleResult = utils.finalizeRuleResult({
+		var ruleResult = axe.utils.finalizeRuleResult({
 			pageLevel: false,
 			nodes: [{
 				none: [{ result: false }],
@@ -149,7 +149,7 @@ describe('utils.finalizeRuleResult', function () {
 	});
 
 	it('should raise the highest "raisedMetadata" on failing checks', function () {
-		var ruleResult = utils.finalizeRuleResult({
+		var ruleResult = axe.utils.finalizeRuleResult({
 			pageLevel: false,
 			nodes: [{
 				none: [{

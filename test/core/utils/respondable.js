@@ -1,4 +1,4 @@
-describe('utils.respondable', function () {
+describe('axe.utils.respondable', function () {
 	'use strict';
 
 	var mockUUID;
@@ -18,11 +18,11 @@ describe('utils.respondable', function () {
 	});
 
 	it('should be a function', function () {
-		assert.isFunction(utils.respondable);
+		assert.isFunction(axe.utils.respondable);
 	});
 
 	it('should accept 5 parameters', function () {
-		assert.lengthOf(utils.respondable, 5);
+		assert.lengthOf(axe.utils.respondable, 5);
 	});
 
 	it('should call `postMessage` on first parameter', function () {
@@ -33,7 +33,7 @@ describe('utils.respondable', function () {
 			}
 		};
 
-		utils.respondable(win, 'batman', 'nananana');
+		axe.utils.respondable(win, 'batman', 'nananana');
 		assert.isTrue(success);
 	});
 
@@ -45,7 +45,7 @@ describe('utils.respondable', function () {
 			}
 		};
 
-		utils.respondable(win, 'batman', { derp: true });
+		axe.utils.respondable(win, 'batman', { derp: true });
 
 	});
 
@@ -60,7 +60,7 @@ describe('utils.respondable', function () {
 			}
 		};
 
-		utils.respondable(win, 'batman', 'nananana');
+		axe.utils.respondable(win, 'batman', 'nananana');
 	});
 
 	it('should add the `keepalive`', function (done) {
@@ -73,7 +73,7 @@ describe('utils.respondable', function () {
 			}
 		};
 
-		utils.respondable(win, 'superman', 'spidey', 'batman');
+		axe.utils.respondable(win, 'superman', 'spidey', 'batman');
 	});
 
 	it('should add `_respondable` to the message', function (done) {
@@ -86,7 +86,7 @@ describe('utils.respondable', function () {
 			}
 		};
 
-		utils.respondable(win, 'batman', 'nananana');
+		axe.utils.respondable(win, 'batman', 'nananana');
 	});
 
 	it('should create a uuid.v1 (time-based uuid)', function () {
@@ -105,7 +105,7 @@ describe('utils.respondable', function () {
 			return UUID;
 		};
 
-		utils.respondable(win, 'batman', 'nananana');
+		axe.utils.respondable(win, 'batman', 'nananana');
 		assert.isTrue(success);
 
 		window.uuid.v1 = orig;
@@ -124,7 +124,7 @@ describe('utils.respondable', function () {
 		});
 		event.source = window;
 
-		utils.respondable(window, 'Death star', null, true, function (data) {
+		axe.utils.respondable(window, 'Death star', null, true, function (data) {
 			success = true;
 			assert.equal(data, 'Help us Obi-Wan');
 		});
@@ -144,7 +144,7 @@ describe('utils.respondable', function () {
 		};
 		event.source = window;
 
-		utils.respondable(window, 'batman', 'nananana', true, function () {
+		axe.utils.respondable(window, 'batman', 'nananana', true, function () {
 			success = false;
 		});
 		document.dispatchEvent(event);
@@ -164,7 +164,7 @@ describe('utils.respondable', function () {
 		}) + 'joker tricks!';
 		event.source = window;
 
-		utils.respondable(window, 'batman', 'nananana', true, function () {
+		axe.utils.respondable(window, 'batman', 'nananana', true, function () {
 			success = false;
 		});
 		document.dispatchEvent(event);
@@ -184,7 +184,7 @@ describe('utils.respondable', function () {
 		});
 		event.source = window;
 
-		utils.respondable(window, 'batman', 'nananana', true, function () {
+		axe.utils.respondable(window, 'batman', 'nananana', true, function () {
 			success = false;
 		});
 		document.dispatchEvent(event);
@@ -205,7 +205,7 @@ describe('utils.respondable', function () {
 		});
 		event.source = window;
 
-		utils.respondable(window, 'batman', 'nananana', true, function () {
+		axe.utils.respondable(window, 'batman', 'nananana', true, function () {
 			success = false;
 		});
 		document.dispatchEvent(event);
@@ -225,7 +225,7 @@ describe('utils.respondable', function () {
 		});
 		event.source = window;
 
-		utils.respondable(window, 'batman', 'nananana', true, function () {
+		axe.utils.respondable(window, 'batman', 'nananana', true, function () {
 			success = false;
 		});
 		document.dispatchEvent(event);
@@ -249,7 +249,7 @@ describe('utils.respondable', function () {
 		});
 		event.source = window;
 
-		utils.respondable(window, 'Death star', null, true, function (data) {
+		axe.utils.respondable(window, 'Death star', null, true, function (data) {
 			success = true;
 			assert.instanceOf(data, ReferenceError);
 			assert.equal(data.message, 'The exhaust port is open!');
@@ -262,18 +262,18 @@ describe('utils.respondable', function () {
 
 	describe('subscribe', function () {
 		it('should be a function', function () {
-			assert.isFunction(utils.respondable.subscribe);
+			assert.isFunction(axe.utils.respondable.subscribe);
 		});
 
 		it('should receive messages', function (done) {
 			var expected = null;
-			utils.respondable.subscribe('catman', function (data) {
+			axe.utils.respondable.subscribe('catman', function (data) {
 				assert.equal(data, expected);
 				if (data === 'yay') {
 					done();
 				}
 			});
-			utils.respondable(window, 'catman', null, undefined, function (data, keepalive, respond) {
+			axe.utils.respondable(window, 'catman', null, undefined, function (data, keepalive, respond) {
 				assert.isNull(data);
 				setTimeout(function () {
 					respond('yay');
@@ -285,13 +285,13 @@ describe('utils.respondable', function () {
 
 		it('should propagate the keepalive setting', function (done) {
 			var expected = null;
-			utils.respondable.subscribe('catman', function (data, keepalive) {
+			axe.utils.respondable.subscribe('catman', function (data, keepalive) {
 				assert.equal(keepalive, expected);
 				if (data === 'yayyay') {
 					done();
 				}
 			});
-			utils.respondable(window, 'catman', null, undefined, function (data, keepalive, respond) {
+			axe.utils.respondable(window, 'catman', null, undefined, function (data, keepalive, respond) {
 				assert.isNull(data);
 				setTimeout(function () {
 					expected = 'keepy';
@@ -303,7 +303,7 @@ describe('utils.respondable', function () {
 		it('should allow multiple responses when keepalive', function (done) {
 			var expected = 2;
 			var called = 0;
-			utils.respondable.subscribe('catman', function (data) {
+			axe.utils.respondable.subscribe('catman', function (data) {
 				if (data === 'yayyayyay') {
 					called += 1;
 					if (called === expected) {
@@ -311,7 +311,7 @@ describe('utils.respondable', function () {
 					}
 				}
 			});
-			utils.respondable(window, 'catman', null, undefined, function (data, keepalive, respond) {
+			axe.utils.respondable(window, 'catman', null, undefined, function (data, keepalive, respond) {
 				assert.isNull(data);
 				setTimeout(function () {
 					respond('yayyayyay', true);
@@ -324,12 +324,12 @@ describe('utils.respondable', function () {
 
 		it('does not trigger for error messages', function (done) {
 			var published = false;
-			utils.respondable.subscribe('catman', function () {
+			axe.utils.respondable.subscribe('catman', function () {
 				published = true;
 			});
 
 			var err = new ReferenceError('whoopsy');
-			utils.respondable(window, 'catman', err);
+			axe.utils.respondable(window, 'catman', err);
 			setTimeout(function () {
 				assert.ok(!published, 'Error events should not trigger');
 				done();
@@ -339,12 +339,12 @@ describe('utils.respondable', function () {
 		it('returns an error if the subscribe method responds with an error', function (done) {
 			var expected = 'Expected owlman to be batman';
 			var wait = true;
-			utils.respondable.subscribe('owlman', function (data, keepalive, respond) {
+			axe.utils.respondable.subscribe('owlman', function (data, keepalive, respond) {
 				wait = false;
 				respond(new TypeError(expected));
 			});
 
-			utils.respondable(window, 'owlman', 'help!', true,
+			axe.utils.respondable(window, 'owlman', 'help!', true,
 			function (data) {
 				if (!wait) {
 					assert.instanceOf(data, TypeError);
@@ -357,7 +357,7 @@ describe('utils.respondable', function () {
 		it('returns an error if the subscribe method throws', function (done) {
 			var wait = true;
 			var expected = 'Expected owlman to be batman';
-			utils.respondable.subscribe('owlman', function () {
+			axe.utils.respondable.subscribe('owlman', function () {
 				wait = false;
 				throw new TypeError(expected);
 			});
@@ -365,7 +365,7 @@ describe('utils.respondable', function () {
 			// use keepalive, because we're running on the same window,
 			// otherwise it would delete the response before subscribe
 			// gets to react
-			utils.respondable(window, 'owlman', null, true,
+			axe.utils.respondable(window, 'owlman', null, true,
 			function (data) {
 				if (!wait) {
 					assert.instanceOf(data, TypeError);

@@ -11,7 +11,7 @@ describe('dom.getElementByReference', function () {
 	it('should return null if the attribute is not found', function () {
 		fixture.innerHTML = '<a id="link" href="#target">Hi</a>';
 		var node = document.getElementById('link'),
-			result = commons.dom.getElementByReference(node, 'usemap');
+			result = axe.commons.dom.getElementByReference(node, 'usemap');
 
 		assert.isNull(result);
 
@@ -20,7 +20,7 @@ describe('dom.getElementByReference', function () {
 	it('should return null if the attribute does not start with "#"', function () {
 		fixture.innerHTML = '<a id="link" usemap="target">Hi</a>';
 		var node = document.getElementById('link'),
-			result = commons.dom.getElementByReference(node, 'href');
+			result = axe.commons.dom.getElementByReference(node, 'href');
 
 		assert.isNull(result);
 
@@ -29,7 +29,7 @@ describe('dom.getElementByReference', function () {
 	it('should return null if no targets are found', function () {
 		fixture.innerHTML = '<a id="link" href="#target">Hi</a>';
 		var node = document.getElementById('link'),
-			result = commons.dom.getElementByReference(node, 'href');
+			result = axe.commons.dom.getElementByReference(node, 'href');
 
 		assert.isNull(result);
 
@@ -42,7 +42,7 @@ describe('dom.getElementByReference', function () {
 
 		var node = document.getElementById('link'),
 			expected = document.getElementById('target'),
-			result = commons.dom.getElementByReference(node, 'href');
+			result = axe.commons.dom.getElementByReference(node, 'href');
 
 		assert.equal(result, expected);
 
@@ -54,7 +54,7 @@ describe('dom.getElementByReference', function () {
 
 		var node = document.getElementById('link'),
 			expected = document.getElementById('target0'),
-			result = commons.dom.getElementByReference(node, 'href');
+			result = axe.commons.dom.getElementByReference(node, 'href');
 
 		assert.equal(result, expected);
 
@@ -67,7 +67,7 @@ describe('dom.getElementByReference', function () {
 
 		var node = document.getElementById('link'),
 			expected = document.getElementById('target0'),
-			result = commons.dom.getElementByReference(node, 'href');
+			result = axe.commons.dom.getElementByReference(node, 'href');
 
 		assert.equal(result, expected);
 
