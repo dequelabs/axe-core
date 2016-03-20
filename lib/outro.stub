@@ -1,2 +1,2 @@
 
-})(window, window ? window.document : undefined);
+})(this, this.document);
