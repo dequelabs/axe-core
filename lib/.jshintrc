@@ -1,7 +1,6 @@
 {
 	"globals": {
-		"axe": true,
-		"utils": true
+		"axe": true
 	},
 
 	"browser" : true,

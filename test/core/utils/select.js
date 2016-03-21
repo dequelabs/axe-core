@@ -1,5 +1,5 @@
 
-describe('utils.select', function () {
+describe('axe.utils.select', function () {
 	'use strict';
 
 	function $id(id) {
@@ -14,11 +14,11 @@ describe('utils.select', function () {
 
 
 	it('should be a function', function () {
-		assert.isFunction(utils.select);
+		assert.isFunction(axe.utils.select);
 	});
 
 	it('should return an array', function () {
-		assert.isArray(utils.select('div', { include: [] }));
+		assert.isArray(axe.utils.select('div', { include: [] }));
 	});
 
 	describe('selector', function () {
@@ -28,7 +28,7 @@ describe('utils.select', function () {
 			div.id = 'monkeys';
 			fixture.appendChild(div);
 
-			var result = utils.select('#monkeys', { include: [document] });
+			var result = axe.utils.select('#monkeys', { include: [document] });
 
 			assert.equal(result[0], div);
 
@@ -40,7 +40,7 @@ describe('utils.select', function () {
 		it('should include', function () {
 			fixture.innerHTML = '<div id="monkeys"><div id="bananas" class="bananas"></div></div>';
 
-			var result = utils.select('.bananas', {
+			var result = axe.utils.select('.bananas', {
 				include: [$id('monkeys')]
 			});
 
@@ -51,7 +51,7 @@ describe('utils.select', function () {
 		it('should exclude', function () {
 			fixture.innerHTML = '<div id="monkeys"><div id="bananas" class="bananas"></div></div>';
 
-			var result = utils.select('.bananas', {
+			var result = axe.utils.select('.bananas', {
 				include: [$id('fixture')],
 				exclude: [$id('monkeys')]
 			});
@@ -72,7 +72,7 @@ describe('utils.select', function () {
 				'</div>';
 
 
-			var result = utils.select('.bananas', {
+			var result = axe.utils.select('.bananas', {
 				include: [$id('include1'), $id('include2')],
 				exclude: [$id('exclude1'), $id('exclude2')]
 			});
@@ -95,7 +95,7 @@ describe('utils.select', function () {
 				'</div>';
 
 
-			var result = utils.select('.bananas', {
+			var result = axe.utils.select('.bananas', {
 				include: [$id('include3'), $id('include2'), $id('include1')],
 				exclude: [$id('exclude1'), $id('exclude2')]
 			});
@@ -109,7 +109,7 @@ describe('utils.select', function () {
 	it('should only contain unique elements', function () {
 		fixture.innerHTML = '<div id="monkeys"><div id="bananas" class="bananas"></div></div>';
 
-		var result = utils.select('.bananas', { include: [$id('fixture'), $id('monkeys')] });
+		var result = axe.utils.select('.bananas', { include: [$id('fixture'), $id('monkeys')] });
 
 		assert.lengthOf(result, 1);
 		assert.equal(result[0], $id('bananas'));
@@ -120,7 +120,7 @@ describe('utils.select', function () {
 		fixture.innerHTML = '<div id="one"><div id="target1" class="bananas"></div></div>' +
 			'<div id="two"><div id="target2" class="bananas"></div></div>';
 
-		var result = utils.select('.bananas', { include: [$id('two'), $id('one')] });
+		var result = axe.utils.select('.bananas', { include: [$id('two'), $id('one')] });
 
 		assert.deepEqual(result, [$id('target1'), $id('target2')]);
 

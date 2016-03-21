@@ -3,7 +3,7 @@
   "selector": "[role]",
   "tags": [
     "wcag2a",
-    "wcag411"
+    "wcag131"
   ],
   "metadata": {
     "description": "Ensures elements with an ARIA role that require parent roles are contained by them",
