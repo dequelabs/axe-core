@@ -97,7 +97,7 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
 
 #### Purpose
 
-To configure the format of the data for the current session
+To configure the format of the data used by aXe. This can be used to add new rules, which must be registered with the library to execute.
 
 #### Description
 
@@ -107,6 +107,10 @@ User specifies the format of the JSON structure passed to the callback of `axe.a
 
 ```javascript
 axe.configure({
+	branding: {
+		brand: String,
+		application: String
+	},
 	reporter: "option",
 	checks: [Object],
 	rules: [Object]});
@@ -115,6 +119,9 @@ axe.configure({
 #### Parameters
 
 * `configurationOptions` - Options object; where the valid name, value pairs are:
+  * `branding` - mixed(optional) Used to set the branding of the helpUrls
+     * `brand` - string(optional) sets the brand string - default "axe"
+     * `application` - string(optional) sets the application string - default "axeAPI"
   * `reporter` - Used to set the output format that the axe.a11yCheck function will pass to the callback function
      * `v1` to use the previous version's format: `axe.configure({ reporter: "v1" });`
      * `v2` to use the current version's format: `axe.configure({ reporter: "v2" });`
@@ -163,7 +170,7 @@ axe.a11yCheck(context, options, callback);
 #### Parameters
 
 * `context`: Defines the scope of the analysis - the part of the DOM that you would like to analyze. This will typically be the `document` or a specific selector such as class name, ID, selector, etc.
-* `options`: (optional) Set of options passed into rules or checks. [See below for more information](#a11ycheck-parameters)
+* `options`: (optional) Set of options passed into rules or checks, temporarily modifying them. This contrasts with `axe.configure`, which is more permanent. [See below for more information](#a11ycheck-parameters)
 * `callback`: The callback function which receives on the [results object](#results-object) as a parameter when analysis is complete
 
 #### Results Object
@@ -323,7 +330,7 @@ The options parameter is flexible way to configure how `a11yCheck` operates. The
 	This example will disable the rules with the id of `color-contrast` and `valid-lang`. All other rules will run. The list of valid rule IDs is specified in the section below.
 
 4. Run a modified set or rules using tags and rule enable
-	
+
 	By combining runOnly with type: tags and the rules option, a modified set can be defined. This lets you include rules with unspecified tags, and exclude rules that do have the specified tag(s).
 	```javascript
 	{
@@ -339,6 +346,23 @@ The options parameter is flexible way to configure how `a11yCheck` operates. The
 	```
 
 	This example includes all level A rules except for valid-lang, and in addition will include the level AA color-contrast rule.
+
+5. Run only some tags, bug exclude others
+
+	Similar to scope, the runOnly option can accept an object with an 'include' and 'exclude' property. Only those checks that match an included tag will run, except those that share a tag from the exclude list.
+	```javascript
+	{
+	  runOnly: {
+	    type: 'tags',
+	    value: {
+	      include: ['wcag2a', 'wcag2aa'],
+	      exclude: ['experimental']
+	    }
+	  }
+	}
+	```
+
+	This example first includes all `wcag2a` and `wcag2aa` rules. All rules that are tagged as `experimental` are than removed from the list of rules to run.
 
 ##### C. Callback Parameter
 

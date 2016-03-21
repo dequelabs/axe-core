@@ -1,6 +1,7 @@
 tmp
 dist
-bower_components
 node_modules
 test/*/index.html
 test/integration/*/index.html
+axe.js
+axe.min.js

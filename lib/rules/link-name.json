@@ -10,8 +10,7 @@
   ],
   "metadata": {
     "description": "Ensures links have discernible text",
-    "help": "Links must have discernible text",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/link-name"
+    "help": "Links must have discernible text"
   },
   "all": [],
   "any": [
@@ -22,7 +21,6 @@
     "role-none"
   ],
   "none": [
-    "duplicate-img-label",
     "focusable-no-name"
   ]
 }

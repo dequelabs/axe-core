@@ -17,7 +17,7 @@ describe('table.isDataCell', function () {
 
 		var target = $id('target');
 
-		assert.isFalse(commons.table.isDataCell(target));
+		assert.isFalse(axe.commons.table.isDataCell(target));
 	});
 
 	it('should work with TD', function () {
@@ -27,7 +27,7 @@ describe('table.isDataCell', function () {
 
 		var target = $id('target');
 
-		assert.isTrue(commons.table.isDataCell(target));
+		assert.isTrue(axe.commons.table.isDataCell(target));
 	});
 
 	it('should work with empty TD', function () {
@@ -37,7 +37,7 @@ describe('table.isDataCell', function () {
 
 		var target = $id('target');
 
-		assert.isFalse(commons.table.isDataCell(target));
+		assert.isFalse(axe.commons.table.isDataCell(target));
 	});
 
 });

@@ -1,4 +1,4 @@
-describe('utils.toArray', function () {
+describe('axe.utils.toArray', function () {
 	'use strict';
 
 	it('should call Array.prototype.slice', function () {
@@ -11,7 +11,7 @@ describe('utils.toArray', function () {
 			assert.equal(this, arrayLike);
 		};
 
-		utils.toArray(arrayLike);
+		axe.utils.toArray(arrayLike);
 
 		assert.isTrue(called);
 
@@ -21,7 +21,7 @@ describe('utils.toArray', function () {
 	it('should return an array', function () {
 		var arrayLike = {'0': 'cats', length: 1};
 
-		var result = utils.toArray(arrayLike);
+		var result = axe.utils.toArray(arrayLike);
 		assert.isArray(result);
 	});
 });

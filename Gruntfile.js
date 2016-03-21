@@ -15,13 +15,7 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		clean: ['dist', 'tmp'],
-		nodeify: {
-			core: {
-				src: ['<%= concat.engine.dest %>'],
-				dest: 'dist/index.js'
-			}
-		},
+		clean: ['tmp'],
 		'update-help': {
 			options: {
 				version: '<%=pkg.version%>'
@@ -34,19 +28,15 @@ module.exports = function (grunt) {
 			engine: {
 				src: [
 					'lib/intro.stub',
-					'bower_components/simple-clone/lib/index.js',
-					'bower_components/element-matches/lib/index.js',
-					'bower_components/escape-selector/lib/index.js',
-					'bower_components/node-uuid/uuid.js',
 					'lib/core/index.js',
 					'lib/core/*/index.js',
 					'lib/core/**/index.js',
 					'lib/core/**/*.js',
-					'<%= configure.rules.dest.auto %>',
 					'lib/core/export.js',
+					'<%= configure.rules.dest.auto %>',
 					'lib/outro.stub'
 				],
-				dest: 'dist/axe.js',
+				dest: 'axe.js',
 				options: {
 					process: true
 				}
@@ -101,15 +91,6 @@ module.exports = function (grunt) {
 			}
 		},
 		uglify: {
-			lib: {
-				files: [{
-					src: ['<%= concat.engine.dest %>'],
-					dest: 'dist/axe.min.js'
-				}],
-				options: {
-					preserveComments: 'some'
-				}
-			},
 			beautify: {
 				files: [{
 					src: ['<%= concat.engine.dest %>'],
@@ -126,23 +107,18 @@ module.exports = function (grunt) {
 					},
 					preserveComments: 'some'
 				}
-			}
-		},
-		copy: {
-			manifests: {
+			},
+			lib: {
 				files: [{
-					src: ['package.json'],
-					dest: 'dist/'
-				}, {
-					src: ['README.md'],
-					dest: 'dist/'
-				}, {
-					src: ['bower.json'],
-					dest: 'dist/'
-				}, {
-					src: ['LICENSE'],
-					dest: 'dist/'
-				}]
+					src: ['<%= concat.engine.dest %>'],
+					dest: 'axe.min.js'
+				}],
+				options: {
+					preserveComments: 'some',
+					mangle: {
+						except: ['commons', 'utils', 'axe']
+					}
+				}
 			}
 		},
 		watch: {
@@ -238,7 +214,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build']);
 
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
-		'concat:engine', 'copy', 'nodeify', 'uglify']);
+		'concat:engine', 'uglify']);
 
 	grunt.registerTask('test', ['build',  'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);

@@ -4,8 +4,8 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "List element only has children that are <li>, <script> or <template> elements",
-      "fail": "List element has children that are not <li>, <script> or <template> elements"
+      "pass": "List element only has direct children that are allowed inside <li> elements",
+      "fail": "List element has direct children that are not allowed inside <li> elements"
     }
   }
 }

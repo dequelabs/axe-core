@@ -8,8 +8,7 @@
   ],
   "metadata": {
     "description": "Ensures presentational <table> elements do not use <th>, <caption> elements or the summary attribute",
-    "help": "Layout tables must not use data table elements",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/layout-table"
+    "help": "Layout tables must not use data table elements"
   },
   "all": [],
   "any": [],

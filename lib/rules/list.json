@@ -1,14 +1,13 @@
 {
   "id": "list",
-  "selector": "ul, ol",
+  "selector": "ul:not([role]), ol:not([role])",
   "tags": [
     "wcag2a",
     "wcag131"
   ],
   "metadata": {
     "description": "Ensures that lists are structured correctly",
-    "help": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/list"
+    "help": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements"
   },
   "all": [],
   "any": [],

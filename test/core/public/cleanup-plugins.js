@@ -4,14 +4,19 @@ describe('cleanupPlugins', function () {
 
   function createFrames(callback) {
     var frame;
-
     frame = document.createElement('iframe');
-    frame.src = '../mock/frames/nocode.html';
-    frame.addEventListener('load', callback);
+    frame.src = '../mock/frames/nested1.html';
+    frame.addEventListener('load', function () {
+      setTimeout(callback, 500);
+    });
     fixture.appendChild(frame);
   }
 
   var fixture = document.getElementById('fixture');
+
+  var assertNotCalled = function () {
+    assert.ok(false, 'Should not be called');
+  };
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -24,7 +29,6 @@ describe('cleanupPlugins', function () {
 
 
   it('should throw if no audit is configured', function () {
-
     assert.throws(function () {
       cleanupPlugins(document, {});
     }, Error, /^No audit configured/);
@@ -44,31 +48,32 @@ describe('cleanupPlugins', function () {
       },
       commands: []
     });
-    axe.plugins.p.cleanup = function (done) {
+    axe.plugins.p.cleanup = function (res) {
       cleaned = true;
-      done();
+      res();
     };
     cleanupPlugins(function () {
       assert.equal(cleaned, true);
       done();
-    });
+    }, assertNotCalled);
   });
+
 
   it('should send command to frames to cleanup', function (done) {
     createFrames(function () {
       axe._load({});
-      var orig = utils.sendCommandToFrame;
+      var orig = axe.utils.sendCommandToFrame;
       var frame = document.querySelector('iframe');
-      utils.sendCommandToFrame = function (node, opts) {
+      axe.utils.sendCommandToFrame = function (node, opts) {
         assert.equal(node, frame);
         assert.deepEqual(opts, {
           command: 'cleanup-plugin'
         });
+        axe.utils.sendCommandToFrame = orig;
         done();
       };
-      cleanupPlugins();
-      utils.sendCommandToFrame = orig;
+      cleanupPlugins(function () {}, assertNotCalled);
     });
-
   });
+
 });

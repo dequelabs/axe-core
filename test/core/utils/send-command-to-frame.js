@@ -1,11 +1,15 @@
-describe('utils.sendCommandToFrame', function () {
+describe('axe.utils.sendCommandToFrame', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
 
 	afterEach(function () {
-		fixture.innerHTML = '';
-	});
+    fixture.innerHTML = '';
+  });
+
+  var assertNotCalled = function () {
+    assert.ok(false, 'should not be called');
+  };
 
   it('should timeout if there is no response from frame', function (done) {
     var orig = window.setTimeout;
@@ -18,22 +22,14 @@ describe('utils.sendCommandToFrame', function () {
       }
       return 'cats';
     };
-    var origLog = axe.log,
-      logCalled = false;
-    axe.log = function (msg, actualFrame) {
-      assert.equal(msg, 'No response from frame: ');
-      assert.equal(actualFrame, frame);
-      logCalled = true;
-    };
 
     var frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
-      utils.sendCommandToFrame(frame, {}, function () {
-        assert.isTrue(logCalled);
-        window.setTimeout = orig;
-        axe.log = origLog;
+      axe.utils.sendCommandToFrame(frame, {}, function (result) {
+        assert.equal(result, null);
         done();
-      });
+      }, assertNotCalled);
+      window.setTimeout = orig;
     });
 
     frame.id = 'level0';
@@ -45,12 +41,12 @@ describe('utils.sendCommandToFrame', function () {
   it('should respond once when no keepalive', function (done) {
     var frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
-      utils.sendCommandToFrame(frame, {
+      axe.utils.sendCommandToFrame(frame, {
         number: 1
       }, function () {
         assert.isTrue(true);
         done();
-      });
+      }, assertNotCalled);
     });
 
     frame.id = 'level0';
@@ -64,7 +60,7 @@ describe('utils.sendCommandToFrame', function () {
     var called = 0;
     var frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
-      utils.sendCommandToFrame(frame, {
+      axe.utils.sendCommandToFrame(frame, {
         number: number,
         keepalive: true
       }, function () {
@@ -73,7 +69,7 @@ describe('utils.sendCommandToFrame', function () {
           assert.isTrue(true);
           done();
         }
-      });
+      }, assertNotCalled);
     });
 
     frame.id = 'level0';
@@ -87,7 +83,7 @@ describe('utils.sendCommandToFrame', function () {
     var called = 0;
     var frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
-      utils.sendCommandToFrame(frame, {
+      axe.utils.sendCommandToFrame(frame, {
         number: number
       }, function () {
         called += 1;
@@ -96,7 +92,7 @@ describe('utils.sendCommandToFrame', function () {
           assert.isTrue(false);
           done();
         }
-      });
+      }, assertNotCalled);
     });
     var timer = setTimeout(function () {
       assert.isTrue(true);

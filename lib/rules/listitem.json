@@ -1,14 +1,13 @@
 {
   "id": "listitem",
-  "selector": "li",
+  "selector": "li:not([role])",
   "tags": [
     "wcag2a",
     "wcag131"
   ],
   "metadata": {
     "description": "Ensures <li> elements are used semantically",
-    "help": "<li> elements must be contained in a <ul> or <ol>",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/listitem"
+    "help": "<li> elements must be contained in a <ul> or <ol>"
   },
   "all": [],
   "any": [

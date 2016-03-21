@@ -12,7 +12,7 @@ describe('dom.visuallyContains', function () {
 			'<div id="target" style="height: 20px; width: 15px; background-color: green;">' +
 			'</div></div>';
 		var target = fixture.querySelector('#target');
-		assert.isTrue(commons.dom.visuallyContains(target, target.parentNode));
+		assert.isTrue(axe.commons.dom.visuallyContains(target, target.parentNode));
 	});
 
 	it('should return false when overflow is hidden', function () {
@@ -20,7 +20,7 @@ describe('dom.visuallyContains', function () {
 			'<div id="target" style="height: 20px; width: 45px; background-color: green;">' +
 			'</div></div>';
 		var target = fixture.querySelector('#target');
-		assert.isTrue(commons.dom.visuallyContains(target, target.parentNode));
+		assert.isTrue(axe.commons.dom.visuallyContains(target, target.parentNode));
 	});
 
 	it('should return false when element is outside of margin', function () {
@@ -28,7 +28,7 @@ describe('dom.visuallyContains', function () {
 			'<div id="target" style="height: 20px; width: 45px; margin-left: -20px; background-color: green;">' +
 			'</div></div>';
 		var target = fixture.querySelector('#target');
-		assert.isFalse(commons.dom.visuallyContains(target, target.parentNode));
+		assert.isFalse(axe.commons.dom.visuallyContains(target, target.parentNode));
 	});
 
 	it('should return false when overflow is visible', function () {
@@ -36,7 +36,7 @@ describe('dom.visuallyContains', function () {
 			'<div id="target" style="height: 20px; width: 45px; background-color: green;">' +
 			'</div></div>';
 		var target = fixture.querySelector('#target');
-		assert.isFalse(commons.dom.visuallyContains(target, target.parentNode));
+		assert.isFalse(axe.commons.dom.visuallyContains(target, target.parentNode));
 	});
 
 	it('should return true when element is scrollable', function () {
@@ -44,7 +44,7 @@ describe('dom.visuallyContains', function () {
 			'<div id="target" style="height: 20px; width: 45px; background-color: green;">' +
 			'</div></div>';
 		var target = fixture.querySelector('#target');
-		assert.isTrue(commons.dom.visuallyContains(target, target.parentNode));
+		assert.isTrue(axe.commons.dom.visuallyContains(target, target.parentNode));
 	});
 
 });

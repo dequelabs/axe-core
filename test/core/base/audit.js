@@ -2,6 +2,10 @@
 describe('Audit', function () {
 	'use strict';
 	var a;
+	var isNotCalled = function () {
+		assert.ok(false, 'Function should not be called');
+	};
+	var noop = function () {};
 
 	var mockChecks = [{
 		id: 'positive1-check1',
@@ -64,17 +68,118 @@ describe('Audit', function () {
 		assert.isFunction(Audit);
 	});
 
+	describe('Audit#_constructHelpUrls', function () {
+		it('should create default help URLS', function () {
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				matches: 'function () {return "hello";}',
+				selector: 'bob'
+			});
+			assert.lengthOf(audit.rules, 1);
+			assert.equal(audit.data.rules.target, undefined);
+			audit._constructHelpUrls();
+			assert.deepEqual(audit.data.rules.target, {
+				helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/target?application=axeAPI'
+			});
+		});
+		it('should use changed branding', function () {
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				matches: 'function () {return "hello";}',
+				selector: 'bob'
+			});
+			assert.lengthOf(audit.rules, 1);
+			assert.equal(audit.data.rules.target, undefined);
+			audit.brand = 'thing';
+			audit._constructHelpUrls();
+			assert.deepEqual(audit.data.rules.target, {
+				helpUrl: 'https://dequeuniversity.com/rules/thing/2.0/target?application=axeAPI'
+			});
+		});
+		it('should use changed application', function () {
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				matches: 'function () {return "hello";}',
+				selector: 'bob'
+			});
+			assert.lengthOf(audit.rules, 1);
+			assert.equal(audit.data.rules.target, undefined);
+			audit.application = 'thing';
+			audit._constructHelpUrls();
+			assert.deepEqual(audit.data.rules.target, {
+				helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/target?application=thing'
+			});
+		});
+	});
+
+	describe('Audit#setBranding', function () {
+		it('should change the brand', function () {
+			var audit = new Audit();
+			assert.equal(audit.brand, 'axe');
+			assert.equal(audit.application, 'axeAPI');
+			audit.setBranding({
+				brand: 'thing'
+			});
+			assert.equal(audit.brand, 'thing');
+			assert.equal(audit.application, 'axeAPI');
+		});
+		it('should change the application', function () {
+			var audit = new Audit();
+			assert.equal(audit.brand, 'axe');
+			assert.equal(audit.application, 'axeAPI');
+			audit.setBranding({
+				application: 'thing'
+			});
+			assert.equal(audit.brand, 'axe');
+			assert.equal(audit.application, 'thing');
+		});
+		it('should call _constructHelpUrls', function () {
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				matches: 'function () {return "hello";}',
+				selector: 'bob'
+			});
+			assert.lengthOf(audit.rules, 1);
+			assert.equal(audit.data.rules.target, undefined);
+			audit.setBranding({
+				application: 'thing'
+			});
+			assert.deepEqual(audit.data.rules.target, {
+				helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/target?application=thing'
+			});
+		});
+		it('should call _constructHelpUrls even when nothing changed', function () {
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				matches: 'function () {return "hello";}',
+				selector: 'bob'
+			});
+			assert.lengthOf(audit.rules, 1);
+			assert.equal(audit.data.rules.target, undefined);
+			audit.setBranding(undefined);
+			assert.deepEqual(audit.data.rules.target, {
+				helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/target?application=axeAPI'
+			});
+		});
+	});
+
+
 	describe('Audit#addRule', function () {
 		it('should override existing rule', function () {
 			var audit = new Audit();
 			audit.addRule({
 				id: 'target',
-				matches: 'hello',
+				matches: 'function () {return "hello";}',
 				selector: 'bob'
 			});
 			assert.lengthOf(audit.rules, 1);
 			assert.equal(audit.rules[0].selector, 'bob');
-			assert.equal(audit.rules[0].matches, 'hello');
+			assert.equal(audit.rules[0].matches(), 'hello');
 
 			audit.addRule({
 				id: 'target',
@@ -83,7 +188,7 @@ describe('Audit', function () {
 
 			assert.lengthOf(audit.rules, 1);
 			assert.equal(audit.rules[0].selector, 'fred');
-			assert.equal(audit.rules[0].matches, 'hello');
+			assert.equal(audit.rules[0].matches(), 'hello');
 		});
 		it('should otherwise push new rule', function () {
 			var audit = new Audit();
@@ -105,6 +210,22 @@ describe('Audit', function () {
 			assert.equal(audit.rules[1].selector, 'fred');
 		});
 
+	});
+
+	describe('Audit#resetRulesAndChecks', function () {
+		it('should override newly created check', function () {
+			var audit = new Audit();
+			assert.equal(audit.checks.target, undefined);
+			audit.addCheck({
+				id: 'target',
+				selector: 'bob',
+				options: 'jane'
+			});
+			assert.ok(audit.checks.target);
+			assert.equal(audit.checks.target.selector, 'bob');
+			audit.resetRulesAndChecks();
+			assert.equal(audit.checks.target, undefined);
+		});
 	});
 
 	describe('Audit#addCheck', function () {
@@ -151,7 +272,7 @@ describe('Audit', function () {
 
 	describe('Audit#run', function () {
 		it('should run all the rules', function (done) {
-			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
+			fixture.innerHTML = '<input aria-label="monkeys" type="text">' +
 				'<div id="monkeys">bananas</div>' +
 				'<input aria-labelledby="monkeys" type="text">' +
 				'<blink>FAIL ME</blink>';
@@ -216,7 +337,7 @@ describe('Audit', function () {
 					nodes: [{
 						node: {
 							selector: ['#fixture'],
-							source: '<div id="fixture"><input type="text" aria-label="monkeys"><div id="monkeys">bananas</div><input aria-labelledby="monkeys" type="text"><blink>FAIL ME</blink></div>'
+							source: '<div id="fixture"><input aria-label="monkeys" type="text"><div id="monkeys">bananas</div><input aria-labelledby="monkeys" type="text"><blink>FAIL ME</blink></div>'
 						},
 						none: [{
 							id: 'negative1-check1',
@@ -265,19 +386,19 @@ describe('Audit', function () {
 				assert.deepEqual(JSON.parse(JSON.stringify(results)), expected);
 				assert.match(out, /^<input(\s+type="text"|\s+aria-label="monkeys"){2,}>/);
 				done();
-			});
+			}, isNotCalled);
 		});
 		it('should not run rules disabled by the options', function (done) {
 			a.run({ include: [document] }, {
-					rules: {
-						'positive3': {
-							enabled: false
-						}
+				rules: {
+					'positive3': {
+						enabled: false
 					}
-				}, function (results) {
-					assert.equal(results.length, 3);
-					done();
-				});
+				}
+			}, function (results) {
+				assert.equal(results.length, 3);
+				done();
+			}, isNotCalled);
 		});
 		it('should not run rules disabled by the configuration', function (done) {
 			var a = new Audit();
@@ -296,11 +417,11 @@ describe('Audit', function () {
 			a.run({ include: [document] }, {}, function () {
 				assert.ok(success);
 				done();
-			});
+			}, isNotCalled);
 		});
 		it('should call the rule\'s run function', function (done) {
 			var targetRule = mockRules[mockRules.length - 1],
-				rule = utils.findBy(a.rules, 'id', targetRule.id),
+				rule = axe.utils.findBy(a.rules, 'id', targetRule.id),
 				called = false,
 				orig;
 
@@ -314,11 +435,11 @@ describe('Audit', function () {
 				assert.isTrue(called);
 				rule.run = orig;
 				done();
-			});
+			}, isNotCalled);
 		});
 		it('should pass the option to the run function', function (done) {
 			var targetRule = mockRules[mockRules.length - 1],
-				rule = utils.findBy(a.rules, 'id', targetRule.id),
+				rule = axe.utils.findBy(a.rules, 'id', targetRule.id),
 				passed = false,
 				orig, options;
 
@@ -335,7 +456,7 @@ describe('Audit', function () {
 				assert.ok(passed);
 				rule.run = orig;
 				done();
-			});
+			}, isNotCalled);
 		});
 
 		it('should skip pageLevel rules if context is not set to entire page', function () {
@@ -351,8 +472,66 @@ describe('Audit', function () {
 
 			audit.run({ include: [ document.body ], page: false }, {}, function (results) {
 				assert.deepEqual(results, []);
-			});
+			}, isNotCalled);
 
+		});
+
+		it('should pass errors to axe.log', function (done) {
+			var orig = axe.log;
+			axe.log = function (err) {
+				assert.equal(err.message, 'Launch the super sheep!');
+				axe.log = orig;
+				done();
+			};
+
+			a.addRule({
+				id: 'throw1',
+				selector: '*',
+				any: [{
+					id: 'throw1-check1',
+				}]
+			});
+			a.addCheck({
+				id: 'throw1-check1',
+				evaluate: function () {
+					throw new Error('Launch the super sheep!');
+				}
+			});
+			a.run({ include: [fixture] }, {
+				runOnly: {
+					'type': 'rule',
+					'values': ['throw1']
+				}
+			}, noop, isNotCalled);
+		});
+
+		it('should not halt if errors occur', function (done) {
+			a.addRule({
+				id: 'throw1',
+				selector: '*',
+				any: [{
+					id: 'throw1-check1',
+				}]
+			});
+			a.addCheck({
+				id: 'throw1-check1',
+				evaluate: function () {
+					throw new Error('Launch the super sheep!');
+				}
+			});
+			a.run({ include: [fixture] }, {
+				runOnly: {
+					'type': 'rule',
+					'values': ['throw1', 'positive1']
+				}
+			}, function (results) {
+				results = results.filter(function (result) {
+					return !!result;
+				});
+				assert.equal(results.length, 1);
+				assert.equal(results[0].id, 'positive1');
+				done();
+			}, isNotCalled);
 		});
 
 		it('should run audit.validateOptions to ensure valid input', function () {
@@ -368,6 +547,31 @@ describe('Audit', function () {
 
 			a.run({ include: [fixture] }, {}, function () {});
 			assert.equal(checked, 'options validated');
+		});
+		it('should halt if an error occurs when debug is set', function (done) {
+			a.addRule({
+				id: 'throw1',
+				selector: '*',
+				any: [{
+					id: 'throw1-check1',
+				}]
+			});
+			a.addCheck({
+				id: 'throw1-check1',
+				evaluate: function () {
+					throw new Error('Launch the super sheep!');
+				}
+			});
+			a.run({ include: [fixture] }, {
+				debug: true,
+				runOnly: {
+					'type': 'rule',
+					'values': ['throw1']
+				}
+			}, noop, function (err) {
+				assert.equal(err.message, 'Launch the super sheep!');
+				done();
+			});
 		});
 	});
 	describe('Audit#after', function () {

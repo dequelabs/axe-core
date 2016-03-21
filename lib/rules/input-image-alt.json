@@ -9,14 +9,14 @@
   ],
   "metadata": {
     "description": "Ensures <input type=\"image\"> elements have alternate text",
-    "help": "Image buttons must have alternate text",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/input-image-alt"
+    "help": "Image buttons must have alternate text"
   },
   "all": [],
   "any": [
     "non-empty-alt",
     "aria-label",
-    "aria-labelledby"
+    "aria-labelledby",
+    "non-empty-title"
   ],
   "none": []
 }

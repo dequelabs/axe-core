@@ -19,13 +19,11 @@ describe('plugins', function () {
     frame.addEventListener('load', onLoad);
     fixture.appendChild(frame);
 
-
     frame = document.createElement('iframe');
-    frame.src = '../mock/frames/nocode.html';
+    frame.src = '../mock/frames/frame-frame.html';
     frame.addEventListener('load', onLoad);
     fixture.appendChild(frame);
   }
-
 
   var fixture = document.getElementById('fixture');
 
@@ -33,6 +31,7 @@ describe('plugins', function () {
     fixture.innerHTML = '';
     axe._audit = null;
   });
+
   beforeEach(function () {
     axe._load({
       rules: []
@@ -114,18 +113,17 @@ describe('plugins', function () {
           var q = axe.utils.queue();
 
           frames = axe.utils.toArray(document.querySelectorAll('iframe, frame'));
-          if (frames.length) {
-            frames.forEach(function (frame) {
-              q.defer(function (done) {
-                axe.utils.sendCommandToFrame(frame, {
-                  options: options,
-                  command: 'run-multi',
-                  parameter: 'hideall',
-                  action: 'run'
-                }, done);
-              });
+          frames.forEach(function (frame) {
+            q.defer(function (resolve, reject) {
+              axe.utils.sendCommandToFrame(frame, {
+                options: options,
+                command: 'run-multi',
+                parameter: 'hideall',
+                action: 'run'
+              }, resolve, reject);
             });
-          }
+          });
+
           q.defer(function (done) {
             // implementation
             done('ola!');
@@ -139,7 +137,7 @@ describe('plugins', function () {
               }
             });
             callback(results);
-          });
+          }).catch(callback);
         }
       });
     });
@@ -153,7 +151,7 @@ describe('plugins', function () {
       createFrames(function () {
         setTimeout(function () {
           axe.plugins.multi.run('hideall', 'run', {}, function (results) {
-            assert.deepEqual(results, ['ola!', 'ola!', 'ola!']);
+            assert.deepEqual(results, ['ola!', 'ola!', 'ola!', 'ola!', 'ola!']);
             done();
           });
         }, 500);

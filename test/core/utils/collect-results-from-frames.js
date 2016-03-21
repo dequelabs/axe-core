@@ -1,8 +1,9 @@
 /*global Context */
-describe('utils.collectResultsFromFrames', function () {
+describe('axe.utils.collectResultsFromFrames', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
+  var noop = function () {};
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -19,21 +20,15 @@ describe('utils.collectResultsFromFrames', function () {
       }
       return 'cats';
     };
-    var origLog = axe.log,
-      logCalled = false;
-    axe.log = function (msg, actualFrame) {
-      assert.equal(msg, 'Error returning results from frame: ');
-      assert.equal(actualFrame, frame);
-      logCalled = true;
-    };
 
     var frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
       var context = new Context(document);
-      utils.collectResultsFromFrames(context, {}, 'stuff', 'morestuff', function () {
-        assert.isTrue(logCalled);
+      axe.utils.collectResultsFromFrames(context, {}, 'stuff', 'morestuff', noop,
+      function (err) {
+        assert.instanceOf(err, Error);
+        assert.equal(err.message.split(/: /)[0], 'Axe in frame timed out');
         window.setTimeout = orig;
-        axe.log = origLog;
         done();
       });
     });
@@ -62,9 +57,12 @@ describe('utils.collectResultsFromFrames', function () {
 		var frame = document.createElement('iframe');
 		frame.addEventListener('load', function () {
 			var context = new Context(document);
-			utils.collectResultsFromFrames(context, {}, 'rules', 'morestuff', function () {
+			axe.utils.collectResultsFromFrames(context, {}, 'rules', 'morestuff', function () {
 				done();
-			});
+			}, function (e) {
+        assert.ok(false, e);
+        done();
+      });
 		});
 
 		frame.id = 'level0';
@@ -72,5 +70,24 @@ describe('utils.collectResultsFromFrames', function () {
 		fixture.appendChild(frame);
 
 	});
+
+  it('returns errors send from the frame', function (done) {
+    var frame = document.createElement('iframe');
+    frame.addEventListener('load', function () {
+      var context = new Context(document);
+      axe.utils.collectResultsFromFrames(context, {}, 'command', 'params', noop,
+      function (err) {
+
+        assert.instanceOf(err, Error);
+        assert.equal(err.message.split(/\n/)[0], 'error in axe.throw');
+        done();
+      });
+
+    });
+
+    frame.id = 'level0';
+    frame.src = '../mock/frames/throwing.html';
+    fixture.appendChild(frame);
+  });
 
 });

@@ -1,4 +1,4 @@
-describe('utils.getSelector', function () {
+describe('axe.utils.getSelector', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
@@ -8,14 +8,14 @@ describe('utils.getSelector', function () {
 	});
 
 	it('should be a function', function () {
-		assert.isFunction(utils.getSelector);
+		assert.isFunction(axe.utils.getSelector);
 	});
 
 	it('should generate a unique CSS selector', function () {
 		var node = document.createElement('div');
 		fixture.appendChild(node);
 
-		var sel = utils.getSelector(node);
+		var sel = axe.utils.getSelector(node);
 
 		assert.equal(sel, '#fixture > div');
 
@@ -29,7 +29,7 @@ describe('utils.getSelector', function () {
 		node.className = '    ';
 		fixture.appendChild(node);
 
-		var sel = utils.getSelector(node);
+		var sel = axe.utils.getSelector(node);
 
 		assert.equal(sel, '#fixture > div');
 
@@ -43,7 +43,7 @@ describe('utils.getSelector', function () {
 		node.id = 'monkeys#are.animals\\ok';
 		fixture.appendChild(node);
 
-		var result = document.querySelectorAll(utils.getSelector(node));
+		var result = document.querySelectorAll(axe.utils.getSelector(node));
 		assert.lengthOf(result, 1);
 		assert.equal(result[0], node);
 	});
@@ -53,7 +53,7 @@ describe('utils.getSelector', function () {
 		node.className = '.  bb-required';
 		fixture.appendChild(node);
 
-		var result = document.querySelectorAll(utils.getSelector(node));
+		var result = document.querySelectorAll(axe.utils.getSelector(node));
 		assert.lengthOf(result, 1);
 		assert.equal(result[0], node);
 	});
@@ -68,7 +68,7 @@ describe('utils.getSelector', function () {
 			}
 		}
 
-		var result = document.querySelectorAll(utils.getSelector(expected));
+		var result = document.querySelectorAll(axe.utils.getSelector(expected));
 		assert.lengthOf(result, 1);
 		assert.equal(result[0], expected);
 	});
@@ -78,7 +78,7 @@ describe('utils.getSelector', function () {
 		node.id = 'monkeys';
 		fixture.appendChild(node);
 
-		var sel = utils.getSelector(node);
+		var sel = axe.utils.getSelector(node);
 
 		assert.equal(sel, '#monkeys');
 
@@ -97,7 +97,7 @@ describe('utils.getSelector', function () {
 		node.id = 'monkeys';
 		fixture.appendChild(node);
 
-		var sel = utils.getSelector(node);
+		var sel = axe.utils.getSelector(node);
 
 		assert.equal(sel, '#fixture > div:nth-of-type(2)');
 
@@ -116,7 +116,7 @@ describe('utils.getSelector', function () {
 		node.className = 'dogs cats';
 		fixture.appendChild(node);
 
-		var sel = utils.getSelector(node);
+		var sel = axe.utils.getSelector(node);
 
 		assert.equal(sel, '#fixture > .dogs.cats');
 
@@ -135,7 +135,7 @@ describe('utils.getSelector', function () {
 		node.className = 'monkeys simian';
 		fixture.appendChild(node);
 
-		var sel = utils.getSelector(node);
+		var sel = axe.utils.getSelector(node);
 
 		assert.equal(sel, '#fixture > div:nth-of-type(2)');
 
@@ -168,7 +168,7 @@ describe('utils.getSelector', function () {
 
 
 
-		var sel = utils.getSelector(target);
+		var sel = axe.utils.getSelector(target);
 
 		assert.equal(sel, '#fixture > div:nth-of-type(2)');
 
@@ -179,7 +179,7 @@ describe('utils.getSelector', function () {
 	});
 
 	it('should work on the documentElement', function () {
-		var sel = utils.getSelector(document.documentElement);
+		var sel = axe.utils.getSelector(document.documentElement);
 		var result = document.querySelectorAll(sel);
 		assert.lengthOf(result, 1);
 		assert.equal(result[0], document.documentElement);
@@ -188,7 +188,7 @@ describe('utils.getSelector', function () {
 	it('should work on the documentElement with classes', function () {
 		var orig = document.documentElement.className;
 		document.documentElement.className = 'stuff and other things';
-		var sel = utils.getSelector(document.documentElement);
+		var sel = axe.utils.getSelector(document.documentElement);
 		var result = document.querySelectorAll(sel);
 		assert.lengthOf(result, 1);
 		assert.equal(result[0], document.documentElement);
@@ -196,7 +196,7 @@ describe('utils.getSelector', function () {
 	});
 
 	it('should work on the body', function () {
-		var sel = utils.getSelector(document.body);
+		var sel = axe.utils.getSelector(document.body);
 		var result = document.querySelectorAll(sel);
 		assert.lengthOf(result, 1);
 		assert.equal(result[0], document.body);
@@ -205,14 +205,14 @@ describe('utils.getSelector', function () {
 	it('should work on namespaced elements', function () {
 		fixture.innerHTML = '<hx:include>Hello</hx:include>';
 		var node = fixture.firstChild;
-		var sel = utils.getSelector(node);
+		var sel = axe.utils.getSelector(node);
 		var result = document.querySelectorAll(sel);
 		assert.lengthOf(result, 1);
 		assert.equal(result[0], node);
 	});
 
 	it('shouldn\'t fail if the node\'s parentNode doesnt have children, somehow (Firefox bug)', function () {
-		var sel = utils.getSelector({
+		var sel = axe.utils.getSelector({
 			nodeName: 'a',
 			parentNode: {
 				nodeName: 'b'

@@ -1,4 +1,4 @@
-/*global Context */
+/*global Context, axe */
 describe('Context', function() {
 	'use strict';
 
@@ -206,10 +206,10 @@ describe('Context', function() {
 			fixture.innerHTML = '<div id="outer"></div>';
 			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function() {
 				var frame = $id('target');
-				var orig = utils.isHidden;
+				var orig = axe.utils.isHidden;
 				var success = false;
 
-				utils.isHidden = function(actual) {
+				axe.utils.isHidden = function(actual) {
 					assert.equal(actual, frame);
 					success = true;
 
@@ -219,8 +219,8 @@ describe('Context', function() {
 				var result = new Context([$id('target')]);
 
 				assert.deepEqual(result.frames, []);
-				utils.isHidden = orig;
-				assert.isTrue(success, 'utils.isHidden was called');
+				axe.utils.isHidden = orig;
+				assert.isTrue(success, 'axe.utils.isHidden was called');
 				done();
 			});
 
@@ -231,10 +231,10 @@ describe('Context', function() {
 			fixture.innerHTML = '<div id="outer"></div>';
 			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function() {
 				var frame = $id('target');
-				var orig = utils.isHidden;
+				var orig = axe.utils.isHidden;
 				var success = false;
 
-				utils.isHidden = function(actual) {
+				axe.utils.isHidden = function(actual) {
 					assert.equal(actual, frame);
 					success = true;
 
@@ -249,8 +249,8 @@ describe('Context', function() {
 					node: $id('target')
 				}]);
 
-				utils.isHidden = orig;
-				assert.isTrue(success, 'utils.isHidden was called');
+				axe.utils.isHidden = orig;
+				assert.isTrue(success, 'axe.utils.isHidden was called');
 				done();
 			});
 
