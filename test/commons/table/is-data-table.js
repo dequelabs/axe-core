@@ -192,7 +192,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be true if the table has a columnheader', function () {
@@ -201,7 +201,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be true if the table has a cell with headers attribute', function () {
