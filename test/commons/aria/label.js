@@ -12,7 +12,7 @@ describe('aria.label', function() {
 				'<input id="target" aria-labelledby="monkeys bananas">';
 
 			var target = document.getElementById('target');
-			assert.equal(commons.text.label(target), 'monkeys bananas');
+			assert.equal(axe.commons.text.label(target), 'monkeys bananas');
 		});
 
 		it('should filter invisible elements', function() {
@@ -20,7 +20,7 @@ describe('aria.label', function() {
 				'<input id="target" aria-labelledby="monkeys bananas">';
 
 			var target = document.getElementById('target');
-			assert.equal(commons.text.label(target), 'monkeys');
+			assert.equal(axe.commons.text.label(target), 'monkeys');
 		});
 
 		it('should take precedence over aria-label', function() {
@@ -28,7 +28,7 @@ describe('aria.label', function() {
 				'<input id="target" aria-labelledby="monkeys bananas" aria-label="nope">';
 
 			var target = document.getElementById('target');
-			assert.equal(commons.text.label(target), 'monkeys bananas');
+			assert.equal(axe.commons.text.label(target), 'monkeys bananas');
 		});
 
 		it('should ignore whitespace only labels', function() {
@@ -36,7 +36,7 @@ describe('aria.label', function() {
 				'<input id="target" aria-labelledby="monkeys bananas">';
 
 			var target = document.getElementById('target');
-			assert.isNull(commons.text.label(target));
+			assert.isNull(axe.commons.text.label(target));
 		});
 	});
 
@@ -45,14 +45,14 @@ describe('aria.label', function() {
 			fixture.innerHTML = '<input id="target" aria-label="monkeys">';
 
 			var target = document.getElementById('target');
-			assert.equal(commons.text.label(target), 'monkeys');
+			assert.equal(axe.commons.text.label(target), 'monkeys');
 		});
 
 		it('should ignore whitespace only labels', function() {
 			fixture.innerHTML = '<input id="target" aria-label="   \n	">';
 
 			var target = document.getElementById('target');
-			assert.isNull(commons.text.label(target));
+			assert.isNull(axe.commons.text.label(target));
 		});
 	});
 });

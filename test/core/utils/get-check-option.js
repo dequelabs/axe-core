@@ -1,9 +1,9 @@
 
-describe('utils.getCheckOption', function () {
+describe('axe.utils.getCheckOption', function () {
 	'use strict';
 
 	it('should prefer options from rules', function () {
-		assert.deepEqual(utils.getCheckOption({
+		assert.deepEqual(axe.utils.getCheckOption({
 				id: 'bananas',
 				enabled: 'fail',
 				options: 'fail'
@@ -30,7 +30,7 @@ describe('utils.getCheckOption', function () {
 			});
 	});
 	it('should fallback to global check options if not defined on the rule', function () {
-		assert.deepEqual(utils.getCheckOption({
+		assert.deepEqual(axe.utils.getCheckOption({
 				id: 'bananas',
 				enabled: 'fail',
 				options: 'fail'
@@ -57,7 +57,7 @@ describe('utils.getCheckOption', function () {
 	});
 
 	it('should prefer fallback to global check options if not defined on the rule', function () {
-		assert.deepEqual(utils.getCheckOption({
+		assert.deepEqual(axe.utils.getCheckOption({
 				id: 'bananas',
 				enabled: 'fail',
 				options: 'fail'
@@ -75,7 +75,7 @@ describe('utils.getCheckOption', function () {
 	});
 
 	it('should otherwise use the check', function () {
-		assert.deepEqual(utils.getCheckOption({
+		assert.deepEqual(axe.utils.getCheckOption({
 				id: 'bananas',
 				enabled: 'yes',
 				options: 'please'

@@ -41,7 +41,7 @@ describe('aria-valid-attr', function () {
 
 	});
 
-	it('should determine attribute validity by calling commons.aria.validateAttr', function () {
+	it('should determine attribute validity by calling axe.commons.aria.validateAttr', function () {
 		var node = document.createElement('div');
 		node.id = 'test';
 		node.tabIndex = 1;
@@ -49,9 +49,9 @@ describe('aria-valid-attr', function () {
 		node.setAttribute('aria-dogs', 'true');
 		fixture.appendChild(node);
 
-		var orig = commons.aria.validateAttr;
+		var orig = axe.commons.aria.validateAttr;
 		var called = 0;
-		commons.aria.validateAttr = function (attrName) {
+		axe.commons.aria.validateAttr = function (attrName) {
 			assert.match(attrName, /^aria-/);
 			called++;
 			return true;
@@ -60,7 +60,7 @@ describe('aria-valid-attr', function () {
 		assert.isNull(checkContext._data);
 		assert.equal(called, 2);
 
-		commons.aria.validateAttr = orig;
+		axe.commons.aria.validateAttr = orig;
 	});
 
 	describe('options', function () {

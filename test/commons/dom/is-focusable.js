@@ -12,7 +12,7 @@ describe('dom.isFocusable', function () {
 		fixture.innerHTML = '<textarea id="target"></textarea>';
 		var el = document.getElementById('target');
 
-		assert.isTrue(commons.dom.isFocusable(el));
+		assert.isTrue(axe.commons.dom.isFocusable(el));
 
 	});
 
@@ -20,7 +20,7 @@ describe('dom.isFocusable', function () {
 		fixture.innerHTML = '<select id="target"></select>';
 		var el = document.getElementById('target');
 
-		assert.isTrue(commons.dom.isFocusable(el));
+		assert.isTrue(axe.commons.dom.isFocusable(el));
 
 	});
 
@@ -28,7 +28,7 @@ describe('dom.isFocusable', function () {
 		fixture.innerHTML = '<button id="target"></button>';
 		var el = document.getElementById('target');
 
-		assert.isTrue(commons.dom.isFocusable(el));
+		assert.isTrue(axe.commons.dom.isFocusable(el));
 
 	});
 
@@ -36,7 +36,7 @@ describe('dom.isFocusable', function () {
 		fixture.innerHTML = '<input type="text" id="target">';
 		var el = document.getElementById('target');
 
-		assert.isTrue(commons.dom.isFocusable(el));
+		assert.isTrue(axe.commons.dom.isFocusable(el));
 
 	});
 
@@ -44,7 +44,7 @@ describe('dom.isFocusable', function () {
 		fixture.innerHTML = '<input type="text" id="target" disabled>';
 		var el = document.getElementById('target');
 
-		assert.isFalse(commons.dom.isFocusable(el));
+		assert.isFalse(axe.commons.dom.isFocusable(el));
 
 	});
 
@@ -52,7 +52,7 @@ describe('dom.isFocusable', function () {
 		fixture.innerHTML = '<input type="hidden" id="target">';
 		var el = document.getElementById('target');
 
-		assert.isFalse(commons.dom.isFocusable(el));
+		assert.isFalse(axe.commons.dom.isFocusable(el));
 
 	});
 
@@ -60,7 +60,7 @@ describe('dom.isFocusable', function () {
 		fixture.innerHTML = '<input type="text" id="target" style="display: none">';
 		var el = document.getElementById('target');
 
-		assert.isFalse(commons.dom.isFocusable(el));
+		assert.isFalse(axe.commons.dom.isFocusable(el));
 
 	});
 
@@ -68,7 +68,7 @@ describe('dom.isFocusable', function () {
 		fixture.innerHTML = '<a href="something.html" id="target"></a>';
 		var el = document.getElementById('target');
 
-		assert.isTrue(commons.dom.isFocusable(el));
+		assert.isTrue(axe.commons.dom.isFocusable(el));
 
 	});
 
@@ -76,7 +76,7 @@ describe('dom.isFocusable', function () {
 		fixture.innerHTML = '<a name="anchor" id="target"></a>';
 		var el = document.getElementById('target');
 
-		assert.isFalse(commons.dom.isFocusable(el));
+		assert.isFalse(axe.commons.dom.isFocusable(el));
 
 	});
 
@@ -84,7 +84,7 @@ describe('dom.isFocusable', function () {
 		fixture.innerHTML = '<div id="target" tabindex="	  0   "></div>';
 		var el = document.getElementById('target');
 
-		assert.isTrue(commons.dom.isFocusable(el));
+		assert.isTrue(axe.commons.dom.isFocusable(el));
 
 	});
 
@@ -92,7 +92,7 @@ describe('dom.isFocusable', function () {
 		fixture.innerHTML = '<div id="target" tabindex="0"></div>';
 		var el = document.getElementById('target');
 
-		assert.isTrue(commons.dom.isFocusable(el));
+		assert.isTrue(axe.commons.dom.isFocusable(el));
 
 	});
 
@@ -100,7 +100,7 @@ describe('dom.isFocusable', function () {
 		fixture.innerHTML = '<div id="target" tabindex="x"></div>';
 		var el = document.getElementById('target');
 
-		assert.isFalse(commons.dom.isFocusable(el));
+		assert.isFalse(axe.commons.dom.isFocusable(el));
 
 	});
 
@@ -108,7 +108,7 @@ describe('dom.isFocusable', function () {
 		fixture.innerHTML = '<details id="target"><p>Detail</p></details>';
 		var el = document.getElementById('target');
 
-		assert.isTrue(commons.dom.isFocusable(el));
+		assert.isTrue(axe.commons.dom.isFocusable(el));
 
 	});
 
@@ -116,7 +116,7 @@ describe('dom.isFocusable', function () {
 		fixture.innerHTML = '<div id="target"></div>';
 		var el = document.getElementById('target');
 
-		assert.isFalse(commons.dom.isFocusable(el));
+		assert.isFalse(axe.commons.dom.isFocusable(el));
 
 	});
 });

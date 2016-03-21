@@ -95,17 +95,17 @@ describe('link-in-text-block', function () {
 
 		it('uses color.elementIsDistinct to test the initial state', function () {
 			var isCalled;
-			var orig = commons.color.elementIsDistinct;
+			var orig = axe.commons.color.elementIsDistinct;
 			var linkElm = getLinkElm();
 
-			commons.color.elementIsDistinct = function (arg1, arg2) {
+			axe.commons.color.elementIsDistinct = function (arg1, arg2) {
 				isCalled = true;
 				return orig(arg1, arg2);
 			};
 
 			checks['link-in-text-block'].evaluate(linkElm);
 			assert.ok(isCalled);
-			commons.color.elementIsDistinct = orig;
+			axe.commons.color.elementIsDistinct = orig;
 		});
 
 		it('passes the selected node and closest ancestral block element', function () {
@@ -116,18 +116,18 @@ describe('link-in-text-block', function () {
 			'  </a> inside block </p> inside block' +
 			'</span> outside block </div>';
 
-			var orig = commons.color.elementIsDistinct;
+			var orig = axe.commons.color.elementIsDistinct;
 			var linkElm = document.getElementById('link');
 			var parentElm = document.getElementById('parent');
 
-			commons.color.elementIsDistinct = function (arg1, arg2) {
+			axe.commons.color.elementIsDistinct = function (arg1, arg2) {
 				assert.deepEqual(arg1, linkElm);
 				assert.deepEqual(arg2, parentElm);
 				return orig(arg1, arg2);
 			};
 
 			checks['link-in-text-block'].evaluate(linkElm);
-			commons.color.elementIsDistinct = orig;
+			axe.commons.color.elementIsDistinct = orig;
 		});
 
 	});

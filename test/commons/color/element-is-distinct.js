@@ -16,7 +16,7 @@ describe('color.elementIsDistinct', function () {
 
 	beforeEach(function () {
 		createStyleString('p', defaultStyle);
-		elementIsDistinct = commons.color.elementIsDistinct;
+		elementIsDistinct = axe.commons.color.elementIsDistinct;
 	});
 
 	afterEach(function () {
