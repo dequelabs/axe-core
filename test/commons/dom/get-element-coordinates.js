@@ -16,7 +16,7 @@ describe('dom.getElementCoordinates', function () {
 			'</div>';
 
 		el = document.getElementById('coords0');
-		coords = commons.dom.getElementCoordinates(el);
+		coords = axe.commons.dom.getElementCoordinates(el);
 		assert.closeTo(coords.left, -1000, 0.5);
 		assert.closeTo(coords.top, -1000, 0.5);
 		assert.closeTo(coords.width, 1000, 0.5);
@@ -25,14 +25,14 @@ describe('dom.getElementCoordinates', function () {
 		assert.closeTo(coords.bottom, 0, 0.5);
 
 		el = document.getElementById('div');
-		coords = commons.dom.getElementCoordinates(el);
+		coords = axe.commons.dom.getElementCoordinates(el);
 		assert.equal(Math.round(coords.left), -1);
 		assert.equal(Math.round(coords.top), -1);
 	});
 
 	it('should take into account scroll offsets', function () {
 		var el, coords,
-			offset = commons.dom.getScrollOffset(window.document);
+			offset = axe.commons.dom.getScrollOffset(window.document);
 
 		fixture.innerHTML = '<div id="div" style="position: absolute; top: -1px; left: -1px;">' +
 			'<span id="coords0" style="position:absolute; top: -999px; left: -999px; width: 1000px; height: 1000px;">' +
@@ -40,7 +40,7 @@ describe('dom.getElementCoordinates', function () {
 			'</div>';
 
 		el = document.getElementById('coords0');
-		coords = commons.dom.getElementCoordinates(el);
+		coords = axe.commons.dom.getElementCoordinates(el);
 		assert.closeTo(coords.left, -1000, 0.5);
 		assert.closeTo(coords.top, -1000, 0.5);
 		assert.closeTo(coords.width, 1000, 0.5);
@@ -49,7 +49,7 @@ describe('dom.getElementCoordinates', function () {
 		assert.closeTo(coords.bottom, 0, 0.5);
 
 		window.scrollTo(0, 150);
-		coords = commons.dom.getElementCoordinates(el);
+		coords = axe.commons.dom.getElementCoordinates(el);
 		assert.closeTo(coords.left, -1000, 0.5);
 		assert.closeTo(coords.top, -1000, 0.5);
 		assert.closeTo(coords.width, 1000, 0.5);

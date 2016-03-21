@@ -14,7 +14,7 @@ describe('dom.findUp', function () {
 		var start = document.getElementById('start'),
 			target = document.getElementById('target');
 
-		assert.equal(commons.dom.findUp(start, '.target'), target, 'Should find it!');
+		assert.equal(axe.commons.dom.findUp(start, '.target'), target, 'Should find it!');
 
 
 	});
@@ -23,7 +23,7 @@ describe('dom.findUp', function () {
 		fixture.innerHTML = '<div id="start"></div>';
 		var start = document.getElementById('start');
 
-		assert.isNull(commons.dom.findUp(start, '.nomatchyplzkthx'));
+		assert.isNull(axe.commons.dom.findUp(start, '.nomatchyplzkthx'));
 
 	});
 
@@ -31,7 +31,7 @@ describe('dom.findUp', function () {
 		fixture.innerHTML = '<div id="start"></div><div class="target"></div>';
 		var start = document.getElementById('start');
 
-		assert.isNull(commons.dom.findUp(start, '.target'));
+		assert.isNull(axe.commons.dom.findUp(start, '.target'));
 
 	});
 });

@@ -97,7 +97,7 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
 
 #### Purpose
 
-To configure the format of the data for the current session
+To configure the format of the data used by aXe. This can be used to add new rules, which must be registered with the library to execute.
 
 #### Description
 
@@ -170,7 +170,7 @@ axe.a11yCheck(context, options, callback);
 #### Parameters
 
 * `context`: Defines the scope of the analysis - the part of the DOM that you would like to analyze. This will typically be the `document` or a specific selector such as class name, ID, selector, etc.
-* `options`: (optional) Set of options passed into rules or checks. [See below for more information](#a11ycheck-parameters)
+* `options`: (optional) Set of options passed into rules or checks, temporarily modifying them. This contrasts with `axe.configure`, which is more permanent. [See below for more information](#a11ycheck-parameters)
 * `callback`: The callback function which receives on the [results object](#results-object) as a parameter when analysis is complete
 
 #### Results Object

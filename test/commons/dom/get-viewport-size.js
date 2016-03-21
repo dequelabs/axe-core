@@ -3,7 +3,7 @@ describe('dom.getViewportSize', function () {
 
 	it('should return an object with width and height', function () {
 
-		var result = commons.dom.getViewportSize(window);
+		var result = axe.commons.dom.getViewportSize(window);
 
 		assert.property(result, 'width');
 		assert.property(result, 'height');
@@ -14,7 +14,7 @@ describe('dom.getViewportSize', function () {
 
 	it('should have some fallbacks for old browsers', function () {
 
-		var result = commons.dom.getViewportSize({
+		var result = axe.commons.dom.getViewportSize({
 			document: {},
 			innerWidth: 12,
 			innerHeight: 47
@@ -23,7 +23,7 @@ describe('dom.getViewportSize', function () {
 		assert.equal(result.width, 12);
 		assert.equal(result.height, 47);
 
-		result = commons.dom.getViewportSize({
+		result = axe.commons.dom.getViewportSize({
 			document: {
 				documentElement: {
 					clientWidth: 13,
@@ -35,7 +35,7 @@ describe('dom.getViewportSize', function () {
 		assert.equal(result.width, 13);
 		assert.equal(result.height, 48);
 
-		result = commons.dom.getViewportSize({
+		result = axe.commons.dom.getViewportSize({
 			document: {
 				body: {
 					clientWidth: 22,

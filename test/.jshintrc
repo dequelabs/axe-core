@@ -10,8 +10,7 @@
 		"chai": true,
 		"assert": true,
 		"axe": true,
-		"helpers": true,
-		"utils": true
+		"helpers": true
     },
 
 	"browser" : true,

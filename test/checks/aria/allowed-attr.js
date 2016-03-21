@@ -70,7 +70,7 @@ describe('aria-allowed-attr', function () {
 
 	});
 
-	it('should determine attribute validity by calling commons.aria.allowedAttr', function () {
+	it('should determine attribute validity by calling axe.commons.aria.allowedAttr', function () {
 		var node = document.createElement('div');
 		node.id = 'test';
 		node.tabIndex = 1;
@@ -79,9 +79,9 @@ describe('aria-allowed-attr', function () {
 		node.setAttribute('aria-bats', 'dead');
 		fixture.appendChild(node);
 
-		var orig = commons.aria.allowedAttr;
+		var orig = axe.commons.aria.allowedAttr;
 		var called = 0;
-		commons.aria.allowedAttr = function (role) {
+		axe.commons.aria.allowedAttr = function (role) {
 			assert.equal(role, 'cats');
 			called++;
 			return ['aria-cats', 'aria-bats'];
@@ -90,7 +90,7 @@ describe('aria-allowed-attr', function () {
 		assert.isNull(checkContext._data);
 		assert.equal(called, 1);
 
-		commons.aria.allowedAttr = orig;
+		axe.commons.aria.allowedAttr = orig;
 	});
 
 	it('should not report on invalid attributes', function () {
@@ -109,8 +109,8 @@ describe('aria-allowed-attr', function () {
 
 	describe('matches', function () {
 		it('should return false on elements with no role or no implicit role', function () {
-			var orig = commons.aria.implicitRole;
-			commons.aria.implicitRole = function (nd) {
+			var orig = axe.commons.aria.implicitRole;
+			axe.commons.aria.implicitRole = function (nd) {
 				assert.equal(nd, div);
 				return null;
 			};
@@ -118,12 +118,12 @@ describe('aria-allowed-attr', function () {
 			fixture.appendChild(div);
 
 			assert.isFalse(checks['aria-allowed-attr'].matches(div));
-			commons.aria.implicitRole = orig;
+			axe.commons.aria.implicitRole = orig;
 		});
 
 		it('should return false on elements that have no allowed attributes', function () {
-			var orig = commons.aria.allowedAttr;
-			commons.aria.allowedAttr = function (role) {
+			var orig = axe.commons.aria.allowedAttr;
+			axe.commons.aria.allowedAttr = function (role) {
 				assert.equal(role, 'button');
 				return null;
 			};
@@ -132,7 +132,7 @@ describe('aria-allowed-attr', function () {
 			fixture.appendChild(div);
 
 			assert.isFalse(checks['aria-allowed-attr'].matches(div));
-			commons.aria.allowedAttr = orig;
+			axe.commons.aria.allowedAttr = orig;
 		});
 
 		it('should return false on elements that have a role but no aria attributes', function () {

@@ -1,5 +1,5 @@
 /*global Context */
-describe('utils.collectResultsFromFrames', function () {
+describe('axe.utils.collectResultsFromFrames', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -24,7 +24,7 @@ describe('utils.collectResultsFromFrames', function () {
     var frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
       var context = new Context(document);
-      utils.collectResultsFromFrames(context, {}, 'stuff', 'morestuff', noop,
+      axe.utils.collectResultsFromFrames(context, {}, 'stuff', 'morestuff', noop,
       function (err) {
         assert.instanceOf(err, Error);
         assert.equal(err.message.split(/: /)[0], 'Axe in frame timed out');
@@ -57,7 +57,7 @@ describe('utils.collectResultsFromFrames', function () {
 		var frame = document.createElement('iframe');
 		frame.addEventListener('load', function () {
 			var context = new Context(document);
-			utils.collectResultsFromFrames(context, {}, 'rules', 'morestuff', function () {
+			axe.utils.collectResultsFromFrames(context, {}, 'rules', 'morestuff', function () {
 				done();
 			}, function (e) {
         assert.ok(false, e);
@@ -75,7 +75,7 @@ describe('utils.collectResultsFromFrames', function () {
     var frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
       var context = new Context(document);
-      utils.collectResultsFromFrames(context, {}, 'command', 'params', noop,
+      axe.utils.collectResultsFromFrames(context, {}, 'command', 'params', noop,
       function (err) {
 
         assert.instanceOf(err, Error);

@@ -49,4 +49,19 @@ describe('aria-labelledby', function () {
 
 		assert.isTrue(checks['aria-labelledby'].evaluate(node));
 	});
+
+	it('should return true if an aria-labelledby is present, but references elements with aria-hidden=true', function () {
+		var node = document.createElement('div');
+		node.setAttribute('aria-labelledby', 'woohoo');
+		fixture.appendChild(node);
+		var target = document.createElement('div');
+		target.id = 'woohoo';
+		target.setAttribute('aria-hidden', 'true');
+		target.innerHTML = 'bananas';
+		fixture.appendChild(target);
+
+		assert.isTrue(checks['aria-labelledby'].evaluate(node));
+	});
+
+
 });

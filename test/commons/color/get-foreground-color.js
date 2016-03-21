@@ -14,8 +14,8 @@ describe('color.getForegroundColor', function () {
 			'This is my text' +
 			'</div></div>';
 		var target = fixture.querySelector('#target');
-		var actual = commons.color.getForegroundColor(target, true);
-		var expected = new commons.color.Color(32, 32, 64, 1);
+		var actual = axe.commons.color.getForegroundColor(target, true);
+		var expected = new axe.commons.color.Color(32, 32, 64, 1);
 		assert.closeTo(actual.red, expected.red, 0.8);
 		assert.closeTo(actual.green, expected.green, 0.8);
 		assert.closeTo(actual.blue, expected.blue, 0.8);
@@ -29,8 +29,8 @@ describe('color.getForegroundColor', function () {
 			'This is my text' +
 			'</div></div>';
 		var target = fixture.querySelector('#target');
-		var actual = commons.color.getForegroundColor(target, true);
-		var expected = new commons.color.Color(32, 32, 64, 1);
+		var actual = axe.commons.color.getForegroundColor(target, true);
+		var expected = new axe.commons.color.Color(32, 32, 64, 1);
 		assert.equal(actual.red, expected.red);
 		assert.equal(actual.green, expected.green);
 		assert.equal(actual.blue, expected.blue);
@@ -43,7 +43,7 @@ describe('color.getForegroundColor', function () {
 			'<div id="target" style="height: 20px; width: 15px; color: blue; background-color: green; opacity: 0.5;">' +
 			'</div></div>';
 		var target = fixture.querySelector('#target');
-		var actual = commons.color.getForegroundColor(target, true);
+		var actual = axe.commons.color.getForegroundColor(target, true);
 		assert.isNull(actual);
 	});
 
@@ -52,8 +52,8 @@ describe('color.getForegroundColor', function () {
 			'<div id="target" style="height: 20px; width: 15px; color: #000080; background-color: green;">' +
 			'</div></div>';
 		var target = fixture.querySelector('#target');
-		var actual = commons.color.getForegroundColor(target, true);
-		var expected = new commons.color.Color(0, 0, 128, 1);
+		var actual = axe.commons.color.getForegroundColor(target, true);
+		var expected = new axe.commons.color.Color(0, 0, 128, 1);
 		assert.equal(actual.red, expected.red);
 		assert.equal(actual.green, expected.green);
 		assert.equal(actual.blue, expected.blue);
