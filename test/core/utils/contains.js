@@ -1,4 +1,4 @@
-describe('utils.contains', function () {
+describe('axe.utils.contains', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
@@ -22,7 +22,7 @@ describe('utils.contains', function () {
 				}
 			};
 
-		utils.contains(node1, node2);
+		axe.utils.contains(node1, node2);
 		assert.isTrue(success);
 	});
 
@@ -36,7 +36,7 @@ describe('utils.contains', function () {
 				}
 			};
 
-		utils.contains(node1, node2);
+		axe.utils.contains(node1, node2);
 		assert.isTrue(success);
 	});
 
@@ -48,7 +48,7 @@ describe('utils.contains', function () {
 				}
 			};
 
-		assert.isTrue(utils.contains(node1, node2));
+		assert.isTrue(axe.utils.contains(node1, node2));
 	});
 
 	it('should work', function () {
@@ -56,7 +56,7 @@ describe('utils.contains', function () {
 		var inner = document.getElementById('inner');
 		var outer = document.getElementById('outer');
 
-		assert.isTrue(utils.contains(outer, inner));
-		assert.isFalse(utils.contains(inner, outer));
+		assert.isTrue(axe.utils.contains(outer, inner));
+		assert.isFalse(axe.utils.contains(inner, outer));
 	});
 });

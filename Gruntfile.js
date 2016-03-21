@@ -32,8 +32,8 @@ module.exports = function (grunt) {
 					'lib/core/*/index.js',
 					'lib/core/**/index.js',
 					'lib/core/**/*.js',
-					'<%= configure.rules.dest.auto %>',
 					'lib/core/export.js',
+					'<%= configure.rules.dest.auto %>',
 					'lib/outro.stub'
 				],
 				dest: 'axe.js',
@@ -114,7 +114,10 @@ module.exports = function (grunt) {
 					dest: 'axe.min.js'
 				}],
 				options: {
-					preserveComments: 'some'
+					preserveComments: 'some',
+					mangle: {
+						except: ['commons', 'utils', 'axe']
+					}
 				}
 			}
 		},

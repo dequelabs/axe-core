@@ -1,9 +1,9 @@
 
-describe('utils.getAllChecks', function () {
+describe('axe.utils.getAllChecks', function () {
 	'use strict';
 
 	it('should be a function', function () {
-		assert.isFunction(utils.getAllChecks);
+		assert.isFunction(axe.utils.getAllChecks);
 	});
 
   it('should concatenate all 3 check collections', function () {
@@ -12,7 +12,7 @@ describe('utils.getAllChecks', function () {
       all: ['all:foo', 'all:bar'],
       none: ['none:foo', 'none:bar']
     };
-    assert.deepEqual(utils.getAllChecks(r), [
+    assert.deepEqual(axe.utils.getAllChecks(r), [
       'any:foo', 'any:bar',
       'all:foo', 'all:bar',
       'none:foo', 'none:bar'
@@ -24,7 +24,7 @@ describe('utils.getAllChecks', function () {
       any: ['any:foo', 'any:bar'],
       none: ['none:foo', 'none:bar']
     };
-    assert.deepEqual(utils.getAllChecks(r), [
+    assert.deepEqual(axe.utils.getAllChecks(r), [
       'any:foo', 'any:bar',
       'none:foo', 'none:bar'
     ]);
@@ -36,7 +36,7 @@ describe('utils.getAllChecks', function () {
       all: ['all:foo', 'all:bar'],
       none: ['none:foo', 'none:bar']
     };
-    assert.deepEqual(utils.getAllChecks(r), [
+    assert.deepEqual(axe.utils.getAllChecks(r), [
       'all:foo', 'all:bar',
       'none:foo', 'none:bar'
     ]);
@@ -48,7 +48,7 @@ describe('utils.getAllChecks', function () {
       any: ['any:foo', 'any:bar'],
       all: ['all:foo', 'all:bar']
     };
-    assert.deepEqual(utils.getAllChecks(r), [
+    assert.deepEqual(axe.utils.getAllChecks(r), [
       'any:foo', 'any:bar',
       'all:foo', 'all:bar'
     ]);

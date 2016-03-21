@@ -1,4 +1,4 @@
-/*global Check, CheckResult */
+/*global Check, CheckResult, axe */
 describe('Check', function () {
 	'use strict';
 	var noop = function () {};
@@ -28,7 +28,6 @@ describe('Check', function () {
 			it('should be a function', function () {
 				assert.isFunction(Check.prototype.matches);
 			});
-
 			it('should test its selector against a given node', function () {
 				var node = document.createElement('div');
 				node.id = 'monkeys';
@@ -237,11 +236,11 @@ describe('Check', function () {
 			});
 
 			it('should bind context to `bindCheckResult`', function (done) {
-				var orig = utils.checkHelper,
+				var orig = axe.utils.checkHelper,
 					cb = function () { return true; },
 					result = { monkeys: 'bananas' };
 
-				utils.checkHelper = function (checkResult, callback) {
+				axe.utils.checkHelper = function (checkResult, callback) {
 					assert.instanceOf(checkResult, window.CheckResult);
 					assert.equal(callback, cb);
 
@@ -251,7 +250,7 @@ describe('Check', function () {
 				new Check({
 					evaluate: function () {
 						assert.deepEqual(result, this);
-						utils.checkHelper = orig;
+						axe.utils.checkHelper = orig;
 						done();
 					}
 				}).run(fixture, {}, cb);

@@ -1,4 +1,4 @@
-describe('utils.sendCommandToFrame', function () {
+describe('axe.utils.sendCommandToFrame', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -25,7 +25,7 @@ describe('utils.sendCommandToFrame', function () {
 
     var frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
-      utils.sendCommandToFrame(frame, {}, function (result) {
+      axe.utils.sendCommandToFrame(frame, {}, function (result) {
         assert.equal(result, null);
         done();
       }, assertNotCalled);
@@ -41,7 +41,7 @@ describe('utils.sendCommandToFrame', function () {
   it('should respond once when no keepalive', function (done) {
     var frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
-      utils.sendCommandToFrame(frame, {
+      axe.utils.sendCommandToFrame(frame, {
         number: 1
       }, function () {
         assert.isTrue(true);
@@ -60,7 +60,7 @@ describe('utils.sendCommandToFrame', function () {
     var called = 0;
     var frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
-      utils.sendCommandToFrame(frame, {
+      axe.utils.sendCommandToFrame(frame, {
         number: number,
         keepalive: true
       }, function () {
@@ -83,7 +83,7 @@ describe('utils.sendCommandToFrame', function () {
     var called = 0;
     var frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
-      utils.sendCommandToFrame(frame, {
+      axe.utils.sendCommandToFrame(frame, {
         number: number
       }, function () {
         called += 1;

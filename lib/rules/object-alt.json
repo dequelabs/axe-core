@@ -13,7 +13,10 @@
   },
   "all": [],
   "any": [
-    "has-visible-text"
+    "has-visible-text",
+    "aria-label",
+    "aria-labelledby",
+    "non-empty-title"
   ],
   "none": []
 }

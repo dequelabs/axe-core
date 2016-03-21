@@ -3,7 +3,7 @@
 		"results": true,
 		"node": true,
 		"options": true,
-		"commons": true,
+		"axe": true,
 		"document": true,
 		"window": true
 	},

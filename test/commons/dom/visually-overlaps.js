@@ -13,7 +13,7 @@ describe('dom.visuallyOverlaps', function () {
 			'</div></div>';
 		var target = fixture.querySelector('#target');
 		var targetRect = target.getBoundingClientRect();
-		assert.isTrue(commons.dom.visuallyOverlaps(targetRect, target.parentNode));
+		assert.isTrue(axe.commons.dom.visuallyOverlaps(targetRect, target.parentNode));
 	});
 
 	it('should return false when rect has no overlap', function () {
@@ -24,7 +24,7 @@ describe('dom.visuallyOverlaps', function () {
 			'</div></div>';
 		var target = fixture.querySelector('#target');
 		var targetRect = target.getBoundingClientRect();
-		assert.isFalse(commons.dom.visuallyOverlaps(targetRect, target.parentNode));
+		assert.isFalse(axe.commons.dom.visuallyOverlaps(targetRect, target.parentNode));
 	});
 
 	it('should return true when rect has overlap', function () {
@@ -35,7 +35,7 @@ describe('dom.visuallyOverlaps', function () {
 			'</div></div>';
 		var target = fixture.querySelector('#target');
 		var targetRect = target.getBoundingClientRect();
-		assert.isTrue(commons.dom.visuallyOverlaps(targetRect, target.parentNode));
+		assert.isTrue(axe.commons.dom.visuallyOverlaps(targetRect, target.parentNode));
 	});
 
 	it('should return true when container is scrollable and rect is in the scroll area', function () {
@@ -44,7 +44,7 @@ describe('dom.visuallyOverlaps', function () {
 			'</div></div>';
 		var target = fixture.querySelector('#target');
 		var targetRect = target.getBoundingClientRect();
-		assert.isTrue(commons.dom.visuallyOverlaps(targetRect, target.parentNode));
+		assert.isTrue(axe.commons.dom.visuallyOverlaps(targetRect, target.parentNode));
 	});
 
 	it('should return false when container has overflow hidden and rect is in the scroll area', function () {
@@ -53,7 +53,7 @@ describe('dom.visuallyOverlaps', function () {
 			'</div></div>';
 		var target = fixture.querySelector('#target');
 		var targetRect = target.getBoundingClientRect();
-		assert.isFalse(commons.dom.visuallyOverlaps(targetRect, target.parentNode));
+		assert.isFalse(axe.commons.dom.visuallyOverlaps(targetRect, target.parentNode));
 	});
 
 });

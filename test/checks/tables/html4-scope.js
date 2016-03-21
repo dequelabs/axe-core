@@ -7,12 +7,12 @@ describe('html4-scope', function () {
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		commons.dom.isHTML5 = orig;
+		axe.commons.dom.isHTML5 = orig;
 	});
 
 	beforeEach(function () {
-		orig = commons.dom.isHTML5;
-		commons.dom.isHTML5 = function () {
+		orig = axe.commons.dom.isHTML5;
+		axe.commons.dom.isHTML5 = function () {
 			return isHTML5;
 		};
 
