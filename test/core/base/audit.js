@@ -545,7 +545,7 @@ describe('Audit', function () {
 				checked = 'options validated';
 			};
 
-			a.run({ include: [fixture] }, {}, function () {});
+			a.run({ include: [fixture] }, {}, noop, isNotCalled);
 			assert.equal(checked, 'options validated');
 		});
 		it('should halt if an error occurs when debug is set', function (done) {
