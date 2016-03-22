@@ -121,8 +121,8 @@ describe('runRules', function () {
 
 	var isNotCalled;
 	beforeEach(function () {
-		isNotCalled = function () {
-			assert.ok(false, 'Reject should not be called');
+		isNotCalled = function (err) {
+			throw err || new Error('Reject should not be called');
 		};
 	});
 
@@ -240,6 +240,7 @@ describe('runRules', function () {
 					impact: null,
 					violations: [],
 					passes: [{
+						result: 'PASS',
 						node: {
 							selector: ['#context-test', '#target'],
 							source: '<div id="target"></div>'
@@ -261,6 +262,7 @@ describe('runRules', function () {
 					impact: null,
 					violations: [],
 					passes: [{
+						result: 'PASS',
 						node: {
 							selector: ['#context-test', '#foo'],
 							source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
@@ -420,6 +422,8 @@ describe('runRules', function () {
 		});
 		fixture.innerHTML = '<div id="target">Target!</div><div>ok</div>';
 		runRules('#fixture', {}, function (results) {
+
+			console.log(JSON.stringify(results, null, '  '));
 			assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
 					helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/div#target?application=axeAPI',
@@ -429,6 +433,7 @@ describe('runRules', function () {
 					impact: 'moderate',
 					passes: [],
 					violations: [{
+						result: 'FAIL',
 						node: {
 							selector: ['#target'],
 							source: '<div id="target">Target!</div>'
@@ -456,6 +461,7 @@ describe('runRules', function () {
 					impact: null,
 					violations: [],
 					passes: [{
+						result: 'PASS',
 						node: {
 							selector: ['#target'],
 							source: '<div id="target">Target!</div>'

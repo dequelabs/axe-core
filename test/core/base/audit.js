@@ -2,8 +2,8 @@
 describe('Audit', function () {
 	'use strict';
 	var a;
-	var isNotCalled = function () {
-		assert.ok(false, 'Function should not be called');
+	var isNotCalled = function (err) {
+		throw err || new Error('Reject should not be called');
 	};
 	var noop = function () {};
 
