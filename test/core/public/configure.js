@@ -1,8 +1,28 @@
-/*global Rule, Check */
+/*global Rule, Check, configureChecksRulesAndBranding */
 describe('axe.configure', function() {
 	'use strict';
 
-	beforeEach(function() {
+	function createFrames(callback) {
+		var frame;
+		frame = document.createElement('iframe');
+		frame.src = '../mock/frames/nested1.html';
+		frame.addEventListener('load', function () {
+			setTimeout(callback, 500);
+		});
+		fixture.appendChild(frame);
+	}
+
+	var assertNotCalled = function () {
+		assert.ok(false, 'Should not be called');
+	};
+
+	var fixture = document.getElementById('fixture');
+
+	afterEach(function () {
+		fixture.innerHTML = '';
+	});
+
+	beforeEach(function () {
 		axe._audit = null;
 	});
 
@@ -29,14 +49,16 @@ describe('axe.configure', function() {
 		axe.configure({
 			rules: [{
 				id: 'bob',
-				metadata: 'joe'
+				metadata: {
+					joe: 'joe'
+				}
 			}]
 		});
 
 		assert.lengthOf(axe._audit.rules, 1);
 		assert.instanceOf(axe._audit.rules[0], Rule);
 		assert.equal(axe._audit.rules[0].id, 'bob');
-		assert.equal(axe._audit.data.rules.bob, 'joe');
+		assert.deepEqual(axe._audit.data.rules.bob.joe, 'joe');
 	});
 
 	it('should call setBranding when passed options', function () {
@@ -76,7 +98,7 @@ describe('axe.configure', function() {
 			rules: [{
 				id: 'bob',
 				selector: 'pass',
-				metadata: 'joe'
+				metadata: {joe: 'joe'}
 			}]
 		});
 
@@ -84,7 +106,7 @@ describe('axe.configure', function() {
 		assert.instanceOf(axe._audit.rules[0], Rule);
 		assert.equal(axe._audit.rules[0].id, 'bob');
 		assert.equal(axe._audit.rules[0].selector, 'pass');
-		assert.equal(axe._audit.data.rules.bob, 'joe');
+		assert.equal(axe._audit.data.rules.bob.joe, 'joe');
 	});
 
 	it('should allow for the addition of checks', function () {
@@ -132,6 +154,32 @@ describe('axe.configure', function() {
 		assert.equal(axe._audit.checks.bob.selector, 'pass');
 		assert.equal(axe._audit.data.checks.bob, 'joe');
 
+	});
+
+	it('should send command to frames to configure', function (done) {
+		createFrames(function () {
+			axe._load({});
+			var orig = axe.utils.sendCommandToFrame;
+			var frame = document.querySelector('iframe');
+			axe.utils.sendCommandToFrame = function (node, opts) {
+				assert.equal(node, frame);
+				assert.deepEqual(opts, {
+					command: 'configure',
+					spec: {}
+				});
+				axe.utils.sendCommandToFrame = orig;
+				done();
+			};
+			configureChecksRulesAndBranding({});
+		});
+	});
+
+	it('should call the resolve function if passed one', function (done) {
+		axe._load({});
+		configureChecksRulesAndBranding({}, function () {
+			assert.ok(true);
+			done();
+		}, assertNotCalled);
 	});
 
 });
