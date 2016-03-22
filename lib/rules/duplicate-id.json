@@ -1,6 +1,7 @@
 {
   "id": "duplicate-id",
   "selector": "[id]",
+  "excludeHidden": false,
   "tags": [
     "wcag2a",
     "wcag411"
