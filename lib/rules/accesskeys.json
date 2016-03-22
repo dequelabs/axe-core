@@ -1,6 +1,7 @@
 {
   "id": "accesskeys",
   "selector": "[accesskey]",
+  "excludeHidden": false,
   "tags": [
     "wcag2a",
     "wcag211",

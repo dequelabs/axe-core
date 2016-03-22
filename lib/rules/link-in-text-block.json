@@ -2,6 +2,7 @@
   "id": "link-in-text-block",
   "selector": "a[href]:not([role]), *[role=link]",
   "matches": "link-in-text-block-matches.js",
+  "excludeHidden": false,
   "tags": [
     "wcag2a",
     "wcag141"
