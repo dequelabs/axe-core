@@ -265,8 +265,8 @@ describe('Context', function() {
 		});
 
 		it('returns an empty context when no element is found inside a frame', function () {
-			var isInFrame = utils.respondable.isInFrame;
-			utils.respondable.isInFrame = function () {
+			var isInFrame = axe.utils.respondable.isInFrame;
+			axe.utils.respondable.isInFrame = function () {
 				return true;
 			};
 
@@ -274,7 +274,7 @@ describe('Context', function() {
 			var result = new Context('#notAnElement');
 			assert.deepEqual(result.include, []);
 
-			utils.respondable.isInFrame = isInFrame;
+			axe.utils.respondable.isInFrame = isInFrame;
 		});
 
 		it('should throw when frame could not be found', function (done) {
