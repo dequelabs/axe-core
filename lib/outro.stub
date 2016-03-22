@@ -1,3 +1,4 @@
 
 	axe.version = '<%= pkg.version %>';
+	if (typeof define === "function" && define.amd) this.axe = axe, define(axe); else if (typeof module === "object" && module.exports) module.exports = axe; else window.axe = axe;
 }(window, window.document));

@@ -10,7 +10,9 @@ module.exports = function (grunt) {
 				return grunt.file.read(fn);
 			}).join('\n');
 
-			grunt.file.write(fileset.dest, 'exports.source = ' + JSON.stringify(source) + ';');
+			var file = grunt.file.read(fileset.dest);
+
+			grunt.file.write(fileset.dest, file + 'module.exports.source = ' + JSON.stringify(source) + ';');
 		});
 	});
 };

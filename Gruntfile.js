@@ -157,6 +157,9 @@ module.exports = function (grunt) {
 				}, {
 					src: ['LICENSE'],
 					dest: 'dist/'
+				}, {
+					src: ['dist/axe.js'],
+					dest: 'dist/index.js'
 				}]
 			}
 		},
