@@ -10,6 +10,7 @@ module.exports = function (grunt) {
 		});
 	}
 
+	grunt.loadNpmTasks("grunt-browserify");
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
@@ -25,6 +26,20 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		clean: ['dist', 'tmp'],
+		babelify: {
+			dist: {
+				options: {
+					transform: [
+						["babelify"]
+					]
+				},
+				files: {
+					"./dist/axe.js": [
+						"./dist/axe.js"
+					]
+				}
+			}
+		},
 		concat: {
 			engine: {
 				src: [
@@ -265,9 +280,9 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build']);
 
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
-		'concat:engine', 'copy', 'uglify']);
+		'concat:engine', 'copy', 'browserify', 'uglify']);
 
-	grunt.registerTask('test', ['build',  'testconfig', 'fixture', 'connect',
+	grunt.registerTask('test', ['build',	'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
 
 	grunt.registerTask('test-ci', ['build', 'fixture', 'connect', 'continue:on', 'saucelabs-mocha',
