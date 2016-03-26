@@ -9,4 +9,7 @@
  * distribute or in any file that contains substantial portions of this source
  * code.
  */
-(function (window, document) {
+(function () {
+  // A window reference is required to access the axe object in a "global".
+  var global = window;
+  var document = window.document;
