@@ -47,6 +47,6 @@
     "phantomjs": "^1.9.17",
     "promise": "~7.0.3",
     "revalidator": "~0.3.1",
-    "selenium-webdriver": "~2.46.1"
+    "selenium-webdriver": "~2.53.1"
   }
 }
