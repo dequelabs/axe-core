@@ -25,7 +25,7 @@
 	"forin": true,
 	"immed": true,
 	"indent": 1,
-	"latedef": true,
+	"latedef": false,
 	"newcap": true,
 	"noarg": true,
 	"noempty": true,

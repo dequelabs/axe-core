@@ -35,7 +35,7 @@
 	"regexp": true,
 	"undef": true,
 	"unused": true,
-	"strict": true,
+	"strict": false,
 	"trailing": true,
 
 	"maxparams": 8,
