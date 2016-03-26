@@ -3,50 +3,57 @@ describe('Audit', function () {
 	'use strict';
 	var a;
 
+	var mockChecks = [{
+		id: 'positive1-check1',
+		evaluate: function () {
+			return true;
+		}
+	}, {
+		id: 'positive2-check1',
+		evaluate: function () {
+			return true;
+		}
+	}, {
+		id: 'negative1-check1',
+		evaluate: function () {
+			return true;
+		}
+	}, {
+		id: 'positive3-check1',
+		evaluate: function () {
+			return true;
+		}
+	}];
+
 	var mockRules = [{
 		id: 'positive1',
 		selector: 'input',
 		any: [{
 			id: 'positive1-check1',
-			evaluate: function () {
-				return true;
-			}
 		}]
 	}, {
 		id: 'positive2',
 		selector: '#monkeys',
-		any: [{
-			id: 'positive2-check1',
-			evaluate: function () {
-				return true;
-			}
-		}]
+		any: ['positive2-check1']
 	}, {
 		id: 'negative1',
 		selector: 'div',
-		none: [{
-			id: 'negative1-check1',
-			evaluate: function () {
-				return true;
-			}
-		}]
+		none: ['negative1-check1']
 	}, {
 		id: 'positive3',
 		selector: 'blink',
-		any: [{
-			id: 'positive3-check1',
-			evaluate: function () {
-				return true;
-			}
-		}]
+		any: ['positive3-check1']
 	}];
 
 	var fixture = document.getElementById('fixture');
 
 	beforeEach(function () {
 		a = new Audit();
-		mockRules.forEach(function (rule) {
-			a.addRule(rule);
+		mockRules.forEach(function (r) {
+			a.addRule(r);
+		});
+		mockChecks.forEach(function (c) {
+			a.addCheck(c);
 		});
 	});
 	afterEach(function () {
@@ -206,6 +213,19 @@ describe('Audit', function () {
 					pageLevel: false,
 					impact: null,
 					nodes: [{
+						node: {
+							selector: ['#fixture'],
+							source: '<div id="fixture"><input type="text" aria-label="monkeys"><div id="monkeys">bananas</div><input aria-labelledby="monkeys" type="text"><blink>FAIL ME</blink></div>'
+						},
+						none: [{
+							id: 'negative1-check1',
+							result: true,
+							data: null,
+							relatedNodes: []
+						}],
+						all: [],
+						any: []
+					}, {
 						node: {
 							selector: ['#monkeys'],
 							source: '<div id="monkeys">bananas</div>'

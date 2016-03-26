@@ -283,6 +283,30 @@ describe('text.accessibleText', function() {
 		assert.equal(commons.text.accessibleText(target), 'Hello');
 	});
 
+	it('shoud properly fall back to title', function() {
+		fixture.innerHTML = '<a href="#" role="none" title="Hello"></a>';
+		var target = fixture.querySelector('a');
+		assert.equal(commons.text.accessibleText(target), 'Hello');
+	});
+
+	it('should give text even for role=none on anchors', function() {
+		fixture.innerHTML = '<a href="#" role="none">Hello</a>';
+		var target = fixture.querySelector('a');
+		assert.equal(commons.text.accessibleText(target), 'Hello');
+	});
+
+	it('should give text even for role=none on buttons', function() {
+		fixture.innerHTML = '<button role="none">Hello</button>';
+		var target = fixture.querySelector('button');
+		assert.equal(commons.text.accessibleText(target), 'Hello');
+	});
+
+	it('should give text even for role=none on summary', function() {
+		fixture.innerHTML = '<summary role="none">Hello</summary>';
+		var target = fixture.querySelector('summary');
+		assert.equal(commons.text.accessibleText(target), 'Hello');
+	});
+
 	it('should not add extra spaces around phrasing elements', function() {
 		fixture.innerHTML = '<a href="#">Hello<span>World</span></a>';
 		var target = fixture.querySelector('a');

@@ -24,8 +24,8 @@ describe('dom.elementsFromPoint', function () {
 		target.scrollIntoView();
 		var rect = target.getBoundingClientRect();
 
-		if (commons.dom.supportsElementsFromPoint(target.ownerDocument)) {
-			var visualParents = commons.dom.elementsFromPoint(target.ownerDocument,
+		if (commons.dom.supportsElementsFromPoint(document)) {
+			var visualParents = commons.dom.elementsFromPoint(document,
 															Math.ceil(rect.left + 1),
 															Math.ceil(rect.top + 1));
 			assert.deepEqual(visualParents.slice(0, 3), [target, pos, container]);
@@ -49,8 +49,8 @@ describe('dom.elementsFromPoint', function () {
 		target.scrollIntoView();
 		var rect = target.getBoundingClientRect();
 
-		if (commons.dom.supportsElementsFromPoint(target.ownerDocument)) {
-			var visualParents = commons.dom.elementsFromPoint(target.ownerDocument,
+		if (commons.dom.supportsElementsFromPoint(document)) {
+			var visualParents = commons.dom.elementsFromPoint(document,
 															Math.ceil(rect.left + 1),
 															Math.ceil(rect.top + 1));
 			assert.deepEqual(visualParents.slice(0, 3), [target, pos, container]);
@@ -67,8 +67,8 @@ describe('dom.elementsFromPoint', function () {
 		target.scrollIntoView();
 		var rect = target.getBoundingClientRect();
 
-		if (commons.dom.supportsElementsFromPoint(target.ownerDocument)) {
-			var visualParents = commons.dom.elementsFromPoint(target.ownerDocument, Math.ceil(rect.left), Math.ceil(rect.top));
+		if (commons.dom.supportsElementsFromPoint(document)) {
+			var visualParents = commons.dom.elementsFromPoint(document, Math.ceil(rect.left), Math.ceil(rect.top));
 			assert.deepEqual(visualParents.slice(0, 3), [target, parent, fixture]);
 		}
 	});
@@ -83,13 +83,13 @@ describe('dom.elementsFromPoint', function () {
 		var rect = target.getBoundingClientRect();
 		var visualParents = null;
 
-		if (commons.dom.supportsElementsFromPoint(target.ownerDocument)) {
-			if (!target.ownerDocument.msElementsFromPoint) {
-				target.ownerDocument.msElementsFromPoint = function () {
+		if (commons.dom.supportsElementsFromPoint(document)) {
+			if (!document.msElementsFromPoint) {
+				document.msElementsFromPoint = function () {
 					return ['a', 'b', 'c'];
 				};
-				visualParents = commons.dom.elementsFromPoint(target.ownerDocument, Math.ceil(rect.left), Math.ceil(rect.top));
-				delete target.ownerDocument.msElementsFromPoint;
+				visualParents = commons.dom.elementsFromPoint(document, Math.ceil(rect.left), Math.ceil(rect.top));
+				delete document.msElementsFromPoint;
 				assert.deepEqual(visualParents.slice(0, 3), ['a', 'b', 'c']);
 			}
 		}

@@ -10,6 +10,10 @@
 	1. [API Name: axe.getRules](#api-name-axegetrules)
 	1. [API Name: axe.configure](#api-name-axeconfigure)
 	1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
+		1. [Parameters](#parameters-2)
+			1. [Context Parameter](#context-parameter)
+			2. [Options Parameter](#options-parameter)
+			3. [Callback Parameter](#callback-parameter)
 		1. [Results Object](#results-object)
 1. [Section 3: Example Reference](#section-3-example-reference)
 
@@ -85,10 +89,10 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
 
 ```javascript
 [
-{ruleId: "area-alt", description: "Checks the <area> elements of image…"},
-{ruleId: "aria-allowed-attr", description: "Checks all attributes that start…"},
-{ruleId: "aria-required-attr", description: "Checks all elements that contain…"},
-…
+  { ruleId: "area-alt", description: "Checks the <area> elements of image…" },
+  { ruleId: "aria-allowed-attr", description: "Checks all attributes that start…" },
+  { ruleId: "aria-required-attr", description: "Checks all elements that contain…" },
+  …
 ]
 ```
 
@@ -96,7 +100,7 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
 
 #### Purpose
 
-To configure the format of the data for the current session
+To configure the format of the data used by aXe. This can be used to add new rules, which must be registered with the library to execute.
 
 #### Description
 
@@ -136,48 +140,11 @@ axe.a11yCheck(context, options, callback);
 
 #### Parameters
 
-* `context`: Defines the scope of the analysis - the part of the DOM that you would like to analyze. This will typically be the `document` or a specific selector such as class name, ID, selector, etc.
-* `options`: (optional) Set of options passed into rules or checks. [See below for more information](#a11ycheck-parameters)
-* `callback`: The callback function which receives on the [results object](#results-object) as a parameter when analysis is complete
+* [`context`](#context-parameter): Defines the scope of the analysis - the part of the DOM that you would like to analyze. This will typically be the `document` or a specific selector such as class name, ID, selector, etc.
+* [`options`](#options-parameter): (optional) Set of options passed into rules or checks, temporarily modifying them. This contrasts with `axe.configure`, which is more permanent. [See below for more information](#a11ycheck-parameters)
+* [`callback`](#callback-parameter): The callback function which receives on the [results object](#results-object) as a parameter when analysis is complete
 
-#### Results Object
-
-The callback function passed in as the third parameter of `axe.allyCheck` runs on the results object. This object has two components – a passes array and a violations array.  The passes array keeps track of all the passed tests, along with detailed information on each one. This leads to more efficient testing, especially when used in conjunction with manual testing, as the user can easily find out what tests have already been passed. Similarly, the violations array keeps track of all the failed tests, along with detailed information on each one.
-
-###### `url`
-
-The URL of the page that was tested.
-
-###### `timestamp`
-
-The date and time that analysis was completed.
-
-###### `passes` and `violations` array
-
-* `description` - Text string that describes what the rule does
-* `help` - Help text that describes the test that was performed
-* `helpURL` - URL that provides more information about the specifics of the violation. Links to a page on the Deque University site.
-* `id` - Unique identifier for the rule; [see the list of rules](rule-descriptions.md)
-* `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the Rule failed or `null` if the check passed
-* `tags` - Array of tags that this rule is assigned. These tags can be used in the option structure to select which rules are run ([see `axe.allyCheck` parameters below for more information](#a11ycheck-parameters)).
-* `nodes` - Array of all elements the Rule tested
-	* `html` - Snippet of HTML of the Element
-	* `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the test failed or `null` if the check passed
-	* `target` - Array of selectors that has each element correspond to one level of iframe or frame. If there is one iframe or frame, there should be two entries in `target`. If there are three iframe levels, there should be four entries in `target`.
-	* `any` - Array of checks that were made where at least one must have passed. Each entry in the array contains:
-		* `id` - Unique identifier for this check. Check ids may be the same as Rule ids
-		* `impact` - How serious this particular check is. Can be one of "minor", "moderate", "serious", or "critical". Each check that is part of a rule can have different impacts. The highest impact of all the checks that fail is reported for the rule
-		* `message` - Description of why this check passed or failed
-		* `data` - Additional information that is specific to the type of Check which is optional. For example, a color contrast check would include the foreground color, background color, contrast ratio, etc.
-		* `relatedNodes` - Optional array of information about other nodes that are related to this check. For example, a duplicate id check violation would list the other selectors that had this same duplicate id. Each entry in the array contains the following information:
-			* `target` - Selector to the related node
-			* `html` - HTML source of the related node
-	* `all` - Array of checks that were made where all must have passed. Each entry in the array contains the same information as the 'any' array
-	* `none` - Array of checks that were made where all must have not passed. Each entry in the array contains the same information as the 'any' array
-
-#### a11yCheck Parameters
-
-##### A. Context Parameter
+##### Context Parameter
 
 The context object can be passed one of the following:
 
@@ -203,28 +170,28 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 1. Include the first item in the `$fixture` NodeList but exclude its first child
 
 	```javascript
-		{
-			include: $fixture[0],
-			exclude: $fixture[0].firstChild
-		}
+	{
+	  include: $fixture[0],
+	  exclude: $fixture[0].firstChild
+	}
 	```
 2. Include the element with the ID of `fix` but exclude any `div`s within it
 
 	```javascript
-		{
-			include: [['#fix']],
-			exclude: [['#fix div']]
-		}
+	{
+	  include: [['#fix']],
+	  exclude: [['#fix div']]
+	}
 	```
 3. Include the whole document except any structures whose parent contains the class `exclude1` or `exclude2`
 
 	```javascript
-		{
-			exclude: [['.exclude1'], ['.exclude2']]
-		}
+	{
+	  exclude: [['.exclude1'], ['.exclude2']]
+	}
 	```
 
-##### B. Options Parameter
+##### Options Parameter
 
 The options parameter is flexible way to configure how `a11yCheck` operates. The different modes of operation are:
 
@@ -234,9 +201,9 @@ The options parameter is flexible way to configure how `a11yCheck` operates. The
 
 ###### Options Parameter Examples
 
-1. Run all Rules for an accessibility standard
+1. Run only Rules for an accessibility standard
 
-	There are certain standards defined that can be used to select a set of rules to be run. The defined standards and tag string are defined as follows:
+	There are certain standards defined that can be used to select a set of rules. The defined standards and tag string are defined as follows:
 
 	| Tag Name           | Accessibility Standard                |
 	|--------------------|:-------------------------------------:|
@@ -245,7 +212,7 @@ The options parameter is flexible way to configure how `a11yCheck` operates. The
 	| `section508`       | Section 508                           |
 	| `best-practice`    | Best practices endorsed by Deque      |
 
-	To run one of the standards, specify `options` as
+	To run only WCAG 2.0 Level A rules, specify `options` as:
 
 	```javascript
 	{
@@ -256,50 +223,93 @@ The options parameter is flexible way to configure how `a11yCheck` operates. The
 	}
 	```
 
-	This tells a11yCheck that only the specific rules should be run corresponding to the provided standard. The standard passed in values can be an array of tag names.
+	To run both WCAG 2.0 Level A and Level AA rules, you must specify both `wcag2a` and `wcag2aa`:
 
-2. Run all Rules except for a list of rules
-
-	The default operation for a11yCheck is to run all rules. If certain rules should be disabled from being run, specify `options` as:
 	```javascript
 	{
-	  "rules": {
-	    "ruleId1": { enabled: false },
-	    "ruleId2": { enabled: false }
+	  runOnly: {
+	    type: "tag",
+	    values: ["wcag2a", "wcag2aa"]
 	  }
 	}
 	```
 
-	This example will disable the rules with the id of `ruleId1` and `ruleId2`. All other rules will run. The list of valid rule IDs is specified in the section below.
+2. Run only a specified list of Rules
 
-3. Run only a specified list of Rules
-
-	If you only want certain rules to be run, specify options as:
+	If you only want to run certain rules, specify options as:
 
 	```javascript
 	{
-		runOnly: {
-			type: "rule",
-			values: [ "ruleId1", "ruleId2", "ruleId3" ]
-		}
+	  runOnly: {
+	    type: "rule",
+	    values: [ "ruleId1", "ruleId2", "ruleId3" ]
+	  }
 	}
 	```
 
 	This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `ruleId3`. No other rule will run.
 
+2. Run all enabled Rules except for a list of rules
 
-##### C. Callback Parameter
+	The default operation for a11yCheck is to run all WCAG 2.0 Level A and Level AA rules. If certain rules should be disabled from being run, specify `options` as:
+	```javascript
+	{
+	  "rules": {
+	    "color-contrast": { enabled: false },
+	    "valid-lang": { enabled: false }
+	  }
+	}
+	```
+
+	This example will disable the rules with the ids of `color-contrast` and `valid-lang`. All other rules will run. The list of valid rule ids is specified in the section below.
+
+##### Callback Parameter
 
 The callback parameter is a function that will be called when the asynchronous `axe.a11yCheck` function completes. The callback function is passed a single parameter - the results object of the `axe.a11yCheck` call.
 
 
+#### Results Object
+
+The callback function passed in as the third parameter of `axe.allyCheck` runs on the results object. This object has two components – a passes array and a violations array.  The passes array keeps track of all the passed tests, along with detailed information on each one. This leads to more efficient testing, especially when used in conjunction with manual testing, as the user can easily find out what tests have already been passed. Similarly, the violations array keeps track of all the failed tests, along with detailed information on each one.
+
+###### `url`
+
+The URL of the page that was tested.
+
+###### `timestamp`
+
+The date and time that analysis was completed.
+
+###### `passes` and `violations` array
+
+* `description` - Text string that describes what the rule does
+* `help` - Help text that describes the test that was performed
+* `helpUrl` - URL that provides more information about the specifics of the violation. Links to a page on the Deque University site.
+* `id` - Unique identifier for the rule; [see the list of rules](rule-descriptions.md)
+* `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the Rule failed or `null` if the check passed
+* `tags` - Array of tags that this rule is assigned. These tags can be used in the option structure to select which rules are run ([see `axe.allyCheck` parameters below for more information](#a11ycheck-parameters)).
+* `nodes` - Array of all elements the Rule tested
+	* `html` - Snippet of HTML of the Element
+	* `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the test failed or `null` if the check passed
+	* `target` - Array of selectors that has each element correspond to one level of iframe or frame. If there is one iframe or frame, there should be two entries in `target`. If there are three iframe levels, there should be four entries in `target`.
+	* `any` - Array of checks that were made where at least one must have passed. Each entry in the array contains:
+		* `id` - Unique identifier for this check. Check ids may be the same as Rule ids
+		* `impact` - How serious this particular check is. Can be one of "minor", "moderate", "serious", or "critical". Each check that is part of a rule can have different impacts. The highest impact of all the checks that fail is reported for the rule
+		* `message` - Description of why this check passed or failed
+		* `data` - Additional information that is specific to the type of Check which is optional. For example, a color contrast check would include the foreground color, background color, contrast ratio, etc.
+		* `relatedNodes` - Optional array of information about other nodes that are related to this check. For example, a duplicate id check violation would list the other selectors that had this same duplicate id. Each entry in the array contains the following information:
+			* `target` - Array of selectors for the related node
+			* `html` - HTML source of the related node
+	* `all` - Array of checks that were made where all must have passed. Each entry in the array contains the same information as the 'any' array
+	* `none` - Array of checks that were made where all must have not passed. Each entry in the array contains the same information as the 'any' array
+
 #### Example 2
 
-In this example, we will pass the selector for the entire document, pass no options, which means all rules will be run, and have a simple callback function that logs the entire results object to the console log:
+In this example, we will pass the selector for the entire document, pass no options, which means all enabled rules will be run, and have a simple callback function that logs the entire results object to the console log:
 
 ```javascript
 axe.a11yCheck(document, function(results) {
-	console.log(results);
+  console.log(results);
 });
 ```
 
@@ -350,13 +360,13 @@ Each subsequent entry in the violations array has the same format, but will deta
 
 #### Example 3
 
-In this example, we pass the selector for the entire document, enable two rules to be run, and have a simple callback function that logs the entire results object to the console log:
+In this example, we pass the selector for the entire document, enable two additional best practice rules, and have a simple callback function that logs the entire results object to the console log:
 
 ```javascript
 axe.a11yCheck(document, {
   rules: {
-    "button-name": { enabled: true },
-	  "color-contrast": { enabled: true }
+    "heading-order": { enabled: true },
+    "label-title-only": { enabled: true }
   }
 }, function(results) {
   console.log(results);

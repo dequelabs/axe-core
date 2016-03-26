@@ -10,7 +10,7 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 branches:
   except:
-    - release
+    - bower
 script:
   - grunt test
 env:

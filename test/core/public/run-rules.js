@@ -129,12 +129,12 @@ describe('runRules', function () {
 		axe._load({ rules: [{
 			id: 'html',
 			selector: 'html',
-			any: [{
-				id: 'html',
-				evaluate: function () {
-					return true;
-				}
-			}]
+			any: ['html']
+		}], checks: [{
+			id: 'html',
+			evaluate: function () {
+				return true;
+			}
 		}], messages: {}});
 
 		createFrames(function () {
@@ -153,12 +153,12 @@ describe('runRules', function () {
 		axe._load({ rules: [{
 			id: 'iframe',
 			selector: 'iframe',
-			any: [{
-				id: 'iframe',
-				evaluate: function () {
-					return true;
-				}
-			}]
+			any: ['iframe']
+		}], checks:[{
+			id: 'iframe',
+			evaluate: function () {
+				return true;
+			}
 		}], messages: {}});
 
 		var frame = document.createElement('iframe');
@@ -191,28 +191,30 @@ describe('runRules', function () {
 			rules: [{
 				id: 'div#target',
 				selector: '#target',
-				any: [{
-					id: 'has-target',
-					evaluate: function () {
-						return true;
-					}
-				}]
+				any: ['has-target']
 			}, {
 				id: 'first-div',
 				selector: 'div',
-				any: [{
-					id: 'first-div',
-					evaluate: function (node) {
-						this.relatedNodes([node]);
-						return false;
-					},
-					after: function (results) {
-						if (results.length) {
-							results[0].result = true;
-						}
-						return [results[0]];
+				any: ['first-div']
+			}],
+			checks: [{
+				id: 'has-target',
+				evaluate: function () {
+					return true;
+				}
+			}, {
+				id: 'first-div',
+				selector: ':not(#fixture)',
+				evaluate: function (node) {
+					this.relatedNodes([node]);
+					return false;
+				},
+				after: function (results) {
+					if (results.length) {
+						results[0].result = true;
 					}
-				}]
+					return [results[0]];
+				}
 			}],
 			messages: {}
 		});
@@ -278,11 +280,13 @@ describe('runRules', function () {
 			rules: [{
 				id: 'test',
 				selector: '*',
-				none: [{
-					evaluate: function () {
+				none: ['bob']
+			}],
+			checks: [{
+				id: 'bob',
+				evaluate: function () {
 					return true;
-					}
-				}]
+				}
 			}]
 		});
 
@@ -296,23 +300,27 @@ describe('runRules', function () {
 
 		axe.a11yCheck($test, function (results) {
 			assert.lengthOf(results.violations, 1);
-			assert.lengthOf(results.violations[0].nodes, 2);
-			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1 > span']);
-			assert.deepEqual(results.violations[0].nodes[1].target, ['#t2 > em']);
+			assert.lengthOf(results.violations[0].nodes, 4);
+			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);
+			assert.deepEqual(results.violations[0].nodes[1].target, ['#t1 > span']);
+			assert.deepEqual(results.violations[0].nodes[2].target, ['#t2']);
+			assert.deepEqual(results.violations[0].nodes[3].target, ['#t2 > em']);
 			done();
 		});
 	});
 
-	it('should accept a NodeLists', function (done) {
+	it('should accept a NodeList', function (done) {
 		axe._load({
 			rules: [{
 				id: 'test',
 				selector: '*',
-				none: [{
-					evaluate: function () {
+				none: ['fred']
+			}],
+			checks: [{
+				id: 'fred',
+				evaluate: function () {
 					return true;
-					}
-				}]
+				}
 			}]
 		});
 
@@ -321,9 +329,11 @@ describe('runRules', function () {
 		var test = fixture.querySelectorAll('.foo');
 		axe.a11yCheck(test, function (results) {
 			assert.lengthOf(results.violations, 1);
-			assert.lengthOf(results.violations[0].nodes, 2);
-			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1 > span']);
-			assert.deepEqual(results.violations[0].nodes[1].target, ['#t2 > em']);
+			assert.lengthOf(results.violations[0].nodes, 4);
+			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);
+			assert.deepEqual(results.violations[0].nodes[1].target, ['#t1 > span']);
+			assert.deepEqual(results.violations[0].nodes[2].target, ['#t2']);
+			assert.deepEqual(results.violations[0].nodes[3].target, ['#t2 > em']);
 			done();
 		});
 	});
@@ -333,28 +343,30 @@ describe('runRules', function () {
 			rules: [{
 				id: 'div#target',
 				selector: '#target',
-				any: [{
-					id: 'has-target',
-					evaluate: function () {
-						return false;
-					}
-				}]
+				any: ['has-target']
 			}, {
 				id: 'first-div',
 				selector: 'div',
-				any: [{
-					id: 'first-div',
-					evaluate: function (node) {
-						this.relatedNodes([node]);
-						return false;
-					},
-					after: function (results) {
-						if (results.length) {
-							results[0].result = true;
-						}
-						return [results[0]];
+				any: ['first-div'],
+			}],
+			checks: [{
+				id: 'has-target',
+				evaluate: function () {
+					return false;
+				}
+			}, {
+				id: 'first-div',
+				selector: ':not(#fixture)',
+				evaluate: function (node) {
+					this.relatedNodes([node]);
+					return false;
+				},
+				after: function (results) {
+					if (results.length) {
+						results[0].result = true;
 					}
-				}]
+					return [results[0]];
+				}
 			}],
 			data: {
 				rules: {

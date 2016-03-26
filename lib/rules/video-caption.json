@@ -9,9 +9,9 @@
     "section508a"
   ],
   "metadata": {
-    "description": "Ensures that the HTML5 <video> tag is captioned",
-    "helpUrl": "https://dequeuniversity.com/courses/html-css/video-audio-multimedia/",
-    "help": "HTML5 video elements need captions"
+    "description": "Ensures <video> elements have captions",
+    "help": "<video> elements must have captions",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/video-caption"
   },
   "all": [],
   "any": [],

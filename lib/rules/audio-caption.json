@@ -9,9 +9,9 @@
     "section508a"
   ],
   "metadata": {
-    "helpUrl": "https://dequeuniversity.com/issues/audio-caption",
-    "description": "Checks the use of all <audio> element to ensure that the element contains a <caption> element",
-    "help": "HTML5 <audio> elements need a captions track"
+    "description": "Ensures <audio> elements have captions",
+    "help": "<audio> elements must have a captions track",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/audio-caption"
   },
   "all": [],
   "any": [],

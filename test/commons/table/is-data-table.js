@@ -17,6 +17,16 @@ describe('table.isDataTable', function () {
 		assert.isFalse(commons.table.isDataTable(node));
 	});
 
+	it('should be false if the table has role=none', function () {
+		fixture.innerHTML = '<table role="none">' +
+			'<thead><tr><th>1</th><th>2</th></tr></thead>' +
+			'<tbody><tr><td>One</td><td>Two</td></tr></tbody>' +
+			'</table>';
+
+		var node = fixture.querySelector('table');
+		assert.isFalse(commons.table.isDataTable(node));
+	});
+
 	it('should be true if the table is inside an editable area', function () {
 
 		fixture.innerHTML = '<div contenteditable="true">' +
@@ -41,6 +51,13 @@ describe('table.isDataTable', function () {
 		fixture.innerHTML = '<table role="treegrid"></table>';
 
 		var node = fixture.querySelector('table');
+		assert.isTrue(commons.table.isDataTable(node));
+	});
+
+	it('should be true if the element has a role of table', function () {
+		fixture.innerHTML = '<div role="table"></div>';
+
+		var node = fixture.querySelector('[role="table"]');
 		assert.isTrue(commons.table.isDataTable(node));
 	});
 

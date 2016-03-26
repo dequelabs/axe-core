@@ -1,4 +1,4 @@
-/*global Rule, Check */
+/*global Rule */
 describe('Rule', function() {
 	'use strict';
 
@@ -12,8 +12,8 @@ describe('Rule', function() {
 		assert.isFunction(Rule);
 	});
 
-	it('should accept one parameter', function() {
-		assert.lengthOf(Rule, 1);
+	it('should accept two parameters', function() {
+		assert.lengthOf(Rule, 2);
 	});
 
 	describe('prototype', function() {
@@ -66,14 +66,14 @@ describe('Rule', function() {
 						selector: 'div'
 					}),
 					nodes = rule.gather({
-						include: [document.getElementById('fixture')]
+						include: [document.getElementById('fixture').firstChild]
 					});
 
 				assert.deepEqual(nodes, [node]);
 			});
 
 			it('should default to all nodes if selector is not specified', function() {
-				var nodes = [],
+				var nodes = [fixture],
 					node = document.createElement('div');
 
 				fixture.appendChild(node);
@@ -89,7 +89,7 @@ describe('Rule', function() {
 						include: [document.getElementById('fixture')]
 					});
 
-				assert.lengthOf(result, 2);
+				assert.lengthOf(result, 3);
 				assert.sameMembers(result, nodes);
 			});
 			it('should exclude hidden elements', function() {
@@ -97,7 +97,7 @@ describe('Rule', function() {
 
 				var rule = new Rule({}),
 					result = rule.gather({
-						include: [document.getElementById('fixture')]
+						include: [document.getElementById('fixture').firstChild]
 					});
 
 				assert.lengthOf(result, 0);
@@ -109,7 +109,7 @@ describe('Rule', function() {
 						excludeHidden: false
 					}),
 					result = rule.gather({
-						include: [document.getElementById('fixture')]
+						include: [document.getElementById('fixture').firstChild]
 					});
 
 				assert.deepEqual(result, [fixture.firstChild]);
@@ -133,7 +133,7 @@ describe('Rule', function() {
 					});
 
 				rule.run({
-					include: [fixture]
+					include: [div]
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
@@ -143,25 +143,24 @@ describe('Rule', function() {
 
 			it('should execute Check#run on its child checks - any', function(done) {
 				fixture.innerHTML = '<blink>Hi</blink>';
-				var orig = Check.prototype.run;
 				var success = false;
-				Check.prototype.run = function(_, __, cb) {
-					success = true;
-					cb(true);
-				};
-
 				var rule = new Rule({
-					any: [{
-						id: 'cats',
-						evaluate: function() {}
-					}]
+					any: ['cats']
+				}, {
+					checks: {
+						cats: {
+							run: function (node, options, cb) {
+								success = true;
+								cb(true);
+							}
+						}
+					}
 				});
 
 				rule.run({
 					include: [fixture]
 				}, {}, function() {
 					assert.isTrue(success);
-					Check.prototype.run = orig;
 					done();
 				});
 
@@ -169,25 +168,24 @@ describe('Rule', function() {
 
 			it('should execute Check#run on its child checks - all', function(done) {
 				fixture.innerHTML = '<blink>Hi</blink>';
-				var orig = Check.prototype.run;
 				var success = false;
-				Check.prototype.run = function(_, __, cb) {
-					success = true;
-					cb(true);
-				};
-
 				var rule = new Rule({
-					all: [{
-						id: 'cats',
-						evaluate: function() {}
-					}]
+					all: ['cats']
+				}, {
+					checks: {
+						cats: {
+							run: function (node, options, cb) {
+								success = true;
+								cb(true);
+							}
+						}
+					}
 				});
 
 				rule.run({
 					include: [fixture]
 				}, {}, function() {
 					assert.isTrue(success);
-					Check.prototype.run = orig;
 					done();
 				});
 
@@ -195,25 +193,24 @@ describe('Rule', function() {
 
 			it('should execute Check#run on its child checks - none', function(done) {
 				fixture.innerHTML = '<blink>Hi</blink>';
-				var orig = Check.prototype.run;
 				var success = false;
-				Check.prototype.run = function(_, __, cb) {
-					success = true;
-					cb(true);
-				};
-
 				var rule = new Rule({
-					none: [{
-						id: 'cats',
-						evaluate: function() {}
-					}]
+					none: ['cats']
+				}, {
+					checks: {
+						cats: {
+							run: function (node, options, cb) {
+								success = true;
+								cb(true);
+							}
+						}
+					}
 				});
 
 				rule.run({
 					include: [fixture]
 				}, {}, function() {
 					assert.isTrue(success);
-					Check.prototype.run = orig;
 					done();
 				});
 
@@ -221,62 +218,54 @@ describe('Rule', function() {
 
 			it('should pass the matching option to run', function(done) {
 				fixture.innerHTML = '<blink>Hi</blink>';
-				var orig = Check.prototype.run,
-					options = {
-						checks: {
-							cats: {
-								enabled: 'bananas',
-								options: 'minkeys'
+				var options = {
+					checks: {
+						cats: {
+							enabled: 'bananas',
+							options: 'minkeys'
+						}
+					}
+				};
+				var rule = new Rule({
+					none: ['cats']
+				}, {
+					checks: {
+						cats: {
+							id: 'cats',
+							run: function (node, options, cb) {
+								assert.equal(options.enabled, 'bananas');
+								assert.equal(options.options, 'minkeys');
+								cb(true);
 							}
 						}
-					};
-
-				Check.prototype.run = function(node, options, cb) {
-					assert.equal(options.enabled, 'bananas');
-					assert.equal(options.options, 'minkeys');
-					cb(true);
-				};
-
-				var rule = new Rule({
-					id: 'cats',
-					any: [{
-						id: 'cats'
-					}]
+					}
 				});
 				rule.run({
 					include: [document]
 				}, options, function() {
-					Check.prototype.run = orig;
 					done();
 				});
 			});
 
 			it('should pass the matching option to run defined on the rule over global', function(done) {
 				fixture.innerHTML = '<blink>Hi</blink>';
-				var orig = Check.prototype.run,
-					options = {
-						rules: {
-							cats: {
-								checks: {
-									cats: {
-										enabled: 'apples',
-										options: 'apes'
-									}
+				var options = {
+					rules: {
+						cats: {
+							checks: {
+								cats: {
+									enabled: 'apples',
+									options: 'apes'
 								}
 							}
-						},
-						checks: {
-							cats: {
-								enabled: 'bananas',
-								options: 'minkeys'
-							}
 						}
-					};
-
-				Check.prototype.run = function(node, options, cb) {
-					assert.equal(options.enabled, 'apples');
-					assert.equal(options.options, 'apes');
-					cb(true);
+					},
+					checks: {
+						cats: {
+							enabled: 'bananas',
+							options: 'minkeys'
+						}
+					}
 				};
 
 				var rule = new Rule({
@@ -284,11 +273,21 @@ describe('Rule', function() {
 					any: [{
 						id: 'cats'
 					}]
+				}, {
+					checks: {
+						cats: {
+							id: 'cats',
+							run: function (node, options, cb) {
+								assert.equal(options.enabled, 'apples');
+								assert.equal(options.options, 'apes');
+								cb(true);
+							}
+						}
+					}
 				});
 				rule.run({
 					include: [document]
 				}, options, function() {
-					Check.prototype.run = orig;
 					done();
 				});
 			});
@@ -296,12 +295,14 @@ describe('Rule', function() {
 			it('should filter out null results', function() {
 				var rule = new Rule({
 					selector: '#fixture',
-					any: [{
-						id: 'cats',
-						evaluate: function() {
-							throw new Error('uh oh');
+					any: ['cats']
+				}, {
+					checks: {
+						cats: {
+							id: 'cats',
+							run: function() {}
 						}
-					}]
+					}
 				});
 				rule.run({
 					include: [document]
@@ -360,14 +361,19 @@ describe('Rule', function() {
 
 				var rule = new Rule({
 					id: 'cats',
-					any: [{
-						id: 'cats',
-						after: function(results, options) {
-							assert.deepEqual(options, { enabled: true, options: { dogs: true }});
-							success = true;
-							return results;
+					any: ['cats']
+				}, {
+					checks: {
+						cats: {
+							id: 'cats',
+							enabled: true,
+							after: function(results, options) {
+								assert.deepEqual(options, { enabled: true, options: { dogs: true }});
+								success = true;
+								return results;
+							}
 						}
-					}]
+					}
 				});
 
 				rule.after({
@@ -390,12 +396,16 @@ describe('Rule', function() {
 
 				var rule = new Rule({
 					id: 'cats',
-					any: [{
-						id: 'cats',
-						after: function(results) {
-							return [results[0]];
+					any: ['cats']
+				}, {
+					checks: {
+						cats: {
+							id: 'cats',
+							after: function(results) {
+								return [results[0]];
+							}
 						}
-					}]
+					}
 				});
 
 				var result = rule.after({
@@ -580,25 +590,6 @@ describe('Rule', function() {
 				assert.property(new Rule(spec), 'any');
 			});
 
-			it('should contain instances of Check', function() {
-				var spec = {
-					any: [{
-						name: 'monkeys'
-					}, {
-						name: 'bananas'
-					}, {
-						name: 'pajamas'
-					}]
-				};
-				var rule = new Rule(spec);
-
-				for (var i = 0, l = spec.any.length; i < l; i++) {
-
-					assert.instanceOf(rule.any[i], Check);
-					assert.deepEqual(rule.any[i], new Check(spec.any[i]));
-				}
-
-			});
 		});
 
 
@@ -616,25 +607,6 @@ describe('Rule', function() {
 				assert.property(new Rule(spec), 'all');
 			});
 
-			it('should contain instances of Check', function() {
-				var spec = {
-					all: [{
-						name: 'monkeys'
-					}, {
-						name: 'bananas'
-					}, {
-						name: 'pajamas'
-					}]
-				};
-				var rule = new Rule(spec);
-
-				for (var i = 0, l = spec.all.length; i < l; i++) {
-
-					assert.instanceOf(rule.all[i], Check);
-					assert.deepEqual(rule.all[i], new Check(spec.all[i]));
-				}
-
-			});
 		});
 
 
@@ -652,25 +624,6 @@ describe('Rule', function() {
 				assert.property(new Rule(spec), 'none');
 			});
 
-			it('should contain instances of Check', function() {
-				var spec = {
-					none: [{
-						name: 'monkeys'
-					}, {
-						name: 'bananas'
-					}, {
-						name: 'pajamas'
-					}]
-				};
-				var rule = new Rule(spec);
-
-				for (var i = 0, l = spec.none.length; i < l; i++) {
-
-					assert.instanceOf(rule.none[i], Check);
-					assert.deepEqual(rule.none[i], new Check(spec.none[i]));
-				}
-
-			});
 		});
 
 		describe('.matches', function() {

@@ -7,9 +7,9 @@
     "best-practice"
   ],
   "metadata": {
-    "description": "Ensures that the best practice of having a skip link as the very first link in a page, is adhered-to",
-    "helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/skip-navigation",
-    "help": "The page must have a skip link as its first link"
+    "description": "Ensures the first link on the page is a skip link",
+    "help": "The page should have a skip link as its first link",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/skip-link"
   },
   "all": [],
   "any": [

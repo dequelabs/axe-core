@@ -9,16 +9,17 @@
     "section508a"
   ],
   "metadata": {
-    "description": "Ensures that every link has an accessible name",
-    "helpUrl": "https://dequeuniversity.com/courses/html-css/navigation/links",
-    "help": "Links must have alternate text"
+    "description": "Ensures links have discernible text",
+    "help": "Links must have discernible text",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/link-name"
   },
   "all": [],
   "any": [
     "has-visible-text",
     "aria-label",
     "aria-labelledby",
-    "role-presentation"
+    "role-presentation",
+    "role-none"
   ],
   "none": [
     "duplicate-img-label",

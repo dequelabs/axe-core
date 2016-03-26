@@ -5,9 +5,9 @@
     "wcag411"
   ],
   "metadata": {
-    "helpUrl": "https://dequeuniversity.com/issues/aria-allowed-attr",
-    "help": "ARIA attributes not allowed for role assigned to this element",
-    "description": "Checks all attributes that start with 'aria-' to ensure that they are all official WAI-ARIA attributes"
+    "description": "Ensures ARIA attributes are allowed for an element's role",
+    "help": "Elements must only use allowed ARIA attributes",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/aria-allowed-attr"
   },
   "all": [],
   "any": [

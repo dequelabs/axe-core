@@ -6,9 +6,9 @@
     "best-practice"
   ],
   "metadata": {
-    "description": "Ensure that the order in which the headings appear in the DOM is semantically correct",
-    "helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/headings#id37_use_headings_in_order",
-    "help": "Heading levels must only increase by one"
+    "description": "Ensures the order of headings is semantically correct",
+    "help": "Heading levels should only increase by one",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/heading-order"
   },
   "all": [],
   "any": [

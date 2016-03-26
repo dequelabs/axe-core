@@ -1,19 +1,19 @@
 {
   "id": "definition-list",
-  "selector": "dl",
+  "selector": "dl:not([role])",
   "tags": [
     "wcag2a",
     "wcag131"
   ],
   "metadata": {
-    "description": "Ensures that all <dl> elements are structured correctly",
-    "help": "<dl> elements must contain properly-ordered <dt> and <dd> elements",
-    "helpUrl": "https://dequeuniversity.com/issues/definition-list"
+    "description": "Ensures <dl> elements are structured correctly",
+    "help": "<dl> elements must only directly contain properly-ordered <dt> and <dd> groups, <script> or <template> elements",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/definition-list"
   },
   "all": [],
   "any": [],
   "none": [
-    "has-dlitems",
+    "structured-dlitems",
     "only-dlitems"
   ]
 }

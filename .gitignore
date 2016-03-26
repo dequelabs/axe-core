@@ -4,3 +4,4 @@ bower_components
 node_modules
 test/*/index.html
 test/integration/*/index.html
+.grunt

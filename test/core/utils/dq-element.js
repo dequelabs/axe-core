@@ -12,6 +12,10 @@ describe('DqElement', function () {
 		assert.isFunction(DqElement);
 	});
 
+	it('should be exposed to utils', function () {
+		assert.equal(utils.DqElement, DqElement);
+	});
+
 	it('should take a node as a parameter and return an object', function () {
 		var node = document.createElement('div');
 		var result = new DqElement(node);
@@ -39,6 +43,19 @@ describe('DqElement', function () {
 
 			var result = new DqElement(fixture.firstChild);
 			assert.equal(result.source, fixture.firstChild.outerHTML);
+		});
+
+		it('should work with SVG elements', function () {
+			fixture.innerHTML = '<svg aria-label="foo"></svg>';
+
+			var result = new DqElement(fixture.firstChild);
+			assert.isString(result.source);
+		});
+		it('should work with MathML', function () {
+			fixture.innerHTML = '<math display="block"><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></math>';
+
+			var result = new DqElement(fixture.firstChild);
+			assert.isString(result.source);
 		});
 
 		it('should truncate large elements', function () {

@@ -1,14 +1,17 @@
 {
   "id": "color-contrast",
+  "options": {
+    "noScroll": false
+  },
   "selector": "*",
   "tags": [
     "wcag2aa",
     "wcag143"
   ],
   "metadata": {
-    "description": "Checks all elements to ensure that the contrast between the foreground and the background meets the WCAG 2 AA contrast ratio thresholds.",
+    "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds",
     "help": "Elements must have sufficient color contrast",
-    "helpUrl": "https://dequeuniversity.com/courses/html-css/visual-layout/color-contrast"
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/color-contrast"
   },
   "all": [],
   "any": [

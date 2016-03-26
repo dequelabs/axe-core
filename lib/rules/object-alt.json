@@ -6,9 +6,9 @@
     "wcag111"
   ],
   "metadata": {
-    "description": "Ensures that every <object> element has a text alternative",
-    "help": "An embedded object must have a text alternative",
-    "helpUrl": "https://dequeuniversity.com/issues/object-alt"
+    "description": "Ensures <object> elements have alternate text",
+    "help": "<object> elements must have alternate text",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/object-alt"
   },
   "all": [],
   "any": [

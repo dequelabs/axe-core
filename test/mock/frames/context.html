@@ -14,28 +14,29 @@
 			rules: [{
 				id: 'div#target',
 				selector: '#target',
-				any: [{
-					id: 'has-target',
-					evaluate: function () {
-						return true;
-					}
-				}]
+				any: ['has-target']
 			}, {
 				id: 'first-div',
 				selector: 'div',
-				any: [{
-					id: 'first-div',
-					evaluate: function (node) {
-						this.relatedNodes([node]);
-						return false;
-					},
-					after: function (results) {
-						if (results.length) {
-							results[0].result = true;
-						}
-						return [results[0]];
+				any: ['first-div']
+			}],
+			checks: [{
+				id: 'has-target',
+				evaluate: function () {
+					return true;
+				}
+			}, {
+				id: 'first-div',
+				evaluate: function (node) {
+					this.relatedNodes([node]);
+					return false;
+				},
+				after: function (results) {
+					if (results.length) {
+						results[0].result = true;
 					}
-				}]
+					return [results[0]];
+				}
 			}],
 			messages: {}
 		});

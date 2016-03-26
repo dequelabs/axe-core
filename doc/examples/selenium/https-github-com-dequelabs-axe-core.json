@@ -2132,6 +2132,13 @@
               "message": "Element's default semantics were not overridden with role=\"presentation\"",
               "data": null,
               "relatedNodes": []
+            },
+            {
+              "id": "role-none",
+              "impact": "moderate",
+              "message": "Element's default semantics were not overridden with role=\"none\"",
+              "data": null,
+              "relatedNodes": []
             }
           ],
           "all": [],
@@ -7601,7 +7608,7 @@
     },
     {
       "id": "image-alt",
-      "description": "Ensures that every <img> element has alternative text or is marked as presentational",
+      "description": "Ensures that every <img> element has alternative text or is marked as none or presentational",
       "help": "Images must have alternate text",
       "helpUrl": "https://dequeuniversity.com/courses/html-css/images/alt-text",
       "impact": null,

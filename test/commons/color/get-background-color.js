@@ -38,7 +38,7 @@ describe('color.getBackgroundColor', function () {
 		var bgNodes = [];
 		var actual = commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new commons.color.Color(64, 64, 0, 1);
-		if (commons.dom.supportsElementsFromPoint(target.ownerDocument)) {
+		if (commons.dom.supportsElementsFromPoint(document)) {
 			assert.closeTo(actual.red, expected.red, 0.5);
 			assert.closeTo(actual.green, expected.green, 0.5);
 			assert.closeTo(actual.blue, expected.blue, 0.5);
@@ -83,7 +83,7 @@ describe('color.getBackgroundColor', function () {
 		var bgNodes = [];
 		var actual = commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new commons.color.Color(64, 64, 0, 1);
-		if (commons.dom.supportsElementsFromPoint(target.ownerDocument)) {
+		if (commons.dom.supportsElementsFromPoint(document)) {
 			assert.closeTo(actual.red, expected.red, 0.5);
 			assert.closeTo(actual.green, expected.green, 0.5);
 			assert.closeTo(actual.blue, expected.blue, 0.5);
@@ -174,6 +174,14 @@ describe('color.getBackgroundColor', function () {
 		assert.deepEqual(bgNodes, [target]);
 	});
 
+	it('should return null if something is obscuring it', function () {
+		fixture.innerHTML = '<div style="position: absolute; top:0; left: 0; right: 0; bottom:0; background: #000"></div>' +
+			'<div id="target" style="position: relative; left: 1px;">Hello</div>';
+		var actual = commons.color.getBackgroundColor(document.getElementById('target'), []);
+		assert.isNull(actual);
+
+	});
+
 	it('should return the bgcolor if it is solid', function () {
 		fixture.innerHTML = '<div style="height: 40px; width: 30px; background-color: red;">' +
 			'<div id="target" style="height: 20px; width: 15px; background-color: green;">' +
@@ -237,7 +245,7 @@ describe('color.getBackgroundColor', function () {
 		var shifted = fixture.querySelector('#shifted');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		var actual = commons.color.getBackgroundColor(target, bgNodes);
+		var actual = commons.color.getBackgroundColor(target, bgNodes, true);
 		var expected = new commons.color.Color(0, 0, 0, 1);
 		if (commons.dom.supportsElementsFromPoint(document)) {
 			assert.deepEqual(bgNodes, [shifted]);
@@ -251,6 +259,31 @@ describe('color.getBackgroundColor', function () {
 		assert.closeTo(actual.alpha, expected.alpha, 0.1);
 	});
 
+	it('does not change the scroll when scroll is disabled', function() {
+		fixture.innerHTML = '<div id="parent" style="height: 40px; width: 30px; ' +
+		'background-color: white; position: relative; z-index: 5">' +
+		'<div id="target" style="position: relative; top: 1px; height: 20px; ' +
+		'width: 25px; z-index: 25;">' + '</div>';
+		var targetEl = fixture.querySelector('#target');
+		var bgNodes = [];
+		window.scroll(0, 0);
 
+		commons.color.getBackgroundColor(targetEl, bgNodes, false);
 
+		assert.equal(window.pageYOffset, 0);
+	});
+
+	it('scrolls into view when scroll is enabled', function() {
+		fixture.innerHTML = '<div id="parent" style="height: 5000px; width: 30px; ' +
+		'background-color: white; position: relative; z-index: 5">' +
+		'<div id="target" style="position: absolute; bottom: 0; height: 20px; ' +
+		'width: 25px; z-index: 25;">' + '</div>';
+		var targetEl = fixture.querySelector('#target');
+		var bgNodes = [];
+		window.scroll(0, 0);
+
+		commons.color.getBackgroundColor(targetEl, bgNodes, true);
+
+		assert.notEqual(window.pageYOffset, 0);
+	});
 });

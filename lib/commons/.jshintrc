@@ -3,7 +3,7 @@
 		"commons": true
 	},
 
-	"browser" : false,
+	"browser" : true,
 	"node" : false,
 	"devel" : false,
 

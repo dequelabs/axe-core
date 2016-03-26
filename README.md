@@ -1,4 +1,6 @@
 # axe-core
+
+[![Join the chat at https://gitter.im/dequelabs/axe-core](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dequelabs/axe-core?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Version](https://img.shields.io/npm/v/axe-core.svg)](https://www.npmjs.com/package/axe-core)
 [![Bower](https://img.shields.io/bower/v/axe-core.svg)](http://bower.io/search)
 [![License](https://img.shields.io/npm/l/axe-core.svg)](LICENSE)
@@ -61,8 +63,8 @@ axe.a11yCheck(document, function (results) {
 The [aXe API](doc/API.md) supports the following browsers:
 
 * Internet Explorer v9, 10, 11
-* Google Chrome v35 and above
-* Mozilla Firefox v24 and above
+* Google Chrome v42 and above
+* Mozilla Firefox v38 and above
 * Apple Safari v7 and above
 
 
@@ -75,6 +77,8 @@ The [aXe API](doc/API.md) package consists of:
 
 
 ## Contributing
+
+Read the [documentation on the architecture](./doc/developer-guide.md)
 
 Read the [documentation on contributing](CONTRIBUTING.md)
 

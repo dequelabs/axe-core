@@ -9,9 +9,9 @@
     "section508a"
   ],
   "metadata": {
-    "helpUrl": "https://dequeuniversity.com/courses/html-css/images/image-maps",
-    "help": "Active <area> elements need alternate text",
-    "description": "Checks the <area> elements of image maps to ensure that they have an alternative text"
+    "description": "Ensures <area> elements of image maps have alternate text",
+    "help": "Active <area> elements must have alternate text",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/area-alt"
   },
   "all": [],
   "any": [

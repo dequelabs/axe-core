@@ -6,9 +6,9 @@
     "wcag312"
   ],
   "metadata": {
-    "description": "Ensures that when the 'lang' attribute is used, it has a valid value",
-    "helpUrl": "https://dequeuniversity.com/courses/html-css/structure-and-semantics/language#id35__language_codes",
-    "help": "lang attribute must have a valid value"
+    "description": "Ensures lang attributes have valid values",
+    "help": "lang attribute must have a valid value",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/valid-lang"
   },
   "all": [],
   "any": [],

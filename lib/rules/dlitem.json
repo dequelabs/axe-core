@@ -1,14 +1,14 @@
 {
   "id": "dlitem",
-  "selector": "dd, dt",
+  "selector": "dd:not([role]), dt:not([role])",
   "tags": [
     "wcag2a",
     "wcag131"
   ],
   "metadata": {
-    "helpUrl": "https://dequeuniversity.com/issues/dlitem",
-    "description": "Ensures that all <dd> and <dt> elements have a <dl> as a parent",
-    "help": "<dd> and <dt> elements must be contained in a <dl>"
+    "description": "Ensures <dt> and <dd> elements are contained by a <dl>",
+    "help": "<dt> and <dd> elements must be contained by a <dl>",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/dlitem"
   },
   "all": [],
   "any": [

@@ -6,9 +6,9 @@
     "wcag131"
   ],
   "metadata": {
-    "description": "Ensures that radio button groups are part of a group structure",
-    "helpUrl": "https://dequeuniversity.com/courses/html-css/forms/form-labels#id84_labels_for_radio_buttons",
-    "help": "Radio inputs with the same name must be part of a group"
+    "description": "Ensures related <input type=\"radio\"> elements have a group and that the group designation is consistent",
+    "help": "Radio inputs with the same name attribute value must be part of a group",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/radiogroup"
   },
   "all": [],
   "any": [
