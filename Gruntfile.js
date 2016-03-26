@@ -3,7 +3,7 @@ var testConfig = require('./build/test/config');
 module.exports = function (grunt) {
 	'use strict';
 
-	grunt.loadNpmTasks("grunt-browserify");
+	grunt.loadNpmTasks('grunt-browserify');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
@@ -17,16 +17,16 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		clean: ['dist', 'tmp'],
-		babelify: {
+		browserify: {
 			dist: {
 				options: {
 					transform: [
-						["babelify"]
+						['babelify']
 					]
 				},
 				files: {
-					"./dist/axe.js": [
-						"./dist/axe.js"
+					'./dist/axe.js': [
+						'./dist/axe.js'
 					]
 				}
 			},
