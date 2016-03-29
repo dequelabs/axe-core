@@ -316,8 +316,8 @@ describe('Context', function() {
 
 		});
 
-		it('should default empty-object include to document', function () {
-			var result = new Context({ include: {}, exclude: {} });
+		it('should default empty include to document', function () {
+			var result = new Context({ include: [], exclude: [] });
 			assert.lengthOf(result.include, 1);
 			assert.equal(result.include[0], document);
 		});
