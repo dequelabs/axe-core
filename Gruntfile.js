@@ -3,7 +3,6 @@ var testConfig = require('./build/test/config');
 module.exports = function (grunt) {
 	'use strict';
 
-	// grunt.loadNpmTasks('grunt-browserify');
 	grunt.loadNpmTasks('grunt-babel');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-concat');
@@ -18,16 +17,13 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		clean: ['dist', 'tmp'],
-	    babel: {
-	    	options: {
-	    		// sourceMap: true
-	    	},
-	        dist: {
-	            files: {
-	                './axe.es2016.js': './axe.js'
-	            }
-	        }
-	    },
+		babel: {
+			dist: {
+				files: {
+					'./axe.es2016.js': './axe.js'
+				}
+			}
+		},
 		'update-help': {
 			options: {
 				version: '<%=pkg.version%>'
@@ -233,4 +229,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('test-browser', ['build',  'testconfig', 'fixture', 'connect',
 		'test-webdriver', 'jshint']);
+
+
+	grunt.registerTask('dev', ['build', 'testconfig', 'connect', 'watch']);
 };
