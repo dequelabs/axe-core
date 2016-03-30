@@ -37,7 +37,7 @@
     "bdd",
     "aXe"
   ],
-  "main": "index.js",
+  "main": "axe.min.js",
   "dependencies": {},
   "scripts": {
     "build": "grunt",

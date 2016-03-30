@@ -1,16 +1,16 @@
 {
   "id": "video-description",
   "selector": "video",
+  "excludeHidden": false,
   "tags": [
     "wcag2aa",
     "wcag125",
     "section508",
-    "section508a"
+    "section508b"
   ],
   "metadata": {
     "description": "Ensures <video> elements have audio descriptions",
-    "help": "<video> elements must have an audio description track",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/video-description"
+    "help": "<video> elements must have an audio description track"
   },
   "all": [],
   "any": [],

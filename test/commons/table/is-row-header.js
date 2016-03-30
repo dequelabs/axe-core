@@ -17,7 +17,7 @@ describe('table.isRowHeader', function () {
 
 		var target = $id('target');
 
-		assert.isTrue(commons.table.isRowHeader(target));
+		assert.isTrue(axe.commons.table.isRowHeader(target));
 	});
 
 	it('should work with scope=row', function () {
@@ -27,7 +27,7 @@ describe('table.isRowHeader', function () {
 
 		var target = $id('target');
 
-		assert.isTrue(commons.table.isRowHeader(target));
+		assert.isTrue(axe.commons.table.isRowHeader(target));
 	});
 
 	it('should work with scope=col', function () {
@@ -38,7 +38,7 @@ describe('table.isRowHeader', function () {
 
 		var target = $id('target');
 
-		assert.isFalse(commons.table.isRowHeader(target));
+		assert.isFalse(axe.commons.table.isRowHeader(target));
 	});
 
 	it('should work with scope=auto on TD', function () {
@@ -48,7 +48,7 @@ describe('table.isRowHeader', function () {
 
 		var target = $id('target');
 
-		assert.isFalse(commons.table.isRowHeader(target));
+		assert.isFalse(axe.commons.table.isRowHeader(target));
 	});
 
 	it('should work with scope=row on TD', function () {
@@ -58,7 +58,7 @@ describe('table.isRowHeader', function () {
 
 		var target = $id('target');
 
-		assert.isTrue(commons.table.isRowHeader(target));
+		assert.isTrue(axe.commons.table.isRowHeader(target));
 	});
 
 	it('should work with scope=auto with data cells in the same column', function () {
@@ -69,7 +69,7 @@ describe('table.isRowHeader', function () {
 
 		var target = $id('target');
 
-		assert.isFalse(commons.table.isRowHeader(target));
+		assert.isFalse(axe.commons.table.isRowHeader(target));
 	});
 
 });

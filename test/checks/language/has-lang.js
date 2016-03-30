@@ -28,4 +28,12 @@ describe('has-lang', function () {
 		assert.isFalse(checks['has-lang'].evaluate(node));
 	});
 
+	it('should return false if lang is left empty', function () {
+		var node = document.createElement('div');
+		node.setAttribute('lang', '');
+		fixture.appendChild(node);
+
+		assert.isFalse(checks['has-lang'].evaluate(node));
+	});
+
 });
