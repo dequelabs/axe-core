@@ -5,3 +5,4 @@ test/*/index.html
 test/integration/*/index.html
 axe.js
 axe.min.js
+axe.es2016.js

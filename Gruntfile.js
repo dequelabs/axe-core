@@ -3,7 +3,8 @@ var testConfig = require('./build/test/config');
 module.exports = function (grunt) {
 	'use strict';
 
-	grunt.loadNpmTasks('grunt-browserify');
+	// grunt.loadNpmTasks('grunt-browserify');
+	grunt.loadNpmTasks('grunt-babel');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
@@ -17,20 +18,16 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		clean: ['dist', 'tmp'],
-		browserify: {
-			dist: {
-				options: {
-					transform: [
-						['babelify']
-					]
-				},
-				files: {
-					'./axe.js': [
-						'./axe.js'
-					]
-				}
-			},
-		},
+	    babel: {
+	    	options: {
+	    		// sourceMap: true
+	    	},
+	        dist: {
+	            files: {
+	                './axe.es2016.js': './axe.js'
+	            }
+	        }
+	    },
 		'update-help': {
 			options: {
 				version: '<%=pkg.version%>'
@@ -51,7 +48,7 @@ module.exports = function (grunt) {
 					'<%= configure.rules.dest.auto %>',
 					'lib/outro.stub'
 				],
-				dest: 'axe.js',
+				dest: 'axe.es2016.js',
 				options: {
 					process: true
 				}
@@ -125,8 +122,8 @@ module.exports = function (grunt) {
 			},
 			lib: {
 				files: [{
-					src: ['<%= concat.engine.dest %>'],
-					dest: 'axe.min.js'
+					src: ['./axe.js'],
+					dest: './axe.min.js'
 				}],
 				options: {
 					preserveComments: 'some',
@@ -229,7 +226,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build']);
 
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
-		'concat:engine', 'browserify', 'uglify']);
+		'concat:engine', 'babel', 'uglify']);
 
 	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
