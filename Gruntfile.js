@@ -3,6 +3,7 @@ var testConfig = require('./build/test/config');
 module.exports = function (grunt) {
 	'use strict';
 
+	grunt.loadNpmTasks('grunt-browserify');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
@@ -15,7 +16,21 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		clean: ['tmp'],
+		clean: ['dist', 'tmp'],
+		browserify: {
+			dist: {
+				options: {
+					transform: [
+						['babelify']
+					]
+				},
+				files: {
+					'./axe.js': [
+						'./axe.js'
+					]
+				}
+			},
+		},
 		'update-help': {
 			options: {
 				version: '<%=pkg.version%>'
@@ -214,9 +229,9 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build']);
 
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
-		'concat:engine', 'uglify']);
+		'concat:engine', 'browserify', 'uglify']);
 
-	grunt.registerTask('test', ['build',  'testconfig', 'fixture', 'connect',
+	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
 
 	grunt.registerTask('test-browser', ['build',  'testconfig', 'fixture', 'connect',
