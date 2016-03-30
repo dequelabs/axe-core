@@ -64,12 +64,13 @@ describe('cleanupPlugins', function () {
       axe._load({});
       var orig = axe.utils.sendCommandToFrame;
       var frame = document.querySelector('iframe');
-      axe.utils.sendCommandToFrame = function (node, opts) {
+      axe.utils.sendCommandToFrame = function (node, opts, resolve) {
         assert.equal(node, frame);
         assert.deepEqual(opts, {
           command: 'cleanup-plugin'
         });
         axe.utils.sendCommandToFrame = orig;
+        resolve();
         done();
       };
       cleanupPlugins(function () {}, assertNotCalled);

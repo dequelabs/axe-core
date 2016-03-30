@@ -1,6 +1,7 @@
 {
   "id": "marquee",
   "selector": "marquee",
+  "excludeHidden": false,
   "tags": [
     "wcag2a",
     "wcag222",
@@ -14,6 +15,6 @@
   "all": [],
   "any": [],
   "none": [
-    "exists"
+    "is-on-screen"
   ]
 }
