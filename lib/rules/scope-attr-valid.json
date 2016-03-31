@@ -1,7 +1,7 @@
 {
   "id": "scope-attr-valid",
   "selector": "td[scope], th[scope]",
-  "enabled": false,
+  "enabled": true,
   "tags": [
     "best-practice"
   ],
