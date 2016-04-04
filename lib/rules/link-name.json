@@ -6,7 +6,7 @@
     "wcag111",
     "wcag412",
     "section508",
-    "section508a"
+    "section508.22.a"
   ],
   "metadata": {
     "description": "Ensures links have discernible text",
