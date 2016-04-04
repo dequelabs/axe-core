@@ -15,10 +15,6 @@
 | bypass | Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content | wcag2a, wcag241, section508, section508.22.o |
 | checkboxgroup | Ensures related &lt;input type=&quot;checkbox&quot;&gt; elements have a group and that that group designation is consistent | best-practice |
 | color-contrast | Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds | wcag2aa, wcag143 |
-<<<<<<< HEAD
-=======
-| data-table | Ensures data tables are marked up semantically and have the correct header structure | wcag2a, wcag131, section508, section508.22.g |
->>>>>>> master
 | definition-list | Ensures &lt;dl&gt; elements are structured correctly | wcag2a, wcag131 |
 | dlitem | Ensures &lt;dt&gt; and &lt;dd&gt; elements are contained by a &lt;dl&gt; | wcag2a, wcag131 |
 | document-title | Ensures each HTML document contains a non-empty &lt;title&gt; element | wcag2a, wcag242 |
@@ -45,13 +41,8 @@
 | object-alt | Ensures &lt;object&gt; elements have alternate text | wcag2a, wcag111, section508, section508.22.a |
 | radiogroup | Ensures related &lt;input type=&quot;radio&quot;&gt; elements have a group and that the group designation is consistent | best-practice |
 | region | Ensures all content is contained within a landmark region | best-practice |
-<<<<<<< HEAD
 | scope-attr-valid | Ensures the scope attribute is used correctly on tables | best-practice |
-| server-side-image-map | Ensures that server-side image maps are not used | wcag2a, wcag211, section508, section508f |
-=======
-| scope | Ensures the scope attribute is used correctly on tables | best-practice |
 | server-side-image-map | Ensures that server-side image maps are not used | wcag2a, wcag211, section508, section508.22.f |
->>>>>>> master
 | skip-link | Ensures the first link on the page is a skip link | best-practice |
 | tabindex | Ensures tabindex attribute values are not greater than 0 | best-practice |
 | table-duplicate-name | Ensure that tables do not have the same summary and caption | best-practice |
