@@ -6,7 +6,7 @@
     "wcag2a",
     "wcag122",
     "section508",
-    "section508a"
+    "section508.22.a"
   ],
   "metadata": {
     "description": "Ensures <audio> elements have captions",

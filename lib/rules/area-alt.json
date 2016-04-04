@@ -6,7 +6,7 @@
     "wcag2a",
     "wcag111",
     "section508",
-    "section508a"
+    "section508.22.a"
   ],
   "metadata": {
     "description": "Ensures <area> elements of image maps have alternate text",
