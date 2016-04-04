@@ -4,9 +4,7 @@
   "excludeHidden": false,
   "tags": [
     "wcag2a",
-    "wcag222",
-    "section508",
-    "section508j"
+    "wcag222"
   ],
   "metadata": {
     "description": "Ensures <marquee> elements are not used",
