@@ -5,7 +5,7 @@
     "wcag2a",
     "wcag241",
     "section508",
-    "section508i"
+    "section508.22.i"
   ],
   "metadata": {
     "description": "Ensures <iframe> and <frame> elements contain a unique and non-empty title attribute",

@@ -6,7 +6,7 @@
     "wcag2aa",
     "wcag125",
     "section508",
-    "section508b"
+    "section508.22.b"
   ],
   "metadata": {
     "description": "Ensures <video> elements have audio descriptions",

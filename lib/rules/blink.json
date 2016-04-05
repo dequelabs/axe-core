@@ -6,7 +6,7 @@
     "wcag2a",
     "wcag222",
     "section508",
-    "section508j"
+    "section508.22.j"
   ],
   "metadata": {
     "description": "Ensures <blink> elements are not used",
