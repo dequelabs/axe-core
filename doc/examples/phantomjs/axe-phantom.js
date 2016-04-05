@@ -24,8 +24,9 @@ page.open(args[1], function (status) {
 	});
 	page.switchToMainFrame();
 	page.evaluateAsync(function () {
-		/*global window, axe */
-		axe.a11yCheck(window.document, null, function (results) {
+		/*global axe */
+		axe.run(function (err, results) {
+			if (err) throw err;
 			window.callPhantom(results);
 		});
 	});
