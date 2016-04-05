@@ -20,7 +20,7 @@ module.exports = function (grunt) {
 		babel: {
 			dist: {
 				files: {
-					'./axe.es2016.js': './axe.js'
+					'./axe.js': './axe.es2016.js'
 				}
 			}
 		},
