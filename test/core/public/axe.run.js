@@ -93,7 +93,7 @@ describe('axe.run', function () {
 			reject('Ninja rope!');
 		};
 
-		axe.run({HHG: 'hallelujah'}, function (err) {
+		axe.run({ reporter: 'raw' }, function (err) {
 			assert.equal(err, 'Ninja rope!');
 			done();
 		});
@@ -105,7 +105,7 @@ describe('axe.run', function () {
 			resolve('MB Bomb');
 		};
 
-		axe.run({HHG: 'hallelujah'}, function (err, result) {
+		axe.run({ reporter: 'raw' }, function (err, result) {
 			assert.equal(err, null);
 			assert.equal(result, 'MB Bomb');
 			done();
@@ -119,7 +119,7 @@ describe('axe.run', function () {
 			resolve('World party');
 		};
 
-		var p = axe.run();
+		var p = axe.run({ reporter: 'raw' });
 		p.then(function (result) {
 			assert.equal(result, 'World party');
 			done();
@@ -135,7 +135,7 @@ describe('axe.run', function () {
 			reject('I surrender!');
 		};
 
-		var p = axe.run();
+		var p = axe.run({ reporter: 'raw' });
 		p.then(noop)
 		.catch(function (err) {
 			assert.equal(err, 'I surrender!');

@@ -4,7 +4,8 @@ describe('html-has-lang test', function () {
 	var results;
 	before(function (done) {
 		window.addEventListener('load', function () {
-			axe.a11yCheck(document, { runOnly: { type: 'rule', values: ['html-has-lang'] } }, function (r) {
+			axe.run({ runOnly: { type: 'rule', values: ['html-has-lang'] } }, function (err, r) {
+				if (err) throw err;
 				results = r;
 				done();
 			});

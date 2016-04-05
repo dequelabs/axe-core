@@ -4,7 +4,8 @@ describe('document-title test', function () {
 	var results;
 	before(function (done) {
 		window.addEventListener('load', function () {
-			axe.a11yCheck(document, { runOnly: { type: 'rule', values: ['document-title'] } }, function (r) {
+			axe.run({ runOnly: { type: 'rule', values: ['document-title'] } }, function (err, r) {
+				if (err) throw err;
 				results = r;
 				done();
 			});

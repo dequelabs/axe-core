@@ -2,7 +2,8 @@ describe('scope html4 test', function () {
 	'use strict';
 	var results;
 	before(function (done) {
-		axe.a11yCheck('#fixture', { runOnly: { type: 'rule', values: ['scope'] } }, function (r) {
+		axe.run('#fixture', { runOnly: { type: 'rule', values: ['scope'] } }, function (err, r) {
+			if (err) throw err;
 			results = r;
 			done();
 		});

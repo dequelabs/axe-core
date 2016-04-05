@@ -2,7 +2,7 @@ describe('bypass aria header test ' + window.location.pathname, function () {
 	'use strict';
 	var results;
 	before(function (done) {
-		axe.a11yCheck(document, { runOnly: { type: 'rule', values: ['bypass'] } }, function (r) {
+		axe.run({ runOnly: { type: 'rule', values: ['bypass'] } }, function (r) {
 			results = r;
 			done();
 		});

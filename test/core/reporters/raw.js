@@ -3,15 +3,16 @@ describe('reporters - raw', function () {
 
 	it('should pass through object', function () {
 		axe._load({});
-		var orig = window.runRules;
-		window.runRules = function (_, __, cb) {
+		var orig = axe._runRules;
+		axe._runRules = function (_, __, cb) {
 			cb('foo');
 		};
 
-		axe.a11yCheck(document, { reporter: 'raw'}, function (r) {
-			assert.equal(r, 'foo');
+		axe.run({ reporter: 'raw'}, function (err, results) {
+			if (err) throw err;
+			assert.equal(results, 'foo');
 		});
 
-		window.runRules = orig;
+		axe._runRules = orig;
 	});
 });

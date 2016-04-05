@@ -94,7 +94,8 @@
 					before(function (done) {
 						fixture.innerHTML = test.content;
 						waitForFrames(fixture, function () {
-							axe.a11yCheck(fixture, { runOnly: { type: 'rule', values: [ruleId]}}, function (r) {
+							axe.run(fixture, { runOnly: { type: 'rule', values: [ruleId]}}, function (err, r) {
+								if (err) throw err;
 								results = flattenResult(r);
 								done();
 							});

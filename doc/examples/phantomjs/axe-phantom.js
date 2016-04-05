@@ -1,4 +1,4 @@
-/*global phantom */
+/*global window, phantom */
 var PATH_TO_AXE = 'node_modules/axe-core/axe.min.js';
 
 var args = require('system').args;
@@ -26,7 +26,9 @@ page.open(args[1], function (status) {
 	page.evaluateAsync(function () {
 		/*global axe */
 		axe.run(function (err, results) {
-			if (err) throw err;
+			if (err)  {
+				throw err;
+			}
 			window.callPhantom(results);
 		});
 	});

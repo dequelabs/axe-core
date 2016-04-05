@@ -309,7 +309,8 @@ describe('runRules', function () {
 			length: 2
 		};
 
-		axe.a11yCheck($test, function (results) {
+		axe.run($test, function (results, err) {
+			if (err) throw err;
 			assert.lengthOf(results.violations, 1);
 			assert.lengthOf(results.violations[0].nodes, 4);
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);
@@ -338,7 +339,8 @@ describe('runRules', function () {
 		fixture.innerHTML = '<div class="foo" id="t1"><span></span></div><div class="foo" id="t2"><em></em></div>';
 
 		var test = fixture.querySelectorAll('.foo');
-		axe.a11yCheck(test, function (results) {
+		axe.run(test, function (err, results) {
+			if (err) throw err;
 			assert.lengthOf(results.violations, 1);
 			assert.lengthOf(results.violations[0].nodes, 4);
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);
