@@ -90,7 +90,8 @@ describe('axe.configure', function() {
 			rules: [{
 				id: 'bob',
 				selector: 'pass',
-			}]
+			}],
+			branding: {}
 		});
 		assert.lengthOf(axe._audit.rules, 1);
 		assert.equal(axe._audit.data.rules.bob.helpUrl,
