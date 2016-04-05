@@ -25,7 +25,7 @@
 	"forin": true,
 	"immed": true,
 	"indent": 1,
-	"latedef": true,
+	"latedef": false,
 	"newcap": true,
 	"noarg": true,
 	"noempty": true,
@@ -37,7 +37,7 @@
 	"regexp": true,
 	"undef": true,
 	"unused": true,
-	"strict": true,
+	"strict": false,
 	"trailing": true,
 
 	"maxparams": 8,
