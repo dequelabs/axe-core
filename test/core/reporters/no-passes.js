@@ -64,7 +64,6 @@ describe('reporters - no-passes', function() {
 		}];
 	beforeEach(function() {
 		axe._load({
-			reporter: 'no-passes',
 			messages: {},
 			rules: [],
 			data: {}
@@ -75,13 +74,15 @@ describe('reporters - no-passes', function() {
 		};
 	});
 
+	var noPassOpt = { reporter: 'no-passes' };
+
 	afterEach(function() {
 		axe._audit = null;
 		axe._runRules = orig;
 	});
 
 	it('should merge the runRules results into violations and  exclude passes', function(done) {
-		axe.run(function (err, results) {
+		axe.run(noPassOpt, function (err, results) {
 			if (err) throw err;
 			assert.isObject(results);
 			assert.isArray(results.violations);
@@ -92,28 +93,28 @@ describe('reporters - no-passes', function() {
 		});
 	});
 	it('should add the rule id to the rule result', function(done) {
-		axe.run(function (err, results) {
+		axe.run(noPassOpt, function (err, results) {
 			if (err) throw err;
 			assert.equal(results.violations[0].id, 'idkStuff');
 			done();
 		});
 	});
 	it('should add tags to the rule result', function(done) {
-		axe.run(function (err, results) {
+		axe.run(noPassOpt, function (err, results) {
 			if (err) throw err;
 			assert.deepEqual(results.violations[0].tags, ['tag2']);
 			done();
 		});
 	});
 	it('should add the rule help to the rule result', function(done) {
-		axe.run(function (err, results) {
+		axe.run(noPassOpt, function (err, results) {
 			if (err) throw err;
 			assert.isNull(results.violations[0].helpUrl);
 			done();
 		});
 	});
 	it('should add the html to the node data', function(done) {
-		axe.run(function (err, results) {
+		axe.run(noPassOpt, function (err, results) {
 			if (err) throw err;
 			assert.ok(results.violations[0].nodes);
 			assert.equal(results.violations[0].nodes.length, 1);
@@ -122,7 +123,7 @@ describe('reporters - no-passes', function() {
 		});
 	});
 	it('should add the target selector array to the node data', function(done) {
-		axe.run(function (err, results) {
+		axe.run(noPassOpt, function (err, results) {
 			if (err) throw err;
 			assert.ok(results.violations[0].nodes);
 			assert.equal(results.violations[0].nodes.length, 1);
@@ -131,14 +132,14 @@ describe('reporters - no-passes', function() {
 		});
 	});
 	it('should add the description to the rule result', function(done) {
-		axe.run(function (err, results) {
+		axe.run(noPassOpt, function (err, results) {
 			if (err) throw err;
 			assert.equal(results.violations[0].description, 'something more nifty');
 			done();
 		});
 	});
 	it('should add the impact to the rule result', function(done) {
-		axe.run(function (err, results) {
+		axe.run(noPassOpt, function (err, results) {
 			if (err) throw err;
 			assert.equal(results.violations[0].impact, 'cats');
 			assert.equal(results.violations[0].nodes[0].impact, 'cats');
@@ -146,14 +147,14 @@ describe('reporters - no-passes', function() {
 		});
 	});
 	it('should remove result', function(done) {
-		axe.run(function (err, results) {
+		axe.run(noPassOpt, function (err, results) {
 			if (err) throw err;
 			assert.isUndefined(results.violations[0].nodes[0].all[0].result);
 			done();
 		});
 	});
 	it('should map relatedNodes', function(done) {
-		axe.run(function (err, results) {
+		axe.run(noPassOpt, function (err, results) {
 			if (err) throw err;
 			assert.lengthOf(results.violations[0].nodes[0].all[0].relatedNodes, 1);
 			assert.equal(results.violations[0].nodes[0].all[0].relatedNodes[0].target, 'joe');
@@ -162,14 +163,14 @@ describe('reporters - no-passes', function() {
 		});
 	});
 	it('should include URL', function(done) {
-		axe.run(function (err, results) {
+		axe.run(noPassOpt, function (err, results) {
 			if (err) throw err;
 			assert.equal(results.url, window.location.href);
 			done();
 		});
 	});
 	it('should include timestamp', function(done) {
-		axe.run(function (err, results) {
+		axe.run(noPassOpt, function (err, results) {
 			if (err) throw err;
 			var timestamp = new Date(results.timestamp);
 			assert.instanceOf(timestamp, Date);

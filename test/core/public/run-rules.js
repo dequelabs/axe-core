@@ -4,6 +4,16 @@ describe('axe.a11yCheck', function () {
 
 	describe('reporter', function () {
 
+		var origReporters;
+		beforeEach(function () {
+			axe._load({});
+			origReporters = window.reporters;
+		});
+
+		afterEach(function () {
+			window.reporters = origReporters;
+		});
+
 		it('should throw if no audit is configured', function () {
 			axe._audit = null;
 
@@ -13,72 +23,49 @@ describe('axe.a11yCheck', function () {
 		});
 
 		it('should allow for option-less invocation', function (done) {
-
-			axe._load({ reporter: function (r, c) {
-				c(r);
-			}});
 			axe.a11yCheck(document, function (result) {
-				assert.isArray(result);
-				assert.lengthOf(result, 0);
+				assert.isObject(result);
+				done();
+			});
+		});
+
+		it('should use v2 reporter by default', function (done) {
+			var usedReporter = false;
+			window.reporters = {
+				'v2': function () {
+					usedReporter = true;
+					return true;
+				}
+			};
+			axe.a11yCheck(document, {}, function () {
+				assert.ok(usedReporter);
 				done();
 			});
 		});
 
 		it('should use specified reporter via options - anon function', function (done) {
-
-			axe._load({
-				reporter: function () {
+			window.reporters = {
+				'v2': function () {
 					assert.fail('should not be called');
 				}
-			});
+			};
+
 			axe.a11yCheck(document, { reporter: function (result) {
 				assert.isArray(result);
-				assert.lengthOf(result, 0);
 				done();
 			}});
 		});
 
 		it('should use specified reporter via options by name', function (done) {
+			window.reporters = {};
 
-			var orig = window.reporters;
-			axe._load({
-				reporter: function () {
-					assert.fail('should not be called');
-				}
-			});
-			axe.reporter('foo', function (result) {
+			axe.addReporter('foo', function (result) {
 				assert.isArray(result);
-				assert.lengthOf(result, 0);
-				window.reporters = orig;
 				done();
 			});
 			axe.a11yCheck(document, { reporter: 'foo' });
 		});
 
-		it('should check configured reporter', function (done) {
-
-			axe._load({
-				reporter: function (result) {
-					assert.isArray(result);
-					assert.lengthOf(result, 0);
-					done();
-				}
-			});
-			axe.a11yCheck(document, null);
-		});
-
-		it('fallback to default configured reporter', function (done) {
-			var orig = window.defaultReporter;
-			window.defaultReporter = function (result) {
-				assert.isArray(result);
-				assert.lengthOf(result, 0);
-				done();
-			};
-
-			axe._load({});
-			axe.a11yCheck(document, null);
-			window.defaultReporter = orig;
-		});
 	});
 });
 describe('runRules', function () {
