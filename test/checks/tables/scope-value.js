@@ -7,27 +7,27 @@ describe('scope-value', function () {
 		fixture.innerHTML = '';
 	});
 
-	it('should return false if scope is "col"', function () {
+	it('should return true if scope is "col"', function () {
 		fixture.innerHTML = '<table><tr><td scope="col"></td></tr></table>';
 		var node = fixture.querySelector('td');
 
-		assert.isFalse(checks['scope-value'].evaluate(node));
+		assert.isTrue(checks['scope-value'].evaluate(node));
 
 	});
 
-	it('should return false if scope is "row"', function () {
+	it('should return true if scope is "row"', function () {
 		fixture.innerHTML = '<table><tr><td scope="row"></td></tr></table>';
 		var node = fixture.querySelector('td');
 
-		assert.isFalse(checks['scope-value'].evaluate(node));
+		assert.isTrue(checks['scope-value'].evaluate(node));
 
 	});
 
-	it('should return true otherwise', function () {
+	it('should return false otherwise', function () {
 		fixture.innerHTML = '<table><tr><td scope="hahahahanothx"></td></tr></table>';
 		var node = fixture.querySelector('td');
 
-		assert.isTrue(checks['scope-value'].evaluate(node));
+		assert.isFalse(checks['scope-value'].evaluate(node));
 
 	});
 
