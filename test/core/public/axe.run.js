@@ -42,6 +42,25 @@ describe('axe.run', function () {
 		});
 	});
 
+	it('sets v1 as the default reporter if no reporter is specified', function (done) {
+		axe._runRules = function (ctxt, opt) {
+			assert.equal(opt.reporter, 'v1');
+			axe._runRules = origRunRules;
+			done();
+		};
+
+		axe.run(document, noop);
+	});
+
+	it('does not override if another reporter is set', function (done) {
+		axe._runRules = function (ctxt, opt) {
+			assert.equal(opt.reporter, 'raw');
+			axe._runRules = origRunRules;
+			done();
+		};
+		axe.run(document, {reporter: 'raw'}, noop);
+	});
+
 	it('uses document as content if it is not specified', function (done) {
 		axe._runRules = function (ctxt) {
 			assert.equal(ctxt, document);
@@ -52,9 +71,9 @@ describe('axe.run', function () {
 		axe.run({ someOption: true }, noop);
 	});
 
-	it('uses an empty object as options if it is not specified', function (done) {
+	it('uses an object as options if it is not specified', function (done) {
 		axe._runRules = function (ctxt, opt) {
-			assert.deepEqual({}, opt);
+			assert.isObject(opt);
 			axe._runRules = origRunRules;
 			done();
 		};
@@ -73,7 +92,7 @@ describe('axe.run', function () {
 
 	it('treats objects with neither inlude or exclude as the option object', function (done) {
 		axe._runRules = function (ctxt, opt) {
-			assert.deepEqual(opt, {HHG: 'hallelujah'});
+			assert.deepEqual(opt.HHG, 'hallelujah');
 			axe._runRules = origRunRules;
 			done();
 		};
