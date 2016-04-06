@@ -2,7 +2,8 @@ describe('bypass aria header test ' + window.location.pathname, function () {
 	'use strict';
 	var results;
 	before(function (done) {
-		axe.run({ runOnly: { type: 'rule', values: ['bypass'] } }, function (r) {
+		axe.run({ runOnly: { type: 'rule', values: ['bypass'] } }, function (err, r) {
+			if (err) throw err;
 			results = r;
 			done();
 		});
