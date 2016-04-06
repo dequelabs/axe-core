@@ -10,6 +10,12 @@
 	1. [API Name: axe.getRules](#api-name-axegetrules)
 	1. [API Name: axe.configure](#api-name-axeconfigure)
 	1. [API Name: axe.run](#api-name-axerun)
+		1. [Parameters axe.run](#parameters-axerun)
+			1. [Context Parameter](#context-parameter)
+			2. [Options Parameter](#options-parameter)
+			3. [Callback Parameter](#callback-parameter)
+		1. [Return Promise](#return-promise)
+		1. [Error result](#error-result)
 		1. [Results Object](#results-object)
 	1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
 1. [Section 3: Example Reference](#section-3-example-reference)
@@ -167,59 +173,13 @@ Runs a number of rules against the provided HTML page and returns the resulting 
 axe.run(context, options, callback);
 ```
 
-#### Parameters
+#### Parameters axe.run
 
-* `context`: (optional) Defines the scope of the analysis - the part of the DOM that you would like to analyze. This will typically be the `document` or a specific selector such as class name, ID, selector, etc.
-* `options`: (optional) Set of options passed into rules or checks, temporarily modifying them. This contrasts with `axe.configure`, which is more permanent. [See below for more information](#axerun-parameters)
-* `callback`: (optional) The callback function which receives either null or an [error result](#error-result) as the first parameter, and the [results object](#results-object) when analysis is completed successfully, or undefined if it did not.
+* [`context`](#context-parameter): (optional) Defines the scope of the analysis - the part of the DOM that you would like to analyze. This will typically be the `document` or a specific selector such as class name, ID, selector, etc.
+* [`options`](#options-parameter): (optional) Set of options passed into rules or checks, temporarily modifying them. This contrasts with `axe.configure`, which is more permanent. [See below for more information](#axerun-parameters)
+* [`callback`](#callback-parameter): (optional) The callback function which receives either null or an [error result](#error-result) as the first parameter, and the [results object](#results-object) when analysis is completed successfully, or undefined if it did not.
 
-#### Return Promise
-
-If the callback was not defined, aXe will return a Promise instead. Axe does not polyfill a Promise library however. So on systems without support for Promises this feature is not available. If you are unsure if the systems you will need aXe on has Promise support we suggest you use the callback provided by axe.run instead.
-
-#### Error Result
-
-This will either be null or an object which is an instance of Error. If you are consistently receiving errors, please report this issue on the [Github issues list of Axe](https://github.com/dequelabs/axe-core/issues).
-
-
-#### Results Object
-
-The callback function passed in as the third parameter of `axe.run` runs on the results object. This object has two components – a passes array and a violations array.  The passes array keeps track of all the passed tests, along with detailed information on each one. This leads to more efficient testing, especially when used in conjunction with manual testing, as the user can easily find out what tests have already been passed. Similarly, the violations array keeps track of all the failed tests, along with detailed information on each one.
-
-###### `url`
-
-The URL of the page that was tested.
-
-###### `timestamp`
-
-The date and time that analysis was completed.
-
-###### `passes` and `violations` array
-
-* `description` - Text string that describes what the rule does
-* `help` - Help text that describes the test that was performed
-* `helpUrl` - URL that provides more information about the specifics of the violation. Links to a page on the Deque University site.
-* `id` - Unique identifier for the rule; [see the list of rules](rule-descriptions.md)
-* `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the Rule failed or `null` if the check passed
-* `tags` - Array of tags that this rule is assigned. These tags can be used in the option structure to select which rules are run ([see `axe.allyCheck` parameters below for more information](#axerun-parameters)).
-* `nodes` - Array of all elements the Rule tested
-	* `html` - Snippet of HTML of the Element
-	* `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the test failed or `null` if the check passed
-	* `target` - Array of selectors that has each element correspond to one level of iframe or frame. If there is one iframe or frame, there should be two entries in `target`. If there are three iframe levels, there should be four entries in `target`.
-	* `any` - Array of checks that were made where at least one must have passed. Each entry in the array contains:
-		* `id` - Unique identifier for this check. Check ids may be the same as Rule ids
-		* `impact` - How serious this particular check is. Can be one of "minor", "moderate", "serious", or "critical". Each check that is part of a rule can have different impacts. The highest impact of all the checks that fail is reported for the rule
-		* `message` - Description of why this check passed or failed
-		* `data` - Additional information that is specific to the type of Check which is optional. For example, a color contrast check would include the foreground color, background color, contrast ratio, etc.
-		* `relatedNodes` - Optional array of information about other nodes that are related to this check. For example, a duplicate id check violation would list the other selectors that had this same duplicate id. Each entry in the array contains the following information:
-			* `target` - Array of selectors for the related node
-			* `html` - HTML source of the related node
-	* `all` - Array of checks that were made where all must have passed. Each entry in the array contains the same information as the 'any' array
-	* `none` - Array of checks that were made where all must have not passed. Each entry in the array contains the same information as the 'any' array
-
-#### axe.run Parameters
-
-##### A. Context Parameter
+##### Context Parameter
 
 The context object can be passed one of the following:
 
@@ -266,7 +226,7 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 	}
 	```
 
-##### B. Options Parameter
+##### Options Parameter
 
 The options parameter is flexible way to configure how `axe.run` operates. The different modes of operation are:
 
@@ -373,10 +333,54 @@ The options parameter is flexible way to configure how `axe.run` operates. The d
 
 	This example first includes all `wcag2a` and `wcag2aa` rules. All rules that are tagged as `experimental` are than removed from the list of rules to run.
 
-##### C. Callback Parameter
+##### Callback Parameter
 
 The callback parameter is a function that will be called when the asynchronous `axe.run` function completes. The callback function is passed two parameters. The first parameter will be an error thrown inside of aXe if axe.run could not complete. If axe completed correctly the first parameter will be null, and the second parameter will be the results object.
 
+
+#### Return Promise
+
+If the callback was not defined, aXe will return a Promise instead. Axe does not polyfill a Promise library however. So on systems without support for Promises this feature is not available. If you are unsure if the systems you will need aXe on has Promise support we suggest you use the callback provided by axe.run instead.
+
+#### Error Result
+
+This will either be null or an object which is an instance of Error. If you are consistently receiving errors, please report this issue on the [Github issues list of Axe](https://github.com/dequelabs/axe-core/issues).
+
+
+#### Results Object
+
+The callback function passed in as the third parameter of `axe.allyCheck` runs on the results object. This object has two components – a passes array and a violations array.  The passes array keeps track of all the passed tests, along with detailed information on each one. This leads to more efficient testing, especially when used in conjunction with manual testing, as the user can easily find out what tests have already been passed. Similarly, the violations array keeps track of all the failed tests, along with detailed information on each one.
+
+###### `url`
+
+The URL of the page that was tested.
+
+###### `timestamp`
+
+The date and time that analysis was completed.
+
+###### `passes` and `violations` array
+
+* `description` - Text string that describes what the rule does
+* `help` - Help text that describes the test that was performed
+* `helpUrl` - URL that provides more information about the specifics of the violation. Links to a page on the Deque University site.
+* `id` - Unique identifier for the rule; [see the list of rules](rule-descriptions.md)
+* `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the Rule failed or `null` if the check passed
+* `tags` - Array of tags that this rule is assigned. These tags can be used in the option structure to select which rules are run ([see `axe.allyCheck` parameters below for more information](#a11ycheck-parameters)).
+* `nodes` - Array of all elements the Rule tested
+	* `html` - Snippet of HTML of the Element
+	* `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the test failed or `null` if the check passed
+	* `target` - Array of selectors that has each element correspond to one level of iframe or frame. If there is one iframe or frame, there should be two entries in `target`. If there are three iframe levels, there should be four entries in `target`.
+	* `any` - Array of checks that were made where at least one must have passed. Each entry in the array contains:
+		* `id` - Unique identifier for this check. Check ids may be the same as Rule ids
+		* `impact` - How serious this particular check is. Can be one of "minor", "moderate", "serious", or "critical". Each check that is part of a rule can have different impacts. The highest impact of all the checks that fail is reported for the rule
+		* `message` - Description of why this check passed or failed
+		* `data` - Additional information that is specific to the type of Check which is optional. For example, a color contrast check would include the foreground color, background color, contrast ratio, etc.
+		* `relatedNodes` - Optional array of information about other nodes that are related to this check. For example, a duplicate id check violation would list the other selectors that had this same duplicate id. Each entry in the array contains the following information:
+			* `target` - Array of selectors for the related node
+			* `html` - HTML source of the related node
+	* `all` - Array of checks that were made where all must have passed. Each entry in the array contains the same information as the 'any' array
+	* `none` - Array of checks that were made where all must have not passed. Each entry in the array contains the same information as the 'any' array
 
 #### Example 2
 
