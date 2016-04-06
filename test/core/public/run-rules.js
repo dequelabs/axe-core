@@ -296,7 +296,7 @@ describe('runRules', function () {
 			length: 2
 		};
 
-		axe.run($test, function (results, err) {
+		axe.run($test, function (err, results) {
 			assert.isNull(err);
 			assert.lengthOf(results.violations, 1);
 			assert.lengthOf(results.violations[0].nodes, 4);
