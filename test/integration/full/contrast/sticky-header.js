@@ -4,7 +4,7 @@ describe('color-contrast sticky header test', function () {
 	var results;
 	before(function (done) {
 		axe.run({ runOnly: { type: 'rule', values: ['color-contrast'] } }, function (err, r) {
-			if (err) throw err;
+			assert.isNull(err);
 			results = r;
 			done();
 		});

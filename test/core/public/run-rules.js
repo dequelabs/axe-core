@@ -297,7 +297,7 @@ describe('runRules', function () {
 		};
 
 		axe.run($test, function (results, err) {
-			if (err) throw err;
+			assert.isNull(err);
 			assert.lengthOf(results.violations, 1);
 			assert.lengthOf(results.violations[0].nodes, 4);
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);
@@ -327,7 +327,7 @@ describe('runRules', function () {
 
 		var test = fixture.querySelectorAll('.foo');
 		axe.run(test, function (err, results) {
-			if (err) throw err;
+			assert.isNull(err);
 			assert.lengthOf(results.violations, 1);
 			assert.lengthOf(results.violations[0].nodes, 4);
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);

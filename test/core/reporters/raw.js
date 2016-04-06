@@ -9,7 +9,7 @@ describe('reporters - raw', function () {
 		};
 
 		axe.run({ reporter: 'raw'}, function (err, results) {
-			if (err) throw err;
+			assert.isNull(err);
 			assert.equal(results, 'foo');
 		});
 

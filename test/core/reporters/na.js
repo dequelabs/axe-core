@@ -91,7 +91,7 @@ describe('reporters - na', function() {
 
 	it('should merge the runRules results into violations, passes and notApplicable', function(done) {
 		axe.run(naOption, function (err, results) {
-			if (err) throw err;
+			assert.isNull(err);
 			assert.isObject(results);
 			assert.isArray(results.violations);
 			assert.lengthOf(results.violations, 1);
@@ -105,7 +105,7 @@ describe('reporters - na', function() {
 	});
 	it('should add the rule id to the rule result', function(done) {
 		axe.run(naOption, function (err, results) {
-			if (err) throw err;
+			assert.isNull(err);
 			assert.equal(results.violations[0].id, 'idkStuff');
 			assert.equal(results.passes[0].id, 'gimmeLabel');
 			assert.equal(results.notApplicable[0].id, 'noMatch');
@@ -114,7 +114,7 @@ describe('reporters - na', function() {
 	});
 	it('should add tags to the rule result', function(done) {
 		axe.run(naOption, function (err, results) {
-			if (err) throw err;
+			assert.isNull(err);
 			assert.deepEqual(results.violations[0].tags, ['tag2']);
 			assert.deepEqual(results.passes[0].tags, ['tag1']);
 			assert.deepEqual(results.notApplicable[0].tags, ['tag3']);
@@ -123,7 +123,7 @@ describe('reporters - na', function() {
 	});
 	it('should add the rule help to the rule result', function(done) {
 		axe.run(naOption, function (err, results) {
-			if (err) throw err;
+			assert.isNull(err);
 			assert.isNull(results.violations[0].helpUrl);
 			assert.equal(results.passes[0].helpUrl, 'things');
 			assert.equal(results.notApplicable[0].helpUrl, 'somewhere');
@@ -132,7 +132,7 @@ describe('reporters - na', function() {
 	});
 	it('should add the html to the node data', function(done) {
 		axe.run(naOption, function (err, results) {
-			if (err) throw err;
+			assert.isNull(err);
 			assert.ok(results.violations[0].nodes);
 			assert.equal(results.violations[0].nodes.length, 1);
 			assert.equal(results.violations[0].nodes[0].html, '<pillock>george bush</pillock>');
@@ -142,7 +142,7 @@ describe('reporters - na', function() {
 	});
 	it('should add the target selector array to the node data', function(done) {
 		axe.run(naOption, function (err, results) {
-			if (err) throw err;
+			assert.isNull(err);
 			assert.ok(results.violations[0].nodes);
 			assert.equal(results.violations[0].nodes.length, 1);
 			assert.deepEqual(results.violations[0].nodes[0].target, ['q', 'r', 'pillock']);
@@ -151,7 +151,7 @@ describe('reporters - na', function() {
 	});
 	it('should add the description to the rule result', function(done) {
 		axe.run(naOption, function (err, results) {
-			if (err) throw err;
+			assert.isNull(err);
 			assert.equal(results.violations[0].description, 'something more nifty');
 			assert.equal(results.passes[0].description, 'something nifty');
 			done();
@@ -159,7 +159,7 @@ describe('reporters - na', function() {
 	});
 	it('should add the impact to the rule result', function(done) {
 		axe.run(naOption, function (err, results) {
-			if (err) throw err;
+			assert.isNull(err);
 			assert.equal(results.violations[0].impact, 'cats');
 			assert.equal(results.violations[0].nodes[0].impact, 'cats');
 			assert.isNull(results.passes[0].impact);
@@ -169,7 +169,7 @@ describe('reporters - na', function() {
 	});
 	it('should remove result', function(done) {
 		axe.run(naOption, function (err, results) {
-			if (err) throw err;
+			assert.isNull(err);
 			assert.isUndefined(results.violations[0].nodes[0].all[0].result);
 			assert.isUndefined(results.passes[0].nodes[0].any[0].result);
 			done();
@@ -177,7 +177,7 @@ describe('reporters - na', function() {
 	});
 	it('should map relatedNodes', function(done) {
 		axe.run(naOption, function (err, results) {
-			if (err) throw err;
+			assert.isNull(err);
 			assert.lengthOf(results.violations[0].nodes[0].all[0].relatedNodes, 1);
 			assert.equal(results.violations[0].nodes[0].all[0].relatedNodes[0].target, 'joe');
 			assert.equal(results.violations[0].nodes[0].all[0].relatedNodes[0].html, 'bob');
@@ -190,14 +190,14 @@ describe('reporters - na', function() {
 	});
 	it('should include URL', function(done) {
 		axe.run(naOption, function (err, results) {
-			if (err) throw err;
+			assert.isNull(err);
 			assert.equal(results.url, window.location.href);
 			done();
 		});
 	});
 	it('should include timestamp', function(done) {
 		axe.run(naOption, function (err, results) {
-			if (err) throw err;
+			assert.isNull(err);
 			var timestamp = new Date(results.timestamp);
 			assert.instanceOf(timestamp, Date);
 			assert.closeTo(timestamp.getTime(), Date.now(), 50);

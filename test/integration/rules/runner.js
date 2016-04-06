@@ -98,7 +98,7 @@
 						fixture.innerHTML = test.content;
 						waitForFrames(fixture, function () {
 							axe.run(fixture, { runOnly: { type: 'rule', values: [ruleId]}}, function (err, r) {
-								if (err) throw err;
+								assert.isNull(err);
 								results = flattenResult(r);
 								done();
 							});

@@ -6,7 +6,7 @@ describe('bypass fail test', function () {
 			html = mocha.innerHTML;
 		mocha.innerHTML = '';
 		axe.run({ runOnly: { type: 'rule', values: ['bypass'] } }, function (err, r) {
-			if (err) throw err;
+			assert.isNull(err);
 			
 			results = r;
 			mocha.innerHTML = html;

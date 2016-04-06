@@ -5,7 +5,7 @@ describe('document-title test', function () {
 	before(function (done) {
 		window.addEventListener('load', function () {
 			axe.run({ runOnly: { type: 'rule', values: ['document-title'] } }, function (err, r) {
-				if (err) throw err;
+				assert.isNull(err);
 				results = r;
 				done();
 			});

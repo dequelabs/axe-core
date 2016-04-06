@@ -19,7 +19,7 @@
 
 	"bitwise": true,
 	"camelcase": true,
-	"curly": false,
+	"curly": true,
 	"eqeqeq": true,
 	"forin": true,
 	"immed": true,

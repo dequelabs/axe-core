@@ -3,7 +3,7 @@ describe('region pass test', function () {
 	var results;
 	before(function (done) {
 		axe.run({ runOnly: { type: 'rule', values: ['region'] } }, function (err, r) {
-			if (err) throw err;
+			assert.isNull(err);
 			results = r;
 			done();
 		});

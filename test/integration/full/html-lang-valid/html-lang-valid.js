@@ -5,7 +5,7 @@ describe('html-lang-valid test', function () {
 	before(function (done) {
 		window.addEventListener('load', function () {
 			axe.run({ runOnly: { type: 'rule', values: ['html-lang-valid'] } }, function (err, r) {
-				if (err) throw err;
+				assert.isNull(err);
 				results = r;
 				done();
 			});

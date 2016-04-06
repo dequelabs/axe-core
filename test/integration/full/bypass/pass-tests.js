@@ -3,7 +3,7 @@ describe('bypass aria header test ' + window.location.pathname, function () {
 	var results;
 	before(function (done) {
 		axe.run({ runOnly: { type: 'rule', values: ['bypass'] } }, function (err, r) {
-			if (err) throw err;
+			assert.isNull(err);
 			results = r;
 			done();
 		});

@@ -3,7 +3,7 @@ describe('skip link fail test', function () {
 	var results;
 	before(function (done) {
 		axe.run({ runOnly: { type: 'rule', values: ['skip-link'] } }, function (err, r) {
-			if (err) throw err;
+			assert.isNull(err);
 			results = r;
 			done();
 		});

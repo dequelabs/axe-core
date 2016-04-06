@@ -5,7 +5,7 @@ describe('html-has-lang test', function () {
 	before(function (done) {
 		window.addEventListener('load', function () {
 			axe.run({ runOnly: { type: 'rule', values: ['html-has-lang'] } }, function (err, r) {
-				if (err) throw err;
+				assert.isNull(err);
 				results = r;
 				done();
 			});
