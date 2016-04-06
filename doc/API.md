@@ -183,15 +183,17 @@ axe.run(context, options, callback);
 
 ##### Context Parameter
 
-The context object can be passed one of the following:
+By default, axe.run will test the entire document. The context object is an optional parameter that can be used to specify which element should and which should not be tested. It can be passed one of the following:
 
 1. An element reference that represents the portion of the document that must be analyzed
 	* Example: To limit analysis to the `<div id="content">` element: `document.getElementById("content")`
-2. A CSS selector that selects the portion(s) of the document that must be analyzed. This includes:
+2. A NodeList such as returned by `document.querySelectorAll`.
+3. A CSS selector that selects the portion(s) of the document that must be analyzed. This includes:
 	*  A CSS selector as a class name  (e.g. `.classname`)
 	*  A CSS selector as a node name (e.g. `div`)
 	*  A CSS selector of an element id (e.g. `#tag`)
-3. An include-exclude object (see below)
+4. An include-exclude object (see below)
+
 
 ###### Include-Exclude Object
 
