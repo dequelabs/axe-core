@@ -422,8 +422,6 @@ describe('runRules', function () {
 		});
 		fixture.innerHTML = '<div id="target">Target!</div><div>ok</div>';
 		runRules('#fixture', {}, function (results) {
-
-			console.log(JSON.stringify(results, null, '  '));
 			assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
 					helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/div#target?application=axeAPI',
