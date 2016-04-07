@@ -150,6 +150,88 @@ describe('axe.utils.ruleShouldRun', function () {
 
 	});
 
+	describe('default axe._tagExclude', function () {
+
+		var origTagExclude;
+		before(function () {
+			origTagExclude = axe._tagExclude;
+		});
+		after(function () {
+			axe._tagExclude = origTagExclude;
+		})
+
+		beforeEach(function () {
+			axe._tagExclude = [];
+		})
+
+		it('excludes rules with a tag put in axe._tagExclude', function () {
+			axe._tagExclude = ['the-cheat'];
+			assert.isTrue(axe.utils.ruleShouldRun({
+				id: 'e-mail',
+				enabled: true,
+				tags: ['strongbad']
+			}, {}, {}));
+
+			assert.isFalse(axe.utils.ruleShouldRun({
+				id: 'party',
+				enabled: true,
+				tags: ['the-cheat']
+			}, {}, {}));
+		});
+
+		it('adds axe.tagExclude to the existing exclude tags', function () {
+			axe._tagExclude = ['the-cheat'];
+			assert.isFalse(axe.utils.ruleShouldRun({
+				id: 'e-mail',
+				enabled: true,
+				tags: ['the-cheat']
+			}, {}, {
+				runOnly: {
+					type: 'tag',
+					values: {exclude: ['strongbad']}
+				}
+			}));
+		});
+
+		it('does not exclude tags explicitly included', function () {
+			axe._tagExclude = ['the-cheat'];
+			assert.isTrue(axe.utils.ruleShouldRun({
+				id: 'e-mail',
+				enabled: false,
+				tags: ['the-cheat']
+			}, {}, {
+				runOnly: {
+					type: 'tag',
+					values: {include: ['the-cheat']}
+				}
+			}));
+
+			assert.isTrue(axe.utils.ruleShouldRun({
+				id: 'e-mail',
+				enabled: false,
+				tags: ['the-cheat']
+			}, {}, {
+				runOnly: {
+					type: 'rule',
+					values: ['e-mail']
+				}
+			}));
+
+			assert.isTrue(axe.utils.ruleShouldRun({
+				id: 'e-mail',
+				enabled: false,
+				tags: ['the-cheat']
+			}, {}, {
+				rules: {
+					'e-mail': {
+						enabled: true
+					}
+				},
+			}));
+
+		});
+
+	});
 
 
 	describe('runOnly type:tag', function () {
