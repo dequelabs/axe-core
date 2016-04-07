@@ -7,7 +7,7 @@
     "wcag122",
     "wcag123",
     "section508",
-    "section508a"
+    "section508.22.a"
   ],
   "metadata": {
     "description": "Ensures <video> elements have captions",
