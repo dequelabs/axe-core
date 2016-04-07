@@ -188,7 +188,7 @@ describe('axe.configure', function() {
 			tagExclude: ['ninjas']
 		});
 		assert.deepEqual(axe._audit.tagExclude, ['ninjas']);
-	})
+	});
 
 	it('should throw if visible frames and no resolve', function (done) {
 		if (window.PHANTOMJS) {

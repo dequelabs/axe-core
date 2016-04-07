@@ -154,15 +154,16 @@ describe('axe.utils.ruleShouldRun', function () {
 
 		var origTagExclude;
 		before(function () {
+			axe._load({});
 			origTagExclude = axe._audit.tagExclude;
 		});
 		after(function () {
 			axe._audit.tagExclude = origTagExclude;
-		})
+		});
 
 		beforeEach(function () {
 			axe._audit.tagExclude = [];
-		})
+		});
 
 		it('excludes rules with a tag put in axe._tagExclude', function () {
 			axe._audit.tagExclude = ['the-cheat'];
