@@ -180,6 +180,16 @@ describe('axe.configure', function() {
 
 	});
 
+	it('overrides the default value of audit.tagExclude', function () {
+		axe._load({});
+		assert.deepEqual(axe.audit.tagExclude, ['experimental']);
+
+		axe.configure({
+			tagExclude: ['ninjas']
+		});
+		assert.deepEqual(axe.audit.tagExclude, ['ninjas']);
+	})
+
 	it('should throw if visible frames and no resolve', function (done) {
 		if (window.PHANTOMJS) {
 			assert.ok('PhantomJS is a liar');

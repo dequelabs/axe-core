@@ -154,18 +154,18 @@ describe('axe.utils.ruleShouldRun', function () {
 
 		var origTagExclude;
 		before(function () {
-			origTagExclude = axe._tagExclude;
+			origTagExclude = axe._audit.tagExclude;
 		});
 		after(function () {
-			axe._tagExclude = origTagExclude;
+			axe._audit.tagExclude = origTagExclude;
 		})
 
 		beforeEach(function () {
-			axe._tagExclude = [];
+			axe._audit.tagExclude = [];
 		})
 
 		it('excludes rules with a tag put in axe._tagExclude', function () {
-			axe._tagExclude = ['the-cheat'];
+			axe._audit.tagExclude = ['the-cheat'];
 			assert.isTrue(axe.utils.ruleShouldRun({
 				id: 'e-mail',
 				enabled: true,
@@ -180,7 +180,7 @@ describe('axe.utils.ruleShouldRun', function () {
 		});
 
 		it('adds axe.tagExclude to the existing exclude tags', function () {
-			axe._tagExclude = ['the-cheat'];
+			axe._audit.tagExclude = ['the-cheat'];
 			assert.isFalse(axe.utils.ruleShouldRun({
 				id: 'e-mail',
 				enabled: true,
@@ -194,7 +194,7 @@ describe('axe.utils.ruleShouldRun', function () {
 		});
 
 		it('does not exclude tags explicitly included', function () {
-			axe._tagExclude = ['the-cheat'];
+			axe._audit.tagExclude = ['the-cheat'];
 			assert.isTrue(axe.utils.ruleShouldRun({
 				id: 'e-mail',
 				enabled: false,
