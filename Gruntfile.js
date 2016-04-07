@@ -124,7 +124,7 @@ module.exports = function (grunt) {
 				options: {
 					preserveComments: 'some',
 					mangle: {
-						except: ['commons', 'utils', 'axe']
+						except: ['commons', 'utils', 'axe', 'window', 'document']
 					}
 				}
 			}
