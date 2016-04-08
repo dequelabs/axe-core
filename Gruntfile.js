@@ -18,10 +18,21 @@ module.exports = function (grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		clean: ['dist', 'tmp'],
 		babel: {
-			dist: {
-				files: {
-					'./axe.js': './axe.es2016.js'
-				}
+			core: {
+                files: [{
+                    expand: true,
+                    cwd: 'lib/core',
+                    src: ['**/*.js'],
+                    dest: 'tmp/core'
+                }]
+			},
+			misc: {
+				files: [{
+                    expand: true,
+                    cwd: 'tmp',
+                    src: ['*.js'],
+                    dest: 'tmp'
+                }]
 			}
 		},
 		'update-help': {
@@ -36,15 +47,16 @@ module.exports = function (grunt) {
 			engine: {
 				src: [
 					'lib/intro.stub',
-					'lib/core/index.js',
-					'lib/core/*/index.js',
-					'lib/core/**/index.js',
-					'lib/core/**/*.js',
-					'lib/core/export.js',
+					'tmp/core/index.js',
+					'tmp/core/*/index.js',
+					'tmp/core/**/index.js',
+					'tmp/core/**/*.js',
+					'tmp/core/export.js',
+					// include rules / checks / commons
 					'<%= configure.rules.dest.auto %>',
 					'lib/outro.stub'
 				],
-				dest: 'axe.es2016.js',
+				dest: 'axe.js',
 				options: {
 					process: true
 				}
@@ -116,15 +128,15 @@ module.exports = function (grunt) {
 					preserveComments: 'some'
 				}
 			},
-			lib: {
+			minify: {
 				files: [{
-					src: ['./axe.js'],
+					src: ['<%= concat.engine.dest %>'],
 					dest: './axe.min.js'
 				}],
 				options: {
 					preserveComments: 'some',
 					mangle: {
-						except: ['commons', 'utils', 'axe']
+						except: ['commons', 'utils', 'axe', 'window', 'document']
 					}
 				}
 			}
@@ -222,7 +234,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build']);
 
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
-		'concat:engine', 'babel', 'uglify']);
+		 'babel', 'concat:engine', 'uglify']);
 
 	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
