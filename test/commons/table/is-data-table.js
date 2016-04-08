@@ -186,6 +186,24 @@ describe('table.isDataTable', function () {
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
+	it('should be true if the table has a rowheader', function () {
+		fixture.innerHTML = '<table>' +
+			'<tr><td role="rowheader"></td></tr>' +
+			'</table>';
+
+		var node = fixture.querySelector('table');
+		assert.isTrue(axe.commons.table.isDataTable(node));
+	});
+
+	it('should be true if the table has a columnheader', function () {
+		fixture.innerHTML = '<table>' +
+			'<tr><td role="columnheader"></td></tr>' +
+			'</table>';
+
+		var node = fixture.querySelector('table');
+		assert.isTrue(axe.commons.table.isDataTable(node));
+	});
+
 	it('should be true if the table has a cell with headers attribute', function () {
 		fixture.innerHTML = '<table>' +
 			'<tr><td headers="yes"></td></tr>' +

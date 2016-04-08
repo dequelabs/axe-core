@@ -1,11 +1,10 @@
 {
   "id": "accesskeys",
   "selector": "[accesskey]",
+  "excludeHidden": false,
   "tags": [
     "wcag2a",
-    "wcag211",
-    "section508",
-    "section508a"
+    "wcag211"
   ],
   "metadata": {
     "description": "Ensures every accesskey attribute value is unique",

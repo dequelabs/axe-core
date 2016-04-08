@@ -3,6 +3,7 @@ var testConfig = require('./build/test/config');
 module.exports = function (grunt) {
 	'use strict';
 
+	grunt.loadNpmTasks('grunt-babel');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
@@ -15,7 +16,25 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		clean: ['tmp'],
+		clean: ['dist', 'tmp'],
+		babel: {
+			core: {
+                files: [{
+                    expand: true,
+                    cwd: 'lib/core',
+                    src: ['**/*.js'],
+                    dest: 'tmp/core'
+                }]
+			},
+			misc: {
+				files: [{
+                    expand: true,
+                    cwd: 'tmp',
+                    src: ['*.js'],
+                    dest: 'tmp'
+                }]
+			}
+		},
 		'update-help': {
 			options: {
 				version: '<%=pkg.version%>'
@@ -28,11 +47,12 @@ module.exports = function (grunt) {
 			engine: {
 				src: [
 					'lib/intro.stub',
-					'lib/core/index.js',
-					'lib/core/*/index.js',
-					'lib/core/**/index.js',
-					'lib/core/**/*.js',
-					'lib/core/export.js',
+					'tmp/core/index.js',
+					'tmp/core/*/index.js',
+					'tmp/core/**/index.js',
+					'tmp/core/**/*.js',
+					'tmp/core/export.js',
+					// include rules / checks / commons
 					'<%= configure.rules.dest.auto %>',
 					'lib/outro.stub'
 				],
@@ -108,15 +128,15 @@ module.exports = function (grunt) {
 					preserveComments: 'some'
 				}
 			},
-			lib: {
+			minify: {
 				files: [{
 					src: ['<%= concat.engine.dest %>'],
-					dest: 'axe.min.js'
+					dest: './axe.min.js'
 				}],
 				options: {
 					preserveComments: 'some',
 					mangle: {
-						except: ['commons', 'utils', 'axe']
+						except: ['commons', 'utils', 'axe', 'window', 'document']
 					}
 				}
 			}
@@ -214,11 +234,14 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build']);
 
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
-		'concat:engine', 'uglify']);
+		 'babel', 'concat:engine', 'uglify']);
 
-	grunt.registerTask('test', ['build',  'testconfig', 'fixture', 'connect',
+	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
 
 	grunt.registerTask('test-browser', ['build',  'testconfig', 'fixture', 'connect',
 		'test-webdriver', 'jshint']);
+
+
+	grunt.registerTask('dev', ['build', 'testconfig', 'connect', 'watch']);
 };

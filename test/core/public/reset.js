@@ -1,12 +1,19 @@
-/*global Rule*/
+/*global Rule */
 describe('axe.reset', function () {
 	'use strict';
 
-	it('should throw if no audit is configured', function () {
-		axe._audit = null;
+	var fixture = document.getElementById('fixture');
+	afterEach(function () {
+		fixture.innerHTML = '';
+	});
 
+	beforeEach(function () {
+		axe._audit = null;
+	});
+
+	it('should throw if no audit is configured', function () {
 		assert.throws(function () {
-			axe.reset();
+			axe.reset(function () {}, function () {});
 		}, Error, /^No audit configured/);
 	});
 
