@@ -7,6 +7,7 @@
 	"node" : false,
 	"devel" : false,
 
+	"esversion": 6,
 	"bitwise": true,
 	"camelcase": true,
 	"curly": true,
@@ -40,8 +41,6 @@
 	"debug": false,
 	"devel": false,
 	"eqnull": false,
-	"es5": false,
-	"esnext": false,
 	"evil": false,
 	"expr": false,
 	"funcscope": false,
