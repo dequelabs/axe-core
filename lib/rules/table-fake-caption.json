@@ -3,6 +3,7 @@
   "selector": "table",
   "matches": "data-table-matches.js",
   "tags": [
+    "experimental",
     "wcag2a",
     "wcag131"
   ],

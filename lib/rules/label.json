@@ -6,7 +6,7 @@
     "wcag332",
     "wcag131",
     "section508",
-    "section508n"
+    "section508.22.n"
   ],
   "metadata": {
     "description": "Ensures every form element has a label",

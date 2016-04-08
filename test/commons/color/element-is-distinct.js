@@ -14,20 +14,6 @@ describe('color.elementIsDistinct', function () {
 		'textDecoration': 'none',
 	};
 
-	beforeEach(function () {
-		createStyleString('p', defaultStyle);
-		elementIsDistinct = axe.commons.color.elementIsDistinct;
-	});
-
-	afterEach(function () {
-		fixture.innerHTML = '';
-		styleElm.innerHTML = '';
-	});
-
-	after(function () {
-		styleElm.parentNode.removeChild(styleElm);
-	});
-
 	function createStyleString(selector, outerStyle) {
 		// Merge style with the default
 		var prop;
@@ -79,6 +65,20 @@ describe('color.elementIsDistinct', function () {
 			par: document.getElementById(parId)
 		};
 	}
+
+	beforeEach(function () {
+		createStyleString('p', defaultStyle);
+		elementIsDistinct = axe.commons.color.elementIsDistinct;
+	});
+
+	afterEach(function () {
+		fixture.innerHTML = '';
+		styleElm.innerHTML = '';
+	});
+
+	after(function () {
+		styleElm.parentNode.removeChild(styleElm);
+	});
 
 	it('returns false without style adjustments', function () {
 		var elms = getLinkElm({});

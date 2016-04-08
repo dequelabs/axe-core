@@ -8,9 +8,9 @@
 		"window": true
 	},
 
+	"esversion": 6,
 	"node" : false,
 	"devel" : false,
-
 	"bitwise": true,
 	"camelcase": true,
 	"curly": true,
@@ -44,8 +44,6 @@
 	"debug": false,
 	"devel": false,
 	"eqnull": false,
-	"es5": false,
-	"esnext": false,
 	"evil": false,
 	"expr": false,
 	"funcscope": false,
