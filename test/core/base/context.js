@@ -256,25 +256,34 @@ describe('Context', function() {
 
 		});
 
-		it('should throw when no elements match the context', function () {
-			fixture.innerHTML = '<div id="foo"></div>';
-			assert.throws(function () {
-				var ctxt;
-				ctxt = new Context('#notAnElement');
-			}, Error, 'No elements found for include in Context');
-		});
+		describe('throwing errors', function () {
+			// jshint unused:false
+			var isInFrame;
 
-		it('returns an empty context when no element is found inside a frame', function () {
-			var isInFrame = axe.utils.respondable.isInFrame;
-			axe.utils.respondable.isInFrame = function () {
-				return true;
-			};
+			beforeEach(function () {
+				isInFrame = axe.utils.respondable.isInFrame;
+			});
+			afterEach(function () {
+				axe.utils.respondable.isInFrame = isInFrame;
+			});
 
-			fixture.innerHTML = '<div id="foo"></div>';
-			var result = new Context('#notAnElement');
-			assert.deepEqual(result.include, []);
+			it('should throw when no elements match the context', function () {
+				fixture.innerHTML = '<div id="foo"></div>';
+				assert.throws(function () {
+					var ctxt = new Context('#notAnElement');
+				}, Error, 'No elements found for include in page Context');
+			});
 
-			axe.utils.respondable.isInFrame = isInFrame;
+			it('should throw when no elements match the context inside a frame', function () {
+				axe.utils.respondable.isInFrame = function () {
+					return true;
+				};
+
+				fixture.innerHTML = '<div id="foo"></div>';
+				assert.throws(function () {
+					var ctxt = new Context('#notAnElement');
+				}, Error, 'No elements found for include in frame Context');
+			});
 		});
 
 		it('should throw when frame could not be found', function (done) {
