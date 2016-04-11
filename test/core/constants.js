@@ -11,15 +11,19 @@ describe('axe.constants', function () {
 		});
 
 		it('should have PASS', function () {
-			assert.equal(axe.constants.result.PASS, 'PASS');
+			assert.equal(axe.constants.result.PASS, 'passed');
 		});
 
 		it('should have FAIL', function () {
-			assert.equal(axe.constants.result.FAIL, 'FAIL');
+			assert.equal(axe.constants.result.FAIL, 'failed');
 		});
 
 		it('should have NA', function () {
-			assert.equal(axe.constants.result.NA, 'NA');
+			assert.equal(axe.constants.result.NA, 'inapplicable');
+		});
+
+		it('should have CANTTELL', function () {
+			assert.equal(axe.constants.result.CANTTELL, 'cantTell');
 		});
 	});
 });

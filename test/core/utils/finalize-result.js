@@ -1,16 +1,17 @@
-
-describe('axe.utils.finalizeRuleResult', function () {
+describe('axe.utils.finalizeRuleResult', function() {
 	'use strict';
+	var FAIL = 'failed';
+	var PASS = 'passed';
 
-	beforeEach(function () {
+	beforeEach(function() {
 		axe._load({});
 	});
 
-	it('should be a function', function () {
+	it('should be a function', function() {
 		assert.isFunction(axe.utils.finalizeRuleResult);
 	});
 
-	it('should FAIL ruleResult if a failing (return true) none is found', function () {
+	it('should FAIL ruleResult if a failing (return true) none is found', function() {
 		var ruleResult = axe.utils.finalizeRuleResult({
 			pageLevel: false,
 			nodes: [{
@@ -27,13 +28,13 @@ describe('axe.utils.finalizeRuleResult', function () {
 				any: []
 			}]
 		});
-		assert.equal(ruleResult.result, 'FAIL');
+		assert.equal(ruleResult.result, FAIL);
 		assert.lengthOf(ruleResult.violations, 2);
 		assert.lengthOf(ruleResult.passes, 1);
 
 	});
 
-	it('should assign FAIL to ruleResult over PASS', function () {
+	it('should assign FAIL to ruleResult over PASS', function() {
 		var ruleResult = axe.utils.finalizeRuleResult({
 			pageLevel: false,
 			nodes: [{
@@ -50,13 +51,13 @@ describe('axe.utils.finalizeRuleResult', function () {
 				all: []
 			}]
 		});
-		assert.equal(ruleResult.result, 'FAIL');
+		assert.equal(ruleResult.result, FAIL);
 		assert.lengthOf(ruleResult.violations, 1);
 		assert.lengthOf(ruleResult.passes, 2);
 
 	});
 
-	it('should assign PASS to ruleResult if there are only passing anys', function () {
+	it('should assign PASS to ruleResult if there are only passing anys', function() {
 		var ruleResult = axe.utils.finalizeRuleResult({
 			pageLevel: false,
 			nodes: [{
@@ -73,13 +74,13 @@ describe('axe.utils.finalizeRuleResult', function () {
 				all: []
 			}]
 		});
-		assert.equal(ruleResult.result, 'PASS');
+		assert.equal(ruleResult.result, PASS);
 		assert.lengthOf(ruleResult.passes, 3);
 		assert.lengthOf(ruleResult.violations, 0);
 
 	});
 
-	it('should assign FAIL if there are no passing anys', function () {
+	it('should assign FAIL if there are no passing anys', function() {
 		var ruleResult = axe.utils.finalizeRuleResult({
 			pageLevel: false,
 			nodes: [{
@@ -96,13 +97,13 @@ describe('axe.utils.finalizeRuleResult', function () {
 				none: []
 			}]
 		});
-		assert.equal(ruleResult.result, 'FAIL');
+		assert.equal(ruleResult.result, FAIL);
 		assert.lengthOf(ruleResult.violations, 3);
 		assert.lengthOf(ruleResult.passes, 0);
 
 	});
 
-	it('should assign FAIL if there is a single non-passing all', function () {
+	it('should assign FAIL if there is a single non-passing all', function() {
 		var ruleResult = axe.utils.finalizeRuleResult({
 			pageLevel: false,
 			nodes: [{
@@ -119,13 +120,13 @@ describe('axe.utils.finalizeRuleResult', function () {
 				none: []
 			}]
 		});
-		assert.equal(ruleResult.result, 'FAIL');
+		assert.equal(ruleResult.result, FAIL);
 		assert.lengthOf(ruleResult.violations, 2);
 		assert.lengthOf(ruleResult.passes, 1);
 
 	});
 
-	it('should PASS if there are only falsey nones', function () {
+	it('should PASS if there are only falsey nones', function() {
 		var ruleResult = axe.utils.finalizeRuleResult({
 			pageLevel: false,
 			nodes: [{
@@ -142,13 +143,13 @@ describe('axe.utils.finalizeRuleResult', function () {
 				all: []
 			}]
 		});
-		assert.equal(ruleResult.result, 'PASS');
+		assert.equal(ruleResult.result, PASS);
 		assert.lengthOf(ruleResult.violations, 0);
 		assert.lengthOf(ruleResult.passes, 3);
 
 	});
 
-	it('should raise the highest "raisedMetadata" on failing checks', function () {
+	it('should raise the highest "raisedMetadata" on failing checks', function() {
 		var ruleResult = axe.utils.finalizeRuleResult({
 			pageLevel: false,
 			nodes: [{
