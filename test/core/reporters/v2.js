@@ -5,6 +5,7 @@ describe('reporters - v2', function() {
 			id: 'gimmeLabel',
 			helpUrl: 'things',
 			description: 'something nifty',
+			result: 'passed',
 			tags: ['tag1'],
 			violations: [],
 			passes: [{
@@ -108,7 +109,7 @@ describe('reporters - v2', function() {
 	});
 	it('should add the rule help to the rule result', function(done) {
 		axe.a11yCheck(document, {}, function(results) {
-			assert.isNull(results.violations[0].helpUrl);
+			assert.isNotOk(results.violations[0].helpUrl);
 			assert.equal(results.passes[0].helpUrl, 'things');
 			done();
 		});
@@ -141,15 +142,8 @@ describe('reporters - v2', function() {
 		axe.a11yCheck(document, {}, function(results) {
 			assert.equal(results.violations[0].impact, 'cats');
 			assert.equal(results.violations[0].nodes[0].impact, 'cats');
-			assert.isNull(results.passes[0].impact);
-			assert.isNull(results.passes[0].nodes[0].impact);
-			done();
-		});
-	});
-	it('should remove result', function(done) {
-		axe.a11yCheck(document, {}, function(results) {
-			assert.isUndefined(results.violations[0].nodes[0].all[0].result);
-			assert.isUndefined(results.passes[0].nodes[0].any[0].result);
+			assert.isNotOk(results.passes[0].impact);
+			assert.isNotOk(results.passes[0].nodes[0].impact);
 			done();
 		});
 	});
