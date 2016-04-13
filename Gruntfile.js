@@ -3,7 +3,7 @@ var testConfig = require('./build/test/config');
 module.exports = function (grunt) {
 	'use strict';
 
-	grunt.loadNpmTasks('grunt-browserify');
+	grunt.loadNpmTasks('grunt-babel');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
@@ -17,19 +17,23 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		clean: ['dist', 'tmp'],
-		browserify: {
-			dist: {
-				options: {
-					transform: [
-						['babelify']
-					]
-				},
-				files: {
-					'./dist/axe.js': [
-						'./dist/axe.js'
-					]
-				}
+		babel: {
+			core: {
+                files: [{
+                    expand: true,
+                    cwd: 'lib/core',
+                    src: ['**/*.js'],
+                    dest: 'tmp/core'
+                }]
 			},
+			misc: {
+				files: [{
+                    expand: true,
+                    cwd: 'tmp',
+                    src: ['*.js'],
+                    dest: 'tmp'
+                }]
+			}
 		},
 		'update-help': {
 			options: {
@@ -268,7 +272,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build']);
 
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
-		'concat:engine', 'copy', 'browserify', 'uglify', 'nodeify']);
+		'concat:engine', 'babel', 'copy', 'uglify', 'nodeify']);
 
 	grunt.registerTask('test', ['build',	'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
