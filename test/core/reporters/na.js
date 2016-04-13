@@ -1,10 +1,11 @@
 describe('reporters - na', function() {
 	'use strict';
-	var orig,
-		results = [{
+	var orig, results,
+		_results = [{
 			id: 'noMatch',
 			helpUrl: 'somewhere',
 			description: 'stuff',
+			result: 'inapplicable',
 			tags: ['tag3'],
 			violations: [],
 			passes: []
@@ -12,10 +13,11 @@ describe('reporters - na', function() {
 			id: 'gimmeLabel',
 			helpUrl: 'things',
 			description: 'something nifty',
+			result: 'passed',
 			tags: ['tag1'],
 			violations: [],
 			passes: [{
-				result: 'PASS',
+				result: 'passed',
 				any: [{
 					result: true,
 					relatedNodes: [{
@@ -36,12 +38,12 @@ describe('reporters - na', function() {
 			id: 'idkStuff',
 			description: 'something more nifty',
 			pageLevel: true,
-			result: 'FAIL',
+			result: 'failed',
 			impact: 'cats',
 			tags: ['tag2'],
 			passes: [],
 			violations: [{
-				result: 'FAIL',
+				result: 'failed',
 				all: [{
 					relatedNodes: [{
 						selector: 'joe',
@@ -70,6 +72,7 @@ describe('reporters - na', function() {
 			}]
 		}];
 	beforeEach(function() {
+		results = JSON.parse(JSON.stringify(_results));
 		axe._load({
 			reporter: 'na',
 			messages: {},
@@ -118,7 +121,7 @@ describe('reporters - na', function() {
 	});
 	it('should add the rule help to the rule result', function(done) {
 		axe.a11yCheck(document, function(results) {
-			assert.isNull(results.violations[0].helpUrl);
+			assert.ok(!results.violations[0].helpUrl);
 			assert.equal(results.passes[0].helpUrl, 'things');
 			assert.equal(results.notApplicable[0].helpUrl, 'somewhere');
 			done();
@@ -152,21 +155,14 @@ describe('reporters - na', function() {
 		axe.a11yCheck(document, function(results) {
 			assert.equal(results.violations[0].impact, 'cats');
 			assert.equal(results.violations[0].nodes[0].impact, 'cats');
-			assert.isNull(results.passes[0].impact);
-			assert.isNull(results.passes[0].nodes[0].impact);
-			done();
-		});
-	});
-	it('should remove result', function(done) {
-		axe.a11yCheck(document, function(results) {
-			assert.isUndefined(results.violations[0].nodes[0].all[0].result);
-			assert.isUndefined(results.passes[0].nodes[0].any[0].result);
+			assert.ok(!results.passes[0].impact);
+			assert.ok(!results.passes[0].nodes[0].impact);
 			done();
 		});
 	});
 	it('should map relatedNodes', function(done) {
 		axe.a11yCheck(document, function(results) {
-			assert.lengthOf(results.violations[0].nodes[0].all[0].relatedNodes, 1);
+			assert.lengthOf(results.violations[0].nodes[0].all[0].relatedNodes, 1);	
 			assert.equal(results.violations[0].nodes[0].all[0].relatedNodes[0].target, 'joe');
 			assert.equal(results.violations[0].nodes[0].all[0].relatedNodes[0].html, 'bob');
 

@@ -122,6 +122,7 @@ describe('runRules', function () {
 	var isNotCalled;
 	beforeEach(function () {
 		isNotCalled = function (err) {
+			if (err) console.log(err);
 			throw err || new Error('Reject should not be called');
 		};
 	});
@@ -238,9 +239,11 @@ describe('runRules', function () {
 					helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/div#target?application=axeAPI',
 					pageLevel: false,
 					impact: null,
+					inapplicable: [],
+					cantTell: [],
 					violations: [],
 					passes: [{
-						result: 'PASS',
+						result: 'passed',
 						node: {
 							selector: ['#context-test', '#target'],
 							source: '<div id="target"></div>'
@@ -253,16 +256,18 @@ describe('runRules', function () {
 						all: [],
 						none: []
 					}],
-					result: 'PASS',
+					result: 'passed',
 					tags: []
 				}, {
 					id: 'first-div',
 					helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/first-div?application=axeAPI',
 					pageLevel: false,
 					impact: null,
+					inapplicable: [],
+					cantTell: [],
 					violations: [],
 					passes: [{
-						result: 'PASS',
+						result: 'passed',
 						node: {
 							selector: ['#context-test', '#foo'],
 							source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
@@ -278,7 +283,7 @@ describe('runRules', function () {
 						all: [],
 						none: []
 					}],
-					result: 'PASS',
+					result: 'passed',
 					tags: []
 				}]);
 
@@ -430,8 +435,10 @@ describe('runRules', function () {
 					stuff: 'blah',
 					impact: 'moderate',
 					passes: [],
+					inapplicable: [],
+					cantTell: [],
 					violations: [{
-						result: 'FAIL',
+						result: 'failed',
 						node: {
 							selector: ['#target'],
 							source: '<div id="target">Target!</div>'
@@ -448,7 +455,7 @@ describe('runRules', function () {
 						all: [],
 						none: []
 					}],
-					result: 'FAIL',
+					result: 'failed',
 					tags: []
 				}, {
 					id: 'first-div',
@@ -457,9 +464,11 @@ describe('runRules', function () {
 					bar: 'foo',
 					stuff: 'no',
 					impact: null,
+					inapplicable: [],
+					cantTell: [],
 					violations: [],
 					passes: [{
-						result: 'PASS',
+						result: 'passed',
 						node: {
 							selector: ['#target'],
 							source: '<div id="target">Target!</div>'
@@ -478,7 +487,7 @@ describe('runRules', function () {
 						all: [],
 						none: []
 					}],
-					result: 'PASS',
+					result: 'passed',
 					tags: []
 				}]);
 			done();

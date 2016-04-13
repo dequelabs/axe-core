@@ -280,7 +280,7 @@ describe('Audit', function () {
 			a.run({ include: [fixture] }, {}, function (results) {
 				var expected = [{
 					id: 'positive1',
-					result: 'NA',
+					result: 'inapplicable',
 					pageLevel: false,
 					impact: null,
 					nodes: [{
@@ -312,7 +312,7 @@ describe('Audit', function () {
 					}]
 				}, {
 					id: 'positive2',
-					result: 'NA',
+					result: 'inapplicable',
 					pageLevel: false,
 					impact: null,
 					nodes: [{
@@ -331,7 +331,7 @@ describe('Audit', function () {
 					}]
 				}, {
 					id: 'negative1',
-					result: 'NA',
+					result: 'inapplicable',
 					pageLevel: false,
 					impact: null,
 					nodes: [{
@@ -363,7 +363,7 @@ describe('Audit', function () {
 					}]
 				}, {
 					id: 'positive3',
-					result: 'NA',
+					result: 'inapplicable',
 					pageLevel: false,
 					impact: null,
 					nodes: [{

@@ -8,7 +8,7 @@ describe('reporters - v1', function() {
 			tags: ['tag1'],
 			violations: [],
 			passes: [{
-				result: 'PASS',
+				result: 'passed',
 				any: [{
 					result: true,
 					data: 'minkey'
@@ -25,12 +25,12 @@ describe('reporters - v1', function() {
 			id: 'idkStuff',
 			description: 'something more nifty',
 			pageLevel: true,
-			result: 'FAIL',
+			result: 'failed',
 			impact: 'cats',
 			tags: ['tag2'],
 			passes: [],
 			violations: [{
-				result: 'FAIL',
+				result: 'failed',
 				all: [{
 					result: false,
 					data: 'pillock',
@@ -51,7 +51,7 @@ describe('reporters - v1', function() {
 			impact: 'monkeys',
 			passes: [],
 			violations: [{
-				result: 'FAIL',
+				result: 'failed',
 				impact: 'monkeys',
 				none: [{
 					data: 'foon',
