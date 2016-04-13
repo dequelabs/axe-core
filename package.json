@@ -38,7 +38,6 @@
     "aXe"
   ],
   "main": "axe.js",
-  "dependencies": {},
   "scripts": {
     "build": "grunt",
     "test": "grunt test"
