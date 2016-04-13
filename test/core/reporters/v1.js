@@ -1,11 +1,12 @@
 describe('reporters - v1', function() {
 	'use strict';
-	var orig,
-		results = [{
+	var orig, results,
+		_results = [{
 			id: 'gimmeLabel',
 			helpUrl: 'things',
 			description: 'something nifty',
 			tags: ['tag1'],
+			result: 'passed',
 			violations: [],
 			passes: [{
 				result: 'passed',
@@ -49,6 +50,7 @@ describe('reporters - v1', function() {
 			description: 'something even more nifty',
 			tags: ['tag3'],
 			impact: 'monkeys',
+			result: 'failed',
 			passes: [],
 			violations: [{
 				result: 'failed',
@@ -70,8 +72,9 @@ describe('reporters - v1', function() {
 			description: 'something awesome',
 			tags: ['tag4'],
 			violations: [],
+			result: 'passed',
 			passes: [{
-				result: 'FAO:',
+				result: 'passed',
 				none: [{
 					data: 'clueso',
 					result: true
@@ -83,6 +86,7 @@ describe('reporters - v1', function() {
 			}]
 		}];
 	beforeEach(function() {
+		results = JSON.parse(JSON.stringify(_results));
 		axe._load({
 			reporter: 'v1',
 			messages: {},
@@ -169,10 +173,10 @@ describe('reporters - v1', function() {
 	});
 	it('should add the rule help to the rule result', function(done) {
 		axe.a11yCheck(document, {}, function(results) {
-			assert.isNull(results.violations[0].helpUrl);
-			assert.isNull(results.violations[1].helpUrl);
+			assert.isNotOk(results.violations[0].helpUrl);
+			assert.isNotOk(results.violations[1].helpUrl);
 			assert.equal(results.passes[0].helpUrl, 'things');
-			assert.isNull(results.passes[1].helpUrl);
+			assert.isNotOk(results.passes[1].helpUrl);
 			done();
 		});
 	});

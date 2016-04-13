@@ -1,14 +1,14 @@
 describe('reporters - v2', function() {
 	'use strict';
-	var orig,
-		results = [{
+	var orig, results,
+		_results = [{
 			id: 'gimmeLabel',
 			helpUrl: 'things',
 			description: 'something nifty',
 			tags: ['tag1'],
 			violations: [],
 			passes: [{
-				result: 'PASS',
+				result: 'passed',
 				any: [{
 					result: true,
 					relatedNodes: [{
@@ -29,12 +29,12 @@ describe('reporters - v2', function() {
 			id: 'idkStuff',
 			description: 'something more nifty',
 			pageLevel: true,
-			result: 'FAIL',
+			result: 'failed',
 			impact: 'cats',
 			tags: ['tag2'],
 			passes: [],
 			violations: [{
-				result: 'FAIL',
+				result: 'failed',
 				all: [{
 					relatedNodes: [{
 						selector: 'joe',
@@ -63,6 +63,7 @@ describe('reporters - v2', function() {
 			}]
 		}];
 	beforeEach(function() {
+		results = JSON.parse(JSON.stringify(_results));
 		axe._load({
 			reporter: 'v2',
 			messages: {},
