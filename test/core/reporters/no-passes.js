@@ -84,7 +84,6 @@ describe('reporters - no-passes', function() {
 
 	it('should merge the runRules results into violations and  exclude passes', function(done) {
 		axe.a11yCheck(document, {}, function(results) {
-			console.log(results);
 			assert.isObject(results);
 			assert.isArray(results.violations);
 			assert.lengthOf(results.violations, 1);

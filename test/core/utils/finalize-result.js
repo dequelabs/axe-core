@@ -8,7 +8,7 @@ describe('axe.utils.finalizeRuleResult', function() {
 
 	afterEach(function () {
 		axe.utils.aggregateRule = origAggregate;
-	})
+	});
 
 	it('should be a function', function() {
 		assert.isFunction(axe.utils.finalizeRuleResult);
@@ -29,7 +29,7 @@ describe('axe.utils.finalizeRuleResult', function() {
 		axe.utils.aggregateRule = function (n) {
 			assert.equal(n, nodes);
 			isCalled = true;
-		}
+		};
 		axe.utils.finalizeRuleResult({ nodes: nodes });
 		assert.ok(isCalled);
 	});
@@ -39,7 +39,7 @@ describe('axe.utils.finalizeRuleResult', function() {
 			return {
 				vulgaris:'magistralis'
 			};
-		}
+		};
 		var out = axe.utils.finalizeRuleResult({});
 		assert.equal(out.vulgaris, 'magistralis');
 	});

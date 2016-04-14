@@ -71,6 +71,7 @@ describe('reporters - na', function() {
 				impact: 'cats'
 			}]
 		}];
+
 	beforeEach(function() {
 		results = JSON.parse(JSON.stringify(_results));
 		axe._load({
@@ -97,8 +98,8 @@ describe('reporters - na', function() {
 			assert.lengthOf(results.violations, 1);
 			assert.isArray(results.passes);
 			assert.lengthOf(results.passes, 1);
-			assert.isArray(results.notApplicable);
-			assert.lengthOf(results.notApplicable, 1);
+			assert.isArray(results.notApplied);
+			assert.lengthOf(results.notApplied, 1);
 
 			done();
 		});
@@ -107,7 +108,7 @@ describe('reporters - na', function() {
 		axe.a11yCheck(document, function(results) {
 			assert.equal(results.violations[0].id, 'idkStuff');
 			assert.equal(results.passes[0].id, 'gimmeLabel');
-			assert.equal(results.notApplicable[0].id, 'noMatch');
+			assert.equal(results.notApplied[0].id, 'noMatch');
 			done();
 		});
 	});
@@ -115,7 +116,7 @@ describe('reporters - na', function() {
 		axe.a11yCheck(document, function(results) {
 			assert.deepEqual(results.violations[0].tags, ['tag2']);
 			assert.deepEqual(results.passes[0].tags, ['tag1']);
-			assert.deepEqual(results.notApplicable[0].tags, ['tag3']);
+			assert.deepEqual(results.notApplied[0].tags, ['tag3']);
 			done();
 		});
 	});
@@ -123,7 +124,7 @@ describe('reporters - na', function() {
 		axe.a11yCheck(document, function(results) {
 			assert.ok(!results.violations[0].helpUrl);
 			assert.equal(results.passes[0].helpUrl, 'things');
-			assert.equal(results.notApplicable[0].helpUrl, 'somewhere');
+			assert.equal(results.notApplied[0].helpUrl, 'somewhere');
 			done();
 		});
 	});
@@ -162,7 +163,7 @@ describe('reporters - na', function() {
 	});
 	it('should map relatedNodes', function(done) {
 		axe.a11yCheck(document, function(results) {
-			assert.lengthOf(results.violations[0].nodes[0].all[0].relatedNodes, 1);	
+			assert.lengthOf(results.violations[0].nodes[0].all[0].relatedNodes, 1);
 			assert.equal(results.violations[0].nodes[0].all[0].relatedNodes[0].target, 'joe');
 			assert.equal(results.violations[0].nodes[0].all[0].relatedNodes[0].html, 'bob');
 

@@ -47,7 +47,7 @@ describe('axe.utils.aggregateRule', function() {
 		));
 
 		assert.equal(ruleResult.result, INAPPLICABLE);
-		assert.lengthOf(ruleResult.inapplicable, 2);
+		assert.lengthOf(ruleResult.notApplied, 2);
 	});
 
 	it('should assign FAIL to ruleResult over PASS', function() {
@@ -69,7 +69,7 @@ describe('axe.utils.aggregateRule', function() {
 		));
 		assert.equal(ruleResult.result, FAIL);
 		assert.lengthOf(ruleResult.violations, 1);
-		assert.lengthOf(ruleResult.cantTell, 1);
+		assert.lengthOf(ruleResult.notCompleted, 1);
 		assert.lengthOf(ruleResult.passes, 1);
 	});
 
@@ -103,7 +103,7 @@ describe('axe.utils.aggregateRule', function() {
 			{ all: 0 }
 		));
 		assert.equal(ruleResult.result, CANTTELL);
-		assert.lengthOf(ruleResult.cantTell, 2);
+		assert.lengthOf(ruleResult.notCompleted, 2);
 		assert.lengthOf(ruleResult.passes, 1);
 	});
 
@@ -124,5 +124,4 @@ describe('axe.utils.aggregateRule', function() {
 		assert.isUndefined(ruleResult.passes[0].impact);
 		assert.isUndefined(ruleResult.passes[1].impact);
 	});
-
 });

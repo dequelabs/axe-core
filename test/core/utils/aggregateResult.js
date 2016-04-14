@@ -1,5 +1,7 @@
 describe('axe.utils.aggregateResult', function () {
-	var orig, results,
+	'use strict';
+
+	var results,
 	_results = [{
 		id: 'gimmeLabel',
 		helpUrl: 'things',
@@ -79,7 +81,7 @@ describe('axe.utils.aggregateResult', function () {
 			},
 			impact: 'cats'
 		}],
-		cantTell: [{
+		notCompleted: [{
 			result: 'cantTell',
 			any: [{
 				result: 0,
@@ -97,7 +99,6 @@ describe('axe.utils.aggregateResult', function () {
 		id: 'blinky',
 		description: 'something awesome',
 		tags: ['tag4'],
-		violations: [],
 		result: 'inapplicable',
 		passes: [{
 			result: 'passed',
@@ -115,7 +116,7 @@ describe('axe.utils.aggregateResult', function () {
 			}
 		}],
 		violations: [],
-		cantTell: []
+		notCompleted: []
 	}];
 
 	beforeEach(function() {
@@ -127,8 +128,8 @@ describe('axe.utils.aggregateResult', function () {
 
 		assert.isArray(resultObject.passes);
 		assert.isArray(resultObject.violations);
-		assert.isArray(resultObject.cantTell);
-		assert.isArray(resultObject.inapplicable);
+		assert.isArray(resultObject.notCompleted);
+		assert.isArray(resultObject.notApplied);
 	});
 
 	it('copies failures and passes to their respective arrays on the result object', function () {
@@ -138,8 +139,8 @@ describe('axe.utils.aggregateResult', function () {
 
 		assert.lengthOf(resultObject.passes, 1);
 		assert.lengthOf(resultObject.violations, 1);
-		assert.lengthOf(resultObject.cantTell, 0);
-		assert.lengthOf(resultObject.inapplicable, 0);
+		assert.lengthOf(resultObject.notCompleted, 0);
+		assert.lengthOf(resultObject.notApplied, 0);
 
 		// Objects are the same
 		assert.deepEqual(resultObject.passes[0], input[0]);
@@ -157,30 +158,30 @@ describe('axe.utils.aggregateResult', function () {
 
 		assert.lengthOf(resultObject.passes, 1);
 		assert.lengthOf(resultObject.violations, 1);
-		assert.lengthOf(resultObject.cantTell, 1);
-		assert.lengthOf(resultObject.inapplicable, 0);
+		assert.lengthOf(resultObject.notCompleted, 1);
+		assert.lengthOf(resultObject.notApplied, 0);
 
 		// Objects are the same
 		assert.deepEqual(resultObject.passes[0], input[0]);
 		assert.deepEqual(resultObject.violations[0], input[0]);
-		assert.deepEqual(resultObject.cantTell[0], input[0]);
+		assert.deepEqual(resultObject.notCompleted[0], input[0]);
 
 		// Object is a copy
 		assert.notEqual(resultObject.passes[0], resultObject.violations[0]);
-		assert.notEqual(resultObject.passes[0], resultObject.cantTell[0]);
-		assert.notEqual(resultObject.violations[0], resultObject.cantTell[0]);
+		assert.notEqual(resultObject.passes[0], resultObject.notCompleted[0]);
+		assert.notEqual(resultObject.violations[0], resultObject.notCompleted[0]);
 	});
 
-	it('moves inapplicable results only to the inapplicable array', function () {
+	it('moves notApplied results only to the notApplied array', function () {
 		// insert 1 fail, containing a pass, a fail and a cantTell result
 		var input = [results[3]];
 		var resultObject = axe.utils.aggregateResult(input);
 
 		assert.lengthOf(resultObject.passes, 0);
 		assert.lengthOf(resultObject.violations, 0);
-		assert.lengthOf(resultObject.cantTell, 0);
-		assert.lengthOf(resultObject.inapplicable, 1);
+		assert.lengthOf(resultObject.notCompleted, 0);
+		assert.lengthOf(resultObject.notApplied, 1);
 
-		assert.deepEqual(resultObject.inapplicable[0], input[0]);
+		assert.deepEqual(resultObject.notApplied[0], input[0]);
 	});
 });

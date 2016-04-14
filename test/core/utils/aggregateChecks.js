@@ -1,10 +1,10 @@
 
 describe('axe.utils.aggregateChecks', function() {
 	'use strict';
-	var FAIL = 'failed';
-	var PASS = 'passed';
-	var CANTTELL = 'cantTell';
-	var INAPPLICABLE = 'inapplicable';
+	var FAIL = axe.constants.FAIL;
+	var PASS = axe.constants.PASS;
+	var CANTTELL = axe.constants.CANTTELL;
+	var NA = axe.constants.NA;
 
 	// create an object of check results, padding input with defaults and
 	// wrapping arrays where required
@@ -41,11 +41,11 @@ describe('axe.utils.aggregateChecks', function() {
 	it('Should be `inapplicable` when no results are given', function () {
 		var ruleResult = axe.utils.aggregateChecks( createTestCheckResults({}) );
 
-		assert.equal(ruleResult.result, INAPPLICABLE);
+		assert.equal(ruleResult.result, NA);
 	});
 
 	it('sets result  to cantTell when result is not a boolean', function() {
-		var values = [undefined, null, 0, "true", {}, NaN];
+		var values = [undefined, null, 0, 'true', {}, NaN];
 		values.forEach(function (value) {
 			var checkResult = axe.utils.aggregateChecks( createTestCheckResults({
 				any: [{result: value}]
@@ -156,6 +156,6 @@ describe('axe.utils.aggregateChecks', function() {
 			}));
 			assert.equal(checkResult.result, FAIL);
 		});
-	})
+	});
 
 });

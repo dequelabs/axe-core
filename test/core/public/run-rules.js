@@ -122,7 +122,6 @@ describe('runRules', function () {
 	var isNotCalled;
 	beforeEach(function () {
 		isNotCalled = function (err) {
-			if (err) console.log(err);
 			throw err || new Error('Reject should not be called');
 		};
 	});
@@ -239,8 +238,8 @@ describe('runRules', function () {
 					helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/div#target?application=axeAPI',
 					pageLevel: false,
 					impact: null,
-					inapplicable: [],
-					cantTell: [],
+					notApplied: [],
+					notCompleted: [],
 					violations: [],
 					passes: [{
 						result: 'passed',
@@ -263,8 +262,8 @@ describe('runRules', function () {
 					helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/first-div?application=axeAPI',
 					pageLevel: false,
 					impact: null,
-					inapplicable: [],
-					cantTell: [],
+					notApplied: [],
+					notCompleted: [],
 					violations: [],
 					passes: [{
 						result: 'passed',
@@ -435,8 +434,8 @@ describe('runRules', function () {
 					stuff: 'blah',
 					impact: 'moderate',
 					passes: [],
-					inapplicable: [],
-					cantTell: [],
+					notApplied: [],
+					notCompleted: [],
 					violations: [{
 						result: 'failed',
 						node: {
@@ -464,8 +463,8 @@ describe('runRules', function () {
 					bar: 'foo',
 					stuff: 'no',
 					impact: null,
-					inapplicable: [],
-					cantTell: [],
+					notApplied: [],
+					notCompleted: [],
 					violations: [],
 					passes: [{
 						result: 'passed',
