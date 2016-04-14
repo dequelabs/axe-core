@@ -139,30 +139,9 @@ module.exports = function (grunt) {
 				options: {
 					preserveComments: 'some'
 				}
-			},
-			index: {
-				files: [{
-					src: ['tmp/index.js'],
-					dest: 'tmp/index.js'
-				}],
-				options: {
-					preserveComments: 'some'
-				}
-			}
-		},
-		nodeify: {
-			core: {
-				src: ['tmp/index.js'],
-				dest: 'dist/index.js'
 			}
 		},
 		copy: {
-			index: {
-				files: [{
-					src: ['<%= concat.engine.dest %>'],
-					dest: 'tmp/index.js'
-				}]
-			},
 			manifests: {
 				files: [{
 					src: ['package.json'],
@@ -272,9 +251,9 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build']);
 
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
-		'concat:engine', 'babel', 'copy', 'uglify', 'nodeify']);
+		'concat:engine', 'babel', 'copy', 'uglify']);
 
-	grunt.registerTask('test', ['build',	'testconfig', 'fixture', 'connect',
+	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
 
 	grunt.registerTask('test-browser', ['build',  'testconfig', 'fixture', 'connect',
