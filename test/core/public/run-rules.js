@@ -94,9 +94,14 @@ describe('runRules', function () {
 		context.appendChild(i);
 	}
 
-	function createFrames(callback) {
-		var frame, num = 2,
-			loaded = 0;
+	function createFrames(url, callback) {
+		var frame, num = 2;
+		var loaded = 0;
+
+		if (typeof url === 'function'){
+			callback = url;
+			url = '../mock/frames/frame-frame.html';
+		}
 
 		function onLoad() {
 			loaded++;
@@ -106,7 +111,7 @@ describe('runRules', function () {
 		}
 
 		frame = document.createElement('iframe');
-		frame.src = '../mock/frames/frame-frame.html';
+		frame.src = url;
 
 		frame.addEventListener('load', onLoad);
 		fixture.appendChild(frame);
@@ -115,6 +120,7 @@ describe('runRules', function () {
 		frame.src = '../mock/frames/nocode.html';
 		frame.addEventListener('load', onLoad);
 		fixture.appendChild(frame);
+		return frame;
 	}
 
 	var fixture = document.getElementById('fixture');
@@ -345,6 +351,7 @@ describe('runRules', function () {
 
 		var test = fixture.querySelectorAll('.foo');
 		axe.a11yCheck(test, function (results) {
+			console.log(results);
 			assert.lengthOf(results.violations, 1);
 			assert.lengthOf(results.violations[0].nodes, 4);
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);
@@ -507,10 +514,48 @@ describe('runRules', function () {
 				function (err) {
 					assert.instanceOf(err, Error);
 					done();
-				}, isNotCalled);
+				});
 			}, 100);
 		});
 	});
 
+	it('should resolve to cantTell when a rule fails', function (done) {
+		axe._load({
+			rules: [{
+				id: 'incomplete-1',
+				selector: '*',
+				none: ['undeffed']
+			}, {
+				id: 'incomplete-2',
+				selector: '*',
+				none: ['thrower']
+			}],
+			checks: [{
+				id: 'undeffed',
+				evaluate: function () {
+					return undefined;
+				}
+			}, {
+				id: 'thrower',
+				evaluate: function () {
+					throw new Error('Check failed to complete');
+				}
+			}]
+		});
+
+		fixture.innerHTML = '<div></div>';
+
+		axe.a11yCheck('#fixture', function (results) {
+			assert.lengthOf(results.notCompleted, 2);
+			assert.equal(results.notCompleted[0].id, 'incomplete-1');
+			assert.equal(results.notCompleted[1].id, 'incomplete-2');
+
+			assert.include(results.notCompleted[1].description,
+						'An error occured while running this rule');
+			done();
+		});
+	});
+
+	it('should resolve to cantTell if an error occurs inside frame rules');
 
 });

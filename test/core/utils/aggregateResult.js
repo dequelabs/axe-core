@@ -143,12 +143,12 @@ describe('axe.utils.aggregateResult', function () {
 		assert.lengthOf(resultObject.notApplied, 0);
 
 		// Objects are the same
-		assert.deepEqual(resultObject.passes[0], input[0]);
-		assert.deepEqual(resultObject.violations[0], input[1]);
+		assert.deepEqual(resultObject.passes[0].nodes, input[0].passes);
+		assert.deepEqual(resultObject.violations[0].nodes, input[1].violations);
 
 		// Object is a copy
-		assert.notEqual(resultObject.passes[0], input[0]);
-		assert.notEqual(resultObject.violations[0], input[1]);
+		assert.notEqual(resultObject.passes[0].nodes, input[0].passes);
+		assert.notEqual(resultObject.violations[0].nodes, input[1].violations);
 	});
 
 	it('creates a duplicate of the result for each outcome it has', function () {
@@ -162,14 +162,9 @@ describe('axe.utils.aggregateResult', function () {
 		assert.lengthOf(resultObject.notApplied, 0);
 
 		// Objects are the same
-		assert.deepEqual(resultObject.passes[0], input[0]);
-		assert.deepEqual(resultObject.violations[0], input[0]);
-		assert.deepEqual(resultObject.notCompleted[0], input[0]);
-
-		// Object is a copy
-		assert.notEqual(resultObject.passes[0], resultObject.violations[0]);
-		assert.notEqual(resultObject.passes[0], resultObject.notCompleted[0]);
-		assert.notEqual(resultObject.violations[0], resultObject.notCompleted[0]);
+		assert.deepEqual(resultObject.passes[0].nodes, input[0].passes);
+		assert.deepEqual(resultObject.violations[0].nodes, input[0].violations);
+		assert.deepEqual(resultObject.notCompleted[0].nodes, input[0].notCompleted);
 	});
 
 	it('moves notApplied results only to the notApplied array', function () {
@@ -182,6 +177,8 @@ describe('axe.utils.aggregateResult', function () {
 		assert.lengthOf(resultObject.notCompleted, 0);
 		assert.lengthOf(resultObject.notApplied, 1);
 
-		assert.deepEqual(resultObject.notApplied[0], input[0]);
+		assert.equal(resultObject.notApplied[0].id, input[0].id);
+		assert.equal(resultObject.notApplied[0].description, input[0].description);
+
 	});
 });
