@@ -351,7 +351,7 @@ describe('runRules', function () {
 
 		var test = fixture.querySelectorAll('.foo');
 		axe.a11yCheck(test, function (results) {
-			console.log(results);
+
 			assert.lengthOf(results.violations, 1);
 			assert.lengthOf(results.violations[0].nodes, 4);
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);
@@ -556,6 +556,41 @@ describe('runRules', function () {
 		});
 	});
 
-	it('should resolve to cantTell if an error occurs inside frame rules');
+	it('should resolve to cantTell if an error occurs inside frame rules', function (done) {
+		axe._load({
+			rules: [{
+				id: 'incomplete-1',
+				selector: '.nogo',
+				none: ['undeffed']
+			}, {
+				id: 'incomplete-2',
+				selector: '.nogo',
+				none: ['thrower']
+			}],
+			checks: [{
+				id: 'undeffed',
+				evaluate: function () {
+					return false;
+				}
+			}, {
+				id: 'thrower',
+				evaluate: function () {
+					return false;
+				}
+			}]
+		});
+
+		iframeReady('../mock/frames/rule-error.html', fixture, 'context-test', function () {
+			axe.a11yCheck('#fixture', function (results) {
+				assert.lengthOf(results.notCompleted, 2);
+				assert.equal(results.notCompleted[0].id, 'incomplete-1');
+				assert.equal(results.notCompleted[1].id, 'incomplete-2');
+
+				assert.include(results.notCompleted[1].description,
+							'An error occured while running this rule');
+				done();
+			}, isNotCalled);
+		});
+	});
 
 });
