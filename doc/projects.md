@@ -11,3 +11,4 @@ Add your project/integration to this file and submit a pull request.
 7. [grunt-axe-webdriver](https://www.npmjs.com/package/grunt-axe-webdriver)
 8. [R-Spec and Cucumber](https://github.com/dequelabs/axe-matchers)
 9. [aXe audit runner for CrawlKit](https://github.com/crawlkit/runner-axe)
+10. [Web Accessibility Checker for Visual Studio](https://visualstudiogallery.msdn.microsoft.com/3aabefab-1681-4fea-8f95-6a62e2f0f1ec)
