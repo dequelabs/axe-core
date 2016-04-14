@@ -183,5 +183,4 @@ describe('axe.utils.aggregateResult', function () {
 
 		assert.deepEqual(resultObject.inapplicable[0], input[0]);
 	});
-
 });
