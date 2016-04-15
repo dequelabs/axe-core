@@ -5,7 +5,9 @@
   "tags": [
     "experimental",
     "wcag2a",
-    "wcag131"
+    "wcag131",
+    "section508",
+    "section508.22.g"
   ],
   "metadata": {
     "description": "Ensure that each non-empty data cell in a large table has one or more table headers",

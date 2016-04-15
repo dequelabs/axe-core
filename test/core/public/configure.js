@@ -141,4 +141,14 @@ describe('axe.configure', function() {
 		assert.equal(axe._audit.data.checks.bob, 'joe');
 
 	});
+
+	it('overrides the default value of audit.tagExclude', function () {
+		axe._load({});
+		assert.deepEqual(axe._audit.tagExclude, ['experimental']);
+
+		axe.configure({
+			tagExclude: ['ninjas']
+		});
+		assert.deepEqual(axe._audit.tagExclude, ['ninjas']);
+	});
 });

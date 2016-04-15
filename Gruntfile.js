@@ -116,8 +116,8 @@ module.exports = function (grunt) {
 		uglify: {
 			beautify: {
 				files: [{
-					src: ['<%= concat.engine.dest %>'],
-					dest: '<%= concat.engine.dest %>'
+					src: ['./axe.js'],
+					dest: './axe.js'
 				}],
 				options: {
 					mangle: false,

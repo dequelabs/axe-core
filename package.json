@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "2.0.1",
+  "version": "2.0.4",
   "license": "MPL-2.0",
   "contributors": [{
     "name": "David Sturley",
@@ -38,7 +38,6 @@
     "aXe"
   ],
   "main": "axe.js",
-  "dependencies": {},
   "scripts": {
     "build": "grunt",
     "test": "grunt test"
