@@ -534,6 +534,20 @@ describe('Audit', function () {
 			}, isNotCalled);
 		});
 
+		it('should run audit.validateOptions to ensure valid input', function () {
+			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
+				'<div id="monkeys">bananas</div>' +
+				'<input aria-labelledby="monkeys" type="text">' +
+				'<blink>FAIL ME</blink>';
+			var checked = 'options not validated';
+
+			a.validateOptions = function () {
+				checked = 'options validated';
+			};
+
+			a.run({ include: [fixture] }, {}, noop, isNotCalled);
+			assert.equal(checked, 'options validated');
+		});
 		it('should halt if an error occurs when debug is set', function (done) {
 			a.addRule({
 				id: 'throw1',
@@ -559,7 +573,6 @@ describe('Audit', function () {
 				done();
 			});
 		});
-
 	});
 	describe('Audit#after', function () {
 		it('should run Rule#after on any rule whose result is passed in', function () {
@@ -584,6 +597,55 @@ describe('Audit', function () {
 
 			audit.after(results, options);
 		});
+	});
+
+	describe('Audit#validateOptions', function () {
+
+		it('returns the options object when it is valid', function () {
+			var opt = {
+				runOnly: {
+					type: 'rule',
+					value: ['positive1', 'positive2']
+				},
+				rules: {
+					negative1: { enabled: false }
+				}
+			};
+			assert(a.validateOptions(opt), opt);
+		});
+
+		it('throws an error when option.runOnly has an unknown rule', function () {
+			assert.throws(function () {
+				a.validateOptions({
+					runOnly: {
+						type: 'rule',
+						value: ['frakeRule']
+					}
+				});
+			});
+		});
+
+		it('throws an error when option.runOnly has an unknown tag', function () {
+			assert.throws(function () {
+				a.validateOptions({
+					runOnly: {
+						type: 'tags',
+						value: ['fakeTag']
+					}
+				});
+			});
+		});
+
+		it('throws an error when option.rules has an unknown rule', function () {
+			assert.throws(function () {
+				a.validateOptions({
+					rules: {
+						fakeRule: { enabled: false}
+					}
+				});
+			});
+		});
+
 	});
 
 });
