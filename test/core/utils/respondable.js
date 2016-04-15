@@ -118,6 +118,7 @@ describe('axe.utils.respondable', function () {
 		event.initEvent('message', true, true);
 		event.data = JSON.stringify({
 			_respondable: true,
+			_source: 'axe.2.0.0',
 			topic: 'Death star',
 			message: 'Help us Obi-Wan',
 			uuid: mockUUID
@@ -239,6 +240,7 @@ describe('axe.utils.respondable', function () {
 		event.initEvent('message', true, true);
 		event.data = JSON.stringify({
 			_respondable: true,
+			_source: 'axe.2.0.0',
 			topic: 'Death star',
 			error: {
 				name: 'ReferenceError',

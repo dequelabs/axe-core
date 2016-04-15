@@ -3,7 +3,9 @@
   "selector": "table",
   "tags": [
     "wcag2a",
-    "wcag131"
+    "wcag131",
+    "section508",
+    "section508.22.g"
   ],
   "metadata": {
     "description": "Ensure that each cell in a table using the headers refers to another cell in that table",

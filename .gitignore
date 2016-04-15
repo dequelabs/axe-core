@@ -6,3 +6,5 @@ test/integration/*/index.html
 axe.js
 axe.min.js
 axe.es2016.js
+*.tgz
+npm-shrinkwrap.json
