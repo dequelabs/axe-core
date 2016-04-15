@@ -46,10 +46,10 @@
 | skip-link | Ensures the first link on the page is a skip link | best-practice |
 | tabindex | Ensures tabindex attribute values are not greater than 0 | best-practice |
 | table-duplicate-name | Ensure that tables do not have the same summary and caption | best-practice |
-| table-fake-caption | Ensure that tables with a caption use the &lt;caption&gt; element. | experimental, wcag2a, wcag131 |
-| td-has-header | Ensure that each non-empty data cell in a large table has one or more table headers | experimental, wcag2a, wcag131 |
-| td-headers-attr | Ensure that each cell in a table using the headers refers to another cell in that table | wcag2a, wcag131 |
-| th-has-data-cells | Ensure that each table header in a data table refers to data cells | wcag2a, wcag131 |
+| table-fake-caption | Ensure that tables with a caption use the &lt;caption&gt; element. | experimental, wcag2a, wcag131, section508, section508.22.g |
+| td-has-header | Ensure that each non-empty data cell in a large table has one or more table headers | experimental, wcag2a, wcag131, section508, section508.22.g |
+| td-headers-attr | Ensure that each cell in a table using the headers refers to another cell in that table | wcag2a, wcag131, section508, section508.22.g |
+| th-has-data-cells | Ensure that each table header in a data table refers to data cells | wcag2a, wcag131, section508, section508.22.g |
 | valid-lang | Ensures lang attributes have valid values | wcag2aa, wcag312 |
 | video-caption | Ensures &lt;video&gt; elements have captions | wcag2a, wcag122, wcag123, section508, section508.22.a |
 | video-description | Ensures &lt;video&gt; elements have audio descriptions | wcag2aa, wcag125, section508, section508.22.b |
