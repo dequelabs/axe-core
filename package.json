@@ -21,7 +21,7 @@
     "bdd",
     "aXe"
   ],
-  "main": "dist/index.js",
+  "main": "dist/axe.js",
   "files": [ "dist", "bower.json" ],
   "dependencies": {},
   "scripts": {
