@@ -21,7 +21,8 @@
     "bdd",
     "aXe"
   ],
-  "main": "index.js",
+  "main": "dist/index.js",
+  "files": [ "dist", "bower.json" ],
   "dependencies": {},
   "scripts": {
     "build": "grunt",

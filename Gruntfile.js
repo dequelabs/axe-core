@@ -141,23 +141,6 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		copy: {
-			manifests: {
-				files: [{
-					src: ['package.json'],
-					dest: 'dist/'
-				}, {
-					src: ['README.md'],
-					dest: 'dist/'
-				}, {
-					src: ['bower.json'],
-					dest: 'dist/'
-				}, {
-					src: ['LICENSE'],
-					dest: 'dist/'
-				}]
-			}
-		},
 		watch: {
 			files: ['lib/**/*', 'test/**/*.js', 'Gruntfile.js'],
 			tasks: ['build', 'testconfig', 'fixture']
@@ -251,7 +234,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build']);
 
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
-		'concat:engine', 'babel', 'copy', 'uglify']);
+		'concat:engine', 'babel', 'uglify']);
 
 	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
