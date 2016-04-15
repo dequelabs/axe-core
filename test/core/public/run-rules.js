@@ -511,7 +511,6 @@ describe('runRules', function () {
 
 			runRules([['#target', '#elementNotFound']], {}, function resolve() {
 				assert.ok(false, 'frame should have thrown an error');
-				done();
 
 			}, function reject(err) {
 				assert.instanceOf(err, Error);
