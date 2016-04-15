@@ -12,6 +12,11 @@ describe('landmark', function () {
 		assert.isTrue(checks.landmark.evaluate(fixture));
 	});
 
+	it('should return true when <main> is found', function () {
+		fixture.innerHTML = '<main></main>';
+		assert.isTrue(checks.landmark.evaluate(fixture));
+	});
+
 	it('should otherwise return false', function () {
 		fixture.innerHTML = '<div role="contentinfo"></div>';
 		assert.isFalse(checks.landmark.evaluate(fixture));
