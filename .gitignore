@@ -1,7 +1,8 @@
 tmp
-dist
 bower_components
 node_modules
+axe.js
+axe.min.js
 test/*/index.html
 test/integration/*/index.html
 .grunt
