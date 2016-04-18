@@ -58,7 +58,6 @@
 									var matches = nodes.filter(function (node) {
 										for (var i=0; i < selector.length; i++) {
 											if (node.target[i] !== selector[i]) {
-												console.log(node.target, selector);
 												return false;
 											}
 										}
@@ -68,8 +67,6 @@
 										// remove each node we find
 										nodes.splice(nodes.indexOf(node), 1);
 									});
-
-									console.log(matches);
 
 									if (matches.length === 0) {
 										assert(false, 'Element not found');
