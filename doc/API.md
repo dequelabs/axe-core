@@ -348,7 +348,15 @@ The URL of the page that was tested.
 
 The date and time that analysis was completed.
 
-###### `passes` and `violations` array
+###### result arrays
+
+The results of axe are grouped according to their outcome into the following arrays:
+* `passes`: These results indicate what elements passed the rules
+* `violations`: These results indicate what elements failed the rules
+* `notApplied`: These results indicate which rules did not run because no matching content was found on the page. For example, with no video, those rules won't run.
+* `notCompleted`: These results were aborted and require further testing. This can happen either because of technical restrictions to what the rule can test, or because a javascript error occurred.
+
+Each object returned in these arrays have the following properties:
 
 * `description` - Text string that describes what the rule does
 * `help` - Help text that describes the test that was performed
