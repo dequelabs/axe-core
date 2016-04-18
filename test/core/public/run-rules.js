@@ -489,5 +489,24 @@ describe('runRules', function () {
 		});
 	});
 
+	it('should cascade `no elements found` errors in frames to reject run_rules', function (done) {
+		axe._load({ rules: [{
+			id: 'invalidRule'
+		}], checks: [], messages: {}});
+		fixture.innerHTML = '<div id="outer"></div>';
+		var outer = document.getElementById('outer');
 
+		iframeReady('../mock/frames/context.html', outer, 'target', function() {
+
+			runRules([['#target', '#elementNotFound']], {}, function resolve() {
+				assert.ok(false, 'frame should have thrown an error');
+
+			}, function reject(err) {
+				assert.instanceOf(err, Error);
+				assert.include(err.message, 'No elements found for include in frame Context');
+				done();
+			});
+
+		});
+	});
 });
