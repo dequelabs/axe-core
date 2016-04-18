@@ -29,41 +29,41 @@ describe('axe.a11yCheck', function () {
 			});
 		});
 
-		it('should use v2 reporter by default', function (done) {
-			var usedReporter = false;
-			window.reporters = {
-				'v2': function () {
-					usedReporter = true;
-					return true;
-				}
-			};
-			axe.a11yCheck(document, {}, function () {
-				assert.ok(usedReporter);
-				done();
-			});
-		});
+		it('sets v2 as the default reporter if audit.reporter is null', function (done) {
+			var origRunRules = axe._runRules;
 
-		it('should use specified reporter via options - anon function', function (done) {
-			window.reporters = {
-				'v2': function () {
-					assert.fail('should not be called');
-				}
+			axe._runRules = function (ctxt, opt) {
+				assert.equal(opt.reporter, 'v2');
+				axe._runRules = origRunRules;
+				done();
 			};
 
-			axe.a11yCheck(document, { reporter: function (result) {
-				assert.isArray(result);
-				done();
-			}});
+			axe._audit.reporter = null;
+			console.log('123');
+			axe.a11yCheck(document, noop);
 		});
 
-		it('should use specified reporter via options by name', function (done) {
-			window.reporters = {};
+		it('uses the audit.reporter if no reporter is set in options', function (done) {
+			var origRunRules = axe._runRules;
 
-			axe.addReporter('foo', function (result) {
-				assert.isArray(result);
+			axe._runRules = function (ctxt, opt) {
+				assert.equal(opt.reporter, 'raw');
+				axe._runRules = origRunRules;
 				done();
-			});
-			axe.a11yCheck(document, { reporter: 'foo' });
+			};
+			axe._audit.reporter = 'raw';
+			axe.a11yCheck(document, noop);
+		});
+
+		it('does not override if another reporter is set', function (done) {
+			var origRunRules = axe._runRules;
+			axe._runRules = function (ctxt, opt) {
+				assert.equal(opt.reporter, 'raw');
+				axe._runRules = origRunRules;
+				done();
+			};
+			axe._audit.reporter = null;
+			axe.a11yCheck(document, {reporter: 'raw'}, noop);
 		});
 
 	});

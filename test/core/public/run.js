@@ -42,13 +42,23 @@ describe('axe.run', function () {
 		});
 	});
 
-	it('sets v1 as the default reporter if no reporter is specified', function (done) {
+	it('sets v1 as the default reporter if audit.reporter is null', function (done) {
 		axe._runRules = function (ctxt, opt) {
 			assert.equal(opt.reporter, 'v1');
 			axe._runRules = origRunRules;
 			done();
 		};
+		axe._audit.reporter = null;
+		axe.run(document, noop);
+	});
 
+	it('uses the audit.reporter if no reporter is set in options', function (done) {
+		axe._runRules = function (ctxt, opt) {
+			assert.equal(opt.reporter, 'raw');
+			axe._runRules = origRunRules;
+			done();
+		};
+		axe._audit.reporter = 'raw';
 		axe.run(document, noop);
 	});
 
@@ -58,6 +68,7 @@ describe('axe.run', function () {
 			axe._runRules = origRunRules;
 			done();
 		};
+		axe._audit.reporter = null;
 		axe.run(document, {reporter: 'raw'}, noop);
 	});
 
