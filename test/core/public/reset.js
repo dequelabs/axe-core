@@ -27,26 +27,35 @@ describe('axe.reset', function () {
 			rules: [{
 				id: 'bob',
 				selector: 'fail'
-			}]
+			}],
+			reporter: 'v2'
 		});
 		assert.lengthOf(axe._audit.rules, 1);
 		assert.instanceOf(axe._audit.rules[0], Rule);
 		assert.equal(axe._audit.rules[0].id, 'bob');
 		assert.equal(axe._audit.rules[0].selector, 'fail');
+		assert.equal(axe._audit.reporter, 'v2');
+
 		axe.configure({
 			rules: [{
 				id: 'bob',
 				selector: 'pass',
-			}]
+			}],
+			reporter: 'raw'
 		});
 		assert.lengthOf(axe._audit.rules, 1);
 		assert.instanceOf(axe._audit.rules[0], Rule);
 		assert.equal(axe._audit.rules[0].id, 'bob');
 		assert.equal(axe._audit.rules[0].selector, 'pass');
+		assert.equal(axe._audit.reporter, 'raw');
+
 		axe.reset();
+
 		assert.lengthOf(axe._audit.rules, 1);
 		assert.instanceOf(axe._audit.rules[0], Rule);
 		assert.equal(axe._audit.rules[0].id, 'bob');
 		assert.equal(axe._audit.rules[0].selector, 'fail');
+		assert.equal(axe._audit.reporter, 'v2');
 	});
+
 });

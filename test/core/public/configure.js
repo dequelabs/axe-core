@@ -18,7 +18,9 @@ describe('axe.configure', function() {
 	});
 
 	it('should override an audit\'s reporter - string', function() {
-		axe._load({ reporter: function (results, callback) { callback(results); } });
+		axe._load({ });
+		assert.isNull(axe._audit.reporter);
+
 		axe.configure({ reporter: 'v1' });
 		assert.equal(axe._audit.reporter, 'v1');
 	});
