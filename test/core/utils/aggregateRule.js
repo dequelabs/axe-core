@@ -121,7 +121,7 @@ describe('axe.utils.aggregateRule', function() {
 		));
 		assert.equal(ruleResult.impact, 'serious');
 		assert.equal(ruleResult.violations[0].impact, 'serious');
-		assert.isUndefined(ruleResult.passes[0].impact);
-		assert.isUndefined(ruleResult.passes[1].impact);
+		assert.isNull(ruleResult.passes[0].impact);
+		assert.isNull(ruleResult.passes[1].impact);
 	});
 });

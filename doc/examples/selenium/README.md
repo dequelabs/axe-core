@@ -33,4 +33,4 @@ so simply edit that property to put in the URLs you wish to test.
 
 The example is simply logging the analysis results to files.  The aXe
 documentation should be consulted for more details on customizing and
-analyzing calls to `axe.a11yCheck`.
+analyzing calls to `axe.run`.
