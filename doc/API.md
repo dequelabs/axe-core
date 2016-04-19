@@ -9,13 +9,17 @@
 	1. [API Notes](#api-notes)
 	1. [API Name: axe.getRules](#api-name-axegetrules)
 	1. [API Name: axe.configure](#api-name-axeconfigure)
-	1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
-		1. [Parameters](#parameters-2)
+	1. [API Name: axe.run](#api-name-axerun)
+		1. [Parameters axe.run](#parameters-axerun)
 			1. [Context Parameter](#context-parameter)
 			2. [Options Parameter](#options-parameter)
 			3. [Callback Parameter](#callback-parameter)
+		1. [Return Promise](#return-promise)
+		1. [Error result](#error-result)
 		1. [Results Object](#results-object)
 	1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
+	1. [API Name: axe.cleanup](#api-name-axecleanup)
+	1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
 1. [Section 3: Example Reference](#section-3-example-reference)
 
 ## Section 1: Introduction
@@ -35,7 +39,7 @@ The aXe API can be used as part of a broader process that is performed on many, 
 
 1. Load page in testing system
 2. Optionally, set configuration options for the javascript API (`axe.configure`)
-3. Call analyze javascript API (`axe.a11yCheck`)
+3. Call analyze javascript API (`axe.run`)
 4. Either assert against results or save them for later processing
 
 
@@ -105,7 +109,7 @@ To configure the format of the data used by aXe. This can be used to add new rul
 
 #### Description
 
-User specifies the format of the JSON structure passed to the callback of `axe.a11yCheck`
+User specifies the format of the JSON structure passed to the callback of `axe.run`
 
 #### Synopsis
 
@@ -126,7 +130,7 @@ axe.configure({
   * `branding` - mixed(optional) Used to set the branding of the helpUrls
      * `brand` - string(optional) sets the brand string - default "axe"
      * `application` - string(optional) sets the application string - default "axeAPI"
-  * `reporter` - Used to set the output format that the axe.a11yCheck function will pass to the callback function
+  * `reporter` - Used to set the output format that the axe.run function will pass to the callback function
      * `v1` to use the previous version's format: `axe.configure({ reporter: "v1" });`
      * `v2` to use the current version's format: `axe.configure({ reporter: "v2" });`
   * `checks` - Used to add checks to the list of checks used by rules, or to override the properties of existing checks
@@ -155,7 +159,7 @@ axe.configure({
 **Returns:** Nothing
 
 
-### API Name: axe.a11yCheck
+### API Name: axe.run
 
 #### Purpose
 
@@ -168,26 +172,28 @@ Runs a number of rules against the provided HTML page and returns the resulting 
 #### Synopsis
 
 ```javascript
-axe.a11yCheck(context, options, callback);
+axe.run(context, options, callback);
 ```
 
-#### Parameters
+#### Parameters axe.run
 
-* [`context`](#context-parameter): Defines the scope of the analysis - the part of the DOM that you would like to analyze. This will typically be the `document` or a specific selector such as class name, ID, selector, etc.
-* [`options`](#options-parameter): (optional) Set of options passed into rules or checks, temporarily modifying them. This contrasts with `axe.configure`, which is more permanent. [See below for more information](#a11ycheck-parameters)
-* [`callback`](#callback-parameter): The callback function which receives on the [results object](#results-object) as a parameter when analysis is complete
+* [`context`](#context-parameter): (optional) Defines the scope of the analysis - the part of the DOM that you would like to analyze. This will typically be the `document` or a specific selector such as class name, ID, selector, etc.
+* [`options`](#options-parameter): (optional) Set of options passed into rules or checks, temporarily modifying them. This contrasts with `axe.configure`, which is more permanent. [See below for more information](#axerun-parameters)
+* [`callback`](#callback-parameter): (optional) The callback function which receives either null or an [error result](#error-result) as the first parameter, and the [results object](#results-object) when analysis is completed successfully, or undefined if it did not.
 
 ##### Context Parameter
 
-The context object can be passed one of the following:
+By default, axe.run will test the entire document. The context object is an optional parameter that can be used to specify which element should and which should not be tested. It can be passed one of the following:
 
 1. An element reference that represents the portion of the document that must be analyzed
 	* Example: To limit analysis to the `<div id="content">` element: `document.getElementById("content")`
-2. A CSS selector that selects the portion(s) of the document that must be analyzed. This includes:
+2. A NodeList such as returned by `document.querySelectorAll`.
+3. A CSS selector that selects the portion(s) of the document that must be analyzed. This includes:
 	*  A CSS selector as a class name  (e.g. `.classname`)
 	*  A CSS selector as a node name (e.g. `div`)
 	*  A CSS selector of an element id (e.g. `#tag`)
-3. An include-exclude object (see below)
+4. An include-exclude object (see below)
+
 
 ###### Include-Exclude Object
 
@@ -226,7 +232,7 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 
 ##### Options Parameter
 
-The options parameter is flexible way to configure how `a11yCheck` operates. The different modes of operation are:
+The options parameter is flexible way to configure how `axe.run` operates. The different modes of operation are:
 
 * Run all rules corresponding to one of the accessibility standards
 * Run all rules defined in the system, except for the list of rules specified
@@ -284,7 +290,7 @@ The options parameter is flexible way to configure how `a11yCheck` operates. The
 
 3. Run all enabled Rules except for a list of rules
 
-	The default operation for a11yCheck is to run all WCAG 2.0 Level A and Level AA rules. If certain rules should be disabled from being run, specify `options` as:
+	The default operation for axe.run is to run all WCAG 2.0 Level A and Level AA rules. If certain rules should be disabled from being run, specify `options` as:
 	```javascript
 	{
 	  "rules": {
@@ -333,7 +339,16 @@ The options parameter is flexible way to configure how `a11yCheck` operates. The
 
 ##### Callback Parameter
 
-The callback parameter is a function that will be called when the asynchronous `axe.a11yCheck` function completes. The callback function is passed a single parameter - the results object of the `axe.a11yCheck` call.
+The callback parameter is a function that will be called when the asynchronous `axe.run` function completes. The callback function is passed two parameters. The first parameter will be an error thrown inside of aXe if axe.run could not complete. If axe completed correctly the first parameter will be null, and the second parameter will be the results object.
+
+
+#### Return Promise
+
+If the callback was not defined, aXe will return a Promise instead. Axe does not polyfill a Promise library however. So on systems without support for Promises this feature is not available. If you are unsure if the systems you will need aXe on has Promise support we suggest you use the callback provided by axe.run instead.
+
+#### Error Result
+
+This will either be null or an object which is an instance of Error. If you are consistently receiving errors, please report this issue on the [Github issues list of Axe](https://github.com/dequelabs/axe-core/issues).
 
 
 #### Results Object
@@ -376,7 +391,8 @@ The date and time that analysis was completed.
 In this example, we will pass the selector for the entire document, pass no options, which means all enabled rules will be run, and have a simple callback function that logs the entire results object to the console log:
 
 ```javascript
-axe.a11yCheck(document, function(results) {
+axe.run(document, function(err, results) {
+  if (err) throw err;
   console.log(results);
 });
 ```
@@ -415,7 +431,7 @@ In the example above, the `passes` array contains two entries that correspond to
 
 This indicates that the element selected by the entry in `target[0]` was checked for the color contrast rule and that it passed the test.
 
-Each subsequent entry in the passes array has the same format, but will detail the different rules that were run as part of this call to `axe.a11yCheck()`.
+Each subsequent entry in the passes array has the same format, but will detail the different rules that were run as part of this call to `axe.run()`.
 
 ##### `violations` Results Array
 
@@ -423,7 +439,7 @@ The array of `violations` contains one entry; this entry describes a test that c
 
 The `target` array demonstrates how we specify the selectors when the node specified is inside of an `iframe` or `frame`. The first element in the `target` array - `target[0]` - specifies the selector to the `iframe` that contains the button. The second element in the `target` array - `target[1]` -  specifies the selector to the actual button, but starting from inside the iframe selected in `target[0]`.
 
-Each subsequent entry in the violations array has the same format, but will detail the different rules that were run that generated accessibility violations as part of this call to `axe.a11yCheck()`.
+Each subsequent entry in the violations array has the same format, but will detail the different rules that were run that generated accessibility violations as part of this call to `axe.run()`.
 
 
 #### Example 3
@@ -431,12 +447,13 @@ Each subsequent entry in the violations array has the same format, but will deta
 In this example, we pass the selector for the entire document, enable two additional best practice rules, and have a simple callback function that logs the entire results object to the console log:
 
 ```javascript
-axe.a11yCheck(document, {
+axe.run(document, {
   rules: {
     "heading-order": { enabled: true },
     "label-title-only": { enabled: true }
   }
-}, function(results) {
+}, function(err, results) {
+  if (err) throw err;
   console.log(results);
 });
 ```
@@ -448,6 +465,13 @@ Register a plugin with the aXe plugin system. See [implementing a plugin](plugin
 
 Call the plugin system's cleanup function. See [implementing a plugin](plugins.md).
 
+### API Name: axe.a11yCheck
+
+In axe-core v1 the main method for axe was `axe.a11yCheck()`. This method was replaced with `axe.run()` in order to better deal with errors. The method `axe.a11yCheck()` differs from `axe.run()` in the following ways:
+
+- .a11yCheck does not pass the error object to the callback, rather it returns the result as the first parameter and logs errors to the console. 
+- .a11yCheck requires a context object, and so will not fall back to the document root.
+- .a11yCheck does not return a Promise.
 
 ## Section 3: Example Reference
 

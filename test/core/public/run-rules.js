@@ -4,6 +4,16 @@ describe('axe.a11yCheck', function () {
 
 	describe('reporter', function () {
 
+		var origReporters;
+		beforeEach(function () {
+			axe._load({});
+			origReporters = window.reporters;
+		});
+
+		afterEach(function () {
+			window.reporters = origReporters;
+		});
+
 		it('should throw if no audit is configured', function () {
 			axe._audit = null;
 
@@ -13,72 +23,49 @@ describe('axe.a11yCheck', function () {
 		});
 
 		it('should allow for option-less invocation', function (done) {
-
-			axe._load({ reporter: function (r, c) {
-				c(r);
-			}});
 			axe.a11yCheck(document, function (result) {
-				assert.isArray(result);
-				assert.lengthOf(result, 0);
+				assert.isObject(result);
 				done();
 			});
 		});
 
-		it('should use specified reporter via options - anon function', function (done) {
+		it('sets v2 as the default reporter if audit.reporter is null', function (done) {
+			var origRunRules = axe._runRules;
 
-			axe._load({
-				reporter: function () {
-					assert.fail('should not be called');
-				}
-			});
-			axe.a11yCheck(document, { reporter: function (result) {
-				assert.isArray(result);
-				assert.lengthOf(result, 0);
-				done();
-			}});
-		});
-
-		it('should use specified reporter via options by name', function (done) {
-
-			var orig = window.reporters;
-			axe._load({
-				reporter: function () {
-					assert.fail('should not be called');
-				}
-			});
-			axe.reporter('foo', function (result) {
-				assert.isArray(result);
-				assert.lengthOf(result, 0);
-				window.reporters = orig;
-				done();
-			});
-			axe.a11yCheck(document, { reporter: 'foo' });
-		});
-
-		it('should check configured reporter', function (done) {
-
-			axe._load({
-				reporter: function (result) {
-					assert.isArray(result);
-					assert.lengthOf(result, 0);
-					done();
-				}
-			});
-			axe.a11yCheck(document, null);
-		});
-
-		it('fallback to default configured reporter', function (done) {
-			var orig = window.defaultReporter;
-			window.defaultReporter = function (result) {
-				assert.isArray(result);
-				assert.lengthOf(result, 0);
+			axe._runRules = function (ctxt, opt) {
+				assert.equal(opt.reporter, 'v2');
+				axe._runRules = origRunRules;
 				done();
 			};
 
-			axe._load({});
-			axe.a11yCheck(document, null);
-			window.defaultReporter = orig;
+			axe._audit.reporter = null;
+			console.log('123');
+			axe.a11yCheck(document, noop);
 		});
+
+		it('uses the audit.reporter if no reporter is set in options', function (done) {
+			var origRunRules = axe._runRules;
+
+			axe._runRules = function (ctxt, opt) {
+				assert.equal(opt.reporter, 'raw');
+				axe._runRules = origRunRules;
+				done();
+			};
+			axe._audit.reporter = 'raw';
+			axe.a11yCheck(document, noop);
+		});
+
+		it('does not override if another reporter is set', function (done) {
+			var origRunRules = axe._runRules;
+			axe._runRules = function (ctxt, opt) {
+				assert.equal(opt.reporter, 'raw');
+				axe._runRules = origRunRules;
+				done();
+			};
+			axe._audit.reporter = null;
+			axe.a11yCheck(document, {reporter: 'raw'}, noop);
+		});
+
 	});
 });
 describe('runRules', function () {
@@ -309,7 +296,8 @@ describe('runRules', function () {
 			length: 2
 		};
 
-		axe.a11yCheck($test, function (results) {
+		axe.run($test, function (err, results) {
+			assert.isNull(err);
 			assert.lengthOf(results.violations, 1);
 			assert.lengthOf(results.violations[0].nodes, 4);
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);
@@ -338,7 +326,8 @@ describe('runRules', function () {
 		fixture.innerHTML = '<div class="foo" id="t1"><span></span></div><div class="foo" id="t2"><em></em></div>';
 
 		var test = fixture.querySelectorAll('.foo');
-		axe.a11yCheck(test, function (results) {
+		axe.run(test, function (err, results) {
+			assert.isNull(err);
 			assert.lengthOf(results.violations, 1);
 			assert.lengthOf(results.violations[0].nodes, 4);
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);

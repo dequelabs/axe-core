@@ -28,10 +28,10 @@ failures.
 To run the example on your own HTML, such as widgets or controls, insert the
 HTML into the document, retrieve the root element of your widget (with e.g.,
 `document.getElementById()`), and pass that as the first argument into a call
-to `axe.a11yCheck`.  
+to `axe.run`.  
 
-The third argument to the `axe.a11yCheck` call should be the function to test
+The third argument to the `axe.run` call should be the function to test
 the results. The example is simply looking at the count of violations, but much
 more detailed information is available if desired.  The aXe documentation
 should be consulted for more details on customizing and
-analyzing calls to `axe.a11yCheck`.
+analyzing calls to `axe.run`.
