@@ -95,7 +95,7 @@ describe('reporters - na', function() {
 
 	var naOption = { reporter: 'na' };
 
-	it('should merge the runRules results into violations, passes and notApplicable', function(done) {
+	it('should merge the runRules results into violations, passes and inapplicable', function(done) {
 		axe.run(naOption, function (err, results) {
 			assert.isNull(err);
 			assert.isObject(results);
@@ -103,8 +103,8 @@ describe('reporters - na', function() {
 			assert.lengthOf(results.violations, 1);
 			assert.isArray(results.passes);
 			assert.lengthOf(results.passes, 1);
-			assert.isArray(results.notApplied);
-			assert.lengthOf(results.notApplied, 1);
+			assert.isArray(results.inapplicable);
+			assert.lengthOf(results.inapplicable, 1);
 
 			done();
 		});
@@ -114,7 +114,7 @@ describe('reporters - na', function() {
 			assert.isNull(err);
 			assert.equal(results.violations[0].id, 'idkStuff');
 			assert.equal(results.passes[0].id, 'gimmeLabel');
-			assert.equal(results.notApplied[0].id, 'noMatch');
+			assert.equal(results.inapplicable[0].id, 'noMatch');
 			done();
 		});
 	});
@@ -123,7 +123,7 @@ describe('reporters - na', function() {
 			assert.isNull(err);
 			assert.deepEqual(results.violations[0].tags, ['tag2']);
 			assert.deepEqual(results.passes[0].tags, ['tag1']);
-			assert.deepEqual(results.notApplied[0].tags, ['tag3']);
+			assert.deepEqual(results.inapplicable[0].tags, ['tag3']);
 			done();
 		});
 	});
@@ -132,7 +132,7 @@ describe('reporters - na', function() {
 			assert.isNull(err);
 			assert.ok(!results.violations[0].helpUrl);
 			assert.equal(results.passes[0].helpUrl, 'things');
-			assert.equal(results.notApplied[0].helpUrl, 'somewhere');
+			assert.equal(results.inapplicable[0].helpUrl, 'somewhere');
 			done();
 		});
 	});

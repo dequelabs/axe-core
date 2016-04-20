@@ -231,8 +231,8 @@ describe('runRules', function () {
 					helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/div#target?application=axeAPI',
 					pageLevel: false,
 					impact: null,
-					notApplied: [],
-					notCompleted: [],
+					inapplicable: [],
+					incomplete: [],
 					violations: [],
 					passes: [{
 						result: 'passed',
@@ -256,8 +256,8 @@ describe('runRules', function () {
 					helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/first-div?application=axeAPI',
 					pageLevel: false,
 					impact: null,
-					notApplied: [],
-					notCompleted: [],
+					inapplicable: [],
+					incomplete: [],
 					violations: [],
 					passes: [{
 						result: 'passed',
@@ -431,8 +431,8 @@ describe('runRules', function () {
 					stuff: 'blah',
 					impact: 'moderate',
 					passes: [],
-					notApplied: [],
-					notCompleted: [],
+					inapplicable: [],
+					incomplete: [],
 					violations: [{
 						result: 'failed',
 						node: {
@@ -460,8 +460,8 @@ describe('runRules', function () {
 					bar: 'foo',
 					stuff: 'no',
 					impact: null,
-					notApplied: [],
-					notCompleted: [],
+					inapplicable: [],
+					incomplete: [],
 					violations: [],
 					passes: [{
 						result: 'passed',
@@ -537,11 +537,11 @@ describe('runRules', function () {
 		fixture.innerHTML = '<div></div>';
 
 		axe.a11yCheck('#fixture', function (results) {
-			assert.lengthOf(results.notCompleted, 2);
-			assert.equal(results.notCompleted[0].id, 'incomplete-1');
-			assert.equal(results.notCompleted[1].id, 'incomplete-2');
+			assert.lengthOf(results.incomplete, 2);
+			assert.equal(results.incomplete[0].id, 'incomplete-1');
+			assert.equal(results.incomplete[1].id, 'incomplete-2');
 
-			assert.include(results.notCompleted[1].description,
+			assert.include(results.incomplete[1].description,
 						'An error occured while running this rule');
 			done();
 		});
@@ -573,11 +573,11 @@ describe('runRules', function () {
 
 		iframeReady('../mock/frames/rule-error.html', fixture, 'context-test', function () {
 			axe.a11yCheck('#fixture', function (results) {
-				assert.lengthOf(results.notCompleted, 2);
-				assert.equal(results.notCompleted[0].id, 'incomplete-1');
-				assert.equal(results.notCompleted[1].id, 'incomplete-2');
+				assert.lengthOf(results.incomplete, 2);
+				assert.equal(results.incomplete[0].id, 'incomplete-1');
+				assert.equal(results.incomplete[1].id, 'incomplete-2');
 
-				assert.include(results.notCompleted[1].description,
+				assert.include(results.incomplete[1].description,
 							'An error occured while running this rule');
 				done();
 			}, isNotCalled);

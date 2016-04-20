@@ -6,7 +6,7 @@
 		return {
 			passes: results.passes[0],
 			violations: results.violations[0],
-			notCompleted: results.notCompleted[0]
+			incomplete: results.incomplete[0]
 		};
 	}
 
@@ -108,8 +108,8 @@
 					});
 					runTest(test, 'passes');
 					runTest(test, 'violations');
-					if (test.notCompleted) {
-						runTest(test, 'notCompleted');
+					if (test.incomplete) {
+						runTest(test, 'incomplete');
 					}
 				});
 			});
