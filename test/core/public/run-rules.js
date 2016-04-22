@@ -1,6 +1,7 @@
 /*global runRules */
 describe('axe.a11yCheck', function () {
 	'use strict';
+	var noop = function () {};
 
 	describe('reporter', function () {
 
@@ -39,7 +40,6 @@ describe('axe.a11yCheck', function () {
 			};
 
 			axe._audit.reporter = null;
-			console.log('123');
 			axe.a11yCheck(document, noop);
 		});
 
