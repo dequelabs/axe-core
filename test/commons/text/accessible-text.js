@@ -444,7 +444,9 @@ describe('text.accessibleText', function() {
 		it('should provide a default value for input type="reset"', function() {
 			fixture.innerHTML = '<input type="reset">';
 			var target = fixture.querySelector('input');
-			assert.equal(axe.commons.text.accessibleText(target), 'Reset');
+			var defaultText = axe.commons.text.accessibleText(target);
+			assert.isString(defaultText);
+			assert.notEqual(defaultText.trim(), '');
 		});
 
 		it('should find title for input type=button', function() {
