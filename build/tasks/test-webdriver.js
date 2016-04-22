@@ -10,7 +10,7 @@ function collectTestResults(driver) {
 	// inject a script that waits half a second
 	return driver.executeAsyncScript(function () {
 		var callback = arguments[arguments.length - 1];
-		setTimeout(function isDone() {
+		setTimeout(function () {
 			if (window.mochaResults) {
 				window.mochaResults.url = window.location.href;
 			}
@@ -40,15 +40,29 @@ module.exports = function (grunt) {
 		var errors = [];
 		var driver;
 
+		if (options.browser === 'edge') {
+			// yes, really, and this isn't documented anywhere either.
+			options.browser = 'MicrosoftEdge';
+		}
+
+		if ((process.platform === 'win32' && options.browser === 'safari') ||
+			(process.platform === 'darwin' && ['ie', 'MicrosoftEdge'].indexOf(options.browser) !== -1)
+		) {
+			grunt.log.writeln();
+			grunt.log.writeln('Skipped ' + browser + ' as it is not supported on this platform');
+			return done();
+		}
+
 		// try to load the browser
 		try {
-			driver = new WebDriver.Builder()
-			.forBrowser(options.browser)
+			driver = new WebDriver.Builder();
+			driver.forBrowser(options.browser)
 			.build();
+
 			driver.manage().timeouts().setScriptTimeout(600);
 
 		// If load fails, warn user and move to the next task
-		} catch(err) {
+		} catch (err) {
 			grunt.log.writeln();
 			grunt.log.error(err.message);
 			grunt.log.writeln('Aborted testing using ' + options.browser);
@@ -85,8 +99,10 @@ module.exports = function (grunt) {
 		});
 
 		Promise.all(testAllPages)
-		.then(driver.quit)
 		.then(function () {
+			return driver.quit()
+
+		}).then(function () {
 			// If there are no errors, continue
 			if (errors.length === 0) {
 				done(true);
