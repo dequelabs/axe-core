@@ -55,8 +55,8 @@ module.exports = function (grunt) {
 
 		// try to load the browser
 		try {
-			driver = new WebDriver.Builder();
-			driver.forBrowser(options.browser)
+			driver = new WebDriver.Builder()
+			.forBrowser(options.browser)
 			.build();
 
 			driver.manage().timeouts().setScriptTimeout(600);
