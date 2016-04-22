@@ -18,6 +18,9 @@ module.exports = function (grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		clean: ['dist', 'tmp'],
 		babel: {
+			options: {
+				compact: 'false'
+			},
 			core: {
                 files: [{
                     expand: true,
