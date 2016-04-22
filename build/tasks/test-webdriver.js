@@ -11,9 +11,6 @@ function collectTestResults(driver) {
 	return driver.executeAsyncScript(function () {
 		var callback = arguments[arguments.length - 1];
 		setTimeout(function () {
-			if (window.mochaResults) {
-				window.mochaResults.url = window.location.href;
-			}
 			// return the mocha results (or undefined if not finished)
 			callback(window.mochaResults);
 		}, 500);
@@ -49,7 +46,7 @@ module.exports = function (grunt) {
 			(process.platform === 'darwin' && ['ie', 'MicrosoftEdge'].indexOf(options.browser) !== -1)
 		) {
 			grunt.log.writeln();
-			grunt.log.writeln('Skipped ' + browser + ' as it is not supported on this platform');
+			grunt.log.writeln('Skipped ' + options.browser + ' as it is not supported on this platform');
 			return done();
 		}
 
@@ -69,17 +66,21 @@ module.exports = function (grunt) {
 			return done();
 		}
 
-		var testAllPages = options.urls
-		.map(function (url) {
-			// open the page
-			return driver.get(url)
-			.then(function () {
-				// Run all tests and collect the results
-				return collectTestResults(driver);
+		options.urls.map(function () {
+			return function () {
 
-			}).then(function (result) {
-				// log which page was tested
-				grunt.log.writeln(result.url);
+			};
+		})
+
+		var testAllPages = (function testPage(urls) {
+			var url = urls.shift();
+
+			return driver.get(url)
+			// Get results
+			.then(collectTestResults.bind(null, driver))
+			// And process them
+			.then(function (result) {
+				grunt.log.writeln(url);
 
 				// Remember the errors
 				(result.reports || []).forEach(function (err) {
@@ -95,11 +96,14 @@ module.exports = function (grunt) {
 					'duration: ' + (result.duration / 1000) +'s'
 				);
 				grunt.log.writeln();
-			});
-		});
 
-		Promise.all(testAllPages)
-		.then(function () {
+			}).then(function () {
+				// Start the next job, if any
+				return (urls.length > 0) ? testPage(urls) : Promise.resolve();
+			});
+		}(options.urls));
+
+		testAllPages.then(function () {
 			return driver.quit()
 
 		}).then(function () {
