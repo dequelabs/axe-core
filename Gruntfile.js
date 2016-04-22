@@ -13,9 +13,25 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadTasks('build/tasks');
+	grunt.loadNpmTasks('grunt-parallel');
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+	    parallel: {
+	    	'browser-test': {
+	      		options: {
+	        		grunt: true
+	      		},
+	      		tasks: [
+	      			'mocha',
+	      			'test-webdriver:firefox',
+			      	'test-webdriver:chrome',
+			      	'test-webdriver:ie',
+			      	'test-webdriver:safari'
+			      	// 'test-webdriver:edge'
+	      		]
+	    	}
+    	},
 		clean: ['dist', 'tmp'],
 		babel: {
 			core: {
@@ -206,7 +222,9 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		mocha: testConfig(grunt),
+		mocha: testConfig(grunt, {
+			reporter: grunt.option('reporter') || 'Spec'
+		}),
 		'test-webdriver': (function () {
 			var tests = testConfig(grunt);
 			var options = Object.assign({}, tests.unit.options);
