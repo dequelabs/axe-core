@@ -1,78 +1,53 @@
 describe('table.isColumnHeader', function () {
 	'use strict';
-	function $id(id) {
-		return document.getElementById(id);
-	}
 
-	var fixture = $id('fixture');
+	var table, origGetScope;
+	beforeEach(function () {
+		table = axe.commons.table;
+		origGetScope = table.getScope;
+	});
 
 	afterEach(function () {
-		fixture.innerHTML = '';
+		table.getScope = origGetScope;
 	});
 
-	it('return true with implicit row and col scope', function () {
-		fixture.innerHTML = '<table>' +
-			'<tr><td></td><th id="target">1</th></tr>' +
-			'<tr><th>2</th><td>ok</td><td></td></tr>' +
-			'</table>';
+	it('passes an argument to table.getScope', function () {
+		var called = false;
+		axe.commons.table.getScope = function (arg) {
+			assert.equal(arg, 'Buzz Lightyear');
+			called = true;
+			return 'auto';
+		};
+		axe.commons.table.isColumnHeader('Buzz Lightyear');
 
-		var target = $id('target');
-
-		assert.isTrue(axe.commons.table.isColumnHeader(target));
+		assert.isTrue(called);
 	});
 
-	it('should return true with explicit col scope', function () {
-		fixture.innerHTML = '<table>' +
-			'<tr><td></td><th id="target" scope="col">1</th></tr>' +
-			'<tr><th>2</th><td>ok</td><td></td></tr>' +
-			'</table>';
-
-		var target = $id('target');
-
-		assert.isTrue(axe.commons.table.isColumnHeader(target));
+	it('returns false if table.getScope returns false', function () {
+		table.getScope = function () {
+			return false;
+		};
+		assert.isFalse(table.isColumnHeader());
 	});
 
-	it('return false with explicit row scope', function () {
-		fixture.innerHTML = '<table>' +
-			'<tr><td></td><th id="target" scope="row">1</th></tr>' +
-			'<tr><th>2</th><td>ok</td><td></td></tr>' +
-			'</table>';
-
-		var target = $id('target');
-
-		assert.isFalse(axe.commons.table.isColumnHeader(target));
+	it('returns true if table.getScope returns auto', function () {
+		table.getScope = function () {
+			return 'auto';
+		};
+		assert.isTrue(table.isColumnHeader());
 	});
 
-	it('should return false without scope attribute on TD', function () {
-		fixture.innerHTML = '<table>' +
-			'<tr><td></td><td id="target">1</td></tr>' +
-			'<tr><th>2</th><td>ok</td></tr>' +
-			'</table>';
-
-		var target = $id('target');
-
-		assert.isFalse(axe.commons.table.isColumnHeader(target));
+	it('returns true if table.getScope returns col', function () {
+		table.getScope = function () {
+			return 'col';
+		};
+		assert.isTrue(table.isColumnHeader());
 	});
 
-	it('return true with explicit col scope', function () {
-		fixture.innerHTML = '<table>' +
-			'<tr><td></td><td id="target" scope="col">1</td></tr>' +
-			'<tr><th>2</th><td>ok</td></tr>' +
-			'</table>';
-
-		var target = $id('target');
-
-		assert.isTrue(axe.commons.table.isColumnHeader(target));
-	});
-
-	it('return true with implicit row + col scope', function () {
-		fixture.innerHTML = '<table>' +
-			'<tr><th id="target">1</th><td>ok</td></tr>' +
-			'<tr><td>ok</td><td>ok</td></tr>' +
-			'</table>';
-
-		var target = $id('target');
-
-		assert.isTrue(axe.commons.table.isColumnHeader(target));
+	it('returns false if table.getScope returns row', function () {
+		table.getScope = function () {
+			return 'row';
+		};
+		assert.isFalse(table.isColumnHeader());
 	});
 });
