@@ -8,7 +8,7 @@ describe('context test', function () {
 			done();
 		} else {
 			frame.addEventListener('load', function () {
-				done()
+				done();
 			});
 		}
 	});
