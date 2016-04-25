@@ -268,7 +268,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
 		 'babel', 'concat:engine', 'uglify']);
 
-	grunt.registerTask('test', ['build',  'testconfig', 'fixture', 'connect',
+	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'parallel', 'jshint']);
 
 	grunt.registerTask('test-fast', ['build', 'testconfig', 'fixture', 'connect',
