@@ -67,6 +67,9 @@ The [aXe API](doc/API.md) supports the following browsers:
 * Mozilla Firefox v38 and above
 * Apple Safari v7 and above
 
+## The Accessibility Rules
+
+The complete list of rules run by axe-core can be found in [doc/rule-descriptions.md](./doc/rule-descriptions.md).
 
 ## Contents of the API Package
 
