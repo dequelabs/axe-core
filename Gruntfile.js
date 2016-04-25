@@ -17,41 +17,41 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-	    parallel: {
-	    	'browser-test': {
-	      		options: {
-	        		grunt: true
-	      		},
-	      		tasks: [
-	      			'test-webdriver:firefox',
-			      	'test-webdriver:chrome',
-			      	// Edge Webdriver isn't all too stable, manual testing required
-			      	// 'test-webdriver:edge',
-			      	'test-webdriver:safari',
-			      	'test-webdriver:ie'
-	      		]
-	    	}
-    	},
+		parallel: {
+			'browser-test': {
+				options: {
+					grunt: true
+				},
+				tasks: [
+					'test-webdriver:firefox',
+					'test-webdriver:chrome',
+					// Edge Webdriver isn't all too stable, manual testing required
+					// 'test-webdriver:edge',
+					'test-webdriver:safari',
+					'test-webdriver:ie'
+				]
+			}
+		},
 		clean: ['dist', 'tmp'],
 		babel: {
 			options: {
 				compact: 'false'
 			},
 			core: {
-                files: [{
-                    expand: true,
-                    cwd: 'lib/core',
-                    src: ['**/*.js'],
-                    dest: 'tmp/core'
-                }]
+				files: [{
+					expand: true,
+					cwd: 'lib/core',
+					src: ['**/*.js'],
+					dest: 'tmp/core'
+				}]
 			},
 			misc: {
 				files: [{
-                    expand: true,
-                    cwd: 'tmp',
-                    src: ['*.js'],
-                    dest: 'tmp'
-                }]
+					expand: true,
+					cwd: 'tmp',
+					src: ['*.js'],
+					dest: 'tmp'
+				}]
 			}
 		},
 		'update-help': {
