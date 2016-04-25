@@ -40,7 +40,10 @@ describe('axe.a11yCheck', function () {
 			};
 
 			axe._audit.reporter = null;
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 			axe.a11yCheck(document, noop);
 		});
 
