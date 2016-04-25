@@ -26,9 +26,10 @@ module.exports = function (grunt) {
 	      			'mocha',
 	      			'test-webdriver:firefox',
 			      	'test-webdriver:chrome',
-			      	'test-webdriver:ie',
-			      	'test-webdriver:safari'
-			      	// 'test-webdriver:edge'
+			      	// Edge Webdriver isn't all too stable, manual testing required
+			      	// 'test-webdriver:edge',
+			      	'test-webdriver:safari',
+			      	'test-webdriver:ie'
 	      		]
 	    	}
     	},
