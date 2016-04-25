@@ -210,9 +210,20 @@ module.exports = function (grunt) {
 			}
 		},
 		mocha: testConfig(grunt),
-		'test-webdriver': testConfig(grunt, {
-			browser: grunt.option('browser') || 'firefox'
-		}),
+		'test-webdriver': (function () {
+			var tests = testConfig(grunt);
+			var options = Object.assign({}, tests.unit.options);
+			options.urls = options.urls.concat(tests.integration.options.urls);
+			var driverTests = {};
+
+			['firefox', 'chrome', 'ie', 'safari', 'edge']
+			.forEach(function (browser) {
+				driverTests[browser] = {
+					options: Object.assign({ browser: browser }, options)
+				};
+			});
+			return driverTests;
+		}()),
 		connect: {
 			test: {
 				options: {
@@ -242,9 +253,8 @@ module.exports = function (grunt) {
 	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
 
-	grunt.registerTask('test-browser', ['build',  'testconfig', 'fixture', 'connect',
-		'test-webdriver', 'jshint']);
-
+	grunt.registerTask('test-all', ['build',  'testconfig', 'fixture', 'connect',
+		'mocha', 'test-webdriver', 'jshint']);
 
 	grunt.registerTask('dev', ['build', 'testconfig', 'connect', 'watch']);
 };
