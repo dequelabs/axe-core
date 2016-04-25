@@ -23,7 +23,6 @@ module.exports = function (grunt) {
 	        		grunt: true
 	      		},
 	      		tasks: [
-	      			'mocha',
 	      			'test-webdriver:firefox',
 			      	'test-webdriver:chrome',
 			      	// Edge Webdriver isn't all too stable, manual testing required
@@ -266,11 +265,11 @@ module.exports = function (grunt) {
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
 		 'babel', 'concat:engine', 'uglify']);
 
-	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
-		'mocha', 'jshint']);
+	grunt.registerTask('test', ['build',  'testconfig', 'fixture', 'connect',
+		'mocha', 'parallel', 'jshint']);
 
-	grunt.registerTask('test-all', ['build',  'testconfig', 'fixture', 'connect',
-		'mocha', 'test-webdriver', 'jshint']);
+	grunt.registerTask('test-fast', ['build', 'testconfig', 'fixture', 'connect',
+		'mocha', 'jshint']);
 
 	grunt.registerTask('dev', ['build', 'testconfig', 'connect', 'watch']);
 };
