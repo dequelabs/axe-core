@@ -34,6 +34,9 @@ module.exports = function (grunt) {
     	},
 		clean: ['dist', 'tmp'],
 		babel: {
+			options: {
+				compact: 'false'
+			},
 			core: {
                 files: [{
                     expand: true,
