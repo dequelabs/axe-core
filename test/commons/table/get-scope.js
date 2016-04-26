@@ -120,6 +120,25 @@ describe('table.getScope', function () {
 			var target = $id('target');
 			assert.equal(axe.commons.table.getScope(target), 'col');
 		});
+
+		it('understands colspan on the table', function () {
+			fixture.innerHTML = '<table>' +
+				'<tr> <th colspan="2"></th> </tr>' +
+				'<tr> <th id="target"></th> <th></th> </tr>' +
+				'<tr> <td></td> <td></td> </tr>' +
+				'</table>';
+			var target = $id('target');
+			assert.equal(axe.commons.table.getScope(target), 'col');
+		});
+
+		it('understands colspan on the cell', function () {
+			fixture.innerHTML = '<table>' +
+				'<tr> <th id="target" colspan="2"></th> </tr>' +
+				'<tr> <td></td> <td></td> </tr>' +
+				'</table>';
+			var target = $id('target');
+			assert.equal(axe.commons.table.getScope(target), 'col');
+		});
 	});
 
 
@@ -154,12 +173,31 @@ describe('table.getScope', function () {
 			assert.equal(axe.commons.table.getScope(target), 'row');
 		});
 
-		it('returns `row` when part of a row of all TH elements', function () {
+		it('returns `row` when part of a column of all TH elements', function () {
 			fixture.innerHTML = '<table>' +
 				'<tr><th></th><td>1</td></tr>' +
 				'<tr><th id="target">2</th><td>ok</td></tr>' +
 				'</table>';
 
+			var target = $id('target');
+			assert.equal(axe.commons.table.getScope(target), 'row');
+		});
+
+		it('understands rowspan in the table', function () {
+			fixture.innerHTML = '<table>' +
+				'<tr> <th rowspan="2"></th> <th></th> <th></th> </tr>' +
+				'<tr> <th id="target"></th> <td></td> </tr>' +
+				'</table>';
+			var target = $id('target');
+			assert.equal(axe.commons.table.getScope(target), 'row');
+		});
+
+		it('understands rowspan on the cell', function () {
+			fixture.innerHTML = '<table>' +
+				'<tr> <th></th> <th></th> </tr>' +
+				'<tr> <th id="target" rowspan="2"></th> <td></td> </tr>' +
+				'<tr> <td></td> </tr>' +
+				'</table>';
 			var target = $id('target');
 			assert.equal(axe.commons.table.getScope(target), 'row');
 		});
