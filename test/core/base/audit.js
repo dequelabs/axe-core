@@ -2,8 +2,8 @@
 describe('Audit', function () {
 	'use strict';
 	var a;
-	var isNotCalled = function () {
-		assert.ok(false, 'Function should not be called');
+	var isNotCalled = function (err) {
+		throw err || new Error('Reject should not be called');
 	};
 	var noop = function () {};
 
@@ -280,7 +280,7 @@ describe('Audit', function () {
 			a.run({ include: [fixture] }, {}, function (results) {
 				var expected = [{
 					id: 'positive1',
-					result: 'NA',
+					result: 'inapplicable',
 					pageLevel: false,
 					impact: null,
 					nodes: [{
@@ -312,7 +312,7 @@ describe('Audit', function () {
 					}]
 				}, {
 					id: 'positive2',
-					result: 'NA',
+					result: 'inapplicable',
 					pageLevel: false,
 					impact: null,
 					nodes: [{
@@ -331,7 +331,7 @@ describe('Audit', function () {
 					}]
 				}, {
 					id: 'negative1',
-					result: 'NA',
+					result: 'inapplicable',
 					pageLevel: false,
 					impact: null,
 					nodes: [{
@@ -363,7 +363,7 @@ describe('Audit', function () {
 					}]
 				}, {
 					id: 'positive3',
-					result: 'NA',
+					result: 'inapplicable',
 					pageLevel: false,
 					impact: null,
 					nodes: [{
@@ -476,14 +476,7 @@ describe('Audit', function () {
 
 		});
 
-		it('should pass errors to axe.log', function (done) {
-			var orig = axe.log;
-			axe.log = function (err) {
-				assert.equal(err.message, 'Launch the super sheep!');
-				axe.log = orig;
-				done();
-			};
-
+		it('catches errors and passes them as a cantTell result', function (done) {
 			a.addRule({
 				id: 'throw1',
 				selector: '*',
@@ -497,12 +490,18 @@ describe('Audit', function () {
 					throw new Error('Launch the super sheep!');
 				}
 			});
+
 			a.run({ include: [fixture] }, {
 				runOnly: {
 					'type': 'rule',
 					'values': ['throw1']
 				}
-			}, noop, isNotCalled);
+			}, function (results) {
+				assert.lengthOf(results,1);
+				assert.equal(results[0].result, 'cantTell');
+				assert.equal(results[0].error.message, 'Launch the super sheep!');
+				done();
+			}, isNotCalled);
 		});
 
 		it('should not halt if errors occur', function (done) {
@@ -524,12 +523,7 @@ describe('Audit', function () {
 					'type': 'rule',
 					'values': ['throw1', 'positive1']
 				}
-			}, function (results) {
-				results = results.filter(function (result) {
-					return !!result;
-				});
-				assert.equal(results.length, 1);
-				assert.equal(results[0].id, 'positive1');
+			}, function () {
 				done();
 			}, isNotCalled);
 		});
