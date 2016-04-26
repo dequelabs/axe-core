@@ -1,6 +1,7 @@
 {
   "id": "document-title",
   "selector": "html",
+  "pageLevel": true,
   "tags": [
     "wcag2a",
     "wcag242"
