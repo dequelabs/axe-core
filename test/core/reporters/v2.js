@@ -1,16 +1,19 @@
 describe('reporters - v2', function() {
 	'use strict';
-	var orig,
-		results = [{
+	var orig, results,
+		_results = [{
 			id: 'gimmeLabel',
 			helpUrl: 'things',
 			description: 'something nifty',
+			result: 'passed',
+			impact: null,
 			tags: ['tag1'],
 			violations: [],
 			passes: [{
-				result: 'PASS',
+				result: 'passed',
 				any: [{
 					result: true,
+					impact: null,
 					relatedNodes: [{
 						selector: 'bob',
 						source: 'fred'
@@ -29,12 +32,12 @@ describe('reporters - v2', function() {
 			id: 'idkStuff',
 			description: 'something more nifty',
 			pageLevel: true,
-			result: 'FAIL',
+			result: 'failed',
 			impact: 'cats',
 			tags: ['tag2'],
 			passes: [],
 			violations: [{
-				result: 'FAIL',
+				result: 'failed',
 				all: [{
 					relatedNodes: [{
 						selector: 'joe',
@@ -63,6 +66,7 @@ describe('reporters - v2', function() {
 			}]
 		}];
 	beforeEach(function() {
+		results = JSON.parse(JSON.stringify(_results));
 		axe._load({
 			messages: {},
 			rules: [],
@@ -112,7 +116,7 @@ describe('reporters - v2', function() {
 	it('should add the rule help to the rule result', function(done) {
 		axe.run(optionsV2, function (err, results) {
 			assert.isNull(err);
-			assert.isNull(results.violations[0].helpUrl);
+			assert.isNotOk(results.violations[0].helpUrl);
 			assert.equal(results.passes[0].helpUrl, 'things');
 			done();
 		});
@@ -149,16 +153,8 @@ describe('reporters - v2', function() {
 			assert.isNull(err);
 			assert.equal(results.violations[0].impact, 'cats');
 			assert.equal(results.violations[0].nodes[0].impact, 'cats');
-			assert.isNull(results.passes[0].impact);
-			assert.isNull(results.passes[0].nodes[0].impact);
-			done();
-		});
-	});
-	it('should remove result', function(done) {
-		axe.run(optionsV2, function (err, results) {
-			assert.isNull(err);
-			assert.isUndefined(results.violations[0].nodes[0].all[0].result);
-			assert.isUndefined(results.passes[0].nodes[0].any[0].result);
+			assert.isNotOk(results.passes[0].impact);
+			assert.isNotOk(results.passes[0].nodes[0].impact);
 			done();
 		});
 	});

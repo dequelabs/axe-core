@@ -1,10 +1,12 @@
 describe('reporters - na', function() {
 	'use strict';
-	var orig,
-		results = [{
+	var orig, results,
+		_results = [{
 			id: 'noMatch',
 			helpUrl: 'somewhere',
 			description: 'stuff',
+			result: 'inapplicable',
+			impact: null,
 			tags: ['tag3'],
 			violations: [],
 			passes: []
@@ -12,10 +14,13 @@ describe('reporters - na', function() {
 			id: 'gimmeLabel',
 			helpUrl: 'things',
 			description: 'something nifty',
+			result: 'passed',
+			impact: null,
 			tags: ['tag1'],
 			violations: [],
 			passes: [{
-				result: 'PASS',
+				result: 'passed',
+				impact:null,
 				any: [{
 					result: true,
 					relatedNodes: [{
@@ -36,12 +41,12 @@ describe('reporters - na', function() {
 			id: 'idkStuff',
 			description: 'something more nifty',
 			pageLevel: true,
-			result: 'FAIL',
+			result: 'failed',
 			impact: 'cats',
 			tags: ['tag2'],
 			passes: [],
 			violations: [{
-				result: 'FAIL',
+				result: 'failed',
 				all: [{
 					relatedNodes: [{
 						selector: 'joe',
@@ -71,6 +76,7 @@ describe('reporters - na', function() {
 		}];
 
 	beforeEach(function() {
+		results = JSON.parse(JSON.stringify(_results));
 		axe._load({
 			messages: {},
 			rules: [],
@@ -89,7 +95,7 @@ describe('reporters - na', function() {
 
 	var naOption = { reporter: 'na' };
 
-	it('should merge the runRules results into violations, passes and notApplicable', function(done) {
+	it('should merge the runRules results into violations, passes and inapplicable', function(done) {
 		axe.run(naOption, function (err, results) {
 			assert.isNull(err);
 			assert.isObject(results);
@@ -97,8 +103,8 @@ describe('reporters - na', function() {
 			assert.lengthOf(results.violations, 1);
 			assert.isArray(results.passes);
 			assert.lengthOf(results.passes, 1);
-			assert.isArray(results.notApplicable);
-			assert.lengthOf(results.notApplicable, 1);
+			assert.isArray(results.inapplicable);
+			assert.lengthOf(results.inapplicable, 1);
 
 			done();
 		});
@@ -108,7 +114,7 @@ describe('reporters - na', function() {
 			assert.isNull(err);
 			assert.equal(results.violations[0].id, 'idkStuff');
 			assert.equal(results.passes[0].id, 'gimmeLabel');
-			assert.equal(results.notApplicable[0].id, 'noMatch');
+			assert.equal(results.inapplicable[0].id, 'noMatch');
 			done();
 		});
 	});
@@ -117,16 +123,16 @@ describe('reporters - na', function() {
 			assert.isNull(err);
 			assert.deepEqual(results.violations[0].tags, ['tag2']);
 			assert.deepEqual(results.passes[0].tags, ['tag1']);
-			assert.deepEqual(results.notApplicable[0].tags, ['tag3']);
+			assert.deepEqual(results.inapplicable[0].tags, ['tag3']);
 			done();
 		});
 	});
 	it('should add the rule help to the rule result', function(done) {
 		axe.run(naOption, function (err, results) {
 			assert.isNull(err);
-			assert.isNull(results.violations[0].helpUrl);
+			assert.ok(!results.violations[0].helpUrl);
 			assert.equal(results.passes[0].helpUrl, 'things');
-			assert.equal(results.notApplicable[0].helpUrl, 'somewhere');
+			assert.equal(results.inapplicable[0].helpUrl, 'somewhere');
 			done();
 		});
 	});
@@ -162,16 +168,10 @@ describe('reporters - na', function() {
 			assert.isNull(err);
 			assert.equal(results.violations[0].impact, 'cats');
 			assert.equal(results.violations[0].nodes[0].impact, 'cats');
+			assert.ok(!results.passes[0].impact);
+			assert.ok(!results.passes[0].nodes[0].impact);
 			assert.isNull(results.passes[0].impact);
 			assert.isNull(results.passes[0].nodes[0].impact);
-			done();
-		});
-	});
-	it('should remove result', function(done) {
-		axe.run(naOption, function (err, results) {
-			assert.isNull(err);
-			assert.isUndefined(results.violations[0].nodes[0].all[0].result);
-			assert.isUndefined(results.passes[0].nodes[0].any[0].result);
 			done();
 		});
 	});

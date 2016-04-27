@@ -38,15 +38,12 @@ describe('color.getBackgroundColor', function () {
 		var bgNodes = [];
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(64, 64, 0, 1);
-		if (axe.commons.dom.supportsElementsFromPoint(document)) {
-			assert.closeTo(actual.red, expected.red, 0.5);
-			assert.closeTo(actual.green, expected.green, 0.5);
-			assert.closeTo(actual.blue, expected.blue, 0.5);
-			assert.closeTo(actual.alpha, expected.alpha, 0.1);
-			assert.deepEqual(bgNodes, [target, pos]);
-		} else {
-			assert.isNull(actual);
-		}
+
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+		assert.deepEqual(bgNodes, [target, pos]);
 	});
 
 	it('should do alpha blending from the back forward', function () {
@@ -83,15 +80,12 @@ describe('color.getBackgroundColor', function () {
 		var bgNodes = [];
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(64, 64, 0, 1);
-		if (axe.commons.dom.supportsElementsFromPoint(document)) {
-			assert.closeTo(actual.red, expected.red, 0.5);
-			assert.closeTo(actual.green, expected.green, 0.5);
-			assert.closeTo(actual.blue, expected.blue, 0.5);
-			assert.closeTo(actual.alpha, expected.alpha, 0.1);
-			assert.deepEqual(bgNodes, [target, under]);
-		} else {
-			assert.isNull(actual);
-		}
+
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+		assert.deepEqual(bgNodes, [target, under]);
 	});
 
 	it('should return the proper blended color if it has alpha set', function () {
@@ -245,16 +239,12 @@ describe('color.getBackgroundColor', function () {
 			'background-color: black; z-index: 15;"></div></div>';
 		var target = fixture.querySelector('#target');
 		var shifted = fixture.querySelector('#shifted');
-		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes, false);
 		var expected = new axe.commons.color.Color(0, 0, 0, 1);
-		if (axe.commons.dom.supportsElementsFromPoint(document)) {
-			assert.deepEqual(bgNodes, [shifted]);
-		} else {
-			expected = new axe.commons.color.Color(255, 255, 255, 1);
-			assert.deepEqual(bgNodes, [parent]);
-		}
+
+		assert.deepEqual(bgNodes, [shifted]);
+
 		assert.closeTo(actual.red, expected.red, 0.5);
 		assert.closeTo(actual.green, expected.green, 0.5);
 		assert.closeTo(actual.blue, expected.blue, 0.5);

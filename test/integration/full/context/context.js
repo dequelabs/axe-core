@@ -1,13 +1,18 @@
-
 describe('context test', function () {
 	'use strict';
 
 	var config = { runOnly: { type: 'rule', values: ['html-has-lang'] } };
 	before(function (done) {
-		window.addEventListener('load', function () {
+		var frame = document.getElementById('myframe');
+		if (frame.contentWindow.document.readyState === 'complete') {
 			done();
-		});
+		} else {
+			frame.addEventListener('load', function () {
+				done();
+			});
+		}
 	});
+
 
 	describe('direct exclude', function () {
 
@@ -53,6 +58,7 @@ describe('context test', function () {
 					done();
 				});
 			});
+
 		});
 
 		describe('body include', function () {
@@ -98,7 +104,7 @@ describe('context test', function () {
 
 	describe('indirect exclude', function () {
 		it('should find no nodes', function (done) {
-			axe.run({ include: [document.body], exclude: [['#frame']] }, config, function (err, results) {
+			axe.run({ include: [document.body], exclude: [['#myframe']] }, config, function (err, results) {
 				assert.isNull(err);
 				assert.lengthOf(results.violations, 0, 'violations');
 				assert.lengthOf(results.passes, 0, 'passes');
@@ -192,7 +198,7 @@ describe('context test', function () {
 	});
 	describe('direct include', function () {
 		it('should find the frames given a context object', function (done) {
-			axe.run({ include: [['#frame']] }, config, function (err, results) {
+			axe.run({ include: [['#myframe']] }, config, function (err, results) {
 				assert.isNull(err);
 				assert.lengthOf(results.violations, 1, 'violations');
 				assert.lengthOf(results.violations[0].nodes, 3, 'violation nodes');
@@ -201,7 +207,7 @@ describe('context test', function () {
 			});
 		});
 		it('should find the frames given a direct reference', function (done) {
-			axe.run(document.getElementById('frame'), config, function (err, results) {
+			axe.run(document.getElementById('myframe'), config, function (err, results) {
 				assert.isNull(err);
 				assert.lengthOf(results.violations, 1, 'violations');
 				assert.lengthOf(results.violations[0].nodes, 3, 'violation nodes');

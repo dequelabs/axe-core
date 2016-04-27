@@ -17,7 +17,6 @@ exports = module.exports = function (grunt, options) {
 					'http://localhost:<%= connect.test.options.port %>/test/integration/rules/'
 				],
 				run: true,
-				reporter: 'Spec',
 				mocha: {
 					grep: grunt.option('grep')
 				}

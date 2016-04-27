@@ -1,10 +1,10 @@
 
-describe('html-lang-valid test', function () {
+describe('document-title test', function () {
 	'use strict';
 	var results;
 	before(function (done) {
-		function start() {
-			axe.run({ runOnly: { type: 'rule', values: ['html-lang-valid'] } }, function (err, r) {
+		function start () {
+			axe.run({ runOnly: { type: 'rule', values: ['document-title'] } }, function (err, r) {
 				assert.isNull(err);
 				results = r;
 				done();
@@ -30,13 +30,16 @@ describe('html-lang-valid test', function () {
 	});
 
 	describe('passes', function () {
-		it('should find 1', function () {
-			assert.lengthOf(results.passes[0].nodes, 1);
+		it('should find 2', function () {
+			assert.lengthOf(results.passes[0].nodes, 2);
 		});
 
 		it('should find #pass1', function () {
-			assert.deepEqual(results.passes[0].nodes[0].target, ['#frame1', '#frame3', '#pass1']);
+			assert.deepEqual(results.passes[0].nodes[0].target, ['#pass1']);
+		});
+
+		it('should find #pass2', function () {
+			assert.deepEqual(results.passes[0].nodes[1].target, ['#frame1', '#frame3', '#pass2']);
 		});
 	});
-
 });
