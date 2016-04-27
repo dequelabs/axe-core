@@ -1,16 +1,19 @@
 describe('reporters - no-passes', function() {
 	'use strict';
-	var orig,
-		results = [{
+	var orig, results,
+		_results = [{
 			id: 'gimmeLabel',
 			helpUrl: 'things',
 			description: 'something nifty',
 			tags: ['tag1'],
+			result: 'passed',
+			impact: null,
 			violations: [],
 			passes: [{
-				result: 'PASS',
+				result: 'passed',
 				any: [{
 					result: true,
+					impact: null,
 					relatedNodes: [{
 						selector: 'bob',
 						source: 'fred'
@@ -29,12 +32,12 @@ describe('reporters - no-passes', function() {
 			id: 'idkStuff',
 			description: 'something more nifty',
 			pageLevel: true,
-			result: 'FAIL',
+			result: 'failed',
 			impact: 'cats',
 			tags: ['tag2'],
 			passes: [],
 			violations: [{
-				result: 'FAIL',
+				result: 'failed',
 				all: [{
 					relatedNodes: [{
 						selector: 'joe',
@@ -63,6 +66,7 @@ describe('reporters - no-passes', function() {
 			}]
 		}];
 	beforeEach(function() {
+		results = JSON.parse(JSON.stringify(_results));
 		axe._load({
 			messages: {},
 			rules: [],
@@ -109,7 +113,7 @@ describe('reporters - no-passes', function() {
 	it('should add the rule help to the rule result', function(done) {
 		axe.run(noPassOpt, function (err, results) {
 			assert.isNull(err);
-			assert.isNull(results.violations[0].helpUrl);
+			assert.isNotOk(results.violations[0].helpUrl);
 			done();
 		});
 	});
@@ -143,13 +147,6 @@ describe('reporters - no-passes', function() {
 			assert.isNull(err);
 			assert.equal(results.violations[0].impact, 'cats');
 			assert.equal(results.violations[0].nodes[0].impact, 'cats');
-			done();
-		});
-	});
-	it('should remove result', function(done) {
-		axe.run(noPassOpt, function (err, results) {
-			assert.isNull(err);
-			assert.isUndefined(results.violations[0].nodes[0].all[0].result);
 			done();
 		});
 	});

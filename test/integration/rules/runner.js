@@ -5,7 +5,8 @@
 	function flattenResult(results) {
 		return {
 			passes: results.passes[0],
-			violations: results.violations[0]
+			violations: results.violations[0],
+			incomplete: results.incomplete[0]
 		};
 	}
 
@@ -107,6 +108,9 @@
 					});
 					runTest(test, 'passes');
 					runTest(test, 'violations');
+					if (test.incomplete) {
+						runTest(test, 'incomplete');
+					}
 				});
 			});
 		});
