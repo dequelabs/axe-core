@@ -3,13 +3,18 @@ describe('html-has-lang test', function () {
 	'use strict';
 	var results;
 	before(function (done) {
-		window.addEventListener('load', function () {
+		function start() {
 			axe.run({ runOnly: { type: 'rule', values: ['html-has-lang'] } }, function (err, r) {
 				assert.isNull(err);
 				results = r;
 				done();
 			});
-		});
+		}
+		if (document.readyState !== 'complete') {
+			window.addEventListener('load', start);
+		} else {
+			start();
+		}
 	});
 
 	describe('violations', function () {

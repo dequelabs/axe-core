@@ -24,12 +24,10 @@ describe('dom.elementsFromPoint', function () {
 		target.scrollIntoView();
 		var rect = target.getBoundingClientRect();
 
-		if (axe.commons.dom.supportsElementsFromPoint(document)) {
-			var visualParents = axe.commons.dom.elementsFromPoint(document,
-															Math.ceil(rect.left + 1),
-															Math.ceil(rect.top + 1));
-			assert.deepEqual(visualParents.slice(0, 3), [target, pos, container]);
-		}
+		var visualParents = axe.commons.dom.elementsFromPoint(document,
+														Math.ceil(rect.left + 1),
+														Math.ceil(rect.top + 1));
+		assert.deepEqual(visualParents.slice(0, 3), [target, pos, container]);
 	});
 
 	it('should return inline elements properly', function () {
@@ -49,12 +47,10 @@ describe('dom.elementsFromPoint', function () {
 		target.scrollIntoView();
 		var rect = target.getBoundingClientRect();
 
-		if (axe.commons.dom.supportsElementsFromPoint(document)) {
-			var visualParents = axe.commons.dom.elementsFromPoint(document,
-															Math.ceil(rect.left + 1),
-															Math.ceil(rect.top + 1));
-			assert.deepEqual(visualParents.slice(0, 3), [target, pos, container]);
-		}
+		var visualParents = axe.commons.dom.elementsFromPoint(document,
+														Math.ceil(rect.left + 1),
+														Math.ceil(rect.top + 1));
+		assert.deepEqual(visualParents.slice(0, 3), [target, pos, container]);
 	});
 
 	it('should return normal flow elements properly', function () {
@@ -67,10 +63,8 @@ describe('dom.elementsFromPoint', function () {
 		target.scrollIntoView();
 		var rect = target.getBoundingClientRect();
 
-		if (axe.commons.dom.supportsElementsFromPoint(document)) {
-			var visualParents = axe.commons.dom.elementsFromPoint(document, Math.ceil(rect.left), Math.ceil(rect.top));
-			assert.deepEqual(visualParents.slice(0, 3), [target, parent, fixture]);
-		}
+		var visualParents = axe.commons.dom.elementsFromPoint(document, Math.ceil(rect.left), Math.ceil(rect.top));
+		assert.deepEqual(visualParents.slice(0, 3), [target, parent, fixture]);
 	});
 
 	it('should use msElementsFromPoint if defined', function () {
@@ -83,16 +77,14 @@ describe('dom.elementsFromPoint', function () {
 		var rect = target.getBoundingClientRect();
 		var visualParents = null;
 
-		if (axe.commons.dom.supportsElementsFromPoint(document)) {
-			if (!document.msElementsFromPoint) {
-				document.msElementsFromPoint = function () {
-					return ['a', 'b', 'c'];
-				};
-				visualParents = axe.commons.dom.elementsFromPoint(document, Math.ceil(rect.left), Math.ceil(rect.top));
-				delete document.msElementsFromPoint;
-				assert.deepEqual(visualParents.slice(0, 3), ['a', 'b', 'c']);
-			}
-		}
+		var orig = document.msElementsFromPoint;
+		document.msElementsFromPoint = function () {
+			return ['a', 'b', 'c'];
+		};
+		visualParents = axe.commons.dom.elementsFromPoint(document, Math.ceil(rect.left), Math.ceil(rect.top));
+		document.msElementsFromPoint = orig;
+
+		assert.deepEqual(visualParents.slice(0, 3), ['a', 'b', 'c']);
 	});
 
 });
