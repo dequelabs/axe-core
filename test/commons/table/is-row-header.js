@@ -1,75 +1,53 @@
 describe('table.isRowHeader', function () {
 	'use strict';
-	function $id(id) {
-		return document.getElementById(id);
-	}
 
-	var fixture = $id('fixture');
+	var table, origGetScope;
+	beforeEach(function () {
+		table = axe.commons.table;
+		origGetScope = table.getScope;
+	});
 
 	afterEach(function () {
-		fixture.innerHTML = '';
+		table.getScope = origGetScope;
 	});
 
-	it('should work with scope=auto', function () {
-		fixture.innerHTML = '<table>' +
-			'<tr><th id="target">2</th><td>ok</td><td></td></tr>' +
-			'</table>';
+	it('passes an argument to table.getScope', function () {
+		var called = false;
+		table.getScope = function (arg) {
+			assert.equal(arg, 'Buzz Lightyear');
+			called = true;
+			return 'auto';
+		};
+		table.isRowHeader('Buzz Lightyear');
 
-		var target = $id('target');
-
-		assert.isTrue(axe.commons.table.isRowHeader(target));
+		assert.isTrue(called);
 	});
 
-	it('should work with scope=row', function () {
-		fixture.innerHTML = '<table>' +
-			'<tr><th scope="row" id="target">2</th><td>ok</td><td></td></tr>' +
-			'</table>';
-
-		var target = $id('target');
-
-		assert.isTrue(axe.commons.table.isRowHeader(target));
+	it('returns false if table.getScope returns false', function () {
+		table.getScope = function () {
+			return false;
+		};
+		assert.isFalse(table.isRowHeader());
 	});
 
-	it('should work with scope=col', function () {
-		fixture.innerHTML = '<table>' +
-			'<tr><th id="target">2</th><th>ok</th><th></th></tr>' +
-			'<tr><td>2</td><td>ok</td><td></td></tr>' +
-			'</table>';
-
-		var target = $id('target');
-
-		assert.isFalse(axe.commons.table.isRowHeader(target));
+	it('returns true if table.getScope returns auto', function () {
+		table.getScope = function () {
+			return 'auto';
+		};
+		assert.isTrue(table.isRowHeader());
 	});
 
-	it('should work with scope=auto on TD', function () {
-		fixture.innerHTML = '<table>' +
-			'<tr><td id="target">2</td><td>ok</td></tr>' +
-			'</table>';
-
-		var target = $id('target');
-
-		assert.isFalse(axe.commons.table.isRowHeader(target));
+	it('returns false if table.getScope returns col', function () {
+		table.getScope = function () {
+			return 'col';
+		};
+		assert.isFalse(table.isRowHeader());
 	});
 
-	it('should work with scope=row on TD', function () {
-		fixture.innerHTML = '<table>' +
-			'<tr><td scope="row" id="target">2</td><td>ok</td></tr>' +
-			'</table>';
-
-		var target = $id('target');
-
-		assert.isTrue(axe.commons.table.isRowHeader(target));
+	it('returns true if table.getScope returns row', function () {
+		table.getScope = function () {
+			return 'row';
+		};
+		assert.isTrue(table.isRowHeader());
 	});
-
-	it('should work with scope=auto with data cells in the same column', function () {
-		fixture.innerHTML = '<table>' +
-			'<tr><th id="target">1</th><td>ok</td></tr>' +
-			'<tr><td>ok</td><td>ok</td></tr>' +
-			'</table>';
-
-		var target = $id('target');
-
-		assert.isFalse(axe.commons.table.isRowHeader(target));
-	});
-
 });
