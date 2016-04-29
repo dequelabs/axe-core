@@ -1,7 +1,6 @@
 /*global runRules */
 describe('axe.a11yCheck', function () {
 	'use strict';
-	var noop = function () {};
 
 	describe('reporter', function () {
 		var origReporters;
