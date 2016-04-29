@@ -150,6 +150,26 @@ describe('axe.configure', function() {
 
 	});
 
+	it('should create an execution context for check messages', function () {
+		axe._load({});
+		axe.configure({
+			checks: [{
+				id: 'bob',
+				metadata: {
+					messages: {
+						pass: function () { return "Bob" + " John" },
+						fail: '"Bob" + " Pete"'
+					}
+				}
+			}]
+		});
+
+		assert.isFunction(axe._audit.data.checks.bob.messages.pass);
+		assert.isFunction(axe._audit.data.checks.bob.messages.fail);
+		assert.equal(axe._audit.data.checks.bob.messages.pass(), 'Bob John');
+		assert.equal(axe._audit.data.checks.bob.messages.fail(), 'Bob Pete');
+	});
+
 	it('overrides the default value of audit.tagExclude', function () {
 		axe._load({});
 		assert.deepEqual(axe._audit.tagExclude, ['experimental']);
