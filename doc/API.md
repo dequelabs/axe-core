@@ -149,7 +149,7 @@ axe.configure({
   	 	 * `selector` - string(optional, default `*`). A CSS selector used to identify the elements that are passed into the rule for evaluation.
   	 	 * `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
   	 	 * `enabled` - boolean(optional, default `true`). Whether the rule is turned on. This is a common attribute for overriding.
-  	 	 * `pageLevel` - boolean(optional, default `false`). This indicates whether the page operates only when the scope is the entire page. An example of a rule like this is the skip link rule. It is not recommended to override this property unless also changing the implementation.
+  	 	 * `pageLevel` - boolean(optional, default `false`). When set to true, this rule is only applied when the entire page is tested. Results from nodes on different frames are combined into a single result. Example: bypass blocks can pass regardless of if the <main> element is in the top window, or inside one of the visible frames.
   	 	 * `any` -  array(optional, default `[]`). This is the list of checks that must all "pass" or else there is a violation.
   	 	 * `all` - array(optional, default `[]`). This is the list of checks that, if any "fails", will generate a violation.
   	 	 * `none` - array(optional, default `[]`). This is a list of the checks that, if none "pass", will generate a violation.
