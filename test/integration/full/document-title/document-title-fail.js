@@ -25,4 +25,12 @@ describe('document-title test failure', function () {
 			assert.lengthOf(results.passes, 0);
 		});
 	});
+
+	it('should find 0 inapplicable', function () {
+		assert.lengthOf(results.inapplicable, 0);
+	});
+
+	it('should find 0 incomplete', function () {
+		assert.lengthOf(results.incomplete, 0);
+	});
 });

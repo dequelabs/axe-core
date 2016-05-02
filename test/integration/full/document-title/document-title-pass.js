@@ -27,4 +27,13 @@ describe('document-title test pass', function () {
 			assert.deepEqual(results.passes[0].nodes[0].target, ['#pass1']);
 		});
 	});
+
+	it('should find 0 inapplicable', function () {
+		assert.lengthOf(results.inapplicable, 0);
+	});
+
+	it('should find 0 incomplete', function () {
+		assert.lengthOf(results.incomplete, 0);
+	});
+
 });
