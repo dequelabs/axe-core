@@ -245,10 +245,10 @@ describe('Audit', function () {
 			assert.equal(audit.checks.target, undefined);
 			audit.addCheck({
 				id: 'target',
-				metadata: 'bob'
+				metadata: {guy:'bob'}
 			});
 			assert.ok(audit.checks.target);
-			assert.equal(audit.data.checks.target, 'bob');
+			assert.equal(audit.data.checks.target.guy, 'bob');
 		});
 		it('should reconfigure existing check', function () {
 			var audit = new Audit();
