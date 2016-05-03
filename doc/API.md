@@ -149,7 +149,7 @@ axe.configure({
   	 	 * `selector` - string(optional, default `*`). A CSS selector used to identify the elements that are passed into the rule for evaluation.
   	 	 * `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
   	 	 * `enabled` - boolean(optional, default `true`). Whether the rule is turned on. This is a common attribute for overriding.
-  	 	 * `pageLevel` - boolean(optional, default `false`). When set to true, this rule is only applied when the entire page is tested. Results from nodes on different frames are combined into a single result. Example: bypass blocks can pass regardless of if the <main> element is in the top window, or inside one of the visible frames.
+  	 	 * `pageLevel` - boolean(optional, default `false`). When set to true, this rule is only applied when the entire page is tested. Results from nodes on different frames are combined into a single result. See [page level rules](#page-level-rules).
   	 	 * `any` -  array(optional, default `[]`). This is the list of checks that must all "pass" or else there is a violation.
   	 	 * `all` - array(optional, default `[]`). This is the list of checks that, if any "fails", will generate a violation.
   	 	 * `none` - array(optional, default `[]`). This is a list of the checks that, if none "pass", will generate a violation.
@@ -157,6 +157,15 @@ axe.configure({
   	 	 * `matches` - string(optional, default `*`). A filtering CSS selector that will exclude elements that do not match the CSS selector.
 
 **Returns:** Nothing
+
+##### Page level rules
+
+Page level rules split their evaluation into two phases. A 'data collection' phase which is done inside the 'evaluate' function and an assessment phase which is done inside the 'after' function. The evaluate function executes inside each individual frame and is responsible for collection data that is passed into the after function which inspects that data and makes a decision.
+
+Page level rules raise violations on the entire document and not on individual nodes or frames from which the data was collected. For an example of how this works, see the heading order check:
+- [lib/checks/navigation/heading-order.json](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order.json)
+- [lib/checks/navigation/heading-order.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order.js)
+- [lib/checks/navigation/heading-order-after.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order-after.js)
 
 
 ### API Name: axe.run
