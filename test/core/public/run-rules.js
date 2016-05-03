@@ -1,11 +1,11 @@
 /*global runRules */
 describe('axe.a11yCheck', function () {
 	'use strict';
-	var noop = function () {};
 
 	describe('reporter', function () {
-
 		var origReporters;
+		var noop = function () {};
+
 		beforeEach(function () {
 			axe._load({});
 			origReporters = window.reporters;
@@ -81,9 +81,14 @@ describe('runRules', function () {
 		context.appendChild(i);
 	}
 
-	function createFrames(callback) {
-		var frame, num = 2,
-			loaded = 0;
+	function createFrames(url, callback) {
+		var frame, num = 2;
+		var loaded = 0;
+
+		if (typeof url === 'function'){
+			callback = url;
+			url = '../mock/frames/frame-frame.html';
+		}
 
 		function onLoad() {
 			loaded++;
@@ -93,7 +98,7 @@ describe('runRules', function () {
 		}
 
 		frame = document.createElement('iframe');
-		frame.src = '../mock/frames/frame-frame.html';
+		frame.src = url;
 
 		frame.addEventListener('load', onLoad);
 		fixture.appendChild(frame);
@@ -102,14 +107,15 @@ describe('runRules', function () {
 		frame.src = '../mock/frames/nocode.html';
 		frame.addEventListener('load', onLoad);
 		fixture.appendChild(frame);
+		return frame;
 	}
 
 	var fixture = document.getElementById('fixture');
 
 	var isNotCalled;
 	beforeEach(function () {
-		isNotCalled = function () {
-			assert.ok(false, 'Reject should not be called');
+		isNotCalled = function (err) {
+			throw err || new Error('Reject should not be called');
 		};
 	});
 
@@ -225,8 +231,12 @@ describe('runRules', function () {
 					helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/div#target?application=axeAPI',
 					pageLevel: false,
 					impact: null,
+					inapplicable: [],
+					incomplete: [],
 					violations: [],
 					passes: [{
+						result: 'passed',
+						impact: null,
 						node: {
 							selector: ['#context-test', '#target'],
 							source: '<div id="target"></div>'
@@ -239,15 +249,19 @@ describe('runRules', function () {
 						all: [],
 						none: []
 					}],
-					result: 'PASS',
+					result: 'passed',
 					tags: []
 				}, {
 					id: 'first-div',
 					helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/first-div?application=axeAPI',
 					pageLevel: false,
 					impact: null,
+					inapplicable: [],
+					incomplete: [],
 					violations: [],
 					passes: [{
+						result: 'passed',
+						impact: null,
 						node: {
 							selector: ['#context-test', '#foo'],
 							source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
@@ -263,7 +277,7 @@ describe('runRules', function () {
 						all: [],
 						none: []
 					}],
-					result: 'PASS',
+					result: 'passed',
 					tags: []
 				}]);
 
@@ -417,7 +431,10 @@ describe('runRules', function () {
 					stuff: 'blah',
 					impact: 'moderate',
 					passes: [],
+					inapplicable: [],
+					incomplete: [],
 					violations: [{
+						result: 'failed',
 						node: {
 							selector: ['#target'],
 							source: '<div id="target">Target!</div>'
@@ -434,7 +451,7 @@ describe('runRules', function () {
 						all: [],
 						none: []
 					}],
-					result: 'FAIL',
+					result: 'failed',
 					tags: []
 				}, {
 					id: 'first-div',
@@ -443,8 +460,12 @@ describe('runRules', function () {
 					bar: 'foo',
 					stuff: 'no',
 					impact: null,
+					inapplicable: [],
+					incomplete: [],
 					violations: [],
 					passes: [{
+						result: 'passed',
+						impact: null,
 						node: {
 							selector: ['#target'],
 							source: '<div id="target">Target!</div>'
@@ -463,7 +484,7 @@ describe('runRules', function () {
 						all: [],
 						none: []
 					}],
-					result: 'PASS',
+					result: 'passed',
 					tags: []
 				}]);
 			done();
@@ -484,8 +505,82 @@ describe('runRules', function () {
 				function (err) {
 					assert.instanceOf(err, Error);
 					done();
-				}, isNotCalled);
+				});
 			}, 100);
+		});
+	});
+
+	it('should resolve to cantTell when a rule fails', function (done) {
+		axe._load({
+			rules: [{
+				id: 'incomplete-1',
+				selector: '*',
+				none: ['undeffed']
+			}, {
+				id: 'incomplete-2',
+				selector: '*',
+				none: ['thrower']
+			}],
+			checks: [{
+				id: 'undeffed',
+				evaluate: function () {
+					return undefined;
+				}
+			}, {
+				id: 'thrower',
+				evaluate: function () {
+					throw new Error('Check failed to complete');
+				}
+			}]
+		});
+
+		fixture.innerHTML = '<div></div>';
+
+		axe.a11yCheck('#fixture', function (results) {
+			assert.lengthOf(results.incomplete, 2);
+			assert.equal(results.incomplete[0].id, 'incomplete-1');
+			assert.equal(results.incomplete[1].id, 'incomplete-2');
+
+			assert.include(results.incomplete[1].description,
+						'An error occured while running this rule');
+			done();
+		});
+	});
+
+	it('should resolve to cantTell if an error occurs inside frame rules', function (done) {
+		axe._load({
+			rules: [{
+				id: 'incomplete-1',
+				selector: '.nogo',
+				none: ['undeffed']
+			}, {
+				id: 'incomplete-2',
+				selector: '.nogo',
+				none: ['thrower']
+			}],
+			checks: [{
+				id: 'undeffed',
+				evaluate: function () {
+					return false;
+				}
+			}, {
+				id: 'thrower',
+				evaluate: function () {
+					return false;
+				}
+			}]
+		});
+
+		iframeReady('../mock/frames/rule-error.html', fixture, 'context-test', function () {
+			axe.a11yCheck('#fixture', function (results) {
+				assert.lengthOf(results.incomplete, 2);
+				assert.equal(results.incomplete[0].id, 'incomplete-1');
+				assert.equal(results.incomplete[1].id, 'incomplete-2');
+
+				assert.include(results.incomplete[1].description,
+							'An error occured while running this rule');
+				done();
+			}, isNotCalled);
 		});
 	});
 
@@ -500,7 +595,6 @@ describe('runRules', function () {
 
 			runRules([['#target', '#elementNotFound']], {}, function resolve() {
 				assert.ok(false, 'frame should have thrown an error');
-
 			}, function reject(err) {
 				assert.instanceOf(err, Error);
 				assert.include(err.message, 'No elements found for include in frame Context');

@@ -86,7 +86,9 @@ describe('axe.configure', function() {
 			rules: [{
 				id: 'bob',
 				selector: 'pass',
-				metadata: {joe: 'joe'}
+				metadata: {
+					joe: 'joe'
+				}
 			}]
 		});
 
@@ -103,14 +105,16 @@ describe('axe.configure', function() {
 			checks: [{
 				id: 'bob',
 				options: true,
-				metadata: 'joe'
+				metadata: {
+					joe: 'joe'
+				}
 			}]
 		});
 
 		assert.instanceOf(axe._audit.checks.bob, Check);
 		assert.equal(axe._audit.checks.bob.id, 'bob');
 		assert.isTrue(axe._audit.checks.bob.options);
-		assert.equal(axe._audit.data.checks.bob, 'joe');
+		assert.equal(axe._audit.data.checks.bob.joe, 'joe');
 
 	});
 
@@ -132,7 +136,9 @@ describe('axe.configure', function() {
 				id: 'bob',
 				options: true,
 				selector: 'pass',
-				metadata: 'joe'
+				metadata: {
+					joe: 'joe'
+				}
 			}]
 		});
 
@@ -140,8 +146,30 @@ describe('axe.configure', function() {
 		assert.equal(axe._audit.checks.bob.id, 'bob');
 		assert.isTrue(axe._audit.checks.bob.options);
 		assert.equal(axe._audit.checks.bob.selector, 'pass');
-		assert.equal(axe._audit.data.checks.bob, 'joe');
+		assert.equal(axe._audit.data.checks.bob.joe, 'joe');
 
+	});
+
+	it('should create an execution context for check messages', function () {
+		axe._load({});
+		axe.configure({
+			checks: [{
+				id: 'bob',
+				metadata: {
+					messages: {
+						pass: function () {
+							return 'Bob' + ' John';
+						},
+						fail: '"Bob" + " Pete"'
+					}
+				}
+			}]
+		});
+
+		assert.isFunction(axe._audit.data.checks.bob.messages.pass);
+		assert.isFunction(axe._audit.data.checks.bob.messages.fail);
+		assert.equal(axe._audit.data.checks.bob.messages.pass(), 'Bob John');
+		assert.equal(axe._audit.data.checks.bob.messages.fail(), 'Bob Pete');
 	});
 
 	it('overrides the default value of audit.tagExclude', function () {

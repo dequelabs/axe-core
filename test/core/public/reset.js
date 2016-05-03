@@ -20,9 +20,11 @@ describe('axe.reset', function () {
 	it('should restore the default configuration', function () {
 		axe._load({
 			data: {
-				rules: [{
-					bob: 'not-joe'
-				}]
+				rules: {
+					bob: {
+						'knows': 'not-joe'
+					}
+				}
 			},
 			rules: [{
 				id: 'bob',
@@ -40,6 +42,9 @@ describe('axe.reset', function () {
 			rules: [{
 				id: 'bob',
 				selector: 'pass',
+				metadata: {
+					knows: 'joe'
+				}
 			}],
 			reporter: 'raw'
 		});
@@ -48,6 +53,7 @@ describe('axe.reset', function () {
 		assert.equal(axe._audit.rules[0].id, 'bob');
 		assert.equal(axe._audit.rules[0].selector, 'pass');
 		assert.equal(axe._audit.reporter, 'raw');
+		assert.equal(axe._audit.data.rules.bob.knows, 'joe');
 
 		axe.reset();
 
@@ -56,6 +62,7 @@ describe('axe.reset', function () {
 		assert.equal(axe._audit.rules[0].id, 'bob');
 		assert.equal(axe._audit.rules[0].selector, 'fail');
 		assert.equal(axe._audit.reporter, 'v2');
+		assert.equal(axe._audit.data.rules.bob.knows, 'not-joe');
 	});
 
 });

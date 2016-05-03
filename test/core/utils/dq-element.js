@@ -39,7 +39,7 @@ describe('DqElement', function () {
 
 	describe('source', function () {
 		it('should include the outerHTML of the element', function () {
-			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
+			fixture.innerHTML = '<div class="bar" id="foo">Hello!</div>';
 
 			var result = new DqElement(fixture.firstChild);
 			assert.equal(result.source, fixture.firstChild.outerHTML);
@@ -67,7 +67,7 @@ describe('DqElement', function () {
 			fixture.innerHTML = div;
 
 			var result = new DqElement(fixture.firstChild);
-			assert.equal(result.source, '<div class="foo" id="foo">');
+			assert.equal(result.source.length, '<div class="foo" id="foo">'.length);
 		});
 
 		it('should use spec object over passed element', function () {

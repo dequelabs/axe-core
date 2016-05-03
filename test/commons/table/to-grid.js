@@ -1,4 +1,4 @@
-describe('table.toArray', function () {
+describe('table.toGrid', function () {
 	'use strict';
 	function $id(id) {
 		return document.getElementById(id);
@@ -18,7 +18,7 @@ describe('table.toArray', function () {
 
 		var target = fixture.querySelector('table');
 
-		assert.deepEqual(axe.commons.table.toArray(target), [
+		assert.deepEqual(axe.commons.table.toGrid(target), [
 			[$id('t1'), $id('t2')],
 			[$id('t3'), $id('t4')]
 		]);
@@ -32,7 +32,7 @@ describe('table.toArray', function () {
 
 		var target = fixture.querySelector('table');
 
-		assert.deepEqual(axe.commons.table.toArray(target), [
+		assert.deepEqual(axe.commons.table.toGrid(target), [
 			[$id('t1'), $id('t1'), $id('t2')],
 			[$id('t3'), $id('t3'), $id('t3')]
 		]);
@@ -41,15 +41,15 @@ describe('table.toArray', function () {
 	it('should have cells with height > 1 occupy more than one row', function () {
 
 		fixture.innerHTML = '<table>' +
-			'<tr><td id="t1" rowspan="2">2</td><td id="t2">ok</td></tr>' +
-			'<tr><td id="t3">ok</td></tr>' +
+			'<tr><td id="t1">2</td><td rowspan="2" id="t2">ok</td><td id="t3"></td></tr>' +
+			'<tr><td id="t4">4</td><td id="t5">5</td></tr>' +
 			'</table>';
 
 		var target = fixture.querySelector('table');
 
-		assert.deepEqual(axe.commons.table.toArray(target), [
-			[$id('t1'), $id('t2')],
-			[$id('t1'), $id('t3')]
+		assert.deepEqual(axe.commons.table.toGrid(target), [
+			[$id('t1'), $id('t2'), $id('t3')],
+			[$id('t4'), $id('t2'), $id('t5')]
 		]);
 	});
 
@@ -62,7 +62,7 @@ describe('table.toArray', function () {
 
 		var target = fixture.querySelector('table');
 
-		assert.deepEqual(axe.commons.table.toArray(target), [
+		assert.deepEqual(axe.commons.table.toGrid(target), [
 			[$id('t1'), $id('t1'), $id('t2')],
 			[$id('t1'), $id('t1'), $id('t3')]
 		]);
@@ -70,19 +70,17 @@ describe('table.toArray', function () {
 	});
 
 	it('should insert an empty array for empty rows', function () {
-			fixture.innerHTML = '<table>' +
-				'<tr></tr>' +
-				'<tr><td id="t1">ok</td></tr>' +
-				'</table>';
+		fixture.innerHTML = '<table>' +
+			'<tr></tr>' +
+			'<tr><td id="t1">ok</td></tr>' +
+			'</table>';
 
-			var target = fixture.querySelector('table');
+		var target = fixture.querySelector('table');
 
-			assert.deepEqual(axe.commons.table.toArray(target), [
-				[],
-				[$id('t1')]
-			]);
-
-
+		assert.deepEqual(axe.commons.table.toGrid(target), [
+			[],
+			[$id('t1')]
+		]);
 	});
 
 });
