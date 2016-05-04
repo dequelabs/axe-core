@@ -1,7 +1,7 @@
 describe('context test', function () {
 	'use strict';
 
-	var config = { runOnly: { type: 'rule', values: ['document-title'] } };
+	var config = { runOnly: { type: 'rule', values: ['html-has-lang'] } };
 	before(function (done) {
 		var frame = document.getElementById('myframe');
 		if (frame.contentWindow.document.readyState === 'complete') {
@@ -23,7 +23,7 @@ describe('context test', function () {
 					assert.isNull(err);
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
-					assert.lengthOf(results.passes[0].nodes, 1, 'context.html has a title');
+					assert.lengthOf(results.passes[0].nodes, 1, 'context.html has a lang attribute');
 					done();
 				});
 			});
@@ -44,7 +44,7 @@ describe('context test', function () {
 					assert.isNull(err);
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
-					assert.lengthOf(results.passes[0].nodes, 1, 'context.html has a title');
+					assert.lengthOf(results.passes[0].nodes, 1, 'context.html has a lang attribute');
 					done();
 				});
 			});
@@ -54,7 +54,7 @@ describe('context test', function () {
 					assert.isNull(err);
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
-					assert.lengthOf(results.passes[0].nodes, 1, 'context.html has a title');
+					assert.lengthOf(results.passes[0].nodes, 1, 'context.html has a lang attribute');
 					done();
 				});
 			});
@@ -119,7 +119,7 @@ describe('context test', function () {
 					assert.isNull(err);
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
-					assert.lengthOf(results.passes[0].nodes, 1, 'context.html has a title');
+					assert.lengthOf(results.passes[0].nodes, 1, 'context.html has a lang attribute');
 					done();
 				});
 			});
@@ -140,7 +140,7 @@ describe('context test', function () {
 					assert.isNull(err);
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
-					assert.lengthOf(results.passes[0].nodes, 1, 'context.html has a title');
+					assert.lengthOf(results.passes[0].nodes, 1, 'context.html has a lang attribute');
 					done();
 				});
 			});
@@ -150,7 +150,7 @@ describe('context test', function () {
 					assert.isNull(err);
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
-					assert.lengthOf(results.passes[0].nodes, 1, 'context.html has a title');
+					assert.lengthOf(results.passes[0].nodes, 1, 'context.html has a lang attribute');
 					done();
 				});
 			});
