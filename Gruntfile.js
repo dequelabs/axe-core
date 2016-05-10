@@ -1,5 +1,6 @@
 //jshint maxcomplexity: 12, maxstatements: false, camelcase: false
 var testConfig = require('./build/test/config');
+
 module.exports = function (grunt) {
 	'use strict';
 
