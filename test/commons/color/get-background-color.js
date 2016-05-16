@@ -133,19 +133,6 @@ describe('color.getBackgroundColor', function () {
 		assert.deepEqual(bgNodes, [target, parent]);
 	});
 
-	it('should return null if parent does not fully contain element', function () {
-		fixture.innerHTML = '<div style="background-color: white;">' +
-			'<div id="parent" style="height: 10px; width: 30px; background-color: #800000;">' +
-			'<div id="target" style="height: 20px; width: 15px; background-color: green; opacity: 0.5;">' +
-			'</div></div></div>';
-		var target = fixture.querySelector('#target');
-		var bgNodes = [];
-		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
-		assert.isNull(actual);
-		assert.deepEqual(bgNodes, [target]);
-	});
-
-
 	it('should return white if transparency goes all the way up to document', function () {
 		fixture.innerHTML = '<div id="target" style="height: 10px; width: 30px;">';
 		var target = fixture.querySelector('#target');
@@ -192,16 +179,19 @@ describe('color.getBackgroundColor', function () {
 	});
 
 	it('should use hierarchical DOM traversal if possible', function () {
-		fixture.innerHTML = '<div id="parent" style="height: 40px; width: 30px; ' +
-			'background-color: white; position: relative; z-index: 5">' +
-			'<div id="target" style="height: 20px; width: 25px; z-index: 25;">' +
-			'</div></div>' +
-			'<div id="shifted" style="position: relative; top: -30px; height: 40px; width: 35px; ' +
-			'background-color: black; z-index: 15;"></div>';
+		fixture.innerHTML =
+		'<div id="parent" style="height: 40px; width: 30px; ' +
+		' background-color: white;">' +
+		'	<div id="target" style="height: 20px; width: 25px; z-index: 25; position:relative;">' +
+		'	</div>' +
+		'</div>' +
+		'<div id="shifted" style="position: relative; top: -10px; height: 40px; width: 35px; ' +
+		' background-color: black; z-index: 15;"></div>';
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+
 		var expected = new axe.commons.color.Color(255, 255, 255, 1);
 		assert.closeTo(actual.red, expected.red, 0.5);
 		assert.closeTo(actual.green, expected.green, 0.5);
@@ -231,12 +221,15 @@ describe('color.getBackgroundColor', function () {
 	});
 
 	it('should use visual traversal when needed', function () {
-		fixture.innerHTML = '<div id="parent" style="height: 40px; width: 30px; ' +
-			'background-color: white; position: relative; z-index: 5">' +
-			'<div id="target" style="position: relative; top: 1px; height: 20px; width: 25px; z-index: 25;">' +
-			'</div>' +
-			'<div id="shifted" style="position: relative; top: -30px; height: 40px; width: 35px; ' +
-			'background-color: black; z-index: 15;"></div></div>';
+		fixture.innerHTML =
+		'<div id="parent" style="height: 40px; width: 30px; ' +
+		' background-color: white; position: relative; z-index: 5">' +
+		'	<div id="target" style="position: relative; top: 1px; height: 20px; width: 25px; z-index: 25;">' +
+		'	</div>' +
+		'<div id="shifted" style="position: relative; top: -30px; height: 40px; width: 35px; ' +
+		' background-color: black; z-index: 15;"></div></div>';
+
+
 		var target = fixture.querySelector('#target');
 		var shifted = fixture.querySelector('#shifted');
 		var bgNodes = [];
@@ -257,7 +250,7 @@ describe('color.getBackgroundColor', function () {
 		' background-color: white; position: relative; z-index: 5"> ' +
 		'	<div id="target" style="position: relative; top: 1px; height: 20px;' +
 		'	 width: 25px; z-index: 25; background:rgba(0,125,0,0.5);"></div> ' +
-		'	<div id="shifted" style="position: absolute; top: -30px; height: 40px; ' +
+		'	<div id="shifted" style="position: absolute; top: 0px; height: 40px; ' +
 		'    background-image: url(foobar.png);'+
 		'	 width: 35px; z-index: 15;">' +
 		'	</div>'+
