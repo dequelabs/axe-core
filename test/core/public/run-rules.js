@@ -206,7 +206,9 @@ describe('runRules', function () {
 				}
 			}, {
 				id: 'first-div',
-				selector: ':not(#fixture)',
+				matches: function (node) {
+					return node.id !== 'fixture';
+				},
 				evaluate: function (node) {
 					this.relatedNodes([node]);
 					return false;
@@ -370,7 +372,9 @@ describe('runRules', function () {
 				}
 			}, {
 				id: 'first-div',
-				selector: ':not(#fixture)',
+				matches: function (node) {
+					return node.id !== 'fixture';
+				},
 				evaluate: function (node) {
 					this.relatedNodes([node]);
 					return false;

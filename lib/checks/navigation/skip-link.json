@@ -1,6 +1,5 @@
 {
   "id": "skip-link",
-  "selector": "a[href]",
   "evaluate": "skip-link.js",
   "after": "skip-link-after.js",
   "metadata": {

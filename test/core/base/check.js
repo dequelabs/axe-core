@@ -25,30 +25,9 @@ describe('Check', function () {
 			});
 		});
 		describe('matches', function () {
-			it('should be a function', function () {
+			it('should be a function that returns true', function () {
 				assert.isFunction(Check.prototype.matches);
-			});
-			it('should test its selector against a given node', function () {
-				var node = document.createElement('div');
-				node.id = 'monkeys';
-				fixture.appendChild(node);
-
-				var check = new Check({ selector: '#monkeys' });
-
-				assert.isTrue(check.matches(node));
-
-				node.id = 'bananas';
-				assert.isFalse(check.matches(node));
-
-			});
-
-			it('should default to true if selector is not set', function () {
-				var node = document.createElement('div');
-
-				var check = new Check({});
-
-				assert.isTrue(check.matches(node));
-
+				assert.isTrue(Check.prototype.matches());
 			});
 		});
 
@@ -64,17 +43,6 @@ describe('Check', function () {
 					options: ['foo']
 				});
 				check.configure({options: 'fong'});
-				assert.equal('fong', check.test());
-				delete Check.prototype.test;
-			});
-			it('should override selector', function () {
-				Check.prototype.test = function () {
-					return this.selector;
-				};
-				var check = new Check({
-					selector: 'foo'
-				});
-				check.configure({selector: 'fong'});
 				assert.equal('fong', check.test());
 				delete Check.prototype.test;
 			});
@@ -276,9 +244,10 @@ describe('Check', function () {
 			});
 
 			it('should pass `null` as the parameter if the node does not match', function (done) {
-
 				new Check({
-					selector: '#monkeys',
+					matches: function () {
+						return false;
+					},
 					evaluate: function () {}
 				}).run(fixture, {}, function (data) {
 					assert.isNull(data);
@@ -289,7 +258,6 @@ describe('Check', function () {
 			it('should pass `null` as the parameter if not enabled', function (done) {
 
 				new Check({
-					selector: '#monkeys',
 					evaluate: function () {},
 					enabled: false
 				}).run(fixture, {}, function (data) {
@@ -301,7 +269,6 @@ describe('Check', function () {
 			it('should pass `null` as the parameter if options disable', function (done) {
 
 				new Check({
-					selector: '#monkeys',
 					evaluate: function () {}
 				}).run(fixture, {enabled: false}, function (data) {
 					assert.isNull(data);
