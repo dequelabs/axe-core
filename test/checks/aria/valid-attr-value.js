@@ -100,27 +100,7 @@ describe('aria-valid-attr-value', function () {
 			fixture.innerHTML = '<div id="target" aria-live="nope" aria-describedby="no exist k thx"></div>';
 			var target = fixture.querySelector('#target');
 			assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, target, ['aria-live', 'aria-describedby']));
-
-
 		});
-	});
-
-	describe('matches', function () {
-		it('should return false if an element has no attributes', function () {
-			var div = document.createElement('div');
-			assert.isFalse(checks['aria-valid-attr-value'].matches(div));
-		});
-		it('should return false if an element has no ARIA attributes', function () {
-			var div = document.createElement('div');
-			div.id = 'monkeys';
-			assert.isFalse(checks['aria-valid-attr-value'].matches(div));
-		});
-		it('should return true if an element has ARIA attributes', function () {
-			var div = document.createElement('div');
-			div.setAttribute('aria-bats', 'monkeys');
-			assert.isTrue(checks['aria-valid-attr-value'].matches(div));
-		});
-
 	});
 
 });

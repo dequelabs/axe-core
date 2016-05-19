@@ -192,4 +192,4 @@ describe('color-contrast matches', function () {
 		assert.isFalse(rule.matches(target));
 	});
 
-})
+});
