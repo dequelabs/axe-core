@@ -1,4 +1,5 @@
-describe('aria-allowed-attr matches', function () {
+describe('aria-allowed-attr-matches', function () {
+	'use strict';
 
 	var fixture = document.getElementById('fixture');
 	var rule;

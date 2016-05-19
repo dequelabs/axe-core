@@ -1,4 +1,5 @@
-describe('color-contrast matches', function () {
+describe('color-contrast-matches', function () {
+	'use strict';
 
 	var fixture = document.getElementById('fixture');
 	var rule;
