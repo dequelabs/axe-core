@@ -1,6 +1,5 @@
 {
   "id": "aria-valid-attr",
-  "matches": "has-attr-matches.js",
   "evaluate": "valid-attr.js",
   "options": [],
   "metadata": {

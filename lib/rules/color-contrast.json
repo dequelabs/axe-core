@@ -1,10 +1,10 @@
 {
   "id": "color-contrast",
+  "matches": "color-contrast-matches.js",
   "excludeHidden": false,
   "options": {
     "noScroll": false
   },
-  "selector": "*",
   "tags": [
     "wcag2aa",
     "wcag143"
