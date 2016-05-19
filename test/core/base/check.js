@@ -24,12 +24,6 @@ describe('Check', function () {
 				assert.isFalse(check.enabled);
 			});
 		});
-		describe('matches', function () {
-			it('should be a function that returns true', function () {
-				assert.isFunction(Check.prototype.matches);
-				assert.isTrue(Check.prototype.matches());
-			});
-		});
 
 		describe('configure', function () {
 			it('should accept one parameter', function () {
@@ -57,17 +51,6 @@ describe('Check', function () {
 				assert.equal('fong', check.test());
 				delete Check.prototype.test;
 			});
-			it('should override matches', function () {
-				Check.prototype.test = function () {
-					return this.matches();
-				};
-				var check = new Check({
-					matches: 'function () { return "foo"; }'
-				});
-				check.configure({matches: 'function () { return "fong"; }'});
-				assert.equal('fong', check.test());
-				delete Check.prototype.test;
-			});
 			it('should override after', function () {
 				Check.prototype.test = function () {
 					return this.after();
@@ -87,17 +70,6 @@ describe('Check', function () {
 					evaluate: function () { return 'foo'; }
 				});
 				check.configure({evaluate: function () { return 'fong'; }});
-				assert.equal('fong', check.test());
-				delete Check.prototype.test;
-			});
-			it('should override matches as a function', function () {
-				Check.prototype.test = function () {
-					return this.matches();
-				};
-				var check = new Check({
-					matches: function () { return 'foo'; }
-				});
-				check.configure({matches: function () { return 'fong'; }});
 				assert.equal('fong', check.test());
 				delete Check.prototype.test;
 			});
@@ -148,22 +120,6 @@ describe('Check', function () {
 		describe('run', function () {
 			it('should accept 4 parameters', function () {
 				assert.lengthOf(new Check({}).run, 4);
-			});
-
-			it('should call matches', function (done) {
-				var success = false;
-
-				new Check({
-					matches: function () {
-						success = true;
-						return true;
-					},
-					evaluate: function () {
-						assert.isTrue(success);
-						done();
-					}
-				}).run(fixture, {}, noop);
-
 			});
 
 			it('should pass the node through', function (done) {
@@ -242,19 +198,6 @@ describe('Check', function () {
 				});
 
 			});
-
-			it('should pass `null` as the parameter if the node does not match', function (done) {
-				new Check({
-					matches: function () {
-						return false;
-					},
-					evaluate: function () {}
-				}).run(fixture, {}, function (data) {
-					assert.isNull(data);
-					done();
-				});
-
-			});
 			it('should pass `null` as the parameter if not enabled', function (done) {
 
 				new Check({
@@ -308,28 +251,6 @@ describe('Check', function () {
 
 
 	describe('spec object', function () {
-
-		describe('.matches', function () {
-			it('should be set', function () {
-				var spec = {
-					matches: function () {}
-				};
-				assert.equal(new Check(spec).matches, spec.matches);
-			});
-
-			it('should default to prototype', function () {
-				var spec = {};
-				assert.equal(new Check(spec).matches, Check.prototype.matches);
-			});
-
-			it('should be able to take a string and turn it into a function', function () {
-				var spec = {
-					matches: 'function () {return "blah";}'
-				};
-				assert.equal(typeof new Check(spec).matches, 'function');
-				assert.equal(new Check(spec).matches(), 'blah');
-			});
-		});
 
 		describe('.id', function () {
 			it('should be set', function () {

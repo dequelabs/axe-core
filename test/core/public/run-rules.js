@@ -196,7 +196,7 @@ describe('runRules', function () {
 				any: ['has-target']
 			}, {
 				id: 'first-div',
-				selector: 'div',
+				selector: 'div:not([id=fixture]',
 				any: ['first-div']
 			}],
 			checks: [{
@@ -206,9 +206,6 @@ describe('runRules', function () {
 				}
 			}, {
 				id: 'first-div',
-				matches: function (node) {
-					return node.id !== 'fixture';
-				},
 				evaluate: function (node) {
 					this.relatedNodes([node]);
 					return false;
@@ -362,7 +359,7 @@ describe('runRules', function () {
 				any: ['has-target']
 			}, {
 				id: 'first-div',
-				selector: 'div',
+				selector: 'div:not([id=fixture]',
 				any: ['first-div'],
 			}],
 			checks: [{
@@ -372,9 +369,6 @@ describe('runRules', function () {
 				}
 			}, {
 				id: 'first-div',
-				matches: function (node) {
-					return node.id !== 'fixture';
-				},
 				evaluate: function (node) {
 					this.relatedNodes([node]);
 					return false;
