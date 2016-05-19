@@ -13,6 +13,7 @@ exports = module.exports = function (grunt, options) {
 				urls: [
 					'http://localhost:<%= connect.test.options.port %>/test/core/',
 					'http://localhost:<%= connect.test.options.port %>/test/checks/',
+					'http://localhost:<%= connect.test.options.port %>/test/rule-matches/',
 					'http://localhost:<%= connect.test.options.port %>/test/commons/',
 					'http://localhost:<%= connect.test.options.port %>/test/integration/rules/'
 				],
