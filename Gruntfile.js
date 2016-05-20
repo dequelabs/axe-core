@@ -213,6 +213,21 @@ module.exports = function (grunt) {
 					}
 				}
 			},
+			ruleMatches: {
+				src: [
+					'<%= concat.engine.dest %>',
+					'build/test/engine.js',
+					'<%= configure.rules.dest.auto %>'
+				],
+				dest: 'test/rule-matches/index.html',
+				options: {
+					fixture: 'test/runner.tmpl',
+					testCwd: 'test/rule-matches',
+					data: {
+						title: 'aXe Rule Matches Tests'
+					}
+				}
+			},
 			integration: {
 				src: ['<%= concat.engine.dest %>'],
 				dest: 'test/integration/rules/index.html',

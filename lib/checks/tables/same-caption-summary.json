@@ -1,6 +1,5 @@
 {
   "id": "same-caption-summary",
-  "selector": "table",
   "evaluate": "same-caption-summary.js",
   "metadata": {
     "impact": "moderate",
