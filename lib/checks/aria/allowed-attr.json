@@ -1,6 +1,5 @@
 {
   "id": "aria-allowed-attr",
-  "matches": "allowed-attr-matches.js",
   "evaluate": "allowed-attr.js",
   "metadata": {
     "impact": "critical",

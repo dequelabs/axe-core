@@ -218,11 +218,10 @@ describe('Audit', function () {
 			assert.equal(audit.checks.target, undefined);
 			audit.addCheck({
 				id: 'target',
-				selector: 'bob',
 				options: 'jane'
 			});
 			assert.ok(audit.checks.target);
-			assert.equal(audit.checks.target.selector, 'bob');
+			assert.equal(audit.checks.target.options, 'jane');
 			audit.resetRulesAndChecks();
 			assert.equal(audit.checks.target, undefined);
 		});
@@ -234,11 +233,10 @@ describe('Audit', function () {
 			assert.equal(audit.checks.target, undefined);
 			audit.addCheck({
 				id: 'target',
-				selector: 'bob',
 				options: 'jane'
 			});
 			assert.ok(audit.checks.target);
-			assert.equal(audit.checks.target.selector, 'bob');
+			assert.equal(audit.checks.target.options, 'jane');
 		});
 		it('should configure the metadata, if passed', function () {
 			var audit = new Audit();
@@ -252,21 +250,22 @@ describe('Audit', function () {
 		});
 		it('should reconfigure existing check', function () {
 			var audit = new Audit();
+			var myTest = function () {};
 			audit.addCheck({
 				id: 'target',
-				selector: 'bob',
-				options: 'jane'
+				evaluate: myTest,
+				options: 'jane',
 			});
-			assert.equal(audit.checks.target.selector, 'bob');
+
 			assert.equal(audit.checks.target.options, 'jane');
 
 			audit.addCheck({
 				id: 'target',
-				selector: 'fred'
+				options: 'fred'
 			});
 
-			assert.equal(audit.checks.target.selector, 'fred');
-			assert.equal(audit.checks.target.options, 'jane');
+			assert.equal(audit.checks.target.evaluate, myTest);
+			assert.equal(audit.checks.target.options, 'fred');
 		});
 	});
 

@@ -15,17 +15,18 @@ describe('non-empty-if-present', function () {
 		checkContext._data = null;
 	});
 
-	it('should return true if an value is present', function () {
+	it('should return false if a value is present', function () {
 		var node = document.createElement('input');
+		node.setAttribute('type', 'submit');
 		node.setAttribute('value', 'woohoo');
 		fixture.appendChild(node);
 
-		assert.isTrue(checks['non-empty-if-present'].evaluate.call(checkContext, node));
-		assert.equal(checkContext._data, 'woohoo');
+		assert.isFalse(checks['non-empty-if-present'].evaluate.call(checkContext, node));
 	});
 
-	it('should return true if an value is not present', function () {
+	it('should return true if a value is not present', function () {
 		var node = document.createElement('input');
+		node.setAttribute('type', 'submit');
 		fixture.appendChild(node);
 
 		assert.isTrue(checks['non-empty-if-present'].evaluate.call(checkContext, node));
@@ -34,6 +35,7 @@ describe('non-empty-if-present', function () {
 
 	it('should return false if an value is present, but empty', function () {
 		var node = document.createElement('input');
+		node.setAttribute('type', 'submit');
 		node.setAttribute('value', '');
 		fixture.appendChild(node);
 
@@ -41,13 +43,21 @@ describe('non-empty-if-present', function () {
 		assert.equal(checkContext._data, '');
 	});
 
-	it('should collapse whitespace', function () {
-		var node = document.createElement('div');
-		node.setAttribute('value', ' \t \n \r \t  \t\r\n ');
+	it('should return false if the element is not a submit or reset input', function () {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'text');
 		fixture.appendChild(node);
-
 		assert.isFalse(checks['non-empty-if-present'].evaluate.call(checkContext, node));
-		assert.equal(checkContext._data, ' \t \n \r \t  \t\r\n ');
 
+		node = document.createElement('input');
+		node.setAttribute('type', 'button');
+		fixture.appendChild(node);
+		assert.isFalse(checks['non-empty-if-present'].evaluate.call(checkContext, node));
+
+		node = document.createElement('button');
+		node.setAttribute('type', 'submit');
+		fixture.appendChild(node);
+		assert.isFalse(checks['non-empty-if-present'].evaluate.call(checkContext, node));
 	});
+
 });
