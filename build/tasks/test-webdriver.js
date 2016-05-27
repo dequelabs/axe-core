@@ -76,6 +76,25 @@ module.exports = function (grunt) {
 		});
 	}
 
+	/*
+	* Build web driver depends whether REMOTE_SELENIUM_URL is set
+	*/
+	function buildWebDriver(browser) {
+		var	webdriver;
+		if (process.env.REMOTE_SELENIUM_URL) {
+		  webdriver = new WebDriver.Builder()
+			.forBrowser(browser)
+			.usingServer(process.env.REMOTE_SELENIUM_URL)
+			.build();
+		} else {
+			webdriver = new WebDriver.Builder()
+			.forBrowser(browser)
+			.build();
+		}
+
+		return webdriver;
+	}
+
 	/**
 	 * Run all tests in a browser using webdriver
 	 */
@@ -90,7 +109,9 @@ module.exports = function (grunt) {
 
 
 		if ((process.platform === 'win32' && options.browser === 'safari') ||
-			(process.platform === 'darwin' && ['ie', 'MicrosoftEdge'].indexOf(options.browser) !== -1)
+			(process.platform === 'darwin' && ['ie', 'MicrosoftEdge'].indexOf(options.browser) !== -1) ||
+			((process.platform === 'linux' || process.env.REMOTE_SELENIUM_URL) &&
+			(['ie', 'MicrosoftEdge'].indexOf(options.browser) !== -1 || options.browser === 'safari'))
 		) {
 			grunt.log.writeln();
 			grunt.log.writeln('Skipped ' + options.browser + ' as it is not supported on this platform');
@@ -99,9 +120,7 @@ module.exports = function (grunt) {
 
 		// try to load the browser
 		try {
-			driver = new WebDriver.Builder()
-			.forBrowser(options.browser)
-			.build();
+			driver = buildWebDriver(options.browser);
 
 		// If load fails, warn user and move to the next task
 		} catch (err) {
