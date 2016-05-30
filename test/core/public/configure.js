@@ -128,14 +128,12 @@ describe('axe.configure', function() {
 			checks: [{
 				id: 'bob',
 				options: false,
-				selector: 'fail'
 			}]
 		});
 		axe.configure({
 			checks: [{
 				id: 'bob',
 				options: true,
-				selector: 'pass',
 				metadata: {
 					joe: 'joe'
 				}
@@ -145,7 +143,6 @@ describe('axe.configure', function() {
 		assert.instanceOf(axe._audit.checks.bob, Check);
 		assert.equal(axe._audit.checks.bob.id, 'bob');
 		assert.isTrue(axe._audit.checks.bob.options);
-		assert.equal(axe._audit.checks.bob.selector, 'pass');
 		assert.equal(axe._audit.data.checks.bob.joe, 'joe');
 
 	});

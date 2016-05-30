@@ -140,7 +140,6 @@ axe.configure({
   	 	 * `evaluate` - function(required for new). This is the function that implements the check's functionality.
   	 	 * `after` - function(optional). This is the function that gets called for checks that operate on a page-level basis, to process the results from the iframes.
   	 	 * `options` - mixed(optional). This is the options structure that is passed to the evaluate function and is intended to be used to configure checks. It is the most common property that is intended to be overridden for existing checks.
-  	 	 * `matches` - string(optional). This string will filter the nodes that are passed into the evaluate function. It is a CSS selector.
   	 	 * `enabled` - boolean(optional, default `true`). This is used to indicate whether the check is on or off by default. Checks that are off are not evaluated, even when included in a rule. Overriding this is a common way to disable a particular check across multiple rules.
   * `rules` - Used to add rules to the existing set of rules, or to override the properties of existing rules
   	 * The rules attribute is an Array of rule objects
