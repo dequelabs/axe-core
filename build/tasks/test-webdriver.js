@@ -109,9 +109,9 @@ module.exports = function (grunt) {
 
 
 		if ((process.platform === 'win32' && options.browser === 'safari') ||
-			(process.platform === 'darwin' && ['ie', 'MicrosoftEdge'].indexOf(options.browser) !== -1) ||
-			((process.platform === 'linux' || process.env.REMOTE_SELENIUM_URL) &&
-			(['ie', 'MicrosoftEdge'].indexOf(options.browser) !== -1 || options.browser === 'safari'))
+			  (process.platform === 'darwin' && ['ie', 'MicrosoftEdge'].indexOf(options.browser) !== -1) ||
+			 ((process.platform === 'linux' || process.env.REMOTE_SELENIUM_URL) &&
+			 ['ie', 'MicrosoftEdge', 'safari'].indexOf(options.browser) !== -1)
 		) {
 			grunt.log.writeln();
 			grunt.log.writeln('Skipped ' + options.browser + ' as it is not supported on this platform');
