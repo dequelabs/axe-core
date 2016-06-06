@@ -1,6 +1,6 @@
 {
   "id": "frame-title-unique",
-  "selector": "frame[title], iframe[title]",
+  "selector": "frame[title]:not([title='']), iframe[title]:not([title=''])",
   "tags": [
     "best-practice"
   ],
