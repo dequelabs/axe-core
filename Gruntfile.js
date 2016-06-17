@@ -7,7 +7,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
-	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
@@ -16,7 +15,7 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		clean: ['dist', 'tmp'],
+		clean: ['axe.js', 'axe.min.js', 'tmp'],
 		babel: {
 			core: {
                 files: [{
@@ -59,7 +58,7 @@ module.exports = function (grunt) {
 					'lib/core/export.js',
 					'lib/outro.stub'
 				],
-				dest: 'dist/axe.js',
+				dest: 'axe.js',
 				options: {
 					process: true
 				}
@@ -134,28 +133,11 @@ module.exports = function (grunt) {
 			lib: {
 				files: [{
 					src: ['<%= concat.engine.dest %>'],
-					dest: 'dist/axe.min.js'
+					dest: 'axe.min.js'
 				}],
 				options: {
 					preserveComments: 'some'
 				}
-			}
-		},
-		copy: {
-			manifests: {
-				files: [{
-					src: ['package.json'],
-					dest: 'dist/'
-				}, {
-					src: ['README.md'],
-					dest: 'dist/'
-				}, {
-					src: ['bower.json'],
-					dest: 'dist/'
-				}, {
-					src: ['LICENSE'],
-					dest: 'dist/'
-				}]
 			}
 		},
 		watch: {
@@ -251,7 +233,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build']);
 
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
-		'concat:engine', 'babel', 'copy', 'uglify']);
+		'concat:engine', 'babel', 'uglify']);
 
 	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
