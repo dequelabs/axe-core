@@ -162,6 +162,10 @@ The include exclude object is a JSON object with two attributes: include and exc
 
 * A node, or
 * An array of arrays of CSS selectors
+    * If the nested array contains a single string, that string is the CSS selector
+    * If the nested array contains multiple strings
+      * The last string is the final CSS selector
+      * All other's are the nested structure of iframes inside the document
 
 In most cases, the component arrays will contain only one CSS selector. Multiple CSS selectors are only required if you want to include or exclude regions of a page that are inside iframes (or iframes within iframes within iframes). In this case, the first n-1 selectors are selectors that select the iframe(s) and the nth selector, selects the region(s) within the iframe.
 
@@ -190,6 +194,35 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 	  exclude: [['.exclude1'], ['.exclude2']]
 	}
 	```
+4. Include the element with the ID of `fix`, within the iframe with id `frame`
+
+  ```javascript
+  {
+    include: [['#frame', '#fix']]
+  }
+  ```
+5. Include the element with the ID of `fix`, within the iframe with id `frame2`, within the iframe with id `frame1`
+
+  ```javascript
+  {
+    include: [['#frame1', '#frame2', '#fix']]
+  }
+  ```
+6. Include the following:
+  * The element with the ID of `fix`, within the iframe with id `frame2`, within the iframe with id `frame1`
+  * The element with id `header`
+  * All links
+
+  ```javascript
+  {
+    include: [
+      ['#header'],
+      ['a'],
+      ['#frame1', '#frame2', '#fix']
+    ]
+  }
+  ```
+
 
 ##### Options Parameter
 
