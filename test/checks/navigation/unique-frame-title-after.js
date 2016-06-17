@@ -27,13 +27,20 @@ describe('unique-frame-title-after', function () {
 			}]);
 
 		assert.deepEqual(result, [{
-			data: 'bananas'
-		}, {
-			data: 'monkeys'
-		}, {
-			data: 'bananas'
-		}, {
-			data: 'monkeys'
+				data: 'bananas',
+				result: true
+			}, {
+				data: 'monkeys',
+				result: true
+			}, {
+				data: 'bananas',
+				result: true
+			}, {
+				data: 'apples',
+				result: false
+			}, {
+				data: 'monkeys',
+				result: true
 		}]);
 	});
 });
