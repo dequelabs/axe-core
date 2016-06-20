@@ -42,36 +42,6 @@ describe('axe.run', function () {
 		});
 	});
 
-	it('sets v1 as the default reporter if audit.reporter is null', function (done) {
-		axe._runRules = function (ctxt, opt) {
-			assert.equal(opt.reporter, 'v1');
-			axe._runRules = origRunRules;
-			done();
-		};
-		axe._audit.reporter = null;
-		axe.run(document, noop);
-	});
-
-	it('uses the audit.reporter if no reporter is set in options', function (done) {
-		axe._runRules = function (ctxt, opt) {
-			assert.equal(opt.reporter, 'raw');
-			axe._runRules = origRunRules;
-			done();
-		};
-		axe._audit.reporter = 'raw';
-		axe.run(document, noop);
-	});
-
-	it('does not override if another reporter is set', function (done) {
-		axe._runRules = function (ctxt, opt) {
-			assert.equal(opt.reporter, 'raw');
-			axe._runRules = origRunRules;
-			done();
-		};
-		axe._audit.reporter = null;
-		axe.run(document, {reporter: 'raw'}, noop);
-	});
-
 	it('uses document as content if it is not specified', function (done) {
 		axe._runRules = function (ctxt) {
 			assert.equal(ctxt, document);
@@ -91,7 +61,7 @@ describe('axe.run', function () {
 		axe.run(document, noop);
 	});
 
-	it('treats objects with include or exclude as the option object', function (done) {
+	it('treats objects with include or exclude as the context object', function (done) {
 		axe._runRules = function (ctxt) {
 			assert.deepEqual(ctxt, {include: '#BoggyB'});
 			axe._runRules = origRunRules;
@@ -117,61 +87,97 @@ describe('axe.run', function () {
 		});
 	});
 
-	it('gives errors to the first argument on the callback', function (done) {
-		axe._runRules = function (ctxt, opt, resolve, reject) {
-			axe._runRules = origRunRules;
-			reject('Ninja rope!');
-		};
 
-		axe.run({ reporter: 'raw' }, function (err) {
-			assert.equal(err, 'Ninja rope!');
-			done();
+	describe('callback', function () {
+		it('gives errors to the first argument on the callback', function (done) {
+			axe._runRules = function (ctxt, opt, resolve, reject) {
+				axe._runRules = origRunRules;
+				reject('Ninja rope!');
+			};
+
+			axe.run({ reporter: 'raw' }, function (err) {
+				assert.equal(err, 'Ninja rope!');
+				done();
+			});
+		});
+
+		it('gives results to the second argument on the callback', function (done) {
+			axe._runRules = function (ctxt, opt, resolve) {
+				axe._runRules = origRunRules;
+				resolve('MB Bomb');
+			};
+
+			axe.run({ reporter: 'raw' }, function (err, result) {
+				assert.equal(err, null);
+				assert.equal(result, 'MB Bomb');
+				done();
+			});
+		});
+
+		it('returns a promise if no callback was given',
+		(!window.Promise) ? undefined :  function (done) {
+			axe._runRules = function (ctxt, opt, resolve) {
+				axe._runRules = origRunRules;
+				resolve('World party');
+			};
+
+			var p = axe.run({ reporter: 'raw' });
+			p.then(function (result) {
+				assert.equal(result, 'World party');
+				done();
+			});
+
+			assert.instanceOf(p, window.Promise);
+		});
+
+		it('returns an error to catch if axe fails',
+		(!window.Promise) ? undefined :  function (done) {
+			axe._runRules = function (ctxt, opt, resolve, reject) {
+				axe._runRules = origRunRules;
+				reject('I surrender!');
+			};
+
+			var p = axe.run({ reporter: 'raw' });
+			p.then(noop)
+			.catch(function (err) {
+				assert.equal(err, 'I surrender!');
+				done();
+			});
+
+			assert.instanceOf(p, window.Promise);
 		});
 	});
 
-	it('gives results to the second argument on the callback', function (done) {
-		axe._runRules = function (ctxt, opt, resolve) {
-			axe._runRules = origRunRules;
-			resolve('MB Bomb');
-		};
 
-		axe.run({ reporter: 'raw' }, function (err, result) {
-			assert.equal(err, null);
-			assert.equal(result, 'MB Bomb');
-			done();
-		});
-	});
-
-	it('returns a promise if no callback was given',
-	(!window.Promise) ? undefined :  function (done) {
-		axe._runRules = function (ctxt, opt, resolve) {
-			axe._runRules = origRunRules;
-			resolve('World party');
-		};
-
-		var p = axe.run({ reporter: 'raw' });
-		p.then(function (result) {
-			assert.equal(result, 'World party');
-			done();
+	describe('option reporter', function () {
+		it('sets v1 as the default reporter if audit.reporter is null', function (done) {
+			axe._runRules = function (ctxt, opt) {
+				assert.equal(opt.reporter, 'v1');
+				axe._runRules = origRunRules;
+				done();
+			};
+			axe._audit.reporter = null;
+			axe.run(document, noop);
 		});
 
-		assert.instanceOf(p, window.Promise);
-	});
-
-	it('returns an error to catch if axe fails',
-	(!window.Promise) ? undefined :  function (done) {
-		axe._runRules = function (ctxt, opt, resolve, reject) {
-			axe._runRules = origRunRules;
-			reject('I surrender!');
-		};
-
-		var p = axe.run({ reporter: 'raw' });
-		p.then(noop)
-		.catch(function (err) {
-			assert.equal(err, 'I surrender!');
-			done();
+		it('uses the audit.reporter if no reporter is set in options', function (done) {
+			axe._runRules = function (ctxt, opt) {
+				assert.equal(opt.reporter, 'raw');
+				axe._runRules = origRunRules;
+				done();
+			};
+			axe._audit.reporter = 'raw';
+			axe.run(document, noop);
 		});
 
-		assert.instanceOf(p, window.Promise);
+		it('does not override if another reporter is set', function (done) {
+			axe._runRules = function (ctxt, opt) {
+				assert.equal(opt.reporter, 'raw');
+				axe._runRules = origRunRules;
+				done();
+			};
+			axe._audit.reporter = null;
+			axe.run(document, {reporter: 'raw'}, noop);
+		});
 	});
 });
