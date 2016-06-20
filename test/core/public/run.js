@@ -180,4 +180,35 @@ describe('axe.run', function () {
 			axe.run(document, {reporter: 'raw'}, noop);
 		});
 	});
+
+	describe('option xpath', function () {
+		it('returns the xpath if the xpath option is true', function (done) {
+			axe.run({ xpath: true }, function (err, result) {
+				assert.equal(result, 'MB Bomb');
+				done();
+			});
+		});
+
+		it('returns xpath on related nodes', function (done) {
+			axe.run({ xpath: true }, function (err, result) {
+				assert.equal(result, 'MB Bomb');
+				done();
+			});
+		});
+
+		it('returns the xpath on any reporter', function (done) {
+			axe.run({ xpath: true, reporter: 'raw' }, function (err, result) {
+				assert.equal(result, 'MB Bomb');
+				done();
+			});
+		});
+
+		it('returns no xpath if the xpath option is not set', function (done) {
+			axe.run(function (err, result) {
+				assert.equal(result, 'MB Bomb');
+				done();
+			});
+		});
+	});
+
 });
