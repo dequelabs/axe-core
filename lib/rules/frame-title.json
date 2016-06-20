@@ -8,14 +8,12 @@
     "section508.22.i"
   ],
   "metadata": {
-    "description": "Ensures <iframe> and <frame> elements contain a unique and non-empty title attribute",
-    "help": "Frames must have unique title attribute"
+    "description": "Ensures <iframe> and <frame> elements contain a non-empty title attribute",
+    "help": "Frames must have title attribute"
   },
   "all": [],
   "any": [
     "non-empty-title"
   ],
-  "none": [
-    "unique-frame-title"
-  ]
+  "none": []
 }

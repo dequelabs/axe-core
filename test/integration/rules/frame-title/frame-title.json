@@ -3,11 +3,11 @@
 	"rule": "frame-title",
 	"violations": [
 		["#violation1"],
-		["#violation3"],
-		["#violation4"],
 		["#violation1", "#violation2"]
 	],
 	"passes": [
-		["#violation1", "#pass1"]
+		["#violation1", "#pass1"],
+		["#pass2"],
+		["#pass3"]
 	]
 }
