@@ -51,7 +51,33 @@ describe('Context', function() {
 
 		});
 
-		it('should accept an array of node reference', function() {
+              it('should accept a node reference consisting of nested divs', function() {
+                     var div1 = document.createElement('div');
+                     var div2 = document.createElement('div');
+
+                     div1.appendChild(div2);
+                     fixture.appendChild(div1);
+
+                     var result = new Context(div1);
+
+                     assert.deepEqual(result.include, [div1]);
+
+              });
+
+              it('should accept a node reference consisting of a form with nested controls', function() {
+                     var form = document.createElement('form');
+                     var input = document.createElement('input');
+
+                     form.appendChild(input);
+                     fixture.appendChild(form);
+
+                     var result = new Context(form);
+
+                     assert.deepEqual(result.include, [form]);
+
+              });
+
+		it('should accept an array of node references', function() {
 			fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
 
 			var result = new Context([$id('foo'), $id('bar')]);
@@ -342,7 +368,7 @@ describe('Context', function() {
 			var spec = document.implementation.createHTMLDocument('ie is dumb');
 			spec.hasOwnProperty = undefined;
 			var result = new Context(spec);
-			
+
 			assert.lengthOf(result.include, 1);
 			assert.equal(result.include[0], spec);
 
