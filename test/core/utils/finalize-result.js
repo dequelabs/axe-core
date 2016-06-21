@@ -25,7 +25,7 @@ describe('axe.utils.finalizeRuleResult', function() {
 
 	it('passes the nodes property to utils.aggregateRule', function() {
 		var isCalled = false;
-		var nodes = {};
+		var nodes = [];
 		axe.utils.aggregateRule = function (n) {
 			assert.equal(n, nodes);
 			isCalled = true;
