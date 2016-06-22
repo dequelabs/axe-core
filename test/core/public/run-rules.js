@@ -238,6 +238,7 @@ describe('runRules', function () {
 						impact: null,
 						node: {
 							selector: ['#context-test', '#target'],
+							xpath: ['/iframe[@id=\'context-test\']', '/div[@id=\'target\']'],
 							source: '<div id="target"></div>'
 						},
 						any: [{
@@ -263,6 +264,7 @@ describe('runRules', function () {
 						impact: null,
 						node: {
 							selector: ['#context-test', '#foo'],
+							xpath: ['/iframe[@id=\'context-test\']', '/div[@id=\'foo\']'],
 							source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
 						},
 						any: [{
@@ -270,6 +272,7 @@ describe('runRules', function () {
 							data: null,
 							relatedNodes: [{
 								selector: ['#context-test', '#foo'],
+								xpath: ['/iframe[@id=\'context-test\']', '/div[@id=\'foo\']'],
 								source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
 							}]
 						}],
@@ -435,6 +438,7 @@ describe('runRules', function () {
 						result: 'failed',
 						node: {
 							selector: ['#target'],
+							xpath: ['/div[@id=\'target\']'],
 							source: '<div id="target">Target!</div>'
 						},
 						impact: 'moderate',
@@ -466,6 +470,7 @@ describe('runRules', function () {
 						impact: null,
 						node: {
 							selector: ['#target'],
+							xpath: ['/div[@id=\'target\']'],
 							source: '<div id="target">Target!</div>'
 						},
 						any: [{
@@ -476,6 +481,7 @@ describe('runRules', function () {
 							data: null,
 							relatedNodes: [{
 								selector: ['#target'],
+								xpath: ['/div[@id=\'target\']'],
 								source: '<div id="target">Target!</div>'
 							}]
 						}],

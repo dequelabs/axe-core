@@ -14,7 +14,8 @@ describe('axe.run', function () {
 			}],
 			checks: [{
 				id: 'fred',
-				evaluate: function () {
+				evaluate: function (node) {
+					this.relatedNodes([node]);
 					return true;
 				}
 			}]
@@ -182,30 +183,46 @@ describe('axe.run', function () {
 	});
 
 	describe('option xpath', function () {
+		it('returns no xpath if the xpath option is not set', function (done) {
+			axe.run('#fixture', function (err, result) {
+				assert.isUndefined(result.violations[0].nodes[0].xpath);
+				done();
+			});
+		});
+
 		it('returns the xpath if the xpath option is true', function (done) {
-			axe.run({ xpath: true }, function (err, result) {
-				assert.equal(result, 'MB Bomb');
+			axe.run('#fixture', {
+				xpath: true
+			}, function (err, result) {
+				assert.deepEqual(
+					result.violations[0].nodes[0].xpath,
+					['/div[@id=\'fixture\']']
+				);
 				done();
 			});
 		});
 
 		it('returns xpath on related nodes', function (done) {
-			axe.run({ xpath: true }, function (err, result) {
-				assert.equal(result, 'MB Bomb');
+			axe.run('#fixture', {
+				xpath: true
+			}, function (err, result) {
+				assert.deepEqual(
+					result.violations[0].nodes[0].none[0].relatedNodes[0].xpath,
+					['/div[@id=\'fixture\']']
+				);
 				done();
 			});
 		});
 
 		it('returns the xpath on any reporter', function (done) {
-			axe.run({ xpath: true, reporter: 'raw' }, function (err, result) {
-				assert.equal(result, 'MB Bomb');
-				done();
-			});
-		});
-
-		it('returns no xpath if the xpath option is not set', function (done) {
-			axe.run(function (err, result) {
-				assert.equal(result, 'MB Bomb');
+			axe.run('#fixture', {
+				xpath: true,
+				reporter: 'no-passes'
+			}, function (err, result) {
+				assert.deepEqual(
+					result.violations[0].nodes[0].xpath,
+					['/div[@id=\'fixture\']']
+				);
 				done();
 			});
 		});
