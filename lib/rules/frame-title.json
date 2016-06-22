@@ -13,7 +13,11 @@
   },
   "all": [],
   "any": [
-    "non-empty-title"
+    "aria-label",
+    "aria-labelledby",
+    "non-empty-title",
+    "role-presentation",
+    "role-none"
   ],
   "none": []
 }
