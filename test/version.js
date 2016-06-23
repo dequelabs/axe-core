@@ -1,2 +1,5 @@
 /*global axe */
-axe.version = '2.0.0';
+
+// This enables free communication between frames with 
+// to the current version of axe:
+axe.version = 'x.y.z';
