@@ -1,4 +1,3 @@
-/*global runRules */
 describe('axe.a11yCheck', function () {
 	'use strict';
 

@@ -145,8 +145,8 @@ describe('axe.run', function () {
 		axe.log = function (e) {
 			assert.equal(e.message, 'err');
 			axe.log = log;
-		}
-		axe.run(function (err, result) {
+		};
+		axe.run(function () {
 			calls += 1;
 			if (calls === 1) {
 				setTimeout(function () {
@@ -195,11 +195,11 @@ describe('axe.run', function () {
 	it('does not error if then() throws',
 	(!window.Promise) ? undefined :  function (done) {
 		axe._runRules = function (ctxt, opt, resolve) {
-			resolve([])
+			resolve([]);
 		};
 
 		axe.run()
-		.then(function (result) {
+		.then(function () {
 			throw new Error('err');
 		}, function (e) {
 			assert.isNotOk(e, 'Caught callback error in the wrong place');

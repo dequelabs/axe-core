@@ -562,7 +562,7 @@ describe('runRules', function () {
 		axe.log = function (e) {
 			assert.equal(e.message, 'err');
 			axe.log = log;
-		}
+		};
 		runRules(document, {},resolve, reject);
 
 	});
