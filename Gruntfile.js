@@ -241,5 +241,5 @@ module.exports = function (grunt) {
 		'test-webdriver', 'jshint']);
 
 
-	grunt.registerTask('dev', ['build', 'testconfig', 'connect', 'watch']);
+	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
 };
