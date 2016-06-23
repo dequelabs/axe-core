@@ -532,4 +532,32 @@ describe('runRules', function () {
 
 		});
 	});
+
+	it('should not call reject when the resolve throws', function (done) {
+		var rejectCalled = false;
+		axe._load({ rules: [{
+			id: 'html',
+			selector: 'html',
+			any: ['html']
+		}], checks: [{
+			id: 'html',
+			evaluate: function () {
+				return true;
+			}
+		}], messages: {}});
+
+		function resolve() {
+			setTimeout(function () {
+				assert.isFalse(rejectCalled);
+				done();
+			}, 50);
+			throw 'err';
+		}
+		function reject() {
+			rejectCalled = true;
+		}
+
+		runRules(document, {},resolve, reject);
+
+	});
 });
