@@ -141,15 +141,21 @@ describe('axe.run', function () {
 			resolve([]);
 		};
 
+		var log = axe.log;
+		axe.log = function (e) {
+			assert.equal(e.message, 'err');
+			axe.log = log;
+		}
 		axe.run(function (err, result) {
 			calls += 1;
 			if (calls === 1) {
 				setTimeout(function () {
-					assert.equal(calls, 1)
+					assert.equal(calls, 1);
+					axe.log = log;
 					done();
 				}, 20);
 			}
-			throw 'err';
+			throw new Error('err');
 		});
 	});
 
@@ -194,13 +200,13 @@ describe('axe.run', function () {
 
 		axe.run()
 		.then(function (result) {
-			throw 'err';
+			throw new Error('err');
 		}, function (e) {
 			assert.isNotOk(e, 'Caught callback error in the wrong place');
 			done();
 
 		}).catch(function (e) {
-			assert.equal(e, 'err');
+			assert.equal(e.message, 'err');
 			done();
 		});
 	});

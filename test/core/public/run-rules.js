@@ -549,14 +549,20 @@ describe('runRules', function () {
 		function resolve() {
 			setTimeout(function () {
 				assert.isFalse(rejectCalled);
+				axe.log = log;
 				done();
-			}, 50);
-			throw 'err';
+			}, 20);
+			throw new Error('err');
 		}
 		function reject() {
 			rejectCalled = true;
 		}
 
+		var log = axe.log;
+		axe.log = function (e) {
+			assert.equal(e.message, 'err');
+			axe.log = log;
+		}
 		runRules(document, {},resolve, reject);
 
 	});
