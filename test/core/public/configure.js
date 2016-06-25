@@ -57,7 +57,7 @@ describe('axe.configure', function() {
 		});
 		assert.lengthOf(axe._audit.rules, 1);
 		assert.equal(axe._audit.data.rules.bob.helpUrl,
-			'https://dequeuniversity.com/rules/axe/2.0/bob?application=axeAPI');
+			'https://dequeuniversity.com/rules/axe/x.y/bob?application=axeAPI');
 		axe.configure({
 			branding: {
 				application: 'thing',
@@ -65,7 +65,7 @@ describe('axe.configure', function() {
 			}
 		});
 		assert.equal(axe._audit.data.rules.bob.helpUrl,
-			'https://dequeuniversity.com/rules/thung/2.0/bob?application=thing');
+			'https://dequeuniversity.com/rules/thung/x.y/bob?application=thing');
 	});
 
 	it('should allow for overwriting of rules', function () {

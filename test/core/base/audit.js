@@ -80,7 +80,7 @@ describe('Audit', function () {
 			assert.equal(audit.data.rules.target, undefined);
 			audit._constructHelpUrls();
 			assert.deepEqual(audit.data.rules.target, {
-				helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/target?application=axeAPI'
+				helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/target?application=axeAPI'
 			});
 		});
 		it('should use changed branding', function () {
@@ -95,7 +95,7 @@ describe('Audit', function () {
 			audit.brand = 'thing';
 			audit._constructHelpUrls();
 			assert.deepEqual(audit.data.rules.target, {
-				helpUrl: 'https://dequeuniversity.com/rules/thing/2.0/target?application=axeAPI'
+				helpUrl: 'https://dequeuniversity.com/rules/thing/x.y/target?application=axeAPI'
 			});
 		});
 		it('should use changed application', function () {
@@ -110,7 +110,7 @@ describe('Audit', function () {
 			audit.application = 'thing';
 			audit._constructHelpUrls();
 			assert.deepEqual(audit.data.rules.target, {
-				helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/target?application=thing'
+				helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/target?application=thing'
 			});
 		});
 	});
@@ -149,7 +149,7 @@ describe('Audit', function () {
 				application: 'thing'
 			});
 			assert.deepEqual(audit.data.rules.target, {
-				helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/target?application=thing'
+				helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/target?application=thing'
 			});
 		});
 		it('should call _constructHelpUrls even when nothing changed', function () {
@@ -163,7 +163,7 @@ describe('Audit', function () {
 			assert.equal(audit.data.rules.target, undefined);
 			audit.setBranding(undefined);
 			assert.deepEqual(audit.data.rules.target, {
-				helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/target?application=axeAPI'
+				helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/target?application=axeAPI'
 			});
 		});
 	});
