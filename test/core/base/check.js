@@ -1,6 +1,7 @@
-/*global Check, CheckResult */
+/*global Check, CheckResult, axe */
 describe('Check', function () {
 	'use strict';
+	var noop = function () {};
 
 	var fixture = document.getElementById('fixture');
 
@@ -27,7 +28,6 @@ describe('Check', function () {
 			it('should be a function', function () {
 				assert.isFunction(Check.prototype.matches);
 			});
-
 			it('should test its selector against a given node', function () {
 				var node = document.createElement('div');
 				node.id = 'monkeys';
@@ -52,9 +52,134 @@ describe('Check', function () {
 			});
 		});
 
+		describe('configure', function () {
+			it('should accept one parameter', function () {
+				assert.lengthOf(new Check({}).configure, 1);
+			});
+			it('should override options', function () {
+				Check.prototype.test = function () {
+					return this.options;
+				};
+				var check = new Check({
+					options: ['foo']
+				});
+				check.configure({options: 'fong'});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should override selector', function () {
+				Check.prototype.test = function () {
+					return this.selector;
+				};
+				var check = new Check({
+					selector: 'foo'
+				});
+				check.configure({selector: 'fong'});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should override evaluate', function () {
+				Check.prototype.test = function () {
+					return this.evaluate();
+				};
+				var check = new Check({
+					evaluate: 'function () { return "foo"; }'
+				});
+				check.configure({evaluate: 'function () { return "fong"; }'});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should override matches', function () {
+				Check.prototype.test = function () {
+					return this.matches();
+				};
+				var check = new Check({
+					matches: 'function () { return "foo"; }'
+				});
+				check.configure({matches: 'function () { return "fong"; }'});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should override after', function () {
+				Check.prototype.test = function () {
+					return this.after();
+				};
+				var check = new Check({
+					after: 'function () { return "foo"; }'
+				});
+				check.configure({after: 'function () { return "fong"; }'});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should override evaluate as a function', function () {
+				Check.prototype.test = function () {
+					return this.evaluate();
+				};
+				var check = new Check({
+					evaluate: function () { return 'foo'; }
+				});
+				check.configure({evaluate: function () { return 'fong'; }});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should override matches as a function', function () {
+				Check.prototype.test = function () {
+					return this.matches();
+				};
+				var check = new Check({
+					matches: function () { return 'foo'; }
+				});
+				check.configure({matches: function () { return 'fong'; }});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should override after as a function', function () {
+				Check.prototype.test = function () {
+					return this.after();
+				};
+				var check = new Check({
+					after: function () { return 'foo'; }
+				});
+				check.configure({after: function () { return 'fong'; }});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should override enabled', function () {
+				Check.prototype.test = function () {
+					return this.enabled;
+				};
+				var check = new Check({
+					enabled: true
+				});
+				check.configure({enabled: false});
+				assert.equal(false, check.test());
+				delete Check.prototype.test;
+			});
+			it('should NOT override id', function () {
+				Check.prototype.test = function () {
+					return this.id;
+				};
+				var check = new Check({
+					id: 'fong'
+				});
+				check.configure({id: 'foo'});
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+			});
+			it('should NOT override any random property', function () {
+				Check.prototype.test = function () {
+					return this.random;
+				};
+				var check = new Check({});
+				check.configure({random: 'foo'});
+				assert.equal(undefined, check.test());
+				delete Check.prototype.test;
+			});
+		});
+
 		describe('run', function () {
-			it('should accept 3 parameters', function () {
-				assert.lengthOf(new Check({}).run, 3);
+			it('should accept 4 parameters', function () {
+				assert.lengthOf(new Check({}).run, 4);
 			});
 
 			it('should call matches', function (done) {
@@ -69,7 +194,7 @@ describe('Check', function () {
 						assert.isTrue(success);
 						done();
 					}
-				}).run(fixture, {}, function () {});
+				}).run(fixture, {}, noop);
 
 			});
 
@@ -79,7 +204,7 @@ describe('Check', function () {
 						assert.equal(node, fixture);
 						done();
 					}
-				}).run(fixture, {}, function () {});
+				}).run(fixture, {}, noop);
 
 			});
 
@@ -92,7 +217,7 @@ describe('Check', function () {
 						assert.deepEqual(options, expected);
 						done();
 					}
-				}).run(fixture, {}, function () {});
+				}).run(fixture, {}, noop);
 
 			});
 
@@ -106,16 +231,16 @@ describe('Check', function () {
 						assert.deepEqual(options, expected);
 						done();
 					}
-				}).run(fixture, { options: expected }, function () {});
+				}).run(fixture, { options: expected }, noop);
 
 			});
 
 			it('should bind context to `bindCheckResult`', function (done) {
-				var orig = utils.checkHelper,
+				var orig = axe.utils.checkHelper,
 					cb = function () { return true; },
 					result = { monkeys: 'bananas' };
 
-				utils.checkHelper = function (checkResult, callback) {
+				axe.utils.checkHelper = function (checkResult, callback) {
 					assert.instanceOf(checkResult, window.CheckResult);
 					assert.equal(callback, cb);
 
@@ -125,7 +250,7 @@ describe('Check', function () {
 				new Check({
 					evaluate: function () {
 						assert.deepEqual(result, this);
-						utils.checkHelper = orig;
+						axe.utils.checkHelper = orig;
 						done();
 					}
 				}).run(fixture, {}, cb);
@@ -137,7 +262,10 @@ describe('Check', function () {
 				var data = { monkeys: 'bananas' };
 				new Check({
 					evaluate: function () {
-						this.async()(data);
+						var ready = this.async();
+						setTimeout(function () {
+							ready(data);
+						}, 10);
 					}
 				}).run(fixture, {}, function (d) {
 					assert.instanceOf(d, CheckResult);
@@ -182,59 +310,7 @@ describe('Check', function () {
 
 			});
 
-			it('should not throw, but add any raised error as `error` on the returned object', function (done) {
-
-				var error = new Error('oh noes');
-				var orig = axe.log;
-				axe.log = function (msg, stack) {
-					assert.equal(msg, error.message);
-					assert.equal(stack, error.stack);
-
-					axe.log = orig;
-					done();
-				};
-				assert.doesNotThrow(function () {
-
-					new Check({
-						evaluate: function () {
-							throw error;
-						}
-					}).run(fixture, {}, function (result) {
-						assert.isNull(result);
-					});
-
-				});
-
-			});
-
-			it('should not throw, but pass any raised error as the first parameter to callback - async', function (done) {
-
-				var error = new Error('oh noes');
-				var orig = axe.log;
-				axe.log = function (msg, stack) {
-					assert.equal(msg, error.message);
-					assert.equal(stack, error.stack);
-
-					axe.log = orig;
-					done();
-				};
-				assert.doesNotThrow(function () {
-
-					new Check({
-						evaluate: function () {
-							this.async();
-							throw error;
-						}
-					}).run(fixture, {}, function (result) {
-						assert.isNull(result);
-					});
-
-				});
-
-
-			});
-
-			it('should return a result', function (done) {
+			it('passes a result to the resolve argument', function (done) {
 
 				new Check({
 					evaluate: function () {
@@ -247,6 +323,19 @@ describe('Check', function () {
 				});
 
 			});
+
+			it('should pass errors to the reject argument', function (done) {
+				new Check({
+					evaluate: function () {
+						throw new Error('Grenade!');
+					}
+				}).run(fixture, {}, noop, function (err) {
+					assert.instanceOf(err, Error);
+					assert.equal(err.message, 'Grenade!');
+					done();
+				});
+			});
+
 		});
 	});
 
@@ -266,6 +355,13 @@ describe('Check', function () {
 				assert.equal(new Check(spec).matches, Check.prototype.matches);
 			});
 
+			it('should be able to take a string and turn it into a function', function () {
+				var spec = {
+					matches: 'function () {return "blah";}'
+				};
+				assert.equal(typeof new Check(spec).matches, 'function');
+				assert.equal(new Check(spec).matches(), 'blah');
+			});
 		});
 
 		describe('.id', function () {
@@ -287,7 +383,7 @@ describe('Check', function () {
 		describe('.after', function () {
 			it('should be set', function () {
 				var spec = {
-					after: 'monkeys'
+					after: function () {}
 				};
 				assert.equal(new Check(spec).after, spec.after);
 			});
@@ -298,6 +394,13 @@ describe('Check', function () {
 
 			});
 
+			it('should be able to take a string and turn it into a function', function () {
+				var spec = {
+					after: 'function () {return "blah";}'
+				};
+				assert.equal(typeof new Check(spec).after, 'function');
+				assert.equal(new Check(spec).after(), 'blah');
+			});
 		});
 
 		describe('.options', function () {
@@ -314,6 +417,23 @@ describe('Check', function () {
 
 			});
 
+		});
+
+		describe('.evaluate', function () {
+			it('should be set', function () {
+				var spec = {
+					evaluate: function () {}
+				};
+				assert.equal(typeof new Check(spec).evaluate, 'function');
+				assert.equal(new Check(spec).evaluate, spec.evaluate);
+			});
+			it('should turn a string into a function', function () {
+				var spec = {
+					evaluate: 'function () { return "blah";}'
+				};
+				assert.equal(typeof new Check(spec).evaluate, 'function');
+				assert.equal(new Check(spec).evaluate(), 'blah');
+			});
 		});
 
 	});

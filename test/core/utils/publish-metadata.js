@@ -1,4 +1,4 @@
-describe('utils.publishMetaData', function () {
+describe('axe.utils.publishMetaData', function () {
 	'use strict';
 
 	afterEach(function () {
@@ -6,7 +6,7 @@ describe('utils.publishMetaData', function () {
 	});
 
 	it('should be a function', function () {
-		assert.isFunction(utils.publishMetaData);
+		assert.isFunction(axe.utils.publishMetaData);
 	});
 
 	it('should pull data from rules from axe._audit.data', function () {
@@ -28,7 +28,7 @@ describe('utils.publishMetaData', function () {
 			id: 'cats',
 			nodes: []
 		};
-		utils.publishMetaData(result);
+		axe.utils.publishMetaData(result);
 
 		assert.equal(result.foo, expected.foo);
 		assert.equal(result.bob, expected.bob);
@@ -59,7 +59,7 @@ describe('utils.publishMetaData', function () {
 				none: []
 			}]
 		};
-		utils.publishMetaData(result);
+		axe.utils.publishMetaData(result);
 		assert.equal(result.nodes[0].any[0].foo, expected.foo);
 		assert.equal(result.nodes[0].any[0].bar, expected.bar);
 	});
@@ -142,7 +142,7 @@ describe('utils.publishMetaData', function () {
 				}]
 			}]
 		};
-		utils.publishMetaData(result);
+		axe.utils.publishMetaData(result);
 		assert.deepEqual(result, {
 			id: 'cats',
 			help: 'cats-rule',
@@ -215,7 +215,7 @@ describe('utils.publishMetaData', function () {
 				}
 			}
 		});
-		utils.publishMetaData({
+		axe.utils.publishMetaData({
 			id: 'cats',
 			nodes: [{
 				any: [{
@@ -267,7 +267,7 @@ describe('utils.publishMetaData', function () {
 				none: []
 			}]
 		};
-		utils.publishMetaData(result);
+		axe.utils.publishMetaData(result);
 		assert.deepEqual(result.tags, ['hai']);
 
 	});

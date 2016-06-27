@@ -2,12 +2,13 @@
   "id": "aria-valid-attr-value",
   "tags": [
     "wcag2a",
-    "wcag411"
+    "wcag131",
+    "wcag411",
+    "wcag412"
   ],
   "metadata": {
     "description": "Ensures all ARIA attributes have valid values",
-    "help": "ARIA attributes must conform to valid values",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/aria-valid-attr-value"
+    "help": "ARIA attributes must conform to valid values"
   },
   "all": [],
   "any": [

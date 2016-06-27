@@ -1,0 +1,6 @@
+{
+	"description": "td-has-header test",
+	"rule": "td-has-header",
+	"violations": [["#fail1"], ["#fail2"]],
+	"passes": [["#pass1"], ["#pass2"], ["#pass3"]]
+}

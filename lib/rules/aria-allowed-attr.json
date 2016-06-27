@@ -2,12 +2,12 @@
   "id": "aria-allowed-attr",
   "tags": [
     "wcag2a",
-    "wcag411"
+    "wcag411",
+    "wcag412"
   ],
   "metadata": {
     "description": "Ensures ARIA attributes are allowed for an element's role",
-    "help": "Elements must only use allowed ARIA attributes",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/aria-allowed-attr"
+    "help": "Elements must only use allowed ARIA attributes"
   },
   "all": [],
   "any": [

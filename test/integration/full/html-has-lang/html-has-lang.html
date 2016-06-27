@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="klingon" id="pass1">
+<head>
+	<title>html-has-lang test</title>
+	<meta charset="utf8">
+	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
+	<script src="/node_modules/mocha/mocha.js"></script>
+	<script src="/node_modules/chai/chai.js"></script>
+	<script src="/axe.js"></script>
+	<script>
+		mocha.setup({
+			timeout: 10000,
+			ui: 'bdd'
+		});
+		var assert = chai.assert;
+	</script>
+</head>
+<body>
+	<iframe id="frame1" src="frames/level1.html"></iframe>
+	<div id="mocha"></div>
+	<script src="html-has-lang.js"></script>
+	<script src="/test/integration/adapter.js"></script>
+</body>
+</html>

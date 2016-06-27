@@ -1,5 +1,5 @@
 
-describe('utils.extend', function () {
+describe('axe.utils.extend', function () {
 	'use strict';
 
 	it('should merge properties', function () {
@@ -8,7 +8,7 @@ describe('utils.extend', function () {
 			dogs: 'fail'
 		};
 
-		utils.extendMetaData(src, {
+		axe.utils.extendMetaData(src, {
 			cats: 'meow',
 			dogs: 'woof'
 		});
@@ -22,7 +22,7 @@ describe('utils.extend', function () {
 			cats: 'fail',
 			dogs: 'fail'
 		};
-		utils.extendMetaData(src, {
+		axe.utils.extendMetaData(src, {
 			cats: function (ctxt) {
 				assert.equal(ctxt, src);
 				return 'meow';
@@ -38,7 +38,7 @@ describe('utils.extend', function () {
 			cats: 'fail',
 			dogs: 'fail'
 		};
-		utils.extendMetaData(src, {
+		axe.utils.extendMetaData(src, {
 			cats: function () {
 				throw new Error('hehe');
 			},

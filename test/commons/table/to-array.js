@@ -18,7 +18,7 @@ describe('table.toArray', function () {
 
 		var target = fixture.querySelector('table');
 
-		assert.deepEqual(commons.table.toArray(target), [
+		assert.deepEqual(axe.commons.table.toArray(target), [
 			[$id('t1'), $id('t2')],
 			[$id('t3'), $id('t4')]
 		]);
@@ -32,7 +32,7 @@ describe('table.toArray', function () {
 
 		var target = fixture.querySelector('table');
 
-		assert.deepEqual(commons.table.toArray(target), [
+		assert.deepEqual(axe.commons.table.toArray(target), [
 			[$id('t1'), $id('t1'), $id('t2')],
 			[$id('t3'), $id('t3'), $id('t3')]
 		]);
@@ -47,7 +47,7 @@ describe('table.toArray', function () {
 
 		var target = fixture.querySelector('table');
 
-		assert.deepEqual(commons.table.toArray(target), [
+		assert.deepEqual(axe.commons.table.toArray(target), [
 			[$id('t1'), $id('t2')],
 			[$id('t1'), $id('t3')]
 		]);
@@ -62,7 +62,7 @@ describe('table.toArray', function () {
 
 		var target = fixture.querySelector('table');
 
-		assert.deepEqual(commons.table.toArray(target), [
+		assert.deepEqual(axe.commons.table.toArray(target), [
 			[$id('t1'), $id('t1'), $id('t2')],
 			[$id('t1'), $id('t1'), $id('t3')]
 		]);
@@ -77,7 +77,7 @@ describe('table.toArray', function () {
 
 			var target = fixture.querySelector('table');
 
-			assert.deepEqual(commons.table.toArray(target), [
+			assert.deepEqual(axe.commons.table.toArray(target), [
 				[],
 				[$id('t1')]
 			]);

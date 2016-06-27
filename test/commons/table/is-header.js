@@ -11,48 +11,48 @@ describe('table.isHeader', function () {
 	});
 
 	it('should return true if table.isColumnHeader return true', function () {
-		var orig = commons.table.isColumnHeader;
-		commons.table.isColumnHeader = function () {
+		var orig = axe.commons.table.isColumnHeader;
+		axe.commons.table.isColumnHeader = function () {
 			return true;
 		};
-		var orig2 = commons.table.isRowHeader;
-		commons.table.isRowHeader = function () {
+		var orig2 = axe.commons.table.isRowHeader;
+		axe.commons.table.isRowHeader = function () {
 			return false;
 		};
-		assert.isTrue(commons.table.isHeader({}));
+		assert.isTrue(axe.commons.table.isHeader({}));
 
-		commons.table.isColumnHeader = orig;
-		commons.table.isRowHeader = orig2;
+		axe.commons.table.isColumnHeader = orig;
+		axe.commons.table.isRowHeader = orig2;
 	});
 
 	it('should return true if table.isRowHeader return true', function () {
-		var orig = commons.table.isRowHeader;
-		commons.table.isRowHeader = function () {
+		var orig = axe.commons.table.isRowHeader;
+		axe.commons.table.isRowHeader = function () {
 			return true;
 		};
-		var orig2 = commons.table.isColumnHeader;
-		commons.table.isColumnHeader = function () {
+		var orig2 = axe.commons.table.isColumnHeader;
+		axe.commons.table.isColumnHeader = function () {
 			return false;
 		};
-		assert.isTrue(commons.table.isHeader({}));
+		assert.isTrue(axe.commons.table.isHeader({}));
 
-		commons.table.isRowHeader = orig;
-		commons.table.isColumnHeader = orig2;
+		axe.commons.table.isRowHeader = orig;
+		axe.commons.table.isColumnHeader = orig2;
 	});
 
 	it('should return false if table.isRowHeader and table.isColumnHeader return false', function () {
-		var orig = commons.table.isRowHeader;
-		commons.table.isRowHeader = function () {
+		var orig = axe.commons.table.isRowHeader;
+		axe.commons.table.isRowHeader = function () {
 			return false;
 		};
-		var orig2 = commons.table.isColumnHeader;
-		commons.table.isColumnHeader = function () {
+		var orig2 = axe.commons.table.isColumnHeader;
+		axe.commons.table.isColumnHeader = function () {
 			return false;
 		};
-		assert.isFalse(commons.table.isHeader({}));
+		assert.isFalse(axe.commons.table.isHeader({}));
 
-		commons.table.isRowHeader = orig;
-		commons.table.isColumnHeader = orig2;
+		axe.commons.table.isRowHeader = orig;
+		axe.commons.table.isColumnHeader = orig2;
 	});
 
 	it('should return true if referenced by another cells headers attr', function () {
@@ -62,7 +62,7 @@ describe('table.isHeader', function () {
 
 		var target = $id('target');
 
-		assert.isTrue(commons.table.isHeader(target));
+		assert.isTrue(axe.commons.table.isHeader(target));
 	});
 
 	it('should return false otherwise', function () {
@@ -72,7 +72,7 @@ describe('table.isHeader', function () {
 
 		var target = document.querySelector('.target');
 
-		assert.isFalse(commons.table.isHeader(target));
+		assert.isFalse(axe.commons.table.isHeader(target));
 	});
 
 });

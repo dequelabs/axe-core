@@ -18,7 +18,7 @@ describe('table.getHeaders', function () {
 
 		var target = $id('target');
 
-		assert.deepEqual(commons.table.getHeaders(target), [$id('t1'), $id('t2')]);
+		assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1'), $id('t2')]);
 	});
 
 
@@ -30,7 +30,7 @@ describe('table.getHeaders', function () {
 
 		var target = $id('target');
 
-		assert.deepEqual(commons.table.getHeaders(target), [$id('t1'), $id('t2')]);
+		assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1'), $id('t2')]);
 	});
 
 
@@ -43,7 +43,7 @@ describe('table.getHeaders', function () {
 
 		var target = $id('target');
 
-		assert.deepEqual(commons.table.getHeaders(target), [$id('t1'), $id('t2'), $id('t3')]);
+		assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1'), $id('t2'), $id('t3')]);
 	});
 
 
@@ -55,7 +55,7 @@ describe('table.getHeaders', function () {
 
 		var target = $id('target');
 
-		assert.deepEqual(commons.table.getHeaders(target), [$id('t1'), $id('t2'), $id('t3')]);
+		assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1'), $id('t2'), $id('t3')]);
 	});
 
 	it('should handle colspans', function () {
@@ -66,7 +66,7 @@ describe('table.getHeaders', function () {
 
 		var target = $id('target');
 
-		assert.deepEqual(commons.table.getHeaders(target), [$id('t1')]);
+		assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);
 	});
 
 	it('should handle rowspans', function () {
@@ -77,7 +77,7 @@ describe('table.getHeaders', function () {
 
 		var target = $id('target');
 
-		assert.deepEqual(commons.table.getHeaders(target), [$id('t1'), $id('t2')]);
+		assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1'), $id('t2')]);
 	});
 
 	it('should handle headers attribute', function () {
@@ -88,7 +88,7 @@ describe('table.getHeaders', function () {
 
 		var target = $id('target');
 
-		assert.deepEqual(commons.table.getHeaders(target), [$id('t1'), $id('t2'), $id('t3')]);
+		assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1'), $id('t2'), $id('t3')]);
 
 	});
 
@@ -100,7 +100,7 @@ describe('table.getHeaders', function () {
 
 		var target = $id('target');
 
-		assert.deepEqual(commons.table.getHeaders(target), []);
+		assert.deepEqual(axe.commons.table.getHeaders(target), []);
 
 	});
 

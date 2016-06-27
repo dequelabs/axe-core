@@ -79,17 +79,10 @@ function CheckResult(check) {
 
 In order to get going, fork and clone the repository. Then, if you do not have [Node.js](https://nodejs.org/download/) installed, install it!
 
-Once you have Node.js installed, if you do not have Bower installed do:
-
-```
-npm install -g bower
-```
-
 Once the basic infrastructure is installed, from the repository root, do the following:
 
 ```
 npm install
-bower install
 ```
 
 To run tests:
@@ -97,6 +90,7 @@ To run tests:
 ```
 grunt test
 ```
+>Note: Firefox 47 is not compatible with Selenium Webdriver. To run tests, you can [downgrade to Firefox 46](https://ftp.mozilla.org/pub/firefox/releases/) until 47.0.1 comes out.
 
 To build the package:
 

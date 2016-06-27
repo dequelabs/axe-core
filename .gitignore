@@ -1,7 +1,10 @@
 tmp
 dist
-bower_components
 node_modules
 test/*/index.html
 test/integration/*/index.html
-.grunt
+axe.js
+axe.min.js
+axe.es2016.js
+*.tgz
+npm-shrinkwrap.json

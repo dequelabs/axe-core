@@ -5,6 +5,6 @@ describe('export', function () {
 		assert.isDefined(window.axe);
 	});
 	it('should define version', function () {
-		assert.equal(axe.version, 'dev');
+		assert.equal(axe.version, 'x.y.z');
 	});
 });

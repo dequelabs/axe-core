@@ -6,16 +6,16 @@
     "wcag2a",
     "wcag111",
     "section508",
-    "section508a"
+    "section508.22.a"
   ],
   "metadata": {
     "description": "Ensures <area> elements of image maps have alternate text",
-    "help": "Active <area> elements must have alternate text",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/area-alt"
+    "help": "Active <area> elements must have alternate text"
   },
   "all": [],
   "any": [
     "non-empty-alt",
+    "non-empty-title",
     "aria-label",
     "aria-labelledby"
   ],

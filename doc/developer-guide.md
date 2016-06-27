@@ -7,10 +7,8 @@ aXe runs a series of tests to check for accessibility of content and functionali
 ### Environment Pre-requisites
 
 1.  You must have NodeJS installed.
-2.  Bower must be installed globally.  `npm install -g bower`
-3.  Grunt must be installed globally.  `npm install -g grunt-cli`
-4.  Install npm development dependencies.  `npm install`
-5.  Install bower development dependencies.  `bower install`
+2.  Grunt must be installed globally.  `npm install -g grunt-cli`
+3.  Install npm development dependencies.  `npm install`
 
 ### Building axe.js
 
@@ -22,12 +20,12 @@ To run all tests from the command line you can run `grunt test`, which will run 
 
 You can also load tests in any supported browser, which is helpful for debugging.  Tests require a local server to run, you must first start a local server to serve files.  You can use Grunt to start one by running `grunt connect watch`.  Once your local server is running you can load the following pages in any browser to run tests:
 
+
 1.  [Core Tests](../test/core/)
 2.  [Commons Tests](../test/commons/)
 3.  [Check Tests](../test/checks/)
 4.  [Integration Tests](../test/integration/rules/)
 5.  There are additional tests located in [test/integration/full/](../test/integration/full/) for tests that need to be run against their own document.
-
 
 ## Architecture Overview
 
@@ -132,7 +130,37 @@ A CheckResult has the following properties:
 * `relatedNodes` - `Array`  Nodes that are related to the current Check as defined by [check.evaluate](#check-evaluate).
 * `result` - `Boolean`  The return value of [check.evaluate](#check-evaluate).
 
-
 ### Common Functions
 
 Common functions are an internal library used by the rules and checks.  If you have code repeated across rules and checks, you can use these functions and contribute to them.  They are made available to every function as `commons`.  Documentation is available in [source code](../lib/commons/).
+
+### Core Utilities
+
+Core Utilities are an internal library that provides aXe with functionality used throughout its core processes. Most notably among these are the queue function and the DqElement constructor.
+
+
+#### Queue Function
+
+The queue function creates an asynchronous "queue", list of functions to be invoked in parallel, but not necessarily returned in order. The queue function returns an object with the following methods:
+
+* `defer(func)` Defer a function that may or may not run asynchronously
+* `then(callback)` The callback to execute once all "deferred" functions have completed.  Will only be invoked once.
+* `abort()` Abort the "queue" and prevent `then` function from firing
+
+
+#### DqElement Class
+
+The DqElement is a "serialized" `HTMLElement`. It will calculate the CSS selector, grab the source outerHTML and offer an array for storing frame paths. The DqElement class takes the following parameters:
+ * `Element` - `HTMLElement` The element to serialize
+ * `Spec` - `Object` Properties to use in place of the element when instantiated on Elements from other frames
+
+```javascript
+var firstH1 = document.getElementByTagName('h1')[0];
+var dqH1 = new axe.utils.DqElement(firstH1);
+```
+
+Elements returned by the DqElement class have the following methods and properties:
+* `selector` - `string` A unique CSS selector for the element
+* `source` - `string` The generated HTML source code of the element
+* `element` - `DOMNode` The element which this object is based off or the containing frame, used for sorting.
+* `toJSON()` - Returns an object containing the selector and source properties

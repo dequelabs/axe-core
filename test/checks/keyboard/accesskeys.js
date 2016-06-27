@@ -59,6 +59,18 @@ describe('accesskeys', function () {
 			assert.isTrue(result[0].result);
 			assert.isFalse(result[1].result);
 		});
+
+		it('should consider accesskeys with different cases as the same result', function () {
+			var result = checks.accesskeys.after([
+				{ data: 'A', relatedNodes: ['bob'] },
+				{ data: 'a', relatedNodes: ['fred'] }
+			]);
+
+			assert.lengthOf(result, 1);
+			assert.equal(result[0].data, 'A');
+			assert.lengthOf(result[0].relatedNodes, 1);
+			assert.equal(result[0].relatedNodes[0], 'fred');
+		});
 	});
 
 });

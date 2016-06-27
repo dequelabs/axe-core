@@ -26,8 +26,8 @@ describe('color-contrast', function () {
 		var target = fixture.querySelector('#target');
 
 		assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
-		var white = new commons.color.Color(255, 255, 255, 1);
-		var black = new commons.color.Color(0, 0, 0, 1);
+		var white = new axe.commons.color.Color(255, 255, 255, 1);
+		var black = new axe.commons.color.Color(0, 0, 0, 1);
 		assert.equal(checkContext._data.bgColor, white.toHexString());
 		assert.equal(checkContext._data.fgColor, black.toHexString());
 		assert.equal(checkContext._data.contrastRatio, '21.00');

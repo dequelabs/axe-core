@@ -42,6 +42,19 @@ describe('has-th', function () {
 		]);
 	});
 
+	it('should return true when the table has a td with role=columnheader', function () {
+		fixture.innerHTML = '<table>' +
+				'<tr><td role="columnheader"></td></tr>' +
+			'</table>';
+
+		var node = fixture.querySelector('table');
+
+		assert.isTrue(checks['has-th'].evaluate.call(checkContext, node));
+		assert.deepEqual(checkContext._relatedNodes, [
+			node.querySelector('td')
+		]);
+	});
+
 	it('should not detect nested table with th', function () {
 		fixture.innerHTML = '<table>' +
 				'<tr><td><table><tr><th>hi</th></tr></table></td></tr>' +

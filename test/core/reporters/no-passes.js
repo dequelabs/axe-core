@@ -159,8 +159,9 @@ describe('reporters - no-passes', function() {
 	});
 	it('should include timestamp', function(done) {
 		axe.a11yCheck(document, {}, function(results) {
-			assert.instanceOf(results.timestamp, Date);
-			assert.closeTo(results.timestamp.getTime(), Date.now(), 50);
+			var timestamp = new Date(results.timestamp);
+			assert.instanceOf(timestamp, Date);
+			assert.closeTo(timestamp.getTime(), Date.now(), 50);
 			done();
 		});
 	});

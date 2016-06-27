@@ -15,7 +15,7 @@ describe('table.getCellPosition', function () {
 
 		var target = document.getElementById('target');
 
-		assert.deepEqual(commons.table.getCellPosition(target), {
+		assert.deepEqual(axe.commons.table.getCellPosition(target), {
 			x: 1,
 			y: 1
 		});
@@ -30,7 +30,7 @@ describe('table.getCellPosition', function () {
 
 		var target = document.getElementById('target');
 
-		assert.deepEqual(commons.table.getCellPosition(target), {
+		assert.deepEqual(axe.commons.table.getCellPosition(target), {
 			x: 2,
 			y: 1
 		});
@@ -45,7 +45,7 @@ describe('table.getCellPosition', function () {
 
 		var target = document.getElementById('target');
 
-		assert.deepEqual(commons.table.getCellPosition(target), {
+		assert.deepEqual(axe.commons.table.getCellPosition(target), {
 			x: 2,
 			y: 1
 		});
@@ -61,7 +61,7 @@ describe('table.getCellPosition', function () {
 
 		var target = document.getElementById('target');
 
-		assert.deepEqual(commons.table.getCellPosition(target), {
+		assert.deepEqual(axe.commons.table.getCellPosition(target), {
 			x: 2,
 			y: 1
 		});
@@ -78,7 +78,7 @@ describe('table.getCellPosition', function () {
 
 		var target = document.getElementById('target');
 
-		assert.deepEqual(commons.table.getCellPosition(target), {
+		assert.deepEqual(axe.commons.table.getCellPosition(target), {
 			x: 1,
 			y: 2
 		});

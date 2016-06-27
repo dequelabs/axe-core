@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+  <title>Double responding frame</title>
+</head>
+<body>
+<script src="../../../lib/core/utils/uuid.js"></script>
+<script>
+var utils = {};
+var axe = {
+	version: '2.0.0'
+};
+</script>
+<script src="../../../lib/core/utils/respondable.js"></script>
+
+<script>
+  utils.respondable.subscribe('axe.ping', function (data, keepalive, respond) {
+    respond({axe: true});
+  });
+  utils.respondable.subscribe('axe.start', function (data, ignore, respond) {
+  	// respond the number of times requested, keeping alive if requested
+	var number = data.number || 1;
+	var keepalive = data.keepalive;
+	for ( var i = 1; i < number; i++) {
+		setTimeout(function () {
+			respond({axe: true}, keepalive);
+		}, i*50);
+	}
+	setTimeout(function () {
+		respond({axe: true});
+	}, i*50);
+  });
+
+</script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Message Iframe Fixture</title>
-	<script src="../../../dist/axe.js"></script>
+	<script src="../../../axe.js"></script>
 	<script>
 		axe._load({ rules: [{
 			id: 'html',
@@ -15,18 +15,59 @@
 				return true;
 			}
 		}],
-		tools: [{
-			id: 'html',
-			source: {
-				run: function (node, options, callback) {
-					if (node.nodeName.toUpperCase() !== 'A') {
-						callback('nope!');
-					}
-					callback('result!');
-				}
-			}
-		}],
 		messages: {}});
+	</script>
+	<script>
+      axe.registerPlugin({
+        id: 'multi',
+        run: function (id, action, options, callback) {
+          this._registry[id][action].call(this._registry[id], options, callback);
+        },
+        add: function (impl) {
+          this._registry[impl.id] = impl;
+        },
+        commands: [{
+          id: 'run-multi',
+          callback: function (data, callback) {
+            return axe.plugins.multi.run(data.parameter, data.action, data.options, callback);
+          }
+        }]
+      });
+      axe.plugins.multi.add({
+        id: 'hideall',
+        run: function (options, callback) {
+          var frames;
+          var q = axe.utils.queue();
+
+          frames = axe.utils.toArray(document.querySelectorAll('iframe, frame'));
+          if (frames.length) {
+            frames.forEach(function (frame) {
+              q.defer(function (done) {
+                axe.utils.sendCommandToFrame(frame, {
+                  options: options,
+                  command: 'run-multi',
+                  parameter: 'hideall',
+                  action: 'run'
+                }, done);
+              });
+            });
+          }
+          q.defer(function (done) {
+            // implementation
+            done('ola!');
+          });
+          q.then(function (data) {
+            // done with all the frames
+            var results = [];
+            data.forEach(function (datum) {
+              if (datum) {
+                results = results.concat(datum);
+              }
+            });
+            callback(results);
+          });
+        }
+      });
 	</script>
 </head>
 <body>

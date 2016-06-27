@@ -1,20 +1,18 @@
 {
   "id": "marquee",
   "selector": "marquee",
+  "excludeHidden": false,
   "tags": [
     "wcag2a",
-    "wcag222",
-    "section508",
-    "section508j"
+    "wcag222"
   ],
   "metadata": {
     "description": "Ensures <marquee> elements are not used",
-    "help": "<marquee> elements are deprecated and must not be used",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/marquee"
+    "help": "<marquee> elements are deprecated and must not be used"
   },
   "all": [],
   "any": [],
   "none": [
-    "exists"
+    "is-on-screen"
   ]
 }
