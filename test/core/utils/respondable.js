@@ -196,7 +196,7 @@ describe('axe.utils.respondable', function () {
 		});
 		event.source = window;
 
-		axe.utils.respondable(window, 'Death star', null, true, function (data) {
+		axe.utils.respondable(window, 'Death star', null, true, function () {
 			success = false;
 		});
 		document.dispatchEvent(event);
