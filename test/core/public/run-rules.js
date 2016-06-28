@@ -111,7 +111,6 @@ describe('runRules', function () {
 		frame.addEventListener('load', onLoad);
 		fixture.appendChild(frame);
 
-
 		frame = document.createElement('iframe');
 		frame.src = '../mock/frames/nocode.html';
 		frame.addEventListener('load', onLoad);
@@ -119,6 +118,13 @@ describe('runRules', function () {
 	}
 
 	var fixture = document.getElementById('fixture');
+
+	var isNotCalled;
+	beforeEach(function () {
+		isNotCalled = function () {
+			assert.ok(false, 'Reject should not be called');
+		};
+	});
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -137,16 +143,19 @@ describe('runRules', function () {
 			}
 		}], messages: {}});
 
-		createFrames(function () {
+
+		var frame = document.createElement('iframe');
+		frame.src = '../mock/frames/frame-frame.html';
+
+		frame.addEventListener('load', function () {
 			setTimeout(function () {
 				runRules(document, {}, function (r) {
 					assert.lengthOf(r[0].passes, 3);
 					done();
-				});
-
+				}, isNotCalled);
 			}, 500);
-
 		});
+		fixture.appendChild(frame);
 	});
 
 	it('should properly order iframes', function (done) {
@@ -176,7 +185,7 @@ describe('runRules', function () {
 						['#level0', '#level1', '#level2b']
 					]);
 					done();
-				});
+				}, isNotCalled);
 
 			}, 500);
 
@@ -226,6 +235,7 @@ describe('runRules', function () {
 			runRules('#fixture', {}, function (results) {
 				assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
+					helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/div#target?application=axeAPI',
 					pageLevel: false,
 					impact: null,
 					violations: [],
@@ -246,6 +256,7 @@ describe('runRules', function () {
 					tags: []
 				}, {
 					id: 'first-div',
+					helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/first-div?application=axeAPI',
 					pageLevel: false,
 					impact: null,
 					violations: [],
@@ -270,7 +281,7 @@ describe('runRules', function () {
 				}]);
 
 				done();
-			});
+			}, isNotCalled);
 
 		});
 	});
@@ -411,6 +422,7 @@ describe('runRules', function () {
 		runRules('#fixture', {}, function (results) {
 			assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
+					helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/div#target?application=axeAPI',
 					pageLevel: false,
 					foo: 'bar',
 					stuff: 'blah',
@@ -437,6 +449,7 @@ describe('runRules', function () {
 					tags: []
 				}, {
 					id: 'first-div',
+					helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/first-div?application=axeAPI',
 					pageLevel: false,
 					bar: 'foo',
 					stuff: 'no',
@@ -465,6 +478,27 @@ describe('runRules', function () {
 					tags: []
 				}]);
 			done();
+		}, isNotCalled);
+	});
+
+	it('should call the reject argument if an error occurs', function (done) {
+		axe._load({ rules: [{
+			id: 'invalidRule'
+		}], checks: [], messages: {}});
+
+		createFrames(function () {
+			setTimeout(function () {
+				runRules(document, {}, function () {
+					assert.ok(false, 'You shall not pass!');
+					done();
+				},
+				function (err) {
+					assert.instanceOf(err, Error);
+					done();
+				}, isNotCalled);
+			}, 100);
 		});
 	});
+
+
 });

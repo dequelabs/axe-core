@@ -8,27 +8,3 @@ describe('utils', function () {
 		assert.equal(axe.utils, window.utils);
 	});
 });
-
-describe('utils.escapeSelector', function () {
-	'use strict';
-
-	it('should be a function', function () {
-		assert.isFunction(utils.escapeSelector);
-	});
-});
-
-describe('utils.matchesSelector', function () {
-	'use strict';
-
-	it('should be a function', function () {
-		assert.isFunction(utils.matchesSelector);
-	});
-});
-
-describe('utils.clone', function () {
-	'use strict';
-
-	it('should be a function', function () {
-		assert.isFunction(utils.clone);
-	});
-});

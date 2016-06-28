@@ -11,7 +11,7 @@
 		"assert": true,
 		"checks": true,
 		"dqreRules": true,
-		"commons": true
+		"axe": true
 	},
 
 	"browser" : true,

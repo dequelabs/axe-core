@@ -1,0 +1,6 @@
+{
+	"description": "link-in-text-block tests",
+	"rule": "link-in-text-block",
+	"violations": [["#fail1"]],
+	"passes":  [["#pass1"], ["#pass2"]]
+}

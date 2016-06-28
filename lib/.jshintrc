@@ -1,13 +1,13 @@
 {
 	"globals": {
-		"axe": true,
-		"utils": true
+		"axe": true
 	},
 
 	"browser" : true,
 	"node" : false,
 	"devel" : false,
 
+	"esversion": 6,
 	"bitwise": true,
 	"camelcase": true,
 	"curly": true,
@@ -30,7 +30,7 @@
 	"strict": true,
 	"trailing": true,
 
-	"maxparams": 5,
+	"maxparams": 6,
 	"maxdepth": 5,
 	"maxstatements": 15,
 	"maxcomplexity": 10,
@@ -41,8 +41,6 @@
 	"debug": false,
 	"devel": false,
 	"eqnull": false,
-	"es5": false,
-	"esnext": false,
 	"evil": false,
 	"expr": false,
 	"funcscope": false,

@@ -1,7 +1,6 @@
 {
   "id": "duplicate-img-label",
   "evaluate": "duplicate-img-label.js",
-  "enabled": false,
   "metadata": {
     "impact": "minor",
     "messages": {

@@ -3,6 +3,10 @@ describe('Rule', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var noop = function () {};
+	var isNotCalled = function () {
+		assert.ok(false, 'Function should not be called');
+	};
 
 	afterEach(function() {
 		fixture.innerHTML = '';
@@ -137,7 +141,7 @@ describe('Rule', function() {
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
-				});
+				}, isNotCalled);
 
 			});
 
@@ -149,9 +153,9 @@ describe('Rule', function() {
 				}, {
 					checks: {
 						cats: {
-							run: function (node, options, cb) {
+							run: function (node, options, resolve) {
 								success = true;
-								cb(true);
+								resolve(true);
 							}
 						}
 					}
@@ -162,7 +166,7 @@ describe('Rule', function() {
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
-				});
+				}, isNotCalled);
 
 			});
 
@@ -174,9 +178,9 @@ describe('Rule', function() {
 				}, {
 					checks: {
 						cats: {
-							run: function (node, options, cb) {
+							run: function (node, options, resolve) {
 								success = true;
-								cb(true);
+								resolve(true);
 							}
 						}
 					}
@@ -187,7 +191,7 @@ describe('Rule', function() {
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
-				});
+				}, isNotCalled);
 
 			});
 
@@ -199,24 +203,24 @@ describe('Rule', function() {
 				}, {
 					checks: {
 						cats: {
-							run: function (node, options, cb) {
+							run: function (node, options, resolve) {
 								success = true;
-								cb(true);
+								resolve(true);
 							}
 						}
 					}
-				});
+				}, isNotCalled);
 
 				rule.run({
 					include: [fixture]
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
-				});
+				}, isNotCalled);
 
 			});
 
-			it('should pass the matching option to run', function(done) {
+			it('should pass the matching option to check.run', function(done) {
 				fixture.innerHTML = '<blink>Hi</blink>';
 				var options = {
 					checks: {
@@ -232,10 +236,10 @@ describe('Rule', function() {
 					checks: {
 						cats: {
 							id: 'cats',
-							run: function (node, options, cb) {
+							run: function (node, options, resolve) {
 								assert.equal(options.enabled, 'bananas');
 								assert.equal(options.options, 'minkeys');
-								cb(true);
+								resolve(true);
 							}
 						}
 					}
@@ -244,10 +248,10 @@ describe('Rule', function() {
 					include: [document]
 				}, options, function() {
 					done();
-				});
+				}, isNotCalled);
 			});
 
-			it('should pass the matching option to run defined on the rule over global', function(done) {
+			it('should pass the matching option to check.run defined on the rule over global', function(done) {
 				fixture.innerHTML = '<blink>Hi</blink>';
 				var options = {
 					rules: {
@@ -277,10 +281,10 @@ describe('Rule', function() {
 					checks: {
 						cats: {
 							id: 'cats',
-							run: function (node, options, cb) {
+							run: function (node, options, resolve) {
 								assert.equal(options.enabled, 'apples');
 								assert.equal(options.options, 'apes');
-								cb(true);
+								resolve(true);
 							}
 						}
 					}
@@ -289,7 +293,7 @@ describe('Rule', function() {
 					include: [document]
 				}, options, function() {
 					done();
-				});
+				}, isNotCalled);
 			});
 
 			it('should filter out null results', function() {
@@ -308,8 +312,52 @@ describe('Rule', function() {
 					include: [document]
 				}, {}, function(r) {
 					assert.lengthOf(r.nodes, 0);
+				}, isNotCalled);
+
+			});
+
+			it('should pass thrown errors to the reject param', function (done) {
+				fixture.innerHTML = '<blink>Hi</blink>';
+				var rule = new Rule({
+					none: ['cats']
+				}, {
+					checks: {
+						cats: {
+							run: function () {
+								throw new Error('Holy hand grenade');
+							}
+						}
+					}
 				});
 
+				rule.run({
+					include: [fixture]
+				}, {}, noop, function(err) {
+					assert.equal(err.message, 'Holy hand grenade');
+					done();
+				}, isNotCalled);
+			});
+
+			it('should pass reject calls to the reject param', function (done) {
+				fixture.innerHTML = '<blink>Hi</blink>';
+				var rule = new Rule({
+					none: ['cats']
+				}, {
+					checks: {
+						cats: {
+							run: function (nope, options, resolve, reject) {
+								reject(new Error('your reality'));
+							}
+						}
+					}
+				});
+
+				rule.run({
+					include: [fixture]
+				}, {}, noop, function(err) {
+					assert.equal(err.message, 'your reality');
+					done();
+				}, isNotCalled);
 			});
 
 			describe('NODE rule', function() {
@@ -330,7 +378,7 @@ describe('Rule', function() {
 					});
 					rule.run({
 						include: document
-					}, {}, function() {});
+					}, {}, noop, isNotCalled);
 					assert.isTrue(success);
 
 
@@ -349,7 +397,7 @@ describe('Rule', function() {
 						include: document
 					}, {}, function() {
 						success = true;
-					});
+					}, isNotCalled);
 					assert.isTrue(success);
 				});
 			});
@@ -638,6 +686,13 @@ describe('Rule', function() {
 				var spec = {};
 				assert.equal(new Rule(spec).matches, Rule.prototype.matches);
 			});
+
+			it('should turn a string into a function', function () {
+				var spec = {
+					matches: 'function() {return "blah";}'
+				};
+				assert.equal(new Rule(spec).matches(), 'blah');
+			});
 		});
 		describe('.tags', function() {
 			it('should be set', function() {
@@ -653,7 +708,97 @@ describe('Rule', function() {
 			});
 		});
 
+	});
 
+	describe('configure', function () {
+		beforeEach(function () {
+			Rule.prototype._get = function (attr) {
+				return this[attr];
+			};
+		});
+		afterEach(function () {
+			delete Rule.prototype._get;
+		});
+		it('should be a function that takes one argument', function() {
+			assert.isFunction(Rule.prototype.configure);
+			assert.lengthOf(new Rule({}).configure, 1);
+		});
+		it('should NOT override the id', function () {
+			var rule = new Rule({id: 'foo'});
+
+			assert.equal(rule._get('id'), 'foo');
+			rule.configure({id: 'fong'});
+			assert.equal(rule._get('id'), 'foo');
+		});
+		it('should NOT override a random property', function () {
+			var rule = new Rule({id: 'foo'});
+
+			rule.configure({fong: 'fong'});
+			assert.equal(rule._get('fong'), undefined);
+		});
+		it('should override the selector', function () {
+			var rule = new Rule({selector: 'foo'});
+
+			assert.equal(rule._get('selector'), 'foo');
+			rule.configure({selector: 'fong'});
+			assert.equal(rule._get('selector'), 'fong');
+		});
+		it('should override excludeHidden', function () {
+			var rule = new Rule({excludeHidden: false});
+
+			assert.equal(rule._get('excludeHidden'), false);
+			rule.configure({excludeHidden: true});
+			assert.equal(rule._get('excludeHidden'), true);
+		});
+		it('should override enabled', function () {
+			var rule = new Rule({enabled: false});
+
+			assert.equal(rule._get('enabled'), false);
+			rule.configure({enabled: true});
+			assert.equal(rule._get('enabled'), true);
+		});
+		it('should override pageLevel', function () {
+			var rule = new Rule({pageLevel: false});
+
+			assert.equal(rule._get('pageLevel'), false);
+			rule.configure({pageLevel: true});
+			assert.equal(rule._get('pageLevel'), true);
+		});
+		it('should override any', function () {
+			var rule = new Rule({any: ['one', 'two']});
+
+			assert.deepEqual(rule._get('any'), ['one', 'two']);
+			rule.configure({any: []});
+			assert.deepEqual(rule._get('any'), []);
+		});
+		it('should override all', function () {
+			var rule = new Rule({all: ['one', 'two']});
+
+			assert.deepEqual(rule._get('all'), ['one', 'two']);
+			rule.configure({all: []});
+			assert.deepEqual(rule._get('all'), []);
+		});
+		it('should override none', function () {
+			var rule = new Rule({none: ['none', 'two']});
+
+			assert.deepEqual(rule._get('none'), ['none', 'two']);
+			rule.configure({none: []});
+			assert.deepEqual(rule._get('none'), []);
+		});
+		it('should override tags', function () {
+			var rule = new Rule({tags: ['tags', 'two']});
+
+			assert.deepEqual(rule._get('tags'), ['tags', 'two']);
+			rule.configure({tags: []});
+			assert.deepEqual(rule._get('tags'), []);
+		});
+		it('should override matches', function () {
+			var rule = new Rule({matches: 'function () {return "matches";}'});
+
+			assert.equal(rule._get('matches')(), 'matches');
+			rule.configure({matches: 'function () {return "does not match";}'});
+			assert.equal(rule._get('matches')(), 'does not match');
+		});
 	});
 
 });

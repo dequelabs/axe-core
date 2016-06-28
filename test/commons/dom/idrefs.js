@@ -14,7 +14,7 @@ describe('dom.idrefs', function () {
 		var start = document.getElementById('start'),
 			expected = [document.getElementById('target1'), document.getElementById('target2')];
 
-		assert.deepEqual(commons.dom.idrefs(start, 'aria-cats'), expected, 'Should find it!');
+		assert.deepEqual(axe.commons.dom.idrefs(start, 'aria-cats'), expected, 'Should find it!');
 
 
 	});
@@ -26,7 +26,7 @@ describe('dom.idrefs', function () {
 		var start = document.getElementById('start'),
 			expected = [document.getElementById('target1'), document.getElementById('target2'), null];
 
-		assert.deepEqual(commons.dom.idrefs(start, 'aria-cats'), expected, 'Should find it!');
+		assert.deepEqual(axe.commons.dom.idrefs(start, 'aria-cats'), expected, 'Should find it!');
 
 
 	});
@@ -38,7 +38,7 @@ describe('dom.idrefs', function () {
 		var start = document.getElementById('start'),
 			expected = [document.getElementById('target1'), document.getElementById('target2'), null];
 
-		assert.deepEqual(commons.dom.idrefs(start, 'aria-cats'), expected, 'Should find it!');
+		assert.deepEqual(axe.commons.dom.idrefs(start, 'aria-cats'), expected, 'Should find it!');
 
 
 	});

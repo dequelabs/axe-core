@@ -1,6 +1,0 @@
-{
-	"description": "scope test",
-	"rule": "scope",
-	"violations": [["#badvalue"], ["#tdrow"], ["#tdcol"]],
-	"passes": [["#throw"], ["#thcol"]]
-}

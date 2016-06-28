@@ -14,7 +14,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(commons.table.isDataTable(node));
+		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be false if the table has role=none', function () {
@@ -24,7 +24,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(commons.table.isDataTable(node));
+		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be true if the table is inside an editable area', function () {
@@ -37,28 +37,28 @@ describe('table.isDataTable', function () {
 			'</div>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be true if the table has a role of grid', function () {
 		fixture.innerHTML = '<table role="grid"></table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be true if the table has a role of treegrid', function () {
 		fixture.innerHTML = '<table role="treegrid"></table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be true if the element has a role of table', function () {
 		fixture.innerHTML = '<div role="table"></div>';
 
 		var node = fixture.querySelector('[role="table"]');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 	describe('should be true if the table has a landmark role', function () {
@@ -66,49 +66,49 @@ describe('table.isDataTable', function () {
 			fixture.innerHTML = '<table role="application"></table>';
 
 			var node = fixture.querySelector('table');
-			assert.isTrue(commons.table.isDataTable(node));
+			assert.isTrue(axe.commons.table.isDataTable(node));
 		});
 		it('banner', function () {
 			fixture.innerHTML = '<table role="banner"></table>';
 
 			var node = fixture.querySelector('table');
-			assert.isTrue(commons.table.isDataTable(node));
+			assert.isTrue(axe.commons.table.isDataTable(node));
 		});
 		it('complementary', function () {
 			fixture.innerHTML = '<table role="complementary"></table>';
 
 			var node = fixture.querySelector('table');
-			assert.isTrue(commons.table.isDataTable(node));
+			assert.isTrue(axe.commons.table.isDataTable(node));
 		});
 		it('contentinfo', function () {
 			fixture.innerHTML = '<table role="contentinfo"></table>';
 
 			var node = fixture.querySelector('table');
-			assert.isTrue(commons.table.isDataTable(node));
+			assert.isTrue(axe.commons.table.isDataTable(node));
 		});
 		it('form', function () {
 			fixture.innerHTML = '<table role="form"></table>';
 
 			var node = fixture.querySelector('table');
-			assert.isTrue(commons.table.isDataTable(node));
+			assert.isTrue(axe.commons.table.isDataTable(node));
 		});
 		it('main', function () {
 			fixture.innerHTML = '<table role="main"></table>';
 
 			var node = fixture.querySelector('table');
-			assert.isTrue(commons.table.isDataTable(node));
+			assert.isTrue(axe.commons.table.isDataTable(node));
 		});
 		it('navigation', function () {
 			fixture.innerHTML = '<table role="navigation"></table>';
 
 			var node = fixture.querySelector('table');
-			assert.isTrue(commons.table.isDataTable(node));
+			assert.isTrue(axe.commons.table.isDataTable(node));
 		});
 		it('search', function () {
 			fixture.innerHTML = '<table role="search"></table>';
 
 			var node = fixture.querySelector('table');
-			assert.isTrue(commons.table.isDataTable(node));
+			assert.isTrue(axe.commons.table.isDataTable(node));
 		});
 
 	});
@@ -120,7 +120,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(commons.table.isDataTable(node));
+		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be true if the table has a summary attribute', function () {
@@ -128,7 +128,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be true if the table has a caption element', function () {
@@ -137,7 +137,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be true if the table has a col element', function () {
@@ -146,7 +146,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be true if the table has a colgroup element', function () {
@@ -155,7 +155,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be true if the table has a thead element', function () {
@@ -164,7 +164,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 
@@ -174,7 +174,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be true if the table has a th element', function () {
@@ -183,7 +183,25 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
+	});
+
+	it('should be true if the table has a rowheader', function () {
+		fixture.innerHTML = '<table>' +
+			'<tr><td role="rowheader"></td></tr>' +
+			'</table>';
+
+		var node = fixture.querySelector('table');
+		assert.isTrue(axe.commons.table.isDataTable(node));
+	});
+
+	it('should be true if the table has a columnheader', function () {
+		fixture.innerHTML = '<table>' +
+			'<tr><td role="columnheader"></td></tr>' +
+			'</table>';
+
+		var node = fixture.querySelector('table');
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be true if the table has a cell with headers attribute', function () {
@@ -192,7 +210,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be true if the table has a cell with scope attribute', function () {
@@ -201,7 +219,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be true if the table has a cell with abbr attribute', function () {
@@ -210,7 +228,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be true if the table has a cell with an abbr element as a single child', function () {
@@ -219,21 +237,21 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(commons.table.isDataTable(node));
+		assert.isFalse(axe.commons.table.isDataTable(node));
 
 		fixture.innerHTML = '<table>' +
 			'<tr><td><abbr>ok</abbr><div></div></td></tr>' +
 			'</table>';
 
 		node = fixture.querySelector('table');
-		assert.isFalse(commons.table.isDataTable(node));
+		assert.isFalse(axe.commons.table.isDataTable(node));
 
 		fixture.innerHTML = '<table>' +
 			'<tr><td><abbr>ok</abbr></td></tr>' +
 			'</table>';
 
 		node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
 	it('should be false if it has a nested table', function () {
@@ -243,7 +261,7 @@ describe('table.isDataTable', function () {
 
 
 		var node = fixture.querySelector('#out');
-		assert.isFalse(commons.table.isDataTable(node));
+		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
 
@@ -255,7 +273,7 @@ describe('table.isDataTable', function () {
 
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(commons.table.isDataTable(node));
+		assert.isFalse(axe.commons.table.isDataTable(node));
 
 	});
 
@@ -266,7 +284,7 @@ describe('table.isDataTable', function () {
 
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(commons.table.isDataTable(node));
+		assert.isFalse(axe.commons.table.isDataTable(node));
 
 	});
 
@@ -277,7 +295,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 
 	});
 
@@ -288,7 +306,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 
 	});
 
@@ -304,7 +322,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 
 	});
 
@@ -323,7 +341,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 
 	});
 	it('should be true if it has 20 or more rows', function () {
@@ -332,7 +350,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 
 	});
 	it('should be false if its width is 95% of the document width', function () {
@@ -341,7 +359,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(commons.table.isDataTable(node));
+		assert.isFalse(axe.commons.table.isDataTable(node));
 
 	});
 
@@ -352,7 +370,7 @@ describe('table.isDataTable', function () {
 
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(commons.table.isDataTable(node));
+		assert.isFalse(axe.commons.table.isDataTable(node));
 
 	});
 
@@ -364,7 +382,7 @@ describe('table.isDataTable', function () {
 
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(commons.table.isDataTable(node));
+		assert.isFalse(axe.commons.table.isDataTable(node));
 
 	});
 
@@ -376,7 +394,7 @@ describe('table.isDataTable', function () {
 
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(commons.table.isDataTable(node));
+		assert.isFalse(axe.commons.table.isDataTable(node));
 
 	});
 
@@ -388,7 +406,7 @@ describe('table.isDataTable', function () {
 
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(commons.table.isDataTable(node));
+		assert.isFalse(axe.commons.table.isDataTable(node));
 
 	});
 
@@ -400,7 +418,7 @@ describe('table.isDataTable', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(commons.table.isDataTable(node));
+		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
 	it('should otherwise be true', function () {
@@ -410,7 +428,7 @@ describe('table.isDataTable', function () {
 
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(commons.table.isDataTable(node));
+		assert.isTrue(axe.commons.table.isDataTable(node));
 
 	});
 

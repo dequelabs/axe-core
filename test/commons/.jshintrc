@@ -8,7 +8,7 @@
 		"after": true,
 		"afterEach": true,
 		"chai": true,
-		"commons": true,
+		"axe": true,
 		"assert": true
     },
 

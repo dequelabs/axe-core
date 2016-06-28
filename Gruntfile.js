@@ -47,19 +47,15 @@ module.exports = function (grunt) {
 			engine: {
 				src: [
 					'lib/intro.stub',
-					'bower_components/simple-clone/lib/index.js',
-					'bower_components/element-matches/lib/index.js',
-					'bower_components/escape-selector/lib/index.js',
-					'bower_components/node-uuid/uuid.js',
-					'lib/core/index.js',
-					'lib/core/*/index.js',
-					'lib/core/**/index.js',
-					'lib/core/**/*.js',
+					'tmp/core/index.js',
+					'tmp/core/*/index.js',
+					'tmp/core/**/index.js',
+					'tmp/core/**/*.js',
+					// include rules / checks / commons
 					'<%= configure.rules.dest.auto %>',
-					'lib/core/export.js',
 					'lib/outro.stub'
 				],
-				dest: 'dist/axe.js',
+				dest: 'axe.js',
 				options: {
 					process: true
 				}
@@ -70,7 +66,6 @@ module.exports = function (grunt) {
 					'lib/commons/index.js',
 					'lib/commons/*/index.js',
 					'lib/commons/**/*.js',
-					'lib/commons/export.js',
 					'lib/commons/outro.stub'
 				],
 				dest: 'tmp/commons.js'
@@ -131,31 +126,17 @@ module.exports = function (grunt) {
 					preserveComments: 'some'
 				}
 			},
-			lib: {
+			minify: {
 				files: [{
 					src: ['<%= concat.engine.dest %>'],
-					dest: 'dist/axe.min.js'
+					dest: './axe.min.js'
 				}],
 				options: {
-					preserveComments: 'some'
+					preserveComments: 'some',
+					mangle: {
+						except: ['commons', 'utils', 'axe', 'window', 'document']
+					}
 				}
-			}
-		},
-		copy: {
-			manifests: {
-				files: [{
-					src: ['package.json'],
-					dest: 'dist/'
-				}, {
-					src: ['README.md'],
-					dest: 'dist/'
-				}, {
-					src: ['bower.json'],
-					dest: 'dist/'
-				}, {
-					src: ['LICENSE'],
-					dest: 'dist/'
-				}]
 			}
 		},
 		watch: {
@@ -251,11 +232,14 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build']);
 
 	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
-		'concat:engine', 'babel', 'copy', 'uglify']);
+		 'babel', 'concat:engine', 'uglify']);
 
 	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
 
 	grunt.registerTask('test-browser', ['build',  'testconfig', 'fixture', 'connect',
 		'test-webdriver', 'jshint']);
+
+
+	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
 };

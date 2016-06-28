@@ -3,9 +3,10 @@
 		"results": true,
 		"node": true,
 		"options": true,
-		"commons": true
+		"axe": true
 	},
 
+	"esversion": 6,
 	"browser" : false,
 	"node" : false,
 	"devel" : false,
@@ -43,8 +44,6 @@
 	"debug": false,
 	"devel": false,
 	"eqnull": false,
-	"es5": false,
-	"esnext": false,
 	"evil": false,
 	"expr": false,
 	"funcscope": false,

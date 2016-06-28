@@ -14,8 +14,8 @@ describe('color.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		var actual = commons.color.getBackgroundColor(target, bgNodes);
-		var expected = new commons.color.Color(128, 0, 0, 1);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(128, 0, 0, 1);
 		assert.closeTo(actual.red, expected.red, 0.5);
 		assert.closeTo(actual.green, expected.green, 0.5);
 		assert.closeTo(actual.blue, expected.blue, 0.5);
@@ -36,9 +36,9 @@ describe('color.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var pos = fixture.querySelector('#pos');
 		var bgNodes = [];
-		var actual = commons.color.getBackgroundColor(target, bgNodes);
-		var expected = new commons.color.Color(64, 64, 0, 1);
-		if (commons.dom.supportsElementsFromPoint(document)) {
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(64, 64, 0, 1);
+		if (axe.commons.dom.supportsElementsFromPoint(document)) {
 			assert.closeTo(actual.red, expected.red, 0.5);
 			assert.closeTo(actual.green, expected.green, 0.5);
 			assert.closeTo(actual.blue, expected.blue, 0.5);
@@ -57,8 +57,8 @@ describe('color.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var under = fixture.querySelector('#under');
 		var bgNodes = [];
-		var actual = commons.color.getBackgroundColor(target, bgNodes);
-		var expected = new commons.color.Color(64, 64, 0, 1);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(64, 64, 0, 1);
 		assert.closeTo(actual.red, expected.red, 0.5);
 		assert.closeTo(actual.green, expected.green, 0.5);
 		assert.closeTo(actual.blue, expected.blue, 0.5);
@@ -81,9 +81,9 @@ describe('color.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var under = fixture.querySelector('#under');
 		var bgNodes = [];
-		var actual = commons.color.getBackgroundColor(target, bgNodes);
-		var expected = new commons.color.Color(64, 64, 0, 1);
-		if (commons.dom.supportsElementsFromPoint(document)) {
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(64, 64, 0, 1);
+		if (axe.commons.dom.supportsElementsFromPoint(document)) {
 			assert.closeTo(actual.red, expected.red, 0.5);
 			assert.closeTo(actual.green, expected.green, 0.5);
 			assert.closeTo(actual.blue, expected.blue, 0.5);
@@ -101,8 +101,8 @@ describe('color.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		var actual = commons.color.getBackgroundColor(target, bgNodes);
-		var expected = new commons.color.Color(64, 64, 0, 1);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(64, 64, 0, 1);
 		assert.closeTo(actual.red, expected.red, 0.5);
 		assert.closeTo(actual.green, expected.green, 0.5);
 		assert.closeTo(actual.blue, expected.blue, 0.5);
@@ -117,8 +117,8 @@ describe('color.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		var actual = commons.color.getBackgroundColor(target, bgNodes);
-		var expected = new commons.color.Color(64, 64, 0, 1);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(64, 64, 0, 1);
 		assert.equal(actual.red, expected.red);
 		assert.equal(actual.green, expected.green);
 		assert.equal(actual.blue, expected.blue);
@@ -134,7 +134,7 @@ describe('color.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		var actual = commons.color.getBackgroundColor(target, bgNodes);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		assert.isNull(actual);
 		assert.deepEqual(bgNodes, [target, parent]);
 	});
@@ -146,7 +146,7 @@ describe('color.getBackgroundColor', function () {
 			'</div></div></div>';
 		var target = fixture.querySelector('#target');
 		var bgNodes = [];
-		var actual = commons.color.getBackgroundColor(target, bgNodes);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		assert.isNull(actual);
 		assert.deepEqual(bgNodes, [target]);
 	});
@@ -155,8 +155,8 @@ describe('color.getBackgroundColor', function () {
 	it('should return white if transparency goes all the way up to document', function () {
 		fixture.innerHTML = '<div id="target" style="height: 10px; width: 30px;">';
 		var target = fixture.querySelector('#target');
-		var actual = commons.color.getBackgroundColor(target);
-		var expected = new commons.color.Color(255, 255, 255, 1);
+		var actual = axe.commons.color.getBackgroundColor(target);
+		var expected = new axe.commons.color.Color(255, 255, 255, 1);
 		assert.equal(actual.red, expected.red);
 		assert.equal(actual.green, expected.green);
 		assert.equal(actual.blue, expected.blue);
@@ -169,7 +169,7 @@ describe('color.getBackgroundColor', function () {
 			'</div></div>';
 		var target = fixture.querySelector('#target');
 		var bgNodes = [];
-		var actual = commons.color.getBackgroundColor(target, bgNodes);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		assert.isNull(actual);
 		assert.deepEqual(bgNodes, [target]);
 	});
@@ -177,7 +177,7 @@ describe('color.getBackgroundColor', function () {
 	it('should return null if something is obscuring it', function () {
 		fixture.innerHTML = '<div style="position: absolute; top:0; left: 0; right: 0; bottom:0; background: #000"></div>' +
 			'<div id="target" style="position: relative; left: 1px;">Hello</div>';
-		var actual = commons.color.getBackgroundColor(document.getElementById('target'), []);
+		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
 		assert.isNull(actual);
 
 	});
@@ -188,8 +188,8 @@ describe('color.getBackgroundColor', function () {
 			'</div></div>';
 		var target = fixture.querySelector('#target');
 		var bgNodes = [];
-		var actual = commons.color.getBackgroundColor(target, bgNodes);
-		var expected = new commons.color.Color(0, 128, 0, 1);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(0, 128, 0, 1);
 		assert.equal(actual.red, expected.red);
 		assert.equal(actual.green, expected.green);
 		assert.equal(actual.blue, expected.blue);
@@ -207,8 +207,8 @@ describe('color.getBackgroundColor', function () {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		var actual = commons.color.getBackgroundColor(target, bgNodes);
-		var expected = new commons.color.Color(255, 255, 255, 1);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(255, 255, 255, 1);
 		assert.closeTo(actual.red, expected.red, 0.5);
 		assert.closeTo(actual.green, expected.green, 0.5);
 		assert.closeTo(actual.blue, expected.blue, 0.5);
@@ -217,16 +217,18 @@ describe('color.getBackgroundColor', function () {
 	});
 
 	it('should ignore 0-height elements', function () {
-		fixture.innerHTML = '<div id="parent" style="height: 40px; width: 30px; ' +
+		fixture.innerHTML =
+			'<div id="parent" style="height: 40px; width: 30px; ' +
 			'background-color: white; position: relative; z-index: 5">' +
-			'<div float="left" style="height: 0px; background-color: black">' +
-			'<div id="target" style="height: 20px; width: 25px; z-index: 25;">' +
+			'  <div float="left" style="height: 0px; background-color: black">' +
+			'    <div id="target" style="height: 20px; width: 25px; z-index: 25;">' +
 			'</div></div></div>';
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		var actual = commons.color.getBackgroundColor(target, bgNodes);
-		var expected = new commons.color.Color(255, 255, 255, 1);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+
+		var expected = new axe.commons.color.Color(255, 255, 255, 1);
 		assert.closeTo(actual.red, expected.red, 0.5);
 		assert.closeTo(actual.green, expected.green, 0.5);
 		assert.closeTo(actual.blue, expected.blue, 0.5);
@@ -245,18 +247,54 @@ describe('color.getBackgroundColor', function () {
 		var shifted = fixture.querySelector('#shifted');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		var actual = commons.color.getBackgroundColor(target, bgNodes, true);
-		var expected = new commons.color.Color(0, 0, 0, 1);
-		if (commons.dom.supportsElementsFromPoint(document)) {
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes, false);
+		var expected = new axe.commons.color.Color(0, 0, 0, 1);
+		if (axe.commons.dom.supportsElementsFromPoint(document)) {
 			assert.deepEqual(bgNodes, [shifted]);
 		} else {
-			expected = new commons.color.Color(255, 255, 255, 1);
+			expected = new axe.commons.color.Color(255, 255, 255, 1);
 			assert.deepEqual(bgNodes, [parent]);
 		}
 		assert.closeTo(actual.red, expected.red, 0.5);
 		assert.closeTo(actual.green, expected.green, 0.5);
 		assert.closeTo(actual.blue, expected.blue, 0.5);
 		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+	});
+
+	it('should return null when encountering background images during visual traversal', function () {
+		fixture.innerHTML =
+		'<div id="parent" style="height: 40px; width: 30px; ' +
+		' background-color: white; position: relative; z-index: 5"> ' +
+		'	<div id="target" style="position: relative; top: 1px; height: 20px;' +
+		'	 width: 25px; z-index: 25; background:rgba(0,125,0,0.5);"></div> ' +
+		'	<div id="shifted" style="position: absolute; top: -30px; height: 40px; ' +
+		'    background-image: url(foobar.png);'+
+		'	 width: 35px; z-index: 15;">' +
+		'	</div>'+
+		'</div>';
+
+		var target = fixture.querySelector('#target');
+		var bgNodes = [];
+		var outcome = axe.commons.color.getBackgroundColor(target, bgNodes, false);
+		assert.isNull(outcome);
+	});
+
+	it('should return null when encountering image nodes during visual traversal', function () {
+		fixture.innerHTML =
+		'<div id="parent" style="height: 40px; width: 30px; ' +
+		' background-color: white; position: relative; z-index: 5"> ' +
+		'	<div id="shifted" style="position: absolute; top: -10px; height: 40px; ' +
+		'	 width: 35px; z-index: 15;">' +
+		'		<img src="some-img.png" width="35" height="40">' +
+		'	</div>'+
+		'	<div id="target" style="position: relative; top: 1px; height: 20px;' +
+		'	 width: 25px; z-index: 25; background:rgba(0,125,0,0.5);"></div> ' +
+		'</div>';
+
+		var target = fixture.querySelector('#target');
+		var bgNodes = [];
+		var outcome = axe.commons.color.getBackgroundColor(target, bgNodes, false);
+		assert.isNull(outcome);
 	});
 
 	it('does not change the scroll when scroll is disabled', function() {
@@ -268,7 +306,7 @@ describe('color.getBackgroundColor', function () {
 		var bgNodes = [];
 		window.scroll(0, 0);
 
-		commons.color.getBackgroundColor(targetEl, bgNodes, false);
+		axe.commons.color.getBackgroundColor(targetEl, bgNodes, true);
 
 		assert.equal(window.pageYOffset, 0);
 	});
@@ -282,7 +320,7 @@ describe('color.getBackgroundColor', function () {
 		var bgNodes = [];
 		window.scroll(0, 0);
 
-		commons.color.getBackgroundColor(targetEl, bgNodes, true);
+		axe.commons.color.getBackgroundColor(targetEl, bgNodes, false);
 
 		assert.notEqual(window.pageYOffset, 0);
 	});

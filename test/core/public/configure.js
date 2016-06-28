@@ -1,15 +1,20 @@
-/*global Rule, Check, Tool */
+/*global Rule, Check */
 describe('axe.configure', function() {
 	'use strict';
+	var fixture = document.getElementById('fixture');
 
-	beforeEach(function() {
+	afterEach(function () {
+		fixture.innerHTML = '';
+	});
+
+	beforeEach(function () {
 		axe._audit = null;
 	});
 
 	it('should throw if audit is not configured', function() {
 		assert.throws(function () {
-			axe.configure({});
-    }, Error, /^No audit configured/);
+				axe.configure({});
+	    }, Error, /^No audit configured/);
 	});
 
 	it('should override an audit\'s reporter - string', function() {
@@ -29,14 +34,38 @@ describe('axe.configure', function() {
 		axe.configure({
 			rules: [{
 				id: 'bob',
-				metadata: 'joe'
+				metadata: {
+					joe: 'joe'
+				}
 			}]
 		});
 
 		assert.lengthOf(axe._audit.rules, 1);
 		assert.instanceOf(axe._audit.rules[0], Rule);
 		assert.equal(axe._audit.rules[0].id, 'bob');
-		assert.equal(axe._audit.data.rules.bob, 'joe');
+		assert.deepEqual(axe._audit.data.rules.bob.joe, 'joe');
+	});
+
+	it('should call setBranding when passed options', function () {
+		axe._load({});
+		axe.configure({
+			rules: [{
+				id: 'bob',
+				selector: 'pass',
+			}],
+			branding: {}
+		});
+		assert.lengthOf(axe._audit.rules, 1);
+		assert.equal(axe._audit.data.rules.bob.helpUrl,
+			'https://dequeuniversity.com/rules/axe/x.y/bob?application=axeAPI');
+		axe.configure({
+			branding: {
+				application: 'thing',
+				brand: 'thung'
+			}
+		});
+		assert.equal(axe._audit.data.rules.bob.helpUrl,
+			'https://dequeuniversity.com/rules/thung/x.y/bob?application=thing');
 	});
 
 	it('should allow for overwriting of rules', function () {
@@ -55,7 +84,7 @@ describe('axe.configure', function() {
 			rules: [{
 				id: 'bob',
 				selector: 'pass',
-				metadata: 'joe'
+				metadata: {joe: 'joe'}
 			}]
 		});
 
@@ -63,7 +92,7 @@ describe('axe.configure', function() {
 		assert.instanceOf(axe._audit.rules[0], Rule);
 		assert.equal(axe._audit.rules[0].id, 'bob');
 		assert.equal(axe._audit.rules[0].selector, 'pass');
-		assert.equal(axe._audit.data.rules.bob, 'joe');
+		assert.equal(axe._audit.data.rules.bob.joe, 'joe');
 	});
 
 	it('should allow for the addition of checks', function () {
@@ -112,40 +141,4 @@ describe('axe.configure', function() {
 		assert.equal(axe._audit.data.checks.bob, 'joe');
 
 	});
-
-	it('should allow for the addition of tools', function () {
-		axe._load({});
-		axe.configure({
-			tools: [{
-				id: 'bob',
-				options: true
-			}]
-		});
-
-		assert.instanceOf(axe._audit.tools.bob, Tool);
-		assert.equal(axe._audit.tools.bob.id, 'bob');
-		assert.isTrue(axe._audit.tools.bob.options);
-
-	});
-
-	it('should allow for the overwriting of tools', function () {
-		axe._load({
-			tools: [{
-				id: 'bob',
-				options: false
-			}]
-		});
-		axe.configure({
-			tools: [{
-				id: 'bob',
-				options: true
-			}]
-		});
-
-		assert.instanceOf(axe._audit.tools.bob, Tool);
-		assert.equal(axe._audit.tools.bob.id, 'bob');
-		assert.isTrue(axe._audit.tools.bob.options);
-
-	});
-
 });

@@ -8,8 +8,7 @@
   ],
   "metadata": {
     "description": "Ensures all content is contained within a landmark region",
-    "help": "Content should be contained in a landmark region",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/region"
+    "help": "Content should be contained in a landmark region"
   },
   "all": [],
   "any": [

@@ -6,12 +6,11 @@
     "wcag2a",
     "wcag122",
     "section508",
-    "section508a"
+    "section508.22.a"
   ],
   "metadata": {
     "description": "Ensures <audio> elements have captions",
-    "help": "<audio> elements must have a captions track",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/audio-caption"
+    "help": "<audio> elements must have a captions track"
   },
   "all": [],
   "any": [],

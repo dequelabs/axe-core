@@ -1,14 +1,13 @@
 {
   "id": "empty-heading",
   "selector": "h1, h2, h3, h4, h5, h6, [role=\"heading\"]",
+  "enabled": true,
   "tags": [
-    "wcag2a",
-    "wcag131"
+    "best-practice"
   ],
   "metadata": {
     "description": "Ensures headings have discernible text",
-    "help": "Headings must not be empty",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/1.1/empty-heading"
+    "help": "Headings must not be empty"
   },
   "all": [],
   "any": [

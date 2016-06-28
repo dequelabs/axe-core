@@ -1,0 +1,34 @@
+<p> <a href="#" id="ignore1">Link text 1</a> </p>
+<ul> <li> <a href="#" id="ignore2">Link text 2</a> </li></ul>
+<p> paragraph <a id="ignore3">Link</a> </p>
+<p> paragraph <a href="#" id="ignore4"> </a> </p>
+<p> paragraph <a href="#" id="ignore5"><img src="" alt="some text"> </a> </p>
+
+<p style="display:none;">paragraph
+	<a style="" href="#" id="ignore6">Link text</a>
+</p>
+
+<p><!-- ignore blocks with mostly links -->
+  Tags: <a href="#" id="ignore7">Link text</a> / <a href="#" id="ignore8">Other link</a>
+</p>
+
+<p><!-- take line breaks into account -->
+	paragraph of text <br />
+	<a href="#" id="ignore9">Link text</a>
+</p>
+
+<p style="color:black">paragraph of text
+	<a style="" href="#" id="pass1">Link</a>
+</p>
+
+<p aria-hidden="true">paragraph of text
+	<a style="" href="#" id="pass2">Link text</a>
+</p>
+
+<p style="color:black">
+	paragraph of text
+	<a style="text-decoration:none; color:blue" href="#" id="fail1">
+	  Link text</a> <br>
+	<a href="#" id="ignore10">Link!</a>
+</p>
+

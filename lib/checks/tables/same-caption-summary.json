@@ -6,7 +6,7 @@
     "impact": "moderate",
     "messages": {
       "pass": "Content of summary attribute and <caption> are not duplicated",
-      "fail": "Content of summary attribute and <caption> element are indentical"
+      "fail": "Content of summary attribute and <caption> element are identical"
     }
   }
 }

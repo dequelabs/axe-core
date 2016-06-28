@@ -1,5 +1,14 @@
 <!doctype html>
 <title>O hai</title>
-<script src="/dist/axe.js"></script>
+<script src="/axe.js"></script>
+<iframe src="mock/frames/responder.html" id="frame1"></iframe>
 <div id="dupe"></div>
 <div id="dupe"></div>
+<script>
+
+document.getElementById('frame1').addEventListener('load', function (e) {
+	window.frameWin = e.target.contentWindow;
+	window.respondable  = axe.utils.respondable;
+});
+
+</script>
