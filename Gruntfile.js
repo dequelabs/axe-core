@@ -71,7 +71,6 @@ module.exports = function (grunt) {
 					'tmp/core/*/index.js',
 					'tmp/core/**/index.js',
 					'tmp/core/**/*.js',
-					'tmp/core/export.js',
 					// include rules / checks / commons
 					'<%= configure.rules.dest.auto %>',
 					'lib/outro.stub'
@@ -87,7 +86,6 @@ module.exports = function (grunt) {
 					'lib/commons/index.js',
 					'lib/commons/*/index.js',
 					'lib/commons/**/*.js',
-					'lib/commons/export.js',
 					'lib/commons/outro.stub'
 				],
 				dest: 'tmp/commons.js'
@@ -290,5 +288,5 @@ module.exports = function (grunt) {
 	grunt.registerTask('test-fast', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
 
-	grunt.registerTask('dev', ['build', 'testconfig', 'connect', 'watch']);
+	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
 };

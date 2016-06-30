@@ -25,8 +25,8 @@ describe('axe.run', function () {
 	afterEach(function () {
 		fixture.innerHTML = '';
 		axe._audit = null;
+		axe._runRules = origRunRules;
 	});
-
 
 	it('takes context, options and callback as parameters', function (done) {
 		fixture.innerHTML = '<div id="t1"></div>';
@@ -46,7 +46,6 @@ describe('axe.run', function () {
 	it('uses document as content if it is not specified', function (done) {
 		axe._runRules = function (ctxt) {
 			assert.equal(ctxt, document);
-			axe._runRules = origRunRules;
 			done();
 		};
 
@@ -56,7 +55,6 @@ describe('axe.run', function () {
 	it('uses an object as options if it is not specified', function (done) {
 		axe._runRules = function (ctxt, opt) {
 			assert.isObject(opt);
-			axe._runRules = origRunRules;
 			done();
 		};
 		axe.run(document, noop);
@@ -65,17 +63,15 @@ describe('axe.run', function () {
 	it('treats objects with include or exclude as the context object', function (done) {
 		axe._runRules = function (ctxt) {
 			assert.deepEqual(ctxt, {include: '#BoggyB'});
-			axe._runRules = origRunRules;
 			done();
 		};
 
 		axe.run({include: '#BoggyB'}, noop);
 	});
 
-	it('treats objects with neither inlude or exclude as the option object', function (done) {
+	it('treats objects with neither include or exclude as the option object', function (done) {
 		axe._runRules = function (ctxt, opt) {
 			assert.deepEqual(opt.HHG, 'hallelujah');
-			axe._runRules = origRunRules;
 			done();
 		};
 
@@ -87,7 +83,6 @@ describe('axe.run', function () {
 			axe.run(done);
 		});
 	});
-
 
 	describe('callback', function () {
 		it('gives errors to the first argument on the callback', function (done) {
@@ -115,6 +110,50 @@ describe('axe.run', function () {
 			});
 		});
 
+		it('does not run the callback twice if it throws', function (done) {
+			var calls = 0;
+			axe._runRules = function (ctxt, opt, resolve) {
+				resolve([]);
+			};
+
+			var log = axe.log;
+			axe.log = function (e) {
+				assert.equal(e.message, 'err');
+				axe.log = log;
+			};
+			axe.run(function () {
+				calls += 1;
+				if (calls === 1) {
+					setTimeout(function () {
+						assert.equal(calls, 1);
+						axe.log = log;
+						done();
+					}, 20);
+				}
+				throw new Error('err');
+			});
+		});
+	});
+
+
+	describe('promise result', function () {
+		it('returns an error to catch if axe fails',
+		(!window.Promise) ? undefined :  function (done) {
+			axe._runRules = function (ctxt, opt, resolve, reject) {
+				axe._runRules = origRunRules;
+				reject('I surrender!');
+			};
+
+			var p = axe.run({ reporter: 'raw' });
+			p.then(noop)
+			.catch(function (err) {
+				assert.equal(err, 'I surrender!');
+				done();
+			});
+
+			assert.instanceOf(p, window.Promise);
+		});
+
 		it('returns a promise if no callback was given',
 		(!window.Promise) ? undefined :  function (done) {
 			axe._runRules = function (ctxt, opt, resolve) {
@@ -131,21 +170,23 @@ describe('axe.run', function () {
 			assert.instanceOf(p, window.Promise);
 		});
 
-		it('returns an error to catch if axe fails',
+		it('does not error if then() throws',
 		(!window.Promise) ? undefined :  function (done) {
-			axe._runRules = function (ctxt, opt, resolve, reject) {
-				axe._runRules = origRunRules;
-				reject('I surrender!');
+			axe._runRules = function (ctxt, opt, resolve) {
+				resolve([]);
 			};
 
-			var p = axe.run({ reporter: 'raw' });
-			p.then(noop)
-			.catch(function (err) {
-				assert.equal(err, 'I surrender!');
+			axe.run()
+			.then(function () {
+				throw new Error('err');
+			}, function (e) {
+				assert.isNotOk(e, 'Caught callback error in the wrong place');
+				done();
+
+			}).catch(function (e) {
+				assert.equal(e.message, 'err');
 				done();
 			});
-
-			assert.instanceOf(p, window.Promise);
 		});
 	});
 
@@ -181,6 +222,7 @@ describe('axe.run', function () {
 			axe.run(document, {reporter: 'raw'}, noop);
 		});
 	});
+
 
 	describe('option xpath', function () {
 		it('returns no xpath if the xpath option is not set', function (done) {
