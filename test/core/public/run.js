@@ -24,6 +24,7 @@ describe('axe.run', function () {
 	afterEach(function () {
 		fixture.innerHTML = '';
 		axe._audit = null;
+		axe._runRules = origRunRules;
 	});
 
 
@@ -45,7 +46,6 @@ describe('axe.run', function () {
 	it('sets v1 as the default reporter if audit.reporter is null', function (done) {
 		axe._runRules = function (ctxt, opt) {
 			assert.equal(opt.reporter, 'v1');
-			axe._runRules = origRunRules;
 			done();
 		};
 		axe._audit.reporter = null;
@@ -55,7 +55,6 @@ describe('axe.run', function () {
 	it('uses the audit.reporter if no reporter is set in options', function (done) {
 		axe._runRules = function (ctxt, opt) {
 			assert.equal(opt.reporter, 'raw');
-			axe._runRules = origRunRules;
 			done();
 		};
 		axe._audit.reporter = 'raw';
@@ -65,7 +64,6 @@ describe('axe.run', function () {
 	it('does not override if another reporter is set', function (done) {
 		axe._runRules = function (ctxt, opt) {
 			assert.equal(opt.reporter, 'raw');
-			axe._runRules = origRunRules;
 			done();
 		};
 		axe._audit.reporter = null;
@@ -75,7 +73,6 @@ describe('axe.run', function () {
 	it('uses document as content if it is not specified', function (done) {
 		axe._runRules = function (ctxt) {
 			assert.equal(ctxt, document);
-			axe._runRules = origRunRules;
 			done();
 		};
 
@@ -85,7 +82,6 @@ describe('axe.run', function () {
 	it('uses an object as options if it is not specified', function (done) {
 		axe._runRules = function (ctxt, opt) {
 			assert.isObject(opt);
-			axe._runRules = origRunRules;
 			done();
 		};
 		axe.run(document, noop);
@@ -94,7 +90,6 @@ describe('axe.run', function () {
 	it('treats objects with include or exclude as the option object', function (done) {
 		axe._runRules = function (ctxt) {
 			assert.deepEqual(ctxt, {include: '#BoggyB'});
-			axe._runRules = origRunRules;
 			done();
 		};
 
@@ -104,7 +99,6 @@ describe('axe.run', function () {
 	it('treats objects with neither inlude or exclude as the option object', function (done) {
 		axe._runRules = function (ctxt, opt) {
 			assert.deepEqual(opt.HHG, 'hallelujah');
-			axe._runRules = origRunRules;
 			done();
 		};
 
@@ -119,7 +113,6 @@ describe('axe.run', function () {
 
 	it('gives errors to the first argument on the callback', function (done) {
 		axe._runRules = function (ctxt, opt, resolve, reject) {
-			axe._runRules = origRunRules;
 			reject('Ninja rope!');
 		};
 
@@ -131,7 +124,6 @@ describe('axe.run', function () {
 
 	it('gives results to the second argument on the callback', function (done) {
 		axe._runRules = function (ctxt, opt, resolve) {
-			axe._runRules = origRunRules;
 			resolve('MB Bomb');
 		};
 
@@ -139,6 +131,31 @@ describe('axe.run', function () {
 			assert.equal(err, null);
 			assert.equal(result, 'MB Bomb');
 			done();
+		});
+	});
+
+
+	it('does not run the callback twice if it throws', function (done) {
+		var calls = 0;
+		axe._runRules = function (ctxt, opt, resolve) {
+			resolve([]);
+		};
+
+		var log = axe.log;
+		axe.log = function (e) {
+			assert.equal(e.message, 'err');
+			axe.log = log;
+		};
+		axe.run(function () {
+			calls += 1;
+			if (calls === 1) {
+				setTimeout(function () {
+					assert.equal(calls, 1);
+					axe.log = log;
+					done();
+				}, 20);
+			}
+			throw new Error('err');
 		});
 	});
 
@@ -166,12 +183,31 @@ describe('axe.run', function () {
 		};
 
 		var p = axe.run({ reporter: 'raw' });
-		p.then(noop)
-		.catch(function (err) {
+		p.then(noop, function (err) {
 			assert.equal(err, 'I surrender!');
 			done();
 		});
 
 		assert.instanceOf(p, window.Promise);
+	});
+
+
+	it('does not error if then() throws',
+	(!window.Promise) ? undefined :  function (done) {
+		axe._runRules = function (ctxt, opt, resolve) {
+			resolve([]);
+		};
+
+		axe.run()
+		.then(function () {
+			throw new Error('err');
+		}, function (e) {
+			assert.isNotOk(e, 'Caught callback error in the wrong place');
+			done();
+
+		}).catch(function (e) {
+			assert.equal(e.message, 'err');
+			done();
+		});
 	});
 });

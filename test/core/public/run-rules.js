@@ -1,73 +1,4 @@
 /*global runRules */
-describe('axe.a11yCheck', function () {
-	'use strict';
-
-	describe('reporter', function () {
-		var origReporters;
-		var noop = function () {};
-
-		beforeEach(function () {
-			axe._load({});
-			origReporters = window.reporters;
-		});
-
-		afterEach(function () {
-			window.reporters = origReporters;
-		});
-
-		it('should throw if no audit is configured', function () {
-			axe._audit = null;
-
-			assert.throws(function () {
-				axe.a11yCheck(document, {});
-			}, Error, /^No audit configured/);
-		});
-
-		it('should allow for option-less invocation', function (done) {
-			axe.a11yCheck(document, function (result) {
-				assert.isObject(result);
-				done();
-			});
-		});
-
-		it('sets v2 as the default reporter if audit.reporter is null', function (done) {
-			var origRunRules = axe._runRules;
-
-			axe._runRules = function (ctxt, opt) {
-				assert.equal(opt.reporter, 'v2');
-				axe._runRules = origRunRules;
-				done();
-			};
-
-			axe._audit.reporter = null;
-			axe.a11yCheck(document, noop);
-		});
-
-		it('uses the audit.reporter if no reporter is set in options', function (done) {
-			var origRunRules = axe._runRules;
-
-			axe._runRules = function (ctxt, opt) {
-				assert.equal(opt.reporter, 'raw');
-				axe._runRules = origRunRules;
-				done();
-			};
-			axe._audit.reporter = 'raw';
-			axe.a11yCheck(document, noop);
-		});
-
-		it('does not override if another reporter is set', function (done) {
-			var origRunRules = axe._runRules;
-			axe._runRules = function (ctxt, opt) {
-				assert.equal(opt.reporter, 'raw');
-				axe._runRules = origRunRules;
-				done();
-			};
-			axe._audit.reporter = null;
-			axe.a11yCheck(document, {reporter: 'raw'}, noop);
-		});
-
-	});
-});
 describe('runRules', function () {
 	'use strict';
 
@@ -227,7 +158,7 @@ describe('runRules', function () {
 			runRules('#fixture', {}, function (results) {
 				assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
-					helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/div#target?application=axeAPI',
+					helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/div#target?application=axeAPI',
 					pageLevel: false,
 					impact: null,
 					inapplicable: [],
@@ -252,7 +183,7 @@ describe('runRules', function () {
 					tags: []
 				}, {
 					id: 'first-div',
-					helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/first-div?application=axeAPI',
+					helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/first-div?application=axeAPI',
 					pageLevel: false,
 					impact: null,
 					inapplicable: [],
@@ -423,7 +354,7 @@ describe('runRules', function () {
 		runRules('#fixture', {}, function (results) {
 			assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
-					helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/div#target?application=axeAPI',
+					helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/div#target?application=axeAPI',
 					pageLevel: false,
 					foo: 'bar',
 					stuff: 'blah',
@@ -453,7 +384,7 @@ describe('runRules', function () {
 					tags: []
 				}, {
 					id: 'first-div',
-					helpUrl: 'https://dequeuniversity.com/rules/axe/2.0/first-div?application=axeAPI',
+					helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/first-div?application=axeAPI',
 					pageLevel: false,
 					bar: 'foo',
 					stuff: 'no',
@@ -600,5 +531,39 @@ describe('runRules', function () {
 			});
 
 		});
+	});
+
+	it('should not call reject when the resolve throws', function (done) {
+		var rejectCalled = false;
+		axe._load({ rules: [{
+			id: 'html',
+			selector: 'html',
+			any: ['html']
+		}], checks: [{
+			id: 'html',
+			evaluate: function () {
+				return true;
+			}
+		}], messages: {}});
+
+		function resolve() {
+			setTimeout(function () {
+				assert.isFalse(rejectCalled);
+				axe.log = log;
+				done();
+			}, 20);
+			throw new Error('err');
+		}
+		function reject() {
+			rejectCalled = true;
+		}
+
+		var log = axe.log;
+		axe.log = function (e) {
+			assert.equal(e.message, 'err');
+			axe.log = log;
+		};
+		runRules(document, {},resolve, reject);
+
 	});
 });
