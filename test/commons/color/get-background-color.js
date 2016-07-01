@@ -307,4 +307,9 @@ describe('color.getBackgroundColor', function () {
 
 		assert.notEqual(window.pageYOffset, 0);
 	});
+
+	xit('returns elements with negative z-index', function () {
+		assert(false);
+	});
+
 });
