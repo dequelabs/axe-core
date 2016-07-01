@@ -6,7 +6,7 @@ describe('jQuery object as a11yCheck context', function () {
 		var fixture = $('#fixture');
 		axe.a11yCheck(fixture, {}, function (results) {
 			assert.lengthOf(results.violations, 0, 'violations');
-			assert.lengthOf(results.passes, 0, 'passes');
+			assert.lengthOf(results.passes, 8, 'passes');
 			done();
 		});
 	});
