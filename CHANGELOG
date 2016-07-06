@@ -2,3 +2,36 @@ v1.0.1:
 	date: 2015-06-10
 	changes:
 		- Initial public release
+v1.1.1:
+	date: 2015-09-04
+	changes:
+		- Adds Travis hooks
+		- Adds Sauce Labs
+		- Encodes HTML in descriptions
+		- Updates messages and help URLs
+v2.0.0:
+	date: 2016-03-01
+	changes:
+		- Adds support for AMD modules
+		- Fixes incompatibility with Webpack
+		- Improvements to rules and checks
+		- Help urls no longer hard-coded
+		- Improved error handling
+v2.0.3:
+	date: 2016-04-12
+	changes:
+		- Security improvements
+		- Build includes Babel/ES6
+		- Improvements to table rules
+		- aXe can be loaded in Node
+v2.0.4:
+	date: 2016-04-13
+	changes:
+		- Improvements to messaging for extensions
+v2.0.5:
+	date: 2016-04-20
+	changes:
+		- Support for UMD pattern
+		- Adds 508 tagging for table rules
+		- Fixes race condition for iframes
+		- Exclude actual nodes from array checking

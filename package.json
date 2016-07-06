@@ -69,6 +69,7 @@
     "grunt-mocha": "~0.4.13",
     "grunt-parallel": "^0.4.1",
     "html-entities": "^1.2.0",
+    "jquery": "^3.0.0",
     "less": "~2.6.1",
     "mocha": "~2.4.5",
     "phantomjs-prebuilt": "~2.1.7",
