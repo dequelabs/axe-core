@@ -36,3 +36,22 @@ This example demonstrates how to use aXe with CasperJS, save the source code, co
 
 ![Jenkins JUnit plugin configuration](error_intopage.png)
 
+
+## Licence ##
+
+* XML.ObjTree 
+Yusuke Kawasaki http://www.kawa.net/
+
+COPYRIGHT AND LICENSE
+
+Copyright (c) 2005-2006 Yusuke Kawasaki. All rights reserved.
+This program is free software; you can redistribute it and/or
+modify it under the Artistic license. Or whatever license I choose,
+which I will do instead of keeping this documentation like it is.
+
+* capturePage function and associated methods Original came from stackoverflow.com
+published by artjom-b http://stackoverflow.com/users/1816580/artjom-b
+Onto the original question : http://stackoverflow.com/questions/24582307/how-to-save-the-current-webpage-with-casperjs-phantomjs
+Under license CC-BY-SA https://creativecommons.org/licenses/by-sa/3.0/
+
+* Other parts of this sample are under the aXe-core license Mozilla Public License, version 2.0
