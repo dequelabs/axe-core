@@ -19,12 +19,20 @@ This example demonstrates how to use aXe with CasperJS, save the source code, co
 
 ## Plublish the result in Jenkins ##
 * Use the plugin Junit https://wiki.jenkins-ci.org/display/JENKINS/JUnit+Plugin and Junit Attachments https://wiki.jenkins-ci.org/display/JENKINS/JUnit+Attachments+Plugin
+
 * Activate it for your project
+
 ![Jenkins JUnit plugin configuration](config_jenkins.png)
+
 * After the second build, you can see a graph onto your project home page
+
 ![trend of errors](vue_jenkins.png)
+
 * For each buil you can access to the detailed error list
+
 ![Detailed error list](tests_failed.png)
+
 * For each failure, you can access to the tested page in standalone, with the error element red bordered, when mouseover it, the error message is displayed
+
 ![Jenkins JUnit plugin configuration](error_intopage.png)
 
