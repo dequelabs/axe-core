@@ -307,4 +307,72 @@ describe('color.getBackgroundColor', function () {
 
 		assert.notEqual(window.pageYOffset, 0);
 	});
+
+	it('returns elements with negative z-index', function () {
+		fixture.innerHTML = '<div id="sibling" ' + 
+			'style="z-index:-1; position:absolute; width:100%; height:2em; background: #000"></div>' +
+			'<div id="target">Some text</div>';
+
+		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
+
+		var expected = new axe.commons.color.Color(0, 0, 0, 1);
+
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+	});
+
+	it('returns negative z-index elements when body has a background', function () {
+		fixture.innerHTML = '<div id="sibling" ' + 
+			'style="z-index:-1; position:absolute; width:100%; height:2em; background: #000"></div>' +
+			'<div id="target">Some text</div>';
+
+		var orig = document.body.style.background;
+		document.body.style.background = '#FFF';
+		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
+
+		var expected = new axe.commons.color.Color(0, 0, 0, 1);
+
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+
+		document.body.style.background = orig;
+	});
+
+	it('returns the body background', function () {
+		fixture.innerHTML = '<div id="target">elm</div>';
+		var orig = document.body.style.background;
+		document.body.style.background = '#F00';
+
+		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
+		var expected = new axe.commons.color.Color(255, 0, 0, 1);
+		document.body.style.background = orig;
+
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+
+	});
+
+	it('returns the html background', function () {
+		fixture.innerHTML = '<div id="target">elm</div>';
+		var orig = document.documentElement.style.background;
+		document.documentElement.style.background = '#0F0';
+
+		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
+		var expected = new axe.commons.color.Color(0, 255, 0, 1);
+		document.documentElement.style.background = orig;
+
+
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+
+	});
+
 });
