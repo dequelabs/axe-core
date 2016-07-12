@@ -86,8 +86,10 @@ describe('document.elementsFromPoint pollyfills', function () {
 			target.scrollIntoView();
 			var rect = target.getBoundingClientRect();
 
-			var visualParents = document.elementsFromPoint(Math.ceil(rect.left + 1),
-															Math.ceil(rect.top + 1));
+			var visualParents = document.elementsFromPoint(
+				Math.ceil(rect.left + 1),
+				Math.ceil(rect.top + 1)
+			);
 			assert.deepEqual(visualParents.slice(0, 3), [target, pos, container]);
 		});
 
