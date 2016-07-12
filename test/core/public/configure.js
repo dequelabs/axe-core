@@ -70,6 +70,25 @@ describe('axe.configure', function() {
 			'https://dequeuniversity.com/rules/thung/x.y/bob?application=thing');
 	});
 
+	it('sets branding on newly configured rules', function () {
+		axe._load({});
+		axe.configure({
+			branding: {
+				application: 'thing',
+				brand: 'thung'
+			}
+		});
+		axe.configure({
+			rules: [{
+				id: 'bob',
+				selector: 'pass',
+			}],
+		});
+
+		assert.equal(axe._audit.data.rules.bob.helpUrl,
+			'https://dequeuniversity.com/rules/thung/x.y/bob?application=thing');
+	});
+
 	it('should allow for overwriting of rules', function () {
 		axe._load({
 			data: {
