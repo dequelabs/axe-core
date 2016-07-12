@@ -152,7 +152,10 @@ module.exports = function (grunt) {
 					dest: './axe.min.js'
 				}],
 				options: {
-					preserveComments: 'some',
+					preserveComments: function(node, comment) {
+						// preserve comments that start with a bang
+						return /^!/.test( comment.value );
+					},
 					mangle: {
 						except: ['commons', 'utils', 'axe', 'window', 'document']
 					}
