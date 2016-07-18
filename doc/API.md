@@ -9,6 +9,7 @@
 	1. [API Notes](#api-notes)
 	1. [API Name: axe.getRules](#api-name-axegetrules)
 	1. [API Name: axe.configure](#api-name-axeconfigure)
+	1. [API Name: axe.reset](#api-name-axereset)
 	1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
 		1. [Parameters](#parameters-2)
 			1. [Context Parameter](#context-parameter)
@@ -16,6 +17,7 @@
 			3. [Callback Parameter](#callback-parameter)
 		1. [Results Object](#results-object)
 	1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
+	1. [API Name: axe.cleanup](#api-name-axecleanup)
 1. [Section 3: Example Reference](#section-3-example-reference)
 
 ## Section 1: Introduction
@@ -154,6 +156,25 @@ axe.configure({
 
 **Returns:** Nothing
 
+### API Name: axe.reset
+
+#### Purpose
+
+Reset the configuration to the default configuration.
+
+#### Description
+
+Override any previous calls to `axe.configure` and restore the configuration to the default configuration. Note: this will NOT unregister any new rules or checks that were registered but will reset the configuration back to the default configuration for everything else.
+
+#### Synopsis
+
+```javascript
+axe.reset();
+```
+
+#### Parameters
+
+None
 
 ### API Name: axe.a11yCheck
 
