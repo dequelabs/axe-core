@@ -1,5 +1,6 @@
 //jshint maxcomplexity: 12, maxstatements: false, camelcase: false
 var testConfig = require('./build/test/config');
+
 module.exports = function (grunt) {
 	'use strict';
 
@@ -13,26 +14,45 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadTasks('build/tasks');
+	grunt.loadNpmTasks('grunt-parallel');
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		parallel: {
+			'browser-test': {
+				options: {
+					grunt: true
+				},
+				tasks: [
+					'test-webdriver:firefox',
+					'test-webdriver:chrome',
+					// Edge Webdriver isn't all too stable, manual testing required
+					// 'test-webdriver:edge',
+					'test-webdriver:safari',
+					'test-webdriver:ie'
+				]
+			}
+		},
 		clean: ['dist', 'tmp'],
 		babel: {
+			options: {
+				compact: 'false'
+			},
 			core: {
-                files: [{
-                    expand: true,
-                    cwd: 'lib/core',
-                    src: ['**/*.js'],
-                    dest: 'tmp/core'
-                }]
+				files: [{
+					expand: true,
+					cwd: 'lib/core',
+					src: ['**/*.js'],
+					dest: 'tmp/core'
+				}]
 			},
 			misc: {
 				files: [{
-                    expand: true,
-                    cwd: 'tmp',
-                    src: ['*.js'],
-                    dest: 'tmp'
-                }]
+					expand: true,
+					cwd: 'tmp',
+					src: ['*.js'],
+					dest: 'tmp'
+				}]
 			}
 		},
 		'update-help': {
@@ -111,8 +131,8 @@ module.exports = function (grunt) {
 		uglify: {
 			beautify: {
 				files: [{
-					src: ['<%= concat.engine.dest %>'],
-					dest: '<%= concat.engine.dest %>'
+					src: ['./axe.js'],
+					dest: './axe.js'
 				}],
 				options: {
 					mangle: false,
@@ -194,6 +214,21 @@ module.exports = function (grunt) {
 					}
 				}
 			},
+			ruleMatches: {
+				src: [
+					'<%= concat.engine.dest %>',
+					'build/test/engine.js',
+					'<%= configure.rules.dest.auto %>'
+				],
+				dest: 'test/rule-matches/index.html',
+				options: {
+					fixture: 'test/runner.tmpl',
+					testCwd: 'test/rule-matches',
+					data: {
+						title: 'aXe Rule Matches Tests'
+					}
+				}
+			},
 			integration: {
 				src: ['<%= concat.engine.dest %>'],
 				dest: 'test/integration/rules/index.html',
@@ -207,10 +242,23 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		mocha: testConfig(grunt),
-		'test-webdriver': testConfig(grunt, {
-			browser: grunt.option('browser') || 'firefox'
+		mocha: testConfig(grunt, {
+			reporter: grunt.option('reporter') || 'Spec'
 		}),
+		'test-webdriver': (function () {
+			var tests = testConfig(grunt);
+			var options = Object.assign({}, tests.unit.options);
+			options.urls = options.urls.concat(tests.integration.options.urls);
+			var driverTests = {};
+
+			['firefox', 'chrome', 'ie', 'safari', 'edge']
+			.forEach(function (browser) {
+				driverTests[browser] = {
+					options: Object.assign({ browser: browser }, options)
+				};
+			});
+			return driverTests;
+		}()),
 		connect: {
 			test: {
 				options: {
@@ -238,11 +286,10 @@ module.exports = function (grunt) {
 		 'babel', 'concat:engine', 'uglify']);
 
 	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
+		'mocha', 'parallel', 'jshint']);
+
+	grunt.registerTask('test-fast', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
-
-	grunt.registerTask('test-browser', ['build',  'testconfig', 'fixture', 'connect',
-		'test-webdriver', 'jshint']);
-
 
 	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
 };

@@ -1,0 +1,12 @@
+{
+	"description": "frame-title-unique test",
+	"rule": "frame-title-unique",
+	"violations": [
+		["#violation1"],
+		["#violation2"]
+	],
+	"passes": [
+		["#ignore1", "#pass1"],
+		["#pass2"]
+	]
+}

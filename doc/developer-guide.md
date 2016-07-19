@@ -31,7 +31,7 @@ You can also load tests in any supported browser, which is helpful for debugging
 
 aXe tests for accessibility using objects called Rules. Each Rule tests for a high-level aspect of accessibility, such as color contrast, button labels, and alternate text for images. Each rule is made up of a series of Checks. Depending on the rule; all, some, or none of these checks must pass in order for the rule to pass.
 
-Upon execution, a Rule runs each of its Checks against all relevant nodes. Which nodes are relevant is determined by the Rule's `selector` property and `matches` function.  A Check can also further limit which nodes it applies to by specifying a `selector` property or `matches` function.  If a Rule has no Checks that apply to a given node, the Rule will neither pass or fail.
+Upon execution, a Rule runs each of its Checks against all relevant nodes. Which nodes are relevant is determined by the Rule's `selector` property and `matches` function. If a Rule has no Checks that apply to a given node, the Rule will result in an inapplicable result.
 
 After execution, a Check will return `true` or `false` depending on whether or not the tested condition was satisfied. The result, as well as more information on what caused the Check to pass or fail, will be stored in either the `passes` array or the `violations` array.
 
@@ -71,8 +71,7 @@ Similar to Rules, Checks are defined by JSON files in the [lib/checks directory]
 
 * `id` - `String` A unique name of the Check
 * `evaluate` - `String` Relative path to the JavaScript file which contains the function body of the Check itself
-* `after` - **optional** `String` Relative path to the JavaScript file which contains the function body of a Check's after (or post-processing) function.
-* `matches` - **optional** `String`  Relative path to the JavaScript file of a custom matching function.  It is functionally the same as a Rule's matches function.  See [matches function](#matches-function) for more information.
+* `after` - **optional** `String` Relative path to the JavaScript file which contains the function body of a Check's after (or post-processing) function.f
 * `options` - **optional** `Mixed` Any information the Check needs that you might need to customize and/or is locale specific.  Options can be overridden at runtime (with the options parameter) or config-time.  For example, the [valid-lang](../lib/checks/language/valid-lang.json) Check defines what ISO 639-1 language codes it should accept as valid.  Options do not need to follow any specific format or type; it is up to the author of a Check to determine the most appropriate format.
 * `metadata` - `Object` Consisting of:
 	* `impact` - `String` (one of `minor`, `moderate`, `serious`, or `critical`)

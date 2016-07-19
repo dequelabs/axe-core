@@ -52,7 +52,8 @@ Now include the javascript file in each of your iframes in you fixtures or test 
 Now insert calls at each point in your tests where a new piece of UI becomes visible or exposed:
 
 ```
-axe.a11yCheck(document, function (results) {
+axe.run(function (err, results) {
+	if (err) throw err;
     ok(results.violations.length === 0, 'Should be no accessibility issues');
     // complete the async call
     ...

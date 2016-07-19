@@ -38,15 +38,12 @@ describe('color.getBackgroundColor', function () {
 		var bgNodes = [];
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(64, 64, 0, 1);
-		if (axe.commons.dom.supportsElementsFromPoint(document)) {
-			assert.closeTo(actual.red, expected.red, 0.5);
-			assert.closeTo(actual.green, expected.green, 0.5);
-			assert.closeTo(actual.blue, expected.blue, 0.5);
-			assert.closeTo(actual.alpha, expected.alpha, 0.1);
-			assert.deepEqual(bgNodes, [target, pos]);
-		} else {
-			assert.isNull(actual);
-		}
+
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+		assert.deepEqual(bgNodes, [target, pos]);
 	});
 
 	it('should do alpha blending from the back forward', function () {
@@ -83,15 +80,12 @@ describe('color.getBackgroundColor', function () {
 		var bgNodes = [];
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(64, 64, 0, 1);
-		if (axe.commons.dom.supportsElementsFromPoint(document)) {
-			assert.closeTo(actual.red, expected.red, 0.5);
-			assert.closeTo(actual.green, expected.green, 0.5);
-			assert.closeTo(actual.blue, expected.blue, 0.5);
-			assert.closeTo(actual.alpha, expected.alpha, 0.1);
-			assert.deepEqual(bgNodes, [target, under]);
-		} else {
-			assert.isNull(actual);
-		}
+
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+		assert.deepEqual(bgNodes, [target, under]);
 	});
 
 	it('should return the proper blended color if it has alpha set', function () {
@@ -139,19 +133,6 @@ describe('color.getBackgroundColor', function () {
 		assert.deepEqual(bgNodes, [target, parent]);
 	});
 
-	it('should return null if parent does not fully contain element', function () {
-		fixture.innerHTML = '<div style="background-color: white;">' +
-			'<div id="parent" style="height: 10px; width: 30px; background-color: #800000;">' +
-			'<div id="target" style="height: 20px; width: 15px; background-color: green; opacity: 0.5;">' +
-			'</div></div></div>';
-		var target = fixture.querySelector('#target');
-		var bgNodes = [];
-		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
-		assert.isNull(actual);
-		assert.deepEqual(bgNodes, [target]);
-	});
-
-
 	it('should return white if transparency goes all the way up to document', function () {
 		fixture.innerHTML = '<div id="target" style="height: 10px; width: 30px;">';
 		var target = fixture.querySelector('#target');
@@ -198,16 +179,19 @@ describe('color.getBackgroundColor', function () {
 	});
 
 	it('should use hierarchical DOM traversal if possible', function () {
-		fixture.innerHTML = '<div id="parent" style="height: 40px; width: 30px; ' +
-			'background-color: white; position: relative; z-index: 5">' +
-			'<div id="target" style="height: 20px; width: 25px; z-index: 25;">' +
-			'</div></div>' +
-			'<div id="shifted" style="position: relative; top: -30px; height: 40px; width: 35px; ' +
-			'background-color: black; z-index: 15;"></div>';
+		fixture.innerHTML =
+		'<div id="parent" style="height: 40px; width: 30px; ' +
+		' background-color: white;">' +
+		'	<div id="target" style="height: 20px; width: 25px; z-index: 25; position:relative;">' +
+		'	</div>' +
+		'</div>' +
+		'<div id="shifted" style="position: relative; top: -10px; height: 40px; width: 35px; ' +
+		' background-color: black; z-index: 15;"></div>';
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+
 		var expected = new axe.commons.color.Color(255, 255, 255, 1);
 		assert.closeTo(actual.red, expected.red, 0.5);
 		assert.closeTo(actual.green, expected.green, 0.5);
@@ -237,24 +221,23 @@ describe('color.getBackgroundColor', function () {
 	});
 
 	it('should use visual traversal when needed', function () {
-		fixture.innerHTML = '<div id="parent" style="height: 40px; width: 30px; ' +
-			'background-color: white; position: relative; z-index: 5">' +
-			'<div id="target" style="position: relative; top: 1px; height: 20px; width: 25px; z-index: 25;">' +
-			'</div>' +
-			'<div id="shifted" style="position: relative; top: -30px; height: 40px; width: 35px; ' +
-			'background-color: black; z-index: 15;"></div></div>';
+		fixture.innerHTML =
+		'<div id="parent" style="height: 40px; width: 30px; ' +
+		' background-color: white; position: relative; z-index: 5">' +
+		'	<div id="target" style="position: relative; top: 1px; height: 20px; width: 25px; z-index: 25;">' +
+		'	</div>' +
+		'<div id="shifted" style="position: relative; top: -30px; height: 40px; width: 35px; ' +
+		' background-color: black; z-index: 15;"></div></div>';
+
+
 		var target = fixture.querySelector('#target');
 		var shifted = fixture.querySelector('#shifted');
-		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes, false);
 		var expected = new axe.commons.color.Color(0, 0, 0, 1);
-		if (axe.commons.dom.supportsElementsFromPoint(document)) {
-			assert.deepEqual(bgNodes, [shifted]);
-		} else {
-			expected = new axe.commons.color.Color(255, 255, 255, 1);
-			assert.deepEqual(bgNodes, [parent]);
-		}
+
+		assert.deepEqual(bgNodes, [shifted]);
+
 		assert.closeTo(actual.red, expected.red, 0.5);
 		assert.closeTo(actual.green, expected.green, 0.5);
 		assert.closeTo(actual.blue, expected.blue, 0.5);
@@ -267,7 +250,7 @@ describe('color.getBackgroundColor', function () {
 		' background-color: white; position: relative; z-index: 5"> ' +
 		'	<div id="target" style="position: relative; top: 1px; height: 20px;' +
 		'	 width: 25px; z-index: 25; background:rgba(0,125,0,0.5);"></div> ' +
-		'	<div id="shifted" style="position: absolute; top: -30px; height: 40px; ' +
+		'	<div id="shifted" style="position: absolute; top: 0px; height: 40px; ' +
 		'    background-image: url(foobar.png);'+
 		'	 width: 35px; z-index: 15;">' +
 		'	</div>'+
@@ -324,4 +307,72 @@ describe('color.getBackgroundColor', function () {
 
 		assert.notEqual(window.pageYOffset, 0);
 	});
+
+	it('returns elements with negative z-index', function () {
+		fixture.innerHTML = '<div id="sibling" ' + 
+			'style="z-index:-1; position:absolute; width:100%; height:2em; background: #000"></div>' +
+			'<div id="target">Some text</div>';
+
+		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
+
+		var expected = new axe.commons.color.Color(0, 0, 0, 1);
+
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+	});
+
+	it('returns negative z-index elements when body has a background', function () {
+		fixture.innerHTML = '<div id="sibling" ' + 
+			'style="z-index:-1; position:absolute; width:100%; height:2em; background: #000"></div>' +
+			'<div id="target">Some text</div>';
+
+		var orig = document.body.style.background;
+		document.body.style.background = '#FFF';
+		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
+
+		var expected = new axe.commons.color.Color(0, 0, 0, 1);
+
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+
+		document.body.style.background = orig;
+	});
+
+	it('returns the body background', function () {
+		fixture.innerHTML = '<div id="target">elm</div>';
+		var orig = document.body.style.background;
+		document.body.style.background = '#F00';
+
+		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
+		var expected = new axe.commons.color.Color(255, 0, 0, 1);
+		document.body.style.background = orig;
+
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+
+	});
+
+	it('returns the html background', function () {
+		fixture.innerHTML = '<div id="target">elm</div>';
+		var orig = document.documentElement.style.background;
+		document.documentElement.style.background = '#0F0';
+
+		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
+		var expected = new axe.commons.color.Color(0, 255, 0, 1);
+		document.documentElement.style.background = orig;
+
+
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+
+	});
+
 });

@@ -4,8 +4,8 @@ describe('Rule', function() {
 
 	var fixture = document.getElementById('fixture');
 	var noop = function () {};
-	var isNotCalled = function () {
-		assert.ok(false, 'Function should not be called');
+	var isNotCalled = function (err) {
+		throw err || new Error('Reject should not be called');
 	};
 
 	afterEach(function() {

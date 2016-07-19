@@ -1,6 +1,5 @@
 {
   "id": "landmark",
-  "selector": "html",
   "evaluate": "landmark.js",
   "metadata": {
     "impact": "serious",

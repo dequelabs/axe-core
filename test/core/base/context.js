@@ -282,6 +282,48 @@ describe('Context', function() {
 
 		});
 
+		describe('throwing errors', function () {
+			// jshint unused:false
+			var isInFrame;
+
+			beforeEach(function () {
+				isInFrame = axe.utils.respondable.isInFrame;
+			});
+			afterEach(function () {
+				axe.utils.respondable.isInFrame = isInFrame;
+			});
+
+			it('should throw when no elements match the context', function () {
+				fixture.innerHTML = '<div id="foo"></div>';
+				assert.throws(function () {
+					var ctxt = new Context('#notAnElement');
+				}, Error, 'No elements found for include in page Context');
+			});
+
+			it('should throw when no elements match the context inside a frame', function () {
+				axe.utils.respondable.isInFrame = function () {
+					return true;
+				};
+
+				fixture.innerHTML = '<div id="foo"></div>';
+				assert.throws(function () {
+					var ctxt = new Context('#notAnElement');
+				}, Error, 'No elements found for include in frame Context');
+			});
+		});
+
+		it('should throw when frame could not be found', function (done) {
+			fixture.innerHTML = '<div id="outer"></div>';
+			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function() {
+				assert.throws(function () {
+					var ctxt;
+					ctxt = new Context(['#notAFrame', '#foo']);
+				});
+				done();
+			});
+
+		});
+
 	});
 
 	describe('object definition', function() {
@@ -302,10 +344,10 @@ describe('Context', function() {
 		it('should disregard bad input, non-matching selectors', function() {
 
 			assert.deepEqual(new Context({
-				include: ['#monkeys'],
+				include: ['#fixture', '#monkeys'],
 				exclude: ['#bananas']
 			}), {
-				include: [],
+				include: [document.getElementById('fixture')],
 				exclude: [],
 				initiator: true,
 				page: false,

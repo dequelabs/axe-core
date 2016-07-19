@@ -5,7 +5,9 @@ describe('bypass fail test', function () {
 		var mocha = document.getElementById('mocha'),
 			html = mocha.innerHTML;
 		mocha.innerHTML = '';
-		axe.a11yCheck(document, { runOnly: { type: 'rule', values: ['bypass'] } }, function (r) {
+		axe.run({ runOnly: { type: 'rule', values: ['bypass'] } }, function (err, r) {
+			assert.isNull(err);
+			
 			results = r;
 			mocha.innerHTML = html;
 			done();

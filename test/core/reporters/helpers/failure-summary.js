@@ -49,7 +49,7 @@ describe('helpers.failureSummary', function() {
 
 	it('should concatenate none and all', function() {
 		var summary = helpers.failureSummary({
-			result: 'FAIL',
+			result: 'failed',
 			any: [],
 			all: [{
 				id: '3',
@@ -69,7 +69,7 @@ describe('helpers.failureSummary', function() {
 
 	it('should return a list of ANYs if none return true', function() {
 		var summary = helpers.failureSummary({
-			result: 'FAIL',
+			result: 'failed',
 			any: [{
 				id: '1',
 				message: '1'
@@ -89,7 +89,7 @@ describe('helpers.failureSummary', function() {
 
 	it('should concatenate anys', function() {
 		var summary = helpers.failureSummary({
-			result: 'FAIL',
+			result: 'failed',
 			any: [{
 				id: '1',
 				message: '1'
