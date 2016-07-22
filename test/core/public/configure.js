@@ -173,7 +173,7 @@ describe('axe.configure', function() {
 				id: 'bob',
 				metadata: {
 					messages: {
-						pass: "function () { return 'Bob' + ' John';}",
+						pass: 'function () { return \'Bob\' + \' John\';}',
 						fail: 'Bob Pete'
 					}
 				}
