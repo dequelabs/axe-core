@@ -173,19 +173,17 @@ describe('axe.configure', function() {
 				id: 'bob',
 				metadata: {
 					messages: {
-						pass: function () {
-							return 'Bob' + ' John';
-						},
-						fail: '"Bob" + " Pete"'
+						pass: "function () { return 'Bob' + ' John';}",
+						fail: 'Bob Pete'
 					}
 				}
 			}]
 		});
 
 		assert.isFunction(axe._audit.data.checks.bob.messages.pass);
-		assert.isFunction(axe._audit.data.checks.bob.messages.fail);
+		assert.isString(axe._audit.data.checks.bob.messages.fail);
 		assert.equal(axe._audit.data.checks.bob.messages.pass(), 'Bob John');
-		assert.equal(axe._audit.data.checks.bob.messages.fail(), 'Bob Pete');
+		assert.equal(axe._audit.data.checks.bob.messages.fail, 'Bob Pete');
 	});
 
 	it('overrides the default value of audit.tagExclude', function () {

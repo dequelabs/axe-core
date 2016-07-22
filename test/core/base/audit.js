@@ -267,6 +267,42 @@ describe('Audit', function () {
 			assert.equal(audit.checks.target.evaluate, myTest);
 			assert.equal(audit.checks.target.options, 'fred');
 		});
+		it('should not turn messages into a function', function () {
+			var audit = new Audit();
+			var spec = {
+				id: 'target',
+				evaluate: 'function () { return "blah";}',
+				metadata: {
+					messages: {
+						fail: 'it failed'
+					}
+				}
+			};
+			audit.addCheck(spec);
+
+			assert.equal(typeof audit.checks.target.evaluate, 'function');
+			assert.equal(typeof audit.data.checks.target.messages.fail, 'string');
+			assert.equal(audit.data.checks.target.messages.fail, 'it failed');
+		});
+
+		it('should turn function strings into a function', function () {
+			var audit = new Audit();
+			var spec = {
+				id: 'target',
+				evaluate: 'function () { return "blah";}',
+				metadata: {
+					messages: {
+						fail: 'function () {return "it failed";}'
+					}
+				}
+			};
+			audit.addCheck(spec);
+
+			assert.equal(typeof audit.checks.target.evaluate, 'function');
+			assert.equal(typeof audit.data.checks.target.messages.fail, 'function');
+			assert.equal(audit.data.checks.target.messages.fail(), 'it failed');
+		});
+
 	});
 
 	describe('Audit#run', function () {
