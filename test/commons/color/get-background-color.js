@@ -358,6 +358,24 @@ describe('color.getBackgroundColor', function () {
 
 	});
 
+	it('returns the body background even when the body is MUCH larger than the screen', function () {
+		fixture.innerHTML = '<div id="target" style="height:20000px;">elm</div>';
+		var orig = document.body.style.background;
+		document.body.style.background = '#F00';
+
+		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
+		var expected = new axe.commons.color.Color(255, 0, 0, 1);
+		document.body.style.background = orig;
+
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+
+	});
+
+
+
 	it('returns the html background', function () {
 		fixture.innerHTML = '<div id="target">elm</div>';
 		var orig = document.documentElement.style.background;
