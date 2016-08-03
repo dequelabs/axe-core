@@ -280,10 +280,10 @@ describe('color-contrast', function () {
 			assert.isFalse(checks['color-contrast'].matches(target));
 		});
 
-		it('should ignore position:fixed elements', function () {
-			fixture.innerHTML = '<div style="background-color: #e5f1e5;"><div style="width:100%; position:fixed; top:0; height:50px; background: #F0F0F0; border:1px solid #CCC; z-index: 200;">header</div><div style="height: 600px;"></div><ul><li>stuff <span id="target" style="color: rgba(91, 91, 90, 0.7)">This is some text</span></li></ul><div style="height: 600px;"></div></div>';
-			var target = fixture.querySelector('#target');
-			assert.isTrue(checks['color-contrast'].matches(target));
+		it('should ignore position:fixed elements above the target', function () {
+			fixture.innerHTML = '<div style="background-color: #e5f1e5;"><div style="width:100%; position:fixed; top:0; height:50px; background: #F0F0F0; border:1px solid #CCC; z-index: 200;">header</div><div style="height: 6000px;"></div><ul><li>stuff <span id="target" style="color: rgba(91, 91, 90, 0.7)">This is some text</span></li></ul><div style="height: 6000px;"></div></div>';
+			assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
+			assert.deepEqual(checkContext._relatedNodes, []);
 		});
 	});
 
