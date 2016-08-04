@@ -105,15 +105,25 @@ describe('color-contrast', function () {
 
 
 	it('should ignore position:fixed elements above the target', function () {
-		fixture.innerHTML = '<div style="background-color: #e5f1e5;" id="background"><div style="width:100%; position:fixed; top:0; height:50px; background: #F0F0F0; border:1px solid #CCC; z-index: 200; color:#fff" id="header">header</div><div style="height: 6000px;"></div><ul><li>stuff <span id="target" style="color: rgba(91, 91, 90, 0.7)">This is some text</span></li></ul><div style="height: 6000px;"></div></div>';
+		fixture.innerHTML = '<div style="background-color: #e5f1e5;" id="background">' +
+			'<div style="width:100%; position:fixed; top:0; height:50px; background: #F0F0F0; z-index: 200; color:#fff" >header</div>' +
+			'<div style="height: 6000px;"></div>' +
+			'stuff <span id="target" style="color: rgba(91, 91, 90, 0.7)">This is some text</span>' +
+			'<div style="height: 6000px;"></div>' +
+			'</div>';
 		var target = fixture.querySelector('#target');
-		var expectedRelatedNodes = fixture.querySelector('#background')
+		var expectedRelatedNodes = fixture.querySelector('#background');
 		assert.isFalse(checks['color-contrast'].evaluate.call(checkContext, target));
 		assert.deepEqual(checkContext._relatedNodes, [expectedRelatedNodes]);
 	});
 
 	it('should find contrast issues on position:fixed elements', function () {
-		fixture.innerHTML = '<div style="background-color: #e5f1e5;" id="background"><div style="width:100%; position:fixed; top:0; height:50px; background: #F0F0F0; border:1px solid #CCC; z-index: 200; color:#fff" id="target">header</div><div style="height: 6000px;"></div><ul><li>stuff <span style="color: rgba(91, 91, 90, 0.7)">This is some text</span></li></ul><div style="height: 6000px;"></div></div>';
+		fixture.innerHTML = '<div style="background-color: #e5f1e5;" id="background">' +
+			'<div style="width:100%; position:fixed; top:0; height:50px; background: #F0F0F0; z-index: 200; color:#fff" id="target">header</div>' +
+			'<div style="height: 6000px;"></div>' +
+			'stuff <span style="color: rgba(91, 91, 90, 0.7)">This is some text</span>' +
+			'<div style="height: 6000px;"></div>' +
+			'</div>';
 
 		var target = fixture.querySelector('#target');
 		assert.isFalse(checks['color-contrast'].evaluate.call(checkContext, target));
