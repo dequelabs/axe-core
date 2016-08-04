@@ -155,12 +155,22 @@ describe('color.getBackgroundColor', function () {
 		assert.deepEqual(bgNodes, [target]);
 	});
 
-	it('should return null if something is obscuring it', function () {
-		fixture.innerHTML = '<div style="position: absolute; top:0; left: 0; right: 0; bottom:0; background: #000"></div>' +
-			'<div id="target" style="position: relative; left: 1px;">Hello</div>';
+	it('should return null if something opaque is obscuring it', function () {
+		fixture.innerHTML = '<div style="width:100%; height: 100px; background: #000"></div>' +
+			'<div id="target" style="position: relative; top: -50px; z-index:-1;color:#fff;">Hello</div>';
 		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
 		assert.isNull(actual);
 
+	});
+
+	it('should return an actual if something non-opaque is obscuring it', function () {
+		fixture.innerHTML = '<div style="width:100%; height: 100px; background: rgba(0, 0, 0, 0.5)"></div>' +
+			'<div id="target" style="position: relative; top: -50px; z-index:-1;color:#fff;">Hello</div>';
+		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
+		assert.isNotNull(actual);
+		assert.equal(Math.floor(actual.blue), 128);
+		assert.equal(Math.floor(actual.red), 128);
+		assert.equal(Math.floor(actual.green), 128);
 	});
 
 	it('should return the bgcolor if it is solid', function () {
@@ -357,6 +367,24 @@ describe('color.getBackgroundColor', function () {
 		assert.closeTo(actual.alpha, expected.alpha, 0.1);
 
 	});
+
+	it('returns the body background even when the body is MUCH larger than the screen', function () {
+		fixture.innerHTML = '<div id="target" style="height:20000px;">elm</div>';
+		var orig = document.body.style.background;
+		document.body.style.background = '#F00';
+
+		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
+		var expected = new axe.commons.color.Color(255, 0, 0, 1);
+		document.body.style.background = orig;
+
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+
+	});
+
+
 
 	it('returns the html background', function () {
 		fixture.innerHTML = '<div id="target">elm</div>';
