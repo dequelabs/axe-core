@@ -14,3 +14,4 @@ Add your project/integration to this file and submit a pull request.
 10. [Web Accessibility Checker for Visual Studio](https://visualstudiogallery.msdn.microsoft.com/3aabefab-1681-4fea-8f95-6a62e2f0f1ec)
 11. [ReactJS Accessibility Checker](https://github.com/dylanb/react-axe) (react-axe)
 12. [Vorlon.js Remote Debugger](https://github.com/MicrosoftDX/Vorlonjs)
+13. [Selenium IDE aXe Extension](https://github.com/bkardell/selenium-ide-axe)
