@@ -22,6 +22,7 @@
 | empty-heading | Ensures headings have discernible text | best-practice |
 | frame-title | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a unique and non-empty title attribute | wcag2a, wcag241, section508, section508.22.i |
 | heading-order | Ensures the order of headings is semantically correct | best-practice |
+| href-no-hash | Ensures an anchors href value is not just # | best-practice |
 | html-has-lang | Ensures every HTML document has a lang attribute | wcag2a, wcag311 |
 | html-lang-valid | Ensures the lang attribute of the &lt;html&gt; element has a valid value | wcag2a, wcag311 |
 | image-alt | Ensures &lt;img&gt; elements have alternate text or a role of none or presentation | wcag2a, wcag111, section508, section508.22.a |

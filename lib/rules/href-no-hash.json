@@ -1,0 +1,17 @@
+{
+  "id": "href-no-hash",
+  "selector": "a[href]",
+  "enabled": false,
+  "tags": [
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "Ensures an anchors href value is not just #",
+    "help": "Anchors with href value that is just # should probably be a button"
+  },
+  "all": [],
+  "any": [
+    "href-no-hash"
+  ],
+  "none": []
+}
