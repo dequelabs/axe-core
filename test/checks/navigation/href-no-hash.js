@@ -18,4 +18,10 @@ describe('href-no-hash', function () {
 		var node = fixture.querySelector('a');
 		assert.isTrue(checks['href-no-hash'].evaluate(node));
 	});
+
+	it('should return true if the href is empty', function () {
+		fixture.innerHTML = '<a href="">Click Here</a>';
+		var node = fixture.querySelector('a');
+		assert.isTrue(checks['href-no-hash'].evaluate(node));
+	});
 });
