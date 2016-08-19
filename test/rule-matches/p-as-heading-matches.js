@@ -1,10 +1,10 @@
 describe('p-as-heading-matches', function () {
 	'use strict';
 
-	var fixture = document.getElementById('fixture');
 	var rule;
+	var fixture = document.getElementById('fixture')
 
-	before(function () {
+	beforeEach(function () {
 		rule = axe._audit.rules.find(function (rule) {
 			return rule.id === 'p-as-heading';
 		});
@@ -18,32 +18,36 @@ describe('p-as-heading-matches', function () {
 		assert.isFunction(rule.matches);
 	});
 
-	it('returns true on a p element', function () {
+	it('matches p elements', function () {
 		fixture.innerHTML = '<p id="target">some text</p><p>some other text</p>';
-		var target = fixture.getElementById('target');
+		var target = fixture.querySelector('#target');
 
 		assert.isTrue(rule.matches(target));
 	});
 
-	it('ignores the first p element in a list of children', function () {
-		fixture.innerHTML = '<p id="target">some text</p><p>some other text</p>';
-		var target = fixture.getElementById('target');
+	it('ignores the last p element in a list of children', function () {
+		fixture.innerHTML = '<p>some text</p><p id="target">some other text</p>';
+		var target = fixture.querySelector('#target');
 
 		assert.isFalse(rule.matches(target));
 	});
 
 	it('ignores p elements that contain punctuation marks', function () {
-		fixture.innerHTML = '<p id="target">some text</p><p>some other text</p>';
-		var target = fixture.getElementById('target');
+		fixture.innerHTML = '<p id="target">A paragraph!</p><p>some other text</p>';
+		var target = fixture.querySelector('#target');
 
 		assert.isFalse(rule.matches(target));
 	});
 
 	it('ignores p elements that have no text-like characters', function () {
-		fixture.innerHTML = '<p id="target">some text</p><p>some other text</p>';
-		var target = fixture.getElementById('target');
+		fixture.innerHTML = '<p id="target"> \n\t\r </p><p>some other text</p>';
+		var target = fixture.querySelector('#target');
 
 		assert.isFalse(rule.matches(target));
 	});
+
+	it('skips ignores siblings that are not p elements');
+
+
 
 });
