@@ -1,0 +1,11 @@
+{
+  "id": "p-as-heading",
+  "evaluate": "p-as-heading.js",
+  "metadata": {
+    "impact": "critical",
+    "messages": {
+      "pass": "Good :D",
+      "fail": "Bad :("
+    }
+  }
+}
