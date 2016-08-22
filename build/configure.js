@@ -7,7 +7,7 @@ var templates = require('./templates');
 var buildManual = require('./build-manual');
 var entities =  new (require('html-entities').AllHtmlEntities)();
 
-var descriptionHeaders = '| Rule ID | Description | Tags |\n| :------- | :------- | :------- |\n';
+var descriptionHeaders = '| Rule ID | Description | Tags | Enabled by default |\n| :------- | :------- | :------- | :------- |\n';
 
 dot.templateSettings.strip = false;
 
@@ -37,7 +37,6 @@ function buildRules(grunt, options, commons, callback) {
 			});
 			return result;
 		}
-
 
 		function replaceFunctions(string) {
 			return string.replace(/"(evaluate|after|gather|matches|source|commons)":\s*("[^"]+?")/g, function (m, p1, p2) {
@@ -114,7 +113,7 @@ function buildRules(grunt, options, commons, callback) {
 			if (rule.metadata && !metadata.rules[rule.id]) {
 				metadata.rules[rule.id] = parseMetaData(rule.metadata);
 			}
-			descriptions.push([rule.id, entities.encode(rule.metadata.description), rule.tags.join(', ')]);
+			descriptions.push([rule.id, entities.encode(rule.metadata.description), rule.tags.join(', '), rule.enabled === false ? false : true]);
 			if (tags.length) {
 				rule.enabled = !!rule.tags.filter(function (t) {
 					return tags.indexOf(t) !== -1;
