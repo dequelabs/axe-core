@@ -8,8 +8,8 @@
     "experimental"
   ],
   "metadata": {
-    "description": "",
-    "help": ""
+    "description": "Ensure p elements are not used to style headings",
+    "help": "Bold, italic text and font-size are not used to style p elements as a heading"
   },
   "all": ["p-as-heading"],
   "any": [],

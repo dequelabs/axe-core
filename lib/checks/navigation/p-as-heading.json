@@ -4,8 +4,8 @@
   "metadata": {
     "impact": "critical",
     "messages": {
-      "pass": "Good :D",
-      "fail": "Bad :("
+      "pass": "<p> elements are not styled as headings",
+      "fail": "Heading elements should be used instead of styled p elements"
     }
   }
 }
