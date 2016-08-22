@@ -11,7 +11,7 @@
     "description": "",
     "help": ""
   },
-  "all": [],
+  "all": ["p-as-heading"],
   "any": [],
-  "none": ["p-as-heading"]
+  "none": []
 }
