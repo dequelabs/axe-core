@@ -46,13 +46,20 @@ describe('p-as-heading-matches', function () {
 		assert.isFalse(rule.matches(target));
 	});
 
-	it('skips ignores siblings that are not p elements', function () {
+	it('ignores siblings that are not p elements', function () {
 		fixture.innerHTML = '<p id="target">some text</p><div></div><p>some other text</p>';
 		var target = fixture.querySelector('#target');
 
 		assert.isTrue(rule.matches(target));
 
 		fixture.innerHTML = '<p id="target">some text</p><div></div>';
+		var target = fixture.querySelector('#target');
+
+		assert.isFalse(rule.matches(target));
+	});
+
+	it('ignores empty p elements as siblings', function () {
+		fixture.innerHTML = '<p id="target">some text</p><p> <!-- nothing here --><img src="" alt="" /></p>';
 		var target = fixture.querySelector('#target');
 
 		assert.isFalse(rule.matches(target));
