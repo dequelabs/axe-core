@@ -19,6 +19,12 @@ describe('p-as-heading', function () {
 		assert.isTrue(checks['p-as-heading'].evaluate.call(checkContext, node));
 	});
 
+	it('returns true if there is no p element following it', function () {
+		fixture.innerHTML = '<p>lone elm</p>';
+		var node = fixture.querySelector('p');
+		assert.isTrue(checks['p-as-heading'].evaluate.call(checkContext, node));
+	});
+
 	it('returns false if the font-weight is heavier', function () {
 		fixture.innerHTML = '<p style="font-weight:bold">elm 1</p> <p>elm 2</p>';
 		var node = fixture.querySelector('p');
