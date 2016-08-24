@@ -32,11 +32,18 @@ describe('p-as-heading-matches', function () {
 		assert.isFalse(rule.matches(target));
 	});
 
-	it('ignores p elements that contain punctuation marks', function () {
-		fixture.innerHTML = '<p id="target">A paragraph!</p><p>some other text</p>';
+	it('ignores p elements that contains punctuation marks', function () {
+		fixture.innerHTML = '<p id="target">A text. Paragraph?</p><p>some other text</p>';
 		var target = fixture.querySelector('#target');
 
 		assert.isFalse(rule.matches(target));
+	});
+
+	it('matches p elements with a single punctuation mark', function () {
+		fixture.innerHTML = '<p id="target">A paragraph?</p><p>some other text</p>';
+		var target = fixture.querySelector('#target');
+
+		assert.isTrue(rule.matches(target));
 	});
 
 	it('ignores p elements that have no text-like characters', function () {
