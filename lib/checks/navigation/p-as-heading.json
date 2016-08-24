@@ -3,11 +3,16 @@
   "evaluate": "p-as-heading.js",
   "options": {
     "margins": [{
-      "weight": 100
-    }, {
+      "weight": 150,
       "italic": true
     }, {
-      "size": 1.1
+      "weight": 150,
+      "size": 1.15
+    }, {
+      "italic": true,
+      "size": 1.15
+    }, {
+      "size": 1.4
     }]
   },
   "metadata": {
