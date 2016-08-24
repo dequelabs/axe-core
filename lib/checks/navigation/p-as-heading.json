@@ -1,6 +1,15 @@
 {
   "id": "p-as-heading",
   "evaluate": "p-as-heading.js",
+  "options": {
+    "margins": [{
+      "weight": 100
+    }, {
+      "italic": true
+    }, {
+      "size": 1.1
+    }]
+  },
   "metadata": {
     "impact": "critical",
     "messages": {
