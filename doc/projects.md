@@ -16,3 +16,4 @@ Add your project/integration to this file and submit a pull request.
 12. [Vorlon.js Remote Debugger](https://github.com/MicrosoftDX/Vorlonjs)
 13. [Selenium IDE aXe Extension](https://github.com/bkardell/selenium-ide-axe)
 14. [gulp-axe-core](https://www.npmjs.com/package/gulp-axe-core)
+15. [AccessLint](https://github.com/accesslint/accesslint.js)
