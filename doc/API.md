@@ -9,6 +9,7 @@
 	1. [API Notes](#api-notes)
 	1. [API Name: axe.getRules](#api-name-axegetrules)
 	1. [API Name: axe.configure](#api-name-axeconfigure)
+	1. [API Name: axe.reset](#api-name-axereset)
 	1. [API Name: axe.run](#api-name-axerun)
 		1. [Parameters axe.run](#parameters-axerun)
 			1. [Context Parameter](#context-parameter)
@@ -165,6 +166,26 @@ Page level rules raise violations on the entire document and not on individual n
 - [lib/checks/navigation/heading-order.json](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order.json)
 - [lib/checks/navigation/heading-order.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order.js)
 - [lib/checks/navigation/heading-order-after.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order-after.js)
+
+### API Name: axe.reset
+
+#### Purpose
+
+Reset the configuration to the default configuration.
+
+#### Description
+
+Override any previous calls to `axe.configure` and restore the configuration to the default configuration. Note: this will NOT unregister any new rules or checks that were registered but will reset the configuration back to the default configuration for everything else.
+
+#### Synopsis
+
+```javascript
+axe.reset();
+```
+
+#### Parameters
+
+None
 
 
 ### API Name: axe.run

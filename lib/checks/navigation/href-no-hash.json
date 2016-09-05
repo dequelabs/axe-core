@@ -1,0 +1,11 @@
+{
+  "id": "href-no-hash",
+  "evaluate": "href-no-hash.js",
+  "metadata": {
+    "impact": "moderate",
+    "messages": {
+      "pass": "Anchor does not have a href quals #",
+      "fail": "Anchor has a href quals #"
+    }
+  }
+}
