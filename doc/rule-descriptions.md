@@ -41,6 +41,7 @@
 | meta-viewport-large | Ensures &lt;meta name=&quot;viewport&quot;&gt; can scale a significant amount | best-practice | true |
 | meta-viewport | Ensures &lt;meta name=&quot;viewport&quot;&gt; does not disable text scaling and zooming | wcag2aa, wcag144 | true |
 | object-alt | Ensures &lt;object&gt; elements have alternate text | wcag2a, wcag111, section508, section508.22.a | true |
+| p-as-heading | Ensure p elements are not used to style headings | wcag2a, wcag131, experimental | true |
 | radiogroup | Ensures related &lt;input type=&quot;radio&quot;&gt; elements have a group and that the group designation is consistent | best-practice | true |
 | region | Ensures all content is contained within a landmark region | best-practice | false |
 | scope-attr-valid | Ensures the scope attribute is used correctly on tables | best-practice | true |
