@@ -97,3 +97,16 @@ To build the package:
 ```
 grunt build
 ```
+
+## Using aXe with TypeScript
+
+The TypeScript definition file for axe-core can be found in [typings/axe-core](./typings/axe-core).
+
+After running `npm install` to install TypeScript, you can run TS definition tests (with the optional `noImplicitAny` flag): 
+
+```
+tsc --noImplicitAny typings/axe-core/axe-core-tests.ts
+```
+
+Coming soon: Angular 2 development tips.
+
