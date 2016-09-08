@@ -133,8 +133,8 @@ describe('Audit', function () {
 			assert.equal(
 				audit.data.rules.target1.helpUrl,
 				'https://dequeuniversity.com/rules/myproject/x.y/target1?application=axeAPI'
-			)
-			assert.isUndefined(audit.data.rules.target2)
+			);
+			assert.isUndefined(audit.data.rules.target2);
 
 			assert.lengthOf(audit.rules, 2);
 			audit.brand = 'thing';
@@ -221,7 +221,7 @@ describe('Audit', function () {
 				'https://dequeuniversity.com/rules/customer-x/x.y/target?application=axeAPI'
 			);
 
-		})
+		});
 	});
 
 
