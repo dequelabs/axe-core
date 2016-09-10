@@ -144,21 +144,25 @@ describe('p-as-heading', function () {
 
 		it('returns false if any of the margins is passed', function () {
 			var options = {
-				margins: [{ size: 1.2, weight: 100 }],
-				margins: [{ size: 1.5 }],
-				margins: [{ italic: true }]
+				margins: [
+					{ size: 1.2, weight: 100 },
+					{ size: 1.5 },
+					{ italic: true }
+				],
 			};
 
 			fixture.innerHTML = '<p style="font-style:italic">elm 1</p> <p>elm 2</p>';
 			var node = fixture.querySelector('p');
 			assert.isFalse(checks['p-as-heading'].evaluate.call(checkContext, node, options));
-		})
+		});
 
 		it('returns true if none of the set margins is passed', function () {
 			var options = {
-				margins: [{ size: 1.2, weight: 100 }],
-				margins: [{ size: 1.5 }],
-				margins: [{ size: 1.2, italic: true }]
+				margins: [
+					{ size: 1.2, weight: 100 },
+					{ size: 1.5 },
+					{ size: 1.2, italic: true }
+				]
 			};
 
 			fixture.innerHTML = '<p style="font-size:1.5em">elm 1</p> <p>elm 2</p>';
