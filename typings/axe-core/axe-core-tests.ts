@@ -5,6 +5,8 @@ var $fixture:any = {}
 
 // axe.a11yCheck config
 axe.a11yCheck(context, {}, (results) => {
+	// axe's results object
+	console.log(results.passes.length)
 	console.log(results.violations.length)
 });
 // axe.a11yCheck include/exclude
@@ -14,23 +16,25 @@ axe.a11yCheck({include: [['#id1'], ['#id2']]}, {}, (results) => {
 axe.a11yCheck({exclude: [$fixture[0]]}, {}, (results) => {
 	console.log(results)
 })
+var tagConfigRunOnly: axe.RunOnly = {
+	type: 'tag',
+	values: ['wcag2a']
+}
 var tagConfig = {
-	runOnly: {
-		type: 'tag',
-		values: ['wcag2a']
-	}
+	runOnly: tagConfigRunOnly
 }
 axe.a11yCheck(context, tagConfig, (results) => {
 	console.log(results)
 })
-var includeExcludeTagsConfig = {
-	runOnly: {
-		type: 'tags',
-		value: {
-			include: ['wcag2a', 'wcag2aa'],
-			exclude: ['experimental']
-		}
+var includeExcludeTagsRunOnly: axe.RunOnly = {
+	type: 'tags',
+	value: {
+		include: ['wcag2a', 'wcag2aa'],
+		exclude: ['experimental']
 	}
+}
+var includeExcludeTagsConfig = {
+	runOnly: includeExcludeTagsRunOnly
 }
 axe.a11yCheck(context, includeExcludeTagsConfig, (results) => {
 	console.log(results)
@@ -46,7 +50,7 @@ axe.a11yCheck(context, someRulesConfig, (results) => {
 })
 
 // axe.configure
-var spec = {
+var spec: axe.Spec = {
 	branding: {
 		brand: 'foo',
 		application: 'bar'
@@ -71,7 +75,7 @@ axe.getRules(['wcag2aa'])
 typeof axe.getRules() === 'object'
 
 // Plugins
-var pluginSrc = {
+var pluginSrc: axe.AxePlugin = {
 	id: 'doStuff',
 	run: (data:any, callback:Function) => {
 		callback()
