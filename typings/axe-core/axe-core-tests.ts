@@ -14,23 +14,26 @@ axe.a11yCheck({include: [['#id1'], ['#id2']]}, {}, (results) => {
 axe.a11yCheck({exclude: [$fixture[0]]}, {}, (results) => {
 	console.log(results)
 })
+var tagConfigRunOnly: axe.RunOnly = {
+	type: 'tag',
+	values: ['wcag2a']
+}; 
 var tagConfig = {
-	runOnly: {
-		type: 'tag',
-		values: ['wcag2a']
-	}
+	runOnly: tagConfigRunOnly
 }
 axe.a11yCheck(context, tagConfig, (results) => {
 	console.log(results)
 })
-var includeExcludeTagsConfig = {
-	runOnly: {
-		type: 'tags',
-		value: {
-			include: ['wcag2a', 'wcag2aa'],
-			exclude: ['experimental']
-		}
+
+var includeExcludeTagsRunonly: axe.RunOnly = {
+	type: 'tags',
+	value: {
+		include: ['wcag2a', 'wcag2aa'],
+		exclude: ['experimental']
 	}
+}
+var includeExcludeTagsConfig = {
+	runOnly: includeExcludeTagsRunonly
 }
 axe.a11yCheck(context, includeExcludeTagsConfig, (results) => {
 	console.log(results)
@@ -46,7 +49,7 @@ axe.a11yCheck(context, someRulesConfig, (results) => {
 })
 
 // axe.configure
-var spec = {
+var spec: axe.Spec = {
 	branding: {
 		brand: 'foo',
 		application: 'bar'
