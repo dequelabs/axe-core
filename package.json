@@ -3,27 +3,33 @@
   "description": "Accessibility engine for automated Web UI testing",
   "version": "2.0.5",
   "license": "MPL-2.0",
-  "contributors": [{
-    "name": "David Sturley",
-    "organization": "Deque Systems, Inc.",
-    "url": "http://deque.com/"
-  },{
-    "name": "Dylan Barrell",
-    "organization": "Deque Systems, Inc.",
-    "url": "http://deque.com/"
-  },{
-    "name": "Wilco Fiers",
-    "organization": "Deque Systems, Inc.",
-    "url": "http://deque.com/"
-  },{
-    "name": "Dian Fay",
-    "organization": "Deque Systems, Inc.",
-    "url": "http://deque.com/"
-  },{
-    "name": "Marcy Sutton",
-    "organization": "Deque Systems, Inc.",
-    "url": "http://deque.com/"
-  }],
+  "contributors": [
+    {
+      "name": "David Sturley",
+      "organization": "Deque Systems, Inc.",
+      "url": "http://deque.com/"
+    },
+    {
+      "name": "Dylan Barrell",
+      "organization": "Deque Systems, Inc.",
+      "url": "http://deque.com/"
+    },
+    {
+      "name": "Wilco Fiers",
+      "organization": "Deque Systems, Inc.",
+      "url": "http://deque.com/"
+    },
+    {
+      "name": "Dian Fay",
+      "organization": "Deque Systems, Inc.",
+      "url": "http://deque.com/"
+    },
+    {
+      "name": "Marcy Sutton",
+      "organization": "Deque Systems, Inc.",
+      "url": "http://deque.com/"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/dequelabs/axe-core.git"
@@ -38,6 +44,7 @@
     "aXe"
   ],
   "main": "axe.js",
+  "typings": "./typings/axe-core/axe-core.d.ts",
   "scripts": {
     "build": "grunt",
     "test": "grunt test"

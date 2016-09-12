@@ -97,3 +97,17 @@ To build the package:
 ```
 grunt build
 ```
+
+## Using aXe with TypeScript
+
+The TypeScript definition file for axe-core can be found in [typings/axe-core](./typings/axe-core).
+
+To develop with TypeScript you must first install it (globally recommended):
+```
+sudo npm -g install typescript
+```
+
+Once that's installed, you can run TypeScript definition tests (with the optional `--noImplicitAny` flag):
+```
+tsc --noImplicitAny typings/axe-core/axe-core-tests.ts
+```
