@@ -3,6 +3,14 @@
 // Definitions by: Marcy Sutton <https://github.com/marcysutton>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
+export type ImpactValue = "minor" | "moderate" | "serious" | "critical" | "null";
+
+export type TagValue = "wcag2a" | "wcag2aa" | "section508" | "best-practice";
+
+export type ReporterVersion = "v1" | "v2";
+
+export type RunOnlyType = "rule" | "rules" | "tag" | "tags";
+
 interface ElementContext {
 	node?: Object,
 	selector?: string,
@@ -10,12 +18,12 @@ interface ElementContext {
 	exclude?: any[]
 }
 interface RunOnly {
-	type: string, // "rule" | "rules" | "tag" | "tags"
+	type: RunOnlyType,
 	value?: {
 		include?: string[],
 		exclude?: string[]
 	}
-	values?: string[] // "wcag2a" | "wcag2aa" | "section508" | "best-practice"
+	values?: TagValue[]
 }
 interface AxeResults {
 	url: string,
@@ -28,8 +36,8 @@ interface Pass {
 	help: string,
 	helpUrl: string,
 	id: string,
-	impact: string, // "minor" | "moderate" | "serious" | "critical" | "null"
-	tags: string[], // "wcag2a" | "wcag2aa" | "section508" | "best-practice"
+	impact: ImpactValue,
+	tags: TagValue[],
 	nodes: NodeResult[]
 }
 interface Violation {
@@ -37,13 +45,13 @@ interface Violation {
 	help: string,
 	helpUrl: string,
 	id: string,
-	impact: string, // "minor" | "moderate" | "serious" | "critical" | "null"
-	tags: string[], // "wcag2a" | "wcag2aa" | "section508" | "best-practice"
+	impact: ImpactValue,
+	tags: TagValue[],
 	nodes: NodeResult[]
 }
 interface NodeResult {
 	html: string,
-	impact: string, // same as Pass/violation - abstract into enum
+	impact: ImpactValue,
 	target: string[],
 	any: CheckResult[],
 	all: CheckResult[],
@@ -65,7 +73,7 @@ interface Spec {
 		brand: string,
 		application: string
 	},
-	reporter?: string, // "v1" | "v2"
+	reporter?: ReporterVersion,
 	checks?: Check[],
 	rules?: Rule[]
 }
