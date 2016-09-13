@@ -146,22 +146,13 @@ describe('Rule', function() {
 			});
 
 			it('should handle an error in #matches', function(done) {
-				var _documentCreateRange = document.createRange;
-				document.createRange = undefined;
-
 				var div = document.createElement('div');
 				div.setAttribute('style', '#fff');
 				fixture.appendChild(div);
 				var success = false,
 					rule = new Rule({
-						matches: function(node) {
-							var range = document.createRange(),
-								childNodes = node.childNodes;
-
-							range.selectNodeContents(child);
-
-							console.log(childNodes);
-							return false;
+						matches: function() {
+							throw new Error('this is an error');
 						}
 					});
 
@@ -171,7 +162,6 @@ describe('Rule', function() {
 					assert.isFalse(success);
 					done();
 				});
-				document.createRange = _documentCreateRange;
 			});
 
 			it('should execute Check#run on its child checks - any', function(done) {
