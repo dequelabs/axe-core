@@ -17,7 +17,7 @@ We believe that automated testing has an important role to play in achieving dig
 
 ## Manifesto
 
-1. Automated accessibility testing rules must have a zero false positive rate
+1. Automated accessibility testing rules must have a zero false-positive rate
 2. Automated accessibility testing rules must be lightweight and fast
 3. Automated accessibility testing rules must work in all modern browsers
 4. Automated accessibility testing rules must, themselves, be tested automatically
@@ -44,7 +44,7 @@ First download the package:
 npm install axe-core --save-dev
 ```
 
-Now include the javascript file in each of your iframes in you fixtures or test systems:
+Now include the javascript file in each of your iframes in your fixtures or test systems:
 
 ```html
 <script src="node_modules/axe-core/axe.min.js" ></script>
@@ -76,7 +76,7 @@ The complete list of rules run by axe-core can be found in [doc/rule-description
 
 The [aXe API](doc/API.md) package consists of:
 
-* `axe.js` - the javascript file that should be included in your web site under test (API)
+* `axe.js` - the JavaScript file that should be included in your web site under test (API)
 * `axe.min.js` - a minified version of the above file
 
 
