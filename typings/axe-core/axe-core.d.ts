@@ -112,6 +112,16 @@ declare namespace axe {
 	export let plugins: any
 
 	/**
+	 * Source string to use as an injected script in Selenium
+	 */
+	export let source: string
+
+	/**
+	 * Object for aXe Results
+	 */
+	export var AxeResults: AxeResults
+
+	/**
 	 * Starts analysis on the current document and its subframes
 	 *
 	 * @param  {Object}   context  The `Context` specification object @see Context
