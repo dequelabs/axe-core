@@ -37,7 +37,7 @@ describe('angular-ng-click', function () {
 		assert.isFalse(checks['angular-ng-click'].evaluate(node));
 	});
 
-	it('should pass if Angular 2 role=button is missing tabindex', function () {
+	it('should fail if Angular 2 role=button is missing tabindex', function () {
 		fixture.innerHTML = '<div role="button" (click)="func()">div button</div>';
 		var node = fixture.querySelector('div');
 		assert.isFalse(checks['angular-ng-click'].evaluate(node));
@@ -51,6 +51,18 @@ describe('angular-ng-click', function () {
 
 	it('should fail if Angular 2 DIV', function () {
 		fixture.innerHTML = '<div (click)="func()"></div>';
+		var node = fixture.querySelector('div');
+		assert.isFalse(checks['angular-ng-click'].evaluate(node));
+	});
+
+	it('should pass if ng-click function on wrapper is also provided on child interactive element', function () {
+		fixture.innerHTML = '<div ng-click="func()"><button ng-click="func()">button</button></div>';
+		var node = fixture.querySelector('div');
+		assert.isTrue(checks['angular-ng-click'].evaluate(node));
+	});
+
+	it('should fail if ng-click function on wrapper is not provided on child interactive element', function () {
+		fixture.innerHTML = '<div ng-click="func()"><button ng-click="otherFunc()">button</button></div>';
 		var node = fixture.querySelector('div');
 		assert.isFalse(checks['angular-ng-click'].evaluate(node));
 	});
