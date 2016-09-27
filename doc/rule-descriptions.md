@@ -1,6 +1,7 @@
 | Rule ID | Description | Tags | Enabled by default |
 | :------- | :------- | :------- | :------- |
 | accesskeys | Ensures every accesskey attribute value is unique | wcag2a, wcag211 | true |
+| angular-ng-click | Ensures ng-click is used on accessible elements | wcag2aa, wcag21, wcag412 | false |
 | area-alt | Ensures &lt;area&gt; elements of image maps have alternate text | wcag2a, wcag111, section508, section508.22.a | true |
 | aria-allowed-attr | Ensures ARIA attributes are allowed for an element&apos;s role | wcag2a, wcag411, wcag412 | true |
 | aria-required-attr | Ensures elements with ARIA roles have all required ARIA attributes | wcag2a, wcag411, wcag412 | true |

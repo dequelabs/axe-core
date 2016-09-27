@@ -1,0 +1,15 @@
+{
+ "id": "angular-ng-click",
+ "enabled": false,
+ "metadata": {
+  "description": "Ensures ng-click is used on accessible elements",
+  "help": "ng-click must be used on accessible elements"
+ },
+ "selector": "[ng-click], [(click)]",
+ "any": [],
+ "all": ["angular-ng-click"],
+ "none": ["focusable-no-name"],
+ "tags": [
+  "wcag2aa", "wcag21", "wcag412"
+ ]
+}
