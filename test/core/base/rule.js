@@ -145,6 +145,25 @@ describe('Rule', function() {
 
 			});
 
+			it('should handle an error in #matches', function(done) {
+				var div = document.createElement('div');
+				div.setAttribute('style', '#fff');
+				fixture.appendChild(div);
+				var success = false,
+					rule = new Rule({
+						matches: function() {
+							throw new Error('this is an error');
+						}
+					});
+
+				rule.run({
+					include: [div]
+				}, {}, isNotCalled, function() {
+					assert.isFalse(success);
+					done();
+				});
+			});
+
 			it('should execute Check#run on its child checks - any', function(done) {
 				fixture.innerHTML = '<blink>Hi</blink>';
 				var success = false;

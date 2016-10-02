@@ -113,6 +113,42 @@ describe('Audit', function () {
 				helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/target?application=thing'
 			});
 		});
+
+		it('does not override helpUrls of different products', function () {
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target1',
+				matches: 'function () {return "hello";}',
+				selector: 'bob',
+				metadata: {
+					helpUrl: 'https://dequeuniversity.com/rules/myproject/x.y/target1?application=axeAPI'
+				}
+			});
+			audit.addRule({
+				id: 'target2',
+				matches: 'function () {return "hello";}',
+				selector: 'bob'
+			});
+
+			assert.equal(
+				audit.data.rules.target1.helpUrl,
+				'https://dequeuniversity.com/rules/myproject/x.y/target1?application=axeAPI'
+			);
+			assert.isUndefined(audit.data.rules.target2);
+
+			assert.lengthOf(audit.rules, 2);
+			audit.brand = 'thing';
+			audit._constructHelpUrls();
+
+			assert.equal(
+				audit.data.rules.target1.helpUrl,
+				'https://dequeuniversity.com/rules/myproject/x.y/target1?application=axeAPI'
+			);
+			assert.equal(
+				audit.data.rules.target2.helpUrl,
+				'https://dequeuniversity.com/rules/thing/x.y/target2?application=axeAPI'
+			);
+		});
 	});
 
 	describe('Audit#setBranding', function () {
@@ -165,6 +201,26 @@ describe('Audit', function () {
 			assert.deepEqual(audit.data.rules.target, {
 				helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/target?application=axeAPI'
 			});
+		});
+		it('should not replace custom set branding', function () {
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				matches: 'function () {return "hello";}',
+				selector: 'bob',
+				metadata: {
+					helpUrl: 'https://dequeuniversity.com/rules/customer-x/x.y/target?application=axeAPI'
+				}
+			});
+			audit.setBranding({
+				application: 'thing',
+				brand: 'other'
+			});
+			assert.equal(
+				audit.data.rules.target.helpUrl,
+				'https://dequeuniversity.com/rules/customer-x/x.y/target?application=axeAPI'
+			);
+
 		});
 	});
 

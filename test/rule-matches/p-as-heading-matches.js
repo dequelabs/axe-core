@@ -2,7 +2,7 @@ describe('p-as-heading-matches', function () {
 	'use strict';
 
 	var rule;
-	var fixture = document.getElementById('fixture')
+	var fixture = document.getElementById('fixture');
 
 	beforeEach(function () {
 		rule = axe._audit.rules.find(function (rule) {
@@ -60,7 +60,7 @@ describe('p-as-heading-matches', function () {
 		assert.isTrue(rule.matches(target));
 
 		fixture.innerHTML = '<p id="target">some text</p><div></div>';
-		var target = fixture.querySelector('#target');
+		target = fixture.querySelector('#target');
 
 		assert.isFalse(rule.matches(target));
 	});
