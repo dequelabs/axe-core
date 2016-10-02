@@ -1,9 +1,8 @@
-// Type definitions for axe-core 2.0.5
+// Type definitions for axe-core 2.0.8
 // Project: https://github.com/dequelabs/axe-core
 // Definitions by: Marcy Sutton <https://github.com/marcysutton>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-declare namespace axe {
+declare module axe {
 
 	export type ImpactValue = "minor" | "moderate" | "serious" | "critical";
 
@@ -163,7 +162,4 @@ declare namespace axe {
 
 }
 
-// axe is also available as a module
-declare module "axe-core" {
-    export = axe;
-}
+export = axe;

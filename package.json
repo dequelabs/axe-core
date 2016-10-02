@@ -44,7 +44,7 @@
     "aXe"
   ],
   "main": "axe.js",
-  "typings": "./typings/axe-core/axe-core.d.ts",
+  "typings": "axe.d.ts",
   "scripts": {
     "build": "grunt",
     "test": "grunt test"
