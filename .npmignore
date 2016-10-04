@@ -6,3 +6,4 @@ lib
 test
 *.tgz
 bower.json
+typings/axe-core

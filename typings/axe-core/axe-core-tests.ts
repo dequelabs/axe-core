@@ -1,4 +1,4 @@
-/// <reference path="axe-core.d.ts" />
+import * as axe from '../../axe'
 
 var context:any = document
 var $fixture:any = {}
