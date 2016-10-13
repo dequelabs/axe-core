@@ -17,3 +17,4 @@ Add your project/integration to this file and submit a pull request.
 13. [Selenium IDE aXe Extension](https://github.com/bkardell/selenium-ide-axe)
 14. [gulp-axe-webdriver](https://github.com/felixzapata/gulp-axe-webdriver)
 15. [AccessLint](https://github.com/accesslint/accesslint.js)
+16. [Lighthouse](https://github.com/GoogleChrome/lighthouse)
