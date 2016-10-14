@@ -29,8 +29,20 @@ that includes a type, a scope and a subject. Here's a sample of the format:
 <footer>
 ```
 
+### Here's an example:
+
+```sh
+perf(color-contrast): improve speed of color contrast rules
+
+	Use async process to compare elements without UI lockup
+
+    Closes #1
+```
+
 > Commit messages should be 100 characters or less to make them easy to read on Github and
 various git tools.
+
+### How to structure your commits:
 
 #### Type
 
@@ -79,15 +91,6 @@ If needed, the footer should contain any information about Breaking Changes. Dep
 breaking changes in the Changelog should inform users if they'll need to modify their code after
 this commit.
 
-### Sample Commit Message:
-
-```sh
-perf(color-contrast): improve speed of color contrast rules
-
-	Use async process to compare elements without UI lockup
-
-    Closes #1
-```
 
 ## Merging a pull request
 
