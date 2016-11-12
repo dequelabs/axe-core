@@ -73,6 +73,18 @@ describe('aria-required-children', function () {
 		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
 	});
 
+	it('should pass one existing required child when one required because of implicit role', function () {
+		fixture.innerHTML = '<table id="target"><p role="row">Nothing here.</p></table>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
+	});
+
+	it('should pass when a child with an implicit role is present', function () {
+		fixture.innerHTML = '<table role="grid" id="target"><tr><td>Nothing here.</td></tr></table>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
+	});
+
 	it('should pass direct existing required children', function () {
 		fixture.innerHTML = '<div role="list" id="target"><p role="listitem">Nothing here.</p></div>';
 		var node = fixture.querySelector('#target');
