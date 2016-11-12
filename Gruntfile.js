@@ -234,14 +234,14 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
+	grunt.registerTask('build', ['clean', 'jshint', 'validate', 'concat:commons', 'configure',
 		 'babel', 'concat:engine', 'uglify']);
 
 	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
 
 	grunt.registerTask('test-browser', ['build',  'testconfig', 'fixture', 'connect',
-		'test-webdriver', 'jshint']);
+		'test-webdriver']);
 
 
 	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
