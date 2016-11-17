@@ -57,7 +57,7 @@ describe('aria-allowed-attr', function () {
 	});
 
 	it('should return true if there is no role', function () {
-		var node = document.createElement('div');
+		var node = document.createElement('picture');
 		node.id = 'test';
 		node.tabIndex = 1;
 		node.setAttribute('aria-selected', 'true');
