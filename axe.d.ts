@@ -49,7 +49,8 @@ declare module axe {
 		target: string[],
 		any: CheckResult[],
 		all: CheckResult[],
-		none: CheckResult[]
+		none: CheckResult[],
+		failureSummary?: string
 	}
 	interface CheckResult {
 		id: string,

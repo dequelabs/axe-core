@@ -11,9 +11,10 @@ axe.run(context, {}, (error: Error, results: axe.AxeResults) => {
 	console.log(results.incomplete.length);
 	console.log(results.inapplicable.length);
 	console.log(results.violations.length);
+	console.log(results.violations[0].nodes[0].failureSummary)
 });
 
-axe.run().then(function(done) {
+axe.run().then(function(done:any) {
 	done();
 });
 
