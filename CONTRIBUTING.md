@@ -6,11 +6,18 @@ In order to contribute, you must accept the [contributor licence agreement](http
 
 ## Contribution Guidelines
 
+Submitting code to the project? Please review and follow our
+[Git commit and pull request guidelines](doc/code-submission-guidelines.md).
+
 ### Code Quality
 
-Although we do not have official coding guidelines, we can and will request you to make changes if we think that your code is sloppy. You can take clues from the existing code base to see what we consider to be reasonable code quality. Please be prepared to make changes that we ask of you even if you might not agree with the request(s).
+Although we do not have official code style guidelines, we can and will request you to make changes
+if we think that your code is sloppy. You can take clues from the existing code base to see what we
+consider to be reasonable code quality. Please be prepared to make changes that we ask of you even
+if you might not agree with the request(s).
 
-Pull requests that change the tabs of a file (spacing or changes from spaces to tabs and vice versa) will not be accepted. Please respect the coding style of the files you are changing and adhere to that.
+Pull requests that change the tabs of a file (spacing or changes from spaces to tabs and vice versa)
+will not be accepted. Please respect the coding style of the files you are changing and adhere to that.
 
 That having been said, we prefer:
 
