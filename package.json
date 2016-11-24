@@ -69,6 +69,7 @@
     "grunt-contrib-uglify": "~1.0.1",
     "grunt-contrib-watch": "~1.0.0",
     "grunt-mocha": "~0.4.13",
+    "grunt-snyk": "^0.1.0",
     "html-entities": "^1.2.0",
     "jquery": "^3.0.0",
     "less": "~2.6.1",

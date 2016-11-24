@@ -12,6 +12,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-mocha');
+	grunt.loadNpmTasks('grunt-snyk');
 	grunt.loadTasks('build/tasks');
 
 	grunt.initConfig({
@@ -234,11 +235,11 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('build', ['clean', 'jshint', 'validate', 'concat:commons', 'configure',
+	grunt.registerTask('build', ['clean', 'jshint', 'validate', 'snyk', 'concat:commons', 'configure',
 		 'babel', 'concat:engine', 'uglify']);
 
 	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
-		'mocha', 'jshint']);
+		'mocha']);
 
 	grunt.registerTask('test-browser', ['build',  'testconfig', 'fixture', 'connect',
 		'test-webdriver']);
