@@ -313,7 +313,95 @@ describe('Rule', function() {
 				}, {}, function(r) {
 					assert.lengthOf(r.nodes, 0);
 				}, isNotCalled);
+			});
 
+			describe('DqElement', function() {
+				var origDqElement;
+				var isDqElementCalled;
+
+				beforeEach(function() {
+					isDqElementCalled = false;
+					origDqElement = axe.utils.DqElement;
+					axe.utils.DqElement = function() {
+						isDqElementCalled = true;
+					};
+					fixture.innerHTML = '<blink>Hi</blink>';
+				});
+
+				afterEach(function() {
+					axe.utils.DqElement = origDqElement;
+				});
+
+				it('is created for matching nodes', function(done) {
+					var rule = new Rule({
+						all: ['cats']
+					}, {
+						checks: {
+							cats: new Check({
+								id: 'cats',
+								enabled: true,
+								evaluate: function() {
+									return true;
+								},
+								matches: function() {
+									return true;
+								}
+							})
+						}
+					});
+					rule.run({
+						include: [fixture]
+					}, {}, function() {
+						assert.isTrue(isDqElementCalled);
+						done();
+					}, isNotCalled);
+				});
+
+				it('is not created for disabled checks', function(done) {
+					var rule = new Rule({
+						all: ['cats']
+					}, {
+						checks: {
+							cats: new Check({
+								id: 'cats',
+								enabled: false,
+								evaluate: function() {},
+								matches: function() {
+									return true;
+								}
+							})
+						}
+					});
+					rule.run({
+						include: [fixture]
+					}, {}, function() {
+						assert.isFalse(isDqElementCalled);
+						done();
+					}, isNotCalled);
+				});
+
+				it('is not created for un-matching nodes', function(done) {
+					var rule = new Rule({
+						all: ['cats']
+					}, {
+						checks: {
+							cats: new Check({
+								id: 'cats',
+								enabled: true,
+								evaluate: function() {},
+								matches: function() {
+									return false;
+								}
+							})
+						}
+					});
+					rule.run({
+						include: [fixture]
+					}, {}, function() {
+						assert.isFalse(isDqElementCalled);
+						done();
+					}, isNotCalled);
+				});
 			});
 
 			it('should pass thrown errors to the reject param', function (done) {
