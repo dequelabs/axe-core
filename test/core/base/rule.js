@@ -1,4 +1,4 @@
-/*global Rule */
+/*global Rule, Check */
 describe('Rule', function() {
 	'use strict';
 
