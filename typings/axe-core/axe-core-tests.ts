@@ -1,19 +1,19 @@
-/// <reference path="axe-core.d.ts" />
+import * as axe from '../../axe'
 
 var context:any = document
 var $fixture:any = {}
 
 // axe.a11yCheck config
-axe.a11yCheck(context, {}, (results) => {
+axe.a11yCheck(context, {}, (results: axe.AxeResults) => {
 	// axe's results object
 	console.log(results.passes.length)
 	console.log(results.violations.length)
 });
 // axe.a11yCheck include/exclude
-axe.a11yCheck({include: [['#id1'], ['#id2']]}, {}, (results) => {
+axe.a11yCheck({include: [['#id1'], ['#id2']]}, {}, (results: axe.AxeResults) => {
 	console.log(results)
 })
-axe.a11yCheck({exclude: [$fixture[0]]}, {}, (results) => {
+axe.a11yCheck({exclude: [$fixture[0]]}, {}, (results: axe.AxeResults) => {
 	console.log(results)
 })
 var tagConfigRunOnly: axe.RunOnly = {
@@ -23,7 +23,7 @@ var tagConfigRunOnly: axe.RunOnly = {
 var tagConfig = {
 	runOnly: tagConfigRunOnly
 }
-axe.a11yCheck(context, tagConfig, (results) => {
+axe.a11yCheck(context, tagConfig, (results: axe.AxeResults) => {
 	console.log(results)
 })
 var includeExcludeTagsRunOnly: axe.RunOnly = {
@@ -36,7 +36,7 @@ var includeExcludeTagsRunOnly: axe.RunOnly = {
 var includeExcludeTagsConfig = {
 	runOnly: includeExcludeTagsRunOnly
 }
-axe.a11yCheck(context, includeExcludeTagsConfig, (results) => {
+axe.a11yCheck(context, includeExcludeTagsConfig, (results: axe.AxeResults) => {
 	console.log(results)
 })
 var someRulesConfig = {
@@ -45,7 +45,7 @@ var someRulesConfig = {
 		"heading-order": {enabled: 'true'}
 	}
 }
-axe.a11yCheck(context, someRulesConfig, (results) => {
+axe.a11yCheck(context, someRulesConfig, (results: axe.AxeResults) => {
 	console.log(results)
 })
 
@@ -68,6 +68,8 @@ var spec: axe.Spec = {
 	}]
 }
 axe.configure(spec)
+
+var source = axe.source;
 
 axe.reset()
 
