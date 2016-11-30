@@ -3,6 +3,21 @@ import * as axe from '../../axe'
 var context:any = document
 var $fixture:any = {}
 
+axe.run(context, {}, (error: Error, results: axe.AxeResults) => {
+	if (error) {
+		console.log(error);
+	}
+	console.log(results.passes.length);
+	console.log(results.incomplete.length);
+	console.log(results.inapplicable.length);
+	console.log(results.violations.length);
+	console.log(results.violations[0].nodes[0].failureSummary)
+});
+
+axe.run().then(function(done:any) {
+	done();
+});
+
 // axe.a11yCheck config
 axe.a11yCheck(context, {}, (results: axe.AxeResults) => {
 	// axe's results object
