@@ -183,7 +183,7 @@ describe('link-in-text-block', function () {
 		it('returns undefined if the background contrast can not be determined', function () {
 			var linkElm = getLinkElm({ }, {
 				color: '#000010',
-				backgroundImage: 'url(photo.jpg)'
+				backgroundImage: 'url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)'
 			}, {
 				color: '#000000'
 			});

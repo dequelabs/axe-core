@@ -66,7 +66,7 @@ describe('axe.utils.collectResultsFromFrames', function () {
 		});
 
 		frame.id = 'level0';
-		frame.src = '../mock/frames/recursive.html';
+		frame.src = '../mock/frames/nested0.html';
 		fixture.appendChild(frame);
 
 	});
