@@ -8,3 +8,4 @@ axe.min.js
 axe.es2016.js
 *.tgz
 npm-shrinkwrap.json
+typings/axe-core/axe-core-tests.js

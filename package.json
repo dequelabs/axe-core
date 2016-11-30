@@ -4,33 +4,34 @@
  "version": "2.1.2",
  "license": "MPL-2.0",
  "contributors": [
-  {
-   "name": "David Sturley",
-   "organization": "Deque Systems, Inc.",
-   "url": "http://deque.com/"
-  },
-  {
-   "name": "Dylan Barrell",
-   "organization": "Deque Systems, Inc.",
-   "url": "http://deque.com/"
-  },
-  {
-   "name": "Wilco Fiers",
-   "organization": "Deque Systems, Inc.",
-   "url": "http://deque.com/"
-  },
-  {
-   "name": "Dian Fay",
-   "organization": "Deque Systems, Inc.",
-   "url": "http://deque.com/"
-  },
-  {
-   "name": "Marcy Sutton",
-   "organization": "Deque Systems, Inc.",
-   "url": "http://deque.com/"
-  }
- ],
- "repository": {
+    {
+     "name": "David Sturley",
+     "organization": "Deque Systems, Inc.",
+     "url": "http://deque.com/"
+    },
+    {
+     "name": "Dylan Barrell",
+     "email": "dylan@barrell.com",
+     "organization": "Deque Systems, Inc.",
+     "url": "http://deque.com/"
+    },
+    {
+     "name": "Wilco Fiers",
+     "organization": "Deque Systems, Inc.",
+     "url": "http://deque.com/"
+    },
+    {
+     "name": "Dian Fay",
+     "organization": "Deque Systems, Inc.",
+     "url": "http://deque.com/"
+    },
+    {
+     "name": "Marcy Sutton",
+     "organization": "Deque Systems, Inc.",
+     "url": "http://deque.com/"
+    }
+  ],
+  "repository": {
   "type": "git",
   "url": "https://github.com/dequelabs/axe-core.git"
  },
@@ -44,6 +45,7 @@
   "aXe"
  ],
  "main": "axe.js",
+ "typings": "axe.d.ts",
  "scripts": {
   "build": "grunt",
   "test": "grunt test"
@@ -68,6 +70,7 @@
   "grunt-contrib-watch": "~1.0.0",
   "grunt-mocha": "~0.4.13",
   "grunt-parallel": "^0.4.1",
+  "grunt-snyk": "^0.1.0",
   "html-entities": "^1.2.0",
   "jquery": "^3.0.0",
   "less": "~2.6.1",
