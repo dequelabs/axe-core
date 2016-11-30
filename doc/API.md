@@ -472,7 +472,7 @@ axe.run(document, function(err, results) {
 * `passes[0]`
   ...
   * `help` - `"Elements must have sufficient color contrast"`
-  * `helpURL` - `"https://dequeuniversity.com/courses/html-css/visual-layout/color-contrast"`
+  * `helpUrl` - `"https://dequeuniversity.com/courses/html-css/visual-layout/color-contrast"`
   * `id` - `"color-contrast"`
 		* `nodes`
 			* `target[0]` - `"#js_off-canvas-wrap > .inner-wrap >.kinja-title.proxima.js_kinja-title-desktop"`
@@ -484,7 +484,7 @@ axe.run(document, function(err, results) {
 
 * `violations[0]`
   * `help` - `"<button> elements must have alternate text"`
-  * `helpURL` - `"https://dequeuniversity.com/courses/html-css/forms/form-labels#id84_example_button"`
+  * `helpUrl` - `"https://dequeuniversity.com/courses/html-css/forms/form-labels#id84_example_button"`
   * `id` - `"button-name"`
 		* `nodes`
 			* `target[0]` - `"post_5919997 > .row.content-wrapper > .column > span > iframe"`

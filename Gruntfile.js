@@ -13,6 +13,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-mocha');
+	grunt.loadNpmTasks('grunt-snyk');
 	grunt.loadTasks('build/tasks');
 	grunt.loadNpmTasks('grunt-parallel');
 
@@ -282,14 +283,14 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('build', ['clean', 'validate', 'concat:commons', 'configure',
+	grunt.registerTask('build', ['clean', 'jshint', 'validate', 'snyk', 'concat:commons', 'configure',
 		 'babel', 'concat:engine', 'uglify']);
 
 	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
-		'mocha', 'parallel', 'jshint']);
+		'mocha', 'parallel']);
 
 	grunt.registerTask('test-fast', ['build', 'testconfig', 'fixture', 'connect',
-		'mocha', 'jshint']);
+		'mocha']);
 
 	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
 };
