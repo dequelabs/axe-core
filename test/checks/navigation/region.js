@@ -28,7 +28,7 @@ describe('region', function () {
 	});
 
 	it('should return false when img content is outside the region', function () {
-		fixture.innerHTML = '<div id="target"><img src="something.jpg"><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div></div>';
+		fixture.innerHTML = '<div id="target"><img src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7"><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div></div>';
 		var node = fixture.querySelector('#target');
 		assert.isFalse(checks.region.evaluate.call(checkContext, node));
 		assert.equal(checkContext._relatedNodes.length, 1);
