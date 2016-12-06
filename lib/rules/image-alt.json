@@ -1,6 +1,6 @@
 {
   "id": "image-alt",
-  "selector": "img",
+  "selector": "img, [role='img']",
   "tags": [
     "wcag2a",
     "wcag111",
