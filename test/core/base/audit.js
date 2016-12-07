@@ -2,8 +2,8 @@
 describe('Audit', function () {
 	'use strict';
 	var a;
-	var isNotCalled = function () {
-		assert.ok(false, 'Function should not be called');
+	var isNotCalled = function (err) {
+		throw err || new Error('Reject should not be called');
 	};
 	var noop = function () {};
 
@@ -218,11 +218,10 @@ describe('Audit', function () {
 			assert.equal(audit.checks.target, undefined);
 			audit.addCheck({
 				id: 'target',
-				selector: 'bob',
 				options: 'jane'
 			});
 			assert.ok(audit.checks.target);
-			assert.equal(audit.checks.target.selector, 'bob');
+			assert.equal(audit.checks.target.options, 'jane');
 			audit.resetRulesAndChecks();
 			assert.equal(audit.checks.target, undefined);
 		});
@@ -234,155 +233,119 @@ describe('Audit', function () {
 			assert.equal(audit.checks.target, undefined);
 			audit.addCheck({
 				id: 'target',
-				selector: 'bob',
 				options: 'jane'
 			});
 			assert.ok(audit.checks.target);
-			assert.equal(audit.checks.target.selector, 'bob');
+			assert.equal(audit.checks.target.options, 'jane');
 		});
 		it('should configure the metadata, if passed', function () {
 			var audit = new Audit();
 			assert.equal(audit.checks.target, undefined);
 			audit.addCheck({
 				id: 'target',
-				metadata: 'bob'
+				metadata: {guy:'bob'}
 			});
 			assert.ok(audit.checks.target);
-			assert.equal(audit.data.checks.target, 'bob');
+			assert.equal(audit.data.checks.target.guy, 'bob');
 		});
 		it('should reconfigure existing check', function () {
 			var audit = new Audit();
+			var myTest = function () {};
 			audit.addCheck({
 				id: 'target',
-				selector: 'bob',
-				options: 'jane'
+				evaluate: myTest,
+				options: 'jane',
 			});
-			assert.equal(audit.checks.target.selector, 'bob');
+
 			assert.equal(audit.checks.target.options, 'jane');
 
 			audit.addCheck({
 				id: 'target',
-				selector: 'fred'
+				options: 'fred'
 			});
 
-			assert.equal(audit.checks.target.selector, 'fred');
-			assert.equal(audit.checks.target.options, 'jane');
+			assert.equal(audit.checks.target.evaluate, myTest);
+			assert.equal(audit.checks.target.options, 'fred');
 		});
+		it('should not turn messages into a function', function () {
+			var audit = new Audit();
+			var spec = {
+				id: 'target',
+				evaluate: 'function () { return "blah";}',
+				metadata: {
+					messages: {
+						fail: 'it failed'
+					}
+				}
+			};
+			audit.addCheck(spec);
+
+			assert.equal(typeof audit.checks.target.evaluate, 'function');
+			assert.equal(typeof audit.data.checks.target.messages.fail, 'string');
+			assert.equal(audit.data.checks.target.messages.fail, 'it failed');
+		});
+
+		it('should turn function strings into a function', function () {
+			var audit = new Audit();
+			var spec = {
+				id: 'target',
+				evaluate: 'function () { return "blah";}',
+				metadata: {
+					messages: {
+						fail: 'function () {return "it failed";}'
+					}
+				}
+			};
+			audit.addCheck(spec);
+
+			assert.equal(typeof audit.checks.target.evaluate, 'function');
+			assert.equal(typeof audit.data.checks.target.messages.fail, 'function');
+			assert.equal(audit.data.checks.target.messages.fail(), 'it failed');
+		});
+
 	});
 
 	describe('Audit#run', function () {
 		it('should run all the rules', function (done) {
 			fixture.innerHTML = '<input aria-label="monkeys" type="text">' +
 				'<div id="monkeys">bananas</div>' +
-				'<input aria-labelledby="monkeys" type="text">' +
+				'<input aria-labelledby="monkeys">' +
 				'<blink>FAIL ME</blink>';
 
 			a.run({ include: [fixture] }, {}, function (results) {
 				var expected = [{
 					id: 'positive1',
-					result: 'NA',
+					result: 'inapplicable',
 					pageLevel: false,
 					impact: null,
-					nodes: [{
-						node: {
-							selector: ['#fixture > input:nth-of-type(1)'],
-							source: null
-						},
-						any: [{
-							id: 'positive1-check1',
-							result: true,
-							data: null,
-							relatedNodes: []
-						}],
-						all: [],
-						none: []
-					}, {
-						node: {
-							selector: ['#fixture > input:nth-of-type(2)'],
-							source: '<input aria-labelledby="monkeys" type="text">'
-						},
-						any: [{
-							id: 'positive1-check1',
-							result: true,
-							data: null,
-							relatedNodes: []
-						}],
-						all: [],
-						none: []
-					}]
+					nodes: '...other tests cover this...'
 				}, {
 					id: 'positive2',
-					result: 'NA',
+					result: 'inapplicable',
 					pageLevel: false,
 					impact: null,
-					nodes: [{
-						node: {
-							selector: ['#monkeys'],
-							source: '<div id="monkeys">bananas</div>'
-						},
-						any: [{
-							id: 'positive2-check1',
-							result: true,
-							data: null,
-							relatedNodes: []
-						}],
-						all: [],
-						none: []
-					}]
+					nodes: '...other tests cover this...'
 				}, {
 					id: 'negative1',
-					result: 'NA',
+					result: 'inapplicable',
 					pageLevel: false,
 					impact: null,
-					nodes: [{
-						node: {
-							selector: ['#fixture'],
-							source: '<div id="fixture"><input aria-label="monkeys" type="text"><div id="monkeys">bananas</div><input aria-labelledby="monkeys" type="text"><blink>FAIL ME</blink></div>'
-						},
-						none: [{
-							id: 'negative1-check1',
-							result: true,
-							data: null,
-							relatedNodes: []
-						}],
-						all: [],
-						any: []
-					}, {
-						node: {
-							selector: ['#monkeys'],
-							source: '<div id="monkeys">bananas</div>'
-						},
-						none: [{
-							id: 'negative1-check1',
-							result: true,
-							data: null,
-							relatedNodes: []
-						}],
-						all: [],
-						any: []
-					}]
+					nodes: '...other tests cover this...'
 				}, {
 					id: 'positive3',
-					result: 'NA',
+					result: 'inapplicable',
 					pageLevel: false,
 					impact: null,
-					nodes: [{
-						node: {
-							selector: ['#fixture > blink'],
-							source: '<blink>FAIL ME</blink>'
-						},
-						any: [{
-							id: 'positive3-check1',
-							result: true,
-							data: null,
-							relatedNodes: []
-						}],
-						all: [],
-						none: []
-					}]
+					nodes: '...other tests cover this...'
 				}];
+
 				var out = results[0].nodes[0].node.source;
-				results[0].nodes[0].node.source = null;
+				results.forEach(function (res) {
+					// attribute order is a pain in the lower back in IE, so we're not
+					// comparing nodes. Check.run and Rule.run do this.
+					res.nodes = '...other tests cover this...';
+				});
+
 				assert.deepEqual(JSON.parse(JSON.stringify(results)), expected);
 				assert.match(out, /^<input(\s+type="text"|\s+aria-label="monkeys"){2,}>/);
 				done();
@@ -476,14 +439,7 @@ describe('Audit', function () {
 
 		});
 
-		it('should pass errors to axe.log', function (done) {
-			var orig = axe.log;
-			axe.log = function (err) {
-				assert.equal(err.message, 'Launch the super sheep!');
-				axe.log = orig;
-				done();
-			};
-
+		it('catches errors and passes them as a cantTell result', function (done) {
 			a.addRule({
 				id: 'throw1',
 				selector: '*',
@@ -497,12 +453,18 @@ describe('Audit', function () {
 					throw new Error('Launch the super sheep!');
 				}
 			});
+
 			a.run({ include: [fixture] }, {
 				runOnly: {
 					'type': 'rule',
 					'values': ['throw1']
 				}
-			}, noop, isNotCalled);
+			}, function (results) {
+				assert.lengthOf(results,1);
+				assert.equal(results[0].result, 'cantTell');
+				assert.equal(results[0].error.message, 'Launch the super sheep!');
+				done();
+			}, isNotCalled);
 		});
 
 		it('should not halt if errors occur', function (done) {
@@ -524,16 +486,25 @@ describe('Audit', function () {
 					'type': 'rule',
 					'values': ['throw1', 'positive1']
 				}
-			}, function (results) {
-				results = results.filter(function (result) {
-					return !!result;
-				});
-				assert.equal(results.length, 1);
-				assert.equal(results[0].id, 'positive1');
+			}, function () {
 				done();
 			}, isNotCalled);
 		});
 
+		it('should run audit.validateOptions to ensure valid input', function () {
+			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
+				'<div id="monkeys">bananas</div>' +
+				'<input aria-labelledby="monkeys" type="text">' +
+				'<blink>FAIL ME</blink>';
+			var checked = 'options not validated';
+
+			a.validateOptions = function () {
+				checked = 'options validated';
+			};
+
+			a.run({ include: [fixture] }, {}, noop, isNotCalled);
+			assert.equal(checked, 'options validated');
+		});
 		it('should halt if an error occurs when debug is set', function (done) {
 			a.addRule({
 				id: 'throw1',
@@ -559,7 +530,6 @@ describe('Audit', function () {
 				done();
 			});
 		});
-
 	});
 	describe('Audit#after', function () {
 		it('should run Rule#after on any rule whose result is passed in', function () {
@@ -584,6 +554,55 @@ describe('Audit', function () {
 
 			audit.after(results, options);
 		});
+	});
+
+	describe('Audit#validateOptions', function () {
+
+		it('returns the options object when it is valid', function () {
+			var opt = {
+				runOnly: {
+					type: 'rule',
+					value: ['positive1', 'positive2']
+				},
+				rules: {
+					negative1: { enabled: false }
+				}
+			};
+			assert(a.validateOptions(opt), opt);
+		});
+
+		it('throws an error when option.runOnly has an unknown rule', function () {
+			assert.throws(function () {
+				a.validateOptions({
+					runOnly: {
+						type: 'rule',
+						value: ['frakeRule']
+					}
+				});
+			});
+		});
+
+		it('throws an error when option.runOnly has an unknown tag', function () {
+			assert.throws(function () {
+				a.validateOptions({
+					runOnly: {
+						type: 'tags',
+						value: ['fakeTag']
+					}
+				});
+			});
+		});
+
+		it('throws an error when option.rules has an unknown rule', function () {
+			assert.throws(function () {
+				a.validateOptions({
+					rules: {
+						fakeRule: { enabled: false}
+					}
+				});
+			});
+		});
+
 	});
 
 });

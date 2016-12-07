@@ -1,7 +1,6 @@
 {
   "id": "non-empty-value",
   "evaluate": "non-empty-value.js",
-  "selector": "[type=\"button\"]",
   "metadata": {
     "impact": "critical",
     "messages": {

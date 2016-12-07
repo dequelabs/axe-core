@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+	<title>Test Rule error</title>
+	<script src="../../../axe.js"></script>
+	<script>
+		axe._load({
+			rules: [{
+				id: 'incomplete-1',
+				selector: '*',
+				none: ['undeffed']
+			}, {
+				id: 'incomplete-2',
+				selector: '*',
+				none: ['thrower']
+			}],
+			checks: [{
+				id: 'undeffed',
+				evaluate: function () {
+					return undefined;
+				}
+			}, {
+				id: 'thrower',
+				evaluate: function () {
+					throw new Error('Check failed to complete');
+				}
+			}]
+		});
+	</script>
+</head>
+<body>
+  <h1 class="nogo">header 1</h1>
+</body>
+</html>

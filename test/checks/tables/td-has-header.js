@@ -19,6 +19,38 @@ describe('td-has-header', function () {
 		checkContext._data = null;
 	});
 
+	it('should not be fooled by rowspan and colspan', function () {
+ 		fixture.innerHTML = '<table>' +
+  			'<thead>' +
+			'    <tr>' +
+			'      <td rowspan="2">Species</td>' +
+			'      <td colspan="2">Info</td>' +
+			'    </tr>' +
+			'    <tr>' +
+			'      <th>Name</th>' +
+			'      <th>Age</th>' +
+			'    </tr>' +
+			'  </thead>' +
+			'  <tbody>' +
+			'    <tr>' +
+			'      <td>Gorilla</td>' +
+			'      <td>Koko</td>' +
+			'      <td>44</td>' +
+			'    </tr>' +
+			'    <tr>' +
+			'      <td>Human</td>' +
+			'      <td>Matt</td>' +
+			'      <td>33</td>' +
+			'    </tr>' +
+			'  </tbody>' +
+			'</table>';
+		var node = fixture.querySelector('table');
+		var result = checks['td-has-header'].evaluate.call(checkContext, node);
+
+		assert.isFalse(result);
+		assert.equal(checkContext._relatedNodes.length, 4);
+	});
+
 	it('should return true each non-empty cell has a row header', function () {
 		fixture.innerHTML =
 			'<table>' +

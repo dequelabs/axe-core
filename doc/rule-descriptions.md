@@ -20,7 +20,8 @@
 | document-title | Ensures each HTML document contains a non-empty &lt;title&gt; element | wcag2a, wcag242 | true |
 | duplicate-id | Ensures every id attribute value is unique | wcag2a, wcag411 | true |
 | empty-heading | Ensures headings have discernible text | best-practice | true |
-| frame-title | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a unique and non-empty title attribute | wcag2a, wcag241, section508, section508.22.i | true |
+| frame-title-unique | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a unique title attribute | best-practice | true |
+| frame-title | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a non-empty title attribute | wcag2a, wcag241, section508, section508.22.i | true |
 | heading-order | Ensures the order of headings is semantically correct | best-practice | false |
 | href-no-hash | Ensures that href values are valid link references to promote only using anchors as links | best-practice | false |
 | html-has-lang | Ensures every HTML document has a lang attribute | wcag2a, wcag311 | true |

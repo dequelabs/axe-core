@@ -2,7 +2,8 @@ describe('region fail test', function () {
 	'use strict';
 	var results;
 	before(function (done) {
-		axe.a11yCheck(document, { runOnly: { type: 'rule', values: ['region'] } }, function (r) {
+		axe.run({ runOnly: { type: 'rule', values: ['region'] } }, function (err, r) {
+			assert.isNull(err);
 			results = r;
 			done();
 		});

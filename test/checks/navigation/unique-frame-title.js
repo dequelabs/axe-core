@@ -19,4 +19,18 @@ describe('unique-frame-title', function () {
 		}));
 		assert.equal(checkContext._data, 'bananas');
 	});
+
+	it('should convert text to lower case', function () {
+		checks['unique-frame-title'].evaluate.call(checkContext, {
+			title: '\t  app\t \n \rle  '
+		});
+		assert.equal(checkContext._data, 'app le');
+	});
+
+	it('should take out space differences', function () {
+		checks['unique-frame-title'].evaluate.call(checkContext, {
+			title: 'APPLE'
+		});
+		assert.equal(checkContext._data, 'apple');
+	});
 });

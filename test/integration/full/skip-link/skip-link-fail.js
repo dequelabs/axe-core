@@ -2,7 +2,8 @@ describe('skip link fail test', function () {
 	'use strict';
 	var results;
 	before(function (done) {
-		axe.a11yCheck(document, { runOnly: { type: 'rule', values: ['skip-link'] } }, function (r) {
+		axe.run({ runOnly: { type: 'rule', values: ['skip-link'] } }, function (err, r) {
+			assert.isNull(err);
 			results = r;
 			done();
 		});

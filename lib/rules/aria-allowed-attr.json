@@ -1,5 +1,6 @@
 {
   "id": "aria-allowed-attr",
+  "matches": "aria-allowed-attr-matches.js",
   "tags": [
     "wcag2a",
     "wcag411",
