@@ -1,4 +1,3 @@
-/*global console */
 describe('context test', function () {
 	'use strict';
 
