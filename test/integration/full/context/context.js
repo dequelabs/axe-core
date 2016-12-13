@@ -1,3 +1,4 @@
+/*global console */
 describe('context test', function () {
 	'use strict';
 
@@ -5,9 +6,12 @@ describe('context test', function () {
 	before(function (done) {
 		var frame = document.getElementById('myframe');
 		if (frame.contentWindow.document.readyState === 'complete') {
+			console.error('already loaded');
 			done();
 		} else {
+			console.error('calling addEventListener to wait for iframe...');
 			frame.addEventListener('load', function () {
+				console.error('...iframe loaded');
 				done();
 			});
 		}
