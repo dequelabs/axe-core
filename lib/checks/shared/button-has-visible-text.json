@@ -1,7 +1,6 @@
 {
   "id": "button-has-visible-text",
-  "evaluate": "has-visible-text.js",
-  "selector": "button, [role=\"button\"]:not(input)",
+  "evaluate": "button-has-visible-text.js",
   "metadata": {
     "impact": "critical",
     "messages": {

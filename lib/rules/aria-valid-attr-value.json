@@ -1,5 +1,6 @@
 {
   "id": "aria-valid-attr-value",
+  "matches": "aria-has-attr-matches.js",
   "tags": [
     "wcag2a",
     "wcag131",

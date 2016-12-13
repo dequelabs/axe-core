@@ -1,6 +1,7 @@
 {
   "id": "document-title",
   "selector": "html",
+  "matches": "window-is-top.js",
   "tags": [
     "wcag2a",
     "wcag242"

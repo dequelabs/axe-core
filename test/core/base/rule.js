@@ -4,8 +4,8 @@ describe('Rule', function() {
 
 	var fixture = document.getElementById('fixture');
 	var noop = function () {};
-	var isNotCalled = function () {
-		assert.ok(false, 'Function should not be called');
+	var isNotCalled = function (err) {
+		throw err || new Error('Reject should not be called');
 	};
 
 	afterEach(function() {
@@ -342,9 +342,6 @@ describe('Rule', function() {
 								enabled: true,
 								evaluate: function() {
 									return true;
-								},
-								matches: function() {
-									return true;
 								}
 							})
 						}
@@ -365,33 +362,7 @@ describe('Rule', function() {
 							cats: new Check({
 								id: 'cats',
 								enabled: false,
-								evaluate: function() {},
-								matches: function() {
-									return true;
-								}
-							})
-						}
-					});
-					rule.run({
-						include: [fixture]
-					}, {}, function() {
-						assert.isFalse(isDqElementCalled);
-						done();
-					}, isNotCalled);
-				});
-
-				it('is not created for un-matching nodes', function(done) {
-					var rule = new Rule({
-						all: ['cats']
-					}, {
-						checks: {
-							cats: new Check({
-								id: 'cats',
-								enabled: true,
-								evaluate: function() {},
-								matches: function() {
-									return false;
-								}
+								evaluate: function() {}
 							})
 						}
 					});

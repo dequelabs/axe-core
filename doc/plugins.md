@@ -20,7 +20,7 @@ In order to create such a plugin, we need to implement the "run" function for th
 
 #### Basic plugin
 
-```
+```javascript
 axe.registerPlugin({
 	id: 'doStuff',
 	run: function (id, action, options, callback) {
@@ -29,28 +29,25 @@ axe.registerPlugin({
 		var that = this;
 		frames = axe.utils.toArray(document.querySelectorAll('iframe, frame'));
 
-		if (frames.length) {
-			frames.forEach(function (frame) {
-			  q.defer(function (done) {
-				axe.utils.sendCommandToFrame(frame, {
-					options: options,
-					command: 'run-doStuff',
-					parameter: id,
-					action: action
-				}, function () {
-					done();
-				});
-			  });
+		frames.forEach(function (frame) {
+		  q.defer(function (done) {
+			axe.utils.sendCommandToFrame(frame, {
+				options: options,
+				command: 'run-doStuff',
+				parameter: id,
+				action: action
+			}, function () {
+				done();
 			});
-		}
+		  });
+		});
+
 		if (!options.context.length) {
 			q.defer(function (done) {
 				that._registry[id][action].call(that._registry[id], document, options, done);
 			});
 		}
-		q.then(function () {
-			callback();
-		});
+		q.then(callback);
 	},
 	commands: [{
 	  id: 'run-doStuff',
@@ -65,9 +62,9 @@ Looking at the code, you will see the following things:
 
 1. The plugin contains an id. This id is then used to access the plugin and its implementations.
 2. The plugin is registered with aXe (in each iframe) using the `axe.registerPlugin()` function.
-3. The plugin registers the "run" function and the "commands" with the aXe system. This allows plugin implementations to be registered with the plugin, and to be executed. It also registers handlers for eachof the commands within each of the iframes, so that the plugin can coordinate with itself accross the iframe boundaries.
+3. The plugin registers the "run" function and the "commands" with the aXe system. This allows plugin implementations to be registered with the plugin, and to be executed. It also registers handlers for each of the commands within each of the iframes, so that the plugin can coordinate with itself across the iframe boundaries.
 
-When the caller wants to call a plugin instance, it does so by callin the plugin's "run" function in the top level document and passing the id of the plugin instance it would like to call, which plugin instance action it would like to call, the options and a callback function.
+When the caller wants to call a plugin instance, it does so by calling the plugin's "run" function in the top level document and passing the id of the plugin instance it would like to call, which plugin instance action it would like to call, the options and a callback function.
 
 The plugin takes this information and sends the same instructions to its implementation in each iframe by communicating to its own command(s) using the aXe utility function `axe.utils.sendCommandToFrame()`.
 
@@ -83,7 +80,7 @@ Once all the iframes' run functions have been executed, the callback is called. 
 
 Lets implement a basic plugin instance to see how this works. This instance will implement a "highlight" function (to place a basic frame around the bounding box of an element on each iframe on a page)
 
-```
+```javascript
   var highlight = {
     id: 'highlight',
     highlighter: new Highlighter(),

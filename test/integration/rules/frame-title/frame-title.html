@@ -1,4 +1,11 @@
 
 <iframe src="frame-title/frames/level1.html" id="violation1"></iframe>
-<iframe src="frame-title/frames/level1a.html" title="Duplicated" id="violation3"></iframe>
-<iframe src="frame-title/frames/level1a.html" title="Duplicated" id="violation4"></iframe>
+<iframe src="frame-title/frames/level1a.html" title="Duplicated" id="pass2"></iframe>
+<iframe src="frame-title/frames/level1a.html" title="Duplicated" id="pass3"></iframe>
+<iframe src="frame-title/frames/level1a.html" aria-label="some label" id="pass4"></iframe>
+<iframe src="frame-title/frames/level1a.html" aria-label="" id="violation3"></iframe>
+
+<div id="mylabel">label!</div>
+<iframe src="frame-title/frames/level1a.html" aria-labelledby="mylabel" id="pass5"></iframe>
+<iframe src="frame-title/frames/level1a.html" id="pass6" role="presentation"></iframe>
+<iframe src="frame-title/frames/level1a.html" id="pass7" role="none"></iframe>

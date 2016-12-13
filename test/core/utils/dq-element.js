@@ -39,7 +39,7 @@ describe('DqElement', function () {
 
 	describe('source', function () {
 		it('should include the outerHTML of the element', function () {
-			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
+			fixture.innerHTML = '<div class="bar" id="foo">Hello!</div>';
 
 			var result = new DqElement(fixture.firstChild);
 			assert.equal(result.source, fixture.firstChild.outerHTML);
@@ -67,7 +67,7 @@ describe('DqElement', function () {
 			fixture.innerHTML = div;
 
 			var result = new DqElement(fixture.firstChild);
-			assert.equal(result.source, '<div class="foo" id="foo">');
+			assert.equal(result.source.length, '<div class="foo" id="foo">'.length);
 		});
 
 		it('should use spec object over passed element', function () {
@@ -108,11 +108,38 @@ describe('DqElement', function () {
 
 	});
 
+	describe('xpath', function () {
+		it('should call axe.utils.getXpath', function () {
+			var orig = axe.utils.getXpath;
+			var success = false;
+			var expected = { monkeys: 'bananas' };
+
+			axe.utils.getXpath = function (p) {
+				success = true;
+				assert.equal(fixture, p);
+				return expected;
+			};
+			var result = new DqElement(fixture);
+			assert.deepEqual(result.xpath, [expected]);
+			axe.utils.getXpath = orig;
+		});
+
+		it('should prefer selector from spec object', function () {
+			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
+			var result = new DqElement(fixture.firstChild, {
+				xpath: 'woot'
+			});
+			assert.equal(result.xpath, 'woot');
+		});
+
+	});
+
 	describe('toJSON', function () {
 		it('should only stringify selector and source', function () {
 			var expected = {
 				selector: 'foo > bar > joe',
-				source: '<joe aria-required="true">'
+				source: '<joe aria-required="true">',
+				xpath: '/foo/bar/joe'
 			};
 			var result = new DqElement('joe', expected);
 

@@ -1,6 +1,5 @@
 {
   "id": "color-contrast",
-  "matches": "color-contrast-matches.js",
   "evaluate": "color-contrast.js",
   "metadata": {
     "impact": "critical",

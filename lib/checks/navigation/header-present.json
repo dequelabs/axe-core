@@ -1,6 +1,5 @@
 {
   "id": "header-present",
-  "selector": "html",
   "evaluate": "header-present.js",
   "metadata": {
     "impact": "moderate",

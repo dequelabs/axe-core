@@ -83,7 +83,7 @@ describe('link-in-text-block', function () {
 		}, {
 			color: '#000'
 		});
-		assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
+		assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
 	});
 
 	describe('link default state', function () {
@@ -140,13 +140,13 @@ describe('link-in-text-block', function () {
 			});
 		});
 
-		it('returns true if text contrast >= 3:0', function() {
+		it('returns undefined if text contrast >= 3:0', function() {
 			var linkElm = getLinkElm({
 				color: 'cyan'
 			}, {
 				color: 'black'
 			});
-			assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
+			assert.isUndefined(checks['link-in-text-block'].evaluate(linkElm));
 		});
 
 		it('returns false if text contrast < 3:0', function() {
@@ -158,29 +158,36 @@ describe('link-in-text-block', function () {
 			assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
 		});
 
-		it('returns true if background contrast >= 3:0', function() {
+		it('returns undefined if background contrast >= 3:0', function() {
 			var linkElm = getLinkElm({
+				color: '#000010',
 				backgroundColor: 'purple'
 			}, {
+				color: '#000000',
 				backgroundColor: 'white'
 			});
-			assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
+			assert.isUndefined(checks['link-in-text-block'].evaluate(linkElm));
 		});
 
 		it('returns false if background contrast < 3:0', function() {
 			var linkElm = getLinkElm({
+				color: '#000010',
 				backgroundColor: '#FFE'
 			}, {
+				color: '#000000',
 				backgroundColor: '#FFF'
 			});
 			assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
 		});
 
-		it('returns true if the background contrast can not be determined', function () {
+		it('returns undefined if the background contrast can not be determined', function () {
 			var linkElm = getLinkElm({ }, {
-				backgroundImage: 'url(photo.jpg)'
+				color: '#000010',
+				backgroundImage: 'url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)'
+			}, {
+				color: '#000000'
 			});
-			assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
+			assert.isUndefined(checks['link-in-text-block'].evaluate(linkElm));
 		});
 
 	});

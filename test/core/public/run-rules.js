@@ -1,86 +1,4 @@
 /*global runRules */
-describe('axe.a11yCheck', function () {
-	'use strict';
-
-	describe('reporter', function () {
-
-		it('should throw if no audit is configured', function () {
-			axe._audit = null;
-
-			assert.throws(function () {
-				axe.a11yCheck(document, {});
-			}, Error, /^No audit configured/);
-		});
-
-		it('should allow for option-less invocation', function (done) {
-
-			axe._load({ reporter: function (r, c) {
-				c(r);
-			}});
-			axe.a11yCheck(document, function (result) {
-				assert.isArray(result);
-				assert.lengthOf(result, 0);
-				done();
-			});
-		});
-
-		it('should use specified reporter via options - anon function', function (done) {
-
-			axe._load({
-				reporter: function () {
-					assert.fail('should not be called');
-				}
-			});
-			axe.a11yCheck(document, { reporter: function (result) {
-				assert.isArray(result);
-				assert.lengthOf(result, 0);
-				done();
-			}});
-		});
-
-		it('should use specified reporter via options by name', function (done) {
-
-			var orig = window.reporters;
-			axe._load({
-				reporter: function () {
-					assert.fail('should not be called');
-				}
-			});
-			axe.reporter('foo', function (result) {
-				assert.isArray(result);
-				assert.lengthOf(result, 0);
-				window.reporters = orig;
-				done();
-			});
-			axe.a11yCheck(document, { reporter: 'foo' });
-		});
-
-		it('should check configured reporter', function (done) {
-
-			axe._load({
-				reporter: function (result) {
-					assert.isArray(result);
-					assert.lengthOf(result, 0);
-					done();
-				}
-			});
-			axe.a11yCheck(document, null);
-		});
-
-		it('fallback to default configured reporter', function (done) {
-			var orig = window.defaultReporter;
-			window.defaultReporter = function (result) {
-				assert.isArray(result);
-				assert.lengthOf(result, 0);
-				done();
-			};
-
-			axe._load({});
-			axe.a11yCheck(document, null);
-			window.defaultReporter = orig;
-		});
-	});
-});
 describe('runRules', function () {
 	'use strict';
 
@@ -94,9 +12,14 @@ describe('runRules', function () {
 		context.appendChild(i);
 	}
 
-	function createFrames(callback) {
-		var frame, num = 2,
-			loaded = 0;
+	function createFrames(url, callback) {
+		var frame, num = 2;
+		var loaded = 0;
+
+		if (typeof url === 'function'){
+			callback = url;
+			url = '../mock/frames/frame-frame.html';
+		}
 
 		function onLoad() {
 			loaded++;
@@ -106,7 +29,7 @@ describe('runRules', function () {
 		}
 
 		frame = document.createElement('iframe');
-		frame.src = '../mock/frames/frame-frame.html';
+		frame.src = url;
 
 		frame.addEventListener('load', onLoad);
 		fixture.appendChild(frame);
@@ -115,14 +38,15 @@ describe('runRules', function () {
 		frame.src = '../mock/frames/nocode.html';
 		frame.addEventListener('load', onLoad);
 		fixture.appendChild(frame);
+		return frame;
 	}
 
 	var fixture = document.getElementById('fixture');
 
 	var isNotCalled;
 	beforeEach(function () {
-		isNotCalled = function () {
-			assert.ok(false, 'Reject should not be called');
+		isNotCalled = function (err) {
+			throw err || new Error('Reject should not be called');
 		};
 	});
 
@@ -203,7 +127,7 @@ describe('runRules', function () {
 				any: ['has-target']
 			}, {
 				id: 'first-div',
-				selector: 'div',
+				selector: 'div:not([id=fixture])',
 				any: ['first-div']
 			}],
 			checks: [{
@@ -213,7 +137,6 @@ describe('runRules', function () {
 				}
 			}, {
 				id: 'first-div',
-				selector: ':not(#fixture)',
 				evaluate: function (node) {
 					this.relatedNodes([node]);
 					return false;
@@ -238,10 +161,15 @@ describe('runRules', function () {
 					helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/div#target?application=axeAPI',
 					pageLevel: false,
 					impact: null,
+					inapplicable: [],
+					incomplete: [],
 					violations: [],
 					passes: [{
+						result: 'passed',
+						impact: null,
 						node: {
 							selector: ['#context-test', '#target'],
+							xpath: ['/iframe[@id=\'context-test\']', '/div[@id=\'target\']'],
 							source: '<div id="target"></div>'
 						},
 						any: [{
@@ -252,17 +180,22 @@ describe('runRules', function () {
 						all: [],
 						none: []
 					}],
-					result: 'PASS',
+					result: 'passed',
 					tags: []
 				}, {
 					id: 'first-div',
 					helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/first-div?application=axeAPI',
 					pageLevel: false,
 					impact: null,
+					inapplicable: [],
+					incomplete: [],
 					violations: [],
 					passes: [{
+						result: 'passed',
+						impact: null,
 						node: {
 							selector: ['#context-test', '#foo'],
+							xpath: ['/iframe[@id=\'context-test\']', '/div[@id=\'foo\']'],
 							source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
 						},
 						any: [{
@@ -270,13 +203,14 @@ describe('runRules', function () {
 							data: null,
 							relatedNodes: [{
 								selector: ['#context-test', '#foo'],
+								xpath: ['/iframe[@id=\'context-test\']', '/div[@id=\'foo\']'],
 								source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
 							}]
 						}],
 						all: [],
 						none: []
 					}],
-					result: 'PASS',
+					result: 'passed',
 					tags: []
 				}]);
 
@@ -309,7 +243,8 @@ describe('runRules', function () {
 			length: 2
 		};
 
-		axe.a11yCheck($test, function (results) {
+		axe.run($test, function (err, results) {
+			assert.isNull(err);
 			assert.lengthOf(results.violations, 1);
 			assert.lengthOf(results.violations[0].nodes, 4);
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);
@@ -338,7 +273,8 @@ describe('runRules', function () {
 		fixture.innerHTML = '<div class="foo" id="t1"><span></span></div><div class="foo" id="t2"><em></em></div>';
 
 		var test = fixture.querySelectorAll('.foo');
-		axe.a11yCheck(test, function (results) {
+		axe.run(test, function (err, results) {
+			assert.isNull(err);
 			assert.lengthOf(results.violations, 1);
 			assert.lengthOf(results.violations[0].nodes, 4);
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);
@@ -357,7 +293,7 @@ describe('runRules', function () {
 				any: ['has-target']
 			}, {
 				id: 'first-div',
-				selector: 'div',
+				selector: 'div:not([id=fixture])',
 				any: ['first-div'],
 			}],
 			checks: [{
@@ -367,7 +303,6 @@ describe('runRules', function () {
 				}
 			}, {
 				id: 'first-div',
-				selector: ':not(#fixture)',
 				evaluate: function (node) {
 					this.relatedNodes([node]);
 					return false;
@@ -428,9 +363,13 @@ describe('runRules', function () {
 					stuff: 'blah',
 					impact: 'moderate',
 					passes: [],
+					inapplicable: [],
+					incomplete: [],
 					violations: [{
+						result: 'failed',
 						node: {
 							selector: ['#target'],
+							xpath: ['/div[@id=\'target\']'],
 							source: '<div id="target">Target!</div>'
 						},
 						impact: 'moderate',
@@ -445,7 +384,7 @@ describe('runRules', function () {
 						all: [],
 						none: []
 					}],
-					result: 'FAIL',
+					result: 'failed',
 					tags: []
 				}, {
 					id: 'first-div',
@@ -454,10 +393,15 @@ describe('runRules', function () {
 					bar: 'foo',
 					stuff: 'no',
 					impact: null,
+					inapplicable: [],
+					incomplete: [],
 					violations: [],
 					passes: [{
+						result: 'passed',
+						impact: null,
 						node: {
 							selector: ['#target'],
+							xpath: ['/div[@id=\'target\']'],
 							source: '<div id="target">Target!</div>'
 						},
 						any: [{
@@ -468,13 +412,14 @@ describe('runRules', function () {
 							data: null,
 							relatedNodes: [{
 								selector: ['#target'],
+								xpath: ['/div[@id=\'target\']'],
 								source: '<div id="target">Target!</div>'
 							}]
 						}],
 						all: [],
 						none: []
 					}],
-					result: 'PASS',
+					result: 'passed',
 					tags: []
 				}]);
 			done();
@@ -495,10 +440,136 @@ describe('runRules', function () {
 				function (err) {
 					assert.instanceOf(err, Error);
 					done();
-				}, isNotCalled);
+				});
 			}, 100);
 		});
 	});
 
+	it('should resolve to cantTell when a rule fails', function (done) {
+		axe._load({
+			rules: [{
+				id: 'incomplete-1',
+				selector: '*',
+				none: ['undeffed']
+			}, {
+				id: 'incomplete-2',
+				selector: '*',
+				none: ['thrower']
+			}],
+			checks: [{
+				id: 'undeffed',
+				evaluate: function () {
+					return undefined;
+				}
+			}, {
+				id: 'thrower',
+				evaluate: function () {
+					throw new Error('Check failed to complete');
+				}
+			}]
+		});
 
+		fixture.innerHTML = '<div></div>';
+
+		axe.a11yCheck('#fixture', function (results) {
+			assert.lengthOf(results.incomplete, 2);
+			assert.equal(results.incomplete[0].id, 'incomplete-1');
+			assert.equal(results.incomplete[1].id, 'incomplete-2');
+
+			assert.include(results.incomplete[1].description,
+						'An error occured while running this rule');
+			done();
+		});
+	});
+
+	it('should resolve to cantTell if an error occurs inside frame rules', function (done) {
+		axe._load({
+			rules: [{
+				id: 'incomplete-1',
+				selector: '.nogo',
+				none: ['undeffed']
+			}, {
+				id: 'incomplete-2',
+				selector: '.nogo',
+				none: ['thrower']
+			}],
+			checks: [{
+				id: 'undeffed',
+				evaluate: function () {
+					return false;
+				}
+			}, {
+				id: 'thrower',
+				evaluate: function () {
+					return false;
+				}
+			}]
+		});
+
+		iframeReady('../mock/frames/rule-error.html', fixture, 'context-test', function () {
+			axe.a11yCheck('#fixture', function (results) {
+				assert.lengthOf(results.incomplete, 2);
+				assert.equal(results.incomplete[0].id, 'incomplete-1');
+				assert.equal(results.incomplete[1].id, 'incomplete-2');
+
+				assert.include(results.incomplete[1].description,
+							'An error occured while running this rule');
+				done();
+			}, isNotCalled);
+		});
+	});
+
+	it('should cascade `no elements found` errors in frames to reject run_rules', function (done) {
+		axe._load({ rules: [{
+			id: 'invalidRule'
+		}], checks: [], messages: {}});
+		fixture.innerHTML = '<div id="outer"></div>';
+		var outer = document.getElementById('outer');
+
+		iframeReady('../mock/frames/context.html', outer, 'target', function() {
+
+			runRules([['#target', '#elementNotFound']], {}, function resolve() {
+				assert.ok(false, 'frame should have thrown an error');
+			}, function reject(err) {
+				assert.instanceOf(err, Error);
+				assert.include(err.message, 'No elements found for include in frame Context');
+				done();
+			});
+
+		});
+	});
+
+	it('should not call reject when the resolve throws', function (done) {
+		var rejectCalled = false;
+		axe._load({ rules: [{
+			id: 'html',
+			selector: 'html',
+			any: ['html']
+		}], checks: [{
+			id: 'html',
+			evaluate: function () {
+				return true;
+			}
+		}], messages: {}});
+
+		function resolve() {
+			setTimeout(function () {
+				assert.isFalse(rejectCalled);
+				axe.log = log;
+				done();
+			}, 20);
+			throw new Error('err');
+		}
+		function reject() {
+			rejectCalled = true;
+		}
+
+		var log = axe.log;
+		axe.log = function (e) {
+			assert.equal(e.message, 'err');
+			axe.log = log;
+		};
+		runRules(document, {},resolve, reject);
+
+	});
 });

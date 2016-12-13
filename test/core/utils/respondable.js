@@ -332,6 +332,16 @@ describe('axe.utils.respondable', function () {
 		assert.isTrue(success);
 	});
 
+	it('uses respondable.isInFrame() to check if the page is in a frame or not', function() {
+		assert.equal(axe.utils.respondable.isInFrame(), !!window.frameElement);
+
+		assert.isFalse(axe.utils.respondable.isInFrame({
+			frameElement: null
+		}));
+		assert.isTrue(axe.utils.respondable.isInFrame({
+			frameElement: document.createElement('iframe')
+		}));
+	});
 
 	describe('subscribe', function () {
 		it('should be a function', function () {

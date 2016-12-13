@@ -18,7 +18,9 @@ describe('axe.configure', function() {
 	});
 
 	it('should override an audit\'s reporter - string', function() {
-		axe._load({ reporter: function (results, callback) { callback(results); } });
+		axe._load({ });
+		assert.isNull(axe._audit.reporter);
+
 		axe.configure({ reporter: 'v1' });
 		assert.equal(axe._audit.reporter, 'v1');
 	});
@@ -68,6 +70,25 @@ describe('axe.configure', function() {
 			'https://dequeuniversity.com/rules/thung/x.y/bob?application=thing');
 	});
 
+	it('sets branding on newly configured rules', function () {
+		axe._load({});
+		axe.configure({
+			branding: {
+				application: 'thing',
+				brand: 'thung'
+			}
+		});
+		axe.configure({
+			rules: [{
+				id: 'bob',
+				selector: 'pass',
+			}],
+		});
+
+		assert.equal(axe._audit.data.rules.bob.helpUrl,
+			'https://dequeuniversity.com/rules/thung/x.y/bob?application=thing');
+	});
+
 	it('should allow for overwriting of rules', function () {
 		axe._load({
 			data: {
@@ -84,7 +105,9 @@ describe('axe.configure', function() {
 			rules: [{
 				id: 'bob',
 				selector: 'pass',
-				metadata: {joe: 'joe'}
+				metadata: {
+					joe: 'joe'
+				}
 			}]
 		});
 
@@ -101,14 +124,16 @@ describe('axe.configure', function() {
 			checks: [{
 				id: 'bob',
 				options: true,
-				metadata: 'joe'
+				metadata: {
+					joe: 'joe'
+				}
 			}]
 		});
 
 		assert.instanceOf(axe._audit.checks.bob, Check);
 		assert.equal(axe._audit.checks.bob.id, 'bob');
 		assert.isTrue(axe._audit.checks.bob.options);
-		assert.equal(axe._audit.data.checks.bob, 'joe');
+		assert.equal(axe._audit.data.checks.bob.joe, 'joe');
 
 	});
 
@@ -122,23 +147,52 @@ describe('axe.configure', function() {
 			checks: [{
 				id: 'bob',
 				options: false,
-				selector: 'fail'
 			}]
 		});
 		axe.configure({
 			checks: [{
 				id: 'bob',
 				options: true,
-				selector: 'pass',
-				metadata: 'joe'
+				metadata: {
+					joe: 'joe'
+				}
 			}]
 		});
 
 		assert.instanceOf(axe._audit.checks.bob, Check);
 		assert.equal(axe._audit.checks.bob.id, 'bob');
 		assert.isTrue(axe._audit.checks.bob.options);
-		assert.equal(axe._audit.checks.bob.selector, 'pass');
-		assert.equal(axe._audit.data.checks.bob, 'joe');
+		assert.equal(axe._audit.data.checks.bob.joe, 'joe');
 
+	});
+
+	it('should create an execution context for check messages', function () {
+		axe._load({});
+		axe.configure({
+			checks: [{
+				id: 'bob',
+				metadata: {
+					messages: {
+						pass: 'function () { return \'Bob\' + \' John\';}',
+						fail: 'Bob Pete'
+					}
+				}
+			}]
+		});
+
+		assert.isFunction(axe._audit.data.checks.bob.messages.pass);
+		assert.isString(axe._audit.data.checks.bob.messages.fail);
+		assert.equal(axe._audit.data.checks.bob.messages.pass(), 'Bob John');
+		assert.equal(axe._audit.data.checks.bob.messages.fail, 'Bob Pete');
+	});
+
+	it('overrides the default value of audit.tagExclude', function () {
+		axe._load({});
+		assert.deepEqual(axe._audit.tagExclude, ['experimental']);
+
+		axe.configure({
+			tagExclude: ['ninjas']
+		});
+		assert.deepEqual(axe._audit.tagExclude, ['ninjas']);
 	});
 });
