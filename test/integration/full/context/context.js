@@ -6,13 +6,14 @@ describe('context test', function () {
 	before(function (done) {
 		var frame = document.getElementById('myframe');
 		if (frame.contentWindow.document.readyState === 'complete') {
-			console.error('already loaded');
-			done();
-		} else {
-			console.error('calling addEventListener to wait for iframe...');
-			frame.addEventListener('load', function () {
-				console.error('...iframe loaded');
+			setTimeout(function () {
 				done();
+			}, 1000);
+		} else {
+			frame.addEventListener('load', function () {
+				setTimeout(function () {
+					done();
+				}, 1000);
 			});
 		}
 	});
