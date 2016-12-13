@@ -26,7 +26,7 @@ var failedTests = [];
 			});
 		});
 	} else {
-		phantomjs.on('error.*', function(error, stack) {
+		window.phantomjs.on('error.*', function(error, stack) {
 			var formattedStack = stack.map(function(frame) {
 			return '    at ' + (frame.function ? frame.function : 'undefined') + ' (' + frame.file + ':' + frame.line + ')';
 		}).join('\n');
