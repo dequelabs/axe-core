@@ -3,13 +3,6 @@ var failedTests = [];
 (function () {
 	'use strict';
 	if (navigator.userAgent.indexOf('PhantomJS') < 0) {
-		phantomjs.on('error.*', function(error, stack) {
-			var formattedStack = stack.map(function(frame) {
-			return '    at ' + (frame.function ? frame.function : 'undefined') + ' (' + frame.file + ':' + frame.line + ')';
-		}).join('\n');
-			console.log(error + '\n' + formattedStack, 3);
-		});
-
 		var runner = mocha.run();
 		runner.on('end', function() {
 			window.mochaResults = runner.stats;
@@ -31,6 +24,13 @@ var failedTests = [];
 				stack: err.stack,
 				titles: flattenTitles(test)
 			});
+		});
+	} else {
+		phantomjs.on('error.*', function(error, stack) {
+			var formattedStack = stack.map(function(frame) {
+			return '    at ' + (frame.function ? frame.function : 'undefined') + ' (' + frame.file + ':' + frame.line + ')';
+		}).join('\n');
+			console.log(error + '\n' + formattedStack, 3);
 		});
 	}
 }());
