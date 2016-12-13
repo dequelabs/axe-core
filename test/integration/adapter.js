@@ -1,4 +1,4 @@
-/*global mocha, phantomjs, console */
+/*global mocha */
 var failedTests = [];
 (function () {
 	'use strict';
@@ -24,13 +24,6 @@ var failedTests = [];
 				stack: err.stack,
 				titles: flattenTitles(test)
 			});
-		});
-	} else {
-		phantomjs.on('error.*', function(error, stack) {
-			var formattedStack = stack.map(function(frame) {
-			return '    at ' + (frame.function ? frame.function : 'undefined') + ' (' + frame.file + ':' + frame.line + ')';
-		}).join('\n');
-			console.log(error + '\n' + formattedStack, 3);
 		});
 	}
 }());

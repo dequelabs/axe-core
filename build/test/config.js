@@ -31,6 +31,7 @@ exports = module.exports = function (grunt, options) {
 		},
 		integration: {
 			options: {
+				logErrors: true,
 				urls: mapToUrl(['test/integration/full/**/*.html', '!test/integration/full/**/frames/**/*.html'],
 					'<%= connect.test.options.port %>'),
 				run: true,
