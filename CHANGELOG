@@ -38,7 +38,7 @@ v2.0.5:
 v2.0.7:
 	date: 2016-09-28
 	changes:
-		- Add TypeScript definiton v1
+		- Add TypeScript definition v1
 v2.1.7:
 	date: 2016-12-13
 	changes:
