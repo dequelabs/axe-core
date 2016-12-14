@@ -21,3 +21,4 @@ Add your project/integration to this file and submit a pull request.
 17. [Axegrinder](https://github.com/claflamme/axegrinder)
 18. [Ghost-Axe](https://www.npmjs.com/package/ghost-axe)
 19. [Protractor accessibility plugin](https://github.com/angular/protractor-accessibility-plugin)
+20. [Storybook accessibility addon](https://github.com/jbovenschen/storybook-addon-a11y)
