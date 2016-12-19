@@ -153,6 +153,11 @@ git push origin develop
 
 ## Writing Integration Tests
 
-For each rule, axe-core needs to have integration tests. These tests are located in `tests/integration`. This directory contains two other directories. `rules`, which contains integration tests that can be run on a single page, and `full` which contains tests that can only be tested by running on multiple pages.
+For each rule, axe-core needs to have integration tests. These tests are located in `tests/integration`.
+This directory contains two other directories. `rules`, which contains integration tests that can be run
+on a single page, and `full` which contains tests that can only be tested by running on multiple pages.
 
-Ensure that for each check used in the rule, there is an integration test for both pass and fail results. Integration tests put in `rules` can be described using simple code snippets in an HTML file, and a JSON file that describes the expected outcome. For `full` tests, a complete Jasmin test should be created, including at least one HTML file that has the tested code, and a JS file that has the test statements.
+Ensure that for each check used in the rule, there is an integration test for both pass and fail results.
+Integration tests put in `rules` can be described using simple code snippets in an HTML file, and a JSON
+file that describes the expected outcome. For `full` tests, a complete Jasmine test should be created,
+including at least one HTML file that has the tested code, and a JS file that has the test statements.
