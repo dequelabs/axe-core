@@ -74,9 +74,8 @@ module.exports = function (grunt) {
 					continue;
 				}
 				var lang = entry[1].replace('Subtag: ', '').trim();
-				if (lang.length === 2) { // only interested in main languages
-					langs.push(lang);
-				}
+				
+				langs.push(lang);
 			}
 			generateOutput(langs, check);
 		}).then(function () {
