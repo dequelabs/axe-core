@@ -1,0 +1,26 @@
+[
+	{
+		"path": "node_modules/tough-cookie",
+		"justification" : "We do not make any HTTP requests"
+	},
+	{
+		"path": "node_modules/retire",
+		"justification" : "Used only for testing"
+	},
+	{
+		"path": "node_modules/grunt-retire",
+		"justification" : "Used only for testing"
+	},
+	{
+		"path": "node_modules/grunt-mocha",
+		"justification" : "Used only for testing"
+	},
+	{
+		"path": "node_modules/grunt-lib-phantomjs",
+		"justification" : "Used only for testing"
+	},
+	{
+		"path": "node_modules/request",
+		"justification" : "Used only for testing"
+	}
+]
