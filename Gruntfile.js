@@ -12,6 +12,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-retire');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadTasks('build/tasks');
 	grunt.loadNpmTasks('grunt-parallel');
@@ -33,6 +34,14 @@ module.exports = function (grunt) {
 				]
 			}
 		},
+	    retire: {
+			options: {
+				/** list of files to ignore **/
+				ignorefile: '.retireignore.json' //or '.retireignore.json'
+			},
+			js: ['lib/*.js'], /** Which js-files to scan. **/
+			node: ['./'] /** Which node directories to scan (containing package.json). **/
+	    },
 		clean: ['dist', 'tmp'],
 		babel: {
 			options: {
@@ -282,7 +291,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('build', ['clean', 'jshint', 'validate', 'concat:commons', 'configure',
+	grunt.registerTask('build', ['clean', 'jshint', 'validate', 'retire', 'concat:commons', 'configure',
 		 'babel', 'concat:engine', 'uglify']);
 
 	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
