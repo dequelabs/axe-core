@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "2.1.2",
+  "version": "2.1.7",
   "license": "MPL-2.0",
   "contributors": [
     {
@@ -48,7 +48,8 @@
   "typings": "axe.d.ts",
   "scripts": {
     "build": "grunt",
-    "test": "grunt test"
+    "test": "grunt test",
+    "test-fast": "grunt test-fast"
   },
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
@@ -61,6 +62,7 @@
     "dot": "~1.0.3",
     "grunt": "~0.4.5",
     "grunt-babel": "^6.0.0",
+    "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "~1.0.0",
     "grunt-contrib-concat": "~1.0.0",
     "grunt-contrib-connect": "~1.0.1",

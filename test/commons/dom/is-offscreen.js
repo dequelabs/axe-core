@@ -14,6 +14,20 @@ describe('dom.isOffscreen', function () {
 		assert.isTrue(axe.commons.dom.isOffscreen(el));
 	});
 
+	it('should detect elements positioned to but not beyond the left edge', function () {
+		fixture.innerHTML = '<div id="target" style="position: absolute; width: 50px; left: -50px;">Offscreen?</div>';
+		var el = document.getElementById('target');
+
+		assert.isTrue(axe.commons.dom.isOffscreen(el));
+	});
+
+	it('should not detect elements at the left edge with a zero width', function () {
+		fixture.innerHTML = '<div id="target" style="width: 0px; left: 0px;"></div>';
+		var el = document.getElementById('target');
+
+		assert.isFalse(axe.commons.dom.isOffscreen(el));
+	});
+
 	it('should detect elements positioned outside the top edge', function () {
 		fixture.innerHTML = '<div id="target" style="position: absolute; height: 50px; top: -51px;">Offscreen?</div>';
 		var el = document.getElementById('target');
