@@ -5,10 +5,14 @@ describe('context test', function () {
 	before(function (done) {
 		var frame = document.getElementById('myframe');
 		if (frame.contentWindow.document.readyState === 'complete') {
-			done();
+			setTimeout(function () {
+				done();
+			}, 1000);
 		} else {
 			frame.addEventListener('load', function () {
-				done();
+				setTimeout(function () {
+					done();
+				}, 1000);
 			});
 		}
 	});
