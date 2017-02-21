@@ -60,6 +60,13 @@ describe('axe.run', function () {
 		axe.run(document, noop);
 	});
 
+	it('works with performance logging enabled', function (done) {
+		axe.run(document, {performanceTimer: true}, function (err, result) {
+			assert.isObject(result);
+			done();
+		});
+	});
+
 	it('treats objects with include or exclude as the context object', function (done) {
 		axe._runRules = function (ctxt) {
 			assert.deepEqual(ctxt, {include: '#BoggyB'});

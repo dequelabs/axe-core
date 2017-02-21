@@ -399,6 +399,47 @@ describe('Rule', function() {
 					}, isNotCalled);
 				});
 
+				it('is created for matching nodes', function(done) {
+					var rule = new Rule({
+						all: ['cats']
+					}, {
+						checks: {
+							cats: new Check({
+								id: 'cats',
+								enabled: true,
+								evaluate: function() {
+									return true;
+								}
+							})
+						}
+					});
+					rule.run({
+						include: [fixture]
+					}, {}, function() {
+						assert.isTrue(isDqElementCalled);
+						done();
+					}, isNotCalled);
+				});
+
+				it('is not created for disabled checks', function(done) {
+					var rule = new Rule({
+						all: ['cats']
+					}, {
+						checks: {
+							cats: new Check({
+								id: 'cats',
+								enabled: false,
+								evaluate: function() {}
+							})
+						}
+					});
+					rule.run({
+						include: [fixture]
+					}, {}, function() {
+						assert.isFalse(isDqElementCalled);
+						done();
+					}, isNotCalled);
+				});
 			});
 
 			it('should pass thrown errors to the reject param', function (done) {

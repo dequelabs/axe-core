@@ -415,7 +415,7 @@ This will either be null or an object which is an instance of Error. If you are 
 
 #### Results Object
 
-The callback function passed in as the third parameter of `axe.allyCheck` runs on the results object. This object has two components – a passes array and a violations array.  The passes array keeps track of all the passed tests, along with detailed information on each one. This leads to more efficient testing, especially when used in conjunction with manual testing, as the user can easily find out what tests have already been passed. Similarly, the violations array keeps track of all the failed tests, along with detailed information on each one.
+The callback function passed in as the third parameter of `axe.a11yCheck` runs on the results object. This object has two components – a passes array and a violations array.  The passes array keeps track of all the passed tests, along with detailed information on each one. This leads to more efficient testing, especially when used in conjunction with manual testing, as the user can easily find out what tests have already been passed. Similarly, the violations array keeps track of all the failed tests, along with detailed information on each one.
 
 ###### `url`
 
@@ -440,7 +440,7 @@ Each object returned in these arrays have the following properties:
 * `helpUrl` - URL that provides more information about the specifics of the violation. Links to a page on the Deque University site.
 * `id` - Unique identifier for the rule; [see the list of rules](rule-descriptions.md)
 * `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the Rule failed or `null` if the check passed
-* `tags` - Array of tags that this rule is assigned. These tags can be used in the option structure to select which rules are run ([see `axe.allyCheck` parameters below for more information](#a11ycheck-parameters)).
+* `tags` - Array of tags that this rule is assigned. These tags can be used in the option structure to select which rules are run ([see `axe.a11yCheck` parameters below for more information](#a11ycheck-parameters)).
 * `nodes` - Array of all elements the Rule tested
 	* `html` - Snippet of HTML of the Element
 	* `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the test failed or `null` if the check passed
