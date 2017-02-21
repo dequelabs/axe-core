@@ -29,7 +29,7 @@ module.exports = function (grunt) {
 					'test-webdriver:chrome',
 					// Edge Webdriver isn't all too stable, manual testing required
 					// 'test-webdriver:edge',
-					'test-webdriver:safari',
+					// 'test-webdriver:safari',
 					'test-webdriver:ie'
 				]
 			}
