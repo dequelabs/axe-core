@@ -1,20 +1,23 @@
-node ('kuberhel') {
-    
+node ('kubeselenium2') {
+
     def err
-    
+
     try {
-    
-    stage 'check out source'
-    
-    sh 'chmod 400 /root/.ssh/bitbucket'
-    
-    git url: 'git@bitbucket.org:dmusser/axe-core.git', branch: 'develop', credentialsId: '39c09b29-afd3-4f30-b0d1-6c3e4d99de9f'
-    
-    stage 'building'
-    
-    sh 'npm install'
-    
-    sh 'grunt test-fast'
+
+    stage ('check out source') {
+      checkout scm
+    }
+
+
+    stage ('building') {
+      sh 'npm install'
+    }
+
+    stage ('testing') {
+      wrap([$class: 'Xvfb']) {
+        sh 'grunt test'
+      }
+    }
     
     } catch (caughtErr) {
 		err = caughtErr
