@@ -23,7 +23,7 @@ describe('html5-scope', function () {
 
 	});
 
-	it('should return false on non-HTML5 documents', function () {
+	it('should return true on non-HTML5 documents', function () {
 		var orig = axe.commons.dom.isHTML5;
 		axe.commons.dom.isHTML5 = function () {
 			return false;
@@ -32,7 +32,7 @@ describe('html5-scope', function () {
 		fixture.innerHTML = '<table><tr><th scope="col"></th></tr></table>';
 		var node = fixture.querySelector('th');
 
-		assert.isFalse(checks['html5-scope'].evaluate(node));
+		assert.isTrue(checks['html5-scope'].evaluate(node));
 
 		axe.commons.dom.isHTML5 = orig;
 	});
