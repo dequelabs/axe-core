@@ -35,15 +35,14 @@ node ('kubeselenium2') {
 		//	[$class: 'RequesterRecipientProvider']
 		//    ])
 
-		    slackSend channel: 'attest-prod', color: 'danger', message: "\'${env.JOB_NAME}\' (${env.BUILD_NUMBER})  has finished with ${currentBuild.result}. Build URL: ${env.BUILD_URL}", teamDomain: 'deque', token: 'BhW2Vk2kdmiumfZRfrLMGxon'
+		    slackSend channel: 'attest-prod', color: 'danger', message: "\'${env.JOB_NAME}\' (${env.BUILD_NUMBER})  has finished with ${currentBuild.result} ${env.BUILD_URL}", teamDomain: 'deque', token: 'BhW2Vk2kdmiumfZRfrLMGxon'
 
 		//    emailext attachLog: true, body: "Build from email-ext ${env.BUILD_URL}", mimeType: 'text/html', recipientProviders: [
 		//	[$class: 'CulpritsRecipientProvider'],
 		//	[$class: 'RequesterRecipientProvider']
 		//    ], subject: "\'${env.JOB_NAME}\' (${env.BUILD_NUMBER})  has finished with ${currentBuild.result}"
 		} else {
-		    slackSend channel: 'attest-prod', color: 'good', message: "\'${env.JOB_NAME}\' (${env.BUILD_NUMBER})  has finished with ${currentBuild.result}. Build URL: ${env.BUILD_URL}", teamDomain: 'deque', token: 'BhW2Vk2kdmiumfZRfrLMGxon'
-
+	    slackSend channel: 'attest-prod', color: 'good', message: "\'${env.JOB_NAME}\' (${env.BUILD_NUMBER})  has finished with ${currentBuild.result} ${env.BUILD_URL}", teamDomain: 'deque', token: 'BhW2Vk2kdmiumfZRfrLMGxon'
 		}
 
     }
