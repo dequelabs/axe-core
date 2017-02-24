@@ -32,8 +32,9 @@ function buildRules(grunt, options, commons, callback) {
 
 		function parseMetaData(source, propType) {
 			var data = source.metadata
-			if (source.id && locale && locale[propType]) {
-				data = locale[propType][source.id] || data
+			var key = source.id || source.type
+			if (key && locale && locale[propType]) {
+				data = locale[propType][key] || data
 			}
 			var result = clone(data) || {};
 
@@ -52,7 +53,7 @@ function buildRules(grunt, options, commons, callback) {
 		function createFailureSummaryObject(summaries) {
 			var result = {};
 			summaries.forEach(function (summary) {
-				result[summary.type] = parseMetaData(summary, 'summary');
+				result[summary.type] = parseMetaData(summary, 'failureSummaries');
 			});
 			return result;
 		}
