@@ -1,0 +1,15 @@
+{
+  "lang": "nl",
+  "checks": {
+    "abstractrole": {
+      "pass": "Er zijn geen abstracte rollen (role) gebruikt",
+      "fail": "Gebruik geen abstracte rollen (role)"
+    }
+  },
+  "rules": {
+    "aria-required-attr": {
+      "description": "Zorg dat elementen met ARIA rollen (role) de vereiste ARIA attributen hebben",
+      "help": "Voorzien de vereiste ARIA attributen"
+    }
+  }
+}

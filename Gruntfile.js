@@ -115,11 +115,10 @@ module.exports = function (grunt) {
 				src: ['<%= concat.commons.dest %>'],
 				options: {
 					tags: grunt.option('tags'),
-					locale: './locale/nl.json'
+					locale: './locales/nl.json'
 				},
 				dest: {
-					auto: 'tmp/rules.js',
-					descriptions: 'doc/rule-descriptions.md'
+					auto: 'tmp/rules.nl.js'
 				}
 			}
 		},

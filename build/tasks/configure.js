@@ -12,7 +12,8 @@ module.exports = function (grunt) {
       style: ['lib/**/*.less'],
       misc: ['lib/misc/**/*.json'],
 			blacklist: ['metadata'],
-			tags: ''
+			tags: '',
+      locale: null
 		});
 		var that = this;
 		this.files.forEach(function (file) {
