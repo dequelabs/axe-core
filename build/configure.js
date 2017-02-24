@@ -30,10 +30,10 @@ function buildRules(grunt, options, commons, callback) {
 	options.getFiles = false;
 	buildManual(grunt, options, commons, function (result) {
 
-		function parseMetaData(source) {
+		function parseMetaData(source, propType) {
 			var data = source.metadata
-			if (source.id && locale) {
-				data = (locale.rules[source.id] || locale.checks[source.id] || data)
+			if (source.id && locale && locale[propType]) {
+				data = locale[propType][source.id] || data
 			}
 			var result = clone(data) || {};
 
@@ -52,7 +52,7 @@ function buildRules(grunt, options, commons, callback) {
 		function createFailureSummaryObject(summaries) {
 			var result = {};
 			summaries.forEach(function (summary) {
-				result[summary.type] = parseMetaData(summary);
+				result[summary.type] = parseMetaData(summary, 'summary');
 			});
 			return result;
 		}
@@ -103,7 +103,7 @@ function buildRules(grunt, options, commons, callback) {
 				c.id = id;
 
 				if (definition.metadata && !metadata.checks[id]) {
-					metadata.checks[id] = parseMetaData(definition);
+					metadata.checks[id] = parseMetaData(definition, 'checks');
 				}
 
 				return c.options === undefined ? id : c;
@@ -130,7 +130,7 @@ function buildRules(grunt, options, commons, callback) {
 			rule.none = parseChecks(rule.none);
 
 			if (rule.metadata && !metadata.rules[rule.id]) {
-				metadata.rules[rule.id] = parseMetaData(rule);
+				metadata.rules[rule.id] = parseMetaData(rule, 'rules');
 			}
 			descriptions.push([rule.id, entities.encode(rule.metadata.description), rule.tags.join(', '), rule.enabled === false ? false : true]);
 			if (tags.length) {
