@@ -118,8 +118,8 @@ describe('runRules', function () {
 		frame.src = '../mock/frames/nested0.html';
 		fixture.appendChild(frame);
 	});
-	it('should properly calculate context and return results from matching frames', function (done) {
 
+	it('should properly calculate context and return results from matching frames', function (done) {
 		axe._load({
 			rules: [{
 				id: 'div#target',
@@ -216,7 +216,28 @@ describe('runRules', function () {
 
 				done();
 			}, isNotCalled);
+		});
+	});
 
+	it('should reject if the context is invalid', function (done) {
+		axe._load({
+			rules: [{
+				id: 'div#target',
+				selector: '#target',
+				any: ['has-target']
+			}],
+			messages: {}
+		});
+
+		iframeReady('../mock/frames/context.html', fixture, 'context-test', function () {
+			runRules('#not-happening', {}, function () {
+				assert.fail('This selector should not exist.');
+			}, function (error) {
+				assert.isOk(error);
+				assert.equal(error.message, 'No elements found for include in page Context');
+
+				done();
+			});
 		});
 	});
 

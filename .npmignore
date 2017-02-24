@@ -1,9 +1,4 @@
 tmp
 dist
 node_modules
-build
-lib
-test
 *.tgz
-bower.json
-typings/axe-core
