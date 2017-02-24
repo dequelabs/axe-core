@@ -80,6 +80,13 @@ The [aXe API](doc/API.md) package consists of:
 * `axe.js` - the JavaScript file that should be included in your web site under test (API)
 * `axe.min.js` - a minified version of the above file
 
+## Localization
+
+Axe can be build using your local language. To do so, a localization file must be added to the `./locales` directory. This file must have be named in the following manner: `<langcode>.json`. To build axe using this locale, instead of the default, run axe with the `--lang` flag, like so:
+
+`grunt build --lang=nl`
+
+This will create a new build for axe, called `axe.<lang>.js` and `axe.<lang>.min.js`.
 
 ## Contributing
 

@@ -11,11 +11,21 @@ var descriptionHeaders = '| Rule ID | Description | Tags | Enabled by default |\
 
 dot.templateSettings.strip = false;
 
-function buildRules(grunt, options, commons, callback) {
-	var locale
-	if (options.locale) {
-		locale = grunt.file.readJSON(options.locale)
+function getLocale(grunt, options) {
+	var locale, localeFile;
+	if (grunt.option('lang')) {
+		localeFile = './locales/' + grunt.option('lang') + '.json';
+	} else {
+		localeFile = options.locale;
 	}
+
+	if (localeFile) {
+		return grunt.file.readJSON(localeFile);
+	}
+}
+
+function buildRules(grunt, options, commons, callback) {
+	var locale = getLocale(grunt, options);
 
 	options.getFiles = false;
 	buildManual(grunt, options, commons, function (result) {

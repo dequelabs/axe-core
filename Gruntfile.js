@@ -17,6 +17,11 @@ module.exports = function (grunt) {
 	grunt.loadTasks('build/tasks');
 	grunt.loadNpmTasks('grunt-parallel');
 
+	var lang = '';
+	if (grunt.option('lang')) {
+		lang = '.' + grunt.option('lang');
+	}
+
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		parallel: {
@@ -84,7 +89,7 @@ module.exports = function (grunt) {
 					'<%= configure.rules.dest.auto %>',
 					'lib/outro.stub'
 				],
-				dest: 'axe.js',
+				dest: 'axe' + lang + '.js',
 				options: {
 					process: true
 				}
@@ -109,16 +114,6 @@ module.exports = function (grunt) {
 				dest: {
 					auto: 'tmp/rules.js',
 					descriptions: 'doc/rule-descriptions.md'
-				}
-			},
-			nl: {
-				src: ['<%= concat.commons.dest %>'],
-				options: {
-					tags: grunt.option('tags'),
-					locale: './locales/nl.json'
-				},
-				dest: {
-					auto: 'tmp/rules.nl.js'
 				}
 			}
 		},
@@ -150,8 +145,8 @@ module.exports = function (grunt) {
 		uglify: {
 			beautify: {
 				files: [{
-					src: ['./axe.js'],
-					dest: './axe.js'
+					src: ['<%= concat.engine.dest %>'],
+					dest: '<%= concat.engine.dest %>'
 				}],
 				options: {
 					mangle: false,
@@ -168,7 +163,7 @@ module.exports = function (grunt) {
 			minify: {
 				files: [{
 					src: ['<%= concat.engine.dest %>'],
-					dest: './axe.min.js'
+					dest: './axe' + lang + '.min.js'
 				}],
 				options: {
 					preserveComments: function(node, comment) {
