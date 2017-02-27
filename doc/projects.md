@@ -23,3 +23,4 @@ Add your project/integration to this file and submit a pull request.
 19. [Protractor accessibility plugin](https://github.com/angular/protractor-accessibility-plugin)
 20. [Storybook accessibility addon](https://github.com/jbovenschen/storybook-addon-a11y)
 21. [Intern](https://github.com/theintern/intern-a11y)
+22. [Protractor-axe-report Plugin](https://github.com/E1Edatatracker/protractor-axe-report-plugin)
