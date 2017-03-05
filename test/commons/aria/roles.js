@@ -189,19 +189,59 @@ describe('aria.implicitRole', function () {
 		axe.commons.aria._lut.role = orig;
 	});
 
-	it('should find the first matching role', function () {
+	it('should find the first optimal matching role', function () {
 		var node = document.createElement('div');
+		node.setAttribute('aria-required', 'true');
+
 		node.id = 'cats';
 		fixture.appendChild(node);
 
 		axe.commons.aria._lut.role = {
 			'cats': {
 				implicit: ['div[id="cats"]']
+			},
+			'dogs': {
+				implicit: ['div[id="cats"]']
+			},
+			'dinosaurs': {
+				attributes: {
+					allowed: ['aria-required']
+				},
+				implicit: ['div[id="cats"]']
 			}
 		};
-		assert.equal(axe.commons.aria.implicitRole(node), 'cats');
 
+		assert.equal(axe.commons.aria.implicitRole(node), 'dinosaurs');
 	});
+
+	it('should find the first optimal matching role when multiple optimal matches are available', function () {
+		var node = document.createElement('div');
+		node.setAttribute('aria-required', 'true');
+
+		node.id = 'cats';
+		fixture.appendChild(node);
+
+		axe.commons.aria._lut.role = {
+			'cats': {
+				implicit: ['div[id="cats"]']
+			},
+			'dogs': {
+				 attributes: {
+					allowed: ['aria-required']
+				},
+				implicit: ['div[id="cats"]']
+			},
+			'dinosaurs': {
+				attributes: {
+					allowed: ['aria-required']
+				},
+				implicit: ['div[id="cats"]']
+			}
+		};
+
+		assert.equal(axe.commons.aria.implicitRole(node), 'dogs');
+	});
+
 
 	it('should return null if there is no matching implicit role', function () {
 		var node = document.createElement('div');
