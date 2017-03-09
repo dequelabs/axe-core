@@ -17,9 +17,15 @@ module.exports = function (grunt) {
 	grunt.loadTasks('build/tasks');
 	grunt.loadNpmTasks('grunt-parallel');
 
-	var lang = '';
-	if (grunt.option('lang')) {
-		lang = '.' + grunt.option('lang');
+	var langs;
+	if (grunt.option('all-lang')) {
+		langs = ['.nl', '.en', '.de'];
+
+	} else if (grunt.option('lang')) {
+		langs = ['.' + grunt.option('lang')];
+
+	} else {
+		langs = [''];
 	}
 
 	grunt.initConfig({
@@ -39,14 +45,14 @@ module.exports = function (grunt) {
 				]
 			}
 		},
-	    retire: {
+    retire: {
 			options: {
 				/** list of files to ignore **/
 				ignorefile: '.retireignore.json' //or '.retireignore.json'
 			},
 			js: ['lib/*.js'], /** Which js-files to scan. **/
 			node: ['./'] /** Which node directories to scan (containing package.json). **/
-	    },
+    },
 		clean: ['dist', 'tmp'],
 		babel: {
 			options: {
@@ -79,20 +85,24 @@ module.exports = function (grunt) {
 		},
 		concat: {
 			engine: {
-				src: [
-					'lib/intro.stub',
-					'tmp/core/index.js',
-					'tmp/core/*/index.js',
-					'tmp/core/**/index.js',
-					'tmp/core/**/*.js',
-					// include rules / checks / commons
-					'<%= configure.rules.dest.auto %>',
-					'lib/outro.stub'
-				],
-				dest: 'axe' + lang + '.js',
 				options: {
 					process: true
-				}
+				},
+				files: langs.map(function (lang, i) {
+					return {
+						src: [
+							'lib/intro.stub',
+							'tmp/core/index.js',
+							'tmp/core/*/index.js',
+							'tmp/core/**/index.js',
+							'tmp/core/**/*.js',
+							// include rules / checks / commons
+							'<%= configure.rules.files[' + i + '].dest.auto %>',
+							'lib/outro.stub'
+						],
+						dest: 'axe' + lang + '.js',
+					};
+				})
 			},
 			commons: {
 				src: [
@@ -107,14 +117,19 @@ module.exports = function (grunt) {
 		},
 		configure: {
 			rules: {
-				src: ['<%= concat.commons.dest %>'],
+				tmp: 'tmp/rules.js',
 				options: {
 					tags: grunt.option('tags')
 				},
-				dest: {
-					auto: 'tmp/rules.js',
-					descriptions: 'doc/rule-descriptions.md'
-				}
+				files: langs.map(function (lang) {
+					return {
+						src: ['<%= concat.commons.dest %>'],
+						dest: {
+							auto: 'tmp/rules' + lang + '.js',
+							descriptions: 'doc/rule-descriptions' + lang + '.md'
+						}
+					};
+				})
 			}
 		},
 		langs : {
@@ -144,10 +159,12 @@ module.exports = function (grunt) {
 		},
 		uglify: {
 			beautify: {
-				files: [{
-					src: ['<%= concat.engine.dest %>'],
-					dest: '<%= concat.engine.dest %>'
-				}],
+				files: langs.map(function (lang, i) {
+					return {
+						src: ['<%= concat.engine.files[' + i + '].dest %>'],
+						dest: '<%= concat.engine.files[' + i + '].dest %>'
+					};
+				}),
 				options: {
 					mangle: false,
 					compress: false,
@@ -161,10 +178,12 @@ module.exports = function (grunt) {
 				}
 			},
 			minify: {
-				files: [{
-					src: ['<%= concat.engine.dest %>'],
-					dest: './axe' + lang + '.min.js'
-				}],
+				files: langs.map(function (lang, i) {
+					return {
+						src: ['<%= concat.engine.files[' + i + '].dest %>'],
+						dest: './axe' + lang + '.min.js'
+					};
+				}),
 				options: {
 					preserveComments: function(node, comment) {
 						// preserve comments that start with a bang
@@ -202,7 +221,7 @@ module.exports = function (grunt) {
 				src: [
 					'<%= concat.engine.dest %>',
 					'build/test/engine.js',
-					'<%= configure.rules.dest.auto %>'
+					'<%= configure.rules.tmp %>'
 				],
 				dest: 'test/checks/index.html',
 				options: {
@@ -217,7 +236,7 @@ module.exports = function (grunt) {
 				src: [
 					'<%= concat.engine.dest %>',
 					'build/test/engine.js',
-					'<%= configure.rules.dest.auto %>'
+					'<%= configure.rules.tmp %>'
 				],
 				dest: 'test/commons/index.html',
 				options: {
@@ -232,7 +251,7 @@ module.exports = function (grunt) {
 				src: [
 					'<%= concat.engine.dest %>',
 					'build/test/engine.js',
-					'<%= configure.rules.dest.auto %>'
+					'<%= configure.rules.tmp %>'
 				],
 				dest: 'test/rule-matches/index.html',
 				options: {

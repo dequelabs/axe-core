@@ -14,12 +14,13 @@ module.exports = function (grunt) {
 			blacklist: ['metadata'],
 			tags: ''
 		});
-		var that = this;
+
 		this.files.forEach(function (file) {
 			var commons = file.src[0];
+
 			buildRules(grunt, options, commons, function (result) {
-				grunt.file.write(that.data.dest.auto, 'axe._load(' + result.auto + ');');
-				grunt.file.write(that.data.dest.descriptions, result.descriptions);
+				grunt.file.write(file.dest.auto, 'axe._load(' + result.auto + ');');
+				grunt.file.write(file.dest.descriptions, result.descriptions);
 				done();
 			});
 		});
