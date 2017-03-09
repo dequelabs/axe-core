@@ -18,11 +18,15 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-parallel');
 
 	var langs;
-	if (grunt.option('all-lang')) {
-		langs = ['.nl', '.en', '.de'];
-
-	} else if (grunt.option('lang')) {
+	if (grunt.option('lang')) {
 		langs = ['.' + grunt.option('lang')];
+
+	} else if (grunt.option('all-lang')) {
+		var localeFiles = require('fs').readdirSync('./locales');
+		langs = localeFiles.map(function (file) {
+			return '.' + file.replace('.json', '');
+		});
+		langs.unshift(''); // Add default
 
 	} else {
 		langs = [''];

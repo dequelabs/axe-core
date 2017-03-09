@@ -4,8 +4,8 @@ node_modules
 test/*/index.html
 test/integration/*/index.html
 axe.js
-axe.min.js
-axe.es2016.js
+axe.*.js
 *.tgz
 npm-shrinkwrap.json
 typings/axe-core/axe-core-tests.js
+doc/rule-descriptions.*.md

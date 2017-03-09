@@ -13,10 +13,8 @@ dot.templateSettings.strip = false;
 
 function getLocale(grunt, options) {
 	var locale, localeFile;
-	if (grunt.option('lang')) {
-		localeFile = './locales/' + grunt.option('lang') + '.json';
-	} else {
-		localeFile = options.locale;
+	if (options.locale) {
+		localeFile = './locales/' + options.locale + '.json';
 	}
 
 	if (localeFile) {
@@ -26,7 +24,6 @@ function getLocale(grunt, options) {
 
 function buildRules(grunt, options, commons, callback) {
 	var locale = getLocale(grunt, options);
-
 	options.getFiles = false;
 	buildManual(grunt, options, commons, function (result) {
 
