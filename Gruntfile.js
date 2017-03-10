@@ -19,7 +19,11 @@ module.exports = function (grunt) {
 
 	var langs;
 	if (grunt.option('lang')) {
-		langs = ['.' + grunt.option('lang')];
+		langs = (grunt.option('lang') || '')
+		.split(/[,;]/g).map(function (lang) {
+			lang = lang.trim();
+			return (lang !== 'en' ? '.' + lang : '');
+		});
 
 	} else if (grunt.option('all-lang')) {
 		var localeFiles = require('fs').readdirSync('./locales');
