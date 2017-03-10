@@ -57,7 +57,7 @@ module.exports = function (grunt) {
 			js: ['lib/*.js'], /** Which js-files to scan. **/
 			node: ['./'] /** Which node directories to scan (containing package.json). **/
     },
-		clean: ['dist', 'tmp'],
+		clean: ['dist', 'tmp', 'axe.js', 'axe.*.js'],
 		babel: {
 			options: {
 				compact: 'false'
@@ -134,6 +134,13 @@ module.exports = function (grunt) {
 						}
 					};
 				})
+			}
+		},
+		'add-locale': {
+			newLang: {
+				options: { lang: grunt.option('lang') },
+				src: ['<%= concat.commons.dest %>'],
+				dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
 			}
 		},
 		langs : {
@@ -327,6 +334,8 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('test-fast', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
+
+	grunt.registerTask('translate', ['clean', 'jshint', 'validate', 'concat:commons', 'add-locale']);
 
 	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
 };
