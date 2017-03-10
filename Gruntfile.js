@@ -93,6 +93,12 @@ module.exports = function (grunt) {
 		},
 		concat: {
 			engine: {
+				coreFiles: [
+					'tmp/core/index.js',
+					'tmp/core/*/index.js',
+					'tmp/core/**/index.js',
+					'tmp/core/**/*.js'
+				],
 				options: {
 					process: true
 				},
@@ -100,10 +106,7 @@ module.exports = function (grunt) {
 					return {
 						src: [
 							'lib/intro.stub',
-							'tmp/core/index.js',
-							'tmp/core/*/index.js',
-							'tmp/core/**/index.js',
-							'tmp/core/**/*.js',
+							'<%= concat.engine.coreFiles %>',
 							// include rules / checks / commons
 							'<%= configure.rules.files[' + i + '].dest.auto %>',
 							'lib/outro.stub'
@@ -142,9 +145,9 @@ module.exports = function (grunt) {
 		},
 		'add-locale': {
 			newLang: {
-				options: { lang: grunt.option('lang').toLowerCase() },
+				options: { lang: grunt.option('lang') },
 				src: ['<%= concat.commons.dest %>'],
-				dest: './locales/' + (grunt.option('lang').toLowerCase() || 'new-locale') + '.json'
+				dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
 			}
 		},
 		langs : {
@@ -222,7 +225,7 @@ module.exports = function (grunt) {
 		},
 		fixture: {
 			engine: {
-				src: '<%= concat.engine.src %>',
+				src: ['<%= concat.engine.coreFiles %>'],
 				dest: 'test/core/index.html',
 				options: {
 					fixture: 'test/runner.tmpl',
@@ -234,7 +237,7 @@ module.exports = function (grunt) {
 			},
 			checks: {
 				src: [
-					'<%= concat.engine.dest %>',
+					'<%= concat.engine.files[0].dest %>',
 					'build/test/engine.js',
 					'<%= configure.rules.tmp %>'
 				],
@@ -249,7 +252,7 @@ module.exports = function (grunt) {
 			},
 			commons: {
 				src: [
-					'<%= concat.engine.dest %>',
+					'<%= concat.engine.files[0].dest %>',
 					'build/test/engine.js',
 					'<%= configure.rules.tmp %>'
 				],
@@ -264,7 +267,7 @@ module.exports = function (grunt) {
 			},
 			ruleMatches: {
 				src: [
-					'<%= concat.engine.dest %>',
+					'<%= concat.engine.files[0].dest %>',
 					'build/test/engine.js',
 					'<%= configure.rules.tmp %>'
 				],
@@ -278,7 +281,7 @@ module.exports = function (grunt) {
 				}
 			},
 			integration: {
-				src: ['<%= concat.engine.dest %>'],
+				src: ['<%= concat.engine.files[0].dest %>'],
 				dest: 'test/integration/rules/index.html',
 				options: {
 					fixture: 'test/runner.tmpl',
@@ -330,10 +333,10 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('build', ['clean', 'jshint', 'validate', 'retire', 'concat:commons', 'configure',
+	grunt.registerTask('build', ['clean', 'jshint', 'validate', 'concat:commons', 'configure',
 		 'babel', 'concat:engine', 'uglify']);
 
-	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
+	grunt.registerTask('test', ['build', 'retire', 'testconfig', 'fixture', 'connect',
 		'mocha', 'parallel', 'jshint']);
 
 	grunt.registerTask('test-fast', ['build', 'testconfig', 'fixture', 'connect',
