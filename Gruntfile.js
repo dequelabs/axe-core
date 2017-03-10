@@ -19,7 +19,11 @@ module.exports = function (grunt) {
 
 	var langs;
 	if (grunt.option('lang')) {
-		langs = ['.' + grunt.option('lang')];
+		langs = (grunt.option('lang') || '')
+		.split(/[,;]/g).map(function (lang) {
+			lang = lang.trim().toLowerCase();
+			return (lang !== 'en' ? '.' + lang : '');
+		});
 
 	} else if (grunt.option('all-lang')) {
 		var localeFiles = require('fs').readdirSync('./locales');
@@ -138,9 +142,9 @@ module.exports = function (grunt) {
 		},
 		'add-locale': {
 			newLang: {
-				options: { lang: grunt.option('lang') },
+				options: { lang: grunt.option('lang').toLowerCase() },
 				src: ['<%= concat.commons.dest %>'],
-				dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
+				dest: './locales/' + (grunt.option('lang').toLowerCase() || 'new-locale') + '.json'
 			}
 		},
 		langs : {
