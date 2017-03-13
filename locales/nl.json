@@ -1,0 +1,23 @@
+{
+  "lang": "nl",
+  "checks": {
+    "abstractrole": {
+      "pass": "Er zijn geen abstracte rollen (role) gebruikt",
+      "fail": "Gebruik geen abstracte rollen (role)"
+    }
+  },
+  "rules": {
+    "aria-required-attr": {
+      "description": "Zorg dat elementen met ARIA rollen (role) de vereiste ARIA attributen hebben",
+      "help": "Voorzien de vereiste ARIA attributen"
+    }
+  },
+  "failureSummaries": {
+    "none": {
+      "failureMessage": "Los al het volgende op:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+    },
+    "any": {
+      "failureMessage": "Gebruik een van de volgende oplossingen:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+    }
+  }
+}

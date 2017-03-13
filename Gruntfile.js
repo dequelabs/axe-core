@@ -17,6 +17,25 @@ module.exports = function (grunt) {
 	grunt.loadTasks('build/tasks');
 	grunt.loadNpmTasks('grunt-parallel');
 
+	var langs;
+	if (grunt.option('lang')) {
+		langs = (grunt.option('lang') || '')
+		.split(/[,;]/g).map(function (lang) {
+			lang = lang.trim();
+			return (lang !== 'en' ? '.' + lang : '');
+		});
+
+	} else if (grunt.option('all-lang')) {
+		var localeFiles = require('fs').readdirSync('./locales');
+		langs = localeFiles.map(function (file) {
+			return '.' + file.replace('.json', '');
+		});
+		langs.unshift(''); // Add default
+
+	} else {
+		langs = [''];
+	}
+
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		parallel: {
@@ -34,15 +53,15 @@ module.exports = function (grunt) {
 				]
 			}
 		},
-	    retire: {
+    retire: {
 			options: {
 				/** list of files to ignore **/
 				ignorefile: '.retireignore.json' //or '.retireignore.json'
 			},
 			js: ['lib/*.js'], /** Which js-files to scan. **/
 			node: ['./'] /** Which node directories to scan (containing package.json). **/
-	    },
-		clean: ['dist', 'tmp'],
+    },
+		clean: ['dist', 'tmp', 'axe.js', 'axe.*.js'],
 		babel: {
 			options: {
 				compact: 'false'
@@ -74,20 +93,27 @@ module.exports = function (grunt) {
 		},
 		concat: {
 			engine: {
-				src: [
-					'lib/intro.stub',
+				coreFiles: [
 					'tmp/core/index.js',
 					'tmp/core/*/index.js',
 					'tmp/core/**/index.js',
-					'tmp/core/**/*.js',
-					// include rules / checks / commons
-					'<%= configure.rules.dest.auto %>',
-					'lib/outro.stub'
+					'tmp/core/**/*.js'
 				],
-				dest: 'axe.js',
 				options: {
 					process: true
-				}
+				},
+				files: langs.map(function (lang, i) {
+					return {
+						src: [
+							'lib/intro.stub',
+							'<%= concat.engine.coreFiles %>',
+							// include rules / checks / commons
+							'<%= configure.rules.files[' + i + '].dest.auto %>',
+							'lib/outro.stub'
+						],
+						dest: 'axe' + lang + '.js',
+					};
+				})
 			},
 			commons: {
 				src: [
@@ -102,14 +128,26 @@ module.exports = function (grunt) {
 		},
 		configure: {
 			rules: {
-				src: ['<%= concat.commons.dest %>'],
+				tmp: 'tmp/rules.js',
 				options: {
 					tags: grunt.option('tags')
 				},
-				dest: {
-					auto: 'tmp/rules.js',
-					descriptions: 'doc/rule-descriptions.md'
-				}
+				files: langs.map(function (lang) {
+					return {
+						src: ['<%= concat.commons.dest %>'],
+						dest: {
+							auto: 'tmp/rules' + lang + '.js',
+							descriptions: 'doc/rule-descriptions' + lang + '.md'
+						}
+					};
+				})
+			}
+		},
+		'add-locale': {
+			newLang: {
+				options: { lang: grunt.option('lang') },
+				src: ['<%= concat.commons.dest %>'],
+				dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
 			}
 		},
 		langs : {
@@ -139,10 +177,12 @@ module.exports = function (grunt) {
 		},
 		uglify: {
 			beautify: {
-				files: [{
-					src: ['./axe.js'],
-					dest: './axe.js'
-				}],
+				files: langs.map(function (lang, i) {
+					return {
+						src: ['<%= concat.engine.files[' + i + '].dest %>'],
+						dest: '<%= concat.engine.files[' + i + '].dest %>'
+					};
+				}),
 				options: {
 					mangle: false,
 					compress: false,
@@ -156,10 +196,12 @@ module.exports = function (grunt) {
 				}
 			},
 			minify: {
-				files: [{
-					src: ['<%= concat.engine.dest %>'],
-					dest: './axe.min.js'
-				}],
+				files: langs.map(function (lang, i) {
+					return {
+						src: ['<%= concat.engine.files[' + i + '].dest %>'],
+						dest: './axe' + lang + '.min.js'
+					};
+				}),
 				options: {
 					preserveComments: function(node, comment) {
 						// preserve comments that start with a bang
@@ -183,7 +225,7 @@ module.exports = function (grunt) {
 		},
 		fixture: {
 			engine: {
-				src: '<%= concat.engine.src %>',
+				src: ['<%= concat.engine.coreFiles %>'],
 				dest: 'test/core/index.html',
 				options: {
 					fixture: 'test/runner.tmpl',
@@ -195,9 +237,9 @@ module.exports = function (grunt) {
 			},
 			checks: {
 				src: [
-					'<%= concat.engine.dest %>',
+					'<%= concat.engine.files[0].dest %>',
 					'build/test/engine.js',
-					'<%= configure.rules.dest.auto %>'
+					'<%= configure.rules.tmp %>'
 				],
 				dest: 'test/checks/index.html',
 				options: {
@@ -210,9 +252,9 @@ module.exports = function (grunt) {
 			},
 			commons: {
 				src: [
-					'<%= concat.engine.dest %>',
+					'<%= concat.engine.files[0].dest %>',
 					'build/test/engine.js',
-					'<%= configure.rules.dest.auto %>'
+					'<%= configure.rules.tmp %>'
 				],
 				dest: 'test/commons/index.html',
 				options: {
@@ -225,9 +267,9 @@ module.exports = function (grunt) {
 			},
 			ruleMatches: {
 				src: [
-					'<%= concat.engine.dest %>',
+					'<%= concat.engine.files[0].dest %>',
 					'build/test/engine.js',
-					'<%= configure.rules.dest.auto %>'
+					'<%= configure.rules.tmp %>'
 				],
 				dest: 'test/rule-matches/index.html',
 				options: {
@@ -239,7 +281,7 @@ module.exports = function (grunt) {
 				}
 			},
 			integration: {
-				src: ['<%= concat.engine.dest %>'],
+				src: ['<%= concat.engine.files[0].dest %>'],
 				dest: 'test/integration/rules/index.html',
 				options: {
 					fixture: 'test/runner.tmpl',
@@ -291,14 +333,16 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('build', ['clean', 'jshint', 'validate', 'retire', 'concat:commons', 'configure',
+	grunt.registerTask('build', ['clean', 'jshint', 'validate', 'concat:commons', 'configure',
 		 'babel', 'concat:engine', 'uglify']);
 
-	grunt.registerTask('test', ['build', 'testconfig', 'fixture', 'connect',
+	grunt.registerTask('test', ['build', 'retire', 'testconfig', 'fixture', 'connect',
 		'mocha', 'parallel', 'jshint']);
 
 	grunt.registerTask('test-fast', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);
+
+	grunt.registerTask('translate', ['clean', 'jshint', 'validate', 'concat:commons', 'add-locale']);
 
 	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
 };
