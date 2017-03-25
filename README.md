@@ -99,3 +99,7 @@ Read the [documentation on contributing](CONTRIBUTING.md)
 ## Projects using axe-core
 
 [List of projects using axe-core](doc/projects.md)
+
+## Acknowledgements
+
+Thanks to the [Slick Parser](https://github.com/mootools/slick/blob/master/Source/Slick.Parser.js) implementers for their contribution, we have used it in the shadowDOM support code.
