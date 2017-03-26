@@ -28,7 +28,7 @@ describe('Context', function() {
 			fixture.innerHTML = '<div id="foo"></div>';
 			var result = new Context('#foo');
 
-			assert.deepEqual(result.include, [$id('foo')]);
+			assert.deepEqual([result.include[0].actualNode], [$id('foo')]);
 		});
 
 		it('should accept multiple selectors', function() {
@@ -38,7 +38,8 @@ describe('Context', function() {
 				['#bar']
 			]);
 
-			assert.deepEqual(result.include, [$id('foo'), $id('bar')]);
+			assert.deepEqual([result.include[0].actualNode, result.include[1].actualNode],
+				[$id('foo'), $id('bar')]);
 		});
 
 		it('should accept a node reference', function() {
@@ -47,43 +48,41 @@ describe('Context', function() {
 
 			var result = new Context(div);
 
-			assert.deepEqual(result.include, [div]);
+			assert.deepEqual([result.include[0].actualNode], [div]);
 
 		});
 
-              it('should accept a node reference consisting of nested divs', function() {
-                     var div1 = document.createElement('div');
-                     var div2 = document.createElement('div');
+		it('should accept a node reference consisting of nested divs', function() {
+			var div1 = document.createElement('div');
+			var div2 = document.createElement('div');
 
-                     div1.appendChild(div2);
-                     fixture.appendChild(div1);
+			div1.appendChild(div2);
+			fixture.appendChild(div1);
 
-                     var result = new Context(div1);
+			var result = new Context(div1);
 
-                     assert.deepEqual(result.include, [div1]);
+			assert.deepEqual([result.include[0].actualNode], [div1]);
+		});
 
-              });
+		it('should accept a node reference consisting of a form with nested controls', function() {
+			var form = document.createElement('form');
+			var input = document.createElement('input');
 
-              it('should accept a node reference consisting of a form with nested controls', function() {
-                     var form = document.createElement('form');
-                     var input = document.createElement('input');
+			form.appendChild(input);
+			fixture.appendChild(form);
 
-                     form.appendChild(input);
-                     fixture.appendChild(form);
+			var result = new Context(form);
 
-                     var result = new Context(form);
-
-                     assert.deepEqual(result.include, [form]);
-
-              });
+			assert.deepEqual([result.include[0].actualNode], [form]);
+		});
 
 		it('should accept an array of node references', function() {
 			fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
 
 			var result = new Context([$id('foo'), $id('bar')]);
 
-			assert.deepEqual(result.include, [$id('foo'), $id('bar')]);
-
+			assert.deepEqual([result.include[0].actualNode, result.include[1].actualNode],
+				[$id('foo'), $id('bar')]);
 		});
 
 		it('should remove any non-matched reference', function() {
@@ -95,8 +94,8 @@ describe('Context', function() {
 				['#bar']
 			]);
 
-			assert.deepEqual(result.include, [$id('foo'), $id('bar')]);
-
+			assert.deepEqual(result.include.map(function (n) { return n.actualNode; }),
+				[$id('foo'), $id('bar')]);
 		});
 
 		it('should remove any null reference', function() {
@@ -104,7 +103,8 @@ describe('Context', function() {
 
 			var result = new Context([$id('foo'), $id('bar'), null]);
 
-			assert.deepEqual(result.include, [$id('foo'), $id('bar')]);
+			assert.deepEqual(result.include.map(function (n) { return n.actualNode; }),
+				[$id('foo'), $id('bar')]);
 
 		});
 
@@ -119,7 +119,8 @@ describe('Context', function() {
 				['#bar'], div
 			]);
 
-			assert.deepEqual(result.include, [$id('foo'), $id('bar'), $id('baz')]);
+			assert.deepEqual(result.include.map(function (n) { return n.actualNode; }),
+				[$id('foo'), $id('bar'), $id('baz')]);
 
 		});
 
@@ -134,7 +135,8 @@ describe('Context', function() {
 
 			var result = new Context($test);
 
-			assert.deepEqual(result.include, [$id('foo'), $id('bar'), $id('baz')]);
+			assert.deepEqual(result.include.map(function (n) { return n.actualNode; }),
+				[$id('foo'), $id('bar'), $id('baz')]);
 
 		});
 
@@ -333,8 +335,8 @@ describe('Context', function() {
 				include: ['#fixture'],
 				exclude: ['#mocha']
 			}), {
-				include: [document.getElementById('fixture')],
-				exclude: [document.getElementById('mocha')],
+				include: [axe.utils.getComposedTree(document.getElementById('fixture'))[0]],
+				exclude: [axe.utils.getComposedTree(document.getElementById('mocha'))[0]],
 				initiator: true,
 				page: false,
 				frames: []
@@ -347,7 +349,7 @@ describe('Context', function() {
 				include: ['#fixture', '#monkeys'],
 				exclude: ['#bananas']
 			}), {
-				include: [document.getElementById('fixture')],
+				include: [axe.utils.getComposedTree(document.getElementById('fixture'))[0]],
 				exclude: [],
 				initiator: true,
 				page: false,
@@ -359,7 +361,7 @@ describe('Context', function() {
 			var result = new Context();
 
 			assert.lengthOf(result.include, 1);
-			assert.equal(result.include[0], document);
+			assert.equal(result.include[0].actualNode, document.documentElement);
 
 			assert.lengthOf(result.exclude, 0);
 
@@ -372,10 +374,10 @@ describe('Context', function() {
 		it('should default include to document', function () {
 			var result = new Context({ exclude: ['#fixture'] });
 			assert.lengthOf(result.include, 1);
-			assert.equal(result.include[0], document);
+			assert.equal(result.include[0].actualNode, document.documentElement);
 
 			assert.lengthOf(result.exclude, 1);
-			assert.equal(result.exclude[0], $id('fixture'));
+			assert.equal(result.exclude[0].actualNode, $id('fixture'));
 
 			assert.isTrue(result.initiator);
 			assert.isTrue(result.page);
@@ -387,7 +389,7 @@ describe('Context', function() {
 		it('should default empty include to document', function () {
 			var result = new Context({ include: [], exclude: [] });
 			assert.lengthOf(result.include, 1);
-			assert.equal(result.include[0], document);
+			assert.equal(result.include[0].actualNode, document.documentElement);
 		});
 
 	});
@@ -399,7 +401,7 @@ describe('Context', function() {
 				initiator: false
 			});
 			assert.lengthOf(result.include, 1);
-			assert.equal(result.include[0], document);
+			assert.equal(result.include[0].actualNode, document.documentElement);
 
 			assert.lengthOf(result.exclude, 0);
 
@@ -418,7 +420,7 @@ describe('Context', function() {
 			var result = new Context(spec);
 
 			assert.lengthOf(result.include, 1);
-			assert.equal(result.include[0], spec);
+			assert.equal(result.include[0].actualNode, spec.documentElement);
 
 			assert.lengthOf(result.exclude, 0);
 

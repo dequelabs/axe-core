@@ -31,17 +31,17 @@ describe('Rule', function() {
 						selector: '#monkeys'
 					}),
 					nodes = rule.gather({
-						include: [fixture],
+						include: [axe.utils.getComposedTree(fixture)[0]],
 						exclude: [],
 						frames: []
 					});
 
 				assert.lengthOf(nodes, 1);
-				assert.equal(nodes[0], node);
+				assert.equal(nodes[0].actualNode, node);
 
 				node.id = 'bananas';
 				nodes = rule.gather({
-					include: [fixture],
+					include: [axe.utils.getComposedTree(fixture)[0]],
 					exclude: [],
 					frames: []
 				});
@@ -54,7 +54,7 @@ describe('Rule', function() {
 						selector: 'div'
 					}),
 					result = rule.gather({
-						include: [fixture],
+						include: [axe.utils.getComposedTree(fixture)[0]],
 						exclude: [],
 						frames: []
 					});
@@ -70,10 +70,10 @@ describe('Rule', function() {
 						selector: 'div'
 					}),
 					nodes = rule.gather({
-						include: [document.getElementById('fixture').firstChild]
+						include: [axe.utils.getComposedTree(document.getElementById('fixture').firstChild)[0]]
 					});
 
-				assert.deepEqual(nodes, [node]);
+				assert.deepEqual(nodes.map(function (n) {return n.actualNode;}), [node]);
 			});
 
 			it('should default to all nodes if selector is not specified', function() {
@@ -90,18 +90,19 @@ describe('Rule', function() {
 
 				var rule = new Rule({}),
 					result = rule.gather({
-						include: [document.getElementById('fixture')]
+						include: [axe.utils.getComposedTree(document.getElementById('fixture'))[0]]
 					});
 
 				assert.lengthOf(result, 3);
-				assert.sameMembers(result, nodes);
+				assert.sameMembers(result.map(function (n) { return n.actualNode; }),
+					nodes);
 			});
 			it('should exclude hidden elements', function() {
 				fixture.innerHTML = '<div style="display: none"><span>HEHEHE</span></div>';
 
 				var rule = new Rule({}),
 					result = rule.gather({
-						include: [document.getElementById('fixture').firstChild]
+						include: [axe.utils.getComposedTree(document.getElementById('fixture').firstChild)[0]]
 					});
 
 				assert.lengthOf(result, 0);
@@ -113,10 +114,10 @@ describe('Rule', function() {
 						excludeHidden: false
 					}),
 					result = rule.gather({
-						include: [document.getElementById('fixture').firstChild]
+						include: [axe.utils.getComposedTree(document.getElementById('fixture').firstChild)[0]]
 					});
 
-				assert.deepEqual(result, [fixture.firstChild]);
+				assert.deepEqual(result.map(function (n) { return n.actualNode; }), [fixture.firstChild]);
 			});
 		});
 		describe('run', function() {
@@ -137,7 +138,7 @@ describe('Rule', function() {
 					});
 
 				rule.run({
-					include: [div]
+					include: [axe.utils.getComposedTree(div)[0]]
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
@@ -157,7 +158,7 @@ describe('Rule', function() {
 					});
 
 				rule.run({
-					include: [div]
+					include: [axe.utils.getComposedTree(div)[0]]
 				}, {}, isNotCalled, function() {
 					assert.isFalse(success);
 					done();
@@ -181,7 +182,7 @@ describe('Rule', function() {
 				});
 
 				rule.run({
-					include: [fixture]
+					include: [axe.utils.getComposedTree(fixture)[0]]
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
@@ -206,7 +207,7 @@ describe('Rule', function() {
 				});
 
 				rule.run({
-					include: [fixture]
+					include: [axe.utils.getComposedTree(fixture)[0]]
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
@@ -231,7 +232,7 @@ describe('Rule', function() {
 				}, isNotCalled);
 
 				rule.run({
-					include: [fixture]
+					include: [axe.utils.getComposedTree(fixture)[0]]
 				}, {}, function() {
 					assert.isTrue(success);
 					done();
@@ -264,7 +265,7 @@ describe('Rule', function() {
 					}
 				});
 				rule.run({
-					include: [document]
+					include: [axe.utils.getComposedTree(document)[0]]
 				}, options, function() {
 					done();
 				}, isNotCalled);
@@ -309,7 +310,7 @@ describe('Rule', function() {
 					}
 				});
 				rule.run({
-					include: [document]
+					include: [axe.utils.getComposedTree(document)[0]]
 				}, options, function() {
 					done();
 				}, isNotCalled);
@@ -328,7 +329,7 @@ describe('Rule', function() {
 					}
 				});
 				rule.run({
-					include: [document]
+					include: [axe.utils.getComposedTree(document)[0]]
 				}, {}, function(r) {
 					assert.lengthOf(r.nodes, 0);
 				}, isNotCalled);
@@ -369,7 +370,7 @@ describe('Rule', function() {
 						}
 					});
 					rule.run({
-						include: [fixture]
+						include: [axe.utils.getComposedTree(fixture)[0]]
 					}, {}, function() {
 						assert.isTrue(isDqElementCalled);
 						done();
@@ -392,7 +393,7 @@ describe('Rule', function() {
 						}
 					});
 					rule.run({
-						include: [fixture]
+						include: [axe.utils.getComposedTree(fixture)[0]]
 					}, {}, function() {
 						assert.isFalse(isDqElementCalled);
 						done();
@@ -414,7 +415,7 @@ describe('Rule', function() {
 						}
 					});
 					rule.run({
-						include: [fixture]
+						include: [axe.utils.getComposedTree(fixture)[0]]
 					}, {}, function() {
 						assert.isTrue(isDqElementCalled);
 						done();
@@ -434,7 +435,7 @@ describe('Rule', function() {
 						}
 					});
 					rule.run({
-						include: [fixture]
+						include: [axe.utils.getComposedTree(fixture)[0]]
 					}, {}, function() {
 						assert.isFalse(isDqElementCalled);
 						done();
@@ -457,7 +458,7 @@ describe('Rule', function() {
 				});
 
 				rule.run({
-					include: [fixture]
+					include: [axe.utils.getComposedTree(fixture)[0]]
 				}, {}, noop, function(err) {
 					assert.equal(err.message, 'Holy hand grenade');
 					done();
@@ -479,7 +480,7 @@ describe('Rule', function() {
 				});
 
 				rule.run({
-					include: [fixture]
+					include: [axe.utils.getComposedTree(fixture)[0]]
 				}, {}, noop, function(err) {
 					assert.equal(err.message, 'your reality');
 					done();
@@ -503,7 +504,7 @@ describe('Rule', function() {
 						}]
 					});
 					rule.run({
-						include: document
+						include: axe.utils.getComposedTree(document)[0]
 					}, {}, noop, isNotCalled);
 					assert.isTrue(success);
 
@@ -520,7 +521,7 @@ describe('Rule', function() {
 						}]
 					});
 					rule.run({
-						include: document
+						include: axe.utils.getComposedTree(document)[0]
 					}, {}, function() {
 						success = true;
 					}, isNotCalled);

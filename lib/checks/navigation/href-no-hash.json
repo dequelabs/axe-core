@@ -4,8 +4,8 @@
   "metadata": {
     "impact": "moderate",
     "messages": {
-      "pass": "Anchor does not have a href quals #",
-      "fail": "Anchor has a href quals #"
+      "pass": "Anchor does not have an href that equals #",
+      "fail": "Anchor has an href that equals #"
     }
   }
 }

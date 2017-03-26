@@ -28,9 +28,9 @@ describe('axe.utils.select', function () {
 			div.id = 'monkeys';
 			fixture.appendChild(div);
 
-			var result = axe.utils.select('#monkeys', { include: [document] });
+			var result = axe.utils.select('#monkeys', { include: [axe.utils.getComposedTree(document)[0]] });
 
-			assert.equal(result[0], div);
+			assert.equal(result[0].actualNode, div);
 
 		});
 
@@ -41,10 +41,10 @@ describe('axe.utils.select', function () {
 			fixture.innerHTML = '<div id="monkeys"><div id="bananas" class="bananas"></div></div>';
 
 			var result = axe.utils.select('.bananas', {
-				include: [$id('monkeys')]
+				include: [axe.utils.getComposedTree($id('monkeys'))[0]]
 			});
 
-			assert.deepEqual(result, [$id('bananas')]);
+			assert.deepEqual([result[0].actualNode], [$id('bananas')]);
 
 		});
 
@@ -52,8 +52,8 @@ describe('axe.utils.select', function () {
 			fixture.innerHTML = '<div id="monkeys"><div id="bananas" class="bananas"></div></div>';
 
 			var result = axe.utils.select('.bananas', {
-				include: [$id('fixture')],
-				exclude: [$id('monkeys')]
+				include: [axe.utils.getComposedTree($id('fixture'))[0]],
+				exclude: [axe.utils.getComposedTree($id('monkeys'))[0]]
 			});
 
 			assert.deepEqual(result, []);
@@ -73,8 +73,10 @@ describe('axe.utils.select', function () {
 
 
 			var result = axe.utils.select('.bananas', {
-				include: [$id('include1'), $id('include2')],
-				exclude: [$id('exclude1'), $id('exclude2')]
+				include: [axe.utils.getComposedTree($id('include1'))[0],
+					axe.utils.getComposedTree($id('include2'))[0]],
+				exclude: [axe.utils.getComposedTree($id('exclude1'))[0],
+					axe.utils.getComposedTree($id('exclude2'))[0]]
 			});
 
 			assert.deepEqual(result, []);
@@ -96,11 +98,14 @@ describe('axe.utils.select', function () {
 
 
 			var result = axe.utils.select('.bananas', {
-				include: [$id('include3'), $id('include2'), $id('include1')],
-				exclude: [$id('exclude1'), $id('exclude2')]
+				include: [axe.utils.getComposedTree($id('include3'))[0],
+					axe.utils.getComposedTree($id('include2'))[0],
+					axe.utils.getComposedTree($id('include1'))[0]],
+				exclude: [axe.utils.getComposedTree($id('exclude1'))[0],
+					axe.utils.getComposedTree($id('exclude2'))[0]]
 			});
 
-			assert.deepEqual(result, [$id('bananas')]);
+			assert.deepEqual([result[0].actualNode], [$id('bananas')]);
 
 		});
 
@@ -109,10 +114,13 @@ describe('axe.utils.select', function () {
 	it('should only contain unique elements', function () {
 		fixture.innerHTML = '<div id="monkeys"><div id="bananas" class="bananas"></div></div>';
 
-		var result = axe.utils.select('.bananas', { include: [$id('fixture'), $id('monkeys')] });
+		var result = axe.utils.select('.bananas', {
+			include: [axe.utils.getComposedTree($id('fixture'))[0],
+					axe.utils.getComposedTree($id('monkeys'))[0]]
+		});
 
 		assert.lengthOf(result, 1);
-		assert.equal(result[0], $id('bananas'));
+		assert.equal(result[0].actualNode, $id('bananas'));
 
 	});
 
@@ -120,10 +128,11 @@ describe('axe.utils.select', function () {
 		fixture.innerHTML = '<div id="one"><div id="target1" class="bananas"></div></div>' +
 			'<div id="two"><div id="target2" class="bananas"></div></div>';
 
-		var result = axe.utils.select('.bananas', { include: [$id('two'), $id('one')] });
+		var result = axe.utils.select('.bananas', { include: [axe.utils.getComposedTree($id('two'))[0],
+			axe.utils.getComposedTree($id('one'))[0]] });
 
-		assert.deepEqual(result, [$id('target1'), $id('target2')]);
-
+		assert.deepEqual(result.map(function (n) { return n.actualNode; }),
+			[$id('target1'), $id('target2')]);
 
 	});
 

@@ -4,6 +4,7 @@ function Vnode (nodeName, className, attributes, id) {
 	this.id = id;
 	this.attributes = attributes || [];
 	this.className = className;
+	this.nodeType = 1;
 }
 
 Vnode.prototype.getAttribute = function (att) {
@@ -11,7 +12,7 @@ Vnode.prototype.getAttribute = function (att) {
 	var attribute = this.attributes.find(function (item) {
 		return item.key === att;
 	});
-	return attribute ? attribute.value : '';
+	return attribute ? attribute.value : null;
 };
 
 describe('axe.utils.querySelectorAll', function () {

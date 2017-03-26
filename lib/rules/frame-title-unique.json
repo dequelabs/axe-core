@@ -1,6 +1,6 @@
 {
   "id": "frame-title-unique",
-  "selector": "frame[title]:not([title='']), iframe[title]:not([title=''])",
+  "selector": "frame[title], iframe[title]",
   "matches": "frame-title-has-text.js",
   "tags": [
     "cat.text-alternatives",

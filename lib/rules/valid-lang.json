@@ -1,6 +1,7 @@
 {
   "id": "valid-lang",
-  "selector": "[lang]:not(html), [xml\\:lang]:not(html)",
+  "selector": "[lang], [xml\\:lang]",
+  "matches": "not-html-matches.js",
   "tags": [
     "cat.language",
     "wcag2aa",
