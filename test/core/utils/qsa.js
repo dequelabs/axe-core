@@ -133,6 +133,42 @@ describe('axe.utils.querySelectorAll', function () {
 		var result = axe.utils.querySelectorAll(dom, '[data-a11yhero="faulkner"] li');
 		assert.equal(result.length, 2);
 	});
+	it('should find nodes using :not selector with class', function () {
+		var result = axe.utils.querySelectorAll(dom, 'div:not(.first)');
+		assert.equal(result.length, 2);
+	});
+	it('should find nodes using :not selector with matching id', function () {
+		var result = axe.utils.querySelectorAll(dom, 'div:not(#one)');
+		assert.equal(result.length, 2);
+	});
+	it('should find nodes using :not selector with matching attribute selector', function () {
+		var result = axe.utils.querySelectorAll(dom, 'div:not([data-a11yhero])');
+		assert.equal(result.length, 2);
+	});
+	it('should find nodes using :not selector with matching attribute selector with value', function () {
+		var result = axe.utils.querySelectorAll(dom, 'div:not([data-a11yhero=faulkner])');
+		assert.equal(result.length, 2);
+	});
+	it('should find nodes using :not selector with bogus attribute selector with value', function () {
+		var result = axe.utils.querySelectorAll(dom, 'div:not([data-a11yhero=wilco])');
+		assert.equal(result.length, 3);
+	});
+	it('should find nodes using :not selector with bogus id', function () {
+		var result = axe.utils.querySelectorAll(dom, 'div:not(#thangy)');
+		assert.equal(result.length, 3);
+	});
+	it('should find nodes hierarchically using :not selector', function () {
+		var result = axe.utils.querySelectorAll(dom, 'div:not(.first) li');
+		assert.equal(result.length, 2);
+	});
+	it('should find same nodes hierarchically using more :not selector', function () {
+		var result = axe.utils.querySelectorAll(dom, 'div:not(.first) li:not(.breaking)');
+		assert.equal(result.length, 2);
+	});
+	it('should NOT find nodes hierarchically using :not selector', function () {
+		var result = axe.utils.querySelectorAll(dom, 'div:not(.second) li:not(.breaking)');
+		assert.equal(result.length, 0);
+	});
 	it('should put it all together', function () {
 		var result = axe.utils.querySelectorAll(dom,
 			'.first[data-a11yhero="faulkner"] > ul li.breaking');
