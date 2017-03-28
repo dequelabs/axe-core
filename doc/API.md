@@ -415,7 +415,15 @@ This will either be null or an object which is an instance of Error. If you are 
 
 #### Results Object
 
-The callback function passed in as the third parameter of `axe.a11yCheck` runs on the results object. This object has two components – a passes array and a violations array.  The passes array keeps track of all the passed tests, along with detailed information on each one. This leads to more efficient testing, especially when used in conjunction with manual testing, as the user can easily find out what tests have already been passed. Similarly, the violations array keeps track of all the failed tests, along with detailed information on each one.
+The callback function passed in as the third parameter of `axe.a11yCheck` runs on the results object. This object has four components – a `passes` array, a `violations` array, an `incomplete` array and an `inapplicable` array.
+
+The `passes` array keeps track of all the passed tests, along with detailed information on each one. This leads to more efficient testing, especially when used in conjunction with manual testing, as the user can easily find out what tests have already been passed.
+
+Similarly, the `violations` array keeps track of all the failed tests, along with detailed information on each one.
+
+The `incomplete` array (also referred to as the "review items") indicates which nodes could neither be determined to definitively pass or definitively fail. They are separated out in order that a user interface can display these to the user for manual review (hence the term "review items").
+
+The `inapplicable` array lists all the rules for which no matching elements were found on the page.
 
 ###### `url`
 
@@ -444,7 +452,7 @@ Each object returned in these arrays have the following properties:
 * `nodes` - Array of all elements the Rule tested
 	* `html` - Snippet of HTML of the Element
 	* `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the test failed or `null` if the check passed
-	* `target` - Array of selectors that has each element correspond to one level of iframe or frame. If there is one iframe or frame, there should be two entries in `target`. If there are three iframe levels, there should be four entries in `target`.
+	* `target` - Array of either strings or Arrays of strings. If the item in the array is a string, then it is a CSS selector. If there are multiple items in the array each item corresponds to one level of iframe or frame. If there is one iframe or frame, there should be two entries in `target`. If there are three iframe levels, there should be four entries in `target`. If the item in the Array is an Array of strings, then it points to an element in a shadow DOM and each item (except the n-1th) in this array is a selector to a DOM element with a shadow DOM. The last element in the array points to the final shadow DOM node.
 	* `any` - Array of checks that were made where at least one must have passed. Each entry in the array contains:
 		* `id` - Unique identifier for this check. Check ids may be the same as Rule ids
 		* `impact` - How serious this particular check is. Can be one of "minor", "moderate", "serious", or "critical". Each check that is part of a rule can have different impacts. The highest impact of all the checks that fail is reported for the rule
@@ -527,6 +535,23 @@ axe.run(document, {
   console.log(results);
 });
 ```
+
+#### Example 4
+
+This example shows a result object that points to a shadow DOM element.
+
+* `violations[0]`
+  * `help` - `"Elements must have sufficient color contrast"`
+  * `helpUrl` - `"https://dequeuniversity.com/rules/axe/2.1/color-contrast?application=axeAPI"`
+  * `id` - `"color-contrast"`
+		* `nodes`
+			* `target[0][0]` - `"header > aria-menu"`
+			* `target[0][1]` - `"li.expanded"`
+
+* `violations[1]` ...
+
+As you can see the `target` array contains one item that is an array. This array contains two items, the first is a CSS selector string that finds the custom element `<aria-menu>` in the `<header>`. The second item in this array is the selector within that custom element's shadow DOM to find the `<li>` element with a class of `expanded`.
+
 ### API Name: axe.registerPlugin
 
 Register a plugin with the aXe plugin system. See [implementing a plugin](plugins.md) for more information on the plugin system
