@@ -10,7 +10,8 @@
   ],
   "metadata": {
     "description": "Ensures <area> elements of image maps have alternate text",
-    "help": "Active <area> elements must have alternate text"
+    "help": "Active <area> elements must have alternate text",
+    "grouping": "text-alternatives"
   },
   "all": [],
   "any": [

@@ -10,7 +10,8 @@
   ],
   "metadata": {
     "description": "Ensures <blink> elements are not used",
-    "help": "<blink> elements are deprecated and must not be used"
+    "help": "<blink> elements are deprecated and must not be used",
+    "grouping": "time-and-media"
   },
   "all": [],
   "any": [],

@@ -11,7 +11,8 @@
   ],
   "metadata": {
     "description": "Ensures <meta http-equiv=\"refresh\"> is not used",
-    "help": "Timed refresh must not exist"
+    "help": "Timed refresh must not exist",
+    "grouping": "time"
   },
   "all": [],
   "any": [

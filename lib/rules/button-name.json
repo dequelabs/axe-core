@@ -9,7 +9,8 @@
   ],
   "metadata": {
     "description": "Ensures buttons have discernible text",
-    "help": "Buttons must have discernible text"
+    "help": "Buttons must have discernible text",
+    "grouping": "name-role-value"
   },
   "all": [],
   "any": [

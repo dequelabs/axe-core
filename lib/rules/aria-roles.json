@@ -9,7 +9,8 @@
   ],
   "metadata": {
     "description": "Ensures all elements with a role attribute use a valid value",
-    "help": "ARIA roles used must conform to valid values"
+    "help": "ARIA roles used must conform to valid values",
+    "grouping": "aria"
   },
   "all": [],
   "any": [],

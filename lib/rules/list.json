@@ -7,7 +7,8 @@
   ],
   "metadata": {
     "description": "Ensures that lists are structured correctly",
-    "help": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements"
+    "help": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+    "grouping": "structure"
   },
   "all": [],
   "any": [],

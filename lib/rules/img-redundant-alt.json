@@ -6,7 +6,8 @@
   ],
   "metadata": {
     "description": "Ensure button and link text is not repeated as image alternative",
-    "help": "Text of buttons and links should not be repeated in the image alternative"
+    "help": "Text of buttons and links should not be repeated in the image alternative",
+    "grouping": "text-alternatives"
   },
   "all": [],
   "any": [],

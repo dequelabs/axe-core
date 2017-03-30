@@ -9,7 +9,8 @@
   ],
   "metadata": {
     "description": "Ensure p elements are not used to style headings",
-    "help": "Bold, italic text and font-size are not used to style p elements as a heading"
+    "help": "Bold, italic text and font-size are not used to style p elements as a heading",
+    "grouping": "semantics"
   },
   "all": ["p-as-heading"],
   "any": [],

@@ -9,7 +9,8 @@
   ],
   "metadata": {
     "description": "Ensures <object> elements have alternate text",
-    "help": "<object> elements must have alternate text"
+    "help": "<object> elements must have alternate text",
+    "grouping": "text-alternatives"
   },
   "all": [],
   "any": [

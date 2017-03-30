@@ -7,7 +7,8 @@
   ],
   "metadata": {
     "description": "Ensures <li> elements are used semantically",
-    "help": "<li> elements must be contained in a <ul> or <ol>"
+    "help": "<li> elements must be contained in a <ul> or <ol>",
+    "grouping": "structure"
   },
   "all": [],
   "any": [

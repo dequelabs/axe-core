@@ -7,7 +7,8 @@
   ],
   "metadata": {
     "description": "Ensures that every form element is not solely labeled using the title or aria-describedby attributes",
-    "help": "Form elements should have a visible label"
+    "help": "Form elements should have a visible label",
+    "grouping": "forms"
   },
   "all": [],
   "any": [],

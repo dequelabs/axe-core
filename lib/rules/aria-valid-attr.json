@@ -7,7 +7,8 @@
   ],
   "metadata": {
     "description": "Ensures attributes that begin with aria- are valid ARIA attributes",
-    "help": "ARIA attributes must conform to valid names"
+    "help": "ARIA attributes must conform to valid names",
+    "grouping": "aria"
   },
   "all": [],
   "any": [

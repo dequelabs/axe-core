@@ -11,7 +11,8 @@
   ],
   "metadata": {
     "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds",
-    "help": "Elements must have sufficient color contrast"
+    "help": "Elements must have sufficient color contrast",
+    "grouping": "color"
   },
   "all": [],
   "any": [

@@ -8,7 +8,8 @@
   ],
   "metadata": {
     "description": "Ensures all content is contained within a landmark region",
-    "help": "Content should be contained in a landmark region"
+    "help": "Content should be contained in a landmark region",
+    "grouping": "keyboard"
   },
   "all": [],
   "any": [

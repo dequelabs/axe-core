@@ -8,7 +8,8 @@
   ],
   "metadata": {
     "description": "Ensures every accesskey attribute value is unique",
-    "help": "accesskey attribute value must be unique"
+    "help": "accesskey attribute value must be unique",
+    "grouping": "keyboard"
   },
   "all": [],
   "any": [],

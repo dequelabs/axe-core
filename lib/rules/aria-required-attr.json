@@ -8,7 +8,8 @@
   ],
   "metadata": {
     "description": "Ensures elements with ARIA roles have all required ARIA attributes",
-    "help": "Required ARIA attributes must be provided"
+    "help": "Required ARIA attributes must be provided",
+    "grouping": "aria"
   },
   "all": [],
   "any": [

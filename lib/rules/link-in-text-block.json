@@ -11,7 +11,8 @@
   ],
   "metadata": {
     "description": "Links can be distinguished without relying on color",
-    "help": "Links must be distinguished from surrounding text in a way that does not rely on color"
+    "help": "Links must be distinguished from surrounding text in a way that does not rely on color",
+    "grouping": "color"
   },
   "all": ["link-in-text-block"],
   "any": [],

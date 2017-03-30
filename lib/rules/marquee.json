@@ -8,7 +8,8 @@
   ],
   "metadata": {
     "description": "Ensures <marquee> elements are not used",
-    "help": "<marquee> elements are deprecated and must not be used"
+    "help": "<marquee> elements are deprecated and must not be used",
+    "grouping": "parsing"
   },
   "all": [],
   "any": [],

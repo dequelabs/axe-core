@@ -7,7 +7,8 @@
   ],
   "metadata": {
     "description": "Ensures <dl> elements are structured correctly",
-    "help": "<dl> elements must only directly contain properly-ordered <dt> and <dd> groups, <script> or <template> elements"
+    "help": "<dl> elements must only directly contain properly-ordered <dt> and <dd> groups, <script> or <template> elements",
+    "grouping": "structure"
   },
   "all": [],
   "any": [],

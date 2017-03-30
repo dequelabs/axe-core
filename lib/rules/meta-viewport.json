@@ -8,7 +8,8 @@
   ],
   "metadata": {
     "description": "Ensures <meta name=\"viewport\"> does not disable text scaling and zooming",
-    "help": "Zooming and scaling must not be disabled"
+    "help": "Zooming and scaling must not be disabled",
+    "grouping": "sensory-and-visual-cues"
   },
   "all": [],
   "any": [

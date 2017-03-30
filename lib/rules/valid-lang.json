@@ -7,7 +7,8 @@
   ],
   "metadata": {
     "description": "Ensures lang attributes have valid values",
-    "help": "lang attribute must have a valid value"
+    "help": "lang attribute must have a valid value",
+    "grouping": "parsing"
   },
   "all": [],
   "any": [],

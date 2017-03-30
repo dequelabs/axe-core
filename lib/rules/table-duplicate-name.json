@@ -6,7 +6,8 @@
   ],
   "metadata": {
     "description": "Ensure that tables do not have the same summary and caption",
-    "help": "The <caption> element should not contain the same text as the summary attribute"
+    "help": "The <caption> element should not contain the same text as the summary attribute",
+    "grouping": "tables"
   },
   "all": [],
   "any": [],

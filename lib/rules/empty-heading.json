@@ -7,7 +7,8 @@
   ],
   "metadata": {
     "description": "Ensures headings have discernible text",
-    "help": "Headings must not be empty"
+    "help": "Headings must not be empty",
+    "grouping": "name-role-value"
   },
   "all": [],
   "any": [

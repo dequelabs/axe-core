@@ -7,7 +7,8 @@
   ],
   "metadata": {
     "description": "Ensures <dt> and <dd> elements are contained by a <dl>",
-    "help": "<dt> and <dd> elements must be contained by a <dl>"
+    "help": "<dt> and <dd> elements must be contained by a <dl>",
+    "grouping": "structure"
   },
   "all": [],
   "any": [

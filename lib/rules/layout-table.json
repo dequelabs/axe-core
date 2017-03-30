@@ -8,7 +8,8 @@
   ],
   "metadata": {
     "description": "Ensures presentational <table> elements do not use <th>, <caption> elements or the summary attribute",
-    "help": "Layout tables must not use data table elements"
+    "help": "Layout tables must not use data table elements",
+    "grouping": "semantics"
   },
   "all": [],
   "any": [],

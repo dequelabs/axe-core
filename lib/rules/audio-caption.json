@@ -10,7 +10,8 @@
   ],
   "metadata": {
     "description": "Ensures <audio> elements have captions",
-    "help": "<audio> elements must have a captions track"
+    "help": "<audio> elements must have a captions track",
+    "grouping": "time-and-media"
   },
   "all": [],
   "any": [],

@@ -11,7 +11,8 @@
   ],
   "metadata": {
     "description": "Ensures <video> elements have captions",
-    "help": "<video> elements must have captions"
+    "help": "<video> elements must have captions",
+    "grouping": "text-alternatives"
   },
   "all": [],
   "any": [],

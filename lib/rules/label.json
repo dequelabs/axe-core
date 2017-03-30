@@ -10,7 +10,8 @@
   ],
   "metadata": {
     "description": "Ensures every form element has a label",
-    "help": "Form elements must have labels"
+    "help": "Form elements must have labels",
+    "grouping": "forms"
   },
   "all": [],
   "any": [

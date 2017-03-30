@@ -10,7 +10,8 @@
   ],
   "metadata": {
     "description": "Ensures links have discernible text",
-    "help": "Links must have discernible text"
+    "help": "Links must have discernible text",
+    "grouping": "name-role-value"
   },
   "all": [],
   "any": [

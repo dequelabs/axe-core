@@ -8,7 +8,8 @@
   ],
   "metadata": {
     "description": "Ensures each HTML document contains a non-empty <title> element",
-    "help": "Documents must have <title> element to aid in navigation"
+    "help": "Documents must have <title> element to aid in navigation",
+    "grouping": "text-alternatives"
   },
   "all": [],
   "any": [

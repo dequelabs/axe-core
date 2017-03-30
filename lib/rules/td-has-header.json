@@ -11,7 +11,8 @@
   ],
   "metadata": {
     "description": "Ensure that each non-empty data cell in a large table has one or more table headers",
-    "help": "All non-empty td element in table larger than 3 by 3 must have an associated table header"
+    "help": "All non-empty td element in table larger than 3 by 3 must have an associated table header",
+    "grouping": "tables"
   },
   "all": [
     "td-has-header"
