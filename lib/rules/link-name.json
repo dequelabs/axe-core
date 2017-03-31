@@ -2,6 +2,7 @@
   "id": "link-name",
   "selector": "a[href]:not([role=\"button\"]), [role=link][href]",
   "tags": [
+    "cat.name-role-value",
     "wcag2a",
     "wcag111",
     "wcag412",
@@ -10,8 +11,7 @@
   ],
   "metadata": {
     "description": "Ensures links have discernible text",
-    "help": "Links must have discernible text",
-    "grouping": "name-role-value"
+    "help": "Links must have discernible text"
   },
   "all": [],
   "any": [

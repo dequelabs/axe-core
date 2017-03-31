@@ -3,6 +3,7 @@
   "selector": "blink",
   "excludeHidden": false,
   "tags": [
+    "cat.time-and-media",
     "wcag2a",
     "wcag222",
     "section508",
@@ -10,8 +11,7 @@
   ],
   "metadata": {
     "description": "Ensures <blink> elements are not used",
-    "help": "<blink> elements are deprecated and must not be used",
-    "grouping": "time-and-media"
+    "help": "<blink> elements are deprecated and must not be used"
   },
   "all": [],
   "any": [],

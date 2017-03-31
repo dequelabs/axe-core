@@ -3,13 +3,13 @@
   "selector": "table",
   "matches": "layout-table-matches.js",
   "tags": [
+    "cat.semantics",
     "wcag2a",
     "wcag131"
   ],
   "metadata": {
     "description": "Ensures presentational <table> elements do not use <th>, <caption> elements or the summary attribute",
-    "help": "Layout tables must not use data table elements",
-    "grouping": "semantics"
+    "help": "Layout tables must not use data table elements"
   },
   "all": [],
   "any": [],

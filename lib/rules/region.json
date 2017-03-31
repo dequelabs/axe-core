@@ -4,12 +4,12 @@
   "pageLevel": true,
   "enabled": false,
   "tags": [
+    "cat.keyboard",
     "best-practice"
   ],
   "metadata": {
     "description": "Ensures all content is contained within a landmark region",
-    "help": "Content should be contained in a landmark region",
-    "grouping": "keyboard"
+    "help": "Content should be contained in a landmark region"
   },
   "all": [],
   "any": [

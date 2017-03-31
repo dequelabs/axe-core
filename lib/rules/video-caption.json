@@ -3,6 +3,7 @@
   "selector": "video",
   "excludeHidden": false,
   "tags": [
+    "cat.text-alternatives",
     "wcag2a",
     "wcag122",
     "wcag123",
@@ -11,8 +12,7 @@
   ],
   "metadata": {
     "description": "Ensures <video> elements have captions",
-    "help": "<video> elements must have captions",
-    "grouping": "text-alternatives"
+    "help": "<video> elements must have captions"
   },
   "all": [],
   "any": [],

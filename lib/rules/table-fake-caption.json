@@ -3,6 +3,7 @@
   "selector": "table",
   "matches": "data-table-matches.js",
   "tags": [
+    "cat.tables",
     "experimental",
     "wcag2a",
     "wcag131",
@@ -11,8 +12,7 @@
   ],
   "metadata": {
     "description": "Ensure that tables with a caption use the <caption> element.",
-    "help": "Data or header cells should not be used to give caption to a data table.",
-    "grouping": "tables"
+    "help": "Data or header cells should not be used to give caption to a data table."
   },
   "all": [
     "caption-faked"

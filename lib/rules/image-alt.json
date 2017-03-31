@@ -2,6 +2,7 @@
   "id": "image-alt",
   "selector": "img, [role='img']",
   "tags": [
+    "cat.text-alternatives",
     "wcag2a",
     "wcag111",
     "section508",
@@ -9,8 +10,7 @@
   ],
   "metadata": {
     "description": "Ensures <img> elements have alternate text or a role of none or presentation",
-    "help": "Images must have alternate text",
-    "grouping": "text-alternatives"
+    "help": "Images must have alternate text"
   },
   "all": [],
   "any": [

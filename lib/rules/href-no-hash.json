@@ -3,12 +3,12 @@
   "selector": "a[href]",
   "enabled": false,
   "tags": [
+    "cat.semantics",
     "best-practice"
   ],
   "metadata": {
     "description": "Ensures that href values are valid link references to promote only using anchors as links",
-    "help": "Anchors must only be used as links and must therefore have an href value that is a valid reference. Otherwise you should probably usa a button",
-    "grouping": "semantics"
+    "help": "Anchors must only be used as links and must therefore have an href value that is a valid reference. Otherwise you should probably usa a button"
   },
   "all": [],
   "any": [

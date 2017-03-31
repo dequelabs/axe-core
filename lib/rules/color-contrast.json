@@ -6,13 +6,13 @@
     "noScroll": false
   },
   "tags": [
+    "cat.color",
     "wcag2aa",
     "wcag143"
   ],
   "metadata": {
     "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds",
-    "help": "Elements must have sufficient color contrast",
-    "grouping": "color"
+    "help": "Elements must have sufficient color contrast"
   },
   "all": [],
   "any": [

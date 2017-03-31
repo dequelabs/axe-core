@@ -2,14 +2,14 @@
   "id": "aria-allowed-attr",
   "matches": "aria-allowed-attr-matches.js",
   "tags": [
+    "cat.aria",
     "wcag2a",
     "wcag411",
     "wcag412"
   ],
   "metadata": {
     "description": "Ensures ARIA attributes are allowed for an element's role",
-    "help": "Elements must only use allowed ARIA attributes",
-    "grouping": "aria"
+    "help": "Elements must only use allowed ARIA attributes"
   },
   "all": [],
   "any": [

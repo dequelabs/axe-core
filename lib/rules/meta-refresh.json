@@ -3,6 +3,7 @@
   "selector": "meta[http-equiv=\"refresh\"]",
   "excludeHidden": false,
   "tags": [
+    "cat.time",
     "wcag2a",
     "wcag2aaa",
     "wcag221",
@@ -11,8 +12,7 @@
   ],
   "metadata": {
     "description": "Ensures <meta http-equiv=\"refresh\"> is not used",
-    "help": "Timed refresh must not exist",
-    "grouping": "time"
+    "help": "Timed refresh must not exist"
   },
   "all": [],
   "any": [

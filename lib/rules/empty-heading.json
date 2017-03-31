@@ -3,12 +3,12 @@
   "selector": "h1, h2, h3, h4, h5, h6, [role=\"heading\"]",
   "enabled": true,
   "tags": [
+    "cat.name-role-value",
     "best-practice"
   ],
   "metadata": {
     "description": "Ensures headings have discernible text",
-    "help": "Headings must not be empty",
-    "grouping": "name-role-value"
+    "help": "Headings must not be empty"
   },
   "all": [],
   "any": [

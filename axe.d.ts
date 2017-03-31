@@ -50,8 +50,7 @@ declare module axe {
 		any: CheckResult[],
 		all: CheckResult[],
 		none: CheckResult[],
-		failureSummary?: string,
-		grouping: string
+		failureSummary?: string
 	}
 	interface CheckResult {
 		id: string,

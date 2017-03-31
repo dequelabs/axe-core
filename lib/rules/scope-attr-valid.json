@@ -3,12 +3,12 @@
   "selector": "td[scope], th[scope]",
   "enabled": true,
   "tags": [
+    "cat.tables",
     "best-practice"
   ],
   "metadata": {
     "description": "Ensures the scope attribute is used correctly on tables",
-    "help": "scope attribute should be used correctly",
-    "grouping": "semantics"
+    "help": "scope attribute should be used correctly"
   },
   "all": [
     "html5-scope",

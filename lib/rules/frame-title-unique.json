@@ -3,12 +3,12 @@
   "selector": "frame[title]:not([title='']), iframe[title]:not([title=''])",
   "matches": "frame-title-has-text.js",
   "tags": [
+    "cat.text-alternatives",
     "best-practice"
   ],
   "metadata": {
     "description": "Ensures <iframe> and <frame> elements contain a unique title attribute",
-    "help": "Frames must have a unique title attribute",
-    "grouping": "text-alternatives"
+    "help": "Frames must have a unique title attribute"
   },
   "all": [],
   "any": [],

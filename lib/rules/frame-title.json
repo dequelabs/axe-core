@@ -2,6 +2,7 @@
   "id": "frame-title",
   "selector": "frame, iframe",
   "tags": [
+    "cat.text-alternatives",
     "wcag2a",
     "wcag241",
     "section508",
@@ -9,8 +10,7 @@
   ],
   "metadata": {
     "description": "Ensures <iframe> and <frame> elements contain a non-empty title attribute",
-    "help": "Frames must have title attribute",
-    "grouping": "text-alternatives"
+    "help": "Frames must have title attribute"
   },
   "all": [],
   "any": [

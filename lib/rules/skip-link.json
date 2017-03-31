@@ -4,12 +4,12 @@
   "pageLevel": true,
   "enabled": false,
   "tags": [
+    "cat.keyboard",
     "best-practice"
   ],
   "metadata": {
     "description": "Ensures the first link on the page is a skip link",
-    "help": "The page should have a skip link as its first link",
-    "grouping": "keyboard"
+    "help": "The page should have a skip link as its first link"
   },
   "all": [],
   "any": [

@@ -2,13 +2,13 @@
   "id": "definition-list",
   "selector": "dl:not([role])",
   "tags": [
+    "cat.structure",
     "wcag2a",
     "wcag131"
   ],
   "metadata": {
     "description": "Ensures <dl> elements are structured correctly",
-    "help": "<dl> elements must only directly contain properly-ordered <dt> and <dd> groups, <script> or <template> elements",
-    "grouping": "structure"
+    "help": "<dl> elements must only directly contain properly-ordered <dt> and <dd> groups, <script> or <template> elements"
   },
   "all": [],
   "any": [],

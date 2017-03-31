@@ -3,6 +3,7 @@
   "selector": "map area[href]",
   "excludeHidden": false,
   "tags": [
+    "cat.text-alternatives",
     "wcag2a",
     "wcag111",
     "section508",
@@ -10,8 +11,7 @@
   ],
   "metadata": {
     "description": "Ensures <area> elements of image maps have alternate text",
-    "help": "Active <area> elements must have alternate text",
-    "grouping": "text-alternatives"
+    "help": "Active <area> elements must have alternate text"
   },
   "all": [],
   "any": [

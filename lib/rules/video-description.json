@@ -3,6 +3,7 @@
   "selector": "video",
   "excludeHidden": false,
   "tags": [
+    "cat.text-alternatives",
     "wcag2aa",
     "wcag125",
     "section508",
@@ -10,8 +11,7 @@
   ],
   "metadata": {
     "description": "Ensures <video> elements have audio descriptions",
-    "help": "<video> elements must have an audio description track",
-    "grouping": "text-alternatives"
+    "help": "<video> elements must have an audio description track"
   },
   "all": [],
   "any": [],

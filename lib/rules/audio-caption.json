@@ -3,6 +3,7 @@
   "selector": "audio",
   "excludeHidden": false,
   "tags": [
+    "cat.time-and-media",
     "wcag2a",
     "wcag122",
     "section508",
@@ -10,8 +11,7 @@
   ],
   "metadata": {
     "description": "Ensures <audio> elements have captions",
-    "help": "<audio> elements must have a captions track",
-    "grouping": "time-and-media"
+    "help": "<audio> elements must have a captions track"
   },
   "all": [],
   "any": [],

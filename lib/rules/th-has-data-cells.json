@@ -3,6 +3,7 @@
   "selector": "table",
   "matches": "data-table-matches.js",
   "tags": [
+    "cat.tables",
     "wcag2a",
     "wcag131",
     "section508",
@@ -10,8 +11,7 @@
   ],
   "metadata": {
     "description": "Ensure that each table header in a data table refers to data cells",
-    "help": "All th element and elements with role=columnheader/rowheader must data cells which it describes",
-    "grouping": "tables"
+    "help": "All th element and elements with role=columnheader/rowheader must data cells which it describes"
   },
   "all": [
     "th-has-data-cells"
