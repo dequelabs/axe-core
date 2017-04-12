@@ -79,6 +79,18 @@ describe('multiple-label', function () {
 		assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
 	});
 
+	it('should return true if there are multiple explicit labels but the first one is hidden', function () {
+		fixture.innerHTML = '<label for="me" id="l1">visible</label>'+
+				'<label for="me" style="display:none;" id="l2">hidden</label>'+
+				'<label for="me" id="l3">visible</label>'+
+				'<input id="me" type="text">';
+		var target = fixture.querySelector('#me');
+		var l1 = fixture.querySelector('#l1');
+		var l3 = fixture.querySelector('#l3');
+		assert.isTrue(checks['multiple-label'].evaluate.call(checkContext, target));
+		assert.deepEqual(checkContext._relatedNodes, [l1, l3]);
+	});
+
 	it('should return true if there are implicit and explicit labels', function () {
 		fixture.innerHTML = '<label id="l1" for="target">Foo</label><label id="l2"><input type="text" id="target"></label>';
 		var target = fixture.querySelector('#target');
