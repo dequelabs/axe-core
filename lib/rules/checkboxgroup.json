@@ -2,6 +2,7 @@
   "id": "checkboxgroup",
   "selector": "input[type=checkbox][name]",
   "tags": [
+    "cat.forms",
     "best-practice"
   ],
   "metadata": {

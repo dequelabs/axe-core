@@ -3,6 +3,7 @@
   "selector": "frame[title]:not([title='']), iframe[title]:not([title=''])",
   "matches": "frame-title-has-text.js",
   "tags": [
+    "cat.text-alternatives",
     "best-practice"
   ],
   "metadata": {

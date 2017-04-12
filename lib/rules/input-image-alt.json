@@ -2,6 +2,7 @@
   "id": "input-image-alt",
   "selector": "input[type=\"image\"]",
   "tags": [
+    "cat.text-alternatives",
     "wcag2a",
     "wcag111",
     "section508",

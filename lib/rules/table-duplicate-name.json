@@ -2,6 +2,7 @@
   "id": "table-duplicate-name",
   "selector": "table",
   "tags": [
+    "cat.tables",
     "best-practice"
   ],
   "metadata": {

@@ -3,6 +3,7 @@
   "selector": "map area[href]",
   "excludeHidden": false,
   "tags": [
+    "cat.text-alternatives",
     "wcag2a",
     "wcag111",
     "section508",

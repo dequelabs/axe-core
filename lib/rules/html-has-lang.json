@@ -2,6 +2,7 @@
   "id": "html-has-lang",
   "selector": "html",
   "tags": [
+    "cat.language",
     "wcag2a",
     "wcag311"
   ],

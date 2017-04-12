@@ -3,6 +3,7 @@
   "selector": "table",
   "matches": "data-table-matches.js",
   "tags": [
+    "cat.tables",
     "wcag2a",
     "wcag131",
     "section508",

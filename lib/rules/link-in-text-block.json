@@ -5,6 +5,7 @@
   "excludeHidden": false,
   "enabled": false,
   "tags": [
+    "cat.color",
     "experimental",
     "wcag2a",
     "wcag141"

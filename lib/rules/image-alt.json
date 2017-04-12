@@ -2,6 +2,7 @@
   "id": "image-alt",
   "selector": "img, [role='img']",
   "tags": [
+    "cat.text-alternatives",
     "wcag2a",
     "wcag111",
     "section508",

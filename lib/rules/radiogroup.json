@@ -2,6 +2,7 @@
   "id": "radiogroup",
   "selector": "input[type=radio][name]",
   "tags": [
+    "cat.forms",
     "best-practice"
   ],
   "metadata": {

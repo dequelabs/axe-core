@@ -2,6 +2,7 @@
   "id": "definition-list",
   "selector": "dl:not([role])",
   "tags": [
+    "cat.structure",
     "wcag2a",
     "wcag131"
   ],
