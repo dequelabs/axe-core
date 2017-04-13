@@ -39,14 +39,8 @@ function buildRules(grunt, options, commons, callback) {
 				Object.keys(result.messages).forEach(function (key) {
 					// only convert to templated function for strings
 					// objects handled later in publish-metadata.js
-					var message = result.messages[key];
-					if (typeof message !== 'object') {
-						message = dot.template(message).toString();
-					}
-					else {
-						Object.keys(message).forEach(function(reason) {
-							message[reason] = dot.template(message[reason]).toString();
-						});
+					if (typeof result.messages[key] !== 'object') {
+						result.messages[key] = dot.template(result.messages[key]).toString();
 					}
 				});
 			}
