@@ -83,6 +83,22 @@ describe('dom.isVisualContent', function () {
 			assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[0]));
 		});
 
+		it('should return true for elements with a visual aria role', function () {
+			fixture.innerHTML = (
+				'<span role="img"></span>' +
+				'<span role="checkbox"></span>' +
+				'<span role="radio"></span>' +
+				'<span role="range"></span>' +
+				'<span role="slider"></span>' +
+				'<span role="spinbutton"></span>' +
+				'<span role="textbox"></span>'
+			);
+
+			for (var i = 0; i < fixture.children.length; i++) {
+				assert.isTrue(axe.commons.dom.isVisualContent(fixture.children[i]));
+			}
+		});
+
 		it('should return false for hidden input', function () {
 			fixture.innerHTML = '<input type="hidden">';
 			assert.isFalse(axe.commons.dom.isVisualContent(fixture.children[0]));

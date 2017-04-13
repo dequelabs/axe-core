@@ -4,6 +4,17 @@ describe('link-in-text-block', function () {
 	var fixture = document.getElementById('fixture');
 	var styleElm;
 
+	var checkContext = {
+		_relatedNodes: [],
+		_data: null,
+		data: function (d) {
+			this._data = d;
+		},
+		relatedNodes: function (rn) {
+			this._relatedNodes = rn;
+		}
+	};
+
 	before(function () {
 		styleElm = document.createElement('style');
 		document.head.appendChild(styleElm);
@@ -21,6 +32,8 @@ describe('link-in-text-block', function () {
 	afterEach(function () {
 		fixture.innerHTML = '';
 		styleElm.innerHTML = '';
+		checkContext._relatedNodes = [];
+		checkContext._data = null;
 	});
 
 	after(function () {
@@ -83,7 +96,7 @@ describe('link-in-text-block', function () {
 		}, {
 			color: '#000'
 		});
-		assert.isTrue(checks['link-in-text-block'].evaluate(linkElm));
+		assert.isTrue(checks['link-in-text-block'].evaluate.call(checkContext, linkElm));
 	});
 
 	describe('link default state', function () {
@@ -103,7 +116,7 @@ describe('link-in-text-block', function () {
 				return orig(arg1, arg2);
 			};
 
-			checks['link-in-text-block'].evaluate(linkElm);
+			checks['link-in-text-block'].evaluate.call(checkContext, linkElm);
 			assert.ok(isCalled);
 			axe.commons.color.elementIsDistinct = orig;
 		});
@@ -126,7 +139,7 @@ describe('link-in-text-block', function () {
 				return orig(arg1, arg2);
 			};
 
-			checks['link-in-text-block'].evaluate(linkElm);
+			checks['link-in-text-block'].evaluate.call(checkContext, linkElm);
 			axe.commons.color.elementIsDistinct = orig;
 		});
 
@@ -146,7 +159,7 @@ describe('link-in-text-block', function () {
 			}, {
 				color: 'black'
 			});
-			assert.isUndefined(checks['link-in-text-block'].evaluate(linkElm));
+			assert.isUndefined(checks['link-in-text-block'].evaluate.call(checkContext, linkElm));
 		});
 
 		it('returns false if text contrast < 3:0', function() {
@@ -155,7 +168,7 @@ describe('link-in-text-block', function () {
 			}, {
 				color: '#000000'
 			});
-			assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
+			assert.isFalse(checks['link-in-text-block'].evaluate.call(checkContext, linkElm));
 		});
 
 		it('returns undefined if background contrast >= 3:0', function() {
@@ -166,7 +179,8 @@ describe('link-in-text-block', function () {
 				color: '#000000',
 				backgroundColor: 'white'
 			});
-			assert.isUndefined(checks['link-in-text-block'].evaluate(linkElm));
+			assert.isUndefined(checks['link-in-text-block'].evaluate.call(checkContext, linkElm));
+			assert.equal(checkContext._data.missingData[0].reason, 'bgContrast');
 		});
 
 		it('returns false if background contrast < 3:0', function() {
@@ -177,7 +191,7 @@ describe('link-in-text-block', function () {
 				color: '#000000',
 				backgroundColor: '#FFF'
 			});
-			assert.isFalse(checks['link-in-text-block'].evaluate(linkElm));
+			assert.isFalse(checks['link-in-text-block'].evaluate.call(checkContext, linkElm));
 		});
 
 		it('returns undefined if the background contrast can not be determined', function () {
@@ -187,7 +201,8 @@ describe('link-in-text-block', function () {
 			}, {
 				color: '#000000'
 			});
-			assert.isUndefined(checks['link-in-text-block'].evaluate(linkElm));
+			assert.isUndefined(checks['link-in-text-block'].evaluate.call(checkContext, linkElm));
+			assert.equal(checkContext._data.missingData[0].reason, 'bgImage');
 		});
 
 	});

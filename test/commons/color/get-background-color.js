@@ -131,6 +131,7 @@ describe('color.getBackgroundColor', function () {
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		assert.isNull(actual);
 		assert.deepEqual(bgNodes, [target, parent]);
+		assert.equal(axe.commons.color.incompleteData.get('bgColor').reason, 'bgImage');
 	});
 
 	it('should return white if transparency goes all the way up to document', function () {
@@ -153,14 +154,15 @@ describe('color.getBackgroundColor', function () {
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		assert.isNull(actual);
 		assert.deepEqual(bgNodes, [target]);
+		assert.equal(axe.commons.color.incompleteData.get('bgColor').reason, 'bgImage');
 	});
 
 	it('should return null if something opaque is obscuring it', function () {
 		fixture.innerHTML = '<div style="width:100%; height: 100px; background: #000"></div>' +
 			'<div id="target" style="position: relative; top: -50px; z-index:-1;color:#fff;">Hello</div>';
 		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
+		assert.equal(axe.commons.color.incompleteData.get('bgColor').reason, 'bgOverlap');
 		assert.isNull(actual);
-
 	});
 
 	it('should return an actual if something non-opaque is obscuring it', function () {
@@ -270,6 +272,7 @@ describe('color.getBackgroundColor', function () {
 		var bgNodes = [];
 		var outcome = axe.commons.color.getBackgroundColor(target, bgNodes, false);
 		assert.isNull(outcome);
+		assert.equal(axe.commons.color.incompleteData.get('bgColor').reason, 'bgImage');
 	});
 
 	it('should return null when encountering image nodes during visual traversal', function () {
@@ -288,6 +291,7 @@ describe('color.getBackgroundColor', function () {
 		var bgNodes = [];
 		var outcome = axe.commons.color.getBackgroundColor(target, bgNodes, false);
 		assert.isNull(outcome);
+		assert.equal(axe.commons.color.incompleteData.get('bgColor').reason, 'imgNode');
 	});
 
 	it('does not change the scroll when scroll is disabled', function() {

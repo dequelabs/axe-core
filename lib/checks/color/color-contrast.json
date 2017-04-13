@@ -4,8 +4,16 @@
   "metadata": {
     "impact": "critical",
     "messages": {
-      "pass": "{{?it.data && it.data.contrastRatio}}Element has sufficient color contrast of {{=it.data.contrastRatio}}{{??}}Unable to determine contrast ratio{{?}}",
-      "fail": "Element has insufficient color contrast of {{=it.data.contrastRatio}} (foreground color: {{=it.data.fgColor}}, background color: {{=it.data.bgColor}}, font size: {{=it.data.fontSize}}, font weight: {{=it.data.fontWeight}})"
+      "pass": "Element has sufficient color contrast of {{=it.data.contrastRatio}}",
+      "fail": "Element has insufficient color contrast of {{=it.data.contrastRatio}} (foreground color: {{=it.data.fgColor}}, background color: {{=it.data.bgColor}}, font size: {{=it.data.fontSize}}, font weight: {{=it.data.fontWeight}})",
+      "incomplete": {
+        "bgImage": "Element's background color could not be determined due to a background image",
+        "bgGradient": "Element's background color could not be determined due to a background gradient",
+        "imgNode": "Element's background color could not be determined because element contains an image node",
+        "bgOverlap": "Element's background color could not be determined because it is overlapped by another element",
+        "fgAlpha" : "Element's foreground color could not be determined because of alpha transparency",
+        "default": "Unable to determine contrast ratio"
+      }
     }
   }
 }

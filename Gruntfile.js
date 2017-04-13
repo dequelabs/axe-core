@@ -345,4 +345,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('translate', ['clean', 'jshint', 'validate', 'concat:commons', 'add-locale']);
 
 	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
+
+	grunt.registerTask('dev:no-lint', ['clean', 'validate', 'concat:commons', 'configure',
+		 'babel', 'concat:engine', 'uglify', 'testconfig', 'fixture', 'connect', 'watch']);
 };
