@@ -44,7 +44,7 @@
 | p-as-heading | Ensure p elements are not used to style headings | cat.semantics, wcag2a, wcag131, experimental | true |
 | radiogroup | Ensures related &lt;input type=&quot;radio&quot;&gt; elements have a group and that the group designation is consistent | cat.forms, best-practice | true |
 | region | Ensures all content is contained within a landmark region | cat.keyboard, best-practice | false |
-| scope-attr-valid | Ensures the scope attribute is used correctly on tables | cat.semantics, best-practice | true |
+| scope-attr-valid | Ensures the scope attribute is used correctly on tables | cat.tables, best-practice | true |
 | server-side-image-map | Ensures that server-side image maps are not used | cat.text-alternatives, wcag2a, wcag211, section508, section508.22.f | true |
 | skip-link | Ensures the first link on the page is a skip link | cat.keyboard, best-practice | false |
 | tabindex | Ensures tabindex attribute values are not greater than 0 | cat.keyboard, best-practice | true |
@@ -53,6 +53,6 @@
 | td-has-header | Ensure that each non-empty data cell in a large table has one or more table headers | cat.tables, experimental, wcag2a, wcag131, section508, section508.22.g | true |
 | td-headers-attr | Ensure that each cell in a table using the headers refers to another cell in that table | cat.tables, wcag2a, wcag131, section508, section508.22.g | true |
 | th-has-data-cells | Ensure that each table header in a data table refers to data cells | cat.tables, wcag2a, wcag131, section508, section508.22.g | true |
-| valid-lang | Ensures lang attributes have valid values | cat.parsing, wcag2aa, wcag312 | true |
+| valid-lang | Ensures lang attributes have valid values | cat.language, wcag2aa, wcag312 | true |
 | video-caption | Ensures &lt;video&gt; elements have captions | cat.text-alternatives, wcag2a, wcag122, wcag123, section508, section508.22.a | true |
 | video-description | Ensures &lt;video&gt; elements have audio descriptions | cat.text-alternatives, wcag2aa, wcag125, section508, section508.22.b | true |
