@@ -7,11 +7,11 @@ describe('caption', function () {
 		fixture.innerHTML = '';
 	});
 
-	it('should fail if there is no track element', function () {
+	it('should return undefined if there is no track element', function () {
 		fixture.innerHTML = '<audio></audio>';
 		var node = fixture.querySelector('audio');
 
-		assert.isTrue(checks.caption.evaluate(node));
+		assert.isUndefined(checks.caption.evaluate(node));
 	});
 
 	it('should fail if there is no kind=captions attribute', function () {
