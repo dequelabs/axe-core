@@ -49,7 +49,8 @@ module.exports = function (grunt) {
 					// Edge Webdriver isn't all too stable, manual testing required
 					// 'test-webdriver:edge',
 					// 'test-webdriver:safari',
-					'test-webdriver:ie'
+					'test-webdriver:ie',
+					'test-webdriver:chrome-mobile'
 				]
 			}
 		},
@@ -302,7 +303,7 @@ module.exports = function (grunt) {
 			options.urls = options.urls.concat(tests.integration.options.urls);
 			var driverTests = {};
 
-			['firefox', 'chrome', 'ie', 'safari', 'edge']
+			['firefox', 'chrome', 'ie', 'safari', 'edge', 'chrome-mobile']
 			.forEach(function (browser) {
 				driverTests[browser] = {
 					options: Object.assign({ browser: browser }, options)
@@ -338,6 +339,9 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('test', ['build', 'retire', 'testconfig', 'fixture', 'connect',
 		'mocha', 'parallel', 'jshint']);
+
+	grunt.registerTask('test-integration', ['build', 'retire', 'testconfig', 'fixture', 'connect',
+	 'parallel', 'jshint']);
 
 	grunt.registerTask('test-fast', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'jshint']);

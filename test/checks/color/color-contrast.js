@@ -32,7 +32,7 @@ describe('color-contrast', function () {
 		assert.equal(checkContext._data.fgColor, black.toHexString());
 		assert.equal(checkContext._data.contrastRatio, '21.00');
 		assert.equal(checkContext._data.fontWeight, 'bold');
-		assert.closeTo(parseFloat(checkContext._data.fontSize), 14, 0.5);
+		assert.isAtLeast(parseFloat(checkContext._data.fontSize), 14, 0.5);
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
 
@@ -62,7 +62,7 @@ describe('color-contrast', function () {
 	});
 
 	it('should return false when there is not sufficient contrast because of font size', function () {
-		fixture.innerHTML = '<div style="color: gray; background-color: white; font-size: 8pt;" id="target">' +
+		fixture.innerHTML = '<div style="color: gray; background-color: white; font-size: 8pt; -webkit-text-size-adjust: none;" id="target">' +
 			'My text</div>';
 		var target = fixture.querySelector('#target');
 		assert.isFalse(checks['color-contrast'].evaluate.call(checkContext, target));
