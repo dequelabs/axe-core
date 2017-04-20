@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+	<title>th-has-data-cells incomplete test</title>
+	<meta charset="utf8">
+	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
+	<script src="/node_modules/mocha/mocha.js"></script>
+	<script src="/node_modules/chai/chai.js"></script>
+	<script src="/axe.js"></script>
+	<script>
+		mocha.setup({
+			timeout: 10000,
+			ui: 'bdd'
+		});
+		var assert = chai.assert;
+	</script>
+</head>
+<body>
+	<div id="fixture">
+		<table id="table1">
+			<tr> <th>hi</th> </tr>
+			<tr> <th>hi</th> </tr>
+		</table>
+		<table id="table2">
+			<tr> <th>hi</th> <td></td> </tr>
+			<tr> <th>hi</th> <td></td> </tr>
+		</table>
+		<table id="table3">
+			<tr> <td>aXe</td> <td role="columnheader">AXE</th> </tr>
+		</table>
+	</div>
+	<div id="mocha"></div>
+	<script src="th-has-data-cells.js"></script>
+	<script src="/test/integration/adapter.js"></script>
+</body>
+</html>
