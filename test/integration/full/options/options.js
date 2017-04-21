@@ -134,7 +134,7 @@ describe('Options', function() {
 		});
 	});
 
-	describe('noSelectors', function() {
+	describe('no selectors', function() {
 		it('should return a selector by default', function(done) {
 			var config = {};
 			axe.a11yCheck(document, config, function(results) {
@@ -152,8 +152,8 @@ describe('Options', function() {
 			});
 		});
 
-		it('should return a selector if `noSelectors` is false', function(done) {
-			var config = { noSelectors: false };
+		it('should return a selector if `selectors` is true', function(done) {
+			var config = { selectors: true };
 			axe.a11yCheck(document, config, function(results) {
 				try {
 					assert.lengthOf(results.violations, 0, 'violations');
@@ -169,8 +169,8 @@ describe('Options', function() {
 			});
 		});
 
-		it('should return no selector in top frame if `noSelectors` is true', function(done) {
-			var config = { noSelectors: true };
+		it('should return no selector in top frame if `selectors` is false', function(done) {
+			var config = { selectors: false };
 			axe.a11yCheck(document, config, function(results) {
 				try {
 					assert.lengthOf(results.violations, 0, 'violations');

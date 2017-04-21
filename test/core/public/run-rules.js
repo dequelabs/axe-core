@@ -572,4 +572,32 @@ describe('runRules', function () {
 		runRules(document, {},resolve, reject);
 
 	});
+
+	it('should ignore iframes if `iframes` === false', function (done) {
+		axe._load({ rules: [{
+			id: 'html',
+			selector: 'html',
+			any: ['html']
+		}], checks: [{
+			id: 'html',
+			evaluate: function () {
+				return true;
+			}
+		}], messages: {}});
+
+		var frame = document.createElement('iframe');
+		frame.src = '../mock/frames/frame-frame.html';
+
+		frame.addEventListener('load', function () {
+			setTimeout(function () {
+				runRules(document, { iframes: false }, function (r) {
+					assert.lengthOf(r[0].passes, 1);
+					assert.equal(r[0].passes[0].node.element.ownerDocument, document,
+					             'Result should not be in an iframe');
+					done();
+				}, isNotCalled);
+			}, 500);
+		});
+		fixture.appendChild(frame);
+	});
 });
