@@ -50,3 +50,27 @@ v2.1.7:
 		- Color contrast rule performance improvements using polyfilled elementsFromPoint
 		- Add better support for implicit roles
 		- DQElement supports xPath
+v2.1.8:
+	date: 2017-02-21
+	changes:
+		- Move from Snyk to Retire.js
+		- Make CI run test-fast task instead of parallel
+		- Add documentation on writing integration tests and rules
+		- Allow a larger list of languages for HTML-valid-lang rule
+		- Add support for [role=img] in image-alt rule
+		- Fix bug with innerHeight in get-background-color
+		- Improve dom.is-offscreen function
+		- Integrate optional performance timer
+		- Empty include defaults to document
+v2.2.0:
+	date: 2017-04-24
+	changes:
+		- Add configuration options for iframes: false, selectors: false, and elementRef: true
+		- Improve color-contrast rule for disabled elements
+		- Add webdriver task for testing mobile viewports
+		- Improve audio/video captioning rules
+		- Improve th-has-data-cells rule
+		- Expose incomplete reasons for color contrast rule as part of Needs Review
+		- Implement rule groupings as tags
+		- Allow building of axe in multiple languages
+		- Empty-heading rule has impact: moderate
