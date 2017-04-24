@@ -93,7 +93,7 @@ describe('reporters - na', function() {
 		axe._runRules = orig;
 	});
 
-	var naOption = { reporter: 'na' };
+	var naOption = { reporter: 'na', selectors: true };
 
 	it('should merge the runRules results into violations, passes and inapplicable', function(done) {
 		axe.run(naOption, function (err, results) {
