@@ -83,7 +83,7 @@ describe('reporters - v2', function() {
 		axe._runRules = orig;
 	});
 
-	var optionsV2 = { reporter: 'v2' };
+	var optionsV2 = { reporter: 'v2', selectors: true };
 
 	it('should merge the runRules results into violations and passes', function(done) {
 		axe.run(optionsV2, function (err, results) {

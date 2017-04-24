@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" id="main">
+<head>
+	<title>frame exclude test</title>
+	<meta charset="utf8">
+	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
+	<script src="/node_modules/mocha/mocha.js"></script>
+	<script src="/node_modules/chai/chai.js"></script>
+	<script src="/axe.js"></script>
+	<script>
+		mocha.setup({
+			timeout: 50000,
+			ui: 'bdd'
+		});
+		var assert = chai.assert;
+
+		axe._load({
+			rules: [{
+				id: 'div#target',
+				selector: '#target',
+				any: ['has-target']
+			}],
+			checks: [{
+				id: 'has-target',
+				evaluate: function () {
+					return true;
+				}
+			}]
+		});
+	</script>
+</head>
+<body>
+	<div id="frame-container">
+		<iframe id="myframe" src="frames/frame.html"></iframe>
+	</div>
+	<div id="target">
+		This is the target in the parent frame.
+	</div>
+
+	<div id="mocha"></div>
+	<script src="options.js"></script>
+	<script src="/test/integration/adapter.js"></script>
+</body>
+</html>
