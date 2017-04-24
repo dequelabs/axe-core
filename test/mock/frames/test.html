@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+	<title>Test Frame</title>
+	<script src="../../../axe.js"></script>
+	<script>
+	axe._load({ 
+		rules: [{
+			id: 'html',
+			selector: '#target',
+			none: ['fred']
+		}],
+		checks: [{
+			id: 'fred',
+			evaluate: function (node) {
+				return true;
+			}
+		}]
+	});
+	</script>
+</head>
+<body>
+	<div id="target">Target in iframe</div>
+</body>
+</html>

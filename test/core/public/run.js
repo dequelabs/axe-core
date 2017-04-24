@@ -269,5 +269,87 @@ describe('axe.run', function () {
 			});
 		});
 	});
+});
 
+describe('axe.run iframes', function () {
+	'use strict';
+
+	var fixture = document.getElementById('fixture');
+	var origRunRules = axe._runRules;
+
+	beforeEach(function () {
+		fixture.innerHTML = '<div id="target">Target in top frame</div>';
+		axe._load({
+			rules: [{
+				id: 'html',
+				selector: '#target',
+				none: ['fred']
+			}],
+			checks: [{
+				id: 'fred',
+				evaluate: function () {
+					return true;
+				}
+			}]
+		});
+	});
+
+	afterEach(function () {
+		fixture.innerHTML = '';
+		axe._audit = null;
+		axe._runRules = origRunRules;
+	});
+
+	it('includes iframes by default', function (done) {
+		var frame = document.createElement('iframe');
+
+		frame.addEventListener('load', function () {
+			var safetyTimeout = window.setTimeout(function () {
+				done();
+			}, 1000);
+
+			axe.run('#fixture', {}, function (err, result) {
+				assert.equal(result.violations.length, 1);
+				var violation = result.violations[0];
+				assert.equal(violation.nodes.length, 2,
+				            'one node for top frame, one for iframe');
+				assert.isTrue(violation.nodes.some(function(node) { 
+					return node.target.length === 1 && node.target[0] === '#target';
+				}), 'one result from top frame');
+				assert.isTrue(violation.nodes.some(function(node) { 
+					return node.target.length === 2 && 
+					       node.target[0] === '#fixture > iframe';
+				}), 'one result from iframe');
+				window.clearTimeout(safetyTimeout);
+				done();
+			});
+		});
+
+		frame.src = '../mock/frames/test.html';
+		fixture.appendChild(frame);
+	});
+
+	it('excludes iframes if iframes is false', function (done) {
+		var frame = document.createElement('iframe');
+
+		frame.addEventListener('load', function () {
+			var safetyTimeout = setTimeout(function () {
+				done();
+			}, 1000);
+
+			axe.run('#fixture', { iframes: false }, function (err, result) {
+				assert.equal(result.violations.length, 1);
+				var violation = result.violations[0];
+				assert.equal(violation.nodes.length, 1,
+				            'only top frame');
+				assert.equal(violation.nodes[0].target.length, 1);
+				assert.equal(violation.nodes[0].target[0], '#target');
+				window.clearTimeout(safetyTimeout);
+				done();
+			});
+		});
+
+		frame.src = '../mock/frames/test.html';
+		fixture.appendChild(frame);
+	});	
 });

@@ -1,0 +1,27 @@
+<!doctype html>
+<html id="level1">
+<head>
+	<meta charset="utf8">
+	<script src="/axe.js"></script>
+</head>
+<body>
+	<span id="target">
+		This is the target
+    </span>
+	<script>
+		axe._load({
+			rules: [{
+				id: 'div#target',
+				selector: '#target',
+				any: ['has-target']
+			}],
+			checks: [{
+				id: 'has-target',
+				evaluate: function () {
+					return true;
+				}
+			}]
+		});
+	</script>
+</body>
+</html>
