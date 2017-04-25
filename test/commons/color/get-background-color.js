@@ -170,9 +170,9 @@ describe('color.getBackgroundColor', function () {
 			'<div id="target" style="position: relative; top: -50px; z-index:-1;color:#fff;">Hello</div>';
 		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
 		assert.isNotNull(actual);
-		assert.equal(Math.floor(actual.blue), 128);
-		assert.equal(Math.floor(actual.red), 128);
-		assert.equal(Math.floor(actual.green), 128);
+		assert.equal(Math.round(actual.blue), 128);
+		assert.equal(Math.round(actual.red), 128);
+		assert.equal(Math.round(actual.green), 128);
 	});
 
 	it('should return the bgcolor if it is solid', function () {
