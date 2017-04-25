@@ -141,7 +141,7 @@ describe('reporters - v1', function() {
 		axe._runRules = orig;
 	});
 
-	var optionsV1 = { reporter: 'v1', selectors: true };
+	var optionsV1 = { reporter: 'v1' };
 
 	it('should merge the runRules results into violations and passes', function(done) {
 		axe.run(optionsV1, function (err, results) {

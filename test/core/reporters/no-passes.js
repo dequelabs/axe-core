@@ -78,7 +78,7 @@ describe('reporters - no-passes', function() {
 		};
 	});
 
-	var noPassOpt = { reporter: 'no-passes', selectors: true };
+	var noPassOpt = { reporter: 'no-passes' };
 
 	afterEach(function() {
 		axe._audit = null;
