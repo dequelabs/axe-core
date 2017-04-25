@@ -24,6 +24,8 @@ describe('th-has-data-cells', function () {
 			'<table>' +
 			'  <tr> <th>hi</th> <td>hello</td> </tr>' +
 			'  <tr> <th>hi</th> <td>hello</td> </tr>' +
+			'  <tr> <td>hello</td> <th>hi</th> </tr>' +
+			'  <tr> <td>hello</td> <th>hi</th> </tr>' +
 			'</table>';
 
 		var node = fixture.querySelector('table');
@@ -33,8 +35,9 @@ describe('th-has-data-cells', function () {
 	it('should return true each non-empty column header has a cell', function (){
 		fixture.innerHTML =
 			'<table>' +
-			'  <tr> <th>H</th> <th>H</th> </tr>' +
-			'  <tr> <td>hi</td> <td>hello</td></tr>' +
+			'  <thead> <tr> <th>H</th> <th>H</th> </tr> </thead>' +
+			'  <tfoot> <tr> <th>H</th> <th>H</th> </tr> </tfoot>' +
+			'  <tbody> <tr> <td>hi</td> <td>hello</td> </tr> </tbody>' +
 			'</table>';
 
 		var node = fixture.querySelector('table');
