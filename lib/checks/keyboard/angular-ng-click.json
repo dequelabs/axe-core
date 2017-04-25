@@ -1,0 +1,12 @@
+{
+   "id": "angular-ng-click",
+   "options": [],
+   "evaluate": "angular-ng-click.js",
+   "metadata": {
+    "impact": "critical",
+    "messages": {
+      "pass": "ng-click is focusable and has an accessible role",
+      "fail": "ng-click is not focusable or missing an accessible role"
+    }
+  }
+}
