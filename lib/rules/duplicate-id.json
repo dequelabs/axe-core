@@ -3,6 +3,7 @@
   "selector": "[id]",
   "excludeHidden": false,
   "tags": [
+    "cat.parsing",
     "wcag2a",
     "wcag411"
   ],

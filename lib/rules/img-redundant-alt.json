@@ -2,6 +2,7 @@
   "id": "image-redundant-alt",
   "selector": "button, [role=\"button\"], a[href], p, li, td, th",
   "tags": [
+    "cat.text-alternatives",
     "best-practice"
   ],
   "metadata": {

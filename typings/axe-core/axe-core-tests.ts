@@ -13,9 +13,12 @@ axe.run(context, {}, (error: Error, results: axe.AxeResults) => {
 	console.log(results.violations.length);
 	console.log(results.violations[0].nodes[0].failureSummary)
 });
-
 axe.run().then(function(done:any) {
 	done();
+});
+// additional configuration options
+axe.run(context, {iframes: false, selectors: false, elementRef: false}, (error: Error, results: axe.AxeResults)  => {
+	console.log(results.passes.length);
 });
 
 // axe.a11yCheck config
@@ -31,6 +34,10 @@ axe.a11yCheck({include: [['#id1'], ['#id2']]}, {}, (results: axe.AxeResults) => 
 axe.a11yCheck({exclude: [$fixture[0]]}, {}, (results: axe.AxeResults) => {
 	console.log(results)
 })
+// additional configuration options
+axe.a11yCheck(context, {iframes: false, selectors: false, elementRef: false}, (results: axe.AxeResults)  => {
+	console.log(results.passes.length);
+});
 var tagConfigRunOnly: axe.RunOnly = {
 	type: 'tag',
 	values: ['wcag2a']

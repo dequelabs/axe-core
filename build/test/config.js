@@ -15,6 +15,7 @@ exports = module.exports = function (grunt, options) {
 		options: options,
 		unit: {
 			options: {
+				logErrors: true,
 				log: true,
 				urls: [
 					'http://' + host + ':<%= connect.test.options.port %>/test/core/',

@@ -2,6 +2,7 @@
   "id": "list",
   "selector": "ul:not([role]), ol:not([role])",
   "tags": [
+    "cat.structure",
     "wcag2a",
     "wcag131"
   ],

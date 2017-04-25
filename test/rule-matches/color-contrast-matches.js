@@ -157,6 +157,18 @@ describe('color-contrast-matches', function () {
 		assert.isFalse(rule.matches(target));
 	});
 
+	it('should not match <button disabled><span></span></button>', function () {
+		fixture.innerHTML = '<button disabled><span>Hi</span></button>';
+		var target = fixture.querySelector('button');
+		assert.isFalse(rule.matches(target.querySelector('span')));
+	});
+
+	it('should not match <button disabled><span><i></i></span></button>', function () {
+		fixture.innerHTML = '<button disabled><span><i>Hi</i></span></button>';
+		var target = fixture.querySelector('button');
+		assert.isFalse(rule.matches(target.querySelector('i')));
+	});
+
 	it('should not match <input type=image>', function () {
 		fixture.innerHTML = '<input type="image">';
 		var target = fixture.querySelector('input');
@@ -193,4 +205,33 @@ describe('color-contrast-matches', function () {
 		assert.isFalse(rule.matches(target));
 	});
 
+	it('should not match aria-disabled=true', function () {
+		fixture.innerHTML = '<div aria-disabled="true">hi</div>';
+		var target = fixture.querySelector('div');
+		assert.isFalse(rule.matches(target));
+	});
+
+	it('should not match a descendant of aria-disabled=true', function () {
+		fixture.innerHTML = '<div aria-disabled="true"><span>hi</span></div>';
+		var target = fixture.querySelector('span');
+		assert.isFalse(rule.matches(target));
+	});
+
+	it('should not match a descendant of a disabled fieldset', function () {
+		fixture.innerHTML = '<fieldset disabled><label>hi <input type="checkbox"></label></fieldset>';
+		var target = fixture.querySelector('label');
+		assert.isFalse(rule.matches(target));
+	});
+
+	it('should not match a descendant of an explicit label for a disabled input', function () {
+		fixture.innerHTML = '<input id="input" type="checkbox" disabled><label for="input"><span>hi</span></label>';
+		var target = fixture.querySelector('span');
+		assert.isFalse(rule.matches(target));
+	});
+
+	it('should not match a descendant of an implicit label for a disabled input', function () {
+		fixture.innerHTML = '<label for="input"><span>hi</span><input id="input" type="checkbox" disabled></label>';
+		var target = fixture.querySelector('span');
+		assert.isFalse(rule.matches(target));
+	});
 });

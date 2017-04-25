@@ -2,6 +2,7 @@
   "id": "link-name",
   "selector": "a[href]:not([role=\"button\"]), [role=link][href]",
   "tags": [
+    "cat.name-role-value",
     "wcag2a",
     "wcag111",
     "wcag412",

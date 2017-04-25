@@ -2,6 +2,7 @@
   "id": "object-alt",
   "selector": "object",
   "tags": [
+    "cat.text-alternatives",
     "wcag2a",
     "wcag111",
     "section508",

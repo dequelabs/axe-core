@@ -4,6 +4,7 @@
   "pageLevel": true,
   "matches": "bypass-matches.js",
   "tags": [
+    "cat.keyboard",
     "wcag2a",
     "wcag241",
     "section508",

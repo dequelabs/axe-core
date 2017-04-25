@@ -1,0 +1,20 @@
+{
+	"description": "p-as-heading test",
+	"rule": "p-as-heading",
+	"violations": [
+		["#failed1"],
+		["#failed2"],
+		["#failed3"]
+	],
+	"passes": [
+		["#passed1"],
+		["#passed2"],
+		["#passed3"],
+		["#passed4"],
+		["#passed5"]
+	],
+	"incomplete": [
+		["#canttell1"],
+		["#canttell2"]
+	]
+}

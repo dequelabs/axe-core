@@ -20,7 +20,7 @@ describe('color-contrast', function () {
 		checkContext._data = null;
 	});
 
-	it('should return store the proper values in data', function () {
+	it('should return the proper values stored in data', function () {
 		fixture.innerHTML = '<div id="parent" style="color: black; background-color: white; font-size: 14pt"><b id="target">' +
 			'My text</b></div>';
 		var target = fixture.querySelector('#target');
@@ -32,7 +32,7 @@ describe('color-contrast', function () {
 		assert.equal(checkContext._data.fgColor, black.toHexString());
 		assert.equal(checkContext._data.contrastRatio, '21.00');
 		assert.equal(checkContext._data.fontWeight, 'bold');
-		assert.closeTo(parseFloat(checkContext._data.fontSize), 14, 0.5);
+		assert.isAtLeast(parseFloat(checkContext._data.fontSize), 14, 0.5);
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
 
@@ -62,7 +62,7 @@ describe('color-contrast', function () {
 	});
 
 	it('should return false when there is not sufficient contrast because of font size', function () {
-		fixture.innerHTML = '<div style="color: gray; background-color: white; font-size: 8pt;" id="target">' +
+		fixture.innerHTML = '<div style="color: gray; background-color: white; font-size: 8pt; -webkit-text-size-adjust: none;" id="target">' +
 			'My text</div>';
 		var target = fixture.querySelector('#target');
 		assert.isFalse(checks['color-contrast'].evaluate.call(checkContext, target));
@@ -127,6 +127,34 @@ describe('color-contrast', function () {
 		var target = fixture.querySelector('#target');
 		assert.isFalse(checks['color-contrast'].evaluate.call(checkContext, target));
 		assert.deepEqual(checkContext._relatedNodes, [target]);
+	});
 
+	it('should return undefined for background-image elements', function () {
+		var dataURI = 'data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/' +
+		'XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkA' +
+		'ABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKU' +
+		'E1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7';
+
+		fixture.innerHTML = '<div id="background" style="background:url('+ dataURI +') no-repeat left center; padding: 5px 0 5px 25px;">' +
+			'<p id="target">Text 1</p>' +
+			'</div>';
+
+		var target = fixture.querySelector('#target');
+		assert.isUndefined(checks['color-contrast'].evaluate.call(checkContext, target));
+		assert.isUndefined(checkContext._data.bgColor);
+		assert.equal(checkContext._data.contrastRatio, 0);
+		assert.equal(checkContext._data.missingData[0].reason, 'bgImage');
+	});
+
+	it('should return undefined for background-gradient elements', function () {
+		fixture.innerHTML = '<div id="background" style="background-image:linear-gradient(red, orange);">' +
+			'<p id="target">Text 2</p>' +
+			'</div>';
+
+		var target = fixture.querySelector('#target');
+		assert.isUndefined(checks['color-contrast'].evaluate.call(checkContext, target));
+		assert.isUndefined(checkContext._data.bgColor);
+		assert.equal(checkContext._data.missingData[0].reason, 'bgGradient');
+		assert.equal(checkContext._data.contrastRatio, 0);
 	});
 });

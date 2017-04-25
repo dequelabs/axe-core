@@ -3,6 +3,7 @@
   "selector": "meta[name=\"viewport\"]",
   "excludeHidden": false,
   "tags": [
+    "cat.sensory-and-visual-cues",
     "wcag2aa",
     "wcag144"
   ],

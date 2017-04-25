@@ -32,7 +32,11 @@ describe('dom.isOffscreen', function () {
 		fixture.innerHTML = '<div id="target" style="position: absolute; height: 50px; top: -51px;">Offscreen?</div>';
 		var el = document.getElementById('target');
 
-		assert.isTrue(axe.commons.dom.isOffscreen(el));
+		if (window.PHANTOMJS) {
+			assert.ok('PhantomJS is a liar');
+		} else {
+			assert.isTrue(axe.commons.dom.isOffscreen(el));
+		}
 	});
 
 	it('should never detect elements positioned outside the bottom edge', function () {
@@ -103,5 +107,16 @@ describe('dom.isOffscreen', function () {
 
 		assert.isFalse(axe.commons.dom.isOffscreen(el));
 	});
-
+	it('should not detect elements positioned because of a scroll', function () {
+		fixture.innerHTML = '<div id="scrollable" style="max-height:20px;overflow:scroll">' +
+				'<div id="visible">goobye</div>' +
+				'<div id="high" style="height:50px">high</div>' +
+				'<div id="scrollme">hello</div>' +
+			'</div>';
+		var viz = document.getElementById('visible');
+		assert.isFalse(axe.commons.dom.isOffscreen(viz));
+		var scrollme = document.getElementById('scrollme');
+		scrollme.scrollIntoView();
+		assert.isFalse(axe.commons.dom.isOffscreen(viz));		
+	});
 });

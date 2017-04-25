@@ -1,6 +1,7 @@
 {
 	"description": "video-caption test",
 	"rule": "video-caption",
-	"violations": [["#fail1"], ["#fail2"]],
+	"incomplete": [["#incomplete1"]],
+	"violations": [["#fail1"]],
 	"passes": [["#pass1"], ["#pass2"]]
 }

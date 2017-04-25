@@ -2,6 +2,7 @@
   "id": "listitem",
   "selector": "li:not([role])",
   "tags": [
+    "cat.structure",
     "wcag2a",
     "wcag131"
   ],

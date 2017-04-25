@@ -2,6 +2,7 @@
   "id": "aria-required-attr",
   "selector": "[role]",
   "tags": [
+    "cat.aria",
     "wcag2a",
     "wcag411",
     "wcag412"

@@ -29,6 +29,13 @@ describe('axe.a11yCheck', function () {
 			});
 		});
 
+		it('should work with performance logging enabled', function (done) {
+			axe.a11yCheck(document, {performanceTimer: true}, function (result) {
+				assert.isObject(result);
+				done();
+			});
+		});
+
 		it('sets v2 as the default reporter if audit.reporter is null', function (done) {
 			var origRunRules = axe._runRules;
 

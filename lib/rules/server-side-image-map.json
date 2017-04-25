@@ -2,6 +2,7 @@
   "id": "server-side-image-map",
   "selector": "img[ismap]",
   "tags": [
+    "cat.text-alternatives",
     "wcag2a",
     "wcag211",
     "section508",

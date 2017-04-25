@@ -1,6 +1,6 @@
 {
 	"description": "th-has-data-cells test",
 	"rule": "th-has-data-cells",
-	"violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"]],
-	"passes": [["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"], ["#pass5"], ["#pass6"]]
+	"incomplete": [["#canttell1"], ["#canttell2"], ["#canttell3"], ["#canttell4"]],
+	"passes": [["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"], ["#pass5"], ["#pass6"], ["#pass7"]]
 }
