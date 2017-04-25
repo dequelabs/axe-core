@@ -30,7 +30,7 @@ function buildRules(grunt, options, commons, callback) {
 		function parseMetaData(source, propType) {
 			var data = source.metadata
 			var key = source.id || source.type
-			if (key && locale && locale[propType]) {
+			if (key && locale && locale[propType] && propType !== 'checks') {
 				data = locale[propType][key] || data
 			}
 			var result = clone(data) || {};
@@ -125,13 +125,22 @@ function buildRules(grunt, options, commons, callback) {
 		var rules = result.rules;
 		var checks = result.checks;
 
-		rules.map(function (rule) {
+		// Translate checks
+		if (locale && locale.checks) {
+			checks.forEach(function (check) {
+				if (locale.checks[check.id] && check.metadata) {
+					check.metadata.messages = locale.checks[check.id]
+				}
+			})
+		}
 
+		rules.map(function (rule) {
 			rule.any = parseChecks(rule.any);
 			rule.all = parseChecks(rule.all);
 			rule.none = parseChecks(rule.none);
 
 			if (rule.metadata && !metadata.rules[rule.id]) {
+				// Translate rules
 				metadata.rules[rule.id] = parseMetaData(rule, 'rules');
 			}
 			descriptions.push([rule.id, entities.encode(rule.metadata.description), rule.tags.join(', '), rule.enabled === false ? false : true]);
@@ -143,7 +152,9 @@ function buildRules(grunt, options, commons, callback) {
 			return rule;
 		});
 
+		// Translate failureSummaries
 		metadata.failureSummaries = createFailureSummaryObject(result.misc);
+
 		callback({
 			auto: replaceFunctions(JSON.stringify({
 				data: metadata,
