@@ -1,4 +1,4 @@
-// Type definitions for axe-core 2.1.7
+// Type definitions for axe-core 2.2.0
 // Project: https://github.com/dequelabs/axe-core
 // Definitions by: Marcy Sutton <https://github.com/marcysutton>
 
@@ -122,7 +122,7 @@ declare module axe {
 	 * @param  {Function} callback Optional The function to invoke when analysis is complete.
 	 * @returns {any}  	  results  If the callback was not defined, aXe will return a Promise instead.
 	 */
-	function run(context?: ElementContext, options?: {runOnly?: RunOnly, rules?: Object}, callback?: (error: Error, results:AxeResults) => void): any
+	function run(context?: ElementContext, options?: {runOnly?: RunOnly, rules?: Object, iframes?: Boolean, elementRef?: Boolean, selectors?: Boolean}, callback?: (error: Error, results:AxeResults) => void): any
 
 	/**
 	 * Starts analysis on the current document and its subframes
@@ -132,7 +132,7 @@ declare module axe {
 	 * @param  {Function} callback The function to invoke when analysis is complete.
 	 * @returns {Object}  results  The aXe results object
 	 */
-	function a11yCheck(context: ElementContext, options: {runOnly?: RunOnly, rules?: Object}, callback: (results:AxeResults) => void): AxeResults
+	function a11yCheck(context: ElementContext, options: {runOnly?: RunOnly, rules?: Object, iframes?: Boolean, elementRef?: Boolean, selectors?: Boolean}, callback: (results:AxeResults) => void): AxeResults
 
 	/**
 	 * Method for configuring the data format used by aXe. Helpful for adding new

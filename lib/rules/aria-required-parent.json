@@ -2,6 +2,7 @@
   "id": "aria-required-parent",
   "selector": "[role]",
   "tags": [
+    "cat.aria",
     "wcag2a",
     "wcag131"
   ],

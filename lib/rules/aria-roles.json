@@ -2,6 +2,7 @@
   "id": "aria-roles",
   "selector": "[role]",
   "tags": [
+    "cat.aria",
     "wcag2a",
     "wcag131",
     "wcag411",

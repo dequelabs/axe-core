@@ -109,7 +109,7 @@ grunt build
 
 ### aXe Development
 
-The TypeScript definition file for axe-core is distributed with this module [axe.d.ts](./axe.d.ts). It currently supports TypeScript 2.0+.
+The TypeScript definition file for axe-core is distributed with this module and can be found in [axe.d.ts](./axe.d.ts). It currently supports TypeScript 2.0+.
 
 To maintain aXe support for TypeScript you must first install it (globally recommended):
 ```

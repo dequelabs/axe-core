@@ -3,6 +3,7 @@
   "selector": "a[href]",
   "enabled": false,
   "tags": [
+    "cat.semantics",
     "best-practice"
   ],
   "metadata": {

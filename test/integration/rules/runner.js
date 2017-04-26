@@ -98,7 +98,7 @@
 					before(function (done) {
 						fixture.innerHTML = test.content;
 						waitForFrames(fixture, function () {
-							axe.run(fixture, { runOnly: { type: 'rule', values: [ruleId]}}, function (err, r) {
+							axe.run(fixture, { performanceTimer: false, runOnly: { type: 'rule', values: [ruleId]}}, function (err, r) {
 								assert.isNull(err);
 								results = flattenResult(r);
 								done();

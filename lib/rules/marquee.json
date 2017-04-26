@@ -3,6 +3,7 @@
   "selector": "marquee",
   "excludeHidden": false,
   "tags": [
+    "cat.parsing",
     "wcag2a",
     "wcag222"
   ],

@@ -80,14 +80,32 @@ module.exports = function (grunt) {
 	* Build web driver depends whether REMOTE_SELENIUM_URL is set
 	*/
 	function buildWebDriver(browser) {
-		var	webdriver;
+		var	webdriver, capabilities;
+		var mobileBrowser = browser.split('-mobile');
+		if (mobileBrowser.length > 1) {
+			browser = mobileBrowser[0];
+			capabilities = {
+			  browserName: mobileBrowser[0],
+				chromeOptions: {
+					mobileEmulation: {
+						deviceMetrics: {
+							width: 320,
+							height: 568,
+							pixelRatio: 2
+						}
+					}
+				}
+			};
+		}
 		if (process.env.REMOTE_SELENIUM_URL) {
 		  webdriver = new WebDriver.Builder()
 			.forBrowser(browser)
+			.withCapabilities(capabilities)
 			.usingServer(process.env.REMOTE_SELENIUM_URL)
 			.build();
 		} else {
 			webdriver = new WebDriver.Builder()
+			.withCapabilities(capabilities)
 			.forBrowser(browser)
 			.build();
 		}

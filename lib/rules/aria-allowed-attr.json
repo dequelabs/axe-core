@@ -2,6 +2,7 @@
   "id": "aria-allowed-attr",
   "matches": "aria-allowed-attr-matches.js",
   "tags": [
+    "cat.aria",
     "wcag2a",
     "wcag411",
     "wcag412"

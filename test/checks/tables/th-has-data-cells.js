@@ -73,7 +73,23 @@ describe('th-has-data-cells', function () {
 		assert.isTrue(checks['th-has-data-cells'].evaluate.call(checkContext, node));
 	});
 
-	it('should return false if a th has no data cells', function (){
+	it('should return true when the td has a content element', function (){
+		fixture.innerHTML =
+			'<table>' +
+			'  <tr> <th>hi</th> <td><input type="text"></td> </tr>' +
+			'  <tr> <th>hi</th> <td><textarea></textarea></td> </tr>' +
+			'  <tr> <th>hi</th> <td><select><option>a</option></select></td> </tr>' +
+			'  <tr> <th>hi</th> <td><img src="" alt="foo"></td> </tr>' +
+			'  <tr> <th>hi</th> <td><video></video></td> </tr>' +
+			'  <tr> <th>hi</th> <td><audio></audio></td> </tr>' +
+			'  <tr> <th>hi</th> <td><span role="img"></span></td> </tr>' +
+			'</table>';
+
+		var node = fixture.querySelector('table');
+		assert.isTrue(checks['th-has-data-cells'].evaluate.call(checkContext, node));
+	});
+
+	it('should return undefined if a th has no data cells', function (){
 		fixture.innerHTML =
 			'<table>' +
 			'  <tr> <th>hi</th> </tr>' +
@@ -81,10 +97,10 @@ describe('th-has-data-cells', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(checks['th-has-data-cells'].evaluate.call(checkContext, node));
+		assert.isUndefined(checks['th-has-data-cells'].evaluate.call(checkContext, node));
 	});
 
-	it('should return false if all data cells are empty', function (){
+	it('should return undefined if all data cells are empty', function (){
 		fixture.innerHTML =
 			'<table>' +
 			'  <tr> <th>hi</th> <td></td> </tr>' +
@@ -92,16 +108,16 @@ describe('th-has-data-cells', function () {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(checks['th-has-data-cells'].evaluate.call(checkContext, node));
+		assert.isUndefined(checks['th-has-data-cells'].evaluate.call(checkContext, node));
 	});
 
-	it('should return false if a td with role=columnheader is used that has no data cells', function (){
+	it('should return undefined if a td with role=columnheader is used that has no data cells', function (){
 		fixture.innerHTML =
 			'<table id="fail4">' +
 			'  <tr> <td>aXe</td> <td role="columnheader">AXE</th> </tr>' +
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(checks['th-has-data-cells'].evaluate.call(checkContext, node));
+		assert.isUndefined(checks['th-has-data-cells'].evaluate.call(checkContext, node));
 	});
 });

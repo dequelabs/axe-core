@@ -1,0 +1,77 @@
+<!-- inapplicable -->
+<div>
+  <p id="inapplicable1"><b>Some text</b></p>
+</div>
+
+<div>
+  <p id="inapplicable2"><b>A paragraph! With text!</b></p>
+  <p>A paragraph!</p>
+</div>
+
+<div>
+  <p>Some text</p>
+  <blockquote>
+    <p id="inapplicable3">Some text</p>
+  </blockquote>
+</div>
+
+<div>
+  <article>
+    <p id="inapplicable4"><b>Some text</b></p>
+  </article>
+  <p>Some text</p>
+</div>
+
+
+<!-- Passes -->
+<div>
+  <p id="passed1">Some text</p>
+  <p>A paragraph!</p>
+</div>
+
+<div>
+  <p id="passed2"><b>Some text</b></p>
+  <p><b>A paragraph!</b></p>
+</div>
+
+<div>
+  <p id="passed3" style="font-style:bold">Some text</p>
+  <p><b>A paragraph!</b></p>
+</div>
+
+<div>
+  <p id="passed4">Some text</p>
+  <p><b>A paragraph!</b></p>
+</div>
+
+
+<!-- Failures -->
+<div>
+  <p id="failed1" style="font-weight:bold; font-size: 120%">Some text</p>
+  <p>A paragraph!</p>
+</div>
+
+<div>
+  <p id="failed2" style="font-size:150%">Some text</p>
+  <p>A paragraph!</p>
+</div>
+
+<div>
+  <p id="failed3"><b><i>Some text</b></i></p>
+  <p>A paragraph!</p>
+</div>
+
+
+<!-- Cant Tell -->
+<div>
+  <p id="passed5"><b style="font-size:120%">Some text</b></p>
+  <p id="canttell1"><b style="font-size:120%">Some text</b></p>
+  <p>A paragraph!</p>
+</div>
+
+<div>
+  <blockquote>
+    <p id="canttell2"><b style="font-size:120%">Some text</b></p>
+    <p>A pragraph!</p>
+  </blockquote>
+</div>

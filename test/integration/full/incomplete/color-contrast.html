@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+	<title>Contrast Incomplete test</title>
+	<meta charset="utf8">
+	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
+	<script src="/node_modules/mocha/mocha.js"></script>
+	<script src="/node_modules/chai/chai.js"></script>
+	<script src="/axe.js"></script>
+	<script>
+		mocha.setup({
+			timeout: 10000,
+			ui: 'bdd'
+		});
+		var assert = chai.assert;
+	</script>
+</head>
+<body>
+	<div id="fixture" style="width: 100%; position: relative;">
+		<div id="parent" style="height: 40px; width: 30px;
+		 background-color: white; position: relative; z-index: 5">
+			<div id="shifted" style="position: absolute; top: -10px; height: 40px;width: 35px; z-index: 15;">
+				<img src="some-img.png" width="35" height="40">
+			</div>
+			<div id="target" style="position: relative; top: 1px; height: 20px
+			 width: 25px; z-index: 25; background:rgba(0,125,0,0.5);">Text</div>
+		</div>
+		<div style="background-image:linear-gradient(red, orange); color:#fff;">
+			Text over gradient
+		</div>
+	</div>
+	<div id="mocha"></div>
+	<script src="color-contrast.js"></script>
+	<script src="/test/integration/adapter.js"></script>
+</body>
+</html>

@@ -3,6 +3,7 @@
   "selector": "video",
   "excludeHidden": false,
   "tags": [
+    "cat.text-alternatives",
     "wcag2a",
     "wcag122",
     "wcag123",

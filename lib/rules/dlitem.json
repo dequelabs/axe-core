@@ -2,6 +2,7 @@
   "id": "dlitem",
   "selector": "dd:not([role]), dt:not([role])",
   "tags": [
+    "cat.structure",
     "wcag2a",
     "wcag131"
   ],

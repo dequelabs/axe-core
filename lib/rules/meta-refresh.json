@@ -3,6 +3,7 @@
   "selector": "meta[http-equiv=\"refresh\"]",
   "excludeHidden": false,
   "tags": [
+    "cat.time",
     "wcag2a",
     "wcag2aaa",
     "wcag221",

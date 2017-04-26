@@ -7,11 +7,11 @@ describe('description', function () {
 		fixture.innerHTML = '';
 	});
 
-	it('should fail if there is no track element', function () {
+	it('should return undefined if there is no track element', function () {
 		fixture.innerHTML = '<video></video>';
 		var node = fixture.querySelector('video');
 
-		assert.isTrue(checks.description.evaluate(node));
+		assert.isUndefined(checks.description.evaluate(node));
 	});
 
 	it('should fail if there is no kind=descriptions attribute', function () {

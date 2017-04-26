@@ -3,6 +3,7 @@
   "selector": "html",
   "matches": "window-is-top.js",
   "tags": [
+    "cat.text-alternatives",
     "wcag2a",
     "wcag242"
   ],

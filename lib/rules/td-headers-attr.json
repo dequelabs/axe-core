@@ -2,6 +2,7 @@
   "id": "td-headers-attr",
   "selector": "table",
   "tags": [
+    "cat.tables",
     "wcag2a",
     "wcag131",
     "section508",

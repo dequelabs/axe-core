@@ -74,7 +74,6 @@ module.exports = function (grunt) {
 					continue;
 				}
 				var lang = entry[1].replace('Subtag: ', '').trim();
-				
 				langs.push(lang);
 			}
 			generateOutput(langs, check);

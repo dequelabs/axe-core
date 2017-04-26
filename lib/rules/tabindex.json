@@ -2,6 +2,7 @@
   "id": "tabindex",
   "selector": "[tabindex]",
   "tags": [
+    "cat.keyboard",
     "best-practice"
   ],
   "metadata": {

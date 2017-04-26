@@ -1,6 +1,5 @@
 {
   "name": "axe-core",
-  "description": "Accessibility engine for automated Web UI testing",
   "version": "2.1.7",
   "contributors": [
     {

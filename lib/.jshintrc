@@ -32,7 +32,7 @@
 
 	"maxparams": 6,
 	"maxdepth": 5,
-	"maxstatements": 15,
+	"maxstatements": 16,
 	"maxcomplexity": 10,
 	"maxlen": 120,
 

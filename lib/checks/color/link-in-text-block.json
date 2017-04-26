@@ -5,7 +5,15 @@
     "impact": "critical",
     "messages": {
       "pass": "Links can be distinguished from surrounding text in a way that does not rely on color",
-      "fail": "Links can not be distinguished from surrounding text in a way that does not rely on color"
+      "fail": "Links can not be distinguished from surrounding text in a way that does not rely on color",
+      "incomplete": {
+        "bgContrast": "Element's contrast ratio could not be determined. Check for a distinct hover/focus style",
+        "bgImage": "Element's contrast ratio could not be determined due to a background image",
+        "bgGradient": "Element's contrast ratio could not be determined due to a background gradient",
+        "imgNode": "Element's contrast ratio could not be determined because element contains an image node",
+        "bgOverlap": "Element's contrast ratio could not be determined because of element overlap",
+        "default": "Unable to determine contrast ratio"
+      }
     }
   }
 }

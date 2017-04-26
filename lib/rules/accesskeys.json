@@ -4,7 +4,8 @@
   "excludeHidden": false,
   "tags": [
     "wcag2a",
-    "wcag211"
+    "wcag211",
+    "cat.keyboard"
   ],
   "metadata": {
     "description": "Ensures every accesskey attribute value is unique",

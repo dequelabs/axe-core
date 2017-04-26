@@ -2,6 +2,7 @@
   "id": "button-name",
   "selector": "button, [role=\"button\"], input[type=\"button\"], input[type=\"submit\"], input[type=\"reset\"]",
   "tags": [
+    "cat.name-role-value",
     "wcag2a",
     "wcag412",
     "section508",
