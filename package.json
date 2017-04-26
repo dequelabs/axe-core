@@ -78,6 +78,6 @@
     "mocha": "^3.2.0",
     "promise": "~7.1.1",
     "revalidator": "~0.3.1",
-    "selenium-webdriver": "~3.0.0"
+    "selenium-webdriver": "~3.4.0"
   }
 }
