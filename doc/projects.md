@@ -24,3 +24,4 @@ Add your project/integration to this file and submit a pull request.
 20. [Storybook accessibility addon](https://github.com/jbovenschen/storybook-addon-a11y)
 21. [Intern](https://github.com/theintern/intern-a11y)
 22. [Protractor-axe-report Plugin](https://github.com/E1Edatatracker/protractor-axe-report-plugin)
+23. [Rocket Validator](https://rocketvalidator.com)
