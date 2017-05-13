@@ -27,7 +27,9 @@
 		["#pass2"],
 		["#pass3"],
 		["#pass4"],
-		["#pass5"]
+		["#pass5"],
+		["#pass6"],
+		["#pass6 > input"]
 	],
 	"incomplete": [
 		["#canttell1"],

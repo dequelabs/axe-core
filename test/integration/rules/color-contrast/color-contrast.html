@@ -1,12 +1,17 @@
-<div style="background-image: url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)">
 <div id="pass1" style="background-color: white; color: black">This is a pass.</div>
 <div id="pass2" style="background-color: gray; color: white; font-size: 40px;">This is a pass.</div>
 <div id="pass3" style="background-color: gray; color: white; font-size: 20px; font-weight: bold">This is a pass.</div>
+
 <div id="fail1" style="background-color: gray; color: white; font-size: 20px;">This is a fail.<b id="pass4">But this is a pass.</b></div>
+
+<div style="background-color: black;">
+	<div style="background-color: rgba(255, 255, 255, 0.1); color: white;" id="pass5">Pass.</div>
+</div>
+
+<label id="pass6">Default label<input type="text"></label>
+
 <div id="fail2" style="background-color: gray; color: white; font-size: 8px;">This is a fail.</div>
 <div id="fail3" style="background-color: yellow; color: white; font-size: 40px;">This is a fail.</div>
-<div style="background-color: black;"><div style="background-color: rgba(255, 255, 255, 0.1); color: white" id="pass5">Pass.</div></div>
-
 <div style="background-color: white;"><div style="background-color: rgba(255, 255, 255, 0.1); color: white" id="fail4">Fail.</div></div>
 <div style="background-color: white; height: 60px; width: 80px;"><div id="fail5" style="color: white; height: 40px; width: 60px;">Hi</div></div>
 <div style="background-color: white"><div id="fail6" style="opacity: 0.1; background-color: white; color: black">This is a fail.</div></div>
@@ -25,6 +30,7 @@
 <input id="fail16" type="submit" style="background: #000; color: #000" value="hello">
 <input id="fail17" style="background: #000; color: #000" value="hello">
 <div id="fail18" style="background: #000; color: #000" role="alert" aria-disabled="false">hello</div>
+
 <div id="fail19" style="background: #000; color: #000" aria-hidden="true">text</div>
 
 <!-- shouldnt run -->
@@ -33,18 +39,34 @@
 <input id="ignore2" style="background: #000; color: #000" value="hello" type="checkbox">
 <input id="ignore4" style="background: #000; color: #000" value="hello" type="hidden">
 <select id="ignore5" style="background: #000; color: #000"></select>
+
 <div id="ignore6" style="color: yellow; width: 100px; overflow: hidden; text-indent: 200px; background-color: white;">text</div>
-<label style="color: #fff">
-	Test
-	<input type="text" disabled>
-</label>
+
 <label for="disabled1">Hello</label>
 <input id="disabled1" disabled>
 <div id="disabled2">Hello</div>
 <input aria-labelledby="disabled2" disabled>
 <div id="disabled3" style="background: #000; color: #000" role="alert" aria-disabled="true">hello</div>
+<label style="color: #fff" id="disabled4">
+	Test
+	<input type="text" disabled>
+</label>
 
-<div style="background-color: rgba(255, 255, 255, 0.1); color: white" id="canttell1">Pass by default.</div>
-<div style="background-color: white; height: 20px; width: 80px;"><div id="canttell2" style="color: white; height: 40px; width: 60px;">Hi</div></div>
-<div style="background-color: white; height: 60px; width: 40px;"><div id="canttell3" style="color: white; height: 40px; width: 60px;">Hi</div></div>
-<div style="background-color: white; height: 60px; width: 80px;"><div id="canttell4" style="margin-left: 80px; color: white; height: 40px; width: 60px;">Hi</div></div>
+<div style="background-image: url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)">
+	<div style="color: white" id="canttell1">Background image</div>
+</div>
+
+<div style="height:40px; position: relative;">
+	<div style="background-color: white; height: 60px; width: 40px;border: 1px solid;">
+		<div id="canttell2" style="color: white; height: 40px; width: 60px; border: 1px solid red;">Outside parent</div>
+	</div>
+</div>
+
+<div style="background-color: white; height: 60px; width: 40px;">
+	<div id="canttell3" style="color: white; height: 40px; width: 60px;">Background overlap</div>
+</div>
+
+<div style="background-color: white; height: 60px; width: 80px; border:1px solid;position: relative;">
+	<div id="canttell4" style="color: white; height: 40px; width: 60px; border:1px solid red;">Element overlap</div>
+	<div style="position: absolute; top: 0; width: 60px; height: 40px;background-color: #000"></div>
+</div>
