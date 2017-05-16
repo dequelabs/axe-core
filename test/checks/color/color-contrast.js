@@ -174,7 +174,7 @@ describe('color-contrast', function () {
 	});
 
 	it('should return true when a label wraps a text input', function () {
-		fixture.innerHTML = '<label style="color: black; background-color: white;" id="target">' +
+		fixture.innerHTML = '<label id="target">' +
 			'My text <input type="text"></label>';
 		var target = fixture.querySelector('#target');
 		var result = checks['color-contrast'].evaluate.call(checkContext, target);
