@@ -5,6 +5,7 @@ time. We expect all code contributed to follow these standards. If your code doe
 will kindly ask you to resubmit it in the correct format.
 
 - [Git Commits](#git-commits)
+- [Submitting a pull request](#submitting-a-pull-request)
 - [Merging a pull request](#merging-a-pull-request)
 - [Squashing Commits](#squashing-everything-into-one-commit)
 
@@ -91,41 +92,53 @@ If needed, the footer should contain any information about Breaking Changes. Dep
 breaking changes in the Changelog should inform users if they'll need to modify their code after
 this commit.
 
+## Submitting a pull request
+
+We want to keep our commit log clean by avoiding merge messages in branches. Before submitting a pull request, make sure your branch is up to date with the develop branch by either:
+
+- Pulling from develop before creating your branch
+- Doing a rebase from origin/develop (will require a force push **on your branch**)
+
+To rebase from origin/develop if we've pushed changes since you created your branch:
+
+```sh
+git checkout your-branch
+git fetch
+git rebase origin/develop
+git push origin head -f
+```
 
 ## Merging a pull request
 
-To apply a pull request, make sure your local develop branch is up to date. Then, create a new branch
-for that pull request:
+If a pull request has many commits (especially if they don't follow our [commit policy](#git-commits)), you'll want to squash them into one clean commit.
+
+In the Github UI, you can use the new [Squash and Merge](https://github.com/blog/2141-squash-your-commits) feature to make this easy. If there are merge conflicts preventing this, either ask the committer to rebase from develop following the [PR submission steps above](#submitting-a-pull-request), or use the manual method below.
+
+To apply a pull request manually, make sure your local develop branch is up to date. Then, create a new branch for that pull request.
+
+Create a temporary, local branch:
 ```sh
-git checkout -b some-user-feature
+git checkout -b temp-feature-branch
 ```
 
 Run the following commands to apply all commits from that pull request on top of your branch's local history:
 
-### Bitbucket
-
-```
-curl -L https://bitbucket.org/api/2.0/repositories/dmusser/axe-core/pullrequests/85/patch | git am -3
-```
-
-### Github
-
 ```
 curl -L https://github.com/dequelabs/axe-core/pull/205.patch | git am -3
 ```
-
-> In the Github UI, you can use the new [Squash and Merge](https://github.com/blog/2141-squash-your-commits) feature as an alternative.
 
 If the merge succeeds, use `git diff origin/develop` to review all the changes that will happen
 post-merge.
 
 ## Squashing everything into one commit
 
-Before merging a pull request into develop, make sure there is only one commit representing the
-changes in the pull request, so the git log stays lean.
+Before merging a pull request with many commits into develop, make sure there is only one commit representing the
+changes in the pull request, so the git log stays lean. We particularly want to avoid merge messages and vague commits that don't follow our commit policy (like `Merged develop into featurebranch` or `fixed some stuff`).
 
 You can use git's interactive rebase to manipulate, merge, and rename commits in your local
-history.
+history. If these steps are followed, a force push shouldn't be necessary. 
+
+**Do not force push to develop or master under any circulstances.**
 
 To interactively rebase all of your commits on top of the latest in develop, run:
 
