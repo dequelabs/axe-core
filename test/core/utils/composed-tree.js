@@ -111,7 +111,7 @@ if (document.body && typeof document.body.attachShadow === 'function') {
 				var group = document.createElement('div');
 				group.className = className;
 				// Empty string in slot name attribute or absence thereof work the same, so no need for special handling.
-				group.innerHTML = '<ul><slot name="' + slotName + '"></slot></ul>';
+				group.innerHTML = '<ul><slot name="' + slotName + '">fallback content<li>one</li></slot></ul>';
 				return group;
 			}
 
@@ -127,6 +127,7 @@ if (document.body && typeof document.body.attachShadow === 'function') {
 			str += '<div class="stories"><li>1</li>' +
 			'<li>2</li><li class="breaking" slot="breaking">3</li>' +
 			'<li>4</li><li>5</li><li class="breaking" slot="breaking">6</li></div>';
+			str += '<div class="stories"></div>';
 			fixture.innerHTML = str;
 
 			fixture.querySelectorAll('.stories').forEach(makeShadowTree);
@@ -139,6 +140,13 @@ if (document.body && typeof document.body.attachShadow === 'function') {
 		});
 		it('getComposedTree\'s virtual DOM should represent the composed tree', composedTreeAssertions);
 		it('getComposedTree\'s virtual DOM should give an ID to the shadow DOM', shadowIdAssertions);
+		it('getComposedTree\'s virtual DOM should have the fallback content', function () {
+			var virtualDOM = axe.utils.getComposedTree(fixture);
+			assert.isTrue(virtualDOM[0].children[7].children[0].children.length === 2);
+			assert.isTrue(virtualDOM[0].children[7].children[0].children[0].actualNode.nodeType === 3);
+			assert.isTrue(virtualDOM[0].children[7].children[0].children[0].actualNode.textContent === 'fallback content');
+			assert.isTrue(virtualDOM[0].children[7].children[0].children[1].actualNode.nodeName === 'LI');
+		});
 	});
 }
 
