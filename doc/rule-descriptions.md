@@ -23,6 +23,7 @@
 | frame-title-unique | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a unique title attribute | cat.text-alternatives, best-practice | true |
 | frame-title | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a non-empty title attribute | cat.text-alternatives, wcag2a, wcag241, section508, section508.22.i | true |
 | heading-order | Ensures the order of headings is semantically correct | cat.semantics, best-practice | false |
+| hidden-content | Informs users about hidden content. | experimental, review-item | false |
 | href-no-hash | Ensures that href values are valid link references to promote only using anchors as links | cat.semantics, best-practice | false |
 | html-has-lang | Ensures every HTML document has a lang attribute | cat.language, wcag2a, wcag311 | true |
 | html-lang-valid | Ensures the lang attribute of the &lt;html&gt; element has a valid value | cat.language, wcag2a, wcag311 | true |
