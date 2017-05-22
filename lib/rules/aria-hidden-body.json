@@ -1,6 +1,6 @@
 {
   "id": "aria-hidden-body",
-  "matches": "aria-hidden-body.js",
+  "selector": "body",
   "tags": [
     "cat.aria",
     "wcag2a",
