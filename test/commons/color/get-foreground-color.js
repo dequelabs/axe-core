@@ -44,7 +44,7 @@ describe('color.getForegroundColor', function () {
 			'</div></div>';
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
-		assert.equal(axe.commons.color.incompleteData.get('fgColor').reason, 'bgImage');
+		assert.equal(axe.commons.color.incompleteData.get('fgColor'), 'bgImage');
 		assert.isNull(actual);
 	});
 
