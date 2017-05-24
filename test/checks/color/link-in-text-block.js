@@ -180,7 +180,7 @@ describe('link-in-text-block', function () {
 				backgroundColor: 'white'
 			});
 			assert.isUndefined(checks['link-in-text-block'].evaluate.call(checkContext, linkElm));
-			assert.equal(checkContext._data.missingData[0].reason, 'bgContrast');
+			assert.equal(checkContext._data.missingReason, 'bgContrast');
 		});
 
 		it('returns false if background contrast < 3:0', function() {
@@ -202,7 +202,7 @@ describe('link-in-text-block', function () {
 				color: '#000000'
 			});
 			assert.isUndefined(checks['link-in-text-block'].evaluate.call(checkContext, linkElm));
-			assert.equal(checkContext._data.missingData[0].reason, 'bgImage');
+			assert.equal(checkContext._data.missingReason, 'bgImage');
 		});
 
 	});
