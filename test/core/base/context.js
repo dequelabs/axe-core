@@ -335,8 +335,8 @@ describe('Context', function() {
 				include: ['#fixture'],
 				exclude: ['#mocha']
 			}), {
-				include: [axe.utils.getComposedTree(document.getElementById('fixture'))[0]],
-				exclude: [axe.utils.getComposedTree(document.getElementById('mocha'))[0]],
+				include: [axe.utils.getFlattenedTree(document.getElementById('fixture'))[0]],
+				exclude: [axe.utils.getFlattenedTree(document.getElementById('mocha'))[0]],
 				initiator: true,
 				page: false,
 				frames: []
@@ -349,7 +349,7 @@ describe('Context', function() {
 				include: ['#fixture', '#monkeys'],
 				exclude: ['#bananas']
 			}), {
-				include: [axe.utils.getComposedTree(document.getElementById('fixture'))[0]],
+				include: [axe.utils.getFlattenedTree(document.getElementById('fixture'))[0]],
 				exclude: [],
 				initiator: true,
 				page: false,

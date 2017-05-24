@@ -59,8 +59,8 @@ describe('axe.utils.contains', function () {
 
 	it('should work', function () {
 		fixture.innerHTML = '<div id="outer"><div id="inner"></div></div>';
-		var inner = axe.utils.getComposedTree(document.getElementById('inner'))[0];
-		var outer = axe.utils.getComposedTree(document.getElementById('outer'))[0];
+		var inner = axe.utils.getFlattenedTree(document.getElementById('inner'))[0];
+		var outer = axe.utils.getFlattenedTree(document.getElementById('outer'))[0];
 
 		assert.isTrue(axe.utils.contains(outer, inner));
 		assert.isFalse(axe.utils.contains(inner, outer));

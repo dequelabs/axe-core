@@ -9,10 +9,10 @@ function createStyle () {
 	return style;
 }
 
-function composedTreeAssertions () {
+function flattenedTreeAssertions () {
 	'use strict';
 
-	var virtualDOM = axe.utils.getComposedTree(fixture.firstChild);
+	var virtualDOM = axe.utils.getFlattenedTree(fixture.firstChild);
 	assert.equal(virtualDOM.length, 3);
 	assert.equal(virtualDOM[0].actualNode.nodeName, 'STYLE');
 
@@ -42,7 +42,7 @@ function composedTreeAssertions () {
 function shadowIdAssertions () {
 	'use strict';
 
-	var virtualDOM = axe.utils.getComposedTree(fixture);
+	var virtualDOM = axe.utils.getFlattenedTree(fixture);
 	assert.isUndefined(virtualDOM[0].shadowId);
 	assert.isDefined(virtualDOM[0].children[0].shadowId);
 	assert.isDefined(virtualDOM[0].children[1].shadowId);
@@ -60,7 +60,7 @@ function shadowIdAssertions () {
 }
 
 if (document.body && typeof document.body.createShadowRoot === 'function') {
-	describe('composed-tree shadow DOM v0', function () {
+	describe('flattened-tree shadow DOM v0', function () {
 		'use strict';
 		afterEach(function () {
 			fixture.innerHTML = '';
@@ -92,16 +92,16 @@ if (document.body && typeof document.body.createShadowRoot === 'function') {
 		it('it should support shadow DOM v0', function () {
 			assert.isDefined(fixture.firstChild.shadowRoot);
 		});
-		it('getComposedTree should return an array of stuff', function () {
-			assert.isTrue(Array.isArray(axe.utils.getComposedTree(fixture.firstChild)));
+		it('getFlattenedTree should return an array of stuff', function () {
+			assert.isTrue(Array.isArray(axe.utils.getFlattenedTree(fixture.firstChild)));
 		});
-		it('getComposedTree\'s virtual DOM should represent the composed tree', composedTreeAssertions);
-		it('getComposedTree\'s virtual DOM should give an ID to the shadow DOM', shadowIdAssertions);
+		it('getFlattenedTree\'s virtual DOM should represent the flattened tree', flattenedTreeAssertions);
+		it('getFlattenedTree\'s virtual DOM should give an ID to the shadow DOM', shadowIdAssertions);
 	});
 }
 
 if (document.body && typeof document.body.attachShadow === 'function') {
-	describe('composed-tree shadow DOM v1', function () {
+	describe('flattened-tree shadow DOM v1', function () {
 		'use strict';
 		afterEach(function () {
 			fixture.innerHTML = '';
@@ -135,13 +135,13 @@ if (document.body && typeof document.body.attachShadow === 'function') {
 		it('should support shadow DOM v1', function () {
 			assert.isDefined(fixture.firstChild.shadowRoot);
 		});
-		it('getComposedTree should return an array of stuff', function () {
-			assert.isTrue(Array.isArray(axe.utils.getComposedTree(fixture.firstChild)));
+		it('getFlattenedTree should return an array of stuff', function () {
+			assert.isTrue(Array.isArray(axe.utils.getFlattenedTree(fixture.firstChild)));
 		});
-		it('getComposedTree\'s virtual DOM should represent the composed tree', composedTreeAssertions);
-		it('getComposedTree\'s virtual DOM should give an ID to the shadow DOM', shadowIdAssertions);
-		it('getComposedTree\'s virtual DOM should have the fallback content', function () {
-			var virtualDOM = axe.utils.getComposedTree(fixture);
+		it('getFlattenedTree\'s virtual DOM should represent the flattened tree', flattenedTreeAssertions);
+		it('getFlattenedTree\'s virtual DOM should give an ID to the shadow DOM', shadowIdAssertions);
+		it('getFlattenedTree\'s virtual DOM should have the fallback content', function () {
+			var virtualDOM = axe.utils.getFlattenedTree(fixture);
 			assert.isTrue(virtualDOM[0].children[7].children[0].children.length === 2);
 			assert.isTrue(virtualDOM[0].children[7].children[0].children[0].actualNode.nodeType === 3);
 			assert.isTrue(virtualDOM[0].children[7].children[0].children[0].actualNode.textContent === 'fallback content');
@@ -152,7 +152,7 @@ if (document.body && typeof document.body.attachShadow === 'function') {
 
 if (document.body && typeof document.body.attachShadow === 'undefined' &&
 	typeof document.body.createShadowRoot === 'undefined') {
-	describe('composed-tree', function () {
+	describe('flattened-tree', function () {
 		'use strict';
 		it('SHADOW DOM TESTS DEFERRED, NO SUPPORT');
 	});

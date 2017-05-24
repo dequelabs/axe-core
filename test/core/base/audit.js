@@ -368,7 +368,7 @@ describe('Audit', function () {
 				'<input aria-labelledby="monkeys">' +
 				'<blink>FAIL ME</blink>';
 
-			a.run({ include: [axe.utils.getComposedTree(fixture)[0]] }, {}, function (results) {
+			a.run({ include: [axe.utils.getFlattenedTree(fixture)[0]] }, {}, function (results) {
 				var expected = [{
 					id: 'positive1',
 					result: 'inapplicable',
@@ -510,7 +510,7 @@ describe('Audit', function () {
 				}
 			});
 
-			a.run({ include: [axe.utils.getComposedTree(fixture)[0]] }, {
+			a.run({ include: [axe.utils.getFlattenedTree(fixture)[0]] }, {
 				runOnly: {
 					'type': 'rule',
 					'values': ['throw1']
@@ -537,7 +537,7 @@ describe('Audit', function () {
 					throw new Error('Launch the super sheep!');
 				}
 			});
-			a.run({ include: [axe.utils.getComposedTree(fixture)[0]] }, {
+			a.run({ include: [axe.utils.getFlattenedTree(fixture)[0]] }, {
 				runOnly: {
 					'type': 'rule',
 					'values': ['throw1', 'positive1']
@@ -575,7 +575,7 @@ describe('Audit', function () {
 					throw new Error('Launch the super sheep!');
 				}
 			});
-			a.run({ include: [axe.utils.getComposedTree(fixture)[0]] }, {
+			a.run({ include: [axe.utils.getFlattenedTree(fixture)[0]] }, {
 				debug: true,
 				runOnly: {
 					'type': 'rule',

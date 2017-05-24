@@ -128,7 +128,7 @@ describe('Check', function () {
 						assert.equal(node, fixture);
 						done();
 					}
-				}).run(axe.utils.getComposedTree(fixture)[0], {}, noop);
+				}).run(axe.utils.getFlattenedTree(fixture)[0], {}, noop);
 
 			});
 
