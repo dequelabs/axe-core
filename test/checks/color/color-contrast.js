@@ -143,7 +143,7 @@ describe('color-contrast', function () {
 		assert.isUndefined(checks['color-contrast'].evaluate.call(checkContext, target));
 		assert.isUndefined(checkContext._data.bgColor);
 		assert.equal(checkContext._data.contrastRatio, 0);
-		assert.equal(checkContext._data.missingReason, 'bgImage');
+		assert.equal(checkContext._data.missingData, 'bgImage');
 	});
 
 	it('should return undefined for background-gradient elements', function () {
@@ -154,7 +154,7 @@ describe('color-contrast', function () {
 		var target = fixture.querySelector('#target');
 		assert.isUndefined(checks['color-contrast'].evaluate.call(checkContext, target));
 		assert.isUndefined(checkContext._data.bgColor);
-		assert.equal(checkContext._data.missingReason, 'bgGradient');
+		assert.equal(checkContext._data.missingData, 'bgGradient');
 		assert.equal(checkContext._data.contrastRatio, 0);
 	});
 });
