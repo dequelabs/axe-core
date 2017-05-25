@@ -329,6 +329,16 @@ module.exports = function (grunt) {
 				},
 				src: ['lib/**/*.js', 'test/**/*.js', 'build/tasks/**/*.js', 'doc/**/*.js', 'Gruntfile.js']
 			}
+		},
+		'act-integration': {
+			options: {
+				metadata: './package.json',
+				hostAddress: 'https://rawgit.com/dequelabs/axe-core/master/'
+			},
+			rules: {
+				src: ['test/integration/rules/**/*.json'],
+				dest: 'test/integration/act-testcases.json'
+			}
 		}
 	});
 
