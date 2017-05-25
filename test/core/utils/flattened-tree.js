@@ -1,10 +1,11 @@
 var fixture = document.getElementById('fixture');
 
-function createStyle () {
+function createStyle (box) {
 	'use strict';
 
 	var style = document.createElement('style');
 	style.textContent = 'div.breaking { color: Red;font-size: 20px; border: 1px dashed Purple; }' +
+		(box ? 'slot { display: block; }' : '') +
 		'div.other { padding: 2px 0 0 0; border: 1px solid Cyan; }';
 	return style;
 }
@@ -146,6 +147,42 @@ if (document.body && typeof document.body.attachShadow === 'function') {
 			assert.isTrue(virtualDOM[0].children[7].children[0].children[0].actualNode.nodeType === 3);
 			assert.isTrue(virtualDOM[0].children[7].children[0].children[0].actualNode.textContent === 'fallback content');
 			assert.isTrue(virtualDOM[0].children[7].children[0].children[1].actualNode.nodeName === 'LI');
+		});
+	});
+	describe('flattened-tree shadow DOM v1: boxed slots', function () {
+		'use strict';
+		afterEach(function () {
+			fixture.innerHTML = '';
+		});
+		beforeEach(function () {
+			function createStoryGroup (className, slotName) {
+				var group = document.createElement('div');
+				group.className = className;
+				// Empty string in slot name attribute or absence thereof work the same, so no need for special handling.
+				group.innerHTML = '<ul><slot name="' + slotName + '">fallback content<li>one</li></slot></ul>';
+				return group;
+			}
+
+			function makeShadowTree (storyList) {
+				var root = storyList.attachShadow({mode: 'open'});
+				root.appendChild(createStyle(true));
+				root.appendChild(createStoryGroup('breaking', 'breaking'));
+				root.appendChild(createStoryGroup('other', ''));
+			}
+			var str = '<div class="stories"><li>1</li>' +
+			'<li>2</li><li class="breaking" slot="breaking">3</li>' +
+			'<li>4</li><li>5</li><li class="breaking" slot="breaking">6</li></div>';
+			str += '<div class="stories"><li>1</li>' +
+			'<li>2</li><li class="breaking" slot="breaking">3</li>' +
+			'<li>4</li><li>5</li><li class="breaking" slot="breaking">6</li></div>';
+			str += '<div class="stories"></div>';
+			fixture.innerHTML = str;
+
+			fixture.querySelectorAll('.stories').forEach(makeShadowTree);
+		});
+		it('getFlattenedTree\'s virtual DOM should have the <slot> elements', function () {
+			var virtualDOM = axe.utils.getFlattenedTree(fixture);
+			assert.isTrue(virtualDOM[0].children[1].children[0].children[0].actualNode.nodeName === 'SLOT');
 		});
 	});
 }
