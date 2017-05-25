@@ -184,7 +184,7 @@ describe('axe.utils.publishMetaData', function () {
 
 	});
 
-	it('should handle incomplete objects with no reason specified by the check', function () {
+	it('should return default incomplete message with no reason specified by the check', function () {
 
 		axe._load({
 			rules: [],
@@ -288,6 +288,105 @@ describe('axe.utils.publishMetaData', function () {
 					result: undefined,
 					id: 'cats-ALL',
 					message: 'Fallback message for no reason',
+					data: {}
+				}]
+			}]
+		});
+
+	});
+
+	it('should fall back to a generic message if incomplete object fails', function () {
+
+		axe._load({
+			rules: [],
+			data: {
+				rules: {
+					cats: {
+						help: function () {
+							return 'cats-rule';
+						}
+					}
+				},
+				checks: {
+					'cats-NONE': {
+						messages: {
+							fail: function () {
+								return 'fail-NONE';
+							},
+							pass: function () {
+								return 'pass-NONE';
+							},
+							incomplete: {}
+						}
+					},
+					'cats-ANY': {
+						messages: {
+							fail: function () {
+								return 'fail-ANY';
+							},
+							pass: function () {
+								return 'pass-ANY';
+							},
+							incomplete: {}
+						}
+					},
+					'cats-ALL': {
+						messages: {
+							fail: function () {
+								return 'fail-ALL';
+							},
+							pass: function () {
+								return 'pass-ALL';
+							},
+							incomplete: {}
+						}
+					}
+				}
+			}
+		});
+
+		var result = {
+			id: 'cats',
+			nodes: [{
+				any: [{
+					result: undefined,
+					id: 'cats-ANY',
+					data: {}
+				}],
+				none: [{
+					result: undefined,
+					id: 'cats-NONE',
+					data: {}
+				}],
+				all: [{
+					result: undefined,
+					id: 'cats-ALL',
+					data: {}
+				}]
+			}]
+		};
+		axe.utils.publishMetaData(result);
+		assert.deepEqual(result, {
+			id: 'cats',
+			help: 'cats-rule',
+			tags: [],
+			nodes: [{
+				any: [{
+					result: undefined,
+					id: 'cats-ANY',
+					message: 'aXe couldn\'t tell the reason. Time to break out the element inspector!',
+					data: {}
+				}],
+				none: [{
+					result: undefined,
+					id: 'cats-NONE',
+					message: 'aXe couldn\'t tell the reason. Time to break out the element inspector!',
+					data: {}
+				}],
+				all: [{
+					result: undefined,
+					id: 'cats-ALL',
+					message: 'aXe couldn\'t tell the reason. Time to break out the element inspector!',
 					data: {}
 				}]
 			}]
@@ -440,7 +539,7 @@ describe('axe.utils.publishMetaData', function () {
 								return 'pass-NONE';
 							},
 							incomplete: {
-								'incomplete-NONE-reason1': 'We couldn\'t tell because of some reason',
+								'incomplete-NONE-reason1': 'We couldn\'t tell because of reason #1',
 								'incomplete-NONE-reason2': 'Some other reason',
 								'default': 'Fallback message for no reason'
 							}
@@ -455,7 +554,7 @@ describe('axe.utils.publishMetaData', function () {
 								return 'pass-ANY';
 							},
 							incomplete: {
-								'incomplete-ANY-reason1': 'We couldn\'t tell because of some reason',
+								'incomplete-ANY-reason1': 'We couldn\'t tell because of reason #1',
 								'incomplete-ANY-reason2': 'Some other reason',
 								'default': 'Fallback message for no reason'
 							}
@@ -470,7 +569,7 @@ describe('axe.utils.publishMetaData', function () {
 								return 'pass-ALL';
 							},
 							incomplete: {
-								'incomplete-ALL-reason1': 'We couldn\'t tell because of some reason',
+								'incomplete-ALL-reason1': 'We couldn\'t tell because of reason #1',
 								'incomplete-ALL-reason2': 'Some other reason',
 								'default': 'Fallback message for no reason'
 							}
@@ -521,7 +620,7 @@ describe('axe.utils.publishMetaData', function () {
 				any: [{
 					result: undefined,
 					id: 'cats-ANY',
-					message: 'We couldn\'t tell because of some reason',
+					message: 'We couldn\'t tell because of reason #1',
 					data: {
 						missingData: [{
 							reason: 'incomplete-ANY-reason1'
@@ -531,7 +630,7 @@ describe('axe.utils.publishMetaData', function () {
 				none: [{
 					result: undefined,
 					id: 'cats-NONE',
-					message: 'We couldn\'t tell because of some reason',
+					message: 'We couldn\'t tell because of reason #1',
 					data: {
 						missingData: [{
 							reason: 'incomplete-NONE-reason1'
@@ -541,7 +640,7 @@ describe('axe.utils.publishMetaData', function () {
 				all: [{
 					result: undefined,
 					id: 'cats-ALL',
-					message: 'We couldn\'t tell because of some reason',
+					message: 'We couldn\'t tell because of reason #1',
 					data: {
 						missingData: [{
 							reason: 'incomplete-ALL-reason1'
