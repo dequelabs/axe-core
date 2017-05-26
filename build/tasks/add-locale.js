@@ -34,6 +34,10 @@ module.exports = function (grunt) {
           failureSummaries: result.misc.reduce(function (out, misc) {
             out[misc.type] = misc.metadata;
             return out;
+          }, {}),
+          incompleteFallbackMessage: result.misc.reduce(function (out, misc) {
+            out[misc.incompleteFallbackMessage] = misc.metadata;
+            return out;
           }, {})
         };
 

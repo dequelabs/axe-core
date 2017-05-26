@@ -300,6 +300,9 @@ describe('axe.utils.publishMetaData', function () {
 		axe._load({
 			rules: [],
 			data: {
+				incompleteFallbackMessage: function() {
+					return 'Dogs are the best';
+				},
 				rules: {
 					cats: {
 						help: function () {
@@ -374,19 +377,19 @@ describe('axe.utils.publishMetaData', function () {
 				any: [{
 					result: undefined,
 					id: 'cats-ANY',
-					message: 'aXe couldn\'t tell the reason. Time to break out the element inspector!',
+					message: 'Dogs are the best',
 					data: {}
 				}],
 				none: [{
 					result: undefined,
 					id: 'cats-NONE',
-					message: 'aXe couldn\'t tell the reason. Time to break out the element inspector!',
+					message: 'Dogs are the best',
 					data: {}
 				}],
 				all: [{
 					result: undefined,
 					id: 'cats-ALL',
-					message: 'aXe couldn\'t tell the reason. Time to break out the element inspector!',
+					message: 'Dogs are the best',
 					data: {}
 				}]
 			}]
