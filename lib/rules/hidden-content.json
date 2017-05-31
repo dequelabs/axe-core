@@ -1,0 +1,14 @@
+{
+  "id": "hidden-content",
+  "matches": "hidden-content.js",
+  "tags": [],
+  "metadata": {
+    "description": "Informs users about hidden content",
+    "help": "Manually check elements that are hidden with display: none, visibility: hidden, or aria-hidden=\"true\""
+  },
+  "all": [],
+  "any": [
+    "hidden-content"
+  ],
+  "none": []
+}

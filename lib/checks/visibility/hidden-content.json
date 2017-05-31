@@ -1,0 +1,11 @@
+{
+  "id": "hidden-content",
+  "evaluate": "hidden-content.js",
+  "metadata": {
+    "impact": "minor",
+    "messages": {
+      "pass": "Page does not have suspicicous hidden content",
+      "fail": "Manually inspect hidden content on this page"
+    }
+  }
+}

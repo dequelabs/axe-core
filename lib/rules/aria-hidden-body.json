@@ -1,0 +1,19 @@
+{
+  "id": "aria-hidden-body",
+  "matches": "aria-hidden-body.js",
+  "tags": [
+    "cat.aria",
+    "wcag2a",
+    "wcag411",
+    "wcag412"
+  ],
+  "metadata": {
+    "description": "Ensures aria-hidden is not present on the document body.",
+    "help": "Document body should not include the aria-hidden attribute."
+  },
+  "all": [],
+  "any": [
+    "aria-hidden-body"
+  ],
+  "none": []
+}
