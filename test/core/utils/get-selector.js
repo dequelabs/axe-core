@@ -190,4 +190,81 @@ describe('axe.utils.getSelector', function () {
 		});
 		assert.equal(sel, 'a');
 	});
+
+	it('should use role attributes', function () {
+		var node = document.createElement('div');
+		node.setAttribute('role', 'menuitem');
+		fixture.appendChild(node);
+
+		assert.equal(
+			axe.utils.getSelector(node),
+			'#fixture > div[role="menuitem"]'
+		);
+	});
+
+	it('should give use two features on the first element', function () {
+		var node = document.createElement('div');
+		node.setAttribute('role', 'menuitem');
+		fixture.appendChild(node);
+
+		assert.equal(
+			axe.utils.getSelector(node),
+			'#fixture > div[role="menuitem"]'
+		);
+		
+		node.className = 'dqpl-btn-primary';
+		assert.equal(
+			axe.utils.getSelector(node),
+			'#fixture > [role="menuitem"].dqpl-btn-primary'
+		);
+	});
+
+	it('should give use one features on the subsequent elements', function () {
+		var span = document.createElement('span');
+		var node = document.createElement('div');
+		node.setAttribute('role', 'menuitem');
+		span.className = 'expand-icon';
+		node.appendChild(span);
+		fixture.appendChild(node);
+
+		assert.equal(
+			axe.utils.getSelector(span),
+			'[role="menuitem"] > span.expand-icon'
+		);
+	});
+
+	it('should prioritize uncommon tagNames', function () {
+		var node = document.createElement('button');
+		node.setAttribute('role', 'menuitem');
+		node.className = 'dqpl-btn-primary';
+		fixture.appendChild(node);
+		assert.equal(
+			axe.utils.getSelector(node),
+			'#fixture > button[role="menuitem"]'
+		);
+	});
+
+	it('should add [type] to input elements', function () {
+		var node = document.createElement('input');
+		node.type = 'password';
+		node.className = 'dqpl-textfield';
+		fixture.appendChild(node);
+		assert.equal(
+			axe.utils.getSelector(node),
+			'#fixture > input[type="password"].dqpl-textfield'
+		);
+	});
+
+	it('should use the name property', function () {
+		var node = document.createElement('input');
+		node.type = 'text';
+		node.name = 'username';
+		node.className = 'dqpl-textfield';
+		fixture.appendChild(node);
+		assert.equal(
+			axe.utils.getSelector(node),
+			'#fixture > input[type="text"][name="username"]'
+		);
+	});
+
 });
