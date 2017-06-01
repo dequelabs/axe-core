@@ -83,3 +83,7 @@ v2.2.2:
 	changes:
 		- Stabilize incompleteData API for backwards compatibility
 		- Change impact of duplicate-id rule to moderate
+v2.2.3:
+  date: 2017-06-01
+  changes:
+    - Removed the disable property from link-in-text-block

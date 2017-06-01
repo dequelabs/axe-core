@@ -1,4 +1,4 @@
-// Type definitions for axe-core 2.2.2
+// Type definitions for axe-core 2.2.3
 // Project: https://github.com/dequelabs/axe-core
 // Definitions by: Marcy Sutton <https://github.com/marcysutton>
 
