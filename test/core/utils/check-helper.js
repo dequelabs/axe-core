@@ -8,8 +8,8 @@ describe('axe.utils.checkHelper', function () {
 		assert.isFunction(axe.utils.checkHelper);
 	});
 
-	it('should accept 3 named parameters', function () {
-		assert.lengthOf(axe.utils.checkHelper, 3);
+	it('should accept 4 named parameters', function () {
+		assert.lengthOf(axe.utils.checkHelper, 4);
 	});
 
 	it('should return an object', function () {
@@ -25,10 +25,10 @@ describe('axe.utils.checkHelper', function () {
 				helper.async();
 				assert.isTrue(helper.isAsync);
 			});
-			it('should call the second parameter of `axe.utils.checkHelper` when invoked', function () {
+			it('should call the third parameter of `axe.utils.checkHelper` when invoked', function () {
 				function fn() { success = true; }
 				var success = false,
-					helper = axe.utils.checkHelper({}, fn);
+					helper = axe.utils.checkHelper({}, {}, fn);
 
 				var done = helper.async();
 				done();
@@ -36,14 +36,14 @@ describe('axe.utils.checkHelper', function () {
 				assert.isTrue(success);
 			});
 
-			it('should call the third parameter of `axe.utils.checkHelper` when returning an error', function () {
+			it('should call the fourth parameter of `axe.utils.checkHelper` when returning an error', function () {
 				var success = false;
 				function reject(e) {
 					success = true;
 					assert.equal(e.message, 'Concrete donkey!');
 				}
 
-				var helper = axe.utils.checkHelper({}, noop, reject);
+				var helper = axe.utils.checkHelper({}, {}, noop, reject);
 				var done = helper.async();
 				done( new Error('Concrete donkey!'));
 
