@@ -32,7 +32,7 @@
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | cat.forms, best-practice | false |
 | label | Ensures every form element has a label | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
 | layout-table | Ensures presentational &lt;table&gt; elements do not use &lt;th&gt;, &lt;caption&gt; elements or the summary attribute | cat.semantics, wcag2a, wcag131 | true |
-| link-in-text-block | Links can be distinguished without relying on color | cat.color, experimental, wcag2a, wcag141 | false |
+| link-in-text-block | Links can be distinguished without relying on color | cat.color, experimental, wcag2a, wcag141 | true |
 | link-name | Ensures links have discernible text | cat.name-role-value, wcag2a, wcag111, wcag412, section508, section508.22.a | true |
 | list | Ensures that lists are structured correctly | cat.structure, wcag2a, wcag131 | true |
 | listitem | Ensures &lt;li&gt; elements are used semantically | cat.structure, wcag2a, wcag131 | true |

@@ -74,3 +74,16 @@ v2.2.0:
 		- Implement rule groupings as tags
 		- Allow building of axe in multiple languages
 		- Empty-heading rule has impact: moderate
+v2.2.1:
+	date: 2017-05-19
+	changes:
+		- Remove nodes from the color contrast incompleteData API to avoid circular references
+v2.2.2:
+	date: 2017-05-25
+	changes:
+		- Stabilize incompleteData API for backwards compatibility
+		- Change impact of duplicate-id rule to moderate
+v2.2.3:
+  date: 2017-06-01
+  changes:
+    - Removed the disable property from link-in-text-block

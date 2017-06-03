@@ -193,7 +193,7 @@ module.exports = function (grunt) {
 						bracketize: true,
 						quote_style: 1
 					},
-					preserveComments: 'some'
+					preserveComments: /^!/
 				}
 			},
 			minify: {

@@ -54,10 +54,23 @@ function buildRules(grunt, options, commons, callback) {
 		function createFailureSummaryObject(summaries) {
 			var result = {};
 			summaries.forEach(function (summary) {
-				result[summary.type] = parseMetaData(summary, 'failureSummaries');
+				if (summary.type) {
+					result[summary.type] = parseMetaData(summary, 'failureSummaries');
+				}
 			});
 			return result;
 		}
+
+		function getIncompleteMsg(summaries) {
+			var result = {};
+			summaries.forEach(function(summary) {
+				if (summary.incompleteFallbackMessage) {
+					result = dot.template(summary.incompleteFallbackMessage).toString();
+				}
+			})
+			return result;
+		}
+
 
 		function replaceFunctions(string) {
 			return string.replace(/"(evaluate|after|gather|matches|source|commons)":\s*("[^"]+?")/g, function (m, p1, p2) {
@@ -154,6 +167,7 @@ function buildRules(grunt, options, commons, callback) {
 
 		// Translate failureSummaries
 		metadata.failureSummaries = createFailureSummaryObject(result.misc);
+		metadata.incompleteFallbackMessage = getIncompleteMsg(result.misc);
 
 		callback({
 			auto: replaceFunctions(JSON.stringify({
