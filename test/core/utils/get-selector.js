@@ -202,6 +202,25 @@ describe('axe.utils.getSelector', function () {
 		);
 	});
 
+	it('should use href and src attributes', function () {
+		var link = document.createElement('a');
+		link.setAttribute('href', '//deque.com/about/');
+		fixture.appendChild(link);
+
+		var img = document.createElement('img');
+		img.setAttribute('src', '//deque.com/logo.png');
+		fixture.appendChild(img);
+
+		assert.equal(
+			axe.utils.getSelector(link),
+			'#fixture > a[href$="about/"]'
+		);
+		assert.equal(
+			axe.utils.getSelector(img),
+			'#fixture > img[src$="logo.png"]'
+		);
+	});
+
 	it('should give use two features on the first element', function () {
 		var node = document.createElement('div');
 		node.setAttribute('role', 'menuitem');
