@@ -21,7 +21,7 @@ describe('aria-hidden', function () {
 
 	it('fails appropriately if aria-hidden on document.body', function () {
 		node.setAttribute('aria-hidden', 'true');
-		assert.isTrue(checks['aria-hidden-body'].evaluate.call(checkContext, node));
+		assert.isFalse(checks['aria-hidden-body'].evaluate.call(checkContext, node));
 	});
 
 });
