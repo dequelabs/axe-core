@@ -12,7 +12,7 @@
         "imgNode": "Element's background color could not be determined because element contains an image node",
         "bgOverlap": "Element's background color could not be determined because it is overlapped by another element",
         "fgAlpha" : "Element's foreground color could not be determined because of alpha transparency",
-        "elmOutsideParent": "Element's background color could not be determined because it extends beyond a parent node",
+        "elmPartiallyObscured": "Element's background color could not be determined because it's partially obscured by another element",
         "default": "Unable to determine contrast ratio"
       }
     }
