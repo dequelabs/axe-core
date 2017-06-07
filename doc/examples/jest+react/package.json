@@ -9,7 +9,6 @@
     "url": "http://deque.com/"
   },
   "dependencies": {
-    "jest-cli": "^20.0.4"
   },
   "scripts": {
     "test": "jest"
@@ -21,6 +20,7 @@
     "babel-preset-react": "^6.24.1",
     "enzyme": "^2.8.2",
     "jest": "^20.0.4",
+    "jest-cli": "^20.0.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-test-renderer": "^15.5.4"
