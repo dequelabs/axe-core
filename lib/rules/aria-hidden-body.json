@@ -9,7 +9,7 @@
   ],
   "metadata": {
     "description": "Ensures aria-hidden is not present on the document body.",
-    "help": "Document body should not include the aria-hidden attribute."
+    "help": "Document body should not include the aria-hidden attribute. Including aria-hidden=true on the document body would render the entire page unusable by screen readers."
   },
   "all": [],
   "any": [
