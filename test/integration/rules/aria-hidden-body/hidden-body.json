@@ -1,0 +1,11 @@
+{
+  "description": "aria-hidden-body tests",
+  "rule": "aria-hidden-body",
+  "violations": [
+    ["#violation1"]
+  ],
+  "passes": [
+    ["#pass1"],
+    ["#pass2"]
+  ]
+}
