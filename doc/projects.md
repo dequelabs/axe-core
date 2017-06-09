@@ -28,3 +28,4 @@ Add your project/integration to this file and submit a pull request.
 1. [Intern](https://github.com/theintern/intern-a11y)
 1. [Protractor-axe-report Plugin](https://github.com/E1Edatatracker/protractor-axe-report-plugin)
 1. [Rocket Validator](https://rocketvalidator.com)
+1. [aXe Reports](https://github.com/louis-reed/axe-reports)

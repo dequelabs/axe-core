@@ -3,7 +3,6 @@
   "selector": "a[href], *[role=link]",
   "matches": "link-in-text-block-matches.js",
   "excludeHidden": false,
-  "enabled": false,
   "tags": [
     "cat.color",
     "experimental",

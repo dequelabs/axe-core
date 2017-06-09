@@ -3,7 +3,7 @@
   "evaluate": "duplicate-id.js",
   "after": "duplicate-id-after.js",
   "metadata": {
-    "impact": "critical",
+    "impact": "moderate",
     "messages": {
       "pass": "Document has no elements that share the same id attribute",
       "fail": "Document has multiple elements with the same id attribute: {{=it.data}}"
