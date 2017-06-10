@@ -57,6 +57,35 @@ describe('axe.utils.contains', function () {
 		assert.isTrue(axe.utils.contains(node1, node2));
 	});
 
+	it('should work when the child is inside shadow DOM', function () {
+		var tree, node1, node2;
+
+		function createContentContains() {
+			var group = document.createElement('div');
+			group.innerHTML = '<label id="mylabel">Label</label><input aria-labelledby="mylabel" type="text" />';
+			return group;
+		}
+
+		function makeShadowTreeContains(node)
+		{
+			var root = node.attachShadow({mode: 'open'});
+			var div = document.createElement('div');
+			div.className = 'parent';
+			root.appendChild(div);
+			div.appendChild(createContentContains());
+		}
+		if (document.body && typeof document.body.attachShadow === 'function') {
+			// shadow DOM v1 - note: v0 is compatible with this code, so no need
+			// to specifically test this
+			fixture.innerHTML = '<div></div>';
+			makeShadowTreeContains(fixture.firstChild);
+			tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			node1 = axe.utils.querySelectorAll(tree, '.parent')[0];
+			node2 = axe.utils.querySelectorAll(tree, 'input')[0];
+			assert.isTrue(axe.utils.contains(node1, node2));
+		}
+	});
+
 	it('should work', function () {
 		fixture.innerHTML = '<div id="outer"><div id="inner"></div></div>';
 		var inner = axe.utils.getFlattenedTree(document.getElementById('inner'))[0];
