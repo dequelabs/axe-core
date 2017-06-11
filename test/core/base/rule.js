@@ -543,7 +543,11 @@ describe('Rule', function() {
 							id: 'cats',
 							enabled: true,
 							after: function(results, options) {
-								assert.deepEqual(options, { enabled: true, options: { dogs: true }});
+								assert.deepEqual(options, {
+									enabled: true,
+									options: { dogs: true },
+									absolutePaths: undefined
+								});
 								success = true;
 								return results;
 							}

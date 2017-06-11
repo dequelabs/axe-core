@@ -99,12 +99,11 @@ describe('axe.utils.getSelector', function () {
 
 		var sel = axe.utils.getSelector(node);
 
-		assert.equal(sel, '#fixture > div:nth-of-type(2)');
+		assert.equal(sel, '#fixture > div:nth-child(2)');
 
 		var result = document.querySelectorAll(sel);
 		assert.lengthOf(result, 1);
 		assert.equal(result[0], node);
-
 	});
 
 	it('should use classes if available and unique', function () {
@@ -118,7 +117,7 @@ describe('axe.utils.getSelector', function () {
 
 		var sel = axe.utils.getSelector(node);
 
-		assert.equal(sel, '#fixture > .dogs.cats');
+		assert.equal(sel, '#fixture > div.dogs.cats');
 
 		var result = document.querySelectorAll(sel);
 		assert.lengthOf(result, 1);
@@ -137,44 +136,11 @@ describe('axe.utils.getSelector', function () {
 
 		var sel = axe.utils.getSelector(node);
 
-		assert.equal(sel, '#fixture > div:nth-of-type(2)');
+		assert.equal(sel, '#fixture > div:nth-child(2)');
 
 		var result = document.querySelectorAll(sel);
 		assert.lengthOf(result, 1);
 		assert.equal(result[0], node);
-
-	});
-
-	it('should properly calculate nth-of-type when siblings are of different type', function () {
-		var node, target;
-		node = document.createElement('span');
-		fixture.appendChild(node);
-
-		node = document.createElement('span');
-		fixture.appendChild(node);
-
-		node = document.createElement('div');
-		fixture.appendChild(node);
-
-		node = document.createElement('div');
-		target = node;
-		fixture.appendChild(node);
-
-		node = document.createElement('div');
-		fixture.appendChild(node);
-
-		node = document.createElement('span');
-		fixture.appendChild(node);
-
-
-
-		var sel = axe.utils.getSelector(target);
-
-		assert.equal(sel, '#fixture > div:nth-of-type(2)');
-
-		var result = document.querySelectorAll(sel);
-		assert.lengthOf(result, 1);
-		assert.equal(result[0], target);
 
 	});
 
@@ -214,10 +180,110 @@ describe('axe.utils.getSelector', function () {
 	it('shouldn\'t fail if the node\'s parentNode doesnt have children, somehow (Firefox bug)', function () {
 		var sel = axe.utils.getSelector({
 			nodeName: 'a',
+			classList: [],
+			hasAttribute: function () { return false; },
 			parentNode: {
-				nodeName: 'b'
+				nodeName: 'b',
+				hasAttribute: function () { return false; },
+				classList: []
 			}
 		});
 		assert.equal(sel, 'a');
 	});
+
+	it('should use role attributes', function () {
+		var node = document.createElement('div');
+		node.setAttribute('role', 'menuitem');
+		fixture.appendChild(node);
+
+		assert.equal(
+			axe.utils.getSelector(node),
+			'#fixture > div[role="menuitem"]'
+		);
+	});
+
+	it('should use href and src attributes', function () {
+		var link = document.createElement('a');
+		link.setAttribute('href', '//deque.com/about/');
+		fixture.appendChild(link);
+
+		var img = document.createElement('img');
+		img.setAttribute('src', '//deque.com/logo.png');
+		fixture.appendChild(img);
+
+		assert.equal(
+			axe.utils.getSelector(link),
+			'#fixture > a[href$="about/"]'
+		);
+		assert.equal(
+			axe.utils.getSelector(img),
+			'#fixture > img[src$="logo.png"]'
+		);
+	});
+
+	it('should give use two features on the first element', function () {
+		var node = document.createElement('div');
+		node.setAttribute('role', 'menuitem');
+		fixture.appendChild(node);
+
+		assert.equal(
+			axe.utils.getSelector(node),
+			'#fixture > div[role="menuitem"]'
+		);
+		
+		node.className = 'dqpl-btn-primary';
+		assert.equal(
+			axe.utils.getSelector(node),
+			'#fixture > [role="menuitem"].dqpl-btn-primary'
+		);
+	});
+
+	it('should give use one features on the subsequent elements', function () {
+		var span = document.createElement('span');
+		var node = document.createElement('div');
+		node.setAttribute('role', 'menuitem');
+		span.className = 'expand-icon';
+		node.appendChild(span);
+		fixture.appendChild(node);
+
+		assert.equal(
+			axe.utils.getSelector(span),
+			'[role="menuitem"] > span.expand-icon'
+		);
+	});
+
+	it('should prioritize uncommon tagNames', function () {
+		var node = document.createElement('button');
+		node.setAttribute('role', 'menuitem');
+		node.className = 'dqpl-btn-primary';
+		fixture.appendChild(node);
+		assert.equal(
+			axe.utils.getSelector(node),
+			'#fixture > button[role="menuitem"]'
+		);
+	});
+
+	it('should add [type] to input elements', function () {
+		var node = document.createElement('input');
+		node.type = 'password';
+		node.className = 'dqpl-textfield';
+		fixture.appendChild(node);
+		assert.equal(
+			axe.utils.getSelector(node),
+			'#fixture > input[type="password"].dqpl-textfield'
+		);
+	});
+
+	it('should use the name property', function () {
+		var node = document.createElement('input');
+		node.type = 'text';
+		node.name = 'username';
+		node.className = 'dqpl-textfield';
+		fixture.appendChild(node);
+		assert.equal(
+			axe.utils.getSelector(node),
+			'#fixture > input[type="text"][name="username"]'
+		);
+	});
+
 });

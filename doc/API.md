@@ -300,6 +300,19 @@ The options parameter is flexible way to configure how `axe.run` operates. The d
 * Run all rules defined in the system, except for the list of rules specified
 * Run a specific set of rules provided as a list of rule ids
 
+Additionally, there are a number or properties that allow configuration of different options:
+
+| Property        | Default | Description                |
+|-----------------|:-------:|:----------------------------:|
+| `runOnly`       | n/a     | Limit which rules are executed, based on names or tags
+| `rules`         | n/a     | Allow customizing a rule's properties (including { enable: false })
+| `reporter`      | `v1`    | Which reporter to use (see [Configutration](#api-name-axeconfigure))
+| `xpath`         | `false` | Return xpath selectors for elements
+| `absolutePaths` | `false` | Use absolute paths when creating element selectors
+| `iframes`       | `true`  | Tell axe to run inside iframes
+| `elementRef`    | `false` | Return element references in addition to the target
+
+
 ###### Options Parameter Examples
 
 1. Run only Rules for an accessibility standard

@@ -72,7 +72,7 @@ describe('DqElement', function () {
 
 		it('should use spec object over passed element', function () {
 			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
-			var result = new DqElement(fixture.firstChild, {
+			var result = new DqElement(fixture.firstChild, {}, {
 				source: 'woot'
 			});
 			assert.equal(result.source, 'woot');
@@ -100,7 +100,7 @@ describe('DqElement', function () {
 
 		it('should prefer selector from spec object', function () {
 			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
-			var result = new DqElement(fixture.firstChild, {
+			var result = new DqElement(fixture.firstChild, {}, {
 				selector: 'woot'
 			});
 			assert.equal(result.selector, 'woot');
@@ -126,12 +126,24 @@ describe('DqElement', function () {
 
 		it('should prefer selector from spec object', function () {
 			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
-			var result = new DqElement(fixture.firstChild, {
+			var result = new DqElement(fixture.firstChild, {}, {
 				xpath: 'woot'
 			});
 			assert.equal(result.xpath, 'woot');
 		});
 
+	});
+
+	describe('absolutePaths', function () {
+		it('creates a path all the way to root', function () {
+			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
+			var result = new DqElement(fixture.firstChild, {
+				absolutePaths: true
+			});
+			assert.include(result.selector[0], 'html > ');
+			assert.include(result.selector[0], '#fixture > ');
+			assert.include(result.selector[0], '#foo');
+		});
 	});
 
 	describe('toJSON', function () {
@@ -141,7 +153,7 @@ describe('DqElement', function () {
 				source: '<joe aria-required="true">',
 				xpath: '/foo/bar/joe'
 			};
-			var result = new DqElement('joe', expected);
+			var result = new DqElement('joe', {}, expected);
 
 			assert.deepEqual(JSON.stringify(result), JSON.stringify(expected));
 		});
