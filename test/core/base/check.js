@@ -164,7 +164,7 @@ describe('Check', function () {
 					cb = function () { return true; },
 					result = { monkeys: 'bananas' };
 
-				axe.utils.checkHelper = function (checkResult, callback) {
+				axe.utils.checkHelper = function (checkResult, options, callback) {
 					assert.instanceOf(checkResult, window.CheckResult);
 					assert.equal(callback, cb);
 

@@ -276,6 +276,45 @@ describe('axe.run', function () {
 			});
 		});
 	});
+
+	describe('option absolutePaths', function () {
+
+		it('returns relative paths when falsy', function (done) {
+			axe.run('#fixture', {
+				absolutePaths: 0
+			}, function (err, result) {
+				assert.deepEqual(
+					result.violations[0].nodes[0].target,
+					['#fixture']
+				);
+				done();
+			});
+		});
+
+		it('returns absolute paths when truthy', function (done) {
+			axe.run('#fixture', {
+				absolutePaths: 'yes please'
+			}, function (err, result) {
+				assert.deepEqual(
+					result.violations[0].nodes[0].target,
+					['html > body > #fixture']
+				);
+				done();
+			});
+		});
+
+		it('returns absolute paths on related nodes', function (done) {
+			axe.run('#fixture', {
+				absolutePaths: true
+			}, function (err, result) {
+				assert.deepEqual(
+					result.violations[0].nodes[0].none[0].relatedNodes[0].target,
+					['html > body > #fixture']
+				);
+				done();
+			});
+		});
+	});
 });
 
 describe('axe.run iframes', function () {

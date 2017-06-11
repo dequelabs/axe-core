@@ -26,7 +26,8 @@ describe('axe.utils.getCheckOption', function () {
 				}
 			}), {
 				enabled: 'yes',
-				options: 'please'
+				options: 'please',
+				absolutePaths: undefined
 			});
 	});
 	it('should fallback to global check options if not defined on the rule', function () {
@@ -52,7 +53,8 @@ describe('axe.utils.getCheckOption', function () {
 				}
 			}), {
 				enabled: 'yes',
-				options: 'please'
+				options: 'please',
+				absolutePaths: undefined
 			});
 	});
 
@@ -70,7 +72,8 @@ describe('axe.utils.getCheckOption', function () {
 				}
 			}), {
 				enabled: 'yes',
-				options: 'please'
+				options: 'please',
+				absolutePaths: undefined
 			});
 	});
 
@@ -81,8 +84,23 @@ describe('axe.utils.getCheckOption', function () {
 				options: 'please'
 			}, 'monkeys', {}), {
 				enabled: 'yes',
-				options: 'please'
+				options: 'please',
+				absolutePaths: undefined
 			});
+	});
+
+	it('passes absolutePaths option along', function () {
+		assert.deepEqual(axe.utils.getCheckOption({
+			id: 'bananas',
+			enabled: 'on',
+			options: 'many'
+		}, 'monkeys', {
+			absolutePaths: 'yep'
+		}), {
+			enabled: 'on',
+			options: 'many',
+			absolutePaths: 'yep'
+		});
 	});
 
 });
