@@ -201,4 +201,15 @@ describe('color-contrast', function () {
 		assert.equal(checkContext._data.missingData, 'bgOverlap');
 		assert.equal(checkContext._data.contrastRatio, 0);
 	});
+
+	it('should return undefined if element has same color as background', function () {
+		fixture.innerHTML = '<div style="background-color: white;">' +
+			'<div style="color:white;" id="target">Text</div>'+
+		'</div>';
+		var target = fixture.querySelector('#target');
+		var actual = checks['color-contrast'].evaluate.call(checkContext, target);
+		assert.isUndefined(actual);
+		assert.equal(checkContext._data.missingData, 'equalRatio');
+		assert.equal(checkContext._data.contrastRatio, 1);
+	});
 });
