@@ -1,0 +1,19 @@
+{
+  "id": "hidden-content",
+  "selector": "*",
+  "excludeHidden": false,
+  "tags": [
+    "experimental",
+    "review-item"
+  ],
+  "metadata": {
+    "description": "Informs users about hidden content.",
+    "help": "Trigger the UI state that displays the content and then run the analysis again."
+  },
+  "all": [],
+  "any": [
+    "hidden-content"
+  ],
+  "none": [],
+  "enabled": false
+}
