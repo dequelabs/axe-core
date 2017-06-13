@@ -2,7 +2,7 @@
   "id": "color-contrast",
   "evaluate": "color-contrast.js",
   "metadata": {
-    "impact": "critical",
+    "impact": "serious",
     "messages": {
       "pass": "Element has sufficient color contrast of {{=it.data.contrastRatio}}",
       "fail": "Element has insufficient color contrast of {{=it.data.contrastRatio}} (foreground color: {{=it.data.fgColor}}, background color: {{=it.data.bgColor}}, font size: {{=it.data.fontSize}}, font weight: {{=it.data.fontWeight}})",
