@@ -10,8 +10,8 @@ describe('aria-hidden on body test ' + window.location.pathname, function () {
 	});
 
 	describe('violations', function () {
-		it('should find 1', function () {
-			assert.lengthOf(results.violations[0].nodes, 1);
+		it('should find some', function () {
+			assert.lengthOf(results.violations, 1);
 		});
 	});
 });
