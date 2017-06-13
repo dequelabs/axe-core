@@ -1,7 +1,7 @@
 {
   "id": "aria-hidden-body",
   "selector": "body",
-  "excludeHidden": "false",
+  "excludeHidden": false,
   "tags": [
     "cat.aria",
     "wcag2a"
