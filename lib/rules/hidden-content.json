@@ -1,6 +1,7 @@
 {
   "id": "hidden-content",
   "selector": "*",
+  "excludeHidden": false,
   "tags": [
     "experimental",
     "review-item"

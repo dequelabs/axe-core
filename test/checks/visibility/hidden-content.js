@@ -27,6 +27,12 @@ describe('hidden content', function () {
 		assert.isUndefined(checks['hidden-content'].evaluate.call(checkContext, node));
 	});
 
+	it('should return true with visibility:hidden and parent with visibility:hidden', function () {
+    fixture.innerHTML = '<div style="visibility: hidden;"><p id="target" style="visibility: hidden;">Some paragraph text.</p></div>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['hidden-content'].evaluate.call(checkContext, node));
+	});
+
 	it('should return true with aria-hidden and no content', function () {
 		fixture.innerHTML = '<span id="target" class="icon" aria-hidden="true"></span>';
 		var node = fixture.querySelector('#target');
