@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML+ARIA 1.0//EN" "http://www.w3.org/WAI/ARIA/schemata/html4-aria-1.dtd">
+<html lang="en">
+<head>
+<title>aria-hidden on body Test</title>
+
+<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
+<script src="/node_modules/mocha/mocha.js"></script>
+<script src="/node_modules/chai/chai.js"></script>
+<script src="/axe.js"></script>
+<script>
+	mocha.setup({
+		timeout: 10000,
+		ui: 'bdd'
+	});
+	var assert = chai.assert;
+</script>
+<script src="/test/integration/no-ui-reporter.js"></script>
+</head>
+<body aria-hidden="true">
+	<h2>Some title.</h2>
+	<a href="http://www.deque.com">Deque</a>
+	<div id="mocha"></div>
+	<script src="fail.js"></script>
+	<script src="/test/integration/adapter.js"></script>
+</body>
+</html>
