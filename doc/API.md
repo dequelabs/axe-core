@@ -77,12 +77,30 @@ Returns a list of all rules with their ID and description
 
 The current set of tags supported are listed in the following table:
 
-| Tag Name           | Accessibility Standard                |
-|--------------------|:-------------------------------------:|
-| `wcag2a`           | WCAG 2.0 Level A                      |
-| `wcag2aa`          | WCAG 2.0 Level AA                     |
-| `section508`       | Section 508                           |
-| `best-practice`    | Best practices endorsed by Deque      |
+| Tag Name           | Accessibility Standard/Purpose              |
+|--------------------|:-------------------------------------------:|
+| `wcag2a`           | WCAG 2.0 Level A                            |
+| `wcag2aa`          | WCAG 2.0 Level AA                           |
+| `section508`       | Section 508                                 |
+| `best-practice`    | Best practices endorsed by Deque            |
+| `experimental`     | Cutting-edge techniques                     |
+| `cat`              | Category mappings used by Deque (see below) |
+
+| Category name                 |
+|-------------------------------|
+| `cat.aria`                    |
+| `cat.color`                   |
+| `cat.forms`                   |
+| `cat.keyboard`                |
+| `cat.language`                |
+| `cat.name-role-value`         |
+| `cat.parsing`                 |
+| `cat.semantics`               |
+| `cat.sensory-and-visual-cues` |
+| `cat.structure`               |
+| `cat.tables`                  |
+| `cat.text-alternatives`       |
+| `cat.time-and-media`          |
 
 
 #### Example 1
