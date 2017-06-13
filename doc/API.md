@@ -495,8 +495,8 @@ axe.run(document, function(err, results) {
   * `help` - `"Elements must have sufficient color contrast"`
   * `helpUrl` - `"https://dequeuniversity.com/courses/html-css/visual-layout/color-contrast"`
   * `id` - `"color-contrast"`
-		* `nodes`
-			* `target[0]` - `"#js_off-canvas-wrap > .inner-wrap >.kinja-title.proxima.js_kinja-title-desktop"`
+    * `nodes`
+      * `target[0]` - `"#js_off-canvas-wrap > .inner-wrap >.kinja-title.proxima.js_kinja-title-desktop"`
 
 * `passes[1]`
    ...
@@ -507,9 +507,9 @@ axe.run(document, function(err, results) {
   * `help` - `"<button> elements must have alternate text"`
   * `helpUrl` - `"https://dequeuniversity.com/courses/html-css/forms/form-labels#id84_example_button"`
   * `id` - `"button-name"`
-		* `nodes`
-			* `target[0]` - `"post_5919997 > .row.content-wrapper > .column > span > iframe"`
-			* `target[1]` - `"#u_0_1 > .pluginConnectButton > .pluginButtonImage > button"`
+    * `nodes`
+      * `target[0]` - `"post_5919997 > .row.content-wrapper > .column > span > iframe"`
+      * `target[1]` - `"#u_0_1 > .pluginConnectButton > .pluginButtonImage > button"`
 
 * `violations[1]` ...
 
@@ -553,15 +553,20 @@ axe.run(document, {
 
 This example shows a result object that points to a shadow DOM element.
 
-* `violations[0]`
-  * `help` - `"Elements must have sufficient color contrast"`
-  * `helpUrl` - `"https://dequeuniversity.com/rules/axe/2.1/color-contrast?application=axeAPI"`
-  * `id` - `"color-contrast"`
-		* `nodes`
-			* `target[0][0]` - `"header > aria-menu"`
-			* `target[0][1]` - `"li.expanded"`
-
-* `violations[1]` ...
+##### `violations[0]`
+```
+{
+	help : "Elements must have sufficient color contrast",
+	helpUrl: "https://dequeuniversity.com/rules/axe/2.1/color-contrast?application=axeAPI",
+	id: "color-contrast",
+	nodes: [{
+		target: [[
+			"header > aria-menu",
+			"li.expanded"
+		]]
+	}]
+}
+```
 
 As you can see the `target` array contains one item that is an array. This array contains two items, the first is a CSS selector string that finds the custom element `<aria-menu>` in the `<header>`. The second item in this array is the selector within that custom element's shadow DOM to find the `<li>` element with a class of `expanded`.
 
