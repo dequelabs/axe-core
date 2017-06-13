@@ -4,7 +4,8 @@
   "excludeHidden": false,
   "tags": [
     "cat.aria",
-    "wcag2a"
+    "wcag2a",
+    "wcag412"
   ],
   "metadata": {
     "description": "Ensures aria-hidden is not present on the document body.",
