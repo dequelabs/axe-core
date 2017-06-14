@@ -87,3 +87,14 @@ v2.2.3:
   date: 2017-06-01
   changes:
     - Removed the disable property from link-in-text-block
+v2.2.4:
+	date: 2017-06-14
+	changes:
+		- Overhaul of selectors API
+		- New experimental rule for hidden content
+		- New rule for aria-hidden="true" on the body
+		- Color-contrast rule impact is now serious
+		- Color-contrast fixes for implicit labels and TR elements
+		- Color-contrast puts 1:1 ratio elements into Needs Review/incomplete
+		- List category mappings in docs
+		- Update axe.source to work with Firefox webdriver
