@@ -47,4 +47,12 @@ describe('dom.visuallyContains', function () {
 		assert.isTrue(axe.commons.dom.visuallyContains(target, target.parentNode));
 	});
 
+	it('should return true when element is inline', function () {
+		// result depends on the display property of the element
+		fixture.innerHTML = '<label>' +
+			'My label <input type="text" id="target">' +
+			'</label>';
+		var target = fixture.querySelector('#target');
+		assert.isTrue(axe.commons.dom.visuallyContains(target, target.parentNode));
+	});
 });

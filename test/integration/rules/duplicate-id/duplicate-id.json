@@ -1,6 +1,6 @@
 {
 	"description": "duplicate-id test",
 	"rule": "duplicate-id",
-	"violations": [["#fixture > p:nth-of-type(1)"]],
+	"violations": [["#fixture > p:nth-child(1)"]],
 	"passes": [["#fixture"], ["#single"]]
 }

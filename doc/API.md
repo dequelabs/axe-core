@@ -77,12 +77,30 @@ Returns a list of all rules with their ID and description
 
 The current set of tags supported are listed in the following table:
 
-| Tag Name           | Accessibility Standard                |
-|--------------------|:-------------------------------------:|
-| `wcag2a`           | WCAG 2.0 Level A                      |
-| `wcag2aa`          | WCAG 2.0 Level AA                     |
-| `section508`       | Section 508                           |
-| `best-practice`    | Best practices endorsed by Deque      |
+| Tag Name           | Accessibility Standard/Purpose              |
+|--------------------|:-------------------------------------------:|
+| `wcag2a`           | WCAG 2.0 Level A                            |
+| `wcag2aa`          | WCAG 2.0 Level AA                           |
+| `section508`       | Section 508                                 |
+| `best-practice`    | Best practices endorsed by Deque            |
+| `experimental`     | Cutting-edge techniques                     |
+| `cat`              | Category mappings used by Deque (see below) |
+
+| Category name                 |
+|-------------------------------|
+| `cat.aria`                    |
+| `cat.color`                   |
+| `cat.forms`                   |
+| `cat.keyboard`                |
+| `cat.language`                |
+| `cat.name-role-value`         |
+| `cat.parsing`                 |
+| `cat.semantics`               |
+| `cat.sensory-and-visual-cues` |
+| `cat.structure`               |
+| `cat.tables`                  |
+| `cat.text-alternatives`       |
+| `cat.time-and-media`          |
 
 
 #### Example 1
@@ -299,6 +317,19 @@ The options parameter is flexible way to configure how `axe.run` operates. The d
 * Run all rules corresponding to one of the accessibility standards
 * Run all rules defined in the system, except for the list of rules specified
 * Run a specific set of rules provided as a list of rule ids
+
+Additionally, there are a number or properties that allow configuration of different options:
+
+| Property        | Default | Description                |
+|-----------------|:-------:|:----------------------------:|
+| `runOnly`       | n/a     | Limit which rules are executed, based on names or tags
+| `rules`         | n/a     | Allow customizing a rule's properties (including { enable: false })
+| `reporter`      | `v1`    | Which reporter to use (see [Configutration](#api-name-axeconfigure))
+| `xpath`         | `false` | Return xpath selectors for elements
+| `absolutePaths` | `false` | Use absolute paths when creating element selectors
+| `iframes`       | `true`  | Tell axe to run inside iframes
+| `elementRef`    | `false` | Return element references in addition to the target
+
 
 ###### Options Parameter Examples
 
