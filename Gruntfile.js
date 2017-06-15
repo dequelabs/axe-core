@@ -153,7 +153,7 @@ module.exports = function (grunt) {
 		},
 		langs : {
 			generate: {
-				check: 'lib/checks/language/valid-lang'
+				check: 'lib/commons/utils/valid-langs'
 			}
 		},
 		validate: {
