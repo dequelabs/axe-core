@@ -36,11 +36,10 @@ module.exports = function (grunt) {
 	}
 	function generateOutput(langs, checkPath) {
 		var path = checkPath + '.js';
-		var newLangs = JSON.stringify(langs, null, '\t');
 		var template = [
 			'/*global axe */\n',
 			'/*jshint -W109 */\n',
-			'var langs = ' + newLangs + ';\n',
+			'var langs = ' + JSON.stringify(langs, null, '\t') + ';\n',
 			'axe.utils.validLangs = function () {\n',
 			'\t\'use strict\';\n',
 			'\treturn langs;\n',
