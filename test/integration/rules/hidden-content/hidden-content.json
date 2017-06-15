@@ -9,6 +9,8 @@
     ["#fixture"],
     ["#pass1"],
     ["#pass2"],
-    ["#pass3"]
+    ["#pass3"],
+    ["#pass4"],
+    ["#pass5"]
   ]
 }

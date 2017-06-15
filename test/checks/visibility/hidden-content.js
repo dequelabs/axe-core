@@ -39,4 +39,8 @@ describe('hidden content', function () {
 		assert.isTrue(checks['hidden-content'].evaluate.call(checkContext, node));
 	});
 
+	it('should skip whitelisted elements', function () {
+		var node = document.querySelector('head');
+		assert.isTrue(checks['hidden-content'].evaluate.call(checkContext, node));
+	});
 });
