@@ -8,7 +8,7 @@
   ],
   "metadata": {
     "description": "Informs users about hidden content.",
-    "help": "Trigger the UI state that displays the content and then run the analysis again."
+    "help": "Hidden content on the page cannot be analyzed"
   },
   "all": [],
   "any": [
