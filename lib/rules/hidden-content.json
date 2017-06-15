@@ -1,6 +1,6 @@
 {
   "id": "hidden-content",
-  "selector": "*",
+  "selector": "body *",
   "excludeHidden": false,
   "tags": [
     "experimental",

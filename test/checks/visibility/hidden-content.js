@@ -39,4 +39,16 @@ describe('hidden content', function () {
 		assert.isTrue(checks['hidden-content'].evaluate.call(checkContext, node));
 	});
 
+	it('should return true on <template>', function () {
+		fixture.innerHTML = '<template id="target">Hello, world.</template>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['hidden-content'].evaluate.call(checkContext, node));
+	});
+
+	it('should return true on <script>', function () {
+		fixture.innerHTML = '<script id="target" src="some.js">var noop = function () { return null; }</script>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['hidden-content'].evaluate.call(checkContext, node));
+	});
+
 });
