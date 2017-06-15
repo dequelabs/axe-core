@@ -35,10 +35,18 @@ module.exports = function (grunt) {
 		return entry;
 	}
 	function generateOutput(langs, checkPath) {
-		var path = checkPath + '.json';
-		var check = grunt.file.readJSON(path);
-		check.options = langs;
-		grunt.file.write(path, JSON.stringify(check, null, ' '));
+		var path = checkPath + '.js';
+		var newLangs = JSON.stringify(langs, null, '\t');
+		var template = [
+			'/*global axe */\n',
+			'/*jshint -W109 */\n',
+			'var langs = ' + newLangs + ';\n',
+			'axe.utils.validLangs = function () {\n',
+			'\t\'use strict\';\n',
+			'\treturn langs;\n',
+			'};'
+		].join('');
+		grunt.file.write(path, template);
 	}
 	grunt.registerMultiTask('langs', function () {
 		var done = this.async();
