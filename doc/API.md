@@ -32,6 +32,7 @@ The aXe API is designed to be an improvement over the previous generation of acc
 * Runs locally, no connection to a third-party server is necessary
 * Performs violation checking on multiple levels of nested iframes
 * Provides list of rules and elements that passed accessibility checking, ensuring rules have been run against entire document
+* Only checks rendered content to minimize false positives (that includes visually-hidden content)
 
 ### Getting Started
 This section gives a quick description of how to use the aXe APIs to analyze web page content and return a JSON object that lists any accessibility violations found.
@@ -42,6 +43,7 @@ The aXe API can be used as part of a broader process that is performed on many, 
 2. Optionally, set configuration options for the javascript API (`axe.configure`)
 3. Call analyze javascript API (`axe.run`)
 4. Either assert against results or save them for later processing
+5. Repeat for any inactive or non-rendered content after making it visible
 
 
 ## Section 2: API Reference
@@ -53,7 +55,8 @@ The aXe APIs are provided in the javascript file axe.js. It must be included in 
 ### API Notes
 
 * A Rule test is made up of sub-tests. Each sub-test is returned in an array of 'checks'
-* The `"helpUrl"` in the results object is a link to a broader description of the accessibility issue and suggested remediation. All of links point to Deque University help pages and require a valid login to that system.
+* The `"helpUrl"` in the results object is a link to a broader description of the accessibility issue and suggested remediation. These links point to Deque University help pages, which do not require a login.
+* aXe does not test hidden regions, such as inactive menus or modal windows. To test those for accessibility, write tests that activate or render the regions visible and run the analysis again.
 
 ### API Name: axe.getRules
 
@@ -210,7 +213,7 @@ None
 
 #### Purpose
 
-Analyze currently loaded page
+Analyze rendered content on the currently loaded page
 
 #### Description
 
