@@ -5,6 +5,7 @@ describe('color.getBackgroundColor', function () {
 
 	afterEach(function () {
 		document.getElementById('fixture').innerHTML = '';
+		axe.commons.color.incompleteData.clear();
 	});
 
 	it('should return the blended color if it has no background set', function () {
@@ -188,6 +189,98 @@ describe('color.getBackgroundColor', function () {
 		assert.equal(actual.blue, expected.blue);
 		assert.equal(actual.alpha, expected.alpha);
 		assert.deepEqual(bgNodes, [target]);
+	});
+
+	it('should count a TR as a background element', function () {
+		fixture.innerHTML = '<div style="background-color:#007acc;">' +
+		'<table style="width:100%">' +
+			'<tr style="background-color:#f3f3f3; height:40px;" id="parent">' +
+        '<td style="color:#007acc" id="target">' +
+					'Cell content</td>' +
+        '</tr>' +
+      '</table></div>';
+		var target = fixture.querySelector('#target'),
+				parent = fixture.querySelector('#parent');
+		var bgNodes = [];
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(243, 243, 243, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+		assert.deepEqual(bgNodes, [parent]);
+	});
+
+	it('should ignore TR elements that don\'t overlap', function () {
+		fixture.innerHTML = '<table style="position:relative; width:100%;">' +
+		'<tr style="background-color:black; height:10px; width:100%;" id="parent">' +
+			'<td style="position:absolute; top: 14px;" id="target">Content</td>'+
+		'</tr></table>';
+		var bgNodes = [];
+		var target = fixture.querySelector('#target');
+		var parent = fixture.querySelector('#parent');
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(255, 255, 255, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+		assert.notEqual(bgNodes, [parent]);
+	});
+
+	it('should count an implicit label as a background element', function () {
+		fixture.innerHTML = '<label id="target" style="background-color: #fff;">My label' +
+		'<input type="text">' +
+			'</label>';
+		var target = fixture.querySelector('#target');
+		var bgNodes = [];
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(255, 255, 255, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+	});
+
+	it('should ignore inline ancestors of non-overlapping elements', function () {
+		fixture.innerHTML = '<div style="position:relative;">'+
+		'<label style="background-color:black;" id="parent">Label' +
+			'<input style="position:absolute; top:20px;" id="target">'+
+		'</label></div>';
+		var target = fixture.querySelector('#target');
+		var parent = fixture.querySelector('#parent');
+		var bgNodes = [];
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(255, 255, 255, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+		assert.notEqual(bgNodes, [parent]);
+	});
+
+	it('should handle multiple ancestors of the same name', function () {
+		fixture.innerHTML = '<div style="background-color: #007acc;">' +
+		'<table style="width: 100%;">' +
+			'<tr style="background-color: #fff;"><td>' +
+			'<table style="width:100%">' +
+				'<tr style="background-color: #f3f3f3; height:40px;" id="parent">' +
+	        '<td style="display: table-cell; color:#007acc" id="target">' +
+						'Cell content</td>' +
+	        '</tr>' +
+	      '</table>' +
+	    '</td></tr>' +
+	  '</table></div>';
+		var target = fixture.querySelector('#target'),
+				parent = fixture.querySelector('#parent');
+		var bgNodes = [];
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(243, 243, 243, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+		assert.deepEqual(bgNodes, [parent]);
 	});
 
 	it('should use hierarchical DOM traversal if possible', function () {
@@ -388,10 +481,8 @@ describe('color.getBackgroundColor', function () {
 
 	});
 
-
-
 	it('returns the html background', function () {
-		fixture.innerHTML = '<div id="target">elm</div>';
+		fixture.innerHTML = '<div id="target"><label>elm<input></label></div>';
 		var orig = document.documentElement.style.background;
 		document.documentElement.style.background = '#0F0';
 
@@ -406,5 +497,4 @@ describe('color.getBackgroundColor', function () {
 		assert.closeTo(actual.alpha, expected.alpha, 0.1);
 
 	});
-
 });

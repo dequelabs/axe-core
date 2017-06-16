@@ -153,7 +153,7 @@ module.exports = function (grunt) {
 		},
 		langs : {
 			generate: {
-				check: 'lib/checks/language/valid-lang'
+				check: 'lib/commons/utils/valid-langs'
 			}
 		},
 		validate: {
@@ -327,7 +327,10 @@ module.exports = function (grunt) {
 					reporter: grunt.option('report') ? 'checkstyle' : undefined,
 					reporterOutput: grunt.option('report') ? 'tmp/lint.xml' : undefined
 				},
-				src: ['lib/**/*.js', 'test/**/*.js', 'build/tasks/**/*.js', 'doc/**/*.js', 'Gruntfile.js']
+				src: [
+					'lib/**/*.js', 'test/**/*.js', 'build/tasks/**/*.js',
+					'doc/**/*.js', '!doc/examples/jest+react/*.js', 'Gruntfile.js'
+				]
 			}
 		}
 	});

@@ -1,0 +1,19 @@
+{
+  "id": "hidden-content",
+  "selector": "*",
+  "excludeHidden": false,
+  "tags": [
+    "experimental",
+    "review-item"
+  ],
+  "metadata": {
+    "description": "Informs users about hidden content.",
+    "help": "Hidden content on the page cannot be analyzed"
+  },
+  "all": [],
+  "any": [
+    "hidden-content"
+  ],
+  "none": [],
+  "enabled": false
+}

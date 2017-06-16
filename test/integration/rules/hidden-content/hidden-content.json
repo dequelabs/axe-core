@@ -1,0 +1,16 @@
+{
+  "description": "hidden-content test",
+  "rule": "hidden-content",
+  "incomplete": [
+    ["#canttell1"],
+    ["#canttell2"]
+  ],
+  "passes": [
+    ["#fixture"],
+    ["#pass1"],
+    ["#pass2"],
+    ["#pass3"],
+    ["#pass4"],
+    ["#pass5"]
+  ]
+}

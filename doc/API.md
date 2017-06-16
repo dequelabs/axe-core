@@ -32,6 +32,7 @@ The aXe API is designed to be an improvement over the previous generation of acc
 * Runs locally, no connection to a third-party server is necessary
 * Performs violation checking on multiple levels of nested iframes
 * Provides list of rules and elements that passed accessibility checking, ensuring rules have been run against entire document
+* Only checks rendered content to minimize false positives (that includes visually-hidden content)
 
 ### Getting Started
 This section gives a quick description of how to use the aXe APIs to analyze web page content and return a JSON object that lists any accessibility violations found.
@@ -42,6 +43,7 @@ The aXe API can be used as part of a broader process that is performed on many, 
 2. Optionally, set configuration options for the javascript API (`axe.configure`)
 3. Call analyze javascript API (`axe.run`)
 4. Either assert against results or save them for later processing
+5. Repeat for any inactive or non-rendered content after making it visible
 
 
 ## Section 2: API Reference
@@ -53,7 +55,8 @@ The aXe APIs are provided in the javascript file axe.js. It must be included in 
 ### API Notes
 
 * A Rule test is made up of sub-tests. Each sub-test is returned in an array of 'checks'
-* The `"helpUrl"` in the results object is a link to a broader description of the accessibility issue and suggested remediation. All of links point to Deque University help pages and require a valid login to that system.
+* The `"helpUrl"` in the results object is a link to a broader description of the accessibility issue and suggested remediation. These links point to Deque University help pages, which do not require a login.
+* aXe does not test hidden regions, such as inactive menus or modal windows. To test those for accessibility, write tests that activate or render the regions visible and run the analysis again.
 
 ### API Name: axe.getRules
 
@@ -77,12 +80,30 @@ Returns a list of all rules with their ID and description
 
 The current set of tags supported are listed in the following table:
 
-| Tag Name           | Accessibility Standard                |
-|--------------------|:-------------------------------------:|
-| `wcag2a`           | WCAG 2.0 Level A                      |
-| `wcag2aa`          | WCAG 2.0 Level AA                     |
-| `section508`       | Section 508                           |
-| `best-practice`    | Best practices endorsed by Deque      |
+| Tag Name           | Accessibility Standard/Purpose              |
+|--------------------|:-------------------------------------------:|
+| `wcag2a`           | WCAG 2.0 Level A                            |
+| `wcag2aa`          | WCAG 2.0 Level AA                           |
+| `section508`       | Section 508                                 |
+| `best-practice`    | Best practices endorsed by Deque            |
+| `experimental`     | Cutting-edge techniques                     |
+| `cat`              | Category mappings used by Deque (see below) |
+
+| Category name                 |
+|-------------------------------|
+| `cat.aria`                    |
+| `cat.color`                   |
+| `cat.forms`                   |
+| `cat.keyboard`                |
+| `cat.language`                |
+| `cat.name-role-value`         |
+| `cat.parsing`                 |
+| `cat.semantics`               |
+| `cat.sensory-and-visual-cues` |
+| `cat.structure`               |
+| `cat.tables`                  |
+| `cat.text-alternatives`       |
+| `cat.time-and-media`          |
 
 
 #### Example 1
@@ -192,7 +213,7 @@ None
 
 #### Purpose
 
-Analyze currently loaded page
+Analyze rendered content on the currently loaded page
 
 #### Description
 
