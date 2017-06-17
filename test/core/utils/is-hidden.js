@@ -95,5 +95,25 @@ describe('axe.utils.isHidden', function () {
 			assert.isTrue(axe.utils.isHidden(node.actualNode));
 		}
 	});
+	it('should work with hiddent slotted elements', function () {
+		function createContentSlotted() {
+			var group = document.createElement('div');
+			group.innerHTML = '<div id="target" style="display:none;">Stuff<slot></slot></div>';
+			return group;
+		}
+		function makeShadowTree(node) {
+			var root = node.attachShadow({mode: 'open'});
+			var div = document.createElement('div');
+			root.appendChild(div);
+			div.appendChild(createContentSlotted());
+		}
+		if (document.body && typeof document.body.attachShadow === 'function') {
+			fixture.innerHTML = '<div><p><a>hello</a></p></div>';
+			makeShadowTree(fixture.firstChild);
+			var tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			var el = axe.utils.querySelectorAll(tree, 'a')[0];
+			assert.isTrue(axe.utils.isHidden(el.actualNode));
+		}
+	});
 
 });
