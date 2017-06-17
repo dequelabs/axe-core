@@ -66,8 +66,7 @@ describe('axe.utils.contains', function () {
 			return group;
 		}
 
-		function makeShadowTreeContains(node)
-		{
+		function makeShadowTreeContains(node) {
 			var root = node.attachShadow({mode: 'open'});
 			var div = document.createElement('div');
 			div.className = 'parent';
@@ -82,6 +81,32 @@ describe('axe.utils.contains', function () {
 			tree = axe.utils.getFlattenedTree(fixture.firstChild);
 			node1 = axe.utils.querySelectorAll(tree, '.parent')[0];
 			node2 = axe.utils.querySelectorAll(tree, 'input')[0];
+			assert.isTrue(axe.utils.contains(node1, node2));
+		}
+	});
+
+	it('should work with slotted elements inside shadow DOM', function () {
+		var tree, node1, node2;
+
+        function createContentSlotted() {
+            var group = document.createElement('div');
+            group.innerHTML = '<div id="target">Stuff<slot></slot></div>';
+            return group;
+        }
+		function makeShadowTree(node) {
+			var root = node.attachShadow({mode: 'open'});
+			var div = document.createElement('div');
+			var a = document.createElement('a');
+			div.appendChild(a);
+			root.appendChild(div);
+			div.appendChild(createContentSlotted());
+		}
+		if (document.body && typeof document.body.attachShadow === 'function') {
+			fixture.innerHTML = '<div></div>';
+			makeShadowTree(fixture.firstChild);
+			tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			node1 = axe.utils.querySelectorAll(tree, '#target')[0];
+			node2 = axe.utils.querySelectorAll(tree, 'a')[0];
 			assert.isTrue(axe.utils.contains(node1, node2));
 		}
 	});
