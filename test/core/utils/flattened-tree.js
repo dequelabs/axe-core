@@ -186,6 +186,46 @@ if (document.body && typeof document.body.attachShadow === 'function') {
 			// assert.isTrue(virtualDOM[0].children[1].children[0].children[0].actualNode.nodeName === 'SLOT');
 		});
 	});
+	describe('getNodeFromTree', function () {
+		'use strict';
+		afterEach(function () {
+			fixture.innerHTML = '';
+		});
+		beforeEach(function () {
+			function createStoryGroup (className, slotName) {
+				var group = document.createElement('div');
+				group.className = className;
+				// Empty string in slot name attribute or absence thereof work the same, so no need for special handling.
+				group.innerHTML = '<ul><slot name="' + slotName + '">fallback content<li>one</li></slot></ul>';
+				return group;
+			}
+
+			function makeShadowTree (storyList) {
+				var root = storyList.attachShadow({mode: 'open'});
+				root.appendChild(createStyle());
+				root.appendChild(createStoryGroup('breaking', 'breaking'));
+				root.appendChild(createStoryGroup('other', ''));
+			}
+			var str = '<div class="stories"><li>1</li>' +
+			'<li>2</li><li class="breaking" slot="breaking">3</li>' +
+			'<li>4</li><li>5</li><li class="breaking" slot="breaking">6</li></div>';
+			str += '<div class="stories"><li>1</li>' +
+			'<li>2</li><li class="breaking" slot="breaking">3</li>' +
+			'<li>4</li><li>5</li><li class="breaking" slot="breaking">6</li></div>';
+			str += '<div class="stories"></div>';
+			fixture.innerHTML = str;
+
+			fixture.querySelectorAll('.stories').forEach(makeShadowTree);
+		});
+		it('should find the virtual node that matches the real node passed in', function () {
+			var virtualDOM = axe.utils.getFlattenedTree(fixture);
+			var node = document.querySelector('.stories li');
+			var vNode = axe.utils.getNodeFromTree(virtualDOM[0], node);
+			assert.isDefined(vNode);
+			assert.equal(node, vNode.actualNode);
+			assert.equal(vNode.actualNode.textContent, '1');
+		});
+	});
 }
 
 if (document.body && typeof document.body.attachShadow === 'undefined' &&

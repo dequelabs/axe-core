@@ -34,4 +34,46 @@ describe('dom.findUp', function () {
 		assert.isNull(axe.commons.dom.findUp(start, '.target'));
 
 	});
+
+	it('should walk up the assigned slot', function () {
+		function createContentSlotted() {
+			var group = document.createElement('div');
+			group.innerHTML = '<div id="target" style="display:none;">Stuff<slot></slot></div>';
+			return group;
+		}
+		function makeShadowTree(node) {
+			var root = node.attachShadow({mode: 'open'});
+			var div = document.createElement('div');
+			root.appendChild(div);
+			div.appendChild(createContentSlotted());
+		}
+		if (document.body && typeof document.body.attachShadow === 'function') {
+			fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
+			makeShadowTree(fixture.querySelector('div'));
+			var tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			var el = axe.utils.querySelectorAll(tree, 'a')[0];
+			assert.equal(axe.commons.dom.findUp(el.actualNode, 'label'), fixture.firstChild);
+		}
+	});
+
+	it('should walk up the shadow DOM', function () {
+		function createContent() {
+			var group = document.createElement('div');
+			group.innerHTML = '<a>thing</a>';
+			return group;
+		}
+		function makeShadowTree(node) {
+			var root = node.attachShadow({mode: 'open'});
+			var div = document.createElement('div');
+			root.appendChild(div);
+			div.appendChild(createContent());
+		}
+		if (document.body && typeof document.body.attachShadow === 'function') {
+			fixture.innerHTML = '<label><div></div></label>';
+			makeShadowTree(fixture.querySelector('div'));
+			var tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			var el = axe.utils.querySelectorAll(tree, 'a')[0];
+			assert.equal(axe.commons.dom.findUp(el.actualNode, 'label'), fixture.firstChild);
+		}
+	});
 });

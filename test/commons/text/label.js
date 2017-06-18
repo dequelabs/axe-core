@@ -11,7 +11,8 @@ describe('text.label', function () {
 			fixture.innerHTML = '<div id="monkeys">monkeys</div><div id="bananas">bananas</div>' +
 				'<input id="target" aria-labelledby="monkeys bananas">';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.equal(axe.commons.text.label(target), 'monkeys bananas');
 		});
 
@@ -19,7 +20,8 @@ describe('text.label', function () {
 			fixture.innerHTML = '<div id="monkeys">monkeys</div><div id="bananas" style="display: none">bananas</div>' +
 				'<input id="target" aria-labelledby="monkeys bananas">';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.equal(axe.commons.text.label(target), 'monkeys');
 		});
 
@@ -27,7 +29,8 @@ describe('text.label', function () {
 			fixture.innerHTML = '<div id="monkeys">monkeys</div><div id="bananas">bananas</div>' +
 				'<input id="target" aria-labelledby="monkeys bananas" aria-label="nope">';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.equal(axe.commons.text.label(target), 'monkeys bananas');
 		});
 
@@ -36,7 +39,8 @@ describe('text.label', function () {
 				'<label for="target">nope</label>' +
 				'<input id="target" aria-labelledby="monkeys bananas">';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.equal(axe.commons.text.label(target), 'monkeys bananas');
 		});
 
@@ -45,7 +49,8 @@ describe('text.label', function () {
 				'<label>nope' +
 				'<input id="target" aria-labelledby="monkeys bananas"></label>';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.equal(axe.commons.text.label(target), 'monkeys bananas');
 		});
 
@@ -53,7 +58,8 @@ describe('text.label', function () {
 			fixture.innerHTML = '<div id="monkeys">	\n  </div><div id="bananas"></div>' +
 				'<input id="target" aria-labelledby="monkeys bananas">';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.isNull(axe.commons.text.label(target));
 		});
 	});
@@ -62,14 +68,16 @@ describe('text.label', function () {
 		it('should detect it', function () {
 			fixture.innerHTML = '<input id="target" aria-label="monkeys">';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.equal(axe.commons.text.label(target), 'monkeys');
 		});
 
 		it('should ignore whitespace only labels', function () {
 			fixture.innerHTML = '<input id="target" aria-label="   \n	">';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.isNull(axe.commons.text.label(target));
 		});
 
@@ -77,7 +85,8 @@ describe('text.label', function () {
 			fixture.innerHTML = '<label for="target">nope</label>' +
 				'<input id="target" aria-label="monkeys">';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.equal(axe.commons.text.label(target), 'monkeys');
 		});
 
@@ -85,7 +94,8 @@ describe('text.label', function () {
 			fixture.innerHTML = '<label>nope' +
 				'<input id="target" aria-label="monkeys"></label>';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.equal(axe.commons.text.label(target), 'monkeys');
 		});
 	});
@@ -95,7 +105,8 @@ describe('text.label', function () {
 			fixture.innerHTML = '<label for="target">monkeys</label>' +
 				'<input id="target">';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.equal(axe.commons.text.label(target), 'monkeys');
 		});
 
@@ -103,7 +114,8 @@ describe('text.label', function () {
 			fixture.innerHTML = '<label for="target">	\n\r  </label>' +
 				'<input id="target">';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.isNull(axe.commons.text.label(target));
 		});
 
@@ -112,7 +124,8 @@ describe('text.label', function () {
 				'<label>nope' +
 				'<input id="target"></label>';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.equal(axe.commons.text.label(target), 'monkeys');
 
 		});
@@ -123,7 +136,8 @@ describe('text.label', function () {
 			fixture.innerHTML = '<label>monkeys' +
 				'<input id="target"><label>';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.equal(axe.commons.text.label(target), 'monkeys');
 		});
 
@@ -131,7 +145,8 @@ describe('text.label', function () {
 			fixture.innerHTML = '<label> ' +
 				'<input id="target"><label>';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.isNull(axe.commons.text.label(target));
 		});
 	});

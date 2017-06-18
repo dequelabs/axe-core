@@ -4,6 +4,7 @@ describe('aria.label', function() {
 	var fixture = document.getElementById('fixture');
 	afterEach(function() {
 		fixture.innerHTML = '';
+		axe._tree = undefined;
 	});
 
 	describe('aria-labelledby', function() {
@@ -11,7 +12,8 @@ describe('aria.label', function() {
 			fixture.innerHTML = '<div id="monkeys">monkeys</div><div id="bananas">bananas</div>' +
 				'<input id="target" aria-labelledby="monkeys bananas">';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.equal(axe.commons.text.label(target), 'monkeys bananas');
 		});
 
@@ -19,7 +21,8 @@ describe('aria.label', function() {
 			fixture.innerHTML = '<div id="monkeys">monkeys</div><div id="bananas" style="display: none">bananas</div>' +
 				'<input id="target" aria-labelledby="monkeys bananas">';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.equal(axe.commons.text.label(target), 'monkeys');
 		});
 
@@ -27,7 +30,8 @@ describe('aria.label', function() {
 			fixture.innerHTML = '<div id="monkeys">monkeys</div><div id="bananas">bananas</div>' +
 				'<input id="target" aria-labelledby="monkeys bananas" aria-label="nope">';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.equal(axe.commons.text.label(target), 'monkeys bananas');
 		});
 
@@ -35,7 +39,8 @@ describe('aria.label', function() {
 			fixture.innerHTML = '<div id="monkeys">	\n  </div><div id="bananas"></div>' +
 				'<input id="target" aria-labelledby="monkeys bananas">';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.isNull(axe.commons.text.label(target));
 		});
 	});
@@ -44,14 +49,16 @@ describe('aria.label', function() {
 		it('should detect it', function() {
 			fixture.innerHTML = '<input id="target" aria-label="monkeys">';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.equal(axe.commons.text.label(target), 'monkeys');
 		});
 
 		it('should ignore whitespace only labels', function() {
 			fixture.innerHTML = '<input id="target" aria-label="   \n	">';
 
-			var target = document.getElementById('target');
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+			var target = axe.utils.querySelectorAll(tree, '#target')[0];
 			assert.isNull(axe.commons.text.label(target));
 		});
 	});

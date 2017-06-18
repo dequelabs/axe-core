@@ -1,7 +1,7 @@
 /*global Audit, Rule */
 describe('Audit', function () {
 	'use strict';
-	var a;
+	var a, getFlattenedTree;
 	var isNotCalled = function (err) {
 		throw err || new Error('Reject should not be called');
 	};
@@ -59,9 +59,12 @@ describe('Audit', function () {
 		mockChecks.forEach(function (c) {
 			a.addCheck(c);
 		});
+		getFlattenedTree = axe.utils.getFlattenedTree;
 	});
 	afterEach(function () {
 		fixture.innerHTML = '';
+		axe._tree = undefined;
+		axe.utils.getFlattenedTree = getFlattenedTree;
 	});
 
 	it('should be a function', function () {
@@ -416,6 +419,18 @@ describe('Audit', function () {
 				}
 			}, function (results) {
 				assert.equal(results.length, 3);
+				done();
+			}, isNotCalled);
+		});
+		it('should call axe.utils.getFlattenedTree', function (done) {
+			var called = false;
+			axe.utils.getFlattenedTree = function () {
+				called = true;
+			};
+			a.run({ include: [document] }, {
+				rules: {}
+			}, function () {
+				assert.isTrue(called);
 				done();
 			}, isNotCalled);
 		});
