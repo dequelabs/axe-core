@@ -311,6 +311,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `absolutePaths` | `false` | Use absolute paths when creating element selectors
 | `iframes`       | `true`  | Tell axe to run inside iframes
 | `elementRef`    | `false` | Return element references in addition to the target
+| `restoreScroll` | `false` | Scrolls elements back to before axe started
 
 
 ###### Options Parameter Examples
