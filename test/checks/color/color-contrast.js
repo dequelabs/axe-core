@@ -160,7 +160,7 @@ describe('color-contrast', function () {
 
 	it('should return undefined when there are elements overlapping', function () {
 		fixture.innerHTML = '<div style="color: black; background-color: white; width: 200px; height: 100px; position: relative;" id="target">' +
-			'My text <div style="position: absolute; top:0; left: 0; background-color: white; width: 100%; height: 100%;"></div></div>';
+			'My text <div style="position: absolute; top: 0; left: 0; background-color: white; width: 100%; height: 100%;"></div></div>';
 		var target = fixture.querySelector('#target');
 		var result = checks['color-contrast'].evaluate.call(checkContext, target);
 		assert.isUndefined(result);
