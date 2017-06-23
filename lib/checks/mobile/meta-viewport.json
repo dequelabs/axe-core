@@ -7,8 +7,8 @@
   "metadata": {
     "impact": "critical",
     "messages": {
-      "pass": "<meta> tag does not disable zooming",
-      "fail": "<meta> tag disables zooming"
+      "pass": "<meta> tag does not disable zooming on mobile devices",
+      "fail": "<meta> tag disables zooming on mobile devices"
     }
   }
 }
