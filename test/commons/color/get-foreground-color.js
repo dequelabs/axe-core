@@ -5,6 +5,8 @@ describe('color.getForegroundColor', function () {
 
 	afterEach(function () {
 		document.getElementById('fixture').innerHTML = '';
+		axe.commons.color.incompleteData.clear();
+		document.body.scrollTop = 0;
 	});
 
 	it('should return the blended color if it has alpha set', function () {
