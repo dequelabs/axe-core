@@ -218,6 +218,61 @@ describe('fieldset', function () {
 			var node = fixture.querySelector('#target');
 			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
 		});
+
+		it('returns true of elements in the same data table', function () {
+			fixture.innerHTML = 
+				'<table> <tr> <td>' +
+	    		'<input type="' + type + '" name="foo">' +
+	  		'</td> </tr>  <tr> <td>' +
+	    		'<input type="' + type + '" name="foo">' +
+				'</td> </tr> </table>';
+			var node = fixture.querySelector('[name=foo]');
+			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+		});
+
+		it('returns true of elements in th', function () {
+			fixture.innerHTML = 
+				'<table> <tr> <th>' +
+	    		'<input type="' + type + '" name="foo">' +
+	  		'</th> </tr>  <tr> <th>' +
+	    		'<input type="' + type + '" name="foo">' +
+				'</th> </tr> </table>';
+			var node = fixture.querySelector('[name=foo]');
+			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+		});
+
+		it('returns false of elements in the same cell', function () {
+			fixture.innerHTML = 
+				'<table> <tr> <td>' +
+	    		'<input type="' + type + '" name="foo">' +
+	    		'<input type="' + type + '" name="foo">' +
+				'</td> </tr> </table>';
+			var node = fixture.querySelector('[name=foo]');
+			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node));
+		});
+
+		it('returns false of elements in a different table', function () {
+			fixture.innerHTML = 
+				'<table> <tr> <td>' +
+	    		'<input type="' + type + '" name="foo">' +
+				'</td> </tr> </table>' +
+				'<table> <tr> <td>' +
+	    		'<input type="' + type + '" name="foo">' +
+				'</td> </tr> </table>';
+			var node = fixture.querySelector('[name=foo]');
+			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node));
+		});
+
+		it('returns false if the table has role="presentation"', function () {
+			fixture.innerHTML = 
+				'<table role="presentation"> <tr> <td>' +
+	    		'<input type="' + type + '" name="foo">' +
+	  		'</td> </tr>  <tr> <td>' +
+	    		'<input type="' + type + '" name="foo">' +
+				'</td> </tr> </table>';
+			var node = fixture.querySelector('[name=foo]');
+			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node));
+		});
 	}
 
 
