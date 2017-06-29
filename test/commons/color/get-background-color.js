@@ -498,4 +498,31 @@ describe('color.getBackgroundColor', function () {
 		assert.closeTo(actual.alpha, expected.alpha, 0.1);
 
 	});
+
+	it('avoids scrolling elements with overflow:hidden', function () {
+		fixture.innerHTML =
+			'<div style="position:relative; color: yellow">' +
+			  '<div style="overflow: hidden">' +
+			    '<div style="background: black; height: 40px; padding-top: 20px;">' +
+			      '<div id="tgt1">Some text here</div>' +
+			      '<div style="height: 100px;"></div>' +
+			    '</div>' +
+			  '</div>' +
+			  '<div style="position: absolute; margin-top: -20px;" id="tgt2">R_20</div>' +
+			'</div>';
+
+		// This shouldn't cause a scroll
+		var target1 = document.getElementById('tgt1');
+		axe.commons.color.getBackgroundColor(target1, []);
+
+		// Otherwise this would not be on the black bg anymore:
+		var target2 = document.getElementById('tgt2');
+		var actual = axe.commons.color.getBackgroundColor(target2, []);
+
+		assert.closeTo(actual.red, 0, 0.5);
+		assert.closeTo(actual.green, 0, 0.5);
+		assert.closeTo(actual.blue, 0, 0.5);
+		assert.closeTo(actual.alpha, 1, 0.1);
+	});
+
 });
