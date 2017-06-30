@@ -29,3 +29,4 @@ Add your project/integration to this file and submit a pull request.
 1. [Protractor-axe-report Plugin](https://github.com/E1Edatatracker/protractor-axe-report-plugin)
 1. [Rocket Validator](https://rocketvalidator.com)
 1. [aXe Reports](https://github.com/louis-reed/axe-reports)
+1. [aXe-TestCafe](https://github.com/helen-dikareva/axe-testcafe)

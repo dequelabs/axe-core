@@ -1,14 +1,25 @@
 <!doctype html>
+<html lang="en">
 <title>O hai</title>
+
+<div style="
+  height: 50px;
+  width: 50px;
+  border: solid 1px black;
+  overflow: auto;
+">
+  <p>foofoofoofoofoofoo</p>
+  <p>foofoofoofoofoofoo</p>
+  <p>foofoofoofoofoofoo</p>
+  <p>foofoofoofoofoofoo</p>
+  <p>foofoofoofoofoofoo</p>
+</div>
+
 <script src="/axe.js"></script>
-<div id="dupe"></div>
-<div id="dupe"></div>
 <script>
-
 window.addEventListener('load' , function () {
-	axe.a11yCheck(document, {}, function (res) {
-		console.log(res);
-	});
+  axe.a11yCheck(document, { restoreScroll: true }, function (res) {
+    console.log(res);
+  });
 })
-
 </script>

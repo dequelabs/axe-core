@@ -8,8 +8,8 @@
   "metadata": {
     "impact": "minor",
     "messages": {
-      "pass": "<meta> tag does not prevent significant zooming",
-      "fail": "<meta> tag limits zooming"
+      "pass": "<meta> tag does not prevent significant zooming on mobile devices",
+      "fail": "<meta> tag limits zooming on mobile devices"
     }
   }
 }

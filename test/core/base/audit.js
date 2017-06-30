@@ -511,6 +511,7 @@ describe('Audit', function () {
 		});
 
 		it('catches errors and passes them as a cantTell result', function (done) {
+			var err = new Error('Launch the super sheep!');
 			a.addRule({
 				id: 'throw1',
 				selector: '*',
@@ -521,7 +522,7 @@ describe('Audit', function () {
 			a.addCheck({
 				id: 'throw1-check1',
 				evaluate: function () {
-					throw new Error('Launch the super sheep!');
+					throw err;
 				}
 			});
 
@@ -533,7 +534,9 @@ describe('Audit', function () {
 			}, function (results) {
 				assert.lengthOf(results,1);
 				assert.equal(results[0].result, 'cantTell');
-				assert.equal(results[0].error.message, 'Launch the super sheep!');
+				assert.equal(results[0].message, err.message);
+				assert.equal(results[0].stack, err.stack);
+				assert.equal(results[0].error, err);
 				done();
 			}, isNotCalled);
 		});
