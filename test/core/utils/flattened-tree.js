@@ -14,6 +14,10 @@ function flattenedTreeAssertions () {
 	'use strict';
 
 	var virtualDOM = axe.utils.getFlattenedTree(fixture.firstChild);
+	assert.equal(virtualDOM.length, 1); // host
+	assert.equal(virtualDOM[0].actualNode.nodeName, 'DIV');
+
+	virtualDOM = virtualDOM[0].children;
 	assert.equal(virtualDOM.length, 3);
 	assert.equal(virtualDOM[0].actualNode.nodeName, 'STYLE');
 
@@ -44,19 +48,20 @@ function shadowIdAssertions () {
 	'use strict';
 
 	var virtualDOM = axe.utils.getFlattenedTree(fixture);
-	assert.isUndefined(virtualDOM[0].shadowId);
-	assert.isDefined(virtualDOM[0].children[0].shadowId);
-	assert.isDefined(virtualDOM[0].children[1].shadowId);
-	assert.isDefined(virtualDOM[0].children[4].shadowId);
+	assert.isUndefined(virtualDOM[0].shadowId); //fixture
+	assert.isUndefined(virtualDOM[0].children[0].shadowId); //host
+	assert.isDefined(virtualDOM[0].children[0].children[0].shadowId);
+	assert.isDefined(virtualDOM[0].children[0].children[1].shadowId);
+	assert.isDefined(virtualDOM[0].children[1].children[0].shadowId);
 	// shadow IDs in the same shadowRoot must be the same
-	assert.equal(virtualDOM[0].children[0].shadowId,
-		virtualDOM[0].children[1].shadowId);
+	assert.equal(virtualDOM[0].children[0].children[0].shadowId,
+		virtualDOM[0].children[0].children[1].shadowId);
 	// should cascade
-	assert.equal(virtualDOM[0].children[1].shadowId,
-		virtualDOM[0].children[1].children[0].shadowId);
+	assert.equal(virtualDOM[0].children[0].children[1].shadowId,
+		virtualDOM[0].children[0].children[1].children[0].shadowId);
 	// shadow IDs in different shadowRoots must be different
-	assert.notEqual(virtualDOM[0].children[0].shadowId,
-		virtualDOM[0].children[4].shadowId);
+	assert.notEqual(virtualDOM[0].children[0].children[0].shadowId,
+		virtualDOM[0].children[1].children[0].shadowId);
 
 }
 
@@ -143,10 +148,10 @@ if (document.body && typeof document.body.attachShadow === 'function') {
 		it('getFlattenedTree\'s virtual DOM should give an ID to the shadow DOM', shadowIdAssertions);
 		it('getFlattenedTree\'s virtual DOM should have the fallback content', function () {
 			var virtualDOM = axe.utils.getFlattenedTree(fixture);
-			assert.isTrue(virtualDOM[0].children[7].children[0].children.length === 2);
-			assert.isTrue(virtualDOM[0].children[7].children[0].children[0].actualNode.nodeType === 3);
-			assert.isTrue(virtualDOM[0].children[7].children[0].children[0].actualNode.textContent === 'fallback content');
-			assert.isTrue(virtualDOM[0].children[7].children[0].children[1].actualNode.nodeName === 'LI');
+			assert.isTrue(virtualDOM[0].children[2].children[1].children[0].children.length === 2);
+			assert.isTrue(virtualDOM[0].children[2].children[1].children[0].children[0].actualNode.nodeType === 3);
+			assert.isTrue(virtualDOM[0].children[2].children[1].children[0].children[0].actualNode.textContent === 'fallback content');
+			assert.isTrue(virtualDOM[0].children[2].children[1].children[0].children[1].actualNode.nodeName === 'LI');
 		});
 	});
 	describe('flattened-tree shadow DOM v1: boxed slots', function () {

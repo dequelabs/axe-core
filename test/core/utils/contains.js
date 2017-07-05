@@ -104,7 +104,7 @@ describe('axe.utils.contains', function () {
 		if (document.body && typeof document.body.attachShadow === 'function') {
 			fixture.innerHTML = '<div></div>';
 			makeShadowTree(fixture.firstChild);
-			tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			tree = axe.utils.getFlattenedTree(fixture.firstChild)[0].children;
 			node1 = axe.utils.querySelectorAll(tree, '#target')[0];
 			node2 = axe.utils.querySelectorAll(tree, 'a')[0];
 			assert.isTrue(axe.utils.contains(node1, node2));
