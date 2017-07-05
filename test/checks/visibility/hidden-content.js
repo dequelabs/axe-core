@@ -1,8 +1,9 @@
+/* global xit */
 describe('hidden content', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-
+	var shadowSupport = document.body && typeof document.body.attachShadow === 'function';
 	var checkContext = {
 		_data: null,
 		data: function (d) {
@@ -48,6 +49,36 @@ describe('hidden content', function () {
 		var node = document.querySelector('head');
 		axe._tree = axe.utils.getFlattenedTree(document.documentElement);
 		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
-		assert.isTrue(checks['hidden-content'].evaluate.call(checkContext, node, undefined, virtualNode));
+		assert.isTrue(checks['hidden-content'].evaluate(node, undefined, virtualNode));
+	});
+
+	(shadowSupport ? it : xit)('works on elements in a shadow DOM', function () {
+		/* global console */
+		fixture.innerHTML = '<div id="shadow"> <div id="content">text</div> </div>';
+		var shadowRoot = document.getElementById('shadow').attachShadow({ mode: 'open' });
+		shadowRoot.innerHTML = '<div id="target" style="display:none">' +
+			'<slot></slot>' +
+		'</div>';
+		axe._tree = axe.utils.getFlattenedTree(fixture);
+		console.log(axe._tree);
+
+		var shadow = document.querySelector('#shadow');
+		var virtualShadow = axe.utils.getNodeFromTree(axe._tree[0], shadow);
+		console.log(virtualShadow, shadow);
+		assert.isTrue(
+			checks['hidden-content'].evaluate(shadow, undefined, virtualShadow)
+		);
+
+		var target = shadowRoot.querySelector('#target');
+		var virtualTarget = axe.utils.getNodeFromTree(axe._tree[0], target);
+		assert.isUndefined(
+			checks['hidden-content'].evaluate(target, undefined, virtualTarget)
+		);
+
+		var content = document.querySelector('#content');
+		var virtualContent = axe.utils.getNodeFromTree(axe._tree[0], content);
+		assert.isTrue(
+			checks['hidden-content'].evaluate(content, undefined, virtualContent)
+		);
 	});
 });
