@@ -17,6 +17,7 @@ describe('td-has-header', function () {
 		fixture.innerHTML = '';
 		checkContext._relatedNodes = [];
 		checkContext._data = null;
+		axe._tree = null;
 	});
 
 	it('should not be fooled by rowspan and colspan', function () {
@@ -44,6 +45,7 @@ describe('td-has-header', function () {
 			'    </tr>' +
 			'  </tbody>' +
 			'</table>';
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		var result = checks['td-has-header'].evaluate.call(checkContext, node);
 
@@ -57,6 +59,7 @@ describe('td-has-header', function () {
 			'  <tr> <th>hi</th> <td>hello</td> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(checks['td-has-header'].evaluate.call(checkContext, node));
 	});
@@ -68,6 +71,7 @@ describe('td-has-header', function () {
 			'  <tr> <td>hi</td> <td>hello</td> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(checks['td-has-header'].evaluate.call(checkContext, node));
 	});
@@ -79,6 +83,7 @@ describe('td-has-header', function () {
 			'  <tr> <td aria-label="one">hi</td> <td aria-label="two">hello</td> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(checks['td-has-header'].evaluate.call(checkContext, node));
 	});
@@ -90,6 +95,7 @@ describe('td-has-header', function () {
 			'  <tr> <td aria-labelledby="one">hi</td> <td aria-labelledby="two">hello</td> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(checks['td-has-header'].evaluate.call(checkContext, node));
 	});
@@ -102,6 +108,7 @@ describe('td-has-header', function () {
 			'  <tr> <td headers="one">hi</td> <td headers="two">hello</td> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(checks['td-has-header'].evaluate.call(checkContext, node));
 	});
@@ -113,6 +120,7 @@ describe('td-has-header', function () {
 			'  <tr> <th></th> <td>hello</td> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(checks['td-has-header'].evaluate.call(checkContext, node));
 	});
@@ -123,6 +131,7 @@ describe('td-has-header', function () {
 			'  <tr> <td></td> <td></td> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(checks['td-has-header'].evaluate.call(checkContext, node));
 	});
@@ -133,6 +142,7 @@ describe('td-has-header', function () {
 			'  <tr> <td>hi</td> <td>hello</td> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 
 		assert.isFalse(checks['td-has-header'].evaluate.call(checkContext, node));
@@ -148,6 +158,7 @@ describe('td-has-header', function () {
 			'  <tr> <td>hi</td> <td>hello</td> <td>Ok</td> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 
 		assert.isFalse(checks['td-has-header'].evaluate.call(checkContext, node));
@@ -162,6 +173,7 @@ describe('td-has-header', function () {
 			'  <tr> <th>Hello</th> <td headers="">goodbye</td> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 
 		assert.isFalse(checks['td-has-header'].evaluate.call(checkContext, node));
@@ -174,6 +186,7 @@ describe('td-has-header', function () {
 			'  <tr> <th>Hello</th> <td headers="beatles">goodbye</td> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 
 		assert.isFalse(checks['td-has-header'].evaluate.call(checkContext, node));
@@ -186,6 +199,7 @@ describe('td-has-header', function () {
 			'  <tr> <td>hi</td> <td>hello</td> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isFalse(checks['td-has-header'].evaluate.call(checkContext, node));
 	});

@@ -7,6 +7,23 @@ describe('aria.label', function() {
 		axe._tree = undefined;
 	});
 
+	it('accepts DOM Nodes and virtual nodes', function () {
+		it('should join text with a single space', function() {
+			fixture.innerHTML = '<div id="monkeys">monkeys</div><div id="bananas">bananas</div>' +
+				'<input id="target" aria-labelledby="monkeys bananas">';
+			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
+
+			// Virtual node
+			assert.equal(axe.commons.text.label(
+				axe.utils.querySelectorAll(tree, '#target')[0]
+			), 'monkeys bananas');
+			// DOM Node
+			assert.equal(axe.commons.text.label(
+				fixture.querySelector('#target')
+			), 'monkeys bananas');
+		});
+  });
+
 	describe('aria-labelledby', function() {
 		it('should join text with a single space', function() {
 			fixture.innerHTML = '<div id="monkeys">monkeys</div><div id="bananas">bananas</div>' +

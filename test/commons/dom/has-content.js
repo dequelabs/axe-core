@@ -51,4 +51,19 @@ describe('dom.hasContent', function () {
       hasContent(axe.utils.querySelectorAll(tree, '#target')[0])
     );
   });
+
+  it('accepts DOM Nodes and virtual nodes', function () {
+    fixture.innerHTML = '<div id="target"> text </div>';
+    axe._tree = axe.utils.getFlattenedTree(fixture);
+
+    // Virtual node
+    assert.isTrue(
+      hasContent(axe.utils.querySelectorAll(axe._tree, '#target')[0])
+    );
+    // DOM node
+    assert.isTrue(
+      hasContent(fixture.querySelector('#target'))
+    );
+    axe._tree = null;
+  });
 });

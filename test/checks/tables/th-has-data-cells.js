@@ -26,6 +26,7 @@ describe('th-has-data-cells', function () {
 			'  <tr> <th>hi</th> <td>hello</td> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(checks['th-has-data-cells'].evaluate.call(checkContext, node));
 	});
@@ -37,6 +38,7 @@ describe('th-has-data-cells', function () {
 			'  <tr> <td>hi</td> <td>hello</td></tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(checks['th-has-data-cells'].evaluate.call(checkContext, node));
 	});
@@ -48,6 +50,7 @@ describe('th-has-data-cells', function () {
 			'  <tr> <th id="a">H</th> <th id="b">H</th> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(checks['th-has-data-cells'].evaluate.call(checkContext, node));
 	});
@@ -59,6 +62,7 @@ describe('th-has-data-cells', function () {
 			'  <tr> <th id="a">H</th> <th id="b">H</th> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(checks['th-has-data-cells'].evaluate.call(checkContext, node));
 	});
@@ -69,6 +73,7 @@ describe('th-has-data-cells', function () {
 			'  <tr> <th></th> <th></th> </tr>' +
 			'  <tr> <th></th> <th></th> </tr>' +
 			'</table>';
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(checks['th-has-data-cells'].evaluate.call(checkContext, node));
 	});
@@ -85,6 +90,7 @@ describe('th-has-data-cells', function () {
 			'  <tr> <th>hi</th> <td><span role="img"></span></td> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(checks['th-has-data-cells'].evaluate.call(checkContext, node));
 	});
@@ -96,6 +102,7 @@ describe('th-has-data-cells', function () {
 			'  <tr> <th>hi</th> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isUndefined(checks['th-has-data-cells'].evaluate.call(checkContext, node));
 	});
@@ -107,6 +114,7 @@ describe('th-has-data-cells', function () {
 			'  <tr> <th>hi</th> <td></td> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isUndefined(checks['th-has-data-cells'].evaluate.call(checkContext, node));
 	});
@@ -117,6 +125,7 @@ describe('th-has-data-cells', function () {
 			'  <tr> <td>aXe</td> <td role="columnheader">AXE</th> </tr>' +
 			'</table>';
 
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isUndefined(checks['th-has-data-cells'].evaluate.call(checkContext, node));
 	});
