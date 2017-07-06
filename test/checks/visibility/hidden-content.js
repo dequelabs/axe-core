@@ -53,18 +53,15 @@ describe('hidden content', function () {
 	});
 
 	(shadowSupport ? it : xit)('works on elements in a shadow DOM', function () {
-		/* global console */
 		fixture.innerHTML = '<div id="shadow"> <div id="content">text</div> </div>';
 		var shadowRoot = document.getElementById('shadow').attachShadow({ mode: 'open' });
 		shadowRoot.innerHTML = '<div id="target" style="display:none">' +
 			'<slot></slot>' +
 		'</div>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
-		console.log(axe._tree);
 
 		var shadow = document.querySelector('#shadow');
 		var virtualShadow = axe.utils.getNodeFromTree(axe._tree[0], shadow);
-		console.log(virtualShadow, shadow);
 		assert.isTrue(
 			checks['hidden-content'].evaluate(shadow, undefined, virtualShadow)
 		);
