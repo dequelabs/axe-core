@@ -2,6 +2,7 @@ describe('th-has-data-cells', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var shadowSupport = (document.body && typeof document.body.attachShadow === 'function');
 	var checkContext = {
 		_relatedNodes: [],
 		_data: null,
@@ -128,5 +129,19 @@ describe('th-has-data-cells', function () {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('table');
 		assert.isUndefined(checks['th-has-data-cells'].evaluate.call(checkContext, node));
+	});
+
+	(shadowSupport ? it : xit)('recognizes shadow tree content', function () {
+		fixture.innerHTML = '<div id="shadow"> <b>data</b> </div>';
+		var shadow = fixture.querySelector('#shadow').attachShadow({ mode: 'open' });
+		shadow.innerHTML =
+			'<table>' +
+			'  <tr> <th> header </th> </tr>' +
+			'  <tr> <td><slot></slot></td> </tr>' +
+			'</table>';
+
+		axe._tree = axe.utils.getFlattenedTree(fixture);
+		var node = axe.utils.querySelectorAll(axe._tree, 'table')[0].actualNode;
+		assert.isTrue(checks['th-has-data-cells'].evaluate.call(checkContext, node));
 	});
 });
