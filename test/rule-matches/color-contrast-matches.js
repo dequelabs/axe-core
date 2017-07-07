@@ -245,8 +245,8 @@ describe('color-contrast-matches', function () {
 		assert.isFalse(rule.matches(target));
 	});
 
-  (shadowSupport ? it : xit)
-  ('should match a descendant of an element across a shadow boundary', function () {
+	(shadowSupport ? it : xit)
+	('should match a descendant of an element across a shadow boundary', function () {
 		fixture.innerHTML = '<div id="parent" style="background-color: #000;">' +
 			'</div>';
 
