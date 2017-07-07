@@ -12,6 +12,7 @@ describe('color-contrast-matches', function () {
 
 	afterEach(function () {
 		fixture.innerHTML = '';
+		axe._tree = undefined;
 	});
 
 	it('is a function', function () {
@@ -22,42 +23,48 @@ describe('color-contrast-matches', function () {
 		fixture.innerHTML = '<div style="color: yellow; background-color: white;" id="target">' +
 			' </div>';
 		var target = fixture.querySelector('#target');
-		assert.isFalse(rule.matches(target));
+		var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(tree[0], target)));
 	});
 
 	it('should match when there is text', function () {
 		fixture.innerHTML = '<div style="color: yellow; background-color: white;" id="target">' +
 			'My text</div>';
 		var target = fixture.querySelector('#target');
-		assert.isTrue(rule.matches(target));
+		var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+		assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(tree[0], target)));
 	});
 
 	it('should not match when there is text that is out of the container', function () {
 		fixture.innerHTML = '<div style="color: yellow; text-indent: -9999px; background-color: white;" id="target">' +
 			'My text</div>';
 		var target = fixture.querySelector('#target');
-		assert.isFalse(rule.matches(target));
+		var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(tree[0], target)));
 	});
 
 	it('should not match when there is text that is out of the container with overflow hidden', function () {
 		fixture.innerHTML = '<div style="color: yellow; width: 100px; overflow: hidden; text-indent: 200px; background-color: white;" id="target">' +
 			'text</div>';
 		var target = fixture.querySelector('#target');
-		assert.isFalse(rule.matches(target));
+		var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(tree[0], target)));
 	});
 
 	it('should match when there is text that is in the scroll reach of container', function () {
 		fixture.innerHTML = '<div style="color: yellow; width: 100px; overflow: scroll; text-indent: 200px; background-color: white;" id="target">' +
 			'text</div>';
 		var target = fixture.querySelector('#target');
-		assert.isTrue(rule.matches(target));
+		var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+		assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(tree[0], target)));
 	});
 
 	it('should match when there is text that is only partially out of the container', function () {
 		fixture.innerHTML = '<div style="color: yellow; text-indent: -20px; background-color: white;" id="target">' +
 			'My text</div>';
 		var target = fixture.querySelector('#target');
-		assert.isTrue(rule.matches(target));
+		var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+		assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(tree[0], target)));
 	});
 
 	it('should match <input type="text">', function () {
@@ -148,7 +155,8 @@ describe('color-contrast-matches', function () {
 	it('should match <button>', function () {
 		fixture.innerHTML = '<button>hi</button>';
 		var target = fixture.querySelector('button');
-		assert.isTrue(rule.matches(target));
+		var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+		assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(tree[0], target)));
 	});
 
 	it('should not match <button disabled>', function () {
