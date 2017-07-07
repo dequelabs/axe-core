@@ -1,7 +1,9 @@
+/* global xit */
 describe('color-contrast-matches', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var shadowSupport = document.body && typeof document.body.attachShadow === 'function';
 	var rule;
 
 	beforeEach(function () {
@@ -241,5 +243,18 @@ describe('color-contrast-matches', function () {
 		fixture.innerHTML = '<label for="input"><span>hi</span><input id="input" type="checkbox" disabled></label>';
 		var target = fixture.querySelector('span');
 		assert.isFalse(rule.matches(target));
+	});
+
+  (shadowSupport ? it : xit)
+  ('should match a descendant of an element across a shadow boundary', function () {
+		fixture.innerHTML = '<div id="parent" style="background-color: #000;">' +
+			'</div>';
+
+		var shadowRoot = document.getElementById('parent').attachShadow({ mode: 'open' });
+		shadowRoot.innerHTML = '<div id="shadowTarget" style="color: #333">Text</div>';
+
+		var shadowTarget = fixture.firstChild.shadowRoot.querySelector('#shadowTarget');
+		var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+		assert.isTrue(rule.matches(shadowTarget, axe.utils.getNodeFromTree(tree[0], shadowTarget)));
 	});
 });
