@@ -212,4 +212,23 @@ describe('color-contrast', function () {
 		assert.equal(checkContext._data.missingData, 'equalRatio');
 		assert.equal(checkContext._data.contrastRatio, 1);
 	});
+
+	it('returns relatedNodes with undefined', function () {
+		var dataURI = 'data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/' +
+		'XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkA' +
+		'ABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKU' +
+		'E1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7';
+
+		fixture.innerHTML = '<div id="background" style="background:url('+ dataURI +') no-repeat left center; padding: 5px 0 5px 25px;">' +
+			'<p id="target">Text 1</p>' +
+			'</div>';
+
+		var target = fixture.querySelector('#target');
+		assert.isUndefined(checks['color-contrast'].evaluate.call(checkContext, target));
+
+		assert.equal(
+			checkContext._relatedNodes[0],
+			document.querySelector('#background')
+		);
+	});
 });
