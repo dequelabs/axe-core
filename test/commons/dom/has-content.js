@@ -3,7 +3,7 @@ describe('dom.hasContent', function () {
   'use strict';
   var hasContent = axe.commons.dom.hasContent;
   var fixture = document.getElementById('fixture');
-  var shadowSupport = document.body && typeof document.body.attachShadow === 'function';
+  var shadowSupport = axe.testUtils.shadowSupport.v1;
   var tree;
 
   it('returns false if there is no content', function () {

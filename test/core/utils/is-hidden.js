@@ -18,6 +18,7 @@ describe('axe.utils.isHidden', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -71,7 +72,7 @@ describe('axe.utils.isHidden', function () {
 	it('not hidden: should work when the element is inside shadow DOM', function () {
 		var tree, node;
 
-		if (document.body && typeof document.body.attachShadow === 'function') {
+		if (shadowSupported) {
 			// shadow DOM v1 - note: v0 is compatible with this code, so no need
 			// to specifically test this
 			fixture.innerHTML = '<div></div>';
@@ -85,7 +86,7 @@ describe('axe.utils.isHidden', function () {
 	it('hidden: should work when the element is inside shadow DOM', function () {
 		var tree, node;
 
-		if (document.body && typeof document.body.attachShadow === 'function') {
+		if (shadowSupported) {
 			// shadow DOM v1 - note: v0 is compatible with this code, so no need
 			// to specifically test this
 			fixture.innerHTML = '<div style="display:none"></div>';
@@ -107,7 +108,7 @@ describe('axe.utils.isHidden', function () {
 			root.appendChild(div);
 			div.appendChild(createContentSlotted());
 		}
-		if (document.body && typeof document.body.attachShadow === 'function') {
+		if (shadowSupported) {
 			fixture.innerHTML = '<div><p><a>hello</a></p></div>';
 			makeShadowTree(fixture.firstChild);
 			var tree = axe.utils.getFlattenedTree(fixture.firstChild);

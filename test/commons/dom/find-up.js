@@ -2,6 +2,7 @@ describe('dom.findUp', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var shadowSupport = axe.testUtils.shadowSupport;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -47,7 +48,7 @@ describe('dom.findUp', function () {
 			root.appendChild(div);
 			div.appendChild(createContentSlotted());
 		}
-		if (document.body && typeof document.body.attachShadow === 'function') {
+		if (shadowSupport.v1) {
 			fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
 			makeShadowTree(fixture.querySelector('div'));
 			var tree = axe.utils.getFlattenedTree(fixture.firstChild);
@@ -68,7 +69,7 @@ describe('dom.findUp', function () {
 			root.appendChild(div);
 			div.appendChild(createContent());
 		}
-		if (document.body && typeof document.body.attachShadow === 'function') {
+		if (shadowSupport.v1) {
 			fixture.innerHTML = '<label><div></div></label>';
 			makeShadowTree(fixture.querySelector('div'));
 			var tree = axe.utils.getFlattenedTree(fixture.firstChild);

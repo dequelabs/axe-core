@@ -1,6 +1,7 @@
 describe('dom.isVisible', function () {
 	'use strict';
 	var fixture = document.getElementById('fixture');
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var fakeNode = {
 		nodeType: Node.ELEMENT_NODE,
 		nodeName: 'div'
@@ -167,7 +168,7 @@ describe('dom.isVisible', function () {
 				root.appendChild(div);
 				div.appendChild(createContentSlotted());
 			}
-			if (document.body && typeof document.body.attachShadow === 'function') {
+			if (shadowSupported) {
 				fixture.innerHTML = '<div><a>hello</a></div>';
 				makeShadowTree(fixture.firstChild);
 				var tree = axe.utils.getFlattenedTree(fixture.firstChild);
@@ -187,7 +188,7 @@ describe('dom.isVisible', function () {
 				root.appendChild(div);
 				div.appendChild(createContentSlotted());
 			}
-			if (document.body && typeof document.body.attachShadow === 'function') {
+			if (shadowSupported) {
 				fixture.innerHTML = '<div><p><a>hello</a></p></div>';
 				makeShadowTree(fixture.firstChild);
 				var tree = axe.utils.getFlattenedTree(fixture.firstChild);

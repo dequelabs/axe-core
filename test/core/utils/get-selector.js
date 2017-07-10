@@ -18,6 +18,7 @@ describe('axe.utils.getSelector', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -305,7 +306,7 @@ describe('axe.utils.getSelector', function () {
 	it('no options: should work with shadow DOM', function () {
 		var shadEl;
 
-		if (document.body && typeof document.body.attachShadow === 'function') {
+		if (shadowSupported) {
 			// shadow DOM v1 - note: v0 is compatible with this code, so no need
 			// to specifically test this
 			fixture.innerHTML = '<div></div>';
@@ -320,7 +321,7 @@ describe('axe.utils.getSelector', function () {
 	it('toRoot: should work with shadow DOM', function () {
 		var shadEl;
 
-		if (document.body && typeof document.body.attachShadow === 'function') {
+		if (shadowSupported) {
 			// shadow DOM v1 - note: v0 is compatible with this code, so no need
 			// to specifically test this
 			fixture.innerHTML = '<div></div>';

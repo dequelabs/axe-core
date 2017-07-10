@@ -136,6 +136,8 @@ describe('aria.validateAttrValue', function () {
 	var orig = axe.commons.aria._lut.attributes,
 		fixture = document.getElementById('fixture');
 
+	var shadowSupport = axe.testUtils.shadowSupport;
+
 	afterEach(function () {
 		axe.commons.aria._lut.attributes = orig;
 		fixture.innerHTML = '';
@@ -213,7 +215,7 @@ describe('aria.validateAttrValue', function () {
 			it('should work in shadow DOM', function () {
 				var shadEl;
 
-				if (document.body && typeof document.body.attachShadow === 'function') {
+				if (shadowSupport.v1) {
 					// shadow DOM v1 - note: v0 is compatible with this code, so no need
 					// to specifically test this
 					fixture.innerHTML = '<div></div>';
