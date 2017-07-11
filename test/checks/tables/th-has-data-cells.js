@@ -2,7 +2,7 @@ describe('th-has-data-cells', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-	var shadowSupport = (document.body && typeof document.body.attachShadow === 'function');
+	var shadowSupport = axe.testUtils.shadowSupport.v1;
 	var checkContext = {
 		_relatedNodes: [],
 		_data: null,
