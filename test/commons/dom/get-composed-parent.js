@@ -3,7 +3,7 @@ describe('dom.getComposedParent', function () {
   'use strict';
   var getComposedParent = axe.commons.dom.getComposedParent;
   var fixture = document.getElementById('fixture');
-  var shadowSupport = document.body && typeof document.body.attachShadow === 'function';
+  var shadowSupport = axe.testUtils.shadowSupport.v1;
 
   afterEach(function () {
     fixture.innerHTML = '';

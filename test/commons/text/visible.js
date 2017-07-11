@@ -2,6 +2,7 @@ describe('text.visible', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
 
 	afterEach(function () {
 		document.getElementById('fixture').innerHTML = '';
@@ -84,7 +85,7 @@ describe('text.visible', function () {
 				root.appendChild(div);
 				div.appendChild(createContentSlotted());
 			}
-			if (document.body && typeof document.body.attachShadow === 'function') {
+			if (shadowSupported) {
 				fixture.innerHTML = '<div><a>hello</a></div>';
 				makeShadowTree(fixture.firstChild);
 				var tree = axe.utils.getFlattenedTree(fixture.firstChild);

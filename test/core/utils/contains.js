@@ -2,6 +2,7 @@ describe('axe.utils.contains', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -73,7 +74,7 @@ describe('axe.utils.contains', function () {
 			root.appendChild(div);
 			div.appendChild(createContentContains());
 		}
-		if (document.body && typeof document.body.attachShadow === 'function') {
+		if (shadowSupported) {
 			// shadow DOM v1 - note: v0 is compatible with this code, so no need
 			// to specifically test this
 			fixture.innerHTML = '<div></div>';
@@ -101,7 +102,7 @@ describe('axe.utils.contains', function () {
 			root.appendChild(div);
 			div.appendChild(createContentSlotted());
 		}
-		if (document.body && typeof document.body.attachShadow === 'function') {
+		if (shadowSupported) {
 			fixture.innerHTML = '<div></div>';
 			makeShadowTree(fixture.firstChild);
 			tree = axe.utils.getFlattenedTree(fixture.firstChild)[0].children;

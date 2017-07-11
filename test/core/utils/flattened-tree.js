@@ -1,4 +1,5 @@
 var fixture = document.getElementById('fixture');
+var shadowSupport = axe.testUtils.shadowSupport;
 
 function createStyle (box) {
 	'use strict';
@@ -65,7 +66,7 @@ function shadowIdAssertions () {
 
 }
 
-if (document.body && typeof document.body.createShadowRoot === 'function') {
+if (shadowSupport.v0) {
 	describe('flattened-tree shadow DOM v0', function () {
 		'use strict';
 		afterEach(function () {
@@ -106,7 +107,7 @@ if (document.body && typeof document.body.createShadowRoot === 'function') {
 	});
 }
 
-if (document.body && typeof document.body.attachShadow === 'function') {
+if (shadowSupport.v1) {
 	describe('flattened-tree shadow DOM v1', function () {
 		'use strict';
 		afterEach(function () {
@@ -233,8 +234,7 @@ if (document.body && typeof document.body.attachShadow === 'function') {
 	});
 }
 
-if (document.body && typeof document.body.attachShadow === 'undefined' &&
-	typeof document.body.createShadowRoot === 'undefined') {
+if (shadowSupport.undefined) {
 	describe('flattened-tree', function () {
 		'use strict';
 		it('SHADOW DOM TESTS DEFERRED, NO SUPPORT');

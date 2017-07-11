@@ -10,6 +10,7 @@ describe('dom.getRootNode', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -27,7 +28,7 @@ describe('dom.getRootNode', function () {
 	it('should return the shadow root when it is inside the shadow DOM', function () {
 		var shadEl;
 
-		if (document.body && typeof document.body.attachShadow === 'function') {
+		if (shadowSupported) {
 			// shadow DOM v1 - note: v0 is compatible with this code, so no need
 			// to specifically test this
 			fixture.innerHTML = '<div></div>';
