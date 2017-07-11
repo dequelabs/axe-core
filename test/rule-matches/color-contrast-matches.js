@@ -302,13 +302,12 @@ describe('color-contrast-matches', function () {
 
 		it('should look at the correct root node when looking up implicit label and disabled input', function () {
 			fixture.innerHTML = '<div id="parent">'+
-				'<input id="input">' +
+				'<input>' +
 			'</div>';
 
 			var shadowRoot = document.getElementById('parent').attachShadow({ mode: 'open' });
 			shadowRoot.innerHTML = '<div id="shadowParent">' +
-					'<label for="input" id="shadowLabel">Label' +
-					'<input id="input" disabled></label>' +
+					'<label id="shadowLabel">Label <input disabled></label>' +
 				'</div>';
 
 			var shadowLabel = fixture.firstChild.shadowRoot.querySelector('#shadowLabel');
@@ -330,6 +329,18 @@ describe('color-contrast-matches', function () {
 			var shadowLabel = fixture.firstChild.shadowRoot.querySelector('#shadowLabel');
 			var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
 			assert.isFalse(rule.matches(shadowLabel, axe.utils.getNodeFromTree(tree[0], shadowLabel)));
+		});
+
+		it('should handle input/label spread across the shadow boundary', function () {
+			fixture.innerHTML = '<label>Text <div id="firstChild"></div></label>';
+
+			var container = document.getElementById('firstChild');
+			var shadowRoot = container.attachShadow({ mode: 'open' });
+			shadowRoot.innerHTML = '<input id="shadowTarget" type="text" />';
+
+			var shadowTarget = container.shadowRoot.querySelector('#shadowTarget');
+			var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+			assert.isTrue(rule.matches(shadowTarget, axe.utils.getNodeFromTree(tree[0], shadowTarget)));
 		});
 
 		it('should look at the children of a virtual node for overlap', function () {
