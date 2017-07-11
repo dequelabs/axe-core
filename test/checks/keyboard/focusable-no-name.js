@@ -27,13 +27,13 @@ describe('focusable-no-name', function () {
 		assert.isTrue(checks['focusable-no-name'].evaluate(node));
 	});
 
-	it('should fail if element is tabable with no name - ARIA', function () {
+	it('should fail if element is tabbable with no name - ARIA', function () {
 		fixtureSetup('<span tabindex="0" role="link" href="#"></spam>');
 		var node = fixture.querySelector('span');
 		assert.isTrue(checks['focusable-no-name'].evaluate(node));
 	});
 
-	it('should pass if the element is tabable but has an accessible name', function () {
+	it('should pass if the element is tabbable but has an accessible name', function () {
 		fixtureSetup('<a href="#" title="Hello"></a>');
 		var node = fixture.querySelector('a');
 		assert.isFalse(checks['focusable-no-name'].evaluate(node));
