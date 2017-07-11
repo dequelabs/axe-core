@@ -16,4 +16,24 @@ testUtils.shadowSupport = (function(document) {
 
 })(document);
 
+testUtils.fixtureSetup = function (content) {
+	'use strict';
+	var fixture = document.querySelector('#fixture');
+	if (typeof content === 'string') {
+		fixture.innerHTML = content;
+	} else if (content instanceof Node) {
+		fixture.appendChild(content);
+	}
+	axe._tree = axe.utils.getFlattenedTree(fixture);
+	return fixture;
+};
+
+testUtils.checkSetup = function (content, options, target) {
+	'use strict';
+	var fixture = testUtils.fixtureSetup(content, target);
+	var node = fixture.querySelector(target || '#target');
+	var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+	return [virtualNode.actualNode, options, virtualNode];
+};
+
 axe.testUtils = testUtils;

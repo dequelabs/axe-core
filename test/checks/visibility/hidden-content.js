@@ -4,20 +4,13 @@ describe('hidden content', function () {
 
 	var fixture = document.getElementById('fixture');
 	var shadowSupport = axe.testUtils.shadowSupport.v1;
+	var checkSetup = axe.testUtils.checkSetup;
 	var checkContext = {
 		_data: null,
 		data: function (d) {
 			this._data = d;
 		}
 	};
-
-	function checkSetup (html, options, target) {
-		fixture.innerHTML = html;
-		axe._tree = axe.utils.getFlattenedTree(fixture);
-		var node = fixture.querySelector(target || '#target');
-		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
-		return [node, options, virtualNode];
-	}
 
 	afterEach(function () {
 		fixture.innerHTML = '';
