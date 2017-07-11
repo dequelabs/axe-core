@@ -27,7 +27,6 @@ testUtils.fixtureSetup = function (content) {
 	axe._tree = axe.utils.getFlattenedTree(fixture);
 	return fixture;
 };
-
 /**
  * Create check arguments
  *
