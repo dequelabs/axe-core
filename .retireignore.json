@@ -22,5 +22,13 @@
 	{
 		"path": "node_modules/request",
 		"justification" : "Used only for testing"
+	},
+	{
+		"path": "node_modules/mocha",
+		"justification": "Used only for testing"
+	},
+	{
+		"path": "node_modules/growl",
+		"justification": "Temporary disabling until vuln is fixed"
 	}
 ]
