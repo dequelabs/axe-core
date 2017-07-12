@@ -54,6 +54,21 @@ describe('dom.hasContent', function () {
     );
   });
 
+  it('accepts DOM Nodes and virtual nodes', function () {
+    fixture.innerHTML = '<div id="target"> text </div>';
+    axe._tree = axe.utils.getFlattenedTree(fixture);
+
+    // Virtual node
+    assert.isTrue(
+      hasContent(axe.utils.querySelectorAll(axe._tree, '#target')[0])
+    );
+    // DOM node
+    assert.isTrue(
+      hasContent(fixture.querySelector('#target'))
+    );
+    axe._tree = null;
+  });
+
   it('is false if the element does not show text', function () {
     fixture.innerHTML = '<style id="target"> #foo { color: green } </style>';
     tree = axe.utils.getFlattenedTree(fixture);
