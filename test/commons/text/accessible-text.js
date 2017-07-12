@@ -2,6 +2,7 @@ describe('text.accessibleText', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var shadowSupport = axe.testUtils.shadowSupport;
 
 	afterEach(function() {
 		fixture.innerHTML = '';
@@ -397,9 +398,24 @@ describe('text.accessibleText', function() {
 		assert.equal(axe.commons.text.accessibleText(target), '');
 	});
 
+	(shadowSupport.v1 ? it : xit)('should only find aria-labelledby element in the same context ', function() {
+		fixture.innerHTML = '<div id="t2label">This is <input type="text" value="the value" ' +
+			'aria-labelledby="t1label" aria-label="ARIA Label" id="t1"> of <i>everything</i></div>' +
+			'<div id="shadow"></div>';
+
+		var shadow = document.getElementById('shadow').attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<div id="t1label">This is a <b>label</b></div>' +
+			'<label for="t1">HTML Label</label>' +
+			'<input type="text" id="t2" aria-labelledby="t2label">';
+
+		axe._tree = axe.utils.getFlattenedTree(fixture);
+		var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
+		assert.equal(axe.commons.text.accessibleText(target), 'ARIA Label');
+	});
+
 	describe('figure', function() {
 
-		it('shoud check aria-labelledby', function() {
+		it('should check aria-labelledby', function() {
 			fixture.innerHTML = '<div id="t1">Hello</div>' +
 				'<figure aria-labelledby="t1">Not part of a11yName <figcaption>Fail</figcaption></figure>';
 			axe._tree = axe.utils.getFlattenedTree(fixture);
@@ -408,7 +424,7 @@ describe('text.accessibleText', function() {
 			assert.equal(axe.commons.text.accessibleText(target), 'Hello');
 		});
 
-		it('shoud check aria-label', function() {
+		it('should check aria-label', function() {
 			fixture.innerHTML = '<figure aria-label="Hello">Not part of a11yName <figcaption>Fail</figcaption></figure>';
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
@@ -416,7 +432,7 @@ describe('text.accessibleText', function() {
 			assert.equal(axe.commons.text.accessibleText(target), 'Hello');
 		});
 
-		it('shoud check the figures figcaption', function() {
+		it('should check the figures figcaption', function() {
 			fixture.innerHTML = '<figure>Not part of a11yName <figcaption>Hello</figcaption></figure>';
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
@@ -424,7 +440,7 @@ describe('text.accessibleText', function() {
 			assert.equal(axe.commons.text.accessibleText(target), 'Hello');
 		});
 
-		it('shoud check title on figure', function() {
+		it('should check title on figure', function() {
 			fixture.innerHTML = '<figure title="Hello">Not part of a11yName <figcaption></figcaption></figure>';
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
@@ -438,6 +454,18 @@ describe('text.accessibleText', function() {
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
 			assert.equal(axe.commons.text.accessibleText(target), '');
+		});
+
+		(shadowSupport.v1 ? it : xit)('should check within the composed (shadow) tree', function () {
+			var node = document.createElement('div');
+			node.innerHTML = 'Hello';
+			var shadowRoot = node.attachShadow({ mode: 'open' });
+			shadowRoot.innerHTML = '<figure>Not part of a11yName <figcaption><slot></slot></figcaption></figure>';
+			fixture.appendChild(node);
+			axe._tree = axe.utils.getFlattenedTree(fixture);
+
+			var target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
+			assert.equal(axe.commons.text.accessibleText(target), 'Hello');
 		});
 	});
 
