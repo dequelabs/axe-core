@@ -1,3 +1,4 @@
+/* global xit */
 describe('dom.findUp', function () {
 	'use strict';
 
@@ -16,8 +17,6 @@ describe('dom.findUp', function () {
 			target = document.getElementById('target');
 
 		assert.equal(axe.commons.dom.findUp(start, '.target'), target, 'Should find it!');
-
-
 	});
 
 	it('should return null if it cant find a match anywhere in the document', function () {
@@ -33,7 +32,46 @@ describe('dom.findUp', function () {
 		var start = document.getElementById('start');
 
 		assert.isNull(axe.commons.dom.findUp(start, '.target'));
+	});
 
+	(shadowSupport.v0 ? it : xit)('should walk up the assigned content (v0)', function () {
+		function createContentSlotted() {
+			var group = document.createElement('div');
+			group.innerHTML = '<div id="target" style="display:none;">Stuff<content></content></div>';
+			return group;
+		}
+		function makeShadowTree(node) {
+			var root = node.createShadowRoot();
+			var div = document.createElement('div');
+			root.appendChild(div);
+			div.appendChild(createContentSlotted());
+		}
+
+		fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
+		makeShadowTree(fixture.querySelector('div'));
+		var tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		var el = axe.utils.querySelectorAll(tree, 'a')[0];
+		assert.equal(axe.commons.dom.findUp(el.actualNode, 'label'), fixture.firstChild);
+	});
+
+	(shadowSupport.v0 ? it : xit)('should walk down the shadow DOM v0', function () {
+		function createContent() {
+			var group = document.createElement('div');
+			group.innerHTML = '<a>thing</a>';
+			return group;
+		}
+		function makeShadowTree(node) {
+			var root = node.createShadowRoot();
+			var div = document.createElement('div');
+			div.appendChild(createContent());
+			root.appendChild(div);
+		}
+
+		fixture.innerHTML = '<label><div></div></label>';
+		makeShadowTree(fixture.querySelector('div'));
+		var tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		var el = axe.utils.querySelectorAll(tree, 'a')[0];
+		assert.equal(axe.commons.dom.findUp(el.actualNode, 'label'), fixture.firstChild);
 	});
 
 	it('should walk up the assigned slot', function () {
