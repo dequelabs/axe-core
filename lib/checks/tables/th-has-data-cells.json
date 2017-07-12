@@ -2,7 +2,7 @@
   "id": "th-has-data-cells",
   "evaluate": "th-has-data-cells.js",
   "metadata": {
-    "impact": "critical",
+    "impact": "serious",
     "messages": {
       "pass": "All table header cells refer to data cells",
       "fail": "Not all table header cells refer to data cells",

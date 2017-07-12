@@ -16,7 +16,7 @@
     }]
   },
   "metadata": {
-    "impact": "critical",
+    "impact": "serious",
     "messages": {
       "pass": "<p> elements are not styled as headings",
       "fail": "Heading elements should be used instead of styled p elements"
