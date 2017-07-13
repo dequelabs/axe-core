@@ -336,11 +336,11 @@ describe('color-contrast-matches', function () {
 
 			var container = document.getElementById('firstChild');
 			var shadowRoot = container.attachShadow({ mode: 'open' });
-			shadowRoot.innerHTML = '<input id="shadowTarget" type="text" />';
+			shadowRoot.innerHTML = '<input type="text" id="input" disabled />';
 
-			var shadowTarget = container.shadowRoot.querySelector('#shadowTarget');
+			var shadowTarget = container.shadowRoot.querySelector('#input');
 			var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
-			assert.isTrue(rule.matches(shadowTarget, axe.utils.getNodeFromTree(tree[0], shadowTarget)));
+			assert.isFalse(rule.matches(shadowTarget, axe.utils.getNodeFromTree(tree[0], shadowTarget)));
 		});
 
 		it('should look at the children of a virtual node for overlap', function () {
@@ -355,6 +355,26 @@ describe('color-contrast-matches', function () {
 			var firstChild = fixture.querySelector('#firstChild');
 			var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
 			assert.isTrue(rule.matches(firstChild, axe.utils.getNodeFromTree(tree[0], firstChild)));
+		});
+
+		it('should handle an input added through slotted content', function () {
+			fixture.innerHTML = '<label>Option 1 <span class="slotted">' +
+				'<input type="text" name="slottedLabel" />' +
+			'</span></label>';
+
+			function createContentSlotted() {
+				var group = document.createElement('span');
+				group.innerHTML = '<slot></slot>';
+				return group;
+			}
+
+			var slotted = fixture.querySelector('.slotted');
+			var shadowRoot = slotted.attachShadow({mode: 'open'});
+			shadowRoot.appendChild(createContentSlotted());
+
+			var input = slotted.querySelector('input');
+			var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+			assert.isTrue(rule.matches(input, axe.utils.getNodeFromTree(tree[0], input)));
 		});
 	}
 });
