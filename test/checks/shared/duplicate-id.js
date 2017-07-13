@@ -49,4 +49,13 @@ describe('duplicate-id', function () {
 		assert.isTrue(checks['duplicate-id'].evaluate.call(checkContext, node));
 	});
 
+	it('should allow overwrote ids', function () {
+		fixture.innerHTML = '<form data-testelm="1" id="target"><label>mylabel' + 
+			'<input name="id">' +
+		'</label></form>';
+		var node = fixture.querySelector('[data-testelm="1"]');
+
+		assert.isTrue(checks['duplicate-id'].evaluate.call(checkContext, node));
+	});
+
 });

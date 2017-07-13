@@ -5,9 +5,11 @@ describe('table.isHeader', function () {
 	}
 
 	var fixture = $id('fixture');
+	var cell;
 
 	afterEach(function () {
-		fixture.innerHTML = '';
+		fixture.innerHTML = '<table><tr><th id="cell"></th></tr></table>';
+		cell = $id('cell');
 	});
 
 	it('should return true if table.isColumnHeader return true', function () {
@@ -19,7 +21,7 @@ describe('table.isHeader', function () {
 		axe.commons.table.isRowHeader = function () {
 			return false;
 		};
-		assert.isTrue(axe.commons.table.isHeader({}));
+		assert.isTrue(axe.commons.table.isHeader(cell));
 
 		axe.commons.table.isColumnHeader = orig;
 		axe.commons.table.isRowHeader = orig2;
@@ -34,7 +36,7 @@ describe('table.isHeader', function () {
 		axe.commons.table.isColumnHeader = function () {
 			return false;
 		};
-		assert.isTrue(axe.commons.table.isHeader({}));
+		assert.isTrue(axe.commons.table.isHeader(cell));
 
 		axe.commons.table.isRowHeader = orig;
 		axe.commons.table.isColumnHeader = orig2;
@@ -49,7 +51,7 @@ describe('table.isHeader', function () {
 		axe.commons.table.isColumnHeader = function () {
 			return false;
 		};
-		assert.isFalse(axe.commons.table.isHeader({}));
+		assert.isFalse(axe.commons.table.isHeader(cell));
 
 		axe.commons.table.isRowHeader = orig;
 		axe.commons.table.isColumnHeader = orig2;
