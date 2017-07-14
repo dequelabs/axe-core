@@ -3,7 +3,7 @@
   "evaluate": "skip-link.js",
   "after": "skip-link-after.js",
   "metadata": {
-    "impact": "critical",
+    "impact": "moderate",
     "messages": {
       "pass": "Valid skip link found",
       "fail": "No valid skip link found"
