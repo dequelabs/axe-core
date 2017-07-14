@@ -16,59 +16,79 @@ describe('has-at-least-one-main', function () {
 
 	
 	it('should return false if main does not exist', function () {
-		var node = fixture.querySelector('main,div[role="main"]');
-		assert.isFalse(checks['has-at-least-one-main'].evaluate.call(checkContext, node));
+		var node = document.createElement('html');
+		fixture.appendChild(node);
+		var mainIsFound = checks['has-at-least-one-main'].evaluate.call(checkContext, node);
+		assert.isFalse(mainIsFound);
+		assert.equal(checkContext._data, mainIsFound);
 	});
 
 	it('should return false if no div has role property', function() {
-		var div = document.createElement('div');
-		fixture.appendChild(div);
-		var node = fixture.querySelector('div[role="main"]');
-		assert.isFalse(checks['has-at-least-one-main'].evaluate.call(checkContext, node));
-		assert.equal(checkContext._data, !!node);
-		fixture.removeChild(div);
+		var node = document.createElement('html');
+		var notMain = document.createElement('div');
+		node.appendChild(notMain);
+		fixture.appendChild(node);
+		var mainIsFound = checks['has-at-least-one-main'].evaluate.call(checkContext, node);
+		assert.isFalse(mainIsFound);
+		assert.equal(checkContext._data, mainIsFound);
+		fixture.removeChild(node);
 	});
 	
 	it('should return false if div has empty role', function() {
-		var div = document.createElement('div');
-		div.setAttribute('role','');
-		fixture.appendChild(div);
-		var node = fixture.querySelector('div[role="main"]');
-		assert.isFalse(checks['has-at-least-one-main'].evaluate.call(checkContext, node));
-		assert.equal(checkContext._data, !!node);
-		fixture.removeChild(div);
+		var node = document.createElement('html');
+		var notMain = document.createElement('div');
+		notMain.setAttribute('role','');
+		node.appendChild(notMain);
+		fixture.appendChild(node);
+		var mainIsFound = checks['has-at-least-one-main'].evaluate.call(checkContext, node);
+		assert.isFalse(mainIsFound);
+		assert.equal(checkContext._data, mainIsFound);
+		fixture.removeChild(node);
 	});
 	
 	it('should return false if div has role not equal to main', function() {
-		var div = document.createElement('div');
-		div.setAttribute('role','not-main');
-		fixture.appendChild(div);
-		var node = fixture.querySelector('div[role="main"]');
-		assert.isFalse(checks['has-at-least-one-main'].evaluate.call(checkContext, node));
-		assert.equal(checkContext._data, !!node);
-		fixture.removeChild(div);
+		var node = document.createElement('html');
+		var notMain = document.createElement('div');
+		notMain.setAttribute('role','bananas');
+		node.appendChild(notMain);
+		fixture.appendChild(node);
+		var mainIsFound = checks['has-at-least-one-main'].evaluate.call(checkContext, node);
+		assert.isFalse(mainIsFound);
+		assert.equal(checkContext._data, mainIsFound);
+		fixture.removeChild(node);
 	});
 	
 	it('should return true if main landmark exists', function(){
-		var mainElem = document.createElement('main');
-		fixture.appendChild(mainElem);
-		var node = fixture.querySelector('main');
-		assert.isTrue(checks['has-at-least-one-main'].evaluate.call(checkContext, node));
-		assert.equal(checkContext._data, !!node);
-		fixture.removeChild(mainElem);
+		var node = document.createElement('html');
+		var mainLandmark = document.createElement('main');
+		node.appendChild(mainLandmark);
+		fixture.appendChild(node);
+		var mainIsFound = checks['has-at-least-one-main'].evaluate.call(checkContext, node);
+		assert.isTrue(mainIsFound);
+		assert.equal(checkContext._data, mainIsFound);
+		fixture.removeChild(node);
 	});
 	
 	it('should return true if one div has role equal to main', function() {
-		var mainDiv = document.createElement('div');
-		mainDiv.setAttribute('role','main');
-		var anotherDiv = document.createElement('div');
-		fixture.appendChild(mainDiv);
-		fixture.appendChild(anotherDiv);
-		var node = fixture.querySelector('div[role="main"]');
-		assert.isTrue(checks['has-at-least-one-main'].evaluate.call(checkContext, node));
-		assert.equal(checkContext._data, !!node);
-		fixture.removeChild(mainDiv);
-		fixture.removeChild(anotherDiv);
+		var node = document.createElement('html');
+		var mainLandmark = document.createElement('div');
+		mainLandmark.setAttribute('role','main');
+		node.appendChild(mainLandmark);
+		fixture.appendChild(node);
+		var mainIsFound = checks['has-at-least-one-main'].evaluate.call(checkContext, node);
+		assert.isTrue(mainIsFound);
+		assert.equal(checkContext._data, mainIsFound);
+		fixture.removeChild(node);
+	});
+	
+	it('should return true if any document has a main landmark', function() {
+		var results = [{data: false, result: false}, {data: true, result: true}];
+		assert.isTrue(checks['has-at-least-one-main'].after(results)[0].result && checks['has-at-least-one-main'].after(results)[1].result);
+	});
+	
+	it('should return false if no document has a main landmark', function() {
+		var results = [{data: false, result: false}, {data: false, result: false}];
+		assert.isFalse(checks['has-at-least-one-main'].after(results)[0].result && checks['has-at-least-one-main'].after(results)[1].result);
 	});
 
 
