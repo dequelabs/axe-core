@@ -18,6 +18,11 @@ describe('description', function () {
 		assert.isTrue(checks.description.evaluate.apply(null, checkArgs));
 	});
 
+	it('should fail if there is no kind attribute', function () {
+		var checkArgs = checkSetup('<video><track></video>', 'video');
+		assert.isTrue(checks.description.evaluate.apply(null, checkArgs));
+	});
+
 	it('should pass if there is a kind=descriptions attribute', function () {
 		var checkArgs = checkSetup('<video><track kind=descriptions></video>', 'video');
 		assert.isFalse(checks.description.evaluate.apply(null, checkArgs));

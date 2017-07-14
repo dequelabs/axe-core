@@ -19,6 +19,11 @@ describe('caption', function () {
 		assert.isTrue(checks.caption.evaluate.apply(null, checkArgs));
 	});
 
+	it('should fail if there is no kind attribute', function () {
+		var checkArgs = checkSetup('<video><track></video>', 'video');
+		assert.isTrue(checks.description.evaluate.apply(null, checkArgs));
+	});
+
 	it('should pass if there is a kind=captions attribute', function () {
 		var checkArgs = checkSetup('<audio><track kind=captions></audio>', 'audio');
 		assert.isFalse(checks.caption.evaluate.apply(null, checkArgs));
