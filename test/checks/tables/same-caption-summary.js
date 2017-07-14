@@ -3,6 +3,7 @@ describe('same-caption-summary', function () {
 
 	var fixture = document.getElementById('fixture');
 	var fixtureSetup = axe.testUtils.fixtureSetup;
+	var shadowSupport = axe.testUtils.shadowSupport;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -37,8 +38,23 @@ describe('same-caption-summary', function () {
 		var node = fixture.querySelector('table');
 
 		assert.isTrue(checks['same-caption-summary'].evaluate(node));
-
 	});
 
+	(shadowSupport.v1 ? it : xit)('should match slotted caption elements', function () {
+		var node = document.createElement('div');
+		node.innerHTML = '<span slot="caption">Caption</span>' +
+      '<span slot="one">Data element 1</span>' +
+      '<span slot="two">Data element 2</span>';
+
+		var root = node.attachShadow({ mode: 'open' });
+		var table = document.createElement('table');
+    table.innerHTML = '<caption><slot name="caption"></slot></caption>' +
+        '<tr><td><slot name="one"></slot></td><td><slot name="two"></slot></td></tr>';
+    table.setAttribute('summary', 'Caption');
+    root.appendChild(table);
+    fixtureSetup(node);
+
+		assert.isTrue(checks['same-caption-summary'].evaluate(table));
+  });
 
 });

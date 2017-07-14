@@ -48,9 +48,9 @@ describe('text.accessibleText', function() {
 			'</fieldset>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
-		// var rule2a = axe.utils.querySelectorAll(axe._tree, '#beep')[0];
+		var rule2a = axe.utils.querySelectorAll(axe._tree, '#beep')[0];
 		var rule2b = axe.utils.querySelectorAll(axe._tree, '#flash')[0];
-		// assert.equal(axe.commons.text.accessibleText(rule2a), 'Beep');
+		assert.equal(axe.commons.text.accessibleText(rule2a), 'Beep');
 		assert.equal(axe.commons.text.accessibleText(rule2b), 'Flash the screen 3 times');
 	});
 
@@ -411,6 +411,40 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
 		assert.equal(axe.commons.text.accessibleText(target), 'ARIA Label');
+	});
+
+	(shadowSupport.v1 ? it : xit)('should find attributes within a shadow tree', function() {
+		fixture.innerHTML = '<div id="shadow"></div>';
+
+		var shadow = document.getElementById('shadow').attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<input type="text" id="t1" title="I will be king">';
+
+		axe._tree = axe.utils.getFlattenedTree(fixture);
+		var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+		assert.equal(axe.commons.text.accessibleText(target), 'I will be king');
+	});
+
+	(shadowSupport.v1 ? it : xit)('should find attributes within a slot on the shadow tree', function() {
+		fixture.innerHTML = '<div id="shadow"><input type="text" id="t1" title="you will be queen"></div>';
+
+		var shadow = document.getElementById('shadow').attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<slot></slot>';
+
+		axe._tree = axe.utils.getFlattenedTree(fixture);
+		var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+		assert.equal(axe.commons.text.accessibleText(target), 'you will be queen');
+	});
+
+	(shadowSupport.v1 ? it : xit)('should find fallback content for shadow DOM', function() {
+		fixture.innerHTML = '<div id="shadow"></div>';
+
+		var shadow = document.getElementById('shadow').attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<input type="text" id="t1">' +
+			'<label for="t1"><slot>Fallback content heroes</slot></label>';
+
+		axe._tree = axe.utils.getFlattenedTree(fixture);
+		var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+		assert.equal(axe.commons.text.accessibleText(target), 'Fallback content heroes');
 	});
 
 	describe('figure', function() {
