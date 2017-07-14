@@ -11,13 +11,7 @@ describe('aria-required-children', function () {
 		}
 	};
 
-	function checkSetup (html, options, target) {
-		fixture.innerHTML = html;
-		axe._tree = axe.utils.getFlattenedTree(fixture);
-		var node = fixture.querySelector(target || '#target');
-		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
-		return [node, options, virtualNode];
-	}
+	var checkSetup = axe.testUtils.checkSetup;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
