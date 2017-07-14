@@ -2,7 +2,6 @@
   "id": "landmark-at-least-one-main",
   "selector": "html",
   "tags": [
-    "cat.keyboard",
 	"cat.best-practice"
   ],
   "metadata": {
