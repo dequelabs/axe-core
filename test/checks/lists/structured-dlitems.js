@@ -49,7 +49,7 @@ describe('structured-dlitems', function () {
 		assert.isFalse(checks['structured-dlitems'].evaluate.apply(null, checkArgs));
 	});
 
-	(shadowSupport ? it : xit)('should work with shadow DOM', function () {
+	(shadowSupport ? it : xit)('should return false in a shadow DOM pass', function () {
 		var node = document.createElement('div');
 		node.innerHTML = '<dt>Grayhound bus</dt><dd>at dawn</dd>';
 		var shadow = node.attachShadow({ mode: 'open' });
@@ -57,6 +57,16 @@ describe('structured-dlitems', function () {
 
 		var checkArgs = checkSetup(node, 'dl');
 		assert.isFalse(checks['structured-dlitems'].evaluate.apply(null, checkArgs));
+	});
+
+	(shadowSupport ? it : xit)('should return true in a shadow DOM fail', function () {
+		var node = document.createElement('div');
+		node.innerHTML = '<p>Galileo</p><p>Figaro</p>';
+		var shadow = node.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<dl><slot></slot></dl>';
+
+		var checkArgs = checkSetup(node, 'dl');
+		assert.isTrue(checks['structured-dlitems'].evaluate.apply(null, checkArgs));
 	});
 
 });

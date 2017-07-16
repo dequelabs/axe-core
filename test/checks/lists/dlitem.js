@@ -21,7 +21,7 @@ describe('dlitem', function () {
 		assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
 	});
 
-	(shadowSupport ? it : xit)('should work with shadow DOM', function () {
+	(shadowSupport ? it : xit)('should return true in a shadow DOM pass', function () {
 		var node = document.createElement('div');
 		node.innerHTML = '<dt>My list item </dt>';
 		var shadow = node.attachShadow({ mode: 'open' });
@@ -29,5 +29,15 @@ describe('dlitem', function () {
 
 		var checkArgs = checkSetup(node, 'dt');
 		assert.isTrue(checks.dlitem.evaluate.apply(null, checkArgs));
+	});
+
+	(shadowSupport ? it : xit)('should return false in a shadow DOM fail', function () {
+		var node = document.createElement('div');
+		node.innerHTML = '<dt>My list item </dt>';
+		var shadow = node.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<div><slot></slot></div>';
+
+		var checkArgs = checkSetup(node, 'dt');
+		assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
 	});
 });
