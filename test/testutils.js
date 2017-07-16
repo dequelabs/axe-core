@@ -16,4 +16,35 @@ testUtils.shadowSupport = (function(document) {
 
 })(document);
 
+testUtils.fixtureSetup = function (content) {
+	'use strict';
+	var fixture = document.querySelector('#fixture');
+	if (typeof content === 'string') {
+		fixture.innerHTML = content;
+	} else if (content instanceof Node) {
+		fixture.appendChild(content);
+	}
+	axe._tree = axe.utils.getFlattenedTree(fixture);
+	return fixture;
+};
+
+/**
+ * Create check arguments
+ *
+ * @param Node|String 	Stuff to go into the fixture (html or node)
+ * @param Object  			Options argument for the check (optional, default: {})
+ * @param String  			Target for the check, CSS selector (default: '#target')
+ */
+testUtils.checkSetup = function (content, options, target) {
+	'use strict';
+	// Normalize the params
+	if (typeof options !== 'object') {
+		target = options;
+		options = {};
+	}
+	testUtils.fixtureSetup(content);
+	var node = axe.utils.querySelectorAll(axe._tree[0], target || '#target')[0];
+	return [node.actualNode, options, node];
+};
+
 axe.testUtils = testUtils;
