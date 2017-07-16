@@ -23,7 +23,7 @@ describe('dom.getComposedParent', function () {
     );
   });
 
-  (shadowSupport ? it : xit)('returns the slot node for slotted content', function () {
+  (shadowSupport ? it : xit)('skip the slot node for slotted content', function () {
     fixture.innerHTML = '<div id="shadow"><div id="target"></div></div>';
     var shadowRoot = document.getElementById('shadow').attachShadow({ mode: 'open' });
     shadowRoot.innerHTML = '<div id="grand-parent">' +
@@ -32,15 +32,15 @@ describe('dom.getComposedParent', function () {
 
     var actual = getComposedParent(fixture.querySelector('#target'));
     assert.instanceOf(actual, Node);
-    assert.equal(actual, shadowRoot.querySelector('#parent'));
+    assert.equal(actual, shadowRoot.querySelector('#grand-parent'));
   });
 
-  (shadowSupport ? it : xit)('returns explicitly slotted nodes', function () {
+  (shadowSupport ? it : xit)('understands explicitly slotted nodes', function () {
     fixture.innerHTML = '<div id="shadow"><div id="target" slot="bar"></div></div>';
     var shadowRoot = document.getElementById('shadow').attachShadow({ mode: 'open' });
     shadowRoot.innerHTML = '<div id="grand-parent">' +
       '<slot name="foo"></slot>' +
-      '<slot id="parent" name="bar"></slot>' +
+      '<div id="parent"><slot name="bar"></slot></div>' +
     '</div>';
 
     var actual = getComposedParent(fixture.querySelector('#target'));
