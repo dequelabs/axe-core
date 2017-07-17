@@ -143,7 +143,26 @@ describe('Rule', function() {
 					assert.isTrue(success);
 					done();
 				}, isNotCalled);
+			});
 
+			it('should pass a virtualNode to #matches', function(done) {
+				var div = document.createElement('div');
+				fixture.appendChild(div);
+				var success = false,
+					rule = new Rule({
+						matches: function(node, virtualNode) {
+							assert.equal(virtualNode.actualNode, div);
+							success = true;
+							return [];
+						}
+					});
+
+				rule.run({
+					include: [axe.utils.getFlattenedTree(div)[0]]
+				}, {}, function() {
+					assert.isTrue(success);
+					done();
+				}, isNotCalled);
 			});
 
 			it('should handle an error in #matches', function(done) {

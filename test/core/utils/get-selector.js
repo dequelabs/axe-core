@@ -198,9 +198,11 @@ describe('axe.utils.getSelector', function () {
 		var sel = axe.utils.getSelector({
 			nodeName: 'a',
 			classList: [],
+			getAttribute: function () { },
 			hasAttribute: function () { return false; },
 			parentNode: {
 				nodeName: 'b',
+				getAttribute: function () { },
 				hasAttribute: function () { return false; },
 				classList: []
 			}
