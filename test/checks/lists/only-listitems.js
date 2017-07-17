@@ -104,7 +104,7 @@ describe('only-listitems', function () {
 		shadow.innerHTML = '<ul><slot></slot></ul>';
 
 		var checkArgs = checkSetup(node, 'ul');
-		assert.isFalse(checks['only-listitems'].evaluate.apply(null, checkArgs));
+		assert.isFalse(checks['only-listitems'].evaluate.apply(checkContext, checkArgs));
 	});
 
 	(shadowSupport ? it : xit)('should return true in a shadow DOM fail', function () {
@@ -114,7 +114,7 @@ describe('only-listitems', function () {
 		shadow.innerHTML = '<ul><slot></slot></ul>';
 
 		var checkArgs = checkSetup(node, 'ul');
-		assert.isTrue(checks['only-listitems'].evaluate.apply(null, checkArgs));
+		assert.isTrue(checks['only-listitems'].evaluate.apply(checkContext, checkArgs));
 	});
 
 });

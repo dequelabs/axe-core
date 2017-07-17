@@ -61,7 +61,7 @@ describe('structured-dlitems', function () {
 
 	(shadowSupport ? it : xit)('should return true in a shadow DOM fail', function () {
 		var node = document.createElement('div');
-		node.innerHTML = '<p>Galileo</p><p>Figaro</p>';
+		node.innerHTML = '<dd>Galileo</dd><dt>Figaro</dt>';
 		var shadow = node.attachShadow({ mode: 'open' });
 		shadow.innerHTML = '<dl><slot></slot></dl>';
 
