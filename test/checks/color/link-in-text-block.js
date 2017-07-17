@@ -207,8 +207,17 @@ describe('link-in-text-block', function () {
 
 	});
 
-	it('looks at the :visited state');
-
-	it('looks at selectors using :link');
-
+	it('returns relatedNodes with undefined', function () {
+			var linkElm = getLinkElm({ }, {
+				color: '#000010',
+				backgroundImage: 'url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)'
+			}, {
+				color: '#000000'
+			});
+			assert.isUndefined(checks['link-in-text-block'].evaluate.call(checkContext, linkElm));
+			assert.equal(
+				checkContext._relatedNodes[0],
+				linkElm.parentNode
+			);
+		});
 });

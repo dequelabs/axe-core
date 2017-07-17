@@ -136,3 +136,43 @@ describe('Module', () => {
 	});
 });
 ```
+## Debugging tests that only fail on CircleCI
+
+First install an X-Windows client on your machine. XQuartz is a good one.
+
+Then follow the [instructions here to connect the X-Windows on CircleCI to XQuartz](https://circleci.com/docs/1.0/browser-debugging/#x11-forwarding-over-ssh)
+
+Start the build using the "Retry the build with SSH enabled" option in the CircleCI interface
+
+Copy the SSH command and add the -X flag to it for example
+
+```
+ssh -X -p 64605 ubuntu@13.58.157.61
+```
+
+When you login, set up the environment and start the chrome browser
+
+```
+export DISPLAY=localhost:10.0
+/opt/google/chrome/chrome
+```
+
+### .Xauthority does not exist
+
+Edit the ~/.Xauthority file and just save it with the following commands
+
+```
+vi ~/.Xauthority
+:wq
+```
+
+### Starting the web server
+
+Log into a second ssh terminal (without -X) and execute the following commands
+
+```
+cd axe-core
+grunt connect watch
+```
+
+Load your test file URL in the Chrome browser opened in XQuartz

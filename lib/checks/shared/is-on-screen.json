@@ -2,7 +2,7 @@
   "id": "is-on-screen",
   "evaluate": "is-on-screen.js",
   "metadata": {
-    "impact": "minor",
+    "impact": "serious",
     "messages": {
       "pass": "Element is not visible",
       "fail": "Element is visible"
