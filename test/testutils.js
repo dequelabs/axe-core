@@ -28,12 +28,23 @@ testUtils.fixtureSetup = function (content) {
 	return fixture;
 };
 
+/**
+ * Create check arguments
+ *
+ * @param Node|String 	Stuff to go into the fixture (html or node)
+ * @param Object  			Options argument for the check (optional, default: {})
+ * @param String  			Target for the check, CSS selector (default: '#target')
+ */
 testUtils.checkSetup = function (content, options, target) {
 	'use strict';
-	var fixture = testUtils.fixtureSetup(content, target);
-	var node = fixture.querySelector(target || '#target');
-	var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
-	return [virtualNode.actualNode, options, virtualNode];
+	// Normalize the params
+	if (typeof options !== 'object') {
+		target = options;
+		options = {};
+	}
+	testUtils.fixtureSetup(content);
+	var node = axe.utils.querySelectorAll(axe._tree[0], target || '#target')[0];
+	return [node.actualNode, options, node];
 };
 
 axe.testUtils = testUtils;
