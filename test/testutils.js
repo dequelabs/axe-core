@@ -42,8 +42,18 @@ testUtils.checkSetup = function (content, options, target) {
 		target = options;
 		options = {};
 	}
+	// Normalize target, allow it to be the inserted node or '#target'
+	target = target || (content instanceof Node ? content : '#target');
 	testUtils.fixtureSetup(content);
-	var node = axe.utils.querySelectorAll(axe._tree[0], target || '#target')[0];
+
+	var node;
+	if (typeof target === 'string') {
+		node = axe.utils.querySelectorAll(axe._tree[0], target)[0];
+	} else if (target instanceof Node) {
+		node = axe.utils.getNodeFromTree(axe._tree[0], target);
+	} else {
+		node = target;
+	}
 	return [node.actualNode, options, node];
 };
 
