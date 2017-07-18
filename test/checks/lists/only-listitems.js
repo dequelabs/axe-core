@@ -97,7 +97,7 @@ describe('only-listitems', function () {
 		assert.isFalse(checks['only-listitems'].evaluate.apply(checkContext, checkArgs));
 	});
 
-	(shadowSupport ? it : xit)('should return false in a shadow DOM pass', function () {
+	(shadowSupport.v1 ? it : xit)('should return false in a shadow DOM pass', function () {
 		var node = document.createElement('div');
 		node.innerHTML = '<li>My list item </li>';
 		var shadow = node.attachShadow({ mode: 'open' });
@@ -107,7 +107,7 @@ describe('only-listitems', function () {
 		assert.isFalse(checks['only-listitems'].evaluate.apply(checkContext, checkArgs));
 	});
 
-	(shadowSupport ? it : xit)('should return true in a shadow DOM fail', function () {
+	(shadowSupport.v1 ? it : xit)('should return true in a shadow DOM fail', function () {
 		var node = document.createElement('div');
 		node.innerHTML = '<p>Not a list item</p>';
 		var shadow = node.attachShadow({ mode: 'open' });

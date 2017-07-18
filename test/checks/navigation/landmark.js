@@ -24,7 +24,7 @@ describe('landmark', function () {
 		assert.isFalse(checks.landmark.evaluate.apply(null, checkArgs));
 	});
 
-	(shadowSupport ? it : xit)('should not automatically pass if there is a shadow tree', function () {
+	(shadowSupport.v1 ? it : xit)('should not automatically pass if there is a shadow tree', function () {
 		var node = document.createElement('div');
 		var shadow = node.attachShadow({ mode: 'open' });
 		shadow.innerHTML = '<div></div>';
@@ -33,7 +33,7 @@ describe('landmark', function () {
 		assert.isFalse(checks.landmark.evaluate.apply(null, checkArgs));
 	});
 
-	(shadowSupport ? it : xit)('should find elements inside shadow trees', function () {
+	(shadowSupport.v1 ? it : xit)('should find elements inside shadow trees', function () {
 		var node = document.createElement('div');
 		var shadow = node.attachShadow({ mode: 'open' });
 		shadow.innerHTML = '<main></main>';
@@ -42,7 +42,7 @@ describe('landmark', function () {
 		assert.isTrue(checks.landmark.evaluate.apply(null, checkArgs));
 	});
 
-	(shadowSupport ? it : xit)('should find elements slotted in shadow trees', function () {
+	(shadowSupport.v1 ? it : xit)('should find elements slotted in shadow trees', function () {
 		var node = document.createElement('div');
 		node.innerHTML = '<main></main>';
 		var shadow = node.attachShadow({ mode: 'open' });

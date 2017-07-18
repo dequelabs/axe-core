@@ -21,7 +21,7 @@ describe('dlitem', function () {
 		assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
 	});
 
-	(shadowSupport ? it : xit)('should return true in a shadow DOM pass', function () {
+	(shadowSupport.v1 ? it : xit)('should return true in a shadow DOM pass', function () {
 		var node = document.createElement('div');
 		node.innerHTML = '<dt>My list item </dt>';
 		var shadow = node.attachShadow({ mode: 'open' });
@@ -31,7 +31,7 @@ describe('dlitem', function () {
 		assert.isTrue(checks.dlitem.evaluate.apply(null, checkArgs));
 	});
 
-	(shadowSupport ? it : xit)('should return false in a shadow DOM fail', function () {
+	(shadowSupport.v1 ? it : xit)('should return false in a shadow DOM fail', function () {
 		var node = document.createElement('div');
 		node.innerHTML = '<dt>My list item </dt>';
 		var shadow = node.attachShadow({ mode: 'open' });
