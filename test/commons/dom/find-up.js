@@ -74,7 +74,18 @@ describe('dom.findUp', function () {
 		assert.equal(axe.commons.dom.findUp(el.actualNode, 'label'), fixture.firstChild);
 	});
 
-	it('should walk up the assigned slot', function () {
+	(shadowSupport.v0 ? it : xit)('should work on shadow root children', function () {
+		fixture.innerHTML = '<div role="list"><div id="something"></div></div>';
+		var shadow = fixture.querySelector('#something').createShadowRoot();
+
+		shadow.innerHTML = '<div role="listitem">item 1</div>';
+		var listItem = shadow.querySelector('[role=listitem]');
+
+		assert.equal(axe.commons.dom.findUp(listItem, '[role=list]'),
+			fixture.firstChild);
+	});
+
+	(shadowSupport.v1 ? it : xit)('should walk up the assigned slot', function () {
 		function createContentSlotted() {
 			var group = document.createElement('div');
 			group.innerHTML = '<div id="target" style="display:none;">Stuff<slot></slot></div>';
@@ -86,16 +97,15 @@ describe('dom.findUp', function () {
 			root.appendChild(div);
 			div.appendChild(createContentSlotted());
 		}
-		if (shadowSupport.v1) {
-			fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
-			makeShadowTree(fixture.querySelector('div'));
-			var tree = axe.utils.getFlattenedTree(fixture.firstChild);
-			var el = axe.utils.querySelectorAll(tree, 'a')[0];
-			assert.equal(axe.commons.dom.findUp(el.actualNode, 'label'), fixture.firstChild);
-		}
+
+		fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
+		makeShadowTree(fixture.querySelector('div'));
+		var tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		var el = axe.utils.querySelectorAll(tree, 'a')[0];
+		assert.equal(axe.commons.dom.findUp(el.actualNode, 'label'), fixture.firstChild);
 	});
 
-	it('should walk up the shadow DOM', function () {
+	(shadowSupport.v1 ? it : xit)('should walk up the shadow DOM', function () {
 		function createContent() {
 			var group = document.createElement('div');
 			group.innerHTML = '<a>thing</a>';
@@ -107,12 +117,22 @@ describe('dom.findUp', function () {
 			root.appendChild(div);
 			div.appendChild(createContent());
 		}
-		if (shadowSupport.v1) {
-			fixture.innerHTML = '<label><div></div></label>';
-			makeShadowTree(fixture.querySelector('div'));
-			var tree = axe.utils.getFlattenedTree(fixture.firstChild);
-			var el = axe.utils.querySelectorAll(tree, 'a')[0];
-			assert.equal(axe.commons.dom.findUp(el.actualNode, 'label'), fixture.firstChild);
-		}
+
+		fixture.innerHTML = '<label><div></div></label>';
+		makeShadowTree(fixture.querySelector('div'));
+		var tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		var el = axe.utils.querySelectorAll(tree, 'a')[0];
+		assert.equal(axe.commons.dom.findUp(el.actualNode, 'label'), fixture.firstChild);
+	});
+
+	(shadowSupport.v1 ? it : xit)('should work on shadow root children', function () {
+		fixture.innerHTML = '<div role="list"><div id="something"></div></div>';
+		var shadow = fixture.querySelector('#something').attachShadow({ mode: 'open' });
+
+		shadow.innerHTML = '<div role="listitem">item 1</div>';
+		var listItem = shadow.querySelector('[role=listitem]');
+
+		assert.equal(axe.commons.dom.findUp(listItem, '[role=list]'),
+			fixture.firstChild);
 	});
 });
