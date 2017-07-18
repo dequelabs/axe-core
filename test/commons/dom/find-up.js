@@ -75,7 +75,7 @@ describe('dom.findUp', function () {
 	});
 
 	(shadowSupport.v0 ? it : xit)('should work on shadow root children', function () {
-		fixture.innerHTML = '<div role="list"><div id="something"></div></div>';
+		fixture.innerHTML = '<div role="list" id="something"></div>';
 		var shadow = fixture.querySelector('#something').createShadowRoot();
 
 		shadow.innerHTML = '<div role="listitem">item 1</div>';
@@ -126,7 +126,7 @@ describe('dom.findUp', function () {
 	});
 
 	(shadowSupport.v1 ? it : xit)('should work on shadow root children', function () {
-		fixture.innerHTML = '<div role="list"><div id="something"></div></div>';
+		fixture.innerHTML = '<div role="list" id="something"></div>';
 		var shadow = fixture.querySelector('#something').attachShadow({ mode: 'open' });
 
 		shadow.innerHTML = '<div role="listitem">item 1</div>';
