@@ -2,6 +2,8 @@ describe('duplicate-img-label', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var checkSetup = axe.testUtils.checkSetup;
+	var shadowSupport = axe.testUtils.shadowSupport;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -64,4 +66,38 @@ describe('duplicate-img-label', function () {
 		var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
 		assert.isFalse(checks['duplicate-img-label'].evaluate(node, undefined, axe.utils.getNodeFromTree(tree[0], node)));
 	});
+
+	(shadowSupport.v1 ? it : xit)('should return true if the img is part of a shadow tree', function () {
+		var button = document.createElement('div');
+		button.setAttribute('role', 'button');
+		button.innerHTML = 'My button';
+		var shadow = button.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<slot></slot><img alt="My button">';
+		var checkArgs = checkSetup(button);
+
+		assert.isTrue(checks['duplicate-img-label'].evaluate.apply(null, checkArgs));
+	});
+
+	(shadowSupport.v1 ? it : xit)('should return true if the img is a slotted element', function () {
+		var button = document.createElement('div');
+		button.setAttribute('role', 'button');
+		button.innerHTML = '<img alt="My button">';
+		var shadow = button.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<span>My button</span> <slot></slot>';
+		var checkArgs = checkSetup(button);
+
+		assert.isTrue(checks['duplicate-img-label'].evaluate.apply(null, checkArgs));
+	});
+
+	(shadowSupport.v1 ? it : xit)('should return false if the shadow img has a different text', function () {
+		var button = document.createElement('div');
+		button.setAttribute('role', 'button');
+		button.innerHTML = 'My button';
+		var shadow = button.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<slot></slot><img alt="My image">';
+		var checkArgs = checkSetup(button);
+
+		assert.isFalse(checks['duplicate-img-label'].evaluate.apply(null, checkArgs));
+	});
+
 });
