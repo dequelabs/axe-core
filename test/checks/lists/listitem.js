@@ -33,7 +33,7 @@ describe('listitem', function () {
 		assert.isFalse(checks.listitem.evaluate.apply(null, checkArgs));
 	});
 
-	(shadowSupport ? it : xit)('should return true in a shadow DOM pass', function () {
+	(shadowSupport.v1 ? it : xit)('should return true in a shadow DOM pass', function () {
 		var node = document.createElement('div');
 		node.innerHTML = '<li>My list item </li>';
 		var shadow = node.attachShadow({ mode: 'open' });
@@ -43,7 +43,7 @@ describe('listitem', function () {
 		assert.isTrue(checks.listitem.evaluate.apply(null, checkArgs));
 	});
 
-	(shadowSupport ? it : xit)('should return false in a shadow DOM fail', function () {
+	(shadowSupport.v1 ? it : xit)('should return false in a shadow DOM fail', function () {
 		var node = document.createElement('div');
 		node.innerHTML = '<li>My list item </li>';
 		var shadow = node.attachShadow({ mode: 'open' });
