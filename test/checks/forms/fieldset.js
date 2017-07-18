@@ -1,7 +1,9 @@
 describe('fieldset', function () {
 	'use strict';
 	var fixture = document.getElementById('fixture');
+	var shadowSupport = axe.testUtils.shadowSupport;
 	var fixtureSetup = axe.testUtils.fixtureSetup;
+
 	var checkContext = {
 		_data: null,
 		data: function (d) {
@@ -158,7 +160,6 @@ describe('fieldset', function () {
 			});
 		});
 
-
 		it('should return true if a properly labelled-by ARIA group contains only the right elements - special characters', function () {
 			fixtureSetup('<div id="grouplabel">Label</div>' +
 				'<div role="group" aria-labelledby="grouplabel">' +
@@ -182,7 +183,6 @@ describe('fieldset', function () {
 			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
 		});
 
-
 		it('should ignore hidden inputs', function () {
 			fixtureSetup('<fieldset><legend>Legendary</legend>' +
 				'<input type="' + type + '" id="target" name="uniqueyname">' +
@@ -190,7 +190,6 @@ describe('fieldset', function () {
 				'<input type="hidden" name="things"></fieldset>');
 			var node = fixture.querySelector('#target');
 			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
-
 		});
 
 		it('should allow elements to be contained in 2 or more fieldsets', function () {
@@ -216,6 +215,36 @@ describe('fieldset', function () {
 				'<input type="' + type + '" name="uniqueyname"></div>' +
 				'</fieldset>');
 			var node = fixture.querySelector('#target');
+			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+		});
+
+		(shadowSupport ? it : xit)('should find fieldsets outside a shadow tree', function () {
+			var fieldset = document.createElement('fieldset');
+			fieldset.innerHTML = '<legend>Legendary</legend> <div></div>';
+
+			var div = fieldset.querySelector('div');
+			var shadow = div.attachShadow({ mode: 'open' });
+			shadow.innerHTML = 
+				'<input type="' + type + '" id="target" name="sharedname">' +
+				'<input type="' + type + '" name="sharedname">';
+			fixtureSetup(fieldset);
+
+			var node = shadow.querySelector('#target');
+			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+		});
+
+		(shadowSupport ? it : xit)('should find fieldsets inside a shadow tree', function () {
+			var div = document.createElement('div');
+			div.innerHTML = 
+				'<input type="' + type + '" id="target" name="sharedname">' +
+				'<input type="' + type + '" name="sharedname">';
+
+			var shadow = div.attachShadow({ mode: 'open' });
+			shadow.innerHTML = '<fieldset><legend>Legendary</legend>' +
+				'<slot></slot></fieldset>';
+			fixtureSetup(div);
+
+			var node = div.querySelector('#target');
 			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
 		});
 	}
@@ -249,4 +278,5 @@ describe('fieldset', function () {
 			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node));
 		});
 	});
+
 });
