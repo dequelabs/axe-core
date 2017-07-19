@@ -2,7 +2,7 @@ describe('duplicate-id', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-
+	var shadowSupport = axe.testUtils.shadowSupport;
 
 	var checkContext = {
 		_relatedNodes: [],
@@ -27,7 +27,6 @@ describe('duplicate-id', function () {
 		assert.isTrue(checks['duplicate-id'].evaluate.call(checkContext, node));
 		assert.equal(checkContext._data, node.id);
 		assert.deepEqual(checkContext._relatedNodes, []);
-
 	});
 
 	it('should return false if there are multiple elements with an ID', function () {
@@ -39,7 +38,8 @@ describe('duplicate-id', function () {
 	});
 
 	it('should return remove duplicates', function () {
-		assert.deepEqual(checks['duplicate-id'].after([{data: 'a'}, {data: 'b'}, {data: 'b'}]), [{data: 'a'}, {data: 'b'}]);
+		assert.deepEqual(checks['duplicate-id'].after([
+			{data: 'a'}, {data: 'b'}, {data: 'b'}]), [{data: 'a'}, {data: 'b'}]);
 	});
 
 	it('should ignore empty ids', function () {
@@ -58,4 +58,52 @@ describe('duplicate-id', function () {
 		assert.isTrue(checks['duplicate-id'].evaluate.call(checkContext, node));
 	});
 
+	(shadowSupport.v1 ? it : xit)('should find duplicate IDs in shadow trees', function () {
+		var div = document.createElement('div');
+		div.id = 'target';
+		var shadow = div.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<span id="target"></span><p id="target">text</p>';
+		var node = shadow.querySelector('span');
+		fixture.appendChild(div);
+
+		assert.isFalse(checks['duplicate-id'].evaluate.call(checkContext, node));
+		assert.lengthOf(checkContext._relatedNodes, 1);
+		assert.deepEqual(checkContext._relatedNodes, [shadow.querySelector('p')]);
+	});
+
+	(shadowSupport.v1 ? it : xit)('should ignore same IDs in shadow trees', function () {
+		var node = document.createElement('div');
+		node.id = 'target';
+		var shadow = node.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<span id="target"></span>';
+		fixture.appendChild(node);
+
+		assert.isTrue(checks['duplicate-id'].evaluate.call(checkContext, node));
+		assert.lengthOf(checkContext._relatedNodes, 0);
+	});
+
+	(shadowSupport.v1 ? it : xit)('should ignore same IDs outside shadow trees', function () {
+		var div = document.createElement('div');
+		div.id = 'target';
+		var shadow = div.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<span id="target"></span>';
+		var node = shadow.querySelector('#target');
+		fixture.appendChild(div);
+
+		assert.isTrue(checks['duplicate-id'].evaluate.call(checkContext, node));
+		assert.lengthOf(checkContext._relatedNodes, 0);
+	});
+
+	(shadowSupport.v1 ? it : xit)('should not ignore slotted elements', function () {
+		var node = document.createElement('div');
+		node.id = 'target';
+		node.innerHTML = '<p id="target">text</p>';
+		var shadow = node.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<span id="target"><slot></slot></span>';
+		fixture.appendChild(node);
+
+		assert.isFalse(checks['duplicate-id'].evaluate.call(checkContext, node));
+		assert.lengthOf(checkContext._relatedNodes, 1);
+		assert.deepEqual(checkContext._relatedNodes, [node.querySelector('p')]);
+	});
 });
