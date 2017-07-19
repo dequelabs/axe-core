@@ -89,9 +89,7 @@ describe('dom.hasContentVirtual', function () {
     var shadow = fixture.querySelector('#shadow').attachShadow({ mode: 'open' });
     shadow.innerHTML = '<div class="target"><slot></slot></div>';
     tree = axe.utils.getFlattenedTree(fixture);
-    var node = axe.utils.querySelectorAll(tree, '.target');
 
-    axe.log(tree, node);
     assert.isTrue(
       hasContentVirtual(axe.utils.querySelectorAll(tree, '.target')[0])
     );
