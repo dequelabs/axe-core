@@ -31,12 +31,12 @@ describe('landmark-no-more-than-one-main test pass', function () {
 			assert.deepEqual(results.passes[0].nodes[1].target, ['#frame1', '#pass2']);
 		});
 		
-		it('should find #frame1, #frame2, #pass4', function () {
-			assert.deepEqual(results.passes[0].nodes[2].target, ['#frame1', '#frame2', '#pass4']);
+		it('should find #frame1, #frame2, #pass3', function () {
+			assert.deepEqual(results.passes[0].nodes[2].target, ['#frame1', '#frame2', '#pass3']);
 		});
 		
-		it('should find #frame1, #frame3, #pass3', function () {
-			assert.deepEqual(results.passes[0].nodes[3].target, ['#frame1', '#frame3', '#pass3']);
+		it('should find #frame1, #frame3, #pass4', function () {
+			assert.deepEqual(results.passes[0].nodes[3].target, ['#frame1', '#frame3', '#pass4']);
 		});
 	});
 
