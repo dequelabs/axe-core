@@ -231,6 +231,12 @@ if (shadowSupport.v1) {
 			assert.equal(node, vNode.actualNode);
 			assert.equal(vNode.actualNode.textContent, '1');
 		});
+		it('should find the virtual node if it is the very top of the tree', function () {
+			var virtualDOM = axe.utils.getFlattenedTree(fixture);
+			var vNode = axe.utils.getNodeFromTree(virtualDOM[0], virtualDOM[0].actualNode);
+			assert.isDefined(vNode);
+			assert.equal(virtualDOM[0].actualNode, vNode.actualNode);
+		});
 	});
 }
 

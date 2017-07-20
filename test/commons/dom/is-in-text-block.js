@@ -143,7 +143,7 @@ describe('dom.isInTextBlock', function () {
 		assert.isFalse(axe.commons.dom.isInTextBlock(link));
 	});
 
-	(shadowSupport ? it : xit)('can reach outside a shadow tree', function () {
+	(shadowSupport.v1 ? it : xit)('can reach outside a shadow tree', function () {
 		var div = document.createElement('div');
 		div.innerHTML = 'Some paragraph with text <span></span> ';
 		var shadow = div.querySelector('span').attachShadow({ mode: 'open' });
