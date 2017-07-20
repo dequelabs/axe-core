@@ -3,12 +3,18 @@ describe('group-labelledby', function () {
 
 	var fixture = document.getElementById('fixture');
 	var fixtureSetup = axe.testUtils.fixtureSetup;
+	var shadowSupport = axe.testUtils.shadowSupport.v1;
+
 	var checkContext = {
 		_data: null,
 		data: function (d) {
 			this._data = d;
 		}
 	};
+
+	beforeEach(function () {
+		axe._tree = undefined;
+	});
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -114,6 +120,38 @@ describe('group-labelledby', function () {
 				});
 			});
 
+			(shadowSupport ? it : xit)
+			('should return false if label is outside of shadow boundary', function () {
+				fixture.innerHTML = '<div id="container"><h2 id="shared">Label</h2></div>';
+				var shadowRoot = fixture.querySelector('#container').attachShadow({ mode: 'open' });
+				shadowRoot.innerHTML = '<input type="' + type + '" id="target" aria-labelledby="shared one" name="uniqueyname">' +
+					'<input type="' + type + '" aria-labelledby="shared two" name="uniqueyname">' +
+					'<input type="' + type + '" aria-labelledby="shared three" name="uniqueyname">';
+
+				var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+				var shadowContent = shadowRoot.querySelector('#target');
+				var virtualTarget = axe.utils.getNodeFromTree(tree[0], shadowContent);
+
+				var params = [shadowContent, undefined, virtualTarget];
+				assert.isFalse(check.evaluate.apply(checkContext, params));
+			});
+
+			(shadowSupport ? it : xit)
+			('should return true if all ' + type + ' components are in the shadow boundary', function () {
+				fixture.innerHTML = '<div id="container"></div>';
+
+				var shadowRoot = fixture.querySelector('#container').attachShadow({ mode: 'open' });
+				shadowRoot.innerHTML = '<p id="shared">Label</p>' +
+					'<input type="' + type + '" name="samename" aria-labelledby="shared one">' +
+					'<input type="' + type + '" id="target" name="samename" aria-labelledby="shared two">';
+
+				var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+				var shadowContent = shadowRoot.querySelector('#target');
+				var virtualTarget = axe.utils.getNodeFromTree(tree[0], shadowContent);
+
+				var params = [shadowContent, undefined, virtualTarget];
+				assert.isTrue(check.evaluate.apply(checkContext, params));
+			});
 		};
 
 	}
