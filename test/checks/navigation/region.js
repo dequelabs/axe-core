@@ -79,7 +79,7 @@ describe('region', function () {
 	});
 
 	it('should considered aria labelled elements as content', function () {
-		var checkArgs = checkSetup('<div id="target"><div aria-label="axe-core logo"></div><div role="main">Content</div></div>');
+		var checkArgs = checkSetup('<div id="target"><div aria-label="axe-core logo" role="img"></div><div role="main">Content</div></div>');
 
 		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
 		assert.deepEqual(checkContext._relatedNodes, [
@@ -92,6 +92,14 @@ describe('region', function () {
 
 		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
 		assert.lengthOf(checkContext._relatedNodes, 0);
+	});
+
+	it('ignores native landmark elements with an overwriting role', function () {
+		var checkArgs = checkSetup('<div id="target"><header role="banner"></header><main role="none"></main></div>');
+
+		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.lengthOf(checkContext._relatedNodes, 1);
+		assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('main')]);
 	});
 
 	(shadowSupport.v1 ? it : xit)('should test Shadow tree content', function () {

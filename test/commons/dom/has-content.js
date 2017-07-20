@@ -77,7 +77,7 @@ describe('dom.hasContent', function () {
     );
   });
 
-  it('is false if noRecurstion is true and the content is not in a child', function () {
+  it('is false if noRecursion is true and the content is not in a child', function () {
     fixture.innerHTML = '<div id="target"><span> text </span></div>';
     tree = axe.utils.getFlattenedTree(fixture);
 
