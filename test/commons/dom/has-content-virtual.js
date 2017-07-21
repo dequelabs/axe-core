@@ -73,6 +73,13 @@ describe('dom.hasContentVirtual', function () {
     assert.isFalse(hasContent(fixture.querySelector('#target')));
   });
 
+  it('is false if noRecursion is true and the content is not in a child', function () {
+    fixture.innerHTML = '<div id="target"><span> text </span></div>';
+    tree = axe.utils.getFlattenedTree(fixture);
+
+    assert.isFalse(hasContentVirtual(axe.utils.querySelectorAll(tree, '#target')[0], true));
+  });
+
   (shadowSupport ? it : xit)('looks at content of shadow dom elements', function () {
     fixture.innerHTML = '<div id="target"></div>';
     var shadow = fixture.querySelector('#target').attachShadow({ mode: 'open' });
