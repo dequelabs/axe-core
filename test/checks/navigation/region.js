@@ -95,7 +95,7 @@ describe('region', function () {
 	});
 
 	it('ignores native landmark elements with an overwriting role', function () {
-		var checkArgs = checkSetup('<div id="target"><header role="banner"></header><main role="none"></main></div>');
+		var checkArgs = checkSetup('<div id="target"><header role="heading" level="1"></header><main role="none">Content</main></div>');
 
 		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
 		assert.lengthOf(checkContext._relatedNodes, 1);
