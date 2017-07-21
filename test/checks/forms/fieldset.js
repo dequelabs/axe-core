@@ -1,7 +1,7 @@
 describe('fieldset', function () {
 	'use strict';
 	var fixture = document.getElementById('fixture');
-	var shadowSupport = axe.testUtils.shadowSupport;
+	var shadowSupport = axe.testUtils.shadowSupport.v1;
 	var fixtureSetup = axe.testUtils.fixtureSetup;
 
 	var checkContext = {
