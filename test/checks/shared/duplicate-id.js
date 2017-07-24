@@ -94,7 +94,7 @@ describe('duplicate-id', function () {
 		assert.lengthOf(checkContext._relatedNodes, 0);
 	});
 
-	(shadowSupport.v1 ? it : xit)('should not ignore slotted elements', function () {
+	(shadowSupport.v1 ? it : xit)('should compare slotted content with the outer tree', function () {
 		var node = document.createElement('div');
 		node.id = 'target';
 		node.innerHTML = '<p id="target">text</p>';
