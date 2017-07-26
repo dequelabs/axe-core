@@ -1,0 +1,16 @@
+{
+  "id": "landmark-main-is-top-level",
+  "selector": "main,[role=main]",
+  "tags": [
+	"best-practice"
+  ],
+  "metadata": {
+    "description": "Each main landmark in a document must not be nested in another landmark",
+    "help": ""
+  },
+  "all": [],
+  "any": [
+    "main-is-top-level"
+  ],
+  "none": []
+}
