@@ -2,7 +2,7 @@
   "id": "link-in-text-block",
   "evaluate": "link-in-text-block.js",
   "metadata": {
-    "impact": "critical",
+    "impact": "serious",
     "messages": {
       "pass": "Links can be distinguished from surrounding text in a way that does not rely on color",
       "fail": "Links can not be distinguished from surrounding text in a way that does not rely on color",
