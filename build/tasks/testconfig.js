@@ -3,7 +3,7 @@
 
 module.exports = function (grunt) {
 	grunt.registerMultiTask('testconfig',
-	'This task creates a file with all the source test config and HTML fixutres in a single JS object "test"',
+	'This task creates a file with all the source test config and HTML fixtures in a single JS object `tests`',
 	function () {
 
 		var result = {
