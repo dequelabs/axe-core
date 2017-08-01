@@ -58,7 +58,7 @@ describe('duplicate-id', function () {
 		assert.isTrue(checks['duplicate-id'].evaluate.call(checkContext, node));
 	});
 
-	(shadowSupport.v1 ? it : xit)('should find duplicate IDs in shadow trees', function () {
+	(shadowSupport.v1 ? it : xit)('should find duplicate IDs in the same shadow DOM', function () {
 		var div = document.createElement('div');
 		div.id = 'target';
 		var shadow = div.attachShadow({ mode: 'open' });
@@ -71,7 +71,7 @@ describe('duplicate-id', function () {
 		assert.deepEqual(checkContext._relatedNodes, [shadow.querySelector('p')]);
 	});
 
-	(shadowSupport.v1 ? it : xit)('should ignore same IDs in shadow trees', function () {
+	(shadowSupport.v1 ? it : xit)('should ignore duplicate IDs if they are in different document roots', function () {
 		var node = document.createElement('div');
 		node.id = 'target';
 		var shadow = node.attachShadow({ mode: 'open' });
@@ -94,7 +94,7 @@ describe('duplicate-id', function () {
 		assert.lengthOf(checkContext._relatedNodes, 0);
 	});
 
-	(shadowSupport.v1 ? it : xit)('should compare slotted content with the outer tree', function () {
+	(shadowSupport.v1 ? it : xit)('should compare slotted content with the light DOM', function () {
 		var node = document.createElement('div');
 		node.id = 'target';
 		node.innerHTML = '<p id="target">text</p>';
