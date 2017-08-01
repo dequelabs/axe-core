@@ -54,6 +54,24 @@ describe('axe.utils.aggregateChecks', function() {
 		});
 	});
 
+	it('returns impact for fail and canttell', function () {
+		var failCheck = axe.utils.aggregateChecks( createTestCheckResults({
+			any: [{ result: false, impact: 'serious' }]
+		}));
+		var canttellCheck = axe.utils.aggregateChecks( createTestCheckResults({
+			any: [{ result: undefined, impact: 'moderate' }]
+		}));
+
+		assert.equal(failCheck.impact, 'serious');
+		assert.equal(canttellCheck.impact, 'moderate');
+	});
+
+	it('sets impact to null for pass', function () {
+		var passCheck = axe.utils.aggregateChecks( createTestCheckResults({
+			any: [{ result: true, impact: 'serious' }]
+		}));
+		assert.isNull(passCheck.impact);
+	});
 
 	describe('none', function () {
 		it('gives result FAIL when any is true', function() {

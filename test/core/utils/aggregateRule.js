@@ -107,6 +107,13 @@ describe('axe.utils.aggregateRule', function() {
 		assert.lengthOf(ruleResult.passes, 1);
 	});
 
+	it('should provide impact on incomplete', function () {
+		var ruleResult = axe.utils.aggregateRule( createTestResults({
+			none: { result: undefined, impact: 'serious' }
+		}));
+		assert.equal(ruleResult.impact, 'serious');
+	});
+
 	it('should raise the highest "raisedMetadata" on failing checks', function() {
 		var ruleResult = axe.utils.aggregateRule( createTestResults({
 				none: { result: true, impact: 'moderate' },
@@ -116,12 +123,12 @@ describe('axe.utils.aggregateRule', function() {
 					{ result: false, impact: 'serious'}
 				]
 			},
-			{ none: { result: false, impact: 'critical' }},
+			{ none: { result: undefined, impact: 'critical' }},
 			{ none: { result: false, impact: 'critical' }}
 		));
 		assert.equal(ruleResult.impact, 'serious');
 		assert.equal(ruleResult.violations[0].impact, 'serious');
+		assert.equal(ruleResult.incomplete[0].impact, 'critical');
 		assert.isNull(ruleResult.passes[0].impact);
-		assert.isNull(ruleResult.passes[1].impact);
 	});
 });

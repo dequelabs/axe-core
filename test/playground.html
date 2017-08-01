@@ -2,24 +2,17 @@
 <html lang="en">
 <title>O hai</title>
 
-<div style="
-  height: 50px;
-  width: 50px;
-  border: solid 1px black;
-  overflow: auto;
-">
-  <p>foofoofoofoofoofoo</p>
-  <p>foofoofoofoofoofoo</p>
-  <p>foofoofoofoofoofoo</p>
-  <p>foofoofoofoofoofoo</p>
-  <p>foofoofoofoofoofoo</p>
-</div>
+<video src="https://youtu.be/cgbJo5fuFMo"></video>
+<p style="color: #ccc">Some text</p>
+<p style="background:url(https://bennettfeely.com/gradients/img/gradient_24.png)">
+  Some more text</p>
 
 <script src="/axe.js"></script>
 <script>
 window.addEventListener('load' , function () {
-  axe.a11yCheck(document, { restoreScroll: true }, function (res) {
-    console.log(res);
+  axe.run(document, function (err, res) {
+    console.log(res.violations[0]);
+    res.incomplete.forEach(issue => console.log(issue))
   });
 })
 </script>
