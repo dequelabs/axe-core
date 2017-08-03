@@ -696,7 +696,7 @@ axe.utils.querySelectorAll(virtualNode, 'a[href]');
 
 An Array of filtered HTML nodes.
 
-#### API Name: axe._tree
+#### API Name: axe.\_tree
 
 During an audit, a high-level variable is available for retrieving a cached version of the flattened tree. This is useful in rules and checks, as well as tests. This variable is good for performance because it prevents having to recompile the flattened tree.
 
