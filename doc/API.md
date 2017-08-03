@@ -21,6 +21,11 @@
 	1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
 	1. [API Name: axe.cleanup](#api-name-axecleanup)
 	1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
+  1. [Virtual DOM Utilities](#virtual-dom-utilities)
+    1. [API Name: axe.utils.getFlattenedTree](#api-name-axeutilsgetflattenedtree)
+    1. [API Name: axe.utils.getNodeFromTree](#api-name-axeutilsgetnodefromtree)
+    1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
+    1. [API Name: axe._tree](#api-name-axe_tree)
 1. [Section 3: Example Reference](#section-3-example-reference)
 
 ## Section 1: Introduction
@@ -607,6 +612,120 @@ In axe-core v1 the main method for axe was `axe.a11yCheck()`. This method was re
 - .a11yCheck does not pass the error object to the callback, rather it returns the result as the first parameter and logs errors to the console.
 - .a11yCheck requires a context object, and so will not fall back to the document root.
 - .a11yCheck does not return a Promise.
+
+### Virtual DOM Utilities
+
+#### API Name: axe.utils.getFlattenedTree
+
+##### Description
+
+Recursvely return an array containing the virtual DOM tree for the node specified, excluding comment nodes and shadow DOM nodes `&lt;content> and `&lt;slot>`. This method will return a composed tree containing both light and shadow DOM, if applicable.
+
+##### Synopsis
+
+```javascript
+var element = document.body;
+axe.utils.getFlattenedTree(element, shadowId)
+```
+
+##### Parameters
+ - `node` – node. The current HTML node for which you want a flattened DOM tree.
+ - `shadowId` – string(optional). ID of the shadow DOM that is the closest shadow ancestor of the node
+
+##### Returns
+
+An array of objects, where each object is a virtualNode:
+
+```javascript
+[{
+  actualNode: body,
+  children: [virtualNodes],
+  shadowId: undefined
+}]
+```
+
+#### API Name: axe.utils.getNodeFromTree
+
+##### Description
+
+Recursively return a single node from a virtual DOM tree. This is commonly used in rules and checks where the node is readily available without querying the DOM.
+
+##### Synopsis
+
+```javascript
+axe.utils.getNodeFromTree(axe._tree[0], node);
+```
+
+##### Parameters
+
+  - `vNode` – object. The flattened DOM tree to fetch a virtual node from
+  - `node` – node. The HTML DOM node for which you need a virtual representation
+
+##### Returns
+
+An object containing the virtualNode:
+
+```javascript
+{
+  actualNode: div,
+  children: [virtualNodes],
+  shadowId: undefined
+}
+```
+
+#### API Name: axe.utils.querySelectorAll
+
+##### Description
+
+A querySelectorAll implementation that works on the virtual DOM and Shadow DOM by manually walking the tree instead of relying on DOM API methods which don't step into Shadow DOM.
+
+Note: while there is no `axe.utils.querySelector` method, you can reproduce that behavior by accessing the first item returned in the array.
+
+##### Synopsis
+
+```javascript
+axe.utils.querySelectorAll(virtualNode, 'a[href]');
+```
+
+##### Parameters
+
+* `virtualNode` – object, the flattened DOM tree to query against. `axe._tree` is available for this purpose during an audit; see below.
+* `selector` – string, the CSS selector to use as a filter. For the most part, this should work seamlessly with `document.querySelectorAll`.
+
+##### Returns
+
+An Array of filtered HTML nodes.
+
+#### API Name: axe._tree
+
+During an audit, a high-level variable is available for retrieving a cached version of the flattened tree. This is useful in rules and checks, as well as tests. This variable is good for performance because it prevents having to recompile the flattened tree.
+
+In Audit.js:
+
+```javascript
+Audit.prototype.run = function (context, options, resolve, reject) {
+  'use strict';
+  this.validateOptions(options);
+
+  axe._tree = axe.utils.getFlattenedTree(document.documentElement);
+
+  // the rest of the code
+```
+
+##### Synopsis
+
+```javascript
+axe.utils.getNodeFromTree(axe._tree[0], node)
+```
+
+##### Parameters
+
+None
+
+##### Returns
+
+An array of objects, where each object is a virtualNode. See `axe.utils.getFlattenedTree`.
+
 
 ## Section 3: Example Reference
 

@@ -41,7 +41,7 @@ After execution, a Check will return `true` or `false` depending on whether or n
 Rules are defined by JSON files in the [lib/rules directory](../lib/rules).  The JSON object is used to seed the [Rule object](../lib/core/base/rule.js#L30).  A valid Rule JSON consists of the following:
 
 * `id` - `String` A unique name of the Rule.
-* `selector` - **optional** `String` which is a CSS selector that specifies the elements of the page on which the Rule runs.  If omitted, the rule will run against every node.
+* `selector` - **optional** `String` which is a CSS selector that specifies the elements of the page on which the Rule runs. aXe-core will look inside of *open* [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Shadow_DOM) subtrees for elements matching the provided selector. If omitted, the rule will run against every node.
 * `excludeHidden` - **optional** `Boolean` Whether the rule should exclude hidden elements.  Defaults to `true`.
 * `enabled` - **optional** `Boolean`  Whether the rule is enabled by default.  Defaults to `true`.
 * `pageLevel` - **optional** `Boolean`  Whether the rule is page level.  Page level rules will only run if given an entire `document` as context.
@@ -63,7 +63,12 @@ There is a Grunt target which will ensure each Rule has a valid format, which ca
 
 #### Matches Function
 
-Custom `matches` functions are executed against each node which matches the Rule's `selector` and receive a single parameter named `node`, which is the Node to test.  The function must return either `true` or `false`.  Common functions are provided as `commons`. [See the data-table matches function for an example.](../lib/rules/data-table-matches.js)
+Custom `matches` functions are executed against each node which matches the Rule's `selector` and receive two parameters:
+
+* `node` – node, the DOM Node to test
+* `virtualNode`– object, the virtual DOM representation of the node. See [virtualNode documentation](#virtual-nodes) for more.
+
+The matches function must return either `true` or `false`.  Common functions are provided as `commons`. [See the data-table matches function for an example.](../lib/rules/data-table-matches.js)
 
 ### Checks
 
@@ -87,6 +92,7 @@ The following variables are defined for `Check#evaluate`:
 
 * `node` - `HTMLElement`  The element that the Check is run against
 * `options` - `Mixed`  Any options specific to this Check that may be necessary.  If not specified by the user at run-time or configure-time; it will use `options` as defined by the Check's JSON file.
+* `virtualNode` – `Object`  The virtualNode object for use with Shadow DOM. See [virtualNode documentation](#virtual-nodes).
 * `this.data()` - `Function`  Free-form data that either the Check message requires or is presented as `data` in the CheckResult object.  Subsequent calls to `this.data()` will overwrite previous.  See [aria-valid-attr](../lib/checks/aria/valid-attr.js) for example usage.
 * `this.relatedNodes()` - `Function`  Array or NodeList of elements that are related to this Check.  For example the [duplicate-id](../lib/checks/shared/duplicate-id.js) Check will add all Elements which share the same ID.
 * `commons` - Common functions that may be used across multiple Checks.  See [Common Functions](#common-functions) for more information.
@@ -115,9 +121,9 @@ return results.filter(function (r) {
 });
 ```
 
-#### Pass and Fail Templates
+#### Pass, Fail and Incomplete Templates
 
-Occasionally, you may want to add additional information about why a Check passed or failed into its message.  For example, the [aria-valid-attr](../lib/checks/aria/valid-attr.json) will add information about any invalid ARIA attributes to its fail message.  The message uses the [doT.js](http://olado.github.io/doT/) and is compiled to a JavaScript function at build-time.  In the Check message, you have access to the `CheckResult` as `it`.
+Occasionally, you may want to add additional information about why a Check passed, failed or returned undefined into its message.  For example, the [aria-valid-attr](../lib/checks/aria/valid-attr.json) will add information about any invalid ARIA attributes to its fail message.  The message uses the [doT.js](http://olado.github.io/doT/) and is compiled to a JavaScript function at build-time.  In the Check message, you have access to the `CheckResult` as `it`.
 
 #### CheckResult
 
@@ -131,11 +137,59 @@ A CheckResult has the following properties:
 
 ### Common Functions
 
-Common functions are an internal library used by the rules and checks.  If you have code repeated across rules and checks, you can use these functions and contribute to them.  They are made available to every function as `commons`.  Documentation is available in [source code](../lib/commons/).
+Common functions are an internal library used by the rules and checks.  If you have code repeated across rules and checks, you can use these functions and contribute to them.  They are made available to every function as `commons`. Documentation is available in [source code](../lib/commons/).
+
+#### Commons and Shadow DOM
+
+To support Shadow DOM while maintaining backwards compatibility, commons functions that
+query DOM nodes must operate on an in-memory representation of the DOM using aXe-core’s
+built-in [API methods and utility functions](./API.md#virtual-dom-utilities).
+
+Commons functions should do the virtual tree lookup and call a `virtual` function
+including the rest of the commons code. The naming of this special function
+should contain the original commons function name with `Virtual` added to signify
+it expects to operate on a virtual DOM tree.
+
+Let’s look at an example:
+
+```javascript
+axe.commons.text.accessibleText = function (element, inLabelledbyContext) {
+  let virtualNode = axe.utils.getNodeFromTree(axe._tree[0]); // throws an exception on purpose if axe._tree not correct
+  return axe.commons.text.virtualAccessibleText(virtualNode, inLabelledbyContext);
+}
+
+axe.commons.text.virtualAccessibleText = function (element, inLabelledbyContext) {
+  // rest of the commons code minus the virtual tree lookup, since it’s passed in
+}
+```
+
+`virtualAccessibleText` would never be called directly; rather, it would be called
+from `accessibleText`, which passes in a virtual DOM node to support querying of
+the light DOM as well as the Shadow DOM.
+
+### Virtual Nodes
+
+To support Shadow DOM, aXe-core has the ability to handle virtual nodes in [rule matches](#matches-function)
+and [check evaluate](#check-evaluate) functions. The full set of API methods for Shadow DOM can be
+found in the [API documentation](./API.md#virtual-dom-utilities), but the general
+structure for a virtualNode is as follows:
+
+```javascript
+{
+  actualNode: <HTMLElement>,
+  children: <Array>,
+  shadowId: <String>
+}
+```
+
+A virtualNode is an object containing an HTML DOM element (`actualNode`), an
+array of child virtualNodes, and, if provided when querying the virtual tree, a
+shadowID for the node.
+
 
 ### Core Utilities
 
-Core Utilities are an internal library that provides aXe with functionality used throughout its core processes. Most notably among these are the queue function and the DqElement constructor.
+Core Utilities are an internal library that provides aXe with functionality used throughout its core processes. Most notably among these are the queue function, shadow tree utilities and the DqElement constructor.
 
 
 #### Queue Function
