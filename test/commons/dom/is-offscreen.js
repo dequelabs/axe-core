@@ -1,6 +1,7 @@
 describe('dom.isOffscreen', function () {
 	'use strict';
 	var fixture = document.getElementById('fixture');
+	var shadowSupport = axe.testUtils.shadowSupport;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -82,16 +83,14 @@ describe('dom.isOffscreen', function () {
 		var el = document.getElementById('target');
 
 		assert.isTrue(axe.commons.dom.isOffscreen(el));
-
 	});
+
 	it('should NOT detect elements positioned outside the right edge on LTR documents', function () {
 		fixture.innerHTML = '<div id="target" style="position: absolute; width: 50px; right: -51px;">Offscreen?</div>';
 		var el = document.getElementById('target');
 
 		assert.isFalse(axe.commons.dom.isOffscreen(el));
 	});
-
-
 
 	it('should detect elements positioned outside the right edge on RTL documents', function () {
 		document.body.style.direction = 'rtl';
@@ -100,6 +99,7 @@ describe('dom.isOffscreen', function () {
 
 		assert.isTrue(axe.commons.dom.isOffscreen(el));
 	});
+
 	it('should NOT detect elements positioned outside the left edge on RTL documents', function () {
 		document.body.style.direction = 'rtl';
 		fixture.innerHTML = '<div id="target" style="position: absolute; width: 50px; left: -51px;">Offscreen?</div>';
@@ -107,6 +107,7 @@ describe('dom.isOffscreen', function () {
 
 		assert.isFalse(axe.commons.dom.isOffscreen(el));
 	});
+
 	it('should not detect elements positioned because of a scroll', function () {
 		fixture.innerHTML = '<div id="scrollable" style="max-height:20px;overflow:scroll">' +
 				'<div id="visible">goobye</div>' +
@@ -119,4 +120,23 @@ describe('dom.isOffscreen', function () {
 		scrollme.scrollIntoView();
 		assert.isFalse(axe.commons.dom.isOffscreen(viz));		
 	});
+
+	(shadowSupport.v1 ? it : xit)('should detect on screen shadow nodes', function () {
+		fixture.innerHTML = '<div></div>';
+		var shadow = fixture.querySelector('div').attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<div id="target">Offscreen?</div>';
+
+		var el = shadow.querySelector('#target');
+		assert.isFalse(axe.commons.dom.isOffscreen(el));
+	});
+
+	(shadowSupport.v1 ? it : xit)('should detect off screen shadow nodes', function () {
+		fixture.innerHTML = '<div></div>';
+		var shadow = fixture.querySelector('div').attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<div id="target" style="position: absolute; height: 50px; top: -51px;">Offscreen?</div>';
+
+		var el = shadow.querySelector('#target');
+		assert.isTrue(axe.commons.dom.isOffscreen(el));
+	});
+
 });

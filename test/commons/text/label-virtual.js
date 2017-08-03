@@ -1,9 +1,18 @@
-describe('text.label', function () {
+describe('text.labelVirtual', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
 	afterEach(function () {
 		fixture.innerHTML = '';
+	});
+
+	it('is called from text.label', function () {
+		fixture.innerHTML = '<div id="monkeys">monkeys</div><div id="bananas">bananas</div>' +
+			'<input id="target" aria-labelledby="monkeys bananas">';
+
+		axe._tree = axe.utils.getFlattenedTree(document.body);
+		var target = fixture.querySelector('#target');
+		assert.equal(axe.commons.text.label(target), 'monkeys bananas');
 	});
 
 	describe('aria-labelledby', function () {
@@ -13,7 +22,7 @@ describe('text.label', function () {
 
 			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
 			var target = axe.utils.querySelectorAll(tree, '#target')[0];
-			assert.equal(axe.commons.text.label(target), 'monkeys bananas');
+			assert.equal(axe.commons.text.labelVirtual(target), 'monkeys bananas');
 		});
 
 		it('should filter invisible elements', function () {
@@ -22,7 +31,7 @@ describe('text.label', function () {
 
 			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
 			var target = axe.utils.querySelectorAll(tree, '#target')[0];
-			assert.equal(axe.commons.text.label(target), 'monkeys');
+			assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
 		});
 
 		it('should take precedence over aria-label', function () {
@@ -31,7 +40,7 @@ describe('text.label', function () {
 
 			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
 			var target = axe.utils.querySelectorAll(tree, '#target')[0];
-			assert.equal(axe.commons.text.label(target), 'monkeys bananas');
+			assert.equal(axe.commons.text.labelVirtual(target), 'monkeys bananas');
 		});
 
 		it('should take precedence over explicit labels', function () {
@@ -41,7 +50,7 @@ describe('text.label', function () {
 
 			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
 			var target = axe.utils.querySelectorAll(tree, '#target')[0];
-			assert.equal(axe.commons.text.label(target), 'monkeys bananas');
+			assert.equal(axe.commons.text.labelVirtual(target), 'monkeys bananas');
 		});
 
 		it('should take precedence over implicit labels', function () {
@@ -51,7 +60,7 @@ describe('text.label', function () {
 
 			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
 			var target = axe.utils.querySelectorAll(tree, '#target')[0];
-			assert.equal(axe.commons.text.label(target), 'monkeys bananas');
+			assert.equal(axe.commons.text.labelVirtual(target), 'monkeys bananas');
 		});
 
 		it('should ignore whitespace only labels', function () {
@@ -60,7 +69,7 @@ describe('text.label', function () {
 
 			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
 			var target = axe.utils.querySelectorAll(tree, '#target')[0];
-			assert.isNull(axe.commons.text.label(target));
+			assert.isNull(axe.commons.text.labelVirtual(target));
 		});
 	});
 
@@ -70,7 +79,7 @@ describe('text.label', function () {
 
 			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
 			var target = axe.utils.querySelectorAll(tree, '#target')[0];
-			assert.equal(axe.commons.text.label(target), 'monkeys');
+			assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
 		});
 
 		it('should ignore whitespace only labels', function () {
@@ -78,7 +87,7 @@ describe('text.label', function () {
 
 			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
 			var target = axe.utils.querySelectorAll(tree, '#target')[0];
-			assert.isNull(axe.commons.text.label(target));
+			assert.isNull(axe.commons.text.labelVirtual(target));
 		});
 
 		it('should take precedence over explicit labels', function () {
@@ -87,7 +96,7 @@ describe('text.label', function () {
 
 			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
 			var target = axe.utils.querySelectorAll(tree, '#target')[0];
-			assert.equal(axe.commons.text.label(target), 'monkeys');
+			assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
 		});
 
 		it('should take precedence over implicit labels', function () {
@@ -96,7 +105,7 @@ describe('text.label', function () {
 
 			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
 			var target = axe.utils.querySelectorAll(tree, '#target')[0];
-			assert.equal(axe.commons.text.label(target), 'monkeys');
+			assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
 		});
 	});
 
@@ -107,7 +116,7 @@ describe('text.label', function () {
 
 			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
 			var target = axe.utils.querySelectorAll(tree, '#target')[0];
-			assert.equal(axe.commons.text.label(target), 'monkeys');
+			assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
 		});
 
 		it('should ignore whitespace only or empty labels', function () {
@@ -116,7 +125,7 @@ describe('text.label', function () {
 
 			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
 			var target = axe.utils.querySelectorAll(tree, '#target')[0];
-			assert.isNull(axe.commons.text.label(target));
+			assert.isNull(axe.commons.text.labelVirtual(target));
 		});
 
 		it('should take precedence over implicit labels', function () {
@@ -126,7 +135,7 @@ describe('text.label', function () {
 
 			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
 			var target = axe.utils.querySelectorAll(tree, '#target')[0];
-			assert.equal(axe.commons.text.label(target), 'monkeys');
+			assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
 
 		});
 	});
@@ -138,7 +147,7 @@ describe('text.label', function () {
 
 			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
 			var target = axe.utils.querySelectorAll(tree, '#target')[0];
-			assert.equal(axe.commons.text.label(target), 'monkeys');
+			assert.equal(axe.commons.text.labelVirtual(target), 'monkeys');
 		});
 
 		it('should ignore whitespace only or empty labels', function () {
@@ -147,7 +156,7 @@ describe('text.label', function () {
 
 			var tree = axe._tree = axe.utils.getFlattenedTree(document.body);
 			var target = axe.utils.querySelectorAll(tree, '#target')[0];
-			assert.isNull(axe.commons.text.label(target));
+			assert.isNull(axe.commons.text.labelVirtual(target));
 		});
 	});
 });
