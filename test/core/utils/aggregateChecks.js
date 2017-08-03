@@ -156,6 +156,26 @@ describe('axe.utils.aggregateChecks', function() {
 			}));
 			assert.equal(checkResult.result, FAIL);
 		});
+
+		it('ignores fail checks on any, if at least one passed', function () {
+			var checkResult = axe.utils.aggregateChecks( createTestCheckResults({
+				any: [false, undefined, true], // cantTell
+				none: [true, false] // fail
+			}));
+
+			assert.lengthOf(checkResult.any, 0);
+			assert.lengthOf(checkResult.none, 1);
+		});
+
+		it('includes cantTell checks from any if there are no fails', function () {
+			var checkResult = axe.utils.aggregateChecks( createTestCheckResults({
+				any: [undefined, undefined, false], // cantTell
+				none: [undefined, false] // cantTell
+			}));
+
+			assert.lengthOf(checkResult.any, 2);
+			assert.lengthOf(checkResult.none, 1);
+		});
 	});
 
 });
