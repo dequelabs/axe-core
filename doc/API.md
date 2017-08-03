@@ -23,9 +23,9 @@
 	1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
   1. [Virtual DOM Utilities](#virtual-dom-utilities)
     1. [API Name: axe.utils.getFlattenedTree](#api-name-axeutilsgetflattenedtree)
-    1. [API Name: axe.utils.getNodeFromTree](#api-name-axeutilsgetnodefromtree)
-    1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
-    1. [API Name: axe._tree](#api-name-axe_tree)
+    2. [API Name: axe.utils.getNodeFromTree](#api-name-axeutilsgetnodefromtree)
+    3. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
+    4. [API Name: axe._tree](#api-name-axe_tree)
 1. [Section 3: Example Reference](#section-3-example-reference)
 
 ## Section 1: Introduction
