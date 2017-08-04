@@ -182,10 +182,9 @@ structure for a virtualNode is as follows:
 }
 ```
 
-A virtualNode is an object containing an HTML DOM element (`actualNode`), an
-array of child virtualNodes, and, if provided when querying the virtual tree, a
-shadowID for the node.
-
+- A virtualNode is an object containing an HTML DOM element (`actualNode`).
+- Children contains an array of child virtualNodes.
+- The shadowID indicates whether the node is in a shadow root and if it is, which one it is inside the boundary.
 
 ### Core Utilities
 
