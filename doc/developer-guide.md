@@ -16,9 +16,9 @@ To build axe.js, simply run `grunt build`.  axe.js and axe.min.js are placed int
 
 ### Running Tests
 
-To run all tests from the command line you can run `grunt test`, which will run all unit and integration tests using PhantomJS.
+To run all tests from the command line you can run `grunt test`, which will run all unit and integration tests using PhantomJS and Selenium Webdriver.
 
-You can also load tests in any supported browser, which is helpful for debugging.  Tests require a local server to run, you must first start a local server to serve files.  You can use Grunt to start one by running `grunt connect watch`.  Once your local server is running you can load the following pages in any browser to run tests:
+You can also load tests in any supported browser, which is helpful for debugging.  Tests require a local server to run, you must first start a local server to serve files.  You can use Grunt to start one by running `grunt dev`.  Once your local server is running you can load the following pages in any browser to run tests:
 
 
 1.  [Core Tests](../test/core/)
@@ -41,7 +41,7 @@ After execution, a Check will return `true` or `false` depending on whether or n
 Rules are defined by JSON files in the [lib/rules directory](../lib/rules).  The JSON object is used to seed the [Rule object](../lib/core/base/rule.js#L30).  A valid Rule JSON consists of the following:
 
 * `id` - `String` A unique name of the Rule.
-* `selector` - **optional** `String` which is a CSS selector that specifies the elements of the page on which the Rule runs. aXe-core will look inside of *open* [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Shadow_DOM) subtrees for elements matching the provided selector. If omitted, the rule will run against every node.
+* `selector` - **optional** `String` which is a CSS selector that specifies the elements of the page on which the Rule runs. aXe-core will look inside of the light DOM and *open* [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Shadow_DOM) trees for elements matching the provided selector. If omitted, the rule will run against every node.
 * `excludeHidden` - **optional** `Boolean` Whether the rule should exclude hidden elements.  Defaults to `true`.
 * `enabled` - **optional** `Boolean`  Whether the rule is enabled by default.  Defaults to `true`.
 * `pageLevel` - **optional** `Boolean`  Whether the rule is page level.  Page level rules will only run if given an entire `document` as context.
