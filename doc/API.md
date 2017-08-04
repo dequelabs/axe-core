@@ -619,7 +619,7 @@ In axe-core v1 the main method for axe was `axe.a11yCheck()`. This method was re
 
 ##### Description
 
-Recursvely return an array containing the virtual DOM tree for the node specified, excluding comment nodes and shadow DOM nodes `&lt;content> and `&lt;slot>`. This method will return a composed tree containing both light and shadow DOM, if applicable.
+Recursvely return an array containing the virtual DOM tree for the node specified, excluding comment nodes and shadow DOM nodes `<content>` and `<slot>`. This method will return a composed tree containing both light and shadow DOM, if applicable.
 
 ##### Synopsis
 
@@ -663,7 +663,7 @@ axe.utils.getNodeFromTree(axe._tree[0], node);
 
 ##### Returns
 
-An object containing the virtualNode:
+A virtualNode object:
 
 ```javascript
 {
@@ -677,7 +677,7 @@ An object containing the virtualNode:
 
 ##### Description
 
-A querySelectorAll implementation that works on the virtual DOM and Shadow DOM by manually walking the tree instead of relying on DOM API methods which don't step into Shadow DOM.
+A querySelectorAll implementation that works on the virtual DOM and Shadow DOM by manually walking the flattened tree instead of relying on DOM API methods which don’t step into Shadow DOM.
 
 Note: while there is no `axe.utils.querySelector` method, you can reproduce that behavior by accessing the first item returned in the array.
 
@@ -695,36 +695,6 @@ axe.utils.querySelectorAll(virtualNode, 'a[href]');
 ##### Returns
 
 An Array of filtered HTML nodes.
-
-#### API Name: axe.\_tree
-
-During an audit, a high-level variable is available for retrieving a cached version of the flattened tree. This is useful in rules and checks, as well as tests. This variable is good for performance because it prevents having to recompile the flattened tree.
-
-In Audit.js:
-
-```javascript
-Audit.prototype.run = function (context, options, resolve, reject) {
-  'use strict';
-  this.validateOptions(options);
-
-  axe._tree = axe.utils.getFlattenedTree(document.documentElement);
-
-  // the rest of the code
-```
-
-##### Synopsis
-
-```javascript
-axe.utils.getNodeFromTree(axe._tree[0], node)
-```
-
-##### Parameters
-
-None
-
-##### Returns
-
-An array of objects, where each object is a virtualNode. See `axe.utils.getFlattenedTree`.
 
 
 ## Section 3: Example Reference
