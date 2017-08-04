@@ -154,18 +154,18 @@ Let’s look at an example:
 
 ```javascript
 axe.commons.text.accessibleText = function (element, inLabelledbyContext) {
-  let virtualNode = axe.utils.getNodeFromTree(axe._tree[0]); // throws an exception on purpose if axe._tree not correct
-  return axe.commons.text.virtualAccessibleText(virtualNode, inLabelledbyContext);
+  let virtualNode = axe.utils.getNodeFromTree(axe._tree[0], element); // throws an exception on purpose if axe._tree not correct
+  return axe.commons.text.accessibleTextVirtual(virtualNode, inLabelledbyContext);
 }
 
-axe.commons.text.virtualAccessibleText = function (element, inLabelledbyContext) {
+axe.commons.text.accessibleTextVirtual = function (element, inLabelledbyContext) {
   // rest of the commons code minus the virtual tree lookup, since it’s passed in
 }
 ```
 
-`virtualAccessibleText` would never be called directly; rather, it would be called
-from `accessibleText`, which passes in a virtual DOM node to support querying of
-the light DOM as well as the Shadow DOM.
+`accessibleTextVirtual` would only be called directly if you’ve got a virtual node
+you can use. If you don’t already have one, call the `accessibleText` lookup function,
+which passes on a virtual DOM node with both the light DOM and Shadow DOM (if applicable).
 
 ### Virtual Nodes
 

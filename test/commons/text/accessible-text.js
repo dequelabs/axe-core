@@ -1,4 +1,4 @@
-describe('text.accessibleText', function() {
+describe('text.accessibleTextVirtual', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
@@ -7,6 +7,14 @@ describe('text.accessibleText', function() {
 	afterEach(function() {
 		fixture.innerHTML = '';
 		axe._tree = null;
+	});
+
+	it('is called through accessibleText with a DOM node', function() {
+ 		var accessibleText = axe.commons.text.accessibleText;
+ 		fixture.innerHTML = '<label><input type="button"></label>';
+ 		axe._tree = axe.utils.getFlattenedTree(fixture);
+ 		var target = fixture.querySelector('input');
+		assert.equal(accessibleText(target), '');
 	});
 
 	it('should match the first example from the ARIA spec', function() {
@@ -27,8 +35,8 @@ describe('text.accessibleText', function() {
 		var rule2a = axe.utils.querySelectorAll(axe._tree, '#rule2a')[0];
 		var rule2c = axe.utils.querySelectorAll(axe._tree, '#rule2c')[0];
 
-		assert.equal(axe.commons.text.accessibleText(rule2a), 'File');
-		assert.equal(axe.commons.text.accessibleText(rule2c), 'New');
+		assert.equal(axe.commons.text.accessibleTextVirtual(rule2a), 'File');
+		assert.equal(axe.commons.text.accessibleTextVirtual(rule2c), 'New');
 	});
 
 	it('should match the second example from the ARIA spec', function() {
@@ -50,8 +58,8 @@ describe('text.accessibleText', function() {
 
 		var rule2a = axe.utils.querySelectorAll(axe._tree, '#beep')[0];
 		var rule2b = axe.utils.querySelectorAll(axe._tree, '#flash')[0];
-		assert.equal(axe.commons.text.accessibleText(rule2a), 'Beep');
-		assert.equal(axe.commons.text.accessibleText(rule2b), 'Flash the screen 3 times');
+		assert.equal(axe.commons.text.accessibleTextVirtual(rule2a), 'Beep');
+		assert.equal(axe.commons.text.accessibleTextVirtual(rule2b), 'Flash the screen 3 times');
 	});
 
 
@@ -64,7 +72,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'This is a label');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'This is a label');
 	});
 
 	it('should use recusive aria-labelledby properly', function() {
@@ -76,7 +84,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'ARIA Label This is a label');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'ARIA Label This is a label');
 	});
 
 	it('should include hidden text referred to with aria-labelledby', function () {
@@ -88,7 +96,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
- 		assert.equal(axe.commons.text.accessibleText(target), 'This is a hidden secret');
+ 		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'This is a hidden secret');
 	});
 
 	it('should allow setting the initial inLabelledbyContext value', function () {
@@ -96,8 +104,8 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#lbl1')[0];
- 		assert.equal(axe.commons.text.accessibleText(target, false), '');
- 		assert.equal(axe.commons.text.accessibleText(target, true), 'hidden label');
+ 		assert.equal(axe.commons.text.accessibleTextVirtual(target, false), '');
+ 		assert.equal(axe.commons.text.accessibleTextVirtual(target, true), 'hidden label');
 	});
 
 	it('should use aria-label if present with no labelledby', function() {
@@ -109,7 +117,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'ARIA Label');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'ARIA Label');
 	});
 
 	it('should use alt on imgs with no ARIA', function() {
@@ -122,7 +130,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'Alt text goes here');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Alt text goes here');
 	});
 
 	it('should use alt on image inputs with no ARIA', function() {
@@ -135,7 +143,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'Alt text goes here');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Alt text goes here');
 	});
 
 	it('should use not use alt on text inputs with no ARIA', function() {
@@ -148,7 +156,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
-		assert.equal(axe.commons.text.accessibleText(target), '');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 	});
 
 	it('should use HTML label if no ARIA information', function() {
@@ -160,7 +168,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'HTML Label');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'HTML Label');
 	});
 
 	it('should handle last ditch title attribute', function() {
@@ -172,7 +180,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2label')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'This is This is a label of italics');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'This is This is a label of italics');
 	});
 
 	it('should handle totally empty elements', function() {
@@ -184,7 +192,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2label')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'This is This is a label of');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'This is This is a label of');
 	});
 
 
@@ -197,7 +205,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2label')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'This is This is a label of');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'This is This is a label of');
 	});
 
 	it('should only show each node once when label is before input', function() {
@@ -205,7 +213,7 @@ describe('text.accessibleText', function() {
 			'<input type="text" id="tb1"></div>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'My form input');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'My form input');
 	});
 
 	it('should only show each node once when label follows input', function() {
@@ -214,7 +222,7 @@ describe('text.accessibleText', function() {
 			'<label for="tb1">My form input</label>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'My form input');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'My form input');
 	});
 
 	it('should handle nested inputs in normal context', function() {
@@ -226,7 +234,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2label')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'This is This is a label of everything');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'This is This is a label of everything');
 	});
 
 	it('should use handle nested inputs properly in labelledby context', function() {
@@ -238,7 +246,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'This is the value of everything');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'This is the value of everything');
 	});
 
 	it('should use ignore hidden inputs', function() {
@@ -250,7 +258,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'This is of everything');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'This is of everything');
 	});
 
 	it('should use handle inputs with no type as if they were text inputs', function() {
@@ -262,7 +270,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'This is the value of everything');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'This is the value of everything');
 	});
 
 	it('should use handle nested selects properly in labelledby context', function() {
@@ -276,7 +284,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'This is first third of everything');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'This is first third of everything');
 	});
 
 	it('should use handle nested textareas properly in labelledby context', function() {
@@ -288,7 +296,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'This is the value of everything');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'This is the value of everything');
 	});
 
 	it('should use handle ARIA labels properly in labelledby context', function() {
@@ -301,7 +309,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'This not a span is the value of everything');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'This not a span is the value of everything');
 	});
 
 	it('shoud properly fall back to title', function() {
@@ -309,7 +317,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 	});
 
 	it('should give text even for role=presentation on anchors', function() {
@@ -317,7 +325,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 	});
 
 	it('should give text even for role=presentation on buttons', function() {
@@ -325,21 +333,21 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 	});
 
 	it('should give text even for role=presentation on summary', function() {
 		fixture.innerHTML = '<summary role="presentation">Hello</summary>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, 'summary')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 	});
 
 	it('shoud properly fall back to title', function() {
 		fixture.innerHTML = '<a href="#" role="none" title="Hello"></a>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 	});
 
 	it('should give text even for role=none on anchors', function() {
@@ -347,7 +355,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 	});
 
 	it('should give text even for role=none on buttons', function() {
@@ -355,7 +363,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 	});
 
 	it('should give text even for role=none on summary', function() {
@@ -363,7 +371,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'summary')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 	});
 
 	it('should not add extra spaces around phrasing elements', function() {
@@ -371,7 +379,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'HelloWorld');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'HelloWorld');
 	});
 
 	it('should add spaces around non-phrasing elements', function() {
@@ -379,7 +387,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 	});
 
 	it('should not look at scripts', function() {
@@ -387,7 +395,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
-		assert.equal(axe.commons.text.accessibleText(target), '');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 	});
 
 	it('should use <label> for input buttons', function() {
@@ -395,7 +403,7 @@ describe('text.accessibleText', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-		assert.equal(axe.commons.text.accessibleText(target), '');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 	});
 
 	(shadowSupport.v1 ? it : xit)('should only find aria-labelledby element in the same context ', function() {
@@ -410,7 +418,7 @@ describe('text.accessibleText', function() {
 
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'ARIA Label');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'ARIA Label');
 	});
 
 	(shadowSupport.v1 ? it : xit)('should find attributes within a shadow tree', function() {
@@ -421,7 +429,7 @@ describe('text.accessibleText', function() {
 
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'I will be king');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'I will be king');
 	});
 
 	(shadowSupport.v1 ? it : xit)('should find attributes within a slot on the shadow tree', function() {
@@ -432,7 +440,7 @@ describe('text.accessibleText', function() {
 
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'you will be queen');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'you will be queen');
 	});
 
 	(shadowSupport.v1 ? it : xit)('should find fallback content for shadow DOM', function() {
@@ -444,7 +452,7 @@ describe('text.accessibleText', function() {
 
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-		assert.equal(axe.commons.text.accessibleText(target), 'Fallback content heroes');
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Fallback content heroes');
 	});
 
 	describe('figure', function() {
@@ -455,7 +463,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 		});
 
 		it('should check aria-label', function() {
@@ -463,7 +471,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 		});
 
 		it('should check the figures figcaption', function() {
@@ -471,7 +479,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 		});
 
 		it('should check title on figure', function() {
@@ -479,7 +487,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 		});
 
 		it('should not visit innerText of figure', function() {
@@ -487,7 +495,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
-			assert.equal(axe.commons.text.accessibleText(target), '');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 		});
 
 		(shadowSupport.v1 ? it : xit)('should check within the composed (shadow) tree', function () {
@@ -499,7 +507,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 		});
 	});
 
@@ -510,7 +518,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'img')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should work with aria-label attribute', function() {
@@ -518,7 +526,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'img')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should work with alt attribute', function() {
@@ -526,7 +534,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'img')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should work with title attribute', function() {
@@ -534,7 +542,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'img')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 	});
 
@@ -544,7 +552,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 		});
 
 		it('should find value for input type=reset', function() {
@@ -552,7 +560,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 		});
 
 		it('should find value for input type=submit', function() {
@@ -560,7 +568,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 		});
 
 		it('should provide a default value for input type="submit"', function() {
@@ -569,7 +577,7 @@ describe('text.accessibleText', function() {
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			// IE inserts this for us, thanks!
-			assert.equal(axe.commons.text.accessibleText(target), target.value || 'Submit');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), target.value || 'Submit');
 		});
 
 		it('should provide a default value for input type="reset"', function() {
@@ -577,7 +585,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-			var defaultText = axe.commons.text.accessibleText(target);
+			var defaultText = axe.commons.text.accessibleTextVirtual(target);
 			assert.isString(defaultText);
 			assert.notEqual(defaultText.trim(), '');
 		});
@@ -587,7 +595,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 		});
 
 		it('should find title for input type=reset', function() {
@@ -596,7 +604,7 @@ describe('text.accessibleText', function() {
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			// IE does not use title; but will use default value instead
-			assert.equal(axe.commons.text.accessibleText(target), target.value || 'Hello');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), target.value || 'Hello');
 		});
 
 		it('should find title for input type=submit', function() {
@@ -605,7 +613,7 @@ describe('text.accessibleText', function() {
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			// Again, default value takes precedence over title
-			assert.equal(axe.commons.text.accessibleText(target), target.value || 'Hello');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), target.value || 'Hello');
 		});
 	});
 
@@ -616,7 +624,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should work with aria-label', function() {
@@ -624,7 +632,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should work with the caption element', function() {
@@ -632,7 +640,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should work with the title attribute', function() {
@@ -640,7 +648,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should work with the summary attribute', function() {
@@ -648,7 +656,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should prefer title attribute over summary attribute', function() {
@@ -656,7 +664,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 	});
 
@@ -672,7 +680,7 @@ describe('text.accessibleText', function() {
 				axe._tree = axe.utils.getFlattenedTree(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-				assert.equal(axe.commons.text.accessibleText(target), 'Hello World', type);
+				assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World', type);
 			});
 		});
 
@@ -683,7 +691,7 @@ describe('text.accessibleText', function() {
 				axe._tree = axe.utils.getFlattenedTree(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-				assert.equal(axe.commons.text.accessibleText(target), 'Hello World', type);
+				assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World', type);
 			});
 		});
 
@@ -695,7 +703,7 @@ describe('text.accessibleText', function() {
 				axe._tree = axe.utils.getFlattenedTree(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-				assert.equal(axe.commons.text.accessibleText(target), 'Hello World', type);
+				assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World', type);
 			});
 		});
 
@@ -707,7 +715,7 @@ describe('text.accessibleText', function() {
 				axe._tree = axe.utils.getFlattenedTree(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-				assert.equal(axe.commons.text.accessibleText(target), 'Hello World', type);
+				assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World', type);
 			});
 		});
 
@@ -719,7 +727,7 @@ describe('text.accessibleText', function() {
 				axe._tree = axe.utils.getFlattenedTree(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-				assert.equal(axe.commons.text.accessibleText(target), 'Hello World', type);
+				assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World', type);
 			});
 		});
 
@@ -730,7 +738,7 @@ describe('text.accessibleText', function() {
 				axe._tree = axe.utils.getFlattenedTree(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-				assert.equal(axe.commons.text.accessibleText(target), 'Hello World', type);
+				assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World', type);
 			});
 		});
 
@@ -741,7 +749,7 @@ describe('text.accessibleText', function() {
 				axe._tree = axe.utils.getFlattenedTree(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-				assert.equal(axe.commons.text.accessibleText(target), '');
+				assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 			});
 		});
 	});
@@ -754,7 +762,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should find aria-label', function() {
@@ -762,7 +770,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should find an implicit label', function() {
@@ -771,7 +779,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should find an explicit label', function() {
@@ -780,7 +788,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		// not implemented yet, doesn't work accross ATs
@@ -789,7 +797,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should find a title attribute', function() {
@@ -797,7 +805,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should otherwise be empty string', function() {
@@ -805,7 +813,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
-			assert.equal(axe.commons.text.accessibleText(target), '');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 		});
 	});
 
@@ -817,7 +825,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should find aria-label', function() {
@@ -825,7 +833,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should find an alt attribute', function() {
@@ -833,7 +841,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		// doesn't work consistently across ATs yet
@@ -842,7 +850,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should find a title attribute', function() {
@@ -850,7 +858,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should otherwise be empty string', function() {
@@ -858,7 +866,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-			assert.equal(axe.commons.text.accessibleText(target), '');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 		});
 	});
 
@@ -869,7 +877,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should find aria-label', function() {
@@ -877,7 +885,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should check subtree', function() {
@@ -885,7 +893,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should find a title attribute', function() {
@@ -893,7 +901,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should otherwise be empty string', function() {
@@ -901,7 +909,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
-			assert.equal(axe.commons.text.accessibleText(target), '');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 		});
 	});
 
@@ -912,7 +920,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should find aria-label', function() {
@@ -920,7 +928,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should check subtree', function() {
@@ -928,7 +936,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should find a title attribute', function() {
@@ -936,7 +944,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
-			assert.equal(axe.commons.text.accessibleText(target), 'Hello World');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
 		});
 
 		it('should otherwise be empty string', function() {
@@ -944,7 +952,7 @@ describe('text.accessibleText', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
-			assert.equal(axe.commons.text.accessibleText(target), '');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 		});
 	});
 
@@ -965,7 +973,7 @@ describe('text.accessibleText', function() {
 				axe._tree = axe.utils.getFlattenedTree(fixture);
 
 				var target = axe.utils.getNodeFromTree(axe._tree[0], elm);
-				var result = axe.commons.text.accessibleText(target);
+				var result = axe.commons.text.accessibleTextVirtual(target);
 				assert.equal(result, 'Hello World', tag);
 			});
 		});
@@ -979,7 +987,7 @@ describe('text.accessibleText', function() {
 				axe._tree = axe.utils.getFlattenedTree(fixture);
 
 				var target = axe.utils.getNodeFromTree(axe._tree[0], elm);
-				var result = axe.commons.text.accessibleText(target);
+				var result = axe.commons.text.accessibleTextVirtual(target);
 				assert.equal(result, 'Hello World', tag);
 			});
 		});
@@ -993,7 +1001,7 @@ describe('text.accessibleText', function() {
 				axe._tree = axe.utils.getFlattenedTree(fixture);
 
 				var target = axe.utils.getNodeFromTree(axe._tree[0], elm);
-				var result = axe.commons.text.accessibleText(target);
+				var result = axe.commons.text.accessibleTextVirtual(target);
 				assert.equal(result, 'Hello World', tag);
 			});
 		});
@@ -1004,7 +1012,7 @@ describe('text.accessibleText', function() {
 				axe._tree = axe.utils.getFlattenedTree(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, tag)[0];
-				assert.equal(axe.commons.text.accessibleText(target), '');
+				assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 			});
 		});
 	});
