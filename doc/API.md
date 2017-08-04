@@ -25,7 +25,13 @@
 		1. [API Name: axe.utils.getFlattenedTree](#api-name-axeutilsgetflattenedtree)
 		2. [API Name: axe.utils.getNodeFromTree](#api-name-axeutilsgetnodefromtree)
 		3. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
-1. [Section 3: Example Reference](#section-3-example-reference)
+	1. [Common Functions](#common-functions)
+1. [Section 3: Test Utilities](#test-utilities)
+		1. [Test Util Name: axe.testUtils.MockCheckContext](#test-util-name-axetestutilsmockcheckcontext)
+		1. [Test Util Name: axe.testUtils.shadowSupport](#test-util-name-axetestutilsshadowsupport)
+		1. [Test Util Name: axe.testUtils.fixtureSetup](#test-util-name-axetestutilsfixturesetup)
+		1. [Test Util Name: axe.testUtils.checkSetup](#test-util-name-axetestutilschecksetup)
+1. [Section 4: Example Reference](#section-3-example-reference)
 
 ## Section 1: Introduction
 
@@ -628,7 +634,7 @@ axe.utils.getFlattenedTree(element, shadowId)
 ```
 
 ##### Parameters
- - `node` – node. The current HTML node for which you want a flattened DOM tree.
+ - `node` – HTMLElement. The current HTML node for which you want a flattened DOM tree.
  - `shadowId` – string(optional). ID of the shadow DOM that is the closest shadow ancestor of the node
 
 ##### Returns
@@ -658,7 +664,7 @@ axe.utils.getNodeFromTree(axe._tree[0], node);
 ##### Parameters
 
   - `vNode` – object. The flattened DOM tree to fetch a virtual node from
-  - `node` – node. The HTML DOM node for which you need a virtual representation
+  - `node` – HTMLElement. The HTML DOM node for which you need a virtual representation
 
 ##### Returns
 
@@ -696,6 +702,179 @@ axe.utils.querySelectorAll(virtualNode, 'a[href]');
 An Array of filtered HTML nodes.
 
 
-## Section 3: Example Reference
+### Common Functions
+
+#### axe.commons.dom.getComposedParent
+
+Get an element's parent in the composed tree
+
+##### Synopsis
+
+```javascript
+axe.commons.dom.getComposedParent(node)
+```
+
+##### Parameters
+* `element` – HTMLElement. The element for which you want to find a parent
+
+##### Returns
+
+A DOMNode for the parent
+
+
+#### axe.commons.dom.getRootNode
+
+Return the document or document fragment (shadow DOM)
+
+##### Synopsis
+
+```javascript
+axe.commons.dom.getRootNode(node)
+```
+
+##### Parameters
+* `element` – HTMLElement. The element for which you want to find the root node
+
+##### Returns
+
+The top-level document or shadow DOM document fragment
+
+
+#### axe.commons.dom.findUp
+
+Recusively walk up the DOM, checking for a node which matches a selector. Warning: this should be used sparingly for performance reasons.
+
+##### Synopsis
+
+```javascript
+axe.commons.dom.findUp(node, '.selector')
+```
+
+##### Parameters
+* `element` – HTMLElement. The starting element
+* `selector` – String. The target selector for the HTMLElement
+
+##### Returns
+
+Either the matching HTMLElement or `null` if there was no match.
+
+## Section 3: Test Utilities
+
+All tests must support Shadow DOM, so we created some test utilities to make this easier.
+
+### Test Util Name: MockCheckContext
+
+Create a check context for mocking and resetting data and relatedNodes in tests.
+
+#### Synopsis
+
+```javascript
+describe('region', function () {
+  var fixture = document.getElementById('fixture');
+
+  var checkContext = new axe.testUtils.MockCheckContext();
+
+  afterEach(function () {
+    fixture.innerHTML = '';
+    checkContext.reset();
+  });
+
+  it('should return true when all content is inside the region', function () {
+    assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+    assert.equal(checkContext._relatedNodes.length, 0);
+  });
+});
+```
+
+#### Parameters
+
+None
+
+#### Returns
+
+An object containg the data, relatedNodes, and a way to reset them.
+
+```javascript
+{
+  data: (){},
+  relatedNodes: (){},
+  reset: (){}
+}
+```
+
+### Test Util Name: shadowSupport
+
+Provide an API for determining Shadow DOM v0 and v1 support in tests. PhantomJS doesn't have Shadow DOM support, while some browsers do.
+
+#### Synopsis
+
+```javascript
+(axe.testUtils.shadowSupport.v1 ? it : xit)('should test Shadow tree content', function () {
+  // The rest of the shadow DOM test
+});
+```
+
+#### Parameters
+
+None
+
+#### Returns
+
+An object containing booleans for the following Shadow DOM supports: `v0`, `v1`, or `undefined`.
+
+### Test Util Name: fixtureSetup
+
+Method for injecting content into a fixture and caching the flattened DOM tree (light and Shadow DOM together).
+
+#### Synopsis
+
+```javascript
+it('should return true if there is only one ' + type + ' element with the same name', function () {
+  axe.testUtils.fixtureSetup('<input type="' + type + '" id="target" name="uniqueyname">' +
+    '<input type="' + type + '" name="differentname">');
+
+  var node = fixture.querySelector('#target');
+  assert.isTrue(check.evaluate.call(checkContext, node));
+});
+```
+
+#### Parameters
+
+* `content` – Node|String. Stuff to go into the fixture (html or DOM node)
+
+#### Returns
+
+An HTML Element for the fixture
+
+### Test Util Name: checkSetup
+
+Create check arguments.
+
+#### Synopsis
+
+```javascript
+it('should return true when all content is inside the region', function () {
+  var checkArgs = checkSetup('<div id="target"><div role="main"><a href="a.html#mainheader">Click Here</a><div><h1 id="mainheader" tabindex="0">Introduction</h1></div></div></div>');
+
+  assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+  assert.equal(checkContext._relatedNodes.length, 0);
+});
+```
+
+#### Parameters
+
+* `content` – String|Node. Stuff to go into the fixture (html or node)
+* `options` – Object. Options argument for the check (optional, default: {})
+* `target` – String. Target for the check, CSS selector (default: '#target')
+
+### Returns
+
+An array with the DOM Node, options and virtualNode
+
+```javascript
+[node, options, virtualNode]
+```
+
+## Section 4: Example Reference
 
 This package contains examples for [jasmine](examples/jasmine), [mocha](examples/mocha), [phantomjs](examples/phantomjs), [qunit](examples/qunit), [selenium using javascript](examples/selenium), and [generating HTML from the violations array](examples/html-handlebars.md). Each of these examples is in the [doc/examples](examples) folder. In each folder, there is a README.md file which contains specific information about each example.

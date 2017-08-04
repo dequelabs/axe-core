@@ -1,5 +1,10 @@
 var testUtils = {};
 
+/**
+ * Create a check context for mocking/resetting data and relatedNodes in tests
+ *
+ * @return Object
+ */
 testUtils.MockCheckContext = function () {
 	'use strict';
 	return {
@@ -18,6 +23,13 @@ testUtils.MockCheckContext = function () {
 	};
 };
 
+/**
+ * Provide an API for determining Shadow DOM v0 and v1 support in tests.
+ * PhantomJS doesn't have Shadow DOM support, while some browsers do.
+ *
+ * @param HTMLDocumentElement		The document of the current context
+ * @return Object
+ */
 testUtils.shadowSupport = (function(document) {
 	'use strict';
 	var v0 = document.body && typeof document.body.createShadowRoot === 'function',
@@ -34,6 +46,13 @@ testUtils.shadowSupport = (function(document) {
 
 })(document);
 
+/**
+ * Method for injecting content into a fixture and caching
+ * the flattened DOM tree (light and Shadow DOM together)
+ *
+ * @param Node|String 	Stuff to go into the fixture (html or DOM node)
+ * @return HTMLElement
+ */
 testUtils.fixtureSetup = function (content) {
 	'use strict';
 	var fixture = document.querySelector('#fixture');
@@ -51,6 +70,7 @@ testUtils.fixtureSetup = function (content) {
  * @param Node|String 	Stuff to go into the fixture (html or node)
  * @param Object  			Options argument for the check (optional, default: {})
  * @param String  			Target for the check, CSS selector (default: '#target')
+ * @return Array
  */
 testUtils.checkSetup = function (content, options, target) {
 	'use strict';
