@@ -22,16 +22,17 @@
 	1. [API Name: axe.cleanup](#api-name-axecleanup)
 	1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
 	1. [Virtual DOM Utilities](#virtual-dom-utilities)
-		1. [API Name: axe.utils.getFlattenedTree](#api-name-axeutilsgetflattenedtree)
-		2. [API Name: axe.utils.getNodeFromTree](#api-name-axeutilsgetnodefromtree)
 		3. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
 	1. [Common Functions](#common-functions)
-1. [Section 3: Test Utilities](#test-utilities)
-		1. [Test Util Name: axe.testUtils.MockCheckContext](#test-util-name-axetestutilsmockcheckcontext)
-		1. [Test Util Name: axe.testUtils.shadowSupport](#test-util-name-axetestutilsshadowsupport)
-		1. [Test Util Name: axe.testUtils.fixtureSetup](#test-util-name-axetestutilsfixturesetup)
-		1. [Test Util Name: axe.testUtils.checkSetup](#test-util-name-axetestutilschecksetup)
-1. [Section 4: Example Reference](#section-3-example-reference)
+1. [Section 3: Core APIs](#section-3-core-apis)
+	1. [API Name: axe.utils.getFlattenedTree](#api-name-axeutilsgetflattenedtree)
+	1. [API Name: axe.utils.getNodeFromTree](#api-name-axeutilsgetnodefromtree)
+1. [Section 4: Test Utilities](#section-4-test-utilities)
+	1. [Test Util Name: axe.testUtils.MockCheckContext](#test-util-name-axetestutilsmockcheckcontext)
+	1. [Test Util Name: axe.testUtils.shadowSupport](#test-util-name-axetestutilsshadowsupport)
+	1. [Test Util Name: axe.testUtils.fixtureSetup](#test-util-name-axetestutilsfixturesetup)
+	1. [Test Util Name: axe.testUtils.checkSetup](#test-util-name-axetestutilschecksetup)
+1. [Section 5: Example Reference](#section-5-example-reference)
 
 ## Section 1: Introduction
 
@@ -620,63 +621,9 @@ In axe-core v1 the main method for axe was `axe.a11yCheck()`. This method was re
 
 ### Virtual DOM Utilities
 
-#### API Name: axe.utils.getFlattenedTree
-
-##### Description
-
-Recursvely return an array containing the virtual DOM tree for the node specified, excluding comment nodes and shadow DOM nodes `<content>` and `<slot>`. This method will return a composed tree containing both light and shadow DOM, if applicable.
-
-##### Synopsis
-
-```javascript
-var element = document.body;
-axe.utils.getFlattenedTree(element, shadowId)
-```
-
-##### Parameters
- - `node` – HTMLElement. The current HTML node for which you want a flattened DOM tree.
- - `shadowId` – string(optional). ID of the shadow DOM that is the closest shadow ancestor of the node
-
-##### Returns
-
-An array of objects, where each object is a virtualNode:
-
-```javascript
-[{
-  actualNode: body,
-  children: [virtualNodes],
-  shadowId: undefined
-}]
-```
-
-#### API Name: axe.utils.getNodeFromTree
-
-##### Description
-
-Recursively return a single node from a virtual DOM tree. This is commonly used in rules and checks where the node is readily available without querying the DOM.
-
-##### Synopsis
-
-```javascript
-axe.utils.getNodeFromTree(axe._tree[0], node);
-```
-
-##### Parameters
-
-  - `vNode` – object. The flattened DOM tree to fetch a virtual node from
-  - `node` – HTMLElement. The HTML DOM node for which you need a virtual representation
-
-##### Returns
-
-A virtualNode object:
-
-```javascript
-{
-  actualNode: div,
-  children: [virtualNodes],
-  shadowId: undefined
-}
-```
+Note: If you’re writing rules or checks, you’ll have both the `node` and `virtualNode` passed in.
+But if you need to query the flattened tree, the documented function below should help. See the
+[developer guide](./developer-guide.md) for more information.
 
 #### API Name: axe.utils.querySelectorAll
 
@@ -706,7 +653,7 @@ An Array of filtered HTML nodes.
 
 #### axe.commons.dom.getComposedParent
 
-Get an element's parent in the composed tree
+Get an element's parent in the flattened tree
 
 ##### Synopsis
 
@@ -758,7 +705,72 @@ axe.commons.dom.findUp(node, '.selector')
 
 Either the matching HTMLElement or `null` if there was no match.
 
-## Section 3: Test Utilities
+## Section 3: Core APIs
+
+As mentioned above, you shouldn’t need the Shadow DOM APIs below unless you’re working on the axe-core
+engine: rules and checks already have `virtualNode` objects passed in.
+
+### API Name: axe.utils.getFlattenedTree
+
+#### Description
+
+Recursvely return an array containing the virtual DOM tree for the node specified, excluding comment nodes
+and shadow DOM nodes `<content>` and `<slot>`. This method will return a flattened tree containing both
+light and shadow DOM, if applicable.
+
+#### Synopsis
+
+```javascript
+var element = document.body;
+axe.utils.getFlattenedTree(element, shadowId)
+```
+
+#### Parameters
+ - `node` – HTMLElement. The current HTML node for which you want a flattened DOM tree.
+ - `shadowId` – string(optional). ID of the shadow DOM that is the closest shadow ancestor of the node
+
+#### Returns
+
+An array of objects, where each object is a virtualNode:
+
+```javascript
+[{
+  actualNode: body,
+  children: [virtualNodes],
+  shadowId: undefined
+}]
+```
+
+### API Name: axe.utils.getNodeFromTree
+
+#### Description
+
+Recursively return a single node from a virtual DOM tree. This is commonly used in rules and checks where the node is readily available without querying the DOM.
+
+#### Synopsis
+
+```javascript
+axe.utils.getNodeFromTree(axe._tree[0], node);
+```
+
+#### Parameters
+
+  - `vNode` – object. The flattened DOM tree to fetch a virtual node from
+  - `node` – HTMLElement. The HTML DOM node for which you need a virtual representation
+
+#### Returns
+
+A virtualNode object:
+
+```javascript
+{
+  actualNode: div,
+  children: [virtualNodes],
+  shadowId: undefined
+}
+```
+
+## Section 4: Test Utilities
 
 All tests must support Shadow DOM, so we created some test utilities to make this easier.
 
@@ -875,6 +887,6 @@ An array with the DOM Node, options and virtualNode
 [node, options, virtualNode]
 ```
 
-## Section 4: Example Reference
+## Section 5: Example Reference
 
 This package contains examples for [jasmine](examples/jasmine), [mocha](examples/mocha), [phantomjs](examples/phantomjs), [qunit](examples/qunit), [selenium using javascript](examples/selenium), and [generating HTML from the violations array](examples/html-handlebars.md). Each of these examples is in the [doc/examples](examples) folder. In each folder, there is a README.md file which contains specific information about each example.
