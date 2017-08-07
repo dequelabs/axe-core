@@ -44,14 +44,14 @@ The actual testing of elements in axe-core is done by checks. A rule has one or 
 | metadata impact    | "minor", "serious", "critical"
 | metadata pass      | Describes why the check passed
 | metadata fail      | Describes why the check failed
-| metadata incomplete| Describes why the check returned undefined
+| metadata incomplete| Describes why the check didn’t complete
 
 Incomplete results occur when axe-core can’t produce a clear pass or fail result,
 giving users the opportunity to review it manually. Incomplete messages can take
 the form of a string, or an object with arbitrary keys matching the data returned
 from the check.
 
-Incomplete is optional for checks, while pass and fail are required.
+A pass message is required, while fail and incomplete are dependent on the check result.
 
 ### Incomplete message string
 
