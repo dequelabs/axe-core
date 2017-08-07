@@ -22,7 +22,7 @@
 	1. [API Name: axe.cleanup](#api-name-axecleanup)
 	1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
 	1. [Virtual DOM Utilities](#virtual-dom-utilities)
-		3. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
+		1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
 	1. [Common Functions](#common-functions)
 1. [Section 3: Core APIs](#section-3-core-apis)
 	1. [API Name: axe.utils.getFlattenedTree](#api-name-axeutilsgetflattenedtree)
