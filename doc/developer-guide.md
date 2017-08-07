@@ -78,7 +78,7 @@ Similar to Rules, Checks are defined by JSON files in the [lib/checks directory]
 	* `messages` - `Object` These messages are displayed when the Check passes or fails
 		* `pass` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check passes
 		* `fail` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check fails
-		* `incomplete` – `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check is incomplete OR `Object` consisting of missingData for why it returned incomplete. Refer to [rules.md](./rules.md).
+		* `incomplete` – `String|Object` – [doT.js](http://olado.github.io/doT/) template string displayed when the Check is incomplete OR an object with `missingData` on why it returned incomplete. Refer to [rules.md](./rules.md).
 
 #### Check `evaluate`
 
@@ -122,6 +122,17 @@ Occasionally, you may want to add additional information about why a Check passe
 
 See [Developing Axe-core Rules](./rule-development.md) for more information
 on writing rules and checks, including incomplete results.
+
+```javascript
+// aria-valid-attr check
+"messages": {
+  "pass": "ARIA attributes are used correctly for the defined role",
+  "fail": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}"
+}
+```
+
+See [rules.md](./rules.md) for more information on writing rules and checks,
+including incomplete results.
 
 #### CheckResult
 
