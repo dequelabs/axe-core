@@ -2,6 +2,22 @@
 
 aXe runs a series of tests to check for accessibility of content and functionality on a website. A test is made up of a series of Rules which are, themselves, made up of Checks. aXe executes these Rules asynchronously and, when the Rules are finished running, runs a callback function which is passed a Result structure. Since some Rules run on the page level while others do not, tests will also run in one of two ways. If a document is specified, the page level rules will run, otherwise they will not.
 
+1. [Getting Started](#getting-started)
+1. [Architecture Overview](#architecture-overview)
+	1. [Rules](#rules)
+	1. [Checks](#checks)
+	1. [Common Functions](#common-functions)
+	1. [Virtual Nodes](#virtual-nodes)
+	1. [Core Utilities](#core-utilities)
+1. [Virtual DOM APIs](#virtual-dom-apis)
+	1. [API Name: axe.utils.getFlattenedTree](#api-name-axeutilsgetflattenedtree)
+	1. [API Name: axe.utils.getNodeFromTree](#api-name-axeutilsgetnodefromtree)
+1. [Test Utilities](#test-utilities)
+	1. [Test Util Name: axe.testUtils.MockCheckContext](#test-util-name-axetestutilsmockcheckcontext)
+	1. [Test Util Name: axe.testUtils.shadowSupport](#test-util-name-axetestutilsshadowsupport)
+	1. [Test Util Name: axe.testUtils.fixtureSetup](#test-util-name-axetestutilsfixturesetup)
+	1. [Test Util Name: axe.testUtils.checkSetup](#test-util-name-axetestutilschecksetup)
+
 ## Getting Started
 
 ### Environment Pre-requisites
@@ -16,9 +32,9 @@ To build axe.js, simply run `grunt build`.  axe.js and axe.min.js are placed int
 
 ### Running Tests
 
-To run all tests from the command line you can run `grunt test`, which will run all unit and integration tests using PhantomJS.
+To run all tests from the command line you can run `grunt test`, which will run all unit and integration tests using PhantomJS and Selenium Webdriver.
 
-You can also load tests in any supported browser, which is helpful for debugging.  Tests require a local server to run, you must first start a local server to serve files.  You can use Grunt to start one by running `grunt connect watch`.  Once your local server is running you can load the following pages in any browser to run tests:
+You can also load tests in any supported browser, which is helpful for debugging.  Tests require a local server to run, you must first start a local server to serve files.  You can use Grunt to start one by running `grunt dev`.  Once your local server is running you can load the following pages in any browser to run tests:
 
 
 1.  [Core Tests](../test/core/)
@@ -41,7 +57,7 @@ After execution, a Check will return `true` or `false` depending on whether or n
 Rules are defined by JSON files in the [lib/rules directory](../lib/rules).  The JSON object is used to seed the [Rule object](../lib/core/base/rule.js#L30).  A valid Rule JSON consists of the following:
 
 * `id` - `String` A unique name of the Rule.
-* `selector` - **optional** `String` which is a CSS selector that specifies the elements of the page on which the Rule runs.  If omitted, the rule will run against every node.
+* `selector` - **optional** `String` which is a CSS selector that specifies the elements of the page on which the Rule runs. aXe-core will look inside of the light DOM and *open* [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Shadow_DOM) trees for elements matching the provided selector. If omitted, the rule will run against every node.
 * `excludeHidden` - **optional** `Boolean` Whether the rule should exclude hidden elements.  Defaults to `true`.
 * `enabled` - **optional** `Boolean`  Whether the rule is enabled by default.  Defaults to `true`.
 * `pageLevel` - **optional** `Boolean`  Whether the rule is page level.  Page level rules will only run if given an entire `document` as context.
@@ -63,7 +79,12 @@ There is a Grunt target which will ensure each Rule has a valid format, which ca
 
 #### Matches Function
 
-Custom `matches` functions are executed against each node which matches the Rule's `selector` and receive a single parameter named `node`, which is the Node to test.  The function must return either `true` or `false`.  Common functions are provided as `commons`. [See the data-table matches function for an example.](../lib/rules/data-table-matches.js)
+Custom `matches` functions are executed against each node which matches the Rule's `selector` and receive two parameters:
+
+* `node` – node, the DOM Node to test
+* `virtualNode`– object, the virtual DOM representation of the node. See [virtualNode documentation](#virtual-nodes) for more.
+
+The matches function must return either `true` or `false`.  Common functions are provided as `commons`. [See the data-table matches function for an example.](../lib/rules/data-table-matches.js)
 
 ### Checks
 
@@ -87,6 +108,7 @@ The following variables are defined for `Check#evaluate`:
 
 * `node` - `HTMLElement`  The element that the Check is run against
 * `options` - `Mixed`  Any options specific to this Check that may be necessary.  If not specified by the user at run-time or configure-time; it will use `options` as defined by the Check's JSON file.
+* `virtualNode` – `Object`  The virtualNode object for use with Shadow DOM. See [virtualNode documentation](#virtual-nodes).
 * `this.data()` - `Function`  Free-form data that either the Check message requires or is presented as `data` in the CheckResult object.  Subsequent calls to `this.data()` will overwrite previous.  See [aria-valid-attr](../lib/checks/aria/valid-attr.js) for example usage.
 * `this.relatedNodes()` - `Function`  Array or NodeList of elements that are related to this Check.  For example the [duplicate-id](../lib/checks/shared/duplicate-id.js) Check will add all Elements which share the same ID.
 * `commons` - Common functions that may be used across multiple Checks.  See [Common Functions](#common-functions) for more information.
@@ -115,9 +137,9 @@ return results.filter(function (r) {
 });
 ```
 
-#### Pass and Fail Templates
+#### Pass, Fail and Incomplete Templates
 
-Occasionally, you may want to add additional information about why a Check passed or failed into its message.  For example, the [aria-valid-attr](../lib/checks/aria/valid-attr.json) will add information about any invalid ARIA attributes to its fail message.  The message uses the [doT.js](http://olado.github.io/doT/) and is compiled to a JavaScript function at build-time.  In the Check message, you have access to the `CheckResult` as `it`.
+Occasionally, you may want to add additional information about why a Check passed, failed or returned undefined into its message.  For example, the [aria-valid-attr](../lib/checks/aria/valid-attr.json) will add information about any invalid ARIA attributes to its fail message.  The message uses the [doT.js](http://olado.github.io/doT/) and is compiled to a JavaScript function at build-time.  In the Check message, you have access to the `CheckResult` as `it`.
 
 #### CheckResult
 
@@ -131,7 +153,54 @@ A CheckResult has the following properties:
 
 ### Common Functions
 
-Common functions are an internal library used by the rules and checks.  If you have code repeated across rules and checks, you can use these functions and contribute to them.  They are made available to every function as `commons`.  Documentation is available in [source code](../lib/commons/).
+Common functions are an internal library used by the rules and checks.  If you have code repeated across rules and checks, you can use these functions and contribute to them.  They are made available to every function as `commons`. Documentation is available in [source code](../lib/commons/).
+
+#### Commons and Shadow DOM
+
+To support Shadow DOM while maintaining backwards compatibility, commons functions that
+query DOM nodes must operate on an in-memory representation of the DOM using aXe-core’s
+built-in [API methods and utility functions](./API.md#virtual-dom-utilities).
+
+Commons functions should do the virtual tree lookup and call a `virtual` function
+including the rest of the commons code. The naming of this special function
+should contain the original commons function name with `Virtual` added to signify
+it expects to operate on a virtual DOM tree.
+
+Let’s look at an example:
+
+```javascript
+axe.commons.text.accessibleText = function (element, inLabelledbyContext) {
+  let virtualNode = axe.utils.getNodeFromTree(axe._tree[0], element); // throws an exception on purpose if axe._tree not correct
+  return axe.commons.text.accessibleTextVirtual(virtualNode, inLabelledbyContext);
+}
+
+axe.commons.text.accessibleTextVirtual = function (element, inLabelledbyContext) {
+  // rest of the commons code minus the virtual tree lookup, since it’s passed in
+}
+```
+
+`accessibleTextVirtual` would only be called directly if you’ve got a virtual node
+you can use. If you don’t already have one, call the `accessibleText` lookup function,
+which passes on a virtual DOM node with both the light DOM and Shadow DOM (if applicable).
+
+### Virtual Nodes
+
+To support Shadow DOM, aXe-core has the ability to handle virtual nodes in [rule matches](#matches-function)
+and [check evaluate](#check-evaluate) functions. The full set of API methods for Shadow DOM can be
+found in the [API documentation](./API.md#virtual-dom-utilities), but the general
+structure for a virtualNode is as follows:
+
+```javascript
+{
+  actualNode: <HTMLElement>,
+  children: <Array>,
+  shadowId: <String>
+}
+```
+
+- A virtualNode is an object containing an HTML DOM element (`actualNode`).
+- Children contains an array of child virtualNodes.
+- The shadowID indicates whether the node is in a shadow root and if it is, which one it is inside the boundary.
 
 ### Core Utilities
 
@@ -163,3 +232,187 @@ Elements returned by the DqElement class have the following methods and properti
 * `source` - `string` The generated HTML source code of the element
 * `element` - `DOMNode` The element which this object is based off or the containing frame, used for sorting.
 * `toJSON()` - Returns an object containing the selector and source properties
+
+
+## Virtual DOM APIs
+
+Note: You shouldn’t need the Shadow DOM APIs below unless you’re working on the axe-core
+engine, as rules and checks already have `virtualNode` objects passed in. However, these APIs
+will make it easier to work with the virtual DOM.
+
+### API Name: axe.utils.getFlattenedTree
+
+#### Description
+
+Recursvely return an array containing the virtual DOM tree for the node specified, excluding comment nodes
+and shadow DOM nodes `<content>` and `<slot>`. This method will return a flattened tree containing both
+light and shadow DOM, if applicable.
+
+#### Synopsis
+
+```javascript
+var element = document.body;
+axe.utils.getFlattenedTree(element, shadowId)
+```
+
+#### Parameters
+ - `node` – HTMLElement. The current HTML node for which you want a flattened DOM tree.
+ - `shadowId` – string(optional). ID of the shadow DOM that is the closest shadow ancestor of the node
+
+#### Returns
+
+An array of objects, where each object is a virtualNode:
+
+```javascript
+[{
+  actualNode: body,
+  children: [virtualNodes],
+  shadowId: undefined
+}]
+```
+
+### API Name: axe.utils.getNodeFromTree
+
+#### Description
+
+Recursively return a single node from a virtual DOM tree. This is commonly used in rules and checks where the node is readily available without querying the DOM.
+
+#### Synopsis
+
+```javascript
+axe.utils.getNodeFromTree(axe._tree[0], node);
+```
+
+#### Parameters
+
+  - `vNode` – object. The flattened DOM tree to fetch a virtual node from
+  - `node` – HTMLElement. The HTML DOM node for which you need a virtual representation
+
+#### Returns
+
+A virtualNode object:
+
+```javascript
+{
+  actualNode: div,
+  children: [virtualNodes],
+  shadowId: undefined
+}
+```
+
+## Test Utilities
+
+All tests must support Shadow DOM, so we created some test utilities to make this easier.
+
+### Test Util Name: MockCheckContext
+
+Create a check context for mocking and resetting data and relatedNodes in tests.
+
+#### Synopsis
+
+```javascript
+describe('region', function () {
+  var fixture = document.getElementById('fixture');
+
+  var checkContext = new axe.testUtils.MockCheckContext();
+
+  afterEach(function () {
+    fixture.innerHTML = '';
+    checkContext.reset();
+  });
+
+  it('should return true when all content is inside the region', function () {
+    assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+    assert.equal(checkContext._relatedNodes.length, 0);
+  });
+});
+```
+
+#### Parameters
+
+None
+
+#### Returns
+
+An object containg the data, relatedNodes, and a way to reset them.
+
+```javascript
+{
+  data: (){},
+  relatedNodes: (){},
+  reset: (){}
+}
+```
+
+### Test Util Name: shadowSupport
+
+Provide an API for determining Shadow DOM v0 and v1 support in tests. PhantomJS doesn't have Shadow DOM support, while some browsers do.
+
+#### Synopsis
+
+```javascript
+(axe.testUtils.shadowSupport.v1 ? it : xit)('should test Shadow tree content', function () {
+  // The rest of the shadow DOM test
+});
+```
+
+#### Parameters
+
+None
+
+#### Returns
+
+An object containing booleans for the following Shadow DOM supports: `v0`, `v1`, or `undefined`.
+
+### Test Util Name: fixtureSetup
+
+Method for injecting content into a fixture and caching the flattened DOM tree (light and Shadow DOM together).
+
+#### Synopsis
+
+```javascript
+it('should return true if there is only one ' + type + ' element with the same name', function () {
+  axe.testUtils.fixtureSetup('<input type="' + type + '" id="target" name="uniqueyname">' +
+    '<input type="' + type + '" name="differentname">');
+
+  var node = fixture.querySelector('#target');
+  assert.isTrue(check.evaluate.call(checkContext, node));
+});
+```
+
+#### Parameters
+
+* `content` – Node|String. Stuff to go into the fixture (html or DOM node)
+
+#### Returns
+
+An HTML Element for the fixture
+
+### Test Util Name: checkSetup
+
+Create check arguments.
+
+#### Synopsis
+
+```javascript
+it('should return true when all content is inside the region', function () {
+  var checkArgs = checkSetup('<div id="target"><div role="main"><a href="a.html#mainheader">Click Here</a><div><h1 id="mainheader" tabindex="0">Introduction</h1></div></div></div>');
+
+  assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+  assert.equal(checkContext._relatedNodes.length, 0);
+});
+```
+
+#### Parameters
+
+* `content` – String|Node. Stuff to go into the fixture (html or node)
+* `options` – Object. Options argument for the check (optional, default: {})
+* `target` – String. Target for the check, CSS selector (default: '#target')
+
+#### Returns
+
+An array with the DOM Node, options and virtualNode
+
+```javascript
+[node, options, virtualNode]
+```

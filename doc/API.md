@@ -21,7 +21,10 @@
 	1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
 	1. [API Name: axe.cleanup](#api-name-axecleanup)
 	1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
-1. [Section 3: Example Reference](#section-3-example-reference)
+	1. [Virtual DOM Utilities](#virtual-dom-utilities)
+		1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
+	1. [Common Functions](#common-functions)
+1. [Section 3: Example Reference](#section-5-example-reference)
 
 ## Section 1: Introduction
 
@@ -450,7 +453,7 @@ This will either be null or an object which is an instance of Error. If you are 
 
 #### Results Object
 
-The callback function passed in as the third parameter of `axe.a11yCheck` runs on the results object. This object has four components – a `passes` array, a `violations` array, an `incomplete` array and an `inapplicable` array.
+The callback function passed in as the third parameter of `axe.run` runs on the results object. This object has four components – a `passes` array, a `violations` array, an `incomplete` array and an `inapplicable` array.
 
 The `passes` array keeps track of all the passed tests, along with detailed information on each one. This leads to more efficient testing, especially when used in conjunction with manual testing, as the user can easily find out what tests have already been passed.
 
@@ -483,7 +486,7 @@ Each object returned in these arrays have the following properties:
 * `helpUrl` - URL that provides more information about the specifics of the violation. Links to a page on the Deque University site.
 * `id` - Unique identifier for the rule; [see the list of rules](rule-descriptions.md)
 * `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the Rule failed or `null` if the check passed
-* `tags` - Array of tags that this rule is assigned. These tags can be used in the option structure to select which rules are run ([see `axe.a11yCheck` parameters below for more information](#a11ycheck-parameters)).
+* `tags` - Array of tags that this rule is assigned. These tags can be used in the option structure to select which rules are run ([see `axe.run` parameters for more information](#parameters-axerun)).
 * `nodes` - Array of all elements the Rule tested
 	* `html` - Snippet of HTML of the Element
 	* `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the test failed or `null` if the check passed
@@ -607,6 +610,93 @@ In axe-core v1 the main method for axe was `axe.a11yCheck()`. This method was re
 - .a11yCheck does not pass the error object to the callback, rather it returns the result as the first parameter and logs errors to the console.
 - .a11yCheck requires a context object, and so will not fall back to the document root.
 - .a11yCheck does not return a Promise.
+
+### Virtual DOM Utilities
+
+Note: If you’re writing rules or checks, you’ll have both the `node` and `virtualNode` passed in.
+But if you need to query the flattened tree, the documented function below should help. See the
+[developer guide](./developer-guide.md) for more information.
+
+#### API Name: axe.utils.querySelectorAll
+
+##### Description
+
+A querySelectorAll implementation that works on the virtual DOM and Shadow DOM by manually walking the flattened tree instead of relying on DOM API methods which don’t step into Shadow DOM.
+
+Note: while there is no `axe.utils.querySelector` method, you can reproduce that behavior by accessing the first item returned in the array.
+
+##### Synopsis
+
+```javascript
+axe.utils.querySelectorAll(virtualNode, 'a[href]');
+```
+
+##### Parameters
+
+* `virtualNode` – object, the flattened DOM tree to query against. `axe._tree` is available for this purpose during an audit; see below.
+* `selector` – string, the CSS selector to use as a filter. For the most part, this should work seamlessly with `document.querySelectorAll`.
+
+##### Returns
+
+An Array of filtered HTML nodes.
+
+
+### Common Functions
+
+#### axe.commons.dom.getComposedParent
+
+Get an element's parent in the flattened tree
+
+##### Synopsis
+
+```javascript
+axe.commons.dom.getComposedParent(node)
+```
+
+##### Parameters
+* `element` – HTMLElement. The element for which you want to find a parent
+
+##### Returns
+
+A DOMNode for the parent
+
+
+#### axe.commons.dom.getRootNode
+
+Return the document or document fragment (shadow DOM)
+
+##### Synopsis
+
+```javascript
+axe.commons.dom.getRootNode(node)
+```
+
+##### Parameters
+* `element` – HTMLElement. The element for which you want to find the root node
+
+##### Returns
+
+The top-level document or shadow DOM document fragment
+
+
+#### axe.commons.dom.findUp
+
+Recusively walk up the DOM, checking for a node which matches a selector. Warning: this should be used sparingly for performance reasons.
+
+##### Synopsis
+
+```javascript
+axe.commons.dom.findUp(node, '.selector')
+```
+
+##### Parameters
+* `element` – HTMLElement. The starting element
+* `selector` – String. The target selector for the HTMLElement
+
+##### Returns
+
+Either the matching HTMLElement or `null` if there was no match.
+
 
 ## Section 3: Example Reference
 
