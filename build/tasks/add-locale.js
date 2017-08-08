@@ -3,7 +3,9 @@
 var buildManual = require('../build-manual');
 
 module.exports = function (grunt) {
-  grunt.registerMultiTask('add-locale', function () {
+  grunt.registerMultiTask('add-locale',
+  'Task for localizing messages in rules and checks',
+  function () {
     var options = this.options({
       rules: ['lib/rules/**/*.json'],
       checks: ['lib/checks/**/*.json'],

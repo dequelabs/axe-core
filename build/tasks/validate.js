@@ -233,7 +233,9 @@ function validateFiles(grunt, files, schema) {
 }
 
 module.exports = function (grunt) {
-	grunt.registerMultiTask('validate', function () {
+	grunt.registerMultiTask('validate',
+	'Task for validating API schema for tools, checks and rules',
+	function () {
 		var schemas = createSchemas();
 		var options = this.options();
 		if (!options.type || !schemas[options.type]) {

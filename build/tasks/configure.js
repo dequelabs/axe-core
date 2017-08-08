@@ -2,8 +2,9 @@
 'use strict';
 var buildRules = require('../configure');
 module.exports = function (grunt) {
-	grunt.registerMultiTask('configure', function () {
-
+	grunt.registerMultiTask('configure',
+	'Task for configuring rules and checks',
+	function () {
 		var done = this.async();
 		var options = this.options({
       rules: ['lib/rules/**/*.json'],
