@@ -2,6 +2,22 @@
 
 aXe runs a series of tests to check for accessibility of content and functionality on a website. A test is made up of a series of Rules which are, themselves, made up of Checks. aXe executes these Rules asynchronously and, when the Rules are finished running, runs a callback function which is passed a Result structure. Since some Rules run on the page level while others do not, tests will also run in one of two ways. If a document is specified, the page level rules will run, otherwise they will not.
 
+1. [Getting Started](#getting-started)
+1. [Architecture Overview](#architecture-overview)
+	1. [Rules](#rules)
+	1. [Checks](#checks)
+	1. [Common Functions](#common-functions)
+	1. [Virtual Nodes](#virtual-nodes)
+	1. [Core Utilities](#core-utilities)
+1. [Virtual DOM APIs](#virtual-dom-apis)
+	1. [API Name: axe.utils.getFlattenedTree](#api-name-axeutilsgetflattenedtree)
+	1. [API Name: axe.utils.getNodeFromTree](#api-name-axeutilsgetnodefromtree)
+1. [Test Utilities](#test-utilities)
+	1. [Test Util Name: axe.testUtils.MockCheckContext](#test-util-name-axetestutilsmockcheckcontext)
+	1. [Test Util Name: axe.testUtils.shadowSupport](#test-util-name-axetestutilsshadowsupport)
+	1. [Test Util Name: axe.testUtils.fixtureSetup](#test-util-name-axetestutilsfixturesetup)
+	1. [Test Util Name: axe.testUtils.checkSetup](#test-util-name-axetestutilschecksetup)
+
 ## Getting Started
 
 ### Environment Pre-requisites
@@ -188,7 +204,7 @@ structure for a virtualNode is as follows:
 
 ### Core Utilities
 
-Core Utilities are an internal library that provides aXe with functionality used throughout its core processes. Most notably among these are the queue function, shadow tree utilities and the DqElement constructor.
+Core Utilities are an internal library that provides aXe with functionality used throughout its core processes. Most notably among these are the queue function and the DqElement constructor.
 
 
 #### Queue Function
@@ -216,3 +232,187 @@ Elements returned by the DqElement class have the following methods and properti
 * `source` - `string` The generated HTML source code of the element
 * `element` - `DOMNode` The element which this object is based off or the containing frame, used for sorting.
 * `toJSON()` - Returns an object containing the selector and source properties
+
+
+## Virtual DOM APIs
+
+Note: You shouldn’t need the Shadow DOM APIs below unless you’re working on the axe-core
+engine, as rules and checks already have `virtualNode` objects passed in. However, these APIs
+will make it easier to work with the virtual DOM.
+
+### API Name: axe.utils.getFlattenedTree
+
+#### Description
+
+Recursvely return an array containing the virtual DOM tree for the node specified, excluding comment nodes
+and shadow DOM nodes `<content>` and `<slot>`. This method will return a flattened tree containing both
+light and shadow DOM, if applicable.
+
+#### Synopsis
+
+```javascript
+var element = document.body;
+axe.utils.getFlattenedTree(element, shadowId)
+```
+
+#### Parameters
+ - `node` – HTMLElement. The current HTML node for which you want a flattened DOM tree.
+ - `shadowId` – string(optional). ID of the shadow DOM that is the closest shadow ancestor of the node
+
+#### Returns
+
+An array of objects, where each object is a virtualNode:
+
+```javascript
+[{
+  actualNode: body,
+  children: [virtualNodes],
+  shadowId: undefined
+}]
+```
+
+### API Name: axe.utils.getNodeFromTree
+
+#### Description
+
+Recursively return a single node from a virtual DOM tree. This is commonly used in rules and checks where the node is readily available without querying the DOM.
+
+#### Synopsis
+
+```javascript
+axe.utils.getNodeFromTree(axe._tree[0], node);
+```
+
+#### Parameters
+
+  - `vNode` – object. The flattened DOM tree to fetch a virtual node from
+  - `node` – HTMLElement. The HTML DOM node for which you need a virtual representation
+
+#### Returns
+
+A virtualNode object:
+
+```javascript
+{
+  actualNode: div,
+  children: [virtualNodes],
+  shadowId: undefined
+}
+```
+
+## Test Utilities
+
+All tests must support Shadow DOM, so we created some test utilities to make this easier.
+
+### Test Util Name: MockCheckContext
+
+Create a check context for mocking and resetting data and relatedNodes in tests.
+
+#### Synopsis
+
+```javascript
+describe('region', function () {
+  var fixture = document.getElementById('fixture');
+
+  var checkContext = new axe.testUtils.MockCheckContext();
+
+  afterEach(function () {
+    fixture.innerHTML = '';
+    checkContext.reset();
+  });
+
+  it('should return true when all content is inside the region', function () {
+    assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+    assert.equal(checkContext._relatedNodes.length, 0);
+  });
+});
+```
+
+#### Parameters
+
+None
+
+#### Returns
+
+An object containg the data, relatedNodes, and a way to reset them.
+
+```javascript
+{
+  data: (){},
+  relatedNodes: (){},
+  reset: (){}
+}
+```
+
+### Test Util Name: shadowSupport
+
+Provide an API for determining Shadow DOM v0 and v1 support in tests. PhantomJS doesn't have Shadow DOM support, while some browsers do.
+
+#### Synopsis
+
+```javascript
+(axe.testUtils.shadowSupport.v1 ? it : xit)('should test Shadow tree content', function () {
+  // The rest of the shadow DOM test
+});
+```
+
+#### Parameters
+
+None
+
+#### Returns
+
+An object containing booleans for the following Shadow DOM supports: `v0`, `v1`, or `undefined`.
+
+### Test Util Name: fixtureSetup
+
+Method for injecting content into a fixture and caching the flattened DOM tree (light and Shadow DOM together).
+
+#### Synopsis
+
+```javascript
+it('should return true if there is only one ' + type + ' element with the same name', function () {
+  axe.testUtils.fixtureSetup('<input type="' + type + '" id="target" name="uniqueyname">' +
+    '<input type="' + type + '" name="differentname">');
+
+  var node = fixture.querySelector('#target');
+  assert.isTrue(check.evaluate.call(checkContext, node));
+});
+```
+
+#### Parameters
+
+* `content` – Node|String. Stuff to go into the fixture (html or DOM node)
+
+#### Returns
+
+An HTML Element for the fixture
+
+### Test Util Name: checkSetup
+
+Create check arguments.
+
+#### Synopsis
+
+```javascript
+it('should return true when all content is inside the region', function () {
+  var checkArgs = checkSetup('<div id="target"><div role="main"><a href="a.html#mainheader">Click Here</a><div><h1 id="mainheader" tabindex="0">Introduction</h1></div></div></div>');
+
+  assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+  assert.equal(checkContext._relatedNodes.length, 0);
+});
+```
+
+#### Parameters
+
+* `content` – String|Node. Stuff to go into the fixture (html or node)
+* `options` – Object. Options argument for the check (optional, default: {})
+* `target` – String. Target for the check, CSS selector (default: '#target')
+
+#### Returns
+
+An array with the DOM Node, options and virtualNode
+
+```javascript
+[node, options, virtualNode]
+```
