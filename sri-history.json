@@ -1,0 +1,54 @@
+{
+	"1.0.1": {
+		"axe.js": "sha256-F14wfpbaL6+ZafS2ufmz74/R6CD1L777gCOJVuLn5Ao=",
+		"axe.min.js": "sha256-GfbQgd6aKJKQT21HaQfVUuGEbMUfSKhi7RsWrrih7SM="
+	},
+	"1.1.0": {
+		"axe.js": "sha256-nG9+LLksY/HS6yG4x0iS08U7RAmTucy50uXQS5ndQnM=",
+		"axe.min.js": "sha256-5Lfk3/s+ieHttrDTOCVuepGjDgH2D1neTDDtXnJdIT0="
+	},
+	"1.1.1": {
+		"axe.js": "sha256-K0MLUClls79s14CT01F82LPc+ZubTBwt6fZDdN5iyFw=",
+		"axe.min.js": "sha256-UWXq259l36QypXwd2e4K2V1Lli2qHeSPmKfDXy+7uIM="
+	},
+	"2.0.5": {
+		"axe.js": "sha256-KVA5sj4tNmFLneuHPPbg4iEp3MBzsHvn3+s9CxfMrmc=",
+		"axe.min.js": "sha256-lt5eNq/L7IBUaoSUSAbQ7MEO02DThMGdVm/oxeA88gk="
+	},
+	"2.0.6": {
+		"axe.js": "sha256-cLV1ABoE5NjfwLaRAJYIstAJCmciDXZ55/TrQS5rR/M=",
+		"axe.min.js": "sha256-fnbwW70tA7/ya+5q5Oimc8wCRsdiv3WrU0MElp/euvY="
+	},
+	"2.0.7": {
+		"axe.js": "sha256-HjHe1xKQqP6i3eGpDlARb5HkFsZxvAslvr1JJhUlp60=",
+		"axe.min.js": "sha256-vo7Qs4YxFxzFEW5DG9u05JdAUCsFxx7dBIoBP5rzmKA="
+	},
+	"2.1.7": {
+		"axe.js": "sha256-kXUowSb3HQy6AChF4LYR4cvNxKEHCWqCcuiSxvY6E1s=",
+		"axe.min.js": "sha256-xJPQwkKDFmgwYDLqrt/esIHlc2HLUB2ogf9c1uS1BXA="
+	},
+	"2.2.0": {
+		"axe.js": "sha256-0iX4Q9QT3uHAo+oxS5NWsrU4DNZKB30JRf7m+jjZcX0=",
+		"axe.min.js": "sha256-3UsQJdfWbhtVd0QzcYi2VAJEfs8DMzxrRvr3h9WbMiE="
+	},
+	"2.2.1": {
+		"axe.js": "sha256-1kuZOWtoYszbvrtG7TYfl/FuO48uwZeFpN4aNnebABk=",
+		"axe.min.js": "sha256-WSHVQ1/IJaG9ZOydoFg+QXHLjOq8x/mhYkRAyN1yAdI="
+	},
+	"2.2.2": {
+		"axe.js": "sha256-jTirRblNTKinTlmCK3FqDG6POtZVbP/bJNdrXZhCuqk=",
+		"axe.min.js": "sha256-zpmYSLTgHx09UyYIvYrS5K6uj4VuBbspk54kHk5hPqo="
+	},
+	"2.2.3": {
+		"axe.js": "sha256-dV8RkE0hyyzj7qgValVkoP7Rtu8789BmbyeHZmidvqA=",
+		"axe.min.js": "sha256-BrNWjOcDL265Me8eKQosGWerJ6ju2g+G9+RvMWiBGOA="
+	},
+	"2.3.0": {
+		"axe.js": "sha256-rkyHB2lHjs+tissQLBUxuxIvWlzRbS4f4cdaH+TjQvo=",
+		"axe.min.js": "sha256-MGWkallV18uw6bSq6w8cjbGsf9v4rJtXP+NDtMEbO14="
+	},
+	"2.3.1": {
+		"axe.js": "sha256-63oq1xHBiOhX9jlvn5sJmoL8TwJ8JaLYIB91gyb74RI=",
+		"axe.min.js": "sha256-BGAllCBTUJjJXw3yOPMVai2Bj+1PVaEhK2na699nI/o="
+	}
+}
