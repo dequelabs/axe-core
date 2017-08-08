@@ -2,7 +2,7 @@ describe('button-has-visible-text', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-
+	var checkSetup = axe.testUtils.checkSetup;
 	var checkContext = {
 		_data: null,
 		data: function (d) {
@@ -16,32 +16,28 @@ describe('button-has-visible-text', function () {
 	});
 
 	it('should return false if button element is empty', function () {
-		fixture.innerHTML = '<button></button>';
+		var checkArgs = checkSetup('<button></button>', 'button');
 
-		var node = fixture.querySelector('button');
-		assert.isFalse(checks['button-has-visible-text'].evaluate.call(checkContext, node));
+		assert.isFalse(checks['button-has-visible-text'].evaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should return true if a button element has text', function () {
-		fixture.innerHTML = '<button>Name</button>';
+		var checkArgs = checkSetup('<button>Name</button>', 'button');
 
-		var node = fixture.querySelector('button');
-		assert.isTrue(checks['button-has-visible-text'].evaluate.call(checkContext, node));
+		assert.isTrue(checks['button-has-visible-text'].evaluate.apply(checkContext, checkArgs));
 		assert.deepEqual(checkContext._data, 'Name');
 	});
 
 	it('should return true if ARIA button has text', function () {
-		fixture.innerHTML = '<div role="button">Text</div>';
+		var checkArgs = checkSetup('<div role="button">Text</div>>', '[role=button]');
 
-		var node = fixture.querySelector('div');
-		assert.isTrue(checks['button-has-visible-text'].evaluate.call(checkContext, node));
+		assert.isTrue(checks['button-has-visible-text'].evaluate.apply(checkContext, checkArgs));
 		assert.deepEqual(checkContext._data, 'Text');
 	});
 
 	it('should return false if ARIA button has no text', function () {
-		fixture.innerHTML = '<div role="button"></div>';
+		var checkArgs = checkSetup('<div role="button"></div>>', '[role=button]');
 
-		var node = fixture.querySelector('div');
-		assert.isFalse(checks['button-has-visible-text'].evaluate.call(checkContext, node));
+		assert.isFalse(checks['button-has-visible-text'].evaluate.apply(checkContext, checkArgs));
 	});
 });

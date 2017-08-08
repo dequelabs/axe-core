@@ -2,6 +2,7 @@ describe('aria-labelledby', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var fixtureSetup = axe.testUtils.fixtureSetup;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -14,7 +15,7 @@ describe('aria-labelledby', function () {
 		var target = document.createElement('div');
 		target.id = 'woohoo';
 		target.innerHTML = 'bananas';
-		fixture.appendChild(target);
+		fixtureSetup(target);
 
 		assert.isTrue(checks['aria-labelledby'].evaluate(node));
 	});
@@ -26,14 +27,14 @@ describe('aria-labelledby', function () {
 		var target = document.createElement('div');
 		target.id = 'woohoo';
 		target.innerHTML = 'bananas';
-		fixture.appendChild(target);
+		fixtureSetup(target);
 
 		assert.isTrue(checks['aria-labelledby'].evaluate(node));
 	});
 
 	it('should return false if an aria-labelledby is not present', function () {
 		var node = document.createElement('div');
-		fixture.appendChild(node);
+		fixtureSetup(node);
 
 		assert.isFalse(checks['aria-labelledby'].evaluate(node));
 	});
@@ -45,7 +46,7 @@ describe('aria-labelledby', function () {
 		var target = document.createElement('div');
 		target.id = 'woohoo';
 		target.innerHTML = '<span style="display: none">bananas</span>';
-		fixture.appendChild(target);
+		fixtureSetup(target);
 
 		assert.isTrue(checks['aria-labelledby'].evaluate(node));
 	});
@@ -58,10 +59,9 @@ describe('aria-labelledby', function () {
 		target.id = 'woohoo';
 		target.setAttribute('aria-hidden', 'true');
 		target.innerHTML = 'bananas';
-		fixture.appendChild(target);
+		fixtureSetup(target);
 
 		assert.isTrue(checks['aria-labelledby'].evaluate(node));
 	});
-
 
 });

@@ -1,4 +1,3 @@
-
 describe('aria.requiredAttr', function () {
 	'use strict';
 
@@ -113,11 +112,31 @@ describe('aria.validateAttr', function () {
 	});
 });
 
+function createContentVAV() {
+	'use strict';
+	var group = document.createElement('div');
+	group.innerHTML = '<label id="mylabel">Label</label>' +
+			'<input id="myinput" aria-labelledby="mylabel" type="text" />' +
+			'<input id="invalid" aria-labelledby="doesnotexist" type="text" />';
+	return group;
+}
+
+function makeShadowTreeVAV(node) {
+	'use strict';
+	var root = node.attachShadow({mode: 'open'});
+	var div = document.createElement('div');
+	div.className = 'parent';
+	root.appendChild(div);
+	div.appendChild(createContentVAV());
+}
+
 describe('aria.validateAttrValue', function () {
 	'use strict';
 
 	var orig = axe.commons.aria._lut.attributes,
 		fixture = document.getElementById('fixture');
+
+	var shadowSupport = axe.testUtils.shadowSupport;
 
 	afterEach(function () {
 		axe.commons.aria._lut.attributes = orig;
@@ -192,6 +211,20 @@ describe('aria.validateAttrValue', function () {
 
 				node.setAttribute('cats', 'invalid');
 				assert.isFalse(axe.commons.aria.validateAttrValue(node, 'cats'));
+			});
+			it('should work in shadow DOM', function () {
+				var shadEl;
+
+				if (shadowSupport.v1) {
+					// shadow DOM v1 - note: v0 is compatible with this code, so no need
+					// to specifically test this
+					fixture.innerHTML = '<div></div>';
+					makeShadowTreeVAV(fixture.firstChild);
+					shadEl = fixture.firstChild.shadowRoot.querySelector('input#myinput');
+					assert.isTrue(axe.commons.aria.validateAttrValue(shadEl, 'aria-labelledby'));
+					shadEl = fixture.firstChild.shadowRoot.querySelector('input#invalid');
+					assert.isFalse(axe.commons.aria.validateAttrValue(shadEl, 'aria-labelledby'));
+				}
 			});
 		});
 		describe('idrefs', function () {

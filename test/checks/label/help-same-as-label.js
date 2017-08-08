@@ -5,6 +5,7 @@ describe('help-same-as-label', function () {
 
 	afterEach(function () {
 		fixture.innerHTML = '';
+		axe._tree = undefined;
 	});
 
 	it('should return true if an element has a label and a title with the same text', function () {
@@ -14,8 +15,8 @@ describe('help-same-as-label', function () {
 		node.setAttribute('aria-label', 'Duplicate');
 
 		fixture.appendChild(node);
-
-		assert.isTrue(checks['help-same-as-label'].evaluate(node));
+		var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+		assert.isTrue(checks['help-same-as-label'].evaluate(node, undefined, axe.utils.getNodeFromTree(tree[0], node)));
 	});
 
 	it('should return true if an element has a label and aria-describedby with the same text', function () {
@@ -30,7 +31,8 @@ describe('help-same-as-label', function () {
 		fixture.appendChild(node);
 		fixture.appendChild(dby);
 
-		assert.isTrue(checks['help-same-as-label'].evaluate(node));
+		var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+		assert.isTrue(checks['help-same-as-label'].evaluate(node, undefined, axe.utils.getNodeFromTree(tree[0], node)));
 	});
 
 
@@ -41,7 +43,8 @@ describe('help-same-as-label', function () {
 
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['help-same-as-label'].evaluate(node));
+		var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+		assert.isFalse(checks['help-same-as-label'].evaluate(node, undefined, axe.utils.getNodeFromTree(tree[0], node)));
 
 	});
 
@@ -56,7 +59,8 @@ describe('help-same-as-label', function () {
 		fixture.appendChild(node);
 		fixture.appendChild(dby);
 
-		assert.isFalse(checks['help-same-as-label'].evaluate(node));
+		var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+		assert.isFalse(checks['help-same-as-label'].evaluate(node, undefined, axe.utils.getNodeFromTree(tree[0], node)));
 	});
 
 });

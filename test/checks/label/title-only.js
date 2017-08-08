@@ -5,6 +5,7 @@ describe('title-only', function () {
 
 	afterEach(function () {
 		fixture.innerHTML = '';
+		axe._tree = undefined;
 	});
 
 	it('should return true if an element only has a title', function () {
@@ -14,9 +15,11 @@ describe('title-only', function () {
 
 		fixture.appendChild(node);
 
-		assert.isTrue(checks['title-only'].evaluate(node));
+		var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+
+		assert.isTrue(checks['title-only'].evaluate(node, undefined, axe.utils.getNodeFromTree(tree[0], node)));
 		node.setAttribute('aria-label', 'woop');
-		assert.isFalse(checks['title-only'].evaluate(node));
+		assert.isFalse(checks['title-only'].evaluate(node, undefined, axe.utils.getNodeFromTree(tree[0], node)));
 	});
 
 	it('should return true if an element only has aria-describedby', function () {
@@ -30,9 +33,11 @@ describe('title-only', function () {
 		fixture.appendChild(node);
 		fixture.appendChild(dby);
 
-		assert.isTrue(checks['title-only'].evaluate(node));
+		var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+
+		assert.isTrue(checks['title-only'].evaluate(node, undefined, axe.utils.getNodeFromTree(tree[0], node)));
 		node.setAttribute('aria-label', 'woop');
-		assert.isFalse(checks['title-only'].evaluate(node));
+		assert.isFalse(checks['title-only'].evaluate(node, undefined, axe.utils.getNodeFromTree(tree[0], node)));
 	});
 
 });
