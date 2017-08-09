@@ -110,11 +110,12 @@ v3.0.0-alpha-1
 		- All commons and utilities refactored to support Shadow DOM
 		- Tests all refactored to support Shadow DOM
 		- API docs and developer guide now cover developing for Shadow DOM
-		- Fix for impact of incomplete nodes
+		- Fix for impact of incomplete nodes (#356)
+		- Fix for combobox false positive (#160)
 	additions:
 		- Commons virtual methods for handling virtual DOM
 		- New axe.utils.querySelectorAll method for querying the flattened tree
 		- New core APIs and test utilities for Shadow DOM development
 		- Support for ARIA 1.1: role=feed, role=term, aria-placeholder, aria-modal,
-    aria-current, aria-keyshortcuts 
+    aria-current, aria-keyshortcuts, role=treegrid, aria-orientation, aria-haspopup
 
