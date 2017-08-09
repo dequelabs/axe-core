@@ -103,3 +103,18 @@ v2.3.1:
 	changes:
 		- Improvements to hidden-content rule
 		- Deduplicated langs in valid-lang options
+v3.0.0-alpha-1
+	date: 2017-08-08
+	changes:
+		- Shadow DOM support: rules and checks now supply a `virtualNode` in addition to the light DOM `node`. No <slot> styling support until supported by Chrome
+		- All commons and utilities refactored to support Shadow DOM
+		- Tests all refactored to support Shadow DOM
+		- API docs and developer guide now cover developing for Shadow DOM
+		- Fix for impact of incomplete nodes
+	additions:
+		- Commons virtual methods for handling virtual DOM
+		- New axe.utils.querySelectorAll method for querying the flattened tree
+		- New core APIs and test utilities for Shadow DOM development
+		- Support for ARIA 1.1: role=feed, role=term, aria-placeholder, aria-modal,
+    aria-current, aria-keyshortcuts 
+
