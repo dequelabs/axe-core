@@ -98,9 +98,8 @@ describe('aria-required-children', function () {
 	});
 
 	it('should pass a native input with role comboxbox when missing child is role textbox', function () {
-		fixture.innerHTML = '<input type="text" role="combobox" aria-owns="listbox" id="target"></div><p role="listbox" id="listbox">Nothing here.</p>';
-		var node = fixture.querySelector('#target');
-		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
+		var params = checkSetup('<input type="text" role="combobox" aria-owns="listbox" id="target"></div><p role="listbox" id="listbox">Nothing here.</p>');
+		assert.isTrue(checks['aria-required-children'].evaluate.apply(checkContext, params));
 	});
 
 	it('should pass one indirectly aria-owned child when one required', function () {
