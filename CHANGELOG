@@ -103,7 +103,7 @@ v2.3.1:
 	changes:
 		- Improvements to hidden-content rule
 		- Deduplicated langs in valid-lang options
-v3.0.0-alpha-1
+v3.0.0-alpha.1
 	date: 2017-08-08
 	changes:
 		- Shadow DOM support: rules and checks now supply a `virtualNode` in addition to the light DOM `node`. No <slot> styling support until supported by Chrome
