@@ -330,7 +330,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 |-----------------|:-------:|:----------------------------:|
 | `runOnly`       | n/a     | Limit which rules are executed, based on names or tags
 | `rules`         | n/a     | Allow customizing a rule's properties (including { enable: false })
-| `reporter`      | `v1`    | Which reporter to use (see [Configutration](#api-name-axeconfigure))
+| `reporter`      | `v1`    | Which reporter to use (see [Configuration](#api-name-axeconfigure))
 | `xpath`         | `false` | Return xpath selectors for elements
 | `absolutePaths` | `false` | Use absolute paths when creating element selectors
 | `iframes`       | `true`  | Tell axe to run inside iframes
