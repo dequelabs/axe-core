@@ -56,7 +56,7 @@
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
     "release": "standard-version && node build/sri-update",
     "prepublishOnly": "grunt build && node build/sri-update --validate",
-    "postinstall": "ln -s -f node_modules/angular-precommit/index.js .git/hooks/commit-msg"
+    "postinstall": "cd .git/hooks/ && cp ../../node_modules/angular-precommit/index.js commit-msg && cd ../../"
   },
   "devDependencies": {
     "angular-precommit": "^1.0.3",
