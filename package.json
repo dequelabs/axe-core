@@ -52,7 +52,7 @@
     "test-fast": "grunt test-fast",
     "version": "node build/sri-update",
     "prepublishOnly": "grunt build && node build/sri-update --validate",
-    "postinstall": "cd .git/hooks/ && cp ../../node_modules/angular-precommit/index.js commit-msg && cd ../../"
+    "postinstall": "./bin/postinstall.sh"
   },
   "devDependencies": {
     "angular-precommit": "^1.0.3",
