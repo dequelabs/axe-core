@@ -5,8 +5,8 @@
 	"best-practice"
   ],
   "metadata": {
-    "description": "Each page must have at least one main landmark, used to identify the main content.",
-    "help": "Page must contain at least one main landmark, defined by <main> or an element with role = 'main'."
+    "description": "Ensures a navigation point to the primary content of the page for users of assistive technologies.",
+    "help": "Page must contain one main landmark."
   },
   "all": [],
   "any": [
