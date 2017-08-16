@@ -16,13 +16,24 @@ describe('landmark-no-more-than-one-main test fail', function () {
 		it('should find 1', function () {
 			assert.lengthOf(results.violations, 1);
 		});
+		
+		it('should find #violation1', function () {
+			assert.deepEqual(results.violations[0].nodes[0].target, ['#violation1']);
+		});
 	});
 
 	describe('passes', function () {
 		it('should find 2', function () {
 			assert.lengthOf(results.passes[0].nodes, 2);
 		});
-
+		
+		it('should find #frame1, #pass1', function () {
+			assert.deepEqual(results.passes[0].nodes[0].target, ['#frame1', '#pass1']);
+		});
+		
+		it('should find #frame1, #pass2, #pass4', function () {
+			assert.deepEqual(results.passes[0].nodes[1].target, ['#frame1', '#frame2', '#pass4']);
+		});
 	});
 		
 
