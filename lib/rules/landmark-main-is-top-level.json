@@ -6,7 +6,7 @@
   ],
   "metadata": {
     "description": "Each main landmark in a document must not be nested in another landmark",
-    "help": ""
+    "help": "The main landmark in this document should not be contained within another landmark"
   },
   "all": [],
   "any": [

@@ -34,7 +34,6 @@
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | cat.forms, best-practice | false |
 | label | Ensures every form element has a label | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
 | landmark-main-is-top-level | Each main landmark in a document must not be nested in another landmark | best-practice | true |
-| landmark-no-more-than-one-main | Each document in a page must have no more than one main landmark, used to identify the main content. | cat.best-practice | true |
 | layout-table | Ensures presentational &lt;table&gt; elements do not use &lt;th&gt;, &lt;caption&gt; elements or the summary attribute | cat.semantics, wcag2a, wcag131 | true |
 | link-in-text-block | Links can be distinguished without relying on color | cat.color, experimental, wcag2a, wcag141 | true |
 | link-name | Ensures links have discernible text | cat.name-role-value, wcag2a, wcag111, wcag412, wcag244, section508, section508.22.a | true |

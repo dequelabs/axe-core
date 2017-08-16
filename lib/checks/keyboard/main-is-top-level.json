@@ -4,8 +4,8 @@
   "metadata": {
     "impact": "moderate",
     "messages": {
-      "pass": "Main landmark is top level",
-      "fail": "Main landmark is not top level"
+      "pass": "The main landmark is top level.",
+      "fail": "The main landmark is not top level."
     }
   }
 }
