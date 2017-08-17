@@ -2,6 +2,7 @@
 	"globals": {
 		"results": true,
 		"node": true,
+		"virtualNode": true,
 		"options": true,
 		"axe": true
 	},

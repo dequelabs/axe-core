@@ -2,6 +2,7 @@ describe('link-in-text-block', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var shadowSupport = axe.testUtils.shadowSupport;
 	var styleElm;
 
 	var checkContext = {
@@ -48,12 +49,12 @@ describe('link-in-text-block', function () {
 			if (defaultStyle.hasOwnProperty(prop)) {
 				styleObj[prop] = defaultStyle[prop];
 			}
-    	}
+		}
 		for (prop in outerStyle) {
 			if (outerStyle.hasOwnProperty(prop)) {
 				styleObj[prop] = outerStyle[prop];
 			}
-    	}
+		}
 
 		var cssLines = Object.keys(styleObj).map(function (prop) {
 			// Make camelCase prop dash separated
@@ -143,6 +144,45 @@ describe('link-in-text-block', function () {
 			axe.commons.color.elementIsDistinct = orig;
 		});
 
+		(shadowSupport.v1 ? it : xit)('works with the block outside the shadow tree', function () {
+			var parentElm = document.createElement('div');
+			var shadow = parentElm.attachShadow({ mode: 'open' });
+			shadow.innerHTML = '<a href="">Link</a>';
+			var linkElm = shadow.querySelector('a');
+			fixture.appendChild(parentElm);
+
+			var orig = axe.commons.color.elementIsDistinct;
+			axe.commons.color.elementIsDistinct = function (arg1, arg2) {
+				assert.deepEqual(arg1, linkElm);
+				assert.deepEqual(arg2, parentElm);
+				return orig(arg1, arg2);
+			};
+
+			checks['link-in-text-block'].evaluate.call(checkContext, linkElm);
+			axe.commons.color.elementIsDistinct = orig;
+		});
+
+		(shadowSupport.v1 ? it : xit)('works with the link inside the shadow tree slot', function () {
+			var div = document.createElement('div');
+			div.innerHTML = '<a href="">Link</a>';
+			var shadow = div.attachShadow({ mode: 'open' });
+			shadow.innerHTML = '<p><slot></slot></p>';
+			fixture.appendChild(div);
+
+			var linkElm = div.querySelector('a');
+			var parentElm = shadow.querySelector('p');
+
+			var orig = axe.commons.color.elementIsDistinct;
+			axe.commons.color.elementIsDistinct = function (arg1, arg2) {
+				assert.deepEqual(arg1, linkElm);
+				assert.deepEqual(arg2, parentElm);
+				return orig(arg1, arg2);
+			};
+
+			checks['link-in-text-block'].evaluate.call(checkContext, linkElm);
+			axe.commons.color.elementIsDistinct = orig;
+		});
+
 	});
 
 
@@ -208,16 +248,16 @@ describe('link-in-text-block', function () {
 	});
 
 	it('returns relatedNodes with undefined', function () {
-			var linkElm = getLinkElm({ }, {
-				color: '#000010',
-				backgroundImage: 'url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)'
-			}, {
-				color: '#000000'
-			});
-			assert.isUndefined(checks['link-in-text-block'].evaluate.call(checkContext, linkElm));
-			assert.equal(
-				checkContext._relatedNodes[0],
-				linkElm.parentNode
-			);
+		var linkElm = getLinkElm({ }, {
+			color: '#000010',
+			backgroundImage: 'url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)'
+		}, {
+			color: '#000000'
 		});
+		assert.isUndefined(checks['link-in-text-block'].evaluate.call(checkContext, linkElm));
+		assert.equal(
+			checkContext._relatedNodes[0],
+			linkElm.parentNode
+		);
+	});
 });

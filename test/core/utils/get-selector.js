@@ -1,7 +1,24 @@
+function createContentGetSelector() {
+	'use strict';
+	var group = document.createElement('div');
+	group.innerHTML = '<label id="mylabel">Label</label><input id="myinput" aria-labelledby="mylabel" type="text" />';
+	return group;
+}
+
+function makeShadowTreeGetSelector(node) {
+	'use strict';
+	var root = node.attachShadow({mode: 'open'});
+	var div = document.createElement('div');
+	div.className = 'parent';
+	root.appendChild(div);
+	div.appendChild(createContentGetSelector());
+}
+
 describe('axe.utils.getSelector', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -286,6 +303,37 @@ describe('axe.utils.getSelector', function () {
 			axe.utils.getSelector(node),
 			'#fixture > input[type="text"][name="username"]'
 		);
+	});
+
+	it('no options: should work with shadow DOM', function () {
+		var shadEl;
+
+		if (shadowSupported) {
+			// shadow DOM v1 - note: v0 is compatible with this code, so no need
+			// to specifically test this
+			fixture.innerHTML = '<div></div>';
+			makeShadowTreeGetSelector(fixture.firstChild);
+			shadEl = fixture.firstChild.shadowRoot.querySelector('input#myinput');
+			assert.deepEqual(axe.utils.getSelector(shadEl), [
+				'#fixture > div',
+				'#myinput'
+			]);
+		}
+	});
+	it('toRoot: should work with shadow DOM', function () {
+		var shadEl;
+
+		if (shadowSupported) {
+			// shadow DOM v1 - note: v0 is compatible with this code, so no need
+			// to specifically test this
+			fixture.innerHTML = '<div></div>';
+			makeShadowTreeGetSelector(fixture.firstChild);
+			shadEl = fixture.firstChild.shadowRoot.querySelector('input#myinput');
+			assert.deepEqual(axe.utils.getSelector(shadEl, { toRoot: true }), [
+				'html > body > #fixture > div',
+				'.parent > div > #myinput'
+			]);
+		}
 	});
 
 });

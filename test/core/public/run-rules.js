@@ -127,7 +127,7 @@ describe('runRules', function () {
 				any: ['has-target']
 			}, {
 				id: 'first-div',
-				selector: 'div:not([id=fixture])',
+				selector: 'div:not(#fixture)',
 				any: ['first-div']
 			}],
 			checks: [{
@@ -314,7 +314,7 @@ describe('runRules', function () {
 				any: ['has-target']
 			}, {
 				id: 'first-div',
-				selector: 'div:not([id=fixture])',
+				selector: 'div#fixture div',
 				any: ['first-div'],
 			}],
 			checks: [{

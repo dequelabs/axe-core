@@ -54,14 +54,14 @@ module.exports = function (grunt) {
 				]
 			}
 		},
-	retire: {
+		retire: {
 			options: {
 				/** list of files to ignore **/
 				ignorefile: '.retireignore.json' //or '.retireignore.json'
 			},
 			js: ['lib/*.js'], /** Which js-files to scan. **/
 			node: ['./'] /** Which node directories to scan (containing package.json). **/
-	},
+		},
 		clean: ['dist', 'tmp', 'axe.js', 'axe.*.js'],
 		babel: {
 			options: {
@@ -94,15 +94,15 @@ module.exports = function (grunt) {
 		},
 		concat: {
 			engine: {
+				options: {
+					process: true
+				},
 				coreFiles: [
 					'tmp/core/index.js',
 					'tmp/core/*/index.js',
 					'tmp/core/**/index.js',
 					'tmp/core/**/*.js'
 				],
-				options: {
-					process: true
-				},
 				files: langs.map(function (lang, i) {
 					return {
 						src: [
@@ -112,7 +112,7 @@ module.exports = function (grunt) {
 							'<%= configure.rules.files[' + i + '].dest.auto %>',
 							'lib/outro.stub'
 						],
-						dest: 'axe' + lang + '.js',
+						dest: 'axe' + lang + '.js'
 					};
 				})
 			},
