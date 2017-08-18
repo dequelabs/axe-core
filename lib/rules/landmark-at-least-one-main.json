@@ -1,0 +1,16 @@
+{
+  "id": "landmark-at-least-one-main",
+  "selector": "html",
+  "tags": [
+	"best-practice"
+  ],
+  "metadata": {
+    "description": "Each page must have at least one main landmark, used to identify the main content.",
+    "help": "Page must contain at least one main landmark, defined by <main> or an element with role = 'main'."
+  },
+  "all": [],
+  "any": [
+    "has-at-least-one-main"
+  ],
+  "none": []
+}

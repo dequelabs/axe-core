@@ -1,0 +1,15 @@
+{
+  "id": "landmark-has-one-main",
+  "selector": "html",
+  "tags": [
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "Ensures the page has at least one document with a main landmark, and each document has no more than one main landmark",
+    "help": "Page must have at least one main landmark, but each document should not have more than one main landmark"
+  },
+  "all": ["has-at-least-one-main",
+  "has-no-more-than-one-main"],
+  "any": [],
+  "none": []
+}
