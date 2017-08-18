@@ -5,7 +5,7 @@
   "metadata": {
     "impact": "moderate",
     "messages": {
-      "pass": "Document has at least one main landmark",
+      "pass": "Document has one main landmark",
       "fail": "Document has no main landmarks"
     }
   }
