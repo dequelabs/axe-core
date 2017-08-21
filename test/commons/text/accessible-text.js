@@ -911,6 +911,22 @@ describe('text.accessibleTextVirtual', function() {
 			var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
 			assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 		});
+
+		it('should use text from a table with a single cell and role=presentation', function() {
+			fixture.innerHTML = '<a href="example.html">' +
+				'<table role="presentation">' +
+					'<tr>' +
+						'<td>' +
+						'Descriptive Link Text' +
+						'</td>' +
+					'</tr>' +
+				'</table>' +
+			'</a>';
+			axe._tree = axe.utils.getFlattenedTree(fixture);
+
+			var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Descriptive Link Text');
+		});
 	});
 
 	describe('button', function() {
