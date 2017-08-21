@@ -733,6 +733,20 @@ describe('text.accessibleText', function() {
 			var target = fixture.querySelector('a');
 			assert.equal(axe.commons.text.accessibleText(target), '');
 		});
+
+		it('should use text from a table with a single cell and role=presentation', function() {
+			fixture.innerHTML = '<a href="example.html">' +
+				'<table role="presentation">' +
+					'<tr>' +
+						'<td>' +
+						'Descriptive Link Text' +
+						'</td>' +
+					'</tr>' +
+				'</table>' +
+			'</a>';
+			var target = fixture.querySelector('a');
+			assert.equal(axe.commons.text.accessibleText(target), 'Descriptive Link Text');
+		});
 	});
 
 	describe('button', function() {
