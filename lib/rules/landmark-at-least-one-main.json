@@ -1,0 +1,16 @@
+{
+  "id": "landmark-at-least-one-main",
+  "selector": "html",
+  "tags": [
+	"best-practice"
+  ],
+  "metadata": {
+    "description": "Ensures a navigation point to the primary content of the page for users of assistive technologies.",
+    "help": "Page must contain one main landmark."
+  },
+  "all": [],
+  "any": [
+    "has-at-least-one-main"
+  ],
+  "none": []
+}
