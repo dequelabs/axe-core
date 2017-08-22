@@ -329,7 +329,8 @@ module.exports = function (grunt) {
 				},
 				src: [
 					'lib/**/*.js', 'test/**/*.js', 'build/tasks/**/*.js',
-					'doc/**/*.js', '!doc/examples/jest+react/*.js', 'Gruntfile.js'
+					'doc/**/*.js', '!doc/examples/jest+react/*.js', 'Gruntfile.js',
+					'!**/node_modules/**/*.js'
 				]
 			}
 		}
