@@ -5,8 +5,8 @@
 	"best-practice"
   ],
   "metadata": {
-    "description": "Each main landmark in a document must not be nested in another landmark",
-    "help": "The main landmark in this document should not be contained within another landmark"
+    "description": "The main landmark should not be contained in another landmark",
+    "help": "Main landmark is not at top level"
   },
   "all": [],
   "any": [
