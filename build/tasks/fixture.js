@@ -2,7 +2,9 @@
 'use strict';
 
 module.exports = function (grunt) {
-	grunt.registerMultiTask('fixture', function () {
+	grunt.registerMultiTask('fixture',
+	'Task for generating HTML test fixtures from a common template',
+	function () {
 		var options = this.options({
 			fixture: 'test/runner.tmpl',
 			testCwd: 'test/core',

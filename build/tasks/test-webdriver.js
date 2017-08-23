@@ -117,7 +117,9 @@ module.exports = function (grunt) {
 	/**
 	 * Run all tests in a browser using webdriver
 	 */
-	grunt.registerMultiTask('test-webdriver', function () {
+	grunt.registerMultiTask('test-webdriver',
+	'Task for launching Webdriver with options and running tests against options URLs',
+	function () {
 		var driver;
 		var done = this.async();
 		var options = this.options({

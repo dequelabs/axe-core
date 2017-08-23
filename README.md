@@ -99,3 +99,9 @@ Read the [documentation on contributing](CONTRIBUTING.md)
 ## Projects using axe-core
 
 [List of projects using axe-core](doc/projects.md)
+
+## Acknowledgements
+
+Thanks to Dulin Marat for his [css-selector-parser](https://www.npmjs.com/package/css-selector-parser) implementation which is included for shadow DOM support.
+
+Thanks to the [Slick Parser](https://github.com/mootools/slick/blob/master/Source/Slick.Parser.js) implementers for their contribution, we have used some of their algorithms in our shadow DOM support code.

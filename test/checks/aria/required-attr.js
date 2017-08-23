@@ -17,15 +17,13 @@ describe('aria-required-attr', function () {
 
 	it('should detect missing attributes', function () {
 		var node = document.createElement('div');
-		node.setAttribute('role', 'checkbox');
+		node.setAttribute('role', 'slider');
 		node.id = 'test';
 		node.tabIndex = 1;
 		fixture.appendChild(node);
 
 		assert.isFalse(checks['aria-required-attr'].evaluate.call(checkContext, node));
-		assert.deepEqual(checkContext._data, ['aria-checked']);
-
-
+		assert.deepEqual(checkContext._data, ['aria-valuenow', 'aria-valuemax', 'aria-valuemin']);
 	});
 
 	it('should return true if there is no role', function () {

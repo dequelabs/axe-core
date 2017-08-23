@@ -2,7 +2,9 @@
 'use strict';
 
 module.exports = function (grunt) {
-	grunt.registerMultiTask('update-help', function () {
+	grunt.registerMultiTask('update-help',
+	'Task for updating Deque University helpUrls based on rule JSON files',
+	function () {
 		var options = this.options({
 			version: '1.0.0'
 		});

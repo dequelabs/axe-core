@@ -2,7 +2,7 @@
 
 ## Contributor License Agreement
 
-In order to contribute, you must accept the [contributor licence agreement](https://cla-assistant.io/dequelabs/axe-core) (CLA). Acceptance of this agreement will be checked automatically and pull requests without a CLA cannot be merged.
+In order to contribute, you must accept the [contributor license agreement](https://cla-assistant.io/dequelabs/axe-core) (CLA). Acceptance of this agreement will be checked automatically and pull requests without a CLA cannot be merged.
 
 ## Contribution Guidelines
 
@@ -27,6 +27,13 @@ That having been said, we prefer:
 4. Variable function definitions like `Class.prototype.functionName = function (arguments) {`
 5. Use of 'use strict'
 6. Variables declared at the top of functions
+
+### Shadow DOM
+
+For any proposed changes to rules, checks, commons, or other APIs to be accepted
+in axe-core,your code must support Shadow DOM. See [API.md](./doc/API.md) and the
+[developer guide](./doc/developer-guide.md) for documentation on the available methods
+and test utilities.
 
 ### Testing
 

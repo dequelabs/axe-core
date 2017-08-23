@@ -1,7 +1,7 @@
 /*global Audit, Rule */
 describe('Audit', function () {
 	'use strict';
-	var a;
+	var a, getFlattenedTree;
 	var isNotCalled = function (err) {
 		throw err || new Error('Reject should not be called');
 	};
@@ -59,9 +59,12 @@ describe('Audit', function () {
 		mockChecks.forEach(function (c) {
 			a.addCheck(c);
 		});
+		getFlattenedTree = axe.utils.getFlattenedTree;
 	});
 	afterEach(function () {
 		fixture.innerHTML = '';
+		axe._tree = undefined;
+		axe.utils.getFlattenedTree = getFlattenedTree;
 	});
 
 	it('should be a function', function () {
@@ -368,7 +371,7 @@ describe('Audit', function () {
 				'<input aria-labelledby="monkeys">' +
 				'<blink>FAIL ME</blink>';
 
-			a.run({ include: [fixture] }, {}, function (results) {
+			a.run({ include: [axe.utils.getFlattenedTree(fixture)[0]] }, {}, function (results) {
 				var expected = [{
 					id: 'positive1',
 					result: 'inapplicable',
@@ -416,6 +419,18 @@ describe('Audit', function () {
 				}
 			}, function (results) {
 				assert.equal(results.length, 3);
+				done();
+			}, isNotCalled);
+		});
+		it('should call axe.utils.getFlattenedTree', function (done) {
+			var called = false;
+			axe.utils.getFlattenedTree = function () {
+				called = true;
+			};
+			a.run({ include: [document] }, {
+				rules: {}
+			}, function () {
+				assert.isTrue(called);
 				done();
 			}, isNotCalled);
 		});
@@ -511,7 +526,7 @@ describe('Audit', function () {
 				}
 			});
 
-			a.run({ include: [fixture] }, {
+			a.run({ include: [axe.utils.getFlattenedTree(fixture)[0]] }, {
 				runOnly: {
 					'type': 'rule',
 					'values': ['throw1']
@@ -540,7 +555,7 @@ describe('Audit', function () {
 					throw new Error('Launch the super sheep!');
 				}
 			});
-			a.run({ include: [fixture] }, {
+			a.run({ include: [axe.utils.getFlattenedTree(fixture)[0]] }, {
 				runOnly: {
 					'type': 'rule',
 					'values': ['throw1', 'positive1']
@@ -578,7 +593,7 @@ describe('Audit', function () {
 					throw new Error('Launch the super sheep!');
 				}
 			});
-			a.run({ include: [fixture] }, {
+			a.run({ include: [axe.utils.getFlattenedTree(fixture)[0]] }, {
 				debug: true,
 				runOnly: {
 					'type': 'rule',

@@ -54,6 +54,24 @@ describe('axe.utils.aggregateChecks', function() {
 		});
 	});
 
+	it('returns impact for fail and canttell', function () {
+		var failCheck = axe.utils.aggregateChecks( createTestCheckResults({
+			any: [{ result: false, impact: 'serious' }]
+		}));
+		var canttellCheck = axe.utils.aggregateChecks( createTestCheckResults({
+			any: [{ result: undefined, impact: 'moderate' }]
+		}));
+
+		assert.equal(failCheck.impact, 'serious');
+		assert.equal(canttellCheck.impact, 'moderate');
+	});
+
+	it('sets impact to null for pass', function () {
+		var passCheck = axe.utils.aggregateChecks( createTestCheckResults({
+			any: [{ result: true, impact: 'serious' }]
+		}));
+		assert.isNull(passCheck.impact);
+	});
 
 	describe('none', function () {
 		it('gives result FAIL when any is true', function() {
@@ -155,6 +173,26 @@ describe('axe.utils.aggregateChecks', function() {
 				none: false,
 			}));
 			assert.equal(checkResult.result, FAIL);
+		});
+
+		it('ignores fail checks on any, if at least one passed', function () {
+			var checkResult = axe.utils.aggregateChecks( createTestCheckResults({
+				any: [false, undefined, true], // cantTell
+				none: [true, false] // fail
+			}));
+
+			assert.lengthOf(checkResult.any, 0);
+			assert.lengthOf(checkResult.none, 1);
+		});
+
+		it('includes cantTell checks from any if there are no fails', function () {
+			var checkResult = axe.utils.aggregateChecks( createTestCheckResults({
+				any: [undefined, undefined, false], // cantTell
+				none: [undefined, false] // cantTell
+			}));
+
+			assert.lengthOf(checkResult.any, 2);
+			assert.lengthOf(checkResult.none, 1);
 		});
 	});
 

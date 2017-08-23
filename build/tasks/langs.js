@@ -47,7 +47,9 @@ module.exports = function (grunt) {
 		].join('');
 		grunt.file.write(path, template);
 	}
-	grunt.registerMultiTask('langs', function () {
+	grunt.registerMultiTask('langs',
+	'Task for generating commons language codes from IANA registry',
+	function () {
 		var done = this.async();
 		var ianaLangsURL = 'http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry';
 		if (!this.data.check) {
