@@ -103,3 +103,36 @@ v2.3.1:
 	changes:
 		- Improvements to hidden-content rule
 		- Deduplicated langs in valid-lang options
+v2.4.0-alpha.1:
+	date: 2017-08-31
+	additions:
+		- feat: Add option `restoreScroll`
+		- doc: add more info on testing hidden regions
+		- feat: add S.C. 2.4.4 to link-name rule. Fixes #369
+		- feat: Add Japanese localisation
+		- doc: Add instructions on debugging on CircleCI
+		- test: add unit tests for button-has-visible-text
+		- chore: add descriptions to Grunt tasks
+		- feat(aria): Support progressive ARIA 1.1 attributes / roles
+		- feat: Add new ARIA 1.1 values for haspopup
+		- feat: Add aria-orientation to additional roles
+	changes:
+		- chore: add help text for testconfig Grunt task
+		- fix: Properly output error stack
+		- doc: Add 'on mobile' to viewport rule
+		- fix: Ensure all tests pass in Chrome
+		- fix: Minimise scrolling in getBackgroundColor
+		- chore: Minor build chores for whitespace and lockfile
+		- fix: Align impact levels with Deque Way
+		- fix: Set relatedNodes on color/link-in-block rules
+		- fix: incomplete results should have impact
+		- fix(aria): Allow implicit attribute values
+		- chore: ignore growl in retire
+		- fix: Use getAttribute(id) over .id
+		- fix: Exclude `any` checks from output if one passed
+		- fix(aria): Treegrid should own rows, not treeitems
+		- fix(aria): add exception for native input combobox missing textbox. Fixes #160
+		- test: fix aria/required-children for jshint
+		- feat: allow link text from single-cell layout table
+		- fix: expand tr support for color contrast
+		- chore: ignore node_modules in examples when linting
