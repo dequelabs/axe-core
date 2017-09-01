@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 <a name="3.0.0-alpha.2"></a>
-# [3.0.0-alpha.2](https://github.com/dequelabs/axe-core/compare/v3.0.0-alpha.1...v3.0.0-alpha.2) (2017-09-01)
+## [3.0.0-alpha.2](https://github.com/dequelabs/axe-core/compare/v3.0.0-alpha.1...v3.0.0-alpha.2) (2017-09-01)
 
 ### Bug Fixes
 
@@ -21,7 +21,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 
 <a name="3.0.0-alpha.1"></a>
-# [3.0.0-alpha.1](https://github.com/dequelabs/axe-core/compare/v2.3.1...v3.0.0-alpha.1) (2017-08-16)
+## [3.0.0-alpha.1](https://github.com/dequelabs/axe-core/compare/v2.3.1...v3.0.0-alpha.1) (2017-08-16)
 
 ### Bug Fixes
 
@@ -88,124 +88,148 @@ All notable changes to this project will be documented in this file. See [standa
 * **link-in-text-block:** Add shadow DOM support ([46a2cca](https://github.com/dequelabs/axe-core/commit/46a2cca))
 * **shadow DOM:** Create commons virtual methods, for backward compatibility ([86a4c25](https://github.com/dequelabs/axe-core/commit/86a4c25))
 
+<a name="2.3.1"></a>
+## [2.3.1](https://github.com/dequelabs/axe-core/compare/v2.3.0...v2.3.1) (2017-06-15)
 
-v3.0.0-alpha.1 (continued)
-	date: 2017-08-08
-	changes:
-		- Shadow DOM support: rules and checks now supply a `virtualNode` in addition to the light DOM `node`. No <slot> styling support until supported by Chrome
-		- All commons and utilities refactored to support Shadow DOM
-		- Tests all refactored to support Shadow DOM
-		- API docs and developer guide now cover developing for Shadow DOM
-		- Fix for impact of incomplete nodes (#356)
-		- Fix for combobox false positive (#160)
-	additions:
-		- Commons virtual methods for handling virtual DOM
-		- New axe.utils.querySelectorAll method for querying the flattened tree
-		- New core APIs and test utilities for Shadow DOM development
-		- Support for ARIA 1.1: role=feed, role=term, aria-placeholder, aria-modal,
-    aria-current, aria-keyshortcuts, role=treegrid, aria-orientation, aria-haspopup
-v2.3.1:
-	date: 2017-06-15
-	changes:
-		- Improvements to hidden-content rule
-		- Deduplicated langs in valid-lang options
-v2.3.0:
-	date: 2017-06-14
-	changes:
-		- Overhaul of selectors API
-		- New experimental rule for hidden-content
-		- New rule for flagging aria-hidden="true" on document.body
-		- Color-contrast rule impact is now serious
-		- Color-contrast fixes for implicit labels and TR elements
-		- Color-contrast puts 1:1 ratio elements into Needs Review/incomplete
-		- List category mappings in docs
-		- Update axe.source to work with Firefox webdriver
-v2.2.3:
-  date: 2017-06-01
-  changes:
-    - Removed the disable property from link-in-text-block
-v2.2.2:
-	date: 2017-05-25
-	changes:
-		- Stabilize incompleteData API for backwards compatibility
-		- Change impact of duplicate-id rule to moderate
-v2.2.1:
-	date: 2017-05-19
-	changes:
-		- Remove nodes from the color contrast incompleteData API to avoid circular references
-v2.2.0:
-	date: 2017-04-24
-	changes:
-		- Add configuration options for iframes: false, selectors: false, and elementRef: true
-		- Improve color-contrast rule for disabled elements
-		- Add webdriver task for testing mobile viewports
-		- Improve audio/video captioning rules
-		- Improve th-has-data-cells rule
-		- Expose incomplete reasons for color contrast rule as part of Needs Review
-		- Implement rule groupings as tags
-		- Allow building of axe in multiple languages
-		- Empty-heading rule has impact: moderate
-v2.1.8:
-	date: 2017-02-21
-	changes:
-		- Move from Snyk to Retire.js
-		- Make CI run test-fast task instead of parallel
-		- Add documentation on writing integration tests and rules
-		- Allow a larger list of languages for HTML-valid-lang rule
-		- Add support for [role=img] in image-alt rule
-		- Fix bug with innerHeight in get-background-color
-		- Improve dom.is-offscreen function
-		- Integrate optional performance timer
-		- Empty include defaults to document
-v2.1.7:
-	date: 2016-12-13
-	changes:
-		- Add promise-based axe.run API method in favor of axe.a11yCheck
-		- Move TypeScript definition to root of project
-		- Add Inapplicable and Can't Tell results
-		- New rule: frame-title-unique
-		- Improvements to table rules: td-has-header, th-has-data-cells
-		- Color contrast rule performance improvements using polyfilled elementsFromPoint
-		- Add better support for implicit roles
-		- DQElement supports xPath
-v2.0.7:
-	date: 2016-09-28
-	changes:
-		- Add TypeScript definition v1
-v2.0.5:
-	date: 2016-04-20
-	changes:
-		- Support for UMD pattern
-		- Adds 508 tagging for table rules
-		- Fixes race condition for iframes
-		- Exclude actual nodes from array checking
-v2.0.4:
-	date: 2016-04-13
-	changes:
-		- Improvements to messaging for extensions
-v2.0.3:
-	date: 2016-04-12
-	changes:
-		- Security improvements
-		- Build includes Babel/ES6
-		- Improvements to table rules
-		- aXe can be loaded in Node
-v2.0.0:
-	date: 2016-03-01
-	changes:
-		- Adds support for AMD modules
-		- Fixes incompatibility with Webpack
-		- Improvements to rules and checks
-		- Help urls no longer hard-coded
-		- Improved error handling
-v1.1.1:
-	date: 2015-09-04
-	changes:
-		- Adds Travis hooks
-		- Adds Sauce Labs
-		- Encodes HTML in descriptions
-		- Updates messages and help URLs
-v1.0.1:
-	date: 2015-06-10
-	changes:
-		- Initial public release
+### Bug fixes:
+
+* Improvements to hidden-content rule
+* Deduplicated langs in valid-lang options
+
+<a name="2.3.0"></a>
+## [2.3.0](https://github.com/dequelabs/axe-core/compare/v2.2.3...v2.3.0) (2017-06-14)
+
+### Bug fixes:
+
+* Overhaul of selectors API
+* New experimental rule for hidden-content
+* New rule for flagging aria-hidden="true" on document.body
+* Color-contrast rule impact is now serious
+* Color-contrast fixes for implicit labels and TR elements
+* Color-contrast puts 1:1 ratio elements into Needs Review/incomplete
+* List category mappings in docs
+* Update axe.source to work with Firefox webdriver
+
+<a name="2.2.3"></a>
+## [2.2.3](https://github.com/dequelabs/axe-core/compare/v2.2.2...v2.2.3) (2017-06-01)
+
+### Bug fixes:
+* Removed the disable property from link-in-text-block
+
+<a name="2.2.2"></a>
+## [2.2.2](https://github.com/dequelabs/axe-core/compare/2.2.1...v2.2.2) (2017-05-25)
+
+### Bug fixes
+* Stabilize incompleteData API for backwards compatibility
+* Change impact of duplicate-id rule to moderate
+
+<a name="2.2.2"></a>
+## [2.2.1](https://github.com/dequelabs/axe-core/compare/2.2.0...2.2.1) (2017-05-19)
+
+### Bug fixes
+* Remove nodes from the color contrast incompleteData API to avoid circular references
+
+<a name="2.2.0"></a>
+## 2.2.0 (2017-04-24)
+
+### Changes
+
+* Add configuration options for iframes: false, selectors: false, and elementRef: true
+* Improve color-contrast rule for disabled elements
+* Add webdriver task for testing mobile viewports
+* Improve audio/video captioning rules
+* Improve th-has-data-cells rule
+* Expose incomplete reasons for color contrast rule as part of Needs Review
+* Implement rule groupings as tags
+* Allow building of axe in multiple languages
+* Empty-heading rule has impact: moderate
+
+<a name="2.1.8"></a>
+## 2.1.8 (2017-05-21)
+
+### Changes
+
+* Move from Snyk to Retire.js
+* Make CI run test-fast task instead of parallel
+* Add documentation on writing integration tests and rules
+* Allow a larger list of languages for HTML-valid-lang rule
+* Add support for [role=img] in image-alt rule
+* Fix bug with innerHeight in get-background-color
+* Improve dom.is-offscreen function
+* Integrate optional performance timer
+* Empty include defaults to document
+
+<a name="2.1.7"></a>
+## 2.1.7 (2016-12-13)
+
+### Changes
+
+* Add promise-based axe.run API method in favor of axe.a11yCheck
+* Move TypeScript definition to root of project
+* Add Inapplicable and Can't Tell results
+* New rule: frame-title-unique
+* Improvements to table rules: td-has-header, th-has-data-cells
+* Color contrast rule performance improvements using polyfilled elementsFromPoint
+* Add better support for implicit roles
+* DQElement supports xPath
+
+<a name="2.0.7"></a>
+## 2.0.7 (2016-09-28)
+
+### Changes
+
+* Add TypeScript definition v1
+
+<a name="2.0.5"></a>
+## 2.0.5 (2016-04-20)
+
+### Changes
+* Support for UMD pattern
+* Adds 508 tagging for table rules
+* Fixes race condition for iframes
+* Exclude actual nodes from array checking
+
+<a name="2.0.5"></a>
+## 2.0.5 (2016-04-13)
+
+### Changes
+
+* Improvements to messaging for extensions
+
+<a name="2.0.3"></a>
+## 2.0.3 (2016-04-12)
+
+### Changes
+
+* Security improvements
+* Build includes Babel/ES6
+* Improvements to table rules
+* aXe can be loaded in Node
+
+<a name="2.0.0"></a>
+## 2.0.0 (2016-03-01)
+
+### Changes
+
+* Adds support for AMD modules
+* Fixes incompatibility with Webpack
+* Improvements to rules and checks
+* Help urls no longer hard-coded
+* Improved error handling
+
+<a name="1.1.1"></a>
+## 1.1.1 (2015-09-04)
+
+### Changes
+
+* Adds Travis hooks
+* Adds Sauce Labs
+* Encodes HTML in descriptions
+* Updates messages and help URLs
+
+<a name="1.0.1"></a>
+## 1.0.1 (2015-06-10)
+
+### Changes
+
+* Initial public release
