@@ -92,6 +92,8 @@ To create a new translation for aXe, start by running `grunt translate --lang=<l
 
 ## Contributing
 
+Read the [Proposing Axe-core Rules guide ](./doc/rule-proposal.md)
+
 Read the [documentation on the architecture](./doc/developer-guide.md)
 
 Read the [documentation on contributing](CONTRIBUTING.md)
