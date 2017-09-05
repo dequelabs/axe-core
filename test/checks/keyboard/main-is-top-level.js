@@ -11,8 +11,8 @@ describe('main-is-top-level', function () {
 		var mainLandmark = document.createElement('main');
 		var bannerDiv = document.createElement('div');
 		bannerDiv.setAttribute('role','banner');
-		fixture.appendChild(bannerDiv);
 		bannerDiv.appendChild(mainLandmark);
+		fixture.appendChild(bannerDiv);
 		assert.isFalse(checks['main-is-top-level'].evaluate(mainLandmark));
 	});
 	
@@ -21,8 +21,8 @@ describe('main-is-top-level', function () {
 		mainDiv.setAttribute('role','main');
 		var navDiv = document.createElement('div');
 		navDiv.setAttribute('role','navigation');
-		fixture.appendChild(navDiv);
 		navDiv.appendChild(mainDiv);
+		fixture.appendChild(navDiv);
 		assert.isFalse(checks['main-is-top-level'].evaluate(mainDiv));
 	});
 	
