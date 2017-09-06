@@ -12,11 +12,17 @@ All Github issues that propose a rule must be tagged as *rule*, and must use the
 
 ### Intro
 
-In one sentence describe what the rule does.
+In one sentence, describe what the rule does.
 
 Example: "Ensures ARIA attributes are allowed for an element's role"\
 
-### Tags
+#### Rule help
+
+In one sentence, describe how to resolve the issue.
+
+Example: "Elements must only use allowed ARIA attributes"
+
+#### Tags
 
 Indicate which tags the rule should use.
 
@@ -53,6 +59,14 @@ In short sentences, using plain language, describe what conditions will lead to 
 2. If the element has an accessible name, return false
 3. Otherwise return true
 
+## Best practices
+
+For rule design, consider the following as best practices:
+
+1. Rules should only have one `none` check so that the error message is specific
+2. Rules should not combine `any` and `none`, these should be broken out into separate rules
+3. Checks should each only test a single specific case (either a passing technique or a single failing test)
+
 ## Template
 
 Use this template when creating the issue:
@@ -61,6 +75,10 @@ Use this template when creating the issue:
 # {{ Rule name }}
 
 {{ Rule description }}
+
+{{ Rule help }}
+
+**Tags:** {{ tag, tag, tag }}
 
 ## Selector
 
