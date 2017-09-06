@@ -66,6 +66,32 @@ function shadowIdAssertions () {
 
 }
 
+describe('isShadowRoot', function () {
+	'use strict';
+	var isShadowRoot = axe.utils.isShadowRoot;
+
+	it('returns false if the node has no shadowRoot', function () {
+		assert.isFalse(isShadowRoot({ nodeName: 'DIV', shadowRoot: undefined }));
+	});
+	it('returns true if the native element allows shadow DOM', function () {
+		assert.isTrue(isShadowRoot({ nodeName: 'DIV', shadowRoot: {} }));
+		assert.isTrue(isShadowRoot({ nodeName: 'H1', shadowRoot: {} }));
+		assert.isTrue(isShadowRoot({ nodeName: 'ASIDE', shadowRoot: {} }));
+	});
+	it('returns true if a custom element with shadowRoot', function () {
+		assert.isTrue(isShadowRoot({ nodeName: 'X-BUTTON', shadowRoot: {} }));
+		assert.isTrue(isShadowRoot({ nodeName: 'T1000-SCHWARZENEGGER', shadowRoot: {} }));
+	});
+	it('returns true if an invalid custom element with shadowRoot', function () {
+		assert.isFalse(isShadowRoot({ nodeName: '0-BUZZ', shadowRoot: {} }));
+		assert.isFalse(isShadowRoot({ nodeName: '--ELM--', shadowRoot: {} }));
+	});
+	it('returns false if the native element does not allow shadow DOM', function () {
+		assert.isFalse(isShadowRoot({ nodeName: 'IFRAME', shadowRoot: {} }));
+		assert.isFalse(isShadowRoot({ nodeName: 'STRONG', shadowRoot: {} }));
+	});
+});
+
 if (shadowSupport.v0) {
 	describe('flattened-tree shadow DOM v0', function () {
 		'use strict';
@@ -153,6 +179,26 @@ if (shadowSupport.v1) {
 			assert.isTrue(virtualDOM[0].children[2].children[1].children[0].children[0].actualNode.nodeType === 3);
 			assert.isTrue(virtualDOM[0].children[2].children[1].children[0].children[0].actualNode.textContent === 'fallback content');
 			assert.isTrue(virtualDOM[0].children[2].children[1].children[0].children[1].actualNode.nodeName === 'LI');
+		});
+		it('calls isShadowRoot to identify a shadow root', function () {
+			var isShadowRoot = axe.utils.isShadowRoot;
+			fixture.innerHTML = '<div></div>';
+			var div = fixture.querySelector('div');
+			var shadowRoot = div.attachShadow({ mode: 'open' });
+			shadowRoot.innerHTML = '<h1>Just a man in the back</h1>';
+
+			// Test without isShqdowRoot overwritten
+			assert.equal(axe.utils.getFlattenedTree(div)[0].children.length, 1);
+
+			var called = false;
+			axe.utils.isShadowRoot = function () {
+				called = true;
+				return false;
+			};
+			// Test with isShadowRoot overwritten
+			assert.equal(axe.utils.getFlattenedTree(div)[0].children.length, 0);
+			assert.isTrue(called);
+			axe.utils.isShadowRoot = isShadowRoot;
 		});
 	});
 	describe('flattened-tree shadow DOM v1: boxed slots', function () {

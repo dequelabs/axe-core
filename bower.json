@@ -1,6 +1,6 @@
 {
   "name": "axe-core",
-  "version": "2.1.7",
+  "version": "3.0.0-alpha.3",
   "contributors": [
     {
       "name": "David Sturley",
@@ -29,8 +29,8 @@
     }
   ],
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/dequelabs/axe-core.git"
+    "type": "git",
+    "url": "https://github.com/dequelabs/axe-core.git"
   },
   "main": "axe.js",
   "typings": "axe.d.ts",

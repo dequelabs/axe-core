@@ -99,6 +99,7 @@ Similar to Rules, Checks are defined by JSON files in the [lib/checks directory]
 	* `messages` - `Object` These messages are displayed when the Check passes or fails
 		* `pass` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check passes
 		* `fail` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check fails
+		* `incomplete` – `String|Object` – [doT.js](http://olado.github.io/doT/) template string displayed when the Check is incomplete OR an object with `missingData` on why it returned incomplete. Refer to [rules.md](./rules.md).
 
 #### Check `evaluate`
 
@@ -140,6 +141,17 @@ return results.filter(function (r) {
 #### Pass, Fail and Incomplete Templates
 
 Occasionally, you may want to add additional information about why a Check passed, failed or returned undefined into its message.  For example, the [aria-valid-attr](../lib/checks/aria/valid-attr.json) will add information about any invalid ARIA attributes to its fail message.  The message uses the [doT.js](http://olado.github.io/doT/) and is compiled to a JavaScript function at build-time.  In the Check message, you have access to the `CheckResult` as `it`.
+
+```javascript
+// aria-valid-attr check
+"messages": {
+  "pass": "ARIA attributes are used correctly for the defined role",
+  "fail": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}"
+}
+```
+
+See [rules.md](./rules.md) for more information on writing rules and checks,
+including incomplete results.
 
 #### CheckResult
 

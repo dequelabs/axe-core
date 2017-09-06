@@ -31,16 +31,62 @@ The actual testing of elements in axe-core is done by checks. A rule has one or 
 | enabled              | Does the rule run by default
 | tags                 | Grouping for the rule, such as wcag2a, best-practice
 | metadata.description | Description of what a rule does
-| metadata.help        | Description of how to resolve an issue
+| metadata.help        | Short description of a violation, used in the aXe extension sidebar
 
 ## Check Properties
 
-| Prop. Name      | Description
-|-----------------|-----------------
-| id              | Unique identifier for the check
-| evaluate        | Evaluating function, returning a boolean value
-| options         | Configurable value for the check
-| after           | Cleanup function, run after check is done
-| metadata impact | "minor", "serious", "critical"
-| metadata pass   | Describes why the check passed
-| metadata fail   | Describes why the check failed
+| Prop. Name         | Description
+|--------------------|-----------------
+| id                 | Unique identifier for the check
+| evaluate           | Evaluating function, returning a boolean value
+| options            | Configurable value for the check
+| after              | Cleanup function, run after check is done
+| metadata impact    | "minor", "serious", "critical"
+| metadata pass      | Describes why the check passed
+| metadata fail      | Describes why the check failed
+| metadata incomplete| Describes why the check didn’t complete
+
+Incomplete results occur when axe-core can’t produce a clear pass or fail result,
+giving users the opportunity to review it manually. Incomplete messages can take
+the form of a string, or an object with arbitrary keys matching the data returned
+from the check.
+
+A pass message is required, while fail and incomplete are dependent on the check result.
+
+### Incomplete message string
+
+As one example, the audio and video caption checks return an incomplete string:
+```
+messages: {
+	pass: 'Why the check passed',
+	fail: 'Why the check failed',
+	incomplete: 'Why the check returned undefined'
+}
+```
+
+### Incomplete message object with missingData
+
+As another example, the color-contrast check returns missingData to aid in
+remediation. Here’s the message format:
+
+```
+messages: {
+	pass: 'Why the check passed',
+	fail: 'Why the check failed',
+	incomplete: {
+		bgImage: 'The background color could not be determined due to a background image',
+		default: 'fallback string'
+	}
+}
+```
+
+To wire up an incomplete message with a specific reason it returned undefined,
+the check needs matching data. Otherwise, it will fall back to the `default` message.
+Reasons are arbitrary for the check (such as 'bgImage') but they must match the
+data returned:
+
+```
+this.data({
+	missingData: 'bgImage'
+});
+```
