@@ -190,6 +190,20 @@ describe('color-contrast', function () {
 		assert.isTrue(result);
 	});
 
+	it('should return true when there is sufficient contrast based on thead', function () {
+		fixture.innerHTML = '<table><thead style="background: #d00d2c"><tr><th id="target" style="color: #fff; padding: .5em">Col 1</th></tr></thead></table>';
+		var target = fixture.querySelector('#target');
+		assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
+	it('should return true when there is sufficient contrast based on tbody', function () {
+		fixture.innerHTML = '<table><tbody style="background: #d00d2c"><tr><td id="target" style="color: #fff; padding: .5em">Col 1</td></tr></tbody></table>';
+		var target = fixture.querySelector('#target');
+		assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+	
 	it('should return undefined if element overlaps text content', function () {
 		fixture.innerHTML = '<div style="background-color: white; height: 60px; width: 80px; border:1px solid;position: relative;">' +
 			'<div id="target" style="color: white; height: 40px; width: 60px; border:1px solid red;">Hi</div>' +
