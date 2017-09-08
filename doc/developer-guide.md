@@ -119,6 +119,9 @@ return results.filter(function (r) {
 
 Occasionally, you may want to add additional information about why a Check passed or failed into its message.  For example, the [aria-valid-attr](../lib/checks/aria/valid-attr.json) will add information about any invalid ARIA attributes to its fail message.  The message uses the [doT.js](http://olado.github.io/doT/) and is compiled to a JavaScript function at build-time.  In the Check message, you have access to the `CheckResult` as `it`.
 
+See [Developing Axe-core Rules](./rule-development.md) for more information
+on writing rules and checks, including incomplete results.
+
 #### CheckResult
 
 When a Check is executed, its result is then added to a [CheckResult object](../lib/core/base/check-result.js).  Much like the RuleResult object, the CheckResult object only contains information that is required to determine whether a Check, and its parent Rule passed or failed.  `metadata` from the originating Check is combined later and will not be available until aXe reaches the reporting stage.
