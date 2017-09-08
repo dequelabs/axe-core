@@ -1,4 +1,6 @@
-# Writing Axe-core Rules
+# Developing Axe-core Rules
+
+Before you start writing axe-core rules, be sure to create a proposal for them in a github issue. Read [Proposing Axe-core rules](./rule-proposal.md) for details.
 
 A rule is a JSON Object that defines a test for aXe-core to run. At a high level, think of a rule as doing two things. First it finds all elements that it should test, and after that it runs a number of checks to see if those selected elements pass or fail the rule.
 
