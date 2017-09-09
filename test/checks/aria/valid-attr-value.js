@@ -60,6 +60,23 @@ describe('aria-valid-attr-value', function () {
 		assert.isNull(checkContext._data);
 	});
 
+	it('should return true if aria-errormessage id is alert or aria-describedby', function () {
+		var testHTML = '<div></div>';
+		testHTML += '<div id="plain"></div>';
+		testHTML += '<div id="live" aria-live="assertive"></div>';
+		testHTML += '<div id="alert" role="alert"></div>';
+		fixture.innerHTML = testHTML;
+		var target = fixture.children[0];
+		target.setAttribute('aria-errormessage', 'plain');
+		assert.isFalse(checks['aria-valid-attr-value'].evaluate.call(checkContext, target));
+		target.setAttribute('aria-errormessage', 'live');
+		assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, target));
+		target.setAttribute('aria-errormessage', 'alert');
+		assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, target));
+		target.setAttribute('aria-describedby', 'plain');
+		assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, target));
+	});
+
 	it('should return false if any values are invalid', function () {
 		var node = document.createElement('div');
 		node.id = 'test';
