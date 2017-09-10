@@ -2,7 +2,7 @@
 	"description": "list test",
 	"rule": "list",
 	"violations": [["#divul"], ["#mixedul"],
-		["#divol"], ["#mixedol"]],
+		["#divol"], ["#mixedol"], ["#ulrolledallli"], ["#olrolledallli"]],
 	"passes": [["#emptyul"], ["#scriptemptyul"], ["#properul"], ["#scriptproperul"],
-		["#emptyol"], ["#scriptemptyol"], ["#properol"], ["#scriptproperol"]]
+		["#emptyol"], ["#scriptemptyol"], ["#properol"], ["#scriptproperol"], ["#ulrolledli"], ["#olrolledli"]]
 }
