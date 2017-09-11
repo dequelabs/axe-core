@@ -52,7 +52,7 @@
     "test-fast": "grunt test-fast",
     "version": "node build/sri-update",
     "prepublishOnly": "grunt build && node build/sri-update --validate",
-    "postinstall": "./bin/postinstall.sh",
+    "postinstall": "node build/utils/postinstall.js",
     "release": "standard-version"
   },
   "devDependencies": {
@@ -87,5 +87,7 @@
     "sri-toolbox": "^0.2.0",
     "standard-version": "^4.2.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "fs-extra": "^4.0.1"
+  }
 }
