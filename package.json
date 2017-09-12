@@ -52,7 +52,7 @@
     "test-fast": "grunt test-fast",
     "version": "node build/sri-update",
     "prepublishOnly": "grunt build && node build/sri-update --validate",
-    "postinstall": "./bin/postinstall.sh",
+    "postinstall": "node build/utils/postinstall.js",
     "release": "standard-version"
   },
   "devDependencies": {
@@ -65,6 +65,7 @@
     "chai": "~3.5.0",
     "clone": "~1.0.2",
     "dot": "~1.0.3",
+    "fs-extra": "^4.0.1",
     "grunt": "^1.0.1",
     "grunt-babel": "^6.0.0",
     "grunt-contrib-clean": "^1.0.0",
