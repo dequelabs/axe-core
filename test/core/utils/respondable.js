@@ -332,6 +332,36 @@ describe('axe.utils.respondable', function () {
 		assert.isTrue(success);
 	});
 
+	it('should create an Error if an invalid error type is passed', function () {
+		var success = false;
+		var event = document.createEvent('Event');
+		window.evil = function () {};
+		// Define that the event name is 'build'.
+		event.initEvent('message', true, true);
+		event.data = JSON.stringify({
+			_respondable: true,
+			_source: 'axe.2.0.0',
+			topic: 'Death star',
+			error: {
+				name: 'evil',
+				message: 'The exhaust port is open!',
+				trail: '... boom'
+			},
+			uuid: mockUUID
+		});
+		event.source = window;
+
+		axe.utils.respondable(window, 'Death star', null, true, function (data) {
+			success = true;
+			assert.instanceOf(data, Error);
+			assert.equal(data.message, 'The exhaust port is open!');
+		});
+
+		document.dispatchEvent(event);
+		assert.isTrue(success);
+		window.evil = undefined;
+	});
+
 	it('uses respondable.isInFrame() to check if the page is in a frame or not', function() {
 		assert.equal(axe.utils.respondable.isInFrame(), !!window.frameElement);
 

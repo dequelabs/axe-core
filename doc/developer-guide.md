@@ -150,8 +150,8 @@ Occasionally, you may want to add additional information about why a Check passe
 }
 ```
 
-See [rules.md](./rules.md) for more information on writing rules and checks,
-including incomplete results.
+See [Developing Axe-core Rules](./rule-development.md) for more information
+on writing rules and checks, including incomplete results.
 
 #### CheckResult
 
