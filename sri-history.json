@@ -50,5 +50,9 @@
 	"2.3.1": {
 		"axe.js": "sha256-63oq1xHBiOhX9jlvn5sJmoL8TwJ8JaLYIB91gyb74RI=",
 		"axe.min.js": "sha256-BGAllCBTUJjJXw3yOPMVai2Bj+1PVaEhK2na699nI/o="
+	},
+	"2.4.1": {
+		"axe.js": "sha256-nR7Ix22wBzWJJw7bNukb3n8Bw16bvHdpGKW86+G8dU4=",
+		"axe.min.js": "sha256-xVpSddrzxbQVFp90jaOUOQGp3fwCwK4sYxYmkIU3N2c="
 	}
 }
