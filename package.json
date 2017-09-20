@@ -3,6 +3,9 @@
   "description": "Accessibility engine for automated Web UI testing",
   "version": "3.0.0-alpha.4",
   "license": "MPL-2.0",
+  "engines": {
+    "node": ">=4"
+  },
   "contributors": [
     {
       "name": "David Sturley",
