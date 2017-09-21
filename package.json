@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0-alpha.4",
   "license": "MPL-2.0",
   "contributors": [
     {
@@ -52,7 +52,8 @@
     "test-fast": "grunt test-fast",
     "version": "node build/sri-update",
     "prepublishOnly": "grunt build && node build/sri-update --validate",
-    "postinstall": "./bin/postinstall.sh"
+    "postinstall": "node build/utils/postinstall.js",
+    "release": "standard-version"
   },
   "devDependencies": {
     "angular-precommit": "^1.0.3",
@@ -64,6 +65,7 @@
     "chai": "~3.5.0",
     "clone": "~1.0.2",
     "dot": "~1.0.3",
+    "fs-extra": "^4.0.1",
     "grunt": "^1.0.1",
     "grunt-babel": "^6.0.0",
     "grunt-contrib-clean": "^1.0.0",
@@ -83,7 +85,8 @@
     "promise": "~7.1.1",
     "revalidator": "~0.3.1",
     "selenium-webdriver": "~3.4.0",
-    "sri-toolbox": "^0.2.0"
+    "sri-toolbox": "^0.2.0",
+    "standard-version": "^4.2.0"
   },
   "dependencies": {}
 }

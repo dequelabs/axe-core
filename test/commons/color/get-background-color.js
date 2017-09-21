@@ -192,14 +192,54 @@ describe('color.getBackgroundColor', function () {
 		assert.deepEqual(bgNodes, [target]);
 	});
 
-	it('should count a TR as a background element', function () {
+	it('should count a TR as a background element for TD', function () {
 		fixture.innerHTML = '<div style="background-color:#007acc;">' +
 		'<table style="width:100%">' +
 			'<tr style="background-color:#f3f3f3; height:40px;" id="parent">' +
-        '<td style="color:#007acc" id="target">' +
+				'<td style="color:#007acc" id="target">' +
 					'Cell content</td>' +
-        '</tr>' +
-      '</table></div>';
+			'</tr>' +
+		'</table></div>';
+		var target = fixture.querySelector('#target'),
+				parent = fixture.querySelector('#parent');
+		var bgNodes = [];
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(243, 243, 243, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+		assert.deepEqual(bgNodes, [parent]);
+	});
+
+	it('should count a TR as a background element for TH', function () {
+		fixture.innerHTML = '<div style="background-color:#007acc;">' +
+		'<table style="width:100%">' +
+			'<tr style="background-color:#f3f3f3; height:40px;" id="parent">' +
+				'<th style="color:#007acc" id="target">' +
+					'Header content</th>' +
+			'</tr>' +
+		'</table></div>';
+		var target = fixture.querySelector('#target'),
+				parent = fixture.querySelector('#parent');
+		var bgNodes = [];
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(243, 243, 243, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+		assert.deepEqual(bgNodes, [parent]);
+	});
+
+	it('should count a TR as a background element for a child element', function () {
+		fixture.innerHTML = '<div style="background-color:#007acc;">' +
+		'<table style="width:100%">' +
+			'<tr style="background-color:#f3f3f3; height:40px;" id="parent">' +
+			'<td>' +
+					'<span style="color:#007acc" id="target">Cell content</span>' +
+			'</td></tr>' +
+		'</table></div>';
 		var target = fixture.querySelector('#target'),
 				parent = fixture.querySelector('#parent');
 		var bgNodes = [];
