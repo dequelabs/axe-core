@@ -16,6 +16,10 @@ describe('landmark-main-is-top-level test fail', function () {
 		it('should find 1', function () {
 			assert.lengthOf(results.violations, 1);
 		});
+		
+		it('should find 4 nodes', function () {
+			assert.lengthOf(results.violations[0].nodes, 4);
+		});
 	});
 
 	describe('passes', function () {
