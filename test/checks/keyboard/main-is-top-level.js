@@ -53,7 +53,7 @@ describe('main-is-top-level', function () {
 		var div = document.createElement('div');
 		var shadow = div.attachShadow({ mode: 'open' });
 		shadow.innerHTML = '<main>Main content</main>';
-		var checkArgs = checkSetup(div);
+		var checkArgs = checkSetup(shadow.querySelector('main'));
 		assert.isTrue(checks['main-is-top-level'].evaluate.apply(null, checkArgs));
 	});
 
