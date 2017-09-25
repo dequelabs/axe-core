@@ -152,6 +152,38 @@ describe('Audit', function () {
 				'https://dequeuniversity.com/rules/thing/x.y/target2?application=axeAPI'
 			);
 		});
+		it('understands prerelease type version numbers', function () {
+			var tempVersion = axe.version;
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				matches: 'function () {return "hello";}',
+				selector: 'bob'
+			});
+
+			axe.version = '3.2.1-alpha.0';
+			audit._constructHelpUrls();
+
+			axe.version = tempVersion;
+			assert.equal(audit.data.rules.target.helpUrl,
+				'https://dequeuniversity.com/rules/axe/3.2/target?application=axeAPI');
+		});
+		it('sets x.y as version for invalid versions', function () {
+			var tempVersion = axe.version;
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				matches: 'function () {return "hello";}',
+				selector: 'bob'
+			});
+
+			axe.version = 'in-3.0-valid';
+			audit._constructHelpUrls();
+
+			axe.version = tempVersion;
+			assert.equal(audit.data.rules.target.helpUrl,
+				'https://dequeuniversity.com/rules/axe/x.y/target?application=axeAPI');
+		});
 	});
 
 	describe('Audit#setBranding', function () {

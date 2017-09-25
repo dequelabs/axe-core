@@ -33,7 +33,7 @@ that includes a type, a scope and a subject. Here's a sample of the format:
 ### Here's an example:
 
 ```sh
-perf(color-contrast): improve speed of color contrast rules
+perf(rule): improve speed of color contrast rules
 
 	Use async process to compare elements without UI lockup
 
@@ -63,11 +63,12 @@ generation
 #### Scope
 
 The scope specifies the place of the commit change in the codebase along with the type. It could
-reference a rule name, a commons file, or anything really. E.g. `perf(color-contrast)` or
-`test(p-as-heading)`.
+reference a rule, a commons file, or anything really. E.g. `feat(rule)` or
+`test(commons/aria)`. It would help us call to out rule changes in our changelog with `rule` used as the scope.
 
 If the scope is too broad to summarize, use the type only and leave off the parentheses. E.g.
-`type: some subject`
+`type: some subject`. Keep in mind that a long scope often pushes your commit message over 100 characters.
+Brevity is helpful for everyone!
 
 
 #### Subject

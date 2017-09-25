@@ -3,6 +3,9 @@
   "description": "Accessibility engine for automated Web UI testing",
   "version": "3.0.0-alpha.4",
   "license": "MPL-2.0",
+  "engines": {
+    "node": ">=4"
+  },
   "contributors": [
     {
       "name": "David Sturley",
@@ -52,7 +55,7 @@
     "test-fast": "grunt test-fast",
     "version": "node build/sri-update",
     "prepublishOnly": "grunt build && node build/sri-update --validate",
-    "postinstall": "./bin/postinstall.sh",
+    "postinstall": "node build/utils/postinstall.js",
     "release": "standard-version"
   },
   "devDependencies": {
@@ -65,6 +68,7 @@
     "chai": "~3.5.0",
     "clone": "~1.0.2",
     "dot": "~1.0.3",
+    "fs-extra": "^4.0.1",
     "grunt": "^1.0.1",
     "grunt-babel": "^6.0.0",
     "grunt-contrib-clean": "^1.0.0",
