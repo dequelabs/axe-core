@@ -2,77 +2,47 @@ describe('has-at-least-one-main', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-	var checkContext = {
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		},
-	};
+	var checkContext = new axe.testUtils.MockCheckContext();
+	var checkSetup = axe.testUtils.checkSetup;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		checkContext._data = null;
-	});
-
-	
-	it('should return false if main does not exist', function () {
-		var node = document.querySelector('html');
-		var mainIsFound = checks['has-at-least-one-main'].evaluate.call(checkContext, node);
-		assert.isFalse(mainIsFound);
-		assert.equal(checkContext._data, mainIsFound);
+		checkContext.reset();
 	});
 
 	it('should return false if no div has role property', function() {
-		var node = document.querySelector('html');
-		var notMain = document.createElement('div');
-		node.appendChild(notMain);
-		var mainIsFound = checks['has-at-least-one-main'].evaluate.call(checkContext, node);
+		var params = checkSetup('<div id = "target">No role</div>');
+		var mainIsFound = checks['has-at-least-one-main'].evaluate.apply(checkContext, params);
 		assert.isFalse(mainIsFound);
-		assert.equal(checkContext._data, mainIsFound);
-		node.removeChild(notMain);
+		assert.deepEqual(checkContext._data, mainIsFound);
 	});
 	
 	it('should return false if div has empty role', function() {
-		var node = document.querySelector('html');
-		var notMain = document.createElement('div');
-		notMain.setAttribute('role','');
-		node.appendChild(notMain);
-		var mainIsFound = checks['has-at-least-one-main'].evaluate.call(checkContext, node);
+		var params = checkSetup('<div id = "target" role = "">Empty role</div>');
+		var mainIsFound = checks['has-at-least-one-main'].evaluate.apply(checkContext, params);
 		assert.isFalse(mainIsFound);
 		assert.equal(checkContext._data, mainIsFound);
-		node.removeChild(notMain);
 	});
 	
 	it('should return false if div has role not equal to main', function() {
-		var node = document.querySelector('html');
-		var notMain = document.createElement('div');
-		notMain.setAttribute('role','bananas');
-		node.appendChild(notMain);
-		var mainIsFound = checks['has-at-least-one-main'].evaluate.call(checkContext, node);
+		var params = checkSetup('<div id = "target" role = "bananas">Wrong role</div>');
+		var mainIsFound = checks['has-at-least-one-main'].evaluate.apply(checkContext, params);
 		assert.isFalse(mainIsFound);
 		assert.equal(checkContext._data, mainIsFound);
-		node.removeChild(notMain);
 	});
 	
 	it('should return true if main landmark exists', function(){
-		var node = document.querySelector('html');
-		var mainLandmark = document.createElement('main');
-		node.appendChild(mainLandmark);
-		var mainIsFound = checks['has-at-least-one-main'].evaluate.call(checkContext, node);
+		var params = checkSetup('<main id = "target">main landmark</main>');
+		var mainIsFound = checks['has-at-least-one-main'].evaluate.apply(checkContext, params);
 		assert.isTrue(mainIsFound);
 		assert.equal(checkContext._data, mainIsFound);
-		node.removeChild(mainLandmark);
 	});
 	
 	it('should return true if one div has role equal to main', function() {
-		var node = document.querySelector('html');
-		var mainLandmark = document.createElement('div');
-		mainLandmark.setAttribute('role','main');
-		node.appendChild(mainLandmark);
-		var mainIsFound = checks['has-at-least-one-main'].evaluate.call(checkContext, node);
+		var params = checkSetup('<div id = "target" role = "main">Div with role main</div>');
+		var mainIsFound = checks['has-at-least-one-main'].evaluate.apply(checkContext, params);
 		assert.isTrue(mainIsFound);
 		assert.equal(checkContext._data, mainIsFound);
-		node.removeChild(mainLandmark);
 	});
 	
 	it('should return true if any document has a main landmark', function() {
