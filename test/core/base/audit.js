@@ -184,6 +184,22 @@ describe('Audit', function () {
 			assert.equal(audit.data.rules.target.helpUrl,
 				'https://dequeuniversity.com/rules/axe/x.y/target?application=axeAPI');
 		});
+		it('matches major release versions', function () {
+			var tempVersion = axe.version;
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				matches: 'function () {return "hello";}',
+				selector: 'bob'
+			});
+
+			axe.version = '1.0.0';
+			audit._constructHelpUrls();
+
+			axe.version = tempVersion;
+			assert.equal(audit.data.rules.target.helpUrl,
+				'https://dequeuniversity.com/rules/axe/1.0/target?application=axeAPI');
+		});
 	});
 
 	describe('Audit#setBranding', function () {
