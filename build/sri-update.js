@@ -5,12 +5,8 @@
  * to validate that something is a known axe-core source
  * file.
  *
- * When running npm version, this script will execute and
+ * When running `npm run release`, this script will execute and
  * update sri-history.json with the SRIs of axe{.*}.js.
- * In npm publish, this script will be executed again
- * with --validate, which will make sure the SRIs still
- * match. If not, this script should be run again,
- * and its changes committed.
  */
 var path = require('path');
 var fs = require('fs');
