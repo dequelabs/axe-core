@@ -66,13 +66,13 @@ describe('aria-required-children', function () {
 	});
 
 	it('should detect multiple missing required children when all required', function () {
-		var params = checkSetup('<div role="combobox" id="target"><p>Nothing here.</p></div>');
+		var params = checkSetup('<div role="combobox" id="target" aria-expanded="true"><p>Nothing here.</p></div>');
 		assert.isFalse(checks['aria-required-children'].evaluate.apply(checkContext, params));
 		assert.deepEqual(checkContext._data, ['listbox', 'textbox']);
 	});
 
 	it('should detect single missing required child when all required', function () {
-		var params = checkSetup('<div role="combobox" id="target"><p role="listbox">Nothing here.</p></div>');
+		var params = checkSetup('<div role="combobox" id="target" aria-expanded="true"><p role="listbox">Nothing here.</p></div>');
 		assert.isFalse(checks['aria-required-children'].evaluate.apply(checkContext, params));
 		assert.deepEqual(checkContext._data, ['textbox']);
 	});
@@ -99,6 +99,11 @@ describe('aria-required-children', function () {
 
 	it('should pass a native input with role comboxbox when missing child is role textbox', function () {
 		var params = checkSetup('<input type="text" role="combobox" aria-owns="listbox" id="target"></div><p role="listbox" id="listbox">Nothing here.</p>');
+		assert.isTrue(checks['aria-required-children'].evaluate.apply(checkContext, params));
+	});
+
+	it('should pass a collapsed comboxbox when missing child is role listbox', function () {
+		var params = checkSetup('<div role="combobox" id="target"><p role="textbox">Textbox</p></div>');
 		assert.isTrue(checks['aria-required-children'].evaluate.apply(checkContext, params));
 	});
 
