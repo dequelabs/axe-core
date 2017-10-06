@@ -97,8 +97,13 @@ describe('aria-required-children', function () {
 		assert.isTrue(checks['aria-required-children'].evaluate.apply(checkContext, params));
 	});
 
-	it('should pass a native input with role comboxbox when missing child is role textbox', function () {
-		var params = checkSetup('<input type="text" role="combobox" aria-owns="listbox" id="target"></div><p role="listbox" id="listbox">Nothing here.</p>');
+	it('should pass a native "text" type input with role comboxbox when missing child is role textbox', function () {
+		var params = checkSetup('<input type="text" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>');
+		assert.isTrue(checks['aria-required-children'].evaluate.apply(checkContext, params));
+	});
+
+	it('should pass a native "search" type input with role comboxbox when missing child is role textbox', function () {
+		var params = checkSetup('<input type="search" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>');
 		assert.isTrue(checks['aria-required-children'].evaluate.apply(checkContext, params));
 	});
 
