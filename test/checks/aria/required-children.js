@@ -103,7 +103,22 @@ describe('aria-required-children', function () {
 	});
 
 	it('should pass a native "search" type input with role comboxbox when missing child is role textbox', function () {
-		var params = checkSetup('<input type="search" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>');
+		var params = checkSetup('<input type="search" role="combobox" aria-owns="listbox1" id="target"><p role="listbox" id="listbox1">Nothing here.</p>');
+		assert.isTrue(checks['aria-required-children'].evaluate.apply(checkContext, params));
+	});
+
+	it('should pass a native "email" type input with role comboxbox when missing child is role textbox', function () {
+		var params = checkSetup('<input type="email" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>');
+		assert.isTrue(checks['aria-required-children'].evaluate.apply(checkContext, params));
+	});
+
+	it('should pass a native "url" type input with role comboxbox when missing child is role textbox', function () {
+		var params = checkSetup('<input type="url" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>');
+		assert.isTrue(checks['aria-required-children'].evaluate.apply(checkContext, params));
+	});
+
+	it('should pass a native "tel" type input with role comboxbox when missing child is role textbox', function () {
+		var params = checkSetup('<input type="tel" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>');
 		assert.isTrue(checks['aria-required-children'].evaluate.apply(checkContext, params));
 	});
 
