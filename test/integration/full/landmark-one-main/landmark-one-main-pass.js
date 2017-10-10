@@ -1,9 +1,9 @@
-describe('landmark-at-least-one-main test pass', function () {
+describe('landmark-one-main test pass', function () {
 	'use strict';
 	var results;
 	before(function (done) {
 		window.addEventListener('load', function () {
-			axe.run({ runOnly: { type: 'rule', values: ['landmark-at-least-one-main'] } }, function (err, r) {
+			axe.run({ runOnly: { type: 'rule', values: ['landmark-one-main'] } }, function (err, r) {
 				assert.isNull(err);
 				results = r;
 				done();
@@ -20,7 +20,7 @@ describe('landmark-at-least-one-main test pass', function () {
 
 	describe('passes', function () {
 		it('should find 4', function () {
-			assert.lengthOf(results.passes[0].nodes, 4);
+			assert.lengthOf(results.passes, 4);
 		});
 
 		it('should find #pass1', function () {

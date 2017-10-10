@@ -1,9 +1,9 @@
-describe('landmark-at-least-one-main test failure', function () {
+describe('landmark-one-main test failure', function () {
 	'use strict';
 	var results;
 
 	before(function (done) {
-		axe.run({ runOnly: { type: 'rule', values: ['landmark-at-least-one-main'] } }, function (err, r) {
+		axe.run({ runOnly: { type: 'rule', values: ['landmark-one-main'] } }, function (err, r) {
 			assert.isNull(err);
 			results = r;
 			done();
@@ -12,7 +12,7 @@ describe('landmark-at-least-one-main test failure', function () {
 
 	describe('violations', function () {
 		it('should find 1', function () {
-			assert.lengthOf(results.violations[0].nodes, 1);
+			assert.lengthOf(results.violations, 1);
 		});
 		it('should find first level iframe', function () {
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#fail1']);
