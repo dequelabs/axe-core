@@ -516,8 +516,8 @@ describe('Audit', function () {
 			}, isNotCalled);
 		});
 		it('should use excludeHidden attribute specified by options', function (done) {
-			fixture.innerHTML = '<blink style="visibility: hidden;" id="monkeys">BAD '
-					+ 'BLINKY ELEMENT</blink>';
+			fixture.innerHTML = '<blink style="visibility: hidden;" id="monkeys">' +
+					'BAD BLINKY ELEMENT</blink>';
 
 			a.run({ include: [axe.utils.getFlattenedTree(fixture)[0]] }, {
 				rules: {
