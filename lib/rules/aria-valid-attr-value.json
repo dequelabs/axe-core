@@ -12,10 +12,10 @@
     "description": "Ensures all ARIA attributes have valid values",
     "help": "ARIA attributes must conform to valid values"
   },
-  "all": [],
-  "any": [
-    "aria-errormessage",
-    "aria-valid-attr-value"
+  "all": [
+    "aria-valid-attr-value",
+    "aria-errormessage"
   ],
+  "any": [],
   "none": []
 }
