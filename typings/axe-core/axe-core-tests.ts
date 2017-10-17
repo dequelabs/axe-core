@@ -17,26 +17,21 @@ axe.run().then(function(done:any) {
 	done();
 });
 // additional configuration options
-axe.run(context, {iframes: false, selectors: false, elementRef: false}, (error: Error, results: axe.AxeResults)  => {
-	console.log(results.passes.length);
+axe.run(context, {iframes: false, selectors: false, elementRef: false},
+		(error: Error, results: axe.AxeResults)  => {
+	console.log(error || results.passes.length);
 });
-
-// axe.a11yCheck config
-axe.a11yCheck(context, {}, (results: axe.AxeResults) => {
-	// axe's results object
-	console.log(results.passes.length)
-	console.log(results.violations.length)
-});
-// axe.a11yCheck include/exclude
-axe.a11yCheck({include: [['#id1'], ['#id2']]}, {}, (results: axe.AxeResults) => {
-	console.log(results)
+// axe.run include/exclude
+axe.run({include: [['#id1'], ['#id2']]}, {}, (error: Error, results: axe.AxeResults) => {
+	console.log(error || results)
 })
-axe.a11yCheck({exclude: [$fixture[0]]}, {}, (results: axe.AxeResults) => {
-	console.log(results)
+axe.run({exclude: [$fixture[0]]}, {}, (error: Error, results: axe.AxeResults) => {
+	console.log(error || results)
 })
 // additional configuration options
-axe.a11yCheck(context, {iframes: false, selectors: false, elementRef: false}, (results: axe.AxeResults)  => {
-	console.log(results.passes.length);
+axe.run(context, {iframes: false, selectors: false, elementRef: false}, 
+		(error: Error, results: axe.AxeResults)  => {
+	console.log(error || results.passes.length);
 });
 var tagConfigRunOnly: axe.RunOnly = {
 	type: 'tag',
@@ -45,8 +40,8 @@ var tagConfigRunOnly: axe.RunOnly = {
 var tagConfig = {
 	runOnly: tagConfigRunOnly
 }
-axe.a11yCheck(context, tagConfig, (results: axe.AxeResults) => {
-	console.log(results)
+axe.run(context, tagConfig, (error: Error, results: axe.AxeResults) => {
+	console.log(error || results)
 })
 var includeExcludeTagsRunOnly: axe.RunOnly = {
 	type: 'tags',
@@ -58,8 +53,8 @@ var includeExcludeTagsRunOnly: axe.RunOnly = {
 var includeExcludeTagsConfig = {
 	runOnly: includeExcludeTagsRunOnly
 }
-axe.a11yCheck(context, includeExcludeTagsConfig, (results: axe.AxeResults) => {
-	console.log(results)
+axe.run(context, includeExcludeTagsConfig, (error: Error, results: axe.AxeResults) => {
+	console.log(error || results)
 })
 var someRulesConfig = {
 	rules: {
@@ -67,8 +62,8 @@ var someRulesConfig = {
 		"heading-order": {enabled: 'true'}
 	}
 }
-axe.a11yCheck(context, someRulesConfig, (results: axe.AxeResults) => {
-	console.log(results)
+axe.run(context, someRulesConfig, (error: Error, results: axe.AxeResults) => {
+	console.log(error || results)
 })
 
 // axe.configure
