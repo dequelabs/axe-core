@@ -2,7 +2,6 @@ describe('has-no-more-than-one-main', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-	
 	var checkContext = new axe.testUtils.MockCheckContext();
 	var checkSetup = axe.testUtils.checkSetup;
 	var shadowCheckSetup = axe.testUtils.shadowCheckSetup;

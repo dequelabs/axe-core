@@ -1,7 +1,6 @@
 describe('landmark-one-main test failure', function () {
 	'use strict';
 	var results;
-
 	before(function (done) {
 		axe.run({ runOnly: { type: 'rule', values: ['landmark-one-main'] } }, function (err, r) {
 			assert.isNull(err);

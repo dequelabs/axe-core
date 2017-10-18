@@ -2,18 +2,15 @@ describe('landmark-one-main test pass', function () {
 	'use strict';
 	var results;
 	before(function (done) {
-		window.addEventListener('load', function () {
-			axe.run({ runOnly: { type: 'rule', values: ['landmark-one-main'] } }, function (err, r) {
-				assert.isNull(err);
-				results = r;
-				done();
-			});
+		axe.run({ runOnly: { type: 'rule', values: ['landmark-one-main'] } }, function (err, r) {
+			assert.isNull(err);
+			results = r;
+			done();
 		});
 	});
 
 	describe('violations', function () {
 		it('should find 0', function () {
-			document.innerHTML = results;
 			assert.lengthOf(results.violations, 0);
 		});
 	});
