@@ -30,14 +30,14 @@ describe('aria-required-children', function () {
 	});
 
 	it('should detect multiple missing required children when all required', function () {
-		fixture.innerHTML = '<div role="combobox" id="target"><p>Nothing here.</p></div>';
+		fixture.innerHTML = '<div role="combobox" id="target" aria-expanded="true"><p>Nothing here.</p></div>';
 		var node = fixture.querySelector('#target');
 		assert.isFalse(checks['aria-required-children'].evaluate.call(checkContext, node));
 		assert.deepEqual(checkContext._data, ['listbox', 'textbox']);
 	});
 
 	it('should detect single missing required child when all required', function () {
-		fixture.innerHTML = '<div role="combobox" id="target"><p role="listbox">Nothing here.</p></div>';
+		fixture.innerHTML = '<div role="combobox" id="target" aria-expanded="true"><p role="listbox">Nothing here.</p></div>';
 		var node = fixture.querySelector('#target');
 		assert.isFalse(checks['aria-required-children'].evaluate.call(checkContext, node));
 		assert.deepEqual(checkContext._data, ['textbox']);
@@ -49,8 +49,38 @@ describe('aria-required-children', function () {
 		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
 	});
 
-	it('should pass a native input with role comboxbox when missing child is role textbox', function () {
-		fixture.innerHTML = '<input type="text" role="combobox" aria-owns="listbox" id="target"></div><p role="listbox" id="listbox">Nothing here.</p>';
+	it('should pass a native "text" type input with role comboxbox when missing child is role textbox', function () {
+		fixture.innerHTML = '<input type="text" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
+	});
+
+	it('should pass a native "search" type input with role comboxbox when missing child is role textbox', function () {
+		fixture.innerHTML = '<input type="search" role="combobox" aria-owns="listbox1" id="target"><p role="listbox" id="listbox1">Nothing here.</p>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
+	});
+
+	it('should pass a native "email" type input with role comboxbox when missing child is role textbox', function () {
+		fixture.innerHTML = '<input type="email" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
+	});
+
+	it('should pass a native "url" type input with role comboxbox when missing child is role textbox', function () {
+		fixture.innerHTML = '<input type="url" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
+	});
+
+	it('should pass a native "tel" type input with role comboxbox when missing child is role textbox', function () {
+		fixture.innerHTML = '<input type="tel" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>';
+		var node = fixture.querySelector('#target');
+		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
+	});
+
+	it('should pass a collapsed comboxbox when missing child is role listbox', function () {
+		fixture.innerHTML = '<div role="combobox" id="target"><p role="textbox">Textbox</p></div>';
 		var node = fixture.querySelector('#target');
 		assert.isTrue(checks['aria-required-children'].evaluate.call(checkContext, node));
 	});
