@@ -231,7 +231,7 @@ axe.run(context, options, callback);
 #### Parameters axe.run
 
 * [`context`](#context-parameter): (optional) Defines the scope of the analysis - the part of the DOM that you would like to analyze. This will typically be the `document` or a specific selector such as class name, ID, selector, etc.
-* [`options`](#options-parameter): (optional) Set of options passed into rules or checks, temporarily modifying them. This contrasts with `axe.configure`, which is more permanent. [See below for more information](#axerun-parameters)
+* [`options`](#options-parameter): (optional) Set of options passed into rules or checks, temporarily modifying them. This contrasts with `axe.configure`, which is more permanent.
 * [`callback`](#callback-parameter): (optional) The callback function which receives either null or an [error result](#error-result) as the first parameter, and the [results object](#results-object) when analysis is completed successfully, or undefined if it did not.
 
 ##### Context Parameter
@@ -331,6 +331,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `runOnly`       | n/a     | Limit which rules are executed, based on names or tags
 | `rules`         | n/a     | Allow customizing a rule's properties (including { enable: false })
 | `reporter`      | `v1`    | Which reporter to use (see [Configuration](#api-name-axeconfigure))
+| `resultTypes`   | n/a     | Limit which result types are processed and aggregated
 | `xpath`         | `false` | Return xpath selectors for elements
 | `absolutePaths` | `false` | Use absolute paths when creating element selectors
 | `iframes`       | `true`  | Tell axe to run inside iframes
@@ -436,6 +437,16 @@ Additionally, there are a number or properties that allow configuration of diffe
 	```
 
 	This example first includes all `wcag2a` and `wcag2aa` rules. All rules that are tagged as `experimental` are than removed from the list of rules to run.
+
+6. Only process certain types of results
+
+	The `resultTypes` option can be used to limit the result types that aXe will process, aggregate, and send to the reporter. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results.
+	```javascript
+	{
+		resultTypes: ['violations', 'incomplete', 'inapplicable']
+	}
+	```
+	This example will only process the specified result types: "violations", "incomplete", and "inapplicable". Notably, it will not process "passes". On a series of extremely large pages, this could improve performance considerably.
 
 ##### Callback Parameter
 
