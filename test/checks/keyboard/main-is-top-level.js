@@ -48,6 +48,16 @@ describe('main-is-top-level', function () {
 		assert.isTrue(checks['main-is-top-level'].evaluate(mainDiv));
 	});
 	
+	it('should return true if main is in form landmark', function () {
+		var mainDiv = document.createElement('div');
+		mainDiv.setAttribute('role','main');
+		var formDiv = document.createElement('div');
+		formDiv.setAttribute('role','form');
+		fixture.appendChild(formDiv);
+		fixture.appendChild(mainDiv);
+		assert.isTrue(checks['main-is-top-level'].evaluate(mainDiv));
+	});
+	
 		
 	(shadowSupported ? it : xit)('should test if main in shadow DOM is top level', function () {
 		var div = document.createElement('div');
