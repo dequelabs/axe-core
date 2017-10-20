@@ -24,7 +24,7 @@ describe('landmark-one-main test pass', function () {
 
 	describe('passes', function () {
 		it('should find 4', function () {
-			assert.lengthOf(results.passes, 4);
+			assert.lengthOf(results.passes[0].nodes, 4);
 		});
 
 		it('should find #pass1', function () {
