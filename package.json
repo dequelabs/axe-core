@@ -53,7 +53,7 @@
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
     "prepublishOnly": "grunt build",
     "postinstall": "node build/utils/postinstall.js",
-    "release": "standard-version && node build/sri-update"
+    "release": "standard-version"
   },
   "devDependencies": {
     "angular-precommit": "^1.0.3",
