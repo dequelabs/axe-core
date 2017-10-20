@@ -1,3 +1,20 @@
+<a name="3.0.0-alpha.8"></a>
+# [3.0.0-alpha.8](https://github.com/dequelabs/axe-core/compare/v3.0.0-alpha.6...v3.0.0-alpha.8) (2017-10-20)
+
+
+### Bug Fixes
+
+* **aria-allowed-attr:** align rowcount, colcount, and colindex with 1.1 spec ([#555](https://github.com/dequelabs/axe-core/issues/555)) ([10efa88](https://github.com/dequelabs/axe-core/commit/10efa88))
+* **required-children:** add combobox > listbox exception ([#559](https://github.com/dequelabs/axe-core/issues/559)) ([8d0991f](https://github.com/dequelabs/axe-core/commit/8d0991f))
+* Added message about expected contrast ratio ([#381](https://github.com/dequelabs/axe-core/issues/381)) ([#562](https://github.com/dequelabs/axe-core/issues/562)) ([9e30d64](https://github.com/dequelabs/axe-core/commit/9e30d64))
+
+
+### Performance Improvements
+
+* **reporter:** add option to limit result types to be processed ([#568](https://github.com/dequelabs/axe-core/issues/568)) ([42b46d9](https://github.com/dequelabs/axe-core/commit/42b46d9)), closes [#512](https://github.com/dequelabs/axe-core/issues/512)
+
+
+
 <a name="3.0.0-alpha.7"></a>
 # [3.0.0-alpha.7](https://github.com/dequelabs/axe-core/compare/v3.0.0-alpha.6...v3.0.0-alpha.7) (2017-10-20)
 
