@@ -1,6 +1,33 @@
-# Change Log
+<a name="3.0.0-alpha.8"></a>
+# [3.0.0-alpha.8](https://github.com/dequelabs/axe-core/compare/v3.0.0-alpha.6...v3.0.0-alpha.8) (2017-10-20)
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### Bug Fixes
+
+* **aria-allowed-attr:** align rowcount, colcount, and colindex with 1.1 spec ([#555](https://github.com/dequelabs/axe-core/issues/555)) ([10efa88](https://github.com/dequelabs/axe-core/commit/10efa88))
+* **required-children:** add combobox > listbox exception ([#559](https://github.com/dequelabs/axe-core/issues/559)) ([8d0991f](https://github.com/dequelabs/axe-core/commit/8d0991f))
+* Added message about expected contrast ratio ([#381](https://github.com/dequelabs/axe-core/issues/381)) ([#562](https://github.com/dequelabs/axe-core/issues/562)) ([9e30d64](https://github.com/dequelabs/axe-core/commit/9e30d64))
+
+
+### Performance Improvements
+
+* **reporter:** add option to limit result types to be processed ([#568](https://github.com/dequelabs/axe-core/issues/568)) ([42b46d9](https://github.com/dequelabs/axe-core/commit/42b46d9)), closes [#512](https://github.com/dequelabs/axe-core/issues/512)
+
+
+<a name="3.0.0-alpha.6"></a>
+# [3.0.0-alpha.6](https://github.com/dequelabs/axe-core/compare/v3.0.0-alpha.3...v3.0.0-alpha.6) (2017-09-27)
+
+
+### Bug Fixes
+
+* **aria:** adding support for aria-expanded in menuitem ([#521](https://github.com/dequelabs/axe-core/issues/521)) ([b30b451](https://github.com/dequelabs/axe-core/commit/b30b451))
+* **color-contrast:** Include `THEAD` and `TBODY` in contrast checks ([#514](https://github.com/dequelabs/axe-core/issues/514)) ([f98f8bd](https://github.com/dequelabs/axe-core/commit/f98f8bd))
+* Match prerelease versions for helpUrl ([#546](https://github.com/dequelabs/axe-core/issues/546)) ([5300577](https://github.com/dequelabs/axe-core/commit/5300577))
+* **helpUrl:** Properly parse x.0 versions ([#550](https://github.com/dequelabs/axe-core/issues/550)) ([a51c5ce](https://github.com/dequelabs/axe-core/commit/a51c5ce))
+* **postinstall:** use node, more conditionals ([#520](https://github.com/dequelabs/axe-core/issues/520)) ([f5b5299](https://github.com/dequelabs/axe-core/commit/f5b5299))
+* **responsible:** Restrict error construction to known errors ([0128a7e](https://github.com/dequelabs/axe-core/commit/0128a7e))
+
+
 
 <a name="3.0.0-alpha.5"></a>
 # [3.0.0-alpha.5](https://github.com/dequelabs/axe-core/compare/v3.0.0-alpha.4...v3.0.0-alpha.5) (2017-09-25)
@@ -120,6 +147,92 @@ All notable changes to this project will be documented in this file. See [standa
 * **duplicate-id:** Add shadow DOM support ([439bc71](https://github.com/dequelabs/axe-core/commit/439bc71))
 * **link-in-text-block:** Add shadow DOM support ([46a2cca](https://github.com/dequelabs/axe-core/commit/46a2cca))
 * **shadow DOM:** Create commons virtual methods, for backward compatibility ([86a4c25](https://github.com/dequelabs/axe-core/commit/86a4c25))
+
+
+<a name="2.4.2"></a>
+## [2.4.2](https://github.com/dequelabs/axe-core/compare/v2.4.1...v2.4.2) (2017-09-25)
+
+### Bug Fixes
+
+* **aria:** adding support for aria-expanded in menuitem ([#521](https://github.com/dequelabs/axe-core/issues/521)) ([b4c42fe](https://github.com/dequelabs/axe-core/commit/b4c42fe))
+* Match prerelease versions for helpUrl ([#546](https://github.com/dequelabs/axe-core/issues/546)) ([c166708](https://github.com/dequelabs/axe-core/commit/c166708))
+* fix(node4): use var to declare variables ([#541](https://github.com/dequelabs/axe-core/issues/541)) ([c72badb](https://github.com/dequelabs/axe-core/commit/c72badbd55ef0b56b97f0c64a4eb544e31b4b3f1))
+
+
+<a name="2.4.1"></a>
+## [2.4.1](https://github.com/dequelabs/axe-core/compare/v2.4.0...v2.4.1) (2017-09-12)
+
+### Bug Fixes
+
+* fix(postinstall): use node, more conditionals ([#520](https://github.com/dequelabs/axe-core/issues/520)) ([98fac8a](https://github.com/dequelabs/axe-core/commit/98fac8a))
+
+
+<a name="2.4.0"></a>
+## [2.4.0](https://github.com/dequelabs/axe-core/compare/v2.3.1-alpha.2...v2.4.0) (2017-09-08)
+
+### Bug fixes:
+
+* fix(color-contrast): Include `THEAD` and `TBODY` in contrast checks (#514) ([f98f8bd](https://github.com/dequelabs/axe-core/commit/f98f8bdacc551579c259aefd88bef41ed8157b68))
+* fix(responsible): Restrict error construction to known errors (#513) ([0128a7e](https://github.com/dequelabs/axe-core/commit/0128a7ea47847b9fa04dbf98327f4bc1760c5e11))
+
+### Features:
+
+* docs: Document how to propose axe-core rules (#507) ([cabd329](https://github.com/dequelabs/axe-core/commit/cabd3297afbbfe9dbcc41a168b5529ba52f408ba))
+
+
+<a name="2.4.0-alpha.2"></a>
+## [2.4.0-alpha.2](https://github.com/dequelabs/axe-core/compare/v2.4.0-alpha.1...v2.4.0-alpha.2) (2017-09-06)
+
+### Bug fixes:
+
+* test(aria): aria-haspopup, aria-modal for 1.1
+* style(test/aria): add line breaks for readability
+* test(aria): add missing roles and properties
+* fix: RestoreScroll was running  out of sync (#508)
+
+### Features:
+
+* feat(ARIA 1.1): Allow row-index, setsize and posinset on more roles
+
+
+<a name="2.4.0-alpha.1"></a>
+## [2.4.0-alpha.1](https://github.com/dequelabs/axe-core/compare/v2.3.0...v2.4.0-alpha.1) (2017-08-31)
+
+### Bug fixes:
+
+* chore: add help text for testconfig Grunt task
+* fix: Properly output error stack
+* doc: Add 'on mobile' to viewport rule
+* fix: Ensure all tests pass in Chrome
+* fix: Minimise scrolling in getBackgroundColor
+* chore: Minor build chores for whitespace and lockfile
+* fix: Align impact levels with Deque Way
+* fix: Set relatedNodes on color/link-in-block rules
+* fix: incomplete results should have impact
+* fix(aria): Allow implicit attribute values
+* chore: ignore growl in retire
+* fix: Use getAttribute(id) over .id
+* fix: Exclude `any` checks from output if one passed
+* fix(aria): Treegrid should own rows, not treeitems
+* fix(aria): add exception for native input combobox missing textbox. Fixes #160
+* test: fix aria/required-children for jshint
+* feat: allow link text from single-cell layout table
+* fix: expand tr support for color contrast
+* chore: ignore node_modules in examples when linting
+
+### Features:
+
+* feat: Add option `restoreScroll`
+* doc: add more info on testing hidden regions
+* feat: add S.C. 2.4.4 to link-name rule. Fixes #369
+* feat: Add Japanese localisation
+* doc: Add instructions on debugging on CircleCI
+* test: add unit tests for button-has-visible-text
+* chore: add descriptions to Grunt tasks
+* feat(aria): Support progressive ARIA 1.1 attributes / roles
+* feat: Add new ARIA 1.1 values for haspopup
+* feat: Add aria-orientation to additional roles
+
 
 <a name="2.3.1"></a>
 ## [2.3.1](https://github.com/dequelabs/axe-core/compare/v2.3.0...v2.3.1) (2017-06-15)
