@@ -2,7 +2,6 @@
   "id": "skip-link",
   "selector": "a[href]",
   "pageLevel": true,
-  "enabled": false,
   "tags": [
     "cat.keyboard",
     "best-practice"
