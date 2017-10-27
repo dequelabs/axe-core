@@ -587,7 +587,7 @@ axe.run(document, {
 
 #### Example 4
 
-This example shows a result object that points to a shadow DOM element.
+This example shows a result object that points to an open shadow DOM element.
 
 ##### `violations[0]`
 ```
@@ -632,7 +632,7 @@ But if you need to query the flattened tree, the documented function below shoul
 
 ##### Description
 
-A querySelectorAll implementation that works on the virtual DOM and Shadow DOM by manually walking the flattened tree instead of relying on DOM API methods which don’t step into Shadow DOM.
+A querySelectorAll implementation that works on the virtual DOM and open Shadow DOM by manually walking the flattened tree instead of relying on DOM API methods which don’t step into Shadow DOM.
 
 Note: while there is no `axe.utils.querySelector` method, you can reproduce that behavior by accessing the first item returned in the array.
 
@@ -674,7 +674,7 @@ A DOMNode for the parent
 
 #### axe.commons.dom.getRootNode
 
-Return the document or document fragment (shadow DOM)
+Return the document or document fragment (open shadow DOM)
 
 ##### Synopsis
 
