@@ -31,9 +31,9 @@ That having been said, we prefer:
 ### Shadow DOM
 
 For any proposed changes to rules, checks, commons, or other APIs to be accepted
-in axe-core,your code must support Shadow DOM. See [API.md](./doc/API.md) and the
+in axe-core, your code must support open Shadow DOM. See [API.md](./doc/API.md) and the
 [developer guide](./doc/developer-guide.md) for documentation on the available methods
-and test utilities.
+and test utilities. You can also look at existing tests for examples using our APIs.
 
 ### Testing
 
