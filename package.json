@@ -53,8 +53,8 @@
     "build": "grunt",
     "test": "grunt test",
     "test-fast": "grunt test-fast",
-    "version": "node build/sri-update",
-    "prepublishOnly": "grunt build && node build/sri-update --validate",
+    "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
+    "prepublishOnly": "grunt build",
     "postinstall": "node build/utils/postinstall.js",
     "release": "standard-version"
   },
