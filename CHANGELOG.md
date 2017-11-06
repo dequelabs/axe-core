@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.5.0"></a>
+# [2.5.0](https://github.com/dequelabs/axe-core/compare/v2.4.2...v2.5.0) (2017-11-06)
+
+
+### Bug Fixes
+
+* **aria-errormessage:** adds support for aria-errormessage ([#517](https://github.com/dequelabs/axe-core/issues/517)) ([465d41d](https://github.com/dequelabs/axe-core/commit/465d41d))
+* adjust aria-errormessage for the 2x branch ([19232e5](https://github.com/dequelabs/axe-core/commit/19232e5))
+* Merge options.resultTypes ([7b28c22](https://github.com/dequelabs/axe-core/commit/7b28c22))
+* Merge required-children.js fix into v2 ([86b4a0e](https://github.com/dequelabs/axe-core/commit/86b4a0e))
+
+
+### Features
+
+* **reporter:** return one result of each type instead of zero when resultTypes is used ([#606](https://github.com/dequelabs/axe-core/issues/606)) ([482374f](https://github.com/dequelabs/axe-core/commit/482374f)), closes [#605](https://github.com/dequelabs/axe-core/issues/605)
+
+
+
 <a name="2.4.2"></a>
 ## [2.4.2](https://github.com/dequelabs/axe-core/compare/v2.4.1...v2.4.2) (2017-09-25)
 
