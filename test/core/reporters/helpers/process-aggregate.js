@@ -25,6 +25,25 @@ describe('helpers.processAggregate', function () {
         }],
         all: [],
         none: []
+      }, {
+        result: 'passed',
+        node: {
+          element: document.createElement('div'),
+          selector: 'main > .thing',
+          source: '<div class=\"thing\">Thing</div>',
+          xpath: '/main/div[@class="thing"]'
+        },
+        any: [{
+          id: 'passed-rule',
+          relatedNodes: [{
+            element: document.createElement('div'),
+            selector: 'footer > .thing',
+            source: '<div class=\"thing\">Thing</div>',
+            xpath: '/footer/div[@class="thing"]',
+          }]
+        }],
+        all: [],
+        none: []
       }],
       inapplicable: [],
       incomplete: [],
@@ -46,6 +65,26 @@ describe('helpers.processAggregate', function () {
             selector: '#dopel',
             source: '<input id=\"dopel\"/>',
             xpath: '/main/input[@id="dopel"]',
+            fromFrame: true
+          }]
+        }],
+        all: [],
+        none: []
+      }, {
+        result: 'failed',
+        node: {
+          selector: '#dopell',
+          source: '<input id=\"dopell\"/>',
+          xpath: '/header/input[@id="dopell"]',
+          fromFrame: true
+        },
+        any: [{
+          id: 'failed-rule',
+          relatedNodes: [{
+            element: document.createElement('input'),
+            selector: '#dopell',
+            source: '<input id=\"dopell\"/>',
+            xpath: '/header/input[@id="dopell"]',
             fromFrame: true
           }]
         }],
@@ -96,12 +135,17 @@ describe('helpers.processAggregate', function () {
 
     describe('`resultTypes` option', function () {
 
-      it('should remove non-specified result types from the `resultObject`', function () {
-        var resultObject = helpers.processAggregate(results, { resultTypes: ['passes', 'violations'] });
+      it('should reduce the unwanted result types to 1 in the `resultObject`', function () {
+        var resultObject = helpers.processAggregate(results, { resultTypes: ['violations'] });
         assert.isDefined(resultObject.passes);
+        assert.equal(resultObject.passes[0].nodes.length, 1);
         assert.isDefined(resultObject.violations);
-        assert.isUndefined(resultObject.incomplete);
-        assert.isUndefined(resultObject.inapplicable);
+        assert.equal(resultObject.violations[0].nodes.length, 2);
+        resultObject = helpers.processAggregate(results, { resultTypes: ['passes'] });
+        assert.equal(resultObject.passes[0].nodes.length, 2);
+        assert.equal(resultObject.violations[0].nodes.length, 1);
+        assert.isDefined(resultObject.incomplete);
+        assert.isDefined(resultObject.inapplicable);
       });
     });
 
