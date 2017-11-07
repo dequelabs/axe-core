@@ -440,14 +440,16 @@ Additionally, there are a number or properties that allow configuration of diffe
 
 6. Only process certain types of results
 
-	The `resultTypes` option can be used to limit the result types that aXe will process, aggregate, and send to the reporter. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results. The option will return 1 result of each type if that rule has at least one of that type of result instead of returning all of that type of result. The caller can use this information to inform the user of the existence of that type of result if appropriate.
+	The `resultTypes` option can be used to limit the result types that aXe will process, aggregate, and send to the reporter. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results.
+
+	Types listed in this option are processed normally and report all of their results. Types *not* listed process a maximum of one result. The caller can use this information to inform the user of the existence of that type of result if appropriate.
 
 	```javascript
 	{
 		resultTypes: ['violations', 'incomplete', 'inapplicable']
 	}
 	```
-	This example will only process the specified result types: "violations", "incomplete", and "inapplicable". Notably, it will only process the first pass for each rule that has a pass. On a series of extremely large pages, this could improve performance considerably.
+	This example will process all of the "violations", "incomplete", and "inapplicable" result types. Since "passes" was not specified, it will only process the first pass for each rule, if one exists. As a result, the results object's `passes` array will have a length of either `0` or `1`. On a series of extremely large pages, this would improve performance considerably.
 
 ##### Callback Parameter
 
