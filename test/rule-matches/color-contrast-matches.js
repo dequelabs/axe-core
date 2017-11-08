@@ -130,7 +130,17 @@ describe('color-contrast-matches', function () {
 		fixture.innerHTML = '<input type="text" disabled>';
 		var target = fixture.querySelector('input');
 		assert.isFalse(rule.matches(target));
+	});
 
+	it('should not match a disabled implicit label child', function () {
+		fixture.innerHTML = '<label>' +
+			'<input type="checkbox" style="position: absolute;display: inline-block;width: 1.5rem;height: 1.5rem;opacity: 0;" disabled checked>' +
+			'<span style="background-color:rgba(0, 0, 0, 0.26);display:inline-block;width: 1.5rem;height: 1.5rem;" aria-hidden="true"></span>' +
+			'<span style="color:rgba(0, 0, 0, 0.38);" id="target">Baseball</span>' +
+			'</label>';
+		var target = fixture.querySelector('#target');
+		var result = rule.matches(target);
+		assert.isFalse(result);
 	});
 
 	it('should not match <textarea disabled>', function () {
