@@ -95,6 +95,21 @@ describe('color-contrast', function () {
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
 
+	it('should return true for inline elements with sufficient contrast spanning multiple lines', function () {
+		fixture.innerHTML = '<p>Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>';
+		var target = fixture.querySelector('#target');
+		assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
+	it('should return true for inline elements with sufficient contrast', function () {
+		fixture.innerHTML = '<p>Text oh heyyyy <b id="target">and here\'s bold text</b></p>';
+		var target = fixture.querySelector('#target');
+		var result = checks['color-contrast'].evaluate.call(checkContext, target);
+		assert.isTrue(result);
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
 	it('should return false when there is not sufficient contrast', function () {
 		fixture.innerHTML = '<div style="color: yellow; background-color: white;" id="target">' +
 			'My text</div>';
