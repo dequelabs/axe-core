@@ -102,6 +102,14 @@ describe('color-contrast', function () {
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
 
+	it('should return undefined for inline elements spanning multiple lines that are overlapped', function () {
+		fixture.innerHTML = '<div style="position:relative;"><div style="background-color:rgba(0,0,0,1);position:absolute;width:300px;height:200px;"></div>' +
+		'<p>Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p></div>';
+		var target = fixture.querySelector('#target');
+		assert.isUndefined(checks['color-contrast'].evaluate.call(checkContext, target));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
 	it('should return true for inline elements with sufficient contrast', function () {
 		fixture.innerHTML = '<p>Text oh heyyyy <b id="target">and here\'s bold text</b></p>';
 		var target = fixture.querySelector('#target');
