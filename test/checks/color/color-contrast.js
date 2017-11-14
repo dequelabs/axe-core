@@ -158,14 +158,18 @@ describe('color-contrast', function () {
 		assert.equal(checkContext._data.contrastRatio, 0);
 	});
 
-	it('should return undefined when there are elements overlapping', function () {
-		fixture.innerHTML = '<div style="color: black; background-color: white; width: 200px; height: 100px; position: relative;" id="target">' +
-			'My text <div style="position: absolute; top:0; left: 0; background-color: white; width: 100%; height: 100%;"></div></div>';
-		var target = fixture.querySelector('#target');
-		var result = checks['color-contrast'].evaluate.call(checkContext, target);
-		assert.isUndefined(result);
-		assert.equal(checkContext._data.missingData, 'bgOverlap');
-		assert.equal(checkContext._data.contrastRatio, 0);
+	it('should return undefined when there are elements overlapping', function (done) {
+		// Give Edge time to scroll... :/
+		setTimeout(function () {
+			fixture.innerHTML = '<div style="color: black; background-color: white; width: 200px; height: 100px; position: relative;" id="target">' +
+				'My text <div style="position: absolute; top:0; left: 0; background-color: white; width: 100%; height: 100%;"></div></div>';
+			var target = fixture.querySelector('#target');
+			var result = checks['color-contrast'].evaluate.call(checkContext, target);
+			assert.isUndefined(result);
+			assert.equal(checkContext._data.missingData, 'bgOverlap');
+			assert.equal(checkContext._data.contrastRatio, 0);
+			done();
+		}, 10);
 	});
 
 	it('should return true when a form wraps mixed content', function() {
@@ -203,17 +207,21 @@ describe('color-contrast', function () {
 		assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
-	
-	it('should return undefined if element overlaps text content', function () {
-		fixture.innerHTML = '<div style="background-color: white; height: 60px; width: 80px; border:1px solid;position: relative;">' +
-			'<div id="target" style="color: white; height: 40px; width: 60px; border:1px solid red;">Hi</div>' +
-			'<div style="position: absolute; top: 0; width: 60px; height: 40px;background-color: #000"></div>' +
-		'</div>';
-		var target = fixture.querySelector('#target');
-		var actual = checks['color-contrast'].evaluate.call(checkContext, target);
-		assert.isUndefined(actual);
-		assert.equal(checkContext._data.missingData, 'bgOverlap');
-		assert.equal(checkContext._data.contrastRatio, 0);
+
+	it('should return undefined if element overlaps text content', function (done) {
+		// Give Edge time to scroll
+		setTimeout(function () {
+			fixture.innerHTML = '<div style="background-color: white; height: 60px; width: 80px; border:1px solid;position: relative;">' +
+				'<div id="target" style="color: white; height: 40px; width: 60px; border:1px solid red;">Hi</div>' +
+				'<div style="position: absolute; top: 0; width: 60px; height: 40px;background-color: #000"></div>' +
+			'</div>';
+			var target = fixture.querySelector('#target');
+			var actual = checks['color-contrast'].evaluate.call(checkContext, target);
+			assert.isUndefined(actual);
+			assert.equal(checkContext._data.missingData, 'bgOverlap');
+			assert.equal(checkContext._data.contrastRatio, 0);
+			done();
+		}, 10);
 	});
 
 	it('should return undefined if element has same color as background', function () {
