@@ -3,18 +3,13 @@ describe('html-lang-valid test', function () {
 	'use strict';
 	var results;
 	before(function (done) {
-		function start() {
+		axe.testUtils.awaitNestedLoad(function () {
 			axe.run({ runOnly: { type: 'rule', values: ['html-lang-valid'] } }, function (err, r) {
 				assert.isNull(err);
 				results = r;
 				done();
 			});
-		}
-		if (document.readyState !== 'complete') {
-			window.addEventListener('load', start);
-		} else {
-			start();
-		}
+		});
 	});
 
 	describe('violations', function () {
