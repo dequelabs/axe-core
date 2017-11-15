@@ -9,7 +9,7 @@
   <script src="/node_modules/mocha/mocha.js"></script>
   <script src="/node_modules/chai/chai.js"></script>
   <script src="/axe.js"></script>
-
+  <script src="/test/testutils.js"></script>
   <script>
     mocha.setup({
       timeout: 10000,
@@ -22,8 +22,8 @@
   <div id="mocha"></div>
 
   <h1>Heading!</h1>
-  <iframe src="./frame1-pass.html" id="frame1"></iframe>
-  <iframe src="./frame2-fail.html" id="frame2"></iframe>
+  <iframe src="frames/frame1-pass.html" id="frame1"></iframe>
+  <iframe src="frames/frame2-fail.html" id="frame2"></iframe>
 
   <script src="heading-one.js"></script>
   <script src="/test/integration/adapter.js"></script>

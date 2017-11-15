@@ -1,12 +1,17 @@
-describe('document-title test failure', function () {
+describe('heading-one tests', function () {
   'use strict';
   var results;
 
+  it('complete', function () {
+    assert.isTrue(true);
+  });
+
   before(function (done) {
-    window.addEventListener('load', function () {
+    axe.testUtils.awaitNestedLoad(function () {
       axe.run({ runOnly: { type: 'rule', values: ['heading-one'] } }, function (err, r) {
         assert.isNull(err);
         results = r;
+        axe.log(results);
         done();
       });
     });
@@ -16,11 +21,11 @@ describe('document-title test failure', function () {
     it('should find 2', function () {
       assert.lengthOf(results.passes[0].nodes, 2);
     });
-    it('should find first level iframe', function () {
+    it('should find #pass1', function () {
       assert.deepEqual(results.passes[0].nodes[0].target,
         ['#pass1']);
     });
-    it('should find first level iframe', function () {
+    it('should find #pass2', function () {
       assert.deepEqual(results.passes[0].nodes[1].target,
         ['#frame1', '#pass2']);
     });
@@ -30,11 +35,11 @@ describe('document-title test failure', function () {
     it('should find 2', function () {
       assert.lengthOf(results.violations[0].nodes, 2);
     });
-    it('should find first level iframe', function () {
+    it('should find #fail1', function () {
       assert.deepEqual(results.violations[0].nodes[0].target,
         ['#frame1', '#frame1a', '#fail1']);
     });
-    it('should find first level iframe', function () {
+    it('should find #fail2', function () {
       assert.deepEqual(results.violations[0].nodes[1].target,
         ['#frame2', '#fail2']);
     });

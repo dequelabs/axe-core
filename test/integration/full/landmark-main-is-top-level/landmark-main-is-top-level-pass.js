@@ -3,7 +3,7 @@ describe('landmark-main-is-top-level test pass', function () {
 	'use strict';
 	var results;
 	before(function (done) {
-		window.addEventListener('load', function () {
+		axe.testUtils.awaitNestedLoad(function () {
 			axe.run({ runOnly: { type: 'rule', values: ['landmark-main-is-top-level'] } }, function (err, r) {
 				assert.isNull(err);
 				results = r;
