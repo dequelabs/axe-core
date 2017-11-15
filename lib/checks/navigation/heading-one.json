@@ -1,0 +1,12 @@
+{
+  "id": "heading-one",
+  "evaluate": "heading-one.js",
+  "metadata": {
+    "impact": "moderate",
+    "messages": {
+      "pass": "Level one heading used",
+      "fail": "Use an <h1> element on the page",
+      "incomplete": "Test that the level one heading is visible in the default page state"
+    }
+  }
+}

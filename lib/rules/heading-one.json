@@ -1,0 +1,17 @@
+{
+  "id": "heading-one",
+  "selector": "html",
+  "tags": [
+    "cat.structure",
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "Ensures each HTML document contains a non-empty <h1> element",
+    "help": "Documents must have an <h1> element"
+  },
+  "all": [],
+  "any": [
+    "heading-one"
+  ],
+  "none": []
+}
