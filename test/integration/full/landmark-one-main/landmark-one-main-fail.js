@@ -2,19 +2,31 @@ describe('landmark-one-main test failure', function () {
 	'use strict';
 	var results;
 	before(function (done) {
-		axe.run({ runOnly: { type: 'rule', values: ['landmark-one-main'] } }, function (err, r) {
-			assert.isNull(err);
-			results = r;
-			done();
-		});
+		function start() {
+			axe.run({ runOnly: { type: 'rule', values: ['landmark-one-main'] } }, function (err, r) {
+				assert.isNull(err);
+				results = r;
+				done();
+			});
+		}
+		if (document.readyState !== 'complete') {
+			window.addEventListener('load', start);
+		} else {
+			start();
+		}
 	});
 
 	describe('violations', function () {
 		it('should find 1', function () {
-			assert.lengthOf(results.violations, 1);
+			assert.lengthOf(results.violations[0].nodes, 2);
 		});
-		it('should find first level iframe', function () {
+
+		it('should find #frame1', function () {
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#fail1']);
+		});
+
+		it('should find #frame1, #violation2', function () {
+			assert.deepEqual(results.violations[0].nodes[1].target, ['#frame1', '#violation2']);
 		});
 	});
 
