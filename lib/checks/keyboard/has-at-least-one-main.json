@@ -1,0 +1,12 @@
+{
+	"id": "has-at-least-one-main",
+	"evaluate": "has-at-least-one-main.js",
+	"after": "has-at-least-one-main-after.js",
+	"metadata": {
+		"impact": "moderate",
+		"messages": {
+		  "pass": "Document has at least one main landmark",
+		  "fail": "Document has no main landmarks"
+		}
+	}
+}
