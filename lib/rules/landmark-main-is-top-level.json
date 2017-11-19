@@ -1,0 +1,16 @@
+{
+  "id": "landmark-main-is-top-level",
+  "selector": "main,[role=main]",
+  "tags": [
+	"best-practice"
+  ],
+  "metadata": {
+    "description": "The main landmark should not be contained in another landmark",
+    "help": "Main landmark is not at top level"
+  },
+  "all": [],
+  "any": [
+    "main-is-top-level"
+  ],
+  "none": []
+}

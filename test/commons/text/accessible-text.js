@@ -576,8 +576,9 @@ describe('text.accessibleTextVirtual', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+
 			// IE inserts this for us, thanks!
-			assert.equal(axe.commons.text.accessibleTextVirtual(target), target.value || 'Submit');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), target.actualNode.value || 'Submit');
 		});
 
 		it('should provide a default value for input type="reset"', function() {
@@ -587,7 +588,9 @@ describe('text.accessibleTextVirtual', function() {
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			var defaultText = axe.commons.text.accessibleTextVirtual(target);
 			assert.isString(defaultText);
-			assert.notEqual(defaultText.trim(), '');
+
+			// IE inserts this for us, thanks!
+			assert.equal(defaultText, target.actualNode.value || 'Reset');
 		});
 
 		it('should find title for input type=button', function() {
@@ -604,7 +607,7 @@ describe('text.accessibleTextVirtual', function() {
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			// IE does not use title; but will use default value instead
-			assert.equal(axe.commons.text.accessibleTextVirtual(target), target.value || 'Hello');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), target.actualNode.value || 'Hello');
 		});
 
 		it('should find title for input type=submit', function() {
@@ -613,7 +616,7 @@ describe('text.accessibleTextVirtual', function() {
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			// Again, default value takes precedence over title
-			assert.equal(axe.commons.text.accessibleTextVirtual(target), target.value || 'Hello');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), target.actualNode.value || 'Hello');
 		});
 	});
 

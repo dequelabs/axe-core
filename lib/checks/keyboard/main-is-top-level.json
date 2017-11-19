@@ -1,0 +1,11 @@
+{
+  "id": "main-is-top-level",
+  "evaluate": "main-is-top-level.js",
+  "metadata": {
+    "impact": "moderate",
+    "messages": {
+      "pass": "The main landmark is at the top level.",
+      "fail": "The main landmark is contained in another landmark."
+    }
+  }
+}

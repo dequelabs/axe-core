@@ -11,7 +11,7 @@
   ],
   "metadata": {
     "description": "Ensure that each table header in a data table refers to data cells",
-    "help": "All th element and elements with role=columnheader/rowheader must data cells which it describes"
+    "help": "All th elements and elements with role=columnheader/rowheader must have data cells they describe"
   },
   "all": [
     "th-has-data-cells"

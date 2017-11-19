@@ -441,12 +441,15 @@ Additionally, there are a number or properties that allow configuration of diffe
 6. Only process certain types of results
 
 	The `resultTypes` option can be used to limit the result types that aXe will process, aggregate, and send to the reporter. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results.
+
+	Types listed in this option are processed normally and report all of their results. Types *not* listed process a maximum of one result. The caller can use this information to inform the user of the existence of that type of result if appropriate.
+
 	```javascript
 	{
 		resultTypes: ['violations', 'incomplete', 'inapplicable']
 	}
 	```
-	This example will only process the specified result types: "violations", "incomplete", and "inapplicable". Notably, it will not process "passes". On a series of extremely large pages, this could improve performance considerably.
+	This example will process all of the "violations", "incomplete", and "inapplicable" result types. Since "passes" was not specified, it will only process the first pass for each rule, if one exists. As a result, the results object's `passes` array will have a length of either `0` or `1`. On a series of extremely large pages, this would improve performance considerably.
 
 ##### Callback Parameter
 
@@ -587,7 +590,7 @@ axe.run(document, {
 
 #### Example 4
 
-This example shows a result object that points to a shadow DOM element.
+This example shows a result object that points to an open shadow DOM element.
 
 ##### `violations[0]`
 ```
@@ -632,7 +635,7 @@ But if you need to query the flattened tree, the documented function below shoul
 
 ##### Description
 
-A querySelectorAll implementation that works on the virtual DOM and Shadow DOM by manually walking the flattened tree instead of relying on DOM API methods which don’t step into Shadow DOM.
+A querySelectorAll implementation that works on the virtual DOM and open Shadow DOM by manually walking the flattened tree instead of relying on DOM API methods which don’t step into Shadow DOM.
 
 Note: while there is no `axe.utils.querySelector` method, you can reproduce that behavior by accessing the first item returned in the array.
 
@@ -674,7 +677,7 @@ A DOMNode for the parent
 
 #### axe.commons.dom.getRootNode
 
-Return the document or document fragment (shadow DOM)
+Return the document or document fragment (open shadow DOM)
 
 ##### Synopsis
 

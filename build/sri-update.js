@@ -1,3 +1,13 @@
+/**
+ * SRI Update will update the sri-history.json file
+ * In the project root. The sri-history.json file contains
+ * SRI hashes of each released version. This can be used
+ * to validate that something is a known axe-core source
+ * file.
+ *
+ * When running `npm run release`, this script will execute and
+ * update sri-history.json with the SRIs of axe{.*}.js.
+ */
 var path = require('path');
 var fs = require('fs');
 var sriToolbox = require("sri-toolbox");
