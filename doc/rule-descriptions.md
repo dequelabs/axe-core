@@ -3,6 +3,7 @@
 | accesskeys | Ensures every accesskey attribute value is unique | wcag2a, wcag211, cat.keyboard | true |
 | area-alt | Ensures &lt;area&gt; elements of image maps have alternate text | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | aria-allowed-attr | Ensures ARIA attributes are allowed for an element&apos;s role | cat.aria, wcag2a, wcag411, wcag412 | true |
+| allowed-role | Ensures all elements with a role attribute have a role that is allowed | cat.aria, wcag2a, wcag131, wcag411, wcag412 | true |
 | aria-hidden-body | Ensures aria-hidden=&apos;true&apos; is not present on the document body. | cat.aria, wcag2a, wcag412 | true |
 | aria-required-attr | Ensures elements with ARIA roles have all required ARIA attributes | cat.aria, wcag2a, wcag411, wcag412 | true |
 | aria-required-children | Ensures elements with an ARIA role that require child roles contain them | cat.aria, wcag2a, wcag131 | true |
@@ -33,8 +34,8 @@
 | input-image-alt | Ensures &lt;input type=&quot;image&quot;&gt; elements have alternate text | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | cat.forms, best-practice | false |
 | label | Ensures every form element has a label | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
-| landmark-one-main | Ensures a navigation point to the primary content of the page. If the page contains iframes, each iframe should contain either no main landmarks or just one. | best-practice | true |
 | landmark-main-is-top-level | The main landmark should not be contained in another landmark | best-practice | true |
+| landmark-one-main | Ensures a navigation point to the primary content of the page. If the page contains iframes, each iframe should contain either no main landmarks or just one. | best-practice | true |
 | layout-table | Ensures presentational &lt;table&gt; elements do not use &lt;th&gt;, &lt;caption&gt; elements or the summary attribute | cat.semantics, wcag2a, wcag131 | true |
 | link-in-text-block | Links can be distinguished without relying on color | cat.color, experimental, wcag2a, wcag141 | true |
 | link-name | Ensures links have discernible text | cat.name-role-value, wcag2a, wcag111, wcag412, wcag244, section508, section508.22.a | true |
