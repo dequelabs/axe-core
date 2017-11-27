@@ -116,6 +116,14 @@ describe('color-contrast-matches', function () {
 		}
 	});
 
+	it('should not match <input type="file"> that is visually hidden', function () {
+		fixture.innerHTML = '<input type="file" style="width:0.1px; height:0.1px; opacity:0; overflow:hidden; position:absolute; z-index:-1;">';
+		var target = fixture.querySelector('input');
+		var tree = axe._tree = axe.utils.getFlattenedTree(fixture);
+
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(tree[0], target)));
+	});
+
 	it('should match <select> with options', function () {
 		fixture.innerHTML = '<select><option>Hello</option></select>';
 		var target = fixture.querySelector('select');

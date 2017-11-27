@@ -110,6 +110,13 @@ describe('dom.isVisible', function () {
 			assert.isTrue(axe.commons.dom.isVisible(el));
 		});
 
+		it('should return false on absolutely positioned elements with opacity: 0', function () {
+			fixture.innerHTML = '<div id="target" style="position:absolute; opacity:0;">Text</div>';
+
+			var el = document.getElementById('target');
+			assert.isFalse(axe.commons.dom.isVisible(el));
+		});
+
 		it('should detect clip rect hidden text technique', function () {
 			var el,
 				clip = 'clip: rect(1px 1px 1px 1px);' +
