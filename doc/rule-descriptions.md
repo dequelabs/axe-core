@@ -3,7 +3,7 @@
 | accesskeys | Ensures every accesskey attribute value is unique | wcag2a, wcag211, cat.keyboard | true |
 | area-alt | Ensures &lt;area&gt; elements of image maps have alternate text | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | aria-allowed-attr | Ensures ARIA attributes are allowed for an element&apos;s role | cat.aria, wcag2a, wcag411, wcag412 | true |
-| allowed-role | Ensures all elements with a role attribute have a role that is allowed | cat.aria, wcag2a, wcag131, wcag411, wcag412 | true |
+| aria-allowed-role | Ensures all elements with a role attribute have a role that is allowed | cat.aria, wcag2a, wcag131, wcag411, wcag412, best-pratice | true |
 | aria-hidden-body | Ensures aria-hidden=&apos;true&apos; is not present on the document body. | cat.aria, wcag2a, wcag412 | true |
 | aria-required-attr | Ensures elements with ARIA roles have all required ARIA attributes | cat.aria, wcag2a, wcag411, wcag412 | true |
 | aria-required-children | Ensures elements with an ARIA role that require child roles contain them | cat.aria, wcag2a, wcag131 | true |

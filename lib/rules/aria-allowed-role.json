@@ -1,18 +1,19 @@
 {
-  "id": "allowed-role",
+  "id": "aria-allowed-role",
   "selector": "[role]",
   "tags": [
     "cat.aria",
     "wcag2a",
     "wcag131",
     "wcag411",
-    "wcag412"
+    "wcag412",
+    "best-pratice"
   ],
   "metadata": {
     "description": "Ensures all elements with a role attribute have a role that is allowed",
     "help": "ARIA roles used must conform to valid values"
   },
   "all": [],
-  "any": ["allowed-role"],
+  "any": ["aria-allowed-role"],
   "none": []
 }

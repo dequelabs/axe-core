@@ -1,5 +1,5 @@
 {
-  "id": "allowed-role",
+  "id": "aria-allowed-role",
   "evaluate": "allowed-role.js",
   "metadata": {
     "impact": "critical",
