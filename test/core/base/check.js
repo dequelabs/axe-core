@@ -193,7 +193,7 @@ describe('Check', function () {
 					}
 				}).run(fixture, {}, function (d) {
 					assert.instanceOf(d, CheckResult);
-					assert.deepEqual(d.value, data);
+					assert.deepEqual(d.result, data);
 					done();
 				});
 
