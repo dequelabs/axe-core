@@ -107,4 +107,16 @@ describe('aria-allowed-attr', function () {
 
 	});
 
+	it('should not report on allowed attributes', function () {
+		var node = document.createElement('div');
+		node.id = 'test';
+		node.tabIndex = 1;
+		node.setAttribute('role', 'radio');
+		node.setAttribute('aria-required', 'true');
+		fixture.appendChild(node);
+
+		assert.isTrue(checks['aria-allowed-attr'].evaluate.call(checkContext, node));
+		assert.isNull(checkContext._data);
+	});
+
 });
