@@ -208,21 +208,6 @@ describe('color.getBackgroundColor', function () {
 		}
 	});
 
-	it('should return null for a multiline block element not fully covering the background', function () {
-		fixture.innerHTML = '<div style="position:relative;">' +
-			'<div id="background" style="background-color:rgba(0,0,0,1); position:absolute; width:300px; height:20px;"></div>' +
-			'<p style="position:relative; z-index:1; width:300px;" id="target">Text content Text content Text content '+
-				'Text content Text content Text content</p>' +
-		'</div>';
-		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
-		if (window.PHANTOMJS) {
-			assert.ok('PhantomJS is a liar');
-		} else {
-			assert.isNull(actual);
-			assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'elmPartiallyObscured');
-		}
-	});
-
 	it('should return null if a multiline inline element does not fully cover background', function () {
 		fixture.innerHTML = '<div style="position:relative;">' +
 			'<div style="background-color:rgba(0,0,0,1);position:absolute;width:300px;height:20px;"></div>' +
