@@ -2,9 +2,6 @@ describe('main-is-top-level', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-	
-	var shadowSupported = axe.testUtils.shadowSupport.v1;
-	var checkSetup = axe.testUtils.checkSetup;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -56,15 +53,6 @@ describe('main-is-top-level', function () {
 		fixture.appendChild(formDiv);
 		fixture.appendChild(mainDiv);
 		assert.isTrue(checks['main-is-top-level'].evaluate(mainDiv));
-	});
-	
-		
-	(shadowSupported ? it : xit)('should test if main in shadow DOM is top level', function () {
-		var div = document.createElement('div');
-		var shadow = div.attachShadow({ mode: 'open' });
-		shadow.innerHTML = '<main>Main content</main>';
-		var checkArgs = checkSetup(shadow.querySelector('main'));
-		assert.isTrue(checks['main-is-top-level'].evaluate.apply(null, checkArgs));
 	});
 
 });
