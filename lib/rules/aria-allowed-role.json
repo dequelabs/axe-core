@@ -1,13 +1,10 @@
 {
   "id": "aria-allowed-role",
+	"excludeHidden": false,
   "selector": "[role]",
   "tags": [
     "cat.aria",
-    "wcag2a",
-    "wcag131",
-    "wcag411",
-    "wcag412",
-    "best-pratice"
+    "best-practice"
   ],
   "metadata": {
     "description": "Ensures all elements with a role attribute have a role that is allowed",

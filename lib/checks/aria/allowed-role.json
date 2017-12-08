@@ -2,7 +2,7 @@
   "id": "aria-allowed-role",
   "evaluate": "allowed-role.js",
   "metadata": {
-    "impact": "critical",
+    "impact": "minor",
     "messages": {
       "pass": "ARIA role is allowed for given element",
       "fail": "Role must be one of the allowed ARIA roles"

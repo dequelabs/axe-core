@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 300">
+  <script id="script" role="presentation" type="text/javascript" xlink:href="/axe.js"></script>
+  <style id="style" role="presentation">
+    svg { background: rgba(255, 200, 100, .1); }
+  </style>
+  <defs id="defs" role="presentation">
+    <clipPath id="clipPath" role="presentation">
+      <use xlink:href="#rect" />
+    </clipPath>
+    <mask id="mask" role="presentation" x="0" y="0" width="100" height="100" >
+      <use xlink:href="#rect" />
+    </mask>
+    <filter id="filter" role="presentation">
+      <feBlend id="feBlend" role="presentation" in="SourceGraphic"/>
+      <feColorMatrix id="feColorMatrix" role="presentation" in="SourceGraphic" type="saturate" values="0.2" />
+      <feComponentTransfer id="feComponentTransfer" role="presentation">
+        <feFuncR id="feFuncR" role="presentation" type="identity"></feFuncR>
+        <feFuncG id="feFuncG" role="presentation" type="identity"></feFuncG>
+        <feFuncB id="feFuncB" role="presentation" type="identity"></feFuncB>
+        <feFuncA id="feFuncA" role="presentation" type="identity"></feFuncA>
+      </feComponentTransfer>
+      <feComposite id="feComposite" role="presentation" in="SourceGraphic" in2="BackgroundImage" operator="in" result="comp"/>
+      <feConvolveMatrix id="feConvolveMatrix" role="presentation" kernelMatrix="3 0 0 0 0 0 0 0 -3"/>
+      <feDiffuseLighting id="feDiffuseLighting" role="presentation" in="SourceGraphic" result="light" lighting-color="white">
+        <feDistantLight id="feDistantLight" role="presentation" azimuth="240" elevation="20"/>
+        <fePointLight id="fePointLight" role="presentation" x="150" y="60" z="20" />
+      </feDiffuseLighting>
+      <feDisplacementMap id="feDisplacementMap" role="presentation" in2="turbulence" in="SourceGraphic"
+        scale="50" xChannelSelector="R" yChannelSelector="G"/>
+      <feDropShadow id="feDropShadow" role="presentation" dx="4" dy="8" stdDeviation="4"/>
+      <feFlood id="feFlood" role="presentation" x="50" y="50" width="100" height="100" flood-color="green" flood-opacity="0.5"/>
+      <feGaussianBlur id="feGaussianBlur" role="presentation" in="SourceGraphic" stdDeviation="5" result="blur2" />
+      <feImage id="feImage" role="presentation" xlink:href="svg.svg"/>
+      <feMerge id="feMerge" role="presentation">
+        <feMergeNode id="feMergeNode" role="presentation" in="blur2" />
+      </feMerge>
+      <feMorphology id="feMorphology" role="presentation" operator="erode" radius="1"/>
+      <feOffset id="feOffset" role="presentation" in="SourceGraphic" dx="60" dy="60" />
+      <feSpecularLighting id="feSpecularLighting" role="presentation" result="specOut" specularExponent="20" lighting-color="#bbbbbb">
+        <feSpotLight id="feSpotLight" role="presentation" x="360" y="5" z="30" limitingConeAngle="20"
+          pointsAtX="390" pointsAtY="80" pointsAtZ="0"/>
+      </feSpecularLighting>
+      <feTile id="feTile" role="presentation" />
+      <feTurbulence id="feTurbulence" role="presentation" type="turbulence" baseFrequency="0.05" numOctaves="2" result="turbulence"/>
+    </filter>
+    <hatch id="hatch" role="presentation" hatchUnits="userSpaceOnUse" pitch="5" rotate="135">
+      <hatchpath id="hatchpath" role="presentation" stroke="#a080ff" stroke-width="2"/>
+    </hatch>
+    <linearGradient id="linearGradient" role="presentation">
+      <stop id="stop" role="presentation"/>
+    </linearGradient>
+    <marker id="marker" role="presentation" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <use xlink:href="#polygon" />
+    </marker>
+    <mesh id="mesh" role="presentation" />
+    <meshgradient x="50" y="50" id="meshgradient" role="presentation">
+      <meshrow id="meshrow" role="presentation">
+        <meshpatch id="meshpatch" role="presentation">
+          <stop path="c  25,-25  75, 25  100,0" stop-color="lightblue" />
+        </meshpatch>
+      </meshrow>
+    </meshgradient>
+    <metadata id="metadata" role="presentation"></metadata>
+    <pattern id="pattern" role="presentation" width="10" height="10" patternUnits="userSpaceOnUse">
+      <polyline id="polyline" role="presentation" points="80,0  100,0  90,20" />
+	  </pattern>
+    <radialGradient id="radialGradient" role="presentation">
+      <stop offset="10%" stop-color="gold"/>
+      <stop offset="95%" stop-color="green"/>
+    </radialGradient>
+    <solidcolor id="solidcolor" role="presentation" solid-color="gold" solid-opacity="0.8"/>
+    <symbol id="symbol" role="presentation">
+      <use xlink:href="#rect" />
+    </symbol>
+  </defs>
+
+  <a id="a" role="presentation" href="svg.svg">
+    <text x="100" y="140">this svg</text>
+  </a>
+
+  <canvas id="canvas" width="100" height="100" x="100" y="100">
+    An alternative text describing what your canvas displays.
+  </canvas>
+  <circle id="circle" role="presentation" fill="green" cx="20" cy="40" r="10"/>
+  <ellipse id="ellipse" role="presentation" cx="40" cy="40" rx="10" ry="5" fill="yellow" />
+  <line id="line" role="presentation" x1="5" y1="10" x2="0" y2="300" stroke="black"/>
+  <foreignObject id="foreignObject" role="presentation"
+    y="40" width="100" height="40" requiredExtensions="http://www.w3.org/1999/xhtml">
+    <body xmlns="http://www.w3.org/1999/xhtml"><p>Some text</p></body>
+  </foreignObject>
+  <image id="image" role="presentation" y="80" width="100" height="100" xlink:href="./svg.svg" />
+  <path id="path" role="presentation" fill="none" stroke="black" d="M75,20 a1,1 0 0,0 100,0" />
+  <polygon id="polygon" role="presentation" fill="rebeccapurple" points="60,0  80,0  70,20" >
+    <animateMotion dur="6s" repeatCount="indefinite" rotate="auto" >
+      <mpath id="mpath" role="presentation" xlink:href="#path"/>
+    </animateMotion>
+  </polygon>
+  <switch id="switch" role="presentation">
+    <g systemLanguage="en" role="presentation" id="g">
+      <text x="100" y="100" id="text" role="presentation">
+        <tspan dx="20" id="tspan" role="presentation">English</tspan>
+      </text>
+    </g>
+    <g systemLanguage="en">
+      <text x="100" y="20">
+        <textPath id="textPath" role="presentation" xlink:href="#path" >
+          Dutch
+        </textPath>
+      </text>
+    </g>
+  </switch>
+  <svg id="innerSvg" role="presentation" x="200">
+    <use xlink:href="#rect" />
+  </svg>
+  <rect id="rect" role="presentation" x="10" y="10" width="20" height="20">
+    <cursor id="cursor" role="presentation" xlink:href="svg.svg" x="4" y="0"/>
+    <title id="title" role="presentation">Title</title>
+    <desc id="desc" role="presentation">Desc</desc>
+  </rect>
+  <use fill="red" x="20" xlink:href="#rect" id="use" role="presentation" />
+  <view id="view" role="presentation" viewBox="0 0 100 100"/>
+</svg>
