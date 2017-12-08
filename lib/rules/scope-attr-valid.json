@@ -1,6 +1,7 @@
 {
   "id": "scope-attr-valid",
   "selector": "td[scope], th[scope]",
+  "enabled": true,
   "tags": [
     "cat.tables",
     "best-practice"

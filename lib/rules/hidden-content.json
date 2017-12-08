@@ -14,5 +14,6 @@
   "any": [
     "hidden-content"
   ],
-  "none": []
+  "none": [],
+  "enabled": false
 }

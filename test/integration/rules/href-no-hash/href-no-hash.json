@@ -1,0 +1,6 @@
+{
+	"description": "href-no-hash test",
+	"rule": "href-no-hash",
+	"violations": [["#fail1"]],
+	"passes":  [["#pass1"], ["#pass2"]]
+}
