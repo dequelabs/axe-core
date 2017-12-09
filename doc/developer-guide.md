@@ -2,6 +2,16 @@
 
 aXe runs a series of tests to check for accessibility of content and functionality on a website. A test is made up of a series of Rules which are, themselves, made up of Checks. aXe executes these Rules asynchronously and, when the Rules are finished running, runs a callback function which is passed a Result structure. Since some Rules run on the page level while others do not, tests will also run in one of two ways. If a document is specified, the page level rules will run, otherwise they will not.
 
+1. [Getting Started](#getting-started)
+1. [Architecture Overview](#architecture-overview)
+	1. [Rules](#rules)
+	1. [Checks](#checks)
+	1. [Common Functions](#common-functions)
+	1. [Core Utilities](#core-utilities)
+1. [Test Utilities](#test-utilities)
+	1. [Test Util Name: axe.testUtils.MockCheckContext](#test-util-name-axetestutilsmockcheckcontext)
+	1. [Test Util Name: axe.testUtils.fixtureSetup](#test-util-name-axetestutilsfixturesetup)
+
 ## Getting Started
 
 ### Environment Pre-requisites
@@ -16,9 +26,9 @@ To build axe.js, simply run `grunt build`.  axe.js and axe.min.js are placed int
 
 ### Running Tests
 
-To run all tests from the command line you can run `grunt test`, which will run all unit and integration tests using PhantomJS.
+To run all tests from the command line you can run `grunt test`, which will run all unit and integration tests using PhantomJS and Selenium Webdriver.
 
-You can also load tests in any supported browser, which is helpful for debugging.  Tests require a local server to run, you must first start a local server to serve files.  You can use Grunt to start one by running `grunt connect watch`.  Once your local server is running you can load the following pages in any browser to run tests:
+You can also load tests in any supported browser, which is helpful for debugging.  Tests require a local server to run, you must first start a local server to serve files.  You can use Grunt to start one by running `grunt dev`.  Once your local server is running you can load the following pages in any browser to run tests:
 
 
 1.  [Core Tests](../test/core/)
@@ -78,6 +88,7 @@ Similar to Rules, Checks are defined by JSON files in the [lib/checks directory]
 	* `messages` - `Object` These messages are displayed when the Check passes or fails
 		* `pass` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check passes
 		* `fail` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check fails
+		* `incomplete` – `String|Object` – [doT.js](http://olado.github.io/doT/) template string displayed when the Check is incomplete OR an object with `missingData` on why it returned incomplete. Refer to [rules.md](./rules.md).
 
 #### Check `evaluate`
 
@@ -115,9 +126,20 @@ return results.filter(function (r) {
 });
 ```
 
-#### Pass and Fail Templates
+#### Pass, Fail and Incomplete Templates
 
-Occasionally, you may want to add additional information about why a Check passed or failed into its message.  For example, the [aria-valid-attr](../lib/checks/aria/valid-attr.json) will add information about any invalid ARIA attributes to its fail message.  The message uses the [doT.js](http://olado.github.io/doT/) and is compiled to a JavaScript function at build-time.  In the Check message, you have access to the `CheckResult` as `it`.
+Occasionally, you may want to add additional information about why a Check passed, failed or returned undefined into its message.  For example, the [aria-valid-attr](../lib/checks/aria/valid-attr.json) will add information about any invalid ARIA attributes to its fail message.  The message uses the [doT.js](http://olado.github.io/doT/) and is compiled to a JavaScript function at build-time.  In the Check message, you have access to the `CheckResult` as `it`.
+
+```javascript
+// aria-valid-attr check
+"messages": {
+  "pass": "ARIA attributes are used correctly for the defined role",
+  "fail": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}"
+}
+```
+
+See [Developing Axe-core Rules](./rule-development.md) for more information
+on writing rules and checks, including incomplete results.
 
 See [Developing Axe-core Rules](./rule-development.md) for more information
 on writing rules and checks, including incomplete results.
