@@ -60,16 +60,18 @@ describe('axe.utils.sendCommandToFrame', function () {
     var called = 0;
     var frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
-      axe.utils.sendCommandToFrame(frame, {
-        number: number,
-        keepalive: true
-      }, function () {
-        called += 1;
-        if (called === number) {
-          assert.isTrue(true);
-          done();
-        }
-      }, assertNotCalled);
+      setTimeout(function () {
+        axe.utils.sendCommandToFrame(frame, {
+          number: number,
+          keepalive: true
+        }, function () {
+          called += 1;
+          if (called === number) {
+            assert.isTrue(true);
+            done();
+          }
+        }, assertNotCalled);
+      }, 500);
     });
 
     frame.id = 'level0';
