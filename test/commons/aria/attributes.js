@@ -4,15 +4,15 @@ describe('aria.requiredAttr', function () {
 
 	var orig;
 	beforeEach(function () {
-		orig = axe.commons.aria._lut.role;
+		orig = axe.commons.aria.lookupTable.role;
 	});
 
 	afterEach(function () {
-		axe.commons.aria._lut.role = orig;
+		axe.commons.aria.lookupTable.role = orig;
 	});
 
 	it('should returned the attributes property for the proper role', function () {
-		axe.commons.aria._lut.role = {
+		axe.commons.aria.lookupTable.role = {
 			'cats': {
 				attributes: {
 					required: 'yes'
@@ -24,7 +24,7 @@ describe('aria.requiredAttr', function () {
 	});
 
 	it('should return an empty array if there are no required attributes', function () {
-		axe.commons.aria._lut.role = {};
+		axe.commons.aria.lookupTable.role = {};
 		var result = axe.commons.aria.requiredAttr('cats');
 
 		assert.deepEqual(result, []);
@@ -37,16 +37,16 @@ describe('aria.allowedAttr', function () {
 
 	var orig;
 	beforeEach(function () {
-		orig = axe.commons.aria._lut.role;
+		orig = axe.commons.aria.lookupTable.role;
 	});
 
 	afterEach(function () {
-		axe.commons.aria._lut.role = orig;
+		axe.commons.aria.lookupTable.role = orig;
 	});
 
 	it('should returned the attributes property for the proper role', function () {
-		var orig = axe.commons.aria._lut.globalAttributes = ['world'];
-		axe.commons.aria._lut.role = {
+		var orig = axe.commons.aria.lookupTable.globalAttributes = ['world'];
+		axe.commons.aria.lookupTable.role = {
 			'cats': {
 				attributes: {
 					allowed: ['hello']
@@ -55,12 +55,12 @@ describe('aria.allowedAttr', function () {
 		};
 
 		assert.deepEqual(axe.commons.aria.allowedAttr('cats'), ['hello', 'world']);
-		axe.commons.aria._lut.globalAttributes = orig;
+		axe.commons.aria.lookupTable.globalAttributes = orig;
 	});
 
 	it('should also check required attributes', function () {
-		var orig = axe.commons.aria._lut.globalAttributes = ['world'];
-		axe.commons.aria._lut.role = {
+		var orig = axe.commons.aria.lookupTable.globalAttributes = ['world'];
+		axe.commons.aria.lookupTable.role = {
 			'cats': {
 				attributes: {
 					required: ['hello'],
@@ -70,18 +70,18 @@ describe('aria.allowedAttr', function () {
 		};
 
 		assert.deepEqual(axe.commons.aria.allowedAttr('cats'), ['ok', 'world', 'hello']);
-		axe.commons.aria._lut.globalAttributes = orig;
+		axe.commons.aria.lookupTable.globalAttributes = orig;
 	});
 
 	it('should return an array with globally allowed attributes', function () {
 		var result,
-			orig = axe.commons.aria._lut.globalAttributes = ['world'];
+			orig = axe.commons.aria.lookupTable.globalAttributes = ['world'];
 
-		axe.commons.aria._lut.role = {};
+		axe.commons.aria.lookupTable.role = {};
 		result = axe.commons.aria.allowedAttr('cats');
 
 		assert.deepEqual(result, ['world']);
-		axe.commons.aria._lut.globalAttributes = orig;
+		axe.commons.aria.lookupTable.globalAttributes = orig;
 
 	});
 });
@@ -91,15 +91,15 @@ describe('aria.validateAttr', function () {
 
 	var orig;
 	beforeEach(function () {
-		orig = axe.commons.aria._lut.attributes;
+		orig = axe.commons.aria.lookupTable.attributes;
 	});
 
 	afterEach(function () {
-		axe.commons.aria._lut.attributes = orig;
+		axe.commons.aria.lookupTable.attributes = orig;
 	});
 
 	it('should return true if attribute is found in lut', function () {
-		axe.commons.aria._lut.attributes = {
+		axe.commons.aria.lookupTable.attributes = {
 			'cats': {}
 		};
 
@@ -107,7 +107,7 @@ describe('aria.validateAttr', function () {
 	});
 
 	it('should return false if attribute is found in lut', function () {
-		axe.commons.aria._lut.attributes = {};
+		axe.commons.aria.lookupTable.attributes = {};
 
 		assert.isFalse(axe.commons.aria.validateAttr('cats'));
 	});
@@ -116,11 +116,11 @@ describe('aria.validateAttr', function () {
 describe('aria.validateAttrValue', function () {
 	'use strict';
 
-	var orig = axe.commons.aria._lut.attributes,
+	var orig = axe.commons.aria.lookupTable.attributes,
 		fixture = document.getElementById('fixture');
 
 	afterEach(function () {
-		axe.commons.aria._lut.attributes = orig;
+		axe.commons.aria.lookupTable.attributes = orig;
 		fixture.innerHTML = '';
 	});
 
@@ -135,7 +135,7 @@ describe('aria.validateAttrValue', function () {
 
 		describe('enumerated values', function () {
 			it('should validate against enumerated .values if present', function () {
-				axe.commons.aria._lut.attributes = {
+				axe.commons.aria.lookupTable.attributes = {
 					cats: {
 						type: 'nmtoken',
 						values: ['valid']
@@ -152,7 +152,7 @@ describe('aria.validateAttrValue', function () {
 
 			});
 			it('should be case-insensitive for enumerated values', function () {
-				axe.commons.aria._lut.attributes = {
+				axe.commons.aria.lookupTable.attributes = {
 					cats: {
 						type: 'nmtoken',
 						values: ['valid']
@@ -165,7 +165,7 @@ describe('aria.validateAttrValue', function () {
 
 			});
 			it('should reject empty strings', function () {
-				axe.commons.aria._lut.attributes = {
+				axe.commons.aria.lookupTable.attributes = {
 					cats: {
 						type: 'nmtoken',
 						values: ['valid']
@@ -179,7 +179,7 @@ describe('aria.validateAttrValue', function () {
 		});
 		describe('idref', function () {
 			it('should validate the referenced node exists', function () {
-				axe.commons.aria._lut.attributes = {
+				axe.commons.aria.lookupTable.attributes = {
 					cats: {
 						type: 'idref'
 					}
@@ -198,7 +198,7 @@ describe('aria.validateAttrValue', function () {
 
 			var node = document.createElement('div');
 			beforeEach(function () {
-				axe.commons.aria._lut.attributes = {
+				axe.commons.aria.lookupTable.attributes = {
 					cats: {
 						type: 'idrefs'
 					}
@@ -236,7 +236,7 @@ describe('aria.validateAttrValue', function () {
 
 		describe('string', function () {
 			it('should always return true', function () {
-				axe.commons.aria._lut.attributes = {
+				axe.commons.aria.lookupTable.attributes = {
 					cats: {
 						type: 'string'
 					}
@@ -250,7 +250,7 @@ describe('aria.validateAttrValue', function () {
 		describe('decimal', function () {
 			var node = document.createElement('div');
 			beforeEach(function () {
-				axe.commons.aria._lut.attributes = {
+				axe.commons.aria.lookupTable.attributes = {
 					cats: {
 						type: 'decimal'
 					}
@@ -351,7 +351,7 @@ describe('aria.validateAttrValue', function () {
 		describe('int', function () {
 			var node = document.createElement('div');
 			beforeEach(function () {
-				axe.commons.aria._lut.attributes = {
+				axe.commons.aria.lookupTable.attributes = {
 					cats: {
 						type: 'int'
 					}
