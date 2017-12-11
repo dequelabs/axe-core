@@ -237,5 +237,4 @@ describe('aria-allowed-role', function () {
 		assert.isFalse(checks['aria-allowed-role'].evaluate.call(checkContext, node));
 	});
 
-
 });
