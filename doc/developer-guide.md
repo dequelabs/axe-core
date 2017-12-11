@@ -120,19 +120,17 @@ return results.filter(function (r) {
 
 Occasionally, you may want to add additional information about why a Check passed or failed into its message.  For example, the [aria-valid-attr](../lib/checks/aria/valid-attr.json) will add information about any invalid ARIA attributes to its fail message.  The message uses the [doT.js](http://olado.github.io/doT/) and is compiled to a JavaScript function at build-time.  In the Check message, you have access to the `CheckResult` as `it`.
 
-See [Developing Axe-core Rules](./rule-development.md) for more information
-on writing rules and checks, including incomplete results.
-
 ```javascript
 // aria-valid-attr check
 "messages": {
   "pass": "ARIA attributes are used correctly for the defined role",
-  "fail": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}"
+  "fail": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}",
+  "incomplete": "axe-core couldn't tell because of {{it.data.missingData}}"
 }
 ```
 
-See [rules.md](./rules.md) for more information on writing rules and checks,
-including incomplete results.
+See [Developing Axe-core Rules](./rule-development.md) for more information
+on writing rules and checks, including incomplete results.
 
 #### CheckResult
 
