@@ -148,7 +148,8 @@ Occasionally, you may want to add additional information about why a Check passe
 // aria-valid-attr check
 "messages": {
   "pass": "ARIA attributes are used correctly for the defined role",
-  "fail": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}"
+  "fail": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}",
+  "incomplete": "axe-core couldn't tell because of {{it.data.missingData}}"
 }
 ```
 
