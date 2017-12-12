@@ -1,4 +1,4 @@
-describe('axe.utils.aggregateRule', function() {
+describe.only('axe.utils.aggregateRule', function() {
 	'use strict';
 	var FAIL = 'failed';
 	var PASS = 'passed';
@@ -42,12 +42,8 @@ describe('axe.utils.aggregateRule', function() {
 	});
 
 	it('Should be `inapplicable` when no results are given', function () {
-		var ruleResult = axe.utils.aggregateRule( createTestResults(
-			{}, {}
-		));
-
+		var ruleResult = axe.utils.aggregateRule([]);
 		assert.equal(ruleResult.result, INAPPLICABLE);
-		assert.lengthOf(ruleResult.inapplicable, 2);
 	});
 
 	it('should assign FAIL to ruleResult over PASS', function() {
