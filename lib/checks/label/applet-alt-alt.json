@@ -1,0 +1,11 @@
+{
+  "id":"applet-alt-alt",
+  "evaluate": "applet-alt-alt.js",
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "applet-alt got text",
+      "fail": "applet-alt is not there"
+    }
+  }
+}
