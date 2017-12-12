@@ -1,4 +1,4 @@
-describe.only('axe.utils.aggregateRule', function() {
+describe('axe.utils.aggregateRule', function() {
 	'use strict';
 	var FAIL = 'failed';
 	var PASS = 'passed';
