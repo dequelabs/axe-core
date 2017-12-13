@@ -7,7 +7,7 @@
     "best-practice"
   ],
   "metadata": {
-    "description": "Ensures all elements with a role attribute have a role that is allowed",
+    "description": "Ensures all elements with a user-defined role may be used",
     "help": "ARIA roles used must conform to valid values"
   },
   "all": [],
