@@ -501,6 +501,84 @@ describe('Audit', function () {
 				done();
 			}, isNotCalled);
 		});
+		it('should use selectors for rules specified by the options', function (done) {
+			fixture.innerHTML = '<blink>BAD BLINKY ELEMENT</blink>';
+
+			a.run({ include: [axe.utils.getFlattenedTree(fixture)[0]] }, {
+				rules: {
+					'positive3': {
+						selector: '#FAKE-ID'
+					}
+				}
+			}, function (results) {
+				assert.equal(results[3].nodes.length, 0);
+				done();
+			}, isNotCalled);
+		});
+		it('should use excludeHidden attribute specified by options', function (done) {
+			fixture.innerHTML = '<blink style="visibility: hidden;" id="monkeys">' +
+					'BAD BLINKY ELEMENT</blink>';
+
+			a.run({ include: [axe.utils.getFlattenedTree(fixture)[0]] }, {
+				rules: {
+					'positive3': {
+						excludeHidden: false
+					}
+				}
+			}, function (results) {
+				assert.equal(results[1].nodes.length, 0);
+				assert.equal(results[3].nodes.length, 1);
+				done();
+			}, isNotCalled);
+		});
+		it('should use matches function specified by options', function (done) {
+			fixture.innerHTML = '<blink>BAD BLINKY ELEMENT</blink>';
+
+			a.run({ include: [axe.utils.getFlattenedTree(fixture)[0]] }, {
+				rules: {
+					'positive3': {
+						matches: 'function (node) { return false; }'
+					}
+				}
+			}, function (results) {
+				assert.equal(results[3].nodes.length, 0);
+				done();
+			}, isNotCalled);
+		});
+		it('should use any and none attributes specified by options', function (done) {
+			fixture.innerHTML = '<blink>BAD BLINKY ELEMENT</blink>';
+
+			a.run({ include: [axe.utils.getFlattenedTree(fixture)[0]] }, {
+				rules: {
+					'positive3': {
+						any: [],
+						none: ['positive3-check1']
+					}
+				}
+			}, function (results) {
+				assert.equal(results[3].nodes[0].any.length, 0);
+				assert.equal(results[3].nodes[0].none.length, 1);
+				done();
+			}, isNotCalled);
+		});
+		it('should use tags attribute specified by options', function (done) {
+			fixture.innerHTML = '<blink>BAD BLINKY ELEMENT</blink>';
+
+			a.run({ include: [axe.utils.getFlattenedTree(fixture)[0]] }, {
+				runOnly: {
+					type: 'tag',
+					values: ['custom']
+				},
+				rules: {
+					'positive3': {
+						tags: ['custom']
+					}
+				}
+			}, function (results) {
+				assert.equal(results.length, 1);
+				done();
+			}, isNotCalled);
+		});
 		it('should call the rule\'s run function', function (done) {
 			var targetRule = mockRules[mockRules.length - 1],
 				rule = axe.utils.findBy(a.rules, 'id', targetRule.id),
