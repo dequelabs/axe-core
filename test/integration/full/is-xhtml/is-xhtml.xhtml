@@ -1,0 +1,24 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>axe.utils.isXHTML test</title>
+	<meta charset="utf-8"/>
+	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
+	<script src="/node_modules/mocha/mocha.js"></script>
+	<script src="/node_modules/chai/chai.js"></script>
+	<script src="/axe.js"></script>
+	<script>
+		mocha.setup({
+			timeout: 10000,
+			ui: 'bdd'
+		});
+		var assert = chai.assert;
+	</script>
+</head>
+<body>
+	<div id="fixture">
+	</div>
+<div id="mocha"></div>
+<script src="is-xhtml.js"></script>
+<script src="/test/integration/adapter.js"></script>
+</body>
+</html>
