@@ -8,7 +8,8 @@
   "tags": [
     "cat.color",
     "wcag2aa",
-    "wcag143"
+    "wcag143",
+    "section508.21.j"
   ],
   "metadata": {
     "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds",
