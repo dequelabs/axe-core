@@ -7,7 +7,8 @@
     "cat.color",
     "experimental",
     "wcag2a",
-    "wcag141"
+    "wcag141",
+    "section508.21.j"
   ],
   "metadata": {
     "description": "Links can be distinguished without relying on color",

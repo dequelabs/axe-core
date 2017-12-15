@@ -5,7 +5,8 @@
   "tags": [
     "cat.aria",
     "wcag2a",
-    "wcag412"
+    "wcag412",
+    "section508.22.d"
   ],
   "metadata": {
     "description": "Ensures aria-hidden='true' is not present on the document body.",

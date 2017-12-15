@@ -5,7 +5,8 @@
   "tags": [
     "wcag2a",
     "wcag211",
-    "cat.keyboard"
+    "cat.keyboard",
+    "section508.21.a"
   ],
   "metadata": {
     "description": "Ensures every accesskey attribute value is unique",

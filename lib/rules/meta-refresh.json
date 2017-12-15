@@ -8,7 +8,8 @@
     "wcag2aaa",
     "wcag221",
     "wcag224",
-    "wcag325"
+    "wcag325",
+    "section508.22.p"
   ],
   "metadata": {
     "description": "Ensures <meta http-equiv=\"refresh\"> is not used",
