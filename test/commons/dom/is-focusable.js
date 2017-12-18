@@ -56,6 +56,30 @@ describe('dom.isFocusable', function () {
 
 	});
 
+	it('should return false for hidden inputs with tabindex', function () {
+		fixture.innerHTML = '<input type="hidden" tabindex="1" id="target">';
+		var el = document.getElementById('target');
+
+		assert.isFalse(axe.commons.dom.isFocusable(el));
+
+	});
+
+	it('should return false for hidden buttons with tabindex', function () {
+		fixture.innerHTML = '<button style="visibility:hidden" tabindex="0" id="target"></button>';
+		var el = document.getElementById('target');
+
+		assert.isFalse(axe.commons.dom.isFocusable(el));
+
+	});
+
+	it('should return false for disabled buttons with tabindex', function () {
+		fixture.innerHTML = '<button tabindex="0" id="target" disabled></button>';
+		var el = document.getElementById('target');
+
+		assert.isFalse(axe.commons.dom.isFocusable(el));
+
+	});
+
 	it('should return false for non-visible elements', function () {
 		fixture.innerHTML = '<input type="text" id="target" style="display: none">';
 		var el = document.getElementById('target');
