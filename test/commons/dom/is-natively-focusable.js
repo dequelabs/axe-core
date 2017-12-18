@@ -3,6 +3,23 @@ describe('dom.isNativelyFocusable', function () {
 
 	var fixture = document.getElementById('fixture');
 
+	function hideByClipping (el) {
+		el.style.cssText = 'position: absolute !important;' +
+			' clip: rect(0px 0px 0px 0px); /* IE6, IE7 */' +
+			' clip: rect(0px, 0px, 0px, 0px);';
+		return el;
+	}
+
+	function hideByMovingOffScreen (el) {
+		el.style.cssText = 'position:absolute;' +
+			' left:-10000px;' +
+			' top:auto;' +
+			' width:1px;' +
+			' height:1px;' +
+			' overflow:hidden;';
+		return el;
+	}
+
 	afterEach(function () {
 		document.getElementById('fixture').innerHTML = '';
 	});
@@ -72,11 +89,37 @@ describe('dom.isNativelyFocusable', function () {
 
 	});
 
-	it('should return false for non-visible elements', function () {
-		fixture.innerHTML = '<input type="text" id="target" style="display: none">';
+	it('should return false for elements hidden with display:none', function () {
+		fixture.innerHTML = '<button id="target" style="display: none">button</button>';
 		var el = document.getElementById('target');
 
 		assert.isFalse(axe.commons.dom.isNativelyFocusable(el));
+
+	});
+
+	it('should return false for elements hidden with visibility:hidden', function () {
+		fixture.innerHTML = '<button id="target" style="visibility: hidden">button</button>';
+		var el = document.getElementById('target');
+
+		assert.isFalse(axe.commons.dom.isNativelyFocusable(el));
+
+	});
+
+	it('should return true for clipped elements', function () {
+		fixture.innerHTML = '<button id="target">button</button>';
+		var el = document.getElementById('target');
+		el = hideByClipping(el);
+
+		assert.isTrue(axe.commons.dom.isNativelyFocusable(el));
+
+	});
+
+	it('should return true for elements positioned off screen', function () {
+		fixture.innerHTML = '<button id="target">button</button>';
+		var el = document.getElementById('target');
+		el = hideByMovingOffScreen(el);
+
+		assert.isTrue(axe.commons.dom.isNativelyFocusable(el));
 
 	});
 
