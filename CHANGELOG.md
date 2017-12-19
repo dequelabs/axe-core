@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.6.0"></a>
+# [2.6.0](https://github.com/dequelabs/axe-core/compare/v2.5.0...v2.6.0) (2017-12-19)
+
+
+### Bug Fixes
+
+* Added message about expected contrast ratio ([#381](https://github.com/dequelabs/axe-core/issues/381)) ([#562](https://github.com/dequelabs/axe-core/issues/562)) ([a34c023](https://github.com/dequelabs/axe-core/commit/a34c023))
+* color contrast misc ([#639](https://github.com/dequelabs/axe-core/issues/639)) Closes [#607](https://github.com/dequelabs/axe-core/issues/607), [#556](https://github.com/dequelabs/axe-core/issues/556) ([7cb0325](https://github.com/dequelabs/axe-core/commit/7cb0325))
+* copy precommit hook as file, not a link ([b3bf3d4](https://github.com/dequelabs/axe-core/commit/b3bf3d4))
+* **aria-allowed-attr:** align rowcount, colcount, and colindex with 1.1 spec ([#555](https://github.com/dequelabs/axe-core/issues/555)) ([320ef55](https://github.com/dequelabs/axe-core/commit/320ef55))
+* Ensure overloaded Array.prototype won't crash axe ([8086a67](https://github.com/dequelabs/axe-core/commit/8086a67))
+* **check:** fix bug with async checks ([34bc4f8](https://github.com/dequelabs/axe-core/commit/34bc4f8))
+* **commons/aria:** allow aria-required on checkbox role ([0d7a9a1](https://github.com/dequelabs/axe-core/commit/0d7a9a1))
+* **commons/aria:** allow aria-required on radio role ([31e9f4c](https://github.com/dequelabs/axe-core/commit/31e9f4c))
+* **helpUrl:** Properly parse x.0 versions ([#550](https://github.com/dequelabs/axe-core/issues/550)) ([6457ba4](https://github.com/dequelabs/axe-core/commit/6457ba4))
+* **postinstall:** use node, more conditionals ([#520](https://github.com/dequelabs/axe-core/issues/520)) ([54f7ddd](https://github.com/dequelabs/axe-core/commit/54f7ddd))
+* **rule/dlitem:** use a case-insenstive `tagName` test ([#652](https://github.com/dequelabs/axe-core/issues/652)) ([e67a913](https://github.com/dequelabs/axe-core/commit/e67a913)), closes [#581](https://github.com/dequelabs/axe-core/issues/581)
+* **rules/region:** Treat `<section>` as a landmark if it has an accessible name [#640](https://github.com/dequelabs/axe-core/issues/640) ([#642](https://github.com/dequelabs/axe-core/issues/642)) ([0131458](https://github.com/dequelabs/axe-core/commit/0131458))
+* Polyfills are made non-enumerable [#648](https://github.com/dequelabs/axe-core/issues/648). ([#649](https://github.com/dequelabs/axe-core/issues/649)) ([1ab4629](https://github.com/dequelabs/axe-core/commit/1ab4629))
+* Return inapplicable results ([#473](https://github.com/dequelabs/axe-core/issues/473)). ([0a2a5cc](https://github.com/dequelabs/axe-core/commit/0a2a5cc))
+* try telling circle to skip .git/hooks ([3b88acd](https://github.com/dequelabs/axe-core/commit/3b88acd))
+* update main rules/tests for 2x branch ([b128e92](https://github.com/dequelabs/axe-core/commit/b128e92))
+
+
+### Features
+
+* **landmark-one-main:** add rule ensuring one main landmark in document ([#498](https://github.com/dequelabs/axe-core/issues/498)) ([ff0a1b8](https://github.com/dequelabs/axe-core/commit/ff0a1b8))
+* add precommit hook on npm postinstall ([122c475](https://github.com/dequelabs/axe-core/commit/122c475))
+* Add rule, landmark-main-is-top-level ([#462](https://github.com/dequelabs/axe-core/issues/462)) ([f007b47](https://github.com/dequelabs/axe-core/commit/f007b47))
+* Improve generated selectors for namespaced elements in XHTML ([#582](https://github.com/dequelabs/axe-core/issues/582)) ([dbe63eb](https://github.com/dequelabs/axe-core/commit/dbe63eb)), closes [#563](https://github.com/dequelabs/axe-core/issues/563)
+* docs: rename `aria._lut`, add to developer guide
+
+
 <a name="2.5.0"></a>
 # [2.5.0](https://github.com/dequelabs/axe-core/compare/v2.4.2...v2.5.0) (2017-11-06)
 
