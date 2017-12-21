@@ -59,7 +59,7 @@ In short sentences, using plain language, describe what conditions will lead to 
 
 `###` keyboard/focusable-no-name (none)
 
-1. If the element is not focusable, return false
+1. If the element is not in the focus order, return false
 2. If the element has an accessible name, return false
 3. Otherwise return true
 
