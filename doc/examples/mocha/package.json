@@ -13,7 +13,7 @@
     "build": "grunt"
   },
   "devDependencies": {
-    "axe-core": "^2.6.0",
+    "axe-core": "^2.6.1",
     "grunt": "~0.4.4",
     "grunt-mocha": "~0.4.10",
     "chai": "~1.9.1"
