@@ -119,4 +119,11 @@ describe('aria-allowed-attr', function () {
 		assert.isNull(checkContext._data);
 	});
 
+	describe('options', function () {
+		it('should allow provided attribute names', function () {
+			fixture.innerHTML = '<div role="separator" id="target" aria-valuenow="0" aria-valuemin="-2" aria-valuemax="4"></div>';
+			var target = fixture.children[0];
+			assert.isTrue(checks['aria-allowed-attr'].evaluate.call(checkContext, target, ['aria-valuenow', 'aria-valuemin', 'aria-valuemax']));
+		});
+	});
 });
