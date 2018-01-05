@@ -12,7 +12,7 @@ describe('aria.isValidRole', function () {
 
 	});
 
-	it('should return false if role is not found in the lut', function () {
+	it('should return false if role is not found in the lookup table', function () {
 		assert.isFalse(axe.commons.aria.isValidRole('cats'));
 
 	});
@@ -57,7 +57,7 @@ describe('aria.getRolesByType', function () {
 
 	});
 
-	it('should return empty array if role is not found in the lut', function () {
+	it('should return empty array if role is not found in the lookup table', function () {
 		assert.deepEqual(axe.commons.aria.getRolesByType('blahblahblah'), []);
 	});
 });
@@ -77,7 +77,7 @@ describe('aria.getRoleType', function () {
 
 	});
 
-	it('should return null if role is not found in the lut', function () {
+	it('should return null if role is not found in the lookup table', function () {
 		assert.isNull(axe.commons.aria.getRoleType('cats'));
 	});
 });
