@@ -57,4 +57,12 @@ describe('aria-required-attr', function () {
 		axe.commons.aria.requiredAttr = orig;
 	});
 
+	describe('options', function () {
+		it('should require provided attribute names', function () {
+			fixture.innerHTML = '<div role="slider" id="target"></div>';
+			var target = fixture.children[0];
+			assert.isFalse(checks['aria-required-attr'].evaluate.call(checkContext, target, ['aria-valuemax', 'aria-bats']));
+			assert.deepEqual(checkContext._data, ['aria-valuenow', 'aria-valuemax', 'aria-valuemin', 'aria-bats']);
+		});
+	});
 });
