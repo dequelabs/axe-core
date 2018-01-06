@@ -1,4 +1,4 @@
-describe('Options', function() {
+describe('Options parameter', function() {
 	'use strict';
 
 	before(function (done) {
