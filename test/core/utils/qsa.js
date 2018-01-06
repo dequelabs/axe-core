@@ -174,4 +174,12 @@ describe('axe.utils.querySelectorAll', function () {
 			'.first[data-a11yhero="faulkner"] > ul li.breaking');
 		assert.equal(result.length, 2);
 	});
+	it('should find an element only once', function () {
+		var divs = axe.utils.querySelectorAll(dom, 'div');
+		var ones = axe.utils.querySelectorAll(dom, '#one');
+		var divOnes = axe.utils.querySelectorAll(dom, 'div, #one');
+
+		assert.isBelow(divOnes.length, divs.length + ones.length,
+			'Elements matching both parts of a selector should not be included twice');
+	});
 });
