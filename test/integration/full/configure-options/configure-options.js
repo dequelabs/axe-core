@@ -11,7 +11,7 @@ describe('Check Configure Options', function() {
 			axe.configure({
 				checks: [{
 					id: 'aria-allowed-attr',
-					options: ['aria-valuenow']
+					options: {'separator': ['aria-valuenow']}
 				}]
 			});
 			axe.run(target, {
@@ -32,7 +32,7 @@ describe('Check Configure Options', function() {
 			axe.configure({
 				checks: [{
 					id: 'aria-required-attr',
-					options: ['aria-checked']
+					options: {slider: ['aria-snuggles']}
 				}]
 			});
 			axe.run('#target',  {
@@ -42,7 +42,7 @@ describe('Check Configure Options', function() {
 			  }
 			}, function(error, results) {
 				assert.lengthOf(results.violations, 1, 'violations');
-				assert.sameMembers(results.violations[0].nodes[0].any[0].data, ['aria-valuemax', 'aria-valuemin', 'aria-checked']);
+				assert.sameMembers(results.violations[0].nodes[0].any[0].data, ['aria-valuemax', 'aria-valuemin', 'aria-snuggles']);
 				done();
 			});
 		});
