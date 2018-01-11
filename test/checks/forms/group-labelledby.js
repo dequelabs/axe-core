@@ -104,6 +104,22 @@ describe('group-labelledby', function () {
 				});
 			});
 
+			it('should return true if there are ungrouped ' + type + ' elements with the same hidden name and with shared labelledby' +
+				'pointing to a node with text content', function () {
+
+				fixtureSetup('<p id="shared" style="display:none">Label</p>' +
+					'<input type="' + type + '" id="target" aria-labelledby="shared one" name="uniqueyname">' +
+					'<input type="' + type + '" aria-labelledby="shared two" name="uniqueyname">' +
+					'<input type="' + type + '" aria-labelledby="shared three" name="uniqueyname">');
+
+				var node = fixture.querySelector('#target');
+				assert.isTrue(check.evaluate.call(checkContext, node));
+				assert.deepEqual(checkContext._data, {
+					name: 'uniqueyname',
+					type: type
+				});
+			});
+
 			it('should return true if there are ungrouped ' + type + ' elements with the same name and with shared labelledby ' +
 				'pointing to a node with text content - SPECIAL CHARACTERS', function () {
 

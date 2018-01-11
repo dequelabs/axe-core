@@ -1,7 +1,7 @@
 {
   "id": "group-labelledby",
-  "evaluate": "labelledby.js",
-  "after": "labelledby-after.js",
+  "evaluate": "group-labelledby.js",
+  "after": "group-labelledby-after.js",
   "metadata": {
     "impact": "critical",
     "messages": {
