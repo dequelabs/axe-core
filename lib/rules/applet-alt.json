@@ -8,8 +8,8 @@
     "wcag111"
   ],
   "metadata": {
-    "description": "Checks if a text alternative is provided for an applet",
-    "help": "Label an applet by using the alt/labelledby/label text alternative and provide a text alternative in the body of the applet element "
+    "description": "Label an applet by using the alt/labelledby/label text alternative and provide a text alternative in the body of the applet element",
+    "help": "Check if a text alternative are provided for an applet"
   },
   "all": ["has-visible-text"],
   "any": [
