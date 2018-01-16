@@ -1,0 +1,11 @@
+{
+  "id":"applet-alt",
+  "evaluate": "applet-alt.js",
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "Alt label and node have text content.",
+      "fail": "Alt label and/or node do not have text content."
+    }
+  }
+}

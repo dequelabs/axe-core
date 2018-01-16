@@ -1,7 +1,6 @@
 {
   "id": "applet-alt",
   "selector": "applet",
-  "matches": "",
   "tags": [
     "cat.text-alternatives",
     "wcag2a",
@@ -9,14 +8,13 @@
   ],
   "metadata": {
     "description": "Label an applet by using the alt/labelledby/label text alternative and provide a text alternative in the body of the applet element",
-    "help": "Check if a text alternative are provided for an applet"
+    "help": "Applet must have text alternative"
   },
   "all": ["has-visible-text"],
   "any": [
         "aria-labelledby",
-        "applet-alt-alt",
-        "aria-label",
-        "none-empty-text"
+        "applet-alt",
+        "aria-label"
   ],
   "none": []
 }

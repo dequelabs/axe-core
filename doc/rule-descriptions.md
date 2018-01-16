@@ -1,7 +1,7 @@
 | Rule ID | Description | Tags | Enabled by default |
 | :------- | :------- | :------- | :------- |
 | accesskeys | Ensures every accesskey attribute value is unique | wcag2a, wcag211, cat.keyboard | true |
-| applet-alt | Checks if a text alternative is provided for an applet | cat.text-alternatives, wcag2a, wcag111 | true |
+| applet-alt | Label an applet by using the alt/labelledby/label text alternative and provide a text alternative in the body of the applet element | cat.text-alternatives, wcag2a, wcag111 | true |
 | area-alt | Ensures &lt;area&gt; elements of image maps have alternate text | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | aria-allowed-attr | Ensures ARIA attributes are allowed for an element&apos;s role | cat.aria, wcag2a, wcag411, wcag412 | true |
 | aria-hidden-body | Ensures aria-hidden=&apos;true&apos; is not present on the document body. | cat.aria, wcag2a, wcag412 | true |
