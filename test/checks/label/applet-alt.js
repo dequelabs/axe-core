@@ -1,4 +1,4 @@
-describe('applet-alt-alt', function () {
+describe('applet-alt', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
@@ -13,7 +13,7 @@ describe('applet-alt-alt', function () {
 		node.innerHTML = 'Some new text';
 		fixture.appendChild(node);
 
-		assert.isTrue(checks['applet-alt-alt'].evaluate(node));
+		assert.isTrue(checks['applet-alt'].evaluate(node));
 	});
 
 	it('should return false if element got alt text and no body text', function () {
@@ -22,14 +22,14 @@ describe('applet-alt-alt', function () {
 		node.innerHTML = ' ';
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['applet-alt-alt'].evaluate(node));
+		assert.isFalse(checks['applet-alt'].evaluate(node));
 	});
 
 	it('should return false if no alt label pressent', function () {
 		var node = document.createElement('div');
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['applet-alt-alt'].evaluate(node));
+		assert.isFalse(checks['applet-alt'].evaluate(node));
 	});
 
 	it('should return false if an alt label got no text', function () {
@@ -37,6 +37,6 @@ describe('applet-alt-alt', function () {
 		node.setAttribute('alt', ' ');
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['applet-alt-alt'].evaluate(node));
+		assert.isFalse(checks['applet-alt'].evaluate(node));
 	});
 });
