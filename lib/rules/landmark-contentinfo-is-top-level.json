@@ -1,0 +1,16 @@
+{
+  "id": "landmark-contentinfo-is-top-level",
+  "selector": "[role=contentinfo], footer",
+  "tags": [
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "A contentinfo landmark is a way to identify common information at the bottom of each page within a website",
+    "help": "Contentinfo landmark must be at top level"
+  },
+  "all": [],
+  "any": [
+    "contentinfo-is-top-level"
+  ],
+  "none": []
+}
