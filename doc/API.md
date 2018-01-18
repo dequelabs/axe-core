@@ -337,6 +337,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `iframes`       | `true`  | Tell axe to run inside iframes
 | `elementRef`    | `false` | Return element references in addition to the target
 | `restoreScroll` | `false` | Scrolls elements back to before axe started
+| `frameWaitTime` | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out
 
 
 ###### Options Parameter Examples
