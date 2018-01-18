@@ -119,4 +119,51 @@ describe('aria-allowed-attr', function () {
 		assert.isNull(checkContext._data);
 	});
 
+	describe('options', function () {
+		it('should allow provided attribute names for a role', function () {
+			axe.commons.aria.lookupTable.role.mcheddarton = {
+				type: 'widget',
+				attributes: {
+					allowed: ['aria-checked']
+				},
+				owned: null,
+				nameFrom: ['author'],
+				context: null
+			};
+			fixture.innerHTML = '<div role="mccheddarton" id="target" aria-checked="true" aria-snuggles="true"></div>';
+			var target = fixture.children[0];
+			assert.isTrue(checks['aria-allowed-attr'].evaluate.call(checkContext, target, {'mccheddarton': ['aria-checked', 'aria-snuggles']}));
+			delete axe.commons.aria.lookupTable.role.mccheddarton;
+		});
+
+		it('should handle multiple roles provided in options', function () {
+			axe.commons.aria.lookupTable.role.mcheddarton = {
+				type: 'widget',
+				attributes: {
+					allowed: ['aria-checked']
+				},
+				owned: null,
+				nameFrom: ['author'],
+				context: null
+			};
+			axe.commons.aria.lookupTable.role.bagley = {
+				type: 'widget',
+				attributes: {
+					allowed: ['aria-checked']
+				},
+				owned: null,
+				nameFrom: ['author'],
+				context: null
+			};
+			fixture.innerHTML = '<div role="bagley" id="target" aria-snuggles2="true"></div>';
+			var target = fixture.children[0];
+			var options = {
+				'mccheddarton': ['aria-snuggles'],
+				'bagley': ['aria-snuggles2']
+			};
+			assert.isTrue(checks['aria-allowed-attr'].evaluate.call(checkContext, target, options));
+			delete axe.commons.aria.lookupTable.role.mccheddarton;
+			delete axe.commons.aria.lookupTable.role.bagley;
+		});
+	});
 });
