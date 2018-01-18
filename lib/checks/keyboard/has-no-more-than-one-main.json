@@ -1,0 +1,11 @@
+{
+	"id": "has-no-more-than-one-main",
+	"evaluate": "has-no-more-than-one-main.js",
+	"metadata": {
+		"impact": "moderate",
+		"messages": {
+		"pass": "Document has no more than one main landmark",
+		"fail": "Document has more than one main landmark"
+		}
+	}
+}

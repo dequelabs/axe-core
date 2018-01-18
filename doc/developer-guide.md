@@ -2,6 +2,8 @@
 
 aXe runs a series of tests to check for accessibility of content and functionality on a website. A test is made up of a series of Rules which are, themselves, made up of Checks. aXe executes these Rules asynchronously and, when the Rules are finished running, runs a callback function which is passed a Result structure. Since some Rules run on the page level while others do not, tests will also run in one of two ways. If a document is specified, the page level rules will run, otherwise they will not.
 
+aXe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities for developing axe-core moving forward. Note: we do not and cannot support closed Shadow DOM.
+
 1. [Getting Started](#getting-started)
 1. [Architecture Overview](#architecture-overview)
 	1. [Rules](#rules)
@@ -146,7 +148,8 @@ Occasionally, you may want to add additional information about why a Check passe
 // aria-valid-attr check
 "messages": {
   "pass": "ARIA attributes are used correctly for the defined role",
-  "fail": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}"
+  "fail": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}",
+  "incomplete": "axe-core couldn't tell because of {{it.data.missingData}}"
 }
 ```
 
@@ -169,7 +172,7 @@ Common functions are an internal library used by the rules and checks.  If you h
 
 #### Commons and Shadow DOM
 
-To support Shadow DOM while maintaining backwards compatibility, commons functions that
+To support open Shadow DOM while maintaining backwards compatibility, commons functions that
 query DOM nodes must operate on an in-memory representation of the DOM using aXe-core’s
 built-in [API methods and utility functions](./API.md#virtual-dom-utilities).
 
@@ -197,7 +200,7 @@ which passes on a virtual DOM node with both the light DOM and Shadow DOM (if ap
 
 ### Virtual Nodes
 
-To support Shadow DOM, aXe-core has the ability to handle virtual nodes in [rule matches](#matches-function)
+To support open Shadow DOM, aXe-core has the ability to handle virtual nodes in [rule matches](#matches-function)
 and [check evaluate](#check-evaluate) functions. The full set of API methods for Shadow DOM can be
 found in the [API documentation](./API.md#virtual-dom-utilities), but the general
 structure for a virtualNode is as follows:
@@ -212,12 +215,27 @@ structure for a virtualNode is as follows:
 
 - A virtualNode is an object containing an HTML DOM element (`actualNode`).
 - Children contains an array of child virtualNodes.
-- The shadowID indicates whether the node is in a shadow root and if it is, which one it is inside the boundary.
+- The shadowID indicates whether the node is in an open shadow root and if it is, which one it is inside the boundary.
 
 ### Core Utilities
 
 Core Utilities are an internal library that provides aXe with functionality used throughout its core processes. Most notably among these are the queue function and the DqElement constructor.
 
+#### ARIA Lookup Tables
+
+axe.commons.aria provides a namespace for ARIA-related utilities, including a lookupTable for attributes and roles.
+
+* `axe.commons.aria.lookupTable.attributes`
+* `axe.commons.aria.lookupTable.globalAttributes`
+* `axe.commons.aria.lookupTable.role`
+
+#### Common Utility Functions
+
+In addition to the ARIA lookupTable, there are also utility functions on the axe.commons.aria and axe.commons.dom namespaces:
+
+* `axe.commons.aria.implicitRole` - Get the implicit role for a given node
+* `axe.commons.aria.label` - Gets the accessible ARIA label text of a given element
+* `axe.commons.dom.isVisible` - Determine whether an element is visible
 
 #### Queue Function
 
@@ -314,7 +332,7 @@ A virtualNode object:
 
 ## Test Utilities
 
-All tests must support Shadow DOM, so we created some test utilities to make this easier.
+All tests must support open Shadow DOM, so we created some test utilities to make this easier.
 
 ### Test Util Name: MockCheckContext
 
@@ -358,7 +376,7 @@ An object containg the data, relatedNodes, and a way to reset them.
 
 ### Test Util Name: shadowSupport
 
-Provide an API for determining Shadow DOM v0 and v1 support in tests. PhantomJS doesn't have Shadow DOM support, while some browsers do.
+Provides an API for determining Shadow DOM v0 and v1 support in tests. For example: PhantomJS doesn't have Shadow DOM support, while some browsers do.
 
 #### Synopsis
 

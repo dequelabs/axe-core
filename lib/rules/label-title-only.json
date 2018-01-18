@@ -2,7 +2,6 @@
   "id": "label-title-only",
   "selector": "input, select, textarea",
   "matches": "label-matches.js",
-  "enabled": false,
   "tags": [
     "cat.forms",
     "best-practice"

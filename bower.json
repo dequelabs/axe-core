@@ -1,10 +1,6 @@
 {
   "name": "axe-core",
-<<<<<<< HEAD
-  "version": "3.0.0-alpha.5",
-=======
-  "version": "3.0.0-alpha.8",
->>>>>>> develop
+  "version": "3.0.0-alpha.9",
   "contributors": [
     {
       "name": "David Sturley",

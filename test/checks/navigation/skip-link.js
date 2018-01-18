@@ -19,20 +19,29 @@ describe('skip-link', function () {
 		assert.isFalse(checks['skip-link'].evaluate(node));
 	});
 
-	it('should return false if the href points to a non-focusable element', function () {
-		fixture.innerHTML = '<a href="#mainheader">Click Here</a><h1 id="mainheader">Introduction</h1>';
-		var node = fixture.querySelector('a');
-		assert.isFalse(checks['skip-link'].evaluate(node));
-	});
-
-	it('should return first result of an array', function () {
-		var results = [1, 2, 3];
-		assert.equal(checks['skip-link'].after(results), 1);
-	});
-
-	it('should return true if the href points to a focusable element', function () {
-		fixture.innerHTML = '<a href="#mainheader">Click Here</a><h1 id="mainheader" tabindex="0">Introduction</h1>';
+	it('should return true if the href points to an element with an ID', function () {
+		fixture.innerHTML = '<a href="#target">Click Here</a><h1 id="target">Introduction</h1>';
 		var node = fixture.querySelector('a');
 		assert.isTrue(checks['skip-link'].evaluate(node));
+	});
+
+	it('should return true if the href points to an element with an name', function () {
+		fixture.innerHTML = '<a href="#target">Click Here</a><a name="target"></a>';
+		var node = fixture.querySelector('a');
+		assert.isTrue(checks['skip-link'].evaluate(node));
+	});
+
+	it('should return undefined if the target has display:none', function () {
+		fixture.innerHTML = '<a href="#target">Click Here</a>' +
+			'<h1 id="target" style="display:none">Introduction</h1>';
+		var node = fixture.querySelector('a');
+		assert.isUndefined(checks['skip-link'].evaluate(node));
+	});
+
+	it('should return undefined if the target has aria-hidden=true', function () {
+		fixture.innerHTML = '<a href="#target">Click Here</a>' +
+			'<h1 id="target" aria-hidden="true">Introduction</h1>';
+		var node = fixture.querySelector('a');
+		assert.isUndefined(checks['skip-link'].evaluate(node));
 	});
 });

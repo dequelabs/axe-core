@@ -67,7 +67,6 @@ describe('runRules', function () {
 			}
 		}], messages: {}});
 
-
 		var frame = document.createElement('iframe');
 		frame.src = '../mock/frames/frame-frame.html';
 
@@ -620,5 +619,32 @@ describe('runRules', function () {
 			}, 500);
 		});
 		fixture.appendChild(frame);
+	});
+
+	it('should not fail if `include` / `exclude` is overwritten', function (done) {
+		function invalid () {
+			throw new Error('nope!');
+		}
+		Array.prototype.include = invalid;
+		Array.prototype.exclude = invalid;
+
+		axe._load({ rules: [{
+			id: 'html',
+			selector: 'html',
+			any: ['html']
+		}], checks: [{
+			id: 'html',
+			evaluate: function () {
+				return true;
+			}
+		}], messages: {}});
+
+		runRules([document], {}, function (r) {
+			assert.lengthOf(r[0].passes, 1);
+
+			delete Array.prototype.include;
+			delete Array.prototype.exclude;
+			done();
+		}, isNotCalled);
 	});
 });

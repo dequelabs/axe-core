@@ -192,6 +192,32 @@ describe('color.getBackgroundColor', function () {
 		assert.deepEqual(bgNodes, [target]);
 	});
 
+	it('should return a bgcolor for a multiline inline element fully covering the background', function () {
+		fixture.innerHTML = '<div style="position:relative;">' +
+			'<div style="background-color:rgba(0,0,0,1);position:absolute;width:300px;height:200px;"></div>' +
+			'<p style="position: relative;z-index:1;">Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>' +
+		'</div>';
+		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
+		if (window.PHANTOMJS) {
+			assert.ok('PhantomJS is a liar');
+		} else {
+			assert.isNotNull(actual);
+			assert.equal(Math.round(actual.blue), 0);
+			assert.equal(Math.round(actual.red), 0);
+			assert.equal(Math.round(actual.green), 0);
+		}
+	});
+
+	it('should return null if a multiline inline element does not fully cover background', function () {
+		fixture.innerHTML = '<div style="position:relative;">' +
+			'<div style="background-color:rgba(0,0,0,1);position:absolute;width:300px;height:20px;"></div>' +
+			'<p style="position: relative;z-index:1;">Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>' +
+		'</div>';
+		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
+		assert.isNull(actual);
+		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'elmPartiallyObscuring');
+	});
+
 	it('should count a TR as a background element for TD', function () {
 		fixture.innerHTML = '<div style="background-color:#007acc;">' +
 		'<table style="width:100%">' +

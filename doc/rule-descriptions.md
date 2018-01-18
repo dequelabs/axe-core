@@ -21,18 +21,20 @@
 | document-title | Ensures each HTML document contains a non-empty &lt;title&gt; element | cat.text-alternatives, wcag2a, wcag242 | true |
 | duplicate-id | Ensures every id attribute value is unique | cat.parsing, wcag2a, wcag411 | true |
 | empty-heading | Ensures headings have discernible text | cat.name-role-value, best-practice | true |
+| focus-order-semantics | Ensures elements in the focus order have an appropriate role | cat.keyboard, best-practice, experimental | true |
 | frame-title-unique | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a unique title attribute | cat.text-alternatives, best-practice | true |
 | frame-title | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a non-empty title attribute | cat.text-alternatives, wcag2a, wcag241, section508, section508.22.i | true |
-| heading-order | Ensures the order of headings is semantically correct | cat.semantics, best-practice | false |
-| hidden-content | Informs users about hidden content. | experimental, review-item | false |
-| href-no-hash | Ensures that href values are valid link references to promote only using anchors as links | cat.semantics, best-practice | false |
+| heading-order | Ensures the order of headings is semantically correct | cat.semantics, best-practice | true |
+| hidden-content | Informs users about hidden content. | experimental, review-item | true |
 | html-has-lang | Ensures every HTML document has a lang attribute | cat.language, wcag2a, wcag311 | true |
 | html-lang-valid | Ensures the lang attribute of the &lt;html&gt; element has a valid value | cat.language, wcag2a, wcag311 | true |
 | image-alt | Ensures &lt;img&gt; elements have alternate text or a role of none or presentation | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | image-redundant-alt | Ensure button and link text is not repeated as image alternative | cat.text-alternatives, best-practice | true |
 | input-image-alt | Ensures &lt;input type=&quot;image&quot;&gt; elements have alternate text | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
-| label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | cat.forms, best-practice | false |
+| label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | cat.forms, best-practice | true |
 | label | Ensures every form element has a label | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
+| landmark-main-is-top-level | The main landmark should not be contained in another landmark | best-practice | true |
+| landmark-one-main | Ensures a navigation point to the primary content of the page. If the page contains iframes, each iframe should contain either no main landmarks or just one. | best-practice | true |
 | layout-table | Ensures presentational &lt;table&gt; elements do not use &lt;th&gt;, &lt;caption&gt; elements or the summary attribute | cat.semantics, wcag2a, wcag131 | true |
 | link-in-text-block | Links can be distinguished without relying on color | cat.color, experimental, wcag2a, wcag141 | true |
 | link-name | Ensures links have discernible text | cat.name-role-value, wcag2a, wcag111, wcag412, wcag244, section508, section508.22.a | true |
@@ -45,10 +47,10 @@
 | object-alt | Ensures &lt;object&gt; elements have alternate text | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | p-as-heading | Ensure p elements are not used to style headings | cat.semantics, wcag2a, wcag131, experimental | true |
 | radiogroup | Ensures related &lt;input type=&quot;radio&quot;&gt; elements have a group and that the group designation is consistent | cat.forms, best-practice | true |
-| region | Ensures all content is contained within a landmark region | cat.keyboard, best-practice | false |
+| region | Ensures all content is contained within a landmark region | cat.keyboard, best-practice | true |
 | scope-attr-valid | Ensures the scope attribute is used correctly on tables | cat.tables, best-practice | true |
 | server-side-image-map | Ensures that server-side image maps are not used | cat.text-alternatives, wcag2a, wcag211, section508, section508.22.f | true |
-| skip-link | Ensures the first link on the page is a skip link | cat.keyboard, best-practice | false |
+| skip-link | Ensure all skip links have a focusable target | cat.keyboard, best-practice | true |
 | tabindex | Ensures tabindex attribute values are not greater than 0 | cat.keyboard, best-practice | true |
 | table-duplicate-name | Ensure that tables do not have the same summary and caption | cat.tables, best-practice | true |
 | table-fake-caption | Ensure that tables with a caption use the &lt;caption&gt; element. | cat.tables, experimental, wcag2a, wcag131, section508, section508.22.g | true |

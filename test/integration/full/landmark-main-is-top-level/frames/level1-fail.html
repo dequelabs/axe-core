@@ -1,0 +1,17 @@
+<!doctype html>
+<html id="violation2">
+<head>
+	<meta charset="utf8">
+	<script src="/axe.js"></script>
+</head>
+<body>
+	<p>This iframe should fail, too</p>
+	<div role="complementary">
+		<div role="main">
+			<p>This main landmark is in a complementary landmark</p>
+		</div>
+	</div>
+	<iframe id="frame2" src="level2.html"></iframe>
+	<iframe id="frame3" src="level2-a.html"></iframe>
+</body>
+</html>

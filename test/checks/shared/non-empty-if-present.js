@@ -3,6 +3,11 @@ describe('non-empty-if-present', function () {
 
 	var fixture = document.getElementById('fixture');
 
+	// These defaults are only available in IE and Edge
+	var input = document.createElement('input');
+	input.type = 'submit';
+	var isEdgeOrIe = typeof input.getAttribute('value') === 'string';
+
 	var checkContext = {
 		_data: null,
 		data: function (d) {
@@ -24,7 +29,7 @@ describe('non-empty-if-present', function () {
 		assert.isFalse(checks['non-empty-if-present'].evaluate.call(checkContext, node));
 	});
 
-	it('should return true if a value is not present', function () {
+	(isEdgeOrIe ? xit : it)('should return true if a value is not present', function () {
 		var node = document.createElement('input');
 		node.setAttribute('type', 'submit');
 		fixture.appendChild(node);

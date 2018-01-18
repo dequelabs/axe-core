@@ -1,12 +1,12 @@
 {
   "id": "skip-link",
   "evaluate": "skip-link.js",
-  "after": "skip-link-after.js",
   "metadata": {
     "impact": "moderate",
     "messages": {
-      "pass": "Valid skip link found",
-      "fail": "No valid skip link found"
+      "pass": "Skip link target exists",
+      "incomplete": "Skip link target should become visible on activation",
+      "fail": "No skip link target"
     }
   }
 }

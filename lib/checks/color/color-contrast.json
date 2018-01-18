@@ -13,6 +13,8 @@
         "bgOverlap": "Element's background color could not be determined because it is overlapped by another element",
         "fgAlpha" : "Element's foreground color could not be determined because of alpha transparency",
         "elmPartiallyObscured": "Element's background color could not be determined because it's partially obscured by another element",
+        "elmPartiallyObscuring": "Element's background color could not be determined because it partially overlaps other elements",
+        "outsideViewport": "Element's background color could not be determined because it's outside the viewport",
         "equalRatio": "Element has a 1:1 contrast ratio with the background",
         "default": "Unable to determine contrast ratio"
       }
