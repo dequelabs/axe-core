@@ -34,6 +34,7 @@
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | cat.forms, best-practice | true |
 | label | Ensures every form element has a label | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
 | landmark-main-is-top-level | The main landmark should not be contained in another landmark | best-practice | true |
+| landmark-no-more-than-one-banner | A banner landmark identifies site-oriented content at the beginning of each page within a website | best-practice | true |
 | landmark-one-main | Ensures a navigation point to the primary content of the page. If the page contains iframes, each iframe should contain either no main landmarks or just one. | best-practice | true |
 | layout-table | Ensures presentational &lt;table&gt; elements do not use &lt;th&gt;, &lt;caption&gt; elements or the summary attribute | cat.semantics, wcag2a, wcag131 | true |
 | link-in-text-block | Links can be distinguished without relying on color | cat.color, experimental, wcag2a, wcag141 | true |
