@@ -2,6 +2,7 @@ describe('color-contrast', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var fixtureSetup = axe.testUtils.fixtureSetup;
 
 	var checkContext = {
 		_relatedNodes: [],
@@ -18,6 +19,7 @@ describe('color-contrast', function () {
 		fixture.innerHTML = '';
 		checkContext._relatedNodes = [];
 		checkContext._data = null;
+		axe._tree = undefined;
 	});
 
 	it('should return the proper values stored in data', function () {
@@ -206,13 +208,14 @@ describe('color-contrast', function () {
 	});
 
 	it('should return true when a label wraps a text input', function () {
-		fixture.innerHTML = '<label id="target">' +
-			'My text <input type="text"></label>';
+		fixtureSetup('<label id="target">' +
+			'My text <input type="text"></label>');
 		var target = fixture.querySelector('#target');
+		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], target);
 		if (window.PHANTOMJS) {
 			assert.ok('PhantomJS is a liar');
 		} else {
-			var result = checks['color-contrast'].evaluate.call(checkContext, target);
+			var result = checks['color-contrast'].evaluate.call(checkContext, target, {}, virtualNode);
 			assert.isTrue(result);
 		}
 	});
@@ -228,6 +231,7 @@ describe('color-contrast', function () {
 	it('should return true when there is sufficient contrast based on thead', function () {
 		fixture.innerHTML = '<table><thead style="background: #d00d2c"><tr><th id="target" style="color: #fff; padding: .5em">Col 1</th></tr></thead></table>';
 		var target = fixture.querySelector('#target');
+		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
@@ -235,6 +239,7 @@ describe('color-contrast', function () {
 	it('should return true when there is sufficient contrast based on tbody', function () {
 		fixture.innerHTML = '<table><tbody style="background: #d00d2c"><tr><td id="target" style="color: #fff; padding: .5em">Col 1</td></tr></tbody></table>';
 		var target = fixture.querySelector('#target');
+		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});

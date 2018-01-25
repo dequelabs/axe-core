@@ -113,10 +113,10 @@ describe('axe.utils.select', function () {
 
 	it('should only contain unique elements', function () {
 		fixture.innerHTML = '<div id="monkeys"><div id="bananas" class="bananas"></div></div>';
-
+		var tree = axe.utils.getFlattenedTree($id('fixture'))[0];
+		var monkeys = tree.children[0];
 		var result = axe.utils.select('.bananas', {
-			include: [axe.utils.getFlattenedTree($id('fixture'))[0],
-					axe.utils.getFlattenedTree($id('monkeys'))[0]]
+			include: [tree, monkeys]
 		});
 
 		assert.lengthOf(result, 1);
