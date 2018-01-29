@@ -24,7 +24,8 @@
 	1. [Virtual DOM Utilities](#virtual-dom-utilities)
 		1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
 	1. [Common Functions](#common-functions)
-1. [Section 3: Example Reference](#section-5-example-reference)
+1. [Section 3: Example Reference](#section-3-example-reference)
+1. [Section 4: Performance](#section-4-performance)
 
 ## Section 1: Introduction
 
@@ -716,3 +717,37 @@ Either the matching HTMLElement or `null` if there was no match.
 ## Section 3: Example Reference
 
 This package contains examples for [jasmine](examples/jasmine), [mocha](examples/mocha), [phantomjs](examples/phantomjs), [qunit](examples/qunit), [selenium using javascript](examples/selenium), and [generating HTML from the violations array](examples/html-handlebars.md). Each of these examples is in the [doc/examples](examples) folder. In each folder, there is a README.md file which contains specific information about each example.
+
+## Section 4: Performance
+
+Axe-core performs very well in general and if you are analyzing average complexity pages with the default settings, you should not need to worry about performance at all. There are some scenarios that can cause performance issues. This is the list of known issues and what you can do to mitigate and/or avoid them.
+
+### Very large pages
+
+Certain rules (like the color-contrast rule) look at almost every element on a page and some of these rules also perform somewhat expensive operations on these elements including looking up the hierarchy, looking at overlapping elements, calculating the computed styles etc. It also calculates a unique selector for each element in the results and also de-duplicates elements so that you do not get duplicate items in your results.
+
+If your page is very large (in terms of the number of Elements on the page) i.e. >50K elements on the page, then you will see analysis times that run over 10s on a relatively decent CPU.
+
+#### Use resultTypes
+
+An approach you can take to reducing the time is use the `resultTypes` option. By calling `axe.run` with the following options, axe-core will only return the full details of the `violations` array and will only return one instance of each of the `inapplicable`, `incomplete` and `pass` array for each rule that has at least one of those entries. This will reduce the amount of computation that axe-core does for the unique selectors.
+
+```
+{
+  resultTypes: ['violations']
+}
+```
+
+### Multiple include regions
+
+If you tell axe-core to only analyze a section of the page and you have multiple selectors for pages to include, then axe-core must select within each region (which could be overlapping) and de-duplicate the matching elements. This is expensive and becomes more expensive, the more regions you supply and the larger the page.
+
+#### Analyze each region separately
+
+If you find yourself doing this with regions that contain a lot of elements, it might be faster to analyze each region separately and then merge the results outside of axe-core. Especially if you know that the regions are not overlapping, you can easily just concat the results.
+
+### Other strategies
+
+#### Targeted color-contrast analysis
+
+If you are analyzing multiple pages on a single Web site or application, chances are these pages all contain the same styles. It is therefore not adding any additional information to your analysis to analyze every page for color-contrast. Choose a small number of pages that represent the totality of you styles and analyze these with color-contrast and analyze all others without it.
