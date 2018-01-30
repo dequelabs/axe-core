@@ -25,7 +25,7 @@ describe('has-no-more-than-one-banner', function () {
 
 	it('should return true if there are multiple headers contained in sectioning elements', function(){
 		var params = checkSetup('<div role="main" id="target"><header></header><header></header></div>');
-		assert.isTrue(checks['has-no-more-than-one-main'].evaluate.apply(checkContext, params));
+		assert.isTrue(checks['has-no-more-than-one-banner'].evaluate.apply(checkContext, params));
 	});
 
 	it('should return true if there is only one element with role banner', function(){
