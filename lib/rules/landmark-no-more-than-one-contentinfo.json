@@ -1,0 +1,16 @@
+{
+  "id": "landmark-no-more-than-one-contentinfo",
+  "selector": "html",
+  "tags": [
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "A contentinfo landmark is a way to identify common information at the bottom of each page within a website",
+    "help": "Page must not contain more than one contentinfo landmark"
+  },
+  "all": [],
+  "any": [
+    "has-no-more-than-one-contentinfo"
+  ],
+  "none": []
+}
