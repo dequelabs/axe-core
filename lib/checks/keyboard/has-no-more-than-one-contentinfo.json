@@ -1,0 +1,11 @@
+{
+	"id": "has-no-more-than-one-contentinfo",
+	"evaluate": "has-no-more-than-one-contentinfo.js",
+	"metadata": {
+		"impact": "moderate",
+		"messages": {
+		"pass": "Document has no more than one contentinfo landmark",
+		"fail": "Document has more than one contentinfo landmark"
+		}
+	}
+}
