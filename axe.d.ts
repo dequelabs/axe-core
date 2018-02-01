@@ -123,6 +123,9 @@ declare module axe {
 	 * @returns {any}  	  results  If the callback was not defined, aXe will return a Promise instead.
 	 */
 	function run(context?: ElementContext, options?: {runOnly?: RunOnly, rules?: Object, iframes?: Boolean, elementRef?: Boolean, selectors?: Boolean}, callback?: (error: Error, results:AxeResults) => void): any
+	function run(options: {runOnly?: RunOnly, rules?: Object, iframes?: Boolean, elementRef?: Boolean, selectors?: Boolean}, callback?: (error: Error, results:AxeResults) => void): any
+	function run(context: ElementContext, callback: (error: Error, results:AxeResults) => void): any
+	function run(callback: (error: Error, results:AxeResults) => void): any
 
 	/**
 	 * Starts analysis on the current document and its subframes
