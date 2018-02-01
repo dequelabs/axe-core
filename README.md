@@ -10,6 +10,8 @@
 
 The Accessibility Engine for automated testing of HTML-based user interfaces. Drop the aXe on your accessibility defects!
 
+Thanks for helping us to make axe-core the most widely used HTML accessibility testing library in the galaxy! Share your axe-core story using #axecoresquad or by submitting it [here](https://accessibility.deque.com/axe-core-stories) to get a sweet T-shirt.
+
 ## Philosophy
 
 We believe that automated testing has an important role to play in achieving digital equality and that in order to do that, it must achieve mainstream adoption by professional web developers. That means that the tests must inspire trust, must be fast, must work everywhere and must be available everywhere.
