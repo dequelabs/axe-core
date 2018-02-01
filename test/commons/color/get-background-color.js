@@ -3,6 +3,8 @@ describe('color.getBackgroundColor', function () {
 
 	var fixture = document.getElementById('fixture');
 
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
+
 	afterEach(function () {
 		document.getElementById('fixture').innerHTML = '';
 		axe.commons.color.incompleteData.clear();
@@ -231,6 +233,26 @@ describe('color.getBackgroundColor', function () {
 		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
 		assert.isNull(actual);
 		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'elmPartiallyObscuring');
+	});
+
+	it('should return an actual if an absolutely positioned element does not cover background', function () {
+		fixture.innerHTML = '<div style="background-color:black; height:20px; position:relative;">' +
+			'<div style="color:#333; position:absolute; top:21px;" id="target">Text</div>' +
+		'</div>';
+		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
+		assert.equal(Math.round(actual.blue), 255);
+		assert.equal(Math.round(actual.red), 255);
+		assert.equal(Math.round(actual.green), 255);
+	});
+
+	it('should return null if an absolutely positioned element partially obsures background', function () {
+		fixture.innerHTML = '<div style="height:40px; position:relative;">' +
+			'<div style="background-color:black; height:20px;"></div>' +
+			'<div style="color:#333; position:absolute; margin-top:-11px;" id="target">Text</div>' +
+		'</div>';
+		var actual = axe.commons.color.getBackgroundColor(document.getElementById('target'), []);
+		assert.isNull(actual);
+		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'elmPartiallyObscured');
 	});
 
 	it('should count a TR as a background element for TD', function () {
@@ -626,4 +648,146 @@ describe('color.getBackgroundColor', function () {
 		assert.closeTo(actual.alpha, 1, 0.1);
 	});
 
+	it('should return the body bgColor when content does not overlap', function () {
+		fixture.innerHTML = '<div style="height: 20px; width: 30px; background-color: red;">' +
+			'<div id="target" style="height:20px; top: 25px; width: 45px; position:absolute;">Text' +
+			'</div></div>';
+		var target = fixture.querySelector('#target');
+		var actual = axe.commons.color.getBackgroundColor(target, []);
+		assert.closeTo(actual.red, 255, 0);
+		assert.closeTo(actual.green, 255, 0);
+		assert.closeTo(actual.blue, 255, 0);
+		assert.closeTo(actual.alpha, 1, 0);
+	});
+
+	(shadowSupported ? it : xit)
+	('finds colors in shadow boundaries', function () {
+		fixture.innerHTML = '<div id="container"></div>';
+		var container = fixture.querySelector('#container');
+		var shadow = container.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<div style="background-color: black;">' +
+			'<span id="shadowTarget" style="color: #ccc;">Text</span>' +
+		'</div>';
+
+		var target = shadow.querySelector('#shadowTarget');
+		var actual = axe.commons.color.getBackgroundColor(target, []);
+
+		assert.closeTo(actual.red, 0, 0);
+		assert.closeTo(actual.green, 0, 0);
+		assert.closeTo(actual.blue, 0, 0);
+		assert.closeTo(actual.alpha, 1, 0);
+	});
+
+	(shadowSupported ? it : xit)
+	('finds colors across shadow boundaries', function () {
+		fixture.innerHTML = '<div id="container" style="background-color:black;"></div>';
+		var container = fixture.querySelector('#container');
+		var shadow = container.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<span id="shadowTarget" style="color:#ccc;">Text</span>';
+
+		var target = shadow.querySelector('#shadowTarget');
+		var actual = axe.commons.color.getBackgroundColor(target, [], false);
+
+		assert.closeTo(actual.red, 0, 0);
+		assert.closeTo(actual.green, 0, 0);
+		assert.closeTo(actual.blue, 0, 0);
+		assert.closeTo(actual.alpha, 1, 0);
+	});
+
+	(shadowSupported ? it : xit)
+	('should count an implicit label as a background element inside shadow dom', function () {
+		fixture.innerHTML = '<div id="container"></div>';
+		var container = fixture.querySelector('#container');
+		var shadow = container.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<label id="target">Text<input type="text"></label>';
+		var target = shadow.querySelector('#target');
+		var actual = axe.commons.color.getBackgroundColor(target, []);
+		var expected = new axe.commons.color.Color(255, 255, 255, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+	});
+
+	(shadowSupported ? it : xit)
+	('finds colors for absolutely positioned elements across shadow boundaries', function () {
+		fixture.innerHTML = '<div id="container" style="background-color:black; height:20px; position:relative;"></div>';
+		var container = fixture.querySelector('#container');
+		var shadow = container.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<div id="shadowTarget" style="color:#333; height:20px; position:absolute; top:20px;">Text</div>';
+
+		var target = shadow.querySelector('#shadowTarget');
+		var actual = axe.commons.color.getBackgroundColor(target, []);
+		assert.closeTo(actual.red, 255, 0);
+		assert.closeTo(actual.green, 255, 0);
+		assert.closeTo(actual.blue, 255, 0);
+		assert.closeTo(actual.alpha, 1, 0);
+	});
+
+	(shadowSupported ? it : xit)
+	('finds a color for absolutely positioned content when background is in shadow dom', function () {
+		fixture.innerHTML = '<div id="elm1" style="width:10em; height:0; position:absolute;"></div>' +
+			'<div id="elm2" style="color:green; position:absolute;">Text</div>';
+
+	  var elm1 = document.querySelector('#elm1');
+	  var shadow1 = elm1.attachShadow({ mode: 'open' });
+	  shadow1.innerHTML = '<div style="background:rgba(0,0,0,1); height:10em;"></div>';
+	  var elm2 = document.querySelector('#elm2');
+	  var actual = axe.commons.color.getBackgroundColor(elm2, []);
+	  assert.closeTo(actual.red, 0, 0);
+	  assert.closeTo(actual.blue, 0, 0);
+	  assert.closeTo(actual.green, 0, 0);
+	  assert.closeTo(actual.alpha, 1, 0);
+	});
+
+	(shadowSupported ? it : xit)
+	('finds colors for content rendered across multiple shadow boundaries', function () {
+		fixture.innerHTML = '<div style="position:relative;"><div id="elm1" style="width:10em;"></div>' +
+			'<div id="elm2"></div></div>';
+
+	  var elm1 = document.querySelector('#elm1');
+	  var shadow1 = elm1.attachShadow({ mode: 'open' });
+	  shadow1.innerHTML = '<div style="background:rgba(0,0,0,1); height:10em;"></div>';
+	  var elm2 = document.querySelector('#elm2');
+	  var shadow2 = elm2.attachShadow({ mode: 'open' });
+	  shadow2.innerHTML = ''+
+	  '<div id="elm3" style="background:rgba(255,255,255,0.5);color:green;height:10em;top:0;position:absolute;">' +
+	  	'Text' +
+  	'</div>';
+
+	  var elm3 = shadow2.querySelector('#elm3');
+
+	  var actual = axe.commons.color.getBackgroundColor(elm3, []);
+	  assert.closeTo(actual.red, 128, 2);
+	  assert.closeTo(actual.blue, 128, 2);
+	  assert.closeTo(actual.green, 128, 2);
+	  assert.closeTo(actual.alpha, 1, 0);
+	});
+
+	(shadowSupported ? it : xit)
+	('finds colors for multiline elements across shadow boundaries', function () {
+		fixture.innerHTML = '<div id="container" style="background-color:black; height:40px;"></div>';
+		var container = fixture.querySelector('#container');
+		var shadow = container.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<div id="shadowTarget" style="color:#333;">Text<br>More text</div>';
+
+		var target = shadow.querySelector('#shadowTarget');
+		var actual = axe.commons.color.getBackgroundColor(target, []);
+		assert.closeTo(actual.red, 0, 0);
+		assert.closeTo(actual.green, 0, 0);
+		assert.closeTo(actual.blue, 0, 0);
+		assert.closeTo(actual.alpha, 1, 0);
+	});
+
+	(shadowSupported ? xit : xit)
+	('returns null for multiline elements not fully covering parents across shadow boundaries', function () {
+		fixture.innerHTML = '<div id="container" style="background-color:black; height:20px;"></div>';
+		var container = fixture.querySelector('#container');
+		var shadow = container.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<div id="shadowTarget" style="color:#333;">Text<br>More text</div>';
+
+		var target = shadow.querySelector('#shadowTarget');
+		var actual = axe.commons.color.getBackgroundColor(target, []);
+		assert.isNull(actual);
+	});
 });
