@@ -1,0 +1,16 @@
+{
+  "id": "landmark-complementary-is-top-level",
+  "selector": "aside, [role=complementary]",
+  "tags": [
+	"best-practice"
+  ],
+  "metadata": {
+    "description": "The complementary landmark should not be contained in another landmark",
+    "help": "Complementary landmark is not at top level"
+  },
+  "all": [],
+  "any": [
+    "complementary-is-top-level"
+  ],
+  "none": []
+}
