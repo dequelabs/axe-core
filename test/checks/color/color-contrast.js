@@ -3,6 +3,8 @@ describe('color-contrast', function () {
 
 	var fixture = document.getElementById('fixture');
 	var fixtureSetup = axe.testUtils.fixtureSetup;
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
+	var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
 
 	var checkContext = {
 		_relatedNodes: [],
@@ -288,5 +290,17 @@ describe('color-contrast', function () {
 			checkContext._relatedNodes[0],
 			document.querySelector('#background')
 		);
+	});
+
+	(shadowSupported ? it : xit)
+	('returns colors across Shadow DOM boundaries', function () {
+		var params = shadowCheckSetup(
+			'<div id="container" style="background-color:black;"></div>',
+			'<p style="color: #333;" id="target">Text</p>'
+		);
+		var container = fixture.querySelector('#container');
+		var result = checks['color-contrast'].evaluate.apply(checkContext, params);
+		assert.isFalse(result);
+		assert.deepEqual(checkContext._relatedNodes, [container]);
 	});
 });
