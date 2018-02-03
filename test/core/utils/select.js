@@ -136,6 +136,18 @@ describe('axe.utils.select', function () {
 
 	});
 
+	it('should sort by DOM order on overlapping elements', function () {
+		fixture.innerHTML = '<div id="zero"><div id="one"><div id="target1" class="bananas"></div></div>' +
+			'<div id="two"><div id="target2" class="bananas"></div></div></div>';
+
+		var result = axe.utils.select('.bananas', { include: [axe.utils.getFlattenedTree($id('one'))[0],
+			axe.utils.getFlattenedTree($id('zero'))[0]] });
+
+		assert.deepEqual(result.map(function (n) { return n.actualNode; }),
+			[$id('target1'), $id('target1'), $id('target2')]);
+		assert.equal(result.length, 3);
+
+	});
 
 
 });

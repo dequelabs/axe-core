@@ -109,6 +109,10 @@ describe('axe.utils.querySelectorAll', function () {
 		var result = axe.utils.querySelectorAll(dom, '#one');
 		assert.equal(result.length, 1);
 	});
+	it('should find nodes using id, but not in shadow DOM', function () {
+		var result = axe.utils.querySelectorAll(dom[0].children[0], '#one');
+		assert.equal(result.length, 1);
+	});
 	it('should find nodes using id, within a shadow DOM', function () {
 		var result = axe.utils.querySelectorAll(dom[0].children[0].children[2], '#one');
 		assert.equal(result.length, 1);
@@ -181,5 +185,11 @@ describe('axe.utils.querySelectorAll', function () {
 
 		assert.isBelow(divOnes.length, divs.length + ones.length,
 			'Elements matching both parts of a selector should not be included twice');
+	});
+	it('should return nodes sorted by document position', function () {
+		var result = axe.utils.querySelectorAll(dom, 'ul, #one');
+		assert.equal(result[0].actualNode.nodeName, 'UL');
+		assert.equal(result[1].actualNode.nodeName, 'DIV');
+		assert.equal(result[2].actualNode.nodeName, 'UL');
 	});
 });
