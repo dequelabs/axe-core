@@ -10,6 +10,7 @@ describe('axe.utils.select', function () {
 
 	afterEach(function () {
 		fixture.innerHTML = '';
+		axe._selectCache = undefined;
 	});
 
 
@@ -148,6 +149,17 @@ describe('axe.utils.select', function () {
 		assert.equal(result.length, 3);
 
 	});
+	it ('should return the cached result if one exists', function () {
+		fixture.innerHTML = '<div id="zero"><div id="one"><div id="target1" class="bananas"></div></div>' +
+			'<div id="two"><div id="target2" class="bananas"></div></div></div>';
 
+		axe._selectCache = [{
+			selector: '.bananas',
+			result: 'fruit bat'
+		}];
+		var result = axe.utils.select('.bananas', { include: [axe.utils.getFlattenedTree($id('zero'))[0]] });
+		assert.equal(result, 'fruit bat');
+
+	});
 
 });
