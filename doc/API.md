@@ -730,21 +730,13 @@ If your page is very large (in terms of the number of Elements on the page) i.e.
 
 #### Use resultTypes
 
-An approach you can take to reducing the time is use the `resultTypes` option. By calling `axe.run` with the following options, axe-core will only return the full details of the `violations` array and will only return one instance of each of the `inapplicable`, `incomplete` and `pass` array for each rule that has at least one of those entries. This will reduce the amount of computation that axe-core does for the unique selectors.
+An approach you can take to reducing the time is use the `resultTypes` option. By calling `axe.run` with the following options, axe-core will only return the full details of the `violations` array and will only return one instance of each of the `inapplicable`, `incomplete` and `pass` arrays for each rule that has at least one of those entries. This will reduce the amount of computation that axe-core does for the unique selectors.
 
 ```
 {
   resultTypes: ['violations']
 }
 ```
-
-### Multiple include regions
-
-If you tell axe-core to only analyze a section of the page and you have multiple selectors for pages to include, then axe-core must select within each region (which could be overlapping) and de-duplicate the matching elements. This is expensive and becomes more expensive, the more regions you supply and the larger the page.
-
-#### Analyze each region separately
-
-If you find yourself doing this with regions that contain a lot of elements, it might be faster to analyze each region separately and then merge the results outside of axe-core. Especially if you know that the regions are not overlapping, you can easily just concat the results.
 
 ### Other strategies
 
