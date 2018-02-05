@@ -98,6 +98,19 @@ describe('Context', function() {
 				[$id('foo'), $id('bar')]);
 		});
 
+		it('should sort the include nodes in document order', function() {
+			fixture.innerHTML = '<div id="foo"><div id="bar"></div></div><div id="baz"></div>';
+
+			var result = new Context([
+				['#foo'],
+				['#baz'],
+				['#bar']
+			]);
+
+			assert.deepEqual(result.include.map(function (n) { return n.actualNode; }),
+				[$id('foo'), $id('bar'), $id('baz')]);
+		});
+
 		it('should remove any null reference', function() {
 			fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
 
