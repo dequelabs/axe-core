@@ -6,6 +6,7 @@ describe('DqElement', function () {
 
 	afterEach(function () {
 		fixture.innerHTML = '';
+		axe._tree = undefined;
 	});
 
 	it('should be a function', function () {
@@ -31,6 +32,8 @@ describe('DqElement', function () {
 
 		it('should not be present in stringified version', function () {
 			var div = document.createElement('div');
+			fixture.appendChild(div);
+			axe._tree = axe.utils.getFlattenedTree(document.documentElement);
 			var dqEl = new DqElement(div);
 
 			assert.isUndefined(JSON.parse(JSON.stringify(dqEl)).element);

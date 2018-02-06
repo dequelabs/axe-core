@@ -303,6 +303,19 @@ describe('axe.run', function () {
 			});
 		});
 
+		it('returns correct absolute paths when truthy', function (done) {
+			fixture.innerHTML = '<div><div id="notme"></div></div><div></div>';
+			axe.run('#fixture', {
+				absolutePaths: 'yes please'
+			}, function (err, result) {
+				assert.deepEqual(
+					result.violations[0].nodes[3].target,
+					['html > body > #fixture > div:nth-of-type(2)']
+				);
+				done();
+			});
+		});
+
 		it('returns absolute paths on related nodes', function (done) {
 			axe.run('#fixture', {
 				absolutePaths: true
