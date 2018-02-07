@@ -195,4 +195,31 @@ describe('axe.configure', function() {
 		});
 		assert.deepEqual(axe._audit.tagExclude, ['ninjas']);
 	});
+
+	it('disables all untouched rules with disableOtherRules', function () {
+		axe._load({
+			rules: [
+				{ id: 'captain-america' },
+				{ id: 'thor' },
+				{ id: 'spider-man'}
+			]
+		});
+		axe.configure({
+			disableOtherRules: true,
+			rules: [
+				{ id: 'captain-america' },
+				{ id: 'black-panther' }
+			]
+		});
+
+		assert.lengthOf(axe._audit.rules, 4);
+		assert.equal(axe._audit.rules[0].id, 'captain-america');
+		assert.equal(axe._audit.rules[0].enabled, true);
+		assert.equal(axe._audit.rules[1].id, 'thor');
+		assert.equal(axe._audit.rules[1].enabled, false);
+		assert.equal(axe._audit.rules[2].id, 'spider-man');
+		assert.equal(axe._audit.rules[2].enabled, false);
+		assert.equal(axe._audit.rules[3].id, 'black-panther');
+		assert.equal(axe._audit.rules[3].enabled, true);
+	});
 });
