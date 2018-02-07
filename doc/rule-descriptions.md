@@ -10,7 +10,7 @@
 | aria-roles | Ensures all elements with a role attribute use a valid value | cat.aria, wcag2a, wcag131, wcag411, wcag412 | true |
 | aria-valid-attr-value | Ensures all ARIA attributes have valid values | cat.aria, wcag2a, wcag131, wcag411, wcag412 | true |
 | aria-valid-attr | Ensures attributes that begin with aria- are valid ARIA attributes | cat.aria, wcag2a, wcag411 | true |
-| audio-caption | Ensures &lt;audio&gt; elements have captions | cat.time-and-media, wcag2a, wcag122, section508, section508.22.a | true |
+| audio-caption | Ensures &lt;audio&gt; elements have captions | cat.time-and-media, wcag2a, wcag121, section508, section508.22.a | true |
 | blink | Ensures &lt;blink&gt; elements are not used | cat.time-and-media, wcag2a, wcag222, section508, section508.22.j | true |
 | button-name | Ensures buttons have discernible text | cat.name-role-value, wcag2a, wcag412, section508, section508.22.a | true |
 | bypass | Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content | cat.keyboard, wcag2a, wcag241, section508, section508.22.o | true |
