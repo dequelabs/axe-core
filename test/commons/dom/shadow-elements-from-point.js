@@ -8,7 +8,7 @@ describe('dom.shadowElementsFromPoint', function () {
 		document.getElementById('fixture').innerHTML = '';
 	});
 
-	(shadowSupported ? xit : xit)
+	(shadowSupported ? it : xit)
 	('should return an array from inside and outside of shadow dom', function () {
 		fixture.innerHTML = '<div id="container" style="background-color:#000;position:relative;"></div>';
 		var container = fixture.querySelector('#container');
