@@ -5,6 +5,8 @@ describe('axe.utils.sendCommandToFrame', function () {
 
 	afterEach(function () {
     fixture.innerHTML = '';
+    axe._tree = undefined;
+    axe._selectorData = undefined;
   });
 
   var assertNotCalled = function () {
@@ -35,7 +37,7 @@ describe('axe.utils.sendCommandToFrame', function () {
     frame.id = 'level0';
     frame.src = '../mock/frames/zombie-frame.html';
     fixture.appendChild(frame);
-
+    axe._tree = axe.utils.getFlattenedTree(document.documentElement);
   });
 
   it('should respond once when no keepalive', function (done) {

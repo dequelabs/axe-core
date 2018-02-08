@@ -487,28 +487,18 @@ describe('Audit', function () {
 		it('should assign the result of getFlattenedTree to axe._tree', function (done) {
 			var thing = 'honey badger';
 			var saved = axe.utils.ruleShouldRun;
+			var seldata = axe.utils.getSelectorData;
 			axe.utils.ruleShouldRun = function () {
 				assert.equal(axe._tree, thing);
 				return false;
 			};
+			axe.utils.getSelectorData = function () {};
 			axe.utils.getFlattenedTree = function () {
 				return thing;
 			};
 			a.run({ include: [document] }, {}, function () {
 				axe.utils.ruleShouldRun = saved;
-				done();
-			}, isNotCalled);
-		});
-		it('should clear axe._tree', function (done) {
-			var thing = 'honey badger';
-			axe.utils.getFlattenedTree = function () {
-				return thing;
-			};
-			a.run({ include: [document] }, {
-				rules: {}
-			}, function () {
-				assert.isTrue(typeof axe._tree === 'undefined');
-				axe.utils.getFlattenedTree = getFlattenedTree;
+				axe.utils.getSelectorData = seldata;
 				done();
 			}, isNotCalled);
 		});
