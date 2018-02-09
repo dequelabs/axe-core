@@ -7,7 +7,7 @@
 <!-- Describe how the issue manifests. -->
 
 ### Expected Behavior
-<!-- Describe what the desired behavior would be. -->
+<!-- Describe what the desired behavior would be, and how it applies to "Accessibility Supported" https://github.com/dequelabs/axe-core/blob/develop/doc/accessibility-supported.md -->
 
 ### Steps to reproduce the behavior
 <!--
