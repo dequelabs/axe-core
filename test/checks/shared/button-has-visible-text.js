@@ -29,14 +29,14 @@ describe('button-has-visible-text', function () {
 	});
 
 	it('should return true if ARIA button has text', function () {
-		var checkArgs = checkSetup('<div role="button">Text</div>>', '[role=button]');
+		var checkArgs = checkSetup('<div role="button">Text</div>', '[role=button]');
 
 		assert.isTrue(checks['button-has-visible-text'].evaluate.apply(checkContext, checkArgs));
 		assert.deepEqual(checkContext._data, 'Text');
 	});
 
 	it('should return false if ARIA button has no text', function () {
-		var checkArgs = checkSetup('<div role="button"></div>>', '[role=button]');
+		var checkArgs = checkSetup('<div role="button"></div>', '[role=button]');
 
 		assert.isFalse(checks['button-has-visible-text'].evaluate.apply(checkContext, checkArgs));
 	});
