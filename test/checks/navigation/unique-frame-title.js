@@ -1,15 +1,10 @@
 describe('unique-frame-title', function () {
 	'use strict';
 
-	var checkContext = {
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
-		checkContext._data = null;
+		checkContext.reset();
 	});
 
 

@@ -5,22 +5,11 @@ describe('color-contrast', function () {
 	var fixtureSetup = axe.testUtils.fixtureSetup;
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
-
-	var checkContext = {
-		_relatedNodes: [],
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		},
-		relatedNodes: function (rn) {
-			this._relatedNodes = rn;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		checkContext._relatedNodes = [];
-		checkContext._data = null;
+		checkContext.reset();
 		axe._tree = undefined;
 	});
 

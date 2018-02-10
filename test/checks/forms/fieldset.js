@@ -4,19 +4,11 @@ describe('fieldset', function () {
 	var shadowSupport = axe.testUtils.shadowSupport.v1;
 	var fixtureSetup = axe.testUtils.fixtureSetup;
 
-	var checkContext = {
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		},
-		relatedNodes: function (nodes) {
-			this._relatedNodes = Array.isArray(nodes) ? nodes : [nodes];
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		checkContext._data = null;
+		checkContext.reset();
 	});
 
 	function tests(type) {

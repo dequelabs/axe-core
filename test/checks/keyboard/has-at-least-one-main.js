@@ -39,7 +39,11 @@ describe('has-at-least-one-main', function () {
 	});
 	
 	it('should return true if one div has role equal to main', function() {
-		var params = checkSetup('<div id = "target" role = "main">Div with role main</div>');
+		var params = checkSetup('<div id="target" role = "main">Div with role main</div>');
+		var mainIsFound = checks['has-at-least-one-main'].evaluate.apply(checkContext, params);
+		assert.isTrue(mainIsFound);
+		assert.equal(checkContext._data, mainIsFound);
+	});
 		var mainIsFound = checks['has-at-least-one-main'].evaluate.apply(checkContext, params);
 		assert.isTrue(mainIsFound);
 		assert.equal(checkContext._data, mainIsFound);

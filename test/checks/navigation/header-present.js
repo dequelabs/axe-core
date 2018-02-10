@@ -2,41 +2,43 @@ describe('header-present', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var checkSetup = axe.testUtils.checkSetup;
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
 		fixture.innerHTML = '';
+		axe._tree = undefined;
+		checkContext.reset();
 	});
 
 	it('should return true if h1-h6 is found', function () {
-		fixture.innerHTML = '<h1>Hi</h1>';
-		assert.isTrue(checks['header-present'].evaluate(fixture));
+		var params = checkSetup('<h1 id="target">Hi</h1>');
+		assert.isTrue(checks['header-present'].evaluate.apply(checkContext, params));
 
-		fixture.innerHTML = '<h2>Hi</h2>';
-		assert.isTrue(checks['header-present'].evaluate(fixture));
+		params = checkSetup('<h2 id="target">Hi</h2>');
+		assert.isTrue(checks['header-present'].evaluate.apply(checkContext, params));
 
-		fixture.innerHTML = '<h3>Hi</h3>';
-		assert.isTrue(checks['header-present'].evaluate(fixture));
+		params = checkSetup('<h3 id="target">Hi</h3>');
+		assert.isTrue(checks['header-present'].evaluate.apply(checkContext, params));
 
-		fixture.innerHTML = '<h4>Hi</h4>';
-		assert.isTrue(checks['header-present'].evaluate(fixture));
+		params = checkSetup('<h4 id="target">Hi</h4>');
+		assert.isTrue(checks['header-present'].evaluate.apply(checkContext, params));
 
-		fixture.innerHTML = '<h5>Hi</h5>';
-		assert.isTrue(checks['header-present'].evaluate(fixture));
+		params = checkSetup('<h5 id="target">Hi</h5>');
+		assert.isTrue(checks['header-present'].evaluate.apply(checkContext, params));
 
-		fixture.innerHTML = '<h6>Hi</h6>';
-		assert.isTrue(checks['header-present'].evaluate(fixture));
+		params = checkSetup('<h6 id="target">Hi</h6>');
+		assert.isTrue(checks['header-present'].evaluate.apply(checkContext, params));
 	});
 
 	it('should return true if role=heading is found', function () {
-
-		fixture.innerHTML = '<div role="heading">Hi</div>';
-		assert.isTrue(checks['header-present'].evaluate(fixture));
-
+		var params = checkSetup('<div role="heading" id="target">Hi</div>');
+		assert.isTrue(checks['header-present'].evaluate.apply(checkContext, params));
 	});
 
 	it('should otherwise return false', function () {
-		fixture.innerHTML = '<p>Some stuff and stuff</p>';
-		assert.isFalse(checks['header-present'].evaluate(fixture));
+		var params = checkSetup('<p id="target">Some stuff and stuff</p>');
+		assert.isFalse(checks['header-present'].evaluate.apply(checkContext, params));
 	});
 
 });

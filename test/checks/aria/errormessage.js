@@ -7,7 +7,7 @@ describe('aria-errormessage', function () {
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		checkContext._data = null;
+		checkContext.reset();
 	});
 
 	it('should return false if aria-errormessage value is invalid', function () {

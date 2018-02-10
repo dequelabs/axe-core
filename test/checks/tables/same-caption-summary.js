@@ -6,16 +6,12 @@ describe('same-caption-summary', function () {
 	var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
 	var shadowSupport = axe.testUtils.shadowSupport;
 
-	var checkContext = {
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 
 	afterEach(function () {
 		fixture.innerHTML = '';
+		checkContext.reset();
 		axe._tree = undefined;
 	});
 

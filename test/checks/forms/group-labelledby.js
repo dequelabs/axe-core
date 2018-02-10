@@ -5,12 +5,7 @@ describe('group-labelledby', function () {
 	var fixtureSetup = axe.testUtils.fixtureSetup;
 	var shadowSupport = axe.testUtils.shadowSupport.v1;
 
-	var checkContext = {
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	beforeEach(function () {
 		axe._tree = undefined;
@@ -18,7 +13,7 @@ describe('group-labelledby', function () {
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		checkContext._data = null;
+		checkContext.reset();
 	});
 
 	function tests(type) {

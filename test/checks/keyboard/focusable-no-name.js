@@ -5,17 +5,13 @@ describe('focusable-no-name', function () {
 	var checkSetup = axe.testUtils.checkSetup;
 	var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
 	var shadowSupport = axe.testUtils.shadowSupport;
-
-	var checkContext = {
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		}
-	};
+	
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
 		fixture.innerHTML = '';
 		axe._tree = undefined;
+		checkContext.reset();
 	});
 
 	it('should pass if tabindex < 0', function () {

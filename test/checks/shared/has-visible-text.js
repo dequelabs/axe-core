@@ -4,17 +4,12 @@ describe('has-visible-text', function () {
 	var fixture = document.getElementById('fixture');
 	var checkSetup = axe.testUtils.checkSetup;
 
-	var checkContext = {
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
 		fixture.innerHTML = '';
 		axe._tree = undefined;
-		checkContext._data = null;
+		checkContext.reset();
 	});
 
 	it('should return false if there is no visible text', function () {

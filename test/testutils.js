@@ -13,8 +13,8 @@ testUtils.MockCheckContext = function () {
 		data: function (d) {
 			this._data = d;
 		},
-		relatedNodes: function (rn) {
-			this._relatedNodes = rn;
+		relatedNodes: function (nodes) {
+			this._relatedNodes = Array.isArray(nodes) ? nodes : [nodes];
 		},
 		reset: function () {
 			this._data = null;
@@ -100,7 +100,7 @@ testUtils.checkSetup = function (content, options, target) {
  * Create check arguments with Shadow DOM. Target can be inside or outside of Shadow DOM, queried by
  * adding `id="target"` to a fragment. Or specify a custom selector as the `targetSelector` argument.
  *
- * @param Node|String 	Stuff to go into the fixture (html or node)
+ * @param Node|String 	Stuff to go into the fixture (html string or DOM Node)
  * @param Node|String 	Stuff to go into the shadow boundary (html or node)
  * @param String  			Target selector for the check, can be inside or outside of Shadow DOM (default: '#target')
  * @param Object  			Options argument for the check (optional, default: {})

@@ -3,16 +3,11 @@ describe('valid-lang', function () {
 
 	var fixture = document.getElementById('fixture');
 
-	var checkContext = {
-		_data: null,
-		data: function (data) {
-			this._data = data;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		checkContext._data = null;
+		checkContext.reset();
 	});
 
 	describe('lang', function () {
