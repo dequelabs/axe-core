@@ -499,19 +499,6 @@ describe('Audit', function () {
 				done();
 			}, isNotCalled);
 		});
-		it('should clear axe._tree', function (done) {
-			var thing = 'honey badger';
-			axe.utils.getFlattenedTree = function () {
-				return thing;
-			};
-			a.run({ include: [document] }, {
-				rules: {}
-			}, function () {
-				assert.isTrue(typeof axe._tree === 'undefined');
-				axe.utils.getFlattenedTree = getFlattenedTree;
-				done();
-			}, isNotCalled);
-		});
 		it('should assign an empty array to axe._selectCache', function (done) {
 			var saved = axe.utils.ruleShouldRun;
 			axe.utils.ruleShouldRun = function () {
