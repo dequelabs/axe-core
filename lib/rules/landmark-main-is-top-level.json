@@ -1,12 +1,12 @@
 {
   "id": "landmark-main-is-top-level",
-  "selector": "main,[role=main]",
+  "selector": "main, [role=main]",
   "tags": [
 	"best-practice"
   ],
   "metadata": {
-    "description": "The main landmark should not be contained in another landmark",
-    "help": "Main landmark is not at top level"
+    "description": "A main element or [role=main] identifies the primary content of the page",
+    "help": "Main landmark must be at top level"
   },
   "all": [],
   "any": [

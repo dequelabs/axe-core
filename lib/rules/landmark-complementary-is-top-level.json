@@ -5,8 +5,8 @@
 	"best-practice"
   ],
   "metadata": {
-    "description": "The complementary landmark should not be contained in another landmark",
-    "help": "Complementary landmark is not at top level"
+    "description": "The aside element or [role=complementary] identifies content related to the main content of the page",
+    "help": "Complementary landmark must be at top level"
   },
   "all": [],
   "any": [

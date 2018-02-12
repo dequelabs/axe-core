@@ -5,7 +5,7 @@
     "best-practice"
   ],
   "metadata": {
-    "description": "A banner landmark identifies site-oriented content at the beginning of each page within a website",
+    "description": "A header element (i.e. context body element) or [role=banner] identifies site-oriented content at the beginning of each page within a website",
     "help": "Banner landmark must be at top level"
   },
   "all": [],
