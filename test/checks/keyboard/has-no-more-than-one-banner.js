@@ -24,7 +24,7 @@ describe('has-no-more-than-one-banner', function () {
 	});
 
 	it('should return true if there are multiple headers contained in sectioning elements', function(){
-		var params = checkSetup('<div role="main" id="target"><header></header><header></header></div>');
+		var params = checkSetup('<main id="target"><header></header><header></header></main>');
 		assert.isTrue(checks['has-no-more-than-one-banner'].evaluate.apply(checkContext, params));
 	});
 
