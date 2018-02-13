@@ -1,18 +1,11 @@
-<!-- Thanks for reporting an issue to axe-core. Please provide all necessary info to reproduce the issue. Without adequate details, your issue may be closed without investigation. -->
+<!-- Thanks for reporting an issue to axe-core. Please provide all necessary info to reproduce the issue. Without adequate details, your issue may be closed without investigation. 
 
-## Issue Description
-<!-- Basic description of the problem. Is it a false positive? Feature request? -->
+If you’re reporting a bug, include a description of the issue and a page or code snippet where it can be reproduced. Please make sure you have tested this with the latest version of axe-core. When proposing a new rule, please use our rule template: https://github.com/dequelabs/axe-core/blob/develop/doc/rule-proposal.md
 
-### Current Behavior
-<!-- Describe how the issue manifests. -->
-
-### Expected Behavior
-<!-- Describe what the desired behavior would be, and how it applies to "Accessibility Supported" https://github.com/dequelabs/axe-core/blob/develop/doc/accessibility-supported.md -->
-
-### Steps to reproduce the behavior
-<!--
-Please provide the *STEPS TO REPRODUCE* and if possible, a *MINIMAL DEMO* of the problem via Codepen, jsbin, Plunkr or similar.
+Describe what the desired behavior would be, and how it applies to axe-core's  "Accessibility Supported" policy: https://github.com/dequelabs/axe-core/blob/develop/doc/accessibility-supported.md
 -->
+
+- Link to live demo:
 
 <pre><code>
 axe-core version: X.Y.Z
