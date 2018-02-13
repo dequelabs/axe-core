@@ -102,25 +102,32 @@ testUtils.checkSetup = function (content, options, target) {
  *
  * @param Node|String 	Stuff to go into the fixture (html string or DOM Node)
  * @param Node|String 	Stuff to go into the shadow boundary (html or node)
- * @param String  			Target selector for the check, can be inside or outside of Shadow DOM (default: '#target')
  * @param Object  			Options argument for the check (optional, default: {})
+ * @param String  			Target selector for the check, can be inside or outside of Shadow DOM (optional, default: '#target')
  * @return Array
  */
-testUtils.shadowCheckSetup = function (content, shadowContent, targetSelector, options) {
+testUtils.shadowCheckSetup = function (content, shadowContent, options, targetSelector) {
 	'use strict';
 
-	// Normalize the params
+	// Normalize target, allow it to be the provided string or use '#target' to query composed tree
+	if (typeof targetSelector !== 'string') {
+		targetSelector = '#target';
+	}
+
+	// Normalize the object params
 	if (typeof options !== 'object') {
 		options = {};
 	}
-	// Normalize target, allow it to be the provided string or use '#target' to query composed tree
-	targetSelector = targetSelector || '#target';
 
 	var fixture = testUtils.fixtureSetup(content);
 	var targetCandidate = fixture.querySelector(targetSelector);
 	var container = targetCandidate;
 	if (!targetCandidate) {
-		container = fixture.firstChild;
+		// check if content specifies a shadow container
+		container = fixture.querySelector('#shadow');
+		if (!container) {
+			container = fixture.firstChild;
+		}
 	}
 	// attach a shadowRoot with the content provided
 	var shadowRoot = container.attachShadow({ mode: 'open' });

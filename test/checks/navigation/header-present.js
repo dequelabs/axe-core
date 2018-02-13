@@ -3,7 +3,9 @@ describe('header-present', function () {
 
 	var fixture = document.getElementById('fixture');
 	var checkSetup = axe.testUtils.checkSetup;
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var checkContext = axe.testUtils.MockCheckContext();
+	var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -41,4 +43,12 @@ describe('header-present', function () {
 		assert.isFalse(checks['header-present'].evaluate.apply(checkContext, params));
 	});
 
+	(shadowSupported ? it : xit)
+	('should return true if heading is in shadow dom', function () {
+		var params = shadowCheckSetup(
+			'<div id="target"><div>',
+			'<h1></h1>'
+		);
+		assert.isTrue(checks['header-present'].evaluate.apply(checkContext, params));
+	});
 });

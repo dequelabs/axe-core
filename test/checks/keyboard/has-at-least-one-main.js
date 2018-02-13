@@ -4,10 +4,13 @@ describe('has-at-least-one-main', function () {
 	var fixture = document.getElementById('fixture');
 	var checkContext = new axe.testUtils.MockCheckContext();
 	var checkSetup = axe.testUtils.checkSetup;
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
+	var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
 		checkContext.reset();
+		axe._tree = undefined;
 	});
 
 	it('should return false if no div has role property', function() {
@@ -44,6 +47,10 @@ describe('has-at-least-one-main', function () {
 		assert.isTrue(mainIsFound);
 		assert.equal(checkContext._data, mainIsFound);
 	});
+
+	(shadowSupported ? it : xit)
+	('should return true if main is inside of shadow dom', function() {
+		var params = shadowCheckSetup('<div id="target"></div>', '<main>main landmark</main>');
 		var mainIsFound = checks['has-at-least-one-main'].evaluate.apply(checkContext, params);
 		assert.isTrue(mainIsFound);
 		assert.equal(checkContext._data, mainIsFound);

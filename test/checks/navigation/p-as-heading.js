@@ -172,4 +172,20 @@ describe('p-as-heading', function () {
 			assert.isTrue(checks['p-as-heading'].evaluate.apply(checkContext, params));
 		});
 	});
+
+	(shadowSupported ? it : xit)
+	('returns undefined instead of false if the element is inside a blockquote in light dom', function () {
+		var params = shadowCheckSetup('<blockquote></blockquote>',
+			'<p style="font-weight:bold" id="target">elm 1</p> <p>elm 2</p>',
+			testOptions);
+		assert.isUndefined(checks['p-as-heading'].evaluate.apply(checkContext, params));
+	});
+
+	(shadowSupported ? it : xit)
+	('returns true over undefined from within a blockquote in light dom', function () {
+		var params = shadowCheckSetup('<blockquote></blockquote>',
+			'<p id="target">elm 1</p> <p>elm 2</p>',
+			testOptions);
+		assert.isTrue(checks['p-as-heading'].evaluate.apply(checkContext, params));
+	});
 });

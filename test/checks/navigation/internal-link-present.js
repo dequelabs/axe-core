@@ -2,8 +2,10 @@ describe('internal-link-present', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var checkContext = axe.testUtils.MockCheckContext();
 	var checkSetup = axe.testUtils.checkSetup;
+	var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -21,4 +23,12 @@ describe('internal-link-present', function () {
 		assert.isFalse(checks['internal-link-present'].evaluate.apply(checkContext, params));
 	});
 
+	(shadowSupported ? it : xit)
+	('should return true when internal link is found in shadow dom', function () {
+		var params = shadowCheckSetup(
+			'<div id="target"></div>',
+			'<a href="#haha">hi</a>'
+		);
+		assert.isTrue(checks['internal-link-present'].evaluate.apply(checkContext, params));
+	});
 });

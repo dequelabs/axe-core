@@ -2,7 +2,8 @@ describe('aria-errormessage', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
+	var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
 	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
@@ -45,5 +46,24 @@ describe('aria-errormessage', function () {
 		target.setAttribute('aria-errormessage', 'plain');
 		target.setAttribute('aria-describedby', 'plain');
 		assert.isTrue(checks['aria-errormessage'].evaluate.call(checkContext, target));
+	});
+
+	(shadowSupported ? it : xit)
+	('should return false if aria-errormessage value crosses shadow boundary', function () {
+		var params = shadowCheckSetup(
+			'<div id="target" aria-errormessage="live"></div>',
+			'<div id="live" aria-live="assertive"></div>'
+		);
+		assert.isFalse(checks['aria-errormessage'].evaluate.apply(checkContext, params));
+	});
+
+	(shadowSupported ? it : xit)
+	('should return true if aria-errormessage and value are inside shadow dom', function () {
+		var params = shadowCheckSetup(
+			'<div></div>',
+			'<div id="target" aria-errormessage="live"</div>' +
+			'<div id="live" aria-live="assertive"></div>'
+		);
+		assert.isTrue(checks['aria-errormessage'].evaluate.apply(checkContext, params));
 	});
 });
