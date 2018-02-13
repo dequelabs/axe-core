@@ -19,8 +19,6 @@ describe('aria-allowed-attr', function () {
 
 		assert.isFalse(checks['aria-allowed-attr'].evaluate.call(checkContext, node));
 		assert.deepEqual(checkContext._data, ['aria-selected="true"']);
-
-
 	});
 
 	it('should not report on required attributes', function () {
@@ -32,8 +30,6 @@ describe('aria-allowed-attr', function () {
 		fixture.appendChild(node);
 
 		assert.isTrue(checks['aria-allowed-attr'].evaluate.call(checkContext, node));
-
-
 	});
 
 	it('should detect incorrectly used attributes - implicit role', function () {
@@ -46,8 +42,6 @@ describe('aria-allowed-attr', function () {
 
 		assert.isFalse(checks['aria-allowed-attr'].evaluate.call(checkContext, node));
 		assert.deepEqual(checkContext._data, ['aria-selected="true"']);
-
-
 	});
 
 	it('should return true if there is no role', function () {
@@ -60,8 +54,6 @@ describe('aria-allowed-attr', function () {
 
 		assert.isTrue(checks['aria-allowed-attr'].evaluate.call(checkContext, node));
 		assert.isNull(checkContext._data);
-
-
 	});
 
 	it('should determine attribute validity by calling axe.commons.aria.allowedAttr', function () {
@@ -97,8 +89,6 @@ describe('aria-allowed-attr', function () {
 
 		assert.isTrue(checks['aria-allowed-attr'].evaluate.call(checkContext, node));
 		assert.isNull(checkContext._data);
-
-
 	});
 
 	it('should not report on allowed attributes', function () {
