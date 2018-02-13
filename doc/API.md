@@ -20,7 +20,6 @@
 		1. [Results Object](#results-object)
 	1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
 	1. [API Name: axe.cleanup](#api-name-axecleanup)
-	1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
 	1. [Virtual DOM Utilities](#virtual-dom-utilities)
 		1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
 	1. [Common Functions](#common-functions)
@@ -629,14 +628,6 @@ The signature is:
 
 `resolve` takes no arguments and `reject` takes a single argument that must be a string or have a toString() method in its prototype.
 
-
-### API Name: axe.a11yCheck
-
-In axe-core v1 the main method for axe was `axe.a11yCheck()`. This method was replaced with `axe.run()` in order to better deal with errors. The method `axe.a11yCheck()` differs from `axe.run()` in the following ways:
-
-- .a11yCheck does not pass the error object to the callback, rather it returns the result as the first parameter and logs errors to the console.
-- .a11yCheck requires a context object, and so will not fall back to the document root.
-- .a11yCheck does not return a Promise.
 
 ### Virtual DOM Utilities
 

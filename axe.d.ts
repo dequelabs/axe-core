@@ -140,16 +140,6 @@ declare module axe {
 	function run(context: ElementContext, options: RunOptions, callback: RunCallback): void
 
 	/**
-	 * Starts analysis on the current document and its subframes
-	 *
-	 * @param  {Object}   context  The `Context` specification object @see Context
-	 * @param  {Array}    options  Options passed into rules or checks, temporarily modifyint them.
-	 * @param  {Function} callback The function to invoke when analysis is complete.
-	 * @returns {Object}  results  The aXe results object
-	 */
-	function a11yCheck(context: ElementContext, options: {runOnly?: RunOnly, rules?: Object, iframes?: Boolean, elementRef?: Boolean, selectors?: Boolean}, callback: (results:AxeResults) => void): AxeResults
-
-	/**
 	 * Method for configuring the data format used by aXe. Helpful for adding new
 	 * rules, which must be registered with the library to execute.
 	 * @param  {Spec}       Spec Object with valid `branding`, `reporter`, `checks` and `rules` data

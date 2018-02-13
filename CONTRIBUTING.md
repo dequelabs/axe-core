@@ -136,10 +136,12 @@ Installing aXe to run accessibility tests in your TypeScript project should be a
 import * as axe from 'axe-core';
 
 describe('Module', () => {
-	it('should have no accessibility violations', () => {
-		axe.a11yCheck(compiledFixture, {}, (results) => {
-			expect(results.violations.length).toBe(0);
-		});
+	it('should have no accessibility violations', (done) => {
+		axe.run(compiledFixture)
+			.then((results) => {
+				expect(results.violations.length).toBe(0);
+				done()
+			}, done);
 	});
 });
 ```
