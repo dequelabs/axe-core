@@ -617,7 +617,18 @@ Register a plugin with the aXe plugin system. See [implementing a plugin](plugin
 
 ### API Name: axe.cleanup
 
-Call the plugin system's cleanup function. See [implementing a plugin](plugins.md).
+Call each plugin's cleanup function. See [implementing a plugin](plugins.md).
+
+The signature is:
+
+```
+    axe.cleanup(resolve, reject)
+```
+
+`resolve` and `reject` are functions that will be invoked on success or failure respectively.
+
+`resolve` takes no arguments and `reject` takes a single argument that must be a string or have a toString() method in its prototype.
+
 
 ### API Name: axe.a11yCheck
 

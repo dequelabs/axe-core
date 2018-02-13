@@ -59,6 +59,30 @@ describe('cleanupPlugins', function () {
   });
 
 
+  it('should not throw exception if no arguments are provided', function(done) {
+    var cleaned = false;
+    axe._load({
+      rules: []
+    });
+    axe.registerPlugin({
+      id: 'p',
+      run: function () {},
+      add: function (impl) {
+        this._registry[impl.id] = impl;
+      },
+      commands: []
+    });
+    axe.plugins.p.cleanup = function (res) {
+      cleaned = true;
+      res();
+    };
+    assert.doesNotThrow(function () {
+      cleanupPlugins();
+      done();
+    });
+  });
+
+
   it('should send command to frames to cleanup', function (done) {
     createFrames(function () {
       axe._load({});
