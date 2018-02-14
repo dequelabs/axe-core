@@ -91,6 +91,8 @@ This will create a new build for aXe, called `axe.<lang>.js` and `axe.<lang>.min
 
 To create a new translation for aXe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below.
 
+To update existing translation file, re-run `grunt translate --lang=<langcode>`. This will add new messages used in English and remove messages which were not used in English.
+
 ## Contributing
 
 Read the [Proposing Axe-core Rules guide ](./doc/rule-proposal.md)
