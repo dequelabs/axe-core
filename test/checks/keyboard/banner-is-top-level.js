@@ -70,11 +70,15 @@ describe('banner-is-top-level', function () {
 		assert.isTrue(checks['banner-is-top-level'].evaluate(header));
 	});
 
+//test conditions using this shadow dom still pass this test, so commented out
+//shadow dom conditions 
 	(shadowSupported ? it : xit)('should test if banner in shadow DOM is top level', function () {
 		var div = document.createElement('div');
+		//div.setAttribute('role', 'search');
 		var shadow = div.attachShadow({ mode: 'open' });
 		shadow.innerHTML = '<div role="banner">Banner landmark</div>';
 		var checkArgs = checkSetup(shadow.querySelector('[role=banner], header'));
+		//assert.isFalse(checks['banner-is-top-level'].evaluate.apply(null, checkArgs));
 		assert.isTrue(checks['banner-is-top-level'].evaluate.apply(null, checkArgs));
 	});
 
