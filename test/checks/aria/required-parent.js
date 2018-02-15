@@ -16,6 +16,7 @@ describe('aria-required-parent', function () {
 	afterEach(function () {
 		fixture.innerHTML = '';
 		checkContext._data = null;
+		axe._tree = undefined;
 	});
 
 	it('should detect missing required parent', function () {

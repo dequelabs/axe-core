@@ -2,6 +2,7 @@ describe('color.getForegroundColor', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
 
 	afterEach(function () {
 		document.getElementById('fixture').innerHTML = '';
@@ -63,4 +64,21 @@ describe('color.getForegroundColor', function () {
 		assert.equal(actual.alpha, expected.alpha);
 	});
 
+	(shadowSupported ? it : xit)
+	('should return the fgcolor from inside of Shadow DOM', function () {
+		fixture.innerHTML = '<div id="container" style="height: 40px; width: 30px; background-color: red;">' +
+			'</div>';
+		var container = fixture.querySelector('#container');
+		var shadow = container.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<div id="target" style="height:20px;width:15px;color:#000080;background-color:green;"></div>';
+		
+		var target = shadow.querySelector('#target');
+		var actual = axe.commons.color.getForegroundColor(target);
+		var expected = new axe.commons.color.Color(0, 0, 128, 1);
+		
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+	});
 });

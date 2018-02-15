@@ -56,6 +56,7 @@ testUtils.shadowSupport = (function(document) {
 testUtils.fixtureSetup = function (content) {
 	'use strict';
 	var fixture = document.querySelector('#fixture');
+	fixture.innerHTML = '';
 	if (typeof content === 'string') {
 		fixture.innerHTML = content;
 	} else if (content instanceof Node) {
@@ -96,50 +97,49 @@ testUtils.checkSetup = function (content, options, target) {
 
 
 /**
- * Create check arguments with Shadow DOM
+ * Create check arguments with Shadow DOM. Target can be inside or outside of Shadow DOM, queried by
+ * adding `id="target"` to a fragment. Or specify a custom selector as the `targetSelector` argument.
  *
  * @param Node|String 	Stuff to go into the fixture (html or node)
  * @param Node|String 	Stuff to go into the shadow boundary (html or node)
+ * @param String  			Target selector for the check, can be inside or outside of Shadow DOM (default: '#target')
  * @param Object  			Options argument for the check (optional, default: {})
- * @param String  			Target for the check, CSS selector (default: '#target')
  * @return Array
  */
-testUtils.shadowCheckSetup = function (content, shadowContent, options, target) {
+testUtils.shadowCheckSetup = function (content, shadowContent, targetSelector, options) {
 	'use strict';
+
 	// Normalize the params
 	if (typeof options !== 'object') {
-		target = options;
 		options = {};
 	}
-	// Normalize target, allow it to be the inserted node or '#target'
-	target = target || (content instanceof Node ? content : '#target');
-	testUtils.fixtureSetup(content);
-	
-	// wrap contents in a DIV to make it easy to attach a shadow
-	// ensure we attach it to the target, and not the outer fixture
-	var fixture = document.querySelector(target);
+	// Normalize target, allow it to be the provided string or use '#target' to query composed tree
+	targetSelector = targetSelector || '#target';
+
+	var fixture = testUtils.fixtureSetup(content);
+	var targetCandidate = fixture.querySelector(targetSelector);
+	var container = targetCandidate;
+	if (!targetCandidate) {
+		container = fixture.firstChild;
+	}
+	// attach a shadowRoot with the content provided
+	var shadowRoot = container.attachShadow({ mode: 'open' });
 	if (typeof shadowContent === 'string') {
-		fixture.innerHTML = '<div id="shadowHost"></div>';
+		shadowRoot.innerHTML = shadowContent;
 	} else if (content instanceof Node) {
-		var shadowHost = document.createElement('div');
-		shadowHost.setAttribute('id', 'shadowHost');
-		fixture.appendChild(shadowHost);
+		shadowRoot.appendChild(shadowContent);
 	}
 
-	// attach a shadowRoot with the content provided
-	var shadowRoot = fixture.querySelector('#shadowHost').attachShadow({ mode: 'open' });
-	shadowRoot.innerHTML = shadowContent;
+	if (!targetCandidate) {
+		targetCandidate = shadowRoot.querySelector(targetSelector);
+	}
+	if (!targetSelector && !targetCandidate) {
+		throw 'shadowCheckSetup requires at least one fragment to have #target, or a provided targetSelector';
+	}
 
 	// query the composed tree AFTER shadowDOM has been attached
 	axe._tree = axe.utils.getFlattenedTree(fixture);
-	var node;
-	if (typeof target === 'string') {
-		node = axe.utils.querySelectorAll(axe._tree[0], target)[0];
-	} else if (target instanceof Node) {
-		node = axe.utils.getNodeFromTree(axe._tree[0], target);
-	} else {
-		node = target;
-	}
+	var node = axe.utils.getNodeFromTree(axe._tree[0], targetCandidate);
 	return [node.actualNode, options, node];
 };
 

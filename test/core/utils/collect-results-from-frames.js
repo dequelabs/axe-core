@@ -9,10 +9,10 @@ describe('axe.utils.collectResultsFromFrames', function () {
 		fixture.innerHTML = '';
 	});
 
-  it('should timeout after 30s', function (done) {
+  it('should timeout after 60s', function (done) {
     var orig = window.setTimeout;
     window.setTimeout = function (fn, to) {
-      if (to === 30000) {
+      if (to === 60000) {
         assert.ok('timeout set');
         fn();
       } else { // ping timeout
@@ -25,6 +25,37 @@ describe('axe.utils.collectResultsFromFrames', function () {
     frame.addEventListener('load', function () {
       var context = new Context(document);
       axe.utils.collectResultsFromFrames(context, {}, 'stuff', 'morestuff', noop,
+      function (err) {
+        assert.instanceOf(err, Error);
+        assert.equal(err.message.split(/: /)[0], 'Axe in frame timed out');
+        window.setTimeout = orig;
+        done();
+      });
+    });
+
+    frame.id = 'level0';
+    frame.src = '../mock/frames/results-timeout.html';
+    fixture.appendChild(frame);
+
+  });
+
+  it('should override the timeout with `options.frameWaitTime`, if provided', function (done) {
+    var orig = window.setTimeout;
+    window.setTimeout = function (fn, to) {
+      if (to === 90000) {
+        assert.ok('timeout set');
+        fn();
+      } else { // ping timeout
+        return orig(fn, to);
+      }
+      return 'cats';
+    };
+
+    var frame = document.createElement('iframe');
+    frame.addEventListener('load', function () {
+      var context = new Context(document);
+      var params = { frameWaitTime: 90000 };
+      axe.utils.collectResultsFromFrames(context, params, 'stuff', 'morestuff', noop,
       function (err) {
         assert.instanceOf(err, Error);
         assert.equal(err.message.split(/: /)[0], 'Axe in frame timed out');
