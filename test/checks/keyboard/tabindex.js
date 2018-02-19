@@ -13,17 +13,14 @@ describe('tabindex', function () {
 		fixture.appendChild(node);
 
 		assert.isFalse(checks.tabindex.evaluate(node));
-
-
 	});
+
 	it('should pass if the tabindex is <= 0', function () {
 		var node = document.createElement('div');
 		node.setAttribute('tabindex', '0');
 		fixture.appendChild(node);
 
 		assert.isTrue(checks.tabindex.evaluate(node));
-
-
 	});
 
 });

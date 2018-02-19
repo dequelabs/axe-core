@@ -3,16 +3,11 @@ describe('button-has-visible-text', function () {
 
 	var fixture = document.getElementById('fixture');
 	var checkSetup = axe.testUtils.checkSetup;
-	var checkContext = {
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		checkContext._data = null;
+		checkContext.reset();
 	});
 
 	it('should return false if button element is empty', function () {
@@ -29,14 +24,14 @@ describe('button-has-visible-text', function () {
 	});
 
 	it('should return true if ARIA button has text', function () {
-		var checkArgs = checkSetup('<div role="button">Text</div>>', '[role=button]');
+		var checkArgs = checkSetup('<div role="button">Text</div>', '[role=button]');
 
 		assert.isTrue(checks['button-has-visible-text'].evaluate.apply(checkContext, checkArgs));
 		assert.deepEqual(checkContext._data, 'Text');
 	});
 
 	it('should return false if ARIA button has no text', function () {
-		var checkArgs = checkSetup('<div role="button"></div>>', '[role=button]');
+		var checkArgs = checkSetup('<div role="button"></div>', '[role=button]');
 
 		assert.isFalse(checks['button-has-visible-text'].evaluate.apply(checkContext, checkArgs));
 	});

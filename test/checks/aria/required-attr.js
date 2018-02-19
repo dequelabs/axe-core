@@ -2,17 +2,11 @@ describe('aria-required-attr', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-
-	var checkContext = {
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		checkContext._data = null;
+		checkContext.reset();
 	});
 
 	it('should detect missing attributes', function () {
