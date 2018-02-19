@@ -2,14 +2,7 @@ describe('Options parameter', function() {
 	'use strict';
 
 	before(function (done) {
-		var frame = document.getElementById('myframe');
-		var interval = setInterval(function () {
-			var win = frame.contentWindow;
-			axe.utils.respondable(win, 'axe.ping', null, undefined, function() {
-				clearInterval(interval);
-				done();
-			});
-		}, 100);
+		axe.testUtils.awaitNestedLoad(done);
 	});
 
 	function $id(id) {

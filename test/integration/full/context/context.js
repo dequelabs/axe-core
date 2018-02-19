@@ -3,18 +3,7 @@ describe('context test', function () {
 
 	var config = { runOnly: { type: 'rule', values: ['html-has-lang'] } };
 	before(function (done) {
-		var frame = document.getElementById('myframe');
-		if (frame.contentWindow.document.readyState === 'complete') {
-			setTimeout(function () {
-				done();
-			}, 1000);
-		} else {
-			frame.addEventListener('load', function () {
-				setTimeout(function () {
-					done();
-				}, 1000);
-			});
-		}
+		axe.testUtils.awaitNestedLoad(done);
 	});
 
 

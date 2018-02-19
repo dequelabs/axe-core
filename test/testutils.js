@@ -95,7 +95,6 @@ testUtils.checkSetup = function (content, options, target) {
 	return [node.actualNode, options, node];
 };
 
-
 /**
  * Create check arguments with Shadow DOM. Target can be inside or outside of Shadow DOM, queried by
  * adding `id="target"` to a fragment. Or specify a custom selector as the `targetSelector` argument.
@@ -150,5 +149,41 @@ testUtils.shadowCheckSetup = function (content, shadowContent, options, targetSe
 	return [node.actualNode, options, node];
 };
 
+/**
+ * Wait for all nested frames to be loaded
+ *
+ * @param Object  			Window to wait for (optional)
+ * @param function      Callback, called once resolved
+ */
+testUtils.awaitNestedLoad = function awaitNestedLoad(win, cb) {
+	'use strict';
+  if (typeof win === 'function') {
+    cb = win;
+    win = window;
+  }
+  var document = win.document;
+  var q = axe.utils.queue();
+
+  // Wait for page load
+  q.defer(function (resolve) {
+    if (document.readyState === 'complete') {
+      resolve();
+    } else {
+      win.addEventListener('load', resolve);
+    }
+  });
+
+  // Wait for all frames to be loaded
+  Array.from(document.querySelectorAll('iframe')).forEach(function (frame) {
+    q.defer(function (resolve) {
+      return awaitNestedLoad(frame.contentWindow, resolve);
+    });
+  });
+
+  // Complete (don't pass the args on to the callback)
+  q.then(function () {
+    cb();
+  });
+};
 
 axe.testUtils = testUtils;
