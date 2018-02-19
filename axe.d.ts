@@ -1,4 +1,4 @@
-// Type definitions for axe-core 3.0.0-alpha.9
+// Type definitions for axe-core 3.0.0-beta.1
 // Project: https://github.com/dequelabs/axe-core
 // Definitions by: Marcy Sutton <https://github.com/marcysutton>
 
