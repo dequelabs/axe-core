@@ -4,10 +4,12 @@ describe('document-title test failure', function () {
 	var results;
 
 	before(function (done) {
-		axe.run({ runOnly: { type: 'rule', values: ['document-title'] } }, function (err, r) {
-			assert.isNull(err);
-			results = r;
-			done();
+		axe.testUtils.awaitNestedLoad(function () {
+			axe.run({ runOnly: { type: 'rule', values: ['document-title'] } }, function (err, r) {
+				assert.isNull(err);
+				results = r;
+				done();
+			});
 		});
 	});
 

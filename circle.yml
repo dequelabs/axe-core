@@ -1,3 +1,13 @@
-machine:
-  node:
-    version: v6.1.0
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:6.12.3-browsers
+    steps:
+      - checkout
+      - run:
+          name: install-npm
+          command: npm install
+      - run:
+          name: test
+          command: npm test

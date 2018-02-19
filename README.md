@@ -10,6 +10,8 @@
 
 The Accessibility Engine for automated testing of HTML-based user interfaces. Drop the aXe on your accessibility defects!
 
+Thanks for helping us to make axe-core the most widely used HTML accessibility testing library in the galaxy! Share your axe-core story using #axecoresquad or by submitting it [here](https://accessibility.deque.com/axe-core-stories) to get a sweet T-shirt.
+
 ## Philosophy
 
 We believe that automated testing has an important role to play in achieving digital equality and that in order to do that, it must achieve mainstream adoption by professional web developers. That means that the tests must inspire trust, must be fast, must work everywhere and must be available everywhere.
@@ -88,6 +90,8 @@ Axe can be built using your local language. To do so, a localization file must b
 This will create a new build for aXe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build localized versions, simply pass in `--all-lang` instead.
 
 To create a new translation for aXe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below.
+
+To update existing translation file, re-run `grunt translate --lang=<langcode>`. This will add new messages used in English and remove messages which were not used in English.
 
 ## Contributing
 

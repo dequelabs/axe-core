@@ -5,16 +5,7 @@ describe('link-in-text-block', function () {
 	var shadowSupport = axe.testUtils.shadowSupport;
 	var styleElm;
 
-	var checkContext = {
-		_relatedNodes: [],
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		},
-		relatedNodes: function (rn) {
-			this._relatedNodes = rn;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	before(function () {
 		styleElm = document.createElement('style');
@@ -33,8 +24,7 @@ describe('link-in-text-block', function () {
 	afterEach(function () {
 		fixture.innerHTML = '';
 		styleElm.innerHTML = '';
-		checkContext._relatedNodes = [];
-		checkContext._data = null;
+		checkContext.reset();
 	});
 
 	after(function () {

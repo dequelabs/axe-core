@@ -521,9 +521,18 @@ describe('Rule', function() {
 							evaluate: function() {},
 							id: 'cats'
 						}]
+					}, {
+						checks: {
+							cats: {
+								run: function (node, options, resolve) {
+									success = true;
+									resolve(true);
+								}
+							}
+						}
 					});
 					rule.run({
-						include: axe.utils.getFlattenedTree(document)[0]
+						include: [axe.utils.getFlattenedTree(document)[0]]
 					}, {}, noop, isNotCalled);
 					assert.isTrue(success);
 
@@ -538,9 +547,18 @@ describe('Rule', function() {
 							evaluate: function() {},
 							id: 'cats'
 						}]
+					}, {
+						checks: {
+							cats: {
+								run: function (node, options, resolve) {
+									success = true;
+									resolve(true);
+								}
+							}
+						}
 					});
 					rule.run({
-						include: axe.utils.getFlattenedTree(document)[0]
+						include: [axe.utils.getFlattenedTree(document)[0]]
 					}, {}, function() {
 						success = true;
 					}, isNotCalled);

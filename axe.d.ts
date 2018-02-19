@@ -1,4 +1,4 @@
-// Type definitions for axe-core 3.0.0-alpha.9
+// Type definitions for axe-core 3.0.0-beta.1
 // Project: https://github.com/dequelabs/axe-core
 // Definitions by: Marcy Sutton <https://github.com/marcysutton>
 
@@ -11,6 +11,8 @@ declare module axe {
 	type ReporterVersion = "v1" | "v2";
 
 	type RunOnlyType = "rule" | "rules" | "tag" | "tags";
+
+	type RunCallback = (error: Error, results:AxeResults) => void;
 
 	interface ElementContext {
 		node?: Object,
@@ -25,6 +27,13 @@ declare module axe {
 			exclude?: string[]
 		}
 		values?: TagValue[]
+	}
+	interface RunOptions {
+		runOnly?: RunOnly,
+		rules?: Object,
+		iframes?: Boolean,
+		elementRef?: Boolean,
+		selectors?: Boolean
 	}
 	interface AxeResults {
 		url: string,
@@ -117,22 +126,18 @@ declare module axe {
 	/**
 	 * Runs a number of rules against the provided HTML page and returns the resulting issue list
 	 *
-	 * @param  {Object}   context  Optional The `Context` specification object @see Context
-	 * @param  {Array}    options  Optional Options passed into rules or checks, temporarily modifying them.
-	 * @param  {Function} callback Optional The function to invoke when analysis is complete.
-	 * @returns {any}  	  results  If the callback was not defined, aXe will return a Promise instead.
+	 * @param   {ElementContext} context  Optional The `Context` specification object @see Context
+	 * @param   {RunOptions}     options  Optional Options passed into rules or checks, temporarily modifying them.
+	 * @param   {RunCallback}    callback Optional The function to invoke when analysis is complete.
+	 * @returns {Promise<AxeResults>|void} If the callback was not defined, aXe will return a Promise.
 	 */
-	function run(context?: ElementContext, options?: {runOnly?: RunOnly, rules?: Object, iframes?: Boolean, elementRef?: Boolean, selectors?: Boolean}, callback?: (error: Error, results:AxeResults) => void): any
-
-	/**
-	 * Starts analysis on the current document and its subframes
-	 *
-	 * @param  {Object}   context  The `Context` specification object @see Context
-	 * @param  {Array}    options  Options passed into rules or checks, temporarily modifyint them.
-	 * @param  {Function} callback The function to invoke when analysis is complete.
-	 * @returns {Object}  results  The aXe results object
-	 */
-	function a11yCheck(context: ElementContext, options: {runOnly?: RunOnly, rules?: Object, iframes?: Boolean, elementRef?: Boolean, selectors?: Boolean}, callback: (results:AxeResults) => void): AxeResults
+	function run(context: ElementContext): Promise<AxeResults>
+	function run(options: RunOptions): Promise<AxeResults>
+	function run(callback: (error: Error, results:AxeResults) => void): void
+	function run(context: ElementContext, callback: RunCallback): void
+	function run(options: RunOptions, callback: RunCallback): void
+	function run(context: ElementContext, options: RunOptions): Promise<AxeResults>
+	function run(context: ElementContext, options: RunOptions, callback: RunCallback): void
 
 	/**
 	 * Method for configuring the data format used by aXe. Helpful for adding new

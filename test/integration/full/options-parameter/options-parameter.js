@@ -2,14 +2,7 @@ describe('Options parameter', function() {
 	'use strict';
 
 	before(function (done) {
-		var frame = document.getElementById('myframe');
-		var interval = setInterval(function () {
-			var win = frame.contentWindow;
-			axe.utils.respondable(win, 'axe.ping', null, undefined, function() {
-				clearInterval(interval);
-				done();
-			});
-		}, 100);
+		axe.testUtils.awaitNestedLoad(done);
 	});
 
 	function $id(id) {
@@ -19,7 +12,7 @@ describe('Options parameter', function() {
 	describe('iframes', function() {
 		it('should include iframes if `iframes` is true', function(done) {
 			var config = { iframes: true };
-			axe.a11yCheck(document, config, function(results) {
+			axe.run(document, config, function(err, results) {
 				try {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
@@ -39,7 +32,7 @@ describe('Options parameter', function() {
 
 		it('should exclude iframes if `iframes` is false', function(done) {
 			var config = { iframes: false };
-			axe.a11yCheck(document, config, function(results) {
+			axe.run(document, config, function(err, results) {
 				try {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
@@ -59,7 +52,7 @@ describe('Options parameter', function() {
 
 		it('should include iframes by default', function(done) {
 			var config = {};
-			axe.a11yCheck(document, config, function(results) {
+			axe.run(document, config, function(err, results) {
 				try {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
@@ -81,7 +74,7 @@ describe('Options parameter', function() {
 	describe('elementRef', function() {
 		it('should not return an elementRef by default', function(done) {
 			var config = {};
-			axe.a11yCheck(document, config, function(results) {
+			axe.run(document, config, function(err, results) {
 				try {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
@@ -98,7 +91,7 @@ describe('Options parameter', function() {
 
 		it('should not return an elementRef if `elementRef` is false', function(done) {
 			var config = { elementRef: false };
-			axe.a11yCheck(document, config, function(results) {
+			axe.run(document, config, function(err, results) {
 				try {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
@@ -115,7 +108,7 @@ describe('Options parameter', function() {
 
 		it('should return element refs for the top frame only if `elementRef` is true', function(done) {
 			var config = { elementRef: true };
-			axe.a11yCheck(document, config, function(results) {
+			axe.run(document, config, function(err, results) {
 				try {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
@@ -137,7 +130,7 @@ describe('Options parameter', function() {
 	describe('no selectors', function() {
 		it('should return a selector by default', function(done) {
 			var config = {};
-			axe.a11yCheck(document, config, function(results) {
+			axe.run(document, config, function(err, results) {
 				try {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
@@ -154,7 +147,7 @@ describe('Options parameter', function() {
 
 		it('should return a selector if `selectors` is true', function(done) {
 			var config = { selectors: true };
-			axe.a11yCheck(document, config, function(results) {
+			axe.run(document, config, function(err, results) {
 				try {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
@@ -171,7 +164,7 @@ describe('Options parameter', function() {
 
 		it('should return no selector in top frame if `selectors` is false', function(done) {
 			var config = { selectors: false };
-			axe.a11yCheck(document, config, function(results) {
+			axe.run(document, config, function(err, results) {
 				try {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');

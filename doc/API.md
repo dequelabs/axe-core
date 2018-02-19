@@ -20,11 +20,11 @@
 		1. [Results Object](#results-object)
 	1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
 	1. [API Name: axe.cleanup](#api-name-axecleanup)
-	1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
 	1. [Virtual DOM Utilities](#virtual-dom-utilities)
 		1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
 	1. [Common Functions](#common-functions)
-1. [Section 3: Example Reference](#section-5-example-reference)
+1. [Section 3: Example Reference](#section-3-example-reference)
+1. [Section 4: Performance](#section-4-performance)
 
 ## Section 1: Introduction
 
@@ -167,18 +167,19 @@ axe.configure({
   	 	 * `options` - mixed(optional). This is the options structure that is passed to the evaluate function and is intended to be used to configure checks. It is the most common property that is intended to be overridden for existing checks.
   	 	 * `enabled` - boolean(optional, default `true`). This is used to indicate whether the check is on or off by default. Checks that are off are not evaluated, even when included in a rule. Overriding this is a common way to disable a particular check across multiple rules.
   * `rules` - Used to add rules to the existing set of rules, or to override the properties of existing rules
-  	 * The rules attribute is an Array of rule objects
-  	 * each rule object can contain the following attributes
-  	 	 * `id` - string(required). This uniquely identifies the rule. If the rule already exists, it will be overridden with any of the attributes supplied. The attributes below that are marked required, are only required for new rules.
-  	 	 * `selector` - string(optional, default `*`). A CSS selector used to identify the elements that are passed into the rule for evaluation.
-  	 	 * `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
-  	 	 * `enabled` - boolean(optional, default `true`). Whether the rule is turned on. This is a common attribute for overriding.
-  	 	 * `pageLevel` - boolean(optional, default `false`). When set to true, this rule is only applied when the entire page is tested. Results from nodes on different frames are combined into a single result. See [page level rules](#page-level-rules).
-  	 	 * `any` -  array(optional, default `[]`). This is the list of checks that must all "pass" or else there is a violation.
-  	 	 * `all` - array(optional, default `[]`). This is the list of checks that, if any "fails", will generate a violation.
-  	 	 * `none` - array(optional, default `[]`). This is a list of the checks that, if none "pass", will generate a violation.
-  	 	 * `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. In practice, you must supply some valid tags or the default evaluation will not invoke the rule. The convention is to include the standard (WCAG 2 and/or section 508), the WCAG 2 level, Section 508 paragraph, and the WCAG 2 success criteria. Tags are constructed by converting all letters to lower case, removing spaces and periods and concatinating the result. E.g. WCAG 2 A success criteria 1.1.1 would become ["wcag2a", "wcag111"]
-  	 	 * `matches` - string(optional, default `*`). A filtering CSS selector that will exclude elements that do not match the CSS selector.
+     * The rules attribute is an Array of rule objects
+     * each rule object can contain the following attributes
+       * `id` - string(required). This uniquely identifies the rule. If the rule already exists, it will be overridden with any of the attributes supplied. The attributes below that are marked required, are only required for new rules.
+       * `selector` - string(optional, default `*`). A CSS selector used to identify the elements that are passed into the rule for evaluation.
+       * `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
+       * `enabled` - boolean(optional, default `true`). Whether the rule is turned on. This is a common attribute for overriding.
+       * `pageLevel` - boolean(optional, default `false`). When set to true, this rule is only applied when the entire page is tested. Results from nodes on different frames are combined into a single result. See [page level rules](#page-level-rules).
+       * `any` -  array(optional, default `[]`). This is the list of checks that must all "pass" or else there is a violation.
+       * `all` - array(optional, default `[]`). This is the list of checks that, if any "fails", will generate a violation.
+       * `none` - array(optional, default `[]`). This is a list of the checks that, if none "pass", will generate a violation.
+       * `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. In practice, you must supply some valid tags or the default evaluation will not invoke the rule. The convention is to include the standard (WCAG 2 and/or section 508), the WCAG 2 level, Section 508 paragraph, and the WCAG 2 success criteria. Tags are constructed by converting all letters to lower case, removing spaces and periods and concatinating the result. E.g. WCAG 2 A success criteria 1.1.1 would become ["wcag2a", "wcag111"]
+       * `matches` - string(optional, default `*`). A filtering CSS selector that will exclude elements that do not match the CSS selector.
+  * `disableOtherRules` - Disables all rules not included in the `rules` property.
 
 **Returns:** Nothing
 
@@ -616,15 +617,18 @@ Register a plugin with the aXe plugin system. See [implementing a plugin](plugin
 
 ### API Name: axe.cleanup
 
-Call the plugin system's cleanup function. See [implementing a plugin](plugins.md).
+Call each plugin's cleanup function. See [implementing a plugin](plugins.md).
 
-### API Name: axe.a11yCheck
+The signature is:
 
-In axe-core v1 the main method for axe was `axe.a11yCheck()`. This method was replaced with `axe.run()` in order to better deal with errors. The method `axe.a11yCheck()` differs from `axe.run()` in the following ways:
+```
+    axe.cleanup(resolve, reject)
+```
 
-- .a11yCheck does not pass the error object to the callback, rather it returns the result as the first parameter and logs errors to the console.
-- .a11yCheck requires a context object, and so will not fall back to the document root.
-- .a11yCheck does not return a Promise.
+`resolve` and `reject` are functions that will be invoked on success or failure respectively.
+
+`resolve` takes no arguments and `reject` takes a single argument that must be a string or have a toString() method in its prototype.
+
 
 ### Virtual DOM Utilities
 
@@ -716,3 +720,29 @@ Either the matching HTMLElement or `null` if there was no match.
 ## Section 3: Example Reference
 
 This package contains examples for [jasmine](examples/jasmine), [mocha](examples/mocha), [phantomjs](examples/phantomjs), [qunit](examples/qunit), [selenium using javascript](examples/selenium), and [generating HTML from the violations array](examples/html-handlebars.md). Each of these examples is in the [doc/examples](examples) folder. In each folder, there is a README.md file which contains specific information about each example.
+
+## Section 4: Performance
+
+Axe-core performs very well in general and if you are analyzing average complexity pages with the default settings, you should not need to worry about performance at all. There are some scenarios that can cause performance issues. This is the list of known issues and what you can do to mitigate and/or avoid them.
+
+### Very large pages
+
+Certain rules (like the color-contrast rule) look at almost every element on a page and some of these rules also perform somewhat expensive operations on these elements including looking up the hierarchy, looking at overlapping elements, calculating the computed styles etc. It also calculates a unique selector for each element in the results and also de-duplicates elements so that you do not get duplicate items in your results.
+
+If your page is very large (in terms of the number of Elements on the page) i.e. >50K elements on the page, then you will see analysis times that run over 10s on a relatively decent CPU.
+
+#### Use resultTypes
+
+An approach you can take to reducing the time is use the `resultTypes` option. By calling `axe.run` with the following options, axe-core will only return the full details of the `violations` array and will only return one instance of each of the `inapplicable`, `incomplete` and `pass` arrays for each rule that has at least one of those entries. This will reduce the amount of computation that axe-core does for the unique selectors.
+
+```
+{
+  resultTypes: ['violations']
+}
+```
+
+### Other strategies
+
+#### Targeted color-contrast analysis
+
+If you are analyzing multiple pages on a single Web site or application, chances are these pages all contain the same styles. It is therefore not adding any additional information to your analysis to analyze every page for color-contrast. Choose a small number of pages that represent the totality of you styles and analyze these with color-contrast and analyze all others without it.

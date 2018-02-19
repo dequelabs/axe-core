@@ -10,6 +10,7 @@ describe('axe.utils.select', function () {
 
 	afterEach(function () {
 		fixture.innerHTML = '';
+		axe._selectCache = undefined;
 	});
 
 
@@ -113,10 +114,10 @@ describe('axe.utils.select', function () {
 
 	it('should only contain unique elements', function () {
 		fixture.innerHTML = '<div id="monkeys"><div id="bananas" class="bananas"></div></div>';
-
+		var tree = axe.utils.getFlattenedTree($id('fixture'))[0];
+		var monkeys = tree.children[0];
 		var result = axe.utils.select('.bananas', {
-			include: [axe.utils.getFlattenedTree($id('fixture'))[0],
-					axe.utils.getFlattenedTree($id('monkeys'))[0]]
+			include: [tree, monkeys]
 		});
 
 		assert.lengthOf(result, 1);
@@ -124,18 +125,30 @@ describe('axe.utils.select', function () {
 
 	});
 
-	it('should sort by DOM order', function () {
-		fixture.innerHTML = '<div id="one"><div id="target1" class="bananas"></div></div>' +
-			'<div id="two"><div id="target2" class="bananas"></div></div>';
+	it('should not return duplicates on overlapping includes', function () {
+		fixture.innerHTML = '<div id="zero"><div id="one"><div id="target1" class="bananas"></div></div>' +
+			'<div id="two"><div id="target2" class="bananas"></div></div></div>';
 
-		var result = axe.utils.select('.bananas', { include: [axe.utils.getFlattenedTree($id('two'))[0],
-			axe.utils.getFlattenedTree($id('one'))[0]] });
+		var result = axe.utils.select('.bananas', { include: [axe.utils.getFlattenedTree($id('zero'))[0],
+				axe.utils.getFlattenedTree($id('one'))[0]] });
 
 		assert.deepEqual(result.map(function (n) { return n.actualNode; }),
 			[$id('target1'), $id('target2')]);
+		assert.equal(result.length, 2);
 
 	});
 
+	it ('should return the cached result if one exists', function () {
+		fixture.innerHTML = '<div id="zero"><div id="one"><div id="target1" class="bananas"></div></div>' +
+			'<div id="two"><div id="target2" class="bananas"></div></div></div>';
 
+		axe._selectCache = [{
+			selector: '.bananas',
+			result: 'fruit bat'
+		}];
+		var result = axe.utils.select('.bananas', { include: [axe.utils.getFlattenedTree($id('zero'))[0]] });
+		assert.equal(result, 'fruit bat');
+
+	});
 
 });

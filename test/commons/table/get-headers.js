@@ -8,6 +8,7 @@ describe('table.getHeaders', function () {
 
 	afterEach(function () {
 		fixture.innerHTML = '';
+		axe._tree = undefined;
 	});
 
 	it('should work with scope=auto', function () {
@@ -18,6 +19,7 @@ describe('table.getHeaders', function () {
 
 		var target = $id('target');
 
+		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1'), $id('t2')]);
 	});
 
@@ -30,6 +32,7 @@ describe('table.getHeaders', function () {
 
 		var target = $id('target');
 
+		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1'), $id('t2')]);
 	});
 
@@ -43,6 +46,7 @@ describe('table.getHeaders', function () {
 
 		var target = $id('target');
 
+		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1'), $id('t2'), $id('t3')]);
 	});
 
@@ -55,6 +59,7 @@ describe('table.getHeaders', function () {
 
 		var target = $id('target');
 
+		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1'), $id('t2'), $id('t3')]);
 	});
 
@@ -66,6 +71,7 @@ describe('table.getHeaders', function () {
 
 		var target = $id('target');
 
+		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);
 	});
 
@@ -77,6 +83,7 @@ describe('table.getHeaders', function () {
 
 		var target = $id('target');
 
+		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1'), $id('t2')]);
 	});
 
@@ -88,6 +95,7 @@ describe('table.getHeaders', function () {
 
 		var target = $id('target');
 
+		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1'), $id('t2'), $id('t3')]);
 
 	});
@@ -100,6 +108,7 @@ describe('table.getHeaders', function () {
 
 		var target = $id('target');
 
+		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		assert.deepEqual(axe.commons.table.getHeaders(target), []);
 
 	});

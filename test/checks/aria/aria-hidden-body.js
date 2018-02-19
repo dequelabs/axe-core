@@ -2,16 +2,10 @@ describe('aria-hidden', function () {
 	'use strict';
 
 	var node = document.getElementsByTagName('body')[0];
-
-	var checkContext = {
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
-		checkContext._data = null;
+		checkContext.reset();
 		node.removeAttribute('aria-hidden');
 	});
 

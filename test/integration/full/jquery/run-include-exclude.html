@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<title>jQuery object test</title>
+	<title>jQuery include test</title>
 	<meta charset="utf8">
 	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
 	<script src="/node_modules/mocha/mocha.js"></script>
@@ -17,20 +17,20 @@
 </head>
 <body>
 	<div id="fixture">
-		<div role="list" id="target">
-			<ol role="listitem">
+		<div id="target">
+			<ol role="dinosaur">
 			  <div>
 					<a href="#somethin">Stuff</a>
 				</div>
 			</ol>
-			<ul role="listitem">
+			<ul role="mary-poppins">
 				<span>Different stuff</span>
 			</ul>
 		</div>
 	</div>
 <div id="mocha"></div>
 <script src="/node_modules/jquery/dist/jquery.js"></script>
-<script src="a11ycheck-object.js"></script>
+<script src="run-include-exclude.js"></script>
 <script src="/test/integration/adapter.js"></script>
 </body>
 </html>
