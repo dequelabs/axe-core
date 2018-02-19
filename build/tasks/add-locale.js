@@ -1,8 +1,33 @@
 /*jshint node: true */
 'use strict';
+var clone = require('clone');
 var buildManual = require('../build-manual');
 
 module.exports = function (grunt) {
+  function mergeMessages (newMessages, oldMessages) {
+    Object.keys(newMessages).forEach(function (key) {
+      if (!oldMessages.hasOwnProperty(key)) {
+        return;
+      }
+
+      var newValue = newMessages[key];
+      var oldValue = oldMessages[key];
+
+      if (typeof newValue === 'object') {
+        // the message format might be changed, ignore old message
+        if (typeof oldValue !== 'object') {
+          return;
+        }
+
+        newMessages[key] = mergeMessages(clone(newValue), oldValue);
+      } else {
+        newMessages[key] = clone(oldValue);
+      }
+    });
+
+    return newMessages;
+  }
+
   grunt.registerMultiTask('add-locale',
   'Task for localizing messages in rules and checks',
   function () {
@@ -42,6 +67,15 @@ module.exports = function (grunt) {
             return out;
           }, {})
         };
+
+        // update locale file if exists
+        var localeFile = './locales/' + options.lang + '.json';
+        if (grunt.file.exists(localeFile)) {
+          var oldMessages = grunt.file.readJSON(localeFile);
+
+          // mergeMessages mutates out
+          mergeMessages(out, oldMessages);
+        }
 
         grunt.file.write(file.dest, JSON.stringify(out, null, '  '));
         console.log('created file at', file.dest);
