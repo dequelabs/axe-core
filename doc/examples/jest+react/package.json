@@ -8,21 +8,21 @@
     "organization": "Deque Systems, Inc.",
     "url": "http://deque.com/"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "scripts": {
     "test": "jest"
   },
   "devDependencies": {
-    "axe-core": "^2.2.3",
-    "babel-jest": "^20.0.3",
+    "axe-core": "^2.6.1",
+    "babel-jest": "^22.4.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "enzyme": "^2.8.2",
-    "jest": "^20.0.4",
-    "jest-cli": "^20.0.4",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-test-renderer": "^15.5.4"
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "jest": "^22.4.0",
+    "jest-cli": "^22.4.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-test-renderer": "^16.2.0"
   }
 }
