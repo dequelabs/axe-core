@@ -3,21 +3,21 @@
 <head>
 	<meta charset="utf-8">
 	<title>Example Mocha Test</title>
-	<link rel="stylesheet" href="../node_modules/grunt-mocha/node_modules/mocha/mocha.css" type="text/css" charset="utf-8" />
+	<link rel="stylesheet" href="../node_modules/mocha/mocha.css" type="text/css" charset="utf-8" />
 </head>
 <body>
 	<!-- Required for browser reporter -->
 	<div id="mocha"></div>
 
-	<script src="../node_modules/grunt-mocha/node_modules/mocha/mocha.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../node_modules/mocha/mocha.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../node_modules/chai/chai.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../node_modules/axe-core/axe.min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
 		mocha.setup('bdd');
 		var expect = chai.expect;
 	</script>
 
 	<!-- Include aXe -->
-	<script src="../node_modules/axe-core/axe.min.js" type="text/javascript" charset="utf-8"></script>
 
 	<!-- Spec files -->
 	<script src="a11y.js" type="text/javascript" charset="utf-8"></script>
