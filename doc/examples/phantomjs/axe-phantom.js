@@ -10,6 +10,8 @@ if (args.length < 2) {
 	phantom.exit(1);
 }
 
+console.log('Testing, please wait...')
+
 page.open(args[1], function (status) {
 	// Check for page load success
 	if (status !== 'success') {
@@ -37,9 +39,13 @@ page.open(args[1], function (status) {
 		if (args[2]) {
 			fs.write(args[2], JSON.stringify(msg, null, '  '), 'w');
 		} else {
-			console.log(JSON.stringify(msg, null, '  '));
+			if (msg.violations.length) {
+				console.log(JSON.stringify(msg.violations, null, '  '));
+			} else {
+				console.log('No violations found!')
+			}
 		}
 
-		phantom.exit();
+		phantom.exit(msg.violations.length);
 	};
 });
