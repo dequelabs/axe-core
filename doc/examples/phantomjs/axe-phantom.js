@@ -10,7 +10,7 @@ if (args.length < 2) {
 	phantom.exit(1);
 }
 
-console.log('Testing, please wait...')
+console.log('Testing, please wait...');
 
 page.open(args[1], function (status) {
 	// Check for page load success
@@ -42,7 +42,7 @@ page.open(args[1], function (status) {
 			if (msg.violations.length) {
 				console.log(JSON.stringify(msg.violations, null, '  '));
 			} else {
-				console.log('No violations found!')
+				console.log('No violations found!');
 			}
 		}
 
