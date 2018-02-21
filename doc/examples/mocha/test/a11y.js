@@ -1,6 +1,7 @@
 /* global describe, it, expect, axe, document */
 
 describe('axe', function () {
+	/* jshint expr: true */
 	'use strict';
 
 	it('should report that good HTML is good', function (done) {
