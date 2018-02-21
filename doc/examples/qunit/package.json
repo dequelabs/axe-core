@@ -10,12 +10,12 @@
   },
   "dependencies": {},
   "scripts": {
-    "build": "grunt"
+    "test": "grunt qunit"
   },
   "devDependencies": {
-    "axe-core": "~1.0.1",
-    "grunt": "~0.4.4",
-    "grunt-contrib-qunit": "~0.4.0",
-    "qunitjs": "~1.14.0"
+    "axe-core": "^2.6.1",
+    "grunt": "~1.0.2",
+    "grunt-contrib-qunit": "~2.0.0",
+    "qunitjs": "~2.4.1"
   }
 }
