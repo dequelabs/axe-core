@@ -2,10 +2,12 @@ describe('context test', function () {
 	'use strict';
 
 	var config = { runOnly: { type: 'rule', values: ['html-has-lang'] } };
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
+
 	before(function (done) {
 		axe.testUtils.awaitNestedLoad(done);
+		axe._tree = undefined;
 	});
-
 
 	describe('direct exclude', function () {
 
@@ -101,6 +103,17 @@ describe('context test', function () {
 				assert.isNull(err);
 				assert.lengthOf(results.violations, 0, 'violations');
 				assert.lengthOf(results.passes, 0, 'passes');
+				done();
+			});
+		});
+
+		(shadowSupported ? it : xit)
+		('should find no nodes in Shadow DOM', function (done) {
+			var sConfig = { runOnly: { type: 'rule', values: ['list', 'color-contrast'] } };
+			axe.run({ include: [['#shadow-container']], exclude: [['#shadow-host']] }, sConfig, function (err, results) {
+				assert.isNull(err);
+				assert.lengthOf(results.violations, 0, 'violations');
+				assert.lengthOf(results.passes, 2, 'passes');
 				done();
 			});
 		});

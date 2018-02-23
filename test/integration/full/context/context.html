@@ -7,7 +7,6 @@
 	<script src="/node_modules/mocha/mocha.js"></script>
 	<script src="/node_modules/chai/chai.js"></script>
 	<script src="/axe.js"></script>
-	<script src="/test/testutils.js"></script>
 	<script>
 		mocha.setup({
 			timeout: 10000,
@@ -20,7 +19,30 @@
 	<div id="frame-container">
 		<iframe id="myframe" src="frames/level1.html"></iframe>
 	</div>
+	<ul style="display: none;">
+		<p>Text</p>
+		<p>Text 2</p>
+	</ul>
+	<div id="shadow-container">
+		<p id="test-passes">Passing Text</p>
+		<div id="shadow-host"></div>
+	</div>
 	<div id="mocha"></div>
+	<script>
+	var host = document.getElementById('shadow-host');
+	var list = document.getElementsByTagName('ul')[0];
+	var shadowRoot = host.attachShadow({ mode: 'open' });
+	var shadowContent = document.createElement('div');
+	shadowContent.setAttribute('style', 'background-color: #333');
+	var content = document.createElement('p');
+	content.style.color = '#000';
+	content.textContent = 'Failing Text';
+	shadowContent.appendChild(content);
+	var shadowList = shadowContent.appendChild(list);
+	shadowList.style.display = 'block';
+	shadowRoot.appendChild(shadowContent);
+	</script>
+	<script src="/test/testutils.js"></script>
 	<script src="context.js"></script>
 	<script src="/test/integration/adapter.js"></script>
 </body>
