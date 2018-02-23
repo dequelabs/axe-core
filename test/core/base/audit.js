@@ -64,6 +64,7 @@ describe('Audit', function () {
 	afterEach(function () {
 		fixture.innerHTML = '';
 		axe._tree = undefined;
+		axe._selectCache = undefined;
 		axe.utils.getFlattenedTree = getFlattenedTree;
 	});
 
@@ -479,6 +480,54 @@ describe('Audit', function () {
 				rules: {}
 			}, function () {
 				assert.isTrue(called);
+				axe.utils.getFlattenedTree = getFlattenedTree;
+				done();
+			}, isNotCalled);
+		});
+		it('should assign the result of getFlattenedTree to axe._tree', function (done) {
+			var thing = 'honey badger';
+			var saved = axe.utils.ruleShouldRun;
+			axe.utils.ruleShouldRun = function () {
+				assert.equal(axe._tree, thing);
+				return false;
+			};
+			axe.utils.getFlattenedTree = function () {
+				return thing;
+			};
+			a.run({ include: [document] }, {}, function () {
+				axe.utils.ruleShouldRun = saved;
+				done();
+			}, isNotCalled);
+		});
+		it('should clear axe._tree', function (done) {
+			var thing = 'honey badger';
+			axe.utils.getFlattenedTree = function () {
+				return thing;
+			};
+			a.run({ include: [document] }, {
+				rules: {}
+			}, function () {
+				assert.isTrue(typeof axe._tree === 'undefined');
+				axe.utils.getFlattenedTree = getFlattenedTree;
+				done();
+			}, isNotCalled);
+		});
+		it('should assign an empty array to axe._selectCache', function (done) {
+			var saved = axe.utils.ruleShouldRun;
+			axe.utils.ruleShouldRun = function () {
+				assert.equal(axe._selectCache.length, 0);
+				return false;
+			};
+			a.run({ include: [document] }, {}, function () {
+				axe.utils.ruleShouldRun = saved;
+				done();
+			}, isNotCalled);
+		});
+		it('should clear axe._selectCache', function (done) {
+			a.run({ include: [document] }, {
+				rules: {}
+			}, function () {
+				assert.isTrue(typeof axe._selectCache === 'undefined');
 				done();
 			}, isNotCalled);
 		});

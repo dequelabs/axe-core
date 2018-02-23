@@ -3,22 +3,11 @@ describe('accesskeys', function () {
 
 	var fixture = document.getElementById('fixture');
 
-
-	var checkContext = {
-		_relatedNodes: [],
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		},
-		relatedNodes: function (rn) {
-			this._relatedNodes = rn;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		checkContext._relatedNodes = [];
-		checkContext._data = null;
+		checkContext.reset();
 	});
 
 	it('should return true and record accesskey', function () {

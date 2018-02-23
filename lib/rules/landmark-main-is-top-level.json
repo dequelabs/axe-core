@@ -1,6 +1,6 @@
 {
   "id": "landmark-main-is-top-level",
-  "selector": "main,[role=main]",
+  "selector": "main, [role=main]",
   "tags": [
 	"best-practice"
   ],

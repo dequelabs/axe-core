@@ -5,16 +5,11 @@ describe('only-listitems', function () {
 	var checkSetup = axe.testUtils.checkSetup;
 	var shadowSupport = axe.testUtils.shadowSupport;
 
-	var checkContext = {
-		_relatedNodes: [],
-		relatedNodes: function (rn) {
-			this._relatedNodes = rn;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		checkContext._relatedNodes = [];
+		checkContext.reset();
 	});
 
 	it('should return false if the list has no contents', function () {

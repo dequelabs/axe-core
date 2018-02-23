@@ -3,20 +3,13 @@ describe('aria-required-children', function () {
 
 	var fixture = document.getElementById('fixture');
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
-
-	var checkContext = {
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		}
-	};
-
+	var checkContext = axe.testUtils.MockCheckContext();
 	var checkSetup = axe.testUtils.checkSetup;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
 		axe._tree = undefined;
-		checkContext._data = null;
+		checkContext.reset();
 	});
 
 	it('should detect missing sole required child', function () {

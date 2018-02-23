@@ -2,17 +2,11 @@ describe('aria-required-attr', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-
-	var checkContext = {
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		checkContext._data = null;
+		checkContext.reset();
 	});
 
 	it('should detect missing attributes', function () {
@@ -57,4 +51,25 @@ describe('aria-required-attr', function () {
 		axe.commons.aria.requiredAttr = orig;
 	});
 
+	describe('options', function () {
+		it('should require provided attribute names for a role', function () {
+			axe.commons.aria.lookupTable.role.mccheddarton = {
+				type: 'widget',
+				attributes: {
+					required: ['aria-valuemax']
+				},
+				owned: null,
+				nameFrom: ['author'],
+				context: null
+			};
+			fixture.innerHTML = '<div role="mccheddarton" id="target"></div>';
+			var target = fixture.children[0];
+			var options = {
+				'mccheddarton': ['aria-snuggles']
+			};
+			assert.isFalse(checks['aria-required-attr'].evaluate.call(checkContext, target, options));
+			assert.deepEqual(checkContext._data, ['aria-snuggles', 'aria-valuemax']);
+			delete axe.commons.aria.lookupTable.role.mccheddarton;
+		});
+	});
 });

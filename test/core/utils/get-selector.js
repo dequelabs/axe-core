@@ -194,6 +194,20 @@ describe('axe.utils.getSelector', function () {
 		assert.equal(result[0], node);
 	});
 
+	it('should work on complex namespaced elements', function () {
+		fixture.innerHTML = '<m:math xmlns:m="http://www.w3.org/1998/Math/MathML">' +
+		  '<m:mi>x</m:mi>' +
+		  '<m:annotation-xml encoding="MathML-Content">' +
+		    '<m:ci>x</m:ci>' +
+		  '</m:annotation-xml>' +
+		'</m:math>';
+		var node = fixture.querySelector('m\\:ci');
+		var sel = axe.utils.getSelector(node);
+		var result = document.querySelectorAll(sel);
+		assert.lengthOf(result, 1);
+		assert.equal(result[0], node);
+	});
+
 	it('shouldn\'t fail if the node\'s parentNode doesnt have children, somehow (Firefox bug)', function () {
 		var sel = axe.utils.getSelector({
 			nodeName: 'a',

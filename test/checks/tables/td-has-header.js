@@ -3,21 +3,11 @@ describe('td-has-header', function () {
 
 	var fixture = document.getElementById('fixture');
 	var shadowSupport = axe.testUtils.shadowSupport.v1;
-	var checkContext = {
-		_relatedNodes: [],
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		},
-		relatedNodes: function (rn) {
-			this._relatedNodes = rn;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		checkContext._relatedNodes = [];
-		checkContext._data = null;
+		checkContext.reset();
 		axe._tree = null;
 	});
 

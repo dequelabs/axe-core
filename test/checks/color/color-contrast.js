@@ -2,22 +2,15 @@ describe('color-contrast', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-
-	var checkContext = {
-		_relatedNodes: [],
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		},
-		relatedNodes: function (rn) {
-			this._relatedNodes = rn;
-		}
-	};
+	var fixtureSetup = axe.testUtils.fixtureSetup;
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
+	var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		checkContext._relatedNodes = [];
-		checkContext._data = null;
+		checkContext.reset();
+		axe._tree = undefined;
 	});
 
 	it('should return the proper values stored in data', function () {
@@ -92,6 +85,33 @@ describe('color-contrast', function () {
 			'My text</div>';
 		var target = fixture.querySelector('#target');
 		assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
+	it('should return true for inline elements with sufficient contrast spanning multiple lines', function () {
+		fixture.innerHTML = '<p>Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>';
+		var target = fixture.querySelector('#target');
+		if (window.PHANTOMJS) {
+			assert.ok('PhantomJS is a liar');
+		} else {
+			assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
+			assert.deepEqual(checkContext._relatedNodes, []);
+		}
+	});
+
+	it('should return undefined for inline elements spanning multiple lines that are overlapped', function () {
+		fixture.innerHTML = '<div style="position:relative;"><div style="background-color:rgba(0,0,0,1);position:absolute;width:300px;height:200px;"></div>' +
+		'<p>Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p></div>';
+		var target = fixture.querySelector('#target');
+		assert.isUndefined(checks['color-contrast'].evaluate.call(checkContext, target));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
+	it('should return true for inline elements with sufficient contrast', function () {
+		fixture.innerHTML = '<p>Text oh heyyyy <b id="target">and here\'s bold text</b></p>';
+		var target = fixture.querySelector('#target');
+		var result = checks['color-contrast'].evaluate.call(checkContext, target);
+		assert.isTrue(result);
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
 
@@ -179,11 +199,16 @@ describe('color-contrast', function () {
 	});
 
 	it('should return true when a label wraps a text input', function () {
-		fixture.innerHTML = '<label id="target">' +
-			'My text <input type="text"></label>';
+		fixtureSetup('<label id="target">' +
+			'My text <input type="text"></label>');
 		var target = fixture.querySelector('#target');
-		var result = checks['color-contrast'].evaluate.call(checkContext, target);
-		assert.isTrue(result);
+		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], target);
+		if (window.PHANTOMJS) {
+			assert.ok('PhantomJS is a liar');
+		} else {
+			var result = checks['color-contrast'].evaluate.call(checkContext, target, {}, virtualNode);
+			assert.isTrue(result);
+		}
 	});
 
 	it('should return true when a label wraps a text input but doesn\'t overlap', function () {
@@ -197,6 +222,7 @@ describe('color-contrast', function () {
 	it('should return true when there is sufficient contrast based on thead', function () {
 		fixture.innerHTML = '<table><thead style="background: #d00d2c"><tr><th id="target" style="color: #fff; padding: .5em">Col 1</th></tr></thead></table>';
 		var target = fixture.querySelector('#target');
+		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
@@ -204,6 +230,7 @@ describe('color-contrast', function () {
 	it('should return true when there is sufficient contrast based on tbody', function () {
 		fixture.innerHTML = '<table><tbody style="background: #d00d2c"><tr><td id="target" style="color: #fff; padding: .5em">Col 1</td></tr></tbody></table>';
 		var target = fixture.querySelector('#target');
+		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		assert.isTrue(checks['color-contrast'].evaluate.call(checkContext, target));
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
@@ -252,5 +279,17 @@ describe('color-contrast', function () {
 			checkContext._relatedNodes[0],
 			document.querySelector('#background')
 		);
+	});
+
+	(shadowSupported ? it : xit)
+	('returns colors across Shadow DOM boundaries', function () {
+		var params = shadowCheckSetup(
+			'<div id="container" style="background-color:black;"></div>',
+			'<p style="color: #333;" id="target">Text</p>'
+		);
+		var container = fixture.querySelector('#container');
+		var result = checks['color-contrast'].evaluate.apply(checkContext, params);
+		assert.isFalse(result);
+		assert.deepEqual(checkContext._relatedNodes, [container]);
 	});
 });

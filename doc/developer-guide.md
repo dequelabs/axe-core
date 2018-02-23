@@ -148,7 +148,8 @@ Occasionally, you may want to add additional information about why a Check passe
 // aria-valid-attr check
 "messages": {
   "pass": "ARIA attributes are used correctly for the defined role",
-  "fail": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}"
+  "fail": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}",
+  "incomplete": "axe-core couldn't tell because of {{it.data.missingData}}"
 }
 ```
 
@@ -220,6 +221,21 @@ structure for a virtualNode is as follows:
 
 Core Utilities are an internal library that provides aXe with functionality used throughout its core processes. Most notably among these are the queue function and the DqElement constructor.
 
+#### ARIA Lookup Tables
+
+axe.commons.aria provides a namespace for ARIA-related utilities, including a lookupTable for attributes and roles.
+
+* `axe.commons.aria.lookupTable.attributes`
+* `axe.commons.aria.lookupTable.globalAttributes`
+* `axe.commons.aria.lookupTable.role`
+
+#### Common Utility Functions
+
+In addition to the ARIA lookupTable, there are also utility functions on the axe.commons.aria and axe.commons.dom namespaces:
+
+* `axe.commons.aria.implicitRole` - Get the implicit role for a given node
+* `axe.commons.aria.label` - Gets the accessible ARIA label text of a given element
+* `axe.commons.dom.isVisible` - Determine whether an element is visible
 
 #### Queue Function
 
