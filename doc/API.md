@@ -423,7 +423,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 
 	This example includes all level A rules except for valid-lang, and in addition will include the level AA color-contrast rule.
 
-5. Run only some tags, bug exclude others
+5. Run only some tags, but exclude others
 
 	Similar to scope, the runOnly option can accept an object with an 'include' and 'exclude' property. Only those checks that match an included tag will run, except those that share a tag from the exclude list.
 	```javascript
