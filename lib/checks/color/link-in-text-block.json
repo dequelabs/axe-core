@@ -4,8 +4,8 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "Links can be distinguished from surrounding text in a way that does not rely on color",
-      "fail": "Links can not be distinguished from surrounding text in a way that does not rely on color",
+      "pass": "Links can be distinguished from surrounding text in some way other than by color",
+      "fail": "Links need to be distinguished from surrounding text in some way other than by color",
       "incomplete": {
         "bgContrast": "Element's contrast ratio could not be determined. Check for a distinct hover/focus style",
         "bgImage": "Element's contrast ratio could not be determined due to a background image",
