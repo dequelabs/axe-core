@@ -6,6 +6,8 @@ describe('DqElement', function () {
 
 	afterEach(function () {
 		fixture.innerHTML = '';
+		axe._tree = undefined;
+		axe._selectorData = undefined;
 	});
 
 	it('should be a function', function () {
@@ -31,6 +33,7 @@ describe('DqElement', function () {
 
 		it('should not be present in stringified version', function () {
 			var div = document.createElement('div');
+			axe._tree = axe.utils.getFlattenedTree(document.documentElement);
 			var dqEl = new DqElement(div);
 
 			assert.isUndefined(JSON.parse(JSON.stringify(dqEl)).element);
@@ -137,6 +140,7 @@ describe('DqElement', function () {
 	describe('absolutePaths', function () {
 		it('creates a path all the way to root', function () {
 			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
+			axe._tree = axe.utils.getFlattenedTree(document.documentElement);
 			var result = new DqElement(fixture.firstChild, {
 				absolutePaths: true
 			});
