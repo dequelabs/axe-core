@@ -91,6 +91,21 @@ describe('axe.run', function () {
 		});
 	});
 
+	it('should clear axe._tree', function (done) {
+		var getFlattenedTree = axe.utils.getFlattenedTree;
+		var thing = 'honey badger';
+		axe.utils.getFlattenedTree = function () {
+			return thing;
+		};
+		axe._runRules = function () {
+			assert.isTrue(typeof axe._tree === 'undefined');
+			axe.utils.getFlattenedTree = getFlattenedTree;
+			done();
+		};
+
+		axe.run({ someOption: true }, noop);
+	});
+
 	describe('callback', function () {
 		it('gives errors to the first argument on the callback', function (done) {
 			axe._runRules = function (ctxt, opt, resolve, reject) {

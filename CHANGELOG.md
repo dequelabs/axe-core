@@ -1,3 +1,22 @@
+<a name="3.0.0-beta.2"></a>
+# [3.0.0-beta.2](https://github.com/dequelabs/axe-core/compare/v3.0.0-alpha.9...v3.0.0-beta.2) (2018-03-01)
+
+
+### Bug Fixes
+
+* **perf:** Improve getSelector performance ([737c81c](https://github.com/dequelabs/axe-core/commit/737c81c))
+* Delete Selenium example, use grunt-axe-selenium instead ([063e701](https://github.com/dequelabs/axe-core/commit/063e701))
+
+
+### Features
+
+* Update Jasmin example ([72d49d5](https://github.com/dequelabs/axe-core/commit/72d49d5))
+* Update Jest+React example ([5b35322](https://github.com/dequelabs/axe-core/commit/5b35322))
+* Update Mocha example ([cf70f9f](https://github.com/dequelabs/axe-core/commit/cf70f9f))
+* Update PhantomJS example ([641b5e6](https://github.com/dequelabs/axe-core/commit/641b5e6))
+* Update QUnit example ([028ae51](https://github.com/dequelabs/axe-core/commit/028ae51))
+
+
 # Change Log
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.

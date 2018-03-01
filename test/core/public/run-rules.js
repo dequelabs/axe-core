@@ -72,6 +72,7 @@ describe('runRules', function () {
 
 		frame.addEventListener('load', function () {
 			setTimeout(function () {
+				axe._tree = axe.utils.getFlattenedTree(document);
 				runRules(document, {}, function (r) {
 					assert.lengthOf(r[0].passes, 3);
 					done();
@@ -96,6 +97,7 @@ describe('runRules', function () {
 		var frame = document.createElement('iframe');
 		frame.addEventListener('load', function () {
 			setTimeout(function () {
+				axe._tree = axe.utils.getFlattenedTree(document);
 				runRules(document, {}, function (r) {
 					var nodes = r[0].passes.map(function (detail) {
 						return detail.node.selector;
@@ -154,6 +156,7 @@ describe('runRules', function () {
 			var div = document.createElement('div');
 			fixture.appendChild(div);
 
+			axe._tree = axe.utils.getFlattenedTree(document);
 			runRules('#fixture', {}, function (results) {
 				assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
@@ -229,6 +232,7 @@ describe('runRules', function () {
 		});
 
 		iframeReady('../mock/frames/context.html', fixture, 'context-test', function () {
+			axe._tree = axe.utils.getFlattenedTree(document);
 			runRules('#not-happening', {}, function () {
 				assert.fail('This selector should not exist.');
 			}, function (error) {

@@ -1,21 +1,19 @@
 {
-  "name": "axe-mocha-example",
+  "name": "axe-phantomjs-example",
   "description": "aXe Mocha Example",
   "version": "0.0.1",
   "private": true,
   "author": {
-    "name": "David Sturley",
+    "name": "Wlico Fiers",
     "organization": "Deque Systems, Inc.",
     "url": "http://deque.com/"
   },
   "dependencies": {},
   "scripts": {
-    "test": "grunt mocha"
+    "test": "phantomjs axe-phantom.js http://www.deque.com"
   },
   "devDependencies": {
     "axe-core": "^2.6.1",
-    "chai": "~4.1.2",
-    "grunt": "~1.0.2",
-    "grunt-mocha": "1.0.0"
+    "phantomjs": "^2.1.7"
   }
 }

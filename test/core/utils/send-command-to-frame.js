@@ -5,6 +5,8 @@ describe('axe.utils.sendCommandToFrame', function () {
 
 	afterEach(function () {
     fixture.innerHTML = '';
+    axe._tree = undefined;
+    axe._selectorData = undefined;
   });
 
   var assertNotCalled = function () {
@@ -25,6 +27,7 @@ describe('axe.utils.sendCommandToFrame', function () {
 
     var frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
+      axe._tree = axe.utils.getFlattenedTree(document.documentElement);
       axe.utils.sendCommandToFrame(frame, {}, function (result) {
         assert.equal(result, null);
         done();
@@ -81,7 +84,7 @@ describe('axe.utils.sendCommandToFrame', function () {
   });
 
   it('should respond once when no keepalive', function (done) {
-    var number = 2;
+    var number = 1;
     var called = 0;
     var frame = document.createElement('iframe');
     frame.addEventListener('load', function () {
@@ -90,16 +93,13 @@ describe('axe.utils.sendCommandToFrame', function () {
       }, function () {
         called += 1;
         if (called === number) {
-          clearTimeout(timer);
-          assert.isTrue(false);
+          assert.isTrue(true);
           done();
+        } else {
+          throw new Error ('should not have been called');
         }
       }, assertNotCalled);
     });
-    var timer = setTimeout(function () {
-      assert.isTrue(true);
-      done();
-    }, 150);
 
     frame.id = 'level0';
     frame.src = '../mock/frames/responder.html';
