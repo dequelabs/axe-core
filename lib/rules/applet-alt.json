@@ -1,0 +1,20 @@
+{
+  "id": "applet-alt",
+  "selector": "applet",
+  "tags": [
+    "cat.text-alternatives",
+    "wcag2a",
+    "wcag111"
+  ],
+  "metadata": {
+    "description": "Label an applet by using the alt/labelledby/label text alternative and provide a text alternative in the body of the applet element",
+    "help": "Applet must have text alternative"
+  },
+  "all": ["has-visible-text"],
+  "any": [
+        "aria-labelledby",
+        "applet-alt",
+        "aria-label"
+  ],
+  "none": []
+}
