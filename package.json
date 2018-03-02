@@ -83,7 +83,6 @@
     "grunt-retire": "^1.0.7",
     "html-entities": "^1.2.0",
     "jquery": "^3.0.0",
-    "less": "~2.6.1",
     "mocha": "^3.2.0",
     "promise": "~7.1.1",
     "revalidator": "~0.3.1",

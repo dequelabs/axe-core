@@ -3,7 +3,6 @@
 
 var path = require('path');
 var templates = require('./templates');
-var less = require('less');
 var Promise = require('promise');
 
 module.exports = function build(grunt, options, commons, callback) {
@@ -26,23 +25,6 @@ module.exports = function build(grunt, options, commons, callback) {
 		});
 	}
 
-	function parseStyle(src, callback) {
-		Promise
-			.all(grunt.file.expand(src).map(function(file) {
-				return new Promise(function(resolve, reject) {
-					less.render(grunt.file.read(file), function(err, result) {
-						if (err) {
-							return reject(err);
-						}
-						resolve(result.css);
-					});
-				});
-			}))
-			.then(function(values) {
-				callback(values.join('\n'));
-			});
-	}
-
 	function getSource(file, type) {
 		return grunt.template.process(templates[type], {
 			data: {
@@ -51,17 +33,11 @@ module.exports = function build(grunt, options, commons, callback) {
 		});
 	}
 
-	parseStyle(options.style, function(styles) {
-
-		callback({
-			rules: parseObject(options.rules),
-			checks: parseObject(options.checks),
-			tools: parseObject(options.tools),
-			misc: parseObject(options.misc),
-			commons: commons,
-			style: styles
-		});
-
+	callback({
+		rules: parseObject(options.rules),
+		checks: parseObject(options.checks),
+		tools: parseObject(options.tools),
+		misc: parseObject(options.misc),
+		commons: commons
 	});
-
 };

@@ -35,7 +35,6 @@ module.exports = function (grunt) {
       rules: ['lib/rules/**/*.json'],
       checks: ['lib/checks/**/*.json'],
       tools: ['lib/tools/**/*.json'],
-      style: ['lib/**/*.less'],
       misc: ['lib/misc/**/*.json'],
       blacklist: ['metadata'],
       tags: '',

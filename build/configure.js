@@ -181,8 +181,7 @@ function buildRules(grunt, options, commons, callback) {
 				rules: rules,
 				checks: checks,
 				commons: result.commons,
-				tools: result.tools,
-				style: result.style
+				tools: result.tools
 			}, blacklist)),
 			descriptions: descriptionHeaders + descriptions.map(function (row) {
 				return '| ' + row.join(' | ') + ' |';
