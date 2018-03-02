@@ -9,7 +9,7 @@
 		"help": "Page must contain one main landmark."
 	},
 	"all": [
-		"has-at-least-one-main",
+		"page-has-main",
 		"has-no-more-than-one-main"
 		],
 	"any": [],
