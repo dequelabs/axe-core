@@ -3,28 +3,28 @@ describe('axe.utils.findBy', function () {
 
 	it('should find the first matching object', function () {
 		var array = [{
-				id: 'monkeys',
-				foo: 'bar'
-			}, {
-				id: 'bananas'
-			}, {
-				id: 'monkeys',
-				bar: 'baz'
-			}];
+			id: 'monkeys',
+			foo: 'bar'
+		}, {
+			id: 'bananas'
+		}, {
+			id: 'monkeys',
+			bar: 'baz'
+		}];
 
 		assert.equal(axe.utils.findBy(array, 'id', 'monkeys'), array[0]);
 	});
 
 	it('should return undefined with no match', function () {
 		var array = [{
-				id: 'monkeys',
-				foo: 'bar'
-			}, {
-				id: 'bananas'
-			}, {
-				id: 'monkeys',
-				bar: 'baz'
-			}];
+			id: 'monkeys',
+			foo: 'bar'
+		}, {
+			id: 'bananas'
+		}, {
+			id: 'monkeys',
+			bar: 'baz'
+		}];
 
 		assert.isUndefined(axe.utils.findBy(array, 'id', 'macaque'));
 

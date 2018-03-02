@@ -13,8 +13,8 @@ describe('axe.configure', function() {
 
 	it('should throw if audit is not configured', function() {
 		assert.throws(function () {
-				axe.configure({});
-	    }, Error, /^No audit configured/);
+			axe.configure({});
+		}, Error, /^No audit configured/);
 	});
 
 	it('should override an audit\'s reporter - string', function() {

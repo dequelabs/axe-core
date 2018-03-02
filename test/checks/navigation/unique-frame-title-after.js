@@ -1,3 +1,4 @@
+/*eslint indent: 0*/
 describe('unique-frame-title-after', function () {
 	'use strict';
 

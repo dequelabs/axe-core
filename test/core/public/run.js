@@ -159,6 +159,7 @@ describe('axe.run', function () {
 
 
 	describe('promise result', function () {
+		/*eslint indent: 0*/
 		it('returns an error to catch if axe fails',
 		(!window.Promise) ? undefined :  function (done) {
 			axe._runRules = function (ctxt, opt, resolve, reject) {
@@ -421,7 +422,7 @@ describe('axe.run iframes', function () {
 					return node.target.length === 1 && node.target[0] === '#target';
 				}), 'one result from top frame');
 				assert.isTrue(violation.nodes.some(function(node) {
-					return node.target.length === 2 && 
+					return node.target.length === 2 &&
 					       node.target[0] === '#fixture > iframe';
 				}), 'one result from iframe');
 				window.clearTimeout(safetyTimeout);
@@ -455,5 +456,5 @@ describe('axe.run iframes', function () {
 
 		frame.src = '../mock/frames/test.html';
 		fixture.appendChild(frame);
-	});	
+	});
 });

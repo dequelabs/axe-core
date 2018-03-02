@@ -22,27 +22,27 @@ describe('color.elementIsDistinct', function () {
 			if (defaultStyle.hasOwnProperty(prop)) {
 				styleObj[prop] = defaultStyle[prop];
 			}
-    	}
+		}
 		for (prop in outerStyle) {
 			if (outerStyle.hasOwnProperty(prop)) {
 				styleObj[prop] = outerStyle[prop];
 			}
-    	}
+		}
 
 		var cssLines = Object.keys(styleObj).map(function (prop) {
 			// Make camelCase prop dash separated
 			var cssPropName = prop.trim()
-			.split(/(?=[A-Z])/g)
-			.reduce(function (prop, propPiece) {
-				if (!prop) {
-					return propPiece;
-				} else {
-					return prop + '-' + propPiece.toLowerCase();
-				}
-			}, null);
+				.split(/(?=[A-Z])/g)
+				.reduce(function (prop, propPiece) {
+					if (!prop) {
+						return propPiece;
+					} else {
+						return prop + '-' + propPiece.toLowerCase();
+					}
+				}, null);
 
 			// Return indented line of style code
-			return '  ' + cssPropName + ':' + styleObj[prop] + ';';
+			return '	' + cssPropName + ':' + styleObj[prop] + ';';
 		}).join('\n');
 
 		// Add to the style element

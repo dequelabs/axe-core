@@ -28,12 +28,13 @@ describe('axe.utils.collectResultsFromFrames', function () {
 			var context = new Context(document);
 			axe._tree = axe.utils.getFlattenedTree(document.documentElement);
 			axe.utils.collectResultsFromFrames(context, {}, 'stuff', 'morestuff', noop,
-			function (err) {
-				assert.instanceOf(err, Error);
-				assert.equal(err.message.split(/: /)[0], 'Axe in frame timed out');
-				window.setTimeout = orig;
-				done();
-			});
+				function (err) {
+					assert.instanceOf(err, Error);
+					assert.equal(err.message.split(/: /)[0], 'Axe in frame timed out');
+					window.setTimeout = orig;
+					done();
+				}
+			);
 		});
 
 		frame.id = 'level0';
@@ -60,12 +61,13 @@ describe('axe.utils.collectResultsFromFrames', function () {
 			var params = { frameWaitTime: 90000 };
 			axe._tree = axe.utils.getFlattenedTree(document.documentElement);
 			axe.utils.collectResultsFromFrames(context, params, 'stuff', 'morestuff', noop,
-			function (err) {
-				assert.instanceOf(err, Error);
-				assert.equal(err.message.split(/: /)[0], 'Axe in frame timed out');
-				window.setTimeout = orig;
-				done();
-			});
+				function (err) {
+					assert.instanceOf(err, Error);
+					assert.equal(err.message.split(/: /)[0], 'Axe in frame timed out');
+					window.setTimeout = orig;
+					done();
+				}
+			);
 		});
 
 		frame.id = 'level0';
@@ -113,12 +115,12 @@ describe('axe.utils.collectResultsFromFrames', function () {
 			var context = new Context(document);
 			axe._tree = axe.utils.getFlattenedTree(document.documentElement);
 			axe.utils.collectResultsFromFrames(context, {}, 'command', 'params', noop,
-			function (err) {
-
-				assert.instanceOf(err, Error);
-				assert.equal(err.message.split(/\n/)[0], 'error in axe.throw');
-				done();
-			});
+				function (err) {
+					assert.instanceOf(err, Error);
+					assert.equal(err.message.split(/\n/)[0], 'error in axe.throw');
+					done();
+				}
+			);
 
 		});
 

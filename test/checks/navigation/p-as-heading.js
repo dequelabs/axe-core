@@ -157,6 +157,7 @@ describe('p-as-heading', function () {
 		});
 
 		it('returns true if none of the set margins is passed', function () {
+			/*eslint indent: 0*/
 			var options = {
 				margins: [
 					{ size: 1.2, weight: 100 },
