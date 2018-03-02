@@ -30,5 +30,9 @@
 	{
 		"path": "node_modules/growl",
 		"justification": "Temporary disabling until vuln is fixed"
+	},
+	{
+		"path": "node_modules/phantomjs-prebuilt",
+		"justification": "Temporary disabling until we switch to headless chrome"
 	}
 ]
