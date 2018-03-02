@@ -34,5 +34,29 @@
 	{
 		"path": "node_modules/phantomjs-prebuilt",
 		"justification": "Temporary disabling until we switch to headless chrome"
+	},
+	{
+		"path": "node_modules/hawk",
+		"justification": "Sub-dependency of retire.js, which is being ignored"
+	},
+	{
+		"path": "node_modules/cryptiles",
+		"justification": "Sub-dependency of retire.js, which is being ignored"
+	},
+	{
+		"path": "node_modules/sntp",
+		"justification": "Sub-dependency of retire.js, which is being ignored"
+	},
+	{
+		"path": "node_modules/boom",
+		"justification": "Sub-dependency of retire.js, which is being ignored"
+	},
+	{
+		"path": "node_modules/hoek",
+		"justification": "Sub-dependency of retire.js, which is being ignored"
+	},
+	{
+		"path": "node_modules/grunt-contrib-watch",
+		"justification": "Ignoring until a new release is out"
 	}
 ]
