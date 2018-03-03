@@ -34,8 +34,8 @@
 | input-image-alt | Ensures &lt;input type=&quot;image&quot;&gt; elements have alternate text | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | cat.forms, best-practice | true |
 | label | Ensures every form element has a label | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
-| landmark-banner-is-top-level | A banner landmark identifies site-oriented content at the beginning of each page within a website | best-practice | true |
-| landmark-contentinfo-is-top-level | A contentinfo landmark is a way to identify common information at the bottom of each page within a website | best-practice | true |
+| landmark-banner-is-top-level | The banner landmark should not be contained in another landmark | best-practice | true |
+| landmark-contentinfo-is-top-level | The contentinfo landmark should not be contained in another landmark | best-practice | true |
 | landmark-main-is-top-level | The main landmark should not be contained in another landmark | best-practice | true |
 | landmark-no-duplicate-banner | Ensures the document has no more than one banner landmark | best-practice | true |
 | landmark-no-duplicate-contentinfo | Ensures the document has no more than one contentinfo landmark | best-practice | true |
