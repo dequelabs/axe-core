@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" id="violation1">
+<head>
+	<title>landmark-banner-is-top-level test</title>
+	<meta charset="utf8">
+	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
+	<script src="/node_modules/mocha/mocha.js"></script>
+	<script src="/node_modules/chai/chai.js"></script>
+	<script src="/axe.js"></script>
+	<script>
+		mocha.setup({
+			timeout: 10000,
+			ui: 'bdd'
+		});
+		var assert = chai.assert;
+	</script>
+</head>
+<body>
+	<div role="navigation">
+		<div role="banner">
+			<p>This is going to fail</p>
+		</div>
+	</div>
+	<iframe id="frame1" src="frames/level1-fail.html"></iframe>
+	<div id="mocha"></div>
+	<script src="landmark-banner-is-top-level-fail.js"></script>
+	<script src="/test/integration/adapter.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "id": "landmark-complementary-is-top-level",
+  "selector": "aside, [role=complementary]",
+  "tags": [
+	"best-practice"
+  ],
+  "metadata": {
+    "description": "The aside element or [role=complementary] identifies content related to the main content of the page",
+    "help": "Complementary landmark must be at top level"
+  },
+  "all": [],
+  "any": [
+    "complementary-is-top-level"
+  ],
+  "none": []
+}

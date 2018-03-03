@@ -1,6 +1,6 @@
 {
   "id": "main-is-top-level",
-  "evaluate": "main-is-top-level.js",
+  "evaluate": "landmark-is-top-level.js",
   "metadata": {
     "impact": "moderate",
     "messages": {
