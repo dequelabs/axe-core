@@ -1,0 +1,16 @@
+{
+  "id": "landmark-banner-is-top-level",
+  "selector": "[role=banner], header",
+  "tags": [
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "A banner landmark identifies site-oriented content at the beginning of each page within a website",
+    "help": "Banner landmark must be at top level"
+  },
+  "all": [],
+  "any": [
+    "banner-is-top-level"
+  ],
+  "none": []
+}

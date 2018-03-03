@@ -1,0 +1,16 @@
+{
+  "id": "landmark-no-more-than-one-banner",
+  "selector": "html",
+  "tags": [
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "A banner landmark identifies site-oriented content at the beginning of each page within a website",
+    "help": "Page must not contain more than one banner landmark"
+  },
+  "all": [],
+  "any": [
+    "has-no-more-than-one-banner"
+  ],
+  "none": []
+}

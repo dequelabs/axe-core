@@ -1,0 +1,11 @@
+{
+  "id": "contentinfo-is-top-level",
+  "evaluate": "contentinfo-is-top-level.js",
+  "metadata": {
+    "impact": "moderate",
+      "messages": {
+        "pass": "Contentinfo landmark is top level or footer element is not contentinfo",
+        "fail": "Contentinfo landmark is not top level"
+        }
+    }
+}
