@@ -17,6 +17,12 @@ describe('region fail test', function () {
 		it('should find html', function () {
 			assert.deepEqual(results.violations[0].nodes[0].target, ['html']);
 		});
+
+		it('should have all text content as related nodes', function () {
+			var wrapper = document.querySelector('#wrapper');
+			assert.equal(results.violations[0].nodes[0].any[0].relatedNodes.length,
+				wrapper.querySelectorAll('h1, li, p, a').length);
+		});
 	});
 
 	describe('passes', function () {
