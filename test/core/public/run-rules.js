@@ -380,72 +380,72 @@ describe('runRules', function () {
 		fixture.innerHTML = '<div id="target">Target!</div><div>ok</div>';
 		runRules('#fixture', {}, function (results) {
 			assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
-					id: 'div#target',
-					helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/div#target?application=axeAPI',
-					pageLevel: false,
-					foo: 'bar',
-					stuff: 'blah',
-					impact: 'moderate',
-					passes: [],
-					inapplicable: [],
-					incomplete: [],
-					violations: [{
-						result: 'failed',
-						node: {
-							selector: ['#target'],
-							xpath: ['/div[@id=\'target\']'],
-							source: '<div id="target">Target!</div>'
-						},
-						impact: 'moderate',
-						any: [{
-							impact: 'moderate',
-							otherThingy: true,
-							message: 'failing is not good',
-							id: 'has-target',
-							data: null,
-							relatedNodes: []
-						}],
-						all: [],
-						none: []
-					}],
+				id: 'div#target',
+				helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/div#target?application=axeAPI',
+				pageLevel: false,
+				foo: 'bar',
+				stuff: 'blah',
+				impact: 'moderate',
+				passes: [],
+				inapplicable: [],
+				incomplete: [],
+				violations: [{
 					result: 'failed',
-					tags: []
-				}, {
-					id: 'first-div',
-					helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/first-div?application=axeAPI',
-					pageLevel: false,
-					bar: 'foo',
-					stuff: 'no',
+					node: {
+						selector: ['#target'],
+						xpath: ['/div[@id=\'target\']'],
+						source: '<div id="target">Target!</div>'
+					},
+					impact: 'moderate',
+					any: [{
+						impact: 'moderate',
+						otherThingy: true,
+						message: 'failing is not good',
+						id: 'has-target',
+						data: null,
+						relatedNodes: []
+					}],
+					all: [],
+					none: []
+				}],
+				result: 'failed',
+				tags: []
+			}, {
+				id: 'first-div',
+				helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/first-div?application=axeAPI',
+				pageLevel: false,
+				bar: 'foo',
+				stuff: 'no',
+				impact: null,
+				inapplicable: [],
+				incomplete: [],
+				violations: [],
+				passes: [{
+					result: 'passed',
 					impact: null,
-					inapplicable: [],
-					incomplete: [],
-					violations: [],
-					passes: [{
-						result: 'passed',
-						impact: null,
-						node: {
+					node: {
+						selector: ['#target'],
+						xpath: ['/div[@id=\'target\']'],
+						source: '<div id="target">Target!</div>'
+					},
+					any: [{
+						impact: 'serious',
+						id: 'first-div',
+						thingy: true,
+						message: 'passing is good',
+						data: null,
+						relatedNodes: [{
 							selector: ['#target'],
 							xpath: ['/div[@id=\'target\']'],
 							source: '<div id="target">Target!</div>'
-						},
-						any: [{
-							impact: 'serious',
-							id: 'first-div',
-							thingy: true,
-							message: 'passing is good',
-							data: null,
-							relatedNodes: [{
-								selector: ['#target'],
-								xpath: ['/div[@id=\'target\']'],
-								source: '<div id="target">Target!</div>'
-							}]
-						}],
-						all: [],
-						none: []
+						}]
 					}],
-					result: 'passed',
-					tags: []
-				}]);
+					all: [],
+					none: []
+				}],
+				result: 'passed',
+				tags: []
+			}]);
 			done();
 		}, isNotCalled);
 	});
@@ -502,7 +502,7 @@ describe('runRules', function () {
 			assert.equal(results.incomplete[1].id, 'incomplete-2');
 
 			assert.include(results.incomplete[1].description,
-						'An error occured while running this rule');
+				'An error occured while running this rule');
 			done();
 		});
 	});
@@ -539,7 +539,7 @@ describe('runRules', function () {
 				assert.equal(results.incomplete[1].id, 'incomplete-2');
 
 				assert.include(results.incomplete[1].description,
-							'An error occured while running this rule');
+					'An error occured while running this rule');
 				done();
 			});
 		});

@@ -130,7 +130,7 @@ describe('axe.utils.select', function () {
 			'<div id="two"><div id="target2" class="bananas"></div></div></div>';
 
 		var result = axe.utils.select('.bananas', { include: [axe.utils.getFlattenedTree($id('zero'))[0],
-				axe.utils.getFlattenedTree($id('one'))[0]] });
+			axe.utils.getFlattenedTree($id('one'))[0]] });
 
 		assert.deepEqual(result.map(function (n) { return n.actualNode; }),
 			[$id('target1'), $id('target2')]);

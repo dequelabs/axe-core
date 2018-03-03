@@ -200,6 +200,7 @@ describe('axe.utils.queue', function () {
 		});
 
 		it('is called when the reject method is called', function (done) {
+			/*eslint no-unused-vars: 0*/
 			var q = axe.utils.queue();
 			var errorsCaught = 0;
 

@@ -1,0 +1,69 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "globals": {
+    "axe": true
+  },
+  "rules": {
+    "no-bitwise": 2,
+    "camelcase": 2,
+    "curly": 2,
+    "eqeqeq": 2,
+    "guard-for-in": 2,
+    "wrap-iife": [
+      2,
+      "any"
+    ],
+    "no-use-before-define": [
+      2,
+      {
+        "functions": false
+      }
+    ],
+    "new-cap": 2,
+    "no-caller": 2,
+    "no-empty": 2,
+    "no-new": 2,
+    "no-plusplus": 0,
+    "no-undef": 2,
+    "no-unused-vars": 2,
+    "strict": 0,
+    "max-params": [
+      2,
+      6
+    ],
+    "max-depth": [
+      2,
+      5
+    ],
+    "max-statements": [
+      2,
+      16
+    ],
+    "max-len": [
+      2,
+      {
+        "code": 120,
+        "ignoreComments": true
+      }
+    ],
+    "semi": 0,
+    "no-cond-assign": 0,
+    "no-debugger": 0,
+    "no-eq-null": 0,
+    "no-eval": 0,
+    "no-unused-expressions": 0,
+    "block-scoped-var": 0,
+    "no-iterator": 0,
+    "linebreak-style": 0,
+    "no-loop-func": 0,
+    "no-multi-str": 0,
+    "no-proto": 0,
+    "no-script-url": 0,
+    "dot-notation": 2,
+    "no-new-func": 0,
+    "no-new-wrappers": 0
+  }
+}

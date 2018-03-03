@@ -85,6 +85,7 @@ describe('DqElement', function () {
 	describe('selector', function () {
 
 		it('should call axe.utils.getSelector', function () {
+			/*eslint no-unused-vars: 0*/
 			var orig = axe.utils.getSelector;
 			var success = false;
 			var expected = { monkeys: 'bananas' };
@@ -113,6 +114,7 @@ describe('DqElement', function () {
 
 	describe('xpath', function () {
 		it('should call axe.utils.getXpath', function () {
+			/*eslint no-unused-vars: 0*/
 			var orig = axe.utils.getXpath;
 			var success = false;
 			var expected = { monkeys: 'bananas' };

@@ -70,50 +70,50 @@ describe('axe.utils.checkHelper', function () {
 			});
 			it('should accept NodeList', function () {
 				fixture.innerHTML = '<div id="t1"></div><div id="t2"></div>';
-					var target = {},
-						helper = axe.utils.checkHelper(target, noop);
-					helper.relatedNodes(fixture.children);
-					assert.lengthOf(target.relatedNodes, 2);
-					assert.instanceOf(target.relatedNodes[0], DqElement);
-					assert.instanceOf(target.relatedNodes[1], DqElement);
-					assert.equal(target.relatedNodes[0].element, fixture.children[0]);
-					assert.equal(target.relatedNodes[1].element, fixture.children[1]);
+				var target = {},
+					helper = axe.utils.checkHelper(target, noop);
+				helper.relatedNodes(fixture.children);
+				assert.lengthOf(target.relatedNodes, 2);
+				assert.instanceOf(target.relatedNodes[0], DqElement);
+				assert.instanceOf(target.relatedNodes[1], DqElement);
+				assert.equal(target.relatedNodes[0].element, fixture.children[0]);
+				assert.equal(target.relatedNodes[1].element, fixture.children[1]);
 			});
 			it('should accept a single Node', function () {
 				fixture.innerHTML = '<div id="t1"></div><div id="t2"></div>';
-					var target = {},
-						helper = axe.utils.checkHelper(target, noop);
-					helper.relatedNodes(fixture.firstChild);
-					assert.lengthOf(target.relatedNodes, 1);
-					assert.instanceOf(target.relatedNodes[0], DqElement);
-					assert.equal(target.relatedNodes[0].element, fixture.firstChild);
+				var target = {},
+					helper = axe.utils.checkHelper(target, noop);
+				helper.relatedNodes(fixture.firstChild);
+				assert.lengthOf(target.relatedNodes, 1);
+				assert.instanceOf(target.relatedNodes[0], DqElement);
+				assert.equal(target.relatedNodes[0].element, fixture.firstChild);
 			});
 			it('should accept an Array', function () {
 				fixture.innerHTML = '<div id="t1"></div><div id="t2"></div>';
-					var target = {},
-						helper = axe.utils.checkHelper(target, noop);
-					helper.relatedNodes(Array.prototype.slice.call(fixture.children));
-					assert.lengthOf(target.relatedNodes, 2);
-					assert.instanceOf(target.relatedNodes[0], DqElement);
-					assert.instanceOf(target.relatedNodes[1], DqElement);
-					assert.equal(target.relatedNodes[0].element, fixture.children[0]);
-					assert.equal(target.relatedNodes[1].element, fixture.children[1]);
+				var target = {},
+					helper = axe.utils.checkHelper(target, noop);
+				helper.relatedNodes(Array.prototype.slice.call(fixture.children));
+				assert.lengthOf(target.relatedNodes, 2);
+				assert.instanceOf(target.relatedNodes[0], DqElement);
+				assert.instanceOf(target.relatedNodes[1], DqElement);
+				assert.equal(target.relatedNodes[0].element, fixture.children[0]);
+				assert.equal(target.relatedNodes[1].element, fixture.children[1]);
 			});
 			it('should accept an array-like Object', function () {
 				fixture.innerHTML = '<div id="t1"></div><div id="t2"></div>';
-					var target = {},
-						helper = axe.utils.checkHelper(target, noop);
-					var nodes = {
-						0: fixture.children[0],
-						1: fixture.children[1],
-						length: 2
-					};
-					helper.relatedNodes(nodes);
-					assert.lengthOf(target.relatedNodes, 2);
-					assert.instanceOf(target.relatedNodes[0], DqElement);
-					assert.instanceOf(target.relatedNodes[1], DqElement);
-					assert.equal(target.relatedNodes[0].element, fixture.children[0]);
-					assert.equal(target.relatedNodes[1].element, fixture.children[1]);
+				var target = {},
+					helper = axe.utils.checkHelper(target, noop);
+				var nodes = {
+					0: fixture.children[0],
+					1: fixture.children[1],
+					length: 2
+				};
+				helper.relatedNodes(nodes);
+				assert.lengthOf(target.relatedNodes, 2);
+				assert.instanceOf(target.relatedNodes[0], DqElement);
+				assert.instanceOf(target.relatedNodes[1], DqElement);
+				assert.equal(target.relatedNodes[0].element, fixture.children[0]);
+				assert.equal(target.relatedNodes[1].element, fixture.children[1]);
 			});
 		});
 

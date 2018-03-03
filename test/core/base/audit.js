@@ -691,6 +691,7 @@ describe('Audit', function () {
 	});
 	describe('Audit#after', function () {
 		it('should run Rule#after on any rule whose result is passed in', function () {
+			/*eslint no-unused-vars:0*/
 			var audit = new Audit();
 			var success = false;
 			var options = [{ id: 'hehe', enabled: true, monkeys: 'bananas' }];

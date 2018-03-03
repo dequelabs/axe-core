@@ -48,37 +48,37 @@
 							});
 
 							test[collection]
-							.forEach(function (selector) {
-								it('should find ' + JSON.stringify(selector), function () {
-									if (!nodes) {
-										assert(false, 'there are no ' + collection);
-										return;
-									}
+  							.forEach(function (selector) {
+  								it('should find ' + JSON.stringify(selector), function () {
+  									if (!nodes) {
+  										assert(false, 'there are no ' + collection);
+  										return;
+  									}
 
-									var matches = nodes.filter(function (node) {
-										for (var i=0; i < selector.length; i++) {
-											if (node.target[i] !== selector[i]) {
-												return false;
-											}
-										}
-										return node.target.length === selector.length;
-									});
-									matches.forEach(function (node) {
-										// remove each node we find
-										nodes.splice(nodes.indexOf(node), 1);
-									});
+  									var matches = nodes.filter(function (node) {
+  										for (var i=0; i < selector.length; i++) {
+  											if (node.target[i] !== selector[i]) {
+  												return false;
+  											}
+  										}
+  										return node.target.length === selector.length;
+  									});
+  									matches.forEach(function (node) {
+  										// remove each node we find
+  										nodes.splice(nodes.indexOf(node), 1);
+  									});
 
-									if (matches.length === 0) {
-										assert(false, 'Element not found');
+  									if (matches.length === 0) {
+  										assert(false, 'Element not found');
 
-									} else if (matches.length === 1) {
-										assert(true, 'Element found');
+  									} else if (matches.length === 1) {
+  										assert(true, 'Element found');
 
-									} else {
-										assert(false, 'Found ' + matches.length + ' elements which match the target');
-									}
+  									} else {
+  										assert(false, 'Found ' + matches.length + ' elements which match the target');
+  									}
+  								});
 								});
-							});
 
 							it('should not return other results', function () {
 								if (typeof nodes !== 'undefined') {

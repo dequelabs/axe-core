@@ -476,10 +476,10 @@ describe('axe.utils.getSelector', function () {
 
 	it('should work on complex namespaced elements', function () {
 		fixture.innerHTML = '<m:math xmlns:m="http://www.w3.org/1998/Math/MathML">' +
-		  '<m:mi>x</m:mi>' +
-		  '<m:annotation-xml encoding="MathML-Content">' +
-		    '<m:ci>x</m:ci>' +
-		  '</m:annotation-xml>' +
+			'<m:mi>x</m:mi>' +
+			'<m:annotation-xml encoding="MathML-Content">' +
+				'<m:ci>x</m:ci>' +
+			'</m:annotation-xml>' +
 		'</m:math>';
 		axe._tree = axe.utils.getFlattenedTree(document.documentElement);
 
@@ -493,14 +493,14 @@ describe('axe.utils.getSelector', function () {
 	it('should not use ignored attributes', function () {
 		var node = document.createElement('div');
 		var ignoredAttributes = [
-				'style',
-				'selected', 'checked',
-				'disabled', 'tabindex',
-				'aria-checked', 'aria-selected',
-				'aria-invalid', 'aria-activedescendant',
-				'aria-busy', 'aria-disabled', 'aria-expanded',
-				'aria-grabbed', 'aria-pressed', 'aria-valuenow'
-				];
+			'style',
+			'selected', 'checked',
+			'disabled', 'tabindex',
+			'aria-checked', 'aria-selected',
+			'aria-invalid', 'aria-activedescendant',
+			'aria-busy', 'aria-disabled', 'aria-expanded',
+			'aria-grabbed', 'aria-pressed', 'aria-valuenow'
+		];
 		ignoredAttributes.forEach(function (att) {
 			node.setAttribute(att, 'true');
 		});
