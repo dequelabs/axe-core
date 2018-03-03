@@ -1,9 +1,9 @@
-describe('landmark-no-more-than-one-banner test pass', function () {
+describe('landmark-no-duplicate-banner test pass', function () {
 	'use strict';
 	var results;
 	before(function (done) {
 		function start() {
-			axe.run({ runOnly: { type: 'rule', values: ['landmark-no-more-than-one-banner'] } }, function (err, r) {
+			axe.run({ runOnly: { type: 'rule', values: ['landmark-no-duplicate-banner'] } }, function (err, r) {
 				assert.isNull(err);
 				results = r;
 				done();

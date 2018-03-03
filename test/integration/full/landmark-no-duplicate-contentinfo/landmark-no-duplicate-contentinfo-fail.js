@@ -3,7 +3,7 @@ describe('landmark-no-more-than-one-contentinfo test failure', function () {
 	var results;
 	before(function (done) {
 		function start() {
-			axe.run({ runOnly: { type: 'rule', values: ['landmark-no-more-than-one-contentinfo'] } }, function (err, r) {
+			axe.run({ runOnly: { type: 'rule', values: ['landmark-no-duplicate-contentinfo'] } }, function (err, r) {
 				assert.isNull(err);
 				results = r;
 				done();

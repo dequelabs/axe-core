@@ -1,0 +1,16 @@
+{
+  "id": "landmark-no-duplicate-banner",
+  "selector": "html",
+  "tags": [
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "Ensures the document has no more than one banner landmark",
+    "help": "Document contain at most one banner landmark"
+  },
+  "all": [],
+  "any": [
+    "page-no-duplicate-banner"
+  ],
+  "none": []
+}
