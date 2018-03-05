@@ -52,8 +52,9 @@ describe('page-has-*', function () {
 
 		it('sets all results to true if any are true', function () {
 			var results = [{ result: true }, { result: false }, { result: undefined }];
-			assert.deepEqual(after(results), [{ result: true },
-					{ result: true }, { result: true }]);
+			assert.deepEqual(after(results),
+				[{ result: true }, { result: true }, { result: true }]
+			);
 		});
 
 		it('Leave the results as is if none of them were true', function () {
@@ -94,6 +95,41 @@ describe('page-has-*', function () {
 			var params = shadowCheckSetup('<div id="target"></div>', '<main>main landmark</main>', check.options);
 			var mainIsFound = check.evaluate.apply(checkContext, params);
 			assert.isTrue(mainIsFound);
+		});
+	});
+
+	describe('page-has-heading-one', function () {
+		var check = checks['page-has-heading-one'];
+
+		it('should return false if div has role not equal to heading', function() {
+			var params = checkSetup('<div id="target" role="bananas">Wrong role</div>', check.options);
+			var h1IsFound = check.evaluate.apply(checkContext, params);
+			assert.isFalse(h1IsFound);
+		});
+		
+		it('should return false if div has role heading but not aria-level=1', function() {
+			var params = checkSetup('<div id="target" role="heading" aria-level="one">Wrong role</div>', check.options);
+			var h1IsFound = check.evaluate.apply(checkContext, params);
+			assert.isFalse(h1IsFound);
+		});
+		
+		it('should return true if h1 exists', function(){
+			var params = checkSetup('<h1 id="target">My heading</h1>', check.options);
+			var h1IsFound = check.evaluate.apply(checkContext, params);
+			assert.isTrue(h1IsFound);
+		});
+		
+		it('should return true if a div has role=heading and aria-level=1', function() {
+			var params = checkSetup('<div id="target" role="heading" aria-level="1">Diversity heading</div>', check.options);
+			var h1IsFound = check.evaluate.apply(checkContext, params);
+			assert.isTrue(h1IsFound);
+		});
+
+		(shadowSupported ? it : xit)
+		('should return true if h1 is inside of shadow dom', function() {
+			var params = shadowCheckSetup('<div id="target"></div>', '<h1>Shady Heading</h1>', check.options);
+			var h1IsFound = check.evaluate.apply(checkContext, params);
+			assert.isTrue(h1IsFound);
 		});
 	});
 });
