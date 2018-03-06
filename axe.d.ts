@@ -12,6 +12,11 @@ declare module axe {
 
 	type RunOnlyType = "rule" | "rules" | "tag" | "tags";
 
+	type RunOnlyObject = {
+		include?: string[],
+		exclude?: string[]
+	}
+
 	type RunCallback = (error: Error, results:AxeResults) => void;
 
 	interface ElementContext {
@@ -22,11 +27,7 @@ declare module axe {
 	}
 	interface RunOnly {
 		type: RunOnlyType,
-		value?: {
-			include?: string[],
-			exclude?: string[]
-		}
-		values?: TagValue[]
+		values?: TagValue[] | RunOnlyObject
 	}
 	interface RunOptions {
 		runOnly?: RunOnly,
