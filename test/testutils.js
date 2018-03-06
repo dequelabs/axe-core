@@ -11,6 +11,16 @@ testUtils.MockCheckContext = function () {
 	return {
 		_relatedNodes: [],
 		_data: null,
+		// When using this.async() in a check, assign a function to _onAsync
+		// to catch the response.
+		_onAsync: null,
+		async: function () {
+			var self = this;
+			return function (result) {
+				// throws if _onAsync isn't set
+				self._onAsync(result, self);
+			}
+		},
 		data: function (d) {
 			this._data = d;
 		},
@@ -20,6 +30,7 @@ testUtils.MockCheckContext = function () {
 		reset: function () {
 			this._data = null;
 			this._relatedNodes = [];
+			this._onAsync = null;
 		}
 	};
 };
