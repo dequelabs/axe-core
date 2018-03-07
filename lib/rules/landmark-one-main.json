@@ -10,7 +10,7 @@
 	},
 	"all": [
 		"page-has-main",
-		"has-no-more-than-one-main"
+		"page-no-duplicate-main"
 	],
 	"any": [],
 	"none": []

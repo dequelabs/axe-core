@@ -1,6 +1,9 @@
 {
-	"id": "has-no-more-than-one-main",
-	"evaluate": "has-no-more-than-one-main.js",
+	"id": "page-no-duplicate-main",
+	"evaluate": "page-no-duplicate.js",
+  "options": {
+    "selector": "main:not([role]), [role='main']"
+  },
 	"metadata": {
 		"impact": "moderate",
 		"messages": {
