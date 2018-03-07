@@ -23,6 +23,7 @@
 | duplicate-id | Ensures every id attribute value is unique | cat.parsing, wcag2a, wcag411 | true |
 | empty-heading | Ensures headings have discernible text | cat.name-role-value, best-practice | true |
 | focus-order-semantics | Ensures elements in the focus order have an appropriate role | cat.keyboard, best-practice, experimental | true |
+| frame-tested | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain the axe-core script | wcag2a, wcag2aa, best-practice | true |
 | frame-title-unique | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a unique title attribute | cat.text-alternatives, best-practice | true |
 | frame-title | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a non-empty title attribute | cat.text-alternatives, wcag2a, wcag241, section508, section508.22.i | true |
 | heading-order | Ensures the order of headings is semantically correct | cat.semantics, best-practice | true |
