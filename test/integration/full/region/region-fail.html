@@ -15,20 +15,23 @@
 </script>
 </head>
 <body>
-<a href="stuff.html#mainheader" id="notskiplink">This is not a skip link.</a>
 <div id="wrapper">
-	<div>
-		<h1 id="mainheader" tabindex="0">This is a header.</h1>
-	</div>
+	<a href="stuff.html#mainheader" id="notskiplink">This is not a skip link.</a>
+	<form>
+		<div>
+			<h1 id="mainheader" tabindex="0">This is a header.</h1>
+		</div>
+	</form>
+	<ul>
+		<li>Home</li>
+		<li>Other</li>
+	</ul>
+	<section>
+		<p>Content</p>
+	</section>
 </div>
-<ul>
-	<li>Home</li>
-	<li>Other</li>
-</ul>
-<section>
-	<p>Content</p>
-</section>
-<div id="mocha"></div>
+
+<main id="mocha"></main>
 <script src="region-fail.js"></script>
 <script src="/test/integration/adapter.js"></script>
 </body>
