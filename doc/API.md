@@ -430,7 +430,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 	{
 	  runOnly: {
 	    type: 'tags',
-	    value: {
+	    values: {
 	      include: ['wcag2a', 'wcag2aa'],
 	      exclude: ['experimental']
 	    }
