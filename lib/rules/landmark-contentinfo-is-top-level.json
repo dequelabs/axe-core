@@ -1,0 +1,17 @@
+{
+  "id": "landmark-contentinfo-is-top-level",
+  "selector": "footer:not([role]), [role=contentinfo]",
+  "matches": "landmark-has-body-context.js",
+  "tags": [
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "The contentinfo landmark should not be contained in another landmark",
+    "help": "Contentinfo landmark must be at top level"
+  },
+  "all": [],
+  "any": [
+    "landmark-is-top-level"
+  ],
+  "none": []
+}

@@ -1,6 +1,6 @@
 {
   "id": "landmark-main-is-top-level",
-  "selector": "main, [role=main]",
+  "selector": "main:not([role]), [role=main]",
   "tags": [
 	"best-practice"
   ],
@@ -10,7 +10,7 @@
   },
   "all": [],
   "any": [
-    "main-is-top-level"
+    "landmark-is-top-level"
   ],
   "none": []
 }
