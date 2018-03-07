@@ -35,7 +35,7 @@
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | cat.forms, best-practice | true |
 | label | Ensures every form element has a label | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
 | landmark-main-is-top-level | The main landmark should not be contained in another landmark | best-practice | true |
-| landmark-one-main | Ensures a navigation point to the primary content of the page. If the page contains iframes, each iframe should contain either no main landmarks or just one. | best-practice | true |
+| landmark-one-main | Ensures a navigation point to the primary content of the page. If the page contains iframes, each iframe should contain either no main landmarks or just one | best-practice | true |
 | layout-table | Ensures presentational &lt;table&gt; elements do not use &lt;th&gt;, &lt;caption&gt; elements or the summary attribute | cat.semantics, wcag2a, wcag131 | true |
 | link-in-text-block | Links can be distinguished without relying on color | cat.color, experimental, wcag2a, wcag141 | true |
 | link-name | Ensures links have discernible text | cat.name-role-value, wcag2a, wcag111, wcag412, wcag244, section508, section508.22.a | true |
@@ -47,6 +47,7 @@
 | meta-viewport | Ensures &lt;meta name=&quot;viewport&quot;&gt; does not disable text scaling and zooming | cat.sensory-and-visual-cues, wcag2aa, wcag144 | true |
 | object-alt | Ensures &lt;object&gt; elements have alternate text | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | p-as-heading | Ensure p elements are not used to style headings | cat.semantics, wcag2a, wcag131, experimental | true |
+| page-has-heading-one | Ensure that the page, or at least one of its frames contains a level-one heading | best-practice | true |
 | radiogroup | Ensures related &lt;input type=&quot;radio&quot;&gt; elements have a group and that the group designation is consistent | cat.forms, best-practice | true |
 | region | Ensures all content is contained within a landmark region | cat.keyboard, best-practice | true |
 | scope-attr-valid | Ensures the scope attribute is used correctly on tables | cat.tables, best-practice | true |
