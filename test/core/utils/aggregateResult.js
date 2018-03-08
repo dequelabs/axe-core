@@ -2,122 +2,122 @@ describe('axe.utils.aggregateResult', function () {
 	'use strict';
 
 	var results,
-	_results = [{
-		id: 'gimmeLabel',
-		helpUrl: 'things',
-		description: 'something nifty',
-		tags: ['tag1'],
-		result: 'passed',
-		violations: [],
-		passes: [{
+		_results = [{
+			id: 'gimmeLabel',
+			helpUrl: 'things',
+			description: 'something nifty',
+			tags: ['tag1'],
 			result: 'passed',
-			any: [{
-				result: true,
-				data: 'minkey'
-			}],
-			all: [],
-			none: [],
-			node: {
-				selector: ['minkey'],
-				frames: [],
-				source: '<minkey>chimp</minky>'
-			}
-		}]
-	}, {
-		id: 'bypass',
-		description: 'something even more nifty',
-		tags: ['tag3'],
-		impact: 'monkeys',
-		result: 'failed',
-		passes: [],
-		violations: [{
-			result: 'failed',
+			violations: [],
+			passes: [{
+				result: 'passed',
+				any: [{
+					result: true,
+					data: 'minkey'
+				}],
+				all: [],
+				none: [],
+				node: {
+					selector: ['minkey'],
+					frames: [],
+					source: '<minkey>chimp</minky>'
+				}
+			}]
+		}, {
+			id: 'bypass',
+			description: 'something even more nifty',
+			tags: ['tag3'],
 			impact: 'monkeys',
-			none: [{
-				data: 'foon',
-				impact: 'monkeys',
-				result: true
-			}],
-			any: [],
-			all: [],
-			node: {
-				selector: ['foon'],
-				source: '<foon>telephone</foon>'
-			}
-		}]
-	}, {
-		id: 'idkStuff',
-		description: 'something more nifty',
-		pageLevel: true,
-		result: 'failed',
-		impact: 'cats',
-		tags: ['tag2'],
-		passes: [{
-			result: 'passed',
-			any: [{
-				result: true,
-				data: 'minkey'
-			}],
-			all: [],
-			none: [],
-			node: {
-				selector: ['minkey'],
-				frames: [],
-				source: '<minkey>chimp</minky>'
-			}
-		}],
-		violations: [{
 			result: 'failed',
-			all: [{
-				result: false,
-				data: 'pillock',
+			passes: [],
+			violations: [{
+				result: 'failed',
+				impact: 'monkeys',
+				none: [{
+					data: 'foon',
+					impact: 'monkeys',
+					result: true
+				}],
+				any: [],
+				all: [],
+				node: {
+					selector: ['foon'],
+					source: '<foon>telephone</foon>'
+				}
+			}]
+		}, {
+			id: 'idkStuff',
+			description: 'something more nifty',
+			pageLevel: true,
+			result: 'failed',
+			impact: 'cats',
+			tags: ['tag2'],
+			passes: [{
+				result: 'passed',
+				any: [{
+					result: true,
+					data: 'minkey'
+				}],
+				all: [],
+				none: [],
+				node: {
+					selector: ['minkey'],
+					frames: [],
+					source: '<minkey>chimp</minky>'
+				}
+			}],
+			violations: [{
+				result: 'failed',
+				all: [{
+					result: false,
+					data: 'pillock',
+					impact: 'cats'
+				}],
+				any: [],
+				none: [],
+				node: {
+					selector: ['q', 'r', 'pillock'],
+					source: '<pillock>george bush</pillock>'
+				},
 				impact: 'cats'
 			}],
-			any: [],
-			none: [],
-			node: {
-				selector: ['q', 'r', 'pillock'],
-				source: '<pillock>george bush</pillock>'
-			},
-			impact: 'cats'
-		}],
-		incomplete: [{
-			result: 'cantTell',
-			any: [{
-				result: 0,
-				data: 'minkey'
+			incomplete: [{
+				result: 'cantTell',
+				any: [{
+					result: 0,
+					data: 'minkey'
+				}],
+				all: [],
+				none: [],
+				node: {
+					selector: ['minkey'],
+					frames: [],
+					source: '<minkey>chimp</minky>'
+				}
+			}]
+		}, {
+			id: 'blinky',
+			description: 'something awesome',
+			tags: ['tag4'],
+			result: 'inapplicable',
+			passes: [{
+				result: 'passed',
+				any: [{
+					shouldIBeHere: 'no, this should be inapplicable!',
+					result: true,
+					data: 'minkey'
+				}],
+				all: [],
+				none: [],
+				node: {
+					selector: ['minkey'],
+					frames: [],
+					source: '<minkey>chimp</minky>'
+				}
 			}],
-			all: [],
-			none: [],
-			node: {
-				selector: ['minkey'],
-				frames: [],
-				source: '<minkey>chimp</minky>'
-			}
-		}]
-	}, {
-		id: 'blinky',
-		description: 'something awesome',
-		tags: ['tag4'],
-		result: 'inapplicable',
-		passes: [{
-			result: 'passed',
-			any: [{
-				shouldIBeHere: 'no, this should be inapplicable!',
-				result: true,
-				data: 'minkey'
-			}],
-			all: [],
-			none: [],
-			node: {
-				selector: ['minkey'],
-				frames: [],
-				source: '<minkey>chimp</minky>'
-			}
-		}],
-		violations: [],
-		incomplete: []
-	}];
+			violations: [],
+			incomplete: []
+		}];
 
 	beforeEach(function() {
 		results = JSON.parse(JSON.stringify(_results));

@@ -18,56 +18,56 @@ Vnode.prototype.getAttribute = function (att) {
 function getTestDom() {
 	'use strict';
 	return [{
-			actualNode: new Vnode('html'),
+		actualNode: new Vnode('html'),
+		children: [{
+			actualNode: new Vnode('body'),
 			children: [{
-				actualNode: new Vnode('body'),
+				actualNode: new Vnode('div', 'first',[{
+					key: 'data-a11yhero',
+					value: 'faulkner'
+				}]),
+				shadowId: 'a',
 				children: [{
-					actualNode: new Vnode('div', 'first',[{
-						key: 'data-a11yhero',
-						value: 'faulkner'
-					}]),
+					actualNode: new Vnode('ul'),
 					shadowId: 'a',
 					children: [{
-						actualNode: new Vnode('ul'),
+						actualNode: new Vnode('li', 'breaking'),
 						shadowId: 'a',
-						children: [{
-							actualNode: new Vnode('li', 'breaking'),
-							shadowId: 'a',
-							children: []
-						},{
-							actualNode: new Vnode('li', 'breaking'),
-							shadowId: 'a',
-							children: []
-						}]
+						children: []
+					},{
+						actualNode: new Vnode('li', 'breaking'),
+						shadowId: 'a',
+						children: []
 					}]
-				}, {
-					actualNode: new Vnode('div', '', [], 'one'),
-					children: []
-				}, {
-					actualNode: new Vnode('div', 'second third'),
+				}]
+			}, {
+				actualNode: new Vnode('div', '', [], 'one'),
+				children: []
+			}, {
+				actualNode: new Vnode('div', 'second third'),
+				shadowId: 'b',
+				children: [{
+					actualNode: new Vnode('ul'),
 					shadowId: 'b',
 					children: [{
-						actualNode: new Vnode('ul'),
+						actualNode: new Vnode('li', undefined, [{
+							key: 'role',
+							value: 'tab'
+						}], 'one'),
 						shadowId: 'b',
-						children: [{
-							actualNode: new Vnode('li', undefined, [{
-								key: 'role',
-								value: 'tab'
-							}], 'one'),
-							shadowId: 'b',
-							children: []
-						},{
-							actualNode: new Vnode('li', undefined, [{
-								key: 'role',
-								value: 'button'
-							}], 'one'),
-							shadowId: 'c',
-							children: []
-						}]
+						children: []
+					},{
+						actualNode: new Vnode('li', undefined, [{
+							key: 'role',
+							value: 'button'
+						}], 'one'),
+						shadowId: 'c',
+						children: []
 					}]
 				}]
 			}]
-		}];
+		}]
+	}];
 }
 
 describe('axe.utils.querySelectorAllFilter', function () {

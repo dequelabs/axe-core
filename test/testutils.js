@@ -1,15 +1,26 @@
+/*eslint indent: 0*/
 var testUtils = {};
 
 /**
- * Create a check context for mocking/resetting data and relatedNodes in tests
- *
- * @return Object
- */
+	* Create a check context for mocking/resetting data and relatedNodes in tests
+	*
+	* @return Object
+	*/
 testUtils.MockCheckContext = function () {
 	'use strict';
 	return {
 		_relatedNodes: [],
 		_data: null,
+		// When using this.async() in a check, assign a function to _onAsync
+		// to catch the response.
+		_onAsync: null,
+		async: function () {
+			var self = this;
+			return function (result) {
+				// throws if _onAsync isn't set
+				self._onAsync(result, self);
+			}
+		},
 		data: function (d) {
 			this._data = d;
 		},
@@ -19,17 +30,18 @@ testUtils.MockCheckContext = function () {
 		reset: function () {
 			this._data = null;
 			this._relatedNodes = [];
+			this._onAsync = null;
 		}
 	};
 };
 
 /**
- * Provide an API for determining Shadow DOM v0 and v1 support in tests.
- * PhantomJS doesn't have Shadow DOM support, while some browsers do.
- *
- * @param HTMLDocumentElement		The document of the current context
- * @return Object
- */
+	* Provide an API for determining Shadow DOM v0 and v1 support in tests.
+	* PhantomJS doesn't have Shadow DOM support, while some browsers do.
+	*
+	* @param HTMLDocumentElement		The document of the current context
+	* @return Object
+	*/
 testUtils.shadowSupport = (function(document) {
 	'use strict';
 	var v0 = document.body && typeof document.body.createShadowRoot === 'function',
@@ -47,12 +59,12 @@ testUtils.shadowSupport = (function(document) {
 })(document);
 
 /**
- * Method for injecting content into a fixture and caching
- * the flattened DOM tree (light and Shadow DOM together)
- *
- * @param Node|String 	Stuff to go into the fixture (html or DOM node)
- * @return HTMLElement
- */
+	* Method for injecting content into a fixture and caching
+	* the flattened DOM tree (light and Shadow DOM together)
+	*
+	* @param Node|String 	Stuff to go into the fixture (html or DOM node)
+	* @return HTMLElement
+	*/
 testUtils.fixtureSetup = function (content) {
 	'use strict';
 	var fixture = document.querySelector('#fixture');
@@ -66,13 +78,13 @@ testUtils.fixtureSetup = function (content) {
 	return fixture;
 };
 /**
- * Create check arguments
- *
- * @param Node|String 	Stuff to go into the fixture (html or node)
- * @param Object  			Options argument for the check (optional, default: {})
- * @param String  			Target for the check, CSS selector (default: '#target')
- * @return Array
- */
+	* Create check arguments
+	*
+	* @param Node|String 	Stuff to go into the fixture (html or node)
+	* @param Object				Options argument for the check (optional, default: {})
+	* @param String				Target for the check, CSS selector (default: '#target')
+	* @return Array
+	*/
 testUtils.checkSetup = function (content, options, target) {
 	'use strict';
 	// Normalize the params
@@ -96,15 +108,15 @@ testUtils.checkSetup = function (content, options, target) {
 };
 
 /**
- * Create check arguments with Shadow DOM. Target can be inside or outside of Shadow DOM, queried by
- * adding `id="target"` to a fragment. Or specify a custom selector as the `targetSelector` argument.
- *
- * @param Node|String 	Stuff to go into the fixture (html string or DOM Node)
- * @param Node|String 	Stuff to go into the shadow boundary (html or node)
- * @param Object  			Options argument for the check (optional, default: {})
- * @param String  			Target selector for the check, can be inside or outside of Shadow DOM (optional, default: '#target')
- * @return Array
- */
+	* Create check arguments with Shadow DOM. Target can be inside or outside of Shadow DOM, queried by
+	* adding `id="target"` to a fragment. Or specify a custom selector as the `targetSelector` argument.
+	*
+	* @param Node|String 	Stuff to go into the fixture (html string or DOM Node)
+	* @param Node|String 	Stuff to go into the shadow boundary (html or node)
+	* @param Object				Options argument for the check (optional, default: {})
+	* @param String				Target selector for the check, can be inside or outside of Shadow DOM (optional, default: '#target')
+	* @return Array
+	*/
 testUtils.shadowCheckSetup = function (content, shadowContent, options, targetSelector) {
 	'use strict';
 
@@ -150,40 +162,40 @@ testUtils.shadowCheckSetup = function (content, shadowContent, options, targetSe
 };
 
 /**
- * Wait for all nested frames to be loaded
- *
- * @param Object  			Window to wait for (optional)
- * @param function      Callback, called once resolved
- */
+	* Wait for all nested frames to be loaded
+	*
+	* @param Object				Window to wait for (optional)
+	* @param function			Callback, called once resolved
+	*/
 testUtils.awaitNestedLoad = function awaitNestedLoad(win, cb) {
 	'use strict';
-  if (typeof win === 'function') {
-    cb = win;
-    win = window;
-  }
-  var document = win.document;
-  var q = axe.utils.queue();
+	if (typeof win === 'function') {
+		cb = win;
+		win = window;
+	}
+	var document = win.document;
+	var q = axe.utils.queue();
 
-  // Wait for page load
-  q.defer(function (resolve) {
-    if (document.readyState === 'complete') {
-      resolve();
-    } else {
-      win.addEventListener('load', resolve);
-    }
-  });
+	// Wait for page load
+	q.defer(function (resolve) {
+		if (document.readyState === 'complete') {
+			resolve();
+		} else {
+			win.addEventListener('load', resolve);
+		}
+	});
 
-  // Wait for all frames to be loaded
-  Array.from(document.querySelectorAll('iframe')).forEach(function (frame) {
-    q.defer(function (resolve) {
-      return awaitNestedLoad(frame.contentWindow, resolve);
-    });
-  });
+	// Wait for all frames to be loaded
+	Array.from(document.querySelectorAll('iframe')).forEach(function (frame) {
+		q.defer(function (resolve) {
+			return awaitNestedLoad(frame.contentWindow, resolve);
+		});
+	});
 
-  // Complete (don't pass the args on to the callback)
-  q.then(function () {
-    cb();
-  });
+	// Complete (don't pass the args on to the callback)
+	q.then(function () {
+		cb();
+	});
 };
 
 axe.testUtils = testUtils;

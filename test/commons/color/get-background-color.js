@@ -264,7 +264,7 @@ describe('color.getBackgroundColor', function () {
 			'</tr>' +
 		'</table></div>';
 		var target = fixture.querySelector('#target'),
-				parent = fixture.querySelector('#parent');
+			parent = fixture.querySelector('#parent');
 		var bgNodes = [];
 		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
@@ -285,7 +285,7 @@ describe('color.getBackgroundColor', function () {
 			'</tr>' +
 		'</table></div>';
 		var target = fixture.querySelector('#target'),
-				parent = fixture.querySelector('#parent');
+			parent = fixture.querySelector('#parent');
 		var bgNodes = [];
 		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
@@ -306,7 +306,7 @@ describe('color.getBackgroundColor', function () {
 			'</td></tr>' +
 		'</table></div>';
 		var target = fixture.querySelector('#target'),
-				parent = fixture.querySelector('#parent');
+			parent = fixture.querySelector('#parent');
 		var bgNodes = [];
 		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
@@ -375,14 +375,14 @@ describe('color.getBackgroundColor', function () {
 			'<tr style="background-color: #fff;"><td>' +
 			'<table style="width:100%">' +
 				'<tr style="background-color: #f3f3f3; height:40px;" id="parent">' +
-	        '<td style="display: table-cell; color:#007acc" id="target">' +
+					'<td style="display: table-cell; color:#007acc" id="target">' +
 						'Cell content</td>' +
-	        '</tr>' +
-	      '</table>' +
-	    '</td></tr>' +
-	  '</table></div>';
+					'</tr>' +
+				'</table>' +
+			'</td></tr>' +
+		'</table></div>';
 		var target = fixture.querySelector('#target'),
-				parent = fixture.querySelector('#parent');
+			parent = fixture.querySelector('#parent');
 		var bgNodes = [];
 		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
@@ -421,8 +421,8 @@ describe('color.getBackgroundColor', function () {
 		fixture.innerHTML =
 			'<div id="parent" style="height: 40px; width: 30px; ' +
 			'background-color: white; position: relative; z-index: 5">' +
-			'  <div float="left" style="height: 0px; background-color: black">' +
-			'    <div id="target" style="height: 20px; width: 25px; z-index: 25;">' +
+			'	<div float="left" style="height: 0px; background-color: black">' +
+			'		<div id="target" style="height: 20px; width: 25px; z-index: 25;">' +
 			'</div></div></div>';
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
@@ -470,7 +470,7 @@ describe('color.getBackgroundColor', function () {
 		'	<div id="target" style="position: relative; top: 1px; height: 20px;' +
 		'	 width: 25px; z-index: 25; background:rgba(0,125,0,0.5);"></div> ' +
 		'	<div id="shifted" style="position: absolute; top: 0px; height: 40px; ' +
-		'    background-image: url(foobar.png);'+
+		'		background-image: url(foobar.png);'+
 		'	 width: 35px; z-index: 15;">' +
 		'	</div>'+
 		'</div>';
@@ -623,13 +623,13 @@ describe('color.getBackgroundColor', function () {
 	it('avoids scrolling elements with overflow:hidden', function () {
 		fixture.innerHTML =
 			'<div style="position:relative; color: yellow">' +
-			  '<div style="overflow: hidden">' +
-			    '<div style="background: black; height: 40px; padding-top: 20px;">' +
-			      '<div id="tgt1">Some text here</div>' +
-			      '<div style="height: 100px;"></div>' +
-			    '</div>' +
-			  '</div>' +
-			  '<div style="position: absolute; margin-top: -20px;" id="tgt2">R_20</div>' +
+				'<div style="overflow: hidden">' +
+					'<div style="background: black; height: 40px; padding-top: 20px;">' +
+						'<div id="tgt1">Some text here</div>' +
+						'<div style="height: 100px;"></div>' +
+					'</div>' +
+				'</div>' +
+				'<div style="position: absolute; margin-top: -20px;" id="tgt2">R_20</div>' +
 			'</div>';
 
 		// This shouldn't cause a scroll
@@ -687,7 +687,7 @@ describe('color.getBackgroundColor', function () {
 		var shadow = container.attachShadow({ mode: 'open' });
 		shadow.innerHTML = '<span id="shadowTarget" style="color:#ccc;">Text</span>';
 		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
-		
+
 		var target = shadow.querySelector('#shadowTarget');
 		var actual = axe.commons.color.getBackgroundColor(target, [], false);
 
@@ -703,7 +703,7 @@ describe('color.getBackgroundColor', function () {
 		var container = fixture.querySelector('#container');
 		var shadow = container.attachShadow({ mode: 'open' });
 		shadow.innerHTML = '<div><label id="target" style="background-color:#000;">Text<input type="text"></label></div>';
-		
+
 		var target = shadow.querySelector('#target');
 		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, []);

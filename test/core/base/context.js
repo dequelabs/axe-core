@@ -1,4 +1,5 @@
 /*global Context, axe */
+/*eslint no-unused-vars:0*/
 describe('Context', function() {
 	'use strict';
 
@@ -298,7 +299,6 @@ describe('Context', function() {
 		});
 
 		describe('throwing errors', function () {
-			// jshint unused:false
 			var isInFrame;
 
 			beforeEach(function () {
@@ -427,7 +427,6 @@ describe('Context', function() {
 
 		// document.hasOwnProperty is undefined in Firefox content scripts
 		it('should not throw given really weird circumstances when hasOwnProperty is deleted from a document node?', function() {
-			//jshint -W001
 			var spec = document.implementation.createHTMLDocument('ie is dumb');
 			spec.hasOwnProperty = undefined;
 			var result = new Context(spec);

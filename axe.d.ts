@@ -1,4 +1,4 @@
-// Type definitions for axe-core 3.0.0-beta.2
+// Type definitions for axe-core 3.0.0-beta.3
 // Project: https://github.com/dequelabs/axe-core
 // Definitions by: Marcy Sutton <https://github.com/marcysutton>
 
@@ -12,6 +12,11 @@ declare module axe {
 
 	type RunOnlyType = "rule" | "rules" | "tag" | "tags";
 
+	type RunOnlyObject = {
+		include?: string[],
+		exclude?: string[]
+	}
+
 	type RunCallback = (error: Error, results:AxeResults) => void;
 
 	interface ElementContext {
@@ -22,11 +27,7 @@ declare module axe {
 	}
 	interface RunOnly {
 		type: RunOnlyType,
-		value?: {
-			include?: string[],
-			exclude?: string[]
-		}
-		values?: TagValue[]
+		values?: TagValue[] | RunOnlyObject
 	}
 	interface RunOptions {
 		runOnly?: RunOnly,

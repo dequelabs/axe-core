@@ -1,0 +1,17 @@
+{
+  "id": "landmark-banner-is-top-level",
+  "selector": "header:not([role]), [role=banner]",
+  "matches": "landmark-has-body-context.js",
+  "tags": [
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "The banner landmark should not be contained in another landmark",
+    "help": "Banner landmark must be at top level"
+  },
+  "all": [],
+  "any": [
+    "landmark-is-top-level"
+  ],
+  "none": []
+}

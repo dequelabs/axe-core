@@ -1,3 +1,35 @@
+<a name="3.0.0-beta.3"></a>
+# [3.0.0-beta.3](https://github.com/dequelabs/axe-core/compare/v3.0.0-beta.2...v3.0.0-beta.3) (2018-03-08)
+
+
+### Bug Fixes
+
+* Correct runOnly object for TypeScript definition ([571e984](https://github.com/dequelabs/axe-core/commit/571e984))
+* **has-at-least-one-main:** Rename check to page-has-main, for reusability ([9a9c283](https://github.com/dequelabs/axe-core/commit/9a9c283))
+* **has-no-more-than-one-main:** Rename check to page-no-duplicate for better reuse ([e75324b](https://github.com/dequelabs/axe-core/commit/e75324b))
+* **main-is-top-level:** Rename check to landmark-is-top-level for greater reuse ([b405af1](https://github.com/dequelabs/axe-core/commit/b405af1))
+* **region:** Ignore forms without accessible name as landmarks ([8ad2718](https://github.com/dequelabs/axe-core/commit/8ad2718))
+
+
+### Features
+
+* **aria-required-attr:** Make aria-level required with role=heading [#740](https://github.com/dequelabs/axe-core/issues/740) ([64b743f](https://github.com/dequelabs/axe-core/commit/64b743f))
+* **aria:** allow DPUB ARIA roles ([70b48f6](https://github.com/dequelabs/axe-core/commit/70b48f6))
+* **frame-tested:** Use this new rule to test if all frames are available, instead of axe.log ([83cd17d](https://github.com/dequelabs/axe-core/commit/83cd17d))
+* **landmark-contentinfo-is-top-level:** Add rule ensuring top level contentinfo ([5692e7d](https://github.com/dequelabs/axe-core/commit/5692e7d))
+* **landmark-no-more-than-one-banner:** Add rule ensuring no more than one banner ([6617800](https://github.com/dequelabs/axe-core/commit/6617800))
+* **landmark-no-more-than-one-contentinfo:** Add rule ensuring no more than one contentinfo ([82217ef](https://github.com/dequelabs/axe-core/commit/82217ef))
+* **page-has-heading-one:** Added new best-practice rule ([cb8f261](https://github.com/dequelabs/axe-core/commit/cb8f261))
+* **rules:** Add new rule aria-dpub-role-fallback ([9470c02](https://github.com/dequelabs/axe-core/commit/9470c02))
+
+
+### BREAKING CHANGES
+
+* **main-is-top-level:** The check main-is-top-level is no longer available
+* **has-at-least-one-main:** Original has-at-least-one-main check is no longer available
+
+
+
 <a name="3.0.0-beta.2"></a>
 # [3.0.0-beta.2](https://github.com/dequelabs/axe-core/compare/v3.0.0-alpha.9...v3.0.0-beta.2) (2018-03-01)
 

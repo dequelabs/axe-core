@@ -11,24 +11,24 @@ describe('axe.utils.aggregateNodeResults', function() {
 		var args = [].slice.call(arguments);
 		return args.map(function (node) {
 			['any','all','none']
-			.forEach(function (type) {
-				if (typeof node[type] === 'undefined') {
-					node[type] = [];
-				} else if (Array.isArray(node[type])) {
-					node[type] = node[type].map(function (val) {
-						if (typeof val !== 'object') {
-							return { result: val };
-						} else {
-							return val;
+				.forEach(function (type) {
+					if (typeof node[type] === 'undefined') {
+						node[type] = [];
+					} else if (Array.isArray(node[type])) {
+						node[type] = node[type].map(function (val) {
+							if (typeof val !== 'object') {
+								return { result: val };
+							} else {
+								return val;
+							}
+						});
+					} else {
+						if (typeof node[type] !== 'object') {
+							node[type] = { result: node[type] };
 						}
-					});
-				} else {
-					if (typeof node[type] !== 'object') {
-						node[type] = { result: node[type] };
+						node[type] = [ node[type] ];
 					}
-					node[type] = [ node[type] ];
-				}
-			});
+				});
 			return node;
 		});
 	}
@@ -111,6 +111,7 @@ describe('axe.utils.aggregateNodeResults', function() {
 	});
 
 	it('should raise the highest "raisedMetadata" on failing checks', function() {
+		/*eslint indent:0 */
 		var ruleResult = axe.utils.aggregateNodeResults( createTestResults({
 				none: { result: true, impact: 'moderate' },
 				any: { result: true, impact: 'minor' },
