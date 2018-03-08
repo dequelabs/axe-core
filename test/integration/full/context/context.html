@@ -28,21 +28,23 @@
 		<div id="shadow-host"></div>
 	</div>
 	<div id="mocha"></div>
-	<script>
-	var host = document.getElementById('shadow-host');
-	var list = document.getElementsByTagName('ul')[0];
-	var shadowRoot = host.attachShadow({ mode: 'open' });
-	var shadowContent = document.createElement('div');
-	shadowContent.setAttribute('style', 'background-color: #333');
-	var content = document.createElement('p');
-	content.style.color = '#000';
-	content.textContent = 'Failing Text';
-	shadowContent.appendChild(content);
-	var shadowList = shadowContent.appendChild(list);
-	shadowList.style.display = 'block';
-	shadowRoot.appendChild(shadowContent);
-	</script>
 	<script src="/test/testutils.js"></script>
+	<script>
+	if (axe.testUtils.shadowSupport.v1) {
+		var host = document.getElementById('shadow-host');
+		var list = document.getElementsByTagName('ul')[0];
+		var shadowRoot = host.attachShadow({ mode: 'open' });
+		var shadowContent = document.createElement('div');
+		shadowContent.setAttribute('style', 'background-color: #333');
+		var content = document.createElement('p');
+		content.style.color = '#000';
+		content.textContent = 'Failing Text';
+		shadowContent.appendChild(content);
+		var shadowList = shadowContent.appendChild(list);
+		shadowList.style.display = 'block';
+		shadowRoot.appendChild(shadowContent);
+	}
+	</script>
 	<script src="context.js"></script>
 	<script src="/test/integration/adapter.js"></script>
 </body>

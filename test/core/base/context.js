@@ -327,6 +327,13 @@ describe('Context', function() {
 			});
 		});
 
+		it('should assign the result of getFlattenedTree to axe._tree', function () {
+			/* eslint no-new:0 */
+			new Context({ include: [document] });
+			// WARNING: This only works because there is now Shadow DOM on this page
+			assert.deepEqual(axe._tree, axe.utils.getFlattenedTree(document));
+		});
+
 		it('should throw when frame could not be found', function (done) {
 			fixture.innerHTML = '<div id="outer"></div>';
 			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function() {
@@ -429,6 +436,7 @@ describe('Context', function() {
 		it('should not throw given really weird circumstances when hasOwnProperty is deleted from a document node?', function() {
 			var spec = document.implementation.createHTMLDocument('ie is dumb');
 			spec.hasOwnProperty = undefined;
+
 			var result = new Context(spec);
 
 			assert.lengthOf(result.include, 1);
