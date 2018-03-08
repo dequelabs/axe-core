@@ -90,5 +90,9 @@
 	"3.0.0-beta.2": {
 		"axe.js": "sha256-cMk6LIQ0mYRm54wqfZ6O2U/6BT6XpHPjqIPVyhMMHYU=",
 		"axe.min.js": "sha256-66fXkU5+wmx5X9sURMglHTsWKO8R+LoOIcBwB8N9dPI="
+	},
+	"3.0.0-beta.3": {
+		"axe.js": "sha256-9le58CGdN3pVlavrlAiyCmo276kXpnTKIIgFRlUhauI=",
+		"axe.min.js": "sha256-yzD9M6lgRosBZtC6x3acx5XaiLgR2jAWe1dDMqutmbs="
 	}
 }
