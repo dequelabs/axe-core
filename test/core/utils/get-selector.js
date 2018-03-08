@@ -551,6 +551,16 @@ describe('axe.utils.getSelector', function () {
 		);
 	});
 
+	it('should work correctly when a URL attribute cannot be shortened', function () {
+		var href = 'mars2.html?a=be_bold';
+		var node = document.createElement('a');
+		node.setAttribute('href', href);
+		fixture.appendChild(node);
+		axe._tree = axe.utils.getFlattenedTree(document.documentElement);
+
+		assert.include(axe.utils.getSelector(node), href);
+	});
+
 	it('no options: should work with shadow DOM', function () {
 		var shadEl;
 
