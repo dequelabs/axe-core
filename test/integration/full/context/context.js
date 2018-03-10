@@ -109,12 +109,14 @@ describe('context test', function () {
 
 		(shadowSupported ? it : xit)
 		('should find no nodes in Shadow DOM', function (done) {
-			var sConfig = { runOnly: { type: 'rule', values: ['list', 'color-contrast'] } };
+			var sConfig = { runOnly: { type: 'rule', values: ['color-contrast'] } };
 			axe.run({ include: [['#shadow-container']], exclude: [['#shadow-host']] }, sConfig, function (err, results) {
-				assert.isNull(err);
-				assert.lengthOf(results.violations, 0, 'violations');
-				assert.lengthOf(results.passes, 2, 'passes');
-				done();
+				try {
+					assert.isNull(err);
+					assert.lengthOf(results.violations, 0, 'violations');
+					assert.lengthOf(results.passes, 1, 'passes');
+					done();
+				} catch (e) { done(e); }
 			});
 		});
 

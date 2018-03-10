@@ -5,6 +5,14 @@ describe('axe.utils.collectResultsFromFrames', function () {
 	var fixture = document.getElementById('fixture');
 	var noop = function () {};
 
+	function contextSetup (scope) {
+		var context = new Context(scope);
+		axe._tree = context.flatTree;
+		axe._selectorData = axe.utils.getSelectorData(context.flatTree);
+
+		return context
+	}
+
 	afterEach(function () {
 		fixture.innerHTML = '';
 		axe._tree = undefined;
@@ -25,8 +33,7 @@ describe('axe.utils.collectResultsFromFrames', function () {
 
 		var frame = document.createElement('iframe');
 		frame.addEventListener('load', function () {
-			var context = new Context(document);
-			axe._tree = axe.utils.getFlattenedTree(document.documentElement);
+			var context = contextSetup(document);
 			axe.utils.collectResultsFromFrames(context, {}, 'stuff', 'morestuff', noop,
 				function (err) {
 					assert.instanceOf(err, Error);
@@ -40,7 +47,6 @@ describe('axe.utils.collectResultsFromFrames', function () {
 		frame.id = 'level0';
 		frame.src = '../mock/frames/results-timeout.html';
 		fixture.appendChild(frame);
-
 	});
 
 	it('should override the timeout with `options.frameWaitTime`, if provided', function (done) {
@@ -57,9 +63,9 @@ describe('axe.utils.collectResultsFromFrames', function () {
 
 		var frame = document.createElement('iframe');
 		frame.addEventListener('load', function () {
-			var context = new Context(document);
+			var context = contextSetup(document);
 			var params = { frameWaitTime: 90000 };
-			axe._tree = axe.utils.getFlattenedTree(document.documentElement);
+
 			axe.utils.collectResultsFromFrames(context, params, 'stuff', 'morestuff', noop,
 				function (err) {
 					assert.instanceOf(err, Error);
@@ -73,7 +79,6 @@ describe('axe.utils.collectResultsFromFrames', function () {
 		frame.id = 'level0';
 		frame.src = '../mock/frames/results-timeout.html';
 		fixture.appendChild(frame);
-
 	});
 
 	it('should not throw given a recursive iframe', function (done) {
@@ -93,8 +98,8 @@ describe('axe.utils.collectResultsFromFrames', function () {
 
 		var frame = document.createElement('iframe');
 		frame.addEventListener('load', function () {
-			var context = new Context(document);
-			axe._tree = axe.utils.getFlattenedTree(document.documentElement);
+			var context = contextSetup(document);
+
 			axe.utils.collectResultsFromFrames(context, {}, 'rules', 'morestuff', function () {
 				done();
 			}, function (e) {
@@ -106,14 +111,12 @@ describe('axe.utils.collectResultsFromFrames', function () {
 		frame.id = 'level0';
 		frame.src = '../mock/frames/nested0.html';
 		fixture.appendChild(frame);
-
 	});
 
 	it('returns errors send from the frame', function (done) {
 		var frame = document.createElement('iframe');
 		frame.addEventListener('load', function () {
-			var context = new Context(document);
-			axe._tree = axe.utils.getFlattenedTree(document.documentElement);
+			var context = contextSetup(document);
 			axe.utils.collectResultsFromFrames(context, {}, 'command', 'params', noop,
 				function (err) {
 					assert.instanceOf(err, Error);

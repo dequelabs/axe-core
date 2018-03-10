@@ -650,4 +650,51 @@ describe('runRules', function () {
 			done();
 		}, isNotCalled);
 	});
+
+	it('should clear up axe._tree / axe._selectorData after resolving', function (done) {
+		axe._load({ rules: [{
+			id: 'html',
+			selector: 'html',
+			any: ['html']
+		}], checks: [{
+			id: 'html',
+			evaluate: function () {
+				return true;
+			}
+		}], messages: {}});
+
+		runRules(document, {}, function resolve() {
+			assert.isDefined(axe._tree);
+			assert.isDefined(axe._selectorData);
+			setTimeout(function () {
+				assert.isUndefined(axe._tree);
+				assert.isUndefined(axe._selectorData);
+				done();
+			}, 10);
+		}, isNotCalled);
+	});
+
+	it('should clear up axe._tree / axe._selectorData after an error', function (done) {
+		axe._load({ rules: [{
+			id: 'invalidRule'
+		}], checks: [], messages: {}});
+
+		createFrames(function () {
+			setTimeout(function () {
+				runRules(document, {}, function () {
+					assert.ok(false, 'You shall not pass!');
+					done();
+				},
+				function () {
+					assert.isDefined(axe._tree);
+					assert.isDefined(axe._selectorData);
+					setTimeout(function () {
+						assert.isUndefined(axe._tree);
+						assert.isUndefined(axe._selectorData);
+						done();
+					}, 10);
+				});
+			}, 100);
+		});
+	});
 });

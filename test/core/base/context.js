@@ -327,11 +327,10 @@ describe('Context', function() {
 			});
 		});
 
-		it('should assign the result of getFlattenedTree to axe._tree', function () {
-			/* eslint no-new:0 */
-			new Context({ include: [document] });
+		it('should create a flatTree property', function () {
+			var context = new Context({ include: [document] });
 			// WARNING: This only works because there is now Shadow DOM on this page
-			assert.deepEqual(axe._tree, axe.utils.getFlattenedTree(document));
+			assert.deepEqual(context.flatTree, axe.utils.getFlattenedTree(document));
 		});
 
 		it('should throw when frame could not be found', function (done) {
@@ -350,27 +349,29 @@ describe('Context', function() {
 
 	describe('object definition', function() {
 		it('should assign include/exclude', function() {
-
+			var flatTree = axe.utils.getFlattenedTree(document);
 			assert.deepEqual(new Context({
 				include: ['#fixture'],
 				exclude: ['#mocha']
 			}), {
-				include: [axe.utils.getFlattenedTree(document.getElementById('fixture'))[0]],
-				exclude: [axe.utils.getFlattenedTree(document.getElementById('mocha'))[0]],
+				include: axe.utils.querySelectorAll(flatTree, '#fixture'),
+				exclude: axe.utils.querySelectorAll(flatTree, '#mocha'),
+				flatTree: flatTree,
 				initiator: true,
 				page: false,
 				frames: []
 			});
-
 		});
-		it('should disregard bad input, non-matching selectors', function() {
 
+		it('should disregard bad input, non-matching selectors', function() {
+			var flatTree = axe.utils.getFlattenedTree(document);
 			assert.deepEqual(new Context({
 				include: ['#fixture', '#monkeys'],
 				exclude: ['#bananas']
 			}), {
-				include: [axe.utils.getFlattenedTree(document.getElementById('fixture'))[0]],
+				include: axe.utils.querySelectorAll(flatTree, '#fixture'),
 				exclude: [],
+				flatTree: flatTree,
 				initiator: true,
 				page: false,
 				frames: []
