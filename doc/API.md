@@ -376,6 +376,14 @@ Additionally, there are a number or properties that allow configuration of diffe
 	}
 	```
 
+  Alternatively, runOnly can be passed an array of tags:
+
+  ```javascript
+  {
+    runOnly: ["wcag2a", "wcag2aa"]
+  }
+  ```
+
 2. Run only a specified list of Rules
 
 	If you only want to run certain rules, specify options as:
