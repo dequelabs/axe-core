@@ -2,7 +2,8 @@
   "id": "landmark-main-is-top-level",
   "selector": "main:not([role]), [role=main]",
   "tags": [
-	"best-practice"
+    "cat.semantics",
+    "best-practice"
   ],
   "metadata": {
     "description": "The main landmark should not be contained in another landmark",

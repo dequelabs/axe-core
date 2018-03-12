@@ -3,6 +3,7 @@
   "selector": "*",
   "excludeHidden": false,
   "tags": [
+    "cat.structure",
     "experimental",
     "review-item"
   ],

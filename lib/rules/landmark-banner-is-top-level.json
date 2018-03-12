@@ -3,6 +3,7 @@
   "selector": "header:not([role]), [role=banner]",
   "matches": "landmark-has-body-context.js",
   "tags": [
+    "cat.semantics",
     "best-practice"
   ],
   "metadata": {
