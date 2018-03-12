@@ -68,15 +68,25 @@ testUtils.shadowSupport = (function(document) {
 testUtils.fixtureSetup = function (content) {
 	'use strict';
 	var fixture = document.querySelector('#fixture');
-	fixture.innerHTML = '';
+	if (typeof content !== 'undefined') {
+		fixture.innerHTML = '';
+	}
+
 	if (typeof content === 'string') {
 		fixture.innerHTML = content;
 	} else if (content instanceof Node) {
 		fixture.appendChild(content);
+	} else if (Array.isArray(content)) {
+		content.forEach(function (node) {
+			fixture.appendChild(node);
+		});
 	}
 	axe._tree = axe.utils.getFlattenedTree(fixture);
+	axe._selectorData = axe.utils.getSelectorData(axe._tree);
+
 	return fixture;
 };
+
 /**
 	* Create check arguments
 	*

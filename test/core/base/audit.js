@@ -471,34 +471,6 @@ describe('Audit', function () {
 				done();
 			}, isNotCalled);
 		});
-		it('should call axe.utils.getFlattenedTree', function (done) {
-			var called = false;
-			axe.utils.getFlattenedTree = function () {
-				called = true;
-			};
-			a.run({ include: [document] }, {
-				rules: {}
-			}, function () {
-				assert.isTrue(called);
-				axe.utils.getFlattenedTree = getFlattenedTree;
-				done();
-			}, isNotCalled);
-		});
-		it('should assign the result of getFlattenedTree to axe._tree', function (done) {
-			var thing = 'honey badger';
-			var saved = axe.utils.ruleShouldRun;
-			axe.utils.ruleShouldRun = function () {
-				assert.equal(axe._tree, thing);
-				return false;
-			};
-			axe.utils.getFlattenedTree = function () {
-				return thing;
-			};
-			a.run({ include: [document] }, {}, function () {
-				axe.utils.ruleShouldRun = saved;
-				done();
-			}, isNotCalled);
-		});
 		it('should assign an empty array to axe._selectCache', function (done) {
 			var saved = axe.utils.ruleShouldRun;
 			axe.utils.ruleShouldRun = function () {

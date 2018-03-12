@@ -327,6 +327,12 @@ describe('Context', function() {
 			});
 		});
 
+		it('should create a flatTree property', function () {
+			var context = new Context({ include: [document] });
+			// WARNING: This only works because there is now Shadow DOM on this page
+			assert.deepEqual(context.flatTree, axe.utils.getFlattenedTree(document));
+		});
+
 		it('should throw when frame could not be found', function (done) {
 			fixture.innerHTML = '<div id="outer"></div>';
 			iframeReady('../mock/frames/context.html', $id('outer'), 'target', function() {
@@ -343,27 +349,29 @@ describe('Context', function() {
 
 	describe('object definition', function() {
 		it('should assign include/exclude', function() {
-
+			var flatTree = axe.utils.getFlattenedTree(document);
 			assert.deepEqual(new Context({
 				include: ['#fixture'],
 				exclude: ['#mocha']
 			}), {
-				include: [axe.utils.getFlattenedTree(document.getElementById('fixture'))[0]],
-				exclude: [axe.utils.getFlattenedTree(document.getElementById('mocha'))[0]],
+				include: axe.utils.querySelectorAll(flatTree, '#fixture'),
+				exclude: axe.utils.querySelectorAll(flatTree, '#mocha'),
+				flatTree: flatTree,
 				initiator: true,
 				page: false,
 				frames: []
 			});
-
 		});
-		it('should disregard bad input, non-matching selectors', function() {
 
+		it('should disregard bad input, non-matching selectors', function() {
+			var flatTree = axe.utils.getFlattenedTree(document);
 			assert.deepEqual(new Context({
 				include: ['#fixture', '#monkeys'],
 				exclude: ['#bananas']
 			}), {
-				include: [axe.utils.getFlattenedTree(document.getElementById('fixture'))[0]],
+				include: axe.utils.querySelectorAll(flatTree, '#fixture'),
 				exclude: [],
+				flatTree: flatTree,
 				initiator: true,
 				page: false,
 				frames: []
@@ -429,6 +437,7 @@ describe('Context', function() {
 		it('should not throw given really weird circumstances when hasOwnProperty is deleted from a document node?', function() {
 			var spec = document.implementation.createHTMLDocument('ie is dumb');
 			spec.hasOwnProperty = undefined;
+
 			var result = new Context(spec);
 
 			assert.lengthOf(result.include, 1);

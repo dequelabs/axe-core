@@ -53,6 +53,7 @@ describe('runRules', function () {
 	afterEach(function () {
 		fixture.innerHTML = '';
 		axe._audit = null;
+		axe._tree = undefined;
 	});
 
 	it('should work', function (done) {
@@ -72,7 +73,6 @@ describe('runRules', function () {
 
 		frame.addEventListener('load', function () {
 			setTimeout(function () {
-				axe._tree = axe.utils.getFlattenedTree(document);
 				runRules(document, {}, function (r) {
 					assert.lengthOf(r[0].passes, 3);
 					done();
@@ -97,7 +97,6 @@ describe('runRules', function () {
 		var frame = document.createElement('iframe');
 		frame.addEventListener('load', function () {
 			setTimeout(function () {
-				axe._tree = axe.utils.getFlattenedTree(document);
 				runRules(document, {}, function (r) {
 					var nodes = r[0].passes.map(function (detail) {
 						return detail.node.selector;
@@ -156,7 +155,6 @@ describe('runRules', function () {
 			var div = document.createElement('div');
 			fixture.appendChild(div);
 
-			axe._tree = axe.utils.getFlattenedTree(document);
 			runRules('#fixture', {}, function (results) {
 				assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
@@ -232,7 +230,6 @@ describe('runRules', function () {
 		});
 
 		iframeReady('../mock/frames/context.html', fixture, 'context-test', function () {
-			axe._tree = axe.utils.getFlattenedTree(document);
 			runRules('#not-happening', {}, function () {
 				assert.fail('This selector should not exist.');
 			}, function (error) {
@@ -652,5 +649,52 @@ describe('runRules', function () {
 			delete Array.prototype.exclude;
 			done();
 		}, isNotCalled);
+	});
+
+	it('should clear up axe._tree / axe._selectorData after resolving', function (done) {
+		axe._load({ rules: [{
+			id: 'html',
+			selector: 'html',
+			any: ['html']
+		}], checks: [{
+			id: 'html',
+			evaluate: function () {
+				return true;
+			}
+		}], messages: {}});
+
+		runRules(document, {}, function resolve() {
+			assert.isDefined(axe._tree);
+			assert.isDefined(axe._selectorData);
+			setTimeout(function () {
+				assert.isUndefined(axe._tree);
+				assert.isUndefined(axe._selectorData);
+				done();
+			}, 10);
+		}, isNotCalled);
+	});
+
+	it('should clear up axe._tree / axe._selectorData after an error', function (done) {
+		axe._load({ rules: [{
+			id: 'invalidRule'
+		}], checks: [], messages: {}});
+
+		createFrames(function () {
+			setTimeout(function () {
+				runRules(document, {}, function () {
+					assert.ok(false, 'You shall not pass!');
+					done();
+				},
+				function () {
+					assert.isDefined(axe._tree);
+					assert.isDefined(axe._selectorData);
+					setTimeout(function () {
+						assert.isUndefined(axe._tree);
+						assert.isUndefined(axe._selectorData);
+						done();
+					}, 10);
+				});
+			}, 100);
+		});
 	});
 });
