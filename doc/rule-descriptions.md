@@ -23,11 +23,11 @@
 | duplicate-id | Ensures every id attribute value is unique | cat.parsing, wcag2a, wcag411 | true |
 | empty-heading | Ensures headings have discernible text | cat.name-role-value, best-practice | true |
 | focus-order-semantics | Ensures elements in the focus order have an appropriate role | cat.keyboard, best-practice, experimental | true |
-| frame-tested | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain the axe-core script | wcag2a, wcag2aa, best-practice | true |
+| frame-tested | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain the axe-core script | cat.structure, review-item | true |
 | frame-title-unique | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a unique title attribute | cat.text-alternatives, best-practice | true |
 | frame-title | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a non-empty title attribute | cat.text-alternatives, wcag2a, wcag241, section508, section508.22.i | true |
 | heading-order | Ensures the order of headings is semantically correct | cat.semantics, best-practice | true |
-| hidden-content | Informs users about hidden content. | experimental, review-item | true |
+| hidden-content | Informs users about hidden content. | cat.structure, experimental, review-item | true |
 | html-has-lang | Ensures every HTML document has a lang attribute | cat.language, wcag2a, wcag311 | true |
 | html-lang-valid | Ensures the lang attribute of the &lt;html&gt; element has a valid value | cat.language, wcag2a, wcag311 | true |
 | image-alt | Ensures &lt;img&gt; elements have alternate text or a role of none or presentation | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
@@ -35,12 +35,12 @@
 | input-image-alt | Ensures &lt;input type=&quot;image&quot;&gt; elements have alternate text | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | cat.forms, best-practice | true |
 | label | Ensures every form element has a label | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
-| landmark-banner-is-top-level | The banner landmark should not be contained in another landmark | best-practice | true |
-| landmark-contentinfo-is-top-level | The contentinfo landmark should not be contained in another landmark | best-practice | true |
-| landmark-main-is-top-level | The main landmark should not be contained in another landmark | best-practice | true |
-| landmark-no-duplicate-banner | Ensures the document has no more than one banner landmark | best-practice | true |
-| landmark-no-duplicate-contentinfo | Ensures the document has no more than one contentinfo landmark | best-practice | true |
-| landmark-one-main | Ensures a navigation point to the primary content of the page. If the page contains iframes, each iframe should contain either no main landmarks or just one | best-practice | true |
+| landmark-banner-is-top-level | The banner landmark should not be contained in another landmark | cat.semantics, best-practice | true |
+| landmark-contentinfo-is-top-level | The contentinfo landmark should not be contained in another landmark | cat.semantics, best-practice | true |
+| landmark-main-is-top-level | The main landmark should not be contained in another landmark | cat.semantics, best-practice | true |
+| landmark-no-duplicate-banner | Ensures the document has no more than one banner landmark | cat.semantics, best-practice | true |
+| landmark-no-duplicate-contentinfo | Ensures the document has no more than one contentinfo landmark | cat.semantics, best-practice | true |
+| landmark-one-main | Ensures a navigation point to the primary content of the page. If the page contains iframes, each iframe should contain either no main landmarks or just one | cat.semantics, best-practice | true |
 | layout-table | Ensures presentational &lt;table&gt; elements do not use &lt;th&gt;, &lt;caption&gt; elements or the summary attribute | cat.semantics, wcag2a, wcag131 | true |
 | link-in-text-block | Links can be distinguished without relying on color | cat.color, experimental, wcag2a, wcag141 | true |
 | link-name | Ensures links have discernible text | cat.name-role-value, wcag2a, wcag111, wcag412, wcag244, section508, section508.22.a | true |
@@ -52,7 +52,7 @@
 | meta-viewport | Ensures &lt;meta name=&quot;viewport&quot;&gt; does not disable text scaling and zooming | cat.sensory-and-visual-cues, wcag2aa, wcag144 | true |
 | object-alt | Ensures &lt;object&gt; elements have alternate text | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | p-as-heading | Ensure p elements are not used to style headings | cat.semantics, wcag2a, wcag131, experimental | true |
-| page-has-heading-one | Ensure that the page, or at least one of its frames contains a level-one heading | best-practice | true |
+| page-has-heading-one | Ensure that the page, or at least one of its frames contains a level-one heading | cat.semantics, best-practice | true |
 | radiogroup | Ensures related &lt;input type=&quot;radio&quot;&gt; elements have a group and that the group designation is consistent | cat.forms, best-practice | true |
 | region | Ensures all content is contained within a landmark region | cat.keyboard, best-practice | true |
 | scope-attr-valid | Ensures the scope attribute is used correctly on tables | cat.tables, best-practice | true |
