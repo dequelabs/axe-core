@@ -1,35 +1,41 @@
 /*global Rule */
-describe('axe.reset', function () {
+describe('axe.reset', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-	afterEach(function () {
+	afterEach(function() {
 		fixture.innerHTML = '';
 	});
 
-	beforeEach(function () {
+	beforeEach(function() {
 		axe._audit = null;
 	});
 
-	it('should throw if no audit is configured', function () {
-		assert.throws(function () {
-			axe.reset(function () {}, function () {});
-		}, Error, /^No audit configured/);
+	it('should throw if no audit is configured', function() {
+		assert.throws(
+			function() {
+				axe.reset(function() {}, function() {});
+			},
+			Error,
+			/^No audit configured/
+		);
 	});
 
-	it('should restore the default configuration', function () {
+	it('should restore the default configuration', function() {
 		axe._load({
 			data: {
 				rules: {
 					bob: {
-						'knows': 'not-joe'
+						knows: 'not-joe'
 					}
 				}
 			},
-			rules: [{
-				id: 'bob',
-				selector: 'fail'
-			}],
+			rules: [
+				{
+					id: 'bob',
+					selector: 'fail'
+				}
+			],
 			reporter: 'v2'
 		});
 		assert.lengthOf(axe._audit.rules, 1);
@@ -39,13 +45,15 @@ describe('axe.reset', function () {
 		assert.equal(axe._audit.reporter, 'v2');
 
 		axe.configure({
-			rules: [{
-				id: 'bob',
-				selector: 'pass',
-				metadata: {
-					knows: 'joe'
+			rules: [
+				{
+					id: 'bob',
+					selector: 'pass',
+					metadata: {
+						knows: 'joe'
+					}
 				}
-			}],
+			],
 			reporter: 'raw'
 		});
 		assert.lengthOf(axe._audit.rules, 1);
@@ -64,5 +72,4 @@ describe('axe.reset', function () {
 		assert.equal(axe._audit.reporter, 'v2');
 		assert.equal(axe._audit.data.rules.bob.knows, 'not-joe');
 	});
-
 });

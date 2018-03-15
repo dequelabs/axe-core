@@ -1,13 +1,18 @@
 /*eslint max-statements: 0 */
-describe('utils.escapeSelector', function () {
+describe('utils.escapeSelector', function() {
 	'use strict';
 	var escapeSelector = axe.utils.escapeSelector;
 
-	it('should serialize strings based on CSSOM spec', function () {
-
-		assert.throws(function () { escapeSelector('\0'); }, Error);
-		assert.throws(function () { escapeSelector('a\0'); }, Error);
-		assert.throws(function () { escapeSelector('a\0b'); }, Error);
+	it('should serialize strings based on CSSOM spec', function() {
+		assert.throws(function() {
+			escapeSelector('\0');
+		}, Error);
+		assert.throws(function() {
+			escapeSelector('a\0');
+		}, Error);
+		assert.throws(function() {
+			escapeSelector('a\0b');
+		}, Error);
 
 		assert.equal(escapeSelector(), 'undefined');
 		assert.equal(escapeSelector(true), 'true');
@@ -55,8 +60,14 @@ describe('utils.escapeSelector', function () {
 		assert.equal(escapeSelector('\x80\x2D\x5F\xA9'), '\\80 \x2D\x5F\xA9');
 		assert.equal(escapeSelector('\xA0\xA1\xA2'), '\xA0\xA1\xA2');
 		assert.equal(escapeSelector('a0123456789b'), 'a0123456789b');
-		assert.equal(escapeSelector('abcdefghijklmnopqrstuvwxyz'), 'abcdefghijklmnopqrstuvwxyz');
-		assert.equal(escapeSelector('ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+		assert.equal(
+			escapeSelector('abcdefghijklmnopqrstuvwxyz'),
+			'abcdefghijklmnopqrstuvwxyz'
+		);
+		assert.equal(
+			escapeSelector('ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+			'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+		);
 
 		assert.equal(escapeSelector('\x20\x21\x78\x79'), '\\ \\!xy');
 
@@ -65,7 +76,5 @@ describe('utils.escapeSelector', function () {
 		// lone surrogates
 		assert.equal(escapeSelector('\uDF06'), '\uDF06');
 		assert.equal(escapeSelector('\uD834'), '\uD834');
-
 	});
-
 });

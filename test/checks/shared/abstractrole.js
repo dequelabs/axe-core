@@ -1,25 +1,25 @@
-describe('abstractrole', function () {
+describe('abstractrole', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
 
-	afterEach(function () {
+	afterEach(function() {
 		fixture.innerHTML = '';
 	});
 
-	it('should return false if applied to a concrete role', function () {
+	it('should return false if applied to a concrete role', function() {
 		fixture.innerHTML = '<div id="target" role="alert">Contents</div>';
 		var node = fixture.querySelector('#target');
 		assert.isFalse(checks.abstractrole.evaluate(node, 'radio'));
 	});
 
-	it('should return false if applied to a nonsensical role', function () {
+	it('should return false if applied to a nonsensical role', function() {
 		fixture.innerHTML = '<div id="target" role="foo">Contents</div>';
 		var node = fixture.querySelector('#target');
 		assert.isFalse(checks.abstractrole.evaluate(node, 'radio'));
 	});
 
-	it('should return true if applied to an abstract role', function () {
+	it('should return true if applied to an abstract role', function() {
 		fixture.innerHTML = '<div id="target" role="widget">Contents</div>';
 		var node = fixture.querySelector('#target');
 		assert.isTrue(checks.abstractrole.evaluate(node, 'radio'));
