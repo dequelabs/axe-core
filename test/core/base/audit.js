@@ -32,20 +32,24 @@ describe('Audit', function () {
 	var mockRules = [{
 		id: 'positive1',
 		selector: 'input',
+		tags: ['positive'],
 		any: [{
 			id: 'positive1-check1',
 		}]
 	}, {
 		id: 'positive2',
 		selector: '#monkeys',
+		tags: ['positive'],
 		any: ['positive2-check1']
 	}, {
 		id: 'negative1',
 		selector: 'div',
+		tags: ['negative'],
 		none: ['negative1-check1']
 	}, {
 		id: 'positive3',
 		selector: 'blink',
+		tags: ['positive'],
 		any: ['positive3-check1']
 	}];
 
@@ -621,14 +625,14 @@ describe('Audit', function () {
 			}, isNotCalled);
 		});
 
-		it('should run audit.validateOptions to ensure valid input', function () {
+		it('should run audit.normalizeOptions to ensure valid input', function () {
 			fixture.innerHTML = '<input type="text" aria-label="monkeys">' +
 				'<div id="monkeys">bananas</div>' +
 				'<input aria-labelledby="monkeys" type="text">' +
 				'<blink>FAIL ME</blink>';
 			var checked = 'options not validated';
 
-			a.validateOptions = function () {
+			a.normalizeOptions = function () {
 				checked = 'options validated';
 			};
 
@@ -687,27 +691,108 @@ describe('Audit', function () {
 		});
 	});
 
-	describe('Audit#validateOptions', function () {
+	describe('Audit#normalizeOptions', function () {
 
 		it('returns the options object when it is valid', function () {
 			var opt = {
 				runOnly: {
 					type: 'rule',
-					value: ['positive1', 'positive2']
+					values: ['positive1', 'positive2']
 				},
 				rules: {
 					negative1: { enabled: false }
 				}
 			};
-			assert(a.validateOptions(opt), opt);
+			assert(a.normalizeOptions(opt), opt);
+		});
+
+		it('allows `value` as alternative to `values`', function () {
+			var opt = {
+				runOnly: {
+					type: 'rule',
+					value: ['positive1', 'positive2']
+				}
+			};
+			var out = a.normalizeOptions(opt)
+			assert.deepEqual(out.runOnly.values, ['positive1', 'positive2']);
+			assert.isUndefined(out.runOnly.value);
+		});
+
+		it('allows type: rules as an alternative to type: rule', function () {
+			var opt = {
+				runOnly: {
+					type: 'rules',
+					values: ['positive1', 'positive2']
+				}
+			};
+			assert(a.normalizeOptions(opt).runOnly.type, 'rule');
+		});
+
+		it('allows type: tags as an alternative to type: tag', function () {
+			var opt = {
+				runOnly: {
+					type: 'tags',
+					values: ['positive']
+				}
+			};
+			assert(a.normalizeOptions(opt).runOnly.type, 'tag');
+		});
+
+		it('allows type: undefined as an alternative to type: tag', function () {
+			var opt = {
+				runOnly: {
+					values: ['positive']
+				}
+			};
+			assert(a.normalizeOptions(opt).runOnly.type, 'tag');
+		});
+
+		it('allows runOnly as an array as an alternative to type: tag', function () {
+			var opt = { runOnly: ['positive', 'negative'] };
+			var out = a.normalizeOptions(opt);
+			assert(out.runOnly.type, 'tag');
+			assert.deepEqual(out.runOnly.values, ['positive', 'negative']);
+		});
+
+		it('throws an error runOnly.values not an array', function () {
+			assert.throws(function () {
+				a.normalizeOptions({
+					runOnly: {
+						type: 'rule',
+						values: { badProp: 'badValue' }
+					}
+				});
+			});
+		});
+
+		it('throws an error runOnly.values an empty', function () {
+			assert.throws(function () {
+				a.normalizeOptions({
+					runOnly: {
+						type: 'rule',
+						values: []
+					}
+				});
+			});
+		});
+
+		it('throws an error runOnly.type is unknown', function () {
+			assert.throws(function () {
+				a.normalizeOptions({
+					runOnly: {
+						type: 'something-else',
+						values: ['wcag2aa']
+					}
+				});
+			});
 		});
 
 		it('throws an error when option.runOnly has an unknown rule', function () {
 			assert.throws(function () {
-				a.validateOptions({
+				a.normalizeOptions({
 					runOnly: {
 						type: 'rule',
-						value: ['frakeRule']
+						values: ['frakeRule']
 					}
 				});
 			});
@@ -715,10 +800,10 @@ describe('Audit', function () {
 
 		it('throws an error when option.runOnly has an unknown tag', function () {
 			assert.throws(function () {
-				a.validateOptions({
+				a.normalizeOptions({
 					runOnly: {
 						type: 'tags',
-						value: ['fakeTag']
+						values: ['fakeTag']
 					}
 				});
 			});
@@ -726,7 +811,7 @@ describe('Audit', function () {
 
 		it('throws an error when option.rules has an unknown rule', function () {
 			assert.throws(function () {
-				a.validateOptions({
+				a.normalizeOptions({
 					rules: {
 						fakeRule: { enabled: false}
 					}
