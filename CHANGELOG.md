@@ -1,3 +1,49 @@
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/dequelabs/axe-core/compare/v3.0.0-beta.2...v3.0.0) (2018-03-19)
+
+
+### Bug Fixes
+
+* Allow exclusion of Shadow DOM content ([cc66eb2](https://github.com/dequelabs/axe-core/commit/cc66eb2))
+* Avoid flatTree memory leak ([a902e80](https://github.com/dequelabs/axe-core/commit/a902e80))
+* **main-is-top-level:** Rename check to landmark-is-top-level for greater reuse ([b405af1](https://github.com/dequelabs/axe-core/commit/b405af1))
+* Avoid timing issue with axe cleanup method ([24ea6a7](https://github.com/dequelabs/axe-core/commit/24ea6a7))
+* correct misnamed check ([1e709e0](https://github.com/dequelabs/axe-core/commit/1e709e0))
+* Correct runOnly object for TypeScript definition ([571e984](https://github.com/dequelabs/axe-core/commit/571e984))
+* **has-at-least-one-main:** Rename check to page-has-main, for reusability ([9a9c283](https://github.com/dequelabs/axe-core/commit/9a9c283))
+* **has-no-more-than-one-main:** Rename check to page-no-duplicate for better reuse ([e75324b](https://github.com/dequelabs/axe-core/commit/e75324b))
+* **region:** Ignore forms without accessible name as landmarks ([8ad2718](https://github.com/dequelabs/axe-core/commit/8ad2718))
+* **rule:** skip-link rule doesn't decode URI encoded href's ([818b5cd](https://github.com/dequelabs/axe-core/commit/818b5cd))
+* Ensure all rules have a category tag ([d61e67d](https://github.com/dequelabs/axe-core/commit/d61e67d))
+* make getSelector work with URIs that cannot be shortened ([a113555](https://github.com/dequelabs/axe-core/commit/a113555))
+
+
+### Features
+
+* Make aria-level required with role=heading [#740](https://github.com/dequelabs/axe-core/issues/740) ([64b743f](https://github.com/dequelabs/axe-core/commit/64b743f))
+* **aria:** allow DPUB ARIA roles ([70b48f6](https://github.com/dequelabs/axe-core/commit/70b48f6))
+* **frame-tested:** Use this new rule to test if all frames are available, instead of axe.log ([83cd17d](https://github.com/dequelabs/axe-core/commit/83cd17d))
+* **landmark-contentinfo-is-top-level:** add rule ensuring top level contentinfo ([5692e7d](https://github.com/dequelabs/axe-core/commit/5692e7d))
+* **landmark-no-more-than-one-banner:** add rule ensuring no more than one banner ([6617800](https://github.com/dequelabs/axe-core/commit/6617800))
+* **landmark-no-more-than-one-contentinfo:** add rule ensuring no more than one contentinfo ([82217ef](https://github.com/dequelabs/axe-core/commit/82217ef))
+* **page-has-heading-one:** Added new best-practice rule ([cb8f261](https://github.com/dequelabs/axe-core/commit/cb8f261))
+* **rules:** add new rule aria-dpub-role-fallback ([9470c02](https://github.com/dequelabs/axe-core/commit/9470c02))
+* Make options.runOnly more forgiving about plurality ([fa81f9d](https://github.com/dequelabs/axe-core/commit/fa81f9d))
+* Translated all 3.0 rules to Japanese ([3862e7e](https://github.com/dequelabs/axe-core/commit/3862e7e))
+
+
+### BREAKING CHANGES
+
+* Incorrect use of runOnly now throws errors
+* **main-is-top-level:** The check main-is-top-level is no longer available
+* **has-at-least-one-main:** Original has-at-least-one-main check is no longer available
+
+
+
 <a name="3.0.0-beta.3"></a>
 # [3.0.0-beta.3](https://github.com/dequelabs/axe-core/compare/v3.0.0-beta.2...v3.0.0-beta.3) (2018-03-08)
 
