@@ -44,4 +44,10 @@ describe('skip-link', function () {
 		var node = fixture.querySelector('a');
 		assert.isUndefined(checks['skip-link'].evaluate(node));
 	});
+
+	it('should return true if the URI encoded href points to an element with an ID', function () {
+		fixture.innerHTML = '<a href="#%3Ctarget%3E">Click Here</a><h1 id="&lt;target&gt;">Introduction</h1>';
+		var node = fixture.querySelector('a');
+		assert.isTrue(checks['skip-link'].evaluate(node));
+	});
 });

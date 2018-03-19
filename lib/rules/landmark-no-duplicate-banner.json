@@ -2,6 +2,7 @@
   "id": "landmark-no-duplicate-banner",
   "selector": "html",
   "tags": [
+    "cat.semantics",
     "best-practice"
   ],
   "metadata": {

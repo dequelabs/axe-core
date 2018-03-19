@@ -132,7 +132,7 @@ describe('reporters - v1', function() {
 		});
 		orig = axe._runRules;
 		axe._runRules = function(ctxt, options, cb) {
-			cb(results);
+			cb(results, function noop () {});
 		};
 	});
 

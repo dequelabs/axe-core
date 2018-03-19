@@ -2,6 +2,7 @@
   "id": "page-has-heading-one",
   "selector": "html",
   "tags": [
+    "cat.semantics",
     "best-practice"
   ],
   "metadata": {
