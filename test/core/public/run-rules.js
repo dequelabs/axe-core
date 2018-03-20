@@ -852,7 +852,7 @@ describe('runRules', function() {
 		);
 	});
 
-	it('should clear up axe._tree / axe._selectorData after resolving', function(done) {
+	it('should return a cleanup method', function(done) {
 		axe._load({
 			rules: [
 				{
@@ -875,14 +875,14 @@ describe('runRules', function() {
 		runRules(
 			document,
 			{},
-			function resolve() {
+			function resolve(out, cleanup) {
 				assert.isDefined(axe._tree);
 				assert.isDefined(axe._selectorData);
-				setTimeout(function() {
-					assert.isUndefined(axe._tree);
-					assert.isUndefined(axe._selectorData);
-					done();
-				}, 10);
+
+				cleanup();
+				assert.isUndefined(axe._tree);
+				assert.isUndefined(axe._selectorData);
+				done();
 			},
 			isNotCalled
 		);
@@ -901,23 +901,11 @@ describe('runRules', function() {
 
 		createFrames(function() {
 			setTimeout(function() {
-				runRules(
-					document,
-					{},
-					function() {
-						assert.ok(false, 'You shall not pass!');
-						done();
-					},
-					function() {
-						assert.isDefined(axe._tree);
-						assert.isDefined(axe._selectorData);
-						setTimeout(function() {
-							assert.isUndefined(axe._tree);
-							assert.isUndefined(axe._selectorData);
-							done();
-						}, 10);
-					}
-				);
+				runRules(document, {}, isNotCalled, function() {
+					assert.isUndefined(axe._tree);
+					assert.isUndefined(axe._selectorData);
+					done();
+				});
 			}, 100);
 		});
 	});

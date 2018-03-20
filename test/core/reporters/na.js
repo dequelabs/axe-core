@@ -106,7 +106,7 @@ describe('reporters - na', function() {
 		});
 		orig = axe._runRules;
 		axe._runRules = function(ctxt, options, cb) {
-			cb(results);
+			cb(results, function noop() {});
 		};
 	});
 
