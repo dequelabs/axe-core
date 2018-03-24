@@ -104,7 +104,6 @@ To run tests:
 ```
 grunt test
 ```
->Note: Firefox 47 is not compatible with Selenium Webdriver. To run tests, you can [downgrade to Firefox 46](https://ftp.mozilla.org/pub/firefox/releases/) until 47.0.1 comes out.
 
 To build the package:
 
