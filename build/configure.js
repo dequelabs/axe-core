@@ -13,7 +13,7 @@ var descriptionHeaders = '| Rule ID | Description | Tags | Enabled by default |\
 dot.templateSettings.strip = false;
 
 function getLocale(grunt, options) {
-	var locale, localeFile;
+	var localeFile;
 	if (options.locale) {
 		localeFile = './locales/' + options.locale + '.json';
 	}
