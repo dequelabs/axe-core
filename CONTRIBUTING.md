@@ -43,7 +43,7 @@ We expect all code to be 100% covered by tests. We don't have or want code cover
 
 Functions should contain a preceding comment block with [jsdoc](http://usejsdoc.org/) style documentation of the function. For example:
 
-```
+```javascript
 /**
  * Runs the Audit; which in turn should call `run` on each rule.
  * @async
@@ -55,7 +55,7 @@ Functions should contain a preceding comment block with [jsdoc](http://usejsdoc.
 
 Classes should contain a jsdoc comment block for each attribute. For example:
 
-```
+```javascript
 /**
  * Constructor for the result of checks
  * @param {Object} check CheckResult specification
@@ -95,20 +95,20 @@ In order to get going, fork and clone the repository. Then, if you do not have [
 
 Once the basic infrastructure is installed, from the repository root, do the following:
 
-```
+```console
 npm install
 ```
 
 To run tests:
 
-```
+```console
 grunt test
 ```
 >Note: Firefox 47 is not compatible with Selenium Webdriver. To run tests, you can [downgrade to Firefox 46](https://ftp.mozilla.org/pub/firefox/releases/) until 47.0.1 comes out.
 
 To build the package:
 
-```
+```console
 grunt build
 ```
 
@@ -119,12 +119,14 @@ grunt build
 The TypeScript definition file for axe-core is distributed with this module and can be found in [axe.d.ts](./axe.d.ts). It currently supports TypeScript 2.0+.
 
 To maintain aXe support for TypeScript you must first install it (globally recommended):
-```
+
+```console
 sudo npm -g install typescript
 ```
 
 Once that's installed, you can run TypeScript definition tests (with the optional `--noImplicitAny` flag):
-```
+
+```console
 tsc --noImplicitAny typings/axe-core/axe-core-tests.ts
 ```
 
@@ -155,13 +157,13 @@ Start the build using the "Retry the build with SSH enabled" option in the Circl
 
 Copy the SSH command and add the -X flag to it for example
 
-```
+```console
 ssh -X -p 64605 ubuntu@13.58.157.61
 ```
 
 When you login, set up the environment and start the chrome browser
 
-```
+```console
 export DISPLAY=localhost:10.0
 /opt/google/chrome/chrome
 ```
@@ -170,7 +172,7 @@ export DISPLAY=localhost:10.0
 
 Edit the ~/.Xauthority file and just save it with the following commands
 
-```
+```console
 vi ~/.Xauthority
 :wq
 ```
@@ -179,7 +181,7 @@ vi ~/.Xauthority
 
 Log into a second ssh terminal (without -X) and execute the following commands
 
-```
+```console
 cd axe-core
 grunt connect watch
 ```
