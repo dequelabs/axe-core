@@ -1,5 +1,5 @@
 /*eslint-env node */
-/*eslint max-statements: ["error", 20] */
+/*eslint max-statements: ["error", 20], max-len: off */
 'use strict';
 
 var clone = require('clone');
