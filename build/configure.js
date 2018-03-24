@@ -107,26 +107,6 @@ function buildRules(grunt, options, commons, callback) {
 			return v;
 		}
 
-		function parseChecks(collection) {
-			return collection.map(function (check) {
-				var c = {};
-				var id = typeof check === 'string' ? check : check.id;
-				var definition = clone(findCheck(checks, id));
-				if (!definition) {
-					grunt.log.error('check ' + id + ' not found');
-				}
-				c.options = check.options || definition.options;
-				c.id = id;
-
-				if (definition.metadata && !metadata.checks[id]) {
-					metadata.checks[id] = parseMetaData(definition, 'checks');
-				}
-
-				return c.options === undefined ? id : c;
-			});
-
-		}
-
 		var metadata = {
 			rules: {},
 			checks: {}
@@ -146,6 +126,26 @@ function buildRules(grunt, options, commons, callback) {
 					check.metadata.messages = locale.checks[check.id]
 				}
 			})
+		}
+
+		function parseChecks(collection) {
+			return collection.map(function (check) {
+				var c = {};
+				var id = typeof check === 'string' ? check : check.id;
+				var definition = clone(findCheck(checks, id));
+				if (!definition) {
+					grunt.log.error('check ' + id + ' not found');
+				}
+				c.options = check.options || definition.options;
+				c.id = id;
+
+				if (definition.metadata && !metadata.checks[id]) {
+					metadata.checks[id] = parseMetaData(definition, 'checks');
+				}
+
+				return c.options === undefined ? id : c;
+			});
+
 		}
 
 		rules.map(function (rule) {
