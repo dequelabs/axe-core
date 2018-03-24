@@ -44,9 +44,9 @@ The actual testing of elements in axe-core is done by checks. A rule has one or 
 | options            | Configurable value for the check
 | after              | Cleanup function, run after check is done
 | metadata impact    | "minor", "serious", "critical"
-| metadata pass      | Describes why the check passed
-| metadata fail      | Describes why the check failed
-| metadata incomplete| Describes why the check didn’t complete
+| metadata.messages.pass      | Describes why the check passed
+| metadata.messages.fail      | Describes why the check failed
+| metadata.messages.incomplete| Describes why the check didn’t complete
 
 Incomplete results occur when axe-core can’t produce a clear pass or fail result,
 giving users the opportunity to review it manually. Incomplete messages can take
