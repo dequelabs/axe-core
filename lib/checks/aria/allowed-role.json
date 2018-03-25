@@ -2,8 +2,8 @@
   "id": "aria-allowed-role",
   "evaluate": "allowed-role.js",
 	"options": {
-		"allowImplicit": false,
-		"disable": []
+		"allowImplicit": true,
+		"ignoredTags": []
 	},
   "metadata": {
     "impact": "minor",
