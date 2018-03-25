@@ -40,7 +40,7 @@ The actual testing of elements in axe-core is done by checks. A rule has one or 
 | Prop. Name         | Description
 |--------------------|-----------------
 | id                 | Unique identifier for the check
-| evaluate           | Evaluating function, returning a boolean valuet
+| evaluate           | Evaluating function, returning a boolean value
 | options            | Configurable value for the check
 | after              | Cleanup function, run after check is done
 | metadata impact    | "minor", "serious", "critical"
