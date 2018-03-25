@@ -27,8 +27,8 @@ The actual testing of elements in axe-core is done by checks. A rule has one or 
 | matches              | Function to further filter the outcome of the selector
 | excludeHidden        | Should hidden elements be excluded
 | all                  | Checks that must all return true
-| any                  | Checks that must all return false
-| none                 | Checks of which at least one must return true
+| any                  | Checks of which at least one must return true
+| none                 | Checks that must all return false
 | pageLevel            | Should the rule only run on the main window
 | enabled              | Does the rule run by default
 | tags                 | Grouping for the rule, such as wcag2a, best-practice
@@ -40,7 +40,7 @@ The actual testing of elements in axe-core is done by checks. A rule has one or 
 | Prop. Name         | Description
 |--------------------|-----------------
 | id                 | Unique identifier for the check
-| evaluate           | Evaluating function, returning a boolean value
+| evaluate           | Evaluating function, returning a boolean valuet
 | options            | Configurable value for the check
 | after              | Cleanup function, run after check is done
 | metadata impact    | "minor", "serious", "critical"
