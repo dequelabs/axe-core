@@ -29,7 +29,7 @@ Add your project/integration to this file and submit a pull request.
 1. [Ghost-Axe](https://www.npmjs.com/package/ghost-axe)
 1. [ember-a11y-testing](https://www.npmjs.com/package/ember-a11y-testing)
 1. [Protractor accessibility plugin](https://github.com/angular/protractor-accessibility-plugin)
-1. [Storybook accessibility addon](https://github.com/jbovenschen/storybook-addon-a11y)
+1. [storybook-addon-a11y](https://github.com/storybooks/storybook/tree/master/addons/a11y)
 1. [Intern](https://github.com/theintern/intern-a11y)
 1. [Protractor-axe-report Plugin](https://github.com/E1Edatatracker/protractor-axe-report-plugin)
 1. [Jest-axe](https://github.com/nickcolley/jest-axe)
