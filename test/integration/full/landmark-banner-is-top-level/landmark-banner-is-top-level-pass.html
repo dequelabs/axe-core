@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" id="pass1">
+<head>
+	<title>landmark-banner-is-top-level test</title>
+	<meta charset="utf8">
+	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
+	<script src="/node_modules/mocha/mocha.js"></script>
+	<script src="/node_modules/chai/chai.js"></script>
+	<script src="/axe.js"></script>
+	<script>
+		mocha.setup({
+			timeout: 10000,
+			ui: 'bdd'
+		});
+		var assert = chai.assert;
+	</script>
+</head>
+<body>
+	<div role="navigation">
+		<p>This div has role navigation</p>
+	</div>
+	<div role="banner">
+		<p>This banner content is not within another landmark</p>
+	</div>
+	<div role="complementary">
+		<p>This div has role complementary</p>
+	</div>
+	<div role="search">
+		<p>This div has role search</p>
+	</div>
+	<div role="form">
+		<p>This div has role form<p>
+	</div>
+	<iframe id="frame1" src="frames/level1.html"></iframe>
+	<div id="mocha"></div>
+	<script src="landmark-banner-is-top-level-pass.js"></script>
+	<script src="/test/integration/adapter.js"></script>
+</body>
+</html>

@@ -1,4 +1,5 @@
-//jshint maxcomplexity: 12, maxstatements: false, camelcase: false
+/*eslint complexity: ["error",12], max-statements: ["error", 30],
+	camelcase: ["error", {"properties": "never"}]*/
 var testConfig = require('./build/test/config');
 
 module.exports = function (grunt) {
@@ -9,7 +10,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-eslint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-retire');
@@ -20,10 +21,10 @@ module.exports = function (grunt) {
 	var langs;
 	if (grunt.option('lang')) {
 		langs = (grunt.option('lang') || '')
-		.split(/[,;]/g).map(function (lang) {
-			lang = lang.trim();
-			return (lang !== 'en' ? '.' + lang : '');
-		});
+			.split(/[,;]/g).map(function (lang) {
+				lang = lang.trim();
+				return (lang !== 'en' ? '.' + lang : '');
+			});
 
 	} else if (grunt.option('all-lang')) {
 		var localeFiles = require('fs').readdirSync('./locales');
@@ -304,11 +305,11 @@ module.exports = function (grunt) {
 			var driverTests = {};
 
 			['firefox', 'chrome', 'ie', 'safari', 'edge', 'chrome-mobile']
-			.forEach(function (browser) {
-				driverTests[browser] = {
-					options: Object.assign({ browser: browser }, options)
-				};
-			});
+				.forEach(function (browser) {
+					driverTests[browser] = {
+						options: Object.assign({ browser: browser }, options)
+					};
+				});
 			return driverTests;
 		}()),
 		connect: {
@@ -320,10 +321,10 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		jshint: {
+		eslint: {
 			axe: {
 				options: {
-					jshintrc: true,
+					eslintrc: true,
 					reporter: grunt.option('report') ? 'checkstyle' : undefined,
 					reporterOutput: grunt.option('report') ? 'tmp/lint.xml' : undefined
 				},
@@ -338,19 +339,19 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('build', ['clean', 'jshint', 'validate', 'concat:commons', 'configure',
+	grunt.registerTask('build', ['clean', 'eslint', 'validate', 'concat:commons', 'configure',
 		 'babel', 'concat:engine', 'uglify']);
 
 	grunt.registerTask('test', ['build', 'retire', 'testconfig', 'fixture', 'connect',
-		'mocha', 'parallel', 'jshint']);
+		'mocha', 'parallel', 'eslint']);
 
 	grunt.registerTask('ci-build', ['build', 'retire', 'testconfig', 'fixture', 'connect',
-	 'parallel', 'jshint']);
+	 'parallel', 'eslint']);
 
 	grunt.registerTask('test-fast', ['build', 'testconfig', 'fixture', 'connect',
-		'mocha', 'jshint']);
+		'mocha', 'eslint']);
 
-	grunt.registerTask('translate', ['clean', 'jshint', 'validate', 'concat:commons', 'add-locale']);
+	grunt.registerTask('translate', ['clean', 'eslint', 'validate', 'concat:commons', 'add-locale']);
 
 	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
 

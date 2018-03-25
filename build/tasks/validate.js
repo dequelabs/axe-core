@@ -1,4 +1,4 @@
-/*jshint node: true */
+/*eslint-env node */
 'use strict';
 
 var revalidator = require('revalidator').validate,
@@ -214,14 +214,14 @@ function createSchemas() {
 function validateFiles(grunt, files, schema) {
 	var valid = true;
 	files.forEach(function (f) {
-		f.src.forEach(function (path) {
-			var file = grunt.file.readJSON(path);
-			file._path = path;
+		f.src.forEach(function (pathArg) {
+			var file = grunt.file.readJSON(pathArg);
+			file._path = pathArg;
 			var result = revalidator(file, schema);
 
 			if (!result.valid) {
 				result.errors.forEach(function (err) {
-					grunt.log.error(path, err.property + ' ' + err.message);
+					grunt.log.error(pathArg, err.property + ' ' + err.message);
 				});
 				valid = false;
 			} else {
@@ -234,15 +234,16 @@ function validateFiles(grunt, files, schema) {
 
 module.exports = function (grunt) {
 	grunt.registerMultiTask('validate',
-	'Task for validating API schema for tools, checks and rules',
-	function () {
-		var schemas = createSchemas();
-		var options = this.options();
-		if (!options.type || !schemas[options.type]) {
-			grunt.log.error('Please specify a valid type to validate: ' + Object.keys(schemas));
-			return false;
+		'Task for validating API schema for tools, checks and rules',
+		function () {
+			var schemas = createSchemas();
+			var options = this.options();
+			if (!options.type || !schemas[options.type]) {
+				grunt.log.error('Please specify a valid type to validate: ' + Object.keys(schemas));
+				return false;
+			}
+			validateFiles(grunt, this.files, schemas[options.type]);
+			schemas[options.type].seen = {};
 		}
-		validateFiles(grunt, this.files, schemas[options.type]);
-		schemas[options.type].seen = {};
-	});
+	);
 };

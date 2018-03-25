@@ -1,4 +1,5 @@
-/*jshint node: true, maxstatements: 20 */
+/*eslint-env node */
+/*eslint max-statements: ["error", 20] */
 'use strict';
 
 var clone = require('clone');
@@ -181,8 +182,7 @@ function buildRules(grunt, options, commons, callback) {
 				rules: rules,
 				checks: checks,
 				commons: result.commons,
-				tools: result.tools,
-				style: result.style
+				tools: result.tools
 			}, blacklist)),
 			descriptions: descriptionHeaders + descriptions.map(function (row) {
 				return '| ' + row.join(' | ') + ' |';

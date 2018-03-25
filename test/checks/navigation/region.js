@@ -102,6 +102,57 @@ describe('region', function () {
 		assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('main')]);
 	});
 
+	it('returns false for content outside of form tags with accessible names', function () {
+		var checkArgs = checkSetup('<div id="target"><p>Text</p><form aria-label="form"></form></div>');
+
+		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.lengthOf(checkContext._relatedNodes, 1);
+		assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('p')]);
+	});
+
+	it('ignores unlabeled forms as they are not landmarks', function () {
+		var checkArgs = checkSetup('<div id="target"><p>Text</p><form><fieldset>foo</fieldset></form></div>');
+
+		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.lengthOf(checkContext._relatedNodes, 2);
+		assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('p'), fixture.querySelector('fieldset')]);
+	});
+
+	it('treats <forms> with aria label as landmarks', function () {
+		var checkArgs = checkSetup('<form id="target" aria-label="foo"><p>This is random content.</p></form>');
+		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+	});
+
+	it('treats role=forms with aria label as landmarks', function () {
+		var checkArgs = checkSetup('<div role="form" id="target" aria-label="foo"><p>This is random content.</p></form>');
+		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+	});
+
+	it('treats forms without aria label as not a landmarks', function () {
+		var checkArgs = checkSetup('<form id="target"><p>This is random content.</p></form>');
+		
+		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.lengthOf(checkContext._relatedNodes, 1);
+		assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('p')]);
+	});
+
+	it('treats forms with an empty aria label as not a landmarks', function () {
+		var checkArgs = checkSetup('<form id="target" aria-label=" "><p>This is random content.</p></form>');
+		
+		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.lengthOf(checkContext._relatedNodes, 1);
+		assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('p')]);
+	});
+
+	it('treats forms with an empty aria label as not a landmarks', function () {
+		var checkArgs = checkSetup('<div role="form" id="target"><p>This is random content.</p></form>');
+		
+		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.lengthOf(checkContext._relatedNodes, 1);
+		assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('p')]);
+	});
+
+
 	(shadowSupport.v1 ? it : xit)('should test Shadow tree content', function () {
 		var div = document.createElement('div');
 		var shadow = div.attachShadow({ mode: 'open' });

@@ -22,10 +22,11 @@ describe('table.traverse', function () {
 		var expect = ['1b', '1c'];
 
 		table.traverse({ x:1, y:0 }, topRight, dummyTable,
-				function (cell) {
-			assert.equal(cell, expect[iterations]);
-			iterations += 1;
-		});
+			function (cell) {
+				assert.equal(cell, expect[iterations]);
+				iterations += 1;
+			}
+		);
 		assert.equal(iterations, expect.length);
 	});
 
@@ -40,10 +41,11 @@ describe('table.traverse', function () {
 		var expect = ['2a', '3a'];
 
 		table.traverse({ x:0, y:1 }, topRight, dummyTable,
-				function (cell) {
-			assert.equal(cell, expect[iterations]);
-			iterations += 1;
-		});
+			function (cell) {
+				assert.equal(cell, expect[iterations]);
+				iterations += 1;
+			}
+		);
 		assert.equal(iterations, expect.length);
 	});
 
@@ -52,10 +54,11 @@ describe('table.traverse', function () {
 		var expect = ['3b', '3a'];
 
 		table.traverse({ x:-1, y:0 }, bottomLeft, dummyTable,
-				function (cell) {
-			assert.equal(cell, expect[iterations]);
-			iterations += 1;
-		});
+			function (cell) {
+				assert.equal(cell, expect[iterations]);
+				iterations += 1;
+			}
+		);
 		assert.equal(iterations, expect.length);
 	});
 
@@ -64,10 +67,11 @@ describe('table.traverse', function () {
 		var expect = ['2c', '1c'];
 
 		table.traverse({ x:0, y:-1 }, bottomLeft, dummyTable,
-				function (cell) {
-			assert.equal(cell, expect[iterations]);
-			iterations += 1;
-		});
+			function (cell) {
+				assert.equal(cell, expect[iterations]);
+				iterations += 1;
+			}
+		);
 		assert.equal(iterations, expect.length);
 	});
 
@@ -75,44 +79,49 @@ describe('table.traverse', function () {
 		var iterations = 0;
 		var expect = ['1b', '1c'];
 		table.traverse('right', topRight, dummyTable,
-				function (cell) {
-			assert.equal(cell, expect[iterations]);
-			iterations += 1;
-		});
+			function (cell) {
+				assert.equal(cell, expect[iterations]);
+				iterations += 1;
+			}
+		);
 
 		iterations = 0;
 		expect = ['2a', '3a'];
 		table.traverse('down', topRight, dummyTable,
-				function (cell) {
-			assert.equal(cell, expect[iterations]);
-			iterations += 1;
-		});
+			function (cell) {
+				assert.equal(cell, expect[iterations]);
+				iterations += 1;
+			}
+		);
 
 		iterations = 0;
 		expect = ['3b', '3a'];
 		table.traverse('left', bottomLeft, dummyTable,
-				function (cell) {
-			assert.equal(cell, expect[iterations]);
-			iterations += 1;
-		});
+			function (cell) {
+				assert.equal(cell, expect[iterations]);
+				iterations += 1;
+			}
+		);
 
 		iterations = 0;
 		expect = ['2c', '1c'];
 		table.traverse('up', bottomLeft, dummyTable,
-				function (cell) {
-			assert.equal(cell, expect[iterations]);
-			iterations += 1;
-		});
+			function (cell) {
+				assert.equal(cell, expect[iterations]);
+				iterations += 1;
+			}
+		);
 	});
 
 	it('stops when the callback returned true', function () {
 		var iterations = 0;
 		table.traverse({ x:1, y:1 }, topRight, dummyTable,
-				function (cell) {
-			assert.equal(cell, '2b'); // or not, to be?
-			iterations += 1;
-			return true;
-		});
+			function (cell) {
+				assert.equal(cell, '2b'); // or not, to be?
+				iterations += 1;
+				return true;
+			}
+		);
 		assert.equal(iterations, 1);
 	});
 
