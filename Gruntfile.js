@@ -2,7 +2,7 @@
 	camelcase: ["error", {"properties": "never"}]*/
 var testConfig = require('./build/test/config');
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 	'use strict';
 
 	grunt.loadNpmTasks('grunt-babel');
@@ -15,24 +15,22 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-retire');
 	grunt.loadNpmTasks('grunt-mocha');
+	grunt.loadNpmTasks('grunt-prettier');
 	grunt.loadTasks('build/tasks');
 	grunt.loadNpmTasks('grunt-parallel');
 
 	var langs;
 	if (grunt.option('lang')) {
-		langs = (grunt.option('lang') || '')
-			.split(/[,;]/g).map(function (lang) {
-				lang = lang.trim();
-				return (lang !== 'en' ? '.' + lang : '');
-			});
-
+		langs = (grunt.option('lang') || '').split(/[,;]/g).map(function(lang) {
+			lang = lang.trim();
+			return lang !== 'en' ? '.' + lang : '';
+		});
 	} else if (grunt.option('all-lang')) {
 		var localeFiles = require('fs').readdirSync('./locales');
-		langs = localeFiles.map(function (file) {
+		langs = localeFiles.map(function(file) {
 			return '.' + file.replace('.json', '');
 		});
 		langs.unshift(''); // Add default
-
 	} else {
 		langs = [''];
 	}
@@ -60,8 +58,10 @@ module.exports = function (grunt) {
 				/** list of files to ignore **/
 				ignorefile: '.retireignore.json' //or '.retireignore.json'
 			},
-			js: ['lib/*.js'], /** Which js-files to scan. **/
-			node: ['./'] /** Which node directories to scan (containing package.json). **/
+			js: ['lib/*.js'] /** Which js-files to scan. **/,
+			node: [
+				'./'
+			] /** Which node directories to scan (containing package.json). **/
 		},
 		clean: ['dist', 'tmp', 'axe.js', 'axe.*.js'],
 		babel: {
@@ -69,20 +69,35 @@ module.exports = function (grunt) {
 				compact: 'false'
 			},
 			core: {
-				files: [{
-					expand: true,
-					cwd: 'lib/core',
-					src: ['**/*.js'],
-					dest: 'tmp/core'
-				}]
+				files: [
+					{
+						expand: true,
+						cwd: 'lib/core',
+						src: ['**/*.js'],
+						dest: 'tmp/core'
+					}
+				]
 			},
 			misc: {
-				files: [{
-					expand: true,
-					cwd: 'tmp',
-					src: ['*.js'],
-					dest: 'tmp'
-				}]
+				files: [
+					{
+						expand: true,
+						cwd: 'tmp',
+						src: ['*.js'],
+						dest: 'tmp'
+					}
+				]
+			}
+		},
+		prettier: {
+			files: {
+				src: [
+					'build/**/*.js',
+					'doc/**/*.js',
+					'lib/**/*.js',
+					'test/**/*.js',
+					'*.js'
+				]
 			}
 		},
 		'update-help': {
@@ -104,7 +119,7 @@ module.exports = function (grunt) {
 					'tmp/core/**/index.js',
 					'tmp/core/**/*.js'
 				],
-				files: langs.map(function (lang, i) {
+				files: langs.map(function(lang, i) {
 					return {
 						src: [
 							'lib/intro.stub',
@@ -134,7 +149,7 @@ module.exports = function (grunt) {
 				options: {
 					tags: grunt.option('tags')
 				},
-				files: langs.map(function (lang) {
+				files: langs.map(function(lang) {
 					return {
 						src: ['<%= concat.commons.dest %>'],
 						dest: {
@@ -152,7 +167,7 @@ module.exports = function (grunt) {
 				dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
 			}
 		},
-		langs : {
+		langs: {
 			generate: {
 				check: 'lib/commons/utils/valid-langs'
 			}
@@ -179,7 +194,7 @@ module.exports = function (grunt) {
 		},
 		uglify: {
 			beautify: {
-				files: langs.map(function (lang, i) {
+				files: langs.map(function(lang, i) {
 					return {
 						src: ['<%= concat.engine.files[' + i + '].dest %>'],
 						dest: '<%= concat.engine.files[' + i + '].dest %>'
@@ -198,7 +213,7 @@ module.exports = function (grunt) {
 				}
 			},
 			minify: {
-				files: langs.map(function (lang, i) {
+				files: langs.map(function(lang, i) {
 					return {
 						src: ['<%= concat.engine.files[' + i + '].dest %>'],
 						dest: './axe' + lang + '.min.js'
@@ -207,7 +222,7 @@ module.exports = function (grunt) {
 				options: {
 					preserveComments: function(node, comment) {
 						// preserve comments that start with a bang
-						return /^!/.test( comment.value );
+						return /^!/.test(comment.value);
 					},
 					mangle: {
 						except: ['commons', 'utils', 'axe', 'window', 'document']
@@ -298,20 +313,21 @@ module.exports = function (grunt) {
 		mocha: testConfig(grunt, {
 			reporter: grunt.option('reporter') || 'Spec'
 		}),
-		'test-webdriver': (function () {
+		'test-webdriver': (function() {
 			var tests = testConfig(grunt);
 			var options = Object.assign({}, tests.unit.options);
 			options.urls = options.urls.concat(tests.integration.options.urls);
 			var driverTests = {};
 
-			['firefox', 'chrome', 'ie', 'safari', 'edge', 'chrome-mobile']
-				.forEach(function (browser) {
+			['firefox', 'chrome', 'ie', 'safari', 'edge', 'chrome-mobile'].forEach(
+				function(browser) {
 					driverTests[browser] = {
 						options: Object.assign({ browser: browser }, options)
 					};
-				});
+				}
+			);
 			return driverTests;
-		}()),
+		})(),
 		connect: {
 			test: {
 				options: {
@@ -329,8 +345,12 @@ module.exports = function (grunt) {
 					reporterOutput: grunt.option('report') ? 'tmp/lint.xml' : undefined
 				},
 				src: [
-					'lib/**/*.js', 'test/**/*.js', 'build/tasks/**/*.js',
-					'doc/**/*.js', '!doc/examples/jest+react/*.js', 'Gruntfile.js',
+					'lib/**/*.js',
+					'test/**/*.js',
+					'build/tasks/**/*.js',
+					'doc/**/*.js',
+					'!doc/examples/jest+react/*.js',
+					'Gruntfile.js',
 					'!**/node_modules/**/*.js'
 				]
 			}
@@ -339,22 +359,74 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('build', ['clean', 'eslint', 'validate', 'concat:commons', 'configure',
-		 'babel', 'concat:engine', 'uglify']);
+	grunt.registerTask('build', [
+		'clean',
+		'eslint',
+		'validate',
+		'concat:commons',
+		'configure',
+		'babel',
+		'concat:engine',
+		'uglify'
+	]);
 
-	grunt.registerTask('test', ['build', 'retire', 'testconfig', 'fixture', 'connect',
-		'mocha', 'parallel', 'eslint']);
+	grunt.registerTask('test', [
+		'build',
+		'retire',
+		'testconfig',
+		'fixture',
+		'connect',
+		'mocha',
+		'parallel',
+		'eslint'
+	]);
 
-	grunt.registerTask('ci-build', ['build', 'retire', 'testconfig', 'fixture', 'connect',
-	 'parallel', 'eslint']);
+	grunt.registerTask('ci-build', [
+		'build',
+		'retire',
+		'testconfig',
+		'fixture',
+		'connect',
+		'parallel',
+		'eslint'
+	]);
 
-	grunt.registerTask('test-fast', ['build', 'testconfig', 'fixture', 'connect',
-		'mocha', 'eslint']);
+	grunt.registerTask('test-fast', [
+		'build',
+		'testconfig',
+		'fixture',
+		'connect',
+		'mocha',
+		'eslint'
+	]);
 
-	grunt.registerTask('translate', ['clean', 'eslint', 'validate', 'concat:commons', 'add-locale']);
+	grunt.registerTask('translate', [
+		'clean',
+		'eslint',
+		'validate',
+		'concat:commons',
+		'add-locale'
+	]);
 
-	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
+	grunt.registerTask('dev', [
+		'build',
+		'testconfig',
+		'fixture',
+		'connect',
+		'watch'
+	]);
 
-	grunt.registerTask('dev:no-lint', ['clean', 'validate', 'concat:commons', 'configure',
-		 'babel', 'concat:engine', 'uglify', 'testconfig', 'fixture', 'connect', 'watch']);
+	grunt.registerTask('dev:no-lint', [
+		'clean',
+		'validate',
+		'concat:commons',
+		'configure',
+		'babel',
+		'concat:engine',
+		'uglify',
+		'testconfig',
+		'fixture',
+		'connect',
+		'watch'
+	]);
 };

@@ -1,18 +1,19 @@
 //@todo better coverage
-describe('dom.getElementCoordinates', function () {
+describe('dom.getElementCoordinates', function() {
 	'use strict';
 	var fixture = document.getElementById('fixture');
 
-	afterEach(function () {
+	afterEach(function() {
 		fixture.innerHTML = '';
 	});
 
-	it('should calculate bounding box based on element position', function () {
+	it('should calculate bounding box based on element position', function() {
 		var el, coords;
 
-		fixture.innerHTML = '<div id="div" style="position: absolute; top: -1px; left: -1px;">' +
+		fixture.innerHTML =
+			'<div id="div" style="position: absolute; top: -1px; left: -1px;">' +
 			'<span id="coords0" style="position:absolute; top: -999px; left: -999px; width: 1000px; height: 1000px;">' +
-				'Absolute</span>' +
+			'Absolute</span>' +
 			'</div>';
 
 		el = document.getElementById('coords0');
@@ -30,13 +31,15 @@ describe('dom.getElementCoordinates', function () {
 		assert.equal(Math.round(coords.top), -1);
 	});
 
-	it('should take into account scroll offsets', function () {
-		var el, coords,
+	it('should take into account scroll offsets', function() {
+		var el,
+			coords,
 			offset = axe.commons.dom.getScrollOffset(window.document);
 
-		fixture.innerHTML = '<div id="div" style="position: absolute; top: -1px; left: -1px;">' +
+		fixture.innerHTML =
+			'<div id="div" style="position: absolute; top: -1px; left: -1px;">' +
 			'<span id="coords0" style="position:absolute; top: -999px; left: -999px; width: 1000px; height: 1000px;">' +
-				'Absolute</span>' +
+			'Absolute</span>' +
 			'</div>';
 
 		el = document.getElementById('coords0');
@@ -58,6 +61,5 @@ describe('dom.getElementCoordinates', function () {
 		assert.closeTo(coords.bottom, 0, 0.5);
 
 		window.scrollTo(offset.left, offset.top);
-
 	});
 });

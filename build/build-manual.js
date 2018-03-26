@@ -6,7 +6,9 @@ var templates = require('./templates');
 var Promise = require('promise');
 
 module.exports = function build(grunt, options, commons, callback) {
-	options.getFiles = options.hasOwnProperty('getFiles') ? options.getFiles : true;
+	options.getFiles = options.hasOwnProperty('getFiles')
+		? options.getFiles
+		: true;
 
 	function parseObject(src) {
 		var files = grunt.file.expand(src);

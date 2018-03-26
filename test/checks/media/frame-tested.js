@@ -1,4 +1,4 @@
-describe('frame-tested', function () {
+describe('frame-tested', function() {
 	'use strict';
 
 	var checkContext = axe.testUtils.MockCheckContext();
@@ -7,58 +7,62 @@ describe('frame-tested', function () {
 	var checkEvaluate = checks['frame-tested'].evaluate.bind(checkContext);
 	var iframe;
 
-	before(function () {
+	before(function() {
 		__respondable = axe.utils.respondable;
-		axe.utils.respondable = function () {
+		axe.utils.respondable = function() {
 			respondableCalls.push(Array.from(arguments));
-		}
+		};
 		iframe = document.createElement('iframe');
 		document.querySelector('#fixture').appendChild(iframe);
 	});
 
-	afterEach(function () {
+	afterEach(function() {
 		respondableCalls = [];
 		checkContext.reset();
-	})
+	});
 
-	after(function () {
+	after(function() {
 		axe.utils.respondable = __respondable;
 	});
 
-	it('correctly calls axe.utils.respondable', function () {
+	it('correctly calls axe.utils.respondable', function() {
 		checkEvaluate(iframe);
 
 		assert.lengthOf(respondableCalls, 1);
-		assert.deepEqual(respondableCalls[0].slice(0,4), 
-			[iframe.contentWindow, 'axe.ping', null, undefined]);
+		assert.deepEqual(respondableCalls[0].slice(0, 4), [
+			iframe.contentWindow,
+			'axe.ping',
+			null,
+			undefined
+		]);
 		assert.isFunction(respondableCalls[0][4]);
 	});
 
-	it('passes if the iframe contains axe-core', function (done) {
+	it('passes if the iframe contains axe-core', function(done) {
 		checkEvaluate(iframe, { timeout: 20 });
-		checkContext._onAsync = function (result) {
+		checkContext._onAsync = function(result) {
 			assert.isTrue(result);
 			done();
-		}
+		};
 		// Respond to the ping
 		respondableCalls[0][4]();
 	});
 
-	it('fails if the iframe does not contain axe-core, and isViolation is true', function (done) {
+	it('fails if the iframe does not contain axe-core, and isViolation is true', function(done) {
 		checkEvaluate(iframe, { timeout: 10, isViolation: true });
 		// Timeout after 10ms
-		checkContext._onAsync = function (result) {
+		checkContext._onAsync = function(result) {
 			assert.isFalse(result);
 			done();
-		}
+		};
 	});
 
-	it('is incomplete if the iframe does not contain axe-core', function (done) {
+	it('is incomplete if the iframe does not contain axe-core', function(done) {
 		checkEvaluate(iframe, { timeout: 10 });
 		// Timeout after 10ms
-		checkContext._onAsync = function (result) {
+		checkContext._onAsync = function(result) {
 			assert.isUndefined(result);
 			done();
-		}
+		};
 	});
 });

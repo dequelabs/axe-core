@@ -1,5 +1,4 @@
-
-describe('group-labelledby-after', function () {
+describe('group-labelledby-after', function() {
 	'use strict';
 
 	function createResult(type, name) {
@@ -11,7 +10,7 @@ describe('group-labelledby-after', function () {
 		};
 	}
 
-	it('should remove duplicate names', function () {
+	it('should remove duplicate names', function() {
 		assert.deepEqual(
 			checks['group-labelledby'].after([
 				createResult('monkey', 'george'),
@@ -32,6 +31,7 @@ describe('group-labelledby-after', function () {
 				createResult('monkey', 'sally'),
 				createResult('ape', 'sally'),
 				createResult('ape', '')
-			]);
+			]
+		);
 	});
 });

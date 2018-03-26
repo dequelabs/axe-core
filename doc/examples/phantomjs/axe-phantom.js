@@ -12,7 +12,7 @@ if (args.length < 2) {
 
 console.log('Testing, please wait...');
 
-page.open(args[1], function (status) {
+page.open(args[1], function(status) {
 	// Check for page load success
 	if (status !== 'success') {
 		console.log('Unable to access network');
@@ -20,22 +20,22 @@ page.open(args[1], function (status) {
 	}
 
 	page.injectJs(PATH_TO_AXE);
-	page.framesName.forEach(function (name) {
+	page.framesName.forEach(function(name) {
 		page.switchToFrame(name);
 		page.injectJs(PATH_TO_AXE);
 	});
 	page.switchToMainFrame();
-	page.evaluateAsync(function () {
+	page.evaluateAsync(function() {
 		/*global axe */
-		axe.run(function (err, results) {
-			if (err)  {
+		axe.run(function(err, results) {
+			if (err) {
 				throw err;
 			}
 			window.callPhantom(results);
 		});
 	});
 
-	page.onCallback = function (msg) {
+	page.onCallback = function(msg) {
 		if (args[2]) {
 			fs.write(args[2], JSON.stringify(msg, null, '  '), 'w');
 		} else {
