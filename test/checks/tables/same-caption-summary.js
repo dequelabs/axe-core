@@ -42,6 +42,20 @@ describe('same-caption-summary', function () {
 		assert.isTrue(checks['same-caption-summary'].evaluate.apply(checkContext, params));
 	});
 
+	it('should return true if summary and caption are the same with mixed casing', function () {
+		var params = checkSetup('<table summary="My Table" id="target">' +
+			'<caption> my table </caption>' +
+			'<thead>' +
+				'<tr><th scope="col">Head</th></tr>' +
+			'</thead>' +
+			'<tbody>' +
+				'<tr><td>Data</td></tr>' +
+			'</tbody>' +
+		'</table>');
+
+		assert.isTrue(checks['same-caption-summary'].evaluate.apply(checkContext, params));
+	});
+
 	(shadowSupport.v1 ? it : xit)('should match slotted caption elements', function () {
 		var params = shadowCheckSetup(
 			'<div>' +
