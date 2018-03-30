@@ -1,0 +1,16 @@
+{
+  "id": "aria-allowed-role",
+	"excludeHidden": false,
+  "selector": "[role]",
+  "tags": [
+    "cat.aria",
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "Ensures all elements with a user-defined role may be used",
+    "help": "ARIA roles used must conform to valid values"
+  },
+  "all": [],
+  "any": ["aria-allowed-role"],
+  "none": []
+}
