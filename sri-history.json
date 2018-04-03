@@ -98,5 +98,9 @@
 	"3.0.0": {
 		"axe.js": "sha256-1wR8RsA0/NYF2caKkmvgOqcCoyZXOZK2q7/EfZ4Y8Fo=",
 		"axe.min.js": "sha256-6SQ3NZobDnpEoUWc8h2u+4G3H2/yzt53VX3nv9PZ8g8="
+	},
+	"3.0.1": {
+		"axe.js": "sha256-Vf/arxSrHppK2X5x6VgBZLJnCy8yK6P6uH99WwzQ30s=",
+		"axe.min.js": "sha256-vMPyo7vifw5RTaVEAlnfwGFa9VyHymsNqanCsHh3Q8c="
 	}
 }
