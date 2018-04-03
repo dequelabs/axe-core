@@ -19,12 +19,8 @@ declare module axe {
 
 	type RunCallback = (error: Error, results:AxeResults) => void;
 
-	interface ElementContext {
-		node?: Object,
-		selector?: string,
-		include?: any[],
-		exclude?: any[]
-	}
+	type ElementContext = Node | string | RunOnlyObject;
+
 	interface RunOnly {
 		type: RunOnlyType,
 		values?: TagValue[] | RunOnlyObject
