@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" id="fail1">
+<head>
+	<meta charset="utf8">
+	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
+	<script src="/node_modules/mocha/mocha.js"></script>
+	<script src="/node_modules/chai/chai.js"></script>
+	<script src="/axe.js"></script>
+	<script>
+		mocha.setup({
+			timeout: 10000,
+			ui: 'bdd'
+		});
+		var assert = chai.assert;
+	</script>
+</head>
+<body>
+	<nav aria-label="test1">Nav 1</nav>
+	<nav aria-label="test2">Nav 2</nav>
+	<nav aria-label="test3">Nav 3</nav>
+	<iframe id="frame1" src="frames/level1.html"></iframe>
+	<div id="mocha"></div>
+	<script src="landmark-accessible-name-nav.js"></script>
+	<script src="/test/integration/adapter.js"></script>
+</body>
+</html>

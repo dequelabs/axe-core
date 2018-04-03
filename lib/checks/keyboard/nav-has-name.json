@@ -1,0 +1,11 @@
+{
+  "id": "nav-has-name",
+  "evaluate": "nav-has-name.js",
+  "metadata": {
+    "impact": "moderate",
+    "messages": {
+      "pass": "The navigation landmark has an accessible name.",
+      "fail": "The navigation landmark does not have an accessible name."
+    }
+  }
+}

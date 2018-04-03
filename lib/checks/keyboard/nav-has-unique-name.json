@@ -1,0 +1,12 @@
+{
+  "id": "nav-has-unique-name",
+  "evaluate": "nav-has-unique-name.js",
+  "after": "nav-has-unique-name-after.js",
+  "metadata": {
+    "impact": "moderate",
+    "messages": {
+      "pass": "The navigation landmark has a unique accessible name.",
+      "fail": "The navigation landmark does not have a unique accessible name."
+    }
+  }
+}

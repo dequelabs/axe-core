@@ -21,7 +21,7 @@
 | document-title | Ensures each HTML document contains a non-empty &lt;title&gt; element | cat.text-alternatives, wcag2a, wcag242 | true |
 | duplicate-id | Ensures every id attribute value is unique | cat.parsing, wcag2a, wcag411 | true |
 | empty-heading | Ensures headings have discernible text | cat.name-role-value, best-practice | true |
-| focus-order-semantics | Ensures elements placed in the focus order have an appropriate aria role for interactive content | cat.keyboard, best-practice, experimental | true |
+| focus-order-semantics | Ensures elements in the focus order have an appropriate role | cat.keyboard, best-practice, experimental | true |
 | frame-title-unique | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a unique title attribute | cat.text-alternatives, best-practice | true |
 | frame-title | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a non-empty title attribute | cat.text-alternatives, wcag2a, wcag241, section508, section508.22.i | true |
 | heading-order | Ensures the order of headings is semantically correct | cat.semantics, best-practice | true |
@@ -33,6 +33,7 @@
 | input-image-alt | Ensures &lt;input type=&quot;image&quot;&gt; elements have alternate text | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | cat.forms, best-practice | true |
 | label | Ensures every form element has a label | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
+| landmark-accessible-name-nav | Use aria-label or aria-labelledby to create unique descriptive labels for navigation landmarks | best-practice | true |
 | landmark-main-is-top-level | The main landmark should not be contained in another landmark | best-practice | true |
 | landmark-one-main | Ensures a navigation point to the primary content of the page. If the page contains iframes, each iframe should contain either no main landmarks or just one. | best-practice | true |
 | layout-table | Ensures presentational &lt;table&gt; elements do not use &lt;th&gt;, &lt;caption&gt; elements or the summary attribute | cat.semantics, wcag2a, wcag131 | true |

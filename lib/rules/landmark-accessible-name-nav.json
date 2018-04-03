@@ -1,0 +1,16 @@
+{
+  "id": "landmark-accessible-name-nav",
+  "selector": "nav:not([role]), [role=navigation]",
+  "tags": [
+	"best-practice"
+  ],
+  "metadata": {
+    "description": "Use aria-label or aria-labelledby to create unique descriptive labels for navigation landmarks",
+    "help": "Navigation landmarks must have unique accessible names"
+  },
+  "all": [
+    "nav-has-unique-name"
+  ],
+  "any": [],
+  "none": []
+}
