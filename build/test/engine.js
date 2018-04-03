@@ -1,4 +1,6 @@
+/*eslint no-unused-vars: ["off"]*/
 /*global axe */
+
 var checks, commons;
 axe._load = function(r) {
 	commons = r.commons;

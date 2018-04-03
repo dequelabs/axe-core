@@ -329,7 +329,7 @@ module.exports = function (grunt) {
 					reporterOutput: grunt.option('report') ? 'tmp/lint.xml' : undefined
 				},
 				src: [
-					'lib/**/*.js', 'test/**/*.js', 'build/tasks/**/*.js',
+					'lib/**/*.js', 'test/**/*.js', 'build/**/*.js',
 					'doc/**/*.js', '!doc/examples/jest+react/*.js', 'Gruntfile.js',
 					'!**/node_modules/**/*.js'
 				]

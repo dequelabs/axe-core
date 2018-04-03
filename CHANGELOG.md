@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+
+<a name="3.0.1"></a>
+## [3.0.1](https://github.com/dequelabs/axe-core/compare/v3.0.0...v3.0.1) (2018-04-03)
+
+
+### Bug Fixes
+
+* allow mixed casing of caption/summary ([ca091ac](https://github.com/dequelabs/axe-core/commit/ca091ac))
+* Allow title on button-name ([#794](https://github.com/dequelabs/axe-core/issues/794)) ([e31fe9a](https://github.com/dequelabs/axe-core/commit/e31fe9a))
+* **sri:** Fix incorrect sri-history entries ([#789](https://github.com/dequelabs/axe-core/issues/789)) ([f5f55f3](https://github.com/dequelabs/axe-core/commit/f5f55f3))
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/dequelabs/axe-core/compare/v3.0.0-beta.2...v3.0.0) (2018-03-19)
 

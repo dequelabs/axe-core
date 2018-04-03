@@ -3,7 +3,6 @@
 
 var path = require('path');
 var templates = require('./templates');
-var Promise = require('promise');
 
 module.exports = function build(grunt, options, commons, callback) {
 	options.getFiles = options.hasOwnProperty('getFiles') ? options.getFiles : true;
