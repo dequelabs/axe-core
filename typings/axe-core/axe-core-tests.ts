@@ -29,7 +29,7 @@ axe.run({exclude: [$fixture[0]]}, {}, (error: Error, results: axe.AxeResults) =>
 	console.log(error || results)
 })
 // additional configuration options
-axe.run(context, {iframes: false, selectors: false, elementRef: false}, 
+axe.run(context, {iframes: false, selectors: false, elementRef: false},
 		(error: Error, results: axe.AxeResults)  => {
 	console.log(error || results.passes.length);
 });
@@ -45,7 +45,7 @@ axe.run(context, tagConfig, (error: Error, results: axe.AxeResults) => {
 })
 var includeExcludeTagsRunOnly: axe.RunOnly = {
 	type: 'tags',
-	value: {
+	values: {
 		include: ['wcag2a', 'wcag2aa'],
 		exclude: ['experimental']
 	}

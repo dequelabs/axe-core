@@ -13,8 +13,8 @@ declare module axe {
 	type RunOnlyType = "rule" | "rules" | "tag" | "tags";
 
 	type RunOnlyObject = {
-		include?: string[],
-		exclude?: string[]
+		include?: string[] | string[][],
+		exclude?: string[] | string[][]
 	}
 
 	type RunCallback = (error: Error, results:AxeResults) => void;
@@ -128,7 +128,7 @@ declare module axe {
 	 * @param   {RunCallback}    callback Optional The function to invoke when analysis is complete.
 	 * @returns {Promise<AxeResults>|void} If the callback was not defined, aXe will return a Promise.
 	 */
-	function run(context: ElementContext): Promise<AxeResults>
+	function run(context?: ElementContext): Promise<AxeResults>
 	function run(options: RunOptions): Promise<AxeResults>
 	function run(callback: (error: Error, results:AxeResults) => void): void
 	function run(context: ElementContext, callback: RunCallback): void
