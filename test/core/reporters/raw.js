@@ -5,7 +5,7 @@ describe('reporters - raw', function () {
 		axe._load({});
 		var orig = axe._runRules;
 		axe._runRules = function (_, __, cb) {
-			cb('foo');
+			cb('foo', function noop () {});
 		};
 
 		axe.run({ reporter: 'raw'}, function (err, results) {

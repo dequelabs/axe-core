@@ -10,7 +10,7 @@
  */
 var path = require('path');
 var fs = require('fs');
-var sriToolbox = require("sri-toolbox");
+var sriToolbox = require('sri-toolbox');
 
 // Check if we should be validating or updating 
 var validate = process.argv.some(function (arg) {
@@ -33,7 +33,7 @@ var axeFiles = fs.readdirSync(root).filter(function (file) {
 
 axeFiles.forEach(function (axeFile) {
 	var axeSource = fs.readFileSync(path.join(root, axeFile), 'utf-8');
-	var axeIntegrity = sriToolbox.generate({ algorithms: ["sha256"] }, axeSource);
+	var axeIntegrity = sriToolbox.generate({ algorithms: ['sha256'] }, axeSource);
 
 	if (!validate) {
 		// Update SRI
@@ -49,7 +49,7 @@ axeFiles.forEach(function (axeFile) {
 if (!validate) {
 	fs.writeFileSync(path.join(root, './sri-history.json'),
 		JSON.stringify(axeHistory, null, '\t'), 'utf-8');
-	console.log("Updated sri-history.json ")
+	console.log('Updated sri-history.json ')
 
 } else if (process.exitCode === 1) {
 	console.log('\nMake sure the package version and sri-history.json is updated ' +

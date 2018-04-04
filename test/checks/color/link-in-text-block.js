@@ -5,16 +5,7 @@ describe('link-in-text-block', function () {
 	var shadowSupport = axe.testUtils.shadowSupport;
 	var styleElm;
 
-	var checkContext = {
-		_relatedNodes: [],
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		},
-		relatedNodes: function (rn) {
-			this._relatedNodes = rn;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	before(function () {
 		styleElm = document.createElement('style');
@@ -33,8 +24,7 @@ describe('link-in-text-block', function () {
 	afterEach(function () {
 		fixture.innerHTML = '';
 		styleElm.innerHTML = '';
-		checkContext._relatedNodes = [];
-		checkContext._data = null;
+		checkContext.reset();
 	});
 
 	after(function () {
@@ -59,14 +49,14 @@ describe('link-in-text-block', function () {
 		var cssLines = Object.keys(styleObj).map(function (prop) {
 			// Make camelCase prop dash separated
 			var cssPropName = prop.trim()
-			.split(/(?=[A-Z])/g)
-			.reduce(function (prop, propPiece) {
-				if (!prop) {
-					return propPiece;
-				} else {
-					return prop + '-' + propPiece.toLowerCase();
-				}
-			}, null);
+				.split(/(?=[A-Z])/g)
+				.reduce(function (prop, propPiece) {
+					if (!prop) {
+						return propPiece;
+					} else {
+						return prop + '-' + propPiece.toLowerCase();
+					}
+				}, null);
 
 			// Return indented line of style code
 			return '  ' + cssPropName + ':' + styleObj[prop] + ';';
@@ -125,9 +115,9 @@ describe('link-in-text-block', function () {
 		it('passes the selected node and closest ancestral block element', function () {
 			fixture.innerHTML =
 			'<div> <span style="display:block" id="parent">' +
-			'  <p style="display:inline"><a href="" id="link">' +
-			'     link text ' +
-			'  </a> inside block </p> inside block' +
+			'	<p style="display:inline"><a href="" id="link">' +
+			'		 link text ' +
+			'	</a> inside block </p> inside block' +
 			'</span> outside block </div>';
 
 			var orig = axe.commons.color.elementIsDistinct;

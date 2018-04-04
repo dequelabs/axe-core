@@ -91,6 +91,21 @@ describe('axe.run', function () {
 		});
 	});
 
+	it('should clear axe._tree', function (done) {
+		var getFlattenedTree = axe.utils.getFlattenedTree;
+		var thing = 'honey badger';
+		axe.utils.getFlattenedTree = function () {
+			return thing;
+		};
+		axe._runRules = function () {
+			assert.isTrue(typeof axe._tree === 'undefined');
+			axe.utils.getFlattenedTree = getFlattenedTree;
+			done();
+		};
+
+		axe.run({ someOption: true }, noop);
+	});
+
 	describe('callback', function () {
 		it('gives errors to the first argument on the callback', function (done) {
 			axe._runRules = function (ctxt, opt, resolve, reject) {
@@ -107,7 +122,7 @@ describe('axe.run', function () {
 		it('gives results to the second argument on the callback', function (done) {
 			axe._runRules = function (ctxt, opt, resolve) {
 				axe._runRules = origRunRules;
-				resolve('MB Bomb');
+				resolve('MB Bomb', noop);
 			};
 
 			axe.run({ reporter: 'raw' }, function (err, result) {
@@ -120,7 +135,7 @@ describe('axe.run', function () {
 		it('does not run the callback twice if it throws', function (done) {
 			var calls = 0;
 			axe._runRules = function (ctxt, opt, resolve) {
-				resolve([]);
+				resolve([], noop);
 			};
 
 			var log = axe.log;
@@ -140,12 +155,30 @@ describe('axe.run', function () {
 				throw new Error('err');
 			});
 		});
+
+		it('is called after cleanup', function (done) {
+			var isClean = false;
+			axe._runRules = function (ctxt, opt, resolve) {
+				axe._runRules = origRunRules;
+				// Check that cleanup is called before the callback is executed
+				resolve('MB Bomb', function cleanup() {
+					isClean = true;
+				});
+			};
+
+			axe.run({ reporter: 'raw' }, function () {
+				assert.isTrue(isClean, 'cleanup must be called first');
+				done();
+			});
+		});
 	});
 
 
 	describe('promise result', function () {
-		it('returns an error to catch if axe fails',
-		(!window.Promise) ? undefined :  function (done) {
+		/*eslint indent: 0*/
+		var promiseIt = window.Promise ? it : it.skip;
+
+		promiseIt('returns an error to catch if axe fails', function (done) {
 			axe._runRules = function (ctxt, opt, resolve, reject) {
 				axe._runRules = origRunRules;
 				reject('I surrender!');
@@ -161,11 +194,10 @@ describe('axe.run', function () {
 			assert.instanceOf(p, window.Promise);
 		});
 
-		it('returns a promise if no callback was given',
-		(!window.Promise) ? undefined :  function (done) {
+		promiseIt('returns a promise if no callback was given', function (done) {
 			axe._runRules = function (ctxt, opt, resolve) {
 				axe._runRules = origRunRules;
-				resolve('World party');
+				resolve('World party', noop);
 			};
 
 			var p = axe.run({ reporter: 'raw' });
@@ -177,10 +209,9 @@ describe('axe.run', function () {
 			assert.instanceOf(p, window.Promise);
 		});
 
-		it('does not error if then() throws',
-		(!window.Promise) ? undefined :  function (done) {
+		promiseIt('does not error if then() throws', function (done) {
 			axe._runRules = function (ctxt, opt, resolve) {
-				resolve([]);
+				resolve([], noop);
 			};
 
 			axe.run()
@@ -194,6 +225,24 @@ describe('axe.run', function () {
 				assert.equal(e.message, 'err');
 				done();
 			});
+		});
+
+		promiseIt('is called after cleanup', function (done) {
+			var isClean = false;
+			axe._runRules = function (ctxt, opt, resolve) {
+				axe._runRules = origRunRules;
+				// Check that cleanup is called before the callback is executed
+				resolve('MB Bomb', function cleanup () {
+					isClean = true;
+				});
+			};
+
+			axe.run({ reporter: 'raw' })
+			.then(function () {
+				assert(isClean, 'cleanup must be called first');
+				done();
+			})
+			.catch(done);
 		});
 	});
 
@@ -406,7 +455,7 @@ describe('axe.run iframes', function () {
 					return node.target.length === 1 && node.target[0] === '#target';
 				}), 'one result from top frame');
 				assert.isTrue(violation.nodes.some(function(node) {
-					return node.target.length === 2 && 
+					return node.target.length === 2 &&
 					       node.target[0] === '#fixture > iframe';
 				}), 'one result from iframe');
 				window.clearTimeout(safetyTimeout);
@@ -440,5 +489,5 @@ describe('axe.run iframes', function () {
 
 		frame.src = '../mock/frames/test.html';
 		fixture.appendChild(frame);
-	});	
+	});
 });

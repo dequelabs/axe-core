@@ -3,9 +3,12 @@ describe('DqElement', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var fixtureSetup = axe.testUtils.fixtureSetup;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
+		axe._tree = undefined;
+		axe._selectorData = undefined;
 	});
 
 	it('should be a function', function () {
@@ -31,6 +34,8 @@ describe('DqElement', function () {
 
 		it('should not be present in stringified version', function () {
 			var div = document.createElement('div');
+			fixtureSetup();
+
 			var dqEl = new DqElement(div);
 
 			assert.isUndefined(JSON.parse(JSON.stringify(dqEl)).element);
@@ -82,6 +87,7 @@ describe('DqElement', function () {
 	describe('selector', function () {
 
 		it('should call axe.utils.getSelector', function () {
+			/*eslint no-unused-vars: 0*/
 			var orig = axe.utils.getSelector;
 			var success = false;
 			var expected = { monkeys: 'bananas' };
@@ -110,6 +116,7 @@ describe('DqElement', function () {
 
 	describe('xpath', function () {
 		it('should call axe.utils.getXpath', function () {
+			/*eslint no-unused-vars: 0*/
 			var orig = axe.utils.getXpath;
 			var success = false;
 			var expected = { monkeys: 'bananas' };
@@ -136,7 +143,8 @@ describe('DqElement', function () {
 
 	describe('absolutePaths', function () {
 		it('creates a path all the way to root', function () {
-			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
+			fixtureSetup('<div id="foo" class="bar">Hello!</div>');
+
 			var result = new DqElement(fixture.firstChild, {
 				absolutePaths: true
 			});

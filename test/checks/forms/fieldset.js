@@ -4,19 +4,11 @@ describe('fieldset', function () {
 	var shadowSupport = axe.testUtils.shadowSupport.v1;
 	var fixtureSetup = axe.testUtils.fixtureSetup;
 
-	var checkContext = {
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		},
-		relatedNodes: function (nodes) {
-			this._relatedNodes = Array.isArray(nodes) ? nodes : [nodes];
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		checkContext._data = null;
+		checkContext.reset();
 	});
 
 	function tests(type) {
@@ -26,7 +18,8 @@ describe('fieldset', function () {
 				'<input type="' + type + '" name="differentname">');
 
 			var node = fixture.querySelector('#target');
-			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 		});
 
 		it('should return false if there are two ungrouped ' + type + ' elements with the same name', function () {
@@ -34,7 +27,8 @@ describe('fieldset', function () {
 				'<input type="' + type + '" name="uniqueyname">');
 
 			var node = fixture.querySelector('#target');
-			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 			assert.deepEqual(checkContext._data, {
 				failureCode: 'no-group',
 				type: type,
@@ -48,7 +42,8 @@ describe('fieldset', function () {
 			fixtureSetup('<fieldset><input type="' + type + '" id="target" name="uniqueyname">' +
 				'<input type="' + type + '" name="uniqueyname"></fieldset>');
 			var node = fixture.querySelector('#target');
-			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 			assert.deepEqual(checkContext._data, {
 				failureCode: 'no-legend',
 				type: type,
@@ -63,7 +58,8 @@ describe('fieldset', function () {
 				'<input type="' + type + '" id="target" name="uniqueyname">' +
 				'<input type="' + type + '" name="uniqueyname"></fieldset>');
 			var node = fixture.querySelector('#target');
-			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 			assert.deepEqual(checkContext._data, {
 				failureCode: 'empty-legend',
 				type: type,
@@ -79,7 +75,8 @@ describe('fieldset', function () {
 				'<input type="' + type + '" id="target" name="uniqueyname">' +
 				'<input type="' + type + '" name="uniqueyname"></fieldset>');
 			var node = fixture.querySelector('#target');
-			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 			assert.deepEqual(checkContext._data, {
 				failureCode: 'mixed-inputs',
 				type: type,
@@ -94,7 +91,8 @@ describe('fieldset', function () {
 				'<input type="' + type + '" id="target" name="uniqueyname">' +
 				'<input type="' + type + '" name="uniqueyname"></fieldset>');
 			var node = fixture.querySelector('#target');
-			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 		});
 
 		it('should return false if an unlabelled ARIA group contains only the right elements', function () {
@@ -103,7 +101,8 @@ describe('fieldset', function () {
 				'<input type="' + type + '" name="uniqueyname"></div>');
 
 			var node = fixture.querySelector('#target');
-			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 			assert.deepEqual(checkContext._data, {
 				failureCode: 'no-group-label',
 				type: type,
@@ -120,7 +119,8 @@ describe('fieldset', function () {
 				'<input type="' + type + '" name="uniqueyname"></div>');
 
 			var node = fixture.querySelector('#target');
-			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 			assert.deepEqual(checkContext._data, {
 				failureCode: 'no-group-label',
 				type: type,
@@ -136,7 +136,8 @@ describe('fieldset', function () {
 				'<input type="' + type + '" id="target" name="uniqueyname">' +
 				'<input type="' + type + '" name="uniqueyname"></div>');
 			var node = fixture.querySelector('#target');
-			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 			assert.deepEqual(checkContext._data, {
 				failureCode: 'group-mixed-inputs',
 				type: type,
@@ -153,7 +154,8 @@ describe('fieldset', function () {
 				'<input type="' + type + '" name="uniqueyname"></div>');
 
 			var node = fixture.querySelector('#target');
-			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 			assert.deepEqual(checkContext._data, {
 				type: type,
 				name: 'uniqueyname'
@@ -167,7 +169,8 @@ describe('fieldset', function () {
 				'<input type="' + type + '" name="s.%$#n"></div>');
 
 			var node = fixture.querySelector('#target');
-			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 
 			assert.deepEqual(checkContext._data, {
 				type: type,
@@ -180,7 +183,8 @@ describe('fieldset', function () {
 				'<input type="' + type + '" id="target" name="uniqueyname">' +
 				'<input type="' + type + '" name="uniqueyname"></div>');
 			var node = fixture.querySelector('#target');
-			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 		});
 
 		it('should ignore hidden inputs', function () {
@@ -189,7 +193,8 @@ describe('fieldset', function () {
 				'<input type="' + type + '" name="uniqueyname"></div>' +
 				'<input type="hidden" name="things"></fieldset>');
 			var node = fixture.querySelector('#target');
-			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 		});
 
 		it('should allow elements to be contained in 2 or more fieldsets', function () {
@@ -202,7 +207,8 @@ describe('fieldset', function () {
 				'<input type="' + type + '" name="uniqueyname"></div>' +
 				'</fieldset>');
 			var node = fixture.querySelector('#target');
-			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 		});
 
 		it('should allow elements to be contained in 2 or more groups', function () {
@@ -215,7 +221,8 @@ describe('fieldset', function () {
 				'<input type="' + type + '" name="uniqueyname"></div>' +
 				'</fieldset>');
 			var node = fixture.querySelector('#target');
-			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 		});
 
 		(shadowSupport ? it : xit)('should find fieldsets outside a shadow tree', function () {
@@ -230,7 +237,8 @@ describe('fieldset', function () {
 			fixtureSetup(fieldset);
 
 			var node = shadow.querySelector('#target');
-			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 		});
 
 		(shadowSupport ? it : xit)('should find fieldsets inside a shadow tree', function () {
@@ -245,7 +253,8 @@ describe('fieldset', function () {
 			fixtureSetup(div);
 
 			var node = div.querySelector('#target');
-			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 		});
 	}
 
@@ -261,7 +270,8 @@ describe('fieldset', function () {
 				'<input type="' + type + '" name="s.%$#n"></div>');
 
 			var node = fixture.querySelector('#target');
-			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isTrue(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 		});
 	});
 
@@ -275,7 +285,8 @@ describe('fieldset', function () {
 				'<input type="' + type + '" id="target" name="s.%$#n">' +
 				'<input type="' + type + '" name="s.%$#n"></div>');
 			var node = fixture.querySelector('#target');
-			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node));
+			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			assert.isFalse(checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode));
 		});
 	});
 

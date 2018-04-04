@@ -1,4 +1,4 @@
-/*jshint node: true */
+/*eslint-env node */
 'use strict';
 var http = require('http');
 var Promise = require('promise');
@@ -37,59 +37,67 @@ module.exports = function (grunt) {
 	function generateOutput(langs, checkPath) {
 		var path = checkPath + '.js';
 		var template = [
-			'/*global axe */\n',
-			'/*jshint -W109 */\n',
-			'var langs = ' + JSON.stringify(langs, null, '\t') + ';\n',
+			'/* global axe */\n',
+			'/*eslint quotes: 0*/\n',
+			'var langs = ' + JSON.stringify(langs, null, '\t') + ';\n\n',
+			'/**\n',
+			' * Returns array of valid language codes\n',
+			' * @method validLangs\n',
+			' * @memberof axe.commons.utils\n',
+			' * @instance\n',
+			' * @return {Array<Sting>} Valid language codes\n',
+			' */\n',
 			'axe.utils.validLangs = function () {\n',
 			'\t\'use strict\';\n',
 			'\treturn langs;\n',
-			'};'
+			'};\n'
 		].join('');
 		grunt.file.write(path, template);
 	}
 	grunt.registerMultiTask('langs',
-	'Task for generating commons language codes from IANA registry',
-	function () {
-		var done = this.async();
-		var ianaLangsURL = 'http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry';
-		if (!this.data.check) {
-			done(false);
-			return;
-		}
-		var check = this.data.check;
-		var langs = [];
-		new Promise(function (resolve, reject) {
-			var data = '';
-			http.get(ianaLangsURL, function(res) {
-				res.on('data', function(chunk) {
-					data += chunk;
-				}).on('end', function () {
-					resolve(data);
-				});
-			}).on('error', function(e) {
-				grunt.log.error('Got error: ' + e.message);
-				reject(false);
-			});
-		}).then(function (data) {
-			var entry = getEntry(data, 0);
-			var pos = entry.used;
-			while(true) {
-				entry = getEntry(data, pos);
-				pos += entry.used;
-				if (!entry.used) {
-					break;
-				}
-				if (entry[0] !== 'Type: language') {
-					continue;
-				}
-				var lang = entry[1].replace('Subtag: ', '').trim();
-				langs.push(lang);
+		'Task for generating commons language codes from IANA registry',
+		function () {
+			var done = this.async();
+			var ianaLangsURL = 'http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry';
+			if (!this.data.check) {
+				done(false);
+				return;
 			}
-			generateOutput(langs, check);
-		}).then(function () {
-			done();
-		}).catch(function (result) {
-			done(result);
-		});
-	});
+			var check = this.data.check;
+			var langs = [];
+			new Promise(function (resolve, reject) {
+				var data = '';
+				http.get(ianaLangsURL, function(res) {
+					res.on('data', function(chunk) {
+						data += chunk;
+					}).on('end', function () {
+						resolve(data);
+					});
+				}).on('error', function(e) {
+					grunt.log.error('Got error: ' + e.message);
+					reject(false);
+				});
+			}).then(function (data) {
+				var entry = getEntry(data, 0);
+				var pos = entry.used;
+				while(true) {
+					entry = getEntry(data, pos);
+					pos += entry.used;
+					if (!entry.used) {
+						break;
+					}
+					if (entry[0] !== 'Type: language') {
+						continue;
+					}
+					var lang = entry[1].replace('Subtag: ', '').trim();
+					langs.push(lang);
+				}
+				generateOutput(langs, check);
+			}).then(function () {
+				done();
+			}).catch(function (result) {
+				done(result);
+			});
+		}
+	);
 };

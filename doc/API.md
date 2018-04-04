@@ -20,11 +20,11 @@
 		1. [Results Object](#results-object)
 	1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
 	1. [API Name: axe.cleanup](#api-name-axecleanup)
-	1. [API Name: axe.a11yCheck](#api-name-axea11ycheck)
 	1. [Virtual DOM Utilities](#virtual-dom-utilities)
 		1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
 	1. [Common Functions](#common-functions)
-1. [Section 3: Example Reference](#section-5-example-reference)
+1. [Section 3: Example Reference](#section-3-example-reference)
+1. [Section 4: Performance](#section-4-performance)
 
 ## Section 1: Introduction
 
@@ -119,10 +119,10 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
 
 ```javascript
 [
-  { ruleId: "area-alt", description: "Checks the <area> elements of image…" },
-  { ruleId: "aria-allowed-attr", description: "Checks all attributes that start…" },
-  { ruleId: "aria-required-attr", description: "Checks all elements that contain…" },
-  …
+	{ ruleId: "area-alt", description: "Checks the <area> elements of image…" },
+	{ ruleId: "aria-allowed-attr", description: "Checks all attributes that start…" },
+	{ ruleId: "aria-required-attr", description: "Checks all elements that contain…" },
+	…
 ]
 ```
 
@@ -152,33 +152,34 @@ axe.configure({
 #### Parameters
 
 * `configurationOptions` - Options object; where the valid name, value pairs are:
-  * `branding` - mixed(optional) Used to set the branding of the helpUrls
-     * `brand` - string(optional) sets the brand string - default "axe"
-     * `application` - string(optional) sets the application string - default "axeAPI"
-  * `reporter` - Used to set the output format that the axe.run function will pass to the callback function
-     * `v1` to use the previous version's format: `axe.configure({ reporter: "v1" });`
-     * `v2` to use the current version's format: `axe.configure({ reporter: "v2" });`
-  * `checks` - Used to add checks to the list of checks used by rules, or to override the properties of existing checks
-  	 * The checks attribute is an array of check objects
-  	 * Each check object can contain the following attributes
-  	 	 * `id` - string(required). This uniquely identifies the check. If the check already exists, this will result in any supplied check properties being overridden. The properties below that are marked required if new are optional when the check is being overridden.
-  	 	 * `evaluate` - function(required for new). This is the function that implements the check's functionality.
-  	 	 * `after` - function(optional). This is the function that gets called for checks that operate on a page-level basis, to process the results from the iframes.
-  	 	 * `options` - mixed(optional). This is the options structure that is passed to the evaluate function and is intended to be used to configure checks. It is the most common property that is intended to be overridden for existing checks.
-  	 	 * `enabled` - boolean(optional, default `true`). This is used to indicate whether the check is on or off by default. Checks that are off are not evaluated, even when included in a rule. Overriding this is a common way to disable a particular check across multiple rules.
-  * `rules` - Used to add rules to the existing set of rules, or to override the properties of existing rules
-  	 * The rules attribute is an Array of rule objects
-  	 * each rule object can contain the following attributes
-  	 	 * `id` - string(required). This uniquely identifies the rule. If the rule already exists, it will be overridden with any of the attributes supplied. The attributes below that are marked required, are only required for new rules.
-  	 	 * `selector` - string(optional, default `*`). A CSS selector used to identify the elements that are passed into the rule for evaluation.
-  	 	 * `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
-  	 	 * `enabled` - boolean(optional, default `true`). Whether the rule is turned on. This is a common attribute for overriding.
-  	 	 * `pageLevel` - boolean(optional, default `false`). When set to true, this rule is only applied when the entire page is tested. Results from nodes on different frames are combined into a single result. See [page level rules](#page-level-rules).
-  	 	 * `any` -  array(optional, default `[]`). This is the list of checks that must all "pass" or else there is a violation.
-  	 	 * `all` - array(optional, default `[]`). This is the list of checks that, if any "fails", will generate a violation.
-  	 	 * `none` - array(optional, default `[]`). This is a list of the checks that, if none "pass", will generate a violation.
-  	 	 * `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. In practice, you must supply some valid tags or the default evaluation will not invoke the rule. The convention is to include the standard (WCAG 2 and/or section 508), the WCAG 2 level, Section 508 paragraph, and the WCAG 2 success criteria. Tags are constructed by converting all letters to lower case, removing spaces and periods and concatinating the result. E.g. WCAG 2 A success criteria 1.1.1 would become ["wcag2a", "wcag111"]
-  	 	 * `matches` - string(optional, default `*`). A filtering CSS selector that will exclude elements that do not match the CSS selector.
+	* `branding` - mixed(optional) Used to set the branding of the helpUrls
+		 * `brand` - string(optional) sets the brand string - default "axe"
+		 * `application` - string(optional) sets the application string - default "axeAPI"
+	* `reporter` - Used to set the output format that the axe.run function will pass to the callback function
+		 * `v1` to use the previous version's format: `axe.configure({ reporter: "v1" });`
+		 * `v2` to use the current version's format: `axe.configure({ reporter: "v2" });`
+	* `checks` - Used to add checks to the list of checks used by rules, or to override the properties of existing checks
+		 * The checks attribute is an array of check objects
+		 * Each check object can contain the following attributes
+			 * `id` - string(required). This uniquely identifies the check. If the check already exists, this will result in any supplied check properties being overridden. The properties below that are marked required if new are optional when the check is being overridden.
+			 * `evaluate` - function(required for new). This is the function that implements the check's functionality.
+			 * `after` - function(optional). This is the function that gets called for checks that operate on a page-level basis, to process the results from the iframes.
+			 * `options` - mixed(optional). This is the options structure that is passed to the evaluate function and is intended to be used to configure checks. It is the most common property that is intended to be overridden for existing checks.
+			 * `enabled` - boolean(optional, default `true`). This is used to indicate whether the check is on or off by default. Checks that are off are not evaluated, even when included in a rule. Overriding this is a common way to disable a particular check across multiple rules.
+	* `rules` - Used to add rules to the existing set of rules, or to override the properties of existing rules
+		 * The rules attribute is an Array of rule objects
+		 * each rule object can contain the following attributes
+			 * `id` - string(required). This uniquely identifies the rule. If the rule already exists, it will be overridden with any of the attributes supplied. The attributes below that are marked required, are only required for new rules.
+			 * `selector` - string(optional, default `*`). A CSS selector used to identify the elements that are passed into the rule for evaluation.
+			 * `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
+			 * `enabled` - boolean(optional, default `true`). Whether the rule is turned on. This is a common attribute for overriding.
+			 * `pageLevel` - boolean(optional, default `false`). When set to true, this rule is only applied when the entire page is tested. Results from nodes on different frames are combined into a single result. See [page level rules](#page-level-rules).
+			 * `any` -  array(optional, default `[]`). This is the list of checks that must all "pass" or else there is a violation.
+			 * `all` - array(optional, default `[]`). This is the list of checks that, if any "fails", will generate a violation.
+			 * `none` - array(optional, default `[]`). This is a list of the checks that, if none "pass", will generate a violation.
+			 * `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. In practice, you must supply some valid tags or the default evaluation will not invoke the rule. The convention is to include the standard (WCAG 2 and/or section 508), the WCAG 2 level, Section 508 paragraph, and the WCAG 2 success criteria. Tags are constructed by converting all letters to lower case, removing spaces and periods and concatinating the result. E.g. WCAG 2 A success criteria 1.1.1 would become ["wcag2a", "wcag111"]
+			 * `matches` - string(optional, default `*`). A filtering CSS selector that will exclude elements that do not match the CSS selector.
+	* `disableOtherRules` - Disables all rules not included in the `rules` property.
 
 **Returns:** Nothing
 
@@ -254,10 +255,10 @@ The include exclude object is a JSON object with two attributes: include and exc
 
 * A node, or
 * An array of arrays of CSS selectors
-    * If the nested array contains a single string, that string is the CSS selector
-    * If the nested array contains multiple strings
-      * The last string is the final CSS selector
-      * All other's are the nested structure of iframes inside the document
+		* If the nested array contains a single string, that string is the CSS selector
+		* If the nested array contains multiple strings
+			* The last string is the final CSS selector
+			* All other's are the nested structure of iframes inside the document
 
 In most cases, the component arrays will contain only one CSS selector. Multiple CSS selectors are only required if you want to include or exclude regions of a page that are inside iframes (or iframes within iframes within iframes). In this case, the first n-1 selectors are selectors that select the iframe(s) and the nth selector, selects the region(s) within the iframe.
 
@@ -267,53 +268,53 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 
 	```javascript
 	{
-	  include: $fixture[0],
-	  exclude: $fixture[0].firstChild
+		include: $fixture[0],
+		exclude: $fixture[0].firstChild
 	}
 	```
 2. Include the element with the ID of `fix` but exclude any `div`s within it
 
 	```javascript
 	{
-	  include: [['#fix']],
-	  exclude: [['#fix div']]
+		include: [['#fix']],
+		exclude: [['#fix div']]
 	}
 	```
 3. Include the whole document except any structures whose parent contains the class `exclude1` or `exclude2`
 
 	```javascript
 	{
-	  exclude: [['.exclude1'], ['.exclude2']]
+		exclude: [['.exclude1'], ['.exclude2']]
 	}
 	```
 4. Include the element with the ID of `fix`, within the iframe with id `frame`
 
-  ```javascript
-  {
-    include: [['#frame', '#fix']]
-  }
-  ```
+	```javascript
+	{
+		include: [['#frame', '#fix']]
+	}
+	```
 5. Include the element with the ID of `fix`, within the iframe with id `frame2`, within the iframe with id `frame1`
 
-  ```javascript
-  {
-    include: [['#frame1', '#frame2', '#fix']]
-  }
-  ```
+	```javascript
+	{
+		include: [['#frame1', '#frame2', '#fix']]
+	}
+	```
 6. Include the following:
-  * The element with the ID of `fix`, within the iframe with id `frame2`, within the iframe with id `frame1`
-  * The element with id `header`
-  * All links
+	* The element with the ID of `fix`, within the iframe with id `frame2`, within the iframe with id `frame1`
+	* The element with id `header`
+	* All links
 
-  ```javascript
-  {
-    include: [
-      ['#header'],
-      ['a'],
-      ['#frame1', '#frame2', '#fix']
-    ]
-  }
-  ```
+	```javascript
+	{
+		include: [
+			['#header'],
+			['a'],
+			['#frame1', '#frame2', '#fix']
+		]
+	}
+	```
 
 
 ##### Options Parameter
@@ -337,6 +338,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `iframes`       | `true`  | Tell axe to run inside iframes
 | `elementRef`    | `false` | Return element references in addition to the target
 | `restoreScroll` | `false` | Scrolls elements back to before axe started
+| `frameWaitTime` | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out
 
 
 ###### Options Parameter Examples
@@ -356,9 +358,9 @@ Additionally, there are a number or properties that allow configuration of diffe
 
 	```javascript
 	{
-	  runOnly: {
-		  type: "tag",
-		  values: ["wcag2a"]
+		runOnly: {
+			type: "tag",
+			values: ["wcag2a"]
 		}
 	}
 	```
@@ -367,10 +369,18 @@ Additionally, there are a number or properties that allow configuration of diffe
 
 	```javascript
 	{
-	  runOnly: {
-	    type: "tag",
-	    values: ["wcag2a", "wcag2aa"]
-	  }
+		runOnly: {
+			type: "tag",
+			values: ["wcag2a", "wcag2aa"]
+		}
+	}
+	```
+
+	Alternatively, runOnly can be passed an array of tags:
+
+	```javascript
+	{
+	runOnly: ["wcag2a", "wcag2aa"]
 	}
 	```
 
@@ -380,10 +390,10 @@ Additionally, there are a number or properties that allow configuration of diffe
 
 	```javascript
 	{
-	  runOnly: {
-	    type: "rule",
-	    values: [ "ruleId1", "ruleId2", "ruleId3" ]
-	  }
+		runOnly: {
+			type: "rule",
+			values: [ "ruleId1", "ruleId2", "ruleId3" ]
+		}
 	}
 	```
 
@@ -394,10 +404,10 @@ Additionally, there are a number or properties that allow configuration of diffe
 	The default operation for axe.run is to run all WCAG 2.0 Level A and Level AA rules. If certain rules should be disabled from being run, specify `options` as:
 	```javascript
 	{
-	  "rules": {
-	    "color-contrast": { enabled: false },
-	    "valid-lang": { enabled: false }
-	  }
+		"rules": {
+			"color-contrast": { enabled: false },
+			"valid-lang": { enabled: false }
+		}
 	}
 	```
 
@@ -408,31 +418,31 @@ Additionally, there are a number or properties that allow configuration of diffe
 	By combining runOnly with type: tags and the rules option, a modified set can be defined. This lets you include rules with unspecified tags, and exclude rules that do have the specified tag(s).
 	```javascript
 	{
-	  runOnly: {
-	    type: "tag",
-	    values: ["wcag2a"]
-	  },
-	  "rules": {
-	    "color-contrast": { enabled: true },
-	    "valid-lang": { enabled: false }
-	  }
+		runOnly: {
+			type: "tag",
+			values: ["wcag2a"]
+		},
+		"rules": {
+			"color-contrast": { enabled: true },
+			"valid-lang": { enabled: false }
+		}
 	}
 	```
 
 	This example includes all level A rules except for valid-lang, and in addition will include the level AA color-contrast rule.
 
-5. Run only some tags, bug exclude others
+5. Run only some tags, but exclude others
 
 	Similar to scope, the runOnly option can accept an object with an 'include' and 'exclude' property. Only those checks that match an included tag will run, except those that share a tag from the exclude list.
 	```javascript
 	{
-	  runOnly: {
-	    type: 'tags',
-	    value: {
-	      include: ['wcag2a', 'wcag2aa'],
-	      exclude: ['experimental']
-	    }
-	  }
+		runOnly: {
+			type: 'tags',
+			values: {
+				include: ['wcag2a', 'wcag2aa'],
+				exclude: ['experimental']
+			}
+		}
 	}
 	```
 
@@ -522,33 +532,33 @@ In this example, we will pass the selector for the entire document, pass no opti
 
 ```javascript
 axe.run(document, function(err, results) {
-  if (err) throw err;
-  console.log(results);
+	if (err) throw err;
+	console.log(results);
 });
 ```
 
 ###### `passes`
 
 * `passes[0]`
-  ...
-  * `help` - `"Elements must have sufficient color contrast"`
-  * `helpUrl` - `"https://dequeuniversity.com/courses/html-css/visual-layout/color-contrast"`
-  * `id` - `"color-contrast"`
-    * `nodes`
-      * `target[0]` - `"#js_off-canvas-wrap > .inner-wrap >.kinja-title.proxima.js_kinja-title-desktop"`
+	...
+	* `help` - `"Elements must have sufficient color contrast"`
+	* `helpUrl` - `"https://dequeuniversity.com/courses/html-css/visual-layout/color-contrast"`
+	* `id` - `"color-contrast"`
+		* `nodes`
+			* `target[0]` - `"#js_off-canvas-wrap > .inner-wrap >.kinja-title.proxima.js_kinja-title-desktop"`
 
 * `passes[1]`
-   ...
+	 ...
 
 ###### `violations`
 
 * `violations[0]`
-  * `help` - `"<button> elements must have alternate text"`
-  * `helpUrl` - `"https://dequeuniversity.com/courses/html-css/forms/form-labels#id84_example_button"`
-  * `id` - `"button-name"`
-    * `nodes`
-      * `target[0]` - `"post_5919997 > .row.content-wrapper > .column > span > iframe"`
-      * `target[1]` - `"#u_0_1 > .pluginConnectButton > .pluginButtonImage > button"`
+	* `help` - `"<button> elements must have alternate text"`
+	* `helpUrl` - `"https://dequeuniversity.com/courses/html-css/forms/form-labels#id84_example_button"`
+	* `id` - `"button-name"`
+		* `nodes`
+			* `target[0]` - `"post_5919997 > .row.content-wrapper > .column > span > iframe"`
+			* `target[1]` - `"#u_0_1 > .pluginConnectButton > .pluginButtonImage > button"`
 
 * `violations[1]` ...
 
@@ -578,13 +588,13 @@ In this example, we pass the selector for the entire document, enable two additi
 
 ```javascript
 axe.run(document, {
-  rules: {
-    "heading-order": { enabled: true },
-    "label-title-only": { enabled: true }
-  }
+	rules: {
+		"heading-order": { enabled: true },
+		"label-title-only": { enabled: true }
+	}
 }, function(err, results) {
-  if (err) throw err;
-  console.log(results);
+	if (err) throw err;
+	console.log(results);
 });
 ```
 
@@ -615,15 +625,18 @@ Register a plugin with the aXe plugin system. See [implementing a plugin](plugin
 
 ### API Name: axe.cleanup
 
-Call the plugin system's cleanup function. See [implementing a plugin](plugins.md).
+Call each plugin's cleanup function. See [implementing a plugin](plugins.md).
 
-### API Name: axe.a11yCheck
+The signature is:
 
-In axe-core v1 the main method for axe was `axe.a11yCheck()`. This method was replaced with `axe.run()` in order to better deal with errors. The method `axe.a11yCheck()` differs from `axe.run()` in the following ways:
+```
+		axe.cleanup(resolve, reject)
+```
 
-- .a11yCheck does not pass the error object to the callback, rather it returns the result as the first parameter and logs errors to the console.
-- .a11yCheck requires a context object, and so will not fall back to the document root.
-- .a11yCheck does not return a Promise.
+`resolve` and `reject` are functions that will be invoked on success or failure respectively.
+
+`resolve` takes no arguments and `reject` takes a single argument that must be a string or have a toString() method in its prototype.
+
 
 ### Virtual DOM Utilities
 
@@ -715,3 +728,29 @@ Either the matching HTMLElement or `null` if there was no match.
 ## Section 3: Example Reference
 
 This package contains examples for [jasmine](examples/jasmine), [mocha](examples/mocha), [phantomjs](examples/phantomjs), [qunit](examples/qunit), [selenium using javascript](examples/selenium), and [generating HTML from the violations array](examples/html-handlebars.md). Each of these examples is in the [doc/examples](examples) folder. In each folder, there is a README.md file which contains specific information about each example.
+
+## Section 4: Performance
+
+Axe-core performs very well in general and if you are analyzing average complexity pages with the default settings, you should not need to worry about performance at all. There are some scenarios that can cause performance issues. This is the list of known issues and what you can do to mitigate and/or avoid them.
+
+### Very large pages
+
+Certain rules (like the color-contrast rule) look at almost every element on a page and some of these rules also perform somewhat expensive operations on these elements including looking up the hierarchy, looking at overlapping elements, calculating the computed styles etc. It also calculates a unique selector for each element in the results and also de-duplicates elements so that you do not get duplicate items in your results.
+
+If your page is very large (in terms of the number of Elements on the page) i.e. >50K elements on the page, then you will see analysis times that run over 10s on a relatively decent CPU.
+
+#### Use resultTypes
+
+An approach you can take to reducing the time is use the `resultTypes` option. By calling `axe.run` with the following options, axe-core will only return the full details of the `violations` array and will only return one instance of each of the `inapplicable`, `incomplete` and `pass` arrays for each rule that has at least one of those entries. This will reduce the amount of computation that axe-core does for the unique selectors.
+
+```
+{
+	resultTypes: ['violations']
+}
+```
+
+### Other strategies
+
+#### Targeted color-contrast analysis
+
+If you are analyzing multiple pages on a single Web site or application, chances are these pages all contain the same styles. It is therefore not adding any additional information to your analysis to analyze every page for color-contrast. Choose a small number of pages that represent the totality of you styles and analyze these with color-contrast and analyze all others without it.

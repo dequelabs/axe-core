@@ -1,0 +1,19 @@
+{
+	"rule": "focus-order-semantics",
+	"description": "focus-order-semantics",
+	"passes": [
+		["#pass1"],
+		["#pass2"],
+		["#pass3"],
+		["#pass4"],
+		["#pass5"],
+		["#pass6"],
+		["#pass7"]
+	],
+	"violations": [
+		["#violation1"],
+		["#violation2"],
+		["#violation3"],
+		["#violation4"]
+	]
+}

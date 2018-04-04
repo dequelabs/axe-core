@@ -55,6 +55,22 @@
 		"axe.js": "sha256-nR7Ix22wBzWJJw7bNukb3n8Bw16bvHdpGKW86+G8dU4=",
 		"axe.min.js": "sha256-xVpSddrzxbQVFp90jaOUOQGp3fwCwK4sYxYmkIU3N2c="
 	},
+	"2.4.2": {
+		"axe.js": "sha256-x1Yy3nmIKx4qWNKjPy+jtpXSozwbuFsLez1iHliFgEQ=",
+		"axe.min.js": "sha256-v8V4N5vGmwEq7XbSIyUkGN9TrjhGBHjM1ZuAAIhgp6o="
+	},
+	"2.5.0": {
+		"axe.js": "sha256-NYUXSdma9KjPfzmpt7jw/hlbmeAha8K3zEA2UOW+eWw=",
+		"axe.min.js": "sha256-7MV3BvKtgHeecwFjYOBYJbmOhvh2wdTGU7odxgpcrG0="
+	},
+	"2.6.0": {
+		"axe.js": "sha256-zK6kpREBDqi1wucJ1GoH9UafxT0E0+XUnrSzg03wdmw=",
+		"axe.min.js": "sha256-vqKSLjjqbp9J3seCuphn1h/3OC6o5jntS8LtlIftvdY="
+	},
+	"2.6.1": {
+		"axe.js": "sha256-fFHgLOnvH7mY6LNF58cvts9CXZCsyUgd++hhHeZpowo=",
+		"axe.min.js": "sha256-arpGpcEwKuAfd4XQmHqNdmXP/nUvm4eMonLh+L0s6cc="
+	},
 	"3.0.0-alpha.7": {
 		"axe.js": "sha256-10kIurI2DW5bjegHOgc/MMSHiiXK2CAVWCQfoN6h0fs=",
 		"axe.min.js": "sha256-cDpGlEEbGsAh0MI82ZFwvX+oOpD5j+uo+kjKH/gJ5t4="
@@ -62,5 +78,29 @@
 	"3.0.0-alpha.8": {
 		"axe.js": "sha256-1ZYjd7ajlao8zM/E8GJLh7u0H/uoMgO5K1fayVUOW5Q=",
 		"axe.min.js": "sha256-hqbtoVFN2hNjaNhgH2anN1itc31jUDUnOX2cj/6SR2M="
+	},
+	"3.0.0-alpha.9": {
+		"axe.js": "sha256-9eUbLQe6YDrwxRsdNnAeTGoBV3lTIrzokBmP2gaStBI=",
+		"axe.min.js": "sha256-2nIufAEb6J4t/f/mnSa3D16vrdcBd0fPjEFy81F+N7k="
+	},
+	"3.0.0-beta.1": {
+		"axe.js": "sha256-F9UktrEmuvDZZ3uYq5WVR9pyfgS+IP+RmRMq8WY6NzU=",
+		"axe.min.js": "sha256-K0dHFoOFTxCCdRuVrey4KVRGQx6Oj5afJyp3YVpZNz0="
+	},
+	"3.0.0-beta.2": {
+		"axe.js": "sha256-cMk6LIQ0mYRm54wqfZ6O2U/6BT6XpHPjqIPVyhMMHYU=",
+		"axe.min.js": "sha256-66fXkU5+wmx5X9sURMglHTsWKO8R+LoOIcBwB8N9dPI="
+	},
+	"3.0.0-beta.3": {
+		"axe.js": "sha256-9le58CGdN3pVlavrlAiyCmo276kXpnTKIIgFRlUhauI=",
+		"axe.min.js": "sha256-yzD9M6lgRosBZtC6x3acx5XaiLgR2jAWe1dDMqutmbs="
+	},
+	"3.0.0": {
+		"axe.js": "sha256-1wR8RsA0/NYF2caKkmvgOqcCoyZXOZK2q7/EfZ4Y8Fo=",
+		"axe.min.js": "sha256-6SQ3NZobDnpEoUWc8h2u+4G3H2/yzt53VX3nv9PZ8g8="
+	},
+	"3.0.1": {
+		"axe.js": "sha256-Vf/arxSrHppK2X5x6VgBZLJnCy8yK6P6uH99WwzQ30s=",
+		"axe.min.js": "sha256-vMPyo7vifw5RTaVEAlnfwGFa9VyHymsNqanCsHh3Q8c="
 	}
 }

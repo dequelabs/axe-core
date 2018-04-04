@@ -458,13 +458,14 @@ describe('axe.utils.respondable', function () {
 			});
 
 			axe.utils.respondable(window, 'owlman', 'help!', true,
-			function (data) {
-				if (!wait) {
-					assert.instanceOf(data, TypeError);
-					assert.equal(data.message.split(/\n/)[0], expected);
-					done();
+				function (data) {
+					if (!wait) {
+						assert.instanceOf(data, TypeError);
+						assert.equal(data.message.split(/\n/)[0], expected);
+						done();
+					}
 				}
-			});
+			);
 		});
 
 		it('returns an error if the subscribe method throws', function (done) {
@@ -479,13 +480,14 @@ describe('axe.utils.respondable', function () {
 			// otherwise it would delete the response before subscribe
 			// gets to react
 			axe.utils.respondable(window, 'owlman', null, true,
-			function (data) {
-				if (!wait) {
-					assert.instanceOf(data, TypeError);
-					assert.equal(data.message.split(/\n/)[0], expected);
-					done();
+				function (data) {
+					if (!wait) {
+						assert.instanceOf(data, TypeError);
+						assert.equal(data.message.split(/\n/)[0], expected);
+						done();
+					}
 				}
-			});
+			);
 		});
 
 	});

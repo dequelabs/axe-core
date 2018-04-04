@@ -6,6 +6,10 @@ Before you start coding a new rule for axe-core, you *must* create a Github issu
 
 In addition to giving the axe-core development team an opportunity to provide feedback on the proposed rule, the Github Issue will serve as documentation of that rule for the future.
 
+## WCAG interpretation
+
+Please read our [principles for deciding on rules](./accessibility-supported.md).
+
 ## Rules Format
 
 All Github issues that propose a rule must be tagged as *rule*, and must use the following format:
@@ -55,7 +59,7 @@ In short sentences, using plain language, describe what conditions will lead to 
 
 `###` keyboard/focusable-no-name (none)
 
-1. If the element is not focusable, return false
+1. If the element is not in the focus order, return false
 2. If the element has an accessible name, return false
 3. Otherwise return true
 

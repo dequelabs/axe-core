@@ -89,11 +89,11 @@ describe('axe.utils.contains', function () {
 	it('should work with slotted elements inside shadow DOM', function () {
 		var tree, node1, node2;
 
-        function createContentSlotted() {
-            var group = document.createElement('div');
-            group.innerHTML = '<div id="target">Stuff<slot></slot></div>';
-            return group;
-        }
+		function createContentSlotted() {
+			var group = document.createElement('div');
+			group.innerHTML = '<div id="target">Stuff<slot></slot></div>';
+			return group;
+		}
 		function makeShadowTree(node) {
 			var root = node.attachShadow({mode: 'open'});
 			var div = document.createElement('div');

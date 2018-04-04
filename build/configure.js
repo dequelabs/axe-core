@@ -1,4 +1,5 @@
-/*jshint node: true, maxstatements: 20 */
+/*eslint-env node */
+/*eslint max-statements: ["error", 20], max-len: off */
 'use strict';
 
 var clone = require('clone');
@@ -12,7 +13,7 @@ var descriptionHeaders = '| Rule ID | Description | Tags | Enabled by default |\
 dot.templateSettings.strip = false;
 
 function getLocale(grunt, options) {
-	var locale, localeFile;
+	var localeFile;
 	if (options.locale) {
 		localeFile = './locales/' + options.locale + '.json';
 	}
@@ -106,26 +107,6 @@ function buildRules(grunt, options, commons, callback) {
 			return v;
 		}
 
-		function parseChecks(collection) {
-			return collection.map(function (check) {
-				var c = {};
-				var id = typeof check === 'string' ? check : check.id;
-				var definition = clone(findCheck(checks, id));
-				if (!definition) {
-					grunt.log.error('check ' + id + ' not found');
-				}
-				c.options = check.options || definition.options;
-				c.id = id;
-
-				if (definition.metadata && !metadata.checks[id]) {
-					metadata.checks[id] = parseMetaData(definition, 'checks');
-				}
-
-				return c.options === undefined ? id : c;
-			});
-
-		}
-
 		var metadata = {
 			rules: {},
 			checks: {}
@@ -145,6 +126,26 @@ function buildRules(grunt, options, commons, callback) {
 					check.metadata.messages = locale.checks[check.id]
 				}
 			})
+		}
+
+		function parseChecks(collection) {
+			return collection.map(function (check) {
+				var c = {};
+				var id = typeof check === 'string' ? check : check.id;
+				var definition = clone(findCheck(checks, id));
+				if (!definition) {
+					grunt.log.error('check ' + id + ' not found');
+				}
+				c.options = check.options || definition.options;
+				c.id = id;
+
+				if (definition.metadata && !metadata.checks[id]) {
+					metadata.checks[id] = parseMetaData(definition, 'checks');
+				}
+
+				return c.options === undefined ? id : c;
+			});
+
 		}
 
 		rules.map(function (rule) {
@@ -181,8 +182,7 @@ function buildRules(grunt, options, commons, callback) {
 				rules: rules,
 				checks: checks,
 				commons: result.commons,
-				tools: result.tools,
-				style: result.style
+				tools: result.tools
 			}, blacklist)),
 			descriptions: descriptionHeaders + descriptions.map(function (row) {
 				return '| ' + row.join(' | ') + ' |';

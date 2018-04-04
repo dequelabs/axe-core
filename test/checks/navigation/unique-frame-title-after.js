@@ -1,15 +1,11 @@
+/*eslint indent: 0*/
 describe('unique-frame-title-after', function () {
 	'use strict';
 
-	var checkContext = {
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
-		checkContext._data = null;
+		checkContext.reset();
 	});
 
 

@@ -1,0 +1,40 @@
+<h2>Elements placed in the tab order with tabindex</h2>
+<div>
+<h3>Non-interactive elements</h3>
+<div>
+	<span id="violation1" tabindex="0">Shouldn't be in the focus order</span>
+	<div id="violation2" tabindex="1">Shouldn't be in the focus order</div>
+</div>
+
+<h3>Elements placed in focus order and given valid interactive roles</h3>
+<div>
+		<div id="pass1" role="listbox" tabindex="0"></div>
+		<ol role="radiogroup" tabindex="0"></ol>
+		<a role="button" tabindex="0">Click me, I'm a button!</a>
+</div>
+
+<h3>Scrollable elements</h3>
+<div>
+	<h4>Invalid landmark roles for scrollable containers</h4>
+	<div>
+		<div id="violation3" role="banner" tabindex="0"></div>
+		<div id="violation4" role="search" tabindex="0"></div>
+	</div>
+	<h4>Valid landmark roles for scrollable containers</h4>
+	<div>
+		<div id="pass2" role="form" tabindex="0"></div>
+		<div id="pass3" role="navigation" tabindex="0"></div>
+		<div id="pass4" role="complementary" tabindex="0"></div>
+		<div id="pass5" role="contentinfo" tabindex="0"></div>
+		<div id="pass6" role="main" tabindex="0"></div>
+		<div id="pass7" role="region" tabindex="0"></div>
+	</div>
+	<h4>Valid scrollable HTML tags for scrollable regions, not selected by this rule</h4>
+	<div>
+		<nav tabindex="0"></nav>
+		<section tabindex="0"></section>
+		<article tabindex="0"></article>
+		<aside tabindex="0"></aside>
+	</div>
+</div>
+</div>

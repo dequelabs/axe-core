@@ -1,0 +1,10 @@
+{
+	"description": "aria-dpub-role-fallback tests",
+	"rule": "aria-dpub-role-fallback",
+	"violations": [
+		["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"], ["#fail5"], ["#fail6"], ["#fail7"]
+	],
+	"passes": [
+		["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"], ["#pass5"], ["#pass6"], ["#pass7"]
+	]
+}

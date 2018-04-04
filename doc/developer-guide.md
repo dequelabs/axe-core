@@ -25,12 +25,12 @@ aXe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities fo
 ### Environment Pre-requisites
 
 1.  You must have NodeJS installed.
-2.  Grunt must be installed globally.  `npm install -g grunt-cli`
-3.  Install npm development dependencies.  `npm install`
+2.  Grunt must be installed globally.  `npm install -g grunt-cli` (You may need to do this as `sudo npm install -g grunt-cli`)
+3.  Install npm development dependencies.  In the root folder of your axe-core repository, run `npm install`
 
 ### Building axe.js
 
-To build axe.js, simply run `grunt build`.  axe.js and axe.min.js are placed into the `dist` folder.
+To build axe.js, simply run `grunt build` in the root folder of the axe-core repository.  axe.js and axe.min.js are placed into the `dist` folder.
 
 ### Running Tests
 

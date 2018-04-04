@@ -2,17 +2,11 @@ describe('aria-allowed-attr', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-
-	var checkContext = {
-		_data: null,
-		data: function (d) {
-			this._data = d;
-		}
-	};
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		checkContext._data = null;
+		checkContext.reset();
 	});
 
 	it('should detect incorrectly used attributes', function () {
@@ -25,8 +19,6 @@ describe('aria-allowed-attr', function () {
 
 		assert.isFalse(checks['aria-allowed-attr'].evaluate.call(checkContext, node));
 		assert.deepEqual(checkContext._data, ['aria-selected="true"']);
-
-
 	});
 
 	it('should not report on required attributes', function () {
@@ -38,8 +30,6 @@ describe('aria-allowed-attr', function () {
 		fixture.appendChild(node);
 
 		assert.isTrue(checks['aria-allowed-attr'].evaluate.call(checkContext, node));
-
-
 	});
 
 	it('should detect incorrectly used attributes - implicit role', function () {
@@ -52,8 +42,6 @@ describe('aria-allowed-attr', function () {
 
 		assert.isFalse(checks['aria-allowed-attr'].evaluate.call(checkContext, node));
 		assert.deepEqual(checkContext._data, ['aria-selected="true"']);
-
-
 	});
 
 	it('should return true if there is no role', function () {
@@ -66,8 +54,6 @@ describe('aria-allowed-attr', function () {
 
 		assert.isTrue(checks['aria-allowed-attr'].evaluate.call(checkContext, node));
 		assert.isNull(checkContext._data);
-
-
 	});
 
 	it('should determine attribute validity by calling axe.commons.aria.allowedAttr', function () {
@@ -103,8 +89,6 @@ describe('aria-allowed-attr', function () {
 
 		assert.isTrue(checks['aria-allowed-attr'].evaluate.call(checkContext, node));
 		assert.isNull(checkContext._data);
-
-
 	});
 
 	it('should not report on allowed attributes', function () {
@@ -119,4 +103,51 @@ describe('aria-allowed-attr', function () {
 		assert.isNull(checkContext._data);
 	});
 
+	describe('options', function () {
+		it('should allow provided attribute names for a role', function () {
+			axe.commons.aria.lookupTable.role.mcheddarton = {
+				type: 'widget',
+				attributes: {
+					allowed: ['aria-checked']
+				},
+				owned: null,
+				nameFrom: ['author'],
+				context: null
+			};
+			fixture.innerHTML = '<div role="mccheddarton" id="target" aria-checked="true" aria-snuggles="true"></div>';
+			var target = fixture.children[0];
+			assert.isTrue(checks['aria-allowed-attr'].evaluate.call(checkContext, target, {'mccheddarton': ['aria-checked', 'aria-snuggles']}));
+			delete axe.commons.aria.lookupTable.role.mccheddarton;
+		});
+
+		it('should handle multiple roles provided in options', function () {
+			axe.commons.aria.lookupTable.role.mcheddarton = {
+				type: 'widget',
+				attributes: {
+					allowed: ['aria-checked']
+				},
+				owned: null,
+				nameFrom: ['author'],
+				context: null
+			};
+			axe.commons.aria.lookupTable.role.bagley = {
+				type: 'widget',
+				attributes: {
+					allowed: ['aria-checked']
+				},
+				owned: null,
+				nameFrom: ['author'],
+				context: null
+			};
+			fixture.innerHTML = '<div role="bagley" id="target" aria-snuggles2="true"></div>';
+			var target = fixture.children[0];
+			var options = {
+				'mccheddarton': ['aria-snuggles'],
+				'bagley': ['aria-snuggles2']
+			};
+			assert.isTrue(checks['aria-allowed-attr'].evaluate.call(checkContext, target, options));
+			delete axe.commons.aria.lookupTable.role.mccheddarton;
+			delete axe.commons.aria.lookupTable.role.bagley;
+		});
+	});
 });
