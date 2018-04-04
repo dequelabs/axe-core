@@ -118,7 +118,7 @@ describe('axe.utils.respondable', function () {
 		event.initEvent('message', true, true);
 		event.data = JSON.stringify({
 			_respondable: true,
-			_source: 'axe.2.0.0',
+			_source: 'axeAPI.2.0.0',
 			topic: 'Death star',
 			message: 'Help us Obi-Wan',
 			uuid: mockUUID
@@ -133,14 +133,14 @@ describe('axe.utils.respondable', function () {
 		assert.isTrue(success);
 	});
 
-	it('should allow messages with _source axe.x.y.z', function () {
+	it('should allow messages with _source axeAPI.x.y.z', function () {
 		var success = false;
 		var event = document.createEvent('Event');
 		// Define that the event name is 'build'.
 		event.initEvent('message', true, true);
 		event.data = JSON.stringify({
 			_respondable: true,
-			_source: 'axe.x.y.z',
+			_source: 'axeAPI.x.y.z',
 			topic: 'Death star',
 			message: 'Help us Obi-Wan',
 			uuid: mockUUID
@@ -164,7 +164,7 @@ describe('axe.utils.respondable', function () {
 		event.initEvent('message', true, true);
 		event.data = JSON.stringify({
 			_respondable: true,
-			_source: 'axe.2.0.0',
+			_source: 'axeAPI.2.0.0',
 			topic: 'Death star',
 			message: 'Help us Obi-Wan',
 			uuid: mockUUID
@@ -189,7 +189,7 @@ describe('axe.utils.respondable', function () {
 		event.initEvent('message', true, true);
 		event.data = JSON.stringify({
 			_respondable: true,
-			_source: 'axe.2.0.0',
+			_source: 'axeAPI.2.0.0',
 			topic: 'Death star',
 			message: 'Help us Obi-Wan',
 			uuid: mockUUID
@@ -311,7 +311,7 @@ describe('axe.utils.respondable', function () {
 		event.initEvent('message', true, true);
 		event.data = JSON.stringify({
 			_respondable: true,
-			_source: 'axe.2.0.0',
+			_source: 'axeAPI.2.0.0',
 			topic: 'Death star',
 			error: {
 				name: 'ReferenceError',
@@ -340,7 +340,7 @@ describe('axe.utils.respondable', function () {
 		event.initEvent('message', true, true);
 		event.data = JSON.stringify({
 			_respondable: true,
-			_source: 'axe.2.0.0',
+			_source: 'axeAPI.2.0.0',
 			topic: 'Death star',
 			error: {
 				name: 'evil',
