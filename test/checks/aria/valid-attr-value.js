@@ -3,6 +3,7 @@ describe('aria-valid-attr-value', function () {
 
 	var fixture = document.getElementById('fixture');
 	var checkContext = axe.testUtils.MockCheckContext();
+	var fixtureSetup = axe.testUtils.fixtureSetup;
 
 	afterEach(function () {
 		fixture.innerHTML = '';
@@ -87,6 +88,17 @@ describe('aria-valid-attr-value', function () {
 		assert.equal(called, 2);
 
 		axe.commons.aria.validateAttrValue = orig;
+	});
+
+	it('should allow empty strings rather than idrefs for specific attributes', function () {
+		fixtureSetup(
+			'<button aria-labelledby="">Button</button>' +
+			'<div aria-owns=""></div>'
+		);
+		var passing = fixture.querySelector('button');
+		var failing = fixture.querySelector('div');
+		assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, passing));
+		assert.isFalse(checks['aria-valid-attr-value'].evaluate.call(checkContext, failing));
 	});
 
 	describe('options', function () {
