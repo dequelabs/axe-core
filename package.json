@@ -78,6 +78,7 @@
     "grunt-contrib-uglify": "^2.1.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-eslint": "^20.1.0",
+    "grunt-markdownlint": "^1.1.2",
     "grunt-mocha": "^1.0.4",
     "grunt-parallel": "^0.5.1",
     "grunt-retire": "^1.0.7",
