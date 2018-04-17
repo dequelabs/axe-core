@@ -1,11 +1,8 @@
 describe('frame-tested', function () {
 	'use strict';
 
-	var checkContext = axe.testUtils.MockCheckContext();
-	var __respondable;
-	var respondableCalls = [];
-	var checkEvaluate = checks['frame-tested'].evaluate.bind(checkContext);
-	var iframe;
+	var checkContext, __respondable, respondableCalls, iframe;
+	var checkEvaluate = checks['frame-tested'].evaluate
 
 	before(function () {
 		__respondable = axe.utils.respondable;
@@ -16,9 +13,11 @@ describe('frame-tested', function () {
 		document.querySelector('#fixture').appendChild(iframe);
 	});
 
-	afterEach(function () {
+	beforeEach(function () {
 		respondableCalls = [];
-		checkContext.reset();
+		checkContext = axe.testUtils.MockCheckContext();
+		// Don't throw on async
+		checkContext._onAsync = function () {};
 	})
 
 	after(function () {
@@ -26,7 +25,7 @@ describe('frame-tested', function () {
 	});
 
 	it('correctly calls axe.utils.respondable', function () {
-		checkEvaluate(iframe);
+		checkEvaluate.call(checkContext, iframe);
 
 		assert.lengthOf(respondableCalls, 1);
 		assert.deepEqual(respondableCalls[0].slice(0,4), 
@@ -35,30 +34,30 @@ describe('frame-tested', function () {
 	});
 
 	it('passes if the iframe contains axe-core', function (done) {
-		checkEvaluate(iframe, { timeout: 20 });
 		checkContext._onAsync = function (result) {
 			assert.isTrue(result);
 			done();
 		}
+		checkEvaluate.call(checkContext, iframe, { timeout: 20 });
 		// Respond to the ping
 		respondableCalls[0][4]();
 	});
 
 	it('fails if the iframe does not contain axe-core, and isViolation is true', function (done) {
-		checkEvaluate(iframe, { timeout: 10, isViolation: true });
-		// Timeout after 10ms
 		checkContext._onAsync = function (result) {
 			assert.isFalse(result);
 			done();
 		}
+		// Timeout after 10ms
+		checkEvaluate.call(checkContext, iframe, { timeout: 10, isViolation: true });
 	});
 
 	it('is incomplete if the iframe does not contain axe-core', function (done) {
-		checkEvaluate(iframe, { timeout: 10 });
-		// Timeout after 10ms
 		checkContext._onAsync = function (result) {
 			assert.isUndefined(result);
 			done();
 		}
+		// Timeout after 10ms
+		checkEvaluate.call(checkContext, iframe, { timeout: 10 });
 	});
 });
