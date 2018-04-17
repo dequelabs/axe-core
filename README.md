@@ -100,7 +100,7 @@ To update existing translation file, re-run `grunt translate --lang=<langcode>`.
 
 ## Contributing
 
-Read the [Proposing Axe-core Rules guide ](./doc/rule-proposal.md)
+Read the [Proposing Axe-core Rules guide](./doc/rule-proposal.md)
 
 Read the [documentation on the architecture](./doc/developer-guide.md)
 
