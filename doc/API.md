@@ -48,7 +48,6 @@ The aXe API can be used as part of a broader process that is performed on many, 
 4. Either assert against results or save them for later processing
 5. Repeat for any inactive or non-rendered content after making it visible
 
-
 ## Section 2: API Reference
 
 ### Overview
@@ -107,7 +106,6 @@ The current set of tags supported are listed in the following table:
 | `cat.tables`                  |
 | `cat.text-alternatives`       |
 | `cat.time-and-media`          |
-
 
 #### Example 1
 
@@ -212,7 +210,6 @@ axe.reset();
 
 None
 
-
 ### API Name: axe.run
 
 #### Purpose
@@ -247,7 +244,6 @@ By default, axe.run will test the entire document. The context object is an opti
 	* A CSS selector as a node name (e.g. `div`)
 	* A CSS selector of an element id (e.g. `#tag`)
 4. An include-exclude object (see below)
-
 
 ###### Include-Exclude Object
 
@@ -316,7 +312,6 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 	}
 	```
 
-
 ##### Options Parameter
 
 The options parameter is flexible way to configure how `axe.run` operates. The different modes of operation are:
@@ -339,7 +334,6 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `elementRef`    | `false` | Return element references in addition to the target
 | `restoreScroll` | `false` | Scrolls elements back to before axe started
 | `frameWaitTime` | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out
-
 
 ###### Options Parameter Examples
 
@@ -465,7 +459,6 @@ Additionally, there are a number or properties that allow configuration of diffe
 
 The callback parameter is a function that will be called when the asynchronous `axe.run` function completes. The callback function is passed two parameters. The first parameter will be an error thrown inside of aXe if axe.run could not complete. If axe completed correctly the first parameter will be null, and the second parameter will be the results object.
 
-
 #### Return Promise
 
 If the callback was not defined, aXe will return a Promise instead. Axe does not polyfill a Promise library however. So on systems without support for Promises this feature is not available. If you are unsure if the systems you will need aXe on has Promise support we suggest you use the callback provided by axe.run instead.
@@ -473,7 +466,6 @@ If the callback was not defined, aXe will return a Promise instead. Axe does not
 #### Error Result
 
 This will either be null or an object which is an instance of Error. If you are consistently receiving errors, please report this issue on the [Github issues list of Axe](https://github.com/dequelabs/axe-core/issues).
-
 
 #### Results Object
 
@@ -562,7 +554,6 @@ axe.run(document, function(err, results) {
 
 * `violations[1]` ...
 
-
 ##### `passes` Results Array
 
 In the example above, the `passes` array contains two entries that correspond to the two rules tested. The first element in the array describes a color contrast check. It relays the information that a list of nodes was checked and subsequently passed. The `help`, `helpUrl`, and `id` fields are returned as expected for each of the entries in the `passes` array. The `target` array has one element in it with a value of
@@ -580,7 +571,6 @@ The array of `violations` contains one entry; this entry describes a test that c
 The `target` array demonstrates how we specify the selectors when the node specified is inside of an `iframe` or `frame`. The first element in the `target` array - `target[0]` - specifies the selector to the `iframe` that contains the button. The second element in the `target` array - `target[1]` -  specifies the selector to the actual button, but starting from inside the iframe selected in `target[0]`.
 
 Each subsequent entry in the violations array has the same format, but will detail the different rules that were run that generated accessibility violations as part of this call to `axe.run()`.
-
 
 #### Example 3
 
@@ -637,7 +627,6 @@ The signature is:
 
 `resolve` takes no arguments and `reject` takes a single argument that must be a string or have a toString() method in its prototype.
 
-
 ### Virtual DOM Utilities
 
 Note: If you’re writing rules or checks, you’ll have both the `node` and `virtualNode` passed in.
@@ -667,7 +656,6 @@ axe.utils.querySelectorAll(virtualNode, 'a[href]');
 
 An Array of filtered HTML nodes.
 
-
 ### Common Functions
 
 #### axe.commons.dom.getComposedParent
@@ -687,7 +675,6 @@ axe.commons.dom.getComposedParent(node)
 
 A DOMNode for the parent
 
-
 #### axe.commons.dom.getRootNode
 
 Return the document or document fragment (open shadow DOM)
@@ -704,7 +691,6 @@ axe.commons.dom.getRootNode(node)
 ##### Returns
 
 The top-level document or shadow DOM document fragment
-
 
 #### axe.commons.dom.findUp
 
@@ -723,7 +709,6 @@ axe.commons.dom.findUp(node, '.selector')
 ##### Returns
 
 Either the matching HTMLElement or `null` if there was no match.
-
 
 ## Section 3: Example Reference
 

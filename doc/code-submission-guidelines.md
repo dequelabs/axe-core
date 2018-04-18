@@ -70,7 +70,6 @@ If the scope is too broad to summarize, use the type only and leave off the pare
 `type: some subject`. Keep in mind that a long scope often pushes your commit message over 100 characters.
 Brevity is helpful for everyone!
 
-
 #### Subject
 
 The subject contains succinct description of the change:

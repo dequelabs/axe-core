@@ -38,7 +38,6 @@ To run all tests from the command line you can run `grunt test`, which will run 
 
 You can also load tests in any supported browser, which is helpful for debugging.  Tests require a local server to run, you must first start a local server to serve files.  You can use Grunt to start one by running `grunt dev`.  Once your local server is running you can load the following pages in any browser to run tests:
 
-
 1. [Core Tests](../test/core/)
 2. [Commons Tests](../test/commons/)
 3. [Check Tests](../test/checks/)
@@ -52,7 +51,6 @@ aXe tests for accessibility using objects called Rules. Each Rule tests for a hi
 Upon execution, a Rule runs each of its Checks against all relevant nodes. Which nodes are relevant is determined by the Rule's `selector` property and `matches` function. If a Rule has no Checks that apply to a given node, the Rule will result in an inapplicable result.
 
 After execution, a Check will return `true` or `false` depending on whether or not the tested condition was satisfied. The result, as well as more information on what caused the Check to pass or fail, will be stored in either the `passes` array or the `violations` array.
-
 
 ### Rules
 
@@ -245,7 +243,6 @@ The queue function creates an asynchronous "queue", list of functions to be invo
 * `then(callback)` The callback to execute once all "deferred" functions have completed.  Will only be invoked once.
 * `abort()` Abort the "queue" and prevent `then` function from firing
 
-
 #### DqElement Class
 
 The DqElement is a "serialized" `HTMLElement`. It will calculate the CSS selector, grab the source outerHTML and offer an array for storing frame paths. The DqElement class takes the following parameters:
@@ -262,7 +259,6 @@ Elements returned by the DqElement class have the following methods and properti
 * `source` - `string` The generated HTML source code of the element
 * `element` - `DOMNode` The element which this object is based off or the containing frame, used for sorting.
 * `toJSON()` - Returns an object containing the selector and source properties
-
 
 ## Virtual DOM APIs
 

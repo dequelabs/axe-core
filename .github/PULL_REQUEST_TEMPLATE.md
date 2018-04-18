@@ -10,7 +10,6 @@ Please check if your PR fulfills the following requirements:
 ## Description of the changes
 - Github issue:
 
-
 ## Does this PR introduce a breaking change?
 
 - [ ] Yes
