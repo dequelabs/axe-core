@@ -41,7 +41,7 @@ aXe is the third generation of accessibility rules for HTML-based user interface
 
 First download the package:
 
-```
+```console
 npm install axe-core --save-dev
 ```
 

@@ -603,7 +603,7 @@ axe.run(document, {
 This example shows a result object that points to an open shadow DOM element.
 
 ##### `violations[0]`
-```
+```json
 {
 	help : "Elements must have sufficient color contrast",
 	helpUrl: "https://dequeuniversity.com/rules/axe/2.1/color-contrast?application=axeAPI",
@@ -629,7 +629,7 @@ Call each plugin's cleanup function. See [implementing a plugin](plugins.md).
 
 The signature is:
 
-```
+```javascript
 		axe.cleanup(resolve, reject)
 ```
 
@@ -743,7 +743,7 @@ If your page is very large (in terms of the number of Elements on the page) i.e.
 
 An approach you can take to reducing the time is use the `resultTypes` option. By calling `axe.run` with the following options, axe-core will only return the full details of the `violations` array and will only return one instance of each of the `inapplicable`, `incomplete` and `pass` arrays for each rule that has at least one of those entries. This will reduce the amount of computation that axe-core does for the unique selectors.
 
-```
+```json
 {
 	resultTypes: ['violations']
 }

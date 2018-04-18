@@ -6,7 +6,7 @@ The example uses handlebars templates but can be easily adapted to other formats
 
 ## The JavaScript
 
-```
+```javascript
 function helperItemIterator(items, template) {
 	var out = '';
 	if (items) {
@@ -14,7 +14,7 @@ function helperItemIterator(items, template) {
 			out += template(items[i]);
 		}
 	}
-	return out;		
+	return out;
 }
 Handlebars.registerHelper('violations', function(items) {
 	return helperItemIterator(items, compiledRowTemplate);
@@ -25,16 +25,16 @@ Handlebars.registerHelper('related', function(items) {
 Handlebars.registerHelper('reasons', function(items) {
 	return helperItemIterator(items, compiledFailureTemplate);
 });
- 
+
 // Setup handlebars templates
- 
+
 compiledRowTemplate = Handlebars.compile(rowTemplate.innerHTML);
 compiledTableTemplate = Handlebars.compile(tableTemplate.innerHTML);
 compiledRelatedListTemplate = Handlebars.compile(relatedListTemplate.innerHTML);
 compiledRelatedNodeTemplate = Handlebars.compile(relatedNodeTemplate.innerHTML);
 compiledFailureTemplate = Handlebars.compile(failureTemplate.innerHTML);
 compiledReasonsTemplate = Handlebars.compile(reasonsTemplate.innerHTML);
- 
+
 function messageFromRelatedNodes(relatedNodes) {
 	var retVal = '';
 	if (relatedNodes.length) {
@@ -48,7 +48,7 @@ function messageFromRelatedNodes(relatedNodes) {
 	}
 	return retVal;
 }
- 
+
 function messagesFromArray(nodes) {
 	var list = nodes.map(function (failure) {
 		return {
@@ -58,14 +58,14 @@ function messagesFromArray(nodes) {
 	});
 	return compiledReasonsTemplate({reasonsList: list});
 }
- 
+
 function summary(node) {
 	var retVal = '';
 	if (node.any.length) {
 		retVal += '<h3 class="error-title">Fix any of the following</h3>';
 		retVal += messagesFromArray(node.any);
 	}
- 
+
 	var all = node.all.concat(node.none);
 	if (all.length) {
 		retVal += '<h3 class="error-title">Fix all of the following</h3>';
@@ -73,7 +73,7 @@ function summary(node) {
 	}
 	return retVal;
 }
- 
+
 /*
  * This code will generate a table of the rules that failed including counts and links to the Deque University help
  * for each rule.
@@ -81,7 +81,7 @@ function summary(node) {
  * When used, you should attach click handlers to the anchors in order to generate the details for each of the
  * violations for each rule.
  */
- 
+
 if (results.violations.length) {
 	var violations = results.violations.map(function (rule, i) {
 		return {
@@ -93,20 +93,20 @@ if (results.violations.length) {
 			index: i
 		};
 	});
- 
+
 	html = compiledTableTemplate({violationList: violations});
 }
- 
+
 /*
  * To generate the human readable summary, call the `summary` function with the node. This will return HTML for that node.
  */
- 
+
 reasonHtml = summary(node);
 ```
 
 ## The Handlebars Templates
 
-```
+```handlebars
 <script id="rowTemplate" type="text/x-handlebars-template">
 <tr>
 	<th scope="row" class="help">

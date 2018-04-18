@@ -12,10 +12,8 @@ Please check if your PR fulfills the following requirements:
 
 
 ## Does this PR introduce a breaking change?
-```
-[ ] Yes
-[ ] No
-```
 
+- [ ] Yes
+- [ ] No
 
 ## Other information

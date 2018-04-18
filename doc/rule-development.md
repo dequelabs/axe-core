@@ -58,7 +58,7 @@ A pass message is required, while fail and incomplete are dependent on the check
 ### Incomplete message string
 
 As one example, the audio and video caption checks return an incomplete string:
-```
+```javascript
 messages: {
 	pass: 'Why the check passed',
 	fail: 'Why the check failed',
@@ -71,7 +71,7 @@ messages: {
 As another example, the color-contrast check returns missingData to aid in
 remediation. Here’s the message format:
 
-```
+```javascript
 messages: {
 	pass: 'Why the check passed',
 	fail: 'Why the check failed',
@@ -87,7 +87,7 @@ the check needs matching data. Otherwise, it will fall back to the `default` mes
 Reasons are arbitrary for the check (such as 'bgImage') but they must match the
 data returned:
 
-```
+```javascript
 this.data({
 	missingData: 'bgImage'
 });
