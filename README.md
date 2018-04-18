@@ -61,6 +61,7 @@ axe.run(function (err, results) {
     ...
 });
 ```
+
 ## Supported Browsers
 
 The [aXe API](doc/API.md) fully supports the following browsers:

@@ -282,6 +282,7 @@ axe.utils.getFlattenedTree(element, shadowId)
 ```
 
 #### Parameters
+
 - `node` – HTMLElement. The current HTML node for which you want a flattened DOM tree.
 - `shadowId` – string(optional). ID of the shadow DOM that is the closest shadow ancestor of the node
 

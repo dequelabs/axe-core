@@ -38,6 +38,7 @@ The aXe API is designed to be an improvement over the previous generation of acc
 * Only checks rendered content to minimize false positives (that includes visually-hidden content)
 
 ### Getting Started
+
 This section gives a quick description of how to use the aXe APIs to analyze web page content and return a JSON object that lists any accessibility violations found.
 
 The aXe API can be used as part of a broader process that is performed on many, if not all, pages of a website. The API is used to analyze web page content and return a JSON object that lists any accessibility violations found. Here is how to get started:
@@ -593,6 +594,7 @@ axe.run(document, {
 This example shows a result object that points to an open shadow DOM element.
 
 ##### `violations[0]`
+
 ```json
 {
   help : "Elements must have sufficient color contrast",
@@ -669,6 +671,7 @@ axe.commons.dom.getComposedParent(node)
 ```
 
 ##### Parameters
+
 * `element` – HTMLElement. The element for which you want to find a parent
 
 ##### Returns
@@ -686,6 +689,7 @@ axe.commons.dom.getRootNode(node)
 ```
 
 ##### Parameters
+
 * `element` – HTMLElement. The element for which you want to find the root node
 
 ##### Returns
@@ -703,6 +707,7 @@ axe.commons.dom.findUp(node, '.selector')
 ```
 
 ##### Parameters
+
 * `element` – HTMLElement. The starting element
 * `selector` – String. The target selector for the HTMLElement
 
