@@ -6,19 +6,19 @@ aXe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities fo
 
 1. [Getting Started](#getting-started)
 1. [Architecture Overview](#architecture-overview)
-	1. [Rules](#rules)
-	1. [Checks](#checks)
-	1. [Common Functions](#common-functions)
-	1. [Virtual Nodes](#virtual-nodes)
-	1. [Core Utilities](#core-utilities)
+   1. [Rules](#rules)
+   1. [Checks](#checks)
+   1. [Common Functions](#common-functions)
+   1. [Virtual Nodes](#virtual-nodes)
+   1. [Core Utilities](#core-utilities)
 1. [Virtual DOM APIs](#virtual-dom-apis)
-	1. [API Name: axe.utils.getFlattenedTree](#api-name-axeutilsgetflattenedtree)
-	1. [API Name: axe.utils.getNodeFromTree](#api-name-axeutilsgetnodefromtree)
+   1. [API Name: axe.utils.getFlattenedTree](#api-name-axeutilsgetflattenedtree)
+   1. [API Name: axe.utils.getNodeFromTree](#api-name-axeutilsgetnodefromtree)
 1. [Test Utilities](#test-utilities)
-	1. [Test Util Name: axe.testUtils.MockCheckContext](#test-util-name-axetestutilsmockcheckcontext)
-	1. [Test Util Name: axe.testUtils.shadowSupport](#test-util-name-axetestutilsshadowsupport)
-	1. [Test Util Name: axe.testUtils.fixtureSetup](#test-util-name-axetestutilsfixturesetup)
-	1. [Test Util Name: axe.testUtils.checkSetup](#test-util-name-axetestutilschecksetup)
+   1. [Test Util Name: axe.testUtils.MockCheckContext](#test-util-name-axetestutilsmockcheckcontext)
+   1. [Test Util Name: axe.testUtils.shadowSupport](#test-util-name-axetestutilsshadowsupport)
+   1. [Test Util Name: axe.testUtils.fixtureSetup](#test-util-name-axetestutilsfixturesetup)
+   1. [Test Util Name: axe.testUtils.checkSetup](#test-util-name-axetestutilschecksetup)
 
 ## Getting Started
 
@@ -130,11 +130,11 @@ The after function must return an `Array` of CheckResults, due to this, it is a 
 ```javascript
 var uniqueIds = [];
 return results.filter(function (r) {
-	if (uniqueIds.indexOf(r.data) === -1) {
-		uniqueIds.push(r.data);
-		return true;
-	}
-	return false;
+  if (uniqueIds.indexOf(r.data) === -1) {
+    uniqueIds.push(r.data);
+    return true;
+  }
+  return false;
 });
 ```
 

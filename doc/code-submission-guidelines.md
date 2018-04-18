@@ -35,7 +35,7 @@ that includes a type, a scope and a subject. Here's a sample of the format:
 ```sh
 perf(rule): improve speed of color contrast rules
 
-	Use async process to compare elements without UI lockup
+  Use async process to compare elements without UI lockup
 
     Closes #1
 ```

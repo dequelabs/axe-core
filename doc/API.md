@@ -3,26 +3,26 @@
 ## Table of Contents
 
 1. [Section 1: Introduction](#section-1-introduction)
-	1. [Get Started](#getting-started)
+   1. [Get Started](#getting-started)
 1. [Section 2: API Reference](#section-2-api-reference)
-	1. [Overview](#overview)
-	1. [API Notes](#api-notes)
-	1. [API Name: axe.getRules](#api-name-axegetrules)
-	1. [API Name: axe.configure](#api-name-axeconfigure)
-	1. [API Name: axe.reset](#api-name-axereset)
-	1. [API Name: axe.run](#api-name-axerun)
-		1. [Parameters axe.run](#parameters-axerun)
-			1. [Context Parameter](#context-parameter)
-			2. [Options Parameter](#options-parameter)
-			3. [Callback Parameter](#callback-parameter)
-		1. [Return Promise](#return-promise)
-		1. [Error result](#error-result)
-		1. [Results Object](#results-object)
-	1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
-	1. [API Name: axe.cleanup](#api-name-axecleanup)
-	1. [Virtual DOM Utilities](#virtual-dom-utilities)
-		1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
-	1. [Common Functions](#common-functions)
+    1. [Overview](#overview)
+    1. [API Notes](#api-notes)
+    1. [API Name: axe.getRules](#api-name-axegetrules)
+    1. [API Name: axe.configure](#api-name-axeconfigure)
+    1. [API Name: axe.reset](#api-name-axereset)
+    1. [API Name: axe.run](#api-name-axerun)
+       1. [Parameters axe.run](#parameters-axerun)
+          1. [Context Parameter](#context-parameter)
+          2. [Options Parameter](#options-parameter)
+          3. [Callback Parameter](#callback-parameter)
+       1. [Return Promise](#return-promise)
+       1. [Error result](#error-result)
+       1. [Results Object](#results-object)
+    1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
+    1. [API Name: axe.cleanup](#api-name-axecleanup)
+    1. [Virtual DOM Utilities](#virtual-dom-utilities)
+       1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
+    1. [Common Functions](#common-functions)
 1. [Section 3: Example Reference](#section-3-example-reference)
 1. [Section 4: Performance](#section-4-performance)
 
@@ -117,10 +117,10 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
 
 ```javascript
 [
-	{ ruleId: "area-alt", description: "Checks the <area> elements of image…" },
-	{ ruleId: "aria-allowed-attr", description: "Checks all attributes that start…" },
-	{ ruleId: "aria-required-attr", description: "Checks all elements that contain…" },
-	…
+  { ruleId: "area-alt", description: "Checks the <area> elements of image…" },
+  { ruleId: "aria-allowed-attr", description: "Checks all attributes that start…" },
+  { ruleId: "aria-required-attr", description: "Checks all elements that contain…" },
+  …
 ]
 ```
 
@@ -138,13 +138,13 @@ User specifies the format of the JSON structure passed to the callback of `axe.r
 
 ```javascript
 axe.configure({
-	branding: {
-		brand: String,
-		application: String
-	},
-	reporter: "option",
-	checks: [Object],
-	rules: [Object]});
+  branding: {
+    brand: String,
+    application: String
+  },
+  reporter: "option",
+  checks: [Object],
+  rules: [Object]});
 ```
 
 #### Parameters
@@ -237,12 +237,12 @@ axe.run(context, options, callback);
 By default, axe.run will test the entire document. The context object is an optional parameter that can be used to specify which element should and which should not be tested. It can be passed one of the following:
 
 1. An element reference that represents the portion of the document that must be analyzed
-	* Example: To limit analysis to the `<div id="content">` element: `document.getElementById("content")`
+  * Example: To limit analysis to the `<div id="content">` element: `document.getElementById("content")`
 2. A NodeList such as returned by `document.querySelectorAll`.
 3. A CSS selector that selects the portion(s) of the document that must be analyzed. This includes:
-	* A CSS selector as a class name  (e.g. `.classname`)
-	* A CSS selector as a node name (e.g. `div`)
-	* A CSS selector of an element id (e.g. `#tag`)
+  * A CSS selector as a class name  (e.g. `.classname`)
+  * A CSS selector as a node name (e.g. `div`)
+  * A CSS selector of an element id (e.g. `#tag`)
 4. An include-exclude object (see below)
 
 ###### Include-Exclude Object
@@ -251,10 +251,10 @@ The include exclude object is a JSON object with two attributes: include and exc
 
 * A node, or
 * An array of arrays of CSS selectors
-		* If the nested array contains a single string, that string is the CSS selector
-		* If the nested array contains multiple strings
-			* The last string is the final CSS selector
-			* All other's are the nested structure of iframes inside the document
+  * If the nested array contains a single string, that string is the CSS selector
+  * If the nested array contains multiple strings
+    * The last string is the final CSS selector
+    * All other's are the nested structure of iframes inside the document
 
 In most cases, the component arrays will contain only one CSS selector. Multiple CSS selectors are only required if you want to include or exclude regions of a page that are inside iframes (or iframes within iframes within iframes). In this case, the first n-1 selectors are selectors that select the iframe(s) and the nth selector, selects the region(s) within the iframe.
 
@@ -262,55 +262,55 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 
 1. Include the first item in the `$fixture` NodeList but exclude its first child
 
-	```javascript
-	{
-		include: $fixture[0],
-		exclude: $fixture[0].firstChild
-	}
-	```
+  ```javascript
+  {
+    include: $fixture[0],
+    exclude: $fixture[0].firstChild
+  }
+  ```
 2. Include the element with the ID of `fix` but exclude any `div`s within it
 
-	```javascript
-	{
-		include: [['#fix']],
-		exclude: [['#fix div']]
-	}
-	```
+  ```javascript
+  {
+    include: [['#fix']],
+    exclude: [['#fix div']]
+  }
+  ```
 3. Include the whole document except any structures whose parent contains the class `exclude1` or `exclude2`
 
-	```javascript
-	{
-		exclude: [['.exclude1'], ['.exclude2']]
-	}
-	```
+  ```javascript
+  {
+    exclude: [['.exclude1'], ['.exclude2']]
+  }
+  ```
 4. Include the element with the ID of `fix`, within the iframe with id `frame`
 
-	```javascript
-	{
-		include: [['#frame', '#fix']]
-	}
-	```
+  ```javascript
+  {
+    include: [['#frame', '#fix']]
+  }
+  ```
 5. Include the element with the ID of `fix`, within the iframe with id `frame2`, within the iframe with id `frame1`
 
-	```javascript
-	{
-		include: [['#frame1', '#frame2', '#fix']]
-	}
-	```
+  ```javascript
+  {
+    include: [['#frame1', '#frame2', '#fix']]
+  }
+  ```
 6. Include the following:
-	* The element with the ID of `fix`, within the iframe with id `frame2`, within the iframe with id `frame1`
-	* The element with id `header`
-	* All links
+  * The element with the ID of `fix`, within the iframe with id `frame2`, within the iframe with id `frame1`
+  * The element with id `header`
+  * All links
 
-	```javascript
-	{
-		include: [
-			['#header'],
-			['a'],
-			['#frame1', '#frame2', '#fix']
-		]
-	}
-	```
+  ```javascript
+  {
+    include: [
+      ['#header'],
+      ['a'],
+      ['#frame1', '#frame2', '#fix']
+    ]
+  }
+  ```
 
 ##### Options Parameter
 
@@ -339,121 +339,121 @@ Additionally, there are a number or properties that allow configuration of diffe
 
 1. Run only Rules for an accessibility standard
 
-	There are certain standards defined that can be used to select a set of rules. The defined standards and tag string are defined as follows:
+  There are certain standards defined that can be used to select a set of rules. The defined standards and tag string are defined as follows:
 
-	| Tag Name           | Accessibility Standard                |
-	|--------------------|:-------------------------------------:|
-	| `wcag2a`           | WCAG 2.0 Level A                      |
-	| `wcag2aa`          | WCAG 2.0 Level AA                     |
-	| `section508`       | Section 508                           |
-	| `best-practice`    | Best practices endorsed by Deque      |
+  | Tag Name           | Accessibility Standard                |
+  |--------------------|:-------------------------------------:|
+  | `wcag2a`           | WCAG 2.0 Level A                      |
+  | `wcag2aa`          | WCAG 2.0 Level AA                     |
+  | `section508`       | Section 508                           |
+  | `best-practice`    | Best practices endorsed by Deque      |
 
-	To run only WCAG 2.0 Level A rules, specify `options` as:
+  To run only WCAG 2.0 Level A rules, specify `options` as:
 
-	```javascript
-	{
-		runOnly: {
-			type: "tag",
-			values: ["wcag2a"]
-		}
-	}
-	```
+  ```javascript
+  {
+    runOnly: {
+      type: "tag",
+      values: ["wcag2a"]
+    }
+  }
+  ```
 
-	To run both WCAG 2.0 Level A and Level AA rules, you must specify both `wcag2a` and `wcag2aa`:
+  To run both WCAG 2.0 Level A and Level AA rules, you must specify both `wcag2a` and `wcag2aa`:
 
-	```javascript
-	{
-		runOnly: {
-			type: "tag",
-			values: ["wcag2a", "wcag2aa"]
-		}
-	}
-	```
+  ```javascript
+  {
+    runOnly: {
+      type: "tag",
+      values: ["wcag2a", "wcag2aa"]
+    }
+  }
+  ```
 
-	Alternatively, runOnly can be passed an array of tags:
+  Alternatively, runOnly can be passed an array of tags:
 
-	```javascript
-	{
-	runOnly: ["wcag2a", "wcag2aa"]
-	}
-	```
+  ```javascript
+  {
+  runOnly: ["wcag2a", "wcag2aa"]
+  }
+  ```
 
 2. Run only a specified list of Rules
 
-	If you only want to run certain rules, specify options as:
+  If you only want to run certain rules, specify options as:
 
-	```javascript
-	{
-		runOnly: {
-			type: "rule",
-			values: [ "ruleId1", "ruleId2", "ruleId3" ]
-		}
-	}
-	```
+  ```javascript
+  {
+    runOnly: {
+      type: "rule",
+      values: [ "ruleId1", "ruleId2", "ruleId3" ]
+    }
+  }
+  ```
 
-	This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `ruleId3`. No other rule will run.
+  This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `ruleId3`. No other rule will run.
 
 3. Run all enabled Rules except for a list of rules
 
-	The default operation for axe.run is to run all WCAG 2.0 Level A and Level AA rules. If certain rules should be disabled from being run, specify `options` as:
-	```javascript
-	{
-		"rules": {
-			"color-contrast": { enabled: false },
-			"valid-lang": { enabled: false }
-		}
-	}
-	```
+  The default operation for axe.run is to run all WCAG 2.0 Level A and Level AA rules. If certain rules should be disabled from being run, specify `options` as:
+  ```javascript
+  {
+    "rules": {
+      "color-contrast": { enabled: false },
+      "valid-lang": { enabled: false }
+    }
+  }
+  ```
 
-	This example will disable the rules with the id of `color-contrast` and `valid-lang`. All other rules will run. The list of valid rule IDs is specified in the section below.
+  This example will disable the rules with the id of `color-contrast` and `valid-lang`. All other rules will run. The list of valid rule IDs is specified in the section below.
 
 4. Run a modified set or rules using tags and rule enable
 
-	By combining runOnly with type: tags and the rules option, a modified set can be defined. This lets you include rules with unspecified tags, and exclude rules that do have the specified tag(s).
-	```javascript
-	{
-		runOnly: {
-			type: "tag",
-			values: ["wcag2a"]
-		},
-		"rules": {
-			"color-contrast": { enabled: true },
-			"valid-lang": { enabled: false }
-		}
-	}
-	```
+  By combining runOnly with type: tags and the rules option, a modified set can be defined. This lets you include rules with unspecified tags, and exclude rules that do have the specified tag(s).
+  ```javascript
+  {
+    runOnly: {
+      type: "tag",
+      values: ["wcag2a"]
+    },
+    "rules": {
+      "color-contrast": { enabled: true },
+      "valid-lang": { enabled: false }
+    }
+  }
+  ```
 
-	This example includes all level A rules except for valid-lang, and in addition will include the level AA color-contrast rule.
+  This example includes all level A rules except for valid-lang, and in addition will include the level AA color-contrast rule.
 
 5. Run only some tags, but exclude others
 
-	Similar to scope, the runOnly option can accept an object with an 'include' and 'exclude' property. Only those checks that match an included tag will run, except those that share a tag from the exclude list.
-	```javascript
-	{
-		runOnly: {
-			type: 'tags',
-			values: {
-				include: ['wcag2a', 'wcag2aa'],
-				exclude: ['experimental']
-			}
-		}
-	}
-	```
+  Similar to scope, the runOnly option can accept an object with an 'include' and 'exclude' property. Only those checks that match an included tag will run, except those that share a tag from the exclude list.
+  ```javascript
+  {
+    runOnly: {
+      type: 'tags',
+      values: {
+        include: ['wcag2a', 'wcag2aa'],
+        exclude: ['experimental']
+      }
+    }
+  }
+  ```
 
-	This example first includes all `wcag2a` and `wcag2aa` rules. All rules that are tagged as `experimental` are than removed from the list of rules to run.
+  This example first includes all `wcag2a` and `wcag2aa` rules. All rules that are tagged as `experimental` are than removed from the list of rules to run.
 
 6. Only process certain types of results
 
-	The `resultTypes` option can be used to limit the result types that aXe will process, aggregate, and send to the reporter. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results.
+  The `resultTypes` option can be used to limit the result types that aXe will process, aggregate, and send to the reporter. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results.
 
-	Types listed in this option are processed normally and report all of their results. Types *not* listed process a maximum of one result. The caller can use this information to inform the user of the existence of that type of result if appropriate.
+  Types listed in this option are processed normally and report all of their results. Types *not* listed process a maximum of one result. The caller can use this information to inform the user of the existence of that type of result if appropriate.
 
-	```javascript
-	{
-		resultTypes: ['violations', 'incomplete', 'inapplicable']
-	}
-	```
-	This example will process all of the "violations", "incomplete", and "inapplicable" result types. Since "passes" was not specified, it will only process the first pass for each rule, if one exists. As a result, the results object's `passes` array will have a length of either `0` or `1`. On a series of extremely large pages, this would improve performance considerably.
+  ```javascript
+  {
+    resultTypes: ['violations', 'incomplete', 'inapplicable']
+  }
+  ```
+  This example will process all of the "violations", "incomplete", and "inapplicable" result types. Since "passes" was not specified, it will only process the first pass for each rule, if one exists. As a result, the results object's `passes` array will have a length of either `0` or `1`. On a series of extremely large pages, this would improve performance considerably.
 
 ##### Callback Parameter
 
@@ -524,15 +524,15 @@ In this example, we will pass the selector for the entire document, pass no opti
 
 ```javascript
 axe.run(document, function(err, results) {
-	if (err) throw err;
-	console.log(results);
+  if (err) throw err;
+  console.log(results);
 });
 ```
 
 ###### `passes`
 
 * `passes[0]`
-	...
+  ...
   * `help` - `"Elements must have sufficient color contrast"`
   * `helpUrl` - `"https://dequeuniversity.com/courses/html-css/visual-layout/color-contrast"`
   * `id` - `"color-contrast"`
@@ -540,7 +540,7 @@ axe.run(document, function(err, results) {
       * `target[0]` - `"#js_off-canvas-wrap > .inner-wrap >.kinja-title.proxima.js_kinja-title-desktop"`
 
 * `passes[1]`
-	 ...
+   ...
 
 ###### `violations`
 
@@ -578,13 +578,13 @@ In this example, we pass the selector for the entire document, enable two additi
 
 ```javascript
 axe.run(document, {
-	rules: {
-		"heading-order": { enabled: true },
-		"label-title-only": { enabled: true }
-	}
+  rules: {
+    "heading-order": { enabled: true },
+    "label-title-only": { enabled: true }
+  }
 }, function(err, results) {
-	if (err) throw err;
-	console.log(results);
+  if (err) throw err;
+  console.log(results);
 });
 ```
 
@@ -595,15 +595,15 @@ This example shows a result object that points to an open shadow DOM element.
 ##### `violations[0]`
 ```json
 {
-	help : "Elements must have sufficient color contrast",
-	helpUrl: "https://dequeuniversity.com/rules/axe/2.1/color-contrast?application=axeAPI",
-	id: "color-contrast",
-	nodes: [{
-		target: [[
-			"header > aria-menu",
-			"li.expanded"
-		]]
-	}]
+  help : "Elements must have sufficient color contrast",
+  helpUrl: "https://dequeuniversity.com/rules/axe/2.1/color-contrast?application=axeAPI",
+  id: "color-contrast",
+  nodes: [{
+    target: [[
+      "header > aria-menu",
+      "li.expanded"
+    ]]
+  }]
 }
 ```
 
@@ -620,7 +620,7 @@ Call each plugin's cleanup function. See [implementing a plugin](plugins.md).
 The signature is:
 
 ```javascript
-		axe.cleanup(resolve, reject)
+    axe.cleanup(resolve, reject)
 ```
 
 `resolve` and `reject` are functions that will be invoked on success or failure respectively.
@@ -730,7 +730,7 @@ An approach you can take to reducing the time is use the `resultTypes` option. B
 
 ```json
 {
-	resultTypes: ['violations']
+  resultTypes: ['violations']
 }
 ```
 

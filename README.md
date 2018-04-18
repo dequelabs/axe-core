@@ -55,7 +55,7 @@ Now insert calls at each point in your tests where a new piece of UI becomes vis
 
 ```js
 axe.run(function (err, results) {
-	if (err) throw err;
+  if (err) throw err;
     ok(results.violations.length === 0, 'Should be no accessibility issues');
     // complete the async call
     ...
