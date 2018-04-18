@@ -64,9 +64,9 @@ Rules are defined by JSON files in the [lib/rules directory](../lib/rules).  The
 * `matches` - **optional** `String`  Relative path to the JavaScript file of a custom matching function.  See [matches function](#matches-function) for more information.
 * `tags` - **optional** `Array` Strings of the accessibility guidelines of which the Rule applies.
 * `metadata` - `Object` Consisting of:
-	* `description` - `String` Text string that describes what the rule does.
-	* `helpUrl` - `String` **optional** URL that provides more information about the specifics of the violation. Links to a page on the Deque University site.
-	* `help` - `String` Help text that describes the test that was performed.
+  * `description` - `String` Text string that describes what the rule does.
+  * `helpUrl` - `String` **optional** URL that provides more information about the specifics of the violation. Links to a page on the Deque University site.
+  * `help` - `String` Help text that describes the test that was performed.
 * `any` - `Array` Checks that make up this Rule; one of these checks must return `true` for a Rule to pass.
 * `all` - `Array` Checks that make up this Rule; all these checks must return `true` for a Rule to pass.
 * `none` - `Array` Checks that make up this Rule; none of these checks must return `true` for a Rule to pass.
@@ -95,11 +95,11 @@ Similar to Rules, Checks are defined by JSON files in the [lib/checks directory]
 * `after` - **optional** `String` Relative path to the JavaScript file which contains the function body of a Check's after (or post-processing) function.f
 * `options` - **optional** `Mixed` Any information the Check needs that you might need to customize and/or is locale specific.  Options can be overridden at runtime (with the options parameter) or config-time.  For example, the [valid-lang](../lib/checks/language/valid-lang.json) Check defines what ISO 639-1 language codes it should accept as valid.  Options do not need to follow any specific format or type; it is up to the author of a Check to determine the most appropriate format.
 * `metadata` - `Object` Consisting of:
-	* `impact` - `String` (one of `minor`, `moderate`, `serious`, or `critical`)
-	* `messages` - `Object` These messages are displayed when the Check passes or fails
-		* `pass` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check passes
-		* `fail` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check fails
-		* `incomplete` – `String|Object` – [doT.js](http://olado.github.io/doT/) template string displayed when the Check is incomplete OR an object with `missingData` on why it returned incomplete. Refer to [rules.md](./rules.md).
+  * `impact` - `String` (one of `minor`, `moderate`, `serious`, or `critical`)
+  * `messages` - `Object` These messages are displayed when the Check passes or fails
+    * `pass` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check passes
+    * `fail` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check fails
+    * `incomplete` – `String|Object` – [doT.js](http://olado.github.io/doT/) template string displayed when the Check is incomplete OR an object with `missingData` on why it returned incomplete. Refer to [rules.md](./rules.md).
 
 #### Check `evaluate`
 
@@ -246,8 +246,8 @@ The queue function creates an asynchronous "queue", list of functions to be invo
 #### DqElement Class
 
 The DqElement is a "serialized" `HTMLElement`. It will calculate the CSS selector, grab the source outerHTML and offer an array for storing frame paths. The DqElement class takes the following parameters:
- * `Element` - `HTMLElement` The element to serialize
- * `Spec` - `Object` Properties to use in place of the element when instantiated on Elements from other frames
+  * `Element` - `HTMLElement` The element to serialize
+  * `Spec` - `Object` Properties to use in place of the element when instantiated on Elements from other frames
 
 ```javascript
 var firstH1 = document.getElementByTagName('h1')[0];
@@ -282,8 +282,8 @@ axe.utils.getFlattenedTree(element, shadowId)
 ```
 
 #### Parameters
- - `node` – HTMLElement. The current HTML node for which you want a flattened DOM tree.
- - `shadowId` – string(optional). ID of the shadow DOM that is the closest shadow ancestor of the node
+- `node` – HTMLElement. The current HTML node for which you want a flattened DOM tree.
+- `shadowId` – string(optional). ID of the shadow DOM that is the closest shadow ancestor of the node
 
 #### Returns
 

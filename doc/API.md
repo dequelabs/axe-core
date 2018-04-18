@@ -150,34 +150,34 @@ axe.configure({
 #### Parameters
 
 * `configurationOptions` - Options object; where the valid name, value pairs are:
-	* `branding` - mixed(optional) Used to set the branding of the helpUrls
-		 * `brand` - string(optional) sets the brand string - default "axe"
-		 * `application` - string(optional) sets the application string - default "axeAPI"
-	* `reporter` - Used to set the output format that the axe.run function will pass to the callback function
-		 * `v1` to use the previous version's format: `axe.configure({ reporter: "v1" });`
-		 * `v2` to use the current version's format: `axe.configure({ reporter: "v2" });`
-	* `checks` - Used to add checks to the list of checks used by rules, or to override the properties of existing checks
-		 * The checks attribute is an array of check objects
-		 * Each check object can contain the following attributes
-			 * `id` - string(required). This uniquely identifies the check. If the check already exists, this will result in any supplied check properties being overridden. The properties below that are marked required if new are optional when the check is being overridden.
-			 * `evaluate` - function(required for new). This is the function that implements the check's functionality.
-			 * `after` - function(optional). This is the function that gets called for checks that operate on a page-level basis, to process the results from the iframes.
-			 * `options` - mixed(optional). This is the options structure that is passed to the evaluate function and is intended to be used to configure checks. It is the most common property that is intended to be overridden for existing checks.
-			 * `enabled` - boolean(optional, default `true`). This is used to indicate whether the check is on or off by default. Checks that are off are not evaluated, even when included in a rule. Overriding this is a common way to disable a particular check across multiple rules.
-	* `rules` - Used to add rules to the existing set of rules, or to override the properties of existing rules
-		 * The rules attribute is an Array of rule objects
-		 * each rule object can contain the following attributes
-			 * `id` - string(required). This uniquely identifies the rule. If the rule already exists, it will be overridden with any of the attributes supplied. The attributes below that are marked required, are only required for new rules.
-			 * `selector` - string(optional, default `*`). A CSS selector used to identify the elements that are passed into the rule for evaluation.
-			 * `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
-			 * `enabled` - boolean(optional, default `true`). Whether the rule is turned on. This is a common attribute for overriding.
-			 * `pageLevel` - boolean(optional, default `false`). When set to true, this rule is only applied when the entire page is tested. Results from nodes on different frames are combined into a single result. See [page level rules](#page-level-rules).
-			 * `any` -  array(optional, default `[]`). This is the list of checks that must all "pass" or else there is a violation.
-			 * `all` - array(optional, default `[]`). This is the list of checks that, if any "fails", will generate a violation.
-			 * `none` - array(optional, default `[]`). This is a list of the checks that, if none "pass", will generate a violation.
-			 * `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. In practice, you must supply some valid tags or the default evaluation will not invoke the rule. The convention is to include the standard (WCAG 2 and/or section 508), the WCAG 2 level, Section 508 paragraph, and the WCAG 2 success criteria. Tags are constructed by converting all letters to lower case, removing spaces and periods and concatinating the result. E.g. WCAG 2 A success criteria 1.1.1 would become ["wcag2a", "wcag111"]
-			 * `matches` - string(optional, default `*`). A filtering CSS selector that will exclude elements that do not match the CSS selector.
-	* `disableOtherRules` - Disables all rules not included in the `rules` property.
+  * `branding` - mixed(optional) Used to set the branding of the helpUrls
+    * `brand` - string(optional) sets the brand string - default "axe"
+    * `application` - string(optional) sets the application string - default "axeAPI"
+  * `reporter` - Used to set the output format that the axe.run function will pass to the callback function
+    * `v1` to use the previous version's format: `axe.configure({ reporter: "v1" });`
+    * `v2` to use the current version's format: `axe.configure({ reporter: "v2" });`
+  * `checks` - Used to add checks to the list of checks used by rules, or to override the properties of existing checks
+    * The checks attribute is an array of check objects
+    * Each check object can contain the following attributes
+      * `id` - string(required). This uniquely identifies the check. If the check already exists, this will result in any supplied check properties being overridden. The properties below that are marked required if new are optional when the check is being overridden.
+      * `evaluate` - function(required for new). This is the function that implements the check's functionality.
+      * `after` - function(optional). This is the function that gets called for checks that operate on a page-level basis, to process the results from the iframes.
+      * `options` - mixed(optional). This is the options structure that is passed to the evaluate function and is intended to be used to configure checks. It is the most common property that is intended to be overridden for existing checks.
+      * `enabled` - boolean(optional, default `true`). This is used to indicate whether the check is on or off by default. Checks that are off are not evaluated, even when included in a rule. Overriding this is a common way to disable a particular check across multiple rules.
+  * `rules` - Used to add rules to the existing set of rules, or to override the properties of existing rules
+    * The rules attribute is an Array of rule objects
+    * each rule object can contain the following attributes
+      * `id` - string(required). This uniquely identifies the rule. If the rule already exists, it will be overridden with any of the attributes supplied. The attributes below that are marked required, are only required for new rules.
+      * `selector` - string(optional, default `*`). A CSS selector used to identify the elements that are passed into the rule for evaluation.
+      * `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
+      * `enabled` - boolean(optional, default `true`). Whether the rule is turned on. This is a common attribute for overriding.
+      * `pageLevel` - boolean(optional, default `false`). When set to true, this rule is only applied when the entire page is tested. Results from nodes on different frames are combined into a single result. See [page level rules](#page-level-rules).
+      * `any` -  array(optional, default `[]`). This is the list of checks that must all "pass" or else there is a violation.
+      * `all` - array(optional, default `[]`). This is the list of checks that, if any "fails", will generate a violation.
+      * `none` - array(optional, default `[]`). This is a list of the checks that, if none "pass", will generate a violation.
+      * `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. In practice, you must supply some valid tags or the default evaluation will not invoke the rule. The convention is to include the standard (WCAG 2 and/or section 508), the WCAG 2 level, Section 508 paragraph, and the WCAG 2 success criteria. Tags are constructed by converting all letters to lower case, removing spaces and periods and concatinating the result. E.g. WCAG 2 A success criteria 1.1.1 would become ["wcag2a", "wcag111"]
+      * `matches` - string(optional, default `*`). A filtering CSS selector that will exclude elements that do not match the CSS selector.
+  * `disableOtherRules` - Disables all rules not included in the `rules` property.
 
 **Returns:** Nothing
 
@@ -504,19 +504,19 @@ Each object returned in these arrays have the following properties:
 * `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the Rule failed or `null` if the check passed
 * `tags` - Array of tags that this rule is assigned. These tags can be used in the option structure to select which rules are run ([see `axe.run` parameters for more information](#parameters-axerun)).
 * `nodes` - Array of all elements the Rule tested
-	* `html` - Snippet of HTML of the Element
-	* `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the test failed or `null` if the check passed
-	* `target` - Array of either strings or Arrays of strings. If the item in the array is a string, then it is a CSS selector. If there are multiple items in the array each item corresponds to one level of iframe or frame. If there is one iframe or frame, there should be two entries in `target`. If there are three iframe levels, there should be four entries in `target`. If the item in the Array is an Array of strings, then it points to an element in a shadow DOM and each item (except the n-1th) in this array is a selector to a DOM element with a shadow DOM. The last element in the array points to the final shadow DOM node.
-	* `any` - Array of checks that were made where at least one must have passed. Each entry in the array contains:
-		* `id` - Unique identifier for this check. Check ids may be the same as Rule ids
-		* `impact` - How serious this particular check is. Can be one of "minor", "moderate", "serious", or "critical". Each check that is part of a rule can have different impacts. The highest impact of all the checks that fail is reported for the rule
-		* `message` - Description of why this check passed or failed
-		* `data` - Additional information that is specific to the type of Check which is optional. For example, a color contrast check would include the foreground color, background color, contrast ratio, etc.
-		* `relatedNodes` - Optional array of information about other nodes that are related to this check. For example, a duplicate id check violation would list the other selectors that had this same duplicate id. Each entry in the array contains the following information:
-			* `target` - Array of selectors for the related node
-			* `html` - HTML source of the related node
-	* `all` - Array of checks that were made where all must have passed. Each entry in the array contains the same information as the 'any' array
-	* `none` - Array of checks that were made where all must have not passed. Each entry in the array contains the same information as the 'any' array
+  * `html` - Snippet of HTML of the Element
+  * `impact` - How serious the violation is. Can be one of "minor", "moderate", "serious", or "critical" if the test failed or `null` if the check passed
+  * `target` - Array of either strings or Arrays of strings. If the item in the array is a string, then it is a CSS selector. If there are multiple items in the array each item corresponds to one level of iframe or frame. If there is one iframe or frame, there should be two entries in `target`. If there are three iframe levels, there should be four entries in `target`. If the item in the Array is an Array of strings, then it points to an element in a shadow DOM and each item (except the n-1th) in this array is a selector to a DOM element with a shadow DOM. The last element in the array points to the final shadow DOM node.
+  * `any` - Array of checks that were made where at least one must have passed. Each entry in the array contains:
+    * `id` - Unique identifier for this check. Check ids may be the same as Rule ids
+    * `impact` - How serious this particular check is. Can be one of "minor", "moderate", "serious", or "critical". Each check that is part of a rule can have different impacts. The highest impact of all the checks that fail is reported for the rule
+    * `message` - Description of why this check passed or failed
+    * `data` - Additional information that is specific to the type of Check which is optional. For example, a color contrast check would include the foreground color, background color, contrast ratio, etc.
+    * `relatedNodes` - Optional array of information about other nodes that are related to this check. For example, a duplicate id check violation would list the other selectors that had this same duplicate id. Each entry in the array contains the following information:
+      * `target` - Array of selectors for the related node
+      * `html` - HTML source of the related node
+  * `all` - Array of checks that were made where all must have passed. Each entry in the array contains the same information as the 'any' array
+  * `none` - Array of checks that were made where all must have not passed. Each entry in the array contains the same information as the 'any' array
 
 #### Example 2
 
@@ -533,11 +533,11 @@ axe.run(document, function(err, results) {
 
 * `passes[0]`
 	...
-	* `help` - `"Elements must have sufficient color contrast"`
-	* `helpUrl` - `"https://dequeuniversity.com/courses/html-css/visual-layout/color-contrast"`
-	* `id` - `"color-contrast"`
-		* `nodes`
-			* `target[0]` - `"#js_off-canvas-wrap > .inner-wrap >.kinja-title.proxima.js_kinja-title-desktop"`
+  * `help` - `"Elements must have sufficient color contrast"`
+  * `helpUrl` - `"https://dequeuniversity.com/courses/html-css/visual-layout/color-contrast"`
+  * `id` - `"color-contrast"`
+    * `nodes`
+      * `target[0]` - `"#js_off-canvas-wrap > .inner-wrap >.kinja-title.proxima.js_kinja-title-desktop"`
 
 * `passes[1]`
 	 ...
@@ -545,12 +545,12 @@ axe.run(document, function(err, results) {
 ###### `violations`
 
 * `violations[0]`
-	* `help` - `"<button> elements must have alternate text"`
-	* `helpUrl` - `"https://dequeuniversity.com/courses/html-css/forms/form-labels#id84_example_button"`
-	* `id` - `"button-name"`
-		* `nodes`
-			* `target[0]` - `"post_5919997 > .row.content-wrapper > .column > span > iframe"`
-			* `target[1]` - `"#u_0_1 > .pluginConnectButton > .pluginButtonImage > button"`
+  * `help` - `"<button> elements must have alternate text"`
+  * `helpUrl` - `"https://dequeuniversity.com/courses/html-css/forms/form-labels#id84_example_button"`
+  * `id` - `"button-name"`
+    * `nodes`
+      * `target[0]` - `"post_5919997 > .row.content-wrapper > .column > span > iframe"`
+      * `target[1]` - `"#u_0_1 > .pluginConnectButton > .pluginButtonImage > button"`
 
 * `violations[1]` ...
 
