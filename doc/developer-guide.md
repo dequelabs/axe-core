@@ -24,9 +24,9 @@ aXe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities fo
 
 ### Environment Pre-requisites
 
-1.  You must have NodeJS installed.
-2.  Grunt must be installed globally.  `npm install -g grunt-cli` (You may need to do this as `sudo npm install -g grunt-cli`)
-3.  Install npm development dependencies.  In the root folder of your axe-core repository, run `npm install`
+1. You must have NodeJS installed.
+2. Grunt must be installed globally.  `npm install -g grunt-cli` (You may need to do this as `sudo npm install -g grunt-cli`)
+3. Install npm development dependencies.  In the root folder of your axe-core repository, run `npm install`
 
 ### Building axe.js
 
@@ -39,11 +39,11 @@ To run all tests from the command line you can run `grunt test`, which will run 
 You can also load tests in any supported browser, which is helpful for debugging.  Tests require a local server to run, you must first start a local server to serve files.  You can use Grunt to start one by running `grunt dev`.  Once your local server is running you can load the following pages in any browser to run tests:
 
 
-1.  [Core Tests](../test/core/)
-2.  [Commons Tests](../test/commons/)
-3.  [Check Tests](../test/checks/)
-4.  [Integration Tests](../test/integration/rules/)
-5.  There are additional tests located in [test/integration/full/](../test/integration/full/) for tests that need to be run against their own document.
+1. [Core Tests](../test/core/)
+2. [Commons Tests](../test/commons/)
+3. [Check Tests](../test/checks/)
+4. [Integration Tests](../test/integration/rules/)
+5. There are additional tests located in [test/integration/full/](../test/integration/full/) for tests that need to be run against their own document.
 
 ## Architecture Overview
 

@@ -243,9 +243,9 @@ By default, axe.run will test the entire document. The context object is an opti
 	* Example: To limit analysis to the `<div id="content">` element: `document.getElementById("content")`
 2. A NodeList such as returned by `document.querySelectorAll`.
 3. A CSS selector that selects the portion(s) of the document that must be analyzed. This includes:
-	*  A CSS selector as a class name  (e.g. `.classname`)
-	*  A CSS selector as a node name (e.g. `div`)
-	*  A CSS selector of an element id (e.g. `#tag`)
+	* A CSS selector as a class name  (e.g. `.classname`)
+	* A CSS selector as a node name (e.g. `div`)
+	* A CSS selector of an element id (e.g. `#tag`)
 4. An include-exclude object (see below)
 
 
