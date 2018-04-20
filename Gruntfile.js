@@ -192,7 +192,7 @@ module.exports = function (grunt) {
 					beautify: {
 						beautify: true,
 						indent_level: 2,
-						bracketize: true,
+						braces: true,
 						quote_style: 1
 					},
 					preserveComments: /^!/
@@ -211,7 +211,7 @@ module.exports = function (grunt) {
 						return /^!/.test( comment.value );
 					},
 					mangle: {
-						except: ['commons', 'utils', 'axe', 'window', 'document']
+						reserved: ['commons', 'utils', 'axe', 'window', 'document']
 					}
 				}
 			}
