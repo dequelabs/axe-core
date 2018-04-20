@@ -17,6 +17,7 @@
 | bypass | Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content | cat.keyboard, wcag2a, wcag241, section508, section508.22.o | true |
 | checkboxgroup | Ensures related &lt;input type=&quot;checkbox&quot;&gt; elements have a group and that the group designation is consistent | cat.forms, best-practice | true |
 | color-contrast | Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds | cat.color, wcag2aa, wcag143 | true |
+| css-orientation-not-locked |  | cat.structure, wcag262, wcag21aa | true |
 | definition-list | Ensures &lt;dl&gt; elements are structured correctly | cat.structure, wcag2a, wcag131 | true |
 | dlitem | Ensures &lt;dt&gt; and &lt;dd&gt; elements are contained by a &lt;dl&gt; | cat.structure, wcag2a, wcag131 | true |
 | document-title | Ensures each HTML document contains a non-empty &lt;title&gt; element | cat.text-alternatives, wcag2a, wcag242 | true |

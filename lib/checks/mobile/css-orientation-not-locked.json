@@ -1,0 +1,11 @@
+{
+  "id": "css-orientation-not-locked",
+  "evaluate": "css-orientation-not-locked.js",
+  "metadata": {
+    "impact": "major",
+    "messages": {
+      "pass": "",
+      "fail": ""
+    }
+  }
+}
