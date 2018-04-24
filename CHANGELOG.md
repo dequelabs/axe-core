@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 
+<a name="3.0.2"></a>
+## [3.0.2](https://github.com/dequelabs/axe-core/compare/v3.0.0-beta.2...v3.0.2) (2018-04-24)
+
+
+### Bug Fixes
+
+* **rule:** Allow empty aria-labelledby values ([#829](https://github.com/dequelabs/axe-core/issues/829)) ([d280c5f](https://github.com/dequelabs/axe-core/commit/d280c5f))
+* Prevent color rules from crashing Chrome 66+ [#856](https://github.com/dequelabs/axe-core/issues/856) ([#861](https://github.com/dequelabs/axe-core/issues/861)) ([147b665](https://github.com/dequelabs/axe-core/commit/147b665))
+* **respondable:** Identify the current axe instance by its application name when it exists ([affd75c](https://github.com/dequelabs/axe-core/commit/affd75c))
+* **respondable:** Use the hard-coded axe.application name as default ([ab4a49f](https://github.com/dequelabs/axe-core/commit/ab4a49f))
+* **rule:** Ignore hashbang URLs for skiplinks ([#827](https://github.com/dequelabs/axe-core/issues/827)) ([e1f0c57](https://github.com/dequelabs/axe-core/commit/e1f0c57))
+* **rule:** Tag video-caption only as SC 1.2.2 ([87818e7](https://github.com/dequelabs/axe-core/commit/87818e7))
+
+
+
 <a name="3.0.1"></a>
 ## [3.0.1](https://github.com/dequelabs/axe-core/compare/v3.0.0...v3.0.1) (2018-04-03)
 

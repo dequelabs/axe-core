@@ -63,12 +63,17 @@ axe.run(function (err, results) {
 ```
 ## Supported Browsers
 
-The [aXe API](doc/API.md) supports the following browsers:
+The [aXe API](doc/API.md) fully supports the following browsers:
 
-* Internet Explorer v9, 10, 11
+* Microsoft Edge v40 and above
 * Google Chrome v42 and above
 * Mozilla Firefox v38 and above
 * Apple Safari v7 and above
+* Internet Explorer v9, 10, 11
+
+Support means that we will fix bugs and attempt to test each browser regularly. Only Firefox and Chrome are currently tested on every pull request.
+
+There is limited support for JSDOM. We will attempt to make all rules compatible with JSDOM but where this is not possible, we recommend turning those rules off. Currently the `color-contrast` rule is known not to work with JSDOM.
 
 ## The Accessibility Rules
 
@@ -95,7 +100,7 @@ To update existing translation file, re-run `grunt translate --lang=<langcode>`.
 
 ## Contributing
 
-Read the [Proposing Axe-core Rules guide ](./doc/rule-proposal.md)
+Read the [Proposing Axe-core Rules guide](./doc/rule-proposal.md)
 
 Read the [documentation on the architecture](./doc/developer-guide.md)
 
