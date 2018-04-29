@@ -360,7 +360,7 @@
       "fail": "All elements with the name \"{{=it.data.name}}\" do not reference the same element with aria-labelledby"
     },
     "accesskeys": {
-      "pass": "Accesskey attribute value is unique",
+      "pass": "La valeur de l'attribut Accesskey est unique",
       "fail": "Document has multiple elements with the same accesskey"
     },
     "focusable-no-name": {
@@ -508,12 +508,12 @@
       "fail": "No skip link target"
     },
     "unique-frame-title": {
-      "pass": "Element's title attribute is unique",
-      "fail": "Element's title attribute is not unique"
+      "pass": "L'attribut title de l'élément est unique",
+      "fail": "L'attribut title de l'élément n'est pas unique"
     },
     "aria-label": {
-      "pass": "aria-label attribute exists and is not empty",
-      "fail": "aria-label attribute does not exist or is empty"
+      "pass": "L'attribut aria-label existe et n'est pas vide",
+      "fail": "L'attribut aria-label n'existe pas ou est vide"
     },
     "aria-labelledby": {
       "pass": "aria-labelledby attribute exists and references elements that are visible to screen readers",
@@ -528,36 +528,36 @@
       "fail": "Document does not have a non-empty <title> element"
     },
     "duplicate-id": {
-      "pass": "Document has no elements that share the same id attribute",
-      "fail": "Document has multiple elements with the same id attribute: {{=it.data}}"
+      "pass": "Le document n'a pas d'éléments qui partagent le même attribut id",
+      "fail": "Le document a plusieurs éléments avec le même attribut id : {{=it.data}}"
     },
     "exists": {
-      "pass": "Element does not exist",
-      "fail": "Element exists"
+      "pass": "L'élément n'existe pas",
+      "fail": "L'élément existe"
     },
     "has-alt": {
-      "pass": "Element has an alt attribute",
-      "fail": "Element does not have an alt attribute"
+      "pass": "L'élément a un attribut alt",
+      "fail": "L'élément n'a pas d'attribut alt"
     },
     "has-visible-text": {
       "pass": "Element has text that is visible to screen readers",
       "fail": "Element does not have text that is visible to screen readers"
     },
     "is-on-screen": {
-      "pass": "Element is not visible",
-      "fail": "Element is visible"
+      "pass": "L'élément n'est pas visible",
+      "fail": "L'élément est visible"
     },
     "non-empty-alt": {
-      "pass": "Element has a non-empty alt attribute",
-      "fail": "Element has no alt attribute or the alt attribute is empty"
+      "pass": "L'élément a un attribut alt non vide",
+      "fail": "L'élément n'a pas d'attribut alt ou l'attribut alt est vide"
     },
     "non-empty-if-present": {
       "pass": "Element {{?it.data}}has a non-empty value attribute{{??}}does not have a value attribute{{?}}",
       "fail": "Element has a value attribute and the value attribute is empty"
     },
     "non-empty-title": {
-      "pass": "Element has a title attribute",
-      "fail": "Element has no title attribute or the title attribute is empty"
+      "pass": "L'élément a un attribut title",
+      "fail": "L'élément n'a pas d'attribut title ou l'attribut title est vide."
     },
     "non-empty-value": {
       "pass": "Element has a non-empty value attribute",
@@ -613,9 +613,9 @@
       "incomplete": "Table data cells are missing or empty"
     },
     "hidden-content": {
-      "pass": "All content on the page has been analyzed.",
-      "fail": "There were problems analyzing the content on this page.",
-      "incomplete": "There is hidden content on the page that was not analyzed. You will need to trigger the display of this content in order to analyze it."
+      "pass": "Tout le contenu de la page a été analysé.",
+      "fail": "Il y a eu des problèmes pour analyser le contenu de cette page.",
+      "incomplete": "Il y a du contenu caché sur la page qui n'a pas été analysé. You will need to trigger the display of this content in order to analyze it."
     }
   },
   "failureSummaries": {
