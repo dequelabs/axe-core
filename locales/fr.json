@@ -58,24 +58,24 @@
       "help": "Les boutons doivent avoir un texte discernable"
     },
     "bypass": {
-      "description": "S’assure que each page has at least one mechanism for a user to bypass navigation and jump straight to the content",
-      "help": "Page must have means to bypass repeated blocks"
+      "description": "S’assure que chaque page dispoe au minium d’un mécanisme d’évitement de la navigation pour accéder directement au contenu",
+      "help": "Chaque page doit fournir des moyens d’éviter les contenus répétés"
     },
     "checkboxgroup": {
-      "description": "S’assure que related <input type=\"checkbox\"> elements have a group and that the group designation is consistent",
-      "help": "Checkbox inputs with the same name attribute value must be part of a group"
+      "description": "S’assure que les éléments <input type=\"checkbox\"> en relation sont regroupées et que la désignation du groupe est cohérente",
+      "help": "Les cases à cocher avec la même valeur pour l’attribut name doivent faire partie d’un groupe"
     },
     "color-contrast": {
-      "description": "S’assure que the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds",
-      "help": "Elements must have sufficient color contrast"
+      "description": "S’assure que les contrastes entre le premier plan et l’arrière-plan atteignent les seuils de contrastes exigés par les WCAG 2 AA",
+      "help": "Les éléments doivent avoir un contraste de couleurs suffisant"
     },
     "definition-list": {
-      "description": "S’assure que <dl> elements are structured correctly",
-      "help": "<dl> elements must only directly contain properly-ordered <dt> and <dd> groups, <script> or <template> elements"
+      "description": "S’assure que les éléments <dl> sont correctement structurés",
+      "help": "Les éléments <dl> ne doivent contenir directement que des groupes d’élements <dt> et <dd> correctement ordonnés, ou des éléments <script> ou <template>"
     },
     "dlitem": {
-      "description": "S’assure que <dt> and <dd> elements are contained by a <dl>",
-      "help": "<dt> and <dd> elements must be contained by a <dl>"
+      "description": "S’assure que les éléments <dt> et <dd> elements sont contenus dans un élément <dl>",
+      "help": "Les éléments <dt> et <dd> doivent être contenus dans un élément <dl>"
     },
     "document-title": {
       "description": "S’assure que each HTML document contains a non-empty <title> element",
