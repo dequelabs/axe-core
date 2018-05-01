@@ -49,6 +49,11 @@
   ],
   "main": "axe.js",
   "typings": "axe.d.ts",
+  "standard-version": {
+    "scripts": {
+      "postbump": "npm run sri-update"
+    }
+  },
   "scripts": {
     "build": "grunt",
     "test": "grunt test",
@@ -56,7 +61,8 @@
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
     "prepublishOnly": "grunt build",
     "postinstall": "node build/utils/postinstall.js",
-    "release": "standard-version && node build/sri-update"
+    "release": "standard-version -a",
+    "sri-update": "grunt build && node build/sri-update && git add sri-history.json"
   },
   "devDependencies": {
     "angular-precommit": "^1.0.3",
