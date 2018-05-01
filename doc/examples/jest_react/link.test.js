@@ -10,7 +10,13 @@ test('Link has no aXe violations', (done) => {
   );
   const linkNode = linkComponent.getDOMNode();
 
-  axe.run(linkNode, (err, { violations }) => {
+  const config = {
+    "rules": {
+      "color-contrast": { enabled: false },
+      "link-in-text-block": { enabled: false }
+    }
+  }
+  axe.run(linkNode, config, (err, { violations }) => {
     expect(err).toBe(null);
     expect(violations).toHaveLength(0);
     done();

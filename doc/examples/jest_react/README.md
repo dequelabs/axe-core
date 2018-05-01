@@ -19,7 +19,12 @@ axe-core in Jest (using JSDOM and Enzyme).
 * `npm test` to run Jasmine
 
 You should see output indicating that the tests ran successfully, with zero
-failures.
+failures. 
+
+Note: to work better with JSDOM (which has limited support for necessary DOM APIs),
+the color-contrast and link-in-text-block rules have been disabled in this example.
+You can test for these rules more reliably using full browser DOM integration
+testing using [axe-webdriverjs](https://github.com/dequelabs/axe-webdriverjs).
 
 ## To modify the example ##
 
