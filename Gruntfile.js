@@ -331,7 +331,7 @@ module.exports = function (grunt) {
 				},
 				src: [
 					'lib/**/*.js', 'test/**/*.js', 'build/**/*.js',
-					'doc/**/*.js', '!doc/examples/jest+react/*.js', 'Gruntfile.js',
+					'doc/**/*.js', '!doc/examples/jest_react/*.js', 'Gruntfile.js',
 					'!**/node_modules/**/*.js'
 				]
 			}
