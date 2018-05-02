@@ -10,16 +10,21 @@ axe-core in Jest (using JSDOM and Enzyme).
 
 * Node must be installed; please follow the directions at http://www.nodejs.org
   to install it.
-* Move to the `doc/examples/jest+react` directory
+* Move to the `doc/examples/jest_react` directory
 * `npm install` to install dependencies
 
 ## To run the example ##
 
-* Move to the `doc/examples/jest+react` directory
+* Move to the `doc/examples/jest_react` directory
 * `npm test` to run Jasmine
 
 You should see output indicating that the tests ran successfully, with zero
-failures.
+failures. 
+
+Note: to work better with JSDOM (which has limited support for necessary DOM APIs),
+the color-contrast and link-in-text-block rules have been disabled in this example.
+You can test for these rules more reliably using full browser DOM integration
+testing using [axe-webdriverjs](https://github.com/dequelabs/axe-webdriverjs).
 
 ## To modify the example ##
 
