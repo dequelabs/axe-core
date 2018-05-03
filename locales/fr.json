@@ -54,8 +54,8 @@
       "help": "L’élément <blink> est déprécié et ne doit pas être utilisé"
     },
     "button-name": {
-      "description": "S’assure que les boutons ont un texte discernable",
-      "help": "Les boutons doivent avoir un texte discernable"
+      "description": "S’assure que les boutons ont un texte perceptible",
+      "help": "Les boutons doivent avoir un texte perceptible"
     },
     "bypass": {
       "description": "S’assure que chaque page dispoe au minium d’un mécanisme d’évitement de la navigation pour accéder directement au contenu",
@@ -78,68 +78,68 @@
       "help": "Les éléments <dt> et <dd> doivent être contenus dans un élément <dl>"
     },
     "document-title": {
-      "description": "S’assure que each HTML document contains a non-empty <title> element",
-      "help": "Documents must have <title> element to aid in navigation"
+      "description": "S’assure que chaque document HTML contient un élément <title> non vide",
+      "help": "Chaque document doit avoir un élément <title> pour aider à la navigation"
     },
     "duplicate-id": {
-      "description": "S’assure que every id attribute value is unique",
-      "help": "id attribute value doit être unique"
+      "description": "S’assure que la valeur de chaque attribut id est unique",
+      "help": "La valeur de l’attribut id doit être unique"
     },
     "empty-heading": {
-      "description": "S’assure que headings have discernible text",
-      "help": "Headings must not be empty"
+      "description": "S’assure que les niveaux de titre ont un texte perceptible",
+      "help": "Les niveaux de titre ne doivent pas être vides"
     },
     "focus-order-semantics": {
-      "description": "S’assure que elements in the focus order have an appropriate role",
-      "help": "Elements in the focus order need a role appropriate for interactive content"
+      "description": "S’assure que les éléments dans le parcours du focus aient un rôle approprié",
+      "help": "Les éléments dans le parcours du focus doivent avoir un rôle approprié pour le contenu interactif"
     },
     "frame-tested": {
-      "description": "S’assure que <iframe> and <frame> elements contain the axe-core script",
-      "help": "Frames must be tested with axe-core"
+      "description": "S’assure que les éléments <iframe> et <frame> contiennent le script axe-core",
+      "help": "Les cadres doivent êtres testés avec axe-core"
     },
     "frame-title-unique": {
-      "description": "S’assure que <iframe> and <frame> elements contain a unique title attribute",
-      "help": "Frames must have a unique title attribute"
+      "description": "S’assure que les éléments <iframe> et <frame> ont un attribut title unique",
+      "help": "Chaque cadre doit avoir un attribut title unique"
     },
     "frame-title": {
-      "description": "S’assure que <iframe> and <frame> elements contain a non-empty title attribute",
-      "help": "Frames must have title attribute"
+      "description": "S’assure que les éléments <iframe> et <frame> ont un attribut title non vide",
+      "help": "Chaque cadre doit avoir un attribut title"
     },
     "heading-order": {
-      "description": "S’assure que the order of headings is semantically correct",
-      "help": "Heading levels should only increase by one"
+      "description": "S’assure que la hiérarchie des niveaux de titre est sémantiquement correcte",
+      "help": "Les niveaux de titre doivent s’incrémenter d’un seul niveau à la fois"
     },
     "hidden-content": {
-      "description": "Informs users about hidden content.",
-      "help": "Hidden content on the page cannot be analyzed"
+      "description": "Informe les utilisateurs sur les contenus cachés",
+      "help": "Le contenu caché sur la page ne peut pas être analysé"
     },
     "html-has-lang": {
-      "description": "S’assure que every HTML document has a lang attribute",
-      "help": "<html> element must have a lang attribute"
+      "description": "S’assure que chaque document HTML a un attribut lang",
+      "help": "L’élément <html> doit avoir un attribut lang"
     },
     "html-lang-valid": {
-      "description": "S’assure que the lang attribute of the <html> element has a valid value",
-      "help": "<html> element must have a valid value for the lang attribute"
+      "description": "S’assure que l’attribut lang sur l’élément HTMl a une valeur valide",
+      "help": "L’élément <html> doit avoir une valeur valide pour l’attribut lang"
     },
     "image-alt": {
-      "description": "S’assure que <img> elements have alternate text or a role of none or presentation",
-      "help": "Images doit avoir un texte alternatif"
+      "description": "S’assure que les éléments <img> ont un texte alternatif, ou un rôle none ou presentation",
+      "help": "Les images doivent avoir un texte alternatif"
     },
     "image-redundant-alt": {
-      "description": "Ensure button and link text is not repeated as image alternative",
-      "help": "Text of buttons and links should not be repeated in the image alternative"
+      "description": "S’assure que l’intitulé des liens et boutons n’est pas répété dans l’alternative de l’image",
+      "help": "L’intitulé des liens et boutons ne doit pas être répété dans l’alternative de l’image"
     },
     "input-image-alt": {
-      "description": "S’assure que <input type=\"image\"> elements have alternate text",
-      "help": "Image buttons doit avoir un texte alternatif"
+      "description": "S’assure que les éléments <input type=\"image\"> ont un texte alternatif",
+      "help": "Les boutons images doivent avoir un texte alternatif"
     },
     "label-title-only": {
-      "description": "S’assure que that every form element is not solely labeled using the title or aria-describedby attributes",
-      "help": "Form elements should have a visible label"
+      "description": "S’assure que chaque élément de formulaire n’est pas labellisé uniquement par les attributs title ou aria-describedby",
+      "help": "Chaque élément de formulaire doit avoir un label visible"
     },
     "label": {
-      "description": "S’assure que every form element has a label",
-      "help": "Form elements must have labels"
+      "description": "S’assure que chaque élément de formulaire a un label",
+      "help": "Chaque élément de formulaire doit avoir un label"
     },
     "landmark-banner-is-top-level": {
       "description": "The banner landmark should not be contained in another landmark",
