@@ -10,4 +10,11 @@ describe('UMD define', function () {
 		assert.strictEqual(call[2](), axe);
 	});
 
+	it('defines module name as axe-core', function () {
+		assert.equal(defineCalls.length, 1);
+
+		var call = defineCalls[0];
+		assert.equal(call[0], 'axe-core');
+	});
+
 });
