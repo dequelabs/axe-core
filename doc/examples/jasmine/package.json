@@ -15,6 +15,6 @@
   "devDependencies": {
     "axe-core": "^3.0.1",
     "grunt": "~1.0.2",
-    "grunt-contrib-jasmine": "~1.1.0"
+    "grunt-contrib-jasmine": "~1.2.0"
   }
 }
