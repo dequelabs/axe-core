@@ -43,7 +43,7 @@ aXe is the third generation of accessibility rules for HTML-based user interface
 
 First download the package:
 
-```
+```console
 npm install axe-core --save-dev
 ```
 
@@ -57,12 +57,13 @@ Now insert calls at each point in your tests where a new piece of UI becomes vis
 
 ```js
 axe.run(function (err, results) {
-	if (err) throw err;
+  if (err) throw err;
     ok(results.violations.length === 0, 'Should be no accessibility issues');
     // complete the async call
     ...
 });
 ```
+
 ## Supported Browsers
 
 The [aXe API](doc/API.md) fully supports the following browsers:

@@ -31,4 +31,3 @@ In addition, we disallow invalid attributes starting with `aria-` and invalid at
 We recognize that there are best practices that significantly improve the usability of application, even though they are not strictly required in order to conform with WCAG 2. We develop the best practice rules to help content developers to identify these and adhere to them.
 
 We recognize that this topic is somewhat controvertial and the rules we have represent Deque's opinion on what constitutes a best practice.
-

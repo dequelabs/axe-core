@@ -6,27 +6,27 @@ aXe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities fo
 
 1. [Getting Started](#getting-started)
 1. [Architecture Overview](#architecture-overview)
-	1. [Rules](#rules)
-	1. [Checks](#checks)
-	1. [Common Functions](#common-functions)
-	1. [Virtual Nodes](#virtual-nodes)
-	1. [Core Utilities](#core-utilities)
+   1. [Rules](#rules)
+   1. [Checks](#checks)
+   1. [Common Functions](#common-functions)
+   1. [Virtual Nodes](#virtual-nodes)
+   1. [Core Utilities](#core-utilities)
 1. [Virtual DOM APIs](#virtual-dom-apis)
-	1. [API Name: axe.utils.getFlattenedTree](#api-name-axeutilsgetflattenedtree)
-	1. [API Name: axe.utils.getNodeFromTree](#api-name-axeutilsgetnodefromtree)
+   1. [API Name: axe.utils.getFlattenedTree](#api-name-axeutilsgetflattenedtree)
+   1. [API Name: axe.utils.getNodeFromTree](#api-name-axeutilsgetnodefromtree)
 1. [Test Utilities](#test-utilities)
-	1. [Test Util Name: axe.testUtils.MockCheckContext](#test-util-name-axetestutilsmockcheckcontext)
-	1. [Test Util Name: axe.testUtils.shadowSupport](#test-util-name-axetestutilsshadowsupport)
-	1. [Test Util Name: axe.testUtils.fixtureSetup](#test-util-name-axetestutilsfixturesetup)
-	1. [Test Util Name: axe.testUtils.checkSetup](#test-util-name-axetestutilschecksetup)
+   1. [Test Util Name: axe.testUtils.MockCheckContext](#test-util-name-axetestutilsmockcheckcontext)
+   1. [Test Util Name: axe.testUtils.shadowSupport](#test-util-name-axetestutilsshadowsupport)
+   1. [Test Util Name: axe.testUtils.fixtureSetup](#test-util-name-axetestutilsfixturesetup)
+   1. [Test Util Name: axe.testUtils.checkSetup](#test-util-name-axetestutilschecksetup)
 
 ## Getting Started
 
 ### Environment Pre-requisites
 
-1.  You must have NodeJS installed.
-2.  Grunt must be installed globally.  `npm install -g grunt-cli` (You may need to do this as `sudo npm install -g grunt-cli`)
-3.  Install npm development dependencies.  In the root folder of your axe-core repository, run `npm install`
+1. You must have NodeJS installed.
+2. Grunt must be installed globally.  `npm install -g grunt-cli` (You may need to do this as `sudo npm install -g grunt-cli`)
+3. Install npm development dependencies.  In the root folder of your axe-core repository, run `npm install`
 
 ### Building axe.js
 
@@ -38,12 +38,11 @@ To run all tests from the command line you can run `grunt test`, which will run 
 
 You can also load tests in any supported browser, which is helpful for debugging.  Tests require a local server to run, you must first start a local server to serve files.  You can use Grunt to start one by running `grunt dev`.  Once your local server is running you can load the following pages in any browser to run tests:
 
-
-1.  [Core Tests](../test/core/)
-2.  [Commons Tests](../test/commons/)
-3.  [Check Tests](../test/checks/)
-4.  [Integration Tests](../test/integration/rules/)
-5.  There are additional tests located in [test/integration/full/](../test/integration/full/) for tests that need to be run against their own document.
+1. [Core Tests](../test/core/)
+2. [Commons Tests](../test/commons/)
+3. [Check Tests](../test/checks/)
+4. [Integration Tests](../test/integration/rules/)
+5. There are additional tests located in [test/integration/full/](../test/integration/full/) for tests that need to be run against their own document.
 
 ## Architecture Overview
 
@@ -52,7 +51,6 @@ aXe tests for accessibility using objects called Rules. Each Rule tests for a hi
 Upon execution, a Rule runs each of its Checks against all relevant nodes. Which nodes are relevant is determined by the Rule's `selector` property and `matches` function. If a Rule has no Checks that apply to a given node, the Rule will result in an inapplicable result.
 
 After execution, a Check will return `true` or `false` depending on whether or not the tested condition was satisfied. The result, as well as more information on what caused the Check to pass or fail, will be stored in either the `passes` array or the `violations` array.
-
 
 ### Rules
 
@@ -66,9 +64,9 @@ Rules are defined by JSON files in the [lib/rules directory](../lib/rules).  The
 * `matches` - **optional** `String`  Relative path to the JavaScript file of a custom matching function.  See [matches function](#matches-function) for more information.
 * `tags` - **optional** `Array` Strings of the accessibility guidelines of which the Rule applies.
 * `metadata` - `Object` Consisting of:
-	* `description` - `String` Text string that describes what the rule does.
-	* `helpUrl` - `String` **optional** URL that provides more information about the specifics of the violation. Links to a page on the Deque University site.
-	* `help` - `String` Help text that describes the test that was performed.
+  * `description` - `String` Text string that describes what the rule does.
+  * `helpUrl` - `String` **optional** URL that provides more information about the specifics of the violation. Links to a page on the Deque University site.
+  * `help` - `String` Help text that describes the test that was performed.
 * `any` - `Array` Checks that make up this Rule; one of these checks must return `true` for a Rule to pass.
 * `all` - `Array` Checks that make up this Rule; all these checks must return `true` for a Rule to pass.
 * `none` - `Array` Checks that make up this Rule; none of these checks must return `true` for a Rule to pass.
@@ -97,11 +95,11 @@ Similar to Rules, Checks are defined by JSON files in the [lib/checks directory]
 * `after` - **optional** `String` Relative path to the JavaScript file which contains the function body of a Check's after (or post-processing) function.f
 * `options` - **optional** `Mixed` Any information the Check needs that you might need to customize and/or is locale specific.  Options can be overridden at runtime (with the options parameter) or config-time.  For example, the [valid-lang](../lib/checks/language/valid-lang.json) Check defines what ISO 639-1 language codes it should accept as valid.  Options do not need to follow any specific format or type; it is up to the author of a Check to determine the most appropriate format.
 * `metadata` - `Object` Consisting of:
-	* `impact` - `String` (one of `minor`, `moderate`, `serious`, or `critical`)
-	* `messages` - `Object` These messages are displayed when the Check passes or fails
-		* `pass` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check passes
-		* `fail` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check fails
-		* `incomplete` – `String|Object` – [doT.js](http://olado.github.io/doT/) template string displayed when the Check is incomplete OR an object with `missingData` on why it returned incomplete. Refer to [rules.md](./rules.md).
+  * `impact` - `String` (one of `minor`, `moderate`, `serious`, or `critical`)
+  * `messages` - `Object` These messages are displayed when the Check passes or fails
+    * `pass` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check passes
+    * `fail` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check fails
+    * `incomplete` – `String|Object` – [doT.js](http://olado.github.io/doT/) template string displayed when the Check is incomplete OR an object with `missingData` on why it returned incomplete. Refer to [rules.md](./rules.md).
 
 #### Check `evaluate`
 
@@ -132,11 +130,11 @@ The after function must return an `Array` of CheckResults, due to this, it is a 
 ```javascript
 var uniqueIds = [];
 return results.filter(function (r) {
-	if (uniqueIds.indexOf(r.data) === -1) {
-		uniqueIds.push(r.data);
-		return true;
-	}
-	return false;
+  if (uniqueIds.indexOf(r.data) === -1) {
+    uniqueIds.push(r.data);
+    return true;
+  }
+  return false;
 });
 ```
 
@@ -245,12 +243,11 @@ The queue function creates an asynchronous "queue", list of functions to be invo
 * `then(callback)` The callback to execute once all "deferred" functions have completed.  Will only be invoked once.
 * `abort()` Abort the "queue" and prevent `then` function from firing
 
-
 #### DqElement Class
 
 The DqElement is a "serialized" `HTMLElement`. It will calculate the CSS selector, grab the source outerHTML and offer an array for storing frame paths. The DqElement class takes the following parameters:
- * `Element` - `HTMLElement` The element to serialize
- * `Spec` - `Object` Properties to use in place of the element when instantiated on Elements from other frames
+  * `Element` - `HTMLElement` The element to serialize
+  * `Spec` - `Object` Properties to use in place of the element when instantiated on Elements from other frames
 
 ```javascript
 var firstH1 = document.getElementByTagName('h1')[0];
@@ -262,7 +259,6 @@ Elements returned by the DqElement class have the following methods and properti
 * `source` - `string` The generated HTML source code of the element
 * `element` - `DOMNode` The element which this object is based off or the containing frame, used for sorting.
 * `toJSON()` - Returns an object containing the selector and source properties
-
 
 ## Virtual DOM APIs
 
@@ -286,8 +282,9 @@ axe.utils.getFlattenedTree(element, shadowId)
 ```
 
 #### Parameters
- - `node` – HTMLElement. The current HTML node for which you want a flattened DOM tree.
- - `shadowId` – string(optional). ID of the shadow DOM that is the closest shadow ancestor of the node
+
+- `node` – HTMLElement. The current HTML node for which you want a flattened DOM tree.
+- `shadowId` – string(optional). ID of the shadow DOM that is the closest shadow ancestor of the node
 
 #### Returns
 

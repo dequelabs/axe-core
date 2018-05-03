@@ -1,4 +1,5 @@
 ## PR Checklist
+
 Please check if your PR fulfills the following requirements:
 
 - [ ] The commit message(s) follow our guidelines: https://github.com/dequelabs/axe-core/blob/develop/doc/code-submission-guidelines.md#git-commits
@@ -8,14 +9,12 @@ Please check if your PR fulfills the following requirements:
 - [ ] Docs have been added / updated (for bug fixes / features)
 
 ## Description of the changes
+
 - Github issue:
 
-
 ## Does this PR introduce a breaking change?
-```
-[ ] Yes
-[ ] No
-```
 
+- [ ] Yes
+- [ ] No
 
 ## Other information
