@@ -6,9 +6,9 @@ var clone = require('clone');
 var dot = require('dot');
 var templates = require('./templates');
 var buildManual = require('./build-manual');
-var entities =  new (require('html-entities').AllHtmlEntities)();
+var entities = new (require('html-entities').AllHtmlEntities)();
 
-var descriptionHeaders = '| Rule ID | Description | Tags | Enabled by default |\n| :------- | :------- | :------- | :------- |\n';
+var descriptionHeaders = '| Rule ID | Description | Impact | Tags | Enabled by default |\n| :------- | :------- | :------- | :------- | :------- |\n';
 
 dot.templateSettings.strip = false;
 
@@ -64,14 +64,13 @@ function buildRules(grunt, options, commons, callback) {
 
 		function getIncompleteMsg(summaries) {
 			var result = {};
-			summaries.forEach(function(summary) {
+			summaries.forEach(function (summary) {
 				if (summary.incompleteFallbackMessage) {
 					result = dot.template(summary.incompleteFallbackMessage).toString();
 				}
 			})
 			return result;
 		}
-
 
 		function replaceFunctions(string) {
 			return string.replace(/"(evaluate|after|gather|matches|source|commons)":\s*("[^"]+?")/g, function (m, p1, p2) {
@@ -111,11 +110,8 @@ function buildRules(grunt, options, commons, callback) {
 			rules: {},
 			checks: {}
 		};
-
 		var descriptions = [];
-
 		var tags = options.tags ? options.tags.split(/\s*,\s*/) : [];
-
 		var rules = result.rules;
 		var checks = result.checks;
 
@@ -145,19 +141,97 @@ function buildRules(grunt, options, commons, callback) {
 
 				return c.options === undefined ? id : c;
 			});
+		}
 
+		function parseImpactForRule(rule, grouped) {
+			var impactScoreMap = {
+				'critical': 4,
+				'serious': 3,
+				'moderate': 2,
+				'minor': 1,
+				'': 0
+			}
+
+			function capitalize(s) {
+				return s.charAt(0).toUpperCase() + s.slice(1);
+			}
+
+			function getKeyByValue(object, value) {
+				return Object.keys(object).find(function (key) {
+					return object[key] === value
+				});
+			}
+
+			function getImpactScores(checkCollection) {
+				var out = [];
+				if (checkCollection && checkCollection.length) {
+					checkCollection.forEach(function (check) {
+						var id = typeof check === 'string' ? check : check.id;
+						var definition = clone(findCheck(checks, id));
+						if (!definition) {
+							grunt.log.error('check ' + id + ' not found');
+						}
+						var impact = definition && definition.metadata && definition.metadata.impact
+							? definition.metadata.impact
+							: undefined;
+						if (impact !== undefined) {
+							var impactScore = impactScoreMap[impact];
+							out.push(impactScore);
+						}
+					})
+				}
+				return out;
+			}
+
+			function getHighestScore(checkCollection) {
+				var scores = getImpactScores(checkCollection);
+				return scores && scores.length
+					? Math.max.apply(null, scores)
+					: 0;
+			}
+
+			var anyImpactScore = getHighestScore(rule.any);
+			var allImpactScore = getHighestScore(rule.all);
+			var noneImpactScore = getHighestScore(rule.none);
+
+			if (grouped) {
+				var out = [];
+				var scoreMap = {
+					'Any': anyImpactScore,
+					'All': allImpactScore,
+					'None': noneImpactScore
+				}
+				Object.keys(scoreMap)
+					.forEach(function (key) {
+						if (scoreMap[key] > 0) {
+							out.push(key + ': ' + capitalize(getKeyByValue(impactScoreMap, scoreMap[key])))
+						}
+					})
+				return out.join(', ');
+			}
+
+			var score = Math.max.apply(null, [anyImpactScore, allImpactScore, noneImpactScore]);
+			return capitalize(getKeyByValue(impactScoreMap, score));
 		}
 
 		rules.map(function (rule) {
+			// if true is passed - prints -> Any: Critical, None: Serious
+			// else chooses the highest among all and prints the impact
+			var impact = parseImpactForRule(rule);
 			rule.any = parseChecks(rule.any);
 			rule.all = parseChecks(rule.all);
 			rule.none = parseChecks(rule.none);
-
 			if (rule.metadata && !metadata.rules[rule.id]) {
 				// Translate rules
 				metadata.rules[rule.id] = parseMetaData(rule, 'rules');
 			}
-			descriptions.push([rule.id, entities.encode(rule.metadata.description), rule.tags.join(', '), rule.enabled === false ? false : true]);
+			descriptions.push([
+				rule.id,
+				entities.encode(rule.metadata.description),
+				impact,
+				rule.tags.join(', '),
+				rule.enabled === false ? false : true
+			]);
 			if (tags.length) {
 				rule.enabled = !!rule.tags.filter(function (t) {
 					return tags.indexOf(t) !== -1;
