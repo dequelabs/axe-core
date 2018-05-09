@@ -26,6 +26,7 @@ function getLocale(grunt, options) {
 function buildRules(grunt, options, commons, callback) {
 	var locale = getLocale(grunt, options);
 	options.getFiles = false;
+
 	buildManual(grunt, options, commons, function (result) {
 
 		function parseMetaData(source, propType) {
@@ -80,7 +81,6 @@ function buildRules(grunt, options, commons, callback) {
 			}).replace(/"(\(function \(\) {)([\s\S]+?)(}\)\(\))"/g, function (m) {
 				return JSON.parse(m);
 			});
-
 		}
 
 		function getSource(file, type) {
@@ -119,7 +119,7 @@ function buildRules(grunt, options, commons, callback) {
 		if (locale && locale.checks) {
 			checks.forEach(function (check) {
 				if (locale.checks[check.id] && check.metadata) {
-					check.metadata.messages = locale.checks[check.id]
+					check.metadata.messages = locale.checks[check.id];
 				}
 			})
 		}
@@ -144,50 +144,32 @@ function buildRules(grunt, options, commons, callback) {
 		}
 
 		function parseImpactForRule(rule, grouped) {
-			var impactScoreMap = {
-				'critical': 4,
-				'serious': 3,
-				'moderate': 2,
-				'minor': 1,
-				'': 0
-			}
+			var impactValues = Object.freeze(['minor', 'moderate', 'serious', 'critical']); // todo: get this from axe.constants in build?
 
 			function capitalize(s) {
 				return s.charAt(0).toUpperCase() + s.slice(1);
 			}
 
-			function getKeyByValue(object, value) {
-				return Object.keys(object).find(function (key) {
-					return object[key] === value
-				});
-			}
-
 			function getImpactScores(checkCollection) {
-				var out = [];
-				if (checkCollection && checkCollection.length) {
-					checkCollection.forEach(function (check) {
-						var id = typeof check === 'string' ? check : check.id;
-						var definition = clone(findCheck(checks, id));
-						if (!definition) {
-							grunt.log.error('check ' + id + ' not found');
-						}
-						var impact = definition && definition.metadata && definition.metadata.impact
-							? definition.metadata.impact
-							: undefined;
-						if (impact !== undefined) {
-							var impactScore = impactScoreMap[impact];
-							out.push(impactScore);
-						}
-					})
-				}
-				return out;
+				return checkCollection.reduce(function (out, check) {
+					var id = typeof check === 'string' ? check : check.id;
+					var definition = clone(findCheck(checks, id));
+					if (!definition) {
+						grunt.log.error('check ' + id + ' not found');
+					}
+					if (definition && definition.metadata && definition.metadata.impact) {
+						var impactScore = impactValues.indexOf(definition.metadata.impact);
+						out.push(impactScore);
+					}
+					return out;
+				}, []);
 			}
 
 			function getHighestScore(checkCollection) {
 				var scores = getImpactScores(checkCollection);
 				return scores && scores.length
 					? Math.max.apply(null, scores)
-					: 0;
+					: -1;
 			}
 
 			var anyImpactScore = getHighestScore(rule.any);
@@ -203,21 +185,19 @@ function buildRules(grunt, options, commons, callback) {
 				}
 				Object.keys(scoreMap)
 					.forEach(function (key) {
-						if (scoreMap[key] > 0) {
-							out.push(key + ': ' + capitalize(getKeyByValue(impactScoreMap, scoreMap[key])))
+						if (scoreMap[key] >= 0) {
+							out.push(key + ': ' + capitalize( impactValues[scoreMap[key]] ))
 						}
 					})
 				return out.join(', ');
 			}
 
 			var score = Math.max.apply(null, [anyImpactScore, allImpactScore, noneImpactScore]);
-			return capitalize(getKeyByValue(impactScoreMap, score));
+			return capitalize(impactValues[score]);
 		}
 
 		rules.map(function (rule) {
-			// if true is passed - prints -> Any: Critical, None: Serious
-			// else chooses the highest among all and prints the impact
-			var impact = parseImpactForRule(rule);
+			var impact = parseImpactForRule(rule); // second argument: pass `true` to get grouped impact across checks -> Eg: Any: Critical, None: Serious, pass `false` to get highest impact Eg: `Serious` across checks.
 			rule.any = parseChecks(rule.any);
 			rule.all = parseChecks(rule.all);
 			rule.none = parseChecks(rule.none);
