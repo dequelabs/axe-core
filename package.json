@@ -83,7 +83,7 @@
     "grunt-contrib-connect": "^1.0.2",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-uglify": "^3.3.0",
-    "grunt-contrib-watch": "^1.0.0",
+    "grunt-contrib-watch": "^1.1.0",
     "grunt-eslint": "^20.1.0",
     "grunt-markdownlint": "^1.1.2",
     "grunt-mocha": "1.0.4",
