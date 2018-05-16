@@ -63,7 +63,7 @@
     },
     "checkboxgroup": {
       "description": "",
-      "help": "Checkbox-Eingaben mit demselben Namens-Attributwert müssen Teil einer Gruppe sein."
+      "help": "Checkbox-Eingaben mit demselben name-Attributwert müssen Teil einer Gruppe sein."
     },
     "color-contrast": {
       "description": "",
@@ -91,7 +91,7 @@
     },
     "focus-order-semantics": {
     "description": "",
-    "help": "Elemente in der Fokusreihenfolge benötigen eine Rolle, die für interaktive Inhalte geeignet ist."
+    "help": "Elemente in der Fokusreihenfolge benötigen eine Rolle, die für interaktive Elemente geeignet ist."
     },
     "frame-tested": {
     "description": "",
@@ -107,11 +107,11 @@
     },
     "heading-order": {
       "description": "",
-      "help": "Die Reihenfolge der Überschriftsebenen sollten semantisch korrekt sein."
+      "help": "Überschriftsebenen sollten nur um eins steigen."
     },
     "hidden-content": {
       "description": "",
-      "help": "Versteckter Inhalt auf der Seite kann nicht analysiert werden."
+      "help": "Versteckter Inhalt auf der Seite konnte nicht analysiert werden."
     },
     "html-has-lang": {
       "description": "",
@@ -143,11 +143,11 @@
     },
     "landmark-banner-is-top-level": {
     "description": "",
-    "help": "Banner landmark muss sich auf oberster Ebene befinden."
+    "help": "Banner landmark muss sich auf der obersten Ebene befinden."
     },
     "landmark-contentinfo-is-top-level": {
     "description": "",
-    "help": "Contentinfo landmark muss sich auf oberster Ebene befinden."
+    "help": "Contentinfo landmark muss sich auf der obersten Ebene befinden."
     },
     "landmark-main-is-top-level": {
     "description": "",
@@ -155,11 +155,11 @@
     },
     "landmark-no-duplicate-banner": {
     "description": "",
-    "help": "Dokument enthält höchstens eine banner landmark."
+    "help": "Das Dokument sollte höchstens eine banner landmark enthalten."
     },
     "landmark-no-duplicate-contentinfo": {
     "description": "",
-    "help": "Dokument enthält höchstens eine contentinfo landmark."
+    "help": "Das Dokument sollte höchstens eine contentinfo landmark enthalten."
     },
     "landmark-one-main": {
     "description": "",
@@ -191,7 +191,7 @@
     },
     "meta-refresh": {
       "description": "",
-      "help": "Eine zeitgesteuerte Aktualisierung(refresh)darf nicht existieren."
+      "help": "Eine zeitgesteuerte Aktualisierung (refresh) sollte nicht verwendet werden."
     },
     "meta-viewport-large": {
       "description": "",
@@ -207,11 +207,15 @@
     },
     "p-as-heading": {
       "description": "",
-      "help": "Die Schriftschnitte bold und italic sowie die Schriftgröße dürfen nicht verwendet werden, um <p>-Elemente wie Überschriften zu formatieren.v"
+      "help": "Die Schriftschnitte bold und italic sowie die Schriftgröße dürfen nicht verwendet werden, um <p>-Elemente wie Überschriften zu formatieren."
+    },
+    "page-has-heading-one": {
+      "description": "",
+      "help": "Die Seite muss eine Überschrift erster Ebene enthalten."
     },
     "radiogroup": {
       "description": "",
-      "help": "Radio-Eingaben mit demselben Namens-Attributwert müssen Teil einer Gruppe sein."
+      "help": "Radio-Eingaben mit demselben name-Attributwert müssen Teil einer Gruppe sein."
     },
     "region": {
       "description": "",
@@ -231,7 +235,7 @@
     },
     "tabindex": {
       "description": "",
-      "help": "Elemenet sollten keinen Tabindex besitzen, der größer als null ist."
+      "help": "Elemenete sollten keinen tabindex besitzen, der größer als null ist."
     },
     "table-duplicate-name": {
       "description": "",
@@ -351,7 +355,7 @@
     },
     "group-labelledby": {
       "pass": "",
-      "fail": "Die Elemente mit dem Namen \"{{=it.data.name}}\" referenzieren mit aria-labelledby nicht alle dasselbe Element."
+      "fail": "Die Elemente mit dem name-Attribut \"{{=it.data.name}}\" referenzieren mit aria-labelledby nicht alle dasselbe Element."
     },
     "accesskeys": {
       "pass": "",
@@ -369,6 +373,10 @@
       "pass": "",
       "fail": "Die Seite muss eine Überschrift erster Ebene besitzen."
     },
+    "page-has-main": {
+      "pass": "",
+      "fail": "Die Seite muss eine main landmark besitzen."
+    },
     "page-no-duplicate-banner": {
       "pass": "",
       "fail": "Das Dokument besitzt mehr als eine banner landmark."
@@ -383,7 +391,7 @@
     },
     "tabindex": {
       "pass": "",
-      "fail": "Das Element besitzt einen Tab-Index größer als 0."
+      "fail": "Das Element besitzt einen tabindex-Attributwert größer als 0."
     },
     "duplicate-img-label": {
       "pass": "",
@@ -391,23 +399,23 @@
     },
     "explicit-label": {
       "pass": "",
-      "fail": "Das Formular-Element besitzt kein explizites <label>."
+      "fail": "Das <form>-Element besitzt kein explizites <label>."
     },
     "help-same-as-label": {
       "pass": "",
-      "fail": "Der Hilfstext (angegeben durch ein title- oder aria-describedby-Attribut) entspricht dem Label-Text."
+      "fail": "Der Hilfstext (angegeben durch ein title- oder aria-describedby-Attribut) wiederholt den Label-Text."
     },
     "implicit-label": {
       "pass": "",
-      "fail": "Das Formular-Element besitzt kein implizites <label>."
+      "fail": "Das <form>-Element besitzt kein implizites <label>."
     },
     "multiple-label": {
       "pass": "",
-      "fail": "Das Formular-Element besitzt mehrere <label>-Elemente."
+      "fail": "Das <form>-Element besitzt mehrere <label>-Elemente."
     },
     "title-only": {
       "pass": "",
-      "fail": "Das Formular-Element ist lediglich durch ein title-Attribut beschriftet."
+      "fail": "Das <form>-Element ist lediglich durch ein title-Attribut beschriftet."
     },
     "has-lang": {
       "pass": "",
@@ -431,7 +439,7 @@
     },
     "only-dlitems": {
       "pass": "",
-      "fail": "Das Definitionslisten-Element enthält unerlaubte Kindelemente."
+      "fail": "Das <dl>-Element enthält unerlaubte Kindelemente."
     },
     "only-listitems": {
       "pass": "",
