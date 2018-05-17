@@ -6,8 +6,8 @@
       "help": "La valeur de l’attribut accesskey doit être unique"
     },
     "area-alt": {
-      "description": "S’assure que que les éléments <area> d’une image réactive ont un texte alternatif",
-      "help": "Les éléments <area> actifs doivent avoir un texte alternatif"
+      "description": "S’assure que que les éléments <area> d’une image réactive ont un alternative textuelle",
+      "help": "Les éléments <area> actifs doivent avoir un alternative textuelle"
     },
     "aria-allowed-attr": {
       "description": "S’assure que que les attributs ARIA sont autorisés pour le rôle d’un élément",
@@ -122,16 +122,16 @@
       "help": "L’élément <html> doit avoir une valeur valide pour l’attribut lang"
     },
     "image-alt": {
-      "description": "S’assure que les éléments <img> ont un texte alternatif, ou un rôle none ou presentation",
-      "help": "Les images doivent avoir un texte alternatif"
+      "description": "S’assure que les éléments <img> ont un alternative textuelle, ou un rôle none ou presentation",
+      "help": "Les images doivent avoir un alternative textuelle"
     },
     "image-redundant-alt": {
       "description": "S’assure que l’intitulé des liens et boutons n’est pas répété dans l’alternative de l’image",
       "help": "L’intitulé des liens et boutons ne doit pas être répété dans l’alternative de l’image"
     },
     "input-image-alt": {
-      "description": "S’assure que les éléments <input type=\"image\"> ont un texte alternatif",
-      "help": "Les boutons images doivent avoir un texte alternatif"
+      "description": "S’assure que les éléments <input type=\"image\"> ont un alternative textuelle",
+      "help": "Les boutons images doivent avoir un alternative textuelle"
     },
     "label-title-only": {
       "description": "S’assure que chaque élément de formulaire n’est pas labellisé uniquement par les attributs title ou aria-describedby",
@@ -202,8 +202,8 @@
       "help": "Le zoom et l’agrandissement ne doivent pas être désactivés"
     },
     "object-alt": {
-      "description": "S’assure que les éléments <object> ont un texte alternatif",
-      "help": "Les éléments <object> doivent avoir un texte alternatif"
+      "description": "S’assure que les éléments <object> ont un alternative textuelle",
+      "help": "Les éléments <object> doivent avoir un alternative textuelle"
     },
     "p-as-heading": {
       "description": "S’assure que les éléments p ne sont pas utilisés pour styler des niveaux de titres",
