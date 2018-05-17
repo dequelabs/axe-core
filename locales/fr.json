@@ -508,12 +508,12 @@
       "fail": "No skip link target"
     },
     "unique-frame-title": {
-      "pass": "L'attribut title de l'élément est unique",
-      "fail": "L'attribut title de l'élément n'est pas unique"
+      "pass": "L’attribut title de l’élément est unique",
+      "fail": "L’attribut title de l’élément n’est pas unique"
     },
     "aria-label": {
-      "pass": "L'attribut aria-label existe et n'est pas vide",
-      "fail": "L'attribut aria-label n'existe pas ou est vide"
+      "pass": "L’attribut aria-label existe et n’est pas vide",
+      "fail": "L’attribut aria-label n’existe pas ou est vide"
     },
     "aria-labelledby": {
       "pass": "aria-labelledby attribute exists and references elements that are visible to screen readers",
@@ -528,36 +528,36 @@
       "fail": "Document does not have a non-empty <title> element"
     },
     "duplicate-id": {
-      "pass": "Le document n'a pas d'éléments qui partagent le même attribut id",
+      "pass": "Le document n’a pas d’éléments qui partagent le même attribut id",
       "fail": "Le document a plusieurs éléments avec le même attribut id : {{=it.data}}"
     },
     "exists": {
-      "pass": "L'élément n'existe pas",
-      "fail": "L'élément existe"
+      "pass": "L’élément n'existe pas",
+      "fail": "L’élément existe"
     },
     "has-alt": {
-      "pass": "L'élément a un attribut alt",
-      "fail": "L'élément n'a pas d'attribut alt"
+      "pass": "L’élément a un attribut alt",
+      "fail": "L’élément n’a pas d’attribut alt"
     },
     "has-visible-text": {
       "pass": "Element has text that is visible to screen readers",
       "fail": "Element does not have text that is visible to screen readers"
     },
     "is-on-screen": {
-      "pass": "L'élément n'est pas visible",
-      "fail": "L'élément est visible"
+      "pass": "L’élément n’est pas visible",
+      "fail": "L’élément est visible"
     },
     "non-empty-alt": {
-      "pass": "L'élément a un attribut alt non vide",
-      "fail": "L'élément n'a pas d'attribut alt ou l'attribut alt est vide"
+      "pass": "L’élément a un attribut alt non vide",
+      "fail": "L’élément n’a pas d'attribut alt ou l’attribut alt est vide"
     },
     "non-empty-if-present": {
       "pass": "Element {{?it.data}}has a non-empty value attribute{{??}}does not have a value attribute{{?}}",
       "fail": "Element has a value attribute and the value attribute is empty"
     },
     "non-empty-title": {
-      "pass": "L'élément a un attribut title",
-      "fail": "L'élément n'a pas d'attribut title ou l'attribut title est vide."
+      "pass": "L’élément a un attribut title",
+      "fail": "L’élément n’a pas d’attribut title ou l’attribut title est vide."
     },
     "non-empty-value": {
       "pass": "Element has a non-empty value attribute",
