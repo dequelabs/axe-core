@@ -12,6 +12,8 @@ declare module axe {
 
 	type RunOnlyType = "rule" | "rules" | "tag" | "tags";
 
+	type resultGroups = "inapplicable" | "passes" | "incomplete" | "violations";
+
 	type RunOnlyObject = {
 		include?: string[] | string[][],
 		exclude?: string[] | string[][]
@@ -30,7 +32,8 @@ declare module axe {
 		rules?: Object,
 		iframes?: Boolean,
 		elementRef?: Boolean,
-		selectors?: Boolean
+		selectors?: Boolean,
+		resultTypes?: resultGroups[],
 	}
 	interface AxeResults {
 		url: string,
