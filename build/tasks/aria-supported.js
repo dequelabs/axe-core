@@ -20,7 +20,7 @@ module.exports = function (grunt) {
 			}
 
 			const getMdContent = (roles, attributes) => {
-				return `# ARIA Roles supported by axe-core. \n \n \n | aria-role | axe-core support | \n | :------- | :------- | \n ${roles} \n \n \n # ARIA Attributes supported by axe-core. \n \n \n | aria-attribute | axe-core support| \n | :------- | :------- | \n ${attributes}`;
+				return `# ARIA Roles and Attributes supported by axe-core \n \n## Roles\n \n| aria-role | axe-core support | \n| :------- | :------- | \n${roles} \n## Attributes \n \n| aria-attribute | axe-core support| \n| :------- | :------- | \n${attributes}`;
 			}
 
 			const generateDoc = () => {

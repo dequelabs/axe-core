@@ -1,9 +1,10 @@
-# ARIA Roles supported by axe-core. 
+# ARIA Roles and Attributes supported by axe-core 
  
+## Roles
  
- | aria-role | axe-core support | 
- | :------- | :------- | 
-  | alert | Yes |
+| aria-role | axe-core support | 
+| :------- | :------- | 
+ | alert | Yes |
  | alertdialog | Yes |
  | application | Yes |
  | article | Yes |
@@ -124,14 +125,11 @@
  | widget | Yes |
  | window | Yes |
  
+## Attributes 
  
- 
- # ARIA Attributes supported by axe-core. 
- 
- 
- | aria-attribute | axe-core support| 
- | :------- | :------- | 
-  | aria-activedescendant | Yes |
+| aria-attribute | axe-core support| 
+| :------- | :------- | 
+ | aria-activedescendant | Yes |
  | aria-atomic | Yes |
  | aria-autocomplete | Yes |
  | aria-busy | Yes |
