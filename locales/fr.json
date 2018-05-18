@@ -214,16 +214,16 @@
       "help": "La page doit contenir un titre de niveau un"
     },
     "radiogroup": {
-      "description": "S’assure que related <input type=\"radio\"> elements have a group and that the group designation is consistent",
-      "help": "Radio inputs with the same name attribute value must be part of a group"
+      "description": "S’assure que les éléments <input type=\"radio\"> liés sont regroupés et que le nom du groupe est cohérent",
+      "help": "Les boutons radios ayant le même attribut name doivent être regroupés"
     },
     "region": {
-      "description": "S’assure que all content is contained within a landmark region",
-      "help": "Content should be contained in a landmark region"
+      "description": "S’assure que tout le contenu est contenu dans une région",
+      "help": "Le contenu doit être contenu dans une région"
     },
     "scope-attr-valid": {
-      "description": "S’assure que the scope attribute is used correctly on tables",
-      "help": "scope attribute should be used correctly"
+      "description": "S’assure que l’attribut scope est utilisé correctement dans les tableaux",
+      "help": "L’attribut scope doit être utilisé correctement"
     },
     "server-side-image-map": {
       "description": "S’assure que that server-side image maps are not used",
