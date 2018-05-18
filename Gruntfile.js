@@ -132,8 +132,6 @@ module.exports = function (grunt) {
 		'aria-supported': {
 			data: {
 				entry: 'lib/commons/aria/index.js',
-				tmpDest: 'tmp/aria',
-				tmpFile: 'tmp/aria/index.js',
 				destFile: 'doc/aria-supported.md'
 			}
 		},
