@@ -15,9 +15,9 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-retire');
 	grunt.loadNpmTasks('grunt-mocha');
-	grunt.loadTasks('build/tasks');
 	grunt.loadNpmTasks('grunt-parallel');
 	grunt.loadNpmTasks('grunt-markdownlint');
+	grunt.loadTasks('build/tasks');
 
 	var langs;
 	if (grunt.option('lang')) {
@@ -129,6 +129,14 @@ module.exports = function (grunt) {
 				dest: 'tmp/commons.js'
 			}
 		},
+		'aria-supported': {
+			data: {
+				entry: 'lib/commons/aria/index.js',
+				tmpDest: 'tmp/aria',
+				tmpFile: 'tmp/aria/index.js',
+				destFile: 'doc/aria-supported.md'
+			}
+		},
 		configure: {
 			rules: {
 				tmp: 'tmp/rules.js',
@@ -153,7 +161,7 @@ module.exports = function (grunt) {
 				dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
 			}
 		},
-		langs : {
+		langs: {
 			generate: {
 				check: 'lib/commons/utils/valid-langs'
 			}
@@ -206,9 +214,9 @@ module.exports = function (grunt) {
 					};
 				}),
 				options: {
-					preserveComments: function(node, comment) {
+					preserveComments: function (node, comment) {
 						// preserve comments that start with a bang
-						return /^!/.test( comment.value );
+						return /^!/.test(comment.value);
 					},
 					mangle: {
 						reserved: ['commons', 'utils', 'axe', 'window', 'document']
@@ -330,8 +338,13 @@ module.exports = function (grunt) {
 					reporterOutput: grunt.option('report') ? 'tmp/lint.xml' : undefined
 				},
 				src: [
-					'lib/**/*.js', 'test/**/*.js', 'build/**/*.js',
-					'doc/**/*.js', '!doc/examples/jest_react/*.js', 'Gruntfile.js',
+					'lib/**/*.js', 
+					'test/**/*.js', 
+					'build/**/*.js',
+					'doc/**/*.js', 
+					'!doc/examples/jest_react/*.js', 
+					'Gruntfile.js',
+					'!build/tasks/aria-supported.js',
 					'!**/node_modules/**/*.js'
 				]
 			}
@@ -340,7 +353,7 @@ module.exports = function (grunt) {
 			all: {
 				options: {
 					config: grunt.file.readJSON('.markdownlint.json')
-			  	},
+				},
 				src: [
 					'README.md',
 					'.github/*.md',
@@ -350,24 +363,81 @@ module.exports = function (grunt) {
 		}
 	});
 
-	grunt.registerTask('default', ['build']);
+	grunt.registerTask('default', [
+		'build'
+	]);
 
-	grunt.registerTask('build', ['clean', 'eslint', 'validate', 'concat:commons', 'configure',
-		 'babel', 'concat:engine', 'uglify']);
+	grunt.registerTask('build', [
+		'clean',
+		'eslint',
+		'validate',
+		'concat:commons',
+		'configure',
+		'babel',
+		'concat:engine',
+		'uglify',
+		'aria-supported'
+	]);
 
-	grunt.registerTask('test', ['build', 'retire', 'testconfig', 'fixture', 'connect',
-		'mocha', 'parallel', 'eslint', 'markdownlint']);
+	grunt.registerTask('test', [
+		'build',
+		'retire',
+		'testconfig',
+		'fixture',
+		'connect',
+		'mocha',
+		'parallel',
+		'eslint',
+		'markdownlint'
+	]);
 
-	grunt.registerTask('ci-build', ['build', 'retire', 'testconfig', 'fixture', 'connect',
-	 'parallel', 'eslint']);
+	grunt.registerTask('ci-build', [
+		'build',
+		'retire',
+		'testconfig',
+		'fixture',
+		'connect',
+		'parallel',
+		'eslint'
+	]);
 
-	grunt.registerTask('test-fast', ['build', 'testconfig', 'fixture', 'connect',
-		'mocha', 'eslint']);
+	grunt.registerTask('test-fast', [
+		'build',
+		'testconfig',
+		'fixture',
+		'connect',
+		'mocha',
+		'eslint'
+	]);
 
-	grunt.registerTask('translate', ['clean', 'eslint', 'validate', 'concat:commons', 'add-locale']);
+	grunt.registerTask('translate', [
+		'clean',
+		'eslint',
+		'validate',
+		'concat:commons',
+		'add-locale'
+	]);
 
-	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
+	grunt.registerTask('dev', [
+		'build',
+		'testconfig',
+		'fixture',
+		'connect',
+		'watch'
+	]);
 
-	grunt.registerTask('dev:no-lint', ['clean', 'validate', 'concat:commons', 'configure',
-		 'babel', 'concat:engine', 'uglify', 'testconfig', 'fixture', 'connect', 'watch']);
+	grunt.registerTask('dev:no-lint', [
+		'clean',
+		'validate',
+		'concat:commons',
+		'configure',
+		'babel',
+		'concat:engine',
+		'uglify',
+		'testconfig',
+		'fixture',
+		'connect',
+		'watch'
+	]);
+
 };
