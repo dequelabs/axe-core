@@ -24,7 +24,7 @@ function getLocale(grunt, options) {
 }
 
 function buildRules(grunt, options, commons, callback) {
-	var axe = require('../axe');
+	var axeImpact = Object.freeze(['minor', 'moderate', 'serious', 'critical']); // TODO: require('../axe') does not work if grunt configure is moved after uglify, npm test breaks with undefined. Complicated grunt concurrency issue.
 	var locale = getLocale(grunt, options);
 	options.getFiles = false;
 	buildManual(grunt, options, commons, function (result) {
@@ -143,7 +143,8 @@ function buildRules(grunt, options, commons, callback) {
 			});
 		}
 
-		function parseImpactForRule(rule, impactValues) {
+		function parseImpactForRule(rule) {
+			
 
 			function capitalize(s) {
 				return s.charAt(0).toUpperCase() + s.slice(1);
@@ -163,7 +164,7 @@ function buildRules(grunt, options, commons, callback) {
 						grunt.log.error('check ' + id + ' not found');
 					}
 					if (definition && definition.metadata && definition.metadata.impact) {
-						var impactScore = impactValues.indexOf(definition.metadata.impact);
+						var impactScore = axeImpact.indexOf(definition.metadata.impact);
 						out.push(impactScore);
 					}
 					return out;
@@ -189,13 +190,15 @@ function buildRules(grunt, options, commons, callback) {
 
 			return cumulativeScores.reduce(function(out, cV) {
 				return out.length 
-					? out + ', ' + capitalize( impactValues[cV] ) 
-					: capitalize( impactValues[cV] );
+					? out + ', ' + capitalize( axeImpact[cV] ) 
+					: capitalize( axeImpact[cV] );
 			}, '');
 		}
 		
+		
 		rules.map(function (rule) {
-			var impact = parseImpactForRule(rule, axe.constants.impact);
+			
+			var impact = parseImpactForRule(rule);
 			rule.any = parseChecks(rule.any);
 			rule.all = parseChecks(rule.all);
 			rule.none = parseChecks(rule.none);

@@ -1,5 +1,5 @@
 /*eslint complexity: ["error",12], max-statements: ["error", 30],
-	camelcase: ["error", {"properties": "never"}]*/
+camelcase: ["error", {"properties": "never"}]*/
 var testConfig = require('./build/test/config');
 
 module.exports = function (grunt) {
@@ -153,7 +153,7 @@ module.exports = function (grunt) {
 				dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
 			}
 		},
-		langs : {
+		langs: {
 			generate: {
 				check: 'lib/commons/utils/valid-langs'
 			}
@@ -206,9 +206,9 @@ module.exports = function (grunt) {
 					};
 				}),
 				options: {
-					preserveComments: function(node, comment) {
+					preserveComments: function (node, comment) {
 						// preserve comments that start with a bang
-						return /^!/.test( comment.value );
+						return /^!/.test(comment.value);
 					},
 					mangle: {
 						reserved: ['commons', 'utils', 'axe', 'window', 'document']
@@ -340,7 +340,7 @@ module.exports = function (grunt) {
 			all: {
 				options: {
 					config: grunt.file.readJSON('.markdownlint.json')
-			  	},
+				},
 				src: [
 					'README.md',
 					'.github/*.md',
@@ -352,14 +352,14 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('build', ['clean', 'eslint', 'validate', 'concat:commons',
-		 'babel', 'concat:engine', 'uglify', 'configure']);
+	grunt.registerTask('build', ['clean', 'eslint', 'validate', 'concat:commons', 'configure',
+		'babel', 'concat:engine', 'uglify']);
 
 	grunt.registerTask('test', ['build', 'retire', 'testconfig', 'fixture', 'connect',
 		'mocha', 'parallel', 'eslint', 'markdownlint']);
 
 	grunt.registerTask('ci-build', ['build', 'retire', 'testconfig', 'fixture', 'connect',
-	 'parallel', 'eslint']);
+		'parallel', 'eslint']);
 
 	grunt.registerTask('test-fast', ['build', 'testconfig', 'fixture', 'connect',
 		'mocha', 'eslint']);
@@ -368,6 +368,6 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
 
-	grunt.registerTask('dev:no-lint', ['clean', 'validate', 'concat:commons', 
-		 'babel', 'concat:engine', 'uglify', 'configure', 'testconfig', 'fixture', 'connect', 'watch']);
+	grunt.registerTask('dev:no-lint', ['clean', 'validate', 'concat:commons', 'configure',
+		'babel', 'concat:engine', 'uglify', 'testconfig', 'fixture', 'connect', 'watch']);
 };
