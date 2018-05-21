@@ -352,8 +352,8 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('build', ['clean', 'eslint', 'validate', 'concat:commons', 'configure',
-		 'babel', 'concat:engine', 'uglify']);
+	grunt.registerTask('build', ['clean', 'eslint', 'validate', 'concat:commons',
+		 'babel', 'concat:engine', 'uglify', 'configure']);
 
 	grunt.registerTask('test', ['build', 'retire', 'testconfig', 'fixture', 'connect',
 		'mocha', 'parallel', 'eslint', 'markdownlint']);
@@ -368,6 +368,6 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
 
-	grunt.registerTask('dev:no-lint', ['clean', 'validate', 'concat:commons', 'configure',
-		 'babel', 'concat:engine', 'uglify', 'testconfig', 'fixture', 'connect', 'watch']);
+	grunt.registerTask('dev:no-lint', ['clean', 'validate', 'concat:commons', 
+		 'babel', 'concat:engine', 'uglify', 'configure', 'testconfig', 'fixture', 'connect', 'watch']);
 };

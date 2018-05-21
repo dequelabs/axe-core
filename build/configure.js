@@ -24,10 +24,28 @@ function getLocale(grunt, options) {
 }
 
 function buildRules(grunt, options, commons, callback) {
+	var axe = require('../axe');
 	var locale = getLocale(grunt, options);
 	options.getFiles = false;
-
 	buildManual(grunt, options, commons, function (result) {
+
+		var metadata = {
+			rules: {},
+			checks: {}
+		};
+		var descriptions = [];
+		var tags = options.tags ? options.tags.split(/\s*,\s*/) : [];
+		var rules = result.rules;
+		var checks = result.checks;
+
+		// Translate checks
+		if (locale && locale.checks) {
+			checks.forEach(function (check) {
+				if (locale.checks[check.id] && check.metadata) {
+					check.metadata.messages = locale.checks[check.id];
+				}
+			})
+		}
 
 		function parseMetaData(source, propType) {
 			var data = source.metadata
@@ -106,24 +124,6 @@ function buildRules(grunt, options, commons, callback) {
 			return v;
 		}
 
-		var metadata = {
-			rules: {},
-			checks: {}
-		};
-		var descriptions = [];
-		var tags = options.tags ? options.tags.split(/\s*,\s*/) : [];
-		var rules = result.rules;
-		var checks = result.checks;
-
-		// Translate checks
-		if (locale && locale.checks) {
-			checks.forEach(function (check) {
-				if (locale.checks[check.id] && check.metadata) {
-					check.metadata.messages = locale.checks[check.id];
-				}
-			})
-		}
-
 		function parseChecks(collection) {
 			return collection.map(function (check) {
 				var c = {};
@@ -143,11 +143,16 @@ function buildRules(grunt, options, commons, callback) {
 			});
 		}
 
-		function parseImpactForRule(rule, grouped) {
-			var impactValues = Object.freeze(['minor', 'moderate', 'serious', 'critical']); // todo: get this from axe.constants in build?
+		function parseImpactForRule(rule, impactValues) {
 
 			function capitalize(s) {
 				return s.charAt(0).toUpperCase() + s.slice(1);
+			}
+
+			function getUniqueArr(arr) {
+				return arr.filter(function(value, index, self) { 
+					return self.indexOf(value) === index;
+				})
 			}
 
 			function getImpactScores(checkCollection) {
@@ -165,45 +170,37 @@ function buildRules(grunt, options, commons, callback) {
 				}, []);
 			}
 
-			function getHighestScore(checkCollection) {
+			function getScore(checkCollection, onlyHighestScore) {
 				var scores = getImpactScores(checkCollection);
-				return scores && scores.length
-					? Math.max.apply(null, scores)
-					: -1;
-			}
-
-			var anyImpactScore = getHighestScore(rule.any);
-			var allImpactScore = getHighestScore(rule.all);
-			var noneImpactScore = getHighestScore(rule.none);
-
-			if (grouped) {
-				var out = [];
-				var scoreMap = {
-					'Any': anyImpactScore,
-					'All': allImpactScore,
-					'None': noneImpactScore
+				if(scores && scores.length) {
+					return onlyHighestScore
+						? [Math.max.apply(null, scores)]
+						: getUniqueArr(scores);
+				} else{
+					return [];
 				}
-				Object.keys(scoreMap)
-					.forEach(function (key) {
-						if (scoreMap[key] >= 0) {
-							out.push(key + ': ' + capitalize( impactValues[scoreMap[key]] ))
-						}
-					})
-				return out.join(', ');
 			}
 
-			var score = Math.max.apply(null, [anyImpactScore, allImpactScore, noneImpactScore]);
-			return capitalize(impactValues[score]);
-		}
+			var cumulativeScores = getUniqueArr(
+				getScore(rule.any, true) 							// Any: get highest impact
+					.concat(getScore(rule.all, false)) 	// All: get all unique
+					.concat(getScore(rule.none, false)) // None: get all unique
+			).sort().reverse(); //order highest to lowest
 
+			return cumulativeScores.reduce(function(out, cV) {
+				return out.length 
+					? out + ', ' + capitalize( impactValues[cV] ) 
+					: capitalize( impactValues[cV] );
+			}, '');
+		}
+		
 		rules.map(function (rule) {
-			var impact = parseImpactForRule(rule); // second argument: pass `true` to get grouped impact across checks -> Eg: Any: Critical, None: Serious, pass `false` to get highest impact Eg: `Serious` across checks.
+			var impact = parseImpactForRule(rule, axe.constants.impact);
 			rule.any = parseChecks(rule.any);
 			rule.all = parseChecks(rule.all);
 			rule.none = parseChecks(rule.none);
 			if (rule.metadata && !metadata.rules[rule.id]) {
-				// Translate rules
-				metadata.rules[rule.id] = parseMetaData(rule, 'rules');
+				metadata.rules[rule.id] = parseMetaData(rule, 'rules'); // Translate rules
 			}
 			descriptions.push([
 				rule.id,
