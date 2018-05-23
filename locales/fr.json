@@ -226,20 +226,20 @@
       "help": "L’attribut scope doit être utilisé correctement"
     },
     "server-side-image-map": {
-      "description": "S’assure que that server-side image maps are not used",
-      "help": "Server-side image maps must not be used"
+      "description": "S’assure que les images réactives côté serveur ne sont pas utilisées",
+      "help": "Les images réactives côté serveur ne devraient pas être utilisées"
     },
     "skip-link": {
-      "description": "Ensure all skip links have a focusable target",
-      "help": "The skip-link target should exist and be focusable"
+      "description": "S’assure que tous les liens d’évitement ont une cible pouvant recevoir le focus",
+      "help": "La cible d’un lien d’évitement doit exister et pouvoir recevoir le focus"
     },
     "tabindex": {
-      "description": "S’assure que tabindex attribute values are not greater than 0",
-      "help": "Elements should not have tabindex greater than zero"
+      "description": "S’assure que les valeurs de l’attribut tabindex ne sont pas supérieures à 0",
+      "help": "Aucun élément ne devrait avoir un tabindex avec une valeur supérieure à zéro"
     },
     "table-duplicate-name": {
-      "description": "Ensure that tables do not have the same summary and caption",
-      "help": "The <caption> element should not contain the same text as the summary attribute"
+      "description": "S’assure que chaque tableau n’ait pas un summary et un caption identiques",
+      "help": "L’élément <caption> ne devrait pas contenir le même texte que l’attribut summary"
     },
     "table-fake-caption": {
       "description": "Ensure that tables with a caption use the <caption> element.",
