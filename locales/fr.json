@@ -242,24 +242,24 @@
       "help": "L’élément <caption> ne devrait pas contenir le même texte que l’attribut summary"
     },
     "table-fake-caption": {
-      "description": "Ensure that tables with a caption use the <caption> element.",
-      "help": "Data or header cells should not be used to give caption to a data table."
+      "description": "S’assure que les tableaux avec une légende utilisent l’élément <caption>",
+      "help": "Les données ou les cellules d’entête ne devrait pas être utilisées pour légender un tableau de données."
     },
     "td-has-header": {
-      "description": "Ensure that each non-empty data cell in a large table has one or more table headers",
-      "help": "All non-empty td element in table larger than 3 by 3 must have an associated table header"
+      "description": "S’assure que chaque cellule de données non vide dans un tableau de données a une ou plusieurs cellules d’entête",
+      "help": "Chaque élément td non vide dans un tableau plus grand que 3 × 3 doit avoir une cellule d’entête associée"
     },
     "td-headers-attr": {
-      "description": "Ensure that each cell in a table using the headers refers to another cell in that table",
-      "help": "All cells in a table element that use the headers attribute must only refer to other cells of that same table"
+      "description": "S’assure que chaque cellule utilisant l’attribut headers fait référence à une autre cellule du même tableau",
+      "help": "Les cellules utilisant l’attribut headers ne doivent faire référence qu’à d’autres cellules du même tableau"
     },
     "th-has-data-cells": {
-      "description": "Ensure that each table header in a data table refers to data cells",
-      "help": "All th elements and elements with role=columnheader/rowheader must have data cells they describe"
+      "description": "S’assure que chaque cellule d’entête dans un tableau de données fait référence à des cellules de données",
+      "help": "Tous les éléments th et ceux avec role=columnheader/rowheader doivent décrire des cellules de données"
     },
     "valid-lang": {
-      "description": "S’assure que lang attributes have valid values",
-      "help": "lang attribute must have a valid value"
+      "description": "S’assure que les attributs lang ont des valeurs valides",
+      "help": "L’attribut lang doit avoir une valeur valide"
     },
     "video-caption": {
       "description": "S’assure que <video> elements have captions",
