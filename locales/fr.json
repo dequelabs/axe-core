@@ -620,15 +620,15 @@
   },
   "failureSummaries": {
     "any": {
-      "failureMessage": "Fix any of the following:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+      "failureMessage": "Corriger l’un des éléments suivants : {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
     },
     "none": {
-      "failureMessage": "Fix all of the following:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+      "failureMessage": "Corriger tous les éléments suivants : {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
     }
   },
   "incompleteFallbackMessage": {
     "undefined": {
-      "failureMessage": "Fix all of the following:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+      "failureMessage": "Corriger tous les éléments suivants : {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
     }
   }
 }
