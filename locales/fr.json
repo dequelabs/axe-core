@@ -262,12 +262,12 @@
       "help": "L’attribut lang doit avoir une valeur valide"
     },
     "video-caption": {
-      "description": "S’assure que <video> elements have captions",
-      "help": "<video> elements must have captions"
+      "description": "S’assure que les éléments <video> ont des sous-titres",
+      "help": "Les éléments <video> doivent avoir des sous-titres"
     },
     "video-description": {
-      "description": "S’assure que <video> elements have audio descriptions",
-      "help": "<video> elements must have an audio description track"
+      "description": "S’assure que les éléments <video> ont des audiodescriptions",
+      "help": "Les éléments <video> doivent avoir des audiodescriptions"
     }
   },
   "checks": {
