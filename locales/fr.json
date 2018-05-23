@@ -272,12 +272,12 @@
   },
   "checks": {
     "abstractrole": {
-      "pass": "Abstract roles are not used",
-      "fail": "Abstract roles cannot be directly used"
+      "pass": "Les rôles abstraits ne sont pas utilisés",
+      "fail": "Les rôles abstraits ne peuvent pas être utilisés directement"
     },
     "aria-allowed-attr": {
-      "pass": "ARIA attributes are used correctly for the defined role",
-      "fail": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}"
+      "pass": "Les attributs ARIA sont utilisés correctement pour le rôle défini",
+      "fail": "{{=it.data && it.data.length > 1 ? 'Attributs ARIA non autorisés' : 'Attribut ARIA non autorisé'}} : {{~it.data:value}} {{=value}}{{~}}"
     },
     "aria-hidden-body": {
       "pass": "No aria-hidden attribute is present on document body",
