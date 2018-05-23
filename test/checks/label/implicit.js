@@ -38,5 +38,4 @@ describe('implicit-label', function () {
 		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
 		assert.isFalse(checks['implicit-label'].evaluate(node, {}, virtualNode));
 	});
-
 });
