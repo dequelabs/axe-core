@@ -280,24 +280,24 @@
       "fail": "{{=it.data && it.data.length > 1 ? 'Attributs ARIA non autorisés' : 'Attribut ARIA non autorisé'}} : {{~it.data:value}} {{=value}}{{~}}"
     },
     "aria-hidden-body": {
-      "pass": "No aria-hidden attribute is present on document body",
-      "fail": "aria-hidden=true should not be present on the document body"
+      "pass": "Aucun attribut aria-hidden n’est présent sur body",
+      "fail": "aria-hidden=true ne devrait pas être présent sur body"
     },
     "aria-errormessage": {
-      "pass": "Uses a supported aria-errormessage technique",
-      "fail": "aria-errormessage value{{=it.data && it.data.length > 1 ? 's' : ''}} {{~it.data:value}} `{{=value}}{{~}}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)"
+      "pass": "Utilise une technique prise en charge pour aria-errormessage",
+      "fail": "{{=it.data && it.data.length > 1 ? 'Les valeurs de aria-errormessage' : 'La valeur de aria-errormessage'}} {{~it.data:value}} `{{=value}}{{~}}` doit utiliser une technique pour annoncer le message (ex. : aria-live, aria-describedby, role=alert, etc.)"
     },
     "has-widget-role": {
-      "pass": "Element has a widget role.",
-      "fail": "Element does not have a widget role."
+      "pass": "L’élément a un rôle widget.",
+      "fail": "L’élément n’a pas de rôle widget."
     },
     "implicit-role-fallback": {
-      "pass": "Element’s implicit ARIA role is an appropriate fallback",
-      "fail": "Element’s implicit ARIA role is not a good fallback for the (unsupported) role"
+      "pass": "Le rôle ARIA implicite de l’élément est un repli approprié",
+      "fail": "Le rôle ARIA implicite de l’élément n’est pas un bon repli pour ce rôle (non pris en charge)"
     },
     "invalidrole": {
-      "pass": "ARIA role is valid",
-      "fail": "Role must be one of the valid ARIA roles"
+      "pass": "Le rôle ARIA est valide",
+      "fail": "Le rôle doit être un des rôles ARIA valides"
     },
     "aria-required-attr": {
       "pass": "All required ARIA attributes are present",
