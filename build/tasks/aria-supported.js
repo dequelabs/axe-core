@@ -2,6 +2,7 @@
 'use strict';
 
 const { roles, aria: props } = require('aria-query');
+const mdTable = require('markdown-table');
 
 module.exports = function (grunt) {
 	grunt.registerMultiTask(
@@ -17,6 +18,14 @@ module.exports = function (grunt) {
 			 */
 			const axe = require('../../axe');
 
+			/**
+			 * As `aria-query` roles map, does not list all aria attributes in its props,
+			 * the below reduce function aims to concatanate and unique the below two, 
+			 * - list from props with in roles map
+			 * - list from aria map
+			 * 
+			 * @return {Map} `aQaria` - This gives a composite list of aria attributes, which is later used to diff against axe-core supported attributes.
+			 */
 			const ariaKeys = Array.from(props).map(([key]) => key)
 			const roleAriaKeys = Array.from(roles)
 				.reduce((out, [name, rule]) => {
@@ -24,32 +33,45 @@ module.exports = function (grunt) {
 				}, []);
 			const aQaria = new Set(axe.utils.uniqueArray(roleAriaKeys, ariaKeys));
 
+			/**
+			 * Given a `base` Map and `subject` Map object, 
+			 * The function converts the `base` Map entries to an array which is sorted then enumerated to compare each entry against the `subject` Map 
+			 * The function constructs a `string` to represent a `markdown table` to 
+			 * @param {Map} base Base Map Object
+			 * @param {Map} subject Subject Map Object
+			 * @return {Array[]} Example Output: [ [ 'alert', 'No' ], [ 'figure', 'Yes' ] ]
+			 */
 			const getDiff = (base, subject) => {
 				return Array.from(base.entries()).sort().reduce((out, [key] = item) => {
 					switch (listType) {
 						case 'supported':
-							return subject.includes(key)
-								? `${out} | ${key} | Yes |\n`
-								: `${out}`
+							if (subject.includes(key)) {
+								out.push([`${key}`, 'Yes']);
+							}
+							break;
 						case 'unsupported':
-							return !subject.includes(key)
-								? `${out} | ${key} | No |\n`
-								: `${out}`
+							if (!subject.includes(key)) {
+								out.push([`${key}`, 'No']);
+							}
+							break;
 						case 'all':
 						default:
-							return `${out} | ${key} | ${subject.includes(key) ? 'Yes' : 'No'} |\n`;
+							out.push([`${key}`, subject.includes(key) ? 'Yes' : 'No']);
+							break;
 					}
-				}, ``);
+					return out;
+				}, []);
 			}
 
-			const getMdContent = (roles, attributes) => {
-				return `# ARIA Roles and Attributes ${listType === 'all' ? 'available' : listType} in axe-core \n \n## Roles\n \n| aria-role | axe-core support | \n| :------- | :------- | \n${roles} \n## Attributes \n \n| aria-attribute | axe-core support| \n| :------- | :------- | \n${attributes}`;
+			const getMdContent = (heading, rolesTable, attributesTable) => {
+				return `${heading}\n## Roles\n${rolesTable}\n## Attributes\n${attributesTable}`;
 			}
 
 			const generateDoc = () => {
 				const content = getMdContent(
-					getDiff(roles, Object.keys(axe.commons.aria.lookupTable.role)),
-					getDiff(aQaria, Object.keys(axe.commons.aria.lookupTable.attributes))
+					`# ARIA Roles and Attributes ${listType === 'all' ? 'available' : listType} in axe-core.`,
+					mdTable([['aria-role', 'axe-core support'], ...getDiff(roles, Object.keys(axe.commons.aria.lookupTable.role))]),
+					mdTable([['aria-attribute', 'axe-core support'], ...getDiff(aQaria, Object.keys(axe.commons.aria.lookupTable.attributes))])
 				);
 				grunt.file.write(destFile, content)
 			}

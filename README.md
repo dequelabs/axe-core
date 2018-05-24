@@ -103,7 +103,7 @@ To update existing translation file, re-run `grunt translate --lang=<langcode>`.
 
 ## Supported ARIA Roles and Attributes.
 
-Refer [aXe ARIA support](./doc/aria-supported.md) for a complete list of ARIA supported roles and attrubites by axe.
+Refer [aXe ARIA support](./doc/aria-supported.md) for a complete list of ARIA supported roles and attributes by axe.
 
 ## Contributing
 

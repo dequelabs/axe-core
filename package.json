@@ -92,6 +92,7 @@
     "grunt-retire": "^1.0.7",
     "html-entities": "^1.2.0",
     "jquery": "^3.0.0",
+    "markdown-table": "^1.1.2",
     "mocha": "^5.1.0",
     "promise": "~8.0.1",
     "revalidator": "~0.3.1",
