@@ -144,14 +144,14 @@ function buildRules(grunt, options, commons, callback) {
 		}
 
 		function parseImpactForRule(rule) {
-			
+
 
 			function capitalize(s) {
 				return s.charAt(0).toUpperCase() + s.slice(1);
 			}
 
 			function getUniqueArr(arr) {
-				return arr.filter(function(value, index, self) { 
+				return arr.filter(function (value, index, self) {
 					return self.indexOf(value) === index;
 				})
 			}
@@ -173,31 +173,31 @@ function buildRules(grunt, options, commons, callback) {
 
 			function getScore(checkCollection, onlyHighestScore) {
 				var scores = getImpactScores(checkCollection);
-				if(scores && scores.length) {
+				if (scores && scores.length) {
 					return onlyHighestScore
 						? [Math.max.apply(null, scores)]
 						: getUniqueArr(scores);
-				} else{
+				} else {
 					return [];
 				}
 			}
 
-			var cumulativeScores = getUniqueArr(
-				getScore(rule.any, true) 							// Any: get highest impact
-					.concat(getScore(rule.all, false)) 	// All: get all unique
-					.concat(getScore(rule.none, false)) // None: get all unique
-			).sort().reverse(); //order highest to lowest
+			var highestImpactForRuleTypeAny = getScore(rule.any, true);
+			var allUniqueImpactsForRuleTypeAll = getScore(rule.all, false);
+			var allUniqueImpactsForRuleTypeNone = getScore(rule.none, false);
+			var cumulativeImpacts = highestImpactForRuleTypeAny.concat(allUniqueImpactsForRuleTypeAll).concat(allUniqueImpactsForRuleTypeNone);
+			var cumulativeScores = getUniqueArr(cumulativeImpacts).sort(); //order lowest to highest
 
-			return cumulativeScores.reduce(function(out, cV) {
-				return out.length 
-					? out + ', ' + capitalize( axeImpact[cV] ) 
-					: capitalize( axeImpact[cV] );
+			return cumulativeScores.reduce(function (out, cV) {
+				return out.length
+					? out + ', ' + capitalize(axeImpact[cV])
+					: capitalize(axeImpact[cV]);
 			}, '');
 		}
-		
-		
+
+
 		rules.map(function (rule) {
-			
+
 			var impact = parseImpactForRule(rule);
 			rule.any = parseChecks(rule.any);
 			rule.all = parseChecks(rule.all);

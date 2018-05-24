@@ -8,12 +8,12 @@
 | aria-required-attr | Ensures elements with ARIA roles have all required ARIA attributes | Critical | cat.aria, wcag2a, wcag411, wcag412 | true |
 | aria-required-children | Ensures elements with an ARIA role that require child roles contain them | Critical | cat.aria, wcag2a, wcag131 | true |
 | aria-required-parent | Ensures elements with an ARIA role that require parent roles are contained by them | Critical | cat.aria, wcag2a, wcag131 | true |
-| aria-roles | Ensures all elements with a role attribute use a valid value | Critical, Serious | cat.aria, wcag2a, wcag131, wcag411, wcag412 | true |
+| aria-roles | Ensures all elements with a role attribute use a valid value | Serious, Critical | cat.aria, wcag2a, wcag131, wcag411, wcag412 | true |
 | aria-valid-attr-value | Ensures all ARIA attributes have valid values | Critical | cat.aria, wcag2a, wcag131, wcag411, wcag412 | true |
 | aria-valid-attr | Ensures attributes that begin with aria- are valid ARIA attributes | Critical | cat.aria, wcag2a, wcag411 | true |
 | audio-caption | Ensures &lt;audio&gt; elements have captions | Critical | cat.time-and-media, wcag2a, wcag121, section508, section508.22.a | true |
 | blink | Ensures &lt;blink&gt; elements are not used | Serious | cat.time-and-media, wcag2a, wcag222, section508, section508.22.j | true |
-| button-name | Ensures buttons have discernible text | Critical, Serious | cat.name-role-value, wcag2a, wcag412, section508, section508.22.a | true |
+| button-name | Ensures buttons have discernible text | Serious, Critical | cat.name-role-value, wcag2a, wcag412, section508, section508.22.a | true |
 | bypass | Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content | Serious | cat.keyboard, wcag2a, wcag241, section508, section508.22.o | true |
 | checkboxgroup | Ensures related &lt;input type=&quot;checkbox&quot;&gt; elements have a group and that the group designation is consistent | Critical | cat.forms, best-practice | true |
 | color-contrast | Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds | Serious | cat.color, wcag2aa, wcag143 | true |
@@ -34,7 +34,7 @@
 | image-redundant-alt | Ensure button and link text is not repeated as image alternative | Minor | cat.text-alternatives, best-practice | true |
 | input-image-alt | Ensures &lt;input type=&quot;image&quot;&gt; elements have alternate text | Critical | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | Serious | cat.forms, best-practice | true |
-| label | Ensures every form element has a label | Critical, Serious, Minor | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
+| label | Ensures every form element has a label | Minor, Serious, Critical | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
 | landmark-banner-is-top-level | The banner landmark should not be contained in another landmark | Moderate | cat.semantics, best-practice | true |
 | landmark-contentinfo-is-top-level | The contentinfo landmark should not be contained in another landmark | Moderate | cat.semantics, best-practice | true |
 | landmark-main-is-top-level | The main landmark should not be contained in another landmark | Moderate | cat.semantics, best-practice | true |
@@ -55,7 +55,7 @@
 | page-has-heading-one | Ensure that the page, or at least one of its frames contains a level-one heading | Moderate | cat.semantics, best-practice | true |
 | radiogroup | Ensures related &lt;input type=&quot;radio&quot;&gt; elements have a group and that the group designation is consistent | Critical | cat.forms, best-practice | true |
 | region | Ensures all content is contained within a landmark region | Moderate | cat.keyboard, best-practice | true |
-| scope-attr-valid | Ensures the scope attribute is used correctly on tables | Critical, Moderate | cat.tables, best-practice | true |
+| scope-attr-valid | Ensures the scope attribute is used correctly on tables | Moderate, Critical | cat.tables, best-practice | true |
 | server-side-image-map | Ensures that server-side image maps are not used | Minor | cat.text-alternatives, wcag2a, wcag211, section508, section508.22.f | true |
 | skip-link | Ensure all skip links have a focusable target | Moderate | cat.keyboard, best-practice | true |
 | tabindex | Ensures tabindex attribute values are not greater than 0 | Serious | cat.keyboard, best-practice | true |
