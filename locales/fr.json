@@ -340,24 +340,24 @@
       }
     },
     "link-in-text-block": {
-      "pass": "Links can be distinguished from surrounding text in some way other than by color",
-      "fail": "Links need to be distinguished from surrounding text in some way other than by color",
+      "pass": "Les liens peuvent être distingués du texte environnant par un autre moyen que la couleur",
+      "fail": "Les liens doivent se distinguer du texte environnant par un autre moyen que la couleur",
       "incomplete": {
-        "bgContrast": "Element's contrast ratio could not be determined. Check for a distinct hover/focus style",
-        "bgImage": "Element's contrast ratio could not be determined due to a background image",
-        "bgGradient": "Element's contrast ratio could not be determined due to a background gradient",
-        "imgNode": "Element's contrast ratio could not be determined because element contains an image node",
-        "bgOverlap": "Element's contrast ratio could not be determined because of element overlap",
-        "default": "Unable to determine contrast ratio"
+        "bgContrast": "Le rapport de contrast de l’élément n’a pu être déterminé. Recherchez un style différent pour le hover/focus.",
+        "bgImage": "Le rapport de contrast de l’élément n’a pu être déterminé à cause d’une image d’arrière-plan",
+        "bgGradient": "Le rapport de contrast de l’élément n’a pu être déterminé à cause d’un dégradé d’arrière-plan",
+        "imgNode": "Le rapport de contrast de l’élément n’a pu être déterminé car l’élément contient une balise image",
+        "bgOverlap": "Le rapport de contrast de l’élément n’a pu être déterminé à cause d’un chevauchement",
+        "default": "Impossible de déterminer le rapport de contraste"
       }
     },
     "fieldset": {
-      "pass": "Element is contained in a fieldset",
-      "fail": "{{var code = it.data && it.data.failureCode;}}{{? code === 'no-legend'}}Fieldset does not have a legend as its first child{{?? code === 'empty-legend'}}Legend does not have text that is visible to screen readers{{?? code === 'mixed-inputs'}}Fieldset contains unrelated inputs{{?? code === 'no-group-label'}}ARIA group does not have aria-label or aria-labelledby{{?? code === 'group-mixed-inputs'}}ARIA group contains unrelated inputs{{??}}Element does not have a containing fieldset or ARIA group{{?}}"
+      "pass": "L’élément est contenu dans un fieldset",
+      "fail": "{{var code = it.data && it.data.failureCode;}}{{? code === 'no-legend'}}Le fieldset n’a pas de legend en premier descendant direct{{?? code === 'empty-legend'}}L’élément legend n’a pas de texte discernable par les lecteurs d’écran{{?? code === 'mixed-inputs'}}Le fieldset contient des champs non liés{{?? code === 'no-group-label'}}Le groupe ARIA n’a pas d’attribut aria-label ou aria-labelledby{{?? code === 'group-mixed-inputs'}}Le groupe ARIA contient des champs non liés {{??}}L’élément n’est contenu ni dans un fieldset ni dans un groupe ARIA{{?}}"
     },
     "group-labelledby": {
-      "pass": "All elements with the name \"{{=it.data.name}}\" reference the same element with aria-labelledby",
-      "fail": "All elements with the name \"{{=it.data.name}}\" do not reference the same element with aria-labelledby"
+      "pass": "Tous les éléments avec le nom \"{{=it.data.name}}\" font référence au même élément avec aria-labelledby",
+      "fail": "Tous les éléments avec le nom \"{{=it.data.name}}\" ne font pas référence au même élément avec  aria-labelledby"
     },
     "accesskeys": {
       "pass": "La valeur de l'attribut Accesskey est unique",
