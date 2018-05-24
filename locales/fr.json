@@ -320,23 +320,23 @@
       "fail": "{{=it.data && it.data.length > 1 ? 'Noms d’attributs ARIA invalides' : 'Nom d’attribut ARIA invalide'}} : {{~it.data:value}} {{=value}}{{~}}"
     },
     "valid-scrollable-semantics": {
-      "pass": "Element has valid semantics for an element in the focus order.",
-      "fail": "Element has invalid semantics for an element in the focus order."
+      "pass": "L’élément a une sémantique valide pour un élément dans l’ordre de tabulation.",
+      "fail": "L’élément n’a pas une sémantique valide pour un élément dans l’ordre de tabulation."
     },
     "color-contrast": {
-      "pass": "Element has sufficient color contrast of {{=it.data.contrastRatio}}",
-      "fail": "Element has insufficient color contrast of {{=it.data.contrastRatio}} (foreground color: {{=it.data.fgColor}}, background color: {{=it.data.bgColor}}, font size: {{=it.data.fontSize}}, font weight: {{=it.data.fontWeight}}). Expected contrast ratio of {{=it.data.expectedContrastRatio}}",
+      "pass": "L’élément a un contraste de couleurs suffisant de {{=it.data.contrastRatio}}",
+      "fail": "L’élément a un contraste de couleurs insuffisant de {{=it.data.contrastRatio}} (couleur du texte : {{=it.data.fgColor}}, couleur d’arrière-plan : {{=it.data.bgColor}}, corps : {{=it.data.fontSize}}, graisse : {{=it.data.fontWeight}}). Le rapport de contraste attendu est {{=it.data.expectedContrastRatio}}",
       "incomplete": {
-        "bgImage": "Element's background color could not be determined due to a background image",
-        "bgGradient": "Element's background color could not be determined due to a background gradient",
-        "imgNode": "Element's background color could not be determined because element contains an image node",
-        "bgOverlap": "Element's background color could not be determined because it is overlapped by another element",
-        "fgAlpha": "Element's foreground color could not be determined because of alpha transparency",
-        "elmPartiallyObscured": "Element's background color could not be determined because it's partially obscured by another element",
-        "elmPartiallyObscuring": "Element's background color could not be determined because it partially overlaps other elements",
-        "outsideViewport": "Element's background color could not be determined because it's outside the viewport",
-        "equalRatio": "Element has a 1:1 contrast ratio with the background",
-        "default": "Unable to determine contrast ratio"
+        "bgImage": "La couleur d’arrière-plan de l’élément n’a pu être déterminée à cause d’une image d’arrière-plan",
+        "bgGradient": "La couleur d’arrière-plan de l’élément n’a pu être déterminée à cause d’un dégradé d’arrière-plan",
+        "imgNode": "La couleur d’arrière-plan de l’élément n’a pu être déterminée car l’élément contient une balise image",
+        "bgOverlap": "La couleur d’arrière-plan de l’élément n’a pu être déterminée car un autre élément le chevauche",
+        "fgAlpha": "La couleur du texte de l’élément n’a pu être déterminée à cause d’une opacité réduite",
+        "elmPartiallyObscured": "La couleur d’arrière-plan de l’élément n’a pu être déterminée car l’élément est partiellement masqué par un autre élément",
+        "elmPartiallyObscuring": "La couleur d’arrière-plan de l’élément n’a pu être déterminée car il chevauche partiellement un autre élément",
+        "outsideViewport": "La couleur d’arrière-plan de l’élément n’a pu être déterminée car il est à l’extérieur du viewport",
+        "equalRatio": "L’élément à un rapport de contraste de 1:1 avec son arrière-plan",
+        "default": "Impossible de déterminer le rapport de contraste"
       }
     },
     "link-in-text-block": {
