@@ -300,24 +300,24 @@
       "fail": "Le rôle doit être un des rôles ARIA valides"
     },
     "aria-required-attr": {
-      "pass": "All required ARIA attributes are present",
-      "fail": "Required ARIA attribute{{=it.data && it.data.length > 1 ? 's' : ''}} not present:{{~it.data:value}} {{=value}}{{~}}"
+      "pass": "Tous les attributs ARIA requis sont présents",
+      "fail": "{{=it.data && it.data.length > 1 ? 'Attributs ARIA requis absents' : 'Attribut ARIA requis absent'}} : {{~it.data:value}} {{=value}}{{~}}"
     },
     "aria-required-children": {
-      "pass": "Required ARIA children are present",
-      "fail": "Required ARIA {{=it.data && it.data.length > 1 ? 'children' : 'child'}} role not present:{{~it.data:value}} {{=value}}{{~}}"
+      "pass": "Les descendants ARIA requis sont présents",
+      "fail": "{{=it.data && it.data.length > 1 ? 'Descendants ARIA requis absents' : 'Descendant ARIA requis absent'}} : {{~it.data:value}} {{=value}}{{~}}"
     },
     "aria-required-parent": {
-      "pass": "Required ARIA parent role present",
-      "fail": "Required ARIA parent{{=it.data && it.data.length > 1 ? 's' : ''}} role not present:{{~it.data:value}} {{=value}}{{~}}"
+      "pass": "Les rôles parents ARIA requis sont présents",
+      "fail": "{{=it.data && it.data.length > 1 ? 'Rôles parents ARIA requis absents' : 'Rôle parent ARIA requis absent'}} : {{~it.data:value}} {{=value}}{{~}}"
     },
     "aria-valid-attr-value": {
-      "pass": "ARIA attribute values are valid",
-      "fail": "Invalid ARIA attribute value{{=it.data && it.data.length > 1 ? 's' : ''}}:{{~it.data:value}} {{=value}}{{~}}"
+      "pass": "Les valeurs d’attribut ARIA sont valides",
+      "fail": "{{=it.data && it.data.length > 1 ? 'Valeurs d’attribut ARIA invalides' : 'Valeur d’attribut ARIA invalide'}} : {{~it.data:value}} {{=value}}{{~}}"
     },
     "aria-valid-attr": {
-      "pass": "ARIA attribute name{{=it.data && it.data.length > 1 ? 's' : ''}} are valid",
-      "fail": "Invalid ARIA attribute name{{=it.data && it.data.length > 1 ? 's' : ''}}:{{~it.data:value}} {{=value}}{{~}}"
+      "pass": "{{=it.data && it.data.length > 1 ? 'Les noms d’attributs ARIA sont valides' : 'Le nom d’attribut ARIA est valide'}}",
+      "fail": "{{=it.data && it.data.length > 1 ? 'Noms d’attributs ARIA invalides' : 'Nom d’attribut ARIA invalide'}} : {{~it.data:value}} {{=value}}{{~}}"
     },
     "valid-scrollable-semantics": {
       "pass": "Element has valid semantics for an element in the focus order.",
