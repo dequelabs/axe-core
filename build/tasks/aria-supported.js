@@ -64,7 +64,7 @@ module.exports = function (grunt) {
 			}
 
 			const getMdContent = (heading, rolesTable, attributesTable) => {
-				return `${heading}\n## Roles\n${rolesTable}\n## Attributes\n${attributesTable}`;
+				return `${heading}\n\n## Roles\n\n${rolesTable}\n\n## Attributes\n\n${attributesTable}`;
 			}
 
 			const generateDoc = () => {
