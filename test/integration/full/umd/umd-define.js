@@ -6,8 +6,15 @@ describe('UMD define', function () {
 		assert.equal(defineCalls.length, 1);
 
 		var call = defineCalls[0];
-		assert.isFunction(call[1]);
-		assert.strictEqual(call[1](), axe);
+		assert.isFunction(call[2]);
+		assert.strictEqual(call[2](), axe);
+	});
+
+	it('defines module name as axe-core', function () {
+		assert.equal(defineCalls.length, 1);
+
+		var call = defineCalls[0];
+		assert.equal(call[0], 'axe-core');
 	});
 
 });

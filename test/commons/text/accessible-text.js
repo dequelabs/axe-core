@@ -312,6 +312,62 @@ describe('text.accessibleTextVirtual', function() {
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'This not a span is the value of everything');
 	});
 
+	it('should come up empty if input is labeled only by select options', function () {
+		fixture.innerHTML = '<label for="target">' +
+			'<select id="select">' +
+			'	<option selected="selected">Chosen</option>' +
+			'	<option>Not Selected</option>' +
+			'</select>' +
+		'</label>' +
+		'<input id="target" type="text" />';
+		axe._tree = axe.utils.getFlattenedTree(fixture);
+		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
+	});
+
+	it('should be empty if input is labeled by labeled select (ref\'d string labels have spotty support)', function () {
+		fixture.innerHTML = '<label for="select">My Select</label>' +
+		'<label for="target">' +
+			'<select id="select">' +
+			'	<option selected="selected">Chosen</option>' +
+			'	<option>Not Selected</option>' +
+			'</select>' +
+		'</label>' +
+		'<input id="target" type="text" />';
+		axe._tree = axe.utils.getFlattenedTree(fixture);
+		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
+	});
+
+	it('should be empty for an empty label wrapping a select', function () {
+		fixture.innerHTML = '<label>' +
+	    '<span class="label"></span>' +
+	    '<select id="target">' +
+	        '<option value="1" selected="selected">Please choose a region</option>' +
+	        '<option value="2">Coastal</option>' +
+	        '<option value="3">Forest</option>' +
+	        '<option value="4">Grasslands</option>' +
+	        '<option value="5">Mountains</option>' +
+	    '</select>' +
+		'</label>';
+		axe._tree = axe.utils.getFlattenedTree(fixture);
+		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
+	});
+
+	it('should return select options if input is aria-labelled by a select', function () {
+		fixture.innerHTML = '<label>' +
+			'<select id="select">' +
+			'	<option selected="selected">Chosen</option>' +
+			'	<option>Not Selected</option>' +
+			'</select>' +
+		'</label>' +
+		'<input aria-labelledby="select" type="text" id="target" />';
+		axe._tree = axe.utils.getFlattenedTree(fixture);
+		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Chosen');
+	});
+
 	it('shoud properly fall back to title', function() {
 		fixture.innerHTML = '<a href="#" role="presentation" title="Hello"></a>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
