@@ -360,24 +360,24 @@
       "fail": "Tous les éléments avec le nom \"{{=it.data.name}}\" ne font pas référence au même élément avec  aria-labelledby"
     },
     "accesskeys": {
-      "pass": "La valeur de l'attribut Accesskey est unique",
-      "fail": "Document has multiple elements with the same accesskey"
+      "pass": "La valeur de l'attribut accesskey est unique",
+      "fail": "Plusieurs éléments ont le même accesskey au sein du document"
     },
     "focusable-no-name": {
-      "pass": "Element is not in tab order or has accessible text",
-      "fail": "Element is in tab order and does not have accessible text"
+      "pass": "L’élément n’est pas dans l’ordre de tabulation ou a un intitulé accessible",
+      "fail": "L’élément est dans l’ordre de tabulation et n’a pas d’intitulé accessible"
     },
     "landmark-is-top-level": {
-      "pass": "The {{=it.data.role }} landmark is at the top level.",
-      "fail": "The {{=it.data.role }} landmark is contained in another landmark."
+      "pass": "La région {{=it.data.role }} est au niveau le plus haut.",
+      "fail": "La région {{=it.data.role }} est contenue dans une autre région."
     },
     "page-has-heading-one": {
-      "pass": "Page has at least one level-one heading",
-      "fail": "Page must have a level-one heading"
+      "pass": "La page a au moins un titre de niveau un",
+      "fail": "La page doit avoir un titre de niveau un"
     },
     "page-has-main": {
-      "pass": "Page has at least one main landmark",
-      "fail": "Page must have a main landmark"
+      "pass": "La page a au moins une région main",
+      "fail": "La page doit avoir une région main"
     },
     "page-no-duplicate-banner": {
       "pass": "Document has no more than one banner landmark",
