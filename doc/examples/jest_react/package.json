@@ -20,7 +20,7 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "jest": "^22.4.0",
-    "jest-cli": "^22.4.4",
+    "jest-cli": "^23.0.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-test-renderer": "^16.2.0"
