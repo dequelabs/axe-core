@@ -101,6 +101,10 @@ To create a new translation for aXe, start by running `grunt translate --lang=<l
 
 To update existing translation file, re-run `grunt translate --lang=<langcode>`. This will add new messages used in English and remove messages which were not used in English.
 
+## Supported ARIA Roles and Attributes.
+
+Refer [aXe ARIA support](./doc/aria-supported.md) for a complete list of ARIA supported roles and attributes by axe.
+
 ## Contributing
 
 Read the [Proposing Axe-core Rules guide](./doc/rule-proposal.md)

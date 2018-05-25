@@ -15,9 +15,9 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-retire');
 	grunt.loadNpmTasks('grunt-mocha');
-	grunt.loadTasks('build/tasks');
 	grunt.loadNpmTasks('grunt-parallel');
 	grunt.loadNpmTasks('grunt-markdownlint');
+	grunt.loadTasks('build/tasks');
 
 	var langs;
 	if (grunt.option('lang')) {
@@ -127,6 +127,13 @@ module.exports = function (grunt) {
 					'lib/commons/outro.stub'
 				],
 				dest: 'tmp/commons.js'
+			}
+		},
+		'aria-supported': {
+			data: {
+				entry: 'lib/commons/aria/index.js',
+				destFile: 'doc/aria-supported.md',
+				listType: 'unsupported' // Possible values for listType: 'supported', 'unsupported', 'all'
 			}
 		},
 		configure: {
@@ -330,8 +337,13 @@ module.exports = function (grunt) {
 					reporterOutput: grunt.option('report') ? 'tmp/lint.xml' : undefined
 				},
 				src: [
-					'lib/**/*.js', 'test/**/*.js', 'build/**/*.js',
-					'doc/**/*.js', '!doc/examples/jest_react/*.js', 'Gruntfile.js',
+					'lib/**/*.js', 
+					'test/**/*.js', 
+					'build/**/*.js',
+					'doc/**/*.js', 
+					'!doc/examples/jest_react/*.js', 
+					'Gruntfile.js',
+					'!build/tasks/aria-supported.js',
 					'!**/node_modules/**/*.js'
 				]
 			}
@@ -350,24 +362,81 @@ module.exports = function (grunt) {
 		}
 	});
 
-	grunt.registerTask('default', ['build']);
+	grunt.registerTask('default', [
+		'build'
+	]);
 
-	grunt.registerTask('build', ['clean', 'eslint', 'validate', 'concat:commons', 'configure',
-		'babel', 'concat:engine', 'uglify']);
+	grunt.registerTask('build', [
+		'clean',
+		'eslint',
+		'validate',
+		'concat:commons',
+		'configure',
+		'babel',
+		'concat:engine',
+		'uglify',
+		'aria-supported'
+	]);
 
-	grunt.registerTask('test', ['build', 'retire', 'testconfig', 'fixture', 'connect',
-		'mocha', 'parallel', 'eslint', 'markdownlint']);
+	grunt.registerTask('test', [
+		'build',
+		'retire',
+		'testconfig',
+		'fixture',
+		'connect',
+		'mocha',
+		'parallel',
+		'eslint',
+		'markdownlint'
+	]);
 
-	grunt.registerTask('ci-build', ['build', 'retire', 'testconfig', 'fixture', 'connect',
-		'parallel', 'eslint']);
+	grunt.registerTask('ci-build', [
+		'build',
+		'retire',
+		'testconfig',
+		'fixture',
+		'connect',
+		'parallel',
+		'eslint'
+	]);
 
-	grunt.registerTask('test-fast', ['build', 'testconfig', 'fixture', 'connect',
-		'mocha', 'eslint']);
+	grunt.registerTask('test-fast', [
+		'build',
+		'testconfig',
+		'fixture',
+		'connect',
+		'mocha',
+		'eslint'
+	]);
 
-	grunt.registerTask('translate', ['clean', 'eslint', 'validate', 'concat:commons', 'add-locale']);
+	grunt.registerTask('translate', [
+		'clean',
+		'eslint',
+		'validate',
+		'concat:commons',
+		'add-locale'
+	]);
 
-	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
+	grunt.registerTask('dev', [
+		'build',
+		'testconfig',
+		'fixture',
+		'connect',
+		'watch'
+	]);
 
-	grunt.registerTask('dev:no-lint', ['clean', 'validate', 'concat:commons', 'configure',
-		'babel', 'concat:engine', 'uglify', 'testconfig', 'fixture', 'connect', 'watch']);
+	grunt.registerTask('dev:no-lint', [
+		'clean',
+		'validate',
+		'concat:commons',
+		'configure',
+		'babel',
+		'concat:engine',
+		'uglify',
+		'testconfig',
+		'fixture',
+		'connect',
+		'watch'
+	]);
+
 };
