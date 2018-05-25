@@ -1,5 +1,5 @@
 /*eslint complexity: ["error",12], max-statements: ["error", 30],
-	camelcase: ["error", {"properties": "never"}]*/
+camelcase: ["error", {"properties": "never"}]*/
 var testConfig = require('./build/test/config');
 
 module.exports = function (grunt) {
