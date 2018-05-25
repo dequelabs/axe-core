@@ -22,7 +22,7 @@
     "jest": "^22.4.0",
     "jest-cli": "^22.4.4",
     "react": "^16.4.0",
-    "react-dom": "^16.2.0",
+    "react-dom": "^16.4.0",
     "react-test-renderer": "^16.2.0"
   }
 }
