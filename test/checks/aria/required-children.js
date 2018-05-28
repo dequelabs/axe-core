@@ -165,4 +165,32 @@ describe('aria-required-children', function () {
 		assert.isTrue(checks['aria-required-children'].evaluate.apply(checkContext, params));
 	});
 
+	describe('options', function () {
+		it('should return undefined instead of false when the role is in options.reviewEmpty', function () {
+			var params = checkSetup('<div role="grid" id="target"></div>');
+			assert.isFalse(checks['aria-required-children'].evaluate.apply(checkContext, params));
+
+			// Options:
+			params[1] = {
+				reviewEmpty: ['grid']
+			}
+			assert.isUndefined(checks['aria-required-children'].evaluate.apply(checkContext, params));
+		});
+
+		it('should not throw when options is incorrect', function () {
+			var params = checkSetup('<div role="grid" id="target"></div>');
+
+			// Options: (incorrect)
+			params[1] = ['grid']
+			assert.isFalse(checks['aria-required-children'].evaluate.apply(checkContext, params));
+
+			// Options: (incorrect)
+			params[1] = null
+			assert.isFalse(checks['aria-required-children'].evaluate.apply(checkContext, params));
+
+			// Options: (incorrect)
+			params[1] = 'grid'
+			assert.isFalse(checks['aria-required-children'].evaluate.apply(checkContext, params));
+		});
+	});
 });
