@@ -43,7 +43,7 @@ module.exports = function (grunt) {
 		errors = errors || [];
 
 		// Give each page enough time
-		driver.manage().timeouts().setScriptTimeout(!isMobile ? 60000 : (60000 * 5));
+		driver.manage().timeouts().setScriptTimeout(!isMobile ? 60000 * 5 : (60000 * 10));
 
 		return driver.get(url)
 			// Get results
