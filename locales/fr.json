@@ -380,24 +380,24 @@
       "fail": "La page doit avoir une région main"
     },
     "page-no-duplicate-banner": {
-      "pass": "Document has no more than one banner landmark",
-      "fail": "Document has more than one banner landmark"
+      "pass": "Le document n’a pas plus d’une région banner",
+      "fail": "Le document a plus d’une région banner"
     },
     "page-no-duplicate-contentinfo": {
-      "pass": "Document has no more than one contentinfo landmark",
-      "fail": "Document has more than one contentinfo landmark"
+      "pass": "Le document n’a pas plus d’une région contentinfo",
+      "fail": "Le document a plus d’une région contentinfo"
     },
     "page-no-duplicate-main": {
-      "pass": "Document has no more than one main landmark",
-      "fail": "Document has more than one main landmark"
+      "pass": "Le document n’a pas plus d’une région main",
+      "fail": "Le document a plus d’une région banner"
     },
     "tabindex": {
-      "pass": "Element does not have a tabindex greater than 0",
-      "fail": "Element has a tabindex greater than 0"
+      "pass": "L’élément n’a pas de tabindex supérieur à 0",
+      "fail": "L’élément a de tabindex supérieur à 0"
     },
     "duplicate-img-label": {
-      "pass": "Element does not duplicate existing text in <img> alt text",
-      "fail": "Element contains <img> element with alt text that duplicates existing text"
+      "pass": "L’élément ne duplique pas un texte existant dans l’alternative textuelle de l’élément <img>",
+      "fail": "L’élément contient un élément <img> dont l’alternative textuelle duplique un texte existant"
     },
     "explicit-label": {
       "pass": "Form element has an explicit <label>",
