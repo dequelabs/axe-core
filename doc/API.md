@@ -235,7 +235,7 @@ axe.run(context, options, callback);
 
 ##### Context Parameter
 
-By default, axe.run will test the entire document. The context object is an optional parameter that can be used to specify which element should and which should not be tested. It can be passed one of the following:
+By default, `axe.run` will test the entire document. The context object is an optional parameter that can be used to specify which element should and which should not be tested. It can be passed one of the following:
 
 1. An element reference that represents the portion of the document that must be analyzed
   * Example: To limit analysis to the `<div id="content">` element: `document.getElementById("content")`
@@ -396,7 +396,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 
 3. Run all enabled Rules except for a list of rules
 
-  The default operation for axe.run is to run all WCAG 2.0 Level A and Level AA rules. If certain rules should be disabled from being run, specify `options` as:
+  The default operation for axe.run is to run all rules except for rules with the "experimental" tag. If certain rules should be disabled from being run, specify `options` as:
   ```javascript
   {
     "rules": {
@@ -575,13 +575,13 @@ Each subsequent entry in the violations array has the same format, but will deta
 
 #### Example 3
 
-In this example, we pass the selector for the entire document, enable two additional best practice rules, and have a simple callback function that logs the entire results object to the console log:
+In this example, we pass the selector for the entire document, enable two additional experimental rules, and have a simple callback function that logs the entire results object to the console log:
 
 ```javascript
 axe.run(document, {
   rules: {
-    "heading-order": { enabled: true },
-    "label-title-only": { enabled: true }
+    "link-in-text-block": { enabled: true },
+    "p-as-heading": { enabled: true }
   }
 }, function(err, results) {
   if (err) throw err;
