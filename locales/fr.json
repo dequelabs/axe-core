@@ -420,24 +420,24 @@
       "fail": "Seul l’attribut title est utilisé comme étiquette pour l’élément de formulaire"
     },
     "has-lang": {
-      "pass": "The <html> element has a lang attribute",
-      "fail": "The <html> element does not have a lang attribute"
+      "pass": "L’élément <html> a un attribut lang",
+      "fail": "L’élément <html> n’a pas d’attribut lang"
     },
     "valid-lang": {
-      "pass": "Value of lang attribute is included in the list of valid languages",
-      "fail": "Value of lang attribute not included in the list of valid languages"
+      "pass": "La valeur de l’attribut lang fait partie des codes de langues valides",
+      "fail": "La valeur de l’attribut lang ne fait pas partie des codes de langues valides"
     },
     "dlitem": {
-      "pass": "Description list item has a <dl> parent element",
-      "fail": "Description list item does not have a <dl> parent element"
+      "pass": "L’item de liste de description a un élément <dl> parent",
+      "fail": "L’item de liste de description n’a pas d’élément <dl> parent"
     },
     "has-listitem": {
-      "pass": "List element contains a <li> element",
-      "fail": "List element does not contain a <li> element"
+      "pass": "L’élément de liste contient un élément <li>",
+      "fail": "L’élément de liste ne contient pas d’élément <li>"
     },
     "listitem": {
-      "pass": "List item has a <ul>, <ol> or role=\"list\" parent element",
-      "fail": "List item does not have a <ul>, <ol> or role=\"list\" parent element"
+      "pass": "L’item de liste a un élément <ul>, <ol> ou role=\"list\" parent",
+      "fail": "L’item de liste n’a pas d’élément <ul>, <ol> ou role=\"list\" parent"
     },
     "only-dlitems": {
       "pass": "List element only has direct children that are allowed inside <dt> or <dd> elements",
