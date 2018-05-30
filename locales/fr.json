@@ -440,26 +440,26 @@
       "fail": "L’item de liste n’a pas d’élément <ul>, <ol> ou role=\"list\" parent"
     },
     "only-dlitems": {
-      "pass": "List element only has direct children that are allowed inside <dt> or <dd> elements",
-      "fail": "List element has direct children that are not allowed inside <dt> or <dd> elements"
+      "pass": "L’élément de liste n’a que des descendants directs qui sont aurotisés dans les éléments <dt> ou <dd>",
+      "fail": "L’élément de liste a des descendants directs qui ne sont pas aurotisés dans les éléments <dt> ou <dd>"
     },
     "only-listitems": {
-      "pass": "List element only has direct children that are allowed inside <li> elements",
-      "fail": "List element has direct children that are not allowed inside <li> elements"
+      "pass": "L’élément de liste n’a que des descendants directs qui sont aurotisés dans les éléments <li>",
+      "fail": "L’élément de liste a des descendants directs qui ne sont pas aurotisés dans les éléments <li>"
     },
     "structured-dlitems": {
-      "pass": "When not empty, element has both <dt> and <dd> elements",
-      "fail": "When not empty, element does not have at least one <dt> element followed by at least one <dd> element"
+      "pass": "S’il n’est pas vide, l’élément contient au moins un élément <dt> et un élément <dd>",
+      "fail": "S’il n’est pas vide, l’élément doit contenir au moins un élément <dt> et un élément <dd>"
     },
     "caption": {
-      "pass": "The multimedia element has a captions track",
-      "fail": "The multimedia element does not have a captions track",
-      "incomplete": "A captions track for this element could not be found"
+      "pass": "L’élément multimédia a une piste de sous-titres",
+      "fail": "L’élément multimédia n’a pas de piste de sous-titres",
+      "incomplete": "Aucune piste de sous-titres n’a pu être trouvée pour cet élément"
     },
     "description": {
-      "pass": "The multimedia element has an audio description track",
-      "fail": "The multimedia element does not have an audio description track",
-      "incomplete": "An audio description track for this element could not be found"
+      "pass": "L’élément multimédia a une piste d’audiodescription",
+      "fail": "L’élément multimédia n’a pas de piste d’audiodescription",
+      "incomplete": "Aucune piste d’audiopdescription n’a pu être trouvée pour cet élément"
     },
     "frame-tested": {
       "pass": "The iframe was tested with axe-core",
