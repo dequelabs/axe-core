@@ -239,18 +239,23 @@ describe('aria.validateAttrValue', function () {
 			});
 
 			it('should return false when a single referenced node is not found', function () {
-
 				node.setAttribute('cats', 'invalid');
 				// target2 not found
 				assert.isFalse(axe.commons.aria.validateAttrValue(node, 'cats'));
 			});
 
-			it('should return false when a referenced element is not found', function () {
+			it('should return false when at no referenced element is found', function () {
+				fixture.innerHTML = '<div id="target"></div>';
+				node.setAttribute('cats', 'target2 target3');
+				// target2 not found
+				assert.isFalse(axe.commons.aria.validateAttrValue(node, 'cats'));
+			});
 
+			it('should return true when at least one referenced element is found', function () {
 				fixture.innerHTML = '<div id="target"></div>';
 				node.setAttribute('cats', 'target target2');
 				// target2 not found
-				assert.isFalse(axe.commons.aria.validateAttrValue(node, 'cats'));
+				assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cats'));
 			});
 
 			it('should return true when all targets are found', function () {
