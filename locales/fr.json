@@ -400,24 +400,24 @@
       "fail": "L’élément contient un élément <img> dont l’alternative textuelle duplique un texte existant"
     },
     "explicit-label": {
-      "pass": "Form element has an explicit <label>",
-      "fail": "Form element does not have an explicit <label>"
+      "pass": "L’élément de formulaire a un <label> explicite",
+      "fail": "L’élément de formulaire n’a pas de <label> explicite"
     },
     "help-same-as-label": {
-      "pass": "Help text (title or aria-describedby) does not duplicate label text",
-      "fail": "Help text (title or aria-describedby) text is the same as the label text"
+      "pass": "L’aide à la saisie (title ou aria-describedby) ne duplique pas le contenu du label",
+      "fail": "L’aide à la saisie (title ou aria-describedby) est identique au contenu du label"
     },
     "implicit-label": {
-      "pass": "Form element has an implicit (wrapped) <label>",
-      "fail": "Form element does not have an implicit (wrapped) <label>"
+      "pass": "L’élément de formulaire a un <label> implicite (imbriqué)",
+      "fail": "L’élément de formulaire n’a pas de <label> implicite (imbriqué)"
     },
     "multiple-label": {
-      "pass": "Form element does not have multiple <label> elements",
-      "fail": "Form element has multiple <label> elements"
+      "pass": "L’élément de formulaire n’a pas plusieurs éléments <label>",
+      "fail": "L’élément de formulaire a plusieurs éléments <label>"
     },
     "title-only": {
-      "pass": "Form element does not solely use title attribute for its label",
-      "fail": "Only title used to generate label for form element"
+      "pass": "L’élément de formulaire n’a pas uniquement l’attribut title comme étiquette",
+      "fail": "Seul l’attribut title est utilisé comme étiquette pour l’élément de formulaire"
     },
     "has-lang": {
       "pass": "The <html> element has a lang attribute",
