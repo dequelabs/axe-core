@@ -462,21 +462,21 @@
       "incomplete": "Aucune piste d’audiopdescription n’a pu être trouvée pour cet élément"
     },
     "frame-tested": {
-      "pass": "The iframe was tested with axe-core",
-      "fail": "The iframe could not be tested with axe-core",
-      "incomplete": "The iframe still has to be tested with axe-core"
+      "pass": "L’iframe a été testée avec axe-core",
+      "fail": "L’iframe n’a pu être testée avec axe-core",
+      "incomplete": "L’iframe doit encore être testée avec axe-core"
     },
     "meta-viewport-large": {
-      "pass": "<meta> tag does not prevent significant zooming on mobile devices",
-      "fail": "<meta> tag limits zooming on mobile devices"
+      "pass": "La balise <meta> ne limite pas l’agrandissement sur les appareils mobiles",
+      "fail": "La balise <meta> limite l’agrandissement sur les appareils mobiles"
     },
     "meta-viewport": {
-      "pass": "<meta> tag does not disable zooming on mobile devices",
-      "fail": "<meta> tag disables zooming on mobile devices"
+      "pass": "La balise <meta> n’empêche pas l’agrandissement sur les appareils mobiles",
+      "fail": "La balise <meta> empêche l’agrandissement sur les appareils mobiles"
     },
     "header-present": {
-      "pass": "Page has a header",
-      "fail": "Page does not have a header"
+      "pass": "La page a un entête",
+      "fail": "La page n’a pas  d’entête"
     },
     "heading-order": {
       "pass": "Heading order valid",
