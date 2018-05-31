@@ -6,15 +6,15 @@
       "help": "La valeur de l’attribut accesskey doit être unique"
     },
     "area-alt": {
-      "description": "S’assure que que les éléments <area> d’une image réactive ont un alternative textuelle",
+      "description": "S’assure que les éléments <area> d’une image réactive ont un alternative textuelle",
       "help": "Les éléments <area> actifs doivent avoir un alternative textuelle"
     },
     "aria-allowed-attr": {
-      "description": "S’assure que que les attributs ARIA sont autorisés pour le rôle d’un élément",
+      "description": "S’assure que les attributs ARIA sont autorisés pour le rôle d’un élément",
       "help": "Les éléments doivent seulement utiliser les attributs ARIA autorisés"
     },
     "aria-dpub-role-fallback": {
-      "description": "S’assure que que les rôles DPUB non supportés ne sont utilisés que sur des éléments avec des rôles implicites",
+      "description": "S’assure que les rôles DPUB non supportés ne sont utilisés que sur des éléments avec des rôles implicites",
       "help": "Les rôles DPUB non supportés doivent être utilisés sur des éléments avec des rôles implicites"
     },
     "aria-hidden-body": {
@@ -74,7 +74,7 @@
       "help": "Les éléments <dl> ne doivent contenir directement que des groupes d’élements <dt> et <dd> correctement ordonnés, ou des éléments <script> ou <template>"
     },
     "dlitem": {
-      "description": "S’assure que les éléments <dt> et <dd> elements sont contenus dans un élément <dl>",
+      "description": "S’assure que les éléments <dt> et <dd> sont contenus dans un élément <dl>",
       "help": "Les éléments <dt> et <dd> doivent être contenus dans un élément <dl>"
     },
     "document-title": {
