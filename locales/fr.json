@@ -520,19 +520,19 @@
       "fail": "L’attribut aria-labelledby n’existe pas, fait référence à des éléments qui n’existent pas ou à des éléments vides ou non visibles"
     },
     "button-has-visible-text": {
-      "pass": "Element has inner text that is visible to screen readers",
-      "fail": "Element does not have inner text that is visible to screen readers"
+      "pass": "L’élément a un contenu textuel visible par les lecteurs d’écran",
+      "fail": "L’élément n’a aucun contenu textuel visible par les lecteurs d’écran"
     },
     "doc-has-title": {
-      "pass": "Document has a non-empty <title> element",
-      "fail": "Document does not have a non-empty <title> element"
+      "pass": "Le document a un élément <title> non vide",
+      "fail": "Le document n’a pas d’élément <title> non vide"
     },
     "duplicate-id": {
       "pass": "Le document n’a pas d’éléments qui partagent le même attribut id",
       "fail": "Le document a plusieurs éléments avec le même attribut id : {{=it.data}}"
     },
     "exists": {
-      "pass": "L’élément n'existe pas",
+      "pass": "L’élément n’existe pas",
       "fail": "L’élément existe"
     },
     "has-alt": {
@@ -540,8 +540,8 @@
       "fail": "L’élément n’a pas d’attribut alt"
     },
     "has-visible-text": {
-      "pass": "Element has text that is visible to screen readers",
-      "fail": "Element does not have text that is visible to screen readers"
+      "pass": "L’élément a un contenu textuel visible par les lecteurs d’écran",
+      "fail": "L’élément n’a aucun contenu textuel visible par les lecteurs d’écran"
     },
     "is-on-screen": {
       "pass": "L’élément n’est pas visible",
@@ -552,8 +552,8 @@
       "fail": "L’élément n’a pas d'attribut alt ou l’attribut alt est vide"
     },
     "non-empty-if-present": {
-      "pass": "Element {{?it.data}}has a non-empty value attribute{{??}}does not have a value attribute{{?}}",
-      "fail": "Element has a value attribute and the value attribute is empty"
+      "pass": "L’élément {{?it.data}}a un attribut value non vide{{??}}n’a pas d’attribut value{{?}}",
+      "fail": "L’élément a un attribut value vide"
     },
     "non-empty-title": {
       "pass": "L’élément a un attribut title",
