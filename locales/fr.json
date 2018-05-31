@@ -600,22 +600,22 @@
       "fail": "La valeur de l’attribut scope ne peut être que 'row' ou 'col'"
     },
     "td-has-header": {
-      "pass": "All non-empty data cells have table headers",
-      "fail": "Some non-empty data cells do not have table headers"
+      "pass": "Toutes les cellules de données non vides ont un entête de tableau",
+      "fail": "Certaines cellules de données non vides n’ont pas d’entête de tableau"
     },
     "td-headers-attr": {
-      "pass": "The headers attribute is exclusively used to refer to other cells in the table",
-      "fail": "The headers attribute is not exclusively used to refer to other cells in the table"
+      "pass": "L’attribut headers est utilisé exclusivement pour faire référence à d’autres cellules dans le tabeau",
+      "fail": "L’attribut headers n’est pas utilisé exclusivement pour faire référence à d’autres cellules dans le tabeau"
     },
     "th-has-data-cells": {
-      "pass": "All table header cells refer to data cells",
-      "fail": "Not all table header cells refer to data cells",
-      "incomplete": "Table data cells are missing or empty"
+      "pass": "Toutes les cellules d’entête de tableau font référence à des cellules de données",
+      "fail": "Toutes les cellules d’entête de tableau ne font pas référence à des cellules de données",
+      "incomplete": "Les cellules de données sont absentes ou vides"
     },
     "hidden-content": {
       "pass": "Tout le contenu de la page a été analysé.",
       "fail": "Il y a eu des problèmes pour analyser le contenu de cette page.",
-      "incomplete": "Il y a du contenu caché sur la page qui n'a pas été analysé. You will need to trigger the display of this content in order to analyze it."
+      "incomplete": "Il y a du contenu caché sur la page qui n’a pas été analysé. Vous allez devoir modifier l’affichage de ce contenu afin de l’analyser."
     }
   },
   "failureSummaries": {
