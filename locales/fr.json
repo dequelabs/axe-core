@@ -553,31 +553,31 @@
     },
     "non-empty-if-present": {
       "pass": "L’élément {{?it.data}}a un attribut value non vide{{??}}n’a pas d’attribut value{{?}}",
-      "fail": "L’élément a un attribut value vide"
+      "fail": "L’élément a un attribut value, et cet attribut est vide"
     },
     "non-empty-title": {
       "pass": "L’élément a un attribut title",
       "fail": "L’élément n’a pas d’attribut title ou l’attribut title est vide."
     },
     "non-empty-value": {
-      "pass": "Element has a non-empty value attribute",
-      "fail": "Element has no value attribute or the value attribute is empty"
+      "pass": "L’élément a un attribut value non vide",
+      "fail": "L’élément n’a pas d’attribut value, ou a un attribut value vide"
     },
     "role-none": {
-      "pass": "Element's default semantics were overriden with role=\"none\"",
-      "fail": "Element's default semantics were not overridden with role=\"none\""
+      "pass": "La sémantique par défaut de l’élément est annulée avec role=\"none\"",
+      "fail": "La sémantique par défaut de l’élément n’est pas annulée avec role=\"none\""
     },
     "role-presentation": {
-      "pass": "Element's default semantics were overriden with role=\"presentation\"",
-      "fail": "Element's default semantics were not overridden with role=\"presentation\""
+      "pass": "La sémantique par défaut de l’élément est annulée avec role=\"presentation\"",
+      "fail": "La sémantique par défaut de l’élément n’est pas annulée avec role=\"presentation\""
     },
     "caption-faked": {
-      "pass": "The first row of a table n’est pas utilisé as a caption",
-      "fail": "The first row of the table should be a caption instead of a table cell"
+      "pass": "La première ligne d’un tableau n’est pas utilisée en guise de légende",
+      "fail": "La première ligne d’un tableau devrait être un caption et non des cellules de tableau"
     },
     "has-caption": {
-      "pass": "Layout table does not use <caption> element",
-      "fail": "Layout table uses <caption> element"
+      "pass": "Le tableau de présentation n’utilise pas d’élément <caption>",
+      "fail": "Le tableau de présentation utilise un élément <caption>"
     },
     "has-summary": {
       "pass": "Layout table does not use summary attribute",
