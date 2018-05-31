@@ -1,5 +1,7 @@
 # axe-core
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/dequelabs/axe-core.svg)](https://greenkeeper.io/)
+
 [![License](https://img.shields.io/npm/l/axe-core.svg)](LICENSE)
 [![Version](https://img.shields.io/npm/v/axe-core.svg)](https://www.npmjs.com/package/axe-core)
 [![Total npm downloads](https://img.shields.io/npm/dt/axe-core.svg)](https://www.npmjs.com/package/axe-core)
@@ -41,7 +43,7 @@ aXe is the third generation of accessibility rules for HTML-based user interface
 
 First download the package:
 
-```
+```console
 npm install axe-core --save-dev
 ```
 
@@ -55,12 +57,13 @@ Now insert calls at each point in your tests where a new piece of UI becomes vis
 
 ```js
 axe.run(function (err, results) {
-	if (err) throw err;
+  if (err) throw err;
     ok(results.violations.length === 0, 'Should be no accessibility issues');
     // complete the async call
     ...
 });
 ```
+
 ## Supported Browsers
 
 The [aXe API](doc/API.md) fully supports the following browsers:
@@ -97,6 +100,10 @@ This will create a new build for aXe, called `axe.<lang>.js` and `axe.<lang>.min
 To create a new translation for aXe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below.
 
 To update existing translation file, re-run `grunt translate --lang=<langcode>`. This will add new messages used in English and remove messages which were not used in English.
+
+## Supported ARIA Roles and Attributes.
+
+Refer [aXe ARIA support](./doc/aria-supported.md) for a complete list of ARIA supported roles and attributes by axe.
 
 ## Contributing
 

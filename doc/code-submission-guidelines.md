@@ -22,7 +22,7 @@ A detailed explanation of Angular's guidelines and conventions can be found [on 
 Each commit message should consist of a header, a body and a footer. The header has a special format
 that includes a type, a scope and a subject. Here's a sample of the format:
 
-```
+```html
 <type>(<scope>): <subject>
 <BLANK LINE>
 <body>
@@ -35,7 +35,7 @@ that includes a type, a scope and a subject. Here's a sample of the format:
 ```sh
 perf(rule): improve speed of color contrast rules
 
-	Use async process to compare elements without UI lockup
+  Use async process to compare elements without UI lockup
 
     Closes #1
 ```
@@ -69,7 +69,6 @@ reference a rule, a commons file, or anything really. E.g. `feat(rule)` or
 If the scope is too broad to summarize, use the type only and leave off the parentheses. E.g.
 `type: some subject`. Keep in mind that a long scope often pushes your commit message over 100 characters.
 Brevity is helpful for everyone!
-
 
 #### Subject
 
@@ -124,7 +123,7 @@ git checkout -b temp-feature-branch
 
 Run the following commands to apply all commits from that pull request on top of your branch's local history:
 
-```
+```console
 curl -L https://github.com/dequelabs/axe-core/pull/205.patch | git am -3
 ```
 
@@ -137,7 +136,7 @@ Before merging a pull request with many commits into develop, make sure there is
 changes in the pull request, so the git log stays lean. We particularly want to avoid merge messages and vague commits that don't follow our commit policy (like `Merged develop into featurebranch` or `fixed some stuff`).
 
 You can use git's interactive rebase to manipulate, merge, and rename commits in your local
-history. If these steps are followed, a force push shouldn't be necessary. 
+history. If these steps are followed, a force push shouldn't be necessary.
 
 **Do not force push to develop or master under any circulstances.**
 
@@ -161,7 +160,7 @@ git pull --rebase origin develop
 ```
 
 You can then push the latest code to develop (note that force push isn't needed if these steps are followed):
-```
+```console
 git push origin develop
 ```
 

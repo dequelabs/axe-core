@@ -13,16 +13,16 @@
     "test": "jest"
   },
   "devDependencies": {
-    "axe-core": "^2.6.1",
-    "babel-jest": "^22.4.0",
+    "axe-core": "^3.0.1",
+    "babel-jest": "^23.0.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "jest": "^22.4.0",
-    "jest-cli": "^22.4.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "jest-cli": "^23.0.1",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
     "react-test-renderer": "^16.2.0"
   }
 }

@@ -13,8 +13,8 @@
     "test": "grunt jasmine"
   },
   "devDependencies": {
-    "axe-core": "^2.6.1",
+    "axe-core": "^3.0.1",
     "grunt": "~1.0.2",
-    "grunt-contrib-jasmine": "~1.1.0"
+    "grunt-contrib-jasmine": "~2.0.0"
   }
 }

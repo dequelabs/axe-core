@@ -24,6 +24,7 @@
 	<label for="fail7"></label><input type="text" id="fail7">
 	<label for="fail8"></label><select id="fail8"></select>
 	<label for="fail9"></label><textarea id="fail9"></textarea>
+	<label for="fail10"><select id="fail10"><option>Thing</option></select></label>
 	<label for="pass10">Label</label><input type="text" id="pass10">
 	<label for="pass11">Label</label><select id="pass11"></select>
 	<label for="pass12">Label</label><textarea id="pass12"></textarea>
@@ -34,4 +35,26 @@
 
 	<label><label><input type="text" id="fail22"></label></label>
 	<label for="fail23">Hi</label><label for="fail23">Foo</label><input type="text" id="fail23">
+
+	<div>
+		<label>
+			<select id="fail24">
+				<option selected="selected">Chosen</option>
+				<option>Not Selected</option>
+			</select>
+		</label>
+		<input aria-labelledby="fail24" type="text" id="pass16" />
+	</div>
+
+	<div>
+		<label for="fail25">
+			<select id="fail26">
+				<option selected="selected">Chosen</option>
+				<option>Not Selected</option>
+			</select>
+		</label>
+		<input type="text" id="fail25" />
+	</div>
+
+	</div>
 </form>

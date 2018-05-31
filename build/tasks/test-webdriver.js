@@ -1,5 +1,7 @@
 /*global window */
-/*eslint-env node */
+/*eslint 
+max-statements: ["error", 20],
+*/
 'use strict';
 
 var Promise = require('promise');
@@ -12,6 +14,7 @@ module.exports = function (grunt) {
 	 * Keep injecting scripts until window.mochaResults is set
 	 */
 	function collectTestResults(driver) {
+
 		// inject a script that waits half a second
 		return driver.executeAsyncScript(function () {
 			var callback = arguments[arguments.length - 1];
@@ -25,7 +28,7 @@ module.exports = function (grunt) {
 			if (!result) {
 				return collectTestResults(driver);
 
-			// if there are, return them
+				// if there are, return them
 			} else {
 				return Promise.resolve(result);
 			}
@@ -35,20 +38,20 @@ module.exports = function (grunt) {
 	/**
 	 * Test each URL
 	 */
-	function runTestUrls(driver, urls, errors) {
+	function runTestUrls(driver, isMobile, urls, errors) {
 		var url = urls.shift();
 		errors = errors || [];
 
 		// Give each page enough time
-		driver.manage().timeouts().setScriptTimeout(60000);
+		driver.manage().timeouts().setScriptTimeout(!isMobile ? 60000 * 5 : (60000 * 10));
 
 		return driver.get(url)
 			// Get results
 			.then(function () {
 				return collectTestResults(driver);
-
+			})
 			// And process them
-			}).then(function (result) {
+			.then(function (result) {
 				grunt.log.writeln(url);
 
 				// Remember the errors
@@ -59,17 +62,17 @@ module.exports = function (grunt) {
 				});
 
 				// Log the result of the page tests
-				grunt.log[ (result.failures ? 'error' : 'ok') ](
+				grunt.log[(result.failures ? 'error' : 'ok')](
 					'passes: ' + result.passes + ', ' +
 					'failures: ' + result.failures + ', ' +
-					'duration: ' + (result.duration / 1000) +'s'
+					'duration: ' + (result.duration / 1000) + 's'
 				);
 				grunt.log.writeln();
 
 			}).then(function () {
 				// Start the next job, if any
 				if (urls.length > 0) {
-					return runTestUrls(driver, urls, errors);
+					return runTestUrls(driver, isMobile, urls, errors);
 				} else {
 					driver.quit();
 					return Promise.resolve(errors);
@@ -81,12 +84,13 @@ module.exports = function (grunt) {
 	* Build web driver depends whether REMOTE_SELENIUM_URL is set
 	*/
 	function buildWebDriver(browser) {
-		var	webdriver, capabilities;
+		var webdriver,
+			capabilities;
 		var mobileBrowser = browser.split('-mobile');
 		if (mobileBrowser.length > 1) {
 			browser = mobileBrowser[0];
 			capabilities = {
-			  browserName: mobileBrowser[0],
+				browserName: mobileBrowser[0],
 				chromeOptions: {
 					mobileEmulation: {
 						deviceMetrics: {
@@ -98,8 +102,9 @@ module.exports = function (grunt) {
 				}
 			};
 		}
+
 		if (process.env.REMOTE_SELENIUM_URL) {
-		  webdriver = new WebDriver.Builder()
+			webdriver = new WebDriver.Builder()
 				.forBrowser(browser)
 				.withCapabilities(capabilities)
 				.usingServer(process.env.REMOTE_SELENIUM_URL)
@@ -111,7 +116,10 @@ module.exports = function (grunt) {
 				.build();
 		}
 
-		return webdriver;
+		return {
+			driver: webdriver,
+			isMobile: (mobileBrowser.length > 1)
+		};
 	}
 
 	/**
@@ -121,6 +129,7 @@ module.exports = function (grunt) {
 		'Task for launching Webdriver with options and running tests against options URLs',
 		function () {
 			var driver;
+			var isMobile = false;
 			var done = this.async();
 			var options = this.options({
 				browser: 'firefox'
@@ -130,9 +139,9 @@ module.exports = function (grunt) {
 
 
 			if ((process.platform === 'win32' && options.browser === 'safari') ||
-				  (process.platform === 'darwin' && ['ie', 'MicrosoftEdge'].indexOf(options.browser) !== -1) ||
-				 ((process.platform === 'linux' || process.env.REMOTE_SELENIUM_URL) &&
-				 ['ie', 'MicrosoftEdge', 'safari'].indexOf(options.browser) !== -1)
+				(process.platform === 'darwin' && ['ie', 'MicrosoftEdge'].indexOf(options.browser) !== -1) ||
+				((process.platform === 'linux' || process.env.REMOTE_SELENIUM_URL) &&
+					['ie', 'MicrosoftEdge', 'safari'].indexOf(options.browser) !== -1)
 			) {
 				grunt.log.writeln();
 				grunt.log.writeln('Skipped ' + options.browser + ' as it is not supported on this platform');
@@ -141,9 +150,10 @@ module.exports = function (grunt) {
 
 			// try to load the browser
 			try {
-				driver = buildWebDriver(options.browser);
-
-			// If load fails, warn user and move to the next task
+				var webDriver = buildWebDriver(options.browser);
+				driver = webDriver.driver;
+				isMobile = webDriver.isMobile;
+				// If load fails, warn user and move to the next task
 			} catch (err) {
 				grunt.log.writeln();
 				grunt.log.error(err.message);
@@ -152,10 +162,10 @@ module.exports = function (grunt) {
 			}
 
 			// Test all pages
-			runTestUrls(driver, options.urls)
+			runTestUrls(driver, isMobile, options.urls)
 				.then(function (testErrors) {
 					// log each error and abort
-					testErrors.forEach(function(err) {
+					testErrors.forEach(function (err) {
 						grunt.log.writeln();
 						grunt.log.error('URL: ' + err.url);
 						grunt.log.error('Describe: ' + err.titles.join(' > '));
@@ -167,7 +177,7 @@ module.exports = function (grunt) {
 					// Return the success to Grunt
 					done(testErrors.length === 0);
 
-				// catch any potential problems
+					// catch any potential problems
 				}).catch(function (err) {
 					grunt.log.error(err);
 					done(false);

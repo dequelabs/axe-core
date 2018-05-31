@@ -3,8 +3,7 @@
   "selector": "[accesskey]",
   "excludeHidden": false,
   "tags": [
-    "wcag2a",
-    "wcag211",
+    "best-practice",
     "cat.keyboard"
   ],
   "metadata": {

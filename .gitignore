@@ -11,3 +11,7 @@ typings/axe-core/axe-core-tests.js
 doc/rule-descriptions.*.md
 package-lock.json
 .DS_Store
+
+# running circleci locally to verify build, ignoring relevant files
+# if circle and docker is configured locally (copy circle.yml to .circleci/config.yml) - run -> circleci build
+.circleci/**/*.* 
