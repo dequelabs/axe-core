@@ -580,24 +580,24 @@
       "fail": "Le tableau de présentation utilise un élément <caption>"
     },
     "has-summary": {
-      "pass": "Layout table does not use summary attribute",
-      "fail": "Layout table uses summary attribute"
+      "pass": "Le tableau de présentation n’utilise pas d’attribut summary",
+      "fail": "Le tableau de présentation utilise un attribut summary"
     },
     "has-th": {
-      "pass": "Layout table does not use <th> elements",
-      "fail": "Layout table uses <th> elements"
+      "pass": "Le tableau de présentation n’utilise pas d’éléments <th>",
+      "fail": "Le tableau de présentation utilise des éléments <th>"
     },
     "html5-scope": {
-      "pass": "Scope attribute is only used on table header elements (<th>)",
-      "fail": "In HTML 5, scope attributes may only be used on table header elements (<th>)"
+      "pass": "L’attribut scope est utilisé uniquement sur des cellules d’entête de tableau",
+      "fail": "En HTML 5, l’attribut scope ne peut être utilisé que sur des cellules d’entête de tableau"
     },
     "same-caption-summary": {
-      "pass": "Content of summary attribute and <caption> are not duplicated",
-      "fail": "Content of summary attribute and <caption> element are identical"
+      "pass": "Les contenus de l’attribut summary et de <caption> ne sont pas identiques",
+      "fail": "Les contenus de l’attribut summary et de <caption> sont identiques"
     },
     "scope-value": {
-      "pass": "Scope attribute is used correctly",
-      "fail": "The value of the scope attribute may only be 'row' or 'col'"
+      "pass": "L’attribut scope est utilisé correctement",
+      "fail": "La valeur de l’attribut scope ne peut être que 'row' ou 'col'"
     },
     "td-has-header": {
       "pass": "All non-empty data cells have table headers",
