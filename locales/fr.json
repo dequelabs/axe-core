@@ -162,7 +162,7 @@
       "help": "Le document contient au plus une région contentinfo"
     },
     "landmark-one-main": {
-      "description": "S’assure qu’une navigation pointe evrs le contenu principal de la page. Si la page contient des iframes, chaque iframe ne doit contenir qu’une région main, ou aucune",
+      "description": "S’assure qu’une navigation pointe vers le contenu principal de la page. Si la page contient des iframes, chaque iframe ne doit contenir qu’une région main, ou aucune",
       "help": "La page doit contenir une région main"
     },
     "layout-table": {
@@ -476,36 +476,36 @@
     },
     "header-present": {
       "pass": "La page a un entête",
-      "fail": "La page n’a pas  d’entête"
+      "fail": "La page n’a pas d’entête"
     },
     "heading-order": {
-      "pass": "Heading order valid",
-      "fail": "Heading order invalid"
+      "pass": "Hiérarchie entre les titres valide",
+      "fail": "Hiérarchie entre les titres invalide"
     },
     "internal-link-present": {
-      "pass": "Valid skip link found",
-      "fail": "No valid skip link found"
+      "pass": "Lien d’évitement valide trouvé",
+      "fail": "Aucun lien d’évitement valide trouvé"
     },
     "landmark": {
-      "pass": "Page has a landmark region",
-      "fail": "Page does not have a landmark region"
+      "pass": "La page a une région",
+      "fail": "La page n’a pas de région"
     },
     "meta-refresh": {
-      "pass": "<meta> tag does not immediately refresh the page",
-      "fail": "<meta> tag forces timed refresh of page"
+      "pass": "Aucune balise <meta> ne rafraîchit immédiatement la page",
+      "fail": "La balise <meta> force le rafraîchissement minuté de la page"
     },
     "p-as-heading": {
-      "pass": "<p> elements are not styled as headings",
-      "fail": "Heading elements should be used instead of styled p elements"
+      "pass": "Les éléments <p> ne sont pas stylés comme des titres",
+      "fail": "Des titres doivent être utilisés au lieu de styler des éléments <p>"
     },
     "region": {
-      "pass": "Content contained by ARIA landmark",
-      "fail": "Content not contained by an ARIA landmark"
+      "pass": "Contenu imbriqué dans une région ARIA",
+      "fail": "Contenu non imbriqué dans une région ARIA"
     },
     "skip-link": {
-      "pass": "Skip link target exists",
-      "incomplete": "Skip link target should become visible on activation",
-      "fail": "No skip link target"
+      "pass": "La cible du lien d’évitement existe",
+      "incomplete": "La cible du lien d’évitement devrait devenir visible lors de l’activation",
+      "fail": "Lien d’évitement sans cible"
     },
     "unique-frame-title": {
       "pass": "L’attribut title de l’élément est unique",
@@ -516,8 +516,8 @@
       "fail": "L’attribut aria-label n’existe pas ou est vide"
     },
     "aria-labelledby": {
-      "pass": "aria-labelledby attribute exists and references elements that are visible to screen readers",
-      "fail": "aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible"
+      "pass": "L’attribut aria-labelledby existe et fait référence à des éléments visibles par les lecteurs d’écran",
+      "fail": "L’attribut aria-labelledby n’existe pas, fait référence à des éléments qui n’existent pas ou à des éléments vides ou non visibles"
     },
     "button-has-visible-text": {
       "pass": "Element has inner text that is visible to screen readers",
