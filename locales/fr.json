@@ -58,7 +58,7 @@
       "help": "Les boutons doivent avoir un texte perceptible"
     },
     "bypass": {
-      "description": "S’assure que chaque page dispoe au minium d’un mécanisme d’évitement de la navigation pour accéder directement au contenu",
+      "description": "S’assure que chaque page dispose au minium d’un mécanisme d’évitement de la navigation pour accéder directement au contenu",
       "help": "Chaque page doit fournir des moyens d’éviter les contenus répétés"
     },
     "checkboxgroup": {
