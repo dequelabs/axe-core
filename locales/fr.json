@@ -6,8 +6,8 @@
       "help": "La valeur de l’attribut accesskey doit être unique"
     },
     "area-alt": {
-      "description": "S’assure que les éléments <area> d’une image réactive ont un alternative textuelle",
-      "help": "Les éléments <area> actifs doivent avoir un alternative textuelle"
+      "description": "S’assure que les éléments <area> d’une image réactive ont une alternative textuelle",
+      "help": "Les éléments <area> actifs doivent avoir une alternative textuelle"
     },
     "aria-allowed-attr": {
       "description": "S’assure que les attributs ARIA sont autorisés pour le rôle d’un élément",
@@ -62,7 +62,7 @@
       "help": "Chaque page doit fournir des moyens d’éviter les contenus répétés"
     },
     "checkboxgroup": {
-      "description": "S’assure que les éléments <input type=\"checkbox\"> en relation sont regroupées et que la désignation du groupe est cohérente",
+      "description": "S’assure que les éléments <input type=\"checkbox\"> en relation sont regroupés et que la désignation du groupe est cohérente",
       "help": "Les cases à cocher avec la même valeur pour l’attribut name doivent faire partie d’un groupe"
     },
     "color-contrast": {
@@ -118,7 +118,7 @@
       "help": "L’élément <html> doit avoir un attribut lang"
     },
     "html-lang-valid": {
-      "description": "S’assure que l’attribut lang sur l’élément HTMl a une valeur valide",
+      "description": "S’assure que l’attribut lang sur l’élément HTML a une valeur valide",
       "help": "L’élément <html> doit avoir une valeur valide pour l’attribut lang"
     },
     "image-alt": {
@@ -130,7 +130,7 @@
       "help": "L’intitulé des liens et boutons ne doit pas être répété dans l’alternative de l’image"
     },
     "input-image-alt": {
-      "description": "S’assure que les éléments <input type=\"image\"> ont un alternative textuelle",
+      "description": "S’assure que les éléments <input type=\"image\"> ont une alternative textuelle",
       "help": "Les boutons images doivent avoir un alternative textuelle"
     },
     "label-title-only": {
@@ -182,7 +182,7 @@
       "help": "<ul> et <ol> doivent ne contenir directement que des éléments <li>, <script> ou <template>"
     },
     "listitem": {
-      "description": "S’assure que  les éléments <li> sont utilisés sémantiquement",
+      "description": "S’assure que les éléments <li> sont utilisés sémantiquement",
       "help": "Les éléments <li> doivent être contenus dans un élément <ul> ou <ol>"
     },
     "marquee": {
@@ -243,7 +243,7 @@
     },
     "table-fake-caption": {
       "description": "S’assure que les tableaux avec une légende utilisent l’élément <caption>",
-      "help": "Les données ou les cellules d’entête ne devrait pas être utilisées pour légender un tableau de données."
+      "help": "Les données ou les cellules d’entête ne devraient pas être utilisées pour légender un tableau de données."
     },
     "td-has-header": {
       "description": "S’assure que chaque cellule de données non vide dans un tableau de données a une ou plusieurs cellules d’entête",
@@ -335,7 +335,7 @@
         "elmPartiallyObscured": "La couleur d’arrière-plan de l’élément n’a pu être déterminée car l’élément est partiellement masqué par un autre élément",
         "elmPartiallyObscuring": "La couleur d’arrière-plan de l’élément n’a pu être déterminée car il chevauche partiellement un autre élément",
         "outsideViewport": "La couleur d’arrière-plan de l’élément n’a pu être déterminée car il est à l’extérieur du viewport",
-        "equalRatio": "L’élément à un rapport de contraste de 1:1 avec son arrière-plan",
+        "equalRatio": "L’élément a un rapport de contraste de 1:1 avec son arrière-plan",
         "default": "Impossible de déterminer le rapport de contraste"
       }
     },
@@ -343,11 +343,11 @@
       "pass": "Les liens peuvent être distingués du texte environnant par un autre moyen que la couleur",
       "fail": "Les liens doivent se distinguer du texte environnant par un autre moyen que la couleur",
       "incomplete": {
-        "bgContrast": "Le rapport de contrast de l’élément n’a pu être déterminé. Recherchez un style différent pour le hover/focus.",
-        "bgImage": "Le rapport de contrast de l’élément n’a pu être déterminé à cause d’une image d’arrière-plan",
-        "bgGradient": "Le rapport de contrast de l’élément n’a pu être déterminé à cause d’un dégradé d’arrière-plan",
-        "imgNode": "Le rapport de contrast de l’élément n’a pu être déterminé car l’élément contient une balise image",
-        "bgOverlap": "Le rapport de contrast de l’élément n’a pu être déterminé à cause d’un chevauchement",
+        "bgContrast": "Le rapport de contraste de l’élément n’a pu être déterminé. Recherchez un style différent pour le hover/focus.",
+        "bgImage": "Le rapport de contraste de l’élément n’a pu être déterminé à cause d’une image d’arrière-plan",
+        "bgGradient": "Le rapport de contraste de l’élément n’a pu être déterminé à cause d’un dégradé d’arrière-plan",
+        "imgNode": "Le rapport de contraste de l’élément n’a pu être déterminé car l’élément contient une balise image",
+        "bgOverlap": "Le rapport de contraste de l’élément n’a pu être déterminé à cause d’un chevauchement",
         "default": "Impossible de déterminer le rapport de contraste"
       }
     },
@@ -357,7 +357,7 @@
     },
     "group-labelledby": {
       "pass": "Tous les éléments avec le nom \"{{=it.data.name}}\" font référence au même élément avec aria-labelledby",
-      "fail": "Tous les éléments avec le nom \"{{=it.data.name}}\" ne font pas référence au même élément avec  aria-labelledby"
+      "fail": "Tous les éléments avec le nom \"{{=it.data.name}}\" ne font pas référence au même élément avec aria-labelledby"
     },
     "accesskeys": {
       "pass": "La valeur de l'attribut accesskey est unique",
@@ -393,7 +393,7 @@
     },
     "tabindex": {
       "pass": "L’élément n’a pas de tabindex supérieur à 0",
-      "fail": "L’élément a de tabindex supérieur à 0"
+      "fail": "L’élément a un tabindex supérieur à 0"
     },
     "duplicate-img-label": {
       "pass": "L’élément ne duplique pas un texte existant dans l’alternative textuelle de l’élément <img>",
@@ -440,12 +440,12 @@
       "fail": "L’item de liste n’a pas d’élément <ul>, <ol> ou role=\"list\" parent"
     },
     "only-dlitems": {
-      "pass": "L’élément de liste n’a que des descendants directs qui sont aurotisés dans les éléments <dt> ou <dd>",
-      "fail": "L’élément de liste a des descendants directs qui ne sont pas aurotisés dans les éléments <dt> ou <dd>"
+      "pass": "L’élément de liste n’a que des descendants directs qui sont autorisés dans les éléments <dt> ou <dd>",
+      "fail": "L’élément de liste a des descendants directs qui ne sont pas autorisés dans les éléments <dt> ou <dd>"
     },
     "only-listitems": {
-      "pass": "L’élément de liste n’a que des descendants directs qui sont aurotisés dans les éléments <li>",
-      "fail": "L’élément de liste a des descendants directs qui ne sont pas aurotisés dans les éléments <li>"
+      "pass": "L’élément de liste n’a que des descendants directs qui sont autorisés dans les éléments <li>",
+      "fail": "L’élément de liste a des descendants directs qui ne sont pas autorisés dans les éléments <li>"
     },
     "structured-dlitems": {
       "pass": "S’il n’est pas vide, l’élément contient au moins un élément <dt> et un élément <dd>",
@@ -604,8 +604,8 @@
       "fail": "Certaines cellules de données non vides n’ont pas d’entête de tableau"
     },
     "td-headers-attr": {
-      "pass": "L’attribut headers est utilisé exclusivement pour faire référence à d’autres cellules dans le tabeau",
-      "fail": "L’attribut headers n’est pas utilisé exclusivement pour faire référence à d’autres cellules dans le tabeau"
+      "pass": "L’attribut headers est utilisé exclusivement pour faire référence à d’autres cellules dans le tableau",
+      "fail": "L’attribut headers n’est pas utilisé exclusivement pour faire référence à d’autres cellules dans le tableau"
     },
     "th-has-data-cells": {
       "pass": "Toutes les cellules d’entête de tableau font référence à des cellules de données",
