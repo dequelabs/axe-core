@@ -218,8 +218,8 @@
       "help": "Les boutons radios ayant le même attribut name doivent être regroupés"
     },
     "region": {
-      "description": "S’assure que tout le contenu est contenu dans une région",
-      "help": "Le contenu doit être contenu dans une région"
+      "description": "S’assure que tout le contenu est localisé dans une région",
+      "help": "Le contenu doit être localisé dans une région"
     },
     "scope-attr-valid": {
       "description": "S’assure que l’attribut scope est utilisé correctement dans les tableaux",
