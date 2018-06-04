@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.3"></a>
+## [3.0.3](https://github.com/dequelabs/axe-core/compare/v3.0.2...v3.0.3) (2018-06-04)
+
+
+### Bug Fixes
+
+* Resolve markdown lint errors. ([efdad94](https://github.com/dequelabs/axe-core/commit/efdad94)) ([aa90155](https://github.com/dequelabs/axe-core/commit/aa90155))
+* Don't require all ARIA IDREFS to exist ([#921](https://github.com/dequelabs/axe-core/issues/921)) ([130efed](https://github.com/dequelabs/axe-core/commit/130efed))
+* generate unsupported aria roles and attributes. ([7315662](https://github.com/dequelabs/axe-core/commit/7315662))
+* Make empty role=lisbox elements as incomplete ([#927](https://github.com/dequelabs/axe-core/issues/927)) ([87e979f](https://github.com/dequelabs/axe-core/commit/87e979f))
+* Prevent axe-core crashing on “-“ as a class name ([#884](https://github.com/dequelabs/axe-core/issues/884)) ([9c4d84e](https://github.com/dequelabs/axe-core/commit/9c4d84e))
+* Right trim URLs before outputting them in getSelector ([#924](https://github.com/dequelabs/axe-core/issues/924)) ([4775a23](https://github.com/dequelabs/axe-core/commit/4775a23)), closes [#788](https://github.com/dequelabs/axe-core/issues/788)
+* td-has-heading to ignore td with its role changed ([#928](https://github.com/dequelabs/axe-core/issues/928)) ([d68af4c](https://github.com/dequelabs/axe-core/commit/d68af4c))
+* Update tags for frame-title rule ([#935](https://github.com/dequelabs/axe-core/issues/935)) ([6436bbf](https://github.com/dequelabs/axe-core/commit/6436bbf))
+* **core:** Define 'axe-core' as an AMD module ([#859](https://github.com/dequelabs/axe-core/issues/859)) ([7b46f63](https://github.com/dequelabs/axe-core/commit/7b46f63)), closes [#849](https://github.com/dequelabs/axe-core/issues/849) [#856](https://github.com/dequelabs/axe-core/issues/856) [#861](https://github.com/dequelabs/axe-core/issues/861) [#847](https://github.com/dequelabs/axe-core/issues/847) [#844](https://github.com/dequelabs/axe-core/issues/844) [#871](https://github.com/dequelabs/axe-core/issues/871) [#849](https://github.com/dequelabs/axe-core/issues/849) [#849](https://github.com/dequelabs/axe-core/issues/849)
+* Update tags to accesskey & link-name rules ([#922](https://github.com/dequelabs/axe-core/issues/922)) ([a8e801c](https://github.com/dequelabs/axe-core/commit/a8e801c))
+* **rule:** Layout-table does not match presentation / none roles ([#828](https://github.com/dequelabs/axe-core/issues/828)) ([5651ecc](https://github.com/dequelabs/axe-core/commit/5651ecc))
+* **rule:** restore labelledBy on unlabeled select ([b7bdf66](https://github.com/dequelabs/axe-core/commit/b7bdf66))
+* **rules:** Allow focusable role=application elements ([b5de450](https://github.com/dequelabs/axe-core/commit/b5de450))
+* **typescript:** Update ElementContext type ([#822](https://github.com/dequelabs/axe-core/issues/822)) ([eb09248](https://github.com/dequelabs/axe-core/commit/eb09248))
+
+
+### Features
+
+* generate ARIA supported documentation for roles and attributes. ([6f095dd](https://github.com/dequelabs/axe-core/commit/6f095dd))
+* generated impacts as a part of rule descriptions ([#898](https://github.com/dequelabs/axe-core/issues/898)) ([6265608](https://github.com/dequelabs/axe-core/commit/6265608))
+
 
 <a name="3.0.2"></a>
 ## [3.0.2](https://github.com/dequelabs/axe-core/compare/v3.0.0-beta.2...v3.0.2) (2018-04-24)
