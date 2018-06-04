@@ -15,9 +15,16 @@ describe('axe.utils.getFriendlyUriEnd', function () {
 		assert.equal('contact.html', getFriendlyUriEnd('/contact.html'));
 	});
 
+	it('trims whitespace', function () {
+		assert.equal(undefined, getFriendlyUriEnd('  '));
+		assert.equal('start page', getFriendlyUriEnd('start page\t'));
+		assert.equal('home#heading', getFriendlyUriEnd('home#heading  '));
+	});
+
 	it('returns a hash URI', function () {
 		assert.equal('#footer', getFriendlyUriEnd('#footer'));
 		assert.equal('contact.html#footer', getFriendlyUriEnd('/contact.html#footer'));
+		assert.equal('home.html#main', getFriendlyUriEnd('/home.html#main '));
 	});
 
 	it('returns undef when there is a query', function () {
