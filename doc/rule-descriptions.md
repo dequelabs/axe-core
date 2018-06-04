@@ -1,6 +1,6 @@
 | Rule ID | Description | Impact | Tags | Enabled by default |
 | :------- | :------- | :------- | :------- | :------- |
-| accesskeys | Ensures every accesskey attribute value is unique | Serious | wcag2a, wcag211, cat.keyboard | true |
+| accesskeys | Ensures every accesskey attribute value is unique | Serious | best-practice, cat.keyboard | true |
 | area-alt | Ensures &lt;area&gt; elements of image maps have alternate text | Critical | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | aria-allowed-attr | Ensures ARIA attributes are allowed for an element&apos;s role | Critical | cat.aria, wcag2a, wcag411, wcag412 | true |
 | aria-dpub-role-fallback | Ensures unsupported DPUB roles are only used on elements with implicit fallback roles | Moderate | cat.aria, wcag2a, wcag131 | true |
@@ -25,7 +25,7 @@
 | focus-order-semantics | Ensures elements in the focus order have an appropriate role | Minor | cat.keyboard, best-practice, experimental | true |
 | frame-tested | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain the axe-core script | Critical | cat.structure, review-item | true |
 | frame-title-unique | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a unique title attribute | Serious | cat.text-alternatives, best-practice | true |
-| frame-title | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a non-empty title attribute | Serious | cat.text-alternatives, wcag2a, wcag241, section508, section508.22.i | true |
+| frame-title | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a non-empty title attribute | Serious | cat.text-alternatives, wcag2a, wcag241, wcag412, section508, section508.22.i | true |
 | heading-order | Ensures the order of headings is semantically correct | Moderate | cat.semantics, best-practice | true |
 | hidden-content | Informs users about hidden content. | Minor | cat.structure, experimental, review-item | true |
 | html-has-lang | Ensures every HTML document has a lang attribute | Serious | cat.language, wcag2a, wcag311 | true |
@@ -43,7 +43,7 @@
 | landmark-one-main | Ensures a navigation point to the primary content of the page. If the page contains iframes, each iframe should contain either no main landmarks or just one | Moderate | cat.semantics, best-practice | true |
 | layout-table | Ensures presentational &lt;table&gt; elements do not use &lt;th&gt;, &lt;caption&gt; elements or the summary attribute | Serious | cat.semantics, wcag2a, wcag131 | true |
 | link-in-text-block | Links can be distinguished without relying on color | Serious | cat.color, experimental, wcag2a, wcag141 | true |
-| link-name | Ensures links have discernible text | Serious | cat.name-role-value, wcag2a, wcag111, wcag412, wcag244, section508, section508.22.a | true |
+| link-name | Ensures links have discernible text | Serious | cat.name-role-value, wcag2a, wcag412, wcag244, section508, section508.22.a | true |
 | list | Ensures that lists are structured correctly | Serious | cat.structure, wcag2a, wcag131 | true |
 | listitem | Ensures &lt;li&gt; elements are used semantically | Serious | cat.structure, wcag2a, wcag131 | true |
 | marquee | Ensures &lt;marquee&gt; elements are not used | Serious | cat.parsing, wcag2a, wcag222 | true |
