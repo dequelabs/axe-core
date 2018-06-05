@@ -1,0 +1,14 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "doc/examples/jasmine/package.json",
+        "doc/examples/jest_react/package.json",
+        "doc/examples/mocha/package.json",
+        "doc/examples/phantomjs/package.json",
+        "doc/examples/qunit/package.json",
+        "package.json"
+      ]
+    }
+  }
+}

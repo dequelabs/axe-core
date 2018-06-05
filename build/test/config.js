@@ -25,6 +25,7 @@ exports = module.exports = function (grunt, options) {
 					'http://' + host + ':<%= connect.test.options.port %>/test/integration/rules/'
 				],
 				run: true,
+				growlOnSuccess: false,
 				mocha: {
 					grep: grunt.option('grep')
 				}
@@ -36,6 +37,7 @@ exports = module.exports = function (grunt, options) {
 				urls: mapToUrl(['test/integration/full/**/*.html', '!test/integration/full/**/frames/**/*.html'],
 					'<%= connect.test.options.port %>'),
 				run: true,
+				growlOnSuccess: false,
 				mocha: {
 					grep: grunt.option('grep')
 				}

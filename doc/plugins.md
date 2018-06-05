@@ -22,39 +22,39 @@ In order to create such a plugin, we need to implement the "run" function for th
 
 ```javascript
 axe.registerPlugin({
-	id: 'doStuff',
-	run: function (id, action, options, callback) {
-		var frames;
-		var q = axe.utils.queue();
-		var that = this;
-		frames = axe.utils.toArray(document.querySelectorAll('iframe, frame'));
+  id: 'doStuff',
+  run: function (id, action, options, callback) {
+    var frames;
+    var q = axe.utils.queue();
+    var that = this;
+    frames = axe.utils.toArray(document.querySelectorAll('iframe, frame'));
 
-		frames.forEach(function (frame) {
-		  q.defer(function (done) {
-			axe.utils.sendCommandToFrame(frame, {
-				options: options,
-				command: 'run-doStuff',
-				parameter: id,
-				action: action
-			}, function () {
-				done();
-			});
-		  });
-		});
+    frames.forEach(function (frame) {
+      q.defer(function (done) {
+      axe.utils.sendCommandToFrame(frame, {
+        options: options,
+        command: 'run-doStuff',
+        parameter: id,
+        action: action
+      }, function () {
+        done();
+      });
+      });
+    });
 
-		if (!options.context.length) {
-			q.defer(function (done) {
-				that._registry[id][action].call(that._registry[id], document, options, done);
-			});
-		}
-		q.then(callback);
-	},
-	commands: [{
-	  id: 'run-doStuff',
-	  callback: function (data, callback) {
-		return axe.plugins.doStuff.run(data.parameter, data.action, data.options, callback);
-	  }
-	}]
+    if (!options.context.length) {
+      q.defer(function (done) {
+        that._registry[id][action].call(that._registry[id], document, options, done);
+      });
+    }
+    q.then(callback);
+  },
+  commands: [{
+    id: 'run-doStuff',
+    callback: function (data, callback) {
+    return axe.plugins.doStuff.run(data.parameter, data.action, data.options, callback);
+    }
+  }]
 });
 ```
 

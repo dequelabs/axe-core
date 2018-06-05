@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
 	<title>frame-wait-time test</title>
 	<meta charset="utf8">
@@ -7,6 +8,7 @@
 	<script src="/node_modules/mocha/mocha.js"></script>
 	<script src="/node_modules/chai/chai.js"></script>
 	<script src="/axe.js"></script>
+	<script src="/test/testutils.js"></script>
 	<script>
 		mocha.setup({
 			timeout: 10000,
@@ -15,12 +17,14 @@
 		var assert = chai.assert;
 	</script>
 </head>
+
 <body>
-  <main>
-  	<iframe id="frame" title="frame-wait-time test frame" src="frames/frame.html"></iframe>
-  </main>
+	<main>
+		<iframe id="frame" title="frame-wait-time test frame" src="frames/frame.html"></iframe>
+	</main>
 	<div id="mocha"></div>
 	<script src="frame-wait-time.js"></script>
 	<script src="/test/integration/adapter.js"></script>
 </body>
+
 </html>
