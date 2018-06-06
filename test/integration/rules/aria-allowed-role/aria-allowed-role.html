@@ -1,0 +1,485 @@
+<address id="address" role="fake-role">ok</address>
+<canvas id="canvas" role="fake-role">ok</canvas>
+<div id="div" role="fake-role">ok</div>
+<p id="p" role="fake-role">ok</p>
+<pre id="pre" role="fake-role">ok</pre>
+<blockquote id="blockquote" role="fake-role">ok</blockquote>
+<ins id="ins" role="fake-role">ok</ins>
+<del id="del" role="fake-role">ok</del>
+<span id="span" role="fake-role">ok</span>
+<em id="em" role="fake-role">ok</em>
+<strong id="strong" role="fake-role">ok</strong>
+<small id="small" role="fake-role">ok</small>
+<s id="s" role="fake-role">ok</s>
+<cite id="cite" role="fake-role">ok</cite>
+<q id="q" role="fake-role">ok</q>
+<dfn id="dfn" role="fake-role">ok</dfn>
+<abbr id="abbr" role="fake-role">ok</abbr>
+<time id="time" role="fake-role">ok</time>
+<code id="code" role="fake-role">ok</code>
+<var id="var" role="fake-role">ok</var>
+<samp id="samp" role="fake-role">ok</samp>
+<kbd id="kbd" role="fake-role">ok</kbd>
+<sub id="sub" role="fake-role">ok</sub>
+<sup id="sup" role="fake-role">ok</sup>
+<i id="i" role="fake-role">ok</i>
+<b id="b" role="fake-role">ok</b>
+<u id="u" role="fake-role">ok</u>
+<mark id="mark" role="fake-role">ok</mark>
+<ruby id="ruby" role="fake-role">ok</ruby>
+<rt id="rt" role="fake-role">ok</rt>
+<rp id="rp" role="fake-role">ok</rp>
+<bdi id="bdi" role="fake-role">ok</bdi>
+<bdo id="bdo" role="fake-role">ok</bdo>
+<br id="br" role="fake-role">ok</br>
+<wbr id="wbr" role="fake-role">ok</wbr>
+
+<!-- Elements who allows any role except its implicit role -->
+<output id="output" role="fake-role">ok</output>
+<table id="table" role="fake-role">
+	<thead id="thead" role="fake-role"></thead>
+	<tbody id="tbody" role="fake-role"></tbody>
+	<tfoot id="tfoot" role="fake-role"></tfoot>
+</table>
+
+<!-- Elements who should not allow any role -->
+<base id="base" role="fake-role" href="#" target="_blank" />
+<table>
+	<caption id="caption" role="fake-role">fail</caption>
+	<colgroup id="colgroup" role="fake-role">
+		<col id="col" role="fake-role">fail</col>
+	</colgroup>
+</table>
+<keygen id="keygen" role="fake-role" challenge="string" keytype="RSA" keyparams="medium" />
+<label id="label" role="fake-role">fail</label>
+<legend id="legend" role="fake-role">fail</legend>
+<map id="map" role="fake-role"></map>
+<meter id="meter" role="fake-role" min="0" max="100"></meter>
+<noscript id="noscript" role="fake-role">fail</noscript>
+<param id="param" role="fake-role">fail</param>
+<picture id="picture" role="fake-role">
+	<source id="source" role="fake=role">
+</picture>
+<script id="script" role="fake-role" type="text/plain">fail</script>
+<style id="style" role="fake-role"></style>
+<title id="title" role="fake-role"></title>
+<template id="template" role="fake-role"></template>
+<track id="track" role="fake-role">fail</track>
+
+<!-- Elements who should not allow any role and has an implicit role -->
+<datalist id="datalist" role="listbox"></datalist>
+<dd id="dd" role="fake-role">fail</dd>
+<details id="details" role="fake-role">fail</details>
+<dt id="dt" role="fake-role">fail</dt>
+<main id="main" role="fake-role">fail</main>
+<math id="math" role="fake-role">fail</math>
+<select>
+	<optgroup id="optgroup" role="fake-role"></optgroup>
+</select>
+<progress id="progress" role="fake-role">fail</progress>
+<textarea id="textarea" role="fake-role">fail</textarea>
+
+<!-- <a> element -->
+<a id="aPass1" role="link">ok</a>
+<a id="aPass2" href="#" role="button">ok</a>
+<a id="fail1" href="#" role="fake-role">fail</a>
+<a id="fail2" href="" role="fake-role">fail</a>
+
+<a id="aPass3" href="#" role="menuitem">ok</a>
+<a id="aPass4" href="#" role="menuitemcheckbox">ok</a>
+<a id="aPass5" href="#" role="menuitemradio">ok</a>
+<a id="aPass6" href="#" role="option">ok</a>
+<a id="aPass7" href="#" role="radio">ok</a>
+<a id="aPass8" href="#" role="switch">ok</a>
+<a id="aPass9" href="#" role="tab">ok</a>
+<a id="aPass10" href="#" role="treeitem">ok</a>
+<a id="aPass11" href="#" role="doc-backlink">ok</a>
+<a id="aPass12" href="#" role="doc-biblioref">ok</a>
+<a id="aPass13" href="#" role="doc-glossref">ok</a>
+<a id="aPass14" href="#" role="doc-noteref">ok</a>
+<a id="aPass15" href="#" role="button">ok</a>
+<a id="aPass16" href="#" role="checkbox">ok</a>
+
+<!-- <area> element -->
+<map>
+	<area id="areaPass1" role="fake-role" />
+	<area href="#" id="fail3" role="link" />
+	<area href="#" id="fail4" role="fake-role" />
+</map>
+
+<!-- <article> element -->
+<article id="fail5" role="fake-role">fail</article>
+<article id="articlePass1" role="feed">ok</article>
+<article id="articlePass2" role="presentation">ok</article>
+<article id="articlePass3" role="none">ok</article>
+<article id="articlePass4" role="document">ok</article>
+<article id="articlePass5" role="application">ok</article>
+<article id="articlePass6" role="main">ok</article>
+<article id="articlePass7" role="region">ok</article>
+
+<!-- <aside> element  -->
+<aside id="fail6" role="fake-role">fail</aside>
+<aside id="asidePass1" role="feed">ok</aside>
+<aside id="asidePass2" role="note">ok</aside>
+<aside id="asidePass3" role="presentation">ok</aside>
+<aside id="asidePass4" role="none">ok</aside>
+<aside id="asidePass5" role="region">ok</aside>
+<aside id="asidePass6" role="search">ok</aside>
+<aside id="asidePass7" role="doc-example">ok</aside>
+<aside id="asidePass8" role="doc-footnote">ok</aside>
+<aside id="asidePass9" role="doc-pullquote">ok</aside>
+<aside id="asidePass10" role="doc-tip">ok</aside>
+
+<!-- <audio> element -->
+<audio id="fail7" role="fake-role">fail</audio>
+<audio id="audioPass1" role="application">ok</audio>
+
+<!-- <button> element -->
+<button id="fail8" role="fake-role">fail</button>
+<button id="buttonPass1" role="checkbox">ok</button>
+<button id="buttonPass2" role="link">ok</button>
+<button id="buttonPass3" role="menuitem">ok</button>
+<button id="buttonPass4" role="menuitemcheckbox">ok</button>
+<button id="buttonPass5" role="menuitemradio">ok</button>
+<button id="buttonPass6" role="option">ok</button>
+<button id="buttonPass7" role="radio">ok</button>
+<button id="buttonPass8" role="switch">ok</button>
+<button id="buttonPass9" role="tab">ok</button>
+<button id="fail9" type="menu" role="link">fail</button>
+<button id="buttonMenuPass1" type="menu" role="menuitem">ok</button>
+
+<!-- <dialog> element -->
+<dialog id="fail10" role="fake-role">fail</dialog>
+<dialog id="dialogPass1" role="alertdialog">ok</dialog>
+
+<!-- <dl> element -->
+<dl id="fail11" role="fake-role">fail</dl>
+<dl id="dlPass1" role="group">ok</dl>
+<dl id="dlPass2" role="presentation">ok</dl>
+<dl id="dlPass3" role="none">ok</dl>
+<dl id="dlPass4" role="doc-glossary">ok</dl>
+
+<!-- <embed> element -->
+<embed id="fail12" role="fake-role"></embed>
+<embed id="embedPass1" role="application">ok</embed>
+<embed id="embedPass2" role="document">ok</embed>
+<embed id="embedPass3" role="presentation">ok</embed>
+<embed id="embedPass4" role="none">ok</embed>
+<embed id="embedPass5" role="img">ok</embed>
+
+<!-- <figcaption> element -->
+<figcaption id="fail13" role="fake-role"></figcaption>
+<figcaption id="figcaptionPass1" role="group">ok</figcaption>
+<figcaption id="figcaptionPass2" role="presentation">ok</figcaption>
+<figcaption id="figcaptionPass3" role="none">ok</figcaption>
+
+<!-- <fieldset> element -->
+<fieldset id="fail14" role="fake-role"></fieldset>
+<fieldset id="fieldsetPass1" role="group">ok</fieldset>
+<fieldset id="fieldsetPass2" role="presentation">ok</fieldset>
+<fieldset id="fieldsetPass3" role="none">ok</fieldset>
+
+<!-- <figure> element -->
+<figure id="fail15" role="figure">fail</figure>
+<figure id="figurePass1" role="group">ok</figure>
+<figure id="figurePass2" role="presentation">ok</figure>
+<figure id="figurePass3" role="none">ok</figure>
+
+<!-- <footer> element -->
+<footer id="fail16" role="fake-role">fail</footer>
+<footer id="footerPass1" role="group">ok</footer>
+<footer id="footerPass2" role="none">ok</footer>
+<footer id="footerPass3" role="presentation">ok</footer>
+<footer id="footerPass4" role="doc-footnote">ok</footer>
+
+<!-- <form> element -->
+<form id="fail17" role="fake-role">fail</form>
+<form id="formPass1" role="search">ok</form>
+<form id="formPass2" role="presentation">ok</form>
+<form id="formPass3" role="none">ok</form>
+
+<!-- headings, <h1> to <h6> -->
+<h1 id="fail18" role="fake-role">fail</h1>
+<h2 id="fail19" role="fake-role">fail</h2>
+<h3 id="fail20" role="fake-role">fail</h3>
+<h4 id="fail21" role="fake-role">fail</h4>
+<h5 id="fail22" role="fake-role">fail</h5>
+<h6 id="fail23" role="fake-role">fail</h6>
+<h1 id="h1Pass1" role="tab">ok</h1>
+<h1 id="h1Pass2" role="none">ok</h1>
+<h1 id="h1Pass3" role="presentation">ok</h1>
+<h1 id="h1Pass4" role="doc-subtitle">ok</h1>
+<h2 id="h2Pass1" role="tab">ok</h2>
+<h2 id="h2Pass2" role="none">ok</h2>
+<h2 id="h2Pass3" role="presentation">ok</h2>
+<h2 id="h2Pass4" role="doc-subtitle">ok</h2>
+<h3 id="h3Pass1" role="tab">ok</h3>
+<h3 id="h3Pass2" role="none">ok</h3>
+<h3 id="h3Pass3" role="presentation">ok</h3>
+<h3 id="h3Pass4" role="doc-subtitle">ok</h3>
+<h4 id="h4Pass1" role="tab">ok</h4>
+<h4 id="h4Pass2" role="none">ok</h4>
+<h4 id="h4Pass3" role="presentation">ok</h4>
+<h4 id="h4Pass4" role="doc-subtitle">ok</h4>
+<h5 id="h5Pass1" role="tab">ok</h5>
+<h5 id="h5Pass2" role="none">ok</h5>
+<h5 id="h5Pass3" role="presentation">ok</h5>
+<h5 id="h5Pass4" role="doc-subtitle">ok</h5>
+<h6 id="h6Pass1" role="tab">ok</h6>
+<h6 id="h6Pass2" role="none">ok</h6>
+<h6 id="h6Pass3" role="presentation">ok</h6>
+<h6 id="h6Pass4" role="doc-subtitle">ok</h6>
+
+<!-- <footer> element -->
+<header id="fail24" role="fake-role">fail</header>
+<header id="headerPass1" role="group">ok</header>
+<header id="headerPass2" role="none">ok</header>
+<header id="headerPass3" role="presentation">ok</header>
+<header id="headerPass4" role="doc-footnote">ok</header>
+
+<!-- <hr> element -->
+<hr id="fail25" role="seperator" />
+<hr id="hrPass1" role="presentation" />
+
+<!-- <img> element -->
+<img id="fail27" role="fake-role" />
+<img id="fail28" role="none" alt="some text" />
+<img id="fail29" role="presentation" alt="some text" />
+
+<img id="imgPass1" role="none" />
+<img id="imgPass2" role="presentation" alt="" />
+<img id="imgPass3" role="fake-role" alt="a description" />
+
+<!-- <input> element -->
+<input id="fail30" type="button" role="fake-role" />
+<input id="fail31" type="checkbox" role="fake-role" />
+<input id="fail32" type="color" role="fake-role" />
+<input id="fail33" type="date" role="fake-role" />
+<input id="fail34" type="datetime" role="fake-role" />
+<input id="fail35" type="email" role="fake-role" />
+<input id="fail36" type="file" role="fake-role" />
+<input id="fail37" type="hidden" role="fake-role" />
+<input id="fail38" type="image" role="fake-role" />
+<input id="fail39" type="month" role="fake-role" />
+<input id="fail40" type="number" role="fake-role" />
+<input id="fail41" type="password" role="fake-role" />
+<input id="fail42" type="radio" role="fake-role" />
+<input id="fail43" type="radio" role="fake-role" />
+<input id="fail44" type="range" role="fake-role" />
+<input id="fail45" type="reset" role="fake-role" />
+<input id="fail46" type="search" role="fake-role" />
+<input id="fail47" type="submit" role="fake-role" />
+<input id="fail48" type="tel" role="fake-role" />
+<input id="fail49" type="text" role="fake-role" />
+<input id="fail50" type="email" role="combobox" list="datalist" />
+<input id="fail51" type="seach" role="combobox" list="datalist" />
+<input id="fail52" type="tel" role="combobox" list="datalist" />
+<input id="fail53" type="text" role="combobox" list="datalist" />
+<input id="fail54" type="url" role="combobox" list="datalist" />
+<input id="fail55" type="time" role="fake-role" />
+<input id="fail56" type="url" role="fake-role" />
+<input id="fail57" type="week" role="fake-role" />
+
+<input id="inputPass1" type="button" role="link" />
+<input id="inputPass2" type="button" role="menuitem" />
+<input id="inputPass3" type="button" role="menuitemcheckbox" />
+<input id="inputPass4" type="button" role="menuitemradio" />
+<input id="inputPass5" type="button" role="option" />
+<input id="inputPass6" type="button" role="radio" />
+<input id="inputPass7" type="button" role="switch" />
+<input id="inputPass8" type="button" role="tab" />
+<input id="inputPass9" type="checkbox" role="button" aria-pressed="true" />
+<input id="inputPass10" type="checkbox" role="menuitemcheckbox" />
+<input id="inputPass11" type="checkbox" role="option" />
+<input id="inputPass12" type="checkbox" role="switch" />
+<input id="inputPass13" type="image" role="link" />
+<input id="inputPass14" type="image" role="menuitem" />
+<input id="inputPass15" type="image" role="menuitemcheckbox" />
+<input id="inputPass16" type="image" role="menuitemradio" />
+<input id="inputPass17" type="image" role="radio" />
+<input id="inputPass18" type="image" role="switch" />
+<input id="inputPass19" type="radio" role="menuitemradio" />
+
+<!-- <li> element -->
+<!-- <li id="liPass1" role="listitem">ok</li> -->
+<ol>
+	<!-- <li id="fail58" role="fake-role">fail</li> -->
+	<!-- <li id="liPass2" role="menuitemcheckbox">ok</li>
+   <li id="liPass3" role="menuitemradio">ok</li>
+   <li id="liPass4" role="option">ok</li>
+   <li id="liPass5" role="none">ok</li>
+   <li id="liPass6" role="presentation">ok</li>
+   <li id="liPass7" role="radio">ok</li> -->
+</ol>
+<ul>
+	<!-- <li id="fail59" role="fake-role">fail</li> -->
+	<!-- <li id="liPass8" role="separator">ok</li>
+   <li id="liPass9" role="tab">ok</li>
+   <li id="liPass10" role="treeitem">ok</li>
+   <li id="liPass11" role="doc-biblioentry">ok</li>
+   <li id="liPass12" role="doc-endnote">ok</li>
+   <li id="liPass13" role="menuitem">ok</li> -->
+</ul>
+
+<!-- <link> element -->
+<link id="fail60" role="fake-role" href="#" />
+<link id="linkPass1" role="fake-role" />
+
+<!-- <menu> element -->
+<menu id="fail61" type="context" role="fake-role"></menu>
+<menu id="menuPass1" role="fake-role"></menu>
+
+<!-- <menuitem> element -->
+<menu>
+	<menuitem id="fail62" type="command" role="fake-role">fail</menuitem>
+	<menuitem id="fail63" type="checkbox" role="fake-role">fail</menuitem>
+	<menuitem id="fail64" type="radio" role="fake-role">fail</menuitem>
+</menu>
+
+<!-- <nav> element -->
+<nav id="fail65" role="fake-role">fail</nav>
+<nav id="navPass1" role="doc-index">ok</nav>
+<nav id="navPass2" role="doc-pagelist">ok</nav>
+<nav id="navPass3" role="doc-toc">ok</nav>
+
+<!-- <object> element -->
+<object id="fail66" role="fake-role">fail</object>
+<object id="objectPass1" role="application">ok</object>
+<object id="objectPass2" role="document">ok</object>
+<object id="objectPass3" role="img">ok</object>
+
+<!-- <ol> element -->
+<ol id="fail67" role="fake-role"></ol>
+<ol id="olPass1" role="directory"></ol>
+<ol id="olPass2" role="group"></ol>
+<ol id="olPass3" role="listbox"></ol>
+<ol id="olPass4" role="menu"></ol>
+<ol id="olPass5" role="menubar"></ol>
+<ol id="olPass6" role="presentation"></ol>
+<ol id="olPass7" role="radiogroup"></ol>
+<ol id="olPass8" role="tablist"></ol>
+<ol id="olPass9" role="toolbar"></ol>
+<ol id="olPass10" role="tree"></ol>
+<ol id="olPass11" role="none"></ol>
+
+<!-- <option> element -->
+<!-- <option id="optionPass1" role="option">ok</option> -->
+<!-- <select>
+   <optgroup>
+      <option id="fail68" role="fake-role">fail</option>
+   </optgroup>
+   <option id="fail69" role="fake-role">fail</option>
+</select> -->
+<!-- <datalist>
+   <option id="fail70" role="fake-role">fail</option>
+</datalist> -->
+
+<!-- <section> element  -->
+<section id="fail71" role="region"></section>
+<section id="sectionPass1" role="alert">ok</section>
+<section id="sectionPass2" role="alertdialog">ok</section>
+<section id="sectionPass3" role="application">ok</section>
+<section id="sectionPass4" role="banner">ok</section>
+<section id="sectionPass5" role="complementary">ok</section>
+<section id="sectionPass6" role="contentinfo">ok</section>
+<section id="sectionPass7" role="dialog">ok</section>
+<section id="sectionPass8" role="document">ok</section>
+<section id="sectionPass9" role="log">ok</section>
+<section id="sectionPass10" role="main">ok</section>
+<section id="sectionPass11" role="marquee">ok</section>
+<section id="sectionPass12" role="navigation">ok</section>
+<section id="sectionPass13" role="none">ok</section>
+<section id="sectionPass14" role="presentation">ok</section>
+<section id="sectionPass15" role="search">ok</section>
+<section id="sectionPass16" role="status">ok</section>
+<section id="sectionPass17" role="tabpanel">ok</section>
+<section id="sectionPass18" role="doc-abstract">ok</section>
+<section id="sectionPass19" role="doc-acknowledgments">ok</section>
+<section id="sectionPass20" role="doc-afterword">ok</section>
+<section id="sectionPass21" role="doc-appendix">ok</section>
+<section id="sectionPass22" role="doc-chapter">ok</section>
+<section id="sectionPass23" role="doc-colophon">ok</section>
+<section id="sectionPass24" role="doc-conclusion">ok</section>
+<section id="sectionPass25" role="doc-credit">ok</section>
+<section id="sectionPass26" role="doc-credits">ok</section>
+<section id="sectionPass27" role="doc-dedication">ok</section>
+<section id="sectionPass28" role="doc-endnotes">ok</section>
+<section id="sectionPass29" role="doc-epilogue">ok</section>
+<section id="sectionPass30" role="doc-errata">ok</section>
+<section id="sectionPass31" role="doc-example">ok</section>
+<section id="sectionPass32" role="doc-foreword">ok</section>
+<section id="sectionPass33" role="doc-index">ok</section>
+<section id="sectionPass34" role="doc-introduction">ok</section>
+<section id="sectionPass35" role="doc-notice">ok</section>
+<section id="sectionPass36" role="doc-pagelist">ok</section>
+<section id="sectionPass37" role="doc-part">ok</section>
+<section id="sectionPass38" role="doc-preface">ok</section>
+<section id="sectionPass39" role="doc-prologue">ok</section>
+<section id="sectionPass40" role="doc-pullquote">ok</section>
+<section id="sectionPass41" role="doc-qna">ok</section>
+<section id="sectionPass42" role="doc-toc">ok</section>
+<section id="sectionPass43" role="doc-bibliography">ok</section>
+<section id="sectionPass44" role="feed">ok</section>
+
+<!-- <select> element -->
+<select id="fail72" role="combobox"></select>
+<select id="selectPass1" role="menu"></select>
+<select id="selectPass2" size="1" role="menu"></select>
+<select id="fail73" multiple role="fake-role"></select>
+<select id="fail74" multiple role="menu"></select>
+<select id="fail75" size="3" role="menu"></select>
+
+<!-- <svg> element -->
+<svg id="fail76" role="fake-role"></svg>
+<svg id="svgPass1" role="application"></svg>
+<svg id="svgPass2" role="document"></svg>
+<svg id="svgPass3" role="img"></svg>
+
+<!-- <summary> element -->
+<details>
+	<summary id="fail77" role="fake-role"></summary>
+</details>
+
+<!-- <td> element -->
+<table>
+	<td id="tdPass1" role="fake-role">ok</td>
+</table>
+
+<!-- <th> element -->
+<table>
+	<thead>
+		<tr>
+			<th id="thPass1" role="columnheader"></th>
+			<th id="thPass2" role="rowheader"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<th id="thPass3" role="columnheader"></th>
+		<th id="thPass4" role="rowheader"></th>
+	</tbody>
+</table>
+
+<!-- <tr> element -->
+<table role="grid" id="ignore1">
+	<tr id="trPass1" role="row"></tr>
+</table>
+<table>
+	<tr id="trPass2" role="fake-role"></tr>
+</table>
+
+<!-- <ul> element -->
+<ul id="fail78" role="fake-role"></ul>
+<ul id="ulPass1" role="directory"></ul>
+<ul id="ulPass2" role="group"></ul>
+<ul id="ulPass3" role="listbox"></ul>
+<ul id="ulPass4" role="menu"></ul>
+<ul id="ulPass5" role="menubar"></ul>
+<ul id="ulPass6" role="presentation"></ul>
+<ul id="ulPass7" role="radiogroup"></ul>
+<ul id="ulPass8" role="tablist"></ul>
+<ul id="ulPass9" role="toolbar"></ul>
+<ul id="ulPass10" role="tree"></ul>
+
+<!-- <video> element -->
+<video id="fail79" role="fake-role"></video>
+<video id="videoPass1" role="application"></video>

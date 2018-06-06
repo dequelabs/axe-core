@@ -1,0 +1,15 @@
+{
+	"id": "aria-allowed-role",
+	"evaluate": "allowed-attr-role.js",
+	"options": {
+		"allowImplicit": true,
+		"ignoredTags": []
+	},
+	"metadata": {
+		"impact": "minor",
+		"messages": {
+			"pass": "ARIA role(s) is allowed for given element",
+			"fail": "Role(s) must be one of the allowed ARIA roles"
+		}
+	}
+}

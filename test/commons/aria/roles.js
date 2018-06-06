@@ -226,7 +226,7 @@ describe('aria.implicitRole', function () {
 				implicit: ['div[id="cats"]']
 			},
 			'dogs': {
-				 attributes: {
+				attributes: {
 					allowed: ['aria-required']
 				},
 				implicit: ['div[id="cats"]']
@@ -254,4 +254,104 @@ describe('aria.implicitRole', function () {
 		assert.isNull(result);
 
 	});
+});
+
+describe('aria.getRoleSegments', function () {
+	'use strict';
+
+	var fixture = document.getElementById('fixture');
+	var orig;
+
+	beforeEach(function () {
+		orig = axe.commons.axia.lookupTable.elementVsAriaAllowedRoleMap;
+	});
+
+	afterEach(function () {
+		fixture.innerHTML = '';
+		axe.commons.aria.lookupTable.elementVsAriaAllowedRoleMap = orig;
+	});
+
+	it('should return an array of role(s) applied to the node', function () {
+		var node = document.getElementById('article');
+		node.setAttribute('role', 'region');
+		node.id = 'target';
+		fixture.appendChild(node);
+		axe.commons.aria.lookupTable.elementVsAriaAllowedRoleMap = {
+			'article': {
+				roles: [
+					'feed',
+					'presentation',
+					'none',
+					'document',
+					'application',
+					'main',
+					'region'
+				]
+			}
+		};
+		var actual = axe.commons.aria.getRoleSegments(node);
+		var expected = ['region'];
+		assert.equal(actual, expected);
+	});
+
+	it('should return an empty array if no role is applied to the node', function () {
+		var node = document.getElementById('article');
+		fixture.appendChild(node);
+		axe.commons.aria.lookupTable.elementVsAriaAllowedRoleMap = {
+			'article': {
+				roles: [
+					'none'
+				]
+			}
+		};
+		var actual = axe.commons.aria.getRoleSegments(node);
+		var expected = [];
+		assert.equal(actual, expected);
+	});
+
+	it('should return empty array if node is undefined', function () {
+		axe.commons.aria.lookupTable.elementVsAriaAllowedRoleMap = {
+			'article': {
+				roles: [
+					'feed'
+				]
+			}
+		};
+		var actual = axe.commons.aria.getRoleSegments();
+		var expected = [];
+		assert.equal(actual, expected);
+	});
+
+});
+
+describe('aria.isAllowedRole', function () {
+	'use strict';
+
+	var orig;
+	beforeEach(function () {
+		orig = axe.commons.aria.lookupTable.elementVsAriaAllowedRoleMap;
+	});
+
+	afterEach(function () {
+		axe.commons.aria.lookupTable.elementVsAriaAllowedRoleMap = orig;
+	});
+
+	it('should return true if role exists for give tag', function () {
+		axe.commons.aria.lookupTable.elementVsAriaAllowedRoleMap = {
+			'aside': {
+				roles: ['doc-tip']
+			}
+		};
+		assert.isTrue(axe.commons.aria.isAllowedRole('aside', 'doc-tip'));
+	});
+
+	it('should return false if role does not exists for give tag', function () {
+		axe.commons.aria.lookupTable.elementVsAriaAllowedRoleMap = {
+			'aside': {
+				roles: ['doc-tip']
+			}
+		};
+		assert.isFalse(axe.commons.aria.isAllowedRole('aside', 'application'));
+	});
+
 });
