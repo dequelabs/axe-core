@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +10,7 @@
   <!-- external stylesheet -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
   <!-- relative stylesheet -->
-  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="sandbox-css-orientation-lock.css" />
   <!-- head style -->
   <style>
     @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
@@ -33,10 +34,25 @@
   <script src="/axe.js"></script>
   <script>
     window.addEventListener('load', function () {
-      axe.run(document, function (err, res) {
-        console.log(res.violations);
-        res.incomplete.forEach(issue => console.log(issue))
-      });
+      axe
+        .configure({
+         
+        })
+        .run({
+          preload: {
+            assets: [ 'CSSOM' ],
+            timeout: 5000
+          },
+          runOnly: {
+            type: 'rule',
+            values: [
+              'css-orientation-lock'
+            ]
+          }
+        }, function (err, res) {
+          console.log(res.violations);
+          res.incomplete.forEach(issue => console.log(issue))
+        });
     })
   </script>
 </body>
