@@ -191,7 +191,7 @@
     },
     "meta-refresh": {
       "description": "S’assure que <meta http-equiv=\"refresh\"> n’est pas utilisé",
-      "help": "Un rafraîchissement après délai ne doit pas être exister"
+      "help": "La page HTML ne doit pas être actualisée automatiquement"
     },
     "meta-viewport-large": {
       "description": "S’assure que <meta name=\"viewport\"> permet un agrandissement significatif",
