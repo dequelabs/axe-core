@@ -30,9 +30,9 @@ declare module axe {
 	interface RunOptions {
 		runOnly?: RunOnly,
 		rules?: Object,
-		iframes?: Boolean,
-		elementRef?: Boolean,
-		selectors?: Boolean,
+		iframes?: boolean,
+		elementRef?: boolean,
+		selectors?: boolean,
 		resultTypes?: resultGroups[],
 	}
 	interface AxeResults {
