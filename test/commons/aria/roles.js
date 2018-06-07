@@ -263,54 +263,40 @@ describe('aria.getRoleSegments', function () {
 	var orig;
 
 	beforeEach(function () {
-		orig = axe.commons.axia.lookupTable.elementVsAriaAllowedRoleMap;
+		orig = axe.commons.aria.lookupTable.elementAriaAllowedRolesMap;
 	});
 
 	afterEach(function () {
 		fixture.innerHTML = '';
-		axe.commons.aria.lookupTable.elementVsAriaAllowedRoleMap = orig;
+		axe.commons.aria.lookupTable.elementAriaAllowedRolesMap = orig;
 	});
 
 	it('should return an array of role(s) applied to the node', function () {
-		var node = document.getElementById('article');
+		var node = document.createElement('article');
 		node.setAttribute('role', 'region');
 		node.id = 'target';
 		fixture.appendChild(node);
-		axe.commons.aria.lookupTable.elementVsAriaAllowedRoleMap = {
-			'article': {
-				roles: [
-					'feed',
-					'presentation',
-					'none',
-					'document',
-					'application',
-					'main',
-					'region'
-				]
-			}
+		axe.commons.aria.lookupTable.elementAriaAllowedRolesMap = {
+			'article': { roles: ['main', 'region'] }
 		};
 		var actual = axe.commons.aria.getRoleSegments(node);
 		var expected = ['region'];
-		assert.equal(actual, expected);
+		assert.deepEqual(actual, expected);
 	});
 
 	it('should return an empty array if no role is applied to the node', function () {
-		var node = document.getElementById('article');
+		var node = document.createElement('article');
 		fixture.appendChild(node);
-		axe.commons.aria.lookupTable.elementVsAriaAllowedRoleMap = {
-			'article': {
-				roles: [
-					'none'
-				]
-			}
+		axe.commons.aria.lookupTable.elementAriaAllowedRolesMap = {
+			'article': { roles: ['none'] }
 		};
 		var actual = axe.commons.aria.getRoleSegments(node);
 		var expected = [];
-		assert.equal(actual, expected);
+		assert.deepEqual(actual, expected);
 	});
 
 	it('should return empty array if node is undefined', function () {
-		axe.commons.aria.lookupTable.elementVsAriaAllowedRoleMap = {
+		axe.commons.aria.lookupTable.elementAriaAllowedRolesMap = {
 			'article': {
 				roles: [
 					'feed'
@@ -319,7 +305,7 @@ describe('aria.getRoleSegments', function () {
 		};
 		var actual = axe.commons.aria.getRoleSegments();
 		var expected = [];
-		assert.equal(actual, expected);
+		assert.deepEqual(actual, expected);
 	});
 
 });
@@ -329,15 +315,15 @@ describe('aria.isAllowedRole', function () {
 
 	var orig;
 	beforeEach(function () {
-		orig = axe.commons.aria.lookupTable.elementVsAriaAllowedRoleMap;
+		orig = axe.commons.aria.lookupTable.elementAriaAllowedRolesMap;
 	});
 
 	afterEach(function () {
-		axe.commons.aria.lookupTable.elementVsAriaAllowedRoleMap = orig;
+		axe.commons.aria.lookupTable.elementAriaAllowedRolesMap = orig;
 	});
 
 	it('should return true if role exists for give tag', function () {
-		axe.commons.aria.lookupTable.elementVsAriaAllowedRoleMap = {
+		axe.commons.aria.lookupTable.elementAriaAllowedRolesMap = {
 			'aside': {
 				roles: ['doc-tip']
 			}
@@ -346,12 +332,40 @@ describe('aria.isAllowedRole', function () {
 	});
 
 	it('should return false if role does not exists for give tag', function () {
-		axe.commons.aria.lookupTable.elementVsAriaAllowedRoleMap = {
+		axe.commons.aria.lookupTable.elementAriaAllowedRolesMap = {
 			'aside': {
 				roles: ['doc-tip']
 			}
 		};
 		assert.isFalse(axe.commons.aria.isAllowedRole('aside', 'application'));
+	});
+
+});
+
+describe('aria.isAllowedSubsetRole', function () {
+	'use strict';
+
+	var orig;
+	beforeEach(function () {
+		orig = axe.commons.aria.lookupTable.elementAriaAllowedSubsetRolesMap;
+	});
+
+	afterEach(function () {
+		axe.commons.aria.lookupTable.elementAriaAllowedSubsetRolesMap = orig;
+	});
+
+	it('should return true if role exists for give tag', function () {
+		axe.commons.aria.lookupTable.elementAriaAllowedSubsetRolesMap = {
+			'button': ['link']
+		};
+		assert.isTrue(axe.commons.aria.isAllowedSubsetRole('button', 'link'));
+	});
+
+	it('should return false if role does not exist for a given tag', function() {
+		axe.commons.aria.lookupTable.elementAriaAllowedSubsetRolesMap = {
+			'button': ['link']
+		};
+		assert.isFalse(axe.commons.aria.isAllowedSubsetRole('button', 'presentation'));
 	});
 
 });

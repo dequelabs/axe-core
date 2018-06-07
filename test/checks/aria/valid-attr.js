@@ -19,8 +19,6 @@ describe('aria-valid-attr', function () {
 
 		assert.isFalse(checks['aria-valid-attr'].evaluate.call(checkContext, node));
 		assert.deepEqual(checkContext._data, ['aria-cats', 'aria-dogs']);
-
-
 	});
 
 	it('should return false if no invalid ARIA attributes are found', function () {
@@ -32,7 +30,6 @@ describe('aria-valid-attr', function () {
 
 		assert.isTrue(checks['aria-valid-attr'].evaluate.call(checkContext, node));
 		assert.isNull(checkContext._data);
-
 	});
 
 	it('should determine attribute validity by calling axe.commons.aria.validateAttr', function () {

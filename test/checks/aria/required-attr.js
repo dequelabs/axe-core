@@ -26,7 +26,6 @@ describe('aria-required-attr', function () {
 
 		assert.isTrue(checks['aria-required-attr'].evaluate.call(checkContext, node));
 		assert.isNull(checkContext._data);
-
 	});
 
 	it('should determine attribute validity by calling axe.commons.aria.requiredAttr', function () {
