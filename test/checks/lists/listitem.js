@@ -33,6 +33,18 @@ describe('listitem', function () {
 		assert.isFalse(checks.listitem.evaluate.apply(null, checkArgs));
 	});
 
+	it('should fail if the listitem has a parent <ol> with changed role', function() {
+		var checkArgs = checkSetup('<ol role="menubar"><li id="target">My list item</li></ol>');
+
+		assert.isFalse(checks.listitem.evaluate.apply(null, checkArgs));
+	});
+
+	it('should fail if the listitem has a parent <ul> with changed role', function() {
+		var checkArgs = checkSetup('<ul role="menubar"><li id="target">My list item</li></ul>');
+
+		assert.isFalse(checks.listitem.evaluate.apply(null, checkArgs));
+	});
+
 	(shadowSupport.v1 ? it : xit)('should return true in a shadow DOM pass', function () {
 		var node = document.createElement('div');
 		node.innerHTML = '<li>My list item </li>';

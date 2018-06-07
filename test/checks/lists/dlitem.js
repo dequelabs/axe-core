@@ -21,6 +21,12 @@ describe('dlitem', function () {
 		assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
 	});
 
+	it('should fail if the dlitem has a parent <dl> with a changed role', function(){
+		var checkArgs = checkSetup('<dl role="menubar"><dt id="target">My list item</dl>');
+
+		assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
+	});
+
 	(shadowSupport.v1 ? it : xit)('should return true in a shadow DOM pass', function () {
 		var node = document.createElement('div');
 		node.innerHTML = '<dt>My list item </dt>';

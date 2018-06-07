@@ -25,6 +25,18 @@ describe('only-dlitems', function () {
 		assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('p')]);
 	});
 
+	it('should return true if the list has non-dd content through role change', function(){
+		var checkArgs = checkSetup('<dl id="target"><dd role="menuitem">Not a list</dd></dl>');
+
+		assert.isTrue(checks['only-dlitems'].evaluate.apply(checkContext, checkArgs));
+	});
+
+	it('should return true if the list has non-dt content through role change', function(){
+		var checkArgs = checkSetup('<dl id="target"><dt role="menuitem">Not a list</dt></dl>');
+
+		assert.isTrue(checks['only-dlitems'].evaluate.apply(checkContext, checkArgs));
+	});
+
 	it('should return false if the list has only a dd', function () {
 		var checkArgs = checkSetup('<dl id="target"><dd>A list</dd></dl>');
 
@@ -75,10 +87,22 @@ describe('only-dlitems', function () {
 		assert.isFalse(checks['only-dlitems'].evaluate.apply(checkContext, checkArgs));
 	});
 
+	it('should return true if <link> is used along side dt with its role changed', function () {
+		var checkArgs = checkSetup('<dl id="target"><link rel="stylesheet" href="theme.css"><dt role="menuitem">A list</dt></dl>');
+
+		assert.isTrue(checks['only-dlitems'].evaluate.apply(checkContext, checkArgs));
+	});
+
 	it('should return false if <meta> is used along side dt', function () {
 		var checkArgs = checkSetup('<dl id="target"><meta name="description" content=""><dt>A list</dt></dl>');
 
 		assert.isFalse(checks['only-dlitems'].evaluate.apply(checkContext, checkArgs));
+	});
+
+	it('should return true if <meta> is used along side dt with its role changed', function () {
+		var checkArgs = checkSetup('<dl id="target"><meta name="description" content=""><dt role="menuitem">A list</dt></dl>');
+
+		assert.isTrue(checks['only-dlitems'].evaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should return false if <script> is used along side dt', function () {
@@ -87,16 +111,34 @@ describe('only-dlitems', function () {
 		assert.isFalse(checks['only-dlitems'].evaluate.apply(checkContext, checkArgs));
 	});
 
+	it('should return true if <script> is used along side dt with its role changed', function () {
+		var checkArgs = checkSetup('<dl id="target"><script src="script.js"></script><dt role="menuitem">A list</dt></dl>');
+
+		assert.isTrue(checks['only-dlitems'].evaluate.apply(checkContext, checkArgs));
+	});
+
 	it('should return false if <style> is used along side dt', function () {
 		var checkArgs = checkSetup('<dl id="target"><style></style><dt>A list</dt></dl>');
 
 		assert.isFalse(checks['only-dlitems'].evaluate.apply(checkContext, checkArgs));
 	});
 
+	it('should return true if <style> is used along side dt with its role changed', function () {
+		var checkArgs = checkSetup('<dl id="target"><style></style><dt role="menuitem">A list</dt></dl>');
+
+		assert.isTrue(checks['only-dlitems'].evaluate.apply(checkContext, checkArgs));
+	});
+
 	it('should return false if <template> is used along side dt', function () {
 		var checkArgs = checkSetup('<dl id="target"><template></template><dt>A list</dt></dl>');
 
 		assert.isFalse(checks['only-dlitems'].evaluate.apply(checkContext, checkArgs));
+	});
+
+	it('should return true if <template> is used along side dt with its role changed', function () {
+		var checkArgs = checkSetup('<dl id="target"><template></template><dt role="menuitem">A list</dt></dl>');
+
+		assert.isTrue(checks['only-dlitems'].evaluate.apply(checkContext, checkArgs));
 	});
 
 	(shadowSupport.v1 ? it : xit)('should return false in a shadow DOM pass', function () {
