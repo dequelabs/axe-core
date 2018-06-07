@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<title>Sandbox:: Rule:: aria-allowed-rol</title>
+
+<section id="sectionPass44" role="feed">ok</section>
+<select id="selectPass1" role="menu"></select>
+<select id="fail73" multiple role="fake-role"></select>
+<select id="fail74" multiple role="menu"></select>
+<select id="fail75" size="3" role="menu"></select>
+<svg id="fail76" role="fake-role"></svg>
+<details>
+	<summary id="fail77" role="fake-role"></summary>
+</details>
+<ul id="fail78" role="fake-role"></ul>
+<video id="fail79" role="fake-role"></video>
+<video id="videoPass1" role="application"></video>
+
+<script src="/axe.js"></script>
+<script>
+	window.addEventListener('load', function () {
+		axe.run({
+			runOnly: {
+				type: "rule",
+				values: ["aria-allowed-role"]
+			}
+		}, function (err, res) {
+			console.log(res.violations);
+			res.incomplete.forEach(issue => console.log(issue))
+		});
+	})
+</script>
