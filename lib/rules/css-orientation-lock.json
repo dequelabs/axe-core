@@ -10,6 +10,12 @@
 		"description": "Ensures that the content is not locked to any specific display orientation, and functionality of the content is operable in all display orientations (portrait/ landscape)",
 		"help": "Content is operable in all both landscape and portriat orientations"
 	},
+	"preload": {
+		"assets": [
+			"CSSOM"
+		],
+		"timeout": 5000
+	},
 	"all": [
 		"css-orientation-lock"
 	],
