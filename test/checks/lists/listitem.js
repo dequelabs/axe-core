@@ -11,25 +11,26 @@ describe('listitem', function () {
 
 	it('should pass if the listitem has a parent <ol>', function () {
 		var checkArgs = checkSetup('<ol><li id="target">My list item</li></ol>');
-
 		assert.isTrue(checks.listitem.evaluate.apply(null, checkArgs));
 	});
 
 	it('should pass if the listitem has a parent <ul>', function () {
 		var checkArgs = checkSetup('<ul><li id="target">My list item</li></ul>');
-
 		assert.isTrue(checks.listitem.evaluate.apply(null, checkArgs));
 	});
 
 	it('should pass if the listitem has a parent role=list', function () {
 		var checkArgs = checkSetup('<div role="list"><li id="target">My list item</li></div>');
-
 		assert.isTrue(checks.listitem.evaluate.apply(null, checkArgs));
 	});
 
 	it('should fail if the listitem has an incorrect parent', function () {
 		var checkArgs = checkSetup('<div><li id="target">My list item</li></div>');
+		assert.isFalse(checks.listitem.evaluate.apply(null, checkArgs));
+	});
 
+	it('should fail if the listitem has a parent <ol> with changed role', function () {
+		var checkArgs = checkSetup('<ol role="menubar"><li id="target">My list item</li></ol>');
 		assert.isFalse(checks.listitem.evaluate.apply(null, checkArgs));
 	});
 
@@ -38,7 +39,6 @@ describe('listitem', function () {
 		node.innerHTML = '<li>My list item </li>';
 		var shadow = node.attachShadow({ mode: 'open' });
 		shadow.innerHTML = '<ul><slot></slot></ul>';
-
 		var checkArgs = checkSetup(node, 'li');
 		assert.isTrue(checks.listitem.evaluate.apply(null, checkArgs));
 	});
@@ -48,8 +48,8 @@ describe('listitem', function () {
 		node.innerHTML = '<li>My list item </li>';
 		var shadow = node.attachShadow({ mode: 'open' });
 		shadow.innerHTML = '<div><slot></slot></div>';
-
 		var checkArgs = checkSetup(node, 'li');
 		assert.isFalse(checks.listitem.evaluate.apply(null, checkArgs));
 	});
+
 });
