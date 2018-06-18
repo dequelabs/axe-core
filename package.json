@@ -87,7 +87,7 @@
     "grunt-contrib-watch": "^1.1.0",
     "grunt-eslint": "^20.1.0",
     "grunt-markdownlint": "^2.0.0",
-    "grunt-mocha": "1.0.5",
+    "grunt-mocha": "1.1.0",
     "grunt-parallel": "^0.5.1",
     "grunt-retire": "^1.0.7",
     "html-entities": "^1.2.0",
