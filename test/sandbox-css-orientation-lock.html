@@ -32,13 +32,23 @@
 	<script>
 		window.addEventListener('load', function () {
 			axe.run({
+				runOnly: {
+					type: "rule",
+					values: [
+						"aria-hidden-body",
+						"page-has-heading-one", // no preload
+						"html-has-lang", // this has a fake preload
+						// "css-orientation-lock" // actual new rule which needs a preload
+					]
+				},
 				preload: {
-					assets: ['CSSOM'],
-					timeout: 5000
-				}
+					assets: ['cssom', 'aom'],
+					// timeout: 1
+				},
+				performanceTimer: true
 			}, function (err, res) {
-				console.log(res.violations);
-				res.incomplete.forEach(issue => console.log(issue))
+				console.log(err);
+				console.log(res);
 			});
 		})
 	</script>
