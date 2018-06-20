@@ -10,7 +10,7 @@
 	<!-- external stylesheet -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
 	<!-- relative stylesheet -->
-	<link rel="stylesheet" type="text/css" media="screen" href="sandbox-preaload.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="sandbox-preload.css" />
 	<!-- head style -->
 	<style>
 		@media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
@@ -40,13 +40,9 @@
 						"html-has-lang",
 					]
 				},
-				preload: {
-					assets: ['cssom', 'aom'],
-					// timeout: 1
-				},
+				preload: true, // true | false (default) | { assets: ['cssom'], timeout: 30000 (optional) }
 				performanceTimer: true
 			}, function (err, res) {
-				console.log(err);
 				console.log(res);
 			});
 		})
