@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Sandbox::Temp</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- external stylesheet -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
+	<!-- relative stylesheet -->
+	<link rel="stylesheet" type="text/css" media="screen" href="sandbox-preload.css" />
+</head>
+
+<body>
+	<iframe id='something' src="./mock/frames/test.html" frameborder="0">
+	</iframe>
+	<script src="/axe.js"></script>
+	<script>
+		window.addEventListener('load', function () {
+			axe.run('#something', {
+				preload: true, // true | false (default) | { assets: ['cssom'], timeout: 30000 (optional) }
+				performanceTimer: true
+			}, function (err, res) {
+				console.log(err);
+				console.log(res);
+			});
+		})
+	</script>
+</body>
+
+</html>

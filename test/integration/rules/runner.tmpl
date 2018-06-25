@@ -7,12 +7,14 @@
 		<link rel="stylesheet" type="text/css" href="../../../node_modules/mocha/mocha.css" />
 		<script src="../../../node_modules/mocha/mocha.js"></script>
 		<script src="../../../node_modules/chai/chai.js"></script>
+		<script src="/node_modules/sinon/pkg/sinon.js"></script>
 		<script>
 			mocha.setup({
 				timeout: 10000,
 				ui: 'bdd'
 			});
 			var assert = chai.assert;
+			var sinon = sinon;
 			var global = {};
 		</script>
 		<% files.forEach(function (file) { %>
