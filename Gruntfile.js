@@ -217,7 +217,9 @@ module.exports = function (grunt) {
 						braces: true,
 						quote_style: 1
 					},
-					preserveComments: /^!/
+					output: {
+						comments: /^!/
+					}
 				}
 			},
 			minify: {

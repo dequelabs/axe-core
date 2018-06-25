@@ -778,6 +778,18 @@ describe('text.accessibleTextVirtual', function() {
 			});
 		});
 
+		it('should find implicit labels with id that does not match to a label', function () {
+			types.forEach(function(type) {
+				var t = type ? ' type="' + type + '"' : '';
+				fixture.innerHTML = '<label for="t1">Hello World' +
+					'<input' + t + ' id="foo"></label>';
+				axe._tree = axe.utils.getFlattenedTree(fixture);
+
+				var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
+				assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World', type);
+			});
+		})
+
 		// not implemented yet, doesn't work accross ATs
 		it.skip('should find a placeholder attribute', function() {
 			types.forEach(function(type) {
