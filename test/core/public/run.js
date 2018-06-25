@@ -2,7 +2,7 @@ describe('axe.run', function () {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-	var noop = function () {};
+	var noop = function () { };
 	var origRunRules = axe._runRules;
 
 	beforeEach(function () {
@@ -32,9 +32,9 @@ describe('axe.run', function () {
 		fixture.innerHTML = '<div id="t1"></div>';
 		var options = {
 			runOnly: {
-			    type: 'rule',
-			    values: ['test']
-			  }
+				type: 'rule',
+				values: ['test']
+			}
 		};
 
 		axe.run(['#t1'], options, function () {
@@ -61,7 +61,7 @@ describe('axe.run', function () {
 	});
 
 	it('works with performance logging enabled', function (done) {
-		axe.run(document, {performanceTimer: true}, function (err, result) {
+		axe.run(document, { performanceTimer: true }, function (err, result) {
 			assert.isObject(result);
 			done();
 		});
@@ -69,11 +69,11 @@ describe('axe.run', function () {
 
 	it('treats objects with include or exclude as the context object', function (done) {
 		axe._runRules = function (ctxt) {
-			assert.deepEqual(ctxt, {include: '#BoggyB'});
+			assert.deepEqual(ctxt, { include: '#BoggyB' });
 			done();
 		};
 
-		axe.run({include: '#BoggyB'}, noop);
+		axe.run({ include: '#BoggyB' }, noop);
 	});
 
 	it('treats objects with neither include or exclude as the option object', function (done) {
@@ -82,7 +82,7 @@ describe('axe.run', function () {
 			done();
 		};
 
-		axe.run({HHG: 'hallelujah'}, noop);
+		axe.run({ HHG: 'hallelujah' }, noop);
 	});
 
 	it('does not fail if no callback is specified', function (done) {
@@ -186,10 +186,10 @@ describe('axe.run', function () {
 
 			var p = axe.run({ reporter: 'raw' });
 			p.then(noop)
-			.catch(function (err) {
-				assert.equal(err, 'I surrender!');
-				done();
-			});
+				.catch(function (err) {
+					assert.equal(err, 'I surrender!');
+					done();
+				});
 
 			assert.instanceOf(p, window.Promise);
 		});
@@ -215,16 +215,16 @@ describe('axe.run', function () {
 			};
 
 			axe.run()
-			.then(function () {
-				throw new Error('err');
-			}, function (e) {
-				assert.isNotOk(e, 'Caught callback error in the wrong place');
-				done();
+				.then(function () {
+					throw new Error('err');
+				}, function (e) {
+					assert.isNotOk(e, 'Caught callback error in the wrong place');
+					done();
 
-			}).catch(function (e) {
-				assert.equal(e.message, 'err');
-				done();
-			});
+				}).catch(function (e) {
+					assert.equal(e.message, 'err');
+					done();
+				});
 		});
 
 		promiseIt('is called after cleanup', function (done) {
@@ -232,17 +232,17 @@ describe('axe.run', function () {
 			axe._runRules = function (ctxt, opt, resolve) {
 				axe._runRules = origRunRules;
 				// Check that cleanup is called before the callback is executed
-				resolve('MB Bomb', function cleanup () {
+				resolve('MB Bomb', function cleanup() {
 					isClean = true;
 				});
 			};
 
 			axe.run({ reporter: 'raw' })
-			.then(function () {
-				assert(isClean, 'cleanup must be called first');
-				done();
-			})
-			.catch(done);
+				.then(function () {
+					assert(isClean, 'cleanup must be called first');
+					done();
+				})
+				.catch(done);
 		});
 	});
 
@@ -275,7 +275,7 @@ describe('axe.run', function () {
 				done();
 			};
 			axe._audit.reporter = null;
-			axe.run(document, {reporter: 'raw'}, noop);
+			axe.run(document, { reporter: 'raw' }, noop);
 		});
 	});
 
@@ -448,15 +448,16 @@ describe('axe.run iframes', function () {
 
 			axe.run('#fixture', {}, function (err, result) {
 				assert.equal(result.violations.length, 1);
+				
 				var violation = result.violations[0];
 				assert.equal(violation.nodes.length, 2,
-				            'one node for top frame, one for iframe');
-				assert.isTrue(violation.nodes.some(function(node) {
+					'one node for top frame, one for iframe');
+				assert.isTrue(violation.nodes.some(function (node) {
 					return node.target.length === 1 && node.target[0] === '#target';
 				}), 'one result from top frame');
-				assert.isTrue(violation.nodes.some(function(node) {
+				assert.isTrue(violation.nodes.some(function (node) {
 					return node.target.length === 2 &&
-					       node.target[0] === '#fixture > iframe';
+						node.target[0] === '#fixture > iframe';
 				}), 'one result from iframe');
 				window.clearTimeout(safetyTimeout);
 				done();
@@ -479,7 +480,7 @@ describe('axe.run iframes', function () {
 				assert.equal(result.violations.length, 1);
 				var violation = result.violations[0];
 				assert.equal(violation.nodes.length, 1,
-				            'only top frame');
+					'only top frame');
 				assert.equal(violation.nodes[0].target.length, 1);
 				assert.equal(violation.nodes[0].target[0], '#target');
 				window.clearTimeout(safetyTimeout);

@@ -5,7 +5,7 @@ describe('Audit', function () {
 	var isNotCalled = function (err) {
 		throw err || new Error('Reject should not be called');
 	};
-	var noop = function () {};
+	var noop = function () { };
 
 	var mockChecks = [{
 		id: 'positive1-check1',
@@ -355,14 +355,14 @@ describe('Audit', function () {
 			assert.equal(audit.checks.target, undefined);
 			audit.addCheck({
 				id: 'target',
-				metadata: {guy:'bob'}
+				metadata: { guy: 'bob' }
 			});
 			assert.ok(audit.checks.target);
 			assert.equal(audit.data.checks.target.guy, 'bob');
 		});
 		it('should reconfigure existing check', function () {
 			var audit = new Audit();
-			var myTest = function () {};
+			var myTest = function () { };
 			audit.addCheck({
 				id: 'target',
 				evaluate: myTest,
@@ -535,16 +535,19 @@ describe('Audit', function () {
 			var targetRule = mockRules[mockRules.length - 1],
 				rule = axe.utils.findBy(a.rules, 'id', targetRule.id),
 				passed = false,
-				orig, options;
+				orig,
+				options;
 
 			fixture.innerHTML = '<a href="#">link</a>';
 			orig = rule.run;
 			rule.run = function (node, o, callback) {
-				assert.deepEqual(o, options);
+				assert.property(o, 'rules');
 				passed = true;
 				callback({});
 			};
-			options = {rules: {}};
+
+			options = { rules: {} };
+
 			(options.rules[targetRule.id] = {}).data = 'monkeys';
 			a.run({ include: [document] }, options, function () {
 				assert.ok(passed);
@@ -564,7 +567,7 @@ describe('Audit', function () {
 				}
 			}));
 
-			audit.run({ include: [ document.body ], page: false }, {}, function (results) {
+			audit.run({ include: [document.body], page: false }, {}, function (results) {
 				assert.deepEqual(results, []);
 			}, isNotCalled);
 
@@ -592,7 +595,7 @@ describe('Audit', function () {
 					'values': ['throw1']
 				}
 			}, function (results) {
-				assert.lengthOf(results,1);
+				assert.lengthOf(results, 1);
 				assert.equal(results[0].result, 'cantTell');
 				assert.equal(results[0].message, err.message);
 				assert.equal(results[0].stack, err.stack);
@@ -813,7 +816,7 @@ describe('Audit', function () {
 			assert.throws(function () {
 				a.normalizeOptions({
 					rules: {
-						fakeRule: { enabled: false}
+						fakeRule: { enabled: false }
 					}
 				});
 			});
