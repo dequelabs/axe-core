@@ -324,7 +324,7 @@ The options parameter is flexible way to configure how `axe.run` operates. The d
 Additionally, there are a number or properties that allow configuration of different options:
 
 | Property        | Default | Description                |
-|-----------------|:-------:|:----------------------------:|
+|-----------------|:-------|:----------------------------|
 | `runOnly`       | n/a     | Limit which rules are executed, based on names or tags
 | `rules`         | n/a     | Allow customizing a rule's properties (including { enable: false })
 | `reporter`      | `v1`    | Which reporter to use (see [Configuration](#api-name-axeconfigure))
@@ -335,6 +335,8 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `elementRef`    | `false` | Return element references in addition to the target
 | `restoreScroll` | `false` | Scrolls elements back to before axe started
 | `frameWaitTime` | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out
+| `preload` 			| `false` | Any additional assets (eg: cssom) to preload before running rules. Accepts a boolean (true/ false) or an object where an array of assets can be specified. Eg: `preload: true`, or `preload: false`, or `preload: { assets: ['cssom'], timeout: 50000 }`. The `timeout` attribute in the object configuration is `optional` and defaults to `30000` as defined in `axe.constants`, the `timeout` is essential for any network dependent assets that are preloaded.
+
 
 ###### Options Parameter Examples
 
