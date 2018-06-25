@@ -8,20 +8,21 @@ describe('axe.utils.preload', function () {
 	});
 
 	it('should return a queue', function () {
-		const options = {
+		var options = {
 			preload: true
 		};
-		const actual = axe.utils.preload(options);
+		var actual = axe.utils.preload(options);
 		assert.isObject(actual);
 	});
 
 	it('should ensure queue is defer(able)', function (done) {
-		const options = {
+		var options = {
 			preload: false
 		};
-		const actual = axe.utils.preload(options);
+		var actual = axe.utils.preload(options);
 		actual
 			.defer((function (res, rej) {
+				assert.isFunction(rej);
 				res(true);
 				assert.isOk(true);
 				done();
@@ -29,12 +30,13 @@ describe('axe.utils.preload', function () {
 	});
 
 	it('should ensure queue is then(able)', function (done) {
-		const options = {
+		var options = {
 			preload: false
 		};
-		const actual = axe.utils.preload(options);
+		var actual = axe.utils.preload(options);
 		actual
 			.then((function (results) {
+				assert.isDefined(results);
 				assert.isOk(true);
 				done();
 			}));

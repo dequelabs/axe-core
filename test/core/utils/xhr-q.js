@@ -1,3 +1,5 @@
+/*global sinon */
+
 describe('axe.utils.xhrQ', function () {
 	'use strict';
 
@@ -14,17 +16,17 @@ describe('axe.utils.xhrQ', function () {
 	});
 
 	it('should reject queue on 500 error', function (done) {
-		const config = {
+		var config = {
 			url: '/kaBoom'
 		};
-		const fakeResponse = {
+		var fakeResponse = {
 			status: 500,
 			contentType: { 'Content-Type': 'text/json' },
 			dataJson: { message: 'some dummy data.' }
 		};
 
 		axe.utils.xhrQ(config)
-			.then(function (response) {
+			.then(function () {
 				assert.fail('should not have resolved the queue');
 				done();
 			})
@@ -42,10 +44,10 @@ describe('axe.utils.xhrQ', function () {
 	});
 
 	it('should resolve queue for status 200', function (done) {
-		const config = {
+		var config = {
 			url: '/gotMe'
 		};
-		const fakeResponse = {
+		var fakeResponse = {
 			status: 200,
 			contentType: { 'Content-Type': 'text/json' },
 			dataJson: { message: 'some dummy data.' }
@@ -53,7 +55,7 @@ describe('axe.utils.xhrQ', function () {
 
 		axe.utils.xhrQ(config)
 			.then(function (results) {
-				const response = results[0];
+				var response = results[0];
 				assert.equal(response.status, 200);
 				done();
 			})
@@ -71,10 +73,10 @@ describe('axe.utils.xhrQ', function () {
 	});
 
 	it('should populate response', function (done) {
-		const config = {
+		var config = {
 			url: '/gotMe'
 		};
-		const fakeResponse = {
+		var fakeResponse = {
 			status: 200,
 			contentType: { 'Content-Type': 'text/json' },
 			dataJson: {
@@ -85,7 +87,7 @@ describe('axe.utils.xhrQ', function () {
 
 		axe.utils.xhrQ(config)
 			.then(function (results) {
-				const response = results[0];
+				var response = results[0];
 				assert.isObject(response);
 				assert.deepEqual(JSON.parse(response.responseText), fakeResponse.dataJson);
 				done();
