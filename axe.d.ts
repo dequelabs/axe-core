@@ -4,13 +4,31 @@
 
 declare module axe {
 
-	type ImpactValue = "minor" | "moderate" | "serious" | "critical";
+	enum ImpactValue {
+		minor = "minor",
+		moderate = "moderate",
+		serious = "serious",
+		critical = "critical"
+	}
 
-	type TagValue = "wcag2a" | "wcag2aa" | "section508" | "best-practice";
+	enum TagValue {
+		wcag2a = "wcag2a",
+		wcag2aa = "wcag2aa",
+		section508 = "section508",
+		"best-practice"
+	};
 
-	type ReporterVersion = "v1" | "v2";
+	enum ReporterVersion {
+		v1 = "v1",
+		v2 = "v2"
+	};
 
-	type RunOnlyType = "rule" | "rules" | "tag" | "tags";
+	enum RunOnlyType {
+		rule = "rule",
+		rules = "rules",
+		tag = "tag",
+		tags = "tags"
+	};
 
 	type resultGroups = "inapplicable" | "passes" | "incomplete" | "violations";
 
