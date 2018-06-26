@@ -37,13 +37,13 @@ declare module axe {
 		exclude?: string[] | string[][]
 	}
 
-	type RunCallback = (error: Error, results:AxeResults) => void;
+	type RunCallback = (error: Error, results: AxeResults) => void;
 
 	type ElementContext = Node | string | RunOnlyObject;
 
 	interface RunOnly {
 		type: RunOnlyType,
-		values?: TagValue[] | RunOnlyObject
+		values?: TagValue[] | string[]
 	}
 	interface RunOptions {
 		runOnly?: RunOnly,
@@ -121,12 +121,12 @@ declare module axe {
 	}
 	interface AxePlugin {
 		id: string,
-		run(...args:any[]): any,
+		run(...args: any[]): any,
 		commands: {
 			id: string,
-			callback(...args:any[]): void
+			callback(...args: any[]): void
 		}[],
-		cleanup?(callback:Function): void
+		cleanup?(callback: Function): void
 	}
 
 	let plugins: any
@@ -151,7 +151,7 @@ declare module axe {
 	 */
 	function run(context?: ElementContext): Promise<AxeResults>
 	function run(options: RunOptions): Promise<AxeResults>
-	function run(callback: (error: Error, results:AxeResults) => void): void
+	function run(callback: (error: Error, results: AxeResults) => void): void
 	function run(context: ElementContext, callback: RunCallback): void
 	function run(options: RunOptions, callback: RunCallback): void
 	function run(context: ElementContext, options: RunOptions): Promise<AxeResults>
