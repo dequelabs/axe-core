@@ -313,59 +313,38 @@ describe('aria.getRoleSegments', function () {
 describe('aria.isAllowedRole', function () {
 	'use strict';
 
+	var fixture = document.getElementById('fixture');
 	var orig;
+
 	beforeEach(function () {
 		orig = axe.commons.aria.lookupTable.elementAriaAllowedRolesMap;
 	});
 
 	afterEach(function () {
+		fixture.innerHTML = '';
 		axe.commons.aria.lookupTable.elementAriaAllowedRolesMap = orig;
 	});
 
-	it('should return true if role exists for give tag', function () {
+	it('should return true if role exists for given tag', function () {
+		var node = document.createElement('aside');
+		fixture.appendChild(node);
 		axe.commons.aria.lookupTable.elementAriaAllowedRolesMap = {
 			'aside': {
 				roles: ['doc-tip']
 			}
 		};
-		assert.isTrue(axe.commons.aria.isAllowedRole('aside', 'doc-tip'));
+		assert.isTrue(axe.commons.aria.isAllowedRole(node, 'aside', 'doc-tip'));
 	});
 
-	it('should return false if role does not exists for give tag', function () {
+	it('should return false if role does not exists for given tag', function () {
+		var node = document.createElement('aside');
+		fixture.appendChild(node);
 		axe.commons.aria.lookupTable.elementAriaAllowedRolesMap = {
 			'aside': {
 				roles: ['doc-tip']
 			}
 		};
-		assert.isFalse(axe.commons.aria.isAllowedRole('aside', 'application'));
+		assert.isFalse(axe.commons.aria.isAllowedRole(node, 'aside', 'application'));
 	});
-
-});
-
-describe('aria.isAllowedSubsetRole', function () {
-	'use strict';
-
-	var orig;
-	beforeEach(function () {
-		orig = axe.commons.aria.lookupTable.elementAriaAllowedSubsetRolesMap;
-	});
-
-	afterEach(function () {
-		axe.commons.aria.lookupTable.elementAriaAllowedSubsetRolesMap = orig;
-	});
-
-	it('should return true if role exists for give tag', function () {
-		axe.commons.aria.lookupTable.elementAriaAllowedSubsetRolesMap = {
-			'button': ['link']
-		};
-		assert.isTrue(axe.commons.aria.isAllowedSubsetRole('button', 'link'));
-	});
-
-	it('should return false if role does not exist for a given tag', function() {
-		axe.commons.aria.lookupTable.elementAriaAllowedSubsetRolesMap = {
-			'button': ['link']
-		};
-		assert.isFalse(axe.commons.aria.isAllowedSubsetRole('button', 'presentation'));
-	});
-
+	
 });
