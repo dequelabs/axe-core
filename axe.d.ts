@@ -4,33 +4,15 @@
 
 declare module axe {
 
-	enum ImpactValue {
-		minor = "minor",
-		moderate = "moderate",
-		serious = "serious",
-		critical = "critical"
-	}
+	type ImpactValue = "minor" | "moderate" | "serious" | "critical";
 
-	enum TagValue {
-		wcag2a = "wcag2a",
-		wcag2aa = "wcag2aa",
-		section508 = "section508",
-		"best-practice"
-	};
+	type TagValue = "wcag2a" | "wcag2aa" | "section508" | "best-practice";
 
-	enum ReporterVersion {
-		v1 = "v1",
-		v2 = "v2"
-	};
+	type ReporterVersion = "v1" | "v2";
 
-	enum RunOnlyType {
-		rule = "rule",
-		rules = "rules",
-		tag = "tag",
-		tags = "tags"
-	};
+	type RunOnlyType = "rule" | "rules" | "tag" | "tags";	
 
-	type ResultGroups = "inapplicable" | "passes" | "incomplete" | "violations";
+	type resultGroups = "inapplicable" | "passes" | "incomplete" | "violations";
 
 	type RunOnlyObject = {
 		include?: string[] | string[][],
@@ -51,7 +33,7 @@ declare module axe {
 		iframes?: boolean,
 		elementRef?: boolean,
 		selectors?: boolean,
-		resultTypes?: ResultGroups[],
+		resultTypes?: resultGroups[],
 	}
 	interface AxeResults {
 		url: string,
