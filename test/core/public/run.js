@@ -447,8 +447,8 @@ describe('axe.run iframes', function () {
 			}, 1000);
 
 			axe.run('#fixture', {}, function (err, result) {
+				assert.isDefined(result);
 				assert.equal(result.violations.length, 1);
-				
 				var violation = result.violations[0];
 				assert.equal(violation.nodes.length, 2,
 					'one node for top frame, one for iframe');

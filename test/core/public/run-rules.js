@@ -220,9 +220,6 @@ describe('runRules', function () {
 	});
 
 	it('should reject if the context is invalid', function (done) {
-		before(function() {
-			axe._selectorData = {};
-		});
 		axe._load({
 			rules: [{
 				id: 'div#target',
