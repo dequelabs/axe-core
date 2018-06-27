@@ -231,6 +231,13 @@ describe('axe.utils.getFlattenedTree', function() {
 				assert.equal(virtualDOM[0].actualNode, vNode.actualNode);
 			});
 		});
+	} else {
+		it('does not throw when slot elements are used', function () {
+			fixture.innerHTML = '<button><slot></slot></button>';
+			assert.doesNotThrow(function () {
+				axe.utils.getFlattenedTree(fixture);
+			});
+		});
 	}
 
 	if (shadowSupport.undefined) {
