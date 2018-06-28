@@ -62,7 +62,9 @@
     "prepublishOnly": "grunt build",
     "postinstall": "node build/utils/postinstall.js",
     "release": "standard-version -a",
-    "sri-update": "grunt build && node build/sri-update && git add sri-history.json"
+    "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
+    "fmt": "prettier --write *.js '{build,doc,lib,test}/**/*.js'",
+    "precommit": "lint-staged"
   },
   "devDependencies": {
     "angular-precommit": "^1.0.3",
@@ -76,6 +78,7 @@
     "chai": "~4.1.2",
     "clone": "~2.1.1",
     "dot": "~1.1.2",
+    "eslint-config-prettier": "^2.9.0",
     "fs-extra": "^6.0.0",
     "grunt": "^1.0.2",
     "grunt-babel": "^7.0.0",
@@ -91,14 +94,23 @@
     "grunt-parallel": "^0.5.1",
     "grunt-retire": "^1.0.7",
     "html-entities": "^1.2.0",
+    "husky": "^0.14.3",
     "jquery": "^3.0.0",
+    "lint-staged": "^7.2.0",
     "markdown-table": "^1.1.2",
     "mocha": "^5.2.0",
+    "prettier": "^1.13.6",
     "promise": "~8.0.1",
     "revalidator": "~0.3.1",
     "selenium-webdriver": "~3.6.0",
     "sri-toolbox": "^0.2.0",
     "standard-version": "^4.2.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  }
 }
