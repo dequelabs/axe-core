@@ -1,13 +1,21 @@
-describe('landmark-no-more-than-one-contentinfo test pass', function () {
+describe('landmark-no-more-than-one-contentinfo test pass', function() {
 	'use strict';
 	var results;
-	before(function (done) {
+	before(function(done) {
 		function start() {
-			axe.run({ runOnly: { type: 'rule', values: ['landmark-no-duplicate-contentinfo'] } }, function (err, r) {
-				assert.isNull(err);
-				results = r;
-				done();
-			});
+			axe.run(
+				{
+					runOnly: {
+						type: 'rule',
+						values: ['landmark-no-duplicate-contentinfo']
+					}
+				},
+				function(err, r) {
+					assert.isNull(err);
+					results = r;
+					done();
+				}
+			);
 		}
 		if (document.readyState !== 'complete') {
 			window.addEventListener('load', start);
@@ -16,32 +24,34 @@ describe('landmark-no-more-than-one-contentinfo test pass', function () {
 		}
 	});
 
-	describe('violations', function () {
-		it('should find 0', function () {
+	describe('violations', function() {
+		it('should find 0', function() {
 			assert.lengthOf(results.violations, 0);
 		});
 	});
 
-	describe('passes', function () {
-		it('should find 2', function () {
+	describe('passes', function() {
+		it('should find 2', function() {
 			assert.lengthOf(results.passes[0].nodes, 2);
 		});
 
-		it('should find #pass1', function () {
+		it('should find #pass1', function() {
 			assert.deepEqual(results.passes[0].nodes[0].target, ['#pass1']);
 		});
 
-		it('should find #frame1, #pass2', function () {
-			assert.deepEqual(results.passes[0].nodes[1].target, ['#frame1', '#pass2']);
+		it('should find #frame1, #pass2', function() {
+			assert.deepEqual(results.passes[0].nodes[1].target, [
+				'#frame1',
+				'#pass2'
+			]);
 		});
 	});
 
-	it('should find 0 inapplicable', function () {
+	it('should find 0 inapplicable', function() {
 		assert.lengthOf(results.inapplicable, 0);
 	});
 
-	it('should find 0 incomplete', function () {
+	it('should find 0 incomplete', function() {
 		assert.lengthOf(results.incomplete, 0);
 	});
-
 });

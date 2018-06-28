@@ -5,7 +5,7 @@ camelcase: ["error", {"properties": "never"}]
 */
 var testConfig = require('./build/test/config');
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 	'use strict';
 
 	grunt.loadNpmTasks('grunt-babel');
@@ -24,19 +24,16 @@ module.exports = function (grunt) {
 
 	var langs;
 	if (grunt.option('lang')) {
-		langs = (grunt.option('lang') || '')
-			.split(/[,;]/g).map(function (lang) {
-				lang = lang.trim();
-				return (lang !== 'en' ? '.' + lang : '');
-			});
-
+		langs = (grunt.option('lang') || '').split(/[,;]/g).map(function(lang) {
+			lang = lang.trim();
+			return lang !== 'en' ? '.' + lang : '';
+		});
 	} else if (grunt.option('all-lang')) {
 		var localeFiles = require('fs').readdirSync('./locales');
-		langs = localeFiles.map(function (file) {
+		langs = localeFiles.map(function(file) {
 			return '.' + file.replace('.json', '');
 		});
 		langs.unshift(''); // Add default
-
 	} else {
 		langs = [''];
 	}
@@ -53,31 +50,32 @@ module.exports = function (grunt) {
 					stream: true,
 					grunt: true
 				},
-				tasks: webDriverTestBrowsers.map(function (b) {
+				tasks: webDriverTestBrowsers.map(function(b) {
 					return 'test-webdriver:' + b;
 				})
-
 			}
 		},
-		'test-webdriver': (function () {
+		'test-webdriver': (function() {
 			var tests = testConfig(grunt);
 			var options = Object.assign({}, tests.unit.options);
 			options.urls = options.urls.concat(tests.integration.options.urls);
 			var driverTests = {};
-			webDriverTestBrowsers.forEach(function (browser) {
+			webDriverTestBrowsers.forEach(function(browser) {
 				driverTests[browser] = {
 					options: Object.assign({ browser: browser }, options)
 				};
 			});
 			return driverTests;
-		}()),
+		})(),
 		retire: {
 			options: {
 				/** list of files to ignore **/
 				ignorefile: '.retireignore.json' //or '.retireignore.json'
 			},
-			js: ['lib/*.js'], /** Which js-files to scan. **/
-			node: ['./'] /** Which node directories to scan (containing package.json). **/
+			js: ['lib/*.js'] /** Which js-files to scan. **/,
+			node: [
+				'./'
+			] /** Which node directories to scan (containing package.json). **/
 		},
 		clean: ['dist', 'tmp', 'axe.js', 'axe.*.js'],
 		babel: {
@@ -85,20 +83,24 @@ module.exports = function (grunt) {
 				compact: 'false'
 			},
 			core: {
-				files: [{
-					expand: true,
-					cwd: 'lib/core',
-					src: ['**/*.js'],
-					dest: 'tmp/core'
-				}]
+				files: [
+					{
+						expand: true,
+						cwd: 'lib/core',
+						src: ['**/*.js'],
+						dest: 'tmp/core'
+					}
+				]
 			},
 			misc: {
-				files: [{
-					expand: true,
-					cwd: 'tmp',
-					src: ['*.js'],
-					dest: 'tmp'
-				}]
+				files: [
+					{
+						expand: true,
+						cwd: 'tmp',
+						src: ['*.js'],
+						dest: 'tmp'
+					}
+				]
 			}
 		},
 		'update-help': {
@@ -120,7 +122,7 @@ module.exports = function (grunt) {
 					'tmp/core/**/index.js',
 					'tmp/core/**/*.js'
 				],
-				files: langs.map(function (lang, i) {
+				files: langs.map(function(lang, i) {
 					return {
 						src: [
 							'lib/intro.stub',
@@ -157,7 +159,7 @@ module.exports = function (grunt) {
 				options: {
 					tags: grunt.option('tags')
 				},
-				files: langs.map(function (lang) {
+				files: langs.map(function(lang) {
 					return {
 						src: ['<%= concat.commons.dest %>'],
 						dest: {
@@ -202,7 +204,7 @@ module.exports = function (grunt) {
 		},
 		uglify: {
 			beautify: {
-				files: langs.map(function (lang, i) {
+				files: langs.map(function(lang, i) {
 					return {
 						src: ['<%= concat.engine.files[' + i + '].dest %>'],
 						dest: '<%= concat.engine.files[' + i + '].dest %>'
@@ -223,14 +225,14 @@ module.exports = function (grunt) {
 				}
 			},
 			minify: {
-				files: langs.map(function (lang, i) {
+				files: langs.map(function(lang, i) {
 					return {
 						src: ['<%= concat.engine.files[' + i + '].dest %>'],
 						dest: './axe' + lang + '.min.js'
 					};
 				}),
 				options: {
-					preserveComments: function (node, comment) {
+					preserveComments: function(node, comment) {
 						// preserve comments that start with a bang
 						return /^!/.test(comment.value);
 					},
@@ -357,18 +359,12 @@ module.exports = function (grunt) {
 				options: {
 					config: grunt.file.readJSON('.markdownlint.json')
 				},
-				src: [
-					'README.md',
-					'.github/*.md',
-					'doc/**/*.md'
-				]
+				src: ['README.md', '.github/*.md', 'doc/**/*.md']
 			}
 		}
 	});
 
-	grunt.registerTask('default', [
-		'build'
-	]);
+	grunt.registerTask('default', ['build']);
 
 	grunt.registerTask('build', [
 		'clean',
@@ -442,5 +438,4 @@ module.exports = function (grunt) {
 		'connect',
 		'watch'
 	]);
-
 };

@@ -1,4 +1,3 @@
-
 describe('helpers.failureSummary', function() {
 	'use strict';
 	before(function() {
@@ -12,10 +11,11 @@ describe('helpers.failureSummary', function() {
 							var out = 'Fix all of the following: \n';
 							var arr1 = it;
 							if (arr1) {
-								var value, i1 = -1,
+								var value,
+									i1 = -1,
 									l1 = arr1.length - 1;
 								while (i1 < l1) {
-									value = arr1[i1 += 1];
+									value = arr1[(i1 += 1)];
 									out += ' ' + value + '\n';
 								}
 							}
@@ -32,10 +32,11 @@ describe('helpers.failureSummary', function() {
 							var out = 'Fix any of the following: \n';
 							var arr1 = it;
 							if (arr1) {
-								var value, i1 = -1,
+								var value,
+									i1 = -1,
 									l1 = arr1.length - 1;
 								while (i1 < l1) {
-									value = arr1[i1 += 1];
+									value = arr1[(i1 += 1)];
 									out += ' ' + value + '\n';
 								}
 							}
@@ -51,17 +52,22 @@ describe('helpers.failureSummary', function() {
 		var summary = helpers.failureSummary({
 			result: 'failed',
 			any: [],
-			all: [{
-				id: '3',
-				message: '3'
-			}],
-			none: [{
-				id: '1',
-				message: '1'
-			}, {
-				id: '2',
-				message: '2'
-			}]
+			all: [
+				{
+					id: '3',
+					message: '3'
+				}
+			],
+			none: [
+				{
+					id: '1',
+					message: '1'
+				},
+				{
+					id: '2',
+					message: '2'
+				}
+			]
 		});
 
 		assert.equal(summary, 'Fix all of the following: \n 1\n 2\n 3\n');
@@ -70,16 +76,20 @@ describe('helpers.failureSummary', function() {
 	it('should return a list of ANYs if none return true', function() {
 		var summary = helpers.failureSummary({
 			result: 'failed',
-			any: [{
-				id: '1',
-				message: '1'
-			}, {
-				id: '2',
-				message: '2'
-			}, {
-				id: '3',
-				message: '3'
-			}],
+			any: [
+				{
+					id: '1',
+					message: '1'
+				},
+				{
+					id: '2',
+					message: '2'
+				},
+				{
+					id: '3',
+					message: '3'
+				}
+			],
 			none: [],
 			all: []
 		});
@@ -90,26 +100,32 @@ describe('helpers.failureSummary', function() {
 	it('should concatenate anys', function() {
 		var summary = helpers.failureSummary({
 			result: 'failed',
-			any: [{
-				id: '1',
-				message: '1'
-			}, {
-				id: '2',
-				message: '2'
-			}, {
-				id: '3',
-				message: '3'
-			}],
+			any: [
+				{
+					id: '1',
+					message: '1'
+				},
+				{
+					id: '2',
+					message: '2'
+				},
+				{
+					id: '3',
+					message: '3'
+				}
+			],
 			all: [],
-			none: [{
-				id: '4',
-				message: '4'
-			}]
+			none: [
+				{
+					id: '4',
+					message: '4'
+				}
+			]
 		});
 
-		assert.equal(summary, 'Fix all of the following: \n 4\n\n\nFix any of the following: \n 1\n 2\n 3\n');
-
+		assert.equal(
+			summary,
+			'Fix all of the following: \n 4\n\n\nFix any of the following: \n 1\n 2\n 3\n'
+		);
 	});
-
-
 });
