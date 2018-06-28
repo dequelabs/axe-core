@@ -1,14 +1,13 @@
-
-describe('frame-wait-time option', function () {
+describe('frame-wait-time option', function() {
 	'use strict';
 
-	before(function (done) {
-		axe.testUtils.awaitNestedLoad(function () {
+	before(function(done) {
+		axe.testUtils.awaitNestedLoad(function() {
 			done();
 		});
 	});
 
-	describe('when set', function () {
+	describe('when set', function() {
 		/**
 		 * Commenting out test, due to issue addressed beloe.
 		 * https://github.com/dequelabs/axe-core/issues/929
@@ -16,8 +15,9 @@ describe('frame-wait-time option', function () {
 		// var opts = {
 		// 	frameWaitTime: 1
 		// };
-		it('should modify the default frame timeout'
-			// Issue - 
+		it(
+			'should modify the default frame timeout'
+			// Issue -
 			// function (done) {
 			// 	var start = new Date();
 			// 	// Run axe with an unreasonably short wait time,
@@ -34,9 +34,9 @@ describe('frame-wait-time option', function () {
 		);
 	});
 
-	describe('when not set', function () {
-		it('should use the default frame timeout', function (done) {
-			axe.run('main', function (err, res) {
+	describe('when not set', function() {
+		it('should use the default frame timeout', function(done) {
+			axe.run('main', function(err, res) {
 				assert.isNull(err);
 				assert.isAbove(res.violations.length, 0);
 				done();
