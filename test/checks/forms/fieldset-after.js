@@ -1,5 +1,4 @@
-
-describe('fieldset-after', function () {
+describe('fieldset-after', function() {
 	'use strict';
 
 	function createResult(result, data) {
@@ -9,7 +8,7 @@ describe('fieldset-after', function () {
 		};
 	}
 
-	it('should remove duplicate results', function () {
+	it('should remove duplicate results', function() {
 		var result = checks.fieldset.after([
 			createResult(true, {
 				name: 'ape',
@@ -74,7 +73,7 @@ describe('fieldset-after', function () {
 				failureCode: 'no-group',
 				name: 'ape',
 				type: 'radio'
-			}),
+			})
 		]);
 	});
 });

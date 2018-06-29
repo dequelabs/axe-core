@@ -1,12 +1,11 @@
-describe('has-widget-role', function () {
+describe('has-widget-role', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
 	var node;
 	var checkContext = axe.testUtils.MockCheckContext();
 
-
-	afterEach(function () {
+	afterEach(function() {
 		node.innerHTML = '';
 		checkContext._data = null;
 	});
@@ -222,171 +221,168 @@ describe('has-widget-role', function () {
 		assert.isTrue(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-
-
-
-	it ('should return false for role=application', function() {
+	it('should return false for role=application', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'application');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=article', function() {
+	it('should return false for role=article', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'article');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=cell', function() {
+	it('should return false for role=cell', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'cell');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=columnheader', function() {
+	it('should return false for role=columnheader', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'columnheader');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=definition', function() {
+	it('should return false for role=definition', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'definition');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=directory', function() {
+	it('should return false for role=directory', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'directory');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=document', function() {
+	it('should return false for role=document', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'document');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=feed', function() {
+	it('should return false for role=feed', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'feed');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=figure', function() {
+	it('should return false for role=figure', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'figure');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=group', function() {
+	it('should return false for role=group', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'group');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=heading', function() {
+	it('should return false for role=heading', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'heading');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=img', function() {
+	it('should return false for role=img', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'img');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=list', function() {
+	it('should return false for role=list', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'list');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=listitem', function() {
+	it('should return false for role=listitem', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'listitem');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=math', function() {
+	it('should return false for role=math', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'math');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=none', function() {
+	it('should return false for role=none', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'none');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=note', function() {
+	it('should return false for role=note', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'note');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=presentation', function() {
+	it('should return false for role=presentation', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'presentation');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=row', function() {
+	it('should return false for role=row', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'row');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=rowgroup', function() {
+	it('should return false for role=rowgroup', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'rowgroup');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=rowheader', function() {
+	it('should return false for role=rowheader', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'rowheader');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=table', function() {
+	it('should return false for role=table', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'table');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=term', function() {
+	it('should return false for role=term', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'term');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=toolbar', function() {
+	it('should return false for role=toolbar', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'toolbar');
 		fixture.appendChild(node);
@@ -394,56 +390,56 @@ describe('has-widget-role', function () {
 	});
 
 	// Landmark Roles
-	it ('should return false for role=banner', function() {
+	it('should return false for role=banner', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'banner');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=complementary', function() {
+	it('should return false for role=complementary', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'complementary');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=contentinfo', function() {
+	it('should return false for role=contentinfo', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'contentinfo');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=form', function() {
+	it('should return false for role=form', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'form');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=main', function() {
+	it('should return false for role=main', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'main');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=navigation', function() {
+	it('should return false for role=navigation', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'navigation');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=region', function() {
+	it('should return false for role=region', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'region');
 		fixture.appendChild(node);
 		assert.isFalse(checks['has-widget-role'].evaluate.call(checkContext, node));
 	});
 
-	it ('should return false for role=search', function() {
+	it('should return false for role=search', function() {
 		node = document.createElement('div');
 		node.setAttribute('role', 'search');
 		fixture.appendChild(node);
