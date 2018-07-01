@@ -16,10 +16,9 @@ if we think that your code is sloppy. You can take clues from the existing code 
 consider to be reasonable code quality. Please be prepared to make changes that we ask of you even
 if you might not agree with the request(s).
 
-Pull requests that change the tabs of a file (spacing or changes from spaces to tabs and vice versa)
-will not be accepted. Please respect the coding style of the files you are changing and adhere to that.
+Please respect the coding style of the files you are changing and adhere to that.
 
-That having been said, we prefer:
+The JavaScript files in this project are formatted by [Prettier](https://prettier.io/). Additionally, we prefer:
 
 1. Tabs over spaces
 2. Single quotes for string literals

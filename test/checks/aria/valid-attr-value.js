@@ -1,16 +1,16 @@
-describe('aria-valid-attr-value', function () {
+describe('aria-valid-attr-value', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
 	var checkContext = axe.testUtils.MockCheckContext();
 	var fixtureSetup = axe.testUtils.fixtureSetup;
 
-	afterEach(function () {
+	afterEach(function() {
 		fixture.innerHTML = '';
 		checkContext.reset();
 	});
 
-	it('should not check the validity of attribute names', function () {
+	it('should not check the validity of attribute names', function() {
 		var node = document.createElement('div');
 		node.id = 'test';
 		node.tabIndex = 1;
@@ -18,11 +18,13 @@ describe('aria-valid-attr-value', function () {
 		node.setAttribute('aria-selected', 'true');
 		fixture.appendChild(node);
 
-		assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			checks['aria-valid-attr-value'].evaluate.call(checkContext, node)
+		);
 		assert.isNull(checkContext._data);
 	});
 
-	it('should return true if all values are valid', function () {
+	it('should return true if all values are valid', function() {
 		var node = document.createElement('div');
 		node.id = 'test';
 		node.tabIndex = 1;
@@ -31,11 +33,13 @@ describe('aria-valid-attr-value', function () {
 		node.setAttribute('aria-relevant', 'additions removals');
 		fixture.appendChild(node);
 
-		assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			checks['aria-valid-attr-value'].evaluate.call(checkContext, node)
+		);
 		assert.isNull(checkContext._data);
 	});
 
-	it('should return true if idref(s) values are valid', function () {
+	it('should return true if idref(s) values are valid', function() {
 		var node = document.createElement('div');
 		var testTgt1 = document.createElement('div');
 		var testTgt2 = document.createElement('div');
@@ -51,11 +55,13 @@ describe('aria-valid-attr-value', function () {
 		fixture.appendChild(testTgt1);
 		fixture.appendChild(testTgt2);
 
-		assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			checks['aria-valid-attr-value'].evaluate.call(checkContext, node)
+		);
 		assert.isNull(checkContext._data);
 	});
 
-	it('should return false if any values are invalid', function () {
+	it('should return false if any values are invalid', function() {
 		var node = document.createElement('div');
 		node.id = 'test';
 		node.tabIndex = 1;
@@ -63,11 +69,13 @@ describe('aria-valid-attr-value', function () {
 		node.setAttribute('aria-selected', '0');
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['aria-valid-attr-value'].evaluate.call(checkContext, node));
+		assert.isFalse(
+			checks['aria-valid-attr-value'].evaluate.call(checkContext, node)
+		);
 		assert.deepEqual(checkContext._data, ['aria-selected="0"']);
 	});
 
-	it('should determine attribute validity by calling axe.commons.aria.validateAttrValue', function () {
+	it('should determine attribute validity by calling axe.commons.aria.validateAttrValue', function() {
 		var node = document.createElement('div');
 		node.id = 'test';
 		node.tabIndex = 1;
@@ -77,36 +85,46 @@ describe('aria-valid-attr-value', function () {
 
 		var orig = axe.commons.aria.validateAttrValue;
 		var called = 0;
-		axe.commons.aria.validateAttrValue = function (nd, attrName) {
+		axe.commons.aria.validateAttrValue = function(nd, attrName) {
 			assert.equal(nd, node);
 			assert.match(attrName, /^aria-/);
 			called++;
 			return true;
 		};
-		assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			checks['aria-valid-attr-value'].evaluate.call(checkContext, node)
+		);
 		assert.isNull(checkContext._data);
 		assert.equal(called, 2);
 
 		axe.commons.aria.validateAttrValue = orig;
 	});
 
-	it('should allow empty strings rather than idrefs for specific attributes', function () {
+	it('should allow empty strings rather than idrefs for specific attributes', function() {
 		fixtureSetup(
-			'<button aria-labelledby="">Button</button>' +
-			'<div aria-owns=""></div>'
+			'<button aria-labelledby="">Button</button>' + '<div aria-owns=""></div>'
 		);
 		var passing = fixture.querySelector('button');
 		var failing = fixture.querySelector('div');
-		assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, passing));
-		assert.isFalse(checks['aria-valid-attr-value'].evaluate.call(checkContext, failing));
+		assert.isTrue(
+			checks['aria-valid-attr-value'].evaluate.call(checkContext, passing)
+		);
+		assert.isFalse(
+			checks['aria-valid-attr-value'].evaluate.call(checkContext, failing)
+		);
 	});
 
-	describe('options', function () {
-		it('should exclude supplied attributes', function () {
-			fixture.innerHTML = '<div id="target" aria-live="nope" aria-describedby="no exist k thx"></div>';
+	describe('options', function() {
+		it('should exclude supplied attributes', function() {
+			fixture.innerHTML =
+				'<div id="target" aria-live="nope" aria-describedby="no exist k thx"></div>';
 			var target = fixture.querySelector('#target');
-			assert.isTrue(checks['aria-valid-attr-value'].evaluate.call(checkContext, target, ['aria-live', 'aria-describedby']));
+			assert.isTrue(
+				checks['aria-valid-attr-value'].evaluate.call(checkContext, target, [
+					'aria-live',
+					'aria-describedby'
+				])
+			);
 		});
 	});
-
 });

@@ -1,16 +1,16 @@
-describe('accesskeys', function () {
+describe('accesskeys', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
 
 	var checkContext = axe.testUtils.MockCheckContext();
 
-	afterEach(function () {
+	afterEach(function() {
 		fixture.innerHTML = '';
 		checkContext.reset();
 	});
 
-	it('should return true and record accesskey', function () {
+	it('should return true and record accesskey', function() {
 		fixture.innerHTML = '<div id="target" accesskey="A"></div>';
 		var node = fixture.querySelector('#target');
 		assert.isTrue(checks.accesskeys.evaluate.call(checkContext, node));
@@ -20,8 +20,8 @@ describe('accesskeys', function () {
 		assert.equal(checkContext._relatedNodes[0], node);
 	});
 
-	describe('after', function () {
-		it('should push duplicates onto relatedNodes', function () {
+	describe('after', function() {
+		it('should push duplicates onto relatedNodes', function() {
 			var results = [
 				{ data: 'A', relatedNodes: ['bob'] },
 				{ data: 'A', relatedNodes: ['fred'] }
@@ -35,7 +35,7 @@ describe('accesskeys', function () {
 			assert.equal(result[0].relatedNodes[0], 'fred');
 		});
 
-		it('should remove non-unique accesskeys and toggle result', function () {
+		it('should remove non-unique accesskeys and toggle result', function() {
 			var results = [
 				{ data: 'A', relatedNodes: ['bob'] },
 				{ data: 'A', relatedNodes: ['joe'] },
@@ -49,7 +49,7 @@ describe('accesskeys', function () {
 			assert.isFalse(result[1].result);
 		});
 
-		it('should consider accesskeys with different cases as the same result', function () {
+		it('should consider accesskeys with different cases as the same result', function() {
 			var result = checks.accesskeys.after([
 				{ data: 'A', relatedNodes: ['bob'] },
 				{ data: 'a', relatedNodes: ['fred'] }
@@ -61,5 +61,4 @@ describe('accesskeys', function () {
 			assert.equal(result[0].relatedNodes[0], 'fred');
 		});
 	});
-
 });

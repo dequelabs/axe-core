@@ -1,26 +1,25 @@
-describe('axe.utils.contains', function () {
+describe('axe.utils.contains', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 
-	afterEach(function () {
+	afterEach(function() {
 		fixture.innerHTML = '';
 	});
 
-	it('should first check contains', function () {
+	it('should first check contains', function() {
 		var success = false,
 			node2 = { actualNode: 'not really a node but it doesnt matter' },
 			node1 = {
 				actualNode: {
-					contains: function (n2) {
+					contains: function(n2) {
 						success = true;
 						assert.deepEqual(n2, node2.actualNode);
 					},
-					compareDocumentPosition: function () {
+					compareDocumentPosition: function() {
 						success = false;
 						assert.ok(false, 'should not be called');
-
 					}
 				}
 			};
@@ -29,12 +28,12 @@ describe('axe.utils.contains', function () {
 		assert.isTrue(success);
 	});
 
-	it('should fallback to compareDocumentPosition', function () {
+	it('should fallback to compareDocumentPosition', function() {
 		var success = false,
 			node2 = { actualNode: 'not really a node but it doesnt matter' },
 			node1 = {
 				actualNode: {
-					compareDocumentPosition: function (n2) {
+					compareDocumentPosition: function(n2) {
 						success = true;
 						assert.deepEqual(n2, node2.actualNode);
 					}
@@ -45,11 +44,11 @@ describe('axe.utils.contains', function () {
 		assert.isTrue(success);
 	});
 
-	it('should compareDocumentPosition against bitwise & 16', function () {
+	it('should compareDocumentPosition against bitwise & 16', function() {
 		var node2 = { actualNode: 'not really a node but it doesnt matter' },
 			node1 = {
 				actualNode: {
-					compareDocumentPosition: function () {
+					compareDocumentPosition: function() {
 						return 20;
 					}
 				}
@@ -58,17 +57,18 @@ describe('axe.utils.contains', function () {
 		assert.isTrue(axe.utils.contains(node1, node2));
 	});
 
-	it('should work when the child is inside shadow DOM', function () {
+	it('should work when the child is inside shadow DOM', function() {
 		var tree, node1, node2;
 
 		function createContentContains() {
 			var group = document.createElement('div');
-			group.innerHTML = '<label id="mylabel">Label</label><input aria-labelledby="mylabel" type="text" />';
+			group.innerHTML =
+				'<label id="mylabel">Label</label><input aria-labelledby="mylabel" type="text" />';
 			return group;
 		}
 
 		function makeShadowTreeContains(node) {
-			var root = node.attachShadow({mode: 'open'});
+			var root = node.attachShadow({ mode: 'open' });
 			var div = document.createElement('div');
 			div.className = 'parent';
 			root.appendChild(div);
@@ -86,7 +86,7 @@ describe('axe.utils.contains', function () {
 		}
 	});
 
-	it('should work with slotted elements inside shadow DOM', function () {
+	it('should work with slotted elements inside shadow DOM', function() {
 		var tree, node1, node2;
 
 		function createContentSlotted() {
@@ -95,7 +95,7 @@ describe('axe.utils.contains', function () {
 			return group;
 		}
 		function makeShadowTree(node) {
-			var root = node.attachShadow({mode: 'open'});
+			var root = node.attachShadow({ mode: 'open' });
 			var div = document.createElement('div');
 			var a = document.createElement('a');
 			div.appendChild(a);
@@ -112,7 +112,7 @@ describe('axe.utils.contains', function () {
 		}
 	});
 
-	it('should work', function () {
+	it('should work', function() {
 		fixture.innerHTML = '<div id="outer"><div id="inner"></div></div>';
 		var inner = axe.utils.getFlattenedTree(document.getElementById('inner'))[0];
 		var outer = axe.utils.getFlattenedTree(document.getElementById('outer'))[0];
