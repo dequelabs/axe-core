@@ -335,7 +335,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `elementRef`    | `false` | Return element references in addition to the target
 | `restoreScroll` | `false` | Scrolls elements back to before axe started
 | `frameWaitTime` | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out
-| `preload`       | `false` | Any additional assets (eg: cssom) to preload before running rules. Accepts a boolean (true/ false) or an object where an array of assets can be specified. Eg: `preload: true`, or `preload: false`, or `preload: { assets: ['cssom'], timeout: 50000 }`. The `timeout` attribute in the object configuration is `optional` and defaults to `30000` as defined in `axe.constants`, the `timeout` is essential for any network dependent assets that are preloaded.
+| `preload`       | `false` | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details)
 
 ###### Options Parameter Examples
 
@@ -456,6 +456,27 @@ Additionally, there are a number or properties that allow configuration of diffe
   }
   ```
   This example will process all of the "violations", "incomplete", and "inapplicable" result types. Since "passes" was not specified, it will only process the first pass for each rule, if one exists. As a result, the results object's `passes` array will have a length of either `0` or `1`. On a series of extremely large pages, this would improve performance considerably.
+
+###### <a id='preload-configuration-details'></a> Preload Configuration in Options Parameter
+
+The preload attribute in options parameter accepts a `boolean` or an `object` where an array of assets can be specified. 
+
+1. Specifying a `boolean`
+
+```js
+preload: true
+```
+
+2. Specifying an `object`
+```js
+preload: { 
+	assets: ['cssom'], 
+	timeout: 50000 
+}
+```
+The `assets` attribute expects an array of preload(able) constraints to be fetched.
+
+The `timeout` attribute in the object configuration is `optional` and has a fallback default value. The `timeout` is essential for any network dependent assets that are preloaded.
 
 ##### Callback Parameter
 
