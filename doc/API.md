@@ -469,10 +469,7 @@ preload: true
 
 2. Specifying an `object`
 ```js
-preload: { 
-	assets: ['cssom'], 
-	timeout: 50000 
-}
+preload: { assets: ['cssom'], timeout: 50000 }
 ```
 The `assets` attribute expects an array of preload(able) constraints to be fetched.
 
