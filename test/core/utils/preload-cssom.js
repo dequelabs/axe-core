@@ -104,10 +104,12 @@ describe('axe.utils.preloadCssom', function() {
 	(shadowSupported ? it : xit)(
 		'should fetch all shadow DOM stylesheets',
 		function(done) {
-			var content =
+			fixture.innerHTML = '<div id="target" role="list"></div>';
+			var target = document.querySelector('#target');
+			var shadowRoot = target.attachShadow({ mode: 'open' });
+			shadowRoot.innerHTML =
 				'<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />';
-			var shadow = fixture.attachShadow({ mode: 'open' });
-			shadow.innerHTML = content;
+
 			var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
 			args.treeRoot = tree;
 			var actual = axe.utils.preloadCssom(args);
