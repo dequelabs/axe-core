@@ -1,4 +1,5 @@
 {
+  "extends": ["prettier"],
   "env": {
     "node": true
   },
@@ -15,7 +16,6 @@
       2,
       "any"
     ],
-    "indent": ["error", "tab", {"SwitchCase": 0}],
     "no-use-before-define": [
       2,
       {
@@ -27,10 +27,6 @@
     "no-empty": 2,
     "no-new": 2,
     "no-plusplus": 0,
-    "quotes": [
-      2,
-      "single"
-    ],
     "no-undef": 2,
     "no-unused-vars": 2,
     "strict": 0,
@@ -50,14 +46,6 @@
       1,
       12
     ],
-    "max-len": [
-      2,
-      {
-        "code": 120,
-        "ignoreComments": true
-      }
-    ],
-    "semi": 0,
     "no-cond-assign": 0,
     "no-debugger": 0,
     "no-eq-null": 0,
@@ -65,8 +53,6 @@
     "no-unused-expressions": 0,
     "block-scoped-var": 0,
     "no-iterator": 0,
-    "linebreak-style": 0,
-    "comma-style": ["error", "last"],
     "no-loop-func": 0,
     "no-multi-str": 0,
     "no-proto": 0,

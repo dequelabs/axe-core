@@ -1,18 +1,18 @@
 /*eslint-env node */
 'use strict';
 
-module.exports = function (grunt) {
-	grunt.registerMultiTask('testconfig',
+module.exports = function(grunt) {
+	grunt.registerMultiTask(
+		'testconfig',
 		'This task creates a file with all the source test config and HTML fixtures in a single JS object `tests`',
-		function () {
-
+		function() {
 			var result = {
 				tests: {},
 				urls: []
 			};
 
 			this.files.forEach(function(f) {
-				f.src.forEach(function (filepath) {
+				f.src.forEach(function(filepath) {
 					var config = grunt.file.readJSON(filepath);
 					config.content = grunt.file.read(filepath.replace(/json$/, 'html'));
 					result.tests[config.rule] = result.tests[config.rule] || [];
@@ -20,7 +20,10 @@ module.exports = function (grunt) {
 				});
 				grunt.config(['testconfig', 'options', 'data'], result);
 				if (f.dest) {
-					grunt.file.write(f.dest, 'var tests = ' + JSON.stringify(result.tests));
+					grunt.file.write(
+						f.dest,
+						'var tests = ' + JSON.stringify(result.tests)
+					);
 				}
 			});
 		}

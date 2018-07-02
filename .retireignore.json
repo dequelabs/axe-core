@@ -60,6 +60,10 @@
 		"justification": "Sub-dependency of retire.js, which is being ignored"
 	},
 	{
+		"path": "node_modules/stringstream",
+		"justification": "Sub-dependency of retire.js, which is being ignored"
+	},
+	{
 		"path": "node_modules/grunt-contrib-watch",
 		"justification": "Ignoring until a new release is out"
 	}

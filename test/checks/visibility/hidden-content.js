@@ -1,5 +1,5 @@
 /* global xit */
-describe('hidden content', function () {
+describe('hidden content', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
@@ -7,45 +7,64 @@ describe('hidden content', function () {
 	var checkSetup = axe.testUtils.checkSetup;
 	var checkContext = axe.testUtils.MockCheckContext();
 
-	afterEach(function () {
+	afterEach(function() {
 		fixture.innerHTML = '';
 		checkContext.reset();
 		axe._tree = undefined;
 	});
 
-	it('should return undefined with display:none and children', function () {
-		var params = checkSetup('<div id="target" style="display: none;"><p>Some paragraph text.</p></div>');
-		assert.isUndefined(checks['hidden-content'].evaluate.apply(checkContext, params));
+	it('should return undefined with display:none and children', function() {
+		var params = checkSetup(
+			'<div id="target" style="display: none;"><p>Some paragraph text.</p></div>'
+		);
+		assert.isUndefined(
+			checks['hidden-content'].evaluate.apply(checkContext, params)
+		);
 	});
 
-	it('should return undefined with visibility:hidden and children', function () {
-		var params = checkSetup('<div id="target" style="visibility: hidden;"><p>Some paragraph text.</p></div>');
-		assert.isUndefined(checks['hidden-content'].evaluate.apply(checkContext, params));
+	it('should return undefined with visibility:hidden and children', function() {
+		var params = checkSetup(
+			'<div id="target" style="visibility: hidden;"><p>Some paragraph text.</p></div>'
+		);
+		assert.isUndefined(
+			checks['hidden-content'].evaluate.apply(checkContext, params)
+		);
 	});
 
-	it('should return true with visibility:hidden and parent with visibility:hidden', function () {
-		var params = checkSetup('<div style="visibility: hidden;"><p id="target" style="visibility: hidden;">Some paragraph text.</p></div>');
-		assert.isTrue(checks['hidden-content'].evaluate.apply(checkContext, params));
+	it('should return true with visibility:hidden and parent with visibility:hidden', function() {
+		var params = checkSetup(
+			'<div style="visibility: hidden;"><p id="target" style="visibility: hidden;">Some paragraph text.</p></div>'
+		);
+		assert.isTrue(
+			checks['hidden-content'].evaluate.apply(checkContext, params)
+		);
 	});
 
-	it('should return true with aria-hidden and no content', function () {
-		var params = checkSetup('<span id="target" class="icon" aria-hidden="true"></span>');
-		assert.isTrue(checks['hidden-content'].evaluate.apply(checkContext, params));
+	it('should return true with aria-hidden and no content', function() {
+		var params = checkSetup(
+			'<span id="target" class="icon" aria-hidden="true"></span>'
+		);
+		assert.isTrue(
+			checks['hidden-content'].evaluate.apply(checkContext, params)
+		);
 	});
 
-	it('should skip whitelisted elements', function () {
+	it('should skip whitelisted elements', function() {
 		var node = document.querySelector('head');
 		axe._tree = axe.utils.getFlattenedTree(document.documentElement);
 		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
-		assert.isTrue(checks['hidden-content'].evaluate(node, undefined, virtualNode));
+		assert.isTrue(
+			checks['hidden-content'].evaluate(node, undefined, virtualNode)
+		);
 	});
 
-	(shadowSupport ? it : xit)('works on elements in a shadow DOM', function () {
+	(shadowSupport ? it : xit)('works on elements in a shadow DOM', function() {
 		fixture.innerHTML = '<div id="shadow"> <div id="content">text</div> </div>';
-		var shadowRoot = document.getElementById('shadow').attachShadow({ mode: 'open' });
-		shadowRoot.innerHTML = '<div id="target" style="display:none">' +
-			'<slot></slot>' +
-		'</div>';
+		var shadowRoot = document
+			.getElementById('shadow')
+			.attachShadow({ mode: 'open' });
+		shadowRoot.innerHTML =
+			'<div id="target" style="display:none">' + '<slot></slot>' + '</div>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var shadow = document.querySelector('#shadow');
