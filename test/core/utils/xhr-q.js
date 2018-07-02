@@ -1,21 +1,21 @@
 /*global sinon */
 
-describe('axe.utils.xhrQ', function () {
+describe('axe.utils.xhrQ', function() {
 	'use strict';
 
-	beforeEach(function () {
+	beforeEach(function() {
 		this.xhr = sinon.useFakeXMLHttpRequest();
 		this.requests = [];
-		this.xhr.onCreate = function (xhr) {
+		this.xhr.onCreate = function(xhr) {
 			this.requests.push(xhr);
 		}.bind(this);
 	});
 
-	afterEach(function () {
+	afterEach(function() {
 		this.xhr.restore();
 	});
 
-	it('should reject queue on 500 error', function (done) {
+	it('should reject queue on 500 error', function(done) {
 		var config = {
 			url: '/kaBoom'
 		};
@@ -25,25 +25,25 @@ describe('axe.utils.xhrQ', function () {
 			dataJson: { message: 'some dummy data.' }
 		};
 
-		axe.utils.xhrQ(config)
-			.then(function () {
+		axe.utils
+			.xhrQ(config)
+			.then(function() {
 				assert.fail('should not have resolved the queue');
 				done();
 			})
-			.catch(function (err) {
+			.catch(function(err) {
 				assert.equal(err.status, 500);
 				done();
 			});
 
-		this.requests[0]
-			.respond(
-				fakeResponse.status,
-				fakeResponse.contentType,
-				JSON.stringify(fakeResponse.dataJson)
-			);
+		this.requests[0].respond(
+			fakeResponse.status,
+			fakeResponse.contentType,
+			JSON.stringify(fakeResponse.dataJson)
+		);
 	});
 
-	it('should resolve queue for status 200', function (done) {
+	it('should resolve queue for status 200', function(done) {
 		var config = {
 			url: '/gotMe'
 		};
@@ -53,26 +53,25 @@ describe('axe.utils.xhrQ', function () {
 			dataJson: { message: 'some dummy data.' }
 		};
 
-		axe.utils.xhrQ(config)
-			.then(function (results) {
+		axe.utils
+			.xhrQ(config)
+			.then(function(results) {
 				var response = results[0];
 				assert.equal(response.status, 200);
 				done();
 			})
-			.catch(function () {
-				assert.fail('should not have rejected the queue.')
-				done();
+			.catch(function(error) {
+				done(error);
 			});
 
-		this.requests[0]
-			.respond(
-				fakeResponse.status,
-				fakeResponse.contentType,
-				JSON.stringify(fakeResponse.dataJson)
-			);
+		this.requests[0].respond(
+			fakeResponse.status,
+			fakeResponse.contentType,
+			JSON.stringify(fakeResponse.dataJson)
+		);
 	});
 
-	it('should populate response', function (done) {
+	it('should populate response', function(done) {
 		var config = {
 			url: '/gotMe'
 		};
@@ -81,28 +80,29 @@ describe('axe.utils.xhrQ', function () {
 			contentType: { 'Content-Type': 'text/json' },
 			dataJson: {
 				status: 200,
-				responseText: 'My Expected Data!',
+				responseText: 'My Expected Data!'
 			}
 		};
 
-		axe.utils.xhrQ(config)
-			.then(function (results) {
+		axe.utils
+			.xhrQ(config)
+			.then(function(results) {
 				var response = results[0];
 				assert.isObject(response);
-				assert.deepEqual(JSON.parse(response.responseText), fakeResponse.dataJson);
+				assert.deepEqual(
+					JSON.parse(response.responseText),
+					fakeResponse.dataJson
+				);
 				done();
 			})
-			.catch(function () {
-				assert.fail('should not have rejected the queue.');
-				done();
+			.catch(function(error) {
+				done(error);
 			});
 
-		this.requests[0]
-			.respond(
-				fakeResponse.status,
-				fakeResponse.contentType,
-				JSON.stringify(fakeResponse.dataJson)
-			);
+		this.requests[0].respond(
+			fakeResponse.status,
+			fakeResponse.contentType,
+			JSON.stringify(fakeResponse.dataJson)
+		);
 	});
-
 });
