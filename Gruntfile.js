@@ -122,6 +122,12 @@ module.exports = function(grunt) {
 					'tmp/core/**/index.js',
 					'tmp/core/**/*.js'
 				],
+				externalDependencyFiles: [
+					// list of external dependencies, which exposes a global on the window,
+					// they are first concatanated to generated axe file
+					// the minify/ uglify step, then processes the same to generate .min equivalent
+					'./node_modules/axios/dist/axios.js'
+				],
 				files: langs.map(function(lang, i) {
 					return {
 						src: [
@@ -129,7 +135,9 @@ module.exports = function(grunt) {
 							'<%= concat.engine.coreFiles %>',
 							// include rules / checks / commons
 							'<%= configure.rules.files[' + i + '].dest.auto %>',
-							'lib/outro.stub'
+							'lib/outro.stub',
+							// append all external dependencies post axe module
+							'<%= concat.engine.externalDependencyFiles %>'
 						],
 						dest: 'axe' + lang + '.js'
 					};
