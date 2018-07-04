@@ -2,15 +2,15 @@
 | :------- | :------- | :------- | :------- | :------- |
 | accesskeys | Ensures every accesskey attribute value is unique | Serious | best-practice, cat.keyboard | true |
 | area-alt | Ensures &lt;area&gt; elements of image maps have alternate text | Critical | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
-| aria-allowed-attr | Ensures ARIA attributes are allowed for an element&apos;s role | Critical | cat.aria, wcag2a, wcag411, wcag412 | true |
+| aria-allowed-attr | Ensures ARIA attributes are allowed for an element&apos;s role | Critical | cat.aria, wcag2a, wcag412 | true |
 | aria-dpub-role-fallback | Ensures unsupported DPUB roles are only used on elements with implicit fallback roles | Moderate | cat.aria, wcag2a, wcag131 | true |
 | aria-hidden-body | Ensures aria-hidden=&apos;true&apos; is not present on the document body. | Critical | cat.aria, wcag2a, wcag412 | true |
-| aria-required-attr | Ensures elements with ARIA roles have all required ARIA attributes | Critical | cat.aria, wcag2a, wcag411, wcag412 | true |
+| aria-required-attr | Ensures elements with ARIA roles have all required ARIA attributes | Critical | cat.aria, wcag2a, wcag412 | true |
 | aria-required-children | Ensures elements with an ARIA role that require child roles contain them | Critical | cat.aria, wcag2a, wcag131 | true |
 | aria-required-parent | Ensures elements with an ARIA role that require parent roles are contained by them | Critical | cat.aria, wcag2a, wcag131 | true |
-| aria-roles | Ensures all elements with a role attribute use a valid value | Serious, Critical | cat.aria, wcag2a, wcag131, wcag411, wcag412 | true |
-| aria-valid-attr-value | Ensures all ARIA attributes have valid values | Critical | cat.aria, wcag2a, wcag131, wcag411, wcag412 | true |
-| aria-valid-attr | Ensures attributes that begin with aria- are valid ARIA attributes | Critical | cat.aria, wcag2a, wcag411 | true |
+| aria-roles | Ensures all elements with a role attribute use a valid value | Serious, Critical | cat.aria, wcag2a, wcag412 | true |
+| aria-valid-attr-value | Ensures all ARIA attributes have valid values | Critical | cat.aria, wcag2a, wcag412 | true |
+| aria-valid-attr | Ensures attributes that begin with aria- are valid ARIA attributes | Critical | cat.aria, wcag2a, wcag412 | true |
 | audio-caption | Ensures &lt;audio&gt; elements have captions | Critical | cat.time-and-media, wcag2a, wcag121, section508, section508.22.a | true |
 | blink | Ensures &lt;blink&gt; elements are not used | Serious | cat.time-and-media, wcag2a, wcag222, section508, section508.22.j | true |
 | button-name | Ensures buttons have discernible text | Serious, Critical | cat.name-role-value, wcag2a, wcag412, section508, section508.22.a | true |
