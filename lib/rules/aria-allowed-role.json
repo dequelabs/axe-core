@@ -7,8 +7,8 @@
 		"best-practice"
 	],
 	"metadata": {
-		"description": "Ensures all elements with a user-defined role may be used",
-		"help": "ARIA roles used must conform to void values"
+		"description": "Ensure role attribute has a value appropriate for the element",
+		"help": "ARIA role must be appropriate for the element"
 	},
 	"all": [],
 	"any": [
