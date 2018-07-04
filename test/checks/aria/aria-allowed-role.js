@@ -46,7 +46,7 @@ describe('aria-allowed-role', function() {
 		);
 	});
 
-	it('should allow an <img> with an alt to have any role except `none` or `presentation`', function() {
+	it('should allow an <img> with a non-empty alt to have any role except `none` or `presentation`', function() {
 		var node = document.createElement('img');
 		node.setAttribute('role', 'banner');
 		node.alt = 'some text';
