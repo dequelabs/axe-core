@@ -1,0 +1,57 @@
+<input autocomplete="username" id="pass1" />
+
+<select autocomplete="bday-month" id="pass2">
+  <option>January</option>
+  <option>...</option>
+</select>
+
+<textarea autocomplete="Street-Address" id="pass3"></textarea>
+
+<input autocomplete="Work EMail" id="pass4" />
+
+<input autocomplete="section-partner email" id="pass5" />
+
+<input autocomplete="section-primary shipping work email" id="pass6" />
+
+<!-- Unknown autocomplete term -->
+<input autocomplete="badterm" id="fail1" />
+
+<!-- "work" not allowed before "photo" -->
+<input autocomplete="work photo" id="fail2" />
+
+<!-- invalid order of terms -->
+<input autocomplete="work shipping email" id="fail3" />
+
+<!-- comma seperated rather than space separated list -->
+<input autocomplete="work,email" id="fail4" />
+
+<!-- inappropriate field type -->
+<input type="number" autocomplete="email" id="fail5" />
+
+<!-- Incorrect element -->
+<button autocomplete="username" id="inapplicable1"></button>
+
+<!-- Empty attribute -->
+<input autocomplete="" id="inapplicable2" />
+
+<!-- Hidden through display:none -->
+<input autocomplete="username" style="display:none" id="inapplicable3" />
+
+<!-- Off screen and not focusable -->
+<input autocomplete="username" tabindex="-1" aria-hidden="true"
+    style="position:absolute; top:-9999em" id="inapplicable4" />
+
+<!-- input button -->
+<input type="button" autocomplete="username" id="inapplicable5" />
+
+<!-- hidden -->
+<input type="hidden" autocomplete="username" id="inapplicable6" />
+
+<!-- native disabled -->
+<input autocomplete="username" disabled id="inapplicable7" />
+
+<!-- ARIA disabled -->
+<input autocomplete="username" aria-disabled="true" id="inapplicable8" />
+
+<!-- non-widget element -->
+<input type="button" role="none" tabindex="-1" autocomplete="username" id="inapplicable9" />
