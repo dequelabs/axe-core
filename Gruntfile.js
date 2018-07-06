@@ -131,13 +131,8 @@ module.exports = function(grunt) {
 				files: langs.map(function(lang, i) {
 					return {
 						src: [
-							'lib/intro.comment.stub',
-
-							// append all external dependencies pre axe module generation
-							'<%= concat.engine.externalDependencyFiles %>',
-
-							// axe files - after external libs, that way any global override by axe takes priority
 							'lib/intro.stub',
+							'<%= concat.engine.externalDependencyFiles %>',
 							'<%= concat.engine.coreFiles %>',
 							// include rules / checks / commons
 							'<%= configure.rules.files[' + i + '].dest.auto %>',

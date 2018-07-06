@@ -9,11 +9,7 @@ describe('UMD window', function() {
 		assert.hasAnyKeys(window.axe, ['utils', 'commons', 'core']);
 	});
 
-	it('should expose axios as a property of window', function() {
-		assert.property(window, 'axios');
-	});
-
-	it('should ensure axios has prototype chained keys', function() {
-		assert.hasAnyKeys(window.axios, ['get', 'request', 'options', 'post']);
+	it('has axios on axe.imports', function() {
+		assert.hasAnyKeys(axe.imports.axios, ['get', 'request', 'options', 'post']);
 	});
 });
