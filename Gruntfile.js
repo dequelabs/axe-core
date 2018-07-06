@@ -122,20 +122,10 @@ module.exports = function(grunt) {
 					'tmp/core/**/index.js',
 					'tmp/core/**/*.js'
 				],
-				externalDependencyFiles: [
-					// list of external dependencies, which exposes a global on the window,
-					// they are first concatanated to generated axe file
-					// the minify/ uglify step, then processes the same to generate .min equivalent
-					'./node_modules/axios/dist/axios.js'
-				],
 				files: langs.map(function(lang, i) {
 					return {
 						src: [
 							'lib/intro.comment.stub',
-
-							// append all external dependencies pre axe module generation
-							'<%= concat.engine.externalDependencyFiles %>',
-
 							// axe files - after external libs, that way any global override by axe takes priority
 							'lib/intro.stub',
 							'<%= concat.engine.coreFiles %>',
@@ -380,6 +370,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('build', [
 		'clean',
+		// 'generate-imports',
 		'eslint',
 		'validate',
 		'concat:commons',
