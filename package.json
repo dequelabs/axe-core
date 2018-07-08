@@ -60,14 +60,17 @@
     "test-fast": "grunt test-fast",
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
     "prepublishOnly": "grunt build",
-    "postinstall": "node build/utils/postinstall.js",
     "release": "standard-version -a",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "fmt": "prettier --write *.js '{build,doc,lib,test}/**/*.js'",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "commit": "git-cz",
+    "commitmsg": "commitlint -E GIT_PARAMS"
   },
   "devDependencies": {
-    "angular-precommit": "^1.0.3",
+    "@commitlint/cli": "^7.0.0",
+    "@commitlint/config-conventional": "^7.0.1",
+    "@commitlint/prompt": "^7.0.0",
     "aria-query": "^3.0.0",
     "babel-core": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
@@ -77,6 +80,7 @@
     "blanket": "~1.2.3",
     "chai": "~4.1.2",
     "clone": "~2.1.1",
+    "commitizen": "^2.10.1",
     "dot": "~1.1.2",
     "eslint-config-prettier": "^2.9.0",
     "fs-extra": "^6.0.0",
@@ -112,5 +116,10 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/prompt"
+    }
   }
 }
