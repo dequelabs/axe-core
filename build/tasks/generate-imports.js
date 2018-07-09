@@ -76,12 +76,11 @@ module.exports = grunt => {
 			};
 
 			// Iterate through each library to import and process the code
-			Object.keys(LIBS_TO_IMPORT).forEach((key, index, arr) => {
+			Object.keys(LIBS_TO_IMPORT).forEach(key => {
 				processImport(key, LIBS_TO_IMPORT[key]);
-				if (index >= arr.length - 1) {
-					done();
-				}
 			});
+
+			done();
 		}
 	);
 };
