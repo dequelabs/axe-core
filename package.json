@@ -53,8 +53,7 @@
     "scripts": {
       "postbump": "npm run sri-update"
     }
-	},
-	
+  },
   "scripts": {
     "build": "grunt",
     "test": "grunt test",
@@ -106,7 +105,8 @@
     "revalidator": "~0.3.1",
     "selenium-webdriver": "~3.6.0",
     "sri-toolbox": "^0.2.0",
-    "standard-version": "^4.2.0"
+    "standard-version": "^4.2.0",
+    "uglify-js": "^3.4.4"
   },
   "dependencies": {},
   "lint-staged": {
