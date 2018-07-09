@@ -5,7 +5,8 @@ module.exports = grunt => {
 	grunt.registerTask(
 		'generate-imports',
 		'Task for generating an axe.imports module with external dependencies.',
-		() => {
+		function() {
+			const done = this.async();
 			// list of external dependencies,
 			// which needs to be added to axe.imports object
 			const LIBS_TO_IMPORT = {
@@ -75,9 +76,12 @@ module.exports = grunt => {
 			};
 
 			// Iterate through each library to import and process the code
-			Object.keys(LIBS_TO_IMPORT).forEach(key =>
-				processImport(key, LIBS_TO_IMPORT[key])
-			);
+			Object.keys(LIBS_TO_IMPORT).forEach((key, index, arr) => {
+				processImport(key, LIBS_TO_IMPORT[key]);
+				if (index >= arr.length - 1) {
+					done();
+				}
+			});
 		}
 	);
 };

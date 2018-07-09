@@ -125,8 +125,6 @@ module.exports = function(grunt) {
 				files: langs.map(function(lang, i) {
 					return {
 						src: [
-							'lib/intro.comment.stub',
-							// axe files - after external libs, that way any global override by axe takes priority
 							'lib/intro.stub',
 							'<%= concat.engine.coreFiles %>',
 							// include rules / checks / commons
@@ -370,7 +368,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('build', [
 		'clean',
-		// 'generate-imports',
+		'generate-imports',
 		'eslint',
 		'validate',
 		'concat:commons',
