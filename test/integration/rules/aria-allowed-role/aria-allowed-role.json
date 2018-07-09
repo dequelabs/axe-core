@@ -1,30 +1,10 @@
 {
 	"description": "aria-allowed-role tests",
 	"rule": "aria-allowed-role",
-	"violations": [
-		["#aFail"],
-		["#articleFail"],
-		["#asideFail"],
-		["#videoFail"],
-		["#audioFail"],
-		["#buttonFail"],
-		["#dialogFail"],
-		["#figcaptionFail"],
-		["#inputFail"],
-		["#olFail"],
-		["#svgFail"]
-	],
 	"passes": [
-		["#aPass"],
-		["#articlePass"],
-		["#asidePass"],
-		["#videoPass"],
-		["#audioPass"],
-		["#buttonPass"],
-		["#dialogPass"],
-		["#figcaptionPass"],
-		["#inputPass"],
-		["#olPass"],
-		["#svgPass"]
+		["#passDiv"], ["#olPass"], ["#videoPass"]
+	],
+	"violations": [
+		["#failDd"]
 	]
 }
