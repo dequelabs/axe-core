@@ -20,9 +20,4 @@ describe('UMD window', function() {
 	it('should ensure axios has prototype chained keys', function() {
 		assert.hasAnyKeys(axe.imports.axios, ['get', 'request', 'options', 'post']);
 	});
-
-	// @wilco - need your input on this, there is no axe.source or equivalent available
-	// it('should ensure axios source includes axios', function() {
-	// 	assert.isTrue(axe.source.includes('axios'));
-	// });
 });
