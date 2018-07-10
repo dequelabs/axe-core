@@ -1,0 +1,11 @@
+{
+  "id": "xml-lang-mismatch",
+  "evaluate": "xml-lang-mismatch.js",
+  "metadata": {
+    "impact": "moderate",
+    "messages": {
+      "pass": "Value of lang or xml:lang attribute match if both are specified and included in the list of valid languages",
+      "fail": "Value of lang or xml:lang attribute either does not match or not included in the list of valid languages"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+	"id": "xml-lang-mismatch",
+	"matches": "xml-lang-mismatch-matches.js",
+	"tags": [
+		"cat.language",
+		"wcag2a",
+		"wcag312"
+	],
+	"metadata": {
+		"description": "Ensures that lang and xml:lang attributes on elements within the body of webpage has a valid language subtag",
+		"help": "The value of the primary language subtag for the lang and xml:lang attributes should be the same"
+	},
+	"all": [
+		"xml-lang-mismatch"
+	],
+	"any": [],
+	"none": []
+}
