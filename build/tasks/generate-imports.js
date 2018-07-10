@@ -15,12 +15,16 @@ module.exports = grunt => {
 
 			// Convenience method that utilises uglifyjs tree-transformer to unwrap umd module resolver
 			const removeUMD = new UglifyJS.TreeTransformer(node => {
-				// umd resolver either takes 1 or 2 arguments, the first argument being this/window/global and second being the factory function
-				// the index for expression and args to resolve is based on number of args passed
-				const index = node.body[0].body.args.length === 1 ? 0 : 1;
+				if (node.body[0].body.args.length <= 0) {
+					throw new Error('Not a UMD wrapper as arguments are missing.');
+				}
+
+				// the last (or only) argument in umd resolver is the factory to be mounted
+				const umdFactory =
+					node.body[0].body.args[node.body[0].body.args.length - 1];
 				const funcCall = new UglifyJS.AST_Call({
-					expression: node.body[0].body.args[index],
-					args: node.body[0].body.args[index].argnames // pass arguments into self invoking func
+					expression: umdFactory,
+					args: umdFactory.argnames // pass arguments into self invoking func
 				});
 				const statement = new UglifyJS.AST_SimpleStatement({
 					body: funcCall,
@@ -46,8 +50,8 @@ module.exports = grunt => {
 			const hasUmdWrapper = sourceCode => {
 				return (
 					/typeof exports/.test(sourceCode) &&
-					/typeof define/ &&
-					/typeof module/
+					/typeof define/.test(sourceCode) &&
+					/typeof module/.test(sourceCode)
 				);
 			};
 
