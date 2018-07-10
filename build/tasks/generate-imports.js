@@ -15,10 +15,12 @@ module.exports = grunt => {
 
 			// Convenience method that utilises uglifyjs tree-transformer to unwrap umd module resolver
 			const removeUMD = new UglifyJS.TreeTransformer(node => {
-				// Reference: http://lisperator.net/uglifyjs/transform
+				// umd resolver either takes 1 or 2 arguments, the first argument being this/window/global and second being the factory function
+				// the index for expression and args to resolve is based on number of args passed
+				const index = node.body[0].body.args.length === 1 ? 0 : 1;
 				const funcCall = new UglifyJS.AST_Call({
-					expression: node.body[0].body.args[1],
-					args: node.body[0].body.args[1].argnames // pass arguments into self invoking func
+					expression: node.body[0].body.args[index],
+					args: node.body[0].body.args[index].argnames // pass arguments into self invoking func
 				});
 				const statement = new UglifyJS.AST_SimpleStatement({
 					body: funcCall,
