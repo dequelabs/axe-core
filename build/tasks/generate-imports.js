@@ -49,7 +49,7 @@ module.exports = grunt => {
 			};
 
 			const writeLibrary = (libName, factory) => {
-				const lib = `/* global axe */ axe.imports["${libName}"] = ${factory}`;
+				const lib = `axe.imports["${libName}"] = ${factory}`;
 				const location = `./lib/core/imports/${libName}.js`;
 				grunt.file.write(location, lib);
 			};
@@ -64,6 +64,7 @@ module.exports = grunt => {
 				if (hasUmdWrapper(sourceCode)) {
 					unwrappedCode(sourceCode, (err, factory) => {
 						if (err) {
+							// running uglifyjs transform in a try block, this is to catch any errors from the transform.
 							throw new Error(err);
 						}
 						writeLibrary(libName, factory);
