@@ -6,9 +6,10 @@ var clone = require('clone');
 var dot = require('dot');
 var templates = require('./templates');
 var buildManual = require('./build-manual');
-var entities = new (require('html-entities').AllHtmlEntities)();
+var entities = new (require('html-entities')).AllHtmlEntities();
 
-var descriptionHeaders = '| Rule ID | Description | Impact | Tags | Enabled by default |\n| :------- | :------- | :------- | :------- | :------- |\n';
+var descriptionHeaders =
+	'| Rule ID | Description | Impact | Tags | Enabled by default |\n| :------- | :------- | :------- | :------- | :------- |\n';
 
 dot.templateSettings.strip = false;
 
@@ -27,8 +28,7 @@ function buildRules(grunt, options, commons, callback) {
 	var axeImpact = Object.freeze(['minor', 'moderate', 'serious', 'critical']); // TODO: require('../axe') does not work if grunt configure is moved after uglify, npm test breaks with undefined. Complicated grunt concurrency issue.
 	var locale = getLocale(grunt, options);
 	options.getFiles = false;
-	buildManual(grunt, options, commons, function (result) {
-
+	buildManual(grunt, options, commons, function(result) {
 		var metadata = {
 			rules: {},
 			checks: {}
@@ -40,27 +40,29 @@ function buildRules(grunt, options, commons, callback) {
 
 		// Translate checks
 		if (locale && locale.checks) {
-			checks.forEach(function (check) {
+			checks.forEach(function(check) {
 				if (locale.checks[check.id] && check.metadata) {
 					check.metadata.messages = locale.checks[check.id];
 				}
-			})
+			});
 		}
 
 		function parseMetaData(source, propType) {
-			var data = source.metadata
-			var key = source.id || source.type
+			var data = source.metadata;
+			var key = source.id || source.type;
 			if (key && locale && locale[propType] && propType !== 'checks') {
-				data = locale[propType][key] || data
+				data = locale[propType][key] || data;
 			}
 			var result = clone(data) || {};
 
 			if (result.messages) {
-				Object.keys(result.messages).forEach(function (key) {
+				Object.keys(result.messages).forEach(function(key) {
 					// only convert to templated function for strings
 					// objects handled later in publish-metadata.js
 					if (typeof result.messages[key] !== 'object') {
-						result.messages[key] = dot.template(result.messages[key]).toString();
+						result.messages[key] = dot
+							.template(result.messages[key])
+							.toString();
 					}
 				});
 			}
@@ -73,7 +75,7 @@ function buildRules(grunt, options, commons, callback) {
 
 		function createFailureSummaryObject(summaries) {
 			var result = {};
-			summaries.forEach(function (summary) {
+			summaries.forEach(function(summary) {
 				if (summary.type) {
 					result[summary.type] = parseMetaData(summary, 'failureSummaries');
 				}
@@ -83,22 +85,30 @@ function buildRules(grunt, options, commons, callback) {
 
 		function getIncompleteMsg(summaries) {
 			var result = {};
-			summaries.forEach(function (summary) {
+			summaries.forEach(function(summary) {
 				if (summary.incompleteFallbackMessage) {
 					result = dot.template(summary.incompleteFallbackMessage).toString();
 				}
-			})
+			});
 			return result;
 		}
 
 		function replaceFunctions(string) {
-			return string.replace(/"(evaluate|after|gather|matches|source|commons)":\s*("[^"]+?")/g, function (m, p1, p2) {
-				return m.replace(p2, getSource(p2.replace(/^"|"$/g, ''), p1));
-			}).replace(/"(function anonymous\([\s\S]+?\) {)([\s\S]+?)(})"/g, function (m) {
-				return JSON.parse(m);
-			}).replace(/"(\(function \(\) {)([\s\S]+?)(}\)\(\))"/g, function (m) {
-				return JSON.parse(m);
-			});
+			return string
+				.replace(
+					/"(evaluate|after|gather|matches|source|commons)":\s*("[^"]+?")/g,
+					function(m, p1, p2) {
+						return m.replace(p2, getSource(p2.replace(/^"|"$/g, ''), p1));
+					}
+				)
+				.replace(/"(function anonymous\([\s\S]+?\) {)([\s\S]+?)(})"/g, function(
+					m
+				) {
+					return JSON.parse(m);
+				})
+				.replace(/"(\(function \(\) {)([\s\S]+?)(}\)\(\))"/g, function(m) {
+					return JSON.parse(m);
+				});
 		}
 
 		function getSource(file, type) {
@@ -110,7 +120,7 @@ function buildRules(grunt, options, commons, callback) {
 		}
 
 		function findCheck(checks, id) {
-			return checks.filter(function (check) {
+			return checks.filter(function(check) {
 				if (check.id === id) {
 					return true;
 				}
@@ -125,7 +135,7 @@ function buildRules(grunt, options, commons, callback) {
 		}
 
 		function parseChecks(collection) {
-			return collection.map(function (check) {
+			return collection.map(function(check) {
 				var c = {};
 				var id = typeof check === 'string' ? check : check.id;
 				var definition = clone(findCheck(checks, id));
@@ -144,20 +154,18 @@ function buildRules(grunt, options, commons, callback) {
 		}
 
 		function parseImpactForRule(rule) {
-
-
 			function capitalize(s) {
 				return s.charAt(0).toUpperCase() + s.slice(1);
 			}
 
 			function getUniqueArr(arr) {
-				return arr.filter(function (value, index, self) {
+				return arr.filter(function(value, index, self) {
 					return self.indexOf(value) === index;
-				})
+				});
 			}
 
 			function getImpactScores(checkCollection) {
-				return checkCollection.reduce(function (out, check) {
+				return checkCollection.reduce(function(out, check) {
 					var id = typeof check === 'string' ? check : check.id;
 					var definition = clone(findCheck(checks, id));
 					if (!definition) {
@@ -185,19 +193,19 @@ function buildRules(grunt, options, commons, callback) {
 			var highestImpactForRuleTypeAny = getScore(rule.any, true);
 			var allUniqueImpactsForRuleTypeAll = getScore(rule.all, false);
 			var allUniqueImpactsForRuleTypeNone = getScore(rule.none, false);
-			var cumulativeImpacts = highestImpactForRuleTypeAny.concat(allUniqueImpactsForRuleTypeAll).concat(allUniqueImpactsForRuleTypeNone);
+			var cumulativeImpacts = highestImpactForRuleTypeAny
+				.concat(allUniqueImpactsForRuleTypeAll)
+				.concat(allUniqueImpactsForRuleTypeNone);
 			var cumulativeScores = getUniqueArr(cumulativeImpacts).sort(); //order lowest to highest
 
-			return cumulativeScores.reduce(function (out, cV) {
+			return cumulativeScores.reduce(function(out, cV) {
 				return out.length
 					? out + ', ' + capitalize(axeImpact[cV])
 					: capitalize(axeImpact[cV]);
 			}, '');
 		}
 
-
-		rules.map(function (rule) {
-
+		rules.map(function(rule) {
 			var impact = parseImpactForRule(rule);
 			rule.any = parseChecks(rule.any);
 			rule.all = parseChecks(rule.all);
@@ -213,7 +221,7 @@ function buildRules(grunt, options, commons, callback) {
 				rule.enabled === false ? false : true
 			]);
 			if (tags.length) {
-				rule.enabled = !!rule.tags.filter(function (t) {
+				rule.enabled = !!rule.tags.filter(function(t) {
 					return tags.indexOf(t) !== -1;
 				}).length;
 			}
@@ -225,27 +233,38 @@ function buildRules(grunt, options, commons, callback) {
 		metadata.incompleteFallbackMessage = getIncompleteMsg(result.misc);
 
 		callback({
-			auto: replaceFunctions(JSON.stringify({
-				data: metadata,
-				rules: rules,
-				checks: checks,
-				commons: result.commons
-			}, blacklist)),
-			manual: replaceFunctions(JSON.stringify({
-				data: metadata,
-				rules: rules,
-				checks: checks,
-				commons: result.commons,
-				tools: result.tools
-			}, blacklist)),
-			descriptions: descriptionHeaders + descriptions.map(function (row) {
-				return '| ' + row.join(' | ') + ' |';
-			}).join('\n')
+			auto: replaceFunctions(
+				JSON.stringify(
+					{
+						data: metadata,
+						rules: rules,
+						checks: checks,
+						commons: result.commons
+					},
+					blacklist
+				)
+			),
+			manual: replaceFunctions(
+				JSON.stringify(
+					{
+						data: metadata,
+						rules: rules,
+						checks: checks,
+						commons: result.commons,
+						tools: result.tools
+					},
+					blacklist
+				)
+			),
+			descriptions:
+				descriptionHeaders +
+				descriptions
+					.map(function(row) {
+						return '| ' + row.join(' | ') + ' |';
+					})
+					.join('\n')
 		});
-
 	});
-
-
 }
 
 module.exports = buildRules;

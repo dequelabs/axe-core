@@ -83,8 +83,8 @@ declare module axe {
 	}
 	interface Check {
 		id: string,
-		evaluate: Function,
-		after?: Function,
+		evaluate: Function | string,
+		after?: Function | string,
 		options?: any,
 		matches?: string,
 		enabled?: boolean

@@ -1,4 +1,5 @@
 {
+  "extends": ["prettier"],
   "env": {
     "browser": true,
     "es6": true
@@ -42,14 +43,6 @@
       2,
       20
     ],
-    "max-len": [
-      2,
-      {
-        "code": 140,
-        "ignoreComments": true
-      }
-    ],
-    "semi": 0,
     "no-cond-assign": 0,
     "no-debugger": 0,
     "no-eq-null": 0,
@@ -57,7 +50,6 @@
     "no-unused-expressions": 0,
     "block-scoped-var": 0,
     "no-iterator": 0,
-    "linebreak-style": 0,
     "no-loop-func": 0,
     "no-multi-str": 0,
     "no-proto": 0,
