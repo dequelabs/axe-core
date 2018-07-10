@@ -2,17 +2,10 @@
 const UglifyJS = require('uglify-js');
 
 module.exports = grunt => {
-	grunt.registerTask(
+	grunt.registerMultiTask(
 		'generate-imports',
 		'Task for generating an axe.imports module with external dependencies.',
 		function() {
-			const done = this.async();
-			// list of external dependencies,
-			// which needs to be added to axe.imports object
-			const LIBS_TO_IMPORT = {
-				axios: './node_modules/axios/dist/axios.js'
-			};
-
 			// Convenience method that utilises uglifyjs tree-transformer to unwrap umd module resolver
 			const removeUMD = new UglifyJS.TreeTransformer(node => {
 				if (node.body[0].body.args.length <= 0) {
@@ -82,11 +75,9 @@ module.exports = grunt => {
 			};
 
 			// Iterate through each library to import and process the code
-			Object.keys(LIBS_TO_IMPORT).forEach(key => {
-				processImport(key, LIBS_TO_IMPORT[key]);
+			Object.keys(this.data).forEach(key => {
+				processImport(key, this.data[key]);
 			});
-
-			done();
 		}
 	);
 };

@@ -146,6 +146,12 @@ module.exports = function(grunt) {
 				dest: 'tmp/commons.js'
 			}
 		},
+		'generate-imports': {
+			// list of external dependencies, which needs to be added to axe.imports object
+			data: {
+				axios: './node_modules/axios/dist/axios.js'
+			}
+		},
 		'aria-supported': {
 			data: {
 				entry: 'lib/commons/aria/index.js',
