@@ -160,7 +160,7 @@ describe('region', function() {
 
 	it('treats role=forms with aria label as landmarks', function() {
 		var checkArgs = checkSetup(
-			'<div role="form" id="target" aria-label="foo"><p>This is random content.</p></form>'
+			'<div role="form" id="target" aria-label="foo"><p>This is random content.</p></div>'
 		);
 		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
 	});
