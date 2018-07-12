@@ -11,94 +11,57 @@ describe('autocomplete-valid', function() {
 		qualifiedTerms: ['qualified-term']
 	};
 
+	var _isValidAutocomplete;
 	beforeEach(function() {
 		axe._tree = undefined;
+		_isValidAutocomplete = axe.commons.text.isValidAutocomplete;
 	});
 
 	afterEach(function() {
+		axe.commons.text.isValidAutocomplete = _isValidAutocomplete;
 		fixture.innerHTML = '';
 		checkContext.reset();
 	});
 
-	function autocompleteCheckParams(arg, opt) {
-		return checkSetup(
-			'<input autocomplete="' + arg + '" id="target" />',
-			opt || options
+	it('passes autocomplete attribute to text.isValidAutocomplete', function() {
+		var params = checkSetup('<input autocomplete="foo" id="target" />');
+		var called = false;
+		axe.commons.text.isValidAutocomplete = function(arg1) {
+			assert.equal(arg1, 'foo');
+			called = true;
+		};
+		evaluate.apply(checkContext, params);
+		assert.isTrue(called);
+	});
+
+	it('passes options to text.isValidAutocomplete', function() {
+		var options = { foo: 'bar' };
+		var params = checkSetup(
+			'<input autocomplete="foo" id="target" />',
+			options
 		);
-	}
-
-	it('returns true the only term is a valid autocomplete term', function() {
-		var params = autocompleteCheckParams('standalone-term');
-		assert.isTrue(evaluate.apply(checkContext, params));
+		var called = false;
+		axe.commons.text.isValidAutocomplete = function(_, arg2) {
+			assert.equal(arg2, options);
+			called = true;
+		};
+		evaluate.apply(checkContext, params);
+		assert.isTrue(called);
 	});
 
-	it('returns false the only term is an invalid autocomplete term', function() {
-		var params = autocompleteCheckParams('bad-term');
-		assert.isFalse(evaluate.apply(checkContext, params));
-	});
+	it('returns the outcome of text.isValidAutocomplete', function() {
+		var params1 = checkSetup(
+			'<input autocomplete="badvalue" id="target" />',
+			options
+		);
+		assert.isFalse(_isValidAutocomplete('badvalue'));
+		assert.isFalse(evaluate.apply(checkContext, params1));
 
-	it('returns true if section-* is used as the first term', function() {
-		var params = autocompleteCheckParams('section-foo standalone-term');
-		assert.isTrue(evaluate.apply(checkContext, params));
-	});
-
-	it('returns true if `shipping` or `billing` is used as the first term', function() {
-		var params1 = autocompleteCheckParams('shipping standalone-term');
-		assert.isTrue(evaluate.apply(checkContext, params1));
-
-		var params2 = autocompleteCheckParams('billing standalone-term');
+		var params2 = checkSetup(
+			'<input autocomplete="email" id="target" />',
+			options
+		);
+		assert.isTrue(_isValidAutocomplete('email'));
 		assert.isTrue(evaluate.apply(checkContext, params2));
-	});
-
-	it('returns true if section-*  is used before `shipping` or `billing`', function() {
-		var params = autocompleteCheckParams(
-			'section-foo shipping standalone-term'
-		);
-		assert.isTrue(evaluate.apply(checkContext, params));
-	});
-
-	it('returns false if `shipping` or `billing` is used before section-*', function() {
-		var params = autocompleteCheckParams(
-			'shipping section-foo standalone-term'
-		);
-		assert.isFalse(evaluate.apply(checkContext, params));
-	});
-
-	it('returns true if "home", "work", "mobile", "fax" or "pager" is used before aqualifier', function() {
-		['home', 'work', 'mobile', 'fax', 'pager'].forEach(function(qualifier) {
-			var params = autocompleteCheckParams(qualifier + ' qualified-term');
-			assert.isTrue(
-				evaluate.apply(checkContext, params),
-				'failed for ' + qualifier
-			);
-		});
-	});
-
-	it('returns false if "home", "work", "mobile", "fax" or "pager" is used before an inappropriate term', function() {
-		['home', 'work', 'mobile', 'fax', 'pager'].forEach(function(qualifier) {
-			var params = autocompleteCheckParams(qualifier + ' standalone-term');
-			assert.isFalse(
-				evaluate.apply(checkContext, params),
-				'failed for ' + qualifier
-			);
-		});
-	});
-
-	describe('options.strictMode:false', function() {
-		it('returns true if the last term is a valid autocomplete term', function() {
-			var params = autocompleteCheckParams('do not care! valid-term', {
-				looseTyped: true,
-				standaloneTerms: ['valid-term']
-			});
-			assert.isTrue(evaluate.apply(checkContext, params));
-		});
-
-		it('returns false if the last term is an invalid autocomplete term', function() {
-			var params = autocompleteCheckParams('shipping invalid', {
-				looseTyped: true,
-				standaloneTerms: ['valid-term']
-			});
-			assert.isFalse(evaluate.apply(checkContext, params));
-		});
 	});
 });
