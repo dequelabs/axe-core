@@ -69,6 +69,7 @@
   "devDependencies": {
     "angular-precommit": "^1.0.3",
     "aria-query": "^3.0.0",
+    "axios": "^0.18.0",
     "babel-core": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
     "babel-polyfill": "^6.7.4",
@@ -104,7 +105,8 @@
     "revalidator": "~0.3.1",
     "selenium-webdriver": "~3.6.0",
     "sri-toolbox": "^0.2.0",
-    "standard-version": "^4.2.0"
+    "standard-version": "^4.2.0",
+    "uglify-js": "^3.4.4"
   },
   "dependencies": {},
   "lint-staged": {
