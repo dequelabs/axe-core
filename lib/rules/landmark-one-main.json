@@ -6,8 +6,8 @@
 		"best-practice"
 	],
 	"metadata": {
-		"description": "Ensures a navigation point to the primary content of the page. If the page contains iframes, each iframe should contain either no main landmarks or just one",
-		"help": "Page must contain one main landmark"
+		"description": "Ensures the page has only one main landmark and each iframe in the page has at most one main landmark",
+		"help": "Page must have one main landmark"
 	},
 	"all": [
 		"page-has-main",
