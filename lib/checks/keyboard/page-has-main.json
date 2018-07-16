@@ -9,7 +9,7 @@
     "impact": "moderate",
     "messages": {
       "pass": "Page has at least one main landmark",
-      "fail": "Page must have a main landmark"
+      "fail": "Page does not have a main landmark"
     }
   }
 }

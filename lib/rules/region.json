@@ -7,8 +7,8 @@
     "best-practice"
   ],
   "metadata": {
-    "description": "Ensures all content is contained within a landmark region",
-    "help": "Content should be contained in a landmark region"
+    "description": "Ensures all page content is contained by landmarks",
+    "help": "All page content must be contained by landmarks"
   },
   "all": [],
   "any": [
