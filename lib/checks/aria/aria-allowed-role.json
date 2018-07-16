@@ -9,7 +9,7 @@
 		"impact": "minor",
 		"messages": {
 			"pass": "ARIA role(s) is allowed for given element",
-			"fail": "Role(s) must be one of the allowed ARIA roles"
+			"fail": "{{=it.data}} role(s) is not allowed for given element"
 		}
 	}
 }

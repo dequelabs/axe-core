@@ -1,5 +1,33 @@
-<div id="passDiv" role="link">ok</a>
-<ol id="olPass" role="directory"></ol>
-<video id="videoPass" role="application"></video>
+<!-- passes -->
+<div id='pass-div-has-any-role' role='divAnyRoleEvenInvalid'></div>
+<div id="pass-div-valid-role" role="link">ok</div>
+<ol id="pass-ol-valid-role" role="directory"></ol>
+<video id="pass-video-valid-role" role="application"></video>
+<a href='' role='treeitem' id="pass-a-valid-role-tree-item"></a>
+<a href='' role='button' id="pass-a-valid-role-button"></a>
+<a href='' role='doc-backlink' id="pass-a-valid-role-doc-backlink"></a>
+<ul id="pass-ul-valid-role" role='toolbar'></ul>
+<section id='pass-section-valid-role-application' role='application'></section>
+<section id='pass-section-valid-role-content-info' role='contentinfo'></section>
+<section id='pass-section-valid-role-dialog' role='dialog'></section>
+<button type='button' role='checkbox' id='pass-button-valid-role-checkbox'></button>
+<ul><li id='pass-li-valid-role-doc-biblioentry' role="doc-biblioentry"></li></ul>
+<header id='pass-header-valid-role' role="group"></header>
+<footer id='pass-footer-valid-role' role="group"></footer>
+<embed id='pass-embed-valid-role' role='img'></embed>
+<input type="image" role="link" id="pass-input-image-valid-role">
+<input type="checkbox" role='menuitemcheckbox' id='pass-input-checkbox-valid-role' >
+<h1 id='pass-h1-valid-role' role='none'></h1>
+<img alt="" role='presentation' id='pass-img-valid-role'>
 
-<dd id='failDd' role='link'></dd>
+<!-- failures -->
+<dd id='fail-dd-no-role' role='link'></dd>
+<dt id='fail-dt-no-role' role='banner'></dt>
+<label id="fail-label-no-role" role='presentation'></label>
+<ol id="fail-ol-invalid-role" role="banner"></ol>
+<video id="fail-video-invalid-role" role="link"></video>
+<a href='' role='doc-acknowledgments' id="fail-a-invalid-role"></a>
+<section id='fail-section-invalid-role' role='doc-subtitle'></section>
+<ul><li id='fail-li-invalid-role' role="doc-bibliography"></li></ul>
+<embed id='fail-embed-invalid-role' role='doc-abstract'></embed>
+<input type="image" id="fail-input-image-invalid-role" role='doc-afterword'>

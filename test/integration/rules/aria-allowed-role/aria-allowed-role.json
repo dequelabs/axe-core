@@ -2,9 +2,37 @@
 	"description": "aria-allowed-role tests",
 	"rule": "aria-allowed-role",
 	"passes": [
-		["#passDiv"], ["#olPass"], ["#videoPass"]
+		["#pass-div-has-any-role"],
+		["#pass-div-valid-role"],
+		["#pass-ol-valid-role"], 
+		["#pass-video-valid-role"],
+		["#pass-a-valid-role-tree-item"],
+		["#pass-a-valid-role-button"],
+		["#pass-a-valid-role-doc-backlink"],
+		["#pass-ul-valid-role"],
+		["#pass-section-valid-role-application"],
+		["#pass-section-valid-role-content-info"],
+		["#pass-section-valid-role-dialog"],
+		["#pass-button-valid-role-checkbox"],
+		["#pass-li-valid-role-doc-biblioentry"],
+		["#pass-header-valid-role"],
+		["#pass-footer-valid-role"],
+		["#pass-embed-valid-role"],
+		["#pass-input-image-valid-role"],
+		["#pass-input-checkbox-valid-role"],
+		["#pass-h1-valid-role"],
+		["#pass-img-valid-role"]
 	],
 	"violations": [
-		["#failDd"]
+		["#fail-dd-no-role"],
+		["#fail-dt-no-role"],
+		["#fail-label-no-role"],
+		["#fail-ol-invalid-role"], 
+		["#fail-video-invalid-role"],
+		["#fail-a-invalid-role"],
+		["#fail-section-invalid-role"],
+		["#fail-li-invalid-role"],
+		["#fail-embed-invalid-role"],
+		["#fail-input-image-invalid-role"]
 	]
 }
