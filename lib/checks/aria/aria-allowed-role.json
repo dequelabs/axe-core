@@ -8,8 +8,8 @@
 	"metadata": {
 		"impact": "minor",
 		"messages": {
-			"pass": "ARIA role(s) is allowed for given element",
-			"fail": "{{=it.data}} role(s) is not allowed for given element"
+			"pass": "ARIA role is allowed for given element",
+			"fail": "{{=it.data}} role{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed for given element"
 		}
 	}
 }
