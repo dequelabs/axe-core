@@ -8,4 +8,4 @@
       "fail": "aria-hidden=true should not be present on the document body"
     }
   }
-} 
+}
