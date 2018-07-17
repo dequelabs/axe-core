@@ -1,5 +1,5 @@
 {
-	"description": "aria-allowed-role tests",
+	"description": "aria-allowed-role integration tests",
 	"rule": "aria-allowed-role",
 	"passes": [
 		["#pass-div-has-any-role"],
@@ -14,7 +14,6 @@
 		["#pass-section-valid-role-content-info"],
 		["#pass-section-valid-role-dialog"],
 		["#pass-button-valid-role-checkbox"],
-		["#pass-li-valid-role-doc-biblioentry"],
 		["#pass-header-valid-role"],
 		["#pass-footer-valid-role"],
 		["#pass-embed-valid-role"],
@@ -31,7 +30,6 @@
 		["#fail-video-invalid-role"],
 		["#fail-a-invalid-role"],
 		["#fail-section-invalid-role"],
-		["#fail-li-invalid-role"],
 		["#fail-embed-invalid-role"],
 		["#fail-input-image-invalid-role"]
 	]
