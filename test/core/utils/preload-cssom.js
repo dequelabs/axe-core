@@ -1,20 +1,36 @@
-describe('axe.utils.preloadCssom', function() {
+describe('axe.utils.preloadCssom unit tests', function() {
 	'use strict';
 
-	var fixture = document.getElementById('fixture');
-	var pageTpl =
-		'<!DOCTYPE html><html><head><style>html {width: 100vh;}</style></head><body></body></html>';
 	var args;
 
+	function addStyleToHead() {
+		var css = 'html {font-size: inherit;}';
+		var head = document.head || document.getElementsByTagName('head')[0];
+		var style = document.createElement('style');
+		style.id = 'preloadCssomTestHeadSheet';
+		style.type = 'text/css';
+		style.appendChild(document.createTextNode(css));
+		head.appendChild(style);
+	}
+
+	function removeStyleFromHead() {
+		var s = document.getElementById('preloadCssomTestHeadSheet');
+		if (s) {
+			s.parentNode.removeChild(s);
+		}
+	}
+
 	beforeEach(function() {
+		addStyleToHead();
 		args = {
 			asset: 'cssom',
-			timeout: 10000
+			timeout: 10000,
+			treeRoot: (axe._tree = axe.utils.getFlattenedTree(document))
 		};
 	});
 
 	afterEach(function() {
-		fixture.innerHTML = '';
+		removeStyleFromHead();
 	});
 
 	it('should be a function', function() {
@@ -22,23 +38,16 @@ describe('axe.utils.preloadCssom', function() {
 	});
 
 	it('should return a queue', function() {
-		fixture.innerHTML = pageTpl;
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
-		args.treeRoot = tree;
 		var actual = axe.utils.preloadCssom(args);
 		assert.isObject(actual);
 		assert.containsAllKeys(actual, ['then', 'defer', 'catch']);
 	});
 
-	it('should ensure result has cssom property', function(done) {
-		fixture.innerHTML = pageTpl;
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
-		args.treeRoot = tree;
+	it('should ensure result of cssom is an array of sheets', function(done) {
 		var actual = axe.utils.preloadCssom(args);
 		actual
 			.then(function(results) {
-				var r = results[0];
-				assert.property(r, 'cssom');
+				assert.lengthOf(results[0], 2); // returned from queue, hence the index look up
 				done();
 			})
 			.catch(function(error) {
@@ -46,16 +55,11 @@ describe('axe.utils.preloadCssom', function() {
 			});
 	});
 
-	it('should ensure result of cssom returned is an array of sheets', function(done) {
-		fixture.innerHTML = pageTpl;
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
-		args.treeRoot = tree;
+	it('should fail if number of sheets returned does not match stylesheets defined in document', function(done) {
 		var actual = axe.utils.preloadCssom(args);
 		actual
 			.then(function(results) {
-				var sheets = results[0].cssom;
-				assert.isTrue(Array.isArray(sheets));
-				assert.lengthOf(sheets, 2);
+				assert.isFalse(results[0].length <= 1); // returned from queue, hence the index look up
 				done();
 			})
 			.catch(function(error) {
@@ -63,14 +67,11 @@ describe('axe.utils.preloadCssom', function() {
 			});
 	});
 
-	it('should ensure all returned stylesheet is defined and has readable sheet/ cssrules', function(done) {
-		fixture.innerHTML = pageTpl;
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
-		args.treeRoot = tree;
+	it('should ensure all returned stylesheet is defined and has property cssRules', function(done) {
 		var actual = axe.utils.preloadCssom(args);
 		actual
 			.then(function(results) {
-				var sheets = results[0].cssom;
+				var sheets = results[0];
 				sheets.forEach(function(s) {
 					assert.isDefined(s);
 					assert.property(s, 'cssRules');
@@ -82,88 +83,8 @@ describe('axe.utils.preloadCssom', function() {
 			});
 	});
 
-	it('should ignore disabled stylesheets', function(done) {
-		var page =
-			'<!DOCTYPE html><html><head> <link disabled rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" /> </head><body></body></html>';
-		fixture.innerHTML = page;
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
-		args.treeRoot = tree;
-		var actual = axe.utils.preloadCssom(args);
-		actual
-			.then(function(results) {
-				var sheets = results[0].cssom;
-				assert.lengthOf(sheets, 1); // the 1 stylesheet fetched is of the parent test runner page
-				done();
-			})
-			.catch(function(error) {
-				done(error);
-			});
-	});
-
-	var shadowSupported = axe.testUtils.shadowSupport.v1;
-	(shadowSupported ? it : xit)(
-		'should fetch all shadow DOM stylesheets',
-		function(done) {
-			fixture.innerHTML = '<div id="target" role="list"></div>';
-			var target = document.querySelector('#target');
-			var shadowRoot = target.attachShadow({ mode: 'open' });
-			shadowRoot.innerHTML =
-				'<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />';
-
-			var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
-			args.treeRoot = tree;
-			var actual = axe.utils.preloadCssom(args);
-			actual
-				.then(function(results) {
-					var sheets = results[0].cssom;
-					assert.lengthOf(sheets, 1);
-					done();
-				})
-				.catch(function(error) {
-					done(error);
-				});
-		}
-	);
-
-	it('should make xhr for external stylesheet', function(done) {
-		var page =
-			'<!DOCTYPE html><html><head> <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" /> </head><body></body></html>';
-		fixture.innerHTML = page;
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
-		args.treeRoot = tree;
-		var actual = axe.utils.preloadCssom(args);
-		actual
-			.then(function(results) {
-				var sheets = results[0].cssom;
-				assert.lengthOf(sheets, 1);
-				sheets.forEach(function(s) {
-					assert.isDefined(s);
-					assert.property(s, 'href');
-					assert.isDefined(s.href);
-					assert.property(s, 'cssRules');
-				});
-				done();
-			})
-			.catch(function(error) {
-				done(error);
-			});
-	});
-
-	it('should return 2 stylesheets', function(done) {
-		var page =
-			'<!DOCTYPE html><html><head> <style>html {width: 100vh;}</style> <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" /> </head><body></body></html>';
-		fixture.innerHTML = page;
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
-		args.treeRoot = tree;
-		var actual = axe.utils.preloadCssom(args);
-		actual
-			.then(function(results) {
-				var sheets = results[0].cssom;
-				assert.lengthOf(sheets, 2);
-				done();
-			})
-			.catch(function(error) {
-				done(error);
-			});
-	});
+	/**
+	 * NOTE: document.styleSheets does not recognise dynamically injected stylesheets after load via beforeEach/ before, so tests for disabled and external stylesheets are done in integration
+	 * Refer Directory: ./test/full/preload-cssom/**.*
+	 */
 });
