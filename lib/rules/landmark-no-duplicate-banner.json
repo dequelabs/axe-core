@@ -6,8 +6,8 @@
     "best-practice"
   ],
   "metadata": {
-    "description": "Ensures the document has no more than one banner landmark",
-    "help": "Document contain at most one banner landmark"
+    "description": "Ensures the page has at most one banner landmark",
+    "help": "Page must not have more than one banner landmark"
   },
   "all": [],
   "any": [

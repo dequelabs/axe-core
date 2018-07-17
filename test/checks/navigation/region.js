@@ -160,7 +160,7 @@ describe('region', function() {
 
 	it('treats role=forms with aria label as landmarks', function() {
 		var checkArgs = checkSetup(
-			'<div role="form" id="target" aria-label="foo"><p>This is random content.</p></form>'
+			'<div role="form" id="target" aria-label="foo"><p>This is random content.</p></div>'
 		);
 		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
 	});
@@ -185,14 +185,30 @@ describe('region', function() {
 		assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('p')]);
 	});
 
-	it('treats forms with an empty aria label as not a landmarks', function() {
+	it('treats forms with non empty titles as landmarks', function() {
 		var checkArgs = checkSetup(
-			'<div role="form" id="target"><p>This is random content.</p></form>'
+			'<form id="target" title="Thing"><p>This is random content.</p></form>'
+		);
+
+		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+	});
+
+	it('treats forms with empty titles not as landmarks', function() {
+		var checkArgs = checkSetup(
+			'<form id="target" title=""><p>This is random content.</p></form>'
 		);
 
 		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
 		assert.lengthOf(checkContext._relatedNodes, 1);
 		assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('p')]);
+	});
+
+	it('treats ARIA forms with no label or title as landmarks', function() {
+		var checkArgs = checkSetup(
+			'<div role="form" id="target"><p>This is random content.</p></div>'
+		);
+
+		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
 	});
 
 	(shadowSupport.v1 ? it : xit)('should test Shadow tree content', function() {

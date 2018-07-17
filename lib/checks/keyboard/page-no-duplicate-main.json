@@ -7,8 +7,8 @@
 	"metadata": {
 		"impact": "moderate",
 		"messages": {
-		"pass": "Document has no more than one main landmark",
-		"fail": "Document has more than one main landmark"
+		"pass": "Page does not have more than one main landmark",
+		"fail": "Page has more than one main landmark"
 		}
 	}
 }
