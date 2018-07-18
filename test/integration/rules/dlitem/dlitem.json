@@ -1,6 +1,20 @@
 {
 	"description": "dlitem test",
 	"rule": "dlitem",
-	"violations": [["#uncontained"], ["#alsouncontained"],["#uncontainedbyrole"],["#alsouncontainedbyrole"]],
-	"passes": [["#contained"], ["#alsocontained"]]
+	"violations": [
+		["#uncontained"],
+		["#alsouncontained"],
+		["#uncontainedbyrole"],
+		["#alsouncontainedbyrole"],
+		["#nested-dt-role-fail"],
+		["#nested-dd-role-fail"]
+	],
+	"passes": [
+		["#contained"],
+		["#alsocontained"],
+		["#nested-dt"],
+		["#nested-dd"],
+		["#nested-dt-role"],
+		["#nested-dd-role"]
+	]
 }

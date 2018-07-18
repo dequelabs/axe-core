@@ -52,6 +52,28 @@ describe('listitem', function() {
 		assert.isTrue(checks.listitem.evaluate.apply(null, checkArgs));
 	});
 
+	it('should pass if the listitem has an `ol`, `ul` ancestor', function() {
+		['ul', 'ol'].forEach(function(tag) {
+			// This issue will be caught by the list rule instead:
+			var checkArgs = checkSetup(
+				'<' +
+					tag +
+					'><div><p> <li id="target">My list item</li> </p></div></' +
+					tag +
+					'>'
+			);
+			assert.isTrue(checks.listitem.evaluate.apply(null, checkArgs));
+		});
+	});
+
+	it('should pass if the listitem has an `[role=list]` ancestor', function() {
+		// This issue will be caught by the list rule instead:
+		var checkArgs = checkSetup(
+			'<div role="list"><div><p> <li id="target">My list item</li> </p></div></div>'
+		);
+		assert.isTrue(checks.listitem.evaluate.apply(null, checkArgs));
+	});
+
 	(shadowSupport.v1 ? it : xit)(
 		'should return true in a shadow DOM pass',
 		function() {

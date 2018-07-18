@@ -4,6 +4,22 @@
 	<dt id="contained">Does belong to a list.</dt>
 	<dd id="alsocontained">Also belongs to a list.</dd>
 </dl>
+
+<dl><div>
+	<dt id="nested-dt">Does belong to a list.</dt>
+	<dd id="nested-dd">Also belongs to a list.</dd>
+</div></dl>
+
+<dl role="list"><div>
+	<dt id="nested-dt-role">Does belong to a list.</dt>
+	<dd id="nested-dd-role">Also belongs to a list.</dd>
+</div></dl>
+
+<div role="list"><div>
+	<dt id="nested-dt-role-fail">Does belong to a list.</dt>
+	<dd id="nested-dd-role-fail">Also belongs to a list.</dd>
+</div></div>
+
 <dl role="menubar">
 	<dt id="uncontainedbyrole">Not part of a list.</dt>
 	<dd id="alsouncontainedbyrole">Also not part of a list.</dd>

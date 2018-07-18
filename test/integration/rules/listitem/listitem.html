@@ -1,11 +1,23 @@
 <li id="uncontained">
 	Should belong to a list.</li>
+
 <ul>
 	<li id="contained">Does belong to a list.</li>
 </ul>
 <ol>
 	<li id="alsocontained">Also belongs to a list.</li>
 </ol>
+
+<ul><div>
+	<li id="ul-deep">Deep list</li>
+</div></ul>
+<ol><div>
+	<li id="ol-deep">Deep ordered list</li>
+</div></ol>
+<div role="list"><div>
+	<li id="role-list-deep">Deep list from role.</li>
+</div></div>
+
 <ul role="menubar">
 	<li id="ulrolechanged">Also does not belong to a list.</li>
 </ul>
