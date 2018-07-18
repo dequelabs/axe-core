@@ -25,7 +25,7 @@ declare module axe {
 
 	interface RunOnly {
 		type: RunOnlyType,
-		values?: TagValue[] | string[]
+		values?: TagValue[] | string[] | RunOnlyObject
 	}
 	interface RunOptions {
 		runOnly?: RunOnly,

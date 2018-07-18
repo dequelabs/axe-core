@@ -1,73 +1,105 @@
 import * as axe from '../../axe'
 
-var context:any = document
-var $fixture:any = {}
+const context:any = document;
+const $fixture:any = {};
 
-axe.run(context, {}, (error: Error, results: axe.AxeResults) => {
-	if (error) {
-		console.log(error);
-	}
-	console.log(results.passes.length);
-	console.log(results.incomplete.length);
-	console.log(results.inapplicable.length);
-	console.log(results.violations.length);
-	console.log(results.violations[0].nodes[0].failureSummary)
-});
-axe.run().then(function(done:any) {
-	done();
-});
+axe.run(context,
+	(error: Error, results: axe.AxeResults) => {
+		if (error) {
+			console.error(error);
+		}
+		console.log(results.passes.length);
+		console.log(results.incomplete.length);
+		console.log(results.inapplicable.length);
+		console.log(results.violations.length);
+		console.log(results.violations[0].nodes[0].failureSummary)
+	});
+
+axe.run().then((done:any) => done());
+
 // additional configuration options
-axe.run(context, {iframes: false, selectors: false, elementRef: false},
-		(error: Error, results: axe.AxeResults)  => {
-	console.log(error || results.passes.length);
-});
+axe.run(context, 
+	{iframes: false, selectors: false, elementRef: false},
+	(error: Error, results: axe.AxeResults)  => {
+		console.log(error || results.passes.length);
+	});
+
 // axe.run include/exclude
-axe.run({include: [['#id1'], ['#id2']]}, {}, (error: Error, results: axe.AxeResults) => {
-	console.log(error || results)
-})
-axe.run({exclude: [$fixture[0]]}, {}, (error: Error, results: axe.AxeResults) => {
-	console.log(error || results)
-})
+axe.run({
+	include: [['#id1'], ['#id2']]}, 
+	{}, 
+	(error: Error, results: axe.AxeResults) => {
+		console.log(error || results)
+	});
+
+axe.run({
+	exclude: [$fixture[0]]}, 
+	{}, 
+	(error: Error, results: axe.AxeResults) => {
+		console.log(error || results)
+	});
+
 // additional configuration options
-axe.run(context, {iframes: false, selectors: false, elementRef: false},
-		(error: Error, results: axe.AxeResults)  => {
-	console.log(error || results.passes.length);
-});
-var tagConfigRunOnly: axe.RunOnly = {
+axe.run(context, 
+	{iframes: false, selectors: false, elementRef: false},
+	(error: Error, results: axe.AxeResults)  => {
+		console.log(error || results.passes.length);
+	});
+
+const tagConfigRunOnly: axe.RunOnly = {
 	type: 'tag',
 	values: ['wcag2a']
 }
-var tagConfig = {
+const tagConfig = {
 	runOnly: tagConfigRunOnly
 }
-axe.run(context, tagConfig, (error: Error, results: axe.AxeResults) => {
-	console.log(error || results)
-})
-var includeExcludeTagsRunOnly: axe.RunOnly = {
-	type: 'tags',
-	values: {
-		include: ['wcag2a', 'wcag2aa'],
-		exclude: ['experimental']
-	}
-}
-var includeExcludeTagsConfig = {
-	runOnly: includeExcludeTagsRunOnly
-}
-axe.run(context, includeExcludeTagsConfig, (error: Error, results: axe.AxeResults) => {
-	console.log(error || results)
-})
-var someRulesConfig = {
+
+axe.run(context, 
+	tagConfig, 
+	(error: Error, results: axe.AxeResults) => {
+		console.log(error || results)
+	});
+
+axe.run(context, 
+	{
+		runOnly: {
+			type: 'tags',
+			values: {
+				include: ['wcag2a', 'wcag2aa'],
+				exclude: ['experimental']
+			}
+		} as axe.RunOnly
+	}, 
+	(error: Error, results: axe.AxeResults) => {
+		console.log(error || results)
+	});
+
+axe.run(context, 
+	{
+		runOnly: {
+			type: 'tags',
+			values: ['wcag2a', 'wcag2aa']
+		} as axe.RunOnly
+	}, 
+	(error: Error, results: axe.AxeResults) => {
+		console.log(error || results)
+	});
+
+const someRulesConfig = {
 	rules: {
 		"color-contrast": {enabled: 'false'},
 		"heading-order": {enabled: 'true'}
 	}
 }
-axe.run(context, someRulesConfig, (error: Error, results: axe.AxeResults) => {
-	console.log(error || results)
-})
+
+axe.run(context, 
+	someRulesConfig, 
+	(error: Error, results: axe.AxeResults) => {
+		console.log(error || results)
+	});
 
 // axe.configure
-var spec: axe.Spec = {
+const spec: axe.Spec = {
 	branding: {
 		brand: 'foo',
 		application: 'bar'
@@ -83,21 +115,24 @@ var spec: axe.Spec = {
 		id: 'custom-rule',
 		any: ['custom-check']
 	}]
-}
+};
 axe.configure(spec)
 
-var source = axe.source;
+const source = axe.source;
+console.log(source);
 
-axe.reset()
+axe.reset();
 
-axe.getRules(['wcag2aa'])
-typeof axe.getRules() === 'object'
+axe.getRules(['wcag2aa']);
+
+typeof axe.getRules() === 'object';
 
 // Plugins
-var pluginSrc: axe.AxePlugin = {
+const pluginSrc: axe.AxePlugin = {
 	id: 'doStuff',
 	run: (data:any, callback:Function) => {
-		callback()
+		console.log(data);
+		callback();
 	},
 	commands: [{
 		id: 'run-doStuff',
@@ -106,5 +141,6 @@ var pluginSrc: axe.AxePlugin = {
 		}
 	}]
 }
-axe.registerPlugin(pluginSrc)
-axe.cleanup()
+
+axe.registerPlugin(pluginSrc);
+axe.cleanup();
