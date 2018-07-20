@@ -52,4 +52,10 @@ describe('heading-matches', function() {
 		h1.setAttribute('role', 'bruce');
 		assert.isTrue(rule.matches(h1));
 	});
+
+	it('should return true on headings with their role changes to an abstract role', function() {
+		var h1 = document.createElement('h1');
+		h1.setAttribute('role', 'widget');
+		assert.isTrue(rule.matches(h1));
+	});
 });
