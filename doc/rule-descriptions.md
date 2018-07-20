@@ -36,12 +36,12 @@
 | input-image-alt | Ensures &lt;input type=&quot;image&quot;&gt; elements have alternate text | Critical | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | Serious | cat.forms, best-practice | true |
 | label | Ensures every form element has a label | Minor, Serious, Critical | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
-| landmark-banner-is-top-level | The banner landmark should not be contained in another landmark | Moderate | cat.semantics, best-practice | true |
-| landmark-contentinfo-is-top-level | The contentinfo landmark should not be contained in another landmark | Moderate | cat.semantics, best-practice | true |
-| landmark-main-is-top-level | The main landmark should not be contained in another landmark | Moderate | cat.semantics, best-practice | true |
-| landmark-no-duplicate-banner | Ensures the document has no more than one banner landmark | Moderate | cat.semantics, best-practice | true |
-| landmark-no-duplicate-contentinfo | Ensures the document has no more than one contentinfo landmark | Moderate | cat.semantics, best-practice | true |
-| landmark-one-main | Ensures a navigation point to the primary content of the page. If the page contains iframes, each iframe should contain either no main landmarks or just one | Moderate | cat.semantics, best-practice | true |
+| landmark-banner-is-top-level | Ensures the banner landmark is at top level | Moderate | cat.semantics, best-practice | true |
+| landmark-contentinfo-is-top-level | Ensures the contentinfo landmark is at top level | Moderate | cat.semantics, best-practice | true |
+| landmark-main-is-top-level | Ensures the main landmark is at top level | Moderate | cat.semantics, best-practice | true |
+| landmark-no-duplicate-banner | Ensures the page has at most one banner landmark | Moderate | cat.semantics, best-practice | true |
+| landmark-no-duplicate-contentinfo | Ensures the page has at most one contentinfo landmark | Moderate | cat.semantics, best-practice | true |
+| landmark-one-main | Ensures the page has only one main landmark and each iframe in the page has at most one main landmark | Moderate | cat.semantics, best-practice | true |
 | layout-table | Ensures presentational &lt;table&gt; elements do not use &lt;th&gt;, &lt;caption&gt; elements or the summary attribute | Serious | cat.semantics, wcag2a, wcag131 | true |
 | link-in-text-block | Links can be distinguished without relying on color | Serious | cat.color, experimental, wcag2a, wcag141 | true |
 | link-name | Ensures links have discernible text | Serious | cat.name-role-value, wcag2a, wcag412, wcag244, section508, section508.22.a | true |
@@ -55,7 +55,7 @@
 | p-as-heading | Ensure p elements are not used to style headings | Serious | cat.semantics, wcag2a, wcag131, experimental | true |
 | page-has-heading-one | Ensure that the page, or at least one of its frames contains a level-one heading | Moderate | cat.semantics, best-practice | true |
 | radiogroup | Ensures related &lt;input type=&quot;radio&quot;&gt; elements have a group and that the group designation is consistent | Critical | cat.forms, best-practice | true |
-| region | Ensures all content is contained within a landmark region | Moderate | cat.keyboard, best-practice | true |
+| region | Ensures all page content is contained by landmarks | Moderate | cat.keyboard, best-practice | true |
 | scope-attr-valid | Ensures the scope attribute is used correctly on tables | Moderate, Critical | cat.tables, best-practice | true |
 | server-side-image-map | Ensures that server-side image maps are not used | Minor | cat.text-alternatives, wcag2a, wcag211, section508, section508.22.f | true |
 | skip-link | Ensure all skip links have a focusable target | Moderate | cat.keyboard, best-practice | true |
