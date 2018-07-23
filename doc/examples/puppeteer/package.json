@@ -1,0 +1,10 @@
+{
+  "name": "axe-puppeteer",
+  "version": "0.0.0",
+  "private": true,
+  "main": "axe-puppeteer.js",
+  "dependencies": {
+    "axe-core": "^3.0.3",
+    "puppeteer": "^1.6.0"
+  }
+}
