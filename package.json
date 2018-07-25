@@ -55,8 +55,8 @@
     }
   },
   "scripts": {
-		"build": "grunt",
-		"test-dts": "tsc",
+    "build": "grunt",
+    "test-dts": "tsc",
     "test": "npm run test-dts && grunt test",
     "test-fast": "grunt test-fast",
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
@@ -107,6 +107,7 @@
     "selenium-webdriver": "~3.6.0",
     "sri-toolbox": "^0.2.0",
     "standard-version": "^4.2.0",
+    "tslint-config-prettier": "^1.14.0",
     "typescript": "^2.9.2",
     "uglify-js": "^3.4.4"
   },
