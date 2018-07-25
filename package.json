@@ -56,7 +56,7 @@
   },
   "scripts": {
 		"build": "grunt",
-		"test-dts": "tsc --noImplicitAny typings/axe-core/axe-core-tests.ts",
+		"test-dts": "tsc",
     "test": "npm run test-dts && grunt test",
     "test-fast": "grunt test-fast",
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
