@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"noImplicitAny": true,
+		"noImplicitAny": true
 	},
 	"include": [
 		"typings/axe-core/axe-core-tests.ts"
