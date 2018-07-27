@@ -64,7 +64,7 @@
     "postinstall": "node build/utils/postinstall.js",
     "release": "standard-version -a",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
-    "fmt": "prettier --write  *.js, *.ts '{build,doc,lib,test}/**/*.js'",
+    "fmt": "prettier --write  *.js, **/*.ts '{build,doc,lib,test}/**/*.js'",
     "precommit": "lint-staged"
   },
   "devDependencies": {
