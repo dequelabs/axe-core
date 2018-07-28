@@ -56,14 +56,15 @@
   },
   "scripts": {
     "build": "grunt",
-    "test": "grunt test",
+		"test-dts": "tsc",
+    "test": "npm run test-dts && grunt test",
     "test-fast": "grunt test-fast",
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
     "prepublishOnly": "grunt build",
     "postinstall": "node build/utils/postinstall.js",
     "release": "standard-version -a",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
-    "fmt": "prettier --write *.js '{build,doc,lib,test}/**/*.js'",
+    "fmt": "prettier --write  *.js, **/*.ts '{build,doc,lib,test}/**/*.js'",
     "precommit": "lint-staged"
   },
   "devDependencies": {
@@ -80,7 +81,7 @@
     "clone": "~2.1.1",
     "dot": "~1.1.2",
     "eslint-config-prettier": "^2.9.0",
-    "fs-extra": "^6.0.0",
+    "fs-extra": "^7.0.0",
     "grunt": "^1.0.2",
     "grunt-babel": "^7.0.0",
     "grunt-contrib-clean": "^1.0.0",
@@ -106,6 +107,7 @@
     "selenium-webdriver": "~3.6.0",
     "sri-toolbox": "^0.2.0",
     "standard-version": "^4.2.0",
+    "typescript": "^2.9.2",
     "uglify-js": "^3.4.4"
   },
   "dependencies": {},
