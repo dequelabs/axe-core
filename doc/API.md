@@ -55,6 +55,10 @@ The aXe API can be used as part of a broader process that is performed on many, 
 
 The aXe APIs are provided in the javascript file axe.js. It must be included in the web page under test. Parameters are sent as javascript function parameters. Results are returned in JSON format.
 
+### Full API Reference for Developers
+
+For a full listing of API offered by aXe, clone the repository and run `npm run api-docs`. This generates `jsdoc` documentation under `doc/api` which can be viewed using the browser.
+
 ### API Notes
 
 * A Rule test is made up of sub-tests. Each sub-test is returned in an array of 'checks'
