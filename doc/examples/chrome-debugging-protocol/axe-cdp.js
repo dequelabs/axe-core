@@ -37,7 +37,7 @@ const example = async url => {
 					.run()
 					// For some reason, when resolving with an object, CDP ignores
 					// its value (`results.result.value` is undefined). By
-					// `JSON.stringifying()` it, we can `JSON.parse()` it later on
+					// `JSON.stringify()`ing it, we can `JSON.parse()` it later on
 					// and return a valid results set.
 					.then(results => JSON.stringify(results))
 					.then(resolve)
