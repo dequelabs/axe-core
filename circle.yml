@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:6.12.3-browsers
+    working_directory: ~/axe-core
     steps:
       - checkout
       - restore_cache:
