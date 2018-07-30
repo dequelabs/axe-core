@@ -2,16 +2,13 @@ describe('axe.utils.preload unit tests', function() {
 	'use strict';
 
 	describe('axe.utils.preload', function() {
-		it('should be a function', function() {
-			assert.isFunction(axe.utils.preload);
-		});
-
 		it('should return a queue', function() {
 			var options = {
 				preload: true
 			};
 			var actual = axe.utils.preload(options);
 			assert.isObject(actual);
+			assert.containsAllKeys(actual, ['then', 'defer', 'catch']);
 		});
 
 		it('should ensure queue is defer(able)', function(done) {
