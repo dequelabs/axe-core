@@ -287,9 +287,9 @@ describe('axe.utils.getFlattenedTree', function() {
 			});
 		});
 	} else {
-		it('does not throw when slot elements are used', function () {
+		it('does not throw when slot elements are used', function() {
 			fixture.innerHTML = '<button><slot></slot></button>';
-			assert.doesNotThrow(function () {
+			assert.doesNotThrow(function() {
 				axe.utils.getFlattenedTree(fixture);
 			});
 		});
