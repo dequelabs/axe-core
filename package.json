@@ -104,7 +104,7 @@
     "markdown-table": "^1.1.2",
     "minami": "^1.2.3",
     "mocha": "^5.2.0",
-    "prettier": "^1.13.6",
+    "prettier": "^1.14.0",
     "promise": "~8.0.1",
     "revalidator": "~0.3.1",
     "selenium-webdriver": "~3.6.0",
