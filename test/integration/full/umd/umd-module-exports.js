@@ -13,11 +13,6 @@ describe('UMD module.export', function() {
 	it('should include doT', function() {
 		var doT = axe.imports.doT;
 		assert(doT, 'doT is registered on axe.imports');
-
-		var compileSrc = doT.compile.toString();
-		var templateSrc = doT.template.toString();
-
-		assert(axe.source.includes(compileSrc), 'source includes doT.compile()');
-		assert(axe.source.includes(templateSrc), 'source includes doT.template()');
+		assert.equal(doT.name, 'doT');
 	});
 });
