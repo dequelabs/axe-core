@@ -118,6 +118,10 @@
     "*.js": [
       "prettier --write",
       "git add"
+    ],
+    "*.ts": [
+      "prettier --write",
+      "git add"
     ]
   }
 }
