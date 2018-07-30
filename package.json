@@ -55,8 +55,9 @@
     }
   },
   "scripts": {
+		"api-docs": "jsdoc --configure .jsdoc.json",
     "build": "grunt",
-		"test-dts": "tsc",
+    "test-dts": "tsc",
     "test": "npm run test-dts && grunt test",
     "test-fast": "grunt test-fast",
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
@@ -98,8 +99,10 @@
     "html-entities": "^1.2.0",
     "husky": "^0.14.3",
     "jquery": "^3.0.0",
+    "jsdoc": "^3.5.5",
     "lint-staged": "^7.2.0",
     "markdown-table": "^1.1.2",
+    "minami": "^1.2.3",
     "mocha": "^5.2.0",
     "prettier": "^1.13.6",
     "promise": "~8.0.1",
