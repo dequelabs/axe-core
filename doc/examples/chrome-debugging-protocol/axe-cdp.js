@@ -63,6 +63,7 @@ const example = async url => {
 		client.close();
 		throw err;
 	}
+	client.close();
 	return results;
 };
 
