@@ -3,11 +3,15 @@ jobs:
   build:
     docker:
       - image: circleci/node:6.12.3-browsers
+    working_directory: ~/axe-core
     steps:
       - checkout
-      - run:
-          name: install-npm
-          command: npm install
-      - run:
-          name: test
-          command: npm test
+      - restore_cache:
+          keys:
+            - npm-deps-{{ checksum "package.json" }}
+      - run: npm install
+      - save_cache:
+          key: npm-deps-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run: npm test
