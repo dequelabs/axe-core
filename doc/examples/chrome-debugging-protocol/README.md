@@ -2,7 +2,7 @@
 
 This (very minimal) example demonstrates how to use `axe-core` with the [Chrome Debugging Protocol](https://chromedevtools.github.io/devtools-protocol/).
 
-The example does not have feature pairty with [`axe-webdriverjs`](https://github.com/dequelabs/axe-webdriverjs), and does not run on `<iframe>`s.
+The example does not have feature parity with [`axe-webdriverjs`](https://github.com/dequelabs/axe-webdriverjs), and does not run on `<iframe>`s.
 
 ## To run the example
 
