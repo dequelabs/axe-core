@@ -113,7 +113,9 @@
     "typescript": "^2.9.2",
     "uglify-js": "^3.4.4"
   },
-  "dependencies": {},
+  "dependencies": {
+    "nvm": "0.0.4"
+  },
   "lint-staged": {
     "*.js": [
       "prettier --write",
