@@ -8,10 +8,10 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - npm-deps-{{ checksum "package-lock.json" }}
+            - npm-deps-{{ checksum "package.json" }}
       - run: npm install
       - save_cache:
-          key: npm-deps-{{ checksum "package-lock.json" }}
+          key: npm-deps-{{ checksum "package.json" }}
           paths:
             - node_modules
       - run: npm test
