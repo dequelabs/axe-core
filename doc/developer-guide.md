@@ -44,6 +44,10 @@ You can also load tests in any supported browser, which is helpful for debugging
 4. [Integration Tests](../test/integration/rules/)
 5. There are additional tests located in [test/integration/full/](../test/integration/full/) for tests that need to be run against their own document.
 
+### API Reference
+
+[See API exposed on aXe](./API.md#section-2-api-reference)
+
 ## Architecture Overview
 
 aXe tests for accessibility using objects called Rules. Each Rule tests for a high-level aspect of accessibility, such as color contrast, button labels, and alternate text for images. Each rule is made up of a series of Checks. Depending on the rule; all, some, or none of these checks must pass in order for the rule to pass.

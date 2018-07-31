@@ -35,9 +35,9 @@ describe('dlitem', function() {
 		assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
 	});
 
-	it('should fail if the dt element has a parent <div> with role="list"', function() {
+	it('should fail if the dt element has a parent <dl> with a changed role', function() {
 		var checkArgs = checkSetup(
-			'<div role="list"><dt id="target">My list item</div>'
+			'<dl role="menubar"><dt id="target">My list item</dl>'
 		);
 		assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
 	});
