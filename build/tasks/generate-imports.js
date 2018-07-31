@@ -1,5 +1,6 @@
 /*eslint-env node */
 const UglifyJS = require('uglify-js');
+const assert = require('assert');
 
 module.exports = grunt => {
 	grunt.registerMultiTask(
@@ -57,11 +58,18 @@ module.exports = grunt => {
 			/**
 			 * Process a given library to unwrapped UMD module if exists, and return the factory
 			 * @param {string} libName name of the library
-			 * @param {string} sourceUrl path to the distributable of the library
+			 * @param {string} sourceCode source code for the library
+			 * @param {Object} [options] Optional options
+			 * @property {Boolean} umd Does the library contain a UMD wrapper
+			 * @property {String} global The library's global (`window.myLibrary`)
 			 */
-			const processImport = (libName, sourceUrl) => {
-				const sourceCode = grunt.file.read(sourceUrl);
-				if (hasUmdWrapper(sourceCode)) {
+			const processImport = (libName, sourceCode, options) => {
+				const hasUMD = options ? options.umd : hasUmdWrapper(sourceCode);
+				const global = options && options.global;
+
+				if (hasUMD) {
+					// If the library has a "standard" UMD wrapper, we'll remove it
+					// and expose the library directly.
 					unwrappedCode(sourceCode, (err, factory) => {
 						if (err) {
 							// running uglifyjs transform in a try block, this is to catch any errors from the transform.
@@ -69,6 +77,45 @@ module.exports = grunt => {
 						}
 						writeLibrary(libName, factory);
 					});
+				} else if (global) {
+					// The global variable exposed by the library. This is not necessarily the same as "libName".
+					const libraryGlobal = global;
+
+					// We wrap the library's source code in an IFFE which voids
+					// existing globals (module, define, process, etc.) forces and
+					// forces it to export a global.
+					//
+					// This method should only be used for "universal" code that
+					// follows the same code paths for all environments (Node,
+					// browser, etc). If there are different paths for different
+					// envs, the UMD method should be used instead.
+					const wrappedLibrary = `
+						(function (module, exports, define, require, process) {
+							// Get a reference to the "true" global scope. This works in
+							// ES5's "strict mode", browsers, node.js and other environments.
+							var global = Function('return this')();
+
+							// If there was a global prior to our script, make sure we
+							// "save" it (think "$.noConflict()").
+							var __old_global__ = global["${libraryGlobal}"];
+
+							${sourceCode}
+
+							// Preserve a reference to the library and remove it from
+							// the global scope.
+							var lib = global["${libraryGlobal}"];
+							delete global["${libraryGlobal}"];
+
+							// Reset a previous global when applicable.
+							if (__old_global__) {
+								global["${libraryGlobal}"] = __old_global__;
+							}
+
+							// Return the library to populate "axe.imports".
+							return lib;
+						})();
+					`;
+					writeLibrary(libName, wrappedLibrary);
 				} else {
 					// assumption is that the library returns an IIFE
 					writeLibrary(libName, sourceCode);
@@ -76,9 +123,22 @@ module.exports = grunt => {
 			};
 
 			// Iterate through each library to import and process the code
-			Object.keys(this.data).forEach(key => {
-				processImport(key, this.data[key]);
-			});
+			for (const name in this.data) {
+				const val = this.data[name];
+				if (typeof val === 'string') {
+					// Provided a path to a file with no options
+					const sourceCode = grunt.file.read(val);
+					processImport(name, sourceCode);
+				} else if (typeof val === 'object') {
+					// Provided an object with options
+					const { file, umd, global } = val;
+					assert(file, 'File required');
+					const sourceCode = grunt.file.read(file);
+					processImport(name, sourceCode, { umd, global });
+				} else {
+					grunt.fail.warn(`Unsupported generate-import: "${name}"`);
+				}
+			}
 		}
 	);
 };
