@@ -78,6 +78,9 @@ module.exports = grunt => {
 						writeLibrary(libName, factory);
 					});
 				} else if (global) {
+					// The global variable exposed by the library. This is not necessarily the same as "libName".
+					const libraryGlobal = global;
+
 					// We wrap the library's source code in an IFFE which voids
 					// existing globals (module, define, process, etc.) forces and
 					// forces it to export a global.
@@ -94,18 +97,18 @@ module.exports = grunt => {
 
 							// If there was a global prior to our script, make sure we
 							// "save" it (think "$.noConflict()").
-							var __old_global__ = global["${global}"];
+							var __old_global__ = global["${libraryGlobal}"];
 
 							${sourceCode}
 
 							// Preserve a reference to the library and remove it from
 							// the global scope.
-							var lib = global["${global}"];
-							delete global["${global}"];
+							var lib = global["${libraryGlobal}"];
+							delete global["${libraryGlobal}"];
 
 							// Reset a previous global when applicable.
 							if (__old_global__) {
-								global["${global}"] = __old_global__;
+								global["${libraryGlobal}"] = __old_global__;
 							}
 
 							// Return the library to populate "axe.imports".
