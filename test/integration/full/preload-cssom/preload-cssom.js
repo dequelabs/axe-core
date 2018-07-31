@@ -3,6 +3,7 @@ describe('preload cssom integration test pass', function() {
 	'use strict';
 
 	var origAxios;
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
 
 	before(function(done) {
 		function start() {
@@ -80,7 +81,7 @@ describe('preload cssom integration test pass', function() {
 						var sheets = results[0];
 						var externalSheet = sheets.filter(function(s) {
 							return s.isExternal;
-						})[0];
+						})[0].sheet;
 						assertStylesheet(externalSheet, 'body', 'body{overflow:auto;}');
 						done();
 					})
@@ -126,8 +127,8 @@ describe('preload cssom integration test pass', function() {
 						});
 						assert.lengthOf(nonExternalsheets, 2);
 						var inlineStylesheet = nonExternalsheets.filter(function(s) {
-							return s.rules.length === 1;
-						})[0];
+							return s.sheet.rules.length === 1;
+						})[0].sheet;
 						assertStylesheet(
 							inlineStylesheet,
 							'.inline-css-test',
@@ -150,8 +151,8 @@ describe('preload cssom integration test pass', function() {
 					});
 					assert.lengthOf(relativeSheets, 2);
 					var relativeSheet = relativeSheets.filter(function(s) {
-						return s.rules.length > 1;
-					})[0];
+						return s.sheet.rules.length > 1;
+					})[0].sheet;
 					assertStylesheet(relativeSheet, 'body', 'body{margin:0px;}');
 					done();
 				})
@@ -167,7 +168,7 @@ describe('preload cssom integration test pass', function() {
 						var externalSheets = sheets.filter(function(s) {
 							return s.isExternal;
 						});
-						assert.lengthOf(externalSheets, 2);
+						assert.lengthOf(externalSheets, 3);
 						done();
 					})
 					.catch(done);
@@ -180,12 +181,52 @@ describe('preload cssom integration test pass', function() {
 				getPreload()
 					.then(function(results) {
 						var sheets = results[0];
-						assert.lengthOf(sheets, 4);
+						assert.lengthOf(sheets, 5);
 						done();
 					})
 					.catch(done);
 			}
 		);
+
+		if (!window.PHANTOMJS) {
+			(shadowSupported ? it : xit)(
+				'should return styles from shadow dom',
+				function(done) {
+					var fixture = document.getElementById('shadow-fixture');
+					var shadow = fixture.attachShadow({ mode: 'open' });
+					shadow.innerHTML =
+						'<style>@import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"; @import "preload-cssom-shadow-blue.css"; .green { background-color: green; }</style>' +
+						'<div class="initialism">Some text</div>' +
+						'<div class="green">green</div>' +
+						'<div class="red">red</div>' +
+						'' +
+						'<h1>Heading</h1>';
+					getPreload(fixture)
+						.then(function(results) {
+							var sheets = results[0];
+							// verify count
+							assert.lengthOf(sheets, 8);
+							// verify that the last non external sheet with shadowId has green selector
+							var nonExternalsheetsWithShadowId = sheets
+								.filter(function(s) {
+									return !s.isExternal;
+								})
+								.filter(function(s) {
+									return s.shadowId;
+								});
+							assertStylesheet(
+								nonExternalsheetsWithShadowId[
+									nonExternalsheetsWithShadowId.length - 1
+								].sheet,
+								'.green',
+								'.green{background-color:green;}'
+							);
+							done();
+						})
+						.catch(done);
+				}
+			);
+		}
 
 		commonTestsForRootAndFrame();
 	});
@@ -221,8 +262,8 @@ describe('preload cssom integration test pass', function() {
 						});
 						assert.lengthOf(nonExternalsheets, 1);
 						var inlineStylesheet = nonExternalsheets.filter(function(s) {
-							return s.rules.length === 1;
-						})[0];
+							return s.sheet.rules.length === 1;
+						})[0].sheet;
 						assertStylesheet(
 							inlineStylesheet,
 							'.inline-frame-css-test',

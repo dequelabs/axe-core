@@ -73,8 +73,8 @@ describe('axe.utils.preloadCssom unit tests', function() {
 			.then(function(results) {
 				var sheets = results[0];
 				sheets.forEach(function(s) {
-					assert.isDefined(s);
-					assert.property(s, 'cssRules');
+					assert.isDefined(s.sheet);
+					assert.property(s.sheet, 'cssRules');
 				});
 				done();
 			})
