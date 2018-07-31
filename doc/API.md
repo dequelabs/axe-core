@@ -149,7 +149,9 @@ axe.configure({
   },
   reporter: "option",
   checks: [Object],
-  rules: [Object]});
+  rules: [Object],
+  locale: Object
+});
 ```
 
 #### Parameters
@@ -183,6 +185,7 @@ axe.configure({
       * `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. In practice, you must supply some valid tags or the default evaluation will not invoke the rule. The convention is to include the standard (WCAG 2 and/or section 508), the WCAG 2 level, Section 508 paragraph, and the WCAG 2 success criteria. Tags are constructed by converting all letters to lower case, removing spaces and periods and concatinating the result. E.g. WCAG 2 A success criteria 1.1.1 would become ["wcag2a", "wcag111"]
       * `matches` - string(optional, default `*`). A filtering CSS selector that will exclude elements that do not match the CSS selector.
   * `disableOtherRules` - Disables all rules not included in the `rules` property.
+  * `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
 
 **Returns:** Nothing
 

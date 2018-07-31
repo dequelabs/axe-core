@@ -72,4 +72,51 @@ describe('axe.reset', function() {
 		assert.equal(axe._audit.reporter, 'v2');
 		assert.equal(axe._audit.data.rules.bob.knows, 'not-joe');
 	});
+
+	describe('when custom locale was provided', function() {
+		beforeEach(function() {
+			axe._load({
+				data: {
+					checks: {
+						banana: {
+							impact: 'serious',
+							messages: {
+								pass: 'yay',
+								fail: 'boo',
+								incomplete: 'donno'
+							}
+						}
+					}
+				},
+				checks: [
+					{
+						id: 'banana',
+						evaluate: function() {}
+					}
+				]
+			});
+		});
+
+		it('should restore the original locale', function() {
+			axe.configure({
+				locale: {
+					checks: {
+						banana: {
+							pass: 'wonderful',
+							fail: 'horrible job',
+							incomplete: 'donno'
+						}
+					}
+				}
+			});
+
+			axe.reset();
+
+			var banana = axe._audit.data.checks.banana;
+			assert.equal(banana.impact, 'serious');
+			assert.equal(banana.messages.pass(), 'yay');
+			assert.equal(banana.messages.fail(), 'boo');
+			assert.equal(banana.messages.incomplete, 'donno');
+		});
+	});
 });
