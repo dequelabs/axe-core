@@ -116,4 +116,50 @@ describe('duplicate-id', function() {
 			assert.deepEqual(checkContext._relatedNodes, [node.querySelector('p')]);
 		}
 	);
+
+	describe('options.accReferred', function() {
+		it('ignores unreffed elements with accReferred: true', function() {
+			fixture.innerHTML = '<div id="foo"></div> <span id="foo"></span>';
+			var node = fixture.querySelector('div[id="foo"]');
+			assert.isTrue(
+				checks['duplicate-id'].evaluate.call(checkContext, node, {
+					accReferred: true
+				})
+			);
+		});
+
+		it('tests reffed elements with accReferred: true', function() {
+			fixture.innerHTML =
+				'<div id="foo"></div> <span id="foo"></span>' +
+				'<div aria-labelledby="foo"></div>';
+			var node = fixture.querySelector('div[id="foo"]');
+			assert.isFalse(
+				checks['duplicate-id'].evaluate.call(checkContext, node, {
+					accReferred: true
+				})
+			);
+		});
+
+		it('ignores reffed elements with accReferred: false', function() {
+			fixture.innerHTML =
+				'<div id="foo"></div> <span id="foo"></span>' +
+				'<div aria-labelledby="foo"></div>';
+			var node = fixture.querySelector('div[id="foo"]');
+			assert.isTrue(
+				checks['duplicate-id'].evaluate.call(checkContext, node, {
+					accReferred: false
+				})
+			);
+		});
+
+		it('tests unreffed elements with accReferred: false', function() {
+			fixture.innerHTML = '<div id="foo"></div> <span id="foo"></span>';
+			var node = fixture.querySelector('div[id="foo"]');
+			assert.isFalse(
+				checks['duplicate-id'].evaluate.call(checkContext, node, {
+					accReferred: false
+				})
+			);
+		});
+	});
 });

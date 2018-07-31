@@ -11,9 +11,10 @@
     "description": "Ensures every id attribute value is unique",
     "help": "id attribute value must be unique"
   },
-  "all": [],
-  "any": [
-    "duplicate-id"
+  "all": [
+    "duplicate-id",
+    "duplicate-id-accessible"
   ],
+  "any": [],
   "none": []
 }
