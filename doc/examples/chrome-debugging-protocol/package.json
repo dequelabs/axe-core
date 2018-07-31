@@ -1,0 +1,8 @@
+{
+  "name": "axe-cdp",
+  "private": true,
+  "dependencies": {
+    "axe-core": "^3.0.3",
+    "chrome-remote-interface": "^0.26.0"
+  }
+}
