@@ -32,6 +32,11 @@ describe('preload cssom integration test pass', function() {
 	});
 
 	function createStub(shouldReject) {
+		/**
+		 * This is a simple override to stub `axe.imports.axios`, until the test-suite is enhanced.
+		 * Did not use any library such as sinon for this, as sinon.stub have difficulties working under selenium webdriver
+		 * Also a generic XHR override was overlooked under webdriver
+		 */
 		axe.imports.axios = function stubbedAxios() {
 			return new Promise(function(resolve, reject) {
 				if (shouldReject) {
@@ -67,38 +72,39 @@ describe('preload cssom integration test pass', function() {
 	}
 
 	function commonTestsForRootAndFrame(root) {
-		it('should return external stylesheet from cross-domain and verify response', function(done) {
-			getPreload(root).then(function(results) {
-				var sheets = results[0];
-				var externalSheet = sheets.filter(function(s) {
-					return s.isExternal;
-				})[0];
-				assertStylesheet(externalSheet, 'body', 'body{overflow:auto;}');
-				done();
-			});
-		});
+		shouldIt(
+			'should return external stylesheet from cross-domain and verify response',
+			function(done) {
+				getPreload(root)
+					.then(function(results) {
+						var sheets = results[0];
+						var externalSheet = sheets.filter(function(s) {
+							return s.isExternal;
+						})[0];
+						assertStylesheet(externalSheet, 'body', 'body{overflow:auto;}');
+						done();
+					})
+					.catch(done);
+			}
+		);
 
-		it('should reject external stylesheets', function(done) {
+		shouldIt('should reject external stylesheets', function(done) {
 			restoreStub();
 			createStub(true);
 			var doneCalled = false;
-			getPreload(root).catch(function(error) {
-				assert.equal(error.message, 'Fake Error');
-				if (!doneCalled) {
-					done();
-				}
-				doneCalled = true;
-			});
+			getPreload(root)
+				.then(done)
+				.catch(function(error) {
+					assert.equal(error.message, 'Fake Error');
+					if (!doneCalled) {
+						done();
+					}
+					doneCalled = true;
+				});
 		});
 	}
 
 	beforeEach(function() {
-		if (window.PHANTOMJS) {
-			assert.ok('PhantomJS is a liar');
-			this.currentTest.fn = function() {
-				this.skip();
-			};
-		}
 		createStub();
 	});
 
@@ -106,59 +112,80 @@ describe('preload cssom integration test pass', function() {
 		restoreStub();
 	});
 
+	var shouldIt = window.PHANTOMJS ? it.skip : it;
+
 	describe('tests for current top level document', function() {
-		it('should return inline stylesheets defined using <style> tag', function(done) {
-			getPreload().then(function(results) {
-				var sheets = results[0];
-				var nonExternalsheets = sheets.filter(function(s) {
-					return !s.isExternal;
-				});
-				assert.lengthOf(nonExternalsheets, 2);
-				var inlineStylesheet = nonExternalsheets.filter(function(s) {
-					return s.rules.length === 1;
-				})[0];
-				assertStylesheet(
-					inlineStylesheet,
-					'.inline-css-test',
-					'.inline-css-test{font-size:inherit;}'
-				);
-				done();
-			});
+		shouldIt(
+			'should return inline stylesheets defined using <style> tag',
+			function(done) {
+				getPreload()
+					.then(function(results) {
+						var sheets = results[0];
+						var nonExternalsheets = sheets.filter(function(s) {
+							return !s.isExternal;
+						});
+						assert.lengthOf(nonExternalsheets, 2);
+						var inlineStylesheet = nonExternalsheets.filter(function(s) {
+							return s.rules.length === 1;
+						})[0];
+						assertStylesheet(
+							inlineStylesheet,
+							'.inline-css-test',
+							'.inline-css-test{font-size:inherit;}'
+						);
+						done();
+					})
+					.catch(done);
+			}
+		);
+
+		shouldIt('should return relative stylesheets with in same-origin', function(
+			done
+		) {
+			getPreload()
+				.then(function(results) {
+					var sheets = results[0];
+					var relativeSheets = sheets.filter(function(s) {
+						return !s.isExternal;
+					});
+					assert.lengthOf(relativeSheets, 2);
+					var relativeSheet = relativeSheets.filter(function(s) {
+						return s.rules.length > 1;
+					})[0];
+					assertStylesheet(relativeSheet, 'body', 'body{margin:0px;}');
+					done();
+				})
+				.catch(done);
 		});
 
-		it('should return relative stylesheets with in same-origin', function(done) {
-			getPreload().then(function(results) {
-				var sheets = results[0];
-				var relativeSheets = sheets.filter(function(s) {
-					return !s.isExternal;
-				});
-				assert.lengthOf(relativeSheets, 2);
-				var relativeSheet = relativeSheets.filter(function(s) {
-					return s.rules.length > 1;
-				})[0];
-				assertStylesheet(relativeSheet, 'body', 'body{margin:0px;}');
-				done();
-			});
-		});
+		shouldIt(
+			'should return all external stylesheets with or with(out) media attribute that are not disabled',
+			function(done) {
+				getPreload()
+					.then(function(results) {
+						var sheets = results[0];
+						var externalSheets = sheets.filter(function(s) {
+							return s.isExternal;
+						});
+						assert.lengthOf(externalSheets, 2);
+						done();
+					})
+					.catch(done);
+			}
+		);
 
-		it('should return all external stylesheets with or with(out) media attribute that are not disabled', function(done) {
-			getPreload().then(function(results) {
-				var sheets = results[0];
-				var externalSheets = sheets.filter(function(s) {
-					return s.isExternal;
-				});
-				assert.lengthOf(externalSheets, 2);
-				done();
-			});
-		});
-
-		it('should ignore disabled stylesheets with or with(out) media attribute', function(done) {
-			getPreload().then(function(results) {
-				var sheets = results[0];
-				assert.lengthOf(sheets, 4);
-				done();
-			});
-		});
+		shouldIt(
+			'should ignore disabled stylesheets with or with(out) media attribute',
+			function(done) {
+				getPreload()
+					.then(function(results) {
+						var sheets = results[0];
+						assert.lengthOf(sheets, 4);
+						done();
+					})
+					.catch(done);
+			}
+		);
 
 		commonTestsForRootAndFrame();
 	});
@@ -170,32 +197,42 @@ describe('preload cssom integration test pass', function() {
 			frame = document.getElementById('frame1').contentDocument;
 		});
 
-		it('should return correct number of stylesheets, ignores disabled', function(done) {
-			getPreload(frame).then(function(results) {
-				var sheets = results[0];
-				assert.lengthOf(sheets, 3);
-				done();
-			});
-		});
+		shouldIt(
+			'should return correct number of stylesheets, ignores disabled',
+			function(done) {
+				getPreload(frame)
+					.then(function(results) {
+						var sheets = results[0];
+						assert.lengthOf(sheets, 3);
+						done();
+					})
+					.catch(done);
+			}
+		);
 
-		it('should return inline stylesheets defined using <style> tag', function(done) {
-			getPreload(frame).then(function(results) {
-				var sheets = results[0];
-				var nonExternalsheets = sheets.filter(function(s) {
-					return !s.isExternal;
-				});
-				assert.lengthOf(nonExternalsheets, 1);
-				var inlineStylesheet = nonExternalsheets.filter(function(s) {
-					return s.rules.length === 1;
-				})[0];
-				assertStylesheet(
-					inlineStylesheet,
-					'.inline-frame-css-test',
-					'.inline-frame-css-test{font-size:inherit;}'
-				);
-				done();
-			});
-		});
+		shouldIt(
+			'should return inline stylesheets defined using <style> tag',
+			function(done) {
+				getPreload(frame)
+					.then(function(results) {
+						var sheets = results[0];
+						var nonExternalsheets = sheets.filter(function(s) {
+							return !s.isExternal;
+						});
+						assert.lengthOf(nonExternalsheets, 1);
+						var inlineStylesheet = nonExternalsheets.filter(function(s) {
+							return s.rules.length === 1;
+						})[0];
+						assertStylesheet(
+							inlineStylesheet,
+							'.inline-frame-css-test',
+							'.inline-frame-css-test{font-size:inherit;}'
+						);
+						done();
+					})
+					.catch(done);
+			}
+		);
 
 		commonTestsForRootAndFrame(frame);
 	});
