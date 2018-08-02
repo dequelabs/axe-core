@@ -1,0 +1,16 @@
+{
+	"tags": {
+		"dictionaries": ["jsdoc"]
+	},
+	"source": {
+		"include": ["lib", "README.md"],
+		"includePattern": ".js$",
+		"excludePattern": "(node_modules/|doc/api)"
+	},
+	"opts": {
+		"destination": "./doc/api",
+		"encoding": "utf8",
+		"recurse": true,
+		"template": "./node_modules/minami"
+	}
+}

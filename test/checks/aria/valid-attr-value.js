@@ -100,17 +100,32 @@ describe('aria-valid-attr-value', function() {
 		axe.commons.aria.validateAttrValue = orig;
 	});
 
-	it('should allow empty strings rather than idrefs for specific attributes', function() {
+	it('should allow empty strings rather than idref', function() {
+		fixtureSetup(
+			'<button aria-controls="">Button</button>' +
+				'<div aria-activedescendant=""></div>'
+		);
+		var passing1 = fixture.querySelector('button');
+		var passing2 = fixture.querySelector('div');
+		assert.isTrue(
+			checks['aria-valid-attr-value'].evaluate.call(checkContext, passing1)
+		);
+		assert.isTrue(
+			checks['aria-valid-attr-value'].evaluate.call(checkContext, passing2)
+		);
+	});
+
+	it('should allow empty strings rather than idrefs', function() {
 		fixtureSetup(
 			'<button aria-labelledby="">Button</button>' + '<div aria-owns=""></div>'
 		);
-		var passing = fixture.querySelector('button');
-		var failing = fixture.querySelector('div');
+		var passing1 = fixture.querySelector('button');
+		var passing2 = fixture.querySelector('div');
 		assert.isTrue(
-			checks['aria-valid-attr-value'].evaluate.call(checkContext, passing)
+			checks['aria-valid-attr-value'].evaluate.call(checkContext, passing1)
 		);
-		assert.isFalse(
-			checks['aria-valid-attr-value'].evaluate.call(checkContext, failing)
+		assert.isTrue(
+			checks['aria-valid-attr-value'].evaluate.call(checkContext, passing2)
 		);
 	});
 
