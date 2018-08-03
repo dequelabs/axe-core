@@ -42,6 +42,27 @@ describe('dlitem', function() {
 		assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
 	});
 
+	it('should pass if the dt element has a parent <dl> with an abstract role', function() {
+		var checkArgs = checkSetup(
+			'<dl role="section"><dt id="target">My list item</dl>'
+		);
+		assert.isTrue(checks.dlitem.evaluate.apply(null, checkArgs));
+	});
+
+	it('should pass if the dt element has a parent <dl> with an invalid role', function() {
+		var checkArgs = checkSetup(
+			'<dl role="invalid-role"><dt id="target">My list item</dl>'
+		);
+		assert.isTrue(checks.dlitem.evaluate.apply(null, checkArgs));
+	});
+
+	it('should fail if the dt element has a parent <dl> with a changed role', function() {
+		var checkArgs = checkSetup(
+			'<dl role="menubar"><dt id="target">My list item</dl>'
+		);
+		assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
+	});
+
 	(shadowSupport.v1 ? it : xit)(
 		'should return true in a shadow DOM pass',
 		function() {

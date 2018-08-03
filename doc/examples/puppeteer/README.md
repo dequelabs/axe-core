@@ -2,7 +2,7 @@
 
 This (very minimal) example demonstrates how to use `axe-core` with [Puppeteer](https://github.com/GoogleChrome/puppeteer).
 
-The example does not have feature pairty with [`axe-webdriverjs`](https://github.com/dequelabs/axe-webdriverjs), and does not run on `<iframe>`s.
+The example does not have feature parity with [`axe-webdriverjs`](https://github.com/dequelabs/axe-webdriverjs), and does not run on `<iframe>`s.
 
 ## To run the example
 
