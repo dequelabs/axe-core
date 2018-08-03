@@ -149,7 +149,12 @@ module.exports = function(grunt) {
 		'generate-imports': {
 			// list of external dependencies, which needs to be added to axe.imports object
 			data: {
-				axios: './node_modules/axios/dist/axios.js'
+				axios: './node_modules/axios/dist/axios.js',
+				doT: {
+					file: './node_modules/dot/doT.js',
+					umd: false,
+					global: 'doT'
+				}
 			}
 		},
 		'aria-supported': {
