@@ -7,6 +7,7 @@
     "axe": true
   },
   "rules": {
+    "no-var": 2,
     "no-bitwise": 2,
     "camelcase": 2,
     "curly": 2,
