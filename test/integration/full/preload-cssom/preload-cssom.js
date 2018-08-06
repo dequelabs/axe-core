@@ -7,9 +7,6 @@ describe('preload cssom integration test pass', function() {
 
 	before(function(done) {
 		function start() {
-			// Stop messing with my tests Mocha!
-			document.querySelector('#mocha h1').outerHTML =
-				'<h2>preload cssom integration test</h2>';
 			// cache original axios object
 			if (axe.imports.axios) {
 				origAxios = axe.imports.axios;
@@ -89,7 +86,9 @@ describe('preload cssom integration test pass', function() {
 			}
 		);
 
-		shouldIt('should reject external stylesheets', function(done) {
+		shouldIt('should reject if external stylesheet fail to load', function(
+			done
+		) {
 			restoreStub();
 			createStub(true);
 			var doneCalled = false;
