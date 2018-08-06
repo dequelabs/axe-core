@@ -38,6 +38,20 @@ describe('listitem', function() {
 		assert.isFalse(checks.listitem.evaluate.apply(null, checkArgs));
 	});
 
+	it('should pass if the listitem has a parent <ol> with an invalid role', function() {
+		var checkArgs = checkSetup(
+			'<ol role="invalid-role"><li id="target">My list item</li></ol>'
+		);
+		assert.isTrue(checks.listitem.evaluate.apply(null, checkArgs));
+	});
+
+	it('should pass if the listitem has a parent <ol> with an abstract role', function() {
+		var checkArgs = checkSetup(
+			'<ol role="section"><li id="target">My list item</li></ol>'
+		);
+		assert.isTrue(checks.listitem.evaluate.apply(null, checkArgs));
+	});
+
 	(shadowSupport.v1 ? it : xit)(
 		'should return true in a shadow DOM pass',
 		function() {
