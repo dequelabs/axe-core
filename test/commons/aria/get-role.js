@@ -47,7 +47,7 @@ describe('aria.getRole', function() {
 		assert.equal(aria.getRole(node), 'listitem');
 	});
 
-	it('ignores tokenlists by default', function() {
+	it('ignores fallback roles by default', function() {
 		var node = document.createElement('div');
 		node.setAttribute('role', 'spinbutton button');
 		assert.isNull(aria.getRole(node));
@@ -65,9 +65,9 @@ describe('aria.getRole', function() {
 		});
 
 		it('still returns the explicit role', function() {
-			var node = document.createElement('li', { noImplicit: true });
+			var node = document.createElement('li');
 			node.setAttribute('role', 'button');
-			assert.equal(aria.getRole(node), 'button');
+			assert.equal(aria.getRole(node, { noImplicit: true }), 'button');
 		});
 
 		it('returns the implicit role with `noImplicit: false`', function() {
@@ -119,42 +119,42 @@ describe('aria.getRole', function() {
 		});
 	});
 
-	describe('tokenList', function() {
+	describe('fallback', function() {
 		it('returns the first valid item in the list', function() {
 			var node = document.createElement('div');
 			node.setAttribute('role', 'link button');
-			assert.equal(aria.getRole(node, { tokenList: true }), 'link');
+			assert.equal(aria.getRole(node, { fallback: true }), 'link');
 		});
 
 		it('skips over invalid roles', function() {
 			var node = document.createElement('div');
 			node.setAttribute('role', 'foobar button');
-			assert.equal(aria.getRole(node, { tokenList: true }), 'button');
+			assert.equal(aria.getRole(node, { fallback: true }), 'button');
 		});
 
 		it('returns the null if all roles are invalid and there is no implicit role', function() {
 			var node = document.createElement('div');
 			node.setAttribute('role', 'foo bar baz');
-			assert.isNull(aria.getRole(node, { tokenList: true }));
+			assert.isNull(aria.getRole(node, { fallback: true }));
 		});
 
 		it('respects the defaults', function() {
 			var node = document.createElement('li');
 			node.setAttribute('role', 'doc-chapter section');
-			assert.equal(aria.getRole(node, { tokenList: true }), 'listitem');
+			assert.equal(aria.getRole(node, { fallback: true }), 'listitem');
 		});
 
 		it('respect the `noImplicit` option', function() {
 			var node = document.createElement('li');
 			node.setAttribute('role', 'doc-chapter section');
-			assert.isNull(aria.getRole(node, { tokenList: true, noImplicit: true }));
+			assert.isNull(aria.getRole(node, { fallback: true, noImplicit: true }));
 		});
 
 		it('respect the `abstracts` option', function() {
 			var node = document.createElement('li');
 			node.setAttribute('role', 'doc-chapter section');
 			assert.equal(
-				aria.getRole(node, { tokenList: true, abstracts: true }),
+				aria.getRole(node, { fallback: true, abstracts: true }),
 				'section'
 			);
 		});
@@ -163,7 +163,7 @@ describe('aria.getRole', function() {
 			var node = document.createElement('li');
 			node.setAttribute('role', 'doc-chapter section');
 			assert.equal(
-				aria.getRole(node, { tokenList: true, dpub: true }),
+				aria.getRole(node, { fallback: true, dpub: true }),
 				'doc-chapter'
 			);
 		});
