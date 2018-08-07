@@ -2,4 +2,3 @@ tmp
 dist
 node_modules
 *.tgz
-build
