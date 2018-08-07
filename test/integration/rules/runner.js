@@ -102,12 +102,27 @@
 							axe.run(
 								fixture,
 								{
+									/**
+									 * The debug flag helps log errors in a fairly detailed fashion,
+									 * when tests fail in webdriver
+									 */
+									debug: true,
 									performanceTimer: false,
 									runOnly: { type: 'rule', values: [ruleId] }
 								},
 								function(err, r) {
+									// assert that there are no errors
 									assert.isNull(err);
+									// assert that result is defined
+									assert.isDefined(r);
+									// assert that result has certain keys
+									assert.hasAnyKeys(r, ['incomplete', 'violations', 'passes']);
+									// flatten results
 									results = flattenResult(r);
+									// assert incomplete in results does not have error
+									if (results.incomplete) {
+										assert.isUndefined(results.incomplete.error);
+									}
 									done();
 								}
 							);
