@@ -117,12 +117,12 @@
 									assert.isDefined(r);
 									// assert that result has certain keys
 									assert.hasAnyKeys(r, ['incomplete', 'violations', 'passes']);
+									// assert incomplete(s) does not have error
+									r.incomplete.forEach(function(incomplete) {
+										assert.isUndefined(incomplete.error);
+									});
 									// flatten results
 									results = flattenResult(r);
-									// assert incomplete in results does not have error
-									if (results.incomplete) {
-										assert.isUndefined(results.incomplete.error);
-									}
 									done();
 								}
 							);
