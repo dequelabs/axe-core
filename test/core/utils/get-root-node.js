@@ -6,7 +6,7 @@ function makeShadowTreeGRN(node) {
 	root.appendChild(div);
 }
 
-describe('dom.getRootNode', function() {
+describe('axe.utils.getRootNode', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
@@ -19,11 +19,11 @@ describe('dom.getRootNode', function() {
 	it('should return the document when the node is just a normal node', function() {
 		fixture.innerHTML = '<div id="target"></div>';
 		var node = document.getElementById('target');
-		assert.isTrue(axe.commons.dom.getRootNode(node) === document);
+		assert.isTrue(axe.utils.getRootNode(node) === document);
 	});
 	it('should return the document when the node is disconnected', function() {
 		var node = document.createElement('div');
-		assert.isTrue(axe.commons.dom.getRootNode(node) === document);
+		assert.isTrue(axe.utils.getRootNode(node) === document);
 	});
 	it('should return the shadow root when it is inside the shadow DOM', function() {
 		var shadEl;
@@ -34,9 +34,9 @@ describe('dom.getRootNode', function() {
 			fixture.innerHTML = '<div></div>';
 			makeShadowTreeGRN(fixture.firstChild);
 			shadEl = fixture.firstChild.shadowRoot.querySelector('div');
-			assert.isTrue(axe.commons.dom.getRootNode(shadEl) !== document);
+			assert.isTrue(axe.utils.getRootNode(shadEl) !== document);
 			assert.isTrue(
-				axe.commons.dom.getRootNode(shadEl) === fixture.firstChild.shadowRoot
+				axe.utils.getRootNode(shadEl) === fixture.firstChild.shadowRoot
 			);
 		}
 	});
