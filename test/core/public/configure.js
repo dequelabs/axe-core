@@ -394,6 +394,7 @@ describe('axe.configure', function() {
 					]
 				});
 			});
+
 			it('should support strings', function() {
 				axe.configure({
 					locale: {
@@ -430,6 +431,44 @@ describe('axe.configure', function() {
 			});
 		});
 
+		// This test ensures we do not drop additional properties added to
+		// checks. See https://github.com/dequelabs/axe-core/pull/1036/files#r207738673
+		// for reasoning.
+		it('should keep existing properties on check data', function() {
+			axe.configure({
+				checks: [
+					{
+						id: 'banana',
+						metadata: {
+							impact: 'potato',
+							foo: 'bar',
+							messages: {
+								pass: 'pass',
+								fail: 'fail',
+								incomplete: 'incomplete'
+							}
+						}
+					}
+				]
+			});
+
+			axe.configure({
+				locale: {
+					lang: 'lol',
+					checks: {
+						banana: {
+							pass: 'yay banana'
+						}
+					}
+				}
+			});
+
+			var banana = axe._audit.data.checks.banana;
+			assert.equal(banana.impact, 'potato');
+			assert.equal(banana.foo, 'bar');
+			assert.equal(banana.messages.pass(), 'yay banana');
+		});
+
 		it('should error when provided an unknown rule id', function() {
 			assert.throws(function() {
 				axe.configure({
@@ -450,8 +489,8 @@ describe('axe.configure', function() {
 			}, /unknown check: "nope"/);
 		});
 
-		it('should set previous locale', function() {
-			assert.isNull(axe._audit._previousLocale);
+		it('should set default locale', function() {
+			assert.isNull(axe._audit._defaultLocale);
 			axe.configure({
 				locale: {
 					lang: 'lol',
@@ -462,7 +501,58 @@ describe('axe.configure', function() {
 					}
 				}
 			});
-			assert.ok(axe._audit._previousLocale);
+			assert.ok(axe._audit._defaultLocale);
+		});
+
+		describe('also given metadata', function() {
+			it('should favor the locale', function() {
+				axe.configure({
+					locale: {
+						lang: 'lol',
+						rules: {
+							greeting: {
+								help: 'hi'
+							}
+						}
+					},
+					rules: [
+						{
+							id: 'greeting',
+							metadata: {
+								help: 'potato'
+							}
+						}
+					]
+				});
+
+				var audit = axe._audit;
+				var localeData = audit.data;
+
+				assert.equal(localeData.rules.greeting.help(), 'hi');
+			});
+		});
+
+		describe('after locale has been set', function() {
+			describe('the provided messages', function() {
+				it('should allow for doT templating', function() {
+					axe.configure({
+						locale: {
+							lang: 'foo',
+							rules: {
+								greeting: {
+									help: 'foo: {{=it.data}}.'
+								}
+							}
+						}
+					});
+
+					var greeting = axe._audit.data.rules.greeting;
+					var value = greeting.help({
+						data: 'bar'
+					});
+					assert.equal(value, 'foo: bar.');
+				});
+			});
 		});
 	});
 });
