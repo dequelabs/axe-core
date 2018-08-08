@@ -1,5 +1,5 @@
 describe('aria.getElementUnallowedRoles', function() {
-	it('should fail input with role application', function() {
+	it('returns false for INPUT with role application', function() {
 		var node = document.createElement('input');
 		var role = 'application';
 		node.setAttribute('type', '');
@@ -10,7 +10,7 @@ describe('aria.getElementUnallowedRoles', function() {
 		assert.include(actual, role);
 	});
 
-	it('should return true when INPUT type is checkbox and has aria-pressed attribute', function() {
+	it('returns true for INPUT type is checkbox and has aria-pressed attribute', function() {
 		var node = document.createElement('input');
 		node.setAttribute('type', 'checkbox');
 		node.setAttribute('aria-pressed', '');
@@ -18,7 +18,7 @@ describe('aria.getElementUnallowedRoles', function() {
 		assert.isEmpty(actual);
 	});
 
-	it('should fail li with role menubar', function() {
+	it('returns false for LI with role menubar', function() {
 		var node = document.createElement('li');
 		var role = 'menubar';
 		node.setAttribute('role', role);
@@ -26,7 +26,7 @@ describe('aria.getElementUnallowedRoles', function() {
 		assert.isEmpty(actual);
 	});
 
-	it('should pass input with type button and role menuitemcheckbox', function() {
+	it('returns true for INPUT with type button and role menuitemcheckbox', function() {
 		var node = document.createElement('input');
 		var role = 'menuitemcheckbox';
 		node.setAttribute('role', role);
@@ -35,7 +35,7 @@ describe('aria.getElementUnallowedRoles', function() {
 		assert.isEmpty(actual);
 	});
 
-	it('should fail section with role option', function() {
+	it('returns false for SECTION with role option', function() {
 		var node = document.createElement('section');
 		var role = 'option';
 		node.setAttribute('role', role);
@@ -44,7 +44,7 @@ describe('aria.getElementUnallowedRoles', function() {
 		assert.include(actual, role);
 	});
 
-	it('should pass input type radio with role menuitemradio', function() {
+	it('returns true for INPUT type radio with role menuitemradio', function() {
 		var node = document.createElement('input');
 		var role = 'menuitemradio';
 		node.setAttribute('role', role);
