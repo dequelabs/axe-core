@@ -143,3 +143,38 @@ var pluginSrc: axe.AxePlugin = {
 };
 axe.registerPlugin(pluginSrc);
 axe.cleanup();
+
+axe.configure({
+	locale: {
+		checks: {
+			foo: {
+				fail: 'failure',
+				pass: 'success',
+				incomplete: {
+					foo: 'nar'
+				}
+			}
+		}
+	}
+});
+
+axe.configure({
+	locale: {
+		lang: 'foo',
+		rules: {
+			foo: {
+				description: 'desc',
+				help: 'help'
+			}
+		},
+		checks: {
+			foo: {
+				pass: 'pass',
+				fail: 'fail',
+				incomplete: {
+					foo: 'bar'
+				}
+			}
+		}
+	}
+});
