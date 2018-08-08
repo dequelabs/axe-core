@@ -328,7 +328,7 @@ The options parameter is flexible way to configure how `axe.run` operates. The d
 Additionally, there are a number or properties that allow configuration of different options:
 
 | Property        | Default | Description                |
-|-----------------|:-------:|:----------------------------:|
+|-----------------|:-------|:----------------------------|
 | `runOnly`       | n/a     | Limit which rules are executed, based on names or tags
 | `rules`         | n/a     | Allow customizing a rule's properties (including { enable: false })
 | `reporter`      | `v1`    | Which reporter to use (see [Configuration](#api-name-axeconfigure))
@@ -339,6 +339,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `elementRef`    | `false` | Return element references in addition to the target
 | `restoreScroll` | `false` | Scrolls elements back to before axe started
 | `frameWaitTime` | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out
+| `preload`       | `false` | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details)
 
 ###### Options Parameter Examples
 
@@ -459,6 +460,28 @@ Additionally, there are a number or properties that allow configuration of diffe
   }
   ```
   This example will process all of the "violations", "incomplete", and "inapplicable" result types. Since "passes" was not specified, it will only process the first pass for each rule, if one exists. As a result, the results object's `passes` array will have a length of either `0` or `1`. On a series of extremely large pages, this would improve performance considerably.
+
+###### <a id='preload-configuration-details'></a> Preload Configuration in Options Parameter
+
+The preload attribute in options parameter accepts a `boolean` or an `object` where an array of assets can be specified. 
+
+1. Specifying a `boolean`
+
+```js
+preload: true
+```
+
+2. Specifying an `object`
+```js
+preload: { assets: ['cssom'], timeout: 50000 }
+```
+The `assets` attribute expects an array of preload(able) constraints to be fetched. The current set of values supported for `assets` is listed in the following table:
+
+| Asset Type | Description |
+|:-----------|:------------|
+| `cssom`    | This asset type preloads all CSS Stylesheets rulesets specified in the page. The stylessheets can be an external cross-domain resource, a relative stylesheet or an inline style with in the head tag of the document. If the stylesheet is an external cross-domain a network request is made. An object representing the CSS Rules from each stylesheet is made available to the checks evaluate function as `preloadedAssets` at run-time |
+
+The `timeout` attribute in the object configuration is `optional` and has a fallback default value (10000ms). The `timeout` is essential for any network dependent assets that are preloaded, where-in if a given request takes longer than the specified/ default value, the operation is aborted.
 
 ##### Callback Parameter
 
