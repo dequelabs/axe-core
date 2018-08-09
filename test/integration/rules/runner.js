@@ -111,10 +111,14 @@
 									runOnly: { type: 'rule', values: [ruleId] }
 								},
 								function(err, r) {
-									// assert that there are no errors
-									assert.isNull(err);
+									// assert that there are no errors - if error exists a stack trace is logged.
+									assert.isNull(
+										err,
+										'Axe Error should be null. ' + (err && err.stack) &&
+											err.stack
+									);
 									// assert that result is defined
-									assert.isDefined(r);
+									assert.isDefined(r, 'Results are defined.');
 									// assert that result has certain keys
 									assert.hasAnyKeys(r, ['incomplete', 'violations', 'passes']);
 									// assert incomplete(s) does not have error
