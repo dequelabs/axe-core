@@ -112,11 +112,8 @@
 								},
 								function(err, r) {
 									// assert that there are no errors - if error exists a stack trace is logged.
-									assert.isNull(
-										err,
-										'Axe Error should be null. ' + (err && err.stack) &&
-											err.stack
-									);
+									var errStack = err && err.stack ? err.stack : '';
+									assert.isNull(err, 'Error should be null. ' + errStack);
 									// assert that result is defined
 									assert.isDefined(r, 'Results are defined.');
 									// assert that result has certain keys
