@@ -141,7 +141,7 @@ describe('aria-allowed-role', function() {
 		assert.deepEqual(checkContext._data, ['link']);
 	});
 
-	it('returns true <img> with a non-empty alt to have any role except `none` or `presentation`', function() {
+	it('returns true <img> with a non-empty alt', function() {
 		var node = document.createElement('img');
 		node.setAttribute('role', 'banner');
 		node.alt = 'some text';
@@ -149,15 +149,17 @@ describe('aria-allowed-role', function() {
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
-		node.setAttribute('role', 'none');
-		assert.isFalse(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
-		);
+	});
+
+	it('returns false for <img> with a non-empty alt and role `presentation`', function() {
+		var node = document.createElement('img');
 		node.setAttribute('role', 'presentation');
+		node.alt = 'some text';
+		fixture.appendChild(node);
 		assert.isFalse(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
-		assert.deepEqual(checkContext._data, ['presentation']);
+		// assert.deepEqual(checkContext._data, ['presentation']);
 	});
 
 	it('should not allow a <link> with a href to have any invalid role', function() {

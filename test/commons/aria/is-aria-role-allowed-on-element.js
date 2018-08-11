@@ -211,17 +211,17 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 	it('returns false if given element cannot have any role', function() {
 		axe.commons.aria.lookupTable.elementsAllowedNoRole = ['NAV'];
 		var node = document.createElement('nav');
-		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, undefined);
+		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'alert'); // changed this
 		assert.isFalse(actual);
 	});
 
 	it('returns false if given element cannot have any role', function() {
 		var node = document.createElement('track');
-		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, undefined);
+		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'banner');
 		assert.isFalse(actual);
 	});
 
-	it('returns false if AREA element does not have href', function() {
+	it('returns false if AREA element has href', function() {
 		var node = document.createElement('area');
 		node.setAttribute('href', '#yay');
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(
@@ -231,9 +231,20 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		assert.isFalse(actual);
 	});
 
+	it('returns true if AREA element does not have href', function() {
+		var node = document.createElement('area');
+		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(
+			node,
+			'presentation'
+		);
+		assert.isTrue(actual);
+	});
+
 	it('returns false, ensure evaluateRoleForElement in lookupTable is invoked', function() {
+		var overrideInvoked = false;
 		axe.commons.aria.lookupTable.evaluateRoleForElement = {
 			IMG: ({ node, out }) => {
+				overrideInvoked = true;
 				assert.isDefined(node);
 				assert.equal(node.nodeName.toUpperCase(), 'IMG');
 				assert.isBoolean(out);
@@ -246,13 +257,15 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 			node,
 			'presentation'
 		);
-		var expected = false;
-		assert.equal(actual, expected);
+		assert.isTrue(overrideInvoked);
+		assert.isFalse(actual);
 	});
 
 	it('returns false if element with role MENU type context', function() {
+		var overrideInvoked = false;
 		axe.commons.aria.lookupTable.evaluateRoleForElement = {
 			LI: ({ node }) => {
+				overrideInvoked = true;
 				assert.isDefined(node);
 				assert.equal(node.nodeName.toUpperCase(), 'LI');
 				return false;
@@ -261,7 +274,7 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('li');
 		node.setAttribute('role', 'menuitem');
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'menuitem');
-		var expected = false;
-		assert.equal(actual, expected);
+		assert.isTrue(overrideInvoked);
+		assert.isFalse(actual);
 	});
 });
