@@ -20,8 +20,36 @@ describe('only-listitems', function() {
 		);
 	});
 
+	it('should return false if the list has only spaces as content', function() {
+		var checkArgs = checkSetup('<ol id="target">   </ol>');
+
+		assert.isFalse(
+			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
 	it('should return false if the list has whitespace', function() {
 		var checkArgs = checkSetup('<ol id="target"><li>Item</li>    </ol>');
+
+		assert.isFalse(
+			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('should return false if the list has only an element with role listitem', function() {
+		var checkArgs = checkSetup(
+			'<ol id="target"><div role="listitem">A list</div></ol>'
+		);
+
+		assert.isFalse(
+			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('should return false if the list has only multiple mixed elements with role listitem', function() {
+		var checkArgs = checkSetup(
+			'<ol id="target"><div role="listitem">list</div><li role="listitem">list</li><div role="listitem">list</div></ol>'
+		);
 
 		assert.isFalse(
 			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
@@ -80,6 +108,35 @@ describe('only-listitems', function() {
 			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
 		);
 		assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('p')]);
+	});
+
+	it('should return false if the list has at least one li while others have their roles changed', function() {
+		var checkArgs = checkSetup(
+			'<ol id="target"><li >A list item</li><li role="menuitem">Not a list item</li></ol>'
+		);
+
+		assert.isFalse(
+			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('should return true if the list has only li items with their roles changed', function() {
+		var checkArgs = checkSetup(
+			'<ol id="target"><li role="menuitem">Not a list item</li><li role="menuitem">Not a list item</li></ol>'
+		);
+		assert.isTrue(
+			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('should return true if <link> is used along side only li items with their roles changed', function() {
+		var checkArgs = checkSetup(
+			'<ol id="target"><link rel="stylesheet" href="theme.css"><li role="menuitem">Not a list item</li></ol>'
+		);
+
+		assert.isTrue(
+			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+		);
 	});
 
 	it('should return false if <link> is used along side li', function() {

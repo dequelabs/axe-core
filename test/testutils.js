@@ -1,3 +1,10 @@
+// Let the user know they need to disable their axe/attest extension before running the tests.
+if (window.__AXE_EXTENSION__) {
+	throw new Error(
+		'You must disable your axe/attest browser extension in order to run the test suite.'
+	);
+}
+
 /*eslint indent: 0*/
 var testUtils = {};
 
