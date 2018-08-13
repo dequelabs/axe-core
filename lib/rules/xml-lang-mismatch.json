@@ -4,11 +4,11 @@
 	"tags": [
 		"cat.language",
 		"wcag2a",
-		"wcag312"
+		"wcag311"
 	],
 	"metadata": {
-		"description": "Ensures that lang and xml:lang attributes on elements within the body of webpage has a valid language subtag",
-		"help": "The value of the primary language subtag for the lang and xml:lang attributes should be the same"
+		"description": "Ensures that for the html element, there is no mismatch between the primary language in non-empty lang and xml:lang attributes, if both are used",
+		"help": "The value of the primary language subtag for the lang and xml:lang attributes should be the same for the html element"
 	},
 	"all": [
 		"xml-lang-mismatch"

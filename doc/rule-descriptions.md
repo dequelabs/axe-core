@@ -67,4 +67,4 @@
 | valid-lang | Ensures lang attributes have valid values | Serious | cat.language, wcag2aa, wcag312 | true |
 | video-caption | Ensures &lt;video&gt; elements have captions | Critical | cat.text-alternatives, wcag2a, wcag122, section508, section508.22.a | true |
 | video-description | Ensures &lt;video&gt; elements have audio descriptions | Critical | cat.text-alternatives, wcag2aa, wcag125, section508, section508.22.b | true |
-| xml-lang-mismatch | Ensures that lang and xml:lang attributes on elements within the body of webpage has a valid language subtag | Moderate | cat.language, wcag2a, wcag312 | true |
+| xml-lang-mismatch | Ensures that for the html element, there is no mismatch between the primary language in non-empty lang and xml:lang attributes, if both are used | Moderate | cat.language, wcag2a, wcag311 | true |

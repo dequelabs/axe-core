@@ -1,43 +1,49 @@
-describe('xml-lang-mismatch-matches', function () {
-	'use strict'; 
+describe('xml-lang-mismatch-matches', function() {
+	'use strict';
 
 	var rule;
 	var dom;
 	var fixture = document.getElementById('fixture');
 
-	beforeEach(function () {
-		rule = axe._audit.rules.find(function (rule) {
+	beforeEach(function() {
+		rule = axe._audit.rules.find(function(rule) {
 			return rule.id === 'xml-lang-mismatch';
 		});
-		dom = document.createElement('p');
+		dom = document.createElement('html');
 	});
 
-	afterEach(function () {
+	afterEach(function() {
 		fixture.innerHTML = '';
 	});
 
-	it('is a function', function () {
-		assert.isFunction(rule.matches);
+	it('is a function', function() {
+		var actual = rule.matches;
+		assert.isFunction(actual);
 	});
 
-	it('returns false if the element does not contain lang or xml:lang attribute', function () {
-		assert.isFalse(rule.matches(dom));
+	it('returns false if the element does not contain lang or xml:lang attribute', function() {
+		var actual = rule.matches(dom);
+		assert.isFalse(actual);
 	});
 
-	it('returns true if the element contains lang or xml:lang attribute', function () {
+	it('returns false if the element contains either/ only one of the lang or xml:lang attribute', function() {
 		dom.setAttribute('lang', 'nl');
-		assert.isFalse(rule.matches(dom));
+		var actual = rule.matches(dom);
+		assert.isFalse(actual);
 	});
 
-	it('returns true if the element contains lang or xml:lang attribute', function () {
+	it('returns true if the element contains both lang and xml:lang attribute', function() {
+		dom.setAttribute('lang', 'en');
 		dom.setAttribute('xml:lang', 'nl');
-		assert.isFalse(rule.matches(dom));
+		var actual = rule.matches(dom);
+		assert.isTrue(actual);
 	});
 
-	it('returns true if the element contains lang or xml:lang attribute', function () {
-		dom.setAttribute('lang', 'nl');
-		dom.setAttribute('xml:lang', 'fr');
-		assert.isFalse(rule.matches(dom));
+	it('returns false for element of type that is not HTML', function() {
+		var node = document.createElement('p');
+		node.setAttribute('lang', '');
+		node.setAttribute('xml:lang', 'nl');
+		var actual = rule.matches(node);
+		assert.isFalse(actual);
 	});
-
 });
