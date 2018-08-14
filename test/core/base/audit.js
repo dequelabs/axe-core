@@ -77,6 +77,7 @@ describe('Audit', function() {
 		});
 		getFlattenedTree = axe.utils.getFlattenedTree;
 	});
+
 	afterEach(function() {
 		fixture.innerHTML = '';
 		axe._tree = undefined;
