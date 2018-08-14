@@ -1,4 +1,4 @@
-describe('xml-lang-mismatch test', function() {
+describe('html-xml-lang-mismatch test', function() {
 	'use strict';
 
 	var results;
@@ -7,7 +7,7 @@ describe('xml-lang-mismatch test', function() {
 			{
 				runOnly: {
 					type: 'rule',
-					values: ['xml-lang-mismatch']
+					values: ['html-xml-lang-mismatch']
 				}
 			},
 			function(err, r) {

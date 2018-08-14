@@ -1,7 +1,7 @@
 {
-	"id": "xml-lang-mismatch",
+	"id": "html-xml-lang-mismatch",
 	"selector": "html[lang][xml\\:lang]",
-	"matches": "xml-lang-mismatch-matches.js",
+	"matches": "html-xml-lang-mismatch-matches.js",
 	"tags": [
 		"cat.language",
 		"wcag2a",

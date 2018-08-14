@@ -1,4 +1,4 @@
-describe('xml-lang-mismatch-matches', function() {
+describe('html-xml-lang-mismatch-matches', function() {
 	'use strict';
 
 	var rule;
@@ -7,7 +7,7 @@ describe('xml-lang-mismatch-matches', function() {
 
 	beforeEach(function() {
 		rule = axe._audit.rules.find(function(rule) {
-			return rule.id === 'xml-lang-mismatch';
+			return rule.id === 'html-xml-lang-mismatch';
 		});
 		dom = document.createElement('html');
 	});
