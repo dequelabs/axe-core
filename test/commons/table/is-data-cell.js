@@ -78,4 +78,17 @@ describe('table.isDataCell', function() {
 		assert.isTrue(axe.commons.table.isDataCell(target1));
 		assert.isFalse(axe.commons.table.isDataCell(target2));
 	});
+
+	it('should ignore abstract roles', function() {
+		fixture.innerHTML =
+			'<table>' +
+			'<tr><td id="target1" role="section">heading</td></tr>' +
+			'<tr><th id="target2" role="section">heading</th></tr>' +
+			'</table>';
+
+		var target1 = $id('target1');
+		var target2 = $id('target2');
+		assert.isTrue(axe.commons.table.isDataCell(target1));
+		assert.isFalse(axe.commons.table.isDataCell(target2));
+	});
 });

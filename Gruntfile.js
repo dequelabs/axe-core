@@ -146,6 +146,17 @@ module.exports = function(grunt) {
 				dest: 'tmp/commons.js'
 			}
 		},
+		'generate-imports': {
+			// list of external dependencies, which needs to be added to axe.imports object
+			data: {
+				axios: './node_modules/axios/dist/axios.js',
+				doT: {
+					file: './node_modules/dot/doT.js',
+					umd: false,
+					global: 'doT'
+				}
+			}
+		},
 		'aria-supported': {
 			data: {
 				entry: 'lib/commons/aria/index.js',
@@ -368,6 +379,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('build', [
 		'clean',
+		'generate-imports',
 		'eslint',
 		'validate',
 		'concat:commons',

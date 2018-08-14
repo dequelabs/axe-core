@@ -15,9 +15,51 @@ describe('dlitem', function() {
 		assert.isTrue(checks.dlitem.evaluate.apply(null, checkArgs));
 	});
 
-	it('should fail if the dlitem has an incorrect parent', function() {
+	it('should fail if the dt element has an incorrect parent', function() {
 		var checkArgs = checkSetup('<video><dt id="target">My list item</video>');
 
+		assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
+	});
+
+	it('should pass if the dt element has a parent <dl> with role="list"', function() {
+		var checkArgs = checkSetup(
+			'<dl role="list"><dt id="target">My list item</dl>'
+		);
+		assert.isTrue(checks.dlitem.evaluate.apply(null, checkArgs));
+	});
+
+	it('should fail if the dt element has a parent <dl> with role="presentation"', function() {
+		var checkArgs = checkSetup(
+			'<dl role="presentation"><dt id="target">My list item</dl>'
+		);
+		assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
+	});
+
+	it('should fail if the dt element has a parent <dl> with a changed role', function() {
+		var checkArgs = checkSetup(
+			'<dl role="menubar"><dt id="target">My list item</dl>'
+		);
+		assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
+	});
+
+	it('should pass if the dt element has a parent <dl> with an abstract role', function() {
+		var checkArgs = checkSetup(
+			'<dl role="section"><dt id="target">My list item</dl>'
+		);
+		assert.isTrue(checks.dlitem.evaluate.apply(null, checkArgs));
+	});
+
+	it('should pass if the dt element has a parent <dl> with an invalid role', function() {
+		var checkArgs = checkSetup(
+			'<dl role="invalid-role"><dt id="target">My list item</dl>'
+		);
+		assert.isTrue(checks.dlitem.evaluate.apply(null, checkArgs));
+	});
+
+	it('should fail if the dt element has a parent <dl> with a changed role', function() {
+		var checkArgs = checkSetup(
+			'<dl role="menubar"><dt id="target">My list item</dl>'
+		);
 		assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
 	});
 
