@@ -1,5 +1,5 @@
 /* global axe, Promise */
-describe('preload cssom integration test pass', function() {
+describe('preload cssom integration test', function() {
 	'use strict';
 
 	var origAxios;
@@ -11,16 +11,7 @@ describe('preload cssom integration test pass', function() {
 			if (axe.imports.axios) {
 				origAxios = axe.imports.axios;
 			}
-			// run axe
-			axe.run(
-				{
-					preload: true
-				},
-				function(err) {
-					assert.isNull(err);
-					done();
-				}
-			);
+			done();
 		}
 		if (document.readyState !== 'complete') {
 			window.addEventListener('load', start);

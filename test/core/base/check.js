@@ -169,10 +169,15 @@ describe('Check', function() {
 			});
 
 			it('should pass the context through to check evaluate call', function(done) {
-				var configured = { cssom: 'yay' };
+				var configured = {
+					cssom: 'yay',
+					source: 'this is page source',
+					aom: undefined
+				};
 				new Check({
 					options: configured,
 					evaluate: function(node, options, virtualNode, context) {
+						assert.property(context, 'cssom');
 						assert.deepEqual(context, configured);
 						done();
 					}
