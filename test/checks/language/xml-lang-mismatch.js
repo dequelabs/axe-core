@@ -6,7 +6,8 @@ describe('xml-lang-mismatch', function() {
 	var checkContext = axe.testUtils.MockCheckContext();
 
 	beforeEach(function() {
-		node = document.createElement('html');
+		// using a div element (instead of html), as the check is agnostic of element type
+		node = document.createElement('div');
 	});
 
 	afterEach(function() {
@@ -64,8 +65,7 @@ describe('xml-lang-mismatch', function() {
 		node.setAttribute('lang', 'en');
 		node.setAttribute('xml:lang', 'fr-FR');
 		fixture.appendChild(node);
-		assert.isTrue(
-			checks['xml-lang-mismatch'].evaluate.call(checkContext, node)
-		);
+		var actual = checks['xml-lang-mismatch'].evaluate.call(checkContext, node);
+		assert.isFalse(actual);
 	});
 });

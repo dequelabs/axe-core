@@ -40,7 +40,7 @@ describe('xml-lang-mismatch-matches', function() {
 	});
 
 	it('returns false for element of type that is not HTML', function() {
-		var node = document.createElement('p');
+		var node = document.createElement('svg');
 		node.setAttribute('lang', '');
 		node.setAttribute('xml:lang', 'nl');
 		var actual = rule.matches(node);
