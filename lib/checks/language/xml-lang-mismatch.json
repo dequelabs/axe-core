@@ -4,8 +4,8 @@
   "metadata": {
     "impact": "moderate",
     "messages": {
-      "pass": "Value of lang or xml:lang attribute match if both are specified and included in the list of valid languages",
-      "fail": "Value of lang or xml:lang attribute either does not match or not included in the list of valid languages"
+      "pass": "Lang and xml:lang attributes have the same base language",
+      "fail": "Lang and xml:lang attributes do not have the same base language"
     }
   }
 }

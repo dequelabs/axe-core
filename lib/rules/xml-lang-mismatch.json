@@ -1,5 +1,6 @@
 {
 	"id": "xml-lang-mismatch",
+	"selector": "html[lang][xml\\:lang]",
 	"matches": "xml-lang-mismatch-matches.js",
 	"tags": [
 		"cat.language",
@@ -7,8 +8,8 @@
 		"wcag311"
 	],
 	"metadata": {
-		"description": "Ensures that for the html element, there is no mismatch between the primary language in non-empty lang and xml:lang attributes, if both are used",
-		"help": "The value of the primary language subtag for the lang and xml:lang attributes should be the same for the html element"
+		"description": "Ensure that HTML elements with both valid lang and xml:lang attributes agree on the base language of the page",
+	  "help": "HTML elements with lang and xml:lang must have the same base language"
 	},
 	"all": [
 		"xml-lang-mismatch"
