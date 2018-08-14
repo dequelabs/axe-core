@@ -126,12 +126,9 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 				allowedElements: [
 					{
 						tagName: 'INPUT',
-						attributes: [
-							{
-								name: 'TYPE',
-								value: 'dogs'
-							}
-						]
+						attributes: {
+							TYPE: 'DOG'
+						}
 					}
 				]
 			}
