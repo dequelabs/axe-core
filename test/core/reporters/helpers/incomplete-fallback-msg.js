@@ -1,4 +1,3 @@
-
 describe('helpers.incompleteFallbackMessage', function() {
 	'use strict';
 	before(function() {
@@ -17,5 +16,4 @@ describe('helpers.incompleteFallbackMessage', function() {
 		var summary = helpers.incompleteFallbackMessage();
 		assert.equal(summary, 'Dogs are the best');
 	});
-
 });

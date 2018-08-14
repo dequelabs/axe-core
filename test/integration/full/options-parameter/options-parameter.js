@@ -1,7 +1,7 @@
 describe('Options parameter', function() {
 	'use strict';
 
-	before(function (done) {
+	before(function(done) {
 		axe.testUtils.awaitNestedLoad(done);
 	});
 
@@ -16,13 +16,20 @@ describe('Options parameter', function() {
 				try {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
-					assert.isTrue(results.passes[0].nodes.some(function(node) {
-						if (node.target.length !== 2) {
-							return false;
-						}
-						return node.target[0] === '#myframe';
-					}), 'couldn\'t find iframe result');
-					assert.lengthOf(results.passes[0].nodes, 2, 'results from main and iframe');
+					assert.isTrue(
+						results.passes[0].nodes.some(function(node) {
+							if (node.target.length !== 2) {
+								return false;
+							}
+							return node.target[0] === '#myframe';
+						}),
+						"couldn't find iframe result"
+					);
+					assert.lengthOf(
+						results.passes[0].nodes,
+						2,
+						'results from main and iframe'
+					);
 					done();
 				} catch (e) {
 					done(e);
@@ -36,13 +43,20 @@ describe('Options parameter', function() {
 				try {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
-					assert.isFalse(results.passes[0].nodes.some(function(node) {
-						if (node.target.length !== 2) {
-							return false;
-						}	
-						return node.target[0] === '#myframe';
-					}), 'unexpectedly found iframe result');
-					assert.lengthOf(results.passes[0].nodes, 1, 'results from main frame only');
+					assert.isFalse(
+						results.passes[0].nodes.some(function(node) {
+							if (node.target.length !== 2) {
+								return false;
+							}
+							return node.target[0] === '#myframe';
+						}),
+						'unexpectedly found iframe result'
+					);
+					assert.lengthOf(
+						results.passes[0].nodes,
+						1,
+						'results from main frame only'
+					);
 					done();
 				} catch (e) {
 					done(e);
@@ -56,13 +70,20 @@ describe('Options parameter', function() {
 				try {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
-					assert.isTrue(results.passes[0].nodes.some(function(node) {
-						if (node.target.length !== 2) {
-							return false;
-						}
-						return node.target[0] === '#myframe';
-					}), 'couldn\'t find iframe result');
-					assert.lengthOf(results.passes[0].nodes, 2, 'results from main and iframe');
+					assert.isTrue(
+						results.passes[0].nodes.some(function(node) {
+							if (node.target.length !== 2) {
+								return false;
+							}
+							return node.target[0] === '#myframe';
+						}),
+						"couldn't find iframe result"
+					);
+					assert.lengthOf(
+						results.passes[0].nodes,
+						2,
+						'results from main and iframe'
+					);
 					done();
 				} catch (e) {
 					done(e);
@@ -79,9 +100,12 @@ describe('Options parameter', function() {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
 					assert.lengthOf(results.passes[0].nodes, 2, '');
-					assert.isFalse(results.passes[0].nodes.some(function(node) {
-						return 'element' in node;
-					}), 'unexpectedly foud element ref');
+					assert.isFalse(
+						results.passes[0].nodes.some(function(node) {
+							return 'element' in node;
+						}),
+						'unexpectedly foud element ref'
+					);
 					done();
 				} catch (e) {
 					done(e);
@@ -95,10 +119,17 @@ describe('Options parameter', function() {
 				try {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
-					assert.lengthOf(results.passes[0].nodes, 2, 'results from main frame and iframe');
-					assert.isFalse(results.passes[0].nodes.some(function(node) {
-						return 'element' in node;
-					}), 'unexpectedly found element ref');
+					assert.lengthOf(
+						results.passes[0].nodes,
+						2,
+						'results from main frame and iframe'
+					);
+					assert.isFalse(
+						results.passes[0].nodes.some(function(node) {
+							return 'element' in node;
+						}),
+						'unexpectedly found element ref'
+					);
 					done();
 				} catch (e) {
 					done(e);
@@ -113,12 +144,15 @@ describe('Options parameter', function() {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
 					assert.lengthOf(results.passes[0].nodes, 2, '');
-					assert.isTrue(results.passes[0].nodes.every(function(node) {
-						if ('element' in node) {
-							return node.element === $id('target');
-						}
-						return 'target' in node && node.target.length > 1;
-					}), 'every result node should either be in an iframe or have an element ref');
+					assert.isTrue(
+						results.passes[0].nodes.every(function(node) {
+							if ('element' in node) {
+								return node.element === $id('target');
+							}
+							return 'target' in node && node.target.length > 1;
+						}),
+						'every result node should either be in an iframe or have an element ref'
+					);
 					done();
 				} catch (e) {
 					done(e);
@@ -135,9 +169,12 @@ describe('Options parameter', function() {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
 					assert.lengthOf(results.passes[0].nodes, 2, '');
-					assert.isTrue(results.passes[0].nodes.every(function(node) {
-						return 'target' in node;
-					}), 'every result node should have a target');
+					assert.isTrue(
+						results.passes[0].nodes.every(function(node) {
+							return 'target' in node;
+						}),
+						'every result node should have a target'
+					);
 					done();
 				} catch (e) {
 					done(e);
@@ -152,9 +189,12 @@ describe('Options parameter', function() {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
 					assert.lengthOf(results.passes[0].nodes, 2, '');
-					assert.isTrue(results.passes[0].nodes.every(function(node) {
-						return 'target' in node;
-					}), 'every result node should have a target');
+					assert.isTrue(
+						results.passes[0].nodes.every(function(node) {
+							return 'target' in node;
+						}),
+						'every result node should have a target'
+					);
 					done();
 				} catch (e) {
 					done(e);
@@ -169,9 +209,12 @@ describe('Options parameter', function() {
 					assert.lengthOf(results.violations, 0, 'violations');
 					assert.lengthOf(results.passes, 1, 'passes');
 					assert.lengthOf(results.passes[0].nodes, 2, '');
-					assert.isFalse(results.passes[0].nodes.some(function(node) {
-						return 'target' in node && node.target.length === 1;
-					}), 'only iframe result nodes should have a target');
+					assert.isFalse(
+						results.passes[0].nodes.some(function(node) {
+							return 'target' in node && node.target.length === 1;
+						}),
+						'only iframe result nodes should have a target'
+					);
 					done();
 				} catch (e) {
 					done(e);

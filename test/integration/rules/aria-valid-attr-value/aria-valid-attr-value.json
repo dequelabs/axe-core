@@ -2,7 +2,7 @@
 	"description": "aria-valid-attr-value tests",
 	"rule": "aria-valid-attr-value",
 	"violations": [
-		["#violation0"], ["#violation1"], ["#violation2"], ["#violation3"], ["#violation4"], ["#violation5"],
+		["#violation1"], ["#violation2"], ["#violation3"], ["#violation4"], ["#violation5"],
 		["#violation6"], ["#violation7"], ["#violation8"], ["#violation9"], ["#violation10"], ["#violation11"],
 		["#violation12"], ["#violation13"], ["#violation14"], ["#violation15"], ["#violation16"], ["#violation17"],
 		["#violation18"], ["#violation19"], ["#violation20"], ["#violation21"], ["#violation22"], ["#violation23"],
@@ -31,7 +31,7 @@
 		["#pass140"], ["#pass141"], ["#pass142"], ["#pass143"], ["#pass144"], ["#pass145"], ["#pass146"],
 		["#pass147"], ["#pass148"], ["#pass149"], ["#pass150"], ["#pass151"], ["#pass152"], ["#pass153"],
 		["#pass154"], ["#pass155"], ["#pass156"], ["#pass157"], ["#pass158"], ["#pass159"], ["#pass160"],
-    ["#pass161"], ["#pass162"], ["#pass163"], ["#pass164"], ["#pass165"], ["#pass166"], ["#pass167"],
-    ["#pass168"], ["#pass169"], ["#pass170"]
+		["#pass161"], ["#pass162"], ["#pass163"], ["#pass164"], ["#pass165"], ["#pass166"], ["#pass167"],
+		["#pass168"], ["#pass169"], ["#pass170"], ["#pass171"]
 	]
 }

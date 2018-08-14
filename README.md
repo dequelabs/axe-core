@@ -101,6 +101,32 @@ To create a new translation for aXe, start by running `grunt translate --lang=<l
 
 To update existing translation file, re-run `grunt translate --lang=<langcode>`. This will add new messages used in English and remove messages which were not used in English.
 
+Additionally, locale can be applied at runtime by passing a `locale` object to `axe.configure()`. The locale object must be of the same shape as existing locales in the `./locales` directory. For example:
+
+```js
+axe.configure({
+  locale: {
+    lang: 'de',
+    rules: {
+      accesskeys: {
+        help: 'Der Wert des accesskey-Attributes muss einzigartig sein.'
+      },
+      // ...
+    },
+    checks: {
+      abstractrole: {
+        fail: 'Abstrakte ARIA-Rollen dürfen nicht direkt verwendet werden.'
+      },
+      'aria-errormessage': {
+        // Note: doT (https://github.com/olado/dot) templates are supported here.
+        fail: 'Der Wert der aria-errormessage {{~it.data:value}} `{{=value}}{{~}}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
+      }
+      // ...
+    }
+  }
+})
+```
+
 ## Supported ARIA Roles and Attributes.
 
 Refer [aXe ARIA support](./doc/aria-supported.md) for a complete list of ARIA supported roles and attributes by axe.

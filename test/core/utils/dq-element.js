@@ -1,38 +1,38 @@
 /*global DqElement */
-describe('DqElement', function () {
+describe('DqElement', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
 	var fixtureSetup = axe.testUtils.fixtureSetup;
 
-	afterEach(function () {
+	afterEach(function() {
 		fixture.innerHTML = '';
 		axe._tree = undefined;
 		axe._selectorData = undefined;
 	});
 
-	it('should be a function', function () {
+	it('should be a function', function() {
 		assert.isFunction(DqElement);
 	});
 
-	it('should be exposed to utils', function () {
+	it('should be exposed to utils', function() {
 		assert.equal(axe.utils.DqElement, DqElement);
 	});
 
-	it('should take a node as a parameter and return an object', function () {
+	it('should take a node as a parameter and return an object', function() {
 		var node = document.createElement('div');
 		var result = new DqElement(node);
 
 		assert.isObject(result);
 	});
-	describe('element', function () {
-		it('should store reference to the element', function () {
+	describe('element', function() {
+		it('should store reference to the element', function() {
 			var div = document.createElement('div');
 			var dqEl = new DqElement(div);
 			assert.equal(dqEl.element, div);
 		});
 
-		it('should not be present in stringified version', function () {
+		it('should not be present in stringified version', function() {
 			var div = document.createElement('div');
 			fixtureSetup();
 
@@ -42,28 +42,29 @@ describe('DqElement', function () {
 		});
 	});
 
-	describe('source', function () {
-		it('should include the outerHTML of the element', function () {
+	describe('source', function() {
+		it('should include the outerHTML of the element', function() {
 			fixture.innerHTML = '<div class="bar" id="foo">Hello!</div>';
 
 			var result = new DqElement(fixture.firstChild);
 			assert.equal(result.source, fixture.firstChild.outerHTML);
 		});
 
-		it('should work with SVG elements', function () {
+		it('should work with SVG elements', function() {
 			fixture.innerHTML = '<svg aria-label="foo"></svg>';
 
 			var result = new DqElement(fixture.firstChild);
 			assert.isString(result.source);
 		});
-		it('should work with MathML', function () {
-			fixture.innerHTML = '<math display="block"><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></math>';
+		it('should work with MathML', function() {
+			fixture.innerHTML =
+				'<math display="block"><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></math>';
 
 			var result = new DqElement(fixture.firstChild);
 			assert.isString(result.source);
 		});
 
-		it('should truncate large elements', function () {
+		it('should truncate large elements', function() {
 			var div = '<div class="foo" id="foo">';
 			for (var i = 0; i < 300; i++) {
 				div += i;
@@ -75,24 +76,27 @@ describe('DqElement', function () {
 			assert.equal(result.source.length, '<div class="foo" id="foo">'.length);
 		});
 
-		it('should use spec object over passed element', function () {
+		it('should use spec object over passed element', function() {
 			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
-			var result = new DqElement(fixture.firstChild, {}, {
-				source: 'woot'
-			});
+			var result = new DqElement(
+				fixture.firstChild,
+				{},
+				{
+					source: 'woot'
+				}
+			);
 			assert.equal(result.source, 'woot');
 		});
 	});
 
-	describe('selector', function () {
-
-		it('should call axe.utils.getSelector', function () {
+	describe('selector', function() {
+		it('should call axe.utils.getSelector', function() {
 			/*eslint no-unused-vars: 0*/
 			var orig = axe.utils.getSelector;
 			var success = false;
 			var expected = { monkeys: 'bananas' };
 
-			axe.utils.getSelector = function (p) {
+			axe.utils.getSelector = function(p) {
 				success = true;
 				assert.equal(fixture, p);
 				return expected;
@@ -101,27 +105,29 @@ describe('DqElement', function () {
 			var result = new DqElement(fixture);
 			assert.deepEqual(result.selector, [expected]);
 			axe.utils.getSelector = orig;
-
 		});
 
-		it('should prefer selector from spec object', function () {
+		it('should prefer selector from spec object', function() {
 			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
-			var result = new DqElement(fixture.firstChild, {}, {
-				selector: 'woot'
-			});
+			var result = new DqElement(
+				fixture.firstChild,
+				{},
+				{
+					selector: 'woot'
+				}
+			);
 			assert.equal(result.selector, 'woot');
 		});
-
 	});
 
-	describe('xpath', function () {
-		it('should call axe.utils.getXpath', function () {
+	describe('xpath', function() {
+		it('should call axe.utils.getXpath', function() {
 			/*eslint no-unused-vars: 0*/
 			var orig = axe.utils.getXpath;
 			var success = false;
 			var expected = { monkeys: 'bananas' };
 
-			axe.utils.getXpath = function (p) {
+			axe.utils.getXpath = function(p) {
 				success = true;
 				assert.equal(fixture, p);
 				return expected;
@@ -131,18 +137,21 @@ describe('DqElement', function () {
 			axe.utils.getXpath = orig;
 		});
 
-		it('should prefer selector from spec object', function () {
+		it('should prefer selector from spec object', function() {
 			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
-			var result = new DqElement(fixture.firstChild, {}, {
-				xpath: 'woot'
-			});
+			var result = new DqElement(
+				fixture.firstChild,
+				{},
+				{
+					xpath: 'woot'
+				}
+			);
 			assert.equal(result.xpath, 'woot');
 		});
-
 	});
 
-	describe('absolutePaths', function () {
-		it('creates a path all the way to root', function () {
+	describe('absolutePaths', function() {
+		it('creates a path all the way to root', function() {
 			fixtureSetup('<div id="foo" class="bar">Hello!</div>');
 
 			var result = new DqElement(fixture.firstChild, {
@@ -154,8 +163,8 @@ describe('DqElement', function () {
 		});
 	});
 
-	describe('toJSON', function () {
-		it('should only stringify selector and source', function () {
+	describe('toJSON', function() {
+		it('should only stringify selector and source', function() {
 			var expected = {
 				selector: 'foo > bar > joe',
 				source: '<joe aria-required="true">',
