@@ -635,10 +635,10 @@ describe('Audit', function() {
 					assert.isTrue(preloadOverrideInvoked);
 					// assert that time diff(s)
 					// assert that run check invoked immediately
-					// real world this will be less than 0 :)
-					assert.isBelow(noPreloadCheckedInvokedTime - runStartTime, 0.1);
+					// choosing 5ms as an arbitary number
+					assert.isBelow(noPreloadCheckedInvokedTime - runStartTime, 5);
 					// assert that preload  invoked immediately
-					assert.isBelow(preloadInvokedTime - runStartTime, 0.1);
+					assert.isBelow(preloadInvokedTime - runStartTime, 5);
 					// ensure cache is clear
 					assert.isTrue(typeof axe._selectCache === 'undefined');
 					// done
