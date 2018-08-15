@@ -56,6 +56,16 @@ describe('aria-errormessage', function() {
 		);
 	});
 
+	it('sets an array of IDs in data', function() {
+		var testHTML = '<div></div>';
+		testHTML += '<div id="plain"></div>';
+		fixture.innerHTML = testHTML;
+		var target = fixture.children[0];
+		target.setAttribute('aria-errormessage', ' foo  bar \tbaz  ');
+		checks['aria-errormessage'].evaluate.call(checkContext, target);
+		assert.deepEqual(checkContext._data, ['foo', 'bar', 'baz']);
+	});
+
 	(shadowSupported ? it : xit)(
 		'should return false if aria-errormessage value crosses shadow boundary',
 		function() {
