@@ -25,7 +25,7 @@
 		<div id="mocha"></div>
 		<div id="fixture"></div>
 		<% tests.forEach(function (file) { %>
-			<script src="<%=file%>"></script>
+			<script src="/<%=data.pathPrefix%>/<%=file%>"></script>
 		<%  }); %>
 
 		<script src="/test/integration/adapter.js"></script>

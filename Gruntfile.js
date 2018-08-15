@@ -80,7 +80,8 @@ module.exports = function(grunt) {
 		clean: ['dist', 'tmp', 'axe.js', 'axe.*.js'],
 		babel: {
 			options: {
-				compact: 'false'
+				compact: 'false',
+				presets: ['env']
 			},
 			core: {
 				files: [
@@ -89,6 +90,16 @@ module.exports = function(grunt) {
 						cwd: 'lib/core',
 						src: ['**/*.js'],
 						dest: 'tmp/core'
+					}
+				]
+			},
+			test: {
+				files: [
+					{
+						expand: true,
+						cwd: 'test/',
+						src: ['**/*.js'],
+						dest: 'tmp/test'
 					}
 				]
 			},
@@ -271,7 +282,8 @@ module.exports = function(grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/core',
 					data: {
-						title: 'aXe Core Tests'
+						title: 'aXe Core Tests',
+						pathPrefix: 'tmp/test/core'
 					}
 				}
 			},
@@ -286,7 +298,8 @@ module.exports = function(grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/checks',
 					data: {
-						title: 'aXe Check Tests'
+						title: 'aXe Check Tests',
+						pathPrefix: 'tmp/test/checks'
 					}
 				}
 			},
@@ -301,7 +314,8 @@ module.exports = function(grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/commons',
 					data: {
-						title: 'aXe Commons Tests'
+						title: 'aXe Commons Tests',
+						pathPrefix: 'tmp/test/commons'
 					}
 				}
 			},
@@ -316,7 +330,8 @@ module.exports = function(grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/rule-matches',
 					data: {
-						title: 'aXe Rule Matches Tests'
+						title: 'aXe Rule Matches Tests',
+						pathPrefix: 'tmp/test/rule-matches'
 					}
 				}
 			},
@@ -328,7 +343,8 @@ module.exports = function(grunt) {
 					testCwd: 'test/integration/rules',
 					tests: ['../../../tmp/integration-tests.js', 'runner.js'],
 					data: {
-						title: 'aXe Integration Tests'
+						title: 'aXe Integration Tests',
+						pathPrefix: 'tmp/test/integration'
 					}
 				}
 			}
