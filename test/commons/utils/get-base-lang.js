@@ -20,4 +20,13 @@ describe('utils.getBaseLang', function() {
 		var actual = axe.commons.utils.getBaseLang('SOME-random-lang');
 		assert.strictEqual(actual, 'some');
 	});
+
+	it('returns an empty string when argument is null or undefined', function() {
+		var actualNull = axe.commons.utils.getBaseLang(null);
+		var actualUndefined = axe.commons.utils.getBaseLang(undefined);
+		var actualEmpty = axe.commons.utils.getBaseLang();
+		assert.strictEqual(actualNull, '');
+		assert.strictEqual(actualUndefined, '');
+		assert.strictEqual(actualEmpty, '');
+	});
 });
