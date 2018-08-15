@@ -37,7 +37,9 @@ describe('preload integration test', function() {
 						id: 'run-later-rule',
 						selector: 'div#run-later-target',
 						any: ['check-context-has-assets'],
-						preload: true
+						preload: {
+							assets: ['cssom']
+						}
 					}
 				],
 				checks: [
@@ -102,43 +104,6 @@ describe('preload integration test', function() {
 	});
 
 	var shouldIt = window.PHANTOMJS ? it.skip : it;
-
-	shouldIt('ensure preload options is passed to audit.run', function(done) {
-		// overriding the default audit.run
-		// to return a mutated rule result with options for assertion
-		axe._audit.run = function(context, options, resolve) {
-			var randomRule = this.rules[0];
-			randomRule.run(context, options, function(ruleResult) {
-				ruleResult.OPTIONS_PASSED = options;
-				resolve([ruleResult]);
-			});
-		};
-
-		var preloadOptions = {
-			assets: ['cssom']
-		};
-		axe.run(
-			{
-				runOnly: {
-					type: 'rule',
-					values: ['run-now-rule']
-				},
-				preload: preloadOptions
-			},
-			function(err, res) {
-				assert.isNull(err);
-				assert.isDefined(res);
-				assert.property(res, 'passes');
-				assert.lengthOf(res.passes, 1);
-				assert.property(res.passes[0], 'OPTIONS_PASSED');
-
-				var optionsPassed = res.passes[0].OPTIONS_PASSED;
-				assert.property(optionsPassed, 'preload');
-				assert.deepEqual(optionsPassed.preload, preloadOptions);
-				done();
-			}
-		);
-	});
 
 	shouldIt(
 		'ensure for custom rule/check which does not preload, the CheckResult does not have asset(cssom)',
