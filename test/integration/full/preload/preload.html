@@ -14,6 +14,16 @@
 			font-size: inherit;
 		}
 	</style>
+	<script src="/node_modules/mocha/mocha.js"></script>
+	<script src="/node_modules/chai/chai.js"></script>
+	<script src="/axe.js"></script>
+	<script>
+		mocha.setup({
+			timeout: 10000,
+			ui: 'bdd'
+		});
+		var assert = chai.assert;
+	</script>
 </head>
 <body>
 	<div id="run-now-target">
@@ -23,16 +33,6 @@
 		Sample DIV which acts as target for run later
 	</div>
 	<div id="mocha"></div>
-	<script src="/node_modules/mocha/mocha.js"></script>
-	<script src="/node_modules/chai/chai.js"></script>
-	<script>
-		mocha.setup({
-			timeout: 10000,
-			ui: 'bdd'
-		});
-		var assert = chai.assert;
-	</script>
-	<script src="/axe.js"></script>
 	<script src="/test/testutils.js"></script>
 	<script src="preload.js"></script>
 	<script src="/test/integration/adapter.js"></script>
