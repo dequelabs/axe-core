@@ -238,7 +238,7 @@ describe('Rule', function() {
 					{
 						checks: {
 							cats: {
-								run: function(node, options, resolve) {
+								run: function(node, options, context, resolve) {
 									success = true;
 									resolve(true);
 								}
@@ -270,7 +270,7 @@ describe('Rule', function() {
 					{
 						checks: {
 							cats: {
-								run: function(node, options, resolve) {
+								run: function(node, options, context, resolve) {
 									success = true;
 									resolve(true);
 								}
@@ -302,7 +302,7 @@ describe('Rule', function() {
 					{
 						checks: {
 							cats: {
-								run: function(node, options, resolve) {
+								run: function(node, options, context, resolve) {
 									success = true;
 									resolve(true);
 								}
@@ -343,7 +343,7 @@ describe('Rule', function() {
 						checks: {
 							cats: {
 								id: 'cats',
-								run: function(node, options, resolve) {
+								run: function(node, options, context, resolve) {
 									assert.equal(options.enabled, 'bananas');
 									assert.equal(options.options, 'minkeys');
 									resolve(true);
@@ -398,7 +398,7 @@ describe('Rule', function() {
 						checks: {
 							cats: {
 								id: 'cats',
-								run: function(node, options, resolve) {
+								run: function(node, options, context, resolve) {
 									assert.equal(options.enabled, 'apples');
 									assert.equal(options.options, 'apes');
 									resolve(true);
@@ -626,7 +626,7 @@ describe('Rule', function() {
 					{
 						checks: {
 							cats: {
-								run: function(nope, options, resolve, reject) {
+								run: function(nope, options, context, resolve, reject) {
 									reject(new Error('your reality'));
 								}
 							}
@@ -670,7 +670,7 @@ describe('Rule', function() {
 						{
 							checks: {
 								cats: {
-									run: function(node, options, resolve) {
+									run: function(node, options, context, resolve) {
 										success = true;
 										resolve(true);
 									}
@@ -705,7 +705,7 @@ describe('Rule', function() {
 						{
 							checks: {
 								cats: {
-									run: function(node, options, resolve) {
+									run: function(node, options, context, resolve) {
 										success = true;
 										resolve(true);
 									}

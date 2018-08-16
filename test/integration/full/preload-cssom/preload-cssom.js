@@ -1,5 +1,5 @@
 /* global axe, Promise */
-describe('preload cssom integration test pass', function() {
+describe('preload cssom integration test', function() {
 	'use strict';
 
 	var origAxios;
@@ -11,16 +11,7 @@ describe('preload cssom integration test pass', function() {
 			if (axe.imports.axios) {
 				origAxios = axe.imports.axios;
 			}
-			// run axe
-			axe.run(
-				{
-					preload: true
-				},
-				function(err) {
-					assert.isNull(err);
-					done();
-				}
-			);
+			done();
 		}
 		if (document.readyState !== 'complete') {
 			window.addEventListener('load', start);
@@ -86,6 +77,34 @@ describe('preload cssom integration test pass', function() {
 			}
 		);
 
+		shouldIt('should reject if axios time(s)out when fetching', function(done) {
+			// restore back normal axios
+			restoreStub();
+
+			// and set config to timeout immediately
+			var config = {
+				asset: 'cssom',
+				timeout: 1,
+				treeRoot: axe.utils.getFlattenedTree(root ? root : document)
+			};
+
+			var doneCalled = false;
+
+			axe.utils
+				.preloadCssom(config)
+				.then(function() {
+					done();
+				})
+				.catch(function(error) {
+					// assert that rejection happens
+					assert.equal(error.message, 'timeout of 1ms exceeded'); // this message comes from axios
+					if (!doneCalled) {
+						doneCalled = true;
+						done();
+					}
+				});
+		});
+
 		shouldIt('should reject if external stylesheet fail to load', function(
 			done
 		) {
@@ -93,13 +112,15 @@ describe('preload cssom integration test pass', function() {
 			createStub(true);
 			var doneCalled = false;
 			getPreload(root)
-				.then(done)
+				.then(function() {
+					done();
+				})
 				.catch(function(error) {
 					assert.equal(error.message, 'Fake Error');
 					if (!doneCalled) {
+						doneCalled = true;
 						done();
 					}
-					doneCalled = true;
 				});
 		});
 	}
