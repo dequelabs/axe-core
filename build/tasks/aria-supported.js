@@ -46,18 +46,30 @@ module.exports = function(grunt) {
 					.reduce((out, [key] = item) => {
 						switch (listType) {
 							case 'supported':
-								if (subject.includes(key)) {
+								if (
+									subject.hasOwnProperty(key) &&
+									subject[key].unsupported === false
+								) {
 									out.push([`${key}`, 'Yes']);
 								}
 								break;
 							case 'unsupported':
-								if (!subject.includes(key)) {
+								if (
+									(subject[key] && subject[key].unsupported === true) ||
+									!subject.hasOwnProperty(key)
+								) {
 									out.push([`${key}`, 'No']);
 								}
 								break;
 							case 'all':
 							default:
-								out.push([`${key}`, subject.includes(key) ? 'Yes' : 'No']);
+								out.push([
+									`${key}`,
+									subject.hasOwnProperty(key) &&
+									subject[key].unsupported === false
+										? 'Yes'
+										: 'No'
+								]);
 								break;
 						}
 						return out;
@@ -75,14 +87,11 @@ module.exports = function(grunt) {
 					} in axe-core.`,
 					mdTable([
 						['aria-role', 'axe-core support'],
-						...getDiff(roles, Object.keys(axe.commons.aria.lookupTable.role))
+						...getDiff(roles, axe.commons.aria.lookupTable.role)
 					]),
 					mdTable([
 						['aria-attribute', 'axe-core support'],
-						...getDiff(
-							aQaria,
-							Object.keys(axe.commons.aria.lookupTable.attributes)
-						)
+						...getDiff(aQaria, axe.commons.aria.lookupTable.attributes)
 					])
 				);
 				grunt.file.write(destFile, content);
