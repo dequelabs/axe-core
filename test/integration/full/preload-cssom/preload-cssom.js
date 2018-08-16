@@ -100,7 +100,7 @@ describe('preload cssom integration test', function() {
 					assert.equal(error.message, 'timeout of 1ms exceeded'); // this message comes from axios
 					if (!doneCalled) {
 						doneCalled = true;
-						done(error);
+						done();
 					}
 				});
 		});
@@ -119,7 +119,7 @@ describe('preload cssom integration test', function() {
 					assert.equal(error.message, 'Fake Error');
 					if (!doneCalled) {
 						doneCalled = true;
-						done(error);
+						done();
 					}
 				});
 		});
