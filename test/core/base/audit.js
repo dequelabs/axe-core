@@ -577,7 +577,7 @@ describe('Audit', function() {
 			);
 		});
 
-		it.only('should run rules (that do not need preload) and preload assets simultaneously', function(done) {
+		it('should run rules (that do not need preload) and preload assets simultaneously', function(done) {
 			// overriding and resolving both check and preload with a delay
 			// but the invoked timestamp should ensure that they were invoked alomost immediately
 
@@ -638,6 +638,8 @@ describe('Audit', function() {
 				}
 			};
 
+			var allowedDiff = 50;
+
 			audit.run(
 				{ include: [axe.utils.getFlattenedTree(fixture)[0]] },
 				{
@@ -652,9 +654,12 @@ describe('Audit', function() {
 					// assert that time diff(s)
 					// assert that run check invoked immediately
 					// choosing 5ms as an arbitary number
-					assert.isBelow(noPreloadCheckedInvokedTime - runStartTime, 5);
+					assert.isBelow(
+						noPreloadCheckedInvokedTime - runStartTime,
+						allowedDiff
+					);
 					// assert that preload  invoked immediately
-					assert.isBelow(preloadInvokedTime - runStartTime, 5);
+					assert.isBelow(preloadInvokedTime - runStartTime, allowedDiff);
 					// ensure cache is clear
 					assert.isTrue(typeof axe._selectCache === 'undefined');
 					// done
