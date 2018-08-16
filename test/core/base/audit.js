@@ -577,7 +577,10 @@ describe('Audit', function() {
 			);
 		});
 
-		it('should run rules (that do not need preload) and preload assets simultaneously', function(done) {
+		it.only('should run rules (that do not need preload) and preload assets simultaneously', function(done) {
+			// overriding and resolving both check and preload with a delay
+			// but the invoked timestamp should ensure that they were invoked alomost immediately
+
 			fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
 
 			var runStartTime = new Date();
@@ -590,7 +593,17 @@ describe('Audit', function() {
 			axe.utils.preload = function(options) {
 				preloadInvokedTime = new Date();
 				preloadOverrideInvoked = true;
-				return axe.utils.queue();
+
+				var q = axe.utils.queue();
+
+				q.defer(function(res, rej) {
+					// a delayed deferred fn, so the q resolves late
+					setTimeout(function() {
+						res(true);
+					}, 2000);
+				});
+
+				return q;
 			};
 
 			var audit = new Audit();
@@ -605,7 +618,10 @@ describe('Audit', function() {
 				evaluate: function(node, options, vNode, context) {
 					noPreloadCheckedInvokedTime = new Date();
 					noPreloadRuleCheckEvaluateInvoked = true;
-					return true;
+					var ready = this.async();
+					setTimeout(function() {
+						ready(true);
+					}, 1000);
 				}
 			});
 
