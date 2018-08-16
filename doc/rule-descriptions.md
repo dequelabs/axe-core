@@ -31,6 +31,7 @@
 | hidden-content | Informs users about hidden content. | Minor | cat.structure, experimental, review-item | true |
 | html-has-lang | Ensures every HTML document has a lang attribute | Serious | cat.language, wcag2a, wcag311 | true |
 | html-lang-valid | Ensures the lang attribute of the &lt;html&gt; element has a valid value | Serious | cat.language, wcag2a, wcag311 | true |
+| html-xml-lang-mismatch | Ensure that HTML elements with both valid lang and xml:lang attributes agree on the base language of the page | Moderate | cat.language, wcag2a, wcag311 | true |
 | image-alt | Ensures &lt;img&gt; elements have alternate text or a role of none or presentation | Critical | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | image-redundant-alt | Ensure button and link text is not repeated as image alternative | Minor | cat.text-alternatives, best-practice | true |
 | input-image-alt | Ensures &lt;input type=&quot;image&quot;&gt; elements have alternate text | Critical | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
