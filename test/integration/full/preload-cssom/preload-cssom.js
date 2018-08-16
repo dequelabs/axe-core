@@ -77,6 +77,34 @@ describe('preload cssom integration test', function() {
 			}
 		);
 
+		shouldIt('should reject if axios time(s)out when fetching', function(done) {
+			// restore back normal axios
+			restoreStub();
+
+			// and set config to timeout immediately
+			var config = {
+				asset: 'cssom',
+				timeout: 1,
+				treeRoot: axe.utils.getFlattenedTree(root ? root : document)
+			};
+
+			var doneCalled = false;
+
+			axe.utils
+				.preloadCssom(config)
+				.then(function() {
+					done();
+				})
+				.catch(function(error) {
+					// assert that rejection happens
+					assert.equal(error.message, 'timeout of 1ms exceeded'); // this message comes from axios
+					if (!doneCalled) {
+						doneCalled = true;
+						done(error);
+					}
+				});
+		});
+
 		shouldIt('should reject if external stylesheet fail to load', function(
 			done
 		) {
@@ -84,13 +112,15 @@ describe('preload cssom integration test', function() {
 			createStub(true);
 			var doneCalled = false;
 			getPreload(root)
-				.then(done)
+				.then(function() {
+					done();
+				})
 				.catch(function(error) {
 					assert.equal(error.message, 'Fake Error');
 					if (!doneCalled) {
-						done();
+						doneCalled = true;
+						done(error);
 					}
-					doneCalled = true;
 				});
 		});
 	}

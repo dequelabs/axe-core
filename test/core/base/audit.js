@@ -725,7 +725,7 @@ describe('Audit', function() {
 			);
 		});
 
-		it('should continue rules and return result when preload is rejected', function(done) {
+		it('should continue to run rules and return result when preload is rejected', function(done) {
 			fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
 
 			var preloadOverrideInvoked = false;
@@ -779,6 +779,67 @@ describe('Audit', function() {
 					// assert preload was invoked
 					assert.isTrue(preloadOverrideInvoked);
 
+					// assert that both rules ran, although preload failed
+					assert.lengthOf(results, 2);
+
+					// assert that because preload failed
+					// cssom was not populated on context of repective check
+					assert.isTrue(preloadNeededCheckInvoked);
+					var ruleResult = results.filter(function(r) {
+						return (r.id = 'yes-preload' && r.nodes.length > 0);
+					})[0];
+					var checkResult = ruleResult.nodes[0].any[0];
+					assert.isDefined(checkResult.data);
+					assert.notProperty(checkResult.data, ['cssom']);
+					// done
+					done();
+				},
+				noop
+			);
+		});
+
+		it('should continue to run rules and return result when axios time(s)out and rejects preload', function(done) {
+			fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
+
+			// there is no stubbing here,
+			// the actual axios call is invoked, and timedout immediately as timeout is set to 0.1
+
+			var preloadNeededCheckInvoked = false;
+			var audit = new Audit();
+			// add a rule and check that does not need preload
+			audit.addRule({
+				id: 'no-preload',
+				selector: 'div#div1' // this inherently means this rule does not need preload
+			});
+			// add a rule which needs preload
+			audit.addRule({
+				id: 'yes-preload',
+				selector: 'div#div2', // this inherently means this rule does not need preload
+				preload: true,
+				any: ['yes-preload-check']
+			});
+			audit.addCheck({
+				id: 'yes-preload-check',
+				evaluate: function(node, options, vNode, context) {
+					preloadNeededCheckInvoked = true;
+					this.data(context);
+					return true;
+				}
+			});
+
+			var preloadOptions = {
+				preload: {
+					assets: ['cssom'],
+					timeout: 0.1
+				}
+			};
+			audit.run(
+				{ include: [axe.utils.getFlattenedTree(fixture)[0]] },
+				{
+					preload: preloadOptions
+				},
+				function(results) {
+					assert.isDefined(results);
 					// assert that both rules ran, although preload failed
 					assert.lengthOf(results, 2);
 

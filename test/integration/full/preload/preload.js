@@ -3,7 +3,6 @@ describe('preload integration test', function() {
 	'use strict';
 
 	var origAxios;
-	var origAuditRun;
 
 	function overridedCheckEvaluateFn(node, options, virtualNode, context) {
 		// populate the data here which is asserted in tests
@@ -14,7 +13,6 @@ describe('preload integration test', function() {
 	before(function(done) {
 		function start() {
 			// cache originals
-			origAuditRun = axe._audit.run;
 			if (axe.imports.axios) {
 				origAxios = axe.imports.axios;
 			}
@@ -82,7 +80,6 @@ describe('preload integration test', function() {
 	}
 
 	function restoreStub() {
-		axe._audit.run = origAuditRun;
 		if (origAxios) {
 			axe.imports.axios = origAxios;
 		}
@@ -180,4 +177,72 @@ describe('preload integration test', function() {
 			);
 		}
 	);
+
+	shouldIt(
+		'ensure for all rules are run if preload call time(s)out assets are not passed to check',
+		function(done) {
+			// restore stub - restores original axios, to test timeout on xhr
+			restoreStub();
+
+			axe.run(
+				{
+					runOnly: {
+						type: 'rule',
+						values: ['run-later-rule']
+					},
+					// run config asks to preload, and the rule requires a preload as well, context will be mutated with 'cssom' asset
+					preload: {
+						assets: ['cssom'],
+						timeout: 1
+					}
+				},
+				function(err, res) {
+					// we ensure preload was skipped by checking context does not have cssom in checks evaluate function
+					assert.isNull(err);
+					assert.isDefined(res);
+					assert.property(res, 'passes');
+					assert.lengthOf(res.passes, 1);
+
+					var checkData = res.passes[0].nodes[0].any[0].data;
+					assert.notProperty(checkData, 'cssom');
+
+					done();
+				}
+			);
+		}
+	);
+
+	shouldIt('ensure for all rules are run if preload call is rejected', function(
+		done
+	) {
+		// restore stub - restores original axios, to test timeout on xhr
+		restoreStub();
+		// create a stub to reject intentionally
+		createStub(true);
+
+		axe.run(
+			{
+				runOnly: {
+					type: 'rule',
+					values: ['run-later-rule']
+				},
+				// run config asks to preload, and the rule requires a preload as well, context will be mutated with 'cssom' asset
+				preload: {
+					assets: ['cssom']
+				}
+			},
+			function(err, res) {
+				// we ensure preload was skipped by checking context does not have cssom in checks evaluate function
+				assert.isNull(err);
+				assert.isDefined(res);
+				assert.property(res, 'passes');
+				assert.lengthOf(res.passes, 1);
+
+				var checkData = res.passes[0].nodes[0].any[0].data;
+				assert.notProperty(checkData, 'cssom');
+
+				done();
+			}
+		);
+	});
 });
