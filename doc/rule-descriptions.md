@@ -3,6 +3,7 @@
 | accesskeys | Ensures every accesskey attribute value is unique | Serious | best-practice, cat.keyboard | true |
 | area-alt | Ensures &lt;area&gt; elements of image maps have alternate text | Critical | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | aria-allowed-attr | Ensures ARIA attributes are allowed for an element&apos;s role | Critical | cat.aria, wcag2a, wcag412 | true |
+| aria-allowed-role | Ensures role attribute has an appropriate value for the element | Minor | cat.aria, best-practice | true |
 | aria-dpub-role-fallback | Ensures unsupported DPUB roles are only used on elements with implicit fallback roles | Moderate | cat.aria, wcag2a, wcag131 | true |
 | aria-hidden-body | Ensures aria-hidden=&apos;true&apos; is not present on the document body. | Critical | cat.aria, wcag2a, wcag412 | true |
 | aria-required-attr | Ensures elements with ARIA roles have all required ARIA attributes | Critical | cat.aria, wcag2a, wcag412 | true |
