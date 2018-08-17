@@ -6,19 +6,12 @@ describe('css-orientation-lock violations test', function() {
 
 	before(function(done) {
 		function start() {
-			// wait for document load
-			// this ensures css and scripts are loaded for assertion
 			done();
 		}
-
-		if (window.PHANTOMJS) {
-			start();
+		if (document.readyState !== 'complete') {
+			window.addEventListener('load', start);
 		} else {
-			if (document.readyState !== 'complete') {
-				window.addEventListener('load', start);
-			} else {
-				start();
-			}
+			start();
 		}
 	});
 
