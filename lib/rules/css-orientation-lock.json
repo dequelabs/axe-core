@@ -1,18 +1,19 @@
 {
 	"id": "css-orientation-lock",
-	"matches": "css-orientation-lock-matches.js",
+	"selector": "html",
 	"tags": [
 		"cat.structure",
 		"wcag262",
 		"wcag21aa"
 	],
 	"metadata": {
-		"description": "Ensures that the content is not locked to any specific display orientation, and functionality of the content is operable in all display orientations (portrait/ landscape)",
-		"help": "Content is operable in all both landscape and portriat orientations"
+		"description": "Ensures content is not locked to any specific display orientation, and the content is operable in all display orientations",
+		"help": "Content is operable in all display orientations"
 	},
 	"all": [
 		"css-orientation-lock"
 	],
 	"any": [],
-	"none": []
+	"none": [],
+	"preload": true
 }
