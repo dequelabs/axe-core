@@ -187,7 +187,7 @@ describe('preload cssom integration test', function() {
 			getPreload()
 				.then(function(results) {
 					var sheets = results[0];
-					assert.isAtLeast(sheets.length, 4);
+					assert.isAtLeast(sheets.length, 3);
 					done();
 				})
 				.catch(done);
@@ -249,7 +249,7 @@ describe('preload cssom integration test', function() {
 			getPreload(frame)
 				.then(function(results) {
 					var sheets = results[0];
-					assert.isAtLeast(sheets.length, 2);
+					assert.isAtLeast(sheets.length, 1);
 					done();
 				})
 				.catch(done);
