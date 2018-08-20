@@ -1,21 +1,16 @@
 describe('css-orientation-lock violations test', function() {
 	'use strict';
 
+	var isPhantom = window.PHANTOMJS ? true : false;
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
-	var shouldIt = window.PHANTOMJS ? it.skip : it;
 
-	before(function(done) {
-		function start() {
-			done();
-		}
-		if (document.readyState !== 'complete') {
-			window.addEventListener('load', start);
-		} else {
-			start();
+	before(function() {
+		if (isPhantom) {
+			this.skip();
 		}
 	});
 
-	shouldIt('returns VIOLATIONS if preload is set to TRUE', function(done) {
+	it('returns VIOLATIONS if preload is set to TRUE', function(done) {
 		// the sheets included in the html, have styles for transform and rotate, hence the violation
 		axe.run(
 			{
@@ -23,7 +18,7 @@ describe('css-orientation-lock violations test', function() {
 					type: 'rule',
 					values: ['css-orientation-lock']
 				},
-				preload: true // same effect if preload was not defined
+				preload: true
 			},
 			function(err, res) {
 				assert.isNull(err);
@@ -51,50 +46,48 @@ describe('css-orientation-lock violations test', function() {
 		);
 	});
 
-	if (!window.PHANTOMJS) {
-		(shadowSupported ? it : xit)(
-			'returns VIOLATIONS whilst also accommodating shadowDOM styles',
-			function(done) {
-				var fixture = document.getElementById('shadow-fixture');
-				var shadow = fixture.attachShadow({ mode: 'open' });
-				shadow.innerHTML =
-					'<style> @media screen and (min-width: 10px) and (max-width: 2000px) and (orientation: portrait) { .shadowDiv { transform: rotate(90deg); } } .green { background-color: green; } </style>' +
-					'<div class="green">green</div>' +
-					'<div class="shadowDiv">red</div>';
+	(shadowSupported ? it : xit)(
+		'returns VIOLATIONS whilst also accommodating shadowDOM styles',
+		function(done) {
+			var fixture = document.getElementById('shadow-fixture');
+			var shadow = fixture.attachShadow({ mode: 'open' });
+			shadow.innerHTML =
+				'<style> @media screen and (min-width: 10px) and (max-width: 2000px) and (orientation: portrait) { .shadowDiv { transform: rotate(90deg); } } .green { background-color: green; } </style>' +
+				'<div class="green">green</div>' +
+				'<div class="shadowDiv">red</div>';
 
-				axe.run(
-					{
-						runOnly: {
-							type: 'rule',
-							values: ['css-orientation-lock']
-						},
-						preload: true // same effect if preload was not defined
+			axe.run(
+				{
+					runOnly: {
+						type: 'rule',
+						values: ['css-orientation-lock']
 					},
-					function(err, res) {
-						assert.isNull(err);
-						assert.isDefined(res);
+					preload: true
+				},
+				function(err, res) {
+					assert.isNull(err);
+					assert.isDefined(res);
 
-						// check for violation
-						assert.property(res, 'violations');
-						assert.lengthOf(res.violations, 1);
+					// check for violation
+					assert.property(res, 'violations');
+					assert.lengthOf(res.violations, 1);
 
-						// assert the node and related nodes
-						var checkedNode = res.violations[0].nodes[0];
-						var checkResult = checkedNode.all[0];
-						assert.lengthOf(checkResult.relatedNodes, 3);
+					// assert the node and related nodes
+					var checkedNode = res.violations[0].nodes[0];
+					var checkResult = checkedNode.all[0];
+					assert.lengthOf(checkResult.relatedNodes, 3);
 
-						var violatedSelectors = ['.someDiv', '.thatDiv', '.shadowDiv'];
-						checkResult.relatedNodes.forEach(function(node) {
-							var target = node.target[0];
-							var className = Array.isArray(target)
-								? target.reverse()[0]
-								: target;
-							assert.isTrue(violatedSelectors.indexOf(className) !== -1);
-						});
-						done();
-					}
-				);
-			}
-		);
-	}
+					var violatedSelectors = ['.someDiv', '.thatDiv', '.shadowDiv'];
+					checkResult.relatedNodes.forEach(function(node) {
+						var target = node.target[0];
+						var className = Array.isArray(target)
+							? target.reverse()[0]
+							: target;
+						assert.isTrue(violatedSelectors.indexOf(className) !== -1);
+					});
+					done();
+				}
+			);
+		}
+	);
 });
