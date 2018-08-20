@@ -27,7 +27,7 @@ describe('css-orientation-lock passes test', function() {
 				assert.property(res, 'passes');
 				assert.lengthOf(res.passes, 1);
 				var checkedNode = res.passes[0].nodes[0];
-				assert.equal(checkedNode.html, '<html lang="en" id="main">');
+				assert.equal(checkedNode.html, '<html lang="en">');
 
 				done();
 			}
@@ -63,7 +63,7 @@ describe('css-orientation-lock passes test', function() {
 					assert.lengthOf(res.passes, 1);
 
 					var checkedNode = res.passes[0].nodes[0];
-					assert.equal(checkedNode.html, '<html lang="en" id="main">');
+					assert.equal(checkedNode.html, '<html lang="en">');
 
 					var checkResult = checkedNode.all[0];
 					assert.lengthOf(checkResult.relatedNodes, 0);

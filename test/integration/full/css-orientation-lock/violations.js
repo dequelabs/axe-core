@@ -30,7 +30,7 @@ describe('css-orientation-lock violations test', function() {
 
 				// assert the node and related nodes
 				var checkedNode = res.violations[0].nodes[0];
-				assert.equal(checkedNode.html, '<html lang="en" id="main">');
+				assert.equal(checkedNode.html, '<html lang="en">');
 
 				var checkResult = checkedNode.all[0];
 				assert.lengthOf(checkResult.relatedNodes, 2);
