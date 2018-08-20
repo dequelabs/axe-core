@@ -87,6 +87,9 @@ module.exports = function(grunt) {
 						return Promise.resolve(errors);
 					}
 				})
+				.catch(function(err) {
+					console.error('Selenium Webdriver Error: ', err);
+				})
 		);
 	}
 
