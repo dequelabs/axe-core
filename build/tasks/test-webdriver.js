@@ -49,7 +49,7 @@ module.exports = function(grunt) {
 		driver
 			.manage()
 			.timeouts()
-			.implicitlyWait(10000);
+			.implicitlyWait(60000);
 
 		return (
 			driver
