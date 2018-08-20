@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>css orientation lock test</title>
+	<meta charset="utf8">
+	<script src="/node_modules/mocha/mocha.js"></script>
+	<script src="/node_modules/chai/chai.js"></script>
+	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
+	<!-- inline stylesheet -->
+	<style>
+		@media screen and (min-width: 20px) and (max-width: 2300px) and (orientation: portrait) {
+			.thatDiv {
+				transform: rotate(90deg);
+				width: 100vh;
+				overflow-x: hidden;
+				position: absolute;
+				top: 100%;
+				left: 0;
+			}
+		}
+		@media screen and (min-width: 10px) and (max-width: 3000px) and (orientation: landscape) {
+			html {
+				transform: rotate(-90deg);
+				width: 100vh;
+				overflow-x: hidden;
+				position: absolute;
+				top: 100%;
+				left: 0;
+			}
+			.someDiv {
+				transform: rotate(90deg);
+				width: 100vh;
+				overflow-x: hidden;
+				position: absolute;
+				top: 100%;
+				left: 0;
+			}
+		}
+	</style>
+	<script>
+		mocha.setup({
+			timeout: 50000,
+			ui: 'bdd'
+		});
+		var assert = chai.assert;
+	</script>
+	<script src="/axe.js"></script>
+</head>
+<body>
+	<div id="mocha"></div>
+	<div class="someDiv">some div content</div>
+	<div class="thatDiv">that div content</div>
+	<div id='shadow-fixture'></div>
+	<script src="/test/testutils.js"></script>
+	<script src="violations.js"></script>
+	<script src="/test/integration/adapter.js"></script>
+</body>
+</html>

@@ -46,6 +46,11 @@ module.exports = function(grunt) {
 			.timeouts()
 			.setScriptTimeout(!isMobile ? 60000 * 5 : 60000 * 10);
 
+		driver
+			.manage()
+			.timeouts()
+			.implicitlyWait(60000);
+
 		return (
 			driver
 				.get(url)
@@ -86,6 +91,9 @@ module.exports = function(grunt) {
 						driver.quit();
 						return Promise.resolve(errors);
 					}
+				})
+				.catch(function(err) {
+					console.error('Selenium Webdriver Error: ', err);
 				})
 		);
 	}

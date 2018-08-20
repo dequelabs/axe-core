@@ -55,6 +55,23 @@ describe('axe.utils.preloadCssom unit tests', function() {
 			});
 	});
 
+	it('ensure that each of the cssom object have defined properties', function(done) {
+		var actual = axe.utils.preloadCssom(args);
+		actual
+			.then(function(results) {
+				// returned from queue, hence the index look up
+				var cssom = results[0];
+				assert.lengthOf(cssom, 2);
+				cssom.forEach(function(o) {
+					assert.hasAllKeys(o, ['root', 'shadowId', 'sheet', 'isExternal']);
+				});
+				done();
+			})
+			.catch(function(error) {
+				done(error);
+			});
+	});
+
 	it('should fail if number of sheets returned does not match stylesheets defined in document', function(done) {
 		var actual = axe.utils.preloadCssom(args);
 		actual
