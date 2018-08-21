@@ -3,10 +3,9 @@
 <head>
 	<title>css orientation lock test</title>
 	<meta charset="utf8">
-	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
 	<script src="/node_modules/mocha/mocha.js"></script>
 	<script src="/node_modules/chai/chai.js"></script>
-	<script src="/axe.js"></script>
+	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
 	<script>
 		mocha.setup({
 			timeout: 50000,
@@ -14,6 +13,7 @@
 		});
 		var assert = chai.assert;
 	</script>
+	<script src="/axe.js"></script>
 </head>
 <body>
 	<div id="mocha"></div>
@@ -24,12 +24,8 @@
 	<script src="violations.js"></script>
 	<script src="/test/integration/adapter.js"></script>
 
-	<!-- Load all stylesheets -->
-	<!-- external cross origin stylesheet -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<!-- relative stylesheet -->
 	<link rel="stylesheet" type="text/css" href="violations.css">
-	<!-- inline stylesheet -->
 	<style>
 		@media screen and (min-width: 10px) and (max-width: 3000px) and (orientation: landscape) {
 			html {
