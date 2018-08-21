@@ -35,10 +35,8 @@ describe('css-orientation-lock passes test', function() {
 			done();
 		} else {
 			styleSheets.forEach(addSheet);
-			setTimeout(function() {
-				// wait for network request to complete for added sheets
-				done();
-			}, 5000);
+			// wait for network request to complete for added sheets
+			setTimeout(done, 5000);
 		}
 	});
 
