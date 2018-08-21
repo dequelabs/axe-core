@@ -11,7 +11,7 @@ describe('frame-wait-time option', function() {
 		var opts = {
 			frameWaitTime: 1
 		};
-		it('should modify the default frame timeout', function(done) {
+		it.skip('should modify the default frame timeout', function(done) {
 			var start = new Date();
 			// Run axe with an unreasonably short wait time,
 			// expecting the frame to time out
