@@ -130,8 +130,8 @@ describe('Check', function() {
 		});
 
 		describe('run', function() {
-			it('should accept 4 parameters', function() {
-				assert.lengthOf(new Check({}).run, 4);
+			it('should accept 5 parameters', function() {
+				assert.lengthOf(new Check({}).run, 5);
 			});
 
 			it('should pass the node through', function(done) {
@@ -140,7 +140,7 @@ describe('Check', function() {
 						assert.equal(node, fixture);
 						done();
 					}
-				}).run(axe.utils.getFlattenedTree(fixture)[0], {}, noop);
+				}).run(axe.utils.getFlattenedTree(fixture)[0], {}, {}, noop);
 			});
 
 			it('should pass the options through', function(done) {
@@ -152,7 +152,7 @@ describe('Check', function() {
 						assert.deepEqual(options, expected);
 						done();
 					}
-				}).run(fixture, {}, noop);
+				}).run(fixture, {}, {}, noop);
 			});
 
 			it('should pass the options through modified by the ones passed into the call', function(done) {
@@ -165,7 +165,23 @@ describe('Check', function() {
 						assert.deepEqual(options, expected);
 						done();
 					}
-				}).run(fixture, { options: expected }, noop);
+				}).run(fixture, { options: expected }, {}, noop);
+			});
+
+			it('should pass the context through to check evaluate call', function(done) {
+				var configured = {
+					cssom: 'yay',
+					source: 'this is page source',
+					aom: undefined
+				};
+				new Check({
+					options: configured,
+					evaluate: function(node, options, virtualNode, context) {
+						assert.property(context, 'cssom');
+						assert.deepEqual(context, configured);
+						done();
+					}
+				}).run(fixture, {}, configured, noop);
 			});
 
 			it('should bind context to `bindCheckResult`', function(done) {
@@ -173,12 +189,13 @@ describe('Check', function() {
 					cb = function() {
 						return true;
 					},
+					options = {},
+					context = {},
 					result = { monkeys: 'bananas' };
 
 				axe.utils.checkHelper = function(checkResult, options, callback) {
 					assert.instanceOf(checkResult, window.CheckResult);
 					assert.equal(callback, cb);
-
 					return result;
 				};
 
@@ -188,7 +205,7 @@ describe('Check', function() {
 						axe.utils.checkHelper = orig;
 						done();
 					}
-				}).run(fixture, {}, cb);
+				}).run(fixture, options, context, cb);
 			});
 
 			it('should allow for asynchronous checks', function(done) {
@@ -200,28 +217,37 @@ describe('Check', function() {
 							ready(data);
 						}, 10);
 					}
-				}).run(fixture, {}, function(d) {
+				}).run(fixture, {}, {}, function(d) {
 					assert.instanceOf(d, CheckResult);
 					assert.deepEqual(d.result, data);
 					done();
 				});
 			});
+
 			it('should pass `null` as the parameter if not enabled', function(done) {
 				new Check({
 					evaluate: function() {},
 					enabled: false
-				}).run(fixture, {}, function(data) {
+				}).run(fixture, {}, {}, function(data) {
 					assert.isNull(data);
 					done();
 				});
 			});
+
 			it('should pass `null` as the parameter if options disable', function(done) {
 				new Check({
 					evaluate: function() {}
-				}).run(fixture, { enabled: false }, function(data) {
-					assert.isNull(data);
-					done();
-				});
+				}).run(
+					fixture,
+					{
+						enabled: false
+					},
+					{},
+					function(data) {
+						assert.isNull(data);
+						done();
+					}
+				);
 			});
 
 			it('passes a result to the resolve argument', function(done) {
@@ -229,7 +255,7 @@ describe('Check', function() {
 					evaluate: function() {
 						return true;
 					}
-				}).run(fixture, {}, function(data) {
+				}).run(fixture, {}, {}, function(data) {
 					assert.instanceOf(data, CheckResult);
 					assert.isTrue(data.result);
 					done();
@@ -241,7 +267,7 @@ describe('Check', function() {
 					evaluate: function() {
 						throw new Error('Grenade!');
 					}
-				}).run(fixture, {}, noop, function(err) {
+				}).run(fixture, {}, {}, noop, function(err) {
 					assert.instanceOf(err, Error);
 					assert.equal(err.message, 'Grenade!');
 					done();
