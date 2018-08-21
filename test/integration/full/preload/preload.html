@@ -4,18 +4,10 @@
 	<meta charset="utf8">
 	<script src="/node_modules/mocha/mocha.js"></script>
 	<script src="/node_modules/chai/chai.js"></script>
-	<link rel="stylesheet" href="https://unpkg.com/gutenberg-css@0.4">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" media="print">
-	<link rel="stylesheet" href="https://unpkg.com/gutenberg-css@0.4" disabled>
 	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css">
-	<style>
-		.inline-css-test {
-			font-size: inherit;
-		}
-	</style>
 	<script>
 		mocha.setup({
-			timeout: 10000,
+			timeout: 50000,
 			ui: 'bdd'
 		});
 		var assert = chai.assert;

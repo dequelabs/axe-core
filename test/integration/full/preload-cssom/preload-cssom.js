@@ -6,16 +6,52 @@ describe('preload cssom integration test', function() {
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var isPhantom = window.PHANTOMJS ? true : false;
 
-	before(function() {});
+	function addSheet(data) {
+		if (data.href) {
+			var link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.href = data.href;
+			if (data.mediaPrint) {
+				link.media = 'print';
+			}
+			document.head.appendChild(link);
+		} else {
+			const style = document.createElement('style');
+			style.type = 'text/css';
+			style.appendChild(document.createTextNode(data.text));
+			document.head.appendChild(style);
+		}
+	}
 
-	before(function() {
+	var styleSheets = [
+		{
+			href:
+				'https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
+		},
+		{
+			href:
+				'https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css',
+			mediaPrint: true
+		},
+		{
+			text:
+				'	@import "preload-cssom-shadow-blue.css"; .inline-css-test { font-size: inherit; }'
+		}
+	];
+
+	before(function(done) {
 		if (isPhantom) {
 			this.skip();
+			done();
 		} else {
+			styleSheets.forEach(addSheet);
 			// cache original axios object
 			if (axe.imports.axios) {
 				origAxios = axe.imports.axios;
 			}
+
+			// wait for network request to complete for added sheets
+			setTimeout(done, 5000);
 		}
 	});
 

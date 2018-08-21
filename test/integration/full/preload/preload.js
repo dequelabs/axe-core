@@ -5,10 +5,44 @@ describe('preload integration test', function() {
 	var origAxios;
 	var isPhantom = window.PHANTOMJS ? true : false;
 
+	function addSheet(data) {
+		if (data.href) {
+			var link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.href = data.href;
+			if (data.mediaPrint) {
+				link.media = 'print';
+			}
+			document.head.appendChild(link);
+		} else {
+			const style = document.createElement('style');
+			style.type = 'text/css';
+			style.appendChild(document.createTextNode(data.text));
+			document.head.appendChild(style);
+		}
+	}
+
+	var styleSheets = [
+		{
+			href: 'https://unpkg.com/gutenberg-css@0.4'
+		},
+		{
+			href:
+				'https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css',
+			mediaPrint: true
+		},
+		{
+			text: '.inline-css-test {	font-size: inherit; }'
+		}
+	];
+
 	before(function(done) {
 		if (isPhantom) {
 			this.skip();
+			done();
 		} else {
+			styleSheets.forEach(addSheet);
+
 			// cache originals
 			if (axe.imports.axios) {
 				origAxios = axe.imports.axios;
@@ -48,9 +82,10 @@ describe('preload integration test', function() {
 					}
 				]
 			});
+
+			// wait for network request to complete for added sheets
+			setTimeout(done, 5000);
 		}
-		// done
-		done();
 	});
 
 	function overridedCheckEvaluateFn(node, options, virtualNode, context) {

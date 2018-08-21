@@ -4,9 +4,41 @@ describe('css-orientation-lock passes test', function() {
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var isPhantom = window.PHANTOMJS ? true : false;
 
-	before(function() {
+	function addSheet(data) {
+		if (data.href) {
+			var link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.href = data.href;
+			document.head.appendChild(link);
+		} else {
+			const style = document.createElement('style');
+			style.type = 'text/css';
+			style.appendChild(document.createTextNode(data.text));
+			document.head.appendChild(style);
+		}
+	}
+
+	var styleSheets = [
+		{
+			href:
+				'https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
+		},
+		{
+			text:
+				'@media screen and (min-width: 10px) and (max-width: 3000px) {	html { width: 100vh; } }'
+		}
+	];
+
+	before(function(done) {
 		if (isPhantom) {
 			this.skip();
+			done();
+		} else {
+			styleSheets.forEach(addSheet);
+			setTimeout(function() {
+				// wait for network request to complete for added sheets
+				done();
+			}, 5000);
 		}
 	});
 
