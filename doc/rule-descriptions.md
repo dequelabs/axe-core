@@ -12,7 +12,7 @@
 | aria-roles | Ensures all elements with a role attribute use a valid value | Serious, Critical | cat.aria, wcag2a, wcag412 | true |
 | aria-valid-attr-value | Ensures all ARIA attributes have valid values | Critical | cat.aria, wcag2a, wcag412 | true |
 | aria-valid-attr | Ensures attributes that begin with aria- are valid ARIA attributes | Critical | cat.aria, wcag2a, wcag412 | true |
-| audio-caption | Ensures &lt;audio&gt; elements have captions | Critical | cat.time-and-media, wcag2a, wcag121, section508, section508.22.a | true |
+| audio-caption | Ensures &lt;audio&gt; elements have captions | Critical | cat.time-and-media, wcag2a, wcag121, section508, section508.22.a | false |
 | autocomplete-valid | Ensure the autocomplete attribute is correct and suitable for the form field | Serious | cat.forms, wcag21aa, wcag135 | true |
 | blink | Ensures &lt;blink&gt; elements are not used | Serious | cat.time-and-media, wcag2a, wcag222, section508, section508.22.j | true |
 | button-name | Ensures buttons have discernible text | Serious, Critical | cat.name-role-value, wcag2a, wcag412, section508, section508.22.a | true |

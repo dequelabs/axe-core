@@ -1,6 +1,7 @@
 {
   "id": "audio-caption",
   "selector": "audio",
+  "enabled": false,
   "excludeHidden": false,
   "tags": [
     "cat.time-and-media",
