@@ -4,19 +4,18 @@ describe('preload cssom integration test', function() {
 
 	var origAxios;
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
+	var isPhantom = window.PHANTOMJS ? true : false;
 
-	before(function(done) {
-		function start() {
+	before(function() {});
+
+	before(function() {
+		if (isPhantom) {
+			this.skip();
+		} else {
 			// cache original axios object
 			if (axe.imports.axios) {
 				origAxios = axe.imports.axios;
 			}
-			done();
-		}
-		if (document.readyState !== 'complete') {
-			window.addEventListener('load', start);
-		} else {
-			start();
 		}
 	});
 
@@ -61,23 +60,20 @@ describe('preload cssom integration test', function() {
 	}
 
 	function commonTestsForRootAndFrame(root) {
-		shouldIt(
-			'should return external stylesheet from cross-domain and verify response',
-			function(done) {
-				getPreload(root)
-					.then(function(results) {
-						var sheets = results[0];
-						var externalSheet = sheets.filter(function(s) {
-							return s.isExternal;
-						})[0].sheet;
-						assertStylesheet(externalSheet, 'body', 'body{overflow:auto;}');
-						done();
-					})
-					.catch(done);
-			}
-		);
+		it('should return external stylesheet from cross-domain and verify response', function(done) {
+			getPreload(root)
+				.then(function(results) {
+					var sheets = results[0];
+					var externalSheet = sheets.filter(function(s) {
+						return s.isExternal;
+					})[0].sheet;
+					assertStylesheet(externalSheet, 'body', 'body{overflow:auto;}');
+					done();
+				})
+				.catch(done);
+		});
 
-		shouldIt('should reject if axios time(s)out when fetching', function(done) {
+		it('should reject if axios time(s)out when fetching', function(done) {
 			// restore back normal axios
 			restoreStub();
 
@@ -105,9 +101,7 @@ describe('preload cssom integration test', function() {
 				});
 		});
 
-		shouldIt('should reject if external stylesheet fail to load', function(
-			done
-		) {
+		it('should reject if external stylesheet fail to load', function(done) {
 			restoreStub();
 			createStub(true);
 			var doneCalled = false;
@@ -133,36 +127,35 @@ describe('preload cssom integration test', function() {
 		restoreStub();
 	});
 
-	var shouldIt = window.PHANTOMJS ? it.skip : it;
-
 	describe('tests for current top level document', function() {
-		shouldIt(
-			'should return inline stylesheets defined using <style> tag',
-			function(done) {
-				getPreload()
-					.then(function(results) {
-						var sheets = results[0];
-						var nonExternalsheets = sheets.filter(function(s) {
-							return !s.isExternal;
-						});
-						assert.lengthOf(nonExternalsheets, 2);
-						var inlineStylesheet = nonExternalsheets.filter(function(s) {
-							return s.sheet.rules.length === 1;
-						})[0].sheet;
-						assertStylesheet(
-							inlineStylesheet,
-							'.inline-css-test',
-							'.inline-css-test{font-size:inherit;}'
-						);
-						done();
-					})
-					.catch(done);
+		before(function() {
+			if (isPhantom) {
+				this.skip();
 			}
-		);
+		});
 
-		shouldIt('should return relative stylesheets with in same-origin', function(
-			done
-		) {
+		it('should return inline stylesheets defined using <style> tag', function(done) {
+			getPreload()
+				.then(function(results) {
+					var sheets = results[0];
+					var nonExternalsheets = sheets.filter(function(s) {
+						return !s.isExternal;
+					});
+					assert.lengthOf(nonExternalsheets, 2);
+					var inlineStylesheet = nonExternalsheets.filter(function(s) {
+						return s.sheet.cssRules.length === 1;
+					})[0].sheet;
+					assertStylesheet(
+						inlineStylesheet,
+						'.inline-css-test',
+						'.inline-css-test{font-size:inherit;}'
+					);
+					done();
+				})
+				.catch(done);
+		});
+
+		it('should return relative stylesheets with in same-origin', function(done) {
 			getPreload()
 				.then(function(results) {
 					var sheets = results[0];
@@ -171,7 +164,7 @@ describe('preload cssom integration test', function() {
 					});
 					assert.lengthOf(relativeSheets, 2);
 					var relativeSheet = relativeSheets.filter(function(s) {
-						return s.sheet.rules.length > 1;
+						return s.sheet.cssRules.length > 1;
 					})[0].sheet;
 					assertStylesheet(relativeSheet, 'body', 'body{margin:0px;}');
 					done();
@@ -179,121 +172,85 @@ describe('preload cssom integration test', function() {
 				.catch(done);
 		});
 
-		shouldIt(
-			'should return all external stylesheets with or with(out) media attribute that are not disabled',
-			function(done) {
-				getPreload()
-					.then(function(results) {
-						var sheets = results[0];
-						var externalSheets = sheets.filter(function(s) {
-							return s.isExternal;
-						});
-						assert.lengthOf(externalSheets, 3);
-						done();
-					})
-					.catch(done);
-			}
-		);
-
-		shouldIt(
-			'should ignore disabled stylesheets with or with(out) media attribute',
-			function(done) {
-				getPreload()
-					.then(function(results) {
-						var sheets = results[0];
-						assert.lengthOf(sheets, 5);
-						done();
-					})
-					.catch(done);
-			}
-		);
-
-		if (!window.PHANTOMJS) {
-			(shadowSupported ? it : xit)(
-				'should return styles from shadow dom',
-				function(done) {
-					var fixture = document.getElementById('shadow-fixture');
-					var shadow = fixture.attachShadow({ mode: 'open' });
-					shadow.innerHTML =
-						'<style>@import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"; @import "preload-cssom-shadow-blue.css"; .green { background-color: green; }</style>' +
-						'<div class="initialism">Some text</div>' +
-						'<div class="green">green</div>' +
-						'<div class="red">red</div>' +
-						'' +
-						'<h1>Heading</h1>';
-					getPreload(fixture)
-						.then(function(results) {
-							var sheets = results[0];
-							// verify count
-							assert.lengthOf(sheets, 8);
-							// verify that the last non external sheet with shadowId has green selector
-							var nonExternalsheetsWithShadowId = sheets
-								.filter(function(s) {
-									return !s.isExternal;
-								})
-								.filter(function(s) {
-									return s.shadowId;
-								});
-							assertStylesheet(
-								nonExternalsheetsWithShadowId[
-									nonExternalsheetsWithShadowId.length - 1
-								].sheet,
-								'.green',
-								'.green{background-color:green;}'
-							);
-							done();
-						})
-						.catch(done);
-				}
-			);
-		}
-
-		commonTestsForRootAndFrame();
-	});
-
-	describe('tests for nested iframe', function() {
-		var frame;
-
-		before(function() {
-			frame = document.getElementById('frame1').contentDocument;
+		it('should return all external stylesheets with or with(out) media attribute that are not disabled', function(done) {
+			getPreload()
+				.then(function(results) {
+					var sheets = results[0];
+					var externalSheets = sheets.filter(function(s) {
+						return s.isExternal;
+					});
+					assert.lengthOf(externalSheets, 2);
+					done();
+				})
+				.catch(done);
 		});
 
-		shouldIt(
-			'should return correct number of stylesheets, ignores disabled',
+		(shadowSupported ? it : xit)(
+			'should return styles from shadow dom',
 			function(done) {
-				getPreload(frame)
+				var fixture = document.getElementById('shadow-fixture');
+				var shadow = fixture.attachShadow({ mode: 'open' });
+				shadow.innerHTML =
+					'<style>@import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"; @import "preload-cssom-shadow-blue.css"; .green { background-color: green; }</style>' +
+					'<div class="initialism">Some text</div>' +
+					'<div class="green">green</div>' +
+					'<div class="red">red</div>' +
+					'' +
+					'<h1>Heading</h1>';
+				getPreload(fixture)
 					.then(function(results) {
 						var sheets = results[0];
-						assert.lengthOf(sheets, 3);
-						done();
-					})
-					.catch(done);
-			}
-		);
-
-		shouldIt(
-			'should return inline stylesheets defined using <style> tag',
-			function(done) {
-				getPreload(frame)
-					.then(function(results) {
-						var sheets = results[0];
-						var nonExternalsheets = sheets.filter(function(s) {
-							return !s.isExternal;
-						});
-						assert.lengthOf(nonExternalsheets, 1);
-						var inlineStylesheet = nonExternalsheets.filter(function(s) {
-							return s.sheet.rules.length === 1;
-						})[0].sheet;
+						// verify count
+						assert.lengthOf(sheets, 7);
+						// verify that the last non external sheet with shadowId has green selector
+						var nonExternalsheetsWithShadowId = sheets
+							.filter(function(s) {
+								return !s.isExternal;
+							})
+							.filter(function(s) {
+								return s.shadowId;
+							});
 						assertStylesheet(
-							inlineStylesheet,
-							'.inline-frame-css-test',
-							'.inline-frame-css-test{font-size:inherit;}'
+							nonExternalsheetsWithShadowId[
+								nonExternalsheetsWithShadowId.length - 1
+							].sheet,
+							'.green',
+							'.green{background-color:green;}'
 						);
 						done();
 					})
 					.catch(done);
 			}
 		);
+
+		commonTestsForRootAndFrame();
+	});
+
+	describe('tests for nested iframe', function() {
+		before(function() {
+			if (isPhantom) {
+				this.skip();
+			}
+		});
+
+		var frame;
+
+		before(function() {
+			frame = document.getElementById('frame1').contentDocument;
+		});
+
+		it('should return inline stylesheets defined using <style> tag', function(done) {
+			getPreload(frame)
+				.then(function(results) {
+					var sheets = results[0];
+					var nonExternalsheets = sheets.filter(function(s) {
+						return !s.isExternal;
+					});
+					assert.lengthOf(nonExternalsheets, 1);
+					done();
+				})
+				.catch(done);
+		});
 
 		commonTestsForRootAndFrame(frame);
 	});

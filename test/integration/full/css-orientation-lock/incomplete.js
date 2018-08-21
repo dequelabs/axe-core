@@ -1,20 +1,15 @@
 describe('css-orientation-lock incomplete test', function() {
 	'use strict';
 
-	var shouldIt = window.PHANTOMJS ? it.skip : it;
+	var isPhantom = window.PHANTOMJS ? true : false;
 
-	before(function(done) {
-		function start() {
-			done();
-		}
-		if (document.readyState !== 'complete') {
-			window.addEventListener('load', start);
-		} else {
-			start();
+	before(function() {
+		if (isPhantom) {
+			this.skip();
 		}
 	});
 
-	shouldIt('returns INCOMPLETE if preload is set to FALSE', function(done) {
+	it('returns INCOMPLETE if preload is set to FALSE', function(done) {
 		axe.run(
 			{
 				runOnly: {
@@ -34,26 +29,23 @@ describe('css-orientation-lock incomplete test', function() {
 		);
 	});
 
-	shouldIt(
-		'returns INCOMPLETE as page has no styles (not even mocha styles)',
-		function(done) {
-			axe.run(
-				{
-					runOnly: {
-						type: 'rule',
-						values: ['css-orientation-lock']
-					},
-					preload: true
+	it('returns INCOMPLETE as page has no styles (not even mocha styles)', function(done) {
+		axe.run(
+			{
+				runOnly: {
+					type: 'rule',
+					values: ['css-orientation-lock']
 				},
-				function(err, res) {
-					assert.isNull(err);
-					assert.isDefined(res);
+				preload: true
+			},
+			function(err, res) {
+				assert.isNull(err);
+				assert.isDefined(res);
 
-					assert.property(res, 'incomplete');
-					assert.lengthOf(res.incomplete, 1);
-					done();
-				}
-			);
-		}
-	);
+				assert.property(res, 'incomplete');
+				assert.lengthOf(res.incomplete, 1);
+				done();
+			}
+		);
+	});
 });

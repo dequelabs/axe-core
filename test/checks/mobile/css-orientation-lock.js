@@ -47,15 +47,15 @@ describe('css-orientation-lock tests', function() {
 		assert.equal(actual, 'invoked');
 	});
 
-	it('returns null if context of check does not have CSSOM property', function() {
+	it('returns undefined if context of check does not have CSSOM property', function() {
 		var actual = checks['css-orientation-lock'].evaluate.call(
 			checkContext,
 			document
 		);
-		assert.isNull(actual);
+		assert.isUndefined(actual);
 	});
 
-	it('returns true if CSSOM does not have any sheets', function() {
+	it('returns undefined if CSSOM does not have any sheets', function() {
 		// pass context with cssom as empty
 		var actual = checks['css-orientation-lock'].evaluate.call(
 			checkContext,
@@ -66,7 +66,7 @@ describe('css-orientation-lock tests', function() {
 				cssom: []
 			}
 		);
-		assert.isTrue(actual);
+		assert.isUndefined(actual);
 	});
 
 	it('returns true if CSSOM does not have sheet or rule(s) in the sheet(s)', function() {
