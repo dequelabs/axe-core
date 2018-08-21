@@ -3,7 +3,7 @@
 	"rule": "aria-roles",
 	"violations": [
 		["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"], ["#fail5"], ["#fail6"], ["#fail7"],
-		["#fail8"], ["#fail9"], ["#fail10"], ["#fail11"], ["#fail12"], ["#fail13"]
+		["#fail8"], ["#fail9"], ["#fail10"], ["#fail11"], ["#fail12"], ["#fail13"], ["#fail14"]
 	],
 	"passes": [
 		["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"], ["#pass5"], ["#pass6"], ["#pass7"],
