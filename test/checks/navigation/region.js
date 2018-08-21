@@ -211,6 +211,35 @@ describe('region', function() {
 		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
 	});
 
+	it('allows content in aria-live=assertive', function() {
+		var checkArgs = checkSetup(
+			'<div aria-live="assertive" id="target"><p>This is random content.</p></div>'
+		);
+		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+	});
+
+	it('allows content in aria-live=polite', function() {
+		var checkArgs = checkSetup(
+			'<div aria-live="polite" id="target"><p>This is random content.</p></div>'
+		);
+		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+	});
+
+	it('does not allow content in aria-live=off', function() {
+		var checkArgs = checkSetup(
+			'<div aria-live="off" id="target"><p>This is random content.</p></div>'
+		);
+		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+	});
+
+	it('treats role=dialog elements as regions', function() {
+		var checkArgs = checkSetup(
+			'<div role="dialog" id="target"><p>This is random content.</p></div>'
+		);
+
+		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+	});
+
 	(shadowSupport.v1 ? it : xit)('should test Shadow tree content', function() {
 		var div = document.createElement('div');
 		var shadow = div.attachShadow({ mode: 'open' });
