@@ -69,6 +69,11 @@ workflows:
           type: approval
           requires:
             - test
+          filters:
+            branches:
+              only:
+                - master
+                - develop
       # Run a next release on "develop" commits, but only after the tests pass and dependencies are installed
       - next_release:
           requires:
