@@ -43,7 +43,7 @@ jobs:
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache
-      - run: build/next-version.js
+      - run: npx standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true
       - run: npm publish --tag=next
 
   # Release a "production" version
@@ -70,6 +70,7 @@ workflows:
           requires:
             - test
           filters:
+            # We only want to hold on these two branches, as PR review acts as approval for PRs
             branches:
               only:
                 - master
