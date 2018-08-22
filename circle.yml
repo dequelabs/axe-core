@@ -43,7 +43,7 @@ jobs:
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache
-      - run: npx standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true
+      - run: npm run next-release
       - run: npm publish --tag=next
 
   # Release a "production" version
