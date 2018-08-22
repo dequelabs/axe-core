@@ -3,15 +3,46 @@ describe('preload integration test', function() {
 	'use strict';
 
 	var origAxios;
+	var isPhantom = window.PHANTOMJS ? true : false;
 
-	function overridedCheckEvaluateFn(node, options, virtualNode, context) {
-		// populate the data here which is asserted in tests
-		this.data(context);
-		return true;
+	function addSheet(data) {
+		if (data.href) {
+			var link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.href = data.href;
+			if (data.mediaPrint) {
+				link.media = 'print';
+			}
+			document.head.appendChild(link);
+		} else {
+			const style = document.createElement('style');
+			style.type = 'text/css';
+			style.appendChild(document.createTextNode(data.text));
+			document.head.appendChild(style);
+		}
 	}
 
+	var styleSheets = [
+		{
+			href: 'https://unpkg.com/gutenberg-css@0.4'
+		},
+		{
+			href:
+				'https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css',
+			mediaPrint: true
+		},
+		{
+			text: '.inline-css-test {	font-size: inherit; }'
+		}
+	];
+
 	before(function(done) {
-		function start() {
+		if (isPhantom) {
+			this.skip();
+			done();
+		} else {
+			styleSheets.forEach(addSheet);
+
 			// cache originals
 			if (axe.imports.axios) {
 				origAxios = axe.imports.axios;
@@ -51,15 +82,17 @@ describe('preload integration test', function() {
 					}
 				]
 			});
-			// done
-			done();
-		}
-		if (document.readyState !== 'complete') {
-			window.addEventListener('load', start);
-		} else {
-			start();
+
+			// wait for network request to complete for added sheets
+			setTimeout(done, 5000);
 		}
 	});
+
+	function overridedCheckEvaluateFn(node, options, virtualNode, context) {
+		// populate the data here which is asserted in tests
+		this.data(context);
+		return true;
+	}
 
 	function createStub(shouldReject) {
 		/**
@@ -100,121 +133,110 @@ describe('preload integration test', function() {
 		restoreStub();
 	});
 
-	var shouldIt = window.PHANTOMJS ? it.skip : it;
-
-	shouldIt(
-		'ensure for custom rule/check which does not preload, the CheckResult does not have asset(cssom)',
-		function(done) {
-			axe.run(
-				{
-					runOnly: {
-						type: 'rule',
-						values: ['run-now-rule']
-					},
-					// run config asks to preload, but no rule mandates preload, so preload is skipped
-					preload: {
-						assets: ['cssom']
-					}
+	it('ensure for custom rule/check which does not preload, the CheckResult does not have asset(cssom)', function(done) {
+		axe.run(
+			{
+				runOnly: {
+					type: 'rule',
+					values: ['run-now-rule']
 				},
-				function(err, res) {
-					// we ensure preload was skipped by checking context does not have cssom in checks evaluate function
-					assert.isNull(err);
-					assert.isDefined(res);
-					assert.property(res, 'passes');
-					assert.lengthOf(res.passes, 1);
-
-					var checkData = res.passes[0].nodes[0].any[0];
-					assert.notProperty(checkData, 'cssom');
-					done();
+				// run config asks to preload, but no rule mandates preload, so preload is skipped
+				preload: {
+					assets: ['cssom']
 				}
-			);
-		}
-	);
+			},
+			function(err, res) {
+				// we ensure preload was skipped by checking context does not have cssom in checks evaluate function
+				assert.isNull(err);
+				assert.isDefined(res);
+				assert.property(res, 'passes');
+				assert.lengthOf(res.passes, 1);
 
-	shouldIt(
-		'ensure for custom rule/check which requires preload, the CheckResult contains asset(cssom) and validate stylesheet',
-		function(done) {
-			axe.run(
-				{
-					runOnly: {
-						type: 'rule',
-						values: ['run-later-rule']
-					},
-					// run config asks to preload, and the rule requires a preload as well, context will be mutated with 'cssom' asset
-					preload: {
-						assets: ['cssom']
-					}
+				var checkData = res.passes[0].nodes[0].any[0];
+				assert.notProperty(checkData, 'cssom');
+				done();
+			}
+		);
+	});
+
+	it('ensure for custom rule/check which requires preload, the CheckResult contains asset(cssom) and validate stylesheet', function(done) {
+		axe.run(
+			{
+				runOnly: {
+					type: 'rule',
+					values: ['run-later-rule']
 				},
-				function(err, res) {
-					// we ensure preload was skipped by checking context does not have cssom in checks evaluate function
-					assert.isNull(err);
-					assert.isDefined(res);
-					assert.property(res, 'passes');
-					assert.lengthOf(res.passes, 1);
-
-					var checkData = res.passes[0].nodes[0].any[0].data;
-					assert.property(checkData, 'cssom');
-
-					var cssom = checkData.cssom;
-					assert.lengthOf(cssom, 3);
-
-					var externalSheet = cssom.filter(function(s) {
-						return s.isExternal;
-					})[0].sheet;
-					assertStylesheet(externalSheet, 'body', 'body{overflow:auto;}');
-
-					var inlineStylesheet = cssom.filter(function(s) {
-						return s.sheet.rules.length === 1 && !s.isExternal;
-					})[0].sheet;
-					assertStylesheet(
-						inlineStylesheet,
-						'.inline-css-test',
-						'.inline-css-test{font-size:inherit;}'
-					);
-
-					done();
+				// run config asks to preload, and the rule requires a preload as well, context will be mutated with 'cssom' asset
+				preload: {
+					assets: ['cssom']
 				}
-			);
-		}
-	);
+			},
+			function(err, res) {
+				// we ensure preload was skipped by checking context does not have cssom in checks evaluate function
+				assert.isNull(err);
+				assert.isDefined(res);
+				assert.property(res, 'passes');
+				assert.lengthOf(res.passes, 1);
 
-	shouldIt(
-		'ensure for all rules are run if preload call time(s)out assets are not passed to check',
-		function(done) {
-			// restore stub - restores original axios, to test timeout on xhr
-			restoreStub();
+				var checkData = res.passes[0].nodes[0].any[0].data;
+				assert.property(checkData, 'cssom');
 
-			axe.run(
-				{
-					runOnly: {
-						type: 'rule',
-						values: ['run-later-rule']
-					},
-					// run config asks to preload, and the rule requires a preload as well, context will be mutated with 'cssom' asset
-					preload: {
-						assets: ['cssom'],
-						timeout: 1
-					}
+				var cssom = checkData.cssom;
+				assert.lengthOf(cssom, 3); // ignore all media='print' styleSheets
+
+				// there should be no external sheet returned
+				// as everything is earmarked as media print
+				var externalSheet = cssom.filter(function(s) {
+					return s.isExternal;
+				})[0].sheet;
+				assertStylesheet(externalSheet, 'body', 'body{overflow:auto;}');
+
+				var inlineStylesheet = cssom.filter(function(s) {
+					return s.sheet.cssRules.length === 1 && !s.isExternal;
+				})[0].sheet;
+				assertStylesheet(
+					inlineStylesheet,
+					'.inline-css-test',
+					'.inline-css-test{font-size:inherit;}'
+				);
+
+				done();
+			}
+		);
+	});
+
+	it('ensure for all rules are run if preload call time(s)out assets are not passed to check', function(done) {
+		// restore stub - restores original axios, to test timeout on xhr
+		restoreStub();
+
+		axe.run(
+			{
+				runOnly: {
+					type: 'rule',
+					values: ['run-later-rule']
 				},
-				function(err, res) {
-					// we ensure preload was skipped by checking context does not have cssom in checks evaluate function
-					assert.isNull(err);
-					assert.isDefined(res);
-					assert.property(res, 'passes');
-					assert.lengthOf(res.passes, 1);
-
-					var checkData = res.passes[0].nodes[0].any[0].data;
-					assert.notProperty(checkData, 'cssom');
-
-					done();
+				// run config asks to preload, and the rule requires a preload as well, context will be mutated with 'cssom' asset
+				preload: {
+					assets: ['cssom'],
+					timeout: 1
 				}
-			);
-		}
-	);
+			},
+			function(err, res) {
+				// we ensure preload was skipped by checking context does not have cssom in checks evaluate function
+				assert.isNull(err);
+				assert.isDefined(res);
+				assert.property(res, 'passes');
+				assert.lengthOf(res.passes, 1);
 
-	shouldIt('ensure for all rules are run if preload call is rejected', function(
-		done
-	) {
+				var checkData = res.passes[0].nodes[0].any[0].data;
+				assert.notProperty(checkData, 'cssom');
+
+				done();
+			}
+		);
+	});
+
+	it('ensure for all rules are run if preload call is rejected', function(done) {
 		// restore stub - restores original axios, to test timeout on xhr
 		restoreStub();
 		// create a stub to reject intentionally
