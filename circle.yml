@@ -36,15 +36,15 @@ jobs:
       - <<: *restore_dependency_cache
       - run: npm run test
 
-  # Release a "canary" version
-  canary_release:
+  # Release a "next" version
+  next_release:
     <<: *defaults
     steps:
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache
-      - run: build/canary.js
-      - run: npm publish --tag=canary
+      - run: build/next-version.js
+      - run: npm publish --tag=next
 
   # Release a "production" version
   production_release:
@@ -64,8 +64,8 @@ workflows:
       - test:
           requires:
             - dependencies
-      # Run a canary release on "develop" commits, but only after the tests pass and dependencies are installed
-      - canary_release:
+      # Run a next release on "develop" commits, but only after the tests pass and dependencies are installed
+      - next_release:
           requires:
             - dependencies
             - test
@@ -73,7 +73,7 @@ workflows:
           filters:
             branches:
               only: develop
-      # Run a canary release on "master" commits, but only after the tests pass and dependencies are installed
+      # Run a production release on "master" commits, but only after the tests pass and dependencies are installed
       - production_release:
           requires:
             - dependencies

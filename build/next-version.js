@@ -15,7 +15,7 @@ const GIT_SHA = CIRCLE_SHA1.substr(0, 7);
 
 // Strip the "dist tag" from the version (if it exists)
 const version = pkg.version.replace(/-\w+\.\d$/, '');
-const nextVersion = `${version}-canary.${GIT_SHA}`;
+const nextVersion = `${version}-next.${GIT_SHA}`;
 
 pkg.version = nextVersion;
 fs.writeFileSync(pkgFile, JSON.stringify(pkg, null, 2));
