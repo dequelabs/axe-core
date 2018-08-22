@@ -194,6 +194,27 @@ describe('only-dlitems', function() {
 		);
 	});
 
+	it('should return false if there is an empty div', function() {
+		var checkArgs = checkSetup('<dl id="target"><div></div></dl>');
+		assert.isFalse(
+			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('should return true if there is a div with text', function() {
+		var checkArgs = checkSetup('<dl id="target"><div>text</div></dl>');
+		assert.isTrue(
+			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('should return true if there is a div with non-dd / dt elements', function() {
+		var checkArgs = checkSetup('<dl id="target"><div> <p>text</p> </div></dl>');
+		assert.isTrue(
+			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
 	(shadowSupport.v1 ? it : xit)(
 		'should return false in a shadow DOM pass',
 		function() {
