@@ -40,12 +40,6 @@ module.exports = function(grunt) {
 		var url = urls.shift();
 		errors = errors || [];
 
-		// Give each page enough time
-		driver
-			.manage()
-			.timeouts()
-			.setScriptTimeout(!isMobile ? 60000 * 5 : 60000 * 10);
-
 		return (
 			driver
 				.get(url)
@@ -176,6 +170,17 @@ module.exports = function(grunt) {
 				grunt.log.writeln('Aborted testing using ' + options.browser);
 				return done();
 			}
+
+			// Give driver timeout options for scripts
+			driver
+				.manage()
+				.timeouts()
+				.setScriptTimeout(!isMobile ? 60000 * 5 : 60000 * 10);
+			// allow to wait for page load implicitly
+			driver
+				.manage()
+				.timeouts()
+				.implicitlyWait(50000);
 
 			// Test all pages
 			runTestUrls(driver, isMobile, options.urls)

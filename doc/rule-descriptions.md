@@ -12,13 +12,14 @@
 | aria-roles | Ensures all elements with a role attribute use a valid value | Serious, Critical | cat.aria, wcag2a, wcag412 | true |
 | aria-valid-attr-value | Ensures all ARIA attributes have valid values | Critical | cat.aria, wcag2a, wcag412 | true |
 | aria-valid-attr | Ensures attributes that begin with aria- are valid ARIA attributes | Critical | cat.aria, wcag2a, wcag412 | true |
-| audio-caption | Ensures &lt;audio&gt; elements have captions | Critical | cat.time-and-media, wcag2a, wcag121, section508, section508.22.a | true |
+| audio-caption | Ensures &lt;audio&gt; elements have captions | Critical | cat.time-and-media, wcag2a, wcag121, section508, section508.22.a | false |
 | autocomplete-valid | Ensure the autocomplete attribute is correct and suitable for the form field | Serious | cat.forms, wcag21aa, wcag135 | true |
 | blink | Ensures &lt;blink&gt; elements are not used | Serious | cat.time-and-media, wcag2a, wcag222, section508, section508.22.j | true |
 | button-name | Ensures buttons have discernible text | Serious, Critical | cat.name-role-value, wcag2a, wcag412, section508, section508.22.a | true |
 | bypass | Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content | Serious | cat.keyboard, wcag2a, wcag241, section508, section508.22.o | true |
 | checkboxgroup | Ensures related &lt;input type=&quot;checkbox&quot;&gt; elements have a group and that the group designation is consistent | Critical | cat.forms, best-practice | true |
 | color-contrast | Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds | Serious | cat.color, wcag2aa, wcag143 | true |
+| css-orientation-lock | Ensures content is not locked to any specific display orientation, and the content is operable in all display orientations | Serious | cat.structure, wcag262, wcag21aa, experimental | true |
 | definition-list | Ensures &lt;dl&gt; elements are structured correctly | Serious | cat.structure, wcag2a, wcag131 | true |
 | dlitem | Ensures &lt;dt&gt; and &lt;dd&gt; elements are contained by a &lt;dl&gt; | Serious | cat.structure, wcag2a, wcag131 | true |
 | document-title | Ensures each HTML document contains a non-empty &lt;title&gt; element | Serious | cat.text-alternatives, wcag2a, wcag242 | true |
