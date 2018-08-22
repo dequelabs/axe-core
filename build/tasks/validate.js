@@ -27,7 +27,7 @@ function hasUniqueId() {
 	};
 }
 
-function hasTwoOutcomes(messages) {
+function hasMultipleOutcomes(messages) {
 	const keys = Object.keys(messages);
 	if (keys.length < 2) {
 		return false;
@@ -105,20 +105,10 @@ function createSchemas() {
 					messages: {
 						required: true,
 						type: 'object',
-						conform: hasTwoOutcomes,
+						conform: hasMultipleOutcomes,
 						messages: {
 							conform: 'Must have at least two valid messages'
 						}
-						// propferties: {
-						// 	fail: {
-						// 		required: true,
-						// 		type: 'string'
-						// 	},
-						// 	pass: {
-						// 		required: true,
-						// 		type: 'string'
-						// 	}
-						// }
 					},
 					impact: {
 						required: true,
