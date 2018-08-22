@@ -176,6 +176,24 @@ describe('only-dlitems', function() {
 		);
 	});
 
+	it('should return false if the list has dt and dd inside a div group', function() {
+		var checkArgs = checkSetup(
+			'<dl id="target"><div><dt>An item</dt><dd>A list</dd></div></dl>'
+		);
+		assert.isFalse(
+			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('should return true if the list has dt and dd inside a div group with a role', function() {
+		var checkArgs = checkSetup(
+			'<dl id="target"><div role="listitem"><dt>An item</dt><dd>A list</dd></div></dl>'
+		);
+		assert.isTrue(
+			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
 	(shadowSupport.v1 ? it : xit)(
 		'should return false in a shadow DOM pass',
 		function() {
