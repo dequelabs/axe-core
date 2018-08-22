@@ -64,6 +64,11 @@ workflows:
       - test:
           requires:
             - dependencies
+      # Hold for approval
+      - hold:
+          type: approval
+          requires:
+            - test
       # Run a next release on "develop" commits, but only after the tests pass and dependencies are installed
       - next_release:
           requires:
