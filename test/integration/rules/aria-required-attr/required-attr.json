@@ -2,9 +2,9 @@
 	"description": "aria-required-attr tests",
 	"rule": "aria-required-attr",
 	"violations": [
-		["#violation1"], ["#violation2"], ["#violation3"], ["#violation4"]
+		["#violation1"], ["#violation2"], ["#violation3"], ["#violation4"], ["#violation5"]
 	],
 	"passes": [
-		["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"]
+		["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"], ["#pass5"]
 	]
 }
