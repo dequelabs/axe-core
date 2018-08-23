@@ -55,7 +55,7 @@
     },
     "autocomplete-valid": {
       "description": "S’assure que l’attribut autocomplete est correct et adapté pour le champ de formulaire",
-      "help": "Lgattribut autocomplete doit être utilisé correctement"
+      "help": "L’attribut autocomplete doit être utilisé correctement"
     },
     "blink": {
       "description": "S’assure que l’élément <blink> n’est pas utilisé",
@@ -293,7 +293,7 @@
     },
     "aria-allowed-role": {
       "pass": "Le rôle ARIA role est autorisé pour l’élément donné",
-      "fail": "{{=it.data && it.data.length > 1 ? 'Les rôles' : 'Le rôle'}} {{=it.data.join(', ')}} {{=it.data && it.data.length > 1 ? 'ne sont' : 'n’est'}} pas autorisé pour l’élément donné"
+      "fail": "{{=it.data && it.data.length > 1 ? 'Les rôles' : 'Le rôle'}} {{=it.data.join(', ')}} {{=it.data && it.data.length > 1 ? 'ne sont pas autorisés' : 'n’est pas autorisé'}} pour l’élément donné"
     },
     "aria-hidden-body": {
       "pass": "Aucun attribut aria-hidden n’est présent sur body",
@@ -322,7 +322,7 @@
     "aria-required-children": {
       "pass": "Les descendants ARIA requis sont présents",
       "fail": "{{=it.data && it.data.length > 1 ? 'Descendants ARIA requis absents' : 'Descendant ARIA requis absent'}} : {{~it.data:value}} {{=value}}{{~}}",
-      "incomplete": "{{=it.data && it.data.length > 1 ? 'Les descendants' : 'Le descendant'}} requièrent le rôle ARIA : {{~it.data:value}} {{=value}}{{~}}"
+      "incomplete": "{{=it.data && it.data.length > 1 ? 'Les descendants requièrent' : 'Le descendant requiert'}} le rôle ARIA : {{~it.data:value}} {{=value}}{{~}}"
     },
     "aria-required-parent": {
       "pass": "Les rôles parents ARIA requis sont présents",
