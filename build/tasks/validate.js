@@ -27,6 +27,27 @@ function hasUniqueId() {
 	};
 }
 
+function hasMultipleOutcomes(messages) {
+	const keys = Object.keys(messages);
+	if (keys.length < 2) {
+		return false;
+	}
+
+	return keys.every(key => {
+		switch (key) {
+			case 'pass':
+			case 'fail':
+				return typeof messages[key] === 'string';
+
+			case 'incomplete':
+				return ['string', 'object'].includes(typeof messages[key]);
+
+			default:
+				return false;
+		}
+	});
+}
+
 function createSchemas() {
 	var schemas = {};
 
@@ -84,15 +105,9 @@ function createSchemas() {
 					messages: {
 						required: true,
 						type: 'object',
-						properties: {
-							fail: {
-								required: true,
-								type: 'string'
-							},
-							pass: {
-								required: true,
-								type: 'string'
-							}
+						conform: hasMultipleOutcomes,
+						messages: {
+							conform: 'Must have at least two valid messages'
 						}
 					},
 					impact: {
