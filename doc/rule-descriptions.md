@@ -3,6 +3,7 @@
 | accesskeys | Ensures every accesskey attribute value is unique | Serious | best-practice, cat.keyboard | true |
 | area-alt | Ensures &lt;area&gt; elements of image maps have alternate text | Critical | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | aria-allowed-attr | Ensures ARIA attributes are allowed for an element&apos;s role | Critical | cat.aria, wcag2a, wcag412 | true |
+| aria-allowed-role | Ensures role attribute has an appropriate value for the element | Minor | cat.aria, best-practice | true |
 | aria-dpub-role-fallback | Ensures unsupported DPUB roles are only used on elements with implicit fallback roles | Moderate | cat.aria, wcag2a, wcag131 | true |
 | aria-hidden-body | Ensures aria-hidden=&apos;true&apos; is not present on the document body. | Critical | cat.aria, wcag2a, wcag412 | true |
 | aria-required-attr | Ensures elements with ARIA roles have all required ARIA attributes | Critical | cat.aria, wcag2a, wcag412 | true |
@@ -11,13 +12,14 @@
 | aria-roles | Ensures all elements with a role attribute use a valid value | Serious, Critical | cat.aria, wcag2a, wcag412 | true |
 | aria-valid-attr-value | Ensures all ARIA attributes have valid values | Critical | cat.aria, wcag2a, wcag412 | true |
 | aria-valid-attr | Ensures attributes that begin with aria- are valid ARIA attributes | Critical | cat.aria, wcag2a, wcag412 | true |
-| audio-caption | Ensures &lt;audio&gt; elements have captions | Critical | cat.time-and-media, wcag2a, wcag121, section508, section508.22.a | true |
+| audio-caption | Ensures &lt;audio&gt; elements have captions | Critical | cat.time-and-media, wcag2a, wcag121, section508, section508.22.a | false |
 | autocomplete-valid | Ensure the autocomplete attribute is correct and suitable for the form field | Serious | cat.forms, wcag21aa, wcag135 | true |
 | blink | Ensures &lt;blink&gt; elements are not used | Serious | cat.time-and-media, wcag2a, wcag222, section508, section508.22.j | true |
 | button-name | Ensures buttons have discernible text | Serious, Critical | cat.name-role-value, wcag2a, wcag412, section508, section508.22.a | true |
 | bypass | Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content | Serious | cat.keyboard, wcag2a, wcag241, section508, section508.22.o | true |
 | checkboxgroup | Ensures related &lt;input type=&quot;checkbox&quot;&gt; elements have a group and that the group designation is consistent | Critical | cat.forms, best-practice | true |
 | color-contrast | Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds | Serious | cat.color, wcag2aa, wcag143 | true |
+| css-orientation-lock | Ensures content is not locked to any specific display orientation, and the content is operable in all display orientations | Serious | cat.structure, wcag262, wcag21aa, experimental | true |
 | definition-list | Ensures &lt;dl&gt; elements are structured correctly | Serious | cat.structure, wcag2a, wcag131 | true |
 | dlitem | Ensures &lt;dt&gt; and &lt;dd&gt; elements are contained by a &lt;dl&gt; | Serious | cat.structure, wcag2a, wcag131 | true |
 | document-title | Ensures each HTML document contains a non-empty &lt;title&gt; element | Serious | cat.text-alternatives, wcag2a, wcag242 | true |
@@ -31,6 +33,7 @@
 | hidden-content | Informs users about hidden content. | Minor | cat.structure, experimental, review-item | true |
 | html-has-lang | Ensures every HTML document has a lang attribute | Serious | cat.language, wcag2a, wcag311 | true |
 | html-lang-valid | Ensures the lang attribute of the &lt;html&gt; element has a valid value | Serious | cat.language, wcag2a, wcag311 | true |
+| html-xml-lang-mismatch | Ensure that HTML elements with both valid lang and xml:lang attributes agree on the base language of the page | Moderate | cat.language, wcag2a, wcag311 | true |
 | image-alt | Ensures &lt;img&gt; elements have alternate text or a role of none or presentation | Critical | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | image-redundant-alt | Ensure button and link text is not repeated as image alternative | Minor | cat.text-alternatives, best-practice | true |
 | input-image-alt | Ensures &lt;input type=&quot;image&quot;&gt; elements have alternate text | Critical | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |

@@ -5,8 +5,7 @@
     "impact": "critical",
     "messages": {
       "pass": "The multimedia element has a captions track",
-      "fail": "The multimedia element does not have a captions track",
-      "incomplete": "A captions track for this element could not be found"
+      "incomplete": "Check that captions is available for the element"
     }
   }
 }

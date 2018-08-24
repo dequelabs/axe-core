@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" id="pass1">
+<head>
+	<meta charset="utf8">
+	<script src="/node_modules/mocha/mocha.js"></script>
+	<script src="/node_modules/chai/chai.js"></script>
+	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css">
+	<script>
+		mocha.setup({
+			timeout: 50000,
+			ui: 'bdd'
+		});
+		var assert = chai.assert;
+	</script>
+	<script src="/axe.js"></script>
+</head>
+<body>
+	<div id="run-now-target">
+		Sample DIV which acts as target for run now
+	</div>
+	<div id="run-later-target">
+		Sample DIV which acts as target for run later
+	</div>
+	<div id="mocha"></div>
+	<script src="/test/testutils.js"></script>
+	<script src="preload.js"></script>
+	<script src="/test/integration/adapter.js"></script>
+</body>
+</html>
