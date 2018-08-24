@@ -4,7 +4,7 @@ describe('aria.isAccessibleRef', function() {
 	var __atrs;
 	var fixture = document.getElementById('fixture');
 	var isAccessibleRef = axe.commons.aria.isAccessibleRef;
-	var shadowSupport = axe.testUtils.shadowSupport;
+	var shadowSupport = axe.testUtils.shadowSupport.v1;
 
 	function setLookup(attrs) {
 		axe.commons.aria.lookupTable.attributes = attrs;

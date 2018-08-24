@@ -1,12 +1,9 @@
 {
-  "id": "duplicate-id",
+  "id": "duplicate-id-aria",
   "evaluate": "duplicate-id.js",
   "after": "duplicate-id-after.js",
-  "options": {
-    "accReferred": false
-  },
   "metadata": {
-    "impact": "minor",
+    "impact": "critical",
     "messages": {
       "pass": "Document has no elements that share the same id attribute",
       "fail": "Document has multiple elements with the same id attribute: {{=it.data}}"

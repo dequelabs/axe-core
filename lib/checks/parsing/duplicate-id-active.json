@@ -1,10 +1,7 @@
 {
-  "id": "duplicate-id-accessible",
+  "id": "duplicate-id-active",
   "evaluate": "duplicate-id.js",
   "after": "duplicate-id-after.js",
-  "options": {
-    "accReferred": true
-  },
   "metadata": {
     "impact": "serious",
     "messages": {
