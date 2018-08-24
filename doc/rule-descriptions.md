@@ -23,7 +23,7 @@
 | definition-list | Ensures &lt;dl&gt; elements are structured correctly | Serious | cat.structure, wcag2a, wcag131 | true |
 | dlitem | Ensures &lt;dt&gt; and &lt;dd&gt; elements are contained by a &lt;dl&gt; | Serious | cat.structure, wcag2a, wcag131 | true |
 | document-title | Ensures each HTML document contains a non-empty &lt;title&gt; element | Serious | cat.text-alternatives, wcag2a, wcag242 | true |
-| duplicate-id-active | Ensures every id attribute value is unique | Serious | cat.parsing, wcag2a, wcag411 | true |
+| duplicate-id-active | Ensures every id attribute value of active elements is unique | Serious | cat.parsing, wcag2a, wcag411 | true |
 | duplicate-id-aria | Ensures every id attribute value used in ARIA and in labels is unique | Critical | cat.parsing, wcag2a, wcag411 | true |
 | duplicate-id | Ensures every id attribute value is unique | Minor | cat.parsing, wcag2a, wcag411 | true |
 | empty-heading | Ensures headings have discernible text | Minor | cat.name-role-value, best-practice | true |

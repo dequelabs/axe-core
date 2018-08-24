@@ -12,9 +12,9 @@
     "description": "Ensures every id attribute value is unique",
     "help": "id attribute value must be unique"
   },
-  "all": [
+  "all": [],
+  "any": [
     "duplicate-id"
   ],
-  "any": [],
   "none": []
 }

@@ -12,9 +12,9 @@
     "description": "Ensures every id attribute value used in ARIA and in labels is unique",
     "help": "IDs used in ARIA and labels must be unique"
   },
-  "all": [
+  "all": [],
+  "any": [
     "duplicate-id-aria"
   ],
-  "any": [],
   "none": []
 }

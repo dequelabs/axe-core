@@ -5,8 +5,8 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "Document has no elements that share the same id attribute",
-      "fail": "Document has multiple elements with the same id attribute: {{=it.data}}"
+      "pass": "Document has no active elements that share the same id attribute",
+      "fail": "Document has active elements with the same id attribute: {{=it.data}}"
     }
   }
 }

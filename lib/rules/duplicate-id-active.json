@@ -9,12 +9,12 @@
     "wcag411"
   ],
   "metadata": {
-    "description": "Ensures every id attribute value is unique",
+    "description": "Ensures every id attribute value of active elements is unique",
     "help": "IDs of active elements must be unique"
   },
-  "all": [
+  "all": [],
+  "any": [
     "duplicate-id-active"
   ],
-  "any": [],
   "none": []
 }
