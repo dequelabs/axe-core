@@ -1,0 +1,1310 @@
+{
+  "name": "axe-core",
+  "description": "Accessibility engine for automated Web UI testing",
+  "version": "2.2.1",
+  "license": "MPL-2.0",
+  "contributors": [
+    {
+      "name": "David Sturley",
+      "organization": "Deque Systems, Inc.",
+      "url": "http://deque.com/"
+    },
+    {
+      "name": "Dylan Barrell",
+      "email": "dylan@barrell.com",
+      "organization": "Deque Systems, Inc.",
+      "url": "http://deque.com/"
+    },
+    {
+      "name": "Wilco Fiers",
+      "organization": "Deque Systems, Inc.",
+      "url": "http://deque.com/"
+    },
+    {
+      "name": "Dian Fay",
+      "organization": "Deque Systems, Inc.",
+      "url": "http://deque.com/"
+    },
+    {
+      "name": "Marcy Sutton",
+      "organization": "Deque Systems, Inc.",
+      "url": "http://deque.com/"
+    }
+  ],
+  "a11y-testcases": [
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/accesskeys/accesskeys.html",
+      "successCriteria": [
+        "wcag20:keyboard-operation-keyboard-operable"
+      ],
+      "failed": [
+        "#violation1",
+        "#violation2"
+      ],
+      "passed": [
+        "#pass1"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/area-alt/area-alt.html",
+      "successCriteria": [
+        "wcag20:text-equiv-all"
+      ],
+      "failed": [
+        "#violation1",
+        "#violation2",
+        "#violation3",
+        "#violation4"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/aria-allowed-attr/failures.html",
+      "successCriteria": [
+        "wcag20:ensure-compat-parses",
+        "wcag20:ensure-compat-rsv"
+      ],
+      "failed": [
+        "#fail1",
+        "#fail2"
+      ],
+      "passed": []
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/aria-allowed-attr/passes.html",
+      "successCriteria": [
+        "wcag20:ensure-compat-parses",
+        "wcag20:ensure-compat-rsv"
+      ],
+      "failed": [],
+      "passed": [
+        "#pass0",
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4",
+        "#pass5",
+        "#pass6",
+        "#pass7",
+        "#pass8",
+        "#pass9",
+        "#pass10",
+        "#pass11",
+        "#pass12",
+        "#pass13",
+        "#pass14",
+        "#pass15",
+        "#pass16",
+        "#pass17",
+        "#pass18",
+        "#pass19",
+        "#pass20",
+        "#pass21",
+        "#pass22",
+        "#pass23",
+        "#pass24",
+        "#pass25",
+        "#pass26",
+        "#pass27",
+        "#pass28",
+        "#pass29",
+        "#pass30",
+        "#pass31",
+        "#pass32",
+        "#pass33",
+        "#pass34",
+        "#pass35",
+        "#pass36",
+        "#pass37",
+        "#pass38",
+        "#pass39",
+        "#pass40",
+        "#pass41",
+        "#pass42",
+        "#pass43",
+        "#pass44",
+        "#pass45",
+        "#pass46",
+        "#pass47",
+        "#pass48",
+        "#pass49",
+        "#pass50",
+        "#pass51",
+        "#pass52",
+        "#pass53",
+        "#pass54",
+        "#pass55",
+        "#pass56",
+        "#pass57",
+        "#pass58",
+        "#pass59",
+        "#pass60",
+        "#pass61",
+        "#pass62",
+        "#pass63",
+        "#pass64",
+        "#pass65"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/aria-required-attr/required-attr.html",
+      "successCriteria": [
+        "wcag20:ensure-compat-parses",
+        "wcag20:ensure-compat-rsv"
+      ],
+      "failed": [
+        "#violation1",
+        "#violation2",
+        "#violation3",
+        "#violation4",
+        "#violation5",
+        "#violation6",
+        "#violation7",
+        "#violation8",
+        "#violation9"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4",
+        "#pass5",
+        "#pass6",
+        "#pass7",
+        "#pass8",
+        "#pass9"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/aria-required-children/aria-required-children.html",
+      "successCriteria": [
+        "wcag20:content-structure-separation-programmatic"
+      ],
+      "failed": [
+        "#fail1",
+        "#fail2",
+        "#fail3"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4",
+        "#pass5",
+        "#pass6",
+        "#pass7",
+        "#pass8"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/aria-required-parent/aria-required-parent.html",
+      "successCriteria": [
+        "wcag20:content-structure-separation-programmatic"
+      ],
+      "failed": [
+        "#fail1",
+        "#fail2",
+        "#fail3"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4",
+        "#pass5",
+        "#pass6",
+        "#pass7",
+        "#pass8"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/aria-roles/aria-roles.html",
+      "successCriteria": [
+        "wcag20:content-structure-separation-programmatic",
+        "wcag20:ensure-compat-parses",
+        "wcag20:ensure-compat-rsv"
+      ],
+      "failed": [
+        "#fail1",
+        "#fail2",
+        "#fail3",
+        "#fail4",
+        "#fail5",
+        "#fail6",
+        "#fail7",
+        "#fail8",
+        "#fail9",
+        "#fail10",
+        "#fail11",
+        "#fail12",
+        "#fail13"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4",
+        "#pass5",
+        "#pass6",
+        "#pass7",
+        "#pass8",
+        "#pass9",
+        "#pass10",
+        "#pass11",
+        "#pass12",
+        "#pass13",
+        "#pass14",
+        "#pass15",
+        "#pass16",
+        "#pass17",
+        "#pass18",
+        "#pass19",
+        "#pass20",
+        "#pass21",
+        "#pass22",
+        "#pass23",
+        "#pass24",
+        "#pass25",
+        "#pass26",
+        "#pass27",
+        "#pass28",
+        "#pass29",
+        "#pass30",
+        "#pass31",
+        "#pass32",
+        "#pass33",
+        "#pass34",
+        "#pass35",
+        "#pass36",
+        "#pass37",
+        "#pass38",
+        "#pass39",
+        "#pass40",
+        "#pass41",
+        "#pass42",
+        "#pass43",
+        "#pass44",
+        "#pass45",
+        "#pass46",
+        "#pass47",
+        "#pass48",
+        "#pass49",
+        "#pass50",
+        "#pass51",
+        "#pass52",
+        "#pass53",
+        "#pass54",
+        "#pass55",
+        "#pass56",
+        "#pass57",
+        "#pass58",
+        "#pass59",
+        "#pass60",
+        "#pass61",
+        "#pass62",
+        "#pass63",
+        "#pass64",
+        "#pass65",
+        "#pass66",
+        "#pass67"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/aria-valid-attr-value/aria-valid-attr-value.html",
+      "successCriteria": [
+        "wcag20:content-structure-separation-programmatic",
+        "wcag20:ensure-compat-parses",
+        "wcag20:ensure-compat-rsv"
+      ],
+      "failed": [
+        "#violation0",
+        "#violation1",
+        "#violation2",
+        "#violation3",
+        "#violation4",
+        "#violation5",
+        "#violation6",
+        "#violation7",
+        "#violation8",
+        "#violation9",
+        "#violation10",
+        "#violation11",
+        "#violation12",
+        "#violation13",
+        "#violation14",
+        "#violation15",
+        "#violation16",
+        "#violation17",
+        "#violation18",
+        "#violation19",
+        "#violation20",
+        "#violation21",
+        "#violation22",
+        "#violation23",
+        "#violation24",
+        "#violation25",
+        "#violation26",
+        "#violation27",
+        "#violation28",
+        "#violation29",
+        "#violation30",
+        "#violation31",
+        "#violation32",
+        "#violation33",
+        "#violation34"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4",
+        "#pass5",
+        "#pass6",
+        "#pass7",
+        "#pass8",
+        "#pass9",
+        "#pass10",
+        "#pass11",
+        "#pass12",
+        "#pass13",
+        "#pass14",
+        "#pass15",
+        "#pass16",
+        "#pass17",
+        "#pass18",
+        "#pass19",
+        "#pass20",
+        "#pass21",
+        "#pass22",
+        "#pass23",
+        "#pass24",
+        "#pass25",
+        "#pass26",
+        "#pass27",
+        "#pass28",
+        "#pass29",
+        "#pass30",
+        "#pass31",
+        "#pass32",
+        "#pass33",
+        "#pass34",
+        "#pass35",
+        "#pass36",
+        "#pass37",
+        "#pass38",
+        "#pass39",
+        "#pass40",
+        "#pass41",
+        "#pass42",
+        "#pass43",
+        "#pass44",
+        "#pass45",
+        "#pass46",
+        "#pass47",
+        "#pass48",
+        "#pass49",
+        "#pass50",
+        "#pass51",
+        "#pass52",
+        "#pass53",
+        "#pass54",
+        "#pass55",
+        "#pass56",
+        "#pass57",
+        "#pass58",
+        "#pass59",
+        "#pass60",
+        "#pass61",
+        "#pass62",
+        "#pass63",
+        "#pass64",
+        "#pass65",
+        "#pass66",
+        "#pass67",
+        "#pass68",
+        "#pass69",
+        "#pass70",
+        "#pass71",
+        "#pass72",
+        "#pass73",
+        "#pass74",
+        "#pass75",
+        "#pass76",
+        "#pass77",
+        "#pass78",
+        "#pass79",
+        "#pass80",
+        "#pass81",
+        "#pass82",
+        "#pass83",
+        "#pass84",
+        "#pass85",
+        "#pass86",
+        "#pass87",
+        "#pass88",
+        "#pass89",
+        "#pass90",
+        "#pass91",
+        "#pass92",
+        "#pass93",
+        "#pass94",
+        "#pass95",
+        "#pass96",
+        "#pass97",
+        "#pass98",
+        "#pass99",
+        "#pass100",
+        "#pass101",
+        "#pass102",
+        "#pass103",
+        "#pass104",
+        "#pass105",
+        "#pass106",
+        "#pass107",
+        "#pass108",
+        "#pass109",
+        "#pass110",
+        "#pass111",
+        "#pass112",
+        "#pass113",
+        "#pass114",
+        "#pass115",
+        "#pass116",
+        "#pass117",
+        "#pass118",
+        "#pass119",
+        "#pass120",
+        "#pass121",
+        "#pass122",
+        "#pass123",
+        "#pass124",
+        "#pass125",
+        "#pass126",
+        "#pass127",
+        "#pass128",
+        "#pass129",
+        "#pass130",
+        "#pass131",
+        "#pass132",
+        "#pass133",
+        "#pass134",
+        "#pass135",
+        "#pass136",
+        "#pass137",
+        "#pass138",
+        "#pass139",
+        "#pass140",
+        "#pass141",
+        "#pass142",
+        "#pass143",
+        "#pass144",
+        "#pass145",
+        "#pass146",
+        "#pass147",
+        "#pass148",
+        "#pass149",
+        "#pass150",
+        "#pass151",
+        "#pass152",
+        "#pass153",
+        "#pass154",
+        "#pass155",
+        "#pass156",
+        "#pass157",
+        "#pass158",
+        "#pass159",
+        "#pass160"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/aria-valid-attr/aria-valid-attr.html",
+      "successCriteria": [
+        "wcag20:ensure-compat-parses"
+      ],
+      "failed": [
+        "#violation1",
+        "#violation2",
+        "#violation3",
+        "#violation4",
+        "#violation5",
+        "#violation6",
+        "#violation7",
+        "#violation8"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4",
+        "#pass5",
+        "#pass6",
+        "#pass7",
+        "#pass8",
+        "#pass9",
+        "#pass10",
+        "#pass11",
+        "#pass12",
+        "#pass13",
+        "#pass14",
+        "#pass15",
+        "#pass16",
+        "#pass17",
+        "#pass18",
+        "#pass19",
+        "#pass20",
+        "#pass21",
+        "#pass22",
+        "#pass23",
+        "#pass24",
+        "#pass25",
+        "#pass26",
+        "#pass27",
+        "#pass28",
+        "#pass29",
+        "#pass30",
+        "#pass31",
+        "#pass32",
+        "#pass33",
+        "#pass34",
+        "#pass35"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/audio-caption/audio-caption.html",
+      "successCriteria": [
+        "wcag20:media-equiv-captions"
+      ],
+      "failed": [],
+      "passed": [
+        "#caption"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/blink/blink.html",
+      "successCriteria": [
+        "wcag20:time-limits-pause"
+      ],
+      "failed": [
+        "#fail1",
+        "#fail2"
+      ],
+      "passed": [
+        "#pass1"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/button-name/button-name.html",
+      "successCriteria": [
+        "wcag20:ensure-compat-rsv"
+      ],
+      "failed": [
+        "#empty",
+        "#val",
+        "#alempty",
+        "#albmissing",
+        "#albempty"
+      ],
+      "passed": [
+        "#text",
+        "#al",
+        "#alb",
+        "#combo"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/checkboxgroup/checkboxgroup.html",
+      "successCriteria": [],
+      "failed": [
+        "#fail1"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass3a",
+        "#pass4",
+        "#pass4a",
+        "#pass5",
+        "#pass5a",
+        "#pass6",
+        "#pass6a",
+        "#pass6b",
+        "#pass6c"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/color-contrast/color-contrast.html",
+      "successCriteria": [
+        "wcag20:visual-audio-contrast-contrast"
+      ],
+      "failed": [
+        "#fail1",
+        "#fail2",
+        "#fail3",
+        "#fail4",
+        "#fail5",
+        "#fail6",
+        "#fail7",
+        "#fail8",
+        "#fail9",
+        "#fail10",
+        "#fail11",
+        "#fail12",
+        "#fail13",
+        "#fail14",
+        "#fail15",
+        "#fail16",
+        "#fail17",
+        "#fail18",
+        "#fail19"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4",
+        "#pass5"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/definition-list/definition-list.html",
+      "successCriteria": [
+        "wcag20:content-structure-separation-programmatic"
+      ],
+      "failed": [
+        "#divdl",
+        "#mixeddl",
+        "#unordereddl",
+        "#mixedscriptdl"
+      ],
+      "passed": [
+        "#emptydl",
+        "#repeatdl",
+        "#properdl",
+        "#scriptdl",
+        "#emptyscriptdl"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/dlitem/dlitem.html",
+      "successCriteria": [
+        "wcag20:content-structure-separation-programmatic"
+      ],
+      "failed": [
+        "#uncontained",
+        "#alsouncontained"
+      ],
+      "passed": [
+        "#contained",
+        "#alsocontained"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/duplicate-id/duplicate-id.html",
+      "successCriteria": [
+        "wcag20:ensure-compat-parses"
+      ],
+      "failed": [
+        "#fixture > p:nth-of-type(1)"
+      ],
+      "passed": [
+        "#fixture",
+        "#single"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/empty-heading/empty-heading.html",
+      "successCriteria": [],
+      "failed": [
+        "#fail1",
+        "#fail2",
+        "#fail3"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4",
+        "#pass5",
+        "#pass6",
+        "#pass7",
+        "#pass8",
+        "#pass9"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/frame-title-unique/frame-title-unique.html",
+      "successCriteria": [],
+      "failed": [
+        "#violation1",
+        "#violation2"
+      ],
+      "passed": [
+        "#pass2"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/frame-title/frame-title.html",
+      "successCriteria": [
+        "wcag20:navigation-mechanisms-skip"
+      ],
+      "failed": [
+        "#violation1",
+        "#violation3"
+      ],
+      "passed": [
+        "#pass2",
+        "#pass3",
+        "#pass4",
+        "#pass5",
+        "#pass6",
+        "#pass7"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/heading-order/heading-order.html",
+      "successCriteria": [],
+      "failed": [
+        "#heading6"
+      ],
+      "passed": [
+        "#heading1",
+        "#heading2",
+        "#heading3",
+        "#heading4",
+        "#heading5",
+        "#heading7"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/href-no-hash/href-no-hash.html",
+      "successCriteria": [],
+      "failed": [
+        "#fail1"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/image-alt/image-alt.html",
+      "successCriteria": [
+        "wcag20:text-equiv-all"
+      ],
+      "failed": [
+        "#violation1",
+        "#violation2",
+        "#violation3",
+        "#violation4",
+        "#violation5",
+        "#violation6"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4",
+        "#pass5",
+        "#pass6",
+        "#pass7",
+        "#pass8",
+        "#pass9"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/input-button-name/input-button-name.html",
+      "successCriteria": [
+        "wcag20:ensure-compat-rsv"
+      ],
+      "failed": [
+        "#fail1",
+        "#fail2",
+        "#fail3",
+        "#fail4",
+        "#fail5",
+        "#fail6"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4",
+        "#pass5",
+        "#pass6",
+        "#pass7",
+        "#pass8"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/input-image-alt/input-image-alt.html",
+      "successCriteria": [
+        "wcag20:text-equiv-all"
+      ],
+      "failed": [
+        "#violation1",
+        "#violation2",
+        "#violation3",
+        "#violation4",
+        "#violation5"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/label-title-only/label-title-only.html",
+      "successCriteria": [],
+      "failed": [
+        "#fail1",
+        "#fail2",
+        "#fail3",
+        "#fail4"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4",
+        "#pass5",
+        "#pass6",
+        "#pass7",
+        "#pass8"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/label/label.html",
+      "successCriteria": [
+        "wcag20:minimize-error-cues",
+        "wcag20:content-structure-separation-programmatic"
+      ],
+      "failed": [
+        "#fail1",
+        "#fail2",
+        "#fail3",
+        "#fail4",
+        "#fail5",
+        "#fail6",
+        "#fail7",
+        "#fail8",
+        "#fail9",
+        "#fail22",
+        "#fail23"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4",
+        "#pass5",
+        "#pass6",
+        "#pass7",
+        "#pass8",
+        "#pass9",
+        "#pass10",
+        "#pass11",
+        "#pass12",
+        "#pass13",
+        "#pass14",
+        "#pass15"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/link-in-text-block/link-in-text-block.html",
+      "successCriteria": [
+        "wcag20:visual-audio-contrast-without-color"
+      ],
+      "failed": [
+        "#fail1"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/link-name/link-name.html",
+      "successCriteria": [
+        "wcag20:text-equiv-all",
+        "wcag20:ensure-compat-rsv"
+      ],
+      "failed": [
+        "#violation1",
+        "#violation2",
+        "#violation3",
+        "#violation4",
+        "#violation5",
+        "#violation6"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass3",
+        "#pass4",
+        "#pass6",
+        "#pass7"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/list/list.html",
+      "successCriteria": [
+        "wcag20:content-structure-separation-programmatic"
+      ],
+      "failed": [
+        "#divul",
+        "#mixedul",
+        "#divol",
+        "#mixedol"
+      ],
+      "passed": [
+        "#emptyul",
+        "#scriptemptyul",
+        "#properul",
+        "#scriptproperul",
+        "#emptyol",
+        "#scriptemptyol",
+        "#properol",
+        "#scriptproperol"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/listitem/listitem.html",
+      "successCriteria": [
+        "wcag20:content-structure-separation-programmatic"
+      ],
+      "failed": [
+        "#uncontained"
+      ],
+      "passed": [
+        "#contained",
+        "#alsocontained"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/marquee/marquee.html",
+      "successCriteria": [
+        "wcag20:time-limits-pause"
+      ],
+      "failed": [
+        "#marqueemarq"
+      ],
+      "passed": []
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/meta-refresh/meta-refresh.html",
+      "successCriteria": [
+        "wcag20:time-limits-required-behaviors",
+        "wcag20:time-limits-postponed",
+        "wcag20:consistent-behavior-no-extreme-changes-context"
+      ],
+      "failed": [
+        "#fail1"
+      ],
+      "passed": []
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/meta-viewport-large/meta-viewport-large-fail1.html",
+      "successCriteria": [],
+      "failed": [
+        "#mvp"
+      ],
+      "passed": []
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/meta-viewport-large/meta-viewport-large-fail2.html",
+      "successCriteria": [],
+      "failed": [
+        "#mvp"
+      ],
+      "passed": []
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/meta-viewport-large/meta-viewport-large-pass1.html",
+      "successCriteria": [],
+      "failed": [],
+      "passed": [
+        "#mvp"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/meta-viewport-large/meta-viewport-large-pass2.html",
+      "successCriteria": [],
+      "failed": [],
+      "passed": [
+        "#mvp"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/meta-viewport-large/meta-viewport-large-pass3.html",
+      "successCriteria": [],
+      "failed": [],
+      "passed": [
+        "#mvp"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/meta-viewport-large/meta-viewport-large-pass4.html",
+      "successCriteria": [],
+      "failed": [],
+      "passed": [
+        "#mvp"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/meta-viewport/meta-viewport-fail1.html",
+      "successCriteria": [
+        "wcag20:visual-audio-contrast-scale"
+      ],
+      "failed": [
+        "#mvp"
+      ],
+      "passed": []
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/meta-viewport/meta-viewport-fail2.html",
+      "successCriteria": [
+        "wcag20:visual-audio-contrast-scale"
+      ],
+      "failed": [
+        "#mvp"
+      ],
+      "passed": []
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/meta-viewport/meta-viewport-pass1.html",
+      "successCriteria": [
+        "wcag20:visual-audio-contrast-scale"
+      ],
+      "failed": [],
+      "passed": [
+        "#mvp"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/meta-viewport/meta-viewport-pass2.html",
+      "successCriteria": [
+        "wcag20:visual-audio-contrast-scale"
+      ],
+      "failed": [],
+      "passed": [
+        "#mvp"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/object-alt/object-alt.html",
+      "successCriteria": [
+        "wcag20:text-equiv-all"
+      ],
+      "failed": [
+        "#violation1",
+        "#violation2",
+        "#violation3"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/p-as-heading/p-as-heading.html",
+      "successCriteria": [
+        "wcag20:content-structure-separation-programmatic"
+      ],
+      "failed": [
+        "#failed1",
+        "#failed2",
+        "#failed3"
+      ],
+      "passed": [
+        "#passed1",
+        "#passed2",
+        "#passed3",
+        "#passed4",
+        "#passed5"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/radiogroup/radiogroup.html",
+      "successCriteria": [],
+      "failed": [
+        "#fail1"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass3a",
+        "#pass4",
+        "#pass4a",
+        "#pass5",
+        "#pass5a",
+        "#pass6",
+        "#pass6a",
+        "#pass6b",
+        "#pass6c"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/role-button-name/role-button-name.html",
+      "successCriteria": [
+        "wcag20:ensure-compat-rsv"
+      ],
+      "failed": [
+        "#empty",
+        "#alempty",
+        "#albmissing",
+        "#albempty"
+      ],
+      "passed": [
+        "#text",
+        "#al",
+        "#alb",
+        "#combo"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/scope-attr-valid/scope-attr-valid.html",
+      "successCriteria": [],
+      "failed": [
+        "#badvalue",
+        "#tdrow",
+        "#tdcol"
+      ],
+      "passed": [
+        "#throw",
+        "#thcol"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/server-side-image-map/server-side-image-map.html",
+      "successCriteria": [
+        "wcag20:keyboard-operation-keyboard-operable"
+      ],
+      "failed": [
+        "#fail"
+      ],
+      "passed": []
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/tabindex/tabindex.html",
+      "successCriteria": [],
+      "failed": [
+        "#positive"
+      ],
+      "passed": [
+        "#negative",
+        "#zero"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/table-duplicate-name/table-duplicate-name.html",
+      "successCriteria": [],
+      "failed": [
+        "#fail1"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/table-fake-caption/table-fake-caption.html",
+      "successCriteria": [
+        "wcag20:content-structure-separation-programmatic"
+      ],
+      "failed": [
+        "#fail1",
+        "#fail2"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/td-has-header/td-has-header.html",
+      "successCriteria": [
+        "wcag20:content-structure-separation-programmatic"
+      ],
+      "failed": [
+        "#fail1",
+        "#fail2"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/th-has-data-cells/th-has-data-cells.html",
+      "successCriteria": [
+        "wcag20:content-structure-separation-programmatic"
+      ],
+      "failed": [],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4",
+        "#pass5",
+        "#pass6",
+        "#pass7"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/valid-lang/valid-lang.html",
+      "successCriteria": [
+        "wcag20:meaning-other-lang-id"
+      ],
+      "failed": [
+        "#fail1",
+        "#fail2",
+        "#fail3"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2",
+        "#pass3",
+        "#pass4",
+        "#pass5",
+        "#pass6"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/video-caption/video-caption.html",
+      "successCriteria": [
+        "wcag20:media-equiv-captions",
+        "wcag20:media-equiv-audio-desc"
+      ],
+      "failed": [
+        "#fail1"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2"
+      ]
+    },
+    {
+      "url": "https://rawgit.com/dequelabs/axe-core/master/test/integration/rules/video-description/video-description.html",
+      "successCriteria": [
+        "wcag20:media-equiv-desc-only"
+      ],
+      "failed": [
+        "#fail1"
+      ],
+      "passed": [
+        "#pass1",
+        "#pass2"
+      ]
+    }
+  ]
+}
