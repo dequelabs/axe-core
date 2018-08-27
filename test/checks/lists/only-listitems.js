@@ -189,6 +189,42 @@ describe('only-listitems', function() {
 		);
 	});
 
+	it('returns false if there are display:none elements that normally would not be allowed', function() {
+		var checkArgs = checkSetup(
+			'<ul id="target"> <li>An item</li> <h1 style="display:none">heading</h1> </ul>'
+		);
+		assert.isFalse(
+			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('returns false if there are visibility:hidden elements that normally would not be allowed', function() {
+		var checkArgs = checkSetup(
+			'<ul id="target"> <li>An item</li> <h1 style="visibility:hidden">heading</h1> </ul>'
+		);
+		assert.isFalse(
+			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('returns false if there are aria-hidden=true elements that normally would not be allowed', function() {
+		var checkArgs = checkSetup(
+			'<ul id="target"> <li>An item</li> <h1 aria-hidden="true">heading</h1> </ul>'
+		);
+		assert.isFalse(
+			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('returns true if there are aria-hidden=false elements that normally would not be allowed', function() {
+		var checkArgs = checkSetup(
+			'<ul id="target"> <li>An item</li> <h1 aria-hidden="false">heading</h1> </ul>'
+		);
+		assert.isTrue(
+			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
 	(shadowSupport.v1 ? it : xit)(
 		'should return false in a shadow DOM pass',
 		function() {

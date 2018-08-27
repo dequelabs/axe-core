@@ -13,6 +13,10 @@
       "description": "S’assure que les attributs ARIA sont autorisés pour le rôle d’un élément",
       "help": "Les éléments doivent seulement utiliser les attributs ARIA autorisés"
     },
+    "aria-allowed-role": {
+      "description": "S’assure que l’attribut role a une valeur valide pour cet élément",
+      "help": "Le rôle ARIA doit être valide pour cet élément"
+    },
     "aria-dpub-role-fallback": {
       "description": "S’assure que les rôles DPUB non supportés ne sont utilisés que sur des éléments avec des rôles implicites",
       "help": "Les rôles DPUB non supportés doivent être utilisés sur des éléments avec des rôles implicites"
@@ -48,6 +52,10 @@
     "audio-caption": {
       "description": "S’assure que les éléments <audio> ont des sous-titres",
       "help": "Les éléments <audio> doivent avoir une psite de sous-titres"
+    },
+    "autocomplete-valid": {
+      "description": "S’assure que l’attribut autocomplete est correct et adapté pour le champ de formulaire",
+      "help": "L’attribut autocomplete doit être utilisé correctement"
     },
     "blink": {
       "description": "S’assure que l’élément <blink> n’est pas utilisé",
@@ -120,6 +128,10 @@
     "html-lang-valid": {
       "description": "S’assure que l’attribut lang sur l’élément HTML a une valeur valide",
       "help": "L’élément <html> doit avoir une valeur valide pour l’attribut lang"
+    },
+    "html-xml-lang-mismatch": {
+      "description": "S’assure que les éléments HTML avec les attributs lang et xml:lang valides indiquent la même langue de base pour la page",
+      "help": "Les éléments HTML avec les attributs lang et xml:lang doivent avoir la même langue de base"
     },
     "image-alt": {
       "description": "S’assure que les éléments <img> ont un alternative textuelle, ou un rôle none ou presentation",
@@ -279,6 +291,10 @@
       "pass": "Les attributs ARIA sont utilisés correctement pour le rôle défini",
       "fail": "{{=it.data && it.data.length > 1 ? 'Attributs ARIA non autorisés' : 'Attribut ARIA non autorisé'}} : {{~it.data:value}} {{=value}}{{~}}"
     },
+    "aria-allowed-role": {
+      "pass": "Le rôle ARIA est autorisé pour l’élément donné",
+      "fail": "{{=it.data && it.data.length > 1 ? 'Les rôles' : 'Le rôle'}} {{=it.data.join(', ')}} {{=it.data && it.data.length > 1 ? 'ne sont pas autorisés' : 'n’est pas autorisé'}} pour l’élément donné"
+    },
     "aria-hidden-body": {
       "pass": "Aucun attribut aria-hidden n’est présent sur body",
       "fail": "aria-hidden=true ne devrait pas être présent sur body"
@@ -305,11 +321,16 @@
     },
     "aria-required-children": {
       "pass": "Les descendants ARIA requis sont présents",
-      "fail": "{{=it.data && it.data.length > 1 ? 'Descendants ARIA requis absents' : 'Descendant ARIA requis absent'}} : {{~it.data:value}} {{=value}}{{~}}"
+      "fail": "{{=it.data && it.data.length > 1 ? 'Descendants ARIA requis absents' : 'Descendant ARIA requis absent'}} : {{~it.data:value}} {{=value}}{{~}}",
+      "incomplete": "{{=it.data && it.data.length > 1 ? 'Les descendants requièrent' : 'Le descendant requiert'}} le rôle ARIA : {{~it.data:value}} {{=value}}{{~}}"
     },
     "aria-required-parent": {
       "pass": "Les rôles parents ARIA requis sont présents",
       "fail": "{{=it.data && it.data.length > 1 ? 'Rôles parents ARIA requis absents' : 'Rôle parent ARIA requis absent'}} : {{~it.data:value}} {{=value}}{{~}}"
+    },
+    "unsupportedrole": {
+      "pass": "Le rôle ARIA est supporté",
+      "fail": "Le rôle utilisé n’est pas suffisamment supporté par les technologies d’assistance"
     },
     "aria-valid-attr-value": {
       "pass": "Les valeurs d’attribut ARIA sont valides",
@@ -350,6 +371,14 @@
         "bgOverlap": "Le rapport de contraste de l’élément n’a pu être déterminé à cause d’un chevauchement",
         "default": "Impossible de déterminer le rapport de contraste"
       }
+    },
+    "autocomplete-appropriate": {
+      "pass": "La valeur autocomplete est sur un élément approprié",
+      "fail": "La valeur autocomplete est inappropriée sur ce type de champ de formulaire"
+    },
+    "autocomplete-valid": {
+      "pass": "L’attribut autocomplete est formaté correctement",
+      "fail": "L’attribut autocomplete est formaté incorrectement"
     },
     "fieldset": {
       "pass": "L’élément est contenu dans un fieldset",
@@ -407,6 +436,10 @@
       "pass": "L’aide à la saisie (title ou aria-describedby) ne duplique pas le contenu du label",
       "fail": "L’aide à la saisie (title ou aria-describedby) est identique au contenu du label"
     },
+    "hidden-explicit-label": {
+      "pass": "L’élément de formulaire a un <label> visible et explicite",
+      "fail": "L’élément de formulaire a un <label> explicite qui est masqué"
+    },
     "implicit-label": {
       "pass": "L’élément de formulaire a un <label> implicite (imbriqué)",
       "fail": "L’élément de formulaire n’a pas de <label> implicite (imbriqué)"
@@ -426,6 +459,10 @@
     "valid-lang": {
       "pass": "La valeur de l’attribut lang fait partie des codes de langues valides",
       "fail": "La valeur de l’attribut lang ne fait pas partie des codes de langues valides"
+    },
+    "xml-lang-mismatch": {
+      "pass": "Les attributs lang et xml:lang indiquent la même langue de base",
+      "fail": "Les attributs lang et xml:lang indiquent des langues de base différentes"
     },
     "dlitem": {
       "pass": "L’item de liste de description a un élément <dl> parent",
