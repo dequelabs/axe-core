@@ -1,20 +1,12 @@
-## PR Checklist
 
-Please check if your PR fulfills the following requirements:
+<< Describe the changes >>
 
-- [ ] The commit message(s) follow our guidelines: https://github.com/dequelabs/axe-core/blob/develop/doc/code-submission-guidelines.md#git-commits
-- [ ] Changes to rules and checks appropriately support [Shadow DOM](https://github.com/dequelabs/axe-core/blob/develop/doc/developer-guide.md)
-- [ ] Changes have been tested in [major browsers and Assistive Technologies](https://github.com/dequelabs/axe-core/blob/develop/doc/accessibility-supported.md#accessibility-supported)
-- [ ] Tests for the changes have been added (for bug fixes / features)
-- [ ] Docs have been added / updated (for bug fixes / features)
+Closes issue:
 
-## Description of the changes
+## Reviewer checks
 
-- Github issue:
-
-## Does this PR introduce a breaking change?
-
-- [ ] Yes
-- [ ] No
-
-## Other information
+**Required fields, to be filled out by PR reviewer(s)**
+- [ ] Follows the commit message policy, appropriate for next version
+- [ ] Has documentation updated, a DU ticket, or requires no documentation change
+- [ ] Includes new tests, or was unnecessary
+- [ ] Code is reviewed for security by: << Name here >>

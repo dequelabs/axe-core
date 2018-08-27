@@ -4,17 +4,20 @@ describe('axe.getRules', function() {
 	beforeEach(function() {
 		axe._load({
 			messages: [],
-			rules: [{
-				id: 'awesomeRule1',
-				selector: '',
-				excludeHidden: false,
-				any: [],
-				tags: ['tag1']
-			}, {
-				id: 'awesomeRule2',
-				any: [],
-				tags: ['tag1', 'tag2']
-			}],
+			rules: [
+				{
+					id: 'awesomeRule1',
+					selector: '',
+					excludeHidden: false,
+					any: [],
+					tags: ['tag1']
+				},
+				{
+					id: 'awesomeRule2',
+					any: [],
+					tags: ['tag1', 'tag2']
+				}
+			],
 			data: {
 				rules: {
 					awesomeRule1: {
@@ -41,13 +44,19 @@ describe('axe.getRules', function() {
 		assert.equal(retValue[0].ruleId, 'awesomeRule1');
 		assert.equal(retValue[0].description, 'some interesting information');
 		assert.equal(retValue[0].help, 'halp');
-		assert.equal(retValue[0].helpUrl, 'https://dequeuniversity.com/rules/axe/x.y/awesomeRule1?application=axeAPI');
+		assert.equal(
+			retValue[0].helpUrl,
+			'https://dequeuniversity.com/rules/axe/x.y/awesomeRule1?application=axeAPI'
+		);
 		assert.deepEqual(retValue[0].tags, ['tag1']);
 
 		assert.equal(retValue[1].ruleId, 'awesomeRule2');
 		assert.equal(retValue[1].description, 'also some interesting information');
 		assert.equal(retValue[1].help, 'halp me!');
-		assert.equal(retValue[1].helpUrl, 'https://dequeuniversity.com/rules/axe/x.y/awesomeRule2?application=axeAPI');
+		assert.equal(
+			retValue[1].helpUrl,
+			'https://dequeuniversity.com/rules/axe/x.y/awesomeRule2?application=axeAPI'
+		);
 		assert.deepEqual(retValue[1].tags, ['tag1', 'tag2']);
 
 		retValue = axe.getRules(['tag2']);
@@ -56,7 +65,10 @@ describe('axe.getRules', function() {
 		assert.equal(retValue[0].ruleId, 'awesomeRule2');
 		assert.equal(retValue[0].description, 'also some interesting information');
 		assert.equal(retValue[0].help, 'halp me!');
-		assert.equal(retValue[0].helpUrl, 'https://dequeuniversity.com/rules/axe/x.y/awesomeRule2?application=axeAPI');
+		assert.equal(
+			retValue[0].helpUrl,
+			'https://dequeuniversity.com/rules/axe/x.y/awesomeRule2?application=axeAPI'
+		);
 		assert.deepEqual(retValue[0].tags, ['tag1', 'tag2']);
 	});
 
@@ -71,13 +83,19 @@ describe('axe.getRules', function() {
 		assert.equal(retValue[0].ruleId, 'awesomeRule1');
 		assert.equal(retValue[0].description, 'some interesting information');
 		assert.equal(retValue[0].help, 'halp');
-		assert.equal(retValue[0].helpUrl, 'https://dequeuniversity.com/rules/axe/x.y/awesomeRule1?application=axeAPI');
+		assert.equal(
+			retValue[0].helpUrl,
+			'https://dequeuniversity.com/rules/axe/x.y/awesomeRule1?application=axeAPI'
+		);
 		assert.deepEqual(retValue[0].tags, ['tag1']);
 
 		assert.equal(retValue[1].ruleId, 'awesomeRule2');
 		assert.equal(retValue[1].description, 'also some interesting information');
 		assert.equal(retValue[1].help, 'halp me!');
-		assert.equal(retValue[1].helpUrl, 'https://dequeuniversity.com/rules/axe/x.y/awesomeRule2?application=axeAPI');
+		assert.equal(
+			retValue[1].helpUrl,
+			'https://dequeuniversity.com/rules/axe/x.y/awesomeRule2?application=axeAPI'
+		);
 		assert.deepEqual(retValue[1].tags, ['tag1', 'tag2']);
 	});
 
@@ -86,14 +104,19 @@ describe('axe.getRules', function() {
 		assert.equal(retValue[0].ruleId, 'awesomeRule1');
 		assert.equal(retValue[0].description, 'some interesting information');
 		assert.equal(retValue[0].help, 'halp');
-		assert.equal(retValue[0].helpUrl, 'https://dequeuniversity.com/rules/axe/x.y/awesomeRule1?application=axeAPI');
+		assert.equal(
+			retValue[0].helpUrl,
+			'https://dequeuniversity.com/rules/axe/x.y/awesomeRule1?application=axeAPI'
+		);
 		assert.deepEqual(retValue[0].tags, ['tag1']);
 
 		assert.equal(retValue[1].ruleId, 'awesomeRule2');
 		assert.equal(retValue[1].description, 'also some interesting information');
 		assert.equal(retValue[1].help, 'halp me!');
-		assert.equal(retValue[1].helpUrl, 'https://dequeuniversity.com/rules/axe/x.y/awesomeRule2?application=axeAPI');
+		assert.equal(
+			retValue[1].helpUrl,
+			'https://dequeuniversity.com/rules/axe/x.y/awesomeRule2?application=axeAPI'
+		);
 		assert.deepEqual(retValue[1].tags, ['tag1', 'tag2']);
 	});
-
 });

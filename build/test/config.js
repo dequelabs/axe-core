@@ -1,4 +1,4 @@
-exports = module.exports = function (grunt, options) {
+exports = module.exports = function(grunt, options) {
 	var host = 'localhost';
 
 	if (process.env.REMOTE_TESTSERVER_HOST) {
@@ -6,7 +6,7 @@ exports = module.exports = function (grunt, options) {
 	}
 
 	function mapToUrl(files, port) {
-		return grunt.file.expand(files).map(function (file) {
+		return grunt.file.expand(files).map(function(file) {
 			return 'http://' + host + ':' + port + '/' + file;
 		});
 	}
@@ -20,9 +20,13 @@ exports = module.exports = function (grunt, options) {
 				urls: [
 					'http://' + host + ':<%= connect.test.options.port %>/test/core/',
 					'http://' + host + ':<%= connect.test.options.port %>/test/checks/',
-					'http://' + host + ':<%= connect.test.options.port %>/test/rule-matches/',
+					'http://' +
+						host +
+						':<%= connect.test.options.port %>/test/rule-matches/',
 					'http://' + host + ':<%= connect.test.options.port %>/test/commons/',
-					'http://' + host + ':<%= connect.test.options.port %>/test/integration/rules/'
+					'http://' +
+						host +
+						':<%= connect.test.options.port %>/test/integration/rules/'
 				],
 				run: true,
 				growlOnSuccess: false,
@@ -34,8 +38,13 @@ exports = module.exports = function (grunt, options) {
 		integration: {
 			options: {
 				log: true,
-				urls: mapToUrl(['test/integration/full/**/*.html', '!test/integration/full/**/frames/**/*.html'],
-					'<%= connect.test.options.port %>'),
+				urls: mapToUrl(
+					[
+						'test/integration/full/**/*.html',
+						'!test/integration/full/**/frames/**/*.html'
+					],
+					'<%= connect.test.options.port %>'
+				),
 				run: true,
 				growlOnSuccess: false,
 				mocha: {

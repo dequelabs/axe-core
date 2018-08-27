@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "3.0.3",
+  "version": "3.1.0",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -55,28 +55,35 @@
     }
   },
   "scripts": {
+    "api-docs": "jsdoc --configure .jsdoc.json",
     "build": "grunt",
-    "test": "grunt test",
+    "test-dts": "tsc",
+    "test": "npm run test-dts && grunt test",
     "test-fast": "grunt test-fast",
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
     "prepublishOnly": "grunt build",
     "postinstall": "node build/utils/postinstall.js",
     "release": "standard-version -a",
-    "sri-update": "grunt build && node build/sri-update && git add sri-history.json"
+    "next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
+    "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
+    "fmt": "prettier --write  *.js, **/*.ts '{build,doc,lib,test}/**/*.js'",
+    "precommit": "lint-staged"
   },
   "devDependencies": {
     "angular-precommit": "^1.0.3",
-    "aria-query": "^2.0.0",
+    "aria-query": "^3.0.0",
+    "axios": "^0.18.0",
     "babel-core": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
     "babel-polyfill": "^6.7.4",
-    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-env": "^1.7.0",
     "babelify": "^8.0.0",
     "blanket": "~1.2.3",
     "chai": "~4.1.2",
     "clone": "~2.1.1",
     "dot": "~1.1.2",
-    "fs-extra": "^6.0.0",
+    "eslint-config-prettier": "^3.0.0",
+    "fs-extra": "^7.0.0",
     "grunt": "^1.0.2",
     "grunt-babel": "^7.0.0",
     "grunt-contrib-clean": "^1.0.0",
@@ -85,20 +92,37 @@
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-uglify": "^3.3.0",
     "grunt-contrib-watch": "^1.1.0",
-    "grunt-eslint": "^20.1.0",
-    "grunt-markdownlint": "^1.1.5",
-    "grunt-mocha": "1.0.4",
+    "grunt-eslint": "^21.0.0",
+    "grunt-markdownlint": "^2.0.0",
+    "grunt-mocha": "1.1.0",
     "grunt-parallel": "^0.5.1",
     "grunt-retire": "^1.0.7",
     "html-entities": "^1.2.0",
+    "husky": "^0.14.3",
     "jquery": "^3.0.0",
+    "jsdoc": "^3.5.5",
+    "lint-staged": "^7.2.0",
     "markdown-table": "^1.1.2",
+    "minami": "^1.2.3",
     "mocha": "^5.2.0",
+    "prettier": "^1.14.0",
     "promise": "~8.0.1",
     "revalidator": "~0.3.1",
     "selenium-webdriver": "~3.6.0",
     "sri-toolbox": "^0.2.0",
-    "standard-version": "^4.2.0"
+    "standard-version": "^4.4.0",
+    "typescript": "^2.9.2",
+    "uglify-js": "^3.4.4"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.ts": [
+      "prettier --write",
+      "git add"
+    ]
+  }
 }

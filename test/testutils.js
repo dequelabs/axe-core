@@ -1,12 +1,19 @@
+// Let the user know they need to disable their axe/attest extension before running the tests.
+if (window.__AXE_EXTENSION__) {
+	throw new Error(
+		'You must disable your axe/attest browser extension in order to run the test suite.'
+	);
+}
+
 /*eslint indent: 0*/
 var testUtils = {};
 
 /**
-	* Create a check context for mocking/resetting data and relatedNodes in tests
-	*
-	* @return Object
-	*/
-testUtils.MockCheckContext = function () {
+ * Create a check context for mocking/resetting data and relatedNodes in tests
+ *
+ * @return Object
+ */
+testUtils.MockCheckContext = function() {
 	'use strict';
 	return {
 		_relatedNodes: [],
@@ -14,20 +21,20 @@ testUtils.MockCheckContext = function () {
 		// When using this.async() in a check, assign a function to _onAsync
 		// to catch the response.
 		_onAsync: null,
-		async: function () {
+		async: function() {
 			var self = this;
-			return function (result) {
+			return function(result) {
 				// throws if _onAsync isn't set
 				self._onAsync(result, self);
-			}
+			};
 		},
-		data: function (d) {
+		data: function(d) {
 			this._data = d;
 		},
-		relatedNodes: function (nodes) {
+		relatedNodes: function(nodes) {
 			this._relatedNodes = Array.isArray(nodes) ? nodes : [nodes];
 		},
-		reset: function () {
+		reset: function() {
 			this._data = null;
 			this._relatedNodes = [];
 			this._onAsync = null;
@@ -36,36 +43,36 @@ testUtils.MockCheckContext = function () {
 };
 
 /**
-	* Provide an API for determining Shadow DOM v0 and v1 support in tests.
-	* PhantomJS doesn't have Shadow DOM support, while some browsers do.
-	*
-	* @param HTMLDocumentElement		The document of the current context
-	* @return Object
-	*/
+ * Provide an API for determining Shadow DOM v0 and v1 support in tests.
+ * PhantomJS doesn't have Shadow DOM support, while some browsers do.
+ *
+ * @param HTMLDocumentElement		The document of the current context
+ * @return Object
+ */
 testUtils.shadowSupport = (function(document) {
 	'use strict';
-	var v0 = document.body && typeof document.body.createShadowRoot === 'function',
-			v1 = document.body && typeof document.body.attachShadow === 'function';
+	var v0 =
+			document.body && typeof document.body.createShadowRoot === 'function',
+		v1 = document.body && typeof document.body.attachShadow === 'function';
 
 	return {
-		v0: (v0 === true),
-		v1: (v1 === true),
-		undefined: (
-			document.body && typeof document.body.attachShadow === 'undefined' &&
+		v0: v0 === true,
+		v1: v1 === true,
+		undefined:
+			document.body &&
+			typeof document.body.attachShadow === 'undefined' &&
 			typeof document.body.createShadowRoot === 'undefined'
-		)
 	};
-
 })(document);
 
 /**
-	* Method for injecting content into a fixture and caching
-	* the flattened DOM tree (light and Shadow DOM together)
-	*
-	* @param Node|String 	Stuff to go into the fixture (html or DOM node)
-	* @return HTMLElement
-	*/
-testUtils.fixtureSetup = function (content) {
+ * Method for injecting content into a fixture and caching
+ * the flattened DOM tree (light and Shadow DOM together)
+ *
+ * @param Node|String 	Stuff to go into the fixture (html or DOM node)
+ * @return HTMLElement
+ */
+testUtils.fixtureSetup = function(content) {
 	'use strict';
 	var fixture = document.querySelector('#fixture');
 	if (typeof content !== 'undefined') {
@@ -77,7 +84,7 @@ testUtils.fixtureSetup = function (content) {
 	} else if (content instanceof Node) {
 		fixture.appendChild(content);
 	} else if (Array.isArray(content)) {
-		content.forEach(function (node) {
+		content.forEach(function(node) {
 			fixture.appendChild(node);
 		});
 	}
@@ -88,14 +95,14 @@ testUtils.fixtureSetup = function (content) {
 };
 
 /**
-	* Create check arguments
-	*
-	* @param Node|String 	Stuff to go into the fixture (html or node)
-	* @param Object				Options argument for the check (optional, default: {})
-	* @param String				Target for the check, CSS selector (default: '#target')
-	* @return Array
-	*/
-testUtils.checkSetup = function (content, options, target) {
+ * Create check arguments
+ *
+ * @param Node|String 	Stuff to go into the fixture (html or node)
+ * @param Object				Options argument for the check (optional, default: {})
+ * @param String				Target for the check, CSS selector (default: '#target')
+ * @return Array
+ */
+testUtils.checkSetup = function(content, options, target) {
 	'use strict';
 	// Normalize the params
 	if (typeof options !== 'object') {
@@ -118,16 +125,21 @@ testUtils.checkSetup = function (content, options, target) {
 };
 
 /**
-	* Create check arguments with Shadow DOM. Target can be inside or outside of Shadow DOM, queried by
-	* adding `id="target"` to a fragment. Or specify a custom selector as the `targetSelector` argument.
-	*
-	* @param Node|String 	Stuff to go into the fixture (html string or DOM Node)
-	* @param Node|String 	Stuff to go into the shadow boundary (html or node)
-	* @param Object				Options argument for the check (optional, default: {})
-	* @param String				Target selector for the check, can be inside or outside of Shadow DOM (optional, default: '#target')
-	* @return Array
-	*/
-testUtils.shadowCheckSetup = function (content, shadowContent, options, targetSelector) {
+ * Create check arguments with Shadow DOM. Target can be inside or outside of Shadow DOM, queried by
+ * adding `id="target"` to a fragment. Or specify a custom selector as the `targetSelector` argument.
+ *
+ * @param Node|String 	Stuff to go into the fixture (html string or DOM Node)
+ * @param Node|String 	Stuff to go into the shadow boundary (html or node)
+ * @param Object				Options argument for the check (optional, default: {})
+ * @param String				Target selector for the check, can be inside or outside of Shadow DOM (optional, default: '#target')
+ * @return Array
+ */
+testUtils.shadowCheckSetup = function(
+	content,
+	shadowContent,
+	options,
+	targetSelector
+) {
 	'use strict';
 
 	// Normalize target, allow it to be the provided string or use '#target' to query composed tree
@@ -172,11 +184,11 @@ testUtils.shadowCheckSetup = function (content, shadowContent, options, targetSe
 };
 
 /**
-	* Wait for all nested frames to be loaded
-	*
-	* @param Object				Window to wait for (optional)
-	* @param function			Callback, called once resolved
-	*/
+ * Wait for all nested frames to be loaded
+ *
+ * @param Object				Window to wait for (optional)
+ * @param function			Callback, called once resolved
+ */
 testUtils.awaitNestedLoad = function awaitNestedLoad(win, cb) {
 	'use strict';
 	if (typeof win === 'function') {
@@ -187,7 +199,7 @@ testUtils.awaitNestedLoad = function awaitNestedLoad(win, cb) {
 	var q = axe.utils.queue();
 
 	// Wait for page load
-	q.defer(function (resolve) {
+	q.defer(function(resolve) {
 		if (document.readyState === 'complete') {
 			resolve();
 		} else {
@@ -196,14 +208,14 @@ testUtils.awaitNestedLoad = function awaitNestedLoad(win, cb) {
 	});
 
 	// Wait for all frames to be loaded
-	Array.from(document.querySelectorAll('iframe')).forEach(function (frame) {
-		q.defer(function (resolve) {
+	Array.from(document.querySelectorAll('iframe')).forEach(function(frame) {
+		q.defer(function(resolve) {
 			return awaitNestedLoad(frame.contentWindow, resolve);
 		});
 	});
 
 	// Complete (don't pass the args on to the callback)
-	q.then(function () {
+	q.then(function() {
 		cb();
 	});
 };

@@ -1,35 +1,42 @@
-describe('aria-required-attr', function () {
+describe('aria-required-attr', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
 	var checkContext = axe.testUtils.MockCheckContext();
 
-	afterEach(function () {
+	afterEach(function() {
 		fixture.innerHTML = '';
 		checkContext.reset();
 	});
 
-	it('should detect missing attributes', function () {
+	it('should detect missing attributes', function() {
 		var node = document.createElement('div');
 		node.setAttribute('role', 'slider');
 		node.id = 'test';
 		node.tabIndex = 1;
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['aria-required-attr'].evaluate.call(checkContext, node));
-		assert.deepEqual(checkContext._data, ['aria-valuenow', 'aria-valuemax', 'aria-valuemin']);
+		assert.isFalse(
+			checks['aria-required-attr'].evaluate.call(checkContext, node)
+		);
+		assert.deepEqual(checkContext._data, [
+			'aria-valuenow',
+			'aria-valuemax',
+			'aria-valuemin'
+		]);
 	});
 
-	it('should return true if there is no role', function () {
+	it('should return true if there is no role', function() {
 		var node = document.createElement('div');
 		fixture.appendChild(node);
 
-		assert.isTrue(checks['aria-required-attr'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			checks['aria-required-attr'].evaluate.call(checkContext, node)
+		);
 		assert.isNull(checkContext._data);
-
 	});
 
-	it('should determine attribute validity by calling axe.commons.aria.requiredAttr', function () {
+	it('should determine attribute validity by calling axe.commons.aria.requiredAttr', function() {
 		var node = document.createElement('div');
 		node.id = 'test';
 		node.tabIndex = 1;
@@ -39,20 +46,22 @@ describe('aria-required-attr', function () {
 
 		var orig = axe.commons.aria.requiredAttr;
 		var called = 0;
-		axe.commons.aria.requiredAttr = function (role) {
+		axe.commons.aria.requiredAttr = function(role) {
 			assert.equal(role, 'cats');
 			called++;
 			return ['aria-cats', 'aria-bats'];
 		};
-		assert.isFalse(checks['aria-required-attr'].evaluate.call(checkContext, node));
+		assert.isFalse(
+			checks['aria-required-attr'].evaluate.call(checkContext, node)
+		);
 		assert.deepEqual(checkContext._data, ['aria-bats']);
 		assert.equal(called, 1);
 
 		axe.commons.aria.requiredAttr = orig;
 	});
 
-	describe('options', function () {
-		it('should require provided attribute names for a role', function () {
+	describe('options', function() {
+		it('should require provided attribute names for a role', function() {
 			axe.commons.aria.lookupTable.role.mccheddarton = {
 				type: 'widget',
 				attributes: {
@@ -65,9 +74,15 @@ describe('aria-required-attr', function () {
 			fixture.innerHTML = '<div role="mccheddarton" id="target"></div>';
 			var target = fixture.children[0];
 			var options = {
-				'mccheddarton': ['aria-snuggles']
+				mccheddarton: ['aria-snuggles']
 			};
-			assert.isFalse(checks['aria-required-attr'].evaluate.call(checkContext, target, options));
+			assert.isFalse(
+				checks['aria-required-attr'].evaluate.call(
+					checkContext,
+					target,
+					options
+				)
+			);
 			assert.deepEqual(checkContext._data, ['aria-snuggles', 'aria-valuemax']);
 			delete axe.commons.aria.lookupTable.role.mccheddarton;
 		});

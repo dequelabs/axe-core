@@ -110,5 +110,9 @@
 	"3.0.3": {
 		"axe.js": "sha256-QhYA1btt0EGa6HUDloEPZ5p6ZArWsL8J9C7PDoqi320=",
 		"axe.min.js": "sha256-Xlzi+kk/RJRo2x/+w04BppEgcrO/Cy9xTSbuIp6m/CU="
+	},
+	"3.1.0": {
+		"axe.js": "sha256-qUMvWIpNXGal2tqBIDJsrXde0clrbTcATxlteQSyA4M=",
+		"axe.min.js": "sha256-q1K/bHXBTINVndnMyDdntNSJHTAei0YhN/kNqeaGD5A="
 	}
 }

@@ -2,25 +2,30 @@
 | :------- | :------- | :------- | :------- | :------- |
 | accesskeys | Ensures every accesskey attribute value is unique | Serious | best-practice, cat.keyboard | true |
 | area-alt | Ensures &lt;area&gt; elements of image maps have alternate text | Critical | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
-| aria-allowed-attr | Ensures ARIA attributes are allowed for an element&apos;s role | Critical | cat.aria, wcag2a, wcag411, wcag412 | true |
+| aria-allowed-attr | Ensures ARIA attributes are allowed for an element&apos;s role | Critical | cat.aria, wcag2a, wcag412 | true |
+| aria-allowed-role | Ensures role attribute has an appropriate value for the element | Minor | cat.aria, best-practice | true |
 | aria-dpub-role-fallback | Ensures unsupported DPUB roles are only used on elements with implicit fallback roles | Moderate | cat.aria, wcag2a, wcag131 | true |
 | aria-hidden-body | Ensures aria-hidden=&apos;true&apos; is not present on the document body. | Critical | cat.aria, wcag2a, wcag412 | true |
-| aria-required-attr | Ensures elements with ARIA roles have all required ARIA attributes | Critical | cat.aria, wcag2a, wcag411, wcag412 | true |
+| aria-required-attr | Ensures elements with ARIA roles have all required ARIA attributes | Critical | cat.aria, wcag2a, wcag412 | true |
 | aria-required-children | Ensures elements with an ARIA role that require child roles contain them | Critical | cat.aria, wcag2a, wcag131 | true |
 | aria-required-parent | Ensures elements with an ARIA role that require parent roles are contained by them | Critical | cat.aria, wcag2a, wcag131 | true |
-| aria-roles | Ensures all elements with a role attribute use a valid value | Serious, Critical | cat.aria, wcag2a, wcag131, wcag411, wcag412 | true |
-| aria-valid-attr-value | Ensures all ARIA attributes have valid values | Critical | cat.aria, wcag2a, wcag131, wcag411, wcag412 | true |
-| aria-valid-attr | Ensures attributes that begin with aria- are valid ARIA attributes | Critical | cat.aria, wcag2a, wcag411 | true |
-| audio-caption | Ensures &lt;audio&gt; elements have captions | Critical | cat.time-and-media, wcag2a, wcag121, section508, section508.22.a | true |
+| aria-roles | Ensures all elements with a role attribute use a valid value | Serious, Critical | cat.aria, wcag2a, wcag412 | true |
+| aria-valid-attr-value | Ensures all ARIA attributes have valid values | Critical | cat.aria, wcag2a, wcag412 | true |
+| aria-valid-attr | Ensures attributes that begin with aria- are valid ARIA attributes | Critical | cat.aria, wcag2a, wcag412 | true |
+| audio-caption | Ensures &lt;audio&gt; elements have captions | Critical | cat.time-and-media, wcag2a, wcag121, section508, section508.22.a | false |
+| autocomplete-valid | Ensure the autocomplete attribute is correct and suitable for the form field | Serious | cat.forms, wcag21aa, wcag135 | true |
 | blink | Ensures &lt;blink&gt; elements are not used | Serious | cat.time-and-media, wcag2a, wcag222, section508, section508.22.j | true |
 | button-name | Ensures buttons have discernible text | Serious, Critical | cat.name-role-value, wcag2a, wcag412, section508, section508.22.a | true |
 | bypass | Ensures each page has at least one mechanism for a user to bypass navigation and jump straight to the content | Serious | cat.keyboard, wcag2a, wcag241, section508, section508.22.o | true |
 | checkboxgroup | Ensures related &lt;input type=&quot;checkbox&quot;&gt; elements have a group and that the group designation is consistent | Critical | cat.forms, best-practice | true |
 | color-contrast | Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds | Serious | cat.color, wcag2aa, wcag143 | true |
+| css-orientation-lock | Ensures content is not locked to any specific display orientation, and the content is operable in all display orientations | Serious | cat.structure, wcag262, wcag21aa, experimental | true |
 | definition-list | Ensures &lt;dl&gt; elements are structured correctly | Serious | cat.structure, wcag2a, wcag131 | true |
 | dlitem | Ensures &lt;dt&gt; and &lt;dd&gt; elements are contained by a &lt;dl&gt; | Serious | cat.structure, wcag2a, wcag131 | true |
 | document-title | Ensures each HTML document contains a non-empty &lt;title&gt; element | Serious | cat.text-alternatives, wcag2a, wcag242 | true |
-| duplicate-id | Ensures every id attribute value is unique | Moderate | cat.parsing, wcag2a, wcag411 | true |
+| duplicate-id-active | Ensures every id attribute value of active elements is unique | Serious | cat.parsing, wcag2a, wcag411 | true |
+| duplicate-id-aria | Ensures every id attribute value used in ARIA and in labels is unique | Critical | cat.parsing, wcag2a, wcag411 | true |
+| duplicate-id | Ensures every id attribute value is unique | Minor | cat.parsing, wcag2a, wcag411 | true |
 | empty-heading | Ensures headings have discernible text | Minor | cat.name-role-value, best-practice | true |
 | focus-order-semantics | Ensures elements in the focus order have an appropriate role | Minor | cat.keyboard, best-practice, experimental | true |
 | frame-tested | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain the axe-core script | Critical | cat.structure, review-item | true |
@@ -30,17 +35,18 @@
 | hidden-content | Informs users about hidden content. | Minor | cat.structure, experimental, review-item | true |
 | html-has-lang | Ensures every HTML document has a lang attribute | Serious | cat.language, wcag2a, wcag311 | true |
 | html-lang-valid | Ensures the lang attribute of the &lt;html&gt; element has a valid value | Serious | cat.language, wcag2a, wcag311 | true |
+| html-xml-lang-mismatch | Ensure that HTML elements with both valid lang and xml:lang attributes agree on the base language of the page | Moderate | cat.language, wcag2a, wcag311 | true |
 | image-alt | Ensures &lt;img&gt; elements have alternate text or a role of none or presentation | Critical | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | image-redundant-alt | Ensure button and link text is not repeated as image alternative | Minor | cat.text-alternatives, best-practice | true |
 | input-image-alt | Ensures &lt;input type=&quot;image&quot;&gt; elements have alternate text | Critical | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | Serious | cat.forms, best-practice | true |
 | label | Ensures every form element has a label | Minor, Serious, Critical | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
-| landmark-banner-is-top-level | The banner landmark should not be contained in another landmark | Moderate | cat.semantics, best-practice | true |
-| landmark-contentinfo-is-top-level | The contentinfo landmark should not be contained in another landmark | Moderate | cat.semantics, best-practice | true |
-| landmark-main-is-top-level | The main landmark should not be contained in another landmark | Moderate | cat.semantics, best-practice | true |
-| landmark-no-duplicate-banner | Ensures the document has no more than one banner landmark | Moderate | cat.semantics, best-practice | true |
-| landmark-no-duplicate-contentinfo | Ensures the document has no more than one contentinfo landmark | Moderate | cat.semantics, best-practice | true |
-| landmark-one-main | Ensures a navigation point to the primary content of the page. If the page contains iframes, each iframe should contain either no main landmarks or just one | Moderate | cat.semantics, best-practice | true |
+| landmark-banner-is-top-level | Ensures the banner landmark is at top level | Moderate | cat.semantics, best-practice | true |
+| landmark-contentinfo-is-top-level | Ensures the contentinfo landmark is at top level | Moderate | cat.semantics, best-practice | true |
+| landmark-main-is-top-level | Ensures the main landmark is at top level | Moderate | cat.semantics, best-practice | true |
+| landmark-no-duplicate-banner | Ensures the page has at most one banner landmark | Moderate | cat.semantics, best-practice | true |
+| landmark-no-duplicate-contentinfo | Ensures the page has at most one contentinfo landmark | Moderate | cat.semantics, best-practice | true |
+| landmark-one-main | Ensures the page has only one main landmark and each iframe in the page has at most one main landmark | Moderate | cat.semantics, best-practice | true |
 | layout-table | Ensures presentational &lt;table&gt; elements do not use &lt;th&gt;, &lt;caption&gt; elements or the summary attribute | Serious | cat.semantics, wcag2a, wcag131 | true |
 | link-in-text-block | Links can be distinguished without relying on color | Serious | cat.color, experimental, wcag2a, wcag141 | true |
 | link-name | Ensures links have discernible text | Serious | cat.name-role-value, wcag2a, wcag412, wcag244, section508, section508.22.a | true |
@@ -54,7 +60,7 @@
 | p-as-heading | Ensure p elements are not used to style headings | Serious | cat.semantics, wcag2a, wcag131, experimental | true |
 | page-has-heading-one | Ensure that the page, or at least one of its frames contains a level-one heading | Moderate | cat.semantics, best-practice | true |
 | radiogroup | Ensures related &lt;input type=&quot;radio&quot;&gt; elements have a group and that the group designation is consistent | Critical | cat.forms, best-practice | true |
-| region | Ensures all content is contained within a landmark region | Moderate | cat.keyboard, best-practice | true |
+| region | Ensures all page content is contained by landmarks | Moderate | cat.keyboard, best-practice | true |
 | scope-attr-valid | Ensures the scope attribute is used correctly on tables | Moderate, Critical | cat.tables, best-practice | true |
 | server-side-image-map | Ensures that server-side image maps are not used | Minor | cat.text-alternatives, wcag2a, wcag211, section508, section508.22.f | true |
 | skip-link | Ensure all skip links have a focusable target | Moderate | cat.keyboard, best-practice | true |

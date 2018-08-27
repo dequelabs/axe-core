@@ -5,8 +5,7 @@
     "impact": "critical",
     "messages": {
       "pass": "The multimedia element has an audio description track",
-      "fail": "The multimedia element does not have an audio description track",
-      "incomplete": "An audio description track for this element could not be found"
+      "incomplete": "Check that audio description is available for the element"
     }
   }
 }

@@ -4,7 +4,7 @@
   "tags": [
     "cat.aria",
     "wcag2a",
-    "wcag411"
+    "wcag412"
   ],
   "metadata": {
     "description": "Ensures attributes that begin with aria- are valid ARIA attributes",

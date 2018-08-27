@@ -5,8 +5,8 @@
   "metadata": {
     "impact": "moderate",
     "messages": {
-      "pass": "Content contained by ARIA landmark",
-      "fail": "Content not contained by an ARIA landmark"
+      "pass": "All page content is contained by landmarks",
+      "fail": "Some page content is not contained by landmarks"
     }
   }
 }

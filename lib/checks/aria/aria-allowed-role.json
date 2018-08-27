@@ -1,0 +1,15 @@
+{
+	"id": "aria-allowed-role",
+	"evaluate": "aria-allowed-role.js",
+	"options": {
+		"allowImplicit": true,
+		"ignoredTags": []
+	},
+	"metadata": {
+		"impact": "minor",
+		"messages": {
+			"pass": "ARIA role is allowed for given element",
+			"fail": "role{{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}} {{=it.data && it.data.length > 1 ? 'are' : ' is'}} not allowed for given element"
+		}
+	}
+}

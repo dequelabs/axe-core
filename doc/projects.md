@@ -23,6 +23,7 @@ Add your project/integration to this file and submit a pull request.
 1. [Sonarwhal](https://sonarwhal.com/)
 1. [Web Accessibility Checker for Visual Studio](https://visualstudiogallery.msdn.microsoft.com/3aabefab-1681-4fea-8f95-6a62e2f0f1ec)
 1. [Ace, by DAISY](https://daisy.github.io/ace)
+1. [axe Selenium Python](https://github.com/mozilla-services/axe-selenium-python)
 1. [aXe audit runner for CrawlKit](https://github.com/crawlkit/runner-axe)
 1. [Selenium IDE aXe Extension](https://github.com/bkardell/selenium-ide-axe)
 1. [Axegrinder](https://github.com/claflamme/axegrinder)

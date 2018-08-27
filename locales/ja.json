@@ -13,12 +13,16 @@
       "description": "要素のロールにARIA属性が許可されていることを確認してください",
       "help": "要素には許可されているARIA属性のみを使用します"
     },
+    "aria-allowed-role": {
+      "description": "role属性の値が要素に対して適切であることを確認してください",
+      "help": "ARIAロールは要素に対して適切でなければなりません"
+    },
     "aria-dpub-role-fallback": {
       "description": "サポートされていないDPUBロールが暗黙のフォールバックロールを持つ要素でのみ使用されていることを確認してください",
       "help": "サポートされていないDPUB ARIAロールは、暗黙のフォールバックロールを持つ要素で使用しなければなりません"
     },
     "aria-hidden-body": {
-      "description": "ドキュメント本体にaria-hidden='true'が存在していないことを確認してください。",
+      "description": "ドキュメント本体にaria-hidden='true'が存在していないことを確認してください",
       "help": "ドキュメント本体にaria-hidden='true'が存在してはなりません"
     },
     "aria-required-attr": {
@@ -49,6 +53,10 @@
       "description": "<audio>要素にキャプションが存在することを確認してください",
       "help": "<audio>要素にはキャプショントラックが存在しなければなりません"
     },
+    "autocomplete-valid": {
+      "description": "autocomplete属性が正しく、かつフォームフィールドに対して適切であることを確認する",
+      "help": "autocomplete属性は正しく使用しなければなりません"
+    },
     "blink": {
       "description": "<blink>要素が使用されていないことを確認してください",
       "help": "<blink>要素は廃止予定であり、使用するべきではありません"
@@ -68,6 +76,10 @@
     "color-contrast": {
       "description": "前景色と背景色のコントラストがWCAG 2のAAコントラスト比のしきい値を満たすことを確認してください",
       "help": "要素には十分な色のコントラストがなければなりません"
+    },
+    "css-orientation-lock": {
+      "description": "コンテンツが特定のディスプレイの向きに固定されていないこと、およびコンテンツが全てのディスプレイの向きで操作可能なことを確認してください",
+      "help": "ディスプレイの向きを固定するためにCSSメディアクエリーは使用されていません"
     },
     "definition-list": {
       "description": "<dl>要素の構造が正しいことを確認してください",
@@ -99,18 +111,18 @@
     },
     "frame-title-unique": {
       "description": "<iframe>及び<frame>要素に一意のタイトル属性が含まれていることを確認してください",
-      "help": "フレームには一意のタイトル属性がなければなりません"
+      "help": "フレームには一意のtitle属性がなければなりません"
     },
     "frame-title": {
       "description": "<iframe>及び<frame>要素に空のタイトル属性が存在しないことを確認してください",
-      "help": "フレームにはタイトル属性がなければなりません"
+      "help": "フレームにはtitle属性がなければなりません"
     },
     "heading-order": {
-      "description": " 見出しの順序が意味的に正しいことを確認してください",
+      "description": "見出しの順序が意味的に正しいことを確認してください",
       "help": "見出しのレベルは1つずつ増加させなければなりません"
     },
     "hidden-content": {
-      "description": "ユーザーに隠れているコンテンツについて通知します。",
+      "description": "ユーザーに隠れているコンテンツについて通知します",
       "help": "ページ上の隠れているコンテンツは分析できません"
     },
     "html-has-lang": {
@@ -120,6 +132,10 @@
     "html-lang-valid": {
       "description": "<html>要素のlang属性が有効な値であることを確認してください",
       "help": "<html>要素のlang属性には有効な値がなければなりません"
+    },
+    "html-xml-lang-mismatch": {
+      "description": "HTML要素に指定された有効なlangおよびxml:lang属性の両方がページの基本言語と一致することを確認してください",
+      "help": "HTML要素に指定されたlangおよびxml:lang属性は同じ基本言語を持つ必要があります"
     },
     "image-alt": {
       "description": "<img>要素に代替テキストが存在する、またはnoneまたはpresentationのロールが存在することを確認してください",
@@ -142,28 +158,28 @@
       "help": "フォーム要素にはラベルがなければなりません"
     },
     "landmark-banner-is-top-level": {
-      "description": "bannerランドマークは他のランドマークに含まれるべきではありません",
-      "help": "Bannerランドマークはトップレベルにあるべきです"
+      "description": "bannerランドマークはトップレベルにあるべきです",
+      "help": "bannerランドマークは他のランドマークに含まれるべきではありません"
     },
     "landmark-contentinfo-is-top-level": {
-      "description": "contentinfoランドマークは他のランドマークに含まれるべきではありません",
-      "help": "Contentinfoランドマークはトップレベルにあるべきです"
+      "description": "contentinfoランドマークはトップレベルにあるべきです",
+      "help": "contentinfoランドマークは他のランドマークに含まれるべきではありません"
     },
     "landmark-main-is-top-level": {
-      "description": "mainランドマークは他のランドマークに含まれるべきではありません",
-      "help": "mainランドマークはトップレベルにあるべきです"
+      "description": "mainランドマークはトップレベルにあるべきです",
+      "help": "mainランドマークは他のランドマークに含まれるべきではありません"
     },
     "landmark-no-duplicate-banner": {
-      "description": "ドキュメントにbannerランドマークが1つしかないことを確認してください",
-      "help": "ドキュメントに最大で1つのbannerランドマークが含まれています"
+      "description": "ページ内のbannerランドマークが最大で1つであることを確認してください",
+      "help": "ページ内に複数のbannerランドマークがあってはなりません"
     },
     "landmark-no-duplicate-contentinfo": {
-      "description": "ドキュメントにcontentinfoランドマークが1つしかないことを確認してください",
-      "help": "ドキュメントに最大で1つのcontentinfoランドマークが含まれています"
+      "description": "ページ内のcontentinfoが最大で1つであることを確認してください",
+      "help": "ページ内に複数のcontentinfoランドマークがあってはなりません"
     },
     "landmark-one-main": {
-      "description": "ページの主要コンテンツへのナビゲーションポイントを確認してください。ページにiframeが含まれている場合、各iframeにmainランドマークが含まれていないか1つだけでなければなりません",
-      "help": "ページには1つのmainランドマークを含まなければなりません"
+      "description": "ページ内のmainランドマークが1つであることおよびページ内の各iframeに最大で1つのmainランドマークがあることを確認します",
+      "help": "ページ内に1つのmainランドマークが必要です"
     },
     "layout-table": {
       "description": "レイアウトのための<table>要素に<th>、<caption>要素またはsummary属性が使用されていないことを確認してください",
@@ -198,7 +214,7 @@
       "help": "ユーザーがズームをしてテキストを最大500％まで拡大できるようにしなければなりません"
     },
     "meta-viewport": {
-      "description": "<meta name=\"viewport\">がテキストの拡大縮小及びズーミングを無効化しないかをを確認してください",
+      "description": "<meta name=\"viewport\">がテキストの拡大縮小及びズーミングを無効化しないかを確認してください",
       "help": "ズーミングや拡大縮小は無効にしてはなりません"
     },
     "object-alt": {
@@ -218,8 +234,8 @@
       "help": "同じname属性値のラジオインプットはグループの一部でなければなりません"
     },
     "region": {
-      "description": "全てのコンテンツがlandmarkのリージョンに含まれていることを確認してください",
-      "help": "コンテンツはlandmarkのリージョン内に含まれていなければなりません"
+      "description": "ページの全てのコンテンツがlandmarkに含まれていることを確認してください",
+      "help": "ページの全てのコンテンツはlandmarkに含まれていなければなりません"
     },
     "scope-attr-valid": {
       "description": "scope属性がテーブル上で正しく使用されていることを確認してください",
@@ -279,6 +295,10 @@
       "pass": "ARIA属性が定義されたロールに対して正しく使用されています",
       "fail": "ARIA属性は許可されていません:{{~it.data:value}} {{=value}}{{~}}"
     },
+    "aria-allowed-role": {
+      "pass": "指定された要素に対してARIAロールが許可されています",
+      "fail": "{{=it.data.join(', ')}} {{=it.data}}ロールは指定された要素に対して許可されていません"
+    },
     "aria-hidden-body": {
       "pass": "ドキュメント本体にaria-hidden属性は存在していません",
       "fail": "aria-hidden=trueはドキュメント本体に存在してはなりません"
@@ -288,8 +308,8 @@
       "fail": "aria-errormessageの値{{~it.data:value}} `{{=value}}{{~}}`はメッセージを通知する方法を使用しなければなりません　(例えば、aria-live、aria-describedby、role=alert等)"
     },
     "has-widget-role": {
-      "pass": "要素にはwidgetロールが存在しています。",
-      "fail": "要素にはwidgetロールが存在していません。"
+      "pass": "要素にはwidgetロールが存在しています",
+      "fail": "要素にはwidgetロールが存在していません"
     },
     "implicit-role-fallback": {
       "pass": "要素の暗黙的なARIAロールは適切なフォールバックです",
@@ -305,11 +325,16 @@
     },
     "aria-required-children": {
       "pass": "必須のARIA子ロールが存在しています",
-      "fail": "必須のARIAロールが提供されていません:{{~it.data:value}} {{=value}}{{~}}"
+      "fail": "必須のARIAロールが提供されていません:{{~it.data:value}} {{=value}}{{~}}",
+      "incomplete": "Expecting ARIA {{=it.data && it.data.length > 1 ? 'children' : 'child'}} role to be added:{{~it.data:value}} {{=value}}{{~}}"
     },
     "aria-required-parent": {
       "pass": "必須のARIA親ロールが存在しています",
       "fail": "必須のARIA親ロールが提供されていません:{{~it.data:value}} {{=value}}{{~}}"
+    },
+    "unsupportedrole": {
+      "pass": "ARIAロールはサポートされています",
+      "fail": "使用されているロールは支援技術で広くサポートされていません"
     },
     "aria-valid-attr-value": {
       "pass": "ARIA属性値が有効です",
@@ -320,8 +345,8 @@
       "fail": "ARIA属性名:{{~it.data:value}} {{=value}}{{~}}が無効です"
     },
     "valid-scrollable-semantics": {
-      "pass": "要素はフォーカス順序に含まれる要素に対して有効なセマンティクスを持ちます。",
-      "fail": "要素はフォーカス順序に含まれる要素に対して無効なセマンティクスを持ちます。"
+      "pass": "要素はフォーカス順序に含まれる要素に対して有効なセマンティクスを持ちます",
+      "fail": "要素はフォーカス順序に含まれる要素に対して無効なセマンティクスを持ちます"
     },
     "color-contrast": {
       "pass": "要素には{{=it.data.contrastRatio}}の十分なコントラスト比があります",
@@ -351,6 +376,14 @@
         "default": "コントラスト比を判定できません"
       }
     },
+    "autocomplete-appropriate": {
+      "pass": "オートコンプリートの値が適切な要素に指定されています",
+      "fail": "オートコンプリートの値はこの種類の入力項目には適切ではありません"
+    },
+    "autocomplete-valid": {
+      "pass": "autocomplete属性は正しくフォーマットされています",
+      "fail": "autocomplete属性は誤ってフォーマットされています"
+    },
     "fieldset": {
       "pass": "フィールドセット内に要素が含まれています",
       "fail": "{{var code = it.data && it.data.failureCode;}}{{? code === 'no-legend'}}フィールドセットの最初の子要素としてレジェンドが存在しません{{?? code === 'empty-legend'}}スクリーン・リーダーに認識可能なテキストがレジェンドに存在しません{{?? code === 'mixed-inputs'}}フィールドセットに関連性のないインプットが含まれています{{?? code === 'no-group-label'}}ARIAグループにaria-labelまたはaria-labelledbyが存在しません{{?? code === 'group-mixed-inputs'}}ARIAグループに関連性のないインプットが含まれています{{??}}要素がフィールドセットまたはARIAグループに含まれていません{{?}}"
@@ -368,8 +401,8 @@
       "fail": "要素がタブ順序にあり、アクセシブルなテキストが存在していません"
     },
     "landmark-is-top-level": {
-      "pass": " {{=it.data.role }} ランドマークはトップレベルにあります。",
-      "fail": "{{=it.data.role }} ランドマークが他のランドマークに含まれています。"
+      "pass": "{{=it.data.role }} ランドマークはトップレベルにあります",
+      "fail": "{{=it.data.role }} ランドマークが他のランドマークに含まれています"
     },
     "page-has-heading-one": {
       "pass": "ページには少なくとも1つのレベル1の見出しがあります",
@@ -377,19 +410,19 @@
     },
     "page-has-main": {
       "pass": "ページには少なくとも1つのmainランドマークがあります",
-      "fail": "ページにはmainランドマークがなければなりません"
+      "fail": "ページにmainランドマークがありません"
     },
     "page-no-duplicate-banner": {
       "pass": "ドキュメントにはbannerランドマークが1つしかありません",
-      "fail": "ドキュメントに1つ以上のbannerランドマークがあります"
+      "fail": "ドキュメントに複数のbannerランドマークがあります"
     },
     "page-no-duplicate-contentinfo": {
-      "pass": "ドキュメントにはcontentinfoランドマークが1つしかありません",
-      "fail": "ドキュメントに1つ以上のcontentinfoランドマークがあります"
+      "pass": "ページにcontentinfoランドマークが1つしかありません",
+      "fail": "ページに複数のcontentinfoランドマークがあります"
     },
     "page-no-duplicate-main": {
-      "pass": "ドキュメントにはmainランドマークが1つしかありません",
-      "fail": "ドキュメントに1つ以上のmainランドマークがあります"
+      "pass": "ページにmainランドマークが1つしかありません",
+      "fail": "ページに複数のmainランドマークがあります"
     },
     "tabindex": {
       "pass": "要素に0より大きいtabindexは存在していません",
@@ -406,6 +439,10 @@
     "help-same-as-label": {
       "pass": "ヘルプテキスト（titleまたはaria-describedby）はラベルテキストと重複していません",
       "fail": "ヘルプテキスト（titleまたはaria-describedby）がラベルテキストと同じです"
+    },
+    "hidden-explicit-label": {
+      "pass": "Form element has a visible explicit <label>",
+      "fail": "Form element has explicit <label> that is hidden"
     },
     "implicit-label": {
       "pass": "フォーム要素に暗黙の（包含された）<label>が存在しています",
@@ -426,6 +463,10 @@
     "valid-lang": {
       "pass": "lang属性の値が有効な言語の一覧に含まれています",
       "fail": "lang属性の値が有効な言語の一覧に含まれていません"
+    },
+    "xml-lang-mismatch": {
+      "pass": "langおよびxml:lang属性は同じ基本言語を持っています",
+      "fail": "langおよびxml:lang属性は同じ基本言語を持っていません"
     },
     "dlitem": {
       "pass": "説明リスト項目に<dl>親要素が存在しています",
@@ -466,13 +507,17 @@
       "fail": "iframeはaxe-coreでテストできませんでした",
       "incomplete": "iframeはまだaxe-coreでテストする必要があります"
     },
+    "css-orientation-lock": {
+      "pass": "ディスプレイは操作可能であり、向きを固定する機能は存在しません",
+      "fail": "CSSオリエンテーションロックが適用されており、ディスプレイを操作不可能にしています"
+    },
     "meta-viewport-large": {
       "pass": "<meta>タグはモバイルデバイスでの拡大を阻止しません",
       "fail": "<meta>タグはモバイルデバイスでの拡大を制限します"
     },
     "meta-viewport": {
       "pass": "<meta>タグはモバイルデバイスでの拡大を無効にしません",
-      "fail": "<meta>タグはモバイルデバイスでの拡大を無効にします"
+      "fail": "<meta>タグの{{=it.data}}がモバイルデバイスでの拡大を無効にします"
     },
     "header-present": {
       "pass": "ページにheaderが存在しています",
@@ -499,8 +544,8 @@
       "fail": "スタイル付けされたp要素ではなく、見出し要素を使用すべきです"
     },
     "region": {
-      "pass": "コンテンツがARIAランドマークに含まれています",
-      "fail": "コンテンツがARIAランドマークに含まれていません"
+      "pass": "ページの全てのコンテンツがランドマークに含まれています",
+      "fail": "ページの一部のコンテンツがランドマークに含まれていません"
     },
     "skip-link": {
       "pass": "スキップリンクのターゲットが存在しています",
@@ -517,7 +562,7 @@
     },
     "aria-labelledby": {
       "pass": "aria-labelledby属性が存在し、スクリーン・リーダーに認識可能な要素を参照しています",
-      "fail": "aria-labelledby属性が存在しない、存在しない要素を参照している、または空の要素を参照しているか認識できません"
+      "fail": "aria-labelledby属性が存在しない、存在しない要素を参照している、または空の要素を参照しています"
     },
     "button-has-visible-text": {
       "pass": "要素にスクリーン・リーダーが認識可能な内部テキストが存在しています",
@@ -589,7 +634,7 @@
     },
     "html5-scope": {
       "pass": "scope属性がテーブルヘッダー要素（<th>）にのみ使用されています",
-      "fail": "HTML 5では、scope属性はテーブルヘッダー要素（<th>）にのみ使用できます"
+      "fail": "HTML5では、scope属性はテーブルヘッダー要素（<th>）にのみ使用できます"
     },
     "same-caption-summary": {
       "pass": "summary属性および<caption>のコンテンツは重複していません",
@@ -613,9 +658,9 @@
       "incomplete": "テーブルデータセルが存在しないまたは空です"
     },
     "hidden-content": {
-      "pass": "ページ内のすべてのコンテンツが分析されました。",
-      "fail": "このページのコンテンツを分析中に問題が発生しました。",
-      "incomplete": "ページ内に分析されなかった非表示のコンテンツが存在します。分析するには、そのコンテンツを表示させる必要があります。"
+      "pass": "ページ内のすべてのコンテンツが分析されました",
+      "fail": "このページのコンテンツを分析中に問題が発生しました",
+      "incomplete": "ページ内に分析されなかった非表示のコンテンツが存在します。分析するには、そのコンテンツを表示させる必要があります"
     }
   },
   "failureSummaries": {

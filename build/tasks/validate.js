@@ -5,13 +5,12 @@ var revalidator = require('revalidator').validate,
 	fs = require('fs'),
 	path = require('path');
 
-
 function fileExists(v, o) {
 	var file = path.resolve(path.dirname(o._path), v);
 	var exists;
 	try {
 		exists = fs.existsSync(file);
-	} catch(e) {
+	} catch (e) {
 		return false;
 	}
 	return exists;
@@ -19,7 +18,7 @@ function fileExists(v, o) {
 
 function hasUniqueId() {
 	var seen = {};
-	return function (v, o) {
+	return function(v, o) {
 		if (!seen[v]) {
 			seen[v] = o;
 			return true;
@@ -28,8 +27,28 @@ function hasUniqueId() {
 	};
 }
 
-function createSchemas() {
+function hasMultipleOutcomes(messages) {
+	const keys = Object.keys(messages);
+	if (keys.length < 2) {
+		return false;
+	}
 
+	return keys.every(key => {
+		switch (key) {
+			case 'pass':
+			case 'fail':
+				return typeof messages[key] === 'string';
+
+			case 'incomplete':
+				return ['string', 'object'].includes(typeof messages[key]);
+
+			default:
+				return false;
+		}
+	});
+}
+
+function createSchemas() {
 	var schemas = {};
 
 	schemas.tool = {
@@ -86,15 +105,9 @@ function createSchemas() {
 					messages: {
 						required: true,
 						type: 'object',
-						properties: {
-							fail: {
-								required: true,
-								type: 'string'
-							},
-							pass: {
-								required: true,
-								type: 'string'
-							}
+						conform: hasMultipleOutcomes,
+						messages: {
+							conform: 'Must have at least two valid messages'
 						}
 					},
 					impact: {
@@ -131,7 +144,7 @@ function createSchemas() {
 				type: 'array',
 				items: {
 					type: ['string', 'object'],
-					conform: function (v) {
+					conform: function(v) {
 						if (typeof v === 'string') {
 							return true;
 						}
@@ -147,7 +160,7 @@ function createSchemas() {
 				type: 'array',
 				items: {
 					type: ['string', 'object'],
-					conform: function (v) {
+					conform: function(v) {
 						if (typeof v === 'string') {
 							return true;
 						}
@@ -163,7 +176,7 @@ function createSchemas() {
 				type: 'array',
 				items: {
 					type: ['string', 'object'],
-					conform: function (v) {
+					conform: function(v) {
 						if (typeof v === 'string') {
 							return true;
 						}
@@ -210,17 +223,16 @@ function createSchemas() {
 	return schemas;
 }
 
-
 function validateFiles(grunt, files, schema) {
 	var valid = true;
-	files.forEach(function (f) {
-		f.src.forEach(function (pathArg) {
+	files.forEach(function(f) {
+		f.src.forEach(function(pathArg) {
 			var file = grunt.file.readJSON(pathArg);
 			file._path = pathArg;
 			var result = revalidator(file, schema);
 
 			if (!result.valid) {
-				result.errors.forEach(function (err) {
+				result.errors.forEach(function(err) {
 					grunt.log.error(pathArg, err.property + ' ' + err.message);
 				});
 				valid = false;
@@ -232,14 +244,17 @@ function validateFiles(grunt, files, schema) {
 	return valid;
 }
 
-module.exports = function (grunt) {
-	grunt.registerMultiTask('validate',
+module.exports = function(grunt) {
+	grunt.registerMultiTask(
+		'validate',
 		'Task for validating API schema for tools, checks and rules',
-		function () {
+		function() {
 			var schemas = createSchemas();
 			var options = this.options();
 			if (!options.type || !schemas[options.type]) {
-				grunt.log.error('Please specify a valid type to validate: ' + Object.keys(schemas));
+				grunt.log.error(
+					'Please specify a valid type to validate: ' + Object.keys(schemas)
+				);
 				return false;
 			}
 			validateFiles(grunt, this.files, schemas[options.type]);

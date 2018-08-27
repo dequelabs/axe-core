@@ -1,4 +1,4 @@
-describe('table.isHeader', function () {
+describe('table.isHeader', function() {
 	'use strict';
 	function $id(id) {
 		return document.getElementById(id);
@@ -7,18 +7,18 @@ describe('table.isHeader', function () {
 	var fixture = $id('fixture');
 	var cell;
 
-	afterEach(function () {
+	afterEach(function() {
 		fixture.innerHTML = '<table><tr><th id="cell"></th></tr></table>';
 		cell = $id('cell');
 	});
 
-	it('should return true if table.isColumnHeader return true', function () {
+	it('should return true if table.isColumnHeader return true', function() {
 		var orig = axe.commons.table.isColumnHeader;
-		axe.commons.table.isColumnHeader = function () {
+		axe.commons.table.isColumnHeader = function() {
 			return true;
 		};
 		var orig2 = axe.commons.table.isRowHeader;
-		axe.commons.table.isRowHeader = function () {
+		axe.commons.table.isRowHeader = function() {
 			return false;
 		};
 		assert.isTrue(axe.commons.table.isHeader(cell));
@@ -27,13 +27,13 @@ describe('table.isHeader', function () {
 		axe.commons.table.isRowHeader = orig2;
 	});
 
-	it('should return true if table.isRowHeader return true', function () {
+	it('should return true if table.isRowHeader return true', function() {
 		var orig = axe.commons.table.isRowHeader;
-		axe.commons.table.isRowHeader = function () {
+		axe.commons.table.isRowHeader = function() {
 			return true;
 		};
 		var orig2 = axe.commons.table.isColumnHeader;
-		axe.commons.table.isColumnHeader = function () {
+		axe.commons.table.isColumnHeader = function() {
 			return false;
 		};
 		assert.isTrue(axe.commons.table.isHeader(cell));
@@ -42,13 +42,13 @@ describe('table.isHeader', function () {
 		axe.commons.table.isColumnHeader = orig2;
 	});
 
-	it('should return false if table.isRowHeader and table.isColumnHeader return false', function () {
+	it('should return false if table.isRowHeader and table.isColumnHeader return false', function() {
 		var orig = axe.commons.table.isRowHeader;
-		axe.commons.table.isRowHeader = function () {
+		axe.commons.table.isRowHeader = function() {
 			return false;
 		};
 		var orig2 = axe.commons.table.isColumnHeader;
-		axe.commons.table.isColumnHeader = function () {
+		axe.commons.table.isColumnHeader = function() {
 			return false;
 		};
 		assert.isFalse(axe.commons.table.isHeader(cell));
@@ -57,8 +57,9 @@ describe('table.isHeader', function () {
 		axe.commons.table.isColumnHeader = orig2;
 	});
 
-	it('should return true if referenced by another cells headers attr', function () {
-		fixture.innerHTML = '<table>' +
+	it('should return true if referenced by another cells headers attr', function() {
+		fixture.innerHTML =
+			'<table>' +
 			'<tr><td id="target">1</td><td headers="bar target foo"></tr>' +
 			'</table>';
 
@@ -67,8 +68,9 @@ describe('table.isHeader', function () {
 		assert.isTrue(axe.commons.table.isHeader(target));
 	});
 
-	it('should return false otherwise', function () {
-		fixture.innerHTML = '<table>' +
+	it('should return false otherwise', function() {
+		fixture.innerHTML =
+			'<table>' +
 			'<tr><td class="target">1</td><td headers="bar monkeys foo"></tr>' +
 			'</table>';
 
@@ -76,5 +78,4 @@ describe('table.isHeader', function () {
 
 		assert.isFalse(axe.commons.table.isHeader(target));
 	});
-
 });

@@ -1,4 +1,5 @@
 {
+  "extends": ["prettier"],
   "env": {
     "browser": true
   },
@@ -32,10 +33,6 @@
     "no-empty": 2,
     "no-new": 2,
     "no-plusplus": 0,
-    "quotes": [
-      2,
-      "single"
-    ],
     "no-undef": 2,
     "no-unused-vars": 2,
     "max-params": [
@@ -54,14 +51,6 @@
       2,
       50
     ],
-    "max-len": [
-      2,
-      {
-        "code": 1000,
-        "ignoreComments": true
-      }
-    ],
-    "semi": 0,
     "no-cond-assign": 0,
     "no-debugger": 0,
     "no-eq-null": 0,
