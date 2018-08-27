@@ -194,6 +194,42 @@ describe('only-dlitems', function() {
 		);
 	});
 
+	it('returns false if there are display:none elements that normally would not be allowed', function() {
+		var checkArgs = checkSetup(
+			'<dl id="target"> <dt>An item</dt> <dd>A list</dd> <h1 style="display:none">heading</h1> </dl>'
+		);
+		assert.isFalse(
+			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('returns false if there are visibility:hidden elements that normally would not be allowed', function() {
+		var checkArgs = checkSetup(
+			'<dl id="target"> <dt>An item</dt> <dd>A list</dd> <h1 style="visibility:hidden">heading</h1> </dl>'
+		);
+		assert.isFalse(
+			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('returns false if there are aria-hidden=true elements that normally would not be allowed', function() {
+		var checkArgs = checkSetup(
+			'<dl id="target"> <dt>An item</dt> <dd>A list</dd> <h1 aria-hidden="true">heading</h1> </dl>'
+		);
+		assert.isFalse(
+			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('returns true if there are aria-hidden=false elements that normally would not be allowed', function() {
+		var checkArgs = checkSetup(
+			'<dl id="target"> <dt>An item</dt> <dd>A list</dd> <h1 aria-hidden="false">heading</h1> </dl>'
+		);
+		assert.isTrue(
+			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
 	(shadowSupport.v1 ? it : xit)(
 		'should return false in a shadow DOM pass',
 		function() {

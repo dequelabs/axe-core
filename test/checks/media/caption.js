@@ -14,17 +14,17 @@ describe('caption', function() {
 		assert.isUndefined(checks.caption.evaluate.apply(null, checkArgs));
 	});
 
-	it('should fail if there is no kind=captions attribute', function() {
+	it('should return undefined if there is no kind=captions attribute', function() {
 		var checkArgs = checkSetup(
 			'<audio><track kind=descriptions></audio>',
 			'audio'
 		);
-		assert.isTrue(checks.caption.evaluate.apply(null, checkArgs));
+		assert.isUndefined(checks.caption.evaluate.apply(null, checkArgs));
 	});
 
-	it('should fail if there is no kind attribute', function() {
+	it('should return undefined if there is no kind attribute', function() {
 		var checkArgs = checkSetup('<video><track></video>', 'video');
-		assert.isTrue(checks.description.evaluate.apply(null, checkArgs));
+		assert.isUndefined(checks.description.evaluate.apply(null, checkArgs));
 	});
 
 	it('should pass if there is a kind=captions attribute', function() {
@@ -36,12 +36,12 @@ describe('caption', function() {
 		'should get track from composed tree',
 		function() {
 			var node = document.createElement('div');
-			node.innerHTML = '<track kind=descriptions>';
+			node.innerHTML = '<track kind=captions>';
 			var shadow = node.attachShadow({ mode: 'open' });
 			shadow.innerHTML = '<audio><slot></slot></audio>';
 
 			var checkArgs = checkSetup(node, {}, 'audio');
-			assert.isTrue(checks.caption.evaluate.apply(null, checkArgs));
+			assert.isFalse(checks.caption.evaluate.apply(null, checkArgs));
 		}
 	);
 });

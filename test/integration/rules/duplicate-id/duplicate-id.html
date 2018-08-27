@@ -1,5 +1,17 @@
-<p id="dupe">This is my first paragraph with this ID.</p>
+<p id="fail1" class="fail1">This is my first paragraph with this ID.</p>
 <div style="display:none">
-  <p id="dupe">This is my second paragraph with this ID.</p>
+  <p id="fail1">This is my second paragraph with this ID.</p>
 </div>
-<p id="single">This is my only paragraph with this ID.</p>
+
+<input id="ignored1" />
+<textarea id="ignored2"></textarea>
+<select id="ignored3"></select>
+<div tabindex="0" id="ignored4"></div>
+
+<span id="ignored5"></span>
+<button id="ignored6"></button>
+<div aria-labelledby="ignored5 ignored6"></div>
+
+<input id="pass1" type="hidden" />
+<button id="pass2" disabled></button>
+<button id="pass3" style="display:none"></button>

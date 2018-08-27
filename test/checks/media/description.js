@@ -13,14 +13,14 @@ describe('description', function() {
 		assert.isUndefined(checks.description.evaluate.apply(null, checkArgs));
 	});
 
-	it('should fail if there is no kind=captions attribute', function() {
+	it('should return undefined if there is no kind=captions attribute', function() {
 		var checkArgs = checkSetup('<video><track kind=captions></video>', 'video');
-		assert.isTrue(checks.description.evaluate.apply(null, checkArgs));
+		assert.isUndefined(checks.description.evaluate.apply(null, checkArgs));
 	});
 
-	it('should fail if there is no kind attribute', function() {
+	it('should return undefined if there is no kind attribute', function() {
 		var checkArgs = checkSetup('<video><track></video>', 'video');
-		assert.isTrue(checks.description.evaluate.apply(null, checkArgs));
+		assert.isUndefined(checks.description.evaluate.apply(null, checkArgs));
 	});
 
 	it('should pass if there is a kind=descriptions attribute', function() {
