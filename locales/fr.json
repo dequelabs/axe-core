@@ -292,7 +292,7 @@
       "fail": "{{=it.data && it.data.length > 1 ? 'Attributs ARIA non autorisés' : 'Attribut ARIA non autorisé'}} : {{~it.data:value}} {{=value}}{{~}}"
     },
     "aria-allowed-role": {
-      "pass": "Le rôle ARIA role est autorisé pour l’élément donné",
+      "pass": "Le rôle ARIA est autorisé pour l’élément donné",
       "fail": "{{=it.data && it.data.length > 1 ? 'Les rôles' : 'Le rôle'}} {{=it.data.join(', ')}} {{=it.data && it.data.length > 1 ? 'ne sont pas autorisés' : 'n’est pas autorisé'}} pour l’élément donné"
     },
     "aria-hidden-body": {
