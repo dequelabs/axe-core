@@ -53,6 +53,7 @@ jobs:
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache
+      - run: npm run build
       - run: npm publish
 
 workflows:
