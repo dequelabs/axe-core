@@ -237,7 +237,7 @@ describe('preload cssom integration test', function() {
 					.then(function(results) {
 						var sheets = results[0];
 						// verify count
-						assert.isAtLeast(sheets.length, 4);
+						assert.lengthOf(sheets, 7);
 						// verify that the last non external sheet with shadowId has green selector
 						var nonExternalsheetsWithShadowId = sheets
 							.filter(function(s) {
