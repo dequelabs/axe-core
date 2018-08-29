@@ -260,6 +260,52 @@ describe('preload cssom integration test', function() {
 			}
 		);
 
+		(shadowSupported ? it : xit)(
+			'should return styles from shadow dom',
+			function(done) {
+				var fixture = document.getElementById('shadow-fixture2');
+				var shadow = fixture.attachShadow({ mode: 'open' });
+				shadow.innerHTML =
+					'<style>@import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"; @import "preload-cssom-shadow-blue.css"; .green { background-color: green; }</style>' +
+					'<div class="initialism">Some text</div>' +
+					'<style>.notGreen { background-color: orange; }</style>' +
+					'<div class="green">green</div>' +
+					'<div class="red">red</div>' +
+					'<div class="duplicateGreen">red</div>' +
+					'<h1>Heading</h1>';
+				getPreload(fixture)
+					.then(function(results) {
+						var sheets = results[0];
+						// verify count
+						assert.lengthOf(sheets, 8);
+						// verify that the last non external sheet with shadowId has green selector
+						var nonExternalsheetsWithShadowId = sheets
+							.filter(function(s) {
+								return !s.isExternal;
+							})
+							.filter(function(s) {
+								return s.shadowId;
+							});
+						assertStylesheet(
+							nonExternalsheetsWithShadowId[
+								nonExternalsheetsWithShadowId.length - 2
+							].sheet,
+							'.green',
+							'.green{background-color:green;}'
+						);
+						assertStylesheet(
+							nonExternalsheetsWithShadowId[
+								nonExternalsheetsWithShadowId.length - 1
+							].sheet,
+							'.notGreen',
+							'.notGreen{background-color:orange;}'
+						);
+						done();
+					})
+					.catch(done);
+			}
+		);
+
 		commonTestsForRootAndFrame();
 	});
 
