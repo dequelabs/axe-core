@@ -266,6 +266,18 @@ describe('preload cssom integration test', function() {
 							'.green',
 							'.green{background-color:green;}'
 						);
+						// verify priority of shadowId sheets is higher than base document
+						var anySheetFromBaseDocument = sheets.filter(function(s) {
+							return !s.shadowId;
+						})[0];
+						var anySheetFromShadowDocument = sheets.filter(function(s) {
+							return s.shadowId;
+						})[0];
+						// shadow dom priority is greater than base doc
+						assert.isAbove(
+							anySheetFromShadowDocument.priority,
+							anySheetFromBaseDocument.priority
+						);
 
 						done();
 					})
