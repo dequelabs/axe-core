@@ -231,7 +231,7 @@ module.exports = function(grunt) {
 						quote_style: 1
 					},
 					output: {
-						comments: /^!/
+						comments: /^\/*! aXe/
 					}
 				}
 			},
@@ -243,9 +243,8 @@ module.exports = function(grunt) {
 					};
 				}),
 				options: {
-					preserveComments: function(node, comment) {
-						// preserve comments that start with a bang
-						return /^!/.test(comment.value);
+					output: {
+						comments: /^\/*! aXe/
 					},
 					mangle: {
 						reserved: ['commons', 'utils', 'axe', 'window', 'document']

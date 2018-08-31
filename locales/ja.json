@@ -93,6 +93,14 @@
       "description": "各HTMLドキュメントに空でない<title>要素が含まれていることを確認してください",
       "help": "ドキュメントにはナビゲーションを補助するために<title>要素がなければなりません"
     },
+    "duplicate-id-active": {
+      "description": "有効な要素のid属性値が一意であることを確認してください",
+      "help": "有効な要素のIDは一意でなければなりません"
+    },
+    "duplicate-id-aria": {
+      "description": "ARIAおよびラベルに使用されているid属性値が一意であることを確認してください",
+      "help": "ARIAおよびラベルに使用されているIDは一意でなければなりません"
+    },
     "duplicate-id": {
       "description": "全てのid属性値が一意であることを確認してください",
       "help": "id属性値は一意でなければなりません"
@@ -326,7 +334,7 @@
     "aria-required-children": {
       "pass": "必須のARIA子ロールが存在しています",
       "fail": "必須のARIAロールが提供されていません:{{~it.data:value}} {{=value}}{{~}}",
-      "incomplete": "Expecting ARIA {{=it.data && it.data.length > 1 ? 'children' : 'child'}} role to be added:{{~it.data:value}} {{=value}}{{~}}"
+      "incomplete": "ARIAの子ロールが追加されることが求められます:{{~it.data:value}} {{=value}}{{~}}"
     },
     "aria-required-parent": {
       "pass": "必須のARIA親ロールが存在しています",
@@ -361,6 +369,7 @@
         "elmPartiallyObscuring": "他の要素と部分的に重なっているため、要素の背景色を判定できません",
         "outsideViewport": "ビューポートの外にあるため、要素の背景色を判定できません",
         "equalRatio": "要素のコントラスト比が背景と1:1です",
+        "shortTextContent": "実際のテキストコンテンツであるかを判断するには要素のコンテンツが短すぎます",
         "default": "コントラスト比を判定できません"
       }
     },
@@ -441,8 +450,8 @@
       "fail": "ヘルプテキスト（titleまたはaria-describedby）がラベルテキストと同じです"
     },
     "hidden-explicit-label": {
-      "pass": "Form element has a visible explicit <label>",
-      "fail": "Form element has explicit <label> that is hidden"
+      "pass": "フォーム要素に視認可能で明確な<label>があります",
+      "fail": "フォーム要素に非表示の明確な<label>があります"
     },
     "implicit-label": {
       "pass": "フォーム要素に暗黙の（包含された）<label>が存在しています",
@@ -494,12 +503,10 @@
     },
     "caption": {
       "pass": "マルチメディア要素にキャプショントラックが存在しています",
-      "fail": "マルチメディア要素にキャプショントラックが存在していません",
       "incomplete": "この要素のキャプショントラックが見つかりません"
     },
     "description": {
       "pass": "マルチメディア要素に音声解説トラックが存在しています",
-      "fail": "マルチメディア要素に音声解説トラックが存在していません",
       "incomplete": "この要素の音声解説トラックが見つかりません"
     },
     "frame-tested": {
@@ -556,6 +563,18 @@
       "pass": "要素のtitle属性が一意です",
       "fail": "要素のtitle属性が一意ではありません"
     },
+    "duplicate-id-active": {
+      "pass": "ドキュメントに同じid属性を持つ有効な要素はありません",
+      "fail": "ドキュメントに同じid属性を持つ有効な要素があります: {{=it.data}}"
+    },
+    "duplicate-id-aria": {
+      "pass": "ドキュメントに同じid属性を持つARIAまたはラベルに参照された要素はありません",
+      "fail": "ドキュメントに同じid属性を持つARIAに参照された複数の要素があります: {{=it.data}}"
+    },
+    "duplicate-id": {
+      "pass": "ドキュメントに同じid属性を持つ要素は存在していません",
+      "fail": "ドキュメントに同じid属性を持つ要素が複数存在しています: {{=it.data}}"
+    },
     "aria-label": {
       "pass": "aria-label属性が存在し、空ではありません",
       "fail": "aria-label属性が存在しない、または空です"
@@ -571,10 +590,6 @@
     "doc-has-title": {
       "pass": "ドキュメントに空ではない<title>要素が存在しています",
       "fail": "ドキュメントに空ではない<title>要素が存在していません"
-    },
-    "duplicate-id": {
-      "pass": "ドキュメントに同じid属性を持つ要素は存在していません",
-      "fail": "ドキュメントに同じid属性を持つ要素が複数存在しています: {{=it.data}}"
     },
     "exists": {
       "pass": "要素は存在していません",
