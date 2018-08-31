@@ -1,0 +1,16 @@
+{
+  "id": "focus",
+  "selector": "[onFocus]",
+  "tags": [
+    "wcag2a",
+    "wcag211",
+    "cat.keyboard"
+  ],
+  "metadata": {
+    "description": "Ensure that executes code onFocus do not loose it when code is executed",
+    "help": "Elements should not loose focus when it just gained it"
+  },
+  "all": ["focus"],
+  "any": [],
+  "none": []
+}

@@ -1,0 +1,11 @@
+{
+  "id": "focus",
+  "evaluate": "focus.js",
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "Element will not lose focus when resiving focus",
+      "fail": "Element loses focus when it resives focus"
+    }
+  }
+}
