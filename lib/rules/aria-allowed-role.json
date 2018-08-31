@@ -2,6 +2,7 @@
 	"id": "aria-allowed-role",
 	"excludeHidden": false,
 	"selector": "[role]",
+	"matches": "aria-allowed-role-matches.js",
 	"tags": [
 		"cat.aria",
 		"best-practice"

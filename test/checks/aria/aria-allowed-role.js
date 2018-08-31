@@ -135,10 +135,8 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('role', 'link');
 		node.href = '';
 		fixture.appendChild(node);
-		assert.isFalse(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
-		);
-		assert.deepEqual(checkContext._data, ['link']);
+		var actual = checks['aria-allowed-role'].evaluate.call(checkContext, node);
+		assert.isTrue(actual);
 	});
 
 	it('returns true <img> with a non-empty alt', function() {
@@ -162,14 +160,13 @@ describe('aria-allowed-role', function() {
 		// assert.deepEqual(checkContext._data, ['presentation']);
 	});
 
-	it('should not allow a <link> with a href to have any invalid role', function() {
+	it('return false for a <link> with a href to have any invalid role', function() {
 		var node = document.createElement('link');
 		node.setAttribute('role', 'invalid-role');
 		node.href = '\\example.com';
 		fixture.appendChild(node);
-		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
-		);
+		var actual = checks['aria-allowed-role'].evaluate.call(checkContext, node);
+		assert.isFalse(actual);
 	});
 
 	it('should allow <select> without a multiple and size attribute to have a menu role', function() {
