@@ -30,6 +30,7 @@
 		["#pass-header-valid-role"],
 		["#pass-footer-valid-role"],
 		["#pass-embed-valid-role"],
+		["#pass-input-text-redundant-role"],
 		["#pass-input-image-valid-role"],
 		["#pass-input-checkbox-valid-role"],
 		["#pass-h1-valid-role"],

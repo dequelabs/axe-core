@@ -157,16 +157,6 @@ describe('aria-allowed-role', function() {
 		assert.isFalse(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
-		// assert.deepEqual(checkContext._data, ['presentation']);
-	});
-
-	it('return false for a <link> with a href to have any invalid role', function() {
-		var node = document.createElement('link');
-		node.setAttribute('role', 'invalid-role');
-		node.href = '\\example.com';
-		fixture.appendChild(node);
-		var actual = checks['aria-allowed-role'].evaluate.call(checkContext, node);
-		assert.isFalse(actual);
 	});
 
 	it('should allow <select> without a multiple and size attribute to have a menu role', function() {
