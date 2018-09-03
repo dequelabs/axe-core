@@ -119,6 +119,21 @@ describe('aria.getRole', function() {
 		});
 	});
 
+	describe('segments', function() {
+		var options = {
+			fallback: true,
+			dpub: true,
+			segments: true
+		};
+
+		it('returns all roles from element', function() {
+			var node = document.createElement('input');
+			node.setAttribute('role', 'textbox combobox');
+			var actual = aria.getRole(node, options);
+			assert.deepEqual(actual, ['textbox', 'combobox']);
+		});
+	});
+
 	describe('fallback', function() {
 		it('returns the first valid item in the list', function() {
 			var node = document.createElement('div');
