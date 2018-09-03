@@ -91,6 +91,36 @@ describe('aria-allowed-role', function() {
 		);
 	});
 
+	it('returns true when INPUT type is text with role combobox', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'text');
+		node.setAttribute('role', 'combobox');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
+	it('returns true when INPUT type is text with role spinbutton', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'text');
+		node.setAttribute('role', 'spinbutton');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
+	it('returns true when INPUT type is text with role searchbox', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'text');
+		node.setAttribute('role', 'searchbox');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
 	it('returns false when MENU has type context', function() {
 		var node = document.createElement('menu');
 		node.setAttribute('type', 'context');
