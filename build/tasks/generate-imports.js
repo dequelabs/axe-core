@@ -91,9 +91,19 @@ module.exports = grunt => {
 					// envs, the UMD method should be used instead.
 					const wrappedLibrary = `
 						(function (module, exports, define, require, process) {
-							// Get a reference to the "true" global scope. This works in
-							// ES5's "strict mode", browsers, node.js and other environments.
-							var global = Function('return this')();
+							// Get a reference to the "true" global scope. This works in ES5's 
+							// "strict mode", browsers, node.js and other environments. We 
+							// try/catch the usage of "Function" to prevent CSP issues and 
+							// fall-back to using "window".
+							//
+							// NOTE: we don't just reference "window" or "global" here, as axe
+							// clobbers them both in "/lib/intro.stub".
+							var global;
+							try {
+								global = Function('return this')();
+							} catch (error) {
+								global = window
+							}
 
 							// If there was a global prior to our script, make sure we
 							// "save" it (think "$.noConflict()").
