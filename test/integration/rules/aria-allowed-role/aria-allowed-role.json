@@ -30,6 +30,7 @@
 		["#pass-header-valid-role"],
 		["#pass-footer-valid-role"],
 		["#pass-embed-valid-role"],
+		["#pass-div-has-any-role"],
 		["#pass-input-text-redundant-role"],
 		["#pass-input-text-role-searchbox"],
 		["#pass-input-text-role-combobox"],

@@ -121,7 +121,7 @@ describe('aria-allowed-role', function() {
 		);
 	});
 
-	it('returns false when MENU has type context', function() {
+	it('returns true when MENU has type context', function() {
 		var node = document.createElement('menu');
 		node.setAttribute('type', 'context');
 		node.setAttribute('role', 'navigation');
