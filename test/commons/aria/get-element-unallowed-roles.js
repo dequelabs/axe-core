@@ -52,4 +52,22 @@ describe('aria.getElementUnallowedRoles', function() {
 		var actual = axe.commons.aria.getElementUnallowedRoles(node);
 		assert.isEmpty(actual);
 	});
+
+	it('returns false when role is implicit and allowImplicit is true (default)', function() {
+		var node = document.createElement('input');
+		var role = 'textbox';
+		node.setAttribute('role', role);
+		var actual = axe.commons.aria.getElementUnallowedRoles(node, true);
+		assert.isEmpty(actual);
+	});
+
+	it('returns false with implicit role of row for TR when allowImplicit is set to false via options', function() {
+		var node = document.createElement('table');
+		node.setAttribute('role', 'grid');
+		var row = document.createElement('tr');
+		row.setAttribute('role', 'row');
+		var actual = axe.commons.aria.getElementUnallowedRoles(row, false);
+		assert.isNotEmpty(actual);
+		assert.include(actual, 'row');
+	});
 });
