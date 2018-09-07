@@ -7,7 +7,7 @@
 <section id="pass-section-role-doc-bib" role="doc-bibliography"></section>
 <ul><li id='pass-li-role-doc-biblioentry' role="doc-biblioentry"></li></ul>
 <aside id='pass-aside-doc-example' role='doc-example'></aside>
-<div id='pass-div-has-any-role' role='divAnyRoleEvenInvalid'></div>
+<div id='pass-div-has-any-role' role='contentinfo'></div>
 <div id="pass-div-valid-role" role="link">ok</div>
 <ol id="pass-ol-valid-role" role="directory"></ol>
 <nav id="pass-nav-role-doc-index" role="doc-index"></nav>
@@ -27,6 +27,12 @@
 <header id='pass-header-valid-role' role="group"></header>
 <footer id='pass-footer-valid-role' role="group"></footer>
 <embed id='pass-embed-valid-role' role='img'>
+<input type="text" role="textbox" id="pass-input-text-redundant-role"/>
+<input type="text" role="textbox combobox" id="pass-input-multiple-roles"/>
+<input type="text" role="searchbox invalidrole" id="pass-input-multiple-valid-and-invalid-roles"/>
+<input aria-autocomplete="list" aria-label="some label" autocomplete="off" role="searchbox" type="text" aria-expanded="true" id='pass-input-text-role-searchbox'>
+<input aria-autocomplete="list" aria-label="some label" autocomplete="off" role="combobox" type="text" aria-expanded="true" id='pass-input-text-role-combobox'>
+<input aria-autocomplete="list" aria-label="some label" autocomplete="off" role="spinbutton" type="text" aria-expanded="true" id='pass-input-text-role-spinbutton'>
 <input type="image" role="link" id="pass-input-image-valid-role">
 <input type="checkbox" role='menuitemcheckbox' id='pass-input-checkbox-valid-role' >
 <h1 id='pass-h1-valid-role' role='none'></h1>
@@ -47,3 +53,5 @@
 <button id="fail-button-role-cell" role='cell'></button>
 <aside id='fail-aside-doc-foreword' role='doc-foreword'></aside>
 <aside id="fail-aside-role-tab" role='tab'></aside>
+<button id='fail-button-role-gridcell' role="gridcell" title="IconCheckmark" aria-label="IconCheckmark icon"></button>
+<input id='fail-input-role-gridcell-multiple-role' role="gridcell combobox">

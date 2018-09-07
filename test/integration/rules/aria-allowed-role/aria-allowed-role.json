@@ -11,7 +11,6 @@
 		["#pass-section-role-doc-bib"],
 		["#pass-li-role-doc-biblioentry"],
 		["#pass-aside-doc-example"],
-		["#pass-div-has-any-role"],
 		["#pass-div-valid-role"],
 		["#pass-ol-valid-role"], 
 		["#pass-nav-role-doc-index"],
@@ -31,6 +30,13 @@
 		["#pass-header-valid-role"],
 		["#pass-footer-valid-role"],
 		["#pass-embed-valid-role"],
+		["#pass-div-has-any-role"],
+		["#pass-input-text-redundant-role"],
+		["#pass-input-multiple-roles"],
+		["#pass-input-multiple-valid-and-invalid-roles"],
+		["#pass-input-text-role-searchbox"],
+		["#pass-input-text-role-combobox"],
+		["#pass-input-text-role-spinbutton"],
 		["#pass-input-image-valid-role"],
 		["#pass-input-checkbox-valid-role"],
 		["#pass-h1-valid-role"],
@@ -52,6 +58,8 @@
 		["#fail-input-image-invalid-role"],
 		["#fail-button-role-cell"],
 		["#fail-aside-doc-foreword"],
-		["#fail-aside-role-tab"]
+		["#fail-aside-role-tab"],
+		["#fail-button-role-gridcell"],
+		["#fail-input-role-gridcell-multiple-role"]
 	]
 }
