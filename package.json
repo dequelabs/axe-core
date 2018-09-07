@@ -85,7 +85,7 @@
     "eslint-config-prettier": "^3.0.0",
     "fs-extra": "^7.0.0",
     "grunt": "^1.0.2",
-    "grunt-babel": "^7.0.0",
+    "grunt-babel": "^8.0.0",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-connect": "^1.0.2",
