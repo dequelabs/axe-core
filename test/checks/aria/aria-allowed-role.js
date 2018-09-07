@@ -91,7 +91,37 @@ describe('aria-allowed-role', function() {
 		);
 	});
 
-	it('returns false when MENU has type context', function() {
+	it('returns true when INPUT type is text with role combobox', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'text');
+		node.setAttribute('role', 'combobox');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
+	it('returns true when INPUT type is text with role spinbutton', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'text');
+		node.setAttribute('role', 'spinbutton');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
+	it('returns true when INPUT type is text with role searchbox', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'text');
+		node.setAttribute('role', 'searchbox');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
+	it('returns true when MENU has type context', function() {
 		var node = document.createElement('menu');
 		node.setAttribute('type', 'context');
 		node.setAttribute('role', 'navigation');
@@ -135,10 +165,8 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('role', 'link');
 		node.href = '';
 		fixture.appendChild(node);
-		assert.isFalse(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
-		);
-		assert.deepEqual(checkContext._data, ['link']);
+		var actual = checks['aria-allowed-role'].evaluate.call(checkContext, node);
+		assert.isTrue(actual);
 	});
 
 	it('returns true <img> with a non-empty alt', function() {
@@ -157,17 +185,6 @@ describe('aria-allowed-role', function() {
 		node.alt = 'some text';
 		fixture.appendChild(node);
 		assert.isFalse(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
-		);
-		// assert.deepEqual(checkContext._data, ['presentation']);
-	});
-
-	it('should not allow a <link> with a href to have any invalid role', function() {
-		var node = document.createElement('link');
-		node.setAttribute('role', 'invalid-role');
-		node.href = '\\example.com';
-		fixture.appendChild(node);
-		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
 	});
