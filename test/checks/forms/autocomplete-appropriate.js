@@ -54,6 +54,18 @@ describe('autocomplete-appropriate', function() {
 		assert.isTrue(evaluate.apply(checkContext, params));
 	});
 
+	it('returns true if the input type is tel and the term is off', function() {
+		var options = {};
+		var params = autocompleteCheckParams('off', 'tel', options);
+		assert.isTrue(evaluate.apply(checkContext, params));
+	});
+
+	it('returns true if the input type is url and the term is on', function() {
+		var options = {};
+		var params = autocompleteCheckParams('on', 'url', options);
+		assert.isTrue(evaluate.apply(checkContext, params));
+	});
+
 	it('returns false if the input type is text and the term maps to an empty array', function() {
 		var options = { foo: [] };
 		var params = autocompleteCheckParams('foo', 'text', options);
