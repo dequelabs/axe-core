@@ -1,6 +1,26 @@
 {
 	"description": "link-name tests",
 	"rule": "link-name",
-	"violations": [["#violation1"], ["#violation2"], ["#violation3"], ["#violation4"], ["#violation5"], ["#violation6"]],
-	"passes":  [["#pass1"], ["#pass3"], ["#pass4"], ["#pass6"], ["#pass7"]]
+	"violations": [
+		["#violation1"], 
+		["#violation2"], 
+		["#violation3"], 
+		["#violation4"], 
+		["#violation5"], 
+		["#violation6"],
+		["#fail1"],
+		["#fail2"],
+		["#fail3"]
+	],
+	"passes":  [
+		["#pass1"], 
+		["#pass3"], 
+		["#pass4"], 
+		["#pass6"], 
+		["#pass7"],
+		["#pass8"],
+		["#pass9"],
+		["#pass10"],
+		["#pass11"]
+	]
 }
