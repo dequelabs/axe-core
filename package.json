@@ -77,7 +77,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
     "babel-polyfill": "^6.7.4",
     "babel-preset-env": "^1.7.0",
-    "babelify": "^8.0.0",
+    "babelify": "^10.0.0",
     "blanket": "~1.2.3",
     "chai": "~4.1.2",
     "clone": "~2.1.1",
