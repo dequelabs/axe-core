@@ -1,0 +1,17 @@
+{
+  "id": "submit-button",
+  "selector": "form[action][method]",
+  "tags": [
+    "wcag2a",
+    "wcag322",
+    "cat.forms",
+    "experimental"
+  ],
+  "metadata": {
+    "description": "Check if an form can be submited with an element",
+    "help": "Forms with action and method must have an way to be submited."
+  },
+  "all": ["submit-button"],
+  "any": [],
+  "none": []
+}
