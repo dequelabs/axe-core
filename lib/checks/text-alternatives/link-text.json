@@ -1,0 +1,11 @@
+{
+  "id": "link-text",
+  "evaluate": "link-text.js",
+  "metadata": {
+    "impact": "moderate",
+    "messages": {
+      "pass": "Link have an uniqe text and title",
+      "fail": "Links text and title are the same"
+    }
+  }
+}

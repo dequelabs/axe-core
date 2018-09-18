@@ -1,0 +1,20 @@
+{
+  "id": "link-text",
+  "selector": "a[href]",
+  "tags": [
+    "wcag2a",
+    "wcag244",
+    "cat.text-alternatives",
+    "best-practice"
+  ],
+  "metadata": {
+    "description": "Ensures links that have the same text have different titles",
+    "help": "Links must have unique text to differentiate from each other"
+  },
+  "all": [],
+  "any": [
+    "link-text"
+  ],
+  "none": [
+  ]
+}
