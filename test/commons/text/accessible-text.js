@@ -41,6 +41,7 @@ describe('text.accessibleTextVirtual', function() {
 	});
 
 	it('should match the second example from the ARIA spec', function() {
+		// TODO: Figure out of input value really should trump aria-label
 		fixture.innerHTML =
 			'<fieldset>' +
 			'  <legend>Meeting alarms</legend>' +
@@ -121,9 +122,17 @@ describe('text.accessibleTextVirtual', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#lbl1')[0];
-		assert.equal(axe.commons.text.accessibleTextVirtual(target, false), '');
 		assert.equal(
-			axe.commons.text.accessibleTextVirtual(target, true),
+			axe.commons.text.accessibleTextVirtual(target, {
+				inLabelledByContext: false
+			}),
+			''
+		);
+
+		assert.equal(
+			axe.commons.text.accessibleTextVirtual(target, {
+				inLabelledByContext: true
+			}),
 			'hidden label'
 		);
 	});
