@@ -4,7 +4,7 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "Form has a way to submit content.",
+      "pass": "Form has a way to submit content",
       "fail": "Form can not be submited by any indicated element"
     }
   }
