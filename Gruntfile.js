@@ -1,5 +1,5 @@
-/*eslint 
-complexity: ["error",12], 
+/*eslint
+complexity: ["error",12],
 max-statements: ["error", 35],
 camelcase: ["error", {"properties": "never"}]
 */
@@ -80,7 +80,7 @@ module.exports = function(grunt) {
 		clean: ['dist', 'tmp', 'axe.js', 'axe.*.js'],
 		babel: {
 			options: {
-				compact: 'false'
+				compact: false
 			},
 			core: {
 				files: [

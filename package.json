@@ -70,13 +70,13 @@
     "precommit": "lint-staged"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.0",
+    "@babel/plugin-syntax-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
     "angular-precommit": "^1.0.3",
     "aria-query": "^3.0.0",
     "axios": "^0.18.0",
-    "babel-core": "^6.26.0",
-    "babel-plugin-transform-object-rest-spread": "^6.6.5",
     "babel-polyfill": "^6.7.4",
-    "babel-preset-env": "^1.7.0",
     "babelify": "^10.0.0",
     "blanket": "~1.2.3",
     "chai": "~4.1.2",
