@@ -8,8 +8,8 @@
 	"metadata": {
 		"impact": "moderate",
 		"messages": {
-			"pass": "Page does not have more than one banner landmark.",
-			"fail": "Page has more than one banner landmark."
+			"pass": "Page does not have more than one banner landmark",
+			"fail": "Page has more than one banner landmark"
 		}
 	}
 }
