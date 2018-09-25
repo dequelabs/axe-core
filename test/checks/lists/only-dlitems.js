@@ -194,6 +194,15 @@ describe('only-dlitems', function() {
 		);
 	});
 
+	it('should return true if the list mixed items inside a div group with a role', function() {
+		var checkArgs = checkSetup(
+			'<dl id="target"><div><dt>An item</dt><dd>A list</dd><p>Not a list</p></div></dl>'
+		);
+		assert.isTrue(
+			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
 	it('should return false if there is an empty div', function() {
 		var checkArgs = checkSetup('<dl id="target"><div></div></dl>');
 		assert.isFalse(
