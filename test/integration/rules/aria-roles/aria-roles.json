@@ -3,7 +3,8 @@
 	"rule": "aria-roles",
 	"violations": [
 		["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"], ["#fail5"], ["#fail6"], ["#fail7"],
-		["#fail8"], ["#fail9"], ["#fail10"], ["#fail11"], ["#fail12"], ["#fail13"], ["#fail14"]
+		["#fail8"], ["#fail9"], ["#fail10"], ["#fail11"], ["#fail12"], ["#fail13"], ["#fail14"],
+		["#fail15"]
 	],
 	"passes": [
 		["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"], ["#pass5"], ["#pass6"], ["#pass7"],
@@ -15,7 +16,7 @@
 		["#pass43"], ["#pass44"], ["#pass45"], ["#pass46"], ["#pass47"], ["#pass48"], ["#pass49"],
 		["#pass50"], ["#pass51"], ["#pass52"], ["#pass53"], ["#pass54"], ["#pass55"], ["#pass56"],
 		["#pass57"], ["#pass58"], ["#pass59"], ["#pass60"], ["#pass61"], ["#pass62"], ["#pass63"],
-		["#pass64"], ["#pass65"], ["#pass66"], ["#pass67"], ["#pass68"], ["#pass69"], ["#pass70"],
+		["#pass64"], ["#pass65"], ["#pass66"], ["#pass67"], ["#pass69"], ["#pass70"],
 		["#pass71"], ["#pass72"], ["#pass73"], ["#pass74"], ["#pass75"], ["#pass76"], ["#pass77"],
 		["#pass78"], ["#pass79"], ["#pass80"], ["#pass81"], ["#pass82"], ["#pass83"], ["#pass84"],
 		["#pass85"], ["#pass86"], ["#pass87"], ["#pass88"], ["#pass89"], ["#pass90"], ["#pass91"],

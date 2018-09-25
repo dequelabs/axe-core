@@ -1,0 +1,6 @@
+{
+	"description": "duplicate-id-active test",
+	"rule": "duplicate-id-active",
+	"violations": [[".fail1"], [".fail2"], [".fail3"], [".fail4"], [".fail5"]],
+	"passes": [["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"]]
+}
