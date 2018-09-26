@@ -1,0 +1,13 @@
+{
+	"description": "label-content-name-mismatch test",
+	"rule": "label-content-name-mismatch",
+	"violations": [
+		["#fail1"],
+		["#fail2"]
+	],
+	"passes": [
+		["#pass1"],
+		["#pass2"],
+		["#pass3"]
+  ]
+}

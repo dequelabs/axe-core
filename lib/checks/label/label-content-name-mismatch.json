@@ -1,0 +1,11 @@
+{
+  "id": "label-content-name-mismatch",
+  "evaluate": "label-content-name-mismatch.js",
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "Interactive element contains visible label as part of it's accessible name",
+      "fail": "Interactive element does not contain visible label as part of it's accessible name"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "label-content-name-mismatch",
+  "matches": "label-content-name-mismatch-matches.js",
+  "tags": [
+    "wcag21a",
+    "wcag253"
+  ],
+  "metadata": {
+    "description": "Ensures that interactive elements labelled through their content must have their visible label as part of their accessible name",
+    "help": "Interactive elements must have their visible label as part of their accessible name"
+  },
+  "all": [],
+  "any": [
+    "label-content-name-mismatch"
+  ],
+  "none": []
+}
