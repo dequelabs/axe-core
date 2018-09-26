@@ -53,7 +53,7 @@ describe('text.accessibleTextVirtual', function() {
 			'  <label for="flash">' +
 			'    Flash the screen' +
 			'    <!-- Rule 2A: label of text input given by aria-label, "Number of times to flash screen" -->' +
-			'    <input type="text" value="3" size="2" id="numTimes" aria-label="Number of times to flash screen">' +
+			'    <input type="text" value="3" size="2" id="numTimes" title="Number of times to flash screen">' +
 			'    times' +
 			'  </label>' +
 			'</fieldset>';
@@ -62,6 +62,8 @@ describe('text.accessibleTextVirtual', function() {
 		var rule2a = axe.utils.querySelectorAll(axe._tree, '#beep')[0];
 		var rule2b = axe.utils.querySelectorAll(axe._tree, '#flash')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(rule2a), 'Beep');
+		// Chrome: "Flash the screen Number of times to flash screen times"
+		// Firefox: "Flash the screen Number of times to flash screen 3 times"
 		assert.equal(
 			axe.commons.text.accessibleTextVirtual(rule2b),
 			'Flash the screen 3 times'
@@ -244,8 +246,11 @@ describe('text.accessibleTextVirtual', function() {
 	});
 
 	it('should handle author name-from roles properly', function() {
+		// TODO: IMO this one should return "This is ARIA Label of everything"
+		// Chrome returns: This is This is a label of
+		// Firefox returns: This is ARIA Label
 		fixture.innerHTML =
-			'<div id="t2label">This is <input type="text" value="the value" ' +
+			'<div id="t2label" role="heading">This is <input type="text" value="the value" ' +
 			'aria-labelledby="t1label" aria-label="ARIA Label" id="t1"> of <i role="alert">everything</i></div>' +
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
@@ -254,7 +259,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2label')[0];
 		assert.equal(
-			axe.commons.text.accessibleTextVirtual(target),
+			axe.commons.text.accessibleTextVirtual(target, { debug: true }),
 			'This is This is a label of'
 		);
 	});
@@ -301,6 +306,8 @@ describe('text.accessibleTextVirtual', function() {
 	});
 
 	it('should use handle nested inputs properly in labelledby context', function() {
+		// Chrome: This is This is a label of everything
+		// Firefox: This is ARIA Label the value of everything
 		fixture.innerHTML =
 			'<div id="t2label">This is <input type="text" value="the value" ' +
 			'aria-labelledby="t1label" aria-label="ARIA Label" id="t1"> of <i>everything</i></div>' +
@@ -312,7 +319,7 @@ describe('text.accessibleTextVirtual', function() {
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
 		assert.equal(
 			axe.commons.text.accessibleTextVirtual(target),
-			'This is the value of everything'
+			'This is ARIA Label of everything'
 		);
 	});
 
@@ -333,9 +340,11 @@ describe('text.accessibleTextVirtual', function() {
 	});
 
 	it('should use handle inputs with no type as if they were text inputs', function() {
+		// Chrome: "This is This is a label of everything"
+		// Firefox "This is the value of everything"
 		fixture.innerHTML =
 			'<div id="t2label">This is <input value="the value" ' +
-			'aria-labelledby="t1label" aria-label="ARIA Label" id="t1"> of <i>everything</i></div>' +
+			'aria-labelledby="t1label" id="t1"> of <i>everything</i></div>' +
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
@@ -349,9 +358,11 @@ describe('text.accessibleTextVirtual', function() {
 	});
 
 	it('should use handle nested selects properly in labelledby context', function() {
+		// Chrome:  "This is This is a label of everything"
+		// Firefox: "This is ARIA Label of everything"
 		fixture.innerHTML =
 			'<div id="t2label">This is <select multiple ' +
-			'aria-labelledby="t1label" aria-label="ARIA Label" id="t1">' +
+			'aria-labelledby="t1label" id="t1">' +
 			'<option selected>first</option><option>second</option><option selected>third</option>' +
 			'</select> of <i>everything</i></div>' +
 			'<div id="t1label">This is a <b>label</b></div>' +
@@ -367,9 +378,11 @@ describe('text.accessibleTextVirtual', function() {
 	});
 
 	it('should use handle nested textareas properly in labelledby context', function() {
+		// Chrome: "This is This is a label of everything"
+		// Firefox: "This is ARIA Label the value of everything"
 		fixture.innerHTML =
 			'<div id="t2label">This is <textarea ' +
-			'aria-labelledby="t1label" aria-label="ARIA Label" id="t1">the value</textarea> of <i>everything</i></div>' +
+			'aria-labelledby="t1label" id="t1">the value</textarea> of <i>everything</i></div>' +
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
@@ -386,7 +399,7 @@ describe('text.accessibleTextVirtual', function() {
 		fixture.innerHTML =
 			'<div id="t2label">This <span aria-label="not a span">span</span>' +
 			' is <input type="text" value="the value" ' +
-			'aria-labelledby="t1label" aria-label="ARIA Label" id="t1"> of <i>everything</i></div>' +
+			'aria-labelledby="t1label" id="t1"> of <i>everything</i></div>' +
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
@@ -400,6 +413,8 @@ describe('text.accessibleTextVirtual', function() {
 	});
 
 	it('should come up empty if input is labeled only by select options', function() {
+		// Chrome: ""
+		// Firefox: ""
 		fixture.innerHTML =
 			'<label for="target">' +
 			'<select id="select">' +
@@ -677,12 +692,12 @@ describe('text.accessibleTextVirtual', function() {
 			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 		});
 
-		it('should not visit innerText of figure', function() {
+		it('should fall back to innerText of figure', function() {
 			fixture.innerHTML = '<figure>Hello<figcaption></figcaption></figure>';
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
-			assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 		});
 
 		(shadowSupport.v1 ? it : xit)(

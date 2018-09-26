@@ -2,14 +2,9 @@
 <html lang="en">
 <title>O hai</title>
 
-<div class="foo" id="foo">foo</div>
+<div role="heading" aria-labelledby="foo2">foo 1</div>
+<div id="foo2"><div aria-labelledby="foo3">foo 2</div></div>
+<div id="foo3"><div aria-labelledby="foo4">foo 3</div></div>
+<div id="foo4"><div aria-labelledby="foo5">foo 4</div></div>
+<div id="foo5">foo 5</div>
 
-<script src="/axe.js"></script>
-<script>
-window.addEventListener('load' , function () {
-  axe.run(document, function (err, res) {
-    console.log(res.violations);
-    res.incomplete.forEach(issue => console.log(issue))
-  });
-})
-</script>
