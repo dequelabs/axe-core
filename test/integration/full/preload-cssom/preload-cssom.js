@@ -275,10 +275,9 @@ describe('preload cssom integration test', function() {
 						})[0];
 						// shadow dom priority is greater than base doc
 						assert.isAbove(
-							anySheetFromShadowDocument.priority,
-							anySheetFromBaseDocument.priority
+							anySheetFromShadowDocument.priority[0],
+							anySheetFromBaseDocument.priority[0]
 						);
-
 						done();
 					})
 					.catch(done);
