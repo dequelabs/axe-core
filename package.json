@@ -61,7 +61,7 @@
     "test": "npm run test-dts && grunt test",
     "test-fast": "grunt test-fast",
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
-    "prepublishOnly": "grunt build",
+    "prepublishOnly": "grunt build && grunt file-exists",
     "postinstall": "node build/utils/postinstall.js",
     "release": "standard-version -a",
     "next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
