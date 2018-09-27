@@ -1,0 +1,11 @@
+{
+  "id": "aria-hidden-focus",
+  "evaluate": "aria-hidden-focus.js",
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "No focusable elements under aria-hidden element",
+      "fail": "aria-hidden=true element must not contain focusable elements"
+    }
+  }
+}
