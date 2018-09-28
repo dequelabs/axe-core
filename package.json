@@ -66,8 +66,7 @@
     "release": "standard-version -a",
     "next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
-    "fmt": "prettier --write  *.js, **/*.ts '{build,doc,lib,test}/**/*.js'",
-    "precommit": "lint-staged"
+    "fmt": "prettier --write  *.js, **/*.ts '{build,doc,lib,test}/**/*.js'"
   },
   "devDependencies": {
     "angular-precommit": "^1.0.3",
@@ -98,7 +97,7 @@
     "grunt-parallel": "^0.5.1",
     "grunt-retire": "^1.0.7",
     "html-entities": "^1.2.0",
-    "husky": "^0.14.3",
+    "husky": "^1.0.0",
     "jquery": "^3.0.0",
     "jsdoc": "^3.5.5",
     "lint-staged": "^7.2.0",
@@ -124,5 +123,10 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
