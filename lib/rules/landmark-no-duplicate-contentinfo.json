@@ -6,8 +6,8 @@
     "best-practice"
   ],
   "metadata": {
-    "description": "Ensures the page has at most one contentinfo landmark",
-    "help": "Page must not have more than one contentinfo landmark"
+    "description": "Ensures the document has at most one contentinfo landmark",
+    "help": "Document must not have more than one contentinfo landmark"
   },
   "all": [],
   "any": [
