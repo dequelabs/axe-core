@@ -1,10 +1,15 @@
-<!doctype html>
 <html lang="en">
 <title>O hai</title>
-
-<div role="heading" aria-labelledby="foo2">foo 1</div>
-<div id="foo2"><div aria-labelledby="foo3">foo 2</div></div>
-<div id="foo3"><div aria-labelledby="foo4">foo 3</div></div>
-<div id="foo4"><div aria-labelledby="foo5">foo 4</div></div>
-<div id="foo5">foo 5</div>
-
+<div id="fixture"></div>
+<INPUT TYPE="PASSWORD" />
+<script>
+var fixture = document.querySelector('#fixture')
+fixture.innerHTML = '<label for="test" id="lbl1">' +
+      'crazy' +
+      '  <select>' +
+      '    <option>clown</option>' +
+      '    <option>rich</option>' +
+      '  </select>' +
+      '</label> ' +
+      '<input type="text" id="test" aria-labelledby="lbl value="baz"/>';
+</script>

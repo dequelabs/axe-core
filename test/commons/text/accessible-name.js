@@ -3,11 +3,8 @@ describe('accessibleName acceptence tests', function() {
 	// Tests borrowed from the AccName 1.1 testing docs
 	// https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_539
 
-	var ariaValuetext = xit; // Not accessibility supported
-	var pseudoText = xit; // https://github.com/dequelabs/axe-core/issues/1130
-	var ariaValuenow = xit; // https://github.com/dequelabs/axe-core/issues/1162
-	var ariaOwns = xit; // TO BE REPORTED
-	var implicitRole = xit; // TO BE REPORTED
+	var ariaValuetext = xit; // Not acc supported
+	var pseudoText = xit; // Not acc supported
 
 	var fixture = document.getElementById('fixture');
 	var accessibleText = axe.commons.text.accessibleText;
@@ -112,7 +109,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), 'crazy Monday');
 	});
 
-	ariaValuenow('passes test 11', function() {
+	it('passes test 11', function() {
 		fixture.innerHTML =
 			'<label for="test">' +
 			'  crazy' +
@@ -810,7 +807,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), 'crazy Monday');
 	});
 
-	ariaValuenow('passes test 78', function() {
+	it('passes test 78', function() {
 		fixture.innerHTML =
 			'<label for="test">' +
 			'  crazy' +
@@ -823,7 +820,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), 'crazy 4');
 	});
 
-	ariaValuenow('passes test 79', function() {
+	it('passes test 79', function() {
 		fixture.innerHTML =
 			'<label for="test">' +
 			'  crazy' +
@@ -836,7 +833,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), 'crazy 4');
 	});
 
-	ariaValuenow('passes test 80', function() {
+	it('passes test 80', function() {
 		fixture.innerHTML =
 			'<label for="test">' +
 			'  crazy' +
@@ -849,7 +846,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), 'crazy 4');
 	});
 
-	ariaValuenow('passes test 81', function() {
+	it('passes test 81', function() {
 		fixture.innerHTML =
 			'<label for="test">' +
 			'  crazy' +
@@ -862,7 +859,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), 'crazy 4');
 	});
 
-	ariaValuenow('passes test 82', function() {
+	it('passes test 82', function() {
 		fixture.innerHTML =
 			'<label for="test">' +
 			'  crazy' +
@@ -1083,7 +1080,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 	});
 
-	ariaValuenow('passes test 101', function() {
+	it('passes test 101', function() {
 		fixture.innerHTML =
 			'<input type="checkbox" id="test" />' +
 			'<label for="test">foo <input role="slider" type="range" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz   	' +
@@ -1093,7 +1090,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), 'foo 5 baz');
 	});
 
-	ariaValuenow('passes test 102', function() {
+	it('passes test 102', function() {
 		fixture.innerHTML =
 			'<input type="checkbox" id="test" />' +
 			'<label for="test">foo <input role="spinbutton" type="number" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
@@ -1161,7 +1158,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 	});
 
-	ariaValuenow('passes test 107', function() {
+	it('passes test 107', function() {
 		fixture.innerHTML =
 			'<input type="file" id="test" />' +
 			'<label for="test">foo <input role="slider" type="range" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
@@ -1171,7 +1168,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), 'foo 5 baz');
 	});
 
-	ariaValuenow('passes test 108', function() {
+	it('passes test 108', function() {
 		fixture.innerHTML =
 			'<input type="file" id="test" />' +
 			'<label for="test">foo <input role="spinbutton" type="number" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
@@ -1247,7 +1244,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 	});
 
-	ariaValuenow('passes test 114', function() {
+	it('passes test 114', function() {
 		fixture.innerHTML =
 			'<input type="password" id="test" />' +
 			'<label for="test">foo <input role="slider" type="range" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
@@ -1257,7 +1254,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), 'foo 5 baz');
 	});
 
-	ariaValuenow('passes test 115', function() {
+	it('passes test 115', function() {
 		fixture.innerHTML =
 			'<input type="password" id="test" />' +
 			'<label for="test">foo <input role="spinbutton" type="number" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
@@ -1282,8 +1279,8 @@ describe('accessibleName acceptence tests', function() {
 			'    <div role="textbox"></div>' +
 			'    <ul role="listbox" style="list-style-type: none;">' +
 			'      <li role="option" aria-selected="true">1</li>' +
-			' 	<li role="option">2</li>' +
-			' 	<li role="option">3</li>' +
+			' 	   <li role="option">2</li>' +
+			' 	   <li role="option">3</li>' +
 			'    </ul>' +
 			'  </div>' +
 			'  times.' +
@@ -1325,7 +1322,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 	});
 
-	ariaValuenow('passes test 120', function() {
+	it('passes test 120', function() {
 		fixture.innerHTML =
 			'<input type="radio" id="test" />' +
 			'<label for="test">foo <input role="slider" type="range" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
@@ -1335,7 +1332,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), 'foo 5 baz');
 	});
 
-	ariaValuenow('passes test 121', function() {
+	it('passes test 121', function() {
 		fixture.innerHTML =
 			'<input type="radio" id="test" />' +
 			'<label for="test">foo <input role="spinbutton"  type="number" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
@@ -1360,8 +1357,8 @@ describe('accessibleName acceptence tests', function() {
 			'    <div role="textbox"></div>' +
 			'    <ul role="listbox" style="list-style-type: none;">' +
 			'      <li role="option" aria-selected="true">1</li>' +
-			' 	<li role="option">2</li>' +
-			' 	<li role="option">3</li>' +
+			' 	   <li role="option">2</li>' +
+			' 	   <li role="option">3</li>' +
 			'    </ul>' +
 			'  </div>' +
 			'  times.' +
@@ -1403,7 +1400,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 	});
 
-	ariaValuenow('passes test 126', function() {
+	it('passes test 126', function() {
 		fixture.innerHTML =
 			'<input type="text" id="test" />' +
 			'<label for="test">foo <input role="slider" type="range" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
@@ -1413,7 +1410,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), 'foo 5 baz');
 	});
 
-	ariaValuenow('passes test 127', function() {
+	it('passes test 127', function() {
 		fixture.innerHTML =
 			'<input type="text" id="test" />' +
 			'<label for="test">foo <input role="spinbutton" type="number" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
@@ -1499,7 +1496,9 @@ describe('accessibleName acceptence tests', function() {
 		);
 	});
 
-	implicitRole('passes test 141', function() {
+	// Disabling this, axe has a buggy implicitName computation
+	//  shouldn't be a big deal
+	xit('passes test 141', function() {
 		fixture.innerHTML =
 			'<style>' +
 			'  .hidden { display: none; }' +
@@ -1679,7 +1678,7 @@ describe('accessibleName acceptence tests', function() {
 		assert.equal(accessibleText(target), '2 4 6 8 10');
 	});
 
-	ariaOwns('passes test 154', function() {
+	it('passes test 154', function() {
 		fixture.innerHTML =
 			'<input type="file" id="test" />' +
 			'<label for="test">Flash <span aria-owns="id1">the screen</span> times.</label>' +
@@ -1697,13 +1696,10 @@ describe('accessibleName acceptence tests', function() {
 			'</div>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = fixture.querySelector('#test');
-		assert.equal(
-			accessibleText(target, { debug: true }),
-			'Flash the screen 2 times.'
-		);
+		assert.equal(accessibleText(target), 'Flash the screen 2 times.');
 	});
 
-	ariaOwns('passes test 155', function() {
+	it('passes test 155', function() {
 		fixture.innerHTML =
 			'<input type="file" id="test" />' +
 			'<label for="test">Flash <span aria-owns="id1">the screen</span> times.</label>' +
