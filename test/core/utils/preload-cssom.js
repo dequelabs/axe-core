@@ -63,7 +63,13 @@ describe('axe.utils.preloadCssom unit tests', function() {
 				var cssom = results[0];
 				assert.lengthOf(cssom, 2);
 				cssom.forEach(function(o) {
-					assert.hasAllKeys(o, ['root', 'shadowId', 'sheet', 'isExternal']);
+					assert.hasAllKeys(o, [
+						'root',
+						'shadowId',
+						'sheet',
+						'isExternal',
+						'priority'
+					]);
 				});
 				done();
 			})
