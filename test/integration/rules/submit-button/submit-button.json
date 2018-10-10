@@ -1,7 +1,6 @@
 {
 	"description": "submit-button test",
 	"rule": "submit-button",
-	"violations": [["#fail1"]],
-	"passes":  [["#pass1"], ["#pass2"], ["#pass3"]],
-	"incomplete": [["#undefiend1"], ["#undefiend2"], ["#undefiend3"], ["#undefiend4"]]
+	"passes":  [["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"]],
+	"incomplete": [["#undefiend1"], ["#undefiend2"], ["#undefiend3"], ["#undefiend4"], ["#undefiend5"], ["#undefiend6"]]
 }

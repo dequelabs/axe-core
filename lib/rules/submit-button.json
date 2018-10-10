@@ -8,8 +8,8 @@
     "experimental"
   ],
   "metadata": {
-    "description": "Ensure that forms can be submitted by using submit buttons",
-    "help": "Forms with action and method must have an way to be submited"
+    "description": "Ensure that user dont lose focus from automatic submition",
+    "help": "Forms with action and method must not have user lose focus by automaticly submit content"
   },
   "all": ["submit-button"],
   "any": [],
