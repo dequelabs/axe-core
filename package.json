@@ -62,14 +62,12 @@
     "test-fast": "grunt test-fast",
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
     "prepublishOnly": "grunt build && grunt file-exists",
-    "postinstall": "node build/utils/postinstall.js",
     "release": "standard-version -a",
     "next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "fmt": "prettier --write  *.js, **/*.ts '{build,doc,lib,test}/**/*.js'"
   },
   "devDependencies": {
-    "angular-precommit": "^1.0.3",
     "aria-query": "^3.0.0",
     "axios": "^0.18.0",
     "babel-core": "^6.26.0",
