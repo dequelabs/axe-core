@@ -70,8 +70,7 @@ describe('preload integration test', function() {
 					done();
 				})
 				.catch(function(error) {
-					console.error('Could not load stylesheets for testing.', error);
-					done();
+					done(new Error('Could not load stylesheets for testing. ' + error));
 				});
 		}
 	});
