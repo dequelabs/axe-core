@@ -27,7 +27,6 @@ describe('hidden-explicit-label', function() {
 		assert.isFalse(check.evaluate.apply(check, args));
 	});
 
-	// TODO: this test appears to be testing the wrong check. Investigate and fix.
 	it('should return true if an invisible empty label is present', function() {
 		var args = checkSetup(
 			'<label for="target" style="display: none;"></label><input type="text" id="target">'
@@ -58,6 +57,18 @@ describe('hidden-explicit-label', function() {
 			assert.isFalse(check.evaluate.apply(shadowCheckSetup, params));
 		}
 	);
+
+	it('should fail when the label has aria-hidden=true', function() {
+		var html = '';
+		html += '<div>';
+		html += '  <label for="target" aria-hidden="true">';
+		html += '    Hello world';
+		html += '  </label>';
+		html += '  <input id="target">';
+		html += '</div>';
+		var args = checkSetup(html, {}, '#target');
+		assert.isTrue(check.evaluate.apply(check, args));
+	});
 
 	describe('if the label is hidden', function() {
 		describe('and the element has an accessible name', function() {
