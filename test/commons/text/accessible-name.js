@@ -1,4 +1,4 @@
-describe('accessibleName acceptence tests', function() {
+describe('text.accessibleText acceptence tests', function() {
 	'use strict';
 	// Tests borrowed from the AccName 1.1 testing docs
 	// https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_539
@@ -8,6 +8,15 @@ describe('accessibleName acceptence tests', function() {
 
 	var fixture = document.getElementById('fixture');
 	var accessibleText = axe.commons.text.accessibleText;
+	var _unsupported;
+
+	before(function() {
+		_unsupported = axe.commons.text.unsupported;
+		axe.commons.text.unsupported = {};
+	});
+	after(function() {
+		axe.commons.text.unsupported = _unsupported;
+	});
 
 	afterEach(function() {
 		fixture.innerHTML = '';
@@ -1456,6 +1465,9 @@ describe('accessibleName acceptence tests', function() {
 
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = fixture.querySelector('#test');
+
+		// Chrome 70: "My name is Garaventa the weird. (QED) Where are my marbles?"
+		// Firefox 62: "Hello, My name is Eli the weird. (QED)"
 		assert.equal(
 			accessibleText(target),
 			'My name is Eli the weird. (QED) Where are my marbles?'

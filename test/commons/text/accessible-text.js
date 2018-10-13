@@ -113,12 +113,12 @@ describe('text.accessibleTextVirtual', function() {
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
 		assert.equal(
-			axe.commons.text.accessibleTextVirtual(target),
+			axe.commons.text.accessibleTextVirtual(target, { debug: true }),
 			'This is a hidden secret'
 		);
 	});
 
-	it('should allow setting the initial inLabelledbyContext value', function() {
+	it('should allow setting the initial includeHidden value', function() {
 		fixture.innerHTML =
 			'<label id="lbl1" style="display:none;">hidden label</label>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
@@ -126,14 +126,14 @@ describe('text.accessibleTextVirtual', function() {
 		var target = axe.utils.querySelectorAll(axe._tree, '#lbl1')[0];
 		assert.equal(
 			axe.commons.text.accessibleTextVirtual(target, {
-				inLabelledByContext: false
+				includeHidden: false
 			}),
 			''
 		);
 
 		assert.equal(
 			axe.commons.text.accessibleTextVirtual(target, {
-				inLabelledByContext: true
+				includeHidden: true
 			}),
 			'hidden label'
 		);
@@ -246,18 +246,19 @@ describe('text.accessibleTextVirtual', function() {
 	});
 
 	it('should handle author name-from roles properly', function() {
-		// TODO: IMO this one should return "This is ARIA Label of everything"
-		// Chrome returns: This is This is a label of
-		// Firefox returns: This is ARIA Label
 		fixture.innerHTML =
-			'<div id="t2label" role="heading">This is <input type="text" value="the value" ' +
-			'aria-labelledby="t1label" aria-label="ARIA Label" id="t1"> of <i role="alert">everything</i></div>' +
+			'<div id="t2label" role="heading">This is ' +
+			'  <input type="text" value="the value" ' +
+			'    aria-labelledby="t1label" aria-label="ARIA Label" id="t1">' +
+			'  of <i role="alert">everything</i></div>' +
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2label')[0];
+		// Chrome returns: This is This is a label of
+		// Firefox returns: This is ARIA Label
 		assert.equal(
 			axe.commons.text.accessibleTextVirtual(target, { debug: true }),
 			'This is This is a label of'
@@ -340,8 +341,6 @@ describe('text.accessibleTextVirtual', function() {
 	});
 
 	it('should use handle inputs with no type as if they were text inputs', function() {
-		// Chrome: "This is This is a label of everything"
-		// Firefox "This is the value of everything"
 		fixture.innerHTML =
 			'<div id="t2label">This is <input value="the value" ' +
 			'aria-labelledby="t1label" id="t1"> of <i>everything</i></div>' +
@@ -351,6 +350,8 @@ describe('text.accessibleTextVirtual', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
+		// Chrome 70: "This is This is a label of everything"
+		// Firefox 62: "This is the value of everything"
 		assert.equal(
 			axe.commons.text.accessibleTextVirtual(target),
 			'This is the value of everything'
@@ -358,8 +359,6 @@ describe('text.accessibleTextVirtual', function() {
 	});
 
 	it('should use handle nested selects properly in labelledby context', function() {
-		// Chrome:  "This is This is a label of everything"
-		// Firefox: "This is ARIA Label of everything"
 		fixture.innerHTML =
 			'<div id="t2label">This is <select multiple ' +
 			'aria-labelledby="t1label" id="t1">' +
@@ -371,15 +370,15 @@ describe('text.accessibleTextVirtual', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
+		// Chrome 70: "This is This is a label of everything"
+		// Firefox 62: "This is of everything"
 		assert.equal(
 			axe.commons.text.accessibleTextVirtual(target),
-			'This is first third of everything'
+			'This is of everything'
 		);
 	});
 
 	it('should use handle nested textareas properly in labelledby context', function() {
-		// Chrome: "This is This is a label of everything"
-		// Firefox: "This is ARIA Label the value of everything"
 		fixture.innerHTML =
 			'<div id="t2label">This is <textarea ' +
 			'aria-labelledby="t1label" id="t1">the value</textarea> of <i>everything</i></div>' +
@@ -389,6 +388,8 @@ describe('text.accessibleTextVirtual', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
+		// Chrome 70: "This is This is a label of everything"
+		// Firefox 62: "This is ARIA Label the value of everything"
 		assert.equal(
 			axe.commons.text.accessibleTextVirtual(target),
 			'This is the value of everything'
@@ -413,8 +414,6 @@ describe('text.accessibleTextVirtual', function() {
 	});
 
 	it('should come up empty if input is labeled only by select options', function() {
-		// Chrome: ""
-		// Firefox: ""
 		fixture.innerHTML =
 			'<label for="target">' +
 			'<select id="select">' +
@@ -425,6 +424,8 @@ describe('text.accessibleTextVirtual', function() {
 			'<input id="target" type="text" />';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+		// Chrome 70: ""
+		// Firefox 62: "Chosen"
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 	});
 
@@ -460,7 +461,7 @@ describe('text.accessibleTextVirtual', function() {
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 	});
 
-	it('should return select options if input is aria-labelled by a select', function() {
+	it('should not return select options if input is aria-labelled by a select', function() {
 		fixture.innerHTML =
 			'<label>' +
 			'<select id="select">' +
@@ -471,7 +472,9 @@ describe('text.accessibleTextVirtual', function() {
 			'<input aria-labelledby="select" type="text" id="target" />';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
-		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Chosen');
+		// Chrome 70: ""
+		// Firefox 62: ""
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 	});
 
 	it('shoud properly fall back to title', function() {
@@ -517,7 +520,10 @@ describe('text.accessibleTextVirtual', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
-		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
+		assert.equal(
+			axe.commons.text.accessibleTextVirtual(target, { debug: true }),
+			'Hello'
+		);
 	});
 
 	it('should give text even for role=none on buttons', function() {
@@ -907,8 +913,10 @@ describe('text.accessibleTextVirtual', function() {
 			);
 		});
 
-		it('should prefer title attribute over summary attribute', function() {
-			fixture.innerHTML = '<table title="Hello World" summary="FAIL"></table>';
+		it('should prefer summary attribute over title attribute', function() {
+			// Chrome 70: "Hello world"
+			// Firefox 62: "Hello world"
+			fixture.innerHTML = '<table summary="Hello World" title="FAIL"></table>';
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
@@ -1164,18 +1172,6 @@ describe('text.accessibleTextVirtual', function() {
 			);
 		});
 
-		// doesn't work consistently across ATs yet
-		it.skip('should find a value attribute', function() {
-			fixture.innerHTML = '<input type="image" value="Hello World">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
-
-			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-			assert.equal(
-				axe.commons.text.accessibleTextVirtual(target),
-				'Hello World'
-			);
-		});
-
 		it('should find a title attribute', function() {
 			fixture.innerHTML = '<input type="image" title="Hello World">';
 			axe._tree = axe.utils.getFlattenedTree(fixture);
@@ -1187,12 +1183,15 @@ describe('text.accessibleTextVirtual', function() {
 			);
 		});
 
-		it('should otherwise be empty string', function() {
+		it('should otherwise be "Submit Query" string', function() {
 			fixture.innerHTML = '<input type="image">';
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-			assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
+			assert.equal(
+				axe.commons.text.accessibleTextVirtual(target),
+				'Submit Query'
+			);
 		});
 	});
 
