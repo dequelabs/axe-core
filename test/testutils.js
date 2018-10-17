@@ -272,14 +272,11 @@ testUtils.addStyleSheet = function addStyleSheet(data) {
  * @returns {Object} a Promise
  */
 testUtils.addStyleSheets = function addStyleSheets(sheets) {
-	var promises = [];
-
+	var q = axe.utils.queue();
 	sheets.forEach(function(data) {
-		var p = axe.testUtils.addStyleSheet(data);
-		promises.push(p);
+		q.defer(axe.testUtils.addStyleSheet(data));
 	});
-
-	return Promise.all(promises);
+	return q;
 };
 
 axe.testUtils = testUtils;
