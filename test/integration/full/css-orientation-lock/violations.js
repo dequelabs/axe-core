@@ -39,6 +39,14 @@ describe('css-orientation-lock violations test', function() {
 		}
 	});
 
+	function assertViolatedSelectors(relatedNodes, violatedSelectors) {
+		relatedNodes.forEach(function(node) {
+			var target = node.target[0];
+			var className = Array.isArray(target) ? target.reverse()[0] : target;
+			assert.isTrue(violatedSelectors.indexOf(className) !== -1);
+		});
+	}
+
 	it('returns VIOLATIONS if preload is set to TRUE', function(done) {
 		// the sheets included in the html, have styles for transform and rotate, hence the violation
 		axe.run(
@@ -57,18 +65,17 @@ describe('css-orientation-lock violations test', function() {
 				assert.property(res, 'violations');
 				assert.lengthOf(res.violations, 1);
 
-				// assert the node and related nodes
+				// assert the node
 				var checkedNode = res.violations[0].nodes[0];
 				assert.isTrue(/html/i.test(checkedNode.html));
 
+				// assert the relatedNodes
 				var checkResult = checkedNode.all[0];
 				assert.lengthOf(checkResult.relatedNodes, 2);
-				var violatedSelectors = ['.someDiv', '.thatDiv'];
-				checkResult.relatedNodes.forEach(function(node) {
-					var target = node.target[0];
-					var className = Array.isArray(target) ? target.reverse()[0] : target;
-					assert.isTrue(violatedSelectors.indexOf(className) !== -1);
-				});
+				assertViolatedSelectors(checkResult.relatedNodes, [
+					'.someDiv',
+					'.thatDiv'
+				]);
 
 				done();
 			}
@@ -101,12 +108,19 @@ describe('css-orientation-lock violations test', function() {
 					assert.property(res, 'violations');
 					assert.lengthOf(res.violations, 1);
 
-					// assert the node and related nodes
+					// assert the node
 					var checkedNode = res.violations[0].nodes[0];
-					var checkResult = checkedNode.all[0];
+					assert.isTrue(/html/i.test(checkedNode.html));
 
-					// Issue - https://github.com/dequelabs/axe-core/issues/1082
-					assert.isAtLeast(checkResult.relatedNodes.length, 2);
+					// assert the relatedNodes
+					var checkResult = checkedNode.all[0];
+					assert.lengthOf(checkResult.relatedNodes, 3);
+					assertViolatedSelectors(checkResult.relatedNodes, [
+						'.someDiv',
+						'.thatDiv',
+						'.shadowDiv'
+					]);
+
 					done();
 				}
 			);
