@@ -44,9 +44,9 @@
 | landmark-banner-is-top-level | Ensures the banner landmark is at top level | Moderate | cat.semantics, best-practice | true |
 | landmark-contentinfo-is-top-level | Ensures the contentinfo landmark is at top level | Moderate | cat.semantics, best-practice | true |
 | landmark-main-is-top-level | Ensures the main landmark is at top level | Moderate | cat.semantics, best-practice | true |
-| landmark-no-duplicate-banner | Ensures the page has at most one banner landmark | Moderate | cat.semantics, best-practice | true |
-| landmark-no-duplicate-contentinfo | Ensures the page has at most one contentinfo landmark | Moderate | cat.semantics, best-practice | true |
-| landmark-one-main | Ensures the page has only one main landmark and each iframe in the page has at most one main landmark | Moderate | cat.semantics, best-practice | true |
+| landmark-no-duplicate-banner | Ensures the document has at most one banner landmark | Moderate | cat.semantics, best-practice | true |
+| landmark-no-duplicate-contentinfo | Ensures the document has at most one contentinfo landmark | Moderate | cat.semantics, best-practice | true |
+| landmark-one-main | Ensures the document has only one main landmark and each iframe in the page has at most one main landmark | Moderate | cat.semantics, best-practice | true |
 | layout-table | Ensures presentational &lt;table&gt; elements do not use &lt;th&gt;, &lt;caption&gt; elements or the summary attribute | Serious | cat.semantics, wcag2a, wcag131 | true |
 | link-in-text-block | Links can be distinguished without relying on color | Serious | cat.color, experimental, wcag2a, wcag141 | true |
 | link-name | Ensures links have discernible text | Serious | cat.name-role-value, wcag2a, wcag412, wcag244, section508, section508.22.a | true |
