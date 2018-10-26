@@ -194,6 +194,22 @@ describe('only-dlitems', function() {
 		);
 	});
 
+	it('should return true if the list mixed items inside a div group with a role', function() {
+		var checkArgs = checkSetup(
+			'<dl id="target"><div><dt>An item</dt><dd>A list</dd><p>Not a list</p></div></dl>'
+		);
+		assert.isTrue(
+			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('should return false if there is an empty div', function() {
+		var checkArgs = checkSetup('<dl id="target"><div></div></dl>');
+		assert.isFalse(
+			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
 	it('returns false if there are display:none elements that normally would not be allowed', function() {
 		var checkArgs = checkSetup(
 			'<dl id="target"> <dt>An item</dt> <dd>A list</dd> <h1 style="display:none">heading</h1> </dl>'
@@ -203,11 +219,25 @@ describe('only-dlitems', function() {
 		);
 	});
 
+	it('should return true if there is a div with text', function() {
+		var checkArgs = checkSetup('<dl id="target"><div>text</div></dl>');
+		assert.isTrue(
+			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
 	it('returns false if there are visibility:hidden elements that normally would not be allowed', function() {
 		var checkArgs = checkSetup(
 			'<dl id="target"> <dt>An item</dt> <dd>A list</dd> <h1 style="visibility:hidden">heading</h1> </dl>'
 		);
 		assert.isFalse(
+			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('should return true if there is a div with non-dd / dt elements', function() {
+		var checkArgs = checkSetup('<dl id="target"><div> <p>text</p> </div></dl>');
+		assert.isTrue(
 			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
 		);
 	});
