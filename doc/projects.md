@@ -40,3 +40,4 @@ Add your project/integration to this file and submit a pull request.
 1. [aXe-TestCafe](https://github.com/helen-dikareva/axe-testcafe)
 1. [Web Audit  University of Nebraska-Lincoln](https://webaudit.unl.edu/)
 1. [Vorlon.js Remote Debugger](https://github.com/MicrosoftDX/Vorlonjs)
+1. [Terra's Webdriver.io Accessibility Service](https://github.com/cerner/terra-toolkit/blob/master/docs/AxeService.md)

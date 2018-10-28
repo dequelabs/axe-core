@@ -252,6 +252,13 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+		'file-exists': {
+			data: langs.reduce(function(out, lang) {
+				out.push('axe' + lang + '.js');
+				out.push('axe' + lang + '.min.js');
+				return out;
+			}, [])
+		},
 		watch: {
 			files: ['lib/**/*', 'test/**/*.js', 'Gruntfile.js'],
 			tasks: ['build', 'testconfig', 'fixture']
@@ -391,6 +398,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('test', [
 		'build',
+		'file-exists',
 		'retire',
 		'testconfig',
 		'fixture',
