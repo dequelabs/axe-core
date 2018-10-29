@@ -1,3 +1,5 @@
+/* global axe, Promise */
+
 // Let the user know they need to disable their axe/attest extension before running the tests.
 if (window.__AXE_EXTENSION__) {
 	throw new Error(
@@ -227,7 +229,7 @@ testUtils.awaitNestedLoad = function awaitNestedLoad(win, cb) {
  * @property {String} data.href relative or absolute url for stylesheet to be loaded
  * @property {Boolean} data.mediaPrint boolean to represent if the constructed sheet is for print media
  * @property {String} data.text text contents to be written to the stylesheet
- * @returns {Object} axe.utils.queue
+ * @returns {Object} promise
  */
 testUtils.addStyleSheet = function addStyleSheet(data) {
 	function loadAsLinkTag(href, mediaPrint, resolve, reject) {
@@ -254,22 +256,20 @@ testUtils.addStyleSheet = function addStyleSheet(data) {
 		resolve();
 	}
 
-	var q = axe.utils.queue();
-	q.defer(function(resolve) {
+	return new Promise(function(resolve) {
 		if (data.href) {
 			loadAsLinkTag(data.href, data.mediaPrint, resolve);
 		} else {
 			loadAsStyleTag(data.text, resolve);
 		}
 	});
-	return q;
 };
 
 /**
  * Add a list of stylesheets
  *
  * @param {Object} sheets array of sheets data object
- * @returns {Object} axe.utils.queue
+ * @returns {Object} ""axe.utils.queue
  */
 testUtils.addStyleSheets = function addStyleSheets(sheets) {
 	var q = axe.utils.queue();
