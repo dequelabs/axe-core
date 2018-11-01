@@ -95,7 +95,7 @@
     "grunt-parallel": "^0.5.1",
     "grunt-retire": "^1.0.7",
     "html-entities": "^1.2.0",
-    "husky": "^1.0.0",
+    "husky": "^1.1.1",
     "jquery": "^3.0.0",
     "jsdoc": "^3.5.5",
     "lint-staged": "^7.2.0",
