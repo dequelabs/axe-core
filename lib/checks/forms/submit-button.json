@@ -4,7 +4,7 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "Form contains an button to submit content",
+      "pass": "Form contains a button to submit content",
       "incomplete": "Can not determine if form contains submit button"
     }
   }
