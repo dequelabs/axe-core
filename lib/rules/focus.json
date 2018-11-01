@@ -1,6 +1,6 @@
 {
   "id": "focus",
-  "selector": "[onFocus]",
+  "selector": "a[href][onFocus], link[href][onFocus], button[onFocus], input[onFocus], select[onFocus], textarea[onFocus], audio[controls][onFocus], video[controls][onFocus]",
   "tags": [
     "wcag2a",
     "wcag211",
