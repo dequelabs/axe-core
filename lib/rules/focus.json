@@ -7,8 +7,8 @@
     "cat.keyboard"
   ],
   "metadata": {
-    "description": "Ensure that executes code onFocus do not loose it when code is executed",
-    "help": "Elements should not loose focus when it just gained it"
+    "description": "Ensure that onFocus code upon execution does not lose focus",
+    "help": "Elements should not blur on focus"
   },
   "all": ["focus"],
   "any": [],

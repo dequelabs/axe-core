@@ -1,24 +1,34 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<title>focus test</title>
-	<meta charset="utf8">
-	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
-	<script src="/node_modules/mocha/mocha.js"></script>
-	<script src="/node_modules/chai/chai.js"></script>
-	<script src="/axe.js"></script>
-	<script>
-		mocha.setup({
-			timeout: 10000,
-			ui: 'bdd'
-		});
-		var assert = chai.assert;
-	</script>
+  <title>focus test</title>
+  <meta charset="utf8">
+  <link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
+  <script src="/node_modules/mocha/mocha.js"></script>
+  <script src="/node_modules/chai/chai.js"></script>
+  <script src="/axe.js"></script>
+  <script>
+    mocha.setup({
+      timeout: 10000,
+      ui: 'bdd'
+    });
+    var assert = chai.assert;
+  </script>
 </head>
 <body>
-  <input placeholder="test 1" onFocus="this.blur()"></input>
-  <input placeholder="test 2" onFocus="blurThis(event)"></input>
-  <input id="thisID5" placeholder="test 3" onFocus="setTimeout(() => {this.blur()}, 1)"></input>
+  <input placeholder="test 1" onFocus="this.blur()" />
+  <input placeholder="test 2" onFocus="blurThis(event)" />
+  <input id="thisID5" placeholder="test 3" onFocus="setTimeout(() => {this.blur()}, 1)" />
+  <a id="fail2" href="#" onFocus="this.blur()">Fail 2</a>
+  <button id="fail3" onFocus="this.blur()">Fail 3</button>
+  <select id="fail4" onFocus="this.blur()">
+    <option value="fail">fail 4</option>
+  </select>
+  <textarea id="fail5" onFocus="this.blur()" placeholder="fail 5" rows="8" cols="80"></textarea>
+  <audio id="fail6" controls onFocus="this.blur()">
+  </audio>
+  <video id="fail7" controls onFocus="this.blur()">
+  </video>
 <div id="mocha"></div>
 <script>
 function blurThis (evt) {
