@@ -164,6 +164,13 @@ describe('dom.isHiddenWithCSS', function() {
 	);
 
 	// `visibility` test
+	it('should return true for element that has `visibility:hidden`', function() {
+		fixture.innerHTML = '<div id="target" style="visibility: hidden;"></div>';
+		var el = document.getElementById('target');
+		var actual = isHiddenWithCSSFn(el);
+		assert.isTrue(actual);
+	});
+
 	it('should return false and consider know how `visibility` of self and parent is configured', function() {
 		fixture.innerHTML =
 			'<div style="visibility: hidden;">' +
