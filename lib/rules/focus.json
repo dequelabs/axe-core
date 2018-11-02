@@ -4,7 +4,8 @@
   "tags": [
     "wcag2a",
     "wcag211",
-    "cat.keyboard"
+    "cat.keyboard",
+    "experimental"
   ],
   "metadata": {
     "description": "Ensure that onFocus code upon execution does not lose focus",
