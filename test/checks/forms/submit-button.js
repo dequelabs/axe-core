@@ -69,17 +69,33 @@ describe('submit-button', function() {
     assert.isUndefined(checks['submit-button'].evaluate.apply(null, params));
   });
 
-  it('should return undefined as form has button with type reset ', function() {
+  it('should return true as form has button with type reset and only one input element', function() {
     var params = checkSetup(
       '<form><button type="reset"></button><input /></form>',
+      '#fixture'
+    );
+    assert.isTrue(checks['submit-button'].evaluate.apply(null, params));
+  });
+
+  it('should return true as form has button[type=button] and only one input element', function() {
+    var params = checkSetup(
+      '<form><button type="button"></button><input /></form>',
+      '#fixture'
+    );
+    assert.isTrue(checks['submit-button'].evaluate.apply(null, params));
+  });
+
+  it('should return true as form has button with type reset and sevral input elements', function() {
+    var params = checkSetup(
+      '<form><button type="reset"></button><input /><input /></form>',
       '#fixture'
     );
     assert.isUndefined(checks['submit-button'].evaluate.apply(null, params));
   });
 
-  it('should return undefined as form has button[type=button]', function() {
+  it('should return true as form has button[type=button] and with sevral input elements', function() {
     var params = checkSetup(
-      '<form><button type="button"></button><input /></form>',
+      '<form><button type="button"></button><input /><input /></form>',
       '#fixture'
     );
     assert.isUndefined(checks['submit-button'].evaluate.apply(null, params));
