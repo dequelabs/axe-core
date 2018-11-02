@@ -1,6 +1,6 @@
 {
-	"description": "submit-button test",
-	"rule": "submit-button",
-	"passes":  [["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"]],
-	"incomplete": [["#undefiend1"], ["#undefiend2"], ["#undefiend3"], ["#undefiend4"], ["#undefiend5"], ["#undefiend6"]]
+  "description": "submit-button test",
+  "rule": "submit-button",
+  "passes":  [["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"], ["#pass5"], ["#pass6"]],
+  "incomplete": [["#undefiend1"], ["#undefiend2"], ["#undefiend3"], ["#undefiend4"], ["#undefiend5"], ["#undefiend6"], ["#undefiend7"]]
 }

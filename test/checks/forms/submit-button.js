@@ -11,9 +11,9 @@ describe('submit-button', function() {
     axe._tree = undefined;
   });
 
-  it('should return true as form has img with submit', function() {
+  it('should return true as form has input(image) with submit', function() {
     var params = checkSetup(
-      '<form><img type="submit" /><input /></form>',
+      '<form><input type="image" /><input /></form>',
       '#fixture'
     );
     assert.isTrue(checks['submit-button'].evaluate.apply(null, params));
@@ -40,14 +40,14 @@ describe('submit-button', function() {
     assert.isUndefined(checks['submit-button'].evaluate.apply(null, params));
   });
 
-  it('should return undefined as no button. img or input with submit was found', function() {
+  it('should return undefined as no button. input with submit was found', function() {
     var params = checkSetup('<form><input /><input /></form>', '#fixture');
     assert.isUndefined(checks['submit-button'].evaluate.apply(null, params));
   });
 
-  it('should return undefined as form has img with submit and disabled', function() {
+  it('should return undefined as form has input(image) with submit and disabled', function() {
     var params = checkSetup(
-      '<form><img type="submit" disabled/><input /></form>',
+      '<form><input type="image" disabled/><input /></form>',
       '#fixture'
     );
     assert.isUndefined(checks['submit-button'].evaluate.apply(null, params));
