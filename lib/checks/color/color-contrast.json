@@ -17,6 +17,8 @@
         "outsideViewport": "Element's background color could not be determined because it's outside the viewport",
         "equalRatio": "Element has a 1:1 contrast ratio with the background",
         "shortTextContent": "Element content is too short to determine if it is actual text content",
+        "pseudoBgGradient": "Element has a background-gradient in {{=it.data.elementType}} pseudo element",
+        "pseudoBgColor": "Element has an undeterminable background-color in {{=it.data.elementType}} pseudo element",
         "default": "Unable to determine contrast ratio"
       }
     }

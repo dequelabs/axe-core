@@ -335,6 +335,124 @@ describe('color-contrast', function() {
 		assert.isTrue(actual);
 	});
 
+	it('should return false for a psuedo element background with no opacity', function() {
+		var params = checkSetup(
+			'<style>#wrapper:before { content: "";' +
+				'display: inline-block;' +
+				'position: absolute;' +
+				'top: 0;' +
+				'left: 0;' +
+				'margin: 0;' +
+				'opacity: 0;' +
+				'width: calc((100% - 67px));' +
+				'height: 100%;' +
+				'pointer-events: none;' +
+				'background: linear-gradient(to right, #00809d, #006f94);' +
+				'z-index: -1; }</style>' +
+				'<div id="wrapper" style="background-color: #000;"><p style="color: #fff" id="target">Text</p></div>'
+		);
+		var actual = contrastEvaluate.apply(checkContext, params);
+
+		assert.isTrue(actual);
+	});
+
+	it('should return false for a psuedo element background that does not overlap', function() {
+		var params = checkSetup(
+			'<style>#wrapper:before { content: "";' +
+				'display: inline-block;' +
+				'position: absolute;' +
+				'top: 0;' +
+				'right: 100%;' +
+				'margin: -10px;' +
+				'width: calc((100% - 67px));' +
+				'height: 10px;' +
+				'pointer-events: none;' +
+				'background: linear-gradient(to right, #00809d, #006f94);' +
+				'z-index: -1; }</style>' +
+				'<div id="wrapper" style="background-color: #000;"><p style="color: #fff" id="target">Text</p></div>'
+		);
+		var actual = contrastEvaluate.apply(checkContext, params);
+
+		assert.isTrue(actual);
+	});
+
+	it('should return undefined for background: gradient in a pseudo element', function() {
+		var params = checkSetup(
+			'<style>#wrapper { position: relative; }' +
+				'#wrapper:before { content: "";' +
+				'display: inline-block;' +
+				'position: absolute;' +
+				'top: 0;' +
+				'left: 0;' +
+				'margin: 0;' +
+				'width: calc((100% - 67px));' +
+				'height: 100%;' +
+				'pointer-events: none;' +
+				'background: linear-gradient(to right, #00809d, #006f94);' +
+				'z-index: -1; }</style>' +
+				'<div id="wrapper"><p style="color: #fff" id="target">Pseudo gradient before</p></div>'
+		);
+		var white = new axe.commons.color.Color(255, 255, 255, 1);
+
+		var actual = contrastEvaluate.apply(checkContext, params);
+
+		assert.isUndefined(actual);
+		assert.equal(checkContext._data.missingData, 'pseudoBgGradient');
+		assert.equal(checkContext._data.elementType, ':before');
+		assert.notEqual(checkContext._data.bgColor, white.toHexString());
+	});
+
+	it('should return undefined for background-image: gradient in a pseudo element', function() {
+		var params = checkSetup(
+			'<style>#wrapper { position: relative; }' +
+				'#wrapper:after { content: "";' +
+				'display: inline-block;' +
+				'position: absolute;' +
+				'top: 0;' +
+				'left: 0;' +
+				'margin: 0;' +
+				'width: calc((100% - 67px));' +
+				'height: 100%;' +
+				'pointer-events: none;' +
+				'background-image: linear-gradient(to right, #00809d, #006f94);' +
+				'z-index: -1; }</style>' +
+				'<div id="wrapper"><p style="color: #fff" id="target">Pseudo gradient after</p></div>'
+		);
+		var white = new axe.commons.color.Color(255, 255, 255, 1);
+
+		var actual = contrastEvaluate.apply(checkContext, params);
+
+		assert.isUndefined(actual);
+		assert.equal(checkContext._data.missingData, 'pseudoBgGradient');
+		assert.equal(checkContext._data.elementType, ':after');
+		assert.notEqual(checkContext._data.bgColor, white.toHexString());
+	});
+
+	it('should return undefined for background-color in a pseudo element', function() {
+		var params = checkSetup(
+			'<style>#wrapper { position: relative; }' +
+				'#wrapper:before { content: "";' +
+				'display: inline-block;' +
+				'position: absolute;' +
+				'top: 0;' +
+				'left: 0;' +
+				'margin: 0;' +
+				'width: calc((100% - 67px));' +
+				'height: 100%;' +
+				'pointer-events: none;' +
+				'background-color: #ccc;' +
+				'z-index: -1; }</style>' +
+				'<div id="wrapper"><p style="color: #fff" id="target">Pseudo before bgcolor</p></div>'
+		);
+		var white = new axe.commons.color.Color(255, 255, 255, 1);
+
+		var actual = contrastEvaluate.apply(checkContext, params);
+		assert.isUndefined(actual);
+		assert.equal(checkContext._data.missingData, 'pseudoBgColor');
+		assert.equal(checkContext._data.elementType, ':before');
+		assert.notEqual(checkContext._data.bgColor, white.toHexString());
+	});
+
 	(shadowSupported ? it : xit)(
 		'returns colors across Shadow DOM boundaries',
 		function() {
