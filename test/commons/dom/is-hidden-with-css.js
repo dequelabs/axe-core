@@ -4,6 +4,7 @@ describe('dom.isHiddenWithCSS', function() {
 	var fixture = document.getElementById('fixture');
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var isHiddenWithCSSFn = axe.commons.dom.isHiddenWithCSS;
+	var origComputedStyle = window.getComputedStyle;
 
 	function createContentSlotted(mainProps, targetProps) {
 		var group = document.createElement('div');
@@ -23,22 +24,21 @@ describe('dom.isHiddenWithCSS', function() {
 	}
 
 	afterEach(function() {
+		window.getComputedStyle = origComputedStyle;
 		document.getElementById('fixture').innerHTML = '';
 	});
 
-	it('should throw an error if computedStyle returns null', function*() {
-		var orig = window.getComputedStyle;
+	it('should throw an error if computedStyle returns null', function() {
+		window.getComputedStyle = function() {
+			return null;
+		};
 		var fakeNode = {
 			nodeType: Node.ELEMENT_NODE,
 			nodeName: 'div'
 		};
-		window.getComputedStyle = function() {
-			return null;
-		};
-		var actual = isHiddenWithCSSFn(fakeNode);
-		var expected = Error;
-		assert.throws(actual, expected);
-		window.getComputedStyle = orig;
+		assert.throws(function() {
+			isHiddenWithCSSFn(fakeNode);
+		});
 	});
 
 	it('should return false on static-positioned, visible element', function() {
