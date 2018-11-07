@@ -1,0 +1,13 @@
+{
+	"description": "multiple label test",
+	"rule": "multiple-label",
+	"violations": [
+    ["#fail1"],
+    ["#fail2"],
+    ["#fail3"]
+	],
+	"passes": [
+    ["#pass1"],
+    ["#pass2"]
+  ]
+}
