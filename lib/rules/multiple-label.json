@@ -1,0 +1,20 @@
+{
+  "id": "multiple-label",
+  "selector": "input, select, textarea",
+  "matches": "label-matches.js",
+  "tags": [
+    "best-practice",
+    "cat.forms",
+    "wcag2a",
+    "wcag332"
+  ],
+  "metadata": {
+    "description": "Ensures form element does not have multiple label elements",
+    "help": "Form element must not have multiple associated label elements"
+  },
+  "all": [],
+  "any": [],
+  "none": [
+    "multiple-label"
+  ]
+}

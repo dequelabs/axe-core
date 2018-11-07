@@ -40,7 +40,7 @@
 | image-redundant-alt | Ensure button and link text is not repeated as image alternative | Minor | cat.text-alternatives, best-practice | true |
 | input-image-alt | Ensures &lt;input type=&quot;image&quot;&gt; elements have alternate text | Critical | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | Serious | cat.forms, best-practice | true |
-| label | Ensures every form element has a label | Minor, Serious, Critical | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
+| label | Ensures every form element has a label | Minor, Critical | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
 | landmark-banner-is-top-level | Ensures the banner landmark is at top level | Moderate | cat.semantics, best-practice | true |
 | landmark-contentinfo-is-top-level | Ensures the contentinfo landmark is at top level | Moderate | cat.semantics, best-practice | true |
 | landmark-main-is-top-level | Ensures the main landmark is at top level | Moderate | cat.semantics, best-practice | true |
@@ -56,6 +56,7 @@
 | meta-refresh | Ensures &lt;meta http-equiv=&quot;refresh&quot;&gt; is not used | Critical | cat.time, wcag2a, wcag2aaa, wcag221, wcag224, wcag325 | true |
 | meta-viewport-large | Ensures &lt;meta name=&quot;viewport&quot;&gt; can scale a significant amount | Minor | cat.sensory-and-visual-cues, best-practice | true |
 | meta-viewport | Ensures &lt;meta name=&quot;viewport&quot;&gt; does not disable text scaling and zooming | Critical | cat.sensory-and-visual-cues, wcag2aa, wcag144 | true |
+| multiple-label | Ensures form element does not have multiple label elements | Serious | best-practice, cat.forms, wcag2a, wcag332 | true |
 | object-alt | Ensures &lt;object&gt; elements have alternate text | Serious | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | p-as-heading | Ensure p elements are not used to style headings | Serious | cat.semantics, wcag2a, wcag131, experimental | true |
 | page-has-heading-one | Ensure that the page, or at least one of its frames contains a level-one heading | Moderate | cat.semantics, best-practice | true |
