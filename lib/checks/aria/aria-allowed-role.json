@@ -9,7 +9,8 @@
 		"impact": "minor",
 		"messages": {
 			"pass": "ARIA role is allowed for given element",
-			"fail": "role{{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}} {{=it.data && it.data.length > 1 ? 'are' : ' is'}} not allowed for given element"
+      "fail": "role{{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}} {{=it.data && it.data.length > 1 ? 'are' : ' is'}} not allowed for given element",
+      "incomplete": "Element is not visible, and ARIA role{{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}} {{=it.data && it.data.length > 1 ? 'are' : ' is'}} not allowed for given element"
 		}
 	}
 }
