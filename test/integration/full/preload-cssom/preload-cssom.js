@@ -6,23 +6,6 @@ describe('preload cssom integration test', function() {
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var isPhantom = window.PHANTOMJS ? true : false;
 
-	function addSheet(data) {
-		if (data.href) {
-			var link = document.createElement('link');
-			link.rel = 'stylesheet';
-			link.href = data.href;
-			if (data.mediaPrint) {
-				link.media = 'print';
-			}
-			document.head.appendChild(link);
-		} else {
-			const style = document.createElement('style');
-			style.type = 'text/css';
-			style.appendChild(document.createTextNode(data.text));
-			document.head.appendChild(style);
-		}
-	}
-
 	var styleSheets = [
 		{
 			href:
@@ -44,14 +27,14 @@ describe('preload cssom integration test', function() {
 			this.skip();
 			done();
 		} else {
-			styleSheets.forEach(addSheet);
-			// cache original axios object
-			if (axe.imports.axios) {
-				origAxios = axe.imports.axios;
-			}
-
-			// wait for network request to complete for added sheets
-			setTimeout(done, 5000);
+			axe.testUtils
+				.addStyleSheets(styleSheets)
+				.then(function() {
+					done();
+				})
+				.catch(function(error) {
+					done(new Error('Could not load stylesheets for testing. ' + error));
+				});
 		}
 	});
 
@@ -164,9 +147,24 @@ describe('preload cssom integration test', function() {
 	});
 
 	describe('tests for current top level document', function() {
+		var shadowFixture;
+
 		before(function() {
 			if (isPhantom) {
 				this.skip();
+			}
+		});
+
+		beforeEach(function() {
+			var shadowNode = document.createElement('div');
+			shadowNode.id = 'shadow-fixture';
+			document.body.appendChild(shadowNode);
+			shadowFixture = document.getElementById('shadow-fixture');
+		});
+
+		afterEach(function() {
+			if (shadowFixture) {
+				document.body.removeChild(shadowFixture);
 			}
 		});
 
@@ -222,22 +220,20 @@ describe('preload cssom integration test', function() {
 		});
 
 		(shadowSupported ? it : xit)(
-			'should return styles from shadow dom',
+			'should return styles from shadow dom (handles @import "external", @import "relative" and inline styles)',
 			function(done) {
-				var fixture = document.getElementById('shadow-fixture');
-				var shadow = fixture.attachShadow({ mode: 'open' });
+				var shadow = shadowFixture.attachShadow({ mode: 'open' });
 				shadow.innerHTML =
-					'<style>@import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"; @import "preload-cssom-shadow-blue.css"; .green { background-color: green; }</style>' +
+					'<style> @import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"; @import "preload-cssom-shadow-blue.css"; .green { background-color: green; } </style>' +
 					'<div class="initialism">Some text</div>' +
 					'<div class="green">green</div>' +
 					'<div class="red">red</div>' +
-					'' +
 					'<h1>Heading</h1>';
-				getPreload(fixture)
+				getPreload(shadowFixture)
 					.then(function(results) {
 						var sheets = results[0];
 						// verify count
-						assert.isAtLeast(sheets.length, 4);
+						assert.lengthOf(sheets, 7);
 						// verify that the last non external sheet with shadowId has green selector
 						var nonExternalsheetsWithShadowId = sheets
 							.filter(function(s) {
@@ -246,20 +242,115 @@ describe('preload cssom integration test', function() {
 							.filter(function(s) {
 								return s.shadowId;
 							});
+						assertStylesheet(
+							nonExternalsheetsWithShadowId[
+								nonExternalsheetsWithShadowId.length - 1
+							].sheet,
+							'.green',
+							'.green{background-color:green;}'
+						);
+						// verify priority of shadowId sheets is higher than base document
+						var anySheetFromBaseDocument = sheets.filter(function(s) {
+							return !s.shadowId;
+						})[0];
+						var anySheetFromShadowDocument = sheets.filter(function(s) {
+							return s.shadowId;
+						})[0];
+						// shadow dom priority is greater than base doc
+						assert.isAbove(
+							anySheetFromShadowDocument.priority[0],
+							anySheetFromBaseDocument.priority[0]
+						);
+						done();
+					})
+					.catch(done);
+			}
+		);
 
-						// Issue - https://github.com/dequelabs/axe-core/issues/1082
-						if (
-							nonExternalsheetsWithShadowId &&
-							nonExternalsheetsWithShadowId.length
-						) {
-							assertStylesheet(
-								nonExternalsheetsWithShadowId[
-									nonExternalsheetsWithShadowId.length - 1
-								].sheet,
-								'.green',
-								'.green{background-color:green;}'
-							);
-						}
+		(shadowSupported ? it : xit)(
+			'should return styles from shadow dom (handles multiple <style> declarations with @import "external", @import "relative" and inline styles)',
+			function(done) {
+				var shadow = shadowFixture.attachShadow({ mode: 'open' });
+				shadow.innerHTML =
+					'<style> @import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"; @import "preload-cssom-shadow-blue.css"; .green { background-color: green; } </style>' +
+					'<div class="initialism">Some text</div>' +
+					'<style> .notGreen { background-color: orange; } </style>' +
+					'<div class="green">green</div>' +
+					'<div class="red">red</div>' +
+					'<div class="notGreen">red</div>' +
+					'<h1>Heading</h1>';
+				getPreload(shadowFixture)
+					.then(function(results) {
+						var sheets = results[0];
+						// verify count
+						assert.lengthOf(sheets, 8);
+						// verify that the last non external sheet with shadowId has green selector
+						var nonExternalsheetsWithShadowId = sheets
+							.filter(function(s) {
+								return !s.isExternal;
+							})
+							.filter(function(s) {
+								return s.shadowId;
+							});
+						assertStylesheet(
+							nonExternalsheetsWithShadowId[
+								nonExternalsheetsWithShadowId.length - 2
+							].sheet,
+							'.green',
+							'.green{background-color:green;}'
+						);
+						assertStylesheet(
+							nonExternalsheetsWithShadowId[
+								nonExternalsheetsWithShadowId.length - 1
+							].sheet,
+							'.notGreen',
+							'.notGreen{background-color:orange;}'
+						);
+						done();
+					})
+					.catch(done);
+			}
+		);
+
+		(shadowSupported ? it : xit)(
+			'should return styles from shadow dom (handles mulitple <style> and <link> tags)',
+			function(done) {
+				var shadow = shadowFixture.attachShadow({ mode: 'open' });
+				shadow.innerHTML =
+					'<style> @import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"; </style>' +
+					'<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure.css" />' +
+					'<h1>Heading</h1>';
+				getPreload(shadowFixture)
+					.then(function(results) {
+						var sheets = results[0];
+						// verify count
+						assert.lengthOf(sheets, 6);
+
+						// verify that the last non external sheet with shadowId has green selector
+						var nonExternalsheetsWithShadowId = sheets
+							.filter(function(s) {
+								return !s.isExternal;
+							})
+							.filter(function(s) {
+								return s.shadowId;
+							});
+						// there are no inline styles in shadowRoot
+						assert.lengthOf(nonExternalsheetsWithShadowId, 0);
+
+						// ensure the output of shadowRoot sheet is that of expected external mocked response
+						var externalsheetsWithShadowId = sheets
+							.filter(function(s) {
+								return s.isExternal;
+							})
+							.filter(function(s) {
+								return s.shadowId;
+							});
+						assertStylesheet(
+							externalsheetsWithShadowId[0].sheet,
+							'body',
+							'body{overflow:auto;}'
+						);
+
 						done();
 					})
 					.catch(done);
