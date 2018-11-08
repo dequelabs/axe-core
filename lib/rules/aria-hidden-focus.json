@@ -8,7 +8,7 @@
     "wcag412"
   ],
   "metadata": {
-    "description": "Ensures aria-hidden element do not contain focusable elements",
+    "description": "Ensures aria-hidden elements do not contain focusable elements",
     "help": "ARIA hidden element must not contain focusable elements"
   },
   "all": [],

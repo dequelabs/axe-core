@@ -14,6 +14,7 @@ describe('aria-hidden-focus', function() {
 		fixture.innerHTML = '';
 	});
 
+	// pass
 	it('returns true when content not focusable by default', function() {
 		fixture.innerHTML = '<p id="target" aria-hidden="true">Some text</p>';
 		var node = fixture.querySelector('#target');
@@ -44,6 +45,7 @@ describe('aria-hidden-focus', function() {
 		assert.isTrue(actual);
 	});
 
+	// fail
 	it('returns false when focusable off screen link', function() {
 		fixture.innerHTML =
 			'<div id="target" aria-hidden="true"><a href="/" style="position:absolute; top:-999em">Link</a></div>';
