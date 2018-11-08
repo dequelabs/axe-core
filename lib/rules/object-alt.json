@@ -17,7 +17,9 @@
     "has-visible-text",
     "aria-label",
     "aria-labelledby",
-    "non-empty-title"
+    "non-empty-title",
+    "role-presentation",
+    "role-none"
   ],
   "none": []
 }
