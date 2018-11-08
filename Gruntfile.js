@@ -1,5 +1,5 @@
-/*eslint 
-complexity: ["error",12], 
+/*eslint
+complexity: ["error",12],
 max-statements: ["error", 35],
 camelcase: ["error", {"properties": "never"}]
 */
@@ -19,7 +19,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-retire');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-parallel');
-	grunt.loadNpmTasks('grunt-markdownlint');
 	grunt.loadTasks('build/tasks');
 
 	var langs;
@@ -370,14 +369,6 @@ module.exports = function(grunt) {
 					'!**/node_modules/**/*.js'
 				]
 			}
-		},
-		markdownlint: {
-			all: {
-				options: {
-					config: grunt.file.readJSON('.markdownlint.json')
-				},
-				src: ['README.md', '.github/*.md', 'doc/**/*.md']
-			}
 		}
 	});
 
@@ -405,8 +396,7 @@ module.exports = function(grunt) {
 		'connect',
 		'mocha',
 		'parallel',
-		'eslint',
-		'markdownlint'
+		'eslint'
 	]);
 
 	grunt.registerTask('ci-build', [

@@ -136,15 +136,15 @@ Installing aXe to run accessibility tests in your TypeScript project should be a
 import * as axe from 'axe-core';
 
 describe('Module', () => {
-	it('should have no accessibility violations', (done) => {
-		axe.run(compiledFixture)
-			.then((results) => {
-				expect(results.violations.length).toBe(0);
-				done()
-			}, done);
+	it('should have no accessibility violations', done => {
+		axe.run(compiledFixture).then(results => {
+			expect(results.violations.length).toBe(0);
+			done();
+		}, done);
 	});
 });
 ```
+
 ## Debugging tests that only fail on CircleCI
 
 First install an X-Windows client on your machine. XQuartz is a good one.
