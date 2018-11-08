@@ -51,7 +51,7 @@ describe('aria-allowed-role', function() {
 		);
 	});
 
-	it('returns null (needs review) when element is hidden and has redundant role', function() {
+	it('returns undefined (needs review) when element is hidden and has redundant role', function() {
 		fixture.innerHTML =
 			'<button id="target" type="button" aria-hidden="true"' +
 			'role="presentation"></button>';
@@ -60,10 +60,10 @@ describe('aria-allowed-role', function() {
 			checkContext,
 			target
 		);
-		assert.isNull(actual);
+		assert.isUndefined(actual);
 	});
 
-	it('returns null (needs review) when element is with in hidden parent and has redundant role', function() {
+	it('returns undefined (needs review) when element is with in hidden parent and has redundant role', function() {
 		fixture.innerHTML =
 			'<div style="display:none">' +
 			'<button id="target" class="mm-tabstart" type="button"' +
@@ -74,7 +74,7 @@ describe('aria-allowed-role', function() {
 			checkContext,
 			target
 		);
-		assert.isNull(actual);
+		assert.isUndefined(actual);
 	});
 
 	it('returns true when BUTTON has type menu and role as menuitem', function() {
