@@ -4,6 +4,7 @@ describe('aria-hidden-focus', function() {
 	var fixture = document.getElementById('fixture');
 	var check = undefined;
 	var checkContext = axe.testUtils.MockCheckContext();
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
 
 	before(function() {
 		check = checks['aria-hidden-focus'];
@@ -56,6 +57,19 @@ describe('aria-hidden-focus', function() {
 		assert.isTrue(actual);
 	});
 
+	(shadowSupported ? it : xit)(
+		'returns true when content hidden through CSS inside shadowDOM',
+		function() {
+			fixture.innerHTML = '<div id="target"></div>';
+			var node = fixture.querySelector('#target');
+			var shadow = node.attachShadow({ mode: 'open' });
+			shadow.innerHTML =
+				'<div aria-hidden="true"><a href="/" style="display:none">Link</a></div>';
+			var actual = check.evaluate.call(checkContext, node);
+			assert.isTrue(actual);
+		}
+	);
+
 	// fail
 	it('returns false when focusable off screen link', function() {
 		fixture.innerHTML =
@@ -88,4 +102,16 @@ describe('aria-hidden-focus', function() {
 		var actual = check.evaluate.call(checkContext, node);
 		assert.isFalse(actual);
 	});
+
+	(shadowSupported ? it : xit)(
+		'returns false when focusable content through tabindex inside shadowDOM',
+		function() {
+			fixture.innerHTML = '<div id="target"></div>';
+			var node = fixture.querySelector('#target');
+			var shadow = node.attachShadow({ mode: 'open' });
+			shadow.innerHTML = '<p tabindex="0" aria-hidden="true">Some text</p>';
+			var actual = check.evaluate.call(checkContext, node);
+			assert.isFalse(actual);
+		}
+	);
 });
