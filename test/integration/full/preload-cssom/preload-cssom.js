@@ -6,23 +6,6 @@ describe('preload cssom integration test', function() {
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var isPhantom = window.PHANTOMJS ? true : false;
 
-	function addSheet(data) {
-		if (data.href) {
-			var link = document.createElement('link');
-			link.rel = 'stylesheet';
-			link.href = data.href;
-			if (data.mediaPrint) {
-				link.media = 'print';
-			}
-			document.head.appendChild(link);
-		} else {
-			const style = document.createElement('style');
-			style.type = 'text/css';
-			style.appendChild(document.createTextNode(data.text));
-			document.head.appendChild(style);
-		}
-	}
-
 	var styleSheets = [
 		{
 			href:
@@ -44,14 +27,14 @@ describe('preload cssom integration test', function() {
 			this.skip();
 			done();
 		} else {
-			styleSheets.forEach(addSheet);
-			// cache original axios object
-			if (axe.imports.axios) {
-				origAxios = axe.imports.axios;
-			}
-
-			// wait for network request to complete for added sheets
-			setTimeout(done, 5000);
+			axe.testUtils
+				.addStyleSheets(styleSheets)
+				.then(function() {
+					done();
+				})
+				.catch(function(error) {
+					done(new Error('Could not load stylesheets for testing. ' + error));
+				});
 		}
 	});
 
