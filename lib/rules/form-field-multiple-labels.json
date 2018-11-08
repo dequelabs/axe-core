@@ -1,5 +1,5 @@
 {
-  "id": "multiple-label",
+  "id": "form-field-multiple-labels",
   "selector": "input, select, textarea",
   "matches": "label-matches.js",
   "tags": [
