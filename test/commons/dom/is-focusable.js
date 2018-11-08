@@ -230,6 +230,14 @@ describe('is-focusable', function() {
 			assert.isFalse(axe.commons.dom.isNativelyFocusable(el));
 		});
 
+		it('should return false for elements collapsed with visibility:collapse', function() {
+			fixture.innerHTML =
+				'<button id="target" style="visibility: collapse">button</button>';
+			var el = document.getElementById('target');
+
+			assert.isFalse(axe.commons.dom.isNativelyFocusable(el));
+		});
+
 		it('should return true for clipped elements', function() {
 			fixture.innerHTML = '<button id="target">button</button>';
 			var el = document.getElementById('target');
@@ -257,6 +265,14 @@ describe('is-focusable', function() {
 		it('should return false for elements hidden with visibility:hidden on an ancestor', function() {
 			fixture.innerHTML =
 				'<div id="parent" style="visibility: hidden"><button id="target">button</button></div>';
+			var el = document.getElementById('target');
+
+			assert.isFalse(axe.commons.dom.isNativelyFocusable(el));
+		});
+
+		it('should return false for elements collapsed with visibility:collapse on an ancestor', function() {
+			fixture.innerHTML =
+				'<div id="parent" style="visibility: collapse"><button id="target">button</button></div>';
 			var el = document.getElementById('target');
 
 			assert.isFalse(axe.commons.dom.isNativelyFocusable(el));
