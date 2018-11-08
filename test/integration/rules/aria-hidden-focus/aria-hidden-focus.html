@@ -3,7 +3,11 @@
 <div id='pass2' aria-hidden="true"><a href="/" style="display:none">Link</a></div>
 <div id='pass3' aria-hidden="true"><button tabindex="-1">Some button</button></div>
 <input id='pass4' disabled aria-hidden="true" />
-<div id='pass5' aria-hidden="true"><a href="/" style="position:absolute; top:-999em">Link</a></div>
+<div id='pass5' aria-hidden="true">
+	<div aria-hidden="false">
+		<button tabindex="-1">Some button</button>
+	</div>
+</div>
 
 <!-- Fail -->
 <div id='violation1' aria-hidden="true">
@@ -12,13 +16,8 @@
 <div id='violation2' aria-hidden="true">
 	<input aria-disabled="true" />
 </div>
-<div id='violation3' aria-hidden="true">
-	<div aria-hidden="false">
-		<button tabindex="-1">Some button</button>
-	</div>
-</div>
-<p id='violation4' tabindex="0" aria-hidden="true">Some text</p>
-<details id='violation5' aria-hidden="true">
+<p id='violation3' tabindex="0" aria-hidden="true">Some text</p>
+<details id='violation4' aria-hidden="true">
 	<summary>Some button</summary>
 	<p>Some details</p>
 </details>

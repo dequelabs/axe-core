@@ -32,7 +32,9 @@ describe('aria-hidden-focus', function() {
 
 	it('returns true when content made unfocusable through tabindex', function() {
 		fixture.innerHTML =
-			'<div id="target" aria-hidden="true"><button tabindex="-1">Some button</button></div>';
+			'<div id="target" aria-hidden="true">' +
+			'<button tabindex="-1">Some button</button>' +
+			'</div>';
 		var node = fixture.querySelector('#target');
 		var actual = check.evaluate.call(checkContext, node);
 		assert.isTrue(actual);
@@ -40,6 +42,15 @@ describe('aria-hidden-focus', function() {
 
 	it('returns true when content made unfocusable through disabled', function() {
 		fixture.innerHTML = '<input id="target" disabled aria-hidden="true" />';
+		var node = fixture.querySelector('#target');
+		var actual = check.evaluate.call(checkContext, node);
+		assert.isTrue(actual);
+	});
+
+	it('returns true when aria-hidden=false does not negate aria-hidden true', function() {
+		// Note: aria-hidden can't be reset once you've set it to true on an ancestor
+		fixture.innerHTML =
+			'<div id="target" aria-hidden="true"><div aria-hidden="false"><button tabindex="-1">Some button</button></div></div>';
 		var node = fixture.querySelector('#target');
 		var actual = check.evaluate.call(checkContext, node);
 		assert.isTrue(actual);
@@ -56,15 +67,7 @@ describe('aria-hidden-focus', function() {
 
 	it('returns false when focusable form field, incorrectly disabled', function() {
 		fixture.innerHTML =
-			'<div id="target" aria-hidden="true"><input type="text"/></div>';
-		var node = fixture.querySelector('#target');
-		var actual = check.evaluate.call(checkContext, node);
-		assert.isFalse(actual);
-	});
-
-	it('returns false when aria-hidden=false does not negate aria-hidden true', function() {
-		fixture.innerHTML =
-			'<div id="target" aria-hidden="true"><div aria-hidden="false"><button tabindex="-1">Some button</button></div></div>';
+			'<div id="target" aria-hidden="true"><input type="text" aria-disabled="true"/></div>';
 		var node = fixture.querySelector('#target');
 		var actual = check.evaluate.call(checkContext, node);
 		assert.isFalse(actual);
@@ -78,7 +81,7 @@ describe('aria-hidden-focus', function() {
 		assert.isFalse(actual);
 	});
 
-	it('returns false when Focusable summary element', function() {
+	it('returns false when focusable summary element', function() {
 		fixture.innerHTML =
 			'<details id="target" aria-hidden="true"><summary>Some button</summary><p>Some details</p></details>';
 		var node = fixture.querySelector('#target');
