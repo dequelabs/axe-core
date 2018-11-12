@@ -56,10 +56,8 @@
   },
   "scripts": {
     "api-docs": "jsdoc --configure .jsdoc.json",
-    "build": "npm run retire && grunt",
-    "test-dts": "tsc",
-    "test": "npm run test-dts && grunt test",
-    "test-fast": "grunt test-fast",
+    "build": "grunt",
+    "test": "npm run retire && tsc && grunt test",
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
     "prepublishOnly": "grunt build && grunt file-exists",
     "retire": "retire --jspath 'lib' --nodepath './' --ignorefile '.retireignore.json' --severity 'medium'",
