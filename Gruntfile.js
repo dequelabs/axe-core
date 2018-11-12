@@ -1,5 +1,5 @@
-/*eslint 
-complexity: ["error",12], 
+/*eslint
+complexity: ["error",12],
 max-statements: ["error", 35],
 camelcase: ["error", {"properties": "never"}]
 */
@@ -16,7 +16,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-eslint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-retire');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-parallel');
 	grunt.loadNpmTasks('grunt-markdownlint');
@@ -67,16 +66,6 @@ module.exports = function(grunt) {
 			});
 			return driverTests;
 		})(),
-		retire: {
-			options: {
-				/** list of files to ignore **/
-				ignorefile: '.retireignore.json' //or '.retireignore.json'
-			},
-			js: ['lib/*.js'] /** Which js-files to scan. **/,
-			node: [
-				'./'
-			] /** Which node directories to scan (containing package.json). **/
-		},
 		clean: ['dist', 'tmp', 'axe.js', 'axe.*.js'],
 		babel: {
 			options: {
@@ -399,7 +388,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('test', [
 		'build',
 		'file-exists',
-		'retire',
 		'testconfig',
 		'fixture',
 		'connect',
@@ -411,7 +399,6 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('ci-build', [
 		'build',
-		'retire',
 		'testconfig',
 		'fixture',
 		'connect',
