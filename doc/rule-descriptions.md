@@ -28,7 +28,7 @@
 | duplicate-id | Ensures every id attribute value is unique | Minor | cat.parsing, wcag2a, wcag411 | true |
 | empty-heading | Ensures headings have discernible text | Minor | cat.name-role-value, best-practice | true |
 | focus-order-semantics | Ensures elements in the focus order have an appropriate role | Minor | cat.keyboard, best-practice, experimental | true |
-| form-field-multiple-labels | Ensures form element does not have multiple label elements | Moderate | best-practice, cat.forms, wcag2a, wcag332 | true |
+| form-field-multiple-labels | Ensures form field does not have multiple label elements | Moderate | cat.forms, wcag2a, wcag332 | true |
 | frame-tested | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain the axe-core script | Critical | cat.structure, review-item | true |
 | frame-title-unique | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a unique title attribute | Serious | cat.text-alternatives, best-practice | true |
 | frame-title | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a non-empty title attribute | Serious | cat.text-alternatives, wcag2a, wcag241, wcag412, section508, section508.22.i | true |
