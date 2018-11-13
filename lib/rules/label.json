@@ -22,5 +22,5 @@
 		"explicit-label",
 		"non-empty-title"
 	],
-	"none": ["help-same-as-label", "multiple-label", "hidden-explicit-label"]
+	"none": ["help-same-as-label", "hidden-explicit-label"]
 }

@@ -23,11 +23,14 @@ Each commit message should consist of a header, a body and a footer. The header 
 that includes a type, a scope and a subject. Here's a sample of the format:
 
 ```html
-<type>(<scope>): <subject>
-<BLANK LINE>
-<body>
-<BLANK LINE>
-<footer>
+<type
+	>(<scope
+		>):
+		<subject>
+			<BLANK LINE>
+				<body>
+					<BLANK LINE> <footer></footer></BLANK></body></BLANK></subject></scope
+></type>
 ```
 
 ### Here's an example:
