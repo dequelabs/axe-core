@@ -13,6 +13,12 @@
     ],
     [
       "#violation4"
+    ],
+    [
+      "#violation5"
+    ],
+    [
+      "#violation6"
     ]
   ],
   "passes": [
@@ -30,6 +36,9 @@
     ],
     [
       "#pass5"
+    ],
+    [
+      "#pass6"
     ]
   ]
 }

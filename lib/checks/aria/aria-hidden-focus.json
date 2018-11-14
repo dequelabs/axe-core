@@ -4,8 +4,8 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "No focusable elements under aria-hidden element",
-      "fail": "aria-hidden=true element must not contain focusable elements"
+      "pass": "No focusable elements contained within aria-hidden element",
+      "fail": "Focusable elements in aria-hidden='true' must have tabindex='-1'"
     }
   }
 }
