@@ -43,6 +43,7 @@
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | Serious | cat.forms, best-practice | true |
 | label | Ensures every form element has a label | Minor, Critical | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
 | landmark-banner-is-top-level | Ensures the banner landmark is at top level | Moderate | cat.semantics, best-practice | true |
+| landmark-complementary-is-top-level | Ensures the complementary landmark or aside is at top level | Moderate | cat.semantics, best-practice | true |
 | landmark-contentinfo-is-top-level | Ensures the contentinfo landmark is at top level | Moderate | cat.semantics, best-practice | true |
 | landmark-main-is-top-level | Ensures the main landmark is at top level | Moderate | cat.semantics, best-practice | true |
 | landmark-no-duplicate-banner | Ensures the document has at most one banner landmark | Moderate | cat.semantics, best-practice | true |

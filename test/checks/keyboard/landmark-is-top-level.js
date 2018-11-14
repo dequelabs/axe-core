@@ -13,12 +13,22 @@ describe('landmark-is-top-level', function() {
 		checkContext.reset();
 	});
 
-	it('should return false if the landmark is in another landmark', function() {
+	it('should return false if the banner landmark is in another landmark', function() {
 		var mainLandmark = document.createElement('main');
 		var bannerDiv = document.createElement('div');
 		bannerDiv.setAttribute('role', 'banner');
 		bannerDiv.appendChild(mainLandmark);
 		fixture.appendChild(bannerDiv);
+		assert.isFalse(check.evaluate.call(checkContext, mainLandmark));
+		assert.deepEqual(checkContext._data, { role: 'main' });
+	});
+
+	it('should return false if the complementary landmark is in another landmark', function() {
+		var mainLandmark = document.createElement('main');
+		var aside = document.createElement('div');
+		aside.setAttribute('role', 'complementary');
+		aside.appendChild(mainLandmark);
+		fixture.appendChild(aside);
 		assert.isFalse(check.evaluate.call(checkContext, mainLandmark));
 		assert.deepEqual(checkContext._data, { role: 'main' });
 	});
