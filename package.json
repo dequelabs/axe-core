@@ -55,6 +55,7 @@
     }
   },
   "scripts": {
+    "axe-rule-gen": "node bin/rule-generator",
     "api-docs": "jsdoc --configure .jsdoc.json",
     "build": "grunt",
     "test": "npm run retire && tsc && grunt test",
@@ -64,7 +65,10 @@
     "release": "standard-version -a",
     "next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
-    "fmt": "prettier --write  *.js, **/*.ts '{build,doc,lib,test}/**/*.js'"
+    "fmt": "prettier --write  *.js, **/*.ts '{bin,build,doc,lib,test}/**/*.js'"
+  },
+  "bin": {
+    "axe-rule-gen": "./bin/rule-generator.js"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
@@ -77,9 +81,12 @@
     "babelify": "^10.0.0",
     "blanket": "~1.2.3",
     "chai": "~4.1.2",
+    "chalk": "^2.4.1",
     "clone": "~2.1.1",
     "dot": "~1.1.2",
     "eslint-config-prettier": "^3.0.0",
+    "figlet": "^1.2.1",
+    "filehound": "^1.16.4",
     "fs-extra": "^7.0.0",
     "grunt": "^1.0.2",
     "grunt-babel": "^7.0.0",
@@ -95,17 +102,20 @@
     "grunt-parallel": "^0.5.1",
     "html-entities": "^1.2.0",
     "husky": "^1.1.1",
+    "inquirer": "^6.2.0",
     "jquery": "^3.0.0",
     "jsdoc": "^3.5.5",
     "lint-staged": "^8.0.0",
     "markdown-table": "^1.1.2",
     "minami": "^1.2.3",
     "mocha": "^5.2.0",
+    "node-command-line": "^1.0.2",
     "prettier": "^1.14.0",
     "promise": "~8.0.1",
     "retire": "^2.0.1",
     "revalidator": "~0.3.1",
     "selenium-webdriver": "~3.6.0",
+    "shelljs": "^0.8.3",
     "sri-toolbox": "^0.2.0",
     "standard-version": "^4.4.0",
     "typescript": "^2.9.2",
