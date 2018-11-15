@@ -32,7 +32,7 @@ This example can be modified to test components in other test frameworks as well
 
 For example, when running Mocha, you should require `jsdom-global/register`. The command for this is as follows:
 
-```shell
+```sh
 mocha *.test.js --require jsdom-global/register
 ```
 

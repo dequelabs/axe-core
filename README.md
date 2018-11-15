@@ -49,7 +49,7 @@ npm install axe-core --save-dev
 
 Now include the javascript file in each of your iframes in your fixtures or test systems:
 
-```html
+```
 <script src="node_modules/axe-core/axe.min.js"></script>
 ```
 

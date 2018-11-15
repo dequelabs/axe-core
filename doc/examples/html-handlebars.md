@@ -6,7 +6,7 @@ The example uses handlebars templates but can be easily adapted to other formats
 
 ## The JavaScript
 
-```javascript
+```js
 function helperItemIterator(items, template) {
 	var out = '';
 	if (items) {

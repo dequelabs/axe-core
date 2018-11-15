@@ -132,7 +132,7 @@ The following variables are defined for `Check#after`:
 
 The after function must return an `Array` of CheckResults, due to this, it is a very common pattern to just use `Array#filter` to filter results:
 
-```javascript
+```js
 var uniqueIds = [];
 return results.filter(function(r) {
 	if (uniqueIds.indexOf(r.data) === -1) {
@@ -147,7 +147,7 @@ return results.filter(function(r) {
 
 Occasionally, you may want to add additional information about why a Check passed, failed or returned undefined into its message. For example, the [aria-valid-attr](../lib/checks/aria/valid-attr.json) will add information about any invalid ARIA attributes to its fail message. The message uses the [doT.js](http://olado.github.io/doT/) and is compiled to a JavaScript function at build-time. In the Check message, you have access to the `CheckResult` as `it`.
 
-```javascript
+```js
 // aria-valid-attr check
 "messages": {
   "pass": "ARIA attributes are used correctly for the defined role",
@@ -187,7 +187,7 @@ it expects to operate on a virtual DOM tree.
 
 Let’s look at an example:
 
-```javascript
+```js
 axe.commons.text.accessibleText = function(element, inLabelledbyContext) {
 	let virtualNode = axe.utils.getNodeFromTree(axe._tree[0], element); // throws an exception on purpose if axe._tree not correct
 	return axe.commons.text.accessibleTextVirtual(
@@ -215,7 +215,7 @@ and [check evaluate](#check-evaluate) functions. The full set of API methods for
 found in the [API documentation](./API.md#virtual-dom-utilities), but the general
 structure for a virtualNode is as follows:
 
-```javascript
+```js
 {
   actualNode: <HTMLElement>,
   children: <Array>,
@@ -262,7 +262,7 @@ The DqElement is a "serialized" `HTMLElement`. It will calculate the CSS selecto
 - `Element` - `HTMLElement` The element to serialize
 - `Spec` - `Object` Properties to use in place of the element when instantiated on Elements from other frames
 
-```javascript
+```js
 var firstH1 = document.getElementByTagName('h1')[0];
 var dqH1 = new axe.utils.DqElement(firstH1);
 ```
@@ -290,7 +290,7 @@ light and shadow DOM, if applicable.
 
 #### Synopsis
 
-```javascript
+```js
 var element = document.body;
 axe.utils.getFlattenedTree(element, shadowId);
 ```
@@ -304,7 +304,7 @@ axe.utils.getFlattenedTree(element, shadowId);
 
 An array of objects, where each object is a virtualNode:
 
-```javascript
+```js
 [
 	{
 		actualNode: body,
@@ -322,7 +322,7 @@ Recursively return a single node from a virtual DOM tree. This is commonly used 
 
 #### Synopsis
 
-```javascript
+```js
 axe.utils.getNodeFromTree(axe._tree[0], node);
 ```
 
@@ -335,7 +335,7 @@ axe.utils.getNodeFromTree(axe._tree[0], node);
 
 A virtualNode object:
 
-```javascript
+```js
 {
   actualNode: div,
   children: [virtualNodes],
@@ -353,7 +353,7 @@ Create a check context for mocking and resetting data and relatedNodes in tests.
 
 #### Synopsis
 
-```javascript
+```js
 describe('region', function() {
 	var fixture = document.getElementById('fixture');
 
@@ -379,7 +379,7 @@ None
 
 An object containg the data, relatedNodes, and a way to reset them.
 
-```javascript
+```js
 {
   data: (){},
   relatedNodes: (){},
@@ -393,7 +393,7 @@ Provides an API for determining Shadow DOM v0 and v1 support in tests. For examp
 
 #### Synopsis
 
-```javascript
+```js
 (axe.testUtils.shadowSupport.v1 ? it : xit)(
 	'should test Shadow tree content',
 	function() {
@@ -416,7 +416,7 @@ Method for injecting content into a fixture and caching the flattened DOM tree (
 
 #### Synopsis
 
-```javascript
+```js
 it(
 	'should return true if there is only one ' +
 		type +
@@ -451,7 +451,7 @@ Create check arguments.
 
 #### Synopsis
 
-```javascript
+```js
 it('should return true when all content is inside the region', function() {
 	var checkArgs = checkSetup(
 		'<div id="target"><div role="main"><a href="a.html#mainheader">Click Here</a><div><h1 id="mainheader" tabindex="0">Introduction</h1></div></div></div>'
@@ -472,6 +472,6 @@ it('should return true when all content is inside the region', function() {
 
 An array with the DOM Node, options and virtualNode
 
-```javascript
+```js
 [node, options, virtualNode];
 ```

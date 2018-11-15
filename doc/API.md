@@ -120,7 +120,7 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
 
 **Returned Data:**
 
-```javascript
+```js
 [
   { ruleId: "area-alt", description: "Checks the <area> elements of image…" },
   { ruleId: "aria-allowed-attr", description: "Checks all attributes that start…" },
@@ -141,7 +141,7 @@ User specifies the format of the JSON structure passed to the callback of `axe.r
 
 #### Synopsis
 
-```javascript
+```js
 axe.configure({
 	branding: {
 		brand: String,
@@ -211,7 +211,7 @@ Override any previous calls to `axe.configure` and restore the configuration to 
 
 #### Synopsis
 
-```javascript
+```js
 axe.reset();
 ```
 
@@ -231,7 +231,7 @@ Runs a number of rules against the provided HTML page and returns the resulting 
 
 #### Synopsis
 
-```javascript
+```js
 axe.run(context, options, callback);
 ```
 
@@ -275,7 +275,7 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 
 1. Include the first item in the `$fixture` NodeList but exclude its first child
 
-```javascript
+```js
 {
   include: $fixture[0],
   exclude: $fixture[0].firstChild
@@ -284,7 +284,7 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 
 2. Include the element with the ID of `fix` but exclude any `div`s within it
 
-```javascript
+```js
 {
   include: [['#fix']],
   exclude: [['#fix div']]
@@ -293,7 +293,7 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 
 3. Include the whole document except any structures whose parent contains the class `exclude1` or `exclude2`
 
-```javascript
+```js
 {
 	exclude: [['.exclude1'], ['.exclude2']];
 }
@@ -301,7 +301,7 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 
 4. Include the element with the ID of `fix`, within the iframe with id `frame`
 
-```javascript
+```js
 {
 	include: [['#frame', '#fix']];
 }
@@ -309,7 +309,7 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 
 5. Include the element with the ID of `fix`, within the iframe with id `frame2`, within the iframe with id `frame1`
 
-```javascript
+```js
 {
 	include: [['#frame1', '#frame2', '#fix']];
 }
@@ -321,7 +321,7 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 - The element with id `header`
 - All links
 
-```javascript
+```js
 {
 	include: [['#header'], ['a'], ['#frame1', '#frame2', '#fix']];
 }
@@ -366,7 +366,7 @@ There are certain standards defined that can be used to select a set of rules. T
 
 To run only WCAG 2.0 Level A rules, specify `options` as:
 
-```javascript
+```js
 {
   runOnly: {
     type: "tag",
@@ -377,7 +377,7 @@ To run only WCAG 2.0 Level A rules, specify `options` as:
 
 To run both WCAG 2.0 Level A and Level AA rules, you must specify both `wcag2a` and `wcag2aa`:
 
-```javascript
+```js
 {
   runOnly: {
     type: "tag",
@@ -388,7 +388,7 @@ To run both WCAG 2.0 Level A and Level AA rules, you must specify both `wcag2a` 
 
 Alternatively, runOnly can be passed an array of tags:
 
-```javascript
+```js
 {
 	runOnly: ['wcag2a', 'wcag2aa'];
 }
@@ -398,7 +398,7 @@ Alternatively, runOnly can be passed an array of tags:
 
 If you only want to run certain rules, specify options as:
 
-```javascript
+```js
 {
   runOnly: {
     type: "rule",
@@ -413,7 +413,7 @@ This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `r
 
 The default operation for axe.run is to run all rules except for rules with the "experimental" tag. If certain rules should be disabled from being run, specify `options` as:
 
-```javascript
+```js
 {
   "rules": {
     "color-contrast": { enabled: false },
@@ -428,7 +428,7 @@ This example will disable the rules with the id of `color-contrast` and `valid-l
 
 By combining runOnly with type: tags and the rules option, a modified set can be defined. This lets you include rules with unspecified tags, and exclude rules that do have the specified tag(s).
 
-```javascript
+```js
 {
   runOnly: {
     type: "tag",
@@ -447,7 +447,7 @@ This example includes all level A rules except for valid-lang, and in addition w
 
 Similar to scope, the runOnly option can accept an object with an 'include' and 'exclude' property. Only those checks that match an included tag will run, except those that share a tag from the exclude list.
 
-```javascript
+```js
 {
   runOnly: {
     type: 'tags',
@@ -467,7 +467,7 @@ The `resultTypes` option can be used to limit the result types that aXe will pro
 
 Types listed in this option are processed normally and report all of their results. Types _not_ listed process a maximum of one result. The caller can use this information to inform the user of the existence of that type of result if appropriate.
 
-```javascript
+```js
 {
 	resultTypes: ['violations', 'incomplete', 'inapplicable'];
 }
@@ -567,7 +567,7 @@ Each object returned in these arrays have the following properties:
 
 In this example, we will pass the selector for the entire document, pass no options, which means all enabled rules will be run, and have a simple callback function that logs the entire results object to the console log:
 
-```javascript
+```js
 axe.run(document, function(err, results) {
 	if (err) throw err;
 	console.log(results);
@@ -623,7 +623,7 @@ Each subsequent entry in the violations array has the same format, but will deta
 
 In this example, we pass the selector for the entire document, enable two additional experimental rules, and have a simple callback function that logs the entire results object to the console log:
 
-```javascript
+```js
 axe.run(
 	document,
 	{
@@ -670,7 +670,7 @@ Call each plugin's cleanup function. See [implementing a plugin](plugins.md).
 
 The signature is:
 
-```javascript
+```js
 axe.cleanup(resolve, reject);
 ```
 
@@ -694,7 +694,7 @@ Note: while there is no `axe.utils.querySelector` method, you can reproduce that
 
 ##### Synopsis
 
-```javascript
+```js
 axe.utils.querySelectorAll(virtualNode, 'a[href]');
 ```
 
@@ -715,7 +715,7 @@ Get an element's parent in the flattened tree
 
 ##### Synopsis
 
-```javascript
+```js
 axe.commons.dom.getComposedParent(node);
 ```
 
@@ -733,7 +733,7 @@ Return the document or document fragment (open shadow DOM)
 
 ##### Synopsis
 
-```javascript
+```js
 axe.commons.dom.getRootNode(node);
 ```
 
@@ -751,7 +751,7 @@ Recusively walk up the DOM, checking for a node which matches a selector. Warnin
 
 ##### Synopsis
 
-```javascript
+```js
 axe.commons.dom.findUp(node, '.selector');
 ```
 

@@ -20,7 +20,7 @@ In order to create such a plugin, we need to implement the "run" function for th
 
 #### Basic plugin
 
-```javascript
+```js
 axe.registerPlugin({
 	id: 'doStuff',
 	run: function(id, action, options, callback) {
@@ -96,7 +96,7 @@ Once all the iframes' run functions have been executed, the callback is called. 
 
 Lets implement a basic plugin instance to see how this works. This instance will implement a "highlight" function (to place a basic frame around the bounding box of an element on each iframe on a page)
 
-```javascript
+```js
 var highlight = {
 	id: 'highlight',
 	highlighter: new Highlighter(),
