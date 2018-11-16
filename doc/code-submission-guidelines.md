@@ -23,20 +23,11 @@ Each commit message should consist of a header, a body and a footer. The header 
 that includes a type, a scope and a subject. Here's a sample of the format:
 
 ```
-<type>
-  (<scope>):
-    <subject>
-      <BLANK LINE>
-      <body>
-        <BLANK LINE>
-        <footer>
-        </footer>
-        </BLANK>
-      </body>
-      </BLANK>
-    </subject>
-  </scope>
-</type>
+<type>(<scope>): <subject>
+<BLANK LINE>
+<body>
+<BLANK LINE>
+<footer>
 ```
 
 ### Here's an example:
@@ -44,9 +35,9 @@ that includes a type, a scope and a subject. Here's a sample of the format:
 ```sh
 perf(rule): improve speed of color contrast rules
 
-Use async process to compare elements without UI lockup
+  Use async process to compare elements without UI lockup
 
-Closes #1
+    Closes #1
 ```
 
 > Commit messages should be 100 characters or less to make them easy to read on Github and
