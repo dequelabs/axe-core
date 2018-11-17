@@ -749,6 +749,8 @@ Either the matching HTMLElement or `null` if there was no match.
 
 This package contains examples for [jasmine](examples/jasmine), [mocha](examples/mocha), [phantomjs](examples/phantomjs), [qunit](examples/qunit), [selenium using javascript](examples/selenium), and [generating HTML from the violations array](examples/html-handlebars.md). Each of these examples is in the [doc/examples](examples) folder. In each folder, there is a README.md file which contains specific information about each example.
 
+See [axe-webdriverjs](https://github.com/dequelabs/axe-webdriverjs#axe-webdriverjs) for selenium webdriver javascript examples.
+
 ## Section 4: Performance
 
 Axe-core performs very well in general and if you are analyzing average complexity pages with the default settings, you should not need to worry about performance at all. There are some scenarios that can cause performance issues. This is the list of known issues and what you can do to mitigate and/or avoid them.
