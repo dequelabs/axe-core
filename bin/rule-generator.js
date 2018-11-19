@@ -6,6 +6,7 @@ const inquirer = require('inquirer');
 const axeFile = path.join(__dirname, '..', 'axe.js');
 const globby = require('globby');
 const execa = require('execa');
+const mkdirp = require('mkdirp');
 
 const directories = {
 	RULES: path.join(__dirname, '..', 'lib', 'rules'),
@@ -248,7 +249,7 @@ const questionAndGetFilesToCreate = async () => {
 			{
 				name: `${ruleName}.html`,
 				content: `<!-- HTML Snippets-->`,
-				dir: directories.TEST_CHECKS_INTEGRATION
+				dir: `${directories.TEST_CHECKS_INTEGRATION}/${ruleName}`
 			},
 			{
 				name: `${ruleName}.json`,
@@ -262,7 +263,7 @@ const questionAndGetFilesToCreate = async () => {
 					undefined,
 					2
 				),
-				dir: directories.TEST_CHECKS_INTEGRATION
+				dir: `${directories.TEST_CHECKS_INTEGRATION}/${ruleName}`
 			}
 		];
 		filesToGenerate = filesToGenerate.concat(files);
@@ -348,14 +349,21 @@ const questionAndGetFilesToCreate = async () => {
 	return filesToGenerate;
 };
 
+const getDirName = require('path').dirname;
+
 const createFile = fileMeta => {
 	const filePath = `${fileMeta.dir}/${fileMeta.name}`;
 	return new Promise((resolve, reject) => {
-		fs.writeFile(filePath, fileMeta.content, err => {
+		mkdirp(getDirName(filePath), err => {
 			if (err) {
 				reject(err);
 			}
-			resolve(filePath);
+			fs.writeFile(filePath, fileMeta.content, err => {
+				if (err) {
+					reject(err);
+				}
+				resolve(filePath);
+			});
 		});
 	});
 };
