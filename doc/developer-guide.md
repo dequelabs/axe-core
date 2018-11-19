@@ -455,13 +455,13 @@ Axe provides a CLI for generating the necessary files and configuration assets f
 
 To invoke the rule generator, run:
 
-```
-$ npm run rule-gen
+```sh
+npm run rule-gen
 ```
 
 The CLI acts a wizard, by asking a series of questions related to generation of the rule, for example:
 
-```
+```sh
 - What is the name of the RULE? (Eg: aria-valid): sample-rule
 - Does the RULE need a MATCHES file to be created?: Yes
 - Would you like to create a CHECK for the RULE?: No
@@ -470,4 +470,3 @@ The CLI acts a wizard, by asking a series of questions related to generation of 
 ```
 
 Upon answering of which the the assets are created in the respective directories.
-
