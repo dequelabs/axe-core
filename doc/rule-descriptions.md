@@ -70,6 +70,7 @@
 | table-fake-caption | Ensure that tables with a caption use the &lt;caption&gt; element. | Serious | cat.tables, experimental, wcag2a, wcag131, section508, section508.22.g | true |
 | td-has-header | Ensure that each non-empty data cell in a large table has one or more table headers | Critical | cat.tables, experimental, wcag2a, wcag131, section508, section508.22.g | true |
 | td-headers-attr | Ensure that each cell in a table using the headers refers to another cell in that table | Serious | cat.tables, wcag2a, wcag131, section508, section508.22.g | true |
+| test-jey |  |  |  | true |
 | th-has-data-cells | Ensure that each table header in a data table refers to data cells | Serious | cat.tables, wcag2a, wcag131, section508, section508.22.g | true |
 | valid-lang | Ensures lang attributes have valid values | Serious | cat.language, wcag2aa, wcag312 | true |
 | video-caption | Ensures &lt;video&gt; elements have captions | Critical | cat.text-alternatives, wcag2a, wcag122, section508, section508.22.a | true |

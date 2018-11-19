@@ -1,35 +1,38 @@
-#!/usr/bin/env node
-
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
 const figlet = require('figlet');
 const inquirer = require('inquirer');
-const cmd = require('node-command-line');
 const axeFile = path.join(__dirname, '..', 'axe.js');
-const filehound = require('filehound');
+const globby = require('globby');
+const execa = require('execa');
 
-const DIRECTORIES = {
-	RULES: path.join(__dirname, '..', '/lib/rules'),
-	TEST_RULES_MATCHES: path.join(__dirname, '..', '/test/rule-matches'),
-	CHECKS: path.join(__dirname, '..', '/lib/checks'),
-	TEST_CHECKS_UNIT: path.join(__dirname, '..', '/test/checks'),
-	TEST_CHECKS_INTEGRATION: path.join(__dirname, '..', '/test/integration/rules')
+const directories = {
+	RULES: path.join(__dirname, '..', 'lib', 'rules'),
+	TEST_RULES_MATCHES: path.join(__dirname, '..', 'test', 'rule-matches'),
+	CHECKS: path.join(__dirname, '..', 'lib', 'checks'),
+	TEST_CHECKS_UNIT: path.join(__dirname, '..', 'test', 'checks'),
+	TEST_CHECKS_INTEGRATION: path.join(
+		__dirname,
+		'..',
+		'test',
+		'integration',
+		'rules'
+	)
 };
 
 const showBanner = () => {
-	const COLOR_DQ_HEX = '#0077c8';
-	console.log(chalk.hex(COLOR_DQ_HEX)(figlet.textSync('Axe Rule Generator')));
+	console.log(chalk.hex('#0077c8')(figlet.textSync('Axe Rule Generator')));
 };
 
-const QUESTIONS = {
-	GET_RULE_NAME: {
+const questions = {
+	getRuleName: {
 		/**
 		 * What is the name of the RULE? (Eg: aria-valid):
 		 * 	- check if there is conflict in rule (file name)
 		 * 	- also if there is conflict in rule id itself
 		 */
-		name: 'GET_RULE_NAME',
+		name: 'getRuleName',
 		type: 'input',
 		message: 'What is the name of the RULE? (Eg: aria-valid):',
 		validate: input => {
@@ -43,7 +46,7 @@ const QUESTIONS = {
 				)
 			) {
 				throw new Error(
-					'RULE name should not be empty and can contain alphabets and dashes.'
+					'RULE name should not be empty and can only contain alphabets and dashes.'
 				);
 			}
 			// 2) ensure no rule filename overlaps
@@ -57,38 +60,38 @@ const QUESTIONS = {
 			return true;
 		}
 	},
-	GET_IS_RULE_MATCHES: {
+	getIsRuleMatches: {
 		/**
 		 * Does the rule need a matches file to be created? (Yes/ No):
 		 */
-		name: 'GET_IS_RULE_MATCHES',
+		name: 'getIsRuleMatches',
 		type: 'confirm',
 		message: 'Does the RULE need a MATCHES file to be created?:'
 	},
-	GET_IS_CHECK: {
+	getIsCheck: {
 		/**
 		 *  Would you like to create a CHECK for the rule? (Yes/ No):
 		 */
-		name: 'GET_IS_CHECK',
+		name: 'getIsCheck',
 		type: 'confirm',
 		message: 'Would you like to create a CHECK for the RULE?:'
 	},
-	GET_IS_ANOTHER_CHECK: {
+	getIsAnotherCheck: {
 		/**
 		 *  Would you like to create a CHECK for the rule? (Yes/ No):
 		 */
-		name: 'GET_IS_ANOTHER_CHECK',
+		name: 'getIsAnotherCheck',
 		type: 'confirm',
 		message: 'Would you like to create another CHECK for the RULE?:'
 	},
-	GET_CHECK_NAME: {
+	getCheckName: {
 		/**
 		 * Enter name of CHECK for the RULE?
 		 * 	(Eg: aria-label)
 		 * 	- check if there is conflict in rule (file name)
 		 * 	- also if there is conflict in rule id itself
 		 */
-		name: 'GET_CHECK_NAME',
+		name: 'getCheckName',
 		type: 'input',
 		message: 'Enter name of CHECK for the RULE? (Eg: aria-label): ',
 		validate: input => {
@@ -116,12 +119,12 @@ const QUESTIONS = {
 			return true;
 		}
 	},
-	GET_CHECK_CATEGORY: {
+	getCheckCategory: {
 		/**
 		 * Choose category for the CHECK? :
 		 * 	(Eg: aria, color, forms, label, language, media...)
 		 */
-		name: 'GET_CHECK_CATEGORY',
+		name: 'getCheckCategory',
 		type: 'list',
 		message: 'Choose category for the CHECK?: ',
 		choices: [
@@ -141,72 +144,72 @@ const QUESTIONS = {
 			'visibility'
 		]
 	},
-	GET_CHECK_TYPE: {
+	getCheckType: {
 		/**
 		 * Choose type of CHECK? :
 		 * 	(Eg: all, any, none)
 		 */
-		name: 'GET_CHECK_TYPE',
+		name: 'getCheckType',
 		type: 'list',
 		message: 'Choose type for the CHECK?: ',
 		choices: ['all', 'any', 'none']
 	},
-	GET_IS_UNIT_TEST_ASSETS: {
+	getIsUnitTestAssets: {
 		/**
 		 * Create UNIT test files? (Yes/ No)
 		 */
-		name: 'GET_IS_UNIT_TEST_ASSETS',
+		name: 'getIsUnitTestAssets',
 		type: 'confirm',
 		message: 'Would you like to create UNIT test files?'
 	},
-	GET_IS_INTEGRATION_TEST_ASSETS: {
+	getIsIntegrationTestAssets: {
 		/**
 		 * Create INTEGRATION test files? (Yes/ No)
 		 */
-		name: 'GET_IS_INTEGRATION_TEST_ASSETS',
+		name: 'getIsIntegrationTestAssets',
 		type: 'confirm',
 		message: 'Would you like to create INTEGRATION test files?'
 	}
 };
 
 const questionAndGetFilesToCreate = async () => {
-	const getCheck = async (checks = []) => {
+	const getChecks = async (checks = []) => {
 		const checkDetails = await inquirer.prompt([
-			QUESTIONS.GET_CHECK_NAME,
-			QUESTIONS.GET_CHECK_CATEGORY,
-			QUESTIONS.GET_CHECK_TYPE,
-			QUESTIONS.GET_IS_ANOTHER_CHECK
+			questions.getCheckName,
+			questions.getCheckCategory,
+			questions.getCheckType,
+			questions.getIsAnotherCheck
 		]);
 		checks.push(checkDetails);
-		if (checkDetails.GET_IS_ANOTHER_CHECK) {
-			await getCheck(checks);
+		if (checkDetails.getIsAnotherCheck) {
+			await getChecks(checks);
 		}
 		return checks;
 	};
 
 	// get rule meta
-	const { GET_RULE_NAME, GET_IS_RULE_MATCHES } = await inquirer.prompt([
-		QUESTIONS.GET_RULE_NAME,
-		QUESTIONS.GET_IS_RULE_MATCHES
+	const { getRuleName, getIsRuleMatches } = await inquirer.prompt([
+		questions.getRuleName,
+		questions.getIsRuleMatches
 	]);
 	// get checks meta
 	let ruleChecks = [];
-	const { GET_IS_CHECK } = await inquirer.prompt([QUESTIONS.GET_IS_CHECK]);
-	if (GET_IS_CHECK) {
-		ruleChecks = await getCheck();
+	const { getIsCheck } = await inquirer.prompt([questions.getIsCheck]);
+	if (getIsCheck) {
+		ruleChecks = await getChecks();
 	}
 	// get if test files should be created
 	const {
-		GET_IS_UNIT_TEST_ASSETS,
-		GET_IS_INTEGRATION_TEST_ASSETS
+		getIsUnitTestAssets,
+		getIsIntegrationTestAssets
 	} = await inquirer.prompt([
-		QUESTIONS.GET_IS_UNIT_TEST_ASSETS,
-		QUESTIONS.GET_IS_INTEGRATION_TEST_ASSETS
+		questions.getIsUnitTestAssets,
+		questions.getIsIntegrationTestAssets
 	]);
 
 	let filesToGenerate = [];
 
-	const ruleName = `${GET_RULE_NAME.toLowerCase()}`;
+	const ruleName = `${getRuleName.toLowerCase()}`;
 
 	const ruleJson = {
 		name: `${ruleName}.json`,
@@ -214,7 +217,7 @@ const questionAndGetFilesToCreate = async () => {
 			{
 				id: `${ruleName}`,
 				selector: '',
-				...(GET_IS_RULE_MATCHES && {
+				...(getIsRuleMatches && {
 					matches: `${ruleName}-matches.js`
 				}),
 				tags: [],
@@ -224,28 +227,28 @@ const questionAndGetFilesToCreate = async () => {
 				},
 				preload: false,
 				all: ruleChecks
-					.filter(c => c.GET_CHECK_TYPE === 'all')
-					.map(c => c.GET_CHECK_NAME.toLowerCase()),
+					.filter(c => c.getCheckType === 'all')
+					.map(c => c.getCheckName.toLowerCase()),
 				any: ruleChecks
-					.filter(c => c.GET_CHECK_TYPE === 'any')
-					.map(c => c.GET_CHECK_NAME.toLowerCase()),
+					.filter(c => c.getCheckType === 'any')
+					.map(c => c.getCheckName.toLowerCase()),
 				none: ruleChecks
-					.filter(c => c.GET_CHECK_TYPE === 'none')
-					.map(c => c.GET_CHECK_NAME.toLowerCase())
+					.filter(c => c.getCheckType === 'none')
+					.map(c => c.getCheckName.toLowerCase())
 			},
 			undefined,
 			2
 		),
-		dir: DIRECTORIES.RULES
+		dir: directories.RULES
 	};
 	filesToGenerate = filesToGenerate.concat(ruleJson);
 
-	if (GET_IS_INTEGRATION_TEST_ASSETS) {
+	if (getIsIntegrationTestAssets) {
 		const files = [
 			{
 				name: `${ruleName}.html`,
 				content: `<!-- HTML Snippets-->`,
-				dir: DIRECTORIES.TEST_CHECKS_INTEGRATION
+				dir: directories.TEST_CHECKS_INTEGRATION
 			},
 			{
 				name: `${ruleName}.json`,
@@ -259,20 +262,20 @@ const questionAndGetFilesToCreate = async () => {
 					undefined,
 					2
 				),
-				dir: DIRECTORIES.TEST_CHECKS_INTEGRATION
+				dir: directories.TEST_CHECKS_INTEGRATION
 			}
 		];
 		filesToGenerate = filesToGenerate.concat(files);
 	}
 
-	if (GET_IS_RULE_MATCHES) {
+	if (getIsRuleMatches) {
 		const ruleMatchesJs = {
 			name: `${ruleName}-matches.js`,
 			content: `
 			// TODO: Filter node(s)
 			return node;
 			`,
-			dir: DIRECTORIES.RULES
+			dir: directories.RULES
 		};
 		filesToGenerate = filesToGenerate.concat(ruleMatchesJs);
 		const ruleMatchesTestJs = {
@@ -283,16 +286,16 @@ const questionAndGetFilesToCreate = async () => {
 				// TODO: Write tests
 			})
 			`,
-			dir: DIRECTORIES.TEST_RULES_MATCHES
+			dir: directories.TEST_RULES_MATCHES
 		};
 		filesToGenerate = filesToGenerate.concat(ruleMatchesTestJs);
 	}
 
 	const checkFiles = ruleChecks
 		.map(c => {
-			const cName = c.GET_CHECK_NAME.toLowerCase();
-			const outDir = `${DIRECTORIES.CHECKS}/${c.GET_CHECK_CATEGORY}/`;
-			const outTestDir = `${DIRECTORIES.CHECKS}/${c.GET_CHECK_CATEGORY}/`;
+			const cName = c.getCheckName.toLowerCase();
+			const outDir = `${directories.CHECKS}/${c.getCheckCategory}/`;
+			const outTestDir = `${directories.CHECKS}/${c.getCheckCategory}/`;
 			const checkJson = {
 				name: `${cName}.json`,
 				content: JSON.stringify(
@@ -332,7 +335,7 @@ const questionAndGetFilesToCreate = async () => {
 				dir: outTestDir
 			};
 			const files = [checkJson, checkJs];
-			if (GET_IS_UNIT_TEST_ASSETS) {
+			if (getIsUnitTestAssets) {
 				files.concat(checkTestJs);
 			}
 			return files;
@@ -357,6 +360,7 @@ const createFile = fileMeta => {
 	});
 };
 
+// Variables computed within the `run` function used for `validation` of replies given for questions.
 let axeRulesFileNames;
 let axeRulesIds;
 let axeChecksFileNames;
@@ -367,21 +371,20 @@ const run = async () => {
 	const axeExists = fs.existsSync(axeFile);
 	if (!axeExists) {
 		console.log(
-			chalk.black.bgRed.bold(
-				`Axe does not exist.Triggering build using - 'npm run build'.Rule Generator will continue after build.`
+			chalk.red.bold(
+				`Axe does not exist. Triggering build using - 'npm run build'.Rule Generator will continue after build.`
 			)
 		);
-		await cmd.run('npm run build');
+		await execa.shell('npm run build');
 	}
 
-	// compute essentials
-	// 1. Get rule SPEC json file names
-	const ruleJsonSpecFiles = await filehound
-		.create()
-		.paths(DIRECTORIES.RULES)
-		.depth(0)
-		.ext('json')
-		.find();
+	// the below computed values are used for `validation` of replies provided for answers
+	// ==================
+	// get all json spec files of rules
+	const ruleJsonSpecFiles = await globby(directories.RULES, {
+		expandDirectories: { extensions: ['json'] }
+	});
+	// `axeRulesFileNames` is used for `validation` of user input for `rule name` in the question `getRuleName`, to avoid conflicts with existing files.
 	axeRulesFileNames = ruleJsonSpecFiles.map(
 		f =>
 			f
@@ -389,19 +392,17 @@ const run = async () => {
 				.split('/')
 				.reverse()[0]
 	);
-	// 2. Get rule ID's
+	// `axeRulesIds` is used for `validation` of user input for `rule name` in the question `getRuleName`, to avoid conflicts with existing rule ids.
 	axeRulesIds = ruleJsonSpecFiles.reduce((out, ruleJsonPath) => {
 		const spec = require(ruleJsonPath);
 		out.push(spec.id);
 		return out;
 	}, []);
-	// 3. Get check SPEC json file names
-	const checkJsonSpecFiles = await filehound
-		.create()
-		.paths(DIRECTORIES.CHECKS)
-		.depth(1)
-		.ext('json')
-		.find();
+	// get all json spec files of checks
+	const checkJsonSpecFiles = await globby(directories.CHECKS, {
+		expandDirectories: { extensions: ['json'] }
+	});
+	// `axeChecksFileNames` is used for `validation` of user input for `rule name` in the question `getCheckName`, to avoid conflicts with existing files.
 	axeChecksFileNames = checkJsonSpecFiles.map(
 		f =>
 			f
@@ -409,8 +410,8 @@ const run = async () => {
 				.split('/')
 				.reverse()[0]
 	);
-	// 4. Get all check ID's
 	const axe = require(axeFile);
+	// `axeChecksIds` is used for `validation` of user input for `rule name` in the question `getCheckName`, to avoid conflicts with existing check ids.
 	axeChecksIds = ruleJsonSpecFiles.reduce((out, ruleJsonPath) => {
 		const spec = require(ruleJsonPath);
 		const checkIds = []
@@ -426,22 +427,20 @@ const run = async () => {
 	// questions
 	const files = await questionAndGetFilesToCreate();
 
-	// create the files
+	// // create the files
 	if (!files || !files.length) {
-		console.log(chalk.white.bgRed.bold(`No files to generate.`));
+		console.log(chalk.red.bold(`No files to generate.`));
 	}
 
 	try {
 		const result = await Promise.all(files.map(createFile));
 		console.log(
-			chalk.black.bgGreen.bold(
-				'Successfully generated RULE and respective files: '
-			)
+			chalk.green.bold('Successfully generated RULE and respective files: ')
 		);
-		console.log(chalk.black.bgGreen.bold(''));
-		console.log(chalk.black.bgGreen.bold(result.join('\r\n')));
+		console.log(chalk.green.bold(''));
+		console.log(chalk.green.bold(result.join('\r\n')));
 	} catch (err) {
-		console.log(chalk.black.bgRed.bold(`Error generating RULE files`, err));
+		console.log(chalk.green.bold(`Error generating RULE files`, err));
 	}
 };
 
