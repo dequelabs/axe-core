@@ -13,11 +13,11 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-eslint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-parallel');
+	grunt.loadNpmTasks('grunt-run');
 	grunt.loadTasks('build/tasks');
 
 	var langs;
@@ -330,7 +330,6 @@ module.exports = function(grunt) {
 		mocha: testConfig(grunt, {
 			reporter: grunt.option('reporter') || 'Spec'
 		}),
-
 		connect: {
 			test: {
 				options: {
@@ -340,33 +339,24 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		eslint: {
-			axe: {
-				options: {
-					eslintrc: true,
-					reporter: grunt.option('report') ? 'checkstyle' : undefined,
-					reporterOutput: grunt.option('report') ? 'tmp/lint.xml' : undefined
-				},
-				src: [
-					'lib/**/*.js',
-					'test/**/*.js',
-					'build/**/*.js',
-					'doc/**/*.js',
-					'!doc/examples/jest_react/*.js',
-					'Gruntfile.js',
-					'!build/tasks/aria-supported.js',
-					'!**/node_modules/**/*.js'
-				]
+		run: {
+			npm_run_eslint: {
+				cmd: 'npm',
+				args: ['run', 'eslint']
 			}
 		}
 	});
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('build', [
+	grunt.registerTask('pre-build', [
 		'clean',
 		'generate-imports',
-		'eslint',
+		'run:npm_run_eslint'
+	]);
+
+	grunt.registerTask('build', [
+		'pre-build',
 		'validate',
 		'concat:commons',
 		'configure',
@@ -383,8 +373,7 @@ module.exports = function(grunt) {
 		'fixture',
 		'connect',
 		'mocha',
-		'parallel',
-		'eslint'
+		'parallel'
 	]);
 
 	grunt.registerTask('ci-build', [
@@ -392,8 +381,7 @@ module.exports = function(grunt) {
 		'testconfig',
 		'fixture',
 		'connect',
-		'parallel',
-		'eslint'
+		'parallel'
 	]);
 
 	grunt.registerTask('test-fast', [
@@ -401,13 +389,11 @@ module.exports = function(grunt) {
 		'testconfig',
 		'fixture',
 		'connect',
-		'mocha',
-		'eslint'
+		'mocha'
 	]);
 
 	grunt.registerTask('translate', [
-		'clean',
-		'eslint',
+		'pre-build',
 		'validate',
 		'concat:commons',
 		'add-locale'
