@@ -25,10 +25,10 @@ describe('axe.utils.getRootNode', function() {
 		var node = document.createElement('div');
 		assert.isTrue(axe.utils.getRootNode(node) === document);
 	});
-	it('should return the shadow root when it is inside the shadow DOM', function() {
-		var shadEl;
-
-		if (shadowSupported) {
+	(shadowSupported ? it : xit)(
+		'should return the shadow root when it is inside the shadow DOM',
+		function() {
+			var shadEl;
 			// shadow DOM v1 - note: v0 is compatible with this code, so no need
 			// to specifically test this
 			fixture.innerHTML = '<div></div>';
@@ -39,5 +39,5 @@ describe('axe.utils.getRootNode', function() {
 				axe.utils.getRootNode(shadEl) === fixture.firstChild.shadowRoot
 			);
 		}
-	});
+	);
 });
