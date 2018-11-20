@@ -1,12 +1,7 @@
 {
 	"description": "color-contrast test",
 	"rule": "color-contrast",
-	"violations": [
-		["#fail1"],
-		["#fail2"],
-		["#fail3"],
-		["#fail6"]
-	],
+	"violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail6"]],
 	"passes": [
 		["#pass1"],
 		["#pass2"],

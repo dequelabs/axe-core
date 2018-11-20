@@ -49,8 +49,8 @@ npm install axe-core --save-dev
 
 Now include the javascript file in each of your iframes in your fixtures or test systems:
 
-```html
-<script src="node_modules/axe-core/axe.min.js" ></script>
+```
+<script src="node_modules/axe-core/axe.min.js"></script>
 ```
 
 Now insert calls at each point in your tests where a new piece of UI becomes visible or exposed:
@@ -68,11 +68,11 @@ axe.run(function (err, results) {
 
 The [aXe API](doc/API.md) fully supports the following browsers:
 
-* Microsoft Edge v40 and above
-* Google Chrome v42 and above
-* Mozilla Firefox v38 and above
-* Apple Safari v7 and above
-* Internet Explorer v9, 10, 11
+- Microsoft Edge v40 and above
+- Google Chrome v42 and above
+- Mozilla Firefox v38 and above
+- Apple Safari v7 and above
+- Internet Explorer v9, 10, 11
 
 Support means that we will fix bugs and attempt to test each browser regularly. Only Firefox and Chrome are currently tested on every pull request.
 
@@ -86,8 +86,8 @@ The complete list of rules run by axe-core can be found in [doc/rule-description
 
 The [aXe API](doc/API.md) package consists of:
 
-* `axe.js` - the JavaScript file that should be included in your web site under test (API)
-* `axe.min.js` - a minified version of the above file
+- `axe.js` - the JavaScript file that should be included in your web site under test (API)
+- `axe.min.js` - a minified version of the above file
 
 ## Localization
 
@@ -105,26 +105,27 @@ Additionally, locale can be applied at runtime by passing a `locale` object to `
 
 ```js
 axe.configure({
-  locale: {
-    lang: 'de',
-    rules: {
-      accesskeys: {
-        help: 'Der Wert des accesskey-Attributes muss einzigartig sein.'
-      },
-      // ...
-    },
-    checks: {
-      abstractrole: {
-        fail: 'Abstrakte ARIA-Rollen dürfen nicht direkt verwendet werden.'
-      },
-      'aria-errormessage': {
-        // Note: doT (https://github.com/olado/dot) templates are supported here.
-        fail: 'Der Wert der aria-errormessage {{~it.data:value}} `{{=value}}{{~}}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
-      }
-      // ...
-    }
-  }
-})
+	locale: {
+		lang: 'de',
+		rules: {
+			accesskeys: {
+				help: 'Der Wert des accesskey-Attributes muss einzigartig sein.'
+			}
+			// ...
+		},
+		checks: {
+			abstractrole: {
+				fail: 'Abstrakte ARIA-Rollen dürfen nicht direkt verwendet werden.'
+			},
+			'aria-errormessage': {
+				// Note: doT (https://github.com/olado/dot) templates are supported here.
+				fail:
+					'Der Wert der aria-errormessage {{~it.data:value}} `{{=value}}{{~}}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
+			}
+			// ...
+		}
+	}
+});
 ```
 
 ## Supported ARIA Roles and Attributes.
