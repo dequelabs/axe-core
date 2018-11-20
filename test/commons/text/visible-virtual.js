@@ -77,25 +77,26 @@ describe('text.visible', function() {
 			assert.equal(visibleVirtual(tree[0]), 'Hello');
 		});
 
-		it('should correctly handle slotted elements', function() {
-			function createContentSlotted() {
-				var group = document.createElement('div');
-				group.innerHTML = '<div id="target">Stuff<slot></slot></div>';
-				return group;
-			}
-			function makeShadowTree(node) {
-				var root = node.attachShadow({ mode: 'open' });
-				var div = document.createElement('div');
-				root.appendChild(div);
-				div.appendChild(createContentSlotted());
-			}
-			if (shadowSupported) {
+		(shadowSupported ? it : xit)(
+			'should correctly handle slotted elements',
+			function() {
+				function createContentSlotted() {
+					var group = document.createElement('div');
+					group.innerHTML = '<div id="target">Stuff<slot></slot></div>';
+					return group;
+				}
+				function makeShadowTree(node) {
+					var root = node.attachShadow({ mode: 'open' });
+					var div = document.createElement('div');
+					root.appendChild(div);
+					div.appendChild(createContentSlotted());
+				}
 				fixture.innerHTML = '<div><a>hello</a></div>';
 				makeShadowTree(fixture.firstChild);
 				var tree = axe.utils.getFlattenedTree(fixture.firstChild);
 				assert.equal(visibleVirtual(tree[0]), 'Stuffhello');
 			}
-		});
+		);
 	});
 
 	describe('screen reader', function() {
