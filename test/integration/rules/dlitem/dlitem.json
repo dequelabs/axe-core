@@ -1,6 +1,11 @@
 {
 	"description": "dlitem test",
 	"rule": "dlitem",
-	"violations": [["#uncontained"], ["#alsouncontained"],["#uncontainedbyrole"],["#alsouncontainedbyrole"]],
+	"violations": [
+		["#uncontained"],
+		["#alsouncontained"],
+		["#uncontainedbyrole"],
+		["#alsouncontainedbyrole"]
+	],
 	"passes": [["#contained"], ["#alsocontained"]]
 }
