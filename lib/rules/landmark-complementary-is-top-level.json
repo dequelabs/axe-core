@@ -1,7 +1,6 @@
 {
   "id": "landmark-complementary-is-top-level",
   "selector": "aside:not([role]), [role=complementary]",
-  "matches": "landmark-has-body-context.js",
   "tags": [
     "cat.semantics",
     "best-practice"
