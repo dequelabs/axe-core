@@ -429,10 +429,6 @@
       "pass": "",
       "fail": "Der Definitionslisteneintrag besitzt kein <dl>-Elternelement."
     },
-    "has-listitem": {
-      "pass": "",
-      "fail": "Das Listen-Element besitzt kein <li>-Element."
-    },
     "listitem": {
       "pass": "",
       "fail": "Der Listeneintrag besitzt kein <ul>-, <ol>- oder role=\"list\" Elternelement."
