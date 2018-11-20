@@ -468,10 +468,6 @@
       "pass": "L’item de liste de description a un élément <dl> parent",
       "fail": "L’item de liste de description n’a pas d’élément <dl> parent"
     },
-    "has-listitem": {
-      "pass": "L’élément de liste contient un élément <li>",
-      "fail": "L’élément de liste ne contient pas d’élément <li>"
-    },
     "listitem": {
       "pass": "L’item de liste a un élément <ul>, <ol> ou role=\"list\" parent",
       "fail": "L’item de liste n’a pas d’élément <ul>, <ol> ou role=\"list\" parent"
