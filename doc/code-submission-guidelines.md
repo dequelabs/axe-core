@@ -22,7 +22,7 @@ A detailed explanation of Angular's guidelines and conventions can be found [on 
 Each commit message should consist of a header, a body and a footer. The header has a special format
 that includes a type, a scope and a subject. Here's a sample of the format:
 
-```html
+```
 <type>(<scope>): <subject>
 <BLANK LINE>
 <body>
@@ -41,7 +41,7 @@ perf(rule): improve speed of color contrast rules
 ```
 
 > Commit messages should be 100 characters or less to make them easy to read on Github and
-various git tools.
+> various git tools.
 
 ### How to structure your commits:
 
@@ -53,12 +53,12 @@ Must be one of the following:
 - **fix:** A bug fix
 - **docs:** Documentation only changes
 - **style:** Changes that do not affect the meaning of the code (white-space, formatting, missing
-semi-colons, etc)
+  semi-colons, etc)
 - **refactor:** A code change that neither fixes a bug nor adds a feature
 - **perf:** A code change that improves performance
 - **test:** Adding missing tests
 - **chore:** Changes to the build process or auxiliary tools and libraries such as documentation
-generation
+  generation
 
 #### Scope
 
@@ -117,6 +117,7 @@ In the Github UI, you can use the new [Squash and Merge](https://github.com/blog
 To apply a pull request manually, make sure your local develop branch is up to date. Then, create a new branch for that pull request.
 
 Create a temporary, local branch:
+
 ```sh
 git checkout -b temp-feature-branch
 ```
@@ -160,6 +161,7 @@ git pull --rebase origin develop
 ```
 
 You can then push the latest code to develop (note that force push isn't needed if these steps are followed):
+
 ```console
 git push origin develop
 ```

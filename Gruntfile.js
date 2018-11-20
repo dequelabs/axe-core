@@ -17,7 +17,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-parallel');
-	grunt.loadNpmTasks('grunt-markdownlint');
 	grunt.loadNpmTasks('grunt-run');
 	grunt.loadTasks('build/tasks');
 
@@ -345,14 +344,6 @@ module.exports = function(grunt) {
 				cmd: 'npm',
 				args: ['run', 'eslint']
 			}
-		},
-		markdownlint: {
-			all: {
-				options: {
-					config: grunt.file.readJSON('.markdownlint.json')
-				},
-				src: ['README.md', '.github/*.md', 'doc/**/*.md']
-			}
 		}
 	});
 
@@ -382,8 +373,7 @@ module.exports = function(grunt) {
 		'fixture',
 		'connect',
 		'mocha',
-		'parallel',
-		'markdownlint'
+		'parallel'
 	]);
 
 	grunt.registerTask('ci-build', [
