@@ -85,7 +85,6 @@
     "eslint-config-prettier": "^3.0.0",
     "execa": "^1.0.0",
     "figlet": "^1.2.1",
-    "filehound": "^1.16.4",
     "fs-extra": "^7.0.0",
     "globby": "^8.0.1",
     "grunt": "^1.0.2",
