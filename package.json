@@ -80,6 +80,7 @@
 		"chai": "~4.1.2",
 		"clone": "~2.1.1",
 		"dot": "~1.1.2",
+		"eslint": "^5.9.0",
 		"eslint-config-prettier": "^3.0.0",
 		"fs-extra": "^7.0.0",
 		"grunt": "^1.0.2",
