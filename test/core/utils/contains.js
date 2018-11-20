@@ -57,24 +57,25 @@ describe('axe.utils.contains', function() {
 		assert.isTrue(axe.utils.contains(node1, node2));
 	});
 
-	it('should work when the child is inside shadow DOM', function() {
-		var tree, node1, node2;
+	(shadowSupported ? it : xit)(
+		'should work when the child is inside shadow DOM',
+		function() {
+			var tree, node1, node2;
 
-		function createContentContains() {
-			var group = document.createElement('div');
-			group.innerHTML =
-				'<label id="mylabel">Label</label><input aria-labelledby="mylabel" type="text" />';
-			return group;
-		}
+			function createContentContains() {
+				var group = document.createElement('div');
+				group.innerHTML =
+					'<label id="mylabel">Label</label><input aria-labelledby="mylabel" type="text" />';
+				return group;
+			}
 
-		function makeShadowTreeContains(node) {
-			var root = node.attachShadow({ mode: 'open' });
-			var div = document.createElement('div');
-			div.className = 'parent';
-			root.appendChild(div);
-			div.appendChild(createContentContains());
-		}
-		if (shadowSupported) {
+			function makeShadowTreeContains(node) {
+				var root = node.attachShadow({ mode: 'open' });
+				var div = document.createElement('div');
+				div.className = 'parent';
+				root.appendChild(div);
+				div.appendChild(createContentContains());
+			}
 			// shadow DOM v1 - note: v0 is compatible with this code, so no need
 			// to specifically test this
 			fixture.innerHTML = '<div></div>';
@@ -84,25 +85,26 @@ describe('axe.utils.contains', function() {
 			node2 = axe.utils.querySelectorAll(tree, 'input')[0];
 			assert.isTrue(axe.utils.contains(node1, node2));
 		}
-	});
+	);
 
-	it('should work with slotted elements inside shadow DOM', function() {
-		var tree, node1, node2;
+	(shadowSupported ? it : xit)(
+		'should work with slotted elements inside shadow DOM',
+		function() {
+			var tree, node1, node2;
 
-		function createContentSlotted() {
-			var group = document.createElement('div');
-			group.innerHTML = '<div id="target">Stuff<slot></slot></div>';
-			return group;
-		}
-		function makeShadowTree(node) {
-			var root = node.attachShadow({ mode: 'open' });
-			var div = document.createElement('div');
-			var a = document.createElement('a');
-			div.appendChild(a);
-			root.appendChild(div);
-			div.appendChild(createContentSlotted());
-		}
-		if (shadowSupported) {
+			function createContentSlotted() {
+				var group = document.createElement('div');
+				group.innerHTML = '<div id="target">Stuff<slot></slot></div>';
+				return group;
+			}
+			function makeShadowTree(node) {
+				var root = node.attachShadow({ mode: 'open' });
+				var div = document.createElement('div');
+				var a = document.createElement('a');
+				div.appendChild(a);
+				root.appendChild(div);
+				div.appendChild(createContentSlotted());
+			}
 			fixture.innerHTML = '<div></div>';
 			makeShadowTree(fixture.firstChild);
 			tree = axe.utils.getFlattenedTree(fixture.firstChild)[0].children;
@@ -110,7 +112,7 @@ describe('axe.utils.contains', function() {
 			node2 = axe.utils.querySelectorAll(tree, 'a')[0];
 			assert.isTrue(axe.utils.contains(node1, node2));
 		}
-	});
+	);
 
 	it('should work', function() {
 		fixture.innerHTML = '<div id="outer"><div id="inner"></div></div>';
