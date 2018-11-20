@@ -1,11 +1,11 @@
 {
-  "id": "multiple-label",
-  "evaluate": "multiple-label.js",
-  "metadata": {
-    "impact": "moderate",
-    "messages": {
-      "pass": "Form field does not have multiple label elements",
-      "fail": "Multiple label elements is not widely supported in assistive technologies"
-    }
-  }
+	"id": "multiple-label",
+	"evaluate": "multiple-label.js",
+	"metadata": {
+		"impact": "moderate",
+		"messages": {
+			"pass": "Form field does not have multiple label elements",
+			"fail": "Multiple label elements is not widely supported in assistive technologies"
+		}
+	}
 }

@@ -1,17 +1,17 @@
-# PhantomJS README #
+# PhantomJS README
 
 This example demonstrates how to use aXe with PhantomJS.
 
-## To configure the example ##
+## To configure the example
 
-* PhantomJS must be installed; please follow the directions at http://phantomjs.org/
+- PhantomJS must be installed; please follow the directions at http://phantomjs.org/
   to install it.
-* Run `npm install axe-core`
+- Run `npm install axe-core`
 
-## To run the example ##
+## To run the example
 
-* Move to the `doc/examples/phantomjs` directory
-* `phantomjs axe-phantom.js http://www.deque.com` to run aXe in PhantomJS
+- Move to the `doc/examples/phantomjs` directory
+- `phantomjs axe-phantom.js http://www.deque.com` to run aXe in PhantomJS
   against http://www.deque.com and output results to the terminal
-* `phantomjs axe-phantom.js http://www.deque.com results.json` to run aXe in PhantomJS
+- `phantomjs axe-phantom.js http://www.deque.com results.json` to run aXe in PhantomJS
   against http://www.deque.com and save results to `results.json`
