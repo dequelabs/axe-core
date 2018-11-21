@@ -20,41 +20,57 @@ In order to create such a plugin, we need to implement the "run" function for th
 
 #### Basic plugin
 
-```javascript
+```js
 axe.registerPlugin({
-  id: 'doStuff',
-  run: function (id, action, options, callback) {
-    var frames;
-    var q = axe.utils.queue();
-    var that = this;
-    frames = axe.utils.toArray(document.querySelectorAll('iframe, frame'));
+	id: 'doStuff',
+	run: function(id, action, options, callback) {
+		var frames;
+		var q = axe.utils.queue();
+		var that = this;
+		frames = axe.utils.toArray(document.querySelectorAll('iframe, frame'));
 
-    frames.forEach(function (frame) {
-      q.defer(function (done) {
-      axe.utils.sendCommandToFrame(frame, {
-        options: options,
-        command: 'run-doStuff',
-        parameter: id,
-        action: action
-      }, function () {
-        done();
-      });
-      });
-    });
+		frames.forEach(function(frame) {
+			q.defer(function(done) {
+				axe.utils.sendCommandToFrame(
+					frame,
+					{
+						options: options,
+						command: 'run-doStuff',
+						parameter: id,
+						action: action
+					},
+					function() {
+						done();
+					}
+				);
+			});
+		});
 
-    if (!options.context.length) {
-      q.defer(function (done) {
-        that._registry[id][action].call(that._registry[id], document, options, done);
-      });
-    }
-    q.then(callback);
-  },
-  commands: [{
-    id: 'run-doStuff',
-    callback: function (data, callback) {
-    return axe.plugins.doStuff.run(data.parameter, data.action, data.options, callback);
-    }
-  }]
+		if (!options.context.length) {
+			q.defer(function(done) {
+				that._registry[id][action].call(
+					that._registry[id],
+					document,
+					options,
+					done
+				);
+			});
+		}
+		q.then(callback);
+	},
+	commands: [
+		{
+			id: 'run-doStuff',
+			callback: function(data, callback) {
+				return axe.plugins.doStuff.run(
+					data.parameter,
+					data.action,
+					data.options,
+					callback
+				);
+			}
+		}
+	]
 });
 ```
 
@@ -80,26 +96,28 @@ Once all the iframes' run functions have been executed, the callback is called. 
 
 Lets implement a basic plugin instance to see how this works. This instance will implement a "highlight" function (to place a basic frame around the bounding box of an element on each iframe on a page)
 
-```javascript
-  var highlight = {
-    id: 'highlight',
-    highlighter: new Highlighter(),
-    run: function (contextNode, options, done) {
-      var that = this;
-      Array.prototype.slice.call(contextNode.querySelectorAll(options.selector)).forEach(function (node) {
-        that.highlighter.highlight(node, options);
-      });
-      done();
-    },
-    cleanup: function (done) {
-      this.highlighter.clear();
-      done();
-    }
-  };
+```js
+var highlight = {
+	id: 'highlight',
+	highlighter: new Highlighter(),
+	run: function(contextNode, options, done) {
+		var that = this;
+		Array.prototype.slice
+			.call(contextNode.querySelectorAll(options.selector))
+			.forEach(function(node) {
+				that.highlighter.highlight(node, options);
+			});
+		done();
+	},
+	cleanup: function(done) {
+		this.highlighter.clear();
+		done();
+	}
+};
 
-  axe.plugins.doStuff.add(highlight);
+axe.plugins.doStuff.add(highlight);
 ```
 
-Above you can see the implementation of a `doStuff` "highlight" instance (the actual highlighting code is not included so as to simplify the example and is left as an exercise for the reader). Plugin instances have an id (which is used to address them), a cleanup function and any number of private or action members. The doStuff `add()` function is called to register this instance with the plugin (notice that we did not have to implement this add function, aXe did that for us). In this case, the action  is called "run", so after registration, this instance can be called by calling `axe.plugins.doStuff.run('highlight', 'run', options, callback);` in the top-level iframe on the page.
+Above you can see the implementation of a `doStuff` "highlight" instance (the actual highlighting code is not included so as to simplify the example and is left as an exercise for the reader). Plugin instances have an id (which is used to address them), a cleanup function and any number of private or action members. The doStuff `add()` function is called to register this instance with the plugin (notice that we did not have to implement this add function, aXe did that for us). In this case, the action is called "run", so after registration, this instance can be called by calling `axe.plugins.doStuff.run('highlight', 'run', options, callback);` in the top-level iframe on the page.
 
 The cleanup functions for all plugin instances are called when the `axe.cleanup()` function is called. Note that this cleanup function will automatically call all the cleanup functions for all the plugin instances in all iframes on the page.
