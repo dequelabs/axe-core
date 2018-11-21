@@ -77,7 +77,7 @@ const getRuleMatchesFileMeta = (
 				// TODO: Write tests
 			})
 			`,
-			dir: directories.test_rules_matches
+			dir: directories.testRuleMatches
 		};
 		files.push(ruleMatchesTestJs);
 	}
@@ -165,9 +165,7 @@ const getChecksFileMeta = (ruleChecks, ruleHasUnitTestAssets) => {
 		.map(c => {
 			const cName = c.getCheckName.toLowerCase();
 			const outDir = `${directories.checks}/${c.getCheckCategory}/`;
-			const outTestDir = `${directories.test_checks_unit}/${
-				c.getCheckCategory
-			}/`;
+			const outTestDir = `${directories.testChecksUnit}/${c.getCheckCategory}/`;
 			const checkJson = getCheckSpecFileMeta(cName, outDir);
 			const checkJs = getCheckJsFileMeta(cName, outDir);
 			const checkTestJs = getCheckTestJsFileMeta(cName, outTestDir);
@@ -200,7 +198,7 @@ const getIntegrationTestAssets = (ruleName, ruleHasIntegrationTestAssets) => {
 		const htmlFile = {
 			name: `${ruleName}.html`,
 			content: `<!-- HTML Snippets-->`,
-			dir: `${directories.test_checks_integration}/${ruleName}`
+			dir: `${directories.testChecksIntegration}/${ruleName}`
 		};
 		files.push(htmlFile);
 
@@ -216,7 +214,7 @@ const getIntegrationTestAssets = (ruleName, ruleHasIntegrationTestAssets) => {
 				undefined,
 				2
 			),
-			dir: `${directories.test_checks_integration}/${ruleName}`
+			dir: `${directories.testChecksIntegration}/${ruleName}`
 		};
 		files.push(jsonFile);
 	}

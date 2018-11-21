@@ -1,3 +1,5 @@
+/* global Promise */
+
 const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
@@ -6,9 +8,9 @@ const directories = {
 	axePath: path.join(__dirname, '..', '..', 'axe.js'),
 	rules: path.join(__dirname, '..', '..', 'lib', 'rules'),
 	checks: path.join(__dirname, '..', '..', 'lib', 'checks'),
-	test_rules_matches: path.join(__dirname, '..', '..', 'test', 'rule-matches'),
-	test_checks_unit: path.join(__dirname, '..', '..', 'test', 'checks'),
-	test_checks_integration: path.join(
+	testRuleMatches: path.join(__dirname, '..', '..', 'test', 'rule-matches'),
+	testChecksUnit: path.join(__dirname, '..', '..', 'test', 'checks'),
+	testChecksIntegration: path.join(
 		__dirname,
 		'..',
 		'..',
