@@ -1,20 +1,20 @@
 {
-  "name": "axe-jasmine-example",
-  "description": "aXe Jasmine Example",
-  "version": "0.0.1",
-  "private": true,
-  "author": {
-    "name": "David Sturley",
-    "organization": "Deque Systems, Inc.",
-    "url": "http://deque.com/"
-  },
-  "dependencies": {},
-  "scripts": {
-    "test": "grunt jasmine"
-  },
-  "devDependencies": {
-    "axe-core": "^3.1.1",
-    "grunt": "~1.0.2",
-    "grunt-contrib-jasmine": "~2.0.0"
-  }
+	"name": "axe-jasmine-example",
+	"description": "aXe Jasmine Example",
+	"version": "0.0.1",
+	"private": true,
+	"author": {
+		"name": "David Sturley",
+		"organization": "Deque Systems, Inc.",
+		"url": "http://deque.com/"
+	},
+	"dependencies": {},
+	"scripts": {
+		"test": "grunt jasmine"
+	},
+	"devDependencies": {
+		"axe-core": "^3.1.1",
+		"grunt": "~1.0.2",
+		"grunt-contrib-jasmine": "~2.0.0"
+	}
 }

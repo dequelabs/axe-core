@@ -8,7 +8,7 @@ A rule is a JSON Object that defines a test for aXe-core to run. At a high level
 
 Each rule has a 'selector' and optionally a 'matches' property. The selector is a CSS selector. Each element matching this selector will be tested by the rule, unless the matches function says otherwise. The `matches` property is a reference to a function that returns a boolean, which indicates if the element should be tested.
 
-The last thing that may influence if an element is selected for testing in the rule is it's visibility. By default, hidden elements are ignored by the rule, unless   the `excludeHidden` is set to 'false'.
+The last thing that may influence if an element is selected for testing in the rule is it's visibility. By default, hidden elements are ignored by the rule, unless the `excludeHidden` is set to 'false'.
 
 ## Using Checks in Rules
 
@@ -20,33 +20,33 @@ The actual testing of elements in axe-core is done by checks. A rule has one or 
 
 ## Rule Properties
 
-| Prop. Name           | Description
-|----------------------|-------------------------
-| id                   | Unique identifier for the rule
-| selector             | CSS Selector that matches elements to test
-| matches              | Function to further filter the outcome of the selector
-| excludeHidden        | Should hidden elements be excluded
-| all                  | Checks that must all return true
-| any                  | Checks of which at least one must return true
-| none                 | Checks that must all return false
-| pageLevel            | Should the rule only run on the main window
-| enabled              | Does the rule run by default
-| tags                 | Grouping for the rule, such as wcag2a, best-practice
-| metadata.description | Description of what a rule does
-| metadata.help        | Short description of a violation, used in the aXe extension sidebar
+| Prop. Name           | Description                                                         |
+| -------------------- | ------------------------------------------------------------------- |
+| id                   | Unique identifier for the rule                                      |
+| selector             | CSS Selector that matches elements to test                          |
+| matches              | Function to further filter the outcome of the selector              |
+| excludeHidden        | Should hidden elements be excluded                                  |
+| all                  | Checks that must all return true                                    |
+| any                  | Checks of which at least one must return true                       |
+| none                 | Checks that must all return false                                   |
+| pageLevel            | Should the rule only run on the main window                         |
+| enabled              | Does the rule run by default                                        |
+| tags                 | Grouping for the rule, such as wcag2a, best-practice                |
+| metadata.description | Description of what a rule does                                     |
+| metadata.help        | Short description of a violation, used in the aXe extension sidebar |
 
 ## Check Properties
 
-| Prop. Name         | Description
-|--------------------|-----------------
-| id                 | Unique identifier for the check
-| evaluate           | Evaluating function, returning a boolean value
-| options            | Configurable value for the check
-| after              | Cleanup function, run after check is done
-| metadata impact    | "minor", "serious", "critical"
-| metadata.messages.pass      | Describes why the check passed
-| metadata.messages.fail      | Describes why the check failed
-| metadata.messages.incomplete| Describes why the check didn’t complete
+| Prop. Name                   | Description                                    |
+| ---------------------------- | ---------------------------------------------- |
+| id                           | Unique identifier for the check                |
+| evaluate                     | Evaluating function, returning a boolean value |
+| options                      | Configurable value for the check               |
+| after                        | Cleanup function, run after check is done      |
+| metadata impact              | "minor", "serious", "critical"                 |
+| metadata.messages.pass       | Describes why the check passed                 |
+| metadata.messages.fail       | Describes why the check failed                 |
+| metadata.messages.incomplete | Describes why the check didn’t complete        |
 
 Incomplete results occur when axe-core can’t produce a clear pass or fail result,
 giving users the opportunity to review it manually. Incomplete messages can take
@@ -58,7 +58,8 @@ A pass message is required, while fail and incomplete are dependent on the check
 ### Incomplete message string
 
 As one example, the audio and video caption checks return an incomplete string:
-```javascript
+
+```js
 messages: {
   pass: 'Why the check passed',
   fail: 'Why the check failed',
@@ -71,7 +72,7 @@ messages: {
 As another example, the color-contrast check returns missingData to aid in
 remediation. Here’s the message format:
 
-```javascript
+```js
 messages: {
   pass: 'Why the check passed',
   fail: 'Why the check failed',
@@ -87,8 +88,8 @@ the check needs matching data. Otherwise, it will fall back to the `default` mes
 Reasons are arbitrary for the check (such as 'bgImage') but they must match the
 data returned:
 
-```javascript
+```js
 this.data({
-  missingData: 'bgImage'
+	missingData: 'bgImage'
 });
 ```
