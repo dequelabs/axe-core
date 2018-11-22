@@ -28,6 +28,14 @@ jobs:
           paths:
             - node_modules
 
+  # Run ESLINT
+  lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache
+      - run: npm run eslint
+
   # Run the test suite.
   test:
     <<: *defaults
@@ -61,6 +69,10 @@ workflows:
   build:
     jobs:
       - dependencies
+      # Run linting
+      - lint:
+          requires:
+            - dependencies
       # Run tests on all commits, but after installing dependencies
       - test:
           requires:
