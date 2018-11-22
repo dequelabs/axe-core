@@ -48,7 +48,7 @@ describe('not-focusable', function() {
 		);
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isFalse(actual);
-		assert.isTrue(checkContext._relatedNodes.length === 0);
+		assert.lengthOf(checkContext._relatedNodes, 0);
 	});
 
 	it('returns false when focusable form field only disabled through ARIA', function() {
@@ -57,6 +57,7 @@ describe('not-focusable', function() {
 		);
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isFalse(actual);
+		assert.lengthOf(checkContext._relatedNodes, 1);
 		assert.deepEqual(
 			checkContext._relatedNodes,
 			Array.from(fixture.querySelectorAll('input'))
@@ -69,7 +70,7 @@ describe('not-focusable', function() {
 		);
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isFalse(actual);
-		assert.isTrue(checkContext._relatedNodes.length === 0);
+		assert.lengthOf(checkContext._relatedNodes, 0);
 	});
 
 	it('returns false when focusable SELECT element', function() {
@@ -85,6 +86,7 @@ describe('not-focusable', function() {
 		);
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isFalse(actual);
+		assert.lengthOf(checkContext._relatedNodes, 1);
 		assert.deepEqual(
 			checkContext._relatedNodes,
 			Array.from(fixture.querySelectorAll('select'))

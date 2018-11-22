@@ -37,6 +37,7 @@ describe('focusable-not-tabbable', function() {
 		);
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isTrue(actual);
+		assert.lengthOf(checkContext._relatedNodes, 1);
 		assert.deepEqual(
 			checkContext._relatedNodes,
 			Array.from(fixture.querySelectorAll('a'))

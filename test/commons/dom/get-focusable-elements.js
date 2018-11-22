@@ -9,7 +9,7 @@ describe('dom.getFocusableElements', function() {
 		document.getElementById('fixture').innerHTML = '';
 	});
 
-	it('returns true when element contains focusable element', function() {
+	it('returns true when element contains focusable element (ignores tabindex)', function() {
 		var fixture = fixtureSetup(
 			'<div id="target">' +
 				'<label>Enter your comments:' +
@@ -20,7 +20,8 @@ describe('dom.getFocusableElements', function() {
 		var node = fixture.querySelector('#target');
 		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
 		var actual = getFocusableElementsFn(virtualNode);
-		assert.isTrue(actual);
+		assert.lengthOf(actual, 1);
+		assert.equal(actual[0].actualNode.nodeName.toUpperCase(), 'TEXTAREA');
 	});
 
 	it('returns false when element contains disabled (focusable) element', function() {
@@ -30,7 +31,7 @@ describe('dom.getFocusableElements', function() {
 		var node = fixture.querySelector('#target');
 		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
 		var actual = getFocusableElementsFn(virtualNode);
-		assert.isFalse(actual);
+		assert.lengthOf(actual, 0);
 	});
 
 	it('returns false when element does not contain focusable element', function() {
@@ -40,7 +41,7 @@ describe('dom.getFocusableElements', function() {
 		var node = fixture.querySelector('#target');
 		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
 		var actual = getFocusableElementsFn(virtualNode);
-		assert.isFalse(actual);
+		assert.lengthOf(actual, 0);
 	});
 
 	(shadowSupported ? it : xit)(
@@ -55,7 +56,8 @@ describe('dom.getFocusableElements', function() {
 			axe._selectorData = axe.utils.getSelectorData(axe._tree);
 			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
 			var actual = getFocusableElementsFn(virtualNode);
-			assert.isTrue(actual);
+			assert.lengthOf(actual, 1);
+			assert.equal(actual[0].actualNode.nodeName.toUpperCase(), 'BUTTON');
 		}
 	);
 
@@ -71,7 +73,7 @@ describe('dom.getFocusableElements', function() {
 			axe._selectorData = axe.utils.getSelectorData(axe._tree);
 			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
 			var actual = getFocusableElementsFn(virtualNode);
-			assert.isFalse(actual);
+			assert.lengthOf(actual, 0);
 		}
 	);
 
@@ -87,7 +89,7 @@ describe('dom.getFocusableElements', function() {
 			axe._selectorData = axe.utils.getSelectorData(axe._tree);
 			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
 			var actual = getFocusableElementsFn(virtualNode);
-			assert.isFalse(actual);
+			assert.lengthOf(actual, 0);
 		}
 	);
 });
