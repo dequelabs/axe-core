@@ -1,4 +1,4 @@
-describe('aria-hidden-focus', function() {
+describe('not-focusable', function() {
 	'use strict';
 
 	var check;
@@ -9,7 +9,7 @@ describe('aria-hidden-focus', function() {
 	var checkSetup = axe.testUtils.checkSetup;
 
 	before(function() {
-		check = checks['aria-hidden-focus'];
+		check = checks['not-focusable'];
 	});
 
 	afterEach(function() {
@@ -19,7 +19,6 @@ describe('aria-hidden-focus', function() {
 		checkContext.reset();
 	});
 
-	// pass
 	it('returns true when content not focusable by default', function() {
 		var params = checkSetup('<p id="target" aria-hidden="true">Some text</p>');
 		var actual = check.evaluate.apply(checkContext, params);
@@ -34,28 +33,6 @@ describe('aria-hidden-focus', function() {
 		assert.isTrue(actual);
 	});
 
-	it('returns true when BUTTON removed from tab order through tabindex', function() {
-		var params = checkSetup(
-			'<div id="target" aria-hidden="true">' +
-				'<button tabindex="-1">Some button</button>' +
-				'</div>'
-		);
-		var actual = check.evaluate.apply(checkContext, params);
-		assert.isTrue(actual);
-	});
-
-	it('returns true when TEXTAREA removed from tab order through tabindex', function() {
-		var params = checkSetup(
-			'<div id="target" aria-hidden="true">' +
-				'<label>Enter your comments:' +
-				'<textarea tabindex="-1"></textarea>' +
-				'</label>' +
-				'</div>'
-		);
-		var actual = check.evaluate.apply(checkContext, params);
-		assert.isTrue(actual);
-	});
-
 	it('returns true when content made unfocusable through disabled', function() {
 		var params = checkSetup(
 			'<input id="target" disabled aria-hidden="true" />'
@@ -64,35 +41,6 @@ describe('aria-hidden-focus', function() {
 		assert.isTrue(actual);
 	});
 
-	it('returns true when aria-hidden=false does not negate aria-hidden true', function() {
-		// Note: aria-hidden can't be reset once you've set it to true on an ancestor
-		var params = checkSetup(
-			'<div id="target" aria-hidden="true"><div aria-hidden="false"><button tabindex="-1">Some button</button></div></div>'
-		);
-		var actual = check.evaluate.apply(checkContext, params);
-		assert.isTrue(actual);
-	});
-
-	(shadowSupported ? it : xit)(
-		'returns true when BUTTON is removed from tab order through tabindex which coexists with plain text in shadowDOM',
-		function() {
-			// Note:
-			// `testUtils.checkSetup` does not work for shadowDOM
-			// as `axe._tree` and `axe._selectorData` needs to be updated after shadowDOM construction
-			fixtureSetup(
-				'<div aria-hidden="true" id="target"><button tabindex="-1">btn</button></div>`'
-			);
-			var node = fixture.querySelector('#target');
-			var shadow = node.attachShadow({ mode: 'open' });
-			shadow.innerHTML = 'plain text';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
-			axe._selectorData = axe.utils.getSelectorData(axe._tree);
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
-			var actual = check.evaluate.call(checkContext, node, {}, virtualNode);
-			assert.isTrue(actual);
-		}
-	);
-
 	// fail
 	it('returns false when focusable off screen link', function() {
 		var params = checkSetup(
@@ -100,10 +48,7 @@ describe('aria-hidden-focus', function() {
 		);
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isFalse(actual);
-		assert.deepEqual(
-			checkContext._relatedNodes,
-			Array.from(fixture.querySelectorAll('a'))
-		);
+		assert.isTrue(checkContext._relatedNodes.length === 0);
 	});
 
 	it('returns false when focusable form field only disabled through ARIA', function() {
@@ -118,24 +63,13 @@ describe('aria-hidden-focus', function() {
 		);
 	});
 
-	it('returns false when focusable content through tabindex', function() {
-		var params = checkSetup(
-			'<p id="target" tabindex="0" aria-hidden="true">Some text</p>'
-		);
-		var actual = check.evaluate.apply(checkContext, params);
-		assert.isFalse(actual);
-	});
-
 	it('returns false when focusable SUMMARY element', function() {
 		var params = checkSetup(
 			'<details id="target" aria-hidden="true"><summary>Some button</summary><p>Some details</p></details>'
 		);
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isFalse(actual);
-		assert.deepEqual(
-			checkContext._relatedNodes,
-			Array.from(fixture.querySelectorAll('details'))
-		);
+		assert.isTrue(checkContext._relatedNodes.length === 0);
 	});
 
 	it('returns false when focusable SELECT element', function() {
@@ -166,17 +100,12 @@ describe('aria-hidden-focus', function() {
 				'</map>' +
 				'</main>'
 		);
-
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isFalse(actual);
-		assert.deepEqual(
-			checkContext._relatedNodes,
-			Array.from(fixture.querySelectorAll('area'))
-		);
 	});
 
 	(shadowSupported ? it : xit)(
-		'returns false when focusable content through tabindex inside shadowDOM',
+		'returns false when focusable content inside shadowDOM',
 		function() {
 			// Note:
 			// `testUtils.checkSetup` does not work for shadowDOM

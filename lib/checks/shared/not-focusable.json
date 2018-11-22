@@ -1,0 +1,11 @@
+{
+	"id": "not-focusable",
+	"evaluate": "not-focusable.js",
+	"metadata": {
+		"impact": "serious",
+		"messages": {
+			"pass": "No focusable elements contained within element",
+			"fail": "Focusable content should be removed from the DOM"
+		}
+	}
+}
