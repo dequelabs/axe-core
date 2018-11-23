@@ -1054,6 +1054,7 @@ describe('text.accessibleText acceptence tests', function() {
 			'</label>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = fixture.querySelector('#test');
+		// Chrome: "Flash the screen times"
 		assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 	});
 
@@ -1328,6 +1329,8 @@ describe('text.accessibleText acceptence tests', function() {
 			'</label>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = fixture.querySelector('#test');
+		// Chrome 70: "Flash the screen times"
+		// Firefox 62: "Flash the screen times"
 		assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 	});
 
@@ -1338,6 +1341,8 @@ describe('text.accessibleText acceptence tests', function() {
 			'</label>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = fixture.querySelector('#test');
+		// Chrome 70: Foo 5 baz
+		// Firefox 62: Foo 5 baz
 		assert.equal(accessibleText(target), 'foo 5 baz');
 	});
 
@@ -1374,6 +1379,8 @@ describe('text.accessibleText acceptence tests', function() {
 			'</label>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = fixture.querySelector('#test');
+		// Chrome 70: "Flash the screen times."
+		// Firefox 62: "Flash the screen 1 times."
 		assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 	});
 
@@ -1406,6 +1413,8 @@ describe('text.accessibleText acceptence tests', function() {
 			'</label>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = fixture.querySelector('#test');
+		// Chrome 70: Flash the screen times
+		// Firefox 62: Flash the screen 1 times
 		assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 	});
 
@@ -1538,8 +1547,6 @@ describe('text.accessibleText acceptence tests', function() {
 
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var target = fixture.querySelector('#test');
-		// My name is Eli the weird. (QED)
-		// My name is Eli the weird. (QED) Where are my marbles?
 		assert.equal(
 			accessibleText(target),
 			'My name is Eli the weird. (QED) Where are my marbles?'
