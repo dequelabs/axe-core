@@ -24,7 +24,6 @@
   ],
   "none": [
     "help-same-as-label",
-    "multiple-label",
     "hidden-explicit-label"
   ]
 }

@@ -28,6 +28,7 @@
 | duplicate-id | Ensures every id attribute value is unique | Minor | cat.parsing, wcag2a, wcag411 | true |
 | empty-heading | Ensures headings have discernible text | Minor | cat.name-role-value, best-practice | true |
 | focus-order-semantics | Ensures elements in the focus order have an appropriate role | Minor | cat.keyboard, best-practice, experimental | true |
+| form-field-multiple-labels | Ensures form field does not have multiple label elements | Moderate | cat.forms, wcag2a, wcag332 | true |
 | frame-tested | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain the axe-core script | Critical | cat.structure, review-item | true |
 | frame-title-unique | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a unique title attribute | Serious | cat.text-alternatives, best-practice | true |
 | frame-title | Ensures &lt;iframe&gt; and &lt;frame&gt; elements contain a non-empty title attribute | Serious | cat.text-alternatives, wcag2a, wcag241, wcag412, section508, section508.22.i | true |
@@ -40,13 +41,13 @@
 | image-redundant-alt | Ensure button and link text is not repeated as image alternative | Minor | cat.text-alternatives, best-practice | true |
 | input-image-alt | Ensures &lt;input type=&quot;image&quot;&gt; elements have alternate text | Critical | cat.text-alternatives, wcag2a, wcag111, section508, section508.22.a | true |
 | label-title-only | Ensures that every form element is not solely labeled using the title or aria-describedby attributes | Serious | cat.forms, best-practice | true |
-| label | Ensures every form element has a label | Minor, Serious, Critical | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
+| label | Ensures every form element has a label | Minor, Critical | cat.forms, wcag2a, wcag332, wcag131, section508, section508.22.n | true |
 | landmark-banner-is-top-level | Ensures the banner landmark is at top level | Moderate | cat.semantics, best-practice | true |
 | landmark-contentinfo-is-top-level | Ensures the contentinfo landmark is at top level | Moderate | cat.semantics, best-practice | true |
 | landmark-main-is-top-level | Ensures the main landmark is at top level | Moderate | cat.semantics, best-practice | true |
-| landmark-no-duplicate-banner | Ensures the page has at most one banner landmark | Moderate | cat.semantics, best-practice | true |
-| landmark-no-duplicate-contentinfo | Ensures the page has at most one contentinfo landmark | Moderate | cat.semantics, best-practice | true |
-| landmark-one-main | Ensures the page has only one main landmark and each iframe in the page has at most one main landmark | Moderate | cat.semantics, best-practice | true |
+| landmark-no-duplicate-banner | Ensures the document has at most one banner landmark | Moderate | cat.semantics, best-practice | true |
+| landmark-no-duplicate-contentinfo | Ensures the document has at most one contentinfo landmark | Moderate | cat.semantics, best-practice | true |
+| landmark-one-main | Ensures the document has only one main landmark and each iframe in the page has at most one main landmark | Moderate | cat.semantics, best-practice | true |
 | layout-table | Ensures presentational &lt;table&gt; elements do not use &lt;th&gt;, &lt;caption&gt; elements or the summary attribute | Serious | cat.semantics, wcag2a, wcag131 | true |
 | link-in-text-block | Links can be distinguished without relying on color | Serious | cat.color, experimental, wcag2a, wcag141 | true |
 | link-name | Ensures links have discernible text | Serious | cat.name-role-value, wcag2a, wcag412, wcag244, section508, section508.22.a | true |

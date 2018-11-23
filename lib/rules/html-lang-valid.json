@@ -1,6 +1,6 @@
 {
   "id": "html-lang-valid",
-  "selector": "html[lang]",
+  "selector": "html[lang], html[xml\\:lang]",
   "tags": [
     "cat.language",
     "wcag2a",

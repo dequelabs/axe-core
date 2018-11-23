@@ -40,6 +40,7 @@
 	<div aria-valuemin="stuff" id="violation33">hi</div>
 	<div aria-valuenow="stuff" id="violation34">hi</div>
 	<div aria-errormessage="violation35-ref" id="violation35">hi</div><div id="violation35-ref"></div>
+	<div aria-valuetext="" id="violation36"></div><!-- don't allow empty aria-valuetext -->
 </div>
 <h2>Possible False Positives</h2>
 <div>
@@ -250,6 +251,19 @@
 	<div aria-errormessage="ref" aria-describedby="ref" id="pass170">hi</div>
 
 	<div aria-activedescendant="" id="pass171">hi</div>
+	<div aria-current="" id="pass172">hi</div>
+	<div aria-invalid="" id="pass173">hi</div>
+	<div aria-controls="" id="pass174">hi</div>
+	<div aria-describedby="" id="pass175">hi</div>
+	<div aria-errormessage="" id="pass176">hi</div>
+	<div aria-flowto="" id="pass177">hi</div>
+	<div aria-haspopup="" id="pass178">hi</div>
+	<div aria-invalid="" id="pass179">hi</div>
+	<div aria-keyshortcuts="" id="pass180">hi</div>
+	<div aria-label="" id="pass181">hi</div>
+	<div aria-labelledby="" id="pass182">hi</div>
+	<div aria-owns="" id="pass183">hi</div>
+	<div aria-placeholder="" id="pass184">hi</div>
 
 	<div id="ref">Hi</div>
 	<div id="ref2">Hi2</div>
