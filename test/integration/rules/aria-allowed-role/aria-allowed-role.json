@@ -61,9 +61,6 @@
 		["#fail-aside-role-tab"],
 		["#fail-button-role-gridcell"],
 		["#fail-input-role-gridcell-multiple-role"]
-  ],
-  "incomplete": [
-    ["#incomplete1"],
-    ["#incomplete2"]
-  ]
+	],
+	"incomplete": [["#incomplete1"], ["#incomplete2"]]
 }

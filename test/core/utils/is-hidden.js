@@ -74,10 +74,10 @@ describe('axe.utils.isHidden', function() {
 		assert.isFalse(axe.utils.isHidden(el));
 	});
 
-	it('not hidden: should work when the element is inside shadow DOM', function() {
-		var tree, node;
-
-		if (shadowSupported) {
+	(shadowSupported ? it : xit)(
+		'not hidden: should work when the element is inside shadow DOM',
+		function() {
+			var tree, node;
 			// shadow DOM v1 - note: v0 is compatible with this code, so no need
 			// to specifically test this
 			fixture.innerHTML = '<div></div>';
@@ -86,12 +86,12 @@ describe('axe.utils.isHidden', function() {
 			node = axe.utils.querySelectorAll(tree, 'input')[0];
 			assert.isFalse(axe.utils.isHidden(node.actualNode));
 		}
-	});
+	);
 
-	it('hidden: should work when the element is inside shadow DOM', function() {
-		var tree, node;
-
-		if (shadowSupported) {
+	(shadowSupported ? it : xit)(
+		'hidden: should work when the element is inside shadow DOM',
+		function() {
+			var tree, node;
 			// shadow DOM v1 - note: v0 is compatible with this code, so no need
 			// to specifically test this
 			fixture.innerHTML = '<div style="display:none"></div>';
@@ -100,26 +100,28 @@ describe('axe.utils.isHidden', function() {
 			node = axe.utils.querySelectorAll(tree, 'input')[0];
 			assert.isTrue(axe.utils.isHidden(node.actualNode));
 		}
-	});
-	it('should work with hiddent slotted elements', function() {
-		function createContentSlotted() {
-			var group = document.createElement('div');
-			group.innerHTML =
-				'<div id="target" style="display:none;">Stuff<slot></slot></div>';
-			return group;
-		}
-		function makeShadowTree(node) {
-			var root = node.attachShadow({ mode: 'open' });
-			var div = document.createElement('div');
-			root.appendChild(div);
-			div.appendChild(createContentSlotted());
-		}
-		if (shadowSupported) {
+	);
+
+	(shadowSupported ? it : xit)(
+		'should work with hidden slotted elements',
+		function() {
+			function createContentSlotted() {
+				var group = document.createElement('div');
+				group.innerHTML =
+					'<div id="target" style="display:none;">Stuff<slot></slot></div>';
+				return group;
+			}
+			function makeShadowTree(node) {
+				var root = node.attachShadow({ mode: 'open' });
+				var div = document.createElement('div');
+				root.appendChild(div);
+				div.appendChild(createContentSlotted());
+			}
 			fixture.innerHTML = '<div><p><a>hello</a></p></div>';
 			makeShadowTree(fixture.firstChild);
 			var tree = axe.utils.getFlattenedTree(fixture.firstChild);
 			var el = axe.utils.querySelectorAll(tree, 'a')[0];
 			assert.isTrue(axe.utils.isHidden(el.actualNode));
 		}
-	});
+	);
 });
