@@ -1,4 +1,4 @@
-describe('aria.getAriaLabelledbyText', function() {
+describe('aria.arialabelledbyText', function() {
 	'use strict';
 	var aria = axe.commons.aria;
 	var fixtureSetup = axe.testUtils.fixtureSetup;
@@ -8,7 +8,7 @@ describe('aria.getAriaLabelledbyText', function() {
 			'<div role="heading" aria-labelledby="foo"></div>' +
 				'<div id="foo">Foo text</div>'
 		);
-		var accName = aria.getAriaLabelledbyText(fixture.firstChild);
+		var accName = aria.arialabelledbyText(fixture.firstChild);
 		assert.equal(accName, 'Foo text');
 	});
 
@@ -18,7 +18,7 @@ describe('aria.getAriaLabelledbyText', function() {
 				'<div id="foo">Foo text</div>'
 		);
 		var target = axe.utils.querySelectorAll(axe._tree[0], '#hdr')[0];
-		var accName = aria.getAriaLabelledbyText(target);
+		var accName = aria.arialabelledbyText(target);
 		assert.equal(accName, 'Foo text');
 	});
 
@@ -29,13 +29,13 @@ describe('aria.getAriaLabelledbyText', function() {
 				'<div id="bar">Bar</div>' +
 				'<div id="baz">Baz</div>'
 		);
-		var accName = aria.getAriaLabelledbyText(fixture.firstChild);
+		var accName = aria.arialabelledbyText(fixture.firstChild);
 		assert.equal(accName, 'Bar Baz Foo');
 	});
 
 	it('returns "" if the node is not an element', function() {
 		var fixture = fixtureSetup('foo');
-		var accName = aria.getAriaLabelledbyText(fixture.firstChild);
+		var accName = aria.arialabelledbyText(fixture.firstChild);
 		assert.equal(accName, '');
 	});
 
@@ -45,7 +45,7 @@ describe('aria.getAriaLabelledbyText', function() {
 				'<div id="foo">Foo text</div>'
 		);
 		var target = axe.utils.querySelectorAll(axe._tree[0], '#hdr')[0];
-		var accName = aria.getAriaLabelledbyText(target, {
+		var accName = aria.arialabelledbyText(target, {
 			inLabelledByContext: true
 		});
 		assert.equal(accName, '');
@@ -57,7 +57,7 @@ describe('aria.getAriaLabelledbyText', function() {
 				'<div id="foo">Foo text</div>'
 		);
 		var target = axe.utils.querySelectorAll(axe._tree[0], '#hdr')[0];
-		var accName = aria.getAriaLabelledbyText(target, {
+		var accName = aria.arialabelledbyText(target, {
 			inControlContext: true
 		});
 		assert.equal(accName, '');
@@ -69,7 +69,7 @@ describe('aria.getAriaLabelledbyText', function() {
 				'<div id="foo" aria-hidden="true">Foo text</div>'
 		);
 		var target = axe.utils.querySelectorAll(axe._tree[0], '#hdr')[0];
-		var accName = aria.getAriaLabelledbyText(target);
+		var accName = aria.arialabelledbyText(target);
 		assert.equal(accName, 'Foo text');
 	});
 
@@ -79,7 +79,7 @@ describe('aria.getAriaLabelledbyText', function() {
 				'<div id="foo" style="display:none">Foo text</div>'
 		);
 		var target = axe.utils.querySelectorAll(axe._tree[0], '#hdr')[0];
-		var accName = aria.getAriaLabelledbyText(target);
+		var accName = aria.arialabelledbyText(target);
 		assert.equal(accName, 'Foo text');
 	});
 
@@ -89,7 +89,7 @@ describe('aria.getAriaLabelledbyText', function() {
 				'<div id="foo"><div style="display:none">Foo text</div></div>'
 		);
 		var target = axe.utils.querySelectorAll(axe._tree[0], '#hdr')[0];
-		var accName = aria.getAriaLabelledbyText(target);
+		var accName = aria.arialabelledbyText(target);
 		assert.equal(accName, '');
 	});
 
@@ -100,7 +100,7 @@ describe('aria.getAriaLabelledbyText', function() {
 				'<div id="bar">Foo text</div>'
 		);
 		var target = axe.utils.querySelectorAll(axe._tree[0], '#hdr')[0];
-		var accName = aria.getAriaLabelledbyText(target, {
+		var accName = aria.arialabelledbyText(target, {
 			inControlContext: true
 		});
 		assert.equal(accName, '');
@@ -111,7 +111,7 @@ describe('aria.getAriaLabelledbyText', function() {
 			'<div role="heading" aria-labelledby="foo"></div>' +
 				'<div id="foo"> \t Foo \n text \t </div>'
 		);
-		var accName = aria.getAriaLabelledbyText(fixture.firstChild);
+		var accName = aria.arialabelledbyText(fixture.firstChild);
 		assert.equal(accName, ' \t Foo \n text \t ');
 	});
 });
