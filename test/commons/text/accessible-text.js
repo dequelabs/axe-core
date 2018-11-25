@@ -1183,15 +1183,12 @@ describe('text.accessibleTextVirtual', function() {
 			);
 		});
 
-		it('should otherwise be "Submit Query" string', function() {
+		it('should otherwise be "Submit" string', function() {
 			fixture.innerHTML = '<input type="image">';
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
-			assert.equal(
-				axe.commons.text.accessibleTextVirtual(target),
-				'Submit Query'
-			);
+			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Submit');
 		});
 	});
 

@@ -5,7 +5,7 @@ describe('text.subtreeText', function() {
 	it('concatinated the accessible name for child elements', function() {
 		fixtureSetup('<span>foo</span> <span>bar</span> <span>baz</span>');
 		var fixture = axe.utils.querySelectorAll(axe._tree[0], '#fixture')[0];
-		assert.equal(subtreeText(fixture, { debug: true }), 'foo bar baz');
+		assert.equal(subtreeText(fixture), 'foo bar baz');
 	});
 
 	it('returns `` when the element is not named from contents', function() {
