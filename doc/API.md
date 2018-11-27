@@ -179,9 +179,9 @@ axe.configure({
       - `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
       - `enabled` - boolean(optional, default `true`). Whether the rule is turned on. This is a common attribute for overriding.
       - `pageLevel` - boolean(optional, default `false`). When set to true, this rule is only applied when the entire page is tested. Results from nodes on different frames are combined into a single result. See [page level rules](#page-level-rules).
-      - `any` - array(optional, default `[]`). This is the list of checks that must all "pass" or else there is a violation.
-      - `all` - array(optional, default `[]`). This is the list of checks that, if any "fails", will generate a violation.
-      - `none` - array(optional, default `[]`). This is a list of the checks that, if none "pass", will generate a violation.
+      - `any` - array(optional, default `[]`). This is a list of checks that, if none "pass", will generate a violation.
+      - `all` - array(optional, default `[]`). This is a list of checks that, if any "fails", will generate a violation.
+      - `none` - array(optional, default `[]`). This is a list of checks that, if any "pass", will generate a violation.
       - `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. In practice, you must supply some valid tags or the default evaluation will not invoke the rule. The convention is to include the standard (WCAG 2 and/or section 508), the WCAG 2 level, Section 508 paragraph, and the WCAG 2 success criteria. Tags are constructed by converting all letters to lower case, removing spaces and periods and concatinating the result. E.g. WCAG 2 A success criteria 1.1.1 would become ["wcag2a", "wcag111"]
       - `matches` - string(optional, default `*`). A filtering CSS selector that will exclude elements that do not match the CSS selector.
   - `disableOtherRules` - Disables all rules not included in the `rules` property.
