@@ -3,8 +3,9 @@
 const fs = require('fs');
 const path = require('path');
 const browserify = require('browserify');
-const mkdirp = require('mkdirp');
-const getDirName = require('path').dirname;
+const { dirname: getDirName } = require('path');
+const makeDir = require('make-dir');
+
 const importsFile = path.join(
 	__dirname,
 	'..',
@@ -14,13 +15,15 @@ const importsFile = path.join(
 	'index.js'
 );
 
-async function run() {
-	// get an object map of modules to be imported as key value pairs based on args
-	const moduleMap = parseArgsAsRequireMap(process.argv.slice(2));
-	if (!moduleMap) {
-		throw new Error('Ensure supplied arguments are correct.');
-	}
+// Mapping of external dependencies to be imported
+// Global Namespace : Library name
+const moduleMap = {
+	axios: 'axios',
+	doT: 'dot',
+	CssSelectorParser: 'css-selector-parser'
+};
 
+async function run() {
 	// generate `axe.imports` content
 	const fileContent = `
 	/**
@@ -64,28 +67,6 @@ async function run() {
 run();
 
 /**
- * Convert arguments to object map of require statement
- * @param {Array<String>} args key value pair of arguments
- * @returns {Object} Eg: { axios: require('axios'), doT: require('dot') }
- */
-function parseArgsAsRequireMap(args) {
-	const argMap = {};
-
-	if (args.length % 2) {
-		throw new Error('Invalid number of arguments');
-	}
-
-	for (let i = 0; i < args.length; i += 2) {
-		let key = args[i];
-
-		key = key.replace(/^--/, '').replace(/-([a-z])/g, g => g[1].toUpperCase());
-
-		argMap[key] = args[i + 1];
-	}
-	return argMap;
-}
-
-/**
  * Create file with contents at specified location
  * @method createFile
  * @param {String} path file path, inclusive of file name
@@ -94,16 +75,15 @@ function parseArgsAsRequireMap(args) {
  */
 function createFile(path, content) {
 	return new Promise((resolve, reject) => {
-		mkdirp(getDirName(path), err => {
-			if (err) {
-				reject(err);
-			}
-			fs.writeFile(path, content, err => {
-				if (err) {
-					reject(err);
-				}
-				resolve(path);
-			});
-		});
+		makeDir(getDirName(path))
+			.then(() => {
+				fs.writeFile(path, content, err => {
+					if (err) {
+						reject(err);
+					}
+					resolve(path);
+				});
+			})
+			.catch(err => reject(err));
 	});
 }

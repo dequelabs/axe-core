@@ -328,6 +328,10 @@ module.exports = function(grunt) {
 			}
 		},
 		run: {
+			npm_run_eslint: {
+				cmd: 'npm',
+				args: ['run', 'eslint']
+			},
 			npm_run_imports: {
 				cmd: 'npm',
 				args: ['run', 'imports-gen']
@@ -339,6 +343,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('pre-build', [
 		'clean',
+		'run:npm_run_eslint',
 		'run:npm_run_imports'
 	]);
 
