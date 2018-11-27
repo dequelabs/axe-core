@@ -17,7 +17,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-parallel');
-	grunt.loadNpmTasks('grunt-run');
 	grunt.loadTasks('build/tasks');
 
 	var langs;
@@ -338,22 +337,12 @@ module.exports = function(grunt) {
 					base: ['.']
 				}
 			}
-		},
-		run: {
-			npm_run_eslint: {
-				cmd: 'npm',
-				args: ['run', 'eslint']
-			}
 		}
 	});
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('pre-build', [
-		'clean',
-		'generate-imports',
-		'run:npm_run_eslint'
-	]);
+	grunt.registerTask('pre-build', ['clean', 'generate-imports']);
 
 	grunt.registerTask('build', [
 		'pre-build',
