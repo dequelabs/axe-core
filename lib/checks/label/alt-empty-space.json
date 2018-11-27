@@ -1,0 +1,11 @@
+{
+	"id": "alt-empty-space",
+	"evaluate": "alt-empty-space.js",
+	"metadata": {
+		"impact": "critical",
+		"messages": {
+			"pass": "Element has a valid alt attribute value",
+			"fail": "Element has an alt attribute containing only a space character"
+		}
+	}
+}
