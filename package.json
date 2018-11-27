@@ -83,7 +83,7 @@
 		"eslint": "^5.9.0",
 		"eslint-config-prettier": "^3.0.0",
 		"fs-extra": "^7.0.0",
-		"grunt": "^1.0.2",
+		"grunt": "^1.0.3",
 		"grunt-babel": "^7.0.0",
 		"grunt-contrib-clean": "^2.0.0",
 		"grunt-contrib-concat": "^1.0.1",
@@ -112,7 +112,6 @@
 		"typescript": "^2.9.2",
 		"uglify-js": "^3.4.4"
 	},
-	"dependencies": {},
 	"lint-staged": {
 		"*.{md,json,js,ts}": [
 			"prettier --write",

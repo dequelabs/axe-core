@@ -29,10 +29,10 @@ describe('focusable-not-tabbable', function() {
 		assert.isTrue(actual);
 	});
 
-	it('returns true when LINK removed from tab order through tabindex', function() {
+	it('returns true when LINK is in tab order', function() {
 		var params = checkSetup(
 			'<div id="target" aria-hidden="true">' +
-				'<a tabindex="-1" href="abc.html">ABC Site</a>' +
+				'<a href="abc.html">ABC Site</a>' +
 				'</div>'
 		);
 		var actual = check.evaluate.apply(checkContext, params);
@@ -44,13 +44,40 @@ describe('focusable-not-tabbable', function() {
 		);
 	});
 
-	it('returns true when TEXTAREA removed from tab order through tabindex', function() {
+	it('returns true when focusable SUMMARY element, that cannot be disabled', function() {
+		var params = checkSetup(
+			'<details id="target" aria-hidden="true"><summary>Some button</summary><p>Some details</p></details>'
+		);
+		var actual = check.evaluate.apply(checkContext, params);
+		assert.isTrue(actual);
+		assert.lengthOf(checkContext._relatedNodes, 1);
+		assert.deepEqual(
+			checkContext._relatedNodes,
+			Array.from(fixture.querySelectorAll('details'))
+		);
+	});
+
+	it('returns false when TEXTAREA is in tab order, but 0 related nodes as TEXTAREA can be disabled', function() {
 		var params = checkSetup(
 			'<div id="target" aria-hidden="true">' +
 				'<label>Enter your comments:' +
-				'<textarea tabindex="-1"></textarea>' +
+				'<textarea></textarea>' +
 				'</label>' +
 				'</div>'
+		);
+		var actual = check.evaluate.apply(checkContext, params);
+		assert.lengthOf(checkContext._relatedNodes, 0);
+		assert.isFalse(actual);
+	});
+
+	it('returns true when focusable AREA element', function() {
+		var params = checkSetup(
+			'<main id="target" aria-hidden="true">' +
+				'<map name="infographic">' +
+				'<area shape="rect" coords="184,6,253,27" href="https://mozilla.org"' +
+				'target="_blank" alt="Mozilla" />' +
+				'</map>' +
+				'</main>'
 		);
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isTrue(actual);
@@ -66,7 +93,7 @@ describe('focusable-not-tabbable', function() {
 	});
 
 	(shadowSupported ? it : xit)(
-		'returns true when BUTTON is removed from tab order in shadowDOM',
+		'returns false when focusable text in shadowDOM',
 		function() {
 			// Note:
 			// `testUtils.checkSetup` does not work for shadowDOM
@@ -74,7 +101,7 @@ describe('focusable-not-tabbable', function() {
 			fixtureSetup('<div aria-hidden="true" id="target"></div>`');
 			var node = fixture.querySelector('#target');
 			var shadow = node.attachShadow({ mode: 'open' });
-			shadow.innerHTML = '<button tabindex="-1">btn</button>';
+			shadow.innerHTML = '<p tabindex="0">btn</p>';
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 			axe._selectorData = axe.utils.getSelectorData(axe._tree);
 			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
@@ -83,11 +110,11 @@ describe('focusable-not-tabbable', function() {
 		}
 	);
 
-	it('returns false when focusable content through tabindex', function() {
+	it('returns true when focusable content through tabindex', function() {
 		var params = checkSetup(
 			'<p id="target" tabindex="0" aria-hidden="true">Some text</p>'
 		);
 		var actual = check.evaluate.apply(checkContext, params);
-		assert.isFalse(actual);
+		assert.isTrue(actual);
 	});
 });

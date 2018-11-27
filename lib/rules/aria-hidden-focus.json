@@ -8,7 +8,7 @@
 		"description": "Ensures aria-hidden elements do not contain focusable elements",
 		"help": "ARIA hidden element must not contain focusable elements"
 	},
-	"all": [],
-	"any": ["not-focusable", "focusable-not-tabbable"],
+	"all": ["focusable-disabled", "focusable-not-tabbable"],
+	"any": [],
 	"none": []
 }

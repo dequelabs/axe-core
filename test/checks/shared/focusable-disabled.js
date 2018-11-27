@@ -1,4 +1,4 @@
-describe('not-focusable', function() {
+describe('focusable-disabled', function() {
 	'use strict';
 
 	var check;
@@ -9,7 +9,7 @@ describe('not-focusable', function() {
 	var checkSetup = axe.testUtils.checkSetup;
 
 	before(function() {
-		check = checks['not-focusable'];
+		check = checks['focusable-disabled'];
 	});
 
 	afterEach(function() {
@@ -19,13 +19,13 @@ describe('not-focusable', function() {
 		checkContext.reset();
 	});
 
-	it('returns true when content not focusable by default', function() {
+	it('returns true when content not focusable by default (no tabbable elements)', function() {
 		var params = checkSetup('<p id="target" aria-hidden="true">Some text</p>');
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isTrue(actual);
 	});
 
-	it('returns true when content hidden through CSS', function() {
+	it('returns true when content hidden through CSS (no tabbable elements)', function() {
 		var params = checkSetup(
 			'<div id="target" aria-hidden="true"><a href="/" style="display:none">Link</a></div>'
 		);
@@ -33,7 +33,7 @@ describe('not-focusable', function() {
 		assert.isTrue(actual);
 	});
 
-	it('returns true when content made unfocusable through disabled', function() {
+	it('returns true when content made unfocusable through disabled (no tabbable elements)', function() {
 		var params = checkSetup(
 			'<input id="target" disabled aria-hidden="true" />'
 		);
@@ -51,12 +51,12 @@ describe('not-focusable', function() {
 		assert.lengthOf(checkContext._relatedNodes, 0);
 	});
 
-	it('returns false when focusable form field only disabled through ARIA', function() {
+	it('returns true when focusable form field only disabled through ARIA', function() {
 		var params = checkSetup(
 			'<div id="target" aria-hidden="true"><input type="text" aria-disabled="true"/></div>'
 		);
 		var actual = check.evaluate.apply(checkContext, params);
-		assert.isFalse(actual);
+		assert.isTrue(actual);
 		assert.lengthOf(checkContext._relatedNodes, 1);
 		assert.deepEqual(
 			checkContext._relatedNodes,
@@ -64,16 +64,7 @@ describe('not-focusable', function() {
 		);
 	});
 
-	it('returns false when focusable SUMMARY element', function() {
-		var params = checkSetup(
-			'<details id="target" aria-hidden="true"><summary>Some button</summary><p>Some details</p></details>'
-		);
-		var actual = check.evaluate.apply(checkContext, params);
-		assert.isFalse(actual);
-		assert.lengthOf(checkContext._relatedNodes, 0);
-	});
-
-	it('returns false when focusable SELECT element', function() {
+	it('returns true when focusable SELECT element that can be disabled', function() {
 		var params = checkSetup(
 			'<div id="target" aria-hidden="true">' +
 				'<label>Choose:' +
@@ -85,7 +76,7 @@ describe('not-focusable', function() {
 				'</div>'
 		);
 		var actual = check.evaluate.apply(checkContext, params);
-		assert.isFalse(actual);
+		assert.isTrue(actual);
 		assert.lengthOf(checkContext._relatedNodes, 1);
 		assert.deepEqual(
 			checkContext._relatedNodes,
@@ -107,7 +98,7 @@ describe('not-focusable', function() {
 	});
 
 	(shadowSupported ? it : xit)(
-		'returns false when focusable content inside shadowDOM',
+		'returns true when focusable content inside shadowDOM, that can be disabled',
 		function() {
 			// Note:
 			// `testUtils.checkSetup` does not work for shadowDOM
@@ -120,7 +111,7 @@ describe('not-focusable', function() {
 			axe._selectorData = axe.utils.getSelectorData(axe._tree);
 			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
 			var actual = check.evaluate.call(checkContext, node, {}, virtualNode);
-			assert.isFalse(actual);
+			assert.isTrue(actual);
 		}
 	);
 });
