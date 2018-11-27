@@ -56,7 +56,7 @@
 	},
 	"scripts": {
 		"api-docs": "jsdoc --configure .jsdoc.json",
-		"imports-gen": "node ./build/imports-generator --axios 'axios' --doT 'dot' --CssSelectorParser 'css-selector-parser'",
+		"imports-gen": "node ./build/imports-generator",
 		"build": "grunt",
 		"eslint": "eslint --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
 		"test": "npm run retire && tsc && grunt test",
