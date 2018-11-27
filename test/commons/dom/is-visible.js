@@ -1,6 +1,8 @@
 describe('dom.isVisible', function() {
 	'use strict';
+
 	var fixture = document.getElementById('fixture');
+	var fixtureSetup = axe.testUtils.fixtureSetup;
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var fakeNode = {
 		nodeType: Node.ELEMENT_NODE,
@@ -76,6 +78,33 @@ describe('dom.isVisible', function() {
 
 		it('should return true on a document', function() {
 			assert.isTrue(axe.commons.dom.isVisible(document));
+		});
+
+		it('should return false on STYLE tag', function() {
+			var fixture = fixtureSetup(
+				'<style id="target"> @import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"; .green { background-color: green; } </style>'
+			);
+			var node = fixture.querySelector('#target');
+			var actual = axe.commons.dom.isVisible(node);
+			assert.isFalse(actual);
+		});
+
+		it('should return false on NOSCRIPT tag', function() {
+			var fixture = fixtureSetup(
+				'<noscript id="target"><p class="invisible"><img src="/piwik/piwik.php?idsite=1" alt="" /></p></noscript>'
+			);
+			var node = fixture.querySelector('#target');
+			var actual = axe.commons.dom.isVisible(node);
+			assert.isFalse(actual);
+		});
+
+		it('should return false on TEMPLATE tag', function() {
+			var fixture = fixtureSetup(
+				'<template id="target"><div>Name:</div></template>'
+			);
+			var node = fixture.querySelector('#target');
+			var actual = axe.commons.dom.isVisible(node);
+			assert.isFalse(actual);
 		});
 
 		it('should return true if positioned staticly but top/left is set', function() {
