@@ -8,8 +8,8 @@ defaults: &defaults
 restore_dependency_cache: &restore_dependency_cache
   restore_cache:
     keys:
-      - v1-npm-cache-{{ checksum "package.json" }}
-      - v1-npm-cache-
+      - v{{ .Environment.CACHE_VERSION }}-npm-cache-{{ checksum "package.json" }}
+      - v{{ .Environment.CACHE_VERSION }}-npm-cache-
 
 set_npm_auth: &set_npm_auth
   run: npm config set "//registry.npmjs.org/:_authToken" $NPM_AUTH
@@ -24,7 +24,7 @@ jobs:
       - <<: *restore_dependency_cache
       - run: npm install
       - save_cache:
-          key: v1-npm-cache-{{ checksum "package.json" }}
+          key: v{{ .Environment.CACHE_VERSION }}-npm-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
 
