@@ -1,9 +1,9 @@
-describe('alt-empty-space', function() {
+describe('alt-space-value', function() {
 	'use strict';
 
 	var checkSetup = axe.testUtils.checkSetup;
 	var checkContext = axe.testUtils.MockCheckContext();
-	var check = checks['alt-empty-space'];
+	var check = checks['alt-space-value'];
 
 	afterEach(function() {
 		checkContext.reset();

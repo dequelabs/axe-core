@@ -1,6 +1,6 @@
 {
-	"id": "alt-empty-space",
-	"evaluate": "alt-empty-space.js",
+	"id": "alt-space-value",
+	"evaluate": "alt-space-value.js",
 	"metadata": {
 		"impact": "critical",
 		"messages": {
