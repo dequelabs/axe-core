@@ -231,4 +231,11 @@ describe('text.nativeTextMethods', function() {
 			assert.equal(nativeTextMethods.labelText('lilly', 'bob'), 'foo');
 		});
 	});
+
+	describe('singleSpace', function () {
+		var singleSpace = nativeTextMethods.singleSpace;
+		it('returns a single space', function() {
+			assert.equal(singleSpace(), ' ');
+		});
+	})
 });
