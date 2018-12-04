@@ -75,7 +75,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'lib/core',
-						src: ['**/*.js'],
+						src: ['**/*.js', '!imports/index.js'],
 						dest: 'tmp/core'
 					}
 				]
@@ -329,10 +329,6 @@ module.exports = function(grunt) {
 			}
 		},
 		run: {
-			npm_run_eslint: {
-				cmd: 'npm',
-				args: ['run', 'eslint']
-			},
 			npm_run_imports: {
 				cmd: 'npm',
 				args: ['run', 'imports-gen']
@@ -342,11 +338,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('pre-build', [
-		'clean',
-		'run:npm_run_eslint',
-		'run:npm_run_imports'
-	]);
+	grunt.registerTask('pre-build', ['clean', 'run:npm_run_imports']);
 
 	grunt.registerTask('build', [
 		'pre-build',

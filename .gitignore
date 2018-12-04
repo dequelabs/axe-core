@@ -3,6 +3,7 @@ node_modules
 npm-shrinkwrap.json
 package-lock.json
 .DS_Store
+.vscode
 
 # tmp - `dev` time generated assets
 tmp
@@ -16,11 +17,12 @@ axe.js
 axe.*.js
 
 
-typings/axe-core/axe-core-tests.js
-
-
-# imports are `build` generated assets
-lib/core/imports/*.js
-
 # generated jsdoc api docs
 doc/api/*
+
+# ts generated file
+typings/axe-core/axe-core-tests.js
+
+# doc
+doc/rule-descriptions.*.md
+
