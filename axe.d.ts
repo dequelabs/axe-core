@@ -91,8 +91,8 @@ declare namespace axe {
 	}
 	interface Spec {
 		branding?: {
-			brand: string;
-			application: string;
+			brand?: string;
+			application?: string;
 		};
 		reporter?: ReporterVersion;
 		checks?: Check[];
