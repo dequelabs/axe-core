@@ -17,6 +17,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-parallel');
+	grunt.loadNpmTasks('grunt-run');
 	grunt.loadTasks('build/tasks');
 
 	var langs;
@@ -248,7 +249,7 @@ module.exports = function(grunt) {
 		},
 		watch: {
 			files: ['lib/**/*', 'test/**/*.js', 'Gruntfile.js'],
-			tasks: ['build', 'testconfig', 'fixture']
+			tasks: ['run:npm_run_eslint', 'build', 'testconfig', 'fixture']
 		},
 		testconfig: {
 			test: {
@@ -337,6 +338,12 @@ module.exports = function(grunt) {
 					base: ['.']
 				}
 			}
+		},
+		run: {
+			npm_run_eslint: {
+				cmd: 'npm',
+				args: ['run', 'eslint']
+			}
 		}
 	});
 
@@ -389,6 +396,7 @@ module.exports = function(grunt) {
 	]);
 
 	grunt.registerTask('dev', [
+		'run:npm_run_eslint',
 		'build',
 		'testconfig',
 		'fixture',
