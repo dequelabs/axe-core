@@ -5,7 +5,7 @@
 		"impact": "serious",
 		"messages": {
 			"pass": "No focusable elements contained within element",
-			"fail": "Focusable content should be disabled or removed from the DOM"
+			"fail": "Focusable content should be disabled or be removed from the DOM"
 		}
 	}
 }

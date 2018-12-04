@@ -5,7 +5,7 @@
 		"impact": "serious",
 		"messages": {
 			"pass": "No focusable elements contained within element",
-			"fail": "Focusable content should be removed or have tabindex='-1'"
+			"fail": "Focusable content should have tabindex='-1' or be removed from the DOM"
 		}
 	}
 }
