@@ -88,7 +88,10 @@ workflows:
   version: 2
   build:
     jobs:
+      # install deps
       - dependencies
+      # install geckodriver
+      - install_drivers
       # Run linting
       - lint:
           requires:
