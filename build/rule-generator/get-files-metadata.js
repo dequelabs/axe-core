@@ -164,8 +164,8 @@ const getChecksFileMeta = (ruleChecks, ruleHasUnitTestAssets) => {
 	const checkFiles = ruleChecks
 		.map(c => {
 			const cName = c.getCheckName.toLowerCase();
-			const outDir = `${directories.checks}/${c.getCheckCategory}/`;
-			const outTestDir = `${directories.testChecksUnit}/${c.getCheckCategory}/`;
+			const outDir = `${directories.checks}/${c.getCheckCategory}`;
+			const outTestDir = `${directories.testChecksUnit}/${c.getCheckCategory}`;
 			const checkJson = getCheckSpecFileMeta(cName, outDir);
 			const checkJs = getCheckJsFileMeta(cName, outDir);
 			const checkTestJs = getCheckTestJsFileMeta(cName, outTestDir);

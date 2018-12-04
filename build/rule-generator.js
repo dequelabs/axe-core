@@ -2,12 +2,11 @@
 
 const fs = require('fs');
 const chalk = require('chalk');
-const figlet = require('figlet');
 const execa = require('execa');
 
-const { getAnswers } = require('./generator/get-answers');
-const { getFilesMetaData } = require('./generator/get-files-metadata');
-const { createFile, directories } = require('./generator/utils');
+const { getAnswers } = require('./rule-generator/get-answers');
+const { getFilesMetaData } = require('./rule-generator/get-files-metadata');
+const { createFile, directories } = require('./rule-generator/utils');
 
 const run = async () => {
 	// ensure axe exists, if not build axe, then start the generator
@@ -22,7 +21,7 @@ const run = async () => {
 	}
 
 	// rule-generator banner
-	console.log(chalk.hex('#0077c8')(figlet.textSync('Axe Rule Generator')));
+	console.log(chalk.hex('#0077c8')('Axe Rule Generator'));
 
 	// get answers (ask questions)
 	const answers = await getAnswers();
