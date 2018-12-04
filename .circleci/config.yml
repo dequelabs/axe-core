@@ -2,7 +2,7 @@ version: 2
 
 defaults: &defaults
   docker:
-    - image: circleci/node:10-browsers
+    - image: circleci/node:10-browsers-legacy
   working_directory: ~/axe-core
 
 restore_dependency_cache: &restore_dependency_cache
@@ -28,25 +28,6 @@ jobs:
           paths:
             - node_modules
 
-  # Install geckodriver and firefox
-  install_drivers:
-    <<: *defaults
-    steps:
-      - run:
-        name: Install geckodriver
-        command: |
-          wget https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-linux64.tar.gz
-          tar -xvzf geckodriver*
-          chmod +x geckodriver
-          sudo mv geckodriver /usr/local/bin
-      - run:
-          name: Install firefox
-          command: |
-            sudo apt-get remove firefox-mozilla-build binutils
-            sudo sh -c "echo 'deb http://ftp.hr.debian.org/debian sid main' >> /etc/apt/sources.list"
-            sudo apt-get update
-            sudo apt-get install -t sid firefox && firefox --version
-
   # Run ESLINT
   lint:
     <<: *defaults
@@ -61,6 +42,20 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache
+      - run:
+          name: Install geckodriver
+          command: |
+            wget https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-linux64.tar.gz
+            tar -xvzf geckodriver*
+            chmod +x geckodriver
+            sudo mv geckodriver /usr/local/bin
+      - run:
+          name: Install firefox
+          command: |
+            sudo apt-get remove firefox-mozilla-build binutils
+            sudo sh -c "echo 'deb http://ftp.hr.debian.org/debian sid main' >> /etc/apt/sources.list"
+            sudo apt-get update
+            sudo apt-get install -t sid firefox && firefox --version
       - run: npm run test
 
   # Release a "next" version
