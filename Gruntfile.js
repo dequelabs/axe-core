@@ -238,7 +238,7 @@ module.exports = function(grunt) {
 		},
 		watch: {
 			files: ['lib/**/*', 'test/**/*.js', 'Gruntfile.js'],
-			tasks: ['build', 'testconfig', 'fixture']
+			tasks: ['run:npm_run_eslint', 'build', 'testconfig', 'fixture']
 		},
 		testconfig: {
 			test: {
@@ -332,6 +332,10 @@ module.exports = function(grunt) {
 			npm_run_imports: {
 				cmd: 'npm',
 				args: ['run', 'imports-gen']
+      },
+			npm_run_eslint: {
+				cmd: 'npm',
+				args: ['run', 'eslint']
 			}
 		}
 	});
@@ -385,6 +389,7 @@ module.exports = function(grunt) {
 	]);
 
 	grunt.registerTask('dev', [
+		'run:npm_run_eslint',
 		'build',
 		'testconfig',
 		'fixture',

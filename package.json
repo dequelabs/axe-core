@@ -58,7 +58,7 @@
 		"api-docs": "jsdoc --configure .jsdoc.json",
 		"imports-gen": "node ./build/imports-generator",
 		"build": "grunt",
-		"eslint": "eslint --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
+		"eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
 		"test": "npm run retire && tsc && grunt test",
 		"version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
 		"prepublishOnly": "grunt build && grunt file-exists",
