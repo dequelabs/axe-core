@@ -57,7 +57,7 @@
 	"scripts": {
 		"api-docs": "jsdoc --configure .jsdoc.json",
 		"build": "grunt",
-		"eslint": "eslint --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
+		"eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
 		"test": "npm run retire && tsc && grunt test",
 		"version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
 		"prepublishOnly": "grunt build && grunt file-exists",
@@ -93,6 +93,7 @@
 		"grunt-contrib-watch": "^1.1.0",
 		"grunt-mocha": "1.1.0",
 		"grunt-parallel": "^0.5.1",
+		"grunt-run": "^0.8.1",
 		"html-entities": "^1.2.0",
 		"husky": "^1.1.1",
 		"jquery": "^3.0.0",
