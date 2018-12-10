@@ -21,5 +21,5 @@
 		"role-presentation",
 		"role-none"
 	],
-	"none": []
+	"none": ["alt-space-value"]
 }
