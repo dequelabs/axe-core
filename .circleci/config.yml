@@ -49,7 +49,7 @@ jobs:
       - save_cache:
           key: v{{ .Environment.CACHE_VERSION }}-phantomjs-2.1.1
           paths:
-            - /usr/local/bin/phantomjs
+            - phantomjs
       - run: npm run test
 
   # Release a "next" version
