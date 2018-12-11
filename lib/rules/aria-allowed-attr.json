@@ -7,6 +7,6 @@
 		"help": "Elements must only use allowed ARIA attributes"
 	},
 	"all": [],
-	"any": ["aria-allowed-attr", "aria-unsupported-attr"],
-	"none": []
+	"any": ["aria-allowed-attr"],
+	"none": ["aria-unsupported-attr"]
 }
