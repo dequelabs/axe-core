@@ -2,7 +2,7 @@ version: 2
 
 defaults: &defaults
   docker:
-    - image: circleci/node:10-browsers-legacy
+    - image: circleci/node:10-browsers
   working_directory: ~/axe-core
 
 restore_dependency_cache: &restore_dependency_cache
@@ -10,6 +10,11 @@ restore_dependency_cache: &restore_dependency_cache
     keys:
       - v{{ .Environment.CACHE_VERSION }}-npm-cache-{{ checksum "package.json" }}
       - v{{ .Environment.CACHE_VERSION }}-npm-cache-
+
+restore_phantomjs_cache: &restore_phantomjs_cache
+  restore_cache:
+    keys:
+      - v{{ .Environment.CACHE_VERSION }}-phantomjs-2.1.1
 
 set_npm_auth: &set_npm_auth
   run: npm config set "//registry.npmjs.org/:_authToken" $NPM_AUTH
@@ -42,6 +47,14 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache
+      - <<: *restore_phantomjs_cache
+      - run:
+          name: PhantomJs - Install or Restore from Cache
+          command: 'sh .circleci/install-phantomjs.sh'
+      - save_cache:
+          key: v{{ .Environment.CACHE_VERSION }}-phantomjs-2.1.1
+          paths:
+            - phantomjs
       - run: npm run test
 
   # Release a "next" version
@@ -68,6 +81,7 @@ workflows:
   version: 2
   build:
     jobs:
+      # install deps
       - dependencies
       # Run linting
       - lint:
