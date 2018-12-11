@@ -19,6 +19,7 @@ aXe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities fo
    1. [Test Util Name: axe.testUtils.shadowSupport](#test-util-name-axetestutilsshadowsupport)
    1. [Test Util Name: axe.testUtils.fixtureSetup](#test-util-name-axetestutilsfixturesetup)
    1. [Test Util Name: axe.testUtils.checkSetup](#test-util-name-axetestutilschecksetup)
+1. [Using Rule Generation CLI](#axe-rule-generator)
 
 ## Getting Started
 
@@ -475,3 +476,25 @@ An array with the DOM Node, options and virtualNode
 ```js
 [node, options, virtualNode];
 ```
+
+## Using Rule Generation CLI
+
+Axe provides a CLI for generating the necessary files and configuration assets for authoring a rule.
+
+To invoke the rule generator, run:
+
+```sh
+npm run rule-gen
+```
+
+The CLI acts a wizard, by asking a series of questions related to generation of the rule, for example:
+
+```sh
+- What is the name of the RULE? (Eg: aria-valid): sample-rule
+- Does the RULE need a MATCHES file to be created?: Yes
+- Would you like to create a CHECK for the RULE?: No
+- Would you like to create UNIT test files? Yes
+- Would you like to create INTEGRATION test files? Yes
+```
+
+Upon answering of which the the assets are created in the respective directories.
