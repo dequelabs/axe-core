@@ -1,0 +1,17 @@
+{
+	"description": "landmark-unique-pass tests",
+	"rule": "landmark-unique",
+	"passes": [
+		["#pass-main"],
+		["#pass-header"],
+		["#pass-form-aria-label-1"],
+		["#pass-form-aria-label-2"],
+		["#pass-form-aria-labelledby-1"],
+		["#pass-form-aria-labelledby-2"],
+		["#pass-aside-aria-label-1"],
+		["#pass-aside-aria-label-2"],
+		["#pass-aside-aria-labelledby-1"],
+		["#pass-aside-aria-labelledby-2"],
+		["#pass-footer"]
+	]
+}

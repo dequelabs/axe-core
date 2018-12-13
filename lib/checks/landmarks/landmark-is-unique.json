@@ -1,0 +1,14 @@
+{
+	"id": "landmark-is-unique",
+	"evaluate": "landmark-is-unique.js",
+	"options": {
+		"selector": "[role=banner], [role=complementary], [role=contentinfo], [role=main], [role=navigation], [role=region], [role=search], [role=form], form, footer, header, aside, main, nav, section"
+	},
+	"metadata": {
+		"impact": "moderate",
+		"messages": {
+			"pass": "Landmarks must have a unique role or role/label combination(aria-label OR aria-labelledby).",
+			"fail": "The landmarks do not have a unique role or role/label combination (use aria-label OR aria-labelledby to make landmarks distinguishable)."
+		}
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"description": "landmark-unique-fail tests",
+	"rule": "landmark-unique",
+	"violations": [
+		["#violation-main-1"],
+		["#violation-main-2"],
+		["#violation-header-1"],
+		["#violation-header-2"],
+		["#violation-form-aria-label-1"],
+		["#violation-form-aria-label-2"],
+		["#violation-form-aria-labelledby-1"],
+		["#violation-form-aria-labelledby-2"],
+		["#violation-aside-aria-label-1"],
+		["#violation-aside-aria-label-2"],
+		["#violation-aside-aria-labelledby-1"],
+		["#violation-aside-aria-labelledby-2"],
+		["#violation-footer-1"],
+		["#violation-footer-2"]
+	]
+}
