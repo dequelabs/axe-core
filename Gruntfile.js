@@ -75,7 +75,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'lib/core',
-						src: ['**/*.js'],
+						src: ['**/*.js', '!imports/index.js'],
 						dest: 'tmp/core'
 					}
 				]
@@ -132,17 +132,6 @@ module.exports = function(grunt) {
 					'lib/commons/outro.stub'
 				],
 				dest: 'tmp/commons.js'
-			}
-		},
-		'generate-imports': {
-			// list of external dependencies, which needs to be added to axe.imports object
-			data: {
-				axios: './node_modules/axios/dist/axios.js',
-				doT: {
-					file: './node_modules/dot/doT.js',
-					umd: false,
-					global: 'doT'
-				}
 			}
 		},
 		'aria-supported': {
@@ -340,6 +329,10 @@ module.exports = function(grunt) {
 			}
 		},
 		run: {
+			npm_run_imports: {
+				cmd: 'npm',
+				args: ['run', 'imports-gen']
+      },
 			npm_run_eslint: {
 				cmd: 'npm',
 				args: ['run', 'eslint']
@@ -349,7 +342,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('pre-build', ['clean', 'generate-imports']);
+	grunt.registerTask('pre-build', ['clean', 'run:npm_run_imports']);
 
 	grunt.registerTask('build', [
 		'pre-build',
