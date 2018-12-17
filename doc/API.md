@@ -478,7 +478,7 @@ This example will process all of the "violations", "incomplete", and "inapplicab
 
 ###### <a id='preload-configuration-details'></a> Preload Configuration in Options Parameter
 
-The preload attribute in options parameter accepts a `boolean` or an `object` where an array of assets can be specified.
+The `preload` attribute (defaults to `true`) in options parameter, accepts a `boolean` or an `object` where an array of assets can be specified.
 
 1. Specifying a `boolean`
 
