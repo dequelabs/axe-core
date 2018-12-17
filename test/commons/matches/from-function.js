@@ -38,7 +38,7 @@ describe('matches.fromFunction', function () {
   describe('with object matches', function () {
     var keyMap = {}
     function getValue (key) {
-      return keyMap[key]
+      return key
     }
 
     it('passes every object key to the getValue function once', function () {
@@ -47,33 +47,38 @@ describe('matches.fromFunction', function () {
         var index = keys.indexOf(key)
         assert.notEqual(index, -1)
         keys.splice(index, 1)
-        return true
+        return key
       }
 
       fromFunction(getValue, {
-        foo: true,
-        bar: true,
-        baz: true,
+        foo: 'foo',
+        bar: 'bar',
+        baz: 'baz',
       })
       assert.lengthOf(keys, 0);
     })
 
-    it('returns true if every value is true', function () {
+    it('returns true if every value is matched', function () {
       keyMap = {
-        foo: true,
-        bar: true,
-        baz: true,
+        foo: 'foo',
+        bar: 'bar',
+        baz: 'baz',
       }
       assert.isTrue(fromFunction(getValue, keyMap))
     })
 
-    it('returns false if any value is false', function () {
+    it('returns false if any value is not matched', function () {
       keyMap = {
-        foo: true,
-        bar: false,
-        baz: true,
+        foo: 'foo',
+        bar: 'bar',
+        baz: 'baz',
       }
-      assert.isTrue(fromFunction(getValue, keyMap))
+      assert.isFalse(fromFunction(function (key) {
+        if (key === 'bar') {
+          return 'mismatch'
+        }
+        return key
+      }, keyMap))
     })
 
     it('returns true if there are no keys', function () {

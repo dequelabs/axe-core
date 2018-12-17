@@ -37,8 +37,8 @@ describe('matches.fromDefinition', function () {
       'bar',
       ['bar', 'baz'],
       /bar/,
-      function (nodeName) {
-        return nodeName === 'bar'
+      function (attributeName) {
+        return attributeName === 'bar'
       }
     ]
     matchers.forEach(function (matcher) {
@@ -103,9 +103,54 @@ describe('matches.fromDefinition', function () {
     }))
   })
 
-  it('works with virtual nodes', function () {
-    fixture.innerHTML = '<div>foo</div>'
-    assert.isTrue(fromDefinition({ actualNode: fixture.firstChild }, 'div'))
+  describe('with virtual nodes', function () {
+    it('matches using a string', function () {
+      fixture.innerHTML = '<div>foo</div>'
+      var node = { actualNode: fixture.firstChild }
+      assert.isTrue(fromDefinition(node, 'div'))
+      assert.isFalse(fromDefinition(node, 'span'))
+    })
+
+    it('matches nodeName', function () {
+      fixture.innerHTML = '<div>foo</div>'
+      var node = { actualNode: fixture.firstChild }
+      assert.isTrue(fromDefinition(node, {
+        nodeName: 'div'
+      }))
+      assert.isFalse(fromDefinition(node, {
+        nodeName: 'span'
+      }))
+    })
+
+    it('matches attributes', function () {
+      fixture.innerHTML = '<div foo="bar">foo</div>'
+      var node = { actualNode: fixture.firstChild }
+      assert.isTrue(fromDefinition(node, {
+        attributes: {
+          foo: 'bar'
+        }
+      }))
+      assert.isFalse(fromDefinition(node, {
+        attributes: {
+          foo: 'baz'
+        }
+      }))
+    })
+
+    it('matches properties', function () {
+      fixture.innerHTML = '<input value="foo" />'
+      var node = { actualNode: fixture.firstChild }
+      assert.isTrue(fromDefinition(node, {
+        properties: {
+          value: 'foo'
+        }
+      }))
+      assert.isFalse(fromDefinition(node, {
+        properties: {
+          value: 'bar'
+        }
+      }))
+    })
   })
 
   describe('with a `condition` property', function () {

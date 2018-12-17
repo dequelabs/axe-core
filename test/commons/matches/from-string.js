@@ -24,6 +24,9 @@ describe('matches.fromString', function () {
     it('returns false if the string is not included', function () {
       assert.isFalse(fromString('foo bar', ['foo', 'bar', 'baz']))
     })
+    it('returns false when passed `undefined`', function () {
+      assert.isFalse(fromString(undefined, ['foo', 'bar', 'baz']))
+    })
   })
 
   describe('with function matchers', function () {
