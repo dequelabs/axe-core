@@ -8,5 +8,5 @@
 	},
 	"all": [],
 	"any": ["aria-allowed-attr"],
-	"none": []
+	"none": ["aria-unsupported-attr"]
 }
