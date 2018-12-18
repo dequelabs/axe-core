@@ -1,4 +1,4 @@
-const { directories } = require('./directories');
+const directories = require('./directories');
 
 /**
  * Get meta data for the file to be created as RULE Specification
@@ -264,6 +264,4 @@ const getFilesMetaData = answers => {
 	];
 };
 
-module.exports = {
-	getFilesMetaData
-};
+module.exports = getFilesMetaData;

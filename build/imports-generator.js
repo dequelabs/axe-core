@@ -1,6 +1,6 @@
 const path = require('path');
 const browserify = require('browserify');
-const { createFile } = require('./shared/create-file');
+const createFile = require('./shared/create-file');
 
 const inputFile = path.join(
 	__dirname,

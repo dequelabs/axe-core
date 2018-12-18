@@ -6,10 +6,10 @@ const execa = require('execa');
 
 const { CI } = process.env;
 
-const { getAnswers } = require('./rule-generator/get-answers');
-const { getFilesMetaData } = require('./rule-generator/get-files-metadata');
-const { createFile } = require('./shared/create-file');
-const { directories } = require('./rule-generator/directories');
+const createFile = require('./shared/create-file');
+const directories = require('./rule-generator/directories');
+const getAnswers = require('./rule-generator/get-answers');
+const getFilesMetaData = require('./rule-generator/get-files-metadata');
 
 // prevent malicious execution from CI
 if (CI) {

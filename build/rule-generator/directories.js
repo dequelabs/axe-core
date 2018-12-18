@@ -17,6 +17,4 @@ const directories = {
 	)
 };
 
-module.exports = {
-	directories
-};
+module.exports = directories;
