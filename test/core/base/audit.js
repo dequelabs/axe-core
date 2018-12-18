@@ -533,7 +533,6 @@ describe('Audit', function() {
 			audit.addRule({
 				id: 'preload1',
 				selector: '*'
-				// this inherently means this rule does not need preload
 			});
 			audit.run = function(context, options, resolve, reject) {
 				var randomRule = this.rules[0];
@@ -610,8 +609,9 @@ describe('Audit', function() {
 			// add a rule and check that does not need preload
 			audit.addRule({
 				id: 'no-preload',
-				selector: 'div#div1', // this inherently means this rule does not need preload
-				any: ['no-preload-check']
+				selector: 'div#div1',
+				any: ['no-preload-check'],
+				preload: false
 			});
 			audit.addCheck({
 				id: 'no-preload-check',
@@ -628,7 +628,7 @@ describe('Audit', function() {
 			// add a rule which needs preload
 			audit.addRule({
 				id: 'yes-preload',
-				selector: 'div#div2', // this inherently means this rule does not need preload
+				selector: 'div#div2',
 				preload: true
 			});
 
@@ -694,12 +694,13 @@ describe('Audit', function() {
 			// add a rule and check that does not need preload
 			audit.addRule({
 				id: 'no-preload',
-				selector: 'div#div1' // this inherently means this rule does not need preload
+				selector: 'div#div1',
+				preload: false
 			});
 			// add a rule which needs preload
 			audit.addRule({
 				id: 'yes-preload',
-				selector: 'div#div2', // this inherently means this rule does not need preload
+				selector: 'div#div2',
 				preload: true,
 				any: ['yes-preload-check']
 			});
@@ -767,12 +768,13 @@ describe('Audit', function() {
 			// add a rule and check that does not need preload
 			audit.addRule({
 				id: 'no-preload',
-				selector: 'div#div1' // this inherently means this rule does not need preload
+				selector: 'div#div1',
+				preload: false
 			});
 			// add a rule which needs preload
 			audit.addRule({
 				id: 'yes-preload',
-				selector: 'div#div2', // this inherently means this rule does not need preload
+				selector: 'div#div2',
 				preload: true,
 				any: ['yes-preload-check']
 			});
@@ -830,12 +832,13 @@ describe('Audit', function() {
 			// add a rule and check that does not need preload
 			audit.addRule({
 				id: 'no-preload',
-				selector: 'div#div1' // this inherently means this rule does not need preload
+				selector: 'div#div1',
+				preload: false
 			});
 			// add a rule which needs preload
 			audit.addRule({
 				id: 'yes-preload',
-				selector: 'div#div2', // this inherently means this rule does not need preload
+				selector: 'div#div2',
 				preload: true,
 				any: ['yes-preload-check']
 			});

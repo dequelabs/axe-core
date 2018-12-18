@@ -16,7 +16,7 @@ describe('css-orientation-lock incomplete test', function() {
 					type: 'rule',
 					values: ['css-orientation-lock']
 				},
-				preload: false // same effect if preload was not defined
+				preload: false
 			},
 			function(err, res) {
 				assert.isNull(err);
@@ -35,8 +35,7 @@ describe('css-orientation-lock incomplete test', function() {
 				runOnly: {
 					type: 'rule',
 					values: ['css-orientation-lock']
-				},
-				preload: true
+				}
 			},
 			function(err, res) {
 				assert.isNull(err);
