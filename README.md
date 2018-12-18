@@ -1,4 +1,4 @@
-# axe-core   
+# axe-core
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/dequelabs/axe-core.svg)](https://greenkeeper.io/)
 
