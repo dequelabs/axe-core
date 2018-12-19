@@ -1,8 +1,6 @@
-const fs = require('fs');
 const path = require('path');
 const browserify = require('browserify');
-const { dirname: getDirName } = require('path');
-const makeDir = require('make-dir');
+const createFile = require('./shared/create-file');
 
 const inputFile = path.join(
 	__dirname,
@@ -36,25 +34,3 @@ async function run() {
 
 // exec
 run();
-
-/**
- * Create file with contents at specified location
- * @method createFile
- * @param {String} path file path, inclusive of file name
- * @param {String} content contents of the file
- * @returns {Promise}
- */
-function createFile(path, content) {
-	return new Promise((resolve, reject) => {
-		makeDir(getDirName(path))
-			.then(() => {
-				fs.writeFile(path, content, err => {
-					if (err) {
-						reject(err);
-					}
-					resolve(path);
-				});
-			})
-			.catch(err => reject(err));
-	});
-}
