@@ -1,6 +1,6 @@
 const fs = require('fs');
 const globby = require('globby');
-const { directories } = require('./utils');
+const directories = require('./directories');
 
 /**
  * Check validity of a given string to be non-empty alphabets or dashes.
@@ -165,6 +165,4 @@ const questions = {
 	}
 };
 
-module.exports = {
-	questions
-};
+module.exports = questions;
