@@ -118,11 +118,11 @@
 			"help": "フレームはaxe-coreでテストする必要があります"
 		},
 		"frame-title-unique": {
-			"description": "<iframe>及び<frame>要素に一意のタイトル属性が含まれていることを確認してください",
+			"description": "<iframe>及び<frame>要素に一意のtitle属性が含まれていることを確認してください",
 			"help": "フレームには一意のtitle属性がなければなりません"
 		},
 		"frame-title": {
-			"description": "<iframe>及び<frame>要素に空のタイトル属性が存在しないことを確認してください",
+			"description": "<iframe>及び<frame>要素に空のtitle属性が存在しないことを確認してください",
 			"help": "フレームにはtitle属性がなければなりません"
 		},
 		"heading-order": {
