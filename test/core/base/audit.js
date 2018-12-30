@@ -1273,8 +1273,8 @@ describe('Audit', function() {
 			});
 		});
 
-		it('throws an error when option.runOnly has an unknown tag', function() {
-			assert.throws(function() {
+		it("doesn't throw an error when option.runOnly has an unknown tag", function() {
+			assert.doesNotThrow(function() {
 				a.normalizeOptions({
 					runOnly: {
 						type: 'tags',
