@@ -57,7 +57,7 @@ describe('skip-link', function() {
 		assert.isTrue(checks['skip-link'].evaluate(node));
 	});
 
-	it('should return true if the URI is an Anulgar skiplink', function() {
+	it('should return true if the URI is an Angular skiplink', function() {
 		fixture.innerHTML =
 			'<a href="/#target">Click Here</a><h1 id="target">Introduction</h1>';
 		var node = fixture.querySelector('a');
