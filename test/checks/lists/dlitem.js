@@ -79,7 +79,7 @@ describe('dlitem', function() {
 		});
 	});
 
-	it('returns false if the dd/dt is in a div with a role with a dl as grandparent', function() {
+	it('returns false if the dd/dt is in a div with a role with a dl as grandparent with a list role', function() {
 		const nodeNames = ['dd', 'dt'];
 		nodeNames.forEach(function(nodeName) {
 			var checkArgs = checkSetup(
@@ -146,7 +146,7 @@ describe('dlitem', function() {
 	);
 
 	(shadowSupport.v1 ? it : xit)(
-		'should return truewhen the item is grouped in dl > div',
+		'should return true when the item is grouped in dl > div in a shadow DOM',
 		function() {
 			var node = document.createElement('div');
 			node.innerHTML = '<dt>My list item </dt>';
