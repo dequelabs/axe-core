@@ -91,6 +91,7 @@ The current set of tags supported are listed in the following table:
 | --------------- | :-----------------------------------------: |
 | `wcag2a`        |              WCAG 2.0 Level A               |
 | `wcag2aa`       |              WCAG 2.0 Level AA              |
+| `wcag21aa`      |              WCAG 2.1 Level AA              |
 | `section508`    |                 Section 508                 |
 | `best-practice` |      Best practices endorsed by Deque       |
 | `experimental`  |           Cutting-edge techniques           |
@@ -477,7 +478,7 @@ This example will process all of the "violations", "incomplete", and "inapplicab
 
 ###### <a id='preload-configuration-details'></a> Preload Configuration in Options Parameter
 
-The preload attribute in options parameter accepts a `boolean` or an `object` where an array of assets can be specified.
+The `preload` attribute (defaults to `true`) in options parameter, accepts a `boolean` or an `object` where an array of assets can be specified.
 
 1. Specifying a `boolean`
 

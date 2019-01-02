@@ -6,9 +6,10 @@ const execa = require('execa');
 
 const { CI } = process.env;
 
-const { getAnswers } = require('./rule-generator/get-answers');
-const { getFilesMetaData } = require('./rule-generator/get-files-metadata');
-const { createFile, directories } = require('./rule-generator/utils');
+const createFile = require('./shared/create-file');
+const directories = require('./rule-generator/directories');
+const getAnswers = require('./rule-generator/get-answers');
+const getFilesMetaData = require('./rule-generator/get-files-metadata');
 
 // prevent malicious execution from CI
 if (CI) {
@@ -45,8 +46,14 @@ async function run() {
 	}
 
 	try {
-		const result = await Promise.all(files.map(createFile));
-
+		const result = await Promise.all(
+			files.map(async meta => {
+				const path = `${meta.dir}/${meta.name}`;
+				const content = meta.content;
+				await createFile(path, content);
+				return path;
+			})
+		);
 		console.log(
 			chalk.green.bold(
 				'\n' + 'Successfully generated RULE and respective files: '

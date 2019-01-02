@@ -1,6 +1,5 @@
 **/node_modules/**/*.js
 
-build/tasks/generate-imports.js
 build/tasks/aria-supported.js
 
 doc/api/*
