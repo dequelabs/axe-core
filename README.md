@@ -10,7 +10,7 @@
 [![Join the chat at https://gitter.im/dequelabs/axe-core](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dequelabs/axe-core?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Package Quality](http://npm.packagequality.com/shield/axe-core.svg)](http://packagequality.com/#?package=axe-core)
 
-The Accessibility Engine for automated testing of HTML-based user interfaces. Drop the aXe on your accessibility defects!
+The Accessibility Engine for automated testing of HTML-based user interfaces. Drop the axe on your accessibility defects!
 
 Thanks for helping us to make axe-core the most widely used HTML accessibility testing library in the galaxy! Share your axe-core story using #axecoresquad or by submitting it [here](https://accessibility.deque.com/axe-core-stories) to get a sweet T-shirt.
 
@@ -25,9 +25,9 @@ We believe that automated testing has an important role to play in achieving dig
 3. Automated accessibility testing rules must work in all modern browsers
 4. Automated accessibility testing rules must, themselves, be tested automatically
 
-## The sharp edge of the aXe
+## The sharp edge of the axe
 
-aXe is the third generation of accessibility rules for HTML-based user interfaces that differentiates itself from other approaches and rules repositories in the following ways:
+Axe is the third generation of accessibility rules for HTML-based user interfaces that differentiates itself from other approaches and rules repositories in the following ways:
 
 1. It works on all modern browsers,
 2. It supports in-memory fixtures, static fixtures, integration tests and iframes of infinite depth
@@ -49,8 +49,8 @@ npm install axe-core --save-dev
 
 Now include the javascript file in each of your iframes in your fixtures or test systems:
 
-```html
-<script src="node_modules/axe-core/axe.min.js" ></script>
+```
+<script src="node_modules/axe-core/axe.min.js"></script>
 ```
 
 Now insert calls at each point in your tests where a new piece of UI becomes visible or exposed:
@@ -66,13 +66,13 @@ axe.run(function (err, results) {
 
 ## Supported Browsers
 
-The [aXe API](doc/API.md) fully supports the following browsers:
+The [axe API](doc/API.md) fully supports the following browsers:
 
-* Microsoft Edge v40 and above
-* Google Chrome v42 and above
-* Mozilla Firefox v38 and above
-* Apple Safari v7 and above
-* Internet Explorer v9, 10, 11
+- Microsoft Edge v40 and above
+- Google Chrome v42 and above
+- Mozilla Firefox v38 and above
+- Apple Safari v7 and above
+- Internet Explorer v9, 10, 11
 
 Support means that we will fix bugs and attempt to test each browser regularly. Only Firefox and Chrome are currently tested on every pull request.
 
@@ -84,20 +84,20 @@ The complete list of rules run by axe-core can be found in [doc/rule-description
 
 ## Contents of the API Package
 
-The [aXe API](doc/API.md) package consists of:
+The [axe API](doc/API.md) package consists of:
 
-* `axe.js` - the JavaScript file that should be included in your web site under test (API)
-* `axe.min.js` - a minified version of the above file
+- `axe.js` - the JavaScript file that should be included in your web site under test (API)
+- `axe.min.js` - a minified version of the above file
 
 ## Localization
 
-Axe can be built using your local language. To do so, a localization file must be added to the `./locales` directory. This file must have be named in the following manner: `<langcode>.json`. To build aXe using this locale, instead of the default, run aXe with the `--lang` flag, like so:
+Axe can be built using your local language. To do so, a localization file must be added to the `./locales` directory. This file must have be named in the following manner: `<langcode>.json`. To build axe using this locale, instead of the default, run axe with the `--lang` flag, like so:
 
 `grunt build --lang=nl`
 
-This will create a new build for aXe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build localized versions, simply pass in `--all-lang` instead.
+This will create a new build for axe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build localized versions, simply pass in `--all-lang` instead.
 
-To create a new translation for aXe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below.
+To create a new translation for axe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below.
 
 To update existing translation file, re-run `grunt translate --lang=<langcode>`. This will add new messages used in English and remove messages which were not used in English.
 
@@ -105,35 +105,36 @@ Additionally, locale can be applied at runtime by passing a `locale` object to `
 
 ```js
 axe.configure({
-  locale: {
-    lang: 'de',
-    rules: {
-      accesskeys: {
-        help: 'Der Wert des accesskey-Attributes muss einzigartig sein.'
-      },
-      // ...
-    },
-    checks: {
-      abstractrole: {
-        fail: 'Abstrakte ARIA-Rollen dürfen nicht direkt verwendet werden.'
-      },
-      'aria-errormessage': {
-        // Note: doT (https://github.com/olado/dot) templates are supported here.
-        fail: 'Der Wert der aria-errormessage {{~it.data:value}} `{{=value}}{{~}}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
-      }
-      // ...
-    }
-  }
-})
+	locale: {
+		lang: 'de',
+		rules: {
+			accesskeys: {
+				help: 'Der Wert des accesskey-Attributes muss einzigartig sein.'
+			}
+			// ...
+		},
+		checks: {
+			abstractrole: {
+				fail: 'Abstrakte ARIA-Rollen dürfen nicht direkt verwendet werden.'
+			},
+			'aria-errormessage': {
+				// Note: doT (https://github.com/olado/dot) templates are supported here.
+				fail:
+					'Der Wert der aria-errormessage {{~it.data:value}} `{{=value}}{{~}}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
+			}
+			// ...
+		}
+	}
+});
 ```
 
 ## Supported ARIA Roles and Attributes.
 
-Refer [aXe ARIA support](./doc/aria-supported.md) for a complete list of ARIA supported roles and attributes by axe.
+Refer [axe ARIA support](./doc/aria-supported.md) for a complete list of ARIA supported roles and attributes by axe.
 
 ## Contributing
 
-Read the [Proposing Axe-core Rules guide](./doc/rule-proposal.md)
+Read the [Proposing axe-core Rules guide](./doc/rule-proposal.md)
 
 Read the [documentation on the architecture](./doc/developer-guide.md)
 

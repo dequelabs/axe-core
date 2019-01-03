@@ -38,8 +38,7 @@ describe('css-orientation-lock passes test', function() {
 				runOnly: {
 					type: 'rule',
 					values: ['css-orientation-lock']
-				},
-				preload: true // same effect if preload was not defined
+				}
 			},
 			function(err, res) {
 				assert.isNull(err);
@@ -73,8 +72,7 @@ describe('css-orientation-lock passes test', function() {
 					runOnly: {
 						type: 'rule',
 						values: ['css-orientation-lock']
-					},
-					preload: true
+					}
 				},
 				function(err, res) {
 					assert.isNull(err);

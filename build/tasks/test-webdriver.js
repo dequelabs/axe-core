@@ -85,8 +85,8 @@ module.exports = function(grunt) {
 	}
 
 	/*
-	* Build web driver depends whether REMOTE_SELENIUM_URL is set
-	*/
+	 * Build web driver depends whether REMOTE_SELENIUM_URL is set
+	 */
 	function buildWebDriver(browser) {
 		var webdriver, capabilities;
 		var mobileBrowser = browser.split('-mobile');

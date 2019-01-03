@@ -13,12 +13,11 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-eslint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-parallel');
-	grunt.loadNpmTasks('grunt-markdownlint');
+	grunt.loadNpmTasks('grunt-run');
 	grunt.loadTasks('build/tasks');
 
 	var langs;
@@ -76,7 +75,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'lib/core',
-						src: ['**/*.js'],
+						src: ['**/*.js', '!imports/index.js'],
 						dest: 'tmp/core'
 					}
 				]
@@ -133,17 +132,6 @@ module.exports = function(grunt) {
 					'lib/commons/outro.stub'
 				],
 				dest: 'tmp/commons.js'
-			}
-		},
-		'generate-imports': {
-			// list of external dependencies, which needs to be added to axe.imports object
-			data: {
-				axios: './node_modules/axios/dist/axios.js',
-				doT: {
-					file: './node_modules/dot/doT.js',
-					umd: false,
-					global: 'doT'
-				}
 			}
 		},
 		'aria-supported': {
@@ -250,7 +238,7 @@ module.exports = function(grunt) {
 		},
 		watch: {
 			files: ['lib/**/*', 'test/**/*.js', 'Gruntfile.js'],
-			tasks: ['build', 'testconfig', 'fixture']
+			tasks: ['run:npm_run_eslint', 'build', 'testconfig', 'fixture']
 		},
 		testconfig: {
 			test: {
@@ -331,7 +319,6 @@ module.exports = function(grunt) {
 		mocha: testConfig(grunt, {
 			reporter: grunt.option('reporter') || 'Spec'
 		}),
-
 		connect: {
 			test: {
 				options: {
@@ -341,41 +328,24 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		eslint: {
-			axe: {
-				options: {
-					eslintrc: true,
-					reporter: grunt.option('report') ? 'checkstyle' : undefined,
-					reporterOutput: grunt.option('report') ? 'tmp/lint.xml' : undefined
-				},
-				src: [
-					'lib/**/*.js',
-					'test/**/*.js',
-					'build/**/*.js',
-					'doc/**/*.js',
-					'!doc/examples/jest_react/*.js',
-					'Gruntfile.js',
-					'!build/tasks/aria-supported.js',
-					'!**/node_modules/**/*.js'
-				]
-			}
-		},
-		markdownlint: {
-			all: {
-				options: {
-					config: grunt.file.readJSON('.markdownlint.json')
-				},
-				src: ['README.md', '.github/*.md', 'doc/**/*.md']
+		run: {
+			npm_run_imports: {
+				cmd: 'npm',
+				args: ['run', 'imports-gen']
+      },
+			npm_run_eslint: {
+				cmd: 'npm',
+				args: ['run', 'eslint']
 			}
 		}
 	});
 
 	grunt.registerTask('default', ['build']);
 
+	grunt.registerTask('pre-build', ['clean', 'run:npm_run_imports']);
+
 	grunt.registerTask('build', [
-		'clean',
-		'generate-imports',
-		'eslint',
+		'pre-build',
 		'validate',
 		'concat:commons',
 		'configure',
@@ -392,9 +362,7 @@ module.exports = function(grunt) {
 		'fixture',
 		'connect',
 		'mocha',
-		'parallel',
-		'eslint',
-		'markdownlint'
+		'parallel'
 	]);
 
 	grunt.registerTask('ci-build', [
@@ -402,8 +370,7 @@ module.exports = function(grunt) {
 		'testconfig',
 		'fixture',
 		'connect',
-		'parallel',
-		'eslint'
+		'parallel'
 	]);
 
 	grunt.registerTask('test-fast', [
@@ -411,19 +378,18 @@ module.exports = function(grunt) {
 		'testconfig',
 		'fixture',
 		'connect',
-		'mocha',
-		'eslint'
+		'mocha'
 	]);
 
 	grunt.registerTask('translate', [
-		'clean',
-		'eslint',
+		'pre-build',
 		'validate',
 		'concat:commons',
 		'add-locale'
 	]);
 
 	grunt.registerTask('dev', [
+		'run:npm_run_eslint',
 		'build',
 		'testconfig',
 		'fixture',
