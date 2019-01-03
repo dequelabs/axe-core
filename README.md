@@ -62,7 +62,7 @@ axe.run(function (err, results) {
 
 ## Supported Browsers
 
-The [aXe API](doc/API.md) fully supports the following browsers:
+The [axe-core API](doc/API.md) fully supports the following browsers:
 
 - Microsoft Edge v40 and above
 - Google Chrome v42 and above
@@ -80,20 +80,20 @@ The complete list of rules run by axe-core can be found in [doc/rule-description
 
 ## Contents of the API Package
 
-The [aXe API](doc/API.md) package consists of:
+The [axe-core API](doc/API.md) package consists of:
 
 - `axe.js` - the JavaScript file that should be included in your web site under test (API)
 - `axe.min.js` - a minified version of the above file
 
 ## Localization
 
-Axe can be built using your local language. To do so, a localization file must be added to the `./locales` directory. This file must have be named in the following manner: `<langcode>.json`. To build aXe using this locale, instead of the default, run aXe with the `--lang` flag, like so:
+Axe can be built using your local language. To do so, a localization file must be added to the `./locales` directory. This file must have be named in the following manner: `<langcode>.json`. To build axe using this locale, instead of the default, run axe with the `--lang` flag, like so:
 
 `grunt build --lang=nl`
 
-This will create a new build for aXe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build localized versions, simply pass in `--all-lang` instead.
+This will create a new build for axe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build localized versions, simply pass in `--all-lang` instead.
 
-To create a new translation for aXe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below.
+To create a new translation for axe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below.
 
 To update existing translation file, re-run `grunt translate --lang=<langcode>`. This will add new messages used in English and remove messages which were not used in English.
 
@@ -126,7 +126,7 @@ axe.configure({
 
 ## Supported ARIA Roles and Attributes.
 
-Refer [aXe ARIA support](./doc/aria-supported.md) for a complete list of ARIA supported roles and attributes by axe.
+Refer [axe-core ARIA support](./doc/aria-supported.md) for a complete list of ARIA supported roles and attributes by axe.
 
 ## Contributing
 
