@@ -55,6 +55,8 @@
 		}
 	},
 	"scripts": {
+		"start": "npm run develop",
+		"develop": "grunt dev --force",
 		"api-docs": "jsdoc --configure .jsdoc.json",
 		"imports-gen": "node ./build/imports-generator",
 		"build": "grunt",
