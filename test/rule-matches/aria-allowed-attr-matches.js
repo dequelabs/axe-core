@@ -18,56 +18,21 @@ describe('aria-allowed-attr-matches', function() {
 		assert.isFunction(rule.matches);
 	});
 
-	it('should return false on elements with no role or no implicit role', function() {
-		var orig = axe.commons.aria.implicitRole;
-		axe.commons.aria.implicitRole = function(nd) {
-			assert.equal(nd, div);
-			return null;
-		};
-		var div = document.createElement('div');
-		fixture.appendChild(div);
-
-		assert.isFalse(rule.matches(div));
-		axe.commons.aria.implicitRole = orig;
-	});
-
-	it('should return false on elements that have no allowed attributes', function() {
-		var orig = axe.commons.aria.allowedAttr;
-		axe.commons.aria.allowedAttr = function(role) {
-			assert.equal(role, 'button');
-			return null;
-		};
+	it('should return true on elements that have aria attributes', function() {
 		var div = document.createElement('div');
 		div.setAttribute('role', 'button');
-		fixture.appendChild(div);
-
-		assert.isFalse(rule.matches(div));
-		axe.commons.aria.allowedAttr = orig;
-	});
-
-	it('should return false on elements that have a role but no aria attributes', function() {
-		var div = document.createElement('div');
-		div.setAttribute('role', 'button');
-		fixture.appendChild(div);
-
-		assert.isFalse(rule.matches(div));
-	});
-
-	it('should return true on elements that have a role', function() {
-		var div = document.createElement('div');
-		div.setAttribute('role', 'button');
-		div.setAttribute('aria-cats', 'meow');
+		div.setAttribute('aria-label', 'Thing 1');
+		div.setAttribute('aria-mccheddarton', 'Unsupported thing 2');
 		fixture.appendChild(div);
 
 		assert.isTrue(rule.matches(div));
 	});
 
-	it('should return true on elements that have an implicit role', function() {
-		var div = document.createElement('a');
-		div.setAttribute('href', '#monkeys');
-		div.setAttribute('aria-cats', 'meow');
+	it('should return false on elements that have no aria attributes', function() {
+		var div = document.createElement('div');
+		div.setAttribute('role', 'button');
 		fixture.appendChild(div);
 
-		assert.isTrue(rule.matches(div));
+		assert.isFalse(rule.matches(div));
 	});
 });

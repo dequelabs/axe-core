@@ -125,9 +125,9 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 			cats: {
 				allowedElements: [
 					{
-						tagName: 'INPUT',
+						nodeName: 'input',
 						attributes: {
-							TYPE: 'DOG'
+							value: 'dog'
 						}
 					}
 				]
@@ -136,7 +136,7 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('input');
 		var role = 'cats';
 		node.setAttribute('role', role);
-		node.setAttribute('type', 'cats');
+		node.setAttribute('value', 'cats');
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, role);
 		assert.isFalse(actual);
 	});

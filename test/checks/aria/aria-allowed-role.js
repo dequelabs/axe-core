@@ -147,17 +147,6 @@ describe('aria-allowed-role', function() {
 		);
 	});
 
-	it('returns true when MENU has type context', function() {
-		var node = document.createElement('menu');
-		node.setAttribute('type', 'context');
-		node.setAttribute('role', 'navigation');
-		fixture.appendChild(node);
-		assert.isFalse(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
-		);
-		assert.deepEqual(checkContext._data, ['navigation']);
-	});
-
 	it('returns false when a role is set on an element that does not allow any role', function() {
 		var node = document.createElement('dd');
 		node.setAttribute('role', 'link');
