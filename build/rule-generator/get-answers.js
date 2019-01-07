@@ -1,4 +1,4 @@
-const { questions } = require('./questions');
+const questions = require('./questions');
 const inquirer = require('inquirer');
 
 /**
@@ -58,6 +58,4 @@ const getAnswers = async () => {
 	};
 };
 
-module.exports = {
-	getAnswers
-};
+module.exports = getAnswers;
