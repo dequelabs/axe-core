@@ -226,4 +226,15 @@ describe('table.getScope', function() {
 			assert.equal(axe.commons.table.getScope(target), 'row');
 		});
 	});
+
+	it('does not throw on empty rows', function() {
+		fixture.innerHTML =
+			'<table>' +
+			'<tr> </tr>' +
+			'<tr> <th id="target">foo</th> <td>bar</td> </tr>' +
+			'</table>';
+		var target = $id('target');
+		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		assert.equal(axe.commons.table.getScope(target), 'auto');
+	});
 });
