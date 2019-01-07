@@ -66,6 +66,15 @@ describe('region', function() {
 		assert.equal(checkContext._relatedNodes.length, 0);
 	});
 
+	it('should return true when there is an Angular skiplink', function() {
+		var checkArgs = checkSetup(
+			'<div id="target"><a href="/#mainheader">Click Here</a><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div></div>'
+		);
+
+		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.equal(checkContext._relatedNodes.length, 0);
+	});
+
 	it('should return false when there is a non-region element', function() {
 		var checkArgs = checkSetup(
 			'<div id="target"><div>This is random content.</div><div role="main"><h1 id="mainheader">Introduction</h1></div></div>'
