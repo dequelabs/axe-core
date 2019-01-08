@@ -29,14 +29,14 @@ describe('focusable-not-tabbable', function() {
 		assert.isTrue(actual);
 	});
 
-	it('returns true when LINK is in tab order', function() {
+	it('returns false when LINK is in tab order', function() {
 		var params = checkSetup(
 			'<div id="target" aria-hidden="true">' +
 				'<a href="abc.html">ABC Site</a>' +
 				'</div>'
 		);
 		var actual = check.evaluate.apply(checkContext, params);
-		assert.isTrue(actual);
+		assert.isFalse(actual);
 		assert.lengthOf(checkContext._relatedNodes, 1);
 		assert.deepEqual(
 			checkContext._relatedNodes,
@@ -44,12 +44,12 @@ describe('focusable-not-tabbable', function() {
 		);
 	});
 
-	it('returns true when focusable SUMMARY element, that cannot be disabled', function() {
+	it('returns false when focusable SUMMARY element, that cannot be disabled', function() {
 		var params = checkSetup(
 			'<details id="target" aria-hidden="true"><summary>Some button</summary><p>Some details</p></details>'
 		);
 		var actual = check.evaluate.apply(checkContext, params);
-		assert.isTrue(actual);
+		assert.isFalse(actual);
 		assert.lengthOf(checkContext._relatedNodes, 1);
 		assert.deepEqual(
 			checkContext._relatedNodes,
@@ -57,7 +57,7 @@ describe('focusable-not-tabbable', function() {
 		);
 	});
 
-	it('returns false when TEXTAREA is in tab order, but 0 related nodes as TEXTAREA can be disabled', function() {
+	it('returns true when TEXTAREA is in tab order, but 0 related nodes as TEXTAREA can be disabled', function() {
 		var params = checkSetup(
 			'<div id="target" aria-hidden="true">' +
 				'<label>Enter your comments:' +
@@ -67,10 +67,10 @@ describe('focusable-not-tabbable', function() {
 		);
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.lengthOf(checkContext._relatedNodes, 0);
-		assert.isFalse(actual);
+		assert.isTrue(actual);
 	});
 
-	it('returns true when focusable AREA element', function() {
+	it('returns false when focusable AREA element', function() {
 		var params = checkSetup(
 			'<main id="target" aria-hidden="true">' +
 				'<map name="infographic">' +
@@ -80,7 +80,7 @@ describe('focusable-not-tabbable', function() {
 				'</main>'
 		);
 		var actual = check.evaluate.apply(checkContext, params);
-		assert.isTrue(actual);
+		assert.isFalse(actual);
 	});
 
 	it('returns true when aria-hidden=false does not negate aria-hidden true', function() {
@@ -106,13 +106,29 @@ describe('focusable-not-tabbable', function() {
 			axe._selectorData = axe.utils.getSelectorData(axe._tree);
 			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
 			var actual = check.evaluate.call(checkContext, node, {}, virtualNode);
-			assert.isTrue(actual);
+			assert.isFalse(actual);
 		}
 	);
 
-	it('returns true when focusable content through tabindex', function() {
+	it('returns false when focusable content through tabindex', function() {
 		var params = checkSetup(
 			'<p id="target" tabindex="0" aria-hidden="true">Some text</p>'
+		);
+		var actual = check.evaluate.apply(checkContext, params);
+		assert.isFalse(actual);
+	});
+
+	it('returns false when focusable target that cannot be disabled', function() {
+		var params = checkSetup(
+			'<div aria-hidden="true"><a id="target" href="">foo</a><button>bar</button></div>'
+		);
+		var actual = check.evaluate.apply(checkContext, params);
+		assert.isFalse(actual);
+	});
+
+	it('returns true when focusable target that can be disabled', function() {
+		var params = checkSetup(
+			'<div aria-hidden="true"><a href="">foo</a><button id="target">bar</button></div>'
 		);
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isTrue(actual);

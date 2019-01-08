@@ -123,6 +123,7 @@
 		"typescript": "^2.9.2",
 		"uglify-js": "^3.4.4"
 	},
+	"dependencies": {},
 	"lint-staged": {
 		"*.{md,json,js,ts}": [
 			"prettier --write",
