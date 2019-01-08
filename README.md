@@ -10,34 +10,30 @@
 [![Join the chat at https://gitter.im/dequelabs/axe-core](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dequelabs/axe-core?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Package Quality](http://npm.packagequality.com/shield/axe-core.svg)](http://packagequality.com/#?package=axe-core)
 
-The Accessibility Engine for automated testing of HTML-based user interfaces. Drop the axe on your accessibility defects!
+![Axe Logo](doc/axelogo2018.png)
 
-Thanks for helping us to make axe-core the most widely used HTML accessibility testing library in the galaxy! Share your axe-core story using #axecoresquad or by submitting it [here](https://accessibility.deque.com/axe-core-stories) to get a sweet T-shirt.
+Axe is an accessibility testing engine for websites and other HTML-based user interfaces. It's fast, secure, lightweight, and was built to seamlessly integrate with any existing test environment so you can automate accessibility testing alongside your regular functional testing.
+
+[Sign up for axe news](https://hubs.ly/H0fsN0b0) to get the latest on axe features, future releases, and events.
 
 ## Philosophy
 
-We believe that automated testing has an important role to play in achieving digital equality and that in order to do that, it must achieve mainstream adoption by professional web developers. That means that the tests must inspire trust, must be fast, must work everywhere and must be available everywhere.
+The web can only become an accessible, inclusive space if developers are empowered to take responsibility for accessibility testing and accessible coding practices.
 
-## Manifesto
+Automated accessibility testing is a huge timesaver, it doesn't require special expertise, and it allows teams to focus expert resources on the accessibility issues that really need them. Unfortunately, most accessibility tools are meant to be run on sites and applications that have reached the end of the development process and often don't give clear or consistent results, causing frustration and delays just when you thought your product was ready to ship.
 
-1. Automated accessibility testing rules must have a zero false-positive rate
-2. Automated accessibility testing rules must be lightweight and fast
-3. Automated accessibility testing rules must work in all modern browsers
-4. Automated accessibility testing rules must, themselves, be tested automatically
+Axe was built to reflect how web development actually works. It works with all modern browsers, tools, and testing environments a dev team might use. With axe, accessibility testing can be performed as part of your unit testing, integration testing, browser testing, and any other functional testing your team already performs on a day-to-day basis. Building accessibility testing into the early development process saves time, resources, and all kinds of frustration.
 
-## The sharp edge of the axe
+## About axe - our Manifesto
 
-Axe is the third generation of accessibility rules for HTML-based user interfaces that differentiates itself from other approaches and rules repositories in the following ways:
-
-1. It works on all modern browsers,
-2. It supports in-memory fixtures, static fixtures, integration tests and iframes of infinite depth
-3. It has zero false positives (bugs notwithstanding)
-4. It is open source
-5. It is actively supported by a major accessibility vendor
-6. It is designed to work with whatever tools, frameworks, libraries and environments you have today
-7. It is designed to be integrated into your existing functional/acceptance automated tests
-8. It automatically determines which rules to run based on the evaluation context
-9. It is highly configurable
+- Axe is open source.
+- It returns zero false positives (bugs notwithstanding).
+- It's designed to work on all modern browsers and with whatever tools, frameworks, libraries and environments you use today.
+- It's actively supported by [Deque Systems](https://www.deque.com), a major accessibility vendor.
+- It integrates with your existing functional/acceptance automated tests.
+- It automatically determines which rules to run based on the evaluation context.
+- Axe supports in-memory fixtures, static fixtures, integration tests and iframes of infinite depth.
+- Axe is highly configurable.
 
 ## Getting started
 
@@ -49,7 +45,7 @@ npm install axe-core --save-dev
 
 Now include the javascript file in each of your iframes in your fixtures or test systems:
 
-```
+```html
 <script src="node_modules/axe-core/axe.min.js"></script>
 ```
 
@@ -66,7 +62,7 @@ axe.run(function (err, results) {
 
 ## Supported Browsers
 
-The [axe API](doc/API.md) fully supports the following browsers:
+The [axe-core API](doc/API.md) fully supports the following browsers:
 
 - Microsoft Edge v40 and above
 - Google Chrome v42 and above
@@ -84,7 +80,7 @@ The complete list of rules run by axe-core can be found in [doc/rule-description
 
 ## Contents of the API Package
 
-The [axe API](doc/API.md) package consists of:
+The [axe-core API](doc/API.md) package consists of:
 
 - `axe.js` - the JavaScript file that should be included in your web site under test (API)
 - `axe.min.js` - a minified version of the above file
@@ -130,11 +126,11 @@ axe.configure({
 
 ## Supported ARIA Roles and Attributes.
 
-Refer [axe ARIA support](./doc/aria-supported.md) for a complete list of ARIA supported roles and attributes by axe.
+Refer [axe-core ARIA support](./doc/aria-supported.md) for a complete list of ARIA supported roles and attributes by axe.
 
 ## Contributing
 
-Read the [Proposing axe-core Rules guide](./doc/rule-proposal.md)
+Read the [Proposing Axe-core Rules guide](./doc/rule-proposal.md)
 
 Read the [documentation on the architecture](./doc/developer-guide.md)
 
