@@ -5,7 +5,9 @@
 		["#uncontained"],
 		["#alsouncontained"],
 		["#uncontainedbyrole"],
-		["#alsouncontainedbyrole"]
+		["#alsouncontainedbyrole"],
+		["#incorrectlygrouped"],
+		["#alsoincorrectlygrouped"]
 	],
-	"passes": [["#contained"], ["#alsocontained"]]
+	"passes": [["#contained"], ["#alsocontained"], ["#grouped"], ["#alsogrouped"]]
 }
