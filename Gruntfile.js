@@ -332,7 +332,7 @@ module.exports = function(grunt) {
 			npm_run_imports: {
 				cmd: 'npm',
 				args: ['run', 'imports-gen']
-      },
+			},
 			npm_run_eslint: {
 				cmd: 'npm',
 				args: ['run', 'eslint']
@@ -398,7 +398,7 @@ module.exports = function(grunt) {
 	]);
 
 	grunt.registerTask('dev:no-lint', [
-		'clean',
+		'pre-build',
 		'validate',
 		'concat:commons',
 		'configure',
