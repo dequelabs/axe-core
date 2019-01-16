@@ -71,4 +71,10 @@ describe('autocomplete-appropriate', function() {
 		var params = autocompleteCheckParams('foo', 'text', options);
 		assert.isFalse(evaluate.apply(checkContext, params));
 	});
+
+	it('returns false if the input type is month and term is bday-month', function() {
+		var options = {};
+		var params = autocompleteCheckParams('bday-month', 'month', options);
+		assert.isFalse(evaluate.apply(checkContext, params));
+	});
 });
