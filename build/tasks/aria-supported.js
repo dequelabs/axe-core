@@ -3,6 +3,7 @@
 
 const { roles, aria: props } = require('aria-query');
 const mdTable = require('markdown-table');
+const format = require('../shared/format');
 
 module.exports = function(grunt) {
 	grunt.registerMultiTask(
@@ -103,7 +104,11 @@ module.exports = function(grunt) {
 						...getDiff(aQaria, axe.commons.aria.lookupTable.attributes)
 					])
 				);
-				grunt.file.write(destFile, content);
+
+				// Format the content so Prettier doesn't create a diff after running.
+				// See https://github.com/dequelabs/axe-core/issues/1310.
+				const formattedContent = format(content, destFile);
+				grunt.file.write(destFile, formattedContent);
 			};
 
 			generateDoc();
