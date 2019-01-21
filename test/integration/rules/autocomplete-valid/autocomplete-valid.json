@@ -7,7 +7,9 @@
 		["#fail3"],
 		["#fail4"],
 		["#fail5"],
-		["#fail6"]
+		["#fail6"],
+		["#fail7"],
+		["#fail8"]
 	],
 	"passes": [
 		["#pass1"],
@@ -76,6 +78,8 @@
 		["#pass64"],
 		["#pass65"],
 		["#pass66"],
-		["#pass67"]
+		["#pass67"],
+		["#pass68"],
+		["#pass69"]
 	]
 }
