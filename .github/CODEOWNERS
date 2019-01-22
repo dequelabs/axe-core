@@ -1,2 +1,11 @@
+# Complete repo
 * @dequelabs/axe-codeowners
+
+# Localisation
 locales/ja.json @mlca11y/mlca11y
+
+# Core features
+lib/core/* @stephenmathieson
+test/core/* @stephenmathieson
+build/* @stephenmathieson
+Gruntfile.js @stephenmathieson

@@ -1035,9 +1035,10 @@ describe('Audit', function() {
 					throw err;
 				}
 			});
-
+			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe._selectorData = axe.utils.getSelectorData(axe._tree);
 			a.run(
-				{ include: [axe.utils.getFlattenedTree(fixture)[0]] },
+				{ include: [axe._tree[0]] },
 				{
 					runOnly: {
 						type: 'rule',
