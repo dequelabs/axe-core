@@ -398,7 +398,7 @@ module.exports = function(grunt) {
 	]);
 
 	grunt.registerTask('dev:no-lint', [
-		'clean',
+		'pre-build',
 		'validate',
 		'concat:commons',
 		'configure',
