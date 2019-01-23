@@ -9,6 +9,17 @@ describe('text.formControlValue', function() {
 		return axe.utils.querySelectorAll(axe._tree, query)[0];
 	}
 
+	function getNodeType(node) {
+		// Note: Inconsistent response for `node.type` across browsers, hence resolving and sanitizing using getAttribute
+		var nodeType = node.hasAttribute('type')
+			? axe.commons.text.sanitize(node.getAttribute('type')).toLowerCase()
+			: 'text';
+		nodeType = axe.utils.validInputTypes().includes(nodeType)
+			? nodeType
+			: 'text';
+		return nodeType;
+	}
+
 	function bar() {
 		return 'bar';
 	}
@@ -97,10 +108,12 @@ describe('text.formControlValue', function() {
 			axe.utils
 				.querySelectorAll(axe._tree[0], '#fixture input')
 				.forEach(function(target) {
-					assert.isDefined(formData[target.actualNode.type]);
+					var expected = formData[getNodeType(target.actualNode)];
+					assert.isDefined(expected);
+					var actual = nativeTextboxValue(target);
 					assert.equal(
-						nativeTextboxValue(target),
-						formData[target.actualNode.type],
+						actual,
+						expected,
 						'Expected value for ' + target.actualNode.outerHTML
 					);
 				});
