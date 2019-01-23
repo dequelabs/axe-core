@@ -1,15 +1,15 @@
+<!doctype html>
 <html lang="en">
 <title>O hai</title>
-<div id="fixture"></div>
-<INPUT TYPE="PASSWORD" />
+
+<div class="foo" id="foo">foo</div>
+
+<script src="/axe.js"></script>
 <script>
-var fixture = document.querySelector('#fixture')
-fixture.innerHTML = '<label for="test" id="lbl1">' +
-      'crazy' +
-      '  <select>' +
-      '    <option>clown</option>' +
-      '    <option>rich</option>' +
-      '  </select>' +
-      '</label> ' +
-      '<input type="text" id="test" aria-labelledby="lbl value="baz"/>';
+window.addEventListener('load' , function () {
+  axe.run(document, function (err, res) {
+    console.log(res.violations);
+    res.incomplete.forEach(issue => console.log(issue))
+  });
+})
 </script>
