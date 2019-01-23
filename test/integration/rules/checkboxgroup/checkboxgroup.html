@@ -1,13 +1,22 @@
 <form action="#">
 	<input type="checkbox" id="noname">
-	<input type="checkbox" name="dupe" id="fail1">
-	<input type="checkbox" name="dupe">
+	<input type="checkbox" name="fail" id="fail1">
+	<input type="checkbox" name="fail">
+
+	<input type="checkbox" name="label-fail1" id="fail2" aria-labelledby="grouplabel">
+	<input type="checkbox" name="label-fail1" aria-labelledby="grouplabel">
+
+	<input type="checkbox" name="label-fail2" id="fail3" aria-labelledby="label1">
+	<input type="checkbox" name="label-fail2" aria-labelledby="label2">
 
 	<input type="checkbox" name="single" id="pass1">
 
-	<input type="checkbox" name="label" id="pass2" aria-labelledby="grouplabel">
-	<input type="checkbox" name="label" aria-labelledby="grouplabel">
-	<div id="grouplabel">Label</div>
+	<input type="checkbox" name="label" id="pass2" aria-labelledby="grouplabel label1">
+	<input type="checkbox" name="label" aria-labelledby="grouplabel label2">
+	<div id="grouplabel">Group label</div>
+	<div id="label1">Label 1</div>
+	<div id="label2">Label 2</div>
+
 	<fieldset>
 		<legend>Name</legend>
 		<input type="checkbox" name="fieldset" id="pass3">
