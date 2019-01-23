@@ -119,7 +119,9 @@ describe('dlitem', function() {
 			);
 			assert.isTrue(checks.dlitem.evaluate.apply(null, checkArgs));
 		});
-	})(shadowSupport.v1 ? it : xit)(
+	});
+
+	(shadowSupport.v1 ? it : xit)(
 		'should return true in a shadow DOM pass',
 		function() {
 			var node = document.createElement('div');

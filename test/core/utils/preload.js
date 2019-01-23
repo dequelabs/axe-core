@@ -38,6 +38,23 @@ describe('axe.utils.preload', function() {
 			});
 	});
 
+	it('should return empty array as result', function(done) {
+		var options = {
+			preload: false
+		};
+		var actual = axe.utils.preload(options);
+		actual
+			.then(function(results) {
+				assert.isDefined(results);
+				assert.isArray(results);
+				assert.lengthOf(results, 0);
+				done();
+			})
+			.catch(function(error) {
+				done(error);
+			});
+	});
+
 	it('should return an object with property cssom and verify result is same output from preloadCssom', function(done) {
 		var options = {
 			preload: {
@@ -63,6 +80,29 @@ describe('axe.utils.preload', function() {
 
 	describe('axe.utils.shouldPreload', function() {
 		it('should return true if preload configuration is valid', function() {
+			var actual = axe.utils.shouldPreload({
+				preload: {
+					assets: ['cssom']
+				}
+			});
+			assert.isTrue(actual);
+		});
+
+		it('should return true if preload is undefined', function() {
+			var actual = axe.utils.shouldPreload({
+				preload: undefined
+			});
+			assert.isTrue(actual);
+		});
+
+		it('should return true if preload is null', function() {
+			var actual = axe.utils.shouldPreload({
+				preload: null
+			});
+			assert.isTrue(actual);
+		});
+
+		it('should return true if preload is not set', function() {
 			var actual = axe.utils.shouldPreload({});
 			assert.isTrue(actual);
 		});
