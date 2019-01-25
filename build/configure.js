@@ -250,8 +250,7 @@ function buildRules(grunt, options, commons, callback) {
 						data: metadata,
 						rules: rules,
 						checks: checks,
-						commons: result.commons,
-						tools: result.tools
+						commons: result.commons
 					},
 					blacklist
 				)
