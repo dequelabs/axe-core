@@ -43,7 +43,7 @@ module.exports = function(grunt) {
 			'/**\n',
 			' * Returns array of valid language codes\n',
 			' * @method validLangs\n',
-			' * @memberof axe.commons.utils\n',
+			' * @memberof axe.utils\n',
 			' * @instance\n',
 			' * @return {Array<Sting>} Valid language codes\n',
 			' */\n',

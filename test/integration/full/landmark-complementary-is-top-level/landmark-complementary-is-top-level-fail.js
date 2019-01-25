@@ -2,7 +2,7 @@ describe('landmark-complementary-is-top-level test fail', function() {
 	'use strict';
 	var results;
 	before(function(done) {
-		window.addEventListener('load', function() {
+		axe.testUtils.awaitNestedLoad(function() {
 			axe.run(
 				{
 					runOnly: {
