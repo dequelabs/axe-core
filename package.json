@@ -100,7 +100,7 @@
 		"grunt-contrib-copy": "^1.0.0",
 		"grunt-contrib-uglify": "^4.0.0",
 		"grunt-contrib-watch": "^1.1.0",
-		"grunt-mocha": "1.1.0",
+		"grunt-mocha": "1.2.0",
 		"grunt-parallel": "^0.5.1",
 		"grunt-run": "^0.8.1",
 		"html-entities": "^1.2.0",
