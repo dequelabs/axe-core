@@ -171,12 +171,6 @@ module.exports = function(grunt) {
 			}
 		},
 		validate: {
-			tools: {
-				options: {
-					type: 'tool'
-				},
-				src: 'lib/tools/**/*.json'
-			},
 			check: {
 				options: {
 					type: 'check'
