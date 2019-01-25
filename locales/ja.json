@@ -450,8 +450,8 @@
 			"fail": "ヘルプテキスト（titleまたはaria-describedby）がラベルテキストと同じです"
 		},
 		"hidden-explicit-label": {
-			"pass": "フォーム要素に視認可能で明確な<label>があります",
-			"fail": "フォーム要素に非表示の明確な<label>があります"
+			"pass": "フォーム要素の明確な<label>が視認可能になっています",
+			"fail": "フォーム要素の明確な<label>が非表示になっています"
 		},
 		"implicit-label": {
 			"pass": "フォーム要素に暗黙の（包含された）<label>が存在しています",
