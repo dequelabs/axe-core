@@ -5,8 +5,8 @@
 	"metadata": {
 		"impact": "critical",
 		"messages": {
-			"pass": "All elements with the name \"{{=it.data.name}}\" reference the same element with aria-labelledby",
-			"fail": "All elements with the name \"{{=it.data.name}}\" do not reference the same element with aria-labelledby"
+			"pass": "Elements with the name \"{{=it.data.name}}\" have both a shared label, and a unique label, referenced through aria-labelledby",
+			"fail": "{{var code = it.data && it.data.failureCode;}}Elements with the name \"{{=it.data.name}}\" do not all have {{? code === 'no-shared-label' }}a shared label{{?? code === 'no-unique-label' }}a unique label{{??}}both a shared label, and a unique label{{?}}, referenced through aria-labelledby"
 		}
 	}
 }
