@@ -71,10 +71,11 @@ testUtils.shadowSupport = (function(document) {
  * Method for injecting content into a fixture and caching
  * the flattened DOM tree (light and Shadow DOM together)
  *
- * @param Node|String 	Stuff to go into the fixture (html or DOM node)
+ * @param {String|Node} content Stuff to go into the fixture (html or DOM node)
+ * @param {String} targetSelector selector to identify node to return from the fixture
  * @return HTMLElement
  */
-testUtils.fixtureSetup = function(content) {
+testUtils.fixtureSetup = function(content, targetSelector) {
 	'use strict';
 	var fixture = document.querySelector('#fixture');
 	if (typeof content !== 'undefined') {
@@ -92,6 +93,10 @@ testUtils.fixtureSetup = function(content) {
 	}
 	axe._tree = axe.utils.getFlattenedTree(fixture);
 	axe._selectorData = axe.utils.getSelectorData(axe._tree);
+
+	if (targetSelector) {
+		return fixture.querySelector(targetSelector);
+	}
 
 	return fixture;
 };
@@ -275,10 +280,9 @@ testUtils.addStyleSheets = function addStyleSheets(sheets) {
 	return q;
 };
 
-testUtils.queryFixture = function queryFixture (html, query) {
-	testUtils.fixtureSetup(html)
-	return axe.utils.querySelectorAll(axe._tree, (query || '#target'))[0];
-}
-
+testUtils.queryFixture = function queryFixture(html, query) {
+	testUtils.fixtureSetup(html);
+	return axe.utils.querySelectorAll(axe._tree, query || '#target')[0];
+};
 
 axe.testUtils = testUtils;
