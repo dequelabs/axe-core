@@ -92,7 +92,6 @@
 		"fs-extra": "^7.0.0",
 		"grunt": "^1.0.3",
 		"globby": "^8.0.1",
-		"grunt": "^1.0.3",
 		"grunt-babel": "^7.0.0",
 		"grunt-contrib-clean": "^2.0.0",
 		"grunt-contrib-concat": "^1.0.1",
