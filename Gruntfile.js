@@ -231,8 +231,14 @@ module.exports = function(grunt) {
 			}, [])
 		},
 		watch: {
-			files: ['lib/**/*', 'test/**/*.js', 'Gruntfile.js'],
-			tasks: ['run:npm_run_eslint', 'build', 'testconfig', 'fixture']
+			lint: {
+				files: ['lib/**/*', 'test/**/*.js', 'Gruntfile.js'],
+				tasks: ['run:npm_run_eslint', 'build', 'testconfig', 'fixture']
+			},
+			noLint: {
+				files: ['lib/**/*', 'test/**/*.js', 'Gruntfile.js'],
+				tasks: ['build', 'testconfig', 'fixture']
+			}
 		},
 		testconfig: {
 			test: {
@@ -388,7 +394,7 @@ module.exports = function(grunt) {
 		'testconfig',
 		'fixture',
 		'connect',
-		'watch'
+		'watch:lint'
 	]);
 
 	grunt.registerTask('dev:no-lint', [
@@ -402,6 +408,6 @@ module.exports = function(grunt) {
 		'testconfig',
 		'fixture',
 		'connect',
-		'watch'
+		'watch:noLint'
 	]);
 };
