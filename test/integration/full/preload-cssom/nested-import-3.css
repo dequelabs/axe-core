@@ -1,0 +1,5 @@
+/* referred by nested-import-2.css */
+
+body::after {
+	content: 'I-am-from-the-3rd-nested-import-stylesheet'
+}

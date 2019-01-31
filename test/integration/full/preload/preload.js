@@ -174,12 +174,12 @@ describe('preload integration test', function() {
 				// there should be no external sheet returned
 				// as everything is earmarked as media print
 				var externalSheet = cssom.filter(function(s) {
-					return s.isExternal;
+					return s.isCrossOrigin;
 				})[0].sheet;
 				assertStylesheet(externalSheet, 'body', 'body{overflow:auto;}');
 
 				var inlineStylesheet = cssom.filter(function(s) {
-					return s.sheet.cssRules.length === 1 && !s.isExternal;
+					return s.sheet.cssRules.length === 1 && !s.isCrossOrigin;
 				})[0].sheet;
 				assertStylesheet(
 					inlineStylesheet,

@@ -69,7 +69,7 @@ describe('axe.utils.preloadCssom unit tests', function() {
 						'root',
 						'shadowId',
 						'sheet',
-						'isExternal',
+						'isCrossOrigin',
 						'priority'
 					]);
 				});

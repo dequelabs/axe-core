@@ -2,71 +2,77 @@
 describe('preload cssom integration test', function() {
 	'use strict';
 
-	var origAxios;
+	before(function(done) {
+		if (isPhantom) {
+			// if `phantomjs` -> skip `suite`
+			this.skip();
+		}
+		axe.testUtils.awaitNestedLoad(done);
+	});
+
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var isPhantom = window.PHANTOMJS ? true : false;
-
-	var styleSheets = [
-		{
+	var styleSheets = {
+		crossOriginLinkHref: {
+			id: 'crossOriginLinkHref',
 			href:
 				'https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
 		},
-		{
+		crossOriginLinkHrefMediaPrint: {
+			id: 'crossOriginLinkHrefMediaPrint',
 			href:
 				'https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css',
 			mediaPrint: true
 		},
-		{
-			text:
-				'	@import "preload-cssom-shadow-blue.css"; .inline-css-test { font-size: inherit; }'
+		styleTag: {
+			id: 'styleTag',
+			text: '.inline-css-test{font-size:inherit;}'
+		},
+		styleTagWithOneImport: {
+			id: 'styleTagWithOneImport',
+			text: '@import "base.css";'
+		},
+		styleTagWithMultipleImports: {
+			id: 'styleTagWithMultipleImports',
+			text: '@import "multiple-import-1.css";'
+		},
+		styleTagWithNestedImports: {
+			id: 'styleTagWithNestedImports',
+			text: '@import "nested-import-1.css";'
+		},
+		styleTagWithCyclicImports: {
+			id: 'styleTagWithCyclicImports',
+			text: '@import "cyclic-import-1.css";'
+		},
+		styleTagWithCyclicCrossOriginImports: {
+			id: 'styleTagWithCyclicCrossOriginImports',
+			text: '@import "cyclic-cross-origin-import-1.css";'
 		}
-	];
+	};
 
-	before(function(done) {
-		if (isPhantom) {
-			this.skip();
-			done();
-		} else {
-			axe.testUtils
-				.addStyleSheets(styleSheets)
-				.then(function() {
-					done();
-				})
-				.catch(function(error) {
-					done(new Error('Could not load stylesheets for testing. ' + error));
-				});
-		}
-	});
-
-	function createStub(shouldReject) {
-		/**
-		 * This is a simple override to stub `axe.imports.axios`, until the test-suite is enhanced.
-		 * Did not use any library such as sinon for this, as sinon.stub have difficulties working under selenium webdriver
-		 * Also a generic XHR override was overlooked under webdriver
-		 */
-		axe.imports.axios = function stubbedAxios() {
-			return new Promise(function(resolve, reject) {
-				if (shouldReject) {
-					reject(new Error('Fake Error'));
-				}
-				resolve({
-					data: 'body{overflow:auto;}'
-				});
-			});
-		};
-	}
-
-	function restoreStub() {
-		if (origAxios) {
-			axe.imports.axios = origAxios;
-		}
-	}
-
-	function assertStylesheet(sheet, selectorText, cssText) {
+	function assertStylesheet(sheet, selectorText, cssText, includes) {
 		assert.isDefined(sheet);
 		assert.property(sheet, 'cssRules');
-		assert.equal(sheet.cssRules[0].selectorText, selectorText);
-		assert.equal(sheet.cssRules[0].cssText.replace(/\s/g, ''), cssText);
+		if (includes) {
+			assert.isTrue(cssText.includes(selectorText));
+		} else {
+			assert.equal(sheet.cssRules[0].selectorText, selectorText);
+			assert.equal(
+				sheet.cssRules[0].cssText.replace(/\s/g, ''),
+				cssText.replace(/\s/g, '')
+			);
+		}
+	}
+
+	function attachStylesheets(options, callback) {
+		axe.testUtils
+			.addStyleSheets(options.styles, options.root)
+			.then(function() {
+				callback();
+			})
+			.catch(function(error) {
+				callback(new Error('Could not load stylesheets for testing. ' + error));
+			});
 	}
 
 	function getPreload(root) {
@@ -78,41 +84,76 @@ describe('preload cssom integration test', function() {
 		return axe.utils.preloadCssom(config);
 	}
 
-	function commonTestsForRootAndFrame(root) {
-		it('should return external stylesheet from cross-domain and verify response', function(done) {
-			getPreload(root)
-				.then(function(results) {
-					var sheets = results[0];
-					var externalSheet = sheets.filter(function(s) {
-						return s.isExternal;
-					})[0].sheet;
-					assertStylesheet(externalSheet, 'body', 'body{overflow:auto;}');
-					done();
-				})
-				.catch(done);
+	function commonTestsForRootNodeAndNestedFrame(root) {
+		it('returns cross-origin stylesheet', function(done) {
+			var stylesForPage = [styleSheets.crossOriginLinkHref];
+			attachStylesheets(
+				{
+					root,
+					styles: stylesForPage
+				},
+				function(err) {
+					if (err) {
+						done(err);
+					}
+					getPreload(root)
+						.then(function(results) {
+							var sheets = results[0];
+							assert.lengthOf(sheets, 1);
+							var sheetData = sheets[0].sheet;
+							assertStylesheet(
+								sheetData,
+								':root',
+								sheetData.cssRules[0].cssText,
+								true
+							);
+							axe.testUtils.removeStyleSheets(stylesForPage);
+							done();
+						})
+						.catch(done);
+				},
+				root
+			);
 		});
 
-		it('should reject if axios time(s)out when fetching', function(done) {
-			// restore back normal axios
-			restoreStub();
+		it('returns no stylesheets when cross-origin stylesheets are of media=print', function(done) {
+			var stylesForPage = [styleSheets.crossOriginLinkHrefMediaPrint];
+			attachStylesheets(
+				{
+					root,
+					styles: stylesForPage
+				},
+				function(err) {
+					if (err) {
+						done(err);
+					}
+					getPreload()
+						.then(function(results) {
+							var sheets = results[0];
+							assert.lengthOf(sheets, 0);
+							axe.testUtils.removeStyleSheets(stylesForPage);
+							done();
+						})
+						.catch(done);
+				},
+				root
+			);
+		});
 
-			// and set config to timeout immediately
+		it('throws if cross-origin stylesheet request timeouts', function(done) {
 			var config = {
 				asset: 'cssom',
 				timeout: 1,
 				treeRoot: axe.utils.getFlattenedTree(root ? root : document)
 			};
-
 			var doneCalled = false;
-
 			axe.utils
 				.preloadCssom(config)
 				.then(function() {
 					done();
 				})
 				.catch(function(error) {
-					// assert that rejection happens
-					assert.equal(error.message, 'timeout of 1ms exceeded'); // this message comes from axios
+					assert.equal(error.message, 'timeout of 1ms exceeded'); // <-this message comes from axios
 					if (!doneCalled) {
 						doneCalled = true;
 						done();
@@ -120,40 +161,40 @@ describe('preload cssom integration test', function() {
 				});
 		});
 
-		it('should reject if external stylesheet fail to load', function(done) {
-			restoreStub();
-			createStub(true);
-			var doneCalled = false;
-			getPreload(root)
-				.then(function() {
-					done();
-				})
-				.catch(function(error) {
-					assert.equal(error.message, 'Fake Error');
-					if (!doneCalled) {
-						doneCalled = true;
-						done();
+		it.only('throws if cross-origin stylesheet fail to load', function(done) {
+			attachStylesheets(
+				{
+					root,
+					styles: [
+						{
+							id: 'nonExistingStylesheet',
+							text: '@import "import-non-existing-cross-origin.css";'
+						}
+					]
+				},
+				function(err) {
+					if (err) {
+						done(err);
 					}
-				});
+					getPreload().catch(function(error) {
+						assert.equal(error.message, 'Network Error'); //<- message from `axios`
+						done();
+					});
+				},
+				root
+			);
 		});
 	}
 
-	beforeEach(function() {
-		createStub();
-	});
-
-	afterEach(function() {
-		restoreStub();
-	});
-
-	describe('tests for current top level document', function() {
-		var shadowFixture;
-
+	describe('tests for root (document)', function() {
 		before(function() {
 			if (isPhantom) {
+				// if `phantomjs` -> skip `suite`
 				this.skip();
 			}
 		});
+
+		var shadowFixture;
 
 		beforeEach(function() {
 			var shadowNode = document.createElement('div');
@@ -168,224 +209,270 @@ describe('preload cssom integration test', function() {
 			}
 		});
 
-		it('should return inline stylesheets defined using <style> tag', function(done) {
-			getPreload()
+		it('returns stylesheets defined via <style> tag', function(done) {
+			var stylesForPage = [styleSheets.styleTag];
+			attachStylesheets({ styles: stylesForPage }, function(err) {
+				if (err) {
+					done(err);
+				}
+				getPreload()
+					.then(function(results) {
+						var sheets = results[0];
+						assert.lengthOf(sheets, 1);
+						var sheetData = sheets[0].sheet;
+						assertStylesheet(
+							sheetData,
+							'.inline-css-test',
+							stylesForPage[0].text
+						);
+						axe.testUtils.removeStyleSheets(stylesForPage);
+						done();
+					})
+					.catch(done);
+			});
+		});
+
+		it('returns stylesheets with in same-origin', function(done) {
+			var stylesForPage = [styleSheets.styleTagWithOneImport];
+			attachStylesheets({ styles: stylesForPage }, function(err) {
+				if (err) {
+					done(err);
+				}
+				getPreload()
+					.then(function(results) {
+						var sheets = results[0];
+						assert.lengthOf(sheets, 1);
+						var nonCrossOriginSheets = sheets.filter(function(s) {
+							return !s.isCrossOrigin;
+						});
+						assert.lengthOf(nonCrossOriginSheets, 1);
+						assertStylesheet(
+							nonCrossOriginSheets[0].sheet,
+							'.base-style',
+							'.base-style { font-size: 100%; }'
+						);
+						axe.testUtils.removeStyleSheets(stylesForPage);
+						done();
+					})
+					.catch(done);
+			});
+		});
+
+		(shadowSupported ? it : xit)(
+			'returns styles from shadow DOM (handles @import in <style>)',
+			function(done) {
+				var shadow = shadowFixture.attachShadow({ mode: 'open' });
+				shadow.innerHTML =
+					'<style>' +
+					// stylesheet -> 1
+					'@import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css";' +
+					// stylesheet -> 2
+					'.green { background-color: green; } ' +
+					'</style>' +
+					'<div class="initialism">Some text</div>';
+				getPreload(shadowFixture)
+					.then(function(results) {
+						var sheets = results[0];
+						assert.lengthOf(sheets, 2);
+
+						var nonCrossOriginSheetsWithInShadowDOM = sheets
+							.filter(function(s) {
+								return !s.isCrossOrigin;
+							})
+							.filter(function(s) {
+								return s.shadowId;
+							});
+						assertStylesheet(
+							nonCrossOriginSheetsWithInShadowDOM[
+								nonCrossOriginSheetsWithInShadowDOM.length - 1
+							].sheet,
+							'.green',
+							'.green{background-color:green;}'
+						);
+						done();
+					})
+					.catch(done);
+			}
+		);
+
+		(shadowSupported ? it : xit)(
+			'returns styles from base document and shadow DOM with right priority',
+			function(done) {
+				var shadow = shadowFixture.attachShadow({ mode: 'open' });
+				shadow.innerHTML =
+					'<style>' +
+					// stylesheet -> 1 -> inside shadow DOM
+					'@import "base.css"' +
+					'</style>' +
+					'<h1>Heading</h1>';
+
+				// sheet appended to root document
+				var stylesForPage = [styleSheets.styleTag];
+				attachStylesheets({ styles: stylesForPage }, function(err) {
+					if (err) {
+						done(err);
+					}
+					getPreload(shadowFixture)
+						.then(function(results) {
+							var sheets = results[0];
+							assert.lengthOf(sheets, 2);
+
+							var shadowDomStyle = sheets.filter(function(s) {
+								return s.shadowId;
+							})[0];
+							assertStylesheet(
+								shadowDomStyle.sheet,
+								'.base-style',
+								'.base-style { font-size: 100%; }'
+							);
+
+							var rootDocumentStyle = sheets.filter(function(s) {
+								return !s.shadowId;
+							})[0];
+							assert.isAbove(
+								shadowDomStyle.priority[0],
+								rootDocumentStyle.priority[0]
+							);
+
+							axe.testUtils.removeStyleSheets(stylesForPage);
+							done();
+						})
+						.catch(done);
+				});
+			}
+		);
+
+		it('returns styles from various @import(ed) styles from an @import(ed) stylesheet', function(done) {
+			var stylesForPage = [
+				styleSheets.styleTagWithMultipleImports // this imports 2 other stylesheets
+			];
+			attachStylesheets({ styles: stylesForPage }, function(err) {
+				if (err) {
+					done(err);
+				}
+				getPreload()
+					.then(function(results) {
+						var sheets = results[0];
+						assert.lengthOf(sheets, 2);
+						var nonCrossOriginSheets = sheets.filter(function(s) {
+							return !s.isCrossOrigin;
+						});
+						assert.lengthOf(nonCrossOriginSheets, 2);
+						assertStylesheet(
+							nonCrossOriginSheets[0].sheet,
+							'.multiple-import-1',
+							'.multiple-import-1 { font-size: 100%; }'
+						);
+						axe.testUtils.removeStyleSheets(stylesForPage);
+						done();
+					})
+					.catch(done);
+			});
+		});
+
+		it('returns style from nested @import (3 levels deep)', function(done) {
+			var stylesForPage = [styleSheets.styleTagWithNestedImports];
+			attachStylesheets({ styles: stylesForPage }, function(err) {
+				if (err) {
+					done(err);
+				}
+				getPreload()
+					.then(function(results) {
+						var sheets = results[0];
+						assert.lengthOf(sheets, 1);
+						var nonCrossOriginSheets = sheets.filter(function(s) {
+							return !s.isCrossOrigin;
+						});
+						assert.lengthOf(nonCrossOriginSheets, 1);
+						assertStylesheet(
+							nonCrossOriginSheets[0].sheet,
+							'body::after',
+							'body::after { content: "I-am-from-the-3rd-nested-import-stylesheet"; }'
+						);
+						axe.testUtils.removeStyleSheets(stylesForPage);
+						done();
+					})
+					.catch(done);
+			});
+		});
+
+		it('returns style from cyclic @import (exits recursion successfully)', function(done) {
+			var stylesForPage = [styleSheets.styleTagWithCyclicImports];
+			attachStylesheets({ styles: stylesForPage }, function(err) {
+				if (err) {
+					done(err);
+				}
+				getPreload()
+					.then(function(results) {
+						var sheets = results[0];
+						assert.lengthOf(sheets, 1);
+						assertStylesheet(
+							sheets[0].sheet,
+							'.cycle-style',
+							'.cycle-style { font-family: inherit; }'
+						);
+						axe.testUtils.removeStyleSheets(stylesForPage);
+						done();
+					})
+					.catch(done);
+			});
+		});
+
+		it('returns style from cyclic @import which only imports one cross-origin stylesheet', function(done) {
+			var stylesForPage = [styleSheets.styleTagWithCyclicCrossOriginImports];
+			attachStylesheets({ styles: stylesForPage }, function(err) {
+				if (err) {
+					done(err);
+				}
+				getPreload()
+					.then(function(results) {
+						var sheets = results[0];
+						assert.lengthOf(sheets, 1);
+						assertStylesheet(
+							sheets[0].sheet,
+							'.container',
+							'.container { position: relative; width: 100%; max-width: 960px; margin: 0px auto; padding: 0px 20px; box-sizing: border-box; }'
+						);
+						axe.testUtils.removeStyleSheets(stylesForPage);
+						done();
+					})
+					.catch(done);
+			});
+		});
+
+		commonTestsForRootNodeAndNestedFrame();
+	});
+
+	describe('tests for nested document', function() {
+		var frame;
+
+		before(function() {
+			if (isPhantom) {
+				// if `phantomjs` -> skip `suite`
+				this.skip();
+			}
+			frame = document.getElementById('frame1').contentDocument;
+		});
+
+		it('returns styles defined using <style> tag', function(done) {
+			getPreload(frame)
 				.then(function(results) {
 					var sheets = results[0];
-					var nonExternalsheets = sheets.filter(function(s) {
-						return !s.isExternal;
-					});
-					assert.lengthOf(nonExternalsheets, 2);
-					var inlineStylesheet = nonExternalsheets.filter(function(s) {
-						return s.sheet.cssRules.length === 1;
+					assert.lengthOf(sheets, 2);
+
+					var nonCrossOriginSheet = sheets.filter(function(s) {
+						return !s.isCrossOrigin;
 					})[0].sheet;
 					assertStylesheet(
-						inlineStylesheet,
-						'.inline-css-test',
-						'.inline-css-test{font-size:inherit;}'
+						nonCrossOriginSheet,
+						'.inline-frame-css-test',
+						'.inline-frame-css-test {font-size: inherit; }'
 					);
 					done();
 				})
 				.catch(done);
 		});
 
-		it('should return relative stylesheets with in same-origin', function(done) {
-			getPreload()
-				.then(function(results) {
-					var sheets = results[0];
-					var relativeSheets = sheets.filter(function(s) {
-						return !s.isExternal;
-					});
-					assert.lengthOf(relativeSheets, 2);
-					var relativeSheet = relativeSheets.filter(function(s) {
-						return s.sheet.cssRules.length > 1;
-					})[0].sheet;
-					assertStylesheet(relativeSheet, 'body', 'body{margin:0px;}');
-					done();
-				})
-				.catch(done);
-		});
-
-		it('should return all external stylesheets with or with(out) media attribute that are not disabled', function(done) {
-			getPreload()
-				.then(function(results) {
-					var sheets = results[0];
-					var externalSheets = sheets.filter(function(s) {
-						return s.isExternal;
-					});
-					assert.lengthOf(externalSheets, 2);
-					done();
-				})
-				.catch(done);
-		});
-
-		(shadowSupported ? it : xit)(
-			'should return styles from shadow dom (handles @import "external", @import "relative" and inline styles)',
-			function(done) {
-				var shadow = shadowFixture.attachShadow({ mode: 'open' });
-				shadow.innerHTML =
-					'<style> @import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"; @import "preload-cssom-shadow-blue.css"; .green { background-color: green; } </style>' +
-					'<div class="initialism">Some text</div>' +
-					'<div class="green">green</div>' +
-					'<div class="red">red</div>' +
-					'<h1>Heading</h1>';
-				getPreload(shadowFixture)
-					.then(function(results) {
-						var sheets = results[0];
-						// verify count
-						assert.lengthOf(sheets, 7);
-						// verify that the last non external sheet with shadowId has green selector
-						var nonExternalsheetsWithShadowId = sheets
-							.filter(function(s) {
-								return !s.isExternal;
-							})
-							.filter(function(s) {
-								return s.shadowId;
-							});
-						assertStylesheet(
-							nonExternalsheetsWithShadowId[
-								nonExternalsheetsWithShadowId.length - 1
-							].sheet,
-							'.green',
-							'.green{background-color:green;}'
-						);
-						// verify priority of shadowId sheets is higher than base document
-						var anySheetFromBaseDocument = sheets.filter(function(s) {
-							return !s.shadowId;
-						})[0];
-						var anySheetFromShadowDocument = sheets.filter(function(s) {
-							return s.shadowId;
-						})[0];
-						// shadow dom priority is greater than base doc
-						assert.isAbove(
-							anySheetFromShadowDocument.priority[0],
-							anySheetFromBaseDocument.priority[0]
-						);
-						done();
-					})
-					.catch(done);
-			}
-		);
-
-		(shadowSupported ? it : xit)(
-			'should return styles from shadow dom (handles multiple <style> declarations with @import "external", @import "relative" and inline styles)',
-			function(done) {
-				var shadow = shadowFixture.attachShadow({ mode: 'open' });
-				shadow.innerHTML =
-					'<style> @import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"; @import "preload-cssom-shadow-blue.css"; .green { background-color: green; } </style>' +
-					'<div class="initialism">Some text</div>' +
-					'<style> .notGreen { background-color: orange; } </style>' +
-					'<div class="green">green</div>' +
-					'<div class="red">red</div>' +
-					'<div class="notGreen">red</div>' +
-					'<h1>Heading</h1>';
-				getPreload(shadowFixture)
-					.then(function(results) {
-						var sheets = results[0];
-						// verify count
-						assert.lengthOf(sheets, 8);
-						// verify that the last non external sheet with shadowId has green selector
-						var nonExternalsheetsWithShadowId = sheets
-							.filter(function(s) {
-								return !s.isExternal;
-							})
-							.filter(function(s) {
-								return s.shadowId;
-							});
-						assertStylesheet(
-							nonExternalsheetsWithShadowId[
-								nonExternalsheetsWithShadowId.length - 2
-							].sheet,
-							'.green',
-							'.green{background-color:green;}'
-						);
-						assertStylesheet(
-							nonExternalsheetsWithShadowId[
-								nonExternalsheetsWithShadowId.length - 1
-							].sheet,
-							'.notGreen',
-							'.notGreen{background-color:orange;}'
-						);
-						done();
-					})
-					.catch(done);
-			}
-		);
-
-		(shadowSupported ? it : xit)(
-			'should return styles from shadow dom (handles mulitple <style> and <link> tags)',
-			function(done) {
-				var shadow = shadowFixture.attachShadow({ mode: 'open' });
-				shadow.innerHTML =
-					'<style> @import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"; </style>' +
-					'<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure.css" />' +
-					'<h1>Heading</h1>';
-				getPreload(shadowFixture)
-					.then(function(results) {
-						var sheets = results[0];
-						// verify count
-						assert.lengthOf(sheets, 6);
-
-						// verify that the last non external sheet with shadowId has green selector
-						var nonExternalsheetsWithShadowId = sheets
-							.filter(function(s) {
-								return !s.isExternal;
-							})
-							.filter(function(s) {
-								return s.shadowId;
-							});
-						// there are no inline styles in shadowRoot
-						assert.lengthOf(nonExternalsheetsWithShadowId, 0);
-
-						// ensure the output of shadowRoot sheet is that of expected external mocked response
-						var externalsheetsWithShadowId = sheets
-							.filter(function(s) {
-								return s.isExternal;
-							})
-							.filter(function(s) {
-								return s.shadowId;
-							});
-						assertStylesheet(
-							externalsheetsWithShadowId[0].sheet,
-							'body',
-							'body{overflow:auto;}'
-						);
-
-						done();
-					})
-					.catch(done);
-			}
-		);
-
-		commonTestsForRootAndFrame();
-	});
-
-	describe('tests for nested iframe', function() {
-		before(function() {
-			if (isPhantom) {
-				this.skip();
-			}
-		});
-
-		var frame;
-
-		before(function() {
-			frame = document.getElementById('frame1').contentDocument;
-		});
-
-		it('should return inline stylesheets defined using <style> tag', function(done) {
-			getPreload(frame)
-				.then(function(results) {
-					var sheets = results[0];
-					var nonExternalsheets = sheets.filter(function(s) {
-						return !s.isExternal;
-					});
-					assert.lengthOf(nonExternalsheets, 1);
-					done();
-				})
-				.catch(done);
-		});
-
-		commonTestsForRootAndFrame(frame);
+		commonTestsForRootNodeAndNestedFrame(frame);
 	});
 });

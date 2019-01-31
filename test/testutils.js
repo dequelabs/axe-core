@@ -229,15 +229,21 @@ testUtils.awaitNestedLoad = function awaitNestedLoad(win, cb) {
  * @property {String} data.href relative or absolute url for stylesheet to be loaded
  * @property {Boolean} data.mediaPrint boolean to represent if the constructed sheet is for print media
  * @property {String} data.text text contents to be written to the stylesheet
+ * @property {String} data.id id reference to link or style to be added to document
+ * @param {Object} rootNode document/fragment to which to append style
  * @returns {Object} axe.utils.queue
  */
-testUtils.addStyleSheet = function addStyleSheet(data) {
+testUtils.addStyleSheet = function addStyleSheet(data, rootNode) {
+	var doc = rootNode ? rootNode : document;
 	var q = axe.utils.queue();
 	if (data.href) {
 		q.defer(function(resolve, reject) {
-			var link = document.createElement('link');
+			var link = doc.createElement('link');
 			link.rel = 'stylesheet';
 			link.href = data.href;
+			if (data.id) {
+				link.id = data.id;
+			}
 			if (data.mediaPrint) {
 				link.media = 'print';
 			}
@@ -247,14 +253,17 @@ testUtils.addStyleSheet = function addStyleSheet(data) {
 			link.onerror = function() {
 				reject();
 			};
-			document.head.appendChild(link);
+			doc.head.appendChild(link);
 		});
 	} else {
 		q.defer(function(resolve) {
-			var style = document.createElement('style');
+			var style = doc.createElement('style');
+			if (data.id) {
+				style.id = data.id;
+			}
 			style.type = 'text/css';
-			style.appendChild(document.createTextNode(data.text));
-			document.head.appendChild(style);
+			style.appendChild(doc.createTextNode(data.text));
+			doc.head.appendChild(style);
 			resolve();
 		});
 	}
@@ -267,12 +276,36 @@ testUtils.addStyleSheet = function addStyleSheet(data) {
  * @param {Object} sheets array of sheets data object
  * @returns {Object} axe.utils.queue
  */
-testUtils.addStyleSheets = function addStyleSheets(sheets) {
+testUtils.addStyleSheets = function addStyleSheets(sheets, rootNode) {
 	var q = axe.utils.queue();
 	sheets.forEach(function(data) {
-		q.defer(axe.testUtils.addStyleSheet(data));
+		q.defer(axe.testUtils.addStyleSheet(data, rootNode));
 	});
 	return q;
+};
+
+/**
+ * Remove a stylesheet by id from the document
+ * @param {String} id id of the node to be removed from the document
+ */
+testUtils.removeStyleSheet = function removeStyleSheet(id) {
+	var node = document.getElementById(id);
+	if (node && node.parentNode) {
+		node.parentNode.removeChild(node);
+	}
+};
+
+/**
+ * Remove a list of stylesheets from the document
+ * @param {Array<Object>} sheets array of sheets data object
+ */
+testUtils.removeStyleSheets = function removeStyleSheets(sheets) {
+	sheets.forEach(function(data) {
+		if (!data.id) {
+			throw new Error('No id specified for stylesheet to be removed', data);
+		}
+		axe.testUtils.removeStyleSheet(data.id);
+	});
 };
 
 axe.testUtils = testUtils;
