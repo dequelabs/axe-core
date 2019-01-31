@@ -248,7 +248,9 @@ testUtils.addStyleSheet = function addStyleSheet(data, rootNode) {
 				link.media = 'print';
 			}
 			link.onload = function() {
-				resolve();
+				setTimeout(function() {
+					resolve();
+				});
 			};
 			link.onerror = function() {
 				reject();
@@ -264,7 +266,9 @@ testUtils.addStyleSheet = function addStyleSheet(data, rootNode) {
 			style.type = 'text/css';
 			style.appendChild(doc.createTextNode(data.text));
 			doc.head.appendChild(style);
-			resolve();
+			setTimeout(function() {
+				resolve();
+			}, 100); // -> note: gives firefox to load (document.stylesheets), other browsers are fine.
 		});
 	}
 	return q;
@@ -285,27 +289,23 @@ testUtils.addStyleSheets = function addStyleSheets(sheets, rootNode) {
 };
 
 /**
- * Remove a stylesheet by id from the document
- * @param {String} id id of the node to be removed from the document
- */
-testUtils.removeStyleSheet = function removeStyleSheet(id) {
-	var node = document.getElementById(id);
-	if (node && node.parentNode) {
-		node.parentNode.removeChild(node);
-	}
-};
-
-/**
  * Remove a list of stylesheets from the document
  * @param {Array<Object>} sheets array of sheets data object
+ * @returns {Object} axe.utils.queue
  */
 testUtils.removeStyleSheets = function removeStyleSheets(sheets) {
+	var q = axe.utils.queue();
 	sheets.forEach(function(data) {
-		if (!data.id) {
-			throw new Error('No id specified for stylesheet to be removed', data);
-		}
-		axe.testUtils.removeStyleSheet(data.id);
+		q.defer(function(resolve, reject) {
+			var node = document.getElementById(data.id);
+			if (!node || !node.parentNode) {
+				reject();
+			}
+			node.parentNode.removeChild(node);
+			resolve();
+		});
 	});
+	return q;
 };
 
 axe.testUtils = testUtils;

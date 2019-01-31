@@ -107,8 +107,14 @@ describe('preload cssom integration test', function() {
 								sheetData.cssRules[0].cssText,
 								true
 							);
-							axe.testUtils.removeStyleSheets(stylesForPage);
-							done();
+							axe.testUtils
+								.removeStyleSheets(stylesForPage)
+								.then(function() {
+									done();
+								})
+								.catch(function(err) {
+									done(err);
+								});
 						})
 						.catch(done);
 				},
@@ -131,8 +137,14 @@ describe('preload cssom integration test', function() {
 						.then(function(results) {
 							var sheets = results[0];
 							assert.lengthOf(sheets, 0);
-							axe.testUtils.removeStyleSheets(stylesForPage);
-							done();
+							axe.testUtils
+								.removeStyleSheets(stylesForPage)
+								.then(function() {
+									done();
+								})
+								.catch(function(err) {
+									done(err);
+								});
 						})
 						.catch(done);
 				},
@@ -161,25 +173,41 @@ describe('preload cssom integration test', function() {
 				});
 		});
 
-		it.only('throws if cross-origin stylesheet fail to load', function(done) {
+		it('throws if cross-origin stylesheet fail to load', function(done) {
+			var stylesForPage = [
+				{
+					id: 'nonExistingStylesheet',
+					text: '@import "import-non-existing-cross-origin.css";'
+				}
+			];
 			attachStylesheets(
 				{
 					root,
-					styles: [
-						{
-							id: 'nonExistingStylesheet',
-							text: '@import "import-non-existing-cross-origin.css";'
-						}
-					]
+					styles: stylesForPage
 				},
 				function(err) {
 					if (err) {
 						done(err);
 					}
-					getPreload().catch(function(error) {
-						assert.equal(error.message, 'Network Error'); //<- message from `axios`
-						done();
-					});
+					var doneCalled = false;
+					getPreload()
+						.then(function() {
+							done();
+						})
+						.catch(function(error) {
+							assert.equal(error.message, 'Network Error'); //<- message from `axios`
+							axe.testUtils
+								.removeStyleSheets(stylesForPage)
+								.then(function() {
+									if (!doneCalled) {
+										doneCalled = true;
+										done();
+									}
+								})
+								.catch(function(err) {
+									done(err);
+								});
+						});
 				},
 				root
 			);
@@ -215,6 +243,7 @@ describe('preload cssom integration test', function() {
 				if (err) {
 					done(err);
 				}
+
 				getPreload()
 					.then(function(results) {
 						var sheets = results[0];
@@ -225,8 +254,14 @@ describe('preload cssom integration test', function() {
 							'.inline-css-test',
 							stylesForPage[0].text
 						);
-						axe.testUtils.removeStyleSheets(stylesForPage);
-						done();
+						axe.testUtils
+							.removeStyleSheets(stylesForPage)
+							.then(function() {
+								done();
+							})
+							.catch(function(err) {
+								done(err);
+							});
 					})
 					.catch(done);
 			});
@@ -251,8 +286,14 @@ describe('preload cssom integration test', function() {
 							'.base-style',
 							'.base-style { font-size: 100%; }'
 						);
-						axe.testUtils.removeStyleSheets(stylesForPage);
-						done();
+						axe.testUtils
+							.removeStyleSheets(stylesForPage)
+							.then(function() {
+								done();
+							})
+							.catch(function(err) {
+								done(err);
+							});
 					})
 					.catch(done);
 			});
@@ -334,8 +375,14 @@ describe('preload cssom integration test', function() {
 								rootDocumentStyle.priority[0]
 							);
 
-							axe.testUtils.removeStyleSheets(stylesForPage);
-							done();
+							axe.testUtils
+								.removeStyleSheets(stylesForPage)
+								.then(function() {
+									done();
+								})
+								.catch(function(err) {
+									done(err);
+								});
 						})
 						.catch(done);
 				});
@@ -363,8 +410,14 @@ describe('preload cssom integration test', function() {
 							'.multiple-import-1',
 							'.multiple-import-1 { font-size: 100%; }'
 						);
-						axe.testUtils.removeStyleSheets(stylesForPage);
-						done();
+						axe.testUtils
+							.removeStyleSheets(stylesForPage)
+							.then(function() {
+								done();
+							})
+							.catch(function(err) {
+								done(err);
+							});
 					})
 					.catch(done);
 			});
@@ -389,8 +442,14 @@ describe('preload cssom integration test', function() {
 							'body::after',
 							'body::after { content: "I-am-from-the-3rd-nested-import-stylesheet"; }'
 						);
-						axe.testUtils.removeStyleSheets(stylesForPage);
-						done();
+						axe.testUtils
+							.removeStyleSheets(stylesForPage)
+							.then(function() {
+								done();
+							})
+							.catch(function(err) {
+								done(err);
+							});
 					})
 					.catch(done);
 			});
@@ -411,8 +470,14 @@ describe('preload cssom integration test', function() {
 							'.cycle-style',
 							'.cycle-style { font-family: inherit; }'
 						);
-						axe.testUtils.removeStyleSheets(stylesForPage);
-						done();
+						axe.testUtils
+							.removeStyleSheets(stylesForPage)
+							.then(function() {
+								done();
+							})
+							.catch(function(err) {
+								done(err);
+							});
 					})
 					.catch(done);
 			});
@@ -433,8 +498,14 @@ describe('preload cssom integration test', function() {
 							'.container',
 							'.container { position: relative; width: 100%; max-width: 960px; margin: 0px auto; padding: 0px 20px; box-sizing: border-box; }'
 						);
-						axe.testUtils.removeStyleSheets(stylesForPage);
-						done();
+						axe.testUtils
+							.removeStyleSheets(stylesForPage)
+							.then(function() {
+								done();
+							})
+							.catch(function(err) {
+								done(err);
+							});
 					})
 					.catch(done);
 			});
