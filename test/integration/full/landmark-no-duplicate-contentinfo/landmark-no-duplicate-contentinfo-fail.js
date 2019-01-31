@@ -2,7 +2,7 @@ describe('landmark-no-more-than-one-contentinfo test failure', function() {
 	'use strict';
 	var results;
 	before(function(done) {
-		function start() {
+		axe.testUtils.awaitNestedLoad(function() {
 			axe.run(
 				{
 					runOnly: {
@@ -16,12 +16,7 @@ describe('landmark-no-more-than-one-contentinfo test failure', function() {
 					done();
 				}
 			);
-		}
-		if (document.readyState !== 'complete') {
-			window.addEventListener('load', start);
-		} else {
-			start();
-		}
+		});
 	});
 
 	describe('violations', function() {

@@ -1,7 +1,7 @@
 {
 	"description": "checkboxgroup test",
 	"rule": "checkboxgroup",
-	"violations": [["#fail1"]],
+	"violations": [["#fail1"], ["#fail2"], ["#fail3"]],
 	"passes": [
 		["#pass1"],
 		["#pass2"],

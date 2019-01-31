@@ -1,11 +1,13 @@
+# Reference - https://help.github.com/articles/about-code-owners/
+
 # Complete repo
 * @dequelabs/axe-codeowners
 
 # Localisation
-locales/ja.json @mlca11y/mlca11y
+locales/ja.json @mlca11y/mlca11y @dequelabs/axe-codeowners
 
 # Core features
-lib/core/* @stephenmathieson
-test/core/* @stephenmathieson
-build/* @stephenmathieson
-Gruntfile.js @stephenmathieson
+lib/core/* @stephenmathieson @dequelabs/axe-codeowners
+test/core/* @stephenmathieson @dequelabs/axe-codeowners
+build/* @stephenmathieson @dequelabs/axe-codeowners
+Gruntfile.js @stephenmathieson @dequelabs/axe-codeowners
