@@ -2,7 +2,7 @@
 	"id": "hidden-content",
 	"selector": "*",
 	"excludeHidden": false,
-	"tags": ["cat.structure", "experimental", "review-item"],
+	"tags": ["cat.structure", "experimental", "review-item", "best-practice"],
 	"metadata": {
 		"description": "Informs users about hidden content.",
 		"help": "Hidden content on the page cannot be analyzed"
