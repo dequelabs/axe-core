@@ -710,6 +710,21 @@ describe('color.getBackgroundColor', function() {
 		assert.closeTo(actual.alpha, 1, 0.1);
 	});
 
+	it('does returns null for inline elements that do not fit the viewport', function() {
+		var html = '';
+		for (var i = 0; i < 1000; i++) {
+			html += 'foo<br />';
+		}
+		fixture.innerHTML = '<em>' + html + '</em>';
+		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		var outcome = axe.commons.color.getBackgroundColor(fixture.firstChild, []);
+		assert.isNull(outcome);
+		assert.equal(
+			axe.commons.color.incompleteData.get('bgColor'),
+			'outsideViewport'
+		);
+	});
+
 	it('should return the body bgColor when content does not overlap', function() {
 		fixture.innerHTML =
 			'<div style="height: 20px; width: 30px; background-color: red;">' +
