@@ -171,12 +171,6 @@ module.exports = function(grunt) {
 			}
 		},
 		validate: {
-			tools: {
-				options: {
-					type: 'tool'
-				},
-				src: 'lib/tools/**/*.json'
-			},
 			check: {
 				options: {
 					type: 'check'
@@ -238,7 +232,7 @@ module.exports = function(grunt) {
 		},
 		watch: {
 			files: ['lib/**/*', 'test/**/*.js', 'Gruntfile.js'],
-			tasks: ['run:npm_run_eslint', 'build', 'testconfig', 'fixture']
+			tasks: ['build', 'testconfig', 'fixture']
 		},
 		testconfig: {
 			test: {
@@ -332,10 +326,6 @@ module.exports = function(grunt) {
 			npm_run_imports: {
 				cmd: 'npm',
 				args: ['run', 'imports-gen']
-      },
-			npm_run_eslint: {
-				cmd: 'npm',
-				args: ['run', 'eslint']
 			}
 		}
 	});
@@ -389,22 +379,7 @@ module.exports = function(grunt) {
 	]);
 
 	grunt.registerTask('dev', [
-		'run:npm_run_eslint',
 		'build',
-		'testconfig',
-		'fixture',
-		'connect',
-		'watch'
-	]);
-
-	grunt.registerTask('dev:no-lint', [
-		'clean',
-		'validate',
-		'concat:commons',
-		'configure',
-		'babel',
-		'concat:engine',
-		'uglify',
 		'testconfig',
 		'fixture',
 		'connect',

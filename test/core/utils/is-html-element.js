@@ -1,5 +1,5 @@
 /* global axe */
-describe('utils.isHtmlElement', function() {
+describe('axe.utils.isHtmlElement', function() {
 	it('returns true if given ul', function() {
 		var node = document.createElement('ul');
 		assert.isTrue(axe.utils.isHtmlElement(node));
