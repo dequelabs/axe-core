@@ -62,8 +62,8 @@ describe('text.accessibleTextVirtual', function() {
 		var rule2a = axe.utils.querySelectorAll(axe._tree, '#beep')[0];
 		var rule2b = axe.utils.querySelectorAll(axe._tree, '#flash')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(rule2a), 'Beep');
-		// Chrome: "Flash the screen Number of times to flash screen times"
-		// Firefox: "Flash the screen Number of times to flash screen 3 times"
+		// Chrome 72: "Flash the screen Number of times to flash screen times"
+		// Firefox 62: "Flash the screen Number of times to flash screen 3 times"
 		assert.equal(
 			axe.commons.text.accessibleTextVirtual(rule2b),
 			'Flash the screen 3 times'
@@ -113,7 +113,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
 		assert.equal(
-			axe.commons.text.accessibleTextVirtual(target, { debug: true }),
+			axe.commons.text.accessibleTextVirtual(target),
 			'This is a hidden secret'
 		);
 	});
@@ -257,10 +257,11 @@ describe('text.accessibleTextVirtual', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2label')[0];
-		// Chrome returns: This is This is a label of
-		// Firefox returns: This is ARIA Label
+		// Chrome 72: This is This is a label of
+		// Firefox 62: This is ARIA Label
+		// Safari 12.0: This is This is a label of
 		assert.equal(
-			axe.commons.text.accessibleTextVirtual(target, { debug: true }),
+			axe.commons.text.accessibleTextVirtual(target),
 			'This is This is a label of'
 		);
 	});
@@ -307,8 +308,9 @@ describe('text.accessibleTextVirtual', function() {
 	});
 
 	it('should use handle nested inputs properly in labelledby context', function() {
-		// Chrome: This is This is a label of everything
-		// Firefox: This is ARIA Label the value of everything
+		// Chrome 72: This is This is a label of everything
+		// Firefox 62: This is ARIA Label the value of everything
+		// Safari 12.0: THis is This is a label of everything
 		fixture.innerHTML =
 			'<div id="t2label">This is <input type="text" value="the value" ' +
 			'aria-labelledby="t1label" aria-label="ARIA Label" id="t1"> of <i>everything</i></div>' +
@@ -352,6 +354,7 @@ describe('text.accessibleTextVirtual', function() {
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
 		// Chrome 70: "This is This is a label of everything"
 		// Firefox 62: "This is the value of everything"
+		// Safari 12.0: "This is This is a label of everything"
 		assert.equal(
 			axe.commons.text.accessibleTextVirtual(target),
 			'This is the value of everything'
@@ -372,6 +375,7 @@ describe('text.accessibleTextVirtual', function() {
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
 		// Chrome 70: "This is This is a label of everything"
 		// Firefox 62: "This is of everything"
+		// Safari 12.0: "This is first third label of"
 		assert.equal(
 			axe.commons.text.accessibleTextVirtual(target),
 			'This is of everything'
@@ -390,6 +394,7 @@ describe('text.accessibleTextVirtual', function() {
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
 		// Chrome 70: "This is This is a label of everything"
 		// Firefox 62: "This is ARIA Label the value of everything"
+		// Safari 12.0: "This is This is a label of everything"
 		assert.equal(
 			axe.commons.text.accessibleTextVirtual(target),
 			'This is the value of everything'
@@ -426,6 +431,7 @@ describe('text.accessibleTextVirtual', function() {
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 		// Chrome 70: ""
 		// Firefox 62: "Chosen"
+		// Safari 12.0: "Chosen"
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 	});
 
@@ -474,6 +480,7 @@ describe('text.accessibleTextVirtual', function() {
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 		// Chrome 70: ""
 		// Firefox 62: ""
+		// Safari 12.0: "Chosen"
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 	});
 
@@ -520,10 +527,7 @@ describe('text.accessibleTextVirtual', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
-		assert.equal(
-			axe.commons.text.accessibleTextVirtual(target, { debug: true }),
-			'Hello'
-		);
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 	});
 
 	it('should give text even for role=none on buttons', function() {
@@ -916,6 +920,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('should prefer summary attribute over title attribute', function() {
 			// Chrome 70: "Hello world"
 			// Firefox 62: "Hello world"
+			// Safari 12.0: "FAIL"
 			fixture.innerHTML = '<table summary="Hello World" title="FAIL"></table>';
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 
@@ -2468,7 +2473,9 @@ describe('text.accessibleTextVirtual', function() {
 				'</label>';
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 			var target = fixture.querySelector('#test');
-			// Chrome: "Flash the screen times"
+			// Chrome 72: "Flash the screen 1 times"
+			// Safari 12.0: "Flash the screen 1 times"
+			// Firefox 62: "Flash the screen 1 times"
 			assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 		});
 
@@ -2743,8 +2750,9 @@ describe('text.accessibleTextVirtual', function() {
 				'</label>';
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 			var target = fixture.querySelector('#test');
-			// Chrome 70: "Flash the screen times"
-			// Firefox 62: "Flash the screen times"
+			// Chrome 72: "Flash the screen 1 times"
+			// Firefox 62: "Flash the screen 1 times"
+			// Safari 12.0: "Flash the screen 1 times"
 			assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 		});
 
@@ -2757,6 +2765,7 @@ describe('text.accessibleTextVirtual', function() {
 			var target = fixture.querySelector('#test');
 			// Chrome 70: Foo 5 baz
 			// Firefox 62: Foo 5 baz
+			// Safari 12.0: Foo 5 baz
 			assert.equal(accessibleText(target), 'foo 5 baz');
 		});
 
@@ -2793,8 +2802,9 @@ describe('text.accessibleTextVirtual', function() {
 				'</label>';
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 			var target = fixture.querySelector('#test');
-			// Chrome 70: "Flash the screen times."
+			// Chrome 72: "Flash the screen 1 times."
 			// Firefox 62: "Flash the screen 1 times."
+			// Safari 12.0: "Flash the screen 1 times."
 			assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 		});
 
@@ -2827,8 +2837,9 @@ describe('text.accessibleTextVirtual', function() {
 				'</label>';
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 			var target = fixture.querySelector('#test');
-			// Chrome 70: Flash the screen times
+			// Chrome 72: Flash the screen 1 times
 			// Firefox 62: Flash the screen 1 times
+			// Safari 12.0: Flash the screen 1 times
 			assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 		});
 
@@ -2892,10 +2903,11 @@ describe('text.accessibleTextVirtual', function() {
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 			var target = fixture.querySelector('#test');
 
-			// Chrome 70: "My name is Garaventa the weird. (QED) Where are my marbles?"
+			// Chrome 72: "My name is Eli the weird. (QED) Where are my marbles?"
+			// Safari 12.0: "My name is Eli the weird. (QED) Where are my marbles?"
 			// Firefox 62: "Hello, My name is Eli the weird. (QED)"
 			assert.equal(
-				accessibleText(target, { debug: true }),
+				accessibleText(target),
 				'My name is Eli the weird. (QED) Where are my marbles?'
 			);
 		});
