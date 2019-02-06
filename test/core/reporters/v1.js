@@ -283,4 +283,25 @@ describe('reporters - v1', function() {
 			done();
 		});
 	});
+	it('should add version information', function(done) {
+		axe.run(optionsV1, function(err, results) {
+			try {
+				assert.isNull(err);
+				assert.isObject(results.testEngine, 'tesetEngine');
+				assert.equal(results.testEngine.name, 'axe-core');
+				assert.equal(results.testEngine.version, axe.version, 'testEngine.version');
+				assert.isObject(results.testRunner, 'testRunner');
+				assert.equal(results.testRunner.name, axe._audit.brand, 'testRunner.name');
+				assert.isObject(results.testEnvironment, 'testEnvironment');
+				assert.ok(results.testEnvironment.userAgent, 'userAgent');
+				assert.ok(results.testEnvironment.windowWidth, 'windowWidth');
+				assert.ok(results.testEnvironment.windowHeight, 'windowHeight');
+				assert.isNotNull(results.testEnvironment.orientationAngle, 'orientationAngle');
+				assert.isNotNull(results.testEnvironment.orientationType, 'orientationType');
+			} catch(e) {
+				return done(e);
+			}
+			done();
+		});
+	});
 });
