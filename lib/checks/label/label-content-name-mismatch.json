@@ -5,7 +5,7 @@
 		"impact": "serious",
 		"messages": {
 			"pass": "Element contains visible text as part of it's accessible name",
-			"fail": "The visible text of the element is different from it's accessible name"
+			"fail": "Text inside the element is not included in the accessible name"
 		}
 	}
 }

@@ -2,7 +2,7 @@ describe('label-content-name-mismatch-matches tests', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-	var fixtureSetup = axe.testUtils.fixtureSetup;
+	var queryFixture = axe.testUtils.queryFixture;
 	var rule = axe._audit.rules.find(function(rule) {
 		return rule.id === 'label-content-name-mismatch';
 	});
@@ -13,158 +13,132 @@ describe('label-content-name-mismatch-matches tests', function() {
 	});
 
 	it('returns false if given element has no role', function() {
-		var target = fixtureSetup('<div></div>', 'div');
-		var actual = rule.matches(target);
+		var vNode = queryFixture('<div id="target"></div>');
+		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
 	});
 
-	it('returns false of element role is not supported with name from contents', function() {
-		var target = fixtureSetup('<textarea></textarea>', 'textarea');
-		var actual = rule.matches(target);
+	it('returns false if element role is not supported with name from contents', function() {
+		var vNode = queryFixture('<textarea id="target"></textarea>');
+		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
 	});
 
 	it('returns false if element does not have accessible name attributes (`aria-label` or `aria-labelledby`)', function() {
-		var target = fixtureSetup(
-			'<button name="link">Until the very end.</button>',
-			'button'
+		var vNode = queryFixture(
+			'<button id="target" name="link">Until the very end.</button>'
 		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
 	});
 
-	it('returns true if element has accessible name (`aria-label`)', function() {
-		var target = fixtureSetup(
-			'<button name="link" aria-label="Until">Until the very end.</button>',
-			'button'
+	it('returns false if element has empty accessible name via `aria-label`', function() {
+		var vNode = queryFixture(
+			'<button id="target" name="link" aria-label="">Until the very end.</button>'
 		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(vNode.actualNode, vNode);
+		assert.isFalse(actual);
+	});
+
+	it('returns true if element has accessible name via `aria-label`', function() {
+		var vNode = queryFixture(
+			'<button id="target" name="link" aria-label="Until">Until the very end.</button>'
+		);
+		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isTrue(actual);
 	});
 
-	it('returns false if element has empty accessible name (`aria-label`)', function() {
-		var target = fixtureSetup(
-			'<button name="link" aria-label="">Until the very end.</button>',
-			'button'
-		);
-		var actual = rule.matches(target);
-		assert.isFalse(actual);
-	});
-
-	it('returns true if element has accessible name (`aria-labelledby`)', function() {
-		var target = fixtureSetup(
+	it('returns true if element has accessible name via `aria-labelledby`', function() {
+		var vNode = queryFixture(
 			'<div role="button" id="target" aria-labelledby="foo">some content</div>' +
-				'<div id="foo">Foo text</div>',
-			'div#target'
+				'<div id="foo">Foo text</div>'
 		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isTrue(actual);
 	});
 
 	it('returns false if element has empty accessible name (`aria-labelledby`)', function() {
-		var target = fixtureSetup(
+		var vNode = queryFixture(
 			'<div role="button" id="target" aria-labelledby="foo">some content</div>' +
-				'<div id="foo"></div>',
-			'div#target'
+				'<div id="foo"></div>'
 		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
 	});
 
 	it('returns false if element has empty accessible name (`aria-labelledby`) because idref does not exist', function() {
-		var target = fixtureSetup(
+		var vNode = queryFixture(
 			'<div role="button" id="target" aria-labelledby="doesNotExist">some content</div>' +
-				'<div id="idExists">Right Label</div>',
-			'div#target'
+				'<div id="idExists">Right Label</div>'
 		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
 	});
 
 	it('returns true if element has accessible name (`aria-labelledby`) - multiple refs', function() {
-		var target = fixtureSetup(
+		var vNode = queryFixture(
 			'<div role="button" id="target" aria-labelledby="bar baz foo">some content</div>' +
 				'<div id="foo">Foo</div>' +
 				'<div id="bar">Bar</div>' +
-				'<div id="baz">Baz</div>',
-			'div#target'
+				'<div id="baz">Baz</div>'
 		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isTrue(actual);
 	});
 
 	it('returns false for `non-widget` role', function() {
-		var target = fixtureSetup('<a aria-label="OK">Next</a>', 'a');
-		var actual = rule.matches(target);
-		assert.isFalse(actual);
-	});
-
-	it('returns false for widget role that does not support name from content', function() {
-		var target = fixtureSetup(
-			'<input type="email" aria-label="E-mail" value="Contact">',
-			'input'
+		var vNode = queryFixture(
+			'<a role="contentinfo" id="target" aria-label="some content">Content Information</a>'
 		);
-		var actual = rule.matches(target);
-		assert.isFalse(actual);
-	});
-
-	it('returns false for non-widget role that does support name from content', function() {
-		var target = fixtureSetup(
-			'<div role="doc-chapter" aria-label="OK">Next</div>',
-			'div'
-		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
 	});
 
 	it('returns true for non-widget role that does support name from content', function() {
-		var target = fixtureSetup(
-			'<div role="tooltip" aria-label="OK">Next</div>',
-			'div'
+		var vNode = queryFixture(
+			'<div id="target" role="tooltip" aria-label="OK">Next</div>'
 		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isTrue(actual);
 	});
 
 	it('returns false for empty text content', function() {
-		var target = fixtureSetup('<button aria-label="close"></button>', 'button');
-		var actual = rule.matches(target);
+		var vNode = queryFixture(
+			'<button id="target" aria-label="close"></button>'
+		);
+		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
 	});
 
 	it('returns false for non text content', function() {
-		var target = fixtureSetup(
-			'<button aria-label="close"><i class="fa fa-icon-close"></i></button>',
-			'button'
+		var vNode = queryFixture(
+			'<button id="target" aria-label="close"><i class="fa fa-icon-close"></i></button>'
 		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
 	});
 
 	it('returns false for hidden (non visible) text content', function() {
-		var target = fixtureSetup(
-			'<button aria-label="close"><span style="display:none"></span></button>',
-			'button'
+		var vNode = queryFixture(
+			'<button id="target" aria-label="close"><span style="display:none"></span></button>'
 		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
 	});
 
-	it('returns false for unicode text content', function() {
-		var target = fixtureSetup(
-			'<button aria-label="close">&#10060;</button>',
-			'button'
+	it('returns true when visible text is combination of alphanumeric and emoji characters', function() {
+		var vNode = queryFixture(
+			'<button id="target" aria-label="I would like a burger">I would like a 🍔 </button>'
 		);
-		var actual = rule.matches(target);
-		assert.isFalse(actual);
+		var actual = rule.matches(vNode.actualNode, vNode);
+		assert.isTrue(actual);
 	});
 
-	it('returns false for unicode emoji as accessible name and text content', function() {
-		var target = fixtureSetup(
-			'<button aria-label="&#x1F354">&#x1F354</button>',
-			'button'
+	it('returns true when visible text is combination of alphanumeric and punctuation characters', function() {
+		var vNode = queryFixture(
+			'<button id="target" aria-label="next page">next page &gt;</button>'
 		);
-		var actual = rule.matches(target);
-		assert.isFalse(actual);
+		var actual = rule.matches(vNode.actualNode, vNode);
+		assert.isTrue(actual);
 	});
 });

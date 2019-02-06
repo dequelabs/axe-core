@@ -72,10 +72,9 @@ testUtils.shadowSupport = (function(document) {
  * the flattened DOM tree (light and Shadow DOM together)
  *
  * @param {String|Node} content Stuff to go into the fixture (html or DOM node)
- * @param {String} targetSelector selector to identify node to return from the fixture
  * @return HTMLElement
  */
-testUtils.fixtureSetup = function(content, targetSelector) {
+testUtils.fixtureSetup = function(content) {
 	'use strict';
 	var fixture = document.querySelector('#fixture');
 	if (typeof content !== 'undefined') {
@@ -93,10 +92,6 @@ testUtils.fixtureSetup = function(content, targetSelector) {
 	}
 	axe._tree = axe.utils.getFlattenedTree(fixture);
 	axe._selectorData = axe.utils.getSelectorData(axe._tree);
-
-	if (targetSelector) {
-		return fixture.querySelector(targetSelector);
-	}
 
 	return fixture;
 };
