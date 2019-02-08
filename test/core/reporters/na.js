@@ -239,10 +239,10 @@ describe('reporters - na', function() {
 			done();
 		});
 	});
-	it('should add toolOption property', function() {
+	it('should add toolOptions property', function(done) {
 		axe.run(naOption, function(err, results) {
 			assert.isNull(err);
-			assert.isNotNull(results.toolOption);
+			assert.isNotNull(results.toolOptions);
 			done();
 		});
 	});

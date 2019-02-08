@@ -221,10 +221,10 @@ describe('reporters - v2', function() {
 			done();
 		});
 	});
-	it('should add toolOption property', function() {
+	it('should add toolOptions property', function(done) {
 		axe.run(optionsV2, function(err, results) {
 			assert.isNull(err);
-			assert.isNotNull(results.toolOption);
+			assert.isNotNull(results.toolOptions);
 			done();
 		});
 	});
