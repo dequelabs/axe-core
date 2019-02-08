@@ -193,40 +193,20 @@ describe('reporters - no-passes', function() {
 			done();
 		});
 	});
-	it('should include URL', function(done) {
+	it('should add environment data', function(done) {
 		axe.run(noPassOpt, function(err, results) {
 			assert.isNull(err);
-			assert.equal(results.url, window.location.href);
+			assert.isNotNull(results.url);
+			assert.isNotNull(results.timestamp);
+			assert.isNotNull(results.testEnvironement);
+			assert.isNotNull(results.testRunner);
 			done();
 		});
 	});
-	it('should include timestamp', function(done) {
+	it('should add toolOption property', function() {
 		axe.run(noPassOpt, function(err, results) {
 			assert.isNull(err);
-			var timestamp = new Date(results.timestamp);
-			assert.instanceOf(timestamp, Date);
-			assert.closeTo(timestamp.getTime(), Date.now(), 50);
-			done();
-		});
-	});
-	it('should add version information', function(done) {
-		axe.run(noPassOpt, function(err, results) {
-			try {
-				assert.isNull(err);
-				assert.isObject(results.testEngine, 'tesetEngine');
-				assert.equal(results.testEngine.name, 'axe-core');
-				assert.equal(results.testEngine.version, axe.version, 'testEngine.version');
-				assert.isObject(results.testRunner, 'testRunner');
-				assert.equal(results.testRunner.name, axe._audit.brand, 'testRunner.name');
-				assert.isObject(results.testEnvironment, 'testEnvironment');
-				assert.ok(results.testEnvironment.userAgent, 'userAgent');
-				assert.ok(results.testEnvironment.windowWidth, 'windowWidth');
-				assert.ok(results.testEnvironment.windowHeight, 'windowHeight');
-				assert.isNotNull(results.testEnvironment.orientationAngle, 'orientationAngle');
-				assert.isNotNull(results.testEnvironment.orientationType, 'orientationType');
-			} catch(e) {
-				return done(e);
-			}
+			assert.isNotNull(results.toolOption);
 			done();
 		});
 	});
