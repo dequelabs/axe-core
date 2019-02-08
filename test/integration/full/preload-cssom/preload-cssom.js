@@ -189,7 +189,6 @@ describe('preload cssom integration test', function() {
 					if (err) {
 						done(err);
 					}
-					var doneCalled = false;
 					getPreload()
 						.then(() => {
 							done(new Error('Expected getPreload to reject.'));
