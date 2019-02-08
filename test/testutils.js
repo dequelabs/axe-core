@@ -308,4 +308,31 @@ testUtils.removeStyleSheets = function removeStyleSheets(sheets) {
 	return q;
 };
 
+/**
+ * Assert a given stylesheet against selectorText and cssText
+ *
+ * @param {Object} sheet CSS Stylesheet
+ * @param {String} selectorText CSS Selector
+ * @param {String} cssText CSS Values
+ * @param {Boolean} includes (Optional) flag to check if existence of selectorText within cssText
+ */
+testUtils.assertStylesheet = function assertStylesheet(
+	sheet,
+	selectorText,
+	cssText,
+	includes
+) {
+	assert.isDefined(sheet);
+	assert.property(sheet, 'cssRules');
+	if (includes) {
+		assert.isTrue(cssText.includes(selectorText));
+	} else {
+		assert.equal(sheet.cssRules[0].selectorText, selectorText);
+		assert.equal(
+			sheet.cssRules[0].cssText.replace(/\s/g, ''),
+			cssText.replace(/\s/g, '')
+		);
+	}
+};
+
 axe.testUtils = testUtils;

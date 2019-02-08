@@ -3,6 +3,6 @@
 
 @import 'cyclic-import-1.css';
 
-.cycle-style {
+.style-from-cyclic-import-2-css {
   font-family: inherit;
 }

@@ -76,20 +76,6 @@ describe('preload integration test', function() {
 		return true;
 	}
 
-	function assertStylesheet(sheet, selectorText, cssText, includes) {
-		assert.isDefined(sheet);
-		assert.property(sheet, 'cssRules');
-		if (includes) {
-			assert.isTrue(cssText.includes(selectorText));
-		} else {
-			assert.equal(sheet.cssRules[0].selectorText, selectorText);
-			assert.equal(
-				sheet.cssRules[0].cssText.replace(/\s/g, ''),
-				cssText.replace(/\s/g, '')
-			);
-		}
-	}
-
 	function attachStylesheets(options, callback) {
 		axe.testUtils
 			.addStyleSheets(options.styles, options.root)
@@ -136,7 +122,7 @@ describe('preload integration test', function() {
 				var inlineStylesheet = cssom.filter(function(s) {
 					return s.sheet.cssRules.length === 1 && !s.isCrossOrigin;
 				})[0].sheet;
-				assertStylesheet(
+				axe.testUtils.assertStylesheet(
 					inlineStylesheet,
 					'.inline-css-test',
 					'.inline-css-test{font-size:inherit;}'
