@@ -44,14 +44,14 @@ describe('text.isHumanInterpretable', function() {
 		assert.equal(actual, 0);
 	});
 
-	it('returns 0 when given string has combination of non BNP characters and emojis', function() {
+	it('returns 0 when given string has combination of only non BNP characters and emojis', function() {
 		var actual = axe.commons.text.isHumanInterpretable('⌛👓🏀🍔🍉🎅');
 		assert.equal(actual, 0);
 	});
 
 	it('returns 1 when given string is a punctuated sentence', function() {
 		var actual = axe.commons.text.isHumanInterpretable(
-			'I like football, but I prefer basketball..'
+			"I like football, but I prefer basketball; although I can't play either very well."
 		);
 		assert.equal(actual, 1);
 	});
