@@ -10,12 +10,12 @@ describe('UMD window', function() {
 	});
 
 	it('should resolve Promise(s)', function(done) {
-		var p1 = new Promise(function(resolve, reject) {
+		var p1 = new Promise(function(resolve) {
 			setTimeout(function() {
 				resolve('Hello');
 			});
 		});
-		var p2 = new Promise(function(resolve, reject) {
+		var p2 = new Promise(function(resolve) {
 			setTimeout(function() {
 				resolve('World!');
 			});
