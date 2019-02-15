@@ -494,8 +494,8 @@ describe('axe.utils.getSelector', function() {
 		img2.setAttribute('src', '//deque.com/logo.png');
 
 		fixtureSetup([link1, link2, img1, img2]);
-		assert.equal(axe.utils.getSelector(link2), 'a[href$="about/"]');
-		assert.equal(axe.utils.getSelector(img2), 'img[src$="logo.png"]');
+		assert.equal(axe.utils.getSelector(link2), 'a[href$="about\\/"]');
+		assert.equal(axe.utils.getSelector(img2), 'img[src$="logo\\.png"]');
 	});
 
 	it('should escape href attributes', function() {
