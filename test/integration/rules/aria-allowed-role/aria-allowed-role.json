@@ -45,6 +45,12 @@
 		["#pass-aside-role-region"],
 		["#pass-form-role-search"],
 		["#pass-li-role-sep"],
+		["#pass-iframe-presentation"],
+		["#pass-iframe-none"],
+		["#pass-ul-role-none"],
+		["#pass-ul-role-presentation"],
+		["#pass-ol-role-none"],
+		["#pass-ol-role-presentation"],
 		["#pass-custom-element-any-role"]
 	],
 	"violations": [
