@@ -1,4 +1,3 @@
-/* global Promise */
 const path = require('path');
 
 const directories = {
