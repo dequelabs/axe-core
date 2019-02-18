@@ -275,4 +275,10 @@ testUtils.addStyleSheets = function addStyleSheets(sheets) {
 	return q;
 };
 
+testUtils.queryFixture = function queryFixture (html, query) {
+	testUtils.fixtureSetup(html)
+	return axe.utils.querySelectorAll(axe._tree, (query || '#target'))[0];
+}
+
+
 axe.testUtils = testUtils;
