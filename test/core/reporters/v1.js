@@ -283,4 +283,21 @@ describe('reporters - v1', function() {
 			done();
 		});
 	});
+	it('should add environment data', function(done) {
+		axe.run(optionsV1, function(err, results) {
+			assert.isNull(err);
+			assert.isNotNull(results.url);
+			assert.isNotNull(results.timestamp);
+			assert.isNotNull(results.testEnvironement);
+			assert.isNotNull(results.testRunner);
+			done();
+		});
+	});
+	it('should add toolOptions property', function(done) {
+		axe.run(optionsV1, function(err, results) {
+			assert.isNull(err);
+			assert.isNotNull(results.toolOptions);
+			done();
+		});
+	});
 });
