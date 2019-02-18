@@ -204,6 +204,33 @@ describe('Rule', function() {
 				);
 			});
 
+			it('should pass a context to #matches', function(done) {
+				var div = document.createElement('div');
+				fixture.appendChild(div);
+				var success = false,
+					rule = new Rule({
+						matches: function(node, virtualNode, context) {
+							assert.isDefined(context);
+							assert.hasAnyKeys(context, ['cssom', 'include', 'exclude']);
+							assert.lengthOf(context.include, 1);
+							success = true;
+							return [];
+						}
+					});
+
+				rule.run(
+					{
+						include: [axe.utils.getFlattenedTree(div)[0]]
+					},
+					{},
+					function() {
+						assert.isTrue(success);
+						done();
+					},
+					isNotCalled
+				);
+			});
+
 			it('should handle an error in #matches', function(done) {
 				var div = document.createElement('div');
 				div.setAttribute('style', '#fff');
