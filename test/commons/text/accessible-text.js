@@ -41,7 +41,6 @@ describe('text.accessibleTextVirtual', function() {
 	});
 
 	it('should match the second example from the ARIA spec', function() {
-		// TODO: Figure out of input value really should trump aria-label
 		fixture.innerHTML =
 			'<fieldset>' +
 			'  <legend>Meeting alarms</legend>' +
@@ -62,8 +61,9 @@ describe('text.accessibleTextVirtual', function() {
 		var rule2a = axe.utils.querySelectorAll(axe._tree, '#beep')[0];
 		var rule2b = axe.utils.querySelectorAll(axe._tree, '#flash')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(rule2a), 'Beep');
-		// Chrome 72: "Flash the screen Number of times to flash screen times"
-		// Firefox 62: "Flash the screen Number of times to flash screen 3 times"
+		// Chrome 72: "Flash the screen 3 times"
+		// Firefox 62: "Flash the screen 3 times"
+		// Safari 12.0: "Flash the screen 3 times"
 		assert.equal(
 			axe.commons.text.accessibleTextVirtual(rule2b),
 			'Flash the screen 3 times'
