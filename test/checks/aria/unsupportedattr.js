@@ -49,4 +49,66 @@ describe('unsupportedattr', function() {
 		);
 		assert.isFalse(check.evaluate.apply(checkContext, params));
 	});
+
+	it('should return false if applied to an element that matches the unsupported "allowedElements" list', function() {
+		axe.commons.aria.lookupTable.attributes['aria-mccheddarton'] = {
+			unsupported: {
+				allowedElements: ['button']
+			}
+		};
+		var params = checkSetup(
+			'<button id="target" aria-mccheddarton="true">Contents</div>'
+		);
+		assert.isFalse(check.evaluate.apply(checkContext, params));
+	});
+
+	it('should return false if applied to an element that matches the unsupported "allowedElements" list using complex conditions', function() {
+		axe.commons.aria.lookupTable.attributes['aria-mccheddarton'] = {
+			unsupported: {
+				allowedElements: [
+					{
+						nodeName: 'input',
+						properties: {
+							type: 'checkbox'
+						}
+					}
+				]
+			}
+		};
+		var params = checkSetup(
+			'<input type="checkbox" id="target" aria-mccheddarton="true">Contents</div>'
+		);
+		assert.isFalse(check.evaluate.apply(checkContext, params));
+	});
+
+	it('should return true if applied to an element that does not match the unsupported "allowedElements" list', function() {
+		axe.commons.aria.lookupTable.attributes['aria-mccheddarton'] = {
+			unsupported: {
+				allowedElements: ['button']
+			}
+		};
+		var params = checkSetup(
+			'<div id="target" aria-mccheddarton="true">Contents</div>'
+		);
+		assert.isTrue(check.evaluate.apply(checkContext, params));
+	});
+
+	it('should return true if applied to an element that does not match the unsupported "allowedElements" list using complex conditions', function() {
+		axe.commons.aria.lookupTable.attributes['aria-mccheddarton'] = {
+			unsupported: {
+				allowedElements: [
+					{
+						nodeName: 'input',
+						properties: {
+							type: 'checkbox'
+						}
+					}
+				]
+			}
+		};
+		var params = checkSetup(
+			'<input type="radio" id="target" aria-mccheddarton="true">Contents</div>'
+		);
+		assert.isTrue(check.evaluate.apply(checkContext, params));
+	});
 });
