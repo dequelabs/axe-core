@@ -72,7 +72,7 @@
 		"fmt": "prettier --write *.{json,md,js} **/*.ts './{build,doc,lib,test}/**/*.{json,md,js,ts}'"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.1.5",
+		"@babel/core": "^7.2.2",
 		"aria-query": "^3.0.0",
 		"axios": "^0.18.0",
 		"babel-core": "^6.26.0",
@@ -86,8 +86,8 @@
 		"clone": "~2.1.1",
 		"css-selector-parser": "^1.3.0",
 		"dot": "~1.1.2",
-		"es6-promise": "^4.2.5",
-		"eslint": "^5.9.0",
+		"es6-promise": "^4.2.6",
+		"eslint": "^5.14.0",
 		"eslint-config-prettier": "^3.4.0",
 		"execa": "^1.0.0",
 		"fs-extra": "^7.0.0",
@@ -119,7 +119,7 @@
 		"revalidator": "~0.3.1",
 		"selenium-webdriver": "~3.6.0",
 		"sri-toolbox": "^0.2.0",
-		"standard-version": "^4.4.0",
+		"standard-version": "^5.0.0",
 		"typescript": "^2.9.2",
 		"uglify-js": "^3.4.4"
 	},
