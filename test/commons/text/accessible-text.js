@@ -113,7 +113,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
 		assert.equal(
-			axe.commons.text.accessibleTextVirtual(target, { debug: true }),
+			axe.commons.text.accessibleTextVirtual(target),
 			'This is a hidden secret'
 		);
 	});
@@ -260,7 +260,7 @@ describe('text.accessibleTextVirtual', function() {
 		// Chrome returns: This is This is a label of
 		// Firefox returns: This is ARIA Label
 		assert.equal(
-			axe.commons.text.accessibleTextVirtual(target, { debug: true }),
+			axe.commons.text.accessibleTextVirtual(target),
 			'This is This is a label of'
 		);
 	});
@@ -520,10 +520,7 @@ describe('text.accessibleTextVirtual', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
-		assert.equal(
-			axe.commons.text.accessibleTextVirtual(target, { debug: true }),
-			'Hello'
-		);
+		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 	});
 
 	it('should give text even for role=none on buttons', function() {
@@ -2895,7 +2892,7 @@ describe('text.accessibleTextVirtual', function() {
 			// Chrome 70: "My name is Garaventa the weird. (QED) Where are my marbles?"
 			// Firefox 62: "Hello, My name is Eli the weird. (QED)"
 			assert.equal(
-				accessibleText(target, { debug: true }),
+				accessibleText(target),
 				'My name is Eli the weird. (QED) Where are my marbles?'
 			);
 		});

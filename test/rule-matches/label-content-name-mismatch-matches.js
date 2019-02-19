@@ -19,7 +19,17 @@ describe('label-content-name-mismatch-matches tests', function() {
 	});
 
 	it('returns false if element role is not supported with name from contents', function() {
-		var vNode = queryFixture('<textarea id="target"></textarea>');
+		var vNode = queryFixture(
+			'<div id="target" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20 %</div>'
+		);
+		var actual = rule.matches(vNode.actualNode, vNode);
+		assert.isFalse(actual);
+	});
+
+	it('returns false if implicit element role is overridden to a role that dos not support name from contents', function() {
+		var vNode = queryFixture(
+			'<button id="target" role="status">Your changes were automatically saved.</button>'
+		);
 		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
 	});
@@ -86,7 +96,7 @@ describe('label-content-name-mismatch-matches tests', function() {
 		assert.isTrue(actual);
 	});
 
-	it('returns false for `non-widget` role', function() {
+	it('returns false for non-widget role', function() {
 		var vNode = queryFixture(
 			'<a role="contentinfo" id="target" aria-label="some content">Content Information</a>'
 		);
@@ -94,7 +104,7 @@ describe('label-content-name-mismatch-matches tests', function() {
 		assert.isFalse(actual);
 	});
 
-	it('returns true for non-widget role that does support name from content', function() {
+	it('returns true for widget role that does support name from content', function() {
 		var vNode = queryFixture(
 			'<div id="target" role="tooltip" aria-label="OK">Next</div>'
 		);
@@ -120,7 +130,7 @@ describe('label-content-name-mismatch-matches tests', function() {
 
 	it('returns false for hidden (non visible) text content', function() {
 		var vNode = queryFixture(
-			'<button id="target" aria-label="close"><span style="display:none"></span></button>'
+			'<button id="target" aria-label="close"><span style="display:none">I am hidden</span></button>'
 		);
 		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
