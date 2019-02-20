@@ -29,6 +29,8 @@ describe('unsupportedattr', function() {
 		var params = checkSetup(
 			'<div id="target" aria-mccheddarton="true" aria-bagleypants="false" aria-label="Nope">Contents</div>'
 		);
+		console.log(checkContext._data);
+
 		assert.isTrue(check.evaluate.apply(checkContext, params));
 		assert.deepEqual(checkContext._data, [
 			'aria-mccheddarton',
@@ -50,10 +52,10 @@ describe('unsupportedattr', function() {
 		assert.isFalse(check.evaluate.apply(checkContext, params));
 	});
 
-	it('should return false if applied to an element that matches the unsupported "allowedElements" list', function() {
+	it('should return false if applied to an element that matches the unsupported "exceptions" list', function() {
 		axe.commons.aria.lookupTable.attributes['aria-mccheddarton'] = {
 			unsupported: {
-				allowedElements: ['button']
+				exceptions: ['button']
 			}
 		};
 		var params = checkSetup(
@@ -62,10 +64,10 @@ describe('unsupportedattr', function() {
 		assert.isFalse(check.evaluate.apply(checkContext, params));
 	});
 
-	it('should return false if applied to an element that matches the unsupported "allowedElements" list using complex conditions', function() {
+	it('should return false if applied to an element that matches the unsupported "exceptions" list using complex conditions', function() {
 		axe.commons.aria.lookupTable.attributes['aria-mccheddarton'] = {
 			unsupported: {
-				allowedElements: [
+				exceptions: [
 					{
 						nodeName: 'input',
 						properties: {
@@ -81,10 +83,10 @@ describe('unsupportedattr', function() {
 		assert.isFalse(check.evaluate.apply(checkContext, params));
 	});
 
-	it('should return true if applied to an element that does not match the unsupported "allowedElements" list', function() {
+	it('should return true if applied to an element that does not match the unsupported "exceptions" list', function() {
 		axe.commons.aria.lookupTable.attributes['aria-mccheddarton'] = {
 			unsupported: {
-				allowedElements: ['button']
+				exceptions: ['button']
 			}
 		};
 		var params = checkSetup(
@@ -93,10 +95,10 @@ describe('unsupportedattr', function() {
 		assert.isTrue(check.evaluate.apply(checkContext, params));
 	});
 
-	it('should return true if applied to an element that does not match the unsupported "allowedElements" list using complex conditions', function() {
+	it('should return true if applied to an element that does not match the unsupported "exceptions" list using complex conditions', function() {
 		axe.commons.aria.lookupTable.attributes['aria-mccheddarton'] = {
 			unsupported: {
-				allowedElements: [
+				exceptions: [
 					{
 						nodeName: 'input',
 						properties: {

@@ -32,6 +32,7 @@ module.exports = function(grunt) {
 				return [...out, ...Object.keys(rule.props)];
 			}, []);
 			const aQaria = new Set(axe.utils.uniqueArray(roleAriaKeys, ariaKeys));
+			let footnotes;
 
 			/**
 			 * Given a `base` Map and `subject` Map object,
@@ -60,6 +61,33 @@ module.exports = function(grunt) {
 									!subject.hasOwnProperty(key)
 								) {
 									out.push([`${key}`, 'No']);
+								} else if (
+									subject[key] &&
+									subject[key].unsupported &&
+									subject[key].unsupported.exceptions
+								) {
+									out.push([`${key}`, `Mixed[^${footnotes.length + 1}]`]);
+
+									let supportedElements = subject[
+										key
+									].unsupported.exceptions.map(element => {
+										if (typeof element === 'string') {
+											return `\`<${element}>\``;
+										} else if (element.nodeName && element.properties) {
+											return Object.keys(element.properties).map(prop => {
+												const value = element.properties[prop];
+												if (typeof value === 'string') {
+													return `\`<${element.nodeName} ${prop}="${value}">\``;
+												} else {
+													let values = value.map(v => `"${v}"`).join(' | ');
+													return `\`<${element.nodeName} ${prop}=${values}>\``;
+												}
+											});
+										}
+									});
+									footnotes.push(
+										'Supported on elements: ' + supportedElements.join(', ')
+									);
 								}
 								break;
 							case 'all':
@@ -77,11 +105,18 @@ module.exports = function(grunt) {
 					}, []);
 			};
 
-			const getMdContent = (heading, rolesTable, attributesTable) => {
-				return `${heading}\n\n## Roles\n\n${rolesTable}\n\n## Attributes\n\n${attributesTable}`;
+			const getMdContent = (
+				heading,
+				rolesTable,
+				attributesTable,
+				footnotes
+			) => {
+				return `${heading}\n\n## Roles\n\n${rolesTable}\n\n## Attributes\n\n${attributesTable}\n\n${footnotes}`;
 			};
 
 			const generateDoc = () => {
+				footnotes = [];
+
 				const content = getMdContent(
 					`# ARIA Roles and Attributes ${
 						listType === 'all' ? 'available' : listType
@@ -102,7 +137,8 @@ module.exports = function(grunt) {
 					mdTable([
 						['aria-attribute', 'axe-core support'],
 						...getDiff(aQaria, axe.commons.aria.lookupTable.attributes)
-					])
+					]),
+					footnotes.map((footnote, index) => `[^${index + 1}]: ${footnote}`)
 				);
 
 				// Format the content so Prettier doesn't create a diff after running.
