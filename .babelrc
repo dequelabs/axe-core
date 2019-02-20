@@ -1,8 +1,11 @@
 {
-  "presets": [
-    "env"
-  ],
-  "plugins": [
-    "transform-object-rest-spread"
-  ]
+	"presets": [
+		[
+			"@babel/preset-env",
+			{
+				"useBuiltIns": "entry",
+				"targets": "defaults, IE 9, IE 10"
+			}
+		]
+	]
 }
