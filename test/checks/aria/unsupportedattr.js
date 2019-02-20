@@ -29,8 +29,6 @@ describe('unsupportedattr', function() {
 		var params = checkSetup(
 			'<div id="target" aria-mccheddarton="true" aria-bagleypants="false" aria-label="Nope">Contents</div>'
 		);
-		console.log(checkContext._data);
-
 		assert.isTrue(check.evaluate.apply(checkContext, params));
 		assert.deepEqual(checkContext._data, [
 			'aria-mccheddarton',
