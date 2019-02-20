@@ -129,8 +129,8 @@
 			"prettier --write",
 			"git add"
 		],
-		"*.{js}": [
-			"npm run eslint --fix",
+		"*.js": [
+			"eslint --fix",
 			"prettier --write",
 			"git add"
 		]
