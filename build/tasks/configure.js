@@ -1,30 +1,39 @@
 /*eslint-env node */
 'use strict';
 var buildRules = require('../configure');
-module.exports = function (grunt) {
-	grunt.registerMultiTask('configure',
+var format = require('../shared/format');
+
+module.exports = function(grunt) {
+	grunt.registerMultiTask(
+		'configure',
 		'Task for configuring rules and checks',
-		function () {
+		function() {
 			var done = this.async();
 			var options = this.options({
-	      rules: ['lib/rules/**/*.json'],
-	      checks: ['lib/checks/**/*.json'],
-	      tools: ['lib/tools/**/*.json'],
-	      misc: ['lib/misc/**/*.json'],
+				rules: ['lib/rules/**/*.json'],
+				checks: ['lib/checks/**/*.json'],
+				misc: ['lib/misc/**/*.json'],
 				blacklist: ['metadata'],
 				tags: ''
 			});
 
-			this.files.forEach(function (file) {
+			this.files.forEach(function(file) {
 				var commons = file.src[0];
-	      var match = file.dest.auto.match(/\.([a-z]{2,3})\.js/);
-	      if (match) {
-	        options.locale = match[1];
-	      }
+				var match = file.dest.auto.match(/\.([a-z]{2,3})\.js/);
+				if (match) {
+					options.locale = match[1];
+				}
 
-				buildRules(grunt, options, commons, function (result) {
+				buildRules(grunt, options, commons, function(result) {
 					grunt.file.write(file.dest.auto, 'axe._load(' + result.auto + ');');
-					grunt.file.write(file.dest.descriptions, result.descriptions);
+
+					// Format the content so Prettier doesn't create a diff after running.
+					// See https://github.com/dequelabs/axe-core/issues/1310.
+					const descriptionsContent = format(
+						result.descriptions,
+						file.dest.descriptions
+					);
+					grunt.file.write(file.dest.descriptions, descriptionsContent);
 					done();
 				});
 			});

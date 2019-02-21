@@ -1,0 +1,67 @@
+<!-- ///////////////// -->
+<!-- Pass -->
+<!-- ///////////////// -->
+<p id='pass1' aria-hidden="true">
+	Some text
+</p>
+
+<div id='pass2' aria-hidden="true">
+	<a href="/" style="display:none">Link</a>
+</div>
+
+<div id='pass3' aria-hidden="true">
+	<button tabindex="-1">Some button</button>
+</div>
+
+<input id='pass4' disabled aria-hidden="true" />
+
+<div id='pass5' aria-hidden="true">
+	<!-- aria-hidden=false does not negate aria-hidden true -->
+	<div aria-hidden="false">
+		<button tabindex="-1">Some button</button>
+	</div>
+</div>
+
+<div id='pass6' aria-hidden="true">
+	<label>
+		Enter your comments:
+		<textarea tabindex="-1"></textarea>
+	</label>
+</div>
+
+
+<!-- ///////////////// -->
+<!-- Fail -->
+<!-- ///////////////// -->
+<div id='violation1' aria-hidden="true">
+	<a href="/" style="position:absolute; top:-999em">Link</a>
+</div>
+
+<div id='violation2' aria-hidden="true">
+	<input aria-disabled="true" />
+</div>
+
+<p id='violation3' tabindex="0" aria-hidden="true">Some text</p>
+
+<details id='violation4' aria-hidden="true">
+	<summary>Some button</summary>
+	<p>Some details</p>
+</details>
+
+<div id='violation5' aria-hidden="true">
+	<label>
+		Choose:
+		<select>
+			<option selected="selected">Chosen</option>
+			<option>Not Selected</option>
+		</select>
+	</label>
+</div>
+
+<main id='violation6' aria-hidden='true'>
+	<map name="infographic">
+		<area shape="rect" coords="184,6,253,27" href="https://mozilla.org" target="_blank" alt="Mozilla" />
+	</map>
+</main>
+
+<div id='violation7' aria-hidden="true"><a href="">foo</a><button>bar</button></div>

@@ -5,7 +5,9 @@ var path = require('path');
 var templates = require('./templates');
 
 module.exports = function build(grunt, options, commons, callback) {
-	options.getFiles = options.hasOwnProperty('getFiles') ? options.getFiles : true;
+	options.getFiles = options.hasOwnProperty('getFiles')
+		? options.getFiles
+		: true;
 
 	function parseObject(src) {
 		var files = grunt.file.expand(src);
@@ -35,7 +37,6 @@ module.exports = function build(grunt, options, commons, callback) {
 	callback({
 		rules: parseObject(options.rules),
 		checks: parseObject(options.checks),
-		tools: parseObject(options.tools),
 		misc: parseObject(options.misc),
 		commons: commons
 	});

@@ -1,5 +1,5 @@
 /*global tests */
-(function () {
+(function() {
 	'use strict';
 
 	function flattenResult(results) {
@@ -28,61 +28,62 @@
 	}
 
 	var fixture = document.getElementById('fixture');
-	Object.keys(tests).forEach(function (ruleId) {
-		describe(ruleId, function () {
-			tests[ruleId].forEach(function (test) {
+	Object.keys(tests).forEach(function(ruleId) {
+		describe(ruleId, function() {
+			tests[ruleId].forEach(function(test) {
 				var testName = test.description || ruleId + ' test';
-				describe(testName, function () {
-
+				describe(testName, function() {
 					function runTest(test, collection) {
 						if (!test[collection]) {
 							return;
 						}
 
-						describe(collection, function () {
+						describe(collection, function() {
 							var nodes;
-							before(function () {
+							before(function() {
 								if (typeof results[collection] === 'object') {
 									nodes = results[collection].nodes;
 								}
 							});
 
-							test[collection]
-  							.forEach(function (selector) {
-  								it('should find ' + JSON.stringify(selector), function () {
-  									if (!nodes) {
-  										assert(false, 'there are no ' + collection);
-  										return;
-  									}
+							test[collection].forEach(function(selector) {
+								it('should find ' + JSON.stringify(selector), function() {
+									if (!nodes) {
+										assert(false, 'there are no ' + collection);
+										return;
+									}
 
-  									var matches = nodes.filter(function (node) {
-  										for (var i=0; i < selector.length; i++) {
-  											if (node.target[i] !== selector[i]) {
-  												return false;
-  											}
-  										}
-  										return node.target.length === selector.length;
-  									});
-  									matches.forEach(function (node) {
-  										// remove each node we find
-  										nodes.splice(nodes.indexOf(node), 1);
-  									});
+									var matches = nodes.filter(function(node) {
+										for (var i = 0; i < selector.length; i++) {
+											if (node.target[i] !== selector[i]) {
+												return false;
+											}
+										}
+										return node.target.length === selector.length;
+									});
+									matches.forEach(function(node) {
+										// remove each node we find
+										nodes.splice(nodes.indexOf(node), 1);
+									});
 
-  									if (matches.length === 0) {
-  										assert(false, 'Element not found');
-
-  									} else if (matches.length === 1) {
-  										assert(true, 'Element found');
-
-  									} else {
-  										assert(false, 'Found ' + matches.length + ' elements which match the target');
-  									}
-  								});
+									if (matches.length === 0) {
+										assert(false, 'Element not found');
+									} else if (matches.length === 1) {
+										assert(true, 'Element found');
+									} else {
+										assert(
+											false,
+											'Found ' +
+												matches.length +
+												' elements which match the target'
+										);
+									}
 								});
+							});
 
-							it('should not return other results', function () {
+							it('should not return other results', function() {
 								if (typeof nodes !== 'undefined') {
-									var targets = nodes.map(function (node) {
+									var targets = nodes.map(function(node) {
 										return node.target;
 									});
 									// check that all nodes are removed
@@ -95,15 +96,37 @@
 					}
 
 					var results;
-					before(function (done) {
+					before(function(done) {
 						fixture.innerHTML = test.content;
-						waitForFrames(fixture, function () {
-							axe.run(fixture, { performanceTimer: false, runOnly: { type: 'rule', values: [ruleId]}}, function (err, r) {
-								assert.isNull(err);
-								results = flattenResult(r);
-								done();
-							});
-
+						waitForFrames(fixture, function() {
+							axe.run(
+								fixture,
+								{
+									/**
+									 * The debug flag helps log errors in a fairly detailed fashion,
+									 * when tests fail in webdriver
+									 */
+									debug: true,
+									performanceTimer: false,
+									runOnly: { type: 'rule', values: [ruleId] }
+								},
+								function(err, r) {
+									// assert that there are no errors - if error exists a stack trace is logged.
+									var errStack = err && err.stack ? err.stack : '';
+									assert.isNull(err, 'Error should be null. ' + errStack);
+									// assert that result is defined
+									assert.isDefined(r, 'Results are defined.');
+									// assert that result has certain keys
+									assert.hasAnyKeys(r, ['incomplete', 'violations', 'passes']);
+									// assert incomplete(s) does not have error
+									r.incomplete.forEach(function(incomplete) {
+										assert.isUndefined(incomplete.error);
+									});
+									// flatten results
+									results = flattenResult(r);
+									done();
+								}
+							);
 						});
 					});
 					runTest(test, 'passes');
@@ -115,5 +138,4 @@
 			});
 		});
 	});
-
-}());
+})();

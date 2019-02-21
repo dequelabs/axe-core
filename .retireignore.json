@@ -12,6 +12,10 @@
 		"justification" : "Used only for testing"
 	},
 	{
+		"path": "node_modules/sshpk",
+		"justification" : "A dependency of retirejs/request"
+	},
+	{
 		"path": "node_modules/grunt-mocha",
 		"justification" : "Used only for testing"
 	},
@@ -53,6 +57,10 @@
 	},
 	{
 		"path": "node_modules/hoek",
+		"justification": "Sub-dependency of retire.js, which is being ignored"
+	},
+	{
+		"path": "node_modules/stringstream",
 		"justification": "Sub-dependency of retire.js, which is being ignored"
 	},
 	{

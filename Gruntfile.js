@@ -1,8 +1,11 @@
-/*eslint complexity: ["error",12], max-statements: ["error", 30],
-	camelcase: ["error", {"properties": "never"}]*/
+/*eslint
+complexity: ["error",12],
+max-statements: ["error", 35],
+camelcase: ["error", {"properties": "never"}]
+*/
 var testConfig = require('./build/test/config');
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 	'use strict';
 
 	grunt.loadNpmTasks('grunt-babel');
@@ -10,79 +13,82 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-eslint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-retire');
 	grunt.loadNpmTasks('grunt-mocha');
-	grunt.loadTasks('build/tasks');
 	grunt.loadNpmTasks('grunt-parallel');
+	grunt.loadNpmTasks('grunt-run');
+	grunt.loadTasks('build/tasks');
 
 	var langs;
 	if (grunt.option('lang')) {
-		langs = (grunt.option('lang') || '')
-			.split(/[,;]/g).map(function (lang) {
-				lang = lang.trim();
-				return (lang !== 'en' ? '.' + lang : '');
-			});
-
+		langs = (grunt.option('lang') || '').split(/[,;]/g).map(function(lang) {
+			lang = lang.trim();
+			return lang !== 'en' ? '.' + lang : '';
+		});
 	} else if (grunt.option('all-lang')) {
 		var localeFiles = require('fs').readdirSync('./locales');
-		langs = localeFiles.map(function (file) {
+		langs = localeFiles.map(function(file) {
 			return '.' + file.replace('.json', '');
 		});
 		langs.unshift(''); // Add default
-
 	} else {
 		langs = [''];
 	}
+
+	var webDriverTestBrowsers = ['firefox', 'chrome', 'ie', 'chrome-mobile'];
+
+	process.env.NODE_NO_HTTP2 = 1; // to hide node warning - (node:18740) ExperimentalWarning: The http2 module is an experimental API.
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		parallel: {
 			'browser-test': {
 				options: {
+					stream: true,
 					grunt: true
 				},
-				tasks: [
-					'test-webdriver:firefox',
-					'test-webdriver:chrome',
-					// Edge Webdriver isn't all too stable, manual testing required
-					// 'test-webdriver:edge',
-					// 'test-webdriver:safari',
-					'test-webdriver:ie',
-					'test-webdriver:chrome-mobile'
-				]
+				tasks: webDriverTestBrowsers.map(function(b) {
+					return 'test-webdriver:' + b;
+				})
 			}
 		},
-		retire: {
-			options: {
-				/** list of files to ignore **/
-				ignorefile: '.retireignore.json' //or '.retireignore.json'
-			},
-			js: ['lib/*.js'], /** Which js-files to scan. **/
-			node: ['./'] /** Which node directories to scan (containing package.json). **/
-		},
+		'test-webdriver': (function() {
+			var tests = testConfig(grunt);
+			var options = Object.assign({}, tests.unit.options);
+			options.urls = options.urls.concat(tests.integration.options.urls);
+			var driverTests = {};
+			webDriverTestBrowsers.forEach(function(browser) {
+				driverTests[browser] = {
+					options: Object.assign({ browser: browser }, options)
+				};
+			});
+			return driverTests;
+		})(),
 		clean: ['dist', 'tmp', 'axe.js', 'axe.*.js'],
 		babel: {
 			options: {
 				compact: 'false'
 			},
 			core: {
-				files: [{
-					expand: true,
-					cwd: 'lib/core',
-					src: ['**/*.js'],
-					dest: 'tmp/core'
-				}]
+				files: [
+					{
+						expand: true,
+						cwd: 'lib/core',
+						src: ['**/*.js', '!imports/index.js'],
+						dest: 'tmp/core'
+					}
+				]
 			},
 			misc: {
-				files: [{
-					expand: true,
-					cwd: 'tmp',
-					src: ['*.js'],
-					dest: 'tmp'
-				}]
+				files: [
+					{
+						expand: true,
+						cwd: 'tmp',
+						src: ['*.js'],
+						dest: 'tmp'
+					}
+				]
 			}
 		},
 		'update-help': {
@@ -104,7 +110,7 @@ module.exports = function (grunt) {
 					'tmp/core/**/index.js',
 					'tmp/core/**/*.js'
 				],
-				files: langs.map(function (lang, i) {
+				files: langs.map(function(lang, i) {
 					return {
 						src: [
 							'lib/intro.stub',
@@ -128,13 +134,20 @@ module.exports = function (grunt) {
 				dest: 'tmp/commons.js'
 			}
 		},
+		'aria-supported': {
+			data: {
+				entry: 'lib/commons/aria/index.js',
+				destFile: 'doc/aria-supported.md',
+				listType: 'unsupported' // Possible values for listType: 'supported', 'unsupported', 'all'
+			}
+		},
 		configure: {
 			rules: {
 				tmp: 'tmp/rules.js',
 				options: {
 					tags: grunt.option('tags')
 				},
-				files: langs.map(function (lang) {
+				files: langs.map(function(lang) {
 					return {
 						src: ['<%= concat.commons.dest %>'],
 						dest: {
@@ -152,18 +165,12 @@ module.exports = function (grunt) {
 				dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
 			}
 		},
-		langs : {
+		langs: {
 			generate: {
 				check: 'lib/commons/utils/valid-langs'
 			}
 		},
 		validate: {
-			tools: {
-				options: {
-					type: 'tool'
-				},
-				src: 'lib/tools/**/*.json'
-			},
 			check: {
 				options: {
 					type: 'check'
@@ -179,7 +186,7 @@ module.exports = function (grunt) {
 		},
 		uglify: {
 			beautify: {
-				files: langs.map(function (lang, i) {
+				files: langs.map(function(lang, i) {
 					return {
 						src: ['<%= concat.engine.files[' + i + '].dest %>'],
 						dest: '<%= concat.engine.files[' + i + '].dest %>'
@@ -191,29 +198,37 @@ module.exports = function (grunt) {
 					beautify: {
 						beautify: true,
 						indent_level: 2,
-						bracketize: true,
+						braces: true,
 						quote_style: 1
 					},
-					preserveComments: /^!/
+					output: {
+						comments: /^\/*! aXe/
+					}
 				}
 			},
 			minify: {
-				files: langs.map(function (lang, i) {
+				files: langs.map(function(lang, i) {
 					return {
 						src: ['<%= concat.engine.files[' + i + '].dest %>'],
 						dest: './axe' + lang + '.min.js'
 					};
 				}),
 				options: {
-					preserveComments: function(node, comment) {
-						// preserve comments that start with a bang
-						return /^!/.test( comment.value );
+					output: {
+						comments: /^\/*! aXe/
 					},
 					mangle: {
-						except: ['commons', 'utils', 'axe', 'window', 'document']
+						reserved: ['commons', 'utils', 'axe', 'window', 'document']
 					}
 				}
 			}
+		},
+		'file-exists': {
+			data: langs.reduce(function(out, lang) {
+				out.push('axe' + lang + '.js');
+				out.push('axe' + lang + '.min.js');
+				return out;
+			}, [])
 		},
 		watch: {
 			files: ['lib/**/*', 'test/**/*.js', 'Gruntfile.js'],
@@ -298,20 +313,6 @@ module.exports = function (grunt) {
 		mocha: testConfig(grunt, {
 			reporter: grunt.option('reporter') || 'Spec'
 		}),
-		'test-webdriver': (function () {
-			var tests = testConfig(grunt);
-			var options = Object.assign({}, tests.unit.options);
-			options.urls = options.urls.concat(tests.integration.options.urls);
-			var driverTests = {};
-
-			['firefox', 'chrome', 'ie', 'safari', 'edge', 'chrome-mobile']
-				.forEach(function (browser) {
-					driverTests[browser] = {
-						options: Object.assign({ browser: browser }, options)
-					};
-				});
-			return driverTests;
-		}()),
 		connect: {
 			test: {
 				options: {
@@ -321,40 +322,67 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		eslint: {
-			axe: {
-				options: {
-					eslintrc: true,
-					reporter: grunt.option('report') ? 'checkstyle' : undefined,
-					reporterOutput: grunt.option('report') ? 'tmp/lint.xml' : undefined
-				},
-				src: [
-					'lib/**/*.js', 'test/**/*.js', 'build/**/*.js',
-					'doc/**/*.js', '!doc/examples/jest+react/*.js', 'Gruntfile.js',
-					'!**/node_modules/**/*.js'
-				]
+		run: {
+			npm_run_imports: {
+				cmd: 'npm',
+				args: ['run', 'imports-gen']
 			}
 		}
 	});
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('build', ['clean', 'eslint', 'validate', 'concat:commons', 'configure',
-		 'babel', 'concat:engine', 'uglify']);
+	grunt.registerTask('pre-build', ['clean', 'run:npm_run_imports']);
 
-	grunt.registerTask('test', ['build', 'retire', 'testconfig', 'fixture', 'connect',
-		'mocha', 'parallel', 'eslint']);
+	grunt.registerTask('build', [
+		'pre-build',
+		'validate',
+		'concat:commons',
+		'configure',
+		'babel',
+		'concat:engine',
+		'uglify',
+		'aria-supported'
+	]);
 
-	grunt.registerTask('ci-build', ['build', 'retire', 'testconfig', 'fixture', 'connect',
-	 'parallel', 'eslint']);
+	grunt.registerTask('test', [
+		'build',
+		'file-exists',
+		'testconfig',
+		'fixture',
+		'connect',
+		'mocha',
+		'parallel'
+	]);
 
-	grunt.registerTask('test-fast', ['build', 'testconfig', 'fixture', 'connect',
-		'mocha', 'eslint']);
+	grunt.registerTask('ci-build', [
+		'build',
+		'testconfig',
+		'fixture',
+		'connect',
+		'parallel'
+	]);
 
-	grunt.registerTask('translate', ['clean', 'eslint', 'validate', 'concat:commons', 'add-locale']);
+	grunt.registerTask('test-fast', [
+		'build',
+		'testconfig',
+		'fixture',
+		'connect',
+		'mocha'
+	]);
 
-	grunt.registerTask('dev', ['build', 'testconfig', 'fixture', 'connect', 'watch']);
+	grunt.registerTask('translate', [
+		'pre-build',
+		'validate',
+		'concat:commons',
+		'add-locale'
+	]);
 
-	grunt.registerTask('dev:no-lint', ['clean', 'validate', 'concat:commons', 'configure',
-		 'babel', 'concat:engine', 'uglify', 'testconfig', 'fixture', 'connect', 'watch']);
+	grunt.registerTask('dev', [
+		'build',
+		'testconfig',
+		'fixture',
+		'connect',
+		'watch'
+	]);
 };

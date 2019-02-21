@@ -1,53 +1,45 @@
-describe('has-th', function () {
+describe('has-th', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
 	var checkContext = axe.testUtils.MockCheckContext();
 
-	afterEach(function () {
+	afterEach(function() {
 		fixture.innerHTML = '';
 		checkContext.reset();
 	});
 
-	it('should return false when the table has no th', function () {
-		fixture.innerHTML = '<table>' +
-				'<tr><td></td></tr>' +
-			'</table>';
+	it('should return false when the table has no th', function() {
+		fixture.innerHTML = '<table>' + '<tr><td></td></tr>' + '</table>';
 
 		var node = fixture.querySelector('table');
 
 		assert.isFalse(checks['has-th'].evaluate.call(checkContext, node));
 	});
 
-	it('should return true when the table has a th', function () {
-		fixture.innerHTML = '<table>' +
-				'<tr><th></th></tr>' +
-			'</table>';
+	it('should return true when the table has a th', function() {
+		fixture.innerHTML = '<table>' + '<tr><th></th></tr>' + '</table>';
 
 		var node = fixture.querySelector('table');
 
 		assert.isTrue(checks['has-th'].evaluate.call(checkContext, node));
-		assert.deepEqual(checkContext._relatedNodes, [
-			node.querySelector('th')
-		]);
+		assert.deepEqual(checkContext._relatedNodes, [node.querySelector('th')]);
 	});
 
-	it('should return true when the table has a td with role=columnheader', function () {
-		fixture.innerHTML = '<table>' +
-				'<tr><td role="columnheader"></td></tr>' +
-			'</table>';
+	it('should return true when the table has a td with role=columnheader', function() {
+		fixture.innerHTML =
+			'<table>' + '<tr><td role="columnheader"></td></tr>' + '</table>';
 
 		var node = fixture.querySelector('table');
 
 		assert.isTrue(checks['has-th'].evaluate.call(checkContext, node));
-		assert.deepEqual(checkContext._relatedNodes, [
-			node.querySelector('td')
-		]);
+		assert.deepEqual(checkContext._relatedNodes, [node.querySelector('td')]);
 	});
 
-	it('should not detect nested table with th', function () {
-		fixture.innerHTML = '<table>' +
-				'<tr><td><table><tr><th>hi</th></tr></table></td></tr>' +
+	it('should not detect nested table with th', function() {
+		fixture.innerHTML =
+			'<table>' +
+			'<tr><td><table><tr><th>hi</th></tr></table></td></tr>' +
 			'</table>';
 
 		var node = fixture.querySelector('table');

@@ -16,10 +16,9 @@ if we think that your code is sloppy. You can take clues from the existing code 
 consider to be reasonable code quality. Please be prepared to make changes that we ask of you even
 if you might not agree with the request(s).
 
-Pull requests that change the tabs of a file (spacing or changes from spaces to tabs and vice versa)
-will not be accepted. Please respect the coding style of the files you are changing and adhere to that.
+Please respect the coding style of the files you are changing and adhere to that.
 
-That having been said, we prefer:
+The JavaScript files in this project are formatted by [Prettier](https://prettier.io/). Additionally, we prefer:
 
 1. Tabs over spaces
 2. Single quotes for string literals
@@ -43,7 +42,7 @@ We expect all code to be 100% covered by tests. We don't have or want code cover
 
 Functions should contain a preceding comment block with [jsdoc](http://usejsdoc.org/) style documentation of the function. For example:
 
-```javascript
+```js
 /**
  * Runs the Audit; which in turn should call `run` on each rule.
  * @async
@@ -55,7 +54,7 @@ Functions should contain a preceding comment block with [jsdoc](http://usejsdoc.
 
 Classes should contain a jsdoc comment block for each attribute. For example:
 
-```javascript
+```js
 /**
  * Constructor for the result of checks
  * @param {Object} check CheckResult specification
@@ -133,19 +132,19 @@ tsc --noImplicitAny typings/axe-core/axe-core-tests.ts
 
 Installing aXe to run accessibility tests in your TypeScript project should be as simple as importing the module:
 
-```javascript
+```js
 import * as axe from 'axe-core';
 
 describe('Module', () => {
-	it('should have no accessibility violations', (done) => {
-		axe.run(compiledFixture)
-			.then((results) => {
-				expect(results.violations.length).toBe(0);
-				done()
-			}, done);
+	it('should have no accessibility violations', done => {
+		axe.run(compiledFixture).then(results => {
+			expect(results.violations.length).toBe(0);
+			done();
+		}, done);
 	});
 });
 ```
+
 ## Debugging tests that only fail on CircleCI
 
 First install an X-Windows client on your machine. XQuartz is a good one.

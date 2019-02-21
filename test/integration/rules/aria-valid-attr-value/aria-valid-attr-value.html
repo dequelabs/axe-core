@@ -1,8 +1,7 @@
 
 <h2>Violations</h2>
 <div>
-	<div aria-activedescendant="Idonotexist" id="violation0">hi</div>
-	<div aria-activedescendant="" id="violation1">hi</div>
+	<div aria-activedescendant="Idonotexist" id="violation1">hi</div>
 	<div aria-activedescendant="ref noexist ref2" id="violation2">hi</div>
 
 	<div aria-atomic="blah" id="violation3">hi</div>
@@ -41,6 +40,7 @@
 	<div aria-valuemin="stuff" id="violation33">hi</div>
 	<div aria-valuenow="stuff" id="violation34">hi</div>
 	<div aria-errormessage="violation35-ref" id="violation35">hi</div><div id="violation35-ref"></div>
+	<div aria-valuetext="" id="violation36"></div><!-- don't allow empty aria-valuetext -->
 </div>
 <h2>Possible False Positives</h2>
 <div>
@@ -74,7 +74,7 @@
 	<div aria-controls=" ref ref2 " id="pass22">hi</div>
 
 	<div aria-describedby="ref" id="pass23">hi</div>
-	<div aria-describedby="ref ref2" id="pass24">hi</div>
+	<div aria-describedby="ref ref2 failref" id="pass24">hi</div>
 	<div aria-describedby=" ref ref2 " id="pass25">hi</div>
 
 	<div aria-disabled="true" id="pass26">hi</div>
@@ -117,7 +117,7 @@
 	<div aria-label="stuff" id="pass55">hi</div>
 
 	<div aria-labelledby="ref" id="pass56">hi</div>
-	<div aria-labelledby="ref ref2" id="pass57">hi</div>
+	<div aria-labelledby="ref ref2 failedref" id="pass57">hi</div>
 	<div aria-labelledby=" ref ref2 " id="pass58">hi</div>
 
 	<div aria-level="0" id="pass59">hi</div>
@@ -145,7 +145,7 @@
 	<div aria-orientation="vertical" id="pass76">hi</div>
 
 	<div aria-owns="ref" id="pass77">hi</div>
-	<div aria-owns="ref ref2" id="pass78">hi</div>
+	<div aria-owns="ref ref2 failedref" id="pass78">hi</div>
 	<div aria-owns=" ref ref2 " id="pass79">hi</div>
 
 	<div aria-posinset="0" id="pass80">hi</div>
@@ -250,6 +250,20 @@
 	<div aria-errormessage="pass68" id="pass169">hi</div>
 	<div aria-errormessage="ref" aria-describedby="ref" id="pass170">hi</div>
 
+	<div aria-activedescendant="" id="pass171">hi</div>
+	<div aria-current="" id="pass172">hi</div>
+	<div aria-invalid="" id="pass173">hi</div>
+	<div aria-controls="" id="pass174">hi</div>
+	<div aria-describedby="" id="pass175">hi</div>
+	<div aria-errormessage="" id="pass176">hi</div>
+	<div aria-flowto="" id="pass177">hi</div>
+	<div aria-haspopup="" id="pass178">hi</div>
+	<div aria-invalid="" id="pass179">hi</div>
+	<div aria-keyshortcuts="" id="pass180">hi</div>
+	<div aria-label="" id="pass181">hi</div>
+	<div aria-labelledby="" id="pass182">hi</div>
+	<div aria-owns="" id="pass183">hi</div>
+	<div aria-placeholder="" id="pass184">hi</div>
 
 	<div id="ref">Hi</div>
 	<div id="ref2">Hi2</div>

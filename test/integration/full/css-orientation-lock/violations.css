@@ -1,0 +1,14 @@
+@media screen and (min-width: 20px) and (max-width: 2300px) and (orientation: portrait) {
+	.thatDiv {
+		transform: rotate(90deg);
+	}
+}
+
+@media screen and (min-width: 10px) and (max-width: 3000px) and (orientation: landscape) {
+	html {
+		transform: rotate(-90deg);
+	}
+	.someDiv {
+		transform: rotate(90deg);
+	}
+}

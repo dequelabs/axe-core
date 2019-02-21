@@ -1,6 +1,6 @@
 /*global mocha */
 var failedTests = [];
-(function () {
+(function() {
 	'use strict';
 	if (navigator.userAgent.indexOf('PhantomJS') < 0) {
 		var runner = mocha.run();
@@ -26,4 +26,4 @@ var failedTests = [];
 			});
 		});
 	}
-}());
+})();

@@ -1,0 +1,16 @@
+{
+	"id": "aria-allowed-role",
+	"evaluate": "aria-allowed-role.js",
+	"options": {
+		"allowImplicit": true,
+		"ignoredTags": []
+	},
+	"metadata": {
+		"impact": "minor",
+		"messages": {
+			"pass": "ARIA role is allowed for given element",
+			"fail": "ARIA role{{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}} {{=it.data && it.data.length > 1 ? 'are' : ' is'}} not allowed for given element",
+			"incomplete": "ARIA role{{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}} must be removed when the element is made visible, as {{=it.data && it.data.length > 1 ? 'they are' : 'it is'}} not allowed for the element"
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"id": "css-orientation-lock",
+	"evaluate": "css-orientation-lock.js",
+	"metadata": {
+		"impact": "serious",
+		"messages": {
+			"pass": "Display is operable, and orientation lock does not exist",
+			"fail": "CSS Orientation lock is applied, and makes display inoperable",
+			"incomplete": "CSS Orientation lock cannot be determined"
+		}
+	}
+}

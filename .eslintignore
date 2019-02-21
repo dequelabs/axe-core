@@ -1,0 +1,8 @@
+**/node_modules/**/*.js
+
+build/tasks/aria-supported.js
+
+doc/api/*
+doc/examples/jest_react/*.js
+
+lib/core/imports/*.js

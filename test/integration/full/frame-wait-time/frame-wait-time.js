@@ -1,25 +1,21 @@
-
-describe('frame-wait-time option', function () {
+describe('frame-wait-time option', function() {
 	'use strict';
 
-	before(function (done) {
-		if (document.readyState !== 'complete') {
-			window.addEventListener('load', done.bind(this, null));
-		} else {
+	before(function(done) {
+		axe.testUtils.awaitNestedLoad(function() {
 			done();
-		}
+		});
 	});
 
-	describe('when set', function () {
+	describe('when set', function() {
 		var opts = {
 			frameWaitTime: 1
 		};
-
-		it('should modify the default frame timeout', function (done) {
+		it.skip('should modify the default frame timeout', function(done) {
 			var start = new Date();
 			// Run axe with an unreasonably short wait time,
 			// expecting the frame to time out
-			axe.run('main', opts, function (err, res) {
+			axe.run('#frame', opts, function(err, res) {
 				assert.isNotNull(err);
 				assert.isUndefined(res);
 				assert.equal(err.message, 'Axe in frame timed out: #frame');
@@ -30,10 +26,9 @@ describe('frame-wait-time option', function () {
 		});
 	});
 
-	describe('when not set', function () {
-
-		it('should use the default frame timeout', function (done) {
-			axe.run('main', function (err, res) {
+	describe('when not set', function() {
+		it('should use the default frame timeout', function(done) {
+			axe.run('main', function(err, res) {
 				assert.isNull(err);
 				assert.isAbove(res.violations.length, 0);
 				done();
