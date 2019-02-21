@@ -2902,7 +2902,6 @@ describe('text.accessibleTextVirtual', function() {
 
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 			var target = fixture.querySelector('#test');
-
 			// Chrome 72: "My name is Eli the weird. (QED) Where are my marbles?"
 			// Safari 12.0: "My name is Eli the weird. (QED) Where are my marbles?"
 			// Firefox 62: "Hello, My name is Eli the weird. (QED)"
