@@ -115,7 +115,6 @@
 		"mkdirp": "^0.5.1",
 		"mocha": "^6.0.0",
 		"prettier": "^1.14.0",
-		"promise": "~8.0.1",
 		"retire": "^2.0.1",
 		"revalidator": "~0.3.1",
 		"selenium-webdriver": "~3.6.0",
@@ -126,7 +125,12 @@
 	},
 	"dependencies": {},
 	"lint-staged": {
-		"*.{md,json,js,ts}": [
+		"*.{md,json,ts}": [
+			"prettier --write",
+			"git add"
+		],
+		"*.js": [
+			"eslint --fix",
 			"prettier --write",
 			"git add"
 		]
