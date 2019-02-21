@@ -35,6 +35,36 @@ module.exports = function(grunt) {
 			let footnotes;
 
 			/**
+			 * Parse a list of unsupported exception elements and add a footnote
+			 * detailing which HTML elements are supported.
+			 * @param {Array<String|Object>} elements List of supported elements
+			 */
+			const generateSupportFootnote = elements => {
+				let supportedElements = elements.map(element => {
+					if (typeof element === 'string') {
+						return `\`<${element}>\``;
+					} else if (element.nodeName && element.properties) {
+						return Object.keys(element.properties).map(prop => {
+							const value = element.properties[prop];
+
+							// the 'type' property can be a string or an array
+							if (typeof value === 'string') {
+								return `\`<${element.nodeName} ${prop}="${value}">\``;
+							} else {
+								// output format for an array of types:
+								// <input type="button" | "checkbox">
+								let values = value.map(v => `"${v}"`).join(' | ');
+								return `\`<${element.nodeName} ${prop}=${values}>\``;
+							}
+						});
+					}
+				});
+				footnotes.push(
+					'Supported on elements: ' + supportedElements.join(', ')
+				);
+			};
+
+			/**
 			 * Given a `base` Map and `subject` Map object,
 			 * The function converts the `base` Map entries to an array which is sorted then enumerated to compare each entry against the `subject` Map
 			 * The function constructs a `string` to represent a `markdown table` to
@@ -67,27 +97,7 @@ module.exports = function(grunt) {
 									subject[key].unsupported.exceptions
 								) {
 									out.push([`${key}`, `Mixed[^${footnotes.length + 1}]`]);
-
-									let supportedElements = subject[
-										key
-									].unsupported.exceptions.map(element => {
-										if (typeof element === 'string') {
-											return `\`<${element}>\``;
-										} else if (element.nodeName && element.properties) {
-											return Object.keys(element.properties).map(prop => {
-												const value = element.properties[prop];
-												if (typeof value === 'string') {
-													return `\`<${element.nodeName} ${prop}="${value}">\``;
-												} else {
-													let values = value.map(v => `"${v}"`).join(' | ');
-													return `\`<${element.nodeName} ${prop}=${values}>\``;
-												}
-											});
-										}
-									});
-									footnotes.push(
-										'Supported on elements: ' + supportedElements.join(', ')
-									);
+									generateSupportFootnote(subject[key].unsupported.exceptions);
 								}
 								break;
 							case 'all':
