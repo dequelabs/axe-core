@@ -13,22 +13,25 @@ describe('label-content-name-mismatch-matches tests', function() {
 	});
 
 	it('returns false if given element has no role', function() {
-		var vNode = queryFixture('<div id="target"></div>');
+		var vNode = queryFixture(
+			'<div id="target" aria-label="what color is the sky?"></div>'
+		);
 		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
 	});
 
 	it('returns false if element role is not supported with name from contents', function() {
 		var vNode = queryFixture(
-			'<div id="target" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20 %</div>'
+			'<div aria-label="choose your age" id="target" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20 %</div>'
 		);
 		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
 	});
 
-	it('returns false if implicit element role is overridden to a role that dos not support name from contents', function() {
+	it('returns false if implicit element role is overridden to a role that does not support name from contents', function() {
 		var vNode = queryFixture(
-			'<button id="target" role="status">Your changes were automatically saved.</button>'
+			'<div id="labelForStatusMsg">Status message</div>' +
+				'<button id="target" role="status" aria-labelledby="labelForStatusMsg">Your changes were automatically saved.</button>'
 		);
 		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
