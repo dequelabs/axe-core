@@ -60,7 +60,12 @@ module.exports = function(grunt) {
 			var driverTests = {};
 			webDriverTestBrowsers.forEach(function(browser) {
 				driverTests[browser] = {
-					options: Object.assign({ browser: browser }, options)
+					options: Object.assign(
+						{
+							browser: browser
+						},
+						options
+					)
 				};
 			});
 			return driverTests;
@@ -160,7 +165,9 @@ module.exports = function(grunt) {
 		},
 		'add-locale': {
 			newLang: {
-				options: { lang: grunt.option('lang') },
+				options: {
+					lang: grunt.option('lang')
+				},
 				src: ['<%= concat.commons.dest %>'],
 				dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
 			}
@@ -324,8 +331,8 @@ module.exports = function(grunt) {
 		},
 		run: {
 			npm_run_imports: {
-				cmd: 'npm',
-				args: ['run', 'imports-gen']
+				cmd: 'node',
+				args: ['./build/imports-generator']
 			}
 		}
 	});

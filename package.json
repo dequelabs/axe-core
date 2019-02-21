@@ -58,7 +58,6 @@
 		"start": "npm run develop",
 		"develop": "grunt dev --force",
 		"api-docs": "jsdoc --configure .jsdoc.json",
-		"imports-gen": "node ./build/imports-generator",
 		"build": "grunt",
 		"eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
 		"test": "npm run retire && tsc && grunt test",
