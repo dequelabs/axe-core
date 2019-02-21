@@ -124,7 +124,12 @@
 	},
 	"dependencies": {},
 	"lint-staged": {
-		"*.{md,json,js,ts}": [
+		"*.{md,json,ts}": [
+			"prettier --write",
+			"git add"
+		],
+		"*.js": [
+			"eslint --fix",
 			"prettier --write",
 			"git add"
 		]
