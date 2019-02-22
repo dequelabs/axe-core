@@ -9,7 +9,12 @@
 		]
 	],
 	"plugins": [
+		// Reference - https://github.com/babel/babel/blob/master/packages/babel-preset-env/data/plugin-features.js
 		"@babel/plugin-proposal-object-rest-spread",
-		"@babel/plugin-transform-spread"
+		"@babel/plugin-transform-spread",
+		"@babel/plugin-transform-template-literals",
+		"@babel/plugin-transform-shorthand-properties",
+		"@babel/plugin-transform-destructuring",
+		"@babel/plugin-transform-block-scoping"
 	]
 }
