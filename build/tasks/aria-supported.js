@@ -43,21 +43,30 @@ module.exports = function(grunt) {
 				let supportedElements = elements.map(element => {
 					if (typeof element === 'string') {
 						return `\`<${element}>\``;
-					} else if (element.nodeName && element.properties) {
-						return Object.keys(element.properties).map(prop => {
-							const value = element.properties[prop];
-
-							// the 'type' property can be a string or an array
-							if (typeof value === 'string') {
-								return `\`<${element.nodeName} ${prop}="${value}">\``;
-							} else {
-								// output format for an array of types:
-								// <input type="button" | "checkbox">
-								let values = value.map(v => `"${v}"`).join(' | ');
-								return `\`<${element.nodeName} ${prop}=${values}>\``;
-							}
-						});
 					}
+
+					/**
+					 * if element is not a string it will be an object with structure:
+					 	{
+							nodeName: string,
+							properties: {
+								type: {string|string[]}
+							}
+					 	}
+					 */
+					return Object.keys(element.properties).map(prop => {
+						const value = element.properties[prop];
+
+						// the 'type' property can be a string or an array
+						if (typeof value === 'string') {
+							return `\`<${element.nodeName} ${prop}="${value}">\``;
+						}
+
+						// output format for an array of types:
+						// <input type="button" | "checkbox">
+						let values = value.map(v => `"${v}"`).join(' | ');
+						return `\`<${element.nodeName} ${prop}=${values}>\``;
+					});
 				});
 				footnotes.push(
 					'Supported on elements: ' + supportedElements.join(', ')
