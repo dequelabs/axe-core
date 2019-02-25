@@ -1,0 +1,12 @@
+{
+	"id": "focusable-content",
+	"evaluate": "focusable-content.js",
+	"metadata": {
+		"impact": "",
+		"messages": {
+			"pass": "Element contains focusable elements",
+			"fail": "Element should have focusable content",
+			"incomplete": ""
+		}
+	}
+}
