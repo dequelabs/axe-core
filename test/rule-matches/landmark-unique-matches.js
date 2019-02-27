@@ -13,20 +13,21 @@ describe('landmark-unique-matches', function() {
 	});
 
 	it('should not match because not a landmark', () => {
-		const node = document.createElement('h1');
+		axeFixtureSetup('<h1>some heading</h1>');
+		const node = fixture.querySelector('h1');
 		assert.isFalse(rule.matches(node, null));
 	});
 
 	it('should pass because is a landmark', () => {
-		const node = document.createElement('div');
-		node.setAttribute('role', 'banner');
+		axeFixtureSetup('<div role="banner">some banner</div>');
+		const node = fixture.querySelector('div');
 		fixture.appendChild(node);
 		assert.isTrue(rule.matches(node, null));
 	});
 
 	it('should not match because landmark is hidden', () => {
-		const node = document.createElement('div');
-		node.setAttribute('role', 'banner');
+		axeFixtureSetup('<div role="banner">some banner</div>');
+		const node = fixture.querySelector('div');
 		node.style.display = 'none';
 		fixture.appendChild(node);
 		assert.isFalse(rule.matches(node, null));
@@ -53,17 +54,19 @@ describe('landmark-unique-matches', function() {
 		elements.forEach(elementType => {
 			excludedDescendants.forEach(exclusionType => {
 				it(`should not match because ${elementType} is contained inside in ${exclusionType}`, () => {
-					const node = document.createElement(elementType);
-					const sectionNode = document.createElement(exclusionType);
-					sectionNode.append(node);
-					fixture.appendChild(sectionNode);
+					axeFixtureSetup(
+						`<${exclusionType} aria-label="sample label">
+							<${elementType}>an element</${elementType}>
+						</${exclusionType}>`
+					);
+					const node = fixture.querySelector(elementType);
 					assert.isFalse(rule.matches(node, null));
 				});
 			});
 
 			it(`should match because ${elementType} is not contained inside the excluded descendents`, () => {
-				const node = document.createElement(elementType);
-				fixture.appendChild(node);
+				axeFixtureSetup(`<${elementType}>an element</${elementType}>`);
+				const node = fixture.querySelector(elementType);
 				assert.isTrue(rule.matches(node, null));
 			});
 		});
