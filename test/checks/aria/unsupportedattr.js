@@ -57,7 +57,7 @@ describe('unsupportedattr', function() {
 			}
 		};
 		var params = checkSetup(
-			'<button id="target" aria-mccheddarton="true">Contents</div>'
+			'<button id="target" aria-mccheddarton="true">Contents</button>'
 		);
 		assert.isFalse(check.evaluate.apply(checkContext, params));
 	});
@@ -76,7 +76,7 @@ describe('unsupportedattr', function() {
 			}
 		};
 		var params = checkSetup(
-			'<input type="checkbox" id="target" aria-mccheddarton="true">Contents</div>'
+			'<input type="checkbox" id="target" aria-mccheddarton="true">'
 		);
 		assert.isFalse(check.evaluate.apply(checkContext, params));
 	});
@@ -107,7 +107,7 @@ describe('unsupportedattr', function() {
 			}
 		};
 		var params = checkSetup(
-			'<input type="radio" id="target" aria-mccheddarton="true">Contents</div>'
+			'<input type="radio" id="target" aria-mccheddarton="true">'
 		);
 		assert.isTrue(check.evaluate.apply(checkContext, params));
 	});
