@@ -18,4 +18,6 @@ For a detailed description about how accessibility support is decided, see [How 
 | -------------------- | ---------------- |
 | aria-describedat     | No               |
 | aria-details         | No               |
-| aria-roledescription | No               |
+| aria-roledescription | Mixed[^1]        |
+
+[^1]: Supported on elements: `<button>`, `<input type="button" | "checkbox" | "image" | "radio" | "reset" | "submit">`, `<img>`, `<select>`, `<summary>`
