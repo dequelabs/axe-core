@@ -1,5 +1,6 @@
 {
 	"id": "scrollable-region-focusable",
+	"excludeHidden": true,
 	"matches": "scrollable-region-focusable-matches.js",
 	"tags": ["wcag2a", "wcag211"],
 	"metadata": {
