@@ -2,6 +2,7 @@
 	"id": "landmark-is-unique",
 	"evaluate": "landmark-is-unique.js",
 	"after": "landmark-is-unique-after.js",
+	"tags": ["best-practice"],
 	"options": {
 		"selector": "[role=banner], [role=complementary], [role=contentinfo], [role=main], [role=navigation], [role=region], [role=search], [role=form], form, footer, header, aside, main, nav, section"
 	},
