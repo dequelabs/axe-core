@@ -33,18 +33,24 @@ describe('landmark-unique-matches', function() {
 		assert.isFalse(rule.matches(node, null));
 	});
 
-	it('should match because it is a section with a label', () => {
-		axeFixtureSetup(
-			'<section aria-label="sample label">some section</section>'
-		);
-		const node = fixture.querySelector('section');
-		assert.isTrue(rule.matches(node, null));
-	});
+	describe('form and section elements must have accessible names to be matched', () => {
+		const elements = ['section', 'form'];
 
-	it('should not match because it is a section without a label', () => {
-		axeFixtureSetup('<section>some section</section>');
-		const node = fixture.querySelector('section');
-		assert.isFalse(rule.matches(node, null));
+		elements.forEach(elementType => {
+			it(`should match because it is a ${elementType} with a label`, () => {
+				axeFixtureSetup(
+					`<${elementType} aria-label="sample label">some ${elementType}</${elementType}>`
+				);
+				const node = fixture.querySelector(`${elementType}`);
+				assert.isTrue(rule.matches(node, null));
+			});
+
+			it(`should not match because it is a ${elementType} without a label`, () => {
+				axeFixtureSetup(`<${elementType}>some ${elementType}</${elementType}>`);
+				const node = fixture.querySelector(`${elementType}`);
+				assert.isFalse(rule.matches(node, null));
+			});
+		});
 	});
 
 	describe('header/footers should only match when not inside the excluded descendents', () => {
