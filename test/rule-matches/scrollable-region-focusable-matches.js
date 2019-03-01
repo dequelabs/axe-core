@@ -4,7 +4,6 @@ describe('scrollable-region-focusable-matches', function() {
 	var fixture = document.getElementById('fixture');
 	var queryFixture = axe.testUtils.queryFixture;
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
-
 	var rule = axe._audit.rules.find(function(rule) {
 		return rule.id === 'scrollable-region-focusable';
 	});
@@ -17,7 +16,7 @@ describe('scrollable-region-focusable-matches', function() {
 		var target = queryFixture(
 			'<section id="target">This element is not scrollable</section>'
 		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(target.actualNode, target);
 		assert.isFalse(actual);
 	});
 
@@ -27,7 +26,7 @@ describe('scrollable-region-focusable-matches', function() {
 				'<div style="height: 10px; width: 100x;">Content</div>' +
 				'</div>'
 		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(target.actualNode, target);
 		assert.isFalse(actual);
 	});
 
@@ -39,7 +38,7 @@ describe('scrollable-region-focusable-matches', function() {
 				'</div>' +
 				'</div>'
 		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(target.actualNode, target);
 		assert.isTrue(actual);
 	});
 
@@ -51,7 +50,7 @@ describe('scrollable-region-focusable-matches', function() {
 				'</div>' +
 				'</div>'
 		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(target.actualNode, target);
 		assert.isTrue(actual);
 	});
 
@@ -59,7 +58,7 @@ describe('scrollable-region-focusable-matches', function() {
 		var target = queryFixture(
 			'<p id="target" style="width: 12em; height: 2em; border: dotted; overflow: visible;">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>'
 		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(target.actualNode, target);
 		assert.isFalse(actual);
 	});
 
@@ -67,7 +66,7 @@ describe('scrollable-region-focusable-matches', function() {
 		var target = queryFixture(
 			'<p id="target" style="width: 12em; height: 2em; border: dotted; overflow: scroll;">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>'
 		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(target.actualNode, target);
 		assert.isTrue(actual);
 	});
 
@@ -75,7 +74,7 @@ describe('scrollable-region-focusable-matches', function() {
 		var target = queryFixture(
 			'<p id="target" style="width: 12em; height: 2em; border: dotted; overflow: scroll;">Sed.</p>'
 		);
-		var actual = rule.matches(target);
+		var actual = rule.matches(target.actualNode, target);
 		assert.isFalse(actual);
 	});
 
@@ -96,7 +95,7 @@ describe('scrollable-region-focusable-matches', function() {
 			root.appendChild(slotted);
 			var tree = axe.utils.getFlattenedTree(fixture.firstChild);
 			var target = axe.utils.querySelectorAll(tree, 'p')[0];
-			var actual = rule.matches(target);
+			var actual = rule.matches(target.actualNode, target);
 			assert.isFalse(actual);
 		});
 
@@ -110,7 +109,7 @@ describe('scrollable-region-focusable-matches', function() {
 			root.appendChild(slotted);
 			var tree = axe.utils.getFlattenedTree(fixture.firstChild);
 			var target = axe.utils.querySelectorAll(tree, 'p')[0];
-			var actual = rule.matches(target);
+			var actual = rule.matches(target.actualNode, target);
 			assert.isTrue(actual);
 		});
 	});
