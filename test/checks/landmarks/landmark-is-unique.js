@@ -25,6 +25,7 @@ describe('landmark-is-unique', function() {
 			checks['landmark-is-unique'].evaluate.call(checkContext, node)
 		);
 		assert.deepEqual(checkContext._data, expectedData);
+		assert.deepEqual(checkContext._relatedNodes, [node]);
 	});
 
 	it('should return true, with correct role and the label lowercased', function() {
@@ -38,5 +39,6 @@ describe('landmark-is-unique', function() {
 			checks['landmark-is-unique'].evaluate.call(checkContext, node)
 		);
 		assert.deepEqual(checkContext._data, expectedData);
+		assert.deepEqual(checkContext._relatedNodes, [node]);
 	});
 });
