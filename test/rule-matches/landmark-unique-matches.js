@@ -3,6 +3,7 @@ describe('landmark-unique-matches', function() {
 	let rule;
 	let fixture;
 	let axeFixtureSetup;
+	const shadowSupport = axe.testUtils.shadowSupport.v1;
 
 	beforeEach(function() {
 		fixture = document.getElementById('fixture');
@@ -77,4 +78,17 @@ describe('landmark-unique-matches', function() {
 			});
 		});
 	});
+
+	(shadowSupport ? it : xit)(
+		'return true for landmarks contained within shadow dom',
+		function() {
+			var container = document.createElement('div');
+			var shadow = container.attachShadow({ mode: 'open' });
+			shadow.innerHTML = '<footer></footer>';
+
+			axeFixtureSetup(container);
+			var vNode = axe.utils.querySelectorAll(axe._tree[0], 'footer')[0];
+			assert.isTrue(rule.matches(vNode.actualNode, vNode));
+		}
+	);
 });
