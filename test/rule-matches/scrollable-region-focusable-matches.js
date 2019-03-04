@@ -70,18 +70,6 @@ describe('scrollable-region-focusable-matches', function() {
 		assert.isTrue(actual);
 	});
 
-	it('returns false when element overflow is scroll, but content fits', function() {
-		var target = queryFixture(
-			'<p id="target" style="width: 12em; height: 2em; border: dotted; overflow: scroll;">Sed.</p>'
-		);
-		var actual = rule.matches(target.actualNode, target);
-		if (window.PHANTOMJS) {
-			assert.ok('PhantomJS is a liar');
-		} else {
-			assert.isFalse(actual);
-		}
-	});
-
 	describe('shadowDOM - scrollable-region-focusable-matches', function() {
 		before(function() {
 			if (!shadowSupported) {

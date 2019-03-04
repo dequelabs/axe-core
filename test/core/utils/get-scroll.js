@@ -76,18 +76,6 @@ describe('axe.utils.getScroll', function() {
 		assert.hasAllKeys(actual, ['elm', 'top', 'left']);
 	});
 
-	it('returns undefined when element overflow is scroll, but content fits (does not scroll)', function() {
-		var target = queryFixture(
-			'<p id="target" style="width: 12em; height: 2em; border: dotted; overflow: scroll;">Sed.</p>'
-		);
-		var actual = axe.utils.getScroll(target.actualNode);
-		if (window.PHANTOMJS) {
-			assert.ok('PhantomJS is a liar');
-		} else {
-			assert.isUndefined(actual);
-		}
-	});
-
 	describe('shadowDOM - axe.utils.getScroll', function() {
 		before(function() {
 			if (!shadowSupported) {
