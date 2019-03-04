@@ -1,5 +1,5 @@
-/*eslint 
-complexity: ["error",12], 
+/*eslint
+complexity: ["error",12],
 max-statements: ["error", 35],
 camelcase: ["error", {"properties": "never"}]
 */
@@ -13,13 +13,11 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-eslint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-retire');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-parallel');
-	grunt.loadNpmTasks('grunt-markdownlint');
+	grunt.loadNpmTasks('grunt-run');
 	grunt.loadTasks('build/tasks');
 
 	var langs;
@@ -62,21 +60,16 @@ module.exports = function(grunt) {
 			var driverTests = {};
 			webDriverTestBrowsers.forEach(function(browser) {
 				driverTests[browser] = {
-					options: Object.assign({ browser: browser }, options)
+					options: Object.assign(
+						{
+							browser: browser
+						},
+						options
+					)
 				};
 			});
 			return driverTests;
 		})(),
-		retire: {
-			options: {
-				/** list of files to ignore **/
-				ignorefile: '.retireignore.json' //or '.retireignore.json'
-			},
-			js: ['lib/*.js'] /** Which js-files to scan. **/,
-			node: [
-				'./'
-			] /** Which node directories to scan (containing package.json). **/
-		},
 		clean: ['dist', 'tmp', 'axe.js', 'axe.*.js'],
 		babel: {
 			options: {
@@ -87,7 +80,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'lib/core',
-						src: ['**/*.js'],
+						src: ['**/*.js', '!imports/index.js'],
 						dest: 'tmp/core'
 					}
 				]
@@ -146,17 +139,6 @@ module.exports = function(grunt) {
 				dest: 'tmp/commons.js'
 			}
 		},
-		'generate-imports': {
-			// list of external dependencies, which needs to be added to axe.imports object
-			data: {
-				axios: './node_modules/axios/dist/axios.js',
-				doT: {
-					file: './node_modules/dot/doT.js',
-					umd: false,
-					global: 'doT'
-				}
-			}
-		},
 		'aria-supported': {
 			data: {
 				entry: 'lib/commons/aria/index.js',
@@ -183,7 +165,9 @@ module.exports = function(grunt) {
 		},
 		'add-locale': {
 			newLang: {
-				options: { lang: grunt.option('lang') },
+				options: {
+					lang: grunt.option('lang')
+				},
 				src: ['<%= concat.commons.dest %>'],
 				dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
 			}
@@ -194,12 +178,6 @@ module.exports = function(grunt) {
 			}
 		},
 		validate: {
-			tools: {
-				options: {
-					type: 'tool'
-				},
-				src: 'lib/tools/**/*.json'
-			},
 			check: {
 				options: {
 					type: 'check'
@@ -251,6 +229,13 @@ module.exports = function(grunt) {
 					}
 				}
 			}
+		},
+		'file-exists': {
+			data: langs.reduce(function(out, lang) {
+				out.push('axe' + lang + '.js');
+				out.push('axe' + lang + '.min.js');
+				return out;
+			}, [])
 		},
 		watch: {
 			files: ['lib/**/*', 'test/**/*.js', 'Gruntfile.js'],
@@ -335,7 +320,6 @@ module.exports = function(grunt) {
 		mocha: testConfig(grunt, {
 			reporter: grunt.option('reporter') || 'Spec'
 		}),
-
 		connect: {
 			test: {
 				options: {
@@ -345,41 +329,20 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		eslint: {
-			axe: {
-				options: {
-					eslintrc: true,
-					reporter: grunt.option('report') ? 'checkstyle' : undefined,
-					reporterOutput: grunt.option('report') ? 'tmp/lint.xml' : undefined
-				},
-				src: [
-					'lib/**/*.js',
-					'test/**/*.js',
-					'build/**/*.js',
-					'doc/**/*.js',
-					'!doc/examples/jest_react/*.js',
-					'Gruntfile.js',
-					'!build/tasks/aria-supported.js',
-					'!**/node_modules/**/*.js'
-				]
-			}
-		},
-		markdownlint: {
-			all: {
-				options: {
-					config: grunt.file.readJSON('.markdownlint.json')
-				},
-				src: ['README.md', '.github/*.md', 'doc/**/*.md']
+		run: {
+			npm_run_imports: {
+				cmd: 'node',
+				args: ['./build/imports-generator']
 			}
 		}
 	});
 
 	grunt.registerTask('default', ['build']);
 
+	grunt.registerTask('pre-build', ['clean', 'run:npm_run_imports']);
+
 	grunt.registerTask('build', [
-		'clean',
-		'generate-imports',
-		'eslint',
+		'pre-build',
 		'validate',
 		'concat:commons',
 		'configure',
@@ -391,24 +354,20 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('test', [
 		'build',
-		'retire',
+		'file-exists',
 		'testconfig',
 		'fixture',
 		'connect',
 		'mocha',
-		'parallel',
-		'eslint',
-		'markdownlint'
+		'parallel'
 	]);
 
 	grunt.registerTask('ci-build', [
 		'build',
-		'retire',
 		'testconfig',
 		'fixture',
 		'connect',
-		'parallel',
-		'eslint'
+		'parallel'
 	]);
 
 	grunt.registerTask('test-fast', [
@@ -416,13 +375,11 @@ module.exports = function(grunt) {
 		'testconfig',
 		'fixture',
 		'connect',
-		'mocha',
-		'eslint'
+		'mocha'
 	]);
 
 	grunt.registerTask('translate', [
-		'clean',
-		'eslint',
+		'pre-build',
 		'validate',
 		'concat:commons',
 		'add-locale'
@@ -430,20 +387,6 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('dev', [
 		'build',
-		'testconfig',
-		'fixture',
-		'connect',
-		'watch'
-	]);
-
-	grunt.registerTask('dev:no-lint', [
-		'clean',
-		'validate',
-		'concat:commons',
-		'configure',
-		'babel',
-		'concat:engine',
-		'uglify',
 		'testconfig',
 		'fixture',
 		'connect',

@@ -1,3 +1,5 @@
+/* global axe */
+
 // Let the user know they need to disable their axe/attest extension before running the tests.
 if (window.__AXE_EXTENSION__) {
 	throw new Error(
@@ -69,7 +71,7 @@ testUtils.shadowSupport = (function(document) {
  * Method for injecting content into a fixture and caching
  * the flattened DOM tree (light and Shadow DOM together)
  *
- * @param Node|String 	Stuff to go into the fixture (html or DOM node)
+ * @param {String|Node} content Stuff to go into the fixture (html or DOM node)
  * @return HTMLElement
  */
 testUtils.fixtureSetup = function(content) {
@@ -218,6 +220,70 @@ testUtils.awaitNestedLoad = function awaitNestedLoad(win, cb) {
 	q.then(function() {
 		cb();
 	});
+};
+
+/**
+ * Add a given stylesheet dynamically to the document
+ *
+ * @param {Object} data composite object containing properties to create stylesheet
+ * @property {String} data.href relative or absolute url for stylesheet to be loaded
+ * @property {Boolean} data.mediaPrint boolean to represent if the constructed sheet is for print media
+ * @property {String} data.text text contents to be written to the stylesheet
+ * @returns {Object} axe.utils.queue
+ */
+testUtils.addStyleSheet = function addStyleSheet(data) {
+	var q = axe.utils.queue();
+	if (data.href) {
+		q.defer(function(resolve, reject) {
+			var link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.href = data.href;
+			if (data.mediaPrint) {
+				link.media = 'print';
+			}
+			link.onload = function() {
+				resolve();
+			};
+			link.onerror = function() {
+				reject();
+			};
+			document.head.appendChild(link);
+		});
+	} else {
+		q.defer(function(resolve) {
+			var style = document.createElement('style');
+			style.type = 'text/css';
+			style.appendChild(document.createTextNode(data.text));
+			document.head.appendChild(style);
+			resolve();
+		});
+	}
+	return q;
+};
+
+/**
+ * Add a list of stylesheets
+ *
+ * @param {Object} sheets array of sheets data object
+ * @returns {Object} axe.utils.queue
+ */
+testUtils.addStyleSheets = function addStyleSheets(sheets) {
+	var q = axe.utils.queue();
+	sheets.forEach(function(data) {
+		q.defer(axe.testUtils.addStyleSheet(data));
+	});
+	return q;
+};
+
+/**
+ * Injecting content into a fixture and return queried element within fixture
+ *
+ * @param {String|Node} content to go into the fixture (html or DOM node)
+ * @return HTMLElement
+ */
+testUtils.queryFixture = function queryFixture(html, query) {
+	testUtils.fixtureSetup(html);
+	return axe.utils.querySelectorAll(axe._tree, query || '#target')[0];
 };
 
 axe.testUtils = testUtils;

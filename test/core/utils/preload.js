@@ -2,10 +2,7 @@ describe('axe.utils.preload', function() {
 	'use strict';
 
 	it('should return a queue', function() {
-		var options = {
-			preload: true
-		};
-		var actual = axe.utils.preload(options);
+		var actual = axe.utils.preload({});
 		assert.isObject(actual);
 		assert.containsAllKeys(actual, ['then', 'defer', 'catch']);
 	});
@@ -41,6 +38,23 @@ describe('axe.utils.preload', function() {
 			});
 	});
 
+	it('should return empty array as result', function(done) {
+		var options = {
+			preload: false
+		};
+		var actual = axe.utils.preload(options);
+		actual
+			.then(function(results) {
+				assert.isDefined(results);
+				assert.isArray(results);
+				assert.lengthOf(results, 0);
+				done();
+			})
+			.catch(function(error) {
+				done(error);
+			});
+	});
+
 	it('should return an object with property cssom and verify result is same output from preloadCssom', function(done) {
 		var options = {
 			preload: {
@@ -66,10 +80,30 @@ describe('axe.utils.preload', function() {
 
 	describe('axe.utils.shouldPreload', function() {
 		it('should return true if preload configuration is valid', function() {
-			var options = {
-				preload: true
-			};
-			var actual = axe.utils.shouldPreload(options);
+			var actual = axe.utils.shouldPreload({
+				preload: {
+					assets: ['cssom']
+				}
+			});
+			assert.isTrue(actual);
+		});
+
+		it('should return true if preload is undefined', function() {
+			var actual = axe.utils.shouldPreload({
+				preload: undefined
+			});
+			assert.isTrue(actual);
+		});
+
+		it('should return true if preload is null', function() {
+			var actual = axe.utils.shouldPreload({
+				preload: null
+			});
+			assert.isTrue(actual);
+		});
+
+		it('should return true if preload is not set', function() {
+			var actual = axe.utils.shouldPreload({});
 			assert.isTrue(actual);
 		});
 
@@ -85,28 +119,20 @@ describe('axe.utils.preload', function() {
 	});
 
 	describe('axe.utils.getPreloadConfig', function() {
-		it('should throw error if preload configuration is invalid', function() {
-			var actual = function() {
-				axe.utils.getPreloadConfig({});
-			};
-			var expected = Error;
-			assert.throws(actual, expected);
+		it('should return default assets if preload configuration is not set', function() {
+			var actual = axe.utils.getPreloadConfig({}).assets;
+			var expected = ['cssom'];
+			assert.deepEqual(actual, expected);
 		});
 
 		it('should return default assets if preload options is set to true', function() {
-			var options = {
-				preload: true
-			};
-			var actual = axe.utils.getPreloadConfig(options).assets;
+			var actual = axe.utils.getPreloadConfig({}).assets;
 			var expected = ['cssom'];
 			assert.deepEqual(actual, expected);
 		});
 
 		it('should return default timeout value if not configured', function() {
-			var options = {
-				preload: true
-			};
-			var actual = axe.utils.getPreloadConfig(options).timeout;
+			var actual = axe.utils.getPreloadConfig({}).timeout;
 			var expected = 10000;
 			assert.equal(actual, expected);
 		});

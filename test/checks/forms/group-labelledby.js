@@ -28,7 +28,7 @@ describe('group-labelledby', function() {
 					fixtureSetup(
 						'<input type="' +
 							type +
-							'" id="target" name="uniqueyname">' +
+							'" id="target" name="groupname">' +
 							'<input type="' +
 							type +
 							'" name="differentname">'
@@ -47,16 +47,16 @@ describe('group-labelledby', function() {
 					fixtureSetup(
 						'<input type="' +
 							type +
-							'" id="target" name="uniqueyname">' +
+							'" id="target" name="groupname">' +
 							'<input type="' +
 							type +
-							'" name="uniqueyname">'
+							'" name="groupname">'
 					);
 
 					var node = fixture.querySelector('#target');
 					assert.isFalse(check.evaluate.call(checkContext, node));
 					assert.deepEqual(checkContext._data, {
-						name: 'uniqueyname',
+						name: 'groupname',
 						type: type
 					});
 				}
@@ -70,19 +70,75 @@ describe('group-labelledby', function() {
 					fixtureSetup(
 						'<input type="' +
 							type +
-							'" id="target" aria-labelledby="unique one" name="uniqueyname">' +
+							'" id="target" aria-labelledby="unique one" name="groupname">' +
 							'<input type="' +
 							type +
-							'" aria-labelledby="notshared two" name="uniqueyname">' +
+							'" aria-labelledby="notshared two" name="groupname">' +
 							'<input type="' +
 							type +
-							'" aria-labelledby="different three" name="uniqueyname">'
+							'" aria-labelledby="different three" name="groupname">'
 					);
 					var node = fixture.querySelector('#target');
 					assert.isFalse(check.evaluate.call(checkContext, node));
 					assert.deepEqual(checkContext._data, {
-						name: 'uniqueyname',
+						name: 'groupname',
 						type: type
+					});
+				}
+			);
+
+			it(
+				'should return false if there are ungrouped ' +
+					type +
+					' elements with the same name and with shared labelledby but no unique label',
+				function() {
+					fixtureSetup(
+						'<p id="shared">Shared label</p>' +
+							'<input type="' +
+							type +
+							'" id="target" aria-labelledby="shared" name="groupname">' +
+							'<input type="' +
+							type +
+							'" aria-labelledby="shared" name="groupname">' +
+							'<input type="' +
+							type +
+							'" aria-labelledby="shared" name="groupname">'
+					);
+					var node = fixture.querySelector('#target');
+					assert.isFalse(check.evaluate.call(checkContext, node));
+					assert.deepEqual(checkContext._data, {
+						name: 'groupname',
+						type: type,
+						failureCode: 'no-unique-label'
+					});
+				}
+			);
+
+			it(
+				'should return false if there are ungrouped ' +
+					type +
+					' elements with the same name and with unique labelledby but no shared label',
+				function() {
+					fixtureSetup(
+						'<p id="one">Label 1</p>' +
+							'<p id="two">Label 2</p>' +
+							'<p id="three">Label 3</p>' +
+							'<input type="' +
+							type +
+							'" id="target" aria-labelledby="one" name="groupname">' +
+							'<input type="' +
+							type +
+							'" aria-labelledby="two" name="groupname">' +
+							'<input type="' +
+							type +
+							'" aria-labelledby="three" name="groupname">'
+					);
+					var node = fixture.querySelector('#target');
+					assert.isFalse(check.evaluate.call(checkContext, node));
+					assert.deepEqual(checkContext._data, {
+						name: 'groupname',
+						type: type,
+						failureCode: 'no-shared-label'
 					});
 				}
 			);
@@ -96,19 +152,19 @@ describe('group-labelledby', function() {
 					fixtureSetup(
 						'<input type="' +
 							type +
-							'" id="target" aria-labelledby="shared one" name="uniqueyname">' +
+							'" id="target" aria-labelledby="shared one" name="groupname">' +
 							'<input type="' +
 							type +
-							'" aria-labelledby="shared two" name="uniqueyname">' +
+							'" aria-labelledby="shared two" name="groupname">' +
 							'<input type="' +
 							type +
-							'" aria-labelledby="shared three" name="uniqueyname">'
+							'" aria-labelledby="shared three" name="groupname">'
 					);
 
 					var node = fixture.querySelector('#target');
 					assert.isFalse(check.evaluate.call(checkContext, node));
 					assert.deepEqual(checkContext._data, {
-						name: 'uniqueyname',
+						name: 'groupname',
 						type: type
 					});
 				}
@@ -124,19 +180,19 @@ describe('group-labelledby', function() {
 						'<p id="shared"></p>' +
 							'<input type="' +
 							type +
-							'" id="target" aria-labelledby="shared one" name="uniqueyname">' +
+							'" id="target" aria-labelledby="shared one" name="groupname">' +
 							'<input type="' +
 							type +
-							'" aria-labelledby="shared two" name="uniqueyname">' +
+							'" aria-labelledby="shared two" name="groupname">' +
 							'<input type="' +
 							type +
-							'" aria-labelledby="shared three" name="uniqueyname">'
+							'" aria-labelledby="shared three" name="groupname">'
 					);
 
 					var node = fixture.querySelector('#target');
 					assert.isFalse(check.evaluate.call(checkContext, node));
 					assert.deepEqual(checkContext._data, {
-						name: 'uniqueyname',
+						name: 'groupname',
 						type: type
 					});
 				}
@@ -145,26 +201,29 @@ describe('group-labelledby', function() {
 			it(
 				'should return true if there are ungrouped ' +
 					type +
-					' elements with the same name and with shared labelledby' +
+					' elements with the same name and with shared and unique labelledby ' +
 					'pointing to a node with text content',
 				function() {
 					fixtureSetup(
-						'<p id="shared">Label</p>' +
+						'<p id="one">Label 1</p>' +
+							'<p id="two">Label 2</p>' +
+							'<p id="three">Label 3</p>' +
+							'<p id="shared">Shared label</p>' +
 							'<input type="' +
 							type +
-							'" id="target" aria-labelledby="shared one" name="uniqueyname">' +
+							'" id="target" aria-labelledby="shared one" name="groupname">' +
 							'<input type="' +
 							type +
-							'" aria-labelledby="shared two" name="uniqueyname">' +
+							'" aria-labelledby="shared two" name="groupname">' +
 							'<input type="' +
 							type +
-							'" aria-labelledby="shared three" name="uniqueyname">'
+							'" aria-labelledby="shared three" name="groupname">'
 					);
 
 					var node = fixture.querySelector('#target');
 					assert.isTrue(check.evaluate.call(checkContext, node));
 					assert.deepEqual(checkContext._data, {
-						name: 'uniqueyname',
+						name: 'groupname',
 						type: type
 					});
 				}
@@ -177,22 +236,27 @@ describe('group-labelledby', function() {
 					'pointing to a node with text content',
 				function() {
 					fixtureSetup(
-						'<p id="shared" style="display:none">Label</p>' +
+						'<div style="display:none">' +
+							'  <p id="one">Label 1</p>' +
+							'  <p id="two">Label 2</p>' +
+							'  <p id="three">Label 3</p>' +
+							'  <p id="shared">Shared label</p>' +
+							'</div>' +
 							'<input type="' +
 							type +
-							'" id="target" aria-labelledby="shared one" name="uniqueyname">' +
+							'" id="target" aria-labelledby="shared one" name="groupname">' +
 							'<input type="' +
 							type +
-							'" aria-labelledby="shared two" name="uniqueyname">' +
+							'" aria-labelledby="shared two" name="groupname">' +
 							'<input type="' +
 							type +
-							'" aria-labelledby="shared three" name="uniqueyname">'
+							'" aria-labelledby="shared three" name="groupname">'
 					);
 
 					var node = fixture.querySelector('#target');
 					assert.isTrue(check.evaluate.call(checkContext, node));
 					assert.deepEqual(checkContext._data, {
-						name: 'uniqueyname',
+						name: 'groupname',
 						type: type
 					});
 				}
@@ -205,7 +269,10 @@ describe('group-labelledby', function() {
 					'pointing to a node with text content - SPECIAL CHARACTERS',
 				function() {
 					fixtureSetup(
-						'<p id="shared">Label</p>' +
+						'<p id="one">Label 1</p>' +
+							'<p id="two">Label 2</p>' +
+							'<p id="three">Label 3</p>' +
+							'<p id="shared">Shared label</p>' +
 							'<input type="' +
 							type +
 							'" id="target" aria-labelledby="shared one" name="s$.#0">' +
@@ -227,23 +294,28 @@ describe('group-labelledby', function() {
 			);
 
 			(shadowSupport ? it : xit)(
-				'should return false if label is outside of shadow boundary',
+				'should return false if the shared label is outside of shadow boundary',
 				function() {
 					fixture.innerHTML =
-						'<div id="container"><h2 id="shared">Label</h2></div>';
+						'<div id="container">' +
+						'  <p id="shared">Shared label</p>' +
+						'</div>';
 					var shadowRoot = fixture
 						.querySelector('#container')
 						.attachShadow({ mode: 'open' });
 					shadowRoot.innerHTML =
+						'<p id="one">Label 1</p>' +
+						'<p id="two">Label 2</p>' +
+						'<p id="three">Label 3</p>' +
 						'<input type="' +
 						type +
-						'" id="target" aria-labelledby="shared one" name="uniqueyname">' +
+						'" id="target" aria-labelledby="shared one" name="groupname">' +
 						'<input type="' +
 						type +
-						'" aria-labelledby="shared two" name="uniqueyname">' +
+						'" aria-labelledby="shared two" name="groupname">' +
 						'<input type="' +
 						type +
-						'" aria-labelledby="shared three" name="uniqueyname">';
+						'" aria-labelledby="shared three" name="groupname">';
 
 					var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
 					var shadowContent = shadowRoot.querySelector('#target');
@@ -251,6 +323,49 @@ describe('group-labelledby', function() {
 
 					var params = [shadowContent, undefined, virtualTarget];
 					assert.isFalse(check.evaluate.apply(checkContext, params));
+					assert.deepEqual(checkContext._data, {
+						name: 'groupname',
+						type: type,
+						failureCode: 'no-shared-label'
+					});
+				}
+			);
+
+			(shadowSupport ? it : xit)(
+				'should return false if the unique label is outside of shadow boundary',
+				function() {
+					fixture.innerHTML =
+						'<div id="container">' +
+						'  <p id="one">Label 1</p>' +
+						'  <p id="two">Label 2</p>' +
+						'  <p id="three">Label 3</p>' +
+						'</div>';
+					var shadowRoot = fixture
+						.querySelector('#container')
+						.attachShadow({ mode: 'open' });
+					shadowRoot.innerHTML =
+						'<p id="shared">Shared label</p>' +
+						'<input type="' +
+						type +
+						'" id="target" aria-labelledby="shared one" name="groupname">' +
+						'<input type="' +
+						type +
+						'" aria-labelledby="shared two" name="groupname">' +
+						'<input type="' +
+						type +
+						'" aria-labelledby="shared three" name="groupname">';
+
+					var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+					var shadowContent = shadowRoot.querySelector('#target');
+					var virtualTarget = axe.utils.getNodeFromTree(tree[0], shadowContent);
+
+					var params = [shadowContent, undefined, virtualTarget];
+					assert.isFalse(check.evaluate.apply(checkContext, params));
+					assert.deepEqual(checkContext._data, {
+						name: 'groupname',
+						type: type,
+						failureCode: 'no-unique-label'
+					});
 				}
 			);
 
@@ -265,13 +380,19 @@ describe('group-labelledby', function() {
 						.querySelector('#container')
 						.attachShadow({ mode: 'open' });
 					shadowRoot.innerHTML =
-						'<p id="shared">Label</p>' +
+						'<p id="one">Label 1</p>' +
+						'<p id="two">Label 2</p>' +
+						'<p id="three">Label 3</p>' +
+						'<p id="shared">Shared label</p>' +
 						'<input type="' +
 						type +
 						'" name="samename" aria-labelledby="shared one">' +
 						'<input type="' +
 						type +
-						'" id="target" name="samename" aria-labelledby="shared two">';
+						'" id="target" name="samename" aria-labelledby="shared two">' +
+						'<input type="' +
+						type +
+						'" id="target" name="samename" aria-labelledby="shared three">';
 
 					var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
 					var shadowContent = shadowRoot.querySelector('#target');

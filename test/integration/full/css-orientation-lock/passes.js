@@ -4,20 +4,6 @@ describe('css-orientation-lock passes test', function() {
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var isPhantom = window.PHANTOMJS ? true : false;
 
-	function addSheet(data) {
-		if (data.href) {
-			var link = document.createElement('link');
-			link.rel = 'stylesheet';
-			link.href = data.href;
-			document.head.appendChild(link);
-		} else {
-			const style = document.createElement('style');
-			style.type = 'text/css';
-			style.appendChild(document.createTextNode(data.text));
-			document.head.appendChild(style);
-		}
-	}
-
 	var styleSheets = [
 		{
 			href:
@@ -34,9 +20,14 @@ describe('css-orientation-lock passes test', function() {
 			this.skip();
 			done();
 		} else {
-			styleSheets.forEach(addSheet);
-			// wait for network request to complete for added sheets
-			setTimeout(done, 5000);
+			axe.testUtils
+				.addStyleSheets(styleSheets)
+				.then(function() {
+					done();
+				})
+				.catch(function(error) {
+					done(new Error('Could not load stylesheets for testing. ' + error));
+				});
 		}
 	});
 
@@ -47,8 +38,7 @@ describe('css-orientation-lock passes test', function() {
 				runOnly: {
 					type: 'rule',
 					values: ['css-orientation-lock']
-				},
-				preload: true // same effect if preload was not defined
+				}
 			},
 			function(err, res) {
 				assert.isNull(err);
@@ -82,8 +72,7 @@ describe('css-orientation-lock passes test', function() {
 					runOnly: {
 						type: 'rule',
 						values: ['css-orientation-lock']
-					},
-					preload: true
+					}
 				},
 				function(err, res) {
 					assert.isNull(err);

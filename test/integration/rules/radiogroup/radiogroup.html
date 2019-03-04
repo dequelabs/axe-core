@@ -1,14 +1,23 @@
 
 <form action="#">
 	<input type="radio" id="noname">
-	<input type="radio" name="dupe" id="fail1">
-	<input type="radio" name="dupe">
+	<input type="radio" name="fail" id="fail1">
+	<input type="radio" name="fail">
+
+	<input type="radio" name="label-fail1" id="fail2" aria-labelledby="grouplabel">
+	<input type="radio" name="label-fail1" aria-labelledby="grouplabel">
+
+	<input type="radio" name="label-fail2" id="fail3" aria-labelledby="label1">
+	<input type="radio" name="label-fail2" aria-labelledby="label2">
 
 	<input type="radio" name="single" id="pass1">
 
-	<input type="radio" name="label" id="pass2" aria-labelledby="grouplabel">
-	<input type="radio" name="label" aria-labelledby="grouplabel">
-	<div id="grouplabel">Label</div>
+	<input type="radio" name="label" id="pass2" aria-labelledby="grouplabel label1">
+	<input type="radio" name="label" aria-labelledby="grouplabel label2">
+	<div id="grouplabel">Group label</div>
+	<div id="label1">Label 1</div>
+	<div id="label2">Label 2</div>
+
 	<fieldset>
 		<legend>Name</legend>
 		<input type="radio" name="fieldset" id="pass3">

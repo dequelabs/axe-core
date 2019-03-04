@@ -4,7 +4,8 @@
     "ecmaVersion": 9
   },
   "env": {
-    "node": true
+    "node": true,
+    "es6": true
   },
   "globals": {
     "axe": true
@@ -63,6 +64,13 @@
     "no-shadow": 0,
     "dot-notation": 2,
     "no-new-func": 0,
-    "no-new-wrappers": 0
+    "no-new-wrappers": 0,
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "MemberExpression[property.name=tagName]",
+        "message": "Don't use node.tagName, use node.nodeName instead."
+      }
+    ]
   }
 }

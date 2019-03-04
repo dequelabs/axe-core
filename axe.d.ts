@@ -22,6 +22,20 @@ declare namespace axe {
 
 	type ElementContext = Node | string | RunOnlyObject;
 
+	interface TestEngine {
+		name: string;
+		version: string;
+	}
+	interface TestRunner {
+		name: string;
+	}
+	interface TestEnvironment {
+		userAgent: string;
+		windowWidth: number;
+		windowHeight: number;
+		orientationAngle?: number;
+		orientationType?: string;
+	}
 	interface RunOnly {
 		type: RunOnlyType;
 		values?: TagValue[] | string[] | RunOnlyObject;
@@ -35,6 +49,10 @@ declare namespace axe {
 		resultTypes?: resultGroups[];
 	}
 	interface AxeResults {
+		toolOptions: RunOptions;
+		testEngine: TestEngine;
+		testRunner: TestRunner;
+		testEnvironment: TestEnvironment;
 		url: string;
 		timestamp: string;
 		passes: Result[];
@@ -91,8 +109,8 @@ declare namespace axe {
 	}
 	interface Spec {
 		branding?: {
-			brand: string;
-			application: string;
+			brand?: string;
+			application?: string;
 		};
 		reporter?: ReporterVersion;
 		checks?: Check[];

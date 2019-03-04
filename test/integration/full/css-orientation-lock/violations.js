@@ -4,20 +4,6 @@ describe('css-orientation-lock violations test', function() {
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var isPhantom = window.PHANTOMJS ? true : false;
 
-	function addSheet(data) {
-		if (data.href) {
-			var link = document.createElement('link');
-			link.rel = 'stylesheet';
-			link.href = data.href;
-			document.head.appendChild(link);
-		} else {
-			const style = document.createElement('style');
-			style.type = 'text/css';
-			style.appendChild(document.createTextNode(data.text));
-			document.head.appendChild(style);
-		}
-	}
-
 	var styleSheets = [
 		{
 			href:
@@ -33,11 +19,24 @@ describe('css-orientation-lock violations test', function() {
 			this.skip();
 			done();
 		} else {
-			styleSheets.forEach(addSheet);
-			// wait for network request to complete for added sheets
-			setTimeout(done, 5000);
+			axe.testUtils
+				.addStyleSheets(styleSheets)
+				.then(function() {
+					done();
+				})
+				.catch(function(error) {
+					done(new Error('Could not load stylesheets for testing. ' + error));
+				});
 		}
 	});
+
+	function assertViolatedSelectors(relatedNodes, violatedSelectors) {
+		relatedNodes.forEach(function(node) {
+			var target = node.target[0];
+			var className = Array.isArray(target) ? target.reverse()[0] : target;
+			assert.isTrue(violatedSelectors.indexOf(className) !== -1);
+		});
+	}
 
 	it('returns VIOLATIONS if preload is set to TRUE', function(done) {
 		// the sheets included in the html, have styles for transform and rotate, hence the violation
@@ -46,8 +45,7 @@ describe('css-orientation-lock violations test', function() {
 				runOnly: {
 					type: 'rule',
 					values: ['css-orientation-lock']
-				},
-				preload: true // same effect if preload was not defined
+				}
 			},
 			function(err, res) {
 				assert.isNull(err);
@@ -57,18 +55,17 @@ describe('css-orientation-lock violations test', function() {
 				assert.property(res, 'violations');
 				assert.lengthOf(res.violations, 1);
 
-				// assert the node and related nodes
+				// assert the node
 				var checkedNode = res.violations[0].nodes[0];
 				assert.isTrue(/html/i.test(checkedNode.html));
 
+				// assert the relatedNodes
 				var checkResult = checkedNode.all[0];
 				assert.lengthOf(checkResult.relatedNodes, 2);
-				var violatedSelectors = ['.someDiv', '.thatDiv'];
-				checkResult.relatedNodes.forEach(function(node) {
-					var target = node.target[0];
-					var className = Array.isArray(target) ? target.reverse()[0] : target;
-					assert.isTrue(violatedSelectors.indexOf(className) !== -1);
-				});
+				assertViolatedSelectors(checkResult.relatedNodes, [
+					'.someDiv',
+					'.thatDiv'
+				]);
 
 				done();
 			}
@@ -90,8 +87,7 @@ describe('css-orientation-lock violations test', function() {
 					runOnly: {
 						type: 'rule',
 						values: ['css-orientation-lock']
-					},
-					preload: true // same effect if preload was not defined
+					}
 				},
 				function(err, res) {
 					assert.isNull(err);
@@ -101,12 +97,19 @@ describe('css-orientation-lock violations test', function() {
 					assert.property(res, 'violations');
 					assert.lengthOf(res.violations, 1);
 
-					// assert the node and related nodes
+					// assert the node
 					var checkedNode = res.violations[0].nodes[0];
-					var checkResult = checkedNode.all[0];
+					assert.isTrue(/html/i.test(checkedNode.html));
 
-					// Issue - https://github.com/dequelabs/axe-core/issues/1082
-					assert.isAtLeast(checkResult.relatedNodes.length, 2);
+					// assert the relatedNodes
+					var checkResult = checkedNode.all[0];
+					assert.lengthOf(checkResult.relatedNodes, 3);
+					assertViolatedSelectors(checkResult.relatedNodes, [
+						'.someDiv',
+						'.thatDiv',
+						'.shadowDiv'
+					]);
+
 					done();
 				}
 			);

@@ -2,7 +2,7 @@ describe('landmark-contentinfo-is-top-level test pass', function() {
 	'use strict';
 	var results;
 	before(function(done) {
-		window.addEventListener('load', function() {
+		axe.testUtils.awaitNestedLoad(function() {
 			axe.run(
 				{
 					runOnly: {

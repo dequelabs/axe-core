@@ -1,11 +1,7 @@
 {
 	"description": "aria-required-children test",
 	"rule": "aria-required-children",
-	"violations": [
-		["#fail1"],
-		["#fail2"],
-		["#fail3"]
-	],
+	"violations": [["#fail1"], ["#fail2"], ["#fail3"]],
 	"passes": [
 		["#pass1"],
 		["#pass2"],
@@ -16,7 +12,5 @@
 		["#pass7"],
 		["#pass8"]
 	],
-	"incomplete": [
-		["#incomplete1"]
-	]
+	"incomplete": [["#incomplete1"]]
 }

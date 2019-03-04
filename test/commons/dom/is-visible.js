@@ -1,6 +1,8 @@
 describe('dom.isVisible', function() {
 	'use strict';
+
 	var fixture = document.getElementById('fixture');
+	var fixtureSetup = axe.testUtils.fixtureSetup;
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var fakeNode = {
 		nodeType: Node.ELEMENT_NODE,
@@ -76,6 +78,33 @@ describe('dom.isVisible', function() {
 
 		it('should return true on a document', function() {
 			assert.isTrue(axe.commons.dom.isVisible(document));
+		});
+
+		it('should return false on STYLE tag', function() {
+			var fixture = fixtureSetup(
+				'<style id="target"> @import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"; .green { background-color: green; } </style>'
+			);
+			var node = fixture.querySelector('#target');
+			var actual = axe.commons.dom.isVisible(node);
+			assert.isFalse(actual);
+		});
+
+		it('should return false on NOSCRIPT tag', function() {
+			var fixture = fixtureSetup(
+				'<noscript id="target"><p class="invisible"><img src="/piwik/piwik.php?idsite=1" alt="" /></p></noscript>'
+			);
+			var node = fixture.querySelector('#target');
+			var actual = axe.commons.dom.isVisible(node);
+			assert.isFalse(actual);
+		});
+
+		it('should return false on TEMPLATE tag', function() {
+			var fixture = fixtureSetup(
+				'<template id="target"><div>Name:</div></template>'
+			);
+			var node = fixture.querySelector('#target');
+			var actual = axe.commons.dom.isVisible(node);
+			assert.isFalse(actual);
 		});
 
 		it('should return true if positioned staticly but top/left is set', function() {
@@ -159,47 +188,49 @@ describe('dom.isVisible', function() {
 			el = document.getElementById('target');
 			assert.isFalse(axe.commons.dom.isVisible(el));
 		});
-		it('should correctly handle visible slotted elements', function() {
-			function createContentSlotted() {
-				var group = document.createElement('div');
-				group.innerHTML = '<div id="target">Stuff<slot></slot></div>';
-				return group;
-			}
-			function makeShadowTree(node) {
-				var root = node.attachShadow({ mode: 'open' });
-				var div = document.createElement('div');
-				root.appendChild(div);
-				div.appendChild(createContentSlotted());
-			}
-			if (shadowSupported) {
+		(shadowSupported ? it : xit)(
+			'should correctly handle visible slotted elements',
+			function() {
+				function createContentSlotted() {
+					var group = document.createElement('div');
+					group.innerHTML = '<div id="target">Stuff<slot></slot></div>';
+					return group;
+				}
+				function makeShadowTree(node) {
+					var root = node.attachShadow({ mode: 'open' });
+					var div = document.createElement('div');
+					root.appendChild(div);
+					div.appendChild(createContentSlotted());
+				}
 				fixture.innerHTML = '<div><a>hello</a></div>';
 				makeShadowTree(fixture.firstChild);
 				var tree = axe.utils.getFlattenedTree(fixture.firstChild);
 				var el = axe.utils.querySelectorAll(tree, 'a')[0];
 				assert.isTrue(axe.commons.dom.isVisible(el.actualNode));
 			}
-		});
-		it('should correctly handle hidden slotted elements', function() {
-			function createContentSlotted() {
-				var group = document.createElement('div');
-				group.innerHTML =
-					'<div id="target" style="display:none;">Stuff<slot></slot></div>';
-				return group;
-			}
-			function makeShadowTree(node) {
-				var root = node.attachShadow({ mode: 'open' });
-				var div = document.createElement('div');
-				root.appendChild(div);
-				div.appendChild(createContentSlotted());
-			}
-			if (shadowSupported) {
+		);
+		(shadowSupported ? it : xit)(
+			'should correctly handle hidden slotted elements',
+			function() {
+				function createContentSlotted() {
+					var group = document.createElement('div');
+					group.innerHTML =
+						'<div id="target" style="display:none;">Stuff<slot></slot></div>';
+					return group;
+				}
+				function makeShadowTree(node) {
+					var root = node.attachShadow({ mode: 'open' });
+					var div = document.createElement('div');
+					root.appendChild(div);
+					div.appendChild(createContentSlotted());
+				}
 				fixture.innerHTML = '<div><p><a>hello</a></p></div>';
 				makeShadowTree(fixture.firstChild);
 				var tree = axe.utils.getFlattenedTree(fixture.firstChild);
 				var el = axe.utils.querySelectorAll(tree, 'a')[0];
 				assert.isFalse(axe.commons.dom.isVisible(el.actualNode));
 			}
-		});
+		);
 	});
 
 	describe('screen readers', function() {

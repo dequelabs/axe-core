@@ -12,7 +12,7 @@
 		["#pass-li-role-doc-biblioentry"],
 		["#pass-aside-doc-example"],
 		["#pass-div-valid-role"],
-		["#pass-ol-valid-role"], 
+		["#pass-ol-valid-role"],
 		["#pass-nav-role-doc-index"],
 		["#pass-h1-role-doc-subtitle"],
 		["#pass-video-valid-role"],
@@ -26,7 +26,7 @@
 		["#pass-section-valid-role-application"],
 		["#pass-section-valid-role-content-info"],
 		["#pass-section-valid-role-dialog"],
-		["#pass-button-valid-role-checkbox"],	
+		["#pass-button-valid-role-checkbox"],
 		["#pass-header-valid-role"],
 		["#pass-footer-valid-role"],
 		["#pass-embed-valid-role"],
@@ -45,13 +45,19 @@
 		["#pass-aside-role-region"],
 		["#pass-form-role-search"],
 		["#pass-li-role-sep"],
+		["#pass-iframe-presentation"],
+		["#pass-iframe-none"],
+		["#pass-ul-role-none"],
+		["#pass-ul-role-presentation"],
+		["#pass-ol-role-none"],
+		["#pass-ol-role-presentation"],
 		["#pass-custom-element-any-role"]
 	],
 	"violations": [
 		["#fail-dd-no-role"],
 		["#fail-dt-no-role"],
 		["#fail-label-no-role"],
-		["#fail-ol-invalid-role"], 
+		["#fail-ol-invalid-role"],
 		["#fail-a-invalid-role"],
 		["#fail-section-invalid-role"],
 		["#fail-embed-invalid-role"],
@@ -61,5 +67,6 @@
 		["#fail-aside-role-tab"],
 		["#fail-button-role-gridcell"],
 		["#fail-input-role-gridcell-multiple-role"]
-	]
+	],
+	"incomplete": [["#incomplete1"], ["#incomplete2"]]
 }

@@ -2,7 +2,7 @@ describe('landmark-banner-is-top-level test fail', function() {
 	'use strict';
 	var results;
 	before(function(done) {
-		window.addEventListener('load', function() {
+		axe.testUtils.awaitNestedLoad(function() {
 			axe.run(
 				{ runOnly: { type: 'rule', values: ['landmark-banner-is-top-level'] } },
 				function(err, r) {
