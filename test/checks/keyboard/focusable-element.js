@@ -27,7 +27,7 @@ describe('focusable-element tests', function() {
 			'<input id="target" type="checkbox" tabindex="-1">'
 		);
 		var actual = check.evaluate.apply(checkContext, params);
-		assert.isTrue(actual);
+		assert.isFalse(actual);
 	});
 
 	it('returns false when element is not focusable by virtue', function() {

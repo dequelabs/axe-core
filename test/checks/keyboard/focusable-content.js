@@ -36,7 +36,9 @@ describe('focusable-content tests', function() {
 
 	it('returns false when parent element is focusable (only checks if contents are focusable)', function() {
 		var params = checkSetup(
-			'<div id="target">' + '<p style="height: 200px;"></p>' + '</div>'
+			'<div id="target" tabindex="0">' +
+				'<p style="height: 200px;"></p>' +
+				'</div>'
 		);
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isFalse(actual);
