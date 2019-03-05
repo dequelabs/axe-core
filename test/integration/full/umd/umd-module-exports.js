@@ -6,6 +6,16 @@ describe('UMD module.export', function() {
 		assert.strictEqual(module.exports, axe);
 	});
 
+	it('does not use `require` functions', function() {
+		// This is to avoid colliding with Cypress.js which overloads all
+		// uses of variables named `require`.
+		assert.notMatch(
+			axe.source,
+			/[^.]require\(/,
+			'Axe source should not contain `require` variables'
+		);
+	});
+
 	it('should ensure axe source includes axios', function() {
 		assert.isTrue(axe.source.includes(axe.imports.axios.toString()));
 	});
