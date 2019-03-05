@@ -21,7 +21,7 @@ describe('aria-valid-attr', function() {
 		assert.deepEqual(checkContext._data, ['aria-cats', 'aria-dogs']);
 	});
 
-	it('should return false if no invalid ARIA attributes are found', function() {
+	it('should return true if no invalid ARIA attributes are found', function() {
 		var node = document.createElement('div');
 		node.id = 'test';
 		node.tabIndex = 1;
@@ -52,6 +52,21 @@ describe('aria-valid-attr', function() {
 		assert.equal(called, 2);
 
 		axe.commons.aria.validateAttr = orig;
+	});
+
+	it('should return true for unsupported ARIA attributes', function() {
+		axe.commons.aria.lookupTable.attributes['aria-mccheddarton'] = {
+			unsupported: true
+		};
+
+		var node = document.createElement('div');
+		node.id = 'test';
+		node.tabIndex = 1;
+		node.setAttribute('aria-mccheddarton', 'true');
+		fixture.appendChild(node);
+
+		assert.isTrue(checks['aria-valid-attr'].evaluate.call(checkContext, node));
+		assert.isNull(checkContext._data);
 	});
 
 	describe('options', function() {
