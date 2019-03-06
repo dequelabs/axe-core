@@ -1,6 +1,6 @@
 {
 	"name": "axe-core",
-	"version": "3.2.0",
+	"version": "3.2.1",
 	"contributors": [
 		{
 			"name": "David Sturley",
@@ -35,12 +35,6 @@
 	"main": "axe.js",
 	"typings": "axe.d.ts",
 	"license": "MPL-2.0",
-	"ignore": [
-		"**/.*",
-		"node_modules",
-		"test",
-		"build",
-		"typings"
-	],
+	"ignore": ["**/.*", "node_modules", "test", "build", "typings"],
 	"devDependencies": {}
 }
