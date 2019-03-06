@@ -91,6 +91,7 @@ workflows:
       - test:
           requires:
             - dependencies
+            - lint
       # Hold for approval
       - hold:
           type: approval
