@@ -8,6 +8,8 @@
 		["#violation-form-aria-labelledby-1"],
 		["#violation-aside-aria-label-1"],
 		["#violation-aside-aria-labelledby-1"],
-		["#violation-footer-1"]
+		["#violation-footer-1"],
+		["#violation-form-through-iframe-1"],
+		["#violation-nav-through-iframe-1"]
 	]
 }
