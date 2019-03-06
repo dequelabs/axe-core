@@ -4,6 +4,14 @@ describe('landmark-unique-matches', function() {
 	let fixture;
 	let axeFixtureSetup;
 	const shadowSupport = axe.testUtils.shadowSupport.v1;
+	const excludedDescendantsForHeadersFooters = [
+		'article',
+		'aside',
+		'main',
+		'nav',
+		'section'
+	];
+	const headerFooterElements = ['header', 'footer'];
 
 	beforeEach(function() {
 		fixture = document.getElementById('fixture');
@@ -38,9 +46,9 @@ describe('landmark-unique-matches', function() {
 	});
 
 	describe('form and section elements must have accessible names to be matched', () => {
-		const elements = ['section', 'form'];
+		const sectionFormElements = ['section', 'form'];
 
-		elements.forEach(elementType => {
+		sectionFormElements.forEach(elementType => {
 			it(`should match because it is a ${elementType} with a label`, () => {
 				axeFixtureSetup(
 					`<${elementType} aria-label="sample label">some ${elementType}</${elementType}>`
@@ -60,11 +68,8 @@ describe('landmark-unique-matches', function() {
 	});
 
 	describe('header/footers should only match when not inside the excluded descendents', () => {
-		const excludedDescendants = ['article', 'aside', 'main', 'nav', 'section'];
-		const elements = ['header', 'footer'];
-
-		elements.forEach(elementType => {
-			excludedDescendants.forEach(exclusionType => {
+		headerFooterElements.forEach(elementType => {
+			excludedDescendantsForHeadersFooters.forEach(exclusionType => {
 				it(`should not match because ${elementType} is contained inside in ${exclusionType}`, () => {
 					axeFixtureSetup(
 						`<${exclusionType} aria-label="sample label">
@@ -98,14 +103,6 @@ describe('landmark-unique-matches', function() {
 		});
 
 		describe('header/footers should only match when not inside the excluded descendents within shadow dom', () => {
-			const excludedDescendants = [
-				'article',
-				'aside',
-				'main',
-				'nav',
-				'section'
-			];
-			const elements = ['header', 'footer'];
 			let container;
 			let shadow;
 
@@ -114,8 +111,8 @@ describe('landmark-unique-matches', function() {
 				shadow = container.attachShadow({ mode: 'open' });
 			});
 
-			elements.forEach(elementType => {
-				excludedDescendants.forEach(exclusionType => {
+			headerFooterElements.forEach(elementType => {
+				excludedDescendantsForHeadersFooters.forEach(exclusionType => {
 					it(`should not match because ${elementType} is contained inside in ${exclusionType}`, () => {
 						shadow.innerHTML = `<${exclusionType} aria-label="sample label">
 								<${elementType}>an element</${elementType}>
