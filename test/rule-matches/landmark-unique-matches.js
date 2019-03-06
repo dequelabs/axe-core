@@ -86,9 +86,8 @@ describe('landmark-unique-matches', function() {
 		});
 	});
 
-	(shadowSupport ? it : xit)(
-		'return true for landmarks contained within shadow dom',
-		function() {
+	if (shadowSupport) {
+		it('return true for landmarks contained within shadow dom', () => {
 			const container = document.createElement('div');
 			const shadow = container.attachShadow({ mode: 'open' });
 			shadow.innerHTML = '<footer></footer>';
@@ -96,6 +95,51 @@ describe('landmark-unique-matches', function() {
 			axeFixtureSetup(container);
 			const vNode = axe.utils.querySelectorAll(axe._tree[0], 'footer')[0];
 			assert.isTrue(rule.matches(vNode.actualNode, vNode));
-		}
-	);
+		});
+
+		describe('header/footers should only match when not inside the excluded descendents within shadow dom', () => {
+			const excludedDescendants = [
+				'article',
+				'aside',
+				'main',
+				'nav',
+				'section'
+			];
+			const elements = ['header', 'footer'];
+			let container;
+			let shadow;
+
+			beforeEach(() => {
+				container = document.createElement('div');
+				shadow = container.attachShadow({ mode: 'open' });
+			});
+
+			elements.forEach(elementType => {
+				excludedDescendants.forEach(exclusionType => {
+					it(`should not match because ${elementType} is contained inside in ${exclusionType}`, () => {
+						shadow.innerHTML = `<${exclusionType} aria-label="sample label">
+								<${elementType}>an element</${elementType}>
+							</${exclusionType}>`;
+
+						axeFixtureSetup(container);
+						const virtualNode = axe.utils.querySelectorAll(
+							axe._tree[0],
+							elementType
+						)[0];
+						assert.isFalse(rule.matches(virtualNode.actualNode, virtualNode));
+					});
+				});
+
+				it(`should match because ${elementType} is not contained inside the excluded descendents`, () => {
+					shadow.innerHTML = `<${elementType}>an element</${elementType}>`;
+					axeFixtureSetup(container);
+					const virtualNode = axe.utils.querySelectorAll(
+						axe._tree[0],
+						elementType
+					)[0];
+					assert.isTrue(rule.matches(virtualNode.actualNode, virtualNode));
+				});
+			});
+		});
+	}
 });
