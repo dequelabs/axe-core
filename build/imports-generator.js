@@ -1,5 +1,6 @@
 const path = require('path');
 const browserify = require('browserify');
+const derequire = require('derequire');
 const createFile = require('./shared/create-file');
 
 const inputFile = path.join(
@@ -25,6 +26,8 @@ async function run() {
 			throw new Error('Cannot browserify axe.imports', err);
 		}
 		try {
+			// Replace `require` calls with `_dereq_` in order not to confuse Cypress.js
+			result = derequire(result);
 			await createFile(outputFile, result);
 		} catch (error) {
 			throw new Error('Cannot write browserify generated axe.imports', error);
