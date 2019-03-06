@@ -2,6 +2,69 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [3.2.0](https://github.com/dequelabs/axe-core/compare/v3.0.3...v3.2.0) (2019-03-04)
+
+### Bug Fixes
+
+- **aria-allowed-role:** Allow iframe role=none ([a4fa44d](https://github.com/dequelabs/axe-core/commit/a4fa44d))
+- **color-contrast:** Prevent crash on large inline elments [#1306](https://github.com/dequelabs/axe-core/issues/1306) ([#1341](https://github.com/dequelabs/axe-core/issues/1341)) ([e1bcafc](https://github.com/dequelabs/axe-core/commit/e1bcafc))
+- **commons:** Allow any node in aria.getRole ([#1258](https://github.com/dequelabs/axe-core/issues/1258)) ([26fa49a](https://github.com/dequelabs/axe-core/commit/26fa49a)), closes [#1163](https://github.com/dequelabs/axe-core/issues/1163)
+- **i18n:** Fix and add Japanese translation ([#1368](https://github.com/dequelabs/axe-core/issues/1368)) ([74fa0a4](https://github.com/dequelabs/axe-core/commit/74fa0a4), [#1291](https://github.com/dequelabs/axe-core/issues/1291)) ([f450176](https://github.com/dequelabs/axe-core/commit/f450176), [#1332](https://github.com/dequelabs/axe-core/issues/1332)) ([0a03c8f](https://github.com/dequelabs/axe-core/commit/0a03c8f), [#1107](https://github.com/dequelabs/axe-core/issues/1107)) ([8138e55](https://github.com/dequelabs/axe-core/commit/8138e55))
+- **messages:** Change messages from "page" to "document" where appropriate ([#1156](https://github.com/dequelabs/axe-core/issues/1156)) ([49dff2b](https://github.com/dequelabs/axe-core/commit/49dff2b)), closes [#983](https://github.com/dequelabs/axe-core/issues/983) [#983](https://github.com/dequelabs/axe-core/issues/983)
+- **rule:** Frame-title applies to wcag242 ([#1312](https://github.com/dequelabs/axe-core/issues/1312)) ([9225ae0](https://github.com/dequelabs/axe-core/commit/9225ae0))
+- **rule:** Prevent th-has-data-cells from crashing on empty rows ([#1285](https://github.com/dequelabs/axe-core/issues/1285)) ([88017be](https://github.com/dequelabs/axe-core/commit/88017be))
+- **typedefs:** Do not require brand and application ([#1264](https://github.com/dequelabs/axe-core/issues/1264)) ([59465dc](https://github.com/dequelabs/axe-core/commit/59465dc)), closes [/github.com/dequelabs/axe-webdriverjs/blob/v2.0.1/lib/axe-injector.js#L28](https://github.com//github.com/dequelabs/axe-webdriverjs/blob/v2.0.1/lib/axe-injector.js/issues/L28)
+- Add Banner comment in generated axe files ([#1112](https://github.com/dequelabs/axe-core/issues/1112)) ([e4788bf](https://github.com/dequelabs/axe-core/commit/e4788bf))
+- Allow div groups for dlitem rule ([#1284](https://github.com/dequelabs/axe-core/issues/1284)) ([d76cd36](https://github.com/dequelabs/axe-core/commit/d76cd36))
+- Allow role presentation and none on object-alt rule ([#1224](https://github.com/dequelabs/axe-core/issues/1224)) ([d475a17](https://github.com/dequelabs/axe-core/commit/d475a17))
+- Avoid IE problems by using nodeName instead of tagName ([#1219](https://github.com/dequelabs/axe-core/issues/1219)) ([cf86ff5](https://github.com/dequelabs/axe-core/commit/cf86ff5))
+- Better unsupported attribute support for aria-roledescription ([#1382](https://github.com/dequelabs/axe-core/issues/1382)) ([93f721e](https://github.com/dequelabs/axe-core/commit/93f721e)), closes [#1216](https://github.com/dequelabs/axe-core/issues/1216)
+- Consider element's accessible names when labels are hidden ([#1187](https://github.com/dequelabs/axe-core/issues/1187)) ([b91b624](https://github.com/dequelabs/axe-core/commit/b91b624)), closes [#1176](https://github.com/dequelabs/axe-core/issues/1176)
+- Correct autocomplete appropriate to handle state terms ([#1121](https://github.com/dequelabs/axe-core/issues/1121)) ([35a4d11](https://github.com/dequelabs/axe-core/commit/35a4d11))
+- Correct autocomplete street address ([#1217](https://github.com/dequelabs/axe-core/issues/1217)) ([27fce9d](https://github.com/dequelabs/axe-core/commit/27fce9d))
+- Correct autocomplete-appropriate node type resolution ([#1318](https://github.com/dequelabs/axe-core/issues/1318)) ([2fc3eeb](https://github.com/dequelabs/axe-core/commit/2fc3eeb))
+- CSSOM generation for shadowRoot in Safari ([#1113](https://github.com/dequelabs/axe-core/issues/1113)) ([a51ae03](https://github.com/dequelabs/axe-core/commit/a51ae03))
+- Don't flag invalid roles in unsupportedrole ([#1328](https://github.com/dequelabs/axe-core/issues/1328)) ([2dfcbaa](https://github.com/dequelabs/axe-core/commit/2dfcbaa))
+- Escape href attribute when generating a CSS selector [[#1137](https://github.com/dequelabs/axe-core/issues/1137)](<[#1366](https://github.com/dequelabs/axe-core/issues/1366)>) ([0c2f42d](https://github.com/dequelabs/axe-core/commit/0c2f42d))
+- Flag hidden elms with disallowed role(s) for review ([#1225](https://github.com/dequelabs/axe-core/issues/1225)) ([bdff141](https://github.com/dequelabs/axe-core/commit/bdff141))
+- Handle noscript and template in dom.isVisible ([#1257](https://github.com/dequelabs/axe-core/issues/1257)) ([e67fc65](https://github.com/dequelabs/axe-core/commit/e67fc65))
+- html-lang-valid should consider xml:lang ([#1152](https://github.com/dequelabs/axe-core/issues/1152)) ([4279c72](https://github.com/dequelabs/axe-core/commit/4279c72))
+- Ignore invalid and allow redundant role in aria-allowed-role ([#1118](https://github.com/dequelabs/axe-core/issues/1118)) ([a0f9b31](https://github.com/dequelabs/axe-core/commit/a0f9b31))
+- Introduce dom.isHiddenWithCSS for use in dom.isFocusable ([#1211](https://github.com/dequelabs/axe-core/issues/1211)) ([2cff417](https://github.com/dequelabs/axe-core/commit/2cff417))
+- Log instead of error on unknown tag ([#1290](https://github.com/dequelabs/axe-core/issues/1290)) ([f82d773](https://github.com/dequelabs/axe-core/commit/f82d773))
+- Prevent TypeErrors in color-contrast checks ([#1320](https://github.com/dequelabs/axe-core/issues/1320)) ([a34165c](https://github.com/dequelabs/axe-core/commit/a34165c)), closes [#1306](https://github.com/dequelabs/axe-core/issues/1306) [#1259](https://github.com/dequelabs/axe-core/issues/1259)
+- Respect preload set to false ([#1298](https://github.com/dequelabs/axe-core/issues/1298)) ([e847d38](https://github.com/dequelabs/axe-core/commit/e847d38))
+- Set preload:true as default ([#1281](https://github.com/dequelabs/axe-core/issues/1281)) ([c9731c8](https://github.com/dequelabs/axe-core/commit/c9731c8))
+- Support skiplinks starting with "/#" ([#1286](https://github.com/dequelabs/axe-core/issues/1286)) ([f93c0c9](https://github.com/dequelabs/axe-core/commit/f93c0c9))
+- Update SC to wcag134 for CSS Orientation Rule ([d3f90df](https://github.com/dequelabs/axe-core/commit/d3f90df))
+
+### Features
+
+- **commons:** Add matches methods ([#1270](https://github.com/dequelabs/axe-core/issues/1270)) ([986c97a](https://github.com/dequelabs/axe-core/commit/986c97a)), closes [#1163](https://github.com/dequelabs/axe-core/issues/1163)
+- **image-alt:** require alt text or empty strings ([#1260](https://github.com/dequelabs/axe-core/issues/1260)) ([e24cea9](https://github.com/dequelabs/axe-core/commit/e24cea9))
+- **new-rule:** New aria-hidden-focus rule ([#1166](https://github.com/dequelabs/axe-core/issues/1166)) ([4489965](https://github.com/dequelabs/axe-core/commit/4489965))
+- **new-rule:** Separate form-field-multiple-label from label rule ([#1226](https://github.com/dequelabs/axe-core/issues/1226)) ([0e0063c](https://github.com/dequelabs/axe-core/commit/0e0063c))
+- **new-rule:** Label and Name from Content mismatch WCAG21 (Issue [#1149](https://github.com/dequelabs/axe-core/issues/1149)) ([#1335](https://github.com/dequelabs/axe-core/issues/1335)) ([a4255da](https://github.com/dequelabs/axe-core/commit/a4255da))
+- **rule:** Require unique aria labels in checkboxgroup & radiogroup ([#1316](https://github.com/dequelabs/axe-core/issues/1316)) ([c9b310d](https://github.com/dequelabs/axe-core/commit/c9b310d))
+- Add a reference to the `node` a rule failed on ([#1321](https://github.com/dequelabs/axe-core/issues/1321)) ([68741de](https://github.com/dequelabs/axe-core/commit/68741de)), closes [#1317](https://github.com/dequelabs/axe-core/issues/1317)
+- Add allowEmpty option for aria-valid-attr-value ([#1154](https://github.com/dequelabs/axe-core/issues/1154)) ([89d18d0](https://github.com/dequelabs/axe-core/commit/89d18d0)), closes [#994](https://github.com/dequelabs/axe-core/issues/994)
+- Add environment details to results ([#1353](https://github.com/dequelabs/axe-core/issues/1353)) ([e795f7d](https://github.com/dequelabs/axe-core/commit/e795f7d))
+- ARIA supported checks ([#1254](https://github.com/dequelabs/axe-core/issues/1254)) ([51a18a8](https://github.com/dequelabs/axe-core/commit/51a18a8)), closes [#918](https://github.com/dequelabs/axe-core/issues/918)
+- New rule landmark-complementary-is-top-level ([#1239](https://github.com/dequelabs/axe-core/issues/1239)) ([328ca2c](https://github.com/dequelabs/axe-core/commit/328ca2c))
+- Pass context argument to rule matches ([#1370](https://github.com/dequelabs/axe-core/issues/1370)) ([b374669](https://github.com/dequelabs/axe-core/commit/b374669))
+- Rebuild the accessible text algorithm ([#1163](https://github.com/dequelabs/axe-core/issues/1163)) ([5f420e5](https://github.com/dequelabs/axe-core/commit/5f420e5))
+- Tag review-items rule as 'best-practice' ([#1344](https://github.com/dequelabs/axe-core/issues/1344)) ([05f37de](https://github.com/dequelabs/axe-core/commit/05f37de))
+
+### Performance Improvements
+
+- Defer rules rather than checks ([#1308](https://github.com/dequelabs/axe-core/issues/1308)) ([80c1c74](https://github.com/dequelabs/axe-core/commit/80c1c74)), closes [#1172](https://github.com/dequelabs/axe-core/issues/1172)
+- Speed up getNodeFromTree ([#1302](https://github.com/dequelabs/axe-core/issues/1302)) ([5f834ed](https://github.com/dequelabs/axe-core/commit/5f834ed))
+- Update performanceTimer end mark for rules ([#1303](https://github.com/dequelabs/axe-core/issues/1303)) ([a28674e](https://github.com/dequelabs/axe-core/commit/a28674e)), closes [#701](https://github.com/dequelabs/axe-core/issues/701) [#1172](https://github.com/dequelabs/axe-core/issues/1172)
+
+### Deprecate
+
+- Deprecate axe.commons.utils namespace ([#1330](https://github.com/dequelabs/axe-core/issues/1330)) ([df93272](https://github.com/dequelabs/axe-core/commit/df93272))
+
 <a name="3.1.2"></a>
 
 ## [3.1.2](https://github.com/dequelabs/axe-core/compare/v3.0.3...v3.1.2) (2018-09-07)

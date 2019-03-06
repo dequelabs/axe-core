@@ -71,7 +71,7 @@ testUtils.shadowSupport = (function(document) {
  * Method for injecting content into a fixture and caching
  * the flattened DOM tree (light and Shadow DOM together)
  *
- * @param Node|String 	Stuff to go into the fixture (html or DOM node)
+ * @param {String|Node} content Stuff to go into the fixture (html or DOM node)
  * @return HTMLElement
  */
 testUtils.fixtureSetup = function(content) {
@@ -333,6 +333,17 @@ testUtils.assertStylesheet = function assertStylesheet(
 			cssText.replace(/\s/g, '')
 		);
 	}
+};
+
+/*
+ * Injecting content into a fixture and return queried element within fixture
+ *
+ * @param {String|Node} content to go into the fixture (html or DOM node)
+ * @return HTMLElement
+ */
+testUtils.queryFixture = function queryFixture(html, query) {
+	testUtils.fixtureSetup(html);
+	return axe.utils.querySelectorAll(axe._tree, query || '#target')[0];
 };
 
 axe.testUtils = testUtils;
