@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.2](https://github.com/dequelabs/axe-core/compare/v3.2.0...v3.2.2) (2019-03-07)
+
+### Bug Fixes
+
+- Avoid "screen is not defined" error [[#1404](https://github.com/dequelabs/axe-core/issues/1404)](<[#1415](https://github.com/dequelabs/axe-core/issues/1415)>) ([c9653a5](https://github.com/dequelabs/axe-core/commit/c9653a5))
+- Avoid require conflict with Cypress [[#1405](https://github.com/dequelabs/axe-core/issues/1405)](<[#1406](https://github.com/dequelabs/axe-core/issues/1406)>) ([30aa570](https://github.com/dequelabs/axe-core/commit/30aa570))
+
 ## [3.2.1](https://github.com/dequelabs/axe-core/compare/v3.2.0...v3.2.1) (2019-03-06)
 
 ### Bug Fixes
