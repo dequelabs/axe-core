@@ -43,6 +43,9 @@ describe('helpers.getEnvironmentData', function() {
 		assert.isDefined(data.url);
 	});
 
+	// TODO: remove or update test once we are testing axe-core in jsdom and
+	// other supported environments as what this is testing should be done in
+	// those environment tests
 	it('gets data from the `win` parameter when passed', function() {
 		var data = helpers.getEnvironmentData({
 			screen: {
