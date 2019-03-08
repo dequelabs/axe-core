@@ -1,7 +1,7 @@
 {
 	"name": "axe-core",
 	"description": "Accessibility engine for automated Web UI testing",
-	"version": "3.2.1",
+	"version": "3.2.2",
 	"license": "MPL-2.0",
 	"engines": {
 		"node": ">=4"
@@ -90,7 +90,7 @@
 		"emoji-regex": "8.0.0",
 		"es6-promise": "^4.2.6",
 		"eslint": "^5.14.0",
-		"eslint-config-prettier": "^3.4.0",
+		"eslint-config-prettier": "^4.1.0",
 		"execa": "^1.0.0",
 		"fs-extra": "^7.0.0",
 		"globby": "^8.0.1",
