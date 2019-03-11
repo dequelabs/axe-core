@@ -2,11 +2,13 @@ describe('axe.utils.preload', function() {
 	'use strict';
 
 	var isPhantom = window.PHANTOMJS ? true : false;
+	var fixture = document.getElementById('fixture');
 
 	before(function() {
 		if (isPhantom) {
 			this.skip(); // if `phantomjs` -> skip `suite`
 		}
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 	});
 
 	it('should return a Promise', function() {
@@ -41,11 +43,10 @@ describe('axe.utils.preload', function() {
 		actual
 			.then(function(results) {
 				assert.isDefined(results);
-				assert.isArray(results);
-				assert.property(results[0], 'cssom');
+				assert.property(results, 'cssom');
 				// also verify that result from css matches that of preloadCssom
 				axe.utils.preloadCssom(options).then(function(resultFromPreloadCssom) {
-					assert.deepEqual(results[0].cssom, resultFromPreloadCssom[0]);
+					assert.deepEqual(results.cssom, resultFromPreloadCssom);
 					done();
 				});
 			})
