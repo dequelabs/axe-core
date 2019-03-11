@@ -1,6 +1,14 @@
 describe('axe.utils.preload', function() {
 	'use strict';
 
+	var isPhantom = window.PHANTOMJS ? true : false;
+
+	before(function() {
+		if (isPhantom) {
+			this.skip(); // if `phantomjs` -> skip `suite`
+		}
+	});
+
 	it('should return a Promise', function() {
 		var actual = axe.utils.preload({});
 		assert.isTrue(

@@ -21,7 +21,6 @@ describe('preload integration test', function() {
 	before(function(done) {
 		if (isPhantom) {
 			this.skip();
-			done();
 		} else {
 			// load custom rule
 			// load custom check

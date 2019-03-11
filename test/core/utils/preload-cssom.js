@@ -8,6 +8,14 @@
 describe('axe.utils.preloadCssom unit tests', function() {
 	'use strict';
 
+	var isPhantom = window.PHANTOMJS ? true : false;
+
+	before(function() {
+		if (isPhantom) {
+			this.skip(); // if `phantomjs` -> skip `suite`
+		}
+	});
+
 	var args;
 
 	function addStyleToHead() {
@@ -44,7 +52,7 @@ describe('axe.utils.preloadCssom unit tests', function() {
 		assert.isFunction(axe.utils.preloadCssom);
 	});
 
-	it('should return a queue', function() {
+	it('should return a Promise', function() {
 		var actual = axe.utils.preloadCssom(args);
 		assert.isTrue(
 			Object.prototype.toString.call(actual) === '[object Promise]'

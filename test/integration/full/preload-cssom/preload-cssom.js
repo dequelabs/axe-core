@@ -45,10 +45,6 @@ describe('preload cssom integration test', function() {
 	var nestedFrame;
 
 	before(function(done) {
-		if (isPhantom) {
-			// if `phantomjs` -> skip `suite`
-			this.skip();
-		}
 		axe.testUtils.awaitNestedLoad(function() {
 			nestedFrame = document.getElementById('frame1').contentDocument;
 			done();
