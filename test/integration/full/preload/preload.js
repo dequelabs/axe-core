@@ -116,7 +116,7 @@ describe('preload integration test', function() {
 				var crossOriginSheet = cssom.filter(function(s) {
 					return s.isCrossOrigin;
 				});
-				assert.lengthOf(crossOriginSheet, 0);
+				assert.lengthOf(crossOriginSheet, 1);
 
 				var inlineStylesheet = cssom.filter(function(s) {
 					return s.sheet.cssRules.length === 1 && !s.isCrossOrigin;
