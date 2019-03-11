@@ -1,4 +1,4 @@
-/* global axe, Promise */
+/* global axe */
 describe('preload integration test', function() {
 	'use strict';
 

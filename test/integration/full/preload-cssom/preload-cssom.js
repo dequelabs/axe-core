@@ -1,4 +1,4 @@
-/* global axe, Promise */
+/* global axe */
 describe('preload cssom integration test', function() {
 	'use strict';
 

@@ -1,41 +1,11 @@
 describe('axe.utils.preload', function() {
 	'use strict';
 
-	it('should return a queue', function() {
+	it('should return a Promise', function() {
 		var actual = axe.utils.preload({});
-		assert.isObject(actual);
-		assert.containsAllKeys(actual, ['then', 'defer', 'catch']);
-	});
-
-	it('should ensure queue is defer(able)', function(done) {
-		var options = {
-			preload: false
-		};
-		var actual = axe.utils.preload(options);
-		actual
-			.defer(function(res, rej) {
-				assert.isFunction(rej);
-				res(true);
-				done();
-			})
-			.catch(function(error) {
-				done(error);
-			});
-	});
-
-	it('should ensure queue is then(able)', function(done) {
-		var options = {
-			preload: false
-		};
-		var actual = axe.utils.preload(options);
-		actual
-			.then(function(results) {
-				assert.isDefined(results);
-				done();
-			})
-			.catch(function(error) {
-				done(error);
-			});
+		assert.isTrue(
+			Object.prototype.toString.call(actual) === '[object Promise]'
+		);
 	});
 
 	it('should return empty array as result', function(done) {

@@ -1,3 +1,10 @@
+/**
+ * NOTE:
+ * `document.styleSheets` does not recognize dynamically injected stylesheets after `load` via `beforeEach`/ `before`,
+ * so tests for disabled and external stylesheets are done in `integration` tests
+ * Refer Directory: `./test/full/preload-cssom/**.*`
+ */
+
 describe('axe.utils.preloadCssom unit tests', function() {
 	'use strict';
 
@@ -39,8 +46,9 @@ describe('axe.utils.preloadCssom unit tests', function() {
 
 	it('should return a queue', function() {
 		var actual = axe.utils.preloadCssom(args);
-		assert.isObject(actual);
-		assert.containsAllKeys(actual, ['then', 'defer', 'catch']);
+		assert.isTrue(
+			Object.prototype.toString.call(actual) === '[object Promise]'
+		);
 	});
 
 	it('should ensure result of cssom is an array of sheets', function(done) {
@@ -107,9 +115,4 @@ describe('axe.utils.preloadCssom unit tests', function() {
 				done(error);
 			});
 	});
-
-	/**
-	 * NOTE: document.styleSheets does not recognise dynamically injected stylesheets after load via beforeEach/ before, so tests for disabled and external stylesheets are done in integration
-	 * Refer Directory: ./test/full/preload-cssom/**.*
-	 */
 });
