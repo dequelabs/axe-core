@@ -3,7 +3,6 @@ describe('preload integration test', function() {
 	'use strict';
 
 	var isPhantom = window.PHANTOMJS ? true : false;
-
 	var styleSheets = [
 		{
 			href: 'https://unpkg.com/gutenberg-css@0.4'

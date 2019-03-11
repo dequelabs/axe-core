@@ -16,16 +16,14 @@ describe('axe.utils.preload', function() {
 		);
 	});
 
-	it('should return empty array as result', function(done) {
+	it('should return `undefined` as result', function(done) {
 		var options = {
 			preload: false
 		};
 		var actual = axe.utils.preload(options);
 		actual
 			.then(function(results) {
-				assert.isDefined(results);
-				assert.isArray(results);
-				assert.lengthOf(results, 0);
+				assert.isUndefined(results);
 				done();
 			})
 			.catch(function(error) {

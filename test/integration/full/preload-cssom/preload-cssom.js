@@ -100,8 +100,7 @@ describe('preload cssom integration test', function() {
 						done(err);
 					}
 					getPreload(root)
-						.then(function(results) {
-							var sheets = results[0];
+						.then(function(sheets) {
 							assert.lengthOf(sheets, 1);
 							var sheetData = sheets[0].sheet;
 							axe.testUtils.assertStylesheet(
@@ -132,8 +131,7 @@ describe('preload cssom integration test', function() {
 						done(err);
 					}
 					getPreload()
-						.then(function(results) {
-							var sheets = results[0];
+						.then(function(sheets) {
 							assert.lengthOf(sheets, 0);
 							done();
 						})
@@ -230,8 +228,7 @@ describe('preload cssom integration test', function() {
 					done(err);
 				}
 				getPreload()
-					.then(function(results) {
-						var sheets = results[0];
+					.then(function(sheets) {
 						assert.lengthOf(sheets, 1);
 						var sheetData = sheets[0].sheet;
 						axe.testUtils.assertStylesheet(
@@ -254,8 +251,7 @@ describe('preload cssom integration test', function() {
 					done(err);
 				}
 				getPreload()
-					.then(function(results) {
-						var sheets = results[0];
+					.then(function(sheets) {
 						assert.lengthOf(sheets, 1);
 						var nonCrossOriginSheets = sheets.filter(function(s) {
 							return !s.isCrossOrigin;
@@ -287,8 +283,7 @@ describe('preload cssom integration test', function() {
 					'</style>' +
 					'<div class="initialism">Some text</div>';
 				getPreload(shadowFixture)
-					.then(function(results) {
-						var sheets = results[0];
+					.then(function(sheets) {
 						assert.lengthOf(sheets, 2);
 						var nonCrossOriginSheetsWithInShadowDOM = sheets
 							.filter(function(s) {
@@ -330,8 +325,7 @@ describe('preload cssom integration test', function() {
 						done(err);
 					}
 					getPreload(shadowFixture)
-						.then(function(results) {
-							var sheets = results[0];
+						.then(function(sheets) {
 							assert.lengthOf(sheets, 2);
 
 							var shadowDomStyle = sheets.filter(function(s) {
@@ -368,8 +362,7 @@ describe('preload cssom integration test', function() {
 					done(err);
 				}
 				getPreload()
-					.then(function(results) {
-						var sheets = results[0];
+					.then(function(sheets) {
 						assert.lengthOf(sheets, 2);
 						var nonCrossOriginSheets = sheets.filter(function(s) {
 							return !s.isCrossOrigin;
@@ -400,8 +393,7 @@ describe('preload cssom integration test', function() {
 					done(err);
 				}
 				getPreload()
-					.then(function(results) {
-						var sheets = results[0];
+					.then(function(sheets) {
 						assert.lengthOf(sheets, 1);
 						var nonCrossOriginSheets = sheets.filter(function(s) {
 							return !s.isCrossOrigin;
@@ -427,8 +419,7 @@ describe('preload cssom integration test', function() {
 					done(err);
 				}
 				getPreload()
-					.then(function(results) {
-						var sheets = results[0];
+					.then(function(sheets) {
 						assert.lengthOf(sheets, 1);
 						axe.testUtils.assertStylesheet(
 							sheets[0].sheet,
@@ -450,8 +441,7 @@ describe('preload cssom integration test', function() {
 					done(err);
 				}
 				getPreload()
-					.then(function(results) {
-						var sheets = results[0];
+					.then(function(sheets) {
 						assert.lengthOf(sheets, 1);
 						axe.testUtils.assertStylesheet(
 							sheets[0].sheet,
@@ -482,8 +472,7 @@ describe('preload cssom integration test', function() {
 
 		it('returns styles defined using <style> tag', function(done) {
 			getPreload(nestedFrame)
-				.then(function(results) {
-					var sheets = results[0];
+				.then(function(sheets) {
 					assert.lengthOf(sheets, 2);
 
 					var nonCrossOriginSheet = sheets.filter(function(s) {

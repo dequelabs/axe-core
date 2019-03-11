@@ -747,7 +747,7 @@ describe('Audit', function() {
 			);
 		});
 
-		it.skip('should continue to run rules and return result when preload is rejected', function(done) {
+		it('should continue to run rules and return result when preload is rejected', function(done) {
 			fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
 
 			var preloadOverrideInvoked = false;
