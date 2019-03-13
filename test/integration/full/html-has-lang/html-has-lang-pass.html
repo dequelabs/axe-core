@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="klingon" id="pass1">
+
 <head>
 	<title>html-has-lang test</title>
 	<meta charset="utf8">
@@ -16,10 +17,15 @@
 		var assert = chai.assert;
 	</script>
 </head>
+
 <body>
-	<iframe id="frame1" src="frames/level1.html"></iframe>
+	<!-- 
+			Note: 
+			This rule does not include `iframe` uses matches "window-is-top.js" 
+		-->
 	<div id="mocha"></div>
-	<script src="html-has-lang.js"></script>
+	<script src="html-has-lang-pass.js"></script>
 	<script src="/test/integration/adapter.js"></script>
 </body>
+
 </html>
