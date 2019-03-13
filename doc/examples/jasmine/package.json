@@ -10,11 +10,12 @@
 	},
 	"dependencies": {},
 	"scripts": {
-		"test": "grunt jasmine"
+		"test": "karma start karma.conf.js"
 	},
 	"devDependencies": {
-		"axe-core": "^3.1.1",
-		"grunt": "~1.0.2",
-		"grunt-contrib-jasmine": "~2.0.0"
+		"axe-core": "^3.2.2",
+		"karma": "^4.0.1",
+		"karma-chrome-launcher": "^2.2.0",
+		"karma-jasmine": "^2.0.1"
 	}
 }
