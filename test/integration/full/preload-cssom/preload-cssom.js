@@ -143,30 +143,6 @@ describe('preload cssom integration test', function() {
 			);
 		});
 
-		it('throws if cross-origin stylesheet request timeouts', function(done) {
-			stylesForPage = [styleSheets.crossOriginLinkHref];
-			attachStylesheets(
-				{
-					root,
-					styles: stylesForPage
-				},
-				function(err) {
-					if (err) {
-						done(err);
-					}
-					getPreload(root, 5)
-						.then(() => {
-							done(new Error('Expected getPreload to reject.'));
-						})
-						.catch(err => {
-							assert.isDefined(err);
-							done();
-						});
-				},
-				root
-			);
-		});
-
 		it('throws if cross-origin stylesheet fail to load', function(done) {
 			stylesForPage = [
 				{
@@ -452,6 +428,23 @@ describe('preload cssom integration test', function() {
 					})
 					.catch(function() {
 						done(new Error('Expected getPreload to resolve.'));
+					});
+			});
+		});
+
+		it('throws if cross-origin stylesheet request timeouts', function(done) {
+			stylesForPage = [styleSheets.crossOriginLinkHref];
+			attachStylesheets({ styles: stylesForPage }, function(err) {
+				if (err) {
+					done(err);
+				}
+				getPreload(undefined, 1)
+					.then(() => {
+						done(new Error('Expected getPreload to reject.'));
+					})
+					.catch(err => {
+						assert.isDefined(err);
+						done();
 					});
 			});
 		});
