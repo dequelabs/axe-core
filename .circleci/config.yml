@@ -77,6 +77,18 @@ jobs:
       - run: npm run build
       - run: npm publish
 
+  # Create a GitHub release.
+  github_release:
+    steps:
+      - checkout
+      - run: go get gopkg.in/aktau/github-release.v0
+      - run:
+          name: Download and run GitHub release script
+          command: |
+            curl https://raw.githubusercontent.com/dequelabs/attest-release-scripts/develop/src/node-github-release.sh -s -o ./node-github-release.sh
+            chmod +x ./node-github-release.sh
+            ./node-github-release.sh
+
 workflows:
   version: 2
   build:
@@ -121,3 +133,6 @@ workflows:
           filters:
             branches:
               only: master
+      - github_release:
+          requires:
+            - production_release
