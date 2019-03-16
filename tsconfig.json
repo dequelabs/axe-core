@@ -1,7 +1,11 @@
 {
 	"compilerOptions": {
-		"noImplicitAny": true
+		"outDir": "./ts-out",
+		"allowJs": true,
+		"target": "es5",
+		"noImplicitAny": true,
+		"skipLibCheck": true
 	},
-	"include": ["typings/axe-core/axe-core-tests.ts"],
-	"exclude": ["node_modules"]
+	"include": ["./**/*"],
+	"exclude": ["./node_modules", "./ts-out", "./tmp", "./build"]
 }

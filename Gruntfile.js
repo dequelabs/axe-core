@@ -18,6 +18,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-parallel');
 	grunt.loadNpmTasks('grunt-run');
+	grunt.loadNpmTasks('grunt-ts');
 	grunt.loadTasks('build/tasks');
 
 	var langs;
@@ -70,7 +71,7 @@ module.exports = function(grunt) {
 			});
 			return driverTests;
 		})(),
-		clean: ['dist', 'tmp', 'axe.js', 'axe.*.js'],
+		clean: ['dist', 'ts-out', 'tmp', 'axe.js', 'axe.*.js'],
 		babel: {
 			options: {
 				compact: 'false'
@@ -79,7 +80,7 @@ module.exports = function(grunt) {
 				files: [
 					{
 						expand: true,
-						cwd: 'lib/core',
+						cwd: 'ts-out/lib/core',
 						src: ['**/*.js', '!imports/index.js'],
 						dest: 'tmp/core'
 					}
@@ -101,7 +102,7 @@ module.exports = function(grunt) {
 				version: '<%=pkg.version%>'
 			},
 			rules: {
-				src: ['lib/rules/**/*.json']
+				src: ['ts-out/lib/rules/**/*.json']
 			}
 		},
 		concat: {
@@ -118,11 +119,11 @@ module.exports = function(grunt) {
 				files: langs.map(function(lang, i) {
 					return {
 						src: [
-							'lib/intro.stub',
-							'<%= concat.engine.coreFiles %>',
+							'ts-out/lib/intro.stub',
+							'<%= concat.engine.coreFiles %>', // >>>>>> find what this is
 							// include rules / checks / commons
-							'<%= configure.rules.files[' + i + '].dest.auto %>',
-							'lib/outro.stub'
+							'<%= configure.rules.files[' + i + '].dest.auto %>', // >>>>>> find what this is
+							'ts-out/lib/outro.stub'
 						],
 						dest: 'axe' + lang + '.js'
 					};
@@ -130,18 +131,18 @@ module.exports = function(grunt) {
 			},
 			commons: {
 				src: [
-					'lib/commons/intro.stub',
-					'lib/commons/index.js',
-					'lib/commons/*/index.js',
-					'lib/commons/**/*.js',
-					'lib/commons/outro.stub'
+					'ts-out/lib/commons/intro.stub',
+					'ts-out/lib/commons/index.js',
+					'ts-out/lib/commons/*/index.js',
+					'ts-out/lib/commons/**/*.js',
+					'ts-out/lib/commons/outro.stub'
 				],
 				dest: 'tmp/commons.js'
 			}
 		},
 		'aria-supported': {
 			data: {
-				entry: 'lib/commons/aria/index.js',
+				entry: 'ts-out/lib/commons/aria/index.js',
 				destFile: 'doc/aria-supported.md',
 				listType: 'unsupported' // Possible values for listType: 'supported', 'unsupported', 'all'
 			}
@@ -153,6 +154,7 @@ module.exports = function(grunt) {
 					tags: grunt.option('tags')
 				},
 				files: langs.map(function(lang) {
+					//console.log(">>>>concat.commons.dest is >>>", concat.commons.dest);
 					return {
 						src: ['<%= concat.commons.dest %>'],
 						dest: {
@@ -161,6 +163,22 @@ module.exports = function(grunt) {
 						}
 					};
 				})
+			}
+		},
+		copy: {
+			resources: {
+				files: [
+					{
+						src: ['./test/**/*', './lib/**/*', '!./**/*.ts', '!./**/*.js'],
+						dest: './ts-out',
+						expand: true
+					}
+				]
+			}
+		},
+		ts: {
+			default: {
+				tsconfig: './tsconfig.json'
 			}
 		},
 		'add-locale': {
@@ -174,7 +192,7 @@ module.exports = function(grunt) {
 		},
 		langs: {
 			generate: {
-				check: 'lib/commons/utils/valid-langs'
+				check: 'ts-out/lib/commons/utils/valid-langs'
 			}
 		},
 		validate: {
@@ -182,18 +200,19 @@ module.exports = function(grunt) {
 				options: {
 					type: 'check'
 				},
-				src: 'lib/checks/**/*.json'
+				src: 'ts-out/lib/checks/**/*.json'
 			},
 			rule: {
 				options: {
 					type: 'rule'
 				},
-				src: 'lib/rules/**/*.json'
+				src: 'ts-out/lib/rules/**/*.json'
 			}
 		},
 		uglify: {
 			beautify: {
 				files: langs.map(function(lang, i) {
+					//	console.log(">>>> concat.engine.files[0] is ", concat.engine.files[0]);
 					return {
 						src: ['<%= concat.engine.files[' + i + '].dest %>'],
 						dest: '<%= concat.engine.files[' + i + '].dest %>'
@@ -243,17 +262,17 @@ module.exports = function(grunt) {
 		},
 		testconfig: {
 			test: {
-				src: ['test/integration/rules/**/*.json'],
+				src: ['ts-out/test/integration/rules/**/*.json'],
 				dest: 'tmp/integration-tests.js'
 			}
 		},
 		fixture: {
 			engine: {
 				src: ['<%= concat.engine.coreFiles %>'],
-				dest: 'test/core/index.html',
+				dest: 'ts-out/test/core/index.html',
 				options: {
-					fixture: 'test/runner.tmpl',
-					testCwd: 'test/core',
+					fixture: 'ts-out/test/runner.tmpl',
+					testCwd: 'ts-out/test/core',
 					data: {
 						title: 'aXe Core Tests'
 					}
@@ -265,10 +284,10 @@ module.exports = function(grunt) {
 					'build/test/engine.js',
 					'<%= configure.rules.tmp %>'
 				],
-				dest: 'test/checks/index.html',
+				dest: 'ts-out/test/checks/index.html',
 				options: {
-					fixture: 'test/runner.tmpl',
-					testCwd: 'test/checks',
+					fixture: 'ts-out/test/runner.tmpl',
+					testCwd: 'ts-out/test/checks',
 					data: {
 						title: 'aXe Check Tests'
 					}
@@ -280,10 +299,10 @@ module.exports = function(grunt) {
 					'build/test/engine.js',
 					'<%= configure.rules.tmp %>'
 				],
-				dest: 'test/commons/index.html',
+				dest: 'ts-out/test/commons/index.html',
 				options: {
-					fixture: 'test/runner.tmpl',
-					testCwd: 'test/commons',
+					fixture: 'ts-out/test/runner.tmpl',
+					testCwd: 'ts-out/test/commons',
 					data: {
 						title: 'aXe Commons Tests'
 					}
@@ -295,10 +314,10 @@ module.exports = function(grunt) {
 					'build/test/engine.js',
 					'<%= configure.rules.tmp %>'
 				],
-				dest: 'test/rule-matches/index.html',
+				dest: 'ts-out/test/rule-matches/index.html',
 				options: {
-					fixture: 'test/runner.tmpl',
-					testCwd: 'test/rule-matches',
+					fixture: 'ts-out/test/runner.tmpl',
+					testCwd: 'ts-out/test/rule-matches',
 					data: {
 						title: 'aXe Rule Matches Tests'
 					}
@@ -306,11 +325,11 @@ module.exports = function(grunt) {
 			},
 			integration: {
 				src: ['<%= concat.engine.files[0].dest %>'],
-				dest: 'test/integration/rules/index.html',
+				dest: 'ts-out/test/integration/rules/index.html',
 				options: {
-					fixture: 'test/runner.tmpl',
-					testCwd: 'test/integration/rules',
-					tests: ['../../../tmp/integration-tests.js', 'runner.js'],
+					fixture: 'ts-out/test/runner.tmpl',
+					testCwd: 'ts-out/test/integration/rules',
+					tests: ['../../../../tmp/integration-tests.js', 'runner.js'],
 					data: {
 						title: 'aXe Integration Tests'
 					}
@@ -339,10 +358,15 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('pre-build', ['clean', 'run:npm_run_imports']);
+	grunt.registerTask('pre-build', [
+		'clean',
+		'run:npm_run_imports',
+		'copy:resources'
+	]);
 
 	grunt.registerTask('build', [
 		'pre-build',
+		'ts',
 		'validate',
 		'concat:commons',
 		'configure',
@@ -380,6 +404,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('translate', [
 		'pre-build',
+		'ts',
 		'validate',
 		'concat:commons',
 		'add-locale'

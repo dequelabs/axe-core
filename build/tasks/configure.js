@@ -10,9 +10,9 @@ module.exports = function(grunt) {
 		function() {
 			var done = this.async();
 			var options = this.options({
-				rules: ['lib/rules/**/*.json'],
-				checks: ['lib/checks/**/*.json'],
-				misc: ['lib/misc/**/*.json'],
+				rules: ['ts-out/lib/rules/**/*.json'],
+				checks: ['ts-out/lib/checks/**/*.json'],
+				misc: ['ts-out/lib/misc/**/*.json'],
 				blacklist: ['metadata'],
 				tags: ''
 			});

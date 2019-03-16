@@ -4,9 +4,11 @@ npm-shrinkwrap.json
 package-lock.json
 .DS_Store
 .vscode
+.tscache
 
-# tmp - `dev` time generated assets
+# `dev` time generated assets
 tmp
+ts-out
 
 # test - runner generated assets
 test/*/index.html
