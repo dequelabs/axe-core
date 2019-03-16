@@ -1,4 +1,4 @@
-describe('css-orientation-lock tests', function() {
+describe.skip('css-orientation-lock tests', function() {
 	'use strict';
 
 	var checkContext = axe.testUtils.MockCheckContext();
