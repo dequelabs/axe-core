@@ -68,7 +68,7 @@ jobs:
       - run: npm publish --tag=next
 
   # Release a "production" version
-  production_release:
+  release:
     <<: *defaults
     steps:
       - checkout
@@ -127,7 +127,7 @@ workflows:
             branches:
               only: develop
       # Run a production release on "master" commits, but only after the tests pass and dependencies are installed
-      - production_release:
+      - release:
           requires:
             - dependencies
             - test
@@ -137,4 +137,4 @@ workflows:
               only: master
       - github_release:
           requires:
-            - production_release
+            - release
