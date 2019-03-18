@@ -1,0 +1,12 @@
+{
+	"id": "avoid-inline-spacing",
+	"evaluate": "avoid-inline-spacing.js",
+	"metadata": {
+		"impact": "moderate",
+		"messages": {
+			"pass": "No CSS styles that affect inline spacing",
+			"fail": "CSS styles, that affect inline spacing is specified",
+			"incomplete": "Inline spacing styles that affect accessibility cannot be determined"
+		}
+	}
+}

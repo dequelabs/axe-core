@@ -1,0 +1,12 @@
+{
+	"id": "avoid-inline-spacing",
+	"tags": ["wcag21", "wcag1412"],
+	"metadata": {
+		"description": "Ensures inline spacing is not affected by custom CSS styles",
+		"help": "CSS styles that affect inline spacing are not used"
+	},
+	"preload": true,
+	"all": [],
+	"any": ["avoid-inline-spacing"],
+	"none": []
+}
