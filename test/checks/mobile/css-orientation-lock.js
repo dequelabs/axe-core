@@ -3,7 +3,7 @@ describe('css-orientation-lock tests', function() {
 
 	var checkContext = axe.testUtils.MockCheckContext();
 	var origCheck = checks['css-orientation-lock'];
-	var dynamicDoc = document.implementation.createHTMLDocument();
+	var dynamicDoc = document.implementation.createHTMLDocument('ie is dumb');
 
 	afterEach(function() {
 		checks['css-orientation-lock'] = origCheck;
