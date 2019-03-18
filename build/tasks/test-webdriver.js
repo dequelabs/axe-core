@@ -4,7 +4,6 @@ max-statements: ["error", 20],
 */
 'use strict';
 
-var Promise = require('promise');
 var WebDriver = require('selenium-webdriver');
 
 module.exports = function(grunt) {
