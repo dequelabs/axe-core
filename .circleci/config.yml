@@ -57,6 +57,14 @@ jobs:
             - phantomjs
       - run: npm run test
 
+  # Run examples under `doc/examples`
+  test_examples:
+    <<: *defaults
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache
+      - run: npm run test:examples
+
   # Release a "next" version
   next_release:
     <<: *defaults
@@ -92,11 +100,15 @@ workflows:
           requires:
             - dependencies
             - lint
+      - test_examples:
+          requires:
+            - test
       # Hold for approval
       - hold:
           type: approval
           requires:
             - test
+            - test_examples
           filters:
             # We only want to hold on these two branches, as PR review acts as approval for PRs
             branches:
@@ -108,6 +120,7 @@ workflows:
           requires:
             - dependencies
             - test
+            - test_examples
             - hold
           filters:
             branches:
@@ -117,6 +130,7 @@ workflows:
           requires:
             - dependencies
             - test
+            - test_examples
             - hold
           filters:
             branches:
