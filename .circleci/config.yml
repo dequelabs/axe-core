@@ -62,6 +62,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - <<: *restore_dependency_cache
       - run: npm run test:examples
 
   # Release a "next" version
@@ -99,7 +100,9 @@ workflows:
           requires:
             - dependencies
             - lint
-      - test_examples
+      - test_examples:
+          requires:
+            - test
       # Hold for approval
       - hold:
           type: approval
