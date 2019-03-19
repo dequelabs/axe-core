@@ -1,0 +1,11 @@
+{
+	"id": "avoid-inline-spacing",
+	"evaluate": "avoid-inline-spacing.js",
+	"metadata": {
+		"impact": "serious",
+		"messages": {
+			"pass": "No inline styles that affect text spacing has been specified",
+			"fail": "Inline styles that affect text spacing has been specified"
+		}
+	}
+}
