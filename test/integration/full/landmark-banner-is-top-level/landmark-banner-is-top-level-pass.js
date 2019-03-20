@@ -2,6 +2,7 @@ describe('landmark-banner-is-top-level test pass', function() {
 	'use strict';
 	var results;
 	var isIE11 = axe.testUtils.isIE11;
+
 	before(function(done) {
 		axe.testUtils.awaitNestedLoad(function() {
 			axe.run(
@@ -22,6 +23,7 @@ describe('landmark-banner-is-top-level test pass', function() {
 	});
 
 	describe('passes', function() {
+		// This currently breaks in IE11
 		(isIE11 ? it.skip : it)('should find 3', function() {
 			assert.lengthOf(results.passes[0].nodes, 2);
 		});

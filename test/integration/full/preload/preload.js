@@ -21,6 +21,7 @@ describe('preload integration test', function() {
 	];
 
 	before(function(done) {
+		// These tests currently break in IE11
 		if (isPhantom || isIE11) {
 			this.skip();
 			done();

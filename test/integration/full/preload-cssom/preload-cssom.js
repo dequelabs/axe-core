@@ -151,6 +151,7 @@ describe('preload cssom integration test', function() {
 		var shadowFixture;
 
 		before(function() {
+			// These tests currently break in IE11
 			if (isPhantom || isIE11) {
 				this.skip();
 			}
@@ -363,6 +364,7 @@ describe('preload cssom integration test', function() {
 
 	describe('tests for nested iframe', function() {
 		before(function() {
+			// These tests currently break in IE11
 			if (isPhantom || isIE11) {
 				this.skip();
 			}

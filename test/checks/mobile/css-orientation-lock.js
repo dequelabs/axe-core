@@ -219,6 +219,7 @@ describe('css-orientation-lock tests', function() {
 		assert.isTrue(actual);
 	});
 
+	// This currently breaks in IE11
 	(isIE11 ? it.skip : it)(
 		'returns false if TRANSFORM style applied is ROTATE, and is divisible by 90 and not divisible by 180',
 		function() {

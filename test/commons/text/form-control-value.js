@@ -120,6 +120,7 @@ describe('text.formControlValue', function() {
 				});
 		});
 
+		// This currently breaks in IE11
 		(isIE11 ? it.skip : it)(
 			'returns `` for non-text input elements',
 			function() {

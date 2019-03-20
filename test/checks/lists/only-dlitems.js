@@ -127,6 +127,7 @@ describe('only-dlitems', function() {
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
 
+	// This currently breaks in IE11
 	(isIE11 ? it.skip : it)(
 		'should return false if <link> is used along side dt',
 		function() {
