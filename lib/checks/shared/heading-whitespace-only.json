@@ -1,0 +1,12 @@
+{
+	"id": "heading-whitespace-only",
+	"evaluate": "heading-whitespace-only.js",
+	"metadata": {
+		"impact": "minor",
+		"messages": {
+			"pass": "Element is empty or does not have whitespace",
+			"fail": "Element does not have text that is visible to screen readers and contains only whitespace characters",
+			"incomplete": ""
+		}
+	}
+}

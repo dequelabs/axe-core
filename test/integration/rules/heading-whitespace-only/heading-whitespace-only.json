@@ -1,0 +1,6 @@
+{
+	"description": "heading-whitespace-only tests",
+	"rule": "heading-whitespace-only",
+	"violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"]],
+	"passes": [["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"]]
+}
