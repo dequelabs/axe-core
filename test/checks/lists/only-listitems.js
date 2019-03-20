@@ -4,6 +4,7 @@ describe('only-listitems', function() {
 	var fixture = document.getElementById('fixture');
 	var checkSetup = axe.testUtils.checkSetup;
 	var shadowSupport = axe.testUtils.shadowSupport;
+	var isIE11 = axe.testUtils.isIE11;
 
 	var checkContext = axe.testUtils.MockCheckContext();
 
@@ -139,15 +140,18 @@ describe('only-listitems', function() {
 		);
 	});
 
-	it('should return false if <link> is used along side li', function() {
-		var checkArgs = checkSetup(
-			'<ol id="target"><link rel="stylesheet" href="theme.css"><li>A list</li></ol>'
-		);
+	(isIE11 ? it.skip : it)(
+		'should return false if <link> is used along side li',
+		function() {
+			var checkArgs = checkSetup(
+				'<ol id="target"><link rel="stylesheet" href="theme.css"><li>A list</li></ol>'
+			);
 
-		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
-		);
-	});
+			assert.isFalse(
+				checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			);
+		}
+	);
 
 	it('should return false if <meta> is used along side li', function() {
 		var checkArgs = checkSetup(

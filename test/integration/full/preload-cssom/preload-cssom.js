@@ -5,6 +5,7 @@ describe('preload cssom integration test', function() {
 	var origAxios;
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var isPhantom = window.PHANTOMJS ? true : false;
+	var isIE11 = axe.testUtils.isIE11;
 
 	var styleSheets = [
 		{
@@ -150,7 +151,7 @@ describe('preload cssom integration test', function() {
 		var shadowFixture;
 
 		before(function() {
-			if (isPhantom) {
+			if (isPhantom || isIE11) {
 				this.skip();
 			}
 		});
@@ -362,7 +363,7 @@ describe('preload cssom integration test', function() {
 
 	describe('tests for nested iframe', function() {
 		before(function() {
-			if (isPhantom) {
+			if (isPhantom || isIE11) {
 				this.skip();
 			}
 		});
