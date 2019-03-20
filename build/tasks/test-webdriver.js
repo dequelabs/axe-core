@@ -1,5 +1,5 @@
 /*global window */
-/*eslint 
+/*eslint
 max-statements: ["error", 20],
 */
 'use strict';
@@ -44,16 +44,20 @@ module.exports = function(grunt) {
 				.get(url)
 				// Get results
 				.then(function() {
-					return collectTestResults(driver);
+					let driverBrowser = driver
+						.getCapabilities()
+						.then(capabilities => capabilities.get('browserName'));
+					return Promise.all([driverBrowser, collectTestResults(driver)]);
 				})
 				// And process them
-				.then(function(result) {
-					grunt.log.writeln(url);
+				.then(function([browser, result]) {
+					grunt.log.writeln(url + ' [' + browser + ']');
 
 					// Remember the errors
 					(result.reports || []).forEach(function(err) {
 						grunt.log.error(err.message);
 						err.url = url;
+						err.browser = browser;
 						errors.push(err);
 					});
 
@@ -188,6 +192,7 @@ module.exports = function(grunt) {
 					testErrors.forEach(function(err) {
 						grunt.log.writeln();
 						grunt.log.error('URL: ' + err.url);
+						grunt.log.error('Browser: ' + err.browser);
 						grunt.log.error('Describe: ' + err.titles.join(' > '));
 						grunt.log.error('it ' + err.name);
 						grunt.log.error(err.stack);
