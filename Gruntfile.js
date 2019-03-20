@@ -280,7 +280,6 @@ module.exports = function(grunt) {
 				options: {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/checks',
-					tests: ['**/*.js', '!**/tables/*.js'],
 					data: {
 						title: 'aXe Check Tests'
 					}
