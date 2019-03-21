@@ -15,6 +15,7 @@ describe('axe.utils.getNodeAttributes', function() {
 		node.setAttribute('id', '123');
 		node.innerHTML = '<select name="attributes"></select>';
 
+		// eslint-disable-next-line no-restricted-syntax
 		assert.isFalse(node.attributes instanceof NamedNodeMap);
 
 		var actual = axe.utils.getNodeAttributes(node);
