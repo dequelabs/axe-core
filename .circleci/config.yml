@@ -76,7 +76,7 @@ jobs:
       - run: npm publish --tag=next
 
   # Release a "production" version
-  production_release:
+  release:
     <<: *defaults
     steps:
       - checkout
@@ -84,6 +84,20 @@ jobs:
       - <<: *restore_dependency_cache
       - run: npm run build
       - run: npm publish
+
+  # Create a GitHub release.
+  github_release:
+    docker:
+      - image: circleci/golang:1.8
+    steps:
+      - checkout
+      - run: go get gopkg.in/aktau/github-release.v0
+      - run:
+          name: Download and run GitHub release script
+          command: |
+            curl https://raw.githubusercontent.com/dequelabs/attest-release-scripts/develop/src/node-github-release.sh -s -o ./node-github-release.sh
+            chmod +x ./node-github-release.sh
+            ./node-github-release.sh
 
 workflows:
   version: 2
@@ -126,7 +140,7 @@ workflows:
             branches:
               only: develop
       # Run a production release on "master" commits, but only after the tests pass and dependencies are installed
-      - production_release:
+      - release:
           requires:
             - dependencies
             - test
@@ -135,3 +149,6 @@ workflows:
           filters:
             branches:
               only: master
+      - github_release:
+          requires:
+            - release
