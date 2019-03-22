@@ -13,7 +13,7 @@
 		"test": "grunt mocha"
 	},
 	"devDependencies": {
-		"axe-core": "^3.1.1",
+		"axe-core": "^3.2.2",
 		"chai": "~4.1.2",
 		"grunt": "~1.0.2",
 		"grunt-mocha": "1.2.0"
