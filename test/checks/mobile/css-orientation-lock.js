@@ -3,7 +3,9 @@ describe('css-orientation-lock tests', function() {
 
 	var checkContext = axe.testUtils.MockCheckContext();
 	var origCheck = checks['css-orientation-lock'];
-	var dynamicDoc = document.implementation.createHTMLDocument();
+	var dynamicDoc = document.implementation.createHTMLDocument(
+		'Dynamic document for CSS Orientation Lock tests'
+	);
 
 	afterEach(function() {
 		checks['css-orientation-lock'] = origCheck;

@@ -2,7 +2,7 @@ import React from 'react';
 import axe from 'axe-core';
 import { mountToDoc } from './test-helpers';
 
-import Link from './Link';
+import Link from './link';
 
 test('Link has no aXe violations', done => {
 	const linkComponent = mountToDoc(

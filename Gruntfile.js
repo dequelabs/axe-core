@@ -73,7 +73,7 @@ module.exports = function(grunt) {
 		clean: ['dist', 'tmp', 'axe.js', 'axe.*.js'],
 		babel: {
 			options: {
-				compact: 'false'
+				compact: false
 			},
 			core: {
 				files: [
