@@ -146,7 +146,7 @@ describe('autocomplete-matches', function() {
 		elm.setAttribute('tabindex', -1);
 		elm.setAttribute('style', 'position:absolute; top:-9999em');
 
-		parent = document.createElement('div');
+		var parent = document.createElement('div');
 		parent.appendChild(elm);
 		parent.setAttribute('aria-hidden', 'true');
 
