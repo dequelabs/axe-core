@@ -74,7 +74,7 @@ module.exports = function(grunt) {
 		clean: ['dist', 'ts-out', 'tmp', 'axe.js', 'axe.*.js'],
 		babel: {
 			options: {
-				compact: 'false'
+				compact: false
 			},
 			core: {
 				files: [
@@ -262,7 +262,18 @@ module.exports = function(grunt) {
 		},
 		testconfig: {
 			test: {
-				src: ['ts-out/test/integration/rules/**/*.json'],
+				src: ['ts-out/integration/rules/**/*.json'].concat(
+					process.env.APPVEYOR
+						? [
+								// These tests are causing PhantomJS to timeout on Appveyor
+								// Warning: PhantomJS timed out, possibly due to a missing Mocha run() call. Use --force to continue.
+								'!test/integration/rules/td-has-header/*.json',
+								'!test/integration/rules/label-content-name-mismatch/*.json',
+								'!test/integration/rules/label/*.json',
+								'!test/integration/rules/th-has-data-cells/*.json'
+						  ]
+						: []
+				),
 				dest: 'tmp/integration-tests.js'
 			}
 		},

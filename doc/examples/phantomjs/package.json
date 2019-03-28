@@ -1,6 +1,6 @@
 {
 	"name": "axe-phantomjs-example",
-	"description": "aXe Mocha Example",
+	"description": "aXe PhantomJS Example",
 	"version": "0.0.1",
 	"private": true,
 	"author": {
@@ -10,10 +10,10 @@
 	},
 	"dependencies": {},
 	"scripts": {
-		"test": "phantomjs axe-phantom.js http://www.deque.com"
+		"test": "phantomjs axe-phantom.js https://www.deque.com"
 	},
 	"devDependencies": {
-		"axe-core": "^3.1.1",
+		"axe-core": "^3.2.2",
 		"phantomjs": "^2.1.7"
 	}
 }

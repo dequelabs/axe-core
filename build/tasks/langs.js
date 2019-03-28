@@ -1,7 +1,6 @@
 /*eslint-env node */
 'use strict';
 var http = require('http');
-var Promise = require('promise');
 module.exports = function(grunt) {
 	function getLine(data, start) {
 		var len = data.length;

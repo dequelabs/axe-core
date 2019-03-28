@@ -286,4 +286,14 @@ testUtils.queryFixture = function queryFixture(html, query) {
 	return axe.utils.querySelectorAll(axe._tree, query || '#target')[0];
 };
 
+/**
+ * Test function for detecting IE11 user agent string
+ *
+ * @param {Object} navigator The navigator object of the current browser
+ * @return {boolean}
+ */
+testUtils.isIE11 = (function isIE11(navigator) {
+	return navigator.userAgent.indexOf('Trident/7') !== -1;
+})(navigator);
+
 axe.testUtils = testUtils;
