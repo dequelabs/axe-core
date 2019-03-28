@@ -73,6 +73,8 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.2.2",
+		"@types/chai": "^4.1.7",
+		"@types/mocha": "^5.2.6",
 		"aria-query": "^3.0.0",
 		"axios": "^0.18.0",
 		"babel-core": "^6.26.0",

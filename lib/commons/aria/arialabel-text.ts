@@ -6,7 +6,7 @@
  * @param {VirtualNode|Element} element
  * @return {string} ARIA label
  */
-aria.arialabelText = function arialabelText(node) {
+aria.arialabelText = function arialabelText(node: any) {
 	node = node.actualNode || node;
 	if (node.nodeType !== 1) {
 		return '';

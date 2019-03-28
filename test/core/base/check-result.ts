@@ -1,7 +1,5 @@
 /*global CheckResult */
 describe('CheckResult', function() {
-	'use strict';
-
 	it('should be a function', function() {
 		assert.isFunction(CheckResult);
 	});

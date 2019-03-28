@@ -3,8 +3,9 @@
 		"outDir": "./ts-out",
 		"allowJs": true,
 		"target": "es5",
-		"noImplicitAny": true,
-		"skipLibCheck": true
+		"skipLibCheck": true,
+		"alwaysStrict": true,
+		"typeRoots": ["./node_modules/@types", "./global-types"]
 	},
 	"include": ["./**/*"],
 	"exclude": ["./node_modules", "./ts-out", "./tmp", "./build"]
