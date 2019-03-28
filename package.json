@@ -77,7 +77,7 @@
 		"@babel/plugin-proposal-object-rest-spread": "^7.3.4",
 		"@babel/polyfill": "^7.2.5",
 		"@babel/preset-env": "^7.3.4",
-    "@types/chai": "^4.1.7",
+		"@types/chai": "^4.1.7",
 		"@types/mocha": "^5.2.6",
 		"aria-query": "^3.0.0",
 		"axios": "^0.18.0",

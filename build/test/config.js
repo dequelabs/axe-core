@@ -46,8 +46,8 @@ exports = module.exports = function(grunt, options) {
 				log: true,
 				urls: mapToUrl(
 					[
-						'test/integration/full/**/*.html',
-						'!test/integration/full/**/frames/**/*.html'
+						'ts-out/test/integration/full/**/*.html',
+						'!ts-out/test/integration/full/**/frames/**/*.html'
 					],
 					'<%= connect.test.options.port %>'
 				),

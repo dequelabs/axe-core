@@ -120,9 +120,9 @@ module.exports = function(grunt) {
 					return {
 						src: [
 							'ts-out/lib/intro.stub',
-							'<%= concat.engine.coreFiles %>', // >>>>>> find what this is
+							'<%= concat.engine.coreFiles %>',
 							// include rules / checks / commons
-							'<%= configure.rules.files[' + i + '].dest.auto %>', // >>>>>> find what this is
+							'<%= configure.rules.files[' + i + '].dest.auto %>',
 							'ts-out/lib/outro.stub'
 						],
 						dest: 'axe' + lang + '.js'
@@ -154,7 +154,6 @@ module.exports = function(grunt) {
 					tags: grunt.option('tags')
 				},
 				files: langs.map(function(lang) {
-					//console.log(">>>>concat.commons.dest is >>>", concat.commons.dest);
 					return {
 						src: ['<%= concat.commons.dest %>'],
 						dest: {
@@ -262,15 +261,15 @@ module.exports = function(grunt) {
 		},
 		testconfig: {
 			test: {
-				src: ['ts-out/integration/rules/**/*.json'].concat(
+				src: ['ts-out/test/integration/rules/**/*.json'].concat(
 					process.env.APPVEYOR
 						? [
 								// These tests are causing PhantomJS to timeout on Appveyor
 								// Warning: PhantomJS timed out, possibly due to a missing Mocha run() call. Use --force to continue.
-								'!test/integration/rules/td-has-header/*.json',
-								'!test/integration/rules/label-content-name-mismatch/*.json',
-								'!test/integration/rules/label/*.json',
-								'!test/integration/rules/th-has-data-cells/*.json'
+								'!ts-out/test/integration/rules/td-has-header/*.json',
+								'!ts-out/test/integration/rules/label-content-name-mismatch/*.json',
+								'!ts-out/test/integration/rules/label/*.json',
+								'!ts-out/test/integration/rules/th-has-data-cells/*.json'
 						  ]
 						: []
 				),
