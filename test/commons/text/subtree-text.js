@@ -38,16 +38,16 @@ describe('text.subtreeText', function() {
 		it('appends the element to context.processed to prevent duplication', function() {
 			fixtureSetup('<h1>foo</h1>');
 			var h1 = axe.utils.querySelectorAll(axe._tree[0], 'h1')[0];
-			var text = h1.children[0]
+			var text = h1.children[0];
 			var context = { processed: [] };
 			subtreeText(h1, context);
-			console.log(context.processed)
+			console.log(context.processed);
 			assert.deepEqual(context.processed, [h1, text]);
 		});
 
 		it('sets context.processed when it is undefined', function() {
 			var h1 = axe.utils.querySelectorAll(axe._tree[0], 'h1')[0];
-			var text = h1.children[0]
+			var text = h1.children[0];
 			var emptyContext = {};
 			subtreeText(h1, emptyContext);
 			assert.deepEqual(emptyContext.processed, [h1, text]);
