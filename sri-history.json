@@ -122,5 +122,17 @@
 	"3.1.2": {
 		"axe.js": "sha256-goUY5vBRPoITOCdg7HK/vfHRs50+RdQRQQkNCU3lnMs=",
 		"axe.min.js": "sha256-wIvlzfT77n6fOnSL6/oLbzB873rY7QHTW/e0Z0mOoYs="
+	},
+	"3.2.0": {
+		"axe.js": "sha256-wdCvSfDepBhwcvTqB0gm586ywpla6Yi81qLCHjegILM=",
+		"axe.min.js": "sha256-Tvf4toyAt1NFmmkuLsgStXW+4pcG5GG9ugopPoOvOwg="
+	},
+	"3.2.1": {
+		"axe.js": "sha256-VPX1ngRx0XWqC5BP9XdHoDd8YlbgXGK39cz14GBL9bg=",
+		"axe.min.js": "sha256-ynN9JxvxoI9VpL7IbdTVCUCLhy3N7Ygrnit2r7a2vK8="
+	},
+	"3.2.2": {
+		"axe.js": "sha256-ekZaZcmreeOq0/Hm0MYYpjK2k/HfLIBchbdzynX2s1A=",
+		"axe.min.js": "sha256-WUsm7HQhfTPm48UUbRuQCZ6mXZXpO+trPivOXYelKM0="
 	}
 }

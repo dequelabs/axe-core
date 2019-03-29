@@ -5,9 +5,3 @@
 
 # Localisation
 locales/ja.json @mlca11y/mlca11y @dequelabs/axe-codeowners
-
-# Core features
-lib/core/* @stephenmathieson @dequelabs/axe-codeowners
-test/core/* @stephenmathieson @dequelabs/axe-codeowners
-build/* @stephenmathieson @dequelabs/axe-codeowners
-Gruntfile.js @stephenmathieson @dequelabs/axe-codeowners

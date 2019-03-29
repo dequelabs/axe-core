@@ -6,3 +6,5 @@ doc/api/*
 doc/examples/jest_react/*.js
 
 lib/core/imports/*.js
+axe.js
+axe.min.js
