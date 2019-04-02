@@ -348,7 +348,7 @@ describe('Check', function() {
 			});
 
 			it('should pass `null` as the parameter if not enabled', function() {
-				let data = new Check({
+				var data = new Check({
 					evaluate: function() {},
 					enabled: false
 				}).runSync(fixture, {}, {});
@@ -357,7 +357,7 @@ describe('Check', function() {
 			});
 
 			it('should pass `null` as the parameter if options disable', function() {
-				let data = new Check({
+				var data = new Check({
 					evaluate: function() {}
 				}).runSync(
 					fixture,
@@ -370,7 +370,7 @@ describe('Check', function() {
 			});
 
 			it('passes a result to the resolve argument', function() {
-				let data = new Check({
+				var data = new Check({
 					evaluate: function() {
 						return true;
 					}

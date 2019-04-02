@@ -1,6 +1,6 @@
 describe('axe.runVirtualRule', function() {
 	'use strict';
-	const audit = axe._audit;
+	var audit = axe._audit;
 
 	beforeEach(function() {
 		axe._audit = {
@@ -36,7 +36,7 @@ describe('axe.runVirtualRule', function() {
 	});
 
 	it('should call rule.runSync', function() {
-		let success = false;
+		var success = false;
 		axe._audit.rules = [
 			{
 				id: 'aria-roles',
@@ -75,7 +75,7 @@ describe('axe.runVirtualRule', function() {
 	});
 
 	it('should pass the virtualNode as the actualNode of the context', function() {
-		const node = {};
+		var node = {};
 		axe._audit.rules = [
 			{
 				id: 'aria-roles',
@@ -112,7 +112,7 @@ describe('axe.runVirtualRule', function() {
 	});
 
 	it('should pass the results of rule.runSync to axe.utils.publishMetaData', function() {
-		const publishMetaData = axe.utils.publishMetaData;
+		var publishMetaData = axe.utils.publishMetaData;
 		axe.utils.publishMetaData = function(results) {
 			assert.isTrue(results);
 		};
@@ -130,7 +130,7 @@ describe('axe.runVirtualRule', function() {
 	});
 
 	it('should return the results of rule.runSync', function() {
-		const publishMetaData = axe.utils.publishMetaData;
+		var publishMetaData = axe.utils.publishMetaData;
 		axe.utils.publishMetaData = function() {};
 		axe._audit.rules = [
 			{

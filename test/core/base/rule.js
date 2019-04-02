@@ -1067,7 +1067,7 @@ describe('Rule', function() {
 				);
 
 				try {
-					let r = rule.runSync(
+					var r = rule.runSync(
 						{
 							include: [axe.utils.getFlattenedTree(document)[0]]
 						},
