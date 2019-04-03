@@ -70,6 +70,12 @@
       {
         "selector": "MemberExpression[property.name=tagName]",
         "message": "Don't use node.tagName, use node.nodeName instead."
+      },
+      {
+        // node.attributes can be clobbered so is unsafe to use
+        // @see https://github.com/dequelabs/axe-core/pull/1432
+        "selector": "MemberExpression[object.name=node][property.name=attributes]",
+        "message": "Don't use node.attributes, use node.hasAttributes() or axe.utils.getNodeAttributes(node) instead."
       }
     ]
   }
