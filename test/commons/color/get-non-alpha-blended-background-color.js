@@ -63,7 +63,7 @@ describe('color.getNonAlphaBlendedBackgroundColor', function() {
 		assert.equal(actual.green, 128);
 		assert.equal(actual.blue, 0);
 		if (!isPhantom) {
-			assert.equal(actual.alpha, 1);
+			assert.equal(actual.alpha, 0.5);
 		}
 	});
 });
