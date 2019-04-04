@@ -1,7 +1,6 @@
 describe('axe.utils.getCoordinatesFromRect', function() {
 	'use strict';
 
-	var isPhantom = window.PHANTOMJS ? true : false;
 	var fixture = document.getElementById('fixture');
 	var queryFixture = axe.testUtils.queryFixture;
 
@@ -31,24 +30,17 @@ describe('axe.utils.getCoordinatesFromRect', function() {
 		assert.isUndefined(actual);
 	});
 
-	/**
-	 * Note:
-	 * Believe in PhantomJs run, the button which is relatively positioned,
-	 * ends up out of bounds of viewport, and thus returns `undefined`.
-	 */
-	isPhantom
-		? it.skip
-		: it('returns `{x,y}` when element is with in viewport', function() {
-				var vNode = queryFixture(
-					'<button id="target" type="button">Click Here</button>'
-				);
-				var node = vNode.actualNode;
-				var rect = node.getBoundingClientRect();
-				var actual = axe.utils.getCoordinatesFromRect(rect);
+	it('returns `{x,y}` when element is with in viewport', function() {
+		var vNode = queryFixture(
+			'<button id="target" type="button" style="position:absolute; top:0">Click Here</button>'
+		);
+		var node = vNode.actualNode;
+		var rect = node.getBoundingClientRect();
+		var actual = axe.utils.getCoordinatesFromRect(rect);
 
-				assert.isDefined(actual);
-				assert.hasAllKeys(actual, ['x', 'y']);
-		  });
+		assert.isDefined(actual);
+		assert.hasAllKeys(actual, ['x', 'y']);
+	});
 
 	it('returns `{x,y}` when element is with in viewport (check returned coordinate values)', function() {
 		var vNode = queryFixture(
