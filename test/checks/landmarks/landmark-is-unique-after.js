@@ -10,17 +10,15 @@ describe('landmark-is-unique-after', function() {
 	}
 
 	function createResultWithSameRelatedNodes(result, data) {
-		return {
-			...createResult(result, data),
+		return Object.assign(createResult(result, data), {
 			relatedNodes: [createResult(result, data)]
-		};
+		});
 	}
 
 	function createResultWithProvidedRelatedNodes(result, data, relatedNodes) {
-		return {
-			...createResult(result, data),
-			relatedNodes
-		};
+		return Object.assign(createResult(result, data), {
+			relatedNodes: relatedNodes
+		});
 	}
 
 	afterEach(function() {
@@ -32,19 +30,19 @@ describe('landmark-is-unique-after', function() {
 		var result = checks['landmark-is-unique'].after([
 			createResultWithSameRelatedNodes(true, {
 				role: 'some role',
-				label: 'some label'
+				accessibleText: 'some accessibleText'
 			}),
 			createResultWithSameRelatedNodes(true, {
 				role: 'some role',
-				label: 'some label'
+				accessibleText: 'some accessibleText'
 			}),
 			createResultWithSameRelatedNodes(true, {
 				role: 'different role',
-				label: 'some label'
+				accessibleText: 'some accessibleText'
 			}),
 			createResultWithSameRelatedNodes(true, {
 				role: 'some role',
-				label: 'different label'
+				accessibleText: 'different accessibleText'
 			})
 		]);
 
@@ -53,12 +51,12 @@ describe('landmark-is-unique-after', function() {
 				false,
 				{
 					role: 'some role',
-					label: 'some label'
+					accessibleText: 'some accessibleText'
 				},
 				[
 					createResult(true, {
 						role: 'some role',
-						label: 'some label'
+						accessibleText: 'some accessibleText'
 					})
 				]
 			),
@@ -66,7 +64,7 @@ describe('landmark-is-unique-after', function() {
 				true,
 				{
 					role: 'different role',
-					label: 'some label'
+					accessibleText: 'some accessibleText'
 				},
 				[]
 			),
@@ -74,7 +72,7 @@ describe('landmark-is-unique-after', function() {
 				true,
 				{
 					role: 'some role',
-					label: 'different label'
+					accessibleText: 'different accessibleText'
 				},
 				[]
 			)
