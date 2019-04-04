@@ -1,0 +1,7 @@
+{
+	"description": "aria-form-field-label test",
+	"rule": "aria-form-field-label",
+	"violations": [["#fail1"], ["#fail2"]],
+	"passes": [["#pass1"]],
+	"incomplete": [["#canttell1"], ["#canttell2"]]
+}

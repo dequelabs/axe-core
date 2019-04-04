@@ -1,12 +1,17 @@
 {
-	"id": "form-field-label",
-	"matches": "form-field-label-matches.js",
+	"id": "aria-form-field-label",
+	"matches": "aria-form-field-label-matches.js",
 	"tags": ["wcag2a", "wcag412"],
 	"metadata": {
 		"description": "Ensures every element with semantic role that designates as a form element has a label",
 		"help": "Form elements must have labels"
 	},
 	"all": [],
-	"any": ["aria-label", "aria-labelledby", "non-empty-title"],
-	"none": ["help-same-as-label", "hidden-explicit-label"]
+	"any": [
+		"aria-label",
+		"aria-labelledby",
+		"non-empty-title",
+		"no-implicit-explicit-label"
+	],
+	"none": []
 }

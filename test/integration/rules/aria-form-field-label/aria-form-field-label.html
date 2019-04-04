@@ -1,0 +1,26 @@
+<!-- Inapplicable -->
+<input id='inapplicable1' />
+<select id="inapplicable2">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="opel">Opel</option>
+</select>
+<textarea id="inapplicable3" title="Label"></textarea>
+
+<!-- Fail -->
+<div id="fail1" aria-label=" " role="combobox">England</div>
+<div id="fail2" aria-labelledby="non-existing" role="combobox">England</div>
+
+<!-- Pass -->
+<div id="pass1" aria-label="country" role="combobox" aria-disabled="true">England</div>
+
+
+<!-- Incomplete -->
+<!-- Implicit label -->
+<label>
+  first name
+  <div id="canttell1" role="textbox"></div>
+</label>
+<!--  Explicit label -->
+<label for="canttell2">first name</label>
+<div role="textbox" id="canttell2"></div>

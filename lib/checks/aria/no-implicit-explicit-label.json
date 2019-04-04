@@ -1,0 +1,11 @@
+{
+	"id": "no-implicit-explicit-label",
+	"evaluate": "no-implicit-explicit-label.js",
+	"metadata": {
+		"impact": "moderate",
+		"messages": {
+			"fail": "Element with ARIA role {{=it.data}} must have label",
+			"incomplete": "Element with ARIA role {{=it.data}} cannot have implicit or explicit label"
+		}
+	}
+}
