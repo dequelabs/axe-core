@@ -10,6 +10,14 @@
 		["#violation-aside-aria-labelledby-1"],
 		["#violation-footer-1"],
 		["#violation-form-through-iframe-1"],
-		["#violation-nav-through-iframe-1"]
+		["#violation-nav-through-iframe-1"],
+		["#violation-role-banner"],
+		["#violation-role-complementary"],
+		["#violation-role-contentinfo"],
+		["#violation-role-main"],
+		["#violation-role-region"],
+		["#violation-role-search"],
+		["#violation-nav"],
+		["#violation-section"]
 	]
 }
