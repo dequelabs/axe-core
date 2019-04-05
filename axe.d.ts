@@ -65,13 +65,13 @@ declare namespace axe {
 		help: string;
 		helpUrl: string;
 		id: string;
-		impact: ImpactValue;
+		impact?: ImpactValue;
 		tags: TagValue[];
 		nodes: NodeResult[];
 	}
 	interface NodeResult {
 		html: string;
-		impact: ImpactValue;
+		impact?: ImpactValue;
 		target: string[];
 		any: CheckResult[];
 		all: CheckResult[];
