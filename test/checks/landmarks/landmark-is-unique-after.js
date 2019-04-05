@@ -46,7 +46,7 @@ describe('landmark-is-unique-after', function() {
 			})
 		]);
 
-		const expectedResult = [
+		var expectedResult = [
 			createResultWithProvidedRelatedNodes(
 				false,
 				{
