@@ -7,8 +7,8 @@
 	"metadata": {
 		"impact": "moderate",
 		"messages": {
-			"pass": "Landmarks must have a unique role or role/label/title (i.e. accessible name) combination.",
-			"fail": "The landmarks do not have a unique role or role/label/title combination (use aria-label, aria-labelledby, or title to make landmarks distinguishable)."
+			"pass": "Landmarks must have a unique role or role/label/title (i.e. accessible name) combination",
+			"fail": "The landmarks do not have a unique role or role/label/title combination (use aria-label, aria-labelledby, or title to make landmarks distinguishable)"
 		}
 	}
 }
