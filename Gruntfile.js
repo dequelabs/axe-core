@@ -1,6 +1,4 @@
 /*eslint
-complexity: ["error",12],
-max-statements: ["error", 35],
 camelcase: ["error", {"properties": "never"}]
 */
 var testConfig = require('./build/test/config');
