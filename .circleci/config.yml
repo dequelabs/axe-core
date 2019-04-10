@@ -135,7 +135,6 @@ workflows:
             - dependencies
             - test
             - test_examples
-            - hold
           filters:
             branches:
               only: develop
