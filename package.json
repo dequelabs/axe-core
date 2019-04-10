@@ -114,7 +114,7 @@
 		"markdown-table": "^1.1.2",
 		"minami": "^1.2.3",
 		"mkdirp": "^0.5.1",
-		"mocha": "^6.0.0",
+		"mocha": "^6.1.2",
 		"prettier": "^1.14.0",
 		"retire": "^2.0.1",
 		"revalidator": "~0.3.1",
