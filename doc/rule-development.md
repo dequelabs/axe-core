@@ -96,7 +96,7 @@ this.data({
 
 # Hierarchical rules
 
-axe-core handles shadow DOM and cross-domain iframe rules very well - as long as you take care in the design and implementation of your rule. Any rule that evaluates the DOM hierarchy needs to think about what happens across shadow DOM boundaries and iframe boundaries.
+Axe-core handles shadow DOM and cross-domain iframe rules very well - as long as you take care in the design and implementation of your rule. Any rule that evaluates the DOM hierarchy needs to think about what happens across shadow DOM boundaries and iframe boundaries.
 
 The rule callbacks all receive both a `node` and a `virtualNode` argument (in addition to the `options` argument). `node` points to the DOM Node that is to be evaluated, whereas `virtualNode` points to the node in the flattened tree (the hierarchy that shadow DOM creates that is used for parent child relationships across shadow DOM boundaries).
 
