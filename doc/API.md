@@ -1,4 +1,4 @@
-# axe Javascript Accessibility API
+# Axe Javascript Accessibility API
 
 ## Table of Contents
 
