@@ -7,6 +7,7 @@
 1. [Section 2: API Reference](#section-2-api-reference)
    1. [Overview](#overview)
    1. [API Notes](#api-notes)
+      1. [Supported CSS Selectors](#supported-css-selectors)
    1. [API Name: axe.getRules](#api-name-axegetrules)
    1. [API Name: axe.configure](#api-name-axeconfigure)
    1. [API Name: axe.reset](#api-name-axereset)
