@@ -63,7 +63,7 @@ For a full listing of API offered by axe, clone the repository and run `npm run 
 
 - A Rule test is made up of sub-tests. Each sub-test is returned in an array of 'checks'
 - The `"helpUrl"` in the results object is a link to a broader description of the accessibility issue and suggested remediation. These links point to Deque University help pages, which do not require a login.
-- axe does not test hidden regions, such as inactive menus or modal windows. To test those for accessibility, write tests that activate or render the regions visible and run the analysis again.
+- Axe does not test hidden regions, such as inactive menus or modal windows. To test those for accessibility, write tests that activate or render the regions visible and run the analysis again.
 
 ### API Name: axe.getRules
 
