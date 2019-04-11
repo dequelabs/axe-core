@@ -65,6 +65,15 @@ For a full listing of API offered by aXe, clone the repository and run `npm run 
 - The `"helpUrl"` in the results object is a link to a broader description of the accessibility issue and suggested remediation. These links point to Deque University help pages, which do not require a login.
 - aXe does not test hidden regions, such as inactive menus or modal windows. To test those for accessibility, write tests that activate or render the regions visible and run the analysis again.
 
+#### Supported CSS Selectors
+
+aXe supports the following CSS selectors:
+
+- Type, Class, ID, and Universal selectors. E.g `div.main, #main`
+- Pseudo selector `not`. E.g `th:not([scope])`
+- Descendant and Child combinators. E.g. `table td`, `ul > li`
+- Attribute selectors `=`, `~=`, `|=`, `^=`, `$=`, `*=`. E.g `a[href^="#"]`
+
 ### API Name: axe.getRules
 
 #### Purpose
@@ -176,7 +185,7 @@ axe.configure({
     - The rules attribute is an Array of rule objects
     - each rule object can contain the following attributes
       - `id` - string(required). This uniquely identifies the rule. If the rule already exists, it will be overridden with any of the attributes supplied. The attributes below that are marked required, are only required for new rules.
-      - `selector` - string(optional, default `*`). A CSS selector used to identify the elements that are passed into the rule for evaluation.
+      - `selector` - string(optional, default `*`). A [CSS selector](#supported-css-selectors) used to identify the elements that are passed into the rule for evaluation.
       - `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
       - `enabled` - boolean(optional, default `true`). Whether the rule is turned on. This is a common attribute for overriding.
       - `pageLevel` - boolean(optional, default `false`). When set to true, this rule is only applied when the entire page is tested. Results from nodes on different frames are combined into a single result. See [page level rules](#page-level-rules).
@@ -184,7 +193,7 @@ axe.configure({
       - `all` - array(optional, default `[]`). This is a list of checks that, if any "fails", will generate a violation.
       - `none` - array(optional, default `[]`). This is a list of checks that, if any "pass", will generate a violation.
       - `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. In practice, you must supply some valid tags or the default evaluation will not invoke the rule. The convention is to include the standard (WCAG 2 and/or section 508), the WCAG 2 level, Section 508 paragraph, and the WCAG 2 success criteria. Tags are constructed by converting all letters to lower case, removing spaces and periods and concatinating the result. E.g. WCAG 2 A success criteria 1.1.1 would become ["wcag2a", "wcag111"]
-      - `matches` - string(optional, default `*`). A filtering CSS selector that will exclude elements that do not match the CSS selector.
+      - `matches` - string(optional, default `*`). A filtering [CSS selector](#supported-css-selectors) that will exclude elements that do not match the CSS selector.
   - `disableOtherRules` - Disables all rules not included in the `rules` property.
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
 
@@ -251,11 +260,7 @@ By default, `axe.run` will test the entire document. The context object is an op
 - Example: To limit analysis to the `<div id="content">` element: `document.getElementById("content")`
 
 2. A NodeList such as returned by `document.querySelectorAll`.
-3. A CSS selector that selects the portion(s) of the document that must be analyzed. This includes:
-
-- A CSS selector as a class name (e.g. `.classname`)
-- A CSS selector as a node name (e.g. `div`)
-- A CSS selector of an element id (e.g. `#tag`)
+3. A [CSS selector](#supported-css-selectors) that selects the portion(s) of the document that must be analyzed.
 
 4. An include-exclude object (see below)
 
@@ -264,7 +269,7 @@ By default, `axe.run` will test the entire document. The context object is an op
 The include exclude object is a JSON object with two attributes: include and exclude. Either include or exclude is required. If only `exclude` is specified; include will default to the entire `document`.
 
 - A node, or
-- An array of arrays of CSS selectors
+- An array of arrays of [CSS selectors](#supported-css-selectors)
   - If the nested array contains a single string, that string is the CSS selector
   - If the nested array contains multiple strings
     - The last string is the final CSS selector
@@ -703,7 +708,7 @@ axe.utils.querySelectorAll(virtualNode, 'a[href]');
 ##### Parameters
 
 - `virtualNode` – object, the flattened DOM tree to query against. `axe._tree` is available for this purpose during an audit; see below.
-- `selector` – string, the CSS selector to use as a filter. For the most part, this should work seamlessly with `document.querySelectorAll`.
+- `selector` – string, the [CSS selector](#supported-css-selectors) to use as a filter. For the most part, this should work seamlessly with `document.querySelectorAll`.
 
 ##### Returns
 
