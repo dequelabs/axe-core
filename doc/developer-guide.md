@@ -1,8 +1,8 @@
 # Axe Developer Guide
 
-axe runs a series of tests to check for accessibility of content and functionality on a website. A test is made up of a series of Rules which are, themselves, made up of Checks. axe executes these Rules asynchronously and, when the Rules are finished running, runs a callback function which is passed a Result structure. Since some Rules run on the page level while others do not, tests will also run in one of two ways. If a document is specified, the page level rules will run, otherwise they will not.
+Axe runs a series of tests to check for accessibility of content and functionality on a website. A test is made up of a series of Rules which are, themselves, made up of Checks. Axe executes these Rules asynchronously and, when the Rules are finished running, runs a callback function which is passed a Result structure. Since some Rules run on the page level while others do not, tests will also run in one of two ways. If a document is specified, the page level rules will run, otherwise they will not.
 
-axe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities for developing axe-core moving forward. Note: we do not and cannot support closed Shadow DOM.
+Axe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities for developing axe-core moving forward. Note: we do not and cannot support closed Shadow DOM.
 
 1. [Getting Started](#getting-started)
 1. [Architecture Overview](#architecture-overview)
@@ -51,7 +51,7 @@ You can also load tests in any supported browser, which is helpful for debugging
 
 ## Architecture Overview
 
-axe tests for accessibility using objects called Rules. Each Rule tests for a high-level aspect of accessibility, such as color contrast, button labels, and alternate text for images. Each rule is made up of a series of Checks. Depending on the rule; all, some, or none of these checks must pass in order for the rule to pass.
+Axe tests for accessibility using objects called Rules. Each Rule tests for a high-level aspect of accessibility, such as color contrast, button labels, and alternate text for images. Each rule is made up of a series of Checks. Depending on the rule; all, some, or none of these checks must pass in order for the rule to pass.
 
 Upon execution, a Rule runs each of its Checks against all relevant nodes. Which nodes are relevant is determined by the Rule's `selector` property and `matches` function. If a Rule has no Checks that apply to a given node, the Rule will result in an inapplicable result.
 
