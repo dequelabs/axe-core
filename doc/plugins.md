@@ -1,6 +1,6 @@
 # Plugins
 
-axe implements a general purpose plugin system that takes advantage of the cross-domain iframe capabilities of axe and allows for adding functionality that extends the axe library outside of its core automated accessibility auditing realm.
+Axe implements a general purpose plugin system that takes advantage of the cross-domain iframe capabilities of axe and allows for adding functionality that extends the axe library outside of its core automated accessibility auditing realm.
 
 The plugin system was initially designed to support functionality like highlighting of elements but has also been utilized for a variety of tasks including implementing functionality that aids with manual accessibility auditing.
 
