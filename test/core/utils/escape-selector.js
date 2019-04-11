@@ -1,4 +1,3 @@
-/*eslint max-statements: 0 */
 describe('utils.escapeSelector', function() {
 	'use strict';
 	var escapeSelector = axe.utils.escapeSelector;

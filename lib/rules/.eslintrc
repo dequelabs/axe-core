@@ -42,14 +42,6 @@
       2,
       5
     ],
-    "max-statements": [
-      2,
-      15
-    ],
-    "complexity": [
-      2,
-      10
-    ],
     "no-cond-assign": 0,
     "no-debugger": 0,
     "no-eq-null": 0,

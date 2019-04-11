@@ -27,7 +27,7 @@ page.open(args[1], function(status) {
 	page.switchToMainFrame();
 	page.evaluateAsync(function() {
 		/*global axe */
-		axe.run(function(err, results) {
+		axe.run({ include: ['#page'] }, function(err, results) {
 			if (err) {
 				throw err;
 			}

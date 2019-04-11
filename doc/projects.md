@@ -20,6 +20,7 @@ Add your project/integration to this file and submit a pull request.
 
 1. [Lighthouse](https://github.com/GoogleChrome/lighthouse)
 1. [Webhint.io](https://webhint.io/)
+1. [AccessibilityInsights](https://accessibilityinsights.io/)
 1. [Web Accessibility Checker for Visual Studio](https://visualstudiogallery.msdn.microsoft.com/3aabefab-1681-4fea-8f95-6a62e2f0f1ec)
 1. [Ace, by DAISY](https://daisy.github.io/ace)
 1. [axe Selenium Python](https://github.com/mozilla-services/axe-selenium-python)
