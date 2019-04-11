@@ -4,7 +4,7 @@
 	"tags": ["wcag21", "wcag1412"],
 	"metadata": {
 		"description": "Ensure text spacing is not affected by inline spacing styles that affects CSS specificity",
-		"help": "No inline styles that affect text spacing should been specified"
+		"help": "No inline styles with '!important' that affect text spacing should been specified"
 	},
 	"all": ["avoid-inline-spacing"],
 	"any": [],

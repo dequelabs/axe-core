@@ -4,8 +4,8 @@
 	"metadata": {
 		"impact": "serious",
 		"messages": {
-			"pass": "No inline styles that affect text spacing has been specified",
-			"fail": "Inline styles that affect text spacing has been specified"
+			"pass": "No inline styles with '!important' that affect text spacing has been specified",
+			"fail": "Remove '!important' from inline style{{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}} that affect text spacing"
 		}
 	}
 }
