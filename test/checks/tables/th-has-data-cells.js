@@ -129,7 +129,7 @@ describe('th-has-data-cells', function() {
 	it('should return undefined if a td with role=columnheader is used that has no data cells', function() {
 		fixture.innerHTML =
 			'<table id="fail4">' +
-			'  <tr> <td>aXe</td> <td role="columnheader">AXE</th> </tr>' +
+			'  <tr> <td>axe</td> <td role="columnheader">AXE</th> </tr>' +
 			'</table>';
 
 		axe._tree = axe.utils.getFlattenedTree(fixture);
