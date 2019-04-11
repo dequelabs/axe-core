@@ -68,12 +68,12 @@ For a full listing of API offered by aXe, clone the repository and run `npm run 
 
 #### Supported CSS Selectors
 
-aXe supports the following CSS selectors:
+Axe supports the following CSS selectors:
 
 - Type, Class, ID, and Universal selectors. E.g `div.main, #main`
 - Pseudo selector `not`. E.g `th:not([scope])`
 - Descendant and Child combinators. E.g. `table td`, `ul > li`
-- Attribute selectors `=`, `~=`, `|=`, `^=`, `$=`, `*=`. E.g `a[href^="#"]`
+- Attribute selectors `=`, `^=`, `$=`, `*=`. E.g `a[href^="#"]`
 
 ### API Name: axe.getRules
 
