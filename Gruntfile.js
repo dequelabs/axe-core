@@ -264,7 +264,7 @@ module.exports = function(grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/core',
 					data: {
-						title: 'axe Core Tests'
+						title: 'Axe Core Tests'
 					}
 				}
 			},
@@ -279,7 +279,7 @@ module.exports = function(grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/checks',
 					data: {
-						title: 'axe Check Tests'
+						title: 'Axe Check Tests'
 					}
 				}
 			},
@@ -294,7 +294,7 @@ module.exports = function(grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/commons',
 					data: {
-						title: 'axe Commons Tests'
+						title: 'Axe Commons Tests'
 					}
 				}
 			},
@@ -309,7 +309,7 @@ module.exports = function(grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/rule-matches',
 					data: {
-						title: 'axe Rule Matches Tests'
+						title: 'Axe Rule Matches Tests'
 					}
 				}
 			},
@@ -321,7 +321,7 @@ module.exports = function(grunt) {
 					testCwd: 'test/integration/rules',
 					tests: ['../../../tmp/integration-tests.js', 'runner.js'],
 					data: {
-						title: 'axe Integration Tests'
+						title: 'Axe Integration Tests'
 					}
 				}
 			}
