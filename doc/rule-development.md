@@ -2,7 +2,7 @@
 
 Before you start writing axe-core rules, be sure to create a proposal for them in a github issue. Read [Proposing Axe-core rules](./rule-proposal.md) for details.
 
-A rule is a JSON Object that defines a test for aXe-core to run. At a high level, think of a rule as doing two things. First it finds all elements that it should test, and after that it runs a number of checks to see if those selected elements pass or fail the rule.
+A rule is a JSON Object that defines a test for axe-core to run. At a high level, think of a rule as doing two things. First it finds all elements that it should test, and after that it runs a number of checks to see if those selected elements pass or fail the rule.
 
 ## Rule Select and Matches
 
@@ -33,7 +33,7 @@ The actual testing of elements in axe-core is done by checks. A rule has one or 
 | enabled              | Does the rule run by default                                        |
 | tags                 | Grouping for the rule, such as wcag2a, best-practice                |
 | metadata.description | Description of what a rule does                                     |
-| metadata.help        | Short description of a violation, used in the aXe extension sidebar |
+| metadata.help        | Short description of a violation, used in the axe extension sidebar |
 
 ## Check Properties
 

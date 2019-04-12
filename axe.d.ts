@@ -155,7 +155,7 @@ declare namespace axe {
 	let source: string;
 
 	/**
-	 * Object for aXe Results
+	 * Object for axe Results
 	 */
 	var AxeResults: AxeResults;
 
@@ -165,7 +165,7 @@ declare namespace axe {
 	 * @param   {ElementContext} context  Optional The `Context` specification object @see Context
 	 * @param   {RunOptions}     options  Optional Options passed into rules or checks, temporarily modifying them.
 	 * @param   {RunCallback}    callback Optional The function to invoke when analysis is complete.
-	 * @returns {Promise<AxeResults>|void} If the callback was not defined, aXe will return a Promise.
+	 * @returns {Promise<AxeResults>|void} If the callback was not defined, axe will return a Promise.
 	 */
 	function run(context?: ElementContext): Promise<AxeResults>;
 	function run(options: RunOptions): Promise<AxeResults>;
@@ -183,7 +183,7 @@ declare namespace axe {
 	): void;
 
 	/**
-	 * Method for configuring the data format used by aXe. Helpful for adding new
+	 * Method for configuring the data format used by axe. Helpful for adding new
 	 * rules, which must be registered with the library to execute.
 	 * @param  {Spec}       Spec Object with valid `branding`, `reporter`, `checks` and `rules` data
 	 */
