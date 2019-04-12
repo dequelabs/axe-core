@@ -1,4 +1,4 @@
-# aXe Javascript Accessibility API
+# Axe Javascript Accessibility API
 
 ## Table of Contents
 
@@ -28,7 +28,7 @@
 
 ## Section 1: Introduction
 
-The aXe API is designed to be an improvement over the previous generation of accessibility APIs. It provides the following benefits:
+The axe API is designed to be an improvement over the previous generation of accessibility APIs. It provides the following benefits:
 
 - Runs in any modern browser
 - Designed to work with existing testing infrastructure
@@ -39,9 +39,9 @@ The aXe API is designed to be an improvement over the previous generation of acc
 
 ### Getting Started
 
-This section gives a quick description of how to use the aXe APIs to analyze web page content and return a JSON object that lists any accessibility violations found.
+This section gives a quick description of how to use the axe APIs to analyze web page content and return a JSON object that lists any accessibility violations found.
 
-The aXe API can be used as part of a broader process that is performed on many, if not all, pages of a website. The API is used to analyze web page content and return a JSON object that lists any accessibility violations found. Here is how to get started:
+The axe API can be used as part of a broader process that is performed on many, if not all, pages of a website. The API is used to analyze web page content and return a JSON object that lists any accessibility violations found. Here is how to get started:
 
 1. Load page in testing system
 2. Optionally, set configuration options for the javascript API (`axe.configure`)
@@ -53,17 +53,17 @@ The aXe API can be used as part of a broader process that is performed on many, 
 
 ### Overview
 
-The aXe APIs are provided in the javascript file axe.js. It must be included in the web page under test. Parameters are sent as javascript function parameters. Results are returned in JSON format.
+The axe APIs are provided in the javascript file axe.js. It must be included in the web page under test. Parameters are sent as javascript function parameters. Results are returned in JSON format.
 
 ### Full API Reference for Developers
 
-For a full listing of API offered by aXe, clone the repository and run `npm run api-docs`. This generates `jsdoc` documentation under `doc/api` which can be viewed using the browser.
+For a full listing of API offered by axe, clone the repository and run `npm run api-docs`. This generates `jsdoc` documentation under `doc/api` which can be viewed using the browser.
 
 ### API Notes
 
 - A Rule test is made up of sub-tests. Each sub-test is returned in an array of 'checks'
 - The `"helpUrl"` in the results object is a link to a broader description of the accessibility issue and suggested remediation. These links point to Deque University help pages, which do not require a login.
-- aXe does not test hidden regions, such as inactive menus or modal windows. To test those for accessibility, write tests that activate or render the regions visible and run the analysis again.
+- Axe does not test hidden regions, such as inactive menus or modal windows. To test those for accessibility, write tests that activate or render the regions visible and run the analysis again.
 
 ### API Name: axe.getRules
 
@@ -134,7 +134,7 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
 
 #### Purpose
 
-To configure the format of the data used by aXe. This can be used to add new rules, which must be registered with the library to execute.
+To configure the format of the data used by axe. This can be used to add new rules, which must be registered with the library to execute.
 
 #### Description
 
@@ -465,7 +465,7 @@ This example first includes all `wcag2a` and `wcag2aa` rules. All rules that are
 
 6. Only process certain types of results
 
-The `resultTypes` option can be used to limit the result types that aXe will process, aggregate, and send to the reporter. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results.
+The `resultTypes` option can be used to limit the result types that axe will process, aggregate, and send to the reporter. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results.
 
 Types listed in this option are processed normally and report all of their results. Types _not_ listed process a maximum of one result. The caller can use this information to inform the user of the existence of that type of result if appropriate.
 
@@ -503,11 +503,11 @@ The `timeout` attribute in the object configuration is `optional` and has a fall
 
 ##### Callback Parameter
 
-The callback parameter is a function that will be called when the asynchronous `axe.run` function completes. The callback function is passed two parameters. The first parameter will be an error thrown inside of aXe if axe.run could not complete. If axe completed correctly the first parameter will be null, and the second parameter will be the results object.
+The callback parameter is a function that will be called when the asynchronous `axe.run` function completes. The callback function is passed two parameters. The first parameter will be an error thrown inside of axe if axe.run could not complete. If axe completed correctly the first parameter will be null, and the second parameter will be the results object.
 
 #### Return Promise
 
-If the callback was not defined, aXe will return a Promise instead. Axe does not polyfill a Promise library however. So on systems without support for Promises this feature is not available. If you are unsure if the systems you will need aXe on has Promise support we suggest you use the callback provided by axe.run instead.
+If the callback was not defined, axe will return a Promise instead. Axe does not polyfill a Promise library however. So on systems without support for Promises this feature is not available. If you are unsure if the systems you will need axe on has Promise support we suggest you use the callback provided by axe.run instead.
 
 #### Error Result
 
@@ -664,7 +664,7 @@ As you can see the `target` array contains one item that is an array. This array
 
 ### API Name: axe.registerPlugin
 
-Register a plugin with the aXe plugin system. See [implementing a plugin](plugins.md) for more information on the plugin system
+Register a plugin with the axe plugin system. See [implementing a plugin](plugins.md) for more information on the plugin system
 
 ### API Name: axe.cleanup
 

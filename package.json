@@ -45,7 +45,7 @@
 		"unit",
 		"tdd",
 		"bdd",
-		"aXe"
+		"axe"
 	],
 	"main": "axe.js",
 	"typings": "axe.d.ts",
