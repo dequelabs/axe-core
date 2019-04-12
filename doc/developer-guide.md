@@ -5,6 +5,11 @@ Axe runs a series of tests to check for accessibility of content and functionali
 Axe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities for developing axe-core moving forward. Note: we do not and cannot support closed Shadow DOM.
 
 1. [Getting Started](#getting-started)
+   1. [Environment Pre-requisites](#environment-pre-requisites)
+   1. [Building axe.js](#building-axejs)
+   1. [Running Tests](#running-tests)
+   1. [API Reference](#api-reference)
+   1. [Supported CSS Selectors](#supported-css-selectors)
 1. [Architecture Overview](#architecture-overview)
    1. [Rules](#rules)
    1. [Checks](#checks)
@@ -49,6 +54,15 @@ You can also load tests in any supported browser, which is helpful for debugging
 
 [See API exposed on axe](./API.md#section-2-api-reference)
 
+### Supported CSS Selectors
+
+Axe supports the following CSS selectors:
+
+- Type, Class, ID, and Universal selectors. E.g `div.main, #main`
+- Pseudo selector `not`. E.g `th:not([scope])`
+- Descendant and Child combinators. E.g. `table td`, `ul > li`
+- Attribute selectors `=`, `^=`, `$=`, `*=`. E.g `a[href^="#"]`
+
 ## Architecture Overview
 
 Axe tests for accessibility using objects called Rules. Each Rule tests for a high-level aspect of accessibility, such as color contrast, button labels, and alternate text for images. Each rule is made up of a series of Checks. Depending on the rule; all, some, or none of these checks must pass in order for the rule to pass.
@@ -62,7 +76,7 @@ After execution, a Check will return `true` or `false` depending on whether or n
 Rules are defined by JSON files in the [lib/rules directory](../lib/rules). The JSON object is used to seed the [Rule object](../lib/core/base/rule.js#L30). A valid Rule JSON consists of the following:
 
 - `id` - `String` A unique name of the Rule.
-- `selector` - **optional** `String` which is a CSS selector that specifies the elements of the page on which the Rule runs. axe-core will look inside of the light DOM and _open_ [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Shadow_DOM) trees for elements matching the provided selector. If omitted, the rule will run against every node.
+- `selector` - **optional** `String` which is a [CSS selector](#supported-css-selectors) that specifies the elements of the page on which the Rule runs. axe-core will look inside of the light DOM and _open_ [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Shadow_DOM) trees for elements matching the provided selector. If omitted, the rule will run against every node.
 - `excludeHidden` - **optional** `Boolean` Whether the rule should exclude hidden elements. Defaults to `true`.
 - `enabled` - **optional** `Boolean` Whether the rule is enabled by default. Defaults to `true`.
 - `pageLevel` - **optional** `Boolean` Whether the rule is page level. Page level rules will only run if given an entire `document` as context.
