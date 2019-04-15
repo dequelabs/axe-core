@@ -1,10 +1,9 @@
-describe('color.getNonAlphaBlendedBackgroundColor', function() {
+describe('color.getOwnBackgroundColor', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
 	var queryFixture = axe.testUtils.queryFixture;
-	var getNonAlphaBlendedBackgroundColor =
-		axe.commons.color.getNonAlphaBlendedBackgroundColor;
+	var getOwnBackgroundColor = axe.commons.color.getOwnBackgroundColor;
 	var isPhantom = window.PHANTOMJS ? true : false;
 
 	afterEach(function() {
@@ -16,7 +15,9 @@ describe('color.getNonAlphaBlendedBackgroundColor', function() {
 		var vNode = queryFixture(
 			'<div id="target" style="height: 40px; width: 30px;">' + '</div>'
 		);
-		var actual = getNonAlphaBlendedBackgroundColor(vNode.actualNode);
+		var actual = getOwnBackgroundColor(
+			window.getComputedStyle(vNode.actualNode)
+		);
 		assert.equal(actual.red, 0);
 		assert.equal(actual.green, 0);
 		assert.equal(actual.blue, 0);
@@ -25,12 +26,14 @@ describe('color.getNonAlphaBlendedBackgroundColor', function() {
 		}
 	});
 
-	it('returns the non-blended color with rgba values of specified background-color value', function() {
+	it('returns color with rgba values of specified background-color value', function() {
 		var vNode = queryFixture(
 			'<div id="target" style="height: 40px; width: 30px; background-color: pink;">' +
 				'</div>'
 		);
-		var actual = getNonAlphaBlendedBackgroundColor(vNode.actualNode);
+		var actual = getOwnBackgroundColor(
+			window.getComputedStyle(vNode.actualNode)
+		);
 		assert.equal(actual.red, 255);
 		assert.equal(actual.green, 192);
 		assert.equal(actual.blue, 203);
@@ -39,12 +42,14 @@ describe('color.getNonAlphaBlendedBackgroundColor', function() {
 		}
 	});
 
-	it('returns the non-blended color with rgba values excluding alpha (for blending)', function() {
+	it('returns color with rgba values and alpha', function() {
 		var vNode = queryFixture(
 			'<div id="target" style="height: 20px; width: 15px; background-color: rgba(0, 128, 0, 0.5);">' +
 				'</div>'
 		);
-		var actual = getNonAlphaBlendedBackgroundColor(vNode.actualNode);
+		var actual = getOwnBackgroundColor(
+			window.getComputedStyle(vNode.actualNode)
+		);
 		assert.equal(actual.red, 0);
 		assert.equal(actual.green, 128);
 		assert.equal(actual.blue, 0);
@@ -53,17 +58,35 @@ describe('color.getNonAlphaBlendedBackgroundColor', function() {
 		}
 	});
 
-	it('returns the non-blended color with rgba values excluding opacity (for blending)', function() {
+	it('returns color with rgba values and opacity (for blending)', function() {
 		var vNode = queryFixture(
 			'<div id="target" style="height: 20px; width: 15px; opacity: 0.5; background-color: green;">' +
 				'</div>'
 		);
-		var actual = getNonAlphaBlendedBackgroundColor(vNode.actualNode);
+		var actual = getOwnBackgroundColor(
+			window.getComputedStyle(vNode.actualNode)
+		);
 		assert.equal(actual.red, 0);
 		assert.equal(actual.green, 128);
 		assert.equal(actual.blue, 0);
 		if (!isPhantom) {
 			assert.equal(actual.alpha, 0.5);
+		}
+	});
+
+	it('returns color with rgba values, alpha and opacity', function() {
+		var vNode = queryFixture(
+			'<div id="target" style="height: 20px; width: 15px; opacity: 0.5; background-color: rgba(0, 128, 0, 0.5);">' +
+				'</div>'
+		);
+		var actual = getOwnBackgroundColor(
+			window.getComputedStyle(vNode.actualNode)
+		);
+		assert.equal(actual.red, 0);
+		assert.equal(actual.green, 128);
+		assert.equal(actual.blue, 0);
+		if (!isPhantom) {
+			assert.equal(actual.alpha, 0.25);
 		}
 	});
 });
