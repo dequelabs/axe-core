@@ -5,6 +5,11 @@ describe('axe.run', function() {
 	var noop = function() {};
 	var origRunRules = axe._runRules;
 
+	// These tests can sometimes be flaky in IE, allow for up to 3 retries
+	if (axe.testUtils.isIE11) {
+		this.retries(3);
+	}
+
 	beforeEach(function() {
 		axe._load({
 			rules: [

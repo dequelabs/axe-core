@@ -2,6 +2,11 @@
 describe('runRules', function() {
 	'use strict';
 
+	// These tests can sometimes be flaky in IE, allow for up to 3 retries
+	if (axe.testUtils.isIE11) {
+		this.retries(3);
+	}
+
 	function iframeReady(src, context, id, cb) {
 		var i = document.createElement('iframe');
 		i.addEventListener('load', function() {
