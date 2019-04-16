@@ -1,6 +1,6 @@
 # Jest + React README
 
-This example demonstrates how to use aXe to test React components using the
+This example demonstrates how to use axe to test React components using the
 Jest unit testing framework.
 
 The unit test is in `link.test.js`, and has one test cases, showing how to run

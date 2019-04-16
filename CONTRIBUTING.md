@@ -110,13 +110,13 @@ To build the package:
 grunt build
 ```
 
-## Using aXe with TypeScript
+## Using axe with TypeScript
 
-### aXe Development
+### Axe Development
 
 The TypeScript definition file for axe-core is distributed with this module and can be found in [axe.d.ts](./axe.d.ts). It currently supports TypeScript 2.0+.
 
-To maintain aXe support for TypeScript you must first install it (globally recommended):
+To maintain axe support for TypeScript you must first install it (globally recommended):
 
 ```console
 sudo npm -g install typescript
@@ -128,9 +128,9 @@ Once that's installed, you can run TypeScript definition tests (with the optiona
 tsc --noImplicitAny typings/axe-core/axe-core-tests.ts
 ```
 
-## Including aXe's type definition in tests
+## Including axe's type definition in tests
 
-Installing aXe to run accessibility tests in your TypeScript project should be as simple as importing the module:
+Installing axe to run accessibility tests in your TypeScript project should be as simple as importing the module:
 
 ```js
 import * as axe from 'axe-core';

@@ -1,7 +1,4 @@
 /*global window */
-/*eslint
-max-statements: ["error", 20],
-*/
 'use strict';
 
 var WebDriver = require('selenium-webdriver');

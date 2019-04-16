@@ -109,6 +109,7 @@ describe('aria-allowed-attr', function() {
 		node.tabIndex = 1;
 		node.setAttribute('role', 'radio');
 		node.setAttribute('aria-required', 'true');
+		node.setAttribute('aria-checked', 'true');
 		fixture.appendChild(node);
 
 		assert.isTrue(
