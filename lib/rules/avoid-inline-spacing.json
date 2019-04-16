@@ -3,8 +3,8 @@
 	"selector": "[style]",
 	"tags": ["wcag21", "wcag1412"],
 	"metadata": {
-		"description": "Ensure text spacing is not affected by inline spacing styles that affects CSS specificity",
-		"help": "Remove inline styles with '!important' that affect text spacing, as overriding this is not supported by most browsers"
+		"description": "Ensure that text spacing set through style attributes can be adjusted with custom stylesheets",
+		"help": "Inline text spacing must be adjustable with custom stylesheets"
 	},
 	"all": ["avoid-inline-spacing"],
 	"any": [],
