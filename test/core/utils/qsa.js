@@ -5,6 +5,15 @@ function Vnode(nodeName, className, attributes, id) {
 	this.attributes = attributes || [];
 	this.className = className;
 	this.nodeType = 1;
+
+	this.attributes.push({
+		key: 'id',
+		value: typeof id !== 'undefined' ? id : null
+	});
+	this.attributes.push({
+		key: 'class',
+		value: typeof className !== 'undefined' ? className : null
+	});
 }
 
 Vnode.prototype.getAttribute = function(att) {
@@ -217,6 +226,10 @@ describe('axe.utils.querySelectorAllFilter', function() {
 		var result = axe.utils.querySelectorAllFilter(dom, 'div:not(#thangy)');
 		assert.equal(result.length, 3);
 	});
+	it('should find nodes using :not selector with attribute', function() {
+		var result = axe.utils.querySelectorAllFilter(dom, 'div:not([id])');
+		assert.equal(result.length, 2);
+	});
 	it('should find nodes hierarchically using :not selector', function() {
 		var result = axe.utils.querySelectorAllFilter(dom, 'div:not(.first) li');
 		assert.equal(result.length, 2);
@@ -234,6 +247,18 @@ describe('axe.utils.querySelectorAllFilter', function() {
 			'div:not(.second) li:not(.breaking)'
 		);
 		assert.equal(result.length, 0);
+	});
+	it('should find nodes using ^= attribute selector', function() {
+		var result = axe.utils.querySelectorAllFilter(dom, '[class^="sec"]');
+		assert.equal(result.length, 1);
+	});
+	it('should find nodes using $= attribute selector', function() {
+		var result = axe.utils.querySelectorAllFilter(dom, '[id$="ne"]');
+		assert.equal(result.length, 3);
+	});
+	it('should find nodes using *= attribute selector', function() {
+		var result = axe.utils.querySelectorAllFilter(dom, '[role*="t"]');
+		assert.equal(result.length, 2);
 	});
 	it('should put it all together', function() {
 		var result = axe.utils.querySelectorAllFilter(

@@ -1,7 +1,8 @@
 <!doctype html>
-<html>
+<html lang="klingon" id="pass1">
+
 <head>
-	<title>th-has-data-cells incomplete test</title>
+	<title>html-has-lang test</title>
 	<meta charset="utf8">
 	<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
 	<script src="/node_modules/mocha/mocha.js"></script>
@@ -16,22 +17,16 @@
 		var assert = chai.assert;
 	</script>
 </head>
+
 <body>
-	<div id="fixture">
-		<table id="table1">
-			<tr> <th>hi</th> </tr>
-			<tr> <th>hi</th> </tr>
-		</table>
-		<table id="table2">
-			<tr> <th>hi</th> <td></td> </tr>
-			<tr> <th>hi</th> <td></td> </tr>
-		</table>
-		<table id="table3">
-			<tr> <td>axe</td> <td role="columnheader">AXE</th> </tr>
-		</table>
-	</div>
+	<!-- 
+			Note: 
+			This rule excludes `iframe`, uses matches "window-is-top.js" 
+		-->
+	<iframe id="frame1" src="frames/level1.html"></iframe>	
 	<div id="mocha"></div>
-	<script src="th-has-data-cells.js"></script>
+	<script src="html-has-lang-pass.js"></script>
 	<script src="/test/integration/adapter.js"></script>
 </body>
+
 </html>

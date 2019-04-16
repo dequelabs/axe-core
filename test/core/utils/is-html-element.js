@@ -28,12 +28,14 @@ describe('axe.utils.isHtmlElement', function() {
 	window.PHANTOMJS
 		? it.skip
 		: it('returns false if node has inherited svg namespace', function() {
-				var node = document.createElementNS(
-					'http://www.w3.org/2000/svg',
-					'svg'
-				);
-				node.innerHTML = "<a href=''>Child Node</a>";
-				var child = node.querySelector('a');
-				assert.isFalse(axe.utils.isHtmlElement(child));
+				var svgNameSpace = 'http://www.w3.org/2000/svg';
+				var node = document.createElementNS(svgNameSpace, 'svg');
+				var child = document.createElementNS(svgNameSpace, 'a');
+				child.setAttribute('href', '');
+				child.textContent = 'Child Node';
+				node.appendChild(child);
+
+				var childNode = node.querySelector('a');
+				assert.isFalse(axe.utils.isHtmlElement(childNode));
 		  });
 });
