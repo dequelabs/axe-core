@@ -104,7 +104,7 @@ describe('focusable-not-tabbable', function() {
 			shadow.innerHTML = '<p tabindex="0">btn</p>';
 			axe._tree = axe.utils.getFlattenedTree(fixture);
 			axe._selectorData = axe.utils.getSelectorData(axe._tree);
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			var actual = check.evaluate.call(checkContext, node, {}, virtualNode);
 			assert.isFalse(actual);
 		}

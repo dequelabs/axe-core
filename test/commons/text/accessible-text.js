@@ -1371,7 +1371,7 @@ describe('text.accessibleTextVirtual', function() {
 				fixture.appendChild(elm);
 				axe._tree = axe.utils.getFlattenedTree(fixture);
 
-				var target = axe.utils.getNodeFromTree(axe._tree[0], elm);
+				var target = axe.utils.getNodeFromTree(elm);
 				var result = axe.commons.text.accessibleTextVirtual(target);
 				assert.equal(result, 'Hello World', tag);
 			});
@@ -1385,7 +1385,7 @@ describe('text.accessibleTextVirtual', function() {
 				fixture.appendChild(elm);
 				axe._tree = axe.utils.getFlattenedTree(fixture);
 
-				var target = axe.utils.getNodeFromTree(axe._tree[0], elm);
+				var target = axe.utils.getNodeFromTree(elm);
 				var result = axe.commons.text.accessibleTextVirtual(target);
 				assert.equal(result, 'Hello World', tag);
 			});
@@ -1399,7 +1399,7 @@ describe('text.accessibleTextVirtual', function() {
 				fixture.appendChild(elm);
 				axe._tree = axe.utils.getFlattenedTree(fixture);
 
-				var target = axe.utils.getNodeFromTree(axe._tree[0], elm);
+				var target = axe.utils.getNodeFromTree(elm);
 				var result = axe.commons.text.accessibleTextVirtual(target);
 				assert.equal(result, 'Hello World', tag);
 			});
@@ -3214,7 +3214,7 @@ describe('text.accessibleTextVirtual', function() {
 			assert.equal(accessibleText(target), 'Country of origin: United States');
 		});
 
-		/** 
+		/**
 	// In case anyone even wants it, here's the script used to generate these test cases
 	function getTestCase(content, index = 0) {
 		const regex = new RegExp('if given\n([^]*)\nthen the accessible name of the element with id of "(.*)" is "(.*)"')
@@ -3222,12 +3222,12 @@ describe('text.accessibleTextVirtual', function() {
 		if (!out || out.length !== 4) {
 			return;
 		}
-		
+
 		const [, html, id, expected] = out;
 		const strings = html.split(/\n/g).map(
 			line => `'${line.substr(2)}'`
 		).join(' +\n      ') + ';'
-	
+
 		return `
 		it('passes test ${index + 1}', function () {
 			fixture.innerHTML = ${strings}
