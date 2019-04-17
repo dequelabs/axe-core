@@ -8,6 +8,7 @@
 		<script src="/node_modules/mocha/mocha.js"></script>
 		<script src="/node_modules/chai/chai.js"></script>
 		<style>
+			/* This is essential to stop mocha reporter created anchors from making the document overflow, mainly along the x-axis */
 			#mocha h1 a {
 				overflow-wrap: break-word;
   			word-wrap: break-word;

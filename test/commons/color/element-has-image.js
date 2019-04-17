@@ -1,10 +1,9 @@
-describe('color.elementHasBackgroundImageOrGradient', function() {
+describe('color.elementHasImage', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
 	var queryFixture = axe.testUtils.queryFixture;
-	var elementHasBackgroundImageOrGradient =
-		axe.commons.color.elementHasBackgroundImageOrGradient;
+	var elementHasImage = axe.commons.color.elementHasImage;
 	var origColorIncompleteData = axe.commons.color.incompleteData;
 
 	afterEach(function() {
@@ -20,7 +19,7 @@ describe('color.elementHasBackgroundImageOrGradient', function() {
 			var vNode = queryFixture(
 				'<' + nodeName + ' id="target"></' + nodeName + '>'
 			);
-			var actual = elementHasBackgroundImageOrGradient(vNode.actualNode);
+			var actual = elementHasImage(vNode.actualNode);
 			assert.isTrue(actual);
 		});
 	});
@@ -29,7 +28,7 @@ describe('color.elementHasBackgroundImageOrGradient', function() {
 		var vNode = queryFixture(
 			'<div id="target" style="height: 40px; width: 30px;">No background style</div>'
 		);
-		var actual = elementHasBackgroundImageOrGradient(vNode.actualNode);
+		var actual = elementHasImage(vNode.actualNode);
 		assert.isFalse(actual);
 	});
 
@@ -37,7 +36,7 @@ describe('color.elementHasBackgroundImageOrGradient', function() {
 		var vNode = queryFixture(
 			'<div id="target" style="height: 40px; width: 30px; background-image: none "> Some text... </div>'
 		);
-		var actual = elementHasBackgroundImageOrGradient(vNode.actualNode);
+		var actual = elementHasImage(vNode.actualNode);
 		assert.isFalse(actual);
 	});
 
@@ -45,7 +44,7 @@ describe('color.elementHasBackgroundImageOrGradient', function() {
 		var vNode = queryFixture(
 			'<div id="target" style="height: 40px; width: 30px; background-image: url(london.png)"> Some text... </div>'
 		);
-		var actual = elementHasBackgroundImageOrGradient(vNode.actualNode);
+		var actual = elementHasImage(vNode.actualNode);
 		assert.isTrue(actual);
 		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgImage');
 	});
@@ -54,7 +53,7 @@ describe('color.elementHasBackgroundImageOrGradient', function() {
 		var vNode = queryFixture(
 			'<div id="target" style="height: 40px; width: 30px; background-image: linear-gradient(red, orange);"> Some text... </div>'
 		);
-		var actual = elementHasBackgroundImageOrGradient(vNode.actualNode);
+		var actual = elementHasImage(vNode.actualNode);
 		assert.isTrue(actual);
 		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgGradient');
 	});
@@ -78,7 +77,7 @@ describe('color.elementHasBackgroundImageOrGradient', function() {
 				}
 			};
 		})();
-		var actual = elementHasBackgroundImageOrGradient(vNode.actualNode);
+		var actual = elementHasImage(vNode.actualNode);
 		assert.isTrue(actual);
 		assert.isTrue(incompleteDataCalled);
 		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgGradient');
