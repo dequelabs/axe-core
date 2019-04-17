@@ -1,7 +1,7 @@
 describe('context test', function() {
 	'use strict';
 
-	var config = { runOnly: { type: 'rule', values: ['html-has-lang'] } };
+	var config = { runOnly: { type: 'rule', values: ['html-lang-valid'] } };
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 
 	before(function(done) {
@@ -321,6 +321,7 @@ describe('context test', function() {
 			});
 		});
 	});
+
 	describe('direct include', function() {
 		it('should find the frames given a context object', function(done) {
 			axe.run({ include: [['#myframe']] }, config, function(err, results) {
