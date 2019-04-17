@@ -90,11 +90,6 @@ testUtils.fixtureSetup = function(content) {
 			fixture.appendChild(node);
 		});
 	}
-	axe._cache = {
-		nodeMap: new WeakMap(),
-		idRefs: {},
-		idRefsCached: false
-	};
 	axe._tree = axe.utils.getFlattenedTree(fixture);
 	axe._selectorData = axe.utils.getSelectorData(axe._tree);
 
@@ -305,8 +300,6 @@ axe.testUtils = testUtils;
 
 beforeEach(function() {
 	axe._cache = {
-		nodeMap: new WeakMap(),
-		idRefs: {},
-		idRefsCached: false
+		nodeMap: new WeakMap()
 	};
 });
