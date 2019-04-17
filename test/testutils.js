@@ -92,6 +92,10 @@ testUtils.fixtureSetup = function(content) {
 	}
 	axe._tree = axe.utils.getFlattenedTree(fixture);
 	axe._selectorData = axe.utils.getSelectorData(axe._tree);
+	axe._cache = {
+		nodeMap: new WeakMap(),
+		idRefs: {}
+	};
 
 	return fixture;
 };
