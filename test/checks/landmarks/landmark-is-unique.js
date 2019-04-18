@@ -11,6 +11,7 @@ describe('landmark-is-unique', function() {
 	});
 
 	afterEach(function() {
+		axe._tree = undefined;
 		checkContext.reset();
 	});
 
@@ -21,8 +22,15 @@ describe('landmark-is-unique', function() {
 			accessibleText: null,
 			role: 'main'
 		};
+		axe._tree = axe.utils.getFlattenedTree(fixture);
+		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
 		assert.isTrue(
-			checks['landmark-is-unique'].evaluate.call(checkContext, node)
+			checks['landmark-is-unique'].evaluate.call(
+				checkContext,
+				node,
+				{},
+				virtualNode
+			)
 		);
 		assert.deepEqual(checkContext._data, expectedData);
 		assert.deepEqual(checkContext._relatedNodes, [node]);
@@ -35,8 +43,15 @@ describe('landmark-is-unique', function() {
 			accessibleText: 'test text',
 			role: 'main'
 		};
+		axe._tree = axe.utils.getFlattenedTree(fixture);
+		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
 		assert.isTrue(
-			checks['landmark-is-unique'].evaluate.call(checkContext, node)
+			checks['landmark-is-unique'].evaluate.call(
+				checkContext,
+				node,
+				{},
+				virtualNode
+			)
 		);
 		assert.deepEqual(checkContext._data, expectedData);
 		assert.deepEqual(checkContext._relatedNodes, [node]);
