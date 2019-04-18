@@ -186,6 +186,16 @@ testUtils.shadowCheckSetup = function(
 };
 
 /**
+ * Setup axe._tree flat tree
+ * @param Node   Stuff to go in the flat tree
+ * @returns vNode[]
+ */
+testUtils.flatTreeSetup = function(content) {
+	axe._tree = axe.utils.getFlattenedTree(content);
+	return axe._tree;
+};
+
+/**
  * Wait for all nested frames to be loaded
  *
  * @param Object				Window to wait for (optional)

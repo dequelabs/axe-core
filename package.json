@@ -122,11 +122,10 @@
 		"sri-toolbox": "^0.2.0",
 		"standard-version": "^5.0.0",
 		"typescript": "^2.9.2",
-		"uglify-js": "^3.4.4"
-	},
-	"dependencies": {
+		"uglify-js": "^3.4.4",
 		"weakmap-polyfill": "^2.0.0"
 	},
+	"dependencies": {},
 	"lint-staged": {
 		"*.{md,json,ts}": [
 			"prettier --write",

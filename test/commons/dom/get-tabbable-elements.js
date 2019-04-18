@@ -62,7 +62,7 @@ describe('dom.getTabbableElements', function() {
 			var shadow = node.attachShadow({ mode: 'open' });
 			shadow.innerHTML = '<button>btn</button>';
 			// re build tree after shadowDOM is constructed
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			axe._selectorData = axe.utils.getSelectorData(axe._tree);
 			var virtualNode = axe.utils.getNodeFromTree(node);
 			var actual = getTabbableElementsFn(virtualNode);
@@ -79,7 +79,7 @@ describe('dom.getTabbableElements', function() {
 			var shadow = node.attachShadow({ mode: 'open' });
 			shadow.innerHTML = '<button disabled>btn</button>';
 			// re build tree after shadowDOM is constructed
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			axe._selectorData = axe.utils.getSelectorData(axe._tree);
 			var virtualNode = axe.utils.getNodeFromTree(node);
 			var actual = getTabbableElementsFn(virtualNode);
@@ -95,7 +95,7 @@ describe('dom.getTabbableElements', function() {
 			var shadow = node.attachShadow({ mode: 'open' });
 			shadow.innerHTML = '<p>I am not tabbable</p>';
 			// re build tree after shadowDOM is constructed
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			axe._selectorData = axe.utils.getSelectorData(axe._tree);
 			var virtualNode = axe.utils.getNodeFromTree(node);
 			var actual = getTabbableElementsFn(virtualNode);

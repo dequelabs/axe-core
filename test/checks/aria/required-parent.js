@@ -32,7 +32,7 @@ describe('aria-required-parent', function() {
 				.attachShadow({ mode: 'open' });
 			shadowRoot.innerHTML = '<p role="listitem" id="target">Nothing here.</p>';
 
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var shadowContent = shadowRoot.querySelector('#target');
 			var virtualTarget = axe.utils.getNodeFromTree(shadowContent);
 
@@ -102,7 +102,7 @@ describe('aria-required-parent', function() {
 				.attachShadow({ mode: 'open' });
 			shadowRoot.innerHTML = '<p role="listitem" id="target">Nothing here.</p>';
 
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var shadowContent = shadowRoot.querySelector('#target');
 			var virtualTarget = axe.utils.getNodeFromTree(shadowContent);
 
@@ -124,7 +124,7 @@ describe('aria-required-parent', function() {
 				.attachShadow({ mode: 'open' });
 			shadowRoot.innerHTML = '<p role="listitem" id="target">Nothing here.</p>';
 
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var shadowContent = shadowRoot.querySelector('#target');
 			var virtualTarget = axe.utils.getNodeFromTree(shadowContent);
 

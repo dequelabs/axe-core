@@ -317,7 +317,7 @@ describe('group-labelledby', function() {
 						type +
 						'" aria-labelledby="shared three" name="groupname">';
 
-					axe._tree = axe.utils.getFlattenedTree(fixture);
+					axe.testUtils.flatTreeSetup(fixture);
 					var shadowContent = shadowRoot.querySelector('#target');
 					var virtualTarget = axe.utils.getNodeFromTree(shadowContent);
 
@@ -355,7 +355,7 @@ describe('group-labelledby', function() {
 						type +
 						'" aria-labelledby="shared three" name="groupname">';
 
-					axe._tree = axe.utils.getFlattenedTree(fixture);
+					axe.testUtils.flatTreeSetup(fixture);
 					var shadowContent = shadowRoot.querySelector('#target');
 					var virtualTarget = axe.utils.getNodeFromTree(shadowContent);
 
@@ -394,7 +394,7 @@ describe('group-labelledby', function() {
 						type +
 						'" id="target" name="samename" aria-labelledby="shared three">';
 
-					axe._tree = axe.utils.getFlattenedTree(fixture);
+					axe.testUtils.flatTreeSetup(fixture);
 					var shadowContent = shadowRoot.querySelector('#target');
 					var virtualTarget = axe.utils.getNodeFromTree(shadowContent);
 

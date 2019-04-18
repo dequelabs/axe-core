@@ -15,7 +15,7 @@ describe('title-only', function() {
 
 		fixture.appendChild(node);
 
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		assert.isTrue(
 			checks['title-only'].evaluate(
@@ -45,7 +45,7 @@ describe('title-only', function() {
 		fixture.appendChild(node);
 		fixture.appendChild(dby);
 
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		assert.isTrue(
 			checks['title-only'].evaluate(

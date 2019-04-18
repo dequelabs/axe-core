@@ -15,7 +15,7 @@ describe('help-same-as-label', function() {
 		node.setAttribute('aria-label', 'Duplicate');
 
 		fixture.appendChild(node);
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['help-same-as-label'].evaluate(
 				node,
@@ -37,7 +37,7 @@ describe('help-same-as-label', function() {
 		fixture.appendChild(node);
 		fixture.appendChild(dby);
 
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['help-same-as-label'].evaluate(
 				node,
@@ -54,7 +54,7 @@ describe('help-same-as-label', function() {
 
 		fixture.appendChild(node);
 
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
 			checks['help-same-as-label'].evaluate(
 				node,
@@ -75,7 +75,7 @@ describe('help-same-as-label', function() {
 		fixture.appendChild(node);
 		fixture.appendChild(dby);
 
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
 			checks['help-same-as-label'].evaluate(
 				node,

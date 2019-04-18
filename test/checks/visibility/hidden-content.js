@@ -51,7 +51,7 @@ describe('hidden content', function() {
 
 	it('should skip whitelisted elements', function() {
 		var node = document.querySelector('head');
-		axe._tree = axe.utils.getFlattenedTree(document.documentElement);
+		axe.testUtils.flatTreeSetup(document.documentElement);
 		var virtualNode = axe.utils.getNodeFromTree(node);
 		assert.isTrue(
 			checks['hidden-content'].evaluate(node, undefined, virtualNode)
@@ -65,7 +65,7 @@ describe('hidden content', function() {
 			.attachShadow({ mode: 'open' });
 		shadowRoot.innerHTML =
 			'<div id="target" style="display:none">' + '<slot></slot>' + '</div>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var shadow = document.querySelector('#shadow');
 		var virtualShadow = axe.utils.getNodeFromTree(shadow);
