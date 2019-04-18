@@ -1,6 +1,4 @@
 /*eslint
-complexity: ["error",12],
-max-statements: ["error", 35],
 camelcase: ["error", {"properties": "never"}]
 */
 var testConfig = require('./build/test/config');
@@ -209,7 +207,7 @@ module.exports = function(grunt) {
 						quote_style: 1
 					},
 					output: {
-						comments: /^\/*! aXe/
+						comments: /^\/*! axe/
 					}
 				}
 			},
@@ -222,7 +220,7 @@ module.exports = function(grunt) {
 				}),
 				options: {
 					output: {
-						comments: /^\/*! aXe/
+						comments: /^\/*! axe/
 					},
 					mangle: {
 						reserved: ['commons', 'utils', 'axe', 'window', 'document']
@@ -266,7 +264,7 @@ module.exports = function(grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/core',
 					data: {
-						title: 'aXe Core Tests'
+						title: 'Axe Core Tests'
 					}
 				}
 			},
@@ -281,7 +279,7 @@ module.exports = function(grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/checks',
 					data: {
-						title: 'aXe Check Tests'
+						title: 'Axe Check Tests'
 					}
 				}
 			},
@@ -296,7 +294,7 @@ module.exports = function(grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/commons',
 					data: {
-						title: 'aXe Commons Tests'
+						title: 'Axe Commons Tests'
 					}
 				}
 			},
@@ -311,7 +309,7 @@ module.exports = function(grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/rule-matches',
 					data: {
-						title: 'aXe Rule Matches Tests'
+						title: 'Axe Rule Matches Tests'
 					}
 				}
 			},
@@ -323,7 +321,7 @@ module.exports = function(grunt) {
 					testCwd: 'test/integration/rules',
 					tests: ['../../../tmp/integration-tests.js', 'runner.js'],
 					data: {
-						title: 'aXe Integration Tests'
+						title: 'Axe Integration Tests'
 					}
 				}
 			}

@@ -707,7 +707,7 @@ All notable changes to this project will be documented in this file. See [standa
 - Security improvements
 - Build includes Babel/ES6
 - Improvements to table rules
-- aXe can be loaded in Node
+- axe can be loaded in Node
 
 <a name="2.0.0"></a>
 

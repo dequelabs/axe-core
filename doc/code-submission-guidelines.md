@@ -13,7 +13,7 @@ will kindly ask you to resubmit it in the correct format.
 
 We follow Angular's code contribution style with precise rules for formatting git commit messages.
 This leads to more readable messages that are easy to follow when looking through the project
-history. We will also use commit messages to generate the aXe Changelog document.
+history. We will also use commit messages to generate the axe Changelog document.
 
 A detailed explanation of Angular's guidelines and conventions can be found [on Google Docs](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#).
 

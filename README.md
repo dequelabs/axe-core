@@ -74,6 +74,8 @@ Support means that we will fix bugs and attempt to test each browser regularly. 
 
 There is limited support for JSDOM. We will attempt to make all rules compatible with JSDOM but where this is not possible, we recommend turning those rules off. Currently the `color-contrast` rule is known not to work with JSDOM.
 
+We can only support environments where features are either natively supported or polyfilled correctly.
+
 ## The Accessibility Rules
 
 The complete list of rules run by axe-core can be found in [doc/rule-descriptions.md](./doc/rule-descriptions.md).
