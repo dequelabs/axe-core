@@ -149,6 +149,7 @@ describe('runRules', function() {
 		fixture.appendChild(frame);
 	});
 
+	// NOTE: this test depends on the whitespace in /test/mock/frames/context.html. If the whitespace changes in that file, this test needs to be updated to reflect that change.
 	it('should properly calculate context and return results from matching frames', function(done) {
 		axe._load({
 			rules: [
