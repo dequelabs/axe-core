@@ -251,7 +251,8 @@ describe('runRules', function() {
 										node: {
 											selector: ['#context-test', '#foo'],
 											xpath: ["/iframe[@id='context-test']", "/div[@id='foo']"],
-											source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
+											source:
+												'<div id="foo">\n\t\t\t<div id="bar"></div>\n\t\t</div>'
 										},
 										any: [
 											{
@@ -265,7 +266,7 @@ describe('runRules', function() {
 															"/div[@id='foo']"
 														],
 														source:
-															'<div id="foo">\n		<div id="bar"></div>\n	</div>'
+															'<div id="foo">\n\t\t\t<div id="bar"></div>\n\t\t</div>'
 													}
 												]
 											}
