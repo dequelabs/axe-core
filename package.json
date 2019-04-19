@@ -70,7 +70,7 @@
 		"rule-gen": "node build/rule-generator",
 		"next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
 		"sri-update": "grunt build && node build/sri-update && git add sri-history.json",
-		"fmt": "prettier --write *.{json,md,js} **/*.ts './{build,doc,lib,test}/**/*.{json,md,js,ts}'"
+		"fmt": "prettier --write *.{json,md,js} **/*.ts './{build,doc,lib,test}/**/*.{json,md,js,ts,html}'"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.3.4",
@@ -115,7 +115,7 @@
 		"minami": "^1.2.3",
 		"mkdirp": "^0.5.1",
 		"mocha": "^6.1.2",
-		"prettier": "^1.14.0",
+		"prettier": "^1.17.0",
 		"retire": "^2.0.1",
 		"revalidator": "~0.3.1",
 		"selenium-webdriver": "~3.6.0",
@@ -126,7 +126,7 @@
 	},
 	"dependencies": {},
 	"lint-staged": {
-		"*.{md,json,ts}": [
+		"*.{md,json,ts,html}": [
 			"prettier --write",
 			"git add"
 		],

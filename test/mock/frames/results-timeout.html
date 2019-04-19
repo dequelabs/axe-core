@@ -1,22 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <title>Message Iframe Fixture</title>
-</head>
-<body>
-<script src="../../../lib/core/utils/uuid.js"></script>
-<script>
-var utils = {};
-var axe = {
-	version: '2.0.0'
-};
-</script>
-<script src="../../../lib/core/utils/respondable.js"></script>
+	<head>
+		<title>Message Iframe Fixture</title>
+	</head>
+	<body>
+		<script src="../../../lib/core/utils/uuid.js"></script>
+		<script>
+			var utils = {};
+			var axe = {
+				version: '2.0.0'
+			};
+		</script>
+		<script src="../../../lib/core/utils/respondable.js"></script>
 
-<script>
-  utils.respondable.subscribe('axe.ping', function (data, keepalive, respond) {
-    respond({axe: true});
-  });
-</script>
-</body>
+		<script>
+			utils.respondable.subscribe('axe.ping', function(
+				data,
+				keepalive,
+				respond
+			) {
+				respond({ axe: true });
+			});
+		</script>
+	</body>
 </html>
