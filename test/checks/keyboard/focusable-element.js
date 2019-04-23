@@ -30,7 +30,7 @@ describe('focusable-element tests', function() {
 		assert.isFalse(actual);
 	});
 
-	it('returns false when element is not focusable by virtue', function() {
+	it('returns false when element is not focusable by default', function() {
 		var params = checkSetup('<p id="target">I hold some text </p>');
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isFalse(actual);

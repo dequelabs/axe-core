@@ -5,8 +5,7 @@
 		"impact": "moderate",
 		"messages": {
 			"pass": "Element contains focusable elements",
-			"fail": "Element should have focusable content",
-			"incomplete": ""
+			"fail": "Element should have focusable content"
 		}
 	}
 }
