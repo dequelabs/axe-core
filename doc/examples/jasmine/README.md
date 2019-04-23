@@ -1,6 +1,6 @@
 # Jasmine README
 
-This example demonstrates how to use aXe with the Jasmine unit testing framework.
+This example demonstrates how to use axe with the Jasmine unit testing framework.
 
 The unit test is in `spec/a11y.js`, and has two test cases: One that shows the
 expected results from HTML with no errors, and one that shows the expected
@@ -32,6 +32,6 @@ to `axe.run`.
 
 The third argument to the `axe.run` call should be the function to test
 the results. The example is simply looking at the count of violations, but much
-more detailed information is available if desired. The aXe documentation
+more detailed information is available if desired. The axe documentation
 should be consulted for more details on customizing and analyzing calls to
 `axe.run`.
