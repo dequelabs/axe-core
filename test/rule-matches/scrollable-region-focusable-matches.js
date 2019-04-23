@@ -20,6 +20,18 @@ describe('scrollable-region-focusable-matches', function() {
 		assert.isFalse(actual);
 	});
 
+	it('returns false when element has no visible children', function() {
+		var target = queryFixture(
+			'<div id="target" style="height: 200px; width: 200px;">' +
+				'<div style="display:none; height: 2000px; width: 100px;">' +
+				'<p> Content </p>' +
+				'</div>' +
+				'</div>'
+		);
+		var actual = rule.matches(target.actualNode, target);
+		assert.isFalse(actual);
+	});
+
 	it('returns false when element does not overflow', function() {
 		var target = queryFixture(
 			'<div id="target" style="height: 200px; width: 200px; overflow: auto;">' +
