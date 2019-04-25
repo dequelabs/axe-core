@@ -432,7 +432,7 @@ describe('preload cssom integration test', function() {
 			});
 		});
 
-		it.only('throws if cross-origin stylesheet request timeouts', function(done) {
+		it('throws if cross-origin stylesheet request timeouts', function(done) {
 			stylesForPage = [styleSheets.crossOriginLinkHref];
 			attachStylesheets({ styles: stylesForPage }, function(err) {
 				if (err) {
