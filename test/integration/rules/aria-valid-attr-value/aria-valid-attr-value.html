@@ -1,4 +1,3 @@
-
 <h2>Violations</h2>
 <div>
 	<div aria-activedescendant="Idonotexist" id="violation1">hi</div>
@@ -39,8 +38,10 @@
 	<div aria-valuemax="stuff" id="violation32">hi</div>
 	<div aria-valuemin="stuff" id="violation33">hi</div>
 	<div aria-valuenow="stuff" id="violation34">hi</div>
-	<div aria-errormessage="violation35-ref" id="violation35">hi</div><div id="violation35-ref"></div>
-	<div aria-valuetext="" id="violation36"></div><!-- don't allow empty aria-valuetext -->
+	<div aria-errormessage="violation35-ref" id="violation35">hi</div>
+	<div id="violation35-ref"></div>
+	<div aria-valuetext="" id="violation36"></div>
+	<!-- don't allow empty aria-valuetext -->
 </div>
 <h2>Possible False Positives</h2>
 <div>
@@ -246,7 +247,8 @@
 	<div aria-valuenow="-.1" id="pass165">hi</div>
 	<div aria-valuenow="-412" id="pass166">hi</div>
 	<div aria-valuetext="stuff" id="pass167">hi</div>
-	<div aria-errormessage="pass168-ref" id="pass168">hi</div><div id="pass168-ref" role="alert"></div>
+	<div aria-errormessage="pass168-ref" id="pass168">hi</div>
+	<div id="pass168-ref" role="alert"></div>
 	<div aria-errormessage="pass68" id="pass169">hi</div>
 	<div aria-errormessage="ref" aria-describedby="ref" id="pass170">hi</div>
 

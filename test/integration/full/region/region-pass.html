@@ -1,45 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<title>Region Test</title>
-<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
-<script src="/node_modules/mocha/mocha.js"></script>
-<script src="/node_modules/chai/chai.js"></script>
-<script src="/axe.js"></script>
-<script>
-	mocha.setup({
-		timeout: 10000,
-		ui: 'bdd'
-	});
-	var assert = chai.assert;
-</script>
-</head>
-<body>
-<a href="#mainheader" id="skiplink">This is a skip link.</a>
-<div id="wrapper">
-	<div role="main">
-		<h1 id="mainheader" tabindex="0">This is a header.</h1>
-	</div>
-</div>
-<form aria-label="My wonderful form">
-	<p>My form!</p>
-</form>
-<ul role="navigation">
-	<li>Home</li>
-	<li>Other</li>
-</ul>
-<section aria-labelledby="hdng">
-	<h1 id="hdng">Section heading</h1>
-	<p>Content</p>
-</section>
-<section aria-label="section 2">
-	<p>Content</p>
-</section>
-<section title="section 3">
-	<p>Content</p>
-</section>
-<div id="mocha" role="complementary"></div>
-<script src="region-pass.js"></script>
-<script src="/test/integration/adapter.js"></script>
-</body>
+	<head>
+		<title>Region Test</title>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="/node_modules/mocha/mocha.css"
+		/>
+		<script src="/node_modules/mocha/mocha.js"></script>
+		<script src="/node_modules/chai/chai.js"></script>
+		<script src="/axe.js"></script>
+		<script>
+			mocha.setup({
+				timeout: 10000,
+				ui: 'bdd'
+			});
+			var assert = chai.assert;
+		</script>
+	</head>
+	<body>
+		<a href="#mainheader" id="skiplink">This is a skip link.</a>
+		<div id="wrapper">
+			<div role="main">
+				<h1 id="mainheader" tabindex="0">This is a header.</h1>
+			</div>
+		</div>
+		<form aria-label="My wonderful form">
+			<p>My form!</p>
+		</form>
+		<ul role="navigation">
+			<li>Home</li>
+			<li>Other</li>
+		</ul>
+		<section aria-labelledby="hdng">
+			<h1 id="hdng">Section heading</h1>
+			<p>Content</p>
+		</section>
+		<section aria-label="section 2">
+			<p>Content</p>
+		</section>
+		<section title="section 3">
+			<p>Content</p>
+		</section>
+		<div id="mocha" role="complementary"></div>
+		<script src="region-pass.js"></script>
+		<script src="/test/integration/adapter.js"></script>
+	</body>
 </html>
