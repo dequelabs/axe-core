@@ -161,7 +161,7 @@ describe('preload cssom integration test', function() {
 						done(err);
 					}
 					getPreload(root)
-						.then(() => {
+						.then(function() {
 							done(new Error('Expected getPreload to reject.'));
 						})
 						.catch(function(err) {
@@ -432,17 +432,17 @@ describe('preload cssom integration test', function() {
 			});
 		});
 
-		it('throws if cross-origin stylesheet request timeouts', function(done) {
+		it.only('throws if cross-origin stylesheet request timeouts', function(done) {
 			stylesForPage = [styleSheets.crossOriginLinkHref];
 			attachStylesheets({ styles: stylesForPage }, function(err) {
 				if (err) {
 					done(err);
 				}
 				getPreload(undefined, 1)
-					.then(() => {
+					.then(function() {
 						done(new Error('Expected getPreload to reject.'));
 					})
-					.catch(err => {
+					.catch(function(err) {
 						assert.isDefined(err);
 						done();
 					});
