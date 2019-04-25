@@ -12,14 +12,14 @@ describe('skip-link', function() {
 			'<a href="#target">Click Here</a><h1 id="target">Introduction</h1>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('a');
-		assert.isTrue(axe.commons.dom.isSkipLink(node));
+		assert.isTrue(checks['skip-link'].evaluate(node));
 	});
 
 	it('should return true if the href points to an element with an name', function() {
 		fixture.innerHTML = '<a href="#target">Click Here</a><a name="target"></a>';
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('a');
-		assert.isTrue(axe.commons.dom.isSkipLink(node));
+		assert.isTrue(checks['skip-link'].evaluate(node));
 	});
 
 	it('should return false if the href points to a non-existent element', function() {
