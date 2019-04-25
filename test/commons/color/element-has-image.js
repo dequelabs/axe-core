@@ -21,6 +21,7 @@ describe('color.elementHasImage', function() {
 			);
 			var actual = elementHasImage(vNode.actualNode);
 			assert.isTrue(actual);
+			assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'imgNode');
 		});
 	});
 
