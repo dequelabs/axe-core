@@ -22,12 +22,13 @@ describe('dom.visuallyOverlaps', function() {
 	it('should return false when rect has no overlap', function() {
 		fixture.innerHTML =
 			'<div style="position: absolute; top: 0px; left: 0px; height: 40px;' +
-			' width: 30px; background-color: red;"></div>' +
+			' width: 30px; background-color: red;">' +
 			'<div id="target" style="position: absolute; top: 50px; left: 0px; height: 20px;' +
 			' width: 45px; background-color: green;">' +
 			'</div></div>';
 		var target = fixture.querySelector('#target');
 		var targetRect = target.getBoundingClientRect();
+
 		assert.isFalse(
 			axe.commons.dom.visuallyOverlaps(targetRect, target.parentNode)
 		);

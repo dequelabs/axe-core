@@ -740,6 +740,28 @@ describe('color.getBackgroundColor', function() {
 		assert.closeTo(actual.alpha, 1, 0);
 	});
 
+	it('should return the html canvas inherited from body bgColor when element content does not overlap with body', function() {
+		fixture.innerHTML =
+			'<div id="target" style="position: relative; top: 2px;">Text</div>';
+
+		// size body element so that target element is positioned outside of background
+		var originalHeight = document.body.style.height;
+		var originalBg = document.body.style.background;
+		document.body.style.height = '1px';
+		document.body.style.background = '#000';
+
+		var target = fixture.querySelector('#target');
+		var actual = axe.commons.color.getBackgroundColor(target, []);
+
+		assert.closeTo(actual.red, 0, 0);
+		assert.closeTo(actual.green, 0, 0);
+		assert.closeTo(actual.blue, 0, 0);
+		assert.closeTo(actual.alpha, 1, 0);
+
+		document.body.style.height = originalHeight;
+		document.body.style.background = originalBg;
+	});
+
 	(shadowSupported ? it : xit)('finds colors in shadow boundaries', function() {
 		fixture.innerHTML = '<div id="container"></div>';
 		var container = fixture.querySelector('#container');
