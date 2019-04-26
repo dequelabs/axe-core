@@ -1,20 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<title>O hai</title>
+	<title>O hai</title>
 
-<p id="target" style="word-spacing: 200% !important; letter-spacing: 50rem !important; line-height: 3 !important;">The quick brown fox jumped over the lazy dog</p>
+	<p
+		id="target"
+		style="word-spacing: 200% !important; letter-spacing: 50rem !important; line-height: 3 !important;"
+	>
+		The quick brown fox jumped over the lazy dog
+	</p>
 
-<script src="/axe.js"></script>
-<script>
-window.addEventListener('load' , function () {
-  axe.run({
-    runOnly: {
-      type: 'rule',
-      values: ['avoid-inline-spacing']
-    }
-  }, function (err, res) {
-    console.log(res.violations);
-    res.incomplete.forEach(issue => console.log(issue))
-  });
-})
-</script>
+	<script src="/axe.js"></script>
+	<script>
+		window.addEventListener('load', function() {
+			axe.run(
+				{
+					runOnly: {
+						type: 'rule',
+						values: ['avoid-inline-spacing']
+					}
+				},
+				function(err, res) {
+					console.log(res.violations);
+					res.incomplete.forEach(issue => console.log(issue));
+				}
+			);
+		});
+	</script>
+</html>
