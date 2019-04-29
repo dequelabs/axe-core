@@ -1,42 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" id="pass1">
-<head>
-  <title>skip-link test</title>
-  <meta charset="utf8">
-  <link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
-  <script src="/node_modules/mocha/mocha.js"></script>
-  <script src="/node_modules/chai/chai.js"></script>
-  <script src="/axe.js"></script>
-  <script src="/test/testutils.js"></script>
-  <script>
-    mocha.setup({
-      timeout: 10000,
-      ui: 'bdd'
-    });
-    var assert = chai.assert;
-  </script>
-</head>
-<body>
+	<head>
+		<title>skip-link test</title>
+		<meta charset="utf8" />
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="/node_modules/mocha/mocha.css"
+		/>
+		<script src="/node_modules/mocha/mocha.js"></script>
+		<script src="/node_modules/chai/chai.js"></script>
+		<script src="/axe.js"></script>
+		<script>
+			mocha.setup({
+				timeout: 10000,
+				ui: 'bdd'
+			});
+			var assert = chai.assert;
+		</script>
+	</head>
+	<body>
+		<div id="pass1-tgt"></div>
+		<a href="#pass1-tgt" id="pass1">Link</a>
 
-  <div id="pass1-tgt"></div>
-  <a href="#pass1-tgt" id="pass1">Link</a>
+		<a href="#pass2-tgt" id="pass2">Link</a>
 
-  <a href="#pass2-tgt" id="pass2">Link</a>
+		<div id="pass3-tgt"></div>
+		<a href="/#pass3-tgt" id="pass3">Link (angular)</a>
 
-  <div id="pass3-tgt"></div>
-  <a href="/#pass3-tgt" id="pass3">Link (angular)</a>
+		<div id="canttell1-tgt" style="display:none"></div>
+		<a href="#canttell1-tgt" id="canttell1">Link</a>
 
-  <div id="canttell1-tgt" style="display:none"></div>
-  <a href="#canttell1-tgt" id="canttell1">Link</a>
-
-  <!-- since these elements are page links, they needs to be at the bottom
+		<!-- since these elements are page links, they needs to be at the bottom
        of the test so all the prior links are considered skip links -->
-  <a name="pass2-tgt"></a>
+		<a name="pass2-tgt"></a>
 
-  <a href="foo#bar" id="ignore1">link</a>
-  <a href="#" id="ignore2">link</a>
-  <div id="mocha"></div>
-  <script src="skip-link-pass.js"></script>
-  <script src="/test/integration/adapter.js"></script>
-</body>
+		<a href="foo#bar" id="ignore1">link</a>
+		<a href="#" id="ignore2">link</a>
+		<div id="mocha"></div>
+		<script src="/test/testutils.js"></script>
+		<script src="skip-link-pass.js"></script>
+		<script src="/test/integration/adapter.js"></script>
+	</body>
 </html>
