@@ -27,7 +27,7 @@ describe('fieldset', function() {
 				);
 
 				var node = fixture.querySelector('#target');
-				var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+				var virtualNode = axe.utils.getNodeFromTree(node);
 				assert.isTrue(
 					checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 				);
@@ -49,7 +49,7 @@ describe('fieldset', function() {
 				);
 
 				var node = fixture.querySelector('#target');
-				var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+				var virtualNode = axe.utils.getNodeFromTree(node);
 				assert.isFalse(
 					checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 				);
@@ -76,7 +76,7 @@ describe('fieldset', function() {
 					'" name="uniqueyname"></fieldset>'
 			);
 			var node = fixture.querySelector('#target');
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			assert.isFalse(
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
@@ -103,7 +103,7 @@ describe('fieldset', function() {
 					'" name="uniqueyname"></fieldset>'
 			);
 			var node = fixture.querySelector('#target');
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			assert.isFalse(
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
@@ -131,7 +131,7 @@ describe('fieldset', function() {
 					'" name="uniqueyname"></fieldset>'
 			);
 			var node = fixture.querySelector('#target');
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			assert.isFalse(
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
@@ -158,7 +158,7 @@ describe('fieldset', function() {
 					'" name="uniqueyname"></fieldset>'
 			);
 			var node = fixture.querySelector('#target');
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			assert.isTrue(
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
@@ -176,7 +176,7 @@ describe('fieldset', function() {
 			);
 
 			var node = fixture.querySelector('#target');
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			assert.isFalse(
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
@@ -202,7 +202,7 @@ describe('fieldset', function() {
 			);
 
 			var node = fixture.querySelector('#target');
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			assert.isFalse(
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
@@ -230,7 +230,7 @@ describe('fieldset', function() {
 					'" name="uniqueyname"></div>'
 			);
 			var node = fixture.querySelector('#target');
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			assert.isFalse(
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
@@ -259,7 +259,7 @@ describe('fieldset', function() {
 			);
 
 			var node = fixture.querySelector('#target');
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			assert.isTrue(
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
@@ -282,7 +282,7 @@ describe('fieldset', function() {
 			);
 
 			var node = fixture.querySelector('#target');
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			assert.isTrue(
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
@@ -304,7 +304,7 @@ describe('fieldset', function() {
 					'" name="uniqueyname"></div>'
 			);
 			var node = fixture.querySelector('#target');
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			assert.isTrue(
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
@@ -322,7 +322,7 @@ describe('fieldset', function() {
 					'<input type="hidden" name="things"></fieldset>'
 			);
 			var node = fixture.querySelector('#target');
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			assert.isTrue(
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
@@ -348,7 +348,7 @@ describe('fieldset', function() {
 					'</fieldset>'
 			);
 			var node = fixture.querySelector('#target');
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			assert.isTrue(
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
@@ -374,7 +374,7 @@ describe('fieldset', function() {
 					'</fieldset>'
 			);
 			var node = fixture.querySelector('#target');
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			assert.isTrue(
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
@@ -398,7 +398,7 @@ describe('fieldset', function() {
 				fixtureSetup(fieldset);
 
 				var node = shadow.querySelector('#target');
-				var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+				var virtualNode = axe.utils.getNodeFromTree(node);
 				assert.isTrue(
 					checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 				);
@@ -423,7 +423,7 @@ describe('fieldset', function() {
 				fixtureSetup(div);
 
 				var node = div.querySelector('#target');
-				var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+				var virtualNode = axe.utils.getNodeFromTree(node);
 				assert.isTrue(
 					checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 				);
@@ -448,7 +448,7 @@ describe('fieldset', function() {
 			);
 
 			var node = fixture.querySelector('#target');
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			assert.isTrue(
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
@@ -471,7 +471,7 @@ describe('fieldset', function() {
 					'" name="s.%$#n"></div>'
 			);
 			var node = fixture.querySelector('#target');
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			assert.isFalse(
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);

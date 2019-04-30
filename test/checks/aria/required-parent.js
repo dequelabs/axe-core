@@ -32,9 +32,9 @@ describe('aria-required-parent', function() {
 				.attachShadow({ mode: 'open' });
 			shadowRoot.innerHTML = '<p role="listitem" id="target">Nothing here.</p>';
 
-			var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+			axe.testUtils.flatTreeSetup(fixture);
 			var shadowContent = shadowRoot.querySelector('#target');
-			var virtualTarget = axe.utils.getNodeFromTree(tree[0], shadowContent);
+			var virtualTarget = axe.utils.getNodeFromTree(shadowContent);
 
 			var params = [shadowContent, undefined, virtualTarget];
 			assert.isFalse(
@@ -102,9 +102,9 @@ describe('aria-required-parent', function() {
 				.attachShadow({ mode: 'open' });
 			shadowRoot.innerHTML = '<p role="listitem" id="target">Nothing here.</p>';
 
-			var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+			axe.testUtils.flatTreeSetup(fixture);
 			var shadowContent = shadowRoot.querySelector('#target');
-			var virtualTarget = axe.utils.getNodeFromTree(tree[0], shadowContent);
+			var virtualTarget = axe.utils.getNodeFromTree(shadowContent);
 
 			var params = [shadowContent, undefined, virtualTarget];
 			assert.isTrue(
@@ -124,9 +124,9 @@ describe('aria-required-parent', function() {
 				.attachShadow({ mode: 'open' });
 			shadowRoot.innerHTML = '<p role="listitem" id="target">Nothing here.</p>';
 
-			var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+			axe.testUtils.flatTreeSetup(fixture);
 			var shadowContent = shadowRoot.querySelector('#target');
-			var virtualTarget = axe.utils.getNodeFromTree(tree[0], shadowContent);
+			var virtualTarget = axe.utils.getNodeFromTree(shadowContent);
 
 			var params = [shadowContent, undefined, virtualTarget];
 			assert.isFalse(
