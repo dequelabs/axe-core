@@ -3,11 +3,6 @@
 	"description": "Axe JSDOM Example",
 	"version": "0.0.1",
 	"private": true,
-	"author": {
-		"name": "David Sturley",
-		"organization": "Deque Systems, Inc.",
-		"url": "http://deque.com/"
-	},
 	"dependencies": {},
 	"scripts": {
 		"test": "mocha"
