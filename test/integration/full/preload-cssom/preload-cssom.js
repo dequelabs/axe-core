@@ -4,7 +4,7 @@ describe('preload cssom integration test', function() {
 
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var isPhantom = window.PHANTOMJS ? true : false;
-  var isIE11 = axe.testUtils.isIE11;
+	var isIE11 = axe.testUtils.isIE11;
 	var styleSheets = {
 		crossOriginLinkHref: {
 			id: 'crossOriginLinkHref',
@@ -131,7 +131,7 @@ describe('preload cssom integration test', function() {
 					if (err) {
 						done(err);
 					}
-					getPreload()
+					getPreload(root)
 						.then(function(sheets) {
 							assert.lengthOf(sheets, 0);
 							done();
@@ -160,8 +160,8 @@ describe('preload cssom integration test', function() {
 					if (err) {
 						done(err);
 					}
-					getPreload()
-						.then(() => {
+					getPreload(root)
+						.then(function() {
 							done(new Error('Expected getPreload to reject.'));
 						})
 						.catch(function(err) {
@@ -439,10 +439,10 @@ describe('preload cssom integration test', function() {
 					done(err);
 				}
 				getPreload(undefined, 1)
-					.then(() => {
+					.then(function() {
 						done(new Error('Expected getPreload to reject.'));
 					})
-					.catch(err => {
+					.catch(function(err) {
 						assert.isDefined(err);
 						done();
 					});

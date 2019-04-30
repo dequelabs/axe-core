@@ -149,6 +149,7 @@ describe('runRules', function() {
 		fixture.appendChild(frame);
 	});
 
+	// NOTE: this test depends on the whitespace in /test/mock/frames/context.html. If the whitespace changes in that file, this test needs to be updated to reflect that change.
 	it('should properly calculate context and return results from matching frames', function(done) {
 		axe._load({
 			rules: [
@@ -251,7 +252,8 @@ describe('runRules', function() {
 										node: {
 											selector: ['#context-test', '#foo'],
 											xpath: ["/iframe[@id='context-test']", "/div[@id='foo']"],
-											source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
+											source:
+												'<div id="foo">\n\t\t\t<div id="bar"></div>\n\t\t</div>'
 										},
 										any: [
 											{
@@ -265,7 +267,7 @@ describe('runRules', function() {
 															"/div[@id='foo']"
 														],
 														source:
-															'<div id="foo">\n		<div id="bar"></div>\n	</div>'
+															'<div id="foo">\n\t\t\t<div id="bar"></div>\n\t\t</div>'
 													}
 												]
 											}
