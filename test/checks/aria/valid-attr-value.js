@@ -177,6 +177,26 @@ describe('aria-valid-attr-value', function() {
 		);
 	});
 
+	it('should pass on aria-owns and aria-expanded=false when the element is not in the DOM', function() {
+		fixtureSetup(
+			'<button aria-owns="test" aria-expanded="false">Button</button>'
+		);
+		var passing1 = fixture.querySelector('button');
+		assert.isTrue(
+			checks['aria-valid-attr-value'].evaluate.call(checkContext, passing1)
+		);
+	});
+
+	it('should fail on aria-owns and aria-expanded=true when the element is not in the DOM', function() {
+		fixtureSetup(
+			'<button aria-owns="test" aria-expanded="true">Button</button>'
+		);
+		var failing1 = fixture.querySelector('button');
+		assert.isFalse(
+			checks['aria-valid-attr-value'].evaluate.call(checkContext, failing1)
+		);
+	});
+
 	describe('options', function() {
 		it('should exclude supplied attributes', function() {
 			fixture.innerHTML =
