@@ -197,6 +197,14 @@ describe('aria-valid-attr-value', function() {
 		);
 	});
 
+	it('should fail on aria-owns when the element is not in the DOM', function() {
+		fixtureSetup('<button aria-owns="test">Button</button>');
+		var failing1 = fixture.querySelector('button');
+		assert.isFalse(
+			checks['aria-valid-attr-value'].evaluate.call(checkContext, failing1)
+		);
+	});
+
 	describe('options', function() {
 		it('should exclude supplied attributes', function() {
 			fixture.innerHTML =
