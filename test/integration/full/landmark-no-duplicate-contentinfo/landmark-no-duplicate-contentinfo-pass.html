@@ -10,7 +10,6 @@
 		<script src="/node_modules/mocha/mocha.js"></script>
 		<script src="/node_modules/chai/chai.js"></script>
 		<script src="/axe.js"></script>
-		<script src="/test/testutils.js"></script>
 		<script>
 			mocha.setup({
 				timeout: 10000,
@@ -23,6 +22,7 @@
 		<p>No contentinfo landmarks</p>
 		<iframe id="frame1" src="frames/level1.html"></iframe>
 		<div id="mocha"></div>
+		<script src="/test/testutils.js"></script>
 		<script src="landmark-no-duplicate-contentinfo-pass.js"></script>
 		<script src="/test/integration/adapter.js"></script>
 	</body>

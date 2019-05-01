@@ -11,7 +11,6 @@
 		<script src="/node_modules/mocha/mocha.js"></script>
 		<script src="/node_modules/chai/chai.js"></script>
 		<script src="/axe.js"></script>
-		<script src="/test/testutils.js"></script>
 		<script>
 			mocha.setup({
 				timeout: 10000,
@@ -22,12 +21,13 @@
 	</head>
 
 	<body>
-		<!-- 
-			Note: 
-			This rule excludes `iframe`, uses matches "window-is-top.js" 
+		<!--
+			Note:
+			This rule excludes `iframe`, uses matches "window-is-top.js"
 		-->
 		<iframe id="frame1" src="frames/level1.html"></iframe>
 		<div id="mocha"></div>
+		<script src="/test/testutils.js"></script>
 		<script src="html-has-lang-pass.js"></script>
 		<script src="/test/integration/adapter.js"></script>
 	</body>
