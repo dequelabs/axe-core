@@ -73,10 +73,10 @@
 		"fmt": "prettier --write *.{json,md,js} **/*.ts './{build,doc,lib,test}/**/*.{json,md,js,ts,html}'"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.3.4",
-		"@babel/plugin-proposal-object-rest-spread": "^7.3.4",
-		"@babel/polyfill": "^7.2.5",
-		"@babel/preset-env": "^7.3.4",
+		"@babel/core": "^7.4.4",
+		"@babel/plugin-proposal-object-rest-spread": "^7.4.4",
+		"@babel/polyfill": "^7.4.4",
+		"@babel/preset-env": "^7.4.4",
 		"aria-query": "^3.0.0",
 		"axios": "^0.18.0",
 		"babelify": "^10.0.0",
