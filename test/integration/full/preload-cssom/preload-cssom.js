@@ -79,7 +79,7 @@ describe('preload cssom integration test', function() {
 			});
 	}
 
-	function getPreload(root) {
+	function getPreloadCssom(root) {
 		const treeRoot = axe.utils.getFlattenedTree(root ? root : document);
 		return axe.utils.preloadCssom({ treeRoot });
 	}
@@ -96,7 +96,7 @@ describe('preload cssom integration test', function() {
 					if (err) {
 						done(err);
 					}
-					getPreload(root)
+					getPreloadCssom(root)
 						.then(function(sheets) {
 							assert.lengthOf(sheets, 1);
 							var sheetData = sheets[0].sheet;
@@ -127,7 +127,7 @@ describe('preload cssom integration test', function() {
 					if (err) {
 						done(err);
 					}
-					getPreload(root)
+					getPreloadCssom(root)
 						.then(function(sheets) {
 							assert.lengthOf(sheets, 0);
 							done();
@@ -156,7 +156,7 @@ describe('preload cssom integration test', function() {
 					if (err) {
 						done(err);
 					}
-					getPreload(root)
+					getPreloadCssom(root)
 						.then(function() {
 							done(new Error('Expected getPreload to reject.'));
 						})
@@ -199,7 +199,7 @@ describe('preload cssom integration test', function() {
 				if (err) {
 					done(err);
 				}
-				getPreload()
+				getPreloadCssom()
 					.then(function(sheets) {
 						assert.lengthOf(sheets, 1);
 						var sheetData = sheets[0].sheet;
@@ -222,7 +222,7 @@ describe('preload cssom integration test', function() {
 				if (err) {
 					done(err);
 				}
-				getPreload()
+				getPreloadCssom()
 					.then(function(sheets) {
 						assert.lengthOf(sheets, 1);
 						var nonCrossOriginSheets = sheets.filter(function(s) {
@@ -254,7 +254,7 @@ describe('preload cssom integration test', function() {
 					'.green { background-color: green; } ' +
 					'</style>' +
 					'<div class="initialism">Some text</div>';
-				getPreload(shadowFixture)
+				getPreloadCssom(shadowFixture)
 					.then(function(sheets) {
 						assert.lengthOf(sheets, 2);
 						var nonCrossOriginSheetsWithInShadowDOM = sheets
@@ -296,7 +296,7 @@ describe('preload cssom integration test', function() {
 					if (err) {
 						done(err);
 					}
-					getPreload(shadowFixture)
+					getPreloadCssom(shadowFixture)
 						.then(function(sheets) {
 							assert.lengthOf(sheets, 2);
 
@@ -333,7 +333,7 @@ describe('preload cssom integration test', function() {
 				if (err) {
 					done(err);
 				}
-				getPreload()
+				getPreloadCssom()
 					.then(function(sheets) {
 						assert.lengthOf(sheets, 2);
 						var nonCrossOriginSheets = sheets.filter(function(s) {
@@ -364,7 +364,7 @@ describe('preload cssom integration test', function() {
 				if (err) {
 					done(err);
 				}
-				getPreload()
+				getPreloadCssom()
 					.then(function(sheets) {
 						assert.lengthOf(sheets, 1);
 						var nonCrossOriginSheets = sheets.filter(function(s) {
@@ -390,7 +390,7 @@ describe('preload cssom integration test', function() {
 				if (err) {
 					done(err);
 				}
-				getPreload()
+				getPreloadCssom()
 					.then(function(sheets) {
 						assert.lengthOf(sheets, 1);
 						axe.testUtils.assertStylesheet(
@@ -412,7 +412,7 @@ describe('preload cssom integration test', function() {
 				if (err) {
 					done(err);
 				}
-				getPreload()
+				getPreloadCssom()
 					.then(function(sheets) {
 						assert.lengthOf(sheets, 1);
 						axe.testUtils.assertStylesheet(
@@ -443,7 +443,7 @@ describe('preload cssom integration test', function() {
 		});
 
 		it('returns styles defined using <style> tag', function(done) {
-			getPreload(nestedFrame)
+			getPreloadCssom(nestedFrame)
 				.then(function(sheets) {
 					assert.lengthOf(sheets, 2);
 
