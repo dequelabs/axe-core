@@ -24,7 +24,7 @@ describe('axe.utils.getScroll', function() {
 	it('returns undefined when element does not overflow', function() {
 		var target = queryFixture(
 			'<div id="target" style="height: 200px; width: 200px;">' +
-				'<div style="height: 2000px; width: 100px; background-color: pink;">' +
+				'<div style="height: 10px; width: 10px; background-color: pink;">' +
 				'<p> Content </p>' +
 				'</div>' +
 				'</div>'
@@ -33,7 +33,7 @@ describe('axe.utils.getScroll', function() {
 		assert.isUndefined(actual);
 	});
 
-	it('returns scroll offset when element overflow is hidden', function() {
+	it('returns undefined when element overflow is hidden', function() {
 		var target = queryFixture(
 			'<div id="target" style="height: 200px; width: 200px; overflow: hidden">' +
 				'<div style="height: 2000px; width: 100px; background-color: pink;">' +

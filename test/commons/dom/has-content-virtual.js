@@ -38,6 +38,18 @@ describe('dom.hasContentVirtual', function() {
 		);
 	});
 
+	it('is false if the element has an aria label but `ignoreAria=true`', function() {
+		fixture.innerHTML = '<div id="target" aria-label="my-label">	</div>';
+		tree = axe.utils.getFlattenedTree(fixture);
+		assert.isTrue(
+			hasContentVirtual(
+				axe.utils.querySelectorAll(tree, '#target')[0],
+				true,
+				true
+			)
+		);
+	});
+
 	it('is true if the element contains visual content', function() {
 		fixture.innerHTML = '<div id="target"> <img src=""> </div>';
 		tree = axe.utils.getFlattenedTree(fixture);

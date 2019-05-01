@@ -89,6 +89,10 @@ describe('scrollable-region-focusable-matches', function() {
 			}
 		});
 
+		afterEach(function() {
+			axe._tree = undefined;
+		});
+
 		it('returns false when shadowDOM element does not overflow', function() {
 			fixture.innerHTML = '<div></div>';
 
@@ -97,7 +101,7 @@ describe('scrollable-region-focusable-matches', function() {
 			slotted.innerHTML =
 				'<p id="target" style="width: 12em; height: 2em; border: dotted;">Sed.</p>';
 			root.appendChild(slotted);
-			var tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			var tree = (axe._tree = axe.utils.getFlattenedTree(fixture.firstChild));
 			var target = axe.utils.querySelectorAll(tree, 'p')[0];
 			var actual = rule.matches(target.actualNode, target);
 			assert.isFalse(actual);
@@ -111,7 +115,7 @@ describe('scrollable-region-focusable-matches', function() {
 			slotted.innerHTML =
 				'<p id="target" style="width: 12em; height: 2em; border: dotted; overflow: auto;">This is a repeated long sentence, This is a repeated long sentence, This is a repeated long sentence, This is a repeated long sentence, This is a repeated long sentence.</p>';
 			root.appendChild(slotted);
-			var tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			var tree = (axe._tree = axe.utils.getFlattenedTree(fixture.firstChild));
 			var target = axe.utils.querySelectorAll(tree, 'p')[0];
 			var actual = rule.matches(target.actualNode, target);
 			assert.isTrue(actual);
