@@ -79,13 +79,9 @@ describe('preload cssom integration test', function() {
 			});
 	}
 
-	function getPreload(root, timeout) {
-		var config = {
-			asset: 'cssom',
-			timeout: timeout ? timeout : 10000,
-			treeRoot: axe.utils.getFlattenedTree(root ? root : document)
-		};
-		return axe.utils.preloadCssom(config);
+	function getPreload(root) {
+		const treeRoot = axe.utils.getFlattenedTree(root ? root : document);
+		return axe.utils.preloadCssom({ treeRoot });
 	}
 
 	function commonTestsForRootNodeAndNestedFrame(root) {
@@ -428,23 +424,6 @@ describe('preload cssom integration test', function() {
 					})
 					.catch(function() {
 						done(new Error('Expected getPreload to resolve.'));
-					});
-			});
-		});
-
-		it('throws if cross-origin stylesheet request timeouts', function(done) {
-			stylesForPage = [styleSheets.crossOriginLinkHref];
-			attachStylesheets({ styles: stylesForPage }, function(err) {
-				if (err) {
-					done(err);
-				}
-				getPreload(undefined, 1)
-					.then(function() {
-						done(new Error('Expected getPreload to reject.'));
-					})
-					.catch(function(err) {
-						assert.isDefined(err);
-						done();
 					});
 			});
 		});

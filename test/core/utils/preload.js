@@ -11,14 +11,14 @@ describe('axe.utils.preload', function() {
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 	});
 
-	it('should return a Promise', function() {
+	it('returns a Promise', function() {
 		var actual = axe.utils.preload({});
 		assert.isTrue(
 			Object.prototype.toString.call(actual) === '[object Promise]'
 		);
 	});
 
-	it('should return `undefined` as result', function(done) {
+	it('returns `undefined` as result', function(done) {
 		var options = {
 			preload: false
 		};
@@ -33,26 +33,22 @@ describe('axe.utils.preload', function() {
 			});
 	});
 
-	it('should return an object with property cssom and verify result is same output from preloadCssom', function(done) {
+	it('returns assets with `cssom`, cross-verify result is same output from `preloadCssom` fn', function(done) {
 		var options = {
 			preload: {
 				assets: ['cssom']
 			}
 		};
 		var actual = axe.utils.preload(options);
-		actual
-			.then(function(results) {
-				assert.isDefined(results);
-				assert.property(results, 'cssom');
-				// also verify that result from css matches that of preloadCssom
-				axe.utils.preloadCssom(options).then(function(resultFromPreloadCssom) {
-					assert.deepEqual(results.cssom, resultFromPreloadCssom);
-					done();
-				});
-			})
-			.catch(function(error) {
-				done(error);
+		actual.then(function(results) {
+			assert.isDefined(results);
+			assert.property(results, 'cssom');
+
+			axe.utils.preloadCssom(options).then(function(resultFromPreloadCssom) {
+				assert.deepEqual(results.cssom, resultFromPreloadCssom);
+				done();
 			});
+		});
 	});
 
 	describe('axe.utils.shouldPreload', function() {

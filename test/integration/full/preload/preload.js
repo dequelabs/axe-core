@@ -87,20 +87,16 @@ describe('preload integration test', function() {
 			});
 	}
 
-	it('returns CSSOM data to checks evaluate function for the custom rule which required preloaded assets', function(done) {
+	it("returns preloaded assets to the check's evaluate fn for the rule which has `preload:true`", function(done) {
 		axe.run(
 			{
 				runOnly: {
 					type: 'rule',
 					values: ['run-later-rule']
 				},
-				// run config asks to preload, and the rule requires a preload as well, context will be mutated with 'cssom' asset
-				preload: {
-					assets: ['cssom']
-				}
+				preload: true
 			},
 			function(err, res) {
-				// we ensure preload was skipped by checking context does not have cssom in checks evaluate function
 				assert.isNull(err);
 				assert.isDefined(res);
 				assert.property(res, 'passes');
@@ -110,15 +106,17 @@ describe('preload integration test', function() {
 				assert.property(checkData, 'cssom');
 
 				var cssom = checkData.cssom;
-				assert.lengthOf(cssom, 3); // ignore all media='print' styleSheets
+
+				// ignores all media='print' styleSheets
+				assert.lengthOf(cssom, 3);
 
 				// there should be no external sheet returned
-				// as everything is earmarked as media print
 				var crossOriginSheet = cssom.filter(function(s) {
 					return s.isCrossOrigin;
 				});
 				assert.lengthOf(crossOriginSheet, 1);
 
+				// verify content of stylesheet
 				var inlineStylesheet = cssom.filter(function(s) {
 					return s.sheet.cssRules.length === 1 && !s.isCrossOrigin;
 				})[0].sheet;
@@ -133,20 +131,16 @@ describe('preload integration test', function() {
 		);
 	});
 
-	it('retuns no CSSOM data to checks which does not require preload(true)', function(done) {
+	it("returns NO preloaded assets to the check which does not require preload'", function(done) {
 		axe.run(
 			{
 				runOnly: {
 					type: 'rule',
 					values: ['run-now-rule']
 				},
-				// run config asks to preload, but no rule mandates preload, so preload is skipped
-				preload: {
-					assets: ['cssom']
-				}
+				preload: true
 			},
 			function(err, res) {
-				// we ensure preload was skipped by checking context does not have cssom in checks evaluate function
 				assert.isNull(err);
 				assert.isDefined(res);
 				assert.property(res, 'passes');
@@ -159,21 +153,19 @@ describe('preload integration test', function() {
 		);
 	});
 
-	it('returns results for rule (executes the rule & check) although preloading of assets is timed out', function(done) {
+	it('returns results for rule (that requires preloaded assets) although preload timed out', function(done) {
 		axe.run(
 			{
 				runOnly: {
 					type: 'rule',
 					values: ['run-later-rule']
 				},
-				// run config asks to preload, and the rule requires a preload as well, context will be mutated with 'cssom' asset
 				preload: {
 					assets: ['cssom'],
 					timeout: 1
 				}
 			},
 			function(err, res) {
-				// we ensure preload was skipped by checking context does not have cssom in checks evaluate function
 				assert.isNull(err);
 				assert.isDefined(res);
 				assert.property(res, 'passes');
@@ -187,7 +179,10 @@ describe('preload integration test', function() {
 		);
 	});
 
-	it('returns no CSSOM for rule when preload assets is rejected (due to attempting to load non existing resource)', function(done) {
+	it('returns no preloaded assets for rule when preload assets is rejected', function(done) {
+		/**
+		 * Note: Attempting to load a non-existing stylesheet will reject the preload function
+		 */
 		var stylesForPage = [
 			{
 				id: 'nonExistingStylesheet',

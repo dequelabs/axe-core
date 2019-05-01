@@ -16,7 +16,7 @@ describe('axe.utils.preloadCssom unit tests', function() {
 		}
 	});
 
-	var args;
+	var treeRoot;
 
 	function addStyleToHead() {
 		var css = 'html {font-size: inherit;}';
@@ -37,30 +37,22 @@ describe('axe.utils.preloadCssom unit tests', function() {
 
 	beforeEach(function() {
 		addStyleToHead();
-		args = {
-			asset: 'cssom',
-			timeout: 10000,
-			treeRoot: (axe._tree = axe.utils.getFlattenedTree(document))
-		};
+		treeRoot = axe._tree = axe.utils.getFlattenedTree(document);
 	});
 
 	afterEach(function() {
 		removeStyleFromHead();
 	});
 
-	it('should be a function', function() {
-		assert.isFunction(axe.utils.preloadCssom);
-	});
-
-	it('should return a Promise', function() {
-		var actual = axe.utils.preloadCssom(args);
+	it('returns a Promise', function() {
+		var actual = axe.utils.preloadCssom({ treeRoot });
 		assert.isTrue(
 			Object.prototype.toString.call(actual) === '[object Promise]'
 		);
 	});
 
-	it('should ensure result of cssom is an array of sheets', function(done) {
-		var actual = axe.utils.preloadCssom(args);
+	it('returns CSSOM object containing an array of sheets', function(done) {
+		var actual = axe.utils.preloadCssom({ treeRoot });
 		actual
 			.then(function(cssom) {
 				assert.isAtLeast(cssom.length, 2);
@@ -71,8 +63,8 @@ describe('axe.utils.preloadCssom unit tests', function() {
 			});
 	});
 
-	it('ensure that each of the cssom object have defined properties', function(done) {
-		var actual = axe.utils.preloadCssom(args);
+	it('returns CSSOM and ensure that each object have defined properties', function(done) {
+		var actual = axe.utils.preloadCssom({ treeRoot });
 		actual
 			.then(function(cssom) {
 				assert.isAtLeast(cssom.length, 2);
@@ -92,8 +84,8 @@ describe('axe.utils.preloadCssom unit tests', function() {
 			});
 	});
 
-	it('should fail if number of sheets returned does not match stylesheets defined in document', function(done) {
-		var actual = axe.utils.preloadCssom(args);
+	it('returns false if number of sheets returned does not match stylesheets defined in document', function(done) {
+		var actual = axe.utils.preloadCssom({ treeRoot });
 		actual
 			.then(function(cssom) {
 				assert.isFalse(cssom.length <= 1);
@@ -104,8 +96,8 @@ describe('axe.utils.preloadCssom unit tests', function() {
 			});
 	});
 
-	it('should ensure all returned stylesheet is defined and has property cssRules', function(done) {
-		var actual = axe.utils.preloadCssom(args);
+	it('returns all stylesheets and ensure each sheet has property cssRules', function(done) {
+		var actual = axe.utils.preloadCssom({ treeRoot });
 		actual
 			.then(function(cssom) {
 				cssom.forEach(function(s) {
