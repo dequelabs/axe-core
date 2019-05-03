@@ -12,7 +12,6 @@ describe('page-has-heading-one test pass', function() {
 				function(err, r) {
 					assert.isNull(err);
 					results = r;
-					console.log(r);
 					done();
 				}
 			);

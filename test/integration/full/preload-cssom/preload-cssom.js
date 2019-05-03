@@ -4,7 +4,6 @@ describe('preload cssom integration test', function() {
 
 	var origAxios;
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
-	var isPhantom = window.PHANTOMJS ? true : false;
 	var isIE11 = axe.testUtils.isIE11;
 
 	var styleSheets = [
@@ -24,19 +23,14 @@ describe('preload cssom integration test', function() {
 	];
 
 	before(function(done) {
-		if (isPhantom) {
-			this.skip();
-			done();
-		} else {
-			axe.testUtils
-				.addStyleSheets(styleSheets)
-				.then(function() {
-					done();
-				})
-				.catch(function(error) {
-					done(new Error('Could not load stylesheets for testing. ' + error));
-				});
-		}
+		axe.testUtils
+			.addStyleSheets(styleSheets)
+			.then(function() {
+				done();
+			})
+			.catch(function(error) {
+				done(new Error('Could not load stylesheets for testing. ' + error));
+			});
 	});
 
 	function createStub(shouldReject) {
@@ -152,7 +146,7 @@ describe('preload cssom integration test', function() {
 
 		before(function() {
 			// These tests currently break in IE11
-			if (isPhantom || isIE11) {
+			if (isIE11) {
 				this.skip();
 			}
 		});
@@ -365,7 +359,7 @@ describe('preload cssom integration test', function() {
 	describe('tests for nested iframe', function() {
 		before(function() {
 			// These tests currently break in IE11
-			if (isPhantom || isIE11) {
+			if (isIE11) {
 				this.skip();
 			}
 		});

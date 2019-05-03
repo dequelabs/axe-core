@@ -316,10 +316,6 @@ describe('table.isDataTable', function() {
 	});
 
 	it('should be true if it has zebra rows', function() {
-		if (window.PHANTOMJS) {
-			assert.ok('PhantomJS is a liar');
-			return;
-		}
 		fixture.innerHTML =
 			'<table>' +
 			'<tr><td></td><td></td></tr>' +
@@ -333,10 +329,6 @@ describe('table.isDataTable', function() {
 	});
 
 	it('should be true if it has zebra rows - background image', function() {
-		if (window.PHANTOMJS) {
-			assert.ok('PhantomJS is a liar');
-			return;
-		}
 		fixture.innerHTML =
 			'<table>' +
 			'<tr><td></td><td></td></tr>' +
@@ -346,7 +338,6 @@ describe('table.isDataTable', function() {
 			'KGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)"><td></td><td></td></tr>' +
 			'<tr><td></td><td></td></tr>' +
 			'</table>';
-
 		var node = fixture.querySelector('table');
 		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
@@ -419,8 +410,7 @@ describe('table.isDataTable', function() {
 		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
-	// Causing sauce labs tests to fail & don't really care about applets
-	it.skip('should be false if has an applet element descendent', function() {
+	it('should be false if has an applet element descendent', function() {
 		fixture.innerHTML =
 			'<table>' +
 			new Array(4).join('<tr><td></td><td></td><td></td></tr>') +

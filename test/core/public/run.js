@@ -184,9 +184,8 @@ describe('axe.run', function() {
 
 	describe('promise result', function() {
 		/*eslint indent: 0*/
-		var promiseIt = window.Promise ? it : it.skip;
 
-		promiseIt('returns an error to catch if axe fails', function(done) {
+		it('returns an error to catch if axe fails', function(done) {
 			axe._runRules = function(ctxt, opt, resolve, reject) {
 				axe._runRules = origRunRules;
 				reject('I surrender!');
@@ -201,7 +200,7 @@ describe('axe.run', function() {
 			assert.instanceOf(p, window.Promise);
 		});
 
-		promiseIt('returns a promise if no callback was given', function(done) {
+		it('returns a promise if no callback was given', function(done) {
 			axe._runRules = function(ctxt, opt, resolve) {
 				axe._runRules = origRunRules;
 				resolve('World party', noop);
@@ -216,7 +215,7 @@ describe('axe.run', function() {
 			assert.instanceOf(p, window.Promise);
 		});
 
-		promiseIt('does not error if then() throws', function(done) {
+		it('does not error if then() throws', function(done) {
 			axe._runRules = function(ctxt, opt, resolve) {
 				resolve([], noop);
 			};
@@ -238,7 +237,7 @@ describe('axe.run', function() {
 				});
 		});
 
-		promiseIt('is called after cleanup', function(done) {
+		it('is called after cleanup', function(done) {
 			var isClean = false;
 			axe._runRules = function(ctxt, opt, resolve) {
 				axe._runRules = origRunRules;

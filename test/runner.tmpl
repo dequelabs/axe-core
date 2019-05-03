@@ -39,7 +39,6 @@
 		<%  }); %>
 
 		<script>
-			if (navigator.userAgent.indexOf('PhantomJS') < 0) {
 				var runner = mocha.run();
 				var failedTests = [];
 				runner.on('end', function() {
@@ -63,7 +62,6 @@
 						titles: flattenTitles(test)
 					});
 				});
-			}
 		</script>
 	</body>
 

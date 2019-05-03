@@ -105,12 +105,8 @@ describe('color-contrast', function() {
 		var params = checkSetup(
 			'<p>Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>'
 		);
-		if (window.PHANTOMJS) {
-			assert.ok('PhantomJS is a liar');
-		} else {
-			assert.isTrue(contrastEvaluate.apply(checkContext, params));
-			assert.deepEqual(checkContext._relatedNodes, []);
-		}
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._relatedNodes, []);
 	});
 
 	it('should return undefined for inline elements spanning multiple lines that are overlapped', function() {
@@ -228,12 +224,8 @@ describe('color-contrast', function() {
 		fixtureSetup('<label id="target">' + 'My text <input type="text"></label>');
 		var target = fixture.querySelector('#target');
 		var virtualNode = axe.utils.getNodeFromTree(target);
-		if (window.PHANTOMJS) {
-			assert.ok('PhantomJS is a liar');
-		} else {
-			var result = contrastEvaluate.call(checkContext, target, {}, virtualNode);
-			assert.isTrue(result);
-		}
+		var result = contrastEvaluate.call(checkContext, target, {}, virtualNode);
+		assert.isTrue(result);
 	});
 
 	it("should return true when a label wraps a text input but doesn't overlap", function() {

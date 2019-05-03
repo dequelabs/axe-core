@@ -4,6 +4,7 @@ describe('axe.log', function() {
 	it('should be a function', function() {
 		assert.isFunction(axe.log);
 	});
+
 	it('should invoke console.log', function() {
 		if (!window.console || window.console.log) {
 			window.console = { log: function() {} };
