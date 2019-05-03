@@ -12,7 +12,7 @@ const runner = async options => {
 
 		const puppeteerOptions = {
 			headless: true,
-			args: ['--no-sandbox'],
+			args: ['--no-sandbox', '-–disable-setuid-sandbox'],
 			ignoreHTTPSErrors: true
 		};
 		const browser = await puppeteer.launch(puppeteerOptions);
