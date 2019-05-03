@@ -7,22 +7,10 @@ const init = async () => {
 	process.setMaxListeners(Infinity);
 
 	const urls = await getTestFiles();
-	try {
-		await Promise.all(urls.map(async url => await runner({ url })));
-
-		// console.log(Object.keys(result));
-		// const { stats } = result;
-
-		// // Print failures, if any
-		// if (stats.failures > 0) {
-		// 	console.log(`Failures: ${stats.failures}\n`);
-		// 	result.failures.forEach(test => {
-		// 		console.log(JSON.stringify(test, undefined, 2));
-		// 	});
-		// }
-	} catch (error) {
-		console.error(error);
-	}
+	const promises = urls.map(async url => {
+		await runner({ url });
+	});
+	await Promise.all(promises);
 
 	console.timeEnd(`Headless tests duration`);
 };

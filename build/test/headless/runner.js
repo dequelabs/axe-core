@@ -22,7 +22,10 @@ const runner = async options => {
 		page.on('pageerror', err => reject(err));
 
 		await page.evaluateOnNewDocument(setGlobals, reporter);
-		await page.goto(url, { waitUntil: 'load' });
+		await page.goto(url, {
+			waitUntil: 'load',
+			timeout: 3000000
+		});
 		await page.waitForFunction(() => window.__mochaResult__, {
 			timeout: 300000
 		});
