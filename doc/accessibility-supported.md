@@ -4,7 +4,7 @@ In order to adhere to the manifesto and at the same time be useful to developers
 
 ## Accessibility supported
 
-Boiled-down, accessibility supported means that in order for a technique to be valid, it must work on all viable platforms for all assitive technology that are widely used and freely available (paraphrased).
+Boiled-down, accessibility supported means that in order for a technique to be valid, it must work on all viable platforms for all assistive technology that are widely used and freely available (paraphrased).
 
 We currently test the following AT combinations for support
 
