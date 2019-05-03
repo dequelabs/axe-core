@@ -86,11 +86,11 @@ The plugin takes this information and sends the same instructions to its impleme
 
 The plugin waits for the commands in the iframes to complete and then executes its instances' action function within the current document.
 
-In the above implementation, the axe promise utility `axe.utils.queue()` is used to coordinate the asynchronous handling of communication accross iframes.
+In the above implementation, the axe promise utility `axe.utils.queue()` is used to coordinate the asynchronous handling of communication across iframes.
 
 The command handler callback runs the plugin's run function within each iframe. This essentially operates like a recursive call to the run function for the plugin within each iframe.
 
-Once all the iframes' run functions have been executed, the callback is called. This essentially operates as a recursive "return" up the iframe heirarchy until at the top document, the actual callback function is executed. This can be leveraged to pass data back up the iframe hierarchy back to the caller (but this is a more advanced topic).
+Once all the iframes' run functions have been executed, the callback is called. This essentially operates as a recursive "return" up the iframe hierarchy until at the top document, the actual callback function is executed. This can be leveraged to pass data back up the iframe hierarchy back to the caller (but this is a more advanced topic).
 
 #### Basic plugin instance
 
