@@ -6,7 +6,8 @@ const getTestFiles = async () => {
 
 	const unitTestFiles = [
 		`http://${host}:${port}/test/core/`,
-		`http://${host}:${port}/test/checks/``http://${host}:${port}/test/rule-matches/`,
+		`http://${host}:${port}/test/checks/`,
+		`http://${host}:${port}/test/rule-matches/`,
 		`http://${host}:${port}/test/commons/`,
 		`http://${host}:${port}/test/integration/rules`
 	];
