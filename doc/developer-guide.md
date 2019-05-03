@@ -299,7 +299,7 @@ will make it easier to work with the virtual DOM.
 
 #### Description
 
-Recursvely return an array containing the virtual DOM tree for the node specified, excluding comment nodes
+Recursively return an array containing the virtual DOM tree for the node specified, excluding comment nodes
 and shadow DOM nodes `<content>` and `<slot>`. This method will return a flattened tree containing both
 light and shadow DOM, if applicable.
 
@@ -392,7 +392,7 @@ None
 
 #### Returns
 
-An object containg the data, relatedNodes, and a way to reset them.
+An object containing the data, relatedNodes, and a way to reset them.
 
 ```js
 {
