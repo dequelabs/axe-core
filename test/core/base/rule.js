@@ -842,12 +842,12 @@ describe('Rule', function() {
 				var div = document.createElement('div');
 				div.setAttribute('style', '#fff');
 				fixture.appendChild(div);
-				var success = false,
-					rule = new Rule({
-						matches: function() {
-							throw new Error('this is an error');
-						}
-					});
+				var success = false;
+				var rule = new Rule({
+					matches: function() {
+						throw new Error('this is an error');
+					}
+				});
 
 				try {
 					rule.runSync(

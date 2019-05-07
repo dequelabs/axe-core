@@ -184,6 +184,16 @@ describe('Check', function() {
 				}).run(fixture, {}, configured, noop);
 			});
 
+			it('should pass the virtual node through', function(done) {
+				var tree = axe.utils.getFlattenedTree(fixture);
+				new Check({
+					evaluate: function(node, options, virtualNode) {
+						assert.equal(virtualNode, tree[0]);
+						done();
+					}
+				}).run(tree[0]);
+			});
+
 			it('should bind context to `bindCheckResult`', function(done) {
 				var orig = axe.utils.checkHelper,
 					cb = function() {
@@ -324,6 +334,15 @@ describe('Check', function() {
 						assert.deepEqual(context, configured);
 					}
 				}).runSync(fixture, {}, configured);
+			});
+
+			it('should pass the virtual node through', function() {
+				var tree = axe.utils.getFlattenedTree(fixture);
+				new Check({
+					evaluate: function(node, options, virtualNode) {
+						assert.equal(virtualNode, tree[0]);
+					}
+				}).runSync(tree[0]);
 			});
 
 			it('should throw error for asynchronous checks', function() {
