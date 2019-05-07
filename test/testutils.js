@@ -309,5 +309,5 @@ testUtils.isIE11 = (function isIE11(navigator) {
 axe.testUtils = testUtils;
 
 afterEach(function() {
-	axe.utils.cache.clear();
+	axe._cache.clear();
 });
