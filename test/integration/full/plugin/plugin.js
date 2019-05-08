@@ -59,7 +59,7 @@ describe('plugin test', function() {
 		var highlight = {
 			id: 'highlight',
 			highlighter: function(node) {
-				node.style.background = 'yellow';
+				node.style.backgroundColor = 'yellow';
 				this._node = node;
 			},
 			run: function(contextNode, options, done) {
@@ -72,7 +72,7 @@ describe('plugin test', function() {
 				done();
 			},
 			cleanup: function(done) {
-				this._node.style.background = '';
+				this._node.style.backgroundColor = '';
 				done();
 			}
 		};
@@ -92,7 +92,7 @@ describe('plugin test', function() {
 				context: []
 			},
 			function() {
-				assert.equal(h1.style.background, 'yellow');
+				assert.equal(h1.style.backgroundColor, 'yellow');
 				done();
 			}
 		);
@@ -102,6 +102,6 @@ describe('plugin test', function() {
 		var h1 = document.querySelector('.my-heading');
 
 		axe.cleanup();
-		assert.equal(h1.style.background, '');
+		assert.equal(h1.style.backgroundColor, '');
 	});
 });
