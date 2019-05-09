@@ -106,36 +106,31 @@ module.exports = function(grunt) {
 			};
 		}
 
+		// don't see to run the test...
 		// @see https://github.com/SeleniumHQ/selenium/issues/6026
-		if (browser === 'safari') {
-			var safari = require('selenium-webdriver/safari');
-			var server = await new safari.ServiceBuilder()
-				.addArguments('--legacy')
-				.build()
-				.start();
+		// if (browser === 'safari') {
+		// 	var safari = require('selenium-webdriver/safari');
+		// 	var server = await new safari.ServiceBuilder()
+		//    	.addArguments('--legacy')
+		//    	.build()
+		//    	.start();
 
-			capabilities = capabilities || {};
-			capabilities.loggingPrefs = {
-				driver: 'ALL',
-				server: 'ALL',
-				browser: 'ALL'
-			};
-
-			if (process.env.REMOTE_SELENIUM_URL) {
-				webdriver = new WebDriver.Builder()
-					.usingServer(server)
-					.forBrowser('safari')
-					.withCapabilities(capabilities)
-					.usingServer(process.env.REMOTE_SELENIUM_URL)
-					.build();
-			} else {
-				webdriver = new WebDriver.Builder()
-					.usingServer(server)
-					.withCapabilities(capabilities)
-					.forBrowser('safari')
-					.build();
-			}
-		} else if (process.env.REMOTE_SELENIUM_URL) {
+		// 	if (process.env.REMOTE_SELENIUM_URL) {
+		// 		webdriver = new WebDriver.Builder()
+		// 	    .usingServer(server)
+		// 	    .forBrowser('safari')
+		// 	    .withCapabilities(capabilities)
+		// 	    .usingServer(process.env.REMOTE_SELENIUM_URL)
+		// 	    .build();
+		//   } else {
+		//   	webdriver = new WebDriver.Builder()
+		//     .usingServer(server)
+		//     .withCapabilities(capabilities)
+		//     .forBrowser('safari')
+		//     .build();
+		//   }
+		// }
+		else if (process.env.REMOTE_SELENIUM_URL) {
 			webdriver = new WebDriver.Builder()
 				.forBrowser(browser)
 				.withCapabilities(capabilities)
