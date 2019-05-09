@@ -36,7 +36,7 @@ describe('landmark-has-body-context', function() {
 		function() {
 			// Safari has a bug in 12.0 that throws an error when calling
 			// attachShadow on <main>
-			// @see https://codepen.io/straker/pen/eapxaw in Safari
+			// @see https://bugs.webkit.org/show_bug.cgi?id=197726
 			var article = document.createElement('article');
 			var shadow = article.attachShadow({ mode: 'open' });
 			shadow.innerHTML = '<footer></footer>';
