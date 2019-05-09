@@ -114,6 +114,13 @@ module.exports = function(grunt) {
 				.build()
 				.start();
 
+			capabilities = capabilities || {};
+			capabilities.loggingPrefs = {
+				driver: 'ALL',
+				server: 'ALL',
+				browser: 'ALL'
+			};
+
 			if (process.env.REMOTE_SELENIUM_URL) {
 				webdriver = new WebDriver.Builder()
 					.usingServer(server)
