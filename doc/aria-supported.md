@@ -10,7 +10,7 @@ For a detailed description about how accessibility support is decided, see [How 
 
 | aria-role | axe-core support |
 | --------- | ---------------- |
-| figure    | No               |
+
 
 ## Attributes
 
