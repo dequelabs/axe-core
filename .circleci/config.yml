@@ -65,15 +65,14 @@ jobs:
       - <<: *restore_dependency_cache
       - run: npm run test:examples
 
-  test_macos:
-    macos:
-      xcode: "10.0"
-    steps:
-      - checkout
-      - run: npm install
-      - run: npm install -g grunt-cli
-      - run: npm run build
-      - run: grunt connect test-webdriver:safari
+  # test_macos:
+  #   macos:
+  #     xcode: "10.0"
+  #   steps:
+  #     - checkout
+  #     - run: npm install
+  #     - run: npm install -g grunt-cli
+  #     - run: grunt connect test-webdriver:safari
 
   # Release a "next" version
   next_release:
@@ -127,16 +126,16 @@ workflows:
       - test_examples:
           requires:
             - test
-      - test_macos:
-          requires:
-            - test
+      # - test_macos:
+      #     requires:
+      #       - test
       # Hold for approval
       - hold:
           type: approval
           requires:
             - test
             - test_examples
-            - test_macos
+           # - test_macos
           filters:
             # We only want to hold on these two branches, as PR review acts as approval for PRs
             branches:
@@ -149,7 +148,7 @@ workflows:
             - dependencies
             - test
             - test_examples
-            - test_macos
+           # - test_macos
           filters:
             branches:
               only: develop
@@ -159,7 +158,7 @@ workflows:
             - dependencies
             - test
             - test_examples
-            - test_macos
+           # - test_macos
             - hold
           filters:
             branches:
