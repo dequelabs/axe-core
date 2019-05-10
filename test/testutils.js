@@ -119,7 +119,7 @@ testUtils.checkSetup = function(content, options, target) {
 	if (typeof target === 'string') {
 		node = axe.utils.querySelectorAll(axe._tree[0], target)[0];
 	} else if (target instanceof Node) {
-		node = axe.utils.getNodeFromTree(axe._tree[0], target);
+		node = axe.utils.getNodeFromTree(target);
 	} else {
 		node = target;
 	}
@@ -181,8 +181,18 @@ testUtils.shadowCheckSetup = function(
 
 	// query the composed tree AFTER shadowDOM has been attached
 	axe._tree = axe.utils.getFlattenedTree(fixture);
-	var node = axe.utils.getNodeFromTree(axe._tree[0], targetCandidate);
+	var node = axe.utils.getNodeFromTree(targetCandidate);
 	return [node.actualNode, options, node];
+};
+
+/**
+ * Setup axe._tree flat tree
+ * @param Node   Stuff to go in the flat tree
+ * @returns vNode[]
+ */
+testUtils.flatTreeSetup = function(content) {
+	axe._tree = axe.utils.getFlattenedTree(content);
+	return axe._tree;
 };
 
 /**
@@ -286,4 +296,20 @@ testUtils.queryFixture = function queryFixture(html, query) {
 	return axe.utils.querySelectorAll(axe._tree, query || '#target')[0];
 };
 
+/**
+ * Test function for detecting IE11 user agent string
+ *
+ * @param {Object} navigator The navigator object of the current browser
+ * @return {boolean}
+ */
+testUtils.isIE11 = (function isIE11(navigator) {
+	return navigator.userAgent.indexOf('Trident/7') !== -1;
+})(navigator);
+
 axe.testUtils = testUtils;
+
+beforeEach(function() {
+	axe._cache = {
+		nodeMap: new WeakMap()
+	};
+});

@@ -1,6 +1,6 @@
 {
 	"id": "skip-link",
-	"selector": "a[href]",
+	"selector": "a[href^=\"#\"], a[href^=\"/#\"]",
 	"matches": "skip-link-matches.js",
 	"tags": ["cat.keyboard", "best-practice"],
 	"metadata": {

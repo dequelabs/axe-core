@@ -9,6 +9,7 @@ describe('skip-link-matches', function() {
 			return rule.id === 'skip-link';
 		});
 		link = document.createElement('a');
+		fixture.innerHTML = '<div id="main"></div>';
 	});
 
 	afterEach(function() {
@@ -29,11 +30,6 @@ describe('skip-link-matches', function() {
 		assert.isFalse(rule.matches(link));
 	});
 
-	it('returns true if the href attribute starts with #', function() {
-		link.href = '#foo';
-		assert.isTrue(rule.matches(link));
-	});
-
 	it('returns false if the href attribute starts with #!', function() {
 		link.href = '#!foo';
 		assert.isFalse(rule.matches(link));
@@ -42,5 +38,15 @@ describe('skip-link-matches', function() {
 	it('returns false if the href attribute starts with #/', function() {
 		link.href = '#/foo';
 		assert.isFalse(rule.matches(link));
+	});
+
+	it('returns true if the href attribute starts with #', function() {
+		link.href = '#main';
+		assert.isTrue(rule.matches(link));
+	});
+
+	it('returns true if the href attribute starts with /# (angular)', function() {
+		link.href = '/#main';
+		assert.isTrue(rule.matches(link));
 	});
 });

@@ -12,7 +12,7 @@ describe('text.accessibleTextVirtual', function() {
 	it('is called through accessibleText with a DOM node', function() {
 		var accessibleText = axe.commons.text.accessibleText;
 		fixture.innerHTML = '<label><input type="button"></label>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('input');
 		assert.equal(accessibleText(target), '');
 	});
@@ -31,7 +31,7 @@ describe('text.accessibleTextVirtual', function() {
 			'    </ul>' +
 			'  </li>' +
 			'</ul>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var rule2a = axe.utils.querySelectorAll(axe._tree, '#rule2a')[0];
 		var rule2c = axe.utils.querySelectorAll(axe._tree, '#rule2c')[0];
@@ -56,7 +56,7 @@ describe('text.accessibleTextVirtual', function() {
 			'    times' +
 			'  </label>' +
 			'</fieldset>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var rule2a = axe.utils.querySelectorAll(axe._tree, '#beep')[0];
 		var rule2b = axe.utils.querySelectorAll(axe._tree, '#flash')[0];
@@ -77,7 +77,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
 		assert.equal(
@@ -93,7 +93,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
 		assert.equal(
@@ -109,7 +109,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<span aria-hidden="true">secret</span></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t1" aria-labelledby="t1label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
 		assert.equal(
@@ -121,7 +121,7 @@ describe('text.accessibleTextVirtual', function() {
 	it('should allow setting the initial includeHidden value', function() {
 		fixture.innerHTML =
 			'<label id="lbl1" style="display:none;">hidden label</label>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#lbl1')[0];
 		assert.equal(
@@ -146,7 +146,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'ARIA Label');
@@ -160,7 +160,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 		assert.equal(
@@ -177,7 +177,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 		assert.equal(
@@ -194,7 +194,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
@@ -207,7 +207,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'HTML Label');
@@ -220,7 +220,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2label')[0];
 		assert.equal(
@@ -236,7 +236,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2label')[0];
 		assert.equal(
@@ -254,7 +254,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2label')[0];
 		// Chrome 72: This is This is a label of
@@ -270,7 +270,7 @@ describe('text.accessibleTextVirtual', function() {
 		fixture.innerHTML =
 			'<div id="target"><label for="tb1">My form input</label>' +
 			'<input type="text" id="tb1"></div>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 		assert.equal(
 			axe.commons.text.accessibleTextVirtual(target),
@@ -283,7 +283,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="target">' +
 			'<input type="text" id="tb1"></div>' +
 			'<label for="tb1">My form input</label>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 		assert.equal(
 			axe.commons.text.accessibleTextVirtual(target),
@@ -298,7 +298,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2label')[0];
 		assert.equal(
@@ -317,7 +317,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
 		assert.equal(
@@ -333,7 +333,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
 		assert.equal(
@@ -349,7 +349,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
 		// Chrome 70: "This is This is a label of everything"
@@ -370,7 +370,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
 		// Chrome 70: "This is This is a label of everything"
@@ -389,7 +389,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
 		// Chrome 70: "This is This is a label of everything"
@@ -409,7 +409,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<div id="t1label">This is a <b>label</b></div>' +
 			'<label for="t1">HTML Label</label>' +
 			'<input type="text" id="t2" aria-labelledby="t2label">';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2')[0];
 		assert.equal(
@@ -427,7 +427,7 @@ describe('text.accessibleTextVirtual', function() {
 			'</select>' +
 			'</label>' +
 			'<input id="target" type="text" />';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 		// Chrome 70: ""
 		// Firefox 62: "Chosen"
@@ -445,7 +445,7 @@ describe('text.accessibleTextVirtual', function() {
 			'</select>' +
 			'</label>' +
 			'<input id="target" type="text" />';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 	});
@@ -462,7 +462,7 @@ describe('text.accessibleTextVirtual', function() {
 			'<option value="5">Mountains</option>' +
 			'</select>' +
 			'</label>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 	});
@@ -476,7 +476,7 @@ describe('text.accessibleTextVirtual', function() {
 			'</select>' +
 			'</label>' +
 			'<input aria-labelledby="select" type="text" id="target" />';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 		// Chrome 70: ""
 		// Firefox 62: ""
@@ -486,7 +486,7 @@ describe('text.accessibleTextVirtual', function() {
 
 	it('shoud properly fall back to title', function() {
 		fixture.innerHTML = '<a href="#" role="presentation" title="Hello"></a>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
@@ -494,7 +494,7 @@ describe('text.accessibleTextVirtual', function() {
 
 	it('should give text even for role=presentation on anchors', function() {
 		fixture.innerHTML = '<a href="#" role="presentation">Hello</a>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
@@ -502,7 +502,7 @@ describe('text.accessibleTextVirtual', function() {
 
 	it('should give text even for role=presentation on buttons', function() {
 		fixture.innerHTML = '<button role="presentation">Hello</button>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
@@ -510,21 +510,21 @@ describe('text.accessibleTextVirtual', function() {
 
 	it('should give text even for role=presentation on summary', function() {
 		fixture.innerHTML = '<summary role="presentation">Hello</summary>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, 'summary')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 	});
 
 	it('shoud properly fall back to title', function() {
 		fixture.innerHTML = '<a href="#" role="none" title="Hello"></a>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
 	});
 
 	it('should give text even for role=none on anchors', function() {
 		fixture.innerHTML = '<a href="#" role="none">Hello</a>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
@@ -532,7 +532,7 @@ describe('text.accessibleTextVirtual', function() {
 
 	it('should give text even for role=none on buttons', function() {
 		fixture.innerHTML = '<button role="none">Hello</button>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
@@ -540,7 +540,7 @@ describe('text.accessibleTextVirtual', function() {
 
 	it('should give text even for role=none on summary', function() {
 		fixture.innerHTML = '<summary role="none">Hello</summary>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'summary')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
@@ -548,7 +548,7 @@ describe('text.accessibleTextVirtual', function() {
 
 	it('should not add extra spaces around phrasing elements', function() {
 		fixture.innerHTML = '<a href="#">Hello<span>World</span></a>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'HelloWorld');
@@ -556,7 +556,7 @@ describe('text.accessibleTextVirtual', function() {
 
 	it('should add spaces around non-phrasing elements', function() {
 		fixture.innerHTML = '<a href="#">Hello<div>World</div></a>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
@@ -565,7 +565,7 @@ describe('text.accessibleTextVirtual', function() {
 	it('should not look at scripts', function() {
 		fixture.innerHTML =
 			'<a href="#"><script> var ajiasdf = true; </script></a>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
@@ -573,7 +573,7 @@ describe('text.accessibleTextVirtual', function() {
 
 	it('should use <label> for input buttons', function() {
 		fixture.innerHTML = '<label><input type="button"></label>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
@@ -595,7 +595,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<label for="t1">HTML Label</label>' +
 				'<input type="text" id="t2" aria-labelledby="t2label">';
 
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = axe.utils.querySelectorAll(axe._tree, '#t1')[0];
 			assert.equal(
 				axe.commons.text.accessibleTextVirtual(target),
@@ -614,7 +614,7 @@ describe('text.accessibleTextVirtual', function() {
 				.attachShadow({ mode: 'open' });
 			shadow.innerHTML = '<input type="text" id="t1" title="I will be king">';
 
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			assert.equal(
 				axe.commons.text.accessibleTextVirtual(target),
@@ -634,7 +634,7 @@ describe('text.accessibleTextVirtual', function() {
 				.attachShadow({ mode: 'open' });
 			shadow.innerHTML = '<slot></slot>';
 
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			assert.equal(
 				axe.commons.text.accessibleTextVirtual(target),
@@ -655,7 +655,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<input type="text" id="t1">' +
 				'<label for="t1"><slot>Fallback content heroes</slot></label>';
 
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			assert.equal(
 				axe.commons.text.accessibleTextVirtual(target),
@@ -669,7 +669,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<div id="t1">Hello</div>' +
 				'<figure aria-labelledby="t1">Not part of a11yName <figcaption>Fail</figcaption></figure>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
 			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
@@ -678,7 +678,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('should check aria-label', function() {
 			fixture.innerHTML =
 				'<figure aria-label="Hello">Not part of a11yName <figcaption>Fail</figcaption></figure>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
 			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
@@ -687,7 +687,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('should check the figures figcaption', function() {
 			fixture.innerHTML =
 				'<figure>Not part of a11yName <figcaption>Hello</figcaption></figure>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
 			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
@@ -696,7 +696,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('should check title on figure', function() {
 			fixture.innerHTML =
 				'<figure title="Hello">Not part of a11yName <figcaption></figcaption></figure>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
 			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
@@ -704,7 +704,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should fall back to innerText of figure', function() {
 			fixture.innerHTML = '<figure>Hello<figcaption></figcaption></figure>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
 			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
@@ -719,7 +719,7 @@ describe('text.accessibleTextVirtual', function() {
 				shadowRoot.innerHTML =
 					'<figure>Not part of a11yName <figcaption><slot></slot></figcaption></figure>';
 				fixture.appendChild(node);
-				axe._tree = axe.utils.getFlattenedTree(fixture);
+				axe.testUtils.flatTreeSetup(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, 'figure')[0];
 				assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
@@ -732,7 +732,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<div id="t1">Hello</div><div id="t2">World</div>' +
 				'<img aria-labelledby="t1 t2">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'img')[0];
 			assert.equal(
@@ -743,7 +743,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should work with aria-label attribute', function() {
 			fixture.innerHTML = '<img aria-label="Hello World">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'img')[0];
 			assert.equal(
@@ -754,7 +754,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should work with alt attribute', function() {
 			fixture.innerHTML = '<img alt="Hello World">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'img')[0];
 			assert.equal(
@@ -765,7 +765,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should work with title attribute', function() {
 			fixture.innerHTML = '<img title="Hello World">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'img')[0];
 			assert.equal(
@@ -778,7 +778,7 @@ describe('text.accessibleTextVirtual', function() {
 	describe('input buttons', function() {
 		it('should find value for input type=button', function() {
 			fixture.innerHTML = '<input type="button" value="Hello">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
@@ -786,7 +786,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should find value for input type=reset', function() {
 			fixture.innerHTML = '<input type="reset" value="Hello">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
@@ -794,7 +794,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should find value for input type=submit', function() {
 			fixture.innerHTML = '<input type="submit" value="Hello">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
@@ -802,7 +802,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should provide a default value for input type="submit"', function() {
 			fixture.innerHTML = '<input type="submit">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 
@@ -815,7 +815,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should provide a default value for input type="reset"', function() {
 			fixture.innerHTML = '<input type="reset">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			var defaultText = axe.commons.text.accessibleTextVirtual(target);
@@ -827,7 +827,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should find title for input type=button', function() {
 			fixture.innerHTML = '<input type="button" title="Hello">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello');
@@ -835,7 +835,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should find title for input type=reset', function() {
 			fixture.innerHTML = '<input type="reset" title="Hello">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			// IE does not use title; but will use default value instead
@@ -847,7 +847,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should find title for input type=submit', function() {
 			fixture.innerHTML = '<input type="submit" title="Hello">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			// Again, default value takes precedence over title
@@ -863,7 +863,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<div id="t1">Hello</div><div id="t2">World</div>' +
 				'<table aria-labelledby="t1 t2"></table>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
 			assert.equal(
@@ -874,7 +874,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should work with aria-label', function() {
 			fixture.innerHTML = '<table aria-label="Hello World"></table>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
 			assert.equal(
@@ -886,7 +886,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('should work with the caption element', function() {
 			fixture.innerHTML =
 				'<table><caption>Hello World</caption><tr><td>Stuff</td></tr></table>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
 			assert.equal(
@@ -897,7 +897,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should work with the title attribute', function() {
 			fixture.innerHTML = '<table title="Hello World"></table>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
 			assert.equal(
@@ -908,7 +908,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should work with the summary attribute', function() {
 			fixture.innerHTML = '<table summary="Hello World"></table>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
 			assert.equal(
@@ -922,7 +922,7 @@ describe('text.accessibleTextVirtual', function() {
 			// Firefox 62: "Hello world"
 			// Safari 12.0: "FAIL"
 			fixture.innerHTML = '<table summary="Hello World" title="FAIL"></table>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'table')[0];
 			assert.equal(
@@ -943,7 +943,7 @@ describe('text.accessibleTextVirtual', function() {
 					'<input' +
 					t +
 					' aria-labelledby="t1 t2">';
-				axe._tree = axe.utils.getFlattenedTree(fixture);
+				axe.testUtils.flatTreeSetup(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 				assert.equal(
@@ -958,7 +958,7 @@ describe('text.accessibleTextVirtual', function() {
 			types.forEach(function(type) {
 				var t = type ? ' type="' + type + '"' : '';
 				fixture.innerHTML = '<input' + t + ' aria-label="Hello World">';
-				axe._tree = axe.utils.getFlattenedTree(fixture);
+				axe.testUtils.flatTreeSetup(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 				assert.equal(
@@ -974,7 +974,7 @@ describe('text.accessibleTextVirtual', function() {
 				var t = type ? ' type="' + type + '"' : '';
 				fixture.innerHTML =
 					'<label for="t1">Hello World' + '<input' + t + '></label>';
-				axe._tree = axe.utils.getFlattenedTree(fixture);
+				axe.testUtils.flatTreeSetup(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 				assert.equal(
@@ -990,7 +990,7 @@ describe('text.accessibleTextVirtual', function() {
 				var t = type ? ' type="' + type + '"' : '';
 				fixture.innerHTML =
 					'<label for="t1">Hello World</label>' + '<input' + t + ' id="t1">';
-				axe._tree = axe.utils.getFlattenedTree(fixture);
+				axe.testUtils.flatTreeSetup(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 				assert.equal(
@@ -1006,7 +1006,7 @@ describe('text.accessibleTextVirtual', function() {
 				var t = type ? ' type="' + type + '"' : '';
 				fixture.innerHTML =
 					'<label for="t1">Hello World' + '<input' + t + ' id="foo"></label>';
-				axe._tree = axe.utils.getFlattenedTree(fixture);
+				axe.testUtils.flatTreeSetup(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 				assert.equal(
@@ -1022,7 +1022,7 @@ describe('text.accessibleTextVirtual', function() {
 			types.forEach(function(type) {
 				var t = type ? ' type="' + type + '"' : '';
 				fixture.innerHTML = '<input' + t + ' placeholder="Hello World">';
-				axe._tree = axe.utils.getFlattenedTree(fixture);
+				axe.testUtils.flatTreeSetup(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 				assert.equal(
@@ -1037,7 +1037,7 @@ describe('text.accessibleTextVirtual', function() {
 			types.forEach(function(type) {
 				var t = type ? ' type="' + type + '"' : '';
 				fixture.innerHTML = '<input' + t + ' title="Hello World">';
-				axe._tree = axe.utils.getFlattenedTree(fixture);
+				axe.testUtils.flatTreeSetup(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 				assert.equal(
@@ -1052,7 +1052,7 @@ describe('text.accessibleTextVirtual', function() {
 			types.forEach(function(type) {
 				var t = type ? ' type="' + type + '"' : '';
 				fixture.innerHTML = '<input' + t + '>';
-				axe._tree = axe.utils.getFlattenedTree(fixture);
+				axe.testUtils.flatTreeSetup(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 				assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
@@ -1065,7 +1065,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<div id="t1">Hello</div><div id="t2">World</div>' +
 				'<textarea aria-labelledby="t1 t2"></textarea>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
 			assert.equal(
@@ -1076,7 +1076,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should find aria-label', function() {
 			fixture.innerHTML = '<textarea aria-label="Hello World"></textarea>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
 			assert.equal(
@@ -1088,7 +1088,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('should find an implicit label', function() {
 			fixture.innerHTML =
 				'<label for="t1">Hello World' + '<textarea></textarea></label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
 			assert.equal(
@@ -1100,7 +1100,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('should find an explicit label', function() {
 			fixture.innerHTML =
 				'<label for="t1">Hello World</label>' + '<textarea id="t1"></textarea>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
 			assert.equal(
@@ -1112,7 +1112,7 @@ describe('text.accessibleTextVirtual', function() {
 		// not implemented yet, doesn't work accross ATs
 		it.skip('should find a placeholder attribute', function() {
 			fixture.innerHTML = '<textarea placeholder="Hello World"></textarea>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
 			assert.equal(
@@ -1123,7 +1123,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should find a title attribute', function() {
 			fixture.innerHTML = '<textarea title="Hello World"></textarea>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
 			assert.equal(
@@ -1134,7 +1134,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should otherwise be empty string', function() {
 			fixture.innerHTML = '<textarea></textarea>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'textarea')[0];
 			assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
@@ -1146,7 +1146,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<div id="t1">Hello</div><div id="t2">World</div>' +
 				'<input type="image" aria-labelledby="t1 t2">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			assert.equal(
@@ -1157,7 +1157,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should find aria-label', function() {
 			fixture.innerHTML = '<input type="image" aria-label="Hello World">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			assert.equal(
@@ -1168,7 +1168,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should find an alt attribute', function() {
 			fixture.innerHTML = '<input type="image" alt="Hello World">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			assert.equal(
@@ -1179,7 +1179,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should find a title attribute', function() {
 			fixture.innerHTML = '<input type="image" title="Hello World">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			assert.equal(
@@ -1190,7 +1190,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should otherwise be "Submit" string', function() {
 			fixture.innerHTML = '<input type="image">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'input')[0];
 			assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Submit');
@@ -1202,7 +1202,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<div id="t1">Hello</div><div id="t2">World</div>' +
 				'<a aria-labelledby="t1 t2"></a>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
 			assert.equal(
@@ -1213,7 +1213,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should find aria-label', function() {
 			fixture.innerHTML = '<a aria-label="Hello World"></a>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
 			assert.equal(
@@ -1224,7 +1224,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should check subtree', function() {
 			fixture.innerHTML = '<a><span>Hello<span> World</span></span></a>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
 			assert.equal(
@@ -1235,7 +1235,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should find a title attribute', function() {
 			fixture.innerHTML = '<a title="Hello World"></a>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
 			assert.equal(
@@ -1246,7 +1246,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should otherwise be empty string', function() {
 			fixture.innerHTML = '<a></a>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
 			assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
@@ -1263,7 +1263,7 @@ describe('text.accessibleTextVirtual', function() {
 				'</tr>' +
 				'</table>' +
 				'</a>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
 			assert.equal(
@@ -1278,7 +1278,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<div id="t1">Hello</div><div id="t2">World</div>' +
 				'<button aria-labelledby="t1 t2"></button>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
 			assert.equal(
@@ -1289,7 +1289,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should find aria-label', function() {
 			fixture.innerHTML = '<button aria-label="Hello World"></button>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
 			assert.equal(
@@ -1301,7 +1301,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('should check subtree', function() {
 			fixture.innerHTML =
 				'<button><span>Hello<span> World</span></span></button>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
 			assert.equal(
@@ -1312,7 +1312,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should find a title attribute', function() {
 			fixture.innerHTML = '<button title="Hello World"></button>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
 			assert.equal(
@@ -1323,7 +1323,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('should otherwise be empty string', function() {
 			fixture.innerHTML = '<button></button>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 
 			var target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
 			assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
@@ -1363,15 +1363,15 @@ describe('text.accessibleTextVirtual', function() {
 		it('should find aria-labelledby', function() {
 			tags.forEach(function(tag) {
 				fixture.innerHTML = '<div id="t1">Hello</div><div id="t2">World</div>';
-				axe._tree = axe.utils.getFlattenedTree(fixture);
+				axe.testUtils.flatTreeSetup(fixture);
 
 				var elm = document.createElement(tag);
 				elm.setAttribute('aria-labelledby', 't1 t2');
 				elm.style.display = 'inline'; // Firefox hides some of these elements because reasons...
 				fixture.appendChild(elm);
-				axe._tree = axe.utils.getFlattenedTree(fixture);
+				axe.testUtils.flatTreeSetup(fixture);
 
-				var target = axe.utils.getNodeFromTree(axe._tree[0], elm);
+				var target = axe.utils.getNodeFromTree(elm);
 				var result = axe.commons.text.accessibleTextVirtual(target);
 				assert.equal(result, 'Hello World', tag);
 			});
@@ -1383,9 +1383,9 @@ describe('text.accessibleTextVirtual', function() {
 				elm.setAttribute('aria-label', 'Hello World');
 				elm.style.display = 'inline'; // Firefox hack, see above
 				fixture.appendChild(elm);
-				axe._tree = axe.utils.getFlattenedTree(fixture);
+				axe.testUtils.flatTreeSetup(fixture);
 
-				var target = axe.utils.getNodeFromTree(axe._tree[0], elm);
+				var target = axe.utils.getNodeFromTree(elm);
 				var result = axe.commons.text.accessibleTextVirtual(target);
 				assert.equal(result, 'Hello World', tag);
 			});
@@ -1397,9 +1397,9 @@ describe('text.accessibleTextVirtual', function() {
 				elm.setAttribute('title', 'Hello World');
 				elm.style.display = 'inline'; // Firefox hack, see above
 				fixture.appendChild(elm);
-				axe._tree = axe.utils.getFlattenedTree(fixture);
+				axe.testUtils.flatTreeSetup(fixture);
 
-				var target = axe.utils.getNodeFromTree(axe._tree[0], elm);
+				var target = axe.utils.getNodeFromTree(elm);
 				var result = axe.commons.text.accessibleTextVirtual(target);
 				assert.equal(result, 'Hello World', tag);
 			});
@@ -1408,7 +1408,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('should otherwise be empty string', function() {
 			tags.forEach(function(tag) {
 				fixture.innerHTML = '<' + tag + '></' + tag + '>';
-				axe._tree = axe.utils.getFlattenedTree(fixture);
+				axe.testUtils.flatTreeSetup(fixture);
 
 				var target = axe.utils.querySelectorAll(axe._tree, tag)[0];
 				assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
@@ -1443,7 +1443,7 @@ describe('text.accessibleTextVirtual', function() {
 
 		it('passes test 1', function() {
 			fixture.innerHTML = '<input type="button" aria-label="Rich" id="test">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Rich');
 		});
@@ -1452,7 +1452,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<div id="ID1">Rich\'s button</div>' +
 				'<input type="button" aria-labelledby="ID1" id="test">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), "Rich's button");
 		});
@@ -1461,21 +1461,21 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<div id="ID1">Rich\'s button</div>' +
 				'<input type="button" aria-label="bar" aria-labelledby="ID1" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), "Rich's button");
 		});
 
 		it('passes test 4', function() {
 			fixture.innerHTML = '<input type="reset" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Reset');
 		});
 
 		it('passes test 5', function() {
 			fixture.innerHTML = '<input type="button" id="test" value="foo"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo');
 		});
@@ -1483,7 +1483,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 6', function() {
 			fixture.innerHTML =
 				'<input src="baz.html" type="image" id="test" alt="foo"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo');
 		});
@@ -1491,7 +1491,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 7', function() {
 			fixture.innerHTML =
 				'<label for="test">States:</label>' + '<input type="text" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'States:');
 		});
@@ -1503,7 +1503,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<input type="text" value="David"/>' +
 				'</label>' +
 				'<input type="text" id="test" value="baz"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo David');
 		});
@@ -1518,7 +1518,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </select>' +
 				'</label> ' +
 				'<input type="text" id="test" value="baz"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy');
 		});
@@ -1531,7 +1531,7 @@ describe('text.accessibleTextVirtual', function() {
 				'   </div>' +
 				'</label>' +
 				'<input type="text" id="test" value="baz"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy Monday');
 		});
@@ -1544,7 +1544,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </div>' +
 				'</label>' +
 				'<input type="text" id="test" value="baz"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy 4');
 		});
@@ -1552,7 +1552,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 12', function() {
 			fixture.innerHTML =
 				'<input type="text" id="test" title="crazy" value="baz"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy');
 		});
@@ -1564,7 +1564,7 @@ describe('text.accessibleTextVirtual', function() {
 				'</style>' +
 				'<label for="test">fruit</label>' +
 				'<input type="text" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'fancy fruit');
 		});
@@ -1576,14 +1576,14 @@ describe('text.accessibleTextVirtual', function() {
 				'</style>' +
 				'<label for="test" data-after="test content"></label>' +
 				'<input type="text" id="test">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'test content');
 		});
 
 		it('passes test 15', function() {
 			fixture.innerHTML = '<img id="test" src="foo.jpg" aria-label="1"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), '1');
 		});
@@ -1591,7 +1591,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 16', function() {
 			fixture.innerHTML =
 				'<img id="test" src="foo.jpg" aria-label="1" alt="a" title="t"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), '1');
 		});
@@ -1602,7 +1602,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<input type="text" value="peanuts" id="test">' +
 				'<img aria-labelledby="test" src="foo.jpg"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), '');
 		});
@@ -1610,7 +1610,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 18', function() {
 			fixture.innerHTML =
 				'<img id="test" aria-labelledby="test" src="foo.jpg"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), '');
 		});
@@ -1621,7 +1621,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<input type="text" value="peanuts" id="test">' +
 				'<img aria-labelledby="test" aria-label="1" src="foo.jpg"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), '');
 		});
@@ -1629,7 +1629,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 20', function() {
 			fixture.innerHTML =
 				'<img id="test" aria-labelledby="test" aria-label="1" src="foo.jpg"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), '1');
 		});
@@ -1640,7 +1640,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<input type="text" value="popcorn" id="ID2">' +
 				'<input type="text" value="apple jacks" id="ID3">' +
 				'<img aria-labelledby="ID1 ID2 ID3" id="test" src="foo.jpg"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'peanuts popcorn apple jacks');
 		});
@@ -1649,7 +1649,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<input type="text" value="peanuts" id="ID1">' +
 				'<img id="test" aria-label="l" aria-labelledby="test ID1" src="foo.jpg"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'l peanuts');
 		});
@@ -1659,7 +1659,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<input type="text" value="peanuts" id="ID1">' +
 				'<input type="text" value="popcorn" id="ID2">' +
 				'<img id="test" aria-label="l" aria-labelledby="test ID1 ID2" src="foo.jpg"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'l peanuts popcorn');
 		});
@@ -1670,7 +1670,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<input type="text" value="popcorn" id="ID2">' +
 				'<input type="text" value="apple jacks" id="ID3">' +
 				'<img id="test" aria-label="l" aria-labelledby="test ID1 ID2 ID3" alt= "a" title="t" src="foo.jpg"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'l peanuts popcorn apple jacks');
 		});
@@ -1681,7 +1681,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<input type="text" value="popcorn" id="ID2">' +
 				'<input type="text" value="apple jacks" id="ID3">' +
 				'<img id="test" aria-label="" aria-labelledby="test ID1 ID2 ID3" alt="" title="t" src="foo.jpg"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 't peanuts popcorn apple jacks');
 		});
@@ -1690,14 +1690,14 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<div id="test" aria-labelledby="ID1">foo</div>' +
 				'<span id="ID1">bar</span>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'bar');
 		});
 
 		it('passes test 27', function() {
 			fixture.innerHTML = '<div id="test" aria-label="Tag">foo</div>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Tag');
 		});
@@ -1706,7 +1706,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<div id="test" aria-labelledby="ID1" aria-label="Tag">foo</div>' +
 				'<span id="ID1">bar</span>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'bar');
 		});
@@ -1716,7 +1716,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<div id="test" aria-labelledby="ID0 ID1" aria-label="Tag">foo</div>' +
 				'<span id="ID0">bar</span>' +
 				'<span id="ID1">baz</span>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'bar baz');
 		});
@@ -1724,14 +1724,14 @@ describe('text.accessibleTextVirtual', function() {
 		// Should only pass in strict mode
 		it('passes test 30', function() {
 			fixture.innerHTML = '<div id="test">Div with text</div>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target, { strict: true }), '');
 		});
 
 		it('passes test 31', function() {
 			fixture.innerHTML = '<div id="test" role="button">foo</div>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo');
 		});
@@ -1740,7 +1740,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<div id="test" role="button" title="Tag" style="outline:medium solid black; width:2em; height:1em;">' +
 				'</div>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Tag');
 		});
@@ -1749,7 +1749,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<div id="ID1">foo</div>' +
 				'<a id="test" href="test.html" aria-labelledby="ID1">bar</a>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo');
 		});
@@ -1757,7 +1757,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 34', function() {
 			fixture.innerHTML =
 				'<a id="test" href="test.html" aria-label="Tag">ABC</a>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Tag');
 		});
@@ -1766,7 +1766,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<a href="test.html" id="test" aria-labelledby="ID1" aria-label="Tag">foo</a>' +
 				'<p id="ID1">bar</p>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'bar');
 		});
@@ -1775,21 +1775,21 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<a href="test.html" id="test" aria-labelledby="test ID1" aria-label="Tag"></a>' +
 				'<p id="ID1">foo</p>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Tag foo');
 		});
 
 		it('passes test 37', function() {
 			fixture.innerHTML = '<a href="test.html" id="test">ABC</a>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'ABC');
 		});
 
 		it('passes test 38', function() {
 			fixture.innerHTML = '<a href="test.html" id="test" title="Tag"></a>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Tag');
 		});
@@ -1800,7 +1800,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<p id="ID1">foo</p>' +
 				'<p id="ID2">bar</p>' +
 				'<p id="ID3">baz</p>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo bar baz');
 		});
@@ -1809,7 +1809,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<input id="test" type="text" aria-label="bar" aria-labelledby="ID1 test">' +
 				'<div id="ID1">foo</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo bar');
 		});
@@ -1817,7 +1817,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 41', function() {
 			fixture.innerHTML =
 				'<input id="test" type="text"/>' + '<label for="test">foo</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo');
 		});
@@ -1825,7 +1825,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 42', function() {
 			fixture.innerHTML =
 				'<input type="password" id="test">' + '<label for="test">foo</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo');
 		});
@@ -1834,7 +1834,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<input type="checkbox" id="test">' +
 				'<label for="test">foo</label></body>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo');
 		});
@@ -1842,7 +1842,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 44', function() {
 			fixture.innerHTML =
 				'<input type="radio" id="test">' + '<label for="test">foo</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo');
 		});
@@ -1850,7 +1850,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 45', function() {
 			fixture.innerHTML =
 				'<input type="file" id="test">' + '<label for="test">foo</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo');
 		});
@@ -1858,7 +1858,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 46', function() {
 			fixture.innerHTML =
 				'<input type="image" id="test">' + '<label for="test">foo</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo');
 		});
@@ -1867,7 +1867,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<input type="checkbox" id="test">' +
 				'<label for="test">foo<input type="text" value="bar">baz</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo bar baz');
 		});
@@ -1876,7 +1876,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<input type="text" id="test">' +
 				'<label for="test">foo<input type="text" value="bar">baz</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo bar baz');
 		});
@@ -1885,7 +1885,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<input type="password" id="test">' +
 				'<label for="test">foo<input type="text" value="bar">baz</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo bar baz');
 		});
@@ -1894,7 +1894,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<input type="radio" id="test">' +
 				'<label for="test">foo<input type="text" value="bar">baz</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo bar baz');
 		});
@@ -1903,7 +1903,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<input type="file" id="test">' +
 				'<label for="test">foo <input type="text" value="bar"> baz</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo bar baz');
 		});
@@ -1917,7 +1917,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<form>' +
 				'  <label for="test" title="bar"><input id="test" type="text" name="test" title="buz"></label> ' +
 				'</form>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo bar baz');
 		});
@@ -1931,7 +1931,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<form>' +
 				'  <label for="test" title="bar"><input id="test" type="password" name="test" title="buz"></label> ' +
 				'</form>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo bar baz');
 		});
@@ -1945,7 +1945,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<form>' +
 				'  <label for="test"><input id="test" type="checkbox" name="test" title=" bar "></label>' +
 				'</form>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo baz');
 		});
@@ -1959,7 +1959,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<form>' +
 				'  <label for="test"><input id="test" type="radio" name="test" title=" bar "></label> ' +
 				'</form>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo baz');
 		});
@@ -1973,7 +1973,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<form>' +
 				'  <label for="test"><input id="test" type="file" name="test" title="bar"></label>' +
 				'</form>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo baz');
 		});
@@ -1987,7 +1987,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<form>' +
 				'  <label for="test"><input id="test" type="image" src="foo.jpg" name="test" title="bar"></label>' +
 				'</form>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo baz');
 		});
@@ -1996,7 +1996,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<label for="test">States:</label>' +
 				'<input type="password" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'States:');
 		});
@@ -2005,7 +2005,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<label for="test">States:</label>' +
 				'<input type="checkbox" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'States:');
 		});
@@ -2013,7 +2013,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 60', function() {
 			fixture.innerHTML =
 				'<label for="test">States:</label>' + '<input type="radio" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'States:');
 		});
@@ -2021,7 +2021,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 61', function() {
 			fixture.innerHTML =
 				'<label for="test">File:</label>' + '<input type="file" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'File:');
 		});
@@ -2030,7 +2030,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<label for="test">States:</label>' +
 				'<input type="image" id="test" src="foo.jpg"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'States:');
 		});
@@ -2042,7 +2042,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  <input type="text" value="David"/>' +
 				'</label>' +
 				'<input type="password" id="test" value="baz"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo David');
 		});
@@ -2054,7 +2054,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  <input type="text" value="David"/>' +
 				'</label>' +
 				'<input type="checkbox" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo David');
 		});
@@ -2066,7 +2066,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  <input type="text" value="David"/>' +
 				'</label>' +
 				'<input type="radio" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo David');
 		});
@@ -2078,7 +2078,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  <input type="text" value="David"/>' +
 				'</label>' +
 				'<input type="file" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo David');
 		});
@@ -2090,7 +2090,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  <input type="text" value="David"/>' +
 				'</label>' +
 				'<input type="image" id="test" src="foo.jpg"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo David');
 		});
@@ -2105,7 +2105,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </select>' +
 				'</label> ' +
 				'<input type="password" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy');
 		});
@@ -2120,7 +2120,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </select>' +
 				'</label> ' +
 				'<input type="checkbox" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy');
 		});
@@ -2135,7 +2135,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </select>' +
 				'</label> ' +
 				'<input type="radio" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy');
 		});
@@ -2150,7 +2150,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </select>' +
 				'</label> ' +
 				'<input type="file" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy');
 		});
@@ -2165,7 +2165,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </select>' +
 				'</label> ' +
 				'<input type="image" id="test" src="foo.jpg"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy');
 		});
@@ -2178,7 +2178,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </div>' +
 				'</label>' +
 				'<input type="password" value="baz" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy Monday');
 		});
@@ -2191,7 +2191,7 @@ describe('text.accessibleTextVirtual', function() {
 				'   aria-valuemin="1" aria-valuemax="7" aria-valuenow="4"></div>' +
 				'</label>' +
 				'<input type="checkbox" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy Monday');
 		});
@@ -2204,7 +2204,7 @@ describe('text.accessibleTextVirtual', function() {
 				'   aria-valuemin="1" aria-valuemax="7" aria-valuenow="4"></div>' +
 				'</label>' +
 				'<input type="radio" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy Monday');
 		});
@@ -2217,7 +2217,7 @@ describe('text.accessibleTextVirtual', function() {
 				'   aria-valuemin="1" aria-valuemax="7" aria-valuenow="4"></div>' +
 				'</label>' +
 				'<input type="file" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy Monday');
 		});
@@ -2230,7 +2230,7 @@ describe('text.accessibleTextVirtual', function() {
 				'   aria-valuemax="7" aria-valuenow="4"></div>' +
 				'</label>' +
 				'<input type="image" src="foo.jpg" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy Monday');
 		});
@@ -2243,7 +2243,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </div>' +
 				'</label>' +
 				'<input type="password" id="test" value="baz"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy 4');
 		});
@@ -2256,7 +2256,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </div>' +
 				'</label>' +
 				'<input type="checkbox" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy 4');
 		});
@@ -2269,7 +2269,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </div>' +
 				'</label>' +
 				'<input type="radio" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy 4');
 		});
@@ -2282,7 +2282,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </div>' +
 				'</label>' +
 				'<input type="file" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy 4');
 		});
@@ -2295,7 +2295,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </div>' +
 				'</label>' +
 				'<input type="image" src="foo.jpg" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy 4');
 		});
@@ -2303,28 +2303,28 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 83', function() {
 			fixture.innerHTML =
 				'<input type="password" id="test" title="crazy" value="baz"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy');
 		});
 
 		it('passes test 84', function() {
 			fixture.innerHTML = '<input type="checkbox" id="test" title="crazy"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy');
 		});
 
 		it('passes test 85', function() {
 			fixture.innerHTML = '<input type="radio" id="test" title="crazy"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy');
 		});
 
 		it('passes test 86', function() {
 			fixture.innerHTML = '<input type="file" id="test" title="crazy"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy');
 		});
@@ -2332,7 +2332,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 87', function() {
 			fixture.innerHTML =
 				'<input type="image" src="foo.jpg" id="test" title="crazy"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'crazy');
 		});
@@ -2344,7 +2344,7 @@ describe('text.accessibleTextVirtual', function() {
 				'</style>' +
 				'<label for="test">fruit</label>' +
 				'<input type="password" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'fancy fruit');
 		});
@@ -2356,7 +2356,7 @@ describe('text.accessibleTextVirtual', function() {
 				'</style>' +
 				'<label for="test">fruit</label>' +
 				'<input type="checkbox" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'fancy fruit');
 		});
@@ -2368,7 +2368,7 @@ describe('text.accessibleTextVirtual', function() {
 				'</style>' +
 				'<label for="test">fruit</label>' +
 				'<input type="radio" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'fancy fruit');
 		});
@@ -2380,7 +2380,7 @@ describe('text.accessibleTextVirtual', function() {
 				'</style>' +
 				'<label for="test">fruit</label>' +
 				'<input type="file" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'fancy fruit');
 		});
@@ -2392,7 +2392,7 @@ describe('text.accessibleTextVirtual', function() {
 				'</style>' +
 				'<label for="test">fruit</label>' +
 				'<input type="image" src="foo.jpg" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'fancy fruit');
 		});
@@ -2404,7 +2404,7 @@ describe('text.accessibleTextVirtual', function() {
 				'</style>' +
 				'<label for="test">fancy</label>' +
 				'<input type="password" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'fancy fruit');
 		});
@@ -2416,7 +2416,7 @@ describe('text.accessibleTextVirtual', function() {
 				'</style>' +
 				'<label for="test">fancy</label>' +
 				'<input type="checkbox" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'fancy fruit');
 		});
@@ -2428,7 +2428,7 @@ describe('text.accessibleTextVirtual', function() {
 				'</style>' +
 				'<label for="test">fancy</label>' +
 				'<input type="radio" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'fancy fruit');
 		});
@@ -2440,7 +2440,7 @@ describe('text.accessibleTextVirtual', function() {
 				'</style>' +
 				'<label for="test">fancy</label>' +
 				'<input type="file" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'fancy fruit');
 		});
@@ -2452,7 +2452,7 @@ describe('text.accessibleTextVirtual', function() {
 				'</style>' +
 				'<label for="test">fancy</label>' +
 				'<input type="image" src="foo.jpg" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'fancy fruit');
 		});
@@ -2471,7 +2471,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </div>' +
 				'  times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			// Chrome 72: "Flash the screen 1 times"
 			// Safari 12.0: "Flash the screen 1 times"
@@ -2490,7 +2490,7 @@ describe('text.accessibleTextVirtual', function() {
 				'    </span>' +
 				'    times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Flash the screen times.');
 		});
@@ -2506,7 +2506,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </select>' +
 				'  times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 		});
@@ -2516,7 +2516,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<input type="checkbox" id="test" />' +
 				'<label for="test">foo <input role="slider" type="range" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz   	' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo 5 baz');
 		});
@@ -2526,14 +2526,14 @@ describe('text.accessibleTextVirtual', function() {
 				'<input type="checkbox" id="test" />' +
 				'<label for="test">foo <input role="spinbutton" type="number" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo 5 baz');
 		});
 
 		it('passes test 103', function() {
 			fixture.innerHTML = '<input type="checkbox" id="test" title="foo" />';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo');
 		});
@@ -2552,7 +2552,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </div>' +
 				'  times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 		});
@@ -2568,7 +2568,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </span>' +
 				'  times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Flash the screen times.');
 		});
@@ -2584,7 +2584,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </select>' +
 				'  times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 		});
@@ -2594,7 +2594,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<input type="file" id="test" />' +
 				'<label for="test">foo <input role="slider" type="range" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo 5 baz');
 		});
@@ -2604,14 +2604,14 @@ describe('text.accessibleTextVirtual', function() {
 				'<input type="file" id="test" />' +
 				'<label for="test">foo <input role="spinbutton" type="number" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo 5 baz');
 		});
 
 		it('passes test 109', function() {
 			fixture.innerHTML = '<input type="file" id="test" title="foo" />';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo');
 		});
@@ -2619,7 +2619,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 110', function() {
 			fixture.innerHTML =
 				'<input type="image" src="test.png" id="test" title="foo" />';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo');
 		});
@@ -2638,7 +2638,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </div>' +
 				'  times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 		});
@@ -2654,7 +2654,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </span>' +
 				'  times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Flash the screen times.');
 		});
@@ -2670,7 +2670,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </select>' +
 				'  times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 		});
@@ -2680,7 +2680,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<input type="password" id="test" />' +
 				'<label for="test">foo <input role="slider" type="range" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo 5 baz');
 		});
@@ -2690,14 +2690,14 @@ describe('text.accessibleTextVirtual', function() {
 				'<input type="password" id="test" />' +
 				'<label for="test">foo <input role="spinbutton" type="number" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo 5 baz');
 		});
 
 		it('passes test 116', function() {
 			fixture.innerHTML = '<input type="password" id="test" title="foo" />';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo');
 		});
@@ -2716,7 +2716,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </div>' +
 				'  times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 		});
@@ -2732,7 +2732,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </span>' +
 				'  times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Flash the screen times.');
 		});
@@ -2748,7 +2748,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </select>' +
 				'  times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			// Chrome 72: "Flash the screen 1 times"
 			// Firefox 62: "Flash the screen 1 times"
@@ -2761,7 +2761,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<input type="radio" id="test" />' +
 				'<label for="test">foo <input role="slider" type="range" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			// Chrome 70: Foo 5 baz
 			// Firefox 62: Foo 5 baz
@@ -2774,14 +2774,14 @@ describe('text.accessibleTextVirtual', function() {
 				'<input type="radio" id="test" />' +
 				'<label for="test">foo <input role="spinbutton"  type="number" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo 5 baz');
 		});
 
 		it('passes test 122', function() {
 			fixture.innerHTML = '<input type="radio" id="test" title="foo" />';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo');
 		});
@@ -2800,7 +2800,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </div>' +
 				'  times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			// Chrome 72: "Flash the screen 1 times."
 			// Firefox 62: "Flash the screen 1 times."
@@ -2819,7 +2819,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </span>' +
 				'  times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Flash the screen times.');
 		});
@@ -2835,7 +2835,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </select>' +
 				'  times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			// Chrome 72: Flash the screen 1 times
 			// Firefox 62: Flash the screen 1 times
@@ -2848,7 +2848,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<input type="text" id="test" />' +
 				'<label for="test">foo <input role="slider" type="range" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo 5 baz');
 		});
@@ -2858,14 +2858,14 @@ describe('text.accessibleTextVirtual', function() {
 				'<input type="text" id="test" />' +
 				'<label for="test">foo <input role="spinbutton" type="number" value="5" min="1" max="10" aria-valuenow="5" aria-valuemin="1" aria-valuemax="10"> baz' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo 5 baz');
 		});
 
 		it('passes test 128', function() {
 			fixture.innerHTML = '<input type="text" id="test" title="foo" />';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'foo');
 		});
@@ -2900,7 +2900,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </table>' +
 				'</div>';
 
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			// Chrome 72: "My name is Eli the weird. (QED) Where are my marbles?"
 			// Safari 12.0: "My name is Eli the weird. (QED) Where are my marbles?"
@@ -2940,7 +2940,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </table>' +
 				'</div>';
 
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(
 				accessibleText(target),
@@ -2976,7 +2976,7 @@ describe('text.accessibleTextVirtual', function() {
 				' </table>' +
 				'</label>';
 
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(
 				accessibleText(target),
@@ -3019,7 +3019,7 @@ describe('text.accessibleTextVirtual', function() {
 				'      </table>' +
 				'    </div>' +
 				'  </div>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Important stuff');
 		});
@@ -3027,7 +3027,7 @@ describe('text.accessibleTextVirtual', function() {
 		it('passes test 144', function() {
 			fixture.innerHTML =
 				'<input id="test" role="combobox" type="text" title="Choose your language" value="English">';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Choose your language');
 		});
@@ -3037,7 +3037,7 @@ describe('text.accessibleTextVirtual', function() {
 				'<div id="test" role="combobox" tabindex="0" title="Choose your language.">' +
 				'  <span> English </span>' +
 				'</div>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Choose your language.');
 		});
@@ -3053,7 +3053,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </ul>' +
 				'  times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 		});
@@ -3065,7 +3065,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  <div role="textbox" contenteditable>1</div>' +
 				'  times.' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 		});
@@ -3074,7 +3074,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<label for="test">a test</label>' +
 				'<label>This <input type="checkbox" id="test" /> is</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'a test This is');
 		});
@@ -3083,7 +3083,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<label>This <input type="checkbox" id="test" /> is</label>' +
 				'<label for="test">a test</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'This is a test');
 		});
@@ -3092,7 +3092,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<input type="file" id="test" />' +
 				'<label for="test">W<i>h<b>a</b></i>t<br>is<div>your<div>name<b>?</b></div></div></label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'What is your name?');
 		});
@@ -3105,7 +3105,7 @@ describe('text.accessibleTextVirtual', function() {
 				'</style>' +
 				'<label for="test">is a test</label>' +
 				'<input type="text" id="test"/>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'This is a test.');
 		});
@@ -3127,7 +3127,7 @@ describe('text.accessibleTextVirtual', function() {
 				// '  <span aria-hidden="false" class="hidden">9</span><span>10</span>' +
 				'  <span aria-hidden="false" style="display:none">9</span><span>10</span>' +
 				'</label>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), '2 4 6 8 10');
 		});
@@ -3148,7 +3148,7 @@ describe('text.accessibleTextVirtual', function() {
 				'    <li role="option">3 </li>' +
 				'  </ul>' +
 				'</div>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Flash the screen 2 times.');
 		});
@@ -3167,7 +3167,7 @@ describe('text.accessibleTextVirtual', function() {
 				'    </ul>' +
 				'  </div>' +
 				'</div>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 		});
@@ -3189,7 +3189,7 @@ describe('text.accessibleTextVirtual', function() {
 				// '  <span class="hidden"><i><b>and don\'t you forget it.</b></i></span>' +
 				'  <span style="display:none"><i><b>and don\'t you forget it.</b></i></span>' +
 				'</div>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'My name is Eli the weird. (QED)');
 		});
@@ -3198,7 +3198,7 @@ describe('text.accessibleTextVirtual', function() {
 			fixture.innerHTML =
 				'<a id="test" href="#" aria-label="California"' +
 				' title="San Francisco">United States</a>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'California');
 		});
@@ -3209,12 +3209,12 @@ describe('text.accessibleTextVirtual', function() {
 				'Country of origin:' +
 				'<input role="combobox" type="text" title="Choose your country." value="United States">' +
 				'</h2>';
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
 			assert.equal(accessibleText(target), 'Country of origin: United States');
 		});
 
-		/** 
+		/**
 	// In case anyone even wants it, here's the script used to generate these test cases
 	function getTestCase(content, index = 0) {
 		const regex = new RegExp('if given\n([^]*)\nthen the accessible name of the element with id of "(.*)" is "(.*)"')
@@ -3222,16 +3222,16 @@ describe('text.accessibleTextVirtual', function() {
 		if (!out || out.length !== 4) {
 			return;
 		}
-		
+
 		const [, html, id, expected] = out;
 		const strings = html.split(/\n/g).map(
 			line => `'${line.substr(2)}'`
 		).join(' +\n      ') + ';'
-	
+
 		return `
 		it('passes test ${index + 1}', function () {
 			fixture.innerHTML = ${strings}
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#${id}');
 			assert.equal(accessibleText(target), '${expected}');
 		});`

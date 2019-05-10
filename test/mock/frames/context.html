@@ -1,45 +1,51 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-US">
-<head>
-	<title>Context Fixture</title>
-</head>
-<body>
-	<div id="foo">
-		<div id="bar"></div>
-	</div>
-	<div id="target"></div>
-	<script src="../../../axe.js"></script>
-	<script>
-		axe._load({
-			rules: [{
-				id: 'div#target',
-				selector: '#target',
-				any: ['has-target']
-			}, {
-				id: 'first-div',
-				selector: 'div',
-				any: ['first-div']
-			}],
-			checks: [{
-				id: 'has-target',
-				evaluate: function () {
-					return true;
-				}
-			}, {
-				id: 'first-div',
-				evaluate: function (node) {
-					this.relatedNodes([node]);
-					return false;
-				},
-				after: function (results) {
-					if (results.length) {
-						results[0].result = true;
+	<head>
+		<title>Context Fixture</title>
+	</head>
+	<body>
+		<div id="foo">
+			<div id="bar"></div>
+		</div>
+		<div id="target"></div>
+		<script src="../../../axe.js"></script>
+		<script>
+			axe._load({
+				rules: [
+					{
+						id: 'div#target',
+						selector: '#target',
+						any: ['has-target']
+					},
+					{
+						id: 'first-div',
+						selector: 'div',
+						any: ['first-div']
 					}
-					return [results[0]];
-				}
-			}],
-			messages: {}
-		});
-	</script>
-</body>
+				],
+				checks: [
+					{
+						id: 'has-target',
+						evaluate: function() {
+							return true;
+						}
+					},
+					{
+						id: 'first-div',
+						evaluate: function(node) {
+							this.relatedNodes([node]);
+							return false;
+						},
+						after: function(results) {
+							if (results.length) {
+								results[0].result = true;
+							}
+							return [results[0]];
+						}
+					}
+				],
+				messages: {}
+			});
+		</script>
+	</body>
 </html>

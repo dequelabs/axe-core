@@ -17,7 +17,7 @@ describe('table.getCellPosition', function() {
 
 		var target = document.getElementById('target');
 
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.deepEqual(axe.commons.table.getCellPosition(target), {
 			x: 1,
 			y: 1
@@ -34,7 +34,7 @@ describe('table.getCellPosition', function() {
 
 		var target = document.getElementById('target');
 
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.deepEqual(axe.commons.table.getCellPosition(target), {
 			x: 2,
 			y: 1
@@ -51,7 +51,7 @@ describe('table.getCellPosition', function() {
 
 		var target = document.getElementById('target');
 
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.deepEqual(axe.commons.table.getCellPosition(target), {
 			x: 2,
 			y: 1
@@ -68,7 +68,7 @@ describe('table.getCellPosition', function() {
 
 		var target = document.getElementById('target');
 
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.deepEqual(axe.commons.table.getCellPosition(target), {
 			x: 2,
 			y: 1
@@ -87,7 +87,7 @@ describe('table.getCellPosition', function() {
 
 		var target = document.getElementById('target');
 
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.deepEqual(axe.commons.table.getCellPosition(target), {
 			x: 1,
 			y: 2

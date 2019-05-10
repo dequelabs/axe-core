@@ -66,11 +66,11 @@ describe('dom.hasContentVirtual', function() {
 	it('is called through hasContent, with a DOM node', function() {
 		var hasContent = axe.commons.dom.hasContent;
 		fixture.innerHTML = '<div id="target"> text </div>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isTrue(hasContent(fixture.querySelector('#target')));
 
 		fixture.innerHTML = '<div id="target"></div>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(hasContent(fixture.querySelector('#target')));
 	});
 

@@ -232,10 +232,10 @@ describe('text.nativeTextMethods', function() {
 		});
 	});
 
-	describe('singleSpace', function () {
+	describe('singleSpace', function() {
 		var singleSpace = nativeTextMethods.singleSpace;
 		it('returns a single space', function() {
 			assert.equal(singleSpace(), ' ');
 		});
-	})
+	});
 });

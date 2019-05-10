@@ -18,7 +18,7 @@ describe('dom.getTabbableElements', function() {
 				'</div>'
 		);
 		var node = fixture.querySelector('#target');
-		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+		var virtualNode = axe.utils.getNodeFromTree(node);
 		var actual = getTabbableElementsFn(virtualNode);
 		assert.lengthOf(actual, 1);
 		assert.equal(actual[0].actualNode.nodeName.toUpperCase(), 'TEXTAREA');
@@ -29,7 +29,7 @@ describe('dom.getTabbableElements', function() {
 			'<div id="target">' + '<input tabindex="-1">' + '</div>'
 		);
 		var node = fixture.querySelector('#target');
-		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+		var virtualNode = axe.utils.getNodeFromTree(node);
 		var actual = getTabbableElementsFn(virtualNode);
 		assert.lengthOf(actual, 0);
 	});
@@ -39,7 +39,7 @@ describe('dom.getTabbableElements', function() {
 			'<div id="target">' + '<button disabled>Submit Me</button>' + '</div>'
 		);
 		var node = fixture.querySelector('#target');
-		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+		var virtualNode = axe.utils.getNodeFromTree(node);
 		var actual = getTabbableElementsFn(virtualNode);
 		assert.lengthOf(actual, 0);
 	});
@@ -49,7 +49,7 @@ describe('dom.getTabbableElements', function() {
 			'<div id="target">' + '<p>Some text</p>' + '</div>'
 		);
 		var node = fixture.querySelector('#target');
-		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+		var virtualNode = axe.utils.getNodeFromTree(node);
 		var actual = getTabbableElementsFn(virtualNode);
 		assert.lengthOf(actual, 0);
 	});
@@ -62,9 +62,9 @@ describe('dom.getTabbableElements', function() {
 			var shadow = node.attachShadow({ mode: 'open' });
 			shadow.innerHTML = '<button>btn</button>';
 			// re build tree after shadowDOM is constructed
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			axe._selectorData = axe.utils.getSelectorData(axe._tree);
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			var actual = getTabbableElementsFn(virtualNode);
 			assert.lengthOf(actual, 1);
 			assert.equal(actual[0].actualNode.nodeName.toUpperCase(), 'BUTTON');
@@ -79,9 +79,9 @@ describe('dom.getTabbableElements', function() {
 			var shadow = node.attachShadow({ mode: 'open' });
 			shadow.innerHTML = '<button disabled>btn</button>';
 			// re build tree after shadowDOM is constructed
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			axe._selectorData = axe.utils.getSelectorData(axe._tree);
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			var actual = getTabbableElementsFn(virtualNode);
 			assert.lengthOf(actual, 0);
 		}
@@ -95,9 +95,9 @@ describe('dom.getTabbableElements', function() {
 			var shadow = node.attachShadow({ mode: 'open' });
 			shadow.innerHTML = '<p>I am not tabbable</p>';
 			// re build tree after shadowDOM is constructed
-			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe.testUtils.flatTreeSetup(fixture);
 			axe._selectorData = axe.utils.getSelectorData(axe._tree);
-			var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+			var virtualNode = axe.utils.getNodeFromTree(node);
 			var actual = getTabbableElementsFn(virtualNode);
 			assert.lengthOf(actual, 0);
 		}

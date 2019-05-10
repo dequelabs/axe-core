@@ -317,9 +317,9 @@ describe('group-labelledby', function() {
 						type +
 						'" aria-labelledby="shared three" name="groupname">';
 
-					var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+					axe.testUtils.flatTreeSetup(fixture);
 					var shadowContent = shadowRoot.querySelector('#target');
-					var virtualTarget = axe.utils.getNodeFromTree(tree[0], shadowContent);
+					var virtualTarget = axe.utils.getNodeFromTree(shadowContent);
 
 					var params = [shadowContent, undefined, virtualTarget];
 					assert.isFalse(check.evaluate.apply(checkContext, params));
@@ -355,9 +355,9 @@ describe('group-labelledby', function() {
 						type +
 						'" aria-labelledby="shared three" name="groupname">';
 
-					var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+					axe.testUtils.flatTreeSetup(fixture);
 					var shadowContent = shadowRoot.querySelector('#target');
-					var virtualTarget = axe.utils.getNodeFromTree(tree[0], shadowContent);
+					var virtualTarget = axe.utils.getNodeFromTree(shadowContent);
 
 					var params = [shadowContent, undefined, virtualTarget];
 					assert.isFalse(check.evaluate.apply(checkContext, params));
@@ -394,9 +394,9 @@ describe('group-labelledby', function() {
 						type +
 						'" id="target" name="samename" aria-labelledby="shared three">';
 
-					var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+					axe.testUtils.flatTreeSetup(fixture);
 					var shadowContent = shadowRoot.querySelector('#target');
-					var virtualTarget = axe.utils.getNodeFromTree(tree[0], shadowContent);
+					var virtualTarget = axe.utils.getNodeFromTree(shadowContent);
 
 					var params = [shadowContent, undefined, virtualTarget];
 					assert.isTrue(check.evaluate.apply(checkContext, params));
