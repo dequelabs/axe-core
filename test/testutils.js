@@ -308,8 +308,6 @@ testUtils.isIE11 = (function isIE11(navigator) {
 
 axe.testUtils = testUtils;
 
-beforeEach(function() {
-	axe._cache = {
-		nodeMap: new WeakMap()
-	};
+afterEach(function() {
+	axe._cache.clear();
 });
