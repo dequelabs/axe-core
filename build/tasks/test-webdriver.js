@@ -88,7 +88,7 @@ module.exports = function(grunt) {
 	 * Build web driver depends whether REMOTE_SELENIUM_URL is set
 	 */
 	async function buildWebDriver(browser) {
-		var webdriver, capabilities;
+		var capabilities;
 		var mobileBrowser = browser.split('-mobile');
 		if (mobileBrowser.length > 1) {
 			browser = mobileBrowser[0];
@@ -106,6 +106,14 @@ module.exports = function(grunt) {
 			};
 		}
 
+		var webdriver = new WebDriver.Builder()
+			.withCapabilities(capabilities)
+			.forBrowser(browser);
+
+		if (process.env.REMOTE_SELENIUM_URL) {
+			webdriver.usingServer(process.env.REMOTE_SELENIUM_URL);
+		}
+
 		// @see https://github.com/SeleniumHQ/selenium/issues/6026
 		if (browser === 'safari') {
 			var safari = require('selenium-webdriver/safari');
@@ -114,35 +122,11 @@ module.exports = function(grunt) {
 				.build()
 				.start();
 
-			if (process.env.REMOTE_SELENIUM_URL) {
-				webdriver = new WebDriver.Builder()
-					.usingServer(server)
-					.forBrowser('safari')
-					.withCapabilities(capabilities)
-					.usingServer(process.env.REMOTE_SELENIUM_URL)
-					.build();
-			} else {
-				webdriver = new WebDriver.Builder()
-					.usingServer(server)
-					.withCapabilities(capabilities)
-					.forBrowser('safari')
-					.build();
-			}
-		} else if (process.env.REMOTE_SELENIUM_URL) {
-			webdriver = new WebDriver.Builder()
-				.forBrowser(browser)
-				.withCapabilities(capabilities)
-				.usingServer(process.env.REMOTE_SELENIUM_URL)
-				.build();
-		} else {
-			webdriver = new WebDriver.Builder()
-				.withCapabilities(capabilities)
-				.forBrowser(browser)
-				.build();
+			webdriver.usingServer(server);
 		}
 
 		return {
-			driver: webdriver,
+			driver: webdriver.build(),
 			isMobile: mobileBrowser.length > 1
 		};
 	}
