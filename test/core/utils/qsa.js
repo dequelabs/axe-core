@@ -5,13 +5,6 @@ function setShadowId(vNode, shadowId) {
 	}
 }
 
-function errorActualNode(vNode) {
-	vNode.actualNode = null;
-	for (var i = 0; i < vNode.children.length; i++) {
-		errorActualNode(vNode.children[i]);
-	}
-}
-
 function getTestDom() {
 	'use strict';
 	var html = document.createElement('html');
@@ -231,18 +224,6 @@ describe('axe.utils.querySelectorAllFilter', function() {
 		});
 		assert.equal(result[0].actualNode.nodeName, 'DIV');
 		assert.equal(result.length, 1);
-	});
-	it('should not access any actualNode apis', function() {
-		errorActualNode(dom[0]);
-
-		function qsa() {
-			axe.utils.querySelectorAllFilter(
-				dom,
-				'.first[data-a11yhero="faulkner"] > ul li.breaking'
-			);
-		}
-
-		assert.doesNotThrow(qsa);
 	});
 });
 describe('axe.utils.querySelectorAll', function() {
