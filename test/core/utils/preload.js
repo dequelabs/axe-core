@@ -5,51 +5,47 @@ describe('axe.utils.preload', function() {
 	var fixture = document.getElementById('fixture');
 
 	before(function() {
-		if (isPhantom) {
-			this.skip(); // if `phantomjs` -> skip `suite`
-		}
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 	});
 
-	it('returns a Promise', function() {
-		var actual = axe.utils.preload({});
-		assert.isTrue(
-			Object.prototype.toString.call(actual) === '[object Promise]'
-		);
-	});
+	(isPhantom ? it.skip : it)(
+		'returns `undefined` when `preload` option is set to false.',
+		function(done) {
+			var options = {
+				preload: false
+			};
+			var actual = axe.utils.preload(options);
+			actual
+				.then(function(results) {
+					assert.isUndefined(results);
+					done();
+				})
+				.catch(function(error) {
+					done(error);
+				});
+		}
+	);
 
-	it('returns `undefined` as result', function(done) {
-		var options = {
-			preload: false
-		};
-		var actual = axe.utils.preload(options);
-		actual
-			.then(function(results) {
-				assert.isUndefined(results);
-				done();
-			})
-			.catch(function(error) {
-				done(error);
+	(isPhantom ? it.skip : it)(
+		'returns assets with `cssom`, verify result is same output from `preloadCssom` fn',
+		function(done) {
+			var options = {
+				preload: {
+					assets: ['cssom']
+				}
+			};
+			var actual = axe.utils.preload(options);
+			actual.then(function(results) {
+				assert.isDefined(results);
+				assert.property(results, 'cssom');
+
+				axe.utils.preloadCssom(options).then(function(resultFromPreloadCssom) {
+					assert.deepEqual(results.cssom, resultFromPreloadCssom);
+					done();
+				});
 			});
-	});
-
-	it('returns assets with `cssom`, cross-verify result is same output from `preloadCssom` fn', function(done) {
-		var options = {
-			preload: {
-				assets: ['cssom']
-			}
-		};
-		var actual = axe.utils.preload(options);
-		actual.then(function(results) {
-			assert.isDefined(results);
-			assert.property(results, 'cssom');
-
-			axe.utils.preloadCssom(options).then(function(resultFromPreloadCssom) {
-				assert.deepEqual(results.cssom, resultFromPreloadCssom);
-				done();
-			});
-		});
-	});
+		}
+	);
 
 	describe('axe.utils.shouldPreload', function() {
 		it('should return true if preload configuration is valid', function() {

@@ -4,17 +4,8 @@
  * so tests for disabled and external stylesheets are done in `integration` tests
  * Refer Directory: `./test/full/preload-cssom/**.*`
  */
-
-describe('axe.utils.preloadCssom unit tests', function() {
+describe('axe.utils.preloadCssom', function() {
 	'use strict';
-
-	var isPhantom = window.PHANTOMJS ? true : false;
-
-	before(function() {
-		if (isPhantom) {
-			this.skip(); // if `phantomjs` -> skip `suite`
-		}
-	});
 
 	var treeRoot;
 
@@ -42,13 +33,6 @@ describe('axe.utils.preloadCssom unit tests', function() {
 
 	afterEach(function() {
 		removeStyleFromHead();
-	});
-
-	it('returns a Promise', function() {
-		var actual = axe.utils.preloadCssom({ treeRoot });
-		assert.isTrue(
-			Object.prototype.toString.call(actual) === '[object Promise]'
-		);
 	});
 
 	it('returns CSSOM object containing an array of sheets', function(done) {
