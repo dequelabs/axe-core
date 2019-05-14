@@ -1,0 +1,59 @@
+<!-- pass -->
+<div id="pass1" style="overflow: hidden; height: 5px;">
+  <input type="text">
+</div>
+
+<div id="pass2" style="height: 200px; overflow: hidden" tabindex="0">
+  <div style="height: 2000px">
+    <p> Content </p>
+  </div>
+</div>
+
+<div id="pass3" style="height: 20px; overflow: auto;">
+  <input type="text" tabindex="-1">
+  <select tabindex="-1"></select>
+  <textarea tabindex="-1"></textarea>
+  <p style="height: 200px;" tabindex="0"></p>
+</div>
+
+
+<!-- fail -->
+<div id="fail1" style="height: 200px; width: 200px; overflow: hidden">
+  <div style="height: 2000px; width: 100px;">
+    <p> Content </p>
+  </div>
+</div>
+
+<div id="fail2" style="height: 5px; overflow: auto;">
+  <input type="text" tabindex="-1">
+</div>
+
+<div id="fail3" style="height: 5px; overflow: auto;">
+  <input type="text" tabindex="-1">
+  <select tabindex="-1"></select>
+  <textarea tabindex="-1"></textarea>
+</div>
+
+<!-- inapplicable -->
+<section id="inapplicable1">This element is not scrollable</section>
+
+<div id="inapplicable2" style="height: 200px; width: 200px; overflow: auto;">
+  <div style="height: 10px; width: 100x;">Content</div>
+</div>
+
+<p id="inapplicable3" style="width: 12em; height: 2em; border: dotted; overflow: visible;">
+  Sed ut perspiciatis unde
+  omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+</p>
+
+<div id="inapplicable4" style="display: none; height: 200px; overflow: hidden" tabindex="0">
+  <div style="height: 2000px">
+    <p> Content </p>
+  </div>
+</div>
+
+<div id="inapplicable5" aria-hidden="true" style="height: 200px; overflow: hidden" tabindex="0">
+  <div style="height: 2000px">
+    <p> Content </p>
+  </div>
+</div>
