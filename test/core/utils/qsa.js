@@ -29,7 +29,7 @@ function getTestDom() {
 	// remove the head node
 	var head = html.querySelector('head');
 	if (head) {
-		head.remove();
+		head.parentNode.removeChild(head);
 	}
 
 	var tree = axe.utils.getFlattenedTree(html);
