@@ -15,9 +15,12 @@ test_script:
   - node --version
   - npm --version
   - npm run build
+  # Run test scaffolding
+  - npx grunt testconfig fixture
   # A few tests are flaky, causing occasional random failures
   # When we have time, we should investigate to see if we can eliminate these flakes
-  # - npm run test
+  - appveyor-retry npx grunt connect mocha
+  - appveyor-retry npx grunt connect test-webdriver:ie
   - npm run test:examples
 
  # Don't actually build.
