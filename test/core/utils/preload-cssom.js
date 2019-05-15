@@ -36,7 +36,7 @@ describe('axe.utils.preloadCssom', function() {
 	});
 
 	it('returns CSSOM object containing an array of sheets', function(done) {
-		var actual = axe.utils.preloadCssom({ treeRoot });
+		var actual = axe.utils.preloadCssom({ treeRoot: treeRoot });
 		actual
 			.then(function(cssom) {
 				assert.isAtLeast(cssom.length, 2);
@@ -48,7 +48,7 @@ describe('axe.utils.preloadCssom', function() {
 	});
 
 	it('returns CSSOM and ensure that each object have defined properties', function(done) {
-		var actual = axe.utils.preloadCssom({ treeRoot });
+		var actual = axe.utils.preloadCssom({ treeRoot: treeRoot });
 		actual
 			.then(function(cssom) {
 				assert.isAtLeast(cssom.length, 2);
@@ -69,7 +69,7 @@ describe('axe.utils.preloadCssom', function() {
 	});
 
 	it('returns false if number of sheets returned does not match stylesheets defined in document', function(done) {
-		var actual = axe.utils.preloadCssom({ treeRoot });
+		var actual = axe.utils.preloadCssom({ treeRoot: treeRoot });
 		actual
 			.then(function(cssom) {
 				assert.isFalse(cssom.length <= 1);
@@ -81,7 +81,7 @@ describe('axe.utils.preloadCssom', function() {
 	});
 
 	it('returns all stylesheets and ensure each sheet has property cssRules', function(done) {
-		var actual = axe.utils.preloadCssom({ treeRoot });
+		var actual = axe.utils.preloadCssom({ treeRoot: treeRoot });
 		actual
 			.then(function(cssom) {
 				cssom.forEach(function(s) {

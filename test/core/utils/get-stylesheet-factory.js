@@ -12,14 +12,14 @@ describe('axe.utils.getStyleSheetFactory', function() {
 	});
 
 	it('returns a function when passed argument of dynamicDocument', function() {
-		const actual = axe.utils.getStyleSheetFactory(dynamicDoc);
+		var actual = axe.utils.getStyleSheetFactory(dynamicDoc);
 		assert.isFunction(actual);
 	});
 
 	it('returns a CSSOM stylesheet, when invoked with data (text)', function() {
-		const stylesheetFactory = axe.utils.getStyleSheetFactory(dynamicDoc);
-		const actual = stylesheetFactory({
-			data: `.someStyle{background-color:red;}`,
+		var stylesheetFactory = axe.utils.getStyleSheetFactory(dynamicDoc);
+		var actual = stylesheetFactory({
+			data: '.someStyle{background-color:red;}',
 			root: document,
 			priority: [1, 0]
 		});

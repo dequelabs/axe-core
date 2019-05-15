@@ -13,7 +13,6 @@ describe('reporters - raw-env', function() {
 	var mockResults;
 	var orig;
 	var rawResults;
-	const env = helpers.getEnvironmentData();
 
 	before(function() {
 		mockResults = [
@@ -134,6 +133,7 @@ describe('reporters - raw-env', function() {
 			if (err) {
 				return done(err);
 			}
+			var env = helpers.getEnvironmentData();
 			assert.deepEqual(results.raw, rawResults);
 			assert.deepEqual(results.env, env);
 			done();

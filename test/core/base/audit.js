@@ -1,4 +1,4 @@
-/*global Audit, Rule */
+/*global Audit, Rule, Promise */
 describe('Audit', function() {
 	'use strict';
 
