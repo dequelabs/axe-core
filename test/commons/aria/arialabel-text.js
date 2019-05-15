@@ -18,7 +18,7 @@ describe('aria.arialabelText', function() {
 		var node = document.createElement('div');
 		var label = ' my label ';
 		node.setAttribute('aria-label', label);
-		const vNode = { actualNode: node };
+		var vNode = { actualNode: node };
 		assert.equal(aria.arialabelText(vNode), label);
 	});
 

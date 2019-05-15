@@ -13,7 +13,7 @@ describe('reporters - raw-env', function() {
 	var mockResults;
 	var orig;
 	var rawResults;
-	const env = helpers.getEnvironmentData();
+	var env = helpers.getEnvironmentData();
 
 	before(function() {
 		mockResults = [

@@ -30,7 +30,7 @@ describe('css-orientation-lock tests', function() {
 	};
 
 	function getSheet(data) {
-		const style = dynamicDoc.createElement('style');
+		var style = dynamicDoc.createElement('style');
 		style.type = 'text/css';
 		style.appendChild(dynamicDoc.createTextNode(data));
 		dynamicDoc.head.appendChild(style);
