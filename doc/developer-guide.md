@@ -36,7 +36,7 @@ Axe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities fo
 
 ### Building axe.js
 
-To build axe.js, simply run `grunt build` in the root folder of the axe-core repository. axe.js and axe.min.js are placed into the `dist` folder.
+To build axe.js, simply run `grunt build` in the root folder of the axe-core repository. axe.js and axe.min.js are placed into the root folder.
 
 ### Running Tests
 

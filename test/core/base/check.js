@@ -184,6 +184,16 @@ describe('Check', function() {
 				}).run(fixture, {}, configured, noop);
 			});
 
+			it('should pass the virtual node through', function(done) {
+				var tree = axe.utils.getFlattenedTree(fixture);
+				new Check({
+					evaluate: function(node, options, virtualNode) {
+						assert.equal(virtualNode, tree[0]);
+						done();
+					}
+				}).run(tree[0]);
+			});
+
 			it('should bind context to `bindCheckResult`', function(done) {
 				var orig = axe.utils.checkHelper,
 					cb = function() {
@@ -272,6 +282,133 @@ describe('Check', function() {
 					assert.equal(err.message, 'Grenade!');
 					done();
 				});
+			});
+		});
+
+		describe('runSync', function() {
+			it('should accept 3 parameters', function() {
+				assert.lengthOf(new Check({}).runSync, 3);
+			});
+
+			it('should pass the node through', function() {
+				new Check({
+					evaluate: function(node) {
+						assert.equal(node, fixture);
+					}
+				}).runSync(axe.utils.getFlattenedTree(fixture)[0], {}, {});
+			});
+
+			it('should pass the options through', function() {
+				var expected = { monkeys: 'bananas' };
+
+				new Check({
+					options: expected,
+					evaluate: function(node, options) {
+						assert.deepEqual(options, expected);
+					}
+				}).runSync(fixture, {}, {});
+			});
+
+			it('should pass the options through modified by the ones passed into the call', function() {
+				var configured = { monkeys: 'bananas' },
+					expected = { monkeys: 'bananas', dogs: 'cats' };
+
+				new Check({
+					options: configured,
+					evaluate: function(node, options) {
+						assert.deepEqual(options, expected);
+					}
+				}).runSync(fixture, { options: expected }, {});
+			});
+
+			it('should pass the context through to check evaluate call', function() {
+				var configured = {
+					cssom: 'yay',
+					source: 'this is page source',
+					aom: undefined
+				};
+				new Check({
+					options: configured,
+					evaluate: function(node, options, virtualNode, context) {
+						assert.property(context, 'cssom');
+						assert.deepEqual(context, configured);
+					}
+				}).runSync(fixture, {}, configured);
+			});
+
+			it('should pass the virtual node through', function() {
+				var tree = axe.utils.getFlattenedTree(fixture);
+				new Check({
+					evaluate: function(node, options, virtualNode) {
+						assert.equal(virtualNode, tree[0]);
+					}
+				}).runSync(tree[0]);
+			});
+
+			it('should throw error for asynchronous checks', function() {
+				var data = { monkeys: 'bananas' };
+
+				try {
+					new Check({
+						evaluate: function() {
+							var ready = this.async();
+							setTimeout(function() {
+								ready(data);
+							}, 10);
+						}
+					}).runSync(fixture, {}, {});
+				} catch (err) {
+					assert.instanceOf(err, Error);
+					assert.equal(
+						err.message,
+						'Cannot run async check while in a synchronous run'
+					);
+				}
+			});
+
+			it('should pass `null` as the parameter if not enabled', function() {
+				var data = new Check({
+					evaluate: function() {},
+					enabled: false
+				}).runSync(fixture, {}, {});
+
+				assert.isNull(data);
+			});
+
+			it('should pass `null` as the parameter if options disable', function() {
+				var data = new Check({
+					evaluate: function() {}
+				}).runSync(
+					fixture,
+					{
+						enabled: false
+					},
+					{}
+				);
+				assert.isNull(data);
+			});
+
+			it('passes a result to the resolve argument', function() {
+				var data = new Check({
+					evaluate: function() {
+						return true;
+					}
+				}).runSync(fixture, {}, {});
+				assert.instanceOf(data, CheckResult);
+				assert.isTrue(data.result);
+			});
+
+			it('should throw errors', function() {
+				try {
+					new Check({
+						evaluate: function() {
+							throw new Error('Grenade!');
+						}
+					}).runSync(fixture, {}, {});
+				} catch (err) {
+					assert.instanceOf(err, Error);
+					assert.equal(err.message, 'Grenade!');
+				}
 			});
 		});
 	});

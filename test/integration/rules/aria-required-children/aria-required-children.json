@@ -1,7 +1,7 @@
 {
 	"description": "aria-required-children test",
 	"rule": "aria-required-children",
-	"violations": [["#fail1"], ["#fail2"], ["#fail3"]],
+	"violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"], ["#fail5"]],
 	"passes": [
 		["#pass1"],
 		["#pass2"],
@@ -12,5 +12,16 @@
 		["#pass7"],
 		["#pass8"]
 	],
-	"incomplete": [["#incomplete1"]]
+	"incomplete": [
+		["#incomplete1"],
+		["#incomplete2"],
+		["#incomplete3"],
+		["#incomplete4"],
+		["#incomplete5"],
+		["#incomplete6"],
+		["#incomplete7"],
+		["#incomplete8"],
+		["#incomplete9"],
+		["#incomplete10"]
+	]
 }
