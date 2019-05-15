@@ -2,7 +2,18 @@
 	"id": "aria-required-children",
 	"evaluate": "required-children.js",
 	"options": {
-		"reviewEmpty": ["listbox"]
+		"reviewEmpty": [
+			"doc-bibliography",
+			"doc-endnotes",
+			"grid",
+			"list",
+			"listbox",
+			"table",
+			"tablist",
+			"tree",
+			"treegrid",
+			"rowgroup"
+		]
 	},
 	"metadata": {
 		"impact": "critical",
