@@ -80,8 +80,8 @@ describe('preload cssom integration test', function() {
 	}
 
 	function getPreloadCssom(root) {
-		const treeRoot = axe.utils.getFlattenedTree(root ? root : document);
-		return axe.utils.preloadCssom({ treeRoot });
+		var treeRoot = axe.utils.getFlattenedTree(root ? root : document);
+		return axe.utils.preloadCssom({ treeRoot: treeRoot });
 	}
 
 	function commonTestsForRootNodeAndNestedFrame(root) {
@@ -89,7 +89,7 @@ describe('preload cssom integration test', function() {
 			stylesForPage = [styleSheets.crossOriginLinkHref];
 			attachStylesheets(
 				{
-					root,
+					root: root,
 					styles: stylesForPage
 				},
 				function(err) {
@@ -120,7 +120,7 @@ describe('preload cssom integration test', function() {
 			stylesForPage = [styleSheets.crossOriginLinkHrefMediaPrint];
 			attachStylesheets(
 				{
-					root,
+					root: root,
 					styles: stylesForPage
 				},
 				function(err) {
@@ -149,7 +149,7 @@ describe('preload cssom integration test', function() {
 			];
 			attachStylesheets(
 				{
-					root,
+					root: root,
 					styles: stylesForPage
 				},
 				function(err) {
