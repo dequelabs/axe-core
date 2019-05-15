@@ -13,9 +13,17 @@ describe('reporters - raw-env', function() {
 	var mockResults;
 	var orig;
 	var rawResults;
-	var env = helpers.getEnvironmentData();
+	var env;
 
 	before(function() {
+		/**
+		 * Ensure `axe._audit` exists, as it is called by `getEnvironmentData`
+		 */
+		axe._audit = {
+			brand: 'axe-test'
+		};
+		env = helpers.getEnvironmentData();
+
 		mockResults = [
 			{
 				id: 'gimmeLabel',
