@@ -72,14 +72,21 @@ describe('VirtualNode', function() {
 				assert.isFalse(vNode.hasClass('class'));
 			});
 
-			it('should not error for text nodes', function() {
+			it('should return false for text nodes', function() {
 				node.textContent = 'hello';
 				var vNode = new VirtualNode(node.firstChild);
-				function fn() {
-					vNode.hasClass('my-class');
-				}
 
-				assert.doesNotThrow(fn);
+				assert.isFalse(vNode.hasClass('my-class'));
+			});
+
+			it('should return false if className is not of type string', function() {
+				var node = {
+					nodeName: 'DIV',
+					className: null
+				};
+				var vNode = new VirtualNode(node);
+
+				assert.isFalse(vNode.hasClass('my-class'));
 			});
 		});
 
@@ -91,14 +98,21 @@ describe('VirtualNode', function() {
 				assert.equal(vNode.attr('data-foo'), 'bar');
 			});
 
-			it('should not error for text nodes', function() {
+			it('should return null for text nodes', function() {
 				node.textContent = 'hello';
 				var vNode = new VirtualNode(node.firstChild);
-				function fn() {
-					vNode.attr('data-foo');
-				}
 
-				assert.doesNotThrow(fn);
+				assert.isNull(vNode.attr('data-foo'));
+			});
+
+			it('should return null if getAttribute is not a function', function() {
+				var node = {
+					nodeName: 'DIV',
+					getAttribute: null
+				};
+				var vNode = new VirtualNode(node);
+
+				assert.isNull(vNode.attr('data-foo'));
 			});
 		});
 
