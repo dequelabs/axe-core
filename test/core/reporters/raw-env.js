@@ -1,4 +1,3 @@
-/*global helpers */
 describe('reporters - raw-env', function() {
 	'use strict';
 
@@ -133,9 +132,12 @@ describe('reporters - raw-env', function() {
 			if (err) {
 				return done(err);
 			}
-			var env = helpers.getEnvironmentData();
 			assert.deepEqual(results.raw, rawResults);
-			assert.deepEqual(results.env, env);
+			assert.isNotNull(results.env);
+			assert.isNotNull(results.env.url);
+			assert.isNotNull(results.env.timestamp);
+			assert.isNotNull(results.env.testEnvironement);
+			assert.isNotNull(results.env.testRunner);
 			done();
 		});
 	});
