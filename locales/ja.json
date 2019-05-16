@@ -61,6 +61,10 @@
 			"description": "autocomplete属性が正しく、かつフォームフィールドに対して適切であることを確認します",
 			"help": "autocomplete属性は正しく使用しなければなりません"
 		},
+		"avoid-inline-spacing": {
+			"description": "style属性で指定されたテキストの間隔は、カスタムスタイルシートにより調整可能であることを確認します",
+			"help": "インラインのテキスト間隔設定はカスタムスタイルシートによって調整可能でなければなりません"
+		},
 		"blink": {
 			"description": "<blink>要素が使用されていないことを確認します",
 			"help": "<blink>要素は廃止されており、使用するべきではありません"
@@ -616,6 +620,10 @@
 		"aria-labelledby": {
 			"pass": "aria-labelledby属性が存在し、スクリーン・リーダーに認識可能な要素を参照しています",
 			"fail": "aria-labelledby属性が存在しない、存在しない要素を参照している、または空の要素を参照しています"
+		},
+		"avoid-inline-spacing": {
+			"pass": "テキストの間隔に影響する '!important' のついたインラインスタイルは指定されていません",
+			"fail": "ほとんどのブラウザーで上書きすることはサポートされていないため、インラインスタイル {{=it.data.join(', ')}}, から '!important' を削除します"
 		},
 		"button-has-visible-text": {
 			"pass": "要素にスクリーン・リーダーが認識可能な内部テキストが存在しています",

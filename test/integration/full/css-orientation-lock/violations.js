@@ -18,7 +18,6 @@ describe('css-orientation-lock violations test', function() {
 	before(function(done) {
 		if (isPhantom) {
 			this.skip();
-			done();
 		} else {
 			axe.testUtils
 				.addStyleSheets(styleSheets)

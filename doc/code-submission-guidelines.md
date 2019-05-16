@@ -139,7 +139,7 @@ changes in the pull request, so the git log stays lean. We particularly want to 
 You can use git's interactive rebase to manipulate, merge, and rename commits in your local
 history. If these steps are followed, a force push shouldn't be necessary.
 
-**Do not force push to develop or master under any circulstances.**
+**Do not force push to develop or master under any circumstances.**
 
 To interactively rebase all of your commits on top of the latest in develop, run:
 

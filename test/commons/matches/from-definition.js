@@ -13,7 +13,7 @@ describe('matches.fromDefinition', function() {
 
 	it('matches a definition with a `nodeName` property', function() {
 		fixture.innerHTML = '<div>foo</div>';
-		const matchers = [
+		var matchers = [
 			'div',
 			['div', 'span'],
 			/div/,
@@ -37,7 +37,7 @@ describe('matches.fromDefinition', function() {
 
 	it('matches a definition with an `attributes` property', function() {
 		fixture.innerHTML = '<div foo="bar">foo</div>';
-		const matchers = [
+		var matchers = [
 			'bar',
 			['bar', 'baz'],
 			/bar/,
@@ -65,7 +65,7 @@ describe('matches.fromDefinition', function() {
 
 	it('matches a definition with a `properties` property', function() {
 		fixture.innerHTML = '<input />';
-		const matchers = [
+		var matchers = [
 			'text',
 			['text', 'password'],
 			/text/,
