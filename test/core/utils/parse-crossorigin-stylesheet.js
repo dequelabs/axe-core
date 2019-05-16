@@ -54,10 +54,8 @@ describe('axe.utils.parseCrossOriginStylesheet', function() {
 				);
 				done();
 			})
-			.catch(function() {
-				done(
-					new Error('Expected axe.utils.parseCrossOriginStylesheet to resolve.')
-				);
+			.catch(function(err) {
+				done(err);
 			});
 	});
 
