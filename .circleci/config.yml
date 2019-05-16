@@ -124,11 +124,9 @@ workflows:
             - test
             - test_examples
           filters:
-            # We only want to hold on these two branches, as PR review acts as approval for PRs
             branches:
               only:
                 - master
-                - develop
       # Run a next release on "develop" commits, but only after the tests pass and dependencies are installed
       - next_release:
           requires:
