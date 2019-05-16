@@ -1,4 +1,3 @@
-/*global helpers */
 describe('reporters - raw-env', function() {
 	'use strict';
 
@@ -133,16 +132,12 @@ describe('reporters - raw-env', function() {
 			if (err) {
 				return done(err);
 			}
-			var env = helpers.getEnvironmentData();
 			assert.deepEqual(results.raw, rawResults);
-			assert.isDefined(results.env);
-			assert.isDefined(results.env.timestamp);
-
-			// remove datetime strings as they can be off by ms which fail
-			// equality tests
-			results.env.timestamp = '';
-			env.timestamp = '';
-			assert.deepEqual(results.env, env);
+			assert.isNotNull(results.env);
+			assert.isNotNull(results.env.url);
+			assert.isNotNull(results.env.timestamp);
+			assert.isNotNull(results.env.testEnvironement);
+			assert.isNotNull(results.env.testRunner);
 			done();
 		});
 	});
