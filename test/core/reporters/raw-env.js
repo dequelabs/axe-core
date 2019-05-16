@@ -1,4 +1,3 @@
-/*global helpers */
 describe('reporters - raw-env', function() {
 	'use strict';
 
@@ -13,7 +12,6 @@ describe('reporters - raw-env', function() {
 	var mockResults;
 	var orig;
 	var rawResults;
-	const env = helpers.getEnvironmentData();
 
 	before(function() {
 		mockResults = [
@@ -135,7 +133,11 @@ describe('reporters - raw-env', function() {
 				return done(err);
 			}
 			assert.deepEqual(results.raw, rawResults);
-			assert.deepEqual(results.env, env);
+			assert.isNotNull(results.env);
+			assert.isNotNull(results.env.url);
+			assert.isNotNull(results.env.timestamp);
+			assert.isNotNull(results.env.testEnvironement);
+			assert.isNotNull(results.env.testRunner);
 			done();
 		});
 	});

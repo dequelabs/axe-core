@@ -338,10 +338,25 @@ testUtils.assertStylesheet = function assertStylesheet(
 		assert.isTrue(cssText.includes(selectorText));
 	} else {
 		assert.equal(sheet.cssRules[0].selectorText, selectorText);
-		assert.equal(
-			sheet.cssRules[0].cssText.replace(/\s/g, ''),
-			cssText.replace(/\s/g, '')
-		);
+
+		// compare the selector properties
+		var styleEl = document.createElement('style');
+		styleEl.type = 'text/css';
+		styleEl.innerHTML = cssText;
+		document.body.appendChild(styleEl);
+
+		var testSheet = document.styleSheets[document.styleSheets.length - 1];
+		var sheetRule = sheet.cssRules[0];
+		var testRule = testSheet.cssRules[0];
+
+		try {
+			for (var i = 0; i < testRule.style.length; i++) {
+				var property = testRule.style[i];
+				assert.equal(sheetRule.style[property], testRule.style[property]);
+			}
+		} finally {
+			styleEl.parentNode.removeChild(styleEl);
+		}
 	}
 };
 

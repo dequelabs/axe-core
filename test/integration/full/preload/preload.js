@@ -55,7 +55,7 @@ describe('axe.utils.preload integration test', function() {
 		return axe.utils.preload({
 			preload: {
 				assets: ['cssom'],
-				timeout
+				timeout: timeout
 			}
 		});
 	}

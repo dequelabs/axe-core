@@ -22,7 +22,7 @@ describe('axe.utils.parseCrossOriginStylesheet', function() {
 		var options = {
 			rootNode: document,
 			shadowId: undefined,
-			convertDataToStylesheet,
+			convertDataToStylesheet: convertDataToStylesheet,
 			rootIndex: 1
 		};
 		var priority = [1, 0];
@@ -54,20 +54,18 @@ describe('axe.utils.parseCrossOriginStylesheet', function() {
 				);
 				done();
 			})
-			.catch(function() {
-				done(
-					new Error('Expected axe.utils.parseCrossOriginStylesheet to resolve.')
-				);
+			.catch(function(err) {
+				done(err);
 			});
 	});
 
-	it(`rejects when given url to fetch is not found`, function(done) {
+	it('rejects when given url to fetch is not found', function(done) {
 		var importUrl =
 			'https://make-up-a-website-that-does-not-exist.com/style.css';
 		var options = {
 			rootNode: document,
 			shadowId: undefined,
-			convertDataToStylesheet,
+			convertDataToStylesheet: convertDataToStylesheet,
 			rootIndex: 1
 		};
 		var priority = [1, 0];

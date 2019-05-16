@@ -48,7 +48,7 @@ describe('axe.utils.parseSameOriginStylesheet', function() {
 			var options = {
 				rootNode: document,
 				shadowId: undefined,
-				convertDataToStylesheet
+				convertDataToStylesheet: convertDataToStylesheet
 			};
 			var priority = [1, 0];
 			var importedUrls = [];
@@ -86,7 +86,7 @@ describe('axe.utils.parseSameOriginStylesheet', function() {
 			var options = {
 				rootNode: document,
 				shadowId: undefined,
-				convertDataToStylesheet
+				convertDataToStylesheet: convertDataToStylesheet
 			};
 			var priority = [1, 0];
 			var importedUrls = [];
@@ -132,7 +132,7 @@ describe('axe.utils.parseSameOriginStylesheet', function() {
 			var options = {
 				rootNode: document,
 				shadowId: undefined,
-				convertDataToStylesheet
+				convertDataToStylesheet: convertDataToStylesheet
 			};
 			var priority = [1, 0];
 			var importedUrls = [];
