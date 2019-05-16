@@ -135,6 +135,13 @@ describe('reporters - raw-env', function() {
 			}
 			var env = helpers.getEnvironmentData();
 			assert.deepEqual(results.raw, rawResults);
+			assert.isDefined(results.env);
+			assert.isDefined(results.env.timestamp);
+
+			// remove datetime strings as they can be off by ms which fail
+			// equality tests
+			results.env.timestamp = '';
+			env.timestamp = '';
 			assert.deepEqual(results.env, env);
 			done();
 		});
