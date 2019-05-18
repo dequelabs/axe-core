@@ -10,10 +10,12 @@ describe('skip-link-matches', function() {
 		});
 		link = document.createElement('a');
 		fixture.innerHTML = '<div id="main"></div>';
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 	});
 
 	afterEach(function() {
 		fixture.innerHTML = '';
+		axe._tree = undefined;
 	});
 
 	it('is a function', function() {

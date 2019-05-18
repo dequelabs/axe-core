@@ -69,19 +69,7 @@ describe('multiple-label', function() {
 		assert.deepEqual(checkContext._relatedNodes, [l1]);
 	});
 
-	it('should return true if there are multiple explicit labels but the first one is hidden', function() {
-		fixture.innerHTML =
-			'<label style="display:none" for="test-input2" id="l1">label one</label>' +
-			'<label for="test-input2" id="l2">label two</label>' +
-			'<input id="test-input2" type="text">';
-		var target = fixture.querySelector('#test-input2');
-		var l1 = fixture.querySelector('#l1');
-		var l2 = fixture.querySelector('#l2');
-		assert.isTrue(checks['multiple-label'].evaluate.call(checkContext, target));
-		assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
-	});
-
-	it('should return true if there are multiple explicit labels but the first one is hidden', function() {
+	it('should return true if there are multiple explicit labels but some are hidden', function() {
 		fixture.innerHTML =
 			'<label for="me" id="l1">visible</label>' +
 			'<label for="me" style="display:none;" id="l2">hidden</label>' +
@@ -111,5 +99,81 @@ describe('multiple-label', function() {
 		assert.isFalse(
 			checks['multiple-label'].evaluate.call(checkContext, target)
 		);
+	});
+
+	it('should return true given multiple labels and no aria-labelledby', function() {
+		fixture.innerHTML = '<input type="checkbox" id="A">';
+		fixture.innerHTML += '<label for="A">Please</label>';
+		fixture.innerHTML += '<label for="A">Excuse</label>';
+		fixture.innerHTML += '<label for="A">My</label>';
+		fixture.innerHTML += '<label for="A">Dear</label>';
+		fixture.innerHTML += '<label for="A">Aunt</label>';
+		fixture.innerHTML += '<label for="A">Sally</label>';
+		var target = fixture.querySelector('#A');
+		assert.isTrue(checks['multiple-label'].evaluate.call(checkContext, target));
+	});
+
+	it('should return true given multiple labels, one label AT visible, and no aria-labelledby', function() {
+		fixture.innerHTML = '<input type="checkbox" id="B">';
+		fixture.innerHTML += '<label for="B">Please</label>';
+		fixture.innerHTML += '<label for="B" aria-hidden="true">Excuse</label>';
+		fixture.innerHTML += '<label for="B" aria-hidden="true">My</label>';
+		fixture.innerHTML += '<label for="B" aria-hidden="true">Dear</label>';
+		fixture.innerHTML += '<label for="B" aria-hidden="true">Aunt</label>';
+		fixture.innerHTML += '<label for="B" aria-hidden="true">Sally</label>';
+		var target = fixture.querySelector('#B');
+		assert.isTrue(checks['multiple-label'].evaluate.call(checkContext, target));
+	});
+
+	it('should return false given multiple labels, one label AT visible, and aria-labelledby for AT visible', function() {
+		fixture.innerHTML = '<input type="checkbox" id="D" aria-labelledby="E"/>';
+		fixture.innerHTML += '<label for="D" aria-hidden="true">Please</label>';
+		fixture.innerHTML += '<label for="D" id="E">Excuse</label>';
+		var target = fixture.querySelector('#D');
+		assert.isFalse(
+			checks['multiple-label'].evaluate.call(checkContext, target)
+		);
+	});
+
+	it('should return false given multiple labels, one label AT visible, and aria-labelledby for all', function() {
+		fixture.innerHTML = '<input type="checkbox" id="F" aria-labelledby="G H"/>';
+		fixture.innerHTML +=
+			'<label for="F" id="G" aria-hidden="true">Please</label>';
+		fixture.innerHTML += '<label for="F" id="H">Excuse</label>';
+		var target = fixture.querySelector('#F');
+		assert.isFalse(
+			checks['multiple-label'].evaluate.call(checkContext, target)
+		);
+	});
+
+	it('should return false given multiple labels, one label visible, and no aria-labelledby', function() {
+		fixture.innerHTML = '<input type="checkbox" id="I"/>';
+		fixture.innerHTML += '<label for="I" style="display:none">Please</label>';
+		fixture.innerHTML += '<label for="I" >Excuse</label>';
+		var target = fixture.querySelector('#I');
+		assert.isFalse(
+			checks['multiple-label'].evaluate.call(checkContext, target)
+		);
+	});
+
+	it('should return true given multiple labels, all visible, aria-labelledby for all', function() {
+		fixture.innerHTML =
+			'<input type="checkbox" id="J" aria-labelledby="K L M N O P">';
+		fixture.innerHTML += '<label for="J" id="K">Please</label>';
+		fixture.innerHTML += '<label for="J" id="L">Excuse</label>';
+		fixture.innerHTML += '<label for="J" id="M">My</label>';
+		fixture.innerHTML += '<label for="J" id="N">Dear</label>';
+		fixture.innerHTML += '<label for="J" id="O">Aunt</label>';
+		fixture.innerHTML += '<label for="J" id="P">Sally</label>';
+		var target = fixture.querySelector('#J');
+		assert.isTrue(checks['multiple-label'].evaluate.call(checkContext, target));
+	});
+
+	it('should return true given multiple labels, one AT visible, no aria-labelledby', function() {
+		fixture.innerHTML = '<input type="checkbox" id="Q"/>';
+		fixture.innerHTML += '<label for="Q" aria-hidden="true"></label>';
+		fixture.innerHTML += '<label for="Q" >Excuse</label>';
+		var target = fixture.querySelector('#Q');
+		assert.isTrue(checks['multiple-label'].evaluate.call(checkContext, target));
 	});
 });

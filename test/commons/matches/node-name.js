@@ -61,7 +61,7 @@ describe('matches.nodeName', function() {
 
 	it('works with virtual nodes', function() {
 		fixture.innerHTML = '<h1>foo</h1>';
-		const virtualNode = { actualNode: fixture.firstChild };
+		var virtualNode = { actualNode: fixture.firstChild };
 		assert.isTrue(matchNodeName(virtualNode, 'h1'));
 		assert.isFalse(matchNodeName(virtualNode, 'div'));
 	});

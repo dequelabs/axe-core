@@ -34,7 +34,13 @@ module.exports = function(grunt) {
 		langs = [''];
 	}
 
-	var webDriverTestBrowsers = ['firefox', 'chrome', 'ie', 'chrome-mobile'];
+	var webDriverTestBrowsers = [
+		'firefox',
+		'chrome',
+		'ie',
+		'chrome-mobile',
+		'safari'
+	];
 
 	process.env.NODE_NO_HTTP2 = 1; // to hide node warning - (node:18740) ExperimentalWarning: The http2 module is an experimental API.
 

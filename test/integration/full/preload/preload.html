@@ -4,11 +4,11 @@
 		<meta charset="utf8" />
 		<script src="/node_modules/mocha/mocha.js"></script>
 		<script src="/node_modules/chai/chai.js"></script>
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="/node_modules/mocha/mocha.css"
-		/>
+		<!-- 
+		Note:
+		Various styles -> `link`, `style` etc., are appended dynamically to this page. 
+		To assert the right count of sheets, removing `mocha` styles 
+		-->
 		<script>
 			mocha.setup({
 				timeout: 50000,

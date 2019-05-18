@@ -1,0 +1,4 @@
+/* import multiple stylesheets */
+
+@import 'multiple-import-2.css';
+@import 'multiple-import-3.css';
