@@ -1,10 +1,15 @@
-# aXe Developer Guide
+# Axe Developer Guide
 
-aXe runs a series of tests to check for accessibility of content and functionality on a website. A test is made up of a series of Rules which are, themselves, made up of Checks. aXe executes these Rules asynchronously and, when the Rules are finished running, runs a callback function which is passed a Result structure. Since some Rules run on the page level while others do not, tests will also run in one of two ways. If a document is specified, the page level rules will run, otherwise they will not.
+Axe runs a series of tests to check for accessibility of content and functionality on a website. A test is made up of a series of Rules which are, themselves, made up of Checks. Axe executes these Rules asynchronously and, when the Rules are finished running, runs a callback function which is passed a Result structure. Since some Rules run on the page level while others do not, tests will also run in one of two ways. If a document is specified, the page level rules will run, otherwise they will not.
 
-aXe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities for developing axe-core moving forward. Note: we do not and cannot support closed Shadow DOM.
+Axe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities for developing axe-core moving forward. Note: we do not and cannot support closed Shadow DOM.
 
 1. [Getting Started](#getting-started)
+   1. [Environment Pre-requisites](#environment-pre-requisites)
+   1. [Building axe.js](#building-axejs)
+   1. [Running Tests](#running-tests)
+   1. [API Reference](#api-reference)
+   1. [Supported CSS Selectors](#supported-css-selectors)
 1. [Architecture Overview](#architecture-overview)
    1. [Rules](#rules)
    1. [Checks](#checks)
@@ -31,7 +36,7 @@ aXe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities fo
 
 ### Building axe.js
 
-To build axe.js, simply run `grunt build` in the root folder of the axe-core repository. axe.js and axe.min.js are placed into the `dist` folder.
+To build axe.js, simply run `grunt build` in the root folder of the axe-core repository. axe.js and axe.min.js are placed into the root folder.
 
 ### Running Tests
 
@@ -47,11 +52,20 @@ You can also load tests in any supported browser, which is helpful for debugging
 
 ### API Reference
 
-[See API exposed on aXe](./API.md#section-2-api-reference)
+[See API exposed on axe](./API.md#section-2-api-reference)
+
+### Supported CSS Selectors
+
+Axe supports the following CSS selectors:
+
+- Type, Class, ID, and Universal selectors. E.g `div.main, #main`
+- Pseudo selector `not`. E.g `th:not([scope])`
+- Descendant and Child combinators. E.g. `table td`, `ul > li`
+- Attribute selectors `=`, `^=`, `$=`, `*=`. E.g `a[href^="#"]`
 
 ## Architecture Overview
 
-aXe tests for accessibility using objects called Rules. Each Rule tests for a high-level aspect of accessibility, such as color contrast, button labels, and alternate text for images. Each rule is made up of a series of Checks. Depending on the rule; all, some, or none of these checks must pass in order for the rule to pass.
+Axe tests for accessibility using objects called Rules. Each Rule tests for a high-level aspect of accessibility, such as color contrast, button labels, and alternate text for images. Each rule is made up of a series of Checks. Depending on the rule; all, some, or none of these checks must pass in order for the rule to pass.
 
 Upon execution, a Rule runs each of its Checks against all relevant nodes. Which nodes are relevant is determined by the Rule's `selector` property and `matches` function. If a Rule has no Checks that apply to a given node, the Rule will result in an inapplicable result.
 
@@ -62,7 +76,7 @@ After execution, a Check will return `true` or `false` depending on whether or n
 Rules are defined by JSON files in the [lib/rules directory](../lib/rules). The JSON object is used to seed the [Rule object](../lib/core/base/rule.js#L30). A valid Rule JSON consists of the following:
 
 - `id` - `String` A unique name of the Rule.
-- `selector` - **optional** `String` which is a CSS selector that specifies the elements of the page on which the Rule runs. aXe-core will look inside of the light DOM and _open_ [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Shadow_DOM) trees for elements matching the provided selector. If omitted, the rule will run against every node.
+- `selector` - **optional** `String` which is a [CSS selector](#supported-css-selectors) that specifies the elements of the page on which the Rule runs. axe-core will look inside of the light DOM and _open_ [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Shadow_DOM) trees for elements matching the provided selector. If omitted, the rule will run against every node.
 - `excludeHidden` - **optional** `Boolean` Whether the rule should exclude hidden elements. Defaults to `true`.
 - `enabled` - **optional** `Boolean` Whether the rule is enabled by default. Defaults to `true`.
 - `pageLevel` - **optional** `Boolean` Whether the rule is page level. Page level rules will only run if given an entire `document` as context.
@@ -162,7 +176,7 @@ on writing rules and checks, including incomplete results.
 
 #### CheckResult
 
-When a Check is executed, its result is then added to a [CheckResult object](../lib/core/base/check-result.js). Much like the RuleResult object, the CheckResult object only contains information that is required to determine whether a Check, and its parent Rule passed or failed. `metadata` from the originating Check is combined later and will not be available until aXe reaches the reporting stage.
+When a Check is executed, its result is then added to a [CheckResult object](../lib/core/base/check-result.js). Much like the RuleResult object, the CheckResult object only contains information that is required to determine whether a Check, and its parent Rule passed or failed. `metadata` from the originating Check is combined later and will not be available until axe reaches the reporting stage.
 
 A CheckResult has the following properties:
 
@@ -178,7 +192,7 @@ Common functions are an internal library used by the rules and checks. If you ha
 #### Commons and Shadow DOM
 
 To support open Shadow DOM while maintaining backwards compatibility, commons functions that
-query DOM nodes must operate on an in-memory representation of the DOM using aXe-core’s
+query DOM nodes must operate on an in-memory representation of the DOM using axe-core’s
 built-in [API methods and utility functions](./API.md#virtual-dom-utilities).
 
 Commons functions should do the virtual tree lookup and call a `virtual` function
@@ -211,7 +225,7 @@ which passes on a virtual DOM node with both the light DOM and Shadow DOM (if ap
 
 ### Virtual Nodes
 
-To support open Shadow DOM, aXe-core has the ability to handle virtual nodes in [rule matches](#matches-function)
+To support open Shadow DOM, axe-core has the ability to handle virtual nodes in [rule matches](#matches-function)
 and [check evaluate](#check-evaluate) functions. The full set of API methods for Shadow DOM can be
 found in the [API documentation](./API.md#virtual-dom-utilities), but the general
 structure for a virtualNode is as follows:
@@ -230,7 +244,7 @@ structure for a virtualNode is as follows:
 
 ### Core Utilities
 
-Core Utilities are an internal library that provides aXe with functionality used throughout its core processes. Most notably among these are the queue function and the DqElement constructor.
+Core Utilities are an internal library that provides axe with functionality used throughout its core processes. Most notably among these are the queue function and the DqElement constructor.
 
 #### ARIA Lookup Tables
 
@@ -285,7 +299,7 @@ will make it easier to work with the virtual DOM.
 
 #### Description
 
-Recursvely return an array containing the virtual DOM tree for the node specified, excluding comment nodes
+Recursively return an array containing the virtual DOM tree for the node specified, excluding comment nodes
 and shadow DOM nodes `<content>` and `<slot>`. This method will return a flattened tree containing both
 light and shadow DOM, if applicable.
 
@@ -378,7 +392,7 @@ None
 
 #### Returns
 
-An object containg the data, relatedNodes, and a way to reset them.
+An object containing the data, relatedNodes, and a way to reset them.
 
 ```js
 {

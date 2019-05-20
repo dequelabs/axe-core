@@ -1,27 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-	<title>Test Nest Frame</title>
-	<script src="../../../axe.js"></script>
-	<script>
-		axe._load({
-			rules: [{
-				id: 'iframe',
-				selector: 'iframe',
-				any: ['iframe']
-			}],
-			checks: [{
-				id: 'iframe',
-				evaluate: function () {
-					return true;
-				}
-			}],
-			messages: {}
-		});
-	</script>
-</head>
-<body>
-	<iframe src="nested2.html" id="level2a"></iframe>
-	<iframe src="nested2.html" id="level2b"></iframe>
-</body>
+	<head>
+		<title>Test Nest Frame</title>
+		<script src="../../../axe.js"></script>
+		<script>
+			axe._load({
+				rules: [
+					{
+						id: 'iframe',
+						selector: 'iframe',
+						any: ['iframe']
+					}
+				],
+				checks: [
+					{
+						id: 'iframe',
+						evaluate: function() {
+							return true;
+						}
+					}
+				],
+				messages: {}
+			});
+		</script>
+	</head>
+	<body>
+		<iframe src="nested2.html" id="level2a"></iframe>
+		<iframe src="nested2.html" id="level2b"></iframe>
+	</body>
 </html>

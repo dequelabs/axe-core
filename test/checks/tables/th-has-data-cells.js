@@ -17,7 +17,7 @@ describe('th-has-data-cells', function() {
 			'  <tr> <th>hi</th> <td>hello</td> </tr>' +
 			'</table>';
 
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(
 			checks['th-has-data-cells'].evaluate.call(checkContext, node)
@@ -31,7 +31,7 @@ describe('th-has-data-cells', function() {
 			'  <tr> <td>hi</td> <td>hello</td></tr>' +
 			'</table>';
 
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(
 			checks['th-has-data-cells'].evaluate.call(checkContext, node)
@@ -45,7 +45,7 @@ describe('th-has-data-cells', function() {
 			'  <tr> <th id="a">H</th> <th id="b">H</th> </tr>' +
 			'</table>';
 
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(
 			checks['th-has-data-cells'].evaluate.call(checkContext, node)
@@ -59,7 +59,7 @@ describe('th-has-data-cells', function() {
 			'  <tr> <th id="a">H</th> <th id="b">H</th> </tr>' +
 			'</table>';
 
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(
 			checks['th-has-data-cells'].evaluate.call(checkContext, node)
@@ -72,7 +72,7 @@ describe('th-has-data-cells', function() {
 			'  <tr> <th></th> <th></th> </tr>' +
 			'  <tr> <th></th> <th></th> </tr>' +
 			'</table>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(
 			checks['th-has-data-cells'].evaluate.call(checkContext, node)
@@ -91,7 +91,7 @@ describe('th-has-data-cells', function() {
 			'  <tr> <th>hi</th> <td><span role="img"></span></td> </tr>' +
 			'</table>';
 
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(
 			checks['th-has-data-cells'].evaluate.call(checkContext, node)
@@ -105,7 +105,7 @@ describe('th-has-data-cells', function() {
 			'  <tr> <th>hi</th> </tr>' +
 			'</table>';
 
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isUndefined(
 			checks['th-has-data-cells'].evaluate.call(checkContext, node)
@@ -119,7 +119,7 @@ describe('th-has-data-cells', function() {
 			'  <tr> <th>hi</th> <td></td> </tr>' +
 			'</table>';
 
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isUndefined(
 			checks['th-has-data-cells'].evaluate.call(checkContext, node)
@@ -129,10 +129,10 @@ describe('th-has-data-cells', function() {
 	it('should return undefined if a td with role=columnheader is used that has no data cells', function() {
 		fixture.innerHTML =
 			'<table id="fail4">' +
-			'  <tr> <td>aXe</td> <td role="columnheader">AXE</th> </tr>' +
+			'  <tr> <td>axe</td> <td role="columnheader">AXE</th> </tr>' +
 			'</table>';
 
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isUndefined(
 			checks['th-has-data-cells'].evaluate.call(checkContext, node)
@@ -150,7 +150,7 @@ describe('th-has-data-cells', function() {
 			'  <tr> <td><slot></slot></td> </tr>' +
 			'</table>';
 
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		var node = axe.utils.querySelectorAll(axe._tree, 'table')[0].actualNode;
 		assert.isTrue(
 			checks['th-has-data-cells'].evaluate.call(checkContext, node)

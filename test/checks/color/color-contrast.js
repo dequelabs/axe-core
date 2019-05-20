@@ -227,7 +227,7 @@ describe('color-contrast', function() {
 	it('should return true when a label wraps a text input', function() {
 		fixtureSetup('<label id="target">' + 'My text <input type="text"></label>');
 		var target = fixture.querySelector('#target');
-		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], target);
+		var virtualNode = axe.utils.getNodeFromTree(target);
 		if (window.PHANTOMJS) {
 			assert.ok('PhantomJS is a liar');
 		} else {

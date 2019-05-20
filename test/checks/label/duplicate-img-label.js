@@ -13,12 +13,12 @@ describe('duplicate-img-label', function() {
 	it('should return false if no img is present', function() {
 		fixture.innerHTML = '<button id="target">Plain text</button>';
 		var node = fixture.querySelector('#target');
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
 			checks['duplicate-img-label'].evaluate(
 				node,
 				undefined,
-				axe.utils.getNodeFromTree(tree[0], node)
+				axe.utils.getNodeFromTree(node)
 			)
 		);
 	});
@@ -26,11 +26,11 @@ describe('duplicate-img-label', function() {
 	it('should return false if no text is present', function() {
 		fixture.innerHTML = '<button id="target"><img alt="Plain text"></button>';
 		var node = fixture.querySelector('#target');
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+		axe.testUtils.flatTreeSetup(fixture);
 		var result = checks['duplicate-img-label'].evaluate(
 			node,
 			undefined,
-			axe.utils.getNodeFromTree(tree[0], node)
+			axe.utils.getNodeFromTree(node)
 		);
 		assert.isFalse(result);
 	});
@@ -39,12 +39,12 @@ describe('duplicate-img-label', function() {
 		fixture.innerHTML =
 			'<button id="target" aria-label="Plain text"><img alt="Plain text"></button>';
 		var node = fixture.querySelector('#target');
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
 			checks['duplicate-img-label'].evaluate(
 				node,
 				undefined,
-				axe.utils.getNodeFromTree(tree[0], node)
+				axe.utils.getNodeFromTree(node)
 			)
 		);
 	});
@@ -53,12 +53,12 @@ describe('duplicate-img-label', function() {
 		fixture.innerHTML =
 			'<button id="target"><img alt="Alt text">Plain text</button>';
 		var node = fixture.querySelector('#target');
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
 			checks['duplicate-img-label'].evaluate(
 				node,
 				undefined,
-				axe.utils.getNodeFromTree(tree[0], node)
+				axe.utils.getNodeFromTree(node)
 			)
 		);
 	});
@@ -67,12 +67,12 @@ describe('duplicate-img-label', function() {
 		fixture.innerHTML =
 			'<button id="target"><img alt="Plain text">Plain text</button>';
 		var node = fixture.querySelector('#target');
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['duplicate-img-label'].evaluate(
 				node,
 				undefined,
-				axe.utils.getNodeFromTree(tree[0], node)
+				axe.utils.getNodeFromTree(node)
 			)
 		);
 	});
@@ -81,12 +81,12 @@ describe('duplicate-img-label', function() {
 		fixture.innerHTML =
 			'<button id="target"><img aria-label="Plain text">Plain text</button>';
 		var node = fixture.querySelector('#target');
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['duplicate-img-label'].evaluate(
 				node,
 				undefined,
-				axe.utils.getNodeFromTree(tree[0], node)
+				axe.utils.getNodeFromTree(node)
 			)
 		);
 	});
@@ -94,12 +94,12 @@ describe('duplicate-img-label', function() {
 	it('should return false if img and text are both blank', function() {
 		fixture.innerHTML = '<button id="target"><img alt=""></button>';
 		var node = fixture.querySelector('#target');
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
 			checks['duplicate-img-label'].evaluate(
 				node,
 				undefined,
-				axe.utils.getNodeFromTree(tree[0], node)
+				axe.utils.getNodeFromTree(node)
 			)
 		);
 	});
@@ -108,12 +108,12 @@ describe('duplicate-img-label', function() {
 		fixture.innerHTML =
 			'<button id="target"><img alt="Plain text and more">Plain text</button>';
 		var node = fixture.querySelector('#target');
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
 			checks['duplicate-img-label'].evaluate(
 				node,
 				undefined,
-				axe.utils.getNodeFromTree(tree[0], node)
+				axe.utils.getNodeFromTree(node)
 			)
 		);
 	});

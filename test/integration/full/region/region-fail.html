@@ -1,38 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<title>Region Test</title>
-<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
-<script src="/node_modules/mocha/mocha.js"></script>
-<script src="/node_modules/chai/chai.js"></script>
-<script src="/axe.js"></script>
-<script>
-	mocha.setup({
-		timeout: 10000,
-		ui: 'bdd'
-	});
-	var assert = chai.assert;
-</script>
-</head>
-<body>
-<div id="wrapper">
-	<a href="stuff.html#mainheader" id="notskiplink">This is not a skip link.</a>
-	<form>
-		<div>
-			<h1 id="mainheader" tabindex="0">This is a header.</h1>
+	<head>
+		<title>Region Test</title>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="/node_modules/mocha/mocha.css"
+		/>
+		<script src="/node_modules/mocha/mocha.js"></script>
+		<script src="/node_modules/chai/chai.js"></script>
+		<script src="/axe.js"></script>
+		<script>
+			mocha.setup({
+				timeout: 10000,
+				ui: 'bdd'
+			});
+			var assert = chai.assert;
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<a href="stuff.html#mainheader" id="notskiplink"
+				>This is not a skip link.</a
+			>
+			<form>
+				<div>
+					<h1 id="mainheader" tabindex="0">This is a header.</h1>
+				</div>
+			</form>
+			<ul>
+				<li>Home</li>
+				<li>Other</li>
+			</ul>
+			<section>
+				<p>Content</p>
+			</section>
 		</div>
-	</form>
-	<ul>
-		<li>Home</li>
-		<li>Other</li>
-	</ul>
-	<section>
-		<p>Content</p>
-	</section>
-</div>
 
-<main id="mocha"></main>
-<script src="region-fail.js"></script>
-<script src="/test/integration/adapter.js"></script>
-</body>
+		<main id="mocha"></main>
+		<script src="region-fail.js"></script>
+		<script src="/test/integration/adapter.js"></script>
+	</body>
 </html>

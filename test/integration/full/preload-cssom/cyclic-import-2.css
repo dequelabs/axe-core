@@ -1,0 +1,8 @@
+
+/* calls a stylesheet, from which this stylesheet was called (cyclic references) */
+
+@import 'cyclic-import-1.css';
+
+.style-from-cyclic-import-2-css {
+  font-family: inherit;
+}
