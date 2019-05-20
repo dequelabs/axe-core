@@ -88,6 +88,20 @@ describe('VirtualNode', function() {
 
 				assert.isFalse(vNode.hasClass('my-class'));
 			});
+
+			it('should return true for whitespace characters', function() {
+				node.setAttribute(
+					'class',
+					'my-class\ta11y-focus\rvisually-hidden\ngrid\fcontainer'
+				);
+				var vNode = new VirtualNode(node);
+
+				assert.isTrue(vNode.hasClass('my-class'));
+				assert.isTrue(vNode.hasClass('a11y-focus'));
+				assert.isTrue(vNode.hasClass('visually-hidden'));
+				assert.isTrue(vNode.hasClass('grid'));
+				assert.isTrue(vNode.hasClass('container'));
+			});
 		});
 
 		describe('attr', function() {
@@ -142,20 +156,6 @@ describe('VirtualNode', function() {
 				assert.isTrue(called);
 			});
 
-			it('should cache the result', function() {
-				axe.commons = {
-					dom: {
-						isFocusable: function() {
-							return true;
-						}
-					}
-				};
-				var vNode = new VirtualNode(node);
-				assert.isUndefined(vNode._cache.isFocusable);
-				vNode.isFocusable();
-				assert.isDefined(vNode._cache.isFocusable);
-			});
-
 			it('should only call dom.isFocusable once', function() {
 				var count = 0;
 				axe.commons = {
@@ -197,20 +197,6 @@ describe('VirtualNode', function() {
 				vNode.tabbableElements();
 
 				assert.isTrue(called);
-			});
-
-			it('should cache the result', function() {
-				axe.commons = {
-					dom: {
-						getTabbableElements: function() {
-							return true;
-						}
-					}
-				};
-				var vNode = new VirtualNode(node);
-				assert.isUndefined(vNode._cache.tabbableElements);
-				vNode.tabbableElements();
-				assert.isDefined(vNode._cache.tabbableElements);
 			});
 
 			it('should only call dom.getTabbableElements once', function() {
