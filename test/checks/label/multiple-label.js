@@ -2,7 +2,7 @@ describe('multiple-label', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function() {
@@ -176,4 +176,62 @@ describe('multiple-label', function() {
 		var target = fixture.querySelector('#Q');
 		assert.isTrue(checks['multiple-label'].evaluate.call(checkContext, target));
 	});
+
+	(shadowSupported ? it : xit)(
+		'should consider labels in the same document/shadow tree',
+		function() {
+			fixture.innerHTML = '<div id="target"></div>';
+			var target = document.querySelector('#target');
+			var shadowRoot = target.attachShadow({ mode: 'open' });
+			shadowRoot.innerHTML =
+				'<input id="myinput" /><label for="myinput">normal</label>';
+			var shadowTarget = target.shadowRoot;
+			assert.isFalse(
+				checks['multiple-label'].evaluate.call(
+					checkContext,
+					shadowTarget.firstElementChild
+				)
+			);
+		}
+	);
+
+	(shadowSupported ? it : xit)(
+		'should return false for valid multiple labels in the same document/shadow tree',
+		function() {
+			fixture.innerHTML = '<div id="target"></div>';
+			var target = document.querySelector('#target');
+			var shadowRoot = target.attachShadow({ mode: 'open' });
+			var innerHTML = '<input type="checkbox" id="D" aria-labelledby="E"/>';
+			innerHTML += '<label for="D" aria-hidden="true">Please</label>';
+			innerHTML += '<label for="D" id="E">Excuse</label>';
+			shadowRoot.innerHTML = innerHTML;
+			var shadowTarget = target.shadowRoot;
+			assert.isFalse(
+				checks['multiple-label'].evaluate.call(
+					checkContext,
+					shadowTarget.firstElementChild
+				)
+			);
+		}
+	);
+
+	(shadowSupported ? it : xit)(
+		'should return true for invalid multiple labels in the same document/shadow tree',
+		function() {
+			fixture.innerHTML = '<div id="target"></div>';
+			var target = document.querySelector('#target');
+			var shadowRoot = target.attachShadow({ mode: 'open' });
+			var innerHTML = '<input type="checkbox" id="Q"/>';
+			innerHTML += '<label for="Q" aria-hidden="true"></label>';
+			innerHTML += '<label for="Q" >Excuse</label>';
+			shadowRoot.innerHTML = innerHTML;
+			var shadowTarget = target.shadowRoot;
+			assert.isTrue(
+				checks['multiple-label'].evaluate.call(
+					checkContext,
+					shadowTarget.firstElementChild
+				)
+			);
+		}
+	);
 });
