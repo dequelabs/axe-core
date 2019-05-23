@@ -5,9 +5,8 @@
 	"tags": ["wcag2a", "wcag131"],
 	"metadata": {
 		"description": "Ensure that heading elements do not have Unicode separator characters, `<br>`, or `<wbr>` elements as their only content",
-		"help": "Headings should contain text and not just whitespace or word break elements."
+		"help": "Heading elements should contain text and not just whitespace or word break elements."
 	},
-	"preload": false,
 	"all": [],
 	"any": ["heading-whitespace-only"],
 	"none": []

@@ -579,6 +579,23 @@ describe('text.accessibleTextVirtual', function() {
 		assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
 	});
 
+	it('should not sanitize value if context.sanitize = false', function() {
+		var sanitize = axe.commons.text.sanitize;
+		var called = false;
+		axe.commons.text.sanitize = function() {
+			called = true;
+		};
+
+		fixture.innerHTML = '<a href="#">Hello<div>World</div></a>';
+		axe.testUtils.flatTreeSetup(fixture);
+
+		var target = axe.utils.querySelectorAll(axe._tree, 'a')[0];
+		axe.commons.text.accessibleTextVirtual(target, { sanitize: false });
+		assert.isFalse(called);
+
+		axe.commons.text.sanitize = sanitize;
+	});
+
 	(shadowSupport.v1 ? it : xit)(
 		'should only find aria-labelledby element in the same context ',
 		function() {

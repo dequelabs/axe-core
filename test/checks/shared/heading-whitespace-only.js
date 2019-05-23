@@ -153,15 +153,14 @@ describe('heading-whitespace-only', function() {
 	});
 
 	it('should return true for newline', function() {
-		var params = checkSetup(`<h2 id="target">
-      </h2>`);
+		var params = checkSetup('<h2 id="target">\n</h2>');
 		assert.isTrue(
 			checks['heading-whitespace-only'].evaluate.apply(checkContext, params)
 		);
 	});
 
 	it('should return true for tab', function() {
-		var params = checkSetup(`<h2 id="target"> </h2>`);
+		var params = checkSetup('<h2 id="target">\t</h2>');
 		assert.isTrue(
 			checks['heading-whitespace-only'].evaluate.apply(checkContext, params)
 		);
@@ -185,6 +184,29 @@ describe('heading-whitespace-only', function() {
 		var params = checkSetup(
 			'<h2 id="target"><span><span><br/></span></span></h2>'
 		);
+		assert.isFalse(
+			checks['heading-whitespace-only'].evaluate.apply(checkContext, params)
+		);
+	});
+
+	it('should return true for heading with aria-label and non-breaking space (&#160;)', function() {
+		var params = checkSetup('<h2 id="target" aria-label="&#160;"></h2>');
+		assert.isFalse(
+			checks['heading-whitespace-only'].evaluate.apply(checkContext, params)
+		);
+	});
+
+	it('should return true for heading with aria-labelledby and non-breaking space (&#160;)', function() {
+		var params = checkSetup(
+			'<span id="label">&#160;</span><h2 id="target" aria-labelledby="label"></h2>'
+		);
+		assert.isFalse(
+			checks['heading-whitespace-only'].evaluate.apply(checkContext, params)
+		);
+	});
+
+	it('should return true for heading with title and non-breaking space (&#160;)', function() {
+		var params = checkSetup('<h2 id="target" title="&#160;"></h2>');
 		assert.isFalse(
 			checks['heading-whitespace-only'].evaluate.apply(checkContext, params)
 		);
