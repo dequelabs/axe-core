@@ -1,6 +1,0 @@
-{
-	"rule": "skip-link",
-	"violations": [["#fail1"]],
-	"incomplete": [["#canttell1"]],
-	"passes": [["#pass1"], ["#pass2"]]
-}

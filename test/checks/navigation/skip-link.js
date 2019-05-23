@@ -7,11 +7,19 @@ describe('skip-link', function() {
 		fixture.innerHTML = '';
 	});
 
-	it('should return false if the href points to another document', function() {
+	it('should return true if the href points to an element with an ID', function() {
 		fixture.innerHTML =
-			'<a href="something.html#mainheader">Click Here</a><h1 id="mainheader">Introduction</h1>';
+			'<a href="#target">Click Here</a><h1 id="target">Introduction</h1>';
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 		var node = fixture.querySelector('a');
-		assert.isFalse(checks['skip-link'].evaluate(node));
+		assert.isTrue(checks['skip-link'].evaluate(node));
+	});
+
+	it('should return true if the href points to an element with an name', function() {
+		fixture.innerHTML = '<a href="#target">Click Here</a><a name="target"></a>';
+		axe._tree = axe.utils.getFlattenedTree(fixture);
+		var node = fixture.querySelector('a');
+		assert.isTrue(checks['skip-link'].evaluate(node));
 	});
 
 	it('should return false if the href points to a non-existent element', function() {
@@ -19,19 +27,6 @@ describe('skip-link', function() {
 			'<a href="#spacecamp">Click Here</a><h1 id="mainheader">Introduction</h1>';
 		var node = fixture.querySelector('a');
 		assert.isFalse(checks['skip-link'].evaluate(node));
-	});
-
-	it('should return true if the href points to an element with an ID', function() {
-		fixture.innerHTML =
-			'<a href="#target">Click Here</a><h1 id="target">Introduction</h1>';
-		var node = fixture.querySelector('a');
-		assert.isTrue(checks['skip-link'].evaluate(node));
-	});
-
-	it('should return true if the href points to an element with an name', function() {
-		fixture.innerHTML = '<a href="#target">Click Here</a><a name="target"></a>';
-		var node = fixture.querySelector('a');
-		assert.isTrue(checks['skip-link'].evaluate(node));
 	});
 
 	it('should return undefined if the target has display:none', function() {
@@ -48,19 +43,5 @@ describe('skip-link', function() {
 			'<h1 id="target" aria-hidden="true">Introduction</h1>';
 		var node = fixture.querySelector('a');
 		assert.isUndefined(checks['skip-link'].evaluate(node));
-	});
-
-	it('should return true if the URI encoded href points to an element with an ID', function() {
-		fixture.innerHTML =
-			'<a href="#%3Ctarget%3E">Click Here</a><h1 id="&lt;target&gt;">Introduction</h1>';
-		var node = fixture.querySelector('a');
-		assert.isTrue(checks['skip-link'].evaluate(node));
-	});
-
-	it('should return true if the URI is an Angular skiplink', function() {
-		fixture.innerHTML =
-			'<a href="/#target">Click Here</a><h1 id="target">Introduction</h1>';
-		var node = fixture.querySelector('a');
-		assert.isTrue(checks['skip-link'].evaluate(node));
 	});
 });

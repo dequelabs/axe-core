@@ -1,7 +1,13 @@
-describe('axe.utils.preloadCssom unit tests', function() {
+/**
+ * NOTE:
+ * `document.styleSheets` does not recognize dynamically injected stylesheets after `load` via `beforeEach`/ `before`,
+ * so tests for disabled and external stylesheets are done in `integration` tests
+ * Refer Directory: `./test/full/preload-cssom/**.*`
+ */
+describe('axe.utils.preloadCssom', function() {
 	'use strict';
 
-	var args;
+	var treeRoot;
 
 	function addStyleToHead() {
 		var css = 'html {font-size: inherit;}';
@@ -22,33 +28,17 @@ describe('axe.utils.preloadCssom unit tests', function() {
 
 	beforeEach(function() {
 		addStyleToHead();
-		args = {
-			asset: 'cssom',
-			timeout: 10000,
-			treeRoot: (axe._tree = axe.utils.getFlattenedTree(document))
-		};
+		treeRoot = axe._tree = axe.utils.getFlattenedTree(document);
 	});
 
 	afterEach(function() {
 		removeStyleFromHead();
 	});
 
-	it('should be a function', function() {
-		assert.isFunction(axe.utils.preloadCssom);
-	});
-
-	it('should return a queue', function() {
-		var actual = axe.utils.preloadCssom(args);
-		assert.isObject(actual);
-		assert.containsAllKeys(actual, ['then', 'defer', 'catch']);
-	});
-
-	it('should ensure result of cssom is an array of sheets', function(done) {
-		var actual = axe.utils.preloadCssom(args);
+	it('returns CSSOM object containing an array of sheets', function(done) {
+		var actual = axe.utils.preloadCssom({ treeRoot: treeRoot });
 		actual
-			.then(function(results) {
-				// returned from queue, hence the index look up
-				var cssom = results[0];
+			.then(function(cssom) {
 				assert.isAtLeast(cssom.length, 2);
 				done();
 			})
@@ -57,19 +47,17 @@ describe('axe.utils.preloadCssom unit tests', function() {
 			});
 	});
 
-	it('ensure that each of the cssom object have defined properties', function(done) {
-		var actual = axe.utils.preloadCssom(args);
+	it('returns CSSOM and ensure that each object have defined properties', function(done) {
+		var actual = axe.utils.preloadCssom({ treeRoot: treeRoot });
 		actual
-			.then(function(results) {
-				// returned from queue, hence the index look up
-				var cssom = results[0];
+			.then(function(cssom) {
 				assert.isAtLeast(cssom.length, 2);
 				cssom.forEach(function(o) {
 					assert.hasAllKeys(o, [
 						'root',
 						'shadowId',
 						'sheet',
-						'isExternal',
+						'isCrossOrigin',
 						'priority'
 					]);
 				});
@@ -80,11 +68,11 @@ describe('axe.utils.preloadCssom unit tests', function() {
 			});
 	});
 
-	it('should fail if number of sheets returned does not match stylesheets defined in document', function(done) {
-		var actual = axe.utils.preloadCssom(args);
+	it('returns false if number of sheets returned does not match stylesheets defined in document', function(done) {
+		var actual = axe.utils.preloadCssom({ treeRoot: treeRoot });
 		actual
-			.then(function(results) {
-				assert.isFalse(results[0].length <= 1); // returned from queue, hence the index look up
+			.then(function(cssom) {
+				assert.isFalse(cssom.length <= 1);
 				done();
 			})
 			.catch(function(error) {
@@ -92,12 +80,11 @@ describe('axe.utils.preloadCssom unit tests', function() {
 			});
 	});
 
-	it('should ensure all returned stylesheet is defined and has property cssRules', function(done) {
-		var actual = axe.utils.preloadCssom(args);
+	it('returns all stylesheets and ensure each sheet has property cssRules', function(done) {
+		var actual = axe.utils.preloadCssom({ treeRoot: treeRoot });
 		actual
-			.then(function(results) {
-				var sheets = results[0];
-				sheets.forEach(function(s) {
+			.then(function(cssom) {
+				cssom.forEach(function(s) {
 					assert.isDefined(s.sheet);
 					assert.property(s.sheet, 'cssRules');
 				});
@@ -107,9 +94,4 @@ describe('axe.utils.preloadCssom unit tests', function() {
 				done(error);
 			});
 	});
-
-	/**
-	 * NOTE: document.styleSheets does not recognise dynamically injected stylesheets after load via beforeEach/ before, so tests for disabled and external stylesheets are done in integration
-	 * Refer Directory: ./test/full/preload-cssom/**.*
-	 */
 });

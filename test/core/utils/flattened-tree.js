@@ -269,9 +269,9 @@ describe('axe.utils.getFlattenedTree', function() {
 				fixture.querySelectorAll('.stories').forEach(makeShadowTree);
 			});
 			it('should find the virtual node that matches the real node passed in', function() {
-				var virtualDOM = axe.utils.getFlattenedTree(fixture);
+				axe.utils.getFlattenedTree(fixture);
 				var node = document.querySelector('.stories li');
-				var vNode = axe.utils.getNodeFromTree(virtualDOM[0], node);
+				var vNode = axe.utils.getNodeFromTree(node);
 				assert.isDefined(vNode);
 				assert.equal(node, vNode.actualNode);
 				assert.equal(vNode.actualNode.textContent, '1');

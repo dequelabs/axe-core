@@ -19,11 +19,7 @@ describe('aria-required-attr', function() {
 		assert.isFalse(
 			checks['aria-required-attr'].evaluate.call(checkContext, node)
 		);
-		assert.deepEqual(checkContext._data, [
-			'aria-valuenow',
-			'aria-valuemax',
-			'aria-valuemin'
-		]);
+		assert.deepEqual(checkContext._data, ['aria-valuenow']);
 	});
 
 	it('should return true if there is no role', function() {
