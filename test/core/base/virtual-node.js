@@ -151,7 +151,7 @@ describe('VirtualNode', function() {
 					}
 				};
 				var vNode = new VirtualNode(node);
-				vNode.isFocusable();
+				vNode.isFocusable;
 
 				assert.isTrue(called);
 			});
@@ -166,9 +166,9 @@ describe('VirtualNode', function() {
 					}
 				};
 				var vNode = new VirtualNode(node);
-				vNode.isFocusable();
-				vNode.isFocusable();
-				vNode.isFocusable();
+				vNode.isFocusable;
+				vNode.isFocusable;
+				vNode.isFocusable;
 				assert.equal(count, 1);
 			});
 		});
@@ -194,7 +194,7 @@ describe('VirtualNode', function() {
 					}
 				};
 				var vNode = new VirtualNode(node);
-				vNode.tabbableElements();
+				vNode.tabbableElements;
 
 				assert.isTrue(called);
 			});
@@ -209,9 +209,9 @@ describe('VirtualNode', function() {
 					}
 				};
 				var vNode = new VirtualNode(node);
-				vNode.tabbableElements();
-				vNode.tabbableElements();
-				vNode.tabbableElements();
+				vNode.tabbableElements;
+				vNode.tabbableElements;
+				vNode.tabbableElements;
 				assert.equal(count, 1);
 			});
 		});
