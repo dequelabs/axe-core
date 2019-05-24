@@ -1,0 +1,12 @@
+{
+	"description": "role-img-alt tests",
+	"rule": "role-img-alt",
+	"violations": [
+		["#violation1"],
+		["#violation2"],
+		["#violation3"],
+		["#violation4"],
+		["#violation5"]
+	],
+	"passes": [["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"]]
+}
