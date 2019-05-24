@@ -1,116 +1,48 @@
-function Vnode(nodeName, className, attributes, id) {
-	'use strict';
-	this.nodeName = nodeName.toUpperCase();
-	this.id = id;
-	this.attributes = attributes || [];
-	this.className = className;
-	this.nodeType = 1;
-
-	this.attributes.push({
-		key: 'id',
-		value: typeof id !== 'undefined' ? id : null
-	});
-	this.attributes.push({
-		key: 'class',
-		value: typeof className !== 'undefined' ? className : null
-	});
+function setShadowId(vNode, shadowId) {
+	vNode.shadowId = shadowId;
+	for (var i = 0; i < vNode.children.length; i++) {
+		setShadowId(vNode.children[i], shadowId);
+	}
 }
-
-Vnode.prototype.getAttribute = function(att) {
-	'use strict';
-	var attribute = this.attributes.find(function(item) {
-		return item.key === att;
-	});
-	return attribute ? attribute.value : null;
-};
 
 function getTestDom() {
 	'use strict';
-	return [
-		{
-			actualNode: new Vnode('html'),
-			children: [
-				{
-					actualNode: new Vnode('body'),
-					children: [
-						{
-							actualNode: new Vnode('div', 'first', [
-								{
-									key: 'data-a11yhero',
-									value: 'faulkner'
-								}
-							]),
-							shadowId: 'a',
-							children: [
-								{
-									actualNode: new Vnode('ul'),
-									shadowId: 'a',
-									children: [
-										{
-											actualNode: new Vnode('li', 'breaking'),
-											shadowId: 'a',
-											children: []
-										},
-										{
-											actualNode: new Vnode('li', 'breaking'),
-											shadowId: 'a',
-											children: []
-										}
-									]
-								}
-							]
-						},
-						{
-							actualNode: new Vnode('div', '', [], 'one'),
-							children: []
-						},
-						{
-							actualNode: new Vnode('div', 'second third'),
-							shadowId: 'b',
-							children: [
-								{
-									actualNode: new Vnode('ul'),
-									shadowId: 'b',
-									children: [
-										{
-											actualNode: new Vnode(
-												'li',
-												undefined,
-												[
-													{
-														key: 'role',
-														value: 'tab'
-													}
-												],
-												'one'
-											),
-											shadowId: 'b',
-											children: []
-										},
-										{
-											actualNode: new Vnode(
-												'li',
-												undefined,
-												[
-													{
-														key: 'role',
-														value: 'button'
-													}
-												],
-												'one'
-											),
-											shadowId: 'c',
-											children: []
-										}
-									]
-								}
-							]
-						}
-					]
-				}
-			]
-		}
-	];
+	var html = document.createElement('html');
+	html.innerHTML =
+		'' +
+		'<body>' +
+		'<div class="first" data-a11yhero="faulkner">' +
+		'<ul>' +
+		'<li class="breaking"></li>' +
+		'<li class="breaking"></li>' +
+		'</ul>' +
+		'</div>' +
+		'<div id="one"></div>' +
+		'<div class="second third">' +
+		'<ul>' +
+		'<li role="tab" id="one"></li>' +
+		'<li role="button" id="one"></li>' +
+		'</ul>' +
+		'</div>' +
+		'</body>';
+
+	// remove the head node
+	var head = html.querySelector('head');
+	if (head) {
+		head.parentNode.removeChild(head);
+	}
+
+	var tree = axe.utils.getFlattenedTree(html);
+
+	// setup shadowIds for testing
+	var first = axe.utils.getNodeFromTree(html.querySelector('.first'));
+	var second = axe.utils.getNodeFromTree(html.querySelector('.second'));
+	setShadowId(first, 'a');
+	setShadowId(second, 'b');
+	axe.utils.getNodeFromTree(html.querySelector('[role="button"]')).shadowId =
+		'c';
+
+	return tree;
 }
 
 describe('axe.utils.querySelectorAllFilter', function() {
