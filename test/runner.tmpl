@@ -14,6 +14,11 @@
   			word-wrap: break-word;
   			hyphens: auto;
 			}
+
+			/* mocha stats having a fixed position can interfere with some tests when intersecting with elements */
+			#mocha-stats {
+				position: static;
+			}
 		</style>
 		<script>
 			mocha.setup({
@@ -30,8 +35,8 @@
 	</head>
 
 	<body>
-		<div id="mocha"></div>
 		<div id="fixture"></div>
+		<div id="mocha"></div>
 		<script src="/test/testutils.js"></script>
 		<% tests.forEach(function (file) { %>
 			<script src="<%=file%>"></script>
