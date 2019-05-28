@@ -49,10 +49,14 @@ describe('forms.isNativeTextbox', function() {
 		nonTextInputs.forEach(function(type) {
 			var node = document.createElement('input');
 			node.setAttribute('type', type);
-			assert.isFalse(
-				isNativeTextbox(node),
-				'<input type="' + type + '"> is not a native text input'
-			);
+
+			// IE doesn't support color inputs
+			if (node.type !== 'text') {
+				assert.isFalse(
+					isNativeTextbox(node),
+					'<input type="' + type + '"> is not a native text input'
+				);
+			}
 		});
 	});
 
