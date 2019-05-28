@@ -23,6 +23,8 @@ describe('axe.runVirtualRule', function() {
 				id: 'aria-roles',
 				excludeHidden: true,
 				runSync: function() {
+					assert.isFalse(this.excludeHidden);
+
 					return {
 						id: 'aria-roles',
 						nodes: []
@@ -32,7 +34,25 @@ describe('axe.runVirtualRule', function() {
 		];
 
 		axe.runVirtualRule('aria-roles');
-		assert.isFalse(axe._audit.rules[0].excludeHidden);
+	});
+
+	it('should not modify the original rule', function() {
+		axe._audit.rules = [
+			{
+				id: 'aria-roles',
+				excludeHidden: true,
+				runSync: function() {
+					assert.notEqual(this, axe._audit.rules[0]);
+
+					return {
+						id: 'aria-roles',
+						nodes: []
+					};
+				}
+			}
+		];
+
+		axe.runVirtualRule('aria-roles');
 	});
 
 	it('should call rule.runSync', function() {
