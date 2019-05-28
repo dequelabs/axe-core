@@ -27,7 +27,7 @@ const example = async url => {
 		const browserCode = () => {
 			/* eslint-env browser */
 			return new Promise((resolve, reject) => {
-				const axe = window.axe;
+				const axe = window.__axe;
 				if (!axe) {
 					throw new Error('Unable to find axe-core');
 				}
