@@ -43,9 +43,6 @@ describe('axe.utils.getScroll', function() {
 		);
 		var actual = axe.utils.getScroll(target.actualNode);
 		assert.isUndefined(actual);
-		// assert.hasAllKeys(actual, ['elm', 'top', 'left']);
-		// assert.equal(actual.top, 0);
-		// assert.equal(actual.left, 0);
 	});
 
 	it('returns scroll offset when element overflow is auto', function() {
