@@ -242,7 +242,12 @@ module.exports = function(grunt) {
 			}, [])
 		},
 		watch: {
-			files: ['lib/**/*', 'test/**/*.js', 'Gruntfile.js'],
+			files: [
+				'lib/**/*',
+				'test/**/*.js',
+				'test/integration/**/!(index).{html,json}',
+				'Gruntfile.js'
+			],
 			tasks: ['build', 'testconfig', 'fixture']
 		},
 		testconfig: {
