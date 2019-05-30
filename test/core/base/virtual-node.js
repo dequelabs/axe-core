@@ -130,6 +130,38 @@ describe('VirtualNode', function() {
 			});
 		});
 
+		describe('hasAttr', function() {
+			it('should return true if the element has the attribute', function() {
+				node.setAttribute('foo', 'bar');
+				var vNode = new VirtualNode(node);
+
+				assert.isTrue(vNode.hasAttr('foo'));
+			});
+
+			it('should return false if the element does not have the attribute', function() {
+				var vNode = new VirtualNode(node);
+
+				assert.isFalse(vNode.hasAttr('foo'));
+			});
+
+			it('should return false for text nodes', function() {
+				node.textContent = 'hello';
+				var vNode = new VirtualNode(node.firstChild);
+
+				assert.isFalse(vNode.hasAttr('foo'));
+			});
+
+			it('should return false if hasAttribute is not a function', function() {
+				var node = {
+					nodeName: 'DIV',
+					hasAttribute: null
+				};
+				var vNode = new VirtualNode(node);
+
+				assert.isFalse(vNode.hasAttr('foo'));
+			});
+		});
+
 		describe('isFocusable', function() {
 			var commons;
 
