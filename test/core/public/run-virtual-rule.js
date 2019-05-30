@@ -12,9 +12,13 @@ describe('axe.runVirtualRule', function() {
 		axe._audit = audit;
 	});
 
-	it('should return undefined if the rule does not exist', function() {
+	it('should throw if the rule does not exist', function() {
 		axe._audit.rules = [];
-		assert.equal(typeof axe.runVirtualRule('aria-roles'), 'undefined');
+		function fn() {
+			axe.runVirtualRule('aria-roles');
+		}
+
+		assert.throws(fn);
 	});
 
 	it('should modify the rule to not excludeHidden', function() {
