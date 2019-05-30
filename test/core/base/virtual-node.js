@@ -61,6 +61,14 @@ describe('VirtualNode', function() {
 				assert.isTrue(vNode.hasClass('visually-hidden'));
 			});
 
+			it('should return true for svg elements', function() {
+				node = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+				node.setAttribute('class', 'my-class');
+				var vNode = new VirtualNode(node);
+
+				assert.isTrue(vNode.hasClass('my-class'));
+			});
+
 			it('should return false when the element does not contain the class', function() {
 				var vNode = new VirtualNode(node);
 
@@ -129,6 +137,38 @@ describe('VirtualNode', function() {
 				var vNode = new VirtualNode(node);
 
 				assert.isNull(vNode.attr('data-foo'));
+			});
+		});
+
+		describe('hasAttr', function() {
+			it('should return true if the element has the attribute', function() {
+				node.setAttribute('foo', 'bar');
+				var vNode = new VirtualNode(node);
+
+				assert.isTrue(vNode.hasAttr('foo'));
+			});
+
+			it('should return false if the element does not have the attribute', function() {
+				var vNode = new VirtualNode(node);
+
+				assert.isFalse(vNode.hasAttr('foo'));
+			});
+
+			it('should return false for text nodes', function() {
+				node.textContent = 'hello';
+				var vNode = new VirtualNode(node.firstChild);
+
+				assert.isFalse(vNode.hasAttr('foo'));
+			});
+
+			it('should return false if hasAttribute is not a function', function() {
+				var node = {
+					nodeName: 'DIV',
+					hasAttribute: null
+				};
+				var vNode = new VirtualNode(node);
+
+				assert.isFalse(vNode.hasAttr('foo'));
 			});
 		});
 

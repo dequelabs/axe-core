@@ -42,10 +42,7 @@ describe('axe.utils.getScroll', function() {
 				'</div>'
 		);
 		var actual = axe.utils.getScroll(target.actualNode);
-		assert.isDefined(actual);
-		assert.hasAllKeys(actual, ['elm', 'top', 'left']);
-		assert.equal(actual.top, 0);
-		assert.equal(actual.left, 0);
+		assert.isUndefined(actual);
 	});
 
 	it('returns scroll offset when element overflow is auto', function() {

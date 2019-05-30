@@ -78,7 +78,7 @@
 		"@babel/polyfill": "^7.4.4",
 		"@babel/preset-env": "^7.4.4",
 		"aria-query": "^3.0.0",
-		"axios": "^0.18.0",
+		"axios": "^0.19.0",
 		"babelify": "^10.0.0",
 		"blanket": "~1.2.3",
 		"browserify": "^16.2.3",

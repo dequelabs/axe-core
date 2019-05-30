@@ -1,9 +1,9 @@
 <!-- pass -->
-<div id="pass1" style="overflow: hidden; height: 5px;">
+<div id="pass1" style="overflow-y: scroll; height: 5px;">
 	<input type="text" />
 </div>
 
-<div id="pass2" style="height: 200px; overflow: hidden" tabindex="0">
+<div id="pass2" style="height: 200px; overflow-y: auto" tabindex="0">
 	<div style="height: 2000px">
 		<p>Content</p>
 	</div>
@@ -17,17 +17,11 @@
 </div>
 
 <!-- fail -->
-<div id="fail1" style="height: 200px; width: 200px; overflow: hidden">
-	<div style="height: 2000px; width: 100px;">
-		<p>Content</p>
-	</div>
-</div>
-
-<div id="fail2" style="height: 5px; overflow: auto;">
+<div id="fail1" style="height: 5px; overflow: auto;">
 	<input type="text" tabindex="-1" />
 </div>
 
-<div id="fail3" style="height: 5px; overflow: auto;">
+<div id="fail2" style="height: 5px; overflow: auto;">
 	<input type="text" tabindex="-1" />
 	<select tabindex="-1"></select>
 	<textarea tabindex="-1"></textarea>
@@ -65,6 +59,12 @@
 	tabindex="0"
 >
 	<div style="height: 2000px">
+		<p>Content</p>
+	</div>
+</div>
+
+<div id="inapplicable6" style="height: 200px; width: 200px; overflow: hidden">
+	<div style="height: 2000px; width: 100px;">
 		<p>Content</p>
 	</div>
 </div>

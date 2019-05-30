@@ -57,6 +57,18 @@ describe('axe.utils.contains', function() {
 		assert.isTrue(axe.utils.contains(node1, node2));
 	});
 
+	it('should fallback to parent lookup', function() {
+		var node1 = {
+			actualNode: 'not really a node but it doesnt matter'
+		};
+		var node2 = {
+			actualNode: 'not really a node but it doesnt matter',
+			parent: node1
+		};
+
+		assert.isTrue(axe.utils.contains(node1, node2));
+	});
+
 	(shadowSupported ? it : xit)(
 		'should work when the child is inside shadow DOM',
 		function() {

@@ -42,7 +42,7 @@ describe('scrollable-region-focusable-matches', function() {
 		assert.isFalse(actual);
 	});
 
-	it('returns true when element is scrollable (overflow=hidden)', function() {
+	it('returns false when element is not scrollable (overflow=hidden)', function() {
 		var target = queryFixture(
 			'<div id="target" style="height: 200px; width: 200px; overflow: hidden">' +
 				'<div style="height: 2000px; width: 100px; background-color: pink;">' +
@@ -51,7 +51,7 @@ describe('scrollable-region-focusable-matches', function() {
 				'</div>'
 		);
 		var actual = rule.matches(target.actualNode, target);
-		assert.isTrue(actual);
+		assert.isFalse(actual);
 	});
 
 	it('returns true when element is scrollable (overflow=auto)', function() {
