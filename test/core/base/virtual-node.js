@@ -25,12 +25,14 @@ describe('VirtualNode', function() {
 		});
 
 		it('should abstract Node and Element APIs', function() {
+			node = document.createElement('input');
 			node.id = 'monkeys';
 			var vNode = new VirtualNode(node);
 
 			assert.equal(vNode.elementNodeType, 1);
-			assert.equal(vNode.elementNodeName, 'div');
+			assert.equal(vNode.elementNodeName, 'input');
 			assert.equal(vNode.elementId, 'monkeys');
+			assert.equal(vNode.elementType, 'text');
 		});
 
 		it('should lowercase nodeName', function() {
