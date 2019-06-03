@@ -4,8 +4,8 @@
 	"metadata": {
 		"impact": "moderate",
 		"messages": {
-			"fail": "Element with ARIA role {{=it.data}} must have label",
-			"incomplete": "Element with ARIA role {{=it.data}} cannot have implicit or explicit label"
+			"fail": "Fix at least one of the following: `aria-labelledby`, `aria-label`, `non-empty title`",
+			"incomplete": "Check that the <label> does not need be part of the ARIA {{=it.data}} field's name"
 		}
 	}
 }

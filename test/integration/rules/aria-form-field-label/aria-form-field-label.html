@@ -1,4 +1,25 @@
-<!-- Inapplicable -->
+<!-- PASS -->
+<div id="pass1" aria-label="country" role="combobox">England</div>
+<label id="foo">
+  foo <div id="pass2" role="textbox" aria-labelledby="foo">
+</label>
+
+
+<!-- FAIL -->
+<!-- aria-label with empty text string -->
+<div id="fail1" aria-label=" " role="combobox">England</div>
+<!-- The label does not exist. -->
+<div id="fail2" aria-labelledby="non-existing" role="combobox">England</div>
+<!-- The implicit label is not supported on div elements. -->
+<label>
+  first name
+  <div id="fail3" role="textbox"></div>
+</label>
+<label for="fail4">first name</label>
+<div role="textbox" id="fail4"></div>
+
+
+<!-- INAPPLICABLE -->
 <input id='inapplicable1' />
 <select id="inapplicable2">
   <option value="volvo">Volvo</option>
@@ -7,20 +28,14 @@
 </select>
 <textarea id="inapplicable3" title="Label"></textarea>
 
-<!-- Fail -->
-<div id="fail1" aria-label=" " role="combobox">England</div>
-<div id="fail2" aria-labelledby="non-existing" role="combobox">England</div>
 
-<!-- Pass -->
-<div id="pass1" aria-label="country" role="combobox" aria-disabled="true">England</div>
-
-
-<!-- Incomplete -->
+<!-- INCOMPLETE -->
 <!-- Implicit label -->
 <label>
   first name
-  <div id="canttell1" role="textbox"></div>
+  <div id="canttell1" role="textbox" aria-label="name"></div>
 </label>
+
 <!--  Explicit label -->
 <label for="canttell2">first name</label>
-<div role="textbox" id="canttell2"></div>
+<div role="textbox" id="canttell2" aria-label="name"></div>
