@@ -15,13 +15,13 @@ describe('title-only', function() {
 
 		fixture.appendChild(node);
 
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+		axe.testUtils.flatTreeSetup(fixture);
 
 		assert.isTrue(
 			checks['title-only'].evaluate(
 				node,
 				undefined,
-				axe.utils.getNodeFromTree(tree[0], node)
+				axe.utils.getNodeFromTree(node)
 			)
 		);
 		node.setAttribute('aria-label', 'woop');
@@ -29,7 +29,7 @@ describe('title-only', function() {
 			checks['title-only'].evaluate(
 				node,
 				undefined,
-				axe.utils.getNodeFromTree(tree[0], node)
+				axe.utils.getNodeFromTree(node)
 			)
 		);
 	});
@@ -45,13 +45,13 @@ describe('title-only', function() {
 		fixture.appendChild(node);
 		fixture.appendChild(dby);
 
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
+		axe.testUtils.flatTreeSetup(fixture);
 
 		assert.isTrue(
 			checks['title-only'].evaluate(
 				node,
 				undefined,
-				axe.utils.getNodeFromTree(tree[0], node)
+				axe.utils.getNodeFromTree(node)
 			)
 		);
 		node.setAttribute('aria-label', 'woop');
@@ -59,7 +59,7 @@ describe('title-only', function() {
 			checks['title-only'].evaluate(
 				node,
 				undefined,
-				axe.utils.getNodeFromTree(tree[0], node)
+				axe.utils.getNodeFromTree(node)
 			)
 		);
 	});

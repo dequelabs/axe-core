@@ -119,7 +119,7 @@ testUtils.checkSetup = function(content, options, target) {
 	if (typeof target === 'string') {
 		node = axe.utils.querySelectorAll(axe._tree[0], target)[0];
 	} else if (target instanceof Node) {
-		node = axe.utils.getNodeFromTree(axe._tree[0], target);
+		node = axe.utils.getNodeFromTree(target);
 	} else {
 		node = target;
 	}
@@ -181,8 +181,18 @@ testUtils.shadowCheckSetup = function(
 
 	// query the composed tree AFTER shadowDOM has been attached
 	axe._tree = axe.utils.getFlattenedTree(fixture);
-	var node = axe.utils.getNodeFromTree(axe._tree[0], targetCandidate);
+	var node = axe.utils.getNodeFromTree(targetCandidate);
 	return [node.actualNode, options, node];
+};
+
+/**
+ * Setup axe._tree flat tree
+ * @param Node   Stuff to go in the flat tree
+ * @returns vNode[]
+ */
+testUtils.flatTreeSetup = function(content) {
+	axe._tree = axe.utils.getFlattenedTree(content);
+	return axe._tree;
 };
 
 /**
@@ -229,33 +239,46 @@ testUtils.awaitNestedLoad = function awaitNestedLoad(win, cb) {
  * @property {String} data.href relative or absolute url for stylesheet to be loaded
  * @property {Boolean} data.mediaPrint boolean to represent if the constructed sheet is for print media
  * @property {String} data.text text contents to be written to the stylesheet
+ * @property {String} data.id id reference to link or style to be added to document
+ * @param {Object} rootNode document/fragment to which to append style
  * @returns {Object} axe.utils.queue
  */
-testUtils.addStyleSheet = function addStyleSheet(data) {
+testUtils.addStyleSheet = function addStyleSheet(data, rootNode) {
+	var doc = rootNode ? rootNode : document;
 	var q = axe.utils.queue();
 	if (data.href) {
 		q.defer(function(resolve, reject) {
-			var link = document.createElement('link');
+			var link = doc.createElement('link');
 			link.rel = 'stylesheet';
 			link.href = data.href;
+			if (data.id) {
+				link.id = data.id;
+			}
 			if (data.mediaPrint) {
 				link.media = 'print';
 			}
 			link.onload = function() {
-				resolve();
+				setTimeout(function() {
+					resolve();
+				});
 			};
 			link.onerror = function() {
 				reject();
 			};
-			document.head.appendChild(link);
+			doc.head.appendChild(link);
 		});
 	} else {
 		q.defer(function(resolve) {
-			var style = document.createElement('style');
+			var style = doc.createElement('style');
+			if (data.id) {
+				style.id = data.id;
+			}
 			style.type = 'text/css';
-			style.appendChild(document.createTextNode(data.text));
-			document.head.appendChild(style);
-			resolve();
+			style.appendChild(doc.createTextNode(data.text));
+			doc.head.appendChild(style);
+			setTimeout(function() {
+				resolve();
+			}, 100); // -> note: gives firefox to load (document.stylesheets), other browsers are fine.
 		});
 	}
 	return q;
@@ -267,15 +290,77 @@ testUtils.addStyleSheet = function addStyleSheet(data) {
  * @param {Object} sheets array of sheets data object
  * @returns {Object} axe.utils.queue
  */
-testUtils.addStyleSheets = function addStyleSheets(sheets) {
+testUtils.addStyleSheets = function addStyleSheets(sheets, rootNode) {
 	var q = axe.utils.queue();
 	sheets.forEach(function(data) {
-		q.defer(axe.testUtils.addStyleSheet(data));
+		q.defer(axe.testUtils.addStyleSheet(data, rootNode));
 	});
 	return q;
 };
 
 /**
+ * Remove a list of stylesheets from the document
+ * @param {Array<Object>} sheets array of sheets data object
+ * @returns {Object} axe.utils.queue
+ */
+testUtils.removeStyleSheets = function removeStyleSheets(sheets) {
+	var q = axe.utils.queue();
+	sheets.forEach(function(data) {
+		q.defer(function(resolve, reject) {
+			var node = document.getElementById(data.id);
+			if (!node || !node.parentNode) {
+				reject();
+			}
+			node.parentNode.removeChild(node);
+			resolve();
+		});
+	});
+	return q;
+};
+
+/**
+ * Assert a given stylesheet against selectorText and cssText
+ *
+ * @param {Object} sheet CSS Stylesheet
+ * @param {String} selectorText CSS Selector
+ * @param {String} cssText CSS Values
+ * @param {Boolean} includes (Optional) flag to check if existence of selectorText within cssText
+ */
+testUtils.assertStylesheet = function assertStylesheet(
+	sheet,
+	selectorText,
+	cssText,
+	includes
+) {
+	assert.isDefined(sheet);
+	assert.property(sheet, 'cssRules');
+	if (includes) {
+		assert.isTrue(cssText.includes(selectorText));
+	} else {
+		assert.equal(sheet.cssRules[0].selectorText, selectorText);
+
+		// compare the selector properties
+		var styleEl = document.createElement('style');
+		styleEl.type = 'text/css';
+		styleEl.innerHTML = cssText;
+		document.body.appendChild(styleEl);
+
+		var testSheet = document.styleSheets[document.styleSheets.length - 1];
+		var sheetRule = sheet.cssRules[0];
+		var testRule = testSheet.cssRules[0];
+
+		try {
+			for (var i = 0; i < testRule.style.length; i++) {
+				var property = testRule.style[i];
+				assert.equal(sheetRule.style[property], testRule.style[property]);
+			}
+		} finally {
+			styleEl.parentNode.removeChild(styleEl);
+		}
+	}
+};
+
+/*
  * Injecting content into a fixture and return queried element within fixture
  *
  * @param {String|Node} content to go into the fixture (html or DOM node)
@@ -286,4 +371,18 @@ testUtils.queryFixture = function queryFixture(html, query) {
 	return axe.utils.querySelectorAll(axe._tree, query || '#target')[0];
 };
 
+/**
+ * Test function for detecting IE11 user agent string
+ *
+ * @param {Object} navigator The navigator object of the current browser
+ * @return {boolean}
+ */
+testUtils.isIE11 = (function isIE11(navigator) {
+	return navigator.userAgent.indexOf('Trident/7') !== -1;
+})(navigator);
+
 axe.testUtils = testUtils;
+
+afterEach(function() {
+	axe._cache.clear();
+});

@@ -13,7 +13,7 @@ will kindly ask you to resubmit it in the correct format.
 
 We follow Angular's code contribution style with precise rules for formatting git commit messages.
 This leads to more readable messages that are easy to follow when looking through the project
-history. We will also use commit messages to generate the aXe Changelog document.
+history. We will also use commit messages to generate the axe Changelog document.
 
 A detailed explanation of Angular's guidelines and conventions can be found [on Google Docs](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#).
 
@@ -139,7 +139,7 @@ changes in the pull request, so the git log stays lean. We particularly want to 
 You can use git's interactive rebase to manipulate, merge, and rename commits in your local
 history. If these steps are followed, a force push shouldn't be necessary.
 
-**Do not force push to develop or master under any circulstances.**
+**Do not force push to develop or master under any circumstances.**
 
 To interactively rebase all of your commits on top of the latest in develop, run:
 

@@ -58,8 +58,6 @@ describe('Configure Options', function() {
 					function(error, results) {
 						assert.lengthOf(results.violations, 1, 'violations');
 						assert.sameMembers(results.violations[0].nodes[0].any[0].data, [
-							'aria-valuemax',
-							'aria-valuemin',
 							'aria-snuggles'
 						]);
 						done();

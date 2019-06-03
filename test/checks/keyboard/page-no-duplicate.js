@@ -108,11 +108,11 @@ describe('page-no-duplicate', function() {
 			function() {
 				var options = {
 					selector: 'footer',
-					nativeScopeFilter: 'main'
+					nativeScopeFilter: 'header'
 				};
 
 				var div = document.createElement('div');
-				div.innerHTML = '<main id="shadow"></main><footer></footer>';
+				div.innerHTML = '<header id="shadow"></header><footer></footer>';
 				div.querySelector('#shadow').attachShadow({ mode: 'open' }).innerHTML =
 					'<footer></footer>';
 				axe.testUtils.fixtureSetup(div);

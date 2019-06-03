@@ -53,7 +53,7 @@ describe('axe.utils.getScrollState', function() {
 		fixture.innerHTML =
 			'<div style="overflow:auto; height: 50px" id="tgt1">' +
 			'<div style="height: 100px"> Han Solo </div>' +
-			'<div style="overflow: hidden; height: 50px" id="tgt2">' +
+			'<div style="overflow: auto; height: 50px" id="tgt2">' +
 			'<div style="height: 100px"> Chewbacca </div>' +
 			'</div>' +
 			'</div>';
@@ -155,7 +155,7 @@ describe('axe.utils.setScrollState', function() {
 	it('calls scroll() for the window element', function() {
 		var called;
 		var winScroll = window.scroll;
-		window.scroll = function(top, left) {
+		window.scroll = function(left, top) {
 			called = { top: top, left: left };
 		};
 		setScrollState([{ elm: window, top: 10, left: 20 }]);

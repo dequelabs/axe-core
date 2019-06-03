@@ -38,10 +38,6 @@
       2,
       5
     ],
-    "max-statements": [
-      2,
-      16
-    ],
     "max-len": [
       2,
       {

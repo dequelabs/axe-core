@@ -1,15 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<title>O hai</title>
+	<title>O hai</title>
 
-<div class="foo" id="foo">foo</div>
+	<div class="foo" id="foo">foo</div>
 
-<script src="/axe.js"></script>
-<script>
-window.addEventListener('load' , function () {
-  axe.run(document, function (err, res) {
-    console.log(res.violations);
-    res.incomplete.forEach(issue => console.log(issue))
-  });
-})
-</script>
+	<script src="/axe.js"></script>
+	<script>
+		window.addEventListener('load', function() {
+			axe.run(document, function(err, res) {
+				console.log(res.violations);
+				res.incomplete.forEach(issue => console.log(issue));
+			});
+		});
+	</script>
+</html>

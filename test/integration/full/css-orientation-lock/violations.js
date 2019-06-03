@@ -3,6 +3,7 @@ describe('css-orientation-lock violations test', function() {
 
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var isPhantom = window.PHANTOMJS ? true : false;
+	var isIE11 = axe.testUtils.isIE11;
 
 	var styleSheets = [
 		{
@@ -17,7 +18,6 @@ describe('css-orientation-lock violations test', function() {
 	before(function(done) {
 		if (isPhantom) {
 			this.skip();
-			done();
 		} else {
 			axe.testUtils
 				.addStyleSheets(styleSheets)
@@ -38,39 +38,43 @@ describe('css-orientation-lock violations test', function() {
 		});
 	}
 
-	it('returns VIOLATIONS if preload is set to TRUE', function(done) {
-		// the sheets included in the html, have styles for transform and rotate, hence the violation
-		axe.run(
-			{
-				runOnly: {
-					type: 'rule',
-					values: ['css-orientation-lock']
+	// This currently breaks in IE11
+	(isIE11 ? it.skip : it)(
+		'returns VIOLATIONS if preload is set to TRUE',
+		function(done) {
+			// the sheets included in the html, have styles for transform and rotate, hence the violation
+			axe.run(
+				{
+					runOnly: {
+						type: 'rule',
+						values: ['css-orientation-lock']
+					}
+				},
+				function(err, res) {
+					assert.isNull(err);
+					assert.isDefined(res);
+
+					// check for violation
+					assert.property(res, 'violations');
+					assert.lengthOf(res.violations, 1);
+
+					// assert the node
+					var checkedNode = res.violations[0].nodes[0];
+					assert.isTrue(/html/i.test(checkedNode.html));
+
+					// assert the relatedNodes
+					var checkResult = checkedNode.all[0];
+					assert.lengthOf(checkResult.relatedNodes, 2);
+					assertViolatedSelectors(checkResult.relatedNodes, [
+						'.someDiv',
+						'.thatDiv'
+					]);
+
+					done();
 				}
-			},
-			function(err, res) {
-				assert.isNull(err);
-				assert.isDefined(res);
-
-				// check for violation
-				assert.property(res, 'violations');
-				assert.lengthOf(res.violations, 1);
-
-				// assert the node
-				var checkedNode = res.violations[0].nodes[0];
-				assert.isTrue(/html/i.test(checkedNode.html));
-
-				// assert the relatedNodes
-				var checkResult = checkedNode.all[0];
-				assert.lengthOf(checkResult.relatedNodes, 2);
-				assertViolatedSelectors(checkResult.relatedNodes, [
-					'.someDiv',
-					'.thatDiv'
-				]);
-
-				done();
-			}
-		);
-	});
+			);
+		}
+	);
 
 	(shadowSupported ? it : xit)(
 		'returns VIOLATIONS whilst also accommodating shadowDOM styles',

@@ -1,6 +1,6 @@
 # axe-core
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/dequelabs/axe-core.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/dequelabs/axe-core.svg)](https://greenkeeper.io/) [![CircleCI](https://circleci.com/gh/dequelabs/axe-core.svg?style=svg)](https://circleci.com/gh/dequelabs/axe-core)
 
 [![License](https://img.shields.io/npm/l/axe-core.svg)](LICENSE)
 [![Version](https://img.shields.io/npm/v/axe-core.svg)](https://www.npmjs.com/package/axe-core)
@@ -73,6 +73,8 @@ The [axe-core API](doc/API.md) fully supports the following browsers:
 Support means that we will fix bugs and attempt to test each browser regularly. Only Firefox and Chrome are currently tested on every pull request.
 
 There is limited support for JSDOM. We will attempt to make all rules compatible with JSDOM but where this is not possible, we recommend turning those rules off. Currently the `color-contrast` rule is known not to work with JSDOM.
+
+We can only support environments where features are either natively supported or polyfilled correctly.
 
 ## The Accessibility Rules
 

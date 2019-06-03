@@ -1,7 +1,4 @@
 /*global window */
-/*eslint 
-max-statements: ["error", 20],
-*/
 'use strict';
 
 var WebDriver = require('selenium-webdriver');
@@ -44,16 +41,23 @@ module.exports = function(grunt) {
 				.get(url)
 				// Get results
 				.then(function() {
-					return collectTestResults(driver);
+					return Promise.all([
+						driver.getCapabilities(),
+						collectTestResults(driver)
+					]);
 				})
 				// And process them
-				.then(function(result) {
-					grunt.log.writeln(url);
+				.then(function([capabilities, result]) {
+					let browserName =
+						capabilities.get('browserName') +
+						(capabilities.get('mobileEmulationEnabled') ? '-mobile' : '');
+					grunt.log.writeln(url + ' [' + browserName + ']');
 
 					// Remember the errors
 					(result.reports || []).forEach(function(err) {
 						grunt.log.error(err.message);
 						err.url = url;
+						err.browser = browserName;
 						errors.push(err);
 					});
 
@@ -86,8 +90,8 @@ module.exports = function(grunt) {
 	/*
 	 * Build web driver depends whether REMOTE_SELENIUM_URL is set
 	 */
-	function buildWebDriver(browser) {
-		var webdriver, capabilities;
+	async function buildWebDriver(browser) {
+		var capabilities;
 		var mobileBrowser = browser.split('-mobile');
 		if (mobileBrowser.length > 1) {
 			browser = mobileBrowser[0];
@@ -105,21 +109,27 @@ module.exports = function(grunt) {
 			};
 		}
 
+		var webdriver = new WebDriver.Builder()
+			.withCapabilities(capabilities)
+			.forBrowser(browser);
+
 		if (process.env.REMOTE_SELENIUM_URL) {
-			webdriver = new WebDriver.Builder()
-				.forBrowser(browser)
-				.withCapabilities(capabilities)
-				.usingServer(process.env.REMOTE_SELENIUM_URL)
-				.build();
-		} else {
-			webdriver = new WebDriver.Builder()
-				.withCapabilities(capabilities)
-				.forBrowser(browser)
-				.build();
+			webdriver.usingServer(process.env.REMOTE_SELENIUM_URL);
+		}
+
+		// @see https://github.com/SeleniumHQ/selenium/issues/6026
+		if (browser === 'safari') {
+			var safari = require('selenium-webdriver/safari');
+			var server = await new safari.ServiceBuilder()
+				.addArguments('--legacy')
+				.build()
+				.start();
+
+			webdriver.usingServer(server);
 		}
 
 		return {
-			driver: webdriver,
+			driver: webdriver.build(),
 			isMobile: mobileBrowser.length > 1
 		};
 	}
@@ -130,7 +140,7 @@ module.exports = function(grunt) {
 	grunt.registerMultiTask(
 		'test-webdriver',
 		'Task for launching Webdriver with options and running tests against options URLs',
-		function() {
+		async function() {
 			var driver;
 			var isMobile = false;
 			var done = this.async();
@@ -159,7 +169,7 @@ module.exports = function(grunt) {
 
 			// try to load the browser
 			try {
-				var webDriver = buildWebDriver(options.browser);
+				var webDriver = await buildWebDriver(options.browser);
 				driver = webDriver.driver;
 				isMobile = webDriver.isMobile;
 				// If load fails, warn user and move to the next task
@@ -188,6 +198,7 @@ module.exports = function(grunt) {
 					testErrors.forEach(function(err) {
 						grunt.log.writeln();
 						grunt.log.error('URL: ' + err.url);
+						grunt.log.error('Browser: ' + err.browser);
 						grunt.log.error('Describe: ' + err.titles.join(' > '));
 						grunt.log.error('it ' + err.name);
 						grunt.log.error(err.stack);

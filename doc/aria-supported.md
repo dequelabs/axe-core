@@ -6,12 +6,6 @@ This page contains a list of ARIA 1.1 features that axe-core raises as unsupport
 
 For a detailed description about how accessibility support is decided, see [How we make decisions on rules](accessibility-supported.md).
 
-## Roles
-
-| aria-role | axe-core support |
-| --------- | ---------------- |
-| figure    | No               |
-
 ## Attributes
 
 | aria-attribute       | axe-core support |

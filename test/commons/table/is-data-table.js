@@ -40,7 +40,7 @@ describe('table.isDataTable', function() {
 			'</div>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -48,7 +48,7 @@ describe('table.isDataTable', function() {
 		fixture.innerHTML = '<table role="grid"></table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -56,7 +56,7 @@ describe('table.isDataTable', function() {
 		fixture.innerHTML = '<table role="treegrid"></table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -64,7 +64,7 @@ describe('table.isDataTable', function() {
 		fixture.innerHTML = '<div role="table"></div>';
 
 		var node = fixture.querySelector('[role="table"]');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -73,56 +73,56 @@ describe('table.isDataTable', function() {
 			fixture.innerHTML = '<table role="application"></table>';
 
 			var node = fixture.querySelector('table');
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			assert.isTrue(axe.commons.table.isDataTable(node));
 		});
 		it('banner', function() {
 			fixture.innerHTML = '<table role="banner"></table>';
 
 			var node = fixture.querySelector('table');
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			assert.isTrue(axe.commons.table.isDataTable(node));
 		});
 		it('complementary', function() {
 			fixture.innerHTML = '<table role="complementary"></table>';
 
 			var node = fixture.querySelector('table');
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			assert.isTrue(axe.commons.table.isDataTable(node));
 		});
 		it('contentinfo', function() {
 			fixture.innerHTML = '<table role="contentinfo"></table>';
 
 			var node = fixture.querySelector('table');
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			assert.isTrue(axe.commons.table.isDataTable(node));
 		});
 		it('form', function() {
 			fixture.innerHTML = '<table role="form"></table>';
 
 			var node = fixture.querySelector('table');
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			assert.isTrue(axe.commons.table.isDataTable(node));
 		});
 		it('main', function() {
 			fixture.innerHTML = '<table role="main"></table>';
 
 			var node = fixture.querySelector('table');
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			assert.isTrue(axe.commons.table.isDataTable(node));
 		});
 		it('navigation', function() {
 			fixture.innerHTML = '<table role="navigation"></table>';
 
 			var node = fixture.querySelector('table');
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			assert.isTrue(axe.commons.table.isDataTable(node));
 		});
 		it('search', function() {
 			fixture.innerHTML = '<table role="search"></table>';
 
 			var node = fixture.querySelector('table');
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			assert.isTrue(axe.commons.table.isDataTable(node));
 		});
 	});
@@ -135,7 +135,7 @@ describe('table.isDataTable', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
@@ -143,7 +143,7 @@ describe('table.isDataTable', function() {
 		fixture.innerHTML = '<table summary="Hello">' + '</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -151,7 +151,7 @@ describe('table.isDataTable', function() {
 		fixture.innerHTML = '<table>' + '<caption>Hello</caption>' + '</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -159,7 +159,7 @@ describe('table.isDataTable', function() {
 		fixture.innerHTML = '<table>' + '<col>' + '</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -167,7 +167,7 @@ describe('table.isDataTable', function() {
 		fixture.innerHTML = '<table>' + '<colgroup></colgroup>' + '</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -175,7 +175,7 @@ describe('table.isDataTable', function() {
 		fixture.innerHTML = '<table>' + '<thead></thead>' + '</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -183,7 +183,7 @@ describe('table.isDataTable', function() {
 		fixture.innerHTML = '<table>' + '<tfoot></tfoot>' + '</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -191,7 +191,7 @@ describe('table.isDataTable', function() {
 		fixture.innerHTML = '<table>' + '<tr><th></th></tr>' + '</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -200,7 +200,7 @@ describe('table.isDataTable', function() {
 			'<table>' + '<tr><td role="rowheader"></td></tr>' + '</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -209,7 +209,7 @@ describe('table.isDataTable', function() {
 			'<table>' + '<tr><td role="columnheader"></td></tr>' + '</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -218,7 +218,7 @@ describe('table.isDataTable', function() {
 			'<table>' + '<tr><td headers="yes"></td></tr>' + '</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -227,7 +227,7 @@ describe('table.isDataTable', function() {
 			'<table>' + '<tr><td scope="col"></td></tr>' + '</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -236,7 +236,7 @@ describe('table.isDataTable', function() {
 			'<table>' + '<tr><td abbr="yes"></td></tr>' + '</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -245,21 +245,21 @@ describe('table.isDataTable', function() {
 			'<table>' + '<tr><td><div><abbr>ok</abbr></div></td></tr>' + '</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isFalse(axe.commons.table.isDataTable(node));
 
 		fixture.innerHTML =
 			'<table>' + '<tr><td><abbr>ok</abbr><div></div></td></tr>' + '</table>';
 
 		node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isFalse(axe.commons.table.isDataTable(node));
 
 		fixture.innerHTML =
 			'<table>' + '<tr><td><abbr>ok</abbr></td></tr>' + '</table>';
 
 		node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -270,7 +270,7 @@ describe('table.isDataTable', function() {
 			'</td></tr></table>';
 
 		var node = fixture.querySelector('#out');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
@@ -279,7 +279,7 @@ describe('table.isDataTable', function() {
 			'<table>' + '<tr><td></td></tr>' + '<tr><td></td></tr>' + '</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
@@ -287,7 +287,7 @@ describe('table.isDataTable', function() {
 		fixture.innerHTML = '<table>' + '<tr><td></td><td></td></tr>' + '</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
@@ -299,7 +299,7 @@ describe('table.isDataTable', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -311,7 +311,7 @@ describe('table.isDataTable', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -328,7 +328,7 @@ describe('table.isDataTable', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 
@@ -348,7 +348,7 @@ describe('table.isDataTable', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 	it('should be true if it has 20 or more rows', function() {
@@ -358,7 +358,7 @@ describe('table.isDataTable', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 	it('should be false if its width is 95% of the document width', function() {
@@ -368,7 +368,7 @@ describe('table.isDataTable', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
@@ -379,7 +379,7 @@ describe('table.isDataTable', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
@@ -391,7 +391,7 @@ describe('table.isDataTable', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
@@ -403,7 +403,7 @@ describe('table.isDataTable', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
@@ -415,7 +415,7 @@ describe('table.isDataTable', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
@@ -428,7 +428,7 @@ describe('table.isDataTable', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
@@ -439,7 +439,7 @@ describe('table.isDataTable', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isTrue(axe.commons.table.isDataTable(node));
 	});
 });

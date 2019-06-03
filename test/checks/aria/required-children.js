@@ -32,8 +32,8 @@ describe('aria-required-children', function() {
 			var shadowRoot = target.attachShadow({ mode: 'open' });
 			shadowRoot.innerHTML = '<p>Nothing here.</p>';
 
-			var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
-			var virtualTarget = axe.utils.getNodeFromTree(tree[0], target);
+			axe.testUtils.flatTreeSetup(fixture);
+			var virtualTarget = axe.utils.getNodeFromTree(target);
 
 			var params = [target, undefined, virtualTarget];
 			assert.isFalse(
@@ -63,8 +63,8 @@ describe('aria-required-children', function() {
 			var shadowRoot = target.attachShadow({ mode: 'open' });
 			shadowRoot.innerHTML = '<p>Nothing here.</p>';
 
-			var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
-			var virtualTarget = axe.utils.getNodeFromTree(tree[0], target);
+			axe.testUtils.flatTreeSetup(fixture);
+			var virtualTarget = axe.utils.getNodeFromTree(target);
 
 			var params = [target, undefined, virtualTarget];
 			assert.isFalse(
@@ -103,6 +103,35 @@ describe('aria-required-children', function() {
 		);
 	});
 
+	it('should return undefined when element is empty and is in reviewEmpty options', function() {
+		var params = checkSetup('<div role="list" id="target"></div>', {
+			reviewEmpty: ['list']
+		});
+		assert.isUndefined(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+	});
+
+	it('should return false when children do not have correct role and is in reviewEmpty options', function() {
+		var params = checkSetup(
+			'<div role="list" id="target"><div role="menuitem"></div></div>',
+			{ reviewEmpty: ['list'] }
+		);
+		assert.isFalse(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+	});
+
+	it('should return false when owned children do not have correct role and is in reviewEmpty options', function() {
+		var params = checkSetup(
+			'<div role="list" id="target" aria-owns="ownedchild"></div><div id="ownedchild" role="menuitem"></div>',
+			{ reviewEmpty: ['list'] }
+		);
+		assert.isFalse(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+	});
+
 	(shadowSupported ? it : xit)(
 		'should pass all existing required children in shadow tree when all required',
 		function() {
@@ -113,8 +142,8 @@ describe('aria-required-children', function() {
 			shadowRoot.innerHTML =
 				'<p role="listbox">Nothing here.</p><p role="textbox">Textbox</p>';
 
-			var tree = (axe._tree = axe.utils.getFlattenedTree(fixture));
-			var virtualTarget = axe.utils.getNodeFromTree(tree[0], target);
+			axe.testUtils.flatTreeSetup(fixture);
+			var virtualTarget = axe.utils.getNodeFromTree(target);
 
 			var params = [target, undefined, virtualTarget];
 			assert.isTrue(

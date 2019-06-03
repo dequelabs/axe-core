@@ -51,8 +51,8 @@ describe('hidden content', function() {
 
 	it('should skip whitelisted elements', function() {
 		var node = document.querySelector('head');
-		axe._tree = axe.utils.getFlattenedTree(document.documentElement);
-		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
+		axe.testUtils.flatTreeSetup(document.documentElement);
+		var virtualNode = axe.utils.getNodeFromTree(node);
 		assert.isTrue(
 			checks['hidden-content'].evaluate(node, undefined, virtualNode)
 		);
@@ -65,22 +65,22 @@ describe('hidden content', function() {
 			.attachShadow({ mode: 'open' });
 		shadowRoot.innerHTML =
 			'<div id="target" style="display:none">' + '<slot></slot>' + '</div>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 
 		var shadow = document.querySelector('#shadow');
-		var virtualShadow = axe.utils.getNodeFromTree(axe._tree[0], shadow);
+		var virtualShadow = axe.utils.getNodeFromTree(shadow);
 		assert.isTrue(
 			checks['hidden-content'].evaluate(shadow, undefined, virtualShadow)
 		);
 
 		var target = shadowRoot.querySelector('#target');
-		var virtualTarget = axe.utils.getNodeFromTree(axe._tree[0], target);
+		var virtualTarget = axe.utils.getNodeFromTree(target);
 		assert.isUndefined(
 			checks['hidden-content'].evaluate(target, undefined, virtualTarget)
 		);
 
 		var content = document.querySelector('#content');
-		var virtualContent = axe.utils.getNodeFromTree(axe._tree[0], content);
+		var virtualContent = axe.utils.getNodeFromTree(content);
 		assert.isTrue(
 			checks['hidden-content'].evaluate(content, undefined, virtualContent)
 		);

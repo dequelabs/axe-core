@@ -18,7 +18,7 @@ describe('dom.findUp', function() {
 		var start = document.getElementById('start'),
 			target = document.getElementById('target');
 
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.equal(
 			axe.commons.dom.findUp(start, '.target'),
 			target,
@@ -30,7 +30,7 @@ describe('dom.findUp', function() {
 		fixture.innerHTML = '<div id="start"></div>';
 		var start = document.getElementById('start');
 
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isNull(axe.commons.dom.findUp(start, '.nomatchyplzkthx'));
 	});
 
@@ -38,7 +38,7 @@ describe('dom.findUp', function() {
 		fixture.innerHTML = '<div id="start"></div><div class="target"></div>';
 		var start = document.getElementById('start');
 
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.isNull(axe.commons.dom.findUp(start, '.target'));
 	});
 
@@ -60,7 +60,7 @@ describe('dom.findUp', function() {
 
 			fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
 			makeShadowTree(fixture.querySelector('div'));
-			var tree = (axe._tree = axe.utils.getFlattenedTree(fixture.firstChild));
+			var tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
 			var el = axe.utils.querySelectorAll(tree, 'a')[0];
 			assert.equal(
 				axe.commons.dom.findUp(el.actualNode, 'label'),
@@ -86,7 +86,7 @@ describe('dom.findUp', function() {
 
 			fixture.innerHTML = '<label><div></div></label>';
 			makeShadowTree(fixture.querySelector('div'));
-			var tree = (axe._tree = axe.utils.getFlattenedTree(fixture.firstChild));
+			var tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
 			var el = axe.utils.querySelectorAll(tree, 'a')[0];
 			assert.equal(
 				axe.commons.dom.findUp(el.actualNode, 'label'),
@@ -104,7 +104,7 @@ describe('dom.findUp', function() {
 			shadow.innerHTML = '<div role="listitem">item 1</div>';
 			var listItem = shadow.querySelector('[role=listitem]');
 
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			assert.equal(
 				axe.commons.dom.findUp(listItem, '[role=list]'),
 				fixture.firstChild
@@ -128,7 +128,7 @@ describe('dom.findUp', function() {
 
 		fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
 		makeShadowTree(fixture.querySelector('div'));
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture.firstChild));
+		var tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var el = axe.utils.querySelectorAll(tree, 'a')[0];
 		assert.equal(
 			axe.commons.dom.findUp(el.actualNode, 'label'),
@@ -155,7 +155,7 @@ describe('dom.findUp', function() {
 
 			fixture.innerHTML = '<label><div><p><a>hello</a></p></div></label>';
 			makeShadowTree(fixture.querySelector('div'));
-			var tree = (axe._tree = axe.utils.getFlattenedTree(fixture.firstChild));
+			var tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
 			var el = axe.utils.querySelectorAll(tree, 'a')[0];
 			var target = axe.utils.querySelectorAll(tree, '.target')[0];
 			assert.equal(
@@ -180,7 +180,7 @@ describe('dom.findUp', function() {
 
 		fixture.innerHTML = '<label><div></div></label>';
 		makeShadowTree(fixture.querySelector('div'));
-		var tree = (axe._tree = axe.utils.getFlattenedTree(fixture.firstChild));
+		var tree = axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var el = axe.utils.querySelectorAll(tree, 'a')[0];
 		assert.equal(
 			axe.commons.dom.findUp(el.actualNode, 'label'),
@@ -199,7 +199,7 @@ describe('dom.findUp', function() {
 			shadow.innerHTML = '<div role="listitem">item 1</div>';
 			var listItem = shadow.querySelector('[role=listitem]');
 
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			assert.equal(
 				axe.commons.dom.findUp(listItem, '[role=list]'),
 				fixture.firstChild

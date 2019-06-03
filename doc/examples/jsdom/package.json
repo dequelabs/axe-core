@@ -1,0 +1,15 @@
+{
+	"name": "axe-jsdom-example",
+	"description": "Axe JSDOM Example",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {},
+	"scripts": {
+		"test": "mocha"
+	},
+	"devDependencies": {
+		"axe-core": "^3.2.2",
+		"jsdom": "^15.0.0",
+		"mocha": "^6.1.4"
+	}
+}

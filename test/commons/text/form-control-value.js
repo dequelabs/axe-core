@@ -135,6 +135,13 @@ describe('text.formControlValue', function() {
 			axe.utils
 				.querySelectorAll(axe._tree[0], '#fixture input')
 				.forEach(function(target) {
+					// Safari and IE11 do not support the color input type
+					// and thus treat them as text inputs. ignore fallback
+					// inputs
+					if (target.actualNode.type === 'text') {
+						return;
+					}
+
 					assert.equal(
 						nativeTextboxValue(target),
 						'',

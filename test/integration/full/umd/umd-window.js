@@ -1,3 +1,4 @@
+/*global Promise */
 describe('UMD window', function() {
 	'use strict';
 
