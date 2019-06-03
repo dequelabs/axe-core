@@ -26,7 +26,7 @@ describe('aria-form-field-label-matches', function() {
 	});
 
 	it('returns false when node is either INPUT, SELECT or TEXTAREA', function() {
-		[`INPUT`, `SELECT`, `TEXTAREA`].forEach(function(node) {
+		['INPUT', 'SELECT', 'TEXTAREA'].forEach(function(node) {
 			var vNode = queryFixture(
 				'<' + node + 'role="randomRole" id="target"><' + node + '>'
 			);
@@ -60,7 +60,7 @@ describe('aria-form-field-label-matches', function() {
 	});
 
 	it('returns false for INPUT of type `BUTTON`, `SUBMIT` or `RESET`', function() {
-		[`button`, `submit`, `reset`].forEach(function(type) {
+		['button', 'submit', 'reset'].forEach(function(type) {
 			var vNode = queryFixture(
 				'<input id="target" role="randomRole" type="' + type + '">'
 			);
