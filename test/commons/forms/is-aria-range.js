@@ -26,12 +26,6 @@ describe('forms.isAriaRange', function() {
 		assert.isFalse(isAriaRange(node));
 	});
 
-	it('returns false for elements with correct role but no aria-valuenow attribute', function() {
-		var node = document.createElement('div');
-		node.setAttribute('role', 'progressbar');
-		assert.isFalse(isAriaRange(node));
-	});
-
 	it('returns false for native range elements', function() {
 		var nativeRangeElements = [
 			{
