@@ -93,7 +93,7 @@ describe('landmark-unique-matches', function() {
 				it(
 					'should not match because ' +
 						elementType +
-						' is contained inside in ' +
+						' is contained inside an ' +
 						exclusionType,
 					function() {
 						axeFixtureSetup(
@@ -155,7 +155,7 @@ describe('landmark-unique-matches', function() {
 					it(
 						'should not match because ' +
 							elementType +
-							' is contained inside in ' +
+							' is contained inside an ' +
 							exclusionType +
 							'',
 						function() {
