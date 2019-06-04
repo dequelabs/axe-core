@@ -19,7 +19,7 @@ describe('aria-form-field-label-matches', function() {
 
 	it('returns false for node `map area[href]`', function() {
 		var vNode = queryFixture(
-			'<map><area id="target" href="#" role="randomRole"></map>'
+			'<map><area id="target" href="#" role="menuitemradio"></map>'
 		);
 		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
@@ -28,7 +28,7 @@ describe('aria-form-field-label-matches', function() {
 	it('returns false when node is either INPUT, SELECT or TEXTAREA', function() {
 		['INPUT', 'SELECT', 'TEXTAREA'].forEach(function(node) {
 			var vNode = queryFixture(
-				'<' + node + 'role="randomRole" id="target"><' + node + '>'
+				'<' + node + 'role="textbox" id="target"><' + node + '>'
 			);
 			var actual = rule.matches(vNode.actualNode, vNode);
 			assert.isFalse(actual);
@@ -36,7 +36,7 @@ describe('aria-form-field-label-matches', function() {
 	});
 
 	it('returns false when node is IMG', function() {
-		var vNode = queryFixture('<img id="target" role="randomRole">');
+		var vNode = queryFixture('<img id="target" role="checkbox">');
 		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
 	});
@@ -48,7 +48,7 @@ describe('aria-form-field-label-matches', function() {
 	});
 
 	it('returns false when node is BUTTON', function() {
-		var vNode = queryFixture('<button id="target" role="button"></button>');
+		var vNode = queryFixture('<button id="target" role="spinbutton"></button>');
 		var actual = rule.matches(vNode.actualNode, vNode);
 		assert.isFalse(actual);
 	});
@@ -62,7 +62,7 @@ describe('aria-form-field-label-matches', function() {
 	it('returns false for INPUT of type `BUTTON`, `SUBMIT` or `RESET`', function() {
 		['button', 'submit', 'reset'].forEach(function(type) {
 			var vNode = queryFixture(
-				'<input id="target" role="randomRole" type="' + type + '">'
+				'<input id="target" role="checkbox" type="' + type + '">'
 			);
 			var actual = rule.matches(vNode.actualNode, vNode);
 			assert.isFalse(actual);
