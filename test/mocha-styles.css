@@ -1,0 +1,6 @@
+/* This is essential to stop mocha reporter created anchors from making the document overflow, mainly along the x-axis. */
+#mocha h1 a {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}

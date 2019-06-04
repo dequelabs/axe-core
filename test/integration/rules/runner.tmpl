@@ -3,30 +3,28 @@
 	<head>
 		<meta charset="utf-8" />
 		<title><%=data.title%></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" type="text/css" href="../../../node_modules/mocha/mocha.css" />
-		<script src="../../../node_modules/mocha/mocha.js"></script>
-		<script src="../../../node_modules/chai/chai.js"></script>
-		<script>
-			mocha.setup({
-				timeout: 10000,
-				ui: 'bdd'
-			});
-			var assert = chai.assert;
-		</script>
-		<% files.forEach(function (file) { %>
-			<script src="../../<%=file%>"></script>
-		<%  }); %>
-
+		<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
+		<link rel="stylesheet" type="text/css" href="/test/mocha-styles.css" />
 	</head>
-
 	<body>
 		<div id="mocha"></div>
 		<div id="fixture"></div>
+
+		<script src="/node_modules/mocha/mocha.js"></script>
+		<script src="/node_modules/chai/chai.js"></script>
+		<script src="/test/mocha-setup.js"></script>
+
+		<% files.forEach(function (file) { %>
+			<script src="../../<%=file%>"></script>
+		<%  }); %>
 		<% tests.forEach(function (file) { %>
 			<script src="<%=file%>"></script>
 		<%  }); %>
-
-		<script src="/test/integration/adapter.js"></script>
+		
+		<script type="text/javascript">
+			mocha.run()
+		</script>
 	</body>
 </html>

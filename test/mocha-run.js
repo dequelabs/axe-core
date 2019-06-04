@@ -1,0 +1,2 @@
+/* global mocha*/
+mocha.run();
