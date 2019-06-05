@@ -85,19 +85,13 @@ async function executeTest({ browser, path }) {
 		const page = await browser.newPage();
 
 		page.on('pageerror', err => reject(err));
-		page.on('console', msg => {
-			if (!msg) {
-				return;
-			}
-			if (!msg.args()) {
-				return;
-			}
+		page.on('console', msg =>
 			msg.args().forEach(async arg => {
 				const output = await arg.jsonValue();
 				const message = getConsoleMessage(output);
 				console.log(message);
-			});
-		});
+			})
+		);
 
 		await page.evaluateOnNewDocument(setGlobals);
 		await page.goto(path, { waitUntil: `load` });
@@ -118,16 +112,16 @@ function getConsoleMessage(output) {
 		return output;
 	}
 	if (output.includes('Suite: ')) {
-		return output.replace('Suite:', clc.magenta.bold(' Suite '));
+		return output.replace('Suite:', clc.bgMagenta.bold(' Suite '));
 	}
 	if (output.includes('Pass: ')) {
-		return output.replace('Pass:', clc.green(' Pass '));
+		return output.replace('Pass:', clc.bgGreen(' Pass '));
 	}
 	if (output.includes('Fail: ')) {
-		return output.replace('Fail:', clc.red(' Fail '));
+		return output.replace('Fail:', clc.bgRed(' Fail '));
 	}
 	if (output.includes('Pending: ')) {
-		return output.replace('Pending:', clc.cyan(' Pending '));
+		return output.replace('Pending:', clc.bgCyan(' Pending '));
 	}
 	return output;
 }

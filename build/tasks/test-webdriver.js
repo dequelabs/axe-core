@@ -5,7 +5,7 @@ var WebDriver = require('selenium-webdriver');
 
 module.exports = function(grunt) {
 	/**
-	 * Keep injecting scripts until window.mochaResults is set
+	 * Keep injecting scripts until `window.__mochaResult__` is set
 	 */
 	function collectTestResults(driver) {
 		// inject a script that waits half a second
@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 				var callback = arguments[arguments.length - 1];
 				setTimeout(function() {
 					// return the mocha results (or undefined if not finished)
-					callback(window.mochaResults);
+					callback(window.__mochaResult__);
 				}, 500);
 			})
 			.then(function(result) {
@@ -54,7 +54,7 @@ module.exports = function(grunt) {
 					grunt.log.writeln(url + ' [' + browserName + ']');
 
 					// Remember the errors
-					(result.reports || []).forEach(function(err) {
+					(result.failedTests || []).forEach(function(err) {
 						grunt.log.error(err.message);
 						err.url = url;
 						err.browser = browserName;
