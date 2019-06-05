@@ -26,7 +26,45 @@
 		<%  }); %>
 		
 		<script type="text/javascript">
-			mocha.run()
+			var runner = mocha.run();
+
+			if (!window.isAxeHeadlessMode) {		
+				var failedTests = [];	
+
+				runner
+					.once(Mocha.Runner.constants.EVENT_RUN_END, onEventRunEnd)
+					.on(Mocha.Runner.constants.EVENT_TEST_FAIL, onEventTestFail)
+
+				function onEventRunEnd() {
+					var result = {
+						stats: runner.stats,
+						failedTests: failedTests
+					};
+					setResult(result);
+				}
+
+				function setResult(stats) {
+					!window.__mochaResult__ && (window.__mochaResult__ = stats);
+				}
+
+				function onEventTestFail(test, err) {
+					var flattenTitles = function(test) {	
+						var titles = [];	
+						while (test.parent.title) {	
+							titles.push(test.parent.title);	
+							test = test.parent;	
+						}	
+						return titles.reverse();	
+					}	
+					failedTests.push({	
+						name: test.title,	
+						result: false,	
+						message: err.message,	
+						stack: err.stack,	
+						titles: flattenTitles(test)	
+					});	
+				}
+			}
 		</script>
 	</body>
 </html>
