@@ -40,26 +40,13 @@ const getTestPaths = require('./get-test-paths');
 			totalDuration += stats.duration;
 
 			console.log(
-				clc.black.bgYellow('Stats: ') +
-					'\n' +
-					'Test Path: ' +
-					path +
-					'\n' +
-					'Total Tests: ' +
-					stats.tests +
-					'\n' +
-					'Total Duration: ' +
-					stats.duration +
-					' ms \n' +
-					'Passed: ' +
-					stats.passes +
-					'\n' +
-					'Failed: ' +
-					stats.failures +
-					'\n' +
-					'Pending: ' +
-					stats.pending +
-					'\n'
+				clc.yellow(
+					`Stats: ${path} (Total: ${stats.tests}, Duration: ${
+						stats.duration
+					}, Passed: ${stats.passes}, Failed: ${stats.failures}, Pending: ${
+						stats.pending
+					}\n)`
+				)
 			);
 		} catch (error) {
 			console.log(error);
@@ -117,7 +104,9 @@ async function executeTest({ browser, path }) {
 		await page.waitForFunction(() => window.__mochaResult__, {
 			timeout: 300000
 		});
-		const response = await page.evaluate(() => window.__mochaResult__);
+		const response = await page.evaluate(() => {
+			return window.__mochaResult__;
+		});
 		await page.close();
 
 		resolve(response);
@@ -129,16 +118,16 @@ function getConsoleMessage(output) {
 		return output;
 	}
 	if (output.includes('Suite: ')) {
-		return output.replace('Suite:', clc.black.bgMagenta.bold(' Suite '));
+		return output.replace('Suite:', clc.magenta.bold(' Suite '));
 	}
 	if (output.includes('Pass: ')) {
-		return output.replace('Pass:', clc.black.bgGreen(' Pass '));
+		return output.replace('Pass:', clc.green(' Pass '));
 	}
 	if (output.includes('Fail: ')) {
-		return output.replace('Fail:', clc.black.bgRed(' Fail '));
+		return output.replace('Fail:', clc.red(' Fail '));
 	}
 	if (output.includes('Pending: ')) {
-		return output.replace('Pending:', clc.black.bgCyan(' Pending '));
+		return output.replace('Pending:', clc.cyan(' Pending '));
 	}
 	return output;
 }
