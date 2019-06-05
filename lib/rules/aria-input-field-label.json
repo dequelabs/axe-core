@@ -8,11 +8,6 @@
 		"help": "ARIA input fields have an accessible name"
 	},
 	"all": [],
-	"any": [
-		"aria-label",
-		"aria-labelledby",
-		"non-empty-title",
-		"has-visible-text"
-	],
+	"any": ["aria-label", "aria-labelledby", "non-empty-title"],
 	"none": ["no-implicit-explicit-label"]
 }
