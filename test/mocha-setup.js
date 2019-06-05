@@ -1,15 +1,16 @@
 /*global mocha, assert, Mocha*/
 /*eslint no-unused-vars: 0*/
-var isBrowser = new Function(
-	'try {return this===window;}catch(e){ return false;}'
-)();
-
 var mochaSetupOptions = {
 	timeout: 20000,
 	ui: 'bdd'
 };
-if (isBrowser) {
-	mochaSetupOptions.reporter = axeHeadlessReporter;
+
+/**
+ * Only override `reporter` for `headless` mode
+ * - `isAxeHeadlessMode` is set in `build/test/headless.js`, when tests are executed in `puppeteer`
+ */
+if (window.isAxeHeadlessMode) {
+	mochaSetupOptions.reporter = axeHeadlessModeReporter;
 }
 
 mocha.setup(mochaSetupOptions);
@@ -19,14 +20,14 @@ var assert = chai.assert;
  * Custom mocha reporter, invoked when running in headless mode (eg: puppeteer)
  * @param {Object} runner mocha runner instance
  */
-function axeHeadlessReporter(runner) {
+function axeHeadlessModeReporter(runner) {
 	var indent = 0;
+	var failedTests = [];
 
 	Mocha.reporters.Base.call(this, runner);
 
 	runner
 		// 'run' hooks
-		.once(Mocha.Runner.constants.EVENT_RUN_BEGIN, onEventRunBegin)
 		.once(Mocha.Runner.constants.EVENT_RUN_END, onEventRunEnd)
 		// 'suite' hooks
 		.on(Mocha.Runner.constants.EVENT_SUITE_BEGIN, onEventSuiteBegin)
@@ -38,44 +39,34 @@ function axeHeadlessReporter(runner) {
 		.on(Mocha.Runner.constants.EVENT_TEST_PENDING, onEventTestPending)
 		.on(Mocha.Runner.constants.EVENT_TEST_END, decreaseIndent);
 
-	function onEventRunBegin() {
-		write('Axe Custom Mocha Reporter - Start\n');
-	}
-
 	function onEventRunEnd() {
-		write(
-			'Axe Custom Mocha Reporter - End.\n\nStats: ' +
-				runner.stats.tests +
-				'/' +
-				runner.total +
-				' (' +
-				runner.stats.passes +
-				' passed,  ' +
-				runner.stats.failures +
-				' failed).'
-		);
+		var result = {
+			stats: runner.stats,
+			failedTests: failedTests
+		};
+		setResult(result);
 	}
 
 	function onEventSuiteBegin(suite) {
 		increaseIndent();
 		if (suite.fullTitle().trim().length) {
-			write(getIndent() + 'Suite: ' + suite.fullTitle());
-		} else {
-			write('Suite: Axe Tests');
+			console.log(getIndent() + 'Suite: ' + suite.fullTitle());
 		}
 	}
 
 	function onEventTestPass(test) {
-		write(getIndent() + 'Pass: ' + test.fullTitle());
+		console.log(getIndent() + 'Pass: ' + test.fullTitle());
 	}
 
 	function onEventTestFail(test, err) {
-		write(
+		failedTests.push(getTestData(test));
+		console.log(
 			getIndent() + 'Fail: ' + test.fullTitle() + ', Error: ' + err.message
 		);
 	}
+
 	function onEventTestPending(test) {
-		write(getIndent() + 'Pending: ' + test.fullTitle());
+		console.log(getIndent() + 'Pending: ' + test.fullTitle());
 	}
 
 	function increaseIndent() {
@@ -87,12 +78,30 @@ function axeHeadlessReporter(runner) {
 	}
 
 	function getIndent() {
-		return Array(indent).join('  ');
+		return Array(indent >= 0 ? indent : 0).join('  ');
 	}
 
-	function write(str) {
-		console.log(str);
-		// todo:jey
-		// process.stdout.write(str)
+	function getTestData(test) {
+		return {
+			title: test.title,
+			fullTitle: test.fullTitle(),
+			duration: test.duration,
+			err: getTestError(test.err)
+		};
+	}
+
+	function getTestError(err) {
+		if (!err) {
+			return {};
+		}
+		var result = {};
+		Object.getOwnPropertyNames(err).forEach(function(key) {
+			result[key] = err[key];
+		});
+		return result;
+	}
+
+	function setResult(stats) {
+		!window.__mochaResult__ && (window.__mochaResult__ = stats);
 	}
 }
