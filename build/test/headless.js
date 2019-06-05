@@ -1,6 +1,5 @@
 /*global window*/
-
-const chalk = require('chalk');
+const clc = require('cli-color');
 const puppeteer = require('puppeteer');
 const getTestPaths = require('./get-test-paths');
 
@@ -41,7 +40,7 @@ const getTestPaths = require('./get-test-paths');
 			totalDuration += stats.duration;
 
 			console.log(
-				chalk.black.bgYellow('Stats: ') +
+				clc.black.bgYellow('Stats: ') +
 					'\n' +
 					'Test Path: ' +
 					path +
@@ -68,7 +67,7 @@ const getTestPaths = require('./get-test-paths');
 	}
 
 	console.log(
-		chalk.green(
+		clc.green(
 			`Tests Execution Completed (Total: ${totalTests}, Duration: ${totalDuration} ms)\n`
 		)
 	);
@@ -78,10 +77,10 @@ const getTestPaths = require('./get-test-paths');
 	 * Enumerate and list all failed tests
 	 */
 	if (allFailedTests.length) {
-		console.log(chalk.red(`Failed Tests (${allFailedTests.length}):\n`));
+		console.log(clc.red(`Failed Tests (${allFailedTests.length}):\n`));
 
 		allFailedTests.forEach((test, index) => {
-			console.log(chalk.red(`${index + 1}. ${test.fullTitle}`));
+			console.log(clc.red(`${index + 1}. ${test.fullTitle}`));
 			console.log(test.err);
 		});
 		// exit, as failure
@@ -130,16 +129,16 @@ function getConsoleMessage(output) {
 		return output;
 	}
 	if (output.includes('Suite: ')) {
-		return output.replace('Suite:', chalk.black.bgMagenta.bold(' Suite '));
+		return output.replace('Suite:', clc.black.bgMagenta.bold(' Suite '));
 	}
 	if (output.includes('Pass: ')) {
-		return output.replace('Pass:', chalk.black.bgGreen(' Pass '));
+		return output.replace('Pass:', clc.black.bgGreen(' Pass '));
 	}
 	if (output.includes('Fail: ')) {
-		return output.replace('Fail:', chalk.black.bgRed(' Fail '));
+		return output.replace('Fail:', clc.black.bgRed(' Fail '));
 	}
 	if (output.includes('Pending: ')) {
-		return output.replace('Pending:', chalk.black.bgCyan(' Pending '));
+		return output.replace('Pending:', clc.black.bgCyan(' Pending '));
 	}
 	return output;
 }
