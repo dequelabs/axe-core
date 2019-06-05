@@ -1,59 +1,22 @@
 <!-- PASS -->
-<!-- checkbox -->
-<div id="pass1" aria-label="newspaper" role="checkbox">Newspaper</div>
 <!-- combobox -->
-<div id="pass2" aria-label="country" role="combobox">England</div>
+<div id="pass1" aria-label="country" role="combobox">England</div>
 <!-- listbox -->
 <p id="pass3Label" role="label">Select a color:</p>
-<div id="pass3" role="listbox" aria-labelledby="pass3Label">
+<div id="pass2" role="listbox" aria-labelledby="pass3Label">
 	<div role="option">Orange</div>
-</div>
-<!-- menuitemchecbox -->
-<ul role="menu">
-	<li role="menuitem">Console</li>
-	<li
-		id="pass4"
-		role="menuitemcheckbox"
-		aria-label="Word wrap"
-		aria-checked="true"
-	>
-		Word wrap
-	</li>
-</ul>
-<!-- menuitemradio -->
-<ul role="menu">
-	<li
-		id="pass5"
-		role="menuitemradio"
-		aria-label="Sans-serif"
-		aria-checked="true"
-	>
-		Sans-serif
-	</li>
-</ul>
-<!-- radio -->
-<div role="radiogroup">
-	<div
-		id="pass6"
-		role="radio"
-		aria-checked="false"
-		tabindex="0"
-		aria-label="Regular crust"
-	>
-		Regular crust
-	</div>
 </div>
 <!-- searchbox -->
 <p id="pass7Label" role="label">Search currency pairs:</p>
 <div
-	id="pass7"
+	id="pass3"
 	role="searchbox"
 	contenteditable="true"
 	aria-labelledby="pass7Label"
 ></div>
 <!-- slider -->
 <div
-	id="pass8"
+	id="pass4"
 	role="slider"
 	aria-label="Choose a value"
 	aria-valuemin="1"
@@ -62,27 +25,17 @@
 ></div>
 <!-- spinbutton -->
 <div
-	id="pass9"
+	id="pass5"
 	role="spinbutton"
 	aria-valuemin="0"
 	aria-valuemax="10"
 	aria-valuenow="8"
 	aria-label="Enter quantity:"
 ></div>
-<!-- switch -->
-<div
-	id="pass10"
-	role="switch"
-	aria-checked="true"
-	aria-label="Display blue light:"
->
-	<span>off</span>
-	<span>on</span>
-</div>
 <!-- textbox -->
 <label id="foo">
 	foo
-	<div id="pass11" role="textbox" aria-labelledby="foo"></div>
+	<div id="pass6" role="textbox" aria-labelledby="foo"></div>
 </label>
 
 <!-- FAIL -->
@@ -98,39 +51,22 @@
 <!-- explicit label -->
 <label for="fail4">first name</label>
 <div role="textbox" id="fail4"></div>
-<!-- checkbox -->
-<div id="fail5" role="checkbox">Newspaper</div>
 <!-- combobox -->
-<div id="fail6" role="combobox">England</div>
+<div id="fail5" role="combobox">England</div>
 <!-- listbox -->
-<div id="fail7" role="listbox" aria-labelledby="label-does-not-exist">
+<div id="fail6" role="listbox" aria-labelledby="label-does-not-exist">
 	<div role="option">Orange</div>
-</div>
-<!-- menuitemchecbox -->
-<ul role="menu">
-	<li role="menuitem">Console</li>
-	<li id="fail8" role="menuitemcheckbox" aria-checked="true">Word wrap</li>
-</ul>
-<!-- menuitemradio -->
-<ul role="menu">
-	<li id="fail9" role="menuitemradio" aria-checked="true">Sans-serif</li>
-</ul>
-<!-- radio -->
-<div role="radiogroup">
-	<div id="fail10" role="radio" aria-checked="false" tabindex="0">
-		Regular crust
-	</div>
 </div>
 <!-- searchbox -->
 <div
-	id="fail11"
+	id="fail7"
 	role="searchbox"
 	contenteditable="true"
 	aria-labelledby="unknown-label"
 ></div>
 <!-- slider -->
 <div
-	id="fail12"
+	id="fail8"
 	role="slider"
 	aria-valuemin="1"
 	aria-valuemax="7"
@@ -138,21 +74,16 @@
 ></div>
 <!-- spinbutton -->
 <div
-	id="fail13"
+	id="fail9"
 	role="spinbutton"
 	aria-valuemin="0"
 	aria-valuemax="10"
 	aria-valuenow="8"
 ></div>
-<!-- switch -->
-<div id="fail14" role="switch" aria-checked="true">
-	<span>off</span>
-	<span>on</span>
-</div>
 <!-- textbox -->
 <label>
 	foo
-	<div id="fail15" role="textbox"></div>
+	<div id="fail10" role="textbox"></div>
 </label>
 
 <!-- INAPPLICABLE -->
