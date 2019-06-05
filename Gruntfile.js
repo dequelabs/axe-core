@@ -13,7 +13,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-parallel');
 	grunt.loadNpmTasks('grunt-run');
 	grunt.loadTasks('build/tasks');
@@ -337,9 +336,6 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		mocha: testConfig(grunt, {
-			reporter: grunt.option('reporter') || 'Spec'
-		}),
 		connect: {
 			test: {
 				options: {
@@ -350,16 +346,18 @@ module.exports = function(grunt) {
 			}
 		},
 		run: {
-			npm_run_imports: {
-				cmd: 'node',
-				args: ['./build/imports-generator']
+			npmRunImportsGenerator: {
+				exec: 'npm run imports-generator'
+			},
+			npmRunTestHeadless: {
+				exec: 'npm run test:headless'
 			}
 		}
 	});
 
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('pre-build', ['clean', 'run:npm_run_imports']);
+	grunt.registerTask('pre-build', ['clean', 'run:npmRunImportsGenerator']);
 
 	grunt.registerTask('build', [
 		'pre-build',
@@ -378,7 +376,7 @@ module.exports = function(grunt) {
 		'testconfig',
 		'fixture',
 		'connect',
-		'mocha',
+		'run:npmRunTestHeadless',
 		'parallel'
 	]);
 
@@ -395,7 +393,7 @@ module.exports = function(grunt) {
 		'testconfig',
 		'fixture',
 		'connect',
-		'mocha'
+		'run:npmRunTestHeadless'
 	]);
 
 	grunt.registerTask('translate', [
