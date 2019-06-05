@@ -1,6 +1,6 @@
 <!-- PASS -->
 <!-- checkbox -->
-<div id="pass1" aria-label="newspaper" role="checkbox">Newspaper</div>
+<div id="pass1" role="checkbox">Newspaper</div>
 <!-- menuitemcheckbox -->
 <ul role="menu">
 	<li
@@ -8,20 +8,17 @@
 		role="menuitemcheckbox"
 		aria-label="Word wrap"
 		aria-checked="true"
-	>
-		Word wrap
-	</li>
+	></li>
 </ul>
 <!-- menuitemradio -->
+<p id="pass3Label">Sans-serif</p>
 <ul role="menu">
 	<li
 		id="pass3"
 		role="menuitemradio"
-		aria-label="Sans-serif"
+		aria-labelledby="pass3Label"
 		aria-checked="true"
-	>
-		Sans-serif
-	</li>
+	></li>
 </ul>
 <!-- radio -->
 <div role="radiogroup">
@@ -30,17 +27,15 @@
 		role="radio"
 		aria-checked="false"
 		tabindex="0"
-		aria-label="Regular crust"
-	>
-		Regular crust
-	</div>
+		title="Regular Crust"
+	></div>
 </div>
 <!-- switch -->
 <div
 	id="pass5"
 	role="switch"
 	aria-checked="true"
-	aria-label="Display blue light:"
+	aria-label="Toggle blue light:"
 >
 	<span>off</span>
 	<span>on</span>
