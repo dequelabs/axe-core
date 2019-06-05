@@ -1,0 +1,6 @@
+{
+	"description": "identical-links-same-purpose tests",
+	"rule": "identical-links-same-purpose",
+	"violations": [],
+	"passes": []
+}

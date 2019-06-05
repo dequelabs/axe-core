@@ -1,0 +1,13 @@
+{
+	"id": "identical-links-same-purpose",
+	"matches": "identical-links-same-purpose-matches.js",
+	"tags": [],
+	"metadata": {
+		"description": "Ensure",
+		"help": ""
+	},
+	"preload": false,
+	"all": ["identical-links-same-purpose"],
+	"any": [],
+	"none": []
+}

@@ -1,0 +1,12 @@
+{
+	"id": "identical-links-same-purpose",
+	"evaluate": "identical-links-same-purpose.js",
+	"metadata": {
+		"impact": "",
+		"messages": {
+			"pass": "",
+			"fail": "",
+			"incomplete": ""
+		}
+	}
+}
