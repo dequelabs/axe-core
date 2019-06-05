@@ -11,12 +11,12 @@ describe('no-implicit-explicit-label', function() {
 		checkContext.reset();
 	});
 
-	it('returns undefined when there is no label text or accessible text', function() {
+	it('returns false when there is no label text or accessible text', function() {
 		var vNode = queryFixture(
 			'<div id="target" role="searchbox" contenteditable="true"></div>'
 		);
 		var actual = check.evaluate.call(checkContext, vNode.actualNode, {}, vNode);
-		assert.isUndefined(actual);
+		assert.isFalse(actual);
 	});
 
 	it('returns undefined when there is no accessible text', function() {
