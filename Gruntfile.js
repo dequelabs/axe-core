@@ -347,7 +347,7 @@ module.exports = function(grunt) {
 		},
 		run: {
 			npmRunImportsGenerator: {
-				exec: 'npm run imports-generator'
+				exec: 'npm run imports-gen'
 			},
 			npmRunTestHeadless: {
 				exec: 'npm run test:headless'
