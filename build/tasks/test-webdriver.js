@@ -41,20 +41,23 @@ module.exports = function(grunt) {
 				.get(url)
 				// Get results
 				.then(function() {
-					let driverBrowser = driver
-						.getCapabilities()
-						.then(capabilities => capabilities.get('browserName'));
-					return Promise.all([driverBrowser, collectTestResults(driver)]);
+					return Promise.all([
+						driver.getCapabilities(),
+						collectTestResults(driver)
+					]);
 				})
 				// And process them
-				.then(function([browser, result]) {
-					grunt.log.writeln(url + ' [' + browser + ']');
+				.then(function([capabilities, result]) {
+					let browserName =
+						capabilities.get('browserName') +
+						(capabilities.get('mobileEmulationEnabled') ? '-mobile' : '');
+					grunt.log.writeln(url + ' [' + browserName + ']');
 
 					// Remember the errors
 					(result.reports || []).forEach(function(err) {
 						grunt.log.error(err.message);
 						err.url = url;
-						err.browser = browser;
+						err.browser = browserName;
 						errors.push(err);
 					});
 

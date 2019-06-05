@@ -4,3 +4,8 @@
   word-wrap: break-word;
   hyphens: auto;
 }
+
+/* mocha stats having a fixed position can interfere with some tests when intersecting with elements */
+#mocha-stats {
+  position: static;
+}

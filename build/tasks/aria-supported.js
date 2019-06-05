@@ -32,7 +32,6 @@ module.exports = function(grunt) {
 					'(https://www.deque.com/blog/weve-got-your-back-with-accessibility-supported-in-axe/).\n\n' +
 					'For a detailed description about how accessibility support is decided, see [How we make ' +
 					'decisions on rules](accessibility-supported.md).',
-				rolesMdTableHeader: ['aria-role', 'axe-core support'],
 				attributesMdTableHeader: ['aria-attribute', 'axe-core support']
 			};
 
@@ -41,10 +40,6 @@ module.exports = function(grunt) {
 				axe.commons.aria.lookupTable.role,
 				listType
 			);
-			const rolesTableMarkdown = mdTable([
-				headings.rolesMdTableHeader,
-				...rolesTable
-			]);
 
 			const ariaQueryAriaAttributes = getAriaQueryAttributes();
 			const { diff: attributesTable, notes: attributesFootnotes } = getDiff(
@@ -63,7 +58,7 @@ module.exports = function(grunt) {
 
 			const content = `${
 				headings.main
-			}\n\n## Roles\n\n${rolesTableMarkdown}\n\n## Attributes\n\n${attributesTableMarkdown}\n\n${footnotes}`;
+			}\n\n## Attributes\n\n${attributesTableMarkdown}\n\n${footnotes}`;
 
 			const destFile = this.data.destFile;
 			// Format the content so Prettier doesn't create a diff after running.
