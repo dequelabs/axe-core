@@ -343,8 +343,20 @@ describe('runRules', function() {
 			]
 		});
 
+		/**
+		 * Note:
+		 * The `generateSelector` computation from `lib/utils/get-selector.js`, relies on having at least 2 nodes on the page of the same type, before it looks at a parent element, in order to compute the selector.
+		 * When running tests directly on the browser and not in headless mode, `mocha` spec (default) reporter injects a bunch of dom elements like `mocha-stats (<em></em> & <span></span>)` elements.
+		 * This is not true, when the tests are run in `headless` fashion, as the `reporter` is overridden and additional `mocha-stats` DOM is generated.
+		 *
+		 * As a consequence, the above computation returns wrong selectors in `headless` mode.
+		 *
+		 * To circumvent this edge-case, in this fixture additional `span` and `em` elements are added.
+		 * This keeps assertions happy in `headless` mode.
+		 */
 		fixture.innerHTML =
-			'<div id="t1"><span></span></div><div id="t2"><em></em></div>';
+			'<div id="t1"><span></span></div><div id="t2"><em></em></div>' +
+			'<span></span><em></em>';
 
 		var $test = {
 			0: fixture.querySelector('#t1'),
@@ -383,8 +395,20 @@ describe('runRules', function() {
 			]
 		});
 
+		/**
+		 * Note:
+		 * The `generateSelector` computation from `lib/utils/get-selector.js`, relies on having at least 2 nodes on the page of the same type, before it looks at a parent element, in order to compute the selector.
+		 * When running tests directly on the browser and not in headless mode, `mocha` spec (default) reporter injects a bunch of dom elements like `mocha-stats (<em></em> & <span></span>)` elements.
+		 * This is not true, when the tests are run in `headless` fashion, as the `reporter` is overridden and additional `mocha-stats` DOM is generated.
+		 *
+		 * As a consequence, the above computation returns wrong selectors in `headless` mode.
+		 *
+		 * To circumvent this edge-case, in this fixture additional `span` and `em` elements are added.
+		 * This keeps assertions happy in `headless` mode.
+		 */
 		fixture.innerHTML =
-			'<div class="foo" id="t1"><span></span></div><div class="foo" id="t2"><em></em></div>';
+			'<div class="foo" id="t1"><span></span></div><div class="foo" id="t2"><em></em></div>' +
+			'<span></span><em></em>';
 
 		var test = fixture.querySelectorAll('.foo');
 		axe.run(test, function(err, results) {
