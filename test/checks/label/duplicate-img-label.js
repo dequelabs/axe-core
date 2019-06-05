@@ -10,21 +10,8 @@ describe('duplicate-img-label', function() {
 		axe._tree = undefined;
 	});
 
-	it('should return false if no img is present', function() {
-		fixture.innerHTML = '<button id="target">Plain text</button>';
-		var node = fixture.querySelector('#target');
-		axe.testUtils.flatTreeSetup(fixture);
-		assert.isFalse(
-			checks['duplicate-img-label'].evaluate(
-				node,
-				undefined,
-				axe.utils.getNodeFromTree(node)
-			)
-		);
-	});
-
 	it('should return false if no text is present', function() {
-		fixture.innerHTML = '<button id="target"><img alt="Plain text"></button>';
+		fixture.innerHTML = '<button><img id="target" alt="Plain text"></button>';
 		var node = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
 		var result = checks['duplicate-img-label'].evaluate(
@@ -37,7 +24,7 @@ describe('duplicate-img-label', function() {
 
 	it('should return false if aria-label duplicates img alt', function() {
 		fixture.innerHTML =
-			'<button id="target" aria-label="Plain text"><img alt="Plain text"></button>';
+			'<button aria-label="Plain text"><img id="target" alt="Plain text"></button>';
 		var node = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
@@ -51,7 +38,7 @@ describe('duplicate-img-label', function() {
 
 	it('should return false if img and text have different text', function() {
 		fixture.innerHTML =
-			'<button id="target"><img alt="Alt text">Plain text</button>';
+			'<button><img id="target" alt="Alt text">Plain text</button>';
 		var node = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
@@ -65,7 +52,7 @@ describe('duplicate-img-label', function() {
 
 	it('should return true if img and text have the same text', function() {
 		fixture.innerHTML =
-			'<button id="target"><img alt="Plain text">Plain text</button>';
+			'<button><img id="target" alt="Plain text">Plain text</button>';
 		var node = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isTrue(
@@ -79,7 +66,7 @@ describe('duplicate-img-label', function() {
 
 	it('should return true if img has ARIA label with the same text', function() {
 		fixture.innerHTML =
-			'<button id="target"><img aria-label="Plain text">Plain text</button>';
+			'<button><img id="target" aria-label="Plain text">Plain text</button>';
 		var node = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isTrue(
@@ -92,7 +79,7 @@ describe('duplicate-img-label', function() {
 	});
 
 	it('should return false if img and text are both blank', function() {
-		fixture.innerHTML = '<button id="target"><img alt=""></button>';
+		fixture.innerHTML = '<button><img id="target" alt=""></button>';
 		var node = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
@@ -106,7 +93,7 @@ describe('duplicate-img-label', function() {
 
 	it('should return false if img and text have superset/subset text', function() {
 		fixture.innerHTML =
-			'<button id="target"><img alt="Plain text and more">Plain text</button>';
+			'<button><img id="target" alt="Plain text and more">Plain text</button>';
 		var node = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
@@ -125,11 +112,16 @@ describe('duplicate-img-label', function() {
 			button.setAttribute('role', 'button');
 			button.innerHTML = 'My button';
 			var shadow = button.attachShadow({ mode: 'open' });
-			shadow.innerHTML = '<slot></slot><img alt="My button">';
-			var checkArgs = checkSetup(button);
-
+			shadow.innerHTML = '<slot></slot><img id="target" alt="My button">';
+			fixture.appendChild(button);
+			axe.testUtils.flatTreeSetup(fixture);
+			var node = shadow.querySelector('#target');
 			assert.isTrue(
-				checks['duplicate-img-label'].evaluate.apply(null, checkArgs)
+				checks['duplicate-img-label'].evaluate(
+					node,
+					undefined,
+					axe.utils.getNodeFromTree(node)
+				)
 			);
 		}
 	);
@@ -139,13 +131,19 @@ describe('duplicate-img-label', function() {
 		function() {
 			var button = document.createElement('div');
 			button.setAttribute('role', 'button');
-			button.innerHTML = '<img alt="My button">';
+			button.innerHTML = '<img id="target" alt="My button">';
 			var shadow = button.attachShadow({ mode: 'open' });
 			shadow.innerHTML = '<span>My button</span> <slot></slot>';
-			var checkArgs = checkSetup(button);
 
+			fixture.appendChild(button);
+			axe.testUtils.flatTreeSetup(fixture);
+			var node = button.querySelector('#target');
 			assert.isTrue(
-				checks['duplicate-img-label'].evaluate.apply(null, checkArgs)
+				checks['duplicate-img-label'].evaluate(
+					node,
+					undefined,
+					axe.utils.getNodeFromTree(node)
+				)
 			);
 		}
 	);
