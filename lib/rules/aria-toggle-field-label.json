@@ -8,6 +8,11 @@
 		"help": "ARIA toggle fields have an accessible name"
 	},
 	"all": [],
-	"any": ["aria-label", "aria-labelledby", "non-empty-title"],
+	"any": [
+		"aria-label",
+		"aria-labelledby",
+		"non-empty-title",
+		"has-visible-text"
+	],
 	"none": ["no-implicit-explicit-label"]
 }
