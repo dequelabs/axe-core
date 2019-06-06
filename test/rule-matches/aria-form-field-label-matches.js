@@ -6,7 +6,7 @@ describe('aria-form-field-label-matches', function() {
 	var rule = axe._audit.rules.find(function(rule) {
 		return (
 			rule.id === 'aria-toggle-field-label' ||
-			rule.id === 'aria-input-field-matches'
+			rule.id === 'aria-input-field-label'
 		);
 	});
 

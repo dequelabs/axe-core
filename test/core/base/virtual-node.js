@@ -24,13 +24,16 @@ describe('VirtualNode', function() {
 			assert.equal(vNode.actualNode, node);
 		});
 
-		it('should abstract Node and Element APIs', function() {
+		it('should abstract Node properties', function() {
+			node = document.createElement('input');
 			node.id = 'monkeys';
 			var vNode = new VirtualNode(node);
 
-			assert.equal(vNode.elementNodeType, 1);
-			assert.equal(vNode.elementNodeName, 'div');
-			assert.equal(vNode.elementId, 'monkeys');
+			assert.isDefined(vNode.props);
+			assert.equal(vNode.props.nodeType, 1);
+			assert.equal(vNode.props.nodeName, 'input');
+			assert.equal(vNode.props.id, 'monkeys');
+			assert.equal(vNode.props.type, 'text');
 		});
 
 		it('should lowercase nodeName', function() {
@@ -39,7 +42,7 @@ describe('VirtualNode', function() {
 			};
 			var vNode = new VirtualNode(node);
 
-			assert.equal(vNode.elementNodeName, 'foobar');
+			assert.equal(vNode.props.nodeName, 'foobar');
 		});
 
 		describe('hasClass', function() {
