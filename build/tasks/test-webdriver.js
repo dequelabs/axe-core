@@ -62,15 +62,15 @@ module.exports = function(grunt) {
 					});
 
 					// Log the result of the page tests
-					grunt.log[result.failures ? 'error' : 'ok'](
+					grunt.log[result.stats.failures ? 'error' : 'ok'](
 						'passes: ' +
-							result.passes +
+							result.stats.passes +
 							', ' +
 							'failures: ' +
-							result.failures +
+							result.stats.failures +
 							', ' +
 							'duration: ' +
-							result.duration / 1000 +
+							result.stats.duration / 1000 +
 							's'
 					);
 					grunt.log.writeln();
