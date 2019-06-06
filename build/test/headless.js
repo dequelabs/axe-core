@@ -1,5 +1,4 @@
 /*global window*/
-const clc = require('cli-color');
 const puppeteer = require('puppeteer');
 const getTestPaths = require('./get-test-paths');
 
@@ -40,13 +39,11 @@ const getTestPaths = require('./get-test-paths');
 			totalDuration += stats.duration;
 
 			console.log(
-				clc.yellow(
-					`Stats: ${path} (Total: ${stats.tests}, Duration: ${
-						stats.duration
-					}, Passed: ${stats.passes}, Failed: ${stats.failures}, Pending: ${
-						stats.pending
-					}\n)`
-				)
+				`Stats: ${path} (Total: ${stats.tests}, Duration: ${
+					stats.duration
+				}, Passed: ${stats.passes}, Failed: ${stats.failures}, Pending: ${
+					stats.pending
+				}\n)`
 			);
 		} catch (error) {
 			console.log(error);
@@ -54,32 +51,34 @@ const getTestPaths = require('./get-test-paths');
 	}
 
 	console.log(
-		clc.green(
-			`Tests Execution Completed (Total: ${totalTests}, Duration: ${totalDuration} ms)\n`
-		)
+		`Tests Execution Completed (Total: ${totalTests}, Duration: ${totalDuration} ms)\n`
 	);
 
 	/**
-	 *
 	 * Enumerate and list all failed tests
 	 */
 	if (allFailedTests.length) {
-		console.log(clc.red(`Failed Tests (${allFailedTests.length}):\n`));
+		console.log(`Failed Tests (${allFailedTests.length}):\n`);
 
 		allFailedTests.forEach((test, index) => {
-			console.log(clc.red(`${index + 1}. ${test.fullTitle}`));
+			console.log(`${index + 1}. ${test.fullTitle}`);
 			console.log(test.err);
 		});
-		// exit, as failure
+		// exit - failure
 		process.exit(1);
 	}
 
-	/**
-	 * Exit, successfully
-	 */
+	// exit - success
 	process.exit();
 })();
 
+/**
+ * Launch a page in puppeteer and return mocha results
+ *
+ * @param {Object} browser puppeteer browser instance
+ * @param {String} path path to launch as page
+ * @return {Promise}
+ */
 async function executeTest({ browser, path }) {
 	return new Promise(async (resolve, reject) => {
 		const page = await browser.newPage();
@@ -88,8 +87,7 @@ async function executeTest({ browser, path }) {
 		page.on('console', msg =>
 			msg.args().forEach(async arg => {
 				const output = await arg.jsonValue();
-				const message = getConsoleMessage(output);
-				console.log(message);
+				console.log(output);
 			})
 		);
 
@@ -107,25 +105,10 @@ async function executeTest({ browser, path }) {
 	});
 }
 
-function getConsoleMessage(output) {
-	if (!output || typeof output.includes === 'undefined') {
-		return output;
-	}
-	if (output.includes('Suite: ')) {
-		return output.replace('Suite:', clc.bgMagenta.bold(' Suite '));
-	}
-	if (output.includes('Pass: ')) {
-		return output.replace('Pass:', clc.bgGreen(' Pass '));
-	}
-	if (output.includes('Fail: ')) {
-		return output.replace('Fail:', clc.bgRed(' Fail '));
-	}
-	if (output.includes('Pending: ')) {
-		return output.replace('Pending:', clc.bgCyan(' Pending '));
-	}
-	return output;
-}
-
+/**
+ * Sets `globals`
+ * Note: - in this case on a called from a new puppeteer page context
+ */
 function setGlobals() {
 	Object.defineProperty(window, 'isAxeHeadlessMode', {
 		value: true,
