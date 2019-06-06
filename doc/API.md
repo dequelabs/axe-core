@@ -55,6 +55,18 @@ The axe API can be used as part of a broader process that is performed on many, 
 
 The axe APIs are provided in the javascript file axe.js. It must be included in the web page under test. Parameters are sent as javascript function parameters. Results are returned in JSON format.
 
+### Required Globals
+
+Axe requires a handful of global variables and interfaces to be available in order to run. See the [jsdom example](https://github.com/dequelabs/axe-core/blob/develop/doc/examples/jsdom/test/a11y.js) for how to set these up in a non-browser environment.
+
+- `window`
+- `document`
+- [`navigator`](https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator)
+- [`Node`](https://developer.mozilla.org/en-US/docs/Web/API/Node)
+- [`NodeList`](https://developer.mozilla.org/en-US/docs/Web/API/NodeList)
+- [`Element`](https://developer.mozilla.org/en-US/docs/Web/API/Element)
+- [`Document`](https://developer.mozilla.org/en-US/docs/Web/API/Document)
+
 ### Full API Reference for Developers
 
 For a full listing of API offered by axe, clone the repository and run `npm run api-docs`. This generates `jsdoc` documentation under `doc/api` which can be viewed using the browser.
