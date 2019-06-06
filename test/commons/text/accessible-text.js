@@ -3214,6 +3214,18 @@ describe('text.accessibleTextVirtual', function() {
 			assert.equal(accessibleText(target), 'Country of origin: United States');
 		});
 
+		it('ignores genericContainers with no interesting textNodes', function() {
+			fixture.innerHTML =
+				'<div id="test">' +
+				'<div class="container">' +
+				'<h1>Something Interesting</h1>' +
+				'</div>' +
+				'</div>';
+			axe.testUtils.flatTreeSetup(fixture);
+			var target = fixture.querySelector('#test');
+			assert.equal(accessibleText(target), '');
+		});
+
 		/**
 	// In case anyone even wants it, here's the script used to generate these test cases
 	function getTestCase(content, index = 0) {
