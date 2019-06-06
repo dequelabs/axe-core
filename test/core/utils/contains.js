@@ -58,11 +58,8 @@ describe('axe.utils.contains', function() {
 	});
 
 	it('should fallback to parent lookup', function() {
-		var node1 = {
-			actualNode: 'not really a node but it doesnt matter'
-		};
+		var node1 = {};
 		var node2 = {
-			actualNode: 'not really a node but it doesnt matter',
 			parent: node1
 		};
 

@@ -1,15 +1,57 @@
 describe('axe.runVirtualRule', function() {
 	'use strict';
-	var audit = axe._audit;
+
+	var origRunRules = axe._runRules;
+	var vNode = {
+		shadowId: undefined,
+		children: [],
+		parent: undefined,
+		_cache: {},
+		_isHidden: null,
+		_attrs: {
+			type: 'text',
+			autocomplete: 'not-on-my-watch'
+		},
+		props: {
+			nodeType: 1,
+			nodeName: 'input',
+			id: null,
+			type: 'text'
+		},
+		hasClass: function() {
+			return false;
+		},
+		attr: function(attrName) {
+			return this._attrs[attrName];
+		},
+		hasAttr: function(attrName) {
+			return !!this._attrs[attrName];
+		}
+	};
 
 	beforeEach(function() {
-		axe._audit = {
-			data: {}
-		};
+		axe._load({
+			rules: [
+				{
+					id: 'test',
+					selector: '*',
+					none: ['fred']
+				}
+			],
+			checks: [
+				{
+					id: 'fred',
+					evaluate: function() {
+						return true;
+					}
+				}
+			]
+		});
 	});
 
 	afterEach(function() {
-		axe._audit = audit;
+		axe._audit = null;
+		axe._runRules = origRunRules;
 	});
 
 	it('should throw if the rule does not exist', function() {
@@ -117,37 +159,20 @@ describe('axe.runVirtualRule', function() {
 		axe.runVirtualRule('aria-roles', null, { foo: 'bar' });
 	});
 
-	it('should pass the results of rule.runSync to axe.utils.publishMetaData', function() {
-		var publishMetaData = axe.utils.publishMetaData;
-		axe.utils.publishMetaData = function(results) {
-			assert.isTrue(results);
-		};
-		axe._audit.rules = [
-			{
-				id: 'aria-roles',
-				runSync: function() {
-					return true;
-				}
-			}
-		];
-
-		axe.runVirtualRule('aria-roles');
-		axe.utils.publishMetaData = publishMetaData;
+	it('should run a rule without needing actual node', function() {
+		function fn() {
+			axe.runVirtualRule('test', vNode);
+		}
+		assert.doesNotThrow(fn);
 	});
 
-	it('should return the results of rule.runSync', function() {
-		var publishMetaData = axe.utils.publishMetaData;
-		axe.utils.publishMetaData = function() {};
-		axe._audit.rules = [
-			{
-				id: 'aria-roles',
-				runSync: function() {
-					return true;
-				}
-			}
-		];
-
-		assert.isTrue(axe.runVirtualRule('aria-roles'));
-		axe.utils.publishMetaData = publishMetaData;
+	it('should return correct structure', function() {
+		var results = axe.runVirtualRule('test', vNode);
+		assert.isDefined(results.violations);
+		assert.isDefined(results.passes);
+		assert.isDefined(results.incomplete);
+		assert.isDefined(results.inapplicable);
+		assert.isDefined(results.testEngine);
+		assert.isDefined(results.toolOptions);
 	});
 });
