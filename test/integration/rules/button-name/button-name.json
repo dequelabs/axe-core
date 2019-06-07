@@ -6,14 +6,8 @@
 		["#val"],
 		["#alempty"],
 		["#albmissing"],
-		["#albempty"]
+		["#albempty"],
+		["#buttonvalue"]
 	],
-	"passes": [
-		["#text"],
-		["#al"],
-		["#alb"],
-		["#combo"],
-		["#buttonTitle"],
-		["#inputTitle"]
-	]
+	"passes": [["#text"], ["#al"], ["#alb"], ["#combo"], ["#buttonTitle"]]
 }
