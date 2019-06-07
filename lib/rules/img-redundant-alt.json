@@ -1,10 +1,10 @@
 {
 	"id": "image-redundant-alt",
-	"selector": "button, [role=\"button\"], a[href], p, li, td, th",
+	"selector": "img",
 	"tags": ["cat.text-alternatives", "best-practice"],
 	"metadata": {
-		"description": "Ensure button and link text is not repeated as image alternative",
-		"help": "Text of buttons and links should not be repeated in the image alternative"
+		"description": "Ensure image alternative is not repeated as text",
+		"help": "Alternative text of images should not be repeated as text"
 	},
 	"all": [],
 	"any": [],
