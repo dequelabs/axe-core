@@ -14,9 +14,7 @@ const getTestPaths = require('./get-test-paths');
 	 */
 	const browser = await puppeteer.launch({
 		headless: true,
-		args: ['--no-sandbox', '-–disable-setuid-sandbox'],
-		ignoreHTTPSErrors: true,
-		devtools: true
+		args: ['--no-sandbox', '-–disable-setuid-sandbox']
 	});
 
 	let allFailedTests = [];
