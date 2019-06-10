@@ -176,6 +176,9 @@ axe.configure({
   - `reporter` - Used to set the output format that the axe.run function will pass to the callback function
     - `v1` to use the previous version's format: `axe.configure({ reporter: "v1" });`
     - `v2` to use the current version's format: `axe.configure({ reporter: "v2" });`
+    - `raw` to return the raw result data without formating: `axe.configure({ reporter: "raw" });`
+    - `raw-env` to return the raw result data with environment data: `axe.configure({ reporter: "raw-env" });`
+    - `no-passes` to return only violation results: `axe.configure({ reporter: "no-passes" });`
   - `checks` - Used to add checks to the list of checks used by rules, or to override the properties of existing checks
     - The checks attribute is an array of check objects
     - Each check object can contain the following attributes
