@@ -22,6 +22,13 @@ declare namespace axe {
 
 	type ElementContext = Node | string | RunOnlyObject;
 
+	type VirtualNodeProps = {
+		nodeType: number;
+		nodeName: string;
+		id?: string;
+		type?: string;
+	};
+
 	interface TestEngine {
 		name: string;
 		version: string;
@@ -145,6 +152,17 @@ declare namespace axe {
 			callback(...args: any[]): void;
 		}[];
 		cleanup?(callback: Function): void;
+	}
+	class VirtualNode {
+		constructor(node?: HTMLElement, parent?: VirtualNode, shadowId?: string);
+		shadowId?: string;
+		children?: VirtualNode[];
+		actualNode?: HTMLElement;
+		parent?: VirtualNode;
+		props: VirtualNodeProps;
+		hasClass(className: string): boolean;
+		attr(attrName: string): string | null;
+		hasAttr(attrName: string): boolean;
 	}
 
 	let plugins: any;
