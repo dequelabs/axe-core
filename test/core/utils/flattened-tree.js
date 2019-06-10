@@ -18,21 +18,26 @@ describe('axe.utils.getFlattenedTree', function() {
 		assert.equal(virtualDOM.length, 1); // host
 		assert.equal(virtualDOM[0].actualNode.nodeName, 'DIV');
 
+		var parentDOM = virtualDOM[0];
 		virtualDOM = virtualDOM[0].children;
 		assert.equal(virtualDOM.length, 3);
 		assert.equal(virtualDOM[0].actualNode.nodeName, 'STYLE');
+		assert.equal(virtualDOM[0].parent, parentDOM);
 
 		// breaking news stories
 		assert.equal(virtualDOM[1].actualNode.nodeName, 'DIV');
 		assert.equal(virtualDOM[1].actualNode.className, 'breaking');
+		assert.equal(virtualDOM[1].parent, parentDOM);
 
 		// other news stories
 		assert.equal(virtualDOM[2].actualNode.nodeName, 'DIV');
 		assert.equal(virtualDOM[2].actualNode.className, 'other');
+		assert.equal(virtualDOM[2].parent, parentDOM);
 
 		// breaking
 		assert.equal(virtualDOM[1].children.length, 1);
 		assert.equal(virtualDOM[1].children[0].actualNode.nodeName, 'UL');
+		assert.equal(virtualDOM[1].children[0].parent, virtualDOM[1]);
 		virtualDOM[1].children[0].children.forEach(function(child, index) {
 			assert.equal(child.actualNode.nodeName, 'LI');
 			assert.isTrue(child.actualNode.textContent === 3 * (index + 1) + '');
@@ -42,6 +47,7 @@ describe('axe.utils.getFlattenedTree', function() {
 		// other
 		assert.equal(virtualDOM[2].children.length, 1);
 		assert.equal(virtualDOM[2].children[0].actualNode.nodeName, 'UL');
+		assert.equal(virtualDOM[2].children[0].parent, virtualDOM[2]);
 		assert.equal(virtualDOM[2].children[0].children.length, 4);
 	}
 

@@ -11,17 +11,19 @@ describe('VirtualNode', function() {
 		assert.isFunction(VirtualNode);
 	});
 
-	it('should accept two parameters', function() {
-		assert.lengthOf(VirtualNode, 2);
+	it('should accept three parameters', function() {
+		assert.lengthOf(VirtualNode, 3);
 	});
 
 	describe('prototype', function() {
 		it('should have public properties', function() {
-			var vNode = new VirtualNode(node, 'foo');
+			var parent = {};
+			var vNode = new VirtualNode(node, parent, 'foo');
 
 			assert.equal(vNode.shadowId, 'foo');
 			assert.typeOf(vNode.children, 'array');
 			assert.equal(vNode.actualNode, node);
+			assert.equal(vNode.parent, parent);
 		});
 
 		it('should abstract Node properties', function() {
