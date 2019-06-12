@@ -7,6 +7,56 @@ describe('VirtualNode', function() {
 		node = document.createElement('div');
 	});
 
+	describe('AbstractVirtualNode', function() {
+		it('should be a function', function() {
+			assert.isFunction(axe.AbstractVirtualNode);
+		});
+
+		it('should throw an error when accessing props', function() {
+			function fn() {
+				var abstractNode = new axe.AbstractVirtualNode();
+				if (abstractNode.props.nodeType === 1) {
+					return;
+				}
+			}
+
+			assert.throws(fn);
+		});
+
+		it('should throw an error when accessing hasClass', function() {
+			function fn() {
+				var abstractNode = new axe.AbstractVirtualNode();
+				if (abstractNode.hasClass('foo')) {
+					return;
+				}
+			}
+
+			assert.throws(fn);
+		});
+
+		it('should throw an error when accessing attr', function() {
+			function fn() {
+				var abstractNode = new axe.AbstractVirtualNode();
+				if (abstractNode.attr('foo') === 'bar') {
+					return;
+				}
+			}
+
+			assert.throws(fn);
+		});
+
+		it('should throw an error when accessing hasAttr', function() {
+			function fn() {
+				var abstractNode = new axe.AbstractVirtualNode();
+				if (abstractNode.hasAttr('foo')) {
+					return;
+				}
+			}
+
+			assert.throws(fn);
+		});
+	});
+
 	it('should be a function', function() {
 		assert.isFunction(VirtualNode);
 	});
