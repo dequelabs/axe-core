@@ -22,13 +22,6 @@ declare namespace axe {
 
 	type ElementContext = Node | string | RunOnlyObject;
 
-	type VirtualNodeProps = {
-		nodeType: number;
-		nodeName: string;
-		id?: string;
-		type?: string;
-	};
-
 	interface TestEngine {
 		name: string;
 		version: string;
