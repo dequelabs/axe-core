@@ -153,12 +153,9 @@ declare namespace axe {
 		}[];
 		cleanup?(callback: Function): void;
 	}
-	class VirtualNode {
-		constructor(node?: HTMLElement, parent?: VirtualNode, shadowId?: string);
-		shadowId?: string;
+	interface VirtualNode {
 		children?: VirtualNode[];
-		actualNode?: HTMLElement;
-		parent?: VirtualNode;
+		parent?: VirtualNode | null;
 		props: VirtualNodeProps;
 		hasClass(className: string): boolean;
 		attr(attrName: string): string | null;

@@ -178,3 +178,34 @@ axe.configure({
 		}
 	}
 });
+
+class CustomVNode implements axe.VirtualNode {
+	parent: CustomVNode | null;
+	children: CustomVNode[];
+	props: axe.VirtualNodeProps;
+	constructor(parent?: CustomVNode | null) {
+		this.parent = parent;
+		this.children = [];
+
+		this.props = {
+			nodeType: 1,
+			nodeName: 'div'
+		};
+	}
+
+	hasClass(className: string) {
+		return false;
+	}
+
+	attr(attrName: string) {
+		return 'foo';
+	}
+
+	hasAttr(attrName: string) {
+		return true;
+	}
+}
+
+const vNode1 = new CustomVNode();
+const vNode2 = new CustomVNode(vNode1);
+vNode1.children = [vNode2];
