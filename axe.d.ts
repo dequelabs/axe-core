@@ -153,14 +153,6 @@ declare namespace axe {
 		}[];
 		cleanup?(callback: Function): void;
 	}
-	interface VirtualNode {
-		children?: VirtualNode[];
-		parent?: VirtualNode | null;
-		props: VirtualNodeProps;
-		hasClass(className: string): boolean;
-		attr(attrName: string): string | null;
-		hasAttr(attrName: string): boolean;
-	}
 
 	let plugins: any;
 
