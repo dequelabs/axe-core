@@ -90,7 +90,7 @@
 		"emoji-regex": "8.0.0",
 		"es6-promise": "^4.2.6",
 		"eslint": "^5.14.0",
-		"eslint-config-prettier": "^4.1.0",
+		"eslint-config-prettier": "^5.0.0",
 		"execa": "^1.0.0",
 		"fs-extra": "^8.0.1",
 		"globby": "^9.1.0",
