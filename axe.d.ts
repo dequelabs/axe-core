@@ -73,6 +73,7 @@ declare namespace axe {
 		html: string;
 		impact?: ImpactValue;
 		target: string[];
+		xpath?: string[];
 		any: CheckResult[];
 		all: CheckResult[];
 		none: CheckResult[];
