@@ -1,8 +1,9 @@
 {
 	"id": "identical-links-same-purpose",
 	"evaluate": "identical-links-same-purpose.js",
+	"after": "identical-links-same-purpose-after.js",
 	"metadata": {
-		"impact": "",
+		"impact": "minor",
 		"messages": {
 			"pass": "",
 			"fail": "",
