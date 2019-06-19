@@ -476,7 +476,7 @@ This example first includes all `wcag2a` and `wcag2aa` rules. All rules that are
 
 6. Only process certain types of results
 
-The `resultTypes` options can be used to limit the number of related nodes for a rule to a maximum of one. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results.
+The `resultTypes` option can be used to limit the number of related nodes for a rule to a maximum of one. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results.
 
 After axe has processed all rules normally, it generates a unique selector for all related nodes in all rules. This process can be time consuming, especially for pages with lots of nodes. By limiting the related nodes to a maximum of one for result types you are not interested in, you can greatly speed up the tail end performance of axe.
 
