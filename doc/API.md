@@ -480,7 +480,7 @@ The `resultTypes` option can be used to limit the number of related nodes for a 
 
 After axe has processed all rules normally, it generates a unique selector for all related nodes in all rules. This process can be time consuming, especially for pages with lots of nodes. By limiting the related nodes to a maximum of one for result types you are not interested in, you can greatly speed up the tail end performance of axe.
 
-Types listed in this option will cause rules that fall under those types to show all related nodes. Types _not_ listed will causes rules that fall under one of the missing types to show a maximum of one related node. This allows you to still see those results and use them to inform the user of them if appropriate.
+Types listed in this option will cause rules that fall under those types to show all related nodes. Types _not_ listed will causes rules that fall under one of the missing types to show a maximum of one related node. This allows you to still see those results and inform the user of them if appropriate.
 
 ```js
 {
