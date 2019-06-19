@@ -478,9 +478,9 @@ This example first includes all `wcag2a` and `wcag2aa` rules. All rules that are
 
 The `resultTypes` options can be used to limit the number of related nodes for a rule to a maximum of one. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results.
 
-After axe has processed all rules normally, it generates a unique selector for all related nodes in all rules. This process can be time consuming, especially for pages with lot of nodes. By limiting the related nodes to a maximum of one for result types you are not interested in, you can greatly speed up the tail end performance of axe.
+After axe has processed all rules normally, it generates a unique selector for all related nodes in all rules. This process can be time consuming, especially for pages with lots of nodes. By limiting the related nodes to a maximum of one for result types you are not interested in, you can greatly speed up the tail end performance of axe.
 
-Types listed in this option are processed normally and report all of their related nodes. Types _not_ listed will show a maximum of one related node. This allows you to see which rules fell under each type so you can inform the user of the existence of that type of result if appropriate.
+Types listed in this option will cause rules that fall under those types to show all related nodes. Types _not_ listed will causes rules that fall under one of the missing types to show a maximum of one related node. This allows you to still see those results and use them to inform the user of them if appropriate.
 
 ```js
 {
@@ -488,7 +488,7 @@ Types listed in this option are processed normally and report all of their relat
 }
 ```
 
-This example will return all the related nodes for all rules that fall under the "violations", "incomplete", and "inapplicable" result types. Since the "passes" type was no specified, it will return at most one related node for each rule that passes.
+This example will return all the related nodes for all rules that fall under the "violations", "incomplete", and "inapplicable" result types. Since the "passes" type was not specified, it will return at most one related node for each rule that passes.
 
 ###### <a id='preload-configuration-details'></a> Preload Configuration in Options Parameter
 
