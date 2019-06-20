@@ -1,0 +1,11 @@
+{
+	"description": "filename-is-valid-accessible-name tests",
+	"rule": "filename-is-valid-accessible-name",
+	"passes": [["#pass1"], ["#pass2"]],
+	"incomplete": [
+		["#incomplete1"],
+		["#incomplete2"],
+		["#incomplete3"],
+		["#incomplete4"]
+	]
+}

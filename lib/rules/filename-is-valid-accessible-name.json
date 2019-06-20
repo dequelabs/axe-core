@@ -1,0 +1,12 @@
+{
+	"id": "filename-is-valid-accessible-name",
+	"matches": "filename-is-valid-accessible-name-matches.js",
+	"tags": ["wcag2", "wcag111", "experimental"],
+	"metadata": {
+		"description": "Ensure that image elements that use their source filename as their accessible name do so without loss of information",
+		"help": "Image elements that using filename as accessible name should do so without loss of information"
+	},
+	"all": ["filename-is-valid-accessible-name"],
+	"any": [],
+	"none": []
+}

@@ -1,0 +1,11 @@
+{
+	"id": "filename-is-valid-accessible-name",
+	"evaluate": "filename-is-valid-accessible-name.js",
+	"metadata": {
+		"impact": "minor",
+		"messages": {
+			"pass": "Element has an accessible name that serves an equivalent purpose to the non-text content",
+			"incomplete": "Element does not have an accessible name that serves an equivalent purpose to the non-text content"
+		}
+	}
+}
