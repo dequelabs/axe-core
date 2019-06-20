@@ -179,7 +179,7 @@ describe('color.getBackgroundColor', function() {
 		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgImage');
 	});
 
-	it('should return null if something opaque is obscuring it', function() {
+	it('should return null if something non-opaque is obscuring it', function() {
 		fixture.innerHTML =
 			'<div style="width:100%; height: 100px; background: #000"></div>' +
 			'<div id="target" style="position: relative; top: -50px; z-index:-1;color:#fff;">Hello</div>';
@@ -192,7 +192,7 @@ describe('color.getBackgroundColor', function() {
 		assert.isNull(actual);
 	});
 
-	it('should return an actual if something non-opaque is obscuring it', function() {
+	it('should return an actual if something opaque is obscuring it', function() {
 		fixture.innerHTML =
 			'<div style="width:100%; height: 100px; background: rgba(0, 0, 0, 0.5)"></div>' +
 			'<div id="target" style="position: relative; top: -50px; z-index:-1;color:#fff;">Hello</div>';
@@ -201,10 +201,8 @@ describe('color.getBackgroundColor', function() {
 			document.getElementById('target'),
 			[]
 		);
-		assert.isNotNull(actual);
-		assert.equal(Math.round(actual.blue), 128);
-		assert.equal(Math.round(actual.red), 128);
-		assert.equal(Math.round(actual.green), 128);
+		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgOverlap');
+		assert.isNull(actual);
 	});
 
 	it('should return the bgcolor if it is solid', function() {
