@@ -44,10 +44,10 @@ describe('identical-links-same-purpose-matches tests', function() {
 		assert.isTrue(actual);
 	});
 
-	it('returns true when <a> element has href attribute but no accessible name', function() {
+	it('returns false when <a> element has href attribute but no accessible name', function() {
 		var vNode = queryFixture('<a id="target" href="https://google.com"></a>');
 		var actual = rule.matches(vNode.actualNode);
-		assert.isTrue(actual);
+		assert.isFalse(actual);
 	});
 
 	it('returns false when <area> element has no href attribute', function() {
