@@ -1,4 +1,4 @@
-describe('duplicate-id-mismatches', function() {
+describe('duplicate-id-aria matches', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
