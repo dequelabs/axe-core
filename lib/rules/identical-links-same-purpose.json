@@ -1,12 +1,11 @@
 {
 	"id": "identical-links-same-purpose",
 	"matches": "identical-links-same-purpose-matches.js",
-	"tags": ["wcag2aaa", "wcag249"],
+	"tags": ["wcag2aaa", "wcag249", "experimental"],
 	"metadata": {
 		"description": "Ensures that links with identical accessible names resolve to the same resource",
 		"help": "Links with resolve to same or equivalent resources"
 	},
-	"preload": false,
 	"all": ["identical-links-same-purpose"],
 	"any": [],
 	"none": []

@@ -5,9 +5,8 @@
 	"metadata": {
 		"impact": "minor",
 		"messages": {
-			"pass": "",
-			"fail": "",
-			"incomplete": ""
+			"pass": "Identical links (if any) resolve to same purpose",
+			"incomplete": "Fix purpose of links with same accessible name"
 		}
 	}
 }
