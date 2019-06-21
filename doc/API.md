@@ -476,9 +476,11 @@ This example first includes all `wcag2a` and `wcag2aa` rules. All rules that are
 
 6. Only process certain types of results
 
-The `resultTypes` option can be used to limit the result types that axe will process, aggregate, and send to the reporter. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results.
+The `resultTypes` option can be used to limit the number of nodes for a rule to a maximum of one. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results.
 
-Types listed in this option are processed normally and report all of their results. Types _not_ listed process a maximum of one result. The caller can use this information to inform the user of the existence of that type of result if appropriate.
+After axe has processed all rules normally, it generates a unique selector for all nodes in all rules. This process can be time consuming, especially for pages with lots of nodes. By limiting the nodes to a maximum of one for result types you are not interested in, you can greatly speed up the tail end performance of axe.
+
+Types listed in this option will cause rules that fall under those types to show all nodes. Types _not_ listed will causes rules that fall under one of the missing types to show a maximum of one node. This allows you to still see those results and inform the user of them if appropriate.
 
 ```js
 {
@@ -486,7 +488,7 @@ Types listed in this option are processed normally and report all of their resul
 }
 ```
 
-This example will process all of the "violations", "incomplete", and "inapplicable" result types. Since "passes" was not specified, it will only process the first pass for each rule, if one exists. As a result, the results object's `passes` array will have a length of either `0` or `1`. On a series of extremely large pages, this would improve performance considerably.
+This example will return all the nodes for all rules that fall under the "violations", "incomplete", and "inapplicable" result types. Since the "passes" type was not specified, it will return at most one node for each rule that passes.
 
 ###### <a id='preload-configuration-details'></a> Preload Configuration in Options Parameter
 
