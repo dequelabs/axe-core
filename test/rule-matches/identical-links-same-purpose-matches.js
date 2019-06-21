@@ -66,9 +66,9 @@ describe('identical-links-same-purpose-matches tests', function() {
 		assert.isFalse(actual);
 	});
 
-	it('returns true when <area> element has href attribute and an accessible name', function() {
+	it('returns true when <a> element has href attribute and an accessible name', function() {
 		var vNode = queryFixture(
-			'<map><area id="target" role="link" href="https://developer.mozilla.org/" shape="circle" coords="130,136,60" aria-label="Go to MDN website" /></map>'
+			'<a id="target" role="link" href="https://developer.mozilla.org/" aria-label="Go to MDN website"></a>'
 		);
 		var actual = rule.matches(vNode.actualNode);
 		assert.isTrue(actual);
