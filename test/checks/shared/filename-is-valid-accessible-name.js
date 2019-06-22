@@ -11,7 +11,7 @@ describe('filename-is-valid-accessible-name tests', function() {
 		checkContext.reset();
 	});
 
-	it('returns undefined when element accessible name contains image extension type', function() {
+	it('returns undefined when <img> element has accessible name which contains image extension', function() {
 		var vNode = queryFixture(
 			'<img id="target" src="https://www.w3.org/WAI/demos/bad/img/w3c" alt="w3c.png" />'
 		);
@@ -19,7 +19,7 @@ describe('filename-is-valid-accessible-name tests', function() {
 		assert.isUndefined(actual);
 	});
 
-	it('returns undefined when element accessible name contains image extension type', function() {
+	it('returns undefined when <input type=image> element has accessible name which contains image extension', function() {
 		var vNode = queryFixture(
 			'<input id="target" type="image" src="https://www.w3.org/WAI/demos/bad/before/img/top_weather.gif" alt="top_weather.gif" />'
 		);
@@ -27,7 +27,7 @@ describe('filename-is-valid-accessible-name tests', function() {
 		assert.isUndefined(actual);
 	});
 
-	it('returns true when img element accessible name uses the filename which describes the image', function() {
+	it('returns true when <img> element has accessible name which uses the filename which describes the image', function() {
 		var vNode = queryFixture(
 			'<img id="target" src="https://www.w3.org/WAI/demos/bad/img/w3c" alt="w3c" />'
 		);
@@ -35,9 +35,9 @@ describe('filename-is-valid-accessible-name tests', function() {
 		assert.isTrue(actual);
 	});
 
-	it('returns true when img element accessible name uses the filename which describes the image', function() {
+	it('returns true when <input type="image"> element has accessible name which uses the filename which describes the image', function() {
 		var vNode = queryFixture(
-			'<img  id="target" src="w3c.png" alt="Logo of w3c"/>'
+			'<input id="target" type="image" src="w3c.png" alt="Logo of w3c"/>'
 		);
 		var actual = check.evaluate.call(checkContext, vNode.actualNode);
 		assert.isTrue(actual);
