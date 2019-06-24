@@ -1,5 +1,6 @@
 {
 	"id": "identical-links-same-purpose",
+	"selector": "a, area, [role=link]",
 	"matches": "identical-links-same-purpose-matches.js",
 	"tags": ["wcag2aaa", "wcag249", "experimental"],
 	"metadata": {
