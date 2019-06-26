@@ -358,6 +358,72 @@ describe('color.getBackgroundColor', function() {
 		assert.deepEqual(bgNodes, [parent]);
 	});
 
+	it('should count a THEAD as a background element for a child element', function() {
+		fixture.innerHTML =
+			'<div style="background-color:#007acc;">' +
+			'<table style="width:100%">' +
+			'<thead style="background-color:#f3f3f3; height:40px;" id="parent">' +
+			'<td>' +
+			'<span style="color:#007acc" id="target">Cell content</span>' +
+			'</td></thead>' +
+			'</table></div>';
+		var target = fixture.querySelector('#target'),
+			parent = fixture.querySelector('#parent');
+		var bgNodes = [];
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(243, 243, 243, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+		assert.deepEqual(bgNodes, [parent]);
+	});
+
+	it('should count a TBODY as a background element for a child element', function() {
+		fixture.innerHTML =
+			'<div style="background-color:#007acc;">' +
+			'<table style="width:100%">' +
+			'<tbody style="background-color:#f3f3f3; height:40px;" id="parent">' +
+			'<td>' +
+			'<span style="color:#007acc" id="target">Cell content</span>' +
+			'</td></tbody>' +
+			'</table></div>';
+		var target = fixture.querySelector('#target'),
+			parent = fixture.querySelector('#parent');
+		var bgNodes = [];
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(243, 243, 243, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+		assert.deepEqual(bgNodes, [parent]);
+	});
+
+	it('should count a TFOOT as a background element for a child element', function() {
+		fixture.innerHTML =
+			'<div style="background-color:#007acc;">' +
+			'<table style="width:100%">' +
+			'<tfoot style="background-color:#f3f3f3; height:40px;" id="parent">' +
+			'<td>' +
+			'<span style="color:#007acc" id="target">Cell content</span>' +
+			'</td></tfoot>' +
+			'</table></div>';
+		var target = fixture.querySelector('#target'),
+			parent = fixture.querySelector('#parent');
+		var bgNodes = [];
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(243, 243, 243, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+		assert.deepEqual(bgNodes, [parent]);
+	});
+
 	it("should ignore TR elements that don't overlap", function() {
 		fixture.innerHTML =
 			'<table style="position:relative; width:100%;">' +
