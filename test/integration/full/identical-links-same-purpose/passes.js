@@ -15,8 +15,8 @@ describe('identical-links-same-purpose passes test', function() {
 
 			assert.lengthOf(res.passes, 1);
 			assert.lengthOf(res.incomplete, 0);
-			assert.lengthOf(res.passes[0].nodes, 6);
-			assert.deepEqual(res.passes[0].nodes[5].target, ['span:nth-child(6)']);
+			assert.isAbove(res.passes[0].nodes.length, 6);
+			assert.deepEqual(res.passes[0].nodes[8].target, ['span:nth-child(7)']);
 
 			done();
 		});
