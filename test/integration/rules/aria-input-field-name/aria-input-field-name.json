@@ -1,6 +1,6 @@
 {
-	"description": "aria-input-field-label test",
-	"rule": "aria-input-field-label",
+	"description": "aria-input-field-name test",
+	"rule": "aria-input-field-name",
 	"passes": [
 		["#pass1"],
 		["#pass2"],

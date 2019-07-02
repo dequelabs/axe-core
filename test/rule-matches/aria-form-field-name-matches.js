@@ -1,12 +1,12 @@
-describe('aria-form-field-label-matches', function() {
+describe('aria-form-field-name-matches', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
 	var queryFixture = axe.testUtils.queryFixture;
 	var rule = axe._audit.rules.find(function(rule) {
 		return (
-			rule.id === 'aria-toggle-field-label' ||
-			rule.id === 'aria-input-field-label'
+			rule.id === 'aria-toggle-field-name' ||
+			rule.id === 'aria-input-field-name'
 		);
 	});
 

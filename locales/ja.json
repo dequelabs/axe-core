@@ -29,7 +29,7 @@
 			"description": "aria-hidden要素にフォーカス可能な要素が含まれていないことを確認します",
 			"help": "ARIA hidden要素にフォーカス可能な要素を含んではなりません"
 		},
-		"aria-input-field-label": {
+		"aria-input-field-name": {
 			"description": "すべてのARIA入力欄にアクセシブルな名前があることを確認します",
 			"help": "ARIA入力欄にアクセシブルな名前があります"
 		},
@@ -49,7 +49,7 @@
 			"description": "すべてのロール属性が指定された要素で、有効な値が使用されていることを確認します",
 			"help": "使用されているARIAロールは有効な値に一致しなければなりません"
 		},
-		"aria-toggle-field-label": {
+		"aria-toggle-field-name": {
 			"description": "すべてのARIAトグル欄にアクセシブルな名前があることを確認します",
 			"help": "ARIAトグル欄にアクセシブルな名前があります"
 		},
