@@ -5,6 +5,7 @@ describe('identical-links-same-purpose tests', function() {
 	var queryFixture = axe.testUtils.queryFixture;
 	var check = checks['identical-links-same-purpose'];
 	var checkContext = axe.testUtils.MockCheckContext();
+	var options = {};
 
 	afterEach(function() {
 		fixture.innerHTML = '';
@@ -13,7 +14,12 @@ describe('identical-links-same-purpose tests', function() {
 
 	it('returns undefined when element does not have a resource (empty href)', function() {
 		var vNode = queryFixture('<a id="target" href="">Go to google.com</a>');
-		var actual = check.evaluate.call(checkContext, vNode.actualNode);
+		var actual = check.evaluate.call(
+			checkContext,
+			vNode.actualNode,
+			options,
+			vNode
+		);
 		assert.isUndefined(actual);
 		assert.isNull(checkContext._data);
 	});
@@ -22,7 +28,12 @@ describe('identical-links-same-purpose tests', function() {
 		var vNode = queryFixture(
 			'<span id="target" role="link" tabindex="0" onclick="return false;">Link text</span>'
 		);
-		var actual = check.evaluate.call(checkContext, vNode.actualNode);
+		var actual = check.evaluate.call(
+			checkContext,
+			vNode.actualNode,
+			options,
+			vNode
+		);
 		assert.isUndefined(actual);
 		assert.isNull(checkContext._data);
 	});
@@ -31,7 +42,12 @@ describe('identical-links-same-purpose tests', function() {
 		var vNode = queryFixture(
 			'<a id="target" href="http://facebook.com">Follow us</a>'
 		);
-		var actual = check.evaluate.call(checkContext, vNode.actualNode);
+		var actual = check.evaluate.call(
+			checkContext,
+			vNode.actualNode,
+			options,
+			vNode
+		);
 		assert.isTrue(actual);
 		assert.hasAllKeys(checkContext._data, ['accessibleText', 'linkResource']);
 	});
@@ -40,7 +56,12 @@ describe('identical-links-same-purpose tests', function() {
 		var vNode = queryFixture(
 			'<span id="target" role="link" tabindex="0" onclick="location=\'/pages/index.html\'">Link text</span>'
 		);
-		var actual = check.evaluate.call(checkContext, vNode.actualNode);
+		var actual = check.evaluate.call(
+			checkContext,
+			vNode.actualNode,
+			options,
+			vNode
+		);
 		assert.isTrue(actual);
 		assert.hasAllKeys(checkContext._data, ['accessibleText', 'linkResource']);
 	});
