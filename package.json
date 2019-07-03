@@ -106,7 +106,7 @@
 		"grunt-parallel": "^0.5.1",
 		"grunt-run": "^0.8.1",
 		"html-entities": "^1.2.0",
-		"husky": "^2.4.0",
+		"husky": "^3.0.0",
 		"jquery": "^3.0.0",
 		"jsdoc": "^3.5.5",
 		"lint-staged": "^9.0.0",
