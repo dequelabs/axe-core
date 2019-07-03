@@ -71,6 +71,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache
+      - run: npm run build
       - run: npm run test:locales
 
   # Release a "next" version
