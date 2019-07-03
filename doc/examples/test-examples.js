@@ -6,9 +6,9 @@ const exampleDirs = readdirSync(__dirname)
 	.filter(dir => statSync(dir).isDirectory());
 
 async function runner(dir) {
-	const config = { cwd: dir, stdio: 'inherit' };
-	await execa.shell('npm install', config);
-	return execa.shell('npm test', config);
+	const config = { cwd: dir, stdio: 'inherit', shell: true };
+	await execa('npm install', config);
+	return execa('npm test', config);
 }
 
 Promise.all(exampleDirs.map(runner))
