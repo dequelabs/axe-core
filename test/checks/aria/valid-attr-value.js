@@ -205,6 +205,14 @@ describe('aria-valid-attr-value', function() {
 		);
 	});
 
+	it('should return undefined on aria-describedby when the element is not in the DOM', function() {
+		fixtureSetup('<button aria-describedby="test">Button</button>');
+		var undefined1 = fixture.querySelector('button');
+		assert.isUndefined(
+			checks['aria-valid-attr-value'].evaluate.call(checkContext, undefined1)
+		);
+	});
+
 	describe('options', function() {
 		it('should exclude supplied attributes', function() {
 			fixture.innerHTML =
