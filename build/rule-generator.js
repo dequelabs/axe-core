@@ -28,7 +28,7 @@ async function run() {
 				`Axe does not exist. Triggering build using - 'npm run build'. Rule generation will continue after build.`
 			)
 		);
-		await execa.shell('npm run build');
+		await execa('npm run build', { shell: true });
 	}
 
 	// rule-generator banner
