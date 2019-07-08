@@ -2,7 +2,7 @@
 
 This example demonstrates how to use axe with the Mocha unit testing framework.
 
-The unit test is in `spec/a11y.js`, and has two test cases: One that shows the
+The unit test is in `test/a11y.js`, and has two test cases: One that shows the
 expected results from HTML with no errors, and one that shows the expected
 result from HTML with a single error.
 
