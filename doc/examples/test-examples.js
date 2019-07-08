@@ -11,11 +11,12 @@ async function runner(dir) {
 	return execa('npm test', config);
 }
 
-async function main() {
-	for (let i = 0; i < exampleDirs.length; i++) {
-		const dir = exampleDirs[i];
-		await runner(dir);
-	}
-}
-
-main();
+Promise.all(exampleDirs.map(runner))
+	.then(() => {
+		// Return successful exit
+		process.exit();
+	})
+	.catch(err => {
+		console.error(err);
+		process.exit(1);
+	});
