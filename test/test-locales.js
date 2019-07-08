@@ -9,20 +9,14 @@ var localeFiles = glob.sync(path.join(__dirname, '../locales/*.json'));
 describe('locales', function() {
 	localeFiles.forEach(function(localeFile) {
 		var localeName = path.basename(localeFile);
-		it(localeName + ' should be valid', function(done) {
-			fs.readFile(localeFile, 'utf-8', function(err, localeData) {
-				if (err) {
-					done(err);
-				}
+		it(localeName + ' should be valid', function() {
+			var localeData = fs.readFileSync(localeFile, 'utf-8');
+			var locale = JSON.parse(localeData);
+			function fn() {
+				axe.configure({ locale: locale });
+			}
 
-				var locale = JSON.parse(localeData);
-				function fn() {
-					axe.configure({ locale: locale });
-				}
-
-				assert.doesNotThrow(fn);
-				done();
-			});
+			assert.doesNotThrow(fn);
 		});
 	});
 });
