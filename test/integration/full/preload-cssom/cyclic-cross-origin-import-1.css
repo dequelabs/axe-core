@@ -1,0 +1,4 @@
+/* calls a stylesheets, which inturn refers back to this one , but also imports a cross-origin stylesheet */
+
+@import 'cyclic-cross-origin-import-2.css';
+@import 'https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css';

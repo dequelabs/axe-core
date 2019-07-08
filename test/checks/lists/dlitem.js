@@ -66,7 +66,7 @@ describe('dlitem', function() {
 	});
 
 	it('returns true if the dd/dt is in a div with a dl as grandparent', function() {
-		const nodeNames = ['dd', 'dt'];
+		var nodeNames = ['dd', 'dt'];
 		nodeNames.forEach(function(nodeName) {
 			var checkArgs = checkSetup(
 				'<dl><div><' +
@@ -80,7 +80,7 @@ describe('dlitem', function() {
 	});
 
 	it('returns false if the dd/dt is in a div with a role with a dl as grandparent with a list role', function() {
-		const nodeNames = ['dd', 'dt'];
+		var nodeNames = ['dd', 'dt'];
 		nodeNames.forEach(function(nodeName) {
 			var checkArgs = checkSetup(
 				'<dl><div role="list"><' +
@@ -94,7 +94,7 @@ describe('dlitem', function() {
 	});
 
 	it('returns false if the dd/dt is in a div[role=presentation] with a dl as grandparent', function() {
-		const nodeNames = ['dd', 'dt'];
+		var nodeNames = ['dd', 'dt'];
 		nodeNames.forEach(function(nodeName) {
 			var checkArgs = checkSetup(
 				'<dl><div role="presentation"><' +
@@ -108,7 +108,7 @@ describe('dlitem', function() {
 	});
 
 	it('returns false if the dd/dt is in a div[role=none] with a dl as grandparent', function() {
-		const nodeNames = ['dd', 'dt'];
+		var nodeNames = ['dd', 'dt'];
 		nodeNames.forEach(function(nodeName) {
 			var checkArgs = checkSetup(
 				'<dl><div role="none"><' +

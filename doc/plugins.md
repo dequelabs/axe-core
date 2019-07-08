@@ -1,12 +1,12 @@
 # Plugins
 
-aXe implements a general purpose plugin system that takes advantage of the cross-domain iframe capabilities of aXe and allows for adding functionality that extends the aXe library outside of its core automated accessibility auditing realm.
+Axe implements a general purpose plugin system that takes advantage of the cross-domain iframe capabilities of axe and allows for adding functionality that extends the axe library outside of its core automated accessibility auditing realm.
 
 The plugin system was initially designed to support functionality like highlighting of elements but has also been utilized for a variety of tasks including implementing functionality that aids with manual accessibility auditing.
 
 ## What is a plugin?
 
-Plugins can be viewed as a registry of tools. The plugins themselves are registered with aXe and then allow themselves for the registration of plugin instances.
+Plugins can be viewed as a registry of tools. The plugins themselves are registered with axe and then allow themselves for the registration of plugin instances.
 
 Lets walk through a plugin implementation as an example to illustrate how plugins and plugin instances work.
 
@@ -14,9 +14,9 @@ Lets walk through a plugin implementation as an example to illustrate how plugin
 
 The act plugin will simply perform an action of some sort inside every iframe on the page. An example of how such a plugin might be used is to implement an instance of this plugin that performs highlighting of all of the elements of a particular type on the page.
 
-Plugins currently support two functions, a "run" function and a "collect" function. Together these functions can be combined to implement complex behaviors on top of the aXe system.
+Plugins currently support two functions, a "run" function and a "collect" function. Together these functions can be combined to implement complex behaviors on top of the axe system.
 
-In order to create such a plugin, we need to implement the "run" function for the plugin, and the command that registers and executes the "run" function within each iframe on the page that contains aXe. Lets look at what a noop implementation of this run function would look like:
+In order to create such a plugin, we need to implement the "run" function for the plugin, and the command that registers and executes the "run" function within each iframe on the page that contains axe. Lets look at what a noop implementation of this run function would look like:
 
 #### Basic plugin
 
@@ -77,20 +77,20 @@ axe.registerPlugin({
 Looking at the code, you will see the following things:
 
 1. The plugin contains an id. This id is then used to access the plugin and its implementations.
-2. The plugin is registered with aXe (in each iframe) using the `axe.registerPlugin()` function.
-3. The plugin registers the "run" function and the "commands" with the aXe system. This allows plugin implementations to be registered with the plugin, and to be executed. It also registers handlers for each of the commands within each of the iframes, so that the plugin can coordinate with itself across the iframe boundaries.
+2. The plugin is registered with axe (in each iframe) using the `axe.registerPlugin()` function.
+3. The plugin registers the "run" function and the "commands" with the axe system. This allows plugin implementations to be registered with the plugin, and to be executed. It also registers handlers for each of the commands within each of the iframes, so that the plugin can coordinate with itself across the iframe boundaries.
 
 When the caller wants to call a plugin instance, it does so by calling the plugin's "run" function in the top level document and passing the id of the plugin instance it would like to call, which plugin instance action it would like to call, the options and a callback function.
 
-The plugin takes this information and sends the same instructions to its implementation in each iframe by communicating to its own command(s) using the aXe utility function `axe.utils.sendCommandToFrame()`.
+The plugin takes this information and sends the same instructions to its implementation in each iframe by communicating to its own command(s) using the axe utility function `axe.utils.sendCommandToFrame()`.
 
 The plugin waits for the commands in the iframes to complete and then executes its instances' action function within the current document.
 
-In the above implementation, the aXe promise utility `axe.utils.queue()` is used to coordinate the asynchronous handling of communication accross iframes.
+In the above implementation, the axe promise utility `axe.utils.queue()` is used to coordinate the asynchronous handling of communication across iframes.
 
 The command handler callback runs the plugin's run function within each iframe. This essentially operates like a recursive call to the run function for the plugin within each iframe.
 
-Once all the iframes' run functions have been executed, the callback is called. This essentially operates as a recursive "return" up the iframe heirarchy until at the top document, the actual callback function is executed. This can be leveraged to pass data back up the iframe hierarchy back to the caller (but this is a more advanced topic).
+Once all the iframes' run functions have been executed, the callback is called. This essentially operates as a recursive "return" up the iframe hierarchy until at the top document, the actual callback function is executed. This can be leveraged to pass data back up the iframe hierarchy back to the caller (but this is a more advanced topic).
 
 #### Basic plugin instance
 
@@ -118,6 +118,6 @@ var highlight = {
 axe.plugins.doStuff.add(highlight);
 ```
 
-Above you can see the implementation of a `doStuff` "highlight" instance (the actual highlighting code is not included so as to simplify the example and is left as an exercise for the reader). Plugin instances have an id (which is used to address them), a cleanup function and any number of private or action members. The doStuff `add()` function is called to register this instance with the plugin (notice that we did not have to implement this add function, aXe did that for us). In this case, the action is called "run", so after registration, this instance can be called by calling `axe.plugins.doStuff.run('highlight', 'run', options, callback);` in the top-level iframe on the page.
+Above you can see the implementation of a `doStuff` "highlight" instance (the actual highlighting code is not included so as to simplify the example and is left as an exercise for the reader). Plugin instances have an id (which is used to address them), a cleanup function and any number of private or action members. The doStuff `add()` function is called to register this instance with the plugin (notice that we did not have to implement this add function, axe did that for us). In this case, the action is called "run", so after registration, this instance can be called by calling `axe.plugins.doStuff.run('highlight', 'run', options, callback);` in the top-level iframe on the page.
 
 The cleanup functions for all plugin instances are called when the `axe.cleanup()` function is called. Note that this cleanup function will automatically call all the cleanup functions for all the plugin instances in all iframes on the page.

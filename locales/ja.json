@@ -29,6 +29,10 @@
 			"description": "aria-hidden要素にフォーカス可能な要素が含まれていないことを確認します",
 			"help": "ARIA hidden要素にフォーカス可能な要素を含んではなりません"
 		},
+		"aria-input-field-name": {
+			"description": "すべてのARIA入力欄にアクセシブルな名前があることを確認します",
+			"help": "ARIA入力欄にアクセシブルな名前があります"
+		},
 		"aria-required-attr": {
 			"description": "ARIAロールのある要素にすべての必須ARIA属性が存在することを確認します",
 			"help": "必須のARIA属性が提供されていなければなりません"
@@ -45,6 +49,10 @@
 			"description": "すべてのロール属性が指定された要素で、有効な値が使用されていることを確認します",
 			"help": "使用されているARIAロールは有効な値に一致しなければなりません"
 		},
+		"aria-toggle-field-name": {
+			"description": "すべてのARIAトグル欄にアクセシブルな名前があることを確認します",
+			"help": "ARIAトグル欄にアクセシブルな名前があります"
+		},
 		"aria-valid-attr-value": {
 			"description": "すべてのARIA属性に有効な値が存在することを確認します",
 			"help": "ARIA属性は有効な値に一致しなければなりません"
@@ -60,6 +68,10 @@
 		"autocomplete-valid": {
 			"description": "autocomplete属性が正しく、かつフォームフィールドに対して適切であることを確認します",
 			"help": "autocomplete属性は正しく使用しなければなりません"
+		},
+		"avoid-inline-spacing": {
+			"description": "style属性で指定されたテキストの間隔は、カスタムスタイルシートにより調整可能であることを確認します",
+			"help": "インラインのテキスト間隔設定はカスタムスタイルシートによって調整可能でなければなりません"
 		},
 		"blink": {
 			"description": "<blink>要素が使用されていないことを確認します",
@@ -158,8 +170,12 @@
 			"help": "画像には代替テキストがなければなりません"
 		},
 		"image-redundant-alt": {
-			"description": "ボタンおよびリンクテキストが画像の代替として繰り返されていないことを確認します",
-			"help": "ボタンおよびリンクのテキストは画像の代替の中で繰り返されてはなりません"
+			"description": "画像の代替がテキストとして繰り返されていないことを確認します",
+			"help": "画像の代替テキストはテキストとして繰り返されるべきではありません"
+		},
+		"input-button-name": {
+			"description": "入力ボタンに認識可能なテキストが存在することを確認します",
+			"help": "入力ボタンには認識可能なテキストが存在しなければなりません"
 		},
 		"input-image-alt": {
 			"description": "<input type=\"image\">要素に代替テキストが存在することを確認します",
@@ -204,6 +220,10 @@
 		"landmark-one-main": {
 			"description": "ドキュメントのランドマークが1つのみであること、およびページ内の各iframeのランドマークが最大で1つであることを確認します",
 			"help": "ドキュメントにはmainランドマークが1つ含まれていなければなりません"
+		},
+		"landmark-unique": {
+			"help": "ランドマークが一意であることを確認します",
+			"description": "ランドマークは一意のロール又はロール／ラベル／タイトル (例: アクセシブルな名前) の組み合わせがなければなりません"
 		},
 		"layout-table": {
 			"description": "レイアウトのための<table>要素に<th>、<caption>要素またはsummary属性が使用されていないことを確認します",
@@ -261,9 +281,17 @@
 			"description": "ページのすべてのコンテンツがlandmarkに含まれていることを確認します",
 			"help": "ページのすべてのコンテンツはlandmarkに含まれていなければなりません"
 		},
+		"role-img-alt": {
+			"description": "[role='img'] 要素に代替テキストが存在することを確認します",
+			"help": "[role='img'] 要素に代替テキストが必要です"
+		},
 		"scope-attr-valid": {
 			"description": "scope属性がテーブルで正しく使用されていることを確認します",
 			"help": "scope属性は正しく使用されなければなりません"
+		},
+		"scrollable-region-focusable": {
+			"description": "スクロール可能なコンテンツを持つ要素はキーボードでアクセスできるようにするべきです",
+			"help": "スクロール可能な領域にキーボードでアクセスできるようにします"
 		},
 		"server-side-image-map": {
 			"description": "サーバーサイドのイメージマップが使用されていないことを確認します",
@@ -343,6 +371,10 @@
 		"invalidrole": {
 			"pass": "ARIAロールが有効です",
 			"fail": "ロールは有効なARIAロールのうちの1つでなければなりません"
+		},
+		"no-implicit-explicit-label": {
+			"pass": "<label> とアクセシブルな名前の間に不一致はありません",
+			"incomplete": "<label> が ARIA {{=it.data}} 欄の名前の一部である必要がないことを確認しましょう"
 		},
 		"aria-required-attr": {
 			"pass": "すべての必須のARIA属性が存在しています",
@@ -426,9 +458,17 @@
 			"pass": "アクセスキー属性値は一意です",
 			"fail": "ドキュメントに同じアクセスキーを持った複数の要素が存在しています"
 		},
+		"focusable-content": {
+			"pass": "要素内にフォーカス可能な要素が含まれています",
+			"fail": "要素にフォーカス可能なコンテンツが存在するべきです"
+		},
 		"focusable-disabled": {
 			"pass": "要素内にフォーカス不可能な要素は含まれていません",
 			"fail": "フォーカス可能なコンテンツは無効にするか、DOMから削除するべきです"
+		},
+		"focusable-element": {
+			"pass": "要素はフォーカス可能です",
+			"fail": "要素はフォーカス可能であるべきです"
 		},
 		"focusable-no-name": {
 			"pass": "要素がタブ順序にない、またはアクセシブルなテキストが存在しています",
@@ -501,6 +541,10 @@
 		"title-only": {
 			"pass": "フォーム要素はラベルにtitle属性だけを用いていません",
 			"fail": "フォーム要素のラベルにtitle属性だけを用いています"
+		},
+		"landmark-is-unique": {
+			"pass": "ランドマークは一意のロール又はロール／ラベル／タイトル (例: アクセシブルな名前) の組み合わせがなければなりません",
+			"fail": "ランドマークを識別可能にするため、ランドマークには一意の aria-label、aria-labelledby、または title がなければなりません。"
 		},
 		"has-lang": {
 			"pass": "<html>要素にlang属性が存在しています",
@@ -616,6 +660,10 @@
 		"aria-labelledby": {
 			"pass": "aria-labelledby属性が存在し、スクリーン・リーダーに認識可能な要素を参照しています",
 			"fail": "aria-labelledby属性が存在しない、存在しない要素を参照している、または空の要素を参照しています"
+		},
+		"avoid-inline-spacing": {
+			"pass": "テキストの間隔に影響する '!important' のついたインラインスタイルは指定されていません",
+			"fail": "ほとんどのブラウザーで上書きすることはサポートされていないため、インラインスタイル {{=it.data.join(', ')}}, から '!important' を削除します"
 		},
 		"button-has-visible-text": {
 			"pass": "要素にスクリーン・リーダーが認識可能な内部テキストが存在しています",

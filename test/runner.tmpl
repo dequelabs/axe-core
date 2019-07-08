@@ -7,13 +7,25 @@
 		<link rel="stylesheet" type="text/css" href="/node_modules/mocha/mocha.css" />
 		<script src="/node_modules/mocha/mocha.js"></script>
 		<script src="/node_modules/chai/chai.js"></script>
+		<style>
+			/* This is essential to stop mocha reporter created anchors from making the document overflow, mainly along the x-axis */
+			#mocha h1 a {
+				overflow-wrap: break-word;
+  			word-wrap: break-word;
+  			hyphens: auto;
+			}
+
+			/* mocha stats having a fixed position can interfere with some tests when intersecting with elements */
+			#mocha-stats {
+				position: static;
+			}
+		</style>
 		<script>
 			mocha.setup({
 				timeout: 20000,
 				ui: 'bdd'
 			});
 			var assert = chai.assert;
-			var global = {};
 		</script>
 		<% files.forEach(function (file) { %>
 			<script src="/<%=file%>"></script>
@@ -23,8 +35,8 @@
 	</head>
 
 	<body>
-		<div id="mocha"></div>
 		<div id="fixture"></div>
+		<div id="mocha"></div>
 		<script src="/test/testutils.js"></script>
 		<% tests.forEach(function (file) { %>
 			<script src="<%=file%>"></script>

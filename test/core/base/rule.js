@@ -149,6 +149,7 @@ describe('Rule', function() {
 				);
 			});
 		});
+
 		describe('run', function() {
 			it('should be a function', function() {
 				assert.isFunction(Rule.prototype.run);
@@ -750,6 +751,636 @@ describe('Rule', function() {
 						},
 						isNotCalled
 					);
+					assert.isTrue(success);
+				});
+			});
+		});
+
+		describe('runSync', function() {
+			it('should be a function', function() {
+				assert.isFunction(Rule.prototype.runSync);
+			});
+
+			it('should run #matches', function() {
+				var div = document.createElement('div');
+				fixture.appendChild(div);
+				var success = false,
+					rule = new Rule({
+						matches: function(node) {
+							assert.equal(node, div);
+							success = true;
+							return [];
+						}
+					});
+
+				try {
+					rule.runSync(
+						{
+							include: [axe.utils.getFlattenedTree(div)[0]]
+						},
+						{}
+					);
+					assert.isTrue(success);
+				} catch (err) {
+					isNotCalled(err);
+				}
+			});
+
+			it('should pass a virtualNode to #matches', function() {
+				var div = document.createElement('div');
+				fixture.appendChild(div);
+				var success = false,
+					rule = new Rule({
+						matches: function(node, virtualNode) {
+							assert.equal(virtualNode.actualNode, div);
+							success = true;
+							return [];
+						}
+					});
+
+				try {
+					rule.runSync(
+						{
+							include: [axe.utils.getFlattenedTree(div)[0]]
+						},
+						{}
+					);
+					assert.isTrue(success);
+				} catch (err) {
+					isNotCalled(err);
+				}
+			});
+
+			it('should pass a context to #matches', function() {
+				var div = document.createElement('div');
+				fixture.appendChild(div);
+				var success = false,
+					rule = new Rule({
+						matches: function(node, virtualNode, context) {
+							assert.isDefined(context);
+							assert.hasAnyKeys(context, ['cssom', 'include', 'exclude']);
+							assert.lengthOf(context.include, 1);
+							success = true;
+							return [];
+						}
+					});
+
+				try {
+					rule.runSync(
+						{
+							include: [axe.utils.getFlattenedTree(div)[0]]
+						},
+						{}
+					);
+					assert.isTrue(success);
+				} catch (err) {
+					isNotCalled(err);
+				}
+			});
+
+			it('should handle an error in #matches', function() {
+				var div = document.createElement('div');
+				div.setAttribute('style', '#fff');
+				fixture.appendChild(div);
+				var success = false;
+				var rule = new Rule({
+					matches: function() {
+						throw new Error('this is an error');
+					}
+				});
+
+				try {
+					rule.runSync(
+						{
+							include: [axe.utils.getFlattenedTree(div)[0]]
+						},
+						{}
+					);
+					isNotCalled();
+				} catch (err) {
+					assert.isFalse(success);
+				}
+			});
+
+			it('should execute Check#runSync on its child checks - any', function() {
+				fixture.innerHTML = '<blink>Hi</blink>';
+				var success = false;
+				var rule = new Rule(
+					{
+						any: ['cats']
+					},
+					{
+						checks: {
+							cats: {
+								runSync: function() {
+									success = true;
+								}
+							}
+						}
+					}
+				);
+
+				try {
+					rule.runSync(
+						{
+							include: [axe.utils.getFlattenedTree(fixture)[0]]
+						},
+						{}
+					);
+					assert.isTrue(success);
+				} catch (err) {
+					isNotCalled(err);
+				}
+			});
+
+			it('should execute Check#runSync on its child checks - all', function() {
+				fixture.innerHTML = '<blink>Hi</blink>';
+				var success = false;
+				var rule = new Rule(
+					{
+						all: ['cats']
+					},
+					{
+						checks: {
+							cats: {
+								runSync: function() {
+									success = true;
+								}
+							}
+						}
+					}
+				);
+
+				try {
+					rule.runSync(
+						{
+							include: [axe.utils.getFlattenedTree(fixture)[0]]
+						},
+						{}
+					);
+					assert.isTrue(success);
+				} catch (err) {
+					isNotCalled(err);
+				}
+			});
+
+			it('should execute Check#run on its child checks - none', function() {
+				fixture.innerHTML = '<blink>Hi</blink>';
+				var success = false;
+				var rule = new Rule(
+					{
+						none: ['cats']
+					},
+					{
+						checks: {
+							cats: {
+								runSync: function() {
+									success = true;
+								}
+							}
+						}
+					},
+					isNotCalled
+				);
+
+				try {
+					rule.runSync(
+						{
+							include: [axe.utils.getFlattenedTree(fixture)[0]]
+						},
+						{}
+					);
+					assert.isTrue(success);
+				} catch (err) {
+					isNotCalled(err);
+				}
+			});
+
+			it('should pass the matching option to check.runSync', function() {
+				fixture.innerHTML = '<blink>Hi</blink>';
+				var options = {
+					checks: {
+						cats: {
+							enabled: 'bananas',
+							options: 'minkeys'
+						}
+					}
+				};
+				var rule = new Rule(
+					{
+						none: ['cats']
+					},
+					{
+						checks: {
+							cats: {
+								id: 'cats',
+								runSync: function(node, options) {
+									assert.equal(options.enabled, 'bananas');
+									assert.equal(options.options, 'minkeys');
+								}
+							}
+						}
+					}
+				);
+
+				try {
+					rule.runSync(
+						{
+							include: [axe.utils.getFlattenedTree(document)[0]]
+						},
+						options
+					);
+				} catch (err) {
+					isNotCalled(err);
+				}
+			});
+
+			it('should pass the matching option to check.runSync defined on the rule over global', function() {
+				fixture.innerHTML = '<blink>Hi</blink>';
+				var options = {
+					rules: {
+						cats: {
+							checks: {
+								cats: {
+									enabled: 'apples',
+									options: 'apes'
+								}
+							}
+						}
+					},
+					checks: {
+						cats: {
+							enabled: 'bananas',
+							options: 'minkeys'
+						}
+					}
+				};
+
+				var rule = new Rule(
+					{
+						id: 'cats',
+						any: [
+							{
+								id: 'cats'
+							}
+						]
+					},
+					{
+						checks: {
+							cats: {
+								id: 'cats',
+								runSync: function(node, options) {
+									assert.equal(options.enabled, 'apples');
+									assert.equal(options.options, 'apes');
+								}
+							}
+						}
+					}
+				);
+
+				try {
+					rule.runSync(
+						{
+							include: [axe.utils.getFlattenedTree(document)[0]]
+						},
+						options
+					);
+				} catch (err) {
+					isNotCalled(err);
+				}
+			});
+
+			it('should filter out null results', function() {
+				var rule = new Rule(
+					{
+						selector: '#fixture',
+						any: ['cats']
+					},
+					{
+						checks: {
+							cats: {
+								id: 'cats',
+								runSync: function() {}
+							}
+						}
+					}
+				);
+
+				try {
+					var r = rule.runSync(
+						{
+							include: [axe.utils.getFlattenedTree(document)[0]]
+						},
+						{}
+					);
+					assert.lengthOf(r.nodes, 0);
+				} catch (err) {
+					isNotCalled(err);
+				}
+			});
+
+			describe('DqElement', function() {
+				var origDqElement;
+				var isDqElementCalled;
+
+				beforeEach(function() {
+					isDqElementCalled = false;
+					origDqElement = axe.utils.DqElement;
+					axe.utils.DqElement = function() {
+						isDqElementCalled = true;
+					};
+					fixture.innerHTML = '<blink>Hi</blink>';
+				});
+
+				afterEach(function() {
+					axe.utils.DqElement = origDqElement;
+				});
+
+				it('is created for matching nodes', function() {
+					var rule = new Rule(
+						{
+							all: ['cats']
+						},
+						{
+							checks: {
+								cats: new Check({
+									id: 'cats',
+									enabled: true,
+									evaluate: function() {
+										return true;
+									},
+									matches: function() {
+										return true;
+									}
+								})
+							}
+						}
+					);
+
+					try {
+						rule.runSync(
+							{
+								include: [axe.utils.getFlattenedTree(fixture)[0]]
+							},
+							{}
+						);
+						assert.isTrue(isDqElementCalled);
+					} catch (err) {
+						isNotCalled(err);
+					}
+				});
+
+				it('is not created for disabled checks', function() {
+					var rule = new Rule(
+						{
+							all: ['cats']
+						},
+						{
+							checks: {
+								cats: new Check({
+									id: 'cats',
+									enabled: false,
+									evaluate: function() {},
+									matches: function() {
+										return true;
+									}
+								})
+							}
+						}
+					);
+
+					try {
+						rule.runSync(
+							{
+								include: [axe.utils.getFlattenedTree(fixture)[0]]
+							},
+							{}
+						);
+						assert.isFalse(isDqElementCalled);
+					} catch (err) {
+						isNotCalled(err);
+					}
+				});
+
+				it('is created for matching nodes', function() {
+					var rule = new Rule(
+						{
+							all: ['cats']
+						},
+						{
+							checks: {
+								cats: new Check({
+									id: 'cats',
+									enabled: true,
+									evaluate: function() {
+										return true;
+									}
+								})
+							}
+						}
+					);
+
+					try {
+						rule.runSync(
+							{
+								include: [axe.utils.getFlattenedTree(fixture)[0]]
+							},
+							{}
+						);
+						assert.isTrue(isDqElementCalled);
+					} catch (err) {
+						isNotCalled(err);
+					}
+				});
+
+				it('is not created for disabled checks', function() {
+					var rule = new Rule(
+						{
+							all: ['cats']
+						},
+						{
+							checks: {
+								cats: new Check({
+									id: 'cats',
+									enabled: false,
+									evaluate: function() {}
+								})
+							}
+						}
+					);
+					rule.runSync(
+						{
+							include: [axe.utils.getFlattenedTree(fixture)[0]]
+						},
+						{},
+						function() {
+							assert.isFalse(isDqElementCalled);
+						},
+						isNotCalled
+					);
+				});
+
+				it('should not be called when there is no actualNode', function() {
+					var rule = new Rule(
+						{
+							all: ['cats']
+						},
+						{
+							checks: {
+								cats: new Check({
+									id: 'cats',
+									evaluate: function() {}
+								})
+							}
+						}
+					);
+					rule.excludeHidden = false; // so we don't call utils.isHidden
+					var vNode = {
+						shadowId: undefined,
+						children: [],
+						parent: undefined,
+						_cache: {},
+						_isHidden: null,
+						_attrs: {
+							type: 'text',
+							autocomplete: 'not-on-my-watch'
+						},
+						props: {
+							nodeType: 1,
+							nodeName: 'input',
+							id: null,
+							type: 'text'
+						},
+						hasClass: function() {
+							return false;
+						},
+						attr: function(attrName) {
+							return this._attrs[attrName];
+						},
+						hasAttr: function(attrName) {
+							return !!this._attrs[attrName];
+						}
+					};
+					rule.runSync(
+						{
+							include: [vNode]
+						},
+						{},
+						function() {
+							assert.isFalse(isDqElementCalled);
+						},
+						isNotCalled
+					);
+				});
+			});
+
+			it('should pass thrown errors to the reject param', function() {
+				fixture.innerHTML = '<blink>Hi</blink>';
+				var rule = new Rule(
+					{
+						none: ['cats']
+					},
+					{
+						checks: {
+							cats: {
+								runSync: function() {
+									throw new Error('Holy hand grenade');
+								}
+							}
+						}
+					}
+				);
+
+				try {
+					rule.runSync(
+						{
+							include: [axe.utils.getFlattenedTree(fixture)[0]]
+						},
+						{}
+					);
+					isNotCalled();
+				} catch (err) {
+					assert.equal(err.message, 'Holy hand grenade');
+				}
+			});
+
+			describe('NODE rule', function() {
+				it('should create a RuleResult', function() {
+					var orig = window.RuleResult;
+					var success = false;
+					window.RuleResult = function(r) {
+						this.nodes = [];
+						assert.equal(rule, r);
+						success = true;
+					};
+
+					var rule = new Rule(
+						{
+							any: [
+								{
+									evaluate: function() {},
+									id: 'cats'
+								}
+							]
+						},
+						{
+							checks: {
+								cats: {
+									runSync: function() {}
+								}
+							}
+						}
+					);
+
+					try {
+						rule.runSync(
+							{
+								include: [axe.utils.getFlattenedTree(document)[0]]
+							},
+							{}
+						);
+						assert.isTrue(success);
+					} catch (err) {
+						isNotCalled(err);
+					}
+
+					window.RuleResult = orig;
+				});
+
+				it('should execute rule callback', function() {
+					var success = false;
+
+					var rule = new Rule(
+						{
+							any: [
+								{
+									evaluate: function() {},
+									id: 'cats'
+								}
+							]
+						},
+						{
+							checks: {
+								cats: {
+									runSync: function() {
+										success = true;
+									}
+								}
+							}
+						}
+					);
+
+					try {
+						rule.runSync(
+							{
+								include: [axe.utils.getFlattenedTree(document)[0]]
+							},
+							{}
+						);
+					} catch (err) {
+						isNotCalled(err);
+					}
+
 					assert.isTrue(success);
 				});
 			});

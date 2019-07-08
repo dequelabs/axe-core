@@ -1,6 +1,6 @@
 {
 	"id": "image-alt",
-	"selector": "img, [role='img']:not(svg)",
+	"selector": "img",
 	"tags": [
 		"cat.text-alternatives",
 		"wcag2a",

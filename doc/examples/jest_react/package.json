@@ -1,6 +1,6 @@
 {
 	"name": "axe-jest-react-example",
-	"description": "aXe Jest + React Example",
+	"description": "Axe Jest + React Example",
 	"version": "0.0.1",
 	"private": true,
 	"author": {
@@ -13,12 +13,12 @@
 		"test": "jest"
 	},
 	"devDependencies": {
-		"axe-core": "^3.1.1",
+		"axe-core": "^3.2.2",
 		"babel-jest": "^23.0.0",
 		"babel-preset-es2015": "^6.24.1",
 		"babel-preset-react": "^6.24.1",
-		"enzyme": "^3.5.0",
-		"enzyme-adapter-react-16": "^1.3.0",
+		"enzyme": "^3.9.0",
+		"enzyme-adapter-react-16": "^1.12.1",
 		"jest": "^22.4.0",
 		"jest-cli": "^23.0.1",
 		"react": "^16.4.0",

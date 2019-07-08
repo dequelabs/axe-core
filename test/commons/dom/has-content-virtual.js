@@ -38,6 +38,18 @@ describe('dom.hasContentVirtual', function() {
 		);
 	});
 
+	it('is false if the element has an aria label but `ignoreAria=true`', function() {
+		fixture.innerHTML = '<div id="target" aria-label="my-label">	</div>';
+		tree = axe.utils.getFlattenedTree(fixture);
+		assert.isTrue(
+			hasContentVirtual(
+				axe.utils.querySelectorAll(tree, '#target')[0],
+				true,
+				true
+			)
+		);
+	});
+
 	it('is true if the element contains visual content', function() {
 		fixture.innerHTML = '<div id="target"> <img src=""> </div>';
 		tree = axe.utils.getFlattenedTree(fixture);
@@ -66,11 +78,11 @@ describe('dom.hasContentVirtual', function() {
 	it('is called through hasContent, with a DOM node', function() {
 		var hasContent = axe.commons.dom.hasContent;
 		fixture.innerHTML = '<div id="target"> text </div>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isTrue(hasContent(fixture.querySelector('#target')));
 
 		fixture.innerHTML = '<div id="target"></div>';
-		axe._tree = axe.utils.getFlattenedTree(fixture);
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(hasContent(fixture.querySelector('#target')));
 	});
 

@@ -2,6 +2,11 @@
 describe('runRules', function() {
 	'use strict';
 
+	// These tests can sometimes be flaky in IE, allow for up to 3 retries
+	if (axe.testUtils.isIE11) {
+		this.retries(3);
+	}
+
 	function iframeReady(src, context, id, cb) {
 		var i = document.createElement('iframe');
 		i.addEventListener('load', function() {
@@ -246,7 +251,7 @@ describe('runRules', function() {
 										node: {
 											selector: ['#context-test', '#foo'],
 											xpath: ["/iframe[@id='context-test']", "/div[@id='foo']"],
-											source: '<div id="foo">\n		<div id="bar"></div>\n	</div>'
+											source: '<div id="foo">\n			<div id="bar"></div>\n		</div>'
 										},
 										any: [
 											{
@@ -260,7 +265,7 @@ describe('runRules', function() {
 															"/div[@id='foo']"
 														],
 														source:
-															'<div id="foo">\n		<div id="bar"></div>\n	</div>'
+															'<div id="foo">\n			<div id="bar"></div>\n		</div>'
 													}
 												]
 											}

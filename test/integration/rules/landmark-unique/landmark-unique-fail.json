@@ -1,0 +1,23 @@
+{
+	"description": "landmark-unique-fail tests",
+	"rule": "landmark-unique",
+	"violations": [
+		["#violation-main-1"],
+		["#violation-header-1"],
+		["#violation-form-aria-label-1"],
+		["#violation-form-aria-labelledby-1"],
+		["#violation-aside-aria-label-1"],
+		["#violation-aside-aria-labelledby-1"],
+		["#violation-footer-1"],
+		["#violation-form-through-iframe-1"],
+		["#violation-nav-through-iframe-1"],
+		["#violation-role-banner"],
+		["#violation-role-complementary"],
+		["#violation-role-contentinfo"],
+		["#violation-role-main"],
+		["#violation-role-region"],
+		["#violation-role-search"],
+		["#violation-nav"],
+		["#violation-section"]
+	]
+}

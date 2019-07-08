@@ -1,8 +1,8 @@
 <input autocomplete="username" id="pass1" />
 
 <select autocomplete="bday-month" id="pass2">
-  <option>January</option>
-  <option>...</option>
+	<option>January</option>
+	<option>...</option>
 </select>
 
 <textarea autocomplete="Street-Address" id="pass3"></textarea>
@@ -38,8 +38,13 @@
 <input autocomplete="username" style="display:none" id="inapplicable3" />
 
 <!-- Off screen and not focusable -->
-<input autocomplete="username" tabindex="-1" aria-hidden="true"
-    style="position:absolute; top:-9999em" id="inapplicable4" />
+<input
+	autocomplete="username"
+	tabindex="-1"
+	aria-hidden="true"
+	style="position:absolute; top:-9999em"
+	id="inapplicable4"
+/>
 
 <!-- input button -->
 <input type="button" autocomplete="username" id="inapplicable5" />
@@ -54,9 +59,14 @@
 <input autocomplete="username" aria-disabled="true" id="inapplicable8" />
 
 <!-- non-widget element -->
-<input type="button" role="none" tabindex="-1" autocomplete="username" id="inapplicable9" />
+<input
+	type="button"
+	role="none"
+	tabindex="-1"
+	autocomplete="username"
+	id="inapplicable9"
+/>
 <input autocomplete="  " id="inapplicable10" />
-
 
 <input autocomplete="on" id="pass7" />
 <input autocomplete=" on " id="pass8" />
@@ -115,12 +125,19 @@
 <input autocomplete="SECTION-foo mobile tel-extension" id="pass61" />
 <input autocomplete="fax email" id="pass62" />
 <input autocomplete="pager impp" id="pass63" />
-<input autocomplete="off" id="pass64" name="input_1" placeholder="Numeric Input Field" value="42" type="tel">
-<input autocomplete="on" id="pass65" value="" type="url">
-<input autocomplete="off" id="pass66" value="42" type="datetime-local">
+<input
+	autocomplete="off"
+	id="pass64"
+	name="input_1"
+	placeholder="Numeric Input Field"
+	value="42"
+	type="tel"
+/>
+<input autocomplete="on" id="pass65" value="" type="url" />
+<input autocomplete="off" id="pass66" value="42" type="datetime-local" />
 <input autocomplete="street-address" id="pass67" type="text" />
-<input autocomplete="on" id="pass68" value="" type="url     ">
-<input autocomplete="off" id="pass69" value="42" type="   DateTime-Local">
+<input autocomplete="on" id="pass68" value="" type="url     " />
+<input autocomplete="off" id="pass69" value="42" type="   DateTime-Local" />
 <input autocomplete="street-address" id="fail6" type="file" />
-<input autocomplete="bday-month" type='month' id="fail7" />
+<input autocomplete="bday-month" type="month" id="fail7" />
 <input type="NUMBER" autocomplete="email" id="fail8" />

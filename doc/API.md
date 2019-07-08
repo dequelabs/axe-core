@@ -1,4 +1,4 @@
-# aXe Javascript Accessibility API
+# Axe Javascript Accessibility API
 
 ## Table of Contents
 
@@ -28,7 +28,7 @@
 
 ## Section 1: Introduction
 
-The aXe API is designed to be an improvement over the previous generation of accessibility APIs. It provides the following benefits:
+The axe API is designed to be an improvement over the previous generation of accessibility APIs. It provides the following benefits:
 
 - Runs in any modern browser
 - Designed to work with existing testing infrastructure
@@ -39,9 +39,9 @@ The aXe API is designed to be an improvement over the previous generation of acc
 
 ### Getting Started
 
-This section gives a quick description of how to use the aXe APIs to analyze web page content and return a JSON object that lists any accessibility violations found.
+This section gives a quick description of how to use the axe APIs to analyze web page content and return a JSON object that lists any accessibility violations found.
 
-The aXe API can be used as part of a broader process that is performed on many, if not all, pages of a website. The API is used to analyze web page content and return a JSON object that lists any accessibility violations found. Here is how to get started:
+The axe API can be used as part of a broader process that is performed on many, if not all, pages of a website. The API is used to analyze web page content and return a JSON object that lists any accessibility violations found. Here is how to get started:
 
 1. Load page in testing system
 2. Optionally, set configuration options for the javascript API (`axe.configure`)
@@ -53,17 +53,29 @@ The aXe API can be used as part of a broader process that is performed on many, 
 
 ### Overview
 
-The aXe APIs are provided in the javascript file axe.js. It must be included in the web page under test. Parameters are sent as javascript function parameters. Results are returned in JSON format.
+The axe APIs are provided in the javascript file axe.js. It must be included in the web page under test. Parameters are sent as javascript function parameters. Results are returned in JSON format.
+
+### Required Globals
+
+Axe requires a handful of global variables and interfaces to be available in order to run. See the [jsdom example](https://github.com/dequelabs/axe-core/blob/develop/doc/examples/jsdom/test/a11y.js) for how to set these up in a non-browser environment.
+
+- `window`
+- `document`
+- [`navigator`](https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator)
+- [`Node`](https://developer.mozilla.org/en-US/docs/Web/API/Node)
+- [`NodeList`](https://developer.mozilla.org/en-US/docs/Web/API/NodeList)
+- [`Element`](https://developer.mozilla.org/en-US/docs/Web/API/Element)
+- [`Document`](https://developer.mozilla.org/en-US/docs/Web/API/Document)
 
 ### Full API Reference for Developers
 
-For a full listing of API offered by aXe, clone the repository and run `npm run api-docs`. This generates `jsdoc` documentation under `doc/api` which can be viewed using the browser.
+For a full listing of API offered by axe, clone the repository and run `npm run api-docs`. This generates `jsdoc` documentation under `doc/api` which can be viewed using the browser.
 
 ### API Notes
 
 - A Rule test is made up of sub-tests. Each sub-test is returned in an array of 'checks'
 - The `"helpUrl"` in the results object is a link to a broader description of the accessibility issue and suggested remediation. These links point to Deque University help pages, which do not require a login.
-- aXe does not test hidden regions, such as inactive menus or modal windows. To test those for accessibility, write tests that activate or render the regions visible and run the analysis again.
+- Axe does not test hidden regions, such as inactive menus or modal windows. To test those for accessibility, write tests that activate or render the regions visible and run the analysis again.
 
 ### API Name: axe.getRules
 
@@ -134,7 +146,7 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
 
 #### Purpose
 
-To configure the format of the data used by aXe. This can be used to add new rules, which must be registered with the library to execute.
+To configure the format of the data used by axe. This can be used to add new rules, which must be registered with the library to execute.
 
 #### Description
 
@@ -164,6 +176,9 @@ axe.configure({
   - `reporter` - Used to set the output format that the axe.run function will pass to the callback function
     - `v1` to use the previous version's format: `axe.configure({ reporter: "v1" });`
     - `v2` to use the current version's format: `axe.configure({ reporter: "v2" });`
+    - `raw` to return the raw result data without formating: `axe.configure({ reporter: "raw" });`
+    - `raw-env` to return the raw result data with environment data: `axe.configure({ reporter: "raw-env" });`
+    - `no-passes` to return only violation results: `axe.configure({ reporter: "no-passes" });`
   - `checks` - Used to add checks to the list of checks used by rules, or to override the properties of existing checks
     - The checks attribute is an array of check objects
     - Each check object can contain the following attributes
@@ -176,15 +191,15 @@ axe.configure({
     - The rules attribute is an Array of rule objects
     - each rule object can contain the following attributes
       - `id` - string(required). This uniquely identifies the rule. If the rule already exists, it will be overridden with any of the attributes supplied. The attributes below that are marked required, are only required for new rules.
-      - `selector` - string(optional, default `*`). A CSS selector used to identify the elements that are passed into the rule for evaluation.
+      - `selector` - string(optional, default `*`). A [CSS selector](./developer-guide.md#supported-css-selectors) used to identify the elements that are passed into the rule for evaluation.
       - `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
       - `enabled` - boolean(optional, default `true`). Whether the rule is turned on. This is a common attribute for overriding.
       - `pageLevel` - boolean(optional, default `false`). When set to true, this rule is only applied when the entire page is tested. Results from nodes on different frames are combined into a single result. See [page level rules](#page-level-rules).
       - `any` - array(optional, default `[]`). This is a list of checks that, if none "pass", will generate a violation.
       - `all` - array(optional, default `[]`). This is a list of checks that, if any "fails", will generate a violation.
       - `none` - array(optional, default `[]`). This is a list of checks that, if any "pass", will generate a violation.
-      - `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. In practice, you must supply some valid tags or the default evaluation will not invoke the rule. The convention is to include the standard (WCAG 2 and/or section 508), the WCAG 2 level, Section 508 paragraph, and the WCAG 2 success criteria. Tags are constructed by converting all letters to lower case, removing spaces and periods and concatinating the result. E.g. WCAG 2 A success criteria 1.1.1 would become ["wcag2a", "wcag111"]
-      - `matches` - string(optional, default `*`). A filtering CSS selector that will exclude elements that do not match the CSS selector.
+      - `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. In practice, you must supply some valid tags or the default evaluation will not invoke the rule. The convention is to include the standard (WCAG 2 and/or section 508), the WCAG 2 level, Section 508 paragraph, and the WCAG 2 success criteria. Tags are constructed by converting all letters to lower case, removing spaces and periods and concatenating the result. E.g. WCAG 2 A success criteria 1.1.1 would become ["wcag2a", "wcag111"]
+      - `matches` - string(optional, default `*`). A filtering [CSS selector](./developer-guide.md#supported-css-selectors) that will exclude elements that do not match the CSS selector.
   - `disableOtherRules` - Disables all rules not included in the `rules` property.
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
 
@@ -251,11 +266,7 @@ By default, `axe.run` will test the entire document. The context object is an op
 - Example: To limit analysis to the `<div id="content">` element: `document.getElementById("content")`
 
 2. A NodeList such as returned by `document.querySelectorAll`.
-3. A CSS selector that selects the portion(s) of the document that must be analyzed. This includes:
-
-- A CSS selector as a class name (e.g. `.classname`)
-- A CSS selector as a node name (e.g. `div`)
-- A CSS selector of an element id (e.g. `#tag`)
+3. A [CSS selector](./developer-guide.md#supported-css-selectors) that selects the portion(s) of the document that must be analyzed.
 
 4. An include-exclude object (see below)
 
@@ -264,7 +275,7 @@ By default, `axe.run` will test the entire document. The context object is an op
 The include exclude object is a JSON object with two attributes: include and exclude. Either include or exclude is required. If only `exclude` is specified; include will default to the entire `document`.
 
 - A node, or
-- An array of arrays of CSS selectors
+- An array of arrays of [CSS selectors](./developer-guide.md#supported-css-selectors)
   - If the nested array contains a single string, that string is the CSS selector
   - If the nested array contains multiple strings
     - The last string is the final CSS selector
@@ -338,19 +349,20 @@ The options parameter is flexible way to configure how `axe.run` operates. The d
 
 Additionally, there are a number or properties that allow configuration of different options:
 
-| Property        | Default | Description                                                                                                                             |
-| --------------- | :------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| `runOnly`       | n/a     | Limit which rules are executed, based on names or tags                                                                                  |
-| `rules`         | n/a     | Allow customizing a rule's properties (including { enable: false })                                                                     |
-| `reporter`      | `v1`    | Which reporter to use (see [Configuration](#api-name-axeconfigure))                                                                     |
-| `resultTypes`   | n/a     | Limit which result types are processed and aggregated                                                                                   |
-| `xpath`         | `false` | Return xpath selectors for elements                                                                                                     |
-| `absolutePaths` | `false` | Use absolute paths when creating element selectors                                                                                      |
-| `iframes`       | `true`  | Tell axe to run inside iframes                                                                                                          |
-| `elementRef`    | `false` | Return element references in addition to the target                                                                                     |
-| `restoreScroll` | `false` | Scrolls elements back to before axe started                                                                                             |
-| `frameWaitTime` | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out                                              |
-| `preload`       | `false` | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details) |
+| Property           | Default | Description                                                                                                                             |
+| ------------------ | :------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| `runOnly`          | n/a     | Limit which rules are executed, based on names or tags                                                                                  |
+| `rules`            | n/a     | Allow customizing a rule's properties (including { enable: false })                                                                     |
+| `reporter`         | `v1`    | Which reporter to use (see [Configuration](#api-name-axeconfigure))                                                                     |
+| `resultTypes`      | n/a     | Limit which result types are processed and aggregated                                                                                   |
+| `xpath`            | `false` | Return xpath selectors for elements                                                                                                     |
+| `absolutePaths`    | `false` | Use absolute paths when creating element selectors                                                                                      |
+| `iframes`          | `true`  | Tell axe to run inside iframes                                                                                                          |
+| `elementRef`       | `false` | Return element references in addition to the target                                                                                     |
+| `restoreScroll`    | `false` | Scrolls elements back to before axe started                                                                                             |
+| `frameWaitTime`    | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out                                              |
+| `preload`          | `false` | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details) |
+| `performanceTimer` | `false` | Log rule performance metrics to the console                                                                                             |
 
 ###### Options Parameter Examples
 
@@ -464,7 +476,7 @@ This example first includes all `wcag2a` and `wcag2aa` rules. All rules that are
 
 6. Only process certain types of results
 
-The `resultTypes` option can be used to limit the result types that aXe will process, aggregate, and send to the reporter. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results.
+The `resultTypes` option can be used to limit the result types that axe will process, aggregate, and send to the reporter. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results.
 
 Types listed in this option are processed normally and report all of their results. Types _not_ listed process a maximum of one result. The caller can use this information to inform the user of the existence of that type of result if appropriate.
 
@@ -494,19 +506,19 @@ preload: { assets: ['cssom'], timeout: 50000 }
 
 The `assets` attribute expects an array of preload(able) constraints to be fetched. The current set of values supported for `assets` is listed in the following table:
 
-| Asset Type | Description                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `cssom`    | This asset type preloads all CSS Stylesheets rulesets specified in the page. The stylessheets can be an external cross-domain resource, a relative stylesheet or an inline style with in the head tag of the document. If the stylesheet is an external cross-domain a network request is made. An object representing the CSS Rules from each stylesheet is made available to the checks evaluate function as `preloadedAssets` at run-time |
+| Asset Type | Description                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `cssom`    | This asset type preloads all CSS Stylesheets rulesets specified in the page. The stylesheets can be an external cross-domain resource, a relative stylesheet or an inline style with in the head tag of the document. If the stylesheet is an external cross-domain a network request is made. An object representing the CSS Rules from each stylesheet is made available to the checks evaluate function as `preloadedAssets` at run-time |
 
 The `timeout` attribute in the object configuration is `optional` and has a fallback default value (10000ms). The `timeout` is essential for any network dependent assets that are preloaded, where-in if a given request takes longer than the specified/ default value, the operation is aborted.
 
 ##### Callback Parameter
 
-The callback parameter is a function that will be called when the asynchronous `axe.run` function completes. The callback function is passed two parameters. The first parameter will be an error thrown inside of aXe if axe.run could not complete. If axe completed correctly the first parameter will be null, and the second parameter will be the results object.
+The callback parameter is a function that will be called when the asynchronous `axe.run` function completes. The callback function is passed two parameters. The first parameter will be an error thrown inside of axe if axe.run could not complete. If axe completed correctly the first parameter will be null, and the second parameter will be the results object.
 
 #### Return Promise
 
-If the callback was not defined, aXe will return a Promise instead. Axe does not polyfill a Promise library however. So on systems without support for Promises this feature is not available. If you are unsure if the systems you will need aXe on has Promise support we suggest you use the callback provided by axe.run instead.
+If the callback was not defined, axe will return a Promise instead. Axe does not polyfill a Promise library however. So on systems without support for Promises this feature is not available. If you are unsure if the systems you will need axe on has Promise support we suggest you use the callback provided by axe.run instead.
 
 #### Error Result
 
@@ -663,7 +675,7 @@ As you can see the `target` array contains one item that is an array. This array
 
 ### API Name: axe.registerPlugin
 
-Register a plugin with the aXe plugin system. See [implementing a plugin](plugins.md) for more information on the plugin system
+Register a plugin with the axe plugin system. See [implementing a plugin](plugins.md) for more information on the plugin system
 
 ### API Name: axe.cleanup
 
@@ -702,7 +714,7 @@ axe.utils.querySelectorAll(virtualNode, 'a[href]');
 ##### Parameters
 
 - `virtualNode` – object, the flattened DOM tree to query against. `axe._tree` is available for this purpose during an audit; see below.
-- `selector` – string, the CSS selector to use as a filter. For the most part, this should work seamlessly with `document.querySelectorAll`.
+- `selector` – string, the [CSS selector](./developer-guide.md#supported-css-selectors) to use as a filter. For the most part, this should work seamlessly with `document.querySelectorAll`.
 
 ##### Returns
 
@@ -748,7 +760,7 @@ The top-level document or shadow DOM document fragment
 
 #### axe.commons.dom.findUp
 
-Recusively walk up the DOM, checking for a node which matches a selector. Warning: this should be used sparingly for performance reasons.
+Recursively walk up the DOM, checking for a node which matches a selector. Warning: this should be used sparingly for performance reasons.
 
 ##### Synopsis
 

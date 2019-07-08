@@ -34,11 +34,14 @@ describe('landmark-has-body-context', function() {
 	(shadowSupport ? it : xit)(
 		'returns false for elements contained in a landmark in a shadow DOM tree',
 		function() {
-			var main = document.createElement('main');
-			var shadow = main.attachShadow({ mode: 'open' });
-			shadow.innerHTML = '<footer></fotoer>';
+			// Safari has a bug in 12.0 that throws an error when calling
+			// attachShadow on <main>
+			// @see https://bugs.webkit.org/show_bug.cgi?id=197726
+			var article = document.createElement('article');
+			var shadow = article.attachShadow({ mode: 'open' });
+			shadow.innerHTML = '<footer></footer>';
 
-			fixtureSetup(main);
+			fixtureSetup(article);
 			var vNode = axe.utils.querySelectorAll(axe._tree[0], 'footer')[0];
 			assert.isFalse(rule.matches(vNode.actualNode, vNode));
 		}

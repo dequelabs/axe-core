@@ -1,257 +1,242 @@
-/* global axe, Promise */
-describe('preload integration test', function() {
+/* global axe */
+describe('axe.utils.preload integration test', function() {
 	'use strict';
 
-	var origAxios;
 	var isPhantom = window.PHANTOMJS ? true : false;
-
-	var styleSheets = [
-		{
+	var isIE11 = axe.testUtils.isIE11;
+	var styleSheets = {
+		crossOriginLinkHref: {
+			id: 'crossOriginLinkHref',
 			href: 'https://unpkg.com/gutenberg-css@0.4'
 		},
-		{
+		crossOriginLinkHrefMediaPrint: {
+			id: 'crossOriginLinkHrefMediaPrint',
 			href:
 				'https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css',
 			mediaPrint: true
 		},
-		{
-			text: '.inline-css-test {	font-size: inherit; }'
+		styleTag: {
+			id: 'styleTag',
+			text: '.inline-css-test{font-size:inherit;}'
 		}
-	];
+	};
+	var stylesForPage;
 
-	before(function(done) {
-		if (isPhantom) {
-			this.skip();
+	function attachStylesheets(options, callback) {
+		axe.testUtils
+			.addStyleSheets(options.styles, document)
+			.then(function() {
+				callback();
+			})
+			.catch(function(error) {
+				callback(new Error('Could not load stylesheets for testing. ' + error));
+			});
+	}
+
+	function detachStylesheets(done) {
+		if (!stylesForPage) {
 			done();
-		} else {
-			// cache originals
-			if (axe.imports.axios) {
-				origAxios = axe.imports.axios;
-			}
-			// load custom rule
-			// load custom check
-			// the evaluate in check sets the data object
-			// which is used for assertion in tests below
-			axe._load({
-				rules: [
-					{
-						// this rule is not preload dependent
-						// and can run immediately
-						id: 'run-now-rule',
-						selector: 'div#run-now-target',
-						any: ['check-context-exists']
-					},
-					{
-						// this rule requires preload
-						// and will run after preload assets are ready
-						id: 'run-later-rule',
-						selector: 'div#run-later-target',
-						any: ['check-context-has-assets'],
-						preload: {
-							assets: ['cssom']
-						}
-					}
-				],
-				checks: [
-					{
-						id: 'check-context-exists',
-						evaluate: overridedCheckEvaluateFn
-					},
-					{
-						id: 'check-context-has-assets',
-						evaluate: overridedCheckEvaluateFn
-					}
-				]
-			});
-			// load stylesheets
-			axe.testUtils
-				.addStyleSheets(styleSheets)
-				.then(function() {
-					done();
-				})
-				.catch(function(error) {
-					done(new Error('Could not load stylesheets for testing. ' + error));
-				});
 		}
-	});
-
-	function overridedCheckEvaluateFn(node, options, virtualNode, context) {
-		// populate the data here which is asserted in tests
-		this.data(context);
-		return true;
-	}
-
-	function createStub(shouldReject) {
-		/**
-		 * This is a simple override to stub `axe.imports.axios`, until the test-suite is enhanced.
-		 * Did not use any library such as sinon for this, as sinon.stub have difficulties working under selenium webdriver
-		 * Also a generic XHR override was overlooked under webdriver
-		 */
-		axe.imports.axios = function stubbedAxios() {
-			return new Promise(function(resolve, reject) {
-				if (shouldReject) {
-					reject(new Error('Fake Error'));
-				}
-				resolve({
-					data: 'body{overflow:auto;}'
-				});
-			});
-		};
-	}
-
-	function restoreStub() {
-		if (origAxios) {
-			axe.imports.axios = origAxios;
-		}
-	}
-
-	function assertStylesheet(sheet, selectorText, cssText) {
-		assert.isDefined(sheet);
-		assert.property(sheet, 'cssRules');
-		assert.equal(sheet.cssRules[0].selectorText, selectorText);
-		assert.equal(sheet.cssRules[0].cssText.replace(/\s/g, ''), cssText);
-	}
-
-	beforeEach(function() {
-		createStub();
-	});
-
-	afterEach(function() {
-		restoreStub();
-	});
-
-	it('ensure for custom rule/check which does not preload, the CheckResult does not have asset(cssom)', function(done) {
-		axe.run(
-			{
-				runOnly: {
-					type: 'rule',
-					values: ['run-now-rule']
-				},
-				// run config asks to preload, but no rule mandates preload, so preload is skipped
-				preload: {
-					assets: ['cssom']
-				}
-			},
-			function(err, res) {
-				// we ensure preload was skipped by checking context does not have cssom in checks evaluate function
-				assert.isNull(err);
-				assert.isDefined(res);
-				assert.property(res, 'passes');
-				assert.lengthOf(res.passes, 1);
-
-				var checkData = res.passes[0].nodes[0].any[0];
-				assert.notProperty(checkData, 'cssom');
+		axe.testUtils
+			.removeStyleSheets(stylesForPage)
+			.then(function() {
 				done();
+				stylesForPage = undefined;
+			})
+			.catch(function(err) {
+				done(err);
+				stylesForPage = undefined;
+			});
+	}
+
+	function getPreload(timeout) {
+		axe._tree = axe.utils.getFlattenedTree(document);
+		// options.treeRoot = treeRoot;
+		return axe.utils.preload({
+			preload: {
+				assets: ['cssom'],
+				timeout: timeout
 			}
-		);
+		});
+	}
+
+	afterEach(function(done) {
+		axe._tree = undefined;
+		detachStylesheets(done);
 	});
 
-	it('ensure for custom rule/check which requires preload, the CheckResult contains asset(cssom) and validate stylesheet', function(done) {
-		axe.run(
-			{
-				runOnly: {
-					type: 'rule',
-					values: ['run-later-rule']
-				},
-				// run config asks to preload, and the rule requires a preload as well, context will be mutated with 'cssom' asset
-				preload: {
-					assets: ['cssom']
-				}
-			},
-			function(err, res) {
-				// we ensure preload was skipped by checking context does not have cssom in checks evaluate function
-				assert.isNull(err);
-				assert.isDefined(res);
-				assert.property(res, 'passes');
-				assert.lengthOf(res.passes, 1);
-
-				var checkData = res.passes[0].nodes[0].any[0].data;
-				assert.property(checkData, 'cssom');
-
-				var cssom = checkData.cssom;
-				assert.lengthOf(cssom, 3); // ignore all media='print' styleSheets
-
-				// there should be no external sheet returned
-				// as everything is earmarked as media print
-				var externalSheet = cssom.filter(function(s) {
-					return s.isExternal;
-				})[0].sheet;
-				assertStylesheet(externalSheet, 'body', 'body{overflow:auto;}');
-
-				var inlineStylesheet = cssom.filter(function(s) {
-					return s.sheet.cssRules.length === 1 && !s.isExternal;
-				})[0].sheet;
-				assertStylesheet(
-					inlineStylesheet,
+	it('returns preloaded assets defined via <style> tag', function(done) {
+		stylesForPage = [styleSheets.styleTag];
+		attachStylesheets({ styles: stylesForPage }, function(err) {
+			if (err) {
+				done(err);
+			}
+			getPreload().then(function(preloadedAssets) {
+				assert.property(preloadedAssets, 'cssom');
+				assert.lengthOf(preloadedAssets.cssom, 1);
+				var sheetData = preloadedAssets.cssom[0].sheet;
+				axe.testUtils.assertStylesheet(
+					sheetData,
 					'.inline-css-test',
-					'.inline-css-test{font-size:inherit;}'
+					stylesForPage[0].text
 				);
-
 				done();
-			}
-		);
+			});
+		});
 	});
 
-	it('ensure for all rules are run if preload call time(s)out assets are not passed to check', function(done) {
-		// restore stub - restores original axios, to test timeout on xhr
-		restoreStub();
-
-		axe.run(
-			{
-				runOnly: {
-					type: 'rule',
-					values: ['run-later-rule']
-				},
-				// run config asks to preload, and the rule requires a preload as well, context will be mutated with 'cssom' asset
-				preload: {
-					assets: ['cssom'],
-					timeout: 1
-				}
-			},
-			function(err, res) {
-				// we ensure preload was skipped by checking context does not have cssom in checks evaluate function
-				assert.isNull(err);
-				assert.isDefined(res);
-				assert.property(res, 'passes');
-				assert.lengthOf(res.passes, 1);
-
-				var checkData = res.passes[0].nodes[0].any[0].data;
-				assert.notProperty(checkData, 'cssom');
-
-				done();
+	it('returns NO preloaded CSSOM assets when requested stylesheets are of media=print', function(done) {
+		stylesForPage = [styleSheets.crossOriginLinkHrefMediaPrint];
+		attachStylesheets({ styles: stylesForPage }, function(err) {
+			if (err) {
+				done(err);
 			}
-		);
+			getPreload().then(function(preloadedAssets) {
+				assert.property(preloadedAssets, 'cssom');
+				assert.lengthOf(preloadedAssets.cssom, 0);
+				done();
+			});
+		});
 	});
 
-	it('ensure for all rules are run if preload call is rejected', function(done) {
-		// restore stub - restores original axios, to test timeout on xhr
-		restoreStub();
-		// create a stub to reject intentionally
-		createStub(true);
-
-		axe.run(
-			{
-				runOnly: {
-					type: 'rule',
-					values: ['run-later-rule']
-				},
-				// run config asks to preload, and the rule requires a preload as well, context will be mutated with 'cssom' asset
-				preload: {
-					assets: ['cssom']
-				}
-			},
-			function(err, res) {
-				// we ensure preload was skipped by checking context does not have cssom in checks evaluate function
-				assert.isNull(err);
-				assert.isDefined(res);
-				assert.property(res, 'passes');
-				assert.lengthOf(res.passes, 1);
-
-				var checkData = res.passes[0].nodes[0].any[0].data;
-				assert.notProperty(checkData, 'cssom');
-
-				done();
+	it('rejects preload function when timed out before fetching assets', function(done) {
+		stylesForPage = [styleSheets.crossOriginLinkHref];
+		attachStylesheets({ styles: stylesForPage }, function(err) {
+			if (err) {
+				done(err);
 			}
-		);
+			getPreload(1).catch(function(err) {
+				assert.isNotNull(err);
+				done();
+			});
+		});
+	});
+
+	describe('verify preloaded assets via axe.run against custom rules', function() {
+		function customCheckEvalFn(node, options, virtualNode, context) {
+			// populate the data here which is asserted in tests
+			this.data(context);
+			return true;
+		}
+
+		before(function(done) {
+			// These tests currently break in IE11
+			if (isPhantom || isIE11) {
+				this.skip();
+			} else {
+				/**
+				 * Load custom rule & check
+				 * -> one check is preload dependent
+				 * -> another check is not preload dependent
+				 */
+				axe._load({
+					rules: [
+						{
+							// this rule is not preload dependent and can run immediately
+							id: 'run-now-rule',
+							selector: 'div#run-now-target',
+							any: ['check-context-exists']
+						},
+						{
+							// this rule requires preload and will run after preload assets are ready
+							id: 'run-later-rule',
+							selector: 'div#run-later-target',
+							any: ['check-context-has-assets'],
+							preload: {
+								assets: ['cssom']
+							}
+						}
+					],
+					checks: [
+						{
+							id: 'check-context-exists',
+							evaluate: customCheckEvalFn
+						},
+						{
+							id: 'check-context-has-assets',
+							evaluate: customCheckEvalFn
+						}
+					]
+				});
+
+				// load stylesheets
+				stylesForPage = [
+					styleSheets.crossOriginLinkHref,
+					styleSheets.crossOriginLinkHrefMediaPrint,
+					styleSheets.styleTag
+				];
+				attachStylesheets({ styles: stylesForPage }, done);
+			}
+		});
+
+		after(function(done) {
+			detachStylesheets(done);
+		});
+
+		it("returns preloaded assets to the check's evaluate fn for the rule which has `preload:true`", function(done) {
+			axe.run(
+				{
+					runOnly: {
+						type: 'rule',
+						values: ['run-later-rule']
+					},
+					preload: true
+				},
+				function(err, res) {
+					assert.isNull(err);
+					assert.isDefined(res);
+					assert.property(res, 'passes');
+					assert.lengthOf(res.passes, 1);
+
+					var checkData = res.passes[0].nodes[0].any[0].data;
+					assert.property(checkData, 'cssom');
+
+					var cssom = checkData.cssom;
+
+					// ignores all media='print' styleSheets
+					assert.lengthOf(cssom, 2);
+
+					// there should be no external sheet returned
+					var crossOriginSheet = cssom.filter(function(s) {
+						return s.isCrossOrigin;
+					});
+					assert.lengthOf(crossOriginSheet, 1);
+
+					// verify content of stylesheet
+					var inlineStylesheet = cssom.filter(function(s) {
+						return s.sheet.cssRules.length === 1 && !s.isCrossOrigin;
+					})[0].sheet;
+					axe.testUtils.assertStylesheet(
+						inlineStylesheet,
+						'.inline-css-test',
+						'.inline-css-test{font-size:inherit;}'
+					);
+
+					done();
+				}
+			);
+		});
+
+		it("returns NO preloaded assets to the check which does not require preload'", function(done) {
+			axe.run(
+				{
+					runOnly: {
+						type: 'rule',
+						values: ['run-now-rule']
+					},
+					preload: true
+				},
+				function(err, res) {
+					assert.isNull(err);
+					assert.isDefined(res);
+					assert.property(res, 'passes');
+					assert.lengthOf(res.passes, 1);
+
+					var checkData = res.passes[0].nodes[0].any[0];
+					assert.notProperty(checkData, 'cssom');
+					done();
+				}
+			);
+		});
 	});
 });
