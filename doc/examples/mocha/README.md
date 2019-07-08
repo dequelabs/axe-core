@@ -2,7 +2,7 @@
 
 This example demonstrates how to use axe with the Mocha unit testing framework.
 
-The unit test is in `test/a11y.js`, and has two test cases: One that shows the
+The unit test is in `spec/a11y.js`, and has two test cases: One that shows the
 expected results from HTML with no errors, and one that shows the expected
 result from HTML with a single error.
 
@@ -10,15 +10,13 @@ result from HTML with a single error.
 
 - Node must be installed; please follow the directions at http://www.nodejs.org
   to install it.
-- `npm install -g grunt-cli` to install the Grunt task runner (may need to be
-  run with `sudo` on Unix or as Administrator on Windows)
 - Move to the `doc/examples/mocha` directory
 - `npm install` to install dependencies
 
 ## To run the example
 
 - Move to the `doc/examples/mocha` directory
-- `grunt mocha` to run Mocha
+- `npm test` to run Mocha
 
 You should see output indicating that the tests ran successfully, with zero
 failures.
@@ -33,5 +31,5 @@ to `axe.run`.
 The third argument to the `axe.run` call should be the function to test
 the results. The example is simply looking at the count of violations, but much
 more detailed information is available if desired. The axe documentation
-should be consulted for more details on customizing and
-analyzing calls to `axe.run`.
+should be consulted for more details on customizing and analyzing calls to
+`axe.run`.
