@@ -110,6 +110,7 @@
 		"jquery": "^3.0.0",
 		"jsdoc": "^3.5.5",
 		"lint-staged": "^9.0.0",
+		"listr": "^0.14.3",
 		"make-dir": "^3.0.0",
 		"markdown-table": "^1.1.2",
 		"minami": "^1.2.3",

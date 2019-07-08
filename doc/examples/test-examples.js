@@ -1,22 +1,36 @@
 const { readdirSync, statSync } = require('fs');
-const { join } = require('path');
+const { join, basename } = require('path');
 const execa = require('execa');
+const Listr = require('listr');
+
 const exampleDirs = readdirSync(__dirname)
 	.map(dir => join(__dirname, dir))
 	.filter(dir => statSync(dir).isDirectory());
 
-async function runner(dir) {
-	const config = { cwd: dir, stdio: 'inherit', shell: true };
-	await execa('npm install', config);
-	return execa('npm test', config);
-}
+const tasks = new Listr([
+	{
+		title: 'Install dependencies',
+		task: () =>
+			new Listr(
+				exampleDirs.map(dir => ({
+					title: basename(dir),
+					task: () => execa('npm install', { cwd: dir, shell: true })
+				}))
+			)
+	},
+	{
+		title: 'Run tests',
+		task: () =>
+			new Listr(
+				exampleDirs.map(dir => ({
+					title: basename(dir),
+					task: () => execa('npm test', { cwd: dir, shell: true })
+				}))
+			)
+	}
+]);
 
-Promise.all(exampleDirs.map(runner))
-	.then(() => {
-		// Return successful exit
-		process.exit();
-	})
-	.catch(err => {
-		console.error(err);
-		process.exit(1);
-	});
+tasks.run().catch(err => {
+	console.error(err);
+	process.exit(1);
+});
