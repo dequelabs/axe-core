@@ -17,7 +17,7 @@ const tasks = new Listr(
 						title: basename(dir),
 						task: () => execa('npm install', { cwd: dir, shell: true })
 					})),
-					{ concurrent: true, nonTTYRenderer: 'silent' }
+					{ nonTTYRenderer: 'silent' }
 				)
 		},
 		{
@@ -28,7 +28,7 @@ const tasks = new Listr(
 						title: basename(dir),
 						task: () => execa('npm test', { cwd: dir, shell: true })
 					})),
-					{ concurrent: true, nonTTYRenderer: 'silent' }
+					{ nonTTYRenderer: 'silent' }
 				)
 		}
 	],
