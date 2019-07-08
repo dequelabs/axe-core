@@ -31,6 +31,12 @@ const tasks = new Listr([
 ]);
 
 tasks.run().catch(err => {
+	if (err.stdout) {
+		process.stdout.write(err.stdout);
+	}
+	if (err.stderr) {
+		process.stderr.write(err.stderr);
+	}
 	console.error(err);
 	process.exit(1);
 });
