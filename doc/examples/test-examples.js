@@ -7,28 +7,33 @@ const exampleDirs = readdirSync(__dirname)
 	.map(dir => join(__dirname, dir))
 	.filter(dir => statSync(dir).isDirectory());
 
-const tasks = new Listr([
-	{
-		title: 'Install dependencies',
-		task: () =>
-			new Listr(
-				exampleDirs.map(dir => ({
-					title: basename(dir),
-					task: () => execa('npm install', { cwd: dir, shell: true })
-				}))
-			)
-	},
-	{
-		title: 'Run tests',
-		task: () =>
-			new Listr(
-				exampleDirs.map(dir => ({
-					title: basename(dir),
-					task: () => execa('npm test', { cwd: dir, shell: true })
-				}))
-			)
-	}
-]);
+const tasks = new Listr(
+	[
+		{
+			title: 'Install dependencies',
+			task: () =>
+				new Listr(
+					exampleDirs.map(dir => ({
+						title: basename(dir),
+						task: () => execa('npm install', { cwd: dir, shell: true })
+					})),
+					{ concurrent: true, nonTTYRenderer: 'silent' }
+				)
+		},
+		{
+			title: 'Run tests',
+			task: () =>
+				new Listr(
+					exampleDirs.map(dir => ({
+						title: basename(dir),
+						task: () => execa('npm test', { cwd: dir, shell: true })
+					})),
+					{ concurrent: true, nonTTYRenderer: 'silent' }
+				)
+		}
+	],
+	{ nonTTYRenderer: 'silent' }
+);
 
 tasks.run().catch(err => {
 	if (err.stdout) {
