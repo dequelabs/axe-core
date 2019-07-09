@@ -1,6 +1,4 @@
-/*eslint 
-complexity: ["error",12], 
-max-statements: ["error", 35],
+/*eslint
 camelcase: ["error", {"properties": "never"}]
 */
 var testConfig = require('./build/test/config');
@@ -13,13 +11,11 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-eslint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-retire');
 	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-parallel');
-	grunt.loadNpmTasks('grunt-markdownlint');
+	grunt.loadNpmTasks('grunt-run');
 	grunt.loadTasks('build/tasks');
 
 	var langs;
@@ -38,7 +34,13 @@ module.exports = function(grunt) {
 		langs = [''];
 	}
 
-	var webDriverTestBrowsers = ['firefox', 'chrome', 'ie', 'chrome-mobile'];
+	var webDriverTestBrowsers = [
+		'firefox',
+		'chrome',
+		'ie',
+		'chrome-mobile',
+		'safari'
+	];
 
 	process.env.NODE_NO_HTTP2 = 1; // to hide node warning - (node:18740) ExperimentalWarning: The http2 module is an experimental API.
 
@@ -62,32 +64,27 @@ module.exports = function(grunt) {
 			var driverTests = {};
 			webDriverTestBrowsers.forEach(function(browser) {
 				driverTests[browser] = {
-					options: Object.assign({ browser: browser }, options)
+					options: Object.assign(
+						{
+							browser: browser
+						},
+						options
+					)
 				};
 			});
 			return driverTests;
 		})(),
-		retire: {
-			options: {
-				/** list of files to ignore **/
-				ignorefile: '.retireignore.json' //or '.retireignore.json'
-			},
-			js: ['lib/*.js'] /** Which js-files to scan. **/,
-			node: [
-				'./'
-			] /** Which node directories to scan (containing package.json). **/
-		},
 		clean: ['dist', 'tmp', 'axe.js', 'axe.*.js'],
 		babel: {
 			options: {
-				compact: 'false'
+				compact: false
 			},
 			core: {
 				files: [
 					{
 						expand: true,
 						cwd: 'lib/core',
-						src: ['**/*.js'],
+						src: ['**/*.js', '!imports/index.js'],
 						dest: 'tmp/core'
 					}
 				]
@@ -146,17 +143,6 @@ module.exports = function(grunt) {
 				dest: 'tmp/commons.js'
 			}
 		},
-		'generate-imports': {
-			// list of external dependencies, which needs to be added to axe.imports object
-			data: {
-				axios: './node_modules/axios/dist/axios.js',
-				doT: {
-					file: './node_modules/dot/doT.js',
-					umd: false,
-					global: 'doT'
-				}
-			}
-		},
 		'aria-supported': {
 			data: {
 				entry: 'lib/commons/aria/index.js',
@@ -183,7 +169,9 @@ module.exports = function(grunt) {
 		},
 		'add-locale': {
 			newLang: {
-				options: { lang: grunt.option('lang') },
+				options: {
+					lang: grunt.option('lang')
+				},
 				src: ['<%= concat.commons.dest %>'],
 				dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
 			}
@@ -194,12 +182,6 @@ module.exports = function(grunt) {
 			}
 		},
 		validate: {
-			tools: {
-				options: {
-					type: 'tool'
-				},
-				src: 'lib/tools/**/*.json'
-			},
 			check: {
 				options: {
 					type: 'check'
@@ -231,7 +213,7 @@ module.exports = function(grunt) {
 						quote_style: 1
 					},
 					output: {
-						comments: /^\/*! aXe/
+						comments: /^\/*! axe/
 					}
 				}
 			},
@@ -244,7 +226,7 @@ module.exports = function(grunt) {
 				}),
 				options: {
 					output: {
-						comments: /^\/*! aXe/
+						comments: /^\/*! axe/
 					},
 					mangle: {
 						reserved: ['commons', 'utils', 'axe', 'window', 'document']
@@ -260,12 +242,28 @@ module.exports = function(grunt) {
 			}, [])
 		},
 		watch: {
-			files: ['lib/**/*', 'test/**/*.js', 'Gruntfile.js'],
+			files: [
+				'lib/**/*',
+				'test/**/*.js',
+				'test/integration/**/!(index).{html,json}',
+				'Gruntfile.js'
+			],
 			tasks: ['build', 'testconfig', 'fixture']
 		},
 		testconfig: {
 			test: {
-				src: ['test/integration/rules/**/*.json'],
+				src: ['test/integration/rules/**/*.json'].concat(
+					process.env.APPVEYOR
+						? [
+								// These tests are causing PhantomJS to timeout on Appveyor
+								// Warning: PhantomJS timed out, possibly due to a missing Mocha run() call. Use --force to continue.
+								'!test/integration/rules/td-has-header/*.json',
+								'!test/integration/rules/label-content-name-mismatch/*.json',
+								'!test/integration/rules/label/*.json',
+								'!test/integration/rules/th-has-data-cells/*.json'
+						  ]
+						: []
+				),
 				dest: 'tmp/integration-tests.js'
 			}
 		},
@@ -277,7 +275,7 @@ module.exports = function(grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/core',
 					data: {
-						title: 'aXe Core Tests'
+						title: 'Axe Core Tests'
 					}
 				}
 			},
@@ -292,7 +290,7 @@ module.exports = function(grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/checks',
 					data: {
-						title: 'aXe Check Tests'
+						title: 'Axe Check Tests'
 					}
 				}
 			},
@@ -307,7 +305,7 @@ module.exports = function(grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/commons',
 					data: {
-						title: 'aXe Commons Tests'
+						title: 'Axe Commons Tests'
 					}
 				}
 			},
@@ -322,7 +320,7 @@ module.exports = function(grunt) {
 					fixture: 'test/runner.tmpl',
 					testCwd: 'test/rule-matches',
 					data: {
-						title: 'aXe Rule Matches Tests'
+						title: 'Axe Rule Matches Tests'
 					}
 				}
 			},
@@ -334,7 +332,7 @@ module.exports = function(grunt) {
 					testCwd: 'test/integration/rules',
 					tests: ['../../../tmp/integration-tests.js', 'runner.js'],
 					data: {
-						title: 'aXe Integration Tests'
+						title: 'Axe Integration Tests'
 					}
 				}
 			}
@@ -342,7 +340,6 @@ module.exports = function(grunt) {
 		mocha: testConfig(grunt, {
 			reporter: grunt.option('reporter') || 'Spec'
 		}),
-
 		connect: {
 			test: {
 				options: {
@@ -352,41 +349,20 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		eslint: {
-			axe: {
-				options: {
-					eslintrc: true,
-					reporter: grunt.option('report') ? 'checkstyle' : undefined,
-					reporterOutput: grunt.option('report') ? 'tmp/lint.xml' : undefined
-				},
-				src: [
-					'lib/**/*.js',
-					'test/**/*.js',
-					'build/**/*.js',
-					'doc/**/*.js',
-					'!doc/examples/jest_react/*.js',
-					'Gruntfile.js',
-					'!build/tasks/aria-supported.js',
-					'!**/node_modules/**/*.js'
-				]
-			}
-		},
-		markdownlint: {
-			all: {
-				options: {
-					config: grunt.file.readJSON('.markdownlint.json')
-				},
-				src: ['README.md', '.github/*.md', 'doc/**/*.md']
+		run: {
+			npm_run_imports: {
+				cmd: 'node',
+				args: ['./build/imports-generator']
 			}
 		}
 	});
 
 	grunt.registerTask('default', ['build']);
 
+	grunt.registerTask('pre-build', ['clean', 'run:npm_run_imports']);
+
 	grunt.registerTask('build', [
-		'clean',
-		'generate-imports',
-		'eslint',
+		'pre-build',
 		'validate',
 		'concat:commons',
 		'configure',
@@ -399,24 +375,19 @@ module.exports = function(grunt) {
 	grunt.registerTask('test', [
 		'build',
 		'file-exists',
-		'retire',
 		'testconfig',
 		'fixture',
 		'connect',
 		'mocha',
-		'parallel',
-		'eslint',
-		'markdownlint'
+		'parallel'
 	]);
 
 	grunt.registerTask('ci-build', [
 		'build',
-		'retire',
 		'testconfig',
 		'fixture',
 		'connect',
-		'parallel',
-		'eslint'
+		'parallel'
 	]);
 
 	grunt.registerTask('test-fast', [
@@ -424,13 +395,11 @@ module.exports = function(grunt) {
 		'testconfig',
 		'fixture',
 		'connect',
-		'mocha',
-		'eslint'
+		'mocha'
 	]);
 
 	grunt.registerTask('translate', [
-		'clean',
-		'eslint',
+		'pre-build',
 		'validate',
 		'concat:commons',
 		'add-locale'
@@ -438,20 +407,6 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('dev', [
 		'build',
-		'testconfig',
-		'fixture',
-		'connect',
-		'watch'
-	]);
-
-	grunt.registerTask('dev:no-lint', [
-		'clean',
-		'validate',
-		'concat:commons',
-		'configure',
-		'babel',
-		'concat:engine',
-		'uglify',
 		'testconfig',
 		'fixture',
 		'connect',

@@ -53,6 +53,17 @@ describe('aria.getRole', function() {
 		assert.isNull(aria.getRole(node));
 	});
 
+	it('accepts virtualNode objects', function() {
+		var node = document.createElement('div');
+		node.setAttribute('role', 'button');
+		assert.equal(aria.getRole({ actualNode: node }), 'button');
+	});
+
+	it('returns null if the node is not an element', function() {
+		var node = document.createTextNode('foo bar baz');
+		assert.isNull(aria.getRole(node));
+	});
+
 	describe('noImplicit', function() {
 		it('returns the implicit role by default', function() {
 			var node = document.createElement('li');

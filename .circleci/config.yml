@@ -2,14 +2,19 @@ version: 2
 
 defaults: &defaults
   docker:
-    - image: circleci/node:10-browsers-legacy
+    - image: circleci/node:10-browsers
   working_directory: ~/axe-core
 
 restore_dependency_cache: &restore_dependency_cache
   restore_cache:
     keys:
-      - v1-npm-cache-{{ checksum "package.json" }}
-      - v1-npm-cache-
+      - v{{ .Environment.CACHE_VERSION }}-npm-cache-{{ checksum "package.json" }}
+      - v{{ .Environment.CACHE_VERSION }}-npm-cache-
+
+restore_phantomjs_cache: &restore_phantomjs_cache
+  restore_cache:
+    keys:
+      - v{{ .Environment.CACHE_VERSION }}-phantomjs-2.1.1
 
 set_npm_auth: &set_npm_auth
   run: npm config set "//registry.npmjs.org/:_authToken" $NPM_AUTH
@@ -24,9 +29,17 @@ jobs:
       - <<: *restore_dependency_cache
       - run: npm install
       - save_cache:
-          key: v1-npm-cache-{{ checksum "package.json" }}
+          key: v{{ .Environment.CACHE_VERSION }}-npm-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
+
+  # Run ESLINT
+  lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache
+      - run: npm run eslint
 
   # Run the test suite.
   test:
@@ -34,7 +47,32 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache
+      - <<: *restore_phantomjs_cache
+      - run:
+          name: PhantomJs - Install or Restore from Cache
+          command: 'sh .circleci/install-phantomjs.sh'
+      - save_cache:
+          key: v{{ .Environment.CACHE_VERSION }}-phantomjs-2.1.1
+          paths:
+            - phantomjs
       - run: npm run test
+
+  # Run examples under `doc/examples`
+  test_examples:
+    <<: *defaults
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache
+      - run: npm run test:examples
+
+  # Test locale files
+  test_locales:
+    <<: *defaults
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache
+      - run: npm run build
+      - run: npm run test:locales
 
   # Release a "next" version
   next_release:
@@ -47,7 +85,7 @@ jobs:
       - run: npm publish --tag=next
 
   # Release a "production" version
-  production_release:
+  release:
     <<: *defaults
     steps:
       - checkout
@@ -56,41 +94,73 @@ jobs:
       - run: npm run build
       - run: npm publish
 
+  # Create a GitHub release.
+  github_release:
+    docker:
+      - image: circleci/golang:1.8
+    steps:
+      - checkout
+      - run: go get gopkg.in/aktau/github-release.v0
+      - run:
+          name: Download and run GitHub release script
+          command: |
+            curl https://raw.githubusercontent.com/dequelabs/attest-release-scripts/develop/src/node-github-release.sh -s -o ./node-github-release.sh
+            chmod +x ./node-github-release.sh
+            ./node-github-release.sh
+
 workflows:
   version: 2
   build:
     jobs:
+      # install deps
       - dependencies
+      # Run linting
+      - lint:
+          requires:
+            - dependencies
       # Run tests on all commits, but after installing dependencies
       - test:
           requires:
             - dependencies
+            - lint
+      - test_examples:
+          requires:
+            - test
+      - test_locales:
+          requires:
+            - test
       # Hold for approval
       - hold:
           type: approval
           requires:
             - test
+            - test_examples
+            - test_locales
           filters:
-            # We only want to hold on these two branches, as PR review acts as approval for PRs
             branches:
               only:
                 - master
-                - develop
       # Run a next release on "develop" commits, but only after the tests pass and dependencies are installed
       - next_release:
           requires:
             - dependencies
             - test
-            - hold
+            - test_examples
+            - test_locales
           filters:
             branches:
               only: develop
       # Run a production release on "master" commits, but only after the tests pass and dependencies are installed
-      - production_release:
+      - release:
           requires:
             - dependencies
             - test
+            - test_examples
+            - test_locales
             - hold
           filters:
             branches:
               only: master
+      - github_release:
+          requires:
+            - release

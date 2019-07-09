@@ -39,7 +39,20 @@ describe('aria-labelledby', function() {
 		assert.isFalse(checks['aria-labelledby'].evaluate(node));
 	});
 
-	it('should return true if an aria-labelledby is present, but references elements who have no visible text', function() {
+	it('should return true if an aria-labelledby is present that references hidden elements', function() {
+		var node = document.createElement('div');
+		node.setAttribute('aria-labelledby', 'woohoo');
+		fixture.appendChild(node);
+		var target = document.createElement('div');
+		target.id = 'woohoo';
+		target.setAttribute('style', 'display:none;');
+		target.innerHTML = 'bananas';
+		fixtureSetup(target);
+
+		assert.isTrue(checks['aria-labelledby'].evaluate(node));
+	});
+
+	it('should return false if an aria-labelledby is present, but references an element with only hidden content', function() {
 		var node = document.createElement('div');
 		node.setAttribute('aria-labelledby', 'woohoo');
 		fixture.appendChild(node);
@@ -48,10 +61,10 @@ describe('aria-labelledby', function() {
 		target.innerHTML = '<span style="display: none">bananas</span>';
 		fixtureSetup(target);
 
-		assert.isTrue(checks['aria-labelledby'].evaluate(node));
+		assert.isFalse(checks['aria-labelledby'].evaluate(node));
 	});
 
-	it('should return true if an aria-labelledby is present, but references elements with aria-hidden=true', function() {
+	it('should return true if an aria-labelledby is present that references elements with has aria-hidden=true', function() {
 		var node = document.createElement('div');
 		node.setAttribute('aria-labelledby', 'woohoo');
 		fixture.appendChild(node);
@@ -62,5 +75,17 @@ describe('aria-labelledby', function() {
 		fixtureSetup(target);
 
 		assert.isTrue(checks['aria-labelledby'].evaluate(node));
+	});
+
+	it('should return false if an aria-labelledby is present that references elements with has aria-hidden=true in the content', function() {
+		var node = document.createElement('div');
+		node.setAttribute('aria-labelledby', 'woohoo');
+		fixture.appendChild(node);
+		var target = document.createElement('div');
+		target.id = 'woohoo';
+		target.innerHTML = '<span aria-hidden="true">bananas</span>';
+		fixtureSetup(target);
+
+		assert.isFalse(checks['aria-labelledby'].evaluate(node));
 	});
 });

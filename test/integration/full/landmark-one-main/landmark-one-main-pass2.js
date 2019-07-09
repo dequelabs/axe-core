@@ -2,7 +2,7 @@ describe('landmark-one-main test pass', function() {
 	'use strict';
 	var results;
 	before(function(done) {
-		function start() {
+		axe.testUtils.awaitNestedLoad(function() {
 			axe.run(
 				{ runOnly: { type: 'rule', values: ['landmark-one-main'] } },
 				function(err, r) {
@@ -11,12 +11,7 @@ describe('landmark-one-main test pass', function() {
 					done();
 				}
 			);
-		}
-		if (document.readyState !== 'complete') {
-			window.addEventListener('load', start);
-		} else {
-			start();
-		}
+		});
 	});
 
 	describe('violations', function() {

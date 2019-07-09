@@ -2,11 +2,11 @@ import React from 'react';
 import axe from 'axe-core';
 import { mountToDoc } from './test-helpers';
 
-import Link from './Link';
+import Link from './link';
 
-test('Link has no aXe violations', done => {
+test('Link has no axe violations', done => {
 	const linkComponent = mountToDoc(
-		<Link page="http://www.axe-core.org">aXe website</Link>
+		<Link page="http://www.axe-core.org">axe website</Link>
 	);
 	const linkNode = linkComponent.getDOMNode();
 

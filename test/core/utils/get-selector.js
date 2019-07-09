@@ -494,8 +494,22 @@ describe('axe.utils.getSelector', function() {
 		img2.setAttribute('src', '//deque.com/logo.png');
 
 		fixtureSetup([link1, link2, img1, img2]);
-		assert.equal(axe.utils.getSelector(link2), 'a[href$="about/"]');
-		assert.equal(axe.utils.getSelector(img2), 'img[src$="logo.png"]');
+		assert.equal(axe.utils.getSelector(link2), 'a[href$="about\\/"]');
+		assert.equal(axe.utils.getSelector(img2), 'img[src$="logo\\.png"]');
+	});
+
+	it('should escape href attributes', function() {
+		var link1 = document.createElement('a');
+		link1.setAttribute('href', '//deque.com/about/');
+
+		var link2 = document.createElement('a');
+		link2.setAttribute('href', '//deque.com/child/ \n\n\n');
+
+		fixtureSetup([link1, link2]);
+		assert.equal(
+			axe.utils.getSelector(link2),
+			'a[href="\\/\\/deque\\.com\\/child\\/\\ \\a \\a \\a "]'
+		);
 	});
 
 	it('should not generate universal selectors', function() {
@@ -516,8 +530,11 @@ describe('axe.utils.getSelector', function() {
 		node2.setAttribute('href', href2);
 		fixtureSetup([node1, node2]);
 
-		assert.include(axe.utils.getSelector(node1), href1);
-		assert.include(axe.utils.getSelector(node2), href2);
+		assert.include(axe.utils.getSelector(node1), 'mars2\\.html\\?a\\=be_bold');
+		assert.include(
+			axe.utils.getSelector(node2),
+			'mars2\\.html\\?a\\=be_italic'
+		);
 	});
 
 	// shadow DOM v1 - note: v0 is compatible with this code, so no need

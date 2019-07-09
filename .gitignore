@@ -1,18 +1,28 @@
-tmp
-dist
+# defaults
 node_modules
-test/*/index.html
-test/integration/*/index.html
-axe.js
-axe.*.js
-*.tgz
 npm-shrinkwrap.json
-typings/axe-core/axe-core-tests.js
-doc/rule-descriptions.*.md
 package-lock.json
 .DS_Store
-!lib/core/imports/index.js
-lib/core/imports/*.js
+.vscode
 
-# ignore jsdoc api documentation generated files
+# tmp - `dev` time generated assets
+tmp
+
+# test - runner generated assets
+test/*/index.html
+test/integration/*/index.html
+
+# dist
+axe.js
+axe.*.js
+
+
+# generated jsdoc api docs
 doc/api/*
+
+# ts generated file
+typings/axe-core/axe-core-tests.js
+
+# doc
+doc/rule-descriptions.*.md
+

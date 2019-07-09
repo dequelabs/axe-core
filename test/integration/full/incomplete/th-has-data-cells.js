@@ -2,7 +2,7 @@ describe('th-has-data-cells cantTell test', function() {
 	'use strict';
 	var results;
 	before(function(done) {
-		function start() {
+		axe.testUtils.awaitNestedLoad(function() {
 			axe.run(
 				'#fixture',
 				{
@@ -14,12 +14,7 @@ describe('th-has-data-cells cantTell test', function() {
 					done();
 				}
 			);
-		}
-		if (document.readyState !== 'complete') {
-			window.addEventListener('load', start);
-		} else {
-			start();
-		}
+		});
 	});
 
 	describe('passes/violations', function() {
@@ -34,7 +29,7 @@ describe('th-has-data-cells cantTell test', function() {
 	describe('incomplete data', function() {
 		it('should be incomplete for missing or empty data cells', function() {
 			var resultNodes = results.incomplete[0].nodes;
-			assert.lengthOf(resultNodes, 3);
+			assert.lengthOf(resultNodes, 2);
 			resultNodes[0].any.forEach(function(check) {
 				assert.match(check.message, 'Table data cells are missing or empty');
 			});

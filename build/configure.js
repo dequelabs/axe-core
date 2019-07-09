@@ -1,5 +1,5 @@
 /*eslint-env node */
-/*eslint max-statements: ["error", 20], max-len: off */
+/*eslint max-len: off */
 'use strict';
 
 var clone = require('clone');
@@ -250,8 +250,7 @@ function buildRules(grunt, options, commons, callback) {
 						data: metadata,
 						rules: rules,
 						checks: checks,
-						commons: result.commons,
-						tools: result.tools
+						commons: result.commons
 					},
 					blacklist
 				)

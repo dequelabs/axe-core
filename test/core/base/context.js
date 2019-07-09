@@ -368,8 +368,8 @@ describe('Context', function() {
 
 		it('should create a flatTree property', function() {
 			var context = new Context({ include: [document] });
-			// WARNING: This only works because there is now Shadow DOM on this page
-			assert.deepEqual(context.flatTree, axe.utils.getFlattenedTree(document));
+			assert.isArray(context.flatTree);
+			assert.isAtLeast(context.flatTree.length, 1);
 		});
 
 		it('should throw when frame could not be found', function(done) {
@@ -391,40 +391,45 @@ describe('Context', function() {
 
 	describe('object definition', function() {
 		it('should assign include/exclude', function() {
-			var flatTree = axe.utils.getFlattenedTree(document);
-			assert.deepEqual(
-				new Context({
-					include: ['#fixture'],
-					exclude: ['#mocha']
-				}),
-				{
-					include: axe.utils.querySelectorAll(flatTree, '#fixture'),
-					exclude: axe.utils.querySelectorAll(flatTree, '#mocha'),
-					flatTree: flatTree,
-					initiator: true,
-					page: false,
-					frames: []
-				}
-			);
+			var context = new Context({
+				include: ['#fixture'],
+				exclude: ['#mocha']
+			});
+			assert.isNotNull(context);
+			assert.hasAllKeys(context, [
+				'include',
+				'exclude',
+				'flatTree',
+				'initiator',
+				'page',
+				'frames'
+			]);
+			assert.isArray(context.flatTree);
+			assert.isAtLeast(context.flatTree.length, 1);
 		});
 
 		it('should disregard bad input, non-matching selectors', function() {
 			var flatTree = axe.utils.getFlattenedTree(document);
-			assert.deepEqual(
-				new Context({
-					include: ['#fixture', '#monkeys'],
-					exclude: ['#bananas']
-				}),
-				{
-					include: axe.utils.querySelectorAll(flatTree, '#fixture'),
-					exclude: [],
-					flatTree: flatTree,
-					initiator: true,
-					page: false,
-					frames: []
-				}
+			var context = new Context({
+				include: ['#fixture', '#monkeys'],
+				exclude: ['#bananas']
+			});
+			assert.isNotNull(context);
+			assert.hasAllKeys(context, [
+				'include',
+				'exclude',
+				'flatTree',
+				'initiator',
+				'page',
+				'frames'
+			]);
+			assert.lengthOf(context.include, 1);
+			assert.equal(
+				context.include[0].actualNode.id,
+				axe.utils.querySelectorAll(flatTree, '#fixture')[0].actualNode.id
 			);
 		});
+
 		it('should disregard bad input (null)', function() {
 			var result = new Context();
 

@@ -121,16 +121,6 @@ describe('helpers.processAggregate', function() {
 		];
 	});
 
-	it('should add a `timestamp` property to the `resultObject`', function() {
-		var resultObject = helpers.processAggregate(results, {});
-		assert.isDefined(resultObject.timestamp);
-	});
-
-	it('should add a `url` property to the `resultObject`', function() {
-		var resultObject = helpers.processAggregate(results, {});
-		assert.isDefined(resultObject.url);
-	});
-
 	it('should remove the `result` property from each node in each ruleResult', function() {
 		assert.isDefined(
 			results.find(function(r) {

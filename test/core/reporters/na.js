@@ -229,19 +229,20 @@ describe('reporters - na', function() {
 			done();
 		});
 	});
-	it('should include URL', function(done) {
+	it('should add environment data', function(done) {
 		axe.run(naOption, function(err, results) {
 			assert.isNull(err);
-			assert.equal(results.url, window.location.href);
+			assert.isNotNull(results.url);
+			assert.isNotNull(results.timestamp);
+			assert.isNotNull(results.testEnvironement);
+			assert.isNotNull(results.testRunner);
 			done();
 		});
 	});
-	it('should include timestamp', function(done) {
+	it('should add toolOptions property', function(done) {
 		axe.run(naOption, function(err, results) {
 			assert.isNull(err);
-			var timestamp = new Date(results.timestamp);
-			assert.instanceOf(timestamp, Date);
-			assert.closeTo(timestamp.getTime(), Date.now(), 50);
+			assert.isNotNull(results.toolOptions);
 			done();
 		});
 	});

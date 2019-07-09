@@ -1,75 +1,78 @@
 describe('axe.utils.preload', function() {
 	'use strict';
 
-	it('should return a queue', function() {
-		var options = {
-			preload: true
-		};
-		var actual = axe.utils.preload(options);
-		assert.isObject(actual);
-		assert.containsAllKeys(actual, ['then', 'defer', 'catch']);
+	var isPhantom = window.PHANTOMJS ? true : false;
+	var fixture = document.getElementById('fixture');
+
+	before(function() {
+		axe._tree = axe.utils.getFlattenedTree(fixture);
 	});
 
-	it('should ensure queue is defer(able)', function(done) {
-		var options = {
-			preload: false
-		};
-		var actual = axe.utils.preload(options);
-		actual
-			.defer(function(res, rej) {
-				assert.isFunction(rej);
-				res(true);
-				done();
-			})
-			.catch(function(error) {
-				done(error);
-			});
-	});
+	(isPhantom ? it.skip : it)(
+		'returns `undefined` when `preload` option is set to false.',
+		function(done) {
+			var options = {
+				preload: false
+			};
+			var actual = axe.utils.preload(options);
+			actual
+				.then(function(results) {
+					assert.isUndefined(results);
+					done();
+				})
+				.catch(function(error) {
+					done(error);
+				});
+		}
+	);
 
-	it('should ensure queue is then(able)', function(done) {
-		var options = {
-			preload: false
-		};
-		var actual = axe.utils.preload(options);
-		actual
-			.then(function(results) {
+	(isPhantom ? it.skip : it)(
+		'returns assets with `cssom`, verify result is same output from `preloadCssom` fn',
+		function(done) {
+			var options = {
+				preload: {
+					assets: ['cssom']
+				}
+			};
+			var actual = axe.utils.preload(options);
+			actual.then(function(results) {
 				assert.isDefined(results);
-				done();
-			})
-			.catch(function(error) {
-				done(error);
-			});
-	});
+				assert.property(results, 'cssom');
 
-	it('should return an object with property cssom and verify result is same output from preloadCssom', function(done) {
-		var options = {
-			preload: {
-				assets: ['cssom']
-			}
-		};
-		var actual = axe.utils.preload(options);
-		actual
-			.then(function(results) {
-				assert.isDefined(results);
-				assert.isArray(results);
-				assert.property(results[0], 'cssom');
-				// also verify that result from css matches that of preloadCssom
 				axe.utils.preloadCssom(options).then(function(resultFromPreloadCssom) {
-					assert.deepEqual(results[0].cssom, resultFromPreloadCssom[0]);
+					assert.deepEqual(results.cssom, resultFromPreloadCssom);
 					done();
 				});
-			})
-			.catch(function(error) {
-				done(error);
 			});
-	});
+		}
+	);
 
 	describe('axe.utils.shouldPreload', function() {
 		it('should return true if preload configuration is valid', function() {
-			var options = {
-				preload: true
-			};
-			var actual = axe.utils.shouldPreload(options);
+			var actual = axe.utils.shouldPreload({
+				preload: {
+					assets: ['cssom']
+				}
+			});
+			assert.isTrue(actual);
+		});
+
+		it('should return true if preload is undefined', function() {
+			var actual = axe.utils.shouldPreload({
+				preload: undefined
+			});
+			assert.isTrue(actual);
+		});
+
+		it('should return true if preload is null', function() {
+			var actual = axe.utils.shouldPreload({
+				preload: null
+			});
+			assert.isTrue(actual);
+		});
+
+		it('should return true if preload is not set', function() {
+			var actual = axe.utils.shouldPreload({});
 			assert.isTrue(actual);
 		});
 
@@ -85,28 +88,20 @@ describe('axe.utils.preload', function() {
 	});
 
 	describe('axe.utils.getPreloadConfig', function() {
-		it('should throw error if preload configuration is invalid', function() {
-			var actual = function() {
-				axe.utils.getPreloadConfig({});
-			};
-			var expected = Error;
-			assert.throws(actual, expected);
+		it('should return default assets if preload configuration is not set', function() {
+			var actual = axe.utils.getPreloadConfig({}).assets;
+			var expected = ['cssom'];
+			assert.deepEqual(actual, expected);
 		});
 
 		it('should return default assets if preload options is set to true', function() {
-			var options = {
-				preload: true
-			};
-			var actual = axe.utils.getPreloadConfig(options).assets;
+			var actual = axe.utils.getPreloadConfig({}).assets;
 			var expected = ['cssom'];
 			assert.deepEqual(actual, expected);
 		});
 
 		it('should return default timeout value if not configured', function() {
-			var options = {
-				preload: true
-			};
-			var actual = axe.utils.getPreloadConfig(options).timeout;
+			var actual = axe.utils.getPreloadConfig({}).timeout;
 			var expected = 10000;
 			assert.equal(actual, expected);
 		});

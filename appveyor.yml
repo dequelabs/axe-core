@@ -1,21 +1,24 @@
-# Test against the latest version of this Node.js version
-environment:
-  nodejs_version: "6"
+version: 1.0.{build}-{branch}
 
-# Install scripts. (runs after repo cloning)
+ # Test against this version of node.
+environment:
+  nodejs_version: "10"
+skip_tags: true
+
+ # Install scripts. (runs after repo cloning)
 install:
-  # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
-  # install modules
   - npm install
 
-# Post-install test scripts.
+ # Post-install test scripts.
 test_script:
-  # Output useful info for debugging.
   - node --version
   - npm --version
-  # run tests
-  - npm test
+  - npm run build
+  # Run test scaffolding
+  - npx grunt testconfig fixture
+  - appveyor-retry npx grunt connect test-webdriver:ie
+  - npm run test:examples
 
-# Don't actually build.
+ # Don't actually build.
 build: off

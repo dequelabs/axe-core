@@ -2,7 +2,7 @@ describe('page-has-heading-one test pass', function() {
 	'use strict';
 	var results;
 	before(function(done) {
-		function start() {
+		axe.testUtils.awaitNestedLoad(function() {
 			// Stop messing with my tests Mocha!
 			document.querySelector('#mocha h1').outerHTML =
 				'<h2>page-has-heading-one test</h2>';
@@ -16,12 +16,7 @@ describe('page-has-heading-one test pass', function() {
 					done();
 				}
 			);
-		}
-		if (document.readyState !== 'complete') {
-			window.addEventListener('load', start);
-		} else {
-			start();
-		}
+		});
 	});
 
 	describe('violations', function() {

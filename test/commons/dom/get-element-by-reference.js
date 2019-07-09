@@ -68,4 +68,17 @@ describe('dom.getElementByReference', function() {
 
 		assert.equal(result, expected);
 	});
+
+	it('returns the first matching element using Angular skiplinks', function() {
+		fixture.innerHTML =
+			'<a id="link" href="/#target">Hi</a>' +
+			'<a name="target" id="target0"></a>' +
+			'<a name="target"></a>';
+
+		var node = document.getElementById('link'),
+			expected = document.getElementById('target0'),
+			result = axe.commons.dom.getElementByReference(node, 'href');
+
+		assert.equal(result, expected);
+	});
 });

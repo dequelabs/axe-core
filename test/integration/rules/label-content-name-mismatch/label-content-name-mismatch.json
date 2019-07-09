@@ -1,0 +1,27 @@
+{
+	"description": "label-content-name-mismatch tests",
+	"rule": "label-content-name-mismatch",
+	"violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"], ["#fail5"]],
+	"passes": [
+		["#pass1"],
+		["#pass2"],
+		["#pass3"],
+		["#pass4"],
+		["#pass5"],
+		["#pass6"],
+		["#pass7"]
+	],
+	"incomplete": [
+		["#incomplete1"],
+		["#incomplete2"],
+		["#incomplete3"],
+		["#incomplete4"],
+		["#incomplete5"],
+		["#incomplete6"],
+		["#incomplete7"],
+		["#incomplete8"],
+		["#incomplete9"],
+		["#incomplete10"],
+		["#incomplete11"]
+	]
+}

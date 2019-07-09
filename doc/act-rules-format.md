@@ -6,7 +6,7 @@ There are two ways a rule written in the axe-core rule format can be transformed
 
 ## Method 1: Create a single rule
 
-This method is useful for rules with a small number of checks. 
+This method is useful for rules with a small number of checks.
 
 1. Add the test input type to it: `rendered page`
 2. Add an `assumptions` section, add possible assumptions to it
@@ -14,8 +14,10 @@ This method is useful for rules with a small number of checks.
 4. Add a `Validation Tests` section, that links to the integration tests
 5. Update the check to return pass/fail/cantTell instead of true/false/undefined
 6. Add control flow to the checks:
-  - `any` checks should only return `fail` in the last step. All steps leading up to it either return `pass` or say `continue to the next step`.
-  - `all` and `none` checks should only return `pass` in the last step. All steps leading up to it either return `fail` or say `continue to the next step`.
+
+- `any` checks should only return `fail` in the last step. All steps leading up to it either return `pass` or say `continue to the next step`.
+- `all` and `none` checks should only return `pass` in the last step. All steps leading up to it either return `fail` or say `continue to the next step`.
+
 7. Rename `checks` to `steps` and add a `step X` (where X is the step number) to the heading with the check name.
 8. Replace the `tags` section with a `Accessibility Requirements`. The requirements can be determined based on the `wcag###` tags.
 

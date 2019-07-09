@@ -40,7 +40,6 @@ describe('description', function() {
 			shadow.innerHTML = '<video><slot></slot></video>';
 
 			var checkArgs = checkSetup(node, {}, 'video');
-			axe.log(checkArgs);
 			assert.isFalse(checks.description.evaluate.apply(null, checkArgs));
 		}
 	);

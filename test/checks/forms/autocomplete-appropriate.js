@@ -66,9 +66,27 @@ describe('autocomplete-appropriate', function() {
 		assert.isTrue(evaluate.apply(checkContext, params));
 	});
 
+	it('returns true if the input type is foobar and the term is undefined', function() {
+		var options = {};
+		var params = autocompleteCheckParams('foo', 'foobar', options);
+		assert.isTrue(evaluate.apply(checkContext, params));
+	});
+
 	it('returns false if the input type is text and the term maps to an empty array', function() {
 		var options = { foo: [] };
 		var params = autocompleteCheckParams('foo', 'text', options);
+		assert.isFalse(evaluate.apply(checkContext, params));
+	});
+
+	it('returns false if the input type is month and term is bday-month', function() {
+		var options = {};
+		var params = autocompleteCheckParams('bday-month', 'month', options);
+		assert.isFalse(evaluate.apply(checkContext, params));
+	});
+
+	it('returns false if the input type is MONTH (case-insensitive & sanitized) and term is bday-month', function() {
+		var options = {};
+		var params = autocompleteCheckParams('bday-month', '   MONTH    ', options);
 		assert.isFalse(evaluate.apply(checkContext, params));
 	});
 });

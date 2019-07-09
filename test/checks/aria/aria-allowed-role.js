@@ -12,6 +12,7 @@ describe('aria-allowed-role', function() {
 	it('returns true if given element is an ignoredTag in options', function() {
 		var node = document.createElement('article');
 		node.setAttribute('role', 'presentation');
+		fixture.appendChild(node);
 		var options = {
 			ignoredTags: ['article']
 		};
@@ -26,16 +27,15 @@ describe('aria-allowed-role', function() {
 	});
 
 	it('returns false with implicit role of row for TR when allowImplicit is set to false via options', function() {
-		var node = document.createElement('table');
-		node.setAttribute('role', 'grid');
-		var row = document.createElement('tr');
-		row.setAttribute('role', 'row');
+		fixture.innerHTML =
+			'<table role="grid"><tr id="target" role="row"></tr></table>';
+		var target = fixture.querySelector('#target');
 		var options = {
 			allowImplicit: false
 		};
 		var actual = checks['aria-allowed-role'].evaluate.call(
 			checkContext,
-			row,
+			target,
 			options
 		);
 		var expected = false;
@@ -49,6 +49,32 @@ describe('aria-allowed-role', function() {
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
+	});
+
+	it('returns undefined (needs review) when element is hidden and has unallowed role', function() {
+		fixture.innerHTML =
+			'<button id="target" type="button" aria-hidden="true"' +
+			'role="presentation"></button>';
+		var target = fixture.querySelector('#target');
+		var actual = checks['aria-allowed-role'].evaluate.call(
+			checkContext,
+			target
+		);
+		assert.isUndefined(actual);
+	});
+
+	it('returns undefined (needs review) when element is with in hidden parent and has unallowed role', function() {
+		fixture.innerHTML =
+			'<div style="display:none">' +
+			'<button id="target" class="mm-tabstart" type="button"' +
+			'role="presentation"></button>' +
+			'</div>';
+		var target = fixture.querySelector('#target');
+		var actual = checks['aria-allowed-role'].evaluate.call(
+			checkContext,
+			target
+		);
+		assert.isUndefined(actual);
 	});
 
 	it('returns true when BUTTON has type menu and role as menuitem', function() {
@@ -119,17 +145,6 @@ describe('aria-allowed-role', function() {
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
-	});
-
-	it('returns true when MENU has type context', function() {
-		var node = document.createElement('menu');
-		node.setAttribute('type', 'context');
-		node.setAttribute('role', 'navigation');
-		fixture.appendChild(node);
-		assert.isFalse(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
-		);
-		assert.deepEqual(checkContext._data, ['navigation']);
 	});
 
 	it('returns false when a role is set on an element that does not allow any role', function() {

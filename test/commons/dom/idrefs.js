@@ -43,8 +43,9 @@ describe('dom.idrefs', function() {
 		);
 	});
 
-	it('should find only referenced nodes within the current root: shadow DOM', function() {
-		if (shadowSupported) {
+	(shadowSupported ? it : xit)(
+		'should find only referenced nodes within the current root: shadow DOM',
+		function() {
 			// shadow DOM v1 - note: v0 is compatible with this code, so no need
 			// to specifically test this
 			fixture.innerHTML = '<div target="target"><div id="target"></div></div>';
@@ -58,10 +59,11 @@ describe('dom.idrefs', function() {
 				'should only find stuff in the shadow DOM'
 			);
 		}
-	});
+	);
 
-	it('should find only referenced nodes within the current root: document', function() {
-		if (shadowSupported) {
+	(shadowSupported ? it : xit)(
+		'should find only referenced nodes within the current root: document',
+		function() {
 			// shadow DOM v1 - note: v0 is compatible with this code, so no need
 			// to specifically test this
 			fixture.innerHTML =
@@ -76,7 +78,7 @@ describe('dom.idrefs', function() {
 				'should only find stuff in the document'
 			);
 		}
-	});
+	);
 
 	it('should insert null if a reference is not found', function() {
 		fixture.innerHTML =

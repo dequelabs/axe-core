@@ -20,7 +20,7 @@ describe('color.getBackgroundColor', function() {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(128, 0, 0, 1);
 		assert.closeTo(actual.red, expected.red, 0.5);
@@ -44,7 +44,7 @@ describe('color.getBackgroundColor', function() {
 		var target = fixture.querySelector('#target');
 		var pos = fixture.querySelector('#pos');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(64, 64, 0, 1);
 
@@ -64,7 +64,7 @@ describe('color.getBackgroundColor', function() {
 		var target = fixture.querySelector('#target');
 		var under = fixture.querySelector('#under');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(64, 64, 0, 1);
 		assert.closeTo(actual.red, expected.red, 0.5);
@@ -90,7 +90,7 @@ describe('color.getBackgroundColor', function() {
 		var target = fixture.querySelector('#target');
 		var under = fixture.querySelector('#under');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(64, 64, 0, 1);
 
@@ -109,7 +109,7 @@ describe('color.getBackgroundColor', function() {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(64, 64, 0, 1);
 		assert.closeTo(actual.red, expected.red, 0.5);
@@ -127,7 +127,7 @@ describe('color.getBackgroundColor', function() {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(64, 64, 0, 1);
 		assert.equal(actual.red, expected.red);
@@ -146,7 +146,7 @@ describe('color.getBackgroundColor', function() {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		assert.isNull(actual);
 		assert.deepEqual(bgNodes, [target, parent]);
@@ -156,7 +156,7 @@ describe('color.getBackgroundColor', function() {
 	it('should return white if transparency goes all the way up to document', function() {
 		fixture.innerHTML = '<div id="target" style="height: 10px; width: 30px;">';
 		var target = fixture.querySelector('#target');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target);
 		var expected = new axe.commons.color.Color(255, 255, 255, 1);
 		assert.equal(actual.red, expected.red);
@@ -172,18 +172,18 @@ describe('color.getBackgroundColor', function() {
 			'</div></div>';
 		var target = fixture.querySelector('#target');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		assert.isNull(actual);
 		assert.deepEqual(bgNodes, [target]);
 		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgImage');
 	});
 
-	it('should return null if something opaque is obscuring it', function() {
+	it('should return null if something non-opaque is obscuring it', function() {
 		fixture.innerHTML =
 			'<div style="width:100%; height: 100px; background: #000"></div>' +
 			'<div id="target" style="position: relative; top: -50px; z-index:-1;color:#fff;">Hello</div>';
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(
 			document.getElementById('target'),
 			[]
@@ -192,19 +192,17 @@ describe('color.getBackgroundColor', function() {
 		assert.isNull(actual);
 	});
 
-	it('should return an actual if something non-opaque is obscuring it', function() {
+	it('should return an actual if something opaque is obscuring it', function() {
 		fixture.innerHTML =
 			'<div style="width:100%; height: 100px; background: rgba(0, 0, 0, 0.5)"></div>' +
 			'<div id="target" style="position: relative; top: -50px; z-index:-1;color:#fff;">Hello</div>';
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(
 			document.getElementById('target'),
 			[]
 		);
-		assert.isNotNull(actual);
-		assert.equal(Math.round(actual.blue), 128);
-		assert.equal(Math.round(actual.red), 128);
-		assert.equal(Math.round(actual.green), 128);
+		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgOverlap');
+		assert.isNull(actual);
 	});
 
 	it('should return the bgcolor if it is solid', function() {
@@ -214,7 +212,7 @@ describe('color.getBackgroundColor', function() {
 			'</div></div>';
 		var target = fixture.querySelector('#target');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(0, 128, 0, 1);
 		assert.equal(actual.red, expected.red);
@@ -230,7 +228,7 @@ describe('color.getBackgroundColor', function() {
 			'<div style="background-color:rgba(0,0,0,1);position:absolute;width:300px;height:200px;"></div>' +
 			'<p style="position: relative;z-index:1;">Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>' +
 			'</div>';
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(
 			document.getElementById('target'),
 			[]
@@ -251,7 +249,7 @@ describe('color.getBackgroundColor', function() {
 			'<div style="background-color:rgba(0,0,0,1);position:absolute;width:300px;height:20px;"></div>' +
 			'<p style="position: relative;z-index:1;">Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>' +
 			'</div>';
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(
 			document.getElementById('target'),
 			[]
@@ -306,7 +304,7 @@ describe('color.getBackgroundColor', function() {
 		var target = fixture.querySelector('#target'),
 			parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(243, 243, 243, 1);
 		assert.equal(actual.red, expected.red);
@@ -328,7 +326,7 @@ describe('color.getBackgroundColor', function() {
 		var target = fixture.querySelector('#target'),
 			parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(243, 243, 243, 1);
 		assert.equal(actual.red, expected.red);
@@ -350,7 +348,73 @@ describe('color.getBackgroundColor', function() {
 		var target = fixture.querySelector('#target'),
 			parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(243, 243, 243, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+		assert.deepEqual(bgNodes, [parent]);
+	});
+
+	it('should count a THEAD as a background element for a child element', function() {
+		fixture.innerHTML =
+			'<div style="background-color:#007acc;">' +
+			'<table style="width:100%">' +
+			'<thead style="background-color:#f3f3f3; height:40px;" id="parent">' +
+			'<td>' +
+			'<span style="color:#007acc" id="target">Cell content</span>' +
+			'</td></thead>' +
+			'</table></div>';
+		var target = fixture.querySelector('#target'),
+			parent = fixture.querySelector('#parent');
+		var bgNodes = [];
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(243, 243, 243, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+		assert.deepEqual(bgNodes, [parent]);
+	});
+
+	it('should count a TBODY as a background element for a child element', function() {
+		fixture.innerHTML =
+			'<div style="background-color:#007acc;">' +
+			'<table style="width:100%">' +
+			'<tbody style="background-color:#f3f3f3; height:40px;" id="parent">' +
+			'<td>' +
+			'<span style="color:#007acc" id="target">Cell content</span>' +
+			'</td></tbody>' +
+			'</table></div>';
+		var target = fixture.querySelector('#target'),
+			parent = fixture.querySelector('#parent');
+		var bgNodes = [];
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(243, 243, 243, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+		assert.deepEqual(bgNodes, [parent]);
+	});
+
+	it('should count a TFOOT as a background element for a child element', function() {
+		fixture.innerHTML =
+			'<div style="background-color:#007acc;">' +
+			'<table style="width:100%">' +
+			'<tfoot style="background-color:#f3f3f3; height:40px;" id="parent">' +
+			'<td>' +
+			'<span style="color:#007acc" id="target">Cell content</span>' +
+			'</td></tfoot>' +
+			'</table></div>';
+		var target = fixture.querySelector('#target'),
+			parent = fixture.querySelector('#parent');
+		var bgNodes = [];
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(243, 243, 243, 1);
 		assert.equal(actual.red, expected.red);
@@ -369,7 +433,7 @@ describe('color.getBackgroundColor', function() {
 		var bgNodes = [];
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(255, 255, 255, 1);
 		assert.equal(actual.red, expected.red);
@@ -386,7 +450,7 @@ describe('color.getBackgroundColor', function() {
 			'</label>';
 		var target = fixture.querySelector('#target');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(0, 0, 0, 1);
 		assert.equal(actual.red, expected.red);
@@ -404,7 +468,7 @@ describe('color.getBackgroundColor', function() {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(255, 255, 255, 1);
 		assert.equal(actual.red, expected.red);
@@ -430,7 +494,7 @@ describe('color.getBackgroundColor', function() {
 		var target = fixture.querySelector('#target'),
 			parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 		var expected = new axe.commons.color.Color(243, 243, 243, 1);
 		assert.equal(actual.red, expected.red);
@@ -452,7 +516,7 @@ describe('color.getBackgroundColor', function() {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 
 		var expected = new axe.commons.color.Color(255, 255, 255, 1);
@@ -473,7 +537,7 @@ describe('color.getBackgroundColor', function() {
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
 
 		var expected = new axe.commons.color.Color(255, 255, 255, 1);
@@ -496,7 +560,7 @@ describe('color.getBackgroundColor', function() {
 		var target = fixture.querySelector('#target');
 		var shifted = fixture.querySelector('#shifted');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes, false);
 		var expected = new axe.commons.color.Color(0, 0, 0, 1);
 
@@ -522,7 +586,7 @@ describe('color.getBackgroundColor', function() {
 
 		var target = fixture.querySelector('#target');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var outcome = axe.commons.color.getBackgroundColor(target, bgNodes, false);
 		assert.isNull(outcome);
 		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgImage');
@@ -542,7 +606,7 @@ describe('color.getBackgroundColor', function() {
 
 		var target = fixture.querySelector('#target');
 		var bgNodes = [];
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var outcome = axe.commons.color.getBackgroundColor(target, bgNodes, false);
 		assert.isNull(outcome);
 		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'imgNode');
@@ -559,7 +623,7 @@ describe('color.getBackgroundColor', function() {
 		var bgNodes = [];
 		window.scroll(0, 0);
 
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		axe.commons.color.getBackgroundColor(targetEl, bgNodes, true);
 
 		assert.equal(window.pageYOffset, 0);
@@ -576,7 +640,7 @@ describe('color.getBackgroundColor', function() {
 		var bgNodes = [];
 		window.scroll(0, 0);
 
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		axe.commons.color.getBackgroundColor(targetEl, bgNodes, false);
 
 		assert.notEqual(window.pageYOffset, 0);
@@ -588,7 +652,7 @@ describe('color.getBackgroundColor', function() {
 			'style="z-index:-1; position:absolute; width:100%; height:2em; background: #000"></div>' +
 			'<div id="target">Some text</div>';
 
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(
 			document.getElementById('target'),
 			[]
@@ -610,7 +674,7 @@ describe('color.getBackgroundColor', function() {
 
 		var orig = document.body.style.background;
 		document.body.style.background = '#FFF';
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(
 			document.getElementById('target'),
 			[]
@@ -631,7 +695,7 @@ describe('color.getBackgroundColor', function() {
 		var orig = document.body.style.background;
 		document.body.style.background = '#F00';
 
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(
 			document.getElementById('target'),
 			[]
@@ -650,7 +714,7 @@ describe('color.getBackgroundColor', function() {
 		var orig = document.body.style.background;
 		document.body.style.background = '#F00';
 
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(
 			document.getElementById('target'),
 			[]
@@ -669,7 +733,7 @@ describe('color.getBackgroundColor', function() {
 		var orig = document.documentElement.style.background;
 		document.documentElement.style.background = '#0F0';
 
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var actual = axe.commons.color.getBackgroundColor(
 			document.getElementById('target'),
 			[]
@@ -697,7 +761,7 @@ describe('color.getBackgroundColor', function() {
 
 		// This shouldn't cause a scroll
 		var target1 = document.getElementById('tgt1');
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		axe.commons.color.getBackgroundColor(target1, []);
 
 		// Otherwise this would not be on the black bg anymore:
@@ -710,12 +774,27 @@ describe('color.getBackgroundColor', function() {
 		assert.closeTo(actual.alpha, 1, 0.1);
 	});
 
+	it('does returns null for inline elements that do not fit the viewport', function() {
+		var html = '';
+		for (var i = 0; i < 1000; i++) {
+			html += 'foo<br />';
+		}
+		fixture.innerHTML = '<em>' + html + '</em>';
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
+		var outcome = axe.commons.color.getBackgroundColor(fixture.firstChild, []);
+		assert.isNull(outcome);
+		assert.equal(
+			axe.commons.color.incompleteData.get('bgColor'),
+			'outsideViewport'
+		);
+	});
+
 	it('should return the body bgColor when content does not overlap', function() {
 		fixture.innerHTML =
 			'<div style="height: 20px; width: 30px; background-color: red;">' +
 			'<div id="target" style="height:20px; top: 25px; width: 45px; position:absolute;">Text' +
 			'</div></div>';
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getBackgroundColor(target, []);
 
@@ -723,6 +802,53 @@ describe('color.getBackgroundColor', function() {
 		assert.closeTo(actual.green, 255, 0);
 		assert.closeTo(actual.blue, 255, 0);
 		assert.closeTo(actual.alpha, 1, 0);
+	});
+
+	it('should return the html canvas inherited from body bgColor when element content does not overlap with body', function() {
+		fixture.innerHTML =
+			'<div id="target" style="position: relative; top: 2px;">Text</div>';
+
+		// size body element so that target element is positioned outside of background
+		var originalHeight = document.body.style.height;
+		var originalBg = document.body.style.background;
+		document.body.style.height = '1px';
+		document.body.style.background = '#000';
+
+		var target = fixture.querySelector('#target');
+		var actual = axe.commons.color.getBackgroundColor(target, []);
+
+		assert.closeTo(actual.red, 0, 0);
+		assert.closeTo(actual.green, 0, 0);
+		assert.closeTo(actual.blue, 0, 0);
+		assert.closeTo(actual.alpha, 1, 0);
+
+		document.body.style.height = originalHeight;
+		document.body.style.background = originalBg;
+	});
+
+	it('should return the html canvas bgColor when element content does not overlap with body', function() {
+		fixture.innerHTML =
+			'<div id="target" style="position: relative; top: 2px;">Text</div>';
+
+		// size body element so that target element is positioned outside of background
+		var originalHeight = document.body.style.height;
+		var originalBg = document.body.style.background;
+		var originalRootBg = document.documentElement.style.background;
+		document.body.style.height = '1px';
+		document.body.style.background = '#0f0';
+		document.documentElement.style.background = '#f00';
+
+		var target = fixture.querySelector('#target');
+		var actual = axe.commons.color.getBackgroundColor(target, []);
+
+		assert.closeTo(actual.red, 255, 0);
+		assert.closeTo(actual.green, 0, 0);
+		assert.closeTo(actual.blue, 0, 0);
+		assert.closeTo(actual.alpha, 1, 0);
+
+		document.body.style.height = originalHeight;
+		document.body.style.background = originalBg;
+		document.documentElement.style.background = originalRootBg;
 	});
 
 	(shadowSupported ? it : xit)('finds colors in shadow boundaries', function() {
@@ -733,7 +859,7 @@ describe('color.getBackgroundColor', function() {
 			'<div style="background-color: black;">' +
 			'<span id="shadowTarget" style="color: #ccc;">Text</span>' +
 			'</div>';
-		axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
 
 		var target = shadow.querySelector('#shadowTarget');
 		var actual = axe.commons.color.getBackgroundColor(target, []);
@@ -753,7 +879,7 @@ describe('color.getBackgroundColor', function() {
 			var shadow = container.attachShadow({ mode: 'open' });
 			shadow.innerHTML =
 				'<span id="shadowTarget" style="color:#ccc;">Text</span>';
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 
 			var target = shadow.querySelector('#shadowTarget');
 			var actual = axe.commons.color.getBackgroundColor(target, [], false);
@@ -775,7 +901,7 @@ describe('color.getBackgroundColor', function() {
 				'<div><label id="target" style="background-color:#000;">Text<input type="text"></label></div>';
 
 			var target = shadow.querySelector('#target');
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			var actual = axe.commons.color.getBackgroundColor(target, []);
 			var expected = new axe.commons.color.Color(0, 0, 0, 1);
 
@@ -795,10 +921,10 @@ describe('color.getBackgroundColor', function() {
 			var shadow = container.attachShadow({ mode: 'open' });
 			shadow.innerHTML =
 				'<div id="shadowTarget" style="color:#333; height:20px; position:absolute; top:20px;">Text</div>';
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 
 			var target = shadow.querySelector('#shadowTarget');
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			var actual = axe.commons.color.getBackgroundColor(target, []);
 			assert.equal(actual.red, 255);
 			assert.equal(actual.green, 255);
@@ -819,7 +945,7 @@ describe('color.getBackgroundColor', function() {
 			shadow1.innerHTML =
 				'<div style="background:rgba(0,0,0,1); height:10em;"></div>';
 			var elm2 = document.querySelector('#elm2');
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			var actual = axe.commons.color.getBackgroundColor(elm2, []);
 			assert.equal(actual.red, 0);
 			assert.equal(actual.blue, 0);
@@ -848,7 +974,7 @@ describe('color.getBackgroundColor', function() {
 				'</div>';
 
 			var elm3 = shadow2.querySelector('#elm3');
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			var actual = axe.commons.color.getBackgroundColor(elm3, []);
 			assert.closeTo(actual.red, 128, 2);
 			assert.closeTo(actual.blue, 128, 2);
@@ -866,7 +992,7 @@ describe('color.getBackgroundColor', function() {
 			var shadow = container.attachShadow({ mode: 'open' });
 			shadow.innerHTML =
 				'<div id="shadowTarget" style="color:#333;">Text<br>More text</div>';
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			var target = shadow.querySelector('#shadowTarget');
 			var actual = axe.commons.color.getBackgroundColor(target, []);
 			assert.equal(actual.red, 0);
@@ -885,7 +1011,7 @@ describe('color.getBackgroundColor', function() {
 			var shadow = container.attachShadow({ mode: 'open' });
 			shadow.innerHTML =
 				'<div id="shadowTarget" style="color:#333;">Text<br>More text</div>';
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			var target = shadow.querySelector('#shadowTarget');
 			var actual = axe.commons.color.getBackgroundColor(target, []);
 			assert.isNull(actual);
@@ -900,7 +1026,7 @@ describe('color.getBackgroundColor', function() {
 			div.innerHTML = '<a href="">Link</a>';
 			var shadow = div.attachShadow({ mode: 'open' });
 			shadow.innerHTML = '<p style="background-color: #000;"><slot></slot></p>';
-			axe._tree = axe.utils.getFlattenedTree(fixture.firstChild);
+			axe.testUtils.flatTreeSetup(fixture.firstChild);
 			var linkElm = div.querySelector('a');
 			var actual = axe.commons.color.getBackgroundColor(linkElm, []);
 			assert.equal(actual.red, 0);

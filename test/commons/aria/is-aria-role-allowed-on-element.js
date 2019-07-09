@@ -125,9 +125,9 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 			cats: {
 				allowedElements: [
 					{
-						tagName: 'INPUT',
+						nodeName: 'input',
 						attributes: {
-							TYPE: 'DOG'
+							value: 'dog'
 						}
 					}
 				]
@@ -136,7 +136,7 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('input');
 		var role = 'cats';
 		node.setAttribute('role', role);
-		node.setAttribute('type', 'cats');
+		node.setAttribute('value', 'cats');
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, role);
 		assert.isFalse(actual);
 	});
@@ -240,11 +240,11 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 	it('returns false, ensure evaluateRoleForElement in lookupTable is invoked', function() {
 		var overrideInvoked = false;
 		axe.commons.aria.lookupTable.evaluateRoleForElement = {
-			IMG: ({ node, out }) => {
+			IMG: function(options) {
 				overrideInvoked = true;
-				assert.isDefined(node);
-				assert.equal(node.nodeName.toUpperCase(), 'IMG');
-				assert.isBoolean(out);
+				assert.isDefined(options.node);
+				assert.equal(options.node.nodeName.toUpperCase(), 'IMG');
+				assert.isBoolean(options.out);
 				return false;
 			}
 		};
@@ -261,10 +261,10 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 	it('returns false if element with role MENU type context', function() {
 		var overrideInvoked = false;
 		axe.commons.aria.lookupTable.evaluateRoleForElement = {
-			LI: ({ node }) => {
+			LI: function(options) {
 				overrideInvoked = true;
-				assert.isDefined(node);
-				assert.equal(node.nodeName.toUpperCase(), 'LI');
+				assert.isDefined(options.node);
+				assert.equal(options.node.nodeName.toUpperCase(), 'LI');
 				return false;
 			}
 		};

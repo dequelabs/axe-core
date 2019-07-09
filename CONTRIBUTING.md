@@ -42,7 +42,7 @@ We expect all code to be 100% covered by tests. We don't have or want code cover
 
 Functions should contain a preceding comment block with [jsdoc](http://usejsdoc.org/) style documentation of the function. For example:
 
-```javascript
+```js
 /**
  * Runs the Audit; which in turn should call `run` on each rule.
  * @async
@@ -54,7 +54,7 @@ Functions should contain a preceding comment block with [jsdoc](http://usejsdoc.
 
 Classes should contain a jsdoc comment block for each attribute. For example:
 
-```javascript
+```js
 /**
  * Constructor for the result of checks
  * @param {Object} check CheckResult specification
@@ -110,13 +110,13 @@ To build the package:
 grunt build
 ```
 
-## Using aXe with TypeScript
+## Using axe with TypeScript
 
-### aXe Development
+### Axe Development
 
 The TypeScript definition file for axe-core is distributed with this module and can be found in [axe.d.ts](./axe.d.ts). It currently supports TypeScript 2.0+.
 
-To maintain aXe support for TypeScript you must first install it (globally recommended):
+To maintain axe support for TypeScript you must first install it (globally recommended):
 
 ```console
 sudo npm -g install typescript
@@ -128,23 +128,23 @@ Once that's installed, you can run TypeScript definition tests (with the optiona
 tsc --noImplicitAny typings/axe-core/axe-core-tests.ts
 ```
 
-## Including aXe's type definition in tests
+## Including axe's type definition in tests
 
-Installing aXe to run accessibility tests in your TypeScript project should be as simple as importing the module:
+Installing axe to run accessibility tests in your TypeScript project should be as simple as importing the module:
 
-```javascript
+```js
 import * as axe from 'axe-core';
 
 describe('Module', () => {
-	it('should have no accessibility violations', (done) => {
-		axe.run(compiledFixture)
-			.then((results) => {
-				expect(results.violations.length).toBe(0);
-				done()
-			}, done);
+	it('should have no accessibility violations', done => {
+		axe.run(compiledFixture).then(results => {
+			expect(results.violations.length).toBe(0);
+			done();
+		}, done);
 	});
 });
 ```
+
 ## Debugging tests that only fail on CircleCI
 
 First install an X-Windows client on your machine. XQuartz is a good one.
