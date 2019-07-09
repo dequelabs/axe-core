@@ -10,15 +10,13 @@ result from HTML with a single error.
 
 - Node must be installed; please follow the directions at http://www.nodejs.org
   to install it.
-- `npm install -g grunt-cli` to install the Grunt task runner (may need to be
-  run with `sudo` on Unix or as Administrator on Windows)
 - Move to the `doc/examples/jasmine` directory
 - `npm install` to install dependencies
 
 ## To run the example
 
 - Move to the `doc/examples/jasmine` directory
-- `grunt jasmine` to run Jasmine
+- `npm test` to run Jasmine
 
 You should see output indicating that the tests ran successfully, with zero
 failures.
