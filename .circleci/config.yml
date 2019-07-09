@@ -65,6 +65,15 @@ jobs:
       - <<: *restore_dependency_cache
       - run: npm run test:examples
 
+  # Test locale files
+  test_locales:
+    <<: *defaults
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache
+      - run: npm run build
+      - run: npm run test:locales
+
   # Release a "next" version
   next_release:
     <<: *defaults
@@ -117,12 +126,16 @@ workflows:
       - test_examples:
           requires:
             - test
+      - test_locales:
+          requires:
+            - test
       # Hold for approval
       - hold:
           type: approval
           requires:
             - test
             - test_examples
+            - test_locales
           filters:
             branches:
               only:
@@ -133,6 +146,7 @@ workflows:
             - dependencies
             - test
             - test_examples
+            - test_locales
           filters:
             branches:
               only: develop
@@ -142,6 +156,7 @@ workflows:
             - dependencies
             - test
             - test_examples
+            - test_locales
             - hold
           filters:
             branches:
