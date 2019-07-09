@@ -1,6 +1,75 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [3.3.0](https://github.com/dequelabs/axe-core/compare/v3.2.2...v3.3.0) (2019-06-12)
+
+### Bug Fixes
+
+- add SC 131 to rule aria hidden focus ([#1474](https://github.com/dequelabs/axe-core/issues/1474)) ([8da9a0d](https://github.com/dequelabs/axe-core/commit/8da9a0d))
+- Add treegrid as allowed parent to rowgroup ([#1435](https://github.com/dequelabs/axe-core/issues/1435)) ([94e9893](https://github.com/dequelabs/axe-core/commit/94e9893)), closes [#1386](https://github.com/dequelabs/axe-core/issues/1386)
+- arguments for gather function in build template ([#1605](https://github.com/dequelabs/axe-core/issues/1605)) ([753ecf4](https://github.com/dequelabs/axe-core/commit/753ecf4))
+- check if property exists in cache of flattenedTree ([#1536](https://github.com/dequelabs/axe-core/issues/1536)) ([51c2e19](https://github.com/dequelabs/axe-core/commit/51c2e19))
+- **aria-valid-attr-value:** allow aria-owns to pass when element is not in the DOM ([#1526](https://github.com/dequelabs/axe-core/issues/1526)) ([f835ed8](https://github.com/dequelabs/axe-core/commit/f835ed8))
+- deprecate na reporter ([#1625](https://github.com/dequelabs/axe-core/issues/1625)) ([3e807f0](https://github.com/dequelabs/axe-core/commit/3e807f0))
+- Exclude iframe for html-has-lang rule (Issue 1424) ([#1430](https://github.com/dequelabs/axe-core/issues/1430)) ([98b5ed2](https://github.com/dequelabs/axe-core/commit/98b5ed2))
+- Include body as part of background color checks when element does not intersect ([#1520](https://github.com/dequelabs/axe-core/issues/1520)) ([55820cf](https://github.com/dequelabs/axe-core/commit/55820cf))
+- make nullable impact properties have nullable types to match API docs ([#1477](https://github.com/dequelabs/axe-core/issues/1477)) ([efaed91](https://github.com/dequelabs/axe-core/commit/efaed91))
+- Only load Promise polyfill if window.Promise is missing [[#1468](https://github.com/dequelabs/axe-core/issues/1468)](<[#1470](https://github.com/dequelabs/axe-core/issues/1470)>) ([1d70306](https://github.com/dequelabs/axe-core/commit/1d70306))
+- Prevent error when using `<select name="attributes">` [[#1397](https://github.com/dequelabs/axe-core/issues/1397)](<[#1432](https://github.com/dequelabs/axe-core/issues/1432)>) ([b477e0d](https://github.com/dequelabs/axe-core/commit/b477e0d))
+- remove unnecessary comments ([6ed71c9](https://github.com/dequelabs/axe-core/commit/6ed71c9))
+- role=radio should not require aria-checked ([#1448](https://github.com/dequelabs/axe-core/issues/1448)) ([0643cbd](https://github.com/dequelabs/axe-core/commit/0643cbd))
+- Scroll state had top and left properties flipped ([#1469](https://github.com/dequelabs/axe-core/issues/1469)) ([2ba83d3](https://github.com/dequelabs/axe-core/commit/2ba83d3))
+- **skip-link,region:** Allow multiple skiplinks at page top ([#1496](https://github.com/dequelabs/axe-core/issues/1496)) ([642c8f1](https://github.com/dequelabs/axe-core/commit/642c8f1))
+- use execa instead of child_process.spawn ([461ce83](https://github.com/dequelabs/axe-core/commit/461ce83))
+- **aria-allowed-attr:** allow figure role ([#1558](https://github.com/dequelabs/axe-core/issues/1558)) ([a4b5240](https://github.com/dequelabs/axe-core/commit/a4b5240))
+- **aria-required-attr:** allow aria-valuenow to pass on elements with value ([#1579](https://github.com/dequelabs/axe-core/issues/1579)) ([3893e04](https://github.com/dequelabs/axe-core/commit/3893e04))
+- **aria-required-attr:** don't require aria-valuemin/max ([#1529](https://github.com/dequelabs/axe-core/issues/1529)) ([80ae444](https://github.com/dequelabs/axe-core/commit/80ae444))
+- **aria-valid-attr-value:** allow aria-controls to pass when element is not in the DOM ([a7842e5](https://github.com/dequelabs/axe-core/commit/a7842e5))
+- **flatten-tree:** do not call deprecated getDistributedNodes ([#1577](https://github.com/dequelabs/axe-core/issues/1577)) ([93d59f4](https://github.com/dequelabs/axe-core/commit/93d59f4))
+- **image-redundant-alt:** prevent redundant issues of image tree ([#1616](https://github.com/dequelabs/axe-core/issues/1616)) ([af81897](https://github.com/dequelabs/axe-core/commit/af81897))
+- **isSkipLink:** cache first page link ([#1525](https://github.com/dequelabs/axe-core/issues/1525)) ([6a1bcba](https://github.com/dequelabs/axe-core/commit/6a1bcba))
+- **matches-selector:** don't call matches function if none exist on the element ([#1613](https://github.com/dequelabs/axe-core/issues/1613)) ([7581592](https://github.com/dequelabs/axe-core/commit/7581592))
+- **multiple-label:** considers explicit labels in the same shadow tree ([#1584](https://github.com/dequelabs/axe-core/issues/1584)) ([b9a324a](https://github.com/dequelabs/axe-core/commit/b9a324a))
+- **multiple-label:** no longer raises issue when aria-labelledby overrides how AT views multiple labels ([#1538](https://github.com/dequelabs/axe-core/issues/1538)) ([fbae36b](https://github.com/dequelabs/axe-core/commit/fbae36b))
+- **prettier:** ignore generated api doc files ([#1522](https://github.com/dequelabs/axe-core/issues/1522)) ([c118da0](https://github.com/dequelabs/axe-core/commit/c118da0))
+- **raw-reporter:** do not output `DqElement`s ([#1513](https://github.com/dequelabs/axe-core/issues/1513)) ([3babcb6](https://github.com/dequelabs/axe-core/commit/3babcb6))
+- **scrollable-region-focusable:** exclude overflow:hidden as not scrollable ([#1599](https://github.com/dequelabs/axe-core/issues/1599)) ([940de07](https://github.com/dequelabs/axe-core/commit/940de07))
+- **utils:** make cache global instead of only setup in axe.run ([#1535](https://github.com/dequelabs/axe-core/issues/1535)) ([91a04c5](https://github.com/dequelabs/axe-core/commit/91a04c5))
+- **virtual-node:** fix hasClass to work with svg elements ([#1603](https://github.com/dequelabs/axe-core/issues/1603)) ([9d83662](https://github.com/dequelabs/axe-core/commit/9d83662))
+
+### Features
+
+- **autocomplete-matches:** use virtualNode only lookups ([#1604](https://github.com/dequelabs/axe-core/issues/1604)) ([b32d4fe](https://github.com/dequelabs/axe-core/commit/b32d4fe))
+- **autocomplete-valid:** allow autocomplete-valid to be run entirely off of a virtual node ([#1591](https://github.com/dequelabs/axe-core/issues/1591)) ([b3e0873](https://github.com/dequelabs/axe-core/commit/b3e0873))
+- **qsa, flatten-tree:** abstract Node and Element apis in virtual tree ([#1562](https://github.com/dequelabs/axe-core/issues/1562)) ([2f2e590](https://github.com/dequelabs/axe-core/commit/2f2e590))
+- **reporter:** adds the rawEnv reporter which wraps raw and env data ([#1556](https://github.com/dequelabs/axe-core/issues/1556)) ([ed15ed3](https://github.com/dequelabs/axe-core/commit/ed15ed3))
+- **role-img-alt:** Split rule for role=img with no accessible name ([#1586](https://github.com/dequelabs/axe-core/issues/1586)) ([2416ed3](https://github.com/dequelabs/axe-core/commit/2416ed3))
+- **rule:** add additional elements to check for incomplete with required children ([#1547](https://github.com/dequelabs/axe-core/issues/1547)) ([3726901](https://github.com/dequelabs/axe-core/commit/3726901))
+- **rule:** add more perf timing metrics to rules ([#1472](https://github.com/dequelabs/axe-core/issues/1472)) ([98646e5](https://github.com/dequelabs/axe-core/commit/98646e5))
+- **rule,check:** add new apis to run a rule synchronously ([#1467](https://github.com/dequelabs/axe-core/issues/1467)) ([84094a1](https://github.com/dequelabs/axe-core/commit/84094a1))
+- add AbstractVirtualNode for linting ([#1627](https://github.com/dequelabs/axe-core/issues/1627)) ([a072ed2](https://github.com/dequelabs/axe-core/commit/a072ed2))
+- **rule:** Adding landmark-is-unique rule ([#1394](https://github.com/dequelabs/axe-core/issues/1394)) ([0088e94](https://github.com/dequelabs/axe-core/commit/0088e94))
+- **rule:** Inline text spacing must be adjustable with custom stylesheets ([#1446](https://github.com/dequelabs/axe-core/issues/1446)) ([430b07f](https://github.com/dequelabs/axe-core/commit/430b07f))
+- Improve perf of axe.run [WWD-1821](<[#1503](https://github.com/dequelabs/axe-core/issues/1503)>) ([a84431a](https://github.com/dequelabs/axe-core/commit/a84431a))
+- **rule:** New aria-input-field-label rule ([#1610](https://github.com/dequelabs/axe-core/issues/1610)) ([73d5273](https://github.com/dequelabs/axe-core/commit/73d5273))
+- **rule:** New aria-toggle-field-label rule ([#1450](https://github.com/dequelabs/axe-core/issues/1450)) ([69a9c3b](https://github.com/dequelabs/axe-core/commit/69a9c3b))
+- **rule:** Scrollable region focusable ([#1396](https://github.com/dequelabs/axe-core/issues/1396)) ([861371a](https://github.com/dequelabs/axe-core/commit/861371a))
+- **rules:** split button name rule into button only and button input rules ([#1615](https://github.com/dequelabs/axe-core/issues/1615)) ([ce20fbf](https://github.com/dequelabs/axe-core/commit/ce20fbf))
+- **run-virtual-rule:** new api to run rules using only virtual nodes ([#1594](https://github.com/dequelabs/axe-core/issues/1594)) ([4e12217](https://github.com/dequelabs/axe-core/commit/4e12217))
+- **utils:** add support for complex CSS selectors ([#1494](https://github.com/dequelabs/axe-core/issues/1494)) ([a9f9ee5](https://github.com/dequelabs/axe-core/commit/a9f9ee5)), closes [#1493](https://github.com/dequelabs/axe-core/issues/1493)
+- **utils:** Update CSSOM for nested [@import](https://github.com/import) computation ([#1339](https://github.com/dequelabs/axe-core/issues/1339)) ([a4e177b](https://github.com/dequelabs/axe-core/commit/a4e177b))
+
+### Tests
+
+- createHTMLDocument needs mandatory title when invoked in IE ([#1442](https://github.com/dequelabs/axe-core/issues/1442)) ([8542773](https://github.com/dequelabs/axe-core/commit/8542773))
+- disable es6 syntax usage within tests directory ([#1569](https://github.com/dequelabs/axe-core/issues/1569)) ([9b13508](https://github.com/dequelabs/axe-core/commit/9b13508))
+- fix flakey test ([#1573](https://github.com/dequelabs/axe-core/issues/1573)) ([fb38ce7](https://github.com/dequelabs/axe-core/commit/fb38ce7))
+- Fix invalid test html ([#1502](https://github.com/dequelabs/axe-core/issues/1502)) ([8d85082](https://github.com/dequelabs/axe-core/commit/8d85082))
+- fix test for Safari ([#1557](https://github.com/dequelabs/axe-core/issues/1557)) ([1bac69e](https://github.com/dequelabs/axe-core/commit/1bac69e))
+- fix tests failing in IE11 ([#1570](https://github.com/dequelabs/axe-core/issues/1570)) ([2102eca](https://github.com/dequelabs/axe-core/commit/2102eca))
+- only run IE11 tests in appveyor ([#1571](https://github.com/dequelabs/axe-core/issues/1571)) ([35261ef](https://github.com/dequelabs/axe-core/commit/35261ef))
+- watch integration html and json files ([#1598](https://github.com/dequelabs/axe-core/issues/1598)) ([3de0b05](https://github.com/dequelabs/axe-core/commit/3de0b05))
 
 ## [3.2.2](https://github.com/dequelabs/axe-core/compare/v3.2.0...v3.2.2) (2019-03-07)
 
