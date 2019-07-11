@@ -74,7 +74,8 @@ jobs:
       - run: npm run build
       - run: npm run test:locales
 
-  # Test newest axe-core version rule help docs are active
+  # Test newest axe-core version rule help docs are active (only on
+  # master prs)
   test_rule_help_version:
     <<: *defaults
     steps:
