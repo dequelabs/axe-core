@@ -75,7 +75,7 @@ jobs:
       - run: npm run test:locales
 
   # Test locale files
-  test_rule-help-version:
+  test_rule_help_version:
     <<: *defaults
     steps:
       - checkout
@@ -144,7 +144,7 @@ workflows:
             - test
             - test_examples
             - test_locales
-            - test_rule-help-version
+            - test_rule_help_version
           filters:
             branches:
               only:
@@ -166,7 +166,7 @@ workflows:
             - test
             - test_examples
             - test_locales
-            - test_rule-help-version
+            - test_rule_help_version
             - hold
           filters:
             branches:
