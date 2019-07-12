@@ -138,6 +138,9 @@ workflows:
       - test_locales:
           requires:
             - test
+      - test_rule_help_version:
+          requires:
+            - test
       # Hold for approval
       - hold:
           type: approval
