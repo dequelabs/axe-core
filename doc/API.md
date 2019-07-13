@@ -404,7 +404,7 @@ Alternatively, runOnly can be passed an array of tags:
 
 ```js
 {
-	runOnly: ['wcag2a', 'wcag2aa'];
+	runOnly: ['wcag2a', 'wcag2aa'],
 }
 ```
 
