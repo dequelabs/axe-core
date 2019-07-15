@@ -64,6 +64,7 @@
 		"test": "npm run retire && tsc && grunt test",
 		"test:examples": "node ./doc/examples/test-examples",
 		"test:locales": "mocha test/test-locales.js",
+		"test:rule-help-version": "mocha test/test-rule-help-version.js",
 		"version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
 		"prepublishOnly": "grunt build && grunt file-exists",
 		"retire": "retire --jspath lib --nodepath ./ --ignorefile .retireignore.json --severity medium",
