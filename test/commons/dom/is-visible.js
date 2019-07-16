@@ -188,6 +188,25 @@ describe('dom.isVisible', function() {
 			el = document.getElementById('target');
 			assert.isFalse(axe.commons.dom.isVisible(el));
 		});
+
+		it('should detect clip-path hidden text technique', function() {
+			fixture.innerHTML =
+				'<div id="target" style="clip-path: inset(50%);">Hi</div>';
+
+			var el = document.getElementById('target');
+			assert.isFalse(axe.commons.dom.isVisible(el));
+		});
+
+		it('should detect clip-path hidden text technique on parent', function() {
+			fixture.innerHTML =
+				'<div style="clip-path: circle(0%);">' +
+				'<div id="target">Hi</div>' +
+				'</div>';
+
+			var el = document.getElementById('target');
+			assert.isFalse(axe.commons.dom.isVisible(el));
+		});
+
 		(shadowSupported ? it : xit)(
 			'should correctly handle visible slotted elements',
 			function() {
@@ -409,6 +428,24 @@ describe('dom.isVisible', function() {
 			fixture.innerHTML = '<div id="target" style="' + clip + '">Hi</div>';
 
 			el = document.getElementById('target');
+			assert.isTrue(axe.commons.dom.isVisible(el, true));
+		});
+
+		it('should detect clip-path hidden text technique', function() {
+			fixture.innerHTML =
+				'<div id="target" style="clip-path: inset(50%);">Hi</div>';
+
+			var el = document.getElementById('target');
+			assert.isTrue(axe.commons.dom.isVisible(el, true));
+		});
+
+		it('should detect clip-path hidden text technique on parent', function() {
+			fixture.innerHTML =
+				'<div style="clip-path: circle(0%);">' +
+				'<div id="target">Hi</div>' +
+				'</div>';
+
+			var el = document.getElementById('target');
 			assert.isTrue(axe.commons.dom.isVisible(el, true));
 		});
 	});
