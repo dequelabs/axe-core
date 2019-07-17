@@ -3,6 +3,7 @@ describe('dom.isVisible', function() {
 
 	var fixture = document.getElementById('fixture');
 	var fixtureSetup = axe.testUtils.fixtureSetup;
+	var isIE11 = axe.testUtils.isIE11;
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var fakeNode = {
 		nodeType: Node.ELEMENT_NODE,
@@ -189,32 +190,31 @@ describe('dom.isVisible', function() {
 			assert.isFalse(axe.commons.dom.isVisible(el));
 		});
 
-		it('should detect clip-path hidden text technique', function() {
-			fixture.innerHTML =
-				'<div id="target" style="clip-path: inset(50%);">Hi</div>';
+		// IE11 either only supports clip paths defined by url() or not at all,
+		// MDN and caniuse.com give different results...
+		(isIE11 || window.PHANTOMJS ? it.skip : it)(
+			'should detect clip-path hidden text technique',
+			function() {
+				fixture.innerHTML =
+					'<div id="target" style="clip-path: inset(50%);">Hi</div>';
 
-			var el = document.getElementById('target');
-			if (window.PHANTOMJS) {
-				assert.ok('PhantomJS is a liar');
-			} else {
+				var el = document.getElementById('target');
 				assert.isFalse(axe.commons.dom.isVisible(el));
 			}
-		});
+		);
 
-		it('should detect clip-path hidden text technique on parent', function() {
-			fixture.innerHTML =
-				'<div style="clip-path: circle(0%);">' +
-				'<div id="target">Hi</div>' +
-				'</div>';
+		(isIE11 || window.PHANTOMJS ? it.skip : it)(
+			'should detect clip-path hidden text technique on parent',
+			function() {
+				fixture.innerHTML =
+					'<div style="clip-path: circle(0%);">' +
+					'<div id="target">Hi</div>' +
+					'</div>';
 
-			var el = document.getElementById('target');
-
-			if (window.PHANTOMJS) {
-				assert.ok('PhantomJS is a liar');
-			} else {
+				var el = document.getElementById('target');
 				assert.isFalse(axe.commons.dom.isVisible(el));
 			}
-		});
+		);
 
 		(shadowSupported ? it : xit)(
 			'should correctly handle visible slotted elements',
