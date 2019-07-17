@@ -287,6 +287,15 @@ describe('aria-required-children', function() {
 		);
 	});
 
+	it('should pass role comboxbox when child is native "search" input type', function() {
+		var params = checkSetup(
+			'<div role="combobox" id="target"><input type="search"><p role="listbox">Textbox</p></div>'
+		);
+		assert.isTrue(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+	});
+
 	describe('options', function() {
 		it('should return undefined instead of false when the role is in options.reviewEmpty', function() {
 			var params = checkSetup('<div role="grid" id="target"></div>');
