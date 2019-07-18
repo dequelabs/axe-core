@@ -105,6 +105,20 @@ describe('duplicate-img-label', function() {
 		);
 	});
 
+	it('should return false if img does not have required parent', function() {
+		fixture.innerHTML =
+			'<main><img id="target" alt="Plain text and more"><p>Plain text</p></main>';
+		var node = fixture.querySelector('#target');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(
+			checks['duplicate-img-label'].evaluate(
+				node,
+				undefined,
+				axe.utils.getNodeFromTree(node)
+			)
+		);
+	});
+
 	(shadowSupport.v1 ? it : xit)(
 		'should return true if the img is part of a shadow tree',
 		function() {
