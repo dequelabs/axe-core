@@ -1,3 +1,5 @@
+/* global runner */
+
 describe('axe.run', function() {
 	'use strict';
 
@@ -141,29 +143,29 @@ describe('axe.run', function() {
 			});
 		});
 
-		it('does not run the callback twice if it throws', function(done) {
-			var calls = 0;
-			axe._runRules = function(ctxt, opt, resolve) {
-				resolve([], noop);
-			};
+		// it('does not run the callback twice if it throws', function(done) {
+		// 	var calls = 0;
+		// 	axe._runRules = function(ctxt, opt, resolve) {
+		// 		resolve([], noop);
+		// 	};
 
-			var log = axe.log;
-			axe.log = function(e) {
-				assert.equal(e.message, 'err');
-				axe.log = log;
-			};
-			axe.run(function() {
-				calls += 1;
-				if (calls === 1) {
-					setTimeout(function() {
-						assert.equal(calls, 1);
-						axe.log = log;
-						done();
-					}, 20);
-				}
-				throw new Error('err');
-			});
-		});
+		// 	var log = axe.log;
+		// 	axe.log = function(e) {
+		// 		assert.equal(e.message, 'err');
+		// 		axe.log = log;
+		// 	};
+		// 	axe.run(function() {
+		// 		calls += 1;
+		// 		if (calls === 1) {
+		// 			setTimeout(function() {
+		// 				assert.equal(calls, 1);
+		// 				axe.log = log;
+		// 				done();
+		// 			}, 20);
+		// 		}
+		// 		throw new Error('err');
+		// 	});
+		// });
 
 		it('is called after cleanup', function(done) {
 			var isClean = false;
@@ -178,6 +180,47 @@ describe('axe.run', function() {
 			axe.run({ reporter: 'raw' }, function() {
 				assert.isTrue(isClean, 'cleanup must be called first');
 				done();
+			});
+		});
+
+		// errors thrown inside axe.run() should fail a unit test instead of
+		// just passing the test
+		// @see https://github.com/dequelabs/axe-core/issues/1639
+		it('should pass errors in the callback to the top scope', function(done) {
+			// testing this is very difficult and requires this very big hack of
+			// Mocha's infrastructure. since axe.run's callback needs to throw an
+			// error, we're unable to catch it in the normal ways since it's an
+			// async function callback. the thrown error would normally fail the
+			// test, but in this case we want the test to pass if it fails with
+			// the thrown error.
+			var next = this.next;
+			var origFail = runner.fail;
+			var failCalled = false;
+			runner.fail = function(test, err) {
+				failCalled = true;
+				runner.fail = origFail;
+
+				if (err.message.indexOf('error from inside axe.run()') === -1) {
+					return origFail.call(runner, test, err);
+				}
+
+				test.state = 'passed';
+				runner.emit('pass', test);
+				runner.emit('test end', test);
+				runner.hookUp('afterEach', next);
+			};
+
+			axe.run(function() {
+				setTimeout(function() {
+					if (failCalled) {
+						return;
+					}
+
+					runner.fail = origFail;
+					done(new Error('axe.run() did not pass error to top scope'));
+				}, 150);
+
+				throw new Error('error from inside axe.run()');
 			});
 		});
 	});
