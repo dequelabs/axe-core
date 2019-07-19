@@ -386,3 +386,58 @@ axe.testUtils = testUtils;
 afterEach(function() {
 	axe._cache.clear();
 });
+
+// testUtils.testShouldThrowError = function(testScope, errObj, callback) {
+
+// testing this is very difficult and requires this very big hack of
+// Mocha's infrastructure. since axe.run and axe.runRules callbacks
+// need to throw an error (instead of swallowing it), we're unable to
+// catch it in the normal ways since it's an async function callback.
+// the thrown error would normally fail the test, but in this case we
+// want the test to pass if it fails with the thrown error.
+// var next = testScope.next;
+// var test = runner.test;
+// var origFail = runner.fail;
+// var failCalled = false;
+
+// function passTest() {
+// 	test.state = 'passed';
+// 	runner.emit('pass', test);
+// 	runner.emit('test end', test);
+// 	runner.hookUp('afterEach', next);
+// }
+
+// runner.fail = function(test, err) {
+// 	runner.fail = origFail;
+// 	failCalled = true;
+
+// 	if (err.message.indexOf(errObj.message) === -1) {
+// 		return origFail.call(runner, test, err);
+// 	}
+
+// 	if (!callback) {
+// 		passTest();
+// 	}
+// };
+
+// fail test if error was not thrown
+// setTimeout(function() {
+// 	runner.fail = origFail;
+
+// 	if (callback) {
+// 		try {
+// 			callback();
+// 		} catch (e) {
+// 			return origFail.call(runner, test, e);
+// 		}
+
+// 		return passTest();
+// 	}
+
+// 	if (failCalled) {
+// 		return;
+// 	}
+
+// 	origFail.call(runner, test, new Error('test did not throw error'));
+// }, 150);
+// }

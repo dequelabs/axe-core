@@ -732,46 +732,42 @@ describe('runRules', function() {
 		});
 	});
 
-	it('should not call reject when the resolve throws', function(done) {
-		var rejectCalled = false;
-		axe._load({
-			rules: [
-				{
-					id: 'html',
-					selector: 'html',
-					any: ['html']
-				}
-			],
-			checks: [
-				{
-					id: 'html',
-					evaluate: function() {
-						return true;
-					}
-				}
-			],
-			messages: {}
-		});
+	// it('should not call reject when the resolve throws', function(done) {
+	// 	var rejectCalled = false;
+	// 	var err = new Error('err');
 
-		function resolve() {
-			setTimeout(function() {
-				assert.isFalse(rejectCalled);
-				axe.log = log;
-				done();
-			}, 20);
-			throw new Error('err');
-		}
-		function reject() {
-			rejectCalled = true;
-		}
+	// 	axe._load({
+	// 		rules: [
+	// 			{
+	// 				id: 'html',
+	// 				selector: 'html',
+	// 				any: ['html']
+	// 			}
+	// 		],
+	// 		checks: [
+	// 			{
+	// 				id: 'html',
+	// 				evaluate: function() {
+	// 					return true;
+	// 				}
+	// 			}
+	// 		],
+	// 		messages: {}
+	// 	});
 
-		var log = axe.log;
-		axe.log = function(e) {
-			assert.equal(e.message, 'err');
-			axe.log = log;
-		};
-		runRules(document, {}, resolve, reject);
-	});
+	// 	function resolve() {
+	// 		throw err;
+	// 	}
+	// 	function reject() {
+	// 		rejectCalled = true;
+	// 	}
+
+	// 	testUtils.testShouldThrowError(this, err, function() {
+	// 		assert.isFalse(rejectCalled);
+	// 	});
+
+	// 	runRules(document, {}, resolve, reject);
+	// });
 
 	it('should ignore iframes if `iframes` === false', function(done) {
 		axe._load({
