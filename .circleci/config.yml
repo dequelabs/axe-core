@@ -74,6 +74,15 @@ jobs:
       - run: npm run build
       - run: npm run test:locales
 
+  # Test newest axe-core version rule help docs are active (only on
+  # master prs)
+  test_rule_help_version:
+    <<: *defaults
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache
+      - run: npm run test:rule-help-version
+
   # Release a "next" version
   next_release:
     <<: *defaults
@@ -129,6 +138,9 @@ workflows:
       - test_locales:
           requires:
             - test
+      - test_rule_help_version:
+          requires:
+            - test
       # Hold for approval
       - hold:
           type: approval
@@ -136,6 +148,7 @@ workflows:
             - test
             - test_examples
             - test_locales
+            - test_rule_help_version
           filters:
             branches:
               only:
@@ -157,6 +170,7 @@ workflows:
             - test
             - test_examples
             - test_locales
+            - test_rule_help_version
             - hold
           filters:
             branches:
