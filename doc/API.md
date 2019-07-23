@@ -249,7 +249,9 @@ Runs a number of rules against the provided HTML page and returns the resulting 
 #### Synopsis
 
 ```js
-const results = await axe.run(context, options);
+axe.run(context, options, (err, results) => {
+	// ...
+});
 ```
 
 #### Parameters axe.run
@@ -289,43 +291,68 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 1. Include the first item in the `$fixture` NodeList but exclude its first child
 
 ```js
-const results = await axe.run({
-	include: $fixture[0],
-	exclude: $fixture[0].firstChild
-});
+axe.run(
+	{
+		include: $fixture[0],
+		exclude: $fixture[0].firstChild
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 2. Include the element with the ID of `fix` but exclude any `div`s within it
 
 ```js
-const results = await axe.run({
-	include: [['#fix']],
-	exclude: [['#fix div']]
-});
+axe.run(
+	{
+		include: [['#fix']],
+		exclude: [['#fix div']]
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 3. Include the whole document except any structures whose parent contains the class `exclude1` or `exclude2`
 
 ```js
-const results = await axe.run({
-	exclude: [['.exclude1'], ['.exclude2']]
-});
+axe.run(
+	{
+		exclude: [['.exclude1'], ['.exclude2']]
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 4. Include the element with the ID of `fix`, within the iframe with id `frame`
 
 ```js
-const results = await axe.run({
-	include: [['#frame', '#fix']]
-});
+axe.run(
+	{
+		include: [['#frame', '#fix']]
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 5. Include the element with the ID of `fix`, within the iframe with id `frame2`, within the iframe with id `frame1`
 
 ```js
-const results = await axe.run({
-	include: [['#frame1', '#frame2', '#fix']]
-});
+axe.run(
+	{
+		include: [['#frame1', '#frame2', '#fix']]
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 6. Include the following:
@@ -335,9 +362,14 @@ const results = await axe.run({
 - All links
 
 ```js
-const results = await axe.run({
-	include: [['#header'], ['a'], ['#frame1', '#frame2', '#fix']]
-});
+axe.run(
+	{
+		include: [['#header'], ['a'], ['#frame1', '#frame2', '#fix']]
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 ##### Options Parameter
@@ -381,30 +413,42 @@ There are certain standards defined that can be used to select a set of rules. T
 To run only WCAG 2.0 Level A rules, specify `options` as:
 
 ```js
-const results = await axe.run({
-	runOnly: {
-		type: 'tag',
-		values: ['wcag2a']
+axe.run(
+	{
+		runOnly: {
+			type: 'tag',
+			values: ['wcag2a']
+		}
+	},
+	(err, results) => {
+		// ...
 	}
-});
+);
 ```
 
 To run both WCAG 2.0 Level A and Level AA rules, you must specify both `wcag2a` and `wcag2aa`:
 
 ```js
-const results = await axe.run({
-	runOnly: {
-		type: 'tag',
-		values: ['wcag2a', 'wcag2aa']
+axe.run(
+	{
+		runOnly: {
+			type: 'tag',
+			values: ['wcag2a', 'wcag2aa']
+		}
+	},
+	(err, results) => {
+		// ...
 	}
-});
+);
 ```
 
 Alternatively, runOnly can be passed an array of tags:
 
 ```js
-const results = await axe.run({
+axe.run({
 	runOnly: ['wcag2a', 'wcag2aa'];
+}, (err, results) => {
+  // ...
 })
 ```
 
@@ -413,12 +457,17 @@ const results = await axe.run({
 If you only want to run certain rules, specify options as:
 
 ```js
-const results = await axe.run({
-	runOnly: {
-		type: 'rule',
-		values: ['ruleId1', 'ruleId2', 'ruleId3']
+axe.run(
+	{
+		runOnly: {
+			type: 'rule',
+			values: ['ruleId1', 'ruleId2', 'ruleId3']
+		}
+	},
+	(err, results) => {
+		// ...
 	}
-});
+);
 ```
 
 This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `ruleId3`. No other rule will run.
@@ -428,12 +477,17 @@ This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `r
 The default operation for axe.run is to run all rules except for rules with the "experimental" tag. If certain rules should be disabled from being run, specify `options` as:
 
 ```js
-const results = await axe.run({
-	rules: {
-		'color-contrast': { enabled: false },
-		'valid-lang': { enabled: false }
+axe.run(
+	{
+		rules: {
+			'color-contrast': { enabled: false },
+			'valid-lang': { enabled: false }
+		}
+	},
+	(err, results) => {
+		// ...
 	}
-});
+);
 ```
 
 This example will disable the rules with the id of `color-contrast` and `valid-lang`. All other rules will run. The list of valid rule IDs is specified in the section below.
@@ -443,16 +497,21 @@ This example will disable the rules with the id of `color-contrast` and `valid-l
 By combining runOnly with type: tags and the rules option, a modified set can be defined. This lets you include rules with unspecified tags, and exclude rules that do have the specified tag(s).
 
 ```js
-const results = await axe.run({
-	runOnly: {
-		type: 'tag',
-		values: ['wcag2a']
+axe.run(
+	{
+		runOnly: {
+			type: 'tag',
+			values: ['wcag2a']
+		},
+		rules: {
+			'color-contrast': { enabled: true },
+			'valid-lang': { enabled: false }
+		}
 	},
-	rules: {
-		'color-contrast': { enabled: true },
-		'valid-lang': { enabled: false }
+	(err, results) => {
+		// ...
 	}
-});
+);
 ```
 
 This example includes all level A rules except for valid-lang, and in addition will include the level AA color-contrast rule.
@@ -462,15 +521,20 @@ This example includes all level A rules except for valid-lang, and in addition w
 Similar to scope, the runOnly option can accept an object with an 'include' and 'exclude' property. Only those checks that match an included tag will run, except those that share a tag from the exclude list.
 
 ```js
-const results = await axe.run({
-	runOnly: {
-		type: 'tags',
-		values: {
-			include: ['wcag2a', 'wcag2aa'],
-			exclude: ['experimental']
+axe.run(
+	{
+		runOnly: {
+			type: 'tags',
+			values: {
+				include: ['wcag2a', 'wcag2aa'],
+				exclude: ['experimental']
+			}
 		}
+	},
+	(err, results) => {
+		// ...
 	}
-});
+);
 ```
 
 This example first includes all `wcag2a` and `wcag2aa` rules. All rules that are tagged as `experimental` are than removed from the list of rules to run.
@@ -484,9 +548,14 @@ After axe has processed all rules normally, it generates a unique selector for a
 Types listed in this option will cause rules that fall under those types to show all nodes. Types _not_ listed will causes rules that fall under one of the missing types to show a maximum of one node. This allows you to still see those results and inform the user of them if appropriate.
 
 ```js
-const results = await axe.run({
-	resultTypes: ['violations', 'incomplete', 'inapplicable']
-});
+axe.run(
+	{
+		resultTypes: ['violations', 'incomplete', 'inapplicable']
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 This example will return all the nodes for all rules that fall under the "violations", "incomplete", and "inapplicable" result types. Since the "passes" type was not specified, it will return at most one node for each rule that passes.
@@ -498,17 +567,27 @@ The `preload` attribute (defaults to `true`) in options parameter, accepts a `bo
 1. Specifying a `boolean`
 
 ```js
-const results = await axe.run({
-	preload: true
-});
+axe.run(
+	{
+		preload: true
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 2. Specifying an `object`
 
 ```js
-const results = await axe.run({
-	preload: { assets: ['cssom'], timeout: 50000 }
-});
+axe.run(
+	{
+		preload: { assets: ['cssom'], timeout: 50000 }
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 The `assets` attribute expects an array of preload(able) constraints to be fetched. The current set of values supported for `assets` is listed in the following table:
@@ -805,9 +884,14 @@ If your page is very large (in terms of the number of Elements on the page) i.e.
 An approach you can take to reducing the time is use the `resultTypes` option. By calling `axe.run` with the following options, axe-core will only return the full details of the `violations` array and will only return one instance of each of the `inapplicable`, `incomplete` and `pass` arrays for each rule that has at least one of those entries. This will reduce the amount of computation that axe-core does for the unique selectors.
 
 ```js
-const results = await axe.run({
-	resultTypes: ['violations']
-});
+axe.run(
+	{
+		resultTypes: ['violations']
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 ### Other strategies
