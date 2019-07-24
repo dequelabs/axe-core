@@ -65,6 +65,24 @@ jobs:
       - <<: *restore_dependency_cache
       - run: npm run test:examples
 
+  # Test locale files
+  test_locales:
+    <<: *defaults
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache
+      - run: npm run build
+      - run: npm run test:locales
+
+  # Test newest axe-core version rule help docs are active (only on
+  # master prs)
+  test_rule_help_version:
+    <<: *defaults
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache
+      - run: npm run test:rule-help-version
+
   # Release a "next" version
   next_release:
     <<: *defaults
@@ -117,12 +135,20 @@ workflows:
       - test_examples:
           requires:
             - test
+      - test_locales:
+          requires:
+            - test
+      - test_rule_help_version:
+          requires:
+            - test
       # Hold for approval
       - hold:
           type: approval
           requires:
             - test
             - test_examples
+            - test_locales
+            - test_rule_help_version
           filters:
             branches:
               only:
@@ -133,6 +159,7 @@ workflows:
             - dependencies
             - test
             - test_examples
+            - test_locales
           filters:
             branches:
               only: develop
@@ -142,6 +169,8 @@ workflows:
             - dependencies
             - test
             - test_examples
+            - test_locales
+            - test_rule_help_version
             - hold
           filters:
             branches:

@@ -2,7 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [3.3.0](https://github.com/dequelabs/axe-core/compare/v3.2.2...v3.3.0) (2019-06-12)
+## [3.3.1](https://github.com/dequelabs/axe-core/compare/v3.3.0...v3.3.1) (2019-07-23)
+
+### Bug Fixes
+
+- **accessible-text-virtual:** sanitize attributes on start node ([#1694](https://github.com/dequelabs/axe-core/issues/1694)) ([c0bb08c](https://github.com/dequelabs/axe-core/commit/c0bb08c))
+- **axe.d.ts:** add optional xpath property to NodeResult ([#1642](https://github.com/dequelabs/axe-core/issues/1642)) ([287ef9c](https://github.com/dequelabs/axe-core/commit/287ef9c))
+- **get-background-color:** No longer calculate color from non-opaque overlapping element ([#1644](https://github.com/dequelabs/axe-core/issues/1644)) ([d45f81e](https://github.com/dequelabs/axe-core/commit/d45f81e))
+- **get-background-color:** No longer calculate color from non-opaque overlapping elm ([f1c2310](https://github.com/dequelabs/axe-core/commit/f1c2310))
+- **get-background-color:** process tbody, thead, and tfoot when getting background color ([#1653](https://github.com/dequelabs/axe-core/issues/1653)) ([e114bfd](https://github.com/dequelabs/axe-core/commit/e114bfd))
+- enable running axe-core in strict CSPs ([#1707](https://github.com/dequelabs/axe-core/issues/1707)) ([cc5bd59](https://github.com/dequelabs/axe-core/commit/cc5bd59))
+- **image-redundant-alt:** check for parent before calculating text ([#1705](https://github.com/dequelabs/axe-core/issues/1705)) ([1adbd02](https://github.com/dequelabs/axe-core/commit/1adbd02))
+- **th-has-data-cells:** empty cells will now pass ([#1659](https://github.com/dequelabs/axe-core/issues/1659)) ([c7489ab](https://github.com/dequelabs/axe-core/commit/c7489ab))
+- **types:** add new properties to RunOptions ([#1697](https://github.com/dequelabs/axe-core/issues/1697)) ([02aa36c](https://github.com/dequelabs/axe-core/commit/02aa36c)), closes [#1696](https://github.com/dequelabs/axe-core/issues/1696)
+- **valid-attr-value:** allow aria-describedby to return needs review ([#1671](https://github.com/dequelabs/axe-core/issues/1671)) ([2390925](https://github.com/dequelabs/axe-core/commit/2390925))
+- **color-contrast:** add px unit to error messages ([#1634](https://github.com/dequelabs/axe-core/issues/1634)) ([1712e46](https://github.com/dequelabs/axe-core/commit/1712e46))
+
+### Tests
+
+- **examples:** do not fail tests if deque.com has violations ([#1686](https://github.com/dequelabs/axe-core/issues/1686)) ([2118360](https://github.com/dequelabs/axe-core/commit/2118360))
+- ensure locale files are valid ([#1673](https://github.com/dequelabs/axe-core/issues/1673)) ([588f9b5](https://github.com/dequelabs/axe-core/commit/588f9b5))
+- require new release rule help docs to be active before creating release ([#1700](https://github.com/dequelabs/axe-core/issues/1700)) ([e9f9c18](https://github.com/dequelabs/axe-core/commit/e9f9c18))
+
+## [3.3.0](https://github.com/dequelabs/axe-core/compare/v3.2.2...v3.3.0) (2019-07-08)
 
 ### Bug Fixes
 

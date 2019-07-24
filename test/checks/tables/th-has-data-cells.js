@@ -112,7 +112,7 @@ describe('th-has-data-cells', function() {
 		);
 	});
 
-	it('should return undefined if all data cells are empty', function() {
+	it('should return true if all data cells are empty', function() {
 		fixture.innerHTML =
 			'<table>' +
 			'  <tr> <th>hi</th> <td></td> </tr>' +
@@ -121,7 +121,7 @@ describe('th-has-data-cells', function() {
 
 		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
-		assert.isUndefined(
+		assert.isTrue(
 			checks['th-has-data-cells'].evaluate.call(checkContext, node)
 		);
 	});

@@ -3,7 +3,7 @@
 'use strict';
 
 var clone = require('clone');
-var dot = require('dot');
+var dot = require('@deque/dot');
 var templates = require('./templates');
 var buildManual = require('./build-manual');
 var entities = new (require('html-entities')).AllHtmlEntities();

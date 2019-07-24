@@ -46,6 +46,8 @@ page.open(args[1], function(status) {
 			}
 		}
 
-		phantom.exit(msg.violations.length);
+		// NOTE: to fail the test when violations are found, uncomment the line below.
+		// phantom.exit(msg.violations.length);
+		phantom.exit(0);
 	};
 });
