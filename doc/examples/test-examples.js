@@ -5,14 +5,24 @@ const exampleDirs = readdirSync(__dirname)
 	.map(dir => join(__dirname, dir))
 	.filter(dir => statSync(dir).isDirectory());
 
-async function runner(dir) {
-	const config = { cwd: dir, stdio: 'inherit' };
-	await execa.shell('npm install', config);
-	return execa.shell('npm test', config);
+const config = { stdio: 'inherit', shell: true };
+
+// run npm install in parallel
+function install(dir) {
+	return execa('npm install', { cwd: dir, ...config });
 }
 
-Promise.all(exampleDirs.map(runner))
-	.then(() => {
+// run tests synchronously so we can see which one threw an error
+function test(dir) {
+	return execa('npm test', { cwd: dir, ...config });
+}
+
+Promise.all(exampleDirs.map(install))
+	.then(async () => {
+		for (const dir of exampleDirs) {
+			await test(dir);
+		}
+
 		// Return successful exit
 		process.exit();
 	})
