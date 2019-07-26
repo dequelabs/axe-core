@@ -12,15 +12,15 @@ function install(dir) {
 	return execa('npm install', { cwd: dir, ...config });
 }
 
-// but run tests synchronously so we can see which one threw an error
+// run tests synchronously so we can see which one threw an error
 function test(dir) {
 	return execa('npm test', { cwd: dir, ...config });
 }
 
 Promise.all(exampleDirs.map(install))
 	.then(async () => {
-		for (let i = 0; i < exampleDirs.length; i++) {
-			await test(exampleDirs[i]);
+		for (const dir of exampleDirs) {
+			await test(dir);
 		}
 
 		// Return successful exit
