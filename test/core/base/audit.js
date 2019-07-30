@@ -737,7 +737,7 @@ describe('Audit', function() {
 						})[0];
 						var checkResult = ruleResult.nodes[0].any[0];
 						assert.isDefined(checkResult.data);
-						assert.property(checkResult.data, ['cssom']);
+						assert.property(checkResult.data, 'cssom');
 						assert.deepEqual(checkResult.data.cssom, preloadData);
 						// ensure cache is clear
 						assert.isTrue(typeof axe._selectCache === 'undefined');
@@ -815,7 +815,7 @@ describe('Audit', function() {
 						})[0];
 						var checkResult = ruleResult.nodes[0].any[0];
 						assert.isDefined(checkResult.data);
-						assert.notProperty(checkResult.data, ['cssom']);
+						assert.notProperty(checkResult.data, 'cssom');
 						// done
 						done();
 					},
@@ -881,7 +881,7 @@ describe('Audit', function() {
 						})[0];
 						var checkResult = ruleResult.nodes[0].any[0];
 						assert.isDefined(checkResult.data);
-						assert.notProperty(checkResult.data, ['cssom']);
+						assert.notProperty(checkResult.data, 'cssom');
 						// done
 						done();
 					},
