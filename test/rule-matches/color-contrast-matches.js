@@ -238,7 +238,7 @@ describe('color-contrast-matches', function() {
 		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
 	});
 
-	it("should not match a aria-disabled input's label - explicit label", function() {
+	it("should not match an aria-disabled input's label - explicit label", function() {
 		fixture.innerHTML =
 			'<label for="t1">Test</label><input type="text" id="t1" aria-disabled="true">';
 		var target = fixture.querySelector('label');
