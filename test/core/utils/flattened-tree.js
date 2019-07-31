@@ -291,6 +291,21 @@ describe('axe.utils.getFlattenedTree', function() {
 				assert.isDefined(vNode);
 				assert.equal(virtualDOM[0].actualNode, vNode.actualNode);
 			});
+			it('should not throw if getDistributedNodes is missing', function() {
+				var getDistributedNodes = fixture.getDistributedNodes;
+				fixture.getDistributedNodes = undefined;
+				try {
+					var virtualDOM = axe.utils.getFlattenedTree(fixture);
+					var vNode = axe.utils.getNodeFromTree(
+						virtualDOM[0],
+						virtualDOM[0].actualNode
+					);
+					assert.isDefined(vNode);
+					assert.equal(virtualDOM[0].actualNode, vNode.actualNode);
+				} finally {
+					fixture.getDistributedNodes = getDistributedNodes;
+				}
+			});
 		});
 	} else {
 		it('does not throw when slot elements are used', function() {
