@@ -2,6 +2,8 @@
 	"id": "fieldset",
 	"evaluate": "fieldset.js",
 	"after": "fieldset-after.js",
+	"enabled": false,
+	"deprecated": true,
 	"metadata": {
 		"impact": "critical",
 		"messages": {
