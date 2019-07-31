@@ -8,10 +8,8 @@ describe('aria.subclassImplicitNodes', function() {
 
 	it('should return an array of implicit CSS selectors', function() {
 		axe.commons.aria.lookupTable.role = {
-			planes: {
-				subclassRoles: ['trains']
-			},
 			trains: {
+				superclassRole: 'planes',
 				implicit: ['[class=trains]']
 			}
 		};
@@ -22,13 +20,12 @@ describe('aria.subclassImplicitNodes', function() {
 
 	it('should return CSS selectors for all subclass roles', function() {
 		axe.commons.aria.lookupTable.role = {
-			planes: {
-				subclassRoles: ['trains', 'automobiles']
-			},
 			trains: {
+				superclassRole: 'planes',
 				implicit: ['[class=trains]']
 			},
 			automobiles: {
+				superclassRole: 'planes',
 				implicit: ['[class=automobiles]']
 			}
 		};
@@ -39,11 +36,11 @@ describe('aria.subclassImplicitNodes', function() {
 
 	it("should not add roles that don't have implicit nodes", function() {
 		axe.commons.aria.lookupTable.role = {
-			planes: {
-				subclassRoles: ['trains', 'automobiles']
+			trains: {
+				superclassRole: 'planes'
 			},
-			trains: {},
 			automobiles: {
+				superclassRole: 'planes',
 				implicit: ['[class=automobiles]']
 			}
 		};
