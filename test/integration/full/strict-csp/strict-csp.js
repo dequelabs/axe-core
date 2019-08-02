@@ -8,7 +8,9 @@
 	});
 
 	it('should run without errors', function(done) {
-		axe.run('#fixture', function() {
+		axe.run(function(err, results) {
+			assert.isNull(err);
+			assert.isDefined(results);
 			done();
 		});
 	});
