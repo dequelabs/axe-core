@@ -6,10 +6,13 @@
 			// phantomjs requires running in non-strict csp
 			if (!window.PHANTOMJS) {
 				var thisScript = document.getElementById('check-phantomjs');
-				var csp = document.createElement('div');
-				csp.innerHTML =
-					'<meta http-equiv="Content-Security-Policy" content="script-src \'nonce-4AEemGb0xJptoIGFP3Nd\'; style-src \'nonce-4AEemGb0xJptoIGFP3Nd\'">';
-				document.head.appendChild(csp.firstElementChild);
+				var meta = document.createElement('meta');
+				meta.setAttribute('http-equiv', 'Content-Security-Policy');
+				meta.setAttribute(
+					'content',
+					"script-src 'nonce-4AEemGb0xJptoIGFP3Nd'; style-src 'nonce-4AEemGb0xJptoIGFP3Nd'"
+				);
+				document.head.appendChild(meta);
 			}
 		</script>
 		<link
