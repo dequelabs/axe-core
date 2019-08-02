@@ -1,0 +1,12 @@
+{
+	"id": "aria-roledescription",
+	"evaluate": "aria-roledescription.js",
+	"metadata": {
+		"impact": "serious",
+		"messages": {
+			"pass": "Used on a known supported role",
+			"incomplete": "Check that the aria-roledescription is announced",
+			"fail": "Used on an element without an implicit or explicit role"
+		}
+	}
+}

@@ -1,0 +1,13 @@
+{
+	"id": "aria-roledescription",
+	"selector": "[aria-roledescription]",
+	"excludeHidden": false,
+	"tags": ["cat.aria", "best-practice"],
+	"metadata": {
+		"description": "Ensures aria-roledescription attribute is used correctly",
+		"help": "Aria-roledescription attribute must be used on elements with an implicit or explicit role"
+	},
+	"all": [],
+	"any": ["aria-roledescription"],
+	"none": []
+}

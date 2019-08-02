@@ -1,0 +1,7 @@
+{
+	"description": "aria-roledescription test",
+	"rule": "aria-roledescription",
+	"violations": [["#fail1"], ["#fail2"]],
+	"passes": [["#pass1"], ["#pass2"], ["#pass3"]],
+	"incomplete": [["#incomplete1"], ["#incomplete2"]]
+}

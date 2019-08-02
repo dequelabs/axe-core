@@ -8,10 +8,7 @@ For a detailed description about how accessibility support is decided, see [How 
 
 ## Attributes
 
-| aria-attribute       | axe-core support |
-| -------------------- | ---------------- |
-| aria-describedat     | No               |
-| aria-details         | No               |
-| aria-roledescription | Mixed[^1]        |
-
-[^1]: Supported on elements: `<button>`, `<input type="button" | "checkbox" | "image" | "radio" | "reset" | "submit">`, `<img>`, `<select>`, `<summary>`
+| aria-attribute   | axe-core support |
+| ---------------- | ---------------- |
+| aria-describedat | No               |
+| aria-details     | No               |
