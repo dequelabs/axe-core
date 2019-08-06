@@ -13,7 +13,7 @@
 		"test": "grunt qunit"
 	},
 	"devDependencies": {
-		"axe-core": "^3.2.2",
+		"axe-core": "^3.3.1",
 		"grunt": "~1.0.2",
 		"grunt-contrib-qunit": "~3.1.0",
 		"qunitjs": "~2.4.1"

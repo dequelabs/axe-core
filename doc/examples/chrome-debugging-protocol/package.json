@@ -5,7 +5,7 @@
 		"test": "echo 'No test specified.'"
 	},
 	"dependencies": {
-		"axe-core": "^3.2.2",
+		"axe-core": "^3.3.1",
 		"chrome-remote-interface": "^0.27.1"
 	}
 }

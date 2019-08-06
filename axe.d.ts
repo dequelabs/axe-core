@@ -7,7 +7,7 @@ declare namespace axe {
 
 	type TagValue = 'wcag2a' | 'wcag2aa' | 'section508' | 'best-practice';
 
-	type ReporterVersion = 'v1' | 'v2';
+	type ReporterVersion = 'v1' | 'v2' | 'raw' | 'raw-env' | 'no-passes';
 
 	type RunOnlyType = 'rule' | 'rules' | 'tag' | 'tags';
 
@@ -47,6 +47,13 @@ declare namespace axe {
 		elementRef?: boolean;
 		selectors?: boolean;
 		resultTypes?: resultGroups[];
+		reporter?: ReporterVersion;
+		xpath?: boolean;
+		absolutePaths?: boolean;
+		restoreScroll?: boolean;
+		frameWaitTime?: number;
+		preload?: boolean;
+		performanceTimer?: boolean;
 	}
 	interface AxeResults {
 		toolOptions: RunOptions;
@@ -73,6 +80,7 @@ declare namespace axe {
 		html: string;
 		impact?: ImpactValue;
 		target: string[];
+		xpath?: string[];
 		any: CheckResult[];
 		all: CheckResult[];
 		none: CheckResult[];

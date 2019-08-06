@@ -179,7 +179,7 @@ describe('color.getBackgroundColor', function() {
 		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgImage');
 	});
 
-	it('should return null if something opaque is obscuring it', function() {
+	it('should return null if something non-opaque is obscuring it', function() {
 		fixture.innerHTML =
 			'<div style="width:100%; height: 100px; background: #000"></div>' +
 			'<div id="target" style="position: relative; top: -50px; z-index:-1;color:#fff;">Hello</div>';
@@ -192,7 +192,7 @@ describe('color.getBackgroundColor', function() {
 		assert.isNull(actual);
 	});
 
-	it('should return an actual if something non-opaque is obscuring it', function() {
+	it('should return an actual if something opaque is obscuring it', function() {
 		fixture.innerHTML =
 			'<div style="width:100%; height: 100px; background: rgba(0, 0, 0, 0.5)"></div>' +
 			'<div id="target" style="position: relative; top: -50px; z-index:-1;color:#fff;">Hello</div>';
@@ -201,10 +201,8 @@ describe('color.getBackgroundColor', function() {
 			document.getElementById('target'),
 			[]
 		);
-		assert.isNotNull(actual);
-		assert.equal(Math.round(actual.blue), 128);
-		assert.equal(Math.round(actual.red), 128);
-		assert.equal(Math.round(actual.green), 128);
+		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgOverlap');
+		assert.isNull(actual);
 	});
 
 	it('should return the bgcolor if it is solid', function() {
@@ -346,6 +344,72 @@ describe('color.getBackgroundColor', function() {
 			'<td>' +
 			'<span style="color:#007acc" id="target">Cell content</span>' +
 			'</td></tr>' +
+			'</table></div>';
+		var target = fixture.querySelector('#target'),
+			parent = fixture.querySelector('#parent');
+		var bgNodes = [];
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(243, 243, 243, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+		assert.deepEqual(bgNodes, [parent]);
+	});
+
+	it('should count a THEAD as a background element for a child element', function() {
+		fixture.innerHTML =
+			'<div style="background-color:#007acc;">' +
+			'<table style="width:100%">' +
+			'<thead style="background-color:#f3f3f3; height:40px;" id="parent">' +
+			'<td>' +
+			'<span style="color:#007acc" id="target">Cell content</span>' +
+			'</td></thead>' +
+			'</table></div>';
+		var target = fixture.querySelector('#target'),
+			parent = fixture.querySelector('#parent');
+		var bgNodes = [];
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(243, 243, 243, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+		assert.deepEqual(bgNodes, [parent]);
+	});
+
+	it('should count a TBODY as a background element for a child element', function() {
+		fixture.innerHTML =
+			'<div style="background-color:#007acc;">' +
+			'<table style="width:100%">' +
+			'<tbody style="background-color:#f3f3f3; height:40px;" id="parent">' +
+			'<td>' +
+			'<span style="color:#007acc" id="target">Cell content</span>' +
+			'</td></tbody>' +
+			'</table></div>';
+		var target = fixture.querySelector('#target'),
+			parent = fixture.querySelector('#parent');
+		var bgNodes = [];
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+		var expected = new axe.commons.color.Color(243, 243, 243, 1);
+		assert.equal(actual.red, expected.red);
+		assert.equal(actual.green, expected.green);
+		assert.equal(actual.blue, expected.blue);
+		assert.equal(actual.alpha, expected.alpha);
+		assert.deepEqual(bgNodes, [parent]);
+	});
+
+	it('should count a TFOOT as a background element for a child element', function() {
+		fixture.innerHTML =
+			'<div style="background-color:#007acc;">' +
+			'<table style="width:100%">' +
+			'<tfoot style="background-color:#f3f3f3; height:40px;" id="parent">' +
+			'<td>' +
+			'<span style="color:#007acc" id="target">Cell content</span>' +
+			'</td></tfoot>' +
 			'</table></div>';
 		var target = fixture.querySelector('#target'),
 			parent = fixture.querySelector('#parent');

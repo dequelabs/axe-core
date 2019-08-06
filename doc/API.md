@@ -6,6 +6,7 @@
    1. [Get Started](#getting-started)
 1. [Section 2: API Reference](#section-2-api-reference)
    1. [Overview](#overview)
+   1. [Required Globals](#required-globals)
    1. [API Notes](#api-notes)
    1. [API Name: axe.getRules](#api-name-axegetrules)
    1. [API Name: axe.configure](#api-name-axeconfigure)
@@ -54,6 +55,18 @@ The axe API can be used as part of a broader process that is performed on many, 
 ### Overview
 
 The axe APIs are provided in the javascript file axe.js. It must be included in the web page under test. Parameters are sent as javascript function parameters. Results are returned in JSON format.
+
+### Required Globals
+
+Axe requires a handful of global variables and interfaces to be available in order to run. See the [jsdom example](https://github.com/dequelabs/axe-core/blob/develop/doc/examples/jsdom/test/a11y.js) for how to set these up in a non-browser environment.
+
+- `window`
+- `document`
+- [`navigator`](https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator)
+- [`Node`](https://developer.mozilla.org/en-US/docs/Web/API/Node)
+- [`NodeList`](https://developer.mozilla.org/en-US/docs/Web/API/NodeList)
+- [`Element`](https://developer.mozilla.org/en-US/docs/Web/API/Element)
+- [`Document`](https://developer.mozilla.org/en-US/docs/Web/API/Document)
 
 ### Full API Reference for Developers
 
@@ -164,6 +177,9 @@ axe.configure({
   - `reporter` - Used to set the output format that the axe.run function will pass to the callback function
     - `v1` to use the previous version's format: `axe.configure({ reporter: "v1" });`
     - `v2` to use the current version's format: `axe.configure({ reporter: "v2" });`
+    - `raw` to return the raw result data without formating: `axe.configure({ reporter: "raw" });`
+    - `raw-env` to return the raw result data with environment data: `axe.configure({ reporter: "raw-env" });`
+    - `no-passes` to return only violation results: `axe.configure({ reporter: "no-passes" });`
   - `checks` - Used to add checks to the list of checks used by rules, or to override the properties of existing checks
     - The checks attribute is an array of check objects
     - Each check object can contain the following attributes
@@ -233,7 +249,9 @@ Runs a number of rules against the provided HTML page and returns the resulting 
 #### Synopsis
 
 ```js
-axe.run(context, options, callback);
+axe.run(context, options, (err, results) => {
+	// ...
+});
 ```
 
 #### Parameters axe.run
@@ -273,43 +291,68 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 1. Include the first item in the `$fixture` NodeList but exclude its first child
 
 ```js
-{
-  include: $fixture[0],
-  exclude: $fixture[0].firstChild
-}
+axe.run(
+	{
+		include: $fixture[0],
+		exclude: $fixture[0].firstChild
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 2. Include the element with the ID of `fix` but exclude any `div`s within it
 
 ```js
-{
-  include: [['#fix']],
-  exclude: [['#fix div']]
-}
+axe.run(
+	{
+		include: [['#fix']],
+		exclude: [['#fix div']]
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 3. Include the whole document except any structures whose parent contains the class `exclude1` or `exclude2`
 
 ```js
-{
-	exclude: [['.exclude1'], ['.exclude2']];
-}
+axe.run(
+	{
+		exclude: [['.exclude1'], ['.exclude2']]
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 4. Include the element with the ID of `fix`, within the iframe with id `frame`
 
 ```js
-{
-	include: [['#frame', '#fix']];
-}
+axe.run(
+	{
+		include: [['#frame', '#fix']]
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 5. Include the element with the ID of `fix`, within the iframe with id `frame2`, within the iframe with id `frame1`
 
 ```js
-{
-	include: [['#frame1', '#frame2', '#fix']];
-}
+axe.run(
+	{
+		include: [['#frame1', '#frame2', '#fix']]
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 6. Include the following:
@@ -319,9 +362,14 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 - All links
 
 ```js
-{
-	include: [['#header'], ['a'], ['#frame1', '#frame2', '#fix']];
-}
+axe.run(
+	{
+		include: [['#header'], ['a'], ['#frame1', '#frame2', '#fix']]
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 ##### Options Parameter
@@ -365,31 +413,43 @@ There are certain standards defined that can be used to select a set of rules. T
 To run only WCAG 2.0 Level A rules, specify `options` as:
 
 ```js
-{
-  runOnly: {
-    type: "tag",
-    values: ["wcag2a"]
-  }
-}
+axe.run(
+	{
+		runOnly: {
+			type: 'tag',
+			values: ['wcag2a']
+		}
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 To run both WCAG 2.0 Level A and Level AA rules, you must specify both `wcag2a` and `wcag2aa`:
 
 ```js
-{
-  runOnly: {
-    type: "tag",
-    values: ["wcag2a", "wcag2aa"]
-  }
-}
+axe.run(
+	{
+		runOnly: {
+			type: 'tag',
+			values: ['wcag2a', 'wcag2aa']
+		}
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 Alternatively, runOnly can be passed an array of tags:
 
 ```js
-{
+axe.run({
 	runOnly: ['wcag2a', 'wcag2aa'];
-}
+}, (err, results) => {
+  // ...
+})
 ```
 
 2. Run only a specified list of Rules
@@ -397,12 +457,17 @@ Alternatively, runOnly can be passed an array of tags:
 If you only want to run certain rules, specify options as:
 
 ```js
-{
-  runOnly: {
-    type: "rule",
-    values: [ "ruleId1", "ruleId2", "ruleId3" ]
-  }
-}
+axe.run(
+	{
+		runOnly: {
+			type: 'rule',
+			values: ['ruleId1', 'ruleId2', 'ruleId3']
+		}
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `ruleId3`. No other rule will run.
@@ -412,12 +477,17 @@ This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `r
 The default operation for axe.run is to run all rules except for rules with the "experimental" tag. If certain rules should be disabled from being run, specify `options` as:
 
 ```js
-{
-  "rules": {
-    "color-contrast": { enabled: false },
-    "valid-lang": { enabled: false }
-  }
-}
+axe.run(
+	{
+		rules: {
+			'color-contrast': { enabled: false },
+			'valid-lang': { enabled: false }
+		}
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 This example will disable the rules with the id of `color-contrast` and `valid-lang`. All other rules will run. The list of valid rule IDs is specified in the section below.
@@ -427,16 +497,21 @@ This example will disable the rules with the id of `color-contrast` and `valid-l
 By combining runOnly with type: tags and the rules option, a modified set can be defined. This lets you include rules with unspecified tags, and exclude rules that do have the specified tag(s).
 
 ```js
-{
-  runOnly: {
-    type: "tag",
-    values: ["wcag2a"]
-  },
-  "rules": {
-    "color-contrast": { enabled: true },
-    "valid-lang": { enabled: false }
-  }
-}
+axe.run(
+	{
+		runOnly: {
+			type: 'tag',
+			values: ['wcag2a']
+		},
+		rules: {
+			'color-contrast': { enabled: true },
+			'valid-lang': { enabled: false }
+		}
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 This example includes all level A rules except for valid-lang, and in addition will include the level AA color-contrast rule.
@@ -446,32 +521,44 @@ This example includes all level A rules except for valid-lang, and in addition w
 Similar to scope, the runOnly option can accept an object with an 'include' and 'exclude' property. Only those checks that match an included tag will run, except those that share a tag from the exclude list.
 
 ```js
-{
-  runOnly: {
-    type: 'tags',
-    values: {
-      include: ['wcag2a', 'wcag2aa'],
-      exclude: ['experimental']
-    }
-  }
-}
+axe.run(
+	{
+		runOnly: {
+			type: 'tags',
+			values: {
+				include: ['wcag2a', 'wcag2aa'],
+				exclude: ['experimental']
+			}
+		}
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 This example first includes all `wcag2a` and `wcag2aa` rules. All rules that are tagged as `experimental` are than removed from the list of rules to run.
 
 6. Only process certain types of results
 
-The `resultTypes` option can be used to limit the result types that axe will process, aggregate, and send to the reporter. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results.
+The `resultTypes` option can be used to limit the number of nodes for a rule to a maximum of one. This can be useful for improving performance on very large or complicated pages when you are only interested in certain types of results.
 
-Types listed in this option are processed normally and report all of their results. Types _not_ listed process a maximum of one result. The caller can use this information to inform the user of the existence of that type of result if appropriate.
+After axe has processed all rules normally, it generates a unique selector for all nodes in all rules. This process can be time consuming, especially for pages with lots of nodes. By limiting the nodes to a maximum of one for result types you are not interested in, you can greatly speed up the tail end performance of axe.
+
+Types listed in this option will cause rules that fall under those types to show all nodes. Types _not_ listed will causes rules that fall under one of the missing types to show a maximum of one node. This allows you to still see those results and inform the user of them if appropriate.
 
 ```js
-{
-	resultTypes: ['violations', 'incomplete', 'inapplicable'];
-}
+axe.run(
+	{
+		resultTypes: ['violations', 'incomplete', 'inapplicable']
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
-This example will process all of the "violations", "incomplete", and "inapplicable" result types. Since "passes" was not specified, it will only process the first pass for each rule, if one exists. As a result, the results object's `passes` array will have a length of either `0` or `1`. On a series of extremely large pages, this would improve performance considerably.
+This example will return all the nodes for all rules that fall under the "violations", "incomplete", and "inapplicable" result types. Since the "passes" type was not specified, it will return at most one node for each rule that passes.
 
 ###### <a id='preload-configuration-details'></a> Preload Configuration in Options Parameter
 
@@ -480,13 +567,27 @@ The `preload` attribute (defaults to `true`) in options parameter, accepts a `bo
 1. Specifying a `boolean`
 
 ```js
-preload: true;
+axe.run(
+	{
+		preload: true
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 2. Specifying an `object`
 
 ```js
-preload: { assets: ['cssom'], timeout: 50000 }
+axe.run(
+	{
+		preload: { assets: ['cssom'], timeout: 50000 }
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 The `assets` attribute expects an array of preload(able) constraints to be fetched. The current set of values supported for `assets` is listed in the following table:
@@ -782,10 +883,15 @@ If your page is very large (in terms of the number of Elements on the page) i.e.
 
 An approach you can take to reducing the time is use the `resultTypes` option. By calling `axe.run` with the following options, axe-core will only return the full details of the `violations` array and will only return one instance of each of the `inapplicable`, `incomplete` and `pass` arrays for each rule that has at least one of those entries. This will reduce the amount of computation that axe-core does for the unique selectors.
 
-```json
-{
-	"resultTypes": ["violations"]
-}
+```js
+axe.run(
+	{
+		resultTypes: ['violations']
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 ### Other strategies

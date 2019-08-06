@@ -7,30 +7,85 @@ describe('VirtualNode', function() {
 		node = document.createElement('div');
 	});
 
+	describe('AbstractVirtualNode', function() {
+		it('should be a function', function() {
+			assert.isFunction(axe.AbstractVirtualNode);
+		});
+
+		it('should throw an error when accessing props', function() {
+			function fn() {
+				var abstractNode = new axe.AbstractVirtualNode();
+				if (abstractNode.props.nodeType === 1) {
+					return;
+				}
+			}
+
+			assert.throws(fn);
+		});
+
+		it('should throw an error when accessing hasClass', function() {
+			function fn() {
+				var abstractNode = new axe.AbstractVirtualNode();
+				if (abstractNode.hasClass('foo')) {
+					return;
+				}
+			}
+
+			assert.throws(fn);
+		});
+
+		it('should throw an error when accessing attr', function() {
+			function fn() {
+				var abstractNode = new axe.AbstractVirtualNode();
+				if (abstractNode.attr('foo') === 'bar') {
+					return;
+				}
+			}
+
+			assert.throws(fn);
+		});
+
+		it('should throw an error when accessing hasAttr', function() {
+			function fn() {
+				var abstractNode = new axe.AbstractVirtualNode();
+				if (abstractNode.hasAttr('foo')) {
+					return;
+				}
+			}
+
+			assert.throws(fn);
+		});
+	});
+
 	it('should be a function', function() {
 		assert.isFunction(VirtualNode);
 	});
 
-	it('should accept two parameters', function() {
-		assert.lengthOf(VirtualNode, 2);
+	it('should accept three parameters', function() {
+		assert.lengthOf(VirtualNode, 3);
 	});
 
 	describe('prototype', function() {
 		it('should have public properties', function() {
-			var vNode = new VirtualNode(node, 'foo');
+			var parent = {};
+			var vNode = new VirtualNode(node, parent, 'foo');
 
 			assert.equal(vNode.shadowId, 'foo');
 			assert.typeOf(vNode.children, 'array');
 			assert.equal(vNode.actualNode, node);
+			assert.equal(vNode.parent, parent);
 		});
 
-		it('should abstract Node and Element APIs', function() {
+		it('should abstract Node properties', function() {
+			node = document.createElement('input');
 			node.id = 'monkeys';
 			var vNode = new VirtualNode(node);
 
-			assert.equal(vNode.elementNodeType, 1);
-			assert.equal(vNode.elementNodeName, 'div');
-			assert.equal(vNode.elementId, 'monkeys');
+			assert.isDefined(vNode.props);
+			assert.equal(vNode.props.nodeType, 1);
+			assert.equal(vNode.props.nodeName, 'input');
+			assert.equal(vNode.props.id, 'monkeys');
+			assert.equal(vNode.props.type, 'text');
 		});
 
 		it('should lowercase nodeName', function() {
@@ -39,7 +94,7 @@ describe('VirtualNode', function() {
 			};
 			var vNode = new VirtualNode(node);
 
-			assert.equal(vNode.elementNodeName, 'foobar');
+			assert.equal(vNode.props.nodeName, 'foobar');
 		});
 
 		describe('hasClass', function() {

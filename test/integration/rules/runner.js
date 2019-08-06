@@ -29,7 +29,19 @@
 
 	var fixture = document.getElementById('fixture');
 	Object.keys(tests).forEach(function(ruleId) {
-		describe(ruleId, function() {
+		var rule = axe._audit.rules.find(function(rule) {
+			return rule.id === ruleId;
+		});
+
+		if (!rule) {
+			return;
+		}
+
+		// don't run rules that are deprecated and disabled
+		var deprecated = rule.tags.indexOf('deprecated') !== -1;
+		(deprecated && !rule.enabled
+			? describe.skip
+			: describe)(ruleId, function() {
 			tests[ruleId].forEach(function(test) {
 				var testName = test.description || ruleId + ' test';
 				describe(testName, function() {

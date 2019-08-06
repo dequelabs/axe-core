@@ -1,0 +1,80 @@
+<!-- PASS -->
+<!-- checkbox -->
+<div id="pass1" role="checkbox">Newspaper</div>
+<!-- menuitemcheckbox -->
+<ul role="menu">
+	<li
+		id="pass2"
+		role="menuitemcheckbox"
+		aria-label="Word wrap"
+		aria-checked="true"
+	></li>
+</ul>
+<!-- menuitemradio -->
+<p id="pass3Label">Sans-serif</p>
+<ul role="menu">
+	<li
+		id="pass3"
+		role="menuitemradio"
+		aria-labelledby="pass3Label"
+		aria-checked="true"
+	></li>
+</ul>
+<!-- radio -->
+<div role="radiogroup">
+	<div
+		id="pass4"
+		role="radio"
+		aria-checked="false"
+		tabindex="0"
+		title="Regular Crust"
+	></div>
+</div>
+<!-- switch -->
+<div
+	id="pass5"
+	role="switch"
+	aria-checked="true"
+	aria-label="Toggle blue light:"
+>
+	<span>off</span>
+	<span>on</span>
+</div>
+
+<!-- FAIL -->
+<!-- checkbox -->
+<div id="fail1" role="checkbox" aria-labelledby="does-not-exist"></div>
+<!-- menuitemcheckbox -->
+<ul role="menu">
+	<li id="fail2" role="menuitemcheckbox" aria-checked="true"></li>
+</ul>
+<!-- menuitemradio -->
+<ul role="menu">
+	<li id="fail3" role="menuitemradio" aria-checked="true"></li>
+</ul>
+<!-- radio -->
+<div role="radiogroup">
+	<div id="fail4" role="radio" aria-checked="false" tabindex="0"></div>
+</div>
+<!-- switch -->
+<div id="fail5" role="switch" aria-checked="true">
+	<span></span>
+	<span></span>
+</div>
+
+<!-- INAPPLICABLE -->
+<input id="inapplicable1" />
+<select id="inapplicable2">
+	<option value="volvo">Volvo</option>
+	<option value="saab">Saab</option>
+	<option value="opel">Opel</option>
+</select>
+<textarea id="inapplicable3" title="Label"></textarea>
+
+<!-- INCOMPLETE -->
+<label>
+	first name
+	<div id="canttell1" role="checkbox" aria-label="name"></div>
+</label>
+<label for="canttell2">first name</label>
+<div role="checkbox" id="canttell2" aria-label="name"></div>

@@ -49,4 +49,22 @@ describe('utils.matchesSelector', function() {
 
 		fixture.innerHTML = '';
 	});
+
+	it('should return false if the element does not have a matching method', function() {
+		var target,
+			fixture = document.getElementById('fixture');
+
+		fixture.innerHTML = '<div id="test">Hi</div>';
+		target = document.getElementById('test');
+
+		target.matches = null;
+		target.matchesSelector = null;
+		target.mozMatchesSelector = null;
+		target.webkitMatchesSelector = null;
+		target.msMatchesSelector = null;
+
+		assert.isFalse(matchesSelector(target, '#test'));
+
+		fixture.innerHTML = '';
+	});
 });

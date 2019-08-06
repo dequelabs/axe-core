@@ -1,0 +1,107 @@
+<!-- PASS -->
+<!-- combobox -->
+<div id="pass1" aria-label="country" role="combobox">England</div>
+<!-- listbox -->
+<p id="pass2Label">Select a color:</p>
+<div id="pass2" role="listbox" aria-labelledby="pass2Label">
+	<div role="option">Orange</div>
+</div>
+<!-- searchbox -->
+<p id="pass3Label">Search currency pairs:</p>
+<div
+	id="pass3"
+	role="searchbox"
+	contenteditable="true"
+	aria-labelledby="pass3Label"
+></div>
+<!-- slider -->
+<div
+	id="pass4"
+	role="slider"
+	aria-label="Choose a value"
+	aria-valuemin="1"
+	aria-valuemax="7"
+	aria-valuenow="2"
+></div>
+<!-- spinbutton -->
+<div
+	id="pass5"
+	role="spinbutton"
+	aria-valuemin="0"
+	aria-valuemax="10"
+	aria-valuenow="8"
+	aria-label="Enter quantity:"
+></div>
+<!-- textbox -->
+<label id="foo">
+	foo
+	<div id="pass6" role="textbox" aria-labelledby="foo"></div>
+</label>
+
+<!-- FAIL -->
+<!-- aria-label with empty text string -->
+<div id="fail1" aria-label=" " role="combobox">England</div>
+<!-- The label does not exist. -->
+<div id="fail2" aria-labelledby="non-existing" role="combobox">England</div>
+<!-- The implicit label is not supported on div elements. -->
+<label>
+	first name
+	<div id="fail3" role="textbox"></div>
+</label>
+<!-- explicit label -->
+<label for="fail4">first name</label>
+<div role="textbox" id="fail4"></div>
+<!-- combobox -->
+<div id="fail5" role="combobox">England</div>
+<!-- listbox -->
+<div id="fail6" role="listbox" aria-labelledby="label-does-not-exist">
+	<div role="option">Orange</div>
+</div>
+<!-- searchbox -->
+<div
+	id="fail7"
+	role="searchbox"
+	contenteditable="true"
+	aria-labelledby="unknown-label"
+></div>
+<!-- slider -->
+<div
+	id="fail8"
+	role="slider"
+	aria-valuemin="1"
+	aria-valuemax="7"
+	aria-valuenow="2"
+></div>
+<!-- spinbutton -->
+<div
+	id="fail9"
+	role="spinbutton"
+	aria-valuemin="0"
+	aria-valuemax="10"
+	aria-valuenow="8"
+></div>
+<!-- textbox -->
+<label>
+	foo
+	<div id="fail10" role="textbox"></div>
+</label>
+
+<!-- INAPPLICABLE -->
+<input id="inapplicable1" />
+<select id="inapplicable2">
+	<option value="volvo">Volvo</option>
+	<option value="saab">Saab</option>
+	<option value="opel">Opel</option>
+</select>
+<textarea id="inapplicable3" title="Label"></textarea>
+
+<!-- INCOMPLETE -->
+<!-- Implicit label -->
+<label>
+	first name
+	<div id="canttell1" role="textbox" aria-label="name"></div>
+</label>
+
+<!--  Explicit label -->
+<label for="canttell2">first name</label>
+<div role="textbox" id="canttell2" aria-label="name"></div>

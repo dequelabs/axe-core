@@ -1219,6 +1219,59 @@ describe('Rule', function() {
 						isNotCalled
 					);
 				});
+
+				it('should not be called when there is no actualNode', function() {
+					var rule = new Rule(
+						{
+							all: ['cats']
+						},
+						{
+							checks: {
+								cats: new Check({
+									id: 'cats',
+									evaluate: function() {}
+								})
+							}
+						}
+					);
+					rule.excludeHidden = false; // so we don't call utils.isHidden
+					var vNode = {
+						shadowId: undefined,
+						children: [],
+						parent: undefined,
+						_cache: {},
+						_isHidden: null,
+						_attrs: {
+							type: 'text',
+							autocomplete: 'not-on-my-watch'
+						},
+						props: {
+							nodeType: 1,
+							nodeName: 'input',
+							id: null,
+							type: 'text'
+						},
+						hasClass: function() {
+							return false;
+						},
+						attr: function(attrName) {
+							return this._attrs[attrName];
+						},
+						hasAttr: function(attrName) {
+							return !!this._attrs[attrName];
+						}
+					};
+					rule.runSync(
+						{
+							include: [vNode]
+						},
+						{},
+						function() {
+							assert.isFalse(isDqElementCalled);
+						},
+						isNotCalled
+					);
+				});
 			});
 
 			it('should pass thrown errors to the reject param', function() {

@@ -7,7 +7,7 @@
 		"test": "node axe-puppeteer.js https://deque.com"
 	},
 	"dependencies": {
-		"axe-core": "^3.2.2",
-		"puppeteer": "^1.6.0"
+		"axe-core": "^3.3.1",
+		"puppeteer": "^1.19.0"
 	}
 }

@@ -1,6 +1,6 @@
 {
 	"description": "input-button-name test",
-	"rule": "button-name",
+	"rule": "input-button-name",
 	"violations": [
 		["#fail1"],
 		["#fail2"],
@@ -17,6 +17,9 @@
 		["#pass5"],
 		["#pass6"],
 		["#pass7"],
-		["#pass8"]
+		["#pass8"],
+		["#pass9"],
+		["#pass10"],
+		["#pass11"]
 	]
 }
