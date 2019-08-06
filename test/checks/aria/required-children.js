@@ -296,6 +296,15 @@ describe('aria-required-children', function() {
 		);
 	});
 
+	it('should not accept implicit nodes with a different role', function() {
+		var params = checkSetup(
+			'<div role="combobox" id="target"><input type="search" role="spinbutton"><p role="listbox">Textbox</p></div>'
+		);
+		assert.isFalse(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+	});
+
 	describe('options', function() {
 		it('should return undefined instead of false when the role is in options.reviewEmpty', function() {
 			var params = checkSetup('<div role="grid" id="target"></div>');
