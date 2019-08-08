@@ -664,7 +664,7 @@
 		},
 		"avoid-inline-spacing": {
 			"pass": "No se han especificado estilos 'inline' con '!important' que afecten al espaciado de texto",
-			"fail": "Eliminar '!important' de estilo{{=it.data && it.data.length > 1 ? 's' 'inline': ''}} {{=it.data.join(', ')}}, ya que anular esto no está admitido en la mayoría de navegadores"
+			"fail": "Eliminar '!important' de inline style{{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}}, porque su anulación no está admitida en la mayoría de navegadores"
 		},
 		"button-has-visible-text": {
 			"pass": "El elemento tiene texto interno visible para lectores de pantalla",
