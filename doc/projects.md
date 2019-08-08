@@ -45,4 +45,4 @@ Add your project/integration to this file and submit a pull request.
 1. [Vorlon.js Remote Debugger](https://github.com/MicrosoftDX/Vorlonjs)
 1. [Terra's Webdriver.io Accessibility Service](https://github.com/cerner/terra-toolkit/blob/master/docs/AxeService.md)
 1. [axe-sarif-converter](https://github.com/microsoft/axe-sarif-converter)
-1. [axe-selenium-csharp](https://github.com/javnov/axe-selenium-csharp)
+1. [Selenium.Axe for .NET](https://github.com/TroyWalshProf/SeleniumAxeDotnet)
