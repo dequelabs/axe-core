@@ -14,7 +14,10 @@ describe('aria-roledescription', function() {
 			'<button aria-roledescription="Awesome Button">Click</button>';
 		var actual = checks['aria-roledescription'].evaluate.call(
 			checkContext,
-			fixture.firstChild
+			fixture.firstChild,
+			{
+				supportedRoles: ['button']
+			}
 		);
 		assert.equal(actual, true);
 		assert.isNull(checkContext._data, null);
@@ -25,7 +28,10 @@ describe('aria-roledescription', function() {
 			'<div role="radio" aria-roledescription="Awesome Radio">Click</div>';
 		var actual = checks['aria-roledescription'].evaluate.call(
 			checkContext,
-			fixture.firstChild
+			fixture.firstChild,
+			{
+				supportedRoles: ['radio']
+			}
 		);
 		assert.equal(actual, true);
 		assert.isNull(checkContext._data, null);

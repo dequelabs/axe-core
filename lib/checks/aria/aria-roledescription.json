@@ -1,6 +1,17 @@
 {
 	"id": "aria-roledescription",
 	"evaluate": "aria-roledescription.js",
+	"options": {
+		"supportedRoles": [
+			"button",
+			"img",
+			"checkbox",
+			"radio",
+			"combobox",
+			"menuitemcheckbox",
+			"menuitemradio"
+		]
+	},
 	"metadata": {
 		"impact": "serious",
 		"messages": {
