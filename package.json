@@ -72,7 +72,7 @@
 		"rule-gen": "node build/rule-generator",
 		"next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
 		"sri-update": "grunt build && node build/sri-update && git add sri-history.json",
-		"fmt": "prettier --write *.{json,md,js} **/*.ts './{build,doc,lib,test}/**/*.{json,md,js,ts,html}'"
+		"fmt": "prettier --write *.{json,md,js} **/*.ts './{.github,build,doc,lib,test}/**/*.{json,md,js,ts,html}'"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.5.4",
@@ -122,7 +122,7 @@
 		"revalidator": "~0.3.1",
 		"selenium-webdriver": "~3.6.0",
 		"sri-toolbox": "^0.2.0",
-    "standard-version": "^7.0.0",
+		"standard-version": "^7.0.0",
 		"typescript": "^3.5.3",
 		"uglify-js": "^3.4.4",
 		"weakmap-polyfill": "^2.0.0"

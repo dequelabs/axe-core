@@ -65,4 +65,12 @@ describe('aria-form-field-name-matches', function() {
 			assert.isFalse(actual);
 		});
 	});
+
+	it('returns false when role=`combobox` has a child input', function() {
+		var vNode = queryFixture(
+			'<div id="target" role="combobox"><input type="text"/></div>'
+		);
+		var actual = rule.matches(vNode.actualNode, vNode);
+		assert.isFalse(actual);
+	});
 });
