@@ -1,11 +1,12 @@
 {
 	"id": "identical-links-same-purpose",
-	"selector": "a, area, [role=link]",
+	"selector": "a[href], area[href], [role=\"link\"]",
+	"excludeHidden": false,
 	"matches": "identical-links-same-purpose-matches.js",
-	"tags": ["wcag2aaa", "wcag249", "experimental"],
+	"tags": ["wcag2aaa", "wcag249", "best-practice", "experimental"],
 	"metadata": {
-		"description": "Ensures that links with identical accessible names resolve to the same resource",
-		"help": "Links with resolve to same or equivalent resources"
+		"description": "Ensure that links with the same accessible name serve a similar purpose",
+		"help": "Links with the same name have a similar purpose"
 	},
 	"all": ["identical-links-same-purpose"],
 	"any": [],

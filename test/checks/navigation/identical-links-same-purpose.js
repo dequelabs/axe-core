@@ -12,8 +12,8 @@ describe('identical-links-same-purpose tests', function() {
 		checkContext.reset();
 	});
 
-	it('returns undefined when element does not have a resource (empty href)', function() {
-		var vNode = queryFixture('<a id="target" href="">Go to google.com</a>');
+	it('returns undefined for native link with `href` but no accessible name', function() {
+		var vNode = queryFixture('<a id="target" href="/home/#/foo"></a>');
 		var actual = check.evaluate.call(
 			checkContext,
 			vNode.actualNode,
@@ -24,9 +24,21 @@ describe('identical-links-same-purpose tests', function() {
 		assert.isNull(checkContext._data);
 	});
 
-	it('returns undefined when element does not have a resource (onclick does not change location)', function() {
+	it('returns undefined when ARIA link that has no accessible name', function() {
+		var vNode = queryFixture('<span role="link" id="target"></span>');
+		var actual = check.evaluate.call(
+			checkContext,
+			vNode.actualNode,
+			options,
+			vNode
+		);
+		assert.isUndefined(actual);
+		assert.isNull(checkContext._data);
+	});
+
+	it('returns undefined when native link has only emoji as accessible name', function() {
 		var vNode = queryFixture(
-			'<span id="target" role="link" tabindex="0" onclick="return false;">Link text</span>'
+			'<a id="target" href="/some-directory/contact/rock.html">🤘</a>'
 		);
 		var actual = check.evaluate.call(
 			checkContext,
@@ -38,9 +50,75 @@ describe('identical-links-same-purpose tests', function() {
 		assert.isNull(checkContext._data);
 	});
 
-	it('returns true when element has location resource', function() {
+	it('returns undefined when native link has only nonBmp characters (diacritical marks supplement) as accessible name', function() {
 		var vNode = queryFixture(
-			'<a id="target" href="http://facebook.com">Follow us</a>'
+			'<a id="target" href="/some-directory/contact/rock.html">ᴁ</a>'
+		);
+		var actual = check.evaluate.call(
+			checkContext,
+			vNode.actualNode,
+			options,
+			vNode
+		);
+		assert.isUndefined(actual);
+		assert.isNull(checkContext._data);
+	});
+
+	it('returns undefined when native link has only nonBmp characters (currency symbol) as accessible name', function() {
+		var vNode = queryFixture(
+			'<a id="target" href="/some-directory/currency.html">₨ </a>'
+		);
+		var actual = check.evaluate.call(
+			checkContext,
+			vNode.actualNode,
+			options,
+			vNode
+		);
+		assert.isUndefined(actual);
+		assert.isNull(checkContext._data);
+	});
+
+	it('returns undefined when ARIA link has only punctuations as accessible name', function() {
+		var vNode = queryFixture('<button id="target" role="link">!!!!</button>');
+		var actual = check.evaluate.call(
+			checkContext,
+			vNode.actualNode,
+			options,
+			vNode
+		);
+		assert.isUndefined(actual);
+		assert.isNull(checkContext._data);
+	});
+
+	it('returns undefined when ARIA link has only combination of emoji, punctuations, nonBmp characters as accessible name', function() {
+		var vNode = queryFixture(
+			'<button id="target" role="link">☀️!₨   </button>'
+		);
+		var actual = check.evaluate.call(
+			checkContext,
+			vNode.actualNode,
+			options,
+			vNode
+		);
+		assert.isUndefined(actual);
+		assert.isNull(checkContext._data);
+	});
+
+	it('returns true for native links with `href` and accessible name', function() {
+		var vNode = queryFixture('<a id="target" href="/home/#/foo">Pass 1</a>');
+		var actual = check.evaluate.call(
+			checkContext,
+			vNode.actualNode,
+			options,
+			vNode
+		);
+		assert.isTrue(actual);
+		assert.hasAllKeys(checkContext._data, ['name', 'resource']);
+	});
+
+	it('returns true for ARIA links has accessible name', function() {
+		var vNode = queryFixture(
+			'<map><area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/></map>'
 		);
 		var actual = check.evaluate.call(
 			checkContext,
@@ -49,12 +127,12 @@ describe('identical-links-same-purpose tests', function() {
 			vNode
 		);
 		assert.isTrue(actual);
-		assert.hasAllKeys(checkContext._data, ['accessibleText', 'linkResource']);
+		assert.hasAllKeys(checkContext._data, ['name', 'resource']);
 	});
 
-	it('returns true when element has location resource', function() {
+	it('returns true for native links with `href` and accessible name (that also has emoji, nonBmp and punctuation characters)', function() {
 		var vNode = queryFixture(
-			'<span id="target" role="link" tabindex="0" onclick="location=\'/pages/index.html\'">Link text</span>'
+			'<a id="target" href="/home/#/foo">The ☀️ is orange, the ◓ is white.</a>'
 		);
 		var actual = check.evaluate.call(
 			checkContext,
@@ -63,56 +141,6 @@ describe('identical-links-same-purpose tests', function() {
 			vNode
 		);
 		assert.isTrue(actual);
-		assert.hasAllKeys(checkContext._data, ['accessibleText', 'linkResource']);
-	});
-
-	describe('after', function() {
-		it('sets results of check result to `undefined` if links do not serve identical purpose', function() {
-			var checkResults = [
-				{
-					data: {
-						accessibleText: 'follow us',
-						linkResource: 'http://facebook.com'
-					},
-					result: true
-				},
-				{
-					data: {
-						accessibleText: 'follow us',
-						linkResource: 'http://instagram.com'
-					},
-					result: true
-				}
-			];
-			var results = check.after(checkResults);
-
-			assert.lengthOf(results, 2);
-			assert.isUndefined(results[0].result);
-			assert.isUndefined(results[1].result);
-		});
-
-		it('sets results of check result to `true` if links serve identical purpose', function() {
-			var checkResults = [
-				{
-					data: {
-						accessibleText: 'follow us',
-						linkResource: 'http://instagram.com/axe'
-					},
-					result: true
-				},
-				{
-					data: {
-						accessibleText: 'follow us',
-						linkResource: 'http://instagram.com/axe'
-					},
-					result: true
-				}
-			];
-			var results = check.after(checkResults);
-
-			assert.lengthOf(results, 2);
-			assert.isTrue(results[0].result);
-			assert.isTrue(results[1].result);
-		});
+		assert.hasAllKeys(checkContext._data, ['name', 'resource']);
 	});
 });

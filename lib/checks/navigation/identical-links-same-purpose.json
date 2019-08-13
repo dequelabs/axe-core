@@ -5,8 +5,8 @@
 	"metadata": {
 		"impact": "minor",
 		"messages": {
-			"pass": "Identical links (if any) resolve to same purpose",
-			"incomplete": "Fix purpose of links with same accessible name"
+			"pass": "There are no other links with the same name, that go to a different URL",
+			"incomplete": "Check that links have the same purpose, or are intentionally ambiguous."
 		}
 	}
 }
