@@ -2,6 +2,7 @@
 	"id": "group-labelledby",
 	"evaluate": "group-labelledby.js",
 	"after": "group-labelledby-after.js",
+	"deprecated": true,
 	"metadata": {
 		"impact": "critical",
 		"messages": {
