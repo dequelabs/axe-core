@@ -15,9 +15,9 @@
 	"metadata": {
 		"impact": "serious",
 		"messages": {
-			"pass": "Used on a known supported role",
-			"incomplete": "Check that the aria-roledescription is announced",
-			"fail": "Used on an element without an implicit or explicit role"
+			"pass": "aria-roledescription used on a supported semantic role",
+			"incomplete": "Check that the aria-roledescription is announced by supported screen readers",
+			"fail": "Give the element a role that supports aria-roledescription"
 		}
 	}
 }

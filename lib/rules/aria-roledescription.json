@@ -1,11 +1,10 @@
 {
 	"id": "aria-roledescription",
 	"selector": "[aria-roledescription]",
-	"excludeHidden": false,
-	"tags": ["cat.aria", "best-practice"],
+	"tags": ["cat.aria", "wcag2a", "wcag412"],
 	"metadata": {
-		"description": "Ensures aria-roledescription attribute is used correctly",
-		"help": "Aria-roledescription attribute must be used on elements with an implicit or explicit role"
+		"description": "Ensure aria-roledescription is only used on elements with an implicit or explicit role",
+		"help": "Use aria-roledescription on elements with a semantic role"
 	},
 	"all": [],
 	"any": ["aria-roledescription"],

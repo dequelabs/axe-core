@@ -58,4 +58,26 @@ describe('aria-roledescription', function() {
 		assert.equal(actual, false);
 		assert.isNull(checkContext._data, null);
 	});
+
+	it('returns false for elements with role=presentation', function() {
+		fixture.innerHTML =
+			'<div role="presentation" aria-roledescription="Awesome Main">The main element</div>';
+		var actual = checks['aria-roledescription'].evaluate.call(
+			checkContext,
+			fixture.firstChild
+		);
+		assert.equal(actual, false);
+		assert.isNull(checkContext._data, null);
+	});
+
+	it('returns false for elements with role=none', function() {
+		fixture.innerHTML =
+			'<div role="none" aria-roledescription="Awesome Main">The main element</div>';
+		var actual = checks['aria-roledescription'].evaluate.call(
+			checkContext,
+			fixture.firstChild
+		);
+		assert.equal(actual, false);
+		assert.isNull(checkContext._data, null);
+	});
 });
