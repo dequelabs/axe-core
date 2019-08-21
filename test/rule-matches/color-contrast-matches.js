@@ -238,6 +238,22 @@ describe('color-contrast-matches', function() {
 		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
 	});
 
+	it("should not match an aria-disabled input's label - explicit label", function() {
+		fixture.innerHTML =
+			'<label for="t1">Test</label><input type="text" id="t1" aria-disabled="true">';
+		var target = fixture.querySelector('label');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
+	it("should not match a parent aria-disabled input's label - explicit label", function() {
+		fixture.innerHTML =
+			'<label for="t1">Test</label><div aria-disabled="true"><input type="text" id="t1"></div>';
+		var target = fixture.querySelector('label');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
 	it("should not match a disabled input's label - implicit label (input)", function() {
 		fixture.innerHTML = '<label>Test<input type="text" disabled></label>';
 		var target = fixture.querySelector('label');

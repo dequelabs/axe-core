@@ -56,9 +56,7 @@ module.exports = function(grunt) {
 				(footnote, index) => `[^${index + 1}]: ${footnote}`
 			);
 
-			const content = `${
-				headings.main
-			}\n\n## Attributes\n\n${attributesTableMarkdown}\n\n${footnotes}`;
+			const content = `${headings.main}\n\n## Attributes\n\n${attributesTableMarkdown}\n\n${footnotes}`;
 
 			const destFile = this.data.destFile;
 			// Format the content so Prettier doesn't create a diff after running.
