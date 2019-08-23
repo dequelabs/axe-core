@@ -48,7 +48,7 @@
 
 <!-- native links, with different accessible name -->
 <a id="pass11" href="/home">Pass 11</a>
-<a id="pass11-not-identical1" href="/home"
+<a id="pass11-identical1" href="/home"
 	>Pass 11, but different accessible name</a
 >
 
@@ -58,8 +58,8 @@
 	Pass 12, but different accessible name
 </button>
 
-<!-- area[href], with different accessible name -->
-<map id="shapes-map">
+<!-- area[href], with parent map, which is referred by img[usemap], with different accessible name -->
+<map name="shapes-map">
 	<area
 		id="pass13"
 		shape="rect"
@@ -75,7 +75,7 @@
 		href="foo"
 	/>
 </map>
-<img src="shape.png" usemap="shapes-map" alt="" />
+<img src="shape.png" usemap="#shapes-map" alt="" />
 
 <!-- AREA with same accessible name, and serve same purpose -->
 <map name="infographic-pass">
@@ -102,17 +102,18 @@
 />
 
 <!-- incomplete -->
+<!-- Note:identical incomplete nodes are appended as relatedNodes -->
 <!-- native links with different purpose -->
 <a id="incomplete1" href="/home/#/bar">Incomplete 1</a>
-<a id="incomplete1-non-identical1" href="/home/#/">Incomplete 1</a>
+<a id="incomplete1-identical1" href="/home/#/">Incomplete 1</a>
 
 <!-- native links with different query params -->
 <a id="incomplete2" href="/search/?q=foo">Incomplete 2</a>
-<a id="incomplete2-non-identical1" href="/search/?q=bar">Incomplete 2</a>
+<a id="incomplete2-identical1" href="/search/?q=bar">Incomplete 2</a>
 
 <!-- native links with different `shebang` -->
 <a id="incomplete3" href="/search/?q=foo#!/foo">Incomplete 3</a>
-<a id="incomplete3-non-identical1" href="/search/?q=foo#!/bar">Incomplete 3</a>
+<a id="incomplete3-identical1" href="/search/?q=foo#!/bar">Incomplete 3</a>
 
 <!-- ARIA links with no href but same accessible name -->
 <button id="incomplete4" role="link">Incomplete 4</button>
@@ -185,3 +186,49 @@
 <!-- native links with different purpose -->
 <a id="incomplete14" href="https://facebook.com">follow us</a>
 <a id="incomplete14-identical1" href="https://instagram.com">follow us</a>
+
+<!-- inapplicable -->
+<!-- area element has no parent map -->
+<area
+	id="inapplicable1"
+	shape="poly"
+	coords="130,147,200,107,254,219,130,228"
+	href="https://developer.mozilla.org/docs/Web/HTML"
+	title="Inapplicable AREA"
+/>
+
+<!-- area has map parent, which has no name -->
+<map>
+	<area
+		id="inapplicable2"
+		shape="poly"
+		coords="130,147,200,107,254,219,130,228"
+		href="https://developer.mozilla.org/docs/Web/HTML"
+		title="Inapplicable AREA"
+	/>
+</map>
+
+<!-- area has map parent, which has name, but not referred by img[usemap] -->
+<map id="iam-not-used-anywhere">
+	<area
+		id="inapplicable3"
+		shape="poly"
+		coords="130,147,200,107,254,219,130,228"
+		href="https://developer.mozilla.org/docs/Web/HTML"
+		title="Inapplicable AREA"
+	/>
+</map>
+
+<!-- native link with no href attribute -->
+<a id="inapplicable4">Inapplicable 4</a>
+
+<!-- AREA with map, referred by img, has no href-->
+<map name="infographic-inapplicable5">
+	<area
+		id="inapplicable5"
+		shape="poly"
+		coords="130,147,200,107,254,219,130,228"
+		title="Inapplicable HTML Logo"
+	/>
+</map>
+<img usemap="#infographic-inapplicable5" alt="MDN infographic" />
