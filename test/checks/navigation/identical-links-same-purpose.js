@@ -114,6 +114,8 @@ describe('identical-links-same-purpose tests', function() {
 		);
 		assert.isTrue(actual);
 		assert.hasAllKeys(checkContext._data, ['name', 'resource']);
+		assert.equal(checkContext._data.name, 'Pass 1');
+		assert.equal(checkContext._data.resource, '/home/#/foo');
 	});
 
 	it('returns true for ARIA links has accessible name', function() {
@@ -128,6 +130,9 @@ describe('identical-links-same-purpose tests', function() {
 		);
 		assert.isTrue(actual);
 		assert.hasAllKeys(checkContext._data, ['name', 'resource']);
+		assert.equal(checkContext._data.name, 'MDN');
+		// todo:jey
+		assert.isUndefined(checkContext._data.resource);
 	});
 
 	it('returns true for native links with `href` and accessible name (that also has emoji, nonBmp and punctuation characters)', function() {
@@ -142,5 +147,7 @@ describe('identical-links-same-purpose tests', function() {
 		);
 		assert.isTrue(actual);
 		assert.hasAllKeys(checkContext._data, ['name', 'resource']);
+		assert.equal(checkContext._data.name, 'The ☀️ is orange, the ◓ is white.');
+		assert.equal(checkContext._data.resource, '/home/#/foo');
 	});
 });
