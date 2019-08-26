@@ -113,9 +113,10 @@ describe('identical-links-same-purpose tests', function() {
 			vNode
 		);
 		assert.isTrue(actual);
-		assert.hasAllKeys(checkContext._data, ['name', 'resource']);
-		assert.equal(checkContext._data.name, 'Pass 1');
-		assert.equal(checkContext._data.resource, '/home/#/foo');
+		assert.hasAllKeys(checkContext._data, ['name', 'parsedResource']);
+		assert.equal(checkContext._data.name, 'Pass 1'.toLowerCase());
+		assert.equal(checkContext._data.parsedResource.hash, '#/foo');
+		assert.equal(checkContext._data.parsedResource.pathname, 'home');
 	});
 
 	it('returns true for ARIA links has accessible name', function() {
@@ -129,15 +130,14 @@ describe('identical-links-same-purpose tests', function() {
 			vNode
 		);
 		assert.isTrue(actual);
-		assert.hasAllKeys(checkContext._data, ['name', 'resource']);
-		assert.equal(checkContext._data.name, 'MDN');
-		// todo:jey
-		assert.isUndefined(checkContext._data.resource);
+		assert.hasAllKeys(checkContext._data, ['name', 'parsedResource']);
+		assert.equal(checkContext._data.name, 'MDN'.toLowerCase());
+		assert.isFalse(!!checkContext._data.resource);
 	});
 
 	it('returns true for native links with `href` and accessible name (that also has emoji, nonBmp and punctuation characters)', function() {
 		var vNode = queryFixture(
-			'<a id="target" href="/home/#/foo">The ☀️ is orange, the ◓ is white.</a>'
+			'<a id="target" href="/contact/foo.html">The ☀️ is orange, the ◓ is white.</a>'
 		);
 		var actual = check.evaluate.call(
 			checkContext,
@@ -146,8 +146,11 @@ describe('identical-links-same-purpose tests', function() {
 			vNode
 		);
 		assert.isTrue(actual);
-		assert.hasAllKeys(checkContext._data, ['name', 'resource']);
-		assert.equal(checkContext._data.name, 'The ☀️ is orange, the ◓ is white.');
-		assert.equal(checkContext._data.resource, '/home/#/foo');
+		assert.hasAllKeys(checkContext._data, ['name', 'parsedResource']);
+		assert.equal(
+			checkContext._data.name,
+			'The is orange the is white'.toLowerCase()
+		);
+		assert.equal(checkContext._data.parsedResource.pathname, 'foo.html');
 	});
 });
