@@ -9,22 +9,14 @@ describe('identical-links-same-purpose-after tests', function() {
 		fixture.innerHTML = '';
 	});
 
-	it('sets results of check result to `undefined` if links do not serve identical purpose', function() {
+	it('sets results of check result to `undefined` if native links do not serve identical purpose', function() {
 		var nodeOne = queryFixture(
 			"<a id='target' href='http://facebook.com'>follow us</a>"
 		);
 		var nodeOneData = {
 			data: {
 				name: 'follow us',
-				parsedResource: {
-					filename: undefined,
-					hash: undefined,
-					hostname: 'facebook.com',
-					pathname: '',
-					port: '',
-					protocol: undefined,
-					search: ''
-				}
+				parsedResource: { hostname: 'facebook.com' }
 			},
 			relatedNodes: [nodeOne],
 			result: true
@@ -35,15 +27,7 @@ describe('identical-links-same-purpose-after tests', function() {
 		var nodeTwoData = {
 			data: {
 				name: 'follow us',
-				parsedResource: {
-					filename: undefined,
-					hash: undefined,
-					hostname: 'instagram.com',
-					pathname: '',
-					port: '',
-					protocol: undefined,
-					search: ''
-				}
+				parsedResource: { hostname: 'instagram.com' }
 			},
 			relatedNodes: [nodeTwo],
 			result: true
@@ -64,22 +48,14 @@ describe('identical-links-same-purpose-after tests', function() {
 		assert.isUndefined(result.result);
 	});
 
-	it('sets results of check result to `true` if links serve identical purpose', function() {
+	it('sets results of check result to `true` if native links serve identical purpose', function() {
 		var nodeOne = queryFixture(
 			"<a id='target' href='http://deque.com/axe-core'>Axe Core</a>"
 		);
 		var nodeOneData = {
 			data: {
 				name: 'Axe Core',
-				parsedResource: {
-					filename: undefined,
-					hash: undefined,
-					hostname: 'deque.com',
-					pathname: 'axe-core',
-					port: '',
-					protocol: undefined,
-					search: ''
-				}
+				parsedResource: { hostname: 'deque.com', pathname: 'axe-core' }
 			},
 			relatedNodes: [nodeOne],
 			result: true
@@ -90,15 +66,7 @@ describe('identical-links-same-purpose-after tests', function() {
 		var nodeTwoData = {
 			data: {
 				name: 'Axe Core us',
-				parsedResource: {
-					filename: undefined,
-					hash: undefined,
-					hostname: 'deque.com',
-					pathname: 'axe-core',
-					port: '',
-					protocol: undefined,
-					search: ''
-				}
+				parsedResource: { hostname: 'deque.com', pathname: 'axe-core' }
 			},
 			relatedNodes: [nodeTwo],
 			result: true
@@ -121,5 +89,37 @@ describe('identical-links-same-purpose-after tests', function() {
 		var result2 = results[1];
 		assert.equal(result2.relatedNodes.length, 0);
 		assert.isTrue(result2.result);
+	});
+
+	it('sets results of check result to `true` if ARIA links have different accessible names', function() {
+		var nodeOne = queryFixture('<button role="link">Earth</button>');
+		var nodeOneData = {
+			data: {
+				name: 'earth',
+				parsedResource: {}
+			},
+			relatedNodes: [nodeOne],
+			result: true
+		};
+		var nodeTwo = queryFixture('<button role="link">Venus</button>');
+		var nodeTwoData = {
+			data: {
+				name: 'venus',
+				parsedResource: {}
+			},
+			relatedNodes: [nodeTwo],
+			result: true
+		};
+		var checkResults = [nodeOneData, nodeTwoData];
+		var results = check.after(checkResults);
+		assert.lengthOf(results, 2);
+
+		var result1 = results[0];
+		assert.equal(result1.data.name, nodeOneData.data.name);
+		assert.equal(result1.relatedNodes.length, 0);
+
+		var result2 = results[1];
+		assert.equal(result2.data.name, nodeTwoData.data.name);
+		assert.equal(result2.relatedNodes.length, 0);
 	});
 });
