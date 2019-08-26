@@ -2,6 +2,8 @@ describe('identical-links-same-purpose tests', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
+	var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
 	var queryFixture = axe.testUtils.queryFixture;
 	var check = checks['identical-links-same-purpose'];
 	var checkContext = axe.testUtils.MockCheckContext();
@@ -10,6 +12,7 @@ describe('identical-links-same-purpose tests', function() {
 	afterEach(function() {
 		fixture.innerHTML = '';
 		checkContext.reset();
+		axe._tree = undefined;
 	});
 
 	it('returns undefined for native link with `href` but no accessible name', function() {
@@ -153,4 +156,61 @@ describe('identical-links-same-purpose tests', function() {
 		);
 		assert.equal(checkContext._data.parsedResource.pathname, 'foo.html');
 	});
+
+	(shadowSupported ? it : xit)(
+		'returns undefined for native link (in shadowDOM) with `href` but no accessible name',
+		function() {
+			var params = shadowCheckSetup(
+				'<div id="shadow"></div>',
+				'<a id="target" href="/home/#/foo"></a>'
+			);
+			var actual = check.evaluate.apply(checkContext, params);
+			assert.isUndefined(actual);
+			assert.isNull(checkContext._data);
+		}
+	);
+
+	(shadowSupported ? it : xit)(
+		'returns true for native links (in shadowDOM) with `href` and accessible name',
+		function() {
+			var params = shadowCheckSetup(
+				'<div id="shadow"></div>',
+				'<a id="target" href="/home/#/foo">Pass 1</a>'
+			);
+			var actual = check.evaluate.apply(checkContext, params);
+			assert.isTrue(actual);
+			assert.hasAllKeys(checkContext._data, ['name', 'parsedResource']);
+			assert.equal(checkContext._data.name, 'Pass 1'.toLowerCase());
+			assert.equal(checkContext._data.parsedResource.hash, '#/foo');
+			assert.equal(checkContext._data.parsedResource.pathname, 'home');
+		}
+	);
+
+	(shadowSupported ? it : xit)(
+		'returns undefined when ARIA link (in shadowDOM) has only punctuations as accessible name',
+		function() {
+			var params = shadowCheckSetup(
+				'<div id="shadow"></div>',
+				'<button id="target" role="link">!!!!</button>'
+			);
+			var actual = check.evaluate.apply(checkContext, params);
+			assert.isUndefined(actual);
+			assert.isNull(checkContext._data);
+		}
+	);
+
+	(shadowSupported ? it : xit)(
+		'returns true for ARIA links (in shadowDOM) has accessible name',
+		function() {
+			var params = shadowCheckSetup(
+				'<div id="shadow"></div>',
+				'<map><area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/></map>'
+			);
+			var actual = check.evaluate.apply(checkContext, params);
+			assert.isTrue(actual);
+			assert.hasAllKeys(checkContext._data, ['name', 'parsedResource']);
+			assert.equal(checkContext._data.name, 'MDN'.toLowerCase());
+			assert.isFalse(!!checkContext._data.resource);
+		}
+	);
 });
