@@ -15,63 +15,93 @@ describe('unique-frame-title', function() {
 		axe._tree = undefined;
 	});
 
-	afterEach(function() {
-		checkContext.reset();
-	});
+	function getFrameFixture(title, src, isShadow, callback) {
+		var vNode;
 
-	it('returns undefined for `iframe` with no accessible name (no name after unicode and space characters are removed)', function() {
-		var vNode = queryFixture(
-			'<iframe id="target" title=" ☀️ " src="../integration/rules/frame-title-unique/frames/page-one.html"> </iframe>'
-		);
-		var actual = check.evaluate.call(
-			checkContext,
-			vNode.actualNode,
-			options,
-			vNode
-		);
-		assert.isUndefined(actual);
-		assert.isNull(checkContext._data);
-	});
-
-	it('returns true and sets `after` data when `iframe` has accessible name', function() {
-		var vNode = queryFixture(
-			'<iframe id="target" title="I am unique" src="../integration/rules/frame-title-unique/frames/page-one.html"> </iframe>'
-		);
-		var actual = check.evaluate.call(
-			checkContext,
-			vNode.actualNode,
-			options,
-			vNode
-		);
-		assert.isTrue(actual);
-		assert.hasAllKeys(checkContext._data, [
-			'name',
-			'parsedResource',
-			'resourceFrameTitle'
-		]);
-		assert.equal(checkContext._data.name, 'i am unique'.toLowerCase());
-		assert.equal(checkContext._data.parsedResource.pathname, 'page-one.html');
-	});
-
-	(shadowSupported ? it : xit)(
-		'returns true and sets `after` data when `iframe` has accessible name (in shadowDOM)',
-		function() {
-			var params = shadowCheckSetup(
+		if (isShadow) {
+			vNode = shadowCheckSetup(
 				'<div id="shadow"></div>',
-				'<iframe id="target" aria-label="I am inside shadowDOM" src="../integration/rules/frame-title-unique/frames/page-one.html"> </iframe>'
+				'<iframe id="target" title="' + title + '"> </iframe>'
+			)[2];
+		} else {
+			vNode = queryFixture(
+				'<iframe id="target" title="' + title + '"> </iframe>'
 			);
-			var actual = check.evaluate.apply(checkContext, params);
+		}
+
+		vNode.actualNode.addEventListener('load', function() {
+			callback(vNode);
+		});
+		vNode.actualNode.src = src;
+	}
+
+	it('returns undefined for `iframe` with no accessible name (no name after unicode and space characters are removed)', function(done) {
+		var title = ' ☀️ ';
+		var src = '../integration/rules/frame-title-unique/frames/page-one.html';
+		getFrameFixture(title, src, false, function(vNode) {
+			var actual = check.evaluate.call(
+				checkContext,
+				vNode.actualNode,
+				options,
+				vNode
+			);
+			assert.isUndefined(actual);
+			assert.isNull(checkContext._data);
+			done();
+		});
+	});
+
+	it('returns true and sets `after` data when `iframe` has accessible name', function(done) {
+		var title = 'I am unique';
+		var src = '../integration/rules/frame-title-unique/frames/page-one.html';
+
+		getFrameFixture(title, src, false, function(vNode) {
+			var actual = check.evaluate.call(
+				checkContext,
+				vNode.actualNode,
+				options,
+				vNode
+			);
 			assert.isTrue(actual);
 			assert.hasAllKeys(checkContext._data, [
 				'name',
 				'parsedResource',
 				'resourceFrameTitle'
 			]);
-			assert.equal(
-				checkContext._data.name,
-				'i am inside shadowdom'.toLowerCase()
-			);
+			assert.equal(checkContext._data.name, 'i am unique'.toLowerCase());
 			assert.equal(checkContext._data.parsedResource.pathname, 'page-one.html');
+			done();
+		});
+	});
+
+	(shadowSupported ? it : xit)(
+		'returns true and sets `after` data when `iframe` has accessible name (in shadowDOM)',
+		function(done) {
+			var title = 'I am inside shadowDOM';
+			var src = '../integration/rules/frame-title-unique/frames/page-one.html';
+			getFrameFixture(title, src, true, function(vNode) {
+				var actual = check.evaluate.call(
+					checkContext,
+					vNode.actualNode,
+					options,
+					vNode
+				);
+				assert.isTrue(actual);
+				assert.hasAllKeys(checkContext._data, [
+					'name',
+					'parsedResource',
+					'resourceFrameTitle'
+				]);
+				assert.equal(
+					checkContext._data.name,
+					'i am inside shadowdom'.toLowerCase()
+				);
+				assert.equal(
+					checkContext._data.parsedResource.pathname,
+					'page-one.html'
+				);
+				done();
+			});
 		}
 	);
 });

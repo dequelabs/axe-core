@@ -2,18 +2,9 @@
 describe('unique-frame-title-after', function() {
 	'use strict';
 
-	var fixture = document.getElementById('fixture');
-	var queryFixture = axe.testUtils.queryFixture;
 	var check = checks['unique-frame-title'];
 
-	afterEach(function() {
-		fixture.innerHTML = '';
-	});
-
 	it('sets results of check result to `undefined` if identical `iframes` but different purpose (resource titles will be compared)', function() {
-		var nodeOne = queryFixture(
-			'<iframe id="target" title="Incomplete 1" src="../integration/rules/frame-title-unique/frames/page-one.html"> </iframe>'
-		);
 		var nodeOneData = {
 			data: {
 				name: 'incomplete 1',
@@ -24,12 +15,10 @@ describe('unique-frame-title-after', function() {
 				},
 				resourceFrameTitle: 'page one'
 			},
-			relatedNodes: [nodeOne],
+			relatedNodes: ['nodeOfPageOne'],
 			result: true
 		};
-		var nodeTwo = queryFixture(
-			'<iframe id="target" title="incomplete 1" src="../integration/rules/frame-title-unique/frames/page-two.html"> </iframe>'
-		);
+
 		var nodeTwoData = {
 			data: {
 				name: 'incomplete 1',
@@ -40,11 +29,11 @@ describe('unique-frame-title-after', function() {
 				},
 				resourceFrameTitle: 'page two'
 			},
-			relatedNodes: [nodeTwo],
+			relatedNodes: ['nodeOfPageTwo'],
 			result: true
 		};
-		var checkResults = [nodeOneData, nodeTwoData];
 
+		var checkResults = [nodeOneData, nodeTwoData];
 		var results = check.after(checkResults);
 
 		assert.lengthOf(results, 1);
@@ -60,9 +49,6 @@ describe('unique-frame-title-after', function() {
 	});
 
 	it('sets results of check result to `true` if identical `iframes` with same purpose (resource tiltes match, although pathnames are different)', function() {
-		var nodeOne = queryFixture(
-			'<iframe id="target" title="Pass Me" src="../integration/rules/frame-title-unique/frames/page-one.html"> </iframe>'
-		);
 		var nodeOneData = {
 			data: {
 				name: 'pass me',
@@ -73,12 +59,9 @@ describe('unique-frame-title-after', function() {
 				},
 				resourceFrameTitle: 'page one'
 			},
-			relatedNodes: [nodeOne],
+			relatedNodes: ['nodeOfPageOne'],
 			result: true
 		};
-		var nodeTwo = queryFixture(
-			'<iframe id="target" title="Pass Me" src="../integration/rules/frame-title-unique/frames/page-one-copy.html"> </iframe>'
-		);
 		var nodeTwoData = {
 			data: {
 				name: 'pass me',
@@ -89,7 +72,7 @@ describe('unique-frame-title-after', function() {
 				},
 				resourceFrameTitle: 'page one'
 			},
-			relatedNodes: [nodeTwo],
+			relatedNodes: ['nodeOfPageOneCopy'],
 			result: true
 		};
 		var checkResults = [nodeOneData, nodeTwoData];
