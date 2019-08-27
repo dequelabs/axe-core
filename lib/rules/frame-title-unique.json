@@ -4,8 +4,8 @@
 	"matches": "frame-title-has-text.js",
 	"tags": ["cat.text-alternatives", "best-practice"],
 	"metadata": {
-		"description": "Ensures <iframe> and <frame> elements contain a unique title attribute",
-		"help": "Frames must have a unique title attribute"
+		"description": "Ensure that <iframe> and <frame> elements with the same accessible name serve a similar purpose",
+		"help": "Frames with the same name have a similar purpose"
 	},
 	"all": ["unique-frame-title"],
 	"any": [],
