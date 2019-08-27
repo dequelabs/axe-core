@@ -1,16 +1,140 @@
-<iframe src="frame-title-unique/frames/level1.html" id="ignore1"></iframe>
+<!-- passes -->
+<!-- pass 1 - same accessibke name and same purpose -->
 <iframe
-	src="frame-title-unique/frames/level1a.html"
-	title="Duplicated"
-	id="violation1"
-></iframe>
+	id="pass1"
+	title="Pass 1"
+	src="/frame-title-unique/frames/page-one.html"
+>
+</iframe>
 <iframe
-	src="frame-title-unique/frames/level1a.html"
-	title="Duplicated"
-	id="violation2"
-></iframe>
+	id="pass1-1"
+	title="Pass 1"
+	src="frame-title-unique/frames/page-one.html"
+>
+</iframe>
+
+<!-- pass 2, accessibe name provided by title and aria-label -->
+<iframe id="pass2" title="Pass 2" src="frame-title-unique/frames/page-one.html">
+</iframe>
 <iframe
-	src="frame-title-unique/frames/level1a.html"
-	title="I'm an individual"
-	id="pass2"
+	id="pass2-1"
+	aria-label="Pass 2"
+	src="frame-title-unique/frames/page-one.html"
+>
+</iframe>
+
+<!-- pass 3, accessible name provided by aria-labelledby -->
+<div id="desc-for-title">Pass 3</div>
+<iframe
+	id="pass3"
+	aria-labelledby="desc-for-title"
+	src="frame-title-unique/frames/page-one.html"
+>
+</iframe>
+<div id="desc-for-title1">Pass 3</div>
+<iframe
+	id="pass3-1"
+	aria-labelledby="desc-for-title1"
+	src="frame-title-unique/frames/page-one.html"
+>
+</iframe>
+
+<!-- pass 4, same resource but in different directory -->
+<iframe id="pass4" title="Pass 4" src="frame-title-unique/frames/page-one.html">
+</iframe>
+<iframe
+	id="pass4-1"
+	title="Pass 4"
+	src="frame-title-unique/frames/sub-dir/page-one.html"
+>
+</iframe>
+
+<!-- pass 5, same resource, but different files with same content (has same title) -->
+<iframe id="pass5" title="Pass 5" src="frame-title-unique/frames/page-one.html">
+</iframe>
+<iframe
+	id="pass5-1"
+	title="Pass 5"
+	src="frame-title-unique/frames/page-one-copy.html"
+>
+</iframe>
+
+<!-- pass 6, same accessible name, points to same resource in a directory (sub directory has a slash and refers to an index.html) -->
+<iframe
+	id="pass6"
+	title="Pass 6"
+	src="frame-title-unique/frames/sub-dir-2/index.html"
+>
+</iframe>
+<iframe id="pass6-1" title="Pass 6" src="frame-title-unique/frames/sub-dir-2">
+</iframe>
+
+<!-- pass 7, no identical names -->
+<iframe id="pass7" title="Pass 7" src="frame-title-unique/frames/page-one.html">
+</iframe>
+
+<!-- incomplete -->
+<!-- incomplete 1, different resource, accessible name by title -->
+<iframe
+	id="incomplete1"
+	title="Incomplete 1"
+	src="frame-title-unique/frames/page-one.html"
+>
+</iframe>
+<iframe
+	id="incomplete1-1"
+	title="Incomplete 1"
+	src="frame-title-unique/frames/page-two.html"
+>
+</iframe>
+
+<!-- incomplete 2, different resource, accessible name by aria-label -->
+<iframe
+	id="incomplete2"
+	aria-label="Incomplete 2"
+	src="frame-title-unique/frames/page-one.html"
+>
+</iframe>
+<iframe
+	id="incomplete2-1"
+	aria-label="Incomplete 2"
+	src="frame-title-unique/frames/page-two.html"
+>
+</iframe>
+
+<!-- inapplicable -->
+<!-- inapplicable 1, no title attribute -->
+<iframe
+	id="inapplicable1"
+	src="frame-title-unique/frames/page-one.html"
 ></iframe>
+
+<!-- inapplicable 2, does not apply to `object`  -->
+<object
+	id="inapplicable2"
+	title="Inapplicable 2"
+	src="frame-title-unique/frames/page-one.html"
+>
+</object>
+<object
+	id="inapplicable2-1"
+	aria-label="Inapplicable 2"
+	src="frame-title-unique/frames/page-two.html"
+>
+</object>
+
+<!-- inapplicable 3, hidden iframe  -->
+<iframe
+	id="inapplicable3"
+	style="display:none;"
+	title="Inapplicable 3"
+	src="frame-title-unique/frames/page-one.html"
+>
+</iframe>
+<iframe
+	id="inapplicable3-1"
+	style="display:none;"
+	aria-label="Inapplicable 3"
+	src="frame-title-unique/frames/page-two.html"
+>
+</iframe>
