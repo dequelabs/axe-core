@@ -8,9 +8,15 @@ describe('identical-links-same-purpose-after tests', function() {
 		fixture.innerHTML = '';
 	});
 
-	function assertResult(result, expectedData, expectedRelatedNodes) {
+	function assertResult(
+		result,
+		expectedData,
+		expectedRelatedNodes,
+		expectedResult
+	) {
 		assert.deepEqual(result.data, expectedData);
 		assert.deepEqual(result.relatedNodes, expectedRelatedNodes);
+		assert.equal(result.result, expectedResult);
 	}
 
 	it('sets results of check result to `undefined` if native links do not serve identical purpose', function() {
@@ -36,8 +42,7 @@ describe('identical-links-same-purpose-after tests', function() {
 		assert.lengthOf(results, 1);
 
 		var result = results[0];
-		assertResult(result, nodeOneData.data, ['nodeTwo']);
-		assert.isUndefined(result.result);
+		assertResult(result, nodeOneData.data, ['nodeTwo'], undefined);
 	});
 
 	it('sets results of check result to `true` if native links serve identical purpose', function() {
@@ -64,8 +69,7 @@ describe('identical-links-same-purpose-after tests', function() {
 		assert.lengthOf(results, 1);
 
 		var result = results[0];
-		assertResult(result, nodeOneData.data, ['nodeTwo']);
-		assert.isTrue(result.result);
+		assertResult(result, nodeOneData.data, ['nodeTwo'], true);
 	});
 
 	it('sets results of check result to `true` if ARIA links have different accessible names', function() {
@@ -89,7 +93,7 @@ describe('identical-links-same-purpose-after tests', function() {
 		var checkResults = [nodeOneData, nodeTwoData];
 		var results = check.after(checkResults);
 		assert.lengthOf(results, 2);
-		assertResult(results[0], nodeOneData.data, []);
-		assertResult(results[1], nodeTwoData.data, []);
+		assertResult(results[0], nodeOneData.data, [], true);
+		assertResult(results[1], nodeTwoData.data, [], true);
 	});
 });
