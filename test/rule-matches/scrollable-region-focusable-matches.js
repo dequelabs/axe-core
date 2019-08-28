@@ -82,6 +82,14 @@ describe('scrollable-region-focusable-matches', function() {
 		assert.isTrue(actual);
 	});
 
+	it('returns false when element overflow is scroll but has no content', function() {
+		var target = queryFixture(
+			'<div id="target" style="width: 12em; height: 2em; border: dotted; overflow: scroll;"><div style="height: 15rem"></div></div>'
+		);
+		var actual = rule.matches(target.actualNode, target);
+		assert.isFalse(actual);
+	});
+
 	describe('shadowDOM - scrollable-region-focusable-matches', function() {
 		before(function() {
 			if (!shadowSupported) {
