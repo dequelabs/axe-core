@@ -94,7 +94,7 @@ describe('axe.runVirtualRule', function() {
 	});
 
 	it('should pass a virtual context to rule.runSync', function() {
-		var node = new SerialVirtualNode({ nodeName: 'div'});
+		var node = new SerialVirtualNode({ nodeName: 'div' });
 		axe._audit.rules = [
 			{
 				id: 'aria-roles',
@@ -129,10 +129,7 @@ describe('axe.runVirtualRule', function() {
 			}
 		];
 
-		axe.runVirtualRule('aria-roles',
-			{ nodeName: 'div' },
-			{ foo: 'bar' }
-		);
+		axe.runVirtualRule('aria-roles', { nodeName: 'div' }, { foo: 'bar' });
 	});
 
 	it('should convert a serialised node into a VirtualNode', function() {
@@ -140,17 +137,17 @@ describe('axe.runVirtualRule', function() {
 			nodeName: 'div',
 			foo: 'bar',
 			attributes: {
-				'bar': 'baz'
+				bar: 'baz'
 			}
 		};
 		axe._audit.rules = [
 			{
 				id: 'aria-roles',
 				runSync: function(context) {
-					var node = context.include[0]
-					assert.instanceOf(node, axe.AbstractVirtualNode)
-					assert.equal(node.props.foo, 'bar')
-					assert.equal(node.attr('bar'), 'baz')
+					var node = context.include[0];
+					assert.instanceOf(node, axe.AbstractVirtualNode);
+					assert.equal(node.props.foo, 'bar');
+					assert.equal(node.attr('bar'), 'baz');
 
 					return {
 						id: 'aria-roles',
