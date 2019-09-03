@@ -558,7 +558,7 @@ describe('axe.configure', function() {
 		});
 	});
 
-	describe('given a version property', function() {
+	describe('given an axeVersion property', function() {
 		beforeEach(function() {
 			axe._load({});
 			axe.version = '1.2.3';
@@ -567,7 +567,7 @@ describe('axe.configure', function() {
 		it('should not throw if version matches axe.version', function() {
 			assert.doesNotThrow(function fn() {
 				axe.configure({
-					ver: '1.2.3'
+					axeVersion: '1.2.3'
 				});
 			});
 		});
@@ -575,7 +575,7 @@ describe('axe.configure', function() {
 		it('should not throw if patch version is less than axe.version', function() {
 			assert.doesNotThrow(function fn() {
 				axe.configure({
-					ver: '1.2.0'
+					axeVersion: '1.2.0'
 				});
 			});
 		});
@@ -583,7 +583,7 @@ describe('axe.configure', function() {
 		it('should not throw if minor version is less than axe.version', function() {
 			assert.doesNotThrow(function fn() {
 				axe.configure({
-					ver: '1.1.9'
+					axeVersion: '1.1.9'
 				});
 			});
 		});
@@ -591,12 +591,12 @@ describe('axe.configure', function() {
 		it('should throw if major version is different than axe.version', function() {
 			assert.throws(function fn() {
 				axe.configure({
-					ver: '2.0.0'
+					axeVersion: '2.0.0'
 				});
 			});
 			assert.throws(function fn() {
 				axe.configure({
-					ver: '0.1.2'
+					axeVersion: '0.1.2'
 				});
 			});
 		});
@@ -604,7 +604,7 @@ describe('axe.configure', function() {
 		it('should throw if minor version is greater than axe.version', function() {
 			assert.throws(function fn() {
 				axe.configure({
-					ver: '1.3.0'
+					axeVersion: '1.3.0'
 				});
 			});
 		});
@@ -612,7 +612,7 @@ describe('axe.configure', function() {
 		it('should throw if patch version is greater than axe.version', function() {
 			assert.throws(function fn() {
 				axe.configure({
-					ver: '1.2.9'
+					axeVersion: '1.2.9'
 				});
 			});
 		});
