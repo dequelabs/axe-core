@@ -343,6 +343,22 @@ describe('axe.configure', function() {
 			});
 		});
 
+		it('sets the lang property', function() {
+			axe.configure({
+				locale: {
+					lang: 'lol',
+					rules: { greeting: { description: 'hello' } },
+					checks: {
+						banana: {
+							fail: 'icecream'
+						}
+					}
+				}
+			});
+
+			assert.equal(axe._audit.lang, 'lol');
+		});
+
 		describe('only given checks', function() {
 			it('should not error', function() {
 				assert.doesNotThrow(function() {
