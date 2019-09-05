@@ -10,6 +10,10 @@ if (window.__AXE_EXTENSION__) {
 /*eslint indent: 0*/
 var testUtils = {};
 
+var fixture = document.createElement('div');
+fixture.setAttribute('id', 'fixture');
+document.body.insertBefore(fixture, document.body.firstChild);
+
 /**
  * Create a check context for mocking/resetting data and relatedNodes in tests
  *
