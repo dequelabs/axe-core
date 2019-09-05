@@ -5,7 +5,7 @@
 	"tags": ["cat.forms", "wcag2a", "wcag332"],
 	"metadata": {
 		"description": "Ensures form field does not have multiple label elements",
-		"help": "Form field must not have multiple label elements"
+		"help": "Form field should not have multiple label elements"
 	},
 	"all": [],
 	"any": [],
