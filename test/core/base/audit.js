@@ -604,100 +604,96 @@ describe('Audit', function() {
 			);
 		});
 
-		// PhantomJs does not have Promise support
-		(window.PHANTOMJS ? xit : it)(
-			'should run rules (that do not need preload) and preload assets simultaneously',
-			function(done) {
-				/**
-				 * Note:
-				 * overriding and resolving both check and preload with a delay,
-				 * but the invoked timestamp should ensure that they were invoked almost immediately
-				 */
+		it('should run rules (that do not need preload) and preload assets simultaneously', function(done) {
+			/**
+			 * Note:
+			 * overriding and resolving both check and preload with a delay,
+			 * but the invoked timestamp should ensure that they were invoked almost immediately
+			 */
 
-				fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
+			fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
 
-				var runStartTime = new Date();
-				var preloadInvokedTime = new Date();
-				var noPreloadCheckedInvokedTime = new Date();
-				var noPreloadRuleCheckEvaluateInvoked = false;
-				var preloadOverrideInvoked = false;
+			var runStartTime = new Date();
+			var preloadInvokedTime = new Date();
+			var noPreloadCheckedInvokedTime = new Date();
+			var noPreloadRuleCheckEvaluateInvoked = false;
+			var preloadOverrideInvoked = false;
 
-				// override preload method
-				axe.utils.preload = function(options) {
-					preloadInvokedTime = new Date();
-					preloadOverrideInvoked = true;
+			// override preload method
+			axe.utils.preload = function(options) {
+				preloadInvokedTime = new Date();
+				preloadOverrideInvoked = true;
 
-					return new Promise(function(res, rej) {
-						setTimeout(function() {
-							res(true);
-						}, 2000);
-					});
-				};
-
-				var audit = new Audit();
-				// add a rule and check that does not need preload
-				audit.addRule({
-					id: 'no-preload',
-					selector: 'div#div1',
-					any: ['no-preload-check'],
-					preload: false
+				return new Promise(function(res, rej) {
+					setTimeout(function() {
+						res(true);
+					}, 2000);
 				});
-				audit.addCheck({
-					id: 'no-preload-check',
-					evaluate: function(node, options, vNode, context) {
-						noPreloadCheckedInvokedTime = new Date();
-						noPreloadRuleCheckEvaluateInvoked = true;
-						var ready = this.async();
-						setTimeout(function() {
-							ready(true);
-						}, 1000);
-					}
-				});
+			};
 
-				// add a rule which needs preload
-				audit.addRule({
-					id: 'yes-preload',
-					selector: 'div#div2',
-					preload: true
-				});
+			var audit = new Audit();
+			// add a rule and check that does not need preload
+			audit.addRule({
+				id: 'no-preload',
+				selector: 'div#div1',
+				any: ['no-preload-check'],
+				preload: false
+			});
+			audit.addCheck({
+				id: 'no-preload-check',
+				evaluate: function(node, options, vNode, context) {
+					noPreloadCheckedInvokedTime = new Date();
+					noPreloadRuleCheckEvaluateInvoked = true;
+					var ready = this.async();
+					setTimeout(function() {
+						ready(true);
+					}, 1000);
+				}
+			});
 
-				var preloadOptions = {
-					preload: {
-						assets: ['cssom']
-					}
-				};
+			// add a rule which needs preload
+			audit.addRule({
+				id: 'yes-preload',
+				selector: 'div#div2',
+				preload: true
+			});
 
-				var allowedDiff = 50;
+			var preloadOptions = {
+				preload: {
+					assets: ['cssom']
+				}
+			};
 
-				audit.run(
-					{ include: [axe.utils.getFlattenedTree(fixture)[0]] },
-					{
-						preload: preloadOptions
-					},
-					function(results) {
-						assert.isDefined(results);
-						// assert that check was invoked for rule(s)
-						assert.isTrue(noPreloadRuleCheckEvaluateInvoked);
-						// assert preload was invoked
-						assert.isTrue(preloadOverrideInvoked);
-						// assert that time diff(s)
-						// assert that run check invoked immediately
-						// choosing 5ms as an arbitary number
-						assert.isBelow(
-							noPreloadCheckedInvokedTime - runStartTime,
-							allowedDiff
-						);
-						// assert that preload  invoked immediately
-						assert.isBelow(preloadInvokedTime - runStartTime, allowedDiff);
-						// ensure cache is clear
-						assert.isTrue(typeof axe._selectCache === 'undefined');
-						// done
-						done();
-					},
-					noop
-				);
-			}
-		);
+			var allowedDiff = 50;
+
+			audit.run(
+				{ include: [axe.utils.getFlattenedTree(fixture)[0]] },
+				{
+					preload: preloadOptions
+				},
+				function(results) {
+					assert.isDefined(results);
+					// assert that check was invoked for rule(s)
+					assert.isTrue(noPreloadRuleCheckEvaluateInvoked);
+					// assert preload was invoked
+					assert.isTrue(preloadOverrideInvoked);
+					// assert that time diff(s)
+					// assert that run check invoked immediately
+					// choosing 5ms as an arbitary number
+					assert.isBelow(
+						noPreloadCheckedInvokedTime - runStartTime,
+						allowedDiff
+					);
+					// assert that preload  invoked immediately
+					assert.isBelow(preloadInvokedTime - runStartTime, allowedDiff);
+					// ensure cache is clear
+					assert.isTrue(typeof axe._selectCache === 'undefined');
+					// done
+					done();
+				},
+				noop
+			);
+		});
 
 		// PhantomJs does not have Promise support
 		(window.PHANTOMJS ? xit : it)(

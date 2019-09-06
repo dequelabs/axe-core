@@ -344,7 +344,7 @@ describe('runRules', function() {
 		});
 
 		fixture.innerHTML =
-			'<div id="t1"><span></span></div><div id="t2"><em></em></div>';
+			'<div id="t1"><em></em></div><div id="t2"><em></em></div>';
 
 		var $test = {
 			0: fixture.querySelector('#t1'),
@@ -357,7 +357,7 @@ describe('runRules', function() {
 			assert.lengthOf(results.violations, 1);
 			assert.lengthOf(results.violations[0].nodes, 4);
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);
-			assert.deepEqual(results.violations[0].nodes[1].target, ['#t1 > span']);
+			assert.deepEqual(results.violations[0].nodes[1].target, ['#t1 > em']);
 			assert.deepEqual(results.violations[0].nodes[2].target, ['#t2']);
 			assert.deepEqual(results.violations[0].nodes[3].target, ['#t2 > em']);
 			done();
@@ -384,7 +384,7 @@ describe('runRules', function() {
 		});
 
 		fixture.innerHTML =
-			'<div class="foo" id="t1"><span></span></div><div class="foo" id="t2"><em></em></div>';
+			'<div class="foo" id="t1"><em></em></div><div class="foo" id="t2"><em></em></div>';
 
 		var test = fixture.querySelectorAll('.foo');
 		axe.run(test, function(err, results) {
@@ -392,7 +392,7 @@ describe('runRules', function() {
 			assert.lengthOf(results.violations, 1);
 			assert.lengthOf(results.violations[0].nodes, 4);
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);
-			assert.deepEqual(results.violations[0].nodes[1].target, ['#t1 > span']);
+			assert.deepEqual(results.violations[0].nodes[1].target, ['#t1 > em']);
 			assert.deepEqual(results.violations[0].nodes[2].target, ['#t2']);
 			assert.deepEqual(results.violations[0].nodes[3].target, ['#t2 > em']);
 			done();
