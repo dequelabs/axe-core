@@ -24,9 +24,31 @@ describe('SerialVirtualNode', function() {
 			assert.isTrue(Object.isFrozen(vNode.props), 'Expect object to be frozen');
 		});
 
+		it('takes 1 as its nodeType', function() {
+			var vNode = new SerialVirtualNode({
+				nodeType: 1,
+				nodeName: 'div'
+			});
+			assert.equal(vNode.props.nodeType, 1);
+		});
+
 		it('has a default nodeType of 1', function() {
 			var vNode = new SerialVirtualNode({ nodeName: 'div' });
 			assert.equal(vNode.props.nodeType, 1);
+		});
+
+		it('throws if nodeType anything else', function() {
+			[2, 3, true, 'one', '1', null, { foo: 'bar' }].forEach(function(
+				throwingNodeType
+			) {
+				assert.throws(function() {
+					// eslint-disable-next-line no-new
+					new SerialVirtualNode({
+						nodeType: throwingNodeType,
+						nodeName: 'div'
+					});
+				});
+			});
 		});
 
 		it('converts nodeNames to lower case', function() {
@@ -43,6 +65,15 @@ describe('SerialVirtualNode', function() {
 			htmlNodes.forEach(function(nodeName) {
 				var vNode = new SerialVirtualNode({ nodeName: nodeName });
 				assert.equal(vNode.props.nodeName, nodeName.toLowerCase());
+			});
+		});
+
+		it('throws if nodeName is not a string', function() {
+			[123, true, null, {}, undefined, []].forEach(function(notAString) {
+				assert.throws(function() {
+					// eslint-disable-next-line no-new
+					new SerialVirtualNode({ nodeName: notAString });
+				});
 			});
 		});
 
@@ -87,6 +118,18 @@ describe('SerialVirtualNode', function() {
 				nodeName: 'div'
 			});
 			assert.isNull(vNode.attr('foo'));
+		});
+
+		it('throws if the value is an object (for except null)', function() {
+			[{}, [], /foo/].forEach(function(someObject) {
+				assert.throws(function() {
+					// eslint-disable-next-line no-new
+					new SerialVirtualNode({
+						nodeName: 'div',
+						attributes: { foo: someObject }
+					});
+				});
+			});
 		});
 
 		it('converts `className` to `class`', function() {
