@@ -25,7 +25,7 @@ module.exports = function(config) {
 			'/integration': '/base/test/integration',
 			'/axe.js': '/base/axe.js'
 		},
-		browsers: ['Chrome'],
+		browsers: ['ChromeHeadless'],
 		preprocessors: {
 			'lib/core/imports/index.js': ['browserify']
 		},
