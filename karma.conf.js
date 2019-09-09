@@ -1,9 +1,9 @@
 module.exports = function(config) {
 	config.set({
 		basePath: '',
-		singleRun: false,
+		singleRun: true,
 		autoWatch: true,
-		frameworks: ['mocha', 'chai', 'sinon', 'browserify'],
+		frameworks: ['mocha', 'chai', 'browserify'],
 		files: [
 			{ pattern: 'test/mock/**/*.html', included: false, served: true },
 			{ pattern: 'test/integration/**/*.css', included: false, served: true },

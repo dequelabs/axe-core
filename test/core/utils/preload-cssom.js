@@ -39,7 +39,7 @@ describe('axe.utils.preloadCssom', function() {
 		var actual = axe.utils.preloadCssom({ treeRoot: treeRoot });
 		actual
 			.then(function(cssom) {
-				assert.isAtLeast(cssom.length, 2);
+				assert.isAtLeast(cssom.length, 1);
 				done();
 			})
 			.catch(function(error) {
@@ -51,7 +51,7 @@ describe('axe.utils.preloadCssom', function() {
 		var actual = axe.utils.preloadCssom({ treeRoot: treeRoot });
 		actual
 			.then(function(cssom) {
-				assert.isAtLeast(cssom.length, 2);
+				assert.isAtLeast(cssom.length, 1);
 				cssom.forEach(function(o) {
 					assert.hasAllKeys(o, [
 						'root',
@@ -72,7 +72,7 @@ describe('axe.utils.preloadCssom', function() {
 		var actual = axe.utils.preloadCssom({ treeRoot: treeRoot });
 		actual
 			.then(function(cssom) {
-				assert.isFalse(cssom.length <= 1);
+				assert.isFalse(cssom.length < 1);
 				done();
 			})
 			.catch(function(error) {
