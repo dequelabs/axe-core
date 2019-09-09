@@ -594,17 +594,13 @@ describe('axe.utils.getSelector', function() {
 		assert.isTrue(test === top);
 	});
 
-	(window.PHANTOMJS ? it.skip : it)(
-		'should not error if fragment is no longer in the DOM',
-		function() {
-			var template = document.createElement('template');
-			template.innerHTML = '<div></div>';
-			var node = template.content.querySelector('div');
-			fixtureSetup(template);
-			template.remove();
-			assert.doesNotThrow(function() {
-				axe.utils.getSelector(node);
-			});
-		}
-	);
+	it('should not error if fragment is no longer in the DOM', function() {
+		var fragment = document.createDocumentFragment();
+		var node = document.createElement('div');
+		fragment.appendChild(node);
+		fixtureSetup();
+		assert.doesNotThrow(function() {
+			axe.utils.getSelector(node);
+		});
+	});
 });
