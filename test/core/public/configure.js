@@ -597,49 +597,81 @@ describe('axe.configure', function() {
 			});
 		});
 
+		it('should throw if invalid version', function() {
+			assert.throws(function fn() {
+				axe.configure({
+					axeVersion: '2'
+				});
+			}, 'Invalid configured version 2');
+
+			assert.throws(function fn() {
+				axe.configure({
+					axeVersion: '2..'
+				});
+			}, 'Invalid configured version 2..');
+		});
+
 		it('should throw if major version is different than axe.version', function() {
 			assert.throws(function fn() {
-				axe.configure({
-					axeVersion: '2.0.0'
-				});
+				axe.configure(
+					{
+						axeVersion: '2.0.0'
+					},
+					/^Configured version/
+				);
 			});
 			assert.throws(function fn() {
-				axe.configure({
-					axeVersion: '0.1.2'
-				});
+				axe.configure(
+					{
+						axeVersion: '0.1.2'
+					},
+					/^Configured version/
+				);
 			});
 		});
 
 		it('should throw if minor version is greater than axe.version', function() {
 			assert.throws(function fn() {
-				axe.configure({
-					axeVersion: '1.3.0'
-				});
+				axe.configure(
+					{
+						axeVersion: '1.3.0'
+					},
+					/^Configured version/
+				);
 			});
 		});
 
 		it('should throw if patch version is greater than axe.version', function() {
 			assert.throws(function fn() {
-				axe.configure({
-					axeVersion: '1.2.9'
-				});
+				axe.configure(
+					{
+						axeVersion: '1.2.9'
+					},
+					/^Configured version/
+				);
 			});
 		});
 
 		it('should throw if versions match and axeVersion has a canary version', function() {
 			assert.throws(function fn() {
-				axe.configure({
-					axeVersion: '1.2.3-canary.2664bae'
-				});
+				axe.configure(
+					{
+						axeVersion: '1.2.3-canary.2664bae'
+					},
+					/^Configured version/
+				);
 			});
 		});
 
 		it('should throw if versions match and both have a canary version', function() {
 			axe.version = '1.2.3-canary.2664bae';
 			assert.throws(function fn() {
-				axe.configure({
-					axeVersion: '1.2.3-canary.a5d727c'
-				});
+				axe.configure(
+					{
+						axeVersion: '1.2.3-canary.a5d727c'
+					},
+					/^Configured version/
+				);
 			});
 		});
 	});
