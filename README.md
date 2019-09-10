@@ -72,7 +72,7 @@ Support means that we will fix bugs and attempt to test each browser regularly. 
 
 There is limited support for JSDOM. We will attempt to make all rules compatible with JSDOM but where this is not possible, we recommend turning those rules off. Currently the `color-contrast` rule is known not to work with JSDOM.
 
-We can only support environments where features are either natively supported or polyfilled correctly. We only support v1 Shadow DOM.
+We can only support environments where features are either natively supported or polyfilled correctly. We do not support the deprecated v0 Shadow DOM implementation.
 
 ## The Accessibility Rules
 
