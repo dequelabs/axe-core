@@ -588,6 +588,15 @@ describe('axe.configure', function() {
 			});
 		});
 
+		it('should not throw if versions match and axe has a canary version', function() {
+			axe.version = '1.2.3-canary.2664bae';
+			assert.doesNotThrow(function fn() {
+				axe.configure({
+					axeVersion: '1.2.3'
+				});
+			});
+		});
+
 		it('should throw if major version is different than axe.version', function() {
 			assert.throws(function fn() {
 				axe.configure({
@@ -613,6 +622,23 @@ describe('axe.configure', function() {
 			assert.throws(function fn() {
 				axe.configure({
 					axeVersion: '1.2.9'
+				});
+			});
+		});
+
+		it('should throw if versions match and axeVersion has a canary version', function() {
+			assert.throws(function fn() {
+				axe.configure({
+					axeVersion: '1.2.3-canary.2664bae'
+				});
+			});
+		});
+
+		it('should throw if versions match and both have a canary version', function() {
+			axe.version = '1.2.3-canary.2664bae';
+			assert.throws(function fn() {
+				axe.configure({
+					axeVersion: '1.2.3-canary.a5d727c'
 				});
 			});
 		});
