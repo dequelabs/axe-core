@@ -700,7 +700,7 @@ describe('axe.configure', function() {
 			assert.throws(function fn() {
 				axe.configure(
 					{
-						axeVersion: '1.3.0'
+						ver: '1.3.0'
 					},
 					/^Configured version/
 				);
