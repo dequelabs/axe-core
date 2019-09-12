@@ -2,9 +2,11 @@
 describe('axe.configure', function() {
 	'use strict';
 	var fixture = document.getElementById('fixture');
+	var axeVersion = axe.version;
 
 	afterEach(function() {
 		fixture.innerHTML = '';
+		axe.version = axeVersion;
 	});
 
 	beforeEach(function() {
@@ -568,6 +570,124 @@ describe('axe.configure', function() {
 					});
 					assert.equal(value, 'foo: bar.');
 				});
+			});
+		});
+	});
+
+	describe('given an axeVersion property', function() {
+		beforeEach(function() {
+			axe._load({});
+			axe.version = '1.2.3';
+		});
+
+		it('should not throw if version matches axe.version', function() {
+			assert.doesNotThrow(function fn() {
+				axe.configure({
+					axeVersion: '1.2.3'
+				});
+			});
+		});
+
+		it('should not throw if patch version is less than axe.version', function() {
+			assert.doesNotThrow(function fn() {
+				axe.configure({
+					axeVersion: '1.2.0'
+				});
+			});
+		});
+
+		it('should not throw if minor version is less than axe.version', function() {
+			assert.doesNotThrow(function fn() {
+				axe.configure({
+					axeVersion: '1.1.9'
+				});
+			});
+		});
+
+		it('should not throw if versions match and axe has a canary version', function() {
+			axe.version = '1.2.3-canary.2664bae';
+			assert.doesNotThrow(function fn() {
+				axe.configure({
+					axeVersion: '1.2.3'
+				});
+			});
+		});
+
+		it('should throw if invalid version', function() {
+			assert.throws(function fn() {
+				axe.configure({
+					axeVersion: '2'
+				});
+			}, 'Invalid configured version 2');
+
+			assert.throws(function fn() {
+				axe.configure({
+					axeVersion: '2..'
+				});
+			}, 'Invalid configured version 2..');
+		});
+
+		it('should throw if major version is different than axe.version', function() {
+			assert.throws(function fn() {
+				axe.configure(
+					{
+						axeVersion: '2.0.0'
+					},
+					/^Configured version/
+				);
+			});
+			assert.throws(function fn() {
+				axe.configure(
+					{
+						axeVersion: '0.1.2'
+					},
+					/^Configured version/
+				);
+			});
+		});
+
+		it('should throw if minor version is greater than axe.version', function() {
+			assert.throws(function fn() {
+				axe.configure(
+					{
+						axeVersion: '1.3.0'
+					},
+					/^Configured version/
+				);
+			});
+		});
+
+		it('should throw if patch version is greater than axe.version', function() {
+			assert.throws(function fn() {
+				axe.configure(
+					{
+						axeVersion: '1.2.9'
+					},
+					/^Configured version/
+				);
+			});
+		});
+
+		it('should throw if versions match and axeVersion has a canary version', function() {
+			assert.throws(function fn() {
+				axe.configure(
+					{
+						axeVersion: '1.2.3-canary.2664bae'
+					},
+					/^Configured version/
+				);
+			});
+		});
+
+		it('should throw if versions match and both have a canary version', function() {
+			axe.version = '1.2.3-canary.2664bae';
+			assert.throws(function fn() {
+				axe.configure(
+					{
+						axeVersion: '1.2.3-canary.a5d727c'
+					},
+					/^Configured version/
+				);
 			});
 		});
 	});

@@ -124,6 +124,7 @@ declare namespace axe {
 		checks?: Check[];
 		rules?: Rule[];
 		locale?: Locale;
+		axeVersion?: string;
 	}
 	interface Check {
 		id: string;
