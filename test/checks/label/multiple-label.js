@@ -10,13 +10,15 @@ describe('multiple-label', function() {
 		checkContext.reset();
 	});
 
-	it('should return true if there are multiple implicit labels', function() {
+	it('should return undefined if there are multiple implicit labels', function() {
 		fixture.innerHTML =
 			'<label id="l2"><label id="l1"><input type="text" id="target"></label></label>';
 		var target = fixture.querySelector('#target');
 		var l1 = fixture.querySelector('#l1');
 		var l2 = fixture.querySelector('#l2');
-		assert.isTrue(checks['multiple-label'].evaluate.call(checkContext, target));
+		assert.isUndefined(
+			checks['multiple-label'].evaluate.call(checkContext, target)
+		);
 		assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
 	});
 
@@ -31,7 +33,7 @@ describe('multiple-label', function() {
 		assert.deepEqual(checkContext._relatedNodes, [l1]);
 	});
 
-	it('should return true if there are multiple explicit labels', function() {
+	it('should return undefined if there are multiple explicit labels', function() {
 		fixture.innerHTML =
 			'<label id="l1" for="target">Foo</label>' +
 			'<label id="l2" for="target">Bar</label>' +
@@ -41,7 +43,9 @@ describe('multiple-label', function() {
 		var l1 = fixture.querySelector('#l1');
 		var l2 = fixture.querySelector('#l2');
 		var l3 = fixture.querySelector('#l3');
-		assert.isTrue(checks['multiple-label'].evaluate.call(checkContext, target));
+		assert.isUndefined(
+			checks['multiple-label'].evaluate.call(checkContext, target)
+		);
 		assert.deepEqual(checkContext._relatedNodes, [l1, l2, l3]);
 	});
 
@@ -69,7 +73,7 @@ describe('multiple-label', function() {
 		assert.deepEqual(checkContext._relatedNodes, [l1]);
 	});
 
-	it('should return true if there are multiple explicit labels but some are hidden', function() {
+	it('should return undefined if there are multiple explicit labels but some are hidden', function() {
 		fixture.innerHTML =
 			'<label for="me" id="l1">visible</label>' +
 			'<label for="me" style="display:none;" id="l2">hidden</label>' +
@@ -78,17 +82,21 @@ describe('multiple-label', function() {
 		var target = fixture.querySelector('#me');
 		var l1 = fixture.querySelector('#l1');
 		var l3 = fixture.querySelector('#l3');
-		assert.isTrue(checks['multiple-label'].evaluate.call(checkContext, target));
+		assert.isUndefined(
+			checks['multiple-label'].evaluate.call(checkContext, target)
+		);
 		assert.deepEqual(checkContext._relatedNodes, [l1, l3]);
 	});
 
-	it('should return true if there are implicit and explicit labels', function() {
+	it('should return undefined if there are implicit and explicit labels', function() {
 		fixture.innerHTML =
 			'<label id="l1" for="target">Foo</label><label id="l2"><input type="text" id="target"></label>';
 		var target = fixture.querySelector('#target');
 		var l1 = fixture.querySelector('#l1');
 		var l2 = fixture.querySelector('#l2');
-		assert.isTrue(checks['multiple-label'].evaluate.call(checkContext, target));
+		assert.isUndefined(
+			checks['multiple-label'].evaluate.call(checkContext, target)
+		);
 		assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
 	});
 
@@ -101,7 +109,7 @@ describe('multiple-label', function() {
 		);
 	});
 
-	it('should return true given multiple labels and no aria-labelledby', function() {
+	it('should return undefined given multiple labels and no aria-labelledby', function() {
 		fixture.innerHTML = '<input type="checkbox" id="A">';
 		fixture.innerHTML += '<label for="A">Please</label>';
 		fixture.innerHTML += '<label for="A">Excuse</label>';
@@ -110,10 +118,12 @@ describe('multiple-label', function() {
 		fixture.innerHTML += '<label for="A">Aunt</label>';
 		fixture.innerHTML += '<label for="A">Sally</label>';
 		var target = fixture.querySelector('#A');
-		assert.isTrue(checks['multiple-label'].evaluate.call(checkContext, target));
+		assert.isUndefined(
+			checks['multiple-label'].evaluate.call(checkContext, target)
+		);
 	});
 
-	it('should return true given multiple labels, one label AT visible, and no aria-labelledby', function() {
+	it('should return undefined given multiple labels, one label AT visible, and no aria-labelledby', function() {
 		fixture.innerHTML = '<input type="checkbox" id="B">';
 		fixture.innerHTML += '<label for="B">Please</label>';
 		fixture.innerHTML += '<label for="B" aria-hidden="true">Excuse</label>';
@@ -122,7 +132,9 @@ describe('multiple-label', function() {
 		fixture.innerHTML += '<label for="B" aria-hidden="true">Aunt</label>';
 		fixture.innerHTML += '<label for="B" aria-hidden="true">Sally</label>';
 		var target = fixture.querySelector('#B');
-		assert.isTrue(checks['multiple-label'].evaluate.call(checkContext, target));
+		assert.isUndefined(
+			checks['multiple-label'].evaluate.call(checkContext, target)
+		);
 	});
 
 	it('should return false given multiple labels, one label AT visible, and aria-labelledby for AT visible', function() {
@@ -156,7 +168,7 @@ describe('multiple-label', function() {
 		);
 	});
 
-	it('should return true given multiple labels, all visible, aria-labelledby for all', function() {
+	it('should return undefined given multiple labels, all visible, aria-labelledby for all', function() {
 		fixture.innerHTML =
 			'<input type="checkbox" id="J" aria-labelledby="K L M N O P">';
 		fixture.innerHTML += '<label for="J" id="K">Please</label>';
@@ -166,15 +178,19 @@ describe('multiple-label', function() {
 		fixture.innerHTML += '<label for="J" id="O">Aunt</label>';
 		fixture.innerHTML += '<label for="J" id="P">Sally</label>';
 		var target = fixture.querySelector('#J');
-		assert.isTrue(checks['multiple-label'].evaluate.call(checkContext, target));
+		assert.isUndefined(
+			checks['multiple-label'].evaluate.call(checkContext, target)
+		);
 	});
 
-	it('should return true given multiple labels, one AT visible, no aria-labelledby', function() {
+	it('should return undefined given multiple labels, one AT visible, no aria-labelledby', function() {
 		fixture.innerHTML = '<input type="checkbox" id="Q"/>';
 		fixture.innerHTML += '<label for="Q" aria-hidden="true"></label>';
 		fixture.innerHTML += '<label for="Q" >Excuse</label>';
 		var target = fixture.querySelector('#Q');
-		assert.isTrue(checks['multiple-label'].evaluate.call(checkContext, target));
+		assert.isUndefined(
+			checks['multiple-label'].evaluate.call(checkContext, target)
+		);
 	});
 
 	(shadowSupported ? it : xit)(
@@ -216,7 +232,7 @@ describe('multiple-label', function() {
 	);
 
 	(shadowSupported ? it : xit)(
-		'should return true for invalid multiple labels in the same document/shadow tree',
+		'should return undefined for invalid multiple labels in the same document/shadow tree',
 		function() {
 			fixture.innerHTML = '<div id="target"></div>';
 			var target = document.querySelector('#target');
@@ -226,7 +242,7 @@ describe('multiple-label', function() {
 			innerHTML += '<label for="Q" >Excuse</label>';
 			shadowRoot.innerHTML = innerHTML;
 			var shadowTarget = target.shadowRoot;
-			assert.isTrue(
+			assert.isUndefined(
 				checks['multiple-label'].evaluate.call(
 					checkContext,
 					shadowTarget.firstElementChild

@@ -593,4 +593,14 @@ describe('axe.utils.getSelector', function() {
 		var test = document.querySelector(sel);
 		assert.isTrue(test === top);
 	});
+
+	it('should not error if fragment is no longer in the DOM', function() {
+		var fragment = document.createDocumentFragment();
+		var node = document.createElement('div');
+		fragment.appendChild(node);
+		fixtureSetup();
+		assert.doesNotThrow(function() {
+			axe.utils.getSelector(node);
+		});
+	});
 });

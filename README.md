@@ -10,8 +10,6 @@
 [![Join the chat at https://gitter.im/dequelabs/axe-core](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dequelabs/axe-core?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Package Quality](http://npm.packagequality.com/shield/axe-core.svg)](http://packagequality.com/#?package=axe-core)
 
-![Axe Logo](doc/axelogo2018.png)
-
 Axe is an accessibility testing engine for websites and other HTML-based user interfaces. It's fast, secure, lightweight, and was built to seamlessly integrate with any existing test environment so you can automate accessibility testing alongside your regular functional testing.
 
 [Sign up for axe news](https://hubs.ly/H0fsN0b0) to get the latest on axe features, future releases, and events.
@@ -70,11 +68,11 @@ The [axe-core API](doc/API.md) fully supports the following browsers:
 - Apple Safari v7 and above
 - Internet Explorer v9, 10, 11
 
-Support means that we will fix bugs and attempt to test each browser regularly. Only Firefox and Chrome are currently tested on every pull request.
+Support means that we will fix bugs and attempt to test each browser regularly. Only Firefox, Chrome, and Internet Explorer 11 are currently tested on every pull request.
 
 There is limited support for JSDOM. We will attempt to make all rules compatible with JSDOM but where this is not possible, we recommend turning those rules off. Currently the `color-contrast` rule is known not to work with JSDOM.
 
-We can only support environments where features are either natively supported or polyfilled correctly.
+We can only support environments where features are either natively supported or polyfilled correctly. We do not support the deprecated v0 Shadow DOM implementation.
 
 ## The Accessibility Rules
 

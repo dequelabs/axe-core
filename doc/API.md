@@ -164,7 +164,8 @@ axe.configure({
 	reporter: 'option',
 	checks: [Object],
 	rules: [Object],
-	locale: Object
+	locale: Object,
+	axeVersion: String
 });
 ```
 
@@ -203,6 +204,7 @@ axe.configure({
       - `matches` - string(optional, default `*`). A filtering [CSS selector](./developer-guide.md#supported-css-selectors) that will exclude elements that do not match the CSS selector.
   - `disableOtherRules` - Disables all rules not included in the `rules` property.
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
+  - `axeVersion` - Set the compatible version of a custom rule with the current axe version. Compatible versions are all patch and minor updates that are the same as, or newer than those of the `axeVersion` property.
 
 **Returns:** Nothing
 
