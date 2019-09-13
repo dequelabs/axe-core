@@ -8,17 +8,6 @@ describe('identical-links-same-purpose-after tests', function() {
 		fixture.innerHTML = '';
 	});
 
-	function assertResult(
-		result,
-		expectedData,
-		expectedRelatedNodes,
-		expectedResult
-	) {
-		assert.deepEqual(result.data, expectedData);
-		assert.deepEqual(result.relatedNodes, expectedRelatedNodes);
-		assert.equal(result.result, expectedResult);
-	}
-
 	it('sets results of check result to `undefined` if native links do not serve identical purpose', function() {
 		var nodeOneData = {
 			data: {
@@ -42,7 +31,9 @@ describe('identical-links-same-purpose-after tests', function() {
 		assert.lengthOf(results, 1);
 
 		var result = results[0];
-		assertResult(result, nodeOneData.data, ['nodeTwo'], undefined);
+		assert.deepEqual(result.data, nodeOneData.data);
+		assert.deepEqual(result.relatedNodes, ['nodeTwo']);
+		assert.equal(result.result, undefined);
 	});
 
 	it('sets results of check result to `true` if native links serve identical purpose', function() {
@@ -69,7 +60,9 @@ describe('identical-links-same-purpose-after tests', function() {
 		assert.lengthOf(results, 1);
 
 		var result = results[0];
-		assertResult(result, nodeOneData.data, ['nodeTwo'], true);
+		assert.deepEqual(result.data, nodeOneData.data);
+		assert.deepEqual(result.relatedNodes, ['nodeTwo']);
+		assert.equal(result.result, true);
 	});
 
 	it('sets results of check result to `true` if ARIA links have different accessible names', function() {
@@ -93,7 +86,13 @@ describe('identical-links-same-purpose-after tests', function() {
 		var checkResults = [nodeOneData, nodeTwoData];
 		var results = check.after(checkResults);
 		assert.lengthOf(results, 2);
-		assertResult(results[0], nodeOneData.data, [], true);
-		assertResult(results[1], nodeTwoData.data, [], true);
+
+		assert.deepEqual(results[0].data, nodeOneData.data);
+		assert.deepEqual(results[0].relatedNodes, []);
+		assert.equal(results[0].result, true);
+
+		assert.deepEqual(results[1].data, nodeTwoData.data);
+		assert.deepEqual(results[1].relatedNodes, []);
+		assert.equal(results[1].result, true);
 	});
 });

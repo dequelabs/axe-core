@@ -119,12 +119,59 @@ describe('identical-links-same-purpose tests', function() {
 		assert.hasAllKeys(checkContext._data, ['name', 'parsedResource']);
 		assert.equal(checkContext._data.name, 'Pass 1'.toLowerCase());
 		assert.equal(checkContext._data.parsedResource.hash, '#/foo');
-		assert.equal(checkContext._data.parsedResource.pathname, 'home');
+		assert.equal(checkContext._data.parsedResource.pathname, '/home');
 	});
 
-	it('returns true for ARIA links has accessible name', function() {
+	it('returns undefined for `AREA` without closest `MAP` element', function() {
 		var vNode = queryFixture(
-			'<map><area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/></map>'
+			'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>'
+		);
+		var actual = check.evaluate.call(
+			checkContext,
+			vNode.actualNode,
+			options,
+			vNode
+		);
+		assert.isUndefined(actual);
+	});
+
+	it('returns undefined for `AREA with closest `MAP` with no name attribute', function() {
+		var vNode = queryFixture(
+			'<map>' +
+				'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
+				'</map>'
+		);
+		var actual = check.evaluate.call(
+			checkContext,
+			vNode.actualNode,
+			options,
+			vNode
+		);
+		assert.isUndefined(actual);
+	});
+
+	it('returns undefined for `AREA with closest `MAP` with name but not referred by an `IMG` usemap attribute', function() {
+		var vNode = queryFixture(
+			'<map name="infographic">' +
+				'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
+				'</map>' +
+				'<img usemap="#infographic-wrong-name" alt="MDN infographic" />'
+		);
+		var actual = check.evaluate.call(
+			checkContext,
+			vNode.actualNode,
+			options,
+			vNode
+		);
+		assert.isUndefined(actual);
+	});
+
+	it('returns true for ARIA links has accessible name (AREA with `MAP` which is used in `IMG`)', function() {
+		var vNode = queryFixture(
+			'<map name="infographic">' +
+				'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
+				'</map>' +
+				'<img usemap="#infographic" alt="MDN infographic" />'
 		);
 		var actual = check.evaluate.call(
 			checkContext,
@@ -154,7 +201,7 @@ describe('identical-links-same-purpose tests', function() {
 			checkContext._data.name,
 			'The is orange the is white'.toLowerCase()
 		);
-		assert.equal(checkContext._data.parsedResource.pathname, 'foo.html');
+		assert.equal(checkContext._data.parsedResource.filename, 'foo.html');
 	});
 
 	(shadowSupported ? it : xit)(
@@ -182,7 +229,7 @@ describe('identical-links-same-purpose tests', function() {
 			assert.hasAllKeys(checkContext._data, ['name', 'parsedResource']);
 			assert.equal(checkContext._data.name, 'Pass 1'.toLowerCase());
 			assert.equal(checkContext._data.parsedResource.hash, '#/foo');
-			assert.equal(checkContext._data.parsedResource.pathname, 'home');
+			assert.equal(checkContext._data.parsedResource.pathname, '/home');
 		}
 	);
 
@@ -200,11 +247,14 @@ describe('identical-links-same-purpose tests', function() {
 	);
 
 	(shadowSupported ? it : xit)(
-		'returns true for ARIA links (in shadowDOM) has accessible name',
+		'returns true for ARIA links (in shadowDOM) has accessible name (AREA with `MAP` which is used in `IMG`)',
 		function() {
 			var params = shadowCheckSetup(
 				'<div id="shadow"></div>',
-				'<map><area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/></map>'
+				'<map name="infographic">' +
+					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
+					'</map>' +
+					'<img usemap="#infographic" alt="MDN infographic" />'
 			);
 			var actual = check.evaluate.apply(checkContext, params);
 			assert.isTrue(actual);

@@ -119,49 +119,45 @@
 <button id="incomplete4" role="link">Incomplete 4</button>
 <div id="incomplete4-identical1" role="link">Incomplete 4</div>
 
-<!-- ARIA links, with no resource -->
-<button id="incomplete5" role="link">Incomplete 5</button>
-<div id="incomplete5-identical1" role="link">Incomplete 5</div>
-
 <!-- native and aria links with different resource -->
-<button id="incomplete6" role="link">Incomplete 6</button>
-<a id="incomplete6-identical1" href="foo.html">Incomplete 6</a>
+<button id="incomplete5" role="link">Incomplete 6</button>
+<a id="incomplete5-identical1" href="foo.html">Incomplete 6</a>
 
 <!-- native links same accesisble names not serving same purpose (casing is normalised) -->
-<a id="incomplete7" href="/home/#/foo">INCOMPLETE 7</a>
-<a id="incomplete7-identical1" href="/home/#/bar">Incomplete 7</a>
+<a id="incomplete6" href="/home/#/foo">INCOMPLETE 7</a>
+<a id="incomplete6-identical1" href="/home/#/bar">Incomplete 7</a>
 
 <!-- native links same accessible name not serving same purpose (whitespace is normalised) -->
-<a id="incomplete8" href="/home/#/foo"> Incomplete 8 </a>
-<a id="incomplete8-identical1" href="/home/#/bar">Incomplete 8</a>
+<a id="incomplete7" href="/home/#/foo"> Incomplete 8 </a>
+<a id="incomplete7-identical1" href="/home/#/bar">Incomplete 8</a>
 
 <!-- native links with same accessible name and not serving same purpose (punctuations is normalised) -->
-<a id="incomplete9" href="/foo">Incomplete 9 >>></a>
-<a id="incomplete9-identical1" href="/bar">Incomplete 9</a>
+<a id="incomplete8" href="/foo">Incomplete 9 >>></a>
+<a id="incomplete8-identical1" href="/bar">Incomplete 9</a>
 
 <!-- native links with same accessible name and not serving same purpose (punctuations is normalised) -->
-<a id="incomplete10" href="/foo">Incomplete 10!</a>
-<a id="incomplete10-identical1" href="/bar">Incomplete 10</a>
+<a id="incomplete9" href="/foo">Incomplete 10!</a>
+<a id="incomplete9-identical1" href="/bar">Incomplete 10</a>
 
 <!-- native links with same accessible name and not serving same purpose (emoji is normalised) -->
-<a id="incomplete11" href="/foo">Incomplete 11!</a>
-<a id="incomplete11-identical1" href="/bar">🤘 Incomplete 11 🤘</a>
+<a id="incomplete10" href="/foo">Incomplete 11!</a>
+<a id="incomplete10-identical1" href="/bar">🤘 Incomplete 11 🤘</a>
 
 <!-- native links with same accessible name but different resource  -->
-<a id="incomplete12" href="/search/?q=foo#/foo">Incomplete 12</a>
-<a id="incomplete12-identical1" href="/search/?q=foo#/bar">Incomplete 12</a>
+<a id="incomplete11" href="/search/?q=foo#/foo">Incomplete 12</a>
+<a id="incomplete11-identical1" href="/search/?q=foo#/bar">Incomplete 12</a>
 
 <!-- AREA with same accessible name, but different resource -->
 <map name="infographic-incomplete">
 	<area
-		id="incomplete13"
+		id="incomplete12"
 		shape="poly"
 		coords="130,147,200,107,254,219,130,228"
 		href="https://developer.mozilla.org/docs/Web/HTML"
 		title="HTML"
 	/>
 	<area
-		id="incomplete13-identical1"
+		id="incomplete12-identical1"
 		shape="poly"
 		coords="130,147,130,228,6,219,59,107"
 		href="https://developer.mozilla.org/docs/Web/CSS"
@@ -169,7 +165,7 @@
 		title="HTML"
 	/>
 	<area
-		id="incomplete13-identical2"
+		id="incomplete12-identical2"
 		shape="poly"
 		coords="130,147,200,107,130,4,59,107"
 		href="https://developer.mozilla.org/docs/Web/JavaScript"
@@ -184,8 +180,8 @@
 />
 
 <!-- native links with different purpose -->
-<a id="incomplete14" href="https://facebook.com">follow us</a>
-<a id="incomplete14-identical1" href="https://instagram.com">follow us</a>
+<a id="incomplete13" href="https://facebook.com">follow us</a>
+<a id="incomplete13-identical1" href="https://instagram.com">follow us</a>
 
 <!-- inapplicable -->
 <!-- area element has no parent map -->
