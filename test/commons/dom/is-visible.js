@@ -2,6 +2,7 @@ describe('dom.isVisible', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var queryFixture = axe.testUtils.queryFixture;
 	var fixtureSetup = axe.testUtils.fixtureSetup;
 	var isIE11 = axe.testUtils.isIE11;
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
@@ -188,6 +189,57 @@ describe('dom.isVisible', function() {
 
 			el = document.getElementById('target');
 			assert.isFalse(axe.commons.dom.isVisible(el));
+		});
+
+		it('returns false for `AREA` without closest `MAP` element', function() {
+			var vNode = queryFixture(
+				'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>'
+			);
+			var actual = axe.commons.dom.isVisible(vNode.actualNode);
+			assert.isFalse(actual);
+		});
+
+		it('returns false for `AREA` with closest `MAP` with no name attribute', function() {
+			var vNode = queryFixture(
+				'<map>' +
+					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
+					'</map>'
+			);
+			var actual = axe.commons.dom.isVisible(vNode.actualNode);
+			assert.isFalse(actual);
+		});
+
+		it('returns false for `AREA` with closest `MAP` with name but not referred by an `IMG` usemap attribute', function() {
+			var vNode = queryFixture(
+				'<map name="infographic">' +
+					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
+					'</map>' +
+					'<img usemap="#infographic-wrong-name" alt="MDN infographic" />'
+			);
+			var actual = axe.commons.dom.isVisible(vNode.actualNode);
+			assert.isFalse(actual);
+		});
+
+		it('returns false for `AREA` with `MAP` and used in `IMG` but `MAP` has `display:none`)', function() {
+			var vNode = queryFixture(
+				'<map name="infographic"style="display:none;">' +
+					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
+					'</map>' +
+					'<img usemap="#infographic" alt="MDN infographic" />'
+			);
+			var actual = axe.commons.dom.isVisible(vNode.actualNode);
+			assert.isFalse(actual);
+		});
+
+		it('returns true for `AREA` with `MAP` and used in `IMG`)', function() {
+			var vNode = queryFixture(
+				'<map name="infographic">' +
+					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
+					'</map>' +
+					'<img usemap="#infographic" alt="MDN infographic" />'
+			);
+			var actual = axe.commons.dom.isVisible(vNode.actualNode);
+			assert.isTrue(actual);
 		});
 
 		// IE11 either only supports clip paths defined by url() or not at all,
