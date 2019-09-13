@@ -3,6 +3,7 @@ describe('identical-links-same-purpose-matches tests', function() {
 
 	var fixture = document.getElementById('fixture');
 	var queryFixture = axe.testUtils.queryFixture;
+	var isPhantom = window.PHANTOMJS ? true : false;
 	var rule = axe._audit.rules.find(function(rule) {
 		return rule.id === 'identical-links-same-purpose';
 	});
@@ -32,23 +33,29 @@ describe('identical-links-same-purpose-matches tests', function() {
 		assert.isFalse(actual);
 	});
 
-	it('returns false when `area` has no parent `map` element', function() {
-		var vNode = queryFixture(
-			'<area id="target" role="link" href="" shape="circle" coords="130,136,60" aria-label="MDN" />'
-		);
-		var actual = rule.matches(vNode.actualNode, vNode);
-		assert.isFalse(actual);
-	});
+	(isPhantom ? xit : it)(
+		'returns false when `area` has no parent `map` element',
+		function() {
+			var vNode = queryFixture(
+				'<area id="target" role="link" href="" shape="circle" coords="130,136,60" aria-label="MDN" />'
+			);
+			var actual = rule.matches(vNode.actualNode, vNode);
+			assert.isFalse(actual);
+		}
+	);
 
-	it('returns false when `area` has parent `map` that is not referred by `img[usemap]`', function() {
-		var vNode = queryFixture(
-			'<map name="iam-not-referred">' +
-				'<area id="target" role="link" href="" shape="circle" coords="130,136,60" aria-label="MDN" />' +
-				'</map>'
-		);
-		var actual = rule.matches(vNode.actualNode, vNode);
-		assert.isFalse(actual);
-	});
+	(isPhantom ? xit : it)(
+		'returns false when `area` has parent `map` that is not referred by `img[usemap]`',
+		function() {
+			var vNode = queryFixture(
+				'<map name="iam-not-referred">' +
+					'<area id="target" role="link" href="" shape="circle" coords="130,136,60" aria-label="MDN" />' +
+					'</map>'
+			);
+			var actual = rule.matches(vNode.actualNode, vNode);
+			assert.isFalse(actual);
+		}
+	);
 
 	it('returns true when native link without href', function() {
 		var vNode = queryFixture('<a id="target">Book Now</a>');
@@ -78,14 +85,17 @@ describe('identical-links-same-purpose-matches tests', function() {
 		assert.isTrue(actual);
 	});
 
-	it('returns true when `area` has parent `map` that is referred by `img`', function() {
-		var vNode = queryFixture(
-			'<map name="iam-referred">' +
-				'<area id="target" role="link" href="" shape="circle" coords="130,136,60" aria-label="MDN" />' +
-				'</map>' +
-				'<img usemap="#iam-referred" alt="MDN infographic" />'
-		);
-		var actual = rule.matches(vNode.actualNode, vNode);
-		assert.isTrue(actual);
-	});
+	(isPhantom ? xit : it)(
+		'returns true when `area` has parent `map` that is referred by `img`',
+		function() {
+			var vNode = queryFixture(
+				'<map name="iam-referred">' +
+					'<area id="target" role="link" href="" shape="circle" coords="130,136,60" aria-label="MDN" />' +
+					'</map>' +
+					'<img usemap="#iam-referred" alt="MDN infographic" />'
+			);
+			var actual = rule.matches(vNode.actualNode, vNode);
+			assert.isTrue(actual);
+		}
+	);
 });
