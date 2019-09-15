@@ -10,16 +10,16 @@
 			"help": "Elementos <area> ativos devem ter um texto alternativo"
 		},
 		"aria-allowed-attr": {
-			"description": "Certifique-se de que os atributos ARIA são permitidos para o 'role' de um elemento",
+			"description": "Certifique-se de que os atributos ARIA são permitidos para a função de um elemento",
 			"help": "Os elementos devem usar apenas atributos ARIA permitidos"
 		},
 		"aria-allowed-role": {
 			"description": "Certifique-se de que o atributo 'role' tem um valor apropriado para o elemento",
-			"help": "O ARIA 'role' deve ser apropriado para o elemento"
+			"help": "A função ARIA deve ser apropriada para o elemento"
 		},
 		"aria-dpub-role-fallback": {
-			"description": "Certifique-se de que DPUB 'roles' não suportados são usados somente em elementos com 'roles' implícitos (fallback)",
-			"help": "Os 'roles' DPUB não suportados devem ser usados em elementos com 'roles' implícitos (fallback)"
+			"description": "Certifique-se de que as funções DPUB não suportadas são usados somente em elementos com funções implícitas (fallback)",
+			"help": "As funções DPUB não suportadas devem ser usadas em elementos com funções implícitas (fallback)"
 		},
 		"aria-hidden-body": {
 			"description": "Certifique-se de que aria-hidden='true' não está presente no elemento <body>.",
@@ -27,26 +27,26 @@
 		},
 		"aria-hidden-focus": {
 			"description": "Certifique-se de que elementos com aria-hidden não contenham elementos focalizáveis",
-			"help": "Elementos com ARIA 'hidden' não devem conter elementos focalizáveis"
+			"help": "Elementos ocultados através de ARIA não devem conter elementos focalizáveis"
 		},
 		"aria-input-field-name": {
 			"description": "Certifique-se de que cada campo de entrada ARIA tenha um nome acessível",
 			"help": "Campos de entrada ARIA tenham um nome acessível"
 		},
 		"aria-required-attr": {
-			"description": "Certifique-se de que elementos com ARIA 'roles' tenham todos os atributos ARIA necessários",
+			"description": "Certifique-se de que elementos com funções ARIA tenham todos os atributos ARIA necessários",
 			"help": "Os atributos ARIA necessários devem ser fornecidos"
 		},
 		"aria-required-children": {
-			"description": "Certifique-se de que elementos com um ARIA 'role' que requer 'roles' filhos os contenham",
-			"help": "Certos ARIA 'roles' devem conter filhos específicos"
+			"description": "Certifique-se de que elementos com uma função ARIA que requer funções filhas as contenham",
+			"help": "Certas funções ARIA devem conter filhos específicos"
 		},
 		"aria-required-parent": {
-			"description": "Certifique-se de que elementos com um ARIA 'role' que requer 'roles' pais estão contidos nestes",
-			"help": "Certos ARIA 'roles' devem estar contidos em pais específicos"
+			"description": "Certifique-se de que elementos com uma função ARIA que requer funções pais estejam contidas nestas",
+			"help": "Certas funções ARIA devem estar contidas em pais específicos"
 		},
 		"aria-roles": {
-			"description": "Certifique-se de que todos os elementos com um atributo 'role' use um valor válido",
+			"description": "Certifique-se de que todos os elementos com um atributo 'role' utilizem um valor válido",
 			"help": "Os ARIA 'roles' utilizados devem ter valores válidos"
 		},
 		"aria-toggle-field-name": {
@@ -82,8 +82,8 @@
 			"help": "Botões devem ter texto discernível"
 		},
 		"bypass": {
-			"description": "Certifique-se de que cada página tenha ao menos um mecanismo para o usuário pular a navegação e ir direto ao conteúdo",
-			"help": "A página deve ter meios para pular blocos repetidos"
+			"description": "Certifique-se de que cada página tenha ao menos um mecanismo para o usuário ignorar a navegação e ir direto ao conteúdo",
+			"help": "A página deve ter meios para ignorar blocos repetidos"
 		},
 		"checkboxgroup": {
 			"description": "Certifique-se de que elementos <input type=\"checkbox\"> relacionados tenham um grupo e que a designação do grupo seja consistente",
@@ -114,7 +114,7 @@
 			"help": "IDs de elementos ativos devem ser únicos"
 		},
 		"duplicate-id-aria": {
-			"description": "Certifique-se de que cada valor do atributo 'id' usado no ARIA e em 'labels' seja único",
+			"description": "Certifique-se de que cada valor do atributo 'id' usado no ARIA e em rótulos seja único",
 			"help": "IDs usados no ARIA e em 'labels' devem ser únicos"
 		},
 		"duplicate-id": {
@@ -122,12 +122,12 @@
 			"help": "O valor do atributo 'id' deve ser único"
 		},
 		"empty-heading": {
-			"description": "Certifique-se de que títulos tenham texto discernível",
+			"description": "Certifique-se de que os títulos tenham texto discernível",
 			"help": "Os títulos não devem ser vazios"
 		},
 		"focus-order-semantics": {
-			"description": "Certifique-se de que os elementos na ordem de foco tenham um 'role' apropriado",
-			"help": "Elementos na ordem de foco necessitam de um 'role' apropriado para conteúdo interativo"
+			"description": "Certifique-se de que os elementos na ordem de foco tenham uma função apropriada",
+			"help": "Elementos na ordem de foco necessitam de uma função apropriada para conteúdo interativo"
 		},
 		"form-field-multiple-labels": {
 			"description": "Certifique-se de que campos de formulários não tenham múltiplos elementos 'label'",
@@ -222,12 +222,12 @@
 			"help": "O documento deve ter uma região 'main'"
 		},
 		"landmark-unique": {
-			"help": "Certifique-se de que os 'landmarks' são únicos",
-			"description": "Os 'landmarks' devem ter um 'role' ou combinação de role/label/title (ou seja, um nome acessível) únicos"
+			"help": "Certifique-se de que as regiões são únicas",
+			"description": "As regiões devem ter um 'role' ou combinação de 'role'/'label'/'title' (ou seja, um nome acessível) únicos"
 		},
 		"layout-table": {
 			"description": "Certifique-se de que elementos <table> de apresentação não usem elementos <th>, <caption> ou o atributo 'summary'",
-			"help": "Tabelas de layout não devem usar elementos de tabela de dados"
+			"help": "Tabelas de apresentação não devem usar elementos de tabela de dados"
 		},
 		"link-in-text-block": {
 			"description": "Links podem ser distinguidos sem depender da cor",
@@ -254,7 +254,7 @@
 			"help": "Atualização temporizada não deve existir"
 		},
 		"meta-viewport-large": {
-			"description": "Certifique-se de que <meta name=\"viewport\"> pode ser ampliado de maneira significativa",
+			"description": "Certifique-se de que <meta name=\"viewport\"> permite ampliar de maneira significativa",
 			"help": "Os usuários devem poder dar zoom e ampliar o texto em até 500%"
 		},
 		"meta-viewport": {
@@ -306,7 +306,7 @@
 			"help": "Elementos não devem ter um 'tabindex' maior do que zero"
 		},
 		"table-duplicate-name": {
-			"description": "Certifique-se de que tabelas não tenham 'summary' e 'caption' iguais",
+			"description": "Certifique-se de que tabelas não tenham 'summary' e <caption> iguais",
 			"help": "O elemento <caption> não deve conter o mesmo texto que o atributo 'summary'"
 		},
 		"table-fake-caption": {
@@ -340,11 +340,11 @@
 	},
 	"checks": {
 		"abstractrole": {
-			"pass": "Os 'roles' abstratos não são utilizados",
-			"fail": "Os 'roles' abstratos não podem ser utilizados diretamente"
+			"pass": "As funções abstratas não são utilizadas",
+			"fail": "As funções abstratas não podem ser utilizadas diretamente"
 		},
 		"aria-allowed-attr": {
-			"pass": "Atributos ARIA são usados corretamente para o 'role' definido",
+			"pass": "Atributos ARIA são usados corretamente para a função definida",
 			"fail": "{{=it.data && it.data.length > 1 ? 'Os atributos ARIA não são permitidos' : 'O atributo ARIA não é permitido'}}: {{~it.data:value}} {{=value}}{{~}}"
 		},
 		"aria-allowed-role": {
@@ -365,8 +365,8 @@
 			"fail": "Elemento não tem um 'role' de 'widget'."
 		},
 		"implicit-role-fallback": {
-			"pass": "O ARIA 'role' implícito do elemento é um 'fallback' apropriado",
-			"fail": "O ARIA 'role' implícito do elemento não é um bom 'fallback' para este 'role' (não suportado)"
+			"pass": "A função ARIA implícita do elemento é um 'fallback' apropriado",
+			"fail": "A função ARIA implícita do elemento não é um bom 'fallback' para esta função (não suportada)"
 		},
 		"invalidrole": {
 			"pass": "O ARIA 'role' é válido",
@@ -382,12 +382,12 @@
 		},
 		"aria-required-children": {
 			"pass": "Os ARIA filhos necessários estão presentes",
-			"fail": "{{=it.data && it.data.length > 1 ? 'Os ARIA roles filhos necessários não estão presentes' : 'O ARIA role filho necessário está presente'}}: {{~it.data:value}} {{=value}}{{~}}",
-			"incomplete": "{{=it.data && it.data.length > 1 ? 'ARIA role filhos a serem adicionados' : 'ARIA role filho a ser adicionado'}}:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": "{{=it.data && it.data.length > 1 ? 'As funções ARIA filhas necessárias não estão presentes' : 'A função ARIA filha necessária está presente'}}: {{~it.data:value}} {{=value}}{{~}}",
+			"incomplete": "{{=it.data && it.data.length > 1 ? 'As funções ARIA filhas a serem adicionadas' : 'A função ARIA filha a ser adicionada'}}:{{~it.data:value}} {{=value}}{{~}}"
 		},
 		"aria-required-parent": {
-			"pass": "O ARIA 'role' pai necessário está presente",
-			"fail": "{{=it.data && it.data.length > 1 ? 'Os ARIA roles pais necessários não estão presentes' : 'O ARIA role necessário não está presente'}}: {{~it.data:value}} {{=value}}{{~}}"
+			"pass": "A função ARIA pai necessária está presente",
+			"fail": "{{=it.data && it.data.length > 1 ? 'As funções ARIA pais necessárias não estão presentes' : 'A função ARIA necessária não está presente'}}: {{~it.data:value}} {{=value}}{{~}}"
 		},
 		"aria-unsupported-attr": {
 			"pass": "O atributo ARIA é suportado",
@@ -520,8 +520,8 @@
 			"fail": "O elemento de formulário não tem um <label> explícito"
 		},
 		"help-same-as-label": {
-			"pass": "O texto de ajuda ('title' ou 'aria-describedby') não duplica o texto do 'label'",
-			"fail": "O texto de ajuda ('title' ou 'aria-describedby') é o igual ao texto do 'label'"
+			"pass": "O texto de ajuda ('title' ou 'aria-describedby') não duplica o texto do rótulo",
+			"fail": "O texto de ajuda ('title' ou 'aria-describedby') é o igual ao texto do rótulo"
 		},
 		"hidden-explicit-label": {
 			"pass": "O elemento de formulário tem um <label> explícito visível",
@@ -544,8 +544,8 @@
 			"fail": "Apenas 'title' usado para gerar o rótulo do elemento de formulário"
 		},
 		"landmark-is-unique": {
-			"pass": "Os 'landmarks' devem ter um 'role' ou combinação de role/label/title (ou seja, nome acessível) únicos",
-			"fail": "O 'landmark' deve ter um 'aria-label', 'aria-labelledby', ou 'title' único para tornar os 'landmarks' distinguíveis"
+			"pass": "As regiões devem ter um 'role' ou combinação de 'role'/'label'/'title' (ou seja, nome acessível) únicos",
+			"fail": "A região deve ter um 'aria-label', 'aria-labelledby', ou 'title' único para tornar as regiões distinguíveis"
 		},
 		"has-lang": {
 			"pass": "O elemento <html> tem um atributo 'lang'",
@@ -593,8 +593,8 @@
 			"incomplete": "O 'iframe' ainda tem que ser testado com o 'axe-core'"
 		},
 		"css-orientation-lock": {
-			"pass": "A exibição é operável, e o bloqueio da orientação não existe",
-			"fail": "Bloqueio de orientação CSS aplicado, o que torna a exibição inoperável",
+			"pass": "A tela é operável, e o bloqueio da orientação não existe",
+			"fail": "Bloqueio de orientação CSS aplicado, o que torna a tela inoperável",
 			"incomplete": "Bloqueio de orientação CSS não pode ser determinado"
 		},
 		"meta-viewport-large": {
@@ -647,8 +647,8 @@
 			"fail": "O documento tem elementos ativos com o mesmo atributo 'id': {{=it.data}}"
 		},
 		"duplicate-id-aria": {
-			"pass": "O documento não tem elementos referenciados com ARIA ou 'labels' que compartilham o mesmo atributo 'id'",
-			"fail": "O documento tem mútiplos elementos referenciados com ARIA com o mesmo atributo 'id': {{=it.data}}"
+			"pass": "O documento não tem elementos referenciados com ARIA ou rótulos que compartilham o mesmo atributo 'id'",
+			"fail": "O documento tem múltiplos elementos referenciados com ARIA com o mesmo atributo 'id': {{=it.data}}"
 		},
 		"duplicate-id": {
 			"pass": "O documento não tem elementos estáticos que compartilham o mesmo atributo 'id'",
@@ -758,7 +758,7 @@
 		"hidden-content": {
 			"pass": "Todo o conteúdo da página foi analisado.",
 			"fail": "Houve problemas ao analisar o conteúdo desta página.",
-			"incomplete": "Existe conteúdo oculto na página que não foi analisado. Será preciso disparar a exibição deste conteúdo para poder analisá-lo."
+			"incomplete": "Existe conteúdo oculto na página que não foi analisado. Será preciso provocar a exibição deste conteúdo para poder analisá-lo."
 		}
 	},
 	"failureSummaries": {
