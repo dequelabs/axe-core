@@ -82,20 +82,20 @@ describe('dom.getParsedResource', function() {
 		assert.equal(actual.search, '?q=foo');
 	});
 
-	it('returns parsed resource for `IFRAME` with `SRC` which has filename', function() {
+	it('returns parsed resource for `A` with `HREF` which has filename', function() {
 		var vNode = queryFixture(
-			'<iframe id="target" src="directory/widgets/calendar.html" title="Book tour caleandar widget">'
+			'<a id="target" href="directory/widgets/calendar.html">Book tour</a>'
 		);
-		var actual = axe.commons.dom.getParsedResource(vNode.actualNode, 'src');
+		var actual = axe.commons.dom.getParsedResource(vNode.actualNode, 'href');
 		assert.isDefined(actual);
 		assert.equal(actual.filename, 'calendar.html');
 	});
 
-	it('returns parsed resource for `IFRAME` with `SRC` which has filename as `index`', function() {
+	it('returns parsed resource for `A` with `HREF` which has filename as `index` (ignores index.*)', function() {
 		var vNode = queryFixture(
-			'<iframe id="target" src="http://mysite.com/directory/index.html" title="Book tour caleandar widget">'
+			'<a id="target" href="http://mysite.com/directory/index.html">Book tour</a>'
 		);
-		var actual = axe.commons.dom.getParsedResource(vNode.actualNode, 'src');
+		var actual = axe.commons.dom.getParsedResource(vNode.actualNode, 'href');
 		assert.isDefined(actual);
 		assert.equal(actual.protocol, 'http:');
 		assert.equal(actual.hostname, 'mysite.com');
