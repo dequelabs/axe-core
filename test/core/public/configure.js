@@ -585,6 +585,11 @@ describe('axe.configure', function() {
 				axe.configure({
 					axeVersion: '1.2.3'
 				});
+
+				axe.version = '1.2.3-canary.2664bae';
+				axe.configure({
+					axeVersion: '1.2.3-canary.2664bae'
+				});
 			});
 		});
 
@@ -687,6 +692,29 @@ describe('axe.configure', function() {
 						axeVersion: '1.2.3-canary.a5d727c'
 					},
 					/^Configured version/
+				);
+			});
+		});
+
+		it('should accept ver property as fallback', function() {
+			assert.throws(function fn() {
+				axe.configure(
+					{
+						ver: '1.3.0'
+					},
+					/^Configured version/
+				);
+			});
+		});
+
+		it('should accept axeVersion over ver property', function() {
+			assert.throws(function fn() {
+				axe.configure(
+					{
+						ver: '0.1.2',
+						axeVersion: '1.3.0'
+					},
+					/^Configured version 1\.3\.0/
 				);
 			});
 		});
