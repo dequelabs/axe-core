@@ -84,6 +84,14 @@ describe('label-content-name-mismatch tests', function() {
 		assert.isTrue(actual);
 	});
 
+	it('returns true when visible text excluding private use unicode is part of accessible name', function() {
+		var vNode = queryFixture(
+			'<button id="target" aria-label="Favorites"> Favorites</button>'
+		);
+		var actual = check.evaluate(vNode.actualNode, options, vNode);
+		assert.isTrue(actual);
+	});
+
 	it('returns undefined (needs review) when visible text name is only an emoji', function() {
 		var vNode = queryFixture(
 			'<button id="target" aria-label="comet">☄️</button>'
