@@ -102,8 +102,9 @@ The current set of tags supported are listed in the following table:
 
 | Tag Name        |       Accessibility Standard/Purpose        |
 | --------------- | :-----------------------------------------: |
-| `wcag2a`        |              WCAG 2.0 Level A               |
-| `wcag2aa`       |              WCAG 2.0 Level AA              |
+| `wcag2a`        |              WCAG 2.0 & WCAG 2.1 Level A    |
+| `wcag2aa`       |              WCAG 2.0 & WCAG 2.1 Level AA   |
+| `wcag21a`       |              WCAG 2.1 Level A               |
 | `wcag21aa`      |              WCAG 2.1 Level AA              |
 | `section508`    |                 Section 508                 |
 | `best-practice` |      Best practices endorsed by Deque       |
