@@ -189,7 +189,7 @@ describe('text.removeUnicode', function() {
 
 	it('returns string removing all private use unicode', function() {
 		var actual = axe.commons.text.removeUnicode('', {
-			punctuations: true
+			nonBmp: true
 		});
 		assert.equal(actual, '');
 	});
