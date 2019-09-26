@@ -8,15 +8,33 @@
 			type="text/css"
 			href="/node_modules/mocha/mocha.css"
 		/>
-		<!--
-      https://google.github.io/material-design-icons/
-      https://material.io/resources/icons/?style=baseline
-    -->
 		<link
 			href="https://fonts.googleapis.com/icon?family=Material+Icons"
 			rel="stylesheet"
 		/>
 		<!-- <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"> -->
+		<style>
+			@font-face {
+				font-family: 'LigatureSymbols';
+				src: url('LigatureSymbols-2.11.woff') format('woff');
+				font-weight: normal;
+				font-style: normal;
+			}
+
+			.lsf {
+				font-family: 'LigatureSymbols';
+				-webkit-text-rendering: optimizeLegibility;
+				-moz-text-rendering: optimizeLegibility;
+				-ms-text-rendering: optimizeLegibility;
+				-o-text-rendering: optimizeLegibility;
+				text-rendering: optimizeLegibility;
+				-webkit-font-smoothing: antialiased;
+				-moz-font-smoothing: antialiased;
+				-ms-font-smoothing: antialiased;
+				-o-font-smoothing: antialiased;
+				font-smoothing: antialiased;
+			}
+		</style>
 		<script src="/node_modules/mocha/mocha.js"></script>
 		<script src="/node_modules/chai/chai.js"></script>
 		<script src="/axe.js"></script>
@@ -33,7 +51,13 @@
 			<span class="material-icons" aria-hidden="true">delete</span>
 			<span aria-hidden="true">Remove File</span>
 		</button>
-		<!-- <button style="font-family: 'Roboto', sans-serif;" aria-label="ffingle">ffingle</button> -->
+
+		<!-- test a ligature of 2 letters -->
+		<button aria-label="Remove File">
+			<span class="lsf" aria-hidden="true">vk</span>
+			<span aria-hidden="true">Remove File</span>
+		</button>
+		<!-- <button style="font-family: 'Roboto', sans-serif;" aria-label="fingle">fingle</button> -->
 		<div id="mocha"></div>
 		<script src="/test/testutils.js"></script>
 		<script src="ligature-font.js"></script>
