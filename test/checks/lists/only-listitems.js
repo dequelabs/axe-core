@@ -37,6 +37,36 @@ describe('only-listitems', function() {
 		);
 	});
 
+	it('should return false if the list has a comment after list items', function() {
+		var checkArgs = checkSetup(
+			'<ol id="target"><li>Item</li><!-- here is a comment --></ol>'
+		);
+
+		assert.isFalse(
+			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('should return false if the list has a comment before list items', function() {
+		var checkArgs = checkSetup(
+			'<ol id="target"><!-- here is a comment --><li>Item</li></ol>'
+		);
+
+		assert.isFalse(
+			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
+	it('should return false if the list has a comment between list items', function() {
+		var checkArgs = checkSetup(
+			'<ol id="target"><li>Item</li><!-- here is a comment --><li>Another Item</li></ol>'
+		);
+
+		assert.isFalse(
+			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+		);
+	});
+
 	it('should return false if the list has only an element with role listitem', function() {
 		var checkArgs = checkSetup(
 			'<ol id="target"><div role="listitem">A list</div></ol>'
