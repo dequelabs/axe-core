@@ -20,52 +20,14 @@
 					format('woff');
 			}
 
-			.material-icons {
-				font-family: 'Material Icons';
-				font-weight: normal;
-				font-style: normal;
-				font-size: 24px;
-				line-height: 1;
-				letter-spacing: normal;
-				text-transform: none;
-				display: inline-block;
-				white-space: nowrap;
-				word-wrap: normal;
-				direction: ltr;
-				font-feature-settings: 'liga';
-			}
-
 			/* https://fonts.google.com/specimen/Roboto?selection.family=Roboto */
 			@font-face {
 				font-family: 'Roboto';
 				font-style: normal;
 				font-weight: 400;
 				font-display: swap;
-				src: local('Roboto'), local('Roboto-Regular'),
-					url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxM.woff)
-						format('woff');
-			}
-
-			/* http://kudakurage.com/ligature_symbols/ */
-			@font-face {
-				font-family: 'LigatureSymbols';
-				font-style: normal;
-				font-weight: 400;
-				src: url('LigatureSymbols-2.11.woff') format('woff');
-			}
-
-			.lsf {
-				font-family: 'LigatureSymbols';
-				-webkit-text-rendering: optimizeLegibility;
-				-moz-text-rendering: optimizeLegibility;
-				-ms-text-rendering: optimizeLegibility;
-				-o-text-rendering: optimizeLegibility;
-				text-rendering: optimizeLegibility;
-				-webkit-font-smoothing: antialiased;
-				-moz-font-smoothing: antialiased;
-				-ms-font-smoothing: antialiased;
-				-o-font-smoothing: antialiased;
-				font-smoothing: antialiased;
+				src: url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxM.woff)
+					format('woff');
 			}
 		</style>
 		<script src="/node_modules/mocha/mocha.js"></script>
@@ -81,24 +43,19 @@
 	</head>
 	<body>
 		<button aria-label="Remove File">
-			<span class="material-icons" aria-hidden="true">delete</span>
+			<span style="font-family: 'Material Icons'" aria-hidden="true"
+				>delete</span
+			>
 			<span aria-hidden="true">Remove File</span>
 		</button>
 
-		<!-- test a ligature of 2 letters -->
 		<button aria-label="Remove File">
-			<span class="lsf" aria-hidden="true">vk</span>
-			<span aria-hidden="true">Remove File</span>
-		</button>
-
-		<!-- test a ligature of similar to the first letter -->
-		<button aria-label="Remove File">
-			<span class="lsf" aria-hidden="true">yahoo</span>
+			<span style="font-family: 'Material Icons'" aria-hidden="true">http</span>
 			<span aria-hidden="true">Remove File</span>
 		</button>
 
 		<!-- test non-icon ligature -->
-		<button style="font-family: 'Roboto', sans-serif;" aria-label="fingle">
+		<button style="font-family: 'Roboto'" aria-label="fingle">
 			fingle
 		</button>
 		<div id="mocha"></div>
