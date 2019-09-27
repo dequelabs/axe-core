@@ -3,27 +3,21 @@ describe('text.isIconLigature', function() {
 
 	var isIconLigature = axe.commons.text.isIconLigature;
 	var queryFixture = axe.testUtils.queryFixture;
-	var link, el;
+	var fontApiSupport = !!document.fonts;
 
 	before(function(done) {
-		link = document.createElement('link');
-		link.setAttribute('rel', 'stylesheet');
-		link.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
-		document.head.appendChild(link);
+		if (!fontApiSupport) {
+			done();
+		}
 
-		// add an element that uses the font to get it to load
-		el = document.createElement('div');
-		el.setAttribute('class', 'material-icons');
-		el.textContent = 'delete';
-		document.body.appendChild(el);
-
-		// give enough time for font to load
-		setTimeout(done, 1000);
-	});
-
-	after(function() {
-		link.remove();
-		el.remove();
+		var materialFont = new FontFace(
+			'Material Icons',
+			'url(https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2)'
+		);
+		materialFont.load().then(function() {
+			document.fonts.add(materialFont);
+			done();
+		});
 	});
 
 	it('should return false for normal text', function() {
@@ -89,32 +83,38 @@ describe('text.isIconLigature', function() {
 		assert.isFalse(isIconLigature(target.children[0]));
 	});
 
-	it('should return true for an icon ligature', function() {
-		var target = queryFixture(
-			'<div id="target" class="material-icons">delete</div>'
-		);
-		assert.isTrue(isIconLigature(target.children[0]));
-	});
+	(fontApiSupport ? it : it.skip)(
+		'should return true for an icon ligature',
+		function() {
+			var target = queryFixture(
+				'<div id="target" style="font-family: \'Material Icons\'">delete</div>'
+			);
+			assert.isTrue(isIconLigature(target.children[0]));
+		}
+	);
 
-	it('should return true after the 3rd time the font is an icon', function() {
-		var target = queryFixture(
-			'<div id="target" class="material-icons">delete</div>'
-		);
+	(fontApiSupport ? it : it.skip)(
+		'should return true after the 3rd time the font is an icon',
+		function() {
+			var target = queryFixture(
+				'<div id="target" style="font-family: \'Material Icons\'">delete</div>'
+			);
 
-		isIconLigature(target.children[0]);
-		isIconLigature(target.children[0]);
-		isIconLigature(target.children[0]);
+			isIconLigature(target.children[0]);
+			isIconLigature(target.children[0]);
+			isIconLigature(target.children[0]);
 
-		// change text to non-icon
-		var target = queryFixture(
-			'<div id="target" class="material-icons">__non-icon text__</div>'
-		);
-		assert.isTrue(isIconLigature(target.children[0]));
-	});
+			// change text to non-icon
+			var target = queryFixture(
+				'<div id="target" style="font-family: \'Material Icons\'">__non-icon text__</div>'
+			);
+			assert.isTrue(isIconLigature(target.children[0]));
+		}
+	);
 
 	it('should return false after the 3rd time the font is not an icon', function() {
 		var target = queryFixture(
-			'<div id="target" class="material-icons">__non-icon text__</div>'
+			'<div id="target" style="font-family: \'Material Icons\'">__non-icon text__</div>'
 		);
 
 		isIconLigature(target.children[0]);
@@ -123,20 +123,23 @@ describe('text.isIconLigature', function() {
 
 		// change text to icon
 		var target = queryFixture(
-			'<div id="target" class="material-icons">delete</div>'
+			'<div id="target" style="font-family: \'Material Icons\'">delete</div>'
 		);
 		assert.isFalse(isIconLigature(target.children[0]));
 	});
 
 	describe('pixelThreshold', function() {
-		it('should allow higher percent (will not flag icon ligatures)', function() {
-			var target = queryFixture(
-				'<div id="target" class="material-icons">delete</div>'
-			);
+		(fontApiSupport ? it : it.skip)(
+			'should allow higher percent (will not flag icon ligatures)',
+			function() {
+				var target = queryFixture(
+					'<div id="target" style="font-family: \'Material Icons\'">delete</div>'
+				);
 
-			// every pixel must be different to flag as icon
-			assert.isFalse(isIconLigature(target.children[0], 1));
-		});
+				// every pixel must be different to flag as icon
+				assert.isFalse(isIconLigature(target.children[0], 1));
+			}
+		);
 
 		it('should allow lower percent (will flag text ligatures)', function() {
 			var target = queryFixture(
@@ -147,19 +150,22 @@ describe('text.isIconLigature', function() {
 	});
 
 	describe('occuranceThreshold', function() {
-		it('should change the number of times a font is seen before returning', function() {
-			var target = queryFixture(
-				'<div id="target" class="material-icons">delete</div>'
-			);
+		(fontApiSupport ? it : it.skip)(
+			'should change the number of times a font is seen before returning',
+			function() {
+				var target = queryFixture(
+					'<div id="target" style="font-family: \'Material Icons\'">delete</div>'
+				);
 
-			isIconLigature(target.children[0]);
+				isIconLigature(target.children[0]);
 
-			// change text to non-icon
-			var target = queryFixture(
-				'<div id="target" class="material-icons">__non-icon text__</div>'
-			);
-			assert.isTrue(isIconLigature(target.children[0], 0.1, 1));
-			assert.isFalse(isIconLigature(target.children[0]));
-		});
+				// change text to non-icon
+				var target = queryFixture(
+					'<div id="target" style="font-family: \'Material Icons\'">__non-icon text__</div>'
+				);
+				assert.isTrue(isIconLigature(target.children[0], 0.1, 1));
+				assert.isFalse(isIconLigature(target.children[0]));
+			}
+		);
 	});
 });
