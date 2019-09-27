@@ -2,8 +2,8 @@
 	"id": "label-content-name-mismatch",
 	"evaluate": "label-content-name-mismatch.js",
 	"options": {
-		"occuranceThreshold": 3,
-		"pixelThreshold": 0.1
+		"pixelThreshold": 0.1,
+		"occuranceThreshold": 3
 	},
 	"metadata": {
 		"impact": "serious",

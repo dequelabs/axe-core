@@ -12,11 +12,25 @@
 			href="https://fonts.googleapis.com/icon?family=Material+Icons"
 			rel="stylesheet"
 		/>
-		<!-- <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"> -->
+		<link
+			href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+			rel="stylesheet"
+		/>
 		<style>
+			/* http://kudakurage.com/ligature_symbols/ */
 			@font-face {
 				font-family: 'LigatureSymbols';
-				src: url('LigatureSymbols-2.11.woff') format('woff');
+				src: url('https://cdn.jsdelivr.net/gh/kudakurage/LigatureSymbols/LigatureSymbols-2.11.eot');
+				src: url('https://cdn.jsdelivr.net/gh/kudakurage/LigatureSymbols/LigatureSymbols-2.11.eot?#iefix')
+						format('embedded-opentype'),
+					url('https://cdn.jsdelivr.net/gh/kudakurage/LigatureSymbols/LigatureSymbols-2.11.woff')
+						format('woff'),
+					url('https://cdn.jsdelivr.net/gh/kudakurage/LigatureSymbols/LigatureSymbols-2.11.ttf')
+						format('truetype'),
+					url('https://cdn.jsdelivr.net/gh/kudakurage/LigatureSymbols/LigatureSymbols-2.11.svg#LigatureSymbols')
+						format('svg');
+				src: url('https://cdn.jsdelivr.net/gh/kudakurage/LigatureSymbols/LigatureSymbols-2.11.ttf')
+					format('truetype');
 				font-weight: normal;
 				font-style: normal;
 			}
@@ -57,7 +71,17 @@
 			<span class="lsf" aria-hidden="true">vk</span>
 			<span aria-hidden="true">Remove File</span>
 		</button>
-		<!-- <button style="font-family: 'Roboto', sans-serif;" aria-label="fingle">fingle</button> -->
+
+		<!-- test a ligature of similar to the first letter -->
+		<button aria-label="Remove File">
+			<span class="lsf" aria-hidden="true">yahoo</span>
+			<span aria-hidden="true">Remove File</span>
+		</button>
+
+		<!-- test non-icon ligature -->
+		<button style="font-family: 'Roboto', sans-serif;" aria-label="fingle">
+			fingle
+		</button>
 		<div id="mocha"></div>
 		<script src="/test/testutils.js"></script>
 		<script src="ligature-font.js"></script>

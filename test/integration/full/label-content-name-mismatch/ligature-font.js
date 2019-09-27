@@ -4,17 +4,22 @@ describe('label-content-name-mismatch test', function() {
 	var results;
 
 	before(function(done) {
-		axe.testUtils.awaitNestedLoad(function() {
-			axe.run(
-				{ runOnly: { type: 'rule', values: ['label-content-name-mismatch'] } },
-				function(err, r) {
-					assert.isNull(err);
-					results = r;
-					done();
-					console.log(results);
-				}
-			);
-		});
+		// give enough time for fonts to load
+		setTimeout(function() {
+			axe.testUtils.awaitNestedLoad(function() {
+				axe.run(
+					{
+						runOnly: { type: 'rule', values: ['label-content-name-mismatch'] }
+					},
+					function(err, r) {
+						assert.isNull(err);
+						results = r;
+						done();
+						console.log(results);
+					}
+				);
+			});
+		}, 500);
 	});
 
 	it('should not find any violations', function() {

@@ -1,13 +1,31 @@
 describe('label-content-name-mismatch tests', function() {
 	'use strict';
 
-	var fixture = document.getElementById('fixture');
 	var queryFixture = axe.testUtils.queryFixture;
 	var check = checks['label-content-name-mismatch'];
 	var options = undefined;
 
-	afterEach(function() {
-		fixture.innerHTML = '';
+	var link, el;
+
+	before(function(done) {
+		link = document.createElement('link');
+		link.setAttribute('rel', 'stylesheet');
+		link.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
+		document.head.appendChild(link);
+
+		// add an element that uses the font to get it to load
+		el = document.createElement('div');
+		el.setAttribute('class', 'material-icons');
+		el.textContent = 'delete';
+		document.body.appendChild(el);
+
+		// give enough time for font to load
+		setTimeout(done, 500);
+	});
+
+	after(function() {
+		link.remove();
+		el.remove();
 	});
 
 	it('returns true when visible text and accessible name (`aria-label`) matches (text sanitized)', function() {
@@ -79,6 +97,14 @@ describe('label-content-name-mismatch tests', function() {
 	it('returns true when visible text excluding punctuations/ symbols is part of accessible name', function() {
 		var vNode = queryFixture(
 			'<button id="target" aria-label="next page">next page &gt;&gt;</button>'
+		);
+		var actual = check.evaluate(vNode.actualNode, options, vNode);
+		assert.isTrue(actual);
+	});
+
+	it('returns true when visible text excluding ligature icon is part of accessible name', function() {
+		var vNode = queryFixture(
+			'<button id="target" aria-label="next page">next page <span class="material-icons">delete</span></button>'
 		);
 		var actual = check.evaluate(vNode.actualNode, options, vNode);
 		assert.isTrue(actual);
