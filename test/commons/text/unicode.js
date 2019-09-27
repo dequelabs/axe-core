@@ -194,7 +194,7 @@ describe('text.removeUnicode', function() {
 		assert.equal(actual, '');
 	});
 
-	it('returns string removing all surrogate private use unicode', function() {
+	it('returns string removing all supplementary private use unicode', function() {
 		var actual = axe.commons.text.removeUnicode('󰀀󿰀󿿽󰏽', {
 			nonBmp: true
 		});
