@@ -18,7 +18,7 @@ describe('text.isIconLigature', function() {
 		document.body.appendChild(el);
 
 		// give enough time for font to load
-		setTimeout(done, 500);
+		setTimeout(done, 1000);
 	});
 
 	after(function() {
