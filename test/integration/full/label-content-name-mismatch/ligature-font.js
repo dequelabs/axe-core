@@ -15,11 +15,10 @@ describe('label-content-name-mismatch test', function() {
 						assert.isNull(err);
 						results = r;
 						done();
-						console.log(results);
 					}
 				);
 			});
-		}, 500);
+		}, 2000);
 	});
 
 	it('should not find any violations', function() {
