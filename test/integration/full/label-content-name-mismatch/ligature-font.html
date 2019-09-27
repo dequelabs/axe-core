@@ -17,6 +17,43 @@
 			rel="stylesheet"
 		/>
 		<style>
+			/* https://material.io/resources/icons/?style=baseline
+			  Open material-icon url in ie11 to get correct url to woff font
+			  @see https://github.com/google/material-design-icons/issues/786 */
+			@font-face {
+				font-family: 'Material Icons';
+				font-style: normal;
+				font-weight: 400;
+				src: url(https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNa.woff)
+					format('woff');
+			}
+
+			.material-icons {
+				font-family: 'Material Icons';
+				font-weight: normal;
+				font-style: normal;
+				font-size: 24px;
+				line-height: 1;
+				letter-spacing: normal;
+				text-transform: none;
+				display: inline-block;
+				white-space: nowrap;
+				word-wrap: normal;
+				direction: ltr;
+				font-feature-settings: 'liga';
+			}
+
+			/* https://fonts.google.com/specimen/Roboto?selection.family=Roboto */
+			@font-face {
+				font-family: 'Roboto';
+				font-style: normal;
+				font-weight: 400;
+				font-display: swap;
+				src: local('Roboto'), local('Roboto-Regular'),
+					url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxM.woff)
+						format('woff');
+			}
+
 			/* http://kudakurage.com/ligature_symbols/ */
 			@font-face {
 				font-family: 'LigatureSymbols';

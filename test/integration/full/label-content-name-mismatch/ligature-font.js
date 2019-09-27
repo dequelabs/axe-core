@@ -18,7 +18,7 @@ describe('label-content-name-mismatch test', function() {
 					}
 				);
 			});
-		}, 2000);
+		}, 1000);
 	});
 
 	it('should not find any violations', function() {
