@@ -28,67 +28,74 @@ describe('text.isIconLigature', function() {
 	});
 
 	it('should return false for normal text', function() {
-		var target = queryFixture(
-			'<div id="target" style="font-family: Roboto">Normal text</div>'
-		);
+		var target = queryFixture('<div id="target">Normal text</div>');
 		assert.isFalse(isIconLigature(target.children[0]));
 	});
 
 	it('should return false for emoji', function() {
-		var target = queryFixture(
-			'<div id="target" style="font-family: Roboto">🌎</div>'
-		);
+		var target = queryFixture('<div id="target">🌎</div>');
 		assert.isFalse(isIconLigature(target.children[0]));
 	});
 
 	it('should return false for non-bmp unicode', function() {
-		var target = queryFixture(
-			'<div id="target" style="font-family: Roboto">◓</div>'
-		);
+		var target = queryFixture('<div id="target">◓</div>');
 		assert.isFalse(isIconLigature(target.children[0]));
 	});
 
 	it('should return false for whitespace strings', function() {
-		var target = queryFixture(
-			'<div id="target" style="font-family: Roboto">     </div>'
-		);
+		var target = queryFixture('<div id="target">     </div>');
 		assert.isFalse(isIconLigature(target.children[0]));
 	});
 
-	it('should return false for common ligatures (fi)', function() {
-		var target = queryFixture(
-			'<div id="target" style="font-family: Roboto">figure</div>'
-		);
-		assert.isFalse(isIconLigature(target.children[0]));
-	});
+	(fontApiSupport ? it : it.skip)(
+		'should return false for common ligatures (fi)',
+		function() {
+			var target = queryFixture(
+				'<div id="target" style="font-family: Roboto">figure</div>'
+			);
+			assert.isFalse(isIconLigature(target.children[0]));
+		}
+	);
 
-	it('should return false for common ligatures (ff)', function() {
-		var target = queryFixture(
-			'<div id="target" style="font-family: Roboto">ffugative</div>'
-		);
-		assert.isFalse(isIconLigature(target.children[0]));
-	});
+	(fontApiSupport ? it : it.skip)(
+		'should return false for common ligatures (ff)',
+		function() {
+			var target = queryFixture(
+				'<div id="target" style="font-family: Roboto">ffugative</div>'
+			);
+			assert.isFalse(isIconLigature(target.children[0]));
+		}
+	);
 
-	it('should return false for common ligatures (fl)', function() {
-		var target = queryFixture(
-			'<div id="target" style="font-family: Roboto">flu shot</div>'
-		);
-		assert.isFalse(isIconLigature(target.children[0]));
-	});
+	(fontApiSupport ? it : it.skip)(
+		'should return false for common ligatures (fl)',
+		function() {
+			var target = queryFixture(
+				'<div id="target" style="font-family: Roboto">flu shot</div>'
+			);
+			assert.isFalse(isIconLigature(target.children[0]));
+		}
+	);
 
-	it('should return false for common ligatures (ffi)', function() {
-		var target = queryFixture(
-			'<div id="target" style="font-family: Roboto">ffigure</div>'
-		);
-		assert.isFalse(isIconLigature(target.children[0]));
-	});
+	(fontApiSupport ? it : it.skip)(
+		'should return false for common ligatures (ffi)',
+		function() {
+			var target = queryFixture(
+				'<div id="target" style="font-family: Roboto">ffigure</div>'
+			);
+			assert.isFalse(isIconLigature(target.children[0]));
+		}
+	);
 
-	it('should return false for common ligatures (ffl)', function() {
-		var target = queryFixture(
-			'<div id="target" style="font-family: Roboto">fflu shot</div>'
-		);
-		assert.isFalse(isIconLigature(target.children[0]));
-	});
+	(fontApiSupport ? it : it.skip)(
+		'should return false for common ligatures (ffl)',
+		function() {
+			var target = queryFixture(
+				'<div id="target" style="font-family: Roboto">fflu shot</div>'
+			);
+			assert.isFalse(isIconLigature(target.children[0]));
+		}
+	);
 
 	(fontApiSupport ? it : it.skip)(
 		'should return true for an icon ligature',
@@ -119,21 +126,24 @@ describe('text.isIconLigature', function() {
 		}
 	);
 
-	it('should return false after the 3rd time the font is not an icon', function() {
-		var target = queryFixture(
-			'<div id="target" style="font-family: \'Material Icons\'">__non-icon text__</div>'
-		);
+	(fontApiSupport ? it : it.skip)(
+		'should return false after the 3rd time the font is not an icon',
+		function() {
+			var target = queryFixture(
+				'<div id="target" style="font-family: \'Material Icons\'">__non-icon text__</div>'
+			);
 
-		isIconLigature(target.children[0]);
-		isIconLigature(target.children[0]);
-		isIconLigature(target.children[0]);
+			isIconLigature(target.children[0]);
+			isIconLigature(target.children[0]);
+			isIconLigature(target.children[0]);
 
-		// change text to icon
-		var target = queryFixture(
-			'<div id="target" style="font-family: \'Material Icons\'">delete</div>'
-		);
-		assert.isFalse(isIconLigature(target.children[0]));
-	});
+			// change text to icon
+			var target = queryFixture(
+				'<div id="target" style="font-family: \'Material Icons\'">delete</div>'
+			);
+			assert.isFalse(isIconLigature(target.children[0]));
+		}
+	);
 
 	describe('pixelThreshold', function() {
 		(fontApiSupport ? it : it.skip)(
@@ -148,12 +158,15 @@ describe('text.isIconLigature', function() {
 			}
 		);
 
-		it('should allow lower percent (will flag text ligatures)', function() {
-			var target = queryFixture(
-				'<div id="target" style="font-family: Roboto">figure</div>'
-			);
-			assert.isTrue(isIconLigature(target.children[0], 0));
-		});
+		(fontApiSupport ? it : it.skip)(
+			'should allow lower percent (will flag text ligatures)',
+			function() {
+				var target = queryFixture(
+					'<div id="target" style="font-family: Roboto">figure</div>'
+				);
+				assert.isTrue(isIconLigature(target.children[0], 0));
+			}
+		);
 	});
 
 	describe('occuranceThreshold', function() {
