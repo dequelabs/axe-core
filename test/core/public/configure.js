@@ -361,6 +361,97 @@ describe('axe.configure', function() {
 			assert.equal(axe._audit.lang, 'lol');
 		});
 
+		it('should update failure messages', function() {
+			axe._load({
+				data: {
+					failureSummaries: {
+						any: {
+							failureMessage: function() {
+								return 'failed any';
+							}
+						},
+						none: {
+							failureMessage: function() {
+								return 'failed none';
+							}
+						}
+					},
+					incompleteFallbackMessage: function() {
+						return 'failed incomplete';
+					}
+				}
+			});
+
+			axe.configure({
+				locale: {
+					lang: 'lol',
+					failureSummaries: {
+						any: {
+							failureMessage: 'foo'
+						},
+						none: {
+							failureMessage: 'bar'
+						}
+					},
+					incompleteFallbackMessage: {
+						undefined: {
+							failureMessage: 'baz'
+						}
+					}
+				}
+			});
+
+			var audit = axe._audit;
+			var localeData = audit.data;
+
+			assert.equal(localeData.failureSummaries.any.failureMessage(), 'foo');
+			assert.equal(localeData.failureSummaries.none.failureMessage(), 'bar');
+			assert.equal(localeData.incompleteFallbackMessage(), 'baz');
+		});
+
+		it('should merge failure messages', function() {
+			axe._load({
+				data: {
+					failureSummaries: {
+						any: {
+							failureMessage: function() {
+								return 'failed any';
+							}
+						},
+						none: {
+							failureMessage: function() {
+								return 'failed none';
+							}
+						}
+					},
+					incompleteFallbackMessage: function() {
+						return 'failed incomplete';
+					}
+				}
+			});
+
+			axe.configure({
+				locale: {
+					lang: 'lol',
+					failureSummaries: {
+						any: {
+							failureMessage: 'foo'
+						}
+					}
+				}
+			});
+
+			var audit = axe._audit;
+			var localeData = audit.data;
+
+			assert.equal(localeData.failureSummaries.any.failureMessage(), 'foo');
+			assert.equal(
+				localeData.failureSummaries.none.failureMessage(),
+				'failed none'
+			);
+			assert.equal(localeData.incompleteFallbackMessage(), 'failed incomplete');
+		});
+
 		describe('only given checks', function() {
 			it('should not error', function() {
 				assert.doesNotThrow(function() {
@@ -505,6 +596,18 @@ describe('axe.configure', function() {
 					}
 				});
 			}, /unknown check: "nope"/);
+		});
+
+		it('should error when provided an unknown failure summary', function() {
+			assert.throws(function() {
+				axe.configure({
+					locale: {
+						failureSummaries: {
+							nope: { failureMessage: 'helpme' }
+						}
+					}
+				});
+			});
 		});
 
 		it('should set default locale', function() {
