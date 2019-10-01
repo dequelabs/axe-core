@@ -10,6 +10,14 @@ describe('text.isIconLigature', function() {
 			done();
 		}
 
+		var firaFont = new FontFace(
+			'Fira Code',
+			'url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.207/distr/woff/FiraCode-Regular.woff)'
+		);
+		var ligatureFont = new FontFace(
+			'LigatureSymbols',
+			'url(https://cdn.jsdelivr.net/gh/kudakurage/LigatureSymbols/LigatureSymbols-2.11.woff)'
+		);
 		var materialFont = new FontFace(
 			'Material Icons',
 			'url(https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2)'
@@ -18,13 +26,19 @@ describe('text.isIconLigature', function() {
 			'Roboto',
 			'url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2)'
 		);
-		window.Promise.all([materialFont.load(), robotoFont.load()]).then(
-			function() {
-				document.fonts.add(materialFont);
-				document.fonts.add(robotoFont);
-				done();
-			}
-		);
+
+		window.Promise.all([
+			firaFont.load(),
+			ligatureFont.load(),
+			materialFont.load(),
+			robotoFont.load()
+		]).then(function() {
+			document.fonts.add(firaFont);
+			document.fonts.add(ligatureFont);
+			document.fonts.add(materialFont);
+			document.fonts.add(robotoFont);
+			done();
+		});
 	});
 
 	it('should return false for normal text', function() {
@@ -108,10 +122,40 @@ describe('text.isIconLigature', function() {
 	);
 
 	(fontApiSupport ? it : it.skip)(
+		'should return true for a font that has no character data',
+		function() {
+			var target = queryFixture(
+				'<div id="target" style="font-family: \'Material Icons\'">f</div>'
+			);
+			assert.isTrue(isIconLigature(target.children[0]));
+		}
+	);
+
+	(fontApiSupport ? it : it.skip)(
+		'should return false for a programming text ligature',
+		function() {
+			var target = queryFixture(
+				'<div id="target" style="font-family: Fira Code">!==</div>'
+			);
+			assert.isFalse(isIconLigature(target.children[0]));
+		}
+	);
+
+	(fontApiSupport ? it : it.skip)(
+		'should return true for an icon ligature with low pixel difference',
+		function() {
+			var target = queryFixture(
+				'<div id="target" style="font-family: \'Material Icons\'">keyboard_arrow_left</div>'
+			);
+			assert.isTrue(isIconLigature(target.children[0]));
+		}
+	);
+
+	(fontApiSupport ? it : it.skip)(
 		'should return true after the 3rd time the font is an icon',
 		function() {
 			var target = queryFixture(
-				'<div id="target" style="font-family: \'Material Icons\'">delete</div>'
+				'<div id="target" style="font-family: \'LigatureSymbols\'">delete</div>'
 			);
 
 			isIconLigature(target.children[0]);
@@ -120,7 +164,7 @@ describe('text.isIconLigature', function() {
 
 			// change text to non-icon
 			var target = queryFixture(
-				'<div id="target" style="font-family: \'Material Icons\'">__non-icon text__</div>'
+				'<div id="target" style="font-family: \'LigatureSymbols\'">__non-icon text__</div>'
 			);
 			assert.isTrue(isIconLigature(target.children[0]));
 		}
@@ -130,7 +174,7 @@ describe('text.isIconLigature', function() {
 		'should return false after the 3rd time the font is not an icon',
 		function() {
 			var target = queryFixture(
-				'<div id="target" style="font-family: \'Material Icons\'">__non-icon text__</div>'
+				'<div id="target" style="font-family: \'Roboto\'">__non-icon text__</div>'
 			);
 
 			isIconLigature(target.children[0]);
@@ -139,7 +183,7 @@ describe('text.isIconLigature', function() {
 
 			// change text to icon
 			var target = queryFixture(
-				'<div id="target" style="font-family: \'Material Icons\'">delete</div>'
+				'<div id="target" style="font-family: \'Roboto\'">delete</div>'
 			);
 			assert.isFalse(isIconLigature(target.children[0]));
 		}
@@ -150,7 +194,7 @@ describe('text.isIconLigature', function() {
 			'should allow higher percent (will not flag icon ligatures)',
 			function() {
 				var target = queryFixture(
-					'<div id="target" style="font-family: \'Material Icons\'">delete</div>'
+					'<div id="target" style="font-family: \'LigatureSymbols\'">delete</div>'
 				);
 
 				// every pixel must be different to flag as icon
@@ -171,17 +215,17 @@ describe('text.isIconLigature', function() {
 
 	describe('occuranceThreshold', function() {
 		(fontApiSupport ? it : it.skip)(
-			'should change the number of Roboto a font is seen before returning',
+			'should change the number of times a font is seen before returning',
 			function() {
 				var target = queryFixture(
-					'<div id="target" style="font-family: \'Material Icons\'">delete</div>'
+					'<div id="target" style="font-family: \'LigatureSymbols\'">delete</div>'
 				);
 
 				isIconLigature(target.children[0]);
 
 				// change text to non-icon
 				var target = queryFixture(
-					'<div id="target" style="font-family: \'Material Icons\'">__non-icon text__</div>'
+					'<div id="target" style="font-family: \'LigatureSymbols\'">__non-icon text__</div>'
 				);
 				assert.isTrue(isIconLigature(target.children[0], 0.1, 1));
 				assert.isFalse(isIconLigature(target.children[0]));
