@@ -2,7 +2,7 @@
 	"id": "label-content-name-mismatch",
 	"evaluate": "label-content-name-mismatch.js",
 	"options": {
-		"differenceThreshold": 0.15,
+		"pixelThreshold": 0.1,
 		"occuranceThreshold": 3
 	},
 	"metadata": {
