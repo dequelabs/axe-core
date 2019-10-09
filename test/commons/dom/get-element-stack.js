@@ -1,4 +1,4 @@
-describe('dom.getElementStack', function() {
+describe.only('dom.getElementStack', function() {
 	'use strict';
 
 	var getElementStack = axe.commons.dom.getElementStack;
@@ -243,7 +243,7 @@ describe('dom.getElementStack', function() {
 			var vNode = queryFixture(
 				'<div id="1" style="position:relative;">' +
 					'<div id="2" style="position:absolute;width:300px;height:20px;"></div>' +
-					'<p id="target" style="position:relative;z-index:1;">Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>' +
+					'<p id="target" style="position:relative;z-index:1;height:40px;">Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>' +
 					'</div>'
 			);
 			var stack = getElementStack(vNode).map(function(vNode) {
@@ -281,7 +281,7 @@ describe('dom.getElementStack', function() {
 			var vNode = queryFixture(
 				'<main id="1">' +
 					'<div id="2">' +
-					'<div id="3" style="height:40px;transform:rotate(-10deg);">transform:rotate</div>' +
+					'<div id="3" style="height:40px;-webkit-transform:rotate(-10deg);-ms-transform:rotate(-10deg);transform:rotate(-10deg);">transform:rotate</div>' +
 					'<div id="target" style="width:40px;height:40px;margin-top:-40px;"></div>' +
 					'</div>' +
 					'</main>'
@@ -322,5 +322,57 @@ describe('dom.getElementStack', function() {
 		});
 	});
 
-	describe('scroll regions', function() {});
+	describe('scroll regions', function() {
+		it('should return stack of scroll regions', function() {
+			var vNode = queryFixture(
+				'<main id="1">' +
+					'<div id="2" style="overflow:auto">' +
+					'<div id="3" style="height:100px">' +
+					'<p id="target">Hello World</p>' +
+					'</div>' +
+					'</div>' +
+					'</main>'
+			);
+			var stack = getElementStack(vNode).map(function(vNode) {
+				return vNode.actualNode.id;
+			});
+			assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
+		});
+
+		it('should return stack when scroll region is larger than parent', function() {
+			var vNode = queryFixture(
+				'<main id="1">' +
+					'<div id="2" style="overflow:auto;height:40px">' +
+					'<div id="3" style="height:100px">' +
+					'<p id="target">Hello World</p>' +
+					'</div>' +
+					'</div>' +
+					'</main>'
+			);
+			var stack = getElementStack(vNode).map(function(vNode) {
+				return vNode.actualNode.id;
+			});
+			assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
+		});
+
+		it('should return stack of recursive scroll regions', function() {
+			var vNode = queryFixture(
+				'<main id="1">' +
+					'<div id="2" style="overflow:auto;height:40px">' +
+					'<div id="3" style="height:100px">' +
+					'<div id="4" style="overflow:auto;height:40px">' +
+					'<div id="5" style="overflow:auto;height:100px">' +
+					'<p id="target">Hello World</p>' +
+					'</div>' +
+					'</div>' +
+					'</div>' +
+					'</div>' +
+					'</main>'
+			);
+			var stack = getElementStack(vNode).map(function(vNode) {
+				return vNode.actualNode.id;
+			});
+			assert.deepEqual(stack, ['target', '5', '4', '3', '2', '1', 'fixture']);
+		});
+	});
 });
