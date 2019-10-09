@@ -87,14 +87,51 @@ describe('aria-allowed-role', function() {
 		);
 	});
 
-	it('returns false when img has no alt', function() {
+	it('returns true when img has no alt', function() {
 		var node = document.createElement('img');
+		node.setAttribute('role', 'presentation');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+		assert.deepEqual(checkContext._data, null);
+		node.setAttribute('role', 'none');
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+		assert.deepEqual(checkContext._data, null);
+	});
+
+	it('returns true when img has empty alt', function() {
+		var node = document.createElement('img');
+		node.setAttribute('alt', '');
+		node.setAttribute('role', 'presentation');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+		assert.deepEqual(checkContext._data, null);
+		node.setAttribute('role', 'none');
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+		assert.deepEqual(checkContext._data, null);
+	});
+
+	it('returns false when img has alt', function() {
+		var node = document.createElement('img');
+		node.setAttribute('alt', 'not empty');
 		node.setAttribute('role', 'presentation');
 		fixture.appendChild(node);
 		assert.isFalse(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
 		assert.deepEqual(checkContext._data, ['presentation']);
+		node.setAttribute('role', 'none');
+		assert.isFalse(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+		assert.deepEqual(checkContext._data, ['none']);
 	});
 
 	it('returns true when input of type image and no role', function() {

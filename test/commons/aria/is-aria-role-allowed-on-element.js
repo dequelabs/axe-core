@@ -249,6 +249,7 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 			}
 		};
 		var node = document.createElement('img');
+		node.setAttribute('alt', '');
 		node.setAttribute('role', 'presentation');
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(
 			node,
@@ -256,6 +257,29 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		);
 		assert.isTrue(overrideInvoked);
 		assert.isFalse(actual);
+	});
+
+	it('returns true, ensure evaluateRoleForElement in lookupTable is invoked', function() {
+		var overrideInvoked = false;
+		axe.commons.aria.lookupTable.evaluateRoleForElement = {
+			IMG: function(options) {
+				overrideInvoked = true;
+				assert.isDefined(options.node);
+				assert.equal(options.node.nodeName.toUpperCase(), 'IMG');
+				assert.isBoolean(options.out);
+				return false;
+			}
+		};
+		var node = document.createElement('img');
+		node.setAttribute('role', 'presentation');
+		var presentationAllowed = axe.commons.aria.isAriaRoleAllowedOnElement(
+			node,
+			'presentation'
+		);
+		var noneAllowed = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'none');
+		assert.isFalse(overrideInvoked);
+		assert.isTrue(presentationAllowed);
+		assert.isTrue(noneAllowed);
 	});
 
 	it('returns false if element with role MENU type context', function() {
