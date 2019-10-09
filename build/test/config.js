@@ -26,7 +26,10 @@ exports = module.exports = function(grunt, options) {
 					'http://' + host + ':<%= connect.test.options.port %>/test/commons/',
 					'http://' +
 						host +
-						':<%= connect.test.options.port %>/test/integration/rules/'
+						':<%= connect.test.options.port %>/test/integration/rules/',
+					'http://' +
+						host +
+						':<%= connect.test.options.port %>/test/integration/api/external/'
 				],
 				run: true,
 				growlOnSuccess: false,

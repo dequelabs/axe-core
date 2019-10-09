@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>External API Test</title>
+
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="/node_modules/mocha/mocha.css"
+		/>
+		<script src="/node_modules/mocha/mocha.js"></script>
+		<script src="/node_modules/chai/chai.js"></script>
+		<script src="/axe.js"></script>
+		<script>
+			mocha.setup({
+				timeout: 10000,
+				ui: 'bdd'
+			});
+			var assert = chai.assert;
+		</script>
+		<script src="/test/integration/no-ui-reporter.js"></script>
+	</head>
+	<body>
+		<div id="mocha"></div>
+		<script src="index.js"></script>
+		<script src="/test/integration/adapter.js"></script>
+	</body>
+</html>
