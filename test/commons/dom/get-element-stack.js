@@ -1,4 +1,4 @@
-describe.only('dom.getElementStack', function() {
+describe('dom.getElementStack', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
