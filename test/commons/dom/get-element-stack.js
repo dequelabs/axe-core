@@ -1,8 +1,13 @@
 describe.only('dom.getElementStack', function() {
 	'use strict';
 
+	var fixture = document.getElementById('fixture');
 	var getElementStack = axe.commons.dom.getElementStack;
 	var queryFixture = axe.testUtils.queryFixture;
+
+	afterEach(function() {
+		fixture.innerHTML = '';
+	});
 
 	describe('stack order', function() {
 		it('should return stack in DOM order of non-positioned elements', function() {
@@ -281,8 +286,8 @@ describe.only('dom.getElementStack', function() {
 			var vNode = queryFixture(
 				'<main id="1">' +
 					'<div id="2">' +
-					'<div id="3" style="height:40px;-webkit-transform:rotate(-10deg);-ms-transform:rotate(-10deg);transform:rotate(-10deg);">transform:rotate</div>' +
-					'<div id="target" style="width:40px;height:40px;margin-top:-40px;"></div>' +
+					'<div id="3" style="-webkit-transform:rotate(-10deg);-ms-transform:rotate(-10deg);transform:rotate(-10deg);">transform:rotate</div>' +
+					'<div id="target" style="width:40px;height:20px;margin-top:-20px;"></div>' +
 					'</div>' +
 					'</main>'
 			);
@@ -296,15 +301,20 @@ describe.only('dom.getElementStack', function() {
 			var vNode = queryFixture(
 				'<main id="1">' +
 					'<div id="2">' +
-					'<em id="3" style="height:40px;transform:rotate(-10deg);">transform:rotate<br>but no rotation</div>' +
-					'<div id="target" style="width:40px;height:40px;margin-top:-40px;"></div>' +
+					'<em id="3" style="-webkit-transform:rotate(-10deg);-ms-transform:rotate(-10deg);transform:rotate(-10deg);">transform:rotate</em>' +
+					'<div id="target" style="width:40px;height:20px;margin-top:-20px;"></div>' +
 					'</div>' +
 					'</main>'
 			);
-			var stack = getElementStack(vNode).map(function(vNode) {
-				return vNode.actualNode.id;
-			});
-			assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
+			var stack = [];
+			try {
+				stack = getElementStack(vNode).map(function(vNode) {
+					return vNode.actualNode.id;
+				});
+			} catch (e) {
+				console.log(e);
+			}
+			assert.deepEqual(stack, ['3', 'target', '2', '1', 'fixture']);
 		});
 
 		it('should handle negative z-index', function() {
