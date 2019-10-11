@@ -39,6 +39,33 @@ describe('color-contrast-matches', function() {
 		assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
 	});
 
+	it('should not match when text only contains emoji', function() {
+		fixture.innerHTML =
+			'<div style="color: yellow; background-color: white;" id="target">' +
+			'🌎</div>';
+		var target = fixture.querySelector('#target');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
+	it('should not match when text only contains punctuation', function() {
+		fixture.innerHTML =
+			'<div style="color: yellow; background-color: white;" id="target">' +
+			'&rlm;</div>';
+		var target = fixture.querySelector('#target');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
+	it('should not match when text only contains nonBmp unicode', function() {
+		fixture.innerHTML =
+			'<div style="color: yellow; background-color: white;" id="target">' +
+			'◓</div>';
+		var target = fixture.querySelector('#target');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
 	it('should not match when there is text that is out of the container', function() {
 		fixture.innerHTML =
 			'<div style="color: yellow; text-indent: -9999px; background-color: white;" id="target">' +
