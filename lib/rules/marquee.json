@@ -2,7 +2,7 @@
 	"id": "marquee",
 	"selector": "marquee",
 	"excludeHidden": false,
-	"tags": ["cat.parsing", "wcag2a", "wcag222"],
+	"tags": ["cat.parsing", "wcag2a", "wcag222", "wcag2.2.2"],
 	"metadata": {
 		"description": "Ensures <marquee> elements are not used",
 		"help": "<marquee> elements are deprecated and must not be used"

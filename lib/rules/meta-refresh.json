@@ -7,8 +7,11 @@
 		"wcag2a",
 		"wcag2aaa",
 		"wcag221",
+		"wcag2.2.1",
 		"wcag224",
-		"wcag325"
+		"wcag2.2.4",
+		"wcag325",
+		"wcag3.2.5"
 	],
 	"metadata": {
 		"description": "Ensures <meta http-equiv=\"refresh\"> is not used",

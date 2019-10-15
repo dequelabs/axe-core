@@ -5,7 +5,9 @@
 		"cat.text-alternatives",
 		"wcag2a",
 		"wcag241",
+		"wcag2.4.1",
 		"wcag412",
+		"wcag4.1.2",
 		"section508",
 		"section508.22.i"
 	],
