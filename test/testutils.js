@@ -14,6 +14,11 @@ var fixture = document.createElement('div');
 fixture.setAttribute('id', 'fixture');
 document.body.insertBefore(fixture, document.body.firstChild);
 
+/*eslint no-unused-vars: 0*/
+var checks = axe._audit.checks;
+var commons = axe.commons;
+axe._load = function() {};
+
 /**
  * Create a check context for mocking/resetting data and relatedNodes in tests
  *

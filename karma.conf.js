@@ -7,17 +7,20 @@ module.exports = function(config) {
 		files: [
 			{ pattern: 'test/mock/**/*.html', included: false, served: true },
 			{ pattern: 'test/integration/**/*.css', included: false, served: true },
-			{ pattern: 'axe.js', included: false, served: true },
+			{ pattern: 'axe.js', included: true, served: true },
 
 			'lib/core/index.js',
 			'lib/core/*/index.js',
 			'lib/core/**/index.js',
-			'lib/core/**/*.js',
-
+			'lib/core/*/*.js',
+			'lib/core/*/*/*.js', // don't run core/constants.js as it will error
 			'test/testutils.js',
 			'test/version.js',
 
-			'test/core/**/*.js'
+			'test/core/**/*.js',
+			'test/commons/**/*.js',
+			'test/checks/**/*.js',
+			'test/rule-matches/**/*.js'
 		],
 		proxies: {
 			'/mock': '/base/test/mock',
