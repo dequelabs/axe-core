@@ -646,6 +646,19 @@ describe('color.getBackgroundColor', function() {
 		assert.notEqual(window.pageYOffset, 0);
 	});
 
+	it('scrolls horizontally into view when scroll is enabled', function() {
+		fixture.innerHTML =
+			'<div style="width: 1000px;"><span id="target">long text to test scrolling</span></div>';
+		var targetEl = fixture.querySelector('#target');
+		var bgNodes = [];
+		window.scroll(100, 0);
+
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
+		axe.commons.color.getBackgroundColor(targetEl, bgNodes, false);
+
+		assert.equal(document.documentElement.scrollLeft, 0);
+	});
+
 	it('returns elements with negative z-index', function() {
 		fixture.innerHTML =
 			'<div id="sibling" ' +

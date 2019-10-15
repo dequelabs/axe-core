@@ -7,56 +7,6 @@ describe('VirtualNode', function() {
 		node = document.createElement('div');
 	});
 
-	describe('AbstractVirtualNode', function() {
-		it('should be a function', function() {
-			assert.isFunction(axe.AbstractVirtualNode);
-		});
-
-		it('should throw an error when accessing props', function() {
-			function fn() {
-				var abstractNode = new axe.AbstractVirtualNode();
-				if (abstractNode.props.nodeType === 1) {
-					return;
-				}
-			}
-
-			assert.throws(fn);
-		});
-
-		it('should throw an error when accessing hasClass', function() {
-			function fn() {
-				var abstractNode = new axe.AbstractVirtualNode();
-				if (abstractNode.hasClass('foo')) {
-					return;
-				}
-			}
-
-			assert.throws(fn);
-		});
-
-		it('should throw an error when accessing attr', function() {
-			function fn() {
-				var abstractNode = new axe.AbstractVirtualNode();
-				if (abstractNode.attr('foo') === 'bar') {
-					return;
-				}
-			}
-
-			assert.throws(fn);
-		});
-
-		it('should throw an error when accessing hasAttr', function() {
-			function fn() {
-				var abstractNode = new axe.AbstractVirtualNode();
-				if (abstractNode.hasAttr('foo')) {
-					return;
-				}
-			}
-
-			assert.throws(fn);
-		});
-	});
-
 	it('should be a function', function() {
 		assert.isFunction(VirtualNode);
 	});
@@ -95,76 +45,6 @@ describe('VirtualNode', function() {
 			var vNode = new VirtualNode(node);
 
 			assert.equal(vNode.props.nodeName, 'foobar');
-		});
-
-		describe('hasClass', function() {
-			it('should return true when the element has the class', function() {
-				node.setAttribute('class', 'my-class');
-				var vNode = new VirtualNode(node);
-
-				assert.isTrue(vNode.hasClass('my-class'));
-			});
-
-			it('should return true when the element contains more than one class', function() {
-				node.setAttribute('class', 'my-class a11y-focus visually-hidden');
-				var vNode = new VirtualNode(node);
-
-				assert.isTrue(vNode.hasClass('my-class'));
-				assert.isTrue(vNode.hasClass('a11y-focus'));
-				assert.isTrue(vNode.hasClass('visually-hidden'));
-			});
-
-			it('should return true for svg elements', function() {
-				node = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-				node.setAttribute('class', 'my-class');
-				var vNode = new VirtualNode(node);
-
-				assert.isTrue(vNode.hasClass('my-class'));
-			});
-
-			it('should return false when the element does not contain the class', function() {
-				var vNode = new VirtualNode(node);
-
-				assert.isFalse(vNode.hasClass('my-class'));
-			});
-
-			it('should return false when the element contains only part of the class', function() {
-				node.setAttribute('class', 'my-class');
-				var vNode = new VirtualNode(node);
-
-				assert.isFalse(vNode.hasClass('class'));
-			});
-
-			it('should return false for text nodes', function() {
-				node.textContent = 'hello';
-				var vNode = new VirtualNode(node.firstChild);
-
-				assert.isFalse(vNode.hasClass('my-class'));
-			});
-
-			it('should return false if className is not of type string', function() {
-				var node = {
-					nodeName: 'DIV',
-					className: null
-				};
-				var vNode = new VirtualNode(node);
-
-				assert.isFalse(vNode.hasClass('my-class'));
-			});
-
-			it('should return true for whitespace characters', function() {
-				node.setAttribute(
-					'class',
-					'my-class\ta11y-focus\rvisually-hidden\ngrid\fcontainer'
-				);
-				var vNode = new VirtualNode(node);
-
-				assert.isTrue(vNode.hasClass('my-class'));
-				assert.isTrue(vNode.hasClass('a11y-focus'));
-				assert.isTrue(vNode.hasClass('visually-hidden'));
-				assert.isTrue(vNode.hasClass('grid'));
-				assert.isTrue(vNode.hasClass('container'));
-			});
 		});
 
 		describe('attr', function() {

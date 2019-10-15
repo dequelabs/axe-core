@@ -102,8 +102,9 @@ The current set of tags supported are listed in the following table:
 
 | Tag Name        |       Accessibility Standard/Purpose        |
 | --------------- | :-----------------------------------------: |
-| `wcag2a`        |              WCAG 2.0 Level A               |
-| `wcag2aa`       |              WCAG 2.0 Level AA              |
+| `wcag2a`        |              WCAG 2.0 & WCAG 2.1 Level A    |
+| `wcag2aa`       |              WCAG 2.0 & WCAG 2.1 Level AA   |
+| `wcag21a`       |              WCAG 2.1 Level A               |
 | `wcag21aa`      |              WCAG 2.1 Level AA              |
 | `section508`    |                 Section 508                 |
 | `best-practice` |      Best practices endorsed by Deque       |
@@ -164,7 +165,8 @@ axe.configure({
 	reporter: 'option',
 	checks: [Object],
 	rules: [Object],
-	locale: Object
+	locale: Object,
+	axeVersion: String
 });
 ```
 
@@ -203,6 +205,7 @@ axe.configure({
       - `matches` - string(optional, default `*`). A filtering [CSS selector](./developer-guide.md#supported-css-selectors) that will exclude elements that do not match the CSS selector.
   - `disableOtherRules` - Disables all rules not included in the `rules` property.
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
+  - `axeVersion` - Set the compatible version of a custom rule with the current axe version. Compatible versions are all patch and minor updates that are the same as, or newer than those of the `axeVersion` property.
 
 **Returns:** Nothing
 
@@ -394,7 +397,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `elementRef`       | `false` | Return element references in addition to the target                                                                                     |
 | `restoreScroll`    | `false` | Scrolls elements back to before axe started                                                                                             |
 | `frameWaitTime`    | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out                                              |
-| `preload`          | `false` | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details) |
+| `preload`          | `true` | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details) |
 | `performanceTimer` | `false` | Log rule performance metrics to the console                                                                                             |
 
 ###### Options Parameter Examples
