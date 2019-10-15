@@ -135,7 +135,7 @@
 		},
 		"form-field-multiple-labels": {
 			"description": "フォームフィールドに複数のlabel要素が存在しないことを確認します",
-			"help": "複数のlabel要素をフォームフィールドに付与してはなりません"
+			"help": "複数のlabel要素をフォームフィールドに付与するべきではありません"
 		},
 		"frame-tested": {
 			"description": "<iframe>および<frame>要素にaxe-coreスクリプトが含まれていることを確認します",
@@ -546,7 +546,7 @@
 		},
 		"multiple-label": {
 			"pass": "フォームフィールドにlabel要素は複数ありません",
-			"fail": "複数のlabel要素は支援技術に広くサポートされていません"
+			"incomplete": "複数のlabel要素は支援技術に広くサポートされていません。最初のラベルがすべての必要な情報を含んでいることを確認します。"
 		},
 		"title-only": {
 			"pass": "フォーム要素はラベルにtitle属性だけを用いていません",
