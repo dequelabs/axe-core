@@ -2,7 +2,14 @@
 	"id": "th-has-data-cells",
 	"selector": "table",
 	"matches": "data-table-matches.js",
-	"tags": ["cat.tables", "wcag2a", "wcag131", "section508", "section508.22.g"],
+	"tags": [
+		"cat.tables",
+		"wcag2a",
+		"wcag131",
+		"wcag1.3.1",
+		"section508",
+		"section508.22.g"
+	],
 	"metadata": {
 		"description": "Ensure that each table header in a data table refers to data cells",
 		"help": "All th elements and elements with role=columnheader/rowheader must have data cells they describe"

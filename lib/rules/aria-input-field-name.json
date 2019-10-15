@@ -2,7 +2,7 @@
 	"id": "aria-input-field-name",
 	"selector": "[role=\"combobox\"], [role=\"listbox\"], [role=\"searchbox\"], [role=\"slider\"], [role=\"spinbutton\"], [role=\"textbox\"]",
 	"matches": "aria-form-field-name-matches.js",
-	"tags": ["wcag2a", "wcag412"],
+	"tags": ["wcag2a", "wcag412", "wcag4.1.2"],
 	"metadata": {
 		"description": "Ensures every ARIA input field has an accessible name",
 		"help": "ARIA input fields have an accessible name"

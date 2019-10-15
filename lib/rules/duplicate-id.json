@@ -3,7 +3,7 @@
 	"selector": "[id]",
 	"matches": "duplicate-id-misc-matches.js",
 	"excludeHidden": false,
-	"tags": ["cat.parsing", "wcag2a", "wcag411"],
+	"tags": ["cat.parsing", "wcag2a", "wcag411", "wcag4.1.1"],
 	"metadata": {
 		"description": "Ensures every id attribute value is unique",
 		"help": "id attribute value must be unique"
