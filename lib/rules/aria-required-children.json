@@ -1,7 +1,7 @@
 {
 	"id": "aria-required-children",
 	"selector": "[role]",
-	"tags": ["cat.aria", "wcag2a", "wcag131", "wcag1.3.1"],
+	"tags": ["cat.aria", "wcag2a", "wcag131"],
 	"metadata": {
 		"description": "Ensures elements with an ARIA role that require child roles contain them",
 		"help": "Certain ARIA roles must contain particular children"

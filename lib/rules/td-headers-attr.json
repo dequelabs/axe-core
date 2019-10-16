@@ -1,14 +1,7 @@
 {
 	"id": "td-headers-attr",
 	"selector": "table",
-	"tags": [
-		"cat.tables",
-		"wcag2a",
-		"wcag131",
-		"wcag1.3.1",
-		"section508",
-		"section508.22.g"
-	],
+	"tags": ["cat.tables", "wcag2a", "wcag131", "section508", "section508.22.g"],
 	"metadata": {
 		"description": "Ensure that each cell in a table using the headers refers to another cell in that table",
 		"help": "All cells in a table element that use the headers attribute must only refer to other cells of that same table"

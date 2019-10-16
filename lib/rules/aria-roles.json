@@ -1,7 +1,7 @@
 {
 	"id": "aria-roles",
 	"selector": "[role]",
-	"tags": ["cat.aria", "wcag2a", "wcag412", "wcag4.1.2"],
+	"tags": ["cat.aria", "wcag2a", "wcag412"],
 	"metadata": {
 		"description": "Ensures all elements with a role attribute use a valid value",
 		"help": "ARIA roles used must conform to valid values"
