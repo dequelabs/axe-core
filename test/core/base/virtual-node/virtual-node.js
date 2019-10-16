@@ -226,6 +226,54 @@ describe('VirtualNode', function() {
 			});
 		});
 
+		describe('getComputedStylePropertyValue', function() {
+			var computedStyle;
+
+			beforeEach(function() {
+				computedStyle = window.getComputedStyle;
+			});
+
+			afterEach(function() {
+				window.getComputedStyle = computedStyle;
+			});
+
+			it('should call window.getComputedStyle and return the property', function() {
+				var called = false;
+				window.getComputedStyle = function() {
+					called = true;
+					return {
+						getPropertyValue: function() {
+							return 'result';
+						}
+					};
+				};
+				var vNode = new VirtualNode(node);
+				var result = vNode.getComputedStylePropertyValue('prop');
+
+				assert.isTrue(called);
+				assert.equal(result, 'result');
+			});
+
+			it('should only call window.getComputedStyle and getPropertyValue once', function() {
+				var computedCount = 0;
+				var propertyCount = 0;
+				window.getComputedStyle = function() {
+					computedCount++;
+					return {
+						getPropertyValue: function() {
+							propertyCount++;
+						}
+					};
+				};
+				var vNode = new VirtualNode(node);
+				vNode.getComputedStylePropertyValue('prop');
+				vNode.getComputedStylePropertyValue('prop');
+				vNode.getComputedStylePropertyValue('prop');
+				assert.equal(computedCount, 1);
+				assert.equal(propertyCount, 1);
+			});
+		});
+
 		describe('clientRects', function() {
 			it('should call node.getClientRects', function() {
 				var called = false;
