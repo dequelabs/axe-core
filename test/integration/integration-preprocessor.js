@@ -14,16 +14,14 @@ var createIntegrationPreprocessor = function(logger) {
 			log.debug('Processing "%s".', file.originalPath);
 			file.path = file.originalPath.replace(extRegex, '.js');
 
+			// turn the json file into the a test file using the js test template
+			// and add the test data to it
 			var htmlpath = file.originalPath.replace(extRegex, '.html');
 			var html = fs.readFileSync(htmlpath, 'utf-8');
 			var test = JSON.parse(content);
 			test.content = html;
 
-			var result = template.replace('{}/*test*/', JSON.stringify(test));
-
-			// console.log('test:', test);
-			// console.log('content:', content);
-			// console.log('result:', result);
+			var result = template.replace('{}; /*test*/', JSON.stringify(test));
 
 			done(null, result);
 		} catch (e) {
