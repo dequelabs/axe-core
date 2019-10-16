@@ -1,8 +1,7 @@
 module.exports = function(config) {
 	config.set({
 		basePath: '',
-		singleRun: false,
-		// singleRun: true,
+		singleRun: true,
 		autoWatch: true,
 		plugins: [
 			'karma-mocha',
@@ -32,12 +31,12 @@ module.exports = function(config) {
 			'test/testutils.js',
 			'test/version.js',
 
-			'test/core/reporters/na.js',
-			'test/commons/**/*.js'
-			// 'test/checks/**/*.js',
-			// 'test/rule-matches/**/*.js',
+			'test/core/**/*.js',
+			'test/commons/**/*.js',
+			'test/checks/**/*.js',
+			'test/rule-matches/**/*.js',
 
-			// 'test/integration/rules/**/*.json'
+			'test/integration/rules/**/*.json'
 		],
 		proxies: {
 			'/mock': '/base/test/mock',
@@ -45,8 +44,7 @@ module.exports = function(config) {
 			'/integration': '/base/test/integration',
 			'/axe.js': '/base/axe.js'
 		},
-		browsers: ['Chrome'],
-		// browsers: ['ChromeHeadless'],
+		browsers: ['ChromeHeadless'],
 		preprocessors: {
 			'lib/core/imports/index.js': ['browserify'],
 			'test/integration/rules/**/*.json': ['integration']

@@ -1,6 +1,6 @@
 describe('helpers.incompleteFallbackMessage', function() {
 	'use strict';
-	before(function() {
+	beforeEach(function() {
 		axe._load({
 			messages: {},
 			rules: [],

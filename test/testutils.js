@@ -15,8 +15,19 @@ fixture.setAttribute('id', 'fixture');
 document.body.insertBefore(fixture, document.body.firstChild);
 
 /*eslint no-unused-vars: 0*/
-var checks = axe._audit.checks;
-var commons = axe.commons;
+var checks, commons;
+var originalChecks = (checks = axe._audit.checks);
+var originalAudit = axe._audit;
+var originalRules = axe._audit.rules;
+var originalCommons = (commons = axe.commons);
+
+beforeEach(function() {
+	// reset from axe._load overriding
+	checks = originalChecks;
+	axe._audit = originalAudit;
+	axe._audit.rules = originalRules;
+	commons = axe.commons = originalCommons;
+});
 
 /**
  * Create a check context for mocking/resetting data and relatedNodes in tests
