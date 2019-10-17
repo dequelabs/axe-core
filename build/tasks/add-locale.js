@@ -62,9 +62,10 @@ module.exports = function(grunt) {
 							return out;
 						}, {}),
 						incompleteFallbackMessage: result.misc.reduce(function(out, misc) {
-							out[misc.incompleteFallbackMessage] = misc.metadata;
-							return out;
-						}, {})
+							return misc.incompleteFallbackMessage
+								? misc.incompleteFallbackMessage
+								: out;
+						}, '')
 					};
 
 					// update locale file if exists

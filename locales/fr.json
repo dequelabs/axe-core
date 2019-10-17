@@ -659,9 +659,5 @@
 			"failureMessage": "Corriger tous les éléments suivants : {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 		}
 	},
-	"incompleteFallbackMessage": {
-		"undefined": {
-			"failureMessage": "Corriger tous les éléments suivants : {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
-		}
-	}
+	"incompleteFallbackMessage": "Corriger tous les éléments suivants : {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 }
