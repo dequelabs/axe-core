@@ -769,9 +769,5 @@
 			"failureMessage": "Corregir (todas) las siguientes incidencias:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 		}
 	},
-	"incompleteFallbackMessage": {
-		"undefined": {
-			"failureMessage": "Corregir (todas) las siguientes incidencias:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
-		}
-	}
+	"incompleteFallbackMessage": "Corregir (todas) las siguientes incidencias:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 }

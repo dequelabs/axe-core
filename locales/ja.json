@@ -778,9 +778,5 @@
 			"failureMessage": "次のすべてを修正します:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 		}
 	},
-	"incompleteFallbackMessage": {
-		"undefined": {
-			"failureMessage": "次のすべてを修正します:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
-		}
-	}
+	"incompleteFallbackMessage": "次のすべてを修正します:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 }
