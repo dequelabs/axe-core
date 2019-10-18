@@ -101,9 +101,6 @@ describe('external API', function() {
 		it('must be a function with the signature Element -> Boolean', function() {
 			assert.isBoolean(axe.commons.dom.isOpaque(randomNodeInTree(isElement)));
 		});
-		it('must return true for disconnected elements', function() {
-			assert.isTrue(axe.commons.dom.isOpaque(randomElement()));
-		});
 	});
 
 	describe('axe.commons.text.accessibleTextVirtual', function() {
