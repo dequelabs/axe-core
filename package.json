@@ -1,7 +1,7 @@
 {
 	"name": "axe-core",
 	"description": "Accessibility engine for automated Web UI testing",
-	"version": "3.3.2",
+	"version": "3.4.0",
 	"license": "MPL-2.0",
 	"engines": {
 		"node": ">=4"
@@ -72,7 +72,7 @@
 		"rule-gen": "node build/rule-generator",
 		"next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
 		"sri-update": "grunt build && node build/sri-update && git add sri-history.json",
-		"fmt": "prettier --write *.{json,md,js} **/*.ts './{build,doc,lib,test}/**/*.{json,md,js,ts,html}'"
+		"fmt": "prettier --write *.{json,md,js} **/*.ts './{.github,build,doc,lib,test}/**/*.{json,md,js,ts,html}'"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.5.4",
@@ -85,14 +85,15 @@
 		"babelify": "^10.0.0",
 		"blanket": "~1.2.3",
 		"browserify": "^16.2.3",
-		"chai": "~4.1.2",
+		"chai": "~4.2.0",
 		"clone": "~2.1.1",
+		"core-js": "^3.2.1",
 		"css-selector-parser": "^1.3.0",
 		"derequire": "^2.0.6",
 		"emoji-regex": "8.0.0",
 		"es6-promise": "^4.2.6",
-		"eslint": "^5.14.0",
-		"eslint-config-prettier": "^6.0.0",
+		"eslint": "^6.1.0",
+		"eslint-config-prettier": "^6.2.0",
 		"execa": "^2.0.2",
 		"fs-extra": "^8.0.1",
 		"globby": "^10.0.0",
@@ -111,7 +112,7 @@
 		"husky": "^3.0.0",
 		"jquery": "^3.0.0",
 		"jsdoc": "^3.5.5",
-		"lint-staged": "^9.0.0",
+		"lint-staged": "^9.2.1",
 		"make-dir": "^3.0.0",
 		"markdown-table": "^1.1.2",
 		"minami": "^1.2.3",
@@ -122,8 +123,8 @@
 		"revalidator": "~0.3.1",
 		"selenium-webdriver": "~3.6.0",
 		"sri-toolbox": "^0.2.0",
-		"standard-version": "^6.0.0",
-		"typescript": "^2.9.2",
+		"standard-version": "^7.0.0",
+		"typescript": "^3.5.3",
 		"uglify-js": "^3.4.4",
 		"weakmap-polyfill": "^2.0.0"
 	},

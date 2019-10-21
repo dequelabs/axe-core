@@ -236,6 +236,24 @@ describe('Audit', function() {
 				'https://dequeuniversity.com/rules/axe/1.0/target?application=axeAPI'
 			);
 		});
+		it('sets the lang query if locale has been set', function() {
+			var audit = new Audit();
+			audit.addRule({
+				id: 'target',
+				matches: 'function () {return "hello";}',
+				selector: 'bob'
+			});
+			audit.applyLocale({
+				lang: 'de'
+			});
+			assert.lengthOf(audit.rules, 1);
+			assert.equal(audit.data.rules.target, undefined);
+			audit._constructHelpUrls();
+			assert.deepEqual(audit.data.rules.target, {
+				helpUrl:
+					'https://dequeuniversity.com/rules/axe/x.y/target?application=axeAPI&lang=de'
+			});
+		});
 	});
 
 	describe('Audit#setBranding', function() {
@@ -367,6 +385,16 @@ describe('Audit', function() {
 			assert.equal(audit.checks.target.options, 'jane');
 			audit.resetRulesAndChecks();
 			assert.equal(audit.checks.target, undefined);
+		});
+		it('should reset locale', function() {
+			var audit = new Audit();
+			assert.equal(audit.lang, 'en');
+			audit.applyLocale({
+				lang: 'de'
+			});
+			assert.equal(audit.lang, 'de');
+			audit.resetRulesAndChecks();
+			assert.equal(audit.lang, 'en');
 		});
 	});
 
@@ -737,7 +765,7 @@ describe('Audit', function() {
 						})[0];
 						var checkResult = ruleResult.nodes[0].any[0];
 						assert.isDefined(checkResult.data);
-						assert.property(checkResult.data, ['cssom']);
+						assert.property(checkResult.data, 'cssom');
 						assert.deepEqual(checkResult.data.cssom, preloadData);
 						// ensure cache is clear
 						assert.isTrue(typeof axe._selectCache === 'undefined');
@@ -815,7 +843,7 @@ describe('Audit', function() {
 						})[0];
 						var checkResult = ruleResult.nodes[0].any[0];
 						assert.isDefined(checkResult.data);
-						assert.notProperty(checkResult.data, ['cssom']);
+						assert.notProperty(checkResult.data, 'cssom');
 						// done
 						done();
 					},
@@ -881,7 +909,7 @@ describe('Audit', function() {
 						})[0];
 						var checkResult = ruleResult.nodes[0].any[0];
 						assert.isDefined(checkResult.data);
-						assert.notProperty(checkResult.data, ['cssom']);
+						assert.notProperty(checkResult.data, 'cssom');
 						// done
 						done();
 					},

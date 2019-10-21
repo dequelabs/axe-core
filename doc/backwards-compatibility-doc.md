@@ -26,7 +26,8 @@ In a minor release, we may add support for new technologies in the Public Utils 
 
 If the HTML page is unchanged, calls to the analysis function(s) when compared across minor or patch releases will return the same exact selector for the nodes in any of the result arrays. If the HTML page has changed, it is possible for the selector to be different but it is not guaranteed that the selector will be different.
 
-APIs may be deprecated in a major or minor release and deprecated APIs will be removed in the next major release after their deprecation.
+APIs may be deprecated in a major or minor release. APIs that have been deprecated for 6 months or more will be removed in the next major release.
+
 A major or a minor release may introduce new Public Utils.
 
 Major releases may remove rules.

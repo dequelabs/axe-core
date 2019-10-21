@@ -102,8 +102,9 @@ The current set of tags supported are listed in the following table:
 
 | Tag Name        |       Accessibility Standard/Purpose        |
 | --------------- | :-----------------------------------------: |
-| `wcag2a`        |              WCAG 2.0 Level A               |
-| `wcag2aa`       |              WCAG 2.0 Level AA              |
+| `wcag2a`        |              WCAG 2.0 & WCAG 2.1 Level A    |
+| `wcag2aa`       |              WCAG 2.0 & WCAG 2.1 Level AA   |
+| `wcag21a`       |              WCAG 2.1 Level A               |
 | `wcag21aa`      |              WCAG 2.1 Level AA              |
 | `section508`    |                 Section 508                 |
 | `best-practice` |      Best practices endorsed by Deque       |
@@ -164,7 +165,8 @@ axe.configure({
 	reporter: 'option',
 	checks: [Object],
 	rules: [Object],
-	locale: Object
+	locale: Object,
+	axeVersion: String
 });
 ```
 
@@ -203,6 +205,7 @@ axe.configure({
       - `matches` - string(optional, default `*`). A filtering [CSS selector](./developer-guide.md#supported-css-selectors) that will exclude elements that do not match the CSS selector.
   - `disableOtherRules` - Disables all rules not included in the `rules` property.
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
+  - `axeVersion` - Set the compatible version of a custom rule with the current axe version. Compatible versions are all patch and minor updates that are the same as, or newer than those of the `axeVersion` property.
 
 **Returns:** Nothing
 
@@ -249,7 +252,9 @@ Runs a number of rules against the provided HTML page and returns the resulting 
 #### Synopsis
 
 ```js
-axe.run(context, options, callback);
+axe.run(context, options, (err, results) => {
+	// ...
+});
 ```
 
 #### Parameters axe.run
@@ -289,43 +294,68 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 1. Include the first item in the `$fixture` NodeList but exclude its first child
 
 ```js
-{
-  include: $fixture[0],
-  exclude: $fixture[0].firstChild
-}
+axe.run(
+	{
+		include: $fixture[0],
+		exclude: $fixture[0].firstChild
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 2. Include the element with the ID of `fix` but exclude any `div`s within it
 
 ```js
-{
-  include: [['#fix']],
-  exclude: [['#fix div']]
-}
+axe.run(
+	{
+		include: [['#fix']],
+		exclude: [['#fix div']]
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 3. Include the whole document except any structures whose parent contains the class `exclude1` or `exclude2`
 
 ```js
-{
-	exclude: [['.exclude1'], ['.exclude2']];
-}
+axe.run(
+	{
+		exclude: [['.exclude1'], ['.exclude2']]
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 4. Include the element with the ID of `fix`, within the iframe with id `frame`
 
 ```js
-{
-	include: [['#frame', '#fix']];
-}
+axe.run(
+	{
+		include: [['#frame', '#fix']]
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 5. Include the element with the ID of `fix`, within the iframe with id `frame2`, within the iframe with id `frame1`
 
 ```js
-{
-	include: [['#frame1', '#frame2', '#fix']];
-}
+axe.run(
+	{
+		include: [['#frame1', '#frame2', '#fix']]
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 6. Include the following:
@@ -335,9 +365,14 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 - All links
 
 ```js
-{
-	include: [['#header'], ['a'], ['#frame1', '#frame2', '#fix']];
-}
+axe.run(
+	{
+		include: [['#header'], ['a'], ['#frame1', '#frame2', '#fix']]
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 ##### Options Parameter
@@ -362,7 +397,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `elementRef`       | `false` | Return element references in addition to the target                                                                                     |
 | `restoreScroll`    | `false` | Scrolls elements back to before axe started                                                                                             |
 | `frameWaitTime`    | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out                                              |
-| `preload`          | `false` | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details) |
+| `preload`          | `true` | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details) |
 | `performanceTimer` | `false` | Log rule performance metrics to the console                                                                                             |
 
 ###### Options Parameter Examples
@@ -381,31 +416,43 @@ There are certain standards defined that can be used to select a set of rules. T
 To run only WCAG 2.0 Level A rules, specify `options` as:
 
 ```js
-{
-  runOnly: {
-    type: "tag",
-    values: ["wcag2a"]
-  }
-}
+axe.run(
+	{
+		runOnly: {
+			type: 'tag',
+			values: ['wcag2a']
+		}
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 To run both WCAG 2.0 Level A and Level AA rules, you must specify both `wcag2a` and `wcag2aa`:
 
 ```js
-{
-  runOnly: {
-    type: "tag",
-    values: ["wcag2a", "wcag2aa"]
-  }
-}
+axe.run(
+	{
+		runOnly: {
+			type: 'tag',
+			values: ['wcag2a', 'wcag2aa']
+		}
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 Alternatively, runOnly can be passed an array of tags:
 
 ```js
-{
+axe.run({
 	runOnly: ['wcag2a', 'wcag2aa'];
-}
+}, (err, results) => {
+  // ...
+})
 ```
 
 2. Run only a specified list of Rules
@@ -413,12 +460,17 @@ Alternatively, runOnly can be passed an array of tags:
 If you only want to run certain rules, specify options as:
 
 ```js
-{
-  runOnly: {
-    type: "rule",
-    values: [ "ruleId1", "ruleId2", "ruleId3" ]
-  }
-}
+axe.run(
+	{
+		runOnly: {
+			type: 'rule',
+			values: ['ruleId1', 'ruleId2', 'ruleId3']
+		}
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `ruleId3`. No other rule will run.
@@ -428,12 +480,17 @@ This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `r
 The default operation for axe.run is to run all rules except for rules with the "experimental" tag. If certain rules should be disabled from being run, specify `options` as:
 
 ```js
-{
-  "rules": {
-    "color-contrast": { enabled: false },
-    "valid-lang": { enabled: false }
-  }
-}
+axe.run(
+	{
+		rules: {
+			'color-contrast': { enabled: false },
+			'valid-lang': { enabled: false }
+		}
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 This example will disable the rules with the id of `color-contrast` and `valid-lang`. All other rules will run. The list of valid rule IDs is specified in the section below.
@@ -443,16 +500,21 @@ This example will disable the rules with the id of `color-contrast` and `valid-l
 By combining runOnly with type: tags and the rules option, a modified set can be defined. This lets you include rules with unspecified tags, and exclude rules that do have the specified tag(s).
 
 ```js
-{
-  runOnly: {
-    type: "tag",
-    values: ["wcag2a"]
-  },
-  "rules": {
-    "color-contrast": { enabled: true },
-    "valid-lang": { enabled: false }
-  }
-}
+axe.run(
+	{
+		runOnly: {
+			type: 'tag',
+			values: ['wcag2a']
+		},
+		rules: {
+			'color-contrast': { enabled: true },
+			'valid-lang': { enabled: false }
+		}
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 This example includes all level A rules except for valid-lang, and in addition will include the level AA color-contrast rule.
@@ -462,15 +524,20 @@ This example includes all level A rules except for valid-lang, and in addition w
 Similar to scope, the runOnly option can accept an object with an 'include' and 'exclude' property. Only those checks that match an included tag will run, except those that share a tag from the exclude list.
 
 ```js
-{
-  runOnly: {
-    type: 'tags',
-    values: {
-      include: ['wcag2a', 'wcag2aa'],
-      exclude: ['experimental']
-    }
-  }
-}
+axe.run(
+	{
+		runOnly: {
+			type: 'tags',
+			values: {
+				include: ['wcag2a', 'wcag2aa'],
+				exclude: ['experimental']
+			}
+		}
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 This example first includes all `wcag2a` and `wcag2aa` rules. All rules that are tagged as `experimental` are than removed from the list of rules to run.
@@ -484,9 +551,14 @@ After axe has processed all rules normally, it generates a unique selector for a
 Types listed in this option will cause rules that fall under those types to show all nodes. Types _not_ listed will causes rules that fall under one of the missing types to show a maximum of one node. This allows you to still see those results and inform the user of them if appropriate.
 
 ```js
-{
-	resultTypes: ['violations', 'incomplete', 'inapplicable'];
-}
+axe.run(
+	{
+		resultTypes: ['violations', 'incomplete', 'inapplicable']
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 This example will return all the nodes for all rules that fall under the "violations", "incomplete", and "inapplicable" result types. Since the "passes" type was not specified, it will return at most one node for each rule that passes.
@@ -498,13 +570,27 @@ The `preload` attribute (defaults to `true`) in options parameter, accepts a `bo
 1. Specifying a `boolean`
 
 ```js
-preload: true;
+axe.run(
+	{
+		preload: true
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 2. Specifying an `object`
 
 ```js
-preload: { assets: ['cssom'], timeout: 50000 }
+axe.run(
+	{
+		preload: { assets: ['cssom'], timeout: 50000 }
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 The `assets` attribute expects an array of preload(able) constraints to be fetched. The current set of values supported for `assets` is listed in the following table:
@@ -800,10 +886,15 @@ If your page is very large (in terms of the number of Elements on the page) i.e.
 
 An approach you can take to reducing the time is use the `resultTypes` option. By calling `axe.run` with the following options, axe-core will only return the full details of the `violations` array and will only return one instance of each of the `inapplicable`, `incomplete` and `pass` arrays for each rule that has at least one of those entries. This will reduce the amount of computation that axe-core does for the unique selectors.
 
-```json
-{
-	"resultTypes": ["violations"]
-}
+```js
+axe.run(
+	{
+		resultTypes: ['violations']
+	},
+	(err, results) => {
+		// ...
+	}
+);
 ```
 
 ### Other strategies

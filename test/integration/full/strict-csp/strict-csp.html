@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf8" />
+		<script id="check-phantomjs">
+			// phantomjs requires running in non-strict csp
+			if (!window.PHANTOMJS) {
+				var thisScript = document.getElementById('check-phantomjs');
+				var meta = document.createElement('meta');
+				meta.setAttribute('http-equiv', 'Content-Security-Policy');
+				meta.setAttribute(
+					'content',
+					"script-src 'nonce-4AEemGb0xJptoIGFP3Nd'; style-src 'nonce-4AEemGb0xJptoIGFP3Nd'"
+				);
+				document.head.appendChild(meta);
+			}
+		</script>
+		<link
+			nonce="4AEemGb0xJptoIGFP3Nd"
+			rel="stylesheet"
+			type="text/css"
+			href="/node_modules/mocha/mocha.css"
+		/>
+		<script
+			nonce="4AEemGb0xJptoIGFP3Nd"
+			src="/node_modules/mocha/mocha.js"
+		></script>
+		<script
+			nonce="4AEemGb0xJptoIGFP3Nd"
+			src="/node_modules/chai/chai.js"
+		></script>
+		<script nonce="4AEemGb0xJptoIGFP3Nd" src="/axe.js"></script>
+		<script nonce="4AEemGb0xJptoIGFP3Nd">
+			mocha.setup({
+				timeout: 10000,
+				ui: 'bdd'
+			});
+			var assert = chai.assert;
+		</script>
+	</head>
+	<body>
+		<div id="mocha"></div>
+		<script nonce="4AEemGb0xJptoIGFP3Nd" src="/test/testutils.js"></script>
+		<script nonce="4AEemGb0xJptoIGFP3Nd" src="strict-csp.js"></script>
+		<script
+			nonce="4AEemGb0xJptoIGFP3Nd"
+			src="/test/integration/adapter.js"
+		></script>
+	</body>
+</html>

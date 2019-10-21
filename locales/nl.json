@@ -32,5 +32,9 @@
 			"failureMessage": "Gebruik een van de volgende oplossingen:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 		}
 	},
-	"incompleteFallbackMessage": "axe kon de reden niet vertellen. Tijd om de element inspecteur uit te breken!"
+	"incompleteFallbackMessage": {
+		"undefined": {
+			"failureMessage": "axe kon de reden niet vertellen. Tijd om de element inspecteur uit te breken!"
+		}
+	}
 }

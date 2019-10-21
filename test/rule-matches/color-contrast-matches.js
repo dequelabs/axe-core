@@ -39,6 +39,33 @@ describe('color-contrast-matches', function() {
 		assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
 	});
 
+	it('should not match when text only contains emoji', function() {
+		fixture.innerHTML =
+			'<div style="color: yellow; background-color: white;" id="target">' +
+			'🌎</div>';
+		var target = fixture.querySelector('#target');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
+	it('should not match when text only contains punctuation', function() {
+		fixture.innerHTML =
+			'<div style="color: yellow; background-color: white;" id="target">' +
+			'&rlm;</div>';
+		var target = fixture.querySelector('#target');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
+	it('should not match when text only contains nonBmp unicode', function() {
+		fixture.innerHTML =
+			'<div style="color: yellow; background-color: white;" id="target">' +
+			'◓</div>';
+		var target = fixture.querySelector('#target');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
 	it('should not match when there is text that is out of the container', function() {
 		fixture.innerHTML =
 			'<div style="color: yellow; text-indent: -9999px; background-color: white;" id="target">' +
@@ -233,6 +260,22 @@ describe('color-contrast-matches', function() {
 	it("should not match a disabled input's label - explicit label", function() {
 		fixture.innerHTML =
 			'<label for="t1">Test</label><input type="text" id="t1" disabled>';
+		var target = fixture.querySelector('label');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
+	it("should not match an aria-disabled input's label - explicit label", function() {
+		fixture.innerHTML =
+			'<label for="t1">Test</label><input type="text" id="t1" aria-disabled="true">';
+		var target = fixture.querySelector('label');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
+	it("should not match a parent aria-disabled input's label - explicit label", function() {
+		fixture.innerHTML =
+			'<label for="t1">Test</label><div aria-disabled="true"><input type="text" id="t1"></div>';
 		var target = fixture.querySelector('label');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));

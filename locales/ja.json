@@ -45,6 +45,10 @@
 			"description": "親ロールを必須とするARIAロールが指定された要素に、それらが含まれていることを確認します",
 			"help": "特定のARIAロールは特定の親に含まれていなければなりません"
 		},
+		"aria-roledescription": {
+			"description": "aria-roledescriptionが暗黙的もしくは明示的なロールを持った要素に使用されていることを確認します",
+			"help": "aria-roledescriptionはセマンティックなロールを持った要素に使用します"
+		},
 		"aria-roles": {
 			"description": "すべてのロール属性が指定された要素で、有効な値が使用されていることを確認します",
 			"help": "使用されているARIAロールは有効な値に一致しなければなりません"
@@ -131,7 +135,7 @@
 		},
 		"form-field-multiple-labels": {
 			"description": "フォームフィールドに複数のlabel要素が存在しないことを確認します",
-			"help": "複数のlabel要素をフォームフィールドに付与してはなりません"
+			"help": "複数のlabel要素をフォームフィールドに付与するべきではありません"
 		},
 		"frame-tested": {
 			"description": "<iframe>および<frame>要素にaxe-coreスクリプトが含まれていることを確認します",
@@ -356,6 +360,11 @@
 			"pass": "ドキュメント本体にaria-hidden属性は存在していません",
 			"fail": "aria-hidden=trueはドキュメント本体に存在してはなりません"
 		},
+		"aria-roledescription": {
+			"pass": "aria-roledescriptionはサポートされたセマンティックなロールに使用されています",
+			"incomplete": "aria-roledescriptionがサポートされたスクリーン・リーダーで読み上げられることを確認しましょう",
+			"fail": "aria-roledescriptionをサポートするロールを要素に付与しましょう"
+		},
 		"aria-errormessage": {
 			"pass": "サポートされているaria-errormessageの技術を使用しています",
 			"fail": "aria-errormessageの値{{~it.data:value}} `{{=value}}{{~}}`はメッセージを通知する方法を使用しなければなりません　(例えば、aria-live、aria-describedby、role=alert等)"
@@ -399,7 +408,8 @@
 		},
 		"aria-valid-attr-value": {
 			"pass": "ARIA属性値が有効です",
-			"fail": "無効なARIA属性値です:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": "無効なARIA属性値です:{{~it.data:value}} {{=value}}{{~}}",
+			"incomplete": "ページにARIA属性の要素IDが存在しません:{{~it.data:value}} {{=value}}{{~}}"
 		},
 		"aria-valid-attr": {
 			"pass": "ARIA属性名が有効です",
@@ -536,7 +546,7 @@
 		},
 		"multiple-label": {
 			"pass": "フォームフィールドにlabel要素は複数ありません",
-			"fail": "複数のlabel要素は支援技術に広くサポートされていません"
+			"incomplete": "複数のlabel要素は支援技術に広くサポートされていません。最初のラベルがすべての必要な情報を含んでいることを確認します。"
 		},
 		"title-only": {
 			"pass": "フォーム要素はラベルにtitle属性だけを用いていません",
@@ -715,7 +725,7 @@
 		},
 		"caption-faked": {
 			"pass": "テーブルの一行目がキャプションとして使用されていません",
-			"fail": "テーブルの一行目はテーブルセルではなく、キャプションにするべきです"
+			"fail": "テーブルの最初の子はテーブルセルではなく、キャプションであるべきです"
 		},
 		"has-caption": {
 			"pass": "レイアウトテーブルに<caption>要素を使用していません",

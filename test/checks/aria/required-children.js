@@ -287,6 +287,24 @@ describe('aria-required-children', function() {
 		);
 	});
 
+	it('should pass role comboxbox when child is native "search" input type', function() {
+		var params = checkSetup(
+			'<div role="combobox" id="target"><input type="search"><p role="listbox">Textbox</p></div>'
+		);
+		assert.isTrue(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+	});
+
+	it('should not accept implicit nodes with a different role', function() {
+		var params = checkSetup(
+			'<div role="combobox" id="target"><input type="search" role="spinbutton"><p role="listbox">Textbox</p></div>'
+		);
+		assert.isFalse(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+	});
+
 	describe('options', function() {
 		it('should return undefined instead of false when the role is in options.reviewEmpty', function() {
 			var params = checkSetup('<div role="grid" id="target"></div>');
@@ -321,6 +339,66 @@ describe('aria-required-children', function() {
 			// Options: (incorrect)
 			params[1] = 'grid';
 			assert.isFalse(
+				checks['aria-required-children'].evaluate.apply(checkContext, params)
+			);
+		});
+
+		it('should return undefined when the element has empty children', function() {
+			var params = checkSetup(
+				'<div role="listbox" id="target"><div></div></div>'
+			);
+			params[1] = {
+				reviewEmpty: ['listbox']
+			};
+			assert.isUndefined(
+				checks['aria-required-children'].evaluate.apply(checkContext, params)
+			);
+		});
+
+		it('should return false when the element has empty child with role', function() {
+			var params = checkSetup(
+				'<div role="listbox" id="target"><div role="grid"></div></div>'
+			);
+			params[1] = {
+				reviewEmpty: ['listbox']
+			};
+			assert.isFalse(
+				checks['aria-required-children'].evaluate.apply(checkContext, params)
+			);
+		});
+
+		it('should return undefined when the element has empty child with role=presentation', function() {
+			var params = checkSetup(
+				'<div role="listbox" id="target"><div role="presentation"></div></div>'
+			);
+			params[1] = {
+				reviewEmpty: ['listbox']
+			};
+			assert.isUndefined(
+				checks['aria-required-children'].evaluate.apply(checkContext, params)
+			);
+		});
+
+		it('should return undefined when the element has empty child with role=none', function() {
+			var params = checkSetup(
+				'<div role="listbox" id="target"><div role="none"></div></div>'
+			);
+			params[1] = {
+				reviewEmpty: ['listbox']
+			};
+			assert.isUndefined(
+				checks['aria-required-children'].evaluate.apply(checkContext, params)
+			);
+		});
+
+		it('should return undefined when the element has empty child and aria-label', function() {
+			var params = checkSetup(
+				'<div role="listbox" id="target" aria-label="listbox"><div></div></div>'
+			);
+			params[1] = {
+				reviewEmpty: ['listbox']
+			};
+			assert.isUndefined(
 				checks['aria-required-children'].evaluate.apply(checkContext, params)
 			);
 		});

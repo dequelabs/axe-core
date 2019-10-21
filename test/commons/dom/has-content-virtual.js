@@ -41,7 +41,7 @@ describe('dom.hasContentVirtual', function() {
 	it('is false if the element has an aria label but `ignoreAria=true`', function() {
 		fixture.innerHTML = '<div id="target" aria-label="my-label">	</div>';
 		tree = axe.utils.getFlattenedTree(fixture);
-		assert.isTrue(
+		assert.isFalse(
 			hasContentVirtual(
 				axe.utils.querySelectorAll(tree, '#target')[0],
 				true,
