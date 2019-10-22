@@ -164,6 +164,46 @@ describe('aria-allowed-role', function() {
 		);
 	});
 
+	it('returns true when INPUT type is tel with role combobox', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'tel');
+		node.setAttribute('role', 'combobox');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
+	it('returns true when INPUT type is url with role combobox', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'url');
+		node.setAttribute('role', 'combobox');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
+	it('returns true when INPUT type is search with role combobox', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'search');
+		node.setAttribute('role', 'combobox');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
+	it('returns true when INPUT type is email with role combobox', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'email');
+		node.setAttribute('role', 'combobox');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
 	it('returns true when INPUT type is text with role spinbutton', function() {
 		var node = document.createElement('input');
 		node.setAttribute('type', 'text');
