@@ -39,63 +39,9 @@ describe('identical-links-same-purpose tests', function() {
 		assert.isNull(checkContext._data);
 	});
 
-	it('returns undefined when native link has only emoji as accessible name', function() {
+	it('returns undefined when ARIA link has only any combination of unicode (emoji, punctuations, nonBmp) characters as accessible name', function() {
 		var vNode = queryFixture(
-			'<a id="target" href="/some-directory/contact/rock.html">🤘</a>'
-		);
-		var actual = check.evaluate.call(
-			checkContext,
-			vNode.actualNode,
-			options,
-			vNode
-		);
-		assert.isUndefined(actual);
-		assert.isNull(checkContext._data);
-	});
-
-	it('returns undefined when native link has only nonBmp characters (diacritical marks supplement) as accessible name', function() {
-		var vNode = queryFixture(
-			'<a id="target" href="/some-directory/contact/rock.html">ᴁ</a>'
-		);
-		var actual = check.evaluate.call(
-			checkContext,
-			vNode.actualNode,
-			options,
-			vNode
-		);
-		assert.isUndefined(actual);
-		assert.isNull(checkContext._data);
-	});
-
-	it('returns undefined when native link has only nonBmp characters (currency symbol) as accessible name', function() {
-		var vNode = queryFixture(
-			'<a id="target" href="/some-directory/currency.html">₨ </a>'
-		);
-		var actual = check.evaluate.call(
-			checkContext,
-			vNode.actualNode,
-			options,
-			vNode
-		);
-		assert.isUndefined(actual);
-		assert.isNull(checkContext._data);
-	});
-
-	it('returns undefined when ARIA link has only punctuations as accessible name', function() {
-		var vNode = queryFixture('<button id="target" role="link">!!!!</button>');
-		var actual = check.evaluate.call(
-			checkContext,
-			vNode.actualNode,
-			options,
-			vNode
-		);
-		assert.isUndefined(actual);
-		assert.isNull(checkContext._data);
-	});
-
-	it('returns undefined when ARIA link has only combination of emoji, punctuations, nonBmp characters as accessible name', function() {
-		var vNode = queryFixture(
-			'<button id="target" role="link">☀️!₨   </button>'
+			'<button id="target" role="link">☀️!!!₨   </button>'
 		);
 		var actual = check.evaluate.call(
 			checkContext,
@@ -116,23 +62,10 @@ describe('identical-links-same-purpose tests', function() {
 			vNode
 		);
 		assert.isTrue(actual);
-		assert.hasAllKeys(checkContext._data, ['name', 'parsedResource']);
+		assert.hasAllKeys(checkContext._data, ['name', 'urlProps']);
 		assert.equal(checkContext._data.name, 'Pass 1'.toLowerCase());
-		assert.equal(checkContext._data.parsedResource.hash, '#/foo');
-		assert.equal(checkContext._data.parsedResource.pathname, '/home');
-	});
-
-	it('returns undefined for `AREA` without closest `MAP` element', function() {
-		var vNode = queryFixture(
-			'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>'
-		);
-		var actual = check.evaluate.call(
-			checkContext,
-			vNode.actualNode,
-			options,
-			vNode
-		);
-		assert.isUndefined(actual);
+		assert.equal(checkContext._data.urlProps.hash, '#/foo');
+		assert.equal(checkContext._data.urlProps.pathname, '/home');
 	});
 
 	it('returns undefined for `AREA with closest `MAP` with no name attribute', function() {
@@ -180,7 +113,7 @@ describe('identical-links-same-purpose tests', function() {
 			vNode
 		);
 		assert.isTrue(actual);
-		assert.hasAllKeys(checkContext._data, ['name', 'parsedResource']);
+		assert.hasAllKeys(checkContext._data, ['name', 'urlProps']);
 		assert.equal(checkContext._data.name, 'MDN'.toLowerCase());
 		assert.isFalse(!!checkContext._data.resource);
 	});
@@ -196,12 +129,12 @@ describe('identical-links-same-purpose tests', function() {
 			vNode
 		);
 		assert.isTrue(actual);
-		assert.hasAllKeys(checkContext._data, ['name', 'parsedResource']);
+		assert.hasAllKeys(checkContext._data, ['name', 'urlProps']);
 		assert.equal(
 			checkContext._data.name,
 			'The is orange the is white'.toLowerCase()
 		);
-		assert.equal(checkContext._data.parsedResource.filename, 'foo.html');
+		assert.equal(checkContext._data.urlProps.filename, 'foo.html');
 	});
 
 	(shadowSupported ? it : xit)(
@@ -226,10 +159,10 @@ describe('identical-links-same-purpose tests', function() {
 			);
 			var actual = check.evaluate.apply(checkContext, params);
 			assert.isTrue(actual);
-			assert.hasAllKeys(checkContext._data, ['name', 'parsedResource']);
+			assert.hasAllKeys(checkContext._data, ['name', 'urlProps']);
 			assert.equal(checkContext._data.name, 'Pass 1'.toLowerCase());
-			assert.equal(checkContext._data.parsedResource.hash, '#/foo');
-			assert.equal(checkContext._data.parsedResource.pathname, '/home');
+			assert.equal(checkContext._data.urlProps.hash, '#/foo');
+			assert.equal(checkContext._data.urlProps.pathname, '/home');
 		}
 	);
 
@@ -243,24 +176,6 @@ describe('identical-links-same-purpose tests', function() {
 			var actual = check.evaluate.apply(checkContext, params);
 			assert.isUndefined(actual);
 			assert.isNull(checkContext._data);
-		}
-	);
-
-	(shadowSupported ? it : xit)(
-		'returns true for ARIA links (in shadowDOM) has accessible name (AREA with `MAP` which is used in `IMG`)',
-		function() {
-			var params = shadowCheckSetup(
-				'<div id="shadow"></div>',
-				'<map name="infographic">' +
-					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
-					'</map>' +
-					'<img usemap="#infographic" alt="MDN infographic" />'
-			);
-			var actual = check.evaluate.apply(checkContext, params);
-			assert.isTrue(actual);
-			assert.hasAllKeys(checkContext._data, ['name', 'parsedResource']);
-			assert.equal(checkContext._data.name, 'MDN'.toLowerCase());
-			assert.isFalse(!!checkContext._data.resource);
 		}
 	);
 });
