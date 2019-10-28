@@ -3,16 +3,9 @@
 <a id="pass1" href="/home/#/foo">Pass 1</a>
 <a id="pass1-identical1" href="/home/#/foo">Pass 1</a>
 
-<!-- multiple native links with same purpose, HREF resolve to same URL -->
-<a
-	id="pass2"
-	href="/test/integration/full/identical-links-same-purpose/foo.html"
-	>Pass 2</a
->
-<a id="pass2-identical1" href="foo.html">Pass 2</a>
-<a id="pass2-identical2" href="../identical-links-same-purpose/foo.html"
-	>Pass 2</a
->
+<!-- native links with same (different order) query params -->
+<a id="pass2" href="/search/?a=foo&b=123">Pass 2</a>
+<a id="pass2-identical1" href="/search/?b=123&a=foo">Pass 2</a>
 
 <!-- native links, normal inline link, don't worry about it -->
 <a id="pass3" href="/home/#foo">Pass 3</a>
@@ -183,6 +176,17 @@
 <a id="incomplete13" href="https://facebook.com">follow us</a>
 <a id="incomplete13-identical1" href="https://instagram.com">follow us</a>
 
+<!-- multiple native links with differnt URLS with same filename but differnt pathname -->
+<a
+	id="incomplete14"
+	href="/test/integration/full/identical-links-same-purpose/foo.html"
+	>Incomplete 14</a
+>
+<a id="incomplete14-identical1" href="foo.html">Incomplete 14</a>
+<a id="incomplete14-identical2" href="../identical-links-same-purpose/foo.html"
+	>Incomplete 14</a
+>
+
 <!-- inapplicable -->
 <!-- area element has no parent map -->
 <area
@@ -205,7 +209,7 @@
 </map>
 
 <!-- area has map parent, which has name, but not referred by img[usemap] -->
-<map id="iam-not-used-anywhere">
+<map name="iam-not-used-anywhere">
 	<area
 		id="inapplicable3"
 		shape="poly"
