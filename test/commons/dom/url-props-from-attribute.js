@@ -22,12 +22,12 @@ describe('dom.urlPropsFromAttribute', function () {
 		assert.isUndefined(actual);
 	});
 
-	it('returns parsed resource when `A` has empty `HREF`', function () {
+	it('returns URL properties when `A` has empty `HREF`', function () {
 		var vNode = queryFixture(
 			'<a id="target" href="">Follow us on Instagram</a>'
 		);
 		var expected = {
-			filename: undefined,
+			filename: '',
 			hash: undefined,
 			hostname: "localhost",
 			pathname: "/test/commons",
@@ -39,12 +39,12 @@ describe('dom.urlPropsFromAttribute', function () {
 		assert.deepEqual(actual, expected)
 	});
 
-	it('returns parsed resource for `A` with `HREF`', function () {
+	it('returns URL properties for `A` with `HREF`', function () {
 		var vNode = queryFixture(
 			'<a id="target" href="https://facebook.com">follow us on Facebook</a>'
 		);
 		var expected = {
-			filename: undefined,
+			filename: '',
 			hash: undefined,
 			hostname: "facebook.com",
 			pathname: "",
@@ -56,12 +56,12 @@ describe('dom.urlPropsFromAttribute', function () {
 		assert.deepEqual(actual, expected)
 	});
 
-	it('returns parsed resource for `A` with `HREF` which has subdirectory and inline link', function () {
+	it('returns URL properties for `A` with `HREF` which has subdirectory and inline link', function () {
 		var vNode = queryFixture(
 			'<a id="target" href="http://mysite.com/directory/#anchor">Go to Issues</a>'
 		);
 		var expected = {
-			filename: undefined,
+			filename: '',
 			hash: undefined,
 			hostname: "mysite.com",
 			pathname: "/directory",
@@ -73,12 +73,12 @@ describe('dom.urlPropsFromAttribute', function () {
 		assert.deepEqual(actual, expected)
 	});
 
-	it('returns parsed resource for `A` with `HREF` which has subdirectory and hashbang', function () {
+	it('returns URL properties for `A` with `HREF` which has subdirectory and hashbang', function () {
 		var vNode = queryFixture(
 			'<a id="target" href="http://mysite.com/directory/#!foo">See our services</a>'
 		);
 		var expected = {
-			filename: undefined,
+			filename: '',
 			hash: "#!foo",
 			hostname: "mysite.com",
 			pathname: "/directory",
@@ -90,12 +90,12 @@ describe('dom.urlPropsFromAttribute', function () {
 		assert.deepEqual(actual, expected)
 	});
 
-	it('returns parsed resource for `A` with `HREF` which has search query', function () {
+	it('returns URL properties for `A` with `HREF` which has search query', function () {
 		var vNode = queryFixture(
 			'<a id="target" href="http://mysite.com/search/?q=foo#bar">Get list of foo bars</a>'
 		);
 		var expected = {
-			filename: undefined,
+			filename: '',
 			hash: undefined,
 			hostname: "mysite.com",
 			pathname: "/search",
@@ -109,12 +109,12 @@ describe('dom.urlPropsFromAttribute', function () {
 		assert.deepEqual(actual, expected)
 	});
 
-	it('returns parsed resource for `A` with `HREF` which has multiple search query parameters', function () {
+	it('returns URL properties for `A` with `HREF` which has multiple search query parameters', function () {
 		var vNode = queryFixture(
 			'<a id="target" href="http://mysite.com/search/?a=123&z=XYZ&name=Axe&version=1.2.3&values=[1,2,3]">Get list of foo bars</a>'
 		);
 		var expected = {
-			filename: undefined,
+			filename: '',
 			hash: undefined,
 			hostname: "mysite.com",
 			pathname: "/search",
@@ -132,7 +132,7 @@ describe('dom.urlPropsFromAttribute', function () {
 		assert.deepEqual(actual, expected)
 	});
 
-	it('returns parsed resource for `A` with `HREF` which has filename', function () {
+	it('returns URL properties for `A` with `HREF` which has filename', function () {
 		var vNode = queryFixture(
 			'<a id="target" href="directory/widgets/calendar.html">Book tour</a>'
 		);
@@ -140,7 +140,7 @@ describe('dom.urlPropsFromAttribute', function () {
 			filename: "calendar.html",
 			hash: undefined,
 			hostname: "localhost",
-			pathname: "",
+			pathname: "/test/commons/directory/widgets",
 			port: "9876",
 			protocol: "http:",
 			search: {}
@@ -149,12 +149,12 @@ describe('dom.urlPropsFromAttribute', function () {
 		assert.deepEqual(actual, expected)
 	});
 
-	it('returns parsed resource for `A` with `HREF` which has filename as `index` (ignores index.*)', function () {
+	it('returns URL properties for `A` with `HREF` which has filename as `index` (ignores index.*)', function () {
 		var vNode = queryFixture(
 			'<a id="target" href="http://mysite.com/directory/index.html">Book tour</a>'
 		);
 		var expected = {
-			filename: undefined,
+			filename: '',
 			hash: undefined,
 			hostname: "mysite.com",
 			pathname: "/directory",
