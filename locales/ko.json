@@ -10,7 +10,7 @@
 			"help": "<area> 요소의 내용을 기술하는 alt 속성이 필요합니다."
 		},
 		"aria-allowed-attr": {
-			"description": "요소의 역할(role)에 ARIA 특성이 허용되도록 합니다.",
+			"description": "요소의 역할(role)에 ARIA 속성이 허용되도록 합니다.",
 			"help": "요소는 허용 된 ARIA 속성만 사용해야 합니다."
 		},
 		"aria-allowed-role": {
@@ -203,22 +203,22 @@
 		},
 		"landmark-contentinfo-is-top-level": {
 			"description": "contentinfo 랜드마크가 최상위 레벨인지 확인합니다.",
-			"help": "contentinfo 랜드마크는 다른 랜드 마크에 포함되지 않아야 합니다."
+			"help": "contentinfo 랜드마크는 다른 랜드마크에 포함되지 않아야 합니다."
 		},
 		"landmark-main-is-top-level": {
 			"description": "main 랜드마크가 최상위 레벨인지 확인합니다.",
-			"help": "main 랜드마크는 다른 랜드 마크에 포함되지 않아야 합니다."
+			"help": "main 랜드마크는 다른 랜드마크에 포함되지 않아야 합니다."
 		},
 		"landmark-no-duplicate-banner": {
 			"description": "문서에 최대 하나의 banner 랜드마크가 있는지 확인합니다.",
 			"help": "문서에는 둘 이상의 banner 랜드마크가 없어야 합니다."
 		},
 		"landmark-no-duplicate-contentinfo": {
-			"description": "문서에 최대 하나의 contentinfo 랜드 마크가 있는지 확인합니다.",
+			"description": "문서에 최대 하나의 contentinfo 랜드마크가 있는지 확인합니다.",
 			"help": "문서에는 둘 이상의 contentinfo 랜드마크가 없어야 합니다."
 		},
 		"landmark-one-main": {
-			"description": "문서에 하나의 main 랜드마크만 있고 페이지의 각 iframe에는 최대 하나의 main 랜드 마크가 있는지 확인합니다.",
+			"description": "문서에 하나의 main 랜드마크만 있고 페이지의 각 iframe에는 최대 하나의 main 랜드마크가 있는지 확인합니다.",
 			"help": "문서에는 둘 이상의 main 랜드마크가 없어야 합니다."
 		},
 		"landmark-unique": {
@@ -492,8 +492,8 @@
 			"fail": "문서에 main 랜드마크가 없습니다."
 		},
 		"page-no-duplicate-banner": {
-			"pass": "문서에 둘 이상의 banner 랜드 마크가 없습니다.",
-			"fail": "문서에 둘 이상의 banner 랜드 마크가 있습니다."
+			"pass": "문서에 둘 이상의 banner 랜드마크가 없습니다.",
+			"fail": "문서에 둘 이상의 banner 랜드마크가 있습니다."
 		},
 		"page-no-duplicate-contentinfo": {
 			"pass": "문서에 하나 이상의 contentinfo 랜드마크가 없습니다.",
@@ -659,8 +659,8 @@
 			"fail": "aria-label 속성이 존재하지 않거나 비어 있습니다."
 		},
 		"aria-labelledby": {
-			"pass": "aria-labeledby 특성이 있으며 스크린 리더에 표시되는 요소를 참조합니다.",
-			"fail": "aria-labeledby 특성이 존재하지 않거나, 존재하지 않는 요소를 참조하거나, 비어 있는 요소를 참조합니다."
+			"pass": "aria-labeledby 속성이 있으며 스크린 리더에 표시되는 요소를 참조합니다.",
+			"fail": "aria-labeledby 속성이 존재하지 않거나, 존재하지 않는 요소를 참조하거나, 비어 있는 요소를 참조합니다."
 		},
 		"avoid-inline-spacing": {
 			"pass": "텍스트 간격에 영향을 주는 '!important'를 가진 인라인 스타일이 지정되지 않았습니다.",
