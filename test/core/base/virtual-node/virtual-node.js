@@ -191,41 +191,6 @@ describe('VirtualNode', function() {
 			});
 		});
 
-		describe('computedStyle', function() {
-			var computedStyle;
-
-			beforeEach(function() {
-				computedStyle = window.getComputedStyle;
-			});
-
-			afterEach(function() {
-				window.getComputedStyle = computedStyle;
-			});
-
-			it('should call window.getComputedStyle', function() {
-				var called = false;
-				window.getComputedStyle = function() {
-					called = true;
-				};
-				var vNode = new VirtualNode(node);
-				vNode.computedStyle;
-
-				assert.isTrue(called);
-			});
-
-			it('should only call window.getComputedStyle once', function() {
-				var count = 0;
-				window.getComputedStyle = function() {
-					count++;
-				};
-				var vNode = new VirtualNode(node);
-				vNode.computedStyle;
-				vNode.computedStyle;
-				vNode.computedStyle;
-				assert.equal(count, 1);
-			});
-		});
-
 		describe('getComputedStylePropertyValue', function() {
 			var computedStyle;
 
