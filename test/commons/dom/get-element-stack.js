@@ -282,41 +282,6 @@ describe('dom.getElementStack', function() {
 			assert.deepEqual(stack, ['target', '2', '1', 'fixture']);
 		});
 
-		it('should handle CSS rotation', function() {
-			var vNode = queryFixture(
-				'<main id="1">' +
-					'<div id="2">' +
-					'<div id="3" style="-webkit-transform:rotate(-10deg);-ms-transform:rotate(-10deg);transform:rotate(-10deg);">transform:rotate</div>' +
-					'<div id="target" style="width:40px;height:20px;margin-top:-20px;"></div>' +
-					'</div>' +
-					'</main>'
-			);
-			var stack = getElementStack(vNode).map(function(vNode) {
-				return vNode.actualNode.id;
-			});
-			assert.deepEqual(stack, ['target', '2', '1', 'fixture']);
-		});
-
-		it("should handle CSS rotation when applied to an element that can't be rotated", function() {
-			var vNode = queryFixture(
-				'<main id="1">' +
-					'<div id="2">' +
-					'<em id="3" style="-webkit-transform:rotate(-10deg);-ms-transform:rotate(-10deg);transform:rotate(-10deg);">transform:rotate</em>' +
-					'<div id="target" style="width:40px;height:20px;margin-top:-20px;"></div>' +
-					'</div>' +
-					'</main>'
-			);
-			var stack = [];
-			try {
-				stack = getElementStack(vNode).map(function(vNode) {
-					return vNode.actualNode.id;
-				});
-			} catch (e) {
-				console.log(e);
-			}
-			assert.deepEqual(stack, ['3', 'target', '2', '1', 'fixture']);
-		});
-
 		it('should handle negative z-index', function() {
 			var vNode = queryFixture(
 				'<main id="1">' +
