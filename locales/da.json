@@ -349,7 +349,7 @@
 		},
 		"aria-allowed-attr": {
 			"pass": "ARIA attribut er brugt korrekt for den angivede role",
-			"fail": "ARIA attribut{{=it.data && it.data.length > 1 ? 'terne' : ''}} er ikke tilladt:{{~it.data:værdi}} {{=værdi}}{{~}}"
+			"fail": "ARIA attribut{{=it.data && it.data.length > 1 ? 'terne' : ''}} er ikke tilladt:{{~it.data:value}} {{=value}}{{~}}"
 		},
 		"aria-allowed-role": {
 			"pass": "ARIA rollen er tilladt for det givne element",
@@ -367,7 +367,7 @@
 		},
 		"aria-errormessage": {
 			"pass": "Bruger en understøttet aria-errormessage teknik",
-			"fail": "aria-errormessage værdi{{=it.data && it.data.length > 1 ? 'er' : ''}} {{~it.data:værdi}} `{{=værdi}}{{~}}` bør bruge en teknik til at annoncere beskeden (fx aria-live, aria-describedby, role=alert, osv.)"
+			"fail": "aria-errormessage værdi{{=it.data && it.data.length > 1 ? 'er' : ''}} {{~it.data:value}} `{{=value}}{{~}}` bør bruge en teknik til at annoncere beskeden (fx aria-live, aria-describedby, role=alert, osv.)"
 		},
 		"has-widget-role": {
 			"pass": "Elementetet har en 'widget' rolle.",
@@ -387,33 +387,33 @@
 		},
 		"aria-required-attr": {
 			"pass": "Alle krævede ARIA attributter er til stede",
-			"fail": "Krævet ARIA attribut{{=it.data && it.data.length > 1 ? 'ter' : ''}} ikke til stede:{{~it.data:værdi}} {{=værdi}}{{~}}"
+			"fail": "Krævet ARIA attribut{{=it.data && it.data.length > 1 ? 'ter' : ''}} ikke til stede:{{~it.data:value}} {{=value}}{{~}}"
 		},
 		"aria-required-children": {
 			"pass": "Krævet ARIA under-elementer er til stede",
-			"fail": "Krævet ARIA under-element{{=it.data && it.data.length > 1 ? 'er' : ''}}s rolle er ikke til stede:{{~it.data:værdi}} {{=værdi}}{{~}}",
-			"incomplete": "Forventer at ARIA under-element{{=it.data && it.data.length > 1 ? 'er' : ''}}s rolle bliver tilføjet:{{~it.data:værdi}} {{=værdi}}{{~}}"
+			"fail": "Krævet ARIA under-element{{=it.data && it.data.length > 1 ? 'er' : ''}}s rolle er ikke til stede:{{~it.data:value}} {{=value}}{{~}}",
+			"incomplete": "Forventer at ARIA under-element{{=it.data && it.data.length > 1 ? 'er' : ''}}s rolle bliver tilføjet:{{~it.data:value}} {{=value}}{{~}}"
 		},
 		"aria-required-parent": {
 			"pass": "Krævet ARIA over-elements rolle er til stede",
-			"fail": "Krævet ARIA over-element{{=it.data && it.data.length > 1 ? 'er' : ''}}s rolle er ikke til stede:{{~it.data:værdi}} {{=værdi}}{{~}}"
+			"fail": "Krævet ARIA over-element{{=it.data && it.data.length > 1 ? 'er' : ''}}s rolle er ikke til stede:{{~it.data:value}} {{=value}}{{~}}"
 		},
 		"aria-unsupported-attr": {
 			"pass": "ARIA attribut er understøttet",
-			"fail": "ARIA attribut er ikke bredt understøttet i skærmlæsere og tilgængeligheds-teknologier: {{~it.data:værdi}} {{=værdi}}{{~}}"
+			"fail": "ARIA attribut er ikke bredt understøttet i skærmlæsere og tilgængeligheds-teknologier: {{~it.data:value}} {{=value}}{{~}}"
 		},
 		"unsupportedrole": {
 			"pass": "ARIA rollen er understøttet",
-			"fail": "Den brugte rolle er ikke bredt understøttet i skærmlæsere og tilgængeligheds-teknologier: {{~it.data:værdi}} {{=værdi}}{{~}}"
+			"fail": "Den brugte rolle er ikke bredt understøttet i skærmlæsere og tilgængeligheds-teknologier: {{~it.data:value}} {{=value}}{{~}}"
 		},
 		"aria-valid-attr-value": {
 			"pass": "ARIA attribut værdi er valid",
-			"fail": "Ikke-korrekt ARIA attribut værdi{{=it.data && it.data.length > 1 ? 'er' : ''}}:{{~it.data:værdi}} {{=værdi}}{{~}}",
-			"incomplete": "ARIA attribut{{=it.data && it.data.length > 1 ? 'ternes' : 'tens'}} element ID er ikke at finde på siden:{{~it.data:værdi}} {{=værdi}}{{~}}"
+			"fail": "Ikke-korrekt ARIA attribut værdi{{=it.data && it.data.length > 1 ? 'er' : ''}}:{{~it.data:value}} {{=value}}{{~}}",
+			"incomplete": "ARIA attribut{{=it.data && it.data.length > 1 ? 'ternes' : 'tens'}} element ID er ikke at finde på siden:{{~it.data:value}} {{=value}}{{~}}"
 		},
 		"aria-valid-attr": {
 			"pass": "ARIA attribut navn{{=it.data && it.data.length > 1 ? 'ene' : 'et'}} er korrekt",
-			"fail": "Ikke-korrekt ARIA attribut navn{{=it.data && it.data.length > 1 ? 'e' : ''}}:{{~it.data:værdi}} {{=værdi}}{{~}}"
+			"fail": "Ikke-korrekt ARIA attribut navn{{=it.data && it.data.length > 1 ? 'e' : ''}}:{{~it.data:value}} {{=value}}{{~}}"
 		},
 		"valid-scrollable-semantics": {
 			"pass": "Elementetet har korrekt semantik for et element i fokus rækkefølgen.",
@@ -772,10 +772,10 @@
 	},
 	"failureSummaries": {
 		"any": {
-			"failureMessage": "Ret en af følgende:{{~it:værdi}}\n  {{=værdi.split('\\n').join('\\n  ')}}{{~}}"
+			"failureMessage": "Ret en af følgende:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 		},
 		"none": {
-			"failureMessage": "Ret alle de følgende:{{~it:værdi}}\n  {{=værdi.split('\\n').join('\\n  ')}}{{~}}"
+			"failureMessage": "Ret alle de følgende:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 		}
 	},
 	"incompleteFallbackMessage": "axe kunne ikke give en årsag. Tid til at få dit udviklingsværktøj frem!"
