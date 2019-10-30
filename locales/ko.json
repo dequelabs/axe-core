@@ -275,7 +275,7 @@
 		},
 		"radiogroup": {
 			"description": "관련 <input type=\"radio\"> 요소에 그룹이 있고 그룹 지정이 일관 되도록 합니다.",
-			"help": "ame 속성 값이 동일한 radio 입력은 그룹의 일부여야 합니다."
+			"help": "name 속성 값이 동일한 radio 입력은 그룹의 일부여야 합니다."
 		},
 		"region": {
 			"description": "모든 페이지 콘텐츠가 랜드마크로 포함되어 있는지 확인합니다.",
