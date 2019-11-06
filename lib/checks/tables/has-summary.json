@@ -1,6 +1,7 @@
 {
 	"id": "has-summary",
 	"evaluate": "has-summary.js",
+	"deprecated": true,
 	"metadata": {
 		"impact": "serious",
 		"messages": {
