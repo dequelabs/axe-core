@@ -1,5 +1,8 @@
-/*! axe v<%= pkg.version %>
- * Copyright (c) <%= grunt.template.today("yyyy") %> Deque Systems, Inc.
+const pkg = require('./package.json');
+
+const year = new Date().getFullYear();
+const banner = `/*! axe v${pkg.version}
+ * Copyright (c) ${year} Deque Systems, Inc.
  *
  * Your use of this Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -12,4 +15,18 @@
 (function axeFunction (window) {
   // A window reference is required to access the axe object in a "global".
   var global = window;
-  var document = window.document;
+  var document = window.document;`;
+
+const footer = `
+}( typeof window === 'object' ? window : this ));
+`;
+
+export default {
+	input: 'lib/index.js',
+	output: {
+		file: 'dist/axe.js',
+		format: 'iife',
+		banner,
+		footer
+	}
+};
