@@ -534,4 +534,46 @@ describe('axe.run iframes', function() {
 		frame.src = '../mock/frames/test.html';
 		fixture.appendChild(frame);
 	});
+
+	it('ignores unexpected messages from non-axe iframes', function(done) {
+		var frame = document.createElement('iframe');
+
+		frame.addEventListener('load', function() {
+			var safetyTimeout = window.setTimeout(function() {
+				done('timeout');
+			}, 1000);
+
+			axe.run('#fixture', {}, function(err, result) {
+				assert.isNull(err);
+				assert.equal(result.violations.length, 1);
+				window.clearTimeout(safetyTimeout);
+				done();
+			});
+		});
+
+		frame.src = '../mock/frames/with-echo.html';
+		fixture.appendChild(frame);
+	});
+
+	it('ignores unexpected messages from axe iframes', function(done) {
+		var frame = document.createElement('iframe');
+
+		frame.addEventListener('load', function() {
+			var safetyTimeout = window.setTimeout(function() {
+				done('timeout');
+			}, 1000);
+			if (!axe._audit) {
+				throw new Error('no _audit');
+			}
+			axe.run('#fixture', {}, function(err, result) {
+				assert.isNull(err);
+				assert.equal(result.violations.length, 1);
+				window.clearTimeout(safetyTimeout);
+				done();
+			});
+		});
+
+		frame.src = '../mock/frames/with-echo-axe.html';
+		fixture.appendChild(frame);
+	});
 });
