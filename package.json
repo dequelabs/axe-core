@@ -115,6 +115,7 @@
 		"lint-staged": "^9.2.1",
 		"make-dir": "^3.0.0",
 		"markdown-table": "^1.1.2",
+		"memoizee": "^0.4.14",
 		"minami": "^1.2.3",
 		"mkdirp": "^0.5.1",
 		"mocha": "^6.1.2",
