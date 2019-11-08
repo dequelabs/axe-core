@@ -3,7 +3,6 @@ describe('axe.utils.collectResultsFromFrames', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-	var orig = window.setTimeout;
 	var noop = function() {};
 
 	function contextSetup(scope) {
@@ -18,10 +17,10 @@ describe('axe.utils.collectResultsFromFrames', function() {
 		fixture.innerHTML = '';
 		axe._tree = undefined;
 		axe._selectorData = undefined;
-		window.setTimeout = orig;
 	});
 
 	it('should timeout after 60s', function(done) {
+		var orig = window.setTimeout;
 		window.setTimeout = function(fn, to) {
 			if (to === 60000) {
 				assert.ok('timeout set');
@@ -45,6 +44,7 @@ describe('axe.utils.collectResultsFromFrames', function() {
 				function(err) {
 					assert.instanceOf(err, Error);
 					assert.equal(err.message.split(/: /)[0], 'Axe in frame timed out');
+					window.setTimeout = orig;
 					done();
 				}
 			);
@@ -56,6 +56,7 @@ describe('axe.utils.collectResultsFromFrames', function() {
 	});
 
 	it('should override the timeout with `options.frameWaitTime`, if provided', function(done) {
+		var orig = window.setTimeout;
 		window.setTimeout = function(fn, to) {
 			if (to === 90000) {
 				assert.ok('timeout set');
@@ -81,6 +82,7 @@ describe('axe.utils.collectResultsFromFrames', function() {
 				function(err) {
 					assert.instanceOf(err, Error);
 					assert.equal(err.message.split(/: /)[0], 'Axe in frame timed out');
+					window.setTimeout = orig;
 					done();
 				}
 			);

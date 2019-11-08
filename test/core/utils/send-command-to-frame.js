@@ -2,13 +2,11 @@ describe('axe.utils.sendCommandToFrame', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-	var orig = window.setTimeout;
 
 	afterEach(function() {
 		fixture.innerHTML = '';
 		axe._tree = undefined;
 		axe._selectorData = undefined;
-		window.setTimeout = orig;
 	});
 
 	var assertNotCalled = function() {
@@ -16,6 +14,7 @@ describe('axe.utils.sendCommandToFrame', function() {
 	};
 
 	it('should timeout if there is no response from frame', function(done) {
+		var orig = window.setTimeout;
 		window.setTimeout = function(fn, to) {
 			if (to === 30000) {
 				assert.ok('timeout set');
@@ -39,6 +38,7 @@ describe('axe.utils.sendCommandToFrame', function() {
 				},
 				assertNotCalled
 			);
+			window.setTimeout = orig;
 		});
 
 		frame.id = 'level0';
