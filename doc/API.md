@@ -102,8 +102,8 @@ The current set of tags supported are listed in the following table:
 
 | Tag Name        |       Accessibility Standard/Purpose        |
 | --------------- | :-----------------------------------------: |
-| `wcag2a`        |              WCAG 2.0 & WCAG 2.1 Level A    |
-| `wcag2aa`       |              WCAG 2.0 & WCAG 2.1 Level AA   |
+| `wcag2a`        |         WCAG 2.0 & WCAG 2.1 Level A         |
+| `wcag2aa`       |        WCAG 2.0 & WCAG 2.1 Level AA         |
 | `wcag21a`       |              WCAG 2.1 Level A               |
 | `wcag21aa`      |              WCAG 2.1 Level AA              |
 | `section508`    |                 Section 508                 |
@@ -397,7 +397,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `elementRef`       | `false` | Return element references in addition to the target                                                                                     |
 | `restoreScroll`    | `false` | Scrolls elements back to before axe started                                                                                             |
 | `frameWaitTime`    | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out                                              |
-| `preload`          | `true` | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details) |
+| `preload`          | `true`  | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details) |
 | `performanceTimer` | `false` | Log rule performance metrics to the console                                                                                             |
 
 ###### Options Parameter Examples
@@ -474,6 +474,16 @@ axe.run(
 ```
 
 This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `ruleId3`. No other rule will run.
+
+Alternatively, runOnly can be passed an array of rules:
+
+```js
+axe.run({
+  runOnly: ['ruleId1', 'ruleId2', 'ruleId3'];
+}, (err, results) => {
+  // ...
+})
+```
 
 3. Run all enabled Rules except for a list of rules
 
