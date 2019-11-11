@@ -31,7 +31,7 @@ describe('frame-wait-time option', function() {
 			axe.run('#frame', opts, function(err, res) {
 				assert.isNotNull(err);
 				assert.isUndefined(res);
-				assert.equal(err.message, 'Axe in frame timed out: #frame');
+				assert.isTrue(err.message.indexOf('Axe in frame timed out') !== -1);
 				// Ensure that axe waited less than the default wait time
 				assert.isBelow(new Date() - start, 60000);
 				done();
