@@ -1,10 +1,23 @@
 describe('frame-wait-time option', function() {
 	'use strict';
+	var respondable = axe.utils.respondable;
 
 	before(function(done) {
 		axe.testUtils.awaitNestedLoad(function() {
 			done();
 		});
+	});
+
+	beforeEach(function() {
+		axe.utils.respondable = function(a, b, c, d, callback) {
+			setTimeout(function() {
+				callback();
+			}, 1000);
+		};
+	});
+
+	afterEach(function() {
+		axe.utils.respondable = respondable;
 	});
 
 	describe('when set', function() {
