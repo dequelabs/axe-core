@@ -475,6 +475,16 @@ axe.run(
 
 This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `ruleId3`. No other rule will run.
 
+Alternatively, runOnly can be passed an array of rules:
+
+```js
+axe.run({
+  runOnly: ['ruleId1', 'ruleId2', 'ruleId3'];
+}, (err, results) => {
+  // ...
+})
+```
+
 3. Run all enabled Rules except for a list of rules
 
 The default operation for axe.run is to run all rules except for rules with the "experimental" tag. If certain rules should be disabled from being run, specify `options` as:
