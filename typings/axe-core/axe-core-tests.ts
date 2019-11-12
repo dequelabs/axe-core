@@ -62,21 +62,6 @@ axe.run(
 	{
 		runOnly: {
 			type: 'tags',
-			values: {
-				include: ['wcag2a', 'wcag2aa'],
-				exclude: ['experimental']
-			}
-		}
-	},
-	(error: Error, results: axe.AxeResults) => {
-		console.log(error || results);
-	}
-);
-axe.run(
-	context,
-	{
-		runOnly: {
-			type: 'tags',
 			values: ['wcag2a', 'wcag2aa']
 		} as axe.RunOnly
 	},
