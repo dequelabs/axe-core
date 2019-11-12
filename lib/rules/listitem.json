@@ -5,7 +5,7 @@
 	"tags": ["cat.structure", "wcag2a", "wcag131"],
 	"metadata": {
 		"description": "Ensures <li> elements are used semantically",
-		"help": "<li> elements must be contained in a <ul> or <ol>"
+		"help": "<li> elements must be contained in a <ul> or <ol> without a role or an element with role=list."
 	},
 	"all": [],
 	"any": ["listitem"],
