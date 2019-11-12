@@ -122,6 +122,7 @@
 		"retire": "^2.0.1",
 		"revalidator": "~0.3.1",
 		"selenium-webdriver": "~3.6.0",
+		"sinon": "^7.5.0",
 		"sri-toolbox": "^0.2.0",
 		"standard-version": "^7.0.0",
 		"typescript": "^3.5.3",
