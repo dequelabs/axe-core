@@ -5,7 +5,7 @@
 		"impact": "minor",
 		"messages": {
 			"pass": "Element does not exist",
-			"fail": "Element exists"
+			"incomplete": "Element exists"
 		}
 	}
 }
