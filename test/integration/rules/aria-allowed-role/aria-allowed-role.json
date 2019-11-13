@@ -55,7 +55,14 @@
 		["#pass-ul-role-presentation"],
 		["#pass-ol-role-none"],
 		["#pass-ol-role-presentation"],
-		["#pass-custom-element-any-role"]
+		["#pass-custom-element-any-role"],
+		["#pass-dpub-1"],
+		["#pass-dpub-2"],
+		["#pass-dpub-3"],
+		["#pass-dpub-4"],
+		["#pass-dpub-5"],
+		["#pass-dpub-6"],
+		["#pass-dpub-7"]
 	],
 	"violations": [
 		["#fail-dd-no-role"],
@@ -70,7 +77,14 @@
 		["#fail-aside-doc-foreword"],
 		["#fail-aside-role-tab"],
 		["#fail-button-role-gridcell"],
-		["#fail-input-role-gridcell-multiple-role"]
+		["#fail-input-role-gridcell-multiple-role"],
+		["#fail-dpub-1"],
+		["#fail-dpub-2"],
+		["#fail-dpub-3"],
+		["#fail-dpub-4"],
+		["#fail-dpub-5"],
+		["#fail-dpub-6"],
+		["#fail-dpub-7"]
 	],
 	"incomplete": [["#incomplete1"], ["#incomplete2"]]
 }
