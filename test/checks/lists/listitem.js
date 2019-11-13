@@ -2,7 +2,6 @@ describe('listitem', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-	// var checkSetup = axe.testUtils.checkSetup;
 	var shadowSupport = axe.testUtils.shadowSupport;
 	var checkContext = axe.testUtils.MockCheckContext();
 
