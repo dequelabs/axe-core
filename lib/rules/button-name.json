@@ -1,6 +1,6 @@
 {
 	"id": "button-name",
-	"selector": "button, [role=\"button\"]",
+	"selector": "button, [role=\"button\"]:not(input)",
 	"tags": [
 		"cat.name-role-value",
 		"wcag2a",
