@@ -131,7 +131,7 @@ typeof axe.getRules() === 'object';
 
 const rules = axe.getRules();
 rules.forEach(rule => {
-	typeof rule.ruleId.substr === 'function';
+	rule.ruleId.substr(1234);
 });
 
 // Plugins
