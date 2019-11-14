@@ -248,7 +248,7 @@ describe('dom.getElementStack', function() {
 			var vNode = queryFixture(
 				'<div id="1" style="position:relative;">' +
 					'<div id="2" style="position:absolute;width:300px;height:20px;"></div>' +
-					'<p id="target" style="position:relative;z-index:1;height:40px;">Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>' +
+					'<p id="target" style="position:relative;z-index:1;width:300px;height:40px;">Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>' +
 					'</div>'
 			);
 			var stack = getElementStack(vNode).map(function(vNode) {
