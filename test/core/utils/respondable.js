@@ -118,7 +118,6 @@ describe('axe.utils.respondable', function() {
 		event.data = JSON.stringify({
 			_respondable: true,
 			_source: 'axeAPI.2.0.0',
-			topic: 'Death star',
 			message: 'Help us Obi-Wan',
 			uuid: mockUUID
 		});
@@ -140,7 +139,6 @@ describe('axe.utils.respondable', function() {
 		event.data = JSON.stringify({
 			_respondable: true,
 			_source: 'axeAPI.x.y.z',
-			topic: 'Death star',
 			message: 'Help us Obi-Wan',
 			uuid: mockUUID
 		});
@@ -164,7 +162,6 @@ describe('axe.utils.respondable', function() {
 		event.data = JSON.stringify({
 			_respondable: true,
 			_source: 'axeAPI.2.0.0',
-			topic: 'Death star',
 			message: 'Help us Obi-Wan',
 			uuid: mockUUID
 		});
@@ -189,7 +186,6 @@ describe('axe.utils.respondable', function() {
 		event.data = JSON.stringify({
 			_respondable: true,
 			_source: 'axeAPI.2.0.0',
-			topic: 'Death star',
 			message: 'Help us Obi-Wan',
 			uuid: mockUUID
 		});
@@ -210,7 +206,6 @@ describe('axe.utils.respondable', function() {
 		event.initEvent('message', true, true);
 		event.data = {
 			_respondable: true,
-			topic: 'batman',
 			uuid: mockUUID
 		};
 		event.source = window;
@@ -230,7 +225,6 @@ describe('axe.utils.respondable', function() {
 		event.data =
 			JSON.stringify({
 				_respondable: true,
-				topic: 'batman',
 				uuid: mockUUID
 			}) + 'joker tricks!';
 		event.source = window;
@@ -249,8 +243,7 @@ describe('axe.utils.respondable', function() {
 		event.initEvent('message', true, true);
 		event.data = '{ "_respondable": true, "topic": "batman" }';
 		event.data = JSON.stringify({
-			_respondable: true,
-			topic: 'batman'
+			_respondable: true
 		});
 		event.source = window;
 
@@ -269,7 +262,6 @@ describe('axe.utils.respondable', function() {
 		event.data = '{ "_respondable": true, "topic": "batman", "uuid": "12" }';
 		event.data = JSON.stringify({
 			_respondable: true,
-			topic: 'batman',
 			uuid: 'not-' + mockUUID
 		});
 		event.source = window;
@@ -288,7 +280,6 @@ describe('axe.utils.respondable', function() {
 		event.initEvent('message', true, true);
 		event.data = '{ "uuid": "48", "topic": "batman" }';
 		event.data = JSON.stringify({
-			topic: 'batman',
 			uuid: mockUUID
 		});
 		event.source = window;
@@ -308,7 +299,6 @@ describe('axe.utils.respondable', function() {
 		event.data = JSON.stringify({
 			_respondable: true,
 			_source: 'axeAPI.2.0.0',
-			topic: 'Death star',
 			error: {
 				name: 'ReferenceError',
 				message: 'The exhaust port is open!',
@@ -337,7 +327,6 @@ describe('axe.utils.respondable', function() {
 		event.data = JSON.stringify({
 			_respondable: true,
 			_source: 'axeAPI.2.0.0',
-			topic: 'Death star',
 			error: {
 				name: 'evil',
 				message: 'The exhaust port is open!',

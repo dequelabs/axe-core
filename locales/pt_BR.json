@@ -769,9 +769,5 @@
 			"failureMessage": "Corrija todos os itens a seguir:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 		}
 	},
-	"incompleteFallbackMessage": {
-		"undefined": {
-			"failureMessage": "Corrija todos os itens a seguir:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
-		}
-	}
+	"incompleteFallbackMessage": "Corrija todos os itens a seguir:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 }

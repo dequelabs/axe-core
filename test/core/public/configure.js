@@ -393,11 +393,7 @@ describe('axe.configure', function() {
 							failureMessage: 'bar'
 						}
 					},
-					incompleteFallbackMessage: {
-						undefined: {
-							failureMessage: 'baz'
-						}
-					}
+					incompleteFallbackMessage: 'baz'
 				}
 			});
 

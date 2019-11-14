@@ -79,7 +79,7 @@
 		},
 		"definition-list": {
 			"description": "S’assure que les éléments <dl> sont correctement structurés",
-			"help": "Les éléments <dl> ne doivent contenir directement que des groupes d’élements <dt> et <dd> correctement ordonnés, ou des éléments <script> ou <template>"
+			"help": "Les éléments <dl> ne doivent contenir directement que des groupes d’éléments <dt> et <dd> correctement ordonnés, ou des éléments <script> ou <template>"
 		},
 		"dlitem": {
 			"description": "S’assure que les éléments <dt> et <dd> sont contenus dans un élément <dl>",
@@ -103,7 +103,7 @@
 		},
 		"frame-tested": {
 			"description": "S’assure que les éléments <iframe> et <frame> contiennent le script axe-core",
-			"help": "Les cadres doivent êtres testés avec axe-core"
+			"help": "Les cadres doivent être testés avec axe-core"
 		},
 		"frame-title-unique": {
 			"description": "S’assure que les éléments <iframe> et <frame> ont un attribut title unique",
@@ -134,8 +134,8 @@
 			"help": "Les éléments HTML avec les attributs lang et xml:lang doivent avoir la même langue de base"
 		},
 		"image-alt": {
-			"description": "S’assure que les éléments <img> ont un alternative textuelle, ou un rôle none ou presentation",
-			"help": "Les images doivent avoir un alternative textuelle"
+			"description": "S’assure que les éléments <img> ont une alternative textuelle, ou un rôle none ou presentation",
+			"help": "Les images doivent avoir une alternative textuelle"
 		},
 		"image-redundant-alt": {
 			"description": "S’assure que l’intitulé des liens et boutons n’est pas répété dans l’alternative de l’image",
@@ -143,7 +143,7 @@
 		},
 		"input-image-alt": {
 			"description": "S’assure que les éléments <input type=\"image\"> ont une alternative textuelle",
-			"help": "Les boutons images doivent avoir un alternative textuelle"
+			"help": "Les boutons images doivent avoir une alternative textuelle"
 		},
 		"label-title-only": {
 			"description": "S’assure que chaque élément de formulaire n’est pas labellisé uniquement par les attributs title ou aria-describedby",
@@ -214,8 +214,8 @@
 			"help": "Le zoom et l’agrandissement ne doivent pas être désactivés"
 		},
 		"object-alt": {
-			"description": "S’assure que les éléments <object> ont un alternative textuelle",
-			"help": "Les éléments <object> doivent avoir un alternative textuelle"
+			"description": "S’assure que les éléments <object> ont une alternative textuelle",
+			"help": "Les éléments <object> doivent avoir une alternative textuelle"
 		},
 		"p-as-heading": {
 			"description": "S’assure que les éléments p ne sont pas utilisés pour styler des niveaux de titres",
@@ -350,12 +350,12 @@
 			"incomplete": {
 				"bgImage": "La couleur d’arrière-plan de l’élément n’a pu être déterminée à cause d’une image d’arrière-plan",
 				"bgGradient": "La couleur d’arrière-plan de l’élément n’a pu être déterminée à cause d’un dégradé d’arrière-plan",
-				"imgNode": "La couleur d’arrière-plan de l’élément n’a pu être déterminée car l’élément contient une balise image",
-				"bgOverlap": "La couleur d’arrière-plan de l’élément n’a pu être déterminée car un autre élément le chevauche",
+				"imgNode": "La couleur d’arrière-plan de l’élément n’a pu être déterminée, car l’élément contient une balise image",
+				"bgOverlap": "La couleur d’arrière-plan de l’élément n’a pu être déterminée, car un autre élément le chevauche",
 				"fgAlpha": "La couleur du texte de l’élément n’a pu être déterminée à cause d’une opacité réduite",
-				"elmPartiallyObscured": "La couleur d’arrière-plan de l’élément n’a pu être déterminée car l’élément est partiellement masqué par un autre élément",
-				"elmPartiallyObscuring": "La couleur d’arrière-plan de l’élément n’a pu être déterminée car il chevauche partiellement un autre élément",
-				"outsideViewport": "La couleur d’arrière-plan de l’élément n’a pu être déterminée car il est à l’extérieur du viewport",
+				"elmPartiallyObscured": "La couleur d’arrière-plan de l’élément n’a pu être déterminée, car l’élément est partiellement masqué par un autre élément",
+				"elmPartiallyObscuring": "La couleur d’arrière-plan de l’élément n’a pu être déterminée, car il chevauche partiellement un autre élément",
+				"outsideViewport": "La couleur d’arrière-plan de l’élément n’a pu être déterminée, car il est à l’extérieur du viewport",
 				"equalRatio": "L’élément a un rapport de contraste de 1:1 avec son arrière-plan",
 				"default": "Impossible de déterminer le rapport de contraste"
 			}
@@ -367,7 +367,7 @@
 				"bgContrast": "Le rapport de contraste de l’élément n’a pu être déterminé. Recherchez un style différent pour le hover/focus.",
 				"bgImage": "Le rapport de contraste de l’élément n’a pu être déterminé à cause d’une image d’arrière-plan",
 				"bgGradient": "Le rapport de contraste de l’élément n’a pu être déterminé à cause d’un dégradé d’arrière-plan",
-				"imgNode": "Le rapport de contraste de l’élément n’a pu être déterminé car l’élément contient une balise image",
+				"imgNode": "Le rapport de contraste de l’élément n’a pu être déterminé, car l’élément contient une balise image",
 				"bgOverlap": "Le rapport de contraste de l’élément n’a pu être déterminé à cause d’un chevauchement",
 				"default": "Impossible de déterminer le rapport de contraste"
 			}
@@ -492,7 +492,7 @@
 		"description": {
 			"pass": "L’élément multimédia a une piste d’audiodescription",
 			"fail": "L’élément multimédia n’a pas de piste d’audiodescription",
-			"incomplete": "Aucune piste d’audiopdescription n’a pu être trouvée pour cet élément"
+			"incomplete": "Aucune piste d’audiodescription n’a pu être trouvée pour cet élément"
 		},
 		"frame-tested": {
 			"pass": "L’iframe a été testée avec axe-core",
@@ -659,9 +659,5 @@
 			"failureMessage": "Corriger tous les éléments suivants : {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 		}
 	},
-	"incompleteFallbackMessage": {
-		"undefined": {
-			"failureMessage": "Corriger tous les éléments suivants : {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
-		}
-	}
+	"incompleteFallbackMessage": "Corriger tous les éléments suivants : {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 }

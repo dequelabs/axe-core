@@ -1,13 +1,25 @@
 describe('label-content-name-mismatch tests', function() {
 	'use strict';
 
-	var fixture = document.getElementById('fixture');
 	var queryFixture = axe.testUtils.queryFixture;
 	var check = checks['label-content-name-mismatch'];
 	var options = undefined;
 
-	afterEach(function() {
-		fixture.innerHTML = '';
+	var fontApiSupport = !!document.fonts;
+
+	before(function(done) {
+		if (!fontApiSupport) {
+			done();
+		}
+
+		var materialFont = new FontFace(
+			'Material Icons',
+			'url(https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2)'
+		);
+		materialFont.load().then(function() {
+			document.fonts.add(materialFont);
+			done();
+		});
 	});
 
 	it('returns true when visible text and accessible name (`aria-label`) matches (text sanitized)', function() {
@@ -83,6 +95,17 @@ describe('label-content-name-mismatch tests', function() {
 		var actual = check.evaluate(vNode.actualNode, options, vNode);
 		assert.isTrue(actual);
 	});
+
+	(fontApiSupport ? it : it.skip)(
+		'returns true when visible text excluding ligature icon is part of accessible name',
+		function() {
+			var vNode = queryFixture(
+				'<button id="target" aria-label="next page">next page <span style="font-family: \'Material Icons\'">delete</span></button>'
+			);
+			var actual = check.evaluate(vNode.actualNode, options, vNode);
+			assert.isTrue(actual);
+		}
+	);
 
 	it('returns true when visible text excluding private use unicode is part of accessible name', function() {
 		var vNode = queryFixture(

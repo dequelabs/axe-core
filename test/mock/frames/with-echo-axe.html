@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Echo frame with axe-core</title>
+		<meta charset="utf8" />
+		<script src="../../../axe.js"></script>
+		<script>
+			// sync this rule to the one in test/core/public/run.js
+			axe._load({
+				rules: [
+					{
+						id: 'html',
+						selector: '#target',
+						none: ['fred']
+					}
+				],
+				checks: [
+					{
+						id: 'fred',
+						evaluate: function() {
+							return true;
+						}
+					}
+				]
+			});
+		</script>
+	</head>
+	<body>
+		<h1>Frame with axe-core</h1>
+		<div id="target">Target in iframe</div>
+		<script>
+			window.addEventListener(
+				'message',
+				function(event) {
+					window.top.postMessage(event.data, '*');
+				},
+				false
+			);
+		</script>
+	</body>
+</html>

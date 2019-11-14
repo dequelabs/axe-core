@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Echo frame without axe-core</title>
+		<meta charset="utf8" />
+	</head>
+	<body>
+		<h1>Frame without axe-core</h1>
+		<div id="target">Target in iframe</div>
+		<script>
+			window.addEventListener(
+				'message',
+				function(event) {
+					window.top.postMessage(event.data, '*');
+				},
+				false
+			);
+		</script>
+	</body>
+</html>
