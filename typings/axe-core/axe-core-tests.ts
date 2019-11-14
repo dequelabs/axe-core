@@ -111,6 +111,11 @@ axe.reset();
 axe.getRules(['wcag2aa']);
 typeof axe.getRules() === 'object';
 
+const rules = axe.getRules();
+rules.forEach(rule => {
+	rule.ruleId.substr(1234);
+});
+
 // Plugins
 var pluginSrc: axe.AxePlugin = {
 	id: 'doStuff',

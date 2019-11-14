@@ -155,6 +155,13 @@ declare namespace axe {
 		}[];
 		cleanup?(callback: Function): void;
 	}
+	interface RuleMetadata {
+		ruleId: string;
+		description: string;
+		help: string;
+		helpUrl: string;
+		tags: string[];
+	}
 
 	let plugins: any;
 
@@ -203,7 +210,7 @@ declare namespace axe {
 	 * @param  {Array}  tags  Optional array of tags
 	 * @return {Array}  Array of rules
 	 */
-	function getRules(tags?: string[]): Object[];
+	function getRules(tags?: string[]): RuleMetadata[];
 
 	/**
 	 * Restores the default axe configuration
