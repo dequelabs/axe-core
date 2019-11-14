@@ -54,10 +54,10 @@ describe('color.getForegroundColor', function() {
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		var expected = new axe.commons.color.Color(119.5, 119.5, 119.5, 1);
-		assert.equal(actual.red, expected.red);
-		assert.equal(actual.green, expected.green);
-		assert.equal(actual.blue, expected.blue);
-		assert.equal(actual.alpha, expected.alpha);
+		assert.closeTo(actual.red, expected.red);
+		assert.closeTo(actual.green, expected.green);
+		assert.closeTo(actual.blue, expected.blue);
+		assert.closeTo(actual.alpha, expected.alpha);
 	});
 
 	it('should return null if containing parent has a background image and is non-opaque', function() {
