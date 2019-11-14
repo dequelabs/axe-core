@@ -5,10 +5,14 @@ describe('table.getHeaders', function() {
 	}
 
 	var fixture = $id('fixture');
+	var origToGrid = axe.commons.table.toGrid;
+	var origCellPosition = axe.commons.table.getCellPosition;
 
 	afterEach(function() {
 		fixture.innerHTML = '';
 		axe._tree = undefined;
+		axe.commons.table.toGrid = origToGrid;
+		axe.commons.table.getCellPosition = origCellPosition;
 	});
 
 	it('should work with scope=auto', function() {
@@ -135,5 +139,39 @@ describe('table.getHeaders', function() {
 
 		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.deepEqual(axe.commons.table.getHeaders(target), []);
+	});
+
+	it('should not call toGrid if a tableGrid is passed in', function() {
+		fixture.innerHTML =
+			'<table id="table">' +
+			'<tr><td></td><th id="t1">1</th><th>2</th></tr>' +
+			'<tr><th id="t2">2</th><td id="target">ok</td><td></td></tr>' +
+			'</table>';
+
+		var target = $id('target');
+		var table = $id('table');
+
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
+		var tableGrid = axe.commons.table.toGrid(table);
+
+		// getCellPosition will eventually call into toGrid when checking for
+		// scope but we're only interested if the toGrid call was called before
+		// cellPosition
+		var called = false;
+		axe.commons.table.toGrid = function(table) {
+			called = true;
+			return origToGrid(table);
+		};
+		axe.commons.table.getCellPosition = function(cell, tableGrid) {
+			axe.commons.table.toGrid = origToGrid;
+			return origCellPosition(cell, tableGrid);
+		};
+
+		axe.commons.table.getHeaders(target, tableGrid);
+		assert.isFalse(called);
+		assert.deepEqual(axe.commons.table.getHeaders(target), [
+			$id('t1'),
+			$id('t2')
+		]);
 	});
 });
