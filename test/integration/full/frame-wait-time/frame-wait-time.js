@@ -31,19 +31,22 @@ describe('frame-wait-time option', function() {
 			frameWaitTime: 1,
 			runOnly: {
 				type: 'rule',
-				values: 'html-has-lang'
+				values: ['html-has-lang']
 			}
 		};
 		it('should modify the default frame timeout', function(done) {
 			axe.run('#frame', opts, function() {
-				// with a low timeout, either the last or 2nd to last call will be the
-				// frameWait call (depending on how the thread completes)
-				var lastCall = spy.lastCall;
-				var secondLastCall = spy.getCalls()[spy.getCalls().length - 2];
-				assert.isTrue(
-					lastCall.calledWith(sinon.match.any, 1) ||
-						secondLastCall.calledWith(sinon.match.any, 1)
-				);
+				var calls = spy.getCalls();
+				var timeoutCall;
+				for (var i = 0; i < calls.length; i++) {
+					var fn = calls[i].args[0];
+
+					if (fn.name === 'collectResultFramesTimeout') {
+						timeoutCall = calls[i];
+						break;
+					}
+				}
+				assert.equal(timeoutCall.args[1], 1);
 				done();
 			});
 		});
@@ -52,9 +55,17 @@ describe('frame-wait-time option', function() {
 	describe('when not set', function() {
 		it('should use the default frame timeout', function(done) {
 			axe.run('#frame', function() {
-				// the 2nd to last call should be the frameWait call
-				var call = spy.getCalls()[spy.getCalls().length - 2];
-				assert.isTrue(call.calledWith(sinon.match.any, 60000));
+				var calls = spy.getCalls();
+				var timeoutCall;
+				for (var i = 0; i < calls.length; i++) {
+					var fn = calls[i].args[0];
+
+					if (fn.name === 'collectResultFramesTimeout') {
+						timeoutCall = calls[i];
+						break;
+					}
+				}
+				assert.equal(timeoutCall.args[1], 60000);
 				done();
 			});
 		});
