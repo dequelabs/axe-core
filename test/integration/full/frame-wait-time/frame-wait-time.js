@@ -38,8 +38,11 @@ describe('frame-wait-time option', function() {
 			axe.run('#frame', opts, function() {
 				var calls = spy.getCalls();
 				var timeoutCall;
+				console.log('##### modify default');
 				for (var i = 0; i < calls.length; i++) {
 					var fn = calls[i].args[0];
+					console.log('\nfn:', fn.name);
+					console.log('timeout:', calls[i].args[1]);
 
 					if (fn.name === 'collectResultFramesTimeout') {
 						timeoutCall = calls[i];
@@ -57,8 +60,11 @@ describe('frame-wait-time option', function() {
 			axe.run('#frame', function() {
 				var calls = spy.getCalls();
 				var timeoutCall;
+				console.log('##### use default');
 				for (var i = 0; i < calls.length; i++) {
 					var fn = calls[i].args[0];
+					console.log('\nfn:', fn.name);
+					console.log('timeout:', calls[i].args[1]);
 
 					if (fn.name === 'collectResultFramesTimeout') {
 						timeoutCall = calls[i];
