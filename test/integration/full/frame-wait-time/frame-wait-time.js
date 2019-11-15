@@ -36,8 +36,14 @@ describe('frame-wait-time option', function() {
 		};
 		it('should modify the default frame timeout', function(done) {
 			axe.run('#frame', opts, function() {
-				// with a low timeout, the last call will be the frameWait call
-				assert.isTrue(spy.lastCall.calledWith(sinon.match.any, 1));
+				// with a low timeout, either the last or 2nd to last call will be the
+				// frameWait call (depending on how the thread completes)
+				var lastCall = spy.lastCall;
+				var secondLastCall = spy.getCalls()[spy.getCalls().length - 2];
+				assert.isTrue(
+					lastCall.calledWith(sinon.match.any, 1) ||
+						secondLastCall.calledWith(sinon.match.any, 1)
+				);
 				done();
 			});
 		});
