@@ -121,6 +121,13 @@ describe('text.isIconLigature', function() {
 		}
 	);
 
+	(fontApiSupport ? it : it.skip)('should trim the string', function() {
+		var target = queryFixture(
+			'<div id="target" style="font-family: Roboto">  fflu shot  </div>'
+		);
+		assert.isFalse(isIconLigature(target.children[0]));
+	});
+
 	(fontApiSupport ? it : it.skip)(
 		'should return true for a font that has no character data',
 		function() {
