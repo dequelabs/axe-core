@@ -299,4 +299,20 @@ describe('aria-allowed-role', function() {
 		assert.isTrue(actual);
 		assert.isNull(checkContext._data, null);
 	});
+
+	it('returns false if a dpub role’s type is not the element’s implicit role', function() {
+		fixture.innerHTML = '<article role="doc-biblioref" id="target"></article>';
+		var target = fixture.children[0];
+		assert.isFalse(
+			checks['aria-allowed-role'].evaluate.call(checkContext, target)
+		);
+	});
+
+	it('returns true if a dpub role’s type is the element’s implicit role', function() {
+		fixture.innerHTML = '<a href="foo" role="doc-biblioref" id="target"></a>';
+		var target = fixture.children[0];
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, target)
+		);
+	});
 });
