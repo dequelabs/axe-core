@@ -22,4 +22,13 @@ describe('tabindex', function() {
 
 		assert.isTrue(checks.tabindex.evaluate(node));
 	});
+
+	it('should look at the attribute and not the property', function() {
+		var node = document.createElement('div');
+		node.setAttribute('tabindex', '1');
+		node.tabindex = null;
+		fixture.appendChild(node);
+
+		assert.isFalse(checks.tabindex.evaluate(node));
+	});
 });
