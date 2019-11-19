@@ -276,6 +276,7 @@ function buildRules(grunt, options, commons, callback) {
 			auto: replaceFunctions(
 				JSON.stringify(
 					{
+						lang: options.locale || 'en',
 						data: metadata,
 						rules: rules,
 						checks: checks,
