@@ -31,4 +31,12 @@ describe('tabindex', function() {
 
 		assert.isFalse(checks.tabindex.evaluate(node));
 	});
+
+	it('should pass if tabindex is NaN', function() {
+		var node = document.createElement('div');
+		node.setAttribute('tabindex', 'foobar');
+		fixture.appendChild(node);
+
+		assert.isTrue(checks.tabindex.evaluate(node));
+	});
 });
