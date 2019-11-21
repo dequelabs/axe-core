@@ -9,7 +9,7 @@ var buildManual = require('./build-manual');
 var entities = new (require('html-entities')).AllHtmlEntities();
 
 var descriptionHeaders =
-	'| Rule ID | Description | Impact | Tags | Enabled by default |\n| :------- | :------- | :------- | :------- | :------- |\n';
+	'| Rule ID | Description | Impact | Tags | Enabled by default | Failures | Needs Review |\n| :------- | :------- | :------- | :------- | :------- | :------- | :------- |\n';
 
 dot.templateSettings.strip = false;
 
@@ -153,6 +153,17 @@ function buildRules(grunt, options, commons, callback) {
 			});
 		}
 
+		function traverseChecks(checkCollection, predicate, startValue) {
+			return checkCollection.reduce(function(out, check) {
+				var id = typeof check === 'string' ? check : check.id;
+				var definition = clone(findCheck(checks, id));
+				if (!definition) {
+					grunt.log.error('check ' + id + ' not found');
+				}
+				return predicate(definition, out);
+			}, startValue);
+		}
+
 		function parseImpactForRule(rule) {
 			function capitalize(s) {
 				return s.charAt(0).toUpperCase() + s.slice(1);
@@ -164,23 +175,16 @@ function buildRules(grunt, options, commons, callback) {
 				});
 			}
 
-			function getImpactScores(checkCollection) {
-				return checkCollection.reduce(function(out, check) {
-					var id = typeof check === 'string' ? check : check.id;
-					var definition = clone(findCheck(checks, id));
-					if (!definition) {
-						grunt.log.error('check ' + id + ' not found');
-					}
-					if (definition && definition.metadata && definition.metadata.impact) {
-						var impactScore = axeImpact.indexOf(definition.metadata.impact);
-						out.push(impactScore);
-					}
-					return out;
-				}, []);
+			function getImpactScores(definition, out) {
+				if (definition && definition.metadata && definition.metadata.impact) {
+					var impactScore = axeImpact.indexOf(definition.metadata.impact);
+					out.push(impactScore);
+				}
+				return out;
 			}
 
 			function getScore(checkCollection, onlyHighestScore) {
-				var scores = getImpactScores(checkCollection);
+				var scores = traverseChecks(checkCollection, getImpactScores, []);
 				if (scores && scores.length) {
 					return onlyHighestScore
 						? [Math.max.apply(null, scores)]
@@ -205,20 +209,56 @@ function buildRules(grunt, options, commons, callback) {
 			}, '');
 		}
 
+		function parseFailureForRule(rule) {
+			function hasFailure(definition, out) {
+				if (definition && definition.metadata && definition.metadata.impact) {
+					out = out || !!definition.metadata.messages.fail;
+				}
+				return out;
+			}
+
+			return (
+				traverseChecks(rule.any, hasFailure, false) ||
+				traverseChecks(rule.all, hasFailure, false) ||
+				traverseChecks(rule.none, hasFailure, false)
+			);
+		}
+
+		function parseIncompleteForRule(rule) {
+			function hasIncomplete(definition, out) {
+				if (definition && definition.metadata && definition.metadata.impact) {
+					out = out || !!definition.metadata.messages.incomplete;
+				}
+				return out;
+			}
+
+			return (
+				traverseChecks(rule.any, hasIncomplete, false) ||
+				traverseChecks(rule.all, hasIncomplete, false) ||
+				traverseChecks(rule.none, hasIncomplete, false)
+			);
+		}
+
 		rules.map(function(rule) {
 			var impact = parseImpactForRule(rule);
+			var canFail = parseFailureForRule(rule);
+			var canIncomplete = parseIncompleteForRule(rule);
+
 			rule.any = parseChecks(rule.any);
 			rule.all = parseChecks(rule.all);
 			rule.none = parseChecks(rule.none);
 			if (rule.metadata && !metadata.rules[rule.id]) {
 				metadata.rules[rule.id] = parseMetaData(rule, 'rules'); // Translate rules
 			}
+
 			descriptions.push([
 				rule.id,
 				entities.encode(rule.metadata.description),
 				impact,
 				rule.tags.join(', '),
-				rule.enabled === false ? false : true
+				rule.enabled === false ? false : true,
+				canFail,
+				canIncomplete
 			]);
 			if (tags.length) {
 				rule.enabled = !!rule.tags.filter(function(t) {
@@ -236,6 +276,7 @@ function buildRules(grunt, options, commons, callback) {
 			auto: replaceFunctions(
 				JSON.stringify(
 					{
+						lang: options.locale || 'en',
 						data: metadata,
 						rules: rules,
 						checks: checks,

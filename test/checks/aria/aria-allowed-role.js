@@ -164,6 +164,46 @@ describe('aria-allowed-role', function() {
 		);
 	});
 
+	it('returns true when INPUT type is tel with role combobox', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'tel');
+		node.setAttribute('role', 'combobox');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
+	it('returns true when INPUT type is url with role combobox', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'url');
+		node.setAttribute('role', 'combobox');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
+	it('returns true when INPUT type is search with role combobox', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'search');
+		node.setAttribute('role', 'combobox');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
+	it('returns true when INPUT type is email with role combobox', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'email');
+		node.setAttribute('role', 'combobox');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
 	it('returns true when INPUT type is text with role spinbutton', function() {
 		var node = document.createElement('input');
 		node.setAttribute('type', 'text');
@@ -258,5 +298,21 @@ describe('aria-allowed-role', function() {
 		var actual = checks['aria-allowed-role'].evaluate.call(checkContext, node);
 		assert.isTrue(actual);
 		assert.isNull(checkContext._data, null);
+	});
+
+	it('returns false if a dpub role’s type is not the element’s implicit role', function() {
+		fixture.innerHTML = '<article role="doc-biblioref" id="target"></article>';
+		var target = fixture.children[0];
+		assert.isFalse(
+			checks['aria-allowed-role'].evaluate.call(checkContext, target)
+		);
+	});
+
+	it('returns true if a dpub role’s type is the element’s implicit role', function() {
+		fixture.innerHTML = '<a href="foo" role="doc-biblioref" id="target"></a>';
+		var target = fixture.children[0];
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, target)
+		);
 	});
 });

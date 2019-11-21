@@ -5,7 +5,7 @@
 		"impact": "serious",
 		"messages": {
 			"pass": "List item has a <ul>, <ol> or role=\"list\" parent element",
-			"fail": "List item does not have a <ul>, <ol> or role=\"list\" parent element"
+			"fail": "List item does not have a <ul>, <ol>{{? it.data === 'roleNotValid'}} without a role, or a role=\"list\"{{?}} parent element"
 		}
 	}
 }
