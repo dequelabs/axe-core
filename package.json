@@ -120,14 +120,15 @@
 		"mocha": "^6.1.2",
 		"prettier": "^1.17.1",
 		"revalidator": "~0.3.1",
-		"rollup": "^1.25.0",
 		"selenium-webdriver": "~3.6.0",
 		"sinon": "^7.5.0",
 		"sri-toolbox": "^0.2.0",
 		"standard-version": "^7.0.0",
 		"typescript": "^3.5.3",
 		"uglify-js": "^3.4.4",
-		"weakmap-polyfill": "^2.0.0"
+		"weakmap-polyfill": "^2.0.0",
+		"webpack": "^4.41.2",
+		"webpack-cli": "^3.3.10"
 	},
 	"dependencies": {},
 	"lint-staged": {

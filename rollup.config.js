@@ -1,4 +1,6 @@
 const pkg = require('./package.json');
+const resolve = require('rollup-plugin-node-resolve');
+const commonjs = require('rollup-plugin-commonjs');
 
 const year = new Date().getFullYear();
 const banner = `/*! axe v${pkg.version}
@@ -15,7 +17,8 @@ const banner = `/*! axe v${pkg.version}
 (function axeFunction (window) {
   // A window reference is required to access the axe object in a "global".
   var global = window;
-  var document = window.document;`;
+  var document = window.document;
+  var axe = {};`;
 
 const footer = `
 }( typeof window === 'object' ? window : this ));
@@ -28,5 +31,6 @@ export default {
 		format: 'iife',
 		banner,
 		footer
-	}
+	},
+	plugins: [resolve(), commonjs()]
 };
