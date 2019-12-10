@@ -74,6 +74,14 @@ jobs:
       - run: npm run build
       - run: npm run test:locales
 
+  # Test api docs can be built
+  build_api_docs:
+    <<: *defaults
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache
+      - run: npm run api-docs
+
   # Test newest axe-core version rule help docs are active (only on
   # master prs)
   test_rule_help_version:
@@ -138,6 +146,9 @@ workflows:
       - test_locales:
           requires:
             - test
+      - build_api_docs:
+          requires:
+            - test
       - test_rule_help_version:
           requires:
             - test
@@ -148,6 +159,7 @@ workflows:
             - test
             - test_examples
             - test_locales
+            - build_api_docs
             - test_rule_help_version
           filters:
             branches:
@@ -160,6 +172,7 @@ workflows:
             - test
             - test_examples
             - test_locales
+            - build_api_docs
           filters:
             branches:
               only: develop
@@ -170,6 +183,7 @@ workflows:
             - test
             - test_examples
             - test_locales
+            - build_api_docs
             - test_rule_help_version
             - hold
           filters:
