@@ -3,15 +3,12 @@
 'use strict';
 
 var clone = require('clone');
-var dot = require('@deque/dot');
 var templates = require('./templates');
 var buildManual = require('./build-manual');
 var entities = new (require('html-entities')).AllHtmlEntities();
 
 var descriptionHeaders =
 	'| Rule ID | Description | Impact | Tags | Enabled by default | Failures | Needs Review |\n| :------- | :------- | :------- | :------- | :------- | :------- | :------- |\n';
-
-dot.templateSettings.strip = false;
 
 function getLocale(grunt, options) {
 	var localeFile;
@@ -55,21 +52,6 @@ function buildRules(grunt, options, commons, callback) {
 			}
 			var result = clone(data) || {};
 
-			if (result.messages) {
-				Object.keys(result.messages).forEach(function(key) {
-					// only convert to templated function for strings
-					// objects handled later in publish-metadata.js
-					if (typeof result.messages[key] !== 'object') {
-						result.messages[key] = dot
-							.template(result.messages[key])
-							.toString();
-					}
-				});
-			}
-			//TODO this is actually failureSummaries, property name should better reflect that
-			if (result.failureMessage) {
-				result.failureMessage = dot.template(result.failureMessage).toString();
-			}
 			return result;
 		}
 
@@ -87,7 +69,7 @@ function buildRules(grunt, options, commons, callback) {
 			var result = {};
 			summaries.forEach(function(summary) {
 				if (summary.incompleteFallbackMessage) {
-					result = dot.template(summary.incompleteFallbackMessage).toString();
+					result = summary.incompleteFallbackMessage;
 				}
 			});
 			return result;

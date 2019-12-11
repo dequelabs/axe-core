@@ -74,40 +74,26 @@ describe('axe.utils.publishMetaData', function() {
 			data: {
 				rules: {
 					cats: {
-						help: function() {
-							return 'cats-rule';
-						}
+						help: 'cats-rule'
 					}
 				},
 				checks: {
 					'cats-NONE': {
 						messages: {
-							fail: function() {
-								return 'fail-NONE';
-							},
-							pass: function() {
-								return 'pass-NONE';
-							}
+							fail: 'fail-NONE',
+							pass: 'pass-NONE'
 						}
 					},
 					'cats-ANY': {
 						messages: {
-							fail: function() {
-								return 'fail-ANY';
-							},
-							pass: function() {
-								return 'pass-ANY';
-							}
+							fail: 'fail-ANY',
+							pass: 'pass-ANY'
 						}
 					},
 					'cats-ALL': {
 						messages: {
-							fail: function() {
-								return 'fail-ALL';
-							},
-							pass: function() {
-								return 'pass-ALL';
-							}
+							fail: 'fail-ALL',
+							pass: 'pass-ALL'
 						}
 					}
 				}
@@ -221,20 +207,14 @@ describe('axe.utils.publishMetaData', function() {
 			data: {
 				rules: {
 					cats: {
-						help: function() {
-							return 'cats-rule';
-						}
+						help: 'cats-rule'
 					}
 				},
 				checks: {
 					'cats-NONE': {
 						messages: {
-							fail: function() {
-								return 'fail-NONE';
-							},
-							pass: function() {
-								return 'pass-NONE';
-							},
+							fail: 'fail-NONE',
+							pass: 'pass-NONE',
 							incomplete: {
 								'incomplete-NONE-reason1':
 									"We couldn't tell because of some reason",
@@ -245,12 +225,8 @@ describe('axe.utils.publishMetaData', function() {
 					},
 					'cats-ANY': {
 						messages: {
-							fail: function() {
-								return 'fail-ANY';
-							},
-							pass: function() {
-								return 'pass-ANY';
-							},
+							fail: 'fail-ANY',
+							pass: 'pass-ANY',
 							incomplete: {
 								'incomplete-ANY-reason1':
 									"We couldn't tell because of some reason",
@@ -261,12 +237,8 @@ describe('axe.utils.publishMetaData', function() {
 					},
 					'cats-ALL': {
 						messages: {
-							fail: function() {
-								return 'fail-ALL';
-							},
-							pass: function() {
-								return 'pass-ALL';
-							},
+							fail: 'fail-ALL',
+							pass: 'pass-ALL',
 							incomplete: {
 								'incomplete-ALL-reason1':
 									"We couldn't tell because of some reason",
@@ -347,47 +319,31 @@ describe('axe.utils.publishMetaData', function() {
 		axe._load({
 			rules: [],
 			data: {
-				incompleteFallbackMessage: function() {
-					return 'Dogs are the best';
-				},
+				incompleteFallbackMessage: 'Dogs are the best',
 				rules: {
 					cats: {
-						help: function() {
-							return 'cats-rule';
-						}
+						help: 'cats-rule'
 					}
 				},
 				checks: {
 					'cats-NONE': {
 						messages: {
-							fail: function() {
-								return 'fail-NONE';
-							},
-							pass: function() {
-								return 'pass-NONE';
-							},
+							faiL: 'fail-NONE',
+							pass: 'pass-NONE',
 							incomplete: {}
 						}
 					},
 					'cats-ANY': {
 						messages: {
-							fail: function() {
-								return 'fail-ANY';
-							},
-							pass: function() {
-								return 'pass-ANY';
-							},
+							faiL: 'fail-ANY',
+							pass: 'pass-ANY',
 							incomplete: {}
 						}
 					},
 					'cats-ALL': {
 						messages: {
-							fail: function() {
-								return 'fail-ALL';
-							},
-							pass: function() {
-								return 'pass-ALL';
-							},
+							faiL: 'fail-ALL',
+							pass: 'pass-ALL',
 							incomplete: {}
 						}
 					}
@@ -465,57 +421,49 @@ describe('axe.utils.publishMetaData', function() {
 			data: {
 				rules: {
 					cats: {
-						help: function() {
-							return 'cats-rule';
-						}
+						help: 'cats-rule'
 					}
 				},
 				checks: {
 					'cats-NONE': {
 						messages: {
-							fail: function() {
-								return 'fail-NONE';
-							},
-							pass: function() {
-								return 'pass-NONE';
-							},
+							faiL: 'fail-NONE',
+							pass: 'pass-NONE',
 							incomplete: {
-								'incomplete-NONE-reason1':
-									"We couldn't tell because of some reason",
-								'incomplete-NONE-reason2': 'Some other reason',
-								default: 'Fallback message for no reason'
+								missingData: {
+									'incomplete-NONE-reason1':
+										"We couldn't tell because of some reason",
+									'incomplete-NONE-reason2': 'Some other reason',
+									default: 'Fallback message for no reason'
+								}
 							}
 						}
 					},
 					'cats-ANY': {
 						messages: {
-							fail: function() {
-								return 'fail-ANY';
-							},
-							pass: function() {
-								return 'pass-ANY';
-							},
+							faiL: 'fail-ANY',
+							pass: 'pass-ANY',
 							incomplete: {
-								'incomplete-ANY-reason1':
-									"We couldn't tell because of some reason",
-								'incomplete-ANY-reason2': 'Some other reason',
-								default: 'Fallback message for no reason'
+								missingData: {
+									'incomplete-ANY-reason1':
+										"We couldn't tell because of some reason",
+									'incomplete-ANY-reason2': 'Some other reason',
+									default: 'Fallback message for no reason'
+								}
 							}
 						}
 					},
 					'cats-ALL': {
 						messages: {
-							fail: function() {
-								return 'fail-ALL';
-							},
-							pass: function() {
-								return 'pass-ALL';
-							},
+							faiL: 'fail-ALL',
+							pass: 'pass-ALL',
 							incomplete: {
-								'incomplete-ALL-reason1':
-									"We couldn't tell because of some reason",
-								'incomplete-ALL-reason2': 'Some other reason',
-								default: 'Fallback message for no reason'
+								missingData: {
+									'incomplete-ALL-reason1':
+										"We couldn't tell because of some reason",
+									'incomplete-ALL-reason2': 'Some other reason',
+									default: 'Fallback message for no reason'
+								}
 							}
 						}
 					}
@@ -605,57 +553,49 @@ describe('axe.utils.publishMetaData', function() {
 			data: {
 				rules: {
 					cats: {
-						help: function() {
-							return 'cats-rule';
-						}
+						help: 'cats-rule'
 					}
 				},
 				checks: {
 					'cats-NONE': {
 						messages: {
-							fail: function() {
-								return 'fail-NONE';
-							},
-							pass: function() {
-								return 'pass-NONE';
-							},
+							faiL: 'fail-NONE',
+							pass: 'pass-NONE',
 							incomplete: {
-								'incomplete-NONE-reason1':
-									"We couldn't tell because of reason #1",
-								'incomplete-NONE-reason2': 'Some other reason',
-								default: 'Fallback message for no reason'
+								missingData: {
+									'incomplete-NONE-reason1':
+										"We couldn't tell because of reason #1",
+									'incomplete-NONE-reason2': 'Some other reason',
+									default: 'Fallback message for no reason'
+								}
 							}
 						}
 					},
 					'cats-ANY': {
 						messages: {
-							fail: function() {
-								return 'fail-ANY';
-							},
-							pass: function() {
-								return 'pass-ANY';
-							},
+							faiL: 'fail-ANY',
+							pass: 'pass-ANY',
 							incomplete: {
-								'incomplete-ANY-reason1':
-									"We couldn't tell because of reason #1",
-								'incomplete-ANY-reason2': 'Some other reason',
-								default: 'Fallback message for no reason'
+								missingData: {
+									'incomplete-ANY-reason1':
+										"We couldn't tell because of reason #1",
+									'incomplete-ANY-reason2': 'Some other reason',
+									default: 'Fallback message for no reason'
+								}
 							}
 						}
 					},
 					'cats-ALL': {
 						messages: {
-							fail: function() {
-								return 'fail-ALL';
-							},
-							pass: function() {
-								return 'pass-ALL';
-							},
+							faiL: 'fail-ALL',
+							pass: 'pass-ALL',
 							incomplete: {
-								'incomplete-ALL-reason1':
-									"We couldn't tell because of reason #1",
-								'incomplete-ALL-reason2': 'Some other reason',
-								default: 'Fallback message for no reason'
+								missingData: {
+									'incomplete-ALL-reason1':
+										"We couldn't tell because of reason #1",
+									'incomplete-ALL-reason2': 'Some other reason',
+									default: 'Fallback message for no reason'
+								}
 							}
 						}
 					}
@@ -769,26 +709,18 @@ describe('axe.utils.publishMetaData', function() {
 			data: {
 				rules: {
 					cats: {
-						help: function() {
-							return 'cats-rule';
-						}
+						help: 'cats-rule'
 					}
 				},
 				checks: {
 					'cats-PASS': {
-						failureMessage: function() {
-							return 'cats-check';
-						}
+						failureMessage: 'cats-check'
 					},
 					'cats-ANY': {
-						failureMessage: function() {
-							return 'cats-check2';
-						}
+						failureMessage: 'cats-check2'
 					},
 					'cats-ALL': {
-						failureMessage: function() {
-							return 'cats-check2';
-						}
+						failureMessage: 'cats-check2'
 					}
 				}
 			}

@@ -5,9 +5,7 @@ describe('helpers.incompleteFallbackMessage', function() {
 			messages: {},
 			rules: [],
 			data: {
-				incompleteFallbackMessage: function anonymous() {
-					return 'Dogs are the best';
-				}
+				incompleteFallbackMessage: 'Dogs are the best'
 			}
 		});
 	});

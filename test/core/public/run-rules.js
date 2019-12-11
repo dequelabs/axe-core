@@ -453,32 +453,16 @@ describe('runRules', function() {
 						thingy: true,
 						impact: 'serious',
 						messages: {
-							fail: function(checkResult) {
-								return checkResult.id === 'first-div'
-									? 'failing is not good'
-									: 'y u wrong rule?';
-							},
-							pass: function(checkResult) {
-								return checkResult.id === 'first-div'
-									? 'passing is good'
-									: 'y u wrong rule?';
-							}
+							fail: 'failing is not good',
+							pass: 'passing is good'
 						}
 					},
 					'has-target': {
 						otherThingy: true,
 						impact: 'moderate',
 						messages: {
-							fail: function(checkResult) {
-								return checkResult.id === 'has-target'
-									? 'failing is not good'
-									: 'y u wrong rule?';
-							},
-							pass: function(checkResult) {
-								return checkResult.id === 'has-target'
-									? 'passing is good'
-									: 'y u wrong rule?';
-							}
+							fail: 'failing is not good',
+							pass: 'passing is good'
 						}
 					}
 				}
