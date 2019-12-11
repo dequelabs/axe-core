@@ -47,10 +47,9 @@ describe('async rule test', function() {
 					metadata: {
 						impact: 'critical',
 						messages: {
-							pass: 'function (out) { return "passed with " + out.data }',
-							fail: 'function (out) { return "failed with " + out.data }',
-							incomplete:
-								'function (out) { return "incomplete with " + out.data }'
+							pass: 'passed with ${data}',
+							fail: 'failed with ${data}',
+							incomplete: 'incomplete with ${data}'
 						}
 					}
 				}
