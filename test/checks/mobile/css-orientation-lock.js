@@ -204,7 +204,7 @@ describe('css-orientation-lock tests', function() {
 					root: document,
 					sheet: getSheet(
 						// apply 0 on the z-axis (3rd parameter) does not apply given rotation on z-axis
-						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform: rotate3d(0,0,1,90deg) } }'
+						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform: rotate3d(0,0,1,90deg); -webkit-transform: rotate3d(0,0,1,90deg) } }'
 					)
 				}
 			]
@@ -219,7 +219,7 @@ describe('css-orientation-lock tests', function() {
 					shadowId: undefined,
 					root: document,
 					sheet: getSheet(
-						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform: rotate3d(0,0,1,1.5708rad) } }'
+						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform: rotate3d(0,0,1,1.5708rad); -webkit-transform: rotate3d(0,0,1,1.5708rad) } }'
 					)
 				}
 			]
@@ -235,7 +235,7 @@ describe('css-orientation-lock tests', function() {
 					root: document,
 					sheet: getSheet(
 						// this rotates by 90deg
-						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform:matrix(0.00,1.00,-1.00,0.00,0,0); } }'
+						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform:matrix(0.00,1.00,-1.00,0.00,0,0); -webkit-transform:matrix(0.00,1.00,-1.00,0.00,0,0); } }'
 					)
 				}
 			]
@@ -251,7 +251,7 @@ describe('css-orientation-lock tests', function() {
 					root: document,
 					sheet: getSheet(
 						// this rotates by 90deg
-						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform: matrix3d(0,-1,0.00,0,1.00,0,0.00,0,0,0,1,0,0,0,0,1); } }'
+						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform: matrix3d(0,-1,0.00,0,1.00,0,0.00,0,0,0,1,0,0,0,0,1); -webkit-transform: matrix3d(0,-1,0.00,0,1.00,0,0.00,0,0,0,1,0,0,0,0,1); } }'
 					)
 				}
 			]
