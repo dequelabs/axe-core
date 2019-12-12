@@ -349,21 +349,12 @@
 		},
 		"aria-allowed-attr": {
 			"pass": "ARIA属性が定義されたロールに対して正しく使用されています",
-			"fail": {
-				"singular": "ARIA attribute is not allowed: ${data.values}",
-				"plural": "ARIA attributes are not allowed: ${data.values}"
-			}
+			"fail": "ARIA属性は許可されていません:{{~it.data:value}} {{=value}}{{~}}"
 		},
 		"aria-allowed-role": {
 			"pass": "ARIAロールは指定された要素に対して許可されています",
-			"fail": {
-				"singular": "ARIA role ${data.values} is not allowed for given element",
-				"plural": "ARIA roles ${data.values} are not allowed for given element"
-			},
-			"incomplete": {
-				"singular": "ARIA role ${data.values} must be removed when the element is made visible, as it is not allowed for the element",
-				"plural": "ARIA roles ${data.values} must be removed when the element is made visible, as they are not allowed for the element"
-			}
+			"fail": "ARIAロールは指定された要素に許可されていません",
+			"incomplete": "ARIAロールはこの要素に許可されていないため、要素が表示されたときはARIAロールを削除する必要があります"
 		},
 		"aria-hidden-body": {
 			"pass": "ドキュメント本体にaria-hidden属性は存在していません",
@@ -376,10 +367,7 @@
 		},
 		"aria-errormessage": {
 			"pass": "サポートされているaria-errormessageの技術を使用しています",
-			"fail": {
-				"singular": "aria-errormessage value `${data.values}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)",
-				"plural": "aria-errormessage values `${data.values}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)"
-			}
+			"fail": "aria-errormessageの値{{~it.data:value}} `{{=value}}{{~}}`はメッセージを通知する方法を使用しなければなりません　(例えば、aria-live、aria-describedby、role=alert等)"
 		},
 		"has-widget-role": {
 			"pass": "要素にはwidgetロールが存在しています",
@@ -399,28 +387,16 @@
 		},
 		"aria-required-attr": {
 			"pass": "すべての必須のARIA属性が存在しています",
-			"fail": {
-				"singular": "Required ARIA attribute not present: ${data.values}",
-				"plural": "Required ARIA attributes not present: ${data.values}"
-			}
+			"fail": "必須のARIA属性が提供されていません:{{~it.data:value}} {{=value}}{{~}}"
 		},
 		"aria-required-children": {
 			"pass": "必須のARIA子ロールが存在しています",
-			"fail": {
-				"singular": "Required ARIA child role not present: ${data.values}",
-				"plural": "Required ARIA children role not present: ${data.values}"
-			},
-			"incomplete": {
-				"singular": "Expecting ARIA child role to be added: ${data.values}",
-				"plural": "Expecting ARIA children role to be added: ${data.values}"
-			}
+			"fail": "必須のARIA子ロールが提供されていません:{{~it.data:value}} {{=value}}{{~}}",
+			"incomplete": "ARIAの子ロールが追加されることを求めています:{{~it.data:value}} {{=value}}{{~}}"
 		},
 		"aria-required-parent": {
 			"pass": "必須のARIA親ロールが存在しています",
-			"fail": {
-				"singular": "Required ARIA parent role not present: ${data.values}",
-				"plural": "Required ARIA parents role not present: ${data.values}"
-			}
+			"fail": "必須のARIA親ロールが提供されていません:{{~it.data:value}} {{=value}}{{~}}"
 		},
 		"aria-unsupported-attr": {
 			"pass": "ARIA属性はサポートされています",
@@ -432,21 +408,12 @@
 		},
 		"aria-valid-attr-value": {
 			"pass": "ARIA属性値が有効です",
-			"fail": {
-				"singular": "Invalid ARIA attribute value: ${data.values}",
-				"plural": "Invalid ARIA attribute values: ${data.values}"
-			},
-			"incomplete": {
-				"singular": "ARIA attribute element ID does not exist on the page: ${data.values}",
-				"plural": "ARIA attributes element ID does not exist on the page: ${data.values}"
-			}
+			"fail": "無効なARIA属性値です:{{~it.data:value}} {{=value}}{{~}}",
+			"incomplete": "ページにARIA属性の要素IDが存在しません:{{~it.data:value}} {{=value}}{{~}}"
 		},
 		"aria-valid-attr": {
 			"pass": "ARIA属性名が有効です",
-			"fail": {
-				"singular": "Invalid ARIA attribute name: ${data.values}",
-				"plural": "Invalid ARIA attribute names: ${data.values}"
-			}
+			"fail": "無効なARIA属性名です:{{~it.data:value}} {{=value}}{{~}}"
 		},
 		"valid-scrollable-semantics": {
 			"pass": "要素はフォーカス順序に含まれる要素に対して有効なセマンティクスを持ちます",
@@ -456,33 +423,29 @@
 			"pass": "要素には{{=it.data.contrastRatio}}の十分なコントラスト比があります",
 			"fail": "要素のコントラスト比が不十分です {{=it.data.contrastRatio}}（前景色: {{=it.data.fgColor}}、背景色: {{=it.data.bgColor}}、フォントサイズ: {{=it.data.fontSize}}、フォントの太さ: {{=it.data.fontWeight}}）。コントラスト比{{=it.data.expectedContrastRatio}}を必要とします",
 			"incomplete": {
-				"default": "コントラスト比を判定できません",
-				"missingData": {
-					"bgImage": "Element's background color could not be determined due to a background image",
-					"bgGradient": "Element's background color could not be determined due to a background gradient",
-					"imgNode": "Element's background color could not be determined because element contains an image node",
-					"bgOverlap": "Element's background color could not be determined because it is overlapped by another element",
-					"fgAlpha": "Element's foreground color could not be determined because of alpha transparency",
-					"elmPartiallyObscured": "Element's background color could not be determined because it's partially obscured by another element",
-					"elmPartiallyObscuring": "Element's background color could not be determined because it partially overlaps other elements",
-					"outsideViewport": "Element's background color could not be determined because it's outside the viewport",
-					"equalRatio": "Element has a 1:1 contrast ratio with the background",
-					"shortTextContent": "Element content is too short to determine if it is actual text content"
-				}
+				"bgImage": "背景画像のため、要素の背景色を判定できません",
+				"bgGradient": "背景グラデーションのため、要素の背景色を判定できません",
+				"imgNode": "画像ノードが含まれるため、要素の背景色を判定できません",
+				"bgOverlap": "他の要素と重なっているため、要素の背景色を判定できません",
+				"fgAlpha": "アルファ透明度により、要素の前景色を判定できません",
+				"elmPartiallyObscured": "他の要素により部分的に不明瞭なため、要素の背景色を判定できません",
+				"elmPartiallyObscuring": "他の要素と部分的に重なっているため、要素の背景色を判定できません",
+				"outsideViewport": "ビューポートの外にあるため、要素の背景色を判定できません",
+				"equalRatio": "要素のコントラスト比が背景と1:1です",
+				"shortTextContent": "実際のテキストコンテンツであるかを判断するには要素のコンテンツが短すぎます",
+				"default": "コントラスト比を判定できません"
 			}
 		},
 		"link-in-text-block": {
 			"pass": "リンクは色以外の方法で周囲のテキストと区別できます",
 			"fail": "リンクは色以外の方法で周囲のテキストと区別させる必要があります",
 			"incomplete": {
-				"default": "コントラスト比を判定できません",
-				"missingData": {
-					"bgContrast": "Element's contrast ratio could not be determined. Check for a distinct hover/focus style",
-					"bgImage": "Element's contrast ratio could not be determined due to a background image",
-					"bgGradient": "Element's contrast ratio could not be determined due to a background gradient",
-					"imgNode": "Element's contrast ratio could not be determined because element contains an image node",
-					"bgOverlap": "Element's contrast ratio could not be determined because of element overlap"
-				}
+				"bgContrast": "要素のコントラスト比を判定できません。明確なホバー/フォーカススタイルを確認します",
+				"bgImage": "背景画像のため、要素のコントラスト比を判定できません",
+				"bgGradient": "背景グラデーションのため、要素のコントラスト比を判定できません",
+				"imgNode": "画像ノードが含まれるため、要素のコントラスト比を判定できません",
+				"bgOverlap": "要素の重なりにより、要素のコントラスト比を判定できません",
+				"default": "コントラスト比を判定できません"
 			}
 		},
 		"autocomplete-appropriate": {
@@ -495,26 +458,11 @@
 		},
 		"fieldset": {
 			"pass": "フィールドセット内に要素が含まれています",
-			"fail": {
-				"default": "Element does not have a containing fieldset or ARIA group",
-				"failureCode": {
-					"no-legend": "Fieldset does not have a legend as its first child",
-					"empty-legend": "Legend does not have text that is visible to screen readers",
-					"mixed-inputs": "Fieldset contains unrelated inputs",
-					"no-group-label": "ARIA group does not have aria-label or aria-labelledby",
-					"group-mixed-inputs": "ARIA group contains unrelated inputs"
-				}
-			}
+			"fail": "{{var code = it.data && it.data.failureCode;}}{{? code === 'no-legend'}}フィールドセットの最初の子要素としてレジェンドが存在しません{{?? code === 'empty-legend'}}スクリーン・リーダーに認識可能なテキストがレジェンドに存在しません{{?? code === 'mixed-inputs'}}フィールドセットに関連性のない入力欄が含まれています{{?? code === 'no-group-label'}}ARIAグループにaria-labelまたはaria-labelledbyが存在しません{{?? code === 'group-mixed-inputs'}}ARIAグループに関連性のない入力欄が含まれています{{??}}要素を含有するフィールドセットまたはARIAグループがありません{{?}}"
 		},
 		"group-labelledby": {
 			"pass": "\"{{=it.data.name}}\" という名前を持つ要素には、共通のラベルおよび一意のラベルがあり、aria-labelledbyを通じて参照されます",
-			"fail": {
-				"default": "Elements with the name \"${data.name}\" do not all have both a shared label, and a unique label referenced through aria-labelledby",
-				"failureCode": {
-					"no-shared-label": "Elements with the name \"${data.name}\" do not all have a shared label referenced through aria-labelledby",
-					"no-unique-label": "Elements with the name \"${data.name}\" do not all have a unique label referenced through aria-labelledby"
-				}
-			}
+			"fail": "{{var code = it.data && it.data.failureCode;}} \"{{=it.data.name}}\" という名前を持つ要素すべてに対してaria-labelledbyを通じて参照される {{? code === 'no-shared-label' }} 共通のラベル {{?? code === 'no-unique-label' }} 一意のラベル {{??}} 共通のラベルおよび一意のラベル両方 {{?}} がありません"
 		},
 		"accesskeys": {
 			"pass": "アクセスキー属性値は一意です",
@@ -626,10 +574,7 @@
 		},
 		"listitem": {
 			"pass": "リスト項目に<ul>、<ol>、またはrole=\"list\"親要素が存在しています",
-			"fail": {
-				"default": "List item does not have a <ul>, <ol> parent element",
-				"roleNotValid": "List item does not have a <ul>, <ol> parent element without a role, or a role=\"list\""
-			}
+			"fail": "リスト項目に<ul>、<ol>、またはrole=\"list\"親要素が存在していません"
 		},
 		"only-dlitems": {
 			"pass": "リスト要素に<dt>または<dd>要素内で許可された直接の子要素のみが存在しています",
@@ -728,10 +673,7 @@
 		},
 		"avoid-inline-spacing": {
 			"pass": "テキストの間隔に影響する '!important' のついたインラインスタイルは指定されていません",
-			"fail": {
-				"singular": "Remove '!important' from inline style ${data.values}, as overriding this is not supported by most browsers",
-				"plural": "Remove '!important' from inline styles ${data.values}, as overriding this is not supported by most browsers"
-			}
+			"fail": "ほとんどのブラウザーで上書きすることはサポートされていないため、インラインスタイル {{=it.data.join(', ')}}, から '!important' を削除します"
 		},
 		"button-has-visible-text": {
 			"pass": "要素にスクリーン・リーダーが認識可能な内部テキストが存在しています",
@@ -743,7 +685,7 @@
 		},
 		"exists": {
 			"pass": "要素は存在していません",
-			"incomplete": "Element exists"
+			"fail": "要素が存在しています"
 		},
 		"has-alt": {
 			"pass": "要素にalt属性が存在しています",
@@ -762,10 +704,7 @@
 			"fail": "要素にalt属性が存在していない、またはalt属性が空です"
 		},
 		"non-empty-if-present": {
-			"pass": {
-				"default": "Element does not have a value attribute",
-				"has-label": "Element has a non-empty value attribute"
-			},
+			"pass": "要素 {{?it.data}}に空ではないvalue属性が存在しています{{??}}value属性が存在していません{{?}}",
 			"fail": "要素にvalue属性が存在し、value属性が空です"
 		},
 		"non-empty-title": {
