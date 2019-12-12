@@ -82,7 +82,7 @@ describe('css-orientation-lock violations test', function() {
 			var fixture = document.getElementById('shadow-fixture');
 			var shadow = fixture.attachShadow({ mode: 'open' });
 			shadow.innerHTML =
-				'<style> @media screen and (min-width: 10px) and (max-width: 2000px) and (orientation: portrait) { .shadowDiv { transform: rotate(90deg); } } .green { background-color: green; } </style>' +
+				'<style> @media screen and (min-width: 10px) and (max-width: 2000px) and (orientation: portrait) { .shadowDiv { transform: rotate3d(0,0,1,90deg); } } .green { background-color: green; } </style>' +
 				'<div class="green">green</div>' +
 				'<div class="shadowDiv">red</div>';
 
