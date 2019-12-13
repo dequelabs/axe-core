@@ -241,7 +241,7 @@ describe('link-in-text-block', function() {
 			assert.isUndefined(
 				checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
 			);
-			assert.equal(checkContext._data.missingData, 'bgContrast');
+			assert.equal(checkContext._data.messageKey, 'bgContrast');
 		});
 
 		it('returns false if background contrast < 3:0', function() {
@@ -275,7 +275,7 @@ describe('link-in-text-block', function() {
 			assert.isUndefined(
 				checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
 			);
-			assert.equal(checkContext._data.missingData, 'bgImage');
+			assert.equal(checkContext._data.messageKey, 'bgImage');
 		});
 	});
 

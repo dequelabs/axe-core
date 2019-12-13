@@ -66,64 +66,25 @@ describe('axe.utils.processMessage', function() {
 	});
 
 	describe('message is object', function() {
-		it('should handle message based on data', function() {
+		it('should handle message based on messageKey', function() {
 			var message = {
 				prop1: 'prop1 message',
 				prop2: 'prop2 message'
 			};
-			var output = axe.utils.processMessage(message, 'prop2');
-			assert.equal(output, 'prop2 message');
-		});
-
-		it('should handle message based on data property', function() {
-			var message = {
-				myProp: {
-					prop1: 'prop1 message',
-					prop2: 'prop2 message'
-				}
-			};
-			var output = axe.utils.processMessage(message, { myProp: 'prop2' });
-			assert.equal(output, 'prop2 message');
-		});
-
-		it('should handle incomplete reason', function() {
-			var message = {
-				missingData: {
-					prop1: 'prop1 message',
-					prop2: 'prop2 message'
-				}
-			};
-			var output = axe.utils.processMessage(message, {
-				missingData: [
-					{
-						reason: 'prop2'
-					}
-				]
-			});
+			var output = axe.utils.processMessage(message, { messageKey: 'prop2' });
 			assert.equal(output, 'prop2 message');
 		});
 
 		it('should replace ${data}', function() {
 			var message = {
 				prop1: 'prop1 message',
-				prop2: '${data} message'
-			};
-			var output = axe.utils.processMessage(message, 'prop2');
-			assert.equal(output, 'prop2 message');
-		});
-
-		it('should replace ${data.prop}', function() {
-			var message = {
-				myProp: {
-					prop1: 'prop1 message',
-					prop2: 'prop2 message ${data.world}'
-				}
+				prop2: '${data.world} message'
 			};
 			var output = axe.utils.processMessage(message, {
-				myProp: 'prop2',
+				messageKey: 'prop2',
 				world: 'World!'
 			});
-			assert.equal(output, 'prop2 message World!');
+			assert.equal(output, 'World! message');
 		});
 
 		it('should use default message', function() {

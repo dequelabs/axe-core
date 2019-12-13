@@ -24,7 +24,7 @@ describe('non-empty-if-present', function() {
 		assert.isFalse(
 			checks['non-empty-if-present'].evaluate.call(checkContext, node)
 		);
-		assert.equal(checkContext._data, 'has-label');
+		assert.equal(checkContext._data.messageKey, 'has-label');
 	});
 
 	(isEdgeOrIe ? xit : it)(

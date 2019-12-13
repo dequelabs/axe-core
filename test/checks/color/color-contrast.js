@@ -185,7 +185,7 @@ describe('color-contrast', function() {
 		assert.isUndefined(contrastEvaluate.apply(checkContext, params));
 		assert.isUndefined(checkContext._data.bgColor);
 		assert.equal(checkContext._data.contrastRatio, 0);
-		assert.equal(checkContext._data.missingData, 'bgImage');
+		assert.equal(checkContext._data.messageKey, 'bgImage');
 	});
 
 	it('should return undefined for background-gradient elements', function() {
@@ -197,7 +197,7 @@ describe('color-contrast', function() {
 
 		assert.isUndefined(contrastEvaluate.apply(checkContext, params));
 		assert.isUndefined(checkContext._data.bgColor);
-		assert.equal(checkContext._data.missingData, 'bgGradient');
+		assert.equal(checkContext._data.messageKey, 'bgGradient');
 		assert.equal(checkContext._data.contrastRatio, 0);
 	});
 
@@ -211,7 +211,7 @@ describe('color-contrast', function() {
 
 			var result = contrastEvaluate.apply(checkContext, params);
 			assert.isUndefined(result);
-			assert.equal(checkContext._data.missingData, 'bgOverlap');
+			assert.equal(checkContext._data.messageKey, 'bgOverlap');
 			assert.equal(checkContext._data.contrastRatio, 0);
 			done();
 		}, 10);
@@ -272,7 +272,7 @@ describe('color-contrast', function() {
 			);
 
 			assert.isUndefined(contrastEvaluate.apply(checkContext, params));
-			assert.equal(checkContext._data.missingData, 'bgOverlap');
+			assert.equal(checkContext._data.messageKey, 'bgOverlap');
 			assert.equal(checkContext._data.contrastRatio, 0);
 			done();
 		}, 10);
@@ -286,7 +286,7 @@ describe('color-contrast', function() {
 		);
 
 		assert.isUndefined(contrastEvaluate.apply(checkContext, params));
-		assert.equal(checkContext._data.missingData, 'equalRatio');
+		assert.equal(checkContext._data.messageKey, 'equalRatio');
 		assert.equal(checkContext._data.contrastRatio, 1);
 	});
 
@@ -321,7 +321,7 @@ describe('color-contrast', function() {
 
 		var actual = contrastEvaluate.apply(checkContext, params);
 		assert.isUndefined(actual);
-		assert.equal(checkContext._data.missingData, 'shortTextContent');
+		assert.equal(checkContext._data.messageKey, 'shortTextContent');
 	});
 
 	it('should return true for a single character text with insufficient contrast', function() {
