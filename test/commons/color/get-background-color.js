@@ -863,6 +863,8 @@ describe('color.getBackgroundColor', function() {
 
 		console.log('actual:', JSON.stringify(actual, null, 2));
 
+		window.debugThisTest = false;
+
 		assert.closeTo(actual.red, 255, 0);
 		assert.closeTo(actual.green, 0, 0);
 		assert.closeTo(actual.blue, 0, 0);
@@ -871,8 +873,6 @@ describe('color.getBackgroundColor', function() {
 		document.body.style.height = originalHeight;
 		document.body.style.background = originalBg;
 		document.documentElement.style.background = originalRootBg;
-
-		window.debugThisTest = false;
 	});
 
 	(shadowSupported ? it : xit)('finds colors in shadow boundaries', function() {
