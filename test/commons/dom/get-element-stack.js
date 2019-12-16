@@ -3,6 +3,7 @@ describe('dom.getElementStack', function() {
 
 	var fixture = document.getElementById('fixture');
 	var getElementStack = axe.commons.dom.getElementStack;
+	var getClientElementStack = axe.commons.dom.getClientElementStack;
 
 	afterEach(function() {
 		fixture.innerHTML = '';
@@ -442,6 +443,32 @@ describe('dom.getElementStack', function() {
 					return !!id;
 				});
 			assert.deepEqual(stack, ['target', '5', '4', '3', '2', '1', 'fixture']);
+		});
+	});
+
+	describe('dom.getClientElementStack', function() {
+		it('should return array of client rects', function() {
+			fixture.innerHTML =
+				'<main id="1">' +
+				'<span id="target">' +
+				'<span id="2">Hello</span><br/><span id="3">World</span>' +
+				'</span>' +
+				'</main>';
+			axe.testUtils.flatTreeSetup(fixture);
+			var target = fixture.querySelector('#target');
+			var stacks = getClientElementStack(target).map(function(stack) {
+				return stack
+					.map(function(node) {
+						return node.id;
+					})
+					.filter(function(id) {
+						return !!id;
+					});
+			});
+			assert.deepEqual(stacks, [
+				['2', 'target', '1', 'fixture'],
+				['3', 'target', '1', 'fixture']
+			]);
 		});
 	});
 });

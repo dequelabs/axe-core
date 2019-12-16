@@ -82,6 +82,18 @@ describe('dom.visuallyContains', function() {
 		assert.isFalse(result);
 	});
 
+	it('should return true when element is contained by scroll region', function() {
+		fixture.innerHTML =
+			'<div id="parent">' +
+			'<div style="overflow: scroll; height: 200px;">' +
+			'<div style="margin-top: 400px; height: 10px;"></div>' +
+			'<p id="target">Text</p></div></div>';
+		var target = fixture.querySelector('#target');
+		var parent = fixture.querySelector('#parent');
+		var result = axe.commons.dom.visuallyContains(target, parent);
+		assert.isTrue(result);
+	});
+
 	(shadowSupported ? it : xit)(
 		'should return true when element is visually contained across shadow boundary',
 		function() {
