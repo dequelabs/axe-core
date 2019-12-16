@@ -134,6 +134,27 @@ describe('css-orientation-lock tests', function() {
 		assert.isTrue(actual);
 	});
 
+	it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of rotate, which affects rotation but does not lock orientation (rotate(-178deg))', function() {
+		var actual = check.evaluate.call(
+			checkContext,
+			document,
+			{ degreeThreshold: 3 },
+			undefined,
+			{
+				cssom: [
+					{
+						shadowId: 'a',
+						root: document,
+						sheet: getSheet(
+							'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { body { transform: rotate(-178deg); -webkit-transform: rotate(-178deg); } }'
+						)
+					}
+				]
+			}
+		);
+		assert.isTrue(actual);
+	});
+
 	it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of rotateZ, which affects rotation but does not lock orientation (rotateZ(1turn))', function() {
 		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
 			cssom: [
@@ -209,6 +230,28 @@ describe('css-orientation-lock tests', function() {
 				}
 			]
 		});
+		assert.isFalse(actual);
+	});
+
+	it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of rotate3d, which affects rotation and locks orientation (rotate3d(0,0,1,93deg))', function() {
+		var actual = check.evaluate.call(
+			checkContext,
+			document,
+			{ degreeThreshold: 3 },
+			undefined,
+			{
+				cssom: [
+					{
+						shadowId: undefined,
+						root: document,
+						sheet: getSheet(
+							// apply 0 on the z-axis (3rd parameter) does not apply given rotation on z-axis
+							'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform: rotate3d(0,0,1,93deg); -webkit-transform: rotate3d(0,0,1,93deg) } }'
+						)
+					}
+				]
+			}
+		);
 		assert.isFalse(actual);
 	});
 
