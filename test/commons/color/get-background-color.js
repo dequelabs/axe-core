@@ -844,8 +844,6 @@ describe('color.getBackgroundColor', function() {
 	});
 
 	it('should return the html canvas bgColor when element content does not overlap with body', function() {
-		window.debugThisTest = true;
-
 		fixture.innerHTML =
 			'<div id="target" style="position: relative; top: 2px;">Text</div>';
 
@@ -860,10 +858,6 @@ describe('color.getBackgroundColor', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getBackgroundColor(target, []);
-
-		console.log('actual:', JSON.stringify(actual, null, 2));
-
-		window.debugThisTest = false;
 
 		assert.closeTo(actual.red, 255, 0);
 		assert.closeTo(actual.green, 0, 0);
