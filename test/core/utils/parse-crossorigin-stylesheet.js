@@ -60,8 +60,6 @@ describe('axe.utils.parseCrossOriginStylesheet', function() {
 	});
 
 	it('rejects when given url to fetch is not found', function(done) {
-		this.timeout(6000);
-
 		var importUrl =
 			'https://make-up-a-website-that-does-not-exist.com/style.css';
 		var options = {
