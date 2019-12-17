@@ -4,6 +4,7 @@ describe('dom.getElementStack', function() {
 	var fixture = document.getElementById('fixture');
 	var getElementStack = axe.commons.dom.getElementStack;
 	var getClientElementStack = axe.commons.dom.getClientElementStack;
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
 
 	afterEach(function() {
 		fixture.innerHTML = '';
@@ -375,6 +376,122 @@ describe('dom.getElementStack', function() {
 				});
 			assert.deepEqual(stack, ['1', 'fixture', 'target', '2']);
 		});
+
+		(shadowSupported ? it : xit)(
+			'should sort shadow dom elements correctly',
+			function() {
+				fixture.innerHTML = '<div id="container"></div>';
+				var container = fixture.querySelector('#container');
+				var shadow = container.attachShadow({ mode: 'open' });
+				shadow.innerHTML = '<span id="shadowTarget">Text</span>';
+				axe.testUtils.flatTreeSetup(fixture);
+
+				var target = shadow.querySelector('#shadowTarget');
+				var stack = getElementStack(target)
+					.map(function(node) {
+						return node.id;
+					})
+					.filter(function(id) {
+						return !!id;
+					});
+				assert.deepEqual(stack, ['shadowTarget', 'container', 'fixture']);
+			}
+		);
+
+		(shadowSupported ? it : xit)(
+			'should sort nested shadow dom elements correctly',
+			function() {
+				fixture.innerHTML = '<div id="container"></div>';
+				var container = fixture.querySelector('#container');
+				var shadow = container.attachShadow({ mode: 'open' });
+
+				shadow.innerHTML = '<div id="shadowContainer"></div>';
+				var nestedContainer = shadow.querySelector('#shadowContainer');
+				var nestedShadow = nestedContainer.attachShadow({ mode: 'open' });
+
+				nestedShadow.innerHTML = '<span id="shadowTarget">Text</span>';
+				axe.testUtils.flatTreeSetup(fixture);
+
+				var target = nestedShadow.querySelector('#shadowTarget');
+				var stack = getElementStack(target)
+					.map(function(node) {
+						return node.id;
+					})
+					.filter(function(id) {
+						return !!id;
+					});
+				assert.deepEqual(stack, [
+					'shadowTarget',
+					'shadowContainer',
+					'container',
+					'fixture'
+				]);
+			}
+		);
+
+		(shadowSupported ? it : xit)(
+			'should sort positioned shadow elements correctly',
+			function() {
+				fixture.innerHTML = '<div id="container"></div>';
+				var container = fixture.querySelector('#container');
+				var shadow = container.attachShadow({ mode: 'open' });
+
+				shadow.innerHTML =
+					'<div id="shadowContainer" style="position: relative; z-index: -1;"></div>';
+				var nestedContainer = shadow.querySelector('#shadowContainer');
+				var nestedShadow = nestedContainer.attachShadow({ mode: 'open' });
+
+				nestedShadow.innerHTML = '<span id="shadowTarget">Text</span>';
+				axe.testUtils.flatTreeSetup(fixture);
+
+				var target = nestedShadow.querySelector('#shadowTarget');
+				var stack = getElementStack(target)
+					.map(function(node) {
+						return node.id;
+					})
+					.filter(function(id) {
+						return !!id;
+					});
+				assert.deepEqual(stack, [
+					'container',
+					'fixture',
+					'shadowTarget',
+					'shadowContainer'
+				]);
+			}
+		);
+
+		(shadowSupported ? it : xit)(
+			'should sort shadow elements with different trees correctly',
+			function() {
+				fixture.innerHTML =
+					'<div id="container1"></div><div id="container2"  style="position: absolute; top: 0;">';
+				var container1 = fixture.querySelector('#container1');
+				var shadow1 = container1.attachShadow({ mode: 'open' });
+				shadow1.innerHTML = '<span id="shadowTarget">Text</span>';
+
+				var container2 = fixture.querySelector('#container2');
+				var shadow2 = container2.attachShadow({ mode: 'open' });
+				shadow2.innerHTML = '<span id="1">Container 2 text</span>';
+				axe.testUtils.flatTreeSetup(fixture);
+
+				var target = shadow1.querySelector('#shadowTarget');
+				var stack = getElementStack(target)
+					.map(function(node) {
+						return node.id;
+					})
+					.filter(function(id) {
+						return !!id;
+					});
+				assert.deepEqual(stack, [
+					'1',
+					'container2',
+					'shadowTarget',
+					'container1',
+					'fixture'
+				]);
+			}
+		);
 	});
 
 	describe('scroll regions', function() {
@@ -461,3 +578,16 @@ describe('dom.getElementStack', function() {
 		});
 	});
 });
+
+// <div id="1">
+// 	#shadow
+//   <div id="2">
+//   <div id="3">
+// 		#shadow
+//     <div id="4">
+//     b <div id="5">
+//     	#shadow
+//       a <div id="6">
+// <div id="7">
+// 	#shadow
+//  	b <div id="8">
