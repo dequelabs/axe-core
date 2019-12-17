@@ -35,6 +35,7 @@ describe('axe.run', function() {
 		fixture.innerHTML = '';
 		axe._audit = null;
 		axe._runRules = origRunRules;
+		axe._running = false;
 	});
 
 	it('takes context, options and callback as parameters', function(done) {
@@ -113,6 +114,14 @@ describe('axe.run', function() {
 		};
 
 		axe.run({ someOption: true }, noop);
+	});
+
+	it('should error if axe is already running', function(done) {
+		axe.run(noop);
+		axe.run(function(err) {
+			assert.isTrue(err.indexOf('Axe is already running') !== -1);
+			done();
+		});
 	});
 
 	describe('callback', function() {
