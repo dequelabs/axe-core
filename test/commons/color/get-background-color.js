@@ -791,7 +791,7 @@ describe('color.getBackgroundColor', function() {
 
 	it('should return background color for inline elements that do not fit the viewport', function() {
 		var html = '';
-		for (var i = 0; i < 1000; i++) {
+		for (var i = 0; i < 300; i++) {
 			html += 'foo<br />';
 		}
 		fixture.innerHTML = '<em>' + html + '</em>';
