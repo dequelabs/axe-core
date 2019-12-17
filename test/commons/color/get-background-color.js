@@ -8,7 +8,6 @@ describe('color.getBackgroundColor', function() {
 	afterEach(function() {
 		document.getElementById('fixture').innerHTML = '';
 		axe.commons.color.incompleteData.clear();
-		// document.body.scrollTop = 0;
 		axe._tree = undefined;
 	});
 
@@ -614,53 +613,6 @@ describe('color.getBackgroundColor', function() {
 		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'imgNode');
 	});
 
-	// it('does not change the scroll when scroll is disabled', function() {
-	// 	fixture.innerHTML =
-	// 		'<div id="parent" style="height: 40px; width: 30px; ' +
-	// 		'background-color: white; position: relative; z-index: 5">' +
-	// 		'<div id="target" style="position: relative; top: 1px; height: 20px; ' +
-	// 		'width: 25px; z-index: 25;">' +
-	// 		'</div>';
-	// 	var targetEl = fixture.querySelector('#target');
-	// 	var bgNodes = [];
-	// 	window.scroll(0, 0);
-
-	// 	axe.testUtils.flatTreeSetup(fixture);
-	// 	axe.commons.color.getBackgroundColor(targetEl, bgNodes, true);
-
-	// 	assert.equal(window.pageYOffset, 0);
-	// });
-
-	// it('scrolls into view when scroll is enabled', function() {
-	// 	fixture.innerHTML =
-	// 		'<div id="parent" style="height: 5000px; width: 30px; ' +
-	// 		'background-color: white; position: relative; z-index: 5">' +
-	// 		'<div id="target" style="position: absolute; bottom: 0; height: 20px; ' +
-	// 		'width: 25px; z-index: 25;">' +
-	// 		'</div>';
-	// 	var targetEl = fixture.querySelector('#target');
-	// 	var bgNodes = [];
-	// 	window.scroll(0, 0);
-
-	// 	axe.testUtils.flatTreeSetup(fixture);
-	// 	axe.commons.color.getBackgroundColor(targetEl, bgNodes, false);
-
-	// 	assert.notEqual(window.pageYOffset, 0);
-	// });
-
-	// it('scrolls horizontally into view when scroll is enabled', function() {
-	// 	fixture.innerHTML =
-	// 		'<div style="width: 1000px;"><span id="target">long text to test scrolling</span></div>';
-	// 	var targetEl = fixture.querySelector('#target');
-	// 	var bgNodes = [];
-	// 	window.scroll(100, 0);
-
-	// 	axe.testUtils.flatTreeSetup(fixture);
-	// 	axe.commons.color.getBackgroundColor(targetEl, bgNodes, false);
-
-	// 	assert.equal(document.documentElement.scrollLeft, 0);
-	// });
-
 	it('returns elements with negative z-index', function() {
 		fixture.innerHTML =
 			'<div id="sibling" ' +
@@ -761,33 +713,6 @@ describe('color.getBackgroundColor', function() {
 		assert.closeTo(actual.blue, expected.blue, 0.5);
 		assert.closeTo(actual.alpha, expected.alpha, 0.1);
 	});
-
-	// it('avoids scrolling elements with overflow:hidden', function() {
-	// 	fixture.innerHTML =
-	// 		'<div style="position:relative; color: yellow">' +
-	// 		'<div style="overflow: hidden">' +
-	// 		'<div style="background: black; height: 40px; padding-top: 20px;">' +
-	// 		'<div id="tgt1">Some text here</div>' +
-	// 		'<div style="height: 100px;"></div>' +
-	// 		'</div>' +
-	// 		'</div>' +
-	// 		'<div style="position: absolute; margin-top: -20px;" id="tgt2">R_20</div>' +
-	// 		'</div>';
-
-	// 	// This shouldn't cause a scroll
-	// 	var target1 = document.getElementById('tgt1');
-	// 	axe.testUtils.flatTreeSetup(fixture);
-	// 	axe.commons.color.getBackgroundColor(target1, []);
-
-	// 	// Otherwise this would not be on the black bg anymore:
-	// 	var target2 = document.getElementById('tgt2');
-	// 	var actual = axe.commons.color.getBackgroundColor(target2, []);
-
-	// 	assert.closeTo(actual.red, 0, 0.5);
-	// 	assert.closeTo(actual.green, 0, 0.5);
-	// 	assert.closeTo(actual.blue, 0, 0.5);
-	// 	assert.closeTo(actual.alpha, 1, 0.1);
-	// });
 
 	it('should return background color for inline elements that do not fit the viewport', function() {
 		var html = '';
@@ -1012,7 +937,6 @@ describe('color.getBackgroundColor', function() {
 				'<div id="shadowTarget" style="color:#333;">Text<br>More text</div>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = shadow.querySelector('#shadowTarget');
-			// window.debugNode = true;
 			var actual = axe.commons.color.getBackgroundColor(target, []);
 			assert.equal(actual.red, 0);
 			assert.equal(actual.green, 0);
