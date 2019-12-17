@@ -6,6 +6,16 @@ describe('dom.getElementStack', function() {
 	var getClientElementStack = axe.commons.dom.getClientElementStack;
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 
+	function normailzeStack(stack) {
+		return stack
+			.map(function(node) {
+				return node.id;
+			})
+			.filter(function(id) {
+				return !!id;
+			});
+	}
+
 	afterEach(function() {
 		fixture.innerHTML = '';
 	});
@@ -20,13 +30,7 @@ describe('dom.getElementStack', function() {
 				'</main>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['target', '2', '1', 'fixture']);
 		});
 
@@ -40,13 +44,7 @@ describe('dom.getElementStack', function() {
 				'</main>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['target', '2', '1', 'fixture']);
 		});
 
@@ -65,13 +63,7 @@ describe('dom.getElementStack', function() {
 				'DIV #5<br />position:static;</div>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['4', '3', '2', '1', 'target', 'fixture']);
 		});
 
@@ -88,13 +80,7 @@ describe('dom.getElementStack', function() {
 				'DIV #4<br />position:absolute;</div>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['4', '1', '2', 'target', 'fixture']);
 		});
 
@@ -122,13 +108,7 @@ describe('dom.getElementStack', function() {
 				'</div>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['4', '2', '3', 'target', 'fixture']);
 		});
 
@@ -156,13 +136,7 @@ describe('dom.getElementStack', function() {
 				'</div>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['2', '4', '3', 'target', 'fixture']);
 		});
 
@@ -202,13 +176,7 @@ describe('dom.getElementStack', function() {
 				'</div>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['1', '4', 'target', '5', '3', '2']);
 		});
 
@@ -219,13 +187,7 @@ describe('dom.getElementStack', function() {
 				'</div>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['target', '1', 'fixture']);
 		});
 
@@ -236,13 +198,7 @@ describe('dom.getElementStack', function() {
 				'</div>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['target', '1', 'fixture']);
 		});
 
@@ -256,13 +212,7 @@ describe('dom.getElementStack', function() {
 				'<div id="3" style="position:absolute;top:0;left:0;right:0;height:100px"></div>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['3', 'target', '2', '1', 'fixture']);
 		});
 
@@ -276,13 +226,7 @@ describe('dom.getElementStack', function() {
 				'<div id="3" style="position:absolute;top:0;left:0;right:0;height:100px;pointer-events:none"></div>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['3', 'target', '2', '1', 'fixture']);
 		});
 
@@ -295,13 +239,7 @@ describe('dom.getElementStack', function() {
 				'</main>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
 		});
 
@@ -313,13 +251,7 @@ describe('dom.getElementStack', function() {
 				'</div>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['target', '1', 'fixture']);
 		});
 
@@ -330,13 +262,7 @@ describe('dom.getElementStack', function() {
 				'</div>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['target']);
 		});
 
@@ -348,13 +274,7 @@ describe('dom.getElementStack', function() {
 				'</div>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['target', '2', '1', 'fixture']);
 		});
 
@@ -367,13 +287,7 @@ describe('dom.getElementStack', function() {
 				'</main>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['1', 'fixture', 'target', '2']);
 		});
 
@@ -506,13 +420,7 @@ describe('dom.getElementStack', function() {
 				'</main>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
 		});
 
@@ -527,13 +435,7 @@ describe('dom.getElementStack', function() {
 				'</main>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
 		});
 
@@ -552,13 +454,7 @@ describe('dom.getElementStack', function() {
 				'</main>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stack = getElementStack(target)
-				.map(function(node) {
-					return node.id;
-				})
-				.filter(function(id) {
-					return !!id;
-				});
+			var stack = normailzeStack(getElementStack(target));
 			assert.deepEqual(stack, ['target', '5', '4', '3', '2', '1', 'fixture']);
 		});
 	});
@@ -578,16 +474,3 @@ describe('dom.getElementStack', function() {
 		});
 	});
 });
-
-// <div id="1">
-// 	#shadow
-//   <div id="2">
-//   <div id="3">
-// 		#shadow
-//     <div id="4">
-//     b <div id="5">
-//     	#shadow
-//       a <div id="6">
-// <div id="7">
-// 	#shadow
-//  	b <div id="8">
