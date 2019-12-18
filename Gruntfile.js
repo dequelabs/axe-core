@@ -338,6 +338,7 @@ module.exports = function(grunt) {
 			}
 		},
 		mocha: testConfig(grunt, {
+			timeout: 15000,
 			reporter: grunt.option('reporter') || 'Spec'
 		}),
 		connect: {
