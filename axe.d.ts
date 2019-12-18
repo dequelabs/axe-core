@@ -13,14 +13,14 @@ declare namespace axe {
 
 	type resultGroups = 'inapplicable' | 'passes' | 'incomplete' | 'violations';
 
-	type RunOnlyObject = {
+	type ContextObject = {
 		include?: string[] | string[][];
 		exclude?: string[] | string[][];
 	};
 
 	type RunCallback = (error: Error, results: AxeResults) => void;
 
-	type ElementContext = Node | string | RunOnlyObject;
+	type ElementContext = Node | string | ContextObject;
 
 	interface TestEngine {
 		name: string;
@@ -38,7 +38,7 @@ declare namespace axe {
 	}
 	interface RunOnly {
 		type: RunOnlyType;
-		values?: TagValue[] | string[] | RunOnlyObject;
+		values: TagValue[] | string[];
 	}
 	interface RunOptions {
 		runOnly?: RunOnly;
@@ -155,6 +155,13 @@ declare namespace axe {
 		}[];
 		cleanup?(callback: Function): void;
 	}
+	interface RuleMetadata {
+		ruleId: string;
+		description: string;
+		help: string;
+		helpUrl: string;
+		tags: string[];
+	}
 
 	let plugins: any;
 
@@ -203,7 +210,7 @@ declare namespace axe {
 	 * @param  {Array}  tags  Optional array of tags
 	 * @return {Array}  Array of rules
 	 */
-	function getRules(tags?: string[]): Object[];
+	function getRules(tags?: string[]): RuleMetadata[];
 
 	/**
 	 * Restores the default axe configuration

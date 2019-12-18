@@ -49,6 +49,13 @@ describe('axe._load', function() {
 		assert.equal(axe.commons, 'foo');
 	});
 
+	it('should load with a lang', function() {
+		axe._load({
+			lang: 'ja'
+		});
+		assert.equal(axe._audit.lang, 'ja');
+	});
+
 	describe('respondable subscriber', function() {
 		it('should add a respondable subscriber', function() {
 			var mockAudit = {

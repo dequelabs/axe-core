@@ -563,5 +563,12 @@ describe('is-focusable', function() {
 
 			assert.isFalse(axe.commons.dom.insertedIntoFocusOrder(node));
 		});
+
+		it('should return false for an invalid tabindex', function() {
+			fixtureSetup('<span id="spanTabindexInvalid" tabindex="invalid"></span>');
+			var node = fixture.querySelector('#spanTabindexInvalid');
+
+			assert.isFalse(axe.commons.dom.insertedIntoFocusOrder(node));
+		});
 	});
 });
