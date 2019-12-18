@@ -41,7 +41,6 @@ describe('listitem', function() {
 		var target = fixture.querySelector('#target');
 		assert.isFalse(checks.listitem.evaluate.call(checkContext, target));
 		assert.equal(checkContext._data.messageKey, 'roleNotValid');
-		assert.equal(checkContext._data, 'roleNotValid');
 	});
 
 	it('should pass if the listitem has a parent <ol> with an invalid role', function() {
