@@ -4,7 +4,10 @@
 	"metadata": {
 		"impact": "critical",
 		"messages": {
-			"pass": "Element {{?it.data}}has a non-empty value attribute{{??}}does not have a value attribute{{?}}",
+			"pass": {
+				"default": "Element does not have a value attribute",
+				"has-label": "Element has a non-empty value attribute"
+			},
 			"fail": "Element has a value attribute and the value attribute is empty"
 		}
 	}

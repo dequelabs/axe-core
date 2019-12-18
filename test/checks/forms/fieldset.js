@@ -54,7 +54,7 @@ describe('fieldset', function() {
 					checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 				);
 				assert.deepEqual(checkContext._data, {
-					failureCode: 'no-group',
+					messageKey: 'no-group',
 					type: type,
 					name: 'uniqueyname'
 				});
@@ -81,7 +81,7 @@ describe('fieldset', function() {
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
 			assert.deepEqual(checkContext._data, {
-				failureCode: 'no-legend',
+				messageKey: 'no-legend',
 				type: type,
 				name: 'uniqueyname'
 			});
@@ -108,7 +108,7 @@ describe('fieldset', function() {
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
 			assert.deepEqual(checkContext._data, {
-				failureCode: 'empty-legend',
+				messageKey: 'empty-legend',
 				type: type,
 				name: 'uniqueyname'
 			});
@@ -136,7 +136,7 @@ describe('fieldset', function() {
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
 			assert.deepEqual(checkContext._data, {
-				failureCode: 'mixed-inputs',
+				messageKey: 'mixed-inputs',
 				type: type,
 				name: 'uniqueyname'
 			});
@@ -181,7 +181,7 @@ describe('fieldset', function() {
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
 			assert.deepEqual(checkContext._data, {
-				failureCode: 'no-group-label',
+				messageKey: 'no-group-label',
 				type: type,
 				name: 'uniqueyname'
 			});
@@ -207,7 +207,7 @@ describe('fieldset', function() {
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
 			assert.deepEqual(checkContext._data, {
-				failureCode: 'no-group-label',
+				messageKey: 'no-group-label',
 				type: type,
 				name: 'uniqueyname'
 			});
@@ -235,7 +235,7 @@ describe('fieldset', function() {
 				checks.fieldset.evaluate.call(checkContext, node, {}, virtualNode)
 			);
 			assert.deepEqual(checkContext._data, {
-				failureCode: 'group-mixed-inputs',
+				messageKey: 'group-mixed-inputs',
 				type: type,
 				name: 'uniqueyname'
 			});

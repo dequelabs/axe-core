@@ -307,10 +307,10 @@ describe('axe.configure', function() {
 			var audit = axe._audit;
 			var localeData = audit.data;
 
-			assert.equal(localeData.rules.greeting.help(), 'hi');
-			assert.equal(localeData.rules.greeting.description(), 'hello');
-			assert.equal(localeData.checks.banana.messages.pass(), 'pizza');
-			assert.equal(localeData.checks.banana.messages.fail(), 'icecream');
+			assert.equal(localeData.rules.greeting.help, 'hi');
+			assert.equal(localeData.rules.greeting.description, 'hello');
+			assert.equal(localeData.checks.banana.messages.pass, 'pizza');
+			assert.equal(localeData.checks.banana.messages.fail, 'icecream');
 			assert.deepEqual(localeData.checks.banana.messages.incomplete, {
 				foo: 'meat',
 				bar: 'fruit',
@@ -335,9 +335,9 @@ describe('axe.configure', function() {
 			var localeData = audit.data;
 
 			assert.equal(localeData.rules.greeting.help, 'ABCDEFGHIKLMNOPQRSTVXYZ');
-			assert.equal(localeData.rules.greeting.description(), 'hello');
+			assert.equal(localeData.rules.greeting.description, 'hello');
 			assert.equal(localeData.checks.banana.messages.pass, 'yay');
-			assert.equal(localeData.checks.banana.messages.fail(), 'icecream');
+			assert.equal(localeData.checks.banana.messages.fail, 'icecream');
 			assert.deepEqual(localeData.checks.banana.messages.incomplete, {
 				foo: 'a',
 				bar: 'b',
@@ -359,6 +359,46 @@ describe('axe.configure', function() {
 			});
 
 			assert.equal(axe._audit.lang, 'lol');
+		});
+
+		it('should call doT.compile if a messages uses doT syntax', function() {
+			axe.configure({
+				locale: {
+					lang: 'lol',
+					rules: { greeting: { description: 'hello' } },
+					checks: {
+						banana: {
+							fail: 'icecream {{=it.data.value}}'
+						}
+					}
+				}
+			});
+
+			var audit = axe._audit;
+			var localeData = audit.data;
+
+			assert.isTrue(
+				typeof localeData.checks.banana.messages.fail === 'function'
+			);
+		});
+
+		it('should leave the messages as a string if it does not use doT syntax', function() {
+			axe.configure({
+				locale: {
+					lang: 'lol',
+					rules: { greeting: { description: 'hello' } },
+					checks: {
+						banana: {
+							fail: 'icecream ${data.value}'
+						}
+					}
+				}
+			});
+
+			var audit = axe._audit;
+			var localeData = audit.data;
+
+			assert.isTrue(typeof localeData.checks.banana.messages.fail === 'string');
 		});
 
 		it('should update failure messages', function() {
@@ -400,9 +440,9 @@ describe('axe.configure', function() {
 			var audit = axe._audit;
 			var localeData = audit.data;
 
-			assert.equal(localeData.failureSummaries.any.failureMessage(), 'foo');
-			assert.equal(localeData.failureSummaries.none.failureMessage(), 'bar');
-			assert.equal(localeData.incompleteFallbackMessage(), 'baz');
+			assert.equal(localeData.failureSummaries.any.failureMessage, 'foo');
+			assert.equal(localeData.failureSummaries.none.failureMessage, 'bar');
+			assert.equal(localeData.incompleteFallbackMessage, 'baz');
 		});
 
 		it('should merge failure messages', function() {
@@ -440,7 +480,7 @@ describe('axe.configure', function() {
 			var audit = axe._audit;
 			var localeData = audit.data;
 
-			assert.equal(localeData.failureSummaries.any.failureMessage(), 'foo');
+			assert.equal(localeData.failureSummaries.any.failureMessage, 'foo');
 			assert.equal(
 				localeData.failureSummaries.none.failureMessage(),
 				'failed none'
@@ -571,7 +611,7 @@ describe('axe.configure', function() {
 			var banana = axe._audit.data.checks.banana;
 			assert.equal(banana.impact, 'potato');
 			assert.equal(banana.foo, 'bar');
-			assert.equal(banana.messages.pass(), 'yay banana');
+			assert.equal(banana.messages.pass, 'yay banana');
 		});
 
 		it('should error when provided an unknown rule id', function() {
@@ -645,7 +685,7 @@ describe('axe.configure', function() {
 				var audit = axe._audit;
 				var localeData = audit.data;
 
-				assert.equal(localeData.rules.greeting.help(), 'hi');
+				assert.equal(localeData.rules.greeting.help, 'hi');
 			});
 		});
 

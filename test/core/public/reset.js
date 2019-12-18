@@ -114,8 +114,8 @@ describe('axe.reset', function() {
 
 			var banana = axe._audit.data.checks.banana;
 			assert.equal(banana.impact, 'serious');
-			assert.equal(banana.messages.pass(), 'yay');
-			assert.equal(banana.messages.fail(), 'boo');
+			assert.equal(banana.messages.pass, 'yay');
+			assert.equal(banana.messages.fail, 'boo');
 			assert.equal(banana.messages.incomplete, 'donno');
 		});
 	});

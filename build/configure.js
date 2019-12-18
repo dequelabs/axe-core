@@ -7,6 +7,7 @@ var dot = require('@deque/dot');
 var templates = require('./templates');
 var buildManual = require('./build-manual');
 var entities = new (require('html-entities')).AllHtmlEntities();
+var dotRegex = /\{\{.+?\}\}/g;
 
 var descriptionHeaders =
 	'| Rule ID | Description | Impact | Tags | Enabled by default | Failures | Needs Review |\n| :------- | :------- | :------- | :------- | :------- | :------- | :------- |\n';
@@ -59,7 +60,10 @@ function buildRules(grunt, options, commons, callback) {
 				Object.keys(result.messages).forEach(function(key) {
 					// only convert to templated function for strings
 					// objects handled later in publish-metadata.js
-					if (typeof result.messages[key] !== 'object') {
+					if (
+						typeof result.messages[key] !== 'object' &&
+						dotRegex.test(result.messages[key])
+					) {
 						result.messages[key] = dot
 							.template(result.messages[key])
 							.toString();
@@ -67,7 +71,7 @@ function buildRules(grunt, options, commons, callback) {
 				});
 			}
 			//TODO this is actually failureSummaries, property name should better reflect that
-			if (result.failureMessage) {
+			if (result.failureMessage && dotRegex.test(result.failureMessage)) {
 				result.failureMessage = dot.template(result.failureMessage).toString();
 			}
 			return result;
@@ -86,7 +90,10 @@ function buildRules(grunt, options, commons, callback) {
 		function getIncompleteMsg(summaries) {
 			var result = {};
 			summaries.forEach(function(summary) {
-				if (summary.incompleteFallbackMessage) {
+				if (
+					summary.incompleteFallbackMessage &&
+					dotRegex.test(summary.incompleteFallbackMessage)
+				) {
 					result = dot.template(summary.incompleteFallbackMessage).toString();
 				}
 			});
