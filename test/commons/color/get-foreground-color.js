@@ -1,3 +1,5 @@
+/* global sinon */
+
 describe('color.getForegroundColor', function() {
 	'use strict';
 
@@ -42,6 +44,39 @@ describe('color.getForegroundColor', function() {
 		assert.equal(actual.alpha, expected.alpha);
 	});
 
+	it('should take into account parent opacity tree', function() {
+		fixture.innerHTML =
+			'<div style="background-color: #fafafa">' +
+			'<div style="height: 40px; width: 30px; opacity: 0.6">' +
+			'<div id="target" style="height: 20px; width: 15px; color: rgba(0, 0, 0, 0.87);">' +
+			'This is my text' +
+			'</div></div></div>';
+		var target = fixture.querySelector('#target');
+		var actual = axe.commons.color.getForegroundColor(target);
+		var expected = new axe.commons.color.Color(119.5, 119.5, 119.5, 1);
+		assert.closeTo(actual.red, expected.red, 0.8);
+		assert.closeTo(actual.green, expected.green, 0.8);
+		assert.closeTo(actual.blue, expected.blue, 0.8);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+	});
+
+	it('should take into account entire parent opacity tree', function() {
+		fixture.innerHTML =
+			'<div style="background-color: #fafafa">' +
+			'<div style="height: 40px; width: 30px; opacity: 0.75">' +
+			'<div style="height: 40px; width: 30px; opacity: 0.8">' +
+			'<div id="target" style="height: 20px; width: 15px; color: rgba(0, 0, 0, 0.87);">' +
+			'This is my text' +
+			'</div></div></div></div>';
+		var target = fixture.querySelector('#target');
+		var actual = axe.commons.color.getForegroundColor(target);
+		var expected = new axe.commons.color.Color(119.5, 119.5, 119.5, 1);
+		assert.closeTo(actual.red, expected.red, 0.8);
+		assert.closeTo(actual.green, expected.green, 0.8);
+		assert.closeTo(actual.blue, expected.blue, 0.8);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+	});
+
 	it('should return null if containing parent has a background image and is non-opaque', function() {
 		fixture.innerHTML =
 			'<div style="height: 40px; width: 30px;' +
@@ -66,6 +101,15 @@ describe('color.getForegroundColor', function() {
 		assert.equal(actual.green, expected.green);
 		assert.equal(actual.blue, expected.blue);
 		assert.equal(actual.alpha, expected.alpha);
+	});
+
+	it('should not recalculate bgColor if passed in', function() {
+		var spy = sinon.spy(axe.commons.color, 'getBackgroundColor');
+		var bgColor = new axe.commons.color.Color(255, 255, 255, 1);
+		var node = document.createElement('div');
+		axe.commons.color.getForegroundColor(node, false, bgColor);
+		assert.isFalse(spy.called);
+		spy.restore();
 	});
 
 	(shadowSupported ? it : xit)(

@@ -1265,6 +1265,28 @@ describe('Audit', function() {
 			assert.deepEqual(out.runOnly.values, ['positive', 'negative']);
 		});
 
+		it('allows runOnly as an array as an alternative to type: rule', function() {
+			var opt = { runOnly: ['positive1', 'negative1'] };
+			var out = a.normalizeOptions(opt);
+			assert(out.runOnly.type, 'rule');
+			assert.deepEqual(out.runOnly.values, ['positive1', 'negative1']);
+		});
+
+		it('throws an error if runOnly contains both rules and tags', function() {
+			assert.throws(function() {
+				a.normalizeOptions({
+					runOnly: ['positive', 'negative1']
+				});
+			});
+		});
+
+		it('defaults runOnly to type: tag', function() {
+			var opt = { runOnly: ['fakeTag'] };
+			var out = a.normalizeOptions(opt);
+			assert(out.runOnly.type, 'tag');
+			assert.deepEqual(out.runOnly.values, ['fakeTag']);
+		});
+
 		it('throws an error runOnly.values not an array', function() {
 			assert.throws(function() {
 				a.normalizeOptions({
