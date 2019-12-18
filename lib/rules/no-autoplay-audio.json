@@ -2,12 +2,12 @@
 	"id": "no-autoplay-audio",
 	"selector": "audio[autoplay=\"true\"], video[autoplay=\"true\"]",
 	"matches": "no-autoplay-audio-matches.js",
-	"tags": ["wcag2a", "wcag142"],
+	"tags": ["wcag2a", "wcag142", "experimental"],
 	"metadata": {
 		"description": "Ensures <video> or <audio> elements does not autoplay audio for more than 3 seconds or has a control mechanism to stop or mute the audio",
 		"help": "<video> or <audio> elements does not autoplay audio"
 	},
-	"preload": false,
+	"preload": true,
 	"all": ["no-autoplay-audio"],
 	"any": [],
 	"none": []

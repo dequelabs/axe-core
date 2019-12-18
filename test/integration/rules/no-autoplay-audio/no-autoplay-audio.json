@@ -1,0 +1,6 @@
+{
+	"description": "no-autoplay-audio tests",
+	"rule": "no-autoplay-audio",
+	"passes": [["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"]],
+	"violations": [["#fail1"], ["#fail2"]]
+}
