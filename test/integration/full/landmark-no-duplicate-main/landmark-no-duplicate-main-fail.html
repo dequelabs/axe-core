@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf8" />
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="/node_modules/mocha/mocha.css"
+		/>
+		<script src="/node_modules/mocha/mocha.js"></script>
+		<script src="/node_modules/chai/chai.js"></script>
+		<script src="/axe.js"></script>
+		<script>
+			mocha.setup({
+				timeout: 10000,
+				ui: 'bdd'
+			});
+			var assert = chai.assert;
+		</script>
+	</head>
+	<body>
+		<div role="main" id="fail1">
+			Div 1 with role of "main"
+		</div>
+		<div role="main">
+			Div 2 with role of "main"
+		</div>
+		<iframe id="frame1" src="frames/level1-fail.html"></iframe>
+		<div id="mocha"></div>
+		<script src="/test/testutils.js"></script>
+		<script src="landmark-no-duplicate-main-fail.js"></script>
+		<script src="/test/integration/adapter.js"></script>
+	</body>
+</html>
