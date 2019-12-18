@@ -1,6 +1,6 @@
 {
 	"id": "landmark-one-main",
-	"selector": "html",
+	"selector": "main:not([role]), [role='main']",
 	"tags": ["cat.semantics", "best-practice"],
 	"metadata": {
 		"description": "Ensures the document has only one main landmark and each iframe in the page has at most one main landmark",
