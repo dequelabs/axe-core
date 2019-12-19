@@ -1,6 +1,7 @@
 {
 	"id": "role-img-alt",
-	"selector": "[role='img']:not(svg):not(img):not(area):not(input):not(object)",
+	"selector": "[role='img']:not(img):not(area):not(input):not(object)",
+	"matches": "html-namespace-matches.js",
 	"tags": [
 		"cat.text-alternatives",
 		"wcag2a",
