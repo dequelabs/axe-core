@@ -128,6 +128,7 @@ describe('only-listitems', function() {
 		assert.isTrue(
 			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
 		);
+		assert.deepEqual(checkContext._data, { messageKey: 'roleNotValid' });
 	});
 
 	it('should return true if <link> is used along side only li items with their roles changed', function() {
