@@ -386,7 +386,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('test-fast', ['prepare', 'run:npm_run_testHeadless']);
 	grunt.registerTask('test', [
 		'prepare',
-		// 'run:npm_run_testHeadless',
+		'run:npm_run_testHeadless',
 		'parallel'
 	]);
 	grunt.registerTask('ci-build', ['prepare', 'parallel']);
