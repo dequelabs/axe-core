@@ -5,8 +5,11 @@
 	"metadata": {
 		"impact": "critical",
 		"messages": {
-			"pass": "ARIA attribute name{{=it.data && it.data.length > 1 ? 's' : ''}} are valid",
-			"fail": "Invalid ARIA attribute name{{=it.data && it.data.length > 1 ? 's' : ''}}:{{~it.data:value}} {{=value}}{{~}}"
+			"pass": "ARIA attribute name is valid",
+			"fail": {
+				"singular": "Invalid ARIA attribute name: ${data.values}",
+				"plural": "Invalid ARIA attribute names: ${data.values}"
+			}
 		}
 	}
 }

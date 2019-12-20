@@ -4,8 +4,8 @@
 	"metadata": {
 		"impact": "moderate",
 		"messages": {
-			"pass": "The {{=it.data.role }} landmark is at the top level.",
-			"fail": "The {{=it.data.role }} landmark is contained in another landmark."
+			"pass": "The ${data.role} landmark is at the top level.",
+			"fail": "The ${data.role} landmark is contained in another landmark."
 		}
 	}
 }

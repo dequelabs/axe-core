@@ -37,8 +37,6 @@ function hasMultipleOutcomes(messages) {
 		switch (key) {
 			case 'pass':
 			case 'fail':
-				return typeof messages[key] === 'string';
-
 			case 'incomplete':
 				return ['string', 'object'].includes(typeof messages[key]);
 

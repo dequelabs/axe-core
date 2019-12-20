@@ -5,7 +5,10 @@
 		"impact": "critical",
 		"messages": {
 			"pass": "ARIA attributes are used correctly for the defined role",
-			"fail": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "ARIA attribute is not allowed: ${data.values}",
+				"plural": "ARIA attributes are not allowed: ${data.values}"
+			}
 		}
 	}
 }
