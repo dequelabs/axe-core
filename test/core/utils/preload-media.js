@@ -34,7 +34,7 @@ describe('axe.utils.preloadMedia', function() {
 	it('passes the treeRoot property to utils.preloadMedia', function(done) {
 		var isCalled = false;
 		axe.utils.preloadMedia = function(options) {
-			assert.equal(options.tree, treeRoot);
+			assert.equal(options.treeRoot, treeRoot);
 			isCalled = true;
 			return Promise.resolve();
 		};
