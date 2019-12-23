@@ -445,8 +445,11 @@ describe('dom.getElementStack', function() {
 				'</main>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stacks = getClientElementStack(target);
-			assert.isTrue(stacks.length > 1);
+			var stacks = getClientElementStack(target).map(mapToIDs);
+			assert.deepEqual(stacks, [
+				['2', 'target', '1', 'fixture'],
+				['3', 'target', '1', 'fixture']
+			]);
 		});
 	});
 });
