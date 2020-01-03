@@ -14,7 +14,10 @@ describe('axe.reset', function() {
 	it('should throw if no audit is configured', function() {
 		assert.throws(
 			function() {
-				axe.reset(function() {}, function() {});
+				axe.reset(
+					function() {},
+					function() {}
+				);
 			},
 			Error,
 			/^No audit configured/

@@ -41,7 +41,6 @@ describe('text.subtreeText', function() {
 			var text = h1.children[0];
 			var context = { processed: [] };
 			subtreeText(h1, context);
-			console.log(context.processed);
 			assert.deepEqual(context.processed, [h1, text]);
 		});
 

@@ -4,15 +4,16 @@ describe('page-has-heading-one test pass', function() {
 	before(function(done) {
 		axe.testUtils.awaitNestedLoad(function() {
 			// Stop messing with my tests Mocha!
-			document.querySelector('#mocha h1').outerHTML =
-				'<h2>page-has-heading-one test</h2>';
+			var heading = document.querySelector('#mocha h1');
+			if (heading) {
+				heading.outerHTML = '<h2>page-has-heading-one test</h2>';
+			}
 
 			axe.run(
 				{ runOnly: { type: 'rule', values: ['page-has-heading-one'] } },
 				function(err, r) {
 					assert.isNull(err);
 					results = r;
-					console.log(r);
 					done();
 				}
 			);
