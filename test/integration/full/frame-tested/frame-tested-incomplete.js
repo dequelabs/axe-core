@@ -10,7 +10,6 @@ describe('frame-tested-incomplete test', function() {
 			) {
 				assert.isNull(err);
 				results = r;
-				console.log(results);
 				done();
 			});
 		});
