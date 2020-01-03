@@ -94,7 +94,7 @@ describe('Audit', function() {
 	});
 
 	it('should be a function', function() {
-		assert.isFunction({});
+		assert.isFunction(Audit);
 	});
 
 	describe('Audit#_constructHelpUrls', function() {
