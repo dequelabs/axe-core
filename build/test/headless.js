@@ -20,7 +20,7 @@ const { runner } = require('mocha-headless-chrome');
 		 * Stop test execution on failure, for early feedback
 		 */
 		if (result.stats.failures > 0) {
-			break;
+			process.exit(1);
 		}
 	}
 })();
