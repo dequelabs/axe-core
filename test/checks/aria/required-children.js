@@ -226,6 +226,15 @@ describe('aria-required-children', function() {
 		assert.deepEqual(checkContext._data, ['grid']);
 	});
 
+	it('should pass an expanded combobox when the required popup role matches regarless of case', function() {
+		var params = checkSetup(
+			'<div role="combobox" aria-haspopup="gRiD" aria-expanded="true" id="target"><p role="textbox">Textbox</p><div role="grid"></div></div>'
+		);
+		assert.isTrue(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+	});
+
 	it('should fail when combobox child isnt default listbox', function() {
 		var params = checkSetup(
 			'<div role="combobox" aria-expanded="true" id="target"><p role="textbox">Textbox</p><div role="grid"></div></div>'
