@@ -40,6 +40,16 @@ describe('axe.utils.isHidden', function() {
 		assert.isFalse(axe.utils.isHidden(document));
 	});
 
+	it('should return false on a `video`', function() {
+		var el = document.createElement('video');
+		assert.isFalse(axe.utils.isHidden(el));
+	});
+
+	it('should return false on an `audio`', function() {
+		var el = document.createElement('audio');
+		assert.isFalse(axe.utils.isHidden(el));
+	});
+
 	it('should return true if `aria-hidden` is set', function() {
 		fixture.innerHTML =
 			'<div id="target" aria-hidden="true">Hidden from screen readers</div>';
