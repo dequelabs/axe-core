@@ -140,6 +140,10 @@ Read the [documentation on contributing](CONTRIBUTING.md)
 
 [List of projects using axe-core](doc/projects.md)
 
+## Version Without Polyfills
+
+To build a version of axe without polyfills, run `grunt --noPolyfills`.
+
 ## Acknowledgements
 
 Thanks to Dulin Marat for his [css-selector-parser](https://www.npmjs.com/package/css-selector-parser) implementation which is included for shadow DOM support.

@@ -83,7 +83,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'lib/core',
-						src: ['**/*.js', '!imports/index.js'],
+						src: ['**/*.js', '!imports/index.js', '!polyfills/index.js'],
 						dest: 'tmp/core'
 					}
 				]
@@ -350,6 +350,10 @@ module.exports = function(grunt) {
 				cmd: 'node',
 				args: ['./build/imports-generator']
 			},
+			npm_run_polyfills: {
+				cmd: 'node',
+				args: ['./build/polyfills-generator']
+			},
 			npm_run_testHeadless: {
 				cmd: 'npm',
 				args: ['run', 'test:headless']
@@ -363,7 +367,11 @@ module.exports = function(grunt) {
 		'concat:commons',
 		'add-locale'
 	]);
-	grunt.registerTask('pre-build', ['clean', 'run:npm_run_imports']);
+	const preBuildTasks = ['clean', 'run:npm_run_imports'];
+	if (!grunt.option('noPolyfills')) {
+		preBuildTasks.push('run:npm_run_polyfills');
+	}
+	grunt.registerTask('pre-build', preBuildTasks);
 	grunt.registerTask('build', [
 		'pre-build',
 		'validate',
