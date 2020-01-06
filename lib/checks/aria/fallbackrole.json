@@ -4,7 +4,7 @@
 	"metadata": {
 		"impact": "serious",
 		"messages": {
-			"pass": "Fallback roles not used",
+			"pass": "Only one role value used",
 			"fail": "Use only one role value, since fallback roles are not widely supported"
 		}
 	}
