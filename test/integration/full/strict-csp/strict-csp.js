@@ -1,5 +1,4 @@
-// phantomjs requires running in non-strict csp
-(window.PHANTOMJS ? describe.skip : describe)('strict-csp', function() {
+describe('strict-csp', function() {
 	'use strict';
 
 	it('should parse without errors', function() {

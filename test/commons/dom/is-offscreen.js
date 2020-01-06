@@ -36,12 +36,7 @@ describe('dom.isOffscreen', function() {
 		fixture.innerHTML =
 			'<div id="target" style="position: absolute; height: 50px; top: -51px;">Offscreen?</div>';
 		var el = document.getElementById('target');
-
-		if (window.PHANTOMJS) {
-			assert.ok('PhantomJS is a liar');
-		} else {
-			assert.isTrue(axe.commons.dom.isOffscreen(el));
-		}
+		assert.isTrue(axe.commons.dom.isOffscreen(el));
 	});
 
 	it('should never detect elements positioned outside the bottom edge', function() {
