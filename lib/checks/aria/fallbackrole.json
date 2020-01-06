@@ -1,0 +1,11 @@
+{
+	"id": "fallbackrole",
+	"evaluate": "fallbackrole.js",
+	"metadata": {
+		"impact": "serious",
+		"messages": {
+			"pass": "Fallback roles not used",
+			"fail": "Use only one role value, since fallback roles are not widely supported"
+		}
+	}
+}
