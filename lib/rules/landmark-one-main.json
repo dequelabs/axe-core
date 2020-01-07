@@ -3,7 +3,7 @@
 	"selector": "html",
 	"tags": ["cat.semantics", "best-practice"],
 	"metadata": {
-		"description": "Ensures the document has a main landmark and each iframe in the page has a main landmark",
+		"description": "Ensures the document has a main landmark",
 		"help": "Document must have one main landmark"
 	},
 	"all": ["page-has-main"],
