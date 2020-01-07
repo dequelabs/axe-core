@@ -3,6 +3,11 @@
 	"evaluate": "color-contrast.js",
 	"metadata": {
 		"impact": "serious",
+		"options": {
+			"noScroll": false,
+			"ignoreUnicode": true,
+			"ignoreLength": false
+		},
 		"messages": {
 			"pass": "Element has sufficient color contrast of ${data.contrastRatio}",
 			"fail": "Element has insufficient color contrast of ${data.contrastRatio} (foreground color: ${data.fgColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Expected contrast ratio of ${data.expectedContrastRatio}",
