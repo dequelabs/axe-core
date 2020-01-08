@@ -385,6 +385,14 @@ describe('dom.getElementStack', function() {
 	});
 
 	describe('scroll regions', function() {
+		var origHeight = document.documentElement.style.height;
+		var origOverflow = document.documentElement.style.overflowY;
+
+		afterEach(function() {
+			document.documentElement.style.height = origHeight;
+			document.documentElement.style.overflowY = origOverflow;
+		});
+
 		it('should return stack of scroll regions', function() {
 			fixture.innerHTML =
 				'<main id="1">' +
@@ -432,6 +440,23 @@ describe('dom.getElementStack', function() {
 			var target = fixture.querySelector('#target');
 			var stack = mapToIDs(getElementStack(target));
 			assert.deepEqual(stack, ['target', '5', '4', '3', '2', '1', 'fixture']);
+		});
+
+		it('should handle html as a scroll region', function() {
+			fixture.innerHTML =
+				'<main id="1">' +
+				'<div id="2" style="overflow:auto">' +
+				'<div id="3" style="height:100px">' +
+				'<p id="target">Hello World</p>' +
+				'</div>' +
+				'</div>' +
+				'</main>';
+			document.documentElement.style.height = '5000px';
+			document.documentElement.style.overflowY = 'scroll';
+			axe.testUtils.flatTreeSetup(fixture);
+			var target = fixture.querySelector('#target');
+			var stack = mapToIDs(getElementStack(target));
+			assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
 		});
 	});
 
