@@ -40,17 +40,26 @@ describe('heading-order', function() {
 	});
 
 	it('should return false when header level increases by 2', function() {
-		var results = [{ data: 1, result: true }, { data: 3, result: true }];
+		var results = [
+			{ data: 1, result: true },
+			{ data: 3, result: true }
+		];
 		assert.isFalse(checks['heading-order'].after(results)[1].result);
 	});
 
 	it('should return true when header level decreases by 1', function() {
-		var results = [{ data: 2, result: true }, { data: 1, result: true }];
+		var results = [
+			{ data: 2, result: true },
+			{ data: 1, result: true }
+		];
 		assert.isTrue(checks['heading-order'].after(results)[1].result);
 	});
 
 	it('should return true when header level decreases by 2', function() {
-		var results = [{ data: 3, result: true }, { data: 1, result: true }];
+		var results = [
+			{ data: 3, result: true },
+			{ data: 1, result: true }
+		];
 		assert.isTrue(checks['heading-order'].after(results)[1].result);
 	});
 
@@ -60,7 +69,10 @@ describe('heading-order', function() {
 	});
 
 	it('should return true when header level increases by 1', function() {
-		var results = [{ data: 1, result: true }, { data: 2, result: true }];
+		var results = [
+			{ data: 1, result: true },
+			{ data: 2, result: true }
+		];
 		assert.isTrue(checks['heading-order'].after(results)[1].result);
 	});
 });
