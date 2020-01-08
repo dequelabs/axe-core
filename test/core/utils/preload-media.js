@@ -1,6 +1,6 @@
 /* global Promise */
 
-describe.only('axe.utils.preloadMedia', function() {
+describe('axe.utils.preloadMedia', function() {
 	'use strict';
 
 	var origFn = axe.utils.preloadMedia;
