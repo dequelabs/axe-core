@@ -45,6 +45,7 @@ describe('axe.utils.preloadMedia', function() {
 		axe.utils.preloadMedia({ treeRoot: axe._tree[0] }).then(function(result) {
 			assert.equal(result.length, 1);
 			assert.isTrue(result[0].readyState > 0);
+			assert.equal(result[0].duration, 27.089);
 
 			done();
 		});
@@ -64,7 +65,10 @@ describe('axe.utils.preloadMedia', function() {
 		axe.utils.preloadMedia({ treeRoot: axe._tree[0] }).then(function(result) {
 			assert.equal(result.length, 2);
 			assert.isTrue(result[0].readyState > 0);
-			assert.notEqual(result[1].duration, NaN);
+			assert.equal(result[0].duration, 27.089);
+
+			assert.isTrue(result[1].readyState > 0);
+			assert.equal(result[1].duration, 13.699);
 
 			done();
 		});
