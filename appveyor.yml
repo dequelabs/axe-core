@@ -8,10 +8,15 @@ skip_tags: true
  # Install scripts. (runs after repo cloning)
 install:
   - ps: Install-Product node $env:nodejs_version
+  # Pin the version of iedriver used
+  - ps: choco install selenium-ie-driver --version 3.141.5
   - npm install
 
  # Post-install test scripts.
 test_script:
+  # Include installed iedriver on path
+  - set PATH=C:\tools\selenium;%PATH%
+  - echo %PATH%
   - node --version
   - npm --version
   - npm run build

@@ -102,8 +102,9 @@ The current set of tags supported are listed in the following table:
 
 | Tag Name        |       Accessibility Standard/Purpose        |
 | --------------- | :-----------------------------------------: |
-| `wcag2a`        |              WCAG 2.0 Level A               |
-| `wcag2aa`       |              WCAG 2.0 Level AA              |
+| `wcag2a`        |         WCAG 2.0 & WCAG 2.1 Level A         |
+| `wcag2aa`       |        WCAG 2.0 & WCAG 2.1 Level AA         |
+| `wcag21a`       |              WCAG 2.1 Level A               |
 | `wcag21aa`      |              WCAG 2.1 Level AA              |
 | `section508`    |                 Section 508                 |
 | `best-practice` |      Best practices endorsed by Deque       |
@@ -396,7 +397,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `elementRef`       | `false` | Return element references in addition to the target                                                                                     |
 | `restoreScroll`    | `false` | Scrolls elements back to before axe started                                                                                             |
 | `frameWaitTime`    | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out                                              |
-| `preload`          | `false` | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details) |
+| `preload`          | `true`  | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details) |
 | `performanceTimer` | `false` | Log rule performance metrics to the console                                                                                             |
 
 ###### Options Parameter Examples
@@ -474,6 +475,16 @@ axe.run(
 
 This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `ruleId3`. No other rule will run.
 
+Alternatively, runOnly can be passed an array of rules:
+
+```js
+axe.run({
+  runOnly: ['ruleId1', 'ruleId2', 'ruleId3'];
+}, (err, results) => {
+  // ...
+})
+```
+
 3. Run all enabled Rules except for a list of rules
 
 The default operation for axe.run is to run all rules except for rules with the "experimental" tag. If certain rules should be disabled from being run, specify `options` as:
@@ -517,29 +528,6 @@ axe.run(
 ```
 
 This example includes all level A rules except for valid-lang, and in addition will include the level AA color-contrast rule.
-
-5. Run only some tags, but exclude others
-
-Similar to scope, the runOnly option can accept an object with an 'include' and 'exclude' property. Only those checks that match an included tag will run, except those that share a tag from the exclude list.
-
-```js
-axe.run(
-	{
-		runOnly: {
-			type: 'tags',
-			values: {
-				include: ['wcag2a', 'wcag2aa'],
-				exclude: ['experimental']
-			}
-		}
-	},
-	(err, results) => {
-		// ...
-	}
-);
-```
-
-This example first includes all `wcag2a` and `wcag2aa` rules. All rules that are tagged as `experimental` are than removed from the list of rules to run.
 
 6. Only process certain types of results
 

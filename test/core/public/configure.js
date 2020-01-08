@@ -307,10 +307,10 @@ describe('axe.configure', function() {
 			var audit = axe._audit;
 			var localeData = audit.data;
 
-			assert.equal(localeData.rules.greeting.help(), 'hi');
-			assert.equal(localeData.rules.greeting.description(), 'hello');
-			assert.equal(localeData.checks.banana.messages.pass(), 'pizza');
-			assert.equal(localeData.checks.banana.messages.fail(), 'icecream');
+			assert.equal(localeData.rules.greeting.help, 'hi');
+			assert.equal(localeData.rules.greeting.description, 'hello');
+			assert.equal(localeData.checks.banana.messages.pass, 'pizza');
+			assert.equal(localeData.checks.banana.messages.fail, 'icecream');
 			assert.deepEqual(localeData.checks.banana.messages.incomplete, {
 				foo: 'meat',
 				bar: 'fruit',
@@ -335,9 +335,9 @@ describe('axe.configure', function() {
 			var localeData = audit.data;
 
 			assert.equal(localeData.rules.greeting.help, 'ABCDEFGHIKLMNOPQRSTVXYZ');
-			assert.equal(localeData.rules.greeting.description(), 'hello');
+			assert.equal(localeData.rules.greeting.description, 'hello');
 			assert.equal(localeData.checks.banana.messages.pass, 'yay');
-			assert.equal(localeData.checks.banana.messages.fail(), 'icecream');
+			assert.equal(localeData.checks.banana.messages.fail, 'icecream');
 			assert.deepEqual(localeData.checks.banana.messages.incomplete, {
 				foo: 'a',
 				bar: 'b',
@@ -359,6 +359,133 @@ describe('axe.configure', function() {
 			});
 
 			assert.equal(axe._audit.lang, 'lol');
+		});
+
+		it('should call doT.compile if a messages uses doT syntax', function() {
+			axe.configure({
+				locale: {
+					lang: 'lol',
+					rules: { greeting: { description: 'hello' } },
+					checks: {
+						banana: {
+							fail: 'icecream {{=it.data.value}}'
+						}
+					}
+				}
+			});
+
+			var audit = axe._audit;
+			var localeData = audit.data;
+
+			assert.isTrue(
+				typeof localeData.checks.banana.messages.fail === 'function'
+			);
+		});
+
+		it('should leave the messages as a string if it does not use doT syntax', function() {
+			axe.configure({
+				locale: {
+					lang: 'lol',
+					rules: { greeting: { description: 'hello' } },
+					checks: {
+						banana: {
+							fail: 'icecream ${data.value}'
+						}
+					}
+				}
+			});
+
+			var audit = axe._audit;
+			var localeData = audit.data;
+
+			assert.isTrue(typeof localeData.checks.banana.messages.fail === 'string');
+		});
+
+		it('should update failure messages', function() {
+			axe._load({
+				data: {
+					failureSummaries: {
+						any: {
+							failureMessage: function() {
+								return 'failed any';
+							}
+						},
+						none: {
+							failureMessage: function() {
+								return 'failed none';
+							}
+						}
+					},
+					incompleteFallbackMessage: function() {
+						return 'failed incomplete';
+					}
+				}
+			});
+
+			axe.configure({
+				locale: {
+					lang: 'lol',
+					failureSummaries: {
+						any: {
+							failureMessage: 'foo'
+						},
+						none: {
+							failureMessage: 'bar'
+						}
+					},
+					incompleteFallbackMessage: 'baz'
+				}
+			});
+
+			var audit = axe._audit;
+			var localeData = audit.data;
+
+			assert.equal(localeData.failureSummaries.any.failureMessage, 'foo');
+			assert.equal(localeData.failureSummaries.none.failureMessage, 'bar');
+			assert.equal(localeData.incompleteFallbackMessage, 'baz');
+		});
+
+		it('should merge failure messages', function() {
+			axe._load({
+				data: {
+					failureSummaries: {
+						any: {
+							failureMessage: function() {
+								return 'failed any';
+							}
+						},
+						none: {
+							failureMessage: function() {
+								return 'failed none';
+							}
+						}
+					},
+					incompleteFallbackMessage: function() {
+						return 'failed incomplete';
+					}
+				}
+			});
+
+			axe.configure({
+				locale: {
+					lang: 'lol',
+					failureSummaries: {
+						any: {
+							failureMessage: 'foo'
+						}
+					}
+				}
+			});
+
+			var audit = axe._audit;
+			var localeData = audit.data;
+
+			assert.equal(localeData.failureSummaries.any.failureMessage, 'foo');
+			assert.equal(
+				localeData.failureSummaries.none.failureMessage(),
+				'failed none'
+			);
+			assert.equal(localeData.incompleteFallbackMessage(), 'failed incomplete');
 		});
 
 		describe('only given checks', function() {
@@ -484,7 +611,7 @@ describe('axe.configure', function() {
 			var banana = axe._audit.data.checks.banana;
 			assert.equal(banana.impact, 'potato');
 			assert.equal(banana.foo, 'bar');
-			assert.equal(banana.messages.pass(), 'yay banana');
+			assert.equal(banana.messages.pass, 'yay banana');
 		});
 
 		it('should error when provided an unknown rule id', function() {
@@ -505,6 +632,18 @@ describe('axe.configure', function() {
 					}
 				});
 			}, /unknown check: "nope"/);
+		});
+
+		it('should error when provided an unknown failure summary', function() {
+			assert.throws(function() {
+				axe.configure({
+					locale: {
+						failureSummaries: {
+							nope: { failureMessage: 'helpme' }
+						}
+					}
+				});
+			});
 		});
 
 		it('should set default locale', function() {
@@ -546,7 +685,7 @@ describe('axe.configure', function() {
 				var audit = axe._audit;
 				var localeData = audit.data;
 
-				assert.equal(localeData.rules.greeting.help(), 'hi');
+				assert.equal(localeData.rules.greeting.help, 'hi');
 			});
 		});
 
@@ -584,6 +723,11 @@ describe('axe.configure', function() {
 			assert.doesNotThrow(function fn() {
 				axe.configure({
 					axeVersion: '1.2.3'
+				});
+
+				axe.version = '1.2.3-canary.2664bae';
+				axe.configure({
+					axeVersion: '1.2.3-canary.2664bae'
 				});
 			});
 		});
@@ -687,6 +831,29 @@ describe('axe.configure', function() {
 						axeVersion: '1.2.3-canary.a5d727c'
 					},
 					/^Configured version/
+				);
+			});
+		});
+
+		it('should accept ver property as fallback', function() {
+			assert.throws(function fn() {
+				axe.configure(
+					{
+						ver: '1.3.0'
+					},
+					/^Configured version/
+				);
+			});
+		});
+
+		it('should accept axeVersion over ver property', function() {
+			assert.throws(function fn() {
+				axe.configure(
+					{
+						ver: '0.1.2',
+						axeVersion: '1.3.0'
+					},
+					/^Configured version 1\.3\.0/
 				);
 			});
 		});

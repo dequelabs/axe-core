@@ -1,7 +1,6 @@
 {
 	"id": "link-name",
-	"selector": "a[href], [role=link][href]",
-	"matches": "role-not-button-matches.js",
+	"selector": "a[href]:not([role=button]), [role=link]",
 	"tags": [
 		"cat.name-role-value",
 		"wcag2a",

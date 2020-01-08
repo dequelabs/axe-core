@@ -87,14 +87,51 @@ describe('aria-allowed-role', function() {
 		);
 	});
 
-	it('returns false when img has no alt', function() {
+	it('returns true when img has no alt', function() {
 		var node = document.createElement('img');
+		node.setAttribute('role', 'presentation');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+		assert.deepEqual(checkContext._data, null);
+		node.setAttribute('role', 'none');
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+		assert.deepEqual(checkContext._data, null);
+	});
+
+	it('returns true when img has empty alt', function() {
+		var node = document.createElement('img');
+		node.setAttribute('alt', '');
+		node.setAttribute('role', 'presentation');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+		assert.deepEqual(checkContext._data, null);
+		node.setAttribute('role', 'none');
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+		assert.deepEqual(checkContext._data, null);
+	});
+
+	it('returns false when img has alt', function() {
+		var node = document.createElement('img');
+		node.setAttribute('alt', 'not empty');
 		node.setAttribute('role', 'presentation');
 		fixture.appendChild(node);
 		assert.isFalse(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
 		assert.deepEqual(checkContext._data, ['presentation']);
+		node.setAttribute('role', 'none');
+		assert.isFalse(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+		assert.deepEqual(checkContext._data, ['none']);
 	});
 
 	it('returns true when input of type image and no role', function() {
@@ -120,6 +157,46 @@ describe('aria-allowed-role', function() {
 	it('returns true when INPUT type is text with role combobox', function() {
 		var node = document.createElement('input');
 		node.setAttribute('type', 'text');
+		node.setAttribute('role', 'combobox');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
+	it('returns true when INPUT type is tel with role combobox', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'tel');
+		node.setAttribute('role', 'combobox');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
+	it('returns true when INPUT type is url with role combobox', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'url');
+		node.setAttribute('role', 'combobox');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
+	it('returns true when INPUT type is search with role combobox', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'search');
+		node.setAttribute('role', 'combobox');
+		fixture.appendChild(node);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
+	it('returns true when INPUT type is email with role combobox', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'email');
 		node.setAttribute('role', 'combobox');
 		fixture.appendChild(node);
 		assert.isTrue(
@@ -221,5 +298,21 @@ describe('aria-allowed-role', function() {
 		var actual = checks['aria-allowed-role'].evaluate.call(checkContext, node);
 		assert.isTrue(actual);
 		assert.isNull(checkContext._data, null);
+	});
+
+	it('returns false if a dpub role’s type is not the element’s implicit role', function() {
+		fixture.innerHTML = '<article role="doc-biblioref" id="target"></article>';
+		var target = fixture.children[0];
+		assert.isFalse(
+			checks['aria-allowed-role'].evaluate.call(checkContext, target)
+		);
+	});
+
+	it('returns true if a dpub role’s type is the element’s implicit role', function() {
+		fixture.innerHTML = '<a href="foo" role="doc-biblioref" id="target"></a>';
+		var target = fixture.children[0];
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, target)
+		);
 	});
 });

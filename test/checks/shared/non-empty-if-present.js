@@ -24,6 +24,7 @@ describe('non-empty-if-present', function() {
 		assert.isFalse(
 			checks['non-empty-if-present'].evaluate.call(checkContext, node)
 		);
+		assert.equal(checkContext._data.messageKey, 'has-label');
 	});
 
 	(isEdgeOrIe ? xit : it)(
@@ -49,7 +50,6 @@ describe('non-empty-if-present', function() {
 		assert.isFalse(
 			checks['non-empty-if-present'].evaluate.call(checkContext, node)
 		);
-		assert.equal(checkContext._data, '');
 	});
 
 	it('should return false if the element is not a submit or reset input', function() {

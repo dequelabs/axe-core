@@ -187,6 +187,20 @@ describe('text.removeUnicode', function() {
 		assert.equal(actual, '');
 	});
 
+	it('returns string removing all private use unicode', function() {
+		var actual = axe.commons.text.removeUnicode('', {
+			nonBmp: true
+		});
+		assert.equal(actual, '');
+	});
+
+	it('returns string removing all supplementary private use unicode', function() {
+		var actual = axe.commons.text.removeUnicode('󰀀󿰀󿿽󰏽', {
+			nonBmp: true
+		});
+		assert.equal(actual, '');
+	});
+
 	it('returns string removing combination of unicode characters', function() {
 		var actual = axe.commons.text.removeUnicode(
 			'The ☀️ is orange, the ◓ is white.',

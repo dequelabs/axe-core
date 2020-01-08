@@ -1,6 +1,9 @@
 {
 	"id": "css-orientation-lock",
 	"evaluate": "css-orientation-lock.js",
+	"options": {
+		"degreeThreshold": 2
+	},
 	"metadata": {
 		"impact": "serious",
 		"messages": {

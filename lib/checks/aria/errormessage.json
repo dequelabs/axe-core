@@ -5,7 +5,10 @@
 		"impact": "critical",
 		"messages": {
 			"pass": "Uses a supported aria-errormessage technique",
-			"fail": "aria-errormessage value{{=it.data && it.data.length > 1 ? 's' : ''}} {{~it.data:value}} `{{=value}}{{~}}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)"
+			"fail": {
+				"singular": "aria-errormessage value `${data.values}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)",
+				"plural": "aria-errormessage values `${data.values}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)"
+			}
 		}
 	}
 }
