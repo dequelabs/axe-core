@@ -233,14 +233,10 @@ describe('color.getBackgroundColor', function() {
 			document.getElementById('target'),
 			[]
 		);
-		if (window.PHANTOMJS) {
-			assert.ok('PhantomJS is a liar');
-		} else {
-			assert.isNotNull(actual);
-			assert.equal(Math.round(actual.blue), 0);
-			assert.equal(Math.round(actual.red), 0);
-			assert.equal(Math.round(actual.green), 0);
-		}
+		assert.isNotNull(actual);
+		assert.equal(Math.round(actual.blue), 0);
+		assert.equal(Math.round(actual.red), 0);
+		assert.equal(Math.round(actual.green), 0);
 	});
 
 	it('should return null if a multiline inline element does not fully cover background', function() {
