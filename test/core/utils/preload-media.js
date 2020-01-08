@@ -51,7 +51,7 @@ describe('axe.utils.preloadMedia', function() {
 		});
 	});
 
-	it.only('returns media nodes (audio, video) after their metadata has been preloaded', function(done) {
+	it('returns media nodes (audio, video) after their metadata has been preloaded', function(done) {
 		fixtureSetup(
 			// 1 audio elm
 			'<audio src="/test/assets/moon-speech.mp3"></audio>' +
