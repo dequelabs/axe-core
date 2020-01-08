@@ -4,7 +4,6 @@ describe('color.getOwnBackgroundColor', function() {
 	var fixture = document.getElementById('fixture');
 	var queryFixture = axe.testUtils.queryFixture;
 	var getOwnBackgroundColor = axe.commons.color.getOwnBackgroundColor;
-	var isPhantom = window.PHANTOMJS ? true : false;
 
 	afterEach(function() {
 		fixture.innerHTML = '';
@@ -21,9 +20,7 @@ describe('color.getOwnBackgroundColor', function() {
 		assert.equal(actual.red, 0);
 		assert.equal(actual.green, 0);
 		assert.equal(actual.blue, 0);
-		if (!isPhantom) {
-			assert.equal(actual.alpha, 0);
-		}
+		assert.equal(actual.alpha, 0);
 	});
 
 	it('returns color with rgba values of specified background-color value', function() {
@@ -37,9 +34,7 @@ describe('color.getOwnBackgroundColor', function() {
 		assert.equal(actual.red, 255);
 		assert.equal(actual.green, 192);
 		assert.equal(actual.blue, 203);
-		if (!isPhantom) {
-			assert.equal(actual.alpha, 1);
-		}
+		assert.equal(actual.alpha, 1);
 	});
 
 	it('returns color with rgba values and alpha', function() {
@@ -53,9 +48,7 @@ describe('color.getOwnBackgroundColor', function() {
 		assert.equal(actual.red, 0);
 		assert.equal(actual.green, 128);
 		assert.equal(actual.blue, 0);
-		if (!isPhantom) {
-			assert.equal(actual.alpha, 0.5);
-		}
+		assert.equal(actual.alpha, 0.5);
 	});
 
 	it('returns color with rgba values and opacity (for blending)', function() {
@@ -69,9 +62,7 @@ describe('color.getOwnBackgroundColor', function() {
 		assert.equal(actual.red, 0);
 		assert.equal(actual.green, 128);
 		assert.equal(actual.blue, 0);
-		if (!isPhantom) {
-			assert.equal(actual.alpha, 0.5);
-		}
+		assert.equal(actual.alpha, 0.5);
 	});
 
 	it('returns color with rgba values, alpha and opacity', function() {
@@ -85,8 +76,6 @@ describe('color.getOwnBackgroundColor', function() {
 		assert.equal(actual.red, 0);
 		assert.equal(actual.green, 128);
 		assert.equal(actual.blue, 0);
-		if (!isPhantom) {
-			assert.equal(actual.alpha, 0.25);
-		}
+		assert.equal(actual.alpha, 0.25);
 	});
 });
