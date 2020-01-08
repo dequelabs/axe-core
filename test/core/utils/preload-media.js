@@ -1,15 +1,11 @@
 /* global Promise */
 
-describe('axe.utils.preloadMedia', function() {
+describe.only('axe.utils.preloadMedia', function() {
 	'use strict';
 
 	var origFn = axe.utils.preloadMedia;
 	var fixture = document.getElementById('fixture');
 	var fixtureSetup = axe.testUtils.fixtureSetup;
-
-	function rebuildTree() {
-		axe._tree = axe.utils.getFlattenedTree(document);
-	}
 
 	afterEach(function() {
 		axe.utils.preloadMedia = origFn;
@@ -24,7 +20,7 @@ describe('axe.utils.preloadMedia', function() {
 			return Promise.resolve();
 		};
 
-		rebuildTree();
+		axe._tree = axe.utils.getFlattenedTree(document);
 
 		axe.utils.preloadMedia({ treeRoot: axe._tree[0] }).then(function() {
 			assert.ok(isCalled);
@@ -33,7 +29,7 @@ describe('axe.utils.preloadMedia', function() {
 	});
 
 	it('returns empty array when there are no media nodes to be preloaded', function(done) {
-		rebuildTree();
+		axe._tree = axe.utils.getFlattenedTree(document);
 
 		axe.utils.preloadMedia({ treeRoot: axe._tree[0] }).then(function(result) {
 			assert.equal(result.length, 0);
@@ -43,7 +39,7 @@ describe('axe.utils.preloadMedia', function() {
 
 	it('returns media node (audio) after their metadata has been preloaded', function(done) {
 		fixtureSetup(
-			'<audio src="https://act-rules.github.io/test-assets/moon-audio/moon-speech.mp3" autoplay="true" controls></audio>'
+			'<audio src="/test/assets/moon-speech.mp3" autoplay="true" controls></audio>'
 		);
 
 		axe.utils.preloadMedia({ treeRoot: axe._tree[0] }).then(function(result) {
@@ -57,11 +53,11 @@ describe('axe.utils.preloadMedia', function() {
 	it('returns media nodes (audio, video) after their metadata has been preloaded', function(done) {
 		fixtureSetup(
 			// 1 audio elm
-			'<audio src="https://act-rules.github.io/test-assets/moon-audio/moon-speech.mp3"></audio>' +
+			'<audio src="/test/assets/moon-speech.mp3"></audio>' +
 				// 1 video elm
 				'<video>' +
-				'<source src="https://act-rules.github.io/test-assets/rabbit-video/video.mp4" type="video/mp4" />' +
-				'<source src="https://act-rules.github.io/test-assets/rabbit-video/video.webm" type="video/webm" />' +
+				'<source src="/test/assets/video.mp4" type="video/mp4" />' +
+				'<source src="/test/assets/video.webm" type="video/webm" />' +
 				'</video>'
 		);
 
