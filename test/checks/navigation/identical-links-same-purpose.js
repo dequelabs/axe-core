@@ -63,7 +63,7 @@ describe('identical-links-same-purpose tests', function() {
 		assert.hasAllKeys(checkContext._data, ['name', 'urlProps']);
 		assert.equal(checkContext._data.name, 'Pass 1'.toLowerCase());
 		assert.equal(checkContext._data.urlProps.hash, '#/foo');
-		assert.equal(checkContext._data.urlProps.pathname, '/home');
+		assert.equal(checkContext._data.urlProps.pathname, '/home/');
 	});
 
 	it('returns true for ARIA links has accessible name (AREA with `MAP` which is used in `IMG`)', function() {
