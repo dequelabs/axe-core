@@ -19,6 +19,7 @@ describe('color.getForegroundColor', function() {
 			' background-color: rgba(0, 128, 0, 0.5);">' +
 			'This is my text' +
 			'</div></div>';
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		var expected = new axe.commons.color.Color(32, 32, 64, 1);
@@ -35,6 +36,7 @@ describe('color.getForegroundColor', function() {
 			' background-color: green; opacity: 0.5;">' +
 			'This is my text' +
 			'</div></div>';
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		var expected = new axe.commons.color.Color(32, 32, 64, 1);
@@ -51,6 +53,7 @@ describe('color.getForegroundColor', function() {
 			'<div id="target" style="height: 20px; width: 15px; color: rgba(0, 0, 0, 0.87);">' +
 			'This is my text' +
 			'</div></div></div>';
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		var expected = new axe.commons.color.Color(119.5, 119.5, 119.5, 1);
@@ -68,6 +71,7 @@ describe('color.getForegroundColor', function() {
 			'<div id="target" style="height: 20px; width: 15px; color: rgba(0, 0, 0, 0.87);">' +
 			'This is my text' +
 			'</div></div></div></div>';
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		var expected = new axe.commons.color.Color(119.5, 119.5, 119.5, 1);
@@ -83,6 +87,7 @@ describe('color.getForegroundColor', function() {
 			'background-color: #800000; background-image: url(image.png);">' +
 			'<div id="target" style="height: 20px; width: 15px; color: blue; background-color: green; opacity: 0.5;">' +
 			'</div></div>';
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		assert.equal(axe.commons.color.incompleteData.get('fgColor'), 'bgImage');
@@ -94,6 +99,7 @@ describe('color.getForegroundColor', function() {
 			'<div style="height: 40px; width: 30px; background-color: red;">' +
 			'<div id="target" style="height: 20px; width: 15px; color: #000080; background-color: green;">' +
 			'</div></div>';
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		var expected = new axe.commons.color.Color(0, 0, 128, 1);
@@ -123,6 +129,7 @@ describe('color.getForegroundColor', function() {
 			shadow.innerHTML =
 				'<div id="target" style="height:20px;width:15px;color:#000080;background-color:green;"></div>';
 
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = shadow.querySelector('#target');
 			var actual = axe.commons.color.getForegroundColor(target);
 			var expected = new axe.commons.color.Color(0, 0, 128, 1);

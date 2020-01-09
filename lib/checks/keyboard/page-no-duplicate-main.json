@@ -1,6 +1,7 @@
 {
 	"id": "page-no-duplicate-main",
 	"evaluate": "page-no-duplicate.js",
+	"after": "page-no-duplicate-after.js",
 	"options": {
 		"selector": "main:not([role]), [role='main']"
 	},

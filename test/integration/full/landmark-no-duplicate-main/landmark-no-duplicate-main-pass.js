@@ -1,15 +1,10 @@
-describe('landmark-no-more-than-one-contentinfo test pass', function() {
+describe('landmark-no-duplicate-main test pass', function() {
 	'use strict';
 	var results;
 	before(function(done) {
 		axe.testUtils.awaitNestedLoad(function() {
 			axe.run(
-				{
-					runOnly: {
-						type: 'rule',
-						values: ['landmark-no-duplicate-contentinfo']
-					}
-				},
+				{ runOnly: { type: 'rule', values: ['landmark-no-duplicate-main'] } },
 				function(err, r) {
 					assert.isNull(err);
 					results = r;

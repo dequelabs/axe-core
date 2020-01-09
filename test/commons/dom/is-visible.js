@@ -251,7 +251,7 @@ describe('dom.isVisible', function() {
 
 		// IE11 either only supports clip paths defined by url() or not at all,
 		// MDN and caniuse.com give different results...
-		(isIE11 || window.PHANTOMJS ? it.skip : it)(
+		(isIE11 ? it.skip : it)(
 			'should detect clip-path hidden text technique',
 			function() {
 				fixture.innerHTML =
@@ -262,7 +262,7 @@ describe('dom.isVisible', function() {
 			}
 		);
 
-		(isIE11 || window.PHANTOMJS ? it.skip : it)(
+		(isIE11 ? it.skip : it)(
 			'should detect clip-path hidden text technique on parent',
 			function() {
 				fixture.innerHTML =
