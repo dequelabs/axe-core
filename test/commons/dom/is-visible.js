@@ -13,7 +13,9 @@ describe('dom.isVisible', function() {
 
 	afterEach(function() {
 		document.getElementById('fixture').innerHTML = '';
+		axe._tree = undefined;
 	});
+
 	describe('default usage', function() {
 		// Firefox returns `null` if accessed inside a hidden iframe
 		it('should return false if computedStyle return null for whatever reason', function() {
@@ -208,6 +210,22 @@ describe('dom.isVisible', function() {
 			var actual = axe.commons.dom.isVisible(vNode.actualNode);
 			assert.isFalse(actual);
 		});
+
+		(shadowSupported ? it : xit)(
+			'returns false for `AREA` element that is inside shadowDOM',
+			function() {
+				fixture.innerHTML = '<div id="container"></div>';
+				var container = fixture.querySelector('#container');
+				var shadow = container.attachShadow({ mode: 'open' });
+				shadow.innerHTML =
+					'<map name="infographic">' +
+					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
+					'</map>';
+				var target = shadow.querySelector('#target');
+				var actual = axe.commons.dom.isVisible(target);
+				assert.isFalse(actual);
+			}
+		);
 
 		it('returns false for `AREA` with closest `MAP` with name but not referred by an `IMG` usemap attribute', function() {
 			var vNode = queryFixture(
