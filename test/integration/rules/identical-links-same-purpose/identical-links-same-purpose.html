@@ -94,6 +94,11 @@
 	alt="MDN infographic"
 />
 
+<!-- native links, same resource (one specified as relative and another as absolute) -->
+<!-- Note: using the hostname and protocol here as need to represent relative and absolute url -->
+<a id="pass15" href="/home">Pass 15</a>
+<a id="pass15-identical1" href="http://localhost:9876/home">Pass 15</a>
+
 <!-- incomplete -->
 <!-- Note:identical incomplete nodes are appended as relatedNodes -->
 <!-- native links with different purpose -->
@@ -176,14 +181,12 @@
 <a id="incomplete13" href="https://facebook.com">follow us</a>
 <a id="incomplete13-identical1" href="https://instagram.com">follow us</a>
 
-<!-- multiple native links with differnt URLS with same filename but differnt pathname -->
-<a
-	id="incomplete14"
-	href="/test/integration/full/identical-links-same-purpose/foo.html"
+<!-- multiple native links with differnt URLS with same filename but different pathname -->
+<a id="incomplete14" href="/test/integration/full/directory-one/foo.html"
 	>Incomplete 14</a
 >
 <a id="incomplete14-identical1" href="foo.html">Incomplete 14</a>
-<a id="incomplete14-identical2" href="../identical-links-same-purpose/foo.html"
+<a id="incomplete14-identical2" href="../directory-two/foo.html"
 	>Incomplete 14</a
 >
 
