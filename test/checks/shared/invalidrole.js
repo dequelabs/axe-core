@@ -1,10 +1,11 @@
 describe('invalidrole', function() {
 	'use strict';
 
+	var fixture = document.getElementById('fixture');
 	var queryFixture = axe.testUtils.queryFixture;
 
 	afterEach(function() {
-		queryFixture('');
+		fixture.innerHTML = '';
 	});
 
 	it('should return true if applied to an empty role', function() {
