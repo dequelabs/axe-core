@@ -207,6 +207,7 @@ describe('dom.isVisible', function() {
 					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
 					'</map>'
 			);
+			debugger;
 			var actual = axe.commons.dom.isVisible(vNode.actualNode);
 			assert.isFalse(actual);
 		});
@@ -221,6 +222,8 @@ describe('dom.isVisible', function() {
 					'<map name="infographic">' +
 					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
 					'</map>';
+				axe.testUtils.flatTreeSetup(fixture);
+
 				var target = shadow.querySelector('#target');
 				var actual = axe.commons.dom.isVisible(target);
 				assert.isFalse(actual);
