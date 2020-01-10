@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.1](https://github.com/dequelabs/axe-core/compare/v3.4.0...v3.4.1) (2019-12-11)
+
+### Bug Fixes
+
+- ignores axe.ping responses that do not contain axe=true ([7d8aa42](https://github.com/dequelabs/axe-core/commit/7d8aa42))
+- input[role=button][value='correct'] should pass ([#1897](https://github.com/dequelabs/axe-core/issues/1897)) ([3aba02c](https://github.com/dequelabs/axe-core/commit/3aba02c))
+- remove heading from list of widget roles ([#1882](https://github.com/dequelabs/axe-core/issues/1882)) ([beb458f](https://github.com/dequelabs/axe-core/commit/beb458f))
+- **listitem:** clarify that li elements must be contained in a list or role=list ([#1894](https://github.com/dequelabs/axe-core/issues/1894)) ([8fa0964](https://github.com/dequelabs/axe-core/commit/8fa0964))
+- removes flaky test in axe Pro api check ([f2b3b54](https://github.com/dequelabs/axe-core/commit/f2b3b54))
+- **aria-allowed-role:** allow role combobox on input tel, search, url, and email ([#1850](https://github.com/dequelabs/axe-core/issues/1850)) ([75d3c8b](https://github.com/dequelabs/axe-core/commit/75d3c8b))
+- **axe.d.ts:** RunOnly.values should not accept a RunOnlyOption ([#1888](https://github.com/dequelabs/axe-core/issues/1888)) ([94b1466](https://github.com/dequelabs/axe-core/commit/94b1466))
+- **build:** add lang query parameter to helpUrl when builing with a locale ([#1909](https://github.com/dequelabs/axe-core/issues/1909)) ([a2f0247](https://github.com/dequelabs/axe-core/commit/a2f0247))
+- **color-contrast:** take into account parent opacity for foreground color ([#1902](https://github.com/dequelabs/axe-core/issues/1902)) ([639c41b](https://github.com/dequelabs/axe-core/commit/639c41b))
+- **is-focusable:** use tabindex attribute instead of property ([#1912](https://github.com/dequelabs/axe-core/issues/1912)) ([aa5314d](https://github.com/dequelabs/axe-core/commit/aa5314d))
+- **is-icon-ligature:** ignore whitespace characters ([#1908](https://github.com/dequelabs/axe-core/issues/1908)) ([77fc838](https://github.com/dequelabs/axe-core/commit/77fc838))
+- **is-ligature-icon:** rename canvas to canvasContext ([#1880](https://github.com/dequelabs/axe-core/issues/1880)) ([604ba4f](https://github.com/dequelabs/axe-core/commit/604ba4f))
+- **link-name:** test role=link when there is no href ([#1921](https://github.com/dequelabs/axe-core/issues/1921)) ([e839c57](https://github.com/dequelabs/axe-core/commit/e839c57))
+- **locales:** fix incompeteMessageFallback to be a string rather than an object ([#1853](https://github.com/dequelabs/axe-core/issues/1853)) ([02a1d8a](https://github.com/dequelabs/axe-core/commit/02a1d8a))
+- **run:** throw error if axe.run is called after a run has started but not completed ([#1914](https://github.com/dequelabs/axe-core/issues/1914)) ([290d125](https://github.com/dequelabs/axe-core/commit/290d125))
+- **server-side-image-map:** return as needs review rather than failure ([#1898](https://github.com/dequelabs/axe-core/issues/1898)) ([ce73af9](https://github.com/dequelabs/axe-core/commit/ce73af9))
+- **tabindex:** don't error when tabindex property is overridden ([#1910](https://github.com/dequelabs/axe-core/issues/1910)) ([e6875ee](https://github.com/dequelabs/axe-core/commit/e6875ee))
+- **td-has-headers:** greatly improve performance of td-has-headers rule ([#1887](https://github.com/dequelabs/axe-core/issues/1887)) ([a588cad](https://github.com/dequelabs/axe-core/commit/a588cad))
+- **typings:** add proper return value to getRule ([#1900](https://github.com/dequelabs/axe-core/issues/1900)) ([0d7c3d2](https://github.com/dequelabs/axe-core/commit/0d7c3d2))
+
 ## [3.4.0](https://github.com/dequelabs/axe-core/compare/v3.3.2...v3.4.0) (2019-10-18)
 
 ### Bug Fixes

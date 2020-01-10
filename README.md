@@ -93,7 +93,7 @@ Axe can be built using your local language. To do so, a localization file must b
 
 This will create a new build for axe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build localized versions, simply pass in `--all-lang` instead.
 
-To create a new translation for axe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below.
+To create a new translation for axe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below. For details on the message syntax, see [Check Message Template](/docs/check-message-template.md).
 
 To update existing translation file, re-run `grunt translate --lang=<langcode>`. This will add new messages used in English and remove messages which were not used in English.
 
@@ -116,7 +116,7 @@ axe.configure({
 			'aria-errormessage': {
 				// Note: doT (https://github.com/olado/dot) templates are supported here.
 				fail:
-					'Der Wert der aria-errormessage {{~it.data:value}} `{{=value}}{{~}}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
+					'Der Wert der aria-errormessage ${data.values}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
 			}
 			// ...
 		}

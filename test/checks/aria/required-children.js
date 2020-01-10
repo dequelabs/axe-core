@@ -206,6 +206,46 @@ describe('aria-required-children', function() {
 		);
 	});
 
+	it('should pass an expanded combobox when the required popup role matches', function() {
+		var params = checkSetup(
+			'<div role="combobox" aria-haspopup="grid" aria-expanded="true" id="target"><p role="textbox">Textbox</p><div role="grid"></div></div>'
+		);
+		assert.isTrue(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+	});
+
+	it('should fail an expanded combobox when the required role is missing on children', function() {
+		var params = checkSetup(
+			'<div role="combobox" aria-haspopup="grid" aria-expanded="true" id="target"><p role="textbox">Textbox</p><div role="listbox"></div></div>'
+		);
+		assert.isFalse(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+
+		assert.deepEqual(checkContext._data, ['grid']);
+	});
+
+	it('should pass an expanded combobox when the required popup role matches regarless of case', function() {
+		var params = checkSetup(
+			'<div role="combobox" aria-haspopup="gRiD" aria-expanded="true" id="target"><p role="textbox">Textbox</p><div role="grid"></div></div>'
+		);
+		assert.isTrue(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+	});
+
+	it('should fail when combobox child isnt default listbox', function() {
+		var params = checkSetup(
+			'<div role="combobox" aria-expanded="true" id="target"><p role="textbox">Textbox</p><div role="grid"></div></div>'
+		);
+		assert.isFalse(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+
+		assert.deepEqual(checkContext._data, ['listbox']);
+	});
+
 	it('should pass one indirectly aria-owned child when one required', function() {
 		var params = checkSetup(
 			'<div role="grid" id="target" aria-owns="r"></div><div id="r"><div role="row">Nothing here.</div></div>'

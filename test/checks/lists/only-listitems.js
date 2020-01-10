@@ -123,11 +123,19 @@ describe('only-listitems', function() {
 
 	it('should return true if the list has only li items with their roles changed', function() {
 		var checkArgs = checkSetup(
-			'<ol id="target"><li role="menuitem">Not a list item</li><li role="menuitem">Not a list item</li></ol>'
+			'<ol id="target"><li id="fail1" role="menuitem">Not a list item</li><li id="fail2" role="menuitem">Not a list item</li></ol>'
 		);
 		assert.isTrue(
 			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
 		);
+		assert.deepEqual(checkContext._data, {
+			messageKey: 'roleNotValid',
+			roles: 'menuitem'
+		});
+		assert.deepEqual(checkContext._relatedNodes, [
+			fixture.querySelector('#fail1'),
+			fixture.querySelector('#fail2')
+		]);
 	});
 
 	it('should return true if <link> is used along side only li items with their roles changed', function() {

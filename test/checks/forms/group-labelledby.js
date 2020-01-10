@@ -109,7 +109,7 @@ describe('group-labelledby', function() {
 					assert.deepEqual(checkContext._data, {
 						name: 'groupname',
 						type: type,
-						failureCode: 'no-unique-label'
+						messageKey: 'no-unique-label'
 					});
 				}
 			);
@@ -138,7 +138,7 @@ describe('group-labelledby', function() {
 					assert.deepEqual(checkContext._data, {
 						name: 'groupname',
 						type: type,
-						failureCode: 'no-shared-label'
+						messageKey: 'no-shared-label'
 					});
 				}
 			);
@@ -326,7 +326,7 @@ describe('group-labelledby', function() {
 					assert.deepEqual(checkContext._data, {
 						name: 'groupname',
 						type: type,
-						failureCode: 'no-shared-label'
+						messageKey: 'no-shared-label'
 					});
 				}
 			);
@@ -364,7 +364,7 @@ describe('group-labelledby', function() {
 					assert.deepEqual(checkContext._data, {
 						name: 'groupname',
 						type: type,
-						failureCode: 'no-unique-label'
+						messageKey: 'no-unique-label'
 					});
 				}
 			);

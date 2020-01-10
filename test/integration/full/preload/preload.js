@@ -2,7 +2,6 @@
 describe('axe.utils.preload integration test', function() {
 	'use strict';
 
-	var isPhantom = window.PHANTOMJS ? true : false;
 	var isIE11 = axe.testUtils.isIE11;
 	var styleSheets = {
 		crossOriginLinkHref: {
@@ -121,7 +120,7 @@ describe('axe.utils.preload integration test', function() {
 
 		before(function(done) {
 			// These tests currently break in IE11
-			if (isPhantom || isIE11) {
+			if (isIE11) {
 				this.skip();
 			} else {
 				/**

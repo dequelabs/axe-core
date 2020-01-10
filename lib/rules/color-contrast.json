@@ -3,7 +3,9 @@
 	"matches": "color-contrast-matches.js",
 	"excludeHidden": false,
 	"options": {
-		"noScroll": false
+		"noScroll": false,
+		"ignoreUnicode": true,
+		"ignoreLength": false
 	},
 	"tags": ["cat.color", "wcag2aa", "wcag143"],
 	"metadata": {

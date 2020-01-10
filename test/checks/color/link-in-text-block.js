@@ -85,6 +85,7 @@ describe('link-in-text-block', function() {
 			linkId +
 			'">link</a>' +
 			'</p>';
+		axe.testUtils.flatTreeSetup(fixture);
 		return document.getElementById(linkId);
 	}
 
@@ -132,6 +133,7 @@ describe('link-in-text-block', function() {
 				'	</a> inside block </p> inside block' +
 				'</span> outside block </div>';
 
+			axe.testUtils.flatTreeSetup(fixture);
 			var orig = axe.commons.color.elementIsDistinct;
 			var linkElm = document.getElementById('link');
 			var parentElm = document.getElementById('parent');
@@ -155,6 +157,7 @@ describe('link-in-text-block', function() {
 				var linkElm = shadow.querySelector('a');
 				fixture.appendChild(parentElm);
 
+				axe.testUtils.flatTreeSetup(fixture);
 				var orig = axe.commons.color.elementIsDistinct;
 				axe.commons.color.elementIsDistinct = function(arg1, arg2) {
 					assert.deepEqual(arg1, linkElm);
@@ -176,6 +179,7 @@ describe('link-in-text-block', function() {
 				shadow.innerHTML = '<p><slot></slot></p>';
 				fixture.appendChild(div);
 
+				axe.testUtils.flatTreeSetup(fixture);
 				var linkElm = div.querySelector('a');
 				var parentElm = shadow.querySelector('p');
 
@@ -241,7 +245,7 @@ describe('link-in-text-block', function() {
 			assert.isUndefined(
 				checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
 			);
-			assert.equal(checkContext._data.missingData, 'bgContrast');
+			assert.equal(checkContext._data.messageKey, 'bgContrast');
 		});
 
 		it('returns false if background contrast < 3:0', function() {
@@ -275,7 +279,7 @@ describe('link-in-text-block', function() {
 			assert.isUndefined(
 				checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
 			);
-			assert.equal(checkContext._data.missingData, 'bgImage');
+			assert.equal(checkContext._data.messageKey, 'bgImage');
 		});
 	});
 
