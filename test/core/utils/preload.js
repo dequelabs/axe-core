@@ -83,13 +83,13 @@ describe('axe.utils.preload', function() {
 	describe('axe.utils.getPreloadConfig', function() {
 		it('should return default assets if preload configuration is not set', function() {
 			var actual = axe.utils.getPreloadConfig({}).assets;
-			var expected = ['cssom'];
+			var expected = ['cssom', 'media'];
 			assert.deepEqual(actual, expected);
 		});
 
 		it('should return default assets if preload options is set to true', function() {
 			var actual = axe.utils.getPreloadConfig({}).assets;
-			var expected = ['cssom'];
+			var expected = ['cssom', 'media'];
 			assert.deepEqual(actual, expected);
 		});
 
