@@ -17,7 +17,7 @@ describe('no-autoplay-audio-matches', function() {
 
 	it('returns false for <video> element that is paused', function() {
 		var vNode = queryFixture(
-			'<video id="target" autoplay="true" paused="true"><source src="https://act-rules.github.io/test-assets/rabbit-video/video.mp4" type="video/mp4" /></video>'
+			'<video id="target" autoplay="true" paused="true"><source src="/test/assets/video.mp4" type="video/mp4" /></video>'
 		);
 		var actual = rule.matches(vNode.actualNode);
 		assert.isFalse(actual);
@@ -25,7 +25,7 @@ describe('no-autoplay-audio-matches', function() {
 
 	it('returns false for <video> element that is muted', function() {
 		var vNode = queryFixture(
-			'<video id="target" autoplay="true" muted="true"><source src="https://act-rules.github.io/test-assets/rabbit-video/video.mp4" type="video/mp4" /></video>'
+			'<video id="target" autoplay="true" muted="true"><source src="/test/assets/video.mp4" type="video/mp4" /></video>'
 		);
 		var actual = rule.matches(vNode.actualNode);
 		assert.isFalse(actual);
@@ -33,7 +33,7 @@ describe('no-autoplay-audio-matches', function() {
 
 	it('returns true for <audio> element that has loop attribute', function() {
 		var vNode = queryFixture(
-			'<video id="target" loop="true"><source src="https://act-rules.github.io/test-assets/rabbit-video/video.mp4" type="video/mp4" /></video>'
+			'<video id="target" loop="true"><source src="/test/assets/video.mp4" type="video/mp4" /></video>'
 		);
 		var actual = rule.matches(vNode.actualNode);
 		assert.isTrue(actual);
