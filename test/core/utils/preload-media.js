@@ -39,6 +39,29 @@ describe('axe.utils.preloadMedia', function() {
 	});
 
 	(isIE11 ? it.skip : it)(
+		'returns empty array when <audio> has no source',
+		function(done) {
+			fixtureSetup('<audio autoplay="true" controls></audio>');
+
+			axe.utils.preloadMedia({ treeRoot: axe._tree[0] }).then(function(result) {
+				assert.equal(result.length, 0);
+				done();
+			});
+		}
+	);
+
+	(isIE11 ? it.skip : it)(
+		'returns empty array when <video> has no source',
+		function(done) {
+			fixtureSetup('<video id="target"><source src=""/></video>');
+			axe.utils.preloadMedia({ treeRoot: axe._tree[0] }).then(function(result) {
+				assert.equal(result.length, 0);
+				done();
+			});
+		}
+	);
+
+	(isIE11 ? it.skip : it)(
 		'returns media node (audio) after their metadata has been preloaded',
 		function(done) {
 			fixtureSetup(
