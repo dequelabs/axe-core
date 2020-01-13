@@ -13,12 +13,8 @@ describe('region pass test', function() {
 	});
 
 	describe('passes', function() {
-		it('should find one', function() {
-			assert.lengthOf(results.passes[0].nodes, 1);
-		});
-
-		it('should find html', function() {
-			assert.deepEqual(results.passes[0].nodes[0].target, ['html']);
+		it('should pass all nodes', function() {
+			assert.lengthOf(results.passes[0].nodes, 33);
 		});
 	});
 

@@ -21,10 +21,4 @@ describe('region fail test', function() {
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#wrapper']);
 		});
 	});
-
-	describe('passes', function() {
-		it('should find none', function() {
-			assert.lengthOf(results.passes, 0);
-		});
-	});
 });
