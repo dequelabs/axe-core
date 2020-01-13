@@ -3,6 +3,7 @@ describe('no-autoplay-audio-matches', function() {
 
 	var fixture = document.getElementById('fixture');
 	var queryFixture = axe.testUtils.queryFixture;
+	var preloadOptions = { preload: { assets: ['media'] } };
 	var rule;
 
 	beforeEach(function() {
@@ -15,27 +16,34 @@ describe('no-autoplay-audio-matches', function() {
 		fixture.innerHTML = '';
 	});
 
-	it('returns false for <video> element that is paused', function() {
+	it('returns false for <audio> element that has no src attribute', function(done) {
+		var vNode = queryFixture('<audio id="target"></audio>');
+		axe.utils.preload(preloadOptions).then(function() {
+			var actual = rule.matches(vNode.actualNode);
+			assert.isFalse(actual);
+			done();
+		});
+	});
+
+	it('returns false for <video> element that is paused', function(done) {
 		var vNode = queryFixture(
 			'<video id="target" autoplay="true" paused="true"><source src="/test/assets/video.mp4" type="video/mp4" /></video>'
 		);
-		var actual = rule.matches(vNode.actualNode);
-		assert.isFalse(actual);
+		axe.utils.preload(preloadOptions).then(function() {
+			var actual = rule.matches(vNode.actualNode);
+			assert.isFalse(actual);
+			done();
+		});
 	});
 
-	it('returns false for <video> element that is muted', function() {
+	it('returns false for <video> element that is muted', function(done) {
 		var vNode = queryFixture(
 			'<video id="target" autoplay="true" muted="true"><source src="/test/assets/video.mp4" type="video/mp4" /></video>'
 		);
-		var actual = rule.matches(vNode.actualNode);
-		assert.isFalse(actual);
-	});
-
-	it('returns true for <audio> element that has loop attribute', function() {
-		var vNode = queryFixture(
-			'<video id="target" loop="true"><source src="/test/assets/video.mp4" type="video/mp4" /></video>'
-		);
-		var actual = rule.matches(vNode.actualNode);
-		assert.isTrue(actual);
+		axe.utils.preload(preloadOptions).then(function() {
+			var actual = rule.matches(vNode.actualNode);
+			assert.isFalse(actual);
+			done();
+		});
 	});
 });
