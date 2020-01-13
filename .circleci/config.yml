@@ -81,15 +81,22 @@ jobs:
     <<: *win_box
     steps:
       - checkout
+      # npm i or restore cache
       - <<: *restore_dependency_cache_win
+      # install selenium 
       - run: |
           choco install selenium-ie-driver --version 3.141.5
           export PATH=/c/tools/selenium:$PATH
           echo $PATH
+      # build `axe`
       - run: npm run build
+      # get fixtures ready for running tests
       - run: npx grunt testconfig	
       - run: npx grunt fixture	
+      # run IE webdriver tests
       - run: npx grunt connect test-webdriver:ie
+      # test examples
+      - run: npm run test:examples
 
   # Run examples under `doc/examples`
   test_examples:
