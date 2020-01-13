@@ -85,6 +85,34 @@ describe('reporters - v1', function() {
 				]
 			},
 			{
+				id: 'incomplete',
+				description: 'something yet more nifty',
+				tags: ['tag4'],
+				impact: 'monkeys',
+				result: 'failed',
+				passes: [],
+				violations: [],
+				incomplete: [
+					{
+						result: 'failed',
+						impact: 'monkeys',
+						none: [
+							{
+								data: 'foon',
+								impact: 'monkeys',
+								result: true
+							}
+						],
+						any: [],
+						all: [],
+						node: {
+							selector: ['foon'],
+							source: '<foon>telephone</foon>'
+						}
+					}
+				]
+			},
+			{
 				id: 'blinky',
 				description: 'something awesome',
 				tags: ['tag4'],
@@ -232,8 +260,11 @@ describe('reporters - v1', function() {
 	});
 	it('should add the failure summary to the node data', function(done) {
 		var origFn = window.helpers.failureSummary;
-		window.helpers.failureSummary = function() {
-			return 'your foon is ringing';
+		window.helpers.failureSummary = function(nodeData) {
+			if (!nodeData || !nodeData.target) {
+				return;
+			}
+			return 'selector: ' + nodeData.target;
 		};
 		axe.run(optionsV1, function(err, results) {
 			assert.isNull(err);
@@ -241,7 +272,11 @@ describe('reporters - v1', function() {
 			assert.equal(results.violations[0].nodes.length, 1);
 			assert.equal(
 				results.violations[0].nodes[0].failureSummary,
-				'your foon is ringing'
+				'selector: q,r,pillock'
+			);
+			assert.equal(
+				results.incomplete[0].nodes[0].failureSummary,
+				'selector: foon'
 			);
 			window.helpers.failureSummary = origFn;
 			done();
