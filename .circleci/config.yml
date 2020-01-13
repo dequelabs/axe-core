@@ -83,7 +83,7 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_win
       - run: |
-          choco install selenium-ie-driver
+          choco install selenium-ie-driver --version 3.141.5
           export PATH=/c/tools/selenium:$PATH
           echo $PATH
       - run: npm run build
