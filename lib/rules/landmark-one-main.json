@@ -3,10 +3,10 @@
 	"selector": "html",
 	"tags": ["cat.semantics", "best-practice"],
 	"metadata": {
-		"description": "Ensures the document has only one main landmark and each iframe in the page has at most one main landmark",
+		"description": "Ensures the document has a main landmark",
 		"help": "Document must have one main landmark"
 	},
-	"all": ["page-has-main", "page-no-duplicate-main"],
+	"all": ["page-has-main"],
 	"any": [],
 	"none": []
 }

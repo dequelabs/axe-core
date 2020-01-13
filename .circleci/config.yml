@@ -1,113 +1,162 @@
-version: 2
+version: 2.1
 
 defaults: &defaults
-  docker:
-    - image: circleci/node:10-browsers
   working_directory: ~/axe-core
 
-restore_dependency_cache: &restore_dependency_cache
-  restore_cache:
-    keys:
-      - v{{ .Environment.CACHE_VERSION }}-npm-cache-{{ checksum "package.json" }}
-      - v{{ .Environment.CACHE_VERSION }}-npm-cache-
+unix_box: &unix_box
+  docker:
+    - image: circleci/node:10-browsers
 
-restore_phantomjs_cache: &restore_phantomjs_cache
-  restore_cache:
-    keys:
-      - v{{ .Environment.CACHE_VERSION }}-phantomjs-2.1.1
+win_box: &win_box
+  executor:
+    name: win/vs2019
+    shell: bash.exe
+
+orbs:
+  win: circleci/windows@1.0.0
 
 set_npm_auth: &set_npm_auth
   run: npm config set "//registry.npmjs.org/:_authToken" $NPM_AUTH
 
+restore_dependency_cache_unix: &restore_dependency_cache_unix
+  restore_cache:
+    keys:
+      - v8-cache-unix-{{ checksum "package.json" }}
+      - v8-cache-unix-
+
+restore_dependency_cache_win: &restore_dependency_cache_win
+  restore_cache:
+    keys:
+      - v8-cache-win-{{ checksum "package.json" }}
+      - v8-cache-win-
+
 jobs:
   # Fetch and cache dependencies.
-  dependencies:
+  dependencies_unix:
     <<: *defaults
+    <<: *unix_box
     steps:
       - checkout
       - <<: *set_npm_auth
-      - <<: *restore_dependency_cache
+      - <<: *restore_dependency_cache_unix
       - run: npm install
       - save_cache:
-          key: v{{ .Environment.CACHE_VERSION }}-npm-cache-{{ checksum "package.json" }}
+          key: v8-cache-unix-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+  dependencies_win:
+    <<: *defaults
+    <<: *win_box
+    steps:
+      - checkout
+      - <<: *set_npm_auth
+      - <<: *restore_dependency_cache_win
+      - run: npm install
+      - save_cache:
+          key: v8-cache-win-{{ checksum "package.json" }}
           paths:
             - node_modules
 
   # Run ESLINT
   lint:
     <<: *defaults
+    <<: *unix_box
     steps:
       - checkout
-      - <<: *restore_dependency_cache
+      - <<: *restore_dependency_cache_unix
       - run: npm run eslint
 
   # Run the test suite.
-  test:
+  test_unix:
     <<: *defaults
+    <<: *unix_box
     steps:
       - checkout
-      - <<: *restore_dependency_cache
-      - <<: *restore_phantomjs_cache
-      - run:
-          name: PhantomJs - Install or Restore from Cache
-          command: 'sh .circleci/install-phantomjs.sh'
-      - save_cache:
-          key: v{{ .Environment.CACHE_VERSION }}-phantomjs-2.1.1
-          paths:
-            - phantomjs
+      - <<: *restore_dependency_cache_unix
       - run: npm run test
+  
+  # Run the test suite in IE in windows
+  test_win:
+    <<: *defaults
+    <<: *win_box
+    steps:
+      - checkout
+      # npm i or restore cache
+      - <<: *restore_dependency_cache_win
+      # install selenium 
+      - run: |
+          choco install selenium-ie-driver --version 3.141.5
+          export PATH=/c/tools/selenium:$PATH
+          echo $PATH
+      # build `axe`
+      - run: npm run build
+      # get fixtures ready for running tests
+      - run: npx grunt testconfig	
+      - run: npx grunt fixture	
+      # run IE webdriver tests
+      - run: npx grunt connect test-webdriver:ie
+      # test examples
+      # Note: Jasmine karma-chrome-launcher requires chrome browser
+      - run: choco install googlechrome --ignore-checksums
+      - run: npm run test:examples
 
   # Run examples under `doc/examples`
   test_examples:
     <<: *defaults
+    <<: *unix_box
     steps:
       - checkout
-      - <<: *restore_dependency_cache
+      - <<: *restore_dependency_cache_unix
       - run: npm run test:examples
 
   # Test locale files
   test_locales:
     <<: *defaults
+    <<: *unix_box
     steps:
       - checkout
-      - <<: *restore_dependency_cache
+      - <<: *restore_dependency_cache_unix
       - run: npm run build
       - run: npm run test:locales
 
   # Test api docs can be built
   build_api_docs:
     <<: *defaults
+    <<: *unix_box
     steps:
       - checkout
-      - <<: *restore_dependency_cache
+      - <<: *restore_dependency_cache_unix
       - run: npm run api-docs
 
   # Test newest axe-core version rule help docs are active (only on
   # master prs)
   test_rule_help_version:
     <<: *defaults
+    <<: *unix_box
     steps:
       - checkout
-      - <<: *restore_dependency_cache
+      - <<: *restore_dependency_cache_unix
       - run: npm run test:rule-help-version
 
   # Release a "next" version
   next_release:
     <<: *defaults
+    <<: *unix_box
     steps:
       - checkout
       - <<: *set_npm_auth
-      - <<: *restore_dependency_cache
+      - <<: *restore_dependency_cache_unix
       - run: npm run next-release
       - run: npm publish --tag=next
 
   # Release a "production" version
   release:
     <<: *defaults
+    <<: *unix_box
     steps:
       - checkout
       - <<: *set_npm_auth
-      - <<: *restore_dependency_cache
+      - <<: *restore_dependency_cache_unix
       - run: npm run build
       - run: npm publish
 
@@ -130,33 +179,38 @@ workflows:
   build:
     jobs:
       # install deps
-      - dependencies
+      - dependencies_unix
+      - dependencies_win
       # Run linting
       - lint:
           requires:
-            - dependencies
+            - dependencies_unix
       # Run tests on all commits, but after installing dependencies
-      - test:
+      - test_unix:
           requires:
-            - dependencies
+            - dependencies_unix
             - lint
+      # Run IE/ Windows test on all commits 
+      - test_win:
+          requires:
+            - dependencies_win
       - test_examples:
           requires:
-            - test
+            - test_unix
       - test_locales:
           requires:
-            - test
+            - test_unix
       - build_api_docs:
           requires:
-            - test
+            - test_unix
       - test_rule_help_version:
           requires:
-            - test
+            - test_unix
       # Hold for approval
       - hold:
           type: approval
           requires:
-            - test
+            - test_unix
             - test_examples
             - test_locales
             - build_api_docs
@@ -168,8 +222,8 @@ workflows:
       # Run a next release on "develop" commits, but only after the tests pass and dependencies are installed
       - next_release:
           requires:
-            - dependencies
-            - test
+            - dependencies_unix
+            - test_unix
             - test_examples
             - test_locales
             - build_api_docs
@@ -179,8 +233,8 @@ workflows:
       # Run a production release on "master" commits, but only after the tests pass and dependencies are installed
       - release:
           requires:
-            - dependencies
-            - test
+            - dependencies_unix
+            - test_unix
             - test_examples
             - test_locales
             - build_api_docs

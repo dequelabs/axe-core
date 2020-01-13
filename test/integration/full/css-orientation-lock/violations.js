@@ -2,7 +2,6 @@ describe('css-orientation-lock violations test', function() {
 	'use strict';
 
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
-	var isPhantom = window.PHANTOMJS ? true : false;
 	var isIE11 = axe.testUtils.isIE11;
 
 	var styleSheets = [
@@ -16,18 +15,14 @@ describe('css-orientation-lock violations test', function() {
 	];
 
 	before(function(done) {
-		if (isPhantom) {
-			this.skip();
-		} else {
-			axe.testUtils
-				.addStyleSheets(styleSheets)
-				.then(function() {
-					done();
-				})
-				.catch(function(error) {
-					done(new Error('Could not load stylesheets for testing. ' + error));
-				});
-		}
+		axe.testUtils
+			.addStyleSheets(styleSheets)
+			.then(function() {
+				done();
+			})
+			.catch(function(error) {
+				done(new Error('Could not load stylesheets for testing. ' + error));
+			});
 	});
 
 	function assertViolatedSelectors(relatedNodes, violatedSelectors) {

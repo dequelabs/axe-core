@@ -40,7 +40,7 @@ To build axe.js, simply run `grunt build` in the root folder of the axe-core rep
 
 ### Running Tests
 
-To run all tests from the command line you can run `grunt test`, which will run all unit and integration tests using PhantomJS and Selenium Webdriver.
+To run all tests from the command line you can run `grunt test`, which will run all unit and integration tests using headless chrome and Selenium Webdriver.
 
 You can also load tests in any supported browser, which is helpful for debugging. Tests require a local server to run, you must first start a local server to serve files. You can use Grunt to start one by running `grunt dev`. Once your local server is running you can load the following pages in any browser to run tests:
 
