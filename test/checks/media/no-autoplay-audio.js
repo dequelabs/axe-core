@@ -76,7 +76,7 @@ describe('no-autoplay-audio', function() {
 		});
 	});
 
-	it('returns true when <video> can autoplay and has no controls mechanism', function(done) {
+	it('returns true when <video> can autoplay and has controls mechanism', function(done) {
 		var checkArgs = checkSetup(
 			'<video id="target" autoplay="true" controls>' +
 				'<source src="/test/assets/video.mp4" type="video/mp4" />' +
