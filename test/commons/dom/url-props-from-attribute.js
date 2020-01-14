@@ -48,7 +48,7 @@ describe('dom.urlPropsFromAttribute', function() {
 		assert.deepEqual(actual, expected);
 	});
 
-	it('returns URL properties for `A` with `HREF`', function() {
+	it('returns URL properties for `A` with `HREF` (having HTTPS protocol)', function() {
 		var vNode = queryFixture(
 			'<a id="target" href="https://facebook.com">follow us on Facebook</a>'
 		);
@@ -58,7 +58,27 @@ describe('dom.urlPropsFromAttribute', function() {
 			hostname: 'facebook.com',
 			pathname: '/',
 			port: '',
-			protocol: 'https:',
+			protocol: 'http:',
+			search: {}
+		};
+		var actual = axe.commons.dom.urlPropsFromAttribute(
+			vNode.actualNode,
+			'href'
+		);
+		assert.deepEqual(actual, expected);
+	});
+
+	it('returns URL properties for `A` with `HREF` (having FTP protocol)', function() {
+		var vNode = queryFixture(
+			'<a id="target" href="ftp://mywebsite.org">Navigate to My Website</a>'
+		);
+		var expected = {
+			filename: '',
+			hash: '',
+			hostname: 'mywebsite.org',
+			pathname: '/',
+			port: '',
+			protocol: 'ftp:',
 			search: {}
 		};
 		var actual = axe.commons.dom.urlPropsFromAttribute(

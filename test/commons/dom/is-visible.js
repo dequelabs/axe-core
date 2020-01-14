@@ -207,7 +207,6 @@ describe('dom.isVisible', function() {
 					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
 					'</map>'
 			);
-			debugger;
 			var actual = axe.commons.dom.isVisible(vNode.actualNode);
 			assert.isFalse(actual);
 		});
@@ -241,7 +240,18 @@ describe('dom.isVisible', function() {
 			assert.isFalse(actual);
 		});
 
-		it('returns true for `AREA` with `MAP` and used in `IMG`)', function() {
+		it('returns false for `AREA` with `MAP` and used in `IMG` which is not visible', function() {
+			var vNode = queryFixture(
+				'<map name="infographic">' +
+					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
+					'</map>' +
+					'<img usemap="#infographic" alt="MDN infographic" style="display:none"/>'
+			);
+			var actual = axe.commons.dom.isVisible(vNode.actualNode);
+			assert.isFalse(actual);
+		});
+
+		it('returns true for `AREA` with `MAP` and used in `IMG` which is visible', function() {
 			var vNode = queryFixture(
 				'<map name="infographic">' +
 					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
