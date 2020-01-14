@@ -3,6 +3,7 @@ describe('dom.urlPropsFromAttribute', function() {
 
 	var fixture = document.getElementById('fixture');
 	var queryFixture = axe.testUtils.queryFixture;
+	var isIE11 = axe.testUtils.isIE11;
 
 	afterEach(function() {
 		fixture.innerHTML = '';
@@ -68,25 +69,28 @@ describe('dom.urlPropsFromAttribute', function() {
 		assert.deepEqual(actual, expected);
 	});
 
-	it('returns URL properties for `A` with `HREF` (having FTP protocol)', function() {
-		var vNode = queryFixture(
-			'<a id="target" href="ftp://mywebsite.org">Navigate to My Website</a>'
-		);
-		var expected = {
-			filename: '',
-			hash: '',
-			hostname: 'mywebsite.org',
-			pathname: '/',
-			port: '',
-			protocol: 'ftp:',
-			search: {}
-		};
-		var actual = axe.commons.dom.urlPropsFromAttribute(
-			vNode.actualNode,
-			'href'
-		);
-		assert.deepEqual(actual, expected);
-	});
+	(isIE11 ? it.skip : it)(
+		'returns URL properties for `A` with `HREF` (having FTP protocol)',
+		function() {
+			var vNode = queryFixture(
+				'<a id="target" href="ftp://mywebsite.org">Navigate to My Website</a>'
+			);
+			var expected = {
+				filename: '',
+				hash: '',
+				hostname: 'mywebsite.org',
+				pathname: '/',
+				port: '',
+				protocol: 'ftp:',
+				search: {}
+			};
+			var actual = axe.commons.dom.urlPropsFromAttribute(
+				vNode.actualNode,
+				'href'
+			);
+			assert.deepEqual(actual, expected);
+		}
+	);
 
 	it('returns URL properties for `A` with `HREF` which has subdirectory and inline link', function() {
 		var vNode = queryFixture(
