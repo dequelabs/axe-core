@@ -3,7 +3,11 @@ describe('table.traverse', function() {
 	var table, dummyTable, topRight, bottomLeft;
 	beforeEach(function() {
 		table = axe.commons.table;
-		dummyTable = [['1a', '1b', '1c'], ['2a', '2b', '2c'], ['3a', '3b', '3c']];
+		dummyTable = [
+			['1a', '1b', '1c'],
+			['2a', '2b', '2c'],
+			['3a', '3b', '3c']
+		];
 		topRight = { x: 0, y: 0 };
 		bottomLeft = { x: 2, y: 2 };
 	});

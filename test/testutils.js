@@ -46,7 +46,6 @@ testUtils.MockCheckContext = function() {
 
 /**
  * Provide an API for determining Shadow DOM v0 and v1 support in tests.
- * PhantomJS doesn't have Shadow DOM support, while some browsers do.
  *
  * @param HTMLDocumentElement		The document of the current context
  * @return Object

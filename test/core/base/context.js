@@ -231,7 +231,10 @@ describe('Context', function() {
 				$id('outer'),
 				'target',
 				function() {
-					var result = new Context([['#target', '#foo'], ['#target', '#bar']]);
+					var result = new Context([
+						['#target', '#foo'],
+						['#target', '#bar']
+					]);
 
 					assert.deepEqual(result.frames, [
 						{
