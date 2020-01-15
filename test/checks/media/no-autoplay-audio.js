@@ -51,7 +51,10 @@ describe('no-autoplay-audio', function() {
 
 	it('returns false when <video> can autoplay and has no controls mechanism', function(done) {
 		var checkArgs = checkSetup(
-			'<video id="target" autoplay="true"><source src="/test/assets/video.mp4" type="video/mp4" /></video>'
+			'<video id="target" autoplay="true">' +
+				'<source src="/test/assets/video.webm" type="video/webm" />' +
+				'<source src="/test/assets/video.mp4" type="video/mp4" />' +
+				'</video>'
 		);
 		axe.utils.preload(preloadOptions).then(function() {
 			assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
@@ -72,6 +75,7 @@ describe('no-autoplay-audio', function() {
 	it('returns true when <video> can autoplay and duration is below allowed duration (by passing options)', function(done) {
 		var checkArgs = checkSetup(
 			'<video id="target" autoplay="true">' +
+				'<source src="/test/assets/video.webm" type="video/webm" />' +
 				'<source src="/test/assets/video.mp4" type="video/mp4" />' +
 				'</video>',
 			{ allowedDuration: 15 }
@@ -85,6 +89,7 @@ describe('no-autoplay-audio', function() {
 	it('returns true when <video> can autoplay and duration is below allowed duration (by setting playback range)', function(done) {
 		var checkArgs = checkSetup(
 			'<video id="target" autoplay="true">' +
+				'<source src="/test/assets/video.webm#t=7,9" type="video/webm" />' +
 				'<source src="/test/assets/video.mp4#t=7,9" type="video/mp4" />' +
 				'</video>'
 			// Note: default allowed duration is 3s
@@ -108,6 +113,7 @@ describe('no-autoplay-audio', function() {
 	it('returns true when <video> can autoplay and has controls mechanism', function(done) {
 		var checkArgs = checkSetup(
 			'<video id="target" autoplay="true" controls>' +
+				'<source src="/test/assets/video.webm" type="video/webm" />' +
 				'<source src="/test/assets/video.mp4" type="video/mp4" />' +
 				'</video>'
 		);
