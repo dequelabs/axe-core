@@ -1,0 +1,236 @@
+<h2>Passed</h2>
+
+<svg
+	id="pass1"
+	xmlns="http://www.w3.org/2000/svg"
+	role="img"
+	width="100"
+	height="100"
+>
+	<title>I am a circle</title>
+	<circle cx="50" cy="50" r="40" fill="yellow"></circle>
+</svg>
+
+<svg
+	id="pass2"
+	xmlns="http://www.w3.org/2000/svg"
+	role="img"
+	width="100"
+	height="100"
+	aria-label="I am a circle"
+>
+	<circle cx="50" cy="50" r="40" fill="yellow"></circle>
+</svg>
+
+<svg
+	id="pass3"
+	xmlns="http://www.w3.org/2000/svg"
+	role="img"
+	width="100"
+	height="100"
+	title="I am a circle"
+>
+	<circle cx="50" cy="50" r="40" fill="yellow"></circle>
+</svg>
+
+<span id="circle-label1">I am a circle</span>
+<svg
+	id="pass4"
+	xmlns="http://www.w3.org/2000/svg"
+	role="img"
+	width="100"
+	height="100"
+	aria-labelledby="circle-label1"
+>
+	<circle cx="50" cy="50" r="40" fill="yellow"></circle>
+</svg>
+
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	id="pass5"
+	role="graphics-document"
+	width="100"
+	height="100"
+>
+	<title>I am a circle</title>
+	<circle cx="50" cy="50" r="40" fill="yellow"></circle>
+</svg>
+
+<svg xmlns="https://www.w3.org/2000/svg">
+	<circle
+		id="pass6"
+		role="graphics-symbol"
+		cx="50"
+		cy="50"
+		r="40"
+		fill="yellow"
+		aria-label="I am a circle"
+	></circle>
+</svg>
+
+<svg xmlns="https://www.w3.org/2000/svg">
+	<circle
+		id="pass7"
+		role="graphics-symbol"
+		cx="50"
+		cy="50"
+		r="40"
+		fill="yellow"
+		aria-labelledby="circle-label1"
+	></circle>
+</svg>
+
+<svg xmlns="https://www.w3.org/2000/svg">
+	<circle
+		id="pass8"
+		role="graphics-symbol"
+		cx="50"
+		cy="50"
+		r="40"
+		fill="yellow"
+		title="I am a circle"
+	></circle>
+</svg>
+
+<svg xmlns="https://www.w3.org/2000/svg">
+	<circle
+		id="pass9"
+		role="graphics-symbol"
+		cx="50"
+		cy="50"
+		r="40"
+		fill="yellow"
+	>
+		<title>I am a circle</title>
+	</circle>
+</svg>
+
+<svg xmlns="https://www.w3.org/2000/svg">
+	<circle id="pass10" role="img" cx="50" cy="50" r="40" fill="yellow">
+		<title>I am a circle</title>
+	</circle>
+</svg>
+
+<h2>Failed</h2>
+
+<svg xmlns="http://www.w3.org/2000/svg" role="img" id="violation1">
+	<circle cx="50" cy="50" r="40" fill="yellow"></circle>
+</svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" role="img" id="violation2">
+	<title></title>
+	<circle cx="50" cy="50" r="40" fill="yellow"></circle>
+</svg>
+
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	role="img"
+	id="violation3"
+	aria-label=" "
+>
+	<circle cx="50" cy="50" r="40" fill="yellow"></circle>
+</svg>
+
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	role="img"
+	id="violation4"
+	aria-labelledby="not-an-id"
+>
+	<circle cx="50" cy="50" r="40" fill="yellow"></circle>
+</svg>
+
+<svg
+	id="violation5"
+	xmlns="http://www.w3.org/2000/svg"
+	role="img"
+	width="100"
+	height="100"
+>
+	<text>I am a circle</text>
+</svg>
+
+<svg
+	id="violation6"
+	xmlns="http://www.w3.org/2000/svg"
+	role="img"
+	width="100"
+	height="100"
+>
+	<circle cx="50" cy="50" r="40" fill="yellow">
+		<!-- Title must be a child -->
+		<title>I am a circle</title>
+	</circle>
+</svg>
+
+<svg
+	id="violation7"
+	xmlns="http://www.w3.org/2000/svg"
+	role="img"
+	width="100"
+	height="100"
+>
+	<metadata>
+		<!-- Title must be a child -->
+		<title>I am a circle</title>
+	</metadata>
+</svg>
+
+<svg
+	id="violation8"
+	xmlns="http://www.w3.org/2000/svg"
+	role="img"
+	width="100"
+	height="100"
+>
+	<desc>I am a circle</desc>
+</svg>
+
+<svg
+	id="violation9"
+	xmlns="http://www.w3.org/2000/svg"
+	role="graphics-document"
+	width="100"
+	height="100"
+></svg>
+
+<svg xmlns="https://www.w3.org/2000/svg">
+	<circle
+		id="violation10"
+		role="img"
+		cx="50"
+		cy="50"
+		r="40"
+		fill="yellow"
+	></circle>
+</svg>
+
+<h2>Inapplicable</h2>
+
+<svg xmlns="http://www.w3.org/2000/svg">
+	<circle id="inapplicable1" cx="50" cy="50" r="40" fill="yellow"></circle>
+</svg>
+
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	role="img"
+	aria-hidden="true"
+	id="inapplicable2"
+>
+	<circle cx="50" cy="50" r="40" fill="yellow"></circle>
+</svg>
+
+<svg xmlns="http://www.w3.org/2000/svg">
+	<circle
+		role="graphics-object"
+		cx="50"
+		cy="50"
+		r="40"
+		fill="yellow"
+		id="inapplicable3"
+	></circle>
+</svg>
+
+<div id="inapplicable4" role="img">
+	<h1>Hello world</h1>
+</div>

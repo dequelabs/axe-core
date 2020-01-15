@@ -5,7 +5,7 @@
 		"impact": "critical",
 		"messages": {
 			"pass": "ARIA attribute is supported",
-			"fail": "ARIA attribute is not widely supported in screen readers and assistive technologies: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "ARIA attribute is not widely supported in screen readers and assistive technologies: ${data.values}"
 		}
 	}
 }

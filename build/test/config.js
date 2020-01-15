@@ -26,7 +26,10 @@ exports = module.exports = function(grunt, options) {
 					'http://' + host + ':<%= connect.test.options.port %>/test/commons/',
 					'http://' +
 						host +
-						':<%= connect.test.options.port %>/test/integration/rules/'
+						':<%= connect.test.options.port %>/test/integration/rules/',
+					'http://' +
+						host +
+						':<%= connect.test.options.port %>/test/integration/api/external/'
 				],
 				run: true,
 				growlOnSuccess: false,
@@ -42,12 +45,7 @@ exports = module.exports = function(grunt, options) {
 					[
 						'test/integration/full/**/*.html',
 						'!test/integration/full/**/frames/**/*.html'
-					].concat([
-						// These tests can be flaky on AppVeyor in Chrome and frequently fail
-						process.env.APPVEYOR
-							? ['!test/integration/full/preload-cssom/preload-cssom.html']
-							: []
-					]),
+					],
 					'<%= connect.test.options.port %>'
 				),
 				run: true,

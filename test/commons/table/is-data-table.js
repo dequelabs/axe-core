@@ -316,10 +316,6 @@ describe('table.isDataTable', function() {
 	});
 
 	it('should be true if it has zebra rows', function() {
-		if (window.PHANTOMJS) {
-			assert.ok('PhantomJS is a liar');
-			return;
-		}
 		fixture.innerHTML =
 			'<table>' +
 			'<tr><td></td><td></td></tr>' +
@@ -333,10 +329,6 @@ describe('table.isDataTable', function() {
 	});
 
 	it('should be true if it has zebra rows - background image', function() {
-		if (window.PHANTOMJS) {
-			assert.ok('PhantomJS is a liar');
-			return;
-		}
 		fixture.innerHTML =
 			'<table>' +
 			'<tr><td></td><td></td></tr>' +

@@ -1,6 +1,6 @@
 # axe-core
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/dequelabs/axe-core.svg)](https://greenkeeper.io/) [![CircleCI](https://circleci.com/gh/dequelabs/axe-core.svg?style=svg)](https://circleci.com/gh/dequelabs/axe-core)
+[![CircleCI](https://circleci.com/gh/dequelabs/axe-core.svg?style=svg)](https://circleci.com/gh/dequelabs/axe-core)
 
 [![License](https://img.shields.io/npm/l/axe-core.svg)](LICENSE)
 [![Version](https://img.shields.io/npm/v/axe-core.svg)](https://www.npmjs.com/package/axe-core)
@@ -68,11 +68,11 @@ The [axe-core API](doc/API.md) fully supports the following browsers:
 - Apple Safari v7 and above
 - Internet Explorer v9, 10, 11
 
-Support means that we will fix bugs and attempt to test each browser regularly. Only Firefox and Chrome are currently tested on every pull request.
+Support means that we will fix bugs and attempt to test each browser regularly. Only Firefox, Chrome, and Internet Explorer 11 are currently tested on every pull request.
 
 There is limited support for JSDOM. We will attempt to make all rules compatible with JSDOM but where this is not possible, we recommend turning those rules off. Currently the `color-contrast` rule is known not to work with JSDOM.
 
-We can only support environments where features are either natively supported or polyfilled correctly.
+We can only support environments where features are either natively supported or polyfilled correctly. We do not support the deprecated v0 Shadow DOM implementation.
 
 ## The Accessibility Rules
 
@@ -93,7 +93,7 @@ Axe can be built using your local language. To do so, a localization file must b
 
 This will create a new build for axe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build localized versions, simply pass in `--all-lang` instead.
 
-To create a new translation for axe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below.
+To create a new translation for axe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below. For details on the message syntax, see [Check Message Template](/docs/check-message-template.md).
 
 To update existing translation file, re-run `grunt translate --lang=<langcode>`. This will add new messages used in English and remove messages which were not used in English.
 
@@ -116,7 +116,7 @@ axe.configure({
 			'aria-errormessage': {
 				// Note: doT (https://github.com/olado/dot) templates are supported here.
 				fail:
-					'Der Wert der aria-errormessage {{~it.data:value}} `{{=value}}{{~}}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
+					'Der Wert der aria-errormessage ${data.values}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
 			}
 			// ...
 		}

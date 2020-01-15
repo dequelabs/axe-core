@@ -17,7 +17,6 @@ node_modules
 .prettierignore
 .prettierrc
 .retireignore.json
-appveyor.yml
 greenkeeper.json
 Gruntfile.js
 tsconfig.json

@@ -2,31 +2,14 @@ describe('css-orientation-lock tests', function() {
 	'use strict';
 
 	var checkContext = axe.testUtils.MockCheckContext();
-	var origCheck = checks['css-orientation-lock'];
+	var check = checks['css-orientation-lock'];
 	var dynamicDoc = document.implementation.createHTMLDocument(
 		'Dynamic document for CSS Orientation Lock tests'
 	);
 
 	afterEach(function() {
-		checks['css-orientation-lock'] = origCheck;
 		checkContext.reset();
 	});
-
-	var SHEET_DATA = {
-		BODY_STYLE: 'body { color: inherit; }',
-		MEDIA_STYLE_NON_ORIENTATION:
-			'@media (min-width: 400px) { background-color: red; }',
-		MEDIA_STYLE_ORIENTATION_EMPTY:
-			'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) {  }',
-		MEDIA_STYLE_ORIENTATION_WITHOUT_TRANSFORM:
-			'@media screen and (min-width: 1px) and (max-width: 2000px) and (orientation: portrait) { #mocha { color: red; } }',
-		MEDIA_STYLE_ORIENTATION_WITH_TRANSFORM_NOT_ROTATE:
-			'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform: translateX(10px); -webkit-transform: translateX(10px); } }',
-		MEDIA_STYLE_ORIENTATION_WITH_TRANSFORM_ROTATE_180:
-			'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { body { transform: rotate(180deg); -webkit-transform: rotate(180deg); } }',
-		MEDIA_STYLE_ORIENTATION_WITH_TRANSFORM_ROTATE_90:
-			'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform: rotate(270deg); -webkit-transform: rotate(270deg); } }'
-	};
 
 	function getSheet(data) {
 		var style = dynamicDoc.createElement('style');
@@ -36,172 +19,126 @@ describe('css-orientation-lock tests', function() {
 		return style.sheet;
 	}
 
-	it('ensure that the check "css-orientation-lock" is invoked', function() {
-		checks['css-orientation-lock'] = {
-			evaluate: function() {
-				return 'invoked';
-			}
-		};
-		var actual = checks['css-orientation-lock'].evaluate.call(
-			checkContext,
-			document
-		);
-		assert.equal(actual, 'invoked');
-	});
-
-	it('returns undefined if context of check does not have CSSOM property', function() {
-		var actual = checks['css-orientation-lock'].evaluate.call(
-			checkContext,
-			document
-		);
+	it('returns undefined when CSSOM is undefined', function() {
+		var actual = check.evaluate.call(checkContext, document);
 		assert.isUndefined(actual);
 	});
 
-	it('returns undefined if CSSOM does not have any sheets', function() {
-		// pass context with cssom as empty
-		var actual = checks['css-orientation-lock'].evaluate.call(
-			checkContext,
-			document,
-			{},
-			undefined,
-			{
-				cssom: []
-			}
-		);
+	it('returns undefined when CSSOM is empty', function() {
+		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+			cssom: [] // pass context with cssom as empty
+		});
 		assert.isUndefined(actual);
 	});
 
-	it('returns true if CSSOM does not have sheet or rule(s) in the sheet(s)', function() {
-		// pass context with cssom but empty or no sheet
-		var actual = checks['css-orientation-lock'].evaluate.call(
-			checkContext,
-			document,
-			{},
-			undefined,
-			{
-				cssom: [
-					{
-						shadowId: 'a',
-						sheet: {} // empty sheet
-					},
-					{
-						shadowId: 'a'
-						// NO SHEET -> this should never happen, but testing for iteration exit in check
-					}
-				]
-			}
-		);
+	it('returns true when CSSOM has no rules', function() {
+		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+			cssom: [
+				{
+					shadowId: 'a',
+					sheet: {} // empty sheet, no css rules
+				}
+			]
+		});
 		assert.isTrue(actual);
 	});
 
-	it('returns true if there are no MEDIA rule(s) in the CSSOM stylesheets', function() {
-		var sheet = getSheet(SHEET_DATA.BODY_STYLE);
-		var actual = checks['css-orientation-lock'].evaluate.call(
-			checkContext,
-			document,
-			{},
-			undefined,
-			{
-				cssom: [
-					{
-						shadowId: 'a',
-						sheet: sheet
-					}
-				]
-			}
-		);
+	it('returns true when CSSOM has no CSS media features', function() {
+		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+			cssom: [
+				{
+					shadowId: 'a',
+					sheet: getSheet('body { color: inherit; }')
+				}
+			]
+		});
 		assert.isTrue(actual);
 	});
 
-	it('returns true if there are no ORIENTATION rule(s) within MEDIA rules in CSSOM stylesheets', function() {
-		var actual = checks['css-orientation-lock'].evaluate.call(
-			checkContext,
-			document,
-			{},
-			undefined,
-			{
-				cssom: [
-					{
-						shadowId: undefined,
-						sheet: getSheet(SHEET_DATA.BODY_STYLE)
-					},
-					{
-						shadowId: 'a',
-						sheet: getSheet(SHEET_DATA.MEDIA_STYLE_NON_ORIENTATION)
-					}
-				]
-			}
-		);
+	it('returns true when CSSOM has no CSS media features targeting orientation', function() {
+		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+			cssom: [
+				{
+					shadowId: undefined,
+					sheet: getSheet('body { color: inherit; }')
+				},
+				{
+					shadowId: 'a',
+					sheet: getSheet(
+						'@media (min-width: 400px) { background-color: red; }'
+					)
+				}
+			]
+		});
 		assert.isTrue(actual);
 	});
 
-	it('returns true if no styles within any of the ORIENTATION rule(s)', function() {
-		var actual = checks['css-orientation-lock'].evaluate.call(
-			checkContext,
-			document,
-			{},
-			undefined,
-			{
-				cssom: [
-					{
-						shadowId: undefined,
-						sheet: getSheet(SHEET_DATA.BODY_STYLE)
-					},
-					{
-						shadowId: 'a',
-						sheet: getSheet(SHEET_DATA.MEDIA_STYLE_ORIENTATION_EMPTY)
-					}
-				]
-			}
-		);
+	it('returns true when CSSOM has empty Orientation CSS media features', function() {
+		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+			cssom: [
+				{
+					shadowId: undefined,
+					sheet: getSheet('body { color: inherit; }')
+				},
+				{
+					shadowId: 'a',
+					sheet: getSheet(
+						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) {  }'
+					)
+				}
+			]
+		});
 		assert.isTrue(actual);
 	});
 
-	it('returns true if there is no TRANSFORM style within any of the ORIENTATION rule(s)', function() {
-		var actual = checks['css-orientation-lock'].evaluate.call(
-			checkContext,
-			document,
-			{},
-			undefined,
-			{
-				cssom: [
-					{
-						shadowId: 'a',
-						sheet: getSheet(
-							SHEET_DATA.MEDIA_STYLE_ORIENTATION_WITHOUT_TRANSFORM
-						)
-					}
-				]
-			}
-		);
+	it('returns true when CSSOM has Orientation CSS media features that does not target transform property', function() {
+		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+			cssom: [
+				{
+					shadowId: 'a',
+					sheet: getSheet(
+						'@media screen and (min-width: 1px) and (max-width: 2000px) and (orientation: portrait) { #mocha { color: red; } }'
+					)
+				}
+			]
+		});
 		assert.isTrue(actual);
 	});
 
-	it('returns true if TRANSFORM style applied is not ROTATE', function() {
-		var actual = checks['css-orientation-lock'].evaluate.call(
-			checkContext,
-			document,
-			{},
-			undefined,
-			{
-				cssom: [
-					{
-						shadowId: undefined,
-						sheet: getSheet(
-							SHEET_DATA.MEDIA_STYLE_ORIENTATION_WITH_TRANSFORM_NOT_ROTATE
-						)
-					}
-				]
-			}
-		);
+	it('returns true when CSSOM has Orientation CSS media features with transform property and transformation function of translateX, which does not affect rotation', function() {
+		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+			cssom: [
+				{
+					shadowId: undefined,
+					sheet: getSheet(
+						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform: translateX(10px); -webkit-transform: translateX(10px); } }'
+					)
+				}
+			]
+		});
 		assert.isTrue(actual);
 	});
 
-	it('returns true if TRANSFORM style applied is ROTATE, but is divisible by 180', function() {
-		var actual = checks['css-orientation-lock'].evaluate.call(
+	it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of rotate, which affects rotation but does not lock orientation (rotate(180deg))', function() {
+		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+			cssom: [
+				{
+					shadowId: 'a',
+					root: document,
+					sheet: getSheet(
+						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { body { transform: rotate(180deg); -webkit-transform: rotate(180deg); } }'
+					)
+				}
+			]
+		});
+		assert.isTrue(actual);
+	});
+
+	it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of rotate, which affects rotation but does not lock orientation (rotate(-178deg))', function() {
+		var actual = check.evaluate.call(
 			checkContext,
 			document,
-			{},
+			{ degreeThreshold: 3 },
 			undefined,
 			{
 				cssom: [
@@ -209,7 +146,7 @@ describe('css-orientation-lock tests', function() {
 						shadowId: 'a',
 						root: document,
 						sheet: getSheet(
-							SHEET_DATA.MEDIA_STYLE_ORIENTATION_WITH_TRANSFORM_ROTATE_180
+							'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { body { transform: rotate(-178deg); -webkit-transform: rotate(-178deg); } }'
 						)
 					}
 				]
@@ -218,11 +155,89 @@ describe('css-orientation-lock tests', function() {
 		assert.isTrue(actual);
 	});
 
-	it('returns false if TRANSFORM style applied is ROTATE, and is divisible by 90 and not divisible by 180', function() {
-		var actual = checks['css-orientation-lock'].evaluate.call(
+	it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of rotateZ, which affects rotation but does not lock orientation (rotateZ(1turn))', function() {
+		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+			cssom: [
+				{
+					shadowId: 'a',
+					root: document,
+					sheet: getSheet(
+						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { body { transform: rotateZ(1turn); } }'
+					)
+				}
+			]
+		});
+		assert.isTrue(actual);
+	});
+
+	it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of rotate3d, which affects rotation but does not lock orientation (rotate3d(0,0,0,400grad))', function() {
+		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+			cssom: [
+				{
+					shadowId: 'a',
+					root: document,
+					sheet: getSheet(
+						// Note: values set on rotate3d cascasdes over rotate
+						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { body { transform: rotate(90deg) rotate3d(0,0,1, 400grad); } }'
+					)
+				}
+			]
+		});
+		assert.isTrue(actual);
+	});
+
+	it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of matrix3d, which affects rotation but does not lock orientation (matrix3d(-1,0,0.00,0,0.00,-1,0.00,0,0,0,1,0,0,0,0,1))', function() {
+		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+			cssom: [
+				{
+					shadowId: 'a',
+					root: document,
+					sheet: getSheet(
+						// Here the target is rotated by 180deg
+						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { body { transform: matrix3d(-1,0,0.00,0,0.00,-1,0.00,0,0,0,1,0,0,0,0,1);  } }'
+					)
+				}
+			]
+		});
+		assert.isTrue(actual);
+	});
+
+	it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of rotate, which affects rotation and locks orientation (rotate(270deg))', function() {
+		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+			cssom: [
+				{
+					shadowId: undefined,
+					root: document,
+					sheet: getSheet(
+						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform: rotate(270deg); -webkit-transform: rotate(270deg); } }'
+					)
+				}
+			]
+		});
+		assert.isFalse(actual);
+	});
+
+	it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of rotate3d, which affects rotation and locks orientation (rotate3d(0,0,1,90deg))', function() {
+		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+			cssom: [
+				{
+					shadowId: undefined,
+					root: document,
+					sheet: getSheet(
+						// apply 0 on the z-axis (3rd parameter) does not apply given rotation on z-axis
+						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform: rotate3d(0,0,1,90deg); -webkit-transform: rotate3d(0,0,1,90deg) } }'
+					)
+				}
+			]
+		});
+		assert.isFalse(actual);
+	});
+
+	it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of rotate3d, which affects rotation and locks orientation (rotate3d(0,0,1,93deg))', function() {
+		var actual = check.evaluate.call(
 			checkContext,
 			document,
-			{},
+			{ degreeThreshold: 3 },
 			undefined,
 			{
 				cssom: [
@@ -230,12 +245,60 @@ describe('css-orientation-lock tests', function() {
 						shadowId: undefined,
 						root: document,
 						sheet: getSheet(
-							SHEET_DATA.MEDIA_STYLE_ORIENTATION_WITH_TRANSFORM_ROTATE_90
+							// apply 0 on the z-axis (3rd parameter) does not apply given rotation on z-axis
+							'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform: rotate3d(0,0,1,93deg); -webkit-transform: rotate3d(0,0,1,93deg) } }'
 						)
 					}
 				]
 			}
 		);
+		assert.isFalse(actual);
+	});
+
+	it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of rotate3d, which affects rotation and locks orientation (rotate3d(0,0,1,1.5708rad))', function() {
+		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+			cssom: [
+				{
+					shadowId: undefined,
+					root: document,
+					sheet: getSheet(
+						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform: rotate3d(0,0,1,1.5708rad); -webkit-transform: rotate3d(0,0,1,1.5708rad) } }'
+					)
+				}
+			]
+		});
+		assert.isFalse(actual);
+	});
+
+	it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of matrix, which affects rotation and locks orientation (matrix(0.00,1.00,-1.00,0.00,0,0))', function() {
+		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+			cssom: [
+				{
+					shadowId: undefined,
+					root: document,
+					sheet: getSheet(
+						// this rotates by 90deg
+						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform:matrix(0.00,1.00,-1.00,0.00,0,0); -webkit-transform:matrix(0.00,1.00,-1.00,0.00,0,0); } }'
+					)
+				}
+			]
+		});
+		assert.isFalse(actual);
+	});
+
+	it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of matrix3d, which affects rotation and locks orientation (matrix3d(0,-1,0.00,0,1.00,0,0.00,0,0,0,1,0,0,0,0,1);)', function() {
+		var actual = check.evaluate.call(checkContext, document, {}, undefined, {
+			cssom: [
+				{
+					shadowId: undefined,
+					root: document,
+					sheet: getSheet(
+						// this rotates by 90deg
+						'@media screen and (min-width: 1px) and (max-width: 3000px) and (orientation: landscape) { #mocha { transform: matrix3d(0,-1,0.00,0,1.00,0,0.00,0,0,0,1,0,0,0,0,1); -webkit-transform: matrix3d(0,-1,0.00,0,1.00,0,0.00,0,0,0,1,0,0,0,0,1); } }'
+					)
+				}
+			]
+		});
 		assert.isFalse(actual);
 	});
 

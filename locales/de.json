@@ -619,9 +619,5 @@
 			"failureMessage": "Korrigiere alle der folgenden Punkte:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 		}
 	},
-	"incompleteFallbackMessage": {
-		"undefined": {
-			"failureMessage": ""
-		}
-	}
+	"incompleteFallbackMessage": ""
 }

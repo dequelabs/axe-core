@@ -23,6 +23,7 @@ describe('dom.shadowElementsFromPoint', function() {
 			var shadow2 = container2.attachShadow({ mode: 'open' });
 			shadow2.innerHTML = '<span>Text</span>';
 			var shadowSpan = shadow2.querySelector('span');
+			axe.testUtils.flatTreeSetup(fixture);
 
 			container.scrollIntoView();
 

@@ -861,4 +861,279 @@ describe('axe.utils.publishMetaData', function() {
 		axe.utils.publishMetaData(result);
 		assert.deepEqual(result.tags, ['hai']);
 	});
+
+	describe('non-doT syntax', function() {
+		it('should process ${data} syntax', function() {
+			axe._load({
+				rules: [],
+				data: {
+					rules: {
+						cats: {
+							help: 'cats-rule'
+						}
+					},
+					checks: {
+						'cats-ANY': {
+							messages: {
+								pass: 'pass-ANY ${data}',
+								fail: 'fail-ANY ${data}'
+							}
+						}
+					}
+				}
+			});
+
+			var result = {
+				id: 'cats',
+				nodes: [
+					{
+						any: [
+							{
+								result: true,
+								id: 'cats-ANY',
+								data: 'cats'
+							}
+						],
+						none: [],
+						all: []
+					}
+				]
+			};
+
+			axe.utils.publishMetaData(result);
+			assert.deepEqual(result, {
+				id: 'cats',
+				help: 'cats-rule',
+				tags: [],
+				nodes: [
+					{
+						any: [
+							{
+								result: true,
+								id: 'cats-ANY',
+								message: 'pass-ANY cats',
+								data: 'cats'
+							}
+						],
+						none: [],
+						all: []
+					}
+				]
+			});
+		});
+
+		it('should return default incomplete message with no reason specified by the check', function() {
+			axe._load({
+				rules: [],
+				data: {
+					rules: {
+						cats: {
+							help: 'cats-rule'
+						}
+					},
+					checks: {
+						'cats-NONE': {
+							messages: {
+								fail: 'fail-NONE',
+								pass: 'pass-NONE',
+								incomplete: {
+									'incomplete-NONE-reason1':
+										"We couldn't tell because of some reason",
+									'incomplete-NONE-reason2': 'Some other reason',
+									default: 'Fallback message for no reason'
+								}
+							}
+						},
+						'cats-ANY': {
+							messages: {
+								fail: 'fail-ANY',
+								pass: 'pass-ANY',
+								incomplete: {
+									'incomplete-ANY-reason1':
+										"We couldn't tell because of some reason",
+									'incomplete-ANY-reason2': 'Some other reason',
+									default: 'Fallback message for no reason'
+								}
+							}
+						},
+						'cats-ALL': {
+							messages: {
+								fail: 'fail-ALL',
+								pass: 'pass-ALL',
+								incomplete: {
+									'incomplete-ALL-reason1':
+										"We couldn't tell because of some reason",
+									'incomplete-ALL-reason2': 'Some other reason',
+									default: 'Fallback message for no reason'
+								}
+							}
+						}
+					}
+				}
+			});
+
+			var result = {
+				id: 'cats',
+				nodes: [
+					{
+						any: [
+							{
+								result: undefined,
+								id: 'cats-ANY',
+								data: {}
+							}
+						],
+						none: [
+							{
+								result: undefined,
+								id: 'cats-NONE',
+								data: {}
+							}
+						],
+						all: [
+							{
+								result: undefined,
+								id: 'cats-ALL',
+								data: {}
+							}
+						]
+					}
+				]
+			};
+			axe.utils.publishMetaData(result);
+			assert.deepEqual(result, {
+				id: 'cats',
+				help: 'cats-rule',
+				tags: [],
+				nodes: [
+					{
+						any: [
+							{
+								result: undefined,
+								id: 'cats-ANY',
+								message: 'Fallback message for no reason',
+								data: {}
+							}
+						],
+						none: [
+							{
+								result: undefined,
+								id: 'cats-NONE',
+								message: 'Fallback message for no reason',
+								data: {}
+							}
+						],
+						all: [
+							{
+								result: undefined,
+								id: 'cats-ALL',
+								message: 'Fallback message for no reason',
+								data: {}
+							}
+						]
+					}
+				]
+			});
+		});
+
+		it('should fall back to a generic message if incomplete object fails', function() {
+			axe._load({
+				rules: [],
+				data: {
+					incompleteFallbackMessage: 'Dogs are the best',
+					rules: {
+						cats: {
+							help: 'cats-rule'
+						}
+					},
+					checks: {
+						'cats-NONE': {
+							messages: {
+								faiL: 'fail-NONE',
+								pass: 'pass-NONE',
+								incomplete: {}
+							}
+						},
+						'cats-ANY': {
+							messages: {
+								faiL: 'fail-ANY',
+								pass: 'pass-ANY',
+								incomplete: {}
+							}
+						},
+						'cats-ALL': {
+							messages: {
+								faiL: 'fail-ALL',
+								pass: 'pass-ALL',
+								incomplete: {}
+							}
+						}
+					}
+				}
+			});
+
+			var result = {
+				id: 'cats',
+				nodes: [
+					{
+						any: [
+							{
+								result: undefined,
+								id: 'cats-ANY',
+								data: {}
+							}
+						],
+						none: [
+							{
+								result: undefined,
+								id: 'cats-NONE',
+								data: {}
+							}
+						],
+						all: [
+							{
+								result: undefined,
+								id: 'cats-ALL',
+								data: {}
+							}
+						]
+					}
+				]
+			};
+			axe.utils.publishMetaData(result);
+			assert.deepEqual(result, {
+				id: 'cats',
+				help: 'cats-rule',
+				tags: [],
+				nodes: [
+					{
+						any: [
+							{
+								result: undefined,
+								id: 'cats-ANY',
+								message: 'Dogs are the best',
+								data: {}
+							}
+						],
+						none: [
+							{
+								result: undefined,
+								id: 'cats-NONE',
+								message: 'Dogs are the best',
+								data: {}
+							}
+						],
+						all: [
+							{
+								result: undefined,
+								id: 'cats-ALL',
+								message: 'Dogs are the best',
+								data: {}
+							}
+						]
+					}
+				]
+			});
+		});
+	});
 });

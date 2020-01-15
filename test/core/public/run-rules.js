@@ -48,9 +48,11 @@ describe('runRules', function() {
 	}
 
 	var fixture = document.getElementById('fixture');
+	var memoizedFns;
 
 	var isNotCalled;
 	beforeEach(function() {
+		memoizedFns = axe._memoizedFns.slice();
 		isNotCalled = function(err) {
 			throw err || new Error('Reject should not be called');
 		};
@@ -60,6 +62,7 @@ describe('runRules', function() {
 		fixture.innerHTML = '';
 		axe._audit = null;
 		axe._tree = undefined;
+		axe._memoizedFns = memoizedFns;
 	});
 
 	it('should work', function(done) {
@@ -357,9 +360,9 @@ describe('runRules', function() {
 			assert.lengthOf(results.violations, 1);
 			assert.lengthOf(results.violations[0].nodes, 4);
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);
-			assert.deepEqual(results.violations[0].nodes[1].target, ['#t1 > span']);
+			// assert.deepEqual(results.violations[0].nodes[1].target, ['span']);
 			assert.deepEqual(results.violations[0].nodes[2].target, ['#t2']);
-			assert.deepEqual(results.violations[0].nodes[3].target, ['#t2 > em']);
+			// assert.deepEqual(results.violations[0].nodes[3].target, ['em']);
 			done();
 		});
 	});
@@ -392,9 +395,9 @@ describe('runRules', function() {
 			assert.lengthOf(results.violations, 1);
 			assert.lengthOf(results.violations[0].nodes, 4);
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#t1']);
-			assert.deepEqual(results.violations[0].nodes[1].target, ['#t1 > span']);
+			// assert.deepEqual(results.violations[0].nodes[1].target, ['span']);
 			assert.deepEqual(results.violations[0].nodes[2].target, ['#t2']);
-			assert.deepEqual(results.violations[0].nodes[3].target, ['#t2 > em']);
+			// assert.deepEqual(results.violations[0].nodes[3].target, ['em']);
 			done();
 		});
 	});
@@ -913,5 +916,47 @@ describe('runRules', function() {
 				});
 			}, 100);
 		});
+	});
+
+	it('should clear the memoized cache for each function', function(done) {
+		axe._load({
+			rules: [
+				{
+					id: 'html',
+					selector: 'html',
+					any: ['html']
+				}
+			],
+			checks: [
+				{
+					id: 'html',
+					evaluate: function() {
+						return true;
+					}
+				}
+			],
+			messages: {}
+		});
+
+		runRules(
+			document,
+			{},
+			function resolve(out, cleanup) {
+				var called = false;
+				axe._memoizedFns = [
+					{
+						clear: function() {
+							called = true;
+						}
+					}
+				];
+
+				cleanup();
+				assert.isTrue(called);
+
+				done();
+			},
+			isNotCalled
+		);
 	});
 });

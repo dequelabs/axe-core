@@ -1,6 +1,7 @@
 {
 	"id": "implicit-role-fallback",
 	"evaluate": "implicit-role-fallback.js",
+	"deprecated": true,
 	"metadata": {
 		"impact": "moderate",
 		"messages": {
