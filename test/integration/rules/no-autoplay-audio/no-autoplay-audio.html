@@ -8,8 +8,8 @@
 ></audio>
 <!-- pass 2 -->
 <video id="pass2" autoplay="true" controls>
-	<source src="/test/assets/video.mp4" type="video/mp4" />
 	<source src="/test/assets/video.webm" type="video/webm" />
+	<source src="/test/assets/video.mp4" type="video/mp4" />
 </video>
 <!-- pass 3  -->
 <audio
@@ -19,8 +19,8 @@
 ></audio>
 <!-- pass 4 -->
 <video id="pass4" autoplay="true">
-	<source src="/test/assets/video.mp4#t=8,10" type="video/mp4" />
 	<source src="/test/assets/video.webm#t=8,10" type="video/webm" />
+	<source src="/test/assets/video.mp4#t=8,10" type="video/mp4" />
 </video>
 <!-- pass 5  -->
 <!-- pass 1 -->
@@ -31,13 +31,13 @@
 <audio id="fail1" src="/test/assets/moon-speech.mp3" autoplay="true"></audio>
 <!-- fail 2 -->
 <video id="fail2" autoplay="true">
-	<source src="/test/assets/video.mp4" type="video/mp4" />
 	<source src="/test/assets/video.webm" type="video/webm" />
+	<source src="/test/assets/video.mp4" type="video/mp4" />
 </video>
 <!-- fail 3 -->
 <video id="fail3" autoplay="true" loop="true">
-	<source src="/test/assets/video.mp4#t=8,10" type="video/mp4" />
 	<source src="/test/assets/video.webm#t=8,10" type="video/webm" />
+	<source src="/test/assets/video.mp4#t=8,10" type="video/mp4" />
 </video>
 <!-- fail 4  -->
 <audio
@@ -50,8 +50,13 @@
 <!-- Inapplicable  -->
 <!-- inapplicable 1 -->
 <video id="inapplicable1" autoplay="true" muted="true">
-	<source src="/test/assets/video.mp4" type="video/mp4" />
 	<source src="/test/assets/video.webm" type="video/webm" />
+	<source src="/test/assets/video.mp4" type="video/mp4" />
 </video>
 <!-- inapplicable 2 -->
 <audio id="inapplicable2" src="/test/assets/moon-speech.mp3" controls></audio>
+<!-- inapplicable 3 -->
+<video id="inapplicable3" autoplay="true" paused="true">
+	<source src="/test/assets/video.webm" type="video/webm" />
+	<source src="/test/assets/video.mp4" type="video/mp4" />
+</video>

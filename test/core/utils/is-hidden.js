@@ -54,7 +54,7 @@ describe('axe.utils.isHidden', function() {
 		assert.isFalse(axe.utils.isHidden(el));
 	});
 
-	it('should return false on a `audio` element with `controls` attribute but `display:none`', function() {
+	it('should return true on a `audio` element with `controls` attribute but `display:none`', function() {
 		fixture.innerHTML =
 			'<audio id="target" src="/test/assets/moon-speech.mp3" style="display: none" controls></audio>';
 		var el = document.getElementById('target');
