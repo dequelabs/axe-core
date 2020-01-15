@@ -2,6 +2,7 @@ describe('dom.isVisible', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var queryFixture = axe.testUtils.queryFixture;
 	var fixtureSetup = axe.testUtils.fixtureSetup;
 	var isIE11 = axe.testUtils.isIE11;
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
@@ -12,7 +13,9 @@ describe('dom.isVisible', function() {
 
 	afterEach(function() {
 		document.getElementById('fixture').innerHTML = '';
+		axe._tree = undefined;
 	});
+
 	describe('default usage', function() {
 		// Firefox returns `null` if accessed inside a hidden iframe
 		it('should return false if computedStyle return null for whatever reason', function() {
@@ -188,6 +191,75 @@ describe('dom.isVisible', function() {
 
 			el = document.getElementById('target');
 			assert.isFalse(axe.commons.dom.isVisible(el));
+		});
+
+		it('returns false for `AREA` without closest `MAP` element', function() {
+			var vNode = queryFixture(
+				'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>'
+			);
+			var actual = axe.commons.dom.isVisible(vNode.actualNode);
+			assert.isFalse(actual);
+		});
+
+		it('returns false for `AREA` with closest `MAP` with no name attribute', function() {
+			var vNode = queryFixture(
+				'<map>' +
+					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
+					'</map>'
+			);
+			var actual = axe.commons.dom.isVisible(vNode.actualNode);
+			assert.isFalse(actual);
+		});
+
+		(shadowSupported ? it : xit)(
+			'returns false for `AREA` element that is inside shadowDOM',
+			function() {
+				fixture.innerHTML = '<div id="container"></div>';
+				var container = fixture.querySelector('#container');
+				var shadow = container.attachShadow({ mode: 'open' });
+				shadow.innerHTML =
+					'<map name="infographic">' +
+					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
+					'</map>';
+				axe.testUtils.flatTreeSetup(fixture);
+
+				var target = shadow.querySelector('#target');
+				var actual = axe.commons.dom.isVisible(target);
+				assert.isFalse(actual);
+			}
+		);
+
+		it('returns false for `AREA` with closest `MAP` with name but not referred by an `IMG` usemap attribute', function() {
+			var vNode = queryFixture(
+				'<map name="infographic">' +
+					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
+					'</map>' +
+					'<img usemap="#infographic-wrong-name" alt="MDN infographic" />'
+			);
+			var actual = axe.commons.dom.isVisible(vNode.actualNode);
+			assert.isFalse(actual);
+		});
+
+		it('returns false for `AREA` with `MAP` and used in `IMG` which is not visible', function() {
+			var vNode = queryFixture(
+				'<map name="infographic">' +
+					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
+					'</map>' +
+					'<img usemap="#infographic" alt="MDN infographic" style="display:none"/>'
+			);
+			var actual = axe.commons.dom.isVisible(vNode.actualNode);
+			assert.isFalse(actual);
+		});
+
+		it('returns true for `AREA` with `MAP` and used in `IMG` which is visible', function() {
+			var vNode = queryFixture(
+				'<map name="infographic">' +
+					'<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
+					'</map>' +
+					'<img usemap="#infographic" alt="MDN infographic" />'
+			);
+			var actual = axe.commons.dom.isVisible(vNode.actualNode);
+			assert.isTrue(actual);
 		});
 
 		// IE11 either only supports clip paths defined by url() or not at all,

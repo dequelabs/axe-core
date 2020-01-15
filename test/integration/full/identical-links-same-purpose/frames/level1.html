@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html id="level1" lang="en">
+	<head>
+		<meta charset="utf8" />
+		<script src="/axe.js"></script>
+	</head>
+
+	<body>
+		<!-- pass  -->
+		<a id="pass-inside-frame" href="/home/#/foo">Pass 1</a>
+
+		<!-- incomplete -->
+		<map name="infographic-incomplete">
+			<area
+				id="incomplete-inside-frame"
+				shape="poly"
+				coords="130,147,130,228,6,219,59,107"
+				href="https://developer.mozilla.org/docs/Web/CSS"
+				target="_blank"
+				title="HTML"
+			/>
+		</map>
+		<img
+			usemap="#infographic-incomplete"
+			src="https://interactive-examples.mdn.mozilla.net/media/examples/mdn-info2.png"
+			alt="MDN infographic"
+		/>
+	</body>
+</html>
