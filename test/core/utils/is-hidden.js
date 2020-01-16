@@ -40,27 +40,6 @@ describe('axe.utils.isHidden', function() {
 		assert.isFalse(axe.utils.isHidden(document));
 	});
 
-	it('should return false on a `audio` element without `controls` attribute', function() {
-		fixture.innerHTML =
-			'<audio id="target" src="/test/assets/moon-speech.mp3"></audio>';
-		var el = document.getElementById('target');
-		assert.isFalse(axe.utils.isHidden(el));
-	});
-
-	it('should return false on a `audio` element with `controls` attribute', function() {
-		fixture.innerHTML =
-			'<audio id="target" src="/test/assets/moon-speech.mp3" controls></audio>';
-		var el = document.getElementById('target');
-		assert.isFalse(axe.utils.isHidden(el));
-	});
-
-	it('should return true on a `audio` element with `controls` attribute but `display:none`', function() {
-		fixture.innerHTML =
-			'<audio id="target" src="/test/assets/moon-speech.mp3" style="display: none" controls></audio>';
-		var el = document.getElementById('target');
-		assert.isTrue(axe.utils.isHidden(el));
-	});
-
 	it('should return true if `aria-hidden` is set', function() {
 		fixture.innerHTML =
 			'<div id="target" aria-hidden="true">Hidden from screen readers</div>';
