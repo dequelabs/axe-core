@@ -57,6 +57,6 @@ describe('matches.nodeName', function() {
 
 	it('works with actual nodes', function() {
 		var virtualNode = queryFixture('<h1 id="target">foo</h1>');
-		assert.isTrue(matchNodeName(virtualNode.actual, 'h1'));
+		assert.isTrue(matchNodeName(virtualNode.actualNode, 'h1'));
 	});
 });
