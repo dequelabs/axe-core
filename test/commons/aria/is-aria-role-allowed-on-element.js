@@ -1,5 +1,7 @@
 describe('aria.isAriaRoleAllowedOnElement', function() {
 	'use strict';
+	var fixture = document.getElementById('fixture');
+	var flatTreeSetup = axe.testUtils.flatTreeSetup;
 
 	var originalLookupTableRole;
 	var originalLookupTableElementsAllowedNoRole;
@@ -27,6 +29,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('section');
 		var role = 'alert';
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, role);
 		var expected = true;
 		assert.equal(actual, expected);
@@ -43,6 +47,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('section');
 		var role = 'checkbox';
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, role);
 		var expected = false;
 		assert.equal(actual, expected);
@@ -52,6 +58,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('svg');
 		var role = 'alertdialog';
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isFalse(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
 	});
 
@@ -59,6 +67,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('object');
 		var role = 'application';
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, role);
 		assert.isTrue(actual);
 	});
@@ -67,6 +77,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('a');
 		var role = 'button';
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
 	});
 
@@ -74,6 +86,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('article');
 		var role = 'cell';
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isFalse(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
 	});
 
@@ -81,6 +95,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('button');
 		var role = 'checkbox';
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
 	});
 
@@ -88,6 +104,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('iframe');
 		var role = 'document';
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
 	});
 
@@ -95,6 +113,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('aside');
 		var role = 'feed';
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
 	});
 
@@ -102,6 +122,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('figure');
 		var role = 'group';
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
 	});
 
@@ -109,6 +131,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('svg');
 		var role = 'img';
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
 	});
 
@@ -117,6 +141,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var role = 'link';
 		node.setAttribute('role', role);
 		node.setAttribute('type', 'image');
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
 	});
 
@@ -137,6 +163,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var role = 'cats';
 		node.setAttribute('role', role);
 		node.setAttribute('value', 'cats');
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, role);
 		assert.isFalse(actual);
 	});
@@ -145,6 +173,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('header');
 		var role = 'none';
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
 	});
 
@@ -152,6 +182,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('li');
 		var role = 'option';
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
 	});
 
@@ -159,6 +191,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('h1');
 		var role = 'tab';
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
 	});
 
@@ -166,11 +200,15 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('ol');
 		var role = 'tablist';
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
 	});
 
 	it('returns true when A has namespace as svg and role menuitem', function() {
 		var node = document.createElementNS('http://www.w3.org/2000/svg', 'a');
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			axe.commons.aria.isAriaRoleAllowedOnElement(node, 'menuitem')
 		);
@@ -181,6 +219,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var role = 'menuitem';
 		node.setAttribute('type', 'menu');
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
 	});
 
@@ -189,18 +229,24 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var role = 'navigation';
 		node.setAttribute('type', 'context');
 		node.setAttribute('role', role);
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isFalse(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
 	});
 
 	it('returns true if given element can have any role', function() {
 		axe.commons.aria.lookupTable.elementsAllowedAnyRole = ['HEADER'];
 		var node = document.createElement('header');
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'link');
 		assert.isTrue(actual);
 	});
 
 	it('returns true if given element can have any role', function() {
 		var node = document.createElement('div');
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'banner');
 		assert.isTrue(actual);
 	});
@@ -208,12 +254,16 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 	it('returns false if given element cannot have any role', function() {
 		axe.commons.aria.lookupTable.elementsAllowedNoRole = ['NAV'];
 		var node = document.createElement('nav');
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'alert'); // changed this
 		assert.isFalse(actual);
 	});
 
 	it('returns false if given element cannot have any role', function() {
 		var node = document.createElement('track');
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'banner');
 		assert.isFalse(actual);
 	});
@@ -221,6 +271,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 	it('returns false if AREA element has href', function() {
 		var node = document.createElement('area');
 		node.setAttribute('href', '#yay');
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(
 			node,
 			'presentation'
@@ -230,6 +282,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 
 	it('returns true if AREA element does not have href', function() {
 		var node = document.createElement('area');
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(
 			node,
 			'presentation'
@@ -251,6 +305,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		var node = document.createElement('img');
 		node.setAttribute('alt', '');
 		node.setAttribute('role', 'presentation');
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(
 			node,
 			'presentation'
@@ -272,6 +328,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		};
 		var node = document.createElement('img');
 		node.setAttribute('role', 'presentation');
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		var presentationAllowed = axe.commons.aria.isAriaRoleAllowedOnElement(
 			node,
 			'presentation'
@@ -294,6 +352,8 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		};
 		var node = document.createElement('li');
 		node.setAttribute('role', 'menuitem');
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'menuitem');
 		assert.isTrue(overrideInvoked);
 		assert.isFalse(actual);
