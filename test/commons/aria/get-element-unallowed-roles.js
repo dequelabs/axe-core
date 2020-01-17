@@ -1,10 +1,5 @@
 describe('aria.getElementUnallowedRoles', function() {
-	var fixture = document.getElementById('fixture');
 	var flatTreeSetup = axe.testUtils.flatTreeSetup;
-
-	afterEach(function() {
-		fixture.innerHTML = '';
-	});
 
 	it('returns false for INPUT with role application', function() {
 		var node = document.createElement('input');
@@ -12,8 +7,7 @@ describe('aria.getElementUnallowedRoles', function() {
 		node.setAttribute('type', '');
 		node.setAttribute('aria-pressed', '');
 		node.setAttribute('role', role);
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+		flatTreeSetup(node);
 		var actual = axe.commons.aria.getElementUnallowedRoles(node);
 		assert.isNotEmpty(actual);
 		assert.include(actual, role);
@@ -23,8 +17,7 @@ describe('aria.getElementUnallowedRoles', function() {
 		var node = document.createElement('input');
 		node.setAttribute('type', 'checkbox');
 		node.setAttribute('aria-pressed', '');
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+		flatTreeSetup(node);
 		var actual = axe.commons.aria.getElementUnallowedRoles(node);
 		assert.isEmpty(actual);
 	});
@@ -33,8 +26,7 @@ describe('aria.getElementUnallowedRoles', function() {
 		var node = document.createElement('li');
 		var role = 'menubar';
 		node.setAttribute('role', role);
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+		flatTreeSetup(node);
 		var actual = axe.commons.aria.getElementUnallowedRoles(node);
 		assert.isEmpty(actual);
 	});
@@ -44,8 +36,7 @@ describe('aria.getElementUnallowedRoles', function() {
 		var role = 'menuitemcheckbox';
 		node.setAttribute('role', role);
 		node.setAttribute('type', 'button');
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+		flatTreeSetup(node);
 		var actual = axe.commons.aria.getElementUnallowedRoles(node);
 		assert.isEmpty(actual);
 	});
@@ -54,8 +45,7 @@ describe('aria.getElementUnallowedRoles', function() {
 		var node = document.createElement('section');
 		var role = 'option';
 		node.setAttribute('role', role);
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+		flatTreeSetup(node);
 		var actual = axe.commons.aria.getElementUnallowedRoles(node);
 		assert.isNotEmpty(actual);
 		assert.include(actual, role);
@@ -66,8 +56,7 @@ describe('aria.getElementUnallowedRoles', function() {
 		var role = 'menuitemradio';
 		node.setAttribute('role', role);
 		node.setAttribute('type', 'radio');
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+		flatTreeSetup(node);
 		var actual = axe.commons.aria.getElementUnallowedRoles(node);
 		assert.isEmpty(actual);
 	});
@@ -76,8 +65,7 @@ describe('aria.getElementUnallowedRoles', function() {
 		var node = document.createElement('input');
 		var role = 'textbox';
 		node.setAttribute('role', role);
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+		flatTreeSetup(node);
 		var actual = axe.commons.aria.getElementUnallowedRoles(node, true);
 		assert.isEmpty(actual);
 	});
@@ -85,8 +73,7 @@ describe('aria.getElementUnallowedRoles', function() {
 	it('returns false with implicit role of row for TR when allowImplicit is set to false via options', function() {
 		var node = document.createElement('tr');
 		node.setAttribute('role', 'row');
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+		flatTreeSetup(node);
 		var actual = axe.commons.aria.getElementUnallowedRoles(node, false);
 		assert.isNotEmpty(actual);
 		assert.include(actual, 'row');
