@@ -1,4 +1,4 @@
-describe.only('utils.matches', function() {
+describe('utils.matches', function() {
 	var matches = axe.utils.matches;
 	var fixture = document.querySelector('#fixture');
 	var queryFixture = axe.testUtils.queryFixture;
