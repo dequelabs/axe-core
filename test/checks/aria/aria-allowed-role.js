@@ -15,7 +15,6 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('role', 'presentation');
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
-		flatTreeSetup(fixture);
 		var options = {
 			ignoredTags: ['article']
 		};
@@ -50,7 +49,6 @@ describe('aria-allowed-role', function() {
 	it('returns true when A has namespace as svg', function() {
 		var node = document.createElementNS('http://www.w3.org/2000/svg', 'a');
 		fixture.appendChild(node);
-		flatTreeSetup(fixture);
 		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
@@ -90,7 +88,6 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('type', 'menu');
 		node.setAttribute('role', 'menuitem');
 		fixture.appendChild(node);
-		flatTreeSetup(fixture);
 		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
