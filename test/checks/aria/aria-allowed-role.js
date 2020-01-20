@@ -3,6 +3,7 @@ describe('aria-allowed-role', function() {
 
 	var fixture = document.getElementById('fixture');
 	var checkContext = axe.testUtils.MockCheckContext();
+	var flatTreeSetup = axe.testUtils.flatTreeSetup;
 
 	afterEach(function() {
 		fixture.innerHTML = '';
@@ -13,6 +14,7 @@ describe('aria-allowed-role', function() {
 		var node = document.createElement('article');
 		node.setAttribute('role', 'presentation');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		var options = {
 			ignoredTags: ['article']
 		};
@@ -30,6 +32,7 @@ describe('aria-allowed-role', function() {
 		fixture.innerHTML =
 			'<table role="grid"><tr id="target" role="row"></tr></table>';
 		var target = fixture.querySelector('#target');
+		flatTreeSetup(fixture);
 		var options = {
 			allowImplicit: false
 		};
@@ -46,6 +49,7 @@ describe('aria-allowed-role', function() {
 	it('returns true when A has namespace as svg', function() {
 		var node = document.createElementNS('http://www.w3.org/2000/svg', 'a');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -56,6 +60,7 @@ describe('aria-allowed-role', function() {
 			'<button id="target" type="button" aria-hidden="true"' +
 			'role="presentation"></button>';
 		var target = fixture.querySelector('#target');
+		flatTreeSetup(fixture);
 		var actual = checks['aria-allowed-role'].evaluate.call(
 			checkContext,
 			target
@@ -70,6 +75,7 @@ describe('aria-allowed-role', function() {
 			'role="presentation"></button>' +
 			'</div>';
 		var target = fixture.querySelector('#target');
+		flatTreeSetup(fixture);
 		var actual = checks['aria-allowed-role'].evaluate.call(
 			checkContext,
 			target
@@ -82,6 +88,7 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('type', 'menu');
 		node.setAttribute('role', 'menuitem');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -91,6 +98,7 @@ describe('aria-allowed-role', function() {
 		var node = document.createElement('img');
 		node.setAttribute('role', 'presentation');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -107,6 +115,7 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('alt', '');
 		node.setAttribute('role', 'presentation');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -123,6 +132,7 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('alt', 'not empty');
 		node.setAttribute('role', 'presentation');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isFalse(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -138,6 +148,7 @@ describe('aria-allowed-role', function() {
 		var node = document.createElement('img');
 		node.setAttribute('type', 'image');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -149,6 +160,7 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('type', 'checkbox');
 		node.setAttribute('aria-pressed', '');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -159,6 +171,7 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('type', 'text');
 		node.setAttribute('role', 'combobox');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -169,6 +182,7 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('type', 'tel');
 		node.setAttribute('role', 'combobox');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -179,6 +193,7 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('type', 'url');
 		node.setAttribute('role', 'combobox');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -189,6 +204,7 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('type', 'search');
 		node.setAttribute('role', 'combobox');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -199,6 +215,7 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('type', 'email');
 		node.setAttribute('role', 'combobox');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -209,6 +226,7 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('type', 'text');
 		node.setAttribute('role', 'spinbutton');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -219,6 +237,7 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('type', 'text');
 		node.setAttribute('role', 'searchbox');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -228,6 +247,7 @@ describe('aria-allowed-role', function() {
 		var node = document.createElement('dd');
 		node.setAttribute('role', 'link');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isFalse(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -238,6 +258,7 @@ describe('aria-allowed-role', function() {
 		var node = document.createElement('div');
 		node.setAttribute('role', 'link');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -247,6 +268,7 @@ describe('aria-allowed-role', function() {
 		var node = document.createElement('a');
 		node.setAttribute('role', 'presentation');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -257,6 +279,7 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('role', 'link');
 		node.href = '';
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		var actual = checks['aria-allowed-role'].evaluate.call(checkContext, node);
 		assert.isTrue(actual);
 	});
@@ -266,6 +289,7 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('role', 'banner');
 		node.alt = 'some text';
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -276,6 +300,7 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('role', 'presentation');
 		node.alt = 'some text';
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isFalse(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -285,6 +310,7 @@ describe('aria-allowed-role', function() {
 		var node = document.createElement('select');
 		node.setAttribute('role', 'menu');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, node)
 		);
@@ -295,6 +321,7 @@ describe('aria-allowed-role', function() {
 		var node = document.createElement('my-navbar');
 		node.setAttribute('role', 'navigation');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 		var actual = checks['aria-allowed-role'].evaluate.call(checkContext, node);
 		assert.isTrue(actual);
 		assert.isNull(checkContext._data, null);
@@ -303,6 +330,7 @@ describe('aria-allowed-role', function() {
 	it('returns false if a dpub role’s type is not the element’s implicit role', function() {
 		fixture.innerHTML = '<article role="doc-biblioref" id="target"></article>';
 		var target = fixture.children[0];
+		flatTreeSetup(fixture);
 		assert.isFalse(
 			checks['aria-allowed-role'].evaluate.call(checkContext, target)
 		);
@@ -311,6 +339,7 @@ describe('aria-allowed-role', function() {
 	it('returns true if a dpub role’s type is the element’s implicit role', function() {
 		fixture.innerHTML = '<a href="foo" role="doc-biblioref" id="target"></a>';
 		var target = fixture.children[0];
+		flatTreeSetup(fixture);
 		assert.isTrue(
 			checks['aria-allowed-role'].evaluate.call(checkContext, target)
 		);
