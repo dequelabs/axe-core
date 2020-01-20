@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf8" />
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="/node_modules/mocha/mocha.css"
+		/>
+		<script src="/node_modules/mocha/mocha.js"></script>
+		<script src="/node_modules/chai/chai.js"></script>
+		<script src="/axe.js"></script>
+		<script>
+			mocha.setup({
+				timeout: 10000,
+				ui: 'bdd'
+			});
+			var assert = chai.assert;
+		</script>
+	</head>
+
+	<body>
+		<div id="fixture">
+			<!-- Passed  -->
+			<!-- pass 1 -->
+			<audio
+				id="pass1"
+				src="/test/assets/moon-speech.mp3"
+				autoplay="true"
+				controls
+			></audio>
+			<!-- pass 2 -->
+			<video id="pass2" autoplay="true" controls>
+				<source src="/test/assets/video.webm" type="video/webm" />
+				<source src="/test/assets/video.mp4" type="video/mp4" />
+			</video>
+			<!-- pass 3  -->
+			<audio
+				id="pass3"
+				src="/test/assets/moon-speech.mp3#t=25"
+				autoplay="true"
+			></audio>
+			<!-- pass 4 -->
+			<video id="pass4" autoplay="true">
+				<source src="/test/assets/video.webm#t=8,10" type="video/webm" />
+				<source src="/test/assets/video.mp4#t=8,10" type="video/mp4" />
+			</video>
+			<!-- pass 5  -->
+			<!-- pass 1 -->
+			<audio
+				id="pass5"
+				src="/test/assets/moon-speech.mp3"
+				autoplay
+				controls
+			></audio>
+
+			<!-- Failed  -->
+			<!-- fail 1 -->
+			<audio
+				id="fail1"
+				src="/test/assets/moon-speech.mp3"
+				autoplay="true"
+			></audio>
+			<!-- fail 2 -->
+			<video id="fail2" autoplay="true">
+				<source src="/test/assets/video.webm" type="video/webm" />
+				<source src="/test/assets/video.mp4" type="video/mp4" />
+			</video>
+			<!-- fail 3 -->
+			<video id="fail3" autoplay="true" loop="true">
+				<source src="/test/assets/video.webm#t=8,10" type="video/webm" />
+				<source src="/test/assets/video.mp4#t=8,10" type="video/mp4" />
+			</video>
+			<!-- fail 4  -->
+			<audio
+				id="fail4"
+				src="/test/assets/moon-speech.mp3#t=1,3"
+				autoplay="true"
+				loop="true"
+			></audio>
+
+			<!-- Inapplicable  -->
+			<!-- inapplicable 1 -->
+			<video id="inapplicable1" autoplay="true" muted="true">
+				<source src="/test/assets/video.webm" type="video/webm" />
+				<source src="/test/assets/video.mp4" type="video/mp4" />
+			</video>
+			<!-- inapplicable 2 -->
+			<audio
+				id="inapplicable2"
+				src="/test/assets/moon-speech.mp3"
+				controls
+			></audio>
+			<!-- inapplicable 3 -->
+			<video id="inapplicable3" autoplay="true" paused="true">
+				<source src="/test/assets/video.webm" type="video/webm" />
+				<source src="/test/assets/video.mp4" type="video/mp4" />
+			</video>
+		</div>
+
+		<div id="mocha"></div>
+
+		<script src="/test/testutils.js"></script>
+		<script src="no-autoplay-audio.js"></script>
+		<script src="/test/integration/adapter.js"></script>
+	</body>
+</html>

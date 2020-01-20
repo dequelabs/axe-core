@@ -511,4 +511,4 @@ The CLI acts a wizard, by asking a series of questions related to generation of 
 - Would you like to create INTEGRATION test files? Yes
 ```
 
-Upon answering of which the the assets are created in the respective directories.
+Upon answering of which the assets are created in the respective directories.
