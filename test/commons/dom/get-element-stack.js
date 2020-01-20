@@ -4,6 +4,7 @@ describe('dom.getElementStack', function() {
 	var fixture = document.getElementById('fixture');
 	var getElementStack = axe.commons.dom.getElementStack;
 	var getClientElementStack = axe.commons.dom.getClientElementStack;
+	var isIE11 = axe.testUtils.isIE11;
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 
 	function mapToIDs(stack) {
@@ -290,6 +291,36 @@ describe('dom.getElementStack', function() {
 			var stack = mapToIDs(getElementStack(target));
 			assert.deepEqual(stack, ['1', 'fixture', 'target', '2']);
 		});
+
+		it('should not add hidden elements', function() {
+			fixture.innerHTML =
+				'<main id="1">' +
+				'<div id="2" style="position: absolute; display: none;">Some text</div>' +
+				'<div id="3" style="position: absolute; visibility: hidden">Some text</div>' +
+				'<span id="target">Hello World</span>' +
+				'</main>';
+			axe.testUtils.flatTreeSetup(fixture);
+			var target = fixture.querySelector('#target');
+			var stack = mapToIDs(getElementStack(target));
+			assert.deepEqual(stack, ['target', '1', 'fixture']);
+		});
+
+		// IE11 either only supports clip paths defined by url() or not at all,
+		// MDN and caniuse.com give different results...
+		(isIE11 ? it.skip : it)(
+			'should not add hidden elements using clip-path',
+			function() {
+				fixture.innerHTML =
+					'<main id="1">' +
+					'<div id="2" style="position: absolute; clip: rect(1px, 1px, 1px, 1px);">Some text</div>' +
+					'<span id="target">Hello World</span>' +
+					'</main>';
+				axe.testUtils.flatTreeSetup(fixture);
+				var target = fixture.querySelector('#target');
+				var stack = mapToIDs(getElementStack(target));
+				assert.deepEqual(stack, ['target', '1', 'fixture']);
+			}
+		);
 
 		(shadowSupported ? it : xit)(
 			'should sort shadow dom elements correctly',
