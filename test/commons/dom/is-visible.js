@@ -50,7 +50,7 @@ describe('dom.isVisible', function() {
 			assert.isTrue(axe.commons.dom.isVisible(el));
 		});
 
-		it('should properly calculate offsets according the the offsetParent', function() {
+		it('should properly calculate offsets according the offsetParent', function() {
 			fixture.innerHTML =
 				'<div style="position: absolute; top: 400px; left: 400px;">' +
 				'<div id="target" style="position: absolute; top: -400px; left: -400px">Hi</div>' +
@@ -367,7 +367,7 @@ describe('dom.isVisible', function() {
 			assert.isTrue(axe.commons.dom.isVisible(el, true));
 		});
 
-		it('should properly calculate offsets according the the offsetParent', function() {
+		it('should properly calculate offsets according the offsetParent', function() {
 			fixture.innerHTML =
 				'<div style="position: absolute; top: 400px; left: 400px;">' +
 				'<div id="target" style="position: absolute; top: -400px; left: -400px">Hi</div>' +
