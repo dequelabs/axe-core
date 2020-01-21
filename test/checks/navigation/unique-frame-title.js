@@ -65,11 +65,15 @@ describe('unique-frame-title', function() {
 			assert.isTrue(actual);
 			assert.hasAllKeys(checkContext._data, [
 				'name',
-				'parsedResource',
-				'resourceFrameTitle'
+				'urlProps',
+				'resourceTitle'
 			]);
 			assert.equal(checkContext._data.name, 'i am unique'.toLowerCase());
-			assert.equal(checkContext._data.parsedResource.pathname, 'page-one.html');
+			assert.equal(
+				checkContext._data.urlProps.pathname,
+				'/test/integration/rules/frame-title-unique/frames/'
+			);
+			assert.equal(checkContext._data.urlProps.filename, 'page-one.html');
 			done();
 		});
 	});
@@ -89,17 +93,18 @@ describe('unique-frame-title', function() {
 				assert.isTrue(actual);
 				assert.hasAllKeys(checkContext._data, [
 					'name',
-					'parsedResource',
-					'resourceFrameTitle'
+					'urlProps',
+					'resourceTitle'
 				]);
 				assert.equal(
 					checkContext._data.name,
 					'i am inside shadowdom'.toLowerCase()
 				);
 				assert.equal(
-					checkContext._data.parsedResource.pathname,
-					'page-one.html'
+					checkContext._data.urlProps.pathname,
+					'/test/integration/rules/frame-title-unique/frames/'
 				);
+				assert.equal(checkContext._data.urlProps.filename, 'page-one.html');
 				done();
 			});
 		}
