@@ -2,18 +2,15 @@
 <html lang="en">
 	<head>
 		<meta charset="utf8" />
-		<script id="check-phantomjs">
-			// phantomjs requires running in non-strict csp
-			if (!window.PHANTOMJS) {
-				var thisScript = document.getElementById('check-phantomjs');
-				var meta = document.createElement('meta');
-				meta.setAttribute('http-equiv', 'Content-Security-Policy');
-				meta.setAttribute(
-					'content',
-					"script-src 'nonce-4AEemGb0xJptoIGFP3Nd'; style-src 'nonce-4AEemGb0xJptoIGFP3Nd'"
-				);
-				document.head.appendChild(meta);
-			}
+		<script id="strict-csp">
+			var thisScript = document.getElementById('strict-csp');
+			var meta = document.createElement('meta');
+			meta.setAttribute('http-equiv', 'Content-Security-Policy');
+			meta.setAttribute(
+				'content',
+				"script-src 'nonce-4AEemGb0xJptoIGFP3Nd'; style-src 'nonce-4AEemGb0xJptoIGFP3Nd'"
+			);
+			document.head.appendChild(meta);
 		</script>
 		<link
 			nonce="4AEemGb0xJptoIGFP3Nd"
@@ -38,6 +35,7 @@
 			var assert = chai.assert;
 		</script>
 	</head>
+
 	<body>
 		<div id="mocha"></div>
 		<script nonce="4AEemGb0xJptoIGFP3Nd" src="/test/testutils.js"></script>

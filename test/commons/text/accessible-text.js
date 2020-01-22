@@ -2881,13 +2881,11 @@ describe('text.accessibleTextVirtual', function() {
 
 		// Skip from 128 - 138 as those are name description cases
 
-		// Note: PhantomJS did not detect `style .hidden` appended via innerHTML
-		// hence falling back to `display: none`
 		it('passes test 139', function() {
 			fixture.innerHTML =
-				// '<style>' +
-				// '  .hidden { display: none; }' +
-				// '</style>' +
+				'<style>' +
+				'  .hidden { display: none; }' +
+				'</style>' +
 				'<div id="test" role="link" tabindex="0">' +
 				'  <span aria-hidden="true"><i> Hello, </i></span>' +
 				'  <span>My</span> name is' +
@@ -2897,8 +2895,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </span>' +
 				'  <span>the weird.</span>' +
 				'  (QED)' +
-				// '  <span  class="hidden"><i><b>and don\'t you forget it.</b></i></span>' +
-				'  <span style="display:none;"><i><b>and don\'t you forget it.</b></i></span>' +
+				'  <span  class="hidden"><i><b>and don\'t you forget it.</b></i></span>' +
 				'  <table>' +
 				'    <tr>' +
 				'      <td>Where</td>' +
@@ -2920,13 +2917,11 @@ describe('text.accessibleTextVirtual', function() {
 			);
 		});
 
-		// Note: PhantomJS did not detect `style .hidden` appended via innerHTML
-		// hence falling back to `display: none`
 		it('passes test 140', function() {
 			fixture.innerHTML =
-				// '<style>' +
-				// '  .hidden { display: none; }' +
-				// '</style>' +
+				'<style>' +
+				'  .hidden { display: none; }' +
+				'</style>' +
 				'<input id="test" type="text" aria-labelledby="lblId" />' +
 				'<div id="lblId" >' +
 				'  <span aria-hidden="true"><i> Hello, </i></span>' +
@@ -2937,8 +2932,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  </span>' +
 				'  <span>the weird.</span>' +
 				'  (QED)' +
-				// '  <span class="hidden"><i><b>and don\'t you forget it.</b></i></span>' +
-				'  <span style="display:none;"><i><b>and don\'t you forget it.</b></i></span>' +
+				'  <span class="hidden"><i><b>and don\'t you forget it.</b></i></span>' +
 				'  <table>' +
 				'    <tr>' +
 				'      <td>Where</td>' +
@@ -3119,22 +3113,18 @@ describe('text.accessibleTextVirtual', function() {
 			assert.equal(accessibleText(target), 'This is a test.');
 		});
 
-		// Note: PhantomJS did not detect `style .hidden` appended via innerHTML
-		// hence falling back to `display: none`
 		it('passes test 153', function() {
 			fixture.innerHTML =
-				// '<style>' +
-				// '  .hidden { display: none; }' +
-				// '</style>' +
+				'<style>' +
+				'  .hidden { display: none; }' +
+				'</style>' +
 				'<input type="file" id="test" />' +
 				'<label for="test">' +
-				// '  <span class="hidden">1</span><span>2</span>' +
-				'  <span style="display:none">1</span><span>2</span>' +
+				'  <span class="hidden">1</span><span>2</span>' +
 				'  <span style="visibility: hidden;">3</span><span>4</span>' +
 				'  <span hidden>5</span><span>6</span>' +
 				'  <span aria-hidden="true">7</span><span>8</span>' +
-				// '  <span aria-hidden="false" class="hidden">9</span><span>10</span>' +
-				'  <span aria-hidden="false" style="display:none">9</span><span>10</span>' +
+				'  <span aria-hidden="false" class="hidden">9</span><span>10</span>' +
 				'</label>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');
@@ -3181,13 +3171,11 @@ describe('text.accessibleTextVirtual', function() {
 			assert.equal(accessibleText(target), 'Flash the screen 1 times.');
 		});
 
-		// Note: PhantomJS did not detect `style .hidden` appended via innerHTML
-		// hence falling back to `display: none`
 		it('passes test 156', function() {
 			fixture.innerHTML =
-				// '<style>' +
-				// '  .hidden { display: none; }' +
-				// '</style>' +
+				'<style>' +
+				'  .hidden { display: none; }' +
+				'</style>' +
 				'<div id="test" role="link" tabindex="0">' +
 				'  <span aria-hidden="true"><i> Hello, </i></span>' +
 				'  <span>My</span> name is' +
@@ -3195,8 +3183,7 @@ describe('text.accessibleTextVirtual', function() {
 				'  <span role="presentation" aria-label="Eli"><span aria-label="Garaventa">Zambino</span></span>' +
 				'  <span>the weird.</span>' +
 				'  (QED)' +
-				// '  <span class="hidden"><i><b>and don\'t you forget it.</b></i></span>' +
-				'  <span style="display:none"><i><b>and don\'t you forget it.</b></i></span>' +
+				'  <span class="hidden"><i><b>and don\'t you forget it.</b></i></span>' +
 				'</div>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#test');

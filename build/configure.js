@@ -6,7 +6,7 @@ var clone = require('clone');
 var dot = require('@deque/dot');
 var templates = require('./templates');
 var buildManual = require('./build-manual');
-var entities = new (require('html-entities')).AllHtmlEntities();
+var entities = new (require('html-entities').AllHtmlEntities)();
 var dotRegex = /\{\{.+?\}\}/g;
 
 var descriptionHeaders =

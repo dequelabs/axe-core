@@ -44,7 +44,7 @@ describe('focusable-not-tabbable', function() {
 		);
 	});
 
-	it('returns false when focusable SUMMARY element, that cannot be disabled', function() {
+	it('returns true when focusable SUMMARY element, that cannot be disabled', function() {
 		var params = checkSetup(
 			'<details id="target" aria-hidden="true"><summary>Some button</summary><p>Some details</p></details>'
 		);
@@ -53,7 +53,7 @@ describe('focusable-not-tabbable', function() {
 		assert.lengthOf(checkContext._relatedNodes, 1);
 		assert.deepEqual(
 			checkContext._relatedNodes,
-			Array.from(fixture.querySelectorAll('details'))
+			Array.from(fixture.querySelectorAll('summary'))
 		);
 	});
 

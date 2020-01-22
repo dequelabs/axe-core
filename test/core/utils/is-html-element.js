@@ -25,17 +25,15 @@ describe('axe.utils.isHtmlElement', function() {
 		assert.isFalse(axe.utils.isHtmlElement(node));
 	});
 
-	window.PHANTOMJS
-		? it.skip
-		: it('returns false if node has inherited svg namespace', function() {
-				var svgNameSpace = 'http://www.w3.org/2000/svg';
-				var node = document.createElementNS(svgNameSpace, 'svg');
-				var child = document.createElementNS(svgNameSpace, 'a');
-				child.setAttribute('href', '');
-				child.textContent = 'Child Node';
-				node.appendChild(child);
+	it('returns false if node has inherited svg namespace', function() {
+		var svgNameSpace = 'http://www.w3.org/2000/svg';
+		var node = document.createElementNS(svgNameSpace, 'svg');
+		var child = document.createElementNS(svgNameSpace, 'a');
+		child.setAttribute('href', '');
+		child.textContent = 'Child Node';
+		node.appendChild(child);
 
-				var childNode = node.querySelector('a');
-				assert.isFalse(axe.utils.isHtmlElement(childNode));
-		  });
+		var childNode = node.querySelector('a');
+		assert.isFalse(axe.utils.isHtmlElement(childNode));
+	});
 });
