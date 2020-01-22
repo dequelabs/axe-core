@@ -32,7 +32,7 @@ describe('focusable-modal-open', function() {
 			'<div id="target" aria-hidden="true">' +
 				'<button>Some button</button>' +
 				'</div>' +
-				'<dialog open>Modal</dialog>'
+				'<div role="dialog">Modal</div>'
 		);
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isUndefined(actual);
@@ -43,7 +43,7 @@ describe('focusable-modal-open', function() {
 			'<div id="target" aria-hidden="true">' +
 				'<button>Some button</button>' +
 				'</div>' +
-				'<dialog open>Modal</dialog>'
+				'<div role="dialog">Modal</div>'
 		);
 		check.evaluate.apply(checkContext, params);
 		assert.lengthOf(checkContext._relatedNodes, 1);

@@ -3,6 +3,8 @@ describe('dom.isModalOpen', function() {
 
 	var fixtureSetup = axe.testUtils.fixtureSetup;
 	var isModalOpen = axe.commons.dom.isModalOpen;
+	var dialogElSupport =
+		typeof document.createElement('dialog').open !== 'undefined';
 
 	afterEach(function() {
 		fixtureSetup('');
@@ -18,10 +20,13 @@ describe('dom.isModalOpen', function() {
 		assert.isTrue(isModalOpen());
 	});
 
-	it('returns true if there is a visible dialog element', function() {
-		fixtureSetup('<dialog open><div>Modal</div></dialog>');
-		assert.isTrue(isModalOpen());
-	});
+	(dialogElSupport ? it : xit)(
+		'returns true if there is a visible dialog element',
+		function() {
+			fixtureSetup('<dialog open><div>Modal</div></dialog>');
+			assert.isTrue(isModalOpen());
+		}
+	);
 
 	it('returns true if there is a visible absolutely positioned element with >= 75% width/height', function() {
 		fixtureSetup(
@@ -74,10 +79,13 @@ describe('dom.isModalOpen', function() {
 		assert.isUndefined(isModalOpen());
 	});
 
-	it('returns undefined if there is a hidden dialog element', function() {
-		fixtureSetup('<dialog><div>Modal</div></dialog>');
-		assert.isUndefined(isModalOpen());
-	});
+	(dialogElSupport ? it : xit)(
+		'returns undefined if there is a hidden dialog element',
+		function() {
+			fixtureSetup('<dialog><div>Modal</div></dialog>');
+			assert.isUndefined(isModalOpen());
+		}
+	);
 
 	it('returns undefined if there is a visible absolutely positioned element with < 75% width/height', function() {
 		fixtureSetup(
