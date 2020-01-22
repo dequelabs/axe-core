@@ -129,4 +129,15 @@ describe('focusable-disabled', function() {
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isFalse(actual);
 	});
+
+	it('returns undefined if a modal is open', function() {
+		var params = checkSetup(
+			'<div id="target" aria-hidden="true">' +
+				'<button>Some button</button>' +
+				'</div>' +
+				'<dialog open>Modal</dialog>'
+		);
+		var actual = check.evaluate.apply(checkContext, params);
+		assert.isUndefined(actual);
+	});
 });
