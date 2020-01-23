@@ -3,16 +3,24 @@ describe('invalidrole', function() {
 
 	var fixture = document.getElementById('fixture');
 	var queryFixture = axe.testUtils.queryFixture;
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function() {
 		fixture.innerHTML = '';
+		checkContext.reset();
 	});
 
 	it('should return true if applied to an empty role', function() {
 		var virtualNode = queryFixture('<div id="target" role="">Contents</div>');
 		assert.isTrue(
-			checks.invalidrole.evaluate(virtualNode.actualNode, null, virtualNode)
+			checks.invalidrole.evaluate.call(
+				checkContext,
+				virtualNode.actualNode,
+				null,
+				virtualNode
+			)
 		);
+		assert.deepEqual(checkContext._data, ['']);
 	});
 
 	it('should return true if applied to a nonsensical role', function() {
@@ -20,8 +28,14 @@ describe('invalidrole', function() {
 			'<div id="target" role="foo">Contents</div>'
 		);
 		assert.isTrue(
-			checks.invalidrole.evaluate(virtualNode.actualNode, null, virtualNode)
+			checks.invalidrole.evaluate.call(
+				checkContext,
+				virtualNode.actualNode,
+				null,
+				virtualNode
+			)
 		);
+		assert.deepEqual(checkContext._data, ['foo']);
 	});
 
 	it('should return false if applied to a concrete role', function() {
@@ -29,8 +43,14 @@ describe('invalidrole', function() {
 			'<div id="target" role="alert">Contents</div>'
 		);
 		assert.isFalse(
-			checks.invalidrole.evaluate(virtualNode.actualNode, null, virtualNode)
+			checks.invalidrole.evaluate.call(
+				checkContext,
+				virtualNode.actualNode,
+				null,
+				virtualNode
+			)
 		);
+		assert.isNull(checkContext._data);
 	});
 
 	it('should return false if applied to an abstract role', function() {
@@ -38,8 +58,14 @@ describe('invalidrole', function() {
 			'<div id="target" role="widget">Contents</div>'
 		);
 		assert.isFalse(
-			checks.invalidrole.evaluate(virtualNode.actualNode, null, virtualNode)
+			checks.invalidrole.evaluate.call(
+				checkContext,
+				virtualNode.actualNode,
+				null,
+				virtualNode
+			)
 		);
+		assert.isNull(checkContext._data);
 	});
 
 	it('should return false if applied to multiple valid roles', function() {
@@ -47,16 +73,28 @@ describe('invalidrole', function() {
 			'<div id="target" role="alert button">Contents</div>'
 		);
 		assert.isFalse(
-			checks.invalidrole.evaluate(virtualNode.actualNode, null, virtualNode)
+			checks.invalidrole.evaluate.call(
+				checkContext,
+				virtualNode.actualNode,
+				null,
+				virtualNode
+			)
 		);
+		assert.isNull(checkContext._data);
 	});
 
 	it('should return true if applied to at least one nonsensical role', function() {
 		var virtualNode = queryFixture(
-			'<div id="target" role="alert button foo">Contents</div>'
+			'<div id="target" role="alert button foo bar">Contents</div>'
 		);
 		assert.isTrue(
-			checks.invalidrole.evaluate(virtualNode.actualNode, null, virtualNode)
+			checks.invalidrole.evaluate.call(
+				checkContext,
+				virtualNode.actualNode,
+				null,
+				virtualNode
+			)
 		);
+		assert.deepEqual(checkContext._data, ['foo', 'bar']);
 	});
 });
