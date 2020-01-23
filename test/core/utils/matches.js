@@ -159,7 +159,7 @@ describe('utils.matches', function() {
 			var virtualNode = queryFixture(
 				'<span id="target" class="foo bar baz"></span>'
 			);
-			assert.isFalse(matches(virtualNode, 'div, p, span'));
+			assert.isTrue(matches(virtualNode, 'div, p, span'));
 		});
 	});
 
