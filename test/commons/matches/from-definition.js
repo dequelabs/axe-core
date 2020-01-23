@@ -183,6 +183,83 @@ describe('matches.fromDefinition', function() {
 		});
 	});
 
+	describe('with SerialVirtualNode', function() {
+		it('matches using a string', function() {
+			var serialNode = new axe.SerialVirtualNode({
+				nodeName: 'div',
+				attributes: {
+					id: 'target'
+				}
+			});
+			assert.isTrue(fromDefinition(serialNode, 'div'));
+			assert.isFalse(fromDefinition(serialNode, 'span'));
+		});
+
+		it('matches nodeName', function() {
+			var serialNode = new axe.SerialVirtualNode({
+				nodeName: 'div',
+				attributes: {
+					id: 'target'
+				}
+			});
+			assert.isTrue(
+				fromDefinition(serialNode, {
+					nodeName: 'div'
+				})
+			);
+			assert.isFalse(
+				fromDefinition(serialNode, {
+					nodeName: 'span'
+				})
+			);
+		});
+
+		it('matches attributes', function() {
+			var serialNode = new axe.SerialVirtualNode({
+				nodeName: 'div',
+				attributes: {
+					id: 'target',
+					foo: 'bar'
+				}
+			});
+			assert.isTrue(
+				fromDefinition(serialNode, {
+					attributes: {
+						foo: 'bar'
+					}
+				})
+			);
+			assert.isFalse(
+				fromDefinition(serialNode, {
+					attributes: {
+						foo: 'baz'
+					}
+				})
+			);
+		});
+
+		it('matches properties', function() {
+			var serialNode = new axe.SerialVirtualNode({
+				nodeName: 'input',
+				id: 'target'
+			});
+			assert.isTrue(
+				fromDefinition(serialNode, {
+					properties: {
+						id: 'target'
+					}
+				})
+			);
+			assert.isFalse(
+				fromDefinition(serialNode, {
+					properties: {
+						id: 'bar'
+					}
+				})
+			);
+		});
+	});
+
 	describe('with a `condition` property', function() {
 		it('calls condition and uses its return value as a matcher', function() {
 			var virtualNode = queryFixture('<div id="target">foo</div>');

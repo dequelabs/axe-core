@@ -51,12 +51,22 @@ describe('matches.nodeName', function() {
 
 	it('is case insensitive for HTML, but not for XHTML', function() {
 		var virtualNode = queryFixture('<H1 id="target">foo</H1>');
-		virtualNode._isXHTML = true;
-		assert.isFalse(matchNodeName(virtualNode, 'h1'));
+		virtualNode._isXHTML = false;
+		assert.isTrue(matchNodeName(virtualNode, 'h1'));
 	});
 
 	it('works with actual nodes', function() {
 		var virtualNode = queryFixture('<h1 id="target">foo</h1>');
 		assert.isTrue(matchNodeName(virtualNode.actualNode, 'h1'));
+	});
+
+	it('works with SerialVirtualNode', function() {
+		var serialNode = new axe.SerialVirtualNode({
+			nodeName: 'h1',
+			attributes: {
+				id: 'target'
+			}
+		});
+		assert.isTrue(matchNodeName(serialNode, 'h1'));
 	});
 });

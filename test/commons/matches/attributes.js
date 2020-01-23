@@ -58,4 +58,23 @@ describe('matches.attributes', function() {
 			})
 		);
 	});
+
+	it('works with SerialVirtualNode', function() {
+		var serialNode = new axe.SerialVirtualNode({
+			nodeName: 'span',
+			attributes: {
+				id: 'target',
+				foo: 'baz',
+				bar: 'foo',
+				baz: 'bar'
+			}
+		});
+		assert.isTrue(
+			attributes(serialNode, {
+				foo: 'baz',
+				bar: 'foo',
+				baz: 'bar'
+			})
+		);
+	});
 });

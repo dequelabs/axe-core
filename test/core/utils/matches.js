@@ -154,6 +154,13 @@ describe('utils.matches', function() {
 			);
 			assert.isFalse(matches(virtualNode, 'span.foo[id="target"]:not(span)'));
 		});
+
+		it('returns true if a comma-separated list of selectors match', function() {
+			var virtualNode = queryFixture(
+				'<span id="target" class="foo bar baz"></span>'
+			);
+			assert.isFalse(matches(virtualNode, 'div, p, span'));
+		});
 	});
 
 	describe('combinator', function() {
