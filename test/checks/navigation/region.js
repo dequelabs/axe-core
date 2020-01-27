@@ -255,6 +255,27 @@ describe('region', function() {
 		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
 	});
 
+	it('allows content in implicit aria-live role alert', function() {
+		var checkArgs = checkSetup(
+			'<div role="alert" id="target"><p>This is random content.</p></div>'
+		);
+		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+	});
+
+	it('allows content in implicit aria-live role log', function() {
+		var checkArgs = checkSetup(
+			'<div role="log" id="target"><p>This is random content.</p></div>'
+		);
+		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+	});
+
+	it('allows content in implicit aria-live role status', function() {
+		var checkArgs = checkSetup(
+			'<div role="status" id="target"><p>This is random content.</p></div>'
+		);
+		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+	});
+
 	it('treats role=dialog elements as regions', function() {
 		var checkArgs = checkSetup(
 			'<div role="dialog" id="target"><p>This is random content.</p></div>'
