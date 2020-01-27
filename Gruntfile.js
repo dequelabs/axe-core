@@ -207,6 +207,7 @@ module.exports = function(grunt) {
 					compress: false,
 					beautify: {
 						beautify: true,
+						ascii_only: true,
 						indent_level: 2,
 						braces: true,
 						quote_style: 1
