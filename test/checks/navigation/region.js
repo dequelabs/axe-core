@@ -1,4 +1,4 @@
-describe.only('region', function() {
+describe('region', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
