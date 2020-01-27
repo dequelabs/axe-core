@@ -241,6 +241,20 @@ describe('region', function() {
 		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
 	});
 
+	it('allows content in aria-live=assertive with explicit role set', function() {
+		var checkArgs = checkSetup(
+			'<div aria-live="assertive" role="alert" id="target"><p>This is random content.</p></div>'
+		);
+		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+	});
+
+	it('allows content in aria-live=polite with explicit role set', function() {
+		var checkArgs = checkSetup(
+			'<div aria-live="polite" role="status" id="target"><p>This is random content.</p></div>'
+		);
+		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+	});
+
 	it('treats role=dialog elements as regions', function() {
 		var checkArgs = checkSetup(
 			'<div role="dialog" id="target"><p>This is random content.</p></div>'
