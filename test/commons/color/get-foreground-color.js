@@ -22,8 +22,10 @@ describe('color.getForegroundColor', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
-		assert.isObject(actual);
 		var expected = new axe.commons.color.Color(32, 32, 64, 1);
+		if (actual === null) {
+			assert.equal(axe.commons.color.incompleteData.get('fgColor'), 'foo');
+		}
 		assert.closeTo(actual.red, expected.red, 0.8);
 		assert.closeTo(actual.green, expected.green, 0.8);
 		assert.closeTo(actual.blue, expected.blue, 0.8);
@@ -40,8 +42,10 @@ describe('color.getForegroundColor', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
-		assert.isObject(actual);
 		var expected = new axe.commons.color.Color(32, 32, 64, 1);
+		if (actual === null) {
+			assert.equal(axe.commons.color.incompleteData.get('fgColor'), 'foo');
+		}
 		assert.equal(actual.red, expected.red);
 		assert.equal(actual.green, expected.green);
 		assert.equal(actual.blue, expected.blue);
@@ -58,8 +62,10 @@ describe('color.getForegroundColor', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
-		assert.isObject(actual);
 		var expected = new axe.commons.color.Color(119.5, 119.5, 119.5, 1);
+		if (actual === null) {
+			assert.equal(axe.commons.color.incompleteData.get('fgColor'), 'foo');
+		}
 		assert.closeTo(actual.red, expected.red, 0.8);
 		assert.closeTo(actual.green, expected.green, 0.8);
 		assert.closeTo(actual.blue, expected.blue, 0.8);
@@ -77,8 +83,10 @@ describe('color.getForegroundColor', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
-		assert.isObject(actual);
 		var expected = new axe.commons.color.Color(119.5, 119.5, 119.5, 1);
+		if (actual === null) {
+			assert.equal(axe.commons.color.incompleteData.get('fgColor'), 'foo');
+		}
 		assert.closeTo(actual.red, expected.red, 0.8);
 		assert.closeTo(actual.green, expected.green, 0.8);
 		assert.closeTo(actual.blue, expected.blue, 0.8);
