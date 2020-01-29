@@ -495,9 +495,9 @@ describe('dom.getElementStack', function() {
 		it('should return array of client text rects', function() {
 			fixture.innerHTML =
 				'<main id="1">' +
-				'<span id="target">' +
+				'<div id="target">' +
 				'<span id="2">Hello</span><br/>World' +
-				'</span>' +
+				'</div>' +
 				'</main>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
@@ -508,10 +508,10 @@ describe('dom.getElementStack', function() {
 		it('should ignore newline characters', function() {
 			fixture.innerHTML =
 				'<main id="1">' +
-				'<span id="target">' +
+				'<div id="target">' +
 				'<span id="2">Hello</span><br/>\n' +
 				'World' +
-				'</span>' +
+				'</div>' +
 				'</main>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');

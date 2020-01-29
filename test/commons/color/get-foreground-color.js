@@ -14,8 +14,8 @@ describe('color.getForegroundColor', function() {
 
 	it('should return the blended color if it has alpha set', function() {
 		fixture.innerHTML =
-			'<div style="height: 40px; width: 30px; background-color: #800000;">' +
-			'<div id="target" style="height: 20px; width: 15px; color: rgba(0, 0, 128, 0.5);' +
+			'<div style="height: 40px; background-color: #800000;">' +
+			'<div id="target" style="height: 40px; color: rgba(0, 0, 128, 0.5);' +
 			' background-color: rgba(0, 128, 0, 0.5);">' +
 			'This is my text' +
 			'</div></div>';
@@ -23,9 +23,6 @@ describe('color.getForegroundColor', function() {
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		var expected = new axe.commons.color.Color(32, 32, 64, 1);
-		if (actual === null) {
-			assert.equal(axe.commons.color.incompleteData.get('fgColor'), 'foo');
-		}
 		assert.closeTo(actual.red, expected.red, 0.8);
 		assert.closeTo(actual.green, expected.green, 0.8);
 		assert.closeTo(actual.blue, expected.blue, 0.8);
@@ -34,8 +31,8 @@ describe('color.getForegroundColor', function() {
 
 	it('should return the blended color if it has opacity set', function() {
 		fixture.innerHTML =
-			'<div style="height: 40px; width: 30px; background-color: #800000;">' +
-			'<div id="target" style="height: 20px; width: 15px; color: #000080;' +
+			'<div style="height: 40px; background-color: #800000;">' +
+			'<div id="target" style="height: 40px; color: #000080;' +
 			' background-color: green; opacity: 0.5;">' +
 			'This is my text' +
 			'</div></div>';
@@ -43,9 +40,6 @@ describe('color.getForegroundColor', function() {
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		var expected = new axe.commons.color.Color(32, 32, 64, 1);
-		if (actual === null) {
-			assert.equal(axe.commons.color.incompleteData.get('fgColor'), 'foo');
-		}
 		assert.equal(actual.red, expected.red);
 		assert.equal(actual.green, expected.green);
 		assert.equal(actual.blue, expected.blue);
@@ -55,17 +49,14 @@ describe('color.getForegroundColor', function() {
 	it('should take into account parent opacity tree', function() {
 		fixture.innerHTML =
 			'<div style="background-color: #fafafa">' +
-			'<div style="height: 40px; width: 30px; opacity: 0.6">' +
-			'<div id="target" style="height: 20px; width: 15px; color: rgba(0, 0, 0, 0.87);">' +
+			'<div style="height: 40px; opacity: 0.6">' +
+			'<div id="target" style="height: 40px; color: rgba(0, 0, 0, 0.87);">' +
 			'This is my text' +
 			'</div></div></div>';
 		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		var expected = new axe.commons.color.Color(119.5, 119.5, 119.5, 1);
-		if (actual === null) {
-			assert.equal(axe.commons.color.incompleteData.get('fgColor'), 'foo');
-		}
 		assert.closeTo(actual.red, expected.red, 0.8);
 		assert.closeTo(actual.green, expected.green, 0.8);
 		assert.closeTo(actual.blue, expected.blue, 0.8);
@@ -75,18 +66,15 @@ describe('color.getForegroundColor', function() {
 	it('should take into account entire parent opacity tree', function() {
 		fixture.innerHTML =
 			'<div style="background-color: #fafafa">' +
-			'<div style="height: 40px; width: 30px; opacity: 0.75">' +
-			'<div style="height: 40px; width: 30px; opacity: 0.8">' +
-			'<div id="target" style="height: 20px; width: 15px; color: rgba(0, 0, 0, 0.87);">' +
+			'<div style="height: 40px; opacity: 0.75">' +
+			'<div style="height: 40px; opacity: 0.8">' +
+			'<div id="target" style="height: 40px; color: rgba(0, 0, 0, 0.87);">' +
 			'This is my text' +
 			'</div></div></div></div>';
 		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		var expected = new axe.commons.color.Color(119.5, 119.5, 119.5, 1);
-		if (actual === null) {
-			assert.equal(axe.commons.color.incompleteData.get('fgColor'), 'foo');
-		}
 		assert.closeTo(actual.red, expected.red, 0.8);
 		assert.closeTo(actual.green, expected.green, 0.8);
 		assert.closeTo(actual.blue, expected.blue, 0.8);
