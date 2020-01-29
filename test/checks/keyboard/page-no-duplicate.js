@@ -50,6 +50,15 @@ describe('page-no-duplicate', function() {
 			assert.isTrue(check.evaluate.apply(checkContext, params));
 		});
 
+		it('should return true if there is more than one element matching the selector but only one is visible', function() {
+			var options = { selector: 'main' };
+			var params = checkSetup(
+				'<div><main id="target"></main><main id="dup" style="display:none;"></main></div>',
+				options
+			);
+			assert.isTrue(check.evaluate.apply(checkContext, params));
+		});
+
 		(shadowSupported ? it : xit)(
 			'should return false if there is a second matching element inside the shadow dom',
 			function() {
