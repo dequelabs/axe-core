@@ -35,14 +35,7 @@ describe('dom.isModalOpen', function() {
 		assert.isTrue(isModalOpen());
 	});
 
-	it('returns true if there is a visible absolutely positioned element with >= 75% width/height', function() {
-		fixtureSetup(
-			'<div style="position: absolute; top: 0; bottom: 0; left: 0; right: 0">Modal</div>'
-		);
-		assert.isTrue(isModalOpen());
-	});
-
-	it('returns true if there is a visible absolutely positioned element with >= 75% width/height and modal content', function() {
+	it('returns true if there is a visible absolutely positioned element with >= 75% width/height and is not the top most element', function() {
 		fixtureSetup(
 			'<div style="position: fixed; top: 0; bottom: 0; width: 100%; height: 100%; z-index: 99999; background: rgba(0,0,0,0.5);">' +
 				'<div style="display: flex; align-items: center; justify-content: center; height: 100%;">' +
@@ -74,7 +67,7 @@ describe('dom.isModalOpen', function() {
 		assert.isUndefined(isModalOpen());
 	});
 
-	it('returns undefined if there is a hidden element with aria-modal=undefined', function() {
+	it('returns undefined if there is a hidden element with aria-modal=true', function() {
 		fixtureSetup('<div aria-modal="true" style="display: none">Modal</div>');
 		assert.isUndefined(isModalOpen());
 	});
