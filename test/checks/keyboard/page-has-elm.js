@@ -45,6 +45,15 @@ describe('page-has-*', function() {
 			var params = checkSetup('<div id="target"><b>No role</b></div>', options);
 			assert.isFalse(evaluate.apply(checkContext, params));
 		});
+
+		it('does not find hidden elements', function() {
+			var options = { selector: 'b' };
+			var params = checkSetup(
+				'<div id="target"><b style="display: none;">No role</b></div>',
+				options
+			);
+			assert.isFalse(evaluate.apply(checkContext, params));
+		});
 	});
 
 	describe('after', function() {
