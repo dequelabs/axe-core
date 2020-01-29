@@ -134,7 +134,7 @@ describe('focusable-not-tabbable', function() {
 		assert.isTrue(actual);
 	});
 
-	it('returns undefined if there is a focusable element and modal is open', function() {
+	it('returns true if there is a focusable element and modal is open', function() {
 		var params = checkSetup(
 			'<div id="target" aria-hidden="true">' +
 				'<a href="">foo</a>' +
@@ -142,6 +142,6 @@ describe('focusable-not-tabbable', function() {
 				'<div role="dialog">Modal</div>'
 		);
 		var actual = check.evaluate.apply(checkContext, params);
-		assert.isUndefined(actual);
+		assert.isTrue(actual);
 	});
 });

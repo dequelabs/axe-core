@@ -130,7 +130,7 @@ describe('focusable-disabled', function() {
 		assert.isFalse(actual);
 	});
 
-	it('returns undefined if there is a focusable element and modal is open', function() {
+	it('returns true if there is a focusable element and modal is open', function() {
 		var params = checkSetup(
 			'<div id="target" aria-hidden="true">' +
 				'<button>Some button</button>' +
@@ -138,6 +138,6 @@ describe('focusable-disabled', function() {
 				'<div role="dialog">Modal</div>'
 		);
 		var actual = check.evaluate.apply(checkContext, params);
-		assert.isUndefined(actual);
+		assert.isTrue(actual);
 	});
 });
