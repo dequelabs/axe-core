@@ -160,7 +160,7 @@ describe('text.hasUnicode', function() {
 
 describe('text.removeUnicode', function() {
 	it('returns string by removing non BMP unicode ', function() {
-		var actual = axe.commons.text.removeUnicode('₨20000', {
+		var actual = axe.commons.text.removeUnicode('₨₨20000₨₨', {
 			nonBmp: true
 		});
 		assert.equal(actual, '20000');

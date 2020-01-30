@@ -328,16 +328,19 @@ describe('color-contrast', function() {
 		assert.equal(checkContext._data.messageKey, 'shortTextContent');
 	});
 
-	it('should return undefined when the text only contains nonBmp unicode by default', function() {
+	it('should return undefined when the text only contains nonBmp unicode when the ignoreUnicode option is true', function() {
 		var params = checkSetup(
 			'<div style="background-color: #FFF;">' +
-				'<div style="color:#DDD;" id="target">◓</div>' +
-				'</div>'
+				'<div style="color:#DDD;" id="target">&#x20A0; &#x20A1; &#x20A2; &#x20A3;</div>' +
+				'</div>',
+			{
+				ignoreUnicode: true
+			}
 		);
 
 		var actual = contrastEvaluate.apply(checkContext, params);
 		assert.isUndefined(actual);
-		assert.equal(checkContext._data.messageKey, 'shortTextContent');
+		assert.equal(checkContext._data.messageKey, 'nonBmp');
 	});
 
 	it('should return true when the text only contains nonBmp unicode when the ignoreUnicode option is false, and there is sufficient contrast', function() {
