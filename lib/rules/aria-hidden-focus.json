@@ -8,7 +8,11 @@
 		"description": "Ensures aria-hidden elements do not contain focusable elements",
 		"help": "ARIA hidden element must not contain focusable elements"
 	},
-	"all": ["focusable-disabled", "focusable-not-tabbable"],
+	"all": [
+		"focusable-modal-open",
+		"focusable-disabled",
+		"focusable-not-tabbable"
+	],
 	"any": [],
 	"none": []
 }
