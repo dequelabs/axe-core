@@ -625,218 +625,218 @@
 			"fail": {
 				"default": "L'item de liste n'a pas d'élément <ul> ou <ol> parent",
 				"roleNotValid": "L'item de liste n'a pas d'élément <ul> ou <ol> parent sans un role ou un role=\"list\""
-			},
-			"only-dlitems": {
-				"pass": "L’élément de liste n’a que des descendants directs qui sont autorisés dans les éléments <dt> ou <dd>",
-				"fail": "L’élément de liste a des descendants directs qui ne sont pas autorisés dans les éléments <dt> ou <dd>"
-			},
-			"only-listitems": {
-				"pass": "L’élément de liste n’a que des descendants directs qui sont autorisés dans les éléments <li>",
-				"fail": {
-					"default": "L’élément de liste comporte des descendants directs qui ne sont pas autorisés à l'intérieur de l'élément <li>",
-					"roleNotValid": "L’élément de liste comporte des descendants directs avec un rôle qui n'est pas autorisé: ${data.roles}"
-				}
-			},
-			"structured-dlitems": {
-				"pass": "S’il n’est pas vide, l’élément contient au moins un élément <dt> et un élément <dd>",
-				"fail": "S’il n’est pas vide, l’élément doit contenir au moins un élément <dt> et un élément <dd>"
-			},
-			"caption": {
-				"pass": "L’élément multimédia a une piste de sous-titres",
-				"incomplete": "Aucune piste de sous-titres n’a pu être trouvée pour cet élément"
-			},
-			"description": {
-				"pass": "L’élément multimédia a une piste d’audiodescription",
-				"incomplete": "Aucune piste d’audiodescription n’a pu être trouvée pour cet élément"
-			},
-			"frame-tested": {
-				"pass": "L’iframe a été testée avec axe-core",
-				"fail": "L’iframe n’a pu être testée avec axe-core",
-				"incomplete": "L’iframe doit encore être testée avec axe-core"
-			},
-			"css-orientation-lock": {
-				"pass": "L'utilisation de l'écran est indépendant de l'orientation et n'est pas limitée à un mode d'affichage donné",
-				"fail": "L'utilisation de l'écran est limitée à une orientation donnée par CSS, rendant l'affichage inutilisable",
-				"incomplete": "Le verouillage de l'orientation d'affichage par CSS ne peut être déterminé"
-			},
-			"meta-viewport-large": {
-				"pass": "La balise <meta> ne limite pas l’agrandissement sur les appareils mobiles",
-				"fail": "La balise <meta> limite l’agrandissement sur les appareils mobiles"
-			},
-			"meta-viewport": {
-				"pass": "La balise <meta> n’empêche pas l’agrandissement sur les appareils mobiles",
-				"fail": "La balise <meta> empêche l’agrandissement sur les appareils mobiles"
-			},
-			"header-present": {
-				"pass": "La page a un entête",
-				"fail": "La page n’a pas d’entête"
-			},
-			"heading-order": {
-				"pass": "Hiérarchie entre les titres valide",
-				"fail": "Hiérarchie entre les titres invalide"
-			},
-			"internal-link-present": {
-				"pass": "Lien d’évitement valide trouvé",
-				"fail": "Aucun lien d’évitement valide trouvé"
-			},
-			"landmark": {
-				"pass": "La page a une région",
-				"fail": "La page n’a pas de région"
-			},
-			"meta-refresh": {
-				"pass": "Aucune balise <meta> ne rafraîchit immédiatement la page",
-				"fail": "La balise <meta> force le rafraîchissement minuté de la page"
-			},
-			"p-as-heading": {
-				"pass": "Les éléments <p> ne sont pas stylés comme des titres",
-				"fail": "Des titres doivent être utilisés au lieu de styler des éléments <p>"
-			},
-			"region": {
-				"pass": "Contenu imbriqué dans une région ARIA",
-				"fail": "Contenu non imbriqué dans une région ARIA"
-			},
-			"skip-link": {
-				"pass": "La cible du lien d’évitement existe",
-				"incomplete": "La cible du lien d’évitement devrait devenir visible lors de l’activation",
-				"fail": "Lien d’évitement sans cible"
-			},
-			"unique-frame-title": {
-				"pass": "L’attribut title de l’élément est unique",
-				"fail": "L’attribut title de l’élément n’est pas unique"
-			},
-			"duplicate-id-active": {
-				"pass": "Le document ne comporte aucun élément actif partageant la même valeur d'attribut id",
-				"fail": "Le document comporte ou un plusieurs éléments actifs partageant la même valeur d'attribut id: ${data}"
-			},
-			"duplicate-id-aria": {
-				"pass": "Le document ne comporte aucun élément référencés par ARIA ou étiquettes partageant la même valeur d'attribut id",
-				"fail": "Le document comporte un ou plusieurs éléments référencés par ARIA partageant la même valeur d'attribut id: ${data}"
-			},
-			"duplicate-id": {
-				"pass": "Le document n’a pas d’éléments qui partagent le même attribut id",
-				"fail": "Le document a plusieurs éléments avec le même attribut id : {{=it.data}}"
-			},
-			"aria-label": {
-				"pass": "L’attribut aria-label existe et n’est pas vide",
-				"fail": "L’attribut aria-label n’existe pas ou est vide"
-			},
-			"aria-labelledby": {
-				"pass": "L’attribut aria-labelledby existe et fait référence à des éléments visibles par les lecteurs d’écran",
-				"fail": "L’attribut aria-labelledby n’existe pas, fait référence à des éléments qui n’existent pas ou à des éléments vides ou non visibles"
-			},
-			"avoid-inline-spacing": {
-				"pass": "Aucun style inline affectant l'espacement du texte avec '!important' n'a été spécifié",
-				"fail": {
-					"singular": "Retirer '!important' du style inline ${data.values}, car le remplacement n'est pas pris en charge par la plupart des navigateurs",
-					"plural": "Retirer '!important' des styles inline ${data.values}, car le remplacement n'est pas pris en charge par la plupart des navigateurs"
-				}
-			},
-			"button-has-visible-text": {
-				"pass": "L’élément a un contenu textuel visible par les lecteurs d’écran",
-				"fail": "L’élément n’a aucun contenu textuel visible par les lecteurs d’écran"
-			},
-			"doc-has-title": {
-				"pass": "Le document a un élément <title> non vide",
-				"fail": "Le document n’a pas d’élément <title> non vide"
-			},
-			"exists": {
-				"pass": "L’élément n’existe pas",
-				"incomplete": "Element exists"
-			},
-			"has-alt": {
-				"pass": "L’élément a un attribut alt",
-				"fail": "L’élément n’a pas d’attribut alt"
-			},
-			"has-visible-text": {
-				"pass": "L’élément a un contenu textuel visible par les lecteurs d’écran",
-				"fail": "L’élément n’a aucun contenu textuel visible par les lecteurs d’écran"
-			},
-			"is-on-screen": {
-				"pass": "L’élément n’est pas visible",
-				"fail": "L’élément est visible"
-			},
-			"non-empty-alt": {
-				"pass": "L’élément a un attribut alt non vide",
-				"fail": "L’élément n’a pas d'attribut alt ou l’attribut alt est vide"
-			},
-			"non-empty-if-present": {
-				"pass": {
-					"default": "L'élément n'a pas d'attribut value",
-					"has-label": "L'élément a un attribut value non-vide"
-				},
-				"fail": "L’élément a un attribut value, et cet attribut est vide"
-			},
-			"non-empty-title": {
-				"pass": "L’élément a un attribut title",
-				"fail": "L’élément n’a pas d’attribut title ou l’attribut title est vide."
-			},
-			"non-empty-value": {
-				"pass": "L’élément a un attribut value non vide",
-				"fail": "L’élément n’a pas d’attribut value, ou a un attribut value vide"
-			},
-			"role-none": {
-				"pass": "La sémantique par défaut de l’élément est annulée avec role=\"none\"",
-				"fail": "La sémantique par défaut de l’élément n’est pas annulée avec role=\"none\""
-			},
-			"role-presentation": {
-				"pass": "La sémantique par défaut de l’élément est annulée avec role=\"presentation\"",
-				"fail": "La sémantique par défaut de l’élément n’est pas annulée avec role=\"presentation\""
-			},
-			"caption-faked": {
-				"pass": "La première ligne d’un tableau n’est pas utilisée en guise de légende",
-				"fail": "La première ligne d’un tableau devrait être un caption et non des cellules de tableau"
-			},
-			"has-caption": {
-				"pass": "Le tableau de présentation n’utilise pas d’élément <caption>",
-				"fail": "Le tableau de présentation utilise un élément <caption>"
-			},
-			"has-summary": {
-				"pass": "Le tableau de présentation n’utilise pas d’attribut summary",
-				"fail": "Le tableau de présentation utilise un attribut summary"
-			},
-			"has-th": {
-				"pass": "Le tableau de présentation n’utilise pas d’éléments <th>",
-				"fail": "Le tableau de présentation utilise des éléments <th>"
-			},
-			"html5-scope": {
-				"pass": "L’attribut scope est utilisé uniquement sur des cellules d’entête de tableau",
-				"fail": "En HTML 5, l’attribut scope ne peut être utilisé que sur des cellules d’entête de tableau"
-			},
-			"same-caption-summary": {
-				"pass": "Les contenus de l’attribut summary et de <caption> ne sont pas identiques",
-				"fail": "Les contenus de l’attribut summary et de <caption> sont identiques"
-			},
-			"scope-value": {
-				"pass": "L’attribut scope est utilisé correctement",
-				"fail": "La valeur de l’attribut scope ne peut être que 'row' ou 'col'"
-			},
-			"td-has-header": {
-				"pass": "Toutes les cellules de données non vides ont un entête de tableau",
-				"fail": "Certaines cellules de données non vides n’ont pas d’entête de tableau"
-			},
-			"td-headers-attr": {
-				"pass": "L’attribut headers est utilisé exclusivement pour faire référence à d’autres cellules dans le tableau",
-				"fail": "L’attribut headers n’est pas utilisé exclusivement pour faire référence à d’autres cellules dans le tableau"
-			},
-			"th-has-data-cells": {
-				"pass": "Toutes les cellules d’entête de tableau font référence à des cellules de données",
-				"fail": "Toutes les cellules d’entête de tableau ne font pas référence à des cellules de données",
-				"incomplete": "Les cellules de données sont absentes ou vides"
-			},
-			"hidden-content": {
-				"pass": "Tout le contenu de la page a été analysé.",
-				"fail": "Il y a eu des problèmes pour analyser le contenu de cette page.",
-				"incomplete": "Il y a du contenu caché sur la page qui n’a pas été analysé. Vous allez devoir modifier l’affichage de ce contenu afin de l’analyser."
 			}
 		},
-		"failureSummaries": {
-			"any": {
-				"failureMessage": "Corriger l’un des éléments suivants : {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
-			},
-			"none": {
-				"failureMessage": "Corriger tous les éléments suivants : {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+		"only-dlitems": {
+			"pass": "L’élément de liste n’a que des descendants directs qui sont autorisés dans les éléments <dt> ou <dd>",
+			"fail": "L’élément de liste a des descendants directs qui ne sont pas autorisés dans les éléments <dt> ou <dd>"
+		},
+		"only-listitems": {
+			"pass": "L’élément de liste n’a que des descendants directs qui sont autorisés dans les éléments <li>",
+			"fail": {
+				"default": "L’élément de liste comporte des descendants directs qui ne sont pas autorisés à l'intérieur de l'élément <li>",
+				"roleNotValid": "L’élément de liste comporte des descendants directs avec un rôle qui n'est pas autorisé: ${data.roles}"
 			}
 		},
-		"incompleteFallbackMessage": "axee n'a pu en déterminr la raison. Il est temps de sortir l'inspecteur d'éléments!"
-	}
+		"structured-dlitems": {
+			"pass": "S’il n’est pas vide, l’élément contient au moins un élément <dt> et un élément <dd>",
+			"fail": "S’il n’est pas vide, l’élément doit contenir au moins un élément <dt> et un élément <dd>"
+		},
+		"caption": {
+			"pass": "L’élément multimédia a une piste de sous-titres",
+			"incomplete": "Aucune piste de sous-titres n’a pu être trouvée pour cet élément"
+		},
+		"description": {
+			"pass": "L’élément multimédia a une piste d’audiodescription",
+			"incomplete": "Aucune piste d’audiodescription n’a pu être trouvée pour cet élément"
+		},
+		"frame-tested": {
+			"pass": "L’iframe a été testée avec axe-core",
+			"fail": "L’iframe n’a pu être testée avec axe-core",
+			"incomplete": "L’iframe doit encore être testée avec axe-core"
+		},
+		"css-orientation-lock": {
+			"pass": "L'utilisation de l'écran est indépendant de l'orientation et n'est pas limitée à un mode d'affichage donné",
+			"fail": "L'utilisation de l'écran est limitée à une orientation donnée par CSS, rendant l'affichage inutilisable",
+			"incomplete": "Le verouillage de l'orientation d'affichage par CSS ne peut être déterminé"
+		},
+		"meta-viewport-large": {
+			"pass": "La balise <meta> ne limite pas l’agrandissement sur les appareils mobiles",
+			"fail": "La balise <meta> limite l’agrandissement sur les appareils mobiles"
+		},
+		"meta-viewport": {
+			"pass": "La balise <meta> n’empêche pas l’agrandissement sur les appareils mobiles",
+			"fail": "La balise <meta> empêche l’agrandissement sur les appareils mobiles"
+		},
+		"header-present": {
+			"pass": "La page a un entête",
+			"fail": "La page n’a pas d’entête"
+		},
+		"heading-order": {
+			"pass": "Hiérarchie entre les titres valide",
+			"fail": "Hiérarchie entre les titres invalide"
+		},
+		"internal-link-present": {
+			"pass": "Lien d’évitement valide trouvé",
+			"fail": "Aucun lien d’évitement valide trouvé"
+		},
+		"landmark": {
+			"pass": "La page a une région",
+			"fail": "La page n’a pas de région"
+		},
+		"meta-refresh": {
+			"pass": "Aucune balise <meta> ne rafraîchit immédiatement la page",
+			"fail": "La balise <meta> force le rafraîchissement minuté de la page"
+		},
+		"p-as-heading": {
+			"pass": "Les éléments <p> ne sont pas stylés comme des titres",
+			"fail": "Des titres doivent être utilisés au lieu de styler des éléments <p>"
+		},
+		"region": {
+			"pass": "Contenu imbriqué dans une région ARIA",
+			"fail": "Contenu non imbriqué dans une région ARIA"
+		},
+		"skip-link": {
+			"pass": "La cible du lien d’évitement existe",
+			"incomplete": "La cible du lien d’évitement devrait devenir visible lors de l’activation",
+			"fail": "Lien d’évitement sans cible"
+		},
+		"unique-frame-title": {
+			"pass": "L’attribut title de l’élément est unique",
+			"fail": "L’attribut title de l’élément n’est pas unique"
+		},
+		"duplicate-id-active": {
+			"pass": "Le document ne comporte aucun élément actif partageant la même valeur d'attribut id",
+			"fail": "Le document comporte ou un plusieurs éléments actifs partageant la même valeur d'attribut id: ${data}"
+		},
+		"duplicate-id-aria": {
+			"pass": "Le document ne comporte aucun élément référencés par ARIA ou étiquettes partageant la même valeur d'attribut id",
+			"fail": "Le document comporte un ou plusieurs éléments référencés par ARIA partageant la même valeur d'attribut id: ${data}"
+		},
+		"duplicate-id": {
+			"pass": "Le document n’a pas d’éléments qui partagent le même attribut id",
+			"fail": "Le document a plusieurs éléments avec le même attribut id : {{=it.data}}"
+		},
+		"aria-label": {
+			"pass": "L’attribut aria-label existe et n’est pas vide",
+			"fail": "L’attribut aria-label n’existe pas ou est vide"
+		},
+		"aria-labelledby": {
+			"pass": "L’attribut aria-labelledby existe et fait référence à des éléments visibles par les lecteurs d’écran",
+			"fail": "L’attribut aria-labelledby n’existe pas, fait référence à des éléments qui n’existent pas ou à des éléments vides ou non visibles"
+		},
+		"avoid-inline-spacing": {
+			"pass": "Aucun style inline affectant l'espacement du texte avec '!important' n'a été spécifié",
+			"fail": {
+				"singular": "Retirer '!important' du style inline ${data.values}, car le remplacement n'est pas pris en charge par la plupart des navigateurs",
+				"plural": "Retirer '!important' des styles inline ${data.values}, car le remplacement n'est pas pris en charge par la plupart des navigateurs"
+			}
+		},
+		"button-has-visible-text": {
+			"pass": "L’élément a un contenu textuel visible par les lecteurs d’écran",
+			"fail": "L’élément n’a aucun contenu textuel visible par les lecteurs d’écran"
+		},
+		"doc-has-title": {
+			"pass": "Le document a un élément <title> non vide",
+			"fail": "Le document n’a pas d’élément <title> non vide"
+		},
+		"exists": {
+			"pass": "L’élément n’existe pas",
+			"incomplete": "Element exists"
+		},
+		"has-alt": {
+			"pass": "L’élément a un attribut alt",
+			"fail": "L’élément n’a pas d’attribut alt"
+		},
+		"has-visible-text": {
+			"pass": "L’élément a un contenu textuel visible par les lecteurs d’écran",
+			"fail": "L’élément n’a aucun contenu textuel visible par les lecteurs d’écran"
+		},
+		"is-on-screen": {
+			"pass": "L’élément n’est pas visible",
+			"fail": "L’élément est visible"
+		},
+		"non-empty-alt": {
+			"pass": "L’élément a un attribut alt non vide",
+			"fail": "L’élément n’a pas d'attribut alt ou l’attribut alt est vide"
+		},
+		"non-empty-if-present": {
+			"pass": {
+				"default": "L'élément n'a pas d'attribut value",
+				"has-label": "L'élément a un attribut value non-vide"
+			},
+			"fail": "L’élément a un attribut value, et cet attribut est vide"
+		},
+		"non-empty-title": {
+			"pass": "L’élément a un attribut title",
+			"fail": "L’élément n’a pas d’attribut title ou l’attribut title est vide."
+		},
+		"non-empty-value": {
+			"pass": "L’élément a un attribut value non vide",
+			"fail": "L’élément n’a pas d’attribut value, ou a un attribut value vide"
+		},
+		"role-none": {
+			"pass": "La sémantique par défaut de l’élément est annulée avec role=\"none\"",
+			"fail": "La sémantique par défaut de l’élément n’est pas annulée avec role=\"none\""
+		},
+		"role-presentation": {
+			"pass": "La sémantique par défaut de l’élément est annulée avec role=\"presentation\"",
+			"fail": "La sémantique par défaut de l’élément n’est pas annulée avec role=\"presentation\""
+		},
+		"caption-faked": {
+			"pass": "La première ligne d’un tableau n’est pas utilisée en guise de légende",
+			"fail": "La première ligne d’un tableau devrait être un caption et non des cellules de tableau"
+		},
+		"has-caption": {
+			"pass": "Le tableau de présentation n’utilise pas d’élément <caption>",
+			"fail": "Le tableau de présentation utilise un élément <caption>"
+		},
+		"has-summary": {
+			"pass": "Le tableau de présentation n’utilise pas d’attribut summary",
+			"fail": "Le tableau de présentation utilise un attribut summary"
+		},
+		"has-th": {
+			"pass": "Le tableau de présentation n’utilise pas d’éléments <th>",
+			"fail": "Le tableau de présentation utilise des éléments <th>"
+		},
+		"html5-scope": {
+			"pass": "L’attribut scope est utilisé uniquement sur des cellules d’entête de tableau",
+			"fail": "En HTML 5, l’attribut scope ne peut être utilisé que sur des cellules d’entête de tableau"
+		},
+		"same-caption-summary": {
+			"pass": "Les contenus de l’attribut summary et de <caption> ne sont pas identiques",
+			"fail": "Les contenus de l’attribut summary et de <caption> sont identiques"
+		},
+		"scope-value": {
+			"pass": "L’attribut scope est utilisé correctement",
+			"fail": "La valeur de l’attribut scope ne peut être que 'row' ou 'col'"
+		},
+		"td-has-header": {
+			"pass": "Toutes les cellules de données non vides ont un entête de tableau",
+			"fail": "Certaines cellules de données non vides n’ont pas d’entête de tableau"
+		},
+		"td-headers-attr": {
+			"pass": "L’attribut headers est utilisé exclusivement pour faire référence à d’autres cellules dans le tableau",
+			"fail": "L’attribut headers n’est pas utilisé exclusivement pour faire référence à d’autres cellules dans le tableau"
+		},
+		"th-has-data-cells": {
+			"pass": "Toutes les cellules d’entête de tableau font référence à des cellules de données",
+			"fail": "Toutes les cellules d’entête de tableau ne font pas référence à des cellules de données",
+			"incomplete": "Les cellules de données sont absentes ou vides"
+		},
+		"hidden-content": {
+			"pass": "Tout le contenu de la page a été analysé.",
+			"fail": "Il y a eu des problèmes pour analyser le contenu de cette page.",
+			"incomplete": "Il y a du contenu caché sur la page qui n’a pas été analysé. Vous allez devoir modifier l’affichage de ce contenu afin de l’analyser."
+		}
+	},
+	"failureSummaries": {
+		"any": {
+			"failureMessage": "Corriger l’un des éléments suivants : {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+		},
+		"none": {
+			"failureMessage": "Corriger tous les éléments suivants : {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+		}
+	},
+	"incompleteFallbackMessage": "axee n'a pu en déterminr la raison. Il est temps de sortir l'inspecteur d'éléments!"
 }
