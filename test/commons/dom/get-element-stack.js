@@ -3,7 +3,7 @@ describe('dom.getElementStack', function() {
 
 	var fixture = document.getElementById('fixture');
 	var getElementStack = axe.commons.dom.getElementStack;
-	var getClientElementStack = axe.commons.dom.getClientElementStack;
+	var getTextElementStack = axe.commons.dom.getTextElementStack;
 	var isIE11 = axe.testUtils.isIE11;
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 
@@ -247,7 +247,7 @@ describe('dom.getElementStack', function() {
 		it('should not return elements that do not fully cover the target', function() {
 			fixture.innerHTML =
 				'<div id="1" style="position:relative;">' +
-				'<div id="2" style="position:absolute;width:300px;height:20px;"></div>' +
+				'<div id="2" style="position:absolute;width:300px;height:19px;"></div>' +
 				'<p id="target" style="position:relative;z-index:1;width:300px;height:40px;">Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>' +
 				'</div>';
 			axe.testUtils.flatTreeSetup(fixture);
@@ -491,21 +491,32 @@ describe('dom.getElementStack', function() {
 		});
 	});
 
-	describe('dom.getClientElementStack', function() {
-		it('should return array of client rects', function() {
+	describe('dom.getTextElementStack', function() {
+		it('should return array of client text rects', function() {
 			fixture.innerHTML =
 				'<main id="1">' +
-				'<span id="target">' +
-				'<span id="2">Hello</span><br/><span id="3">World</span>' +
-				'</span>' +
+				'<div id="target">' +
+				'<span id="2">Hello</span><br/>World' +
+				'</div>' +
 				'</main>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
-			var stacks = getClientElementStack(target).map(mapToIDs);
-			assert.deepEqual(stacks, [
-				['2', 'target', '1', 'fixture'],
-				['3', 'target', '1', 'fixture']
-			]);
+			var stacks = getTextElementStack(target).map(mapToIDs);
+			assert.deepEqual(stacks, [['target', '1', 'fixture']]);
+		});
+
+		it('should ignore newline characters', function() {
+			fixture.innerHTML =
+				'<main id="1">' +
+				'<div id="target">' +
+				'<span id="2">Hello</span><br/>\n' +
+				'World' +
+				'</div>' +
+				'</main>';
+			axe.testUtils.flatTreeSetup(fixture);
+			var target = fixture.querySelector('#target');
+			var stacks = getTextElementStack(target).map(mapToIDs);
+			assert.deepEqual(stacks, [['target', '1', 'fixture']]);
 		});
 	});
 });
