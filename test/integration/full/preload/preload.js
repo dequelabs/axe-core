@@ -74,17 +74,19 @@ describe('axe.utils.preload integration test', function() {
 			if (err) {
 				done(err);
 			}
-			getPreload().then(function(preloadedAssets) {
-				assert.property(preloadedAssets, 'cssom');
-				assert.lengthOf(preloadedAssets.cssom, 1);
-				var sheetData = preloadedAssets.cssom[0].sheet;
-				axe.testUtils.assertStylesheet(
-					sheetData,
-					'.inline-css-test',
-					stylesForPage[0].text
-				);
-				done();
-			});
+			getPreload()
+				.then(function(preloadedAssets) {
+					assert.property(preloadedAssets, 'cssom');
+					assert.lengthOf(preloadedAssets.cssom, 1);
+					var sheetData = preloadedAssets.cssom[0].sheet;
+					axe.testUtils.assertStylesheet(
+						sheetData,
+						'.inline-css-test',
+						stylesForPage[0].text
+					);
+					done();
+				})
+				.catch(done);
 		});
 	});
 
@@ -94,11 +96,13 @@ describe('axe.utils.preload integration test', function() {
 			if (err) {
 				done(err);
 			}
-			getPreload().then(function(preloadedAssets) {
-				assert.property(preloadedAssets, 'cssom');
-				assert.lengthOf(preloadedAssets.cssom, 0);
-				done();
-			});
+			getPreload()
+				.then(function(preloadedAssets) {
+					assert.property(preloadedAssets, 'cssom');
+					assert.lengthOf(preloadedAssets.cssom, 0);
+					done();
+				})
+				.catch(done);
 		});
 	});
 
@@ -116,7 +120,8 @@ describe('axe.utils.preload integration test', function() {
 					assert.isNotNull(err);
 					assert.isTrue(!err.message.includes('Preload assets timed out'));
 					done();
-				});
+				})
+				.catch(done);
 		});
 	});
 
@@ -134,7 +139,8 @@ describe('axe.utils.preload integration test', function() {
 					assert.isNotNull(err);
 					assert.isTrue(err.message.includes('Preload assets timed out'));
 					done();
-				});
+				})
+				.catch(done);
 		});
 	});
 
