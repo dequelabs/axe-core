@@ -9,8 +9,8 @@ describe('axe.utils.preload integration test', function() {
 			href: 'https://unpkg.com/gutenberg-css@0.4'
 		},
 		crossOriginDoesNotExist: {
-			id: 'crossOriginDoesNotExist',
-			href: 'https://i-do-not-exist.css'
+			id: 'styleTag',
+			text: '@import "https://i-do-not-exist.css"'
 		},
 		crossOriginLinkHrefMediaPrint: {
 			id: 'crossOriginLinkHrefMediaPrint',
