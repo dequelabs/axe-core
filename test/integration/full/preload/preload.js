@@ -1,4 +1,5 @@
-/* global axe */
+/* global axe, Promise */
+
 describe('axe.utils.preload integration test', function() {
 	'use strict';
 
@@ -7,6 +8,10 @@ describe('axe.utils.preload integration test', function() {
 		crossOriginLinkHref: {
 			id: 'crossOriginLinkHref',
 			href: 'https://unpkg.com/gutenberg-css@0.4'
+		},
+		crossOriginDoesNotExist: {
+			id: 'styleTag',
+			text: '@import "https://i-do-not-exist.css"'
 		},
 		crossOriginLinkHrefMediaPrint: {
 			id: 'crossOriginLinkHrefMediaPrint',
@@ -70,17 +75,19 @@ describe('axe.utils.preload integration test', function() {
 			if (err) {
 				done(err);
 			}
-			getPreload().then(function(preloadedAssets) {
-				assert.property(preloadedAssets, 'cssom');
-				assert.lengthOf(preloadedAssets.cssom, 1);
-				var sheetData = preloadedAssets.cssom[0].sheet;
-				axe.testUtils.assertStylesheet(
-					sheetData,
-					'.inline-css-test',
-					stylesForPage[0].text
-				);
-				done();
-			});
+			getPreload()
+				.then(function(preloadedAssets) {
+					assert.property(preloadedAssets, 'cssom');
+					assert.lengthOf(preloadedAssets.cssom, 1);
+					var sheetData = preloadedAssets.cssom[0].sheet;
+					axe.testUtils.assertStylesheet(
+						sheetData,
+						'.inline-css-test',
+						stylesForPage[0].text
+					);
+					done();
+				})
+				.catch(done);
 		});
 	});
 
@@ -90,24 +97,65 @@ describe('axe.utils.preload integration test', function() {
 			if (err) {
 				done(err);
 			}
-			getPreload().then(function(preloadedAssets) {
-				assert.property(preloadedAssets, 'cssom');
-				assert.lengthOf(preloadedAssets.cssom, 0);
-				done();
-			});
+			getPreload()
+				.then(function(preloadedAssets) {
+					assert.property(preloadedAssets, 'cssom');
+					assert.lengthOf(preloadedAssets.cssom, 0);
+					done();
+				})
+				.catch(done);
+		});
+	});
+
+	it('returns NO preloaded CSSOM assets when requested stylesheet does not exist`', function(done) {
+		stylesForPage = [styleSheets.crossOriginDoesNotExist];
+		attachStylesheets({ styles: stylesForPage }, function(err) {
+			if (err) {
+				done(err);
+			}
+			getPreload()
+				.then(function() {
+					done(new Error('Not expecting to complete the promise'));
+				})
+				.catch(function(err) {
+					assert.isNotNull(err);
+					assert.isTrue(!err.message.includes('Preload assets timed out'));
+					done();
+				})
+				.catch(done);
 		});
 	});
 
 	it('rejects preload function when timed out before fetching assets', function(done) {
 		stylesForPage = [styleSheets.crossOriginLinkHref];
+
+		var origPreloadCssom = axe.utils.preloadCssom;
+		axe.utils.preloadCssom = function() {
+			return new Promise(function(res) {
+				setTimeout(function() {
+					res(true);
+				}, 2000);
+			});
+		};
+
 		attachStylesheets({ styles: stylesForPage }, function(err) {
 			if (err) {
 				done(err);
 			}
-			getPreload(1).catch(function(err) {
-				assert.isNotNull(err);
-				done();
-			});
+			getPreload(1)
+				.then(function() {
+					done(new Error('Not expecting to complete the promise'));
+				})
+				.catch(function(err) {
+					assert.isNotNull(err);
+					assert.isTrue(err.message.includes('Preload assets timed out'));
+
+					done();
+				})
+				.catch(done)
+				.finally(function() {
+					axe.utils.preloadCssom = origPreloadCssom;
+				});
 		});
 	});
 
