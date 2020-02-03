@@ -8,6 +8,11 @@ describe('axe.utils.preload integration test', function() {
 			id: 'crossOriginLinkHref',
 			href: 'https://unpkg.com/gutenberg-css@0.4'
 		},
+		crossOriginLinkHrefThatWillFailBecauseOfCors: {
+			id: 'crossOriginLinkHrefThatWillFailBecauseOfCors',
+			href:
+				'https://qkadxq0tba-flywheel.netdna-ssl.com/wp-content/plugins/deque-hubspot/assets/css/deque-forms.css?ver=1.2.4'
+		},
 		crossOriginLinkHrefMediaPrint: {
 			id: 'crossOriginLinkHrefMediaPrint',
 			href:
@@ -98,16 +103,39 @@ describe('axe.utils.preload integration test', function() {
 		});
 	});
 
+	it('returns NO preloaded CSSOM assets when requested stylesheets has been blocked by CORS policy: No `Access-Control-Allow-Origin`', function(done) {
+		stylesForPage = [styleSheets.crossOriginLinkHrefThatWillFailBecauseOfCors];
+		attachStylesheets({ styles: stylesForPage }, function(err) {
+			if (err) {
+				done(err);
+			}
+			getPreload()
+				.then(function() {
+					done(new Error('Not expecting to complete the promise'));
+				})
+				.catch(function(err) {
+					assert.isNotNull(err);
+					assert.isTrue(!err.message.includes('Preload assets timed out'));
+					done();
+				});
+		});
+	});
+
 	it('rejects preload function when timed out before fetching assets', function(done) {
 		stylesForPage = [styleSheets.crossOriginLinkHref];
 		attachStylesheets({ styles: stylesForPage }, function(err) {
 			if (err) {
 				done(err);
 			}
-			getPreload(1).catch(function(err) {
-				assert.isNotNull(err);
-				done();
-			});
+			getPreload(1)
+				.then(function() {
+					done(new Error('Not expecting to complete the promise'));
+				})
+				.catch(function(err) {
+					assert.isNotNull(err);
+					assert.isTrue(err.message.includes('Preload assets timed out'));
+					done();
+				});
 		});
 	});
 
