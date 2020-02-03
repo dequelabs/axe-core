@@ -8,10 +8,9 @@ describe('axe.utils.preload integration test', function() {
 			id: 'crossOriginLinkHref',
 			href: 'https://unpkg.com/gutenberg-css@0.4'
 		},
-		crossOriginLinkHrefThatWillFailBecauseOfCors: {
-			id: 'crossOriginLinkHrefThatWillFailBecauseOfCors',
-			href:
-				'https://qkadxq0tba-flywheel.netdna-ssl.com/wp-content/plugins/deque-hubspot/assets/css/deque-forms.css?ver=1.2.4'
+		crossOriginDoesNotExist: {
+			id: 'crossOriginDoesNotExist',
+			href: 'https://i-do-not-exist.css'
 		},
 		crossOriginLinkHrefMediaPrint: {
 			id: 'crossOriginLinkHrefMediaPrint',
@@ -103,8 +102,8 @@ describe('axe.utils.preload integration test', function() {
 		});
 	});
 
-	it('returns NO preloaded CSSOM assets when requested stylesheets has been blocked by CORS policy: No `Access-Control-Allow-Origin`', function(done) {
-		stylesForPage = [styleSheets.crossOriginLinkHrefThatWillFailBecauseOfCors];
+	it('returns NO preloaded CSSOM assets when requested stylesheet does not exist`', function(done) {
+		stylesForPage = [styleSheets.crossOriginDoesNotExist];
 		attachStylesheets({ styles: stylesForPage }, function(err) {
 			if (err) {
 				done(err);
