@@ -151,6 +151,10 @@
 		"axe.js": "sha256-JcCz9SrZX+oGJEsYPQ4fpDB096mdCKD3hf8SpYo/ADE=",
 		"axe.min.js": "sha256-BzkfvZKBN8N7J2HwqfrbS8K+uICQsIEz6yTRtISGCr0="
 	},
+	"3.3.3": {
+		"axe.js": "sha256-cWikFVL1B7T3kafsX1ESurvIh/+2bFrhX8CKJJUNnQ0=",
+		"axe.min.js": "sha256-L/faUr+k2zA3fuo4l2T7mIpMxL8vPB3CWsSujoLyKLk="
+	},
 	"3.4.0": {
 		"axe.js": "sha256-LUQUiJIyJRR10Ct2kwIDlqi6Ojt3zsgTHiephxccciY=",
 		"axe.min.js": "sha256-/yZ9QvDDVP4J90XG5PPi0GmAh9QSBzqWnPDqmWzxzRk="
