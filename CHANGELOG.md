@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.3](https://github.com/dequelabs/axe-core/compare/v3.2.2...v3.2.3) (2020-02-04)
+
+### Bug Fixes
+
+- **color-contrast:** support IE extension context ([#2008](https://github.com/dequelabs/axe-core/issues/2008)) ([cd651a0](https://github.com/dequelabs/axe-core/commit/cd651a0713fa2f4b307cc7fc2be033f8636b40d2))
+- **unicode:** stop parsing escaped unicode strings ([#1997](https://github.com/dequelabs/axe-core/issues/1997)) ([523a31c](https://github.com/dequelabs/axe-core/commit/523a31c19fefd330e0b4f4c45f51d400c6f66164))
+
 ## [3.2.2](https://github.com/dequelabs/axe-core/compare/v3.2.0...v3.2.2) (2019-03-07)
 
 ### Bug Fixes
