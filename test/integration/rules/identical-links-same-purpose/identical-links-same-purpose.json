@@ -19,7 +19,9 @@
 		["#pass13"],
 		["#pass13-identical-resource-but-different-name"],
 		["#pass14"],
-		["#pass15"]
+		["#pass15"],
+		["#pass16"],
+		["#pass17"]
 	],
 	"incomplete": [
 		["#incomplete1"],
@@ -35,6 +37,7 @@
 		["#incomplete11"],
 		["#incomplete12"],
 		["#incomplete13"],
-		["#incomplete14"]
+		["#incomplete14"],
+		["#incomplete15"]
 	]
 }

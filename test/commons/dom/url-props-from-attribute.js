@@ -20,12 +20,20 @@ describe('dom.urlPropsFromAttribute', function() {
 		assert.isUndefined(actual);
 	});
 
-	it('returns undefined when `A` has no `HREF` attribute', function() {
+	it('returns undefined when `A` has no requested `HREF` attribute', function() {
 		var vNode = queryFixture('<a id="target">Follow us on Instagram</a>');
 		var actual = axe.commons.dom.urlPropsFromAttribute(
 			vNode.actualNode,
 			'href'
 		);
+		assert.isUndefined(actual);
+	});
+
+	it('returns undefined when `IFRAME` has no requested `SRC` attribute', function() {
+		var vNode = queryFixture(
+			'<iframe id="target" title="Welcome to Foo Bar"></iframe>'
+		);
+		var actual = axe.commons.dom.urlPropsFromAttribute(vNode.actualNode, 'src');
 		assert.isUndefined(actual);
 	});
 
@@ -46,6 +54,23 @@ describe('dom.urlPropsFromAttribute', function() {
 			vNode.actualNode,
 			'href'
 		);
+		assert.deepEqual(actual, expected);
+	});
+
+	it('returns URL properties for `IFRAME` with `SRC` (having HTTPS protocol)', function() {
+		var vNode = queryFixture(
+			'<iframe id="target" title="Facebook" src="https://facebook.com"></iframe>'
+		);
+		var expected = {
+			filename: '',
+			hash: '',
+			hostname: 'facebook.com',
+			pathname: '/',
+			port: '',
+			protocol: 'http:',
+			search: {}
+		};
+		var actual = axe.commons.dom.urlPropsFromAttribute(vNode.actualNode, 'src');
 		assert.deepEqual(actual, expected);
 	});
 
@@ -184,6 +209,28 @@ describe('dom.urlPropsFromAttribute', function() {
 	it('returns URL properties for `A` with `HREF` which has filename', function() {
 		var vNode = queryFixture(
 			'<a id="target" href="http://mysite.com/directory/widgets/calendar.html">Book tour</a>'
+		);
+		var expected = {
+			filename: 'calendar.html',
+			hash: '',
+			hostname: 'mysite.com',
+			pathname: '/directory/widgets/',
+			port: '',
+			protocol: 'http:',
+			search: {}
+		};
+		var actual = axe.commons.dom.urlPropsFromAttribute(
+			vNode.actualNode,
+			'href'
+		);
+		assert.deepEqual(actual, expected);
+	});
+
+	it('returns URL properties for `A` with `HREF` that is contained in SVG document', function() {
+		var vNode = queryFixture(
+			'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
+				'<a id="target" href="http://mysite.com/directory/widgets/calendar.html" aria-label="Book tour"><circle cx="50" cy="40" r="35" /></a>' +
+				'</svg>'
 		);
 		var expected = {
 			filename: 'calendar.html',
