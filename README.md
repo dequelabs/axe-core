@@ -14,6 +14,8 @@ Axe is an accessibility testing engine for websites and other HTML-based user in
 
 [Sign up for axe news](https://hubs.ly/H0fsN0b0) to get the latest on axe features, future releases, and events.
 
+Join us at the [5th annual axe-hackathon](https://www.deque.com/axe-hackathon-2020/) on March 14th, 2020 in Orange County.
+
 ## Philosophy
 
 The web can only become an accessible, inclusive space if developers are empowered to take responsibility for accessibility testing and accessible coding practices.
