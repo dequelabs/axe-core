@@ -24,14 +24,14 @@ describe('page-no-duplicate', function() {
 		it('should return false if there is more than one element matching the selector', function() {
 			var options = { selector: 'main' };
 			var params = checkSetup(
-				'<div id="target"><main></main><main></main></div>',
+				'<div><main id="target"></main><main id="dup"></main></div>',
 				options
 			);
 
 			assert.isFalse(check.evaluate.apply(checkContext, params));
 			assert.deepEqual(
 				checkContext._relatedNodes,
-				Array.from(fixture.querySelectorAll('main'))
+				Array.from(fixture.querySelectorAll('#dup'))
 			);
 		});
 
@@ -44,7 +44,16 @@ describe('page-no-duplicate', function() {
 		it('should return true if there are no element matching the selector', function() {
 			var options = { selector: 'footer' };
 			var params = checkSetup(
-				'<div id="target"><main></main><main></main></div>',
+				'<div><main id="target"></main><main></main></div>',
+				options
+			);
+			assert.isTrue(check.evaluate.apply(checkContext, params));
+		});
+
+		it('should return true if there is more than one element matching the selector but only one is visible', function() {
+			var options = { selector: 'main' };
+			var params = checkSetup(
+				'<div><main id="target"></main><main id="dup" style="display:none;"></main></div>',
 				options
 			);
 			assert.isTrue(check.evaluate.apply(checkContext, params));
@@ -55,20 +64,20 @@ describe('page-no-duplicate', function() {
 			function() {
 				var options = { selector: 'main' };
 				var div = document.createElement('div');
-				div.innerHTML = '<div id="shadow"></div><main></main>';
+				div.innerHTML = '<div id="shadow"></div><main id="target"></main>';
 
 				var shadow = div
 					.querySelector('#shadow')
 					.attachShadow({ mode: 'open' });
 				shadow.innerHTML = '<main></main>';
 				axe.testUtils.fixtureSetup(div);
+				var vNode = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 
 				assert.isFalse(
-					check.evaluate.call(checkContext, fixture, options, axe._tree[0])
+					check.evaluate.call(checkContext, vNode.actualNode, options, vNode)
 				);
 				assert.deepEqual(checkContext._relatedNodes, [
-					shadow.querySelector('main'),
-					div.querySelector('main')
+					shadow.querySelector('main')
 				]);
 			}
 		);
@@ -81,7 +90,7 @@ describe('page-no-duplicate', function() {
 				nativeScopeFilter: 'main'
 			};
 			var params = checkSetup(
-				'<div id="target"><footer></footer>' +
+				'<div><footer id="target"></footer>' +
 					'<main><footer></footer></main>' +
 					'</div>',
 				options
@@ -95,7 +104,7 @@ describe('page-no-duplicate', function() {
 				nativeScopeFilter: 'main'
 			};
 			var params = checkSetup(
-				'<div id="target"><footer></footer>' +
+				'<div><footer id="target"></footer>' +
 					'<main><div role="contentinfo"></div></main>' +
 					'</div>',
 				options
@@ -112,13 +121,15 @@ describe('page-no-duplicate', function() {
 				};
 
 				var div = document.createElement('div');
-				div.innerHTML = '<header id="shadow"></header><footer></footer>';
+				div.innerHTML =
+					'<header id="shadow"></header><footer id="target"></footer>';
 				div.querySelector('#shadow').attachShadow({ mode: 'open' }).innerHTML =
 					'<footer></footer>';
 				axe.testUtils.fixtureSetup(div);
+				var vNode = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 
 				assert.isTrue(
-					check.evaluate.call(checkContext, fixture, options, axe._tree[0])
+					check.evaluate.call(checkContext, vNode.actualNode, options, vNode)
 				);
 			}
 		);

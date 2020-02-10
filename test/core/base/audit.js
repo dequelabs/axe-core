@@ -604,319 +604,303 @@ describe('Audit', function() {
 			);
 		});
 
-		// PhantomJs does not have Promise support
-		(window.PHANTOMJS ? xit : it)(
-			'should run rules (that do not need preload) and preload assets simultaneously',
-			function(done) {
-				/**
-				 * Note:
-				 * overriding and resolving both check and preload with a delay,
-				 * but the invoked timestamp should ensure that they were invoked almost immediately
-				 */
+		it('should run rules (that do not need preload) and preload assets simultaneously', function(done) {
+			/**
+			 * Note:
+			 * overriding and resolving both check and preload with a delay,
+			 * but the invoked timestamp should ensure that they were invoked almost immediately
+			 */
 
-				fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
+			fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
 
-				var runStartTime = new Date();
-				var preloadInvokedTime = new Date();
-				var noPreloadCheckedInvokedTime = new Date();
-				var noPreloadRuleCheckEvaluateInvoked = false;
-				var preloadOverrideInvoked = false;
+			var runStartTime = new Date();
+			var preloadInvokedTime = new Date();
+			var noPreloadCheckedInvokedTime = new Date();
+			var noPreloadRuleCheckEvaluateInvoked = false;
+			var preloadOverrideInvoked = false;
 
-				// override preload method
-				axe.utils.preload = function(options) {
-					preloadInvokedTime = new Date();
-					preloadOverrideInvoked = true;
+			// override preload method
+			axe.utils.preload = function(options) {
+				preloadInvokedTime = new Date();
+				preloadOverrideInvoked = true;
 
-					return new Promise(function(res, rej) {
-						setTimeout(function() {
-							res(true);
-						}, 2000);
-					});
-				};
-
-				var audit = new Audit();
-				// add a rule and check that does not need preload
-				audit.addRule({
-					id: 'no-preload',
-					selector: 'div#div1',
-					any: ['no-preload-check'],
-					preload: false
+				return new Promise(function(res, rej) {
+					setTimeout(function() {
+						res(true);
+					}, 2000);
 				});
-				audit.addCheck({
-					id: 'no-preload-check',
-					evaluate: function(node, options, vNode, context) {
-						noPreloadCheckedInvokedTime = new Date();
-						noPreloadRuleCheckEvaluateInvoked = true;
-						var ready = this.async();
-						setTimeout(function() {
-							ready(true);
-						}, 1000);
-					}
+			};
+
+			var audit = new Audit();
+			// add a rule and check that does not need preload
+			audit.addRule({
+				id: 'no-preload',
+				selector: 'div#div1',
+				any: ['no-preload-check'],
+				preload: false
+			});
+			audit.addCheck({
+				id: 'no-preload-check',
+				evaluate: function(node, options, vNode, context) {
+					noPreloadCheckedInvokedTime = new Date();
+					noPreloadRuleCheckEvaluateInvoked = true;
+					var ready = this.async();
+					setTimeout(function() {
+						ready(true);
+					}, 1000);
+				}
+			});
+
+			// add a rule which needs preload
+			audit.addRule({
+				id: 'yes-preload',
+				selector: 'div#div2',
+				preload: true
+			});
+
+			var preloadOptions = {
+				preload: {
+					assets: ['cssom']
+				}
+			};
+
+			var allowedDiff = 50;
+
+			audit.run(
+				{ include: [axe.utils.getFlattenedTree(fixture)[0]] },
+				{
+					preload: preloadOptions
+				},
+				function(results) {
+					assert.isDefined(results);
+					// assert that check was invoked for rule(s)
+					assert.isTrue(noPreloadRuleCheckEvaluateInvoked);
+					// assert preload was invoked
+					assert.isTrue(preloadOverrideInvoked);
+					// assert that time diff(s)
+					// assert that run check invoked immediately
+					// choosing 5ms as an arbitary number
+					assert.isBelow(
+						noPreloadCheckedInvokedTime - runStartTime,
+						allowedDiff
+					);
+					// assert that preload  invoked immediately
+					assert.isBelow(preloadInvokedTime - runStartTime, allowedDiff);
+					// ensure cache is clear
+					assert.isTrue(typeof axe._selectCache === 'undefined');
+					// done
+					done();
+				},
+				noop
+			);
+		});
+
+		it('should pass assets from preload to rule check that needs assets as context', function(done) {
+			fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
+
+			var yesPreloadRuleCheckEvaluateInvoked = false;
+			var preloadOverrideInvoked = false;
+
+			var preloadData = {
+				data: 'you got it!'
+			};
+			// override preload method
+			axe.utils.preload = function(options) {
+				preloadOverrideInvoked = true;
+				return Promise.resolve({
+					cssom: preloadData
 				});
+			};
 
-				// add a rule which needs preload
-				audit.addRule({
-					id: 'yes-preload',
-					selector: 'div#div2',
-					preload: true
-				});
+			var audit = new Audit();
+			// add a rule and check that does not need preload
+			audit.addRule({
+				id: 'no-preload',
+				selector: 'div#div1',
+				preload: false
+			});
+			// add a rule which needs preload
+			audit.addRule({
+				id: 'yes-preload',
+				selector: 'div#div2',
+				preload: true,
+				any: ['yes-preload-check']
+			});
+			audit.addCheck({
+				id: 'yes-preload-check',
+				evaluate: function(node, options, vNode, context) {
+					yesPreloadRuleCheckEvaluateInvoked = true;
+					this.data(context);
+					return true;
+				}
+			});
 
-				var preloadOptions = {
-					preload: {
-						assets: ['cssom']
-					}
-				};
+			var preloadOptions = {
+				preload: {
+					assets: ['cssom']
+				}
+			};
+			audit.run(
+				{ include: [axe.utils.getFlattenedTree(fixture)[0]] },
+				{
+					preload: preloadOptions
+				},
+				function(results) {
+					assert.isDefined(results);
+					// assert that check was invoked for rule(s)
+					assert.isTrue(yesPreloadRuleCheckEvaluateInvoked);
+					// assert preload was invoked
+					assert.isTrue(preloadOverrideInvoked);
 
-				var allowedDiff = 50;
+					// assert preload data that was passed to check
+					var ruleResult = results.filter(function(r) {
+						return (r.id = 'yes-preload' && r.nodes.length > 0);
+					})[0];
+					var checkResult = ruleResult.nodes[0].any[0];
+					assert.isDefined(checkResult.data);
+					assert.property(checkResult.data, 'cssom');
+					assert.deepEqual(checkResult.data.cssom, preloadData);
+					// ensure cache is clear
+					assert.isTrue(typeof axe._selectCache === 'undefined');
+					// done
+					done();
+				},
+				noop
+			);
+		});
 
-				audit.run(
-					{ include: [axe.utils.getFlattenedTree(fixture)[0]] },
-					{
-						preload: preloadOptions
-					},
-					function(results) {
-						assert.isDefined(results);
-						// assert that check was invoked for rule(s)
-						assert.isTrue(noPreloadRuleCheckEvaluateInvoked);
-						// assert preload was invoked
-						assert.isTrue(preloadOverrideInvoked);
-						// assert that time diff(s)
-						// assert that run check invoked immediately
-						// choosing 5ms as an arbitary number
-						assert.isBelow(
-							noPreloadCheckedInvokedTime - runStartTime,
-							allowedDiff
-						);
-						// assert that preload  invoked immediately
-						assert.isBelow(preloadInvokedTime - runStartTime, allowedDiff);
-						// ensure cache is clear
-						assert.isTrue(typeof axe._selectCache === 'undefined');
-						// done
-						done();
-					},
-					noop
-				);
-			}
-		);
+		it('should continue to run rules and return result when preload is rejected', function(done) {
+			fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
 
-		// PhantomJs does not have Promise support
-		(window.PHANTOMJS ? xit : it)(
-			'should pass assets from preload to rule check that needs assets as context',
-			function(done) {
-				fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
+			var preloadOverrideInvoked = false;
+			var preloadNeededCheckInvoked = false;
+			var rejectionMsg =
+				'Boom! Things went terribly wrong! (But this was intended in this test)';
 
-				var yesPreloadRuleCheckEvaluateInvoked = false;
-				var preloadOverrideInvoked = false;
+			// override preload method
+			axe.utils.preload = function(options) {
+				preloadOverrideInvoked = true;
+				return Promise.reject(rejectionMsg);
+			};
 
-				var preloadData = {
-					data: 'you got it!'
-				};
-				// override preload method
-				axe.utils.preload = function(options) {
-					preloadOverrideInvoked = true;
-					return Promise.resolve({
-						cssom: preloadData
-					});
-				};
+			var audit = new Audit();
+			// add a rule and check that does not need preload
+			audit.addRule({
+				id: 'no-preload',
+				selector: 'div#div1',
+				preload: false
+			});
+			// add a rule which needs preload
+			audit.addRule({
+				id: 'yes-preload',
+				selector: 'div#div2',
+				preload: true,
+				any: ['yes-preload-check']
+			});
+			audit.addCheck({
+				id: 'yes-preload-check',
+				evaluate: function(node, options, vNode, context) {
+					preloadNeededCheckInvoked = true;
+					this.data(context);
+					return true;
+				}
+			});
 
-				var audit = new Audit();
-				// add a rule and check that does not need preload
-				audit.addRule({
-					id: 'no-preload',
-					selector: 'div#div1',
-					preload: false
-				});
-				// add a rule which needs preload
-				audit.addRule({
-					id: 'yes-preload',
-					selector: 'div#div2',
-					preload: true,
-					any: ['yes-preload-check']
-				});
-				audit.addCheck({
-					id: 'yes-preload-check',
-					evaluate: function(node, options, vNode, context) {
-						yesPreloadRuleCheckEvaluateInvoked = true;
-						this.data(context);
-						return true;
-					}
-				});
+			var preloadOptions = {
+				preload: {
+					assets: ['cssom']
+				}
+			};
+			audit.run(
+				{ include: [axe.utils.getFlattenedTree(fixture)[0]] },
+				{
+					preload: preloadOptions
+				},
+				function(results) {
+					assert.isDefined(results);
+					// assert preload was invoked
+					assert.isTrue(preloadOverrideInvoked);
 
-				var preloadOptions = {
-					preload: {
-						assets: ['cssom']
-					}
-				};
-				audit.run(
-					{ include: [axe.utils.getFlattenedTree(fixture)[0]] },
-					{
-						preload: preloadOptions
-					},
-					function(results) {
-						assert.isDefined(results);
-						// assert that check was invoked for rule(s)
-						assert.isTrue(yesPreloadRuleCheckEvaluateInvoked);
-						// assert preload was invoked
-						assert.isTrue(preloadOverrideInvoked);
+					// assert that both rules ran, although preload failed
+					assert.lengthOf(results, 2);
 
-						// assert preload data that was passed to check
-						var ruleResult = results.filter(function(r) {
-							return (r.id = 'yes-preload' && r.nodes.length > 0);
-						})[0];
-						var checkResult = ruleResult.nodes[0].any[0];
-						assert.isDefined(checkResult.data);
-						assert.property(checkResult.data, 'cssom');
-						assert.deepEqual(checkResult.data.cssom, preloadData);
-						// ensure cache is clear
-						assert.isTrue(typeof axe._selectCache === 'undefined');
-						// done
-						done();
-					},
-					noop
-				);
-			}
-		);
+					// assert that because preload failed
+					// cssom was not populated on context of repective check
+					assert.isTrue(preloadNeededCheckInvoked);
+					var ruleResult = results.filter(function(r) {
+						return (r.id = 'yes-preload' && r.nodes.length > 0);
+					})[0];
+					var checkResult = ruleResult.nodes[0].any[0];
+					assert.isDefined(checkResult.data);
+					assert.notProperty(checkResult.data, 'cssom');
+					// done
+					done();
+				},
+				noop
+			);
+		});
 
-		// PhantomJs does not have Promise support
-		(window.PHANTOMJS ? xit : it)(
-			'should continue to run rules and return result when preload is rejected',
-			function(done) {
-				fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
+		it('should continue to run rules and return result when axios time(s)out and rejects preload', function(done) {
+			fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
 
-				var preloadOverrideInvoked = false;
-				var preloadNeededCheckInvoked = false;
-				var rejectionMsg =
-					'Boom! Things went terribly wrong! (But this was intended in this test)';
+			// there is no stubbing here,
+			// the actual axios call is invoked, and timedout immediately as timeout is set to 0.1
 
-				// override preload method
-				axe.utils.preload = function(options) {
-					preloadOverrideInvoked = true;
-					return Promise.reject(rejectionMsg);
-				};
+			var preloadNeededCheckInvoked = false;
+			var audit = new Audit();
+			// add a rule and check that does not need preload
+			audit.addRule({
+				id: 'no-preload',
+				selector: 'div#div1',
+				preload: false
+			});
+			// add a rule which needs preload
+			audit.addRule({
+				id: 'yes-preload',
+				selector: 'div#div2',
+				preload: true,
+				any: ['yes-preload-check']
+			});
+			audit.addCheck({
+				id: 'yes-preload-check',
+				evaluate: function(node, options, vNode, context) {
+					preloadNeededCheckInvoked = true;
+					this.data(context);
+					return true;
+				}
+			});
 
-				var audit = new Audit();
-				// add a rule and check that does not need preload
-				audit.addRule({
-					id: 'no-preload',
-					selector: 'div#div1',
-					preload: false
-				});
-				// add a rule which needs preload
-				audit.addRule({
-					id: 'yes-preload',
-					selector: 'div#div2',
-					preload: true,
-					any: ['yes-preload-check']
-				});
-				audit.addCheck({
-					id: 'yes-preload-check',
-					evaluate: function(node, options, vNode, context) {
-						preloadNeededCheckInvoked = true;
-						this.data(context);
-						return true;
-					}
-				});
+			var preloadOptions = {
+				preload: {
+					assets: ['cssom'],
+					timeout: 0.1
+				}
+			};
+			audit.run(
+				{ include: [axe.utils.getFlattenedTree(fixture)[0]] },
+				{
+					preload: preloadOptions
+				},
+				function(results) {
+					assert.isDefined(results);
+					// assert that both rules ran, although preload failed
+					assert.lengthOf(results, 2);
 
-				var preloadOptions = {
-					preload: {
-						assets: ['cssom']
-					}
-				};
-				audit.run(
-					{ include: [axe.utils.getFlattenedTree(fixture)[0]] },
-					{
-						preload: preloadOptions
-					},
-					function(results) {
-						assert.isDefined(results);
-						// assert preload was invoked
-						assert.isTrue(preloadOverrideInvoked);
-
-						// assert that both rules ran, although preload failed
-						assert.lengthOf(results, 2);
-
-						// assert that because preload failed
-						// cssom was not populated on context of repective check
-						assert.isTrue(preloadNeededCheckInvoked);
-						var ruleResult = results.filter(function(r) {
-							return (r.id = 'yes-preload' && r.nodes.length > 0);
-						})[0];
-						var checkResult = ruleResult.nodes[0].any[0];
-						assert.isDefined(checkResult.data);
-						assert.notProperty(checkResult.data, 'cssom');
-						// done
-						done();
-					},
-					noop
-				);
-			}
-		);
-
-		// PhantomJs does not have Promise support
-		(window.PHANTOMJS ? xit : it)(
-			'should continue to run rules and return result when axios time(s)out and rejects preload',
-			function(done) {
-				fixture.innerHTML = '<div id="div1"></div><div id="div2"></div>';
-
-				// there is no stubbing here,
-				// the actual axios call is invoked, and timedout immediately as timeout is set to 0.1
-
-				var preloadNeededCheckInvoked = false;
-				var audit = new Audit();
-				// add a rule and check that does not need preload
-				audit.addRule({
-					id: 'no-preload',
-					selector: 'div#div1',
-					preload: false
-				});
-				// add a rule which needs preload
-				audit.addRule({
-					id: 'yes-preload',
-					selector: 'div#div2',
-					preload: true,
-					any: ['yes-preload-check']
-				});
-				audit.addCheck({
-					id: 'yes-preload-check',
-					evaluate: function(node, options, vNode, context) {
-						preloadNeededCheckInvoked = true;
-						this.data(context);
-						return true;
-					}
-				});
-
-				var preloadOptions = {
-					preload: {
-						assets: ['cssom'],
-						timeout: 0.1
-					}
-				};
-				audit.run(
-					{ include: [axe.utils.getFlattenedTree(fixture)[0]] },
-					{
-						preload: preloadOptions
-					},
-					function(results) {
-						assert.isDefined(results);
-						// assert that both rules ran, although preload failed
-						assert.lengthOf(results, 2);
-
-						// assert that because preload failed
-						// cssom was not populated on context of repective check
-						assert.isTrue(preloadNeededCheckInvoked);
-						var ruleResult = results.filter(function(r) {
-							return (r.id = 'yes-preload' && r.nodes.length > 0);
-						})[0];
-						var checkResult = ruleResult.nodes[0].any[0];
-						assert.isDefined(checkResult.data);
-						assert.notProperty(checkResult.data, 'cssom');
-						// done
-						done();
-					},
-					noop
-				);
-			}
-		);
+					// assert that because preload failed
+					// cssom was not populated on context of repective check
+					assert.isTrue(preloadNeededCheckInvoked);
+					var ruleResult = results.filter(function(r) {
+						return (r.id = 'yes-preload' && r.nodes.length > 0);
+					})[0];
+					var checkResult = ruleResult.nodes[0].any[0];
+					assert.isDefined(checkResult.data);
+					assert.notProperty(checkResult.data, 'cssom');
+					// done
+					done();
+				},
+				noop
+			);
+		});
 
 		it('should assign an empty array to axe._selectCache', function(done) {
 			var saved = axe.utils.ruleShouldRun;
@@ -1263,6 +1247,28 @@ describe('Audit', function() {
 			var out = a.normalizeOptions(opt);
 			assert(out.runOnly.type, 'tag');
 			assert.deepEqual(out.runOnly.values, ['positive', 'negative']);
+		});
+
+		it('allows runOnly as an array as an alternative to type: rule', function() {
+			var opt = { runOnly: ['positive1', 'negative1'] };
+			var out = a.normalizeOptions(opt);
+			assert(out.runOnly.type, 'rule');
+			assert.deepEqual(out.runOnly.values, ['positive1', 'negative1']);
+		});
+
+		it('throws an error if runOnly contains both rules and tags', function() {
+			assert.throws(function() {
+				a.normalizeOptions({
+					runOnly: ['positive', 'negative1']
+				});
+			});
+		});
+
+		it('defaults runOnly to type: tag', function() {
+			var opt = { runOnly: ['fakeTag'] };
+			var out = a.normalizeOptions(opt);
+			assert(out.runOnly.type, 'tag');
+			assert.deepEqual(out.runOnly.values, ['fakeTag']);
 		});
 
 		it('throws an error runOnly.values not an array', function() {

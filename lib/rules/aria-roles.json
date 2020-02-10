@@ -8,5 +8,5 @@
 	},
 	"all": [],
 	"any": [],
-	"none": ["invalidrole", "abstractrole", "unsupportedrole"]
+	"none": ["fallbackrole", "invalidrole", "abstractrole", "unsupportedrole"]
 }

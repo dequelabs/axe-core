@@ -1,0 +1,40 @@
+{
+	"description": "identical-links-same-purpose tests",
+	"rule": "identical-links-same-purpose",
+	"passes": [
+		["#pass1"],
+		["#pass2"],
+		["#pass3"],
+		["#pass4"],
+		["#pass5"],
+		["#pass6"],
+		["#pass7"],
+		["#pass8"],
+		["#pass9"],
+		["#pass10"],
+		["#pass11"],
+		["#pass11-identical-resource-but-different-name"],
+		["#pass12"],
+		["#pass12-identical-resource-but-different-name"],
+		["#pass13"],
+		["#pass13-identical-resource-but-different-name"],
+		["#pass14"],
+		["#pass15"]
+	],
+	"incomplete": [
+		["#incomplete1"],
+		["#incomplete2"],
+		["#incomplete3"],
+		["#incomplete4"],
+		["#incomplete5"],
+		["#incomplete6"],
+		["#incomplete7"],
+		["#incomplete8"],
+		["#incomplete9"],
+		["#incomplete10"],
+		["#incomplete11"],
+		["#incomplete12"],
+		["#incomplete13"],
+		["#incomplete14"]
+	]
+}

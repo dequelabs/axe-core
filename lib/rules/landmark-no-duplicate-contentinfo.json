@@ -1,6 +1,6 @@
 {
 	"id": "landmark-no-duplicate-contentinfo",
-	"selector": "html",
+	"selector": "footer:not([role]), [role=contentinfo]",
 	"tags": ["cat.semantics", "best-practice"],
 	"metadata": {
 		"description": "Ensures the document has at most one contentinfo landmark",

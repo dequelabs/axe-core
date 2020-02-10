@@ -475,6 +475,16 @@ axe.run(
 
 This example will only run the rules with the id of `ruleId1`, `ruleId2`, and `ruleId3`. No other rule will run.
 
+Alternatively, runOnly can be passed an array of rules:
+
+```js
+axe.run({
+  runOnly: ['ruleId1', 'ruleId2', 'ruleId3'];
+}, (err, results) => {
+  // ...
+})
+```
+
 3. Run all enabled Rules except for a list of rules
 
 The default operation for axe.run is to run all rules except for rules with the "experimental" tag. If certain rules should be disabled from being run, specify `options` as:
@@ -575,6 +585,7 @@ The `assets` attribute expects an array of preload(able) constraints to be fetch
 | Asset Type | Description                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `cssom`    | This asset type preloads all CSS Stylesheets rulesets specified in the page. The stylesheets can be an external cross-domain resource, a relative stylesheet or an inline style with in the head tag of the document. If the stylesheet is an external cross-domain a network request is made. An object representing the CSS Rules from each stylesheet is made available to the checks evaluate function as `preloadedAssets` at run-time |
+| `media`    | This asset type preloads metadata information of any HTMLMediaElement in the specified document                                                                                                                                                                                                                                                                                                                                             |
 
 The `timeout` attribute in the object configuration is `optional` and has a fallback default value (10000ms). The `timeout` is essential for any network dependent assets that are preloaded, where-in if a given request takes longer than the specified/ default value, the operation is aborted.
 

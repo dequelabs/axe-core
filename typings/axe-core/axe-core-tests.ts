@@ -69,6 +69,24 @@ axe.run(
 		console.log(error || results);
 	}
 );
+axe.run(
+	context,
+	{
+		runOnly: ['wcag2a', 'wcag2aa']
+	},
+	(error: Error, results: axe.AxeResults) => {
+		console.log(error || results);
+	}
+);
+axe.run(
+	context,
+	{
+		runOnly: ['color-contrast', 'heading-order']
+	},
+	(error: Error, results: axe.AxeResults) => {
+		console.log(error || results);
+	}
+);
 
 var someRulesConfig = {
 	rules: {

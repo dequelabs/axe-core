@@ -1,7 +1,7 @@
 {
 	"name": "axe-core",
 	"description": "Accessibility engine for automated Web UI testing",
-	"version": "3.4.1",
+	"version": "3.5.0",
 	"license": "MPL-2.0",
 	"engines": {
 		"node": ">=4"
@@ -61,6 +61,7 @@
 		"imports-gen": "node ./build/imports-generator",
 		"build": "grunt",
 		"eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
+		"test:headless": "node ./build/test/headless",
 		"test": "tsc && grunt test",
 		"test:examples": "node ./doc/examples/test-examples",
 		"test:locales": "mocha test/test-locales.js",
@@ -104,7 +105,6 @@
 		"grunt-contrib-copy": "^1.0.0",
 		"grunt-contrib-uglify": "^4.0.0",
 		"grunt-contrib-watch": "^1.1.0",
-		"grunt-mocha": "1.2.0",
 		"grunt-parallel": "^0.5.1",
 		"grunt-run": "^0.8.1",
 		"html-entities": "^1.2.0",
@@ -118,7 +118,9 @@
 		"minami": "^1.2.3",
 		"mkdirp": "^0.5.1",
 		"mocha": "^6.1.2",
+		"mocha-headless-chrome": "^2.0.3",
 		"prettier": "^1.17.1",
+		"puppeteer": "^2.0.0",
 		"revalidator": "~0.3.1",
 		"selenium-webdriver": "~3.6.0",
 		"sinon": "^7.5.0",

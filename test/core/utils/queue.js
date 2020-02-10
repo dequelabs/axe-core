@@ -54,7 +54,10 @@ describe('axe.utils.queue', function() {
 
 		it('is chainable', function() {
 			var q = axe.utils.queue();
-			assert.equal(q, q.defer(function() {}));
+			assert.equal(
+				q,
+				q.defer(function() {})
+			);
 		});
 
 		it('throws if then was already called', function() {
@@ -110,7 +113,10 @@ describe('axe.utils.queue', function() {
 
 		it('is chainable', function() {
 			var q = axe.utils.queue();
-			assert.equal(q, q.then(function() {}));
+			assert.equal(
+				q,
+				q.then(function() {})
+			);
 		});
 
 		it('throws when called more than once', function() {
@@ -250,7 +256,10 @@ describe('axe.utils.queue', function() {
 
 		it('is chainable', function() {
 			var q = axe.utils.queue();
-			assert.equal(q, q.catch(function() {}));
+			assert.equal(
+				q,
+				q.catch(function() {})
+			);
 		});
 
 		it('throws when called more than once', function() {

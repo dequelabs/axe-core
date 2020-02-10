@@ -190,5 +190,114 @@ describe('VirtualNode', function() {
 				assert.equal(count, 1);
 			});
 		});
+
+		describe('getComputedStylePropertyValue', function() {
+			var computedStyle;
+
+			beforeEach(function() {
+				computedStyle = window.getComputedStyle;
+			});
+
+			afterEach(function() {
+				window.getComputedStyle = computedStyle;
+			});
+
+			it('should call window.getComputedStyle and return the property', function() {
+				var called = false;
+				window.getComputedStyle = function() {
+					called = true;
+					return {
+						getPropertyValue: function() {
+							return 'result';
+						}
+					};
+				};
+				var vNode = new VirtualNode(node);
+				var result = vNode.getComputedStylePropertyValue('prop');
+
+				assert.isTrue(called);
+				assert.equal(result, 'result');
+			});
+
+			it('should only call window.getComputedStyle and getPropertyValue once', function() {
+				var computedCount = 0;
+				var propertyCount = 0;
+				window.getComputedStyle = function() {
+					computedCount++;
+					return {
+						getPropertyValue: function() {
+							propertyCount++;
+						}
+					};
+				};
+				var vNode = new VirtualNode(node);
+				vNode.getComputedStylePropertyValue('prop');
+				vNode.getComputedStylePropertyValue('prop');
+				vNode.getComputedStylePropertyValue('prop');
+				assert.equal(computedCount, 1);
+				assert.equal(propertyCount, 1);
+			});
+		});
+
+		describe('clientRects', function() {
+			it('should call node.getClientRects', function() {
+				var called = false;
+				node.getClientRects = function() {
+					called = true;
+					return [];
+				};
+				var vNode = new VirtualNode(node);
+				vNode.clientRects;
+
+				assert.isTrue(called);
+			});
+
+			it('should only call node.getClientRects once', function() {
+				var count = 0;
+				node.getClientRects = function() {
+					count++;
+					return [];
+				};
+				var vNode = new VirtualNode(node);
+				vNode.clientRects;
+				vNode.clientRects;
+				vNode.clientRects;
+				assert.equal(count, 1);
+			});
+
+			it('should filter out 0 width rects', function() {
+				node.getClientRects = function() {
+					return [{ width: 10 }, { width: 0 }, { width: 20 }];
+				};
+				var vNode = new VirtualNode(node);
+
+				assert.deepEqual(vNode.clientRects, [{ width: 10 }, { width: 20 }]);
+			});
+		});
+
+		describe('boundingClientRect', function() {
+			it('should call node.getBoundingClientRect', function() {
+				var called = false;
+				node.getBoundingClientRect = function() {
+					called = true;
+				};
+				var vNode = new VirtualNode(node);
+				vNode.boundingClientRect;
+
+				assert.isTrue(called);
+			});
+
+			it('should only call node.getBoundingClientRect once', function() {
+				var count = 0;
+				node.getBoundingClientRect = function() {
+					count++;
+				};
+				var vNode = new VirtualNode(node);
+				vNode.boundingClientRect;
+				vNode.boundingClientRect;
+				vNode.boundingClientRect;
+				assert.equal(count, 1);
+			});
+		});
 	});
 });

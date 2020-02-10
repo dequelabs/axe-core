@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>html-has-lang test</title>
+		<meta charset="utf8" />
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="/node_modules/mocha/mocha.css"
+		/>
+		<style>
+			.a {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100vw;
+				height: 100vh;
+				background: rgba(0, 0, 0, 0.5);
+				z-index: 99999;
+			}
+
+			.b {
+				position: fixed;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				top: 35%;
+				bottom: 35%;
+				left: 35%;
+				right: 35%;
+				background: white;
+				z-index: 999999;
+			}
+		</style>
+		<script src="/node_modules/mocha/mocha.js"></script>
+		<script src="/node_modules/chai/chai.js"></script>
+		<script src="/axe.js"></script>
+		<script>
+			mocha.setup({
+				timeout: 10000,
+				ui: 'bdd'
+			});
+			var assert = chai.assert;
+		</script>
+	</head>
+
+	<body>
+		<main aria-hidden="true" id="incomplete1">
+			<p>Contents of page</p>
+			<button>Click me</button>
+		</main>
+		<div class="a"></div>
+		<div class="b">
+			Subscribe to our newsletter!
+		</div>
+		<div id="mocha"></div>
+		<script src="/test/testutils.js"></script>
+		<script src="modal.js"></script>
+		<script src="/test/integration/adapter.js"></script>
+	</body>
+</html>

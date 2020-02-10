@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Test Page</title>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="/node_modules/mocha/mocha.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism-okaidia.min.css"
+		/>
+		<script src="/node_modules/mocha/mocha.js"></script>
+		<script src="/node_modules/chai/chai.js"></script>
+		<script src="/axe.js"></script>
+		<script>
+			mocha.setup({
+				timeout: 10000,
+				ui: 'bdd'
+			});
+			var assert = chai.assert;
+		</script>
+		<script src="/test/integration/no-ui-reporter.js"></script>
+		<style></style>
+	</head>
+
+	<body>
+		<div id="fixture">
+			<pre>
+        <code class="language-html">&lt;!DOCTYPE html&gt;
+          &lt;html lang="en"&gt;
+            &lt;head&gt;
+              &lt;title&gt;Test Page&lt;/title&gt;
+              &lt;link
+                rel="stylesheet"
+                type="text/css"
+                href="/node_modules/mocha/mocha.css"
+              /&gt;
+              &lt;script src="/node_modules/mocha/mocha.js"&gt;&lt;/script&gt;
+              &lt;script src="/node_modules/chai/chai.js"&gt;&lt;/script&gt;
+              &lt;script src="/axe.js"&gt;&lt;/script&gt;
+              &lt;script&gt;
+                mocha.setup({
+                  timeout: 10000,
+                  ui: 'bdd'
+                });
+                var assert = chai.assert;
+              &lt;/script&gt;
+              &lt;script src="/test/integration/no-ui-reporter.js"&gt;&lt;/script&gt;
+              &lt;style&gt;&lt;/style&gt;
+            &lt;/head&gt;
+
+            &lt;body&gt;
+              &lt;pre&gt;
+                &lt;code&gt;
+
+                &lt;/code&gt;
+              &lt;/pre&gt;
+              &lt;script src="/test/testutils.js"&gt;&lt;/script&gt;
+              &lt;script src="code-highlighting.js"&gt;&lt;/script&gt;
+              &lt;script src="/test/integration/adapter.js"&gt;&lt;/script&gt;
+            &lt;/body&gt;
+          &lt;/html&gt;</code>
+      </pre>
+		</div>
+		<script src="/test/testutils.js"></script>
+		<script src="code-highlighting.js"></script>
+		<script src="/test/integration/adapter.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/prism.min.js"></script>
+	</body>
+</html>

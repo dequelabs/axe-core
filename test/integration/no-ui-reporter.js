@@ -1,6 +1,11 @@
 /*global mocha, console */
 (function() {
 	'use strict';
+
+	if (!mocha || !mocha.reporter || !mocha.reporter('base')) {
+		return;
+	}
+
 	var Base = mocha.reporter('base')._reporter;
 	mocha.reporter(function(runner) {
 		Base.call(this, runner);

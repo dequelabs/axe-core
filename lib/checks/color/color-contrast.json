@@ -1,12 +1,18 @@
 {
 	"id": "color-contrast",
 	"evaluate": "color-contrast.js",
+	"options": {
+		"noScroll": false,
+		"ignoreUnicode": true,
+		"ignoreLength": false
+	},
 	"metadata": {
 		"impact": "serious",
 		"messages": {
-			"pass": "Element has sufficient color contrast of {{=it.data.contrastRatio}}",
-			"fail": "Element has insufficient color contrast of {{=it.data.contrastRatio}} (foreground color: {{=it.data.fgColor}}, background color: {{=it.data.bgColor}}, font size: {{=it.data.fontSize}}, font weight: {{=it.data.fontWeight}}). Expected contrast ratio of {{=it.data.expectedContrastRatio}}",
+			"pass": "Element has sufficient color contrast of ${data.contrastRatio}",
+			"fail": "Element has insufficient color contrast of ${data.contrastRatio} (foreground color: ${data.fgColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Expected contrast ratio of ${data.expectedContrastRatio}",
 			"incomplete": {
+				"default": "Unable to determine contrast ratio",
 				"bgImage": "Element's background color could not be determined due to a background image",
 				"bgGradient": "Element's background color could not be determined due to a background gradient",
 				"imgNode": "Element's background color could not be determined because element contains an image node",
@@ -17,7 +23,7 @@
 				"outsideViewport": "Element's background color could not be determined because it's outside the viewport",
 				"equalRatio": "Element has a 1:1 contrast ratio with the background",
 				"shortTextContent": "Element content is too short to determine if it is actual text content",
-				"default": "Unable to determine contrast ratio"
+				"nonBmp": "Element content contains only non-text characters"
 			}
 		}
 	}

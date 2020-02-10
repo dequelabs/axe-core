@@ -13,7 +13,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-mocha');
 	grunt.loadNpmTasks('grunt-parallel');
 	grunt.loadNpmTasks('grunt-run');
 	grunt.loadTasks('build/tasks');
@@ -208,6 +207,7 @@ module.exports = function(grunt) {
 					compress: false,
 					beautify: {
 						beautify: true,
+						ascii_only: true,
 						indent_level: 2,
 						braces: true,
 						quote_style: 1
@@ -252,18 +252,7 @@ module.exports = function(grunt) {
 		},
 		testconfig: {
 			test: {
-				src: ['test/integration/rules/**/*.json'].concat(
-					process.env.APPVEYOR
-						? [
-								// These tests are causing PhantomJS to timeout on Appveyor
-								// Warning: PhantomJS timed out, possibly due to a missing Mocha run() call. Use --force to continue.
-								'!test/integration/rules/td-has-header/*.json',
-								'!test/integration/rules/label-content-name-mismatch/*.json',
-								'!test/integration/rules/label/*.json',
-								'!test/integration/rules/th-has-data-cells/*.json'
-						  ]
-						: []
-				),
+				src: ['test/integration/rules/**/*.json'],
 				dest: 'tmp/integration-tests.js'
 			}
 		},
@@ -337,9 +326,6 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		mocha: testConfig(grunt, {
-			reporter: grunt.option('reporter') || 'Spec'
-		}),
 		connect: {
 			test: {
 				options: {
@@ -353,14 +339,21 @@ module.exports = function(grunt) {
 			npm_run_imports: {
 				cmd: 'node',
 				args: ['./build/imports-generator']
+			},
+			npm_run_testHeadless: {
+				cmd: 'npm',
+				args: ['run', 'test:headless']
 			}
 		}
 	});
 
-	grunt.registerTask('default', ['build']);
-
+	grunt.registerTask('translate', [
+		'pre-build',
+		'validate',
+		'concat:commons',
+		'add-locale'
+	]);
 	grunt.registerTask('pre-build', ['clean', 'run:npm_run_imports']);
-
 	grunt.registerTask('build', [
 		'pre-build',
 		'validate',
@@ -371,45 +364,20 @@ module.exports = function(grunt) {
 		'uglify',
 		'aria-supported'
 	]);
-
-	grunt.registerTask('test', [
+	grunt.registerTask('prepare', [
 		'build',
 		'file-exists',
 		'testconfig',
 		'fixture',
-		'connect',
-		'mocha',
+		'connect'
+	]);
+	grunt.registerTask('default', ['build']);
+	grunt.registerTask('dev', ['prepare', 'watch']);
+	grunt.registerTask('test-fast', ['prepare', 'run:npm_run_testHeadless']);
+	grunt.registerTask('test', [
+		'prepare',
+		'run:npm_run_testHeadless',
 		'parallel'
 	]);
-
-	grunt.registerTask('ci-build', [
-		'build',
-		'testconfig',
-		'fixture',
-		'connect',
-		'parallel'
-	]);
-
-	grunt.registerTask('test-fast', [
-		'build',
-		'testconfig',
-		'fixture',
-		'connect',
-		'mocha'
-	]);
-
-	grunt.registerTask('translate', [
-		'pre-build',
-		'validate',
-		'concat:commons',
-		'add-locale'
-	]);
-
-	grunt.registerTask('dev', [
-		'build',
-		'testconfig',
-		'fixture',
-		'connect',
-		'watch'
-	]);
+	grunt.registerTask('ci-build', ['prepare', 'parallel']);
 };

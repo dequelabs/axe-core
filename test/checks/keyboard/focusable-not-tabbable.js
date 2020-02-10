@@ -44,7 +44,7 @@ describe('focusable-not-tabbable', function() {
 		);
 	});
 
-	it('returns false when focusable SUMMARY element, that cannot be disabled', function() {
+	it('returns true when focusable SUMMARY element, that cannot be disabled', function() {
 		var params = checkSetup(
 			'<details id="target" aria-hidden="true"><summary>Some button</summary><p>Some details</p></details>'
 		);
@@ -53,7 +53,7 @@ describe('focusable-not-tabbable', function() {
 		assert.lengthOf(checkContext._relatedNodes, 1);
 		assert.deepEqual(
 			checkContext._relatedNodes,
-			Array.from(fixture.querySelectorAll('details'))
+			Array.from(fixture.querySelectorAll('summary'))
 		);
 	});
 
@@ -129,6 +129,17 @@ describe('focusable-not-tabbable', function() {
 	it('returns true when focusable target that can be disabled', function() {
 		var params = checkSetup(
 			'<div aria-hidden="true"><a href="">foo</a><button id="target">bar</button></div>'
+		);
+		var actual = check.evaluate.apply(checkContext, params);
+		assert.isTrue(actual);
+	});
+
+	it('returns true if there is a focusable element and modal is open', function() {
+		var params = checkSetup(
+			'<div id="target" aria-hidden="true">' +
+				'<a href="">foo</a>' +
+				'</div>' +
+				'<div role="dialog">Modal</div>'
 		);
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isTrue(actual);

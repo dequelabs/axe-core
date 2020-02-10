@@ -1,0 +1,237 @@
+<!-- pass -->
+<!-- native links with identical purposes -->
+<a id="pass1" href="/home/#/foo">Pass 1</a>
+<a id="pass1-identical1" href="/home/#/foo">Pass 1</a>
+
+<!-- native links with same (different order) query params -->
+<a id="pass2" href="/search/?a=foo&b=123">Pass 2</a>
+<a id="pass2-identical1" href="/search/?b=123&a=foo">Pass 2</a>
+
+<!-- native links, normal inline link, don't worry about it -->
+<a id="pass3" href="/home/#foo">Pass 3</a>
+<a id="pass3-identical1" href="/home/#">Pass 3</a>
+
+<!-- native links, with identical hash -->
+<a id="pass4" href="/home/#!foo">Pass 4</a>
+<a id="pass4-identical1" href="/home/#!foo">Pass 4</a>
+
+<!-- native links, hash-bange URL is the same -->
+<a id="pass5" href="/home/#!/foo">Pass 5</a>
+<a id="pass5-identical1" href="/home/#!/foo">Pass 5</a>
+
+<!-- native links, same query -->
+<a id="pass6" href="/search/?q=foo#bar">Pass 6</a>
+<a id="pass6-identical1" href="/search/?q=foo#foo">Pass 6</a>
+
+<!-- native links, ignore trailing slashes -->
+<a id="pass7" href="/home">Pass 7</a>
+<a id="pass7-identical1" href="/home/">Pass 7</a>
+
+<!-- native links, special-case for an index.html file -->
+<a id="pass8" href="/home/">Pass 8</a>
+<a id="pass8-identical1" href="/home/index.html">Pass 8</a>
+
+<!-- native links, index.*** file, should exclude any index.[php,html,etc] file -->
+<a id="pass9" href="/home/">Pass 9</a>
+<a id="pass9-identical1" href="/home/index.foo">Pass 9</a>
+
+<!-- native links, same resource, different hash within same page -->
+<a id="pass10" href="/home">Pass 10</a>
+<a id="pass10-identical1" href="/home#foo">Pass 10</a>
+
+<!-- native links, with different accessible name -->
+<a id="pass11" href="/home">Pass 11</a>
+<a id="pass11-identical-resource-but-different-name" href="/home"
+	>Pass 11, but different accessible name</a
+>
+
+<!-- ARIA links, with different accessible name -->
+<button id="pass12" role="link">Pass 12</button>
+<button id="pass12-identical-resource-but-different-name" role="link">
+	Pass 12, but different accessible name
+</button>
+
+<!-- area[href], with parent map, which is referred by img[usemap], with different accessible name -->
+<map name="shapes-map">
+	<area
+		id="pass13"
+		shape="rect"
+		aria-label="Pass 13"
+		coords="19,28,222,228"
+		href="foo"
+	/>
+	<area
+		id="pass13-identical-resource-but-different-name"
+		shape="circle"
+		aria-label="Pass 13, but different accessible name"
+		coords="361,132,96"
+		href="foo"
+	/>
+</map>
+<img src="shape.png" usemap="#shapes-map" alt="" />
+
+<!-- AREA with same accessible name, and serve same purpose -->
+<map name="infographic-pass">
+	<area
+		id="pass14"
+		shape="poly"
+		coords="130,147,200,107,254,219,130,228"
+		href="https://developer.mozilla.org/docs/Web/HTML"
+		title="HTML Logo"
+	/>
+	<area
+		id="pass14-identical1"
+		shape="poly"
+		coords="130,147,130,228,6,219,59,107"
+		href="https://developer.mozilla.org/docs/Web/HTML"
+		target="_blank"
+		aria-label="HTML Logo"
+	/>
+</map>
+<img
+	usemap="#infographic-pass"
+	src="https://interactive-examples.mdn.mozilla.net/media/examples/mdn-info2.png"
+	alt="MDN infographic"
+/>
+
+<!-- native links, same resource (one specified as relative and another as absolute) -->
+<!-- Note: using the hostname and protocol here as need to represent relative and absolute url -->
+<a id="pass15" href="/home">Pass 15</a>
+<a id="pass15-identical1" href="http://localhost:9876/home">Pass 15</a>
+
+<!-- incomplete -->
+<!-- Note:identical incomplete nodes are appended as relatedNodes -->
+<!-- native links with different purpose -->
+<a id="incomplete1" href="/home/#/bar">Incomplete 1</a>
+<a id="incomplete1-identical1" href="/home/#/">Incomplete 1</a>
+
+<!-- native links with different query params -->
+<a id="incomplete2" href="/search/?q=foo">Incomplete 2</a>
+<a id="incomplete2-identical1" href="/search/?q=bar">Incomplete 2</a>
+
+<!-- native links with different `shebang` -->
+<a id="incomplete3" href="/search/?q=foo#!/foo">Incomplete 3</a>
+<a id="incomplete3-identical1" href="/search/?q=foo#!/bar">Incomplete 3</a>
+
+<!-- ARIA links with no href but same accessible name -->
+<button id="incomplete4" role="link">Incomplete 4</button>
+<div id="incomplete4-identical1" role="link">Incomplete 4</div>
+
+<!-- native and aria links with different resource -->
+<button id="incomplete5" role="link">Incomplete 6</button>
+<a id="incomplete5-identical1" href="foo.html">Incomplete 6</a>
+
+<!-- native links same accesisble names not serving same purpose (casing is normalised) -->
+<a id="incomplete6" href="/home/#/foo">INCOMPLETE 7</a>
+<a id="incomplete6-identical1" href="/home/#/bar">Incomplete 7</a>
+
+<!-- native links same accessible name not serving same purpose (whitespace is normalised) -->
+<a id="incomplete7" href="/home/#/foo"> Incomplete 8 </a>
+<a id="incomplete7-identical1" href="/home/#/bar">Incomplete 8</a>
+
+<!-- native links with same accessible name and not serving same purpose (punctuations is normalised) -->
+<a id="incomplete8" href="/foo">Incomplete 9 >>></a>
+<a id="incomplete8-identical1" href="/bar">Incomplete 9</a>
+
+<!-- native links with same accessible name and not serving same purpose (punctuations is normalised) -->
+<a id="incomplete9" href="/foo">Incomplete 10!</a>
+<a id="incomplete9-identical1" href="/bar">Incomplete 10</a>
+
+<!-- native links with same accessible name and not serving same purpose (emoji is normalised) -->
+<a id="incomplete10" href="/foo">Incomplete 11!</a>
+<a id="incomplete10-identical1" href="/bar">🤘 Incomplete 11 🤘</a>
+
+<!-- native links with same accessible name but different resource  -->
+<a id="incomplete11" href="/search/?q=foo#/foo">Incomplete 12</a>
+<a id="incomplete11-identical1" href="/search/?q=foo#/bar">Incomplete 12</a>
+
+<!-- AREA with same accessible name, but different resource -->
+<map name="infographic-incomplete">
+	<area
+		id="incomplete12"
+		shape="poly"
+		coords="130,147,200,107,254,219,130,228"
+		href="https://developer.mozilla.org/docs/Web/HTML"
+		title="HTML"
+	/>
+	<area
+		id="incomplete12-identical1"
+		shape="poly"
+		coords="130,147,130,228,6,219,59,107"
+		href="https://developer.mozilla.org/docs/Web/CSS"
+		target="_blank"
+		title="HTML"
+	/>
+	<area
+		id="incomplete12-identical2"
+		shape="poly"
+		coords="130,147,200,107,130,4,59,107"
+		href="https://developer.mozilla.org/docs/Web/JavaScript"
+		target="_blank"
+		aria-label="HTML"
+	/>
+</map>
+<img
+	usemap="#infographic-incomplete"
+	src="https://interactive-examples.mdn.mozilla.net/media/examples/mdn-info2.png"
+	alt="MDN infographic"
+/>
+
+<!-- native links with different purpose -->
+<a id="incomplete13" href="https://facebook.com">follow us</a>
+<a id="incomplete13-identical1" href="https://instagram.com">follow us</a>
+
+<!-- multiple native links with differnt URLS with same filename but different pathname -->
+<a id="incomplete14" href="/test/integration/full/directory-one/foo.html"
+	>Incomplete 14</a
+>
+<a id="incomplete14-identical1" href="foo.html">Incomplete 14</a>
+<a id="incomplete14-identical2" href="../directory-two/foo.html"
+	>Incomplete 14</a
+>
+
+<!-- inapplicable -->
+<!-- area element has no parent map -->
+<area
+	id="inapplicable1"
+	shape="poly"
+	coords="130,147,200,107,254,219,130,228"
+	href="https://developer.mozilla.org/docs/Web/HTML"
+	title="Inapplicable AREA"
+/>
+
+<!-- area has map parent, which has no name -->
+<map>
+	<area
+		id="inapplicable2"
+		shape="poly"
+		coords="130,147,200,107,254,219,130,228"
+		href="https://developer.mozilla.org/docs/Web/HTML"
+		title="Inapplicable AREA"
+	/>
+</map>
+
+<!-- area has map parent, which has name, but not referred by img[usemap] -->
+<map name="iam-not-used-anywhere">
+	<area
+		id="inapplicable3"
+		shape="poly"
+		coords="130,147,200,107,254,219,130,228"
+		href="https://developer.mozilla.org/docs/Web/HTML"
+		title="Inapplicable AREA"
+	/>
+</map>
+
+<!-- native link with no href attribute -->
+<a id="inapplicable4">Inapplicable 4</a>
+
+<!-- AREA with map, referred by img, has no href-->
+<map name="infographic-inapplicable5">
+	<area
+		id="inapplicable5"
+		shape="poly"
+		coords="130,147,200,107,254,219,130,228"
+		title="Inapplicable HTML Logo"
+	/>
+</map>
+<img usemap="#infographic-inapplicable5" alt="MDN infographic" />

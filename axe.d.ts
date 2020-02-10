@@ -41,7 +41,7 @@ declare namespace axe {
 		values: TagValue[] | string[];
 	}
 	interface RunOptions {
-		runOnly?: RunOnly;
+		runOnly?: RunOnly | TagValue[] | string[];
 		rules?: Object;
 		iframes?: boolean;
 		elementRef?: boolean;

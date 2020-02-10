@@ -169,6 +169,10 @@
 			"description": "HTML要素に指定された有効なlangおよびxml:lang属性の両方がページの基本言語と一致することを確認します",
 			"help": "HTML要素に指定されたlangおよびxml:lang属性は同じ基本言語を持たなければなりません"
 		},
+		"identical-links-same-purpose": {
+			"description": "同じアクセシブルな名前を持つ複数のリンクが同様の目的を果たすことを確認します",
+			"help": "同じ名前を持つ複数のリンクは同様の目的を持っています"
+		},
 		"image-alt": {
 			"description": "<img>要素に代替テキストが存在する、またはnoneまたはpresentationのロールが存在することを確認します",
 			"help": "画像には代替テキストがなければなりません"
@@ -214,12 +218,16 @@
 			"help": "mainランドマークは他のランドマークに含まれるべきではありません"
 		},
 		"landmark-no-duplicate-banner": {
-			"description": "bannerランドマークがドキュメント内に最大で1つのみであることを確認します",
+			"description": "ドキュメント内のbannerランドマークが最大で1つのみであることを確認します",
 			"help": "ドキュメントに複数のbannerランドマークが存在してはなりません"
 		},
 		"landmark-no-duplicate-contentinfo": {
-			"description": "contentinfoランドマークがドキュメント内に最大で1つのみであることを確認します",
+			"description": "ドキュメント内のcontentinfoランドマークが最大で1つのみであることを確認します",
 			"help": "ドキュメントに複数のcontentinfoランドマークが存在してはなりません"
+		},
+		"landmark-no-duplicate-main": {
+			"description": "ドキュメント内のmainランドマークが最大で1つのみであることを確認します",
+			"help": "ドキュメントに複数のmainランドマークが存在してはなりません"
 		},
 		"landmark-one-main": {
 			"description": "ドキュメントのランドマークが1つのみであること、およびページ内の各iframeのランドマークが最大で1つであることを確認します",
@@ -265,6 +273,10 @@
 			"description": "<meta name=\"viewport\">がテキストの拡大縮小およびズーミングを無効化しないことを確認します",
 			"help": "ズーミングや拡大縮小は無効にしてはなりません"
 		},
+		"no-autoplay-audio": {
+			"description": "<video> または <audio> 要素が音声を停止またはミュートするコントロールなしに音声を3秒より長く自動再生しないことを確認します",
+			"help": "<video> または <audio> 要素は音声を自動再生しません"
+		},
 		"object-alt": {
 			"description": "<object>要素に代替テキストが存在することを確認します",
 			"help": "<object>要素には代替テキストがなければなりません"
@@ -304,6 +316,10 @@
 		"skip-link": {
 			"description": "すべてのスキップリンクにフォーカス可能なターゲットがあることを確認します",
 			"help": "スキップリンクのターゲットが存在し、フォーカス可能でなければなりません"
+		},
+		"svg-img-alt": {
+			"description": "img、graphics-document または graphics-symbol ロールを持つ svg 要素にアクセシブルなテキストがあることを確認します",
+			"help": "img ロールを持つ svg 要素に代替テキストが存在します"
 		},
 		"tabindex": {
 			"description": "tabindex属性値が0より大きくないことを確認します",
@@ -345,16 +361,28 @@
 	"checks": {
 		"abstractrole": {
 			"pass": "抽象ロールは使用されていません",
-			"fail": "抽象ロールは直接使用できません"
+			"fail": {
+				"singular": "抽象ロールは直接使用できません: ${data.values}",
+				"plural": "抽象ロールは直接使用できません: ${data.values}"
+			}
 		},
 		"aria-allowed-attr": {
 			"pass": "ARIA属性が定義されたロールに対して正しく使用されています",
-			"fail": "ARIA属性は許可されていません:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "ARIA属性は許可されていません: ${data.values}",
+				"plural": "ARIA属性は許可されていません: ${data.values}"
+			}
 		},
 		"aria-allowed-role": {
 			"pass": "ARIAロールは指定された要素に対して許可されています",
-			"fail": "ARIAロールは指定された要素に許可されていません",
-			"incomplete": "ARIAロールはこの要素に許可されていないため、要素が表示されたときはARIAロールを削除する必要があります"
+			"fail": {
+				"singular": "ARIA ロール ${data.values} は指定された要素に許可されていません",
+				"plural": "ARIA ロール ${data.values} は指定された要素に許可されていません"
+			},
+			"incomplete": {
+				"singular": "ARIA ロール ${data.values} この要素に許可されていないため、要素が表示されたときはARIAロールを削除する必要があります",
+				"plural": "ARIA ロール ${data.values} この要素に許可されていないため、要素が表示されたときはARIAロールを削除する必要があります"
+			}
 		},
 		"aria-hidden-body": {
 			"pass": "ドキュメント本体にaria-hidden属性は存在していません",
@@ -367,7 +395,14 @@
 		},
 		"aria-errormessage": {
 			"pass": "サポートされているaria-errormessageの技術を使用しています",
-			"fail": "aria-errormessageの値{{~it.data:value}} `{{=value}}{{~}}`はメッセージを通知する方法を使用しなければなりません　(例えば、aria-live、aria-describedby、role=alert等)"
+			"fail": {
+				"singular": "aria-errormessage の値 `${data.values}` はメッセージを通知する方法を使用しなければなりません (例えば、aria-live、aria-describedby、role=alert等)",
+				"plural": "aria-errormessage の値 `${data.values}` はメッセージを通知する方法を使用しなければなりません (例えば、aria-live、aria-describedby、role=alert等)"
+			}
+		},
+		"fallbackrole": {
+			"pass": "1つのロール値のみ使用されています",
+			"fail": "古いブラウザーではフォールバックロールがサポートされていないため、ロール値は1つのみ使用します"
 		},
 		"has-widget-role": {
 			"pass": "要素にはwidgetロールが存在しています",
@@ -379,7 +414,10 @@
 		},
 		"invalidrole": {
 			"pass": "ARIAロールが有効です",
-			"fail": "ロールは有効なARIAロールのうちの1つでなければなりません"
+			"fail": {
+				"singular": "ロールは有効なARIAロールのうちの1つでなければなりません: ${data.values}",
+				"plural": "ロールは有効なARIAロールのうちの1つでなければなりません: ${data.values}"
+			}
 		},
 		"no-implicit-explicit-label": {
 			"pass": "<label> とアクセシブルな名前の間に不一致はありません",
@@ -387,16 +425,28 @@
 		},
 		"aria-required-attr": {
 			"pass": "すべての必須のARIA属性が存在しています",
-			"fail": "必須のARIA属性が提供されていません:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "必須のARIA属性が提供されていません: ${data.values}",
+				"plural": "必須のARIA属性が提供されていません: ${data.values}"
+			}
 		},
 		"aria-required-children": {
 			"pass": "必須のARIA子ロールが存在しています",
-			"fail": "必須のARIA子ロールが提供されていません:{{~it.data:value}} {{=value}}{{~}}",
-			"incomplete": "ARIAの子ロールが追加されることを求めています:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "必須のARIA子ロールが提供されていません: ${data.values}",
+				"plural": "必須のARIA子ロールが提供されていません: ${data.values}"
+			},
+			"incomplete": {
+				"singular": "ARIAの子ロールを追加することが求められます: ${data.values}",
+				"plural": "ARIAの子ロールを追加することが求められます: ${data.values}"
+			}
 		},
 		"aria-required-parent": {
 			"pass": "必須のARIA親ロールが存在しています",
-			"fail": "必須のARIA親ロールが提供されていません:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "必須のARIA親ロールが提供されていません: ${data.values}",
+				"plural": "必須のARIA親ロールが提供されていません: ${data.values}"
+			}
 		},
 		"aria-unsupported-attr": {
 			"pass": "ARIA属性はサポートされています",
@@ -408,12 +458,21 @@
 		},
 		"aria-valid-attr-value": {
 			"pass": "ARIA属性値が有効です",
-			"fail": "無効なARIA属性値です:{{~it.data:value}} {{=value}}{{~}}",
-			"incomplete": "ページにARIA属性の要素IDが存在しません:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "無効なARIA属性値です: ${data.values}",
+				"plural": "無効なARIA属性値です: ${data.values}"
+			},
+			"incomplete": {
+				"noId": "ARIA 属性の要素IDがページ上に存在しません: ${data.needsReview}",
+				"ariaCurrent": "ARIA 属性値が無効であるため、\"aria-current=true\" として扱われます: ${data.needsReview}"
+			}
 		},
 		"aria-valid-attr": {
 			"pass": "ARIA属性名が有効です",
-			"fail": "無効なARIA属性名です:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "無効なARIA属性名です: ${data.values}",
+				"plural": "無効なARIA属性名です: ${data.values}"
+			}
 		},
 		"valid-scrollable-semantics": {
 			"pass": "要素はフォーカス順序に含まれる要素に対して有効なセマンティクスを持ちます",
@@ -423,6 +482,7 @@
 			"pass": "要素には{{=it.data.contrastRatio}}の十分なコントラスト比があります",
 			"fail": "要素のコントラスト比が不十分です {{=it.data.contrastRatio}}（前景色: {{=it.data.fgColor}}、背景色: {{=it.data.bgColor}}、フォントサイズ: {{=it.data.fontSize}}、フォントの太さ: {{=it.data.fontWeight}}）。コントラスト比{{=it.data.expectedContrastRatio}}を必要とします",
 			"incomplete": {
+				"default": "コントラスト比を判定できません",
 				"bgImage": "背景画像のため、要素の背景色を判定できません",
 				"bgGradient": "背景グラデーションのため、要素の背景色を判定できません",
 				"imgNode": "画像ノードが含まれるため、要素の背景色を判定できません",
@@ -433,19 +493,19 @@
 				"outsideViewport": "ビューポートの外にあるため、要素の背景色を判定できません",
 				"equalRatio": "要素のコントラスト比が背景と1:1です",
 				"shortTextContent": "実際のテキストコンテンツであるかを判断するには要素のコンテンツが短すぎます",
-				"default": "コントラスト比を判定できません"
+				"nonBmp": "要素のコンテンツはテキストではない文字のみを含んでいます"
 			}
 		},
 		"link-in-text-block": {
 			"pass": "リンクは色以外の方法で周囲のテキストと区別できます",
 			"fail": "リンクは色以外の方法で周囲のテキストと区別させる必要があります",
 			"incomplete": {
+				"default": "コントラスト比を判定できません",
 				"bgContrast": "要素のコントラスト比を判定できません。明確なホバー/フォーカススタイルを確認します",
 				"bgImage": "背景画像のため、要素のコントラスト比を判定できません",
 				"bgGradient": "背景グラデーションのため、要素のコントラスト比を判定できません",
 				"imgNode": "画像ノードが含まれるため、要素のコントラスト比を判定できません",
-				"bgOverlap": "要素の重なりにより、要素のコントラスト比を判定できません",
-				"default": "コントラスト比を判定できません"
+				"bgOverlap": "要素の重なりにより、要素のコントラスト比を判定できません"
 			}
 		},
 		"autocomplete-appropriate": {
@@ -458,11 +518,22 @@
 		},
 		"fieldset": {
 			"pass": "フィールドセット内に要素が含まれています",
-			"fail": "{{var code = it.data && it.data.failureCode;}}{{? code === 'no-legend'}}フィールドセットの最初の子要素としてレジェンドが存在しません{{?? code === 'empty-legend'}}スクリーン・リーダーに認識可能なテキストがレジェンドに存在しません{{?? code === 'mixed-inputs'}}フィールドセットに関連性のない入力欄が含まれています{{?? code === 'no-group-label'}}ARIAグループにaria-labelまたはaria-labelledbyが存在しません{{?? code === 'group-mixed-inputs'}}ARIAグループに関連性のない入力欄が含まれています{{??}}要素を含有するフィールドセットまたはARIAグループがありません{{?}}"
+			"fail": {
+				"default": "要素を含有するフィールドセットまたはARIAグループがありません",
+				"no-legend": "フィールドセットの最初の子要素としてレジェンドが存在しません",
+				"empty-legend": "スクリーン・リーダーに認識可能なテキストがレジェンドに存在しません",
+				"mixed-inputs": "フィールドセットに関連性のない入力欄が含まれています",
+				"no-group-label": "ARIAグループにaria-labelまたはaria-labelledbyが存在しません",
+				"group-mixed-inputs": "ARIAグループに関連性のない入力欄が含まれています"
+			}
 		},
 		"group-labelledby": {
 			"pass": "\"{{=it.data.name}}\" という名前を持つ要素には、共通のラベルおよび一意のラベルがあり、aria-labelledbyを通じて参照されます",
-			"fail": "{{var code = it.data && it.data.failureCode;}} \"{{=it.data.name}}\" という名前を持つ要素すべてに対してaria-labelledbyを通じて参照される {{? code === 'no-shared-label' }} 共通のラベル {{?? code === 'no-unique-label' }} 一意のラベル {{??}} 共通のラベルおよび一意のラベル両方 {{?}} がありません"
+			"fail": {
+				"default": "\"${data.name}\" という名前の要素すべてに、共通のラベルおよび aria-labelledby で参照された一意のラベルの両方がありません",
+				"no-shared-label": "\"${data.name}\" という名前の要素すべてに、aria-labelledby で参照された共有のラベルがありません",
+				"no-unique-label": "\"${data.name}\" という名前の要素すべてに、aria-labelledby で参照された一意のラベルがありません"
+			}
 		},
 		"accesskeys": {
 			"pass": "アクセスキー属性値は一意です",
@@ -479,6 +550,10 @@
 		"focusable-element": {
 			"pass": "要素はフォーカス可能です",
 			"fail": "要素はフォーカス可能であるべきです"
+		},
+		"focusable-modal-open": {
+			"pass": "モーダル開いている時、フォーカス可能な要素がありません",
+			"incomplete": "現在の状態で、フォーカス可能な要素がタブ移動可能になっていないことを確認します"
 		},
 		"focusable-no-name": {
 			"pass": "要素がタブ順序にない、またはアクセシブルなテキストが存在しています",
@@ -574,7 +649,10 @@
 		},
 		"listitem": {
 			"pass": "リスト項目に<ul>、<ol>、またはrole=\"list\"親要素が存在しています",
-			"fail": "リスト項目に<ul>、<ol>、またはrole=\"list\"親要素が存在していません"
+			"fail": {
+				"default": "リスト項目に <ul>、<ol> 親要素が存在していません",
+				"roleNotValid": "リスト項目にロールまたは role=\"list\" のついていない<ul>、<ol> 親要素が存在していません"
+			}
 		},
 		"only-dlitems": {
 			"pass": "リスト要素に<dt>または<dd>要素内で許可された直接の子要素のみが存在しています",
@@ -582,7 +660,10 @@
 		},
 		"only-listitems": {
 			"pass": "リスト要素に<li>要素内で許可された直接の子要素のみが存在しています",
-			"fail": "リスト要素に<li>要素内で許可されていない直接の子要素が存在しています"
+			"fail": {
+				"default": "リスト要素に<li>要素内で許可されていない直接の子要素が存在しています",
+				"roleNotValid": "リスト要素に許可されていないロールを持った直接の子要素が存在しています: ${data.roles}"
+			}
 		},
 		"structured-dlitems": {
 			"pass": "空ではない場合、要素に<dt>および<dd>要素の両方が存在しています",
@@ -600,6 +681,11 @@
 			"pass": "iframeはaxe-coreでテストされました",
 			"fail": "iframeはaxe-coreでテストできませんでした",
 			"incomplete": "iframeはまだaxe-coreでテストする必要があります"
+		},
+		"no-autoplay-audio": {
+			"pass": "<video> または <audio> は許可された時間より長く音声を出力しない、もしくはコントールするメカニズムを持っています",
+			"fail": "<video> または <audio> は許可された時間より長く音声を出力し、かつコントロールするメカニズムを持っていません",
+			"incomplete": "<video> または <audio> が許可された時間より長く音声を出力しない、またはコントロールするメカニズムを提供していることを確認します"
 		},
 		"css-orientation-lock": {
 			"pass": "ディスプレイは操作可能であり、向きを固定する機能は存在しません",
@@ -621,6 +707,10 @@
 		"heading-order": {
 			"pass": "見出しの順序が有効です",
 			"fail": "見出しの順序が無効です"
+		},
+		"identical-links-same-purpose": {
+			"pass": "同じ名前で異なるURLに遷移する他のリンクはありません",
+			"incomplete": "リンクが同じ目的を持っていること、または意図的に不明瞭になっていることを確認します"
 		},
 		"internal-link-present": {
 			"pass": "有効なスキップリンクが存在しています",
@@ -673,7 +763,10 @@
 		},
 		"avoid-inline-spacing": {
 			"pass": "テキストの間隔に影響する '!important' のついたインラインスタイルは指定されていません",
-			"fail": "ほとんどのブラウザーで上書きすることはサポートされていないため、インラインスタイル {{=it.data.join(', ')}}, から '!important' を削除します"
+			"fail": {
+				"singular": "ほとんどのブラウザーで上書きすることはサポートされていないため、インラインスタイル ${data.values} から '!important' を削除します",
+				"plural": "ほとんどのブラウザーで上書きすることはサポートされていないため、インラインスタイル ${data.values} から '!important' を削除します"
+			}
 		},
 		"button-has-visible-text": {
 			"pass": "要素にスクリーン・リーダーが認識可能な内部テキストが存在しています",
@@ -685,7 +778,7 @@
 		},
 		"exists": {
 			"pass": "要素は存在していません",
-			"fail": "要素が存在しています"
+			"incomplete": "要素が存在しています"
 		},
 		"has-alt": {
 			"pass": "要素にalt属性が存在しています",
@@ -704,7 +797,10 @@
 			"fail": "要素にalt属性が存在していない、またはalt属性が空です"
 		},
 		"non-empty-if-present": {
-			"pass": "要素 {{?it.data}}に空ではないvalue属性が存在しています{{??}}value属性が存在していません{{?}}",
+			"pass": {
+				"default": "要素に value 属性が存在しません",
+				"has-label": "要素に空ではない value 属性が存在しています"
+			},
 			"fail": "要素にvalue属性が存在し、value属性が空です"
 		},
 		"non-empty-title": {
@@ -722,6 +818,10 @@
 		"role-presentation": {
 			"pass": "要素のデフォルトのセマンティクスがrole=\"presentation\"で上書きされました",
 			"fail": "要素のデフォルトのセマンティクスはrole=\"presentation\"で上書きされませんでした"
+		},
+		"svg-non-empty-title": {
+			"pass": "要素にタイトルとしての子が存在します",
+			"fail": "要素にタイトルとしての子が存在しません"
 		},
 		"caption-faked": {
 			"pass": "テーブルの一行目がキャプションとして使用されていません",
