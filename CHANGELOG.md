@@ -25,6 +25,8 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
+- **color-contrast:** properly pass options to check ([#2033](https://github.com/dequelabs/axe-core/issues/2033)) ([26b99c0](https://github.com/dequelabs/axe-core/commit/26b99c0a511bd6fffaaca7535d732f26b39ef46e))
+- **commons:** avoid unicode regex encoding in axe.min.js ([#2024](https://github.com/dequelabs/axe-core/issues/2024)) ([ae90dc4](https://github.com/dequelabs/axe-core/commit/ae90dc47521f6047f71befcb3551686cf857208d))
 - add tags with dots for wcag sc ([#1849](https://github.com/dequelabs/axe-core/issues/1849)) ([2f1ab36](https://github.com/dequelabs/axe-core/commit/2f1ab36354add65fe77be3e2831278ce37c3bbab))
 - compute orientation lock from various transformation func… ([#1937](https://github.com/dequelabs/axe-core/issues/1937)) ([c987de0](https://github.com/dequelabs/axe-core/commit/c987de0ce7cfcde5a280a9d6c643879093df1bcd))
 - ignores axe.ping responses that do not contain axe=true ([26cb1fb](https://github.com/dequelabs/axe-core/commit/26cb1fbdd7127c421bb7ca60e07d72385c6e2ea1))
