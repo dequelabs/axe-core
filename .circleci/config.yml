@@ -211,6 +211,7 @@ workflows:
           type: approval
           requires:
             - test_unix
+            - test_win
             - test_examples
             - test_locales
             - build_api_docs
