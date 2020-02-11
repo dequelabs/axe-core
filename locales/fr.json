@@ -838,5 +838,5 @@
 			"failureMessage": "Corriger tous les éléments suivants : {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 		}
 	},
-	"incompleteFallbackMessage": "axee n'a pu en déterminr la raison. Il est temps de sortir l'inspecteur d'éléments!"
+  "incompleteFallbackMessage": "axe n'a pu en déterminer la raison. Il est temps de sortir l'inspecteur d'éléments!"
 }
