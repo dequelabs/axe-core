@@ -52,7 +52,7 @@
 	"typings": "axe.d.ts",
 	"standard-version": {
 		"scripts": {
-			"postbump": "npm run sri-update"
+			"postbump": "npm ci && npm run sri-update"
 		}
 	},
 	"scripts": {
