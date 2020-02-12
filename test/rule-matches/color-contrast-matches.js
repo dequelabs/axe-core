@@ -75,6 +75,32 @@ describe('color-contrast-matches', function() {
 		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
 	});
 
+	it('should not match input when there is text that is out of the container', function() {
+		fixture.innerHTML =
+			'<input style="text-indent: -9999px" type="submit" value="Search" />';
+		var target = fixture.querySelector('input');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
+	it('should not match select when there is text that is out of the container', function() {
+		fixture.innerHTML =
+			'<select style="text-indent: -9999px">' +
+			'<option selected>My text</option>' +
+			'</select>';
+		var target = fixture.querySelector('select');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
+	it('should not match textarea when there is text that is out of the container', function() {
+		fixture.innerHTML =
+			'<textarea style="text-indent: -9999px">My text</textarea>';
+		var target = fixture.querySelector('textarea');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
 	it('should not match when there is text that is out of the container with overflow hidden', function() {
 		fixture.innerHTML =
 			'<div style="color: yellow; width: 100px; overflow: hidden; text-indent: 200px; background-color: white;" id="target">' +
