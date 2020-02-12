@@ -39,7 +39,7 @@ jobs:
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
-      - run: npm install
+      - run: npm ci
       - save_cache:
           key: v8-cache-unix-{{ checksum "package.json" }}
           paths:
@@ -51,7 +51,7 @@ jobs:
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_win
-      - run: npm install
+      - run: npm ci
       - save_cache:
           key: v8-cache-win-{{ checksum "package.json" }}
           paths:
@@ -158,6 +158,7 @@ jobs:
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
       - run: npm run build
+      - run: npm run sri-validate
       - run: npm publish
 
   # Create a GitHub release.
