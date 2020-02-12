@@ -1,7 +1,7 @@
 # defaults
 node_modules
 npm-shrinkwrap.json
-package-lock.json
+doc/examples/*/package-lock.json
 .DS_Store
 .vscode
 
