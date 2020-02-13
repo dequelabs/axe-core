@@ -44,12 +44,22 @@ describe('color-contrast', function() {
 
 	it('should return true when there is sufficient contrast because of font weight', function() {
 		var params = checkSetup(
-			'<div style="color: gray; background-color: white; font-size: 14pt; font-weight: bold" id="target">' +
-				'My text</div>'
+			'<div style="color: gray; background-color: white; font-size: 14pt; font-weight: 900" id="target">' +
+				'<span style="font-weight:lighter">My text</span></div>'
 		);
 
 		assert.isTrue(contrastEvaluate.apply(checkContext, params));
 		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
+	it('should return false when there is not sufficient contrast because of font weight', function() {
+		var params = checkSetup(
+			'<div style="color: gray; background-color: white; font-size: 14pt; font-weight: 100" id="target">' +
+				'<span style="font-weight:bolder">My text</span></div>'
+		);
+
+		assert.isFalse(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._relatedNodes, [params[0]]);
 	});
 
 	it('should return true when there is sufficient contrast because of font size', function() {

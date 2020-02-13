@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.1](https://github.com/dequelabs/axe-core/compare/v3.5.0...v3.5.1) (2020-02-12)
+
+### Bug Fixes
+
+- **color-contrast:** parse font-weight value as number ([#2031](https://github.com/dequelabs/axe-core/issues/2031)) ([#2040](https://github.com/dequelabs/axe-core/issues/2040)) ([0bb2166](https://github.com/dequelabs/axe-core/commit/0bb21669f75b3adc0e3345c85680d437c57f94d8))
+- **color-contrast:** properly pass options to check ([#2033](https://github.com/dequelabs/axe-core/issues/2033)) ([26b99c0](https://github.com/dequelabs/axe-core/commit/26b99c0a511bd6fffaaca7535d732f26b39ef46e))
+- **commons:** avoid unicode regex encoding in axe.min.js ([#2024](https://github.com/dequelabs/axe-core/issues/2024)) ([ae90dc4](https://github.com/dequelabs/axe-core/commit/ae90dc47521f6047f71befcb3551686cf857208d))
+- **sri-history:** correct SRI for various versions ([#2041](https://github.com/dequelabs/axe-core/issues/2041)) ([940c017](https://github.com/dequelabs/axe-core/commit/940c01708cede33e796972ce810a815ddf492ba4))
+
 ## [3.5.0](https://github.com/dequelabs/axe-core/compare/v3.4.0...v3.5.0) (2020-02-04)
 
 ### Features
