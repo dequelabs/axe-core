@@ -1,7 +1,7 @@
 {
 	"description": "aria-required-parent test",
 	"rule": "aria-required-parent",
-	"violations": [["#fail1"], ["#fail2"], ["#fail3"]],
+	"violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"]],
 	"passes": [
 		["#pass1"],
 		["#pass2"],
@@ -16,6 +16,11 @@
 		["#pass11"],
 		["#pass12"],
 		["#pass13"],
-		["#pass14"]
+		["#pass14"],
+		["#pass15"],
+		["#pass16"],
+		["#pass17"],
+		["#pass18"],
+		["#pass19"]
 	]
 }
