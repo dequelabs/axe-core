@@ -48,7 +48,7 @@ Major releases may remove rules.
 | **Rules**                                     |                                                         |                       |                            |
 | Add rules                                     | May add                                                 | May add               | Will not add               |
 | Disable or remove rules                       | May remove (will remove previously deprecated rules)    | May disable or remove | Will not disable or remove |
-| Rule tags                                     | May add or rmeove                                       | May add or rmeove     | Will not change            |
+| Rule tags                                     | May add or remove                                       | May add or remove     | Will not change            |
 | Deprecate rules                               | May deprecate                                           | May deprecate         | Will not deprecate         |
 
 \*_New OSes, Browsers, ATs, new standards (e.g. introduction of ARIA), new versions of standards (e.g. WCAG 2.1)_
