@@ -220,4 +220,26 @@ describe('dom.urlPropsFromAttribute', function() {
 		);
 		assert.deepEqual(actual, expected);
 	});
+
+	it('returns URL properties for `A` with `HREF` that is contained in SVG document', function() {
+		var vNode = queryFixture(
+			'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
+				'<a id="target" href="http://mysite.com/directory/widgets/calendar.html" aria-label="Book tour"><circle cx="50" cy="40" r="35" /></a>' +
+				'</svg>'
+		);
+		var expected = {
+			filename: 'calendar.html',
+			hash: '',
+			hostname: 'mysite.com',
+			pathname: '/directory/widgets/',
+			port: '',
+			protocol: 'http:',
+			search: {}
+		};
+		var actual = axe.commons.dom.urlPropsFromAttribute(
+			vNode.actualNode,
+			'href'
+		);
+		assert.deepEqual(actual, expected);
+	});
 });
