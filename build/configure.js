@@ -319,15 +319,15 @@ function buildRules(grunt, options, commons, callback) {
 				issueType.push('failure');
 			}
 			if (canIncomplete) {
-				issueType.push('needs review');
+				issueType.push('needs&nbsp;review');
 			}
 
 			rules.push([
 				rule.id,
 				entities.encode(rule.metadata.description),
 				impact,
-				rule.tags.join(', '),
-				issueType.join(', ')
+				rule.tags.join(',<br>'),
+				issueType.join(',<br>')
 			]);
 			if (tags.length) {
 				rule.enabled = !!rule.tags.filter(function(t) {
