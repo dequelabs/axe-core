@@ -43,27 +43,27 @@ function buildRules(grunt, options, commons, callback) {
 		};
 		var descriptions = {
 			wcag20: {
-				title: 'WCAG 2.0 Level A & AA rules',
+				title: 'WCAG 2.0 Level A & AA Rules',
 				rules: []
 			},
 			wcag21: {
-				title: 'WCAG 2.1 Level A & AA rules',
+				title: 'WCAG 2.1 Level A & AA Rules',
 				rules: []
 			},
 			bestPractice: {
-				title: 'Best practices rules',
+				title: 'Best Practices Rules',
 				intro:
 					'Rules that do not necessarily conform to WCAG success criterion but are industry accepted practices that improve the user experience.',
 				rules: []
 			},
 			experimental: {
-				title: 'Experimental rules',
+				title: 'Experimental Rules',
 				intro:
 					'Rules we are still testing and developing. They are not enabled by default in axe-core, but are enabled for the axe browser extensions.',
 				rules: []
 			},
 			deprecated: {
-				title: 'Deprecated rules',
+				title: 'Deprecated Rules',
 				intro:
 					'Deprecated rules are not enabled by default and will be removed in the next major release.',
 				rules: []

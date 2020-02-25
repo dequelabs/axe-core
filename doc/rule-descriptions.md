@@ -2,13 +2,13 @@
 
 ## Table of Contents
 
-- [WCAG 2.0 Level A & AA rules](#wcag-20-level-a--aa-rules)
-- [WCAG 2.1 Level A & AA rules](#wcag-21-level-a--aa-rules)
-- [Best practices rules](#best-practices-rules)
-- [Experimental rules](#experimental-rules)
-- [Deprecated rules](#deprecated-rules)
+- [WCAG 2.0 Level A & AA Rules](#wcag-20-level-a--aa-rules)
+- [WCAG 2.1 Level A & AA Rules](#wcag-21-level-a--aa-rules)
+- [Best Practices Rules](#best-practices-rules)
+- [Experimental Rules](#experimental-rules)
+- [Deprecated Rules](#deprecated-rules)
 
-## WCAG 2.0 Level A & AA rules
+## WCAG 2.0 Level A & AA Rules
 
 | Rule ID                     | Description                                                                                                   | Impact            | Tags                                                                                  | Issue Type            |
 | :-------------------------- | :------------------------------------------------------------------------------------------------------------ | :---------------- | :------------------------------------------------------------------------------------ | :-------------------- |
@@ -60,14 +60,14 @@
 | valid-lang                  | Ensures lang attributes have valid values                                                                     | Serious           | cat.language, wcag2aa, wcag312                                                        | failure               |
 | video-caption               | Ensures &lt;video&gt; elements have captions                                                                  | Critical          | cat.text-alternatives, wcag2a, wcag122, section508, section508.22.a                   | needs review          |
 
-## WCAG 2.1 Level A & AA rules
+## WCAG 2.1 Level A & AA Rules
 
 | Rule ID              | Description                                                                                   | Impact  | Tags                         | Issue Type |
 | :------------------- | :-------------------------------------------------------------------------------------------- | :------ | :--------------------------- | :--------- |
 | autocomplete-valid   | Ensure the autocomplete attribute is correct and suitable for the form field                  | Serious | cat.forms, wcag21aa, wcag135 | failure    |
 | avoid-inline-spacing | Ensure that text spacing set through style attributes can be adjusted with custom stylesheets | Serious | wcag21aa, wcag1412           | failure    |
 
-## Best practices rules
+## Best Practices Rules
 
 Rules that do not necessarily conform to WCAG success criterion but are industry accepted practices that improve the user experience.
 
@@ -100,7 +100,7 @@ Rules that do not necessarily conform to WCAG success criterion but are industry
 | tabindex                            | Ensures tabindex attribute values are not greater than 0                                             | Serious            | cat.keyboard, best-practice                | failure               |
 | table-duplicate-name                | Ensure that tables do not have the same summary and caption                                          | Minor              | cat.tables, best-practice                  | failure               |
 
-## Experimental rules
+## Experimental Rules
 
 Rules we are still testing and developing. They are not enabled by default in axe-core, but are enabled for the axe browser extensions.
 
@@ -116,7 +116,7 @@ Rules we are still testing and developing. They are not enabled by default in ax
 | table-fake-caption          | Ensure that tables with a caption use the &lt;caption&gt; element.                                                                                  | Serious  | cat.tables, experimental, wcag2a, wcag131, section508, section508.22.g | failure               |
 | td-has-header               | Ensure that each non-empty data cell in a large table has one or more table headers                                                                 | Critical | cat.tables, experimental, wcag2a, wcag131, section508, section508.22.g | failure               |
 
-## Deprecated rules
+## Deprecated Rules
 
 Deprecated rules are not enabled by default and will be removed in the next major release.
 
