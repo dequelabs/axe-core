@@ -26,7 +26,10 @@ function getLocale(grunt, options) {
 }
 
 function makeHeaderLink(title) {
-	return title.replace(/ /g, '-').toLowerCase();
+	return title
+		.replace(/ /g, '-')
+		.replace(/[\.&]/g, '')
+		.toLowerCase();
 }
 
 function buildRules(grunt, options, commons, callback) {

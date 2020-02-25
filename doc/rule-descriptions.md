@@ -2,8 +2,8 @@
 
 ## Table of Contents
 
-- [WCAG 2.0 Level A & AA rules](#wcag-2.0-level-a-&-aa-rules)
-- [WCAG 2.1 Level A & AA rules](#wcag-2.1-level-a-&-aa-rules)
+- [WCAG 2.0 Level A & AA rules](#wcag-20-level-a--aa-rules)
+- [WCAG 2.1 Level A & AA rules](#wcag-21-level-a--aa-rules)
 - [Best practices rules](#best-practices-rules)
 - [Experimental rules](#experimental-rules)
 - [Deprecated rules](#deprecated-rules)
