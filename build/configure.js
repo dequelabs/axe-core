@@ -326,8 +326,8 @@ function buildRules(grunt, options, commons, callback) {
 				rule.id,
 				entities.encode(rule.metadata.description),
 				impact,
-				rule.tags.join(',<br>'),
-				issueType.join(',<br>')
+				rule.tags.join(', '),
+				issueType.join(', ')
 			]);
 			if (tags.length) {
 				rule.enabled = !!rule.tags.filter(function(t) {
