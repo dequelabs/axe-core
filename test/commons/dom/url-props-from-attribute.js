@@ -49,6 +49,27 @@ describe('dom.urlPropsFromAttribute', function() {
 		assert.deepEqual(actual, expected);
 	});
 
+	it('returns URL properties when `A` with empty `HREF`', function() {
+		var vNode = queryFixture('<a id="target" href="">See commons tests</a>');
+		var actual = axe.commons.dom.urlPropsFromAttribute(
+			vNode.actualNode,
+			'href'
+		);
+		/**
+		 * Note:
+		 * Given `a` has empty `href`, the url props will depend on the context in which the page is loaded
+		 * eg:
+		 * 	- http://localhost:9876/test/commons
+		 *  - http://localhost:9876/test/commons/?grep=url...
+		 *
+		 * Hence only asserting the what we know to be static values
+		 */
+		assert.equal(actual.protocol, 'http:');
+		assert.equal(actual.hostname, 'localhost');
+		assert.equal(actual.port, '9876');
+		assert.equal(actual.pathname, '/test/commons/');
+	});
+
 	it('returns URL properties for `A` with `HREF` (having HTTPS protocol)', function() {
 		var vNode = queryFixture(
 			'<a id="target" href="https://facebook.com">follow us on Facebook</a>'
@@ -241,5 +262,30 @@ describe('dom.urlPropsFromAttribute', function() {
 			'href'
 		);
 		assert.deepEqual(actual, expected);
+	});
+
+	it('returns URL properties for `A` with empty `HREF` that is contained in SVG document', function() {
+		var vNode = queryFixture(
+			'<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
+				'<a id="target" href="" aria-label="Book tour"><circle cx="50" cy="40" r="35" /></a>' +
+				'</svg>'
+		);
+		var actual = axe.commons.dom.urlPropsFromAttribute(
+			vNode.actualNode,
+			'href'
+		);
+		/**
+		 * Note:
+		 * Given `a` has empty `href`, the url props will depend on the context in which the page is loaded
+		 * eg:
+		 * 	- http://localhost:9876/test/commons
+		 *  - http://localhost:9876/test/commons/?grep=url...
+		 *
+		 * Hence only asserting the what we know to be static values
+		 */
+		assert.equal(actual.protocol, 'http:');
+		assert.equal(actual.hostname, 'localhost');
+		assert.equal(actual.port, '9876');
+		assert.equal(actual.pathname, '/test/commons/');
 	});
 });
