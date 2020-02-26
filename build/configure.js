@@ -7,7 +7,13 @@ var dot = require('@deque/dot');
 var templates = require('./templates');
 var buildManual = require('./build-manual');
 var entities = new (require('html-entities').AllHtmlEntities)();
+var packageJSON = require('../package.json');
 var dotRegex = /\{\{.+?\}\}/g;
+
+var axeVersion = packageJSON.version.substring(
+	0,
+	packageJSON.version.lastIndexOf('.')
+);
 
 var descriptionTableHeader =
 	'| Rule ID | Description | Impact | Tags | Issue Type |\n| :------- | :------- | :------- | :------- | :------- |\n';
@@ -323,7 +329,7 @@ function buildRules(grunt, options, commons, callback) {
 			}
 
 			rules.push([
-				rule.id,
+				`[${rule.id}](https://dequeuniversity.com/rules/axe/${axeVersion}/${rule.id}?application=RuleDescription)`,
 				entities.encode(rule.metadata.description),
 				impact,
 				rule.tags.join(', '),
