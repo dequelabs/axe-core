@@ -7,10 +7,16 @@ var dot = require('@deque/dot');
 var templates = require('./templates');
 var buildManual = require('./build-manual');
 var entities = new (require('html-entities').AllHtmlEntities)();
+var packageJSON = require('../package.json');
 var dotRegex = /\{\{.+?\}\}/g;
 
-var descriptionHeaders =
-	'| Rule ID | Description | Impact | Tags | Enabled by default | Failures | Needs Review |\n| :------- | :------- | :------- | :------- | :------- | :------- | :------- |\n';
+var axeVersion = packageJSON.version.substring(
+	0,
+	packageJSON.version.lastIndexOf('.')
+);
+
+var descriptionTableHeader =
+	'| Rule ID | Description | Impact | Tags | Issue Type |\n| :------- | :------- | :------- | :------- | :------- |\n';
 
 dot.templateSettings.strip = false;
 
@@ -25,6 +31,13 @@ function getLocale(grunt, options) {
 	}
 }
 
+function makeHeaderLink(title) {
+	return title
+		.replace(/ /g, '-')
+		.replace(/[\.&]/g, '')
+		.toLowerCase();
+}
+
 function buildRules(grunt, options, commons, callback) {
 	var axeImpact = Object.freeze(['minor', 'moderate', 'serious', 'critical']); // TODO: require('../axe') does not work if grunt configure is moved after uglify, npm test breaks with undefined. Complicated grunt concurrency issue.
 	var locale = getLocale(grunt, options);
@@ -34,7 +47,43 @@ function buildRules(grunt, options, commons, callback) {
 			rules: {},
 			checks: {}
 		};
-		var descriptions = [];
+		var descriptions = {
+			wcag20: {
+				title: 'WCAG 2.0 Level A & AA Rules',
+				rules: []
+			},
+			wcag21: {
+				title: 'WCAG 2.1 Level A & AA Rules',
+				rules: []
+			},
+			bestPractice: {
+				title: 'Best Practices Rules',
+				intro:
+					'Rules that do not necessarily conform to WCAG success criterion but are industry accepted practices that improve the user experience.',
+				rules: []
+			},
+			experimental: {
+				title: 'Experimental Rules',
+				intro:
+					'Rules we are still testing and developing. They are not enabled by default in axe-core, but are enabled for the axe browser extensions.',
+				rules: []
+			},
+			deprecated: {
+				title: 'Deprecated Rules',
+				intro:
+					'Deprecated rules are not enabled by default and will be removed in the next major release.',
+				rules: []
+			}
+		};
+
+		var TOC = Object.keys(descriptions)
+			.map(key => {
+				return `- [${descriptions[key].title}](#${makeHeaderLink(
+					descriptions[key].title
+				)})`;
+			})
+			.join('\n');
+
 		var tags = options.tags ? options.tags.split(/\s*,\s*/) : [];
 		var rules = result.rules;
 		var checks = result.checks;
@@ -258,14 +307,33 @@ function buildRules(grunt, options, commons, callback) {
 				metadata.rules[rule.id] = parseMetaData(rule, 'rules'); // Translate rules
 			}
 
-			descriptions.push([
-				rule.id,
+			var rules;
+			if (rule.tags.includes('deprecated')) {
+				rules = descriptions.deprecated.rules;
+			} else if (rule.tags.includes('experimental')) {
+				rules = descriptions.experimental.rules;
+			} else if (rule.tags.includes('best-practice')) {
+				rules = descriptions.bestPractice.rules;
+			} else if (rule.tags.find(tag => tag.startsWith('wcag2a'))) {
+				rules = descriptions.wcag20.rules;
+			} else {
+				rules = descriptions.wcag21.rules;
+			}
+
+			var issueType = [];
+			if (canFail) {
+				issueType.push('failure');
+			}
+			if (canIncomplete) {
+				issueType.push('needs&nbsp;review');
+			}
+
+			rules.push([
+				`[${rule.id}](https://dequeuniversity.com/rules/axe/${axeVersion}/${rule.id}?application=RuleDescription)`,
 				entities.encode(rule.metadata.description),
 				impact,
 				rule.tags.join(', '),
-				rule.enabled === false ? false : true,
-				canFail,
-				canIncomplete
+				issueType.join(', ')
 			]);
 			if (tags.length) {
 				rule.enabled = !!rule.tags.filter(function(t) {
@@ -274,6 +342,30 @@ function buildRules(grunt, options, commons, callback) {
 			}
 			return rule;
 		});
+
+		var ruleTables = Object.keys(descriptions)
+			.map(key => {
+				var description = descriptions[key];
+
+				return `
+## ${description.title}
+
+${description.intro ? description.intro : ''}
+
+${descriptionTableHeader}${description.rules
+					.map(function(row) {
+						return '| ' + row.join(' | ') + ' |';
+					})
+					.join('\n')}`;
+			})
+			.join('\n\n');
+
+		var descriptions = `
+# Rule Descriptions
+
+## Table of Contents
+${TOC}
+${ruleTables}`;
 
 		// Translate failureSummaries
 		metadata.failureSummaries = createFailureSummaryObject(result.misc);
@@ -303,13 +395,7 @@ function buildRules(grunt, options, commons, callback) {
 					blacklist
 				)
 			),
-			descriptions:
-				descriptionHeaders +
-				descriptions
-					.map(function(row) {
-						return '| ' + row.join(' | ') + ' |';
-					})
-					.join('\n')
+			descriptions
 		});
 	});
 }
