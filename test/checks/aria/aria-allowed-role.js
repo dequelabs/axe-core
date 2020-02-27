@@ -232,6 +232,28 @@ describe('aria-allowed-role', function() {
 		);
 	});
 
+	it('returns true when INPUT type is number with role spinbutton', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'number');
+		node.setAttribute('role', 'spinbutton');
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
+	it('returns true when INPUT type is tel with role spinbutton', function() {
+		var node = document.createElement('input');
+		node.setAttribute('type', 'tel');
+		node.setAttribute('role', 'spinbutton');
+		fixture.appendChild(node);
+		flatTreeSetup(fixture);
+		assert.isTrue(
+			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+		);
+	});
+
 	it('returns true when INPUT type is text with role searchbox', function() {
 		var node = document.createElement('input');
 		node.setAttribute('type', 'text');
