@@ -99,6 +99,38 @@
 <a id="pass15" href="/home">Pass 15</a>
 <a id="pass15-identical1" href="http://localhost:9876/home">Pass 15</a>
 
+<!-- ARIA links, with same resource, where one inside svg document -->
+<a id="pass16" href="http://deque.com">Pass 16</a>
+<svg
+	viewBox="0 0 100 100"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+	<a id="pass16-identical1" href="http://deque.com" aria-label="Pass 16">
+		<circle cx="50" cy="40" r="35" />
+	</a>
+</svg>
+
+<!-- ARIA links, with same resource, both are inside svg document -->
+<svg
+	viewBox="0 0 100 100"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+	<a href="http://deque.com" aria-label="Pass 17" id="pass17">
+		<circle cx="50" cy="40" r="35" />
+	</a>
+	<a href="http://deque.com" id="pass17-identical1">
+		<text x="50" y="90" text-anchor="middle">
+			Pass 17
+		</text>
+	</a>
+</svg>
+
+<!-- native links with identical name and empty resource (href) -->
+<a id="pass18" href="">Pass 18</a>
+<a id="pass18-identical1" href="">Pass 18</a>
+
 <!-- incomplete -->
 <!-- Note:identical incomplete nodes are appended as relatedNodes -->
 <!-- native links with different purpose -->
