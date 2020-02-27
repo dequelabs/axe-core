@@ -83,7 +83,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'lib/core',
-						src: ['**/*.js', '!imports/index.js'],
+						src: ['**/*.js', '!imports/index.js', '!polyfills/index.js'],
 						dest: 'tmp/core'
 					}
 				]
@@ -128,6 +128,30 @@ module.exports = function(grunt) {
 							'lib/outro.stub'
 						],
 						dest: 'axe' + lang + '.js'
+					};
+				})
+			},
+			engineSansPolyfills: {
+				options: {
+					process: true
+				},
+				coreFiles: [
+					'tmp/core/index.js',
+					'tmp/core/*/index.js',
+					'tmp/core/**/index.js',
+					'tmp/core/**/*.js',
+					'!tmp/core/polyfills/index.js'
+				],
+				files: langs.map(function(lang, i) {
+					return {
+						src: [
+							'lib/intro.stub',
+							'<%= concat.engineSansPolyfills.coreFiles %>',
+							// include rules / checks / commons
+							'<%= configure.rules.files[' + i + '].dest.auto %>',
+							'lib/outro.stub'
+						],
+						dest: 'axe.sansPolyfills' + lang + '.js'
 					};
 				})
 			},
@@ -195,35 +219,7 @@ module.exports = function(grunt) {
 			}
 		},
 		uglify: {
-			beautify: {
-				files: langs.map(function(lang, i) {
-					return {
-						src: ['<%= concat.engine.files[' + i + '].dest %>'],
-						dest: '<%= concat.engine.files[' + i + '].dest %>'
-					};
-				}),
-				options: {
-					mangle: false,
-					compress: false,
-					beautify: {
-						beautify: true,
-						ascii_only: true,
-						indent_level: 2,
-						braces: true,
-						quote_style: 1
-					},
-					output: {
-						comments: /^\/*! axe/
-					}
-				}
-			},
-			minify: {
-				files: langs.map(function(lang, i) {
-					return {
-						src: ['<%= concat.engine.files[' + i + '].dest %>'],
-						dest: './axe' + lang + '.min.js'
-					};
-				}),
+			engine: {
 				options: {
 					output: {
 						comments: /^\/*! axe/
@@ -231,7 +227,41 @@ module.exports = function(grunt) {
 					mangle: {
 						reserved: ['commons', 'utils', 'axe', 'window', 'document']
 					}
-				}
+				},
+				files: langs.map(function(lang) {
+					return [
+						{
+							expand: true,
+							src: 'axe' + lang + '.js',
+							dest: '.',
+							rename: function(dst, src) {
+								return dst + '/' + src.replace('.js', '.min.js');
+							}
+						}
+					];
+				})
+			},
+			engineSansPolyfills: {
+				options: {
+					output: {
+						comments: /^\/*! axe/
+					},
+					mangle: {
+						reserved: ['commons', 'utils', 'axe', 'window', 'document']
+					}
+				},
+				files: langs.map(function(lang) {
+					return [
+						{
+							expand: true,
+							src: 'axe.sansPolyfills' + lang + '.js',
+							dest: '.',
+							rename: function(dst, src) {
+								return dst + '/' + src.replace('.js', '.min.js');
+							}
+						}
+					];
+				})
 			}
 		},
 		'file-exists': {
@@ -361,7 +391,9 @@ module.exports = function(grunt) {
 		'configure',
 		'babel',
 		'concat:engine',
-		'uglify',
+		'concat:engineSansPolyfills',
+		'uglify:engine',
+		'uglify:engineSansPolyfills',
 		'aria-supported'
 	]);
 	grunt.registerTask('prepare', [
