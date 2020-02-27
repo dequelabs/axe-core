@@ -41,6 +41,8 @@
 		["#pass-input-url-role-combobox"],
 		["#pass-input-email-role-combobox"],
 		["#pass-input-text-role-spinbutton"],
+		["#pass-input-number-role-spinbutton"],
+		["#pass-input-tel-role-spinbutton"],
 		["#pass-input-image-valid-role"],
 		["#pass-input-checkbox-valid-role"],
 		["#pass-h1-valid-role"],
