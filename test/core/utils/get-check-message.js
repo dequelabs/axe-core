@@ -45,11 +45,15 @@ describe('axe.utils.getCheckMessage', function() {
 		);
 	});
 
-	it('returns empty string when check does not exist', function() {
-		assert.equal(getCheckMessage('invalid-check', 'pass'), '');
+	it('should error when check does not exist', function() {
+		assert.throws(function() {
+			getCheckMessage('invalid-check', 'pass');
+		});
 	});
 
-	it('returns empty string when check message does not exist', function() {
-		assert.equal(getCheckMessage('invalid-check', 'invalid'), '');
+	it('should error when check message does not exist', function() {
+		assert.throws(function() {
+			getCheckMessage('invalid-check', 'invalid');
+		});
 	});
 });
