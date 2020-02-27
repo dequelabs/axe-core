@@ -3,9 +3,9 @@ const browserify = require('browserify');
 const derequire = require('derequire');
 const createFile = require('./shared/create-file');
 
-const filePath = ['core/imports/index.js', 'core/polyfills/index.js'];
+const filePaths = ['core/imports/index.js', 'core/polyfills/index.js'];
 
-filePath.forEach(filePath => {
+filePaths.forEach(filePath => {
 	const inputFile = path.join(__dirname, '../lib', filePath);
 	const outputFile = path.join(__dirname, '../tmp', filePath);
 
