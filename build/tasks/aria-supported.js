@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 			 * as `axe` does not exist until grunt task `build:uglify` is complete,
 			 * hence cannot be required at the top of the file.
 			 */
-			const axe = require('../../axe.sansPolyfills');
+			const axe = require('../../axe');
 			const listType = this.data.listType.toLowerCase();
 			const headings = {
 				main:
