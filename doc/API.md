@@ -269,7 +269,7 @@ By default, `axe.run` will test the entire document. The context object is an op
 
 1. An element reference that represents the portion of the document that must be analyzed
 
-- Example: To limit analysis to the `<div id="content">` element: `document.getElementById("content")`
+    - Example: To limit analysis to the `<div id="content">` element: `document.getElementById("content")`
 
 2. A NodeList such as returned by `document.querySelectorAll`.
 3. A [CSS selector](./developer-guide.md#supported-css-selectors) that selects the portion(s) of the document that must be analyzed.
