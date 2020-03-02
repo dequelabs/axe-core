@@ -8,8 +8,9 @@ describe('skip-link-matches', function() {
 		rule = axe._audit.rules.find(function(rule) {
 			return rule.id === 'skip-link';
 		});
-		link = document.createElement('a');
-		fixture.innerHTML = '<div id="main"></div>';
+		fixture.innerHTML =
+			'<a href="" id="target" style="position: absolute; left: -10000px;">Click me</a><div id="main"></div>';
+		link = fixture.querySelector('#target');
 		axe._tree = axe.utils.getFlattenedTree(fixture);
 	});
 
@@ -20,6 +21,12 @@ describe('skip-link-matches', function() {
 
 	it('is a function', function() {
 		assert.isFunction(rule.matches);
+	});
+
+	it('returns false if the links is onscreen', function() {
+		link.removeAttribute('style');
+		link.href = '#main';
+		assert.isFalse(rule.matches(link));
 	});
 
 	it('returns false if the href attribute does not start with #', function() {

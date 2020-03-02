@@ -55,7 +55,7 @@ describe('region', function() {
 
 	it('should return true when there is a skiplink', function() {
 		var checkArgs = checkSetup(
-			'<a id="target" href="#mainheader">Click Here</a><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div>'
+			'<a id="target" href="#mainheader" style="position: absolute; top: -1000px">Click Here</a><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div>'
 		);
 
 		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
@@ -63,7 +63,7 @@ describe('region', function() {
 
 	it('should return true when there is an Angular skiplink', function() {
 		var checkArgs = checkSetup(
-			'<a id="target" href="/#mainheader">Click Here</a><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div>'
+			'<a id="target" href="/#mainheader" style="position: absolute; top: -1000px">Click Here</a><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div>'
 		);
 
 		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
