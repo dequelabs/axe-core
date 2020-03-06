@@ -174,5 +174,9 @@
 	"3.5.1": {
 		"axe.js": "sha256-J5+J6tFJyKx7Jyn9xK3rJhAyJCGAPR6kOwzXjpdFbEM=",
 		"axe.min.js": "sha256-wo0QYtgoayRMifoYIHc8Spw5NmeFN4ojGLSqmrUuhX8="
+	},
+	"3.5.2": {
+		"axe.js": "sha256-wf7AYQ0YxwohIAqhYIfQ6y1VDQmP2zbgGhL6mb8a+Eg=",
+		"axe.min.js": "sha256-suutTbfowm19n2znRYpsLOcHOkwv9g+ximjS8TLJ6/8="
 	}
 }
