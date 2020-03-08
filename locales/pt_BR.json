@@ -45,6 +45,10 @@
 			"description": "Certifique-se de que elementos com uma função ARIA que requer funções pais estejam contidas nestas",
 			"help": "Certas funções ARIA devem estar contidas em pais específicos"
 		},
+		"aria-roledescription": {
+			"description": "Certifique-se de que 'aria-roledescription' somente é utilizado em elementos com uma função implícita ou explícita",
+			"help": "Use 'aria-roledescription' em elementos com função semântica"
+		},
 		"aria-roles": {
 			"description": "Certifique-se de que todos os elementos com um atributo 'role' utilizem um valor válido",
 			"help": "Os ARIA 'roles' utilizados devem ter valores válidos"
@@ -165,6 +169,10 @@
 			"description": "Certifique-se de que elementos HTML com ambos os atributos 'lang' e 'xml:lang' válidos concordem entre si sobre o idioma base da página",
 			"help": "Elementos HTML com 'lang' e 'xml:lang' devem ter o mesmo idioma base"
 		},
+		"identical-links-same-purpose": {
+			"description": "Certifique-se de que links com o mesmo nome acessível servem a um propósito similar",
+			"help": "Links com o mesmo nome devem ter um propósito similar"
+		},
 		"image-alt": {
 			"description": "Certifique-se de que elementos <img> tenham texto alternativo ou um 'role' igual a 'none' ou 'presentation'",
 			"help": "Imagens devem ter texto alternativo"
@@ -175,7 +183,7 @@
 		},
 		"input-button-name": {
 			"description": "Certifique-se de que botões tenham um texto discernível",
-			"help": "Input buttons must have discernible text"
+			"help": "Botões de controle devem ter um texto discernível"
 		},
 		"input-image-alt": {
 			"description": "Certifique-se de que elementos <input type=\"image\"> tenham um texto alternativo",
@@ -216,6 +224,10 @@
 		"landmark-no-duplicate-contentinfo": {
 			"description": "Certifique-se de que o documento tenha no máximo uma região 'contentinfo'",
 			"help": "O documento não deve ter mais do que uma região 'contentinfo'"
+		},
+		"landmark-no-duplicate-main": {
+			"description": "Certifique-se de que o documento tenha, no máximo, uma região 'main'",
+			"help": "O documento não deve ter mais de uma região 'main'"
 		},
 		"landmark-one-main": {
 			"description": "Certifique-se de que o documento tenha apenas uma região 'main' e que cada 'iframe' na página tenha no náximo uma região 'main'",
@@ -261,6 +273,10 @@
 			"description": "Certifique-se de que <meta name=\"viewport\"> não desabilite a ampliação de texto e o zoom",
 			"help": "O zoom e a ampliação de texto não devem ser desabilitados"
 		},
+		"no-autoplay-audio": {
+			"description": "Certifique-se de que elementos <video> ou <audio> não reproduzam áudio automaticamente por mais de 3 segundos sem um mecanismo de controle para parar ou silenciar o áudio",
+			"help": "Elementos <video> ou <audio> não reproduzam áudio automaticamente"
+		},
 		"object-alt": {
 			"description": "Certifique-se de que elementos <object> tenham um texto alternativo",
 			"help": "Elementos <object> devem ter um texto alternativo"
@@ -275,7 +291,7 @@
 		},
 		"radiogroup": {
 			"description": "Certifique-se de que elementos <input type=\"radio\"> relacionados tenham o mesmo grupo e que o nome do grupo é consistente",
-			"help": "Entradas do tipo 'botão de rádio' com o mesmo valor para o atributo 'name' devem ser parte de um grupo"
+			"help": "Controles do tipo 'botão de rádio' com o mesmo valor para o atributo 'name' devem ser parte de um grupo"
 		},
 		"region": {
 			"description": "Certifique-se de todo o conteúdo da página esteja contido em regiões (landmarks)",
@@ -300,6 +316,10 @@
 		"skip-link": {
 			"description": "Certifique-se de que todos os links de escape tenham um destino focalizável",
 			"help": "O destino de um link de escape deve existir e ser focalizável"
+		},
+		"svg-img-alt": {
+			"description": "Certifique-se de que elementos svg com um 'role' de 'img', 'graphics-document' ou 'graphics-symbol' tenham um texto acessível",
+			"help": "Elementos svg com um 'role' de 'img' tenham um texto alternativo"
 		},
 		"tabindex": {
 			"description": "Certifique-se de que os valores do atributo 'tabindex' não são maiores do que 0",
@@ -341,24 +361,48 @@
 	"checks": {
 		"abstractrole": {
 			"pass": "As funções abstratas não são utilizadas",
-			"fail": "As funções abstratas não podem ser utilizadas diretamente"
+			"fail": {
+				"singular": "A função abstrata não pode ser diretamente utilizada: ${data.values}",
+				"plural": "As funções abstratas não podem ser diretamente utilizadas: ${data.values}"
+			}
 		},
 		"aria-allowed-attr": {
 			"pass": "Atributos ARIA são usados corretamente para a função definida",
-			"fail": "{{=it.data && it.data.length > 1 ? 'Os atributos ARIA não são permitidos' : 'O atributo ARIA não é permitido'}}: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "O atributo ARIA não é permitido: ${data.values}",
+				"plural": "Os atributos ARIA não são permitidos: ${data.values}"
+			}
 		},
 		"aria-allowed-role": {
 			"pass": "O ARIA 'role' é permitido para o elemento dado",
-			"fail": "{{=it.data && it.data.length > 1 ? 'Os ARIA roles' : 'O ARIA role'}} {{=it.data.join(', ')}} {{=it.data && it.data.length > 1 ? 'não são permitidos' : ' não é permitido'}} para o elemento dado",
-			"incomplete": "{{=it.data && it.data.length > 1 ? 'Os ARIA roles' : 'O ARIA role'}} {{=it.data.join(', ')}} {{=it.data && it.data.length > 1 ? 'devem ser removidos' : 'deve ser removido'}} quando o elemento é tornado visível, uma vez que {{=it.data && it.data.length > 1 ? 'eles não são permitodos' : 'ele não é permitido'}} para o elemento"
+			"fail": {
+				"singular": "O ARIA 'role' ${data.values} não é permitido para o elemento dado",
+				"plural": "Os ARIA 'roles' ${data.values} não são permitidos para o elemento dado"
+			},
+			"incomplete": {
+				"singular": "O ARIA 'role' ${data.values} deve ser removido quando o elemento é tornado visível, uma vez que não é permitido para o elemento",
+				"plural": "Os ARIA 'roles' ${data.values} devem ser removidos quando o elemento é tornado visível, uma vez que não são permitidos para o elemento"
+			}
 		},
 		"aria-hidden-body": {
 			"pass": "Nenhum atributo 'aria-hidden' está presente no elemento <body>",
 			"fail": "'aria-hidden=true' não deve estar presente no elemento <body>"
 		},
+		"aria-roledescription": {
+			"pass": "'aria-roledescription' usado em função semântica suportada",
+			"incomplete": "Garanta que o 'aria-roledescription' é anunciado pelos leitores de tela suportados",
+			"fail": "Dê ao elemento uma função que suporte 'aria-roledescription'"
+		},
 		"aria-errormessage": {
 			"pass": "Usa uma técnica de 'aria-errormessage' suportada",
-			"fail": "{{=it.data && it.data.length > 1 ? 'Os valores do aria-errormessage devem' : 'O valor do aria-errormessage deve'}} {{~it.data:value}} `{{=value}}{{~}}` usar uma técnica para anunciar a mensagem (ex.: aria-live, aria-describedby, role=alert, etc.)"
+			"fail": {
+				"singular": "O valor de 'aria-errormessage' `${data.values}` deve umsar uma técnica para anunciar a mensagem (por exemplo, 'aria-live', 'aria-describedby', role=alert, etc.)",
+				"plural": "Os valores de 'aria-errormessage' `${data.values}` devem usar uma técnica para anunciar a mensagem (por exemplo, 'aria-live', 'aria-describedby', role=alert, etc.)"
+			}
+		},
+		"fallbackrole": {
+			"pass": "Apenas um valor de 'role' deve ser utilizado",
+			"fail": "Use apenas um valor de 'role', uma vez que funções 'fallback' não são suportadas em navegadores mais antigos"
 		},
 		"has-widget-role": {
 			"pass": "Elemento tem um 'role' de 'widget'.",
@@ -370,7 +414,10 @@
 		},
 		"invalidrole": {
 			"pass": "O ARIA 'role' é válido",
-			"fail": "O 'role' deve ser um dos ARIA 'roles' válidos"
+			"fail": {
+				"singular": "O 'role' deve ser um dos ARIA 'roles' válidos: ${data.values}",
+				"plural": "Os 'roles' devem ser um dos ARIA 'roles' válidos: ${data.values}"
+			}
 		},
 		"no-implicit-explicit-label": {
 			"pass": "Não há nenhuma divergência entre <label> e o nome acessível",
@@ -378,16 +425,28 @@
 		},
 		"aria-required-attr": {
 			"pass": "Todos os atributos ARIA necessários estão presentes",
-			"fail": "{{=it.data && it.data.length > 1 ? 'Os atributos ARIA necessários não estão presentes' : 'O atributo ARIA necessário não está presente'}}: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "Atributo ARIA necessário ausente: ${data.values}",
+				"plural": "Atributos ARIA necessários ausentes: ${data.values}"
+			}
 		},
 		"aria-required-children": {
 			"pass": "Os ARIA filhos necessários estão presentes",
-			"fail": "{{=it.data && it.data.length > 1 ? 'As funções ARIA filhas necessárias não estão presentes' : 'A função ARIA filha necessária está presente'}}: {{~it.data:value}} {{=value}}{{~}}",
-			"incomplete": "{{=it.data && it.data.length > 1 ? 'As funções ARIA filhas a serem adicionadas' : 'A função ARIA filha a ser adicionada'}}:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "Função ARIA filha necessária ausente: ${data.values}",
+				"plural": "Funções ARIA filhas necessárias ausentes: ${data.values}"
+			},
+			"incomplete": {
+				"singular": "Esperando função ARIA filha a ser adicionada: ${data.values}",
+				"plural": "Esperando funções ARIA filhas a serem adicionadas: ${data.values}"
+			}
 		},
 		"aria-required-parent": {
 			"pass": "A função ARIA pai necessária está presente",
-			"fail": "{{=it.data && it.data.length > 1 ? 'As funções ARIA pais necessárias não estão presentes' : 'A função ARIA necessária não está presente'}}: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "Função ARIA pai necessária ausente: ${data.values}",
+				"plural": "Funções ARIA pais necessárias ausentes: ${data.values}"
+			}
 		},
 		"aria-unsupported-attr": {
 			"pass": "O atributo ARIA é suportado",
@@ -399,12 +458,21 @@
 		},
 		"aria-valid-attr-value": {
 			"pass": "Os valores dos atributos ARIA são válidos",
-			"fail": "{{=it.data && it.data.length > 1 ? 'Valores dos atributos ARIA inválidos' : 'Valor do atributo ARIA inválido'}}: {{~it.data:value}} {{=value}}{{~}}",
-			"incomplete": "{{=it.data && it.data.length > 1 ? 'Os IDs dos elementos dos atributos ARIA não existem' : 'O ID do elemento do atributo ARIA não existe'}} na página: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "Valor de atributo ARIA inválido: ${data.values}",
+				"plural": "Valores de atributos ARIA inválidos: ${data.values}"
+			},
+			"incomplete": {
+				"noId": "O ID do atributo ARIA do elemento não existe na página: ${data.needsReview}",
+				"ariaCurrent": "O valor do atributo ARIA é inválido e será tratado como \"aria-current=true\": ${data.needsReview}"
+			}
 		},
 		"aria-valid-attr": {
 			"pass": "{{=it.data && it.data.length > 1 ? 'Os nomes dos atributos ARIA são válidos' : 'O nome do atributo ARIA é valido'}}",
-			"fail": "{{=it.data && it.data.length > 1 ? 'Nomes dos atributos ARIA inválidos' : 'Nome do atributo ARIA inválido'}}:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "Nome de atributo ARIA inválido: ${data.values}",
+				"plural": "Nomes de atributos ARIA inválidos: ${data.values}"
+			}
 		},
 		"valid-scrollable-semantics": {
 			"pass": "O elemento possui semântica válida para um elemento na ordem de foco.",
@@ -414,6 +482,7 @@
 			"pass": "O elemento tem contraste suficiente no valor de {{=it.data.contrastRatio}}",
 			"fail": "O elemento tem contraste insuficiente no valor de {{=it.data.contrastRatio}} (cor do primeiro plano: {{=it.data.fgColor}}, cor de fundo: {{=it.data.bgColor}}, tamanho da fonte: {{=it.data.fontSize}}, normal/negrito: {{=it.data.fontWeight}}). Contraste esperado no valor de {{=it.data.expectedContrastRatio}}",
 			"incomplete": {
+				"default": "Impossível determinar o contraste",
 				"bgImage": "A cor de fundo do elemento não pôde ser determinada devido a uma imagem de fundo",
 				"bgGradient": "A cor de fundo do elemento não pôde ser determinada devido a um gradiente de fundo",
 				"imgNode": "A cor de fundo do elemento não pôde ser determinada porque o elemento contém um nó de imagem",
@@ -424,19 +493,19 @@
 				"outsideViewport": "A cor de fundo do elemento não pôde ser determinada porque está fora da 'viewport'",
 				"equalRatio": "O elemento tem um contraste de 1:1 com plano de fundo",
 				"shortTextContent": "O conteúdo do elemento é muito curto para determinar se é conteúdo de texto real",
-				"default": "Impossível determinar o contraste"
+				"nonBmp": "O conteúdo do elemento contém apenas caracteres não textuais"
 			}
 		},
 		"link-in-text-block": {
 			"pass": "Links pode ser distinguidos do texto ao redor de outra maneira além da cor",
 			"fail": "Links precisam ser distinguidos do texto ao redor de outra maneira além da cor",
 			"incomplete": {
+				"default": "Impossível determinar o contraste",
 				"bgContrast": "O contraste do elemento não pôde ser determinado. Verifique se há um estilo distinto para 'hover'/'focus'.",
 				"bgImage": "O contraste do elemento não pôde ser determinado devido a uma imagem de fundo",
 				"bgGradient": "O contraste do elemento não pôde ser determinado devido a um gradiente de fundo",
 				"imgNode": "O contraste do elemento não pôde ser determinado porque o elemento contém um nó de imagem",
-				"bgOverlap": "O contraste do elemento não pôde ser determinado devido a uma sobreposição do elemento",
-				"default": "Impossível determinar o contraste"
+				"bgOverlap": "O contraste do elemento não pôde ser determinado devido a uma sobreposição do elemento"
 			}
 		},
 		"autocomplete-appropriate": {
@@ -448,12 +517,23 @@
 			"fail": "o atributo 'autocomplete' está incorretamente formatado"
 		},
 		"fieldset": {
-			"pass": "O elemento está contido em um 'fieldset'",
-			"fail": "{{var code = it.data && it.data.failureCode;}}{{? code === 'no-legend'}}O 'fieldset' não tem um 'legend' como seu primeiro filho{{?? code === 'empty-legend'}}O 'legend' não tem texto visível para leitores de tela{{?? code === 'mixed-inputs'}}O 'fieldset' contém entradas não relacionadas{{?? code === 'no-group-label'}}O ARIA 'group' não tem 'aria-label' ou 'aria-labelledby'{{?? code === 'group-mixed-inputs'}}O ARIA 'group' contém entradas não relacionadas{{??}}O elemento não está contido em um 'fieldset' ou ARIA 'group'{{?}}"
+			"pass": "O elemento está contido em um <fieldset>",
+			"fail": {
+				"default": "O elemento não está contido em um >fieldset> ou grupo ARIA",
+				"no-legend": "O <fieldset> não tem um elemento <legend> como seu primeiro filho",
+				"empty-legend": "O elemento <legend> não tem texto visível para leitores de tela",
+				"mixed-inputs": "O <fieldset> contem controles não relacionados",
+				"no-group-label": "O grupo ARIA não tem um 'aria-label' ou 'aria-labelledby'",
+				"group-mixed-inputs": "O grupo ARIA contém controles não relacionados"
+			}
 		},
 		"group-labelledby": {
 			"pass": "Os elementos com o nome \"{{=it.data.name}}\" possuem tanto um 'label' compartilhado, como um 'label' único, referenciados através do 'aria-labelledby'",
-			"fail": "{{var code = it.data && it.data.failureCode;}}Elementos com o nome \"{{=it.data.name}}\" não possuem todos {{? code === 'no-shared-label' }}um 'label' compartilhado{{?? code === 'no-unique-label' }}um 'label' único{{??}}tanto um 'label' compartilhado, quanto um 'label' único{{?}}, referenciados através do 'aria-labelledby'"
+			"fail": {
+				"default": "Os elementos com o nome \"${data.name}\" não possuem todos tanto um 'label' compartilhado, como um 'label' único, referenciados através do 'aria-labelledby'",
+				"no-shared-label": "Os elementos com o nome \"${data.name}\" não possuem todos um 'label' compartilhado, referenciado através do 'aria-labelledby'",
+				"no-unique-label": "Os elementos com o nome \"${data.name}\" não possuem todos um 'label' único, referenciado através do 'aria-labelledby'"
+			}
 		},
 		"accesskeys": {
 			"pass": "O valor do atributo 'accesskey' é único",
@@ -470,6 +550,10 @@
 		"focusable-element": {
 			"pass": "O elemento é focalizável",
 			"fail": "O elemento deveria ser focalizável"
+		},
+		"focusable-modal-open": {
+			"pass": "Nenhum elemento focalizável enquanto um modal está aberto",
+			"incomplete": "Garanta que os elementos focalizáveis não estejam na ordem de tabulação no estado atual"
 		},
 		"focusable-no-name": {
 			"pass": "O elemento não está na ordem de tabulação ou tem texto acessível",
@@ -537,7 +621,7 @@
 		},
 		"multiple-label": {
 			"pass": "O campo de formulário não tem múltiplos elementos <label>",
-			"fail": "O uso de múltiplos elementos <label> não é amplamente suportado nas tecnologias assistivas"
+			"incomplete": "O uso de múltiplos elementos <label> não é amplamente suportado pelas tecnologias assistivas. Certifique-se de que o primeiro <label> contém toda a informação necessária."
 		},
 		"title-only": {
 			"pass": "Elementos de formulário não usam somente o atributo 'title' como seu rótulo",
@@ -565,7 +649,10 @@
 		},
 		"listitem": {
 			"pass": "O item de lista tem um elemento pai <ul>, <ol> ou role=\"list\"",
-			"fail": "O item de lista não tem um elemento pai <ul>, <ol> ou role=\"list\""
+			"fail": {
+				"default": "O item de lista não tem um elemento pai <ul> ou <ol>",
+				"roleNotValid": "O item de lista não tem um elemento pai <ul> ou <ol> sem um 'role', ou um role=\"list\""
+			}
 		},
 		"only-dlitems": {
 			"pass": "O elemento de lista tem somente filhos diretos que são permitidos dentro de elementos <dt> ou <dd>",
@@ -573,7 +660,10 @@
 		},
 		"only-listitems": {
 			"pass": "O elemento de lista tem somente filhos diretos que são permitidos dentro de elementos <li>",
-			"fail": "O elemento de lista tem filhos diretos que não são permitidos dentro de elemento <li>"
+			"fail": {
+				"default": "O elemento de lista tem filhos diretos que não são permitidos dentro de elementos <li>",
+				"roleNotValid": "O elemento de lista tem filhos diretos com um 'role' que não é permitido: ${data.roles}"
+			}
 		},
 		"structured-dlitems": {
 			"pass": "Quando não vazio, o elemento tem ambos elementos <dt> e <dd>",
@@ -591,6 +681,11 @@
 			"pass": "O 'iframe' foi testado com o 'axe-core'",
 			"fail": "O 'iframe' não pôde ser testado com o 'axe-core'",
 			"incomplete": "O 'iframe' ainda tem que ser testado com o 'axe-core'"
+		},
+		"no-autoplay-audio": {
+			"pass": "Elementos <video> ou <audio> não reproduzem áudio por mais do que a duração permitida ou possuem mecanismos de controle",
+			"fail": "Elementos <video> ou <audio> reproduzem áudio por uma duração maior que a permitida ou não possuem mecanismos de controle",
+			"incomplete": "Garanta que elementos <video> ou <audio> não reproduzam áudio por mais do que a duração permitida ou disponibilize mecanismos de controle"
 		},
 		"css-orientation-lock": {
 			"pass": "A tela é operável, e o bloqueio da orientação não existe",
@@ -612,6 +707,10 @@
 		"heading-order": {
 			"pass": "Hierarquia de títulos válida",
 			"fail": "Hierarquia de títulos inválida"
+		},
+		"identical-links-same-purpose": {
+			"pass": "Não há outros links com o mesmo nome, que direcionem para uma URL diferente",
+			"incomplete": "Verifique se os links têm o mesmo propósito ou são intencionalmente ambíguos."
 		},
 		"internal-link-present": {
 			"pass": "Link de escape válido encontrado",
@@ -664,7 +763,10 @@
 		},
 		"avoid-inline-spacing": {
 			"pass": "Nenhum estilo 'inline' com '!important' que afete o espaçamento do texto foi especificado",
-			"fail": "Remova a regra '!important' {{=it.data && it.data.length > 1 ? 'dos estilos inline' : 'do estilo inline'}} {{=it.data.join(', ')}}, uma vez que a sua sobreposição não é suportada pela maioria dos navegadores"
+			"fail": {
+				"singular": "Remova '!important' do estilo 'inline' ${data.values}, uma vez que sobrepor isto não é suportado pela maioria dos navegadores",
+				"plural": "Remova '!important' dos estilos 'inline' ${data.values}, uma vez que sobrepor isto não é suportado pela maioria dos navegadores"
+			}
 		},
 		"button-has-visible-text": {
 			"pass": "O elemento tem texto interno que é visível aos leitores de tela",
@@ -676,7 +778,7 @@
 		},
 		"exists": {
 			"pass": "O elemento não existe",
-			"fail": "O elemento existe"
+			"incomplete": "O elemento existe"
 		},
 		"has-alt": {
 			"pass": "O elemento tem um atributo 'alt'",
@@ -695,7 +797,10 @@
 			"fail": "O elemento não tem um atributo 'alt' ou ele está vazio"
 		},
 		"non-empty-if-present": {
-			"pass": "O elemento {{?it.data}}tem um atributo 'value' não vazio{{??}}não tem um atributo 'value'{{?}}",
+			"pass": {
+				"default": "O elemento tem um atributo 'value",
+				"has-label": "O elemento tem um atributo 'value' não vazio"
+			},
 			"fail": "O elemento tem um atributo 'value' e ele está vazio"
 		},
 		"non-empty-title": {
@@ -713,6 +818,10 @@
 		"role-presentation": {
 			"pass": "A semântica padrão do elemento foi sobrescrita com role=\"presentation\"",
 			"fail": "A semântica padrão do elemento não foi sobrescrita com role=\"presentation\""
+		},
+		"svg-non-empty-title": {
+			"pass": "O elemento tem um filho <title>",
+			"fail": "O elemento não tem um filho <title>"
 		},
 		"caption-faked": {
 			"pass": "A primeira linha de uma tabela não é usada como legenda",
