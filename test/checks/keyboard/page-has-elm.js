@@ -54,6 +54,30 @@ describe('page-has-*', function() {
 			);
 			assert.isFalse(evaluate.apply(checkContext, params));
 		});
+
+		it('does find screen-reader only elements', function() {
+			var options = { selector: 'b' };
+			var params = checkSetup(
+				'<style type="text/css">' +
+					'.sr-only {' +
+					'border: 0;' +
+					'clip: rect(0 0 0 0);' +
+					'clip-path: polygon(0px 0px, 0px 0px, 0px 0px);' +
+					'-webkit-clip-path: polygon(0px 0px, 0px 0px, 0px 0px);' +
+					'height: 1px;' +
+					'margin: -1px;' +
+					'overflow: hidden;' +
+					'padding: 0;' +
+					'position: absolute;' +
+					'width: 1px;' +
+					'white-space: nowrap;' +
+					'}' +
+					'</style>' +
+					'<div id="target"><b class="sr-only">No role</b></div>',
+				options
+			);
+			assert.isTrue(evaluate.apply(checkContext, params));
+		});
 	});
 
 	describe('after', function() {

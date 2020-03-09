@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" id="pass1">
+<html id="fail1" xml:lang="fr">
 	<head>
-		<title>skip-link test</title>
+		<title>html-has-lang test</title>
 		<meta charset="utf8" />
 		<link
 			rel="stylesheet"
@@ -19,13 +19,15 @@
 			var assert = chai.assert;
 		</script>
 	</head>
+
 	<body>
-		<a href="#fail1-tgt" style="position: absolute; margin: -10000px" id="fail1"
-			>bad link 1</a
-		>
+		<!--
+			Note:
+			This rule does not include `iframe` uses matches "window-is-top.js"
+		-->
 		<div id="mocha"></div>
 		<script src="/test/testutils.js"></script>
-		<script src="skip-link-fail.js"></script>
+		<script src="html-has-lang-fail-xml-lang.js"></script>
 		<script src="/test/integration/adapter.js"></script>
 	</body>
 </html>

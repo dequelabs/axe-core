@@ -107,12 +107,12 @@ describe('label-content-name-mismatch-matches tests', function() {
 		assert.isFalse(actual);
 	});
 
-	it('returns true for widget role that does support name from content', function() {
+	it('returns false for non-widget role that does support name from content', function() {
 		var vNode = queryFixture(
 			'<div id="target" role="tooltip" aria-label="OK">Next</div>'
 		);
 		var actual = rule.matches(vNode.actualNode, vNode);
-		assert.isTrue(actual);
+		assert.isFalse(actual);
 	});
 
 	it('returns false for empty text content', function() {

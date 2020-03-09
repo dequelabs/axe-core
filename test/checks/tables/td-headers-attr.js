@@ -24,7 +24,7 @@ describe('td-headers-attr', function() {
 		fixture.innerHTML =
 			'<table>' +
 			'  <tr> <th id="hi">hello</th> </tr>' +
-			'  <tr> <td headers="hi">goodbye</th> </tr>' +
+			'  <tr> <td headers="hi">goodbye</td> </tr>' +
 			'</table>';
 
 		var node = fixture.querySelector('table');
@@ -35,7 +35,7 @@ describe('td-headers-attr', function() {
 		fixture.innerHTML =
 			'<table>' +
 			'  <tr> <th id="hi1">hello</th> <th id="hi2">hello</th> </tr>' +
-			'  <tr> <td headers="hi1 \t\n hi2">goodbye</th> </tr>' +
+			'  <tr> <td headers="hi1 \t\n hi2">goodbye</td> </tr>' +
 			'</table>';
 
 		var node = fixture.querySelector('table');
@@ -46,7 +46,7 @@ describe('td-headers-attr', function() {
 		fixture.innerHTML =
 			'<table>' +
 			'  <tr> <th id="hi1"></th> </tr>' +
-			'  <tr> <td headers="hi1">goodbye</th> </tr>' +
+			'  <tr> <td headers="hi1">goodbye</td> </tr>' +
 			'</table>';
 
 		var node = fixture.querySelector('table');
@@ -58,7 +58,7 @@ describe('td-headers-attr', function() {
 		fixture.innerHTML =
 			'<table>' +
 			'  <tr> <th id="hi"> </th> </tr>' +
-			'  <tr> <td headers="">goodbye</th> </tr>' +
+			'  <tr> <td headers="">goodbye</td> </tr>' +
 			'</table>';
 
 		var node = fixture.querySelector('table');
@@ -71,7 +71,7 @@ describe('td-headers-attr', function() {
 		fixture.innerHTML =
 			'<table>' +
 			'  <tr> <th> <span id="hi">hello</span> </th> </tr>' +
-			'  <tr> <td headers="h1">goodbye</th> </tr>' +
+			'  <tr> <td headers="h1">goodbye</td> </tr>' +
 			'</table>';
 		node = fixture.querySelector('table');
 		assert.isFalse(checks['td-headers-attr'].evaluate.call(checkContext, node));
@@ -80,7 +80,7 @@ describe('td-headers-attr', function() {
 			'<span id="hi">hello</span>' +
 			'<table>' +
 			'  <tr> <th></th> </tr>' +
-			'  <tr> <td headers="h1">goodbye</th> </tr>' +
+			'  <tr> <td headers="h1">goodbye</td> </tr>' +
 			'</table>';
 		node = fixture.querySelector('table');
 		assert.isFalse(checks['td-headers-attr'].evaluate.call(checkContext, node));
@@ -88,7 +88,7 @@ describe('td-headers-attr', function() {
 		fixture.innerHTML =
 			'<table id="hi">' +
 			'  <tr> <th>hello</th> </tr>' +
-			'  <tr> <td headers="h1">goodbye</th> </tr>' +
+			'  <tr> <td headers="h1">goodbye</td> </tr>' +
 			'</table>';
 		node = fixture.querySelector('table');
 		assert.isFalse(checks['td-headers-attr'].evaluate.call(checkContext, node));
@@ -98,7 +98,7 @@ describe('td-headers-attr', function() {
 		fixture.innerHTML =
 			'<table id="hi">' +
 			'  <tr> <th>hello</th> </tr>' +
-			'  <tr> <td id="bye" headers="bye">goodbye</th> </tr>' +
+			'  <tr> <td id="bye" headers="bye">goodbye</td> </tr>' +
 			'</table>';
 
 		var node = fixture.querySelector('table');

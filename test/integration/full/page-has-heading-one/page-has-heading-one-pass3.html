@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" id="pass1">
 	<head>
-		<title>skip-link test</title>
 		<meta charset="utf8" />
 		<link
 			rel="stylesheet"
@@ -11,6 +10,21 @@
 		<script src="/node_modules/mocha/mocha.js"></script>
 		<script src="/node_modules/chai/chai.js"></script>
 		<script src="/axe.js"></script>
+		<style type="text/css">
+			.sr-only {
+				border: 0;
+				clip: rect(0 0 0 0);
+				clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
+				-webkit-clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
+				height: 1px;
+				margin: -1px;
+				overflow: hidden;
+				padding: 0;
+				position: absolute;
+				width: 1px;
+				white-space: nowrap;
+			}
+		</style>
 		<script>
 			mocha.setup({
 				timeout: 10000,
@@ -20,12 +34,10 @@
 		</script>
 	</head>
 	<body>
-		<a href="#fail1-tgt" style="position: absolute; margin: -10000px" id="fail1"
-			>bad link 1</a
-		>
+		<h1 class="sr-only">Level one heading!</h1>
 		<div id="mocha"></div>
 		<script src="/test/testutils.js"></script>
-		<script src="skip-link-fail.js"></script>
+		<script src="page-has-heading-one-pass3.js"></script>
 		<script src="/test/integration/adapter.js"></script>
 	</body>
 </html>

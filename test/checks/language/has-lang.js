@@ -15,8 +15,14 @@ describe('has-lang', function() {
 		assert.isTrue(checks['has-lang'].evaluate(node));
 	});
 
-	it('should return true if xml:lang attribute is present', function() {
+	it('should return false if only `xml:lang` attribute is present', function() {
 		fixture.innerHTML = '<div xml:lang="cats"></div>';
+
+		assert.isFalse(checks['has-lang'].evaluate(fixture.firstChild));
+	});
+
+	it('should return true if both `lang` and `xml:lang` attribute is present', function() {
+		fixture.innerHTML = '<div lang="cats" xml:lang="cats"></div>';
 
 		assert.isTrue(checks['has-lang'].evaluate(fixture.firstChild));
 	});
