@@ -53,8 +53,7 @@ describe('td-headers-attr', function() {
 		assert.isTrue(checks['td-headers-attr'].evaluate.call(checkContext, node));
 	});
 
-	it('returns true if no headers are present', function() {
-		// this is a failure for td-has-header
+	it('returns undefined if headers is empty', function() {
 		fixture.innerHTML =
 			'<table>' +
 			'  <tr> <th id="hi"> </th> </tr>' +
@@ -62,7 +61,9 @@ describe('td-headers-attr', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(checks['td-headers-attr'].evaluate.call(checkContext, node));
+		assert.isUndefined(
+			checks['td-headers-attr'].evaluate.call(checkContext, node)
+		);
 	});
 
 	it('returns false if the header is a table cell', function() {
