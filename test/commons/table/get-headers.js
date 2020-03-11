@@ -128,6 +128,25 @@ describe('table.getHeaders', function() {
 		]);
 	});
 
+	it('should handle empty headers attribute', function() {
+		fixture.innerHTML =
+			'<table>' +
+			'<tr>' +
+			'<th scope="col" id="t1">Projects</th>' +
+			'<th scope="col" id="t2">Progress</th>' +
+			'</tr>' +
+			'<tr>' +
+			'<td headers="" id="target">My Project</td>' +
+			'<td>15%</td>' +
+			'</tr>' +
+			'</table>';
+
+		var target = $id('target');
+
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
+		assert.deepEqual(axe.commons.table.getHeaders(target), [$id('t1')]);
+	});
+
 	it('should work with tables that have inconsistent columns', function() {
 		fixture.innerHTML =
 			'<table>' +
