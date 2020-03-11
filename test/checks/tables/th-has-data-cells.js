@@ -139,6 +139,26 @@ describe('th-has-data-cells', function() {
 		);
 	});
 
+	it('should return undefined if table cell points to a different header', function() {
+		fixture.innerHTML =
+			'<table>' +
+			'<tr>' +
+			'<th id="col1">Column 1</th>' +
+			'<th id="Column2">Column 2</th>' +
+			'</tr>' +
+			'<tr>' +
+			'<td></td>' +
+			'<td headers="col1"></td>' +
+			'</tr>' +
+			'</table>';
+
+		axe.testUtils.flatTreeSetup(fixture);
+		var node = fixture.querySelector('table');
+		assert.isUndefined(
+			checks['th-has-data-cells'].evaluate.call(checkContext, node)
+		);
+	});
+
 	(shadowSupport ? it : xit)('recognizes shadow tree content', function() {
 		fixture.innerHTML = '<div id="shadow"> <b>data</b> </div>';
 		var shadow = fixture
