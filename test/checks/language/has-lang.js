@@ -2,43 +2,47 @@ describe('has-lang', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var checkContext = axe.testUtils.MockCheckContext();
+	var checkSetup = axe.testUtils.checkSetup;
+	var hasLangEvaluate = checks['has-lang'].evaluate;
 
 	afterEach(function() {
 		fixture.innerHTML = '';
+		checkContext.reset();
 	});
 
 	it('should return true if a lang attribute is present', function() {
-		var node = document.createElement('div');
-		node.setAttribute('lang', 'woohoo');
-		fixture.appendChild(node);
+		var params = checkSetup('<div id="target" lang="woohoo"></div>');
 
-		assert.isTrue(checks['has-lang'].evaluate(node));
+		assert.isTrue(hasLangEvaluate.apply(checkContext, params));
 	});
 
 	it('should return false if only `xml:lang` attribute is present', function() {
-		fixture.innerHTML = '<div xml:lang="cats"></div>';
+		var params = checkSetup('<div id="target" xml:lang="cats"></div>');
 
-		assert.isFalse(checks['has-lang'].evaluate(fixture.firstChild));
+		assert.isFalse(hasLangEvaluate.apply(checkContext, params));
+		assert.equal(checkContext._data.messageKey, 'noXHTML');
 	});
 
 	it('should return true if both `lang` and `xml:lang` attribute is present', function() {
-		fixture.innerHTML = '<div lang="cats" xml:lang="cats"></div>';
+		var params = checkSetup(
+			'<div id="target" lang="cats" xml:lang="cats"></div>'
+		);
 
-		assert.isTrue(checks['has-lang'].evaluate(fixture.firstChild));
+		assert.isTrue(hasLangEvaluate.apply(checkContext, params));
 	});
 
 	it('should return false if xml:lang and lang attributes are not present', function() {
-		var node = document.createElement('div');
-		fixture.appendChild(node);
+		var params = checkSetup('<div id="target"></div>');
 
-		assert.isFalse(checks['has-lang'].evaluate(node));
+		assert.isFalse(hasLangEvaluate.apply(checkContext, params));
+		assert.equal(checkContext._data.messageKey, 'noLang');
 	});
 
 	it('should return false if lang is left empty', function() {
-		var node = document.createElement('div');
-		node.setAttribute('lang', '');
-		fixture.appendChild(node);
+		var params = checkSetup('<div id="target" lang=""></div>');
 
-		assert.isFalse(checks['has-lang'].evaluate(node));
+		assert.isFalse(hasLangEvaluate.apply(checkContext, params));
+		assert.equal(checkContext._data.messageKey, 'noLang');
 	});
 });
