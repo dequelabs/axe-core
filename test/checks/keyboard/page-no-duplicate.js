@@ -112,6 +112,21 @@ describe('page-no-duplicate', function() {
 			assert.isFalse(check.evaluate.apply(checkContext, params));
 		});
 
+		it('should pass when there are two elements and the first is contained within a nativeSccopeFilter', function() {
+			var options = {
+				selector: 'footer, [role="contentinfo"]',
+				nativeScopeFilter: 'article'
+			};
+			var params = checkSetup(
+				'<article>' +
+					'<footer id="target">Article footer</footer>' +
+					'</article>' +
+					'<footer>Body footer</footer>',
+				options
+			);
+			assert.isTrue(check.evaluate.apply(checkContext, params));
+		});
+
 		(shadowSupported ? it : xit)(
 			'elements if its ancestor is outside the shadow DOM tree',
 			function() {
