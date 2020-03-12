@@ -125,7 +125,9 @@ describe('page-no-duplicate', function() {
 				options
 			);
 			assert.isTrue(check.evaluate.apply(checkContext, params));
-		})(shadowSupported ? it : xit)(
+		});
+
+		(shadowSupported ? it : xit)(
 			'elements if its ancestor is outside the shadow DOM tree',
 			function() {
 				var options = {
