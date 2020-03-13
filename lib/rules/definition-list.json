@@ -5,7 +5,7 @@
 	"tags": ["cat.structure", "wcag2a", "wcag131"],
 	"metadata": {
 		"description": "Ensures <dl> elements are structured correctly",
-		"help": "<dl> elements must only directly contain properly-ordered <dt> and <dd> groups, <script> or <template> elements"
+		"help": "<dl> elements must only directly contain properly-ordered <dt> and <dd> groups, <script>, <template> or <div> elements"
 	},
 	"all": [],
 	"any": [],
