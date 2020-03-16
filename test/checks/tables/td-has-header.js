@@ -171,7 +171,7 @@ describe('td-has-header', function() {
 		assert.isTrue(checks['td-has-header'].evaluate.call(checkContext, node));
 	});
 
-	it('should return false if the headers element refers to non-existing elements', function() {
+	it('should return true if the headers element refers to non-existing elements', function() {
 		fixture.innerHTML =
 			'<table>' +
 			'  <tr> <th>Hello</th> <td headers="beatles">goodbye</td> </tr>' +
@@ -180,7 +180,7 @@ describe('td-has-header', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 
-		assert.isFalse(checks['td-has-header'].evaluate.call(checkContext, node));
+		assert.isTrue(checks['td-has-header'].evaluate.call(checkContext, node));
 	});
 
 	it('should return false if all headers are empty', function() {
