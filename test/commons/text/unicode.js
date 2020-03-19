@@ -69,6 +69,13 @@ describe('text.hasUnicode', function() {
 			});
 			assert.isTrue(actual);
 		});
+
+		it('returns true for a string with characters in supplementary private use area A', function() {
+			var actual = axe.commons.text.hasUnicode('\u{F0019}', {
+				nonBmp: true
+			});
+			assert.isTrue(actual);
+		});
 	});
 
 	describe('text.hasUnicode, characters of type Emoji', function() {
