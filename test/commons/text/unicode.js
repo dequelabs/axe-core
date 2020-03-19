@@ -208,6 +208,13 @@ describe('text.removeUnicode', function() {
 		assert.equal(actual, '');
 	});
 
+	it('returns the string with supplementary private use area A characters removed', function() {
+		var actual = axe.commons.text.removeUnicode('\uDB80\uDC19', {
+			nonBmp: true
+		});
+		assert.equal(actual, '');
+	});
+
 	it('returns string removing combination of unicode characters', function() {
 		var actual = axe.commons.text.removeUnicode(
 			'The ☀️ is orange, the ◓ is white.',
