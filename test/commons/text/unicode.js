@@ -71,7 +71,7 @@ describe('text.hasUnicode', function() {
 		});
 
 		it('returns true for a string with characters in supplementary private use area A', function() {
-			var actual = axe.commons.text.hasUnicode('\uDB80\uDC19', {
+			var actual = axe.commons.text.hasUnicode('\uDB80\uDFFE', {
 				nonBmp: true
 			});
 			assert.isTrue(actual);
@@ -209,7 +209,7 @@ describe('text.removeUnicode', function() {
 	});
 
 	it('returns the string with supplementary private use area A characters removed', function() {
-		var actual = axe.commons.text.removeUnicode('\uDB80\uDC19', {
+		var actual = axe.commons.text.removeUnicode('\uDB80\uDFFE', {
 			nonBmp: true
 		});
 		assert.equal(actual, '');
