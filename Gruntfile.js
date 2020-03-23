@@ -371,6 +371,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('translate', [
 		'pre-build',
 		'validate',
+		'webpack',
 		'concat:commons',
 		'add-locale'
 	]);
