@@ -1,3 +1,5 @@
+var path = require('path');
+
 /*eslint
 camelcase: ["error", {"properties": "never"}]
 */
@@ -15,6 +17,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-parallel');
 	grunt.loadNpmTasks('grunt-run');
+	grunt.loadNpmTasks('grunt-webpack');
 	grunt.loadTasks('build/tasks');
 
 	var langs;
@@ -137,9 +140,27 @@ module.exports = function(grunt) {
 					'lib/commons/index.js',
 					'lib/commons/*/index.js',
 					'lib/commons/**/*.js',
+
+					// directories we've converted to ES Modules
+					'!lib/commons/utils/*.js',
+
+					// output of webpack directories
+					'tmp/commons/**/*.js',
+
 					'lib/commons/outro.stub'
 				],
 				dest: 'tmp/commons.js'
+			}
+		},
+		webpack: {
+			commonsUtils: {
+				devtool: false,
+				mode: 'development',
+				entry: path.resolve(__dirname, 'lib/commons/utils/index.js'),
+				output: {
+					path: path.resolve(__dirname, 'tmp/commons/utils'),
+					filename: 'index.js'
+				}
 			}
 		},
 		'aria-supported': {
@@ -350,6 +371,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('translate', [
 		'pre-build',
 		'validate',
+		'webpack',
 		'concat:commons',
 		'add-locale'
 	]);
@@ -357,6 +379,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', [
 		'pre-build',
 		'validate',
+		'webpack',
 		'concat:commons',
 		'configure',
 		'babel',

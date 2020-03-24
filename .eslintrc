@@ -70,5 +70,13 @@
         "message": "Don't use node.attributes, use node.hasAttributes() or axe.utils.getNodeAttributes(node) instead."
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["lib/commons/utils/*.js"],
+      "parserOptions":{
+        "sourceType": "module"
+      }
+    }
+  ]
 }
