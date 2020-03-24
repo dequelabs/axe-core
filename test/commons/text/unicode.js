@@ -139,6 +139,15 @@ describe('text.hasUnicode', function() {
 			});
 			assert.isTrue(actual);
 		});
+
+		it('returns true for strings with money signs and odd symbols', function() {
+			['£', '¢', '¥', '€', '§', '±'].forEach(function(str) {
+				var actual = axe.commons.text.hasUnicode(str, {
+					punctuations: true
+				});
+				assert.isTrue(actual);
+			});
+		});
 	});
 
 	describe('text.hasUnicode, has combination of unicode', function() {
