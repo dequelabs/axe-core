@@ -154,7 +154,7 @@ module.exports = function(grunt) {
 		},
 		webpack: {
 			commonsUtils: {
-				devtool: 'source-map',
+				devtool: false,
 				mode: 'development',
 				entry: path.resolve(__dirname, 'lib/commons/utils/index.js'),
 				output: {
