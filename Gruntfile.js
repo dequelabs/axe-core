@@ -5,6 +5,11 @@ camelcase: ["error", {"properties": "never"}]
 */
 var testConfig = require('./build/test/config');
 
+var defaultWebpackConfig = {
+	devtool: false,
+	mode: 'development'
+};
+
 module.exports = function(grunt) {
 	'use strict';
 
@@ -142,6 +147,7 @@ module.exports = function(grunt) {
 					'lib/commons/**/*.js',
 
 					// directories we've converted to ES Modules
+					'!lib/commons/forms/*.js',
 					'!lib/commons/utils/*.js',
 
 					// output of webpack directories
@@ -154,11 +160,18 @@ module.exports = function(grunt) {
 		},
 		webpack: {
 			commonsUtils: {
-				devtool: false,
-				mode: 'development',
+				...defaultWebpackConfig,
 				entry: path.resolve(__dirname, 'lib/commons/utils/index.js'),
 				output: {
 					path: path.resolve(__dirname, 'tmp/commons/utils'),
+					filename: 'index.js'
+				}
+			},
+			commonsForms: {
+				...defaultWebpackConfig,
+				entry: path.resolve(__dirname, 'lib/commons/forms/index.js'),
+				output: {
+					path: path.resolve(__dirname, 'tmp/commons/forms'),
 					filename: 'index.js'
 				}
 			}

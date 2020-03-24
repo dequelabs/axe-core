@@ -73,7 +73,10 @@
   },
   "overrides": [
     {
-      "files": ["lib/commons/utils/*.js"],
+      "files": [
+        "lib/commons/forms/*.js",
+        "lib/commons/utils/*.js"
+      ],
       "parserOptions":{
         "sourceType": "module"
       }
