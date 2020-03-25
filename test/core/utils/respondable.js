@@ -119,7 +119,8 @@ describe('axe.utils.respondable', function() {
 			_respondable: true,
 			_source: 'axeAPI.2.0.0',
 			message: 'Help us Obi-Wan',
-			uuid: mockUUID
+			uuid: mockUUID,
+			_axeuuid: 'otherAxe'
 		});
 		event.source = window;
 
@@ -140,7 +141,8 @@ describe('axe.utils.respondable', function() {
 			_respondable: true,
 			_source: 'axeAPI.x.y.z',
 			message: 'Help us Obi-Wan',
-			uuid: mockUUID
+			uuid: mockUUID,
+			_axeuuid: 'otherAxe'
 		});
 		event.source = window;
 
@@ -163,7 +165,8 @@ describe('axe.utils.respondable', function() {
 			_respondable: true,
 			_source: 'axeAPI.2.0.0',
 			message: 'Help us Obi-Wan',
-			uuid: mockUUID
+			uuid: mockUUID,
+			_axeuuid: 'otherAxe'
 		});
 		event.source = window;
 
@@ -187,7 +190,8 @@ describe('axe.utils.respondable', function() {
 			_respondable: true,
 			_source: 'axeAPI.2.0.0',
 			message: 'Help us Obi-Wan',
-			uuid: mockUUID
+			uuid: mockUUID,
+			_axeuuid: 'otherAxe'
 		});
 		event.source = window;
 
@@ -206,7 +210,8 @@ describe('axe.utils.respondable', function() {
 		event.initEvent('message', true, true);
 		event.data = {
 			_respondable: true,
-			uuid: mockUUID
+			uuid: mockUUID,
+			_axeuuid: 'otherAxe'
 		};
 		event.source = window;
 
@@ -225,7 +230,8 @@ describe('axe.utils.respondable', function() {
 		event.data =
 			JSON.stringify({
 				_respondable: true,
-				uuid: mockUUID
+				uuid: mockUUID,
+				_axeuuid: 'otherAxe'
 			}) + 'joker tricks!';
 		event.source = window;
 
@@ -243,7 +249,8 @@ describe('axe.utils.respondable', function() {
 		event.initEvent('message', true, true);
 		event.data = '{ "_respondable": true, "topic": "batman" }';
 		event.data = JSON.stringify({
-			_respondable: true
+			_respondable: true,
+			_axeuuid: 'otherAxe'
 		});
 		event.source = window;
 
@@ -262,7 +269,8 @@ describe('axe.utils.respondable', function() {
 		event.data = '{ "_respondable": true, "topic": "batman", "uuid": "12" }';
 		event.data = JSON.stringify({
 			_respondable: true,
-			uuid: 'not-' + mockUUID
+			uuid: 'not-' + mockUUID,
+			_axeuuid: 'otherAxe'
 		});
 		event.source = window;
 
@@ -280,7 +288,8 @@ describe('axe.utils.respondable', function() {
 		event.initEvent('message', true, true);
 		event.data = '{ "uuid": "48", "topic": "batman" }';
 		event.data = JSON.stringify({
-			uuid: mockUUID
+			uuid: mockUUID,
+			_axeuuid: 'otherAxe'
 		});
 		event.source = window;
 
@@ -304,7 +313,8 @@ describe('axe.utils.respondable', function() {
 				message: 'The exhaust port is open!',
 				trail: '... boom'
 			},
-			uuid: mockUUID
+			uuid: mockUUID,
+			_axeuuid: 'otherAxe'
 		});
 		event.source = window;
 
@@ -332,7 +342,8 @@ describe('axe.utils.respondable', function() {
 				message: 'The exhaust port is open!',
 				trail: '... boom'
 			},
-			uuid: mockUUID
+			uuid: mockUUID,
+			_axeuuid: 'otherAxe'
 		});
 		event.source = window;
 
@@ -363,6 +374,26 @@ describe('axe.utils.respondable', function() {
 	});
 
 	describe('subscribe', function() {
+		var origAxeUUID = axe._uuid;
+		var counter = 0;
+
+		before(function() {
+			// assign axe a new uuid every time it's requested to trick
+			// the code that each respondable was called from a different
+			// context
+			Object.defineProperty(axe, '_uuid', {
+				get: function() {
+					return ++counter;
+				}
+			});
+		});
+
+		after(function() {
+			Object.defineProperty(axe, '_uuid', {
+				value: origAxeUUID
+			});
+		});
+
 		it('should be a function', function() {
 			assert.isFunction(axe.utils.respondable.subscribe);
 		});
