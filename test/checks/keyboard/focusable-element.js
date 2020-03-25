@@ -43,4 +43,12 @@ describe('focusable-element tests', function() {
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isTrue(actual);
 	});
+
+	it('returns true when element made focusable by contenteditable', function() {
+		var params = checkSetup(
+			'<p id="target" contenteditable="true">I hold some text </p>'
+		);
+		var actual = check.evaluate.apply(checkContext, params);
+		assert.isTrue(actual);
+	});
 });
