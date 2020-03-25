@@ -337,6 +337,26 @@ describe('color-contrast-matches', function() {
 		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
 	});
 
+	it("should match not all input's are disabled - aria-labelledby", function() {
+		fixture.innerHTML =
+			'<div id="t1">Test</div>' +
+			'<input type="text" aria-labelledby="t1" disabled />' +
+			'<input type="text" aria-labelledby="t1" />';
+		var target = fixture.querySelector('div');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
+	it("should match not input's disabled by an ancestor - aria-labelledby", function() {
+		fixture.innerHTML = '<div id="t1">Test</div>' + '<fieldset disabled>';
+		'<input type="text" aria-labelledby="t1" />' +
+			'<input type="text" aria-labelledby="t1" />' +
+			'</fieldset>';
+		var target = fixture.querySelector('div');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
 	it('should not match aria-disabled=true', function() {
 		fixture.innerHTML = '<div aria-disabled="true">hi</div>';
 		var target = fixture.querySelector('div');
@@ -346,6 +366,15 @@ describe('color-contrast-matches', function() {
 
 	it('should not match a descendant of aria-disabled=true', function() {
 		fixture.innerHTML = '<div aria-disabled="true"><span>hi</span></div>';
+		var target = fixture.querySelector('span');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
+	it("should not match a aria-disabled input's label - aria-labelledby", function() {
+		fixture.innerHTML =
+			'<div id="t1"><span>Test</span></div>' +
+			'<div role="textbox" aria-labelledby="bob t1 fred" aria-disabled="true"></div>';
 		var target = fixture.querySelector('span');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
