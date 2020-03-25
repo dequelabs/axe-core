@@ -5,6 +5,18 @@ camelcase: ["error", {"properties": "never"}]
 */
 var testConfig = require('./build/test/config');
 
+function createWebpackConfig(input, output) {
+	return {
+		devtool: false,
+		mode: 'development',
+		entry: path.resolve(__dirname, input),
+		output: {
+			filename: 'index.js',
+			path: path.resolve(__dirname, output)
+		}
+	};
+}
+
 module.exports = function(grunt) {
 	'use strict';
 
@@ -142,6 +154,7 @@ module.exports = function(grunt) {
 					'lib/commons/**/*.js',
 
 					// directories we've converted to ES Modules
+					'!lib/commons/forms/*.js',
 					'!lib/commons/utils/*.js',
 
 					// output of webpack directories
@@ -153,15 +166,14 @@ module.exports = function(grunt) {
 			}
 		},
 		webpack: {
-			commonsUtils: {
-				devtool: false,
-				mode: 'development',
-				entry: path.resolve(__dirname, 'lib/commons/utils/index.js'),
-				output: {
-					path: path.resolve(__dirname, 'tmp/commons/utils'),
-					filename: 'index.js'
-				}
-			}
+			commonsUtils: createWebpackConfig(
+				'lib/commons/utils/index.js',
+				'tmp/commons/utils'
+			),
+			commonsForms: createWebpackConfig(
+				'lib/commons/forms/index.js',
+				'tmp/commons/forms'
+			)
 		},
 		'aria-supported': {
 			data: {
