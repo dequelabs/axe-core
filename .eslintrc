@@ -75,6 +75,7 @@
     {
       "files": [
         "lib/commons/forms/*.js",
+        "lib/commons/matches/*.js",
         "lib/commons/utils/*.js"
       ],
       "parserOptions":{
