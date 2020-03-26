@@ -124,6 +124,10 @@ describe('axe.utils.respondable', function() {
 		});
 		event.source = window;
 
+		// this sets up the callback function but the post event from it
+		// is asynchronous so is will be ignored as the dispatch event
+		// that follows is synchronous and will trigger the callback
+		// (thats why there's no `done()` call)
 		axe.utils.respondable(window, 'Death star', null, true, function(data) {
 			success = true;
 			assert.equal(data, 'Help us Obi-Wan');
@@ -247,9 +251,9 @@ describe('axe.utils.respondable', function() {
 		var event = document.createEvent('Event');
 		// Define that the event name is 'build'.
 		event.initEvent('message', true, true);
-		event.data = '{ "_respondable": true, "topic": "batman" }';
 		event.data = JSON.stringify({
 			_respondable: true,
+			topic: 'batman',
 			_axeuuid: 'otherAxe'
 		});
 		event.source = window;
@@ -266,9 +270,9 @@ describe('axe.utils.respondable', function() {
 		var event = document.createEvent('Event');
 		// Define that the event name is 'build'.
 		event.initEvent('message', true, true);
-		event.data = '{ "_respondable": true, "topic": "batman", "uuid": "12" }';
 		event.data = JSON.stringify({
 			_respondable: true,
+			topic: 'batman',
 			uuid: 'not-' + mockUUID,
 			_axeuuid: 'otherAxe'
 		});
@@ -286,10 +290,49 @@ describe('axe.utils.respondable', function() {
 		var event = document.createEvent('Event');
 		// Define that the event name is 'build'.
 		event.initEvent('message', true, true);
-		event.data = '{ "uuid": "48", "topic": "batman" }';
 		event.data = JSON.stringify({
 			uuid: mockUUID,
+			topic: 'batman',
 			_axeuuid: 'otherAxe'
+		});
+		event.source = window;
+
+		axe.utils.respondable(window, 'batman', 'nananana', true, function() {
+			success = false;
+		});
+		document.dispatchEvent(event);
+		assert.isTrue(success);
+	});
+
+	it('should reject messages that do not have `_axeuuid`', function() {
+		var success = true;
+		var event = document.createEvent('Event');
+		// Define that the event name is 'build'.
+		event.initEvent('message', true, true);
+		event.data = JSON.stringify({
+			_respondable: true,
+			topic: 'batman',
+			uuid: mockUUID
+		});
+		event.source = window;
+
+		axe.utils.respondable(window, 'batman', 'nananana', true, function() {
+			success = false;
+		});
+		document.dispatchEvent(event);
+		assert.isTrue(success);
+	});
+
+	it('should reject messages from the same axe instance (`_axeuuid`)', function() {
+		var success = true;
+		var event = document.createEvent('Event');
+		// Define that the event name is 'build'.
+		event.initEvent('message', true, true);
+		event.data = JSON.stringify({
+			_respondable: true,
+			topic: 'batman',
+			_axeuuid: axe._uuid,
+			uuid: mockUUID
 		});
 		event.source = window;
 
