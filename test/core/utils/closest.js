@@ -2,6 +2,7 @@ describe('utils.closest', function() {
 	var closest = axe.utils.closest;
 	var fixture = document.querySelector('#fixture');
 	var queryFixture = axe.testUtils.queryFixture;
+	var shadowSupported = axe.testUtils.shadowSupport.v1;
 
 	afterEach(function() {
 		fixture.innerHTML = '';
@@ -39,5 +40,20 @@ describe('utils.closest', function() {
 		);
 		var closestNode = closest(virtualNode, 'h1');
 		assert.isNull(closestNode);
+	});
+
+	(shadowSupported ? it : xit)('should support shadow dom', function() {
+		fixture.innerHTML = '<div id="parent"></div>';
+
+		var root = fixture.firstChild.attachShadow({ mode: 'open' });
+		var slotted = document.createElement('span');
+		slotted.innerHTML = '<span id="target">foo</span>';
+		root.appendChild(slotted);
+		axe.utils.getFlattenedTree(fixture.firstChild);
+
+		var virtualNode = axe.utils.getNodeFromTree(slotted.firstChild);
+		var parent = fixture.querySelector('#parent');
+		var closestNode = closest(virtualNode, 'div');
+		assert.equal(closestNode, axe.utils.getNodeFromTree(parent));
 	});
 });
