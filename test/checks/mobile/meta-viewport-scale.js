@@ -34,6 +34,18 @@ describe('meta-viewport', function() {
 			assert.isTrue(checks['meta-viewport'].evaluate(node));
 		});
 
+		it('should return false on maximum-scale=yes (translates to 1)', function() {
+			fixture.innerHTML = '<meta name="viewport" content="maximum-scale=yes">';
+			var node = fixture.querySelector('meta');
+			assert.isFalse(checks['meta-viewport'].evaluate.call(checkContext, node));
+		});
+
+		it('should return true on negative maximum scale (should be ignored)', function() {
+			fixture.innerHTML = '<meta name="viewport" content="maximum-scale=-1">';
+			var node = fixture.querySelector('meta');
+			assert.isTrue(checks['meta-viewport'].evaluate.call(checkContext, node));
+		});
+
 		it('should return true if maximum-scale >= options.scaleMinimum', function() {
 			fixture.innerHTML =
 				'<meta name="viewport" content="foo=bar, maximum-scale=5, cats=dogs">';
