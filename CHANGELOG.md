@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.3](https://github.com/dequelabs/axe-core/compare/v3.5.2...v3.5.3) (2020-03-31)
+
+### Bug Fixes
+
+- **meta-viewport:** parse negative and string values for `maximum-scale` ([#2137](https://github.com/dequelabs/axe-core/issues/2137)) ([8c92472](https://github.com/dequelabs/axe-core/commit/8c92472397676d44b333cf50ad1a9413b9783c2c))
+- **respondable:** ignore reflected messages from iframes ([#2134](https://github.com/dequelabs/axe-core/issues/2134)) ([3ab9f21](https://github.com/dequelabs/axe-core/commit/3ab9f21414d8f4195ac95ffca8f0ce52258539b0))
+- **header-present:** update verbiage to use heading instead of header ([#2132](https://github.com/dequelabs/axe-core/issues/2132)) ([8890063](https://github.com/dequelabs/axe-core/commit/889006397329a35a170f4a3d24c55c3c4fd758fc))
+- **color-contrast:** mark more punctuations for review ([#2126](https://github.com/dequelabs/axe-core/issues/2126)) ([dc98afc](https://github.com/dequelabs/axe-core/commit/dc98afc841c86e4b7b771bbb1171152a151c3e5b))
+- **unicode:** detect supplementary private use area A ([#2102](https://github.com/dequelabs/axe-core/issues/2102)) ([f1739c2](https://github.com/dequelabs/axe-core/commit/f1739c21efdf5cf6fddf425d1c72b056757f3ba1))
+- **definition-list:** Mention <div> is allowed to group content in <dl> ([#2098](https://github.com/dequelabs/axe-core/issues/2098)) ([76b1a9f](https://github.com/dequelabs/axe-core/commit/76b1a9f7f244e43f63351c46d91fc8b27040ba98))
+- **td-headers-attr:** mark as needs review if headers attr is empty ([#2096](https://github.com/dequelabs/axe-core/issues/2096)) ([699b566](https://github.com/dequelabs/axe-core/commit/699b566111cfed2a4ebeade35346a49bcb3546c7))
+- **td-has-headers:** don't fail for empty headers attribute ([#2095](https://github.com/dequelabs/axe-core/issues/2095)) ([7952a37](https://github.com/dequelabs/axe-core/commit/7952a377b960c2403c8d4758a9f35ebe525549fe))
+- **th-has-data-cells:** fail when data cell points to a different header ([#2094](https://github.com/dequelabs/axe-core/issues/2094)) ([d3bd416](https://github.com/dequelabs/axe-core/commit/d3bd416a3df7324231f17ff9e1e20dc6342c7aa5))
+- **has-lang:** update message to indicate that xml:lang is not valid on HTML pages ([#2093](https://github.com/dequelabs/axe-core/issues/2093)) ([c3a7de2](https://github.com/dequelabs/axe-core/commit/c3a7de206baf77c0b25c8c095119393b1dc85f0f))
+- **page-no-duplicate-contentinfo:** do not fail when first element is inside landmark ([#2092](https://github.com/dequelabs/axe-core/issues/2092)) ([eca7e05](https://github.com/dequelabs/axe-core/commit/eca7e05cc6ff750855bcb219833967a9d7087679))
+
 ### [3.5.2](https://github.com/dequelabs/axe-core/compare/v3.5.1...v3.5.2) (2020-03-06)
 
 ### Bug Fixes
