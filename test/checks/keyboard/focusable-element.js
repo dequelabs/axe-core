@@ -43,4 +43,52 @@ describe('focusable-element tests', function() {
 		var actual = check.evaluate.apply(checkContext, params);
 		assert.isTrue(actual);
 	});
+
+	it('returns true when element made focusable by contenteditable', function() {
+		var params = checkSetup(
+			'<p id="target" contenteditable>I hold some text </p>'
+		);
+		var actual = check.evaluate.apply(checkContext, params);
+		assert.isTrue(actual);
+	});
+
+	it('returns true when element made focusable by contenteditable="true"', function() {
+		var params = checkSetup(
+			'<p id="target" contenteditable="true">I hold some text </p>'
+		);
+		var actual = check.evaluate.apply(checkContext, params);
+		assert.isTrue(actual);
+	});
+
+	it('returns false when element made focusable by contenteditable="false"', function() {
+		var params = checkSetup(
+			'<p id="target" contenteditable="false">I hold some text </p>'
+		);
+		var actual = check.evaluate.apply(checkContext, params);
+		assert.isFalse(actual);
+	});
+
+	it('returns true when element made focusable by contenteditable="invalid" and parent is contenteditable', function() {
+		var params = checkSetup(
+			'<div contenteditable><p id="target" contenteditable="invalid">I hold some text </p></div>'
+		);
+		var actual = check.evaluate.apply(checkContext, params);
+		assert.isTrue(actual);
+	});
+
+	it('returns false when element made focusable by contenteditable="invalid" and parent is not contenteditable', function() {
+		var params = checkSetup(
+			'<div><p id="target" contenteditable="invalid">I hold some text </p></div>'
+		);
+		var actual = check.evaluate.apply(checkContext, params);
+		assert.isFalse(actual);
+	});
+
+	it('returns false when element made focusable by contenteditable="invalid" and parent is contenteditable="false"', function() {
+		var params = checkSetup(
+			'<div contenteditable="false"><p id="target" contenteditable="invalid">I hold some text </p></div>'
+		);
+		var actual = check.evaluate.apply(checkContext, params);
+		assert.isFalse(actual);
+	});
 });
