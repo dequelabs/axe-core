@@ -154,6 +154,7 @@ module.exports = function(grunt) {
 					'lib/commons/**/*.js',
 
 					// directories we've converted to ES Modules
+					'!lib/commons/aria/*.js',
 					'!lib/commons/forms/*.js',
 					'!lib/commons/matches/*.js',
 					'!lib/commons/utils/*.js',
@@ -170,6 +171,10 @@ module.exports = function(grunt) {
 			commonsUtils: createWebpackConfig(
 				'lib/commons/utils/index.js',
 				'tmp/commons/utils'
+			),
+			commonsAria: createWebpackConfig(
+				'lib/commons/aria/index.js',
+				'tmp/commons/aria'
 			),
 			commonsForms: createWebpackConfig(
 				'lib/commons/forms/index.js',
