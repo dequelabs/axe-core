@@ -768,10 +768,5 @@
 		"none": {
 			"failureMessage": "Gorabehera hauek zuzentzea (guztiak):{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 		}
-	},
-	"incompleteFallbackMessage": {
-		"undefined": {
-			"failureMessage": "Gorabehera hauek zuzentzea (guztiak):{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
-		}
 	}
 }
