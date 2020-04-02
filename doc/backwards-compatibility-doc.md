@@ -22,7 +22,7 @@ In a minor release, we may change the implementation of Public Utils to fix bugs
 
 We will not add or remove rules in a patch release. We will not add support for new technologies in a patch release. We will endeavour to return the exact same results across patch releases with the exception of changes that are due to bug fixes. This means that the likelihood of a patch release finding issues on a page that was clean in a previous release is very close to zero but not zero.
 
-In a minor release, we may add support for new technologies in the Public Utils or in existing rules and we may add or disable rules. We may also change an experimental rule to become a standard rule (essentially equivalent to adding rule). This means that pages that did not return violations in a particular minor release may return violations in a subsequent release.
+In a minor release, we may add support for new technologies in the Public Utils or in existing rules and we may add or disable rules. We may also change an experimental rule to become a standard rule (essentially equivalent to adding rule). This means that pages that did not return violations in a particular minor release may return violations in a subsequent release. Rule tags, including the "wcag\*" tags, and whether or not something is reported as best-practice can be changed in minor releases.
 
 If the HTML page is unchanged, calls to the analysis function(s) when compared across minor or patch releases will return the same exact selector for the nodes in any of the result arrays. If the HTML page has changed, it is possible for the selector to be different but it is not guaranteed that the selector will be different.
 
@@ -48,6 +48,7 @@ Major releases may remove rules.
 | **Rules**                                     |                                                         |                       |                            |
 | Add rules                                     | May add                                                 | May add               | Will not add               |
 | Disable or remove rules                       | May remove (will remove previously deprecated rules)    | May disable or remove | Will not disable or remove |
+| Rule tags                                     | May add or remove                                       | May add or remove     | Will not change            |
 | Deprecate rules                               | May deprecate                                           | May deprecate         | Will not deprecate         |
 
 \*_New OSes, Browsers, ATs, new standards (e.g. introduction of ARIA), new versions of standards (e.g. WCAG 2.1)_

@@ -1,6 +1,6 @@
 {
 	"id": "landmark-no-duplicate-banner",
-	"selector": "html",
+	"selector": "header:not([role]), [role=banner]",
 	"tags": ["cat.semantics", "best-practice"],
 	"metadata": {
 		"description": "Ensures the document has at most one banner landmark",

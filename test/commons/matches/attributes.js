@@ -1,14 +1,18 @@
 describe('matches.attributes', function() {
 	var attributes = axe.commons.matches.attributes;
 	var fixture = document.querySelector('#fixture');
+	var queryFixture = axe.testUtils.queryFixture;
+
 	beforeEach(function() {
 		fixture.innerHTML = '';
 	});
 
 	it('returns true if all attributes match', function() {
-		fixture.innerHTML = '<span foo="baz" bar="foo" baz="bar"></span>';
+		var virtualNode = queryFixture(
+			'<span id="target" foo="baz" bar="foo" baz="bar"></span>'
+		);
 		assert.isTrue(
-			attributes(fixture.firstChild, {
+			attributes(virtualNode, {
 				foo: 'baz',
 				bar: 'foo',
 				baz: 'bar'
@@ -17,9 +21,11 @@ describe('matches.attributes', function() {
 	});
 
 	it('returns false if some attributes do not match', function() {
-		fixture.innerHTML = '<span foo="baz" bar="foo" baz="bar"></span>';
+		var virtualNode = queryFixture(
+			'<span id="target" foo="baz" bar="foo" baz="bar"></span>'
+		);
 		assert.isFalse(
-			attributes(fixture.firstChild, {
+			attributes(virtualNode, {
 				foo: 'baz',
 				bar: 'foo',
 				baz: 'baz'
@@ -28,9 +34,11 @@ describe('matches.attributes', function() {
 	});
 
 	it('returns false if any attributes are missing', function() {
-		fixture.innerHTML = '<span foo="baz" baz="bar"></span>';
+		var virtualNode = queryFixture(
+			'<span id="target" foo="baz" baz="bar"></span>'
+		);
 		assert.isFalse(
-			attributes(fixture.firstChild, {
+			attributes(virtualNode, {
 				foo: 'baz',
 				bar: 'foo',
 				baz: 'bar'
@@ -38,28 +46,35 @@ describe('matches.attributes', function() {
 		);
 	});
 
-	it('works with virtual nodes', function() {
-		fixture.innerHTML = '<span foo="bar" bar="foo"></span>';
-		assert.isTrue(
-			attributes(
-				{
-					actualNode: fixture.firstChild
-				},
-				{
-					foo: 'bar',
-					bar: 'foo'
-				}
-			)
+	it('works with actual nodes', function() {
+		var virtualNode = queryFixture(
+			'<span id="target" foo="baz" bar="foo" baz="bar"></span>'
 		);
-		assert.isFalse(
-			attributes(
-				{
-					actualNode: fixture.firstChild
-				},
-				{
-					baz: 'baz'
-				}
-			)
+		assert.isTrue(
+			attributes(virtualNode.actualNode, {
+				foo: 'baz',
+				bar: 'foo',
+				baz: 'bar'
+			})
+		);
+	});
+
+	it('works with SerialVirtualNode', function() {
+		var serialNode = new axe.SerialVirtualNode({
+			nodeName: 'span',
+			attributes: {
+				id: 'target',
+				foo: 'baz',
+				bar: 'foo',
+				baz: 'bar'
+			}
+		});
+		assert.isTrue(
+			attributes(serialNode, {
+				foo: 'baz',
+				bar: 'foo',
+				baz: 'bar'
+			})
 		);
 	});
 });

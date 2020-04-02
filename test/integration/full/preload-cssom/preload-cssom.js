@@ -3,7 +3,6 @@ describe('preload cssom integration test', function() {
 	'use strict';
 
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
-	var isPhantom = window.PHANTOMJS ? true : false;
 	var isIE11 = axe.testUtils.isIE11;
 	var styleSheets = {
 		crossOriginLinkHref: {
@@ -171,12 +170,6 @@ describe('preload cssom integration test', function() {
 	}
 
 	describe('tests for root (document)', function() {
-		before(function() {
-			if (isPhantom || isIE11) {
-				this.skip();
-			}
-		});
-
 		var shadowFixture;
 
 		beforeEach(function() {
@@ -433,7 +426,7 @@ describe('preload cssom integration test', function() {
 
 	describe('tests for nested document', function() {
 		before(function() {
-			if (isPhantom || !nestedFrame || isIE11) {
+			if (!nestedFrame || isIE11) {
 				this.skip();
 			}
 		});

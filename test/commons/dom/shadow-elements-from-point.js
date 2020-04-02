@@ -23,6 +23,7 @@ describe('dom.shadowElementsFromPoint', function() {
 			var shadow2 = container2.attachShadow({ mode: 'open' });
 			shadow2.innerHTML = '<span>Text</span>';
 			var shadowSpan = shadow2.querySelector('span');
+			axe.testUtils.flatTreeSetup(fixture);
 
 			container.scrollIntoView();
 
@@ -43,4 +44,17 @@ describe('dom.shadowElementsFromPoint', function() {
 			assert.notInclude(result2, shadowSpan);
 		}
 	);
+
+	it('does not throw when elementsFromPoints returns null', function() {
+		var mockDocument = {
+			elementsFromPoint: function() {
+				return null;
+			}
+		};
+		var out;
+		assert.doesNotThrow(function() {
+			out = axe.commons.dom.shadowElementsFromPoint(10, 10, mockDocument);
+		});
+		assert.deepEqual(out, []);
+	});
 });

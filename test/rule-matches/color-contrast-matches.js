@@ -57,13 +57,13 @@ describe('color-contrast-matches', function() {
 		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
 	});
 
-	it('should not match when text only contains nonBmp unicode', function() {
+	it('should match when text only contains nonBmp unicode', function() {
 		fixture.innerHTML =
 			'<div style="color: yellow; background-color: white;" id="target">' +
 			'◓</div>';
 		var target = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
-		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+		assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
 	});
 
 	it('should not match when there is text that is out of the container', function() {
@@ -71,6 +71,32 @@ describe('color-contrast-matches', function() {
 			'<div style="color: yellow; text-indent: -9999px; background-color: white;" id="target">' +
 			'My text</div>';
 		var target = fixture.querySelector('#target');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
+	it('should not match input when there is text that is out of the container', function() {
+		fixture.innerHTML =
+			'<input style="text-indent: -9999px" type="submit" value="Search" />';
+		var target = fixture.querySelector('input');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
+	it('should not match select when there is text that is out of the container', function() {
+		fixture.innerHTML =
+			'<select style="text-indent: -9999px">' +
+			'<option selected>My text</option>' +
+			'</select>';
+		var target = fixture.querySelector('select');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
+	});
+
+	it('should not match textarea when there is text that is out of the container', function() {
+		fixture.innerHTML =
+			'<textarea style="text-indent: -9999px">My text</textarea>';
+		var target = fixture.querySelector('textarea');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
 	});

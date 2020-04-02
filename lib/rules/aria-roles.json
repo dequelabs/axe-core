@@ -1,6 +1,7 @@
 {
 	"id": "aria-roles",
 	"selector": "[role]",
+	"matches": "no-empty-role-matches.js",
 	"tags": ["cat.aria", "wcag2a", "wcag412"],
 	"metadata": {
 		"description": "Ensures all elements with a role attribute use a valid value",
@@ -8,5 +9,5 @@
 	},
 	"all": [],
 	"any": [],
-	"none": ["invalidrole", "abstractrole", "unsupportedrole"]
+	"none": ["fallbackrole", "invalidrole", "abstractrole", "unsupportedrole"]
 }

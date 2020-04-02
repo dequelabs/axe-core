@@ -44,12 +44,22 @@ describe('color-contrast', function() {
 
 	it('should return true when there is sufficient contrast because of font weight', function() {
 		var params = checkSetup(
-			'<div style="color: gray; background-color: white; font-size: 14pt; font-weight: bold" id="target">' +
-				'My text</div>'
+			'<div style="color: gray; background-color: white; font-size: 14pt; font-weight: 900" id="target">' +
+				'<span style="font-weight:lighter">My text</span></div>'
 		);
 
 		assert.isTrue(contrastEvaluate.apply(checkContext, params));
 		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
+	it('should return false when there is not sufficient contrast because of font weight', function() {
+		var params = checkSetup(
+			'<div style="color: gray; background-color: white; font-size: 14pt; font-weight: 100" id="target">' +
+				'<span style="font-weight:bolder">My text</span></div>'
+		);
+
+		assert.isFalse(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._relatedNodes, [params[0]]);
 	});
 
 	it('should return true when there is sufficient contrast because of font size', function() {
@@ -105,12 +115,8 @@ describe('color-contrast', function() {
 		var params = checkSetup(
 			'<p>Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>'
 		);
-		if (window.PHANTOMJS) {
-			assert.ok('PhantomJS is a liar');
-		} else {
-			assert.isTrue(contrastEvaluate.apply(checkContext, params));
-			assert.deepEqual(checkContext._relatedNodes, []);
-		}
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._relatedNodes, []);
 	});
 
 	it('should return undefined for inline elements spanning multiple lines that are overlapped', function() {
@@ -228,12 +234,8 @@ describe('color-contrast', function() {
 		fixtureSetup('<label id="target">' + 'My text <input type="text"></label>');
 		var target = fixture.querySelector('#target');
 		var virtualNode = axe.utils.getNodeFromTree(target);
-		if (window.PHANTOMJS) {
-			assert.ok('PhantomJS is a liar');
-		} else {
-			var result = contrastEvaluate.call(checkContext, target, {}, virtualNode);
-			assert.isTrue(result);
-		}
+		var result = contrastEvaluate.call(checkContext, target, {}, virtualNode);
+		assert.isTrue(result);
 	});
 
 	it("should return true when a label wraps a text input but doesn't overlap", function() {
@@ -327,12 +329,72 @@ describe('color-contrast', function() {
 	it('should return true for a single character text with insufficient contrast', function() {
 		var params = checkSetup(
 			'<div style="background-color: #FFF;">' +
-				'<div style="color:#000;" id="target">X</div>' +
+				'<div style="color:#DDD;" id="target">X</div>' +
 				'</div>'
 		);
 
 		var actual = contrastEvaluate.apply(checkContext, params);
+		assert.isUndefined(actual);
+		assert.equal(checkContext._data.messageKey, 'shortTextContent');
+	});
+
+	it('should return undefined when the text only contains nonBmp unicode when the ignoreUnicode option is true', function() {
+		var params = checkSetup(
+			'<div style="background-color: #FFF;">' +
+				'<div style="color:#DDD;" id="target">&#x20A0; &#x20A1; &#x20A2; &#x20A3;</div>' +
+				'</div>',
+			{
+				ignoreUnicode: true
+			}
+		);
+
+		var actual = contrastEvaluate.apply(checkContext, params);
+		assert.isUndefined(actual);
+		assert.equal(checkContext._data.messageKey, 'nonBmp');
+	});
+
+	it('should return true when the text only contains nonBmp unicode when the ignoreUnicode option is false, and there is sufficient contrast', function() {
+		var params = checkSetup(
+			'<div style="background-color: #FFF;">' +
+				'<div style="color:#000;" id="target">◓</div>' +
+				'</div>',
+			{
+				ignoreUnicode: false
+			}
+		);
+
+		var actual = contrastEvaluate.apply(checkContext, params);
 		assert.isTrue(actual);
+	});
+
+	it('should return undefined when the text only contains nonBmp unicode when the ignoreUnicode option is false and the ignoreLength option is default, and there is insufficient contrast', function() {
+		var params = checkSetup(
+			'<div style="background-color: #FFF;">' +
+				'<div style="color:#DDD;" id="target">◓</div>' +
+				'</div>',
+			{
+				ignoreUnicode: false
+			}
+		);
+
+		var actual = contrastEvaluate.apply(checkContext, params);
+		assert.isUndefined(actual);
+		assert.equal(checkContext._data.messageKey, 'shortTextContent');
+	});
+
+	it('should return false when the text only contains nonBmp unicode when the ignoreUnicode option is false and the ignoreLength option is true, and there is insufficient contrast', function() {
+		var params = checkSetup(
+			'<div style="background-color: #FFF;">' +
+				'<div style="color:#DDD;" id="target">◓</div>' +
+				'</div>',
+			{
+				ignoreUnicode: false,
+				ignoreLength: true
+			}
+		);
+
+		var actual = contrastEvaluate.apply(checkContext, params);
+		assert.isFalse(actual);
 	});
 
 	(shadowSupported ? it : xit)(

@@ -11,8 +11,8 @@
 				"plural": "Invalid ARIA attribute values: ${data.values}"
 			},
 			"incomplete": {
-				"singular": "ARIA attribute element ID does not exist on the page: ${data.values}",
-				"plural": "ARIA attributes element ID does not exist on the page: ${data.values}"
+				"noId": "ARIA attribute element ID does not exist on the page: ${data.needsReview}",
+				"ariaCurrent": "ARIA attribute value is invalid and will be treated as \"aria-current=true\": ${data.needsReview}"
 			}
 		}
 	}

@@ -1,7 +1,21 @@
+var path = require('path');
+
 /*eslint
 camelcase: ["error", {"properties": "never"}]
 */
 var testConfig = require('./build/test/config');
+
+function createWebpackConfig(input, output) {
+	return {
+		devtool: false,
+		mode: 'development',
+		entry: path.resolve(__dirname, input),
+		output: {
+			filename: 'index.js',
+			path: path.resolve(__dirname, output)
+		}
+	};
+}
 
 module.exports = function(grunt) {
 	'use strict';
@@ -15,6 +29,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-parallel');
 	grunt.loadNpmTasks('grunt-run');
+	grunt.loadNpmTasks('grunt-webpack');
 	grunt.loadTasks('build/tasks');
 
 	var langs;
@@ -137,10 +152,33 @@ module.exports = function(grunt) {
 					'lib/commons/index.js',
 					'lib/commons/*/index.js',
 					'lib/commons/**/*.js',
+
+					// directories we've converted to ES Modules
+					'!lib/commons/forms/*.js',
+					'!lib/commons/matches/*.js',
+					'!lib/commons/utils/*.js',
+
+					// output of webpack directories
+					'tmp/commons/**/*.js',
+
 					'lib/commons/outro.stub'
 				],
 				dest: 'tmp/commons.js'
 			}
+		},
+		webpack: {
+			commonsUtils: createWebpackConfig(
+				'lib/commons/utils/index.js',
+				'tmp/commons/utils'
+			),
+			commonsForms: createWebpackConfig(
+				'lib/commons/forms/index.js',
+				'tmp/commons/forms'
+			),
+			commonsMatches: createWebpackConfig(
+				'lib/commons/matches/index.js',
+				'tmp/commons/matches'
+			)
 		},
 		'aria-supported': {
 			data: {
@@ -207,6 +245,7 @@ module.exports = function(grunt) {
 					compress: false,
 					beautify: {
 						beautify: true,
+						ascii_only: true,
 						indent_level: 2,
 						braces: true,
 						quote_style: 1
@@ -251,18 +290,7 @@ module.exports = function(grunt) {
 		},
 		testconfig: {
 			test: {
-				src: ['test/integration/rules/**/*.json'].concat(
-					process.env.APPVEYOR
-						? [
-								// These tests are causing PhantomJS to timeout on Appveyor
-								// Warning: PhantomJS timed out, possibly due to a missing Mocha run() call. Use --force to continue.
-								'!test/integration/rules/td-has-header/*.json',
-								'!test/integration/rules/label-content-name-mismatch/*.json',
-								'!test/integration/rules/label/*.json',
-								'!test/integration/rules/th-has-data-cells/*.json'
-						  ]
-						: []
-				),
+				src: ['test/integration/rules/**/*.json'],
 				dest: 'tmp/integration-tests.js'
 			}
 		},
@@ -360,6 +388,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('translate', [
 		'pre-build',
 		'validate',
+		'webpack',
 		'concat:commons',
 		'add-locale'
 	]);
@@ -367,6 +396,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', [
 		'pre-build',
 		'validate',
+		'webpack',
 		'concat:commons',
 		'configure',
 		'babel',

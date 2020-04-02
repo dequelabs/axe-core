@@ -268,13 +268,10 @@ axe.run(context, options, (err, results) => {
 By default, `axe.run` will test the entire document. The context object is an optional parameter that can be used to specify which element should and which should not be tested. It can be passed one of the following:
 
 1. An element reference that represents the portion of the document that must be analyzed
-
-- Example: To limit analysis to the `<div id="content">` element: `document.getElementById("content")`
-
-2. A NodeList such as returned by `document.querySelectorAll`.
-3. A [CSS selector](./developer-guide.md#supported-css-selectors) that selects the portion(s) of the document that must be analyzed.
-
-4. An include-exclude object (see below)
+   - Example: To limit analysis to the `<div id="content">` element: `document.getElementById("content")`
+1. A NodeList such as returned by `document.querySelectorAll`.
+1. A [CSS selector](./developer-guide.md#supported-css-selectors) that selects the portion(s) of the document that must be analyzed.
+1. An include-exclude object (see below)
 
 ###### Include-Exclude Object
 
@@ -585,6 +582,7 @@ The `assets` attribute expects an array of preload(able) constraints to be fetch
 | Asset Type | Description                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `cssom`    | This asset type preloads all CSS Stylesheets rulesets specified in the page. The stylesheets can be an external cross-domain resource, a relative stylesheet or an inline style with in the head tag of the document. If the stylesheet is an external cross-domain a network request is made. An object representing the CSS Rules from each stylesheet is made available to the checks evaluate function as `preloadedAssets` at run-time |
+| `media`    | This asset type preloads metadata information of any HTMLMediaElement in the specified document                                                                                                                                                                                                                                                                                                                                             |
 
 The `timeout` attribute in the object configuration is `optional` and has a fallback default value (10000ms). The `timeout` is essential for any network dependent assets that are preloaded, where-in if a given request takes longer than the specified/ default value, the operation is aborted.
 

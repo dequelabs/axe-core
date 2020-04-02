@@ -14,11 +14,12 @@ describe('color.getForegroundColor', function() {
 
 	it('should return the blended color if it has alpha set', function() {
 		fixture.innerHTML =
-			'<div style="height: 40px; width: 30px; background-color: #800000;">' +
-			'<div id="target" style="height: 20px; width: 15px; color: rgba(0, 0, 128, 0.5);' +
+			'<div style="height: 40px; background-color: #800000;">' +
+			'<div id="target" style="height: 40px; color: rgba(0, 0, 128, 0.5);' +
 			' background-color: rgba(0, 128, 0, 0.5);">' +
 			'This is my text' +
 			'</div></div>';
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		var expected = new axe.commons.color.Color(32, 32, 64, 1);
@@ -30,11 +31,12 @@ describe('color.getForegroundColor', function() {
 
 	it('should return the blended color if it has opacity set', function() {
 		fixture.innerHTML =
-			'<div style="height: 40px; width: 30px; background-color: #800000;">' +
-			'<div id="target" style="height: 20px; width: 15px; color: #000080;' +
+			'<div style="height: 40px; background-color: #800000;">' +
+			'<div id="target" style="height: 40px; color: #000080;' +
 			' background-color: green; opacity: 0.5;">' +
 			'This is my text' +
 			'</div></div>';
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		var expected = new axe.commons.color.Color(32, 32, 64, 1);
@@ -47,10 +49,11 @@ describe('color.getForegroundColor', function() {
 	it('should take into account parent opacity tree', function() {
 		fixture.innerHTML =
 			'<div style="background-color: #fafafa">' +
-			'<div style="height: 40px; width: 30px; opacity: 0.6">' +
-			'<div id="target" style="height: 20px; width: 15px; color: rgba(0, 0, 0, 0.87);">' +
+			'<div style="height: 40px; opacity: 0.6">' +
+			'<div id="target" style="height: 40px; color: rgba(0, 0, 0, 0.87);">' +
 			'This is my text' +
 			'</div></div></div>';
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		var expected = new axe.commons.color.Color(119.5, 119.5, 119.5, 1);
@@ -63,11 +66,12 @@ describe('color.getForegroundColor', function() {
 	it('should take into account entire parent opacity tree', function() {
 		fixture.innerHTML =
 			'<div style="background-color: #fafafa">' +
-			'<div style="height: 40px; width: 30px; opacity: 0.75">' +
-			'<div style="height: 40px; width: 30px; opacity: 0.8">' +
-			'<div id="target" style="height: 20px; width: 15px; color: rgba(0, 0, 0, 0.87);">' +
+			'<div style="height: 40px; opacity: 0.75">' +
+			'<div style="height: 40px; opacity: 0.8">' +
+			'<div id="target" style="height: 40px; color: rgba(0, 0, 0, 0.87);">' +
 			'This is my text' +
 			'</div></div></div></div>';
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		var expected = new axe.commons.color.Color(119.5, 119.5, 119.5, 1);
@@ -83,6 +87,7 @@ describe('color.getForegroundColor', function() {
 			'background-color: #800000; background-image: url(image.png);">' +
 			'<div id="target" style="height: 20px; width: 15px; color: blue; background-color: green; opacity: 0.5;">' +
 			'</div></div>';
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		assert.equal(axe.commons.color.incompleteData.get('fgColor'), 'bgImage');
@@ -94,6 +99,7 @@ describe('color.getForegroundColor', function() {
 			'<div style="height: 40px; width: 30px; background-color: red;">' +
 			'<div id="target" style="height: 20px; width: 15px; color: #000080; background-color: green;">' +
 			'</div></div>';
+		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
 		var actual = axe.commons.color.getForegroundColor(target);
 		var expected = new axe.commons.color.Color(0, 0, 128, 1);
@@ -123,6 +129,7 @@ describe('color.getForegroundColor', function() {
 			shadow.innerHTML =
 				'<div id="target" style="height:20px;width:15px;color:#000080;background-color:green;"></div>';
 
+			axe.testUtils.flatTreeSetup(fixture);
 			var target = shadow.querySelector('#target');
 			var actual = axe.commons.color.getForegroundColor(target);
 			var expected = new axe.commons.color.Color(0, 0, 128, 1);

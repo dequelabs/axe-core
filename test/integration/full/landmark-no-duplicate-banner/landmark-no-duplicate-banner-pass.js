@@ -21,16 +21,12 @@ describe('landmark-no-duplicate-banner test pass', function() {
 	});
 
 	describe('passes', function() {
-		it('should find 2', function() {
-			assert.lengthOf(results.passes[0].nodes, 2);
-		});
-
-		it('should find #pass1', function() {
-			assert.deepEqual(results.passes[0].nodes[0].target, ['#pass1']);
+		it('should find 1', function() {
+			assert.lengthOf(results.passes[0].nodes, 1);
 		});
 
 		it('should find #frame1, #pass2', function() {
-			assert.deepEqual(results.passes[0].nodes[1].target, [
+			assert.deepEqual(results.passes[0].nodes[0].target, [
 				'#frame1',
 				'#pass2'
 			]);

@@ -1,14 +1,6 @@
 describe('css-orientation-lock incomplete test', function() {
 	'use strict';
 
-	var isPhantom = window.PHANTOMJS ? true : false;
-
-	before(function() {
-		if (isPhantom) {
-			this.skip();
-		}
-	});
-
 	it('returns INCOMPLETE if preload is set to FALSE', function(done) {
 		axe.run(
 			{

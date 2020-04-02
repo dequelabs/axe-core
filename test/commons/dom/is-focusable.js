@@ -134,11 +134,27 @@ describe('is-focusable', function() {
 			assert.isFalse(axe.commons.dom.isFocusable(el));
 		});
 
-		it('should return true for a details element', function() {
+		it('should return true for a summary element', function() {
+			fixture.innerHTML =
+				'<details><summary id="target">Summary</summary><p>Detail</p></details>';
+			var el = document.getElementById('target');
+
+			assert.isTrue(axe.commons.dom.isFocusable(el));
+		});
+
+		it('should return true for a details element without a summary element', function() {
 			fixture.innerHTML = '<details id="target"><p>Detail</p></details>';
 			var el = document.getElementById('target');
 
 			assert.isTrue(axe.commons.dom.isFocusable(el));
+		});
+
+		it('should return false for a details element with a summary element', function() {
+			fixture.innerHTML =
+				'<details id="target"><summary>Summary</summary><p>Detail</p></details>';
+			var el = document.getElementById('target');
+
+			assert.isFalse(axe.commons.dom.isFocusable(el));
 		});
 
 		it('should return false for a div with no tabindex', function() {
@@ -360,11 +376,27 @@ describe('is-focusable', function() {
 			assert.isFalse(axe.commons.dom.isNativelyFocusable(el));
 		});
 
-		it('should return true for a details element', function() {
+		it('should return true for a summary element', function() {
+			fixture.innerHTML =
+				'<details><summary id="target">Summary</summary><p>Detail</p></details>';
+			var el = document.getElementById('target');
+
+			assert.isTrue(axe.commons.dom.isFocusable(el));
+		});
+
+		it('should return true for a details element without a summary element', function() {
 			fixture.innerHTML = '<details id="target"><p>Detail</p></details>';
 			var el = document.getElementById('target');
 
-			assert.isTrue(axe.commons.dom.isNativelyFocusable(el));
+			assert.isTrue(axe.commons.dom.isFocusable(el));
+		});
+
+		it('should return false for a details element with a summary element', function() {
+			fixture.innerHTML =
+				'<details id="target"><summary>Summary</summary><p>Detail</p></details>';
+			var el = document.getElementById('target');
+
+			assert.isFalse(axe.commons.dom.isFocusable(el));
 		});
 
 		it('should return false for a div with no tabindex', function() {

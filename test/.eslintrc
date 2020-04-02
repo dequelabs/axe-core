@@ -56,7 +56,7 @@
       50
     ],
     "no-cond-assign": 0,
-    "no-debugger": 0,
+    "no-debugger": 2,
     "no-eq-null": 0,
     "no-eval": 0,
     "no-unused-expressions": 0,
