@@ -178,60 +178,6 @@ describe('text.nativeTextMethods', function() {
 		});
 	});
 
-	describe('titleText', function() {
-		var __titleText;
-		beforeEach(function() {
-			__titleText = text.titleText;
-		});
-		afterEach(function() {
-			text.titleText = __titleText;
-		});
-		it('returns the value from text.titleText', function() {
-			text.titleText = function(arg1, arg2) {
-				assert.equal(arg1, 'lilly');
-				assert.equal(arg2, 'bob');
-				return 'foo';
-			};
-			assert.equal(nativeTextMethods.titleText('lilly', 'bob'), 'foo');
-		});
-	});
-
-	describe('subtreeText', function() {
-		var __subtreeText;
-		beforeEach(function() {
-			__subtreeText = text.subtreeText;
-		});
-		afterEach(function() {
-			text.subtreeText = __subtreeText;
-		});
-		it('returns the value from text.subtreeText', function() {
-			text.subtreeText = function(arg1, arg2) {
-				assert.equal(arg1, 'lilly');
-				assert.equal(arg2, 'bob');
-				return 'foo';
-			};
-			assert.equal(nativeTextMethods.subtreeText('lilly', 'bob'), 'foo');
-		});
-	});
-
-	describe('labelText', function() {
-		var __labelText;
-		beforeEach(function() {
-			__labelText = text.labelText;
-		});
-		afterEach(function() {
-			text.labelText = __labelText;
-		});
-		it('returns the value from text.labelText', function() {
-			text.labelText = function(arg1, arg2) {
-				assert.equal(arg1, 'lilly');
-				assert.equal(arg2, 'bob');
-				return 'foo';
-			};
-			assert.equal(nativeTextMethods.labelText('lilly', 'bob'), 'foo');
-		});
-	});
-
 	describe('singleSpace', function() {
 		var singleSpace = nativeTextMethods.singleSpace;
 		it('returns a single space', function() {

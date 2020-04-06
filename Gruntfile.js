@@ -30,6 +30,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-parallel');
 	grunt.loadNpmTasks('grunt-run');
 	grunt.loadNpmTasks('grunt-webpack');
+	grunt.loadNpmTasks('grunt-rollup');
 	grunt.loadTasks('build/tasks');
 
 	var langs;
@@ -167,6 +168,15 @@ module.exports = function(grunt) {
 				],
 				dest: 'tmp/commons.js'
 			}
+		},
+		rollup: {
+			options: {
+				format: 'iife'
+			},
+			'tmp/commons/aria/index.js': 'lib/commons/aria/index.js',
+			'tmp/commons/forms/index.js': 'lib/commons/forms/index.js',
+			'tmp/commons/matches/index.js': 'lib/commons/matches/index.js',
+			'tmp/commons/text/index.js': 'lib/commons/text/index.js'
 		},
 		webpack: {
 			commonsUtils: createWebpackConfig(
