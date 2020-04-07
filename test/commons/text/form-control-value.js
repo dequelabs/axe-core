@@ -1,5 +1,4 @@
 describe('text.formControlValue', function() {
-	// var __methods, __unsupported;
 	var formControlValue = axe.commons.text.formControlValue;
 	var queryFixture = axe.testUtils.queryFixture;
 	var fixtureSetup = axe.testUtils.fixtureSetup;
@@ -15,22 +14,6 @@ describe('text.formControlValue', function() {
 			: 'text';
 		return nodeType;
 	}
-
-	// function bar() {
-	// 	return 'bar';
-	// }
-	// function empty() {
-	// 	return '';
-	// }
-
-	// beforeEach(function() {
-	// 	__methods = axe.commons.text.formControlValueMethods;
-	// 	__unsupported = axe.commons.text.unsupported.accessibleNameFromFieldValue;
-	// });
-	// afterEach(function() {
-	// 	axe.commons.text.formControlValueMethods = __methods;
-	// 	axe.commons.text.unsupported.accessibleNameFromFieldValue = __unsupported;
-	// });
 
 	it('returns the first truthy result from text.formControlValueMethods', function() {
 		var target = queryFixture(
