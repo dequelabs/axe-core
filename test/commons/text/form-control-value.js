@@ -1,13 +1,8 @@
 describe('text.formControlValue', function() {
-	var __methods, __unsupported;
 	var formControlValue = axe.commons.text.formControlValue;
+	var queryFixture = axe.testUtils.queryFixture;
 	var fixtureSetup = axe.testUtils.fixtureSetup;
 	var fixture = document.querySelector('#fixture');
-
-	function queryFixture(code, query) {
-		fixtureSetup(code);
-		return axe.utils.querySelectorAll(axe._tree, query)[0];
-	}
 
 	function getNodeType(node) {
 		// Note: Inconsistent response for `node.type` across browsers, hence resolving and sanitizing using getAttribute
@@ -20,53 +15,30 @@ describe('text.formControlValue', function() {
 		return nodeType;
 	}
 
-	function bar() {
-		return 'bar';
-	}
-	function empty() {
-		return '';
-	}
-
-	beforeEach(function() {
-		__methods = axe.commons.text.formControlValueMethods;
-		__unsupported = axe.commons.text.unsupported.accessibleNameFromFieldValue;
-	});
-	afterEach(function() {
-		axe.commons.text.formControlValueMethods = __methods;
-		axe.commons.text.unsupported.accessibleNameFromFieldValue = __unsupported;
-	});
-
-	it('runs functions on text.formControlValueMethods', function() {
-		var target = queryFixture('<input value="foo" />', 'input');
-		axe.commons.text.formControlValueMethods = [bar];
-		assert.equal(formControlValue(target), 'bar');
-	});
-
 	it('returns the first truthy result from text.formControlValueMethods', function() {
-		var target = queryFixture('<input value ="foo" />', 'input');
+		var target = queryFixture(
+			'<div id="target" role="textbox" value="foo">bar</div>'
+		);
 		var fixture = axe.utils.querySelectorAll(axe._tree, '#fixture')[0];
-		axe.commons.text.formControlValueMethods = [empty, bar, empty];
 		assert.equal(formControlValue(target, { startNode: fixture }), 'bar');
 	});
 
-	it('returns `` when the node equal context.startNode', function() {
-		var target = queryFixture('<input value="foo" />', 'input');
-		axe.commons.text.formControlValueMethods = [bar];
+	it('returns `` when the node equals context.startNode', function() {
+		var target = queryFixture('<input id="target" value="foo" />');
 		assert.equal(formControlValue(target, { startNode: target }), '');
 	});
 
 	it('returns `` when the role is not supposed to return a value', function() {
 		var target = queryFixture(
-			'<input value="foo" role="presentation" />',
-			'input'
+			'<input id="target" value="foo" role="presentation" />'
 		);
-		axe.commons.text.formControlValueMethods = [bar];
 		assert.equal(formControlValue(target), '');
 	});
 
 	it('returns `` when accessibleNameFromFieldValue says the role is unsupported', function() {
-		var target = queryFixture('<input value="foo" />', 'input');
-		axe.commons.text.unsupported.accessibleNameFromFieldValue = ['textbox'];
+		var target = queryFixture(
+			'<input id="target" value="foo" role="combobox"/>'
+		);
 		assert.equal(formControlValue(target), '');
 	});
 
@@ -174,11 +146,10 @@ describe('text.formControlValue', function() {
 
 		it('returns the selected option text', function() {
 			var target = queryFixture(
-				'<select>' +
+				'<select id="target">' +
 					'  <option>foo</option>' +
 					'  <option value="bar" selected>baz</option>' +
-					'</select>',
-				'select'
+					'</select>'
 			);
 			assert.equal(nativeSelectValue(target), 'baz');
 		});
@@ -186,22 +157,21 @@ describe('text.formControlValue', function() {
 		it('returns multiple options, space seperated', function() {
 			// Can't apply multiple "selected" props without setting "multiple"
 			var target = queryFixture(
-				'<select multiple>' +
+				'<select id="target" multiple>' +
 					'  <option>oof</option>' +
 					'  <option selected>foo</option>' +
 					'  <option>rab</option>' +
 					'  <option selected>bar</option>' +
 					'  <option>zab</option>' +
 					'  <option selected>baz</option>' +
-					'</select>',
-				'select'
+					'</select>'
 			);
 			assert.equal(nativeSelectValue(target), 'foo bar baz');
 		});
 
 		it('returns options from within optgroup elements', function() {
 			var target = queryFixture(
-				'<select multiple>' +
+				'<select id="target" multiple>' +
 					'  <option>oof</option>' +
 					'  <option selected>foo</option>' +
 					'  <optgroup>' +
@@ -212,8 +182,7 @@ describe('text.formControlValue', function() {
 					'    <option>zab</option>' +
 					'    <option selected>baz</option>' +
 					'  </optgroup>' +
-					'</select>',
-				'select'
+					'</select>'
 			);
 			assert.equal(nativeSelectValue(target), 'foo bar baz');
 		});
@@ -221,11 +190,10 @@ describe('text.formControlValue', function() {
 		it('returns the first option when there are no selected options', function() {
 			// Browser automatically selectes the first option
 			var target = queryFixture(
-				'<select>' +
+				'<select id="target">' +
 					'  <option>foo</option>' +
 					'  <option>baz</option>' +
-					'</select>',
-				'select'
+					'</select>'
 			);
 			assert.equal(nativeSelectValue(target), 'foo');
 		});
@@ -248,63 +216,56 @@ describe('text.formControlValue', function() {
 			axe.commons.text.formControlValueMethods.ariaTextboxValue;
 
 		it('returns the text of role=textbox elements', function() {
-			var target = queryFixture(
-				'<div role="textbox">foo</div>',
-				'[role=textbox]'
-			);
+			var target = queryFixture('<div id="target" role="textbox">foo</div>');
 			assert.equal(ariaTextboxValue(target), 'foo');
 		});
 
 		it('returns `` for elements without role=textbox', function() {
-			var target = queryFixture(
-				'<div role="combobox">foo</div>',
-				'[role=combobox]'
-			);
+			var target = queryFixture('<div id="target" role="combobox">foo</div>');
 			assert.equal(ariaTextboxValue(target), '');
 		});
 
 		it('ignores text hidden with CSS', function() {
 			var target = queryFixture(
-				'<div role="textbox">' +
+				'<div id="target" role="textbox">' +
 					'<span>foo</span>' +
 					'<span style="display: none;">bar</span>' +
 					'<span style="visibility: hidden;">baz</span>' +
-					'</div>',
-				'[role=textbox]'
+					'</div>'
 			);
 			assert.equal(ariaTextboxValue(target), 'foo');
 		});
 
 		it('ignores elements with hidden content', function() {
 			var target = queryFixture(
-				'<div role="textbox">' +
+				'<div id="target" role="textbox">' +
 					'<span>span</span>' +
 					'<style>style</style>' +
 					'<template>template</template>' +
 					'<script>script</script>' +
 					'<!-- comment -->' +
 					'<h1>h1</h1>' +
-					'</div>',
-				'[role=textbox]'
+					'</div>'
 			);
 			assert.equal(ariaTextboxValue(target), 'spanh1');
 		});
 
 		it('does not return HTML or comments', function() {
 			var target = queryFixture(
-				'<div role="textbox">' + '<i>foo</i>' + '<!-- comment -->' + '</div>',
-				'[role=textbox]'
+				'<div id="target" role="textbox">' +
+					'<i>foo</i>' +
+					'<!-- comment -->' +
+					'</div>'
 			);
 			assert.equal(ariaTextboxValue(target), 'foo');
 		});
 
 		it('returns the entire text content if the textbox is hidden', function() {
 			var target = queryFixture(
-				'<div role="textbox" style="display:none">' +
+				'<div id="target" role="textbox" style="display:none">' +
 					// Yes, this is how it works in browsers :-(
 					'<style>[role=texbox] { display: none }</style>' +
-					'</div>',
-				'[role=textbox]'
+					'</div>'
 			);
 			assert.equal(ariaTextboxValue(target), '[role=texbox] { display: none }');
 		});
@@ -316,71 +277,65 @@ describe('text.formControlValue', function() {
 
 		it('returns the selected option when the element is a listbox', function() {
 			var target = queryFixture(
-				'<div role="listbox">' +
+				'<div id="target" role="listbox">' +
 					'  <div role="option">foo</div>' +
 					'  <div role="option" aria-selected="true">bar</div>' +
 					'  <div role="option">baz</div>' +
-					'</div>',
-				'[role=listbox]'
+					'</div>'
 			);
 			assert.equal(ariaListboxValue(target), 'bar');
 		});
 
 		it('returns `` when the element is not a listbox', function() {
 			var target = queryFixture(
-				'<div role="combobox">' +
+				'<div id="target" role="combobox">' +
 					'  <div role="option">foo</div>' +
 					'  <div role="option" aria-selected="true">bar</div>' +
 					'  <div role="option">baz</div>' +
-					'</div>',
-				'[role=combobox]'
+					'</div>'
 			);
 			assert.equal(ariaListboxValue(target), '');
 		});
 
 		it('returns `` when there is no selected option', function() {
 			var target = queryFixture(
-				'<div role="listbox">' +
+				'<div id="target" role="listbox">' +
 					'  <div role="option">foo</div>' +
 					'  <div role="option">bar</div>' +
 					'  <div role="option">baz</div>' +
-					'</div>',
-				'[role=listbox]'
+					'</div>'
 			);
 			assert.equal(ariaListboxValue(target), '');
 		});
 
 		it('returns `` when aria-selected is not true option', function() {
 			var target = queryFixture(
-				'<div role="listbox">' +
+				'<div id="target" role="listbox">' +
 					'  <div role="option" aria-selected="false">foo</div>' +
 					'  <div role="option" aria-selected="TRUE">bar</div>' +
 					'  <div role="option" aria-selected="yes">baz</div>' +
 					'  <div role="option" aria-selected="selected">fiz</div>' +
-					'</div>',
-				'[role=listbox]'
+					'</div>'
 			);
 			assert.equal(ariaListboxValue(target), '');
 		});
 
 		it('returns selected options from aria-owned', function() {
 			var target = queryFixture(
-				'<div role="listbox" aria-owns="opt1 opt2 opt3"></div>' +
+				'<div id="target" role="listbox" aria-owns="opt1 opt2 opt3"></div>' +
 					'<div role="option" id="opt1">foo</div>' +
 					'<div role="option" id="opt2" aria-selected="true">bar</div>' +
-					'<div role="option" id="opt3">baz</div>',
-				'[role=listbox]'
+					'<div role="option" id="opt3">baz</div>'
 			);
 			assert.equal(ariaListboxValue(target), 'bar');
 		});
 
 		it('ignores aria-selected for elements that are not options', function() {
 			var target = queryFixture(
-				'<div role="listbox" aria-owns="opt1 opt2 opt3"></div>' +
+				'<div id="target" role="listbox" aria-owns="opt1 opt2 opt3"></div>' +
 					'<div id="opt1">foo</div>' +
 					'<div id="opt2" aria-selected="true">bar</div>' +
-					'<div id="opt3">baz</div>',
-				'[role=listbox]'
+					'<div id="opt3">baz</div>'
 			);
 			assert.equal(ariaListboxValue(target), '');
 		});
@@ -388,35 +343,32 @@ describe('text.formControlValue', function() {
 		describe('with multiple aria-selected', function() {
 			it('returns the first selected option from children', function() {
 				var target = queryFixture(
-					'<div role="listbox">' +
+					'<div id="target" role="listbox">' +
 						'  <div role="option">foo</div>' +
 						'  <div role="option" aria-selected="true">bar</div>' +
 						'  <div role="option" aria-selected="true">baz</div>' +
-						'</div>',
-					'[role=listbox]'
+						'</div>'
 				);
 				assert.equal(ariaListboxValue(target), 'bar');
 			});
 
 			it('returns the first selected option in aria-owned (as opposed to in the DOM order)', function() {
 				var target = queryFixture(
-					'<div role="listbox" aria-owns="opt3 opt2 opt1"></div>' +
+					'<div id="target" role="listbox" aria-owns="opt3 opt2 opt1"></div>' +
 						'<div role="option" id="opt1" aria-selected="true">foo</div>' +
 						'<div role="option" id="opt2" aria-selected="true">bar</div>' +
-						'<div role="option" id="opt3">baz</div>',
-					'[role=listbox]'
+						'<div role="option" id="opt3">baz</div>'
 				);
 				assert.equal(ariaListboxValue(target), 'bar');
 			});
 
 			it('returns the a selected child before a selected aria-owned element', function() {
 				var target = queryFixture(
-					'<div role="listbox" aria-owns="opt2 opt3">' +
+					'<div id="target" role="listbox" aria-owns="opt2 opt3">' +
 						'  <div role="option" aria-selected="true">foo</div>' +
 						'</div>' +
 						'<div role="option" id="opt2" aria-selected="true">bar</div>' +
-						'<div role="option" id="opt3">baz</div>',
-					'[role=listbox]'
+						'<div role="option" id="opt3">baz</div>'
 				);
 				assert.equal(ariaListboxValue(target), 'foo');
 			});
@@ -424,12 +376,11 @@ describe('text.formControlValue', function() {
 			it('ignores aria-multiselectable=true', function() {
 				// aria-multiselectable doesn't add additional content to the accessible name
 				var target = queryFixture(
-					'<div role="listbox" aria-owns="opt2 opt3" aria-multiselectable="true">' +
+					'<div id="target" role="listbox" aria-owns="opt2 opt3" aria-multiselectable="true">' +
 						'  <div role="option" aria-selected="true">foo</div>' +
 						'</div>' +
 						'<div  role="option" id="opt2" aria-selected="true">bar</div>' +
-						'<div  role="option" id="opt3" aria-selected="true">baz</div>',
-					'[role=listbox]'
+						'<div  role="option" id="opt3" aria-selected="true">baz</div>'
 				);
 				assert.equal(ariaListboxValue(target), 'foo');
 			});
@@ -439,12 +390,6 @@ describe('text.formControlValue', function() {
 	describe('ariaComboboxValue', function() {
 		var ariaComboboxValue =
 			axe.commons.text.formControlValueMethods.ariaComboboxValue;
-		var __ariaListboxValue =
-			axe.commons.text.formControlValueMethods.ariaListboxValue;
-
-		afterEach(function() {
-			axe.commons.text.formControlValueMethods.ariaListboxValue = __ariaListboxValue;
-		});
 
 		var comboboxContent =
 			'<div role="textbox" id="text">nope</div>' +
@@ -455,46 +400,33 @@ describe('text.formControlValue', function() {
 
 		it('returns the text of role=combobox elements', function() {
 			var target = queryFixture(
-				'<div role="combobox">' + comboboxContent + '</div>',
-				'[role=combobox]'
+				'<div id="target" role="combobox">' + comboboxContent + '</div>'
 			);
 			assert.equal(ariaComboboxValue(target), 'bar');
 		});
 
 		it('returns `` for elements without role=combobox', function() {
-			var target = queryFixture(
-				'<div role="combobox">' + comboboxContent + '</div>',
+			queryFixture('<div role="combobox">' + comboboxContent + '</div>');
+			var target = axe.utils.querySelectorAll(
+				axe._tree[0],
 				'[role=listbox]'
-			);
+			)[0];
 			assert.equal(ariaComboboxValue(target), '');
 		});
 
 		it('passes child listbox to `ariaListboxValue` and returns its result', function() {
 			var target = queryFixture(
-				'<div role="combobox">' + comboboxContent + '</div>',
-				'[role=combobox]'
+				'<div id="target" role="combobox">' + comboboxContent + '</div>'
 			);
-			axe.commons.text.formControlValueMethods.ariaListboxValue = function(
-				elm
-			) {
-				assert.equal(elm.actualNode.id, 'list');
-				return 'Foxtrot';
-			};
-			assert.equal(ariaComboboxValue(target), 'Foxtrot');
+			assert.equal(ariaComboboxValue(target), 'bar');
 		});
 
 		it('passes aria-owned listbox to `ariaListboxValue` and returns its result', function() {
 			var target = queryFixture(
-				'<div role="combobox" aria-owns="text list"></div>' + comboboxContent,
-				'[role=combobox]'
+				'<div id="target" role="combobox" aria-owns="text list"></div>' +
+					comboboxContent
 			);
-			axe.commons.text.formControlValueMethods.ariaListboxValue = function(
-				elm
-			) {
-				assert.equal(elm.actualNode.id, 'list');
-				return 'Foxtrot';
-			};
-			assert.equal(ariaComboboxValue(target), 'Foxtrot');
+			assert.equal(ariaComboboxValue(target), 'bar');
 		});
 	});
 
@@ -504,10 +436,7 @@ describe('text.formControlValue', function() {
 			axe.commons.text.formControlValueMethods.ariaRangeValue;
 
 		it('returns `` for roles that are not ranges', function() {
-			var target = queryFixture(
-				'<div role="textbox">foo</div>',
-				'[role=textbox]'
-			);
+			var target = queryFixture('<div id="target" role="textbox">foo</div>');
 			assert.equal(ariaRangeValue(target), '');
 		});
 
@@ -515,32 +444,34 @@ describe('text.formControlValue', function() {
 			describe('with ' + role, function() {
 				it('returns the result of aria-valuenow', function() {
 					var target = queryFixture(
-						'<div role="' + role + '" aria-valuenow="+123">foo</div>',
-						'[aria-valuenow]'
+						'<div id="target" role="' +
+							role +
+							'" aria-valuenow="+123">foo</div>'
 					);
 					assert.equal(ariaRangeValue(target), '123');
 				});
 
 				it('returns `0` if aria-valuenow is not a number', function() {
 					var target = queryFixture(
-						'<div role="' + role + '" aria-valuenow="abc">foo</div>',
-						'[aria-valuenow]'
+						'<div id="target" role="' + role + '" aria-valuenow="abc">foo</div>'
 					);
 					assert.equal(ariaRangeValue(target), '0');
 				});
 
 				it('returns decimal numbers', function() {
 					var target = queryFixture(
-						'<div role="' + role + '" aria-valuenow="1.5678">foo</div>',
-						'[aria-valuenow]'
+						'<div id="target" role="' +
+							role +
+							'" aria-valuenow="1.5678">foo</div>'
 					);
 					assert.equal(ariaRangeValue(target), '1.5678');
 				});
 
 				it('returns negative numbers', function() {
 					var target = queryFixture(
-						'<div role="' + role + '" aria-valuenow="-1.0">foo</div>',
-						'[aria-valuenow]'
+						'<div id="target" role="' +
+							role +
+							'" aria-valuenow="-1.0">foo</div>'
 					);
 					assert.equal(ariaRangeValue(target), '-1');
 				});

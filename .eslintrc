@@ -77,6 +77,7 @@
         "lib/commons/aria/*.js",
         "lib/commons/forms/*.js",
         "lib/commons/matches/*.js",
+        "lib/commons/text/*.js",
         "lib/commons/utils/*.js"
       ],
       "parserOptions":{

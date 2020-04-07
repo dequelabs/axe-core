@@ -157,6 +157,7 @@ module.exports = function(grunt) {
 					'!lib/commons/aria/*.js',
 					'!lib/commons/forms/*.js',
 					'!lib/commons/matches/*.js',
+					'!lib/commons/text/*.js',
 					'!lib/commons/utils/*.js',
 
 					// output of webpack directories
@@ -183,6 +184,10 @@ module.exports = function(grunt) {
 			commonsMatches: createWebpackConfig(
 				'lib/commons/matches/index.js',
 				'tmp/commons/matches'
+			),
+			commonsText: createWebpackConfig(
+				'lib/commons/text/index.js',
+				'tmp/commons/text'
 			)
 		},
 		'aria-supported': {
