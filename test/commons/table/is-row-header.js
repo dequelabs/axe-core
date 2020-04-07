@@ -33,13 +33,13 @@ describe('table.isRowHeader', function() {
 		assert.isTrue(table.isRowHeader(cell));
 	});
 
-	it('returns true if scope="col"', function() {
-		var cell = document.querySelector('#rh2');
-		assert.isTrue(table.isRowHeader(cell));
-	});
-
-	it('returns false if scope="row"', function() {
+	it('returns false if scope="col"', function() {
 		var cell = document.querySelector('#ch1');
 		assert.isFalse(table.isRowHeader(cell));
+	});
+
+	it('returns true if scope="row"', function() {
+		var cell = document.querySelector('#rh2');
+		assert.isTrue(table.isRowHeader(cell));
 	});
 });
