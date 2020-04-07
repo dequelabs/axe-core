@@ -103,6 +103,15 @@ describe('aria-required-children', function() {
 		);
 	});
 
+	it('should pass all existing required children when all required', function() {
+		var params = checkSetup(
+			'<div id="target" role="menu"><li role="none"></li><li role="menuitem">Item 1</li><div role="menuitemradio">Item 2</div><div role="menuitemcheckbox">Item 3</div></div>'
+		);
+		assert.isTrue(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+	});
+
 	it('should return undefined when element is empty and is in reviewEmpty options', function() {
 		var params = checkSetup('<div role="list" id="target"></div>', {
 			reviewEmpty: ['list']
@@ -246,6 +255,39 @@ describe('aria-required-children', function() {
 		assert.deepEqual(checkContext._data, ['listbox']);
 	});
 
+	it('should fail when list does not have required children listitem', function() {
+		var params = checkSetup(
+			'<div id="target" role="list"><span>Item 1</span></div>'
+		);
+		assert.isFalse(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+
+		assert.deepEqual(checkContext._data, ['listitem']);
+	});
+
+	it('should fail when list has intermediate child with role that is not a required role', function() {
+		var params = checkSetup(
+			'<div id="target" role="list"><div role="tabpanel"><div role="listitem">List item 1</div></div></div>'
+		);
+		assert.isFalse(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+
+		assert.deepEqual(checkContext._data, ['listitem']);
+	});
+
+	it('should fail when nested child with role row  does not have required child role cell', function() {
+		var params = checkSetup(
+			'<div  role="grid"><div role="row" id="target"><span>Item 1</span></div></div>'
+		);
+		assert.isFalse(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+
+		assert.includeMembers(checkContext._data, ['cell']);
+	});
+
 	it('should pass one indirectly aria-owned child when one required', function() {
 		var params = checkSetup(
 			'<div role="grid" id="target" aria-owns="r"></div><div id="r"><div role="row">Nothing here.</div></div>'
@@ -267,6 +309,33 @@ describe('aria-required-children', function() {
 	it('should pass one existing aria-owned child when one required', function() {
 		var params = checkSetup(
 			'<div role="grid" id="target" aria-owns="r"></div><p id="r" role="row">Nothing here.</p>'
+		);
+		assert.isTrue(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+	});
+
+	it('should fail one existing aria-owned child when an intermediate child with role that is not a required role exists', function() {
+		var params = checkSetup(
+			'<div id="target" role="list" aria-owns="list"></div><div id="list"><div role="tabpanel"><div role="listitem"></div></div></div>'
+		);
+		assert.isFalse(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+	});
+
+	it('should pass one existing required child when one required (has explicit role of tab)', function() {
+		var params = checkSetup(
+			'<ul id="target" role="tablist"><li role="tab">Tab 1</li><li role="tab">Tab 2</li></ul>'
+		);
+		assert.isTrue(
+			checks['aria-required-children'].evaluate.apply(checkContext, params)
+		);
+	});
+
+	it('should pass required child roles (grid contains row, which contains cell)', function() {
+		var params = checkSetup(
+			'<table id="target" role="grid"><tr role="row"><td role="cell">Item 1</td></tr></table>'
 		);
 		assert.isTrue(
 			checks['aria-required-children'].evaluate.apply(checkContext, params)
