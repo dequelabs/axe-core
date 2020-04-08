@@ -157,6 +157,7 @@ module.exports = function(grunt) {
 					'!lib/commons/aria/*.js',
 					'!lib/commons/forms/*.js',
 					'!lib/commons/matches/*.js',
+					'!lib/commons/table/*.js',
 					'!lib/commons/text/*.js',
 					'!lib/commons/utils/*.js',
 
@@ -184,6 +185,10 @@ module.exports = function(grunt) {
 			commonsMatches: createWebpackConfig(
 				'lib/commons/matches/index.js',
 				'tmp/commons/matches'
+			),
+			commonsTable: createWebpackConfig(
+				'lib/commons/table/index.js',
+				'tmp/commons/table'
 			),
 			commonsText: createWebpackConfig(
 				'lib/commons/text/index.js',
