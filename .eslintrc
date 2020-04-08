@@ -78,6 +78,7 @@
         "lib/commons/color/*.js",
         "lib/commons/forms/*.js",
         "lib/commons/matches/*.js",
+        "lib/commons/table/*.js",
         "lib/commons/text/*.js",
         "lib/commons/utils/*.js"
       ],

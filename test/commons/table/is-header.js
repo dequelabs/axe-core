@@ -1,60 +1,42 @@
 describe('table.isHeader', function() {
 	'use strict';
-	function $id(id) {
-		return document.getElementById(id);
-	}
 
-	var fixture = $id('fixture');
-	var cell;
+	var table = axe.commons.table;
+	var fixture = document.querySelector('#fixture');
+	var fixtureSetup = axe.testUtils.fixtureSetup;
 
-	afterEach(function() {
-		fixture.innerHTML = '<table><tr><th id="cell"></th></tr></table>';
-		cell = $id('cell');
+	var tableFixture =
+		'<table>' +
+		'<tr>' +
+		'<th id="ch1">column header 1</th>' +
+		'<th scope="col" id="ch2">column header 2</th>' +
+		'</tr>' +
+		'<tr>' +
+		'<th id="rh1">row header 1</th>' +
+		'<td id="cell1">cell 1</td>' +
+		'</tr>' +
+		'<tr>' +
+		'<th scope="row" id="rh2">row header 2</th>' +
+		'<td id="cell2">cell 2</td>' +
+		'</tr>' +
+		'</table>';
+
+	it('should return true for column headers', function() {
+		fixtureSetup(tableFixture);
+		var cell = document.querySelector('#ch1');
+		assert.isTrue(table.isHeader(cell));
 	});
 
-	it('should return true if table.isColumnHeader return true', function() {
-		var orig = axe.commons.table.isColumnHeader;
-		axe.commons.table.isColumnHeader = function() {
-			return true;
-		};
-		var orig2 = axe.commons.table.isRowHeader;
-		axe.commons.table.isRowHeader = function() {
-			return false;
-		};
-		assert.isTrue(axe.commons.table.isHeader(cell));
-
-		axe.commons.table.isColumnHeader = orig;
-		axe.commons.table.isRowHeader = orig2;
+	it('should return true if cell is a row header', function() {
+		fixtureSetup(tableFixture);
+		var cell = document.querySelector('#rh1');
+		assert.isTrue(table.isHeader(cell));
 	});
 
-	it('should return true if table.isRowHeader return true', function() {
-		var orig = axe.commons.table.isRowHeader;
-		axe.commons.table.isRowHeader = function() {
-			return true;
-		};
-		var orig2 = axe.commons.table.isColumnHeader;
-		axe.commons.table.isColumnHeader = function() {
-			return false;
-		};
-		assert.isTrue(axe.commons.table.isHeader(cell));
-
-		axe.commons.table.isRowHeader = orig;
-		axe.commons.table.isColumnHeader = orig2;
-	});
-
-	it('should return false if table.isRowHeader and table.isColumnHeader return false', function() {
-		var orig = axe.commons.table.isRowHeader;
-		axe.commons.table.isRowHeader = function() {
-			return false;
-		};
-		var orig2 = axe.commons.table.isColumnHeader;
-		axe.commons.table.isColumnHeader = function() {
-			return false;
-		};
-		assert.isFalse(axe.commons.table.isHeader(cell));
-
-		axe.commons.table.isRowHeader = orig;
-		axe.commons.table.isColumnHeader = orig2;
+	it('should return false if cell is not a column or row header', function() {
+		fixtureSetup(tableFixture);
+		var cell = document.querySelector('#cell1');
+		assert.isFalse(table.isHeader(cell));
 	});
 
 	it('should return true if referenced by another cells headers attr', function() {
@@ -63,19 +45,19 @@ describe('table.isHeader', function() {
 			'<tr><td id="target">1</td><td headers="bar target foo"></tr>' +
 			'</table>';
 
-		var target = $id('target');
+		var target = document.querySelector('#target');
 
-		assert.isTrue(axe.commons.table.isHeader(target));
+		assert.isTrue(table.isHeader(target));
 	});
 
 	it('should return false otherwise', function() {
 		fixture.innerHTML =
 			'<table>' +
-			'<tr><td class="target">1</td><td headers="bar monkeys foo"></tr>' +
+			'<tr><td id="target">1</td><td headers="bar monkeys foo"></tr>' +
 			'</table>';
 
-		var target = document.querySelector('.target');
+		var target = document.querySelector('#target');
 
-		assert.isFalse(axe.commons.table.isHeader(target));
+		assert.isFalse(table.isHeader(target));
 	});
 });
