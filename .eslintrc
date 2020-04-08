@@ -75,6 +75,7 @@
     {
       "files": [
         "lib/commons/aria/*.js",
+        "lib/commons/color/*.js",
         "lib/commons/forms/*.js",
         "lib/commons/matches/*.js",
         "lib/commons/table/*.js",
