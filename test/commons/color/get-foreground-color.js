@@ -1,5 +1,3 @@
-/* global sinon */
-
 describe('color.getForegroundColor', function() {
 	'use strict';
 
@@ -110,12 +108,20 @@ describe('color.getForegroundColor', function() {
 	});
 
 	it('should not recalculate bgColor if passed in', function() {
-		var spy = sinon.spy(axe.commons.color, 'getBackgroundColor');
-		var bgColor = new axe.commons.color.Color(255, 255, 255, 1);
-		var node = document.createElement('div');
-		axe.commons.color.getForegroundColor(node, false, bgColor);
-		assert.isFalse(spy.called);
-		spy.restore();
+		fixture.innerHTML =
+			'<div style="height: 40px; background-color: #000000;">' +
+			'<div id="target" style="height: 40px; color: rgba(0, 0, 128, 0.5);">' +
+			'This is my text' +
+			'</div></div>';
+		axe.testUtils.flatTreeSetup(fixture);
+		var target = fixture.querySelector('#target');
+		var bgColor = new axe.commons.color.Color(64, 64, 0, 1);
+		var actual = axe.commons.color.getForegroundColor(target, false, bgColor);
+		var expected = new axe.commons.color.Color(32, 32, 64, 1);
+		assert.closeTo(actual.red, expected.red, 0.8);
+		assert.closeTo(actual.green, expected.green, 0.8);
+		assert.closeTo(actual.blue, expected.blue, 0.8);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
 	});
 
 	(shadowSupported ? it : xit)(
