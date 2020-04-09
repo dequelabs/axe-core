@@ -110,63 +110,37 @@ describe('link-in-text-block', function() {
 			});
 		});
 
-		it('uses color.elementIsDistinct to test the initial state', function() {
-			var isCalled;
-			var orig = axe.commons.color.elementIsDistinct;
-			var linkElm = getLinkElm();
-
-			axe.commons.color.elementIsDistinct = function(arg1, arg2) {
-				isCalled = true;
-				return orig(arg1, arg2);
-			};
-
-			checks['link-in-text-block'].evaluate.call(checkContext, linkElm);
-			assert.ok(isCalled);
-			axe.commons.color.elementIsDistinct = orig;
-		});
-
 		it('passes the selected node and closest ancestral block element', function() {
 			fixture.innerHTML =
-				'<div> <span style="display:block" id="parent">' +
+				'<div> <span style="display:block; color: #100" id="parent">' +
 				'	<p style="display:inline"><a href="" id="link">' +
 				'		 link text ' +
 				'	</a> inside block </p> inside block' +
 				'</span> outside block </div>';
 
 			axe.testUtils.flatTreeSetup(fixture);
-			var orig = axe.commons.color.elementIsDistinct;
 			var linkElm = document.getElementById('link');
-			var parentElm = document.getElementById('parent');
 
-			axe.commons.color.elementIsDistinct = function(arg1, arg2) {
-				assert.deepEqual(arg1, linkElm);
-				assert.deepEqual(arg2, parentElm);
-				return orig(arg1, arg2);
-			};
-
-			checks['link-in-text-block'].evaluate.call(checkContext, linkElm);
-			axe.commons.color.elementIsDistinct = orig;
+			assert.isTrue(
+				checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
+			);
 		});
 
 		(shadowSupport.v1 ? it : xit)(
 			'works with the block outside the shadow tree',
 			function() {
 				var parentElm = document.createElement('div');
+				parentElm.setAttribute('style', 'color:#100;');
 				var shadow = parentElm.attachShadow({ mode: 'open' });
-				shadow.innerHTML = '<a href="">Link</a>';
+				shadow.innerHTML = '<a href="" style="color:#100;">Link</a>';
 				var linkElm = shadow.querySelector('a');
 				fixture.appendChild(parentElm);
 
 				axe.testUtils.flatTreeSetup(fixture);
-				var orig = axe.commons.color.elementIsDistinct;
-				axe.commons.color.elementIsDistinct = function(arg1, arg2) {
-					assert.deepEqual(arg1, linkElm);
-					assert.deepEqual(arg2, parentElm);
-					return orig(arg1, arg2);
-				};
 
-				checks['link-in-text-block'].evaluate.call(checkContext, linkElm);
-				axe.commons.color.elementIsDistinct = orig;
+				assert.isTrue(
+					checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
+				);
 			}
 		);
 
@@ -174,24 +148,18 @@ describe('link-in-text-block', function() {
 			'works with the link inside the shadow tree slot',
 			function() {
 				var div = document.createElement('div');
-				div.innerHTML = '<a href="">Link</a>';
+				div.setAttribute('style', 'color:#100;');
+				div.innerHTML = '<a href="" style="color:#100;">Link</a>';
 				var shadow = div.attachShadow({ mode: 'open' });
 				shadow.innerHTML = '<p><slot></slot></p>';
 				fixture.appendChild(div);
 
 				axe.testUtils.flatTreeSetup(fixture);
 				var linkElm = div.querySelector('a');
-				var parentElm = shadow.querySelector('p');
 
-				var orig = axe.commons.color.elementIsDistinct;
-				axe.commons.color.elementIsDistinct = function(arg1, arg2) {
-					assert.deepEqual(arg1, linkElm);
-					assert.deepEqual(arg2, parentElm);
-					return orig(arg1, arg2);
-				};
-
-				checks['link-in-text-block'].evaluate.call(checkContext, linkElm);
-				axe.commons.color.elementIsDistinct = orig;
+				assert.isTrue(
+					checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
+				);
 			}
 		);
 	});
