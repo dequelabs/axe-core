@@ -145,24 +145,18 @@ module.exports = function(grunt) {
 						dest: 'axe' + lang + '.js'
 					};
 				})
+			},
+			commons: {
+				src: [
+					'lib/commons/intro.stub',
+
+					// output of webpack directories
+					'tmp/commons/index.js',
+
+					'lib/commons/outro.stub'
+				],
+				dest: 'tmp/commons.js'
 			}
-			// commons: {
-			// 	src: [
-			// 		'lib/commons/intro.stub',
-			// 		'lib/commons/index.js',
-			// 		'lib/commons/*/index.js',
-			// 		'lib/commons/**/*.js',
-
-			// 		// directories we've converted to ES Modules
-			// 		'!lib/commons/*/*.js',
-
-			// 		// output of webpack directories
-			// 		'tmp/commons/**/*.js',
-
-			// 		'lib/commons/outro.stub'
-			// 	],
-			// 	dest: 'tmp/commons.js'
-			// }
 		},
 		webpack: {
 			commons: createWebpackConfig('lib/commons/index.js', 'tmp/commons')
@@ -182,7 +176,7 @@ module.exports = function(grunt) {
 				},
 				files: langs.map(function(lang) {
 					return {
-						src: ['tmp/commons/index.js'],
+						src: ['<%= concat.commons.dest %>'],
 						dest: {
 							auto: 'tmp/rules' + lang + '.js',
 							descriptions: 'doc/rule-descriptions' + lang + '.md'
@@ -196,7 +190,7 @@ module.exports = function(grunt) {
 				options: {
 					lang: grunt.option('lang')
 				},
-				src: ['tmp/commons/index.js'],
+				src: ['<%= concat.commons.dest %>'],
 				dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
 			}
 		},
@@ -376,7 +370,7 @@ module.exports = function(grunt) {
 		'pre-build',
 		'validate',
 		'webpack',
-		// 'concat:commons',
+		'concat:commons',
 		'add-locale'
 	]);
 	grunt.registerTask('pre-build', ['clean', 'run:npm_run_imports']);
@@ -384,7 +378,7 @@ module.exports = function(grunt) {
 		'pre-build',
 		'validate',
 		'webpack',
-		// 'concat:commons',
+		'concat:commons',
 		'configure',
 		'babel',
 		'concat:engine',

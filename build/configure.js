@@ -378,7 +378,8 @@ ${ruleTables}`;
 						lang: options.locale || 'en',
 						data: metadata,
 						rules: rules,
-						checks: checks
+						checks: checks,
+						commons: result.commons
 					},
 					blacklist
 				)
@@ -388,7 +389,8 @@ ${ruleTables}`;
 					{
 						data: metadata,
 						rules: rules,
-						checks: checks
+						checks: checks,
+						commons: result.commons
 					},
 					blacklist
 				)
