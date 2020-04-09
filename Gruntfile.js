@@ -145,65 +145,27 @@ module.exports = function(grunt) {
 						dest: 'axe' + lang + '.js'
 					};
 				})
-			},
-			commons: {
-				src: [
-					'lib/commons/intro.stub',
-					'lib/commons/index.js',
-					'lib/commons/*/index.js',
-					'lib/commons/**/*.js',
-
-					// directories we've converted to ES Modules
-					'!lib/commons/aria/*.js',
-					'!lib/commons/color/*.js',
-					'!lib/commons/dom/*.js',
-					'!lib/commons/forms/*.js',
-					'!lib/commons/matches/*.js',
-					'!lib/commons/table/*.js',
-					'!lib/commons/text/*.js',
-					'!lib/commons/utils/*.js',
-
-					// output of webpack directories
-					'tmp/commons/**/*.js',
-
-					'lib/commons/outro.stub'
-				],
-				dest: 'tmp/commons.js'
 			}
+			// commons: {
+			// 	src: [
+			// 		'lib/commons/intro.stub',
+			// 		'lib/commons/index.js',
+			// 		'lib/commons/*/index.js',
+			// 		'lib/commons/**/*.js',
+
+			// 		// directories we've converted to ES Modules
+			// 		'!lib/commons/*/*.js',
+
+			// 		// output of webpack directories
+			// 		'tmp/commons/**/*.js',
+
+			// 		'lib/commons/outro.stub'
+			// 	],
+			// 	dest: 'tmp/commons.js'
+			// }
 		},
 		webpack: {
-			commonsUtils: createWebpackConfig(
-				'lib/commons/utils/index.js',
-				'tmp/commons/utils'
-			),
-			commonsAria: createWebpackConfig(
-				'lib/commons/aria/index.js',
-				'tmp/commons/aria'
-			),
-			commonsColor: createWebpackConfig(
-				'lib/commons/color/index.js',
-				'tmp/commons/color'
-			),
-			commonsDOM: createWebpackConfig(
-				'lib/commons/dom/index.js',
-				'tmp/commons/dom'
-			),
-			commonsForms: createWebpackConfig(
-				'lib/commons/forms/index.js',
-				'tmp/commons/forms'
-			),
-			commonsMatches: createWebpackConfig(
-				'lib/commons/matches/index.js',
-				'tmp/commons/matches'
-			),
-			commonsTable: createWebpackConfig(
-				'lib/commons/table/index.js',
-				'tmp/commons/table'
-			),
-			commonsText: createWebpackConfig(
-				'lib/commons/text/index.js',
-				'tmp/commons/text'
-			)
+			commons: createWebpackConfig('lib/commons/index.js', 'tmp/commons')
 		},
 		'aria-supported': {
 			data: {
@@ -220,7 +182,7 @@ module.exports = function(grunt) {
 				},
 				files: langs.map(function(lang) {
 					return {
-						src: ['<%= concat.commons.dest %>'],
+						src: ['tmp/commons/index.js'],
 						dest: {
 							auto: 'tmp/rules' + lang + '.js',
 							descriptions: 'doc/rule-descriptions' + lang + '.md'
@@ -234,7 +196,7 @@ module.exports = function(grunt) {
 				options: {
 					lang: grunt.option('lang')
 				},
-				src: ['<%= concat.commons.dest %>'],
+				src: ['tmp/commons/index.js'],
 				dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
 			}
 		},
@@ -414,7 +376,7 @@ module.exports = function(grunt) {
 		'pre-build',
 		'validate',
 		'webpack',
-		'concat:commons',
+		// 'concat:commons',
 		'add-locale'
 	]);
 	grunt.registerTask('pre-build', ['clean', 'run:npm_run_imports']);
@@ -422,7 +384,7 @@ module.exports = function(grunt) {
 		'pre-build',
 		'validate',
 		'webpack',
-		'concat:commons',
+		// 'concat:commons',
 		'configure',
 		'babel',
 		'concat:engine',

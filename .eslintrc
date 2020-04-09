@@ -74,14 +74,7 @@
   "overrides": [
     {
       "files": [
-        "lib/commons/aria/*.js",
-        "lib/commons/color/*.js",
-        "lib/commons/dom/*.js",
-        "lib/commons/forms/*.js",
-        "lib/commons/matches/*.js",
-        "lib/commons/table/*.js",
-        "lib/commons/text/*.js",
-        "lib/commons/utils/*.js"
+        "lib/commons/**/*.js"
       ],
       "parserOptions":{
         "sourceType": "module"
