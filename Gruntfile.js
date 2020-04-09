@@ -5,13 +5,13 @@ camelcase: ["error", {"properties": "never"}]
 */
 var testConfig = require('./build/test/config');
 
-function createWebpackConfig(input, output) {
+function createWebpackConfig(input, output, outputFilename = 'index.js') {
 	return {
 		devtool: false,
 		mode: 'development',
 		entry: path.resolve(__dirname, input),
 		output: {
-			filename: 'index.js',
+			filename: outputFilename,
 			path: path.resolve(__dirname, output)
 		}
 	};
@@ -98,7 +98,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'lib/core',
-						src: ['**/*.js', '!imports/index.js'],
+						src: ['**/*.js', '!reporters/**/*.js', '!imports/index.js'],
 						dest: 'tmp/core'
 					}
 				]
@@ -108,7 +108,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'tmp',
-						src: ['*.js'],
+						src: ['*.js', 'core/reporters/not-index.js'],
 						dest: 'tmp'
 					}
 				]
@@ -129,6 +129,7 @@ module.exports = function(grunt) {
 				},
 				coreFiles: [
 					'tmp/core/index.js',
+					'tmp/core/constants.js',
 					'tmp/core/*/index.js',
 					'tmp/core/**/index.js',
 					'tmp/core/**/*.js'
@@ -203,6 +204,12 @@ module.exports = function(grunt) {
 			commonsText: createWebpackConfig(
 				'lib/commons/text/index.js',
 				'tmp/commons/text'
+			),
+
+			coreReporters: createWebpackConfig(
+				'lib/core/reporters/not-index.js',
+				'tmp/core/reporters',
+				'not-index.js'
 			)
 		},
 		'aria-supported': {

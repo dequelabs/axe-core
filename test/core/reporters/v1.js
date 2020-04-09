@@ -197,142 +197,177 @@ describe('reporters - v1', function() {
 
 	it('should merge the runRules results into violations and passes', function(done) {
 		axe.run(optionsV1, function(err, results) {
-			assert.isNull(err);
-			assert.isObject(results);
-			assert.isArray(results.violations);
-			assert.lengthOf(results.violations, 2);
-			assert.isArray(results.passes);
-			assert.lengthOf(results.passes, 2);
-
-			done();
+			try {
+				assert.isNull(err);
+				assert.isObject(results);
+				assert.isArray(results.violations);
+				assert.lengthOf(results.violations, 2);
+				assert.isArray(results.passes);
+				assert.lengthOf(results.passes, 2);
+				done();
+			} catch (err) {
+				done(err);
+			}
 		});
 	});
 	it('should add the rule id to the rule result', function(done) {
 		axe.run(optionsV1, function(err, results) {
-			assert.isNull(err);
-			assert.equal(results.violations[0].id, 'idkStuff');
-			assert.equal(results.violations[1].id, 'bypass');
-			assert.equal(results.passes[0].id, 'gimmeLabel');
-			assert.equal(results.passes[1].id, 'blinky');
-			done();
+			try {
+				assert.isNull(err);
+				assert.equal(results.violations[0].id, 'idkStuff');
+				assert.equal(results.violations[1].id, 'bypass');
+				assert.equal(results.passes[0].id, 'gimmeLabel');
+				assert.equal(results.passes[1].id, 'blinky');
+				done();
+			} catch (err) {
+				done(err);
+			}
 		});
 	});
 	it('should add tags to the rule result', function(done) {
 		axe.run(optionsV1, function(err, results) {
-			assert.isNull(err);
-			assert.deepEqual(results.violations[0].tags, ['tag2']);
-			assert.deepEqual(results.violations[1].tags, ['tag3']);
-			assert.deepEqual(results.passes[0].tags, ['tag1']);
-			assert.deepEqual(results.passes[1].tags, ['tag4']);
-			done();
+			try {
+				assert.isNull(err);
+				assert.deepEqual(results.violations[0].tags, ['tag2']);
+				assert.deepEqual(results.violations[1].tags, ['tag3']);
+				assert.deepEqual(results.passes[0].tags, ['tag1']);
+				assert.deepEqual(results.passes[1].tags, ['tag4']);
+				done();
+			} catch (err) {
+				done(err);
+			}
 		});
 	});
 	it('should add the rule help to the rule result', function(done) {
 		axe.run(optionsV1, function(err, results) {
-			assert.isNull(err);
-			assert.isNotOk(results.violations[0].helpUrl);
-			assert.isNotOk(results.violations[1].helpUrl);
-			assert.equal(results.passes[0].helpUrl, 'things');
-			assert.isNotOk(results.passes[1].helpUrl);
-			done();
+			try {
+				assert.isNull(err);
+				assert.isNotOk(results.violations[0].helpUrl);
+				assert.isNotOk(results.violations[1].helpUrl);
+				assert.equal(results.passes[0].helpUrl, 'things');
+				assert.isNotOk(results.passes[1].helpUrl);
+				done();
+			} catch (err) {
+				done(err);
+			}
 		});
 	});
 	it('should add the html to the node data', function(done) {
 		axe.run(optionsV1, function(err, results) {
-			assert.isNull(err);
-			assert.ok(results.violations[0].nodes);
-			assert.equal(results.violations[0].nodes.length, 1);
-			assert.equal(
-				results.violations[0].nodes[0].html,
-				'<pillock>george bush</pillock>'
-			);
-			assert.equal(
-				results.violations[1].nodes[0].html,
-				'<foon>telephone</foon>'
-			);
-			assert.equal(results.passes[0].nodes[0].html, '<minkey>chimp</minky>');
-			assert.equal(
-				results.passes[1].nodes[0].html,
-				'<clueso>nincompoop</clueso>'
-			);
-			done();
+			try {
+				assert.isNull(err);
+				assert.ok(results.violations[0].nodes);
+				assert.equal(results.violations[0].nodes.length, 1);
+				assert.equal(
+					results.violations[0].nodes[0].html,
+					'<pillock>george bush</pillock>'
+				);
+				assert.equal(
+					results.violations[1].nodes[0].html,
+					'<foon>telephone</foon>'
+				);
+				assert.equal(results.passes[0].nodes[0].html, '<minkey>chimp</minky>');
+				assert.equal(
+					results.passes[1].nodes[0].html,
+					'<clueso>nincompoop</clueso>'
+				);
+				done();
+			} catch (err) {
+				done(err);
+			}
 		});
 	});
 	it('should add the failure summary to the node data', function(done) {
-		var origFn = window.helpers.failureSummary;
-		window.helpers.failureSummary = function(nodeData) {
-			if (!nodeData || !nodeData.target) {
-				return;
-			}
-			return 'selector: ' + nodeData.target;
-		};
 		axe.run(optionsV1, function(err, results) {
-			assert.isNull(err);
-			assert.ok(results.violations[0].nodes);
-			assert.equal(results.violations[0].nodes.length, 1);
-			assert.equal(
-				results.violations[0].nodes[0].failureSummary,
-				'selector: q,r,pillock'
-			);
-			assert.equal(
-				results.incomplete[0].nodes[0].failureSummary,
-				'selector: foon'
-			);
-			window.helpers.failureSummary = origFn;
-			done();
+			try {
+				assert.isNull(err);
+				assert.ok(results.violations[0].nodes);
+				assert.equal(results.violations[0].nodes.length, 1);
+				assert.equal(
+					typeof results.violations[0].nodes[0].failureSummary,
+					'string'
+				);
+				assert.equal(
+					typeof results.incomplete[0].nodes[0].failureSummary,
+					'string'
+				);
+				done();
+			} catch (err) {
+				done(err);
+			}
 		});
 	});
 	it('should add the target selector array to the node data', function(done) {
 		axe.run(optionsV1, function(err, results) {
-			assert.isNull(err);
-			assert.ok(results.violations[0].nodes);
-			assert.equal(results.violations[0].nodes.length, 1);
-			assert.deepEqual(results.violations[0].nodes[0].target, [
-				'q',
-				'r',
-				'pillock'
-			]);
-			done();
+			try {
+				assert.isNull(err);
+				assert.ok(results.violations[0].nodes);
+				assert.equal(results.violations[0].nodes.length, 1);
+				assert.deepEqual(results.violations[0].nodes[0].target, [
+					'q',
+					'r',
+					'pillock'
+				]);
+				done();
+			} catch (err) {
+				done(err);
+			}
 		});
 	});
 	it('should add the description to the rule result', function(done) {
 		axe.run(optionsV1, function(err, results) {
-			assert.isNull(err);
-			assert.equal(results.violations[0].description, 'something more nifty');
-			assert.equal(
-				results.violations[1].description,
-				'something even more nifty'
-			);
-			assert.equal(results.passes[0].description, 'something nifty');
-			assert.equal(results.passes[1].description, 'something awesome');
-			done();
+			try {
+				assert.isNull(err);
+				assert.equal(results.violations[0].description, 'something more nifty');
+				assert.equal(
+					results.violations[1].description,
+					'something even more nifty'
+				);
+				assert.equal(results.passes[0].description, 'something nifty');
+				assert.equal(results.passes[1].description, 'something awesome');
+				done();
+			} catch (err) {
+				done(err);
+			}
 		});
 	});
 	it('should add the impact to the rule result', function(done) {
 		axe.run(optionsV1, function(err, results) {
-			assert.isNull(err);
-			assert.equal(results.violations[0].impact, 'cats');
-			assert.equal(results.violations[0].nodes[0].impact, 'cats');
-			assert.equal(results.violations[1].impact, 'monkeys');
-			assert.equal(results.violations[1].nodes[0].impact, 'monkeys');
-			done();
+			try {
+				assert.isNull(err);
+				assert.equal(results.violations[0].impact, 'cats');
+				assert.equal(results.violations[0].nodes[0].impact, 'cats');
+				assert.equal(results.violations[1].impact, 'monkeys');
+				assert.equal(results.violations[1].nodes[0].impact, 'monkeys');
+				done();
+			} catch (err) {
+				done(err);
+			}
 		});
 	});
 	it('should add environment data', function(done) {
 		axe.run(optionsV1, function(err, results) {
-			assert.isNull(err);
-			assert.isNotNull(results.url);
-			assert.isNotNull(results.timestamp);
-			assert.isNotNull(results.testEnvironement);
-			assert.isNotNull(results.testRunner);
-			done();
+			try {
+				assert.isNull(err);
+				assert.isNotNull(results.url);
+				assert.isNotNull(results.timestamp);
+				assert.isNotNull(results.testEnvironement);
+				assert.isNotNull(results.testRunner);
+				done();
+			} catch (err) {
+				done(err);
+			}
 		});
 	});
 	it('should add toolOptions property', function(done) {
 		axe.run(optionsV1, function(err, results) {
-			assert.isNull(err);
-			assert.isNotNull(results.toolOptions);
-			done();
+			try {
+				assert.isNull(err);
+				assert.isNotNull(results.toolOptions);
+				done();
+			} catch (err) {
+				done(err);
+			}
 		});
 	});
 });
