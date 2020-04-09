@@ -108,7 +108,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'tmp',
-						src: ['*.js', 'core/reporters/not-index.js'],
+						src: ['*.js', 'core/reporters/reporters.js'],
 						dest: 'tmp'
 					}
 				]
@@ -207,9 +207,10 @@ module.exports = function(grunt) {
 			),
 
 			coreReporters: createWebpackConfig(
-				'lib/core/reporters/not-index.js',
+				'lib/core/reporters/reporters.js',
 				'tmp/core/reporters',
-				'not-index.js'
+				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
+				'reporters.js'
 			)
 		},
 		'aria-supported': {
