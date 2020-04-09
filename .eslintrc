@@ -81,7 +81,9 @@
         "lib/commons/matches/*.js",
         "lib/commons/table/*.js",
         "lib/commons/text/*.js",
-        "lib/commons/utils/*.js"
+        "lib/commons/utils/*.js",
+        "lib/core/base/*/*.js",
+        "lib/core/base/*.js"
       ],
       "parserOptions":{
         "sourceType": "module"
