@@ -1,6 +1,6 @@
 {
 	"id": "description",
-	"evaluate": "description.js",
+	"evaluate": "description-evaluate.js",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

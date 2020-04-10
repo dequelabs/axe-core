@@ -1,6 +1,6 @@
 {
 	"id": "non-empty-title",
-	"evaluate": "non-empty-title.js",
+	"evaluate": "non-empty-title-evaluate.js",
 	"metadata": {
 		"impact": "serious",
 		"messages": {
