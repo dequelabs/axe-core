@@ -5,13 +5,13 @@ camelcase: ["error", {"properties": "never"}]
 */
 var testConfig = require('./build/test/config');
 
-function createWebpackConfig(input, output) {
+function createWebpackConfig(input, output, outputFilename = 'index.js') {
 	return {
 		devtool: false,
 		mode: 'development',
 		entry: path.resolve(__dirname, input),
 		output: {
-			filename: 'index.js',
+			filename: outputFilename,
 			path: path.resolve(__dirname, output)
 		}
 	};
@@ -98,7 +98,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'lib/core',
-						src: ['**/*.js', '!imports/index.js'],
+						src: ['**/*.js', '!reporters/**/*.js', '!imports/index.js'],
 						dest: 'tmp/core'
 					}
 				]
@@ -108,7 +108,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'tmp',
-						src: ['*.js'],
+						src: ['*.js', 'core/reporters/reporters.js'],
 						dest: 'tmp'
 					}
 				]
@@ -129,6 +129,7 @@ module.exports = function(grunt) {
 				},
 				coreFiles: [
 					'tmp/core/index.js',
+					'tmp/core/constants.js',
 					'tmp/core/*/index.js',
 					'tmp/core/**/index.js',
 					'tmp/core/**/*.js'
@@ -159,6 +160,12 @@ module.exports = function(grunt) {
 			}
 		},
 		webpack: {
+			coreReporters: createWebpackConfig(
+				'lib/core/reporters/reporters.js',
+				'tmp/core/reporters',
+				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
+				'reporters.js'
+			),
 			commons: createWebpackConfig('lib/commons/index.js', 'tmp/commons')
 		},
 		'aria-supported': {
