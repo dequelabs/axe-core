@@ -1,6 +1,6 @@
 {
 	"id": "duplicate-id-active",
-	"evaluate": "duplicate-id.js",
+	"evaluate": "duplicate-id-evaluate.js",
 	"after": "duplicate-id-after.js",
 	"metadata": {
 		"impact": "serious",

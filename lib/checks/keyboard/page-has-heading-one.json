@@ -1,6 +1,6 @@
 {
 	"id": "page-has-heading-one",
-	"evaluate": "page-has-elm.js",
+	"evaluate": "page-has-elm-evaluate.js",
 	"after": "page-has-elm-after.js",
 	"options": {
 		"selector": "h1:not([role]), [role=\"heading\"][aria-level=\"1\"]"

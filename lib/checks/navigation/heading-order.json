@@ -1,6 +1,6 @@
 {
 	"id": "heading-order",
-	"evaluate": "heading-order.js",
+	"evaluate": "heading-order-evaluate.js",
 	"after": "heading-order-after.js",
 	"metadata": {
 		"impact": "moderate",

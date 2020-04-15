@@ -1,6 +1,6 @@
 {
 	"id": "aria-allowed-role",
-	"evaluate": "aria-allowed-role.js",
+	"evaluate": "aria-allowed-role-evaluate.js",
 	"options": {
 		"allowImplicit": true,
 		"ignoredTags": []

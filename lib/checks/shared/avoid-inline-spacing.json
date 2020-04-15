@@ -1,6 +1,6 @@
 {
 	"id": "avoid-inline-spacing",
-	"evaluate": "avoid-inline-spacing.js",
+	"evaluate": "avoid-inline-spacing-evaluate.js",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

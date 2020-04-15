@@ -1,6 +1,6 @@
 {
 	"id": "landmark-is-unique",
-	"evaluate": "landmark-is-unique.js",
+	"evaluate": "landmark-is-unique-evaluate.js",
 	"after": "landmark-is-unique-after.js",
 	"metadata": {
 		"impact": "moderate",
