@@ -1,6 +1,6 @@
 {
 	"id": "aria-required-parent",
-	"evaluate": "required-parent.js",
+	"evaluate": "aria-required-parent-evaluate.js",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

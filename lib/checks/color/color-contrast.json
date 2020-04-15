@@ -1,6 +1,6 @@
 {
 	"id": "color-contrast",
-	"evaluate": "color-contrast.js",
+	"evaluate": "color-contrast-evaluate.js",
 	"options": {
 		"noScroll": false,
 		"ignoreUnicode": true,

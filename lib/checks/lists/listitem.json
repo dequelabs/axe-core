@@ -1,6 +1,6 @@
 {
 	"id": "listitem",
-	"evaluate": "listitem.js",
+	"evaluate": "listitem-evaluate.js",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

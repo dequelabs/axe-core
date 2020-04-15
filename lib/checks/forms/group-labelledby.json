@@ -1,6 +1,6 @@
 {
 	"id": "group-labelledby",
-	"evaluate": "group-labelledby.js",
+	"evaluate": "group-labelledby-evaluate.js",
 	"after": "group-labelledby-after.js",
 	"deprecated": true,
 	"metadata": {
