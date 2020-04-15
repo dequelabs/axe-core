@@ -107,7 +107,7 @@ describe('axe.utils.preload integration test', function() {
 		});
 	});
 
-	it('returns NO preloaded CSSOM assets when requested stylesheet does not exist`', function(done) {
+	it.skip('returns NO preloaded CSSOM assets when requested stylesheet does not exist`', function(done) {
 		stylesForPage = [styleSheets.crossOriginDoesNotExist];
 		attachStylesheets({ styles: stylesForPage }, function(err) {
 			if (err) {
