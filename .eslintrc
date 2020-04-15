@@ -74,6 +74,7 @@
   "overrides": [
     {
       "files": [
+        "lib/core/public/**/*.js",
         "lib/core/reporters/*.js",
         "lib/core/reporters/*/*.js",
         "lib/commons/**/*.js"
