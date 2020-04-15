@@ -1,7 +1,7 @@
-/*global DqElement */
 describe('axe.utils.checkHelper', function() {
 	'use strict';
 
+	var DqElement = axe.utils.DqElement;
 	function noop() {}
 
 	it('should be a function', function() {

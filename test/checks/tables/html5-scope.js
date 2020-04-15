@@ -22,16 +22,11 @@ describe('html5-scope', function() {
 	});
 
 	it('should return true on non-HTML5 documents', function() {
-		var orig = axe.commons.dom.isHTML5;
-		axe.commons.dom.isHTML5 = function() {
-			return false;
-		};
-
+		var origPublicId = document.publicId;
 		fixture.innerHTML = '<table><tr><th scope="col"></th></tr></table>';
 		var node = fixture.querySelector('th');
 
 		assert.isTrue(checks['html5-scope'].evaluate(node));
-
-		axe.commons.dom.isHTML5 = orig;
+		document.publicId = origPublicId;
 	});
 });
