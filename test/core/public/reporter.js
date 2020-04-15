@@ -14,6 +14,6 @@ describe('axe.addReporter', function() {
 
 	it('should add reporter with given name', function() {
 		axe.addReporter('bob', 'joe');
-		assert.equal(window.reporters.bob, 'joe');
+		assert.equal(axe.getReporter('bob'), 'joe');
 	});
 });
