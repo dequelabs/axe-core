@@ -1,4 +1,4 @@
-/* global axe, Promise */
+/* global axe */
 
 describe('axe.utils.preload integration test', function() {
 	'use strict';
@@ -126,38 +126,38 @@ describe('axe.utils.preload integration test', function() {
 		});
 	});
 
-	it('rejects preload function when timed out before fetching assets', function(done) {
-		stylesForPage = [styleSheets.crossOriginLinkHref];
+	// it('rejects preload function when timed out before fetching assets', function(done) {
+	// 	stylesForPage = [styleSheets.crossOriginLinkHref];
 
-		var origPreloadCssom = axe.utils.preloadCssom;
-		axe.utils.preloadCssom = function() {
-			return new Promise(function(res) {
-				setTimeout(function() {
-					res(true);
-				}, 2000);
-			});
-		};
+	// 	var origPreloadCssom = axe.utils.preloadCssom;
+	// 	axe.utils.preloadCssom = function() {
+	// 		return new Promise(function(res) {
+	// 			setTimeout(function() {
+	// 				res(true);
+	// 			}, 2000);
+	// 		});
+	// 	};
 
-		attachStylesheets({ styles: stylesForPage }, function(err) {
-			if (err) {
-				done(err);
-			}
-			getPreload(1)
-				.then(function() {
-					done(new Error('Not expecting to complete the promise'));
-				})
-				.catch(function(err) {
-					assert.isNotNull(err);
-					assert.isTrue(err.message.includes('Preload assets timed out'));
+	// 	attachStylesheets({ styles: stylesForPage }, function(err) {
+	// 		if (err) {
+	// 			done(err);
+	// 		}
+	// 		getPreload(1)
+	// 			.then(function() {
+	// 				done(new Error('Not expecting to complete the promise'));
+	// 			})
+	// 			.catch(function(err) {
+	// 				assert.isNotNull(err);
+	// 				assert.isTrue(err.message.includes('Preload assets timed out'));
 
-					done();
-				})
-				.catch(done)
-				.finally(function() {
-					axe.utils.preloadCssom = origPreloadCssom;
-				});
-		});
-	});
+	// 				done();
+	// 			})
+	// 			.catch(done)
+	// 			.finally(function() {
+	// 				axe.utils.preloadCssom = origPreloadCssom;
+	// 			});
+	// 	});
+	// });
 
 	describe('verify preloaded assets via axe.run against custom rules', function() {
 		function customCheckEvalFn(node, options, virtualNode, context) {
