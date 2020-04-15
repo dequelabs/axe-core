@@ -75,133 +75,111 @@ describe('axe._load', function() {
 			axe.utils.respondable._publish(win, { topic: 'axe.ping' });
 		});
 
-		// 	describe('given command rules', function() {
-		// 		it('should call `runRules` and default context to empty object', function(done) {
-		// 			var mockAudit = {
-		// 				rules: []
-		// 			};
-		// 			var origSub = window.utils.respondable.subscribe;
-		// 			var orig = window.runRules;
-		// 			window.runRules = function(context, options, callback) {
-		// 				assert.deepEqual(context, {});
-		// 				assert.isFunction(callback);
-		// 				done();
-		// 			};
+		describe.skip('given command rules', function() {
+			it('should call `runRules` and default context to empty object', function(done) {
+				var mockAudit = {
+					rules: []
+				};
+				var origSub = window.utils.respondable.subscribe;
+				var orig = window.runRules;
+				window.runRules = function(context, options, callback) {
+					assert.deepEqual(context, {});
+					assert.isFunction(callback);
+					done();
+				};
 
-		// 			axe.utils.respondable.subscribe = function(topic, callback) {
-		// 				callback({ data: 'iscool', command: 'rules' }, undefined, function(
-		// 					response
-		// 				) {
-		// 					// ping callback will call this response function
-		// 					assert.ok(response);
-		// 				});
-		// 			};
-		// 			axe._load(mockAudit);
+				axe.utils.respondable.subscribe = function(topic, callback) {
+					callback({ data: 'iscool', command: 'rules' }, undefined, function(
+						response
+					) {
+						// ping callback will call this response function
+						assert.ok(response);
+					});
+				};
+				axe._load(mockAudit);
 
-		// 			window.utils.respondable.subscribe = origSub;
-		// 			window.runRules = orig;
-		// 		});
+				window.utils.respondable.subscribe = origSub;
+				window.runRules = orig;
+			});
 
-		// 		it('should pass data.context to `runRules`', function(done) {
-		// 			var origSub = window.utils.respondable.subscribe;
-		// 			var orig = window.runRules;
-		// 			window.runRules = function(context, options, callback) {
-		// 				assert.deepEqual(context, { include: ['monkeys'] });
-		// 				assert.isFunction(callback);
-		// 				done();
-		// 			};
+			it('should pass data.context to `runRules`', function(done) {
+				var origSub = window.utils.respondable.subscribe;
+				var orig = window.runRules;
+				window.runRules = function(context, options, callback) {
+					assert.deepEqual(context, { include: ['monkeys'] });
+					assert.isFunction(callback);
+					done();
+				};
 
-		// 			axe.utils.respondable.subscribe = function(topic, callback) {
-		// 				callback(
-		// 					{ command: 'rules', context: { include: ['monkeys'] } },
-		// 					undefined,
-		// 					function(response) {
-		// 						assert.ok(response);
-		// 					}
-		// 				);
-		// 			};
-		// 			axe._load({
-		// 				rules: []
-		// 			});
+				axe.utils.respondable.subscribe = function(topic, callback) {
+					callback(
+						{ command: 'rules', context: { include: ['monkeys'] } },
+						undefined,
+						function(response) {
+							assert.ok(response);
+						}
+					);
+				};
+				axe._load({
+					rules: []
+				});
 
-		// 			window.utils.respondable.subscribe = origSub;
-		// 			window.runRules = orig;
-		// 		});
-		// 		it('should default include to current document if none are found', function(done) {
-		// 			var origSub = axe.utils.respondable.subscribe;
-		// 			var orig = window.runRules;
-		// 			var expected = { include: [document] };
-		// 			window.runRules = function(context) {
-		// 				assert.deepEqual(context, expected);
-		// 				done();
-		// 			};
+				window.utils.respondable.subscribe = origSub;
+				window.runRules = orig;
+			});
+			it('should default include to current document if none are found', function(done) {
+				var origSub = axe.utils.respondable.subscribe;
+				var orig = window.runRules;
+				var expected = { include: [document] };
+				window.runRules = function(context) {
+					assert.deepEqual(context, expected);
+					done();
+				};
 
-		// 			axe.utils.respondable.subscribe = function(topic, callback) {
-		// 				callback(
-		// 					{ command: 'rules', context: { include: [] } },
-		// 					undefined,
-		// 					function() {}
-		// 				);
-		// 			};
-		// 			axe._load({
-		// 				rules: []
-		// 			});
-		// 			window.runRules = orig;
-		// 			axe.utils.respondable.subscribe = origSub;
-		// 		});
-		// 	});
+				axe.utils.respondable.subscribe = function(topic, callback) {
+					callback(
+						{ command: 'rules', context: { include: [] } },
+						undefined,
+						function() {}
+					);
+				};
+				axe._load({
+					rules: []
+				});
+				window.runRules = orig;
+				axe.utils.respondable.subscribe = origSub;
+			});
+		});
 
-		// 	describe('given command cleanup-plugins', function() {
-		// 		it('should call `cleanupPlugins`', function(done) {
-		// 			var mockAudit = {
-		// 				rules: []
-		// 			};
-		// 			var origSub = window.utils.respondable.subscribe;
-		// 			var orig = window.cleanupPlugins;
-		// 			window.cleanupPlugins = function(callback) {
-		// 				assert.isFunction(callback);
-		// 				done();
-		// 			};
+		describe.skip('given command cleanup-plugins', function() {
+			it('should call `cleanupPlugins`', function(done) {
+				var mockAudit = {
+					rules: []
+				};
+				var origSub = window.utils.respondable.subscribe;
+				var orig = window.cleanupPlugins;
+				window.cleanupPlugins = function(callback) {
+					assert.isFunction(callback);
+					done();
+				};
 
-		// 			axe.utils.respondable.subscribe = function(topic, callback) {
-		// 				callback(
-		// 					{
-		// 						command: 'cleanup-plugin'
-		// 					},
-		// 					undefined,
-		// 					function(response) {
-		// 						// ping callback will call this response function
-		// 						assert.ok(response);
-		// 					}
-		// 				);
-		// 			};
-		// 			axe._load(mockAudit);
+				axe.utils.respondable.subscribe = function(topic, callback) {
+					callback(
+						{
+							command: 'cleanup-plugin'
+						},
+						undefined,
+						function(response) {
+							// ping callback will call this response function
+							assert.ok(response);
+						}
+					);
+				};
+				axe._load(mockAudit);
 
-		// 			window.utils.respondable.subscribe = origSub;
-		// 			window.cleanupPlugins = orig;
-		// 		});
-		// 	});
-
-		// 	it('should respond', function() {
-		// 		var origSub = window.utils.respondable.subscribe;
-		// 		var expected = { data: { include: ['monkeys'] } };
-
-		// 		axe.utils.respondable.subscribe = function(topic, callback) {
-		// 			callback({}, undefined, function responder(data) {
-		// 				if (topic === 'axe.start') {
-		// 					assert.equal(data, expected);
-		// 				} else if (topic === 'axe.ping') {
-		// 					assert.deepEqual(data, { axe: true });
-		// 				} else {
-		// 					assert.ok(false);
-		// 				}
-		// 			});
-		// 		};
-		// 		axe._load({
-		// 			rules: []
-		// 		});
-
-		// 		window.utils.respondable.subscribe = origSub;
-		// 	});
+				window.utils.respondable.subscribe = origSub;
+				window.cleanupPlugins = orig;
+			});
+		});
 	});
 });
