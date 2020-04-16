@@ -5,13 +5,13 @@ camelcase: ["error", {"properties": "never"}]
 */
 var testConfig = require('./build/test/config');
 
-function createWebpackConfig(input, output) {
+function createWebpackConfig(input, output, outputFilename = 'index.js') {
 	return {
 		devtool: false,
 		mode: 'development',
 		entry: path.resolve(__dirname, input),
 		output: {
-			filename: 'index.js',
+			filename: outputFilename,
 			path: path.resolve(__dirname, output)
 		}
 	};
@@ -98,7 +98,12 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'lib/core',
-						src: ['**/*.js', '!imports/index.js'],
+						src: [
+							'**/*.js',
+							'!reporters/**/*.js',
+							'!utils/**/*.js',
+							'!imports/index.js'
+						],
 						dest: 'tmp/core'
 					}
 				]
@@ -108,7 +113,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'tmp',
-						src: ['*.js'],
+						src: ['*.js', 'core/reporters/reporters.js', 'core/utils/utils.js'],
 						dest: 'tmp'
 					}
 				]
@@ -129,6 +134,7 @@ module.exports = function(grunt) {
 				},
 				coreFiles: [
 					'tmp/core/index.js',
+					'tmp/core/constants.js',
 					'tmp/core/*/index.js',
 					'tmp/core/**/index.js',
 					'tmp/core/**/*.js'
@@ -149,22 +155,9 @@ module.exports = function(grunt) {
 			commons: {
 				src: [
 					'lib/commons/intro.stub',
-					'lib/commons/index.js',
-					'lib/commons/*/index.js',
-					'lib/commons/**/*.js',
-
-					// directories we've converted to ES Modules
-					'!lib/commons/aria/*.js',
-					'!lib/commons/color/*.js',
-					'!lib/commons/dom/*.js',
-					'!lib/commons/forms/*.js',
-					'!lib/commons/matches/*.js',
-					'!lib/commons/table/*.js',
-					'!lib/commons/text/*.js',
-					'!lib/commons/utils/*.js',
 
 					// output of webpack directories
-					'tmp/commons/**/*.js',
+					'tmp/commons/index.js',
 
 					'lib/commons/outro.stub'
 				],
@@ -172,38 +165,19 @@ module.exports = function(grunt) {
 			}
 		},
 		webpack: {
-			commonsUtils: createWebpackConfig(
-				'lib/commons/utils/index.js',
-				'tmp/commons/utils'
+			coreReporters: createWebpackConfig(
+				'lib/core/reporters/reporters.js',
+				'tmp/core/reporters',
+				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
+				'reporters.js'
 			),
-			commonsAria: createWebpackConfig(
-				'lib/commons/aria/index.js',
-				'tmp/commons/aria'
+			coreUtils: createWebpackConfig(
+				'lib/core/utils/utils.js',
+				'tmp/core/utils',
+				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
+				'utils.js'
 			),
-			commonsColor: createWebpackConfig(
-				'lib/commons/color/index.js',
-				'tmp/commons/color'
-			),
-			commonsDOM: createWebpackConfig(
-				'lib/commons/dom/index.js',
-				'tmp/commons/dom'
-			),
-			commonsForms: createWebpackConfig(
-				'lib/commons/forms/index.js',
-				'tmp/commons/forms'
-			),
-			commonsMatches: createWebpackConfig(
-				'lib/commons/matches/index.js',
-				'tmp/commons/matches'
-			),
-			commonsTable: createWebpackConfig(
-				'lib/commons/table/index.js',
-				'tmp/commons/table'
-			),
-			commonsText: createWebpackConfig(
-				'lib/commons/text/index.js',
-				'tmp/commons/text'
-			)
+			commons: createWebpackConfig('lib/commons/index.js', 'tmp/commons')
 		},
 		'aria-supported': {
 			data: {

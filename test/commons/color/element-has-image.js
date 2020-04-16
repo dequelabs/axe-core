@@ -4,12 +4,11 @@ describe('color.elementHasImage', function() {
 	var fixture = document.getElementById('fixture');
 	var queryFixture = axe.testUtils.queryFixture;
 	var elementHasImage = axe.commons.color.elementHasImage;
-	var origColorIncompleteData = axe.commons.color.incompleteData;
 
 	afterEach(function() {
 		fixture.innerHTML = '';
 		axe._tree = undefined;
-		axe.commons.color.incompleteData = origColorIncompleteData;
+		axe.commons.color.incompleteData.clear();
 	});
 
 	it('returns true when `HTMLElement` is of graphical type', function() {

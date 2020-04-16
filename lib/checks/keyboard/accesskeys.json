@@ -1,6 +1,6 @@
 {
 	"id": "accesskeys",
-	"evaluate": "accesskeys.js",
+	"evaluate": "accesskeys-evaluate.js",
 	"after": "accesskeys-after.js",
 	"metadata": {
 		"impact": "serious",

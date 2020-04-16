@@ -75,31 +75,6 @@ describe('aria-valid-attr-value', function() {
 		assert.deepEqual(checkContext._data, ['aria-selected="0"']);
 	});
 
-	it('should determine attribute validity by calling axe.commons.aria.validateAttrValue', function() {
-		var node = document.createElement('div');
-		node.id = 'test';
-		node.tabIndex = 1;
-		node.setAttribute('aria-selected', 'maybe');
-		node.setAttribute('aria-live', 'dead');
-		fixture.appendChild(node);
-
-		var orig = axe.commons.aria.validateAttrValue;
-		var called = 0;
-		axe.commons.aria.validateAttrValue = function(nd, attrName) {
-			assert.equal(nd, node);
-			assert.match(attrName, /^aria-/);
-			called++;
-			return true;
-		};
-		assert.isTrue(
-			checks['aria-valid-attr-value'].evaluate.call(checkContext, node)
-		);
-		assert.isNull(checkContext._data);
-		assert.equal(called, 2);
-
-		axe.commons.aria.validateAttrValue = orig;
-	});
-
 	it('should allow empty strings rather than idref', function() {
 		fixtureSetup(
 			'<button aria-controls="">Button</button>' +

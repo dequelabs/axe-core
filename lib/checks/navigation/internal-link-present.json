@@ -1,6 +1,6 @@
 {
 	"id": "internal-link-present",
-	"evaluate": "internal-link-present.js",
+	"evaluate": "internal-link-present-evaluate.js",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

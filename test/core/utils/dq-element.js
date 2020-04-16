@@ -1,7 +1,7 @@
-/*global DqElement */
 describe('DqElement', function() {
 	'use strict';
 
+	var DqElement = axe.utils.DqElement;
 	var fixture = document.getElementById('fixture');
 	var fixtureSetup = axe.testUtils.fixtureSetup;
 
@@ -90,23 +90,6 @@ describe('DqElement', function() {
 	});
 
 	describe('selector', function() {
-		it('should call axe.utils.getSelector', function() {
-			/*eslint no-unused-vars: 0*/
-			var orig = axe.utils.getSelector;
-			var success = false;
-			var expected = { monkeys: 'bananas' };
-
-			axe.utils.getSelector = function(p) {
-				success = true;
-				assert.equal(fixture, p);
-				return expected;
-			};
-
-			var result = new DqElement(fixture);
-			assert.deepEqual(result.selector, [expected]);
-			axe.utils.getSelector = orig;
-		});
-
 		it('should prefer selector from spec object', function() {
 			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
 			var result = new DqElement(
@@ -121,22 +104,6 @@ describe('DqElement', function() {
 	});
 
 	describe('xpath', function() {
-		it('should call axe.utils.getXpath', function() {
-			/*eslint no-unused-vars: 0*/
-			var orig = axe.utils.getXpath;
-			var success = false;
-			var expected = { monkeys: 'bananas' };
-
-			axe.utils.getXpath = function(p) {
-				success = true;
-				assert.equal(fixture, p);
-				return expected;
-			};
-			var result = new DqElement(fixture);
-			assert.deepEqual(result.xpath, [expected]);
-			axe.utils.getXpath = orig;
-		});
-
 		it('should prefer selector from spec object', function() {
 			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
 			var result = new DqElement(

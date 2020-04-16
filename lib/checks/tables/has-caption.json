@@ -1,6 +1,6 @@
 {
 	"id": "has-caption",
-	"evaluate": "has-caption.js",
+	"evaluate": "has-caption-evaluate.js",
 	"deprecated": true,
 	"metadata": {
 		"impact": "serious",

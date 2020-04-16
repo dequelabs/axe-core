@@ -1,6 +1,6 @@
 {
 	"id": "role-none",
-	"evaluate": "role-none.js",
+	"evaluate": "role-none-evaluate.js",
 	"metadata": {
 		"impact": "minor",
 		"messages": {

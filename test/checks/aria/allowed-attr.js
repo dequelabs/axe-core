@@ -64,31 +64,6 @@ describe('aria-allowed-attr', function() {
 		assert.isNull(checkContext._data);
 	});
 
-	it('should determine attribute validity by calling axe.commons.aria.allowedAttr', function() {
-		var node = document.createElement('div');
-		node.id = 'test';
-		node.tabIndex = 1;
-		node.setAttribute('role', 'cats');
-		node.setAttribute('aria-cats', 'maybe');
-		node.setAttribute('aria-bats', 'dead');
-		fixture.appendChild(node);
-
-		var orig = axe.commons.aria.allowedAttr;
-		var called = 0;
-		axe.commons.aria.allowedAttr = function(role) {
-			assert.equal(role, 'cats');
-			called++;
-			return ['aria-cats', 'aria-bats'];
-		};
-		assert.isTrue(
-			checks['aria-allowed-attr'].evaluate.call(checkContext, node)
-		);
-		assert.isNull(checkContext._data);
-		assert.equal(called, 1);
-
-		axe.commons.aria.allowedAttr = orig;
-	});
-
 	it('should not report on invalid attributes', function() {
 		var node = document.createElement('div');
 		node.id = 'test';

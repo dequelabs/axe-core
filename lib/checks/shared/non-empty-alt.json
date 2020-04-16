@@ -1,6 +1,6 @@
 {
 	"id": "non-empty-alt",
-	"evaluate": "non-empty-alt.js",
+	"evaluate": "non-empty-alt-evaluate.js",
 	"metadata": {
 		"impact": "critical",
 		"messages": {
