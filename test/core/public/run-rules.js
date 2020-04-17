@@ -917,7 +917,8 @@ describe('runRules', function() {
 		});
 	});
 
-	it('should clear the memoized cache for each function', function(done) {
+	// todo:jey change from mocking to a proper test
+	it.skip('should clear the memoized cache for each function', function(done) {
 		axe._load({
 			rules: [
 				{
