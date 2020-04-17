@@ -917,7 +917,7 @@ describe('runRules', function() {
 		});
 	});
 
-	// todo:jey change from mocking to a proper test
+	// todo: see issue - https://github.com/dequelabs/axe-core/issues/2168
 	it.skip('should clear the memoized cache for each function', function(done) {
 		axe._load({
 			rules: [

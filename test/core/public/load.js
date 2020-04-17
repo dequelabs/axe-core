@@ -73,7 +73,7 @@ describe('axe._load', function() {
 		});
 
 		describe('given command rules', function() {
-			// todo:jey change from mocking to a proper test
+			// todo: see issue - https://github.com/dequelabs/axe-core/issues/2168
 			it.skip('should call `runRules` and default context to empty object', function(done) {
 				var mockAudit = {
 					rules: []
@@ -100,7 +100,7 @@ describe('axe._load', function() {
 				window.runRules = orig;
 			});
 
-			// todo:jey change from mocking to a proper test
+			// todo: see issue - https://github.com/dequelabs/axe-core/issues/2168
 			it.skip('should pass data.context to `runRules`', function(done) {
 				var origSub = window.utils.respondable.subscribe;
 				var orig = window.runRules;
@@ -127,7 +127,7 @@ describe('axe._load', function() {
 				window.runRules = orig;
 			});
 
-			// todo:jey change from mocking to a proper test
+			// todo: see issue - https://github.com/dequelabs/axe-core/issues/2168
 			it.skip('should default include to current document if none are found', function(done) {
 				var origSub = axe.utils.respondable.subscribe;
 				var orig = window.runRules;
@@ -153,7 +153,7 @@ describe('axe._load', function() {
 		});
 
 		describe('given command cleanup-plugins', function() {
-			// todo:jey change from mocking to a proper test
+			// todo: see issue - https://github.com/dequelabs/axe-core/issues/2168
 			it.skip('should call `cleanupPlugins`', function(done) {
 				var mockAudit = {
 					rules: []
