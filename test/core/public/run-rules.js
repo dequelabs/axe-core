@@ -1,4 +1,3 @@
-/*global runRules */
 describe('runRules', function() {
 	'use strict';
 
@@ -90,7 +89,7 @@ describe('runRules', function() {
 
 		frame.addEventListener('load', function() {
 			setTimeout(function() {
-				runRules(
+				axe._runRules(
 					document,
 					{},
 					function(r) {
@@ -127,7 +126,7 @@ describe('runRules', function() {
 		var frame = document.createElement('iframe');
 		frame.addEventListener('load', function() {
 			setTimeout(function() {
-				runRules(
+				axe._runRules(
 					document,
 					{},
 					function(r) {
@@ -198,7 +197,7 @@ describe('runRules', function() {
 				var div = document.createElement('div');
 				fixture.appendChild(div);
 
-				runRules(
+				axe._runRules(
 					'#fixture',
 					{},
 					function(results) {
@@ -307,7 +306,7 @@ describe('runRules', function() {
 			fixture,
 			'context-test',
 			function() {
-				runRules(
+				axe._runRules(
 					'#not-happening',
 					{},
 					function() {
@@ -485,7 +484,7 @@ describe('runRules', function() {
 			}
 		});
 		fixture.innerHTML = '<div id="target">Target!</div><div>ok</div>';
-		runRules(
+		axe._runRules(
 			'#fixture',
 			{},
 			function(results) {
@@ -590,7 +589,7 @@ describe('runRules', function() {
 
 		createFrames(function() {
 			setTimeout(function() {
-				runRules(
+				axe._runRules(
 					document,
 					{},
 					function() {
@@ -717,7 +716,7 @@ describe('runRules', function() {
 		var outer = document.getElementById('outer');
 
 		iframeReady('../mock/frames/context.html', outer, 'target', function() {
-			runRules(
+			axe._runRules(
 				[['#target', '#elementNotFound']],
 				{},
 				function resolve() {
@@ -773,7 +772,7 @@ describe('runRules', function() {
 			assert.equal(e.message, 'err');
 			axe.log = log;
 		};
-		runRules(document, {}, resolve, reject);
+		axe._runRules(document, {}, resolve, reject);
 	});
 
 	it('should ignore iframes if `iframes` === false', function(done) {
@@ -801,7 +800,7 @@ describe('runRules', function() {
 
 		frame.addEventListener('load', function() {
 			setTimeout(function() {
-				runRules(
+				axe._runRules(
 					document,
 					{ iframes: false },
 					function(r) {
@@ -846,7 +845,7 @@ describe('runRules', function() {
 			messages: {}
 		});
 
-		runRules(
+		axe._runRules(
 			[document],
 			{},
 			function(r) {
@@ -880,7 +879,7 @@ describe('runRules', function() {
 			messages: {}
 		});
 
-		runRules(
+		axe._runRules(
 			document,
 			{},
 			function resolve(out, cleanup) {
@@ -909,7 +908,7 @@ describe('runRules', function() {
 
 		createFrames(function() {
 			setTimeout(function() {
-				runRules(document, {}, isNotCalled, function() {
+				axe._runRules(document, {}, isNotCalled, function() {
 					assert.isUndefined(axe._tree);
 					assert.isUndefined(axe._selectorData);
 					done();
@@ -938,7 +937,7 @@ describe('runRules', function() {
 			messages: {}
 		});
 
-		runRules(
+		axe._runRules(
 			document,
 			{},
 			function resolve(out, cleanup) {
