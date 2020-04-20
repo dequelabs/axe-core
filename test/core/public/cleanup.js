@@ -1,5 +1,5 @@
-/*global cleanupPlugins */
-describe('cleanupPlugins', function() {
+/*global cleanup */
+describe('cleanup', function() {
 	'use strict';
 
 	function createFrames(callback) {
@@ -30,7 +30,7 @@ describe('cleanupPlugins', function() {
 	it('should throw if no audit is configured', function() {
 		assert.throws(
 			function() {
-				cleanupPlugins(document, {});
+				axe.cleanup(document, {});
 			},
 			Error,
 			/^No audit configured/
@@ -55,7 +55,7 @@ describe('cleanupPlugins', function() {
 			cleaned = true;
 			res();
 		};
-		cleanupPlugins(function() {
+		axe.cleanup(function() {
 			assert.equal(cleaned, true);
 			done();
 		}, assertNotCalled);
@@ -79,7 +79,7 @@ describe('cleanupPlugins', function() {
 			res();
 		};
 		assert.doesNotThrow(function() {
-			cleanupPlugins();
+			axe.cleanup();
 			done();
 		});
 	});
@@ -98,7 +98,7 @@ describe('cleanupPlugins', function() {
 				resolve();
 				done();
 			};
-			cleanupPlugins(function() {}, assertNotCalled);
+			axe.cleanup(function() {}, assertNotCalled);
 		});
 	});
 });

@@ -75,8 +75,9 @@ describe('axe._load', function() {
 			axe.utils.respondable._publish(win, { topic: 'axe.ping' });
 		});
 
-		describe.skip('given command rules', function() {
-			it('should call `runRules` and default context to empty object', function(done) {
+		describe('given command rules', function() {
+			// todo: see issue - https://github.com/dequelabs/axe-core/issues/2168
+			it.skip('should call `runRules` and default context to empty object', function(done) {
 				var mockAudit = {
 					rules: []
 				};
@@ -102,7 +103,8 @@ describe('axe._load', function() {
 				window.runRules = orig;
 			});
 
-			it('should pass data.context to `runRules`', function(done) {
+			// todo: see issue - https://github.com/dequelabs/axe-core/issues/2168
+			it.skip('should pass data.context to `runRules`', function(done) {
 				var origSub = window.utils.respondable.subscribe;
 				var orig = window.runRules;
 				window.runRules = function(context, options, callback) {
@@ -127,7 +129,9 @@ describe('axe._load', function() {
 				window.utils.respondable.subscribe = origSub;
 				window.runRules = orig;
 			});
-			it('should default include to current document if none are found', function(done) {
+
+			// todo: see issue - https://github.com/dequelabs/axe-core/issues/2168
+			it.skip('should default include to current document if none are found', function(done) {
 				var origSub = axe.utils.respondable.subscribe;
 				var orig = window.runRules;
 				var expected = { include: [document] };
@@ -151,14 +155,15 @@ describe('axe._load', function() {
 			});
 		});
 
-		describe.skip('given command cleanup-plugins', function() {
-			it('should call `cleanupPlugins`', function(done) {
+		describe('given command cleanup-plugins', function() {
+			// todo: see issue - https://github.com/dequelabs/axe-core/issues/2168
+			it.skip('should call `cleanup`', function(done) {
 				var mockAudit = {
 					rules: []
 				};
 				var origSub = window.utils.respondable.subscribe;
-				var orig = window.cleanupPlugins;
-				window.cleanupPlugins = function(callback) {
+				var orig = window.cleanup;
+				window.cleanup = function(callback) {
 					assert.isFunction(callback);
 					done();
 				};
@@ -178,7 +183,7 @@ describe('axe._load', function() {
 				axe._load(mockAudit);
 
 				window.utils.respondable.subscribe = origSub;
-				window.cleanupPlugins = orig;
+				window.cleanup = orig;
 			});
 		});
 	});
