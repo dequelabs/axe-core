@@ -1,5 +1,5 @@
-/*global cleanupPlugins */
-describe('cleanupPlugins', function() {
+/*global cleanup */
+describe('cleanup', function() {
 	'use strict';
 
 	function createFrames(callback) {

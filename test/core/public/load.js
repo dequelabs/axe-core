@@ -154,13 +154,13 @@ describe('axe._load', function() {
 
 		describe('given command cleanup-plugins', function() {
 			// todo: see issue - https://github.com/dequelabs/axe-core/issues/2168
-			it.skip('should call `cleanupPlugins`', function(done) {
+			it.skip('should call `cleanup`', function(done) {
 				var mockAudit = {
 					rules: []
 				};
 				var origSub = window.utils.respondable.subscribe;
-				var orig = window.cleanupPlugins;
-				window.cleanupPlugins = function(callback) {
+				var orig = window.cleanup;
+				window.cleanup = function(callback) {
 					assert.isFunction(callback);
 					done();
 				};
@@ -180,7 +180,7 @@ describe('axe._load', function() {
 				axe._load(mockAudit);
 
 				window.utils.respondable.subscribe = origSub;
-				window.cleanupPlugins = orig;
+				window.cleanup = orig;
 			});
 		});
 
