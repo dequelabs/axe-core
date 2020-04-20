@@ -1,7 +1,7 @@
-/*global Context */
 describe('axe.utils.collectResultsFromFrames', function() {
 	'use strict';
 
+	var Context = axe._thisWillBeDeletedDoNotUse.base.Context;
 	var fixture = document.getElementById('fixture');
 	var noop = function() {};
 

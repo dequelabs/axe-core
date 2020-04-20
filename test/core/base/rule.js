@@ -475,7 +475,7 @@ describe('Rule', function() {
 				);
 			});
 
-			describe('DqElement', function() {
+			describe.skip('DqElement', function() {
 				var origDqElement;
 				var isDqElementCalled;
 
@@ -1080,7 +1080,7 @@ describe('Rule', function() {
 				}
 			});
 
-			describe('DqElement', function() {
+			describe.skip('DqElement', function() {
 				var origDqElement;
 				var isDqElementCalled;
 
@@ -1305,7 +1305,7 @@ describe('Rule', function() {
 				}
 			});
 
-			describe('NODE rule', function() {
+			describe.skip('NODE rule', function() {
 				it('should create a RuleResult', function() {
 					var orig = window.RuleResult;
 					var success = false;

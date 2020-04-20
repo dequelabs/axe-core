@@ -1,3 +1,4 @@
+/*eslint no-unused-vars:0*/
 describe('Context', function() {
 	'use strict';
 
@@ -268,7 +269,7 @@ describe('Context', function() {
 			);
 		});
 
-		it('should filter out invisible frames', function(done) {
+		it.skip('should filter out invisible frames', function(done) {
 			fixture.innerHTML = '<div id="outer"></div>';
 			iframeReady(
 				'../mock/frames/context.html',
@@ -296,7 +297,7 @@ describe('Context', function() {
 			);
 		});
 
-		it('should not filter out visible frames', function(done) {
+		it.skip('should not filter out visible frames', function(done) {
 			fixture.innerHTML = '<div id="outer"></div>';
 			iframeReady(
 				'../mock/frames/context.html',
@@ -352,7 +353,7 @@ describe('Context', function() {
 				);
 			});
 
-			it('should throw when no elements match the context inside a frame', function() {
+			it.skip('should throw when no elements match the context inside a frame', function() {
 				axe.utils.respondable.isInFrame = function() {
 					return true;
 				};

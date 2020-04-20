@@ -196,7 +196,7 @@ describe('Check', function() {
 				}).run(tree[0]);
 			});
 
-			it('should bind context to `bindCheckResult`', function(done) {
+			it.skip('should bind context to `bindCheckResult`', function(done) {
 				var orig = axe.utils.checkHelper,
 					cb = function() {
 						return true;

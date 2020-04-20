@@ -76,6 +76,7 @@
       "files": [
         "lib/core/base/*/*.js",
         "lib/core/base/*.js",
+        "lib/core/public/**/*.js",
         "lib/core/reporters/**/*.js",
         "lib/core/utils/*.js",
         "lib/commons/**/*.js"
