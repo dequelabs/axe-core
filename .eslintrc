@@ -74,8 +74,8 @@
   "overrides": [
     {
       "files": [
-        "lib/core/reporters/*.js",
-        "lib/core/reporters/*/*.js",
+        "lib/core/reporters/**/*.js",
+        "lib/core/utils/*.js",
         "lib/commons/**/*.js"
       ],
       "parserOptions":{
