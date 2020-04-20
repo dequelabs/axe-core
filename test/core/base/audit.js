@@ -1,7 +1,8 @@
-/*global Audit, Rule, Promise */
 describe('Audit', function() {
 	'use strict';
 
+	var Audit = axe._thisWillBeDeletedDoNotUse.base.Audit;
+	var Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
 	var a, getFlattenedTree;
 	var isNotCalled = function(err) {
 		throw err || new Error('Reject should not be called');

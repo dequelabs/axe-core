@@ -1,6 +1,7 @@
-/*global axe, VirtualNode */
 describe('VirtualNode', function() {
 	'use strict';
+
+	var VirtualNode = axe.VirtualNode;
 	var node;
 
 	beforeEach(function() {

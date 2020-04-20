@@ -1,6 +1,8 @@
-/*global Check, CheckResult, axe */
 describe('Check', function() {
 	'use strict';
+
+	var Check = axe._thisWillBeDeletedDoNotUse.base.Check;
+	var CheckResult = axe._thisWillBeDeletedDoNotUse.base.CheckResult;
 	var noop = function() {};
 
 	var fixture = document.getElementById('fixture');

@@ -1,7 +1,8 @@
-/*global Rule, Check */
 describe('Rule', function() {
 	'use strict';
 
+	var Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
+	var Check = axe._thisWillBeDeletedDoNotUse.base.Check;
 	var fixture = document.getElementById('fixture');
 	var noop = function() {};
 	var isNotCalled = function(err) {

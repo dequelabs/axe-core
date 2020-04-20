@@ -100,9 +100,10 @@ module.exports = function(grunt) {
 						cwd: 'lib/core',
 						src: [
 							'**/*.js',
+							'!base/**/*.js',
 							'!reporters/**/*.js',
 							'!utils/**/*.js',
-							'!imports/index.js'
+							'!imports/index.js',
 						],
 						dest: 'tmp/core'
 					}
@@ -113,7 +114,12 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'tmp',
-						src: ['*.js', 'core/reporters/reporters.js', 'core/utils/utils.js'],
+						src: [
+							'*.js',
+							'core/base/base.js',
+							'core/reporters/reporters.js',
+							'core/utils/utils.js'
+						],
 						dest: 'tmp'
 					}
 				]
@@ -165,6 +171,12 @@ module.exports = function(grunt) {
 			}
 		},
 		webpack: {
+			coreBase: createWebpackConfig(
+				'lib/core/base/base.js',
+				'tmp/core/base',
+				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
+				'base.js'
+			),
 			coreReporters: createWebpackConfig(
 				'lib/core/reporters/reporters.js',
 				'tmp/core/reporters',

@@ -1,5 +1,6 @@
-/*global axe, SerialVirtualNode */
 describe('SerialVirtualNode', function() {
+	var SerialVirtualNode = axe.SerialVirtualNode;
+
 	it('extends AbstractVirtualNode', function() {
 		var vNode = new SerialVirtualNode({
 			nodeName: 'div'

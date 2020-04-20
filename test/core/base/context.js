@@ -1,8 +1,7 @@
-/*global Context, axe */
-/*eslint no-unused-vars:0*/
 describe('Context', function() {
 	'use strict';
 
+	var Context = axe._thisWillBeDeletedDoNotUse.base.Context;
 	function iframeReady(src, context, id, cb) {
 		var i = document.createElement('iframe');
 		i.addEventListener('load', function() {
