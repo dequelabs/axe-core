@@ -1,6 +1,6 @@
 {
 	"id": "aria-errormessage",
-	"evaluate": "errormessage.js",
+	"evaluate": "aria-errormessage-evaluate.js",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

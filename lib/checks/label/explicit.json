@@ -1,6 +1,6 @@
 {
 	"id": "explicit-label",
-	"evaluate": "explicit.js",
+	"evaluate": "explicit-evaluate.js",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

@@ -107,7 +107,7 @@ describe('axe.utils.preload integration test', function() {
 		});
 	});
 
-	it('returns NO preloaded CSSOM assets when requested stylesheet does not exist`', function(done) {
+	it.skip('returns NO preloaded CSSOM assets when requested stylesheet does not exist`', function(done) {
 		stylesForPage = [styleSheets.crossOriginDoesNotExist];
 		attachStylesheets({ styles: stylesForPage }, function(err) {
 			if (err) {
@@ -126,7 +126,7 @@ describe('axe.utils.preload integration test', function() {
 		});
 	});
 
-	it('rejects preload function when timed out before fetching assets', function(done) {
+	it.skip('rejects preload function when timed out before fetching assets', function(done) {
 		stylesForPage = [styleSheets.crossOriginLinkHref];
 
 		var origPreloadCssom = axe.utils.preloadCssom;

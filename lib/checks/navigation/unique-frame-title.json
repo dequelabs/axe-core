@@ -1,6 +1,6 @@
 {
 	"id": "unique-frame-title",
-	"evaluate": "unique-frame-title.js",
+	"evaluate": "unique-frame-title-evaluate.js",
 	"after": "unique-frame-title-after.js",
 	"metadata": {
 		"impact": "serious",

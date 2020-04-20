@@ -1,6 +1,6 @@
 {
 	"id": "page-no-duplicate-banner",
-	"evaluate": "page-no-duplicate.js",
+	"evaluate": "page-no-duplicate-evaluate.js",
 	"after": "page-no-duplicate-after.js",
 	"options": {
 		"selector": "header:not([role]), [role=banner]",

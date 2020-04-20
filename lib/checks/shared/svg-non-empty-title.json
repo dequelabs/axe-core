@@ -1,6 +1,6 @@
 {
 	"id": "svg-non-empty-title",
-	"evaluate": "svg-non-empty-title.js",
+	"evaluate": "svg-non-empty-title-evaluate.js",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

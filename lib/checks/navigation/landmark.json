@@ -1,6 +1,6 @@
 {
 	"id": "landmark",
-	"evaluate": "landmark.js",
+	"evaluate": "landmark-evaluate.js",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

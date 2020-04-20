@@ -1,6 +1,6 @@
 {
 	"id": "has-lang",
-	"evaluate": "has-lang.js",
+	"evaluate": "has-lang-evaluate.js",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

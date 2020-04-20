@@ -1,6 +1,6 @@
 {
 	"id": "aria-label",
-	"evaluate": "aria-label.js",
+	"evaluate": "aria-label-evaluate.js",
 	"metadata": {
 		"impact": "serious",
 		"messages": {
