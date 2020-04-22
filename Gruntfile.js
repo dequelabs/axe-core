@@ -5,17 +5,17 @@ camelcase: ["error", {"properties": "never"}]
 */
 var testConfig = require('./build/test/config');
 
-function createWebpackConfig(input, output, outputFilename = 'index.js') {
-	return {
-		devtool: false,
-		mode: 'development',
-		entry: path.resolve(__dirname, input),
-		output: {
-			filename: outputFilename,
-			path: path.resolve(__dirname, output)
-		}
-	};
-}
+// function createWebpackConfig(input, output, outputFilename = 'index.js') {
+// 	return {
+// 		devtool: false,
+// 		mode: 'development',
+// 		entry: path.resolve(__dirname, input),
+// 		output: {
+// 			filename: outputFilename,
+// 			path: path.resolve(__dirname, output)
+// 		}
+// 	};
+// }
 
 module.exports = function(grunt) {
 	'use strict';
@@ -93,34 +93,35 @@ module.exports = function(grunt) {
 			options: {
 				compact: false
 			},
-			core: {
-				files: [
-					{
-						expand: true,
-						cwd: 'lib/core',
-						src: [
-							'**/*.js',
-							'!base/**/*.js',
-							'!public/**/*.js',
-							'!reporters/**/*.js',
-							'!utils/**/*.js',
-							'!imports/index.js'
-						],
-						dest: 'tmp/core'
-					}
-				]
-			},
+			// core: {
+			// 	files: [
+			// 		{
+			// 			expand: true,
+			// 			cwd: 'lib/core',
+			// 			src: [
+			// 				'**/*.js',
+			// 				'!base/**/*.js',
+			// 				'!public/**/*.js',
+			// 				'!reporters/**/*.js',
+			// 				'!utils/**/*.js',
+			// 				'!imports/index.js'
+			// 			],
+			// 			dest: 'tmp/core'
+			// 		}
+			// 	]
+			// },
 			misc: {
 				files: [
 					{
 						expand: true,
 						cwd: 'tmp',
 						src: [
-							'*.js',
-							'core/base/base.js',
-							'core/public/public.js',
-							'core/reporters/reporters.js',
-							'core/utils/utils.js'
+							'axe.js'
+							// '*.js',
+							// 'core/base/base.js',
+							// 'core/public/public.js',
+							// 'core/reporters/reporters.js',
+							// 'core/utils/utils.js'
 						],
 						dest: 'tmp'
 					}
@@ -135,69 +136,56 @@ module.exports = function(grunt) {
 				src: ['lib/rules/**/*.json']
 			}
 		},
-		concat: {
-			engine: {
-				options: {
-					process: true
-				},
-				coreFiles: [
-					'tmp/core/index.js',
-					'tmp/core/constants.js',
-					'tmp/core/*/index.js',
-					'tmp/core/**/index.js',
-					'tmp/core/**/*.js'
-				],
-				files: langs.map(function(lang, i) {
-					return {
-						src: [
-							'lib/intro.stub',
-							'<%= concat.engine.coreFiles %>',
-							// include rules / checks / commons
-							'<%= configure.rules.files[' + i + '].dest.auto %>',
-							'lib/outro.stub'
-						],
-						dest: 'axe' + lang + '.js'
-					};
-				})
-			},
-			commons: {
-				src: [
-					'lib/commons/intro.stub',
+		// concat: {
+		// 	engine: {
+		// 		options: {
+		// 			process: true
+		// 		},
+		// 		coreFiles: [
+		// 			'tmp/core/index.js',
+		// 			'tmp/core/constants.js',
+		// 			'tmp/core/*/index.js',
+		// 			'tmp/core/**/index.js',
+		// 			'tmp/core/**/*.js'
+		// 		],
+		// 		files: langs.map(function(lang, i) {
+		// 			return {
+		// 				src: [
+		// 					'lib/intro.stub',
+		// 					'<%= concat.engine.coreFiles %>',
+		// 					// include rules / checks / commons
+		// 					'<%= configure.rules.files[' + i + '].dest.auto %>',
+		// 					'lib/outro.stub'
+		// 				],
+		// 				dest: 'axe' + lang + '.js'
+		// 			};
+		// 		})
+		// 	},
+		// 	commons: {
+		// 		src: [
+		// 			'lib/commons/intro.stub',
 
-					// output of webpack directories
-					'tmp/commons/index.js',
+		// 			// output of webpack directories
+		// 			'tmp/commons/index.js',
 
-					'lib/commons/outro.stub'
-				],
-				dest: 'tmp/commons.js'
-			}
-		},
+		// 			'lib/commons/outro.stub'
+		// 		],
+		// 		dest: 'tmp/commons.js'
+		// 	}
+		// },
 		webpack: {
-			coreBase: createWebpackConfig(
-				'lib/core/base/base.js',
-				'tmp/core/base',
-				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
-				'base.js'
-			),
-			corePublic: createWebpackConfig(
-				'lib/core/public/public.js',
-				'tmp/core/public',
-				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
-				'public.js'
-			),
-			coreReporters: createWebpackConfig(
-				'lib/core/reporters/reporters.js',
-				'tmp/core/reporters',
-				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
-				'reporters.js'
-			),
-			coreUtils: createWebpackConfig(
-				'lib/core/utils/utils.js',
-				'tmp/core/utils',
-				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
-				'utils.js'
-			),
-			commons: createWebpackConfig('lib/commons/index.js', 'tmp/commons')
+			axe: {
+				devtool: false,
+				mode: 'development',
+				entry: path.resolve(__dirname, 'lib/index.js'),
+				output: {
+					filename: 'axe.js',
+					library: 'axe',
+					libraryTarget: 'umd',
+					libraryExport: 'default',
+					path: path.resolve(__dirname, './')
+				}
+			}
 		},
 		'aria-supported': {
 			data: {
@@ -214,7 +202,7 @@ module.exports = function(grunt) {
 				},
 				files: langs.map(function(lang) {
 					return {
-						src: ['<%= concat.commons.dest %>'],
+						src: [],
 						dest: {
 							auto: 'tmp/rules' + lang + '.js',
 							descriptions: 'doc/rule-descriptions' + lang + '.md'
@@ -252,32 +240,32 @@ module.exports = function(grunt) {
 			}
 		},
 		uglify: {
-			beautify: {
-				files: langs.map(function(lang, i) {
-					return {
-						src: ['<%= concat.engine.files[' + i + '].dest %>'],
-						dest: '<%= concat.engine.files[' + i + '].dest %>'
-					};
-				}),
-				options: {
-					mangle: false,
-					compress: false,
-					beautify: {
-						beautify: true,
-						ascii_only: true,
-						indent_level: 2,
-						braces: true,
-						quote_style: 1
-					},
-					output: {
-						comments: /^\/*! axe/
-					}
-				}
-			},
+			// beautify: {
+			// 	files: langs.map(function(lang, i) {
+			// 		return {
+			// 			src: ['<%= concat.engine.files[' + i + '].dest %>'],
+			// 			dest: '<%= concat.engine.files[' + i + '].dest %>'
+			// 		};
+			// 	}),
+			// 	options: {
+			// 		mangle: false,
+			// 		compress: false,
+			// 		beautify: {
+			// 			beautify: true,
+			// 			ascii_only: true,
+			// 			indent_level: 2,
+			// 			braces: true,
+			// 			quote_style: 1
+			// 		},
+			// 		output: {
+			// 			comments: /^\/*! axe/
+			// 		}
+			// 	}
+			// },
 			minify: {
-				files: langs.map(function(lang, i) {
+				files: langs.map(function(lang) {
 					return {
-						src: ['<%= concat.engine.files[' + i + '].dest %>'],
+						src: ['./axe.js'],
 						dest: './axe' + lang + '.min.js'
 					};
 				}),
@@ -416,10 +404,8 @@ module.exports = function(grunt) {
 		'pre-build',
 		'validate',
 		'webpack',
-		'concat:commons',
 		'configure',
 		'babel',
-		'concat:engine',
 		'uglify',
 		'aria-supported'
 	]);
