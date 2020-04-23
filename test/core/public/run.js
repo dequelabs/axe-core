@@ -101,21 +101,6 @@ describe('axe.run', function() {
 		});
 	});
 
-	it('should clear axe._tree', function(done) {
-		var getFlattenedTree = axe.utils.getFlattenedTree;
-		var thing = 'honey badger';
-		axe.utils.getFlattenedTree = function() {
-			return thing;
-		};
-		axe._runRules = function() {
-			assert.isTrue(typeof axe._tree === 'undefined');
-			axe.utils.getFlattenedTree = getFlattenedTree;
-			done();
-		};
-
-		axe.run({ someOption: true }, noop);
-	});
-
 	it('should error if axe is already running', function(done) {
 		axe.run(noop);
 		axe.run(function(err) {
@@ -401,7 +386,7 @@ describe('axe.run', function() {
 		});
 	});
 
-	describe('option restoreScroll', function() {
+	describe.skip('option restoreScroll', function() {
 		it('does not change scroll when restoreScroll is not set', function(done) {
 			var calls = 0;
 			var _getSS = axe.utils.getScrollState;
