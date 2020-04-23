@@ -65,6 +65,60 @@ describe('aria-required-parent', function() {
 		assert.deepEqual(checkContext._data, ['list']);
 	});
 
+	it('should fail when required parent is missing (has immediate parent with different context role)', function() {
+		var params = checkSetup(
+			'<div role="list">' +
+				'<div role="tabpanel">' +
+				'<div id="target" role="listitem">List item 1</div>' +
+				'</div>' +
+				'</div>'
+		);
+		assert.isFalse(
+			checks['aria-required-parent'].evaluate.apply(checkContext, params)
+		);
+	});
+
+	it('should fail when required parent is missing (has parent with different context role)', function() {
+		var params = checkSetup(
+			'<div role="list">' +
+				'<div role="menu">' +
+				'<div>' +
+				'<div id="target" role="listitem">List item 1</div>' +
+				'</div>' +
+				'</div>' +
+				'</div>'
+		);
+		assert.isFalse(
+			checks['aria-required-parent'].evaluate.apply(checkContext, params)
+		);
+	});
+
+	it('should pass when required parent is present (parent with role=presentation is ignored)', function() {
+		var params = checkSetup(
+			'<div role="list">' +
+				'<div role="presentation">' +
+				'<div id="target" role="listitem">List item 1</div>' +
+				'</div>' +
+				'</div>'
+		);
+		assert.isTrue(
+			checks['aria-required-parent'].evaluate.apply(checkContext, params)
+		);
+	});
+
+	it('should pass when required parent is present in aria-owns context (immediate parent with role is ignored)', function() {
+		var params = checkSetup(
+			'<div role="list" aria-owns="target">' +
+				'<div role="navigation">' +
+				'<div id="target" role="listitem">List item 1</div>' +
+				'</div>' +
+				'</div>'
+		);
+		assert.isTrue(
+			checks['aria-required-parent'].evaluate.apply(checkContext, params)
+		);
+	});
+
 	it('should pass when required parent is present in an aria-owns context', function() {
 		var params = checkSetup(
 			'<div role="list" aria-owns="target"></div><div><p role="listitem" id="target">Nothing here.</p></div>'
