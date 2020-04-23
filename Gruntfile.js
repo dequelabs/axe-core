@@ -1,7 +1,21 @@
+var path = require('path');
+
 /*eslint
 camelcase: ["error", {"properties": "never"}]
 */
 var testConfig = require('./build/test/config');
+
+function createWebpackConfig(input, output, outputFilename = 'index.js') {
+	return {
+		devtool: false,
+		mode: 'development',
+		entry: path.resolve(__dirname, input),
+		output: {
+			filename: outputFilename,
+			path: path.resolve(__dirname, output)
+		}
+	};
+}
 
 module.exports = function(grunt) {
 	'use strict';
@@ -15,6 +29,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-parallel');
 	grunt.loadNpmTasks('grunt-run');
+	grunt.loadNpmTasks('grunt-webpack');
 	grunt.loadTasks('build/tasks');
 
 	var langs;
@@ -83,7 +98,14 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'lib/core',
-						src: ['**/*.js', '!imports/index.js'],
+						src: [
+							'**/*.js',
+							'!base/**/*.js',
+							'!public/**/*.js',
+							'!reporters/**/*.js',
+							'!utils/**/*.js',
+							'!imports/index.js'
+						],
 						dest: 'tmp/core'
 					}
 				]
@@ -93,7 +115,13 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'tmp',
-						src: ['*.js'],
+						src: [
+							'*.js',
+							'core/base/base.js',
+							'core/public/public.js',
+							'core/reporters/reporters.js',
+							'core/utils/utils.js'
+						],
 						dest: 'tmp'
 					}
 				]
@@ -114,6 +142,7 @@ module.exports = function(grunt) {
 				},
 				coreFiles: [
 					'tmp/core/index.js',
+					'tmp/core/constants.js',
 					'tmp/core/*/index.js',
 					'tmp/core/**/index.js',
 					'tmp/core/**/*.js'
@@ -134,13 +163,41 @@ module.exports = function(grunt) {
 			commons: {
 				src: [
 					'lib/commons/intro.stub',
-					'lib/commons/index.js',
-					'lib/commons/*/index.js',
-					'lib/commons/**/*.js',
+
+					// output of webpack directories
+					'tmp/commons/index.js',
+
 					'lib/commons/outro.stub'
 				],
 				dest: 'tmp/commons.js'
 			}
+		},
+		webpack: {
+			coreBase: createWebpackConfig(
+				'lib/core/base/base.js',
+				'tmp/core/base',
+				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
+				'base.js'
+			),
+			corePublic: createWebpackConfig(
+				'lib/core/public/public.js',
+				'tmp/core/public',
+				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
+				'public.js'
+			),
+			coreReporters: createWebpackConfig(
+				'lib/core/reporters/reporters.js',
+				'tmp/core/reporters',
+				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
+				'reporters.js'
+			),
+			coreUtils: createWebpackConfig(
+				'lib/core/utils/utils.js',
+				'tmp/core/utils',
+				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
+				'utils.js'
+			),
+			commons: createWebpackConfig('lib/commons/index.js', 'tmp/commons')
 		},
 		'aria-supported': {
 			data: {
@@ -350,6 +407,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('translate', [
 		'pre-build',
 		'validate',
+		'webpack',
 		'concat:commons',
 		'add-locale'
 	]);
@@ -357,6 +415,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', [
 		'pre-build',
 		'validate',
+		'webpack',
 		'concat:commons',
 		'configure',
 		'babel',

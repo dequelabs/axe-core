@@ -4,12 +4,11 @@ describe('color.elementHasImage', function() {
 	var fixture = document.getElementById('fixture');
 	var queryFixture = axe.testUtils.queryFixture;
 	var elementHasImage = axe.commons.color.elementHasImage;
-	var origColorIncompleteData = axe.commons.color.incompleteData;
 
 	afterEach(function() {
 		fixture.innerHTML = '';
 		axe._tree = undefined;
-		axe.commons.color.incompleteData = origColorIncompleteData;
+		axe.commons.color.incompleteData.clear();
 	});
 
 	it('returns true when `HTMLElement` is of graphical type', function() {
@@ -56,31 +55,6 @@ describe('color.elementHasImage', function() {
 		);
 		var actual = elementHasImage(vNode.actualNode);
 		assert.isTrue(actual);
-		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgGradient');
-	});
-
-	it('returns true when `HTMLElement` has background-image (gradient) and ensure incompleteData setter is invoked', function() {
-		var incompleteDataCalled = false;
-		var vNode = queryFixture(
-			'<div id="target" style="height: 40px; width: 30px; background-image: radial-gradient(purple, pink, green);"> Some text... </div>'
-		);
-		// override `incompleteData` setter
-		axe.commons.color.incompleteData = (function() {
-			var data = {};
-			return {
-				set: function(key, value) {
-					incompleteDataCalled = true;
-					data[key] = value;
-					return data[key];
-				},
-				get: function(key) {
-					return data[key];
-				}
-			};
-		})();
-		var actual = elementHasImage(vNode.actualNode);
-		assert.isTrue(actual);
-		assert.isTrue(incompleteDataCalled);
 		assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgGradient');
 	});
 });

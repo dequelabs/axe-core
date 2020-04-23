@@ -1,46 +1,16 @@
 describe('axe.utils.finalizeRuleResult', function() {
 	'use strict';
 
-	var origAggregate;
-	beforeEach(function() {
-		origAggregate = axe.utils.aggregateNodeResults;
-	});
-
-	afterEach(function() {
-		axe.utils.aggregateNodeResults = origAggregate;
-	});
-
 	it('should be a function', function() {
 		assert.isFunction(axe.utils.finalizeRuleResult);
 	});
 
 	it('returns the first param object', function() {
-		axe.utils.aggregateNodeResults = function() {};
-
-		var goingIn = {};
+		var goingIn = {
+			nodes: []
+		};
 		var comingOut = axe.utils.finalizeRuleResult(goingIn);
 
 		assert.equal(goingIn, comingOut);
-	});
-
-	it('passes the nodes property to utils.aggregateNodeResults', function() {
-		var isCalled = false;
-		var nodes = [];
-		axe.utils.aggregateNodeResults = function(n) {
-			assert.equal(n, nodes);
-			isCalled = true;
-		};
-		axe.utils.finalizeRuleResult({ nodes: nodes });
-		assert.ok(isCalled);
-	});
-
-	it('adds properties returned from utils.aggregateNodeResults to the return value', function() {
-		axe.utils.aggregateNodeResults = function() {
-			return {
-				vulgaris: 'magistralis'
-			};
-		};
-		var out = axe.utils.finalizeRuleResult({});
-		assert.equal(out.vulgaris, 'magistralis');
 	});
 });

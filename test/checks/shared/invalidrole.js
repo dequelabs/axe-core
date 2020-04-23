@@ -83,9 +83,23 @@ describe('invalidrole', function() {
 		assert.isNull(checkContext._data);
 	});
 
-	it('should return true if applied to at least one nonsensical role', function() {
+	it('should return false if atleast one role is valid', function() {
 		var virtualNode = queryFixture(
 			'<div id="target" role="alert button foo bar">Contents</div>'
+		);
+		assert.isFalse(
+			checks.invalidrole.evaluate.call(
+				checkContext,
+				virtualNode.actualNode,
+				null,
+				virtualNode
+			)
+		);
+	});
+
+	it('should return true if all roles are invalid', function() {
+		var virtualNode = queryFixture(
+			'<div id="target" role="foo bar">Contents</div>'
 		);
 		assert.isTrue(
 			checks.invalidrole.evaluate.call(

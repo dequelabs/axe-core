@@ -69,6 +69,13 @@ describe('text.hasUnicode', function() {
 			});
 			assert.isTrue(actual);
 		});
+
+		it('returns true for a string with characters in supplementary private use area A', function() {
+			var actual = axe.commons.text.hasUnicode('\uDB80\uDFFE', {
+				nonBmp: true
+			});
+			assert.isTrue(actual);
+		});
 	});
 
 	describe('text.hasUnicode, characters of type Emoji', function() {
@@ -131,6 +138,15 @@ describe('text.hasUnicode', function() {
 				punctuations: true
 			});
 			assert.isTrue(actual);
+		});
+
+		it('returns true for strings with money signs and odd symbols', function() {
+			['£', '¢', '¥', '€', '§', '±'].forEach(function(str) {
+				var actual = axe.commons.text.hasUnicode(str, {
+					punctuations: true
+				});
+				assert.isTrue(actual);
+			});
 		});
 	});
 
@@ -196,6 +212,13 @@ describe('text.removeUnicode', function() {
 
 	it('returns string removing all supplementary private use unicode', function() {
 		var actual = axe.commons.text.removeUnicode('󰀀󿰀󿿽󰏽', {
+			nonBmp: true
+		});
+		assert.equal(actual, '');
+	});
+
+	it('returns the string with supplementary private use area A characters removed', function() {
+		var actual = axe.commons.text.removeUnicode('\uDB80\uDFFE', {
 			nonBmp: true
 		});
 		assert.equal(actual, '');

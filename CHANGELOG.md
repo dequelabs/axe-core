@@ -2,6 +2,49 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.3](https://github.com/dequelabs/axe-core/compare/v3.5.2...v3.5.3) (2020-03-31)
+
+### Bug Fixes
+
+- **meta-viewport:** parse negative and string values for `maximum-scale` ([#2137](https://github.com/dequelabs/axe-core/issues/2137)) ([8c92472](https://github.com/dequelabs/axe-core/commit/8c92472397676d44b333cf50ad1a9413b9783c2c))
+- **respondable:** ignore reflected messages from iframes ([#2134](https://github.com/dequelabs/axe-core/issues/2134)) ([3ab9f21](https://github.com/dequelabs/axe-core/commit/3ab9f21414d8f4195ac95ffca8f0ce52258539b0))
+- **header-present:** update verbiage to use heading instead of header ([#2132](https://github.com/dequelabs/axe-core/issues/2132)) ([8890063](https://github.com/dequelabs/axe-core/commit/889006397329a35a170f4a3d24c55c3c4fd758fc))
+- **color-contrast:** mark more punctuations for review ([#2126](https://github.com/dequelabs/axe-core/issues/2126)) ([dc98afc](https://github.com/dequelabs/axe-core/commit/dc98afc841c86e4b7b771bbb1171152a151c3e5b))
+- **unicode:** detect supplementary private use area A ([#2102](https://github.com/dequelabs/axe-core/issues/2102)) ([f1739c2](https://github.com/dequelabs/axe-core/commit/f1739c21efdf5cf6fddf425d1c72b056757f3ba1))
+- **definition-list:** Mention <div> is allowed to group content in <dl> ([#2098](https://github.com/dequelabs/axe-core/issues/2098)) ([76b1a9f](https://github.com/dequelabs/axe-core/commit/76b1a9f7f244e43f63351c46d91fc8b27040ba98))
+- **td-headers-attr:** mark as needs review if headers attr is empty ([#2096](https://github.com/dequelabs/axe-core/issues/2096)) ([699b566](https://github.com/dequelabs/axe-core/commit/699b566111cfed2a4ebeade35346a49bcb3546c7))
+- **td-has-headers:** don't fail for empty headers attribute ([#2095](https://github.com/dequelabs/axe-core/issues/2095)) ([7952a37](https://github.com/dequelabs/axe-core/commit/7952a377b960c2403c8d4758a9f35ebe525549fe))
+- **th-has-data-cells:** fail when data cell points to a different header ([#2094](https://github.com/dequelabs/axe-core/issues/2094)) ([d3bd416](https://github.com/dequelabs/axe-core/commit/d3bd416a3df7324231f17ff9e1e20dc6342c7aa5))
+- **has-lang:** update message to indicate that xml:lang is not valid on HTML pages ([#2093](https://github.com/dequelabs/axe-core/issues/2093)) ([c3a7de2](https://github.com/dequelabs/axe-core/commit/c3a7de206baf77c0b25c8c095119393b1dc85f0f))
+- **page-no-duplicate-contentinfo:** do not fail when first element is inside landmark ([#2092](https://github.com/dequelabs/axe-core/issues/2092)) ([eca7e05](https://github.com/dequelabs/axe-core/commit/eca7e05cc6ff750855bcb219833967a9d7087679))
+
+### [3.5.2](https://github.com/dequelabs/axe-core/compare/v3.5.1...v3.5.2) (2020-03-06)
+
+### Bug Fixes
+
+- **aria-allowed-role:** allow role=spinbutton on input[type=tel](<[635445b](https://github.com/dequelabs/axe-core/commit/635445ba6da7bc197bcdee6fb1a9d9dc81e43941)>)
+- **color-contrast:** ignore form elements that move text outside of node using text-indent ([#2044](https://github.com/dequelabs/axe-core/issues/2044)) ([85cc6ab](https://github.com/dequelabs/axe-core/commit/85cc6abd7f919a7311c6da01a41853cbfd539508))
+- **commons:** handle node(s) contained by SVG document when de… ([#2054](https://github.com/dequelabs/axe-core/issues/2054)) ([bf4c9bf](https://github.com/dequelabs/axe-core/commit/bf4c9bff2953b1ac7f40dbb1d0bd1986c1caa673))
+- **getCheckMessage:** add API to return check message ([#2066](https://github.com/dequelabs/axe-core/issues/2066)) ([e216322](https://github.com/dequelabs/axe-core/commit/e216322183c8b064ebfd748fea785b8c2fe78b16))
+- **has-lang:** fail check when `xml:lang` is used in HTML docum… ([#2053](https://github.com/dequelabs/axe-core/issues/2053)) ([e07aaea](https://github.com/dequelabs/axe-core/commit/e07aaea86bc9460a2d9f568637b4a77d33094ed6))
+- **label-content-name-mismatch:** ignore non `widget` aria role(s) & do not use deprecated `lookupTable.rolesOfType` ([#2022](https://github.com/dequelabs/axe-core/issues/2022)) ([89bd84c](https://github.com/dequelabs/axe-core/commit/89bd84c4a9846dc31a660eda6b274329e7ac70b5))
+- **package-lock:** change @deque/doT from agora to npm ([#2058](https://github.com/dequelabs/axe-core/issues/2058)) ([c03c0e5](https://github.com/dequelabs/axe-core/commit/c03c0e5ffc3ea1b49607355fa9d6f2e2faf0ebd1))
+- **page-has-heading-one:** find screen-reader only headings ([#2065](https://github.com/dequelabs/axe-core/issues/2065)) ([f808a12](https://github.com/dequelabs/axe-core/commit/f808a12261269719534ae52c878d1700fb70053e))
+- **region:** ignore direct child text nodes of body ([#2050](https://github.com/dequelabs/axe-core/issues/2050)) ([fde31d0](https://github.com/dequelabs/axe-core/commit/fde31d03d24820f681b257c4c42b98f25b2877ec))
+- **skip-link:** identify as skip-link only if the link is offscreen ([#2079](https://github.com/dequelabs/axe-core/issues/2079)) ([241e1d0](https://github.com/dequelabs/axe-core/commit/241e1d0715398a39c2e502ddb781f5fc29987dde))
+- check `invaildrole` fails only when all roles are invalid ([#2075](https://github.com/dequelabs/axe-core/issues/2075)) ([989b317](https://github.com/dequelabs/axe-core/commit/989b31788b08b6514dd4b606162193d4dd168be9))
+- ignore empty, whitespace or undefined `role` for rule `ari… ([#2077](https://github.com/dequelabs/axe-core/issues/2077)) ([dbd3c02](https://github.com/dequelabs/axe-core/commit/dbd3c0211b05641f366dfe2fe9c2124cad9e5e3a))
+- update tags for rule `area-alt` ([#2051](https://github.com/dequelabs/axe-core/issues/2051)) ([7db231f](https://github.com/dequelabs/axe-core/commit/7db231f2ff2b70a4e8e6f7aababe0871764ece96))
+
+### [3.5.1](https://github.com/dequelabs/axe-core/compare/v3.5.0...v3.5.1) (2020-02-12)
+
+### Bug Fixes
+
+- **color-contrast:** parse font-weight value as number ([#2031](https://github.com/dequelabs/axe-core/issues/2031)) ([#2040](https://github.com/dequelabs/axe-core/issues/2040)) ([0bb2166](https://github.com/dequelabs/axe-core/commit/0bb21669f75b3adc0e3345c85680d437c57f94d8))
+- **color-contrast:** properly pass options to check ([#2033](https://github.com/dequelabs/axe-core/issues/2033)) ([26b99c0](https://github.com/dequelabs/axe-core/commit/26b99c0a511bd6fffaaca7535d732f26b39ef46e))
+- **commons:** avoid unicode regex encoding in axe.min.js ([#2024](https://github.com/dequelabs/axe-core/issues/2024)) ([ae90dc4](https://github.com/dequelabs/axe-core/commit/ae90dc47521f6047f71befcb3551686cf857208d))
+- **sri-history:** correct SRI for various versions ([#2041](https://github.com/dequelabs/axe-core/issues/2041)) ([940c017](https://github.com/dequelabs/axe-core/commit/940c01708cede33e796972ce810a815ddf492ba4))
+
 ## [3.5.0](https://github.com/dequelabs/axe-core/compare/v3.4.0...v3.5.0) (2020-02-04)
 
 ### Features

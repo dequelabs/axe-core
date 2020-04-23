@@ -1,6 +1,6 @@
 {
 	"id": "fieldset",
-	"evaluate": "fieldset.js",
+	"evaluate": "fieldset-evaluate.js",
 	"after": "fieldset-after.js",
 	"deprecated": true,
 	"metadata": {

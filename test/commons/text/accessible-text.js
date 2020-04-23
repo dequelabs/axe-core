@@ -1438,11 +1438,11 @@ describe('text.accessibleTextVirtual', function() {
 		var _unsupported;
 
 		before(function() {
-			_unsupported = axe.commons.text.unsupported;
-			axe.commons.text.unsupported = {};
+			_unsupported = axe.commons.text.unsupported.accessibleNameFromFieldValue;
+			axe.commons.text.unsupported.accessibleNameFromFieldValue = [];
 		});
 		after(function() {
-			axe.commons.text.unsupported = _unsupported;
+			axe.commons.text.unsupported.accessibleNameFromFieldValue = _unsupported;
 		});
 
 		afterEach(function() {

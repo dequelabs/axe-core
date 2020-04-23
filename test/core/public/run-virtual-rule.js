@@ -1,7 +1,4 @@
-/* global SerialVirtualNode */
 describe('axe.runVirtualRule', function() {
-	var origRunRules = axe._runRules;
-
 	beforeEach(function() {
 		axe._load({
 			rules: [
@@ -24,7 +21,6 @@ describe('axe.runVirtualRule', function() {
 
 	afterEach(function() {
 		axe._audit = null;
-		axe._runRules = origRunRules;
 	});
 
 	it('should throw if the rule does not exist', function() {
@@ -94,7 +90,7 @@ describe('axe.runVirtualRule', function() {
 	});
 
 	it('should pass a virtual context to rule.runSync', function() {
-		var node = new SerialVirtualNode({ nodeName: 'div' });
+		var node = new axe.SerialVirtualNode({ nodeName: 'div' });
 		axe._audit.rules = [
 			{
 				id: 'aria-roles',

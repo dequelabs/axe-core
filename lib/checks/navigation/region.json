@@ -1,6 +1,6 @@
 {
 	"id": "region",
-	"evaluate": "region.js",
+	"evaluate": "region-evaluate.js",
 	"metadata": {
 		"impact": "moderate",
 		"messages": {

@@ -1,6 +1,6 @@
 {
 	"id": "page-has-main",
-	"evaluate": "page-has-elm.js",
+	"evaluate": "page-has-elm-evaluate.js",
 	"after": "page-has-elm-after.js",
 	"options": {
 		"selector": "main:not([role]), [role='main']"
