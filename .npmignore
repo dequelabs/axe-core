@@ -18,3 +18,4 @@ node_modules
 .retireignore.json
 greenkeeper.json
 tsconfig.json
+!build/test/*.*
