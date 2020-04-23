@@ -425,7 +425,7 @@ module.exports = function(grunt) {
 	]);
 	grunt.registerTask('prepare', [
 		'build',
-		'file-exists',
+		// 'file-exists',
 		'testconfig',
 		'fixture',
 		'connect'
