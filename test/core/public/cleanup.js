@@ -5,7 +5,7 @@ describe('cleanup', function() {
 	function createFrames(callback) {
 		var frame;
 		frame = document.createElement('iframe');
-		frame.src = '../mock/frames/nested1.html';
+		frame.src = '../mock/frames/responder.html';
 		frame.addEventListener('load', function() {
 			setTimeout(callback, 500);
 		});
@@ -87,18 +87,18 @@ describe('cleanup', function() {
 	it('should send command to frames to cleanup', function(done) {
 		createFrames(function() {
 			axe._load({});
-			var orig = axe.utils.sendCommandToFrame;
-			var frame = document.querySelector('iframe');
-			axe.utils.sendCommandToFrame = function(node, opts, resolve) {
-				assert.equal(node, frame);
-				assert.deepEqual(opts, {
-					command: 'cleanup-plugin'
-				});
-				axe.utils.sendCommandToFrame = orig;
-				resolve();
-				done();
-			};
-			axe.cleanup(function() {}, assertNotCalled);
+
+			var frame = fixture.querySelector('iframe');
+			var win = frame.contentWindow;
+			win.addEventListener('message', function(message) {
+				var data = JSON.parse(message.data);
+				if (data.topic === 'axe.start') {
+					assert.deepEqual(data.message, { command: 'cleanup-plugin' });
+					done();
+				}
+			});
+
+			axe.cleanup();
 		});
 	});
 });
