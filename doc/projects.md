@@ -33,6 +33,7 @@ Add your project/integration to this file and submit a pull request.
 1. [Intern](https://github.com/theintern/intern-a11y)
 1. [Protractor-axe-report Plugin](https://github.com/E1Edatatracker/protractor-axe-report-plugin)
 1. [Cypress-axe](https://github.com/avanslaars/cypress-axe)
+1. [Taiko-accessibility](https://github.com/andreas-ku/taiko-accessibility)
 1. [Jest-axe](https://github.com/nickcolley/jest-axe)
 1. [axe audit runner for CrawlKit](https://github.com/crawlkit/runner-axe)
 1. [Selenium IDE axe Extension](https://github.com/bkardell/selenium-ide-axe)
