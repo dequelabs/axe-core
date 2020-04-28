@@ -152,7 +152,7 @@ function buildRules(grunt, options, commons, callback) {
 		function replaceFunctions(string) {
 			return string
 				.replace(
-					/"(evaluate|after|gather|matches|source|commons)":\s*("[^"]+?")/g,
+					/"(evaluate|after|gather|matches|source|commons)":\s*("[^"]+?.js")/g,
 					function(m, p1, p2) {
 						return m.replace(p2, getSource(p2.replace(/^"|"$/g, ''), p1));
 					}
@@ -378,8 +378,8 @@ ${ruleTables}`;
 						lang: options.locale || 'en',
 						data: metadata,
 						rules: rules,
-						checks: checks,
-						commons: result.commons
+						checks: checks
+						// commons: result.commons
 					},
 					blacklist
 				)
@@ -389,8 +389,8 @@ ${ruleTables}`;
 					{
 						data: metadata,
 						rules: rules,
-						checks: checks,
-						commons: result.commons
+						checks: checks
+						// commons: result.commons
 					},
 					blacklist
 				)

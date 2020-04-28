@@ -1,6 +1,6 @@
 {
 	"id": "aria-unsupported-attr",
-	"evaluate": "aria-unsupported-attr-evaluate.js",
+	"evaluate": "aria-unsupported-attr-evaluate",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

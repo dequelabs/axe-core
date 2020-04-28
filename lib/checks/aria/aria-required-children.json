@@ -1,6 +1,6 @@
 {
 	"id": "aria-required-children",
-	"evaluate": "aria-required-children-evaluate.js",
+	"evaluate": "aria-required-children-evaluate",
 	"options": {
 		"reviewEmpty": [
 			"doc-bibliography",
