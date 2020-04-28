@@ -9,12 +9,10 @@ describe('reporters - raw-env', function() {
 		return new axe.utils.DqElement(node);
 	}
 
-	var mockResults;
-	var orig;
-	var rawResults;
+	var runResults;
 
-	before(function() {
-		mockResults = [
+	beforeEach(function() {
+		runResults = [
 			{
 				id: 'gimmeLabel',
 				helpUrl: 'things',
@@ -110,39 +108,32 @@ describe('reporters - raw-env', function() {
 		axe.testUtils.fixtureSetup();
 
 		axe._load({});
-		orig = axe._runRules;
-		axe._runRules = function(_, __, cb) {
-			cb(mockResults, function noop() {});
-		};
-		axe.run({ reporter: 'raw' }, function(err, results) {
-			if (err) {
-				return {};
-			}
-			rawResults = results;
-		});
+		axe._cache.set('selectorData', {});
 	});
 
 	after(function() {
-		axe._runRules = orig;
 		fixture.innerHTML = '';
 	});
 
-	it('should pass raw results and env object', function(done) {
-		axe.run({ reporter: 'rawEnv' }, function(err, results) {
-			if (err) {
-				return done(err);
+	it('should serialize DqElements (#1195)', function() {
+		axe.getReporter('rawEnv')(runResults, {}, function(results) {
+			for (var i = 0; i < results.length; i++) {
+				var result = results[i];
+				for (var j = 0; j < result.passes.length; j++) {
+					var p = result.passes[j];
+					assert.notInstanceOf(p.node, axe.utils.DqElement);
+				}
 			}
-			try {
-				assert.deepEqual(results.raw, rawResults);
-				assert.isNotNull(results.env);
-				assert.isNotNull(results.env.url);
-				assert.isNotNull(results.env.timestamp);
-				assert.isNotNull(results.env.testEnvironement);
-				assert.isNotNull(results.env.testRunner);
-			} catch (err) {
-				return done(err);
-			}
-			done();
+		});
+	});
+
+	it('should pass env object', function() {
+		axe.getReporter('rawEnv')(runResults, {}, function(results) {
+			assert.isNotNull(results.env);
+			assert.isNotNull(results.env.url);
+			assert.isNotNull(results.env.timestamp);
+			assert.isNotNull(results.env.testEnvironement);
+			assert.isNotNull(results.env.testRunner);
 		});
 	});
 });
