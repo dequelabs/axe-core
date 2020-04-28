@@ -1,6 +1,6 @@
 {
 	"id": "aria-roledescription",
-	"evaluate": "aria-roledescription-evaluate.js",
+	"evaluate": "aria-roledescription-evaluate",
 	"options": {
 		"supportedRoles": [
 			"button",

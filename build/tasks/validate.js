@@ -6,6 +6,10 @@ var revalidator = require('revalidator').validate,
 	path = require('path');
 
 function fileExists(v, o) {
+	if (!v.endsWith('.js')) {
+		return true;
+	}
+
 	var file = path.resolve(path.dirname(o._path), v);
 	var exists;
 	try {

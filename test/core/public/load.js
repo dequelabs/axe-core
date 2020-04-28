@@ -23,13 +23,6 @@ describe('axe._load', function() {
 		assert.equal(axe._audit.rules[1].id, 'bananas');
 	});
 
-	it('should define commons on axe', function() {
-		axe._load({
-			commons: 'foo'
-		});
-		assert.equal(axe.commons, 'foo');
-	});
-
 	it('should load with a lang', function() {
 		axe._load({
 			lang: 'ja'

@@ -154,8 +154,7 @@ module.exports = function(grunt) {
 			}
 		},
 		webpack: {
-			core: createWebpackConfig('lib/core/core.js', 'tmp/core', 'core.js'),
-			commons: createWebpackConfig('lib/commons/index.js', 'tmp/commons')
+			core: createWebpackConfig('lib/core/core.js', 'tmp/core', 'core.js')
 		},
 		'aria-supported': {
 			data: {
@@ -172,7 +171,7 @@ module.exports = function(grunt) {
 				},
 				files: langs.map(function(lang) {
 					return {
-						src: ['<%= concat.commons.dest %>'],
+						src: [''],
 						dest: {
 							auto: 'tmp/rules' + lang + '.js',
 							descriptions: 'doc/rule-descriptions' + lang + '.md'
@@ -186,7 +185,7 @@ module.exports = function(grunt) {
 				options: {
 					lang: grunt.option('lang')
 				},
-				src: ['<%= concat.commons.dest %>'],
+				src: ['tmp/core/core.js'],
 				dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
 			}
 		},
@@ -358,17 +357,11 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.registerTask('translate', [
-		'validate',
-		'webpack',
-		'concat:commons',
-		'add-locale'
-	]);
+	grunt.registerTask('translate', ['validate', 'webpack', 'add-locale']);
 	grunt.registerTask('build', [
 		'clean',
 		'validate',
 		'webpack',
-		'concat:commons',
 		'configure',
 		'babel',
 		'concat:engine',
