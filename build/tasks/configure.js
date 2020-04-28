@@ -18,7 +18,6 @@ module.exports = function(grunt) {
 			});
 
 			this.files.forEach(function(file) {
-				// var commons = file.src[0];
 				var match = file.dest.auto.match(/\.([a-z]{2,3})\.js/);
 				if (match) {
 					options.locale = match[1];

@@ -379,7 +379,6 @@ ${ruleTables}`;
 						data: metadata,
 						rules: rules,
 						checks: checks
-						// commons: result.commons
 					},
 					blacklist
 				)
@@ -390,7 +389,6 @@ ${ruleTables}`;
 						data: metadata,
 						rules: rules,
 						checks: checks
-						// commons: result.commons
 					},
 					blacklist
 				)

@@ -357,17 +357,11 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.registerTask('translate', [
-		'validate',
-		'webpack',
-		'concat:commons',
-		'add-locale'
-	]);
+	grunt.registerTask('translate', ['validate', 'webpack', 'add-locale']);
 	grunt.registerTask('build', [
 		'clean',
 		'validate',
 		'webpack',
-		// 'concat:commons',
 		'configure',
 		'babel',
 		'concat:engine',
