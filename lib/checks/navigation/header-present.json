@@ -1,6 +1,6 @@
 {
 	"id": "header-present",
-	"evaluate": "header-present-evaluate.js",
+	"evaluate": "header-present-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {
