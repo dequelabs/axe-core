@@ -1,6 +1,6 @@
 {
 	"id": "hidden-content",
-	"evaluate": "hidden-content-evaluate.js",
+	"evaluate": "hidden-content-evaluate",
 	"metadata": {
 		"impact": "minor",
 		"messages": {
