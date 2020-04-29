@@ -77,6 +77,7 @@
         "lib/core/**/*.js",
         "lib/commons/**/*.js",
         "lib/checks/aria/**/*.js",
+        "lib/checks/tables/*.js",
         "lib/checks/parsing/**/*.js",
         "lib/checks/visibility/*.js",
         "lib/checks/color/**/*.js",
