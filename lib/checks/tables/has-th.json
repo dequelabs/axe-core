@@ -1,6 +1,6 @@
 {
 	"id": "has-th",
-	"evaluate": "has-th-evaluate.js",
+	"evaluate": "has-th-evaluate",
 	"deprecated": true,
 	"metadata": {
 		"impact": "serious",

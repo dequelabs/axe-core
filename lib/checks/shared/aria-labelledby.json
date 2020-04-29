@@ -1,6 +1,6 @@
 {
 	"id": "aria-labelledby",
-	"evaluate": "aria-labelledby-evaluate.js",
+	"evaluate": "aria-labelledby-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {
