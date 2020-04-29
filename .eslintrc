@@ -76,7 +76,10 @@
       "files": [
         "lib/core/**/*.js",
         "lib/commons/**/*.js",
-        "lib/checks/aria/**/*.js"
+        "lib/checks/aria/**/*.js",
+        "lib/checks/color/**/*.js",
+        "lib/checks/forms/autocomplete-appropriate-evaluate.js",
+        "lib/checks/forms/autocomplete-valid-evaluate.js"
       ],
       "parserOptions":{
         "sourceType": "module"
