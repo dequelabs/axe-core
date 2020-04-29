@@ -1,6 +1,6 @@
 {
 	"id": "identical-links-same-purpose",
-	"evaluate": "identical-links-same-purpose-evaluate.js",
+	"evaluate": "identical-links-same-purpose-evaluate",
 	"after": "identical-links-same-purpose-after.js",
 	"metadata": {
 		"impact": "minor",
