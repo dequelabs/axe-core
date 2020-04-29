@@ -1,6 +1,6 @@
 {
 	"id": "non-empty-value",
-	"evaluate": "non-empty-value-evaluate.js",
+	"evaluate": "non-empty-value-evaluate",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

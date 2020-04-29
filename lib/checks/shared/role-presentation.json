@@ -1,6 +1,6 @@
 {
 	"id": "role-presentation",
-	"evaluate": "role-presentation-evaluate.js",
+	"evaluate": "role-presentation-evaluate",
 	"metadata": {
 		"impact": "minor",
 		"messages": {
