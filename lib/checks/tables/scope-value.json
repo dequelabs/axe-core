@@ -1,6 +1,6 @@
 {
 	"id": "scope-value",
-	"evaluate": "scope-value-evaluate.js",
+	"evaluate": "scope-value-evaluate",
 	"metadata": {
 		"impact": "critical",
 		"messages": {
