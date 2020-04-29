@@ -81,6 +81,7 @@
         "lib/checks/parsing/**/*.js",
         "lib/checks/visibility/*.js",
         "lib/checks/color/**/*.js",
+        "lib/checks/mobile/**/*.js",
         "lib/checks/forms/autocomplete-appropriate-evaluate.js",
         "lib/checks/forms/autocomplete-valid-evaluate.js"
       ],
