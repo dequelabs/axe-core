@@ -85,6 +85,7 @@
         "lib/checks/color/**/*.js",
         "lib/checks/mobile/**/*.js",
         "lib/checks/keyboard/**/*.js",
+        "lib/checks/label/**/*.js",
         "lib/checks/forms/autocomplete-appropriate-evaluate.js",
         "lib/checks/forms/autocomplete-valid-evaluate.js"
       ],

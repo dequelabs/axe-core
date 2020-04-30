@@ -1,6 +1,6 @@
 {
 	"id": "hidden-explicit-label",
-	"evaluate": "hidden-explicit-label-evaluate.js",
+	"evaluate": "hidden-explicit-label-evaluate",
 	"metadata": {
 		"impact": "critical",
 		"messages": {
