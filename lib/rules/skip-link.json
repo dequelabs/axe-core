@@ -1,7 +1,7 @@
 {
 	"id": "skip-link",
 	"selector": "a[href^=\"#\"], a[href^=\"/#\"]",
-	"matches": "skip-link-matches.js",
+	"matches": "skip-link-matches",
 	"tags": ["cat.keyboard", "best-practice"],
 	"metadata": {
 		"description": "Ensure all skip links have a focusable target",

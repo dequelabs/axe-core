@@ -1,6 +1,6 @@
 {
 	"id": "scrollable-region-focusable",
-	"matches": "scrollable-region-focusable-matches.js",
+	"matches": "scrollable-region-focusable-matches",
 	"tags": ["wcag2a", "wcag211"],
 	"metadata": {
 		"description": "Elements that have scrollable content should be accessible by keyboard",

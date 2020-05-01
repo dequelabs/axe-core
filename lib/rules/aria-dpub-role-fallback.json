@@ -1,7 +1,7 @@
 {
 	"id": "aria-dpub-role-fallback",
 	"selector": "[role]",
-	"matches": "aria-dpub-role-fallback-matches.js",
+	"matches": "aria-dpub-role-fallback-matches",
 	"tags": ["cat.aria", "wcag2a", "wcag131", "deprecated"],
 	"metadata": {
 		"description": "Ensures unsupported DPUB roles are only used on elements with implicit fallback roles",

@@ -2,7 +2,7 @@
 	"id": "aria-allowed-role",
 	"excludeHidden": false,
 	"selector": "[role]",
-	"matches": "aria-allowed-role-matches.js",
+	"matches": "aria-allowed-role-matches",
 	"tags": ["cat.aria", "best-practice"],
 	"metadata": {
 		"description": "Ensures role attribute has an appropriate value for the element",
