@@ -1,7 +1,7 @@
 {
 	"id": "fieldset",
-	"evaluate": "fieldset-evaluate.js",
-	"after": "fieldset-after.js",
+	"evaluate": "fieldset-evaluate",
+	"after": "fieldset-after",
 	"deprecated": true,
 	"metadata": {
 		"impact": "critical",
