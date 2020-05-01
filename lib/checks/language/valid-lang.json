@@ -1,6 +1,6 @@
 {
 	"id": "valid-lang",
-	"evaluate": "valid-lang-evaluate.js",
+	"evaluate": "valid-lang-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {
