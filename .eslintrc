@@ -76,18 +76,7 @@
       "files": [
         "lib/core/**/*.js",
         "lib/commons/**/*.js",
-        "lib/checks/navigation/**/*.js",
-        "lib/checks/aria/**/*.js",
-        "lib/checks/shared/**/*.js",
-        "lib/checks/tables/*.js",
-        "lib/checks/parsing/**/*.js",
-        "lib/checks/visibility/*.js",
-        "lib/checks/color/**/*.js",
-        "lib/checks/mobile/**/*.js",
-        "lib/checks/keyboard/**/*.js",
-        "lib/checks/label/**/*.js",
-        "lib/checks/forms/autocomplete-appropriate-evaluate.js",
-        "lib/checks/forms/autocomplete-valid-evaluate.js"
+        "lib/checks/**/*.js"
       ],
       "parserOptions":{
         "sourceType": "module"

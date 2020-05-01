@@ -1,6 +1,6 @@
 {
 	"id": "frame-tested",
-	"evaluate": "frame-tested-evaluate.js",
+	"evaluate": "frame-tested-evaluate",
 	"options": {
 		"isViolation": false
 	},
