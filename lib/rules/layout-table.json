@@ -1,7 +1,7 @@
 {
 	"id": "layout-table",
 	"selector": "table",
-	"matches": "layout-table-matches.js",
+	"matches": "layout-table-matches",
 	"tags": ["cat.semantics", "wcag2a", "wcag131", "deprecated"],
 	"metadata": {
 		"description": "Ensures presentational <table> elements do not use <th>, <caption> elements or the summary attribute",

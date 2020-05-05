@@ -74,9 +74,7 @@
   "overrides": [
     {
       "files": [
-        "lib/core/**/*.js",
-        "lib/commons/**/*.js",
-        "lib/checks/**/*.js"
+        "lib/**/*.js"
       ],
       "parserOptions":{
         "sourceType": "module"

@@ -1,7 +1,7 @@
 {
 	"id": "p-as-heading",
 	"selector": "p",
-	"matches": "p-as-heading-matches.js",
+	"matches": "p-as-heading-matches",
 	"tags": ["cat.semantics", "wcag2a", "wcag131", "experimental"],
 	"metadata": {
 		"description": "Ensure p elements are not used to style headings",

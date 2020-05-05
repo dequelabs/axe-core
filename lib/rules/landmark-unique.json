@@ -6,7 +6,7 @@
 		"help": "Ensures landmarks are unique",
 		"description": "Landmarks must have a unique role or role/label/title (i.e. accessible name) combination"
 	},
-	"matches": "landmark-unique-matches.js",
+	"matches": "landmark-unique-matches",
 	"all": [],
 	"any": ["landmark-is-unique"],
 	"none": []

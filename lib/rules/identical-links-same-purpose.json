@@ -2,7 +2,7 @@
 	"id": "identical-links-same-purpose",
 	"selector": "a[href], area[href], [role=\"link\"]",
 	"excludeHidden": false,
-	"matches": "identical-links-same-purpose-matches.js",
+	"matches": "identical-links-same-purpose-matches",
 	"tags": ["wcag2aaa", "wcag249", "best-practice"],
 	"metadata": {
 		"description": "Ensure that links with the same accessible name serve a similar purpose",
