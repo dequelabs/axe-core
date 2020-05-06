@@ -17,10 +17,6 @@
 			"description": "Garantiza que el atributo role tiene un valor apropiado para el elemento",
 			"help": "ARIA role debe ser apropiado para el elemento"
 		},
-		"aria-dpub-role-fallback": {
-			"description": "Garantiza que los 'DPUB roles' no admitidos solo se usan en elementos con roles alternativos implícitos",
-			"help": "Los 'DPUB ARIA roles' no admitidos deberían usarse en elementos con roles alternativos implícitos"
-		},
 		"aria-hidden-body": {
 			"description": "Garantiza que aria-hidden='true' no está presente en el 'body' del documento.",
 			"help": "aria-hidden='true' no debe estar presente en el 'body' del documento"
@@ -84,10 +80,6 @@
 		"bypass": {
 			"description": "Garantiza que cada página tiene al menos un medio para que un usuario pueda saltarse la navegación y pasar directamente al contenido",
 			"help": "Las páginas deben tener medios para saltarse bloques repetidos"
-		},
-		"checkboxgroup": {
-			"description": "Garantiza que los elementos <input type=\"checkbox\"> relacionados tienen un grupo y que la designación del grupo es consistente",
-			"help": "Los 'Checkbox inputs' con el mismo valor para el atributo name deben ser parte de un grupo"
 		},
 		"color-contrast": {
 			"description": "Garantiza que el contraste entre colores de primer plano y fondo cumple los límites de la ratio para contraste WCAG 2 AA",
@@ -225,10 +217,6 @@
 			"help": "Garantiza que los puntos de referencia son únicos",
 			"description": "Los puntos de referencia deben tener una única combinación de role o role/label/title (es decir, un nombre accesible único)"
 		},
-		"layout-table": {
-			"description": "Garantiza que los elementos de diseño en <table> no usan elementos <th>, <caption> o el atributo summary",
-			"help": "Las tablas de diseño no deben usar elementos de tablas de datos"
-		},
 		"link-in-text-block": {
 			"description": "Los enlaces pueden distinguirse sin depender del color",
 			"help": "Los enlaces deben distinguirse del texto adyacente por un medio que no dependa del color"
@@ -272,10 +260,6 @@
 		"page-has-heading-one": {
 			"description": "Garantizar que la página, o al menos uno de sus marcos, contiene un encabezado de nivel 1",
 			"help": "La página debe contener un encabezado de nivel 1"
-		},
-		"radiogroup": {
-			"description": "Garantiza que los elementos <input type=\"radio\"> relacionados tienen un grupo y que la designación del grupo es consistente",
-			"help": "'Radio inputs' con el mismo valor para el atributo name deben formar parte de un grupo"
 		},
 		"region": {
 			"description": "Garantiza que todo el contenido de la página está incluido en puntos de referencia",
@@ -332,10 +316,6 @@
 		"video-caption": {
 			"description": "Garantiza que los elementos <video> tienen subtítulos",
 			"help": "Los elementos <video> deben tener subtítulos"
-		},
-		"video-description": {
-			"description": "Garantiza que los elementos <video> tienen audiodescripciones",
-			"help": "Los elementos <video> deben tener una pista de audiodescripción"
 		}
 	},
 	"checks": {
@@ -363,10 +343,6 @@
 		"has-widget-role": {
 			"pass": "El elemento tiene un rol de widget.",
 			"fail": "El elemento no tiene un rol de widget."
-		},
-		"implicit-role-fallback": {
-			"pass": "El rol ARIA implícito de los elementos es una alternativa apropiada",
-			"fail": "El rol ARIA implícito de los elementos no es una buena alternativa para el rol (no admitido)"
 		},
 		"invalidrole": {
 			"pass": "El rol ARIA es válido",
@@ -446,14 +422,6 @@
 		"autocomplete-valid": {
 			"pass": "el atributo autocomplete está formateado correctamente",
 			"fail": "el atributo autocomplete está formateado incorrectamente"
-		},
-		"fieldset": {
-			"pass": "El elemento está contenido en un fieldset",
-			"fail": "{{var code = it.data && it.data.failureCode;}}{{? code === 'no-legend'}}Fieldset no tiene un legend como primer hijo{{?? code === 'empty-legend'}}Legend no tiene texto visible para lectores de pantalla{{?? code === 'mixed-inputs'}}Fieldset contiene inputs no relacionados{{?? code === 'no-group-label'}}ARIA group no tiene aria-label o aria-labelledby{{?? code === 'group-mixed-inputs'}}ARIA group contiene inputs no relacionados{{??}}El elemento no tiene un fieldset o ARIA group contenedor{{?}}"
-		},
-		"group-labelledby": {
-			"pass": "Los elementos con el nombre \"{{=it.data.name}}\" tienen tanto una etiqueta compartida como una etiqueta única, referida mediante aria-labelledby",
-			"fail": "{{var code = it.data && it.data.failureCode;}}Los elementos con el nombre \"{{=it.data.name}}\", no todos tienen {{? code === 'no-shared-label' }}una etiqueta compartida{{?? code === 'no-unique-label' }}una etiqueta única{{??}}tanto una etiqueta compartida como una etiqueta única{{?}}, referida mediante aria-labelledby"
 		},
 		"accesskeys": {
 			"pass": "El valor del atributo accesskey es único",
@@ -582,10 +550,6 @@
 		"caption": {
 			"pass": "El elemento multimedia tiene una pista de subtítulos",
 			"incomplete": "Comprobar que hay disponibles subtítulos para el elemento"
-		},
-		"description": {
-			"pass": "El elemento multimedia tiene una pista de audiodescripción",
-			"incomplete": "Comprobar que hay disponible audiodescripción para el elemento"
 		},
 		"frame-tested": {
 			"pass": "El marco incorporado fue probado con axe-core",
@@ -717,18 +681,6 @@
 		"caption-faked": {
 			"pass": "La primera fila de una tabla no se usa como título ('caption')",
 			"fail": "La primera fila de la tabla debería ser un título ('caption') en vez de una celda de tabla"
-		},
-		"has-caption": {
-			"pass": "la tabla de diseño no usa el elemento <caption>",
-			"fail": "La tabla de diseño usa el elemento <caption>"
-		},
-		"has-summary": {
-			"pass": "La tabla de diseño no usa el atributo summary",
-			"fail": "La tabla de diseño usa el atributo summary"
-		},
-		"has-th": {
-			"pass": "La tabla de diseño no usa elementos <th>",
-			"fail": "La tabla de diseño usa elementos <th>"
 		},
 		"html5-scope": {
 			"pass": "El atributo scope solo se usa en elementos de encabezados de tabla (<th>)",
