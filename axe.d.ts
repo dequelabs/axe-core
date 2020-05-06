@@ -85,7 +85,7 @@ declare namespace axe {
 		all: CheckResult[];
 		none: CheckResult[];
 		failureSummary?: string;
-		element: Element;
+		element?: Element;
 	}
 	interface CheckResult {
 		id: string;
