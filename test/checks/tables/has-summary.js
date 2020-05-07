@@ -12,7 +12,7 @@ describe('has-summary', function() {
 
 		var node = fixture.querySelector('table');
 
-		assert.isFalse(checks['has-summary'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('has-summary')(node));
 	});
 
 	it('should return true when the table has a summary', function() {
@@ -21,7 +21,7 @@ describe('has-summary', function() {
 
 		var node = fixture.querySelector('table');
 
-		assert.isTrue(checks['has-summary'].evaluate(node));
+		assert.isTrue(axe.testUtils.getCheckEvaluate('has-summary')(node));
 	});
 
 	it('should not detect nested table with summary', function() {
@@ -32,6 +32,6 @@ describe('has-summary', function() {
 
 		var node = fixture.querySelector('table');
 
-		assert.isFalse(checks['has-summary'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('has-summary')(node));
 	});
 });

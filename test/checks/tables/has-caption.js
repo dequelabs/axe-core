@@ -12,7 +12,7 @@ describe('has-caption', function() {
 
 		var node = fixture.querySelector('table');
 
-		assert.isFalse(checks['has-caption'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('has-caption')(node));
 	});
 
 	it('should return true when the table has a caption', function() {
@@ -21,7 +21,7 @@ describe('has-caption', function() {
 
 		var node = fixture.querySelector('table');
 
-		assert.isTrue(checks['has-caption'].evaluate(node));
+		assert.isTrue(axe.testUtils.getCheckEvaluate('has-caption')(node));
 	});
 
 	it('should not detect nested table with caption', function() {
@@ -32,6 +32,6 @@ describe('has-caption', function() {
 
 		var node = fixture.querySelector('table');
 
-		assert.isFalse(checks['has-caption'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('has-caption')(node));
 	});
 });

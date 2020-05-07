@@ -12,14 +12,14 @@ describe('non-empty-value', function() {
 		node.setAttribute('value', 'woohoo');
 		fixture.appendChild(node);
 
-		assert.isTrue(checks['non-empty-value'].evaluate(node));
+		assert.isTrue(axe.testUtils.getCheckEvaluate('non-empty-value')(node));
 	});
 
 	it('should return false if an value is not present', function() {
 		var node = document.createElement('input');
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['non-empty-value'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('non-empty-value')(node));
 	});
 
 	it('should return false if an value is present, but empty', function() {
@@ -27,7 +27,7 @@ describe('non-empty-value', function() {
 		node.setAttribute('value', ' ');
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['non-empty-value'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('non-empty-value')(node));
 	});
 
 	it('should collapse whitespace', function() {
@@ -35,6 +35,6 @@ describe('non-empty-value', function() {
 		node.setAttribute('value', ' \t \n \r \t  \t\r\n ');
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['non-empty-value'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('non-empty-value')(node));
 	});
 });

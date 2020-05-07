@@ -11,20 +11,20 @@ describe('role-presentation', function() {
 		fixture.innerHTML = '<div role="presentation"></div>';
 		var node = fixture.querySelector('div');
 
-		assert.isTrue(checks['role-presentation'].evaluate(node));
+		assert.isTrue(axe.testUtils.getCheckEvaluate('role-presentation')(node));
 	});
 
 	it('should return false when role !== presentation', function() {
 		fixture.innerHTML = '<div role="cats"></div>';
 		var node = fixture.querySelector('div');
 
-		assert.isFalse(checks['role-presentation'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('role-presentation')(node));
 	});
 
 	it('should return false when there is no role attribute', function() {
 		fixture.innerHTML = '<div></div>';
 		var node = fixture.querySelector('div');
 
-		assert.isFalse(checks['role-presentation'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('role-presentation')(node));
 	});
 });

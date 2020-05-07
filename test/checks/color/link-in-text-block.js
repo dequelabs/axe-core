@@ -99,7 +99,9 @@ describe('link-in-text-block', function() {
 			}
 		);
 		assert.isTrue(
-			checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
+			axe.testUtils
+				.getCheckEvaluate('link-in-text-block')
+				.call(checkContext, linkElm)
 		);
 	});
 
@@ -122,7 +124,9 @@ describe('link-in-text-block', function() {
 			var linkElm = document.getElementById('link');
 
 			assert.isTrue(
-				checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
+				axe.testUtils
+					.getCheckEvaluate('link-in-text-block')
+					.call(checkContext, linkElm)
 			);
 		});
 
@@ -139,7 +143,9 @@ describe('link-in-text-block', function() {
 				axe.testUtils.flatTreeSetup(fixture);
 
 				assert.isTrue(
-					checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
+					axe.testUtils
+						.getCheckEvaluate('link-in-text-block')
+						.call(checkContext, linkElm)
 				);
 			}
 		);
@@ -158,7 +164,9 @@ describe('link-in-text-block', function() {
 				var linkElm = div.querySelector('a');
 
 				assert.isTrue(
-					checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
+					axe.testUtils
+						.getCheckEvaluate('link-in-text-block')
+						.call(checkContext, linkElm)
 				);
 			}
 		);
@@ -181,7 +189,9 @@ describe('link-in-text-block', function() {
 				}
 			);
 			assert.isUndefined(
-				checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
+				axe.testUtils
+					.getCheckEvaluate('link-in-text-block')
+					.call(checkContext, linkElm)
 			);
 		});
 
@@ -195,7 +205,9 @@ describe('link-in-text-block', function() {
 				}
 			);
 			assert.isFalse(
-				checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
+				axe.testUtils
+					.getCheckEvaluate('link-in-text-block')
+					.call(checkContext, linkElm)
 			);
 		});
 
@@ -211,7 +223,9 @@ describe('link-in-text-block', function() {
 				}
 			);
 			assert.isUndefined(
-				checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
+				axe.testUtils
+					.getCheckEvaluate('link-in-text-block')
+					.call(checkContext, linkElm)
 			);
 			assert.equal(checkContext._data.messageKey, 'bgContrast');
 		});
@@ -228,7 +242,9 @@ describe('link-in-text-block', function() {
 				}
 			);
 			assert.isFalse(
-				checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
+				axe.testUtils
+					.getCheckEvaluate('link-in-text-block')
+					.call(checkContext, linkElm)
 			);
 		});
 
@@ -245,7 +261,9 @@ describe('link-in-text-block', function() {
 				}
 			);
 			assert.isUndefined(
-				checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
+				axe.testUtils
+					.getCheckEvaluate('link-in-text-block')
+					.call(checkContext, linkElm)
 			);
 			assert.equal(checkContext._data.messageKey, 'bgImage');
 		});
@@ -264,7 +282,9 @@ describe('link-in-text-block', function() {
 			}
 		);
 		assert.isUndefined(
-			checks['link-in-text-block'].evaluate.call(checkContext, linkElm)
+			axe.testUtils
+				.getCheckEvaluate('link-in-text-block')
+				.call(checkContext, linkElm)
 		);
 		assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
 	});

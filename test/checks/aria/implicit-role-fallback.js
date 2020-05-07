@@ -14,7 +14,9 @@ describe('implicit-role-fallback', function() {
 		node = document.createElement('div');
 		fixture.appendChild(node);
 		assert.isTrue(
-			checks['implicit-role-fallback'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('implicit-role-fallback')
+				.call(checkContext, node)
 		);
 	});
 
@@ -22,7 +24,9 @@ describe('implicit-role-fallback', function() {
 		fixture.innerHTML = '<a role="awesomelink" id="target" href="#">text</a>';
 		var target = fixture.children[0];
 		assert.isTrue(
-			checks['implicit-role-fallback'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('implicit-role-fallback')
+				.call(checkContext, target)
 		);
 	});
 
@@ -39,7 +43,9 @@ describe('implicit-role-fallback', function() {
 		fixture.innerHTML = '<a role="awesomelink" id="target" href="#">text</a>';
 		var target = fixture.children[0];
 		assert.isTrue(
-			checks['implicit-role-fallback'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('implicit-role-fallback')
+				.call(checkContext, target)
 		);
 		delete axe.commons.aria.lookupTable.role.awesomelink;
 	});
@@ -57,7 +63,9 @@ describe('implicit-role-fallback', function() {
 		fixture.innerHTML = '<article role="awesomelink" id="target"></article>';
 		var target = fixture.children[0];
 		assert.isFalse(
-			checks['implicit-role-fallback'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('implicit-role-fallback')
+				.call(checkContext, target)
 		);
 		delete axe.commons.aria.lookupTable.role.awesomelink;
 	});
@@ -75,7 +83,9 @@ describe('implicit-role-fallback', function() {
 		fixture.innerHTML = '<div role="awesomelink" id="target"></div>';
 		var target = fixture.children[0];
 		assert.isFalse(
-			checks['implicit-role-fallback'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('implicit-role-fallback')
+				.call(checkContext, target)
 		);
 		delete axe.commons.aria.lookupTable.role.awesomelink;
 	});

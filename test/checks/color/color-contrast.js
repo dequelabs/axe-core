@@ -7,7 +7,7 @@ describe('color-contrast', function() {
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
 	var checkContext = axe.testUtils.MockCheckContext();
-	var contrastEvaluate = checks['color-contrast'].evaluate;
+	var contrastEvaluate = axe.testUtils.getCheckEvaluate('color-contrast');
 
 	afterEach(function() {
 		fixture.innerHTML = '';

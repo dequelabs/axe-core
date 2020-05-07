@@ -14,7 +14,9 @@ describe('has-th', function() {
 
 		var node = fixture.querySelector('table');
 
-		assert.isFalse(checks['has-th'].evaluate.call(checkContext, node));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('has-th').call(checkContext, node)
+		);
 	});
 
 	it('should return true when the table has a th', function() {
@@ -22,7 +24,9 @@ describe('has-th', function() {
 
 		var node = fixture.querySelector('table');
 
-		assert.isTrue(checks['has-th'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('has-th').call(checkContext, node)
+		);
 		assert.deepEqual(checkContext._relatedNodes, [node.querySelector('th')]);
 	});
 
@@ -32,7 +36,9 @@ describe('has-th', function() {
 
 		var node = fixture.querySelector('table');
 
-		assert.isTrue(checks['has-th'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('has-th').call(checkContext, node)
+		);
 		assert.deepEqual(checkContext._relatedNodes, [node.querySelector('td')]);
 	});
 
@@ -44,6 +50,8 @@ describe('has-th', function() {
 
 		var node = fixture.querySelector('table');
 
-		assert.isFalse(checks['has-th'].evaluate.call(checkContext, node));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('has-th').call(checkContext, node)
+		);
 	});
 });

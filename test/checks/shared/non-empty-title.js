@@ -14,7 +14,7 @@ describe('non-empty-title', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 
-		assert.isTrue(checks['non-empty-title'].evaluate(node));
+		assert.isTrue(axe.testUtils.getCheckEvaluate('non-empty-title')(node));
 	});
 
 	it('should return false if a title is not present', function() {
@@ -22,7 +22,7 @@ describe('non-empty-title', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 
-		assert.isFalse(checks['non-empty-title'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('non-empty-title')(node));
 	});
 
 	it('should return false if a title is present, but empty', function() {
@@ -31,7 +31,7 @@ describe('non-empty-title', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 
-		assert.isFalse(checks['non-empty-title'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('non-empty-title')(node));
 	});
 
 	it('should collapse whitespace', function() {
@@ -40,6 +40,6 @@ describe('non-empty-title', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 
-		assert.isFalse(checks['non-empty-title'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('non-empty-title')(node));
 	});
 });

@@ -18,7 +18,9 @@ describe('hidden content', function() {
 			'<div id="target" style="display: none;"><p>Some paragraph text.</p></div>'
 		);
 		assert.isUndefined(
-			checks['hidden-content'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('hidden-content')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -27,7 +29,9 @@ describe('hidden content', function() {
 			'<div id="target" style="visibility: hidden;"><p>Some paragraph text.</p></div>'
 		);
 		assert.isUndefined(
-			checks['hidden-content'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('hidden-content')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -36,7 +40,9 @@ describe('hidden content', function() {
 			'<div style="visibility: hidden;"><p id="target" style="visibility: hidden;">Some paragraph text.</p></div>'
 		);
 		assert.isTrue(
-			checks['hidden-content'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('hidden-content')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -45,7 +51,9 @@ describe('hidden content', function() {
 			'<span id="target" class="icon" aria-hidden="true"></span>'
 		);
 		assert.isTrue(
-			checks['hidden-content'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('hidden-content')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -54,7 +62,11 @@ describe('hidden content', function() {
 		axe.testUtils.flatTreeSetup(document.documentElement);
 		var virtualNode = axe.utils.getNodeFromTree(node);
 		assert.isTrue(
-			checks['hidden-content'].evaluate(node, undefined, virtualNode)
+			axe.testUtils.getCheckEvaluate('hidden-content')(
+				node,
+				undefined,
+				virtualNode
+			)
 		);
 	});
 
@@ -70,19 +82,31 @@ describe('hidden content', function() {
 		var shadow = document.querySelector('#shadow');
 		var virtualShadow = axe.utils.getNodeFromTree(shadow);
 		assert.isTrue(
-			checks['hidden-content'].evaluate(shadow, undefined, virtualShadow)
+			axe.testUtils.getCheckEvaluate('hidden-content')(
+				shadow,
+				undefined,
+				virtualShadow
+			)
 		);
 
 		var target = shadowRoot.querySelector('#target');
 		var virtualTarget = axe.utils.getNodeFromTree(target);
 		assert.isUndefined(
-			checks['hidden-content'].evaluate(target, undefined, virtualTarget)
+			axe.testUtils.getCheckEvaluate('hidden-content')(
+				target,
+				undefined,
+				virtualTarget
+			)
 		);
 
 		var content = document.querySelector('#content');
 		var virtualContent = axe.utils.getNodeFromTree(content);
 		assert.isTrue(
-			checks['hidden-content'].evaluate(content, undefined, virtualContent)
+			axe.testUtils.getCheckEvaluate('hidden-content')(
+				content,
+				undefined,
+				virtualContent
+			)
 		);
 	});
 });

@@ -4,7 +4,7 @@ describe('has-lang', function() {
 	var fixture = document.getElementById('fixture');
 	var checkContext = axe.testUtils.MockCheckContext();
 	var checkSetup = axe.testUtils.checkSetup;
-	var hasLangEvaluate = checks['has-lang'].evaluate;
+	var hasLangEvaluate = axe.testUtils.getCheckEvaluate('has-lang');
 
 	afterEach(function() {
 		fixture.innerHTML = '';
