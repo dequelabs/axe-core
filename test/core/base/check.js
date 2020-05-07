@@ -431,6 +431,36 @@ describe('Check', function() {
 				}
 			});
 		});
+
+		describe('getOptions', function() {
+			var check;
+			beforeEach(function() {
+				check = new Check({
+					options: {
+						foo: 'bar'
+					}
+				});
+			});
+
+			it('should return default check options', function() {
+				assert.deepEqual(check.getOptions(), { foo: 'bar' });
+			});
+
+			it('should merge options with Check defaults', function() {
+				var options = check.getOptions({ hello: 'world' });
+				assert.deepEqual(options, { foo: 'bar', hello: 'world' });
+			});
+
+			it('should override defaults', function() {
+				var options = check.getOptions({ foo: 'world' });
+				assert.deepEqual(options, { foo: 'world' });
+			});
+
+			it('should normalize passed in options', function() {
+				var options = check.getOptions('world');
+				assert.deepEqual(options, { foo: 'bar', value: 'world' });
+			});
+		});
 	});
 
 	describe('spec object', function() {
