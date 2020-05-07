@@ -2,44 +2,40 @@ describe('non-empty-title', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-	var flatTreeSetup = axe.testUtils.flatTreeSetup;
+	var checkSetup = axe.testUtils.checkSetup;
 
 	afterEach(function() {
 		fixture.innerHTML = '';
 	});
 
 	it('should return true if a title is present', function() {
-		var node = document.createElement('img');
-		node.setAttribute('title', 'woohoo');
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+		var params = checkSetup('<img id="target" title="woohoo" />', {
+			attribute: 'title'
+		});
 
-		assert.isTrue(checks['non-empty-title'].evaluate(node));
+		assert.isTrue(checks['non-empty-title'].evaluate.apply(null, params));
 	});
 
 	it('should return false if a title is not present', function() {
-		var node = document.createElement('img');
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+		var params = checkSetup('<img id="target" />', { attribute: 'title' });
 
-		assert.isFalse(checks['non-empty-title'].evaluate(node));
+		assert.isFalse(checks['non-empty-title'].evaluate.apply(null, params));
 	});
 
 	it('should return false if a title is present, but empty', function() {
-		var node = document.createElement('img');
-		node.setAttribute('title', ' ');
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+		var params = checkSetup('<img id="target" title=" " />', {
+			attribute: 'title'
+		});
 
-		assert.isFalse(checks['non-empty-title'].evaluate(node));
+		assert.isFalse(checks['non-empty-title'].evaluate.apply(null, params));
 	});
 
 	it('should collapse whitespace', function() {
-		var node = document.createElement('div');
-		node.setAttribute('title', ' \t \n \r \t  \t\r\n ');
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+		var params = checkSetup(
+			'<img id="target" title=" \t \n \r \t  \t\r\n " />',
+			{ attribute: 'title' }
+		);
 
-		assert.isFalse(checks['non-empty-title'].evaluate(node));
+		assert.isFalse(checks['non-empty-title'].evaluate.apply(null, params));
 	});
 });
