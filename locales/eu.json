@@ -17,10 +17,6 @@
 			"description": "rol atributuak elementuarentzat balio egokia duela bermatzen du",
 			"help": "ARIA role egokia izan behar da elementuarentzat"
 		},
-		"aria-dpub-role-fallback": {
-			"description": "Onartzen ez diren 'DPUB rolak' rol alternatibo inplizituak dituzten elementuetan bakarrik erabiltzen direla bermatzen du",
-			"help": "Onartu gabeko 'DPUB ARIA rolak' ordezko rol inplizituak dituzten elementuetan erabili beharko lirateke"
-		},
 		"aria-hidden-body": {
 			"description": "Bermatzen du aria-hidden = 'true' ez dagoela dokumentuaren 'body'an.",
 			"help": "aria-hidden = 'true' ez da dokumentuaren 'body'an egon behar"
@@ -84,10 +80,6 @@
 		"bypass": {
 			"description": "Orrialde bakoitzak gutxienez bitarteko bat duela bermatzen du, erabiltzaile batek nabigazioa gainditu eta edukira zuzenean pasatzeko aukera izan dezan",
 			"help": "Orriek bloke errepikatuak saltatzeko baliabideak izan behar dituzte"
-		},
-		"checkboxgroup": {
-			"description": "< input type =\"Checkbox\" > erlazionaturiko elementuek talde bat dutela eta taldearen izendapena sendoa dela bermatzen du",
-			"help": "name atributurako balio bera duten 'Checkbox inputs'ek talde baten parte izan behar dute"
 		},
 		"color-contrast": {
 			"description": "Lehen planoko eta hondoko koloreen arteko kontrasteak WCAG 2 AA kontrasterako ratioaren mugak betetzen dituela bermatzen du.",
@@ -225,10 +217,6 @@
 			"help": "Erreferentziazko puntuak bakarrak direla bermatzen du",
 			"description": "Erreferentzia-puntuek role edo role/label/title konbinazio bakarra izan behar dute (hau da, izen irisgarri bakarra)"
 		},
-		"layout-table": {
-			"description": "Bermatzen du <table> diseinu-elementuek ez dutela < th>, < caption> edo summary atributua erabiltzen",
-			"help": "Diseinu-taulek ez dute erabili behar datu-tauletako elementurik"
-		},
 		"link-in-text-block": {
 			"description": "Estekak kolorearen menpe egon gabe bereiz daitezke",
 			"help": "Estekak ondoko testutik bereizi behar dira, kolorearen menpe ez dagoen bitarteko batez."
@@ -272,10 +260,6 @@
 		"page-has-heading-one": {
 			"description": "Orrialdeak, edo gutxienez bere esparruetako batek, 1. mailako goiburu bat duela bermatzea",
 			"help": "Orrialdeak 1. mailako goiburu bat izan behar du"
-		},
-		"radiogroup": {
-			"description": "< input type =\"radio\" > erlazionaturiko elementuek talde bat dutela eta taldearen izendapena sendoa dela bermatzen du",
-			"help": "name atributurako balio bera duen 'radio inputs'ek talde bateko kide izan behar dute"
 		},
 		"region": {
 			"description": "Orrialdeko eduki guztia erreferentzia-puntuetan sartuta dagoela bermatzen du.",
@@ -332,10 +316,6 @@
 		"video-caption": {
 			"description": "Bermatzen du <video> elementuek azpitituluak dituztela",
 			"help": "<bideo> elementuek azpitituluak izan behar dituzte"
-		},
-		"video-description": {
-			"description": "Bermatzen du <video> elementuek audio-deskripzioak dituztela",
-			"help": "<video> elementuek audiodeskribapen-pista bat izan behar dute"
 		}
 	},
 	"checks": {
@@ -363,10 +343,6 @@
 		"has-widget-role": {
 			"pass": "Elementuak widget rola du.",
 			"fail": "Elementuak ez du widget rolik."
-		},
-		"implicit-role-fallback": {
-			"pass": "Elementuen ARIA rola inplizitua alternatiba egokia da",
-			"fail": "Elementuen ARIA rola inplizitua ez da aukera ona rolarentzat (ez da onartzen)"
 		},
 		"invalidrole": {
 			"pass": "ARIA rola baliozkoa da",
@@ -446,14 +422,6 @@
 		"autocomplete-valid": {
 			"pass": "autocompleteren atributua behar bezala formateatuta dago",
 			"fail": "autocompleteren atributua gaizki formateatuta dago"
-		},
-		"fieldset": {
-			"pass": "Elementua fieldset batean dago",
-			"fail": "{{var code = it.data && it.data.failureCode;}}{{? code === 'no-legend'}}Fieldsetek ez du legend bat lehen semetzat{{?? code === 'empty-legend'}}Legendek ez du pantaila-irakurgailuetarako testu ikusgarririk{{?? code === 'mixed-inputs'}}Fieldsetek erlazionatu gabeko inputak ditu{{?? code === 'no-group-label'}}Aria groupek ez dauka aria-label edo aria-labelledby{{?? code === 'group-mixed-inputs'}}Aria group-ek erlazionatu gabeko inputak ditu{{??}}Elementuak ez dauka fieldset edo aria group edukiontzirik{{?}}"
-		},
-		"group-labelledby": {
-			"pass": "\"{{=it.data.name}}\" izena duten elementuek etiketa partekatu bat eta etiketa bakar bat dute, eta etiketa hori aria-labelledby bidez aipatzen da.",
-			"fail": "{{var code = it.data && it.data.failureCode;}}\"{{=it.data.name}}\" izena duten elementuak, guztiek ez daukate {{? code === 'no-shared-label' }}etiketa partekatua{{?? code === 'no-unique-label' }}etiketa bakarra{{??}}Bai etiketa partekatu bat, bai etiketa bakar bat{{?}}, aria-labelledby bidez aipatua"
 		},
 		"accesskeys": {
 			"pass": "Accesskey atributuaren balioa bakarra da",
@@ -582,10 +550,6 @@
 		"caption": {
 			"pass": "Multimedia-elementuak azpititulu-pista bat du",
 			"incomplete": "Elementurako azpitituluak daudela egiaztatu"
-		},
-		"description": {
-			"pass": "Multimedia-elementuak audiodeskribapen-pista bat du",
-			"incomplete": "Elementurako audiodeskripzioa dagoela egiaztatu"
 		},
 		"frame-tested": {
 			"pass": "Sartutako markoa axe-core bidez probatu da",
@@ -717,18 +681,6 @@
 		"caption-faked": {
 			"pass": "Taula baten lehen lerroa ez da izenburu gisa erabiltzen ('caption')",
 			"fail": "Taularen lehen ilarak izenburu bat izan beharko luke ('caption'), taula-gelaxka baten ordez"
-		},
-		"has-caption": {
-			"pass": "Diseinu-taulak ez du caption atributua erabiltzen",
-			"fail": "Diseinu-taulak caption atributua erabiltzen du"
-		},
-		"has-summary": {
-			"pass": "Diseinu-taulak ez du summary atributua erabiltzen",
-			"fail": "Diseinu-taulak summary atributua erabiltzen du"
-		},
-		"has-th": {
-			"pass": "Diseinu-taulak ez du <th> elementurik erabiltzen ",
-			"fail": "Diseinu-taulak <th> elementuak erabiltzen ditu"
 		},
 		"html5-scope": {
 			"pass": "Scope atributua taulako goiburuen elementuetan bakarrik erabiltzen da (<th>)",
