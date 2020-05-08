@@ -52,6 +52,21 @@ describe('aria-required-attr', function() {
 		);
 	});
 
+	it('should pass aria-checkbox if element has checked property', function() {
+		var vNode = queryFixture(
+			'<input id="target" type="checkbox" role="switch">'
+		);
+
+		assert.isTrue(
+			checks['aria-required-attr'].evaluate.call(
+				checkContext,
+				vNode.actualNode,
+				options,
+				vNode
+			)
+		);
+	});
+
 	describe('options', function() {
 		it('should require provided attribute names for a role', function() {
 			axe.commons.aria.lookupTable.role.mccheddarton = {
