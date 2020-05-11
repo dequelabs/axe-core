@@ -120,6 +120,4 @@ Rules we are still testing and developing. They are not enabled by default in ax
 
 Deprecated rules are not enabled by default and will be removed in the next major release.
 
-| Rule ID | Description | Impact | Tags | Issue Type |
-| :------ | :---------- | :----- | :--- | :--------- |
-
+_There are no matching rules_

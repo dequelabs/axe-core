@@ -352,7 +352,11 @@ function buildRules(grunt, options, commons, callback) {
 
 ${description.intro ? description.intro : ''}
 
-${descriptionTableHeader}${description.rules
+${
+	description.rules.length
+		? descriptionTableHeader
+		: '_There are no matching rules_'
+}${description.rules
 					.map(function(row) {
 						return '| ' + row.join(' | ') + ' |';
 					})
