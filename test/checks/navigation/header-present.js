@@ -16,46 +16,62 @@ describe('header-present', function() {
 	it('should return true if h1-h6 is found', function() {
 		var params = checkSetup('<h1 id="target">Hi</h1>');
 		assert.isTrue(
-			checks['header-present'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('header-present')
+				.apply(checkContext, params)
 		);
 
 		params = checkSetup('<h2 id="target">Hi</h2>');
 		assert.isTrue(
-			checks['header-present'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('header-present')
+				.apply(checkContext, params)
 		);
 
 		params = checkSetup('<h3 id="target">Hi</h3>');
 		assert.isTrue(
-			checks['header-present'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('header-present')
+				.apply(checkContext, params)
 		);
 
 		params = checkSetup('<h4 id="target">Hi</h4>');
 		assert.isTrue(
-			checks['header-present'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('header-present')
+				.apply(checkContext, params)
 		);
 
 		params = checkSetup('<h5 id="target">Hi</h5>');
 		assert.isTrue(
-			checks['header-present'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('header-present')
+				.apply(checkContext, params)
 		);
 
 		params = checkSetup('<h6 id="target">Hi</h6>');
 		assert.isTrue(
-			checks['header-present'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('header-present')
+				.apply(checkContext, params)
 		);
 	});
 
 	it('should return true if role=heading is found', function() {
 		var params = checkSetup('<div role="heading" id="target">Hi</div>');
 		assert.isTrue(
-			checks['header-present'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('header-present')
+				.apply(checkContext, params)
 		);
 	});
 
 	it('should otherwise return false', function() {
 		var params = checkSetup('<p id="target">Some stuff and stuff</p>');
 		assert.isFalse(
-			checks['header-present'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('header-present')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -64,7 +80,9 @@ describe('header-present', function() {
 		function() {
 			var params = shadowCheckSetup('<div id="target"><div>', '<h1></h1>');
 			assert.isTrue(
-				checks['header-present'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('header-present')
+					.apply(checkContext, params)
 			);
 		}
 	);

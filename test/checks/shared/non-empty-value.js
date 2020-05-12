@@ -3,39 +3,35 @@ describe('non-empty-value', function() {
 
 	var fixture = document.getElementById('fixture');
 	var checkSetup = axe.testUtils.checkSetup;
+	var checkEvaluate = axe.testUtils.getCheckEvaluate('non-empty-value');
 
 	afterEach(function() {
 		fixture.innerHTML = '';
 	});
 
 	it('should return true if an value is present', function() {
-		var params = checkSetup('<input id="target" value="woohoo" />', {
-			attribute: 'value'
-		});
+		var params = checkSetup('<input id="target" value="woohoo" />');
 
-		assert.isTrue(checks['non-empty-value'].evaluate.apply(null, params));
+		assert.isTrue(checkEvaluate.apply(null, params));
 	});
 
 	it('should return false if an value is not present', function() {
-		var params = checkSetup('<input id="target" />', { attribute: 'value' });
+		var params = checkSetup('<input id="target" />');
 
-		assert.isFalse(checks['non-empty-value'].evaluate.apply(null, params));
+		assert.isFalse(checkEvaluate.apply(null, params));
 	});
 
 	it('should return false if an value is present, but empty', function() {
-		var params = checkSetup('<input id="target" value=" " />', {
-			attribute: 'value'
-		});
+		var params = checkSetup('<input id="target" value=" " />');
 
-		assert.isFalse(checks['non-empty-value'].evaluate.apply(null, params));
+		assert.isFalse(checkEvaluate.apply(null, params));
 	});
 
 	it('should collapse whitespace', function() {
 		var params = checkSetup(
-			'<input id="target" value=" \t \n \r \t  \t\r\n " />',
-			{ attribute: 'value' }
+			'<input id="target" value=" \t \n \r \t  \t\r\n " />'
 		);
 
-		assert.isFalse(checks['non-empty-value'].evaluate.apply(null, params));
+		assert.isFalse(checkEvaluate.apply(null, params));
 	});
 });

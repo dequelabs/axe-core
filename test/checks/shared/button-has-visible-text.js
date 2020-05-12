@@ -14,7 +14,9 @@ describe('button-has-visible-text', function() {
 		var checkArgs = checkSetup('<button></button>', 'button');
 
 		assert.isFalse(
-			checks['button-has-visible-text'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('button-has-visible-text')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -22,7 +24,9 @@ describe('button-has-visible-text', function() {
 		var checkArgs = checkSetup('<button>Name</button>', 'button');
 
 		assert.isTrue(
-			checks['button-has-visible-text'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('button-has-visible-text')
+				.apply(checkContext, checkArgs)
 		);
 		assert.deepEqual(checkContext._data, 'Name');
 	});
@@ -34,7 +38,9 @@ describe('button-has-visible-text', function() {
 		);
 
 		assert.isTrue(
-			checks['button-has-visible-text'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('button-has-visible-text')
+				.apply(checkContext, checkArgs)
 		);
 		assert.deepEqual(checkContext._data, 'Text');
 	});
@@ -43,7 +49,9 @@ describe('button-has-visible-text', function() {
 		var checkArgs = checkSetup('<div role="button"></div>', '[role=button]');
 
 		assert.isFalse(
-			checks['button-has-visible-text'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('button-has-visible-text')
+				.apply(checkContext, checkArgs)
 		);
 	});
 });

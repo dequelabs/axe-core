@@ -20,7 +20,9 @@ describe('th-has-data-cells', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(
-			checks['th-has-data-cells'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('th-has-data-cells')
+				.call(checkContext, node)
 		);
 	});
 
@@ -34,7 +36,9 @@ describe('th-has-data-cells', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(
-			checks['th-has-data-cells'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('th-has-data-cells')
+				.call(checkContext, node)
 		);
 	});
 
@@ -48,7 +52,9 @@ describe('th-has-data-cells', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(
-			checks['th-has-data-cells'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('th-has-data-cells')
+				.call(checkContext, node)
 		);
 	});
 
@@ -62,7 +68,9 @@ describe('th-has-data-cells', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(
-			checks['th-has-data-cells'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('th-has-data-cells')
+				.call(checkContext, node)
 		);
 	});
 
@@ -75,7 +83,9 @@ describe('th-has-data-cells', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(
-			checks['th-has-data-cells'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('th-has-data-cells')
+				.call(checkContext, node)
 		);
 	});
 
@@ -94,7 +104,9 @@ describe('th-has-data-cells', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(
-			checks['th-has-data-cells'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('th-has-data-cells')
+				.call(checkContext, node)
 		);
 	});
 
@@ -108,7 +120,9 @@ describe('th-has-data-cells', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isUndefined(
-			checks['th-has-data-cells'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('th-has-data-cells')
+				.call(checkContext, node)
 		);
 	});
 
@@ -122,7 +136,9 @@ describe('th-has-data-cells', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isTrue(
-			checks['th-has-data-cells'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('th-has-data-cells')
+				.call(checkContext, node)
 		);
 	});
 
@@ -135,7 +151,9 @@ describe('th-has-data-cells', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isUndefined(
-			checks['th-has-data-cells'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('th-has-data-cells')
+				.call(checkContext, node)
 		);
 	});
 
@@ -155,7 +173,9 @@ describe('th-has-data-cells', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var node = fixture.querySelector('table');
 		assert.isUndefined(
-			checks['th-has-data-cells'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('th-has-data-cells')
+				.call(checkContext, node)
 		);
 	});
 
@@ -173,7 +193,9 @@ describe('th-has-data-cells', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 		var node = axe.utils.querySelectorAll(axe._tree, 'table')[0].actualNode;
 		assert.isTrue(
-			checks['th-has-data-cells'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('th-has-data-cells')
+				.call(checkContext, node)
 		);
 	});
 });

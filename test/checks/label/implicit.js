@@ -13,7 +13,9 @@ describe('implicit-label', function() {
 		fixtureSetup('<label><input type="text" id="target"></label>');
 		var node = fixture.querySelector('#target');
 		var virtualNode = axe.utils.getNodeFromTree(node);
-		assert.isFalse(checks['implicit-label'].evaluate(node, {}, virtualNode));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('implicit-label')(node, {}, virtualNode)
+		);
 	});
 
 	it('should return false if an invisible non-empty label is present', function() {
@@ -22,14 +24,18 @@ describe('implicit-label', function() {
 		);
 		var node = fixture.querySelector('#target');
 		var virtualNode = axe.utils.getNodeFromTree(node);
-		assert.isFalse(checks['implicit-label'].evaluate(node, {}, virtualNode));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('implicit-label')(node, {}, virtualNode)
+		);
 	});
 
 	it('should return true if a non-empty label is present', function() {
 		fixtureSetup('<label>Text <input type="text" id="target"></label>');
 		var node = fixture.querySelector('#target');
 		var virtualNode = axe.utils.getNodeFromTree(node);
-		assert.isTrue(checks['implicit-label'].evaluate(node, {}, virtualNode));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('implicit-label')(node, {}, virtualNode)
+		);
 	});
 
 	it('should return false if a label is not present', function() {
@@ -38,6 +44,8 @@ describe('implicit-label', function() {
 		fixtureSetup(node);
 
 		var virtualNode = axe.utils.getNodeFromTree(node);
-		assert.isFalse(checks['implicit-label'].evaluate(node, {}, virtualNode));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('implicit-label')(node, {}, virtualNode)
+		);
 	});
 });

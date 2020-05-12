@@ -17,7 +17,9 @@ describe('only-dlitems', function() {
 		var checkArgs = checkSetup('<dl id="target"></dl>');
 
 		assert.isFalse(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -25,7 +27,9 @@ describe('only-dlitems', function() {
 		var checkArgs = checkSetup('<dl id="target"><p>Not a list</p></dl>');
 
 		assert.isTrue(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 		assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('p')]);
 	});
@@ -36,7 +40,9 @@ describe('only-dlitems', function() {
 		);
 
 		assert.isTrue(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -46,7 +52,9 @@ describe('only-dlitems', function() {
 		);
 
 		assert.isTrue(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -54,7 +62,9 @@ describe('only-dlitems', function() {
 		var checkArgs = checkSetup('<dl id="target"><dd>A list</dd></dl>');
 
 		assert.isFalse(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -63,7 +73,9 @@ describe('only-dlitems', function() {
 			'<dl id="target"><link rel="stylesheet" href="theme.css"><dt role="menuitem">A list</dt></dl>'
 		);
 		assert.isTrue(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -71,7 +83,9 @@ describe('only-dlitems', function() {
 		var checkArgs = checkSetup('<dl id="target"><dt>A list</dt></dl>');
 
 		assert.isFalse(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -81,7 +95,9 @@ describe('only-dlitems', function() {
 		);
 
 		assert.isFalse(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -91,7 +107,9 @@ describe('only-dlitems', function() {
 		);
 
 		assert.isFalse(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -101,7 +119,9 @@ describe('only-dlitems', function() {
 		);
 
 		assert.isFalse(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -111,7 +131,9 @@ describe('only-dlitems', function() {
 		);
 
 		assert.isTrue(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 		assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('p')]);
 	});
@@ -122,7 +144,9 @@ describe('only-dlitems', function() {
 		);
 
 		assert.isTrue(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
@@ -136,7 +160,9 @@ describe('only-dlitems', function() {
 			);
 
 			assert.isFalse(
-				checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+				axe.testUtils
+					.getCheckEvaluate('only-dlitems')
+					.apply(checkContext, checkArgs)
 			);
 		}
 	);
@@ -147,7 +173,9 @@ describe('only-dlitems', function() {
 		);
 
 		assert.isFalse(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -157,7 +185,9 @@ describe('only-dlitems', function() {
 		);
 
 		assert.isFalse(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -167,7 +197,9 @@ describe('only-dlitems', function() {
 		);
 
 		assert.isFalse(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -177,7 +209,9 @@ describe('only-dlitems', function() {
 		);
 
 		assert.isFalse(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -186,7 +220,9 @@ describe('only-dlitems', function() {
 			'<dl id="target"><div><dt>An item</dt><dd>A list</dd></div></dl>'
 		);
 		assert.isFalse(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -195,7 +231,9 @@ describe('only-dlitems', function() {
 			'<dl id="target"><div role="listitem"><dt>An item</dt><dd>A list</dd></div></dl>'
 		);
 		assert.isTrue(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -204,14 +242,18 @@ describe('only-dlitems', function() {
 			'<dl id="target"><div><dt>An item</dt><dd>A list</dd><p>Not a list</p></div></dl>'
 		);
 		assert.isTrue(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
 	it('should return false if there is an empty div', function() {
 		var checkArgs = checkSetup('<dl id="target"><div></div></dl>');
 		assert.isFalse(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -220,14 +262,18 @@ describe('only-dlitems', function() {
 			'<dl id="target"> <dt>An item</dt> <dd>A list</dd> <h1 style="display:none">heading</h1> </dl>'
 		);
 		assert.isFalse(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
 	it('should return true if there is a div with text', function() {
 		var checkArgs = checkSetup('<dl id="target"><div>text</div></dl>');
 		assert.isTrue(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -236,14 +282,18 @@ describe('only-dlitems', function() {
 			'<dl id="target"> <dt>An item</dt> <dd>A list</dd> <h1 style="visibility:hidden">heading</h1> </dl>'
 		);
 		assert.isFalse(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
 	it('should return true if there is a div with non-dd / dt elements', function() {
 		var checkArgs = checkSetup('<dl id="target"><div> <p>text</p> </div></dl>');
 		assert.isTrue(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -252,7 +302,9 @@ describe('only-dlitems', function() {
 			'<dl id="target"> <dt>An item</dt> <dd>A list</dd> <h1 aria-hidden="true">heading</h1> </dl>'
 		);
 		assert.isFalse(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -261,7 +313,9 @@ describe('only-dlitems', function() {
 			'<dl id="target"> <dt>An item</dt> <dd>A list</dd> <h1 aria-hidden="false">heading</h1> </dl>'
 		);
 		assert.isTrue(
-			checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-dlitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -275,7 +329,9 @@ describe('only-dlitems', function() {
 
 			var checkArgs = checkSetup(node, 'dl');
 			assert.isFalse(
-				checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+				axe.testUtils
+					.getCheckEvaluate('only-dlitems')
+					.apply(checkContext, checkArgs)
 			);
 		}
 	);
@@ -290,7 +346,9 @@ describe('only-dlitems', function() {
 
 			var checkArgs = checkSetup(node, 'dl');
 			assert.isTrue(
-				checks['only-dlitems'].evaluate.apply(checkContext, checkArgs)
+				axe.testUtils
+					.getCheckEvaluate('only-dlitems')
+					.apply(checkContext, checkArgs)
 			);
 		}
 	);

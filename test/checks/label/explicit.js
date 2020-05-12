@@ -12,7 +12,7 @@ describe('explicit-label', function() {
 	it('should return false if an empty label is present', function() {
 		fixtureSetup('<label for="target"></label><input type="text" id="target">');
 		var node = fixture.querySelector('#target');
-		assert.isFalse(checks['explicit-label'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('explicit-label')(node));
 	});
 
 	it('should return true if a non-empty label is present', function() {
@@ -20,7 +20,7 @@ describe('explicit-label', function() {
 			'<label for="target">Text</label><input type="text" id="target">'
 		);
 		var node = fixture.querySelector('#target');
-		assert.isTrue(checks['explicit-label'].evaluate(node));
+		assert.isTrue(axe.testUtils.getCheckEvaluate('explicit-label')(node));
 	});
 
 	it('should return true if an invisible non-empty label is present, to defer to hidden-explicit-label', function() {
@@ -28,7 +28,7 @@ describe('explicit-label', function() {
 			'<label for="target" style="display: none;">Text</label><input type="text" id="target">'
 		);
 		var node = fixture.querySelector('#target');
-		assert.isTrue(checks['explicit-label'].evaluate(node));
+		assert.isTrue(axe.testUtils.getCheckEvaluate('explicit-label')(node));
 	});
 
 	it('should return false if a label is not present', function() {
@@ -36,7 +36,7 @@ describe('explicit-label', function() {
 		node.type = 'text';
 		fixtureSetup(node);
 
-		assert.isFalse(checks['explicit-label'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('explicit-label')(node));
 	});
 
 	(shadowSupport.v1 ? it : xit)(
@@ -49,7 +49,7 @@ describe('explicit-label', function() {
 			fixtureSetup(root);
 
 			var node = shadow.querySelector('#target');
-			assert.isTrue(checks['explicit-label'].evaluate(node));
+			assert.isTrue(axe.testUtils.getCheckEvaluate('explicit-label')(node));
 		}
 	);
 
@@ -64,7 +64,7 @@ describe('explicit-label', function() {
 			fixtureSetup(root);
 
 			var node = shadow.querySelector('#target');
-			assert.isTrue(checks['explicit-label'].evaluate(node));
+			assert.isTrue(axe.testUtils.getCheckEvaluate('explicit-label')(node));
 		}
 	);
 
@@ -78,7 +78,7 @@ describe('explicit-label', function() {
 			fixtureSetup(root);
 
 			var node = shadow.querySelector('#target');
-			assert.isFalse(checks['explicit-label'].evaluate(node));
+			assert.isFalse(axe.testUtils.getCheckEvaluate('explicit-label')(node));
 		}
 	);
 
@@ -93,7 +93,7 @@ describe('explicit-label', function() {
 			fixtureSetup(root);
 
 			var node = root.querySelector('#target');
-			assert.isFalse(checks['explicit-label'].evaluate(node));
+			assert.isFalse(axe.testUtils.getCheckEvaluate('explicit-label')(node));
 		}
 	);
 });

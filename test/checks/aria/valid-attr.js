@@ -17,7 +17,9 @@ describe('aria-valid-attr', function() {
 		node.setAttribute('aria-dogs', 'true');
 		fixture.appendChild(node);
 
-		assert.isFalse(checks['aria-valid-attr'].evaluate.call(checkContext, node));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('aria-valid-attr').call(checkContext, node)
+		);
 		assert.deepEqual(checkContext._data, ['aria-cats', 'aria-dogs']);
 	});
 
@@ -28,7 +30,9 @@ describe('aria-valid-attr', function() {
 		node.setAttribute('aria-selected', 'true');
 		fixture.appendChild(node);
 
-		assert.isTrue(checks['aria-valid-attr'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('aria-valid-attr').call(checkContext, node)
+		);
 		assert.isNull(checkContext._data);
 	});
 
@@ -43,7 +47,9 @@ describe('aria-valid-attr', function() {
 		node.setAttribute('aria-mccheddarton', 'true');
 		fixture.appendChild(node);
 
-		assert.isTrue(checks['aria-valid-attr'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('aria-valid-attr').call(checkContext, node)
+		);
 		assert.isNull(checkContext._data);
 	});
 
@@ -53,10 +59,9 @@ describe('aria-valid-attr', function() {
 				'<div id="target" aria-bats="cats" aria-puppies="2"></div>';
 			var target = fixture.children[0];
 			assert.isTrue(
-				checks['aria-valid-attr'].evaluate.call(checkContext, target, [
-					'aria-bats',
-					'aria-puppies'
-				])
+				axe.testUtils
+					.getCheckEvaluate('aria-valid-attr')
+					.call(checkContext, target, ['aria-bats', 'aria-puppies'])
 			);
 		});
 	});

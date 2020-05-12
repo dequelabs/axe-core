@@ -2,7 +2,7 @@ describe('frame-tested', function() {
 	'use strict';
 
 	var checkContext, iframe;
-	var checkEvaluate = checks['frame-tested'].evaluate;
+	var checkEvaluate = axe.testUtils.getCheckEvaluate('frame-tested');
 	var fixture = document.querySelector('#fixture');
 
 	beforeEach(function() {

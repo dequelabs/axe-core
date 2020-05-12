@@ -11,14 +11,14 @@ describe('scope-value', function() {
 		fixture.innerHTML = '<table><tr><td scope="col"></td></tr></table>';
 		var node = fixture.querySelector('td');
 
-		assert.isTrue(checks['scope-value'].evaluate(node));
+		assert.isTrue(axe.testUtils.getCheckEvaluate('scope-value')(node));
 	});
 
 	it('should return true if scope is "row"', function() {
 		fixture.innerHTML = '<table><tr><td scope="row"></td></tr></table>';
 		var node = fixture.querySelector('td');
 
-		assert.isTrue(checks['scope-value'].evaluate(node));
+		assert.isTrue(axe.testUtils.getCheckEvaluate('scope-value')(node));
 	});
 
 	it('should return false otherwise', function() {
@@ -26,6 +26,6 @@ describe('scope-value', function() {
 			'<table><tr><td scope="hahahahanothx"></td></tr></table>';
 		var node = fixture.querySelector('td');
 
-		assert.isFalse(checks['scope-value'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('scope-value')(node));
 	});
 });
