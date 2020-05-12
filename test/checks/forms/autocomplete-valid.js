@@ -4,7 +4,7 @@ describe('autocomplete-valid', function() {
 	var fixture = document.getElementById('fixture');
 	var checkSetup = axe.testUtils.checkSetup;
 	var checkContext = axe.testUtils.MockCheckContext();
-	var evaluate = checks['autocomplete-valid'].evaluate;
+	var evaluate = axe.testUtils.getCheckEvaluate('autocomplete-valid');
 
 	afterEach(function() {
 		fixture.innerHTML = '';

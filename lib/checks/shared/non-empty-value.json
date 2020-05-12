@@ -1,6 +1,9 @@
 {
 	"id": "non-empty-value",
-	"evaluate": "non-empty-value-evaluate",
+	"evaluate": "attr-non-space-content-evaluate",
+	"options": {
+		"attribute": "value"
+	},
 	"metadata": {
 		"impact": "critical",
 		"messages": {

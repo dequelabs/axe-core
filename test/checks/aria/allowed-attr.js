@@ -18,7 +18,9 @@ describe('aria-allowed-attr', function() {
 		fixture.appendChild(node);
 
 		assert.isFalse(
-			checks['aria-allowed-attr'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-attr')
+				.call(checkContext, node)
 		);
 		assert.deepEqual(checkContext._data, ['aria-selected="true"']);
 	});
@@ -32,7 +34,9 @@ describe('aria-allowed-attr', function() {
 		fixture.appendChild(node);
 
 		assert.isTrue(
-			checks['aria-allowed-attr'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-attr')
+				.call(checkContext, node)
 		);
 	});
 
@@ -45,7 +49,9 @@ describe('aria-allowed-attr', function() {
 		fixture.appendChild(node);
 
 		assert.isFalse(
-			checks['aria-allowed-attr'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-attr')
+				.call(checkContext, node)
 		);
 		assert.deepEqual(checkContext._data, ['aria-selected="true"']);
 	});
@@ -59,7 +65,9 @@ describe('aria-allowed-attr', function() {
 		fixture.appendChild(node);
 
 		assert.isTrue(
-			checks['aria-allowed-attr'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-attr')
+				.call(checkContext, node)
 		);
 		assert.isNull(checkContext._data);
 	});
@@ -73,7 +81,9 @@ describe('aria-allowed-attr', function() {
 		fixture.appendChild(node);
 
 		assert.isTrue(
-			checks['aria-allowed-attr'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-attr')
+				.call(checkContext, node)
 		);
 		assert.isNull(checkContext._data);
 	});
@@ -88,7 +98,9 @@ describe('aria-allowed-attr', function() {
 		fixture.appendChild(node);
 
 		assert.isTrue(
-			checks['aria-allowed-attr'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-attr')
+				.call(checkContext, node)
 		);
 		assert.isNull(checkContext._data);
 	});
@@ -108,9 +120,11 @@ describe('aria-allowed-attr', function() {
 				'<div role="mccheddarton" id="target" aria-checked="true" aria-snuggles="true"></div>';
 			var target = fixture.children[0];
 			assert.isTrue(
-				checks['aria-allowed-attr'].evaluate.call(checkContext, target, {
-					mccheddarton: ['aria-checked', 'aria-snuggles']
-				})
+				axe.testUtils
+					.getCheckEvaluate('aria-allowed-attr')
+					.call(checkContext, target, {
+						mccheddarton: ['aria-checked', 'aria-snuggles']
+					})
 			);
 			delete axe.commons.aria.lookupTable.role.mccheddarton;
 		});
@@ -142,7 +156,9 @@ describe('aria-allowed-attr', function() {
 				bagley: ['aria-snuggles2']
 			};
 			assert.isTrue(
-				checks['aria-allowed-attr'].evaluate.call(checkContext, target, options)
+				axe.testUtils
+					.getCheckEvaluate('aria-allowed-attr')
+					.call(checkContext, target, options)
 			);
 			delete axe.commons.aria.lookupTable.role.mccheddarton;
 			delete axe.commons.aria.lookupTable.role.bagley;

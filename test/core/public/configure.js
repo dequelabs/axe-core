@@ -146,7 +146,7 @@ describe('axe.configure', function() {
 			checks: [
 				{
 					id: 'bob',
-					options: true,
+					options: { value: true },
 					metadata: {
 						joe: 'joe'
 					}
@@ -156,7 +156,7 @@ describe('axe.configure', function() {
 
 		// assert.instanceOf(axe._audit.checks.bob, Check);
 		assert.equal(axe._audit.checks.bob.id, 'bob');
-		assert.isTrue(axe._audit.checks.bob.options);
+		assert.isTrue(axe._audit.checks.bob.options.value);
 		assert.equal(axe._audit.data.checks.bob.joe, 'joe');
 	});
 
@@ -170,7 +170,7 @@ describe('axe.configure', function() {
 			checks: [
 				{
 					id: 'bob',
-					options: false
+					options: { value: false }
 				}
 			]
 		});
@@ -178,7 +178,7 @@ describe('axe.configure', function() {
 			checks: [
 				{
 					id: 'bob',
-					options: true,
+					options: { value: true },
 					metadata: {
 						joe: 'joe'
 					}
@@ -188,7 +188,7 @@ describe('axe.configure', function() {
 
 		// assert.instanceOf(axe._audit.checks.bob, Check);
 		assert.equal(axe._audit.checks.bob.id, 'bob');
-		assert.isTrue(axe._audit.checks.bob.options);
+		assert.isTrue(axe._audit.checks.bob.options.value);
 		assert.equal(axe._audit.data.checks.bob.joe, 'joe');
 	});
 

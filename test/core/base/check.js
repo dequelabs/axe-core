@@ -38,8 +38,8 @@ describe('Check', function() {
 				var check = new Check({
 					options: ['foo']
 				});
-				check.configure({ options: 'fong' });
-				assert.equal('fong', check.test());
+				check.configure({ options: { value: 'fong' } });
+				assert.deepEqual({ value: 'fong' }, check.test());
 				delete Check.prototype.test;
 			});
 			it('should override evaluate', function() {
@@ -168,6 +168,15 @@ describe('Check', function() {
 						done();
 					}
 				}).run(fixture, { options: expected }, {}, noop);
+			});
+
+			it('should normalize non-object options', function(done) {
+				new Check({
+					evaluate: function(node, options) {
+						assert.deepEqual(options, { value: 'foo' });
+						done();
+					}
+				}).run(fixture, { options: 'foo' }, {}, noop);
 			});
 
 			it('should pass the context through to check evaluate call', function(done) {
@@ -323,6 +332,15 @@ describe('Check', function() {
 				}).runSync(fixture, { options: expected }, {});
 			});
 
+			it('should normalize non-object options', function(done) {
+				new Check({
+					evaluate: function(node, options) {
+						assert.deepEqual(options, { value: 'foo' });
+						done();
+					}
+				}).run(fixture, { options: 'foo' }, {}, noop);
+			});
+
 			it('should pass the context through to check evaluate call', function() {
 				var configured = {
 					cssom: 'yay',
@@ -413,6 +431,36 @@ describe('Check', function() {
 				}
 			});
 		});
+
+		describe('getOptions', function() {
+			var check;
+			beforeEach(function() {
+				check = new Check({
+					options: {
+						foo: 'bar'
+					}
+				});
+			});
+
+			it('should return default check options', function() {
+				assert.deepEqual(check.getOptions(), { foo: 'bar' });
+			});
+
+			it('should merge options with Check defaults', function() {
+				var options = check.getOptions({ hello: 'world' });
+				assert.deepEqual(options, { foo: 'bar', hello: 'world' });
+			});
+
+			it('should override defaults', function() {
+				var options = check.getOptions({ foo: 'world' });
+				assert.deepEqual(options, { foo: 'world' });
+			});
+
+			it('should normalize passed in options', function() {
+				var options = check.getOptions('world');
+				assert.deepEqual(options, { foo: 'bar', value: 'world' });
+			});
+		});
 	});
 
 	describe('spec object', function() {
@@ -455,7 +503,7 @@ describe('Check', function() {
 		describe('.options', function() {
 			it('should be set', function() {
 				var spec = {
-					options: ['monkeys', 'bananas']
+					options: { value: ['monkeys', 'bananas'] }
 				};
 				assert.equal(new Check(spec).options, spec.options);
 			});
@@ -463,6 +511,13 @@ describe('Check', function() {
 			it('should have no default', function() {
 				var spec = {};
 				assert.equal(new Check(spec).options, spec.options);
+			});
+
+			it('should normalize non-object options', function() {
+				var spec = {
+					options: 'foo'
+				};
+				assert.deepEqual(new Check(spec).options, { value: 'foo' });
 			});
 		});
 

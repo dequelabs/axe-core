@@ -17,10 +17,6 @@
 			"description": "S’assure que l’attribut role a une valeur valide pour cet élément",
 			"help": "Le rôle ARIA doit être valide pour cet élément"
 		},
-		"aria-dpub-role-fallback": {
-			"description": "S’assure que les rôles DPUB non supportés ne sont utilisés que sur des éléments avec des rôles implicites",
-			"help": "Les rôles DPUB non supportés doivent être utilisés sur des éléments avec des rôles implicites"
-		},
 		"aria-hidden-body": {
 			"description": "S’assure que aria-hidden='true' n’est pas présent sur le corps du document (élément body)",
 			"help": "aria-hidden='true' ne doit pas être présent sur <body>"
@@ -88,10 +84,6 @@
 		"bypass": {
 			"description": "S’assure que chaque page dispose au minimum d’un mécanisme de contournement de la navigation pour accéder directement au contenu",
 			"help": "Chaque page doit fournir des moyens de contourner les contenus répétés"
-		},
-		"checkboxgroup": {
-			"description": "S’assure que les éléments <input type=\"checkbox\"> en relation sont regroupés et que la désignation du groupe est cohérente",
-			"help": "Les cases à cocher avec la même valeur pour l’attribut name doivent faire partie d’un groupe"
 		},
 		"color-contrast": {
 			"description": "S’assure que les contrastes entre le premier plan et l’arrière-plan rencontrent les seuils de contrastes exigés par les WCAG 2 AA",
@@ -233,10 +225,6 @@
 			"help": "S'assure que chaque landmark est unique",
 			"description": "Les landmarks doivent comporter un rôle unique, ou une étiquette accessible par la combinaison de role/label/title"
 		},
-		"layout-table": {
-			"description": "S’assure que les éléments <table> de présentation n’utilisent pas les éléments <th>, <caption> ni l’attribut summary",
-			"help": "Les tableaux de présentation ne doivent pas utiliser les éléments de tableaux de données"
-		},
 		"link-in-text-block": {
 			"description": "Les liens doivent pouvoir être distingués autrement que par la couleur",
 			"help": "Les liens doivent pouvoir être distingués du texte environnant d’une façon qui ne repose pas sur la couleur"
@@ -280,10 +268,6 @@
 		"page-has-heading-one": {
 			"description": "S’assure que la page, ou au moins une de ses iframes, contient un titre de niveau un",
 			"help": "La page doit contenir un titre de niveau un"
-		},
-		"radiogroup": {
-			"description": "S’assure que les éléments <input type=\"radio\"> liés sont regroupés et que le nom du groupe est cohérent",
-			"help": "Les boutons radios ayant le même attribut name doivent être regroupés"
 		},
 		"region": {
 			"description": "S’assure que tout le contenu est localisé dans une région",
@@ -340,10 +324,6 @@
 		"video-caption": {
 			"description": "S’assure que les éléments <video> ont des sous-titres",
 			"help": "Les éléments <video> doivent avoir des sous-titres"
-		},
-		"video-description": {
-			"description": "S’assure que les éléments <video> ont des audiodescriptions",
-			"help": "Les éléments <video> doivent avoir des audiodescriptions"
 		}
 	},
 	"checks": {
@@ -388,10 +368,6 @@
 		"has-widget-role": {
 			"pass": "L’élément a un rôle widget.",
 			"fail": "L’élément n’a pas de rôle widget."
-		},
-		"implicit-role-fallback": {
-			"pass": "Le rôle ARIA implicite de l’élément est un repli approprié",
-			"fail": "Le rôle ARIA implicite de l’élément n’est pas un bon repli pour ce rôle (non pris en charge)"
 		},
 		"invalidrole": {
 			"pass": "Le rôle ARIA est valide",
@@ -492,25 +468,6 @@
 		"autocomplete-valid": {
 			"pass": "L’attribut autocomplete est formaté correctement",
 			"fail": "L’attribut autocomplete est formaté incorrectement"
-		},
-		"fieldset": {
-			"pass": "L’élément est contenu dans un fieldset",
-			"fail": {
-				"default": "L’élément n'est pas contenu dans un fieldset ou un ARIA group",
-				"no-legend": "Le fieldset ne possède pas un legend comme descendant direct",
-				"empty-legend": "Le legend n'offre pas de texte visible pour les lecteurs d'écran",
-				"mixed-inputs": "Le fieldset contient des contrôles sans rapports directs",
-				"no-group-label": "Le ARIA group ne possèdee pas de aria-label ou aria-labelledby",
-				"group-mixed-inputs": "Le ARIA group contient des contrôles sans rapports directs"
-			}
-		},
-		"group-labelledby": {
-			"pass": "Tous les éléments avec le nom \"{{=it.data.name}}\" font référence au même élément avec aria-labelledby",
-			"fail": {
-				"default": "Les éléments avec le nom \"${data.name}\" ne possèdent pas à la fois une étiquette commune, et une étiquette unique référencée par aria-labelledby",
-				"no-shared-label": "Les éléments avec le nom \"${data.name}\" ne partagent pas tous une étiquette commune, référencée par aria-labelledby",
-				"no-unique-label": "Les éléments avec le nom \"${data.name}\" n'ont pas tous une étiquette unique, référencée par aria-labelledby"
-			}
 		},
 		"accesskeys": {
 			"pass": "La valeur de l'attribut accesskey est unique",
@@ -645,10 +602,6 @@
 		"caption": {
 			"pass": "L’élément multimédia a une piste de sous-titres",
 			"incomplete": "Aucune piste de sous-titres n’a pu être trouvée pour cet élément"
-		},
-		"description": {
-			"pass": "L’élément multimédia a une piste d’audiodescription",
-			"incomplete": "Aucune piste d’audiodescription n’a pu être trouvée pour cet élément"
 		},
 		"frame-tested": {
 			"pass": "L’iframe a été testée avec axe-core",
@@ -787,18 +740,6 @@
 			"pass": "La première ligne d’un tableau n’est pas utilisée en guise de légende",
 			"fail": "La première ligne d’un tableau devrait être un caption et non des cellules de tableau"
 		},
-		"has-caption": {
-			"pass": "Le tableau de présentation n’utilise pas d’élément <caption>",
-			"fail": "Le tableau de présentation utilise un élément <caption>"
-		},
-		"has-summary": {
-			"pass": "Le tableau de présentation n’utilise pas d’attribut summary",
-			"fail": "Le tableau de présentation utilise un attribut summary"
-		},
-		"has-th": {
-			"pass": "Le tableau de présentation n’utilise pas d’éléments <th>",
-			"fail": "Le tableau de présentation utilise des éléments <th>"
-		},
 		"html5-scope": {
 			"pass": "L’attribut scope est utilisé uniquement sur des cellules d’entête de tableau",
 			"fail": "En HTML 5, l’attribut scope ne peut être utilisé que sur des cellules d’entête de tableau"
@@ -838,5 +779,5 @@
 			"failureMessage": "Corriger tous les éléments suivants : {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
 		}
 	},
-  "incompleteFallbackMessage": "axe n'a pu en déterminer la raison. Il est temps de sortir l'inspecteur d'éléments!"
+	"incompleteFallbackMessage": "axe n'a pu en déterminer la raison. Il est temps de sortir l'inspecteur d'éléments!"
 }

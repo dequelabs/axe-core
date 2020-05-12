@@ -1,4 +1,4 @@
-/* global axe */
+/* global axe, checks */
 
 // Let the user know they need to disable their axe/attest extension before running the tests.
 if (window.__AXE_EXTENSION__) {
@@ -368,6 +368,19 @@ testUtils.assertStylesheet = function assertStylesheet(
 testUtils.queryFixture = function queryFixture(html, query) {
 	testUtils.fixtureSetup(html);
 	return axe.utils.querySelectorAll(axe._tree, query || '#target')[0];
+};
+
+/**
+ * Return the checks evaluate method and apply default options
+ * @param {String} checkId - ID of the check
+ * @return Function
+ */
+testUtils.getCheckEvaluate = function getCheckEvaluate(checkId) {
+	var check = checks[checkId];
+	return function evaluateWrapper(node, options, virtualNode, context) {
+		var opts = check.getOptions(options);
+		return check.evaluate.call(this, node, opts, virtualNode, context);
+	};
 };
 
 /**

@@ -22,11 +22,6 @@ describe('caption', function() {
 		assert.isUndefined(checks.caption.evaluate.apply(null, checkArgs));
 	});
 
-	it('should return undefined if there is no kind attribute', function() {
-		var checkArgs = checkSetup('<video><track></video>', 'video');
-		assert.isUndefined(checks.description.evaluate.apply(null, checkArgs));
-	});
-
 	it('should pass if there is a kind=captions attribute', function() {
 		var checkArgs = checkSetup('<audio><track kind=captions></audio>', 'audio');
 		assert.isFalse(checks.caption.evaluate.apply(null, checkArgs));

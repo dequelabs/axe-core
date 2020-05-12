@@ -1,6 +1,9 @@
 {
 	"id": "non-empty-title",
-	"evaluate": "non-empty-title-evaluate",
+	"evaluate": "attr-non-space-content-evaluate",
+	"options": {
+		"attribute": "title"
+	},
 	"metadata": {
 		"impact": "serious",
 		"messages": {

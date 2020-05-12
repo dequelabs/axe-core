@@ -11,7 +11,7 @@ describe('meta-refresh', function() {
 			fixture.innerHTML = '<meta name="refresh" content="300">';
 			var node = fixture.querySelector('meta');
 
-			assert.isFalse(checks['meta-refresh'].evaluate(node));
+			assert.isFalse(axe.testUtils.getCheckEvaluate('meta-refresh')(node));
 		});
 
 		it('should return false if content value does not start with 0', function() {
@@ -19,7 +19,7 @@ describe('meta-refresh', function() {
 				'<meta name="refresh" content="300;URL=something.html">';
 			var node = fixture.querySelector('meta');
 
-			assert.isFalse(checks['meta-refresh'].evaluate(node));
+			assert.isFalse(axe.testUtils.getCheckEvaluate('meta-refresh')(node));
 		});
 
 		it('should return true if content value starts with 0', function() {
@@ -27,21 +27,21 @@ describe('meta-refresh', function() {
 				'<meta name="refresh" content="0;URL=something.html">';
 			var node = fixture.querySelector('meta');
 
-			assert.isTrue(checks['meta-refresh'].evaluate(node));
+			assert.isTrue(axe.testUtils.getCheckEvaluate('meta-refresh')(node));
 		});
 
 		it('should return true if content value is 0', function() {
 			fixture.innerHTML = '<meta name="refresh" content="0">';
 			var node = fixture.querySelector('meta');
 
-			assert.isTrue(checks['meta-refresh'].evaluate(node));
+			assert.isTrue(axe.testUtils.getCheckEvaluate('meta-refresh')(node));
 		});
 
 		it('should return true if there is no content value', function() {
 			fixture.innerHTML = '<meta name="refresh">';
 			var node = fixture.querySelector('meta');
 
-			assert.isTrue(checks['meta-refresh'].evaluate(node));
+			assert.isTrue(axe.testUtils.getCheckEvaluate('meta-refresh')(node));
 		});
 	});
 });

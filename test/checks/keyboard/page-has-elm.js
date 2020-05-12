@@ -14,23 +14,23 @@ describe('page-has-*', function() {
 	});
 
 	describe('evaluate', function() {
-		var evaluate = checks['page-has-main'].evaluate;
+		var evaluate = axe.testUtils.getCheckEvaluate('page-has-main');
 
 		it('throws if there is no selector', function() {
 			assert.throws(function() {
 				var params = checkSetup('<div id="target">No role</div>', undefined);
-				evaluate.apply(checkContext, params);
+				checks['page-has-main'].evaluate.apply(checkContext, params);
 			});
 
 			assert.throws(function() {
 				var params = checkSetup('<div id="target">No role</div>', {});
-				evaluate.apply(checkContext, params);
+				checks['page-has-main'].evaluate.apply(checkContext, params);
 			});
 
 			assert.throws(function() {
 				var badOptions = { selector: [] };
 				var params = checkSetup('<div id="target">No role</div>', badOptions);
-				evaluate.apply(checkContext, params);
+				checks['page-has-main'].evaluate.apply(checkContext, params);
 			});
 		});
 

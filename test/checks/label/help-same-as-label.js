@@ -17,7 +17,7 @@ describe('help-same-as-label', function() {
 		fixture.appendChild(node);
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['help-same-as-label'].evaluate(
+			axe.testUtils.getCheckEvaluate('help-same-as-label')(
 				node,
 				undefined,
 				axe.utils.getNodeFromTree(node)
@@ -39,7 +39,7 @@ describe('help-same-as-label', function() {
 
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['help-same-as-label'].evaluate(
+			axe.testUtils.getCheckEvaluate('help-same-as-label')(
 				node,
 				undefined,
 				axe.utils.getNodeFromTree(node)
@@ -56,7 +56,7 @@ describe('help-same-as-label', function() {
 
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
-			checks['help-same-as-label'].evaluate(
+			axe.testUtils.getCheckEvaluate('help-same-as-label')(
 				node,
 				undefined,
 				axe.utils.getNodeFromTree(node)
@@ -77,7 +77,7 @@ describe('help-same-as-label', function() {
 
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
-			checks['help-same-as-label'].evaluate(
+			axe.testUtils.getCheckEvaluate('help-same-as-label')(
 				node,
 				undefined,
 				axe.utils.getNodeFromTree(node)
