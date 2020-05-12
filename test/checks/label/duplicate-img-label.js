@@ -125,7 +125,7 @@ describe('duplicate-img-label', function() {
 		var node = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
-			checks['duplicate-img-label'].evaluate(
+			axe.testUtils.getCheckEvaluate('duplicate-img-label')(
 				node,
 				{ parentSelector: 'div' },
 				axe.utils.getNodeFromTree(node)
