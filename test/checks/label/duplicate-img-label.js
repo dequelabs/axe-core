@@ -119,7 +119,7 @@ describe('duplicate-img-label', function() {
 		);
 	});
 
-	it('should support a options.parentSelector', function() {
+	it('should support options.parentSelector', function() {
 		fixture.innerHTML =
 			'<div aria-label="Plain text"><img id="target" alt="Plain text"></div>';
 		var node = fixture.querySelector('#target');
