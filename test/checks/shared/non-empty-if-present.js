@@ -22,7 +22,9 @@ describe('non-empty-if-present', function() {
 		fixture.appendChild(node);
 
 		assert.isFalse(
-			checks['non-empty-if-present'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('non-empty-if-present')
+				.call(checkContext, node)
 		);
 		assert.equal(checkContext._data.messageKey, 'has-label');
 	});
@@ -35,7 +37,9 @@ describe('non-empty-if-present', function() {
 			fixture.appendChild(node);
 
 			assert.isTrue(
-				checks['non-empty-if-present'].evaluate.call(checkContext, node)
+				axe.testUtils
+					.getCheckEvaluate('non-empty-if-present')
+					.call(checkContext, node)
 			);
 			assert.isNull(checkContext._data);
 		}
@@ -48,7 +52,9 @@ describe('non-empty-if-present', function() {
 		fixture.appendChild(node);
 
 		assert.isFalse(
-			checks['non-empty-if-present'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('non-empty-if-present')
+				.call(checkContext, node)
 		);
 	});
 
@@ -57,21 +63,27 @@ describe('non-empty-if-present', function() {
 		node.setAttribute('type', 'text');
 		fixture.appendChild(node);
 		assert.isFalse(
-			checks['non-empty-if-present'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('non-empty-if-present')
+				.call(checkContext, node)
 		);
 
 		node = document.createElement('input');
 		node.setAttribute('type', 'button');
 		fixture.appendChild(node);
 		assert.isFalse(
-			checks['non-empty-if-present'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('non-empty-if-present')
+				.call(checkContext, node)
 		);
 
 		node = document.createElement('button');
 		node.setAttribute('type', 'submit');
 		fixture.appendChild(node);
 		assert.isFalse(
-			checks['non-empty-if-present'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('non-empty-if-present')
+				.call(checkContext, node)
 		);
 	});
 });

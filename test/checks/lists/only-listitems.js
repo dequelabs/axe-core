@@ -17,7 +17,9 @@ describe('only-listitems', function() {
 		var checkArgs = checkSetup('<ol id="target"></ol>');
 
 		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -25,7 +27,9 @@ describe('only-listitems', function() {
 		var checkArgs = checkSetup('<ol id="target">   </ol>');
 
 		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -33,7 +37,9 @@ describe('only-listitems', function() {
 		var checkArgs = checkSetup('<ol id="target"><li>Item</li>    </ol>');
 
 		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -43,7 +49,9 @@ describe('only-listitems', function() {
 		);
 
 		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -53,7 +61,9 @@ describe('only-listitems', function() {
 		);
 
 		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -63,7 +73,9 @@ describe('only-listitems', function() {
 		);
 
 		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -71,7 +83,9 @@ describe('only-listitems', function() {
 		var checkArgs = checkSetup('<ol id="target"><li>Item</li>Not an item</ol>');
 
 		assert.isTrue(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -79,7 +93,9 @@ describe('only-listitems', function() {
 		var checkArgs = checkSetup('<ol id="target"><p>Not a list</p></ol>');
 
 		assert.isTrue(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 		assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('p')]);
 	});
@@ -88,7 +104,9 @@ describe('only-listitems', function() {
 		var checkArgs = checkSetup('<ol id="target"><li>A <i>list</i></li></ol>');
 
 		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -96,7 +114,9 @@ describe('only-listitems', function() {
 		var checkArgs = checkSetup('<ol id="target"><li>A list</li></ol>');
 
 		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -106,7 +126,9 @@ describe('only-listitems', function() {
 		);
 
 		assert.isTrue(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 		assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('p')]);
 	});
@@ -117,7 +139,9 @@ describe('only-listitems', function() {
 		);
 
 		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -126,7 +150,9 @@ describe('only-listitems', function() {
 			'<ol id="target"><li id="fail1" role="menuitem">Not a list item</li><li id="fail2" role="menuitem">Not a list item</li></ol>'
 		);
 		assert.isTrue(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 		assert.deepEqual(checkContext._data, {
 			messageKey: 'roleNotValid',
@@ -144,7 +170,9 @@ describe('only-listitems', function() {
 		);
 
 		assert.isTrue(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -157,7 +185,9 @@ describe('only-listitems', function() {
 			);
 
 			assert.isFalse(
-				checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+				axe.testUtils
+					.getCheckEvaluate('only-listitems')
+					.apply(checkContext, checkArgs)
 			);
 		}
 	);
@@ -168,7 +198,9 @@ describe('only-listitems', function() {
 		);
 
 		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -178,7 +210,9 @@ describe('only-listitems', function() {
 		);
 
 		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -188,7 +222,9 @@ describe('only-listitems', function() {
 		);
 
 		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -198,7 +234,9 @@ describe('only-listitems', function() {
 		);
 
 		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -207,7 +245,9 @@ describe('only-listitems', function() {
 			'<ul id="target"> <li>An item</li> <h1 style="display:none">heading</h1> </ul>'
 		);
 		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -216,7 +256,9 @@ describe('only-listitems', function() {
 			'<ul id="target"> <li>An item</li> <h1 style="visibility:hidden">heading</h1> </ul>'
 		);
 		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -225,7 +267,9 @@ describe('only-listitems', function() {
 			'<ul id="target"> <li>An item</li> <h1 aria-hidden="true">heading</h1> </ul>'
 		);
 		assert.isFalse(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -234,7 +278,9 @@ describe('only-listitems', function() {
 			'<ul id="target"> <li>An item</li> <h1 aria-hidden="false">heading</h1> </ul>'
 		);
 		assert.isTrue(
-			checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('only-listitems')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -248,7 +294,9 @@ describe('only-listitems', function() {
 
 			var checkArgs = checkSetup(node, 'ul');
 			assert.isFalse(
-				checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+				axe.testUtils
+					.getCheckEvaluate('only-listitems')
+					.apply(checkContext, checkArgs)
 			);
 		}
 	);
@@ -263,7 +311,9 @@ describe('only-listitems', function() {
 
 			var checkArgs = checkSetup(node, 'ul');
 			assert.isTrue(
-				checks['only-listitems'].evaluate.apply(checkContext, checkArgs)
+				axe.testUtils
+					.getCheckEvaluate('only-listitems')
+					.apply(checkContext, checkArgs)
 			);
 		}
 	);

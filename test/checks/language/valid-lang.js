@@ -17,11 +17,9 @@ describe('valid-lang', function() {
 			fixture.appendChild(node);
 
 			assert.isFalse(
-				checks['valid-lang'].evaluate.call(checkContext, node, [
-					'blah',
-					'blah',
-					'woohoo'
-				])
+				axe.testUtils
+					.getCheckEvaluate('valid-lang')
+					.call(checkContext, node, ['blah', 'blah', 'woohoo'])
 			);
 		});
 
@@ -31,11 +29,9 @@ describe('valid-lang', function() {
 			fixture.appendChild(node);
 
 			assert.isFalse(
-				checks['valid-lang'].evaluate.call(checkContext, node, [
-					'blah',
-					'blah',
-					'wOohoo'
-				])
+				axe.testUtils
+					.getCheckEvaluate('valid-lang')
+					.call(checkContext, node, ['blah', 'blah', 'wOohoo'])
 			);
 		});
 
@@ -44,7 +40,11 @@ describe('valid-lang', function() {
 			node.setAttribute('lang', 'en-FOO');
 			fixture.appendChild(node);
 
-			assert.isTrue(checks['valid-lang'].evaluate.call(checkContext, node, []));
+			assert.isTrue(
+				axe.testUtils
+					.getCheckEvaluate('valid-lang')
+					.call(checkContext, node, [])
+			);
 			assert.deepEqual(checkContext._data, ['lang="en-FOO"']);
 		});
 
@@ -53,7 +53,9 @@ describe('valid-lang', function() {
 			node.setAttribute('lang', 'en-US');
 			fixture.appendChild(node);
 
-			assert.isFalse(checks['valid-lang'].evaluate.call(checkContext, node));
+			assert.isFalse(
+				axe.testUtils.getCheckEvaluate('valid-lang').call(checkContext, node)
+			);
 		});
 
 		it('should return true if the language is badly formatted', function() {
@@ -62,7 +64,9 @@ describe('valid-lang', function() {
 			fixture.appendChild(node);
 
 			assert.isTrue(
-				checks['valid-lang'].evaluate.call(checkContext, node, ['en'])
+				axe.testUtils
+					.getCheckEvaluate('valid-lang')
+					.call(checkContext, node, ['en'])
 			);
 			assert.deepEqual(checkContext._data, ['lang="en_US"']);
 		});
@@ -73,7 +77,9 @@ describe('valid-lang', function() {
 			fixture.appendChild(node);
 
 			assert.isFalse(
-				checks['valid-lang'].evaluate.call(checkContext, node, ['en'])
+				axe.testUtils
+					.getCheckEvaluate('valid-lang')
+					.call(checkContext, node, ['en'])
 			);
 		});
 	});
@@ -85,11 +91,9 @@ describe('valid-lang', function() {
 			fixture.appendChild(node);
 
 			assert.isFalse(
-				checks['valid-lang'].evaluate.call(checkContext, node, [
-					'blah',
-					'blah',
-					'woohoo'
-				])
+				axe.testUtils
+					.getCheckEvaluate('valid-lang')
+					.call(checkContext, node, ['blah', 'blah', 'woohoo'])
 			);
 		});
 
@@ -99,11 +103,9 @@ describe('valid-lang', function() {
 			fixture.appendChild(node);
 
 			assert.isFalse(
-				checks['valid-lang'].evaluate.call(checkContext, node, [
-					'blah',
-					'blah',
-					'wOohoo'
-				])
+				axe.testUtils
+					.getCheckEvaluate('valid-lang')
+					.call(checkContext, node, ['blah', 'blah', 'wOohoo'])
 			);
 		});
 
@@ -112,7 +114,11 @@ describe('valid-lang', function() {
 			node.setAttribute('xml:lang', 'en-FOO');
 			fixture.appendChild(node);
 
-			assert.isTrue(checks['valid-lang'].evaluate.call(checkContext, node, []));
+			assert.isTrue(
+				axe.testUtils
+					.getCheckEvaluate('valid-lang')
+					.call(checkContext, node, [])
+			);
 			assert.deepEqual(checkContext._data, ['xml:lang="en-FOO"']);
 		});
 
@@ -121,7 +127,9 @@ describe('valid-lang', function() {
 			node.setAttribute('xml:lang', 'en-US');
 			fixture.appendChild(node);
 
-			assert.isFalse(checks['valid-lang'].evaluate.call(checkContext, node));
+			assert.isFalse(
+				axe.testUtils.getCheckEvaluate('valid-lang').call(checkContext, node)
+			);
 		});
 
 		it('should return true if the language is badly formatted', function() {
@@ -130,7 +138,9 @@ describe('valid-lang', function() {
 			fixture.appendChild(node);
 
 			assert.isTrue(
-				checks['valid-lang'].evaluate.call(checkContext, node, ['en'])
+				axe.testUtils
+					.getCheckEvaluate('valid-lang')
+					.call(checkContext, node, ['en'])
 			);
 			assert.deepEqual(checkContext._data, ['xml:lang="en_US"']);
 		});
@@ -141,7 +151,9 @@ describe('valid-lang', function() {
 			fixture.appendChild(node);
 
 			assert.isFalse(
-				checks['valid-lang'].evaluate.call(checkContext, node, ['en'])
+				axe.testUtils
+					.getCheckEvaluate('valid-lang')
+					.call(checkContext, node, ['en'])
 			);
 		});
 	});

@@ -3,39 +3,35 @@ describe('non-empty-title', function() {
 
 	var fixture = document.getElementById('fixture');
 	var checkSetup = axe.testUtils.checkSetup;
+	var checkEvaluate = axe.testUtils.getCheckEvaluate('non-empty-title');
 
 	afterEach(function() {
 		fixture.innerHTML = '';
 	});
 
 	it('should return true if a title is present', function() {
-		var params = checkSetup('<img id="target" title="woohoo" />', {
-			attribute: 'title'
-		});
+		var params = checkSetup('<img id="target" title="woohoo" />');
 
-		assert.isTrue(checks['non-empty-title'].evaluate.apply(null, params));
+		assert.isTrue(checkEvaluate.apply(null, params));
 	});
 
 	it('should return false if a title is not present', function() {
-		var params = checkSetup('<img id="target" />', { attribute: 'title' });
+		var params = checkSetup('<img id="target" />');
 
-		assert.isFalse(checks['non-empty-title'].evaluate.apply(null, params));
+		assert.isFalse(checkEvaluate.apply(null, params));
 	});
 
 	it('should return false if a title is present, but empty', function() {
-		var params = checkSetup('<img id="target" title=" " />', {
-			attribute: 'title'
-		});
+		var params = checkSetup('<img id="target" title=" " />');
 
-		assert.isFalse(checks['non-empty-title'].evaluate.apply(null, params));
+		assert.isFalse(checkEvaluate.apply(null, params));
 	});
 
 	it('should collapse whitespace', function() {
 		var params = checkSetup(
-			'<img id="target" title=" \t \n \r \t  \t\r\n " />',
-			{ attribute: 'title' }
+			'<img id="target" title=" \t \n \r \t  \t\r\n " />'
 		);
 
-		assert.isFalse(checks['non-empty-title'].evaluate.apply(null, params));
+		assert.isFalse(checkEvaluate.apply(null, params));
 	});
 });

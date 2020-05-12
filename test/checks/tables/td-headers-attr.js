@@ -17,7 +17,9 @@ describe('td-headers-attr', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(checks['td-headers-attr'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('td-headers-attr').call(checkContext, node)
+		);
 	});
 
 	it('returns true if a valid header is present', function() {
@@ -28,7 +30,9 @@ describe('td-headers-attr', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(checks['td-headers-attr'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('td-headers-attr').call(checkContext, node)
+		);
 	});
 
 	it('returns true if multiple valid headers are present', function() {
@@ -39,7 +43,9 @@ describe('td-headers-attr', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(checks['td-headers-attr'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('td-headers-attr').call(checkContext, node)
+		);
 	});
 
 	it('returns true with an empty header', function() {
@@ -50,7 +56,9 @@ describe('td-headers-attr', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isTrue(checks['td-headers-attr'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('td-headers-attr').call(checkContext, node)
+		);
 	});
 
 	it('returns undefined if headers is empty', function() {
@@ -62,7 +70,7 @@ describe('td-headers-attr', function() {
 
 		var node = fixture.querySelector('table');
 		assert.isUndefined(
-			checks['td-headers-attr'].evaluate.call(checkContext, node)
+			axe.testUtils.getCheckEvaluate('td-headers-attr').call(checkContext, node)
 		);
 	});
 
@@ -75,7 +83,9 @@ describe('td-headers-attr', function() {
 			'  <tr> <td headers="h1">goodbye</td> </tr>' +
 			'</table>';
 		node = fixture.querySelector('table');
-		assert.isFalse(checks['td-headers-attr'].evaluate.call(checkContext, node));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('td-headers-attr').call(checkContext, node)
+		);
 
 		fixture.innerHTML =
 			'<span id="hi">hello</span>' +
@@ -84,7 +94,9 @@ describe('td-headers-attr', function() {
 			'  <tr> <td headers="h1">goodbye</td> </tr>' +
 			'</table>';
 		node = fixture.querySelector('table');
-		assert.isFalse(checks['td-headers-attr'].evaluate.call(checkContext, node));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('td-headers-attr').call(checkContext, node)
+		);
 
 		fixture.innerHTML =
 			'<table id="hi">' +
@@ -92,7 +104,9 @@ describe('td-headers-attr', function() {
 			'  <tr> <td headers="h1">goodbye</td> </tr>' +
 			'</table>';
 		node = fixture.querySelector('table');
-		assert.isFalse(checks['td-headers-attr'].evaluate.call(checkContext, node));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('td-headers-attr').call(checkContext, node)
+		);
 	});
 
 	it('returns false if the header refers to the same cell', function() {
@@ -103,6 +117,8 @@ describe('td-headers-attr', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
-		assert.isFalse(checks['td-headers-attr'].evaluate.call(checkContext, node));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('td-headers-attr').call(checkContext, node)
+		);
 	});
 });
