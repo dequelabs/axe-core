@@ -1,6 +1,9 @@
 {
 	"id": "header-present",
-	"evaluate": "header-present-evaluate",
+	"evaluate": "has-descendant-evaluate",
+	"options": {
+		"selector": "h1, h2, h3, h4, h5, h6, [role=heading]"
+	},
 	"metadata": {
 		"impact": "serious",
 		"messages": {
