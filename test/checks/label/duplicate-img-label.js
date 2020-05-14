@@ -119,6 +119,20 @@ describe('duplicate-img-label', function() {
 		);
 	});
 
+	it('should support options.parentSelector', function() {
+		fixture.innerHTML =
+			'<div aria-label="Plain text"><img id="target" alt="Plain text"></div>';
+		var node = fixture.querySelector('#target');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('duplicate-img-label')(
+				node,
+				{ parentSelector: 'div' },
+				axe.utils.getNodeFromTree(node)
+			)
+		);
+	});
+
 	(shadowSupport.v1 ? it : xit)(
 		'should return true if the img is part of a shadow tree',
 		function() {
