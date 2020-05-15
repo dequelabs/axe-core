@@ -677,6 +677,47 @@ describe('Rule', function() {
 				);
 			});
 
+			it('should mark checks as incomplete if reviewOnFail is set to true', function(done) {
+				var rule = new Rule(
+					{
+						reviewOnFail: true,
+						all: ['cats'],
+						any: ['cats'],
+						none: ['dogs']
+					},
+					{
+						checks: {
+							cats: new Check({
+								id: 'cats',
+								evaluate: function() {
+									return false;
+								}
+							}),
+							dogs: new Check({
+								id: 'dogs',
+								evaluate: function() {
+									return true;
+								}
+							})
+						}
+					}
+				);
+
+				rule.run(
+					{
+						include: [axe.utils.getFlattenedTree(fixture)[0]]
+					},
+					{},
+					function(results) {
+						assert.isUndefined(results.nodes[0].all[0].result);
+						assert.isUndefined(results.nodes[0].any[0].result);
+						assert.isUndefined(results.nodes[0].none[0].result);
+						done();
+					},
+					isNotCalled
+				);
+			});
+
 			describe('NODE rule', function() {
 				it('should create a RuleResult', function() {
 					var orig = window.RuleResult;
@@ -1305,6 +1346,44 @@ describe('Rule', function() {
 				}
 			});
 
+			it('should mark checks as incomplete if reviewOnFail is set to true', function() {
+				var rule = new Rule(
+					{
+						reviewOnFail: true,
+						all: ['cats'],
+						any: ['cats'],
+						none: ['dogs']
+					},
+					{
+						checks: {
+							cats: new Check({
+								id: 'cats',
+								evaluate: function() {
+									return false;
+								}
+							}),
+							dogs: new Check({
+								id: 'dogs',
+								evaluate: function() {
+									return true;
+								}
+							})
+						}
+					}
+				);
+
+				var results = rule.runSync(
+					{
+						include: [axe.utils.getFlattenedTree(fixture)[0]]
+					},
+					{}
+				);
+
+				assert.isUndefined(results.nodes[0].all[0].result);
+				assert.isUndefined(results.nodes[0].any[0].result);
+				assert.isUndefined(results.nodes[0].none[0].result);
+			});
+
 			describe.skip('NODE rule', function() {
 				it('should create a RuleResult', function() {
 					var orig = window.RuleResult;
@@ -1615,6 +1694,27 @@ describe('Rule', function() {
 			});
 		});
 
+		describe('.reviewOnFail', function() {
+			it('should be set', function() {
+				var spec = {
+					reviewOnFail: true
+				};
+				assert.equal(new Rule(spec).reviewOnFail, spec.reviewOnFail);
+			});
+
+			it('should default to false', function() {
+				var spec = {};
+				assert.isFalse(new Rule(spec).reviewOnFail);
+			});
+
+			it('should default to false if given a bad value', function() {
+				var spec = {
+					reviewOnFail: 'monkeys'
+				};
+				assert.isFalse(new Rule(spec).reviewOnFail);
+			});
+		});
+
 		describe('.id', function() {
 			it('should be set', function() {
 				var spec = {
@@ -1774,6 +1874,13 @@ describe('Rule', function() {
 			assert.equal(rule._get('pageLevel'), false);
 			rule.configure({ pageLevel: true });
 			assert.equal(rule._get('pageLevel'), true);
+		});
+		it('should override reviewOnFail', function() {
+			var rule = new Rule({ reviewOnFail: false });
+
+			assert.equal(rule._get('reviewOnFail'), false);
+			rule.configure({ reviewOnFail: true });
+			assert.equal(rule._get('reviewOnFail'), true);
 		});
 		it('should override any', function() {
 			var rule = new Rule({ any: ['one', 'two'] });
