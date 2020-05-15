@@ -14,7 +14,7 @@
 	},
 	"all": [],
 	"any": [
-		"button-has-visible-text",
+		"has-text-content",
 		"aria-label",
 		"aria-labelledby",
 		"role-presentation",

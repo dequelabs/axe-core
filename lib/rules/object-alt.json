@@ -14,7 +14,7 @@
 	},
 	"all": [],
 	"any": [
-		"has-visible-text",
+		"has-text-content",
 		"aria-label",
 		"aria-labelledby",
 		"non-empty-title",

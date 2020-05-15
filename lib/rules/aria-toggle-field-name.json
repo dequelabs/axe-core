@@ -12,7 +12,7 @@
 		"aria-label",
 		"aria-labelledby",
 		"non-empty-title",
-		"has-visible-text"
+		"has-text-content"
 	],
 	"none": ["no-implicit-explicit-label"]
 }

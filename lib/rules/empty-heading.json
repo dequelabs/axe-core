@@ -8,6 +8,11 @@
 		"help": "Headings must not be empty"
 	},
 	"all": [],
-	"any": ["has-visible-text"],
+	"any": [
+		"aria-label",
+		"aria-labelledby",
+		"non-empty-title",
+		"has-text-content"
+	],
 	"none": []
 }

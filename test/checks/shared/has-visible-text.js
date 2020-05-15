@@ -1,4 +1,4 @@
-describe('has-visible-text', function() {
+describe('has-text-content', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
@@ -16,7 +16,7 @@ describe('has-visible-text', function() {
 		var params = checkSetup('<object id="target"></object>');
 		assert.isFalse(
 			axe.testUtils
-				.getCheckEvaluate('has-visible-text')
+				.getCheckEvaluate('has-text-content')
 				.apply(checkContext, params)
 		);
 	});
@@ -27,7 +27,7 @@ describe('has-visible-text', function() {
 		);
 		assert.isFalse(
 			axe.testUtils
-				.getCheckEvaluate('has-visible-text')
+				.getCheckEvaluate('has-text-content')
 				.apply(checkContext, params)
 		);
 	});
@@ -36,7 +36,7 @@ describe('has-visible-text', function() {
 		var params = checkSetup('<object id="target">hello!</object>');
 		assert.isTrue(
 			axe.testUtils
-				.getCheckEvaluate('has-visible-text')
+				.getCheckEvaluate('has-text-content')
 				.apply(checkContext, params)
 		);
 	});

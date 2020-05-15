@@ -15,7 +15,7 @@
 	},
 	"all": [],
 	"any": [
-		"has-visible-text",
+		"has-text-content",
 		"aria-label",
 		"aria-labelledby",
 		"role-presentation",
