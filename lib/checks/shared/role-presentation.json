@@ -1,6 +1,13 @@
 {
 	"id": "role-presentation",
-	"evaluate": "role-presentation-evaluate",
+	"evaluate": "matches-definition-evaluate",
+	"options": {
+		"matcher": {
+			"attributes": {
+				"role": "presentation"
+			}
+		}
+	},
 	"metadata": {
 		"impact": "minor",
 		"messages": {
