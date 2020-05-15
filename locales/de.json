@@ -475,10 +475,6 @@
 			"pass": "",
 			"fail": "Das aria-labelledby-Attribut existiert nicht oder referenziert ein Element, das nicht existiert, nicht sichtbar oder leer ist."
 		},
-		"button-has-visible-text": {
-			"pass": "",
-			"fail": "Das Element besitzt keinen Text, der für Screenreader sichtbar ist."
-		},
 		"doc-has-title": {
 			"pass": "Test",
 			"fail": "Das Dokument besitzt kein <title>-Element oder das <title>-Element ist leer."
@@ -495,7 +491,7 @@
 			"pass": "",
 			"fail": "Das Element besitzt kein alt-Attribut."
 		},
-		"has-visible-text": {
+		"has-text-content": {
 			"pass": "",
 			"fail": "Das Element besitzt keinen Text, der für Screenreader sichtbar ist."
 		},

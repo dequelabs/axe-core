@@ -630,10 +630,6 @@
 			"pass": "Ez da testu-tarteari eragiten dion '!important' estilorik zehaztu.",
 			"fail": "Ezabatu '!important' inline style{{=it.data && it.data.length > 1 ? 'etatik' : 'tik'}} {{=it.data.join(', ')}}, nabigatzaile gehienetan ez delako onartzen baliogabetzea."
 		},
-		"button-has-visible-text": {
-			"pass": "Elementuak pantaila-irakurgailuek ikusteko moduko barne-testua du.",
-			"fail": "Elementuak ez du pantaila-irakurgailuek ikusteko moduko barne-testurik"
-		},
 		"doc-has-title": {
 			"pass": "Dokumentuak badu elementu bat <title> ez hutsik",
 			"fail": "Dokumentuak ez dauka <title> elementurik hutsik"
@@ -646,7 +642,7 @@
 			"pass": "Elementuak alt atributua du",
 			"fail": "Elementuak ez dauka alt atributurik"
 		},
-		"has-visible-text": {
+		"has-text-content": {
 			"pass": "Elementuak pantaila-irakurgailuetarako testua du ikusgai",
 			"fail": "Elementuak ez du pantaila-irakurgailuetarako testu ikusgarririk"
 		},

@@ -685,10 +685,6 @@
 				"plural": "Retirer '!important' des styles inline ${data.values}, car le remplacement n'est pas pris en charge par la plupart des navigateurs"
 			}
 		},
-		"button-has-visible-text": {
-			"pass": "L’élément a un contenu textuel visible par les lecteurs d’écran",
-			"fail": "L’élément n’a aucun contenu textuel visible par les lecteurs d’écran"
-		},
 		"doc-has-title": {
 			"pass": "Le document a un élément <title> non vide",
 			"fail": "Le document n’a pas d’élément <title> non vide"
@@ -701,7 +697,7 @@
 			"pass": "L’élément a un attribut alt",
 			"fail": "L’élément n’a pas d’attribut alt"
 		},
-		"has-visible-text": {
+		"has-text-content": {
 			"pass": "L’élément a un contenu textuel visible par les lecteurs d’écran",
 			"fail": "L’élément n’a aucun contenu textuel visible par les lecteurs d’écran"
 		},

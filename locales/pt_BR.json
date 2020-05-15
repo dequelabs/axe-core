@@ -721,10 +721,6 @@
 				"plural": "Remova '!important' dos estilos 'inline' ${data.values}, uma vez que sobrepor isto não é suportado pela maioria dos navegadores"
 			}
 		},
-		"button-has-visible-text": {
-			"pass": "O elemento tem texto interno que é visível aos leitores de tela",
-			"fail": "O elemento não tem texto interno que seja visível aos leitores de tela"
-		},
 		"doc-has-title": {
 			"pass": "O documento tem um elemento <title> não vazio",
 			"fail": "O documento não tem um elemento <title> não vazio"
@@ -737,7 +733,7 @@
 			"pass": "O elemento tem um atributo 'alt'",
 			"fail": "O elemento não tem um atributo 'alt'"
 		},
-		"has-visible-text": {
+		"has-text-content": {
 			"pass": "O elemento tem texto que é visível aos leitores de tela",
 			"fail": "O elemento não tem texto que seja visível aos leitores de tela"
 		},

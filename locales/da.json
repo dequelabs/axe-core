@@ -639,10 +639,6 @@
 			"pass": "Ingen inline styling med '!important', som påvirker tekst-mellemrums-afstand er specificeret",
 			"fail": "Fjern '!important' fra inline styling{{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}}, da overskrivning af dette, ikke er understøttet i de fleste browsere"
 		},
-		"button-has-visible-text": {
-			"pass": "Elementet har indre tekst, som er synlig for skærmlæsere",
-			"fail": "Elementet har ingen indre tekst, som er synlig for skærmlæsere"
-		},
 		"doc-has-title": {
 			"pass": "Dokumentet har et <title> element, der ikke er tomt",
 			"fail": "Dokumentet mangler et <title> element med indhold"
@@ -655,7 +651,7 @@
 			"pass": "Elementet har en 'alt'-attribut",
 			"fail": "Elementet har ikke en 'alt'-attribut"
 		},
-		"has-visible-text": {
+		"has-text-content": {
 			"pass": "Elementet har tekst, der er synligt for skærmlæsere",
 			"fail": "Elementet har ikke tekst, der er synligt for skærmlæsere"
 		},

@@ -630,10 +630,6 @@
 			"pass": "No se han especificado estilos 'inline' con '!important' que afecten al espaciado de texto",
 			"fail": "Eliminar '!important' de inline style{{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}}, porque su anulación no está admitida en la mayoría de navegadores"
 		},
-		"button-has-visible-text": {
-			"pass": "El elemento tiene texto interno visible para lectores de pantalla",
-			"fail": "El elemento no tiene texto interno visible para lectores de pantalla"
-		},
 		"doc-has-title": {
 			"pass": "El documento tiene un elemento <title> no vacío",
 			"fail": "El documento no tiene un elemento <title> no vacío"
@@ -646,7 +642,7 @@
 			"pass": "El elemento tiene un atributo alt",
 			"fail": "El elemento no tiene un atributo alt"
 		},
-		"has-visible-text": {
+		"has-text-content": {
 			"pass": "El elemento tiene texto visible para lectores de pantalla",
 			"fail": "El elemento no tiene texto visible para lectores de pantalla"
 		},
