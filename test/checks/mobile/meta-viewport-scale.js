@@ -99,6 +99,14 @@ describe('meta-viewport', function() {
 				axe.testUtils.getCheckEvaluate('meta-viewport').call(checkContext, node)
 			);
 		});
+
+		it('should not crash if viewport property does not have a value', function() {
+			fixture.innerHTML =
+				'<meta name="viewport" content="user-scalable=1, minimal-ui">';
+			var node = fixture.querySelector('meta');
+
+			assert.isTrue(axe.testUtils.getCheckEvaluate('meta-viewport')(node));
+		});
 	});
 
 	describe(', separator', function() {
