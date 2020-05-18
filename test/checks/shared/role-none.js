@@ -2,29 +2,28 @@ describe('role-none', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var queryFixture = axe.testUtils.queryFixture;
+	var checkEvaluate = axe.testUtils.getCheckEvaluate('role-none');
 
 	afterEach(function() {
 		fixture.innerHTML = '';
 	});
 
 	it('should detect role="none" on the element', function() {
-		fixture.innerHTML = '<div role="none"></div>';
-		var node = fixture.querySelector('div');
+		var vNode = queryFixture('<div id="target" role="none"></div>');
 
-		assert.isTrue(axe.testUtils.getCheckEvaluate('role-none')(node));
+		assert.isTrue(checkEvaluate(null, null, vNode));
 	});
 
 	it('should return false when role !== none', function() {
-		fixture.innerHTML = '<div role="cats"></div>';
-		var node = fixture.querySelector('div');
+		var vNode = queryFixture('<div id="target" role="cats"></div>');
 
-		assert.isFalse(axe.testUtils.getCheckEvaluate('role-none')(node));
+		assert.isFalse(checkEvaluate(null, null, vNode));
 	});
 
 	it('should return false when there is no role attribute', function() {
-		fixture.innerHTML = '<div></div>';
-		var node = fixture.querySelector('div');
+		var vNode = queryFixture('<div id="target"></div>');
 
-		assert.isFalse(axe.testUtils.getCheckEvaluate('role-none')(node));
+		assert.isFalse(checkEvaluate(null, null, vNode));
 	});
 });
