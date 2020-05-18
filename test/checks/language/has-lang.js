@@ -45,4 +45,12 @@ describe('has-lang', function() {
 		assert.isFalse(hasLangEvaluate.apply(checkContext, params));
 		assert.equal(checkContext._data.messageKey, 'noLang');
 	});
+
+	it('should support options.attributes', function() {
+		var params = checkSetup('<div id="target" foo="cats"></div>', {
+			attributes: ['foo']
+		});
+
+		assert.isTrue(hasLangEvaluate.apply(checkContext, params));
+	});
 });
