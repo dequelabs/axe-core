@@ -28,4 +28,16 @@ describe('scope-value', function() {
 
 		assert.isFalse(axe.testUtils.getCheckEvaluate('scope-value')(node));
 	});
+
+	it('should support options.values', function() {
+		fixture.innerHTML =
+			'<table><tr><td scope="hahahahanothx"></td></tr></table>';
+		var node = fixture.querySelector('td');
+
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('scope-value')(node, {
+				values: ['hahahahanothx']
+			})
+		);
+	});
 });
