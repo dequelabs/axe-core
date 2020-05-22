@@ -121,7 +121,7 @@ describe('avoid-inline-spacing tests', function() {
 
 	it('supports options.cssProperties', function() {
 		var vNode = queryFixture(
-			'<p id="target" style="font-size: 14px !important;">The quick brown fox jumped over the lazy dog</p>'
+			'<p id="target" style="font-size: 14px !important; line-height: 3 !important; letter-spacing: 50rem !important">The quick brown fox jumped over the lazy dog</p>'
 		);
 		var actual = checkEvaluate.call(checkContext, vNode.actualNode, {
 			cssProperties: ['font-size']
