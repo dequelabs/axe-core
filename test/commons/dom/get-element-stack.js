@@ -85,6 +85,21 @@ describe('dom.getElementStack', function() {
 			assert.deepEqual(stack, ['4', '1', '2', 'target', 'fixture']);
 		});
 
+		it('should handle floating parent elements', function() {
+			fixture.innerHTML =
+				'<div id="1" style="float: left; background: #000000; color: #fff;">' +
+				'<div id="2"><span id="target">whole picture</span></div>' +
+				'</div>' +
+				'<div id="3">' +
+				'<div id="4" style="background: #f2f2f2;">English</div>' +
+				'</div>';
+
+			axe.testUtils.flatTreeSetup(fixture);
+			var target = fixture.querySelector('#target');
+			var stack = mapToIDs(getElementStack(target));
+			assert.deepEqual(stack, ['target', '2', '1', '4', '3', 'fixture']);
+		});
+
 		it('should handle z-index positioned elements in the same stacking context', function() {
 			// see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/Stacking_context_example_1
 			fixture.innerHTML =
