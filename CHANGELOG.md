@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.4](https://github.com/dequelabs/axe-core/compare/v3.5.3...v3.5.4) (2020-05-22)
+
+### Bug Fixes
+
+- **get-element-stack:** properly calculate position of children of floated elements ([28a8c58](https://github.com/dequelabs/axe-core/commit/28a8c58b409461600da07eac164e5b0ca4744502))
+
 ### [3.5.3](https://github.com/dequelabs/axe-core/compare/v3.5.2...v3.5.3) (2020-03-31)
 
 ### Bug Fixes
