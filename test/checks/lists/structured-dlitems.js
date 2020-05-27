@@ -12,19 +12,29 @@ describe('structured-dlitems', function() {
 	it('should return false if the list has no contents', function() {
 		var checkArgs = checkSetup('<dl id="target"></dl>');
 		assert.isFalse(
-			checks['structured-dlitems'].evaluate.apply(null, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('structured-dlitems')
+				.apply(null, checkArgs)
 		);
 	});
 
 	it('should return true if the list has only a dd', function() {
 		var checkArgs = checkSetup('<dl id="target"><dd>A list</dd></dl>');
-		assert.isTrue(checks['structured-dlitems'].evaluate.apply(null, checkArgs));
+		assert.isTrue(
+			axe.testUtils
+				.getCheckEvaluate('structured-dlitems')
+				.apply(null, checkArgs)
+		);
 	});
 
 	it('should return true if the list has only a dt', function() {
 		var checkArgs = checkSetup('<dl id="target"><dt>A list</dt></dl>');
 
-		assert.isTrue(checks['structured-dlitems'].evaluate.apply(null, checkArgs));
+		assert.isTrue(
+			axe.testUtils
+				.getCheckEvaluate('structured-dlitems')
+				.apply(null, checkArgs)
+		);
 	});
 
 	it('should return true if the list has dt and dd in the incorrect order', function() {
@@ -32,7 +42,11 @@ describe('structured-dlitems', function() {
 			'<dl id="target"><dd>A list</dd><dt>An item</dt></dl>'
 		);
 
-		assert.isTrue(checks['structured-dlitems'].evaluate.apply(null, checkArgs));
+		assert.isTrue(
+			axe.testUtils
+				.getCheckEvaluate('structured-dlitems')
+				.apply(null, checkArgs)
+		);
 	});
 
 	it('should return true if the list has dt and dd in the correct order as non-child descendants', function() {
@@ -40,7 +54,11 @@ describe('structured-dlitems', function() {
 			'<dl id="target"><dd><dl><dt>An item</dt><dd>A list</dd></dl></dd></dl>'
 		);
 
-		assert.isTrue(checks['structured-dlitems'].evaluate.apply(null, checkArgs));
+		assert.isTrue(
+			axe.testUtils
+				.getCheckEvaluate('structured-dlitems')
+				.apply(null, checkArgs)
+		);
 	});
 
 	it('should return false if the list has dt and dd in the correct order', function() {
@@ -49,7 +67,9 @@ describe('structured-dlitems', function() {
 		);
 
 		assert.isFalse(
-			checks['structured-dlitems'].evaluate.apply(null, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('structured-dlitems')
+				.apply(null, checkArgs)
 		);
 	});
 
@@ -59,7 +79,9 @@ describe('structured-dlitems', function() {
 		);
 
 		assert.isFalse(
-			checks['structured-dlitems'].evaluate.apply(null, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('structured-dlitems')
+				.apply(null, checkArgs)
 		);
 	});
 
@@ -73,7 +95,9 @@ describe('structured-dlitems', function() {
 
 			var checkArgs = checkSetup(node, 'dl');
 			assert.isFalse(
-				checks['structured-dlitems'].evaluate.apply(null, checkArgs)
+				axe.testUtils
+					.getCheckEvaluate('structured-dlitems')
+					.apply(null, checkArgs)
 			);
 		}
 	);
@@ -88,7 +112,9 @@ describe('structured-dlitems', function() {
 
 			var checkArgs = checkSetup(node, 'dl');
 			assert.isTrue(
-				checks['structured-dlitems'].evaluate.apply(null, checkArgs)
+				axe.testUtils
+					.getCheckEvaluate('structured-dlitems')
+					.apply(null, checkArgs)
 			);
 		}
 	);

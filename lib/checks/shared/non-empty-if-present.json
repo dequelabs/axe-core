@@ -1,6 +1,6 @@
 {
 	"id": "non-empty-if-present",
-	"evaluate": "non-empty-if-present.js",
+	"evaluate": "non-empty-if-present-evaluate",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

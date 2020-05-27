@@ -17,7 +17,7 @@ describe('aria-labelledby', function() {
 		target.innerHTML = 'bananas';
 		fixtureSetup(target);
 
-		assert.isTrue(checks['aria-labelledby'].evaluate(node));
+		assert.isTrue(axe.testUtils.getCheckEvaluate('aria-labelledby')(node));
 	});
 
 	it('should return true if only one element referenced by aria-labelledby has visible text', function() {
@@ -29,14 +29,14 @@ describe('aria-labelledby', function() {
 		target.innerHTML = 'bananas';
 		fixtureSetup(target);
 
-		assert.isTrue(checks['aria-labelledby'].evaluate(node));
+		assert.isTrue(axe.testUtils.getCheckEvaluate('aria-labelledby')(node));
 	});
 
 	it('should return false if an aria-labelledby is not present', function() {
 		var node = document.createElement('div');
 		fixtureSetup(node);
 
-		assert.isFalse(checks['aria-labelledby'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('aria-labelledby')(node));
 	});
 
 	it('should return true if an aria-labelledby is present that references hidden elements', function() {
@@ -49,7 +49,7 @@ describe('aria-labelledby', function() {
 		target.innerHTML = 'bananas';
 		fixtureSetup(target);
 
-		assert.isTrue(checks['aria-labelledby'].evaluate(node));
+		assert.isTrue(axe.testUtils.getCheckEvaluate('aria-labelledby')(node));
 	});
 
 	it('should return false if an aria-labelledby is present, but references an element with only hidden content', function() {
@@ -61,7 +61,7 @@ describe('aria-labelledby', function() {
 		target.innerHTML = '<span style="display: none">bananas</span>';
 		fixtureSetup(target);
 
-		assert.isFalse(checks['aria-labelledby'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('aria-labelledby')(node));
 	});
 
 	it('should return true if an aria-labelledby is present that references elements with has aria-hidden=true', function() {
@@ -74,7 +74,7 @@ describe('aria-labelledby', function() {
 		target.innerHTML = 'bananas';
 		fixtureSetup(target);
 
-		assert.isTrue(checks['aria-labelledby'].evaluate(node));
+		assert.isTrue(axe.testUtils.getCheckEvaluate('aria-labelledby')(node));
 	});
 
 	it('should return false if an aria-labelledby is present that references elements with has aria-hidden=true in the content', function() {
@@ -86,6 +86,6 @@ describe('aria-labelledby', function() {
 		target.innerHTML = '<span aria-hidden="true">bananas</span>';
 		fixtureSetup(target);
 
-		assert.isFalse(checks['aria-labelledby'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('aria-labelledby')(node));
 	});
 });

@@ -17,7 +17,9 @@ describe('multiple-label', function() {
 		var l1 = fixture.querySelector('#l1');
 		var l2 = fixture.querySelector('#l2');
 		assert.isUndefined(
-			checks['multiple-label'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('multiple-label')
+				.call(checkContext, target)
 		);
 		assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
 	});
@@ -28,7 +30,9 @@ describe('multiple-label', function() {
 		var target = fixture.querySelector('#target');
 		var l1 = fixture.querySelector('#l1');
 		assert.isFalse(
-			checks['multiple-label'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('multiple-label')
+				.call(checkContext, target)
 		);
 		assert.deepEqual(checkContext._relatedNodes, [l1]);
 	});
@@ -44,7 +48,9 @@ describe('multiple-label', function() {
 		var l2 = fixture.querySelector('#l2');
 		var l3 = fixture.querySelector('#l3');
 		assert.isUndefined(
-			checks['multiple-label'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('multiple-label')
+				.call(checkContext, target)
 		);
 		assert.deepEqual(checkContext._relatedNodes, [l1, l2, l3]);
 	});
@@ -55,7 +61,9 @@ describe('multiple-label', function() {
 		var target = fixture.querySelector('#target');
 		var l1 = fixture.querySelector('#l1');
 		assert.isFalse(
-			checks['multiple-label'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('multiple-label')
+				.call(checkContext, target)
 		);
 		assert.deepEqual(checkContext._relatedNodes, [l1]);
 	});
@@ -68,7 +76,9 @@ describe('multiple-label', function() {
 		var target = fixture.querySelector('#test-input2');
 		var l1 = fixture.querySelector('#l1');
 		assert.isFalse(
-			checks['multiple-label'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('multiple-label')
+				.call(checkContext, target)
 		);
 		assert.deepEqual(checkContext._relatedNodes, [l1]);
 	});
@@ -83,7 +93,9 @@ describe('multiple-label', function() {
 		var l1 = fixture.querySelector('#l1');
 		var l3 = fixture.querySelector('#l3');
 		assert.isUndefined(
-			checks['multiple-label'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('multiple-label')
+				.call(checkContext, target)
 		);
 		assert.deepEqual(checkContext._relatedNodes, [l1, l3]);
 	});
@@ -95,7 +107,9 @@ describe('multiple-label', function() {
 		var l1 = fixture.querySelector('#l1');
 		var l2 = fixture.querySelector('#l2');
 		assert.isUndefined(
-			checks['multiple-label'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('multiple-label')
+				.call(checkContext, target)
 		);
 		assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
 	});
@@ -105,7 +119,9 @@ describe('multiple-label', function() {
 			'<label for="target">Foo<input type="text" id="target"></label>';
 		var target = fixture.querySelector('#target');
 		assert.isFalse(
-			checks['multiple-label'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('multiple-label')
+				.call(checkContext, target)
 		);
 	});
 
@@ -119,7 +135,9 @@ describe('multiple-label', function() {
 		fixture.innerHTML += '<label for="A">Sally</label>';
 		var target = fixture.querySelector('#A');
 		assert.isUndefined(
-			checks['multiple-label'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('multiple-label')
+				.call(checkContext, target)
 		);
 	});
 
@@ -133,7 +151,9 @@ describe('multiple-label', function() {
 		fixture.innerHTML += '<label for="B" aria-hidden="true">Sally</label>';
 		var target = fixture.querySelector('#B');
 		assert.isUndefined(
-			checks['multiple-label'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('multiple-label')
+				.call(checkContext, target)
 		);
 	});
 
@@ -143,7 +163,9 @@ describe('multiple-label', function() {
 		fixture.innerHTML += '<label for="D" id="E">Excuse</label>';
 		var target = fixture.querySelector('#D');
 		assert.isFalse(
-			checks['multiple-label'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('multiple-label')
+				.call(checkContext, target)
 		);
 	});
 
@@ -154,7 +176,9 @@ describe('multiple-label', function() {
 		fixture.innerHTML += '<label for="F" id="H">Excuse</label>';
 		var target = fixture.querySelector('#F');
 		assert.isFalse(
-			checks['multiple-label'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('multiple-label')
+				.call(checkContext, target)
 		);
 	});
 
@@ -164,7 +188,9 @@ describe('multiple-label', function() {
 		fixture.innerHTML += '<label for="I" >Excuse</label>';
 		var target = fixture.querySelector('#I');
 		assert.isFalse(
-			checks['multiple-label'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('multiple-label')
+				.call(checkContext, target)
 		);
 	});
 
@@ -179,7 +205,9 @@ describe('multiple-label', function() {
 		fixture.innerHTML += '<label for="J" id="P">Sally</label>';
 		var target = fixture.querySelector('#J');
 		assert.isUndefined(
-			checks['multiple-label'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('multiple-label')
+				.call(checkContext, target)
 		);
 	});
 
@@ -189,7 +217,9 @@ describe('multiple-label', function() {
 		fixture.innerHTML += '<label for="Q" >Excuse</label>';
 		var target = fixture.querySelector('#Q');
 		assert.isUndefined(
-			checks['multiple-label'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('multiple-label')
+				.call(checkContext, target)
 		);
 	});
 
@@ -203,10 +233,9 @@ describe('multiple-label', function() {
 				'<input id="myinput" /><label for="myinput">normal</label>';
 			var shadowTarget = target.shadowRoot;
 			assert.isFalse(
-				checks['multiple-label'].evaluate.call(
-					checkContext,
-					shadowTarget.firstElementChild
-				)
+				axe.testUtils
+					.getCheckEvaluate('multiple-label')
+					.call(checkContext, shadowTarget.firstElementChild)
 			);
 		}
 	);
@@ -223,10 +252,9 @@ describe('multiple-label', function() {
 			shadowRoot.innerHTML = innerHTML;
 			var shadowTarget = target.shadowRoot;
 			assert.isFalse(
-				checks['multiple-label'].evaluate.call(
-					checkContext,
-					shadowTarget.firstElementChild
-				)
+				axe.testUtils
+					.getCheckEvaluate('multiple-label')
+					.call(checkContext, shadowTarget.firstElementChild)
 			);
 		}
 	);
@@ -243,10 +271,9 @@ describe('multiple-label', function() {
 			shadowRoot.innerHTML = innerHTML;
 			var shadowTarget = target.shadowRoot;
 			assert.isUndefined(
-				checks['multiple-label'].evaluate.call(
-					checkContext,
-					shadowTarget.firstElementChild
-				)
+				axe.testUtils
+					.getCheckEvaluate('multiple-label')
+					.call(checkContext, shadowTarget.firstElementChild)
 			);
 		}
 	);

@@ -1,6 +1,6 @@
 {
 	"id": "has-widget-role",
-	"evaluate": "has-widget-role.js",
+	"evaluate": "has-widget-role-evaluate",
 	"options": [],
 	"metadata": {
 		"impact": "minor",

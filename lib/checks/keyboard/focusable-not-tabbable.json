@@ -1,6 +1,6 @@
 {
 	"id": "focusable-not-tabbable",
-	"evaluate": "focusable-not-tabbable.js",
+	"evaluate": "focusable-not-tabbable-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

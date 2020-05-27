@@ -16,28 +16,36 @@ describe('internal-link-present', function() {
 	it('should return true when an internal link is found', function() {
 		var params = checkSetup('<div id="target"><a href="#haha">hi</a></div>');
 		assert.isTrue(
-			checks['internal-link-present'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('internal-link-present')
+				.apply(checkContext, params)
 		);
 	});
 
 	it('should return false when a hashbang URL was used', function() {
 		var params = checkSetup('<div id="target"><a href="#!foo">hi</a></div>');
 		assert.isFalse(
-			checks['internal-link-present'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('internal-link-present')
+				.apply(checkContext, params)
 		);
 	});
 
 	it('should return false when a hash route URL was used', function() {
 		var params = checkSetup('<div id="target"><a href="#/home">hi</a></div>');
 		assert.isFalse(
-			checks['internal-link-present'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('internal-link-present')
+				.apply(checkContext, params)
 		);
 	});
 
 	it('should return false when a hashbang + slash route URL was used', function() {
 		var params = checkSetup('<div id="target"><a href="#!/home">hi</a></div>');
 		assert.isFalse(
-			checks['internal-link-present'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('internal-link-present')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -46,7 +54,9 @@ describe('internal-link-present', function() {
 			'<div id="target"><a href="http://www.deque.com/#haha">hi</a></div>'
 		);
 		assert.isFalse(
-			checks['internal-link-present'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('internal-link-present')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -58,7 +68,9 @@ describe('internal-link-present', function() {
 				'<a href="#haha">hi</a>'
 			);
 			assert.isTrue(
-				checks['internal-link-present'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('internal-link-present')
+					.apply(checkContext, params)
 			);
 		}
 	);

@@ -1,6 +1,6 @@
 {
 	"id": "th-has-data-cells",
-	"evaluate": "th-has-data-cells.js",
+	"evaluate": "th-has-data-cells-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

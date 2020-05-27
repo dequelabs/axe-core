@@ -1,6 +1,6 @@
 {
 	"id": "skip-link",
-	"evaluate": "skip-link.js",
+	"evaluate": "skip-link-evaluate",
 	"metadata": {
 		"impact": "moderate",
 		"messages": {

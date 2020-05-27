@@ -1,7 +1,7 @@
 {
 	"id": "svg-img-alt",
 	"selector": "[role=\"img\"], [role=\"graphics-symbol\"], svg[role=\"graphics-document\"]",
-	"matches": "svg-namespace-matches.js",
+	"matches": "svg-namespace-matches",
 	"tags": [
 		"cat.text-alternatives",
 		"wcag2a",

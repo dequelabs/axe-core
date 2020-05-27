@@ -1,6 +1,6 @@
 {
 	"id": "no-implicit-explicit-label",
-	"evaluate": "no-implicit-explicit-label.js",
+	"evaluate": "no-implicit-explicit-label-evaluate",
 	"metadata": {
 		"impact": "moderate",
 		"messages": {

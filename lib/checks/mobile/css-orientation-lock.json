@@ -1,6 +1,6 @@
 {
 	"id": "css-orientation-lock",
-	"evaluate": "css-orientation-lock.js",
+	"evaluate": "css-orientation-lock-evaluate",
 	"options": {
 		"degreeThreshold": 2
 	},

@@ -1,7 +1,7 @@
 {
 	"id": "accesskeys",
-	"evaluate": "accesskeys.js",
-	"after": "accesskeys-after.js",
+	"evaluate": "accesskeys-evaluate",
+	"after": "accesskeys-after",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

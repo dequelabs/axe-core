@@ -1,6 +1,6 @@
 {
 	"id": "exists",
-	"evaluate": "exists.js",
+	"evaluate": "exists-evaluate",
 	"metadata": {
 		"impact": "minor",
 		"messages": {

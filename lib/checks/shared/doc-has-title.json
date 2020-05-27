@@ -1,6 +1,6 @@
 {
 	"id": "doc-has-title",
-	"evaluate": "doc-has-title.js",
+	"evaluate": "doc-has-title-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

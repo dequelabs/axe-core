@@ -4,7 +4,7 @@ describe('has-lang', function() {
 	var fixture = document.getElementById('fixture');
 	var checkContext = axe.testUtils.MockCheckContext();
 	var checkSetup = axe.testUtils.checkSetup;
-	var hasLangEvaluate = checks['has-lang'].evaluate;
+	var hasLangEvaluate = axe.testUtils.getCheckEvaluate('has-lang');
 
 	afterEach(function() {
 		fixture.innerHTML = '';
@@ -44,5 +44,13 @@ describe('has-lang', function() {
 
 		assert.isFalse(hasLangEvaluate.apply(checkContext, params));
 		assert.equal(checkContext._data.messageKey, 'noLang');
+	});
+
+	it('should support options.attributes', function() {
+		var params = checkSetup('<div id="target" foo="cats"></div>', {
+			attributes: ['foo']
+		});
+
+		assert.isTrue(hasLangEvaluate.apply(checkContext, params));
 	});
 });

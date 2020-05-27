@@ -1,6 +1,9 @@
 {
 	"id": "duplicate-img-label",
-	"evaluate": "duplicate-img-label.js",
+	"evaluate": "duplicate-img-label-evaluate",
+	"options": {
+		"parentSelector": "button, [role=button], a[href], p, li, td, th"
+	},
 	"metadata": {
 		"impact": "minor",
 		"messages": {

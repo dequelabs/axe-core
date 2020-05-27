@@ -1,6 +1,6 @@
 {
 	"id": "label-content-name-mismatch",
-	"evaluate": "label-content-name-mismatch.js",
+	"evaluate": "label-content-name-mismatch-evaluate",
 	"options": {
 		"pixelThreshold": 0.1,
 		"occuranceThreshold": 3

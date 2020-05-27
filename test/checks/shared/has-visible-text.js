@@ -15,7 +15,9 @@ describe('has-visible-text', function() {
 	it('should return false if there is no visible text', function() {
 		var params = checkSetup('<object id="target"></object>');
 		assert.isFalse(
-			checks['has-visible-text'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('has-visible-text')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -24,14 +26,18 @@ describe('has-visible-text', function() {
 			'<object id="target"><span style="display:none">hello!</span></object>'
 		);
 		assert.isFalse(
-			checks['has-visible-text'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('has-visible-text')
+				.apply(checkContext, params)
 		);
 	});
 
 	it('should return true if there is visible text', function() {
 		var params = checkSetup('<object id="target">hello!</object>');
 		assert.isTrue(
-			checks['has-visible-text'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('has-visible-text')
+				.apply(checkContext, params)
 		);
 	});
 });

@@ -18,11 +18,9 @@ describe('aria-allowed-role', function() {
 		var options = {
 			ignoredTags: ['article']
 		};
-		var actual = checks['aria-allowed-role'].evaluate.call(
-			checkContext,
-			node,
-			options
-		);
+		var actual = axe.testUtils
+			.getCheckEvaluate('aria-allowed-role')
+			.call(checkContext, node, options);
 		var expected = true;
 		assert.equal(actual, expected);
 		assert.isNull(checkContext._data, null);
@@ -36,11 +34,9 @@ describe('aria-allowed-role', function() {
 		var options = {
 			allowImplicit: false
 		};
-		var actual = checks['aria-allowed-role'].evaluate.call(
-			checkContext,
-			target,
-			options
-		);
+		var actual = axe.testUtils
+			.getCheckEvaluate('aria-allowed-role')
+			.call(checkContext, target, options);
 		var expected = false;
 		assert.equal(actual, expected);
 		assert.deepEqual(checkContext._data, ['row']);
@@ -51,7 +47,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 	});
 
@@ -61,10 +59,9 @@ describe('aria-allowed-role', function() {
 			'role="presentation"></button>';
 		var target = fixture.querySelector('#target');
 		flatTreeSetup(fixture);
-		var actual = checks['aria-allowed-role'].evaluate.call(
-			checkContext,
-			target
-		);
+		var actual = axe.testUtils
+			.getCheckEvaluate('aria-allowed-role')
+			.call(checkContext, target);
 		assert.isUndefined(actual);
 	});
 
@@ -76,10 +73,9 @@ describe('aria-allowed-role', function() {
 			'</div>';
 		var target = fixture.querySelector('#target');
 		flatTreeSetup(fixture);
-		var actual = checks['aria-allowed-role'].evaluate.call(
-			checkContext,
-			target
-		);
+		var actual = axe.testUtils
+			.getCheckEvaluate('aria-allowed-role')
+			.call(checkContext, target);
 		assert.isUndefined(actual);
 	});
 
@@ -90,7 +86,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 	});
 
@@ -100,12 +98,16 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 		assert.deepEqual(checkContext._data, null);
 		node.setAttribute('role', 'none');
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 		assert.deepEqual(checkContext._data, null);
 	});
@@ -117,12 +119,16 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 		assert.deepEqual(checkContext._data, null);
 		node.setAttribute('role', 'none');
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 		assert.deepEqual(checkContext._data, null);
 	});
@@ -134,12 +140,16 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isFalse(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 		assert.deepEqual(checkContext._data, ['presentation']);
 		node.setAttribute('role', 'none');
 		assert.isFalse(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 		assert.deepEqual(checkContext._data, ['none']);
 	});
@@ -150,7 +160,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 		assert.isNull(checkContext._data, null);
 	});
@@ -162,7 +174,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 	});
 
@@ -173,7 +187,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 	});
 
@@ -184,7 +200,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 	});
 
@@ -195,7 +213,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 	});
 
@@ -206,7 +226,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 	});
 
@@ -217,7 +239,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 	});
 
@@ -228,7 +252,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 	});
 
@@ -239,7 +265,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 	});
 
@@ -250,7 +278,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 	});
 
@@ -261,7 +291,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 	});
 
@@ -271,7 +303,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isFalse(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 		assert.deepEqual(checkContext._data, ['link']);
 	});
@@ -282,7 +316,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 	});
 
@@ -292,7 +328,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 	});
 
@@ -302,7 +340,9 @@ describe('aria-allowed-role', function() {
 		node.href = '';
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
-		var actual = checks['aria-allowed-role'].evaluate.call(checkContext, node);
+		var actual = axe.testUtils
+			.getCheckEvaluate('aria-allowed-role')
+			.call(checkContext, node);
 		assert.isTrue(actual);
 	});
 
@@ -313,7 +353,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 	});
 
@@ -324,7 +366,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isFalse(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 	});
 
@@ -334,7 +378,9 @@ describe('aria-allowed-role', function() {
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, node)
 		);
 		assert.isNull(checkContext._data, null);
 	});
@@ -344,7 +390,9 @@ describe('aria-allowed-role', function() {
 		node.setAttribute('role', 'navigation');
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);
-		var actual = checks['aria-allowed-role'].evaluate.call(checkContext, node);
+		var actual = axe.testUtils
+			.getCheckEvaluate('aria-allowed-role')
+			.call(checkContext, node);
 		assert.isTrue(actual);
 		assert.isNull(checkContext._data, null);
 	});
@@ -354,7 +402,9 @@ describe('aria-allowed-role', function() {
 		var target = fixture.children[0];
 		flatTreeSetup(fixture);
 		assert.isFalse(
-			checks['aria-allowed-role'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, target)
 		);
 	});
 
@@ -363,7 +413,9 @@ describe('aria-allowed-role', function() {
 		var target = fixture.children[0];
 		flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['aria-allowed-role'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-role')
+				.call(checkContext, target)
 		);
 	});
 });

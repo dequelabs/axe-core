@@ -9,7 +9,7 @@ describe('unique-frame-title', function() {
 
 	it('should log title to data and return true', function() {
 		assert.isTrue(
-			checks['unique-frame-title'].evaluate.call(checkContext, {
+			axe.testUtils.getCheckEvaluate('unique-frame-title').call(checkContext, {
 				title: 'bananas'
 			})
 		);
@@ -17,14 +17,14 @@ describe('unique-frame-title', function() {
 	});
 
 	it('should convert text to lower case', function() {
-		checks['unique-frame-title'].evaluate.call(checkContext, {
+		axe.testUtils.getCheckEvaluate('unique-frame-title').call(checkContext, {
 			title: '\t  app\t \n \rle  '
 		});
 		assert.equal(checkContext._data, 'app le');
 	});
 
 	it('should take out space differences', function() {
-		checks['unique-frame-title'].evaluate.call(checkContext, {
+		axe.testUtils.getCheckEvaluate('unique-frame-title').call(checkContext, {
 			title: 'APPLE'
 		});
 		assert.equal(checkContext._data, 'apple');

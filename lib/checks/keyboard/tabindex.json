@@ -1,6 +1,6 @@
 {
 	"id": "tabindex",
-	"evaluate": "tabindex.js",
+	"evaluate": "tabindex-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

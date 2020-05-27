@@ -1,7 +1,7 @@
 {
 	"id": "listitem",
 	"selector": "li",
-	"matches": "no-role-matches.js",
+	"matches": "no-role-matches",
 	"tags": ["cat.structure", "wcag2a", "wcag131"],
 	"metadata": {
 		"description": "Ensures <li> elements are used semantically",

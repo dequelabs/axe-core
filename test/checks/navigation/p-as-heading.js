@@ -22,12 +22,16 @@ describe('p-as-heading', function() {
 			'<p id="target">elm 1</p> <p>elm 2</p>',
 			testOptions
 		);
-		assert.isTrue(checks['p-as-heading'].evaluate.apply(checkContext, params));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
+		);
 	});
 
 	it('returns true if there is no p element following it', function() {
 		var params = checkSetup('<p id="target">lone elm</p>', testOptions);
-		assert.isTrue(checks['p-as-heading'].evaluate.apply(checkContext, params));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
+		);
 	});
 
 	it('returns false if the font-weight is heavier', function() {
@@ -35,7 +39,9 @@ describe('p-as-heading', function() {
 			'<p id="target" style="font-weight:bold">elm 1</p>' + '<p>elm 2</p>',
 			testOptions
 		);
-		assert.isFalse(checks['p-as-heading'].evaluate.apply(checkContext, params));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
+		);
 	});
 
 	it('returns false if the font-size is bigger', function() {
@@ -43,7 +49,9 @@ describe('p-as-heading', function() {
 			'<p id="target" style="font-size:150%">elm 1</p> <p>elm 2</p>',
 			testOptions
 		);
-		assert.isFalse(checks['p-as-heading'].evaluate.apply(checkContext, params));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
+		);
 	});
 
 	it('returns false if the fake heading is italic and the text is not', function() {
@@ -51,7 +59,9 @@ describe('p-as-heading', function() {
 			'<p id="target" style="font-style:italic">elm 1</p> <p>elm 2</p>',
 			testOptions
 		);
-		assert.isFalse(checks['p-as-heading'].evaluate.apply(checkContext, params));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
+		);
 	});
 
 	it('returns true if both texts are bold, italic and larger', function() {
@@ -60,7 +70,9 @@ describe('p-as-heading', function() {
 				'<p style="font: italic bold 120% bold">elm 2</p>',
 			testOptions
 		);
-		assert.isTrue(checks['p-as-heading'].evaluate.apply(checkContext, params));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
+		);
 	});
 
 	it('considers styles of elements inside the paragraph', function() {
@@ -68,7 +80,9 @@ describe('p-as-heading', function() {
 			'<p id="target"><b>elm 1</b></p> <p>elm 2</p>',
 			testOptions
 		);
-		assert.isFalse(checks['p-as-heading'].evaluate.apply(checkContext, params));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
+		);
 	});
 
 	it('ignores empty child element for style', function() {
@@ -76,7 +90,9 @@ describe('p-as-heading', function() {
 			'<p id="target"><span> </span><b>elm 1</b></p> <p>elm 2</p>',
 			testOptions
 		);
-		assert.isFalse(checks['p-as-heading'].evaluate.apply(checkContext, params));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
+		);
 	});
 
 	it('considers styles of elements that do not contain all the text', function() {
@@ -84,7 +100,9 @@ describe('p-as-heading', function() {
 			'<p id="target"><b>elm</b> 1</p> <p>elm 2</p>',
 			testOptions
 		);
-		assert.isTrue(checks['p-as-heading'].evaluate.apply(checkContext, params));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
+		);
 	});
 
 	it('returns undefined instead of false if the element is inside a blockquote', function() {
@@ -95,7 +113,7 @@ describe('p-as-heading', function() {
 			testOptions
 		);
 		assert.isUndefined(
-			checks['p-as-heading'].evaluate.apply(checkContext, params)
+			axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
 		);
 	});
 
@@ -106,7 +124,9 @@ describe('p-as-heading', function() {
 				'</blockquote>',
 			testOptions
 		);
-		assert.isTrue(checks['p-as-heading'].evaluate.apply(checkContext, params));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
+		);
 	});
 
 	it('returns undefined if a previous sibling has a similar font-weight', function() {
@@ -117,7 +137,7 @@ describe('p-as-heading', function() {
 			testOptions
 		);
 		assert.isUndefined(
-			checks['p-as-heading'].evaluate.apply(checkContext, params)
+			axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
 		);
 	});
 
@@ -130,7 +150,9 @@ describe('p-as-heading', function() {
 				options
 			);
 			assert.isTrue(
-				checks['p-as-heading'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('p-as-heading')
+					.apply(checkContext, params)
 			);
 		});
 
@@ -144,7 +166,9 @@ describe('p-as-heading', function() {
 				options
 			);
 			assert.isTrue(
-				checks['p-as-heading'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('p-as-heading')
+					.apply(checkContext, params)
 			);
 		});
 
@@ -159,7 +183,9 @@ describe('p-as-heading', function() {
 				options
 			);
 			assert.isFalse(
-				checks['p-as-heading'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('p-as-heading')
+					.apply(checkContext, params)
 			);
 		});
 
@@ -173,7 +199,9 @@ describe('p-as-heading', function() {
 				options
 			);
 			assert.isTrue(
-				checks['p-as-heading'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('p-as-heading')
+					.apply(checkContext, params)
 			);
 		});
 
@@ -187,7 +215,9 @@ describe('p-as-heading', function() {
 				options
 			);
 			assert.isFalse(
-				checks['p-as-heading'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('p-as-heading')
+					.apply(checkContext, params)
 			);
 		});
 
@@ -206,7 +236,9 @@ describe('p-as-heading', function() {
 				options
 			);
 			assert.isTrue(
-				checks['p-as-heading'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('p-as-heading')
+					.apply(checkContext, params)
 			);
 		});
 	});
@@ -220,7 +252,9 @@ describe('p-as-heading', function() {
 				testOptions
 			);
 			assert.isUndefined(
-				checks['p-as-heading'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('p-as-heading')
+					.apply(checkContext, params)
 			);
 		}
 	);
@@ -234,7 +268,9 @@ describe('p-as-heading', function() {
 				testOptions
 			);
 			assert.isTrue(
-				checks['p-as-heading'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('p-as-heading')
+					.apply(checkContext, params)
 			);
 		}
 	);

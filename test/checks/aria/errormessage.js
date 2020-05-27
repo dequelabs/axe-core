@@ -25,7 +25,9 @@ describe('aria-errormessage', function() {
 		var target = fixture.children[0];
 		target.setAttribute('aria-errormessage', 'plain');
 		assert.isFalse(
-			checks['aria-errormessage'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('aria-errormessage')
+				.call(checkContext, target)
 		);
 	});
 
@@ -36,7 +38,9 @@ describe('aria-errormessage', function() {
 		var target = fixture.children[0];
 		target.setAttribute('aria-errormessage', 'alert');
 		assert.isTrue(
-			checks['aria-errormessage'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('aria-errormessage')
+				.call(checkContext, target)
 		);
 	});
 
@@ -47,7 +51,9 @@ describe('aria-errormessage', function() {
 		var target = fixture.children[0];
 		target.setAttribute('aria-errormessage', 'live');
 		assert.isTrue(
-			checks['aria-errormessage'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('aria-errormessage')
+				.call(checkContext, target)
 		);
 	});
 
@@ -59,7 +65,9 @@ describe('aria-errormessage', function() {
 		target.setAttribute('aria-errormessage', 'plain');
 		target.setAttribute('aria-describedby', 'plain');
 		assert.isTrue(
-			checks['aria-errormessage'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('aria-errormessage')
+				.call(checkContext, target)
 		);
 	});
 
@@ -69,7 +77,9 @@ describe('aria-errormessage', function() {
 		fixture.innerHTML = testHTML;
 		var target = fixture.children[0];
 		target.setAttribute('aria-errormessage', ' foo  bar \tbaz  ');
-		checks['aria-errormessage'].evaluate.call(checkContext, target);
+		axe.testUtils
+			.getCheckEvaluate('aria-errormessage')
+			.call(checkContext, target);
 		assert.deepEqual(checkContext._data, ['foo', 'bar', 'baz']);
 	});
 
@@ -79,10 +89,9 @@ describe('aria-errormessage', function() {
 		].allowEmpty = true;
 		fixture.innerHTML = '<div aria-errormessage=" "></div>';
 		assert.isTrue(
-			checks['aria-errormessage'].evaluate.call(
-				checkContext,
-				fixture.children[0]
-			)
+			axe.testUtils
+				.getCheckEvaluate('aria-errormessage')
+				.call(checkContext, fixture.children[0])
 		);
 	});
 
@@ -92,10 +101,9 @@ describe('aria-errormessage', function() {
 		].allowEmpty = false;
 		fixture.innerHTML = '<div aria-errormessage=" "></div>';
 		assert.isFalse(
-			checks['aria-errormessage'].evaluate.call(
-				checkContext,
-				fixture.children[0]
-			)
+			axe.testUtils
+				.getCheckEvaluate('aria-errormessage')
+				.call(checkContext, fixture.children[0])
 		);
 	});
 
@@ -107,7 +115,9 @@ describe('aria-errormessage', function() {
 				'<div id="live" aria-live="assertive"></div>'
 			);
 			assert.isFalse(
-				checks['aria-errormessage'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-errormessage')
+					.apply(checkContext, params)
 			);
 		}
 	);
@@ -121,7 +131,9 @@ describe('aria-errormessage', function() {
 					'<div id="live" aria-live="assertive"></div>'
 			);
 			assert.isTrue(
-				checks['aria-errormessage'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-errormessage')
+					.apply(checkContext, params)
 			);
 		}
 	);

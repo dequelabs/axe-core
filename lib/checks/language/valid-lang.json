@@ -1,6 +1,9 @@
 {
 	"id": "valid-lang",
-	"evaluate": "valid-lang.js",
+	"evaluate": "valid-lang-evaluate",
+	"options": {
+		"attributes": ["lang", "xml:lang"]
+	},
 	"metadata": {
 		"impact": "serious",
 		"messages": {

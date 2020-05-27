@@ -1,7 +1,7 @@
 {
 	"id": "duplicate-id-aria",
-	"evaluate": "duplicate-id.js",
-	"after": "duplicate-id-after.js",
+	"evaluate": "duplicate-id-evaluate",
+	"after": "duplicate-id-after",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

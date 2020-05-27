@@ -1,6 +1,6 @@
 {
 	"id": "link-in-text-block",
-	"evaluate": "link-in-text-block.js",
+	"evaluate": "link-in-text-block-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

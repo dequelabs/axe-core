@@ -1,6 +1,6 @@
 {
 	"id": "caption",
-	"evaluate": "caption.js",
+	"evaluate": "caption-evaluate",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

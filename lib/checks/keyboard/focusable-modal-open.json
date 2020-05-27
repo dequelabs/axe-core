@@ -1,6 +1,6 @@
 {
 	"id": "focusable-modal-open",
-	"evaluate": "focusable-modal-open.js",
+	"evaluate": "focusable-modal-open-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

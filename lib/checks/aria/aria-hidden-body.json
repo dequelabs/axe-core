@@ -1,6 +1,6 @@
 {
 	"id": "aria-hidden-body",
-	"evaluate": "aria-hidden-body.js",
+	"evaluate": "aria-hidden-body-evaluate",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

@@ -1,7 +1,7 @@
 {
 	"id": "unique-frame-title",
-	"evaluate": "unique-frame-title.js",
-	"after": "unique-frame-title-after.js",
+	"evaluate": "unique-frame-title-evaluate",
+	"after": "unique-frame-title-after",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

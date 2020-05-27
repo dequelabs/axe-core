@@ -17,10 +17,6 @@
 			"description": "",
 			"help": "ARIA-attributten 'role' skal være passende for elementet"
 		},
-		"aria-dpub-role-fallback": {
-			"description": "",
-			"help": "Ikke-understøttede DPUB ARIA-roller bør kun bruges på elementer med implicitte fallback-roller"
-		},
 		"aria-hidden-body": {
 			"description": "",
 			"help": "aria-hidden='true' må ikke bruges på dokumentets <body> element"
@@ -88,10 +84,6 @@
 		"bypass": {
 			"description": "",
 			"help": "Sider skal have en metode til at springe over gentaget indhold"
-		},
-		"checkboxgroup": {
-			"description": "",
-			"help": "Afkrydsningsfelter med den samme 'name' attributværdi skal være del af en gruppe"
 		},
 		"color-contrast": {
 			"description": "",
@@ -229,10 +221,6 @@
 			"description": "",
 			"help": "Sikrer at landmarks er unikke"
 		},
-		"layout-table": {
-			"description": "",
-			"help": "Tabeller brugt til layout må ikke bruge beskrivende elementer (så som <th> og <caption>)"
-		},
 		"link-in-text-block": {
 			"description": "",
 			"help": "Links skal være fremtrædende fra den omkringliggende tekst på en måde, som ikke afhænger af farve"
@@ -276,10 +264,6 @@
 		"page-has-heading-one": {
 			"description": "",
 			"help": "Siden skal indeholde en overskrift på øverste niveau"
-		},
-		"radiogroup": {
-			"description": "",
-			"help": "Radioknapper med identiske 'name' attributværdier skal være del af samme gruppe"
 		},
 		"region": {
 			"description": "",
@@ -336,10 +320,6 @@
 		"video-caption": {
 			"description": "",
 			"help": "<video> elementer skal have undertekster ('captions')"
-		},
-		"video-description": {
-			"description": "",
-			"help": "<video> elementer skal have et 'description' track"
 		}
 	},
 	"checks": {
@@ -372,10 +352,6 @@
 		"has-widget-role": {
 			"pass": "Elementet har en 'widget'-rolle.",
 			"fail": "Elementet har ikke en 'widget'-rolle."
-		},
-		"implicit-role-fallback": {
-			"pass": "Elementets implicitte ARIA-rolle er en passende fallback",
-			"fail": "Elementets implicitte ARIA-rolle er ikke en god fallback for den (ikke-supporterede) rolle"
 		},
 		"invalidrole": {
 			"pass": "ARIA-rollen er korrekt",
@@ -455,14 +431,6 @@
 		"autocomplete-valid": {
 			"pass": "'autocomplete'-attributten er korrekt formateret",
 			"fail": "'autocomplete'-attributten er forkert formateret"
-		},
-		"fieldset": {
-			"pass": "Elementet er indhold i en gruppe af form-felter",
-			"fail": "{{var code = it.data && it.data.failureCode;}}{{? code === 'no-legend'}}Gruppen af form-felter ('fieldset') mangler et 'legend'-element som sit første under-element{{?? code === 'empty-legend'}}'Legend'-elementet har ikke tekst, som er synlig for skærmlæsere{{?? code === 'mixed-inputs'}}Gruppen af form-felter ('fieldset') indeholder ikke-relaterede input-elementer{{?? code === 'no-group-label'}}ARIA-gruppen mangler en 'aria-label' eller 'aria-labelledby'{{?? code === 'group-mixed-inputs'}}ARIA-gruppen indeholder ikke-relateret indhold{{??}}Elementet mangler en omkringliggende grupperingselement ('fieldset') eller ARIA-gruppe{{?}}"
-		},
-		"group-labelledby": {
-			"pass": "Elementer med navnet \"{{=it.data.name}}\" har både en delt og en unik label via 'aria-labelledby'-referencer",
-			"fail": "{{var code = it.data && it.data.failureCode;}}elementer med navnet \"{{=it.data.name}}\" har ikke alle {{? code === 'no-shared-label' }}en delt label{{?? code === 'no-unik-label' }}en unik label{{??}}både en delt og unik label{{?}}, via 'aria-labelledby'-referencer"
 		},
 		"accesskeys": {
 			"pass": "'Accesskey' attributværdien er unik",
@@ -591,10 +559,6 @@
 		"caption": {
 			"pass": "Multimedia-elementet har et track med undertekster",
 			"incomplete": "Tjek at undertekster er tilgængelige for elementet"
-		},
-		"description": {
-			"pass": "Multimedia-elementet har et lydbeskrivende ('audio-description') track",
-			"incomplete": "Tjek at elementet har et lydbeskrivende ('audio-description') track"
 		},
 		"frame-tested": {
 			"pass": "Denne <iframe> blev testet af axe-core",
@@ -726,18 +690,6 @@
 		"caption-faked": {
 			"pass": "Den første række i tabellen er ikke brugt som en beskrivelse ('caption')",
 			"fail": "Det første element i tabellen bør være en beskrivelse (<caption>) i stedet for en celle"
-		},
-		"has-caption": {
-			"pass": "Layouttabellen bruger ikke et <caption> element",
-			"fail": "Layouttabellen bruger <caption> element"
-		},
-		"has-summary": {
-			"pass": "Layouttabellen bruger ikke 'summary'-attribut",
-			"fail": "Layouttabellen bruger 'summary'-attribut"
-		},
-		"has-th": {
-			"pass": "Layouttabellen bruger ikke <th> elementer",
-			"fail": "Layouttabellen bruger <th> elementer"
 		},
 		"html5-scope": {
 			"pass": "'Scope'-attributten bør kun bruges på tabellens header-elementer (<th>)",

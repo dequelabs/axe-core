@@ -1,6 +1,6 @@
 {
 	"id": "meta-refresh",
-	"evaluate": "meta-refresh.js",
+	"evaluate": "meta-refresh-evaluate",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

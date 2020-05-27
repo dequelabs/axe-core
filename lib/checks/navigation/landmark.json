@@ -1,6 +1,9 @@
 {
 	"id": "landmark",
-	"evaluate": "landmark.js",
+	"evaluate": "has-descendant-evaluate",
+	"options": {
+		"selector": "main, [role=main]"
+	},
 	"metadata": {
 		"impact": "serious",
 		"messages": {
