@@ -86,8 +86,23 @@ describe('aria.implicitRole', function() {
 		}
 	});
 
-	it('should return form for form with accessible name', function() {
+	it('should return form for form with accessible name aria-label', function() {
 		fixture.innerHTML = '<form id="target" aria-label="foo"></form>';
+		var node = fixture.querySelector('#target');
+		flatTreeSetup(fixture);
+		assert.equal(implicitRole(node), 'form');
+	});
+
+	it('should return form for form with accessible name aria-labelledby', function() {
+		fixture.innerHTML =
+			'<div id="foo">foo</div><form id="target" aria-labelledby="foo"></form>';
+		var node = fixture.querySelector('#target');
+		flatTreeSetup(fixture);
+		assert.equal(implicitRole(node), 'form');
+	});
+
+	it('should return form for form with accessible name title', function() {
+		fixture.innerHTML = '<form id="target" title="foo"></form>';
 		var node = fixture.querySelector('#target');
 		flatTreeSetup(fixture);
 		assert.equal(implicitRole(node), 'form');
@@ -270,8 +285,23 @@ describe('aria.implicitRole', function() {
 		assert.equal(implicitRole(node), 'combobox');
 	});
 
-	it('should return region for "section" with accessible name', function() {
+	it('should return region for "section" with accessible name aria-label', function() {
 		fixture.innerHTML = '<section id="target" aria-label="foo"></section>';
+		var node = fixture.querySelector('#target');
+		flatTreeSetup(fixture);
+		assert.equal(implicitRole(node), 'region');
+	});
+
+	it('should return region for section with accessible name aria-labelledby', function() {
+		fixture.innerHTML =
+			'<div id="foo">foo</div><section id="target" aria-labelledby="foo"></section>';
+		var node = fixture.querySelector('#target');
+		flatTreeSetup(fixture);
+		assert.equal(implicitRole(node), 'region');
+	});
+
+	it('should return region for section with accessible name title', function() {
+		fixture.innerHTML = '<section id="target" title="foo"></section>';
 		var node = fixture.querySelector('#target');
 		flatTreeSetup(fixture);
 		assert.equal(implicitRole(node), 'region');
@@ -279,6 +309,28 @@ describe('aria.implicitRole', function() {
 
 	it('should return null for "section" without accessible name', function() {
 		fixture.innerHTML = '<section id="target"></section>';
+		var node = fixture.querySelector('#target');
+		flatTreeSetup(fixture);
+		assert.isNull(implicitRole(node));
+	});
+
+	it('should return null for "section" with empty aria-label', function() {
+		fixture.innerHTML = '<section id="target" aria-label=" "></section>';
+		var node = fixture.querySelector('#target');
+		flatTreeSetup(fixture);
+		assert.isNull(implicitRole(node));
+	});
+
+	it('should return null for "section" with empty aria-labelledby', function() {
+		fixture.innerHTML =
+			'<div id="foo"> </div><section id="target" aria-labelledby="foo"></section>';
+		var node = fixture.querySelector('#target');
+		flatTreeSetup(fixture);
+		assert.isNull(implicitRole(node));
+	});
+
+	it('should return null for "section" with empty title', function() {
+		fixture.innerHTML = '<section id="target" title=" "></section>';
 		var node = fixture.querySelector('#target');
 		flatTreeSetup(fixture);
 		assert.isNull(implicitRole(node));
