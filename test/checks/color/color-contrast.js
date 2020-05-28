@@ -397,6 +397,97 @@ describe('color-contrast', function() {
 		assert.isFalse(actual);
 	});
 
+	it('should support options.boldValue', function() {
+		var params = checkSetup(
+			'<div style="color: gray; background-color: white; font-size: 14pt; font-weight: 100" id="target">' +
+				'<span style="font-weight:bolder">My text</span></div>',
+			{
+				boldValue: 100
+			}
+		);
+
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
+	it('should support options.boldPt', function() {
+		var params = checkSetup(
+			'<div style="color: gray; background-color: white; font-size: 6pt; font-weight: 700" id="target">' +
+				'<span style="font-weight:bolder">My text</span></div>',
+			{
+				boldPt: 6
+			}
+		);
+
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
+	it('should support options.nonBoldPt', function() {
+		var params = checkSetup(
+			'<div style="color: gray; background-color: white; font-size: 6pt; font-weight: 100" id="target">' +
+				'<span style="font-weight:bolder">My text</span></div>',
+			{
+				nonBoldPt: 6
+			}
+		);
+
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
+	it('should support options.minNormalContrastRatio', function() {
+		var params = checkSetup(
+			'<div style="color: #999; background-color: white; font-size: 14pt; font-weight: 100" id="target">' +
+				'<span style="font-weight:bolder">My text</span></div>',
+			{
+				minNormalContrastRatio: 3
+			}
+		);
+
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
+	it('should support options.normalContrastRatio', function() {
+		var params = checkSetup(
+			'<div style="color: #999; background-color: white; font-size: 14pt; font-weight: 100" id="target">' +
+				'<span style="font-weight:bolder">My text</span></div>',
+			{
+				normalContrastRatio: 2.5
+			}
+		);
+
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
+	it('should support options.minLargeContrastRatio', function() {
+		var params = checkSetup(
+			'<div style="color: #ccc; background-color: white; font-size: 18pt; font-weight: 100" id="target">' +
+				'<span style="font-weight:bolder">My text</span></div>',
+			{
+				minLargeContrastRatio: 1.8
+			}
+		);
+
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
+	it('should support options.largeContrastRatio', function() {
+		var params = checkSetup(
+			'<div style="color: #ccc; background-color: white; font-size: 18pt; font-weight: 100" id="target">' +
+				'<span style="font-weight:bolder">My text</span></div>',
+			{
+				largeContrastRatio: 1.5
+			}
+		);
+
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
 	(shadowSupported ? it : xit)(
 		'returns colors across Shadow DOM boundaries',
 		function() {

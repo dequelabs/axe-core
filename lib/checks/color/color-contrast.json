@@ -4,7 +4,14 @@
 	"options": {
 		"noScroll": false,
 		"ignoreUnicode": true,
-		"ignoreLength": false
+		"ignoreLength": false,
+		"boldValue": 700,
+		"boldPt": 14,
+		"nonBoldPt": 18,
+		"minNormalContrastRatio": 0,
+		"normalContrastRatio": 4.5,
+		"minLargeContrastRatio": 0,
+		"largeContrastRatio": 3
 	},
 	"metadata": {
 		"impact": "serious",
