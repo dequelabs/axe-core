@@ -222,6 +222,7 @@ workflows:
       # install deps
       - dependencies_unix
       - dependencies_win
+      - dependencies_macos
       # Run linting
       - lint:
           requires:
