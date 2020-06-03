@@ -117,17 +117,6 @@ module.exports = function(grunt) {
 			webdriver.usingServer(process.env.REMOTE_SELENIUM_URL);
 		}
 
-		// @see https://github.com/SeleniumHQ/selenium/issues/6026
-		if (browser === 'safari') {
-			var safari = require('selenium-webdriver/safari');
-			var server = await new safari.ServiceBuilder()
-				.addArguments('--legacy')
-				.build()
-				.start();
-
-			webdriver.usingServer(server);
-		}
-
 		return {
 			driver: webdriver.build(),
 			isMobile: mobileBrowser.length > 1
@@ -181,15 +170,7 @@ module.exports = function(grunt) {
 			}
 
 			// Give driver timeout options for scripts
-			driver
-				.manage()
-				.timeouts()
-				.setScriptTimeout(!isMobile ? 60000 * 5 : 60000 * 10);
-			// allow to wait for page load implicitly
-			driver
-				.manage()
-				.timeouts()
-				.implicitlyWait(50000);
+			driver;
 
 			// Test all pages
 			runTestUrls(driver, isMobile, options.urls)

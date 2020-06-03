@@ -126,7 +126,6 @@
 		"prettier": "^1.17.1",
 		"puppeteer": "^2.0.0",
 		"revalidator": "~0.3.1",
-		"selenium-webdriver": "~3.6.0",
 		"sinon": "^7.5.0",
 		"sri-toolbox": "^0.2.0",
 		"standard-version": "^7.0.0",
@@ -135,7 +134,9 @@
 		"weakmap-polyfill": "^2.0.0",
 		"webpack": "^4.42.0"
 	},
-	"dependencies": {},
+	"dependencies": {
+		"selenium-webdriver": "^4.0.0-alpha.1"
+	},
 	"lint-staged": {
 		"*.{md,json,ts,html}": [
 			"prettier --write",
