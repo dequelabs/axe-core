@@ -139,7 +139,9 @@ jobs:
             defaults write com.apple.Safari IncludeDevelopMenu YES
             defaults write com.apple.Safari AllowRemoteAutomation 1
             sudo safaridriver --enable
-            safaridriver -p 0 &
+        - run:
+              command: safaridriver -p 0
+              background: true
         # run safari webdriver tests
         - run: npx grunt connect test-webdriver:safari --force
 
