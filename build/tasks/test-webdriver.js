@@ -109,6 +109,10 @@ module.exports = function(grunt) {
 			};
 		}
 
+		if (browser === 'ie') {
+			browser = 'internet explorer';
+		}
+
 		var webdriver = new WebDriver.Builder()
 			.withCapabilities(capabilities)
 			.forBrowser(browser);

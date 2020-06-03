@@ -51,7 +51,7 @@ module.exports = function(grunt) {
 	var webDriverTestBrowsers = [
 		'firefox',
 		'chrome',
-		'internet explorer',
+		'ie',
 		'chrome-mobile',
 		'safari'
 	];
