@@ -137,7 +137,7 @@ jobs:
         # enable connection to safaridriver
         - run: sudo safaridriver --enable
         # run safari webdriver tests
-        - run: npx grunt connect test-webdriver:safari
+        - run: npx grunt connect test-webdriver:safari --force
         # test examples
         - run: npm run test:examples
 
