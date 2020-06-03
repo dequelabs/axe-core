@@ -34,12 +34,6 @@ restore_dependency_cache_win: &restore_dependency_cache_win
       - v8-cache-win-{{ checksum "package.json" }}
       - v8-cache-win-
 
-restore_dependency_cache_macos: &restore_dependency_cache_macos
-  restore_cache:
-    keys:
-      - v8-cache-win-{{ checksum "package.json" }}
-      - v8-cache-win-
-
 jobs:
   # Fetch and cache dependencies.
   dependencies_unix:
@@ -72,7 +66,7 @@ jobs:
     steps:
       - checkout
       - <<: *set_npm_auth
-      - <<: *restore_dependency_cache_macos
+      - <<: *restore_dependency_cache_unix
       - run: npm ci
       - save_cache:
           key: v8-cache-unix-{{ checksum "package.json" }}
