@@ -34,6 +34,11 @@ restore_dependency_cache_win: &restore_dependency_cache_win
       - v8-cache-win-{{ checksum "package.json" }}
       - v8-cache-win-
 
+restore_dependency_cache_macos: &restore_dependency_cache_macos
+  restore_cache:
+    keys:
+      - v8-cache-macos-{{ checksum "package.json" }}
+      - v8-cache-macos-
 jobs:
   # Fetch and cache dependencies.
   dependencies_unix:
@@ -66,10 +71,10 @@ jobs:
     steps:
       - checkout
       - <<: *set_npm_auth
-      - <<: *restore_dependency_cache_unix
+      - <<: *restore_dependency_cache_macos
       - run: npm ci
       - save_cache:
-          key: v8-cache-unix-{{ checksum "package.json" }}
+          key: v8-cache-macos-{{ checksum "package.json" }}
           paths:
             - node_modules
 
@@ -123,7 +128,7 @@ jobs:
       steps:
         - checkout
         # npm i or restore cache
-        - <<: *restore_dependency_cache_win
+        - <<: *restore_dependency_cache_macos
         # build `axe`
         - run: npm run build
         # get fixtures ready for running tests
