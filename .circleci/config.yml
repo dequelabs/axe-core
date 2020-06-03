@@ -135,7 +135,11 @@ jobs:
         - run: npx grunt testconfig
         - run: npx grunt fixture
         # enable connection to safaridriver
-        - run: sudo safaridriver --enable
+        - run: |
+            defaults write com.apple.Safari IncludeDevelopMenu YES
+            defaults write com.apple.Safari AllowRemoteAutomation 1
+            sudo safaridriver --enable
+            safaridriver -p 0 &
         # run safari webdriver tests
         - run: npx grunt connect test-webdriver:safari --force
 
