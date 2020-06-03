@@ -176,9 +176,6 @@ module.exports = function(grunt) {
 				return done();
 			}
 
-			// Give driver timeout options for scripts
-			driver;
-
 			// Test all pages
 			runTestUrls(driver, isMobile, options.urls)
 				.then(function(testErrors) {

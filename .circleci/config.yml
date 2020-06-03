@@ -143,7 +143,7 @@ jobs:
               command: safaridriver -p 0
               background: true
         # run safari webdriver tests
-        - run: npx grunt connect test-webdriver:safari --force
+        - run: npx grunt connect test-webdriver:safari
 
   # Run examples under `doc/examples`
   test_examples:
