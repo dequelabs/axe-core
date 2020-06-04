@@ -1,4 +1,4 @@
-describe('axe.utils.parseCrossOriginStylesheet', function() {
+describe.skip('axe.utils.parseCrossOriginStylesheet', function() {
 	'use strict';
 
 	var dynamicDoc;
