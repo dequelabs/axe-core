@@ -125,7 +125,10 @@ declare namespace axe {
 		checks?: Check[];
 		rules?: Rule[];
 		locale?: Locale;
+		disableOtherRules?: boolean;
 		axeVersion?: string;
+		// Deprecated - do not use.
+		ver?: string;
 	}
 	interface Check {
 		id: string;
