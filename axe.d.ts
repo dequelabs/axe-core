@@ -127,7 +127,6 @@ declare namespace axe {
 		locale?: Locale;
 		disableOtherRules?: boolean;
 		axeVersion?: string;
-		rulesetVersion?: string;
 		// Deprecated - do not use.
 		ver?: string;
 	}
