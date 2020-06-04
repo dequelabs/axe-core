@@ -18,7 +18,7 @@ describe('axe.utils.parseCrossOriginStylesheet', function() {
 
 	it('returns cross-origin stylesheet', function(done) {
 		var importUrl =
-			'https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css';
+			'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css';
 		var options = {
 			rootNode: document,
 			shadowId: undefined,
@@ -49,8 +49,8 @@ describe('axe.utils.parseCrossOriginStylesheet', function() {
 
 				axe.testUtils.assertStylesheet(
 					data.sheet,
-					'.container',
-					'.container { position: relative; width: 100%; max-width: 960px; margin: 0px auto; padding: 0px 20px; box-sizing: border-box; }'
+					'html',
+					'html{line-height:1.15;-webkit-text-size-adjust:100%}'
 				);
 				done();
 			})
