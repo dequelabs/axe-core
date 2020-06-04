@@ -5,7 +5,7 @@
 declare namespace axe {
 	type ImpactValue = 'minor' | 'moderate' | 'serious' | 'critical';
 
-	type TagValue = 'wcag2a' | 'wcag2aa' | 'section508' | 'best-practice';
+	type TagValue = 'wcag2a' | 'wcag2aa' | 'section508' | 'best-practice' | 'wcag21a' | 'wcag21aa';
 
 	type ReporterVersion = 'v1' | 'v2' | 'raw' | 'raw-env' | 'no-passes';
 
