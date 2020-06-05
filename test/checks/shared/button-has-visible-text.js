@@ -28,7 +28,6 @@ describe('button-has-visible-text', function() {
 				.getCheckEvaluate('button-has-visible-text')
 				.apply(checkContext, checkArgs)
 		);
-		assert.deepEqual(checkContext._data, 'Name');
 	});
 
 	it('should return true if ARIA button has text', function() {
@@ -42,7 +41,6 @@ describe('button-has-visible-text', function() {
 				.getCheckEvaluate('button-has-visible-text')
 				.apply(checkContext, checkArgs)
 		);
-		assert.deepEqual(checkContext._data, 'Text');
 	});
 
 	it('should return false if ARIA button has no text', function() {

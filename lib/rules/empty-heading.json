@@ -8,6 +8,6 @@
 		"help": "Headings must not be empty"
 	},
 	"all": [],
-	"any": ["has-visible-text"],
+	"any": ["has-accessible-text"],
 	"none": []
 }
