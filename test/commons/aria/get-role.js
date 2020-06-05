@@ -2,6 +2,7 @@ describe('aria.getRole', function() {
 	'use strict';
 	var aria = axe.commons.aria;
 	var roleDefinitions = aria.lookupTable.role;
+	var flatTreeSetup = axe.testUtils.flatTreeSetup;
 
 	var orig;
 	beforeEach(function() {
@@ -15,74 +16,87 @@ describe('aria.getRole', function() {
 	it('returns valid roles', function() {
 		var node = document.createElement('div');
 		node.setAttribute('role', 'button');
+		flatTreeSetup(node);
 		assert.equal(aria.getRole(node), 'button');
 	});
 
 	it('handles case sensitivity', function() {
 		var node = document.createElement('div');
 		node.setAttribute('role', 'BUTTON');
+		flatTreeSetup(node);
 		assert.equal(aria.getRole(node), 'button');
 	});
 
 	it('handles whitespacing', function() {
 		var node = document.createElement('div');
 		node.setAttribute('role', ' button  ');
+		flatTreeSetup(node);
 		assert.equal(aria.getRole(node), 'button');
 	});
 
 	it('returns null when there is no role', function() {
 		var node = document.createElement('div');
+		flatTreeSetup(node);
 		assert.isNull(aria.getRole(node));
 	});
 
 	it('returns the explit role if it is valid and non-abstract', function() {
 		var node = document.createElement('li');
 		node.setAttribute('role', 'menuitem');
+		flatTreeSetup(node);
 		assert.equal(aria.getRole(node), 'menuitem');
 	});
 
 	it('returns the implicit role if the explicit is invalid', function() {
 		var node = document.createElement('li');
 		node.setAttribute('role', 'foobar');
+		flatTreeSetup(node);
 		assert.equal(aria.getRole(node), 'listitem');
 	});
 
 	it('ignores fallback roles by default', function() {
 		var node = document.createElement('div');
 		node.setAttribute('role', 'spinbutton button');
+		flatTreeSetup(node);
 		assert.isNull(aria.getRole(node));
 	});
 
 	it('accepts virtualNode objects', function() {
 		var node = document.createElement('div');
 		node.setAttribute('role', 'button');
+		flatTreeSetup(node);
 		assert.equal(aria.getRole({ actualNode: node }), 'button');
 	});
 
 	it('returns null if the node is not an element', function() {
 		var node = document.createTextNode('foo bar baz');
+		flatTreeSetup(node);
 		assert.isNull(aria.getRole(node));
 	});
 
 	describe('noImplicit', function() {
 		it('returns the implicit role by default', function() {
 			var node = document.createElement('li');
+			flatTreeSetup(node);
 			assert.equal(aria.getRole(node), 'listitem');
 		});
 
 		it('returns null rather than the implicit role with `noImplicit: true`', function() {
 			var node = document.createElement('li');
+			flatTreeSetup(node);
 			assert.isNull(aria.getRole(node, { noImplicit: true }));
 		});
 
 		it('still returns the explicit role', function() {
 			var node = document.createElement('li');
 			node.setAttribute('role', 'button');
+			flatTreeSetup(node);
 			assert.equal(aria.getRole(node, { noImplicit: true }), 'button');
 		});
 
 		it('returns the implicit role with `noImplicit: false`', function() {
 			var node = document.createElement('li');
+			flatTreeSetup(node);
 			assert.equal(aria.getRole(node, { noImplicit: false }), 'listitem');
 		});
 	});
@@ -91,6 +105,7 @@ describe('aria.getRole', function() {
 		it('ignores abstract roles by default', function() {
 			var node = document.createElement('li');
 			node.setAttribute('role', 'section');
+			flatTreeSetup(node);
 			assert.equal(roleDefinitions.section.type, 'abstract');
 			assert.equal(aria.getRole(node), 'listitem');
 		});
@@ -98,6 +113,7 @@ describe('aria.getRole', function() {
 		it('returns abstract roles with `abstracts: true`', function() {
 			var node = document.createElement('li');
 			node.setAttribute('role', 'section');
+			flatTreeSetup(node);
 			assert.equal(roleDefinitions.section.type, 'abstract');
 			assert.equal(aria.getRole(node, { abstracts: true }), 'section');
 		});
@@ -105,6 +121,7 @@ describe('aria.getRole', function() {
 		it('does not returns abstract roles with `abstracts: false`', function() {
 			var node = document.createElement('li');
 			node.setAttribute('role', 'section');
+			flatTreeSetup(node);
 			assert.equal(roleDefinitions.section.type, 'abstract');
 			assert.equal(aria.getRole(node, { abstracts: false }), 'listitem');
 		});
@@ -114,18 +131,21 @@ describe('aria.getRole', function() {
 		it('ignores DPUB roles by default', function() {
 			var node = document.createElement('section');
 			node.setAttribute('role', 'doc-chapter');
+			flatTreeSetup(node);
 			assert.isNull(aria.getRole(node));
 		});
 
 		it('returns DPUB roles with `dpub: true`', function() {
 			var node = document.createElement('section');
 			node.setAttribute('role', 'doc-chapter');
+			flatTreeSetup(node);
 			assert.equal(aria.getRole(node, { dpub: true }), 'doc-chapter');
 		});
 
 		it('does not returns DPUB roles with `dpub: false`', function() {
 			var node = document.createElement('section');
 			node.setAttribute('role', 'doc-chapter');
+			flatTreeSetup(node);
 			assert.isNull(aria.getRole(node, { dpub: false }));
 		});
 	});
@@ -134,36 +154,42 @@ describe('aria.getRole', function() {
 		it('returns the first valid item in the list', function() {
 			var node = document.createElement('div');
 			node.setAttribute('role', 'link button');
+			flatTreeSetup(node);
 			assert.equal(aria.getRole(node, { fallback: true }), 'link');
 		});
 
 		it('skips over invalid roles', function() {
 			var node = document.createElement('div');
 			node.setAttribute('role', 'foobar button');
+			flatTreeSetup(node);
 			assert.equal(aria.getRole(node, { fallback: true }), 'button');
 		});
 
 		it('returns the null if all roles are invalid and there is no implicit role', function() {
 			var node = document.createElement('div');
 			node.setAttribute('role', 'foo bar baz');
+			flatTreeSetup(node);
 			assert.isNull(aria.getRole(node, { fallback: true }));
 		});
 
 		it('respects the defaults', function() {
 			var node = document.createElement('li');
 			node.setAttribute('role', 'doc-chapter section');
+			flatTreeSetup(node);
 			assert.equal(aria.getRole(node, { fallback: true }), 'listitem');
 		});
 
 		it('respect the `noImplicit` option', function() {
 			var node = document.createElement('li');
 			node.setAttribute('role', 'doc-chapter section');
+			flatTreeSetup(node);
 			assert.isNull(aria.getRole(node, { fallback: true, noImplicit: true }));
 		});
 
 		it('respect the `abstracts` option', function() {
 			var node = document.createElement('li');
 			node.setAttribute('role', 'doc-chapter section');
+			flatTreeSetup(node);
 			assert.equal(
 				aria.getRole(node, { fallback: true, abstracts: true }),
 				'section'
@@ -173,6 +199,7 @@ describe('aria.getRole', function() {
 		it('respect the `dpub` option', function() {
 			var node = document.createElement('li');
 			node.setAttribute('role', 'doc-chapter section');
+			flatTreeSetup(node);
 			assert.equal(
 				aria.getRole(node, { fallback: true, dpub: true }),
 				'doc-chapter'
