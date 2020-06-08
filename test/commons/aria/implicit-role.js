@@ -159,11 +159,11 @@ describe('aria.implicitRole', function() {
 		assert.equal(implicitRole(node), 'img');
 	});
 
-	it('should return null for "img" with empty alt', function() {
+	it('should return presentation for "img" with empty alt', function() {
 		fixture.innerHTML = '<img id="target" alt=""></img>';
 		var node = fixture.querySelector('#target');
 		flatTreeSetup(fixture);
-		assert.isNull(implicitRole(node));
+		assert.equal(implicitRole(node), 'presentation');
 	});
 
 	it('should return button for "input[type=button]"', function() {
