@@ -92,7 +92,7 @@ describe('aria.getRole', function() {
 		assert.equal(aria.getRole(node), 'listitem');
 	});
 
-	it('returns <img alt="" aria-label="foo"> as img', function() {
+	it('returns <img alt=""> with global attribute as img', function() {
 		var node = document.createElement('img');
 		node.setAttribute('alt', '');
 		node.setAttribute('aria-label', 'foo');
@@ -100,7 +100,7 @@ describe('aria.getRole', function() {
 		assert.equal(aria.getRole(node), 'img');
 	});
 
-	it('returns <img role="presentation" aria-label="foo"> as img', function() {
+	it('returns <img role="presentation"> with global attribute as img', function() {
 		var node = document.createElement('img');
 		node.setAttribute('role', 'presentation');
 		node.setAttribute('aria-label', 'foo');
@@ -108,7 +108,7 @@ describe('aria.getRole', function() {
 		assert.equal(aria.getRole(node), 'img');
 	});
 
-	it('returns <img role="none" aria-label="foo"> as img', function() {
+	it('returns <img role="none"> with global attribute as img', function() {
 		var node = document.createElement('img');
 		node.setAttribute('role', 'none');
 		node.setAttribute('aria-label', 'foo');
@@ -191,6 +191,14 @@ describe('aria.getRole', function() {
 		flatTreeSetup(fixture);
 		var node = fixture.querySelector('#target');
 		assert.equal(aria.getRole(node), 'presentation');
+	});
+
+	it('returns implicit role for presentation role inheritance if ancestor is not the required ancestor', function() {
+		fixture.innerHTML =
+			'<table role="presentation"><tr><td><ul><li id="target">foo</li></ul></td></tr></table>';
+		flatTreeSetup(fixture);
+		var node = fixture.querySelector('#target');
+		assert.equal(aria.getRole(node), 'listitem');
 	});
 
 	it('does not override explicit role with presentation role inheritance', function() {
