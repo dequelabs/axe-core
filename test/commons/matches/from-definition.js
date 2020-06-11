@@ -93,6 +93,78 @@ describe('matches.fromDefinition', function() {
 		);
 	});
 
+	it('matches a definition with an `explicitRole` property', function() {
+		var virtualNode = queryFixture('<span id="target" role="textbox"></span>');
+		var matchers = [
+			'textbox',
+			['textbox', 'combobox'],
+			/textbox/,
+			function(attributeName) {
+				return attributeName === 'textbox';
+			}
+		];
+		matchers.forEach(function(matcher) {
+			assert.isTrue(
+				fromDefinition(virtualNode, {
+					explicitRole: matcher
+				})
+			);
+		});
+		assert.isFalse(
+			fromDefinition(virtualNode, {
+				explicitRole: 'main'
+			})
+		);
+	});
+
+	it('matches a definition with an `implicitRole` property', function() {
+		var virtualNode = queryFixture('<input id="target">');
+		var matchers = [
+			'textbox',
+			['textbox', 'combobox'],
+			/textbox/,
+			function(attributeName) {
+				return attributeName === 'textbox';
+			}
+		];
+		matchers.forEach(function(matcher) {
+			assert.isTrue(
+				fromDefinition(virtualNode, {
+					implicitRole: matcher
+				})
+			);
+		});
+		assert.isFalse(
+			fromDefinition(virtualNode, {
+				implicitRole: 'main'
+			})
+		);
+	});
+
+	it('matches a definition with an `semanticRole` property', function() {
+		var virtualNode = queryFixture('<input id="target">');
+		var matchers = [
+			'textbox',
+			['textbox', 'combobox'],
+			/textbox/,
+			function(attributeName) {
+				return attributeName === 'textbox';
+			}
+		];
+		matchers.forEach(function(matcher) {
+			assert.isTrue(
+				fromDefinition(virtualNode, {
+					semanticRole: matcher
+				})
+			);
+		});
+		assert.isFalse(
+			fromDefinition(virtualNode, {
+				semanticRole: 'main'
+			})
+		);
+	});
+
 	it('returns true when all matching properties return true', function() {
 		var virtualNode = queryFixture(
 			'<input id="target" value="bar" aria-disabled="true" />'
