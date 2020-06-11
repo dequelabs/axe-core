@@ -92,30 +92,6 @@ describe('aria.getRole', function() {
 		assert.equal(aria.getRole(node), 'listitem');
 	});
 
-	it('returns <img alt=""> with global attribute as img', function() {
-		var node = document.createElement('img');
-		node.setAttribute('alt', '');
-		node.setAttribute('aria-label', 'foo');
-		flatTreeSetup(node);
-		assert.equal(aria.getRole(node), 'img');
-	});
-
-	it('returns <img role="presentation"> with global attribute as img', function() {
-		var node = document.createElement('img');
-		node.setAttribute('role', 'presentation');
-		node.setAttribute('aria-label', 'foo');
-		flatTreeSetup(node);
-		assert.equal(aria.getRole(node), 'img');
-	});
-
-	it('returns <img role="none"> with global attribute as img', function() {
-		var node = document.createElement('img');
-		node.setAttribute('role', 'none');
-		node.setAttribute('aria-label', 'foo');
-		flatTreeSetup(node);
-		assert.equal(aria.getRole(node), 'img');
-	});
-
 	it('handles focusable element with role="none"', function() {
 		var node = document.createElement('button');
 		node.setAttribute('role', 'none');
@@ -123,90 +99,126 @@ describe('aria.getRole', function() {
 		assert.equal(aria.getRole(node), 'button');
 	});
 
-	it('handles presentation role inheritance for ul', function() {
-		fixture.innerHTML = '<ul role="presentation"><li id="target">foo</li></ul>';
-		flatTreeSetup(fixture);
-		var node = fixture.querySelector('#target');
-		assert.equal(aria.getRole(node), 'presentation');
-	});
+	describe('presentational role inheritance', function() {
+		it('handles presentation role inheritance for ul', function() {
+			fixture.innerHTML =
+				'<ul role="presentation"><li id="target">foo</li></ul>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'presentation');
+		});
 
-	it('handles presentation role inheritance for ol', function() {
-		fixture.innerHTML = '<ol role="presentation"><li id="target">foo</li></ol>';
-		flatTreeSetup(fixture);
-		var node = fixture.querySelector('#target');
-		assert.equal(aria.getRole(node), 'presentation');
-	});
+		it('handles presentation role inheritance for ol', function() {
+			fixture.innerHTML =
+				'<ol role="presentation"><li id="target">foo</li></ol>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'presentation');
+		});
 
-	it('handles presentation role inheritance for dt', function() {
-		fixture.innerHTML =
-			'<dl role="presentation"><dt id="target">foo</dt><dd>bar></dd></dl>';
-		flatTreeSetup(fixture);
-		var node = fixture.querySelector('#target');
-		assert.equal(aria.getRole(node), 'presentation');
-	});
+		it('handles presentation role inheritance for dt', function() {
+			fixture.innerHTML =
+				'<dl role="presentation"><dt id="target">foo</dt><dd>bar></dd></dl>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'presentation');
+		});
 
-	it('handles presentation role inheritance for dd', function() {
-		fixture.innerHTML =
-			'<dl role="presentation"><dt>foo</dt><dd id="target">bar></dd></dl>';
-		flatTreeSetup(fixture);
-		var node = fixture.querySelector('#target');
-		assert.equal(aria.getRole(node), 'presentation');
-	});
+		it('handles presentation role inheritance for dd', function() {
+			fixture.innerHTML =
+				'<dl role="presentation"><dt>foo</dt><dd id="target">bar></dd></dl>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'presentation');
+		});
 
-	it('handles presentation role inheritance for thead', function() {
-		fixture.innerHTML =
-			'<table role="presentation"><thead id="target"><tr><th>hi</th><th>goodbye</th></tr></thead><tbody><tr><th>hi</th><td>foo</td></tr></tbody></table>';
-		flatTreeSetup(fixture);
-		var node = fixture.querySelector('#target');
-		assert.equal(aria.getRole(node), 'presentation');
-	});
+		it('handles presentation role inheritance for thead', function() {
+			fixture.innerHTML =
+				'<table role="presentation"><thead id="target"><tr><th>hi</th><th>goodbye</th></tr></thead><tbody><tr><th>hi</th><td>foo</td></tr></tbody></table>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'presentation');
+		});
 
-	it('handles presentation role inheritance for td', function() {
-		fixture.innerHTML =
-			'<table role="presentation"><thead><tr><th>hi</th><th>goodbye</th></tr></thead><tbody><tr><th>hi</th><td id="target">foo</td></tr></tbody></table>';
-		flatTreeSetup(fixture);
-		var node = fixture.querySelector('#target');
-		assert.equal(aria.getRole(node), 'presentation');
-	});
+		it('handles presentation role inheritance for td', function() {
+			fixture.innerHTML =
+				'<table role="presentation"><thead><tr><th>hi</th><th>goodbye</th></tr></thead><tbody><tr><th>hi</th><td id="target">foo</td></tr></tbody></table>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'presentation');
+		});
 
-	it('handles presentation role inheritance for th', function() {
-		fixture.innerHTML =
-			'<table role="presentation"><thead><tr><th>hi</th><th>goodbye</th></tr></thead><tbody><tr><th id="target">hi</th><td>foo</td></tr></tbody></table>';
-		flatTreeSetup(fixture);
-		var node = fixture.querySelector('#target');
-		assert.equal(aria.getRole(node), 'presentation');
-	});
+		it('handles presentation role inheritance for th', function() {
+			fixture.innerHTML =
+				'<table role="presentation"><thead><tr><th>hi</th><th>goodbye</th></tr></thead><tbody><tr><th id="target">hi</th><td>foo</td></tr></tbody></table>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'presentation');
+		});
 
-	it('handles presentation role inheritance for thead', function() {
-		fixture.innerHTML =
-			'<table role="presentation"><thead id="target"><tr><th>hi</th><th>goodbye</th></tr></thead><tbody><tr><th>hi</th><td>foo</td></tr></tbody></table>';
-		flatTreeSetup(fixture);
-		var node = fixture.querySelector('#target');
-		assert.equal(aria.getRole(node), 'presentation');
-	});
+		it('handles presentation role inheritance for tbody', function() {
+			fixture.innerHTML =
+				'<table role="presentation"><thead><tr><th>hi</th><th>goodbye</th></tr></thead><tbody id="target"><tr><th>hi</th><td>foo</td></tr></tbody></table>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'presentation');
+		});
 
-	it('handles presentation role inheritance for tr', function() {
-		fixture.innerHTML =
-			'<table role="presentation"><thead><tr id="target"><th>hi</th><th>goodbye</th></tr></thead><tbody><tr><th>hi</th><td>foo</td></tr></tbody></table>';
-		flatTreeSetup(fixture);
-		var node = fixture.querySelector('#target');
-		assert.equal(aria.getRole(node), 'presentation');
-	});
+		it('handles presentation role inheritance for tr', function() {
+			fixture.innerHTML =
+				'<table role="presentation"><thead><tr id="target"><th>hi</th><th>goodbye</th></tr></thead><tbody><tr><th>hi</th><td>foo</td></tr></tbody></table>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'presentation');
+		});
 
-	it('returns implicit role for presentation role inheritance if ancestor is not the required ancestor', function() {
-		fixture.innerHTML =
-			'<table role="presentation"><tr><td><ul><li id="target">foo</li></ul></td></tr></table>';
-		flatTreeSetup(fixture);
-		var node = fixture.querySelector('#target');
-		assert.equal(aria.getRole(node), 'listitem');
-	});
+		it('handles presentation role inheritance for tfoot', function() {
+			fixture.innerHTML =
+				'<table role="presentation"><thead><tr><th>hi</th><th>goodbye</th></tr></thead><tfoot id="target"><tr><th>hi</th><td>foo</td></tr></tfoot></table>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'presentation');
+		});
 
-	it('does not override explicit role with presentation role inheritance', function() {
-		fixture.innerHTML =
-			'<ul role="presentation"><li id="target" role="listitem">foo</li></ul>';
-		flatTreeSetup(fixture);
-		var node = fixture.querySelector('#target');
-		assert.equal(aria.getRole(node), 'listitem');
+		it('returns implicit role for presentation role inheritance if ancestor is not the required ancestor', function() {
+			fixture.innerHTML =
+				'<table role="presentation"><tr><td><ul><li id="target">foo</li></ul></td></tr></table>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'listitem');
+		});
+
+		it('does not override explicit role with presentation role inheritance', function() {
+			fixture.innerHTML =
+				'<ul role="presentation"><li id="target" role="listitem">foo</li></ul>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'listitem');
+		});
+
+		it('does not continue presentation role with explicit role in between', function() {
+			fixture.innerHTML =
+				'<table role="presentation"><tr role="row"><td id="target">foo</td></tr></table>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'cell');
+		});
+
+		it('handles presentation role inheritance with invalid role in between', function() {
+			fixture.innerHTML =
+				'<table role="presentation"><tr role="tablerow"><td id="target">foo</td></tr></table>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'presentation');
+		});
+
+		it('does not continue presentation role through nested layers', function() {
+			fixture.innerHTML =
+				'<ul role="presentation"><li><ul><li id="target">foo</li></ul></li></ul>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'listitem');
+		});
 	});
 
 	describe('noImplicit', function() {
@@ -227,7 +239,7 @@ describe('aria.getRole', function() {
 			node.setAttribute('role', 'none');
 			node.setAttribute('aria-label', 'foo');
 			flatTreeSetup(node);
-			assert.equal(aria.getRole(node, { noImplicit: true }), 'none');
+			assert.equal(aria.getRole(node, { noImplicit: true }), null);
 		});
 
 		it('still returns the explicit role', function() {

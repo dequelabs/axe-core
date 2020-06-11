@@ -166,6 +166,20 @@ describe('aria.implicitRole', function() {
 		assert.equal(implicitRole(node), 'presentation');
 	});
 
+	it('should return img for "img" with empty alt and global aria attribute', function() {
+		fixture.innerHTML = '<img id="target" alt="" aria-label></img>';
+		var node = fixture.querySelector('#target');
+		flatTreeSetup(fixture);
+		assert.equal(implicitRole(node), 'img');
+	});
+
+	it('should return img for "img" with empty alt and focusable', function() {
+		fixture.innerHTML = '<img id="target" alt="" tabindex="0"></img>';
+		var node = fixture.querySelector('#target');
+		flatTreeSetup(fixture);
+		assert.equal(implicitRole(node), 'img');
+	});
+
 	it('should return button for "input[type=button]"', function() {
 		fixture.innerHTML = '<input id="target" type="button"/>';
 		var node = fixture.querySelector('#target');
