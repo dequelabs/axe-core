@@ -61,14 +61,14 @@ describe('axe.configure', function() {
 	it('should throw error if rules property is invalid', function() {
 		assert.throws(function() {
 			axe.configure({ rules: 'hello' }),
-				Error,
+				TypeError,
 				/^Rules property must be an array/;
 		});
 	});
 
 	it('should throw error if rule is invalid', function() {
 		assert.throws(function() {
-			axe.configure({ rules: ['hello'] }), Error, /Rules must be an object/;
+			axe.configure({ rules: ['hello'] }), TypeError, /Rules must be an object/;
 		});
 	});
 
@@ -177,14 +177,16 @@ describe('axe.configure', function() {
 	it('should throw error if checks property is invalid', function() {
 		assert.throws(function() {
 			axe.configure({ checks: 'hello' }),
-				Error,
+				TypeError,
 				/^Checks property must be an array/;
 		});
 	});
 
 	it('should throw error if check is invalid', function() {
 		assert.throws(function() {
-			axe.configure({ checks: ['hello'] }), Error, /Checks must be an object/;
+			axe.configure({ checks: ['hello'] }),
+				TypeError,
+				/Checks must be an object/;
 		});
 	});
 
