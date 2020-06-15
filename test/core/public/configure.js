@@ -58,6 +58,20 @@ describe('axe.configure', function() {
 		assert.deepEqual(axe._audit.data.rules.bob.joe, 'joe');
 	});
 
+	it('should throw error if rules property is invalid', function() {
+		assert.throws(function() {
+			axe.configure({ rules: 'hello' }),
+				Error,
+				/^Rules property must be an array/;
+		});
+	});
+
+	it('should throw error if rule is invalid', function() {
+		assert.throws(function() {
+			axe.configure({ rules: ['hello'] }), Error, /Rules must be an object/;
+		});
+	});
+
 	it('should call setBranding when passed options', function() {
 		axe._load({});
 		axe.configure({
@@ -158,6 +172,20 @@ describe('axe.configure', function() {
 		assert.equal(axe._audit.checks.bob.id, 'bob');
 		assert.isTrue(axe._audit.checks.bob.options.value);
 		assert.equal(axe._audit.data.checks.bob.joe, 'joe');
+	});
+
+	it('should throw error if checks property is invalid', function() {
+		assert.throws(function() {
+			axe.configure({ checks: 'hello' }),
+				Error,
+				/^Checks property must be an array/;
+		});
+	});
+
+	it('should throw error if check is invalid', function() {
+		assert.throws(function() {
+			axe.configure({ checks: ['hello'] }), Error, /Checks must be an object/;
+		});
 	});
 
 	it('should allow for the overwriting of checks', function() {
