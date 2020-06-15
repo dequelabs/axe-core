@@ -68,7 +68,17 @@ describe('axe.configure', function() {
 
 	it('should throw error if rule is invalid', function() {
 		assert.throws(function() {
-			axe.configure({ rules: ['hello'] }), TypeError, /Rules must be an object/;
+			axe.configure({ rules: ['hello'] }),
+				TypeError,
+				/Configured rule "hello" is invalid/;
+		});
+	});
+
+	it('should throw error if rule does not have an id', function() {
+		assert.throws(function() {
+			axe.configure({ rules: [{ foo: 'bar' }] }),
+				TypeError,
+				/Configured rule "{foo:\"bar\"}" is invalid/;
 		});
 	});
 
@@ -186,7 +196,15 @@ describe('axe.configure', function() {
 		assert.throws(function() {
 			axe.configure({ checks: ['hello'] }),
 				TypeError,
-				/Checks must be an object/;
+				/Configured check "hello" is invalid/;
+		});
+	});
+
+	it('should throw error if check does not have an id', function() {
+		assert.throws(function() {
+			axe.configure({ checks: [{ foo: 'bar' }] }),
+				TypeError,
+				/Configured check "{foo:\"bar\"}" is invalid/;
 		});
 	});
 
