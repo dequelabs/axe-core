@@ -60,13 +60,13 @@ const getRuleMatchesFileMeta = (
 		const ruleMatchesJs = {
 			name: `${ruleName}-matches.js`,
 			content: `
-			// todo: use the matches function to filter out nodes that are to be checked by the rule
+			// TODO: Filter node(s)	
 			
-			function getMatchingNodes(node) {
+			function getMatches(node) {
 				return node
 			}
 
-			export default getMatchingNodes
+			export default getMatches
 			`,
 			dir: directories.rules
 		};
@@ -79,9 +79,7 @@ const getRuleMatchesFileMeta = (
 			content: `
 			describe('${ruleName}-matches', function() {
 				'use strict';
-
-				// todo: Write tests
-
+				// TODO: Write tests 
 			})
 			`,
 			dir: directories.testRuleMatches
@@ -133,12 +131,10 @@ const getCheckJsFileMeta = (name, dir) => {
 	return {
 		name: `${name}.js`,
 		content: `
-		// todo: evaluate fn logic for check
-
+		// TODO: Logic for check
 		function evaluate(node) {
 			return true
 		}
-
 		export default evaluate;
 		`,
 		dir
@@ -158,9 +154,7 @@ const getCheckTestJsFileMeta = (name, dir) => {
 		content: `
 		describe('${name} tests', function() {
 			'use strict';
-
-			// todo: Write tests
-			
+			// TODO: Write tests
 		})
 		`,
 		dir
