@@ -5,7 +5,7 @@
 	"tags": ["wcag2a", "wcag412"],
 	"metadata": {
 		"description": "Ensures every ARIA input field has an accessible name",
-		"help": "ARIA input fields have an accessible name"
+		"help": "ARIA input fields must have an accessible name"
 	},
 	"all": [],
 	"any": ["aria-label", "aria-labelledby", "non-empty-title"],
