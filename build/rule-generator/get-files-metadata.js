@@ -16,7 +16,7 @@ const getRuleSpecFileMeta = (ruleName, ruleHasMatches, ruleChecks) => {
 				id: `${ruleName}`,
 				selector: '',
 				...(ruleHasMatches && {
-					matches: `${ruleName}-matches.js`
+					matches: `${ruleName}-matches`
 				}),
 				tags: [],
 				metadata: {
@@ -60,8 +60,13 @@ const getRuleMatchesFileMeta = (
 		const ruleMatchesJs = {
 			name: `${ruleName}-matches.js`,
 			content: `
-			// TODO: Filter node(s)
-			return node;
+			// todo: use the matches function to filter out nodes that are to be checked by the rule
+			
+			function getMatchingNodes(node) {
+				return node
+			}
+
+			export default getMatchingNodes
 			`,
 			dir: directories.rules
 		};
@@ -74,7 +79,9 @@ const getRuleMatchesFileMeta = (
 			content: `
 			describe('${ruleName}-matches', function() {
 				'use strict';
-				// TODO: Write tests
+
+				// todo: Write tests
+
 			})
 			`,
 			dir: directories.testRuleMatches
@@ -98,7 +105,7 @@ const getCheckSpecFileMeta = (name, dir) => {
 		content: JSON.stringify(
 			{
 				id: `${name}`,
-				evaluate: `${name}.js`,
+				evaluate: `${name}`,
 				metadata: {
 					impact: '',
 					messages: {
@@ -126,8 +133,13 @@ const getCheckJsFileMeta = (name, dir) => {
 	return {
 		name: `${name}.js`,
 		content: `
-		// TODO: Logic for check
-		return true;
+		// todo: evaluate fn logic for check
+
+		function evaluate(node) {
+			return true
+		}
+
+		export default evaluate;
 		`,
 		dir
 	};
@@ -146,7 +158,9 @@ const getCheckTestJsFileMeta = (name, dir) => {
 		content: `
 		describe('${name} tests', function() {
 			'use strict';
-			// TODO: Write tests
+
+			// todo: Write tests
+			
 		})
 		`,
 		dir
