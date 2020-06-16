@@ -29,15 +29,10 @@ describe('matches.implicitRole', function() {
 		assert.isFalse(implicitRole(virtualNode, 'menuitem'));
 	});
 
-	// TODO: will only work when get-role works exclusively with virtual
-	// nodes
-	it.skip('works with SerialVirtualNode', function() {
+	it('works with SerialVirtualNode', function() {
 		var serialNode = new axe.SerialVirtualNode({
-			nodeName: 'span',
-			attributes: {
-				role: 'textbox'
-			}
+			nodeName: 'li'
 		});
-		assert.isTrue(implicitRole(serialNode, 'textbox'));
+		assert.isTrue(implicitRole(serialNode, 'listitem'));
 	});
 });

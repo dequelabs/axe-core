@@ -27,9 +27,7 @@ describe('matches.semanticRole', function() {
 		assert.isFalse(semanticRole(virtualNode, 'textbox'));
 	});
 
-	// TODO: will only work when get-role works exclusively with virtual
-	// nodes
-	it.skip('works with SerialVirtualNode', function() {
+	it('works with SerialVirtualNode', function() {
 		var serialNode = new axe.SerialVirtualNode({
 			nodeName: 'span',
 			attributes: {

@@ -27,9 +27,7 @@ describe('matches.explicitRole', function() {
 		assert.isFalse(explicitRole(virtualNode, 'listitem'));
 	});
 
-	// TODO: will only work when get-role works exclusively with virtual
-	// nodes
-	it.skip('works with SerialVirtualNode', function() {
+	it('works with SerialVirtualNode', function() {
 		var serialNode = new axe.SerialVirtualNode({
 			nodeName: 'span',
 			attributes: {
