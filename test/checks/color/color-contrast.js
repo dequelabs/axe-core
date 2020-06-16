@@ -15,6 +15,26 @@ describe('color-contrast', function() {
 		axe._tree = undefined;
 	});
 
+	it('should return true for hidden element', function() {
+		var params = checkSetup(
+			'<div style="color: gray; background-color: white; font-size: 14pt; font-weight: 100;">' +
+				'<span  id="target" style="font-weight:bolder; opacity: 0;">My text</span></div>'
+		);
+
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
+	it('should return true for child of hidden element', function() {
+		var params = checkSetup(
+			'<div style="color: gray; background-color: white; font-size: 14pt; font-weight: 100; overflow: scroll; height: 0">' +
+				'<span id="target" style="font-weight:bolder">My text</span></div>'
+		);
+
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
 	it('should return the proper values stored in data', function() {
 		var params = checkSetup(
 			'<div id="parent" style="color: black; background-color: white; font-size: 14pt">' +

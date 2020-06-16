@@ -1,6 +1,7 @@
 describe('forms.isAriaRange', function() {
 	'use strict';
 	var isAriaRange = axe.commons.forms.isAriaRange;
+	var flatTreeSetup = axe.testUtils.flatTreeSetup;
 
 	it('returns true for an element with range roles', function() {
 		var rangeRoles = ['progressbar', 'scrollbar', 'slider', 'spinbutton'];
@@ -8,7 +9,7 @@ describe('forms.isAriaRange', function() {
 			var node = document.createElement('div');
 			node.setAttribute('role', role);
 			node.setAttribute('aria-valuenow', '0');
-			axe.utils.getFlattenedTree(node);
+			flatTreeSetup(node);
 			assert.isTrue(
 				isAriaRange(node),
 				'role="' + role + '" is not an aria range role'
@@ -18,14 +19,14 @@ describe('forms.isAriaRange', function() {
 
 	it('returns false for elements without role', function() {
 		var node = document.createElement('div');
-		axe.utils.getFlattenedTree(node);
+		flatTreeSetup(node);
 		assert.isFalse(isAriaRange(node));
 	});
 
 	it('returns false for elements with incorrect role', function() {
 		var node = document.createElement('div');
 		node.setAttribute('role', 'main');
-		axe.utils.getFlattenedTree(node);
+		flatTreeSetup(node);
 		assert.isFalse(isAriaRange(node));
 	});
 
@@ -48,7 +49,7 @@ describe('forms.isAriaRange', function() {
 			if (elm.type) {
 				node.setAttribute('type', elm.type);
 			}
-			axe.utils.getFlattenedTree(node);
+			flatTreeSetup(node);
 			assert.isFalse(
 				isAriaRange(node),
 				node.outterHTML + ' is not an aria range element'

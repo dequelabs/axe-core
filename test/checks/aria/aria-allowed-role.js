@@ -10,17 +10,6 @@ describe('aria-allowed-role', function() {
 		checkContext.reset();
 	});
 
-	it('tests', function() {
-		fixture.innerHTML =
-			'<button id="incomplete2" type="button" aria-hidden="true" role="presentation"></button>';
-		var node = fixture.firstChild;
-		flatTreeSetup(fixture);
-		var actual = axe.testUtils
-			.getCheckEvaluate('aria-allowed-role')
-			.call(checkContext, node);
-		assert.isTrue(actual);
-	});
-
 	it('returns true if given element is an ignoredTag in options', function() {
 		var node = document.createElement('article');
 		node.setAttribute('role', 'presentation');

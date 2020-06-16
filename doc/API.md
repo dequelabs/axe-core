@@ -385,7 +385,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | Property           | Default | Description                                                                                                                             |
 | ------------------ | :------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
 | `runOnly`          | n/a     | Limit which rules are executed, based on names or tags                                                                                  |
-| `rules`            | n/a     | Allow customizing a rule's properties (including { enable: false })                                                                     |
+| `rules`            | n/a     | Enable or disable rules using the `enabled` property                                                                                    |
 | `reporter`         | `v1`    | Which reporter to use (see [Configuration](#api-name-axeconfigure))                                                                     |
 | `resultTypes`      | n/a     | Limit which result types are processed and aggregated                                                                                   |
 | `xpath`            | `false` | Return xpath selectors for elements                                                                                                     |

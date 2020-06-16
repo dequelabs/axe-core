@@ -66,8 +66,8 @@ describe('aria.getRole', function() {
 	it('accepts virtualNode objects', function() {
 		var node = document.createElement('div');
 		node.setAttribute('role', 'button');
-		flatTreeSetup(node);
-		assert.equal(aria.getRole({ actualNode: node }), 'button');
+		var vNode = flatTreeSetup(node)[0];
+		assert.equal(aria.getRole(vNode), 'button');
 	});
 
 	it('returns null if the node is not an element', function() {
