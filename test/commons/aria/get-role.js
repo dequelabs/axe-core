@@ -50,9 +50,9 @@ describe('aria.getRole', function() {
 	});
 
 	it('returns the implicit role if the explicit is invalid', function() {
-		var node = document.createElement('li');
-		node.setAttribute('role', 'foobar');
-		flatTreeSetup(node);
+		fixture.innerHTML = '<ul><li id="target" role="foobar"></li></ul>';
+		flatTreeSetup(fixture);
+		var node = fixture.querySelector('#target');
 		assert.equal(aria.getRole(node), 'listitem');
 	});
 
@@ -77,18 +77,18 @@ describe('aria.getRole', function() {
 	});
 
 	it('runs role resolution with role=none', function() {
-		var node = document.createElement('li');
-		node.setAttribute('role', 'none');
-		node.setAttribute('aria-label', 'foo');
-		flatTreeSetup(node);
+		fixture.innerHTML =
+			'<ul><li id="target" role="none" aria-label="foo"></li></ul>';
+		flatTreeSetup(fixture);
+		var node = fixture.querySelector('#target');
 		assert.equal(aria.getRole(node), 'listitem');
 	});
 
 	it('runs role resolution with role=presentation', function() {
-		var node = document.createElement('li');
-		node.setAttribute('role', 'presentation');
-		node.setAttribute('aria-label', 'foo');
-		flatTreeSetup(node);
+		fixture.innerHTML =
+			'<ul><li id="target" role="presentation" aria-label="foo"></li></ul>';
+		flatTreeSetup(fixture);
+		var node = fixture.querySelector('#target');
 		assert.equal(aria.getRole(node), 'listitem');
 	});
 
@@ -219,12 +219,23 @@ describe('aria.getRole', function() {
 			var node = fixture.querySelector('#target');
 			assert.equal(aria.getRole(node), 'listitem');
 		});
+
+		it('throws an error if the tree is incomplete', function() {
+			fixture.innerHTML =
+				'<ul role="presentation"><li id="target">foo</li></ul>';
+			var node = fixture.querySelector('#target');
+			flatTreeSetup(node);
+			assert.throws(function() {
+				aria.getRole(node);
+			});
+		});
 	});
 
 	describe('noImplicit', function() {
 		it('returns the implicit role by default', function() {
-			var node = document.createElement('li');
-			flatTreeSetup(node);
+			fixture.innerHTML = '<ul><li id="target"></li></ul>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
 			assert.equal(aria.getRole(node), 'listitem');
 		});
 
@@ -250,17 +261,18 @@ describe('aria.getRole', function() {
 		});
 
 		it('returns the implicit role with `noImplicit: false`', function() {
-			var node = document.createElement('li');
-			flatTreeSetup(node);
+			fixture.innerHTML = '<ul><li id="target"></li></ul>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
 			assert.equal(aria.getRole(node, { noImplicit: false }), 'listitem');
 		});
 	});
 
 	describe('abstracts', function() {
 		it('ignores abstract roles by default', function() {
-			var node = document.createElement('li');
-			node.setAttribute('role', 'section');
-			flatTreeSetup(node);
+			fixture.innerHTML = '<ul><li id="target" role="section"></li></ul>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
 			assert.equal(roleDefinitions.section.type, 'abstract');
 			assert.equal(aria.getRole(node), 'listitem');
 		});
@@ -274,9 +286,9 @@ describe('aria.getRole', function() {
 		});
 
 		it('does not returns abstract roles with `abstracts: false`', function() {
-			var node = document.createElement('li');
-			node.setAttribute('role', 'section');
-			flatTreeSetup(node);
+			fixture.innerHTML = '<ul><li id="target" role="section"></li></ul>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
 			assert.equal(roleDefinitions.section.type, 'abstract');
 			assert.equal(aria.getRole(node, { abstracts: false }), 'listitem');
 		});
@@ -328,9 +340,10 @@ describe('aria.getRole', function() {
 		});
 
 		it('respects the defaults', function() {
-			var node = document.createElement('li');
-			node.setAttribute('role', 'doc-chapter section');
-			flatTreeSetup(node);
+			fixture.innerHTML =
+				'<ul><li id="target" role="doc-chapter section"></li></ul>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
 			assert.equal(aria.getRole(node, { fallback: true }), 'listitem');
 		});
 
