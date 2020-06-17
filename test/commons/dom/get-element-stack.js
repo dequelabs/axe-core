@@ -562,5 +562,19 @@ describe('dom.getElementStack', function() {
 			var stacks = getTextElementStack(target).map(mapToIDs);
 			assert.deepEqual(stacks, [['target', '1', 'fixture']]);
 		});
+
+		it('should handle truncated text', function() {
+			fixture.innerHTML =
+				'<main id="1">' +
+				'<div id="target" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100px;">' +
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et sollicitudin quam. Fusce mi odio, egestas pulvinar erat eget, vehicula tempus est. Proin vitae ullamcorper velit. Donec sagittis est justo, mattis iaculis arcu facilisis id. Proin pulvinar ornare arcu a fermentum. Quisque et dignissim nulla, sit amet consectetur ipsum. Donec in libero porttitor, dapibus neque imperdiet, aliquam est. Vivamus blandit volutpat fringilla. In mi magna, mollis sit amet imperdiet eu, rutrum ut tellus. Mauris vel condimentum nibh, quis ultricies nisi. Vivamus accumsan quam mauris, id iaculis quam fringilla ac. Curabitur pulvinar dolor ac magna vehicula, non auctor ligula dignissim. Nam ac nibh porttitor, malesuada tortor varius, feugiat turpis. Mauris dapibus, tellus ut viverra porta, ipsum turpis bibendum ligula, at tempor felis ante non libero. Donec dapibus, diam sit amet posuere commodo, magna orci hendrerit ipsum, eu egestas mauris nulla ut ipsum. Sed luctus, orci in fringilla finibus, odio leo porta dolor, eu dignissim risus eros eget erat.' +
+				'World' +
+				'</div>' +
+				'</main>';
+			axe.testUtils.flatTreeSetup(fixture);
+			var target = fixture.querySelector('#target');
+			var stacks = getTextElementStack(target).map(mapToIDs);
+			assert.deepEqual(stacks, [['target', '1', 'fixture']]);
+		});
 	});
 });
