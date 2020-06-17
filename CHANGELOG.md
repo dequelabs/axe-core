@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.5](https://github.com/dequelabs/axe-core/compare/v3.5.4...v3.5.5) (2020-06-16)
+
+### Bug Fixes
+
+- **aria-input-field-name:** add the missing word must to help metadata ([b0f5562](https://github.com/dequelabs/axe-core/commit/b0f5562ac2a746e8ac78f6e483e39162680f3a22))
+- **color-contrast:** fix font-weight calculation for safari ([205b587](https://github.com/dequelabs/axe-core/commit/205b58709c280f00100bf24a7b6bf15da50ed0ed))
+- **configure:** validate rules and checks properties ([8c91ead](https://github.com/dequelabs/axe-core/commit/8c91ead900fd3cab58f77af45cce54d02e734a8e))
+- **is-visible:** return false for opacity: 0 and 0 height scrollable regions ([86ada3f](https://github.com/dequelabs/axe-core/commit/86ada3f7cef5b1fbcaad37b8acfaee93566ba8bf))
+- **listitem:** do not fail for parent with role=presentation|none ([a3ddc6e](https://github.com/dequelabs/axe-core/commit/a3ddc6e1e43716b761e8bb42fba4842d88f813dc))
+- **meta-viewport:** don't throw error if viewport property doesn't have a value ([2176794](https://github.com/dequelabs/axe-core/commit/2176794f8a831c8303984039e4a07b99d368b111))
+
 ### [3.5.4](https://github.com/dequelabs/axe-core/compare/v3.5.3...v3.5.4) (2020-05-22)
 
 ### Bug Fixes
