@@ -62,11 +62,11 @@ const getRuleMatchesFileMeta = (
 			content: `
 			// TODO: Filter node(s)	
 			
-			function getMatches(node) {
+			function myRuleMatches(node) {
 				return node
 			}
 
-			export default getMatches
+			export default myRuleMatches
 			`,
 			dir: directories.rules
 		};
@@ -103,7 +103,7 @@ const getCheckSpecFileMeta = (name, dir) => {
 		content: JSON.stringify(
 			{
 				id: `${name}`,
-				evaluate: `${name}`,
+				evaluate: `${name}-evaluate`,
 				metadata: {
 					impact: '',
 					messages: {
@@ -129,13 +129,13 @@ const getCheckSpecFileMeta = (name, dir) => {
  */
 const getCheckJsFileMeta = (name, dir) => {
 	return {
-		name: `${name}.js`,
+		name: `${name}-evaluate.js`,
 		content: `
 		// TODO: Logic for check
-		function evaluate(node) {
+		function myCheckEvaluate(node) {
 			return true
 		}
-		export default evaluate;
+		export default myCheckEvaluate;
 		`,
 		dir
 	};
