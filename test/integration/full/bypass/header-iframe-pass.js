@@ -1,4 +1,4 @@
-describe('page-has-heading-one iframe test pass', function() {
+describe('bypass iframe test pass', function() {
 	'use strict';
 	var results;
 	before(function(done) {
@@ -7,8 +7,7 @@ describe('page-has-heading-one iframe test pass', function() {
 			// Stop messing with my tests Mocha!
 			var heading = document.querySelector('#mocha h1');
 			if (heading) {
-				heading.outerHTML =
-					'<div><b>page-has-heading-one pass test fail</b></div>';
+				heading.outerHTML = '<div><b>bypass pass test fail</b></div>';
 			}
 
 			axe.run({ runOnly: { type: 'rule', values: ['bypass'] } }, function(
