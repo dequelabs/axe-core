@@ -22,20 +22,18 @@ describe('bypass iframe test fail', function() {
 
 	describe('violations', function() {
 		it('should find 1', function() {
-			assert.lengthOf(results.violations, 1);
+			assert.lengthOf(results.violations[0].nodes, 2);
 		});
 
-		// this test seems to be flakey in ci. it should return 2 results
-		// but the ci test only returns 1 and it's the iframe
-		it('should find failing html element', function() {
-			if (results.violations[0].nodes[0].target.length === 1) {
-				assert.deepEqual(results.violations[0].nodes[0].target, ['#fail1']);
-			} else {
-				assert.deepEqual(results.violations[0].nodes[0].target, [
-					'#frame1',
-					'#violation2'
-				]);
-			}
+		it('should find #frame1', function() {
+			assert.deepEqual(results.violations[0].nodes[0].target, ['#fail1']);
+		});
+
+		it('should find #frame1, #violation2', function() {
+			assert.deepEqual(results.violations[0].nodes[1].target, [
+				'#frame1',
+				'#violation2'
+			]);
 		});
 	});
 
