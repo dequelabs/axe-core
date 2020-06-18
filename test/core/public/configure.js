@@ -908,4 +908,54 @@ describe('axe.configure', function() {
 			});
 		});
 	});
+
+	describe('given a standards object', function() {
+		beforeEach(function() {
+			axe._load({});
+		});
+
+		describe('ariaAttrs', function() {
+			it('should allow creating new attr', function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'string'
+							}
+						}
+					}
+				});
+
+				var ariaAttr = axe.standards.ariaAttrs.newAttr;
+				assert.equal(ariaAttr.type, 'string');
+			});
+
+			it('should override existing attr', function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'string'
+							}
+						}
+					}
+				});
+
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'mntoken',
+								values: ['foo', 'bar']
+							}
+						}
+					}
+				});
+
+				var ariaAttr = axe.standards.ariaAttrs.newAttr;
+				assert.equal(ariaAttr.type, 'mntoken');
+				assert.deepEqual(ariaAttr.values, ['foo', 'bar']);
+			});
+		});
+	});
 });
