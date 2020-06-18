@@ -2,6 +2,8 @@
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 const assert = require('assert');
+const path = require('path');
+const axe = require(path.join(__dirname, '../../../../axe'));
 
 describe('axe', () => {
 	const { window } = new JSDOM(`<!DOCTYPE html>
@@ -20,21 +22,6 @@ describe('axe', () => {
     </body>
   </html>`);
 
-	global.document = window.document;
-	global.window = window;
-
-	// needed by axios lib/helpers/isURLSameOrigin.js
-	global.navigator = window.navigator;
-
-	// needed by axe /lib/core/public/run.js
-	global.Node = window.Node;
-	global.NodeList = window.NodeList;
-
-	// needed by axe /lib/core/base/context.js
-	global.Element = window.Element;
-	global.Document = window.Document;
-
-	const axe = require('axe-core');
 	const config = {
 		rules: {
 			'color-contrast': { enabled: false }
