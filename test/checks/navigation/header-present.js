@@ -75,6 +75,17 @@ describe('header-present', function() {
 		);
 	});
 
+	it('should return false if heading has a different role', function() {
+		var params = checkSetup(
+			'<h1 role="none" id="target">Some stuff and stuff</h1>'
+		);
+		assert.isFalse(
+			axe.testUtils
+				.getCheckEvaluate('header-present')
+				.apply(checkContext, params)
+		);
+	});
+
 	(shadowSupported ? it : xit)(
 		'should return true if heading is in shadow dom',
 		function() {
