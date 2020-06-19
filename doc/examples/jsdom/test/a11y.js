@@ -2,8 +2,6 @@
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 const assert = require('assert');
-const path = require('path');
-const axe = require(path.join(__dirname, '../../../../axe'));
 
 describe('axe', () => {
 	const { window } = new JSDOM(`<!DOCTYPE html>
@@ -22,6 +20,7 @@ describe('axe', () => {
     </body>
   </html>`);
 
+	const axe = require('axe-core');
 	const config = {
 		rules: {
 			'color-contrast': { enabled: false }
