@@ -1,6 +1,16 @@
 const directories = require('./directories');
 
 /**
+ * Helper to convert a given string to camel case (split by hyphens if any)
+ * @param {String} str given string to be camel cased
+ */
+const camelCase = str => {
+	return str.replace(/-([a-z])/g, g => {
+		return g[1].toUpperCase();
+	});
+};
+
+/**
  * Get meta data for the file to be created as RULE Specification
  * @method getRuleSpecFileMeta
  * @param {String} ruleName given name for the RULE
@@ -57,16 +67,17 @@ const getRuleMatchesFileMeta = (
 	let files = [];
 
 	if (ruleHasMatches) {
+		const fnName = `${camelCase(ruleName)}Matches`;
 		const ruleMatchesJs = {
 			name: `${ruleName}-matches.js`,
 			content: `
 			// TODO: Filter node(s)	
 			
-			function myRuleMatches(node) {
+			function ${fnName}(node) {
 				return node
 			}
 
-			export default myRuleMatches
+			export default ${fnName}
 			`,
 			dir: directories.rules
 		};
@@ -128,14 +139,15 @@ const getCheckSpecFileMeta = (name, dir) => {
  * @returns {Object} meta data of file
  */
 const getCheckJsFileMeta = (name, dir) => {
+	const fnName = `${camelCase(name)}Evaluate`;
 	return {
 		name: `${name}-evaluate.js`,
 		content: `
 		// TODO: Logic for check
-		function myCheckEvaluate(node) {
+		function ${fnName}(node) {
 			return true
 		}
-		export default myCheckEvaluate;
+		export default ${fnName};
 		`,
 		dir
 	};
