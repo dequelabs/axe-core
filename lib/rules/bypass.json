@@ -1,6 +1,7 @@
 {
 	"id": "bypass",
 	"selector": "html",
+	"pageLevel": true,
 	"matches": "bypass-matches",
 	"tags": [
 		"cat.keyboard",
