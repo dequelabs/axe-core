@@ -132,6 +132,22 @@ describe('aria.getRole', function() {
 			assert.equal(aria.getRole(node), 'presentation');
 		});
 
+		it('handles presentation role inheritance for dt with div wrapper', function() {
+			fixture.innerHTML =
+				'<dl role="presentation"><div><dt id="target">foo</dt><dd>bar></dd></div></dl>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'presentation');
+		});
+
+		it('handles presentation role inheritance for dd with div wrapper', function() {
+			fixture.innerHTML =
+				'<dl role="presentation"><div><dt>foo</dt><dd id="target">bar></dd></div></dl>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.equal(aria.getRole(node), 'presentation');
+		});
+
 		it('handles presentation role inheritance for thead', function() {
 			fixture.innerHTML =
 				'<table role="presentation"><thead id="target"><tr><th>hi</th><th>goodbye</th></tr></thead><tbody><tr><th>hi</th><td>foo</td></tr></tbody></table>';
