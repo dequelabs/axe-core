@@ -139,7 +139,7 @@ describe('axe.reset', function() {
 
 		axe.reset();
 
-		var ariaLiveAttr = axe.standards.ariaAttrs['aria-live'];
+		var ariaLiveAttr = axe._audit.standards.ariaAttrs['aria-live'];
 		assert.equal(ariaLiveAttr.type, 'nmtoken');
 	});
 });

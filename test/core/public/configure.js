@@ -926,7 +926,7 @@ describe('axe.configure', function() {
 					}
 				});
 
-				var ariaAttr = axe.standards.ariaAttrs.newAttr;
+				var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
 				assert.equal(ariaAttr.type, 'string');
 			});
 
@@ -952,8 +952,35 @@ describe('axe.configure', function() {
 					}
 				});
 
-				var ariaAttr = axe.standards.ariaAttrs.newAttr;
+				var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
 				assert.equal(ariaAttr.type, 'mntoken');
+				assert.deepEqual(ariaAttr.values, ['foo', 'bar']);
+			});
+
+			it('should merge existing attr', function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'mntoken',
+								values: ['foo', 'bar']
+							}
+						}
+					}
+				});
+
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'mntokens'
+							}
+						}
+					}
+				});
+
+				var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
+				assert.equal(ariaAttr.type, 'mntokens');
 				assert.deepEqual(ariaAttr.values, ['foo', 'bar']);
 			});
 		});
