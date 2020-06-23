@@ -2,6 +2,7 @@ describe('aria-allowed-role-matches', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var flatTreeSetup = axe.testUtils.flatTreeSetup;
 	var rule;
 
 	beforeEach(function() {
@@ -23,6 +24,7 @@ describe('aria-allowed-role-matches', function() {
 		node.setAttribute('role', 'invalid-role');
 		node.href = '\\example.com';
 		fixture.appendChild(node);
+		flatTreeSetup(node);
 		assert.isFalse(rule.matches(node));
 	});
 
@@ -32,6 +34,7 @@ describe('aria-allowed-role-matches', function() {
 		node.setAttribute('role', 'textbox');
 		node.href = '\\example.com';
 		fixture.appendChild(node);
+		flatTreeSetup(node);
 		assert.isTrue(rule.matches(node));
 	});
 
@@ -40,6 +43,7 @@ describe('aria-allowed-role-matches', function() {
 		node.setAttribute('role', 'listbox');
 		node.href = '\\example.com';
 		fixture.appendChild(node);
+		flatTreeSetup(node);
 		assert.isTrue(rule.matches(node));
 	});
 });

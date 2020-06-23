@@ -1,7 +1,7 @@
 {
 	"id": "td-has-header",
 	"selector": "table",
-	"matches": "data-table-large-matches.js",
+	"matches": "data-table-large-matches",
 	"tags": [
 		"cat.tables",
 		"experimental",

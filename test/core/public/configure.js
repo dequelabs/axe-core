@@ -1,6 +1,7 @@
-/*global Rule, Check */
 describe('axe.configure', function() {
 	'use strict';
+	// var Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
+	// var Check = axe._thisWillBeDeletedDoNotUse.base.Check;
 	var fixture = document.getElementById('fixture');
 	var axeVersion = axe.version;
 
@@ -51,9 +52,34 @@ describe('axe.configure', function() {
 		});
 
 		assert.lengthOf(axe._audit.rules, 1);
-		assert.instanceOf(axe._audit.rules[0], Rule);
+		// TODO: this does not work yet thanks to webpack
+		// assert.instanceOf(axe._audit.rules[0], Rule);
 		assert.equal(axe._audit.rules[0].id, 'bob');
 		assert.deepEqual(axe._audit.data.rules.bob.joe, 'joe');
+	});
+
+	it('should throw error if rules property is invalid', function() {
+		assert.throws(function() {
+			axe.configure({ rules: 'hello' }),
+				TypeError,
+				/^Rules property must be an array/;
+		});
+	});
+
+	it('should throw error if rule is invalid', function() {
+		assert.throws(function() {
+			axe.configure({ rules: ['hello'] }),
+				TypeError,
+				/Configured rule "hello" is invalid/;
+		});
+	});
+
+	it('should throw error if rule does not have an id', function() {
+		assert.throws(function() {
+			axe.configure({ rules: [{ foo: 'bar' }] }),
+				TypeError,
+				/Configured rule "{foo:\"bar\"}" is invalid/;
+		});
 	});
 
 	it('should call setBranding when passed options', function() {
@@ -132,7 +158,7 @@ describe('axe.configure', function() {
 		});
 
 		assert.lengthOf(axe._audit.rules, 1);
-		assert.instanceOf(axe._audit.rules[0], Rule);
+		// assert.instanceOf(axe._audit.rules[0], Rule);
 		assert.equal(axe._audit.rules[0].id, 'bob');
 		assert.equal(axe._audit.rules[0].selector, 'pass');
 		assert.equal(axe._audit.data.rules.bob.joe, 'joe');
@@ -144,7 +170,7 @@ describe('axe.configure', function() {
 			checks: [
 				{
 					id: 'bob',
-					options: true,
+					options: { value: true },
 					metadata: {
 						joe: 'joe'
 					}
@@ -152,10 +178,34 @@ describe('axe.configure', function() {
 			]
 		});
 
-		assert.instanceOf(axe._audit.checks.bob, Check);
+		// assert.instanceOf(axe._audit.checks.bob, Check);
 		assert.equal(axe._audit.checks.bob.id, 'bob');
-		assert.isTrue(axe._audit.checks.bob.options);
+		assert.isTrue(axe._audit.checks.bob.options.value);
 		assert.equal(axe._audit.data.checks.bob.joe, 'joe');
+	});
+
+	it('should throw error if checks property is invalid', function() {
+		assert.throws(function() {
+			axe.configure({ checks: 'hello' }),
+				TypeError,
+				/^Checks property must be an array/;
+		});
+	});
+
+	it('should throw error if check is invalid', function() {
+		assert.throws(function() {
+			axe.configure({ checks: ['hello'] }),
+				TypeError,
+				/Configured check "hello" is invalid/;
+		});
+	});
+
+	it('should throw error if check does not have an id', function() {
+		assert.throws(function() {
+			axe.configure({ checks: [{ foo: 'bar' }] }),
+				TypeError,
+				/Configured check "{foo:\"bar\"}" is invalid/;
+		});
 	});
 
 	it('should allow for the overwriting of checks', function() {
@@ -168,7 +218,7 @@ describe('axe.configure', function() {
 			checks: [
 				{
 					id: 'bob',
-					options: false
+					options: { value: false }
 				}
 			]
 		});
@@ -176,7 +226,7 @@ describe('axe.configure', function() {
 			checks: [
 				{
 					id: 'bob',
-					options: true,
+					options: { value: true },
 					metadata: {
 						joe: 'joe'
 					}
@@ -184,9 +234,9 @@ describe('axe.configure', function() {
 			]
 		});
 
-		assert.instanceOf(axe._audit.checks.bob, Check);
+		// assert.instanceOf(axe._audit.checks.bob, Check);
 		assert.equal(axe._audit.checks.bob.id, 'bob');
-		assert.isTrue(axe._audit.checks.bob.options);
+		assert.isTrue(axe._audit.checks.bob.options.value);
 		assert.equal(axe._audit.data.checks.bob.joe, 'joe');
 	});
 

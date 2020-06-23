@@ -23,7 +23,9 @@ describe('xml-lang-mismatch', function() {
 		node.setAttribute('lang', 'en');
 		fixture.appendChild(node);
 		assert.isFalse(
-			checks['xml-lang-mismatch'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('xml-lang-mismatch')
+				.call(checkContext, node)
 		);
 	});
 
@@ -31,7 +33,9 @@ describe('xml-lang-mismatch', function() {
 		node.setAttribute('xml:lang', 'fr-FR');
 		fixture.appendChild(node);
 		assert.isFalse(
-			checks['xml-lang-mismatch'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('xml-lang-mismatch')
+				.call(checkContext, node)
 		);
 	});
 
@@ -39,7 +43,9 @@ describe('xml-lang-mismatch', function() {
 		node.setAttribute('lang', undefined);
 		fixture.appendChild(node);
 		assert.isFalse(
-			checks['xml-lang-mismatch'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('xml-lang-mismatch')
+				.call(checkContext, node)
 		);
 	});
 
@@ -48,7 +54,9 @@ describe('xml-lang-mismatch', function() {
 		node.setAttribute('xml:lang', 'en-GB');
 		fixture.appendChild(node);
 		assert.isTrue(
-			checks['xml-lang-mismatch'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('xml-lang-mismatch')
+				.call(checkContext, node)
 		);
 	});
 
@@ -57,7 +65,9 @@ describe('xml-lang-mismatch', function() {
 		node.setAttribute('xml:lang', 'en-US');
 		fixture.appendChild(node);
 		assert.isTrue(
-			checks['xml-lang-mismatch'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('xml-lang-mismatch')
+				.call(checkContext, node)
 		);
 	});
 
@@ -65,7 +75,9 @@ describe('xml-lang-mismatch', function() {
 		node.setAttribute('lang', 'en');
 		node.setAttribute('xml:lang', 'fr-FR');
 		fixture.appendChild(node);
-		var actual = checks['xml-lang-mismatch'].evaluate.call(checkContext, node);
+		var actual = axe.testUtils
+			.getCheckEvaluate('xml-lang-mismatch')
+			.call(checkContext, node);
 		assert.isFalse(actual);
 	});
 });

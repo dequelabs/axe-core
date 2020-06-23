@@ -1,7 +1,7 @@
-/*global CheckResult */
 describe('CheckResult', function() {
 	'use strict';
 
+	var CheckResult = axe._thisWillBeDeletedDoNotUse.base.CheckResult;
 	it('should be a function', function() {
 		assert.isFunction(CheckResult);
 	});

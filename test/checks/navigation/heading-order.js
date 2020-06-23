@@ -14,28 +14,36 @@ describe('heading-order', function() {
 		fixture.innerHTML =
 			'<div role="aria-heading" aria-level="1" id="target">One</h1><h3>Three</h3>';
 		var node = fixture.querySelector('#target');
-		assert.isTrue(checks['heading-order'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('heading-order').call(checkContext, node)
+		);
 		assert.equal(checkContext._data, 1);
 	});
 
 	it('should store the header level as a number', function() {
 		fixture.innerHTML = '<h1 id="target">One</h1><h3>Three</h3>';
 		var node = fixture.querySelector('#target');
-		assert.isTrue(checks['heading-order'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('heading-order').call(checkContext, node)
+		);
 		assert.isNumber(checkContext._data);
 	});
 
 	it('should store the correct header level for hn tags and return true', function() {
 		fixture.innerHTML = '<h1 id="target">One</h1><h3>Three</h3>';
 		var node = fixture.querySelector('#target');
-		assert.isTrue(checks['heading-order'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('heading-order').call(checkContext, node)
+		);
 		assert.equal(checkContext._data, 1);
 	});
 
 	it('should return true and put nothing in data for non-headers', function() {
 		fixture.innerHTML = '<div id="target">One</div><h3>Three</h3>';
 		var node = fixture.querySelector('#target');
-		assert.isTrue(checks['heading-order'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('heading-order').call(checkContext, node)
+		);
 		assert.equal(checkContext._data, null);
 	});
 

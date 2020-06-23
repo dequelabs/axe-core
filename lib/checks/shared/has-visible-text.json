@@ -1,6 +1,6 @@
 {
 	"id": "has-visible-text",
-	"evaluate": "has-visible-text.js",
+	"evaluate": "has-text-content-evaluate",
 	"metadata": {
 		"impact": "minor",
 		"messages": {

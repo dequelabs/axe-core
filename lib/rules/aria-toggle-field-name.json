@@ -1,7 +1,7 @@
 {
 	"id": "aria-toggle-field-name",
 	"selector": "[role=\"checkbox\"], [role=\"menuitemcheckbox\"], [role=\"menuitemradio\"], [role=\"radio\"], [role=\"switch\"]",
-	"matches": "aria-form-field-name-matches.js",
+	"matches": "aria-form-field-name-matches",
 	"tags": ["wcag2a", "wcag412"],
 	"metadata": {
 		"description": "Ensures every ARIA toggle field has an accessible name",

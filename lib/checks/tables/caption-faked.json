@@ -1,6 +1,6 @@
 {
 	"id": "caption-faked",
-	"evaluate": "caption-faked.js",
+	"evaluate": "caption-faked-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

@@ -1,6 +1,6 @@
 {
 	"id": "td-has-header",
-	"evaluate": "td-has-header.js",
+	"evaluate": "td-has-header-evaluate",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

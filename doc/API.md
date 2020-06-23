@@ -100,16 +100,16 @@ Returns a list of all rules with their ID and description
 
 The current set of tags supported are listed in the following table:
 
-| Tag Name        |       Accessibility Standard/Purpose        |
-| --------------- | :-----------------------------------------: |
-| `wcag2a`        |         WCAG 2.0 & WCAG 2.1 Level A         |
-| `wcag2aa`       |        WCAG 2.0 & WCAG 2.1 Level AA         |
-| `wcag21a`       |              WCAG 2.1 Level A               |
-| `wcag21aa`      |              WCAG 2.1 Level AA              |
-| `section508`    |                 Section 508                 |
-| `best-practice` |      Best practices endorsed by Deque       |
-| `experimental`  |           Cutting-edge techniques           |
-| `cat`           | Category mappings used by Deque (see below) |
+| Tag Name        | Accessibility Standard / Purpose            |
+| --------------- | ------------------------------------------- |
+| `wcag2a`        | WCAG 2.0 Level A                            |
+| `wcag2aa`       | WCAG 2.0 Level AA                           |
+| `wcag21a`       | WCAG 2.1 Level A                            |
+| `wcag21aa`      | WCAG 2.1 Level AA                           |
+| `best-practice` | Common accessibility best practices         |
+| `section508`    | Old Section 508 rules                       |
+| `experimental`  | Cutting-edge rules, disabled by default     |
+| `cat.*`         | Category mappings used by Deque (see below) |
 
 | Category name                 |
 | ----------------------------- |
@@ -202,7 +202,7 @@ axe.configure({
       - `all` - array(optional, default `[]`). This is a list of checks that, if any "fails", will generate a violation.
       - `none` - array(optional, default `[]`). This is a list of checks that, if any "pass", will generate a violation.
       - `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. In practice, you must supply some valid tags or the default evaluation will not invoke the rule. The convention is to include the standard (WCAG 2 and/or section 508), the WCAG 2 level, Section 508 paragraph, and the WCAG 2 success criteria. Tags are constructed by converting all letters to lower case, removing spaces and periods and concatenating the result. E.g. WCAG 2 A success criteria 1.1.1 would become ["wcag2a", "wcag111"]
-      - `matches` - string(optional, default `*`). A filtering [CSS selector](./developer-guide.md#supported-css-selectors) that will exclude elements that do not match the CSS selector.
+      - `matches` - function(optional, default `function() { return true }`). A filtering function that will exclude elements that match the `selector` property.
   - `disableOtherRules` - Disables all rules not included in the `rules` property.
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
   - `axeVersion` - Set the compatible version of a custom rule with the current axe version. Compatible versions are all patch and minor updates that are the same as, or newer than those of the `axeVersion` property.
@@ -385,7 +385,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | Property           | Default | Description                                                                                                                             |
 | ------------------ | :------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
 | `runOnly`          | n/a     | Limit which rules are executed, based on names or tags                                                                                  |
-| `rules`            | n/a     | Allow customizing a rule's properties (including { enable: false })                                                                     |
+| `rules`            | n/a     | Enable or disable rules using the `enabled` property                                                                                    |
 | `reporter`         | `v1`    | Which reporter to use (see [Configuration](#api-name-axeconfigure))                                                                     |
 | `resultTypes`      | n/a     | Limit which result types are processed and aggregated                                                                                   |
 | `xpath`            | `false` | Return xpath selectors for elements                                                                                                     |

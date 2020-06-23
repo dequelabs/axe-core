@@ -1,7 +1,7 @@
 {
 	"id": "page-no-duplicate-banner",
-	"evaluate": "page-no-duplicate.js",
-	"after": "page-no-duplicate-after.js",
+	"evaluate": "page-no-duplicate-evaluate",
+	"after": "page-no-duplicate-after",
 	"options": {
 		"selector": "header:not([role]), [role=banner]",
 		"nativeScopeFilter": "article, aside, main, nav, section"

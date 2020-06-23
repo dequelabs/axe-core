@@ -1,6 +1,6 @@
 {
 	"id": "button-has-visible-text",
-	"evaluate": "button-has-visible-text.js",
+	"evaluate": "has-text-content-evaluate",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

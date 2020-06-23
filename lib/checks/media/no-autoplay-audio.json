@@ -1,6 +1,6 @@
 {
 	"id": "no-autoplay-audio",
-	"evaluate": "no-autoplay-audio.js",
+	"evaluate": "no-autoplay-audio-evaluate",
 	"options": {
 		"allowedDuration": 3
 	},

@@ -1,6 +1,6 @@
 {
 	"id": "only-listitems",
-	"evaluate": "only-listitems.js",
+	"evaluate": "only-listitems-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

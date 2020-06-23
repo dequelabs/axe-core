@@ -20,20 +20,6 @@ describe('axe', () => {
     </body>
   </html>`);
 
-	global.document = window.document;
-	global.window = window;
-
-	// needed by axios lib/helpers/isURLSameOrigin.js
-	global.navigator = window.navigator;
-
-	// needed by axe /lib/core/public/run.js
-	global.Node = window.Node;
-	global.NodeList = window.NodeList;
-
-	// needed by axe /lib/core/base/context.js
-	global.Element = window.Element;
-	global.Document = window.Document;
-
 	const axe = require('axe-core');
 	const config = {
 		rules: {

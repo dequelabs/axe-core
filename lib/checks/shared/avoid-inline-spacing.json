@@ -1,6 +1,9 @@
 {
 	"id": "avoid-inline-spacing",
-	"evaluate": "avoid-inline-spacing.js",
+	"evaluate": "avoid-inline-spacing-evaluate",
+	"options": {
+		"cssProperties": ["line-height", "letter-spacing", "word-spacing"]
+	},
 	"metadata": {
 		"impact": "serious",
 		"messages": {

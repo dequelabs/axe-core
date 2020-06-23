@@ -1,6 +1,9 @@
 {
 	"id": "has-lang",
-	"evaluate": "has-lang.js",
+	"evaluate": "has-lang-evaluate",
+	"options": {
+		"attributes": ["lang", "xml:lang"]
+	},
 	"metadata": {
 		"impact": "serious",
 		"messages": {

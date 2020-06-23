@@ -29,6 +29,20 @@ describe('listitem', function() {
 		assert.isTrue(checks.listitem.evaluate.call(checkContext, target));
 	});
 
+	it('should pass if the listitem has a parent role=none', function() {
+		fixture.innerHTML =
+			'<ul role="none"><li id="target">My list item</li></ul>';
+		var target = fixture.querySelector('#target');
+		assert.isTrue(checks.listitem.evaluate.call(checkContext, target));
+	});
+
+	it('should pass if the listitem has a parent role=presentation', function() {
+		fixture.innerHTML =
+			'<ul role="presentation"><li id="target">My list item</li></ul>';
+		var target = fixture.querySelector('#target');
+		assert.isTrue(checks.listitem.evaluate.call(checkContext, target));
+	});
+
 	it('should fail if the listitem has an incorrect parent', function() {
 		fixture.innerHTML = '<div><li id="target">My list item</li></div>';
 		var target = fixture.querySelector('#target');

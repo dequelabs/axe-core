@@ -1,7 +1,21 @@
+var path = require('path');
+
 /*eslint
 camelcase: ["error", {"properties": "never"}]
 */
 var testConfig = require('./build/test/config');
+
+function createWebpackConfig(input, output, outputFilename = 'index.js') {
+	return {
+		devtool: false,
+		mode: 'development',
+		entry: path.resolve(__dirname, input),
+		output: {
+			filename: outputFilename,
+			path: path.resolve(__dirname, output)
+		}
+	};
+}
 
 module.exports = function(grunt) {
 	'use strict';
@@ -15,6 +29,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-parallel');
 	grunt.loadNpmTasks('grunt-run');
+	grunt.loadNpmTasks('grunt-webpack');
 	grunt.loadTasks('build/tasks');
 
 	var langs;
@@ -83,7 +98,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'lib/core',
-						src: ['**/*.js', '!imports/index.js'],
+						src: ['index.js'],
 						dest: 'tmp/core'
 					}
 				]
@@ -93,7 +108,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'tmp',
-						src: ['*.js'],
+						src: ['**/*.js'],
 						dest: 'tmp'
 					}
 				]
@@ -112,12 +127,7 @@ module.exports = function(grunt) {
 				options: {
 					process: true
 				},
-				coreFiles: [
-					'tmp/core/index.js',
-					'tmp/core/*/index.js',
-					'tmp/core/**/index.js',
-					'tmp/core/**/*.js'
-				],
+				coreFiles: ['tmp/core/index.js', 'tmp/core/**/*.js'],
 				files: langs.map(function(lang, i) {
 					return {
 						src: [
@@ -134,13 +144,17 @@ module.exports = function(grunt) {
 			commons: {
 				src: [
 					'lib/commons/intro.stub',
-					'lib/commons/index.js',
-					'lib/commons/*/index.js',
-					'lib/commons/**/*.js',
+
+					// output of webpack directories
+					'tmp/commons/index.js',
+
 					'lib/commons/outro.stub'
 				],
 				dest: 'tmp/commons.js'
 			}
+		},
+		webpack: {
+			core: createWebpackConfig('lib/core/core.js', 'tmp/core', 'core.js')
 		},
 		'aria-supported': {
 			data: {
@@ -157,7 +171,7 @@ module.exports = function(grunt) {
 				},
 				files: langs.map(function(lang) {
 					return {
-						src: ['<%= concat.commons.dest %>'],
+						src: [''],
 						dest: {
 							auto: 'tmp/rules' + lang + '.js',
 							descriptions: 'doc/rule-descriptions' + lang + '.md'
@@ -171,7 +185,7 @@ module.exports = function(grunt) {
 				options: {
 					lang: grunt.option('lang')
 				},
-				src: ['<%= concat.commons.dest %>'],
+				src: ['tmp/core/core.js'],
 				dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
 			}
 		},
@@ -336,10 +350,6 @@ module.exports = function(grunt) {
 			}
 		},
 		run: {
-			npm_run_imports: {
-				cmd: 'node',
-				args: ['./build/imports-generator']
-			},
 			npm_run_testHeadless: {
 				cmd: 'npm',
 				args: ['run', 'test:headless']
@@ -347,17 +357,11 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.registerTask('translate', [
-		'pre-build',
-		'validate',
-		'concat:commons',
-		'add-locale'
-	]);
-	grunt.registerTask('pre-build', ['clean', 'run:npm_run_imports']);
+	grunt.registerTask('translate', ['validate', 'webpack', 'add-locale']);
 	grunt.registerTask('build', [
-		'pre-build',
+		'clean',
 		'validate',
-		'concat:commons',
+		'webpack',
 		'configure',
 		'babel',
 		'concat:engine',

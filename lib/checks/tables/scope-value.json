@@ -1,6 +1,9 @@
 {
 	"id": "scope-value",
-	"evaluate": "scope-value.js",
+	"evaluate": "scope-value-evaluate",
+	"options": {
+		"values": ["row", "col", "rowgroup", "colgroup"]
+	},
 	"metadata": {
 		"impact": "critical",
 		"messages": {

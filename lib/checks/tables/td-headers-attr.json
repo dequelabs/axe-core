@@ -1,6 +1,6 @@
 {
 	"id": "td-headers-attr",
-	"evaluate": "td-headers-attr.js",
+	"evaluate": "td-headers-attr-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

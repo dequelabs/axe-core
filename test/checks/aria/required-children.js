@@ -18,7 +18,9 @@ describe('aria-required-children', function() {
 		);
 
 		assert.isFalse(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 		assert.deepEqual(checkContext._data, ['listitem']);
 	});
@@ -37,7 +39,9 @@ describe('aria-required-children', function() {
 
 			var params = [target, undefined, virtualTarget];
 			assert.isFalse(
-				checks['aria-required-children'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-children')
+					.apply(checkContext, params)
 			);
 			assert.deepEqual(checkContext._data, ['listitem']);
 		}
@@ -49,7 +53,9 @@ describe('aria-required-children', function() {
 		);
 
 		assert.isFalse(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 		assert.deepEqual(checkContext._data, ['rowgroup', 'row']);
 	});
@@ -68,7 +74,9 @@ describe('aria-required-children', function() {
 
 			var params = [target, undefined, virtualTarget];
 			assert.isFalse(
-				checks['aria-required-children'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-children')
+					.apply(checkContext, params)
 			);
 			assert.deepEqual(checkContext._data, ['rowgroup', 'row']);
 		}
@@ -79,7 +87,9 @@ describe('aria-required-children', function() {
 			'<div role="combobox" id="target" aria-expanded="true"><p>Nothing here.</p></div>'
 		);
 		assert.isFalse(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 		assert.deepEqual(checkContext._data, ['listbox', 'textbox']);
 	});
@@ -89,7 +99,9 @@ describe('aria-required-children', function() {
 			'<div role="combobox" id="target" aria-expanded="true"><p role="listbox">Nothing here.</p></div>'
 		);
 		assert.isFalse(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 		assert.deepEqual(checkContext._data, ['textbox']);
 	});
@@ -99,7 +111,20 @@ describe('aria-required-children', function() {
 			'<div role="combobox" id="target"><p role="listbox">Nothing here.</p><p role="textbox">Textbox</p></div>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
+		);
+	});
+
+	it('should pass all existing required children when all required', function() {
+		var params = checkSetup(
+			'<div id="target" role="menu"><li role="none"></li><li role="menuitem">Item 1</li><div role="menuitemradio">Item 2</div><div role="menuitemcheckbox">Item 3</div></div>'
+		);
+		assert.isTrue(
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -108,7 +133,9 @@ describe('aria-required-children', function() {
 			reviewEmpty: ['list']
 		});
 		assert.isUndefined(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -118,7 +145,9 @@ describe('aria-required-children', function() {
 			{ reviewEmpty: ['list'] }
 		);
 		assert.isFalse(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -128,7 +157,9 @@ describe('aria-required-children', function() {
 			{ reviewEmpty: ['list'] }
 		);
 		assert.isFalse(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -147,7 +178,9 @@ describe('aria-required-children', function() {
 
 			var params = [target, undefined, virtualTarget];
 			assert.isTrue(
-				checks['aria-required-children'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-children')
+					.apply(checkContext, params)
 			);
 		}
 	);
@@ -157,7 +190,9 @@ describe('aria-required-children', function() {
 			'<input type="text" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -166,7 +201,9 @@ describe('aria-required-children', function() {
 			'<input type="search" role="combobox" aria-owns="listbox1" id="target"><p role="listbox" id="listbox1">Nothing here.</p>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -175,7 +212,9 @@ describe('aria-required-children', function() {
 			'<input type="email" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -184,7 +223,9 @@ describe('aria-required-children', function() {
 			'<input type="url" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -193,7 +234,9 @@ describe('aria-required-children', function() {
 			'<input type="tel" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -202,7 +245,9 @@ describe('aria-required-children', function() {
 			'<div role="combobox" id="target"><p role="textbox">Textbox</p></div>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -211,7 +256,9 @@ describe('aria-required-children', function() {
 			'<div role="combobox" aria-haspopup="grid" aria-expanded="true" id="target"><p role="textbox">Textbox</p><div role="grid"></div></div>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -220,7 +267,9 @@ describe('aria-required-children', function() {
 			'<div role="combobox" aria-haspopup="grid" aria-expanded="true" id="target"><p role="textbox">Textbox</p><div role="listbox"></div></div>'
 		);
 		assert.isFalse(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 
 		assert.deepEqual(checkContext._data, ['grid']);
@@ -231,7 +280,9 @@ describe('aria-required-children', function() {
 			'<div role="combobox" aria-haspopup="gRiD" aria-expanded="true" id="target"><p role="textbox">Textbox</p><div role="grid"></div></div>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -240,10 +291,51 @@ describe('aria-required-children', function() {
 			'<div role="combobox" aria-expanded="true" id="target"><p role="textbox">Textbox</p><div role="grid"></div></div>'
 		);
 		assert.isFalse(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 
 		assert.deepEqual(checkContext._data, ['listbox']);
+	});
+
+	it('should fail when list does not have required children listitem', function() {
+		var params = checkSetup(
+			'<div id="target" role="list"><span>Item 1</span></div>'
+		);
+		assert.isFalse(
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
+		);
+
+		assert.deepEqual(checkContext._data, ['listitem']);
+	});
+
+	it('should fail when list has intermediate child with role that is not a required role', function() {
+		var params = checkSetup(
+			'<div id="target" role="list"><div role="tabpanel"><div role="listitem">List item 1</div></div></div>'
+		);
+		assert.isFalse(
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
+		);
+
+		assert.deepEqual(checkContext._data, ['listitem']);
+	});
+
+	it('should fail when nested child with role row  does not have required child role cell', function() {
+		var params = checkSetup(
+			'<div  role="grid"><div role="row" id="target"><span>Item 1</span></div></div>'
+		);
+		assert.isFalse(
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
+		);
+
+		assert.includeMembers(checkContext._data, ['cell']);
 	});
 
 	it('should pass one indirectly aria-owned child when one required', function() {
@@ -251,7 +343,9 @@ describe('aria-required-children', function() {
 			'<div role="grid" id="target" aria-owns="r"></div><div id="r"><div role="row">Nothing here.</div></div>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -260,7 +354,9 @@ describe('aria-required-children', function() {
 			'<div role="grid" id="target" aria-owns="nonexistent"></div>'
 		);
 		assert.isFalse(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -269,7 +365,42 @@ describe('aria-required-children', function() {
 			'<div role="grid" id="target" aria-owns="r"></div><p id="r" role="row">Nothing here.</p>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
+		);
+	});
+
+	it('should fail one existing aria-owned child when an intermediate child with role that is not a required role exists', function() {
+		var params = checkSetup(
+			'<div id="target" role="list" aria-owns="list"></div><div id="list"><div role="tabpanel"><div role="listitem"></div></div></div>'
+		);
+		assert.isFalse(
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
+		);
+	});
+
+	it('should pass one existing required child when one required (has explicit role of tab)', function() {
+		var params = checkSetup(
+			'<ul id="target" role="tablist"><li role="tab">Tab 1</li><li role="tab">Tab 2</li></ul>'
+		);
+		assert.isTrue(
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
+		);
+	});
+
+	it('should pass required child roles (grid contains row, which contains cell)', function() {
+		var params = checkSetup(
+			'<table id="target" role="grid"><tr role="row"><td role="cell">Item 1</td></tr></table>'
+		);
+		assert.isTrue(
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -278,7 +409,9 @@ describe('aria-required-children', function() {
 			'<div role="grid" id="target"><p role="row">Nothing here.</p></div>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -287,7 +420,9 @@ describe('aria-required-children', function() {
 			'<table id="target"><p role="row">Nothing here.</p></table>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -296,7 +431,9 @@ describe('aria-required-children', function() {
 			'<table role="grid" id="target"><tr><td>Nothing here.</td></tr></table>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -305,7 +442,9 @@ describe('aria-required-children', function() {
 			'<div role="list" id="target"><p role="listitem">Nothing here.</p></div>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -314,7 +453,9 @@ describe('aria-required-children', function() {
 			'<div role="list" id="target"><p>Just a regular ol p that contains a... <p role="listitem">Nothing here.</p></p></div>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -323,7 +464,9 @@ describe('aria-required-children', function() {
 			'<div role="listitem" id="target"><p>Nothing here.</p></div>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -332,7 +475,9 @@ describe('aria-required-children', function() {
 			'<div role="combobox" id="target"><input type="search"><p role="listbox">Textbox</p></div>'
 		);
 		assert.isTrue(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -341,15 +486,21 @@ describe('aria-required-children', function() {
 			'<div role="combobox" id="target"><input type="search" role="spinbutton"><p role="listbox">Textbox</p></div>'
 		);
 		assert.isFalse(
-			checks['aria-required-children'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-children')
+				.apply(checkContext, params)
 		);
 	});
 
 	describe('options', function() {
 		it('should return undefined instead of false when the role is in options.reviewEmpty', function() {
-			var params = checkSetup('<div role="grid" id="target"></div>');
+			var params = checkSetup('<div role="grid" id="target"></div>', {
+				reviewEmpty: []
+			});
 			assert.isFalse(
-				checks['aria-required-children'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-children')
+					.apply(checkContext, params)
 			);
 
 			// Options:
@@ -357,29 +508,37 @@ describe('aria-required-children', function() {
 				reviewEmpty: ['grid']
 			};
 			assert.isUndefined(
-				checks['aria-required-children'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-children')
+					.apply(checkContext, params)
 			);
 		});
 
 		it('should not throw when options is incorrect', function() {
-			var params = checkSetup('<div role="grid" id="target"></div>');
+			var params = checkSetup('<div role="menu" id="target"></div>');
 
 			// Options: (incorrect)
-			params[1] = ['grid'];
+			params[1] = ['menu'];
 			assert.isFalse(
-				checks['aria-required-children'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-children')
+					.apply(checkContext, params)
 			);
 
 			// Options: (incorrect)
 			params[1] = null;
 			assert.isFalse(
-				checks['aria-required-children'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-children')
+					.apply(checkContext, params)
 			);
 
 			// Options: (incorrect)
-			params[1] = 'grid';
+			params[1] = 'menu';
 			assert.isFalse(
-				checks['aria-required-children'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-children')
+					.apply(checkContext, params)
 			);
 		});
 
@@ -391,7 +550,9 @@ describe('aria-required-children', function() {
 				reviewEmpty: ['listbox']
 			};
 			assert.isUndefined(
-				checks['aria-required-children'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-children')
+					.apply(checkContext, params)
 			);
 		});
 
@@ -403,7 +564,9 @@ describe('aria-required-children', function() {
 				reviewEmpty: ['listbox']
 			};
 			assert.isFalse(
-				checks['aria-required-children'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-children')
+					.apply(checkContext, params)
 			);
 		});
 
@@ -415,7 +578,9 @@ describe('aria-required-children', function() {
 				reviewEmpty: ['listbox']
 			};
 			assert.isUndefined(
-				checks['aria-required-children'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-children')
+					.apply(checkContext, params)
 			);
 		});
 
@@ -427,7 +592,9 @@ describe('aria-required-children', function() {
 				reviewEmpty: ['listbox']
 			};
 			assert.isUndefined(
-				checks['aria-required-children'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-children')
+					.apply(checkContext, params)
 			);
 		});
 
@@ -439,7 +606,9 @@ describe('aria-required-children', function() {
 				reviewEmpty: ['listbox']
 			};
 			assert.isUndefined(
-				checks['aria-required-children'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-children')
+					.apply(checkContext, params)
 			);
 		});
 	});

@@ -1,11 +1,14 @@
 {
 	"id": "header-present",
-	"evaluate": "header-present.js",
+	"evaluate": "has-descendant-evaluate",
+	"options": {
+		"selector": "h1:not([role]), h2:not([role]), h3:not([role]), h4:not([role]), h5:not([role]), h6:not([role]), [role=heading]"
+	},
 	"metadata": {
 		"impact": "serious",
 		"messages": {
-			"pass": "Page has a header",
-			"fail": "Page does not have a header"
+			"pass": "Page has a heading",
+			"fail": "Page does not have a heading"
 		}
 	}
 }

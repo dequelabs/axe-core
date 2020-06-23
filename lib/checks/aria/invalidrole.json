@@ -1,6 +1,6 @@
 {
 	"id": "invalidrole",
-	"evaluate": "invalidrole.js",
+	"evaluate": "invalidrole-evaluate",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

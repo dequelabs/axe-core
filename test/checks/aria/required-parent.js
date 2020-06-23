@@ -17,7 +17,9 @@ describe('aria-required-parent', function() {
 			'<div><p role="listitem" id="target">Nothing here.</p></div>'
 		);
 		assert.isFalse(
-			checks['aria-required-parent'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-parent')
+				.apply(checkContext, params)
 		);
 		assert.deepEqual(checkContext._data, ['list']);
 	});
@@ -38,7 +40,9 @@ describe('aria-required-parent', function() {
 
 			var params = [shadowContent, undefined, virtualTarget];
 			assert.isFalse(
-				checks['aria-required-parent'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-parent')
+					.apply(checkContext, params)
 			);
 			assert.deepEqual(checkContext._data, ['list']);
 		}
@@ -50,7 +54,9 @@ describe('aria-required-parent', function() {
 			'<div id="parent"><p role="listitem" id="target">Nothing here.</p></div>';
 		var params = checkSetup(snippet);
 		assert.isTrue(
-			checks['aria-required-parent'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-parent')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -60,7 +66,9 @@ describe('aria-required-parent', function() {
 				'<div><p role="listitem" id="target">Nothing here.</p></div>'
 		);
 		assert.isFalse(
-			checks['aria-required-parent'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-parent')
+				.apply(checkContext, params)
 		);
 		assert.deepEqual(checkContext._data, ['list']);
 	});
@@ -70,7 +78,9 @@ describe('aria-required-parent', function() {
 			'<div role="list" aria-owns="target"></div><div><p role="listitem" id="target">Nothing here.</p></div>'
 		);
 		assert.isTrue(
-			checks['aria-required-parent'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-parent')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -79,7 +89,9 @@ describe('aria-required-parent', function() {
 			'<div role="grid"><p role="row" id="target">Nothing here.</p></div>'
 		);
 		assert.isTrue(
-			checks['aria-required-parent'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-parent')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -88,7 +100,9 @@ describe('aria-required-parent', function() {
 			'<div role="list"><p role="listitem" id="target">Nothing here.</p></div>'
 		);
 		assert.isTrue(
-			checks['aria-required-parent'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-parent')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -108,7 +122,9 @@ describe('aria-required-parent', function() {
 
 			var params = [shadowContent, undefined, virtualTarget];
 			assert.isTrue(
-				checks['aria-required-parent'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-parent')
+					.apply(checkContext, params)
 			);
 		}
 	);
@@ -130,7 +146,9 @@ describe('aria-required-parent', function() {
 
 			var params = [shadowContent, undefined, virtualTarget];
 			assert.isFalse(
-				checks['aria-required-parent'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-parent')
+					.apply(checkContext, params)
 			);
 		}
 	);

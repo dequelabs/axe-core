@@ -1,6 +1,6 @@
 {
 	"id": "focusable-element",
-	"evaluate": "focusable-element.js",
+	"evaluate": "focusable-element-evaluate",
 	"metadata": {
 		"impact": "moderate",
 		"messages": {

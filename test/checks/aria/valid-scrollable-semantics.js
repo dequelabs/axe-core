@@ -14,7 +14,9 @@ describe('valid-scrollable-semantics', function() {
 		node.setAttribute('role', '"banner');
 		fixture.appendChild(node);
 		assert.isFalse(
-			checks['valid-scrollable-semantics'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('valid-scrollable-semantics')
+				.call(checkContext, node)
 		);
 	});
 
@@ -23,7 +25,9 @@ describe('valid-scrollable-semantics', function() {
 		node.setAttribute('role', 'search');
 		fixture.appendChild(node);
 		assert.isFalse(
-			checks['valid-scrollable-semantics'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('valid-scrollable-semantics')
+				.call(checkContext, node)
 		);
 	});
 
@@ -32,7 +36,9 @@ describe('valid-scrollable-semantics', function() {
 		node.setAttribute('role', 'form');
 		fixture.appendChild(node);
 		assert.isTrue(
-			checks['valid-scrollable-semantics'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('valid-scrollable-semantics')
+				.call(checkContext, node)
 		);
 	});
 
@@ -41,7 +47,9 @@ describe('valid-scrollable-semantics', function() {
 		node.setAttribute('role', 'navigation');
 		fixture.appendChild(node);
 		assert.isTrue(
-			checks['valid-scrollable-semantics'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('valid-scrollable-semantics')
+				.call(checkContext, node)
 		);
 	});
 
@@ -50,7 +58,9 @@ describe('valid-scrollable-semantics', function() {
 		node.setAttribute('role', 'complementary');
 		fixture.appendChild(node);
 		assert.isTrue(
-			checks['valid-scrollable-semantics'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('valid-scrollable-semantics')
+				.call(checkContext, node)
 		);
 	});
 
@@ -59,7 +69,9 @@ describe('valid-scrollable-semantics', function() {
 		node.setAttribute('role', 'contentinfo');
 		fixture.appendChild(node);
 		assert.isTrue(
-			checks['valid-scrollable-semantics'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('valid-scrollable-semantics')
+				.call(checkContext, node)
 		);
 	});
 
@@ -68,7 +80,9 @@ describe('valid-scrollable-semantics', function() {
 		node.setAttribute('role', 'main');
 		fixture.appendChild(node);
 		assert.isTrue(
-			checks['valid-scrollable-semantics'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('valid-scrollable-semantics')
+				.call(checkContext, node)
 		);
 	});
 
@@ -77,7 +91,9 @@ describe('valid-scrollable-semantics', function() {
 		node.setAttribute('role', 'region');
 		fixture.appendChild(node);
 		assert.isTrue(
-			checks['valid-scrollable-semantics'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('valid-scrollable-semantics')
+				.call(checkContext, node)
 		);
 	});
 
@@ -85,7 +101,9 @@ describe('valid-scrollable-semantics', function() {
 		var node = document.createElement('nav');
 		fixture.appendChild(node);
 		assert.isTrue(
-			checks['valid-scrollable-semantics'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('valid-scrollable-semantics')
+				.call(checkContext, node)
 		);
 	});
 
@@ -93,7 +111,9 @@ describe('valid-scrollable-semantics', function() {
 		var node = document.createElement('section');
 		fixture.appendChild(node);
 		assert.isTrue(
-			checks['valid-scrollable-semantics'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('valid-scrollable-semantics')
+				.call(checkContext, node)
 		);
 	});
 
@@ -101,7 +121,9 @@ describe('valid-scrollable-semantics', function() {
 		var node = document.createElement('article');
 		fixture.appendChild(node);
 		assert.isTrue(
-			checks['valid-scrollable-semantics'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('valid-scrollable-semantics')
+				.call(checkContext, node)
 		);
 	});
 
@@ -109,7 +131,9 @@ describe('valid-scrollable-semantics', function() {
 		var node = document.createElement('aside');
 		fixture.appendChild(node);
 		assert.isTrue(
-			checks['valid-scrollable-semantics'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('valid-scrollable-semantics')
+				.call(checkContext, node)
 		);
 	});
 });

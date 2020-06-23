@@ -1,6 +1,6 @@
 {
 	"id": "color-contrast",
-	"matches": "color-contrast-matches.js",
+	"matches": "color-contrast-matches",
 	"excludeHidden": false,
 	"tags": ["cat.color", "wcag2aa", "wcag143"],
 	"metadata": {

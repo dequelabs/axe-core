@@ -20,7 +20,9 @@ describe('same-caption-summary', function() {
 		);
 
 		assert.isFalse(
-			checks['same-caption-summary'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('same-caption-summary')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -30,7 +32,9 @@ describe('same-caption-summary', function() {
 		);
 
 		assert.isFalse(
-			checks['same-caption-summary'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('same-caption-summary')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -40,7 +44,9 @@ describe('same-caption-summary', function() {
 		);
 
 		assert.isFalse(
-			checks['same-caption-summary'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('same-caption-summary')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -50,7 +56,9 @@ describe('same-caption-summary', function() {
 		);
 
 		assert.isTrue(
-			checks['same-caption-summary'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('same-caption-summary')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -68,7 +76,9 @@ describe('same-caption-summary', function() {
 		);
 
 		assert.isTrue(
-			checks['same-caption-summary'].evaluate.apply(checkContext, params)
+			axe.testUtils
+				.getCheckEvaluate('same-caption-summary')
+				.apply(checkContext, params)
 		);
 	});
 
@@ -88,7 +98,9 @@ describe('same-caption-summary', function() {
 			);
 
 			assert.isTrue(
-				checks['same-caption-summary'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('same-caption-summary')
+					.apply(checkContext, params)
 			);
 		}
 	);

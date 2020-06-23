@@ -1,6 +1,6 @@
 {
 	"id": "same-caption-summary",
-	"evaluate": "same-caption-summary.js",
+	"evaluate": "same-caption-summary-evaluate",
 	"metadata": {
 		"impact": "minor",
 		"messages": {

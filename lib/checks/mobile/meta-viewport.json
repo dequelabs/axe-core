@@ -1,6 +1,6 @@
 {
 	"id": "meta-viewport",
-	"evaluate": "meta-viewport-scale.js",
+	"evaluate": "meta-viewport-scale-evaluate",
 	"options": {
 		"scaleMinimum": 2
 	},
