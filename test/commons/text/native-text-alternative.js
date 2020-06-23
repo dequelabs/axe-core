@@ -35,13 +35,13 @@ describe('text.nativeTextAlternative', function() {
 
 	it('returns `` when the element has role=presentation', function() {
 		var vNode = queryFixture(
-			'<button id="target" role="presentation">foo</button>'
+			'<img id="target" alt="foo" role="presentation" />'
 		);
 		assert.equal(nativeTextAlternative(vNode), '');
 	});
 
 	it('returns `` when the element has role=none', function() {
-		var vNode = queryFixture('<button id="target" role="none">foo</button>');
+		var vNode = queryFixture('<img id="target" alt="foo" role="none" />');
 		assert.equal(nativeTextAlternative(vNode), '');
 	});
 });
