@@ -73,7 +73,7 @@ const getRuleMatchesFileMeta = (
 			content: `
 			// TODO: Filter node(s)	
 			
-			function ${fnName}(node) {
+			function ${fnName}(node, virtualNode) {
 				return node
 			}
 
@@ -90,7 +90,7 @@ const getRuleMatchesFileMeta = (
 			content: `
 			describe('${ruleName}-matches', function() {
 				'use strict';
-				// TODO: Write tests 
+				// TODO: Write tests
 			})
 			`,
 			dir: directories.testRuleMatches
@@ -144,7 +144,7 @@ const getCheckJsFileMeta = (name, dir) => {
 		name: `${name}-evaluate.js`,
 		content: `
 		// TODO: Logic for check
-		function ${fnName}(node) {
+		function ${fnName}(node, options, virtualNode) {
 			return true
 		}
 		export default ${fnName};
