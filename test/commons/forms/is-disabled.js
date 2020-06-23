@@ -38,7 +38,7 @@ describe('forms.isDisabled', function() {
 			assert.isTrue(isDisabled(node));
 		});
 
-		it('returns true for in a disabled fieldset', function() {
+		it('returns true when in a disabled fieldset', function() {
 			fixtureSetup(
 				'<fieldset disabled>' + '<span>Hello world</span>' + '</fieldset>'
 			);
@@ -47,7 +47,7 @@ describe('forms.isDisabled', function() {
 			assert.isTrue(isDisabled(node));
 		});
 
-		it('returns true for in a disabled button', function() {
+		it('returns true when in a disabled button', function() {
 			fixtureSetup(
 				'<button disabled>' + '<span>Hello world</span>' + '</button>'
 			);
@@ -80,7 +80,7 @@ describe('forms.isDisabled', function() {
 			assert.isTrue(isDisabled(node));
 		});
 
-		it('returns true for an element with aria-disabled is not true', function() {
+		it('returns false for an element when aria-disabled is not true', function() {
 			fixtureSetup('<span aria-disabled="not true">hello</span>');
 			var node = axe.utils.querySelectorAll(axe._tree[0], 'span')[0];
 
@@ -98,7 +98,7 @@ describe('forms.isDisabled', function() {
 			assert.isTrue(isDisabled(node));
 		});
 
-		it('returns true if the closest ancestor with aria-disabled is set to false', function() {
+		it('returns false if the closest ancestor with aria-disabled is set to false', function() {
 			fixtureSetup(
 				'<section aria-disabled="true">' +
 					'<div aria-disabled="false"><span>hello</span></div>' +

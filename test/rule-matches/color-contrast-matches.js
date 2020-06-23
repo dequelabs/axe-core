@@ -337,7 +337,7 @@ describe('color-contrast-matches', function() {
 		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
 	});
 
-	it("should match not all input's are disabled - aria-labelledby", function() {
+	it("should match when at least one input is not disabled - aria-labelledby", function() {
 		fixture.innerHTML =
 			'<div id="t1">Test</div>' +
 			'<input type="text" aria-labelledby="t1" disabled />' +
@@ -347,7 +347,7 @@ describe('color-contrast-matches', function() {
 		assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
 	});
 
-	it("should match not input's disabled by an ancestor - aria-labelledby", function() {
+	it("should match when inputs are disabled by an ancestor - aria-labelledby", function() {
 		fixture.innerHTML = '<div id="t1">Test</div>' + '<fieldset disabled>';
 		'<input type="text" aria-labelledby="t1" />' +
 			'<input type="text" aria-labelledby="t1" />' +
@@ -371,7 +371,7 @@ describe('color-contrast-matches', function() {
 		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
 	});
 
-	it("should not match a aria-disabled input's label - aria-labelledby", function() {
+	it("should not match an aria-disabled input's label - aria-labelledby", function() {
 		fixture.innerHTML =
 			'<div id="t1"><span>Test</span></div>' +
 			'<div role="textbox" aria-labelledby="bob t1 fred" aria-disabled="true"></div>';
