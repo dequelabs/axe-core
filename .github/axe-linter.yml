@@ -1,3 +1,5 @@
 exclude:
   - ./CHANGELOG.md
   - ./test/**/*
+rules:
+  document-title: false
