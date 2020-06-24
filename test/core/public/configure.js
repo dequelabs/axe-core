@@ -983,6 +983,32 @@ describe('axe.configure', function() {
 				assert.equal(ariaAttr.type, 'mntokens');
 				assert.deepEqual(ariaAttr.values, ['foo', 'bar']);
 			});
+
+			it('should override and not merge array', function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'mntoken',
+								values: ['foo', 'bar']
+							}
+						}
+					}
+				});
+
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								values: ['baz']
+							}
+						}
+					}
+				});
+
+				var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
+				assert.deepEqual(ariaAttr.values, ['baz']);
+			});
 		});
 	});
 });
