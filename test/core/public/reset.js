@@ -123,4 +123,23 @@ describe('axe.reset', function() {
 			assert.equal(banana.messages.incomplete, 'donno');
 		});
 	});
+
+	it('should restore standards object', function() {
+		axe._load({});
+
+		axe.configure({
+			standards: {
+				ariaAttrs: {
+					'aria-live': {
+						type: 'string'
+					}
+				}
+			}
+		});
+
+		axe.reset();
+
+		var ariaLiveAttr = axe._audit.standards.ariaAttrs['aria-live'];
+		assert.equal(ariaLiveAttr.type, 'nmtoken');
+	});
 });
