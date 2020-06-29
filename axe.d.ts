@@ -3,9 +3,9 @@
 // Definitions by: Marcy Sutton <https://github.com/marcysutton>
 
 declare namespace axe {
-	type ImpactValue = 'minor' | 'moderate' | 'serious' | 'critical';
+	type ImpactValue = 'minor' | 'moderate' | 'serious' | 'critical' | null;
 
-	type TagValue = 'wcag2a' | 'wcag2aa' | 'section508' | 'best-practice' | 'wcag21a' | 'wcag21aa';
+	type TagValue = string;
 
 	type ReporterVersion = 'v1' | 'v2' | 'raw' | 'raw-env' | 'no-passes';
 
