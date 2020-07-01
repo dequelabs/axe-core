@@ -18,7 +18,7 @@ describe('axe.commons.color.getTextShadowColors', function() {
 	it('returns a rgb values of each text-shadow color', function() {
 		fixture.innerHTML =
 			'<span style="text-shadow: ' +
-			'1px 1px 2px red, blue 0 0 1em, \n0\t 0  0.2em green;' +
+			'1px 1px 2px #F00, rgb(0, 0, 255) 0 0 1em, \n0\t 0  0.2em green;' +
 			'">Hello world</span>';
 
 		var span = fixture.querySelector('span');
@@ -71,7 +71,7 @@ describe('axe.commons.color.getTextShadowColors', function() {
 	it('combines the blur radius alpha with the alpha of the text-shadow color', function() {
 		fixture.innerHTML =
 			'<span style="text-shadow: ' +
-			'rgba(255,0,0,0) 0 0 2px, rgba(255,0,0,0.5) 0 0 2px, rgba(255,0,0,0.8) 0 0 2px' +
+			'#F000 0 0 2px, rgba(255,0,0,0.5) 0 0 2px, rgba(255,0,0,0.8) 0 0 2px' +
 			'">Hello world</span>';
 
 		var span = fixture.querySelector('span');
