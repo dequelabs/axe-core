@@ -46,6 +46,7 @@ describe('axe.commons.color.getTextShadowColors', function() {
 		var span = fixture.querySelector('span');
 		var shadowColors = getTextShadowColors(span);
 
+		assert.lengthOf(shadowColors, 3);
 		assert.equal(shadowColors[0].alpha, 0);
 		assert.equal(shadowColors[1].alpha, 0);
 		assert.equal(shadowColors[2].alpha, 0);
@@ -63,6 +64,7 @@ describe('axe.commons.color.getTextShadowColors', function() {
 		var expected1 = 3.7 / (10 + 8);
 		var expected2 = 3.7 / (18 + 8);
 
+		assert.lengthOf(shadowColors, 3);
 		assert.closeTo(shadowColors[0].alpha, expected0, 0.05);
 		assert.closeTo(shadowColors[1].alpha, expected1, 0.05);
 		assert.closeTo(shadowColors[2].alpha, expected2, 0.05);
@@ -71,7 +73,7 @@ describe('axe.commons.color.getTextShadowColors', function() {
 	it('combines the blur radius alpha with the alpha of the text-shadow color', function() {
 		fixture.innerHTML =
 			'<span style="text-shadow: ' +
-			'#F000 0 0 2px, rgba(255,0,0,0.5) 0 0 2px, rgba(255,0,0,0.8) 0 0 2px' +
+			'rgba(255, 0, 0, 0) 0 0 2px, rgba(255,0,0,0.5) 0 0 2px, rgba(255,0,0,0.8) 0 0 2px' +
 			'">Hello world</span>';
 
 		var span = fixture.querySelector('span');
@@ -79,6 +81,7 @@ describe('axe.commons.color.getTextShadowColors', function() {
 		var expected1 = (3.7 / (2 + 8)) * 0.5;
 		var expected2 = (3.7 / (2 + 8)) * 0.8;
 
+		assert.lengthOf(shadowColors, 3);
 		assert.closeTo(shadowColors[0].alpha, 0, 0.05);
 		assert.closeTo(shadowColors[1].alpha, expected1, 0.05);
 		assert.closeTo(shadowColors[2].alpha, expected2, 0.05);
