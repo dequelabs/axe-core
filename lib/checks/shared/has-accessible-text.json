@@ -1,0 +1,11 @@
+{
+	"id": "has-accessible-text",
+	"evaluate": "has-accessible-text-evaluate",
+	"metadata": {
+		"impact": "minor",
+		"messages": {
+			"pass": "Element has text that is visible to screen readers",
+			"fail": "Element does not have text that is visible to screen readers"
+		}
+	}
+}

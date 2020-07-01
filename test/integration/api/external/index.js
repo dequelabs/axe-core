@@ -40,6 +40,7 @@ describe('external API', function() {
 
 	describe('axe.commons.aria.implicitRole', function() {
 		it('must be a function with the signature Element -> String|null', function() {
+			axe.utils.getFlattenedTree(document.documentElement);
 			var implicitRolesOrNull = getEntries(
 				axe.commons.aria.lookupTable.role
 			).reduce(

@@ -64,7 +64,9 @@
 		["#pass-dpub-4"],
 		["#pass-dpub-5"],
 		["#pass-dpub-6"],
-		["#pass-dpub-7"]
+		["#pass-dpub-7"],
+		["#hr-presentation"],
+		["#hr-none"]
 	],
 	"violations": [
 		["#fail-dd-no-role"],

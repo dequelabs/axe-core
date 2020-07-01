@@ -2,6 +2,7 @@ describe('aria-roledescription', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var flatTreeSetup = axe.testUtils.flatTreeSetup;
 	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function() {
@@ -12,6 +13,7 @@ describe('aria-roledescription', function() {
 	it('returns true for elements with an implicit supported role', function() {
 		fixture.innerHTML =
 			'<button aria-roledescription="Awesome Button">Click</button>';
+		flatTreeSetup(fixture);
 		var actual = axe.testUtils
 			.getCheckEvaluate('aria-roledescription')
 			.call(checkContext, fixture.firstChild, {
@@ -24,6 +26,7 @@ describe('aria-roledescription', function() {
 	it('returns true for elements with an explicit supported role', function() {
 		fixture.innerHTML =
 			'<div role="radio" aria-roledescription="Awesome Radio">Click</div>';
+		flatTreeSetup(fixture);
 		var actual = axe.testUtils
 			.getCheckEvaluate('aria-roledescription')
 			.call(checkContext, fixture.firstChild, {
@@ -36,6 +39,7 @@ describe('aria-roledescription', function() {
 	it('returns undefined for elements with an unsupported role', function() {
 		fixture.innerHTML =
 			'<div role="main" aria-roledescription="Awesome Main">The main element</div>';
+		flatTreeSetup(fixture);
 		var actual = axe.testUtils
 			.getCheckEvaluate('aria-roledescription')
 			.call(checkContext, fixture.firstChild);
@@ -46,6 +50,7 @@ describe('aria-roledescription', function() {
 	it('returns false for elements without role', function() {
 		fixture.innerHTML =
 			'<div aria-roledescription="Awesome Main">The main element</div>';
+		flatTreeSetup(fixture);
 		var actual = axe.testUtils
 			.getCheckEvaluate('aria-roledescription')
 			.call(checkContext, fixture.firstChild);
@@ -56,6 +61,7 @@ describe('aria-roledescription', function() {
 	it('returns false for elements with role=presentation', function() {
 		fixture.innerHTML =
 			'<div role="presentation" aria-roledescription="Awesome Main">The main element</div>';
+		flatTreeSetup(fixture);
 		var actual = axe.testUtils
 			.getCheckEvaluate('aria-roledescription')
 			.call(checkContext, fixture.firstChild);
@@ -66,6 +72,7 @@ describe('aria-roledescription', function() {
 	it('returns false for elements with role=none', function() {
 		fixture.innerHTML =
 			'<div role="none" aria-roledescription="Awesome Main">The main element</div>';
+		flatTreeSetup(fixture);
 		var actual = axe.testUtils
 			.getCheckEvaluate('aria-roledescription')
 			.call(checkContext, fixture.firstChild);

@@ -2,16 +2,23 @@
 	"id": "color-contrast",
 	"evaluate": "color-contrast-evaluate",
 	"options": {
-		"noScroll": false,
 		"ignoreUnicode": true,
 		"ignoreLength": false,
 		"boldValue": 700,
 		"boldPt": 14,
 		"nonBoldPt": 18,
-		"minNormalContrastRatio": 0,
-		"normalContrastRatio": 4.5,
-		"minLargeContrastRatio": 0,
-		"largeContrastRatio": 3
+		"contrastRatio": {
+			"normal": {
+				"expected": 4.5,
+				"minThreshold": 0,
+				"maxThreshold": 4.5
+			},
+			"large": {
+				"expected": 3,
+				"minThreshold": 0,
+				"maxThreshold": 3
+			}
+		}
 	},
 	"metadata": {
 		"impact": "serious",
