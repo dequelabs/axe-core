@@ -469,7 +469,7 @@ describe('color-contrast', function() {
 			'<div style="color: #999; background-color: white; font-size: 14pt; font-weight: 100" id="target">' +
 				'<span style="font-weight:bolder">My text</span></div>',
 			{
-				contrastRaio: {
+				contrastRatio: {
 					normal: {
 						expected: 2.5
 					}
@@ -481,12 +481,12 @@ describe('color-contrast', function() {
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
 
-	it('should support options.contrastRaio.normal.minThreshold', function() {
+	it('should support options.contrastRatio.normal.minThreshold', function() {
 		var params = checkSetup(
 			'<div style="color: #999; background-color: white; font-size: 14pt; font-weight: 100" id="target">' +
 				'<span style="font-weight:bolder">My text</span></div>',
 			{
-				contrastRaio: {
+				contrastRatio: {
 					normal: {
 						minThreshold: 3
 					}
@@ -498,12 +498,12 @@ describe('color-contrast', function() {
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
 
-	it('should support options.contrastRaio.normal.maxThreshold', function() {
+	it('should support options.contrastRatio.normal.maxThreshold', function() {
 		var params = checkSetup(
 			'<div style="color: #999; background-color: white; font-size: 14pt; font-weight: 100" id="target">' +
 				'<span style="font-weight:bolder">My text</span></div>',
 			{
-				contrastRaio: {
+				contrastRatio: {
 					normal: {
 						maxThreshold: 2
 					}
@@ -515,13 +515,13 @@ describe('color-contrast', function() {
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
 
-	it('should support options.contrastRaio.large.expected', function() {
+	it('should support options.contrastRatio.large.expected', function() {
 		var params = checkSetup(
 			'<div style="color: #ccc; background-color: white; font-size: 18pt; font-weight: 100" id="target">' +
 				'<span style="font-weight:bolder">My text</span></div>',
 			{
-				contrastRaio: {
-					normal: {
+				contrastRatio: {
+					large: {
 						expected: 1.5
 					}
 				}
@@ -532,12 +532,29 @@ describe('color-contrast', function() {
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
 
-	it('should support options.contrastRaio.large.maxThreshold', function() {
+	it('should support options.contrastRatio.large.minThreshold', function() {
 		var params = checkSetup(
 			'<div style="color: #ccc; background-color: white; font-size: 18pt; font-weight: 100" id="target">' +
 				'<span style="font-weight:bolder">My text</span></div>',
 			{
-				contrastRaio: {
+				contrastRatio: {
+					large: {
+						minThreshold: 2
+					}
+				}
+			}
+		);
+
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._relatedNodes, []);
+	});
+
+	it('should support options.contrastRatio.large.maxThreshold', function() {
+		var params = checkSetup(
+			'<div style="color: #ccc; background-color: white; font-size: 18pt; font-weight: 100" id="target">' +
+				'<span style="font-weight:bolder">My text</span></div>',
+			{
+				contrastRatio: {
 					large: {
 						maxThreshold: 1.2
 					}

@@ -11,12 +11,12 @@
 			"normal": {
 				"expected": 4.5,
 				"minThreshold": 0,
-				"maxThreshold": 4.5
+				"maxThreshold": 999
 			},
 			"large": {
 				"expected": 3,
 				"minThreshold": 0,
-				"maxThreshold": 3
+				"maxThreshold": 999
 			}
 		}
 	},
