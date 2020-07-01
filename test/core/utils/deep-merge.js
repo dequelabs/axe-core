@@ -61,4 +61,13 @@ describe('utils.deepMerge', function() {
 			b: 'five'
 		});
 	});
+
+	it('should handle bad sources', function() {
+		var obj;
+
+		assert.doesNotThrow(function() {
+			obj = deepMerge(null, undefined, true, 'one', ['a', 'b'], 1, { a: 'b' });
+		});
+		assert.deepEqual(obj, { a: 'b' });
+	});
 });
