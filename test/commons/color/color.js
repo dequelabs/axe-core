@@ -14,11 +14,20 @@ describe('color.Color', function() {
 
 		it('should set values properly via RGBA', function() {
 			var c = new Color();
-			c.parseRgbString('rgba(17, 34,51, 0)');
+			c.parseRgbString('rgba(17, 34,51,  0.2)');
 			assert.equal(c.red, 17);
 			assert.equal(c.green, 34);
 			assert.equal(c.blue, 51);
-			assert.equal(c.alpha, 0);
+			assert.closeTo(c.alpha, 0.2, 0.01);
+		});
+
+		it('allows decimal values', function() {
+			var c = new Color();
+			c.parseRgbString('rgba(.1, 23.4, 56.7,  .89)');
+			assert.closeTo(c.red, 0.1, 0.01);
+			assert.closeTo(c.green, 23.4, 0.01);
+			assert.closeTo(c.blue, 56.7, 0.01);
+			assert.closeTo(c.alpha, 0.89, 0.01);
 		});
 
 		it('returns everything on 0 with transparent', function() {

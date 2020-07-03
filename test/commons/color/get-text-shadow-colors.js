@@ -70,6 +70,20 @@ describe('axe.commons.color.getTextShadowColors', function() {
 		assert.closeTo(shadowColors[2].alpha, expected2, 0.05);
 	});
 
+	it('handles floating point values', function() {
+		fixture.innerHTML =
+			'<span style="text-shadow: ' +
+			'0 0.1px .2px red' +
+			'">Hello world</span>';
+
+		var span = fixture.querySelector('span');
+		var shadowColors = getTextShadowColors(span);
+		var expectedAlpha = 3.7 / (0.12 + 8);
+
+		assert.lengthOf(shadowColors, 1);
+		assert.closeTo(shadowColors[0].alpha, expectedAlpha, 0.01);
+	});
+
 	it('combines the blur radius alpha with the alpha of the text-shadow color', function() {
 		fixture.innerHTML =
 			'<span style="text-shadow: ' +
