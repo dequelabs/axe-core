@@ -18,7 +18,7 @@ describe('title-only', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 
 		assert.isTrue(
-			checks['title-only'].evaluate(
+			axe.testUtils.getCheckEvaluate('title-only')(
 				node,
 				undefined,
 				axe.utils.getNodeFromTree(node)
@@ -26,7 +26,7 @@ describe('title-only', function() {
 		);
 		node.setAttribute('aria-label', 'woop');
 		assert.isFalse(
-			checks['title-only'].evaluate(
+			axe.testUtils.getCheckEvaluate('title-only')(
 				node,
 				undefined,
 				axe.utils.getNodeFromTree(node)
@@ -48,7 +48,7 @@ describe('title-only', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 
 		assert.isTrue(
-			checks['title-only'].evaluate(
+			axe.testUtils.getCheckEvaluate('title-only')(
 				node,
 				undefined,
 				axe.utils.getNodeFromTree(node)
@@ -56,7 +56,7 @@ describe('title-only', function() {
 		);
 		node.setAttribute('aria-label', 'woop');
 		assert.isFalse(
-			checks['title-only'].evaluate(
+			axe.testUtils.getCheckEvaluate('title-only')(
 				node,
 				undefined,
 				axe.utils.getNodeFromTree(node)

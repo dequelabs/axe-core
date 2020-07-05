@@ -1,6 +1,6 @@
 {
 	"id": "dlitem",
-	"evaluate": "dlitem-evaluate.js",
+	"evaluate": "dlitem-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

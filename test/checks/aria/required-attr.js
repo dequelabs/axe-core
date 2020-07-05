@@ -15,12 +15,9 @@ describe('aria-required-attr', function() {
 		var vNode = queryFixture('<div id="target" role="slider" tabindex="1">');
 
 		assert.isFalse(
-			checks['aria-required-attr'].evaluate.call(
-				checkContext,
-				vNode.actualNode,
-				options,
-				vNode
-			)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-attr')
+				.call(checkContext, vNode.actualNode, options, vNode)
 		);
 		assert.deepEqual(checkContext._data, ['aria-valuenow']);
 	});
@@ -29,18 +26,27 @@ describe('aria-required-attr', function() {
 		var vNode = queryFixture('<div id="target">');
 
 		assert.isTrue(
-			checks['aria-required-attr'].evaluate.call(
-				checkContext,
-				vNode.actualNode,
-				options,
-				vNode
-			)
+			axe.testUtils
+				.getCheckEvaluate('aria-required-attr')
+				.call(checkContext, vNode.actualNode, options, vNode)
 		);
 		assert.isNull(checkContext._data);
 	});
 
 	it('should pass aria-valuenow if element has value property', function() {
 		var vNode = queryFixture('<input id="target" type="range" role="slider">');
+
+		assert.isTrue(
+			axe.testUtils
+				.getCheckEvaluate('aria-required-attr')
+				.call(checkContext, vNode.actualNode, options, vNode)
+		);
+	});
+
+	it('should pass aria-checkbox if element has checked property', function() {
+		var vNode = queryFixture(
+			'<input id="target" type="checkbox" role="switch">'
+		);
 
 		assert.isTrue(
 			checks['aria-required-attr'].evaluate.call(
@@ -68,12 +74,9 @@ describe('aria-required-attr', function() {
 				mccheddarton: ['aria-snuggles']
 			};
 			assert.isFalse(
-				checks['aria-required-attr'].evaluate.call(
-					checkContext,
-					vNode.actualNode,
-					options,
-					vNode
-				)
+				axe.testUtils
+					.getCheckEvaluate('aria-required-attr')
+					.call(checkContext, vNode.actualNode, options, vNode)
 			);
 			assert.deepEqual(checkContext._data, ['aria-snuggles', 'aria-valuemax']);
 			delete axe.commons.aria.lookupTable.role.mccheddarton;

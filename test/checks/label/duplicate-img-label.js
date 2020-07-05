@@ -14,7 +14,7 @@ describe('duplicate-img-label', function() {
 		fixture.innerHTML = '<button><img id="target" alt="Plain text"></button>';
 		var node = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
-		var result = checks['duplicate-img-label'].evaluate(
+		var result = axe.testUtils.getCheckEvaluate('duplicate-img-label')(
 			node,
 			undefined,
 			axe.utils.getNodeFromTree(node)
@@ -28,7 +28,7 @@ describe('duplicate-img-label', function() {
 		var node = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
-			checks['duplicate-img-label'].evaluate(
+			axe.testUtils.getCheckEvaluate('duplicate-img-label')(
 				node,
 				undefined,
 				axe.utils.getNodeFromTree(node)
@@ -42,7 +42,7 @@ describe('duplicate-img-label', function() {
 		var node = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
-			checks['duplicate-img-label'].evaluate(
+			axe.testUtils.getCheckEvaluate('duplicate-img-label')(
 				node,
 				undefined,
 				axe.utils.getNodeFromTree(node)
@@ -56,7 +56,7 @@ describe('duplicate-img-label', function() {
 		var node = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['duplicate-img-label'].evaluate(
+			axe.testUtils.getCheckEvaluate('duplicate-img-label')(
 				node,
 				undefined,
 				axe.utils.getNodeFromTree(node)
@@ -70,7 +70,7 @@ describe('duplicate-img-label', function() {
 		var node = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isTrue(
-			checks['duplicate-img-label'].evaluate(
+			axe.testUtils.getCheckEvaluate('duplicate-img-label')(
 				node,
 				undefined,
 				axe.utils.getNodeFromTree(node)
@@ -83,7 +83,7 @@ describe('duplicate-img-label', function() {
 		var node = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
-			checks['duplicate-img-label'].evaluate(
+			axe.testUtils.getCheckEvaluate('duplicate-img-label')(
 				node,
 				undefined,
 				axe.utils.getNodeFromTree(node)
@@ -97,7 +97,7 @@ describe('duplicate-img-label', function() {
 		var node = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
-			checks['duplicate-img-label'].evaluate(
+			axe.testUtils.getCheckEvaluate('duplicate-img-label')(
 				node,
 				undefined,
 				axe.utils.getNodeFromTree(node)
@@ -111,9 +111,23 @@ describe('duplicate-img-label', function() {
 		var node = fixture.querySelector('#target');
 		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
-			checks['duplicate-img-label'].evaluate(
+			axe.testUtils.getCheckEvaluate('duplicate-img-label')(
 				node,
 				undefined,
+				axe.utils.getNodeFromTree(node)
+			)
+		);
+	});
+
+	it('should support options.parentSelector', function() {
+		fixture.innerHTML =
+			'<div aria-label="Plain text"><img id="target" alt="Plain text"></div>';
+		var node = fixture.querySelector('#target');
+		axe.testUtils.flatTreeSetup(fixture);
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('duplicate-img-label')(
+				node,
+				{ parentSelector: 'div' },
 				axe.utils.getNodeFromTree(node)
 			)
 		);
@@ -131,7 +145,7 @@ describe('duplicate-img-label', function() {
 			axe.testUtils.flatTreeSetup(fixture);
 			var node = shadow.querySelector('#target');
 			assert.isTrue(
-				checks['duplicate-img-label'].evaluate(
+				axe.testUtils.getCheckEvaluate('duplicate-img-label')(
 					node,
 					undefined,
 					axe.utils.getNodeFromTree(node)
@@ -153,7 +167,7 @@ describe('duplicate-img-label', function() {
 			axe.testUtils.flatTreeSetup(fixture);
 			var node = button.querySelector('#target');
 			assert.isTrue(
-				checks['duplicate-img-label'].evaluate(
+				axe.testUtils.getCheckEvaluate('duplicate-img-label')(
 					node,
 					undefined,
 					axe.utils.getNodeFromTree(node)
@@ -173,7 +187,9 @@ describe('duplicate-img-label', function() {
 			var checkArgs = checkSetup(button);
 
 			assert.isFalse(
-				checks['duplicate-img-label'].evaluate.apply(null, checkArgs)
+				axe.testUtils
+					.getCheckEvaluate('duplicate-img-label')
+					.apply(null, checkArgs)
 			);
 		}
 	);

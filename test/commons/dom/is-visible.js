@@ -27,7 +27,7 @@ describe('dom.isVisible', function() {
 			window.getComputedStyle = orig;
 		});
 
-		it('should return true on staticly-positioned, visible elements', function() {
+		it('should return true on statically-positioned, visible elements', function() {
 			fixture.innerHTML = '<div id="target">Hello!</div>';
 			var el = document.getElementById('target');
 
@@ -111,7 +111,7 @@ describe('dom.isVisible', function() {
 			assert.isFalse(actual);
 		});
 
-		it('should return true if positioned staticly but top/left is set', function() {
+		it('should return true if positioned statically but top/left is set', function() {
 			fixture.innerHTML =
 				'<div id="target" style="top: -9999px; left: -9999px;' +
 				'right: -9999px; bottom: -9999px;">Hi</div>';
@@ -190,6 +190,35 @@ describe('dom.isVisible', function() {
 			fixture.innerHTML = '<div id="target" style="' + clip + '">Hi</div>';
 
 			el = document.getElementById('target');
+			assert.isFalse(axe.commons.dom.isVisible(el));
+		});
+
+		it('should return false for display: none', function() {
+			fixture.innerHTML = '<div id="target" style="display: none">Hello!</div>';
+			var el = document.getElementById('target');
+
+			assert.isFalse(axe.commons.dom.isVisible(el));
+		});
+
+		it('should return false for opacity: 0', function() {
+			fixture.innerHTML = '<div id="target" style="opacity: 0">Hello!</div>';
+			var el = document.getElementById('target');
+
+			assert.isFalse(axe.commons.dom.isVisible(el));
+		});
+
+		it('should return false for opacity: 0', function() {
+			fixture.innerHTML = '<div id="target" style="opacity: 0">Hello!</div>';
+			var el = document.getElementById('target');
+
+			assert.isFalse(axe.commons.dom.isVisible(el));
+		});
+
+		it('should return false for 0 height scrollable region', function() {
+			fixture.innerHTML =
+				'<div style="overflow: scroll; height: 0"><div id="target">Hello!</div></div>';
+			var el = document.getElementById('target');
+
 			assert.isFalse(axe.commons.dom.isVisible(el));
 		});
 

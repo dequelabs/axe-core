@@ -3,9 +3,9 @@
 // Definitions by: Marcy Sutton <https://github.com/marcysutton>
 
 declare namespace axe {
-	type ImpactValue = 'minor' | 'moderate' | 'serious' | 'critical';
+	type ImpactValue = 'minor' | 'moderate' | 'serious' | 'critical' | null;
 
-	type TagValue = 'wcag2a' | 'wcag2aa' | 'section508' | 'best-practice';
+	type TagValue = string;
 
 	type ReporterVersion = 'v1' | 'v2' | 'raw' | 'raw-env' | 'no-passes';
 
@@ -85,6 +85,7 @@ declare namespace axe {
 		all: CheckResult[];
 		none: CheckResult[];
 		failureSummary?: string;
+		element?: HTMLElement;
 	}
 	interface CheckResult {
 		id: string;
@@ -124,7 +125,10 @@ declare namespace axe {
 		checks?: Check[];
 		rules?: Rule[];
 		locale?: Locale;
+		disableOtherRules?: boolean;
 		axeVersion?: string;
+		// Deprecated - do not use.
+		ver?: string;
 	}
 	interface Check {
 		id: string;

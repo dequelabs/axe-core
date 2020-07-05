@@ -74,7 +74,7 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run test
-  
+
   # Run the test suite in IE in windows
   test_win:
     <<: *defaults
@@ -83,7 +83,7 @@ jobs:
       - checkout
       # npm i or restore cache
       - <<: *restore_dependency_cache_win
-      # install selenium 
+      # install selenium
       - run: |
           choco install selenium-ie-driver --version 3.141.5
           export PATH=/c/tools/selenium:$PATH
@@ -91,8 +91,8 @@ jobs:
       # build `axe`
       - run: npm run build
       # get fixtures ready for running tests
-      - run: npx grunt testconfig	
-      - run: npx grunt fixture	
+      - run: npx grunt testconfig
+      - run: npx grunt fixture
       # run IE webdriver tests
       - run: npx grunt connect test-webdriver:ie
       # test examples
@@ -107,6 +107,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: npm run build
       - run: npm run test:examples
 
   # Test locale files
@@ -164,7 +165,7 @@ jobs:
   # Create a GitHub release.
   github_release:
     docker:
-      - image: circleci/golang:1.8
+      - image: circleci/golang:1.10
     steps:
       - checkout
       - run: go get gopkg.in/aktau/github-release.v0
@@ -191,7 +192,7 @@ workflows:
           requires:
             - dependencies_unix
             - lint
-      # Run IE/ Windows test on all commits 
+      # Run IE/ Windows test on all commits
       - test_win:
           requires:
             - dependencies_win

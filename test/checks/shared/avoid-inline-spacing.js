@@ -3,7 +3,7 @@ describe('avoid-inline-spacing tests', function() {
 
 	var fixture = document.getElementById('fixture');
 	var queryFixture = axe.testUtils.queryFixture;
-	var check = checks['avoid-inline-spacing'];
+	var checkEvaluate = axe.testUtils.getCheckEvaluate('avoid-inline-spacing');
 	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function() {
@@ -15,7 +15,7 @@ describe('avoid-inline-spacing tests', function() {
 		var vNode = queryFixture(
 			'<p id="target" style="font-size: 200%;">The quick brown fox jumped over the lazy dog</p>'
 		);
-		var actual = check.evaluate.call(checkContext, vNode.actualNode);
+		var actual = checkEvaluate.call(checkContext, vNode.actualNode);
 		assert.isTrue(actual);
 		assert.isNull(checkContext._data);
 	});
@@ -24,7 +24,7 @@ describe('avoid-inline-spacing tests', function() {
 		var vNode = queryFixture(
 			'<p id="target" style="line-height: 5invalid;">The quick brown fox jumped over the lazy dog</p>'
 		);
-		var actual = check.evaluate.call(checkContext, vNode.actualNode);
+		var actual = checkEvaluate.call(checkContext, vNode.actualNode);
 		assert.isTrue(actual);
 		assert.isNull(checkContext._data);
 	});
@@ -33,7 +33,7 @@ describe('avoid-inline-spacing tests', function() {
 		var vNode = queryFixture(
 			'<p id="target" style="line-height: invalid !important;">The quick brown fox jumped over the lazy dog</p>'
 		);
-		var actual = check.evaluate.call(checkContext, vNode.actualNode);
+		var actual = checkEvaluate.call(checkContext, vNode.actualNode);
 		assert.isTrue(actual);
 		assert.isNull(checkContext._data);
 	});
@@ -42,7 +42,7 @@ describe('avoid-inline-spacing tests', function() {
 		var vNode = queryFixture(
 			'<p id="target" style="line-height: 1.5;">The quick brown fox jumped over the lazy dog</p>'
 		);
-		var actual = check.evaluate.call(checkContext, vNode.actualNode);
+		var actual = checkEvaluate.call(checkContext, vNode.actualNode);
 		assert.isTrue(actual);
 		assert.isNull(checkContext._data);
 	});
@@ -51,7 +51,7 @@ describe('avoid-inline-spacing tests', function() {
 		var vNode = queryFixture(
 			'<p id="target" style="letter-spacing: 50px;">The quick brown fox jumped over the lazy dog</p>'
 		);
-		var actual = check.evaluate.call(checkContext, vNode.actualNode);
+		var actual = checkEvaluate.call(checkContext, vNode.actualNode);
 		assert.isTrue(actual);
 		assert.isNull(checkContext._data);
 	});
@@ -60,7 +60,7 @@ describe('avoid-inline-spacing tests', function() {
 		var vNode = queryFixture(
 			'<p id="target" style="word-spacing: 10px;">The quick brown fox jumped over the lazy dog</p>'
 		);
-		var actual = check.evaluate.call(checkContext, vNode.actualNode);
+		var actual = checkEvaluate.call(checkContext, vNode.actualNode);
 		assert.isTrue(actual);
 		assert.isNull(checkContext._data);
 	});
@@ -69,7 +69,7 @@ describe('avoid-inline-spacing tests', function() {
 		var vNode = queryFixture(
 			'<p id="target" style="word-spacing: 20ch; letter-spacing: 50rem; line-height: 3;">The quick brown fox jumped over the lazy dog</p>'
 		);
-		var actual = check.evaluate.call(checkContext, vNode.actualNode);
+		var actual = checkEvaluate.call(checkContext, vNode.actualNode);
 		assert.isTrue(actual);
 		assert.isNull(checkContext._data);
 	});
@@ -78,7 +78,7 @@ describe('avoid-inline-spacing tests', function() {
 		var vNode = queryFixture(
 			'<p id="target" style="line-height: 1.5 !important;">The quick brown fox jumped over the lazy dog</p>'
 		);
-		var actual = check.evaluate.call(checkContext, vNode.actualNode);
+		var actual = checkEvaluate.call(checkContext, vNode.actualNode);
 		assert.isFalse(actual);
 		assert.deepEqual(checkContext._data, ['line-height']);
 	});
@@ -87,7 +87,7 @@ describe('avoid-inline-spacing tests', function() {
 		var vNode = queryFixture(
 			'<p id="target" style="letter-spacing: 100em !important;">The quick brown fox jumped over the lazy dog</p>'
 		);
-		var actual = check.evaluate.call(checkContext, vNode.actualNode);
+		var actual = checkEvaluate.call(checkContext, vNode.actualNode);
 		assert.isFalse(actual);
 		assert.deepEqual(checkContext._data, ['letter-spacing']);
 	});
@@ -96,7 +96,7 @@ describe('avoid-inline-spacing tests', function() {
 		var vNode = queryFixture(
 			'<p id="target" style="word-spacing: -.4ch !important;">The quick brown fox jumped over the lazy dog</p>'
 		);
-		var actual = check.evaluate.call(checkContext, vNode.actualNode);
+		var actual = checkEvaluate.call(checkContext, vNode.actualNode);
 		assert.isFalse(actual);
 		assert.deepEqual(checkContext._data, ['word-spacing']);
 	});
@@ -105,7 +105,7 @@ describe('avoid-inline-spacing tests', function() {
 		var vNode = queryFixture(
 			'<p id="target" style="word-spacing: 200%; letter-spacing: 50rem !important; line-height: 3;">The quick brown fox jumped over the lazy dog</p>'
 		);
-		var actual = check.evaluate.call(checkContext, vNode.actualNode);
+		var actual = checkEvaluate.call(checkContext, vNode.actualNode);
 		assert.isFalse(actual);
 		assert.deepEqual(checkContext._data, ['letter-spacing']);
 	});
@@ -114,8 +114,19 @@ describe('avoid-inline-spacing tests', function() {
 		var vNode = queryFixture(
 			'<p id="target" style="line-height: 3 !important; letter-spacing: 50rem !important;">The quick brown fox jumped over the lazy dog</p>'
 		);
-		var actual = check.evaluate.call(checkContext, vNode.actualNode);
+		var actual = checkEvaluate.call(checkContext, vNode.actualNode);
 		assert.isFalse(actual);
 		assert.deepEqual(checkContext._data, ['line-height', 'letter-spacing']);
+	});
+
+	it('supports options.cssProperties', function() {
+		var vNode = queryFixture(
+			'<p id="target" style="font-size: 14px !important; line-height: 3 !important; letter-spacing: 50rem !important">The quick brown fox jumped over the lazy dog</p>'
+		);
+		var actual = checkEvaluate.call(checkContext, vNode.actualNode, {
+			cssProperties: ['font-size']
+		});
+		assert.isFalse(actual);
+		assert.deepEqual(checkContext._data, ['font-size']);
 	});
 });

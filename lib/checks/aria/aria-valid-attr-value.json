@@ -1,6 +1,6 @@
 {
 	"id": "aria-valid-attr-value",
-	"evaluate": "aria-valid-attr-value-evaluate.js",
+	"evaluate": "aria-valid-attr-value-evaluate",
 	"options": [],
 	"metadata": {
 		"impact": "critical",

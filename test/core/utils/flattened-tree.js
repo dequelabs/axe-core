@@ -75,6 +75,12 @@ describe('axe.utils.getFlattenedTree', function() {
 		);
 	}
 
+	it('should default to document', function() {
+		fixture.innerHTML = '';
+		var tree = axe.utils.getFlattenedTree();
+		assert(tree[0].actualNode === document.documentElement);
+	});
+
 	if (shadowSupport.v0) {
 		describe('shadow DOM v0', function() {
 			afterEach(function() {

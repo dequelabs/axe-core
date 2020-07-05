@@ -8,8 +8,16 @@ const exampleDirs = readdirSync(__dirname)
 const config = { stdio: 'inherit', shell: true };
 
 // run npm install in parallel
-function install(dir) {
-	return execa('npm install', { cwd: dir, ...config });
+async function install(dir) {
+	await execa('npm install', { cwd: dir, ...config });
+
+	// override the package version of axe-core with the local version.
+	// this allows the examples to stay examples while allowing us to
+	// test them against our changes
+	return await execa('npm install --no-save file:..\\/..\\/..\\/', {
+		cwd: dir,
+		...config
+	});
 }
 
 // run tests synchronously so we can see which one threw an error

@@ -1,7 +1,7 @@
 {
 	"id": "duplicate-id",
 	"selector": "[id]",
-	"matches": "duplicate-id-misc-matches.js",
+	"matches": "duplicate-id-misc-matches",
 	"excludeHidden": false,
 	"tags": ["cat.parsing", "wcag2a", "wcag411"],
 	"metadata": {

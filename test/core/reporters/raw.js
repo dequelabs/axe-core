@@ -9,11 +9,10 @@ describe('reporters - raw', function() {
 		return new axe.utils.DqElement(node);
 	}
 
-	var mockResults;
-	var orig;
+	var runResults;
 
-	before(function() {
-		mockResults = [
+	beforeEach(function() {
+		runResults = [
 			{
 				id: 'gimmeLabel',
 				helpUrl: 'things',
@@ -109,33 +108,15 @@ describe('reporters - raw', function() {
 		axe.testUtils.fixtureSetup();
 
 		axe._load({});
-		orig = axe._runRules;
-		axe._runRules = function(_, __, cb) {
-			cb(mockResults, function noop() {});
-		};
+		axe._cache.set('selectorData', {});
 	});
 
 	after(function() {
-		axe._runRules = orig;
 		fixture.innerHTML = '';
 	});
 
-	it('should pass through object', function(done) {
-		axe.run({ reporter: 'raw' }, function(err, results) {
-			if (err) {
-				return done(err);
-			}
-			assert.isTrue(Array.isArray(results));
-			done();
-		});
-	});
-
-	it('should serialize DqElements (#1195)', function(done) {
-		axe.run({ reporter: 'raw' }, function(err, results) {
-			if (err) {
-				return done(err);
-			}
-
+	it('should serialize DqElements (#1195)', function() {
+		axe.getReporter('rawEnv')(runResults, {}, function(results) {
 			for (var i = 0; i < results.length; i++) {
 				var result = results[i];
 				for (var j = 0; j < result.passes.length; j++) {
@@ -143,8 +124,6 @@ describe('reporters - raw', function() {
 					assert.notInstanceOf(p.node, axe.utils.DqElement);
 				}
 			}
-
-			done();
 		});
 	});
 });

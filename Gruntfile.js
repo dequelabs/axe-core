@@ -98,14 +98,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'lib/core',
-						src: [
-							'**/*.js',
-							'!base/**/*.js',
-							'!public/**/*.js',
-							'!reporters/**/*.js',
-							'!utils/**/*.js',
-							'!imports/index.js'
-						],
+						src: ['index.js'],
 						dest: 'tmp/core'
 					}
 				]
@@ -115,13 +108,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: 'tmp',
-						src: [
-							'*.js',
-							'core/base/base.js',
-							'core/public/public.js',
-							'core/reporters/reporters.js',
-							'core/utils/utils.js'
-						],
+						src: ['**/*.js'],
 						dest: 'tmp'
 					}
 				]
@@ -140,13 +127,7 @@ module.exports = function(grunt) {
 				options: {
 					process: true
 				},
-				coreFiles: [
-					'tmp/core/index.js',
-					'tmp/core/constants.js',
-					'tmp/core/*/index.js',
-					'tmp/core/**/index.js',
-					'tmp/core/**/*.js'
-				],
+				coreFiles: ['tmp/core/index.js', 'tmp/core/**/*.js'],
 				files: langs.map(function(lang, i) {
 					return {
 						src: [
@@ -173,31 +154,7 @@ module.exports = function(grunt) {
 			}
 		},
 		webpack: {
-			coreBase: createWebpackConfig(
-				'lib/core/base/base.js',
-				'tmp/core/base',
-				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
-				'base.js'
-			),
-			corePublic: createWebpackConfig(
-				'lib/core/public/public.js',
-				'tmp/core/public',
-				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
-				'public.js'
-			),
-			coreReporters: createWebpackConfig(
-				'lib/core/reporters/reporters.js',
-				'tmp/core/reporters',
-				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
-				'reporters.js'
-			),
-			coreUtils: createWebpackConfig(
-				'lib/core/utils/utils.js',
-				'tmp/core/utils',
-				// Due to how the Babel/concat stuff works, this cannot be called `index.js`.
-				'utils.js'
-			),
-			commons: createWebpackConfig('lib/commons/index.js', 'tmp/commons')
+			core: createWebpackConfig('lib/core/core.js', 'tmp/core', 'core.js')
 		},
 		'aria-supported': {
 			data: {
@@ -214,7 +171,7 @@ module.exports = function(grunt) {
 				},
 				files: langs.map(function(lang) {
 					return {
-						src: ['<%= concat.commons.dest %>'],
+						src: [''],
 						dest: {
 							auto: 'tmp/rules' + lang + '.js',
 							descriptions: 'doc/rule-descriptions' + lang + '.md'
@@ -228,7 +185,7 @@ module.exports = function(grunt) {
 				options: {
 					lang: grunt.option('lang')
 				},
-				src: ['<%= concat.commons.dest %>'],
+				src: ['tmp/core/core.js'],
 				dest: './locales/' + (grunt.option('lang') || 'new-locale') + '.json'
 			}
 		},
@@ -393,10 +350,6 @@ module.exports = function(grunt) {
 			}
 		},
 		run: {
-			npm_run_imports: {
-				cmd: 'node',
-				args: ['./build/imports-generator']
-			},
 			npm_run_testHeadless: {
 				cmd: 'npm',
 				args: ['run', 'test:headless']
@@ -404,19 +357,11 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.registerTask('translate', [
-		'pre-build',
-		'validate',
-		'webpack',
-		'concat:commons',
-		'add-locale'
-	]);
-	grunt.registerTask('pre-build', ['clean', 'run:npm_run_imports']);
+	grunt.registerTask('translate', ['validate', 'webpack', 'add-locale']);
 	grunt.registerTask('build', [
-		'pre-build',
+		'clean',
 		'validate',
 		'webpack',
-		'concat:commons',
 		'configure',
 		'babel',
 		'concat:engine',

@@ -1,6 +1,6 @@
 {
 	"id": "aria-allowed-attr",
-	"matches": "aria-allowed-attr-matches.js",
+	"matches": "aria-allowed-attr-matches",
 	"tags": ["cat.aria", "wcag2a", "wcag412"],
 	"metadata": {
 		"description": "Ensures ARIA attributes are allowed for an element's role",

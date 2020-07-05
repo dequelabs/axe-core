@@ -1,6 +1,6 @@
 {
 	"id": "aria-required-attr",
-	"evaluate": "aria-required-attr-evaluate.js",
+	"evaluate": "aria-required-attr-evaluate",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

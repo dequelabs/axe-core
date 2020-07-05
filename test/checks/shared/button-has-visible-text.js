@@ -14,7 +14,9 @@ describe('button-has-visible-text', function() {
 		var checkArgs = checkSetup('<button></button>', 'button');
 
 		assert.isFalse(
-			checks['button-has-visible-text'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('button-has-visible-text')
+				.apply(checkContext, checkArgs)
 		);
 	});
 
@@ -22,9 +24,10 @@ describe('button-has-visible-text', function() {
 		var checkArgs = checkSetup('<button>Name</button>', 'button');
 
 		assert.isTrue(
-			checks['button-has-visible-text'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('button-has-visible-text')
+				.apply(checkContext, checkArgs)
 		);
-		assert.deepEqual(checkContext._data, 'Name');
 	});
 
 	it('should return true if ARIA button has text', function() {
@@ -34,16 +37,19 @@ describe('button-has-visible-text', function() {
 		);
 
 		assert.isTrue(
-			checks['button-has-visible-text'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('button-has-visible-text')
+				.apply(checkContext, checkArgs)
 		);
-		assert.deepEqual(checkContext._data, 'Text');
 	});
 
 	it('should return false if ARIA button has no text', function() {
 		var checkArgs = checkSetup('<div role="button"></div>', '[role=button]');
 
 		assert.isFalse(
-			checks['button-has-visible-text'].evaluate.apply(checkContext, checkArgs)
+			axe.testUtils
+				.getCheckEvaluate('button-has-visible-text')
+				.apply(checkContext, checkArgs)
 		);
 	});
 });

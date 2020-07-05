@@ -17,10 +17,6 @@
 			"description": "role属性の値が要素に対して適切であることを確認します",
 			"help": "ARIAロールは要素に対して適切でなければなりません"
 		},
-		"aria-dpub-role-fallback": {
-			"description": "サポートされていないDPUBロールが暗黙のフォールバックロールを持つ要素でのみ使用されていることを確認します",
-			"help": "サポートされていないDPUB ARIAロールは、暗黙のフォールバックロールを持つ要素で使用するべきです"
-		},
 		"aria-hidden-body": {
 			"description": "ドキュメント本体にaria-hidden='true'が存在していないことを確認します",
 			"help": "ドキュメント本体にaria-hidden='true'が存在してはなりません"
@@ -88,10 +84,6 @@
 		"bypass": {
 			"description": "各ページに少なくとも1つ、ユーザーがナビゲーション部分をスキップして直接本文へ移動できるメカニズムが存在することを確認します",
 			"help": "ページには繰り返されるブロックをスキップする手段が存在しなければなりません"
-		},
-		"checkboxgroup": {
-			"description": "関連している<input type=\"checkbox\">要素がグループ化され、そのグループ指定が一貫していることを確認します",
-			"help": "同じname属性値を持つチェックボックスは、グループの一部でなければなりません"
 		},
 		"color-contrast": {
 			"description": "前景色と背景色のコントラストがWCAG 2のAAコントラスト比のしきい値を満たすことを確認します",
@@ -237,10 +229,6 @@
 			"help": "ランドマークが一意であることを確認します",
 			"description": "ランドマークは一意のロール又はロール／ラベル／タイトル (例: アクセシブルな名前) の組み合わせがなければなりません"
 		},
-		"layout-table": {
-			"description": "レイアウトのための<table>要素に<th>、<caption>要素またはsummary属性が使用されていないことを確認します",
-			"help": "レイアウトテーブルにはデータテーブルの要素を使用してはなりません"
-		},
 		"link-in-text-block": {
 			"description": "色に依存することなくリンクを区別できます",
 			"help": "リンクは色に依存しない方法で周囲のテキストと区別できなければなりません"
@@ -288,10 +276,6 @@
 		"page-has-heading-one": {
 			"description": "ページ、またはそのフレームの少なくとも1つにはレベル1の見出しが含まれていることを確認します",
 			"help": "ページにはレベル1の見出しが含まれていなければなりません"
-		},
-		"radiogroup": {
-			"description": "関連している<input type=\"radio\">要素にグループがあり、そのグループの指定が一貫していることを確認します",
-			"help": "同じname属性値のラジオ入力欄はグループの一部でなければなりません"
 		},
 		"region": {
 			"description": "ページのすべてのコンテンツがlandmarkに含まれていることを確認します",
@@ -352,10 +336,6 @@
 		"video-caption": {
 			"description": "<video>要素にキャプションが存在することを確認します",
 			"help": "<video>要素にはキャプションがなければなりません"
-		},
-		"video-description": {
-			"description": "<video>要素に音声解説が存在することを確認します",
-			"help": "<video>要素には音声解説トラックがなければなりません"
 		}
 	},
 	"checks": {
@@ -407,10 +387,6 @@
 		"has-widget-role": {
 			"pass": "要素にはwidgetロールが存在しています",
 			"fail": "要素にはwidgetロールが存在していません"
-		},
-		"implicit-role-fallback": {
-			"pass": "要素の暗黙的なARIAロールは適切なフォールバックです",
-			"fail": "要素の暗黙的なARIAロールは（サポートされていない）ロールに対して、適切なフォールバックではありません"
 		},
 		"invalidrole": {
 			"pass": "ARIAロールが有効です",
@@ -515,25 +491,6 @@
 		"autocomplete-valid": {
 			"pass": "autocomplete属性は正しくフォーマットされています",
 			"fail": "autocomplete属性は誤ってフォーマットされています"
-		},
-		"fieldset": {
-			"pass": "フィールドセット内に要素が含まれています",
-			"fail": {
-				"default": "要素を含有するフィールドセットまたはARIAグループがありません",
-				"no-legend": "フィールドセットの最初の子要素としてレジェンドが存在しません",
-				"empty-legend": "スクリーン・リーダーに認識可能なテキストがレジェンドに存在しません",
-				"mixed-inputs": "フィールドセットに関連性のない入力欄が含まれています",
-				"no-group-label": "ARIAグループにaria-labelまたはaria-labelledbyが存在しません",
-				"group-mixed-inputs": "ARIAグループに関連性のない入力欄が含まれています"
-			}
-		},
-		"group-labelledby": {
-			"pass": "\"{{=it.data.name}}\" という名前を持つ要素には、共通のラベルおよび一意のラベルがあり、aria-labelledbyを通じて参照されます",
-			"fail": {
-				"default": "\"${data.name}\" という名前の要素すべてに、共通のラベルおよび aria-labelledby で参照された一意のラベルの両方がありません",
-				"no-shared-label": "\"${data.name}\" という名前の要素すべてに、aria-labelledby で参照された共有のラベルがありません",
-				"no-unique-label": "\"${data.name}\" という名前の要素すべてに、aria-labelledby で参照された一意のラベルがありません"
-			}
 		},
 		"accesskeys": {
 			"pass": "アクセスキー属性値は一意です",
@@ -672,10 +629,6 @@
 		"caption": {
 			"pass": "マルチメディア要素にキャプショントラックが存在しています",
 			"incomplete": "要素にキャプションが存在することを確認します"
-		},
-		"description": {
-			"pass": "マルチメディア要素に音声解説トラックが存在しています",
-			"incomplete": "要素に音声解説が存在することを確認します"
 		},
 		"frame-tested": {
 			"pass": "iframeはaxe-coreでテストされました",
@@ -826,18 +779,6 @@
 		"caption-faked": {
 			"pass": "テーブルの一行目がキャプションとして使用されていません",
 			"fail": "テーブルの最初の子はテーブルセルではなく、キャプションであるべきです"
-		},
-		"has-caption": {
-			"pass": "レイアウトテーブルに<caption>要素を使用していません",
-			"fail": "レイアウトテーブルに<caption>要素を使用しています"
-		},
-		"has-summary": {
-			"pass": "レイアウトテーブルにsummary属性を使用していません",
-			"fail": "レイアウトテーブルにsummary属性を使用しています"
-		},
-		"has-th": {
-			"pass": "レイアウトテーブルに<th>要素を使用していません",
-			"fail": "レイアウトテーブルに<th>要素を使用しています"
 		},
 		"html5-scope": {
 			"pass": "scope属性がテーブルヘッダー要素（<th>）にのみ使用されています",

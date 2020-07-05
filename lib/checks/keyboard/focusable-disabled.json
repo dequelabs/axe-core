@@ -1,6 +1,6 @@
 {
 	"id": "focusable-disabled",
-	"evaluate": "focusable-disabled-evaluate.js",
+	"evaluate": "focusable-disabled-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

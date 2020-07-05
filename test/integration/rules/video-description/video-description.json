@@ -1,6 +1,0 @@
-{
-	"description": "video-description test",
-	"rule": "video-description",
-	"incomplete": [["#incomplete1"], ["#incomplete2"]],
-	"passes": [["#pass1"], ["#pass2"]]
-}

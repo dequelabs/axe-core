@@ -10,18 +10,28 @@ describe('aria-hidden', function() {
 	});
 
 	it('should not be present on document.body', function() {
-		assert.isTrue(checks['aria-hidden-body'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			axe.testUtils
+				.getCheckEvaluate('aria-hidden-body')
+				.call(checkContext, node)
+		);
 	});
 
 	it('fails appropriately if aria-hidden=true on document.body', function() {
 		node.setAttribute('aria-hidden', 'true');
 		assert.isFalse(
-			checks['aria-hidden-body'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-hidden-body')
+				.call(checkContext, node)
 		);
 	});
 
 	it('passes if aria-hidden=false on document.body', function() {
 		node.setAttribute('aria-hidden', 'false');
-		assert.isTrue(checks['aria-hidden-body'].evaluate.call(checkContext, node));
+		assert.isTrue(
+			axe.testUtils
+				.getCheckEvaluate('aria-hidden-body')
+				.call(checkContext, node)
+		);
 	});
 });

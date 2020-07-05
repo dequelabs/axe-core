@@ -2,7 +2,7 @@
 	"id": "bypass",
 	"selector": "html",
 	"pageLevel": true,
-	"matches": "bypass-matches.js",
+	"matches": "bypass-matches",
 	"tags": [
 		"cat.keyboard",
 		"wcag2a",

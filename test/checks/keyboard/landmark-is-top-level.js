@@ -15,6 +15,8 @@ describe('landmark-is-top-level', function() {
 		var params = checkSetup(
 			'<div role="banner"><main id="target"></main></div>'
 		);
+		// landmark-is-top-level requires a complete tree to work properly
+		axe.utils.getFlattenedTree(document.documentElement);
 		assert.isFalse(check.evaluate.apply(checkContext, params));
 		assert.deepEqual(checkContext._data, { role: 'main' });
 	});
@@ -23,6 +25,7 @@ describe('landmark-is-top-level', function() {
 		var params = checkSetup(
 			'<main><div role="complementary" id="target"></div></main>'
 		);
+		axe.utils.getFlattenedTree(document.documentElement);
 		assert.isFalse(check.evaluate.apply(checkContext, params));
 		assert.deepEqual(checkContext._data, { role: 'complementary' });
 	});
@@ -31,6 +34,7 @@ describe('landmark-is-top-level', function() {
 		var params = checkSetup(
 			'<div role="navigation"><div role="main" id="target"></div></div>'
 		);
+		axe.utils.getFlattenedTree(document.documentElement);
 		assert.isFalse(check.evaluate.apply(checkContext, params));
 		assert.deepEqual(checkContext._data, { role: 'main' });
 	});
@@ -39,6 +43,7 @@ describe('landmark-is-top-level', function() {
 		var params = checkSetup(
 			'<div><footer id="target"></footer><div role="banner"></div></div>'
 		);
+		axe.utils.getFlattenedTree(document.documentElement);
 		assert.isTrue(check.evaluate.apply(checkContext, params));
 		assert.deepEqual(checkContext._data, { role: 'contentinfo' });
 	});
@@ -47,6 +52,7 @@ describe('landmark-is-top-level', function() {
 		var params = checkSetup(
 			'<div><div role="main" id="target"></div><div role="navigation"></div></div>'
 		);
+		axe.utils.getFlattenedTree(document.documentElement);
 		assert.isTrue(check.evaluate.apply(checkContext, params));
 		assert.deepEqual(checkContext._data, { role: 'main' });
 	});
@@ -55,6 +61,7 @@ describe('landmark-is-top-level', function() {
 		var params = checkSetup(
 			'<div><div role="banner" id="target"></div><div role="form"></div></div>'
 		);
+		axe.utils.getFlattenedTree(document.documentElement);
 		assert.isTrue(check.evaluate.apply(checkContext, params));
 		assert.deepEqual(checkContext._data, { role: 'banner' });
 	});
@@ -66,6 +73,7 @@ describe('landmark-is-top-level', function() {
 				'<div></div>',
 				'<main id="target">Main content</main>'
 			);
+			axe.utils.getFlattenedTree(document.documentElement);
 			assert.isTrue(check.evaluate.apply(checkContext, params));
 			assert.deepEqual(checkContext._data, { role: 'main' });
 		}

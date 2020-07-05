@@ -1,9 +1,6 @@
-/* global Promise */
-
 describe('axe.utils.preloadMedia', function() {
 	'use strict';
 
-	var origFn = axe.utils.preloadMedia;
 	var fixture = document.getElementById('fixture');
 	var fixtureSetup = axe.testUtils.fixtureSetup;
 	var isIE11 = axe.testUtils.isIE11;
@@ -17,24 +14,7 @@ describe('axe.utils.preloadMedia', function() {
 	});
 
 	afterEach(function() {
-		axe.utils.preloadMedia = origFn;
 		fixture.innerHTML = '';
-	});
-
-	it('invokes utils.preloadMedia and passes the treeRoot property', function(done) {
-		var isCalled = false;
-		axe.utils.preloadMedia = function(options) {
-			assert.isDefined(options.treeRoot);
-			isCalled = true;
-			return Promise.resolve();
-		};
-
-		axe._tree = axe.utils.getFlattenedTree(document);
-
-		axe.utils.preloadMedia({ treeRoot: axe._tree[0] }).then(function() {
-			assert.ok(isCalled);
-			done();
-		});
 	});
 
 	it('returns empty array when there are no media nodes to be preloaded', function(done) {
