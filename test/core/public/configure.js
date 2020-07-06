@@ -908,4 +908,107 @@ describe('axe.configure', function() {
 			});
 		});
 	});
+
+	describe('given a standards object', function() {
+		beforeEach(function() {
+			axe._load({});
+		});
+
+		describe('ariaAttrs', function() {
+			it('should allow creating new attr', function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'string'
+							}
+						}
+					}
+				});
+
+				var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
+				assert.equal(ariaAttr.type, 'string');
+			});
+
+			it('should override existing attr', function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'string'
+							}
+						}
+					}
+				});
+
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'mntoken',
+								values: ['foo', 'bar']
+							}
+						}
+					}
+				});
+
+				var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
+				assert.equal(ariaAttr.type, 'mntoken');
+				assert.deepEqual(ariaAttr.values, ['foo', 'bar']);
+			});
+
+			it('should merge existing attr', function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'mntoken',
+								values: ['foo', 'bar']
+							}
+						}
+					}
+				});
+
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'mntokens'
+							}
+						}
+					}
+				});
+
+				var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
+				assert.equal(ariaAttr.type, 'mntokens');
+				assert.deepEqual(ariaAttr.values, ['foo', 'bar']);
+			});
+
+			it('should override and not merge array', function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'mntoken',
+								values: ['foo', 'bar']
+							}
+						}
+					}
+				});
+
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								values: ['baz']
+							}
+						}
+					}
+				});
+
+				var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
+				assert.deepEqual(ariaAttr.values, ['baz']);
+			});
+		});
+	});
 });

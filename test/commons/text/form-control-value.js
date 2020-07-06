@@ -28,13 +28,6 @@ describe('text.formControlValue', function() {
 		assert.equal(formControlValue(target, { startNode: target }), '');
 	});
 
-	it('returns `` when the role is not supposed to return a value', function() {
-		var target = queryFixture(
-			'<input id="target" value="foo" role="presentation" />'
-		);
-		assert.equal(formControlValue(target), '');
-	});
-
 	it('returns `` when accessibleNameFromFieldValue says the role is unsupported', function() {
 		var target = queryFixture(
 			'<input id="target" value="foo" role="combobox"/>'
