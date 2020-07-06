@@ -100,4 +100,29 @@ describe('axe.commons.color.getTextShadowColors', function() {
 		assert.closeTo(shadowColors[1].alpha, expected1, 0.05);
 		assert.closeTo(shadowColors[2].alpha, expected2, 0.05);
 	});
+
+	it('treats the blur radius as 0 when left undefined', function() {
+		fixture.innerHTML =
+			'<span style="text-shadow: ' + '1px 2px red' + '">Hello world</span>';
+
+		var span = fixture.querySelector('span');
+		var shadowColors = getTextShadowColors(span);
+
+		assert.lengthOf(shadowColors, 1);
+		assert.equal(shadowColors[0].alpha, 0);
+	});
+
+	it('uses text color if text-shadow color is ommitted', function() {
+		fixture.innerHTML =
+			'<span style="color: red;' +
+			'text-shadow: 1px 1px 1px;' +
+			'">Hello world</span>';
+		var span = fixture.querySelector('span');
+		var shadowColors = getTextShadowColors(span);
+
+		assert.lengthOf(shadowColors, 1);
+		assert.equal(shadowColors[0].red, 255);
+		assert.equal(shadowColors[0].green, 0);
+		assert.equal(shadowColors[0].blue, 0);
+	});
 });
