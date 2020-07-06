@@ -5,8 +5,8 @@
 		"ignoreUnicode": true,
 		"ignoreLength": false,
 		"boldValue": 700,
-		"boldPt": 14,
-		"nonBoldPt": 18,
+		"boldTextPt": 14,
+		"largeTextPt": 18,
 		"contrastRatio": {
 			"normal": {
 				"expected": 4.5,
