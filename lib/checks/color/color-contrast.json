@@ -16,7 +16,6 @@
 			"large": {
 				"expected": 3,
 				"minThreshold": 0,
-				"maxThreshold": 999
 			}
 		}
 	},
