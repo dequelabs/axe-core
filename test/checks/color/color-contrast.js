@@ -438,12 +438,12 @@ describe('color-contrast', function() {
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
 
-	it('should support options.boldPt', function() {
+	it('should support options.boldTextPt', function() {
 		var params = checkSetup(
 			'<div style="color: gray; background-color: white; font-size: 6pt; font-weight: 700" id="target">' +
 				'<span style="font-weight:bolder">My text</span></div>',
 			{
-				boldPt: 6
+				boldTextPt: 6
 			}
 		);
 
@@ -451,12 +451,12 @@ describe('color-contrast', function() {
 		assert.deepEqual(checkContext._relatedNodes, []);
 	});
 
-	it('should support options.nonBoldPt', function() {
+	it('should support options.largeTextPt', function() {
 		var params = checkSetup(
 			'<div style="color: gray; background-color: white; font-size: 6pt; font-weight: 100" id="target">' +
 				'<span style="font-weight:bolder">My text</span></div>',
 			{
-				nonBoldPt: 6
+				largeTextPt: 6
 			}
 		);
 

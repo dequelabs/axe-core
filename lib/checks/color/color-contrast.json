@@ -9,12 +9,10 @@
 		"largeTextPt": 18,
 		"contrastRatio": {
 			"normal": {
-				"expected": 4.5,
-				"minThreshold": 0,
+				"expected": 4.5
 			},
 			"large": {
-				"expected": 3,
-				"minThreshold": 0,
+				"expected": 3
 			}
 		}
 	},
