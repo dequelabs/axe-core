@@ -22,9 +22,10 @@ describe('aria.namedFromContents', function() {
 	});
 
 	it('works on virtual nodes', function() {
-		fixture.innerHTML = '<div role="foo"></div>';
-		flatTreeSetup(fixture);
-		assert.isTrue(namedFromContents({ actualNode: fixture.firstChild }));
+		var vNode = axe.testUtils.queryFixture(
+			'<div id="target" role="foo"></div>'
+		);
+		assert.isTrue(namedFromContents(vNode));
 	});
 
 	it('returns true when the element has an implicit role named from content', function() {
