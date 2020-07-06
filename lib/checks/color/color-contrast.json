@@ -11,7 +11,6 @@
 			"normal": {
 				"expected": 4.5,
 				"minThreshold": 0,
-				"maxThreshold": 999
 			},
 			"large": {
 				"expected": 3,
