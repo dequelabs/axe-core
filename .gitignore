@@ -11,6 +11,7 @@ tmp
 # test - runner generated assets
 test/*/index.html
 test/integration/*/index.html
+!test/integration/virtual-rules/index.html
 
 # dist
 axe.js
