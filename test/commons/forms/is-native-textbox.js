@@ -60,4 +60,9 @@ describe('forms.isNativeTextbox', function() {
 		var node = queryFixture('<div id="target" role="textbox"></div>');
 		assert.isFalse(isNativeTextbox(node));
 	});
+
+	it('should ignore type case', function() {
+		var node = queryFixture('<input id="target" type="TEXT"/>');
+		assert.isTrue(isNativeTextbox(node));
+	});
 });
