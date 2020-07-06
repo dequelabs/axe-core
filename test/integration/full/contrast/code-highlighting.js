@@ -9,6 +9,7 @@ describe('color-contrast code highlighting test', function() {
 				done(err);
 			} else {
 				results = res;
+				done();
 			}
 		});
 	});
