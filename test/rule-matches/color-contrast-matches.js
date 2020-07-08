@@ -337,7 +337,7 @@ describe('color-contrast-matches', function() {
 		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
 	});
 
-	it("should match when at least one input is not disabled - aria-labelledby", function() {
+	it('should match when at least one input is not disabled - aria-labelledby', function() {
 		fixture.innerHTML =
 			'<div id="t1">Test</div>' +
 			'<input type="text" aria-labelledby="t1" disabled />' +
@@ -347,14 +347,16 @@ describe('color-contrast-matches', function() {
 		assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
 	});
 
-	it("should match when inputs are disabled by an ancestor - aria-labelledby", function() {
-		fixture.innerHTML = '<div id="t1">Test</div>' + '<fieldset disabled>';
-		'<input type="text" aria-labelledby="t1" />' +
+	it('should not match when inputs are disabled by an ancestor - aria-labelledby', function() {
+		fixture.innerHTML =
+			'<div id="t1">Test</div>' +
+			'<fieldset disabled>' +
+			'<input type="text" aria-labelledby="t1" />' +
 			'<input type="text" aria-labelledby="t1" />' +
 			'</fieldset>';
 		var target = fixture.querySelector('div');
 		axe.testUtils.flatTreeSetup(fixture);
-		assert.isTrue(rule.matches(target, axe.utils.getNodeFromTree(target)));
+		assert.isFalse(rule.matches(target, axe.utils.getNodeFromTree(target)));
 	});
 
 	it('should not match aria-disabled=true', function() {
