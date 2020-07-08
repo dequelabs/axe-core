@@ -1,4 +1,4 @@
-describe('page-has-heading-one test pass 3', function() {
+describe('page-has-heading-one test pass 6', function() {
 	'use strict';
 	var results;
 	before(function(done) {
@@ -31,8 +31,8 @@ describe('page-has-heading-one test pass 3', function() {
 			assert.lengthOf(results.passes[0].nodes, 1);
 		});
 
-		it('should find #pass3', function() {
-			assert.deepEqual(results.passes[0].nodes[0].target, ['#pass3']);
+		it('should find #pass6', function() {
+			assert.deepEqual(results.passes[0].nodes[0].target, ['#pass6']);
 		});
 	});
 
