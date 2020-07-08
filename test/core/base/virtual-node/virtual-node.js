@@ -39,6 +39,14 @@ describe('VirtualNode', function() {
 			assert.equal(vNode.props.type, 'text');
 		});
 
+		it('should lowercase type', function() {
+			var node = document.createElement('input');
+			node.setAttribute('type', 'COLOR');
+			var vNode = new VirtualNode(node);
+
+			assert.equal(vNode.props.type, 'color');
+		});
+
 		it('should lowercase nodeName', function() {
 			var node = {
 				nodeName: 'FOOBAR'

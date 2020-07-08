@@ -89,6 +89,48 @@ describe('SerialVirtualNode', function() {
 			});
 			assert.isUndefined(vNode.props.attributes);
 		});
+
+		it('converts type prop to lower case', function() {
+			var types = ['text', 'COLOR', 'Month', 'uRL'];
+			types.forEach(function(type) {
+				var vNode = new SerialVirtualNode({
+					nodeName: 'input',
+					type: type
+				});
+				assert.equal(vNode.props.type, type.toLowerCase());
+			});
+		});
+
+		it('converts type attribute to lower case', function() {
+			var types = ['text', 'COLOR', 'Month', 'uRL'];
+			types.forEach(function(type) {
+				var vNode = new SerialVirtualNode({
+					nodeName: 'input',
+					attributes: {
+						type: type
+					}
+				});
+				assert.equal(vNode.props.type, type.toLowerCase());
+			});
+		});
+
+		it('defaults type prop to "text"', function() {
+			var vNode = new SerialVirtualNode({
+				nodeName: 'input'
+			});
+			assert.equal(vNode.props.type, 'text');
+		});
+
+		it('uses the type property over the type attribute', function() {
+			var vNode = new SerialVirtualNode({
+				nodeName: 'input',
+				type: 'month',
+				attributes: {
+					type: 'color'
+				}
+			});
+			assert.equal(vNode.props.type, 'month');
+		});
 	});
 
 	describe('attr', function() {
