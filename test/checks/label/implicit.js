@@ -14,7 +14,7 @@ describe('implicit-label', function() {
 		var node = fixture.querySelector('#target');
 		var virtualNode = axe.utils.getNodeFromTree(node);
 		assert.isFalse(
-			axe.testUtils.getCheckEvaluate('implicit-label')(node, {}, virtualNode)
+			axe.testUtils.getCheckEvaluate('implicit-label')(null, {}, virtualNode)
 		);
 	});
 
@@ -25,7 +25,7 @@ describe('implicit-label', function() {
 		var node = fixture.querySelector('#target');
 		var virtualNode = axe.utils.getNodeFromTree(node);
 		assert.isFalse(
-			axe.testUtils.getCheckEvaluate('implicit-label')(node, {}, virtualNode)
+			axe.testUtils.getCheckEvaluate('implicit-label')(null, {}, virtualNode)
 		);
 	});
 
@@ -34,7 +34,7 @@ describe('implicit-label', function() {
 		var node = fixture.querySelector('#target');
 		var virtualNode = axe.utils.getNodeFromTree(node);
 		assert.isTrue(
-			axe.testUtils.getCheckEvaluate('implicit-label')(node, {}, virtualNode)
+			axe.testUtils.getCheckEvaluate('implicit-label')(null, {}, virtualNode)
 		);
 	});
 
@@ -45,7 +45,22 @@ describe('implicit-label', function() {
 
 		var virtualNode = axe.utils.getNodeFromTree(node);
 		assert.isFalse(
-			axe.testUtils.getCheckEvaluate('implicit-label')(node, {}, virtualNode)
+			axe.testUtils.getCheckEvaluate('implicit-label')(null, {}, virtualNode)
 		);
+	});
+
+	describe('SerialVirtualNode', function() {
+		it('should return false', function() {
+			var virtualNode = new axe.SerialVirtualNode({
+				nodeName: 'input',
+				attributes: {
+					type: 'text'
+				}
+			});
+
+			assert.isFalse(
+				axe.testUtils.getCheckEvaluate('implicit-label')(null, {}, virtualNode)
+			);
+		});
 	});
 });
