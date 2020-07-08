@@ -52,4 +52,16 @@ describe('button-has-visible-text', function() {
 				.apply(checkContext, checkArgs)
 		);
 	});
+
+	describe('SerialVirtualNode', function() {
+		it('should return undefined if no other attributes are provided', function() {
+			var node = new axe.SerialVirtualNode({
+				nodeName: 'button'
+			});
+
+			assert.isUndefined(
+				axe.testUtils.getCheckEvaluate('has-visible-text')(null, {}, node)
+			);
+		});
+	});
 });
