@@ -87,4 +87,18 @@ describe('hidden-explicit-label', function() {
 			});
 		});
 	});
+
+	describe('SerialVirtualNode', function() {
+		it('should return undefined', function() {
+			var vNode = new axe.SerialVirtualNode({
+				nodeName: 'input',
+				attributes: {
+					type: 'text'
+				}
+			});
+			assert.isUndefined(
+				axe.testUtils.getCheckEvaluate('hidden-explicit-label')(null, {}, vNode)
+			);
+		});
+	});
 });

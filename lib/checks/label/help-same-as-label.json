@@ -6,7 +6,8 @@
 		"impact": "minor",
 		"messages": {
 			"pass": "Help text (title or aria-describedby) does not duplicate label text",
-			"fail": "Help text (title or aria-describedby) text is the same as the label text"
+			"fail": "Help text (title or aria-describedby) text is the same as the label text",
+			"incomplete": "Unable to determine if Help text (title or aria-describedby) text is the same as the label text"
 		}
 	}
 }
