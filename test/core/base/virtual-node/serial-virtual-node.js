@@ -121,6 +121,16 @@ describe('SerialVirtualNode', function() {
 			assert.equal(vNode.props.type, 'text');
 		});
 
+		it('default type prop to "text" if type is invalid', function() {
+			var vNode = new SerialVirtualNode({
+				nodeName: 'input',
+				attributes: {
+					type: 'woohoo'
+				}
+			});
+			assert.equal(vNode.props.type, 'text');
+		});
+
 		it('uses the type property over the type attribute', function() {
 			var vNode = new SerialVirtualNode({
 				nodeName: 'input',
