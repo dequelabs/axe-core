@@ -18,41 +18,41 @@ describe('aria-form-field-name-matches', function() {
 		var vNode = queryFixture(
 			'<map><area id="target" href="#" role="checkbox"></map>'
 		);
-		var actual = rule.matches(vNode.actualNode, vNode);
+		var actual = rule.matches(null, vNode);
 		assert.isFalse(actual);
 	});
 
 	it('returns false when node is either INPUT, SELECT or TEXTAREA', function() {
-		['INPUT', 'SELECT', 'TEXTAREA'].forEach(function(node) {
+		['input', 'select', 'textarea'].forEach(function(node) {
 			var vNode = queryFixture(
 				'<' + node + ' role="menuitemcheckbox" id="target"><' + node + '>'
 			);
-			var actual = rule.matches(vNode.actualNode, vNode);
+			var actual = rule.matches(null, vNode);
 			assert.isFalse(actual);
 		});
 	});
 
 	it('returns false when node is IMG', function() {
 		var vNode = queryFixture('<img id="target" role="menuitemradio">');
-		var actual = rule.matches(vNode.actualNode, vNode);
+		var actual = rule.matches(null, vNode);
 		assert.isFalse(actual);
 	});
 
 	it('returns false when node is not SVG with role=`img`', function() {
 		var vNode = queryFixture('<div id="target" role="img">');
-		var actual = rule.matches(vNode.actualNode, vNode);
+		var actual = rule.matches(null, vNode);
 		assert.isFalse(actual);
 	});
 
 	it('returns false when node is BUTTON', function() {
 		var vNode = queryFixture('<button id="target" role="button"></button>');
-		var actual = rule.matches(vNode.actualNode, vNode);
+		var actual = rule.matches(null, vNode);
 		assert.isFalse(actual);
 	});
 
 	it('returns false when role=`button`', function() {
 		var vNode = queryFixture('<div id="target" role="button"></div>');
-		var actual = rule.matches(vNode.actualNode, vNode);
+		var actual = rule.matches(null, vNode);
 		assert.isFalse(actual);
 	});
 
@@ -61,7 +61,7 @@ describe('aria-form-field-name-matches', function() {
 			var vNode = queryFixture(
 				'<input id="target" role="radio" type="' + type + '">'
 			);
-			var actual = rule.matches(vNode.actualNode, vNode);
+			var actual = rule.matches(null, vNode);
 			assert.isFalse(actual);
 		});
 	});
@@ -70,7 +70,7 @@ describe('aria-form-field-name-matches', function() {
 		var vNode = queryFixture(
 			'<div id="target" role="combobox"><input type="text"/></div>'
 		);
-		var actual = rule.matches(vNode.actualNode, vNode);
+		var actual = rule.matches(null, vNode);
 		assert.isFalse(actual);
 	});
 });
