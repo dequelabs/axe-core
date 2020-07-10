@@ -1,5 +1,5 @@
-describe('standards.getHtmlElementSpec', function() {
-	var getHtmlElementSpec = axe.commons.standards.getHtmlElementSpec;
+describe('standards.getElementSpec', function() {
+	var getElementSpec = axe.commons.standards.getElementSpec;
 	var queryFixture = axe.testUtils.queryFixture;
 	var fixture = document.querySelector('#fixture');
 
@@ -28,7 +28,7 @@ describe('standards.getHtmlElementSpec', function() {
 		});
 
 		var vNode = queryFixture('<abbr id="target"></abbr>');
-		assert.deepEqual(getHtmlElementSpec(vNode), {
+		assert.deepEqual(getElementSpec(vNode), {
 			contentTypes: ['phrasing', 'flow'],
 			allowedRoles: true
 		});
@@ -63,13 +63,13 @@ describe('standards.getHtmlElementSpec', function() {
 
 		it('should return top level properties', function() {
 			var vNode = queryFixture('<abbr id="target" controls></abbr>');
-			var spec = getHtmlElementSpec(vNode);
+			var spec = getElementSpec(vNode);
 			assert.equal(spec.allowedRoles, false);
 		});
 
 		it('should return properties from matching variant', function() {
 			var vNode = queryFixture('<abbr id="target" controls></abbr>');
-			var spec = getHtmlElementSpec(vNode);
+			var spec = getElementSpec(vNode);
 			assert.equal(spec.customProp, 'controls');
 		});
 
@@ -77,21 +77,21 @@ describe('standards.getHtmlElementSpec', function() {
 			var vNode = queryFixture(
 				'<abbr id="target" controls aria-label="foo"></abbr>'
 			);
-			var spec = getHtmlElementSpec(vNode);
+			var spec = getElementSpec(vNode);
 			assert.equal(spec.customProp, 'controls');
 			assert.equal(spec.anotherProp, 'label');
 		});
 
 		it('should return default props in no variants match', function() {
 			var vNode = queryFixture('<abbr id="target"></abbr>');
-			var spec = getHtmlElementSpec(vNode);
+			var spec = getElementSpec(vNode);
 			assert.equal(spec.customProp, 'default');
 			assert.equal(spec.anotherProp, 'default');
 		});
 
 		it('should return default props that were not part of other matches', function() {
 			var vNode = queryFixture('<abbr id="target" controls></abbr>');
-			var spec = getHtmlElementSpec(vNode);
+			var spec = getElementSpec(vNode);
 			assert.equal(spec.customProp, 'controls');
 			assert.equal(spec.anotherProp, 'default');
 		});
