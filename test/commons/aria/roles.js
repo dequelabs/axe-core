@@ -25,26 +25,6 @@ describe('aria.isValidRole', function() {
 	});
 });
 
-describe('aria.getRolesWithNameFromContents', function() {
-	'use strict';
-
-	it('should return array if nameFrom contents is found in the lookup table', function() {
-		var orig = axe.commons.aria.lookupTable.role;
-		axe.commons.aria.lookupTable.role = {
-			dogs: {
-				type: 'things',
-				nameFrom: ['author', 'contents']
-			},
-			cats: {
-				type: 'stuff',
-				nameFrom: ['author']
-			}
-		};
-		assert.deepEqual(axe.commons.aria.getRolesWithNameFromContents(), ['dogs']);
-		axe.commons.aria.lookupTable.role = orig;
-	});
-});
-
 describe('aria.getRolesByType', function() {
 	'use strict';
 
