@@ -89,7 +89,7 @@ describe('matches.fromPrimative', function() {
 			assert.isFalse(fromPrimative('foobar', '/^(foo|bar|baz)$/'));
 		});
 		it('returns false for null value', function() {
-			assert.isFalse(fromPrimative(null, /.*/));
+			assert.isFalse(fromPrimative(null, '/.*/'));
 		});
 	});
 });
