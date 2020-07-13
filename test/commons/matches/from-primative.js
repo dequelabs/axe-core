@@ -76,6 +76,9 @@ describe('matches.fromPrimative', function() {
 		it('returns false if the regexp does not match', function() {
 			assert.isFalse(fromPrimative('foobar', /^(foo|bar|baz)$/));
 		});
+		it('returns false for null value', function() {
+			assert.isFalse(fromPrimative(null, /.*/));
+		});
 	});
 
 	describe('with RegExp string', function() {
@@ -84,6 +87,9 @@ describe('matches.fromPrimative', function() {
 		});
 		it('returns false if the regexp does not match', function() {
 			assert.isFalse(fromPrimative('foobar', '/^(foo|bar|baz)$/'));
+		});
+		it('returns false for null value', function() {
+			assert.isFalse(fromPrimative(null, /.*/));
 		});
 	});
 });
