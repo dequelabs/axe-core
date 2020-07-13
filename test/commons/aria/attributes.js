@@ -29,60 +29,6 @@ describe('aria.requiredAttr', function() {
 	});
 });
 
-describe('aria.allowedAttr', function() {
-	'use strict';
-
-	var orig;
-	var origGlobals;
-	beforeEach(function() {
-		orig = axe.commons.aria.lookupTable.role;
-		origGlobals = axe.commons.aria.lookupTable.globalAttributes;
-	});
-
-	afterEach(function() {
-		axe.commons.aria.lookupTable.role = orig;
-		axe.commons.aria.lookupTable.globalAttributes = origGlobals;
-	});
-
-	it('should returned the attributes property for the proper role', function() {
-		axe.commons.aria.lookupTable.globalAttributes = ['world'];
-		axe.commons.aria.lookupTable.role = {
-			cats: {
-				attributes: {
-					allowed: ['hello']
-				}
-			}
-		};
-
-		assert.deepEqual(axe.commons.aria.allowedAttr('cats'), ['hello', 'world']);
-	});
-
-	it('should also check required attributes', function() {
-		axe.commons.aria.lookupTable.globalAttributes = ['world'];
-		axe.commons.aria.lookupTable.role = {
-			cats: {
-				attributes: {
-					required: ['hello'],
-					allowed: ['ok']
-				}
-			}
-		};
-
-		assert.deepEqual(axe.commons.aria.allowedAttr('cats'), [
-			'ok',
-			'world',
-			'hello'
-		]);
-	});
-
-	it('should return an array with globally allowed attributes', function() {
-		axe.commons.aria.lookupTable.globalAttributes = ['world'];
-		axe.commons.aria.lookupTable.role = {};
-
-		assert.deepEqual(axe.commons.aria.allowedAttr('cats'), ['world']);
-	});
-});
-
 describe('aria.validateAttr', function() {
 	'use strict';
 
