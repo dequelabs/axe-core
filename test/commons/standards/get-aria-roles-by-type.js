@@ -27,6 +27,7 @@ describe('standards.getAriaRolesByType', function() {
 			'list',
 			'listitem',
 			'math',
+			'none',
 			'note',
 			'presentation',
 			'row',
