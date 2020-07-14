@@ -25,67 +25,6 @@ describe('aria.isValidRole', function() {
 	});
 });
 
-describe('aria.getRolesWithNameFromContents', function() {
-	'use strict';
-
-	it('should return array if nameFrom contents is found in the lookup table', function() {
-		var orig = axe.commons.aria.lookupTable.role;
-		axe.commons.aria.lookupTable.role = {
-			dogs: {
-				type: 'things',
-				nameFrom: ['author', 'contents']
-			},
-			cats: {
-				type: 'stuff',
-				nameFrom: ['author']
-			}
-		};
-		assert.deepEqual(axe.commons.aria.getRolesWithNameFromContents(), ['dogs']);
-		axe.commons.aria.lookupTable.role = orig;
-	});
-});
-
-describe('aria.getRolesByType', function() {
-	'use strict';
-
-	it('should return array if roletype is found in the lookup table', function() {
-		var orig = axe.commons.aria.lookupTable.role;
-		axe.commons.aria.lookupTable.role = {
-			dogs: {
-				type: 'things'
-			},
-			cats: {
-				type: 'stuff'
-			}
-		};
-		assert.deepEqual(axe.commons.aria.getRolesByType('stuff'), ['cats']);
-		axe.commons.aria.lookupTable.role = orig;
-	});
-
-	it('should return empty array if role is not found in the lookup table', function() {
-		assert.deepEqual(axe.commons.aria.getRolesByType('blahblahblah'), []);
-	});
-});
-
-describe('aria.getRoleType', function() {
-	'use strict';
-
-	it('should return true if role is found in the lookup table', function() {
-		var orig = axe.commons.aria.lookupTable.role;
-		axe.commons.aria.lookupTable.role = {
-			cats: {
-				type: 'stuff'
-			}
-		};
-		assert.equal(axe.commons.aria.getRoleType('cats'), 'stuff');
-		axe.commons.aria.lookupTable.role = orig;
-	});
-
-	it('should return null if role is not found in the lookup table', function() {
-		assert.isNull(axe.commons.aria.getRoleType('cats'));
-	});
-});
-
 describe('aria.requiredOwned', function() {
 	'use strict';
 
