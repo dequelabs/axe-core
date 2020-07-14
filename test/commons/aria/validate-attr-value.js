@@ -4,44 +4,6 @@ describe('aria.validateAttrValue', function() {
 	var fixture = document.getElementById('fixture');
 	var shadowSupport = axe.testUtils.shadowSupport;
 
-	beforeEach(function() {
-		axe.configure({
-			standards: {
-				ariaAttrs: {
-					cats: {
-						type: 'nmtoken',
-						values: ['valid'],
-						allowEmpty: true
-					},
-					dogs: {
-						type: 'idref',
-						allowEmpty: true
-					},
-					goats: {
-						type: 'idrefs',
-						allowEmpty: true
-					},
-					cows: {
-						type: 'string',
-						allowEmpty: true
-					},
-					sheep: {
-						type: 'decimal',
-						allowEmpty: true
-					},
-					pigs: {
-						type: 'int',
-						allowEmpty: true
-					},
-					horses: {
-						type: 'boolean',
-						allowEmpty: true
-					}
-				}
-			}
-		});
-	});
-
 	afterEach(function() {
 		fixture.innerHTML = '';
 		axe.reset();
@@ -54,55 +16,7 @@ describe('aria.validateAttrValue', function() {
 		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'unknown-attr'));
 	});
 
-	it('returns true for empty attributes with allowEmpty:true', function() {
-		var node = document.createElement('div');
-		node.setAttribute('cats', '');
-		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cats'));
-
-		node.setAttribute('dogs', '');
-		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'dogs'));
-
-		node.setAttribute('goats', '');
-		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'goats'));
-
-		node.setAttribute('sheep', '');
-		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
-
-		node.setAttribute('cows', '');
-		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cows'));
-
-		node.setAttribute('pigs', '');
-		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
-
-		node.setAttribute('horses', '');
-		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'horses'));
-	});
-
-	it('returns true for whitespace-only attributes with allowEmpty:true', function() {
-		var node = document.createElement('div');
-		node.setAttribute('cats', '  \r\n\t  ');
-		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cats'));
-
-		node.setAttribute('dogs', '  \r\n\t  ');
-		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'dogs'));
-
-		node.setAttribute('goats', '  \r\n\t  ');
-		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'goats'));
-
-		node.setAttribute('cows', '  \r\n\t  ');
-		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cows'));
-
-		node.setAttribute('pigs', '  \r\n\t  ');
-		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
-
-		node.setAttribute('sheep', '  \r\n\t  ');
-		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
-
-		node.setAttribute('horses', '  \r\n\t  ');
-		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
-	});
-
-	describe('schema defintions', function() {
+	describe('allowEmpty', function() {
 		beforeEach(function() {
 			axe.configure({
 				standards: {
@@ -110,38 +24,101 @@ describe('aria.validateAttrValue', function() {
 						cats: {
 							type: 'nmtoken',
 							values: ['valid'],
-							allowEmpty: false
+							allowEmpty: true
 						},
 						dogs: {
 							type: 'idref',
-							allowEmpty: false
+							allowEmpty: true
 						},
 						goats: {
 							type: 'idrefs',
-							allowEmpty: false
+							allowEmpty: true
 						},
 						cows: {
 							type: 'string',
-							allowEmpty: false
+							allowEmpty: true
 						},
 						sheep: {
 							type: 'decimal',
-							allowEmpty: false
+							allowEmpty: true
 						},
 						pigs: {
 							type: 'int',
-							allowEmpty: false
+							allowEmpty: true
 						},
 						horses: {
 							type: 'boolean',
-							allowEmpty: false
+							allowEmpty: true
 						}
 					}
 				}
 			});
 		});
 
+		it('returns true for empty attributes with allowEmpty:true', function() {
+			var node = document.createElement('div');
+			node.setAttribute('cats', '');
+			assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cats'));
+
+			node.setAttribute('dogs', '');
+			assert.isTrue(axe.commons.aria.validateAttrValue(node, 'dogs'));
+
+			node.setAttribute('goats', '');
+			assert.isTrue(axe.commons.aria.validateAttrValue(node, 'goats'));
+
+			node.setAttribute('sheep', '');
+			assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
+
+			node.setAttribute('cows', '');
+			assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cows'));
+
+			node.setAttribute('pigs', '');
+			assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
+
+			node.setAttribute('horses', '');
+			assert.isTrue(axe.commons.aria.validateAttrValue(node, 'horses'));
+		});
+
+		it('returns true for whitespace-only attributes with allowEmpty:true', function() {
+			var node = document.createElement('div');
+			node.setAttribute('cats', '  \r\n\t  ');
+			assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cats'));
+
+			node.setAttribute('dogs', '  \r\n\t  ');
+			assert.isTrue(axe.commons.aria.validateAttrValue(node, 'dogs'));
+
+			node.setAttribute('goats', '  \r\n\t  ');
+			assert.isTrue(axe.commons.aria.validateAttrValue(node, 'goats'));
+
+			node.setAttribute('cows', '  \r\n\t  ');
+			assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cows'));
+
+			node.setAttribute('pigs', '  \r\n\t  ');
+			assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
+
+			node.setAttribute('sheep', '  \r\n\t  ');
+			assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
+
+			node.setAttribute('horses', '  \r\n\t  ');
+			assert.isTrue(axe.commons.aria.validateAttrValue(node, 'horses'));
+		});
+	});
+
+	describe('schema defintions', function() {
 		describe('enumerated values', function() {
+			beforeEach(function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							cats: {
+								type: 'nmtoken',
+								values: ['valid']
+							}
+						}
+					}
+				});
+			});
+
 			it('should validate against enumerated .values if present', function() {
 				var node = document.createElement('div');
 				node.setAttribute('cats', 'valid');
@@ -169,6 +146,18 @@ describe('aria.validateAttrValue', function() {
 		});
 
 		describe('idref', function() {
+			beforeEach(function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							dogs: {
+								type: 'idref'
+							}
+						}
+					}
+				});
+			});
+
 			it('should validate the referenced node exists', function() {
 				var node = document.createElement('div');
 				fixture.innerHTML = '<div id="target"></div>';
@@ -207,6 +196,18 @@ describe('aria.validateAttrValue', function() {
 
 		describe('idrefs', function() {
 			var node = document.createElement('div');
+
+			beforeEach(function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							goats: {
+								type: 'idrefs'
+							}
+						}
+					}
+				});
+			});
 
 			it('should return false when a single referenced node is not found', function() {
 				node.setAttribute('goats', 'invalid');
@@ -248,6 +249,18 @@ describe('aria.validateAttrValue', function() {
 		});
 
 		describe('string', function() {
+			beforeEach(function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							cows: {
+								type: 'string'
+							}
+						}
+					}
+				});
+			});
+
 			it('returns true for non-empty strings', function() {
 				var node = document.createElement('div');
 				node.setAttribute('cows', 'hi');
@@ -263,6 +276,18 @@ describe('aria.validateAttrValue', function() {
 
 		describe('decimal', function() {
 			var node = document.createElement('div');
+
+			beforeEach(function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							sheep: {
+								type: 'decimal'
+							}
+						}
+					}
+				});
+			});
 
 			it('should allow, but not require, a preceeding sign', function() {
 				node.setAttribute('sheep', '+1.12');
@@ -359,6 +384,18 @@ describe('aria.validateAttrValue', function() {
 		describe('int', function() {
 			var node = document.createElement('div');
 
+			beforeEach(function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							pigs: {
+								type: 'int'
+							}
+						}
+					}
+				});
+			});
+
 			it('should only allow for numbers by an optional preceeding sign', function() {
 				node.setAttribute('pigs', '+1234234');
 				assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
@@ -377,6 +414,18 @@ describe('aria.validateAttrValue', function() {
 		});
 
 		describe('boolean', function() {
+			beforeEach(function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							horses: {
+								type: 'boolean'
+							}
+						}
+					}
+				});
+			});
+
 			it('returns true for boolean value', function() {
 				var node = document.createElement('div');
 				node.setAttribute('horses', 'true');
