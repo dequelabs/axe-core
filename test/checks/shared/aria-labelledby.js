@@ -13,7 +13,9 @@ describe('aria-labelledby', function() {
 			'<div id="target" aria-labelledby="woohoo"></div><div id="woohoo">bananas</div>'
 		);
 
-		assert.isTrue(axe.testUtils.getCheckEvaluate('aria-labelledby')(node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('aria-labelledby')(null, {}, node)
+		);
 	});
 
 	it('should return true if only one element referenced by aria-labelledby has visible text', function() {
@@ -21,13 +23,17 @@ describe('aria-labelledby', function() {
 			'<div id="target" aria-labelledby="woohoo noexist hehe"></div><div id="woohoo">bananas</div>'
 		);
 
-		assert.isTrue(axe.testUtils.getCheckEvaluate('aria-labelledby')(node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('aria-labelledby')(null, {}, node)
+		);
 	});
 
 	it('should return false if an aria-labelledby is not present', function() {
 		var node = queryFixture('<div id="target"></div>');
 
-		assert.isFalse(axe.testUtils.getCheckEvaluate('aria-labelledby')(node));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('aria-labelledby')(null, {}, node)
+		);
 	});
 
 	it('should return true if an aria-labelledby is present that references hidden elements', function() {
@@ -35,7 +41,9 @@ describe('aria-labelledby', function() {
 			'<div id="target" aria-labelledby="woohoo noexist hehe"></div><div id="woohoo" style="display:none">bananas</div>'
 		);
 
-		assert.isTrue(axe.testUtils.getCheckEvaluate('aria-labelledby')(node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('aria-labelledby')(null, {}, node)
+		);
 	});
 
 	it('should return false if an aria-labelledby is present, but references an element with only hidden content', function() {
@@ -43,7 +51,9 @@ describe('aria-labelledby', function() {
 			'<div id="target" aria-labelledby="woohoo noexist hehe"></div><div id="woohoo"><span style="display: none">bananas</span></div>'
 		);
 
-		assert.isFalse(axe.testUtils.getCheckEvaluate('aria-labelledby')(node));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('aria-labelledby')(null, {}, node)
+		);
 	});
 
 	it('should return true if an aria-labelledby is present that references elements with has aria-hidden=true', function() {
@@ -51,7 +61,9 @@ describe('aria-labelledby', function() {
 			'<div id="target" aria-labelledby="woohoo"></div><div id="woohoo" aria-hidden="true">bananas</div>'
 		);
 
-		assert.isTrue(axe.testUtils.getCheckEvaluate('aria-labelledby')(node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('aria-labelledby')(null, {}, node)
+		);
 	});
 
 	it('should return false if an aria-labelledby is present that references elements with has aria-hidden=true in the content', function() {
@@ -59,7 +71,9 @@ describe('aria-labelledby', function() {
 			'<div id="target" aria-labelledby="woohoo"></div><div id="woohoo"><span aria-hidden="true">bananas</span></div>'
 		);
 
-		assert.isFalse(axe.testUtils.getCheckEvaluate('aria-labelledby')(node));
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('aria-labelledby')(null, {}, node)
+		);
 	});
 
 	describe('SerialVirtualNode', function() {
@@ -68,7 +82,9 @@ describe('aria-labelledby', function() {
 				nodeName: 'div'
 			});
 
-			assert.isFalse(axe.testUtils.getCheckEvaluate('aria-labelledby')(node));
+			assert.isFalse(
+				axe.testUtils.getCheckEvaluate('aria-labelledby')(null, {}, node)
+			);
 		});
 
 		it('should return undefined if an aria-labelledby is present', function() {
@@ -80,7 +96,7 @@ describe('aria-labelledby', function() {
 			});
 
 			assert.isUndefined(
-				axe.testUtils.getCheckEvaluate('aria-labelledby')(node)
+				axe.testUtils.getCheckEvaluate('aria-labelledby')(null, {}, node)
 			);
 		});
 	});
