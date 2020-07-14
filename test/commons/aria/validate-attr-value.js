@@ -75,7 +75,7 @@ describe('aria.validateAttrValue', function() {
 		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
 
 		node.setAttribute('horses', '');
-		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
+		assert.isTrue(axe.commons.aria.validateAttrValue(node, 'horses'));
 	});
 
 	it('returns true for whitespace-only attributes with allowEmpty:true', function() {
