@@ -10,12 +10,25 @@ describe('aria.requiredContext', function() {
 			standards: {
 				ariaRoles: {
 					cats: {
+						requiredContext: ['yes']
+					}
+				}
+			}
+		});
+		assert.deepEqual(axe.commons.aria.requiredContext('cats'), ['yes']);
+	});
+
+	it('should returned null if the required context is not an array', function() {
+		axe.configure({
+			standards: {
+				ariaRoles: {
+					cats: {
 						requiredContext: 'yes'
 					}
 				}
 			}
 		});
-		assert.equal(axe.commons.aria.requiredContext('cats'), 'yes');
+		assert.isNull(axe.commons.aria.requiredContext('cats'));
 	});
 
 	it('should return null if there are no required context nodes', function() {
