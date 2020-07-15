@@ -36,4 +36,21 @@ describe('aria.requiredContext', function() {
 
 		assert.isNull(result);
 	});
+
+	it('should return a unique copy of the context', function() {
+		var context = ['yes', 'no'];
+
+		axe.configure({
+			standards: {
+				ariaRoles: {
+					cats: {
+						requiredContext: context
+					}
+				}
+			}
+		});
+
+		var result = axe.commons.aria.requiredContext('cats');
+		assert.notEqual(result, context);
+	});
 });
