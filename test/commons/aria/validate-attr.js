@@ -1,26 +1,23 @@
 describe('aria.validateAttr', function() {
 	'use strict';
 
-	var orig;
-	beforeEach(function() {
-		orig = axe.commons.aria.lookupTable.attributes;
-	});
-
 	afterEach(function() {
-		axe.commons.aria.lookupTable.attributes = orig;
+		axe.reset();
 	});
 
 	it('should return true if attribute is found in lut', function() {
-		axe.commons.aria.lookupTable.attributes = {
-			cats: {}
-		};
+		axe.configure({
+			standards: {
+				ariaAttrs: {
+					cats: {}
+				}
+			}
+		});
 
 		assert.isTrue(axe.commons.aria.validateAttr('cats'));
 	});
 
 	it('should return false if attribute is found in lut', function() {
-		axe.commons.aria.lookupTable.attributes = {};
-
 		assert.isFalse(axe.commons.aria.validateAttr('cats'));
 	});
 });
