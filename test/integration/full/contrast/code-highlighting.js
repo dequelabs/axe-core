@@ -3,16 +3,22 @@ describe('color-contrast code highlighting test', function() {
 
 	describe('violations', function() {
 		it('should find issues', function(done) {
-			axe.run(
-				'#fixture',
-				{ runOnly: { type: 'rule', values: ['color-contrast'] } },
-				function(err, results) {
-					assert.isNull(err);
-					assert.lengthOf(results.violations, 1);
-					assert.lengthOf(results.violations[0].nodes, 32);
-					done();
-				}
-			);
+			window.addEventListener('DOMContentLoaded', function() {
+				axe.run(
+					'#fixture',
+					{ runOnly: { type: 'rule', values: ['color-contrast'] } },
+					function(err, results) {
+						try {
+							assert.isNull(err);
+							assert.lengthOf(results.violations, 1);
+							assert.lengthOf(results.violations[0].nodes, 32);
+							done();
+						} catch (e) {
+							done(e);
+						}
+					}
+				);
+			});
 		});
 	});
 
