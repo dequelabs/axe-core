@@ -2,10 +2,10 @@ describe('color.Color', function() {
 	'use strict';
 	var Color = axe.commons.color.Color;
 
-	describe('parseRgbString', function() {
+	describe('parseColorFnString', function() {
 		it('should set values properly via RGB', function() {
 			var c = new Color();
-			c.parseRgbString('rgb(17, 34,  51)');
+			c.parseColorFnString('rgb(17, 34,  51)');
 			assert.equal(c.red, 17);
 			assert.equal(c.green, 34);
 			assert.equal(c.blue, 51);
@@ -14,7 +14,7 @@ describe('color.Color', function() {
 
 		it('should set values properly via RGBA', function() {
 			var c = new Color();
-			c.parseRgbString('rgba(17, 34,51,  0.2)');
+			c.parseColorFnString('rgba(17, 34,51,  0.2)');
 			assert.equal(c.red, 17);
 			assert.equal(c.green, 34);
 			assert.equal(c.blue, 51);
@@ -23,20 +23,94 @@ describe('color.Color', function() {
 
 		it('allows decimal values', function() {
 			var c = new Color();
-			c.parseRgbString('rgba(.1, 23.4, 56.7,  .89)');
+			c.parseColorFnString('rgba(.1, 23.4, 56.7,  .89)');
 			assert.closeTo(c.red, 0.1, 0.01);
 			assert.closeTo(c.green, 23.4, 0.01);
 			assert.closeTo(c.blue, 56.7, 0.01);
 			assert.closeTo(c.alpha, 0.89, 0.01);
 		});
 
-		it('returns everything on 0 with transparent', function() {
-			var color = new Color(255, 255, 255, 1);
-			color.parseRgbString('transparent');
-			assert.equal(color.red, 0);
-			assert.equal(color.green, 0);
-			assert.equal(color.blue, 0);
-			assert.equal(color.alpha, 0);
+		it('allows percentages', function() {
+			var c = new Color();
+			c.parseColorFnString('rgba(100%, 100%, 0%, 50%)');
+			assert.equal(c.red, 255);
+			assert.equal(c.green, 255);
+			assert.equal(c.blue, 0);
+			assert.equal(c.alpha, 0.5);
+		});
+
+		it('supports space separated notation', function() {
+			var c = new Color();
+			c.parseColorFnString('rgba(255 128 0 / 50%)');
+			assert.equal(c.red, 255);
+			assert.equal(c.green, 128);
+			assert.equal(c.blue, 0);
+			assert.equal(c.alpha, 0.5);
+		});
+
+		it('allows alpha values in rgb()', function() {
+			var c = new Color();
+			c.parseColorFnString('rgb(255 128 0 / 50%)');
+			assert.equal(c.red, 255);
+			assert.equal(c.green, 128);
+			assert.equal(c.blue, 0);
+			assert.equal(c.alpha, 0.5);
+		});
+
+		describe('with hsl(a)', function() {
+			it('allows hsl', function() {
+				var c = new Color();
+				c.parseColorFnString('hsl(160, 40%, 50%)');
+				assert.equal(c.red, 77);
+				assert.equal(c.green, 179);
+				assert.equal(c.blue, 145);
+				assert.equal(c.alpha, 1);
+			});
+
+			it('allows hsla', function() {
+				var c = new Color();
+				c.parseColorFnString('hsla(160, 40%, 50%, .5)');
+				assert.equal(c.red, 77);
+				assert.equal(c.green, 179);
+				assert.equal(c.blue, 145);
+				assert.equal(c.alpha, 0.5);
+			});
+
+			it('allows hsl with space notation', function() {
+				var c = new Color();
+				c.parseColorFnString('hsl(160 40% 50% / 5%)');
+				assert.equal(c.red, 77);
+				assert.equal(c.green, 179);
+				assert.equal(c.blue, 145);
+				assert.equal(c.alpha, 0.05);
+			});
+
+			it('supports deg on hue', function() {
+				var c = new Color();
+				c.parseColorFnString('hsl(160deg, 40%, 50%)');
+				assert.equal(c.red, 77);
+				assert.equal(c.green, 179);
+				assert.equal(c.blue, 145);
+				assert.equal(c.alpha, 1);
+			});
+
+			it('supports rad on hue', function() {
+				var c = new Color();
+				c.parseColorFnString('hsl(2.8rad, 40%, 50%)');
+				assert.equal(c.red, 77);
+				assert.equal(c.green, 179);
+				assert.equal(c.blue, 145);
+				assert.equal(c.alpha, 1);
+			});
+
+			it('supports turn on hue', function() {
+				var c = new Color();
+				c.parseColorFnString('hsl(0.446turn, 40%, 50%)');
+				assert.equal(c.red, 77);
+				assert.equal(c.green, 179);
+				assert.equal(c.blue, 145);
+				assert.equal(c.alpha, 1);
+			});
 		});
 	});
 
@@ -100,6 +174,15 @@ describe('color.Color', function() {
 			assert.equal(color.alpha, 1);
 		});
 
+		it('returns everything on 0 with transparent', function() {
+			var color = new Color(255, 255, 255, 1);
+			color.parseString('transparent');
+			assert.equal(color.red, 0);
+			assert.equal(color.green, 0);
+			assert.equal(color.blue, 0);
+			assert.equal(color.alpha, 0);
+		});
+
 		it('sets hex colors', function() {
 			var color = new Color();
 			color.parseString('#F00C');
@@ -125,6 +208,24 @@ describe('color.Color', function() {
 			assert.equal(color.green, 20);
 			assert.equal(color.blue, 30);
 			assert.equal(color.alpha, 0.4);
+		});
+
+		it('allows hsl', function() {
+			var c = new Color();
+			c.parseString('hsl(160, 40%, 50%)');
+			assert.equal(c.red, 77);
+			assert.equal(c.green, 179);
+			assert.equal(c.blue, 145);
+			assert.equal(c.alpha, 1);
+		});
+
+		it('allows hsla', function() {
+			var c = new Color();
+			c.parseString('hsla(160, 40%, 50%, .5)');
+			assert.equal(c.red, 77);
+			assert.equal(c.green, 179);
+			assert.equal(c.blue, 145);
+			assert.equal(c.alpha, 0.5);
 		});
 	});
 
