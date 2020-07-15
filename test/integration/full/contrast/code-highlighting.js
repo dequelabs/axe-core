@@ -1,24 +1,29 @@
 describe('color-contrast code highlighting test', function() {
 	'use strict';
 
+	before(function(done) {
+		// wait for styles to load before running tests
+		window.onload = function() {
+			done();
+		};
+	});
+
 	describe('violations', function() {
 		it('should find issues', function(done) {
-			window.addEventListener('DOMContentLoaded', function() {
-				axe.run(
-					'#fixture',
-					{ runOnly: { type: 'rule', values: ['color-contrast'] } },
-					function(err, results) {
-						try {
-							assert.isNull(err);
-							assert.lengthOf(results.violations, 1);
-							assert.lengthOf(results.violations[0].nodes, 32);
-							done();
-						} catch (e) {
-							done(e);
-						}
+			axe.run(
+				'#fixture',
+				{ runOnly: { type: 'rule', values: ['color-contrast'] } },
+				function(err, results) {
+					try {
+						assert.isNull(err);
+						assert.lengthOf(results.violations, 1);
+						assert.lengthOf(results.violations[0].nodes, 32);
+						done();
+					} catch (e) {
+						done(e);
 					}
-				);
-			});
+				}
+			);
 		});
 	});
 
