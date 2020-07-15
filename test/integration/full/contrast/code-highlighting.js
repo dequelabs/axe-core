@@ -2,10 +2,10 @@ describe('color-contrast code highlighting test', function() {
 	'use strict';
 
 	before(function(done) {
-		// wait for styles to load before running tests
-		window.onload = function() {
+		// wait for all styles to load before running tests
+		window.addEventListener('load', function() {
 			done();
-		};
+		});
 	});
 
 	describe('violations', function() {
@@ -14,14 +14,10 @@ describe('color-contrast code highlighting test', function() {
 				'#fixture',
 				{ runOnly: { type: 'rule', values: ['color-contrast'] } },
 				function(err, results) {
-					try {
-						assert.isNull(err);
-						assert.lengthOf(results.violations, 1);
-						assert.lengthOf(results.violations[0].nodes, 32);
-						done();
-					} catch (e) {
-						done(e);
-					}
+					assert.isNull(err);
+					assert.lengthOf(results.violations, 1);
+					assert.lengthOf(results.violations[0].nodes, 32);
+					done();
 				}
 			);
 		});
