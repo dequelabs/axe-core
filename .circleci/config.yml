@@ -146,6 +146,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: npm run build
       - run: npm run test:node
 
   # Release a "next" version
