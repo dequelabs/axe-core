@@ -33,13 +33,21 @@ describe('SerialVirtualNode', function() {
 			assert.equal(vNode.props.nodeType, 1);
 		});
 
+		it('takes 3 as its nodeType', function() {
+			var vNode = new SerialVirtualNode({
+				nodeType: 3,
+				nodeName: '#text'
+			});
+			assert.equal(vNode.props.nodeType, 3);
+		});
+
 		it('has a default nodeType of 1', function() {
 			var vNode = new SerialVirtualNode({ nodeName: 'div' });
 			assert.equal(vNode.props.nodeType, 1);
 		});
 
-		it('throws if nodeType anything else', function() {
-			[2, 3, true, 'one', '1', null, { foo: 'bar' }].forEach(function(
+		it('throws if nodeType is a not a number', function() {
+			[true, 'one', '1', null, { foo: 'bar' }].forEach(function(
 				throwingNodeType
 			) {
 				assert.throws(function() {
@@ -76,6 +84,11 @@ describe('SerialVirtualNode', function() {
 					new SerialVirtualNode({ nodeName: notAString });
 				});
 			});
+		});
+
+		it('has children property', function() {
+			var vNode = new SerialVirtualNode({ nodeName: 'div' });
+			assert.typeOf(vNode.children, 'array');
 		});
 
 		it('ignores the `attributes` property', function() {

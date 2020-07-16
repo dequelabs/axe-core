@@ -52,12 +52,28 @@ describe('has-visible-text', function() {
 			);
 		});
 
-		it('should return undefined if element is named from contents', function() {
+		it('should return false if there is no visible text', function() {
 			var node = new axe.SerialVirtualNode({
 				nodeName: 'button'
 			});
 
-			assert.isUndefined(
+			assert.isFalse(
+				axe.testUtils.getCheckEvaluate('has-visible-text')(null, {}, node)
+			);
+		});
+
+		it('should return true if there is visible text', function() {
+			var node = new axe.SerialVirtualNode({
+				nodeName: 'object'
+			});
+			var child = new axe.SerialVirtualNode({
+				nodeName: '#text',
+				nodeType: 3,
+				textContent: 'hello!'
+			});
+			node.children.push(child);
+
+			assert.isTrue(
 				axe.testUtils.getCheckEvaluate('has-visible-text')(null, {}, node)
 			);
 		});

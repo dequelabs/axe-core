@@ -44,7 +44,7 @@ describe('no-implicit-explicit-label', function() {
 	});
 
 	describe('SerialVirtualNode', function() {
-		it('should return undefined', function() {
+		it('should return false', function() {
 			var serialNode = new axe.SerialVirtualNode({
 				nodeName: 'div',
 				attributes: {
@@ -54,7 +54,7 @@ describe('no-implicit-explicit-label', function() {
 			});
 
 			var actual = check.evaluate.call(checkContext, null, {}, serialNode);
-			assert.isUndefined(actual);
+			assert.isFalse(actual);
 		});
 	});
 });

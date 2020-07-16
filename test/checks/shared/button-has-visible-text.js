@@ -54,13 +54,37 @@ describe('button-has-visible-text', function() {
 	});
 
 	describe('SerialVirtualNode', function() {
-		it('should return undefined if no other attributes are provided', function() {
+		it('should return false if button element is empty', function() {
 			var node = new axe.SerialVirtualNode({
 				nodeName: 'button'
 			});
 
-			assert.isUndefined(
-				axe.testUtils.getCheckEvaluate('has-visible-text')(null, {}, node)
+			assert.isFalse(
+				axe.testUtils.getCheckEvaluate('button-has-visible-text')(
+					null,
+					{},
+					node
+				)
+			);
+		});
+
+		it('should return true if a button element has text', function() {
+			var node = new axe.SerialVirtualNode({
+				nodeName: 'button'
+			});
+			var child = new axe.SerialVirtualNode({
+				nodeName: '#text',
+				nodeType: 3,
+				textContent: 'Text'
+			});
+			node.children.push(child);
+
+			assert.isTrue(
+				axe.testUtils.getCheckEvaluate('button-has-visible-text')(
+					null,
+					{},
+					node
+				)
 			);
 		});
 	});

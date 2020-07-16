@@ -37,6 +37,7 @@ describe('VirtualNode', function() {
 			assert.equal(vNode.props.nodeName, 'input');
 			assert.equal(vNode.props.id, 'monkeys');
 			assert.equal(vNode.props.type, 'text');
+			assert.equal(vNode.props.textContent, '');
 		});
 
 		it('should lowercase type', function() {
