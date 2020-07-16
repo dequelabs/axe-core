@@ -9,17 +9,18 @@ describe('aria-required-attr', function() {
 	afterEach(function() {
 		fixture.innerHTML = '';
 		checkContext.reset();
+		axe.reset();
 	});
 
 	it('should detect missing attributes', function() {
-		var vNode = queryFixture('<div id="target" role="slider" tabindex="1">');
+		var vNode = queryFixture('<div id="target" role="switch" tabindex="1">');
 
 		assert.isFalse(
 			axe.testUtils
 				.getCheckEvaluate('aria-required-attr')
 				.call(checkContext, vNode.actualNode, options, vNode)
 		);
-		assert.deepEqual(checkContext._data, ['aria-valuenow']);
+		assert.deepEqual(checkContext._data, ['aria-checked']);
 	});
 
 	it('should return true if there is no role', function() {
@@ -60,15 +61,16 @@ describe('aria-required-attr', function() {
 
 	describe('options', function() {
 		it('should require provided attribute names for a role', function() {
-			axe.commons.aria.lookupTable.role.mccheddarton = {
-				type: 'widget',
-				attributes: {
-					required: ['aria-valuemax']
-				},
-				owned: null,
-				nameFrom: ['author'],
-				context: null
-			};
+			axe.configure({
+				standards: {
+					ariaRoles: {
+						mccheddarton: {
+							requiredAttrs: ['aria-valuemax']
+						}
+					}
+				}
+			});
+
 			var vNode = queryFixture('<div role="mccheddarton" id="target"></div>');
 			var options = {
 				mccheddarton: ['aria-snuggles']
@@ -79,7 +81,6 @@ describe('aria-required-attr', function() {
 					.call(checkContext, vNode.actualNode, options, vNode)
 			);
 			assert.deepEqual(checkContext._data, ['aria-snuggles', 'aria-valuemax']);
-			delete axe.commons.aria.lookupTable.role.mccheddarton;
 		});
 	});
 });
