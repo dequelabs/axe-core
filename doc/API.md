@@ -78,38 +78,27 @@ For a full listing of API offered by axe, clone the repository and run `npm run 
 - The `"helpUrl"` in the results object is a link to a broader description of the accessibility issue and suggested remediation. These links point to Deque University help pages, which do not require a login.
 - Axe does not test hidden regions, such as inactive menus or modal windows. To test those for accessibility, write tests that activate or render the regions visible and run the analysis again.
 
-### API Name: axe.getRules
+### Axe-core Tags
 
-#### Purpose
+Each rule in axe-core has a number of tags. These provide metadata about the rule. Each rule has one tag that indicates which WCAG version / level it belongs to, or if it doesn't it have the `best-practice` tag. If the rule is required by WCAG, there is a tag that references the success criterion number. For example, the `wcag111` tag means a rule is required for WCAG 2 success criterion 1.1.1.
 
-To get information on all the rules in the system.
+The `experimental`, `ACT` and `section508` tags are only added to some rules. Each rule with a `section508` tag also has a tag to indicate what requirement in old Section 508 the rule is required by. For example `section508.22.a`.
 
-#### Description
+| Tag Name         | Accessibility Standard / Purpose                     |
+| ---------------- | ---------------------------------------------------- |
+| `wcag2a`         | WCAG 2.0 Level A                                     |
+| `wcag2aa`        | WCAG 2.0 Level AA                                    |
+| `wcag21a`        | WCAG 2.1 Level A                                     |
+| `wcag21aa`       | WCAG 2.1 Level AA                                    |
+| `best-practice`  | Common accessibility best practices                  |
+| `wcag***`        | WCAG success criterion e.g. wcag111 maps to SC 1.1.1 |
+| `ACT`            | W3C approved Accessibility Conformance Testing rules |
+| `section508`     | Old Section 508 rules                                |
+| `section508.*.*` | Requirement in old Section 508                       |
+| `experimental`   | Cutting-edge rules, disabled by default              |
+| `cat.*`          | Category mappings used by Deque (see below)          |
 
-Returns a list of all rules with their ID and description
-
-#### Synopsis
-
-`axe.getRules([Tag Name 1, Tag Name 2...]);`
-
-#### Parameters
-
-- `tags` - **optional** Array of tags used to filter returned rules. If omitted, it will return all rules.
-
-**Returns:** Array of rules that match the input filter with each entry having a format of `{ruleId: <id>, description: <desc>}`
-
-The current set of tags supported are listed in the following table:
-
-| Tag Name        | Accessibility Standard / Purpose            |
-| --------------- | ------------------------------------------- |
-| `wcag2a`        | WCAG 2.0 Level A                            |
-| `wcag2aa`       | WCAG 2.0 Level AA                           |
-| `wcag21a`       | WCAG 2.1 Level A                            |
-| `wcag21aa`      | WCAG 2.1 Level AA                           |
-| `best-practice` | Common accessibility best practices         |
-| `section508`    | Old Section 508 rules                       |
-| `experimental`  | Cutting-edge rules, disabled by default     |
-| `cat.*`         | Category mappings used by Deque (see below) |
+All rules have a `cat.*` tag, which indicates what type of content it is part of. The following `cat.*` tags exist in axe-core:
 
 | Category name                 |
 | ----------------------------- |
@@ -126,6 +115,26 @@ The current set of tags supported are listed in the following table:
 | `cat.tables`                  |
 | `cat.text-alternatives`       |
 | `cat.time-and-media`          |
+
+### API Name: axe.getRules
+
+#### Purpose
+
+To get information on all the rules in the system.
+
+#### Description
+
+Returns a list of all rules with their ID and description
+
+#### Synopsis
+
+`axe.getRules([Tag Name 1, Tag Name 2...]);`
+
+#### Parameters
+
+- `tags` - **optional** Array of tags used to filter returned rules. If omitted, it will return all rules. See [axe-core tags](#axe-core-tags).
+
+**Returns:** Array of rules that match the input filter with each entry having a format of `{ruleId: <id>, description: <desc>}`
 
 #### Example 1
 
@@ -201,7 +210,7 @@ axe.configure({
       - `any` - array(optional, default `[]`). This is a list of checks that, if none "pass", will generate a violation.
       - `all` - array(optional, default `[]`). This is a list of checks that, if any "fails", will generate a violation.
       - `none` - array(optional, default `[]`). This is a list of checks that, if any "pass", will generate a violation.
-      - `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. In practice, you must supply some valid tags or the default evaluation will not invoke the rule. The convention is to include the standard (WCAG 2 and/or section 508), the WCAG 2 level, Section 508 paragraph, and the WCAG 2 success criteria. Tags are constructed by converting all letters to lower case, removing spaces and periods and concatenating the result. E.g. WCAG 2 A success criteria 1.1.1 would become ["wcag2a", "wcag111"]
+      - `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. See [axe-core tags](#axe-core-tags).
       - `matches` - function(optional, default `function() { return true }`). A filtering function that will exclude elements that match the `selector` property.
   - `disableOtherRules` - Disables all rules not included in the `rules` property.
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
@@ -399,16 +408,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 
 ###### Options Parameter Examples
 
-1. Run only Rules for an accessibility standard
-
-There are certain standards defined that can be used to select a set of rules. The defined standards and tag string are defined as follows:
-
-| Tag Name        |      Accessibility Standard      |
-| --------------- | :------------------------------: |
-| `wcag2a`        |         WCAG 2.0 Level A         |
-| `wcag2aa`       |        WCAG 2.0 Level AA         |
-| `section508`    |           Section 508            |
-| `best-practice` | Best practices endorsed by Deque |
+1. Run only Rules for an accessibility standard. See [axe-core tags](#axe-core-tags).
 
 To run only WCAG 2.0 Level A rules, specify `options` as:
 
