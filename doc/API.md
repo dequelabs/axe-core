@@ -397,7 +397,6 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `rules`            | n/a     | Enable or disable rules using the `enabled` property                                                                                    |
 | `reporter`         | `v1`    | Which reporter to use (see [Configuration](#api-name-axeconfigure))                                                                     |
 | `resultTypes`      | n/a     | Limit which result types are processed and aggregated                                                                                   |
-| `selectors`        | `true`  | Return human-friendly CSS selectors for elements                                                                                        |
 | `ancestry`         | `false` | Return CSS selector for elements, with all the element's ancestors                                                                      |
 | `xpath`            | `false` | Return xpath selectors for elements                                                                                                     |
 | `absolutePaths`    | `false` | Use absolute paths when creating element selectors                                                                                      |
