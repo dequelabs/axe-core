@@ -13,7 +13,8 @@ describe('helpers.processAggregate', function() {
 							element: document.createElement('div'),
 							selector: 'header > .thing',
 							source: '<div class="thing">Thing</div>',
-							xpath: '/header/div[@class="thing"]'
+							xpath: '/header/div[@class="thing"]',
+							ancestry: 'html > body > header > div'
 						},
 						any: [
 							{
@@ -23,7 +24,8 @@ describe('helpers.processAggregate', function() {
 										element: document.createElement('div'),
 										selector: 'footer > .thing',
 										source: '<div class="thing">Thing</div>',
-										xpath: '/footer/div[@class="thing"]'
+										xpath: '/footer/div[@class="thing"]',
+										ancestry: 'html > body > footer > div'
 									}
 								]
 							}
@@ -37,7 +39,8 @@ describe('helpers.processAggregate', function() {
 							element: document.createElement('div'),
 							selector: 'main > .thing',
 							source: '<div class="thing">Thing</div>',
-							xpath: '/main/div[@class="thing"]'
+							xpath: '/main/div[@class="thing"]',
+							ancestry: 'html > body > main > div'
 						},
 						any: [
 							{
@@ -47,7 +50,8 @@ describe('helpers.processAggregate', function() {
 										element: document.createElement('div'),
 										selector: 'footer > .thing',
 										source: '<div class="thing">Thing</div>',
-										xpath: '/footer/div[@class="thing"]'
+										xpath: '/footer/div[@class="thing"]',
+										ancestry: 'html > body > footer > div'
 									}
 								]
 							}
@@ -69,6 +73,7 @@ describe('helpers.processAggregate', function() {
 							selector: '#dopel',
 							source: '<input id="dopel"/>',
 							xpath: '/main/input[@id="dopel"]',
+							ancestry: 'html > body > main > input:nth-child(0)',
 							fromFrame: true
 						},
 						any: [
@@ -80,6 +85,7 @@ describe('helpers.processAggregate', function() {
 										selector: '#dopel',
 										source: '<input id="dopel"/>',
 										xpath: '/main/input[@id="dopel"]',
+										ancestry: 'html > body > main > input:nth-child(1)',
 										fromFrame: true
 									}
 								]
@@ -94,6 +100,7 @@ describe('helpers.processAggregate', function() {
 							selector: '#dopell',
 							source: '<input id="dopell"/>',
 							xpath: '/header/input[@id="dopell"]',
+							ancestry: 'html > body > main > input:nth-child(0)',
 							fromFrame: true
 						},
 						any: [
@@ -105,6 +112,7 @@ describe('helpers.processAggregate', function() {
 										selector: '#dopell',
 										source: '<input id="dopell"/>',
 										xpath: '/header/input[@id="dopell"]',
+										ancestry: 'html > body > main > input:nth-child(1)',
 										fromFrame: true
 									}
 								]
@@ -276,6 +284,42 @@ describe('helpers.processAggregate', function() {
 					assert.isDefined(resultObject.passes[0].nodes[0].target);
 					assert.isDefined(
 						resultObject.passes[0].nodes[0].any[0].relatedNodes[0].target
+					);
+				});
+			});
+		});
+
+		describe('`ancestry` option', function() {
+			describe('when set to true', function() {
+				it('should add an `ancestry` property to the subResult nodes or relatedNodes', function() {
+					var resultObject = helpers.processAggregate(results, {
+						ancestry: true
+					});
+					assert.isDefined(resultObject.passes[0].nodes[0].ancestry);
+					assert.isDefined(
+						resultObject.passes[0].nodes[0].any[0].relatedNodes[0].ancestry
+					);
+				});
+			});
+
+			describe('when set to false', function() {
+				it('should NOT add an `ancestry` property to the subResult nodes or relatedNodes', function() {
+					var resultObject = helpers.processAggregate(results, {
+						ancestry: false
+					});
+					assert.isUndefined(resultObject.passes[0].nodes[0].ancestry);
+					assert.isUndefined(
+						resultObject.passes[0].nodes[0].any[0].relatedNodes[0].ancestry
+					);
+				});
+			});
+
+			describe('when not set at all', function() {
+				it('should NOT add an `ancestry` property to the subResult nodes or relatedNodes', function() {
+					var resultObject = helpers.processAggregate(results, {});
+					assert.isUndefined(resultObject.passes[0].nodes[0].ancestry);
+					assert.isUndefined(
+						resultObject.passes[0].nodes[0].any[0].relatedNodes[0].ancestry
 					);
 				});
 			});
