@@ -215,7 +215,7 @@ describe('aria.validateAttrValue', function() {
 				assert.isFalse(axe.commons.aria.validateAttrValue(node, 'goats'));
 			});
 
-			it('should return false when at no referenced element is found', function() {
+			it('should return false when no referenced element is found', function() {
 				fixture.innerHTML = '<div id="target"></div>';
 				node.setAttribute('goats', 'target2 target3');
 				// target2 not found
