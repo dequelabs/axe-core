@@ -2,10 +2,13 @@ describe('color-contrast code highlighting test', function() {
 	'use strict';
 
 	before(function(done) {
-		// wait for all styles to load before running tests
-		window.addEventListener('load', function() {
+		if (document.readyState === 'complete') {
 			done();
-		});
+		} else {
+			window.addEventListener('load', function() {
+				done();
+			});
+		}
 	});
 
 	describe('violations', function() {
