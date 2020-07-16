@@ -5,17 +5,11 @@ describe('aria-errormessage', function() {
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
 	var checkContext = axe.testUtils.MockCheckContext();
-	var attrData = Object.assign(
-		{},
-		axe.commons.aria.lookupTable.attributes['aria-errormessage']
-	);
 
 	afterEach(function() {
-		axe.commons.aria.lookupTable.attributes[
-			'aria-errormessage'
-		] = Object.assign({}, attrData);
 		fixture.innerHTML = '';
 		checkContext.reset();
+		axe.reset();
 	});
 
 	it('should return false if aria-errormessage value is invalid', function() {
@@ -84,9 +78,15 @@ describe('aria-errormessage', function() {
 	});
 
 	it('returns true when aria-errormessage is empty, if that is allowed', function() {
-		axe.commons.aria.lookupTable.attributes[
-			'aria-errormessage'
-		].allowEmpty = true;
+		axe.configure({
+			standards: {
+				ariaAttrs: {
+					'aria-errormessage': {
+						allowEmpty: true
+					}
+				}
+			}
+		});
 		fixture.innerHTML = '<div aria-errormessage=" "></div>';
 		assert.isTrue(
 			axe.testUtils
@@ -96,9 +96,15 @@ describe('aria-errormessage', function() {
 	});
 
 	it('returns false when aria-errormessage is empty, if that is not allowed', function() {
-		axe.commons.aria.lookupTable.attributes[
-			'aria-errormessage'
-		].allowEmpty = false;
+		axe.configure({
+			standards: {
+				ariaAttrs: {
+					'aria-errormessage': {
+						allowEmpty: false
+					}
+				}
+			}
+		});
 		fixture.innerHTML = '<div aria-errormessage=" "></div>';
 		assert.isFalse(
 			axe.testUtils

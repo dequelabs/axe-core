@@ -7,12 +7,20 @@ describe('unsupportedattr', function() {
 
 	afterEach(function() {
 		checkContext.reset();
+		axe.reset();
 	});
 
 	it('should return true if applied to an unsupported attribute', function() {
-		axe.commons.aria.lookupTable.attributes['aria-mccheddarton'] = {
-			unsupported: true
-		};
+		axe.configure({
+			standards: {
+				ariaAttrs: {
+					'aria-mccheddarton': {
+						unsupported: true
+					}
+				}
+			}
+		});
+
 		var params = checkSetup(
 			'<div id="target" aria-mccheddarton="true">Contents</div>'
 		);
@@ -20,12 +28,18 @@ describe('unsupportedattr', function() {
 	});
 
 	it('should return true with multiple unsupported and supported attributes', function() {
-		axe.commons.aria.lookupTable.attributes['aria-mccheddarton'] = {
-			unsupported: true
-		};
-		axe.commons.aria.lookupTable.attributes['aria-bagleypants'] = {
-			unsupported: true
-		};
+		axe.configure({
+			standards: {
+				ariaAttrs: {
+					'aria-mccheddarton': {
+						unsupported: true
+					},
+					'aria-bagleypants': {
+						unsupported: true
+					}
+				}
+			}
+		});
 		var params = checkSetup(
 			'<div id="target" aria-mccheddarton="true" aria-bagleypants="false" aria-label="Nope">Contents</div>'
 		);
@@ -51,11 +65,17 @@ describe('unsupportedattr', function() {
 	});
 
 	it('should return false if applied to an element that matches the unsupported "exceptions" list', function() {
-		axe.commons.aria.lookupTable.attributes['aria-mccheddarton'] = {
-			unsupported: {
-				exceptions: ['button']
+		axe.configure({
+			standards: {
+				ariaAttrs: {
+					'aria-mccheddarton': {
+						unsupported: {
+							exceptions: ['button']
+						}
+					}
+				}
 			}
-		};
+		});
 		var params = checkSetup(
 			'<button id="target" aria-mccheddarton="true">Contents</button>'
 		);
@@ -63,18 +83,24 @@ describe('unsupportedattr', function() {
 	});
 
 	it('should return false if applied to an element that matches the unsupported "exceptions" list using complex conditions', function() {
-		axe.commons.aria.lookupTable.attributes['aria-mccheddarton'] = {
-			unsupported: {
-				exceptions: [
-					{
-						nodeName: 'input',
-						properties: {
-							type: 'checkbox'
+		axe.configure({
+			standards: {
+				ariaAttrs: {
+					'aria-mccheddarton': {
+						unsupported: {
+							exceptions: [
+								{
+									nodeName: 'input',
+									properties: {
+										type: 'checkbox'
+									}
+								}
+							]
 						}
 					}
-				]
+				}
 			}
-		};
+		});
 		var params = checkSetup(
 			'<input type="checkbox" id="target" aria-mccheddarton="true">'
 		);
@@ -82,11 +108,17 @@ describe('unsupportedattr', function() {
 	});
 
 	it('should return true if applied to an element that does not match the unsupported "exceptions" list', function() {
-		axe.commons.aria.lookupTable.attributes['aria-mccheddarton'] = {
-			unsupported: {
-				exceptions: ['button']
+		axe.configure({
+			standards: {
+				ariaAttrs: {
+					'aria-mccheddarton': {
+						unsupported: {
+							exceptions: ['button']
+						}
+					}
+				}
 			}
-		};
+		});
 		var params = checkSetup(
 			'<div id="target" aria-mccheddarton="true">Contents</div>'
 		);
@@ -94,18 +126,24 @@ describe('unsupportedattr', function() {
 	});
 
 	it('should return true if applied to an element that does not match the unsupported "exceptions" list using complex conditions', function() {
-		axe.commons.aria.lookupTable.attributes['aria-mccheddarton'] = {
-			unsupported: {
-				exceptions: [
-					{
-						nodeName: 'input',
-						properties: {
-							type: 'checkbox'
+		axe.configure({
+			standards: {
+				ariaAttrs: {
+					'aria-mccheddarton': {
+						unsupported: {
+							exceptions: [
+								{
+									nodeName: 'input',
+									properties: {
+										type: 'checkbox'
+									}
+								}
+							]
 						}
 					}
-				]
+				}
 			}
-		};
+		});
 		var params = checkSetup(
 			'<input type="radio" id="target" aria-mccheddarton="true">'
 		);

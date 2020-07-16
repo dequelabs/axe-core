@@ -1,18 +1,11 @@
 describe('aria.getRole', function() {
 	'use strict';
 	var aria = axe.commons.aria;
-	var roleDefinitions = aria.lookupTable.role;
 	var flatTreeSetup = axe.testUtils.flatTreeSetup;
 	var fixture = document.querySelector('#fixture');
 
-	var orig;
-	beforeEach(function() {
-		orig = axe.commons.aria.lookupTable.role;
-	});
-
 	afterEach(function() {
 		fixture.innerHTML = '';
-		axe.commons.aria.lookupTable.role = orig;
 	});
 
 	it('returns valid roles', function() {
@@ -289,7 +282,6 @@ describe('aria.getRole', function() {
 			fixture.innerHTML = '<ul><li id="target" role="section"></li></ul>';
 			flatTreeSetup(fixture);
 			var node = fixture.querySelector('#target');
-			assert.equal(roleDefinitions.section.type, 'abstract');
 			assert.equal(aria.getRole(node), 'listitem');
 		});
 
@@ -297,7 +289,6 @@ describe('aria.getRole', function() {
 			var node = document.createElement('li');
 			node.setAttribute('role', 'section');
 			flatTreeSetup(node);
-			assert.equal(roleDefinitions.section.type, 'abstract');
 			assert.equal(aria.getRole(node, { abstracts: true }), 'section');
 		});
 
@@ -305,7 +296,6 @@ describe('aria.getRole', function() {
 			fixture.innerHTML = '<ul><li id="target" role="section"></li></ul>';
 			flatTreeSetup(fixture);
 			var node = fixture.querySelector('#target');
-			assert.equal(roleDefinitions.section.type, 'abstract');
 			assert.equal(aria.getRole(node, { abstracts: false }), 'listitem');
 		});
 	});

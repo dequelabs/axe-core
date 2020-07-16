@@ -7,6 +7,7 @@ describe('aria-valid-attr', function() {
 	afterEach(function() {
 		fixture.innerHTML = '';
 		checkContext.reset();
+		axe.reset();
 	});
 
 	it('should return false if any invalid ARIA attributes are found', function() {
@@ -37,9 +38,15 @@ describe('aria-valid-attr', function() {
 	});
 
 	it('should return true for unsupported ARIA attributes', function() {
-		axe.commons.aria.lookupTable.attributes['aria-mccheddarton'] = {
-			unsupported: true
-		};
+		axe.configure({
+			standards: {
+				ariaAttrs: {
+					'aria-mccheddarton': {
+						unsupported: true
+					}
+				}
+			}
+		});
 
 		var node = document.createElement('div');
 		node.id = 'test';
