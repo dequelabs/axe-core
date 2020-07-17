@@ -141,6 +141,7 @@ declare namespace axe {
 	interface Rule {
 		id: string;
 		selector?: string;
+		impact?: ImpactValue;
 		excludeHidden?: boolean;
 		enabled?: boolean;
 		pageLevel?: boolean;
