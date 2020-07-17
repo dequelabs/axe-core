@@ -86,11 +86,6 @@ describe('SerialVirtualNode', function() {
 			});
 		});
 
-		it('has children property', function() {
-			var vNode = new SerialVirtualNode({ nodeName: 'div' });
-			assert.typeOf(vNode.children, 'array');
-		});
-
 		it('ignores the `attributes` property', function() {
 			var vNode = new SerialVirtualNode({
 				nodeName: 'div',

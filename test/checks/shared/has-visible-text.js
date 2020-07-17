@@ -52,10 +52,21 @@ describe('has-visible-text', function() {
 			);
 		});
 
+		it('should return incomplete if no other properties are set', function() {
+			var node = new axe.SerialVirtualNode({
+				nodeName: 'button'
+			});
+
+			assert.isUndefined(
+				axe.testUtils.getCheckEvaluate('has-visible-text')(null, {}, node)
+			);
+		});
+
 		it('should return false if there is no visible text', function() {
 			var node = new axe.SerialVirtualNode({
 				nodeName: 'button'
 			});
+			node.children = [];
 
 			assert.isFalse(
 				axe.testUtils.getCheckEvaluate('has-visible-text')(null, {}, node)
@@ -69,9 +80,9 @@ describe('has-visible-text', function() {
 			var child = new axe.SerialVirtualNode({
 				nodeName: '#text',
 				nodeType: 3,
-				textContent: 'hello!'
+				nodeValue: 'hello!'
 			});
-			node.children.push(child);
+			node.children = [child];
 
 			assert.isTrue(
 				axe.testUtils.getCheckEvaluate('has-visible-text')(null, {}, node)
