@@ -4,15 +4,8 @@ describe('aria.namedFromContents', function() {
 	var fixture = document.querySelector('#fixture');
 	var flatTreeSetup = axe.testUtils.flatTreeSetup;
 
-	beforeEach(function() {
-		aria.foo = { nameFrom: ['author', 'contents'] };
-		aria.bar = { nameFrom: ['author'] };
-	});
-
 	afterEach(function() {
 		fixture.innerHTML = '';
-		delete aria.lookupTable.role.foo;
-		delete aria.lookupTable.role.bar;
 	});
 
 	it('returns true when the element has an explicit role named from content', function() {
@@ -31,20 +24,12 @@ describe('aria.namedFromContents', function() {
 	it('returns true when the element has an implicit role named from content', function() {
 		fixture.innerHTML = '<h1>foo</h1>';
 		flatTreeSetup(fixture);
-		// Varify h1 is named from contents:
-		assert.equal(aria.getRole(fixture.firstChild), 'heading');
-		assert.include(aria.lookupTable.role.heading.nameFrom, 'contents');
-
 		assert.isTrue(namedFromContents(fixture.firstChild));
 	});
 
 	it('returns false when the element has a role not named from content', function() {
 		fixture.innerHTML = '<main role="main"></main>';
 		flatTreeSetup(fixture);
-		// Varify main is not named from contents:
-		assert.equal(aria.getRole(fixture.firstChild), 'main');
-		assert.notInclude(aria.lookupTable.role.main.nameFrom, 'contents');
-
 		assert.isFalse(namedFromContents(fixture.firstChild));
 	});
 
