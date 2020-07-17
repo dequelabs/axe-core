@@ -348,7 +348,7 @@ describe('aria-allowed-role', function() {
 
 	it('returns true <img> with a non-empty alt', function() {
 		var node = document.createElement('img');
-		node.setAttribute('role', 'banner');
+		node.setAttribute('role', 'button');
 		node.alt = 'some text';
 		fixture.appendChild(node);
 		flatTreeSetup(fixture);

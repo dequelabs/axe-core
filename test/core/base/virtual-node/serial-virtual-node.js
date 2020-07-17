@@ -33,13 +33,21 @@ describe('SerialVirtualNode', function() {
 			assert.equal(vNode.props.nodeType, 1);
 		});
 
+		it('takes 3 as its nodeType', function() {
+			var vNode = new SerialVirtualNode({
+				nodeType: 3,
+				nodeName: '#text'
+			});
+			assert.equal(vNode.props.nodeType, 3);
+		});
+
 		it('has a default nodeType of 1', function() {
 			var vNode = new SerialVirtualNode({ nodeName: 'div' });
 			assert.equal(vNode.props.nodeType, 1);
 		});
 
-		it('throws if nodeType anything else', function() {
-			[2, 3, true, 'one', '1', null, { foo: 'bar' }].forEach(function(
+		it('throws if nodeType is a not a number', function() {
+			[true, 'one', '1', null, { foo: 'bar' }].forEach(function(
 				throwingNodeType
 			) {
 				assert.throws(function() {
@@ -88,6 +96,58 @@ describe('SerialVirtualNode', function() {
 				}
 			});
 			assert.isUndefined(vNode.props.attributes);
+		});
+
+		it('converts type prop to lower case', function() {
+			var types = ['text', 'COLOR', 'Month', 'uRL'];
+			types.forEach(function(type) {
+				var vNode = new SerialVirtualNode({
+					nodeName: 'input',
+					type: type
+				});
+				assert.equal(vNode.props.type, type.toLowerCase());
+			});
+		});
+
+		it('converts type attribute to lower case', function() {
+			var types = ['text', 'COLOR', 'Month', 'uRL'];
+			types.forEach(function(type) {
+				var vNode = new SerialVirtualNode({
+					nodeName: 'input',
+					attributes: {
+						type: type
+					}
+				});
+				assert.equal(vNode.props.type, type.toLowerCase());
+			});
+		});
+
+		it('defaults type prop to "text"', function() {
+			var vNode = new SerialVirtualNode({
+				nodeName: 'input'
+			});
+			assert.equal(vNode.props.type, 'text');
+		});
+
+		it('default type prop to "text" if type is invalid', function() {
+			var vNode = new SerialVirtualNode({
+				nodeName: 'input',
+				attributes: {
+					type: 'woohoo'
+				}
+			});
+			assert.equal(vNode.props.type, 'text');
+		});
+
+		it('uses the type property over the type attribute', function() {
+			var vNode = new SerialVirtualNode({
+				nodeName: 'input',
+				type: 'month',
+				attributes: {
+					type: 'color'
+				}
+			});
+			assert.equal(vNode.props.type, 'month');
 		});
 	});
 

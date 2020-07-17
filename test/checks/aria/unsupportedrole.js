@@ -6,13 +6,21 @@ describe('unsupportedrole', function() {
 
 	afterEach(function() {
 		fixture.innerHTML = '';
+		axe.reset();
 	});
 
 	it('should return true if applied to an unsupported role', function() {
-		axe.commons.aria.lookupTable.role.mccheddarton = {
-			type: 'widget',
-			unsupported: true
-		};
+		axe.configure({
+			standards: {
+				ariaRoles: {
+					mccheddarton: {
+						type: 'widget',
+						unsupported: true
+					}
+				}
+			}
+		});
+
 		fixture.innerHTML = '<div id="target" role="mccheddarton">Contents</div>';
 		var node = fixture.querySelector('#target');
 		flatTreeSetup(fixture);
