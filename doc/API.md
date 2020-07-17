@@ -159,6 +159,8 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
 
 To configure the format of the data used by axe. This can be used to add new rules, which must be registered with the library to execute.
 
+**important**: `axe.configure()` does not communicate configuration calls into iframes. Instead `axe.configure()` must be called with the same argument in each `frame` / `iframe` individually.
+
 #### Description
 
 User specifies the format of the JSON structure passed to the callback of `axe.run`
