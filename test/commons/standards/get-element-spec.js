@@ -34,6 +34,11 @@ describe('standards.getElementSpec', function() {
 		});
 	});
 
+	it('should return empty object if passed an invalid element', function() {
+		var vNode = queryFixture('<foo-bar id="target"></foo-bar>');
+		assert.deepEqual(getElementSpec(vNode), {});
+	});
+
 	describe('variants', function() {
 		before(function() {
 			axe.configure({
