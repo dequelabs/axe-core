@@ -1,22 +1,25 @@
 describe('aria.isAccessibleRef', function() {
 	'use strict';
 
-	var __atrs;
 	var fixture = document.getElementById('fixture');
 	var isAccessibleRef = axe.commons.aria.isAccessibleRef;
 	var shadowSupport = axe.testUtils.shadowSupport.v1;
 
 	function setLookup(attrs) {
-		axe.commons.aria.lookupTable.attributes = attrs;
+		axe.configure({
+			standards: {
+				ariaAttrs: attrs
+			}
+		});
 	}
 
-	afterEach(function() {
-		fixture.innerHTML = '';
-		__atrs = axe.commons.aria.lookupTable.attributes;
+	before(function() {
+		axe._load({});
 	});
 
 	afterEach(function() {
-		axe.commons.aria.lookupTable.attributes = __atrs;
+		fixture.innerHTML = '';
+		axe.reset();
 	});
 
 	it('returns false by default', function() {

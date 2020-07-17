@@ -21,7 +21,7 @@ describe('color.Color', function() {
 			assert.closeTo(c.alpha, 0.2, 0.01);
 		});
 
-		it('allows decimal values', function() {
+		it('allows decimal values, with and without the integer', function() {
 			var c = new Color();
 			c.parseColorFnString('rgba(.1, 23.4, 56.7,  .89)');
 			assert.closeTo(c.red, 0.1, 0.01);
@@ -37,6 +37,15 @@ describe('color.Color', function() {
 			assert.equal(c.green, 255);
 			assert.equal(c.blue, 0);
 			assert.equal(c.alpha, 0.5);
+		});
+
+		it('allows exponent numbers', function() {
+			var c = new Color();
+			c.parseColorFnString('rgb(2e0, 2e1, 2e2)');
+			assert.equal(c.red, 2);
+			assert.equal(c.green, 20);
+			assert.equal(c.blue, 200);
+			assert.equal(c.alpha, 1);
 		});
 
 		it('supports space separated notation', function() {

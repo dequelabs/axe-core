@@ -117,6 +117,7 @@ describe('text.formControlValue', function() {
 
 		it('returns the value of DOM nodes', function() {
 			fixture.innerHTML = '<input value="foo">';
+			axe.utils.getFlattenedTree(fixture);
 			assert.equal(nativeTextboxValue(fixture.querySelector('input')), 'foo');
 		});
 
@@ -127,6 +128,7 @@ describe('text.formControlValue', function() {
 					var target = document.createElement(nodeName);
 					target.value = 'foo'; // That shouldn't do anything
 					fixture.appendChild(target);
+					axe.utils.getFlattenedTree(fixture);
 					assert.equal(nativeTextboxValue(target), '');
 				}
 			);
@@ -198,6 +200,7 @@ describe('text.formControlValue', function() {
 					var target = document.createElement(nodeName);
 					target.value = 'foo'; // That shouldn't do anything
 					fixture.appendChild(target);
+					axe.utils.getFlattenedTree(fixture);
 					assert.equal(nativeSelectValue(target), '');
 				}
 			);

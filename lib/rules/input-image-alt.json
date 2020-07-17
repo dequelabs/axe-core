@@ -6,7 +6,8 @@
 		"wcag2a",
 		"wcag111",
 		"section508",
-		"section508.22.a"
+		"section508.22.a",
+		"ACT"
 	],
 	"metadata": {
 		"description": "Ensures <input type=\"image\"> elements have alternate text",

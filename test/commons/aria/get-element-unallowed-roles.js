@@ -28,7 +28,7 @@ describe('aria.getElementUnallowedRoles', function() {
 		node.setAttribute('role', role);
 		flatTreeSetup(node);
 		var actual = axe.commons.aria.getElementUnallowedRoles(node);
-		assert.isEmpty(actual);
+		assert.isNotEmpty(actual);
 	});
 
 	it('returns true for INPUT with type button and role menuitemcheckbox', function() {
