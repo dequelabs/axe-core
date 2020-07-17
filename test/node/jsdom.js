@@ -28,25 +28,24 @@ describe('jsdom axe-core', function() {
 			});
 	});
 
-	it('should unset globals so it can run with a new set of globals', function(done) {
+	it('should unset globals so it can run with a new set of globals', function() {
 		var dom = new jsdom.JSDOM(domStr);
 
-		axe
+		return axe
 			.run(dom.window.document.documentElement, {
 				rules: { 'color-contrast': { enabled: false } }
 			})
 			.then(function(results) {
-				assert.equal(results.violations.length, 2);
+				assert.notEqual(results.violations.length, 0);
 
 				var dom = new jsdom.JSDOM(domStr);
 
-				axe
+				return axe
 					.run(dom.window.document.documentElement, {
 						rules: { 'color-contrast': { enabled: false } }
 					})
 					.then(function(results) {
-						assert.equal(results.violations.length, 2);
-						done();
+						assert.notEqual(results.violations.length, 0);
 					});
 			});
 	});
