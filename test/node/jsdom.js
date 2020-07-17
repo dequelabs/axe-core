@@ -16,16 +16,15 @@ var domStr =
 	'</html>';
 
 describe('jsdom axe-core', function() {
-	it('should run without setting globals', function(done) {
+	it('should run without setting globals', function() {
 		var dom = new jsdom.JSDOM(domStr);
 
-		axe
+		return axe
 			.run(dom.window.document.documentElement, {
 				rules: { 'color-contrast': { enabled: false } }
 			})
 			.then(function(results) {
-				assert.equal(results.violations.length, 2);
-				done();
+				assert.notEqual(results.violations.length, 0);
 			});
 	});
 
