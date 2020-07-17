@@ -1,32 +1,3 @@
-describe('aria.requiredOwned', function() {
-	'use strict';
-
-	var orig;
-	beforeEach(function() {
-		orig = axe.commons.aria.lookupTable.role;
-	});
-
-	afterEach(function() {
-		axe.commons.aria.lookupTable.role = orig;
-	});
-
-	it('should returned the owned property for the proper role', function() {
-		axe.commons.aria.lookupTable.role = {
-			cats: {
-				owned: 'yes'
-			}
-		};
-		assert.equal(axe.commons.aria.requiredOwned('cats'), 'yes');
-	});
-
-	it('should return null if there are no required owned nodes', function() {
-		axe.commons.aria.lookupTable.role = {};
-		var result = axe.commons.aria.requiredOwned('cats');
-
-		assert.isNull(result);
-	});
-});
-
 describe('aria.implicitNodes', function() {
 	'use strict';
 
