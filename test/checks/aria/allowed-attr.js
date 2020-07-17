@@ -8,6 +8,7 @@ describe('aria-allowed-attr', function() {
 	afterEach(function() {
 		fixture.innerHTML = '';
 		checkContext.reset();
+		axe.reset();
 	});
 
 	it('should detect incorrectly used attributes', function() {
@@ -114,15 +115,16 @@ describe('aria-allowed-attr', function() {
 
 	describe('options', function() {
 		it('should allow provided attribute names for a role', function() {
-			axe.commons.aria.lookupTable.role.mcheddarton = {
-				type: 'widget',
-				attributes: {
-					allowed: ['aria-checked']
-				},
-				owned: null,
-				nameFrom: ['author'],
-				context: null
-			};
+			axe.configure({
+				standards: {
+					ariaRoles: {
+						mcheddarton: {
+							allowedAttrs: ['aria-checked']
+						}
+					}
+				}
+			});
+
 			fixture.innerHTML =
 				'<div role="mccheddarton" id="target" aria-checked="true" aria-snuggles="true"></div>';
 			var target = fixture.children[0];
@@ -134,28 +136,22 @@ describe('aria-allowed-attr', function() {
 						mccheddarton: ['aria-checked', 'aria-snuggles']
 					})
 			);
-			delete axe.commons.aria.lookupTable.role.mccheddarton;
 		});
 
 		it('should handle multiple roles provided in options', function() {
-			axe.commons.aria.lookupTable.role.mcheddarton = {
-				type: 'widget',
-				attributes: {
-					allowed: ['aria-checked']
-				},
-				owned: null,
-				nameFrom: ['author'],
-				context: null
-			};
-			axe.commons.aria.lookupTable.role.bagley = {
-				type: 'widget',
-				attributes: {
-					allowed: ['aria-checked']
-				},
-				owned: null,
-				nameFrom: ['author'],
-				context: null
-			};
+			axe.configure({
+				standards: {
+					ariaRoles: {
+						mcheddarton: {
+							allowedAttrs: ['aria-checked']
+						},
+						bagley: {
+							allowedAttrs: ['aria-checked']
+						}
+					}
+				}
+			});
+
 			fixture.innerHTML =
 				'<div role="bagley" id="target" aria-snuggles2="true"></div>';
 			var target = fixture.children[0];
@@ -169,8 +165,6 @@ describe('aria-allowed-attr', function() {
 					.getCheckEvaluate('aria-allowed-attr')
 					.call(checkContext, target, options)
 			);
-			delete axe.commons.aria.lookupTable.role.mccheddarton;
-			delete axe.commons.aria.lookupTable.role.bagley;
 		});
 	});
 });
