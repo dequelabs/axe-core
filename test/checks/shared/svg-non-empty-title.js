@@ -77,5 +77,13 @@ describe('svg-non-empty-title tests', function() {
 
 			assert.isFalse(checkEvaluate(null, {}, serialNode));
 		});
+
+		it('returns undefined if the element has empty children', function() {
+			var serialNode = new axe.SerialVirtualNode({
+				nodeName: 'svg'
+			});
+
+			assert.isUndefined(checkEvaluate(null, {}, serialNode));
+		});
 	});
 });
