@@ -1,4 +1,4 @@
-describe.only('label', function() {
+describe('label', function() {
 	it('should not apply if input type is hidden', function() {
 		var results = axe.runVirtualRule('label', {
 			nodeName: 'input',
@@ -28,7 +28,7 @@ describe.only('label', function() {
 
 	it('should pass for aria-label', function() {
 		var results = axe.runVirtualRule('label', {
-			nodeName: 'input',
+			nodeName: 'textarea',
 			attributes: {
 				'aria-label': 'foobar'
 			}
@@ -74,79 +74,92 @@ describe.only('label', function() {
 		assert.lengthOf(results.incomplete, 0);
 	});
 
-	// it('should pass for role=presentation', function() {
-	//   var results = axe.runVirtualRule('label', {
-	//     nodeName: 'input',
-	//     attributes: {
-	//       role: 'presentation'
-	//     }
-	//   });
+	it('should incomplete for explicit label', function() {
+		var node = new axe.SerialVirtualNode({
+			nodeName: 'input',
+			attributes: {
+				id: 'foobar'
+			}
+		});
 
-	//   assert.lengthOf(results.passes, 1);
-	//   assert.lengthOf(results.violations, 0);
-	//   assert.lengthOf(results.incomplete, 0);
-	// });
+		var results = axe.runVirtualRule('label', node);
 
-	// it('should pass for role=none', function() {
-	//   var results = axe.runVirtualRule('label', {
-	//     nodeName: 'input',
-	//     attributes: {
-	//       role: 'none'
-	//     }
-	//   });
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 0);
+		assert.lengthOf(results.incomplete, 1);
+	});
 
-	//   assert.lengthOf(results.passes, 1);
-	//   assert.lengthOf(results.violations, 0);
-	//   assert.lengthOf(results.incomplete, 0);
-	// });
+	it('should pass for title', function() {
+		var results = axe.runVirtualRule('label', {
+			nodeName: 'input',
+			attributes: {
+				title: 'foobar'
+			}
+		});
 
-	// it('should fail when alt is missing', function() {
-	//   var results = axe.runVirtualRule('label', {
-	//     nodeName: 'input',
-	//     attributes: {}
-	//   });
+		assert.lengthOf(results.passes, 1);
+		assert.lengthOf(results.violations, 0);
+		assert.lengthOf(results.incomplete, 0);
+	});
 
-	//   assert.lengthOf(results.passes, 0);
-	//   assert.lengthOf(results.violations, 1);
-	//   assert.lengthOf(results.incomplete, 0);
-	// });
+	it('should incomplete for both missing aria-label and implicit label', function() {
+		var results = axe.runVirtualRule('label', {
+			nodeName: 'input',
+			attributes: {
+				'aria-label': ''
+			}
+		});
 
-	// it('should fail when alt contains only whitespace', function() {
-	//   var results = axe.runVirtualRule('label', {
-	//     nodeName: 'input',
-	//     attributes: {
-	//       alt: ' \t   \n   '
-	//     }
-	//   });
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 0);
+		assert.lengthOf(results.incomplete, 1);
+	});
 
-	//   assert.lengthOf(results.passes, 0);
-	//   assert.lengthOf(results.violations, 1);
-	//   assert.lengthOf(results.incomplete, 0);
-	// });
+	it('should fail when aria-label contains only whitespace and no implicit label', function() {
+		var node = new axe.SerialVirtualNode({
+			nodeName: 'input',
+			attributes: {
+				'aria-label': ' \t   \n   '
+			}
+		});
+		node.parent = null;
 
-	// it('should fail when aria-label is empty', function() {
-	//   var results = axe.runVirtualRule('label', {
-	//     nodeName: 'input',
-	//     attributes: {
-	//       'aria-label': ''
-	//     }
-	//   });
+		var results = axe.runVirtualRule('label', node);
 
-	//   assert.lengthOf(results.passes, 0);
-	//   assert.lengthOf(results.violations, 1);
-	//   assert.lengthOf(results.incomplete, 0);
-	// });
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 1);
+		assert.lengthOf(results.incomplete, 0);
+	});
 
-	// it('should fail when title is empty', function() {
-	//   var results = axe.runVirtualRule('label', {
-	//     nodeName: 'input',
-	//     attributes: {
-	//       title: ''
-	//     }
-	//   });
+	it('should fail when aria-label is empty and no implicit label', function() {
+		var node = new axe.SerialVirtualNode({
+			nodeName: 'input',
+			attributes: {
+				'aria-label': ''
+			}
+		});
+		node.parent = null;
 
-	//   assert.lengthOf(results.passes, 0);
-	//   assert.lengthOf(results.violations, 1);
-	//   assert.lengthOf(results.incomplete, 0);
-	// });
+		var results = axe.runVirtualRule('label', node);
+
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 1);
+		assert.lengthOf(results.incomplete, 0);
+	});
+
+	it('should fail when title is empty and no implicit label', function() {
+		var node = new axe.SerialVirtualNode({
+			nodeName: 'input',
+			attributes: {
+				title: ''
+			}
+		});
+		node.parent = null;
+
+		var results = axe.runVirtualRule('label', node);
+
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 1);
+		assert.lengthOf(results.incomplete, 0);
+	});
 });

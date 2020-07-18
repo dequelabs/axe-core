@@ -89,11 +89,24 @@ describe('hidden-explicit-label', function() {
 	});
 
 	describe('SerialVirtualNode', function() {
-		it('should return undefined', function() {
+		it('should return false if no id', function() {
 			var vNode = new axe.SerialVirtualNode({
 				nodeName: 'input',
 				attributes: {
 					type: 'text'
+				}
+			});
+			assert.isFalse(
+				axe.testUtils.getCheckEvaluate('hidden-explicit-label')(null, {}, vNode)
+			);
+		});
+
+		it('should return undefined if it has id', function() {
+			var vNode = new axe.SerialVirtualNode({
+				nodeName: 'input',
+				attributes: {
+					type: 'text',
+					id: 'foobar'
 				}
 			});
 			assert.isUndefined(

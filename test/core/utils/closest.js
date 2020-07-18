@@ -44,13 +44,24 @@ describe('utils.closest', function() {
 
 	it('should error if tree is not complete', function() {
 		var virtualNode = queryFixture('<div id="target">foo</div>');
-		virtualNode.parent = null;
+		virtualNode.parent = undefined;
 
 		function fn() {
 			closest(virtualNode, 'h1');
 		}
 
 		assert.throws(fn);
+	});
+
+	it('should not error if tree is complete', function() {
+		var virtualNode = queryFixture('<div id="target">foo</div>');
+		virtualNode.parent = null;
+
+		function fn() {
+			closest(virtualNode, 'h1');
+		}
+
+		assert.doesNotThrow(fn);
 	});
 
 	(shadowSupported ? it : xit)('should support shadow dom', function() {

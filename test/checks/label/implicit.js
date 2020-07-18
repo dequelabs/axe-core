@@ -50,7 +50,21 @@ describe('implicit-label', function() {
 	});
 
 	describe('SerialVirtualNode', function() {
-		it('should return false', function() {
+		it('should return false if no implicit label', function() {
+			var virtualNode = new axe.SerialVirtualNode({
+				nodeName: 'input',
+				attributes: {
+					type: 'text'
+				}
+			});
+			virtualNode.parent = null;
+
+			assert.isFalse(
+				axe.testUtils.getCheckEvaluate('implicit-label')(null, {}, virtualNode)
+			);
+		});
+
+		it('should return undefined if tree is not complete', function() {
 			var virtualNode = new axe.SerialVirtualNode({
 				nodeName: 'input',
 				attributes: {
@@ -58,7 +72,7 @@ describe('implicit-label', function() {
 				}
 			});
 
-			assert.isFalse(
+			assert.isUndefined(
 				axe.testUtils.getCheckEvaluate('implicit-label')(null, {}, virtualNode)
 			);
 		});

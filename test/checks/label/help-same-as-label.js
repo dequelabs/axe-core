@@ -2,7 +2,6 @@ describe('help-same-as-label', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
-	var queryFixture = axe.testUtils.queryFixture;
 
 	afterEach(function() {
 		fixture.innerHTML = '';
@@ -10,81 +9,79 @@ describe('help-same-as-label', function() {
 	});
 
 	it('should return true if an element has a label and a title with the same text', function() {
-		var vNode = queryFixture(
-			'<input id="target" type="text" title="Duplicate" aria-label="Duplicate" />'
-		);
+		var node = document.createElement('input');
+		node.type = 'text';
+		node.title = 'Duplicate';
+		node.setAttribute('aria-label', 'Duplicate');
+
+		fixture.appendChild(node);
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isTrue(
-			axe.testUtils.getCheckEvaluate('help-same-as-label')(null, {}, vNode)
+			axe.testUtils.getCheckEvaluate('help-same-as-label')(
+				node,
+				undefined,
+				axe.utils.getNodeFromTree(node)
+			)
 		);
 	});
 
 	it('should return true if an element has a label and aria-describedby with the same text', function() {
-		var vNode = queryFixture(
-			'<div id="dby">Duplicate</div><input id="target" type="text" aria-label="Duplicate" aria-describedby="dby" />'
-		);
+		var node = document.createElement('input');
+		node.type = 'text';
+		node.setAttribute('aria-label', 'Duplicate');
+		node.setAttribute('aria-describedby', 'dby');
+		var dby = document.createElement('div');
+		dby.id = 'dby';
+		dby.innerHTML = 'Duplicate';
+
+		fixture.appendChild(node);
+		fixture.appendChild(dby);
+
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isTrue(
-			axe.testUtils.getCheckEvaluate('help-same-as-label')(null, {}, vNode)
+			axe.testUtils.getCheckEvaluate('help-same-as-label')(
+				node,
+				undefined,
+				axe.utils.getNodeFromTree(node)
+			)
 		);
 	});
 
 	it('should return false if input only has a title', function() {
-		var vNode = queryFixture(
-			'<input id="target" type="text" title="Duplicate" />'
-		);
+		var node = document.createElement('input');
+		node.type = 'text';
+		node.title = 'Duplicate';
+
+		fixture.appendChild(node);
+
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
-			axe.testUtils.getCheckEvaluate('help-same-as-label')(null, {}, vNode)
+			axe.testUtils.getCheckEvaluate('help-same-as-label')(
+				node,
+				undefined,
+				axe.utils.getNodeFromTree(node)
+			)
 		);
 	});
 
 	it('should return true if an input only has aria-describedby', function() {
-		var vNode = queryFixture(
-			'<div id="dby">Duplicate</div><input id="target" type="text" aria-describedby="dby" />'
-		);
+		var node = document.createElement('input');
+		node.type = 'text';
+		node.setAttribute('aria-describedby', 'dby');
+		var dby = document.createElement('div');
+		dby.id = 'dby';
+		dby.innerHTML = 'Duplicate';
+
+		fixture.appendChild(node);
+		fixture.appendChild(dby);
+
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(
-			axe.testUtils.getCheckEvaluate('help-same-as-label')(null, {}, vNode)
+			axe.testUtils.getCheckEvaluate('help-same-as-label')(
+				node,
+				undefined,
+				axe.utils.getNodeFromTree(node)
+			)
 		);
-	});
-
-	describe('SerialVirtualNode', function() {
-		it('should return true if an element has a label and a title with the same text', function() {
-			var vNode = new axe.SerialVirtualNode({
-				nodeName: 'input',
-				attributes: {
-					type: 'text',
-					title: 'Duplicate',
-					'aria-label': 'Duplicate'
-				}
-			});
-			assert.isTrue(
-				axe.testUtils.getCheckEvaluate('help-same-as-label')(null, {}, vNode)
-			);
-		});
-
-		it('should return undefined if an aria-describedby is present', function() {
-			var node = new axe.SerialVirtualNode({
-				nodeName: 'input',
-				attributes: {
-					type: 'text',
-					'aria-describedby': 'woohoo'
-				}
-			});
-
-			assert.isUndefined(
-				axe.testUtils.getCheckEvaluate('help-same-as-label')(node)
-			);
-		});
-
-		it('should return undefined if input only has a title', function() {
-			var vNode = new axe.SerialVirtualNode({
-				nodeName: 'input',
-				attributes: {
-					type: 'text',
-					title: 'Duplicate'
-				}
-			});
-			assert.isUndefined(
-				axe.testUtils.getCheckEvaluate('help-same-as-label')(null, {}, vNode)
-			);
-		});
 	});
 });
