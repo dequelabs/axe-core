@@ -82,5 +82,13 @@ describe('svg-namespace-matches', function() {
 
 			assert.isFalse(rule.matches(null, serialNode));
 		});
+
+		it('should return false when passed an svg element without a parent', function() {
+			var serialNode = new axe.SerialVirtualNode({
+				nodeName: 'circle'
+			});
+
+			assert.isTrue(rule.matches(null, serialNode));
+		});
 	});
 });
