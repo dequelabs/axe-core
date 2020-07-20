@@ -98,7 +98,7 @@ describe('svg-img-alt', function() {
 		assert.lengthOf(results.incomplete, 1);
 	});
 
-	it('should fail when alt contains only whitespace', function() {
+	it('should fail when aria-label contains only whitespace', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'svg',
 			attributes: {
