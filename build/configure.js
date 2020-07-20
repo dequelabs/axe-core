@@ -224,6 +224,9 @@ function buildRules(grunt, options, commons, callback) {
 			function capitalize(s) {
 				return s.charAt(0).toUpperCase() + s.slice(1);
 			}
+			if (rule.impact) {
+				return capitalize(rule.impact);
+			}
 
 			function getUniqueArr(arr) {
 				return arr.filter(function(value, index, self) {
