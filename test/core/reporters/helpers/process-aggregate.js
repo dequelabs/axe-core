@@ -73,7 +73,7 @@ describe('helpers.processAggregate', function() {
 							selector: '#dopel',
 							source: '<input id="dopel"/>',
 							xpath: '/main/input[@id="dopel"]',
-							ancestry: 'html > body > main > input:nth-child(0)',
+							ancestry: 'html > body > main > input:nth-child(1)',
 							fromFrame: true
 						},
 						any: [
@@ -85,7 +85,7 @@ describe('helpers.processAggregate', function() {
 										selector: '#dopel',
 										source: '<input id="dopel"/>',
 										xpath: '/main/input[@id="dopel"]',
-										ancestry: 'html > body > main > input:nth-child(1)',
+										ancestry: 'html > body > main > input:nth-child(2)',
 										fromFrame: true
 									}
 								]
@@ -100,7 +100,7 @@ describe('helpers.processAggregate', function() {
 							selector: '#dopell',
 							source: '<input id="dopell"/>',
 							xpath: '/header/input[@id="dopell"]',
-							ancestry: 'html > body > main > input:nth-child(0)',
+							ancestry: 'html > body > main > input:nth-child(1)',
 							fromFrame: true
 						},
 						any: [
@@ -112,7 +112,7 @@ describe('helpers.processAggregate', function() {
 										selector: '#dopell',
 										source: '<input id="dopell"/>',
 										xpath: '/header/input[@id="dopell"]',
-										ancestry: 'html > body > main > input:nth-child(1)',
+										ancestry: 'html > body > main > input:nth-child(2)',
 										fromFrame: true
 									}
 								]
