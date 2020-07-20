@@ -88,130 +88,85 @@ describe('link-name', function() {
 		assert.lengthOf(results.incomplete, 0);
 	});
 
-	//   // children are required since titleText comes after subtree text
-	//   // in accessible name calculation
-	//   node.children = [];
-	//   node.parent = parent;
-	//   parent.children = [node];
+	it('should incomplete when aria-label and children are missing', function() {
+		var node = new axe.SerialVirtualNode({
+			nodeName: 'a',
+			attributes: {
+				href: '/foo.html'
+			}
+		});
 
-	//   var results = axe.runVirtualRule('link-name', node);
+		var results = axe.runVirtualRule('link-name', node);
 
-	//   assert.lengthOf(results.passes, 1);
-	//   assert.lengthOf(results.violations, 0);
-	//   assert.lengthOf(results.incomplete, 0);
-	// });
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 0);
+		assert.lengthOf(results.incomplete, 1);
+	});
 
-	// it('should pass for title element', function() {
-	//   var node = new axe.SerialVirtualNode({
-	//     nodeName: 'a',
-	//     attributes: {
-	//       role: 'img'
-	//     }
-	//   });
-	//   var title = new axe.SerialVirtualNode({
-	//     nodeName: 'title'
-	//   });
-	//   var text = new axe.SerialVirtualNode({
-	//     nodeName: '#text',
-	//     nodeType: 3,
-	//     nodeValue: 'foobar'
-	//   });
+	it('should fail when aria-label contains only whitespace', function() {
+		var node = new axe.SerialVirtualNode({
+			nodeName: 'a',
+			attributes: {
+				href: '/foo.html',
+				'aria-label': ' \t   \n   '
+			}
+		});
+		node.children = [];
 
-	//   title.children = [text];
-	//   title.parent = node;
-	//   node.children = [title];
+		var results = axe.runVirtualRule('link-name', node);
 
-	//   var results = axe.runVirtualRule('link-name', node);
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 1);
+		assert.lengthOf(results.incomplete, 0);
+	});
 
-	//   assert.lengthOf(results.passes, 1);
-	//   assert.lengthOf(results.violations, 0);
-	//   assert.lengthOf(results.incomplete, 0);
-	// });
+	it('should fail when aria-label is empty', function() {
+		var node = new axe.SerialVirtualNode({
+			nodeName: 'a',
+			attributes: {
+				href: '/foo.html',
+				'aria-label': ''
+			}
+		});
+		node.children = [];
 
-	// it('should incomplete when aria-label and children are missing', function() {
-	//   var node = new axe.SerialVirtualNode({
-	//     nodeName: 'a',
-	//     attributes: {
-	//       role: 'img'
-	//     }
-	//   });
+		var results = axe.runVirtualRule('link-name', node);
 
-	//   var results = axe.runVirtualRule('link-name', node);
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 1);
+		assert.lengthOf(results.incomplete, 0);
+	});
 
-	//   assert.lengthOf(results.passes, 0);
-	//   assert.lengthOf(results.violations, 0);
-	//   assert.lengthOf(results.incomplete, 1);
-	// });
+	it('should incomplete if anchor is still focusable and missing children', function() {
+		var node = new axe.SerialVirtualNode({
+			nodeName: 'a',
+			attributes: {
+				href: '/foo.html',
+				role: 'presentation'
+			}
+		});
 
-	// it('should fail when aria-label contains only whitespace', function() {
-	//   var node = new axe.SerialVirtualNode({
-	//     nodeName: 'a',
-	//     attributes: {
-	//       role: 'img',
-	//       'aria-label': ' \t   \n   '
-	//     }
-	//   });
-	//   node.children = [];
+		var results = axe.runVirtualRule('link-name', node);
 
-	//   var results = axe.runVirtualRule('link-name', node);
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 0);
+		assert.lengthOf(results.incomplete, 1);
+	});
 
-	//   assert.lengthOf(results.passes, 0);
-	//   assert.lengthOf(results.violations, 1);
-	//   assert.lengthOf(results.incomplete, 0);
-	// });
+	it('should fail if anchor is still focusable and no children', function() {
+		var node = new axe.SerialVirtualNode({
+			nodeName: 'a',
+			attributes: {
+				href: '/foo.html',
+				role: 'presentation'
+			}
+		});
+		node.children = [];
 
-	// it('should fail when aria-label is empty', function() {
-	//   var node = new axe.SerialVirtualNode({
-	//     nodeName: 'a',
-	//     attributes: {
-	//       role: 'img',
-	//       'aria-label': ''
-	//     }
-	//   });
-	//   node.children = [];
+		var results = axe.runVirtualRule('link-name', node);
 
-	//   var results = axe.runVirtualRule('link-name', node);
-
-	//   assert.lengthOf(results.passes, 0);
-	//   assert.lengthOf(results.violations, 1);
-	//   assert.lengthOf(results.incomplete, 0);
-	// });
-
-	// it('should fail when title is empty', function() {
-	//   var node = new axe.SerialVirtualNode({
-	//     nodeName: 'a',
-	//     attributes: {
-	//       role: 'img',
-	//       title: ''
-	//     }
-	//   });
-	//   node.children = [];
-
-	//   var results = axe.runVirtualRule('link-name', node);
-
-	//   assert.lengthOf(results.passes, 0);
-	//   assert.lengthOf(results.violations, 1);
-	//   assert.lengthOf(results.incomplete, 0);
-	// });
-
-	// it('should incomplete when title element has missing children', function() {
-	//   var node = new axe.SerialVirtualNode({
-	//     nodeName: 'a',
-	//     attributes: {
-	//       role: 'img'
-	//     }
-	//   });
-	//   var title = new axe.SerialVirtualNode({
-	//     nodeName: 'title'
-	//   });
-
-	//   title.parent = node;
-	//   node.children = [title];
-
-	//   var results = axe.runVirtualRule('link-name', node);
-
-	//   assert.lengthOf(results.passes, 0);
-	//   assert.lengthOf(results.violations, 0);
-	//   assert.lengthOf(results.incomplete, 1);
-	// });
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 1);
+		assert.lengthOf(results.incomplete, 0);
+	});
 });
