@@ -16,6 +16,7 @@ describe('table.isDataTable', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
@@ -27,6 +28,7 @@ describe('table.isDataTable', function() {
 			'</table>';
 
 		var node = fixture.querySelector('table');
+		axe.testUtils.flatTreeSetup(fixture);
 		assert.isFalse(axe.commons.table.isDataTable(node));
 	});
 
