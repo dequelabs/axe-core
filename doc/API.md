@@ -205,6 +205,7 @@ axe.configure({
     - The rules attribute is an Array of rule objects
     - each rule object can contain the following attributes
       - `id` - string(required). This uniquely identifies the rule. If the rule already exists, it will be overridden with any of the attributes supplied. The attributes below that are marked required, are only required for new rules.
+      - `impact` - string(optional). Override the impact defined by checks
       - `selector` - string(optional, default `*`). A [CSS selector](./developer-guide.md#supported-css-selectors) used to identify the elements that are passed into the rule for evaluation.
       - `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
       - `enabled` - boolean(optional, default `true`). Whether the rule is turned on. This is a common attribute for overriding.
