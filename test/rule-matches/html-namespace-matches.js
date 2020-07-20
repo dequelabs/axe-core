@@ -45,4 +45,37 @@ describe('html-namespace-matches', function() {
 		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
 		assert.isFalse(rule.matches(node, virtualNode));
 	});
+
+	describe('Serial Virtual Node', function() {
+		it('returns true when passed an HTML element', function() {
+			var serialNode = new axe.SerialVirtualNode({
+				nodeName: 'h1'
+			});
+			serialNode.parent = null;
+
+			assert.isTrue(rule.matches(null, serialNode));
+		});
+
+		it('returns true when passed a custom HTML element', function() {
+			var serialNode = new axe.SerialVirtualNode({
+				nodeName: 'xx-heading'
+			});
+			serialNode.parent = null;
+
+			assert.isTrue(rule.matches(null, serialNode));
+		});
+
+		it('returns false when passed an SVG circle element', function() {
+			var serialNode = new axe.SerialVirtualNode({
+				nodeName: 'circle'
+			});
+			var parent = new axe.SerialVirtualNode({
+				nodeName: 'svg'
+			});
+			serialNode.parent = parent;
+			parent.children = [serialNode];
+
+			assert.isFalse(rule.matches(null, serialNode));
+		});
+	});
 });

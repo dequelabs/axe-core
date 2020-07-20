@@ -159,6 +159,8 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
 
 To configure the format of the data used by axe. This can be used to add new rules, which must be registered with the library to execute.
 
+**important**: `axe.configure()` does not communicate configuration calls into iframes. Instead `axe.configure()` must be called with the same argument in each `frame` / `iframe` individually.
+
 #### Description
 
 User specifies the format of the JSON structure passed to the callback of `axe.run`
@@ -203,6 +205,7 @@ axe.configure({
     - The rules attribute is an Array of rule objects
     - each rule object can contain the following attributes
       - `id` - string(required). This uniquely identifies the rule. If the rule already exists, it will be overridden with any of the attributes supplied. The attributes below that are marked required, are only required for new rules.
+      - `impact` - string(optional). Override the impact defined by checks
       - `selector` - string(optional, default `*`). A [CSS selector](./developer-guide.md#supported-css-selectors) used to identify the elements that are passed into the rule for evaluation.
       - `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
       - `enabled` - boolean(optional, default `true`). Whether the rule is turned on. This is a common attribute for overriding.
@@ -397,6 +400,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `rules`            | n/a     | Enable or disable rules using the `enabled` property                                                                                    |
 | `reporter`         | `v1`    | Which reporter to use (see [Configuration](#api-name-axeconfigure))                                                                     |
 | `resultTypes`      | n/a     | Limit which result types are processed and aggregated                                                                                   |
+| `selector`         | `true`  | Return CSS selector for elements, optimised for readability                                                                             |
 | `ancestry`         | `false` | Return CSS selector for elements, with all the element's ancestors                                                                      |
 | `xpath`            | `false` | Return xpath selectors for elements                                                                                                     |
 | `absolutePaths`    | `false` | Use absolute paths when creating element selectors                                                                                      |
