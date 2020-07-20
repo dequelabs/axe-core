@@ -44,7 +44,21 @@ describe('no-implicit-explicit-label', function() {
 	});
 
 	describe('SerialVirtualNode', function() {
-		it('should return false', function() {
+		it('should return false if there is no parent', function() {
+			var serialNode = new axe.SerialVirtualNode({
+				nodeName: 'div',
+				attributes: {
+					role: 'combobox',
+					'aria-label': 'woohoo'
+				}
+			});
+			serialNode.parent = null;
+
+			var actual = check.evaluate.call(checkContext, null, {}, serialNode);
+			assert.isFalse(actual);
+		});
+
+		it('should return undefined if incomplete tree', function() {
 			var serialNode = new axe.SerialVirtualNode({
 				nodeName: 'div',
 				attributes: {
@@ -54,7 +68,7 @@ describe('no-implicit-explicit-label', function() {
 			});
 
 			var actual = check.evaluate.call(checkContext, null, {}, serialNode);
-			assert.isFalse(actual);
+			assert.isUndefined(actual);
 		});
 	});
 });

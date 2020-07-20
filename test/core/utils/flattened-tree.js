@@ -81,6 +81,11 @@ describe('axe.utils.getFlattenedTree', function() {
 		assert(tree[0].actualNode === document.documentElement);
 	});
 
+	it('should set `null` on the parent for the root node', function() {
+		var tree = axe.utils.getFlattenedTree();
+		assert(tree[0].parent === null);
+	});
+
 	if (shadowSupport.v0) {
 		describe('shadow DOM v0', function() {
 			afterEach(function() {

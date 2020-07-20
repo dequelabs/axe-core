@@ -1729,6 +1729,27 @@ describe('Rule', function() {
 			});
 		});
 
+		describe('.impact', function() {
+			it('should be set', function() {
+				var spec = {
+					impact: 'critical'
+				};
+				assert.equal(new Rule(spec).impact, spec.impact);
+			});
+
+			it('should have no default', function() {
+				var spec = {};
+				assert.isUndefined(new Rule(spec).impact);
+			});
+
+			it('throws if impact is invalid', function() {
+				assert.throws(function() {
+					// eslint-disable-next-line no-new
+					new Rule({ impact: 'hello' });
+				});
+			});
+		});
+
 		describe('.any', function() {
 			it('should be set', function() {
 				var spec = {

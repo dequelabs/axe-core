@@ -133,6 +133,10 @@ function createSchemas() {
 			selector: {
 				type: 'string'
 			},
+			impact: {
+				type: 'string',
+				enum: ['minor', 'moderate', 'serious', 'critical']
+			},
 			excludeHidden: {
 				type: 'boolean'
 			},

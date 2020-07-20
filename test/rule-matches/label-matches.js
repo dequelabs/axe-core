@@ -2,61 +2,46 @@ describe('label-matches', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var queryFixture = axe.testUtils.queryFixture;
 	var rule;
 
 	beforeEach(function() {
+		fixture.innerHTML = '';
 		rule = axe._audit.rules.find(function(rule) {
 			return rule.id === 'label';
 		});
 	});
 
 	it('returns true for non-input elements', function() {
-		fixture.innerHTML = '<textarea></textarea>';
-		var target = fixture.querySelector('textarea');
-
-		assert.isTrue(rule.matches(target));
+		var vNode = queryFixture('<textarea id="target"></textarea>');
+		assert.isTrue(rule.matches(null, vNode));
 	});
 
 	it('returns true for input elements without type', function() {
-		fixture.innerHTML = '<input />';
-		var target = fixture.querySelector('input');
+		var vNode = queryFixture('<input id="target" />');
 
-		assert.isTrue(rule.matches(target));
+		assert.isTrue(rule.matches(null, vNode));
 	});
 
 	it('returns false for input buttons', function() {
-		fixture.innerHTML =
-			'<input type="button" />' +
-			'<input type="submit" />' +
-			'<input type="image" />' +
-			'<input type="reset" />';
-
-		var targets = Array.from(fixture.querySelectorAll('input'));
-		targets.forEach(function(target) {
-			assert.isFalse(rule.matches(target));
+		['button', 'submit', 'image', 'reset'].forEach(function(type) {
+			var vNode = queryFixture('<input id="target" type="' + type + '" />');
+			assert.isFalse(rule.matches(null, vNode));
 		});
 	});
 
 	it('returns false for input elements type=hidden', function() {
-		fixture.innerHTML = '<input type="hidden" />';
-		var target = fixture.querySelector('input');
+		var vNode = queryFixture('<input id="target" type="hidden" />');
 
-		assert.isFalse(rule.matches(target));
+		assert.isFalse(rule.matches(null, vNode));
 	});
 
 	it('returns true for other input types', function() {
-		fixture.innerHTML =
-			'<input type="text" />' +
-			'<input type="password" />' +
-			'<input type="url" />' +
-			'<input type="range" />' +
-			'<input type="date" />' +
-			'<input type="checkbox" />' +
-			'<input type="radio" />';
-
-		var targets = Array.from(fixture.querySelectorAll('input'));
-		targets.forEach(function(target) {
-			assert.isTrue(rule.matches(target));
-		});
+		['text', 'password', 'url', 'range', 'date', 'checkbox', 'radio'].forEach(
+			function(type) {
+				var vNode = queryFixture('<input id="target" type="' + type + '" />');
+				assert.isTrue(rule.matches(null, vNode));
+			}
+		);
 	});
 });
