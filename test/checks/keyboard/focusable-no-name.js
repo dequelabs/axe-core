@@ -132,6 +132,23 @@ describe('focusable-no-name', function() {
 			);
 		});
 
+		it('should return undefined if element is tabbable with no name nor children - native', function() {
+			var serialNode = new axe.SerialVirtualNode({
+				nodeName: 'a',
+				attributes: {
+					href: '#'
+				}
+			});
+
+			assert.isUndefined(
+				axe.testUtils.getCheckEvaluate('focusable-no-name')(
+					null,
+					{},
+					serialNode
+				)
+			);
+		});
+
 		it('should pass if the element is tabbable but has an accessible name', function() {
 			var serialNode = new axe.SerialVirtualNode({
 				nodeName: 'a',
