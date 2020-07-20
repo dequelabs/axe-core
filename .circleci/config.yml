@@ -139,6 +139,16 @@ jobs:
       - <<: *restore_dependency_cache_unix
       - run: npm run test:rule-help-version
 
+  # Test node API
+  test_node:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      - run: npm run test:node
+
   # Release a "next" version
   next_release:
     <<: *defaults
@@ -208,6 +218,9 @@ workflows:
       - test_rule_help_version:
           requires:
             - test_unix
+      - test_node:
+          requires:
+            - test_unix
       # Hold for approval
       - hold:
           type: approval
@@ -218,6 +231,7 @@ workflows:
             - test_locales
             - build_api_docs
             - test_rule_help_version
+            - test_node
           filters:
             branches:
               only:
@@ -242,6 +256,7 @@ workflows:
             - test_locales
             - build_api_docs
             - test_rule_help_version
+            - test_node
             - hold
           filters:
             branches:
