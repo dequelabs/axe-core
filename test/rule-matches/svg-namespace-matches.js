@@ -87,6 +87,11 @@ describe('svg-namespace-matches', function() {
 			var serialNode = new axe.SerialVirtualNode({
 				nodeName: 'circle'
 			});
+			var parent = new axe.SerialVirtualNode({
+				nodeName: 'svg'
+			});
+			parent.children = [serialNode];
+			serialNode.parent = parent;
 
 			assert.isTrue(rule.matches(null, serialNode));
 		});

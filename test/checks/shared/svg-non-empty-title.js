@@ -60,10 +60,15 @@ describe('svg-non-empty-title tests', function() {
 				nodeName: 'svg'
 			});
 			var child = new axe.SerialVirtualNode({
-				nodeName: 'title',
+				nodeName: 'title'
+			});
+			var text = new axe.SerialVirtualNode({
+				nodeName: '#text',
+				nodeType: 3,
 				nodeValue: 'Time II: Party'
 			});
 			child.parent = serialNode;
+			child.children = [text];
 			serialNode.children = [child];
 
 			assert.isTrue(checkEvaluate(null, {}, serialNode));
