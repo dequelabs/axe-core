@@ -13,7 +13,7 @@ describe('label', function() {
 		assert.lengthOf(results.inapplicable, 1);
 	});
 
-	it('should pass for aria-label', function() {
+	it('should pass for aria-label (input)', function() {
 		var results = axe.runVirtualRule('label', {
 			nodeName: 'input',
 			attributes: {
@@ -26,7 +26,7 @@ describe('label', function() {
 		assert.lengthOf(results.incomplete, 0);
 	});
 
-	it('should pass for aria-label', function() {
+	it('should pass for aria-label (textarea)', function() {
 		var results = axe.runVirtualRule('label', {
 			nodeName: 'textarea',
 			attributes: {

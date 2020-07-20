@@ -1,12 +1,15 @@
 describe('aria-toggle-field-name', function() {
 	it('should pass for aria-label', function() {
-		var results = axe.runVirtualRule('aria-toggle-field-name', {
+		var node = new axe.SerialVirtualNode({
 			nodeName: 'div',
 			attributes: {
 				role: 'menuitemcheckbox',
 				'aria-label': 'foobar'
 			}
 		});
+		node.parent = null;
+
+		var results = axe.runVirtualRule('aria-toggle-field-name', node);
 
 		assert.lengthOf(results.passes, 1);
 		assert.lengthOf(results.violations, 0);
@@ -38,6 +41,7 @@ describe('aria-toggle-field-name', function() {
 		// children are required since titleText comes after subtree text
 		// in accessible name calculation
 		node.children = [];
+		node.parent = null;
 
 		var results = axe.runVirtualRule('aria-toggle-field-name', node);
 
@@ -59,6 +63,7 @@ describe('aria-toggle-field-name', function() {
 			nodeValue: 'foobar'
 		});
 		node.children = [child];
+		node.parent = null;
 
 		var results = axe.runVirtualRule('aria-toggle-field-name', node);
 

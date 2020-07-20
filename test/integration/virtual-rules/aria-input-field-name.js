@@ -1,12 +1,15 @@
 describe('aria-input-field-name', function() {
 	it('should pass for aria-label', function() {
-		var results = axe.runVirtualRule('aria-input-field-name', {
+		var node = new axe.SerialVirtualNode({
 			nodeName: 'div',
 			attributes: {
 				role: 'combobox',
 				'aria-label': 'foobar'
 			}
 		});
+		node.parent = null;
+
+		var results = axe.runVirtualRule('aria-input-field-name', node);
 
 		assert.lengthOf(results.passes, 1);
 		assert.lengthOf(results.violations, 0);
@@ -14,13 +17,16 @@ describe('aria-input-field-name', function() {
 	});
 
 	it('should incomplete for aria-labelledby', function() {
-		var results = axe.runVirtualRule('aria-input-field-name', {
+		var node = new axe.SerialVirtualNode({
 			nodeName: 'div',
 			attributes: {
 				role: 'listbox',
 				'aria-labelledby': 'foobar'
 			}
 		});
+		node.parent = null;
+
+		var results = axe.runVirtualRule('aria-input-field-name', node);
 
 		assert.lengthOf(results.passes, 0);
 		assert.lengthOf(results.violations, 0);
@@ -38,6 +44,7 @@ describe('aria-input-field-name', function() {
 		// children are required since titleText comes after subtree text
 		// in accessible name calculation
 		node.children = [];
+		node.parent = null;
 
 		var results = axe.runVirtualRule('aria-input-field-name', node);
 
