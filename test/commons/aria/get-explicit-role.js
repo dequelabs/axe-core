@@ -4,15 +4,6 @@ describe('aria.getExplicitRole', function() {
 	var roleDefinitions = aria.lookupTable.role;
 	var flatTreeSetup = axe.testUtils.flatTreeSetup;
 
-	var orig;
-	beforeEach(function() {
-		orig = axe.commons.aria.lookupTable.role;
-	});
-
-	afterEach(function() {
-		axe.commons.aria.lookupTable.role = orig;
-	});
-
 	it('returns valid roles', function() {
 		var node = document.createElement('div');
 		node.setAttribute('role', 'button');
