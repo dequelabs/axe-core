@@ -2,28 +2,6 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 	'use strict';
 	var flatTreeSetup = axe.testUtils.flatTreeSetup;
 
-	var originalLookupTableRole;
-	var originalLookupTableElementsAllowedNoRole;
-	var originalLookupTableElementsAllowedAnyRole;
-	var originalLookupTableEvaluateRoleForElement;
-
-	beforeEach(function() {
-		originalLookupTableRole = axe.commons.aria.lookupTable.role;
-		originalLookupTableElementsAllowedNoRole =
-			axe.commons.aria.lookupTable.elementsAllowedNoRole;
-		originalLookupTableElementsAllowedAnyRole =
-			axe.commons.aria.lookupTable.elementsAllowedAnyRole;
-		originalLookupTableEvaluateRoleForElement =
-			axe.commons.aria.lookupTable.evaluateRoleForElement;
-	});
-
-	afterEach(function() {
-		axe.commons.aria.lookupTable.role = originalLookupTableRole;
-		axe.commons.aria.lookupTable.elementsAllowedNoRole = originalLookupTableElementsAllowedNoRole;
-		axe.commons.aria.lookupTable.elementsAllowedAnyRole = originalLookupTableElementsAllowedAnyRole;
-		axe.commons.aria.lookupTable.evaluateRoleForElement = originalLookupTableEvaluateRoleForElement;
-	});
-
 	it('returns true for SECTION with role alert', function() {
 		var node = document.createElement('section');
 		var role = 'alert';
@@ -35,13 +13,6 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 	});
 
 	it('returns false for SECTION with role checkbox', function() {
-		axe.commons.aria.lookupTable.role = {
-			checkbox: {
-				type: 'widget',
-				implicit: ['input[type="checkbox"]'],
-				allowedElements: ['BUTTON']
-			}
-		};
 		var node = document.createElement('section');
 		var role = 'checkbox';
 		node.setAttribute('role', role);
@@ -133,28 +104,6 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
 	});
 
-	it('returns false for INPUT with specified type and role', function() {
-		axe.commons.aria.lookupTable.role = {
-			cats: {
-				allowedElements: [
-					{
-						nodeName: 'input',
-						attributes: {
-							value: 'dog'
-						}
-					}
-				]
-			}
-		};
-		var node = document.createElement('input');
-		var role = 'cats';
-		node.setAttribute('role', role);
-		node.setAttribute('value', 'cats');
-		flatTreeSetup(node);
-		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, role);
-		assert.isFalse(actual);
-	});
-
 	it('returns true for HEADER with role none', function() {
 		var node = document.createElement('header');
 		var role = 'none';
@@ -214,23 +163,14 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 	});
 
 	it('returns true if given element can have any role', function() {
-		axe.commons.aria.lookupTable.elementsAllowedAnyRole = ['HEADER'];
-		var node = document.createElement('header');
+		var node = document.createElement('div');
 		flatTreeSetup(node);
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'link');
 		assert.isTrue(actual);
 	});
 
-	it('returns true if given element can have any role', function() {
-		var node = document.createElement('div');
-		flatTreeSetup(node);
-		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'banner');
-		assert.isTrue(actual);
-	});
-
 	it('returns false if given element cannot have any role', function() {
-		axe.commons.aria.lookupTable.elementsAllowedNoRole = ['NAV'];
-		var node = document.createElement('nav');
+		var node = document.createElement('main');
 		flatTreeSetup(node);
 		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'alert'); // changed this
 		assert.isFalse(actual);
@@ -243,89 +183,20 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
 		assert.isFalse(actual);
 	});
 
-	it('returns false if AREA element has href', function() {
+	it('returns true if elements implicit role matches the role', function() {
 		var node = document.createElement('area');
 		node.setAttribute('href', '#yay');
+		node.setAttribute('role', 'link');
 		flatTreeSetup(node);
-		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(
-			node,
-			'presentation'
-		);
-		assert.isFalse(actual);
-	});
-
-	it('returns true if AREA element does not have href', function() {
-		var node = document.createElement('area');
-		flatTreeSetup(node);
-		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(
-			node,
-			'presentation'
-		);
+		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'link');
 		assert.isTrue(actual);
 	});
 
-	it('returns false, ensure evaluateRoleForElement in lookupTable is invoked', function() {
-		var overrideInvoked = false;
-		axe.commons.aria.lookupTable.evaluateRoleForElement = {
-			IMG: function(options) {
-				overrideInvoked = true;
-				assert.isDefined(options.node);
-				assert.equal(options.node.nodeName.toUpperCase(), 'IMG');
-				assert.isBoolean(options.out);
-				return false;
-			}
-		};
-		var node = document.createElement('img');
-		node.setAttribute('alt', '');
-		node.setAttribute('role', 'presentation');
+	it('returns false if elements implicit role does not match the role', function() {
+		var node = document.createElement('area');
+		node.setAttribute('role', 'link');
 		flatTreeSetup(node);
-		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(
-			node,
-			'presentation'
-		);
-		assert.isTrue(overrideInvoked);
-		assert.isFalse(actual);
-	});
-
-	it('returns true, ensure evaluateRoleForElement in lookupTable is invoked', function() {
-		var overrideInvoked = false;
-		axe.commons.aria.lookupTable.evaluateRoleForElement = {
-			IMG: function(options) {
-				overrideInvoked = true;
-				assert.isDefined(options.node);
-				assert.equal(options.node.nodeName.toUpperCase(), 'IMG');
-				assert.isBoolean(options.out);
-				return false;
-			}
-		};
-		var node = document.createElement('img');
-		node.setAttribute('role', 'presentation');
-		flatTreeSetup(node);
-		var presentationAllowed = axe.commons.aria.isAriaRoleAllowedOnElement(
-			node,
-			'presentation'
-		);
-		var noneAllowed = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'none');
-		assert.isFalse(overrideInvoked);
-		assert.isTrue(presentationAllowed);
-		assert.isTrue(noneAllowed);
-	});
-
-	it('returns false if element with role MENU type context', function() {
-		var overrideInvoked = false;
-		axe.commons.aria.lookupTable.evaluateRoleForElement = {
-			LI: function(options) {
-				overrideInvoked = true;
-				assert.isDefined(options.node);
-				assert.equal(options.node.nodeName.toUpperCase(), 'LI');
-				return false;
-			}
-		};
-		var node = document.createElement('li');
-		node.setAttribute('role', 'menuitem');
-		flatTreeSetup(node);
-		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'menuitem');
-		assert.isTrue(overrideInvoked);
+		var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'link');
 		assert.isFalse(actual);
 	});
 });

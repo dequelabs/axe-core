@@ -1,6 +1,19 @@
 describe('color-contrast code highlighting test', function() {
 	'use strict';
 
+	before(function(done) {
+		// wait for window load event (or if the window has already loaded) so the
+		// prism styles have loaded before running the tests (in Chrome the load
+		// even was already fired before Mocha starts the test suite)
+		if (document.readyState === 'complete') {
+			done();
+		} else {
+			window.addEventListener('load', function() {
+				done();
+			});
+		}
+	});
+
 	describe('violations', function() {
 		it('should find issues', function(done) {
 			axe.run(

@@ -262,7 +262,7 @@ module.exports = function(grunt) {
 				'test/integration/**/!(index).{html,json}',
 				'Gruntfile.js'
 			],
-			tasks: ['build', 'testconfig', 'fixture']
+			tasks: ['build', 'testconfig', 'fixture', 'notify']
 		},
 		testconfig: {
 			test: {
@@ -353,6 +353,14 @@ module.exports = function(grunt) {
 			npm_run_testHeadless: {
 				cmd: 'npm',
 				args: ['run', 'test:headless']
+			}
+		},
+		notify: {
+			data: {
+				title: 'Axe-core',
+				message: 'Build complete',
+				sound: 'Pop',
+				timeout: 2
 			}
 		}
 	});
