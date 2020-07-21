@@ -3,7 +3,7 @@
 ## Table of Contents
 
 - [How Checks Work](#how-checks-work)
-- [Options](#optoins)
+- [Options](#options)
   - [aria-allowed-role](#aria-allowed-role)
   - [aria-required-children](#aria-required-children)
   - [aria-roledescription](#aria-roledescription)
