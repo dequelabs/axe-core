@@ -3,7 +3,7 @@
 ## Table of Contents
 
 - [How Checks Work](#how-checks-work)
-- [Check Options](#check-optoins)
+- [Options](#optoins)
   - [aria-allowed-role](#aria-allowed-role)
   - [aria-required-children](#aria-required-children)
   - [aria-roledescription](#aria-roledescription)
@@ -54,7 +54,7 @@ axe.configure({
 });
 ```
 
-## Check Options
+## Options
 
 ### aria-allowed-role
 
