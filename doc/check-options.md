@@ -30,7 +30,7 @@
 
 ## How Checks Work
 
-[Rules in axe-core](../lib/rules) are made up of individual checks that dictate how the rule works. Each check is typically designed to look for a specific requirement and report back its findings to the rule.
+[Rules in axe-core](../lib/rules) are made up of one or more individual checks that dictate how the rule works. Each check is typically designed to look for a specific requirement and report back its findings to the rule.
 
 For example, the rule [image-alt](../lib/rules/image-alt.json) uses the checks `has-alt`, `aria-label`, `aria-labelledby`, and `non-empty-title` to determine if the image has an accessible name from an `alt`, `aria-label`, `aria-labelledby`, or `title` attribute (respectively).
 
