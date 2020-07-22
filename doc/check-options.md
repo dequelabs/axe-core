@@ -92,7 +92,7 @@ axe.configure({
 | `contrastRatio.large`              | N/A     | Contrast ratio requirements for large text (bold text or text larger than `largeTextPt`)       |
 | `contrastRatio.large.expected`     | `4.5`   | The expected contrast ratio for large text                                                     |
 | `contrastRatio.large.minThreshold`  | N/A     | The minimum ratio the check will apply to. Ratios less than this number will be ignored        |
-| `contratRatio.large.maxThreshold`  | N/A     | The maximum ratio the check will apply to. Ratios greater than this number will be ignored     |
+| `contrastRatio.large.maxThreshold`  | N/A     | The maximum ratio the check will apply to. Ratios greater than this number will be ignored     |
 
 ### page-has-heading-one
 
