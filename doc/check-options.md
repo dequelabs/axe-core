@@ -136,7 +136,7 @@ axe.configure({
 
 | Option               | Default | Description                                                                                                                                                               |
 | -------------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `pixelThreshold`     | `0.1`   | Percent of differences in pixel data or pixel width needed to determine if a font is a ligature font (ligature fonts are ignored when comparing the label to the content) |
+| `pixelThreshold`     | `0.1`   | Percent of difference in pixel data or pixel width required to determine if a font is a ligature font. Ligature fonts are ignored when comparing the label to the content |
 | `occuranceThreshold` | `3`     | Number of times the font is encountered before auto-assigning the font as a ligature or not                                                                               |
 
 ### has-lang
