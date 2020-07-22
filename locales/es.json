@@ -325,12 +325,21 @@
 		},
 		"aria-allowed-attr": {
 			"pass": "Los atributos ARIA se usan correctamente para el rol definido",
-			"fail": "En ARIA, atributo{{=it.data && it.data.length > 1 ? 's no están permitidos' : 'no está permitido'}} :{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "En ARIA, atributos no están permitidos : ${data.values}",
+				"plural": "En ARIA, atributono está permitido : ${data.values}"
+			}
 		},
 		"aria-allowed-role": {
 			"pass": "El rol ARIA está permitido para el elemento proporcionado",
-			"fail": "En ARIA, role{{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}} {{=it.data && it.data.length > 1 ? 'no están permitidos' : ' no está permitido'}} para el elemento proporcionado",
-			"incomplete": "En ARIA, hay que eliminar role{{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}} cuando el elemento se haga visible, ya que {{=it.data && it.data.length > 1 ? 'no están permitidos' : 'no está permitido'}} para el elemento"
+			"fail": {
+				"singular": "En ARIA, roles )}}', ')}} no están permitidos para el elemento proporcionado",
+				"plural": "En ARIA, role )}}', ')}}  no está permitido para el elemento proporcionado"
+			},
+			"incomplete": {
+				"singular": "En ARIA, hay que eliminar roles )}}', ')}} cuando el elemento se haga visible, ya que no están permitidos para el elemento",
+				"plural": "En ARIA, hay que eliminar role )}}', ')}} cuando el elemento se haga visible, ya que no está permitido para el elemento"
+			}
 		},
 		"aria-hidden-body": {
 			"pass": "No hay ningún atributo aria-hidden presente en el 'body' del documento",
@@ -338,7 +347,10 @@
 		},
 		"aria-errormessage": {
 			"pass": "Usa una técnica admitida para aria-errormessage",
-			"fail": "En aria-errormessage, valor{{=it.data && it.data.length > 1 ? 'es' : ''}} {{~it.data:value}} `{{=value}}{{~}}`, se debe usar una técnica para anunciar el mensaje (p. ej., aria-live, aria-describedby, role=alert, etc.)"
+			"fail": {
+				"singular": "En aria-errormessage, valores  ${data.values}`, se debe usar una técnica para anunciar el mensaje (p. ej., aria-live, aria-describedby, role=alert, etc.)",
+				"plural": "En aria-errormessage, valor  ${data.values}`, se debe usar una técnica para anunciar el mensaje (p. ej., aria-live, aria-describedby, role=alert, etc.)"
+			}
 		},
 		"has-widget-role": {
 			"pass": "El elemento tiene un rol de widget.",
@@ -350,45 +362,69 @@
 		},
 		"no-implicit-explicit-label": {
 			"pass": "No hay discordancia entre un <label> y el nombre accesible",
-			"incomplete": "Comprobar que el <label> no necesita ser parte del ARIA {{=it.data}} para el nombre del campo"
+			"incomplete": "Comprobar que el <label> no necesita ser parte del ARIA ${data} para el nombre del campo"
 		},
 		"aria-required-attr": {
 			"pass": "Todos los atributos ARIA requeridos están presentes",
-			"fail": "Atributo{{=it.data && it.data.length > 1 ? 's requeridos no presentes' : ' requerido no presente'}}:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "Atributos requeridos no presentes: ${data.values}",
+				"plural": "Atributo requerido no presente: ${data.values}"
+			}
 		},
 		"aria-required-children": {
 			"pass": "Los hijos ARIA requeridos están presentes",
-			"fail": "Rol de {{=it.data && it.data.length > 1 ? 'hijos' : 'hijo'}} requerido en ARIA no presente:{{~it.data:value}} {{=value}}{{~}}",
-			"incomplete": "Esperando que se añada rol ARIA para {{=it.data && it.data.length > 1 ? 'hijos' : 'hijo'}}:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "Rol de hijos requerido en ARIA no presente: ${data.values}",
+				"plural": "Rol de hijo requerido en ARIA no presente: ${data.values}"
+			},
+			"incomplete": {
+				"singular": "Esperando que se añada rol ARIA para hijos: ${data.values}",
+				"plural": "Esperando que se añada rol ARIA para hijo: ${data.values}"
+			}
 		},
 		"aria-required-parent": {
 			"pass": "Rol de padre requerido en ARIA presente",
-			"fail": "Rol de ARIA requerido para padre {{=it.data && it.data.length > 1 ? 's' : ''}} no presente:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "Rol de ARIA requerido para padre s no presente: ${data.values}",
+				"plural": "Rol de ARIA requerido para padre  no presente: ${data.values}"
+			}
 		},
 		"aria-unsupported-attr": {
 			"pass": "El atributo ARIA está admitido",
-			"fail": "El atributo ARIA no está ampliamente admitido en lectores de pantalla y tecnologías de apoyo: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "El atributo ARIA no está ampliamente admitido en lectores de pantalla y tecnologías de apoyo:  ${data.values}"
 		},
 		"unsupportedrole": {
 			"pass": "El rol ARIA está admitido",
-			"fail": "El rol usado no está ampliamente admitido en lectores de pantalla y tecnologías de apoyo: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "El rol usado no está ampliamente admitido en lectores de pantalla y tecnologías de apoyo:  ${data.values}"
 		},
 		"aria-valid-attr-value": {
 			"pass": "Los valores de los atributos ARIA son válidos",
-			"fail": "Valor{{=it.data && it.data.length > 1 ? 'es no válidos para atributo ARIA' : ' no válido para atributo ARIA'}}:{{~it.data:value}} {{=value}}{{~}}",
-			"incomplete": "Atributo{=it.data && it.data.length > 1 ? 's' : ''}} ARIA ID de elemento no existe en la página:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "Valores no válidos para atributo ARIA: ${data.values}",
+				"plural": "Valor no válido para atributo ARIA: ${data.values}"
+			},
+			"incomplete": {
+				"singular": "Atributos ARIA ID de elemento no existe en la página: ${data.values}",
+				"plural": "Atributo ARIA ID de elemento no existe en la página: ${data.values}"
+			}
 		},
 		"aria-valid-attr": {
-			"pass": "Nombre{{=it.data && it.data.length > 1 ? 's de atributos ARIA válidos' : 'de atributo ARIA válido'}}",
-			"fail": "Nombre{{=it.data && it.data.length > 1 ? 's de atributos ARIA no válidos' : ' de atributo ARIA no válido'}}: {{~it.data:value}} {{=value}}{{~}}"
+			"pass": {
+				"singular": "Nombres de atributos ARIA válidos",
+				"plural": "Nombrede atributo ARIA válido"
+			},
+			"fail": {
+				"singular": "Nombres de atributos ARIA no válidos:  ${data.values}",
+				"plural": "Nombre de atributo ARIA no válido:  ${data.values}"
+			}
 		},
 		"valid-scrollable-semantics": {
 			"pass": "El elemento tiene una semántica válida para un elemento en orden de foco.",
 			"fail": "El elemento tiene una semántica no válida para un elemento en orden de foco."
 		},
 		"color-contrast": {
-			"pass": "El elemento tiene un contraste de color suficiente de {{=it.data.contrastRatio}}",
-			"fail": "El elemento tiene un contraste de color insuficiente de {{=it.data.contrastRatio}} (color de primer plano: {{=it.data.fgColor}}, color de fondo: {{=it.data.bgColor}}, tamaño de fuente: {{=it.data.fontSize}}, grosor de fuente: {{=it.data.fontWeight}}). Ratio de contraste esperado: {{=it.data.expectedContrastRatio}}",
+			"pass": "El elemento tiene un contraste de color suficiente de ${data.contrastRatio}",
+			"fail": "El elemento tiene un contraste de color insuficiente de ${data.contrastRatio} (color de primer plano: ${data.fgColor}, color de fondo: ${data.bgColor}, tamaño de fuente: ${data.fontSize}, grosor de fuente: ${data.fontWeight}). Ratio de contraste esperado: ${data.expectedContrastRatio}",
 			"incomplete": {
 				"bgImage": "El color de fondo del elemento no se pudo determinar debido a una imagen de fondo",
 				"bgGradient": "El color de fondo del elemento no se pudo determinar debido a un degradado de fondo",
@@ -448,8 +484,8 @@
 			"fail": "El contenido que admita el foco debería tener tabindex='-1' o ser eliminado del DOM"
 		},
 		"landmark-is-top-level": {
-			"pass": "El punto de referencia {{=it.data.role }} está en el nivel superior.",
-			"fail": "El punto de referencia {{=it.data.role }} está contenido en otro punto de referencia."
+			"pass": "El punto de referencia ${data.role} está en el nivel superior.",
+			"fail": "El punto de referencia ${data.role} está contenido en otro punto de referencia."
 		},
 		"page-has-heading-one": {
 			"pass": "La página tiene al menos un encabezado de nivel 1",
@@ -567,7 +603,7 @@
 		},
 		"meta-viewport": {
 			"pass": "La etiqueta <meta> no impide el zum en dispositivos móviles",
-			"fail": "{{=it.data}} en la etiqueta <meta> impide el zum en dispositivos móviles"
+			"fail": "${data} en la etiqueta <meta> impide el zum en dispositivos móviles"
 		},
 		"header-present": {
 			"pass": "La página tiene un 'header'",
@@ -608,11 +644,11 @@
 		},
 		"duplicate-id-active": {
 			"pass": "El documento no tiene elementos activos que compartan el mismo atributo id",
-			"fail": "El documento tiene elementos activos con el mismo atributo id: {{=it.data}}"
+			"fail": "El documento tiene elementos activos con el mismo atributo id: ${data}"
 		},
 		"duplicate-id-aria": {
 			"pass": "El documento no tiene elementos referidos con ARIA o etiquetas que compartan el mismo atributo id",
-			"fail": "El documento tiene múltiples elementos referidos con ARIA con el mismo atributo id: {{=it.data}}"
+			"fail": "El documento tiene múltiples elementos referidos con ARIA con el mismo atributo id: ${data}"
 		},
 		"duplicate-id": {
 			"pass": "El documento no tiene elementos estáticos que compartan el mismo atributo id",
@@ -628,7 +664,10 @@
 		},
 		"avoid-inline-spacing": {
 			"pass": "No se han especificado estilos 'inline' con '!important' que afecten al espaciado de texto",
-			"fail": "Eliminar '!important' de inline style{{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}}, porque su anulación no está admitida en la mayoría de navegadores"
+			"fail": {
+				"singular": "Eliminar '!important' de inline styles )}}', ')}}, porque su anulación no está admitida en la mayoría de navegadores",
+				"plural": "Eliminar '!important' de inline style )}}', ')}}, porque su anulación no está admitida en la mayoría de navegadores"
+			}
 		},
 		"button-has-visible-text": {
 			"pass": "El elemento tiene texto interno visible para lectores de pantalla",
@@ -659,7 +698,10 @@
 			"fail": "El elemento no tiene atributo alt o el atributo alt está vacío"
 		},
 		"non-empty-if-present": {
-			"pass": "El elemento {{?it.data}}tiene un atributo de valor no vacío{{??}}no tiene un atributo de valor{{?}}",
+			"pass": {
+				"default": "El elemento no tiene un atributo de valor",
+				"has-label": "El elemento tiene un atributo de valor no vacío"
+			},
 			"fail": "El elemento tiene un atributo de valor y el atributo de valor está vacío"
 		},
 		"non-empty-title": {

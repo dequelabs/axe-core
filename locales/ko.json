@@ -338,7 +338,7 @@
 		},
 		"aria-errormessage": {
 			"pass": "지원되고 있는 aria-errormessage 기술을 사용하고 있습니다.",
-			"fail": "aria-errormessage 값{{~it.data:value}} {=value}{{~}}는 메시지를 공지하는 방법을 사용해야 합니다.(예를 들어, aria-live, aria-describedby,role=alert 등)"
+			"fail": "aria-errormessage 값 ${data.values}는 메시지를 공지하는 방법을 사용해야 합니다.(예를 들어, aria-live, aria-describedby,role=alert 등)"
 		},
 		"has-widget-role": {
 			"pass": "요소에 widget 역할이 ​​있습니다.",
@@ -350,7 +350,7 @@
 		},
 		"no-implicit-explicit-label": {
 			"pass": "<label>과 접근 가능한 이름이 일치하지 않습니다.",
-			"incomplete": "<label>이 ARIA {{=it.data}} 필드 이름의 일부일 필요는 없는지 확인하세요."
+			"incomplete": "<label>이 ARIA ${data} 필드 이름의 일부일 필요는 없는지 확인하세요."
 		},
 		"aria-required-attr": {
 			"description": "ARIA 역할을 가진 요소가 모든 필수 ARIA 속성을 갖도록 합니다.",
@@ -358,37 +358,37 @@
 		},
 		"aria-required-children": {
 			"pass": "필수적인 ARIA 역할이 존재합니다.",
-			"fail": "필수적인 ARIA 역할이 제공되지 않고 있습니다: {{~it.data:value}} {{=value}}{{~}}",
-			"incomplete": "ARIA의 자손 역할이 추가되어야 합니다: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "필수적인 ARIA 역할이 제공되지 않고 있습니다:  ${data.values}",
+			"incomplete": "ARIA의 자손 역할이 추가되어야 합니다:  ${data.values}"
 		},
 		"aria-required-parent": {
 			"pass": "필수적인 ARIA 역할이 존재합니다.",
-			"fail": "필수적인 ARIA 역할이 제공되지 않고 있습니다: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "필수적인 ARIA 역할이 제공되지 않고 있습니다:  ${data.values}"
 		},
 		"aria-unsupported-attr": {
 			"pass": "사용된 ARIA 속성은 지원되고 있습니다.",
-			"fail": "사용된 ARIA 속성은 스크린 리더나 보조 기술에 널리 지원되지 않고 있습니다: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "사용된 ARIA 속성은 스크린 리더나 보조 기술에 널리 지원되지 않고 있습니다:  ${data.values}"
 		},
 		"unsupportedrole": {
 			"pass": "사용된 ARIA 역할이 지원됩니다.",
-			"fail": "사용된 ARIA 속성은 스크린 리더나 보조 기술에 널리 지원되지 않고 있습니다.: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "사용된 ARIA 속성은 스크린 리더나 보조 기술에 널리 지원되지 않고 있습니다.:  ${data.values}"
 		},
 		"aria-valid-attr-value": {
 			"pass": "ARIA 속성이 유효합니다.",
-			"fail": "무효인 ARIA 속성입니다:{{~it.data:value}} {{=value}}{{~}}",
-			"incomplete": "페이지에 ARIA 속성의 요소 ID가 존재하지 않습니다:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": "무효인 ARIA 속성입니다: ${data.values}",
+			"incomplete": "페이지에 ARIA 속성의 요소 ID가 존재하지 않습니다: ${data.values}"
 		},
 		"aria-valid-attr": {
 			"pass": "ARIA 속성명이 유효합니다.",
-			"fail": "무효인 ARIA 속성명 입니다: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "무효인 ARIA 속성명 입니다:  ${data.values}"
 		},
 		"valid-scrollable-semantics": {
 			"pass": "요소는 포커스 순서에서 요소에 대한 유효한 의미를 갖습니다.",
 			"fail": "요소의 포커스 순서에서 요소에 대한 의미가 유효하지 않습니다."
 		},
 		"color-contrast": {
-			"pass": "{{=it.data.contrastRatio}} 요소의 색상 대비가 충분합니다.",
-			"fail": "{{=it.data.contrastRatio}} 요소의 색상 대비가 충분하지 않습니다. (foreground color: {{=it.data.fgColor}}, background color: {{=it.data.bgColor}}, font size: {{=it.data.fontSize}}, font weight: {{=it.data.fontWeight}}). {{=it.data.expectedContrastRatio}} 예상 대비 비율",
+			"pass": "${data.contrastRatio} 요소의 색상 대비가 충분합니다.",
+			"fail": "${data.contrastRatio} 요소의 색상 대비가 충분하지 않습니다. (foreground color: ${data.fgColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). ${data.expectedContrastRatio} 예상 대비 비율",
 			"incomplete": {
 				"bgImage": "배경 이미지로 인해 요소의 배경색을 확인할 수 없습니다.",
 				"bgGradient": "배경 그라데이션으로 인해 요소의 배경색을 결정할 수 없습니다.",
@@ -448,8 +448,8 @@
 			"fail": "포커스 가능 콘텐츠는 tabindex='-1' 이거나 DOM에서 제거 되어야 합니다."
 		},
 		"landmark-is-top-level": {
-			"pass": "{{=it.data.role }} 랜드마크가 최상위 레벨에 있습니다.",
-			"fail": "{{=it.data.role } 랜드마크는 다른 랜드마크에 포함되어 있습니다."
+			"pass": "${data.role} 랜드마크가 최상위 레벨에 있습니다.",
+			"fail": "${data.role} 랜드마크는 다른 랜드마크에 포함되어 있습니다."
 		},
 		"page-has-heading-one": {
 			"pass": "페이지에 하나 이상의 제목 레벨 1이 있습니다.",
@@ -567,7 +567,7 @@
 		},
 		"meta-viewport": {
 			"pass": "<meta> 태그는 모바일 장치에서 확대/축소를 비활성화하지 않습니다.",
-			"fail": "<meta> 태그의 {{= it.data}}는 모바일 장치에서 확대/축소를 사용하지 않습니다."
+			"fail": "<meta> 태그의 ${data}는 모바일 장치에서 확대/축소를 사용하지 않습니다."
 		},
 		"header-present": {
 			"pass": "페이지에 헤더가 있습니다.",
@@ -608,11 +608,11 @@
 		},
 		"duplicate-id-active": {
 			"pass": "문서에 같은 id 속성을 갖는 유효한 요소는 없습니다.",
-			"fail": "문서에 같은 id 속성을 갖는 유효한 요소가 있습니다: {{=it.data}}"
+			"fail": "문서에 같은 id 속성을 갖는 유효한 요소가 있습니다: ${data}"
 		},
 		"duplicate-id-aria": {
 			"pass": "문서에 ARIA로 참조된 요소나 동일한 id 속성을 공유하는 레이블이 없습니다.",
-			"fail": "동일한 id 속성을 가진 ARIA를 참조하는 여러 요소가 문서에 있습니다: {{=it.data}}"
+			"fail": "동일한 id 속성을 가진 ARIA를 참조하는 여러 요소가 문서에 있습니다: ${data}"
 		},
 		"duplicate-id": {
 			"pass": "문서에 동일한 id 속성을 공유하는 정적 요소가 없습니다.",
@@ -628,7 +628,10 @@
 		},
 		"avoid-inline-spacing": {
 			"pass": "텍스트 간격에 영향을 주는 '!important'를 가진 인라인 스타일이 지정되지 않았습니다.",
-			"fail": "인라인 스타일에서 '!important' 제거 {{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}}, 이 항목을 재정의하는 것은 대부분의 브라우저에서 지원되지 않습니다."
+			"fail": {
+				"singular": "인라인 스타일에서 '!important' 제거 s )}}', ')}}, 이 항목을 재정의하는 것은 대부분의 브라우저에서 지원되지 않습니다.",
+				"plural": "인라인 스타일에서 '!important' 제거  )}}', ')}}, 이 항목을 재정의하는 것은 대부분의 브라우저에서 지원되지 않습니다."
+			}
 		},
 		"button-has-visible-text": {
 			"pass": "요소에는 스크린 리더에 표시되는 내부 텍스트가 있습니다.",
@@ -659,7 +662,10 @@
 			"fail": "요소에 alt 속성이 존재하지 않거나, alt 속성이 비어 있습니다."
 		},
 		"non-empty-if-present": {
-			"pass": "요소 {{?it.data}} 비어 있지 않은 값 속성이 있습니다{{??}}값 속성이 없습니다{{?}}",
+			"pass": {
+				"default": "요소 값 속성이 없습니다",
+				"has-label": "요소 비어 있지 않은 값 속성이 있습니다"
+			},
 			"fail": "요소에 value 속성이 존재하고, value 속성이 비어있습니다."
 		},
 		"non-empty-title": {
