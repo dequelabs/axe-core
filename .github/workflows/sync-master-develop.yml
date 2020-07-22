@@ -11,6 +11,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           pr-title: "chore: merge master into develop"
-          pr-reviewers: straker,WilcoFiers
+          pr-reviewers: straker,WilcoFiers,stephenmathieson
           pr-labels: chore
           pr-template: .github/PULL_REQUEST_TEMPLATE.md
