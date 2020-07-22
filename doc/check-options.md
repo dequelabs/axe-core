@@ -61,7 +61,7 @@ axe.configure({
 | Option          | Default | Description                                                       |
 | --------------- | :------ | :---------------------------------------------------------------- |
 | `allowImplicit` | `true`  | Allow the explicit role to match the implicit role of the element |
-| `ignoredTags`   | `[]`    | List of HTML element names to not check for allowed roles         |
+| `ignoredTags`   | `[]`    | Do not check for allowed roles in the provided HTML elements list        |
 
 ### aria-required-children
 
