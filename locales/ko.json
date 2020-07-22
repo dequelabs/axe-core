@@ -629,8 +629,8 @@
 		"avoid-inline-spacing": {
 			"pass": "텍스트 간격에 영향을 주는 '!important'를 가진 인라인 스타일이 지정되지 않았습니다.",
 			"fail": {
-				"singular": "인라인 스타일에서 '!important' 제거 s )}}', ')}}, 이 항목을 재정의하는 것은 대부분의 브라우저에서 지원되지 않습니다.",
-				"plural": "인라인 스타일에서 '!important' 제거  )}}', ')}}, 이 항목을 재정의하는 것은 대부분의 브라우저에서 지원되지 않습니다."
+				"singular": "인라인 스타일에서 '!important' 제거 s ${data.values}, 이 항목을 재정의하는 것은 대부분의 브라우저에서 지원되지 않습니다.",
+				"plural": "인라인 스타일에서 '!important' 제거  ${data.values}, 이 항목을 재정의하는 것은 대부분의 브라우저에서 지원되지 않습니다."
 			}
 		},
 		"button-has-visible-text": {

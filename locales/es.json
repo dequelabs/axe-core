@@ -333,12 +333,12 @@
 		"aria-allowed-role": {
 			"pass": "El rol ARIA está permitido para el elemento proporcionado",
 			"fail": {
-				"singular": "En ARIA, roles )}}', ')}} no están permitidos para el elemento proporcionado",
-				"plural": "En ARIA, role )}}', ')}}  no está permitido para el elemento proporcionado"
+				"singular": "En ARIA, roles ${data.values} no están permitidos para el elemento proporcionado",
+				"plural": "En ARIA, role ${data.values}  no está permitido para el elemento proporcionado"
 			},
 			"incomplete": {
-				"singular": "En ARIA, hay que eliminar roles )}}', ')}} cuando el elemento se haga visible, ya que no están permitidos para el elemento",
-				"plural": "En ARIA, hay que eliminar role )}}', ')}} cuando el elemento se haga visible, ya que no está permitido para el elemento"
+				"singular": "En ARIA, hay que eliminar roles ${data.values} cuando el elemento se haga visible, ya que no están permitidos para el elemento",
+				"plural": "En ARIA, hay que eliminar role ${data.values} cuando el elemento se haga visible, ya que no está permitido para el elemento"
 			}
 		},
 		"aria-hidden-body": {
@@ -665,8 +665,8 @@
 		"avoid-inline-spacing": {
 			"pass": "No se han especificado estilos 'inline' con '!important' que afecten al espaciado de texto",
 			"fail": {
-				"singular": "Eliminar '!important' de inline styles )}}', ')}}, porque su anulación no está admitida en la mayoría de navegadores",
-				"plural": "Eliminar '!important' de inline style )}}', ')}}, porque su anulación no está admitida en la mayoría de navegadores"
+				"singular": "Eliminar '!important' de inline styles ${data.values}, porque su anulación no está admitida en la mayoría de navegadores",
+				"plural": "Eliminar '!important' de inline style ${data.values}, porque su anulación no está admitida en la mayoría de navegadores"
 			}
 		},
 		"button-has-visible-text": {

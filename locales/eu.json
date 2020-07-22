@@ -333,12 +333,12 @@
 		"aria-allowed-role": {
 			"pass": "ARIA rola baimenduta dago emandako elementurako",
 			"fail": {
-				"singular": "ARIAn, rolak )}}', ')}} -ak ez daude baimenduta emandako elementurako",
-				"plural": "ARIAn, rola )}}', ')}} -a ez dago baimenduta emandako elementurako"
+				"singular": "ARIAn, rolak ${data.values} -ak ez daude baimenduta emandako elementurako",
+				"plural": "ARIAn, rola ${data.values} -a ez dago baimenduta emandako elementurako"
 			},
 			"incomplete": {
-				"singular": "AREAN, rolak kendu behar dira )}}', ')}} elementua ikusgai egiten denean, zeren elementurako  ez daude baimenduta",
-				"plural": "AREAN, rola kendu behar da )}}', ')}} elementua ikusgai egiten denean, zeren elementurako  ez dago baimenduta"
+				"singular": "AREAN, rolak kendu behar dira ${data.values} elementua ikusgai egiten denean, zeren elementurako  ez daude baimenduta",
+				"plural": "AREAN, rola kendu behar da ${data.values} elementua ikusgai egiten denean, zeren elementurako  ez dago baimenduta"
 			}
 		},
 		"aria-hidden-body": {
@@ -665,8 +665,8 @@
 		"avoid-inline-spacing": {
 			"pass": "Ez da testu-tarteari eragiten dion '!important' estilorik zehaztu.",
 			"fail": {
-				"singular": "Ezabatu '!important' inline styleetatik )}}', ')}}, nabigatzaile gehienetan ez delako onartzen baliogabetzea.",
-				"plural": "Ezabatu '!important' inline styletik )}}', ')}}, nabigatzaile gehienetan ez delako onartzen baliogabetzea."
+				"singular": "Ezabatu '!important' inline styleetatik ${data.values}, nabigatzaile gehienetan ez delako onartzen baliogabetzea.",
+				"plural": "Ezabatu '!important' inline styletik ${data.values}, nabigatzaile gehienetan ez delako onartzen baliogabetzea."
 			}
 		},
 		"button-has-visible-text": {

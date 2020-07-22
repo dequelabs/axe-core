@@ -337,12 +337,12 @@
 		"aria-allowed-role": {
 			"pass": "ARIA-rollen er tilladt for det givne element",
 			"fail": {
-				"singular": "ARIA-rollerne )}}', ')}} er ikke tilladt for det givne element",
-				"plural": "ARIA-rollen )}}', ')}} er ikke tilladt for det givne element"
+				"singular": "ARIA-rollerne ${data.values} er ikke tilladt for det givne element",
+				"plural": "ARIA-rollen ${data.values} er ikke tilladt for det givne element"
 			},
 			"incomplete": {
-				"singular": "ARIA-rollerne )}}', ')}} skal være fjernet, når elementet er synligt, da de ikke er tilladt for elementet",
-				"plural": "ARIA-rollen )}}', ')}} skal være fjernet, når elementet er synligt, da det ikke er tilladt for elementet"
+				"singular": "ARIA-rollerne ${data.values} skal være fjernet, når elementet er synligt, da de ikke er tilladt for elementet",
+				"plural": "ARIA-rollen ${data.values} skal være fjernet, når elementet er synligt, da det ikke er tilladt for elementet"
 			}
 		},
 		"aria-hidden-body": {
@@ -674,8 +674,8 @@
 		"avoid-inline-spacing": {
 			"pass": "Ingen inline styling med '!important', som påvirker tekst-mellemrums-afstand er specificeret",
 			"fail": {
-				"singular": "Fjern '!important' fra inline stylings )}}', ')}}, da overskrivning af dette, ikke er understøttet i de fleste browsere",
-				"plural": "Fjern '!important' fra inline styling )}}', ')}}, da overskrivning af dette, ikke er understøttet i de fleste browsere"
+				"singular": "Fjern '!important' fra inline stylings ${data.values}, da overskrivning af dette, ikke er understøttet i de fleste browsere",
+				"plural": "Fjern '!important' fra inline styling ${data.values}, da overskrivning af dette, ikke er understøttet i de fleste browsere"
 			}
 		},
 		"button-has-visible-text": {
