@@ -161,7 +161,7 @@ axe.configure({
 
 | Option            | Default | Description                                                                   |
 | ----------------- | :------ | :---------------------------------------------------------------------------- |
-| `allowedDuration` | `3`     | Maximum time an audio is allowed to autoplay before being marked as violation |
+| `allowedDuration` | `3`     | Maximum time in seconds an audio clip may autoplay before being marked as violation |
 
 ### css-orientation-lock
 
