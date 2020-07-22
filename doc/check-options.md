@@ -206,7 +206,7 @@ axe.configure({
 
 | Option          | Default                                             | Description                                      |
 | --------------- | :-------------------------------------------------- | :----------------------------------------------- |
-| `cssProperties` | `['line-height', 'letter-spacing', 'word-spacing']` | List of CSS properties to flag as inline spacing |
+| `cssProperties` | `['line-height', 'letter-spacing', 'word-spacing']` | List of inline spacing CSS properties to flag |
 
 ### scope-value
 
