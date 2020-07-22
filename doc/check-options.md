@@ -81,7 +81,7 @@ axe.configure({
 | ---------------------------------- | :------ | :--------------------------------------------------------------------------------------------- |
 | `ignoreUnicode`                    | `true`  | If unicode characters should not be checked for contrast                                       |
 | `ignoreLength`                     | `false` | If short text content should not be checked for color contrast                                 |
-| `boldValue`                        | `700`   | The minimum CSS `font-weight` value that designates text as being bold                         |
+| `boldValue`                        | `700`   | The minimum CSS `font-weight` value that designates bold text |
 | `boldTextPt`                       | `14`    | The minimum CSS `font-size` pt value that designates bold text as being large                  |
 | `largeTextPt`                      | `18`    | The minimum CSS `font-size` pt value that designates text as being large                       |
 | `contrastRatio`                    | N/A     | Contrast ratio options                                                                         |
