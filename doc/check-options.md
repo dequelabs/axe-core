@@ -118,7 +118,7 @@ axe.configure({
 | Option              | Default                                  | Description                                                                                |
 | ------------------- | :--------------------------------------- | :----------------------------------------------------------------------------------------- |
 | `selector`          | `footer:not([role]), [role=contentinfo]` | Selector used to determine if a page has a contentinfo landmark                            |
-| `nativeScopeFilter` | `article, aside, main, nav, section`     | Selector used to ignore contentinfo landmarks that have a parent that matches the selector |
+| `nativeScopeFilter` | `article, aside, main, nav, section`     | Option values used to ignore contentinfo landmarks that have a selector matching the parent element |
 
 ### page-no-duplicate-main
 
