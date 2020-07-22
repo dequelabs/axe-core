@@ -38,7 +38,7 @@ Many checks allow you to change how they work through `options` properties. Thes
 
 For example, the check [has-lang](../lib/checks/language/has-lang.json) takes an `attributes` option which dictates which attributes to check for a lang value.
 
-To customize a checks options, you can use [`axe.configure`](./API.md#api-name-axeconfigure) to configure the check and modify the options as desired.
+To customize a check's options, you can use [`axe.configure`](./API.md#api-name-axeconfigure) to configure the check and modify the options as desired.
 
 ```js
 // configure has-lang check to look at the `hreflang` attribute as well
