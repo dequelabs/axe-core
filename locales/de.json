@@ -257,7 +257,7 @@
 		},
 		"aria-allowed-attr": {
 			"pass": "",
-			"fail": "Die folgenden ARIA-Attribute sind (für die ARIA-Rolle des Elementes) nicht erlaubt:{{~it.data:value}} {{=value}}{{~}}."
+			"fail": "Die folgenden ARIA-Attribute sind (für die ARIA-Rolle des Elementes) nicht erlaubt: ${data.values}."
 		},
 		"aria-hidden-body": {
 			"pass": "",
@@ -265,7 +265,7 @@
 		},
 		"aria-errormessage": {
 			"pass": "",
-			"fail": "Der Wert der aria-errormessage {{~it.data:value}} `{{=value}}{{~}}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.)."
+			"fail": "Der Wert der aria-errormessage  ${data.values}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.)."
 		},
 		"has-widget-role": {
 			"pass": "",
@@ -277,23 +277,23 @@
 		},
 		"aria-required-attr": {
 			"pass": "",
-			"fail": "Die folgenden erforderlichen ARIA-Attribute sind nicht vorhanden:{{~it.data:value}} {{=value}}{{~}}."
+			"fail": "Die folgenden erforderlichen ARIA-Attribute sind nicht vorhanden: ${data.values}."
 		},
 		"aria-required-children": {
 			"pass": "",
-			"fail": "Die folgenden erforderlichen untergeordneten ARIA-Rollen (ARIA-Kind-Rollen) sind nicht vorhanden:{{~it.data:value}} {{=value}}{{~}}."
+			"fail": "Die folgenden erforderlichen untergeordneten ARIA-Rollen (ARIA-Kind-Rollen) sind nicht vorhanden: ${data.values}."
 		},
 		"aria-required-parent": {
 			"pass": "",
-			"fail": "Die folgenden erforderlichen übergeordneten ARIA-Rollen (ARIA-Eltern-Rollen) sind nicht vorhanden:{{~it.data:value}} {{=value}}{{~}}."
+			"fail": "Die folgenden erforderlichen übergeordneten ARIA-Rollen (ARIA-Eltern-Rollen) sind nicht vorhanden: ${data.values}."
 		},
 		"aria-valid-attr-value": {
 			"pass": "",
-			"fail": "Folgende ARIA-Attributwerte sind nicht valide:{{~it.data:value}} {{=value}}{{~}}."
+			"fail": "Folgende ARIA-Attributwerte sind nicht valide: ${data.values}."
 		},
 		"aria-valid-attr": {
 			"pass": "",
-			"fail": "Folgende ARIA-Attributnamen sind nicht valide:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": "Folgende ARIA-Attributnamen sind nicht valide: ${data.values}"
 		},
 		"valid-scrollable-semantics": {
 			"pass": "",
@@ -301,7 +301,7 @@
 		},
 		"color-contrast": {
 			"pass": "",
-			"fail": "Das Element hat einen unzureichenden Kontrast von {{=it.data.contrastRatio}} (Vordergrundfarbe: {{=it.data.fgColor}}, Hintergrundfarbe: {{=it.data.bgColor}}, Schriftgröße: {{=it.data.fontSize}}, Schriftstärke: {{=it.data.fontWeight}}).",
+			"fail": "Das Element hat einen unzureichenden Kontrast von ${data.contrastRatio} (Vordergrundfarbe: ${data.fgColor}, Hintergrundfarbe: ${data.bgColor}, Schriftgröße: ${data.fontSize}, Schriftstärke: ${data.fontWeight}).",
 			"incomplete": {
 				"bgImage": "Die Hintergrundfarbe des Elementes konnte aufgrund eines Hintergrundbildes nicht bestimmt werden.",
 				"bgGradient": "Die Hintergrundfarbe des Elementes konnte aufgrund eines Hintergrundfarbverlaufes nicht bestimmt werden.",
@@ -335,7 +335,7 @@
 		},
 		"landmark-is-top-level": {
 			"pass": "",
-			"fail": "Die {{=it.data.role }} landmark befindet sich innerhalb einer anderen landmark."
+			"fail": "Die ${data.role} landmark befindet sich innerhalb einer anderen landmark."
 		},
 		"page-has-heading-one": {
 			"pass": "",
@@ -485,7 +485,7 @@
 		},
 		"duplicate-id": {
 			"pass": "",
-			"fail": "Das Dokument besitzt mehrere Elemente mit demselben id-Attributwert: {{=it.data}}."
+			"fail": "Das Dokument besitzt mehrere Elemente mit demselben id-Attributwert: ${data}."
 		},
 		"exists": {
 			"pass": "",
