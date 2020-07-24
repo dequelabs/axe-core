@@ -6,6 +6,19 @@ For example, the `aria-valid-attr` rule uses the [`ariaAttrs`](../lib/standards/
 
 To configure how axe-core validates ARIA information, you'll most likely configure the standards object to your needs. Below is a list of each object, their structure, and which rules will use that information
 
+```js
+axe.configure({
+	standards: {
+		ariaAttrs: {
+			'aria-relevant': {
+				// make the aria-relevant attribute global
+				global: true
+			}
+		}
+	}
+});
+```
+
 ## Table of Contents
 
 1.  [ARIA Attrs](#aria-attrs)
