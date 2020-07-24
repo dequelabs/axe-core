@@ -319,9 +319,31 @@ h6:not([role]),
 
 ### p-as-heading
 
-| Option    | Default                                                                                                                                    | Description                                                                                                                    |
-| --------- | :----------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
-| `margins` | <pre lang=js>[{ "weight": 150, "italic": true }, { "weight": 150, "size": 1.15 }, { "italic": true, "size": 1.15 }, { "size": 1.4 }]</pre> | Common CSS values used to display `p` elements as `h1-h6` elements determining if a `p` element is being improperly repurposed |
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th align="left">Default</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>margins</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>[
+  { "weight": 150, "italic": true }, 
+  { "weight": 150, "size": 1.15 }, 
+  { "italic": true, "size": 1.15 }, 
+  { "size": 1.4 }
+]</code></pre>
+        </td>
+      <td align="left">Common CSS values used to display `p` elements as `h1-h6` elements determining if a `p` element is being improperly repurposed</td>
+    </tr>
+  </tbody>
+</table>
 
 ### avoid-inline-spacing
 
