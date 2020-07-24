@@ -27,7 +27,7 @@ const main = async url => {
 		// Inject and run axe-core
 		const handle = await page.evaluateHandle(`
 			// Inject axe source code
-			${axeCore.source}
+			var axe = ${axeCore.source}
 			// Run axe
 			axe.run()
 		`);
