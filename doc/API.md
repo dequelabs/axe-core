@@ -216,7 +216,7 @@ axe.configure({
       - `none` - array(optional, default `[]`). This is a list of checks that, if any "pass", will generate a violation.
       - `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. See [axe-core tags](#axe-core-tags).
       - `matches` - string(optional). The ID of the filtering function that will exclude elements that match the `selector` property. See the [`metadata-function-map`](../lib/core/base/metadata-function-map.js) file for all defined IDs.
-  - `standards` - Used to configure the standards object. See the [Standards Object docs](./standards-object.md) for the structure of each standards object.
+  - `standards` - object(optional). Used to configure the standards object. See the [Standards Object docs](./standards-object.md) for the structure of each standards object.
   - `disableOtherRules` - Disables all rules not included in the `rules` property.
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
   - `axeVersion` - Set the compatible version of a custom rule with the current axe version. Compatible versions are all patch and minor updates that are the same as, or newer than those of the `axeVersion` property.
