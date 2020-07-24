@@ -65,21 +65,36 @@ axe.configure({
 
 ### aria-required-children
 
-| Option        | Default              | Description |
-| ------------- | :------------------- | :---------- |
-| `reviewEmpty` | <pre lang=js><code>[ |
-
-'doc-bibliography',
-'doc-endnotes',
-'grid',
-'list',
-'listbox',
-'table',
-'tablist',
-'tree',
-'treegrid',
-'rowgroup'
-]</code></pre> | List of ARIA roles that should be flagged as "Needs Review" rather than a violation if the element has no owned children |
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th align="left">Default</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>reviewEmpty</code>
+      </td>
+      <td align="left">
+        <pre lang=css><code>[
+  'doc-bibliography',
+  'doc-endnotes',
+  'grid',
+  'list',
+  'listbox',
+  'table',
+  'tablist',
+  'tree',
+  'treegrid',
+  'rowgroup']</code></pre>
+        </td>
+      <td align="left">List of ARIA roles that should be flagged as "Needs Review" rather than a violation if the element has no owned children</td>
+    </tr>
+  </tbody>
+</table>
 
 ### aria-roledescription
 
