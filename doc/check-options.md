@@ -65,9 +65,21 @@ axe.configure({
 
 ### aria-required-children
 
-| Option        | Default                                                                                                                                                                                        | Description                                                                                                              |
-| ------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
-| `reviewEmpty` | <pre lang=js>[<br/> 'doc-bibliography',<br/> 'doc-endnotes',<br/> 'grid',<br/> 'list',<br/> 'listbox',<br/> 'table',<br/> 'tablist',<br/> 'tree',<br/> 'treegrid',<br/> 'rowgroup'<br/>]</pre> | List of ARIA roles that should be flagged as "Needs Review" rather than a violation if the element has no owned children |
+| Option        | Default              | Description |
+| ------------- | :------------------- | :---------- |
+| `reviewEmpty` | <pre lang=js><code>[ |
+
+'doc-bibliography',
+'doc-endnotes',
+'grid',
+'list',
+'listbox',
+'table',
+'tablist',
+'tree',
+'treegrid',
+'rowgroup'
+]</code></pre> | List of ARIA roles that should be flagged as "Needs Review" rather than a violation if the element has no owned children |
 
 ### aria-roledescription
 
@@ -128,9 +140,9 @@ axe.configure({
 
 ### duplicate-img-label
 
-| Option           | Default                                                            | Description                                                                 |
-| ---------------- | :----------------------------------------------------------------- | :-------------------------------------------------------------------------- |
-| `parentSelector` | <<pre lang=css>button, [role=button], a[href], p, li, td, th</pre> | Selector used to look at an image parent that may duplicate the image label |
+| Option           | Default                                                           | Description                                                                 |
+| ---------------- | :---------------------------------------------------------------- | :-------------------------------------------------------------------------- |
+| `parentSelector` | <pre lang=css>button, [role=button], a[href], p, li, td, th</pre> | Selector used to look at an image parent that may duplicate the image label |
 
 ### label-content-name-mismatch
 
