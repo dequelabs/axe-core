@@ -180,7 +180,7 @@ axe.configure({
 
 | Option         | Default | Description                                                                                                |
 | -------------- | :------ | :--------------------------------------------------------------------------------------------------------- |
-| `scaleMinimum` | `2`     | The maximum CSS value of `scale-maximum` the check will apply to. Values above this number will be ignored |
+| `scaleMinimum` | `2`     | The `scale-maximum` CSS value the check applies to. Values above this number will be ignored |
 
 ### header-present
 
