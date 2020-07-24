@@ -130,22 +130,22 @@ axe.configure({
 
 ### color-contrast
 
-| Option                                                      | Default | Description                                                                                    |
-| ----------------------------------------------------------- | :------ | :--------------------------------------------------------------------------------------------- |
-| `ignoreUnicode`                                             | `true`  | Do not check the color contrast of Unicode characters                                          |
-| `ignoreLength`                                              | `false` | Do not check the color contrast of short text content                                          |
-| `boldValue`                                                 | `700`   | The minimum CSS `font-weight` value that designates bold text                                  |
-| `boldTextPt`                                                | `14`    | The minimum CSS `font-size` pt value that designates bold text as being large                  |
-| `largeTextPt`                                               | `18`    | The minimum CSS `font-size` pt value that designates text as being large                       |
-| `contrastRatio`                                             | N/A     | Contrast ratio options                                                                         |
-| &nbsp;&nbsp;`contrastRatio.normal`                          | N/A     | Contrast ratio requirements for normal text (non-bold text or text smaller than `largeTextPt`) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.expected`     | `4.5`   | The expected contrast ratio for normal text                                                    |
-| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.minThreshold` | N/A     | The minimum ratio the check will apply to. Ratios less than this number will be ignored        |
-| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.maxThreshold` | N/A     | The maximum ratio the check will apply to. Ratios greater than this number will be ignored     |
-| &nbsp;&nbsp;`contrastRatio.large`                           | N/A     | Contrast ratio requirements for large text (bold text or text larger than `largeTextPt`)       |
-| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.large.expected`      | `4.5`   | The expected contrast ratio for large text                                                     |
-| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.large.minThreshold`  | N/A     | The minimum ratio the check will apply to. Ratios less than this number will be ignored        |
-| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.large.maxThreshold`  | N/A     | The maximum ratio the check will apply to. Ratios greater than this number will be ignored     |
+| Option                                                      | Default | Description                                                                                                 |
+| ----------------------------------------------------------- | :------ | :---------------------------------------------------------------------------------------------------------- |
+| `ignoreUnicode`                                             | `true`  | Do not check the color contrast of Unicode characters                                                       |
+| `ignoreLength`                                              | `false` | Do not check the color contrast of short text content                                                       |
+| `boldValue`                                                 | `700`   | The minimum CSS `font-weight` value that designates bold text                                               |
+| `boldTextPt`                                                | `14`    | The minimum CSS `font-size` pt value that designates bold text as being large                               |
+| `largeTextPt`                                               | `18`    | The minimum CSS `font-size` pt value that designates text as being large                                    |
+| `contrastRatio`                                             | N/A     | Contrast ratio options                                                                                      |
+| &nbsp;&nbsp;`contrastRatio.normal`                          | N/A     | Contrast ratio requirements for normal text (non-bold text or text smaller than `largeTextPt`)              |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.expected`     | `4.5`   | The expected contrast ratio for normal text                                                                 |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.minThreshold` | N/A     | The minimum contrast ratio the check will apply to. Contrast ratios less than this value will be ignored    |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.maxThreshold` | N/A     | The maximum contrast ratio the check will apply to. Contrast ratios greater than this value will be ignored |
+| &nbsp;&nbsp;`contrastRatio.large`                           | N/A     | Contrast ratio requirements for large text (bold text or text larger than `largeTextPt`)                    |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.large.expected`      | `4.5`   | The expected contrast contrast ratio for large text                                                         |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.large.minThreshold`  | N/A     | The minimum contrast ratio the check will apply to. Contrast ratios less than this value will be ignored    |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.large.maxThreshold`  | N/A     | The maximum contrast ratio the check will apply to. Contrast ratios greater than this value will be ignored |
 
 ### page-has-heading-one
 
