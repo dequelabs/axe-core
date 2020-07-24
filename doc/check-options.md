@@ -61,13 +61,13 @@ axe.configure({
 | Option          | Default | Description                                                       |
 | --------------- | :------ | :---------------------------------------------------------------- |
 | `allowImplicit` | `true`  | Allow the explicit role to match the implicit role of the element |
-| `ignoredTags`   | `[]`    | Do not check for allowed roles in the provided HTML elements list        |
+| `ignoredTags`   | `[]`    | Do not check for allowed roles in the provided HTML elements list |
 
 ### aria-required-children
 
-| Option        | Default                                                                                                               | Description                                                                                                            |
-| ------------- | :-------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
-| `reviewEmpty` | `['doc-bibliography', 'doc-endnotes', 'grid', 'list', 'listbox', 'table', 'tablist', 'tree', 'treegrid', 'rowgroup']` | List of ARIA roles that should be flagged as Needs Review rather than a violation if the element has no owned children |
+| Option        | Default                                                                                                               | Description                                                                                                              |
+| ------------- | :-------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
+| `reviewEmpty` | `['doc-bibliography', 'doc-endnotes', 'grid', 'list', 'listbox', 'table', 'tablist', 'tree', 'treegrid', 'rowgroup']` | List of ARIA roles that should be flagged as "Needs Review" rather than a violation if the element has no owned children |
 
 ### aria-roledescription
 
@@ -77,60 +77,60 @@ axe.configure({
 
 ### color-contrast
 
-| Option                             | Default | Description                                                                                    |
-| ---------------------------------- | :------ | :--------------------------------------------------------------------------------------------- |
-| `ignoreUnicode`                    | `true`  | If unicode characters should not be checked for contrast                                       |
-| `ignoreLength`                     | `false` | If short text content should not be checked for color contrast                                 |
-| `boldValue`                        | `700`   | The minimum CSS `font-weight` value that designates bold text |
-| `boldTextPt`                       | `14`    | The minimum CSS `font-size` pt value that designates bold text as being large                  |
-| `largeTextPt`                      | `18`    | The minimum CSS `font-size` pt value that designates text as being large                       |
-| `contrastRatio`                    | N/A     | Contrast ratio options                                                                         |
-| `contrastRatio.normal`             | N/A     | Contrast ratio requirements for normal text (non-bold text or text smaller than `largeTextPt`) |
-| `contrastRatio.normal.expected`    | `4.5`   | The expected contrast ratio for normal text                                                    |
+| Option                              | Default | Description                                                                                    |
+| ----------------------------------- | :------ | :--------------------------------------------------------------------------------------------- |
+| `ignoreUnicode`                     | `true`  | Do not check the color contrast of Unicode characters                                          |
+| `ignoreLength`                      | `false` | Do not check the color contrast of short text content                                          |
+| `boldValue`                         | `700`   | The minimum CSS `font-weight` value that designates bold text                                  |
+| `boldTextPt`                        | `14`    | The minimum CSS `font-size` pt value that designates bold text as being large                  |
+| `largeTextPt`                       | `18`    | The minimum CSS `font-size` pt value that designates text as being large                       |
+| `contrastRatio`                     | N/A     | Contrast ratio options                                                                         |
+| `contrastRatio.normal`              | N/A     | Contrast ratio requirements for normal text (non-bold text or text smaller than `largeTextPt`) |
+| `contrastRatio.normal.expected`     | `4.5`   | The expected contrast ratio for normal text                                                    |
 | `contrastRatio.normal.minThreshold` | N/A     | The minimum ratio the check will apply to. Ratios less than this number will be ignored        |
 | `contrastRatio.normal.maxThreshold` | N/A     | The maximum ratio the check will apply to. Ratios greater than this number will be ignored     |
-| `contrastRatio.large`              | N/A     | Contrast ratio requirements for large text (bold text or text larger than `largeTextPt`)       |
-| `contrastRatio.large.expected`     | `4.5`   | The expected contrast ratio for large text                                                     |
+| `contrastRatio.large`               | N/A     | Contrast ratio requirements for large text (bold text or text larger than `largeTextPt`)       |
+| `contrastRatio.large.expected`      | `4.5`   | The expected contrast ratio for large text                                                     |
 | `contrastRatio.large.minThreshold`  | N/A     | The minimum ratio the check will apply to. Ratios less than this number will be ignored        |
 | `contrastRatio.large.maxThreshold`  | N/A     | The maximum ratio the check will apply to. Ratios greater than this number will be ignored     |
 
 ### page-has-heading-one
 
-| Option     | Default                                                                                                                                                                                                                                              | Description                                                  |
-| ---------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------- |
-| `selector` | `h1:not([role]):not([aria-level]), h1:not([role])[aria-level=1], h2:not([role])[aria-level=1], h3:not([role])[aria-level=1], h4:not([role])[aria-level=1], h5:not([role])[aria-level=1], h6:not([role])[aria-level=1], [role=heading][aria-level=1]` | Selector used to determine if a page has a level one heading |
+| Option     | Default                                                                                                                                                                                                                                                                | Description                                                  |
+| ---------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------- |
+| `selector` | <pre lang=css>h1:not([role]):not([aria-level]), h1:not([role])[aria-level=1], h2:not([role])[aria-level=1], h3:not([role])[aria-level=1], h4:not([role])[aria-level=1], h5:not([role])[aria-level=1], h6:not([role])[aria-level=1], [role=heading][aria-level=1]</pre> | Selector used to determine if a page has a level one heading |
 
 ### page-has-main
 
-| Option     | Default                           | Description                                              |
-| ---------- | :-------------------------------- | :------------------------------------------------------- |
-| `selector` | `main:not([role]), [role='main']` | Selector used to determine if a page has a main landmark |
+| Option     | Default                           | Description                                                |
+| ---------- | :-------------------------------- | :--------------------------------------------------------- |
+| `selector` | `main:not([role]), [role='main']` | Selector used to determine if a page has a `main` landmark |
 
 ### page-no-duplicate-banner
 
-| Option              | Default                              | Description                                                                           |
-| ------------------- | :----------------------------------- | :------------------------------------------------------------------------------------ |
-| `selector`          | `header:not([role]), [role=banner]`  | Selector used to determine if a page has a banner landmark                            |
-| `nativeScopeFilter` | `article, aside, main, nav, section` | Selector used to ignore banner landmarks that have a parent that matches the selector |
+| Option              | Default                              | Description                                                                             |
+| ------------------- | :----------------------------------- | :-------------------------------------------------------------------------------------- |
+| `selector`          | `header:not([role]), [role=banner]`  | Selector used to determine if a page has a `banner` landmark                            |
+| `nativeScopeFilter` | `article, aside, main, nav, section` | Selector used to ignore `banner` landmarks that have a parent that matches the selector |
 
 ### page-no-duplicate-contentinfo
 
-| Option              | Default                                  | Description                                                                                |
-| ------------------- | :--------------------------------------- | :----------------------------------------------------------------------------------------- |
-| `selector`          | `footer:not([role]), [role=contentinfo]` | Selector used to determine if a page has a contentinfo landmark                            |
-| `nativeScopeFilter` | `article, aside, main, nav, section`     | Option values used to ignore contentinfo landmarks that have a selector matching the parent element |
+| Option              | Default                                  | Description                                                                                           |
+| ------------------- | :--------------------------------------- | :---------------------------------------------------------------------------------------------------- |
+| `selector`          | `footer:not([role]), [role=contentinfo]` | Selector used to determine if a page has a `contentinfo` landmark                                     |
+| `nativeScopeFilter` | `article, aside, main, nav, section`     | Option values used to ignore `contentinfo` landmarks that have a selector matching the parent element |
 
 ### page-no-duplicate-main
 
-| Option     | Default                           | Description                                              |
-| ---------- | :-------------------------------- | :------------------------------------------------------- |
-| `selector` | `main:not([role]), [role='main']` | Selector used to determine if a page has a main landmark |
+| Option     | Default                           | Description                                                |
+| ---------- | :-------------------------------- | :--------------------------------------------------------- |
+| `selector` | `main:not([role]), [role='main']` | Selector used to determine if a page has a `main` landmark |
 
 ### duplicate-img-label
 
-| Option           | Default                                         | Description                                                                           |
-| ---------------- | :---------------------------------------------- | :------------------------------------------------------------------------------------ |
-| `parentSelector` | `button, [role=button], a[href], p, li, td, th` | Selector used to look for the parent of an image that could duplicate the image label |
+| Option           | Default                                         | Description                                                                 |
+| ---------------- | :---------------------------------------------- | :-------------------------------------------------------------------------- |
+| `parentSelector` | `button, [role=button], a[href], p, li, td, th` | Selector used to look at an image parent that may duplicate the image label |
 
 ### label-content-name-mismatch
 
@@ -153,40 +153,40 @@ axe.configure({
 
 ### frame-tested
 
-| Option        | Default | Description                                                |
-| ------------- | :------ | :--------------------------------------------------------- |
-| `isViolation` | `false` | If an iframe without axe should be reported as a violation |
+| Option        | Default | Description                                                                               |
+| ------------- | :------ | :---------------------------------------------------------------------------------------- |
+| `isViolation` | `false` | If an `iframe` that has not been injected with axe-core should be reported as a violation |
 
 ### no-autoplay-audio
 
-| Option            | Default | Description                                                                   |
-| ----------------- | :------ | :---------------------------------------------------------------------------- |
+| Option            | Default | Description                                                                         |
+| ----------------- | :------ | :---------------------------------------------------------------------------------- |
 | `allowedDuration` | `3`     | Maximum time in seconds an audio clip may autoplay before being marked as violation |
 
 ### css-orientation-lock
 
-| Option            | Default | Description                                                                                                                            |
-| ----------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------- |
-| `degreeThreshold` | `3`     | The difference of degrees from 180 and 90 that are considered orientation lock (for example, 93° is orientation locked but 94° is not) |
+| Option            | Default | Description                                                                                                                                                             |
+| ----------------- | :------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `degreeThreshold` | `3`     | The difference of degrees from 180 and 90 that are considered locked to a specific display orientation (for example, 93° rotated is not considered locked while 94° is) |
 
 ### meta-viewport-large
 
-| Option         | Default | Description                                                                                                |
-| -------------- | :------ | :--------------------------------------------------------------------------------------------------------- |
+| Option         | Default | Description                                                                                     |
+| -------------- | :------ | :---------------------------------------------------------------------------------------------- |
 | `scaleMinimum` | `5`     | The `scale-maximum` CSS value of the check applies to. Values above this number will be ignored |
-| `lowerBound`   | `2`     | The `scale-minimum` CSS value the check applies to. Values below this number will be ignored |
+| `lowerBound`   | `2`     | The `scale-minimum` CSS value the check applies to. Values below this number will be ignored    |
 
 ### meta-viewport
 
-| Option         | Default | Description                                                                                                |
-| -------------- | :------ | :--------------------------------------------------------------------------------------------------------- |
+| Option         | Default | Description                                                                                  |
+| -------------- | :------ | :------------------------------------------------------------------------------------------- |
 | `scaleMinimum` | `2`     | The `scale-maximum` CSS value the check applies to. Values above this number will be ignored |
 
 ### header-present
 
-| Option     | Default                                                                                                          | Description                                        |
-| ---------- | :--------------------------------------------------------------------------------------------------------------- | :------------------------------------------------- |
-| `selector` | `h1:not([role]), h2:not([role]), h3:not([role]), h4:not([role]), h5:not([role]), h6:not([role]), [role=heading]` | Selector used to determine if a page has a heading |
+| Option     | Default                                                                                                                            | Description                                        |
+| ---------- | :--------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------- |
+| `selector` | <pre lang=css>h1:not([role]), h2:not([role]), h3:not([role]), h4:not([role]), h5:not([role]), h6:not([role]), [role=heading]</pre> | Selector used to determine if a page has a heading |
 
 ### landmark
 
@@ -196,16 +196,14 @@ axe.configure({
 
 ### p-as-heading
 
-| Option | Default | Description |
-| ------ | :------ | :---------- |
-
-
-???
+| Option    | Default                                                                                                                   | Description                                                                                                                    |
+| --------- | :------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------------------------------------------------------------------------- |
+| `margins` | `[{ "weight": 150, "italic": true }, { "weight": 150, "size": 1.15 }, { "italic": true, "size": 1.15 }, { "size": 1.4 }]` | Common CSS values used to display `p` elements as `h1-h6` elements determining if a `p` element is being improperly repurposed |
 
 ### avoid-inline-spacing
 
-| Option          | Default                                             | Description                                      |
-| --------------- | :-------------------------------------------------- | :----------------------------------------------- |
+| Option          | Default                                             | Description                                   |
+| --------------- | :-------------------------------------------------- | :-------------------------------------------- |
 | `cssProperties` | `['line-height', 'letter-spacing', 'word-spacing']` | List of inline spacing CSS properties to flag |
 
 ### scope-value
