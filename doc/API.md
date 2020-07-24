@@ -176,7 +176,7 @@ axe.configure({
 	reporter: 'option',
 	checks: [Object],
 	rules: [Object],
-	standards: [Object],
+	standards: Object,
 	locale: Object,
 	axeVersion: String
 });
