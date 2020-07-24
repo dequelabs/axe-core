@@ -41,7 +41,7 @@ The [`ariaAttrs`](../lib/standards/aria-attrs.js) object defines valid ARIA attr
 
 - `type` - string(required). The attribute type which dictates the valid values of the attribute. Valid types are:
   - `boolean` - Boolean attributes only accept `true` or `false` as valid values (e.g. `aria-selected`).
-  - `nmtoken` - Name token attributes accept a single value from a list of valid values (e.g. `aria-orientation`.
+  - `nmtoken` - Name token attributes accept a single value from a list of valid values (e.g. `aria-orientation`).
   - `mntokens` - Name tokens attributes accept a space separated list of values from a list of valid values (e.g. `aria-relevant`).
   - `idref` - ID reference attributes accept an ID to point to another element in the DOM (e.g. `aria-activedescendant`).
   - `idrefs` - ID references attributes accept a space separated list of IDs that point to multiple elements in the DOM (e.g. `aria-labelledby`).
