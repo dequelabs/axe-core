@@ -11,11 +11,7 @@ describe('UMD define', function() {
 		assert.isFunction(call[2]);
 
 		var axe = call[2]();
-
-		// test some public apis
-		assert.typeOf(axe.run, 'function');
-		assert.typeOf(axe.configure, 'function');
-		assert.typeOf(axe.reset, 'function');
+		assert.hasAnyKeys(axe, ['utils', 'commons', 'core']);
 	});
 
 	it('defines module name as axe-core', function() {
