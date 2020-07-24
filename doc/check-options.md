@@ -65,15 +65,15 @@ axe.configure({
 
 ### aria-required-children
 
-| Option        | Default                                                                                                               | Description                                                                                                              |
-| ------------- | :-------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
-| `reviewEmpty` | `['doc-bibliography', 'doc-endnotes', 'grid', 'list', 'listbox', 'table', 'tablist', 'tree', 'treegrid', 'rowgroup']` | List of ARIA roles that should be flagged as "Needs Review" rather than a violation if the element has no owned children |
+| Option        | Default                                                                                                                                | Description                                                                                                              |
+| ------------- | :------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
+| `reviewEmpty` | <pre lang=js>['doc-bibliography', 'doc-endnotes', 'grid', 'list', 'listbox', 'table', 'tablist', 'tree', 'treegrid', 'rowgroup']</pre> | List of ARIA roles that should be flagged as "Needs Review" rather than a violation if the element has no owned children |
 
 ### aria-roledescription
 
-| Option           | Default                                                                                   | Description                                                          |
-| ---------------- | :---------------------------------------------------------------------------------------- | :------------------------------------------------------------------- |
-| `supportedRoles` | `['button', 'img', 'checkbox', 'radio', 'combobox', 'menuitemcheckbox', 'menuitemradio']` | List of ARIA roles that support the `aria-roledescription` attribute |
+| Option           | Default                                                                                                    | Description                                                          |
+| ---------------- | :--------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------- |
+| `supportedRoles` | <pre lang=js>['button', 'img', 'checkbox', 'radio', 'combobox', 'menuitemcheckbox', 'menuitemradio']</pre> | List of ARIA roles that support the `aria-roledescription` attribute |
 
 ### color-contrast
 
@@ -102,35 +102,35 @@ axe.configure({
 
 ### page-has-main
 
-| Option     | Default                           | Description                                                |
-| ---------- | :-------------------------------- | :--------------------------------------------------------- |
-| `selector` | `main:not([role]), [role='main']` | Selector used to determine if a page has a `main` landmark |
+| Option     | Default                                             | Description                                                |
+| ---------- | :-------------------------------------------------- | :--------------------------------------------------------- |
+| `selector` | <pre lang=css>main:not([role]), [role='main']</pre> | Selector used to determine if a page has a `main` landmark |
 
 ### page-no-duplicate-banner
 
-| Option              | Default                              | Description                                                                             |
-| ------------------- | :----------------------------------- | :-------------------------------------------------------------------------------------- |
-| `selector`          | `header:not([role]), [role=banner]`  | Selector used to determine if a page has a `banner` landmark                            |
-| `nativeScopeFilter` | `article, aside, main, nav, section` | Selector used to ignore `banner` landmarks that have a parent that matches the selector |
+| Option              | Default                                                | Description                                                                             |
+| ------------------- | :----------------------------------------------------- | :-------------------------------------------------------------------------------------- |
+| `selector`          | <pre lang=css>header:not([role]), [role=banner]</pre>  | Selector used to determine if a page has a `banner` landmark                            |
+| `nativeScopeFilter` | <pre lang=css>article, aside, main, nav, section</pre> | Selector used to ignore `banner` landmarks that have a parent that matches the selector |
 
 ### page-no-duplicate-contentinfo
 
-| Option              | Default                                  | Description                                                                                           |
-| ------------------- | :--------------------------------------- | :---------------------------------------------------------------------------------------------------- |
-| `selector`          | `footer:not([role]), [role=contentinfo]` | Selector used to determine if a page has a `contentinfo` landmark                                     |
-| `nativeScopeFilter` | `article, aside, main, nav, section`     | Option values used to ignore `contentinfo` landmarks that have a selector matching the parent element |
+| Option              | Default                                                    | Description                                                                                           |
+| ------------------- | :--------------------------------------------------------- | :---------------------------------------------------------------------------------------------------- |
+| `selector`          | <pre lang=css>footer:not([role]), [role=contentinfo]</pre> | Selector used to determine if a page has a `contentinfo` landmark                                     |
+| `nativeScopeFilter` | <pre lang=css>article, aside, main, nav, section</pre>     | Option values used to ignore `contentinfo` landmarks that have a selector matching the parent element |
 
 ### page-no-duplicate-main
 
-| Option     | Default                           | Description                                                |
-| ---------- | :-------------------------------- | :--------------------------------------------------------- |
-| `selector` | `main:not([role]), [role='main']` | Selector used to determine if a page has a `main` landmark |
+| Option     | Default                                             | Description                                                |
+| ---------- | :-------------------------------------------------- | :--------------------------------------------------------- |
+| `selector` | <pre lang=css>main:not([role]), [role='main']</pre> | Selector used to determine if a page has a `main` landmark |
 
 ### duplicate-img-label
 
-| Option           | Default                                         | Description                                                                 |
-| ---------------- | :---------------------------------------------- | :-------------------------------------------------------------------------- |
-| `parentSelector` | `button, [role=button], a[href], p, li, td, th` | Selector used to look at an image parent that may duplicate the image label |
+| Option           | Default                                                            | Description                                                                 |
+| ---------------- | :----------------------------------------------------------------- | :-------------------------------------------------------------------------- |
+| `parentSelector` | <<pre lang=css>button, [role=button], a[href], p, li, td, th</pre> | Selector used to look at an image parent that may duplicate the image label |
 
 ### label-content-name-mismatch
 
@@ -141,15 +141,15 @@ axe.configure({
 
 ### has-lang
 
-| Option       | Default                | Description                         |
-| ------------ | :--------------------- | :---------------------------------- |
-| `attributes` | `['lang', 'xml:lang']` | Attributes to check for lang values |
+| Option       | Default                                 | Description                         |
+| ------------ | :-------------------------------------- | :---------------------------------- |
+| `attributes` | <pre lang=js>['lang', 'xml:lang']</pre> | Attributes to check for lang values |
 
 ### valid-lang
 
-| Option       | Default                | Description                               |
-| ------------ | :--------------------- | :---------------------------------------- |
-| `attributes` | `['lang', 'xml:lang']` | Attributes to check for valid lang values |
+| Option       | Default                                 | Description                               |
+| ------------ | :-------------------------------------- | :---------------------------------------- |
+| `attributes` | <pre lang=js>['lang', 'xml:lang']</pre> | Attributes to check for valid lang values |
 
 ### frame-tested
 
@@ -190,24 +190,24 @@ axe.configure({
 
 ### landmark
 
-| Option     | Default             | Description                                                |
-| ---------- | :------------------ | :--------------------------------------------------------- |
-| `selector` | `main, [role=main]` | Selector used to determine if a page has a landmark region |
+| Option     | Default                               | Description                                                |
+| ---------- | :------------------------------------ | :--------------------------------------------------------- |
+| `selector` | <pre lang=css>main, [role=main]</pre> | Selector used to determine if a page has a landmark region |
 
 ### p-as-heading
 
-| Option    | Default                                                                                                                   | Description                                                                                                                    |
-| --------- | :------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------------------------------------------------------------------------- |
-| `margins` | `[{ "weight": 150, "italic": true }, { "weight": 150, "size": 1.15 }, { "italic": true, "size": 1.15 }, { "size": 1.4 }]` | Common CSS values used to display `p` elements as `h1-h6` elements determining if a `p` element is being improperly repurposed |
+| Option    | Default                                                                                                                                    | Description                                                                                                                    |
+| --------- | :----------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
+| `margins` | <pre lang=js>[{ "weight": 150, "italic": true }, { "weight": 150, "size": 1.15 }, { "italic": true, "size": 1.15 }, { "size": 1.4 }]</pre> | Common CSS values used to display `p` elements as `h1-h6` elements determining if a `p` element is being improperly repurposed |
 
 ### avoid-inline-spacing
 
-| Option          | Default                                             | Description                                   |
-| --------------- | :-------------------------------------------------- | :-------------------------------------------- |
-| `cssProperties` | `['line-height', 'letter-spacing', 'word-spacing']` | List of inline spacing CSS properties to flag |
+| Option          | Default                                                              | Description                                   |
+| --------------- | :------------------------------------------------------------------- | :-------------------------------------------- |
+| `cssProperties` | <pre lang=js>['line-height', 'letter-spacing', 'word-spacing']</pre> | List of inline spacing CSS properties to flag |
 
 ### scope-value
 
-| Option   | Default                                  | Description                |
-| -------- | :--------------------------------------- | :------------------------- |
-| `values` | `['row', 'col', 'rowgroup', 'colgroup']` | List of valid scope values |
+| Option   | Default                                                   | Description                |
+| -------- | :-------------------------------------------------------- | :------------------------- |
+| `values` | <pre lang=js>['row', 'col', 'rowgroup', 'colgroup']</pre> | List of valid scope values |
