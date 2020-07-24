@@ -174,7 +174,7 @@ axe.configure({
 | Option         | Default | Description                                                                                                |
 | -------------- | :------ | :--------------------------------------------------------------------------------------------------------- |
 | `scaleMinimum` | `5`     | The maximum CSS value of `scale-maximum` the check will apply to. Values above this number will be ignored |
-| `lowerBound`   | `2`     | The minimum CSS value of `scale-minimum` the check will apply to. Values below this number will be ignored |
+| `lowerBound`   | `2`     | The `scale-minimum` CSS value the check applies to. Values below this number will be ignored |
 
 ### meta-viewport
 
