@@ -60,7 +60,7 @@ The [`ariaRoles`](../lib/standards/aria-roles.js) object defines valid ARIA role
 ## Used by Rules
 
 - `aria-allowed-attr` - Checks if the attribute can be used on the role from the `allowedAttrs` and `requiredAttrs` properties, as well as any global ARIA attributes (from the `ariaAttrs` standard).
-- `aria-required-attr` - Checks if the role has at least one required attribute listed in the `requiredAttrs` property
+- `aria-required-attr` - Checks if the role has all required attributes listed in the `requiredAttrs` property
 - `aria-required-context` - Checks if the role has at least one required parent role listed in the `requiredContext` property
 - `aria-required-owned` - Checks if the role has at least one required owned role listed in the `requiredOwned` property
 - `unsupportedrole` - Checks if the role has the `unsupported` property
