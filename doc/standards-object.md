@@ -33,9 +33,9 @@ The [`ariaAttrs`](../lib/standards/aria-attrs.js) object defines valid ARIA attr
 
 ### Used by Rules
 
-- `aria-valid-attr` - Checks if the attribute name exists in the object
-- `aria-valid-attr-value` - Checks if the attribute value is valid for its type
-- `aria-unsupported-attr` - Checks if the attribute has the `unsupported` property
+- `aria-valid-attr` - Checks if the attribute name exists in the object.
+- `aria-valid-attr-value` - Checks if the attribute value is valid for its type.
+- `aria-unsupported-attr` - Checks if the attribute has the `unsupported` property.
 
 ### Structure
 
@@ -48,7 +48,7 @@ The [`ariaAttrs`](../lib/standards/aria-attrs.js) object defines valid ARIA attr
   - `string` - String attributes accept any string (e.g. `aria-label`).
   - `decimal` - Decimal attributes accept any number or decimal value (e.g. `aria-valuemax`).
   - `int` - Integer attributes only accept whole number values (e.g. `aria-level`).
-- `values` - array(required for only `mntoken` and `mntokens`). The list of valid values for the attribute
+- `values` - array(required for only `mntoken` and `mntokens`). The list of valid values for the attribute.
 - `allowEmpty` - boolean(optional, default `false`). If the attribute is allowed to have no value.
 - `global` - boolean(optional, default `false`). If the attribute is a [global ARIA attribute](https://www.w3.org/TR/wai-aria-1.1/#global_states).
 - `unsupported` - boolean(optional, default `false`). If the attribute is unsupported. Use this property to disable an attribute.
@@ -60,10 +60,10 @@ The [`ariaRoles`](../lib/standards/aria-roles.js) object defines valid ARIA role
 ## Used by Rules
 
 - `aria-allowed-attr` - Checks if the attribute can be used on the role from the `allowedAttrs` and `requiredAttrs` properties, as well as any global ARIA attributes (from the `ariaAttrs` standard).
-- `aria-required-attr` - Checks if the role has all required attributes listed in the `requiredAttrs` property
-- `aria-required-context` - Checks if the role has at least one required parent role listed in the `requiredContext` property
-- `aria-required-owned` - Checks if the role has at least one required owned role listed in the `requiredOwned` property
-- `unsupportedrole` - Checks if the role has the `unsupported` property
+- `aria-required-attr` - Checks if the role has all required attributes listed in the `requiredAttrs` property.
+- `aria-required-context` - Checks if the role has at least one required parent role listed in the `requiredContext` property.
+- `aria-required-owned` - Checks if the role has at least one required owned role listed in the `requiredOwned` property.
+- `unsupportedrole` - Checks if the role has the `unsupported` property.
 
 ### Structure
 
@@ -72,10 +72,10 @@ The [`ariaRoles`](../lib/standards/aria-roles.js) object defines valid ARIA role
   - `widget`
   - `structure`
   - `landmark`
-- `requiredContext` - array(optional). List of required parent roles
-- `requiredOwned` - array(optional). List of required owned roles
-- `requiredAttrs` - array(optional). List of required attributes
-- `allowedAttrs` - array(optional). List of allowed attributes (besides any required and global ARIA attributes)
+- `requiredContext` - array(optional). List of required parent roles.
+- `requiredOwned` - array(optional). List of required owned roles.
+- `requiredAttrs` - array(optional). List of required attributes.
+- `allowedAttrs` - array(optional). List of allowed attributes (besides any required and global ARIA attributes).
 - `nameFromContent` - boolean(optional. Default `false`). If the role allows name from content when calculating the accessible name.
 - `unsupported` - boolean(optional. Default `false`). If the role role is unsupported. Use this property to disable a role.
 
@@ -89,9 +89,9 @@ The [`htmlElms`](../lib/standards/html-elms.js) object defines valid HTML elemen
 
 ### Used by Rules
 
-- `aria-allowed-attr` - Checks if the attribute can be used on the element from the `noAriaAttrs` property
-- `aria-allowed-role` - Checks if the role can be used on the HTML element from the `allowedRoles` property
-- `aria-required-attrs` - Checks if any required attrs are defied implicitly on the element from the `implicitAttrs` property
+- `aria-allowed-attr` - Checks if the attribute can be used on the element from the `noAriaAttrs` property.
+- `aria-allowed-role` - Checks if the role can be used on the HTML element from the `allowedRoles` property.
+- `aria-required-attrs` - Checks if any required attrs are defied implicitly on the element from the `implicitAttrs` property.
 
 ### Structure
 
