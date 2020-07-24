@@ -79,7 +79,7 @@ axe.configure({
         <code>reviewEmpty</code>
       </td>
       <td align="left">
-        <pre lang=css><code>[
+        <pre lang=js><code>[
   'doc-bibliography',
   'doc-endnotes',
   'grid',
@@ -89,7 +89,8 @@ axe.configure({
   'tablist',
   'tree',
   'treegrid',
-  'rowgroup']</code></pre>
+  'rowgroup'
+]</code></pre>
         </td>
       <td align="left">List of ARIA roles that should be flagged as "Needs Review" rather than a violation if the element has no owned children</td>
     </tr>
@@ -98,34 +99,83 @@ axe.configure({
 
 ### aria-roledescription
 
-| Option           | Default                                                                                                    | Description                                                          |
-| ---------------- | :--------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------- |
-| `supportedRoles` | <pre lang=js>['button', 'img', 'checkbox', 'radio', 'combobox', 'menuitemcheckbox', 'menuitemradio']</pre> | List of ARIA roles that support the `aria-roledescription` attribute |
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th align="left">Default</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>supportedRoles</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>[
+  'button',
+  'img',
+  'checkbox',
+  'radio',
+  'combobox',
+  'menuitemcheckbox',
+  'menuitemradio'
+]</code></pre>
+        </td>
+      <td align="left">List of ARIA roles that support the `aria-roledescription` attribute</td>
+    </tr>
+  </tbody>
+</table>
 
 ### color-contrast
 
-| Option                              | Default | Description                                                                                    |
-| ----------------------------------- | :------ | :--------------------------------------------------------------------------------------------- |
-| `ignoreUnicode`                     | `true`  | Do not check the color contrast of Unicode characters                                          |
-| `ignoreLength`                      | `false` | Do not check the color contrast of short text content                                          |
-| `boldValue`                         | `700`   | The minimum CSS `font-weight` value that designates bold text                                  |
-| `boldTextPt`                        | `14`    | The minimum CSS `font-size` pt value that designates bold text as being large                  |
-| `largeTextPt`                       | `18`    | The minimum CSS `font-size` pt value that designates text as being large                       |
-| `contrastRatio`                     | N/A     | Contrast ratio options                                                                         |
-| `contrastRatio.normal`              | N/A     | Contrast ratio requirements for normal text (non-bold text or text smaller than `largeTextPt`) |
-| `contrastRatio.normal.expected`     | `4.5`   | The expected contrast ratio for normal text                                                    |
-| `contrastRatio.normal.minThreshold` | N/A     | The minimum ratio the check will apply to. Ratios less than this number will be ignored        |
-| `contrastRatio.normal.maxThreshold` | N/A     | The maximum ratio the check will apply to. Ratios greater than this number will be ignored     |
-| `contrastRatio.large`               | N/A     | Contrast ratio requirements for large text (bold text or text larger than `largeTextPt`)       |
-| `contrastRatio.large.expected`      | `4.5`   | The expected contrast ratio for large text                                                     |
-| `contrastRatio.large.minThreshold`  | N/A     | The minimum ratio the check will apply to. Ratios less than this number will be ignored        |
-| `contrastRatio.large.maxThreshold`  | N/A     | The maximum ratio the check will apply to. Ratios greater than this number will be ignored     |
+| Option                                                      | Default | Description                                                                                    |
+| ----------------------------------------------------------- | :------ | :--------------------------------------------------------------------------------------------- |
+| `ignoreUnicode`                                             | `true`  | Do not check the color contrast of Unicode characters                                          |
+| `ignoreLength`                                              | `false` | Do not check the color contrast of short text content                                          |
+| `boldValue`                                                 | `700`   | The minimum CSS `font-weight` value that designates bold text                                  |
+| `boldTextPt`                                                | `14`    | The minimum CSS `font-size` pt value that designates bold text as being large                  |
+| `largeTextPt`                                               | `18`    | The minimum CSS `font-size` pt value that designates text as being large                       |
+| `contrastRatio`                                             | N/A     | Contrast ratio options                                                                         |
+| &nbsp;&nbsp;`contrastRatio.normal`                          | N/A     | Contrast ratio requirements for normal text (non-bold text or text smaller than `largeTextPt`) |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.expected`     | `4.5`   | The expected contrast ratio for normal text                                                    |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.minThreshold` | N/A     | The minimum ratio the check will apply to. Ratios less than this number will be ignored        |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.maxThreshold` | N/A     | The maximum ratio the check will apply to. Ratios greater than this number will be ignored     |
+| &nbsp;&nbsp;`contrastRatio.large`                           | N/A     | Contrast ratio requirements for large text (bold text or text larger than `largeTextPt`)       |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.large.expected`      | `4.5`   | The expected contrast ratio for large text                                                     |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.large.minThreshold`  | N/A     | The minimum ratio the check will apply to. Ratios less than this number will be ignored        |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.large.maxThreshold`  | N/A     | The maximum ratio the check will apply to. Ratios greater than this number will be ignored     |
 
 ### page-has-heading-one
 
-| Option     | Default                                                                                                                                                                                                                                                                | Description                                                  |
-| ---------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------- |
-| `selector` | <pre lang=css>h1:not([role]):not([aria-level]), h1:not([role])[aria-level=1], h2:not([role])[aria-level=1], h3:not([role])[aria-level=1], h4:not([role])[aria-level=1], h5:not([role])[aria-level=1], h6:not([role])[aria-level=1], [role=heading][aria-level=1]</pre> | Selector used to determine if a page has a level one heading |
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th align="left">Default</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>selector</code>
+      </td>
+      <td align="left">
+        <pre lang=css><code>h1:not([role]):not([aria-level]), 
+h1:not([role])[aria-level=1], 
+h2:not([role])[aria-level=1], 
+h3:not([role])[aria-level=1], 
+h4:not([role])[aria-level=1], 
+h5:not([role])[aria-level=1], 
+h6:not([role])[aria-level=1], 
+[role=heading][aria-level=1]</code></pre>
+        </td>
+      <td align="left">Selector used to determine if a page has a level one heading</td>
+    </tr>
+  </tbody>
+</table>
 
 ### page-has-main
 
@@ -155,9 +205,32 @@ axe.configure({
 
 ### duplicate-img-label
 
-| Option           | Default                                                           | Description                                                                 |
-| ---------------- | :---------------------------------------------------------------- | :-------------------------------------------------------------------------- |
-| `parentSelector` | <pre lang=css>button, [role=button], a[href], p, li, td, th</pre> | Selector used to look at an image parent that may duplicate the image label |
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th align="left">Default</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>parentSelector</code>
+      </td>
+      <td align="left">
+        <pre lang=css><code>button,
+[role=button],
+a[href],
+p,
+li,
+td,
+th</code></pre>
+        </td>
+      <td align="left">Selector used to look at an image parent that may duplicate the image label</td>
+    </tr>
+  </tbody>
+</table>
 
 ### label-content-name-mismatch
 
@@ -211,9 +284,32 @@ axe.configure({
 
 ### header-present
 
-| Option     | Default                                                                                                                            | Description                                        |
-| ---------- | :--------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------- |
-| `selector` | <pre lang=css>h1:not([role]), h2:not([role]), h3:not([role]), h4:not([role]), h5:not([role]), h6:not([role]), [role=heading]</pre> | Selector used to determine if a page has a heading |
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th align="left">Default</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>selector</code>
+      </td>
+      <td align="left">
+        <pre lang=css><code>h1:not([role]), 
+h2:not([role]), 
+h3:not([role]), 
+h4:not([role]), 
+h5:not([role]), 
+h6:not([role]), 
+[role=heading]</code></pre>
+        </td>
+      <td align="left">Selector used to determine if a page has a heading</td>
+    </tr>
+  </tbody>
+</table>
 
 ### landmark
 
