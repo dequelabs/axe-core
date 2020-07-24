@@ -1,2 +1,4 @@
 
+  return axe;
+}
 }( typeof window === 'object' ? window : this ));

@@ -9,7 +9,24 @@
  * distribute or in any file that contains substantial portions of this source
  * code.
  */
-(function axeFunction (window) {
+(function(window) {
+
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD.
+        define('axe-core', [], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like environments that support module.exports,
+        // like Node.
+        module.exports = factory();
+    } else {
+        // Browser globals (root is window)
+        root.axe = factory();
+  }
+}(typeof self !== 'undefined' ? self : this, axeFunction));
+
+function axeFunction() {
   // A window reference is required to access the axe object in a "global".
   var global = window;
   var document = window.document;
