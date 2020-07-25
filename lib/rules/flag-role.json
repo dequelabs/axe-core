@@ -1,0 +1,13 @@
+{
+	"id": "flag-role",
+	"selector": "[role=\"none\"], [role=\"presentation\"]",
+	"tags": ["cat.aria"],
+	"metadata": {
+		"description": "Flags elements whose role is none or presentation and which cause the role conflict resolution to trigger.",
+		"help": "Elements of role none or presentation should be flagged"
+	},
+	"preload": false,
+	"all": ["is-element-focusable", "has-global-aria-attribute"],
+	"any": [],
+	"none": []
+}

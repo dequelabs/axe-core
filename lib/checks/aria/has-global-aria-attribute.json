@@ -1,0 +1,11 @@
+{
+	"id": "has-global-aria-attribute",
+	"evaluate": "has-global-aria-attribute-evaluate",
+	"metadata": {
+		"impact": "minor",
+		"messages": {
+			"pass": "Element has global ARIA attribute",
+			"fail": "Element does not have global ARIA attribute"
+		}
+	}
+}
