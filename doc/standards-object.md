@@ -53,7 +53,7 @@ The [`ariaAttrs`](../lib/standards/aria-attrs.js) object defines valid ARIA attr
 
 The [`ariaRoles`](../lib/standards/aria-roles.js) object defines valid ARIA roles and their use.
 
-## Used by Rules
+### Used by Rules
 
 - `aria-allowed-attr` - Checks if the attribute can be used on the role from the `allowedAttrs` and `requiredAttrs` properties, as well as any global ARIA attributes (from the `ariaAttrs` standard).
 - `aria-required-attr` - Checks if the role has all required attributes listed in the `requiredAttrs` property.
