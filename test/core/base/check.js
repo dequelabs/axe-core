@@ -98,6 +98,62 @@ describe('Check', function() {
 				assert.equal('fong', check.test());
 				delete Check.prototype.test;
 			});
+			it('should override evaluate as ID', function() {
+				axe._load({});
+				axe._audit.metadataFunctionMap['custom-evaluate'] = function() {
+					return 'fong';
+				};
+
+				Check.prototype.test = function() {
+					return this.evaluate();
+				};
+				var check = new Check({
+					evaluate: 'function () { return "foo"; }'
+				});
+				check.configure({ evaluate: 'custom-evaluate' });
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+				delete axe._audit.metadataFunctionMap['custom-evaluate'];
+			});
+			it('should override after as ID', function() {
+				axe._load({});
+				axe._audit.metadataFunctionMap['custom-after'] = function() {
+					return 'fong';
+				};
+
+				Check.prototype.test = function() {
+					return this.after();
+				};
+				var check = new Check({
+					after: 'function () { return "foo"; }'
+				});
+				check.configure({ after: 'custom-after' });
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+				delete axe._audit.metadataFunctionMap['custom-after'];
+			});
+			it('should error if evaluate does not match an ID', function() {
+				function fn() {
+					var check = new Check({});
+					check.configure({ evaluate: 'does-not-exist' });
+				}
+
+				assert.throws(
+					fn,
+					'Function ID does not exist in the metadata-function-map: does-not-exist'
+				);
+			});
+			it('should error if after does not match an ID', function() {
+				function fn() {
+					var check = new Check({});
+					check.configure({ after: 'does-not-exist' });
+				}
+
+				assert.throws(
+					fn,
+					'Function ID does not exist in the metadata-function-map: does-not-exist'
+				);
+			});
 			it('should override enabled', function() {
 				Check.prototype.test = function() {
 					return this.enabled;
