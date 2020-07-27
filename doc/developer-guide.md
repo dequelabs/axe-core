@@ -159,7 +159,7 @@ return results.filter(function(r) {
 
 #### Pass, Fail and Incomplete Templates
 
-Occasionally, you may want to add additional information about why a Check passed, failed or returned undefined into its message. For example, the [aria-valid-attr](../lib/checks/aria/valid-attr.json) will add information about any invalid ARIA attributes to its fail message. The message use a [custom message format](./check-message-template.md). In the Check message, you have access to the `data` object as `data`.
+Occasionally, you may want to add additional information about why a Check passed, failed or returned undefined into its message. For example, the [aria-valid-attr](../lib/checks/aria/valid-attr.json) will add information about any invalid ARIA attributes to its fail message. The message uses a [custom message format](./check-message-template.md). In the Check message, you have access to the `data` object as `data`.
 
 ```js
 // aria-valid-attr check
