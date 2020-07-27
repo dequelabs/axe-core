@@ -397,7 +397,7 @@
 		},
 		"no-implicit-explicit-label": {
 			"pass": "Não há nenhuma divergência entre <label> e o nome acessível",
-			"incomplete": "Verifique se o <label> não precisa fazer parte do nome do campo ARIA {{=it.data}}"
+			"incomplete": "Verifique se o <label> não precisa fazer parte do nome do campo ARIA ${data}"
 		},
 		"aria-required-attr": {
 			"pass": "Todos os atributos ARIA necessários estão presentes",
@@ -426,11 +426,11 @@
 		},
 		"aria-unsupported-attr": {
 			"pass": "O atributo ARIA é suportado",
-			"fail": "O atributo ARIA não é amplamente suportado em leitores de tela e tecnologias assistivas: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "O atributo ARIA não é amplamente suportado em leitores de tela e tecnologias assistivas:  ${data.values}"
 		},
 		"unsupportedrole": {
 			"pass": "O ARIA 'role' é suportado",
-			"fail": "O 'role' usado não é amplamente suportado em leitores de tela e tecnologias assistivas: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "O 'role' usado não é amplamente suportado em leitores de tela e tecnologias assistivas:  ${data.values}"
 		},
 		"aria-valid-attr-value": {
 			"pass": "Os valores dos atributos ARIA são válidos",
@@ -444,7 +444,10 @@
 			}
 		},
 		"aria-valid-attr": {
-			"pass": "{{=it.data && it.data.length > 1 ? 'Os nomes dos atributos ARIA são válidos' : 'O nome do atributo ARIA é valido'}}",
+			"pass": {
+				"singular": "Os nomes dos atributos ARIA são válidos",
+				"plural": "O nome do atributo ARIA é valido"
+			},
 			"fail": {
 				"singular": "Nome de atributo ARIA inválido: ${data.values}",
 				"plural": "Nomes de atributos ARIA inválidos: ${data.values}"
@@ -455,8 +458,8 @@
 			"fail": "O elemento possui semântica inválida para um elemento na ordem de foco."
 		},
 		"color-contrast": {
-			"pass": "O elemento tem contraste suficiente no valor de {{=it.data.contrastRatio}}",
-			"fail": "O elemento tem contraste insuficiente no valor de {{=it.data.contrastRatio}} (cor do primeiro plano: {{=it.data.fgColor}}, cor de fundo: {{=it.data.bgColor}}, tamanho da fonte: {{=it.data.fontSize}}, normal/negrito: {{=it.data.fontWeight}}). Contraste esperado no valor de {{=it.data.expectedContrastRatio}}",
+			"pass": "O elemento tem contraste suficiente no valor de ${data.contrastRatio}",
+			"fail": "O elemento tem contraste insuficiente no valor de ${data.contrastRatio} (cor do primeiro plano: ${data.fgColor}, cor de fundo: ${data.bgColor}, tamanho da fonte: ${data.fontSize}, normal/negrito: ${data.fontWeight}). Contraste esperado no valor de ${data.expectedContrastRatio}",
 			"incomplete": {
 				"default": "Impossível determinar o contraste",
 				"bgImage": "A cor de fundo do elemento não pôde ser determinada devido a uma imagem de fundo",
@@ -521,8 +524,8 @@
 			"fail": "Conteúdo focalizável deve ter tabindex='-1' ou ser removido do DOM"
 		},
 		"landmark-is-top-level": {
-			"pass": "A região {{=it.data.role }} está no nível principal.",
-			"fail": "A região {{=it.data.role }} está contida em outra região."
+			"pass": "A região ${data.role} está no nível principal.",
+			"fail": "A região ${data.role} está contida em outra região."
 		},
 		"page-has-heading-one": {
 			"pass": "A página tem pelo menos um título de primeiro nível",
@@ -651,7 +654,7 @@
 		},
 		"meta-viewport": {
 			"pass": "A tag <meta> não desabilita o zoom em dispositivos móveis",
-			"fail": "{{=it.data}} na tag <meta> desabilita o zoom em dispositivos móveis"
+			"fail": "${data} na tag <meta> desabilita o zoom em dispositivos móveis"
 		},
 		"header-present": {
 			"pass": "A página tem um cabeçalho (header)",
@@ -696,11 +699,11 @@
 		},
 		"duplicate-id-active": {
 			"pass": "O documento não tem elementos ativos que compartilham o mesmo atributo 'id'",
-			"fail": "O documento tem elementos ativos com o mesmo atributo 'id': {{=it.data}}"
+			"fail": "O documento tem elementos ativos com o mesmo atributo 'id': ${data}"
 		},
 		"duplicate-id-aria": {
 			"pass": "O documento não tem elementos referenciados com ARIA ou rótulos que compartilham o mesmo atributo 'id'",
-			"fail": "O documento tem múltiplos elementos referenciados com ARIA com o mesmo atributo 'id': {{=it.data}}"
+			"fail": "O documento tem múltiplos elementos referenciados com ARIA com o mesmo atributo 'id': ${data}"
 		},
 		"duplicate-id": {
 			"pass": "O documento não tem elementos estáticos que compartilham o mesmo atributo 'id'",

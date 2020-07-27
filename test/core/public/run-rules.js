@@ -201,87 +201,105 @@ describe('runRules', function() {
 					'#fixture',
 					{},
 					function(results) {
-						assert.deepEqual(JSON.parse(JSON.stringify(results)), [
-							{
-								id: 'div#target',
-								helpUrl:
-									'https://dequeuniversity.com/rules/axe/x.y/div#target?application=axeAPI',
-								pageLevel: false,
-								impact: null,
-								inapplicable: [],
-								incomplete: [],
-								violations: [],
-								passes: [
-									{
-										result: 'passed',
-										impact: null,
-										node: {
-											selector: ['#context-test', '#target'],
-											xpath: [
-												"/iframe[@id='context-test']",
-												"/div[@id='target']"
+						try {
+							assert.deepEqual(JSON.parse(JSON.stringify(results)), [
+								{
+									id: 'div#target',
+									helpUrl:
+										'https://dequeuniversity.com/rules/axe/x.y/div#target?application=axeAPI',
+									pageLevel: false,
+									impact: null,
+									inapplicable: [],
+									incomplete: [],
+									violations: [],
+									passes: [
+										{
+											result: 'passed',
+											impact: null,
+											node: {
+												selector: ['#context-test', '#target'],
+												ancestry: [
+													'html > body > div:nth-child(1) > iframe:nth-child(1)',
+													'html > body > div:nth-child(2)'
+												],
+												xpath: [
+													"/iframe[@id='context-test']",
+													"/div[@id='target']"
+												],
+												source: '<div id="target"></div>'
+											},
+											any: [
+												{
+													id: 'has-target',
+													data: null,
+													relatedNodes: []
+												}
 											],
-											source: '<div id="target"></div>'
-										},
-										any: [
-											{
-												id: 'has-target',
-												data: null,
-												relatedNodes: []
-											}
-										],
-										all: [],
-										none: []
-									}
-								],
-								result: 'passed',
-								tags: []
-							},
-							{
-								id: 'first-div',
-								helpUrl:
-									'https://dequeuniversity.com/rules/axe/x.y/first-div?application=axeAPI',
-								pageLevel: false,
-								impact: null,
-								inapplicable: [],
-								incomplete: [],
-								violations: [],
-								passes: [
-									{
-										result: 'passed',
-										impact: null,
-										node: {
-											selector: ['#context-test', '#foo'],
-											xpath: ["/iframe[@id='context-test']", "/div[@id='foo']"],
-											source: '<div id="foo">\n			<div id="bar"></div>\n		</div>'
-										},
-										any: [
-											{
-												id: 'first-div',
-												data: null,
-												relatedNodes: [
-													{
-														selector: ['#context-test', '#foo'],
-														xpath: [
-															"/iframe[@id='context-test']",
-															"/div[@id='foo']"
-														],
-														source:
-															'<div id="foo">\n			<div id="bar"></div>\n		</div>'
-													}
-												]
-											}
-										],
-										all: [],
-										none: []
-									}
-								],
-								result: 'passed',
-								tags: []
-							}
-						]);
-
-						done();
+											all: [],
+											none: []
+										}
+									],
+									result: 'passed',
+									tags: []
+								},
+								{
+									id: 'first-div',
+									helpUrl:
+										'https://dequeuniversity.com/rules/axe/x.y/first-div?application=axeAPI',
+									pageLevel: false,
+									impact: null,
+									inapplicable: [],
+									incomplete: [],
+									violations: [],
+									passes: [
+										{
+											result: 'passed',
+											impact: null,
+											node: {
+												selector: ['#context-test', '#foo'],
+												ancestry: [
+													'html > body > div:nth-child(1) > iframe:nth-child(1)',
+													'html > body > div:nth-child(1)'
+												],
+												xpath: [
+													"/iframe[@id='context-test']",
+													"/div[@id='foo']"
+												],
+												source: '<div id="foo">\n			<div id="bar"></div>\n		</div>'
+											},
+											any: [
+												{
+													id: 'first-div',
+													data: null,
+													relatedNodes: [
+														{
+															selector: ['#context-test', '#foo'],
+															ancestry: [
+																'html > body > div:nth-child(1) > iframe:nth-child(1)',
+																'html > body > div:nth-child(1)'
+															],
+															xpath: [
+																"/iframe[@id='context-test']",
+																"/div[@id='foo']"
+															],
+															source:
+																'<div id="foo">\n			<div id="bar"></div>\n		</div>'
+														}
+													]
+												}
+											],
+											all: [],
+											none: []
+										}
+									],
+									result: 'passed',
+									tags: []
+								}
+							]);
+							done();
+						} catch (e) {
+							done(e);
+						}
 					},
 					isNotCalled
 				);
@@ -488,89 +506,102 @@ describe('runRules', function() {
 			'#fixture',
 			{},
 			function(results) {
-				assert.deepEqual(JSON.parse(JSON.stringify(results)), [
-					{
-						id: 'div#target',
-						helpUrl:
-							'https://dequeuniversity.com/rules/axe/x.y/div#target?application=axeAPI',
-						pageLevel: false,
-						foo: 'bar',
-						stuff: 'blah',
-						impact: 'moderate',
-						passes: [],
-						inapplicable: [],
-						incomplete: [],
-						violations: [
-							{
-								result: 'failed',
-								node: {
-									selector: ['#target'],
-									xpath: ["/div[@id='target']"],
-									source: '<div id="target">Target!</div>'
-								},
-								impact: 'moderate',
-								any: [
-									{
-										impact: 'moderate',
-										otherThingy: true,
-										message: 'failing is not good',
-										id: 'has-target',
-										data: null,
-										relatedNodes: []
-									}
-								],
-								all: [],
-								none: []
-							}
-						],
-						result: 'failed',
-						tags: []
-					},
-					{
-						id: 'first-div',
-						helpUrl:
-							'https://dequeuniversity.com/rules/axe/x.y/first-div?application=axeAPI',
-						pageLevel: false,
-						bar: 'foo',
-						stuff: 'no',
-						impact: null,
-						inapplicable: [],
-						incomplete: [],
-						violations: [],
-						passes: [
-							{
-								result: 'passed',
-								impact: null,
-								node: {
-									selector: ['#target'],
-									xpath: ["/div[@id='target']"],
-									source: '<div id="target">Target!</div>'
-								},
-								any: [
-									{
-										impact: 'serious',
-										id: 'first-div',
-										thingy: true,
-										message: 'passing is good',
-										data: null,
-										relatedNodes: [
-											{
-												selector: ['#target'],
-												xpath: ["/div[@id='target']"],
-												source: '<div id="target">Target!</div>'
-											}
-										]
-									}
-								],
-								all: [],
-								none: []
-							}
-						],
-						result: 'passed',
-						tags: []
-					}
-				]);
-				done();
+				try {
+					assert.deepEqual(JSON.parse(JSON.stringify(results)), [
+						{
+							id: 'div#target',
+							helpUrl:
+								'https://dequeuniversity.com/rules/axe/x.y/div#target?application=axeAPI',
+							pageLevel: false,
+							foo: 'bar',
+							stuff: 'blah',
+							impact: 'moderate',
+							passes: [],
+							inapplicable: [],
+							incomplete: [],
+							violations: [
+								{
+									result: 'failed',
+									node: {
+										selector: ['#target'],
+										ancestry: [
+											'html > body > div:nth-child(1) > div:nth-child(1)'
+										],
+										xpath: ["/div[@id='target']"],
+										source: '<div id="target">Target!</div>'
+									},
+									impact: 'moderate',
+									any: [
+										{
+											impact: 'moderate',
+											otherThingy: true,
+											message: 'failing is not good',
+											id: 'has-target',
+											data: null,
+											relatedNodes: []
+										}
+									],
+									all: [],
+									none: []
+								}
+							],
+							result: 'failed',
+							tags: []
+						},
+						{
+							id: 'first-div',
+							helpUrl:
+								'https://dequeuniversity.com/rules/axe/x.y/first-div?application=axeAPI',
+							pageLevel: false,
+							bar: 'foo',
+							stuff: 'no',
+							impact: null,
+							inapplicable: [],
+							incomplete: [],
+							violations: [],
+							passes: [
+								{
+									result: 'passed',
+									impact: null,
+									node: {
+										selector: ['#target'],
+										xpath: ["/div[@id='target']"],
+										ancestry: [
+											'html > body > div:nth-child(1) > div:nth-child(1)'
+										],
+										source: '<div id="target">Target!</div>'
+									},
+									any: [
+										{
+											impact: 'serious',
+											id: 'first-div',
+											thingy: true,
+											message: 'passing is good',
+											data: null,
+											relatedNodes: [
+												{
+													selector: ['#target'],
+													ancestry: [
+														'html > body > div:nth-child(1) > div:nth-child(1)'
+													],
+													xpath: ["/div[@id='target']"],
+													source: '<div id="target">Target!</div>'
+												}
+											]
+										}
+									],
+									all: [],
+									none: []
+								}
+							],
+							result: 'passed',
+							tags: []
+						}
+					]);
+					done();
+				} catch (e) {
+					done(e);
+				}
 			},
 			isNotCalled
 		);

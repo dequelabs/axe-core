@@ -401,11 +401,11 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `reporter`         | `v1`    | Which reporter to use (see [Configuration](#api-name-axeconfigure))                                                                     |
 | `resultTypes`      | n/a     | Limit which result types are processed and aggregated                                                                                   |
 | `selector`         | `true`  | Return CSS selector for elements, optimised for readability                                                                             |
+| `ancestry`         | `false` | Return CSS selector for elements, with all the element's ancestors                                                                      |
 | `xpath`            | `false` | Return xpath selectors for elements                                                                                                     |
 | `absolutePaths`    | `false` | Use absolute paths when creating element selectors                                                                                      |
 | `iframes`          | `true`  | Tell axe to run inside iframes                                                                                                          |
 | `elementRef`       | `false` | Return element references in addition to the target                                                                                     |
-| `restoreScroll`    | `false` | Scrolls elements back to before axe started                                                                                             |
 | `frameWaitTime`    | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out                                              |
 | `preload`          | `true`  | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details) |
 | `performanceTimer` | `false` | Log rule performance metrics to the console                                                                                             |

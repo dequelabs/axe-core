@@ -397,7 +397,7 @@
 		},
 		"no-implicit-explicit-label": {
 			"pass": "<label> とアクセシブルな名前の間に不一致はありません",
-			"incomplete": "<label> が ARIA {{=it.data}} 欄の名前の一部である必要がないことを確認しましょう"
+			"incomplete": "<label> が ARIA ${data} 欄の名前の一部である必要がないことを確認しましょう"
 		},
 		"aria-required-attr": {
 			"pass": "すべての必須のARIA属性が存在しています",
@@ -426,11 +426,11 @@
 		},
 		"aria-unsupported-attr": {
 			"pass": "ARIA属性はサポートされています",
-			"fail": "ARIA属性はスクリーン・リーダーや支援技術に広くサポートされていません: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "ARIA属性はスクリーン・リーダーや支援技術に広くサポートされていません: ${data.values}"
 		},
 		"unsupportedrole": {
 			"pass": "ARIAロールはサポートされています",
-			"fail": "使用されているロールはスクリーン・リーダーや支援技術に広くサポートされていません: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "使用されているロールはスクリーン・リーダーや支援技術に広くサポートされていません: ${data.values}"
 		},
 		"aria-valid-attr-value": {
 			"pass": "ARIA属性値が有効です",
@@ -455,8 +455,8 @@
 			"fail": "要素はフォーカス順序に含まれる要素に対して無効なセマンティクスを持ちます"
 		},
 		"color-contrast": {
-			"pass": "要素には{{=it.data.contrastRatio}}の十分なコントラスト比があります",
-			"fail": "要素のコントラスト比が不十分です {{=it.data.contrastRatio}}（前景色: {{=it.data.fgColor}}、背景色: {{=it.data.bgColor}}、フォントサイズ: {{=it.data.fontSize}}、フォントの太さ: {{=it.data.fontWeight}}）。コントラスト比{{=it.data.expectedContrastRatio}}を必要とします",
+			"pass": "要素には${data.contrastRatio}の十分なコントラスト比があります",
+			"fail": "要素のコントラスト比が不十分です ${data.contrastRatio}（前景色: ${data.fgColor}、背景色: ${data.bgColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします",
 			"incomplete": {
 				"default": "コントラスト比を判定できません",
 				"bgImage": "背景画像のため、要素の背景色を判定できません",
@@ -521,8 +521,8 @@
 			"fail": "フォーカス可能なコンテンツは tabindex='-1' を指定するか、DOMから削除するべきです"
 		},
 		"landmark-is-top-level": {
-			"pass": "{{=it.data.role }} ランドマークはトップレベルにあります",
-			"fail": "{{=it.data.role }} ランドマークが他のランドマークに含まれています"
+			"pass": "${data.role} ランドマークはトップレベルにあります",
+			"fail": "${data.role} ランドマークが他のランドマークに含まれています"
 		},
 		"page-has-heading-one": {
 			"pass": "ページには少なくとも1つのレベル1の見出しがあります",
@@ -651,7 +651,7 @@
 		},
 		"meta-viewport": {
 			"pass": "<meta>タグはモバイルデバイスでの拡大を無効にしません",
-			"fail": "<meta>タグの{{=it.data}}がモバイルデバイスでの拡大を無効にします"
+			"fail": "<meta>タグの${data}がモバイルデバイスでの拡大を無効にします"
 		},
 		"header-present": {
 			"pass": "ページにheaderが存在しています",
@@ -696,11 +696,11 @@
 		},
 		"duplicate-id-active": {
 			"pass": "ドキュメントに同じid属性を持つ有効な要素はありません",
-			"fail": "ドキュメントに同じid属性を持つ有効な要素があります: {{=it.data}}"
+			"fail": "ドキュメントに同じid属性を持つ有効な要素があります: ${data}"
 		},
 		"duplicate-id-aria": {
 			"pass": "ドキュメントに同じid属性を持つARIAまたはラベルに参照された要素はありません",
-			"fail": "ドキュメントに同じid属性を持つARIAに参照された複数の要素があります: {{=it.data}}"
+			"fail": "ドキュメントに同じid属性を持つARIAに参照された複数の要素があります: ${data}"
 		},
 		"duplicate-id": {
 			"pass": "ドキュメントに同じid属性を共有する静的な要素はありません",
