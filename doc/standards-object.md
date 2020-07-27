@@ -15,7 +15,7 @@ axe.configure({
 });
 ```
 
-## Table of Contents
+The following properties are currently available in axe-core `standards`:
 
 1.  [ARIA Attrs](#aria-attrs)
 1.  [ARIA Roles](#aria-roles)
