@@ -141,6 +141,20 @@ var spec: axe.Spec = {
 				type: 'widget',
 				requiredAttrs: ['aria-label']
 			}
+		},
+		ariaAttrs: {
+			'custom-attr': {
+				type: 'boolean'
+			}
+		},
+		htmlElms: {
+			'custom-elm': {
+				contentTypes: ['flow'],
+				allowedRoles: false
+			}
+		},
+		cssColors: {
+			customColor: [0, 1, 2, 3]
 		}
 	},
 	rules: [
