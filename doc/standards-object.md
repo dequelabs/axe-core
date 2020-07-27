@@ -103,24 +103,28 @@ The [`htmlElms`](../lib/standards/html-elms.js) object defines valid HTML elemen
 - `shadowRoot` - boolean(optional. Default `false`). If the element is allowed to have a shadow root.
 - `implicitAttrs` - object(optional. Default `{}`). Any implicit ARIA attributes for the element and their default value.
 - `namingMethods` - array(optional. Default `[]`). The [native text method](../lib/commons/text/native-text-methods.js) used to calculate the accessible name of the element.
-- `variant` - object(optional). Sometimes an element can have different properties based on which attributes are defined on it. For example, an `img` is only considered interactive if it has the `usemap` attribute.
+- `variant` - object(optional). Object defining different property values based on which attributes exist on the element.
 
-  For these cases, the `variant` property allows different definitions for the element. The `variant` object gives a name to each variant, defines when the variant applies through the `matches` property (a `matcher` object), and provides a `default` variant in the case none of the other variants match. A variant should only define what can change based on the attributes. Any properties that always apply regardless of attributes should be defined at the top level.
+### Variants
 
-  Below is an example for the `meta` element which only has a `contentType` when it has the `itemprop` attribute, but always does not allow ARIA roles or attributes.
+Sometimes an element can have different properties and values based on which attributes are defined on it. For example, an `img` is only considered interactive if it has the `usemap` attribute.
 
-  ```js
-  meta: {
-      variant: {
-          itemprop: {
-              matches: '[itemprop]',
-              contentTypes: ['phrasing', 'flow']
-          }
-      },
-      allowedRoles: false,
-      noAriaAttrs: true
-  }
-  ```
+For these cases, the `variant` property allows different definitions for the element. The `variant` object gives a name to each variant, defines when the variant applies through the `matches` property (a `matcher` object), and provides a `default` variant in the case none of the other variants match. A variant should only define what can change based on the attributes. Any properties that always apply regardless of attributes should be defined at the top level.
+
+Below is an example for the `meta` element which only has a `contentType` property when it has the `itemprop` attribute, but always does not allow ARIA roles or attributes.
+
+```js
+meta: {
+    variant: {
+        itemprop: {
+            matches: '[itemprop]',
+            contentTypes: ['phrasing', 'flow']
+        }
+    },
+    allowedRoles: false,
+    noAriaAttrs: true
+}
+```
 
 ## CSS Colors
 
