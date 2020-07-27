@@ -6,7 +6,6 @@
    1. [Get Started](#getting-started)
 1. [Section 2: API Reference](#section-2-api-reference)
    1. [Overview](#overview)
-   1. [Required Globals](#required-globals)
    1. [API Notes](#api-notes)
    1. [API Name: axe.getRules](#api-name-axegetrules)
    1. [API Name: axe.configure](#api-name-axeconfigure)
@@ -54,19 +53,7 @@ The axe API can be used as part of a broader process that is performed on many, 
 
 ### Overview
 
-The axe APIs are provided in the javascript file axe.js. It must be included in the web page under test. Parameters are sent as javascript function parameters. Results are returned in JSON format.
-
-### Required Globals
-
-Axe requires a handful of global variables and interfaces to be available in order to run. See the [jsdom example](https://github.com/dequelabs/axe-core/blob/develop/doc/examples/jsdom/test/a11y.js) for how to set these up in a non-browser environment.
-
-- `window`
-- `document`
-- [`navigator`](https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator)
-- [`Node`](https://developer.mozilla.org/en-US/docs/Web/API/Node)
-- [`NodeList`](https://developer.mozilla.org/en-US/docs/Web/API/NodeList)
-- [`Element`](https://developer.mozilla.org/en-US/docs/Web/API/Element)
-- [`Document`](https://developer.mozilla.org/en-US/docs/Web/API/Document)
+The axe APIs are provided in the javascript file axe.js. It must be included in the web page under test, as well as each `iframe` under test. Parameters are sent as javascript function parameters. Results are returned in JSON format.
 
 ### Full API Reference for Developers
 
@@ -134,7 +121,7 @@ Returns a list of all rules with their ID and description
 
 - `tags` - **optional** Array of tags used to filter returned rules. If omitted, it will return all rules. See [axe-core tags](#axe-core-tags).
 
-**Returns:** Array of rules that match the input filter with each entry having a format of `{ruleId: <id>, description: <desc>}`
+**Returns:** Array of rules that match the input filter with each entry having a format of `{ruleId: <id>, description: <desc>, helpUrl: <url>, help: <help>, tags: <tags>}`
 
 #### Example 1
 
@@ -146,9 +133,32 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
 
 ```js
 [
-  { ruleId: "area-alt", description: "Checks the <area> elements of image…" },
-  { ruleId: "aria-allowed-attr", description: "Checks all attributes that start…" },
-  { ruleId: "aria-required-attr", description: "Checks all elements that contain…" },
+  {
+    description: "Ensures <area> elements of image maps have alternate text",
+    help: "Active <area> elements must have alternate text",
+    helpUrl: "https://dequeuniversity.com/rules/axe/3.5/area-alt?application=axeAPI",
+    ruleId: "area-alt",
+    tags: [
+      "cat.text-alternatives",
+      "wcag2a",
+      "wcag111",
+      "wcag244",
+      "wcag412",
+      "section508",
+      "section508.22.a"
+    ]
+  },
+  {
+    description: "Ensures ARIA attributes are allowed for an element's role",
+    help: "Elements must only use allowed ARIA attributes",
+    helpUrl: "https://dequeuniversity.com/rules/axe/3.5/aria-allowed-attr?application=axeAPI",
+    ruleId: "aria-allowed-attr",
+    tags: [
+      "cat.aria",
+      "wcag2a",
+      "wcag412"
+    ]
+  }
   …
 ]
 ```
@@ -622,6 +632,14 @@ The URL of the page that was tested.
 
 The date and time that analysis was completed.
 
+###### `testEngine`
+
+The application and version that ran the audit.
+
+###### `testEnvironment`
+
+Information about the current browser or node application that ran the audit.
+
 ###### result arrays
 
 The results of axe are grouped according to their outcome into the following arrays:
@@ -835,25 +853,6 @@ axe.commons.dom.getRootNode(node);
 ##### Returns
 
 The top-level document or shadow DOM document fragment
-
-#### axe.commons.dom.findUp
-
-Recursively walk up the DOM, checking for a node which matches a selector. Warning: this should be used sparingly for performance reasons.
-
-##### Synopsis
-
-```js
-axe.commons.dom.findUp(node, '.selector');
-```
-
-##### Parameters
-
-- `element` – HTMLElement. The starting element
-- `selector` – String. The target selector for the HTMLElement
-
-##### Returns
-
-Either the matching HTMLElement or `null` if there was no match.
 
 ## Section 3: Example Reference
 
