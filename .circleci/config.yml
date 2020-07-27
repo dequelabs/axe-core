@@ -191,6 +191,7 @@ jobs:
   # Verify released package has all required files
   verify_release:
     <<: *defaults
+    <<: *unix_box
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
@@ -199,6 +200,7 @@ jobs:
   # Verify canary released package has all required files
   verify_next_release:
     <<: *defaults
+    <<: *unix_box
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
