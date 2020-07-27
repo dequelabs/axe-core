@@ -75,7 +75,7 @@ The [`ariaRoles`](../lib/standards/aria-roles.js) object defines valid ARIA role
 - `nameFromContent` - boolean(optional. Default `false`). If the role allows name from content when calculating the accessible name.
 - `unsupported` - boolean(optional. Default `false`). If the role role is unsupported. Use this property to disable a role.
 
-## Dpub Roles
+### Dpub Roles
 
 Dpub roles are defined in the [dpub-roles](../lib/standards/dpub-roles.js) file. Their structure is the exact same as the aria roles standard (albeit they have different `type`s) and is combined into the `ariaRoles` table. They are only separated for organizational purposes.
 
