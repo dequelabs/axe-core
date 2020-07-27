@@ -1,10 +1,6 @@
 # Standards Object
 
-The [standards object](../lib/standards) is JSON object of ARIA and HTML spec information that axe-core uses to validate ARIA roles, attributes, and use.
-
-For example, the `aria-valid-attr` rule uses the [`ariaAttrs`](../lib/standards/aria-attrs.js) object to determine if the aria attribute is a valid ARIA attribute.
-
-To configure how axe-core validates ARIA information, you'll most likely configure the standards object to your needs. Below is a list of each object, their structure, and which rules will use that information
+The [standards object](../lib/standards) is JSON object of ARIA and HTML spec information that axe-core uses to validate ARIA roles, attributes, and use. For example, the `aria-valid-attr` rule uses the [`ariaAttrs`](../lib/standards/aria-attrs.js) object to determine if the aria attribute is a valid ARIA attribute. To configure how axe-core validates ARIA information, you'll most likely configure the standards object to your needs. Below is a list of each object, their structure, and which rules will use that information
 
 ```js
 axe.configure({
