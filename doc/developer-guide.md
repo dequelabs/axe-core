@@ -20,11 +20,11 @@ Axe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities fo
    1. [API Name: axe.utils.getFlattenedTree](#api-name-axeutilsgetflattenedtree)
    1. [API Name: axe.utils.getNodeFromTree](#api-name-axeutilsgetnodefromtree)
 1. [Test Utilities](#test-utilities)
-   1. [Test Util Name: axe.testUtils.MockCheckContext](#test-util-name-axetestutilsmockcheckcontext)
-   1. [Test Util Name: axe.testUtils.shadowSupport](#test-util-name-axetestutilsshadowsupport)
-   1. [Test Util Name: axe.testUtils.fixtureSetup](#test-util-name-axetestutilsfixturesetup)
-   1. [Test Util Name: axe.testUtils.checkSetup](#test-util-name-axetestutilschecksetup)
-1. [Using Rule Generation CLI](#axe-rule-generator)
+   1. [Test Util Name: axe.testUtils.MockCheckContext](#test-util-name-mockcheckcontext)
+   1. [Test Util Name: axe.testUtils.shadowSupport](#test-util-name-shadowsupport)
+   1. [Test Util Name: axe.testUtils.fixtureSetup](#test-util-name-fixturesetup)
+   1. [Test Util Name: axe.testUtils.checkSetup](#test-util-name-checksetup)
+1. [Using Rule Generation CLI](#using-rule-generation-cli)
 
 ## Getting Started
 
