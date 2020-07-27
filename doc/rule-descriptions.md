@@ -62,10 +62,11 @@
 
 ## WCAG 2.1 Level A & AA Rules
 
-| Rule ID                                                                                                            | Description                                                                                   | Impact  | Tags                         | Issue Type |
-| :----------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------- | :------ | :--------------------------- | :--------- |
-| [autocomplete-valid](https://dequeuniversity.com/rules/axe/3.5/autocomplete-valid?application=RuleDescription)     | Ensure the autocomplete attribute is correct and suitable for the form field                  | Serious | cat.forms, wcag21aa, wcag135 | failure    |
-| [avoid-inline-spacing](https://dequeuniversity.com/rules/axe/3.5/avoid-inline-spacing?application=RuleDescription) | Ensure that text spacing set through style attributes can be adjusted with custom stylesheets | Serious | wcag21aa, wcag1412           | failure    |
+| Rule ID                                                                                                                  | Description                                                                                   | Impact  | Tags                         | Issue Type        |
+| :----------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------- | :------ | :--------------------------- | :---------------- |
+| [autocomplete-valid](https://dequeuniversity.com/rules/axe/3.5/autocomplete-valid?application=RuleDescription)           | Ensure the autocomplete attribute is correct and suitable for the form field                  | Serious | cat.forms, wcag21aa, wcag135 | failure           |
+| [avoid-inline-spacing](https://dequeuniversity.com/rules/axe/3.5/avoid-inline-spacing?application=RuleDescription)       | Ensure that text spacing set through style attributes can be adjusted with custom stylesheets | Serious | wcag21aa, wcag1412           | failure           |
+| [zoomed-text-not-clipped](https://dequeuniversity.com/rules/axe/3.5/zoomed-text-not-clipped?application=RuleDescription) | Ensures that text nodes are not unintentionally clipped by overflow                           | Minor   | wcag21, wcag144              | needs&nbsp;review |
 
 ## Best Practices Rules
 

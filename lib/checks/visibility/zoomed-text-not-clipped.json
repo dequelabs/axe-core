@@ -1,0 +1,11 @@
+{
+	"id": "zoomed-text-not-clipped",
+	"evaluate": "zoomed-text-not-clipped-evaluate",
+	"metadata": {
+		"impact": "minor",
+		"messages": {
+			"pass": "No text nodes are not unintentionally clipped by overflow",
+			"incomplete": "Check that the text nodes are not unintentionally clipped by overflow"
+		}
+	}
+}

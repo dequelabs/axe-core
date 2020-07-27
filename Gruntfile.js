@@ -373,8 +373,8 @@ module.exports = function(grunt) {
 		'configure',
 		'babel',
 		'concat:engine',
-		'uglify',
-		'aria-supported'
+		'uglify'
+		// 'aria-supported'
 	]);
 	grunt.registerTask('prepare', [
 		'build',

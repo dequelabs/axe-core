@@ -1,0 +1,13 @@
+{
+	"id": "zoomed-text-not-clipped",
+	"matches": "zoomed-text-not-clipped-matches",
+	"tags": ["wcag21", "wcag144"],
+	"metadata": {
+		"description": "Ensures that text nodes are not unintentionally clipped by overflow",
+		"help": "Text nodes should not be unintentionally"
+	},
+	"preload": false,
+	"all": ["zoomed-text-not-clipped"],
+	"any": [],
+	"none": []
+}
