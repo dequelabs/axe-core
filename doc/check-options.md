@@ -247,9 +247,10 @@ th</code></pre>
 
 ### valid-lang
 
-| Option       | Default                                 | Description                               |
-| ------------ | :-------------------------------------- | :---------------------------------------- |
-| `attributes` | <pre lang=js>['lang', 'xml:lang']</pre> | Attributes to check for valid lang values |
+| Option       | Default                                                      | Description                               |
+| ------------ | :----------------------------------------------------------- | :---------------------------------------- |
+| `attributes` | <pre lang=js>['lang', 'xml:lang']</pre>                      | Attributes to check for valid lang values |
+| `value`      | [Array of all valid langs](../lib/core/utils/valid-langs.js) | List of valid lang values                 |
 
 ### frame-tested
 
