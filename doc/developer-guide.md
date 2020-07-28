@@ -237,7 +237,7 @@ To support open Shadow DOM, axe-core has the ability to handle virtual nodes in 
 
 - A virtualNode is an object containing an HTML DOM element (`actualNode`).
 - Children contains an array of child VirtualNodes.
-- Parent is the VirutalNode parent
+- Parent is the VirtualNode parent
 - The shadowID indicates whether the node is in an open shadow root and if it is, which one it is inside the boundary.
 - Attr is a function which returns the value of the passed in attribute, similar to `node.getAttribute()` (e.g. `vNode.attr('aria-label')`)
 - HasAttr is a function which returns true if the VirutalNode has the attribute, similar to `node.hasAttribute()` (e.g. `vNode.hasAttr('aria-label')`)
