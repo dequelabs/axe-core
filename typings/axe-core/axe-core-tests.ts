@@ -2,6 +2,7 @@ import * as axe from '../../axe';
 
 var context: any = document;
 var $fixture: any = {};
+var options = { iframes: false, selectors: false, elementRef: false };
 
 axe.run(context, {}, (error: Error, results: axe.AxeResults) => {
 	if (error) {
@@ -17,13 +18,9 @@ axe.run().then(function(done: any) {
 	done();
 });
 // additional configuration options
-axe.run(
-	context,
-	{ iframes: false, selectors: false, elementRef: false },
-	(error: Error, results: axe.AxeResults) => {
-		console.log(error || results.passes.length);
-	}
-);
+axe.run(context, options, (error: Error, results: axe.AxeResults) => {
+	console.log(error || results.passes.length);
+});
 // axe.run include/exclude
 axe.run(
 	{ include: [['#id1'], ['#id2']] },
@@ -40,13 +37,9 @@ axe.run(
 	}
 );
 // additional configuration options
-axe.run(
-	context,
-	{ iframes: false, selectors: false, elementRef: false },
-	(error: Error, results: axe.AxeResults) => {
-		console.log(error || results.passes.length);
-	}
-);
+axe.run(context, options, (error: Error, results: axe.AxeResults) => {
+	console.log(error || results.passes.length);
+});
 var tagConfigRunOnly: axe.RunOnly = {
 	type: 'tag',
 	values: ['wcag2a']
@@ -90,11 +83,40 @@ axe.run(
 
 var someRulesConfig = {
 	rules: {
-		'color-contrast': { enabled: 'false' },
-		'heading-order': { enabled: 'true' }
+		'color-contrast': { enabled: false },
+		'heading-order': { enabled: true }
 	}
 };
 axe.run(context, someRulesConfig, (error: Error, results: axe.AxeResults) => {
+	console.log(error || results);
+});
+
+// just context
+axe.run(context).then(function(done: any) {
+	done();
+});
+// just options
+axe.run(options).then(function(done: any) {
+	done();
+});
+// just callback
+axe.run((error: Error, results: axe.AxeResults) => {
+	console.log(error || results);
+});
+// context and callback
+axe.run(context, (error: Error, results: axe.AxeResults) => {
+	console.log(error || results);
+});
+// options and callback
+axe.run(options, (error: Error, results: axe.AxeResults) => {
+	console.log(error || results);
+});
+// context and options
+axe.run(context, options).then(function(done: any) {
+	done();
+});
+// context, options, and callback
+axe.run(context, options, (error: Error, results: axe.AxeResults) => {
 	console.log(error || results);
 });
 
@@ -113,6 +135,28 @@ var spec: axe.Spec = {
 			}
 		}
 	],
+	standards: {
+		ariaRoles: {
+			'custom-role': {
+				type: 'widget',
+				requiredAttrs: ['aria-label']
+			}
+		},
+		ariaAttrs: {
+			'custom-attr': {
+				type: 'boolean'
+			}
+		},
+		htmlElms: {
+			'custom-elm': {
+				contentTypes: ['flow'],
+				allowedRoles: false
+			}
+		},
+		cssColors: {
+			customColor: [0, 1, 2, 3]
+		}
+	},
 	rules: [
 		{
 			id: 'custom-rule',
@@ -123,6 +167,7 @@ var spec: axe.Spec = {
 axe.configure(spec);
 
 var source = axe.source;
+var version = axe.version;
 
 axe.reset();
 
