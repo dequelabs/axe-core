@@ -1967,5 +1967,19 @@ describe('Rule', function() {
 				'Function ID does not exist in the metadata-function-map: does-not-exist'
 			);
 		});
+		it('should override impact', function() {
+			var rule = new Rule({ impact: 'minor' });
+
+			assert.equal(rule._get('impact'), 'minor');
+			rule.configure({ impact: 'serious' });
+			assert.equal(rule._get('impact'), 'serious');
+		});
+		it('should throw if impact impact', function() {
+			var rule = new Rule({ impact: 'minor' });
+
+			assert.throws(function() {
+				rule.configure({ impact: 'hello' });
+			});
+		});
 	});
 });
