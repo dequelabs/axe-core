@@ -240,7 +240,7 @@ To support open Shadow DOM, axe-core has the ability to handle virtual nodes in 
 - Parent is the VirtualNode parent
 - The shadowID indicates whether the node is in an open shadow root and if it is, which one it is inside the boundary.
 - Attr is a function which returns the value of the passed in attribute, similar to `node.getAttribute()` (e.g. `vNode.attr('aria-label')`)
-- HasAttr is a function which returns true if the VirutalNode has the attribute, similar to `node.hasAttribute()` (e.g. `vNode.hasAttr('aria-label')`)
+- HasAttr is a function which returns true if the VirtualNode has the attribute, similar to `node.hasAttribute()` (e.g. `vNode.hasAttr('aria-label')`)
 - Props is an object of HTML DOM element properties. The general structure is as follows:
   ```js
   {
