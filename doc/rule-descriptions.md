@@ -62,10 +62,12 @@
 
 ## WCAG 2.1 Level A & AA Rules
 
-| Rule ID                                                                                                            | Description                                                                                   | Impact  | Tags                         | Issue Type |
-| :----------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------- | :------ | :--------------------------- | :--------- |
-| [autocomplete-valid](https://dequeuniversity.com/rules/axe/3.5/autocomplete-valid?application=RuleDescription)     | Ensure the autocomplete attribute is correct and suitable for the form field                  | Serious | cat.forms, wcag21aa, wcag135 | failure    |
-| [avoid-inline-spacing](https://dequeuniversity.com/rules/axe/3.5/avoid-inline-spacing?application=RuleDescription) | Ensure that text spacing set through style attributes can be adjusted with custom stylesheets | Serious | wcag21aa, wcag1412           | failure    |
+| Rule ID                                                                                                            | Description                                                                                        | Impact  | Tags                         | Issue Type                 |
+| :----------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------- | :------ | :--------------------------- | :------------------------- |
+| [autocomplete-valid](https://dequeuniversity.com/rules/axe/3.5/autocomplete-valid?application=RuleDescription)     | Ensure the autocomplete attribute is correct and suitable for the form field                       | Serious | cat.forms, wcag21aa, wcag135 | failure                    |
+| [avoid-inline-spacing](https://dequeuniversity.com/rules/axe/3.5/avoid-inline-spacing?application=RuleDescription) | Ensure that text spacing set through style attributes can be adjusted with custom stylesheets      | Serious | wcag21aa, wcag1412           | failure                    |
+| [name-author-contents](https://dequeuniversity.com/rules/axe/3.5/name-author-contents?application=RuleDescription) | Ensures elements with ARIA roles that require an accessible name have one from author or contents. | Serious |                              | failure, needs&nbsp;review |
+| [name-author](https://dequeuniversity.com/rules/axe/3.5/name-author?application=RuleDescription)                   | Ensures elements with ARIA roles that require an accessible name have one from author.             | Serious |                              | failure, needs&nbsp;review |
 
 ## Best Practices Rules
 

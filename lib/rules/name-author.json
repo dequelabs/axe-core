@@ -1,0 +1,12 @@
+{
+	"id": "name-author",
+	"selector": "[role=\"tree\"]",
+	"tags": [],
+	"metadata": {
+		"description": "Ensures elements with ARIA roles that require an accessible name have one from author.",
+		"help": "Required accessible name must be present (author)"
+	},
+	"all": [],
+	"any": ["aria-label", "aria-labelledby", "non-empty-title"],
+	"none": []
+}

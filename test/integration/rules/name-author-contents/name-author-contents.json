@@ -1,0 +1,19 @@
+{
+	"description": "name-author-contents test",
+	"rule": "name-author-contents",
+	"violations": [
+		["#treeitem-empty"],
+		["#treeitem-alempty"],
+		["#treeitem-albmissing"],
+		["#treeitem-albempty"],
+		["#treeitem-li-unnamed"]
+	],
+	"passes": [
+		["#treeitem-text"],
+		["#treeitem-al"],
+		["#treeitem-alb"],
+		["#treeitem-combo"],
+		["#treeitem-title"],
+		["#treeitem-li-named"]
+	]
+}
