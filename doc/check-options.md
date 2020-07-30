@@ -4,6 +4,7 @@
 
 - [How Checks Work](#how-checks-work)
 - [Options](#options)
+  - [Global Options](#global-options)
   - [aria-allowed-role](#aria-allowed-role)
   - [aria-required-children](#aria-required-children)
   - [aria-roledescription](#aria-roledescription)
@@ -55,6 +56,14 @@ axe.configure({
 ```
 
 ## Options
+
+### Global Options
+
+All checks allow these global options:
+
+| Option         | Default | Description                                                     |
+| -------------- | :------ | :-------------------------------------------------------------- |
+| `reviewOnFail` | `false` | Have the check return as "Needs Review" rather than a violation |
 
 ### aria-allowed-role
 
@@ -123,7 +132,7 @@ axe.configure({
   'menuitemradio'
 ]</code></pre>
         </td>
-      <td align="left">List of ARIA roles that support the `aria-roledescription` attribute</td>
+      <td align="left">List of ARIA roles that support the <code>aria-roledescription</code> attribute</td>
     </tr>
   </tbody>
 </table>
