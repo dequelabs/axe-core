@@ -1,6 +1,6 @@
 {
 	"id": "html5-scope",
-	"evaluate": "html5-scope.js",
+	"evaluate": "html5-scope-evaluate",
 	"metadata": {
 		"impact": "moderate",
 		"messages": {

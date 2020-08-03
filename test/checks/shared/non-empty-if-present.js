@@ -9,6 +9,7 @@ describe('non-empty-if-present', function() {
 	var isEdgeOrIe = typeof input.getAttribute('value') === 'string';
 
 	var checkContext = axe.testUtils.MockCheckContext();
+	var queryFixture = axe.testUtils.queryFixture;
 
 	afterEach(function() {
 		fixture.innerHTML = '';
@@ -16,13 +17,14 @@ describe('non-empty-if-present', function() {
 	});
 
 	it('should return false if a value is present', function() {
-		var node = document.createElement('input');
-		node.setAttribute('type', 'submit');
-		node.setAttribute('value', 'woohoo');
-		fixture.appendChild(node);
+		var vNode = queryFixture(
+			'<input id="target" type="submit" value="woohoo" />'
+		);
 
 		assert.isFalse(
-			checks['non-empty-if-present'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('non-empty-if-present')
+				.call(checkContext, null, {}, vNode)
 		);
 		assert.equal(checkContext._data.messageKey, 'has-label');
 	});
@@ -30,48 +32,47 @@ describe('non-empty-if-present', function() {
 	(isEdgeOrIe ? xit : it)(
 		'should return true if a value is not present',
 		function() {
-			var node = document.createElement('input');
-			node.setAttribute('type', 'submit');
-			fixture.appendChild(node);
+			var vNode = queryFixture('<input id="target" type="submit" />');
 
 			assert.isTrue(
-				checks['non-empty-if-present'].evaluate.call(checkContext, node)
+				axe.testUtils
+					.getCheckEvaluate('non-empty-if-present')
+					.call(checkContext, null, {}, vNode)
 			);
 			assert.isNull(checkContext._data);
 		}
 	);
 
 	it('should return false if an value is present, but empty', function() {
-		var node = document.createElement('input');
-		node.setAttribute('type', 'submit');
-		node.setAttribute('value', '');
-		fixture.appendChild(node);
+		var vNode = queryFixture('<input id="target" type="submit" value="" />');
 
 		assert.isFalse(
-			checks['non-empty-if-present'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('non-empty-if-present')
+				.call(checkContext, null, {}, vNode)
 		);
 	});
 
 	it('should return false if the element is not a submit or reset input', function() {
-		var node = document.createElement('input');
-		node.setAttribute('type', 'text');
-		fixture.appendChild(node);
+		var vNode = queryFixture('<input id="target" type="text" />');
 		assert.isFalse(
-			checks['non-empty-if-present'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('non-empty-if-present')
+				.call(checkContext, null, {}, vNode)
 		);
 
-		node = document.createElement('input');
-		node.setAttribute('type', 'button');
-		fixture.appendChild(node);
+		var vNode = queryFixture('<input id="target" type="button" />');
 		assert.isFalse(
-			checks['non-empty-if-present'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('non-empty-if-present')
+				.call(checkContext, null, {}, vNode)
 		);
 
-		node = document.createElement('button');
-		node.setAttribute('type', 'submit');
-		fixture.appendChild(node);
+		var vNode = queryFixture('<button id="target" type="submit"></button');
 		assert.isFalse(
-			checks['non-empty-if-present'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('non-empty-if-present')
+				.call(checkContext, null, {}, vNode)
 		);
 	});
 });

@@ -2,11 +2,13 @@ describe('aria-allowed-attr', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
+	var flatTreeSetup = axe.testUtils.flatTreeSetup;
 	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function() {
 		fixture.innerHTML = '';
 		checkContext.reset();
+		axe.reset();
 	});
 
 	it('should detect incorrectly used attributes', function() {
@@ -16,9 +18,12 @@ describe('aria-allowed-attr', function() {
 		node.tabIndex = 1;
 		node.setAttribute('aria-selected', 'true');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 
 		assert.isFalse(
-			checks['aria-allowed-attr'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-attr')
+				.call(checkContext, node)
 		);
 		assert.deepEqual(checkContext._data, ['aria-selected="true"']);
 	});
@@ -30,9 +35,12 @@ describe('aria-allowed-attr', function() {
 		node.tabIndex = 1;
 		node.setAttribute('aria-checked', 'true');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 
 		assert.isTrue(
-			checks['aria-allowed-attr'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-attr')
+				.call(checkContext, node)
 		);
 	});
 
@@ -43,9 +51,12 @@ describe('aria-allowed-attr', function() {
 		node.tabIndex = 1;
 		node.setAttribute('aria-selected', 'true');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 
 		assert.isFalse(
-			checks['aria-allowed-attr'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-attr')
+				.call(checkContext, node)
 		);
 		assert.deepEqual(checkContext._data, ['aria-selected="true"']);
 	});
@@ -57,36 +68,14 @@ describe('aria-allowed-attr', function() {
 		node.setAttribute('aria-selected', 'true');
 		node.setAttribute('aria-checked', 'true');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 
 		assert.isTrue(
-			checks['aria-allowed-attr'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-attr')
+				.call(checkContext, node)
 		);
 		assert.isNull(checkContext._data);
-	});
-
-	it('should determine attribute validity by calling axe.commons.aria.allowedAttr', function() {
-		var node = document.createElement('div');
-		node.id = 'test';
-		node.tabIndex = 1;
-		node.setAttribute('role', 'cats');
-		node.setAttribute('aria-cats', 'maybe');
-		node.setAttribute('aria-bats', 'dead');
-		fixture.appendChild(node);
-
-		var orig = axe.commons.aria.allowedAttr;
-		var called = 0;
-		axe.commons.aria.allowedAttr = function(role) {
-			assert.equal(role, 'cats');
-			called++;
-			return ['aria-cats', 'aria-bats'];
-		};
-		assert.isTrue(
-			checks['aria-allowed-attr'].evaluate.call(checkContext, node)
-		);
-		assert.isNull(checkContext._data);
-		assert.equal(called, 1);
-
-		axe.commons.aria.allowedAttr = orig;
 	});
 
 	it('should not report on invalid attributes', function() {
@@ -96,9 +85,12 @@ describe('aria-allowed-attr', function() {
 		node.setAttribute('aria-cats', 'true');
 		node.setAttribute('role', 'dialog');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 
 		assert.isTrue(
-			checks['aria-allowed-attr'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-attr')
+				.call(checkContext, node)
 		);
 		assert.isNull(checkContext._data);
 	});
@@ -111,66 +103,82 @@ describe('aria-allowed-attr', function() {
 		node.setAttribute('aria-required', 'true');
 		node.setAttribute('aria-checked', 'true');
 		fixture.appendChild(node);
+		flatTreeSetup(fixture);
 
 		assert.isTrue(
-			checks['aria-allowed-attr'].evaluate.call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('aria-allowed-attr')
+				.call(checkContext, node)
 		);
 		assert.isNull(checkContext._data);
 	});
 
 	describe('options', function() {
 		it('should allow provided attribute names for a role', function() {
-			axe.commons.aria.lookupTable.role.mcheddarton = {
-				type: 'widget',
-				attributes: {
-					allowed: ['aria-checked']
-				},
-				owned: null,
-				nameFrom: ['author'],
-				context: null
-			};
+			axe.configure({
+				standards: {
+					ariaRoles: {
+						mccheddarton: {
+							allowedAttrs: ['aria-checked']
+						}
+					}
+				}
+			});
+
 			fixture.innerHTML =
-				'<div role="mccheddarton" id="target" aria-checked="true" aria-snuggles="true"></div>';
+				'<div role="mccheddarton" id="target" aria-checked="true" aria-selected="true"></div>';
 			var target = fixture.children[0];
-			assert.isTrue(
-				checks['aria-allowed-attr'].evaluate.call(checkContext, target, {
-					mccheddarton: ['aria-checked', 'aria-snuggles']
-				})
+			flatTreeSetup(fixture);
+
+			assert.isFalse(
+				axe.testUtils
+					.getCheckEvaluate('aria-allowed-attr')
+					.call(checkContext, target)
 			);
-			delete axe.commons.aria.lookupTable.role.mccheddarton;
+
+			assert.isTrue(
+				axe.testUtils
+					.getCheckEvaluate('aria-allowed-attr')
+					.call(checkContext, target, {
+						mccheddarton: ['aria-checked', 'aria-selected']
+					})
+			);
 		});
 
 		it('should handle multiple roles provided in options', function() {
-			axe.commons.aria.lookupTable.role.mcheddarton = {
-				type: 'widget',
-				attributes: {
-					allowed: ['aria-checked']
-				},
-				owned: null,
-				nameFrom: ['author'],
-				context: null
-			};
-			axe.commons.aria.lookupTable.role.bagley = {
-				type: 'widget',
-				attributes: {
-					allowed: ['aria-checked']
-				},
-				owned: null,
-				nameFrom: ['author'],
-				context: null
-			};
+			axe.configure({
+				standards: {
+					ariaRoles: {
+						mcheddarton: {
+							allowedAttrs: ['aria-checked']
+						},
+						bagley: {
+							allowedAttrs: ['aria-checked']
+						}
+					}
+				}
+			});
+
 			fixture.innerHTML =
-				'<div role="bagley" id="target" aria-snuggles2="true"></div>';
+				'<div role="bagley" id="target" aria-selected="true"></div>';
 			var target = fixture.children[0];
 			var options = {
-				mccheddarton: ['aria-snuggles'],
-				bagley: ['aria-snuggles2']
+				mccheddarton: ['aria-selected'],
+				bagley: ['aria-selected']
 			};
-			assert.isTrue(
-				checks['aria-allowed-attr'].evaluate.call(checkContext, target, options)
+			flatTreeSetup(fixture);
+
+			assert.isFalse(
+				axe.testUtils
+					.getCheckEvaluate('aria-allowed-attr')
+					.call(checkContext, target)
 			);
-			delete axe.commons.aria.lookupTable.role.mccheddarton;
-			delete axe.commons.aria.lookupTable.role.bagley;
+
+			assert.isTrue(
+				axe.testUtils
+					.getCheckEvaluate('aria-allowed-attr')
+					.call(checkContext, target, options)
+			);
 		});
 	});
 });

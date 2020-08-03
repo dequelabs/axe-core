@@ -1,7 +1,7 @@
 {
 	"id": "table-fake-caption",
 	"selector": "table",
-	"matches": "data-table-matches.js",
+	"matches": "data-table-matches",
 	"tags": [
 		"cat.tables",
 		"experimental",

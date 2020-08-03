@@ -312,12 +312,41 @@ describe('dom.getElementStack', function() {
 				'<main id="1">' +
 				'<div id="2" style="position: absolute; display: none;">Some text</div>' +
 				'<div id="3" style="position: absolute; visibility: hidden">Some text</div>' +
+				'<div id="4" style="position: absolute; opacity: 0">Some text</div>' +
 				'<span id="target">Hello World</span>' +
 				'</main>';
 			axe.testUtils.flatTreeSetup(fixture);
 			var target = fixture.querySelector('#target');
 			var stack = mapToIDs(getElementStack(target));
 			assert.deepEqual(stack, ['target', '1', 'fixture']);
+		});
+
+		it('should return empty array for hidden elements', function() {
+			fixture.innerHTML =
+				'<main id="1">' +
+				'<div id="2" style="position: absolute; display: none">' +
+				'<span id="3">text</span>' +
+				'<span id="target">Hello World</span>' +
+				'</div>' +
+				'</main>';
+			axe.testUtils.flatTreeSetup(fixture);
+			var target = fixture.querySelector('#target');
+			var stack = mapToIDs(getElementStack(target));
+			assert.deepEqual(stack, []);
+		});
+
+		it('should return empty array for children of 0 height scrollable regions', function() {
+			fixture.innerHTML =
+				'<main id="1">' +
+				'<div id="2" style="overflow: scroll; height: 0">' +
+				'<span id="3">text</span>' +
+				'<span id="target">Hello World</span>' +
+				'</div>' +
+				'</main>';
+			axe.testUtils.flatTreeSetup(fixture);
+			var target = fixture.querySelector('#target');
+			var stack = mapToIDs(getElementStack(target));
+			assert.deepEqual(stack, []);
 		});
 
 		// IE11 either only supports clip paths defined by url() or not at all,
@@ -525,6 +554,20 @@ describe('dom.getElementStack', function() {
 				'<main id="1">' +
 				'<div id="target">' +
 				'<span id="2">Hello</span><br/>\n' +
+				'World' +
+				'</div>' +
+				'</main>';
+			axe.testUtils.flatTreeSetup(fixture);
+			var target = fixture.querySelector('#target');
+			var stacks = getTextElementStack(target).map(mapToIDs);
+			assert.deepEqual(stacks, [['target', '1', 'fixture']]);
+		});
+
+		it('should handle truncated text', function() {
+			fixture.innerHTML =
+				'<main id="1">' +
+				'<div id="target" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100px;">' +
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et sollicitudin quam. Fusce mi odio, egestas pulvinar erat eget, vehicula tempus est. Proin vitae ullamcorper velit. Donec sagittis est justo, mattis iaculis arcu facilisis id. Proin pulvinar ornare arcu a fermentum. Quisque et dignissim nulla, sit amet consectetur ipsum. Donec in libero porttitor, dapibus neque imperdiet, aliquam est. Vivamus blandit volutpat fringilla. In mi magna, mollis sit amet imperdiet eu, rutrum ut tellus. Mauris vel condimentum nibh, quis ultricies nisi. Vivamus accumsan quam mauris, id iaculis quam fringilla ac. Curabitur pulvinar dolor ac magna vehicula, non auctor ligula dignissim. Nam ac nibh porttitor, malesuada tortor varius, feugiat turpis. Mauris dapibus, tellus ut viverra porta, ipsum turpis bibendum ligula, at tempor felis ante non libero. Donec dapibus, diam sit amet posuere commodo, magna orci hendrerit ipsum, eu egestas mauris nulla ut ipsum. Sed luctus, orci in fringilla finibus, odio leo porta dolor, eu dignissim risus eros eget erat.' +
 				'World' +
 				'</div>' +
 				'</main>';

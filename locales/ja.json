@@ -17,10 +17,6 @@
 			"description": "role属性の値が要素に対して適切であることを確認します",
 			"help": "ARIAロールは要素に対して適切でなければなりません"
 		},
-		"aria-dpub-role-fallback": {
-			"description": "サポートされていないDPUBロールが暗黙のフォールバックロールを持つ要素でのみ使用されていることを確認します",
-			"help": "サポートされていないDPUB ARIAロールは、暗黙のフォールバックロールを持つ要素で使用するべきです"
-		},
 		"aria-hidden-body": {
 			"description": "ドキュメント本体にaria-hidden='true'が存在していないことを確認します",
 			"help": "ドキュメント本体にaria-hidden='true'が存在してはなりません"
@@ -88,10 +84,6 @@
 		"bypass": {
 			"description": "各ページに少なくとも1つ、ユーザーがナビゲーション部分をスキップして直接本文へ移動できるメカニズムが存在することを確認します",
 			"help": "ページには繰り返されるブロックをスキップする手段が存在しなければなりません"
-		},
-		"checkboxgroup": {
-			"description": "関連している<input type=\"checkbox\">要素がグループ化され、そのグループ指定が一貫していることを確認します",
-			"help": "同じname属性値を持つチェックボックスは、グループの一部でなければなりません"
 		},
 		"color-contrast": {
 			"description": "前景色と背景色のコントラストがWCAG 2のAAコントラスト比のしきい値を満たすことを確認します",
@@ -237,10 +229,6 @@
 			"help": "ランドマークが一意であることを確認します",
 			"description": "ランドマークは一意のロール又はロール／ラベル／タイトル (例: アクセシブルな名前) の組み合わせがなければなりません"
 		},
-		"layout-table": {
-			"description": "レイアウトのための<table>要素に<th>、<caption>要素またはsummary属性が使用されていないことを確認します",
-			"help": "レイアウトテーブルにはデータテーブルの要素を使用してはなりません"
-		},
 		"link-in-text-block": {
 			"description": "色に依存することなくリンクを区別できます",
 			"help": "リンクは色に依存しない方法で周囲のテキストと区別できなければなりません"
@@ -288,10 +276,6 @@
 		"page-has-heading-one": {
 			"description": "ページ、またはそのフレームの少なくとも1つにはレベル1の見出しが含まれていることを確認します",
 			"help": "ページにはレベル1の見出しが含まれていなければなりません"
-		},
-		"radiogroup": {
-			"description": "関連している<input type=\"radio\">要素にグループがあり、そのグループの指定が一貫していることを確認します",
-			"help": "同じname属性値のラジオ入力欄はグループの一部でなければなりません"
 		},
 		"region": {
 			"description": "ページのすべてのコンテンツがlandmarkに含まれていることを確認します",
@@ -352,10 +336,6 @@
 		"video-caption": {
 			"description": "<video>要素にキャプションが存在することを確認します",
 			"help": "<video>要素にはキャプションがなければなりません"
-		},
-		"video-description": {
-			"description": "<video>要素に音声解説が存在することを確認します",
-			"help": "<video>要素には音声解説トラックがなければなりません"
 		}
 	},
 	"checks": {
@@ -408,10 +388,6 @@
 			"pass": "要素にはwidgetロールが存在しています",
 			"fail": "要素にはwidgetロールが存在していません"
 		},
-		"implicit-role-fallback": {
-			"pass": "要素の暗黙的なARIAロールは適切なフォールバックです",
-			"fail": "要素の暗黙的なARIAロールは（サポートされていない）ロールに対して、適切なフォールバックではありません"
-		},
 		"invalidrole": {
 			"pass": "ARIAロールが有効です",
 			"fail": {
@@ -421,7 +397,7 @@
 		},
 		"no-implicit-explicit-label": {
 			"pass": "<label> とアクセシブルな名前の間に不一致はありません",
-			"incomplete": "<label> が ARIA {{=it.data}} 欄の名前の一部である必要がないことを確認しましょう"
+			"incomplete": "<label> が ARIA ${data} 欄の名前の一部である必要がないことを確認しましょう"
 		},
 		"aria-required-attr": {
 			"pass": "すべての必須のARIA属性が存在しています",
@@ -450,11 +426,11 @@
 		},
 		"aria-unsupported-attr": {
 			"pass": "ARIA属性はサポートされています",
-			"fail": "ARIA属性はスクリーン・リーダーや支援技術に広くサポートされていません: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "ARIA属性はスクリーン・リーダーや支援技術に広くサポートされていません: ${data.values}"
 		},
 		"unsupportedrole": {
 			"pass": "ARIAロールはサポートされています",
-			"fail": "使用されているロールはスクリーン・リーダーや支援技術に広くサポートされていません: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "使用されているロールはスクリーン・リーダーや支援技術に広くサポートされていません: ${data.values}"
 		},
 		"aria-valid-attr-value": {
 			"pass": "ARIA属性値が有効です",
@@ -479,8 +455,8 @@
 			"fail": "要素はフォーカス順序に含まれる要素に対して無効なセマンティクスを持ちます"
 		},
 		"color-contrast": {
-			"pass": "要素には{{=it.data.contrastRatio}}の十分なコントラスト比があります",
-			"fail": "要素のコントラスト比が不十分です {{=it.data.contrastRatio}}（前景色: {{=it.data.fgColor}}、背景色: {{=it.data.bgColor}}、フォントサイズ: {{=it.data.fontSize}}、フォントの太さ: {{=it.data.fontWeight}}）。コントラスト比{{=it.data.expectedContrastRatio}}を必要とします",
+			"pass": "要素には${data.contrastRatio}の十分なコントラスト比があります",
+			"fail": "要素のコントラスト比が不十分です ${data.contrastRatio}（前景色: ${data.fgColor}、背景色: ${data.bgColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします",
 			"incomplete": {
 				"default": "コントラスト比を判定できません",
 				"bgImage": "背景画像のため、要素の背景色を判定できません",
@@ -516,25 +492,6 @@
 			"pass": "autocomplete属性は正しくフォーマットされています",
 			"fail": "autocomplete属性は誤ってフォーマットされています"
 		},
-		"fieldset": {
-			"pass": "フィールドセット内に要素が含まれています",
-			"fail": {
-				"default": "要素を含有するフィールドセットまたはARIAグループがありません",
-				"no-legend": "フィールドセットの最初の子要素としてレジェンドが存在しません",
-				"empty-legend": "スクリーン・リーダーに認識可能なテキストがレジェンドに存在しません",
-				"mixed-inputs": "フィールドセットに関連性のない入力欄が含まれています",
-				"no-group-label": "ARIAグループにaria-labelまたはaria-labelledbyが存在しません",
-				"group-mixed-inputs": "ARIAグループに関連性のない入力欄が含まれています"
-			}
-		},
-		"group-labelledby": {
-			"pass": "\"{{=it.data.name}}\" という名前を持つ要素には、共通のラベルおよび一意のラベルがあり、aria-labelledbyを通じて参照されます",
-			"fail": {
-				"default": "\"${data.name}\" という名前の要素すべてに、共通のラベルおよび aria-labelledby で参照された一意のラベルの両方がありません",
-				"no-shared-label": "\"${data.name}\" という名前の要素すべてに、aria-labelledby で参照された共有のラベルがありません",
-				"no-unique-label": "\"${data.name}\" という名前の要素すべてに、aria-labelledby で参照された一意のラベルがありません"
-			}
-		},
 		"accesskeys": {
 			"pass": "アクセスキー属性値は一意です",
 			"fail": "ドキュメントに同じアクセスキーを持った複数の要素が存在しています"
@@ -564,8 +521,8 @@
 			"fail": "フォーカス可能なコンテンツは tabindex='-1' を指定するか、DOMから削除するべきです"
 		},
 		"landmark-is-top-level": {
-			"pass": "{{=it.data.role }} ランドマークはトップレベルにあります",
-			"fail": "{{=it.data.role }} ランドマークが他のランドマークに含まれています"
+			"pass": "${data.role} ランドマークはトップレベルにあります",
+			"fail": "${data.role} ランドマークが他のランドマークに含まれています"
 		},
 		"page-has-heading-one": {
 			"pass": "ページには少なくとも1つのレベル1の見出しがあります",
@@ -673,10 +630,6 @@
 			"pass": "マルチメディア要素にキャプショントラックが存在しています",
 			"incomplete": "要素にキャプションが存在することを確認します"
 		},
-		"description": {
-			"pass": "マルチメディア要素に音声解説トラックが存在しています",
-			"incomplete": "要素に音声解説が存在することを確認します"
-		},
 		"frame-tested": {
 			"pass": "iframeはaxe-coreでテストされました",
 			"fail": "iframeはaxe-coreでテストできませんでした",
@@ -698,7 +651,7 @@
 		},
 		"meta-viewport": {
 			"pass": "<meta>タグはモバイルデバイスでの拡大を無効にしません",
-			"fail": "<meta>タグの{{=it.data}}がモバイルデバイスでの拡大を無効にします"
+			"fail": "<meta>タグの${data}がモバイルデバイスでの拡大を無効にします"
 		},
 		"header-present": {
 			"pass": "ページにheaderが存在しています",
@@ -743,11 +696,11 @@
 		},
 		"duplicate-id-active": {
 			"pass": "ドキュメントに同じid属性を持つ有効な要素はありません",
-			"fail": "ドキュメントに同じid属性を持つ有効な要素があります: {{=it.data}}"
+			"fail": "ドキュメントに同じid属性を持つ有効な要素があります: ${data}"
 		},
 		"duplicate-id-aria": {
 			"pass": "ドキュメントに同じid属性を持つARIAまたはラベルに参照された要素はありません",
-			"fail": "ドキュメントに同じid属性を持つARIAに参照された複数の要素があります: {{=it.data}}"
+			"fail": "ドキュメントに同じid属性を持つARIAに参照された複数の要素があります: ${data}"
 		},
 		"duplicate-id": {
 			"pass": "ドキュメントに同じid属性を共有する静的な要素はありません",
@@ -826,18 +779,6 @@
 		"caption-faked": {
 			"pass": "テーブルの一行目がキャプションとして使用されていません",
 			"fail": "テーブルの最初の子はテーブルセルではなく、キャプションであるべきです"
-		},
-		"has-caption": {
-			"pass": "レイアウトテーブルに<caption>要素を使用していません",
-			"fail": "レイアウトテーブルに<caption>要素を使用しています"
-		},
-		"has-summary": {
-			"pass": "レイアウトテーブルにsummary属性を使用していません",
-			"fail": "レイアウトテーブルにsummary属性を使用しています"
-		},
-		"has-th": {
-			"pass": "レイアウトテーブルに<th>要素を使用していません",
-			"fail": "レイアウトテーブルに<th>要素を使用しています"
 		},
 		"html5-scope": {
 			"pass": "scope属性がテーブルヘッダー要素（<th>）にのみ使用されています",

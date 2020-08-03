@@ -17,10 +17,6 @@
 			"description": "역할(role) 속성이 요소에 적절한지 확인하세요.",
 			"help": "요소에 적절한 ARIA 역할(role)을 설정해야 합니다."
 		},
-		"aria-dpub-role-fallback": {
-			"description": "지원되지 않는 DPUB 역할(role)이 암시적 대체 역할을 가진 요소에만 사용되도록 보장합니다.",
-			"help": "암시적 대체 역할이 있는 요소에 지원되지 않는 DPUB ARIA 역할을 사용해야 합니다."
-		},
 		"aria-hidden-body": {
 			"description": "<body> 요소의 aria-hidden='true' 설정을 확인하세요.",
 			"help": "aria-hidden='true' 설정이 <body> 요소에 설정되어서는 안됩니다."
@@ -84,10 +80,6 @@
 		"bypass": {
 			"description": "사용자가 내비게이션을 건너띄고, 콘텐츠로 바로 이동할 수 있는 하나 이상의 메커니즘을 제공해야 합니다.",
 			"help": "페이지의 반복 블록(예: 내비게이션)을 건너띌 수 있는 수단이 필요합니다."
-		},
-		"checkboxgroup": {
-			"description": "관련 <input type=\"checkbox\"> 요소를 묶는 그룹 요소가 있고 그룹 지정이 일관성이 있는지 확인합니다.",
-			"help": "name 속성 값이 동일한 checkbox 입력은 그룹의 일부여야 합니다."
 		},
 		"color-contrast": {
 			"description": "전경색과 배경색 간의 대비가 WCAG2 AA 기준 값을 충족하도록 보장해야 합니다.",
@@ -225,10 +217,6 @@
 			"description": "랜드마크에는 고유한 역할(role) 또는 role/label/title (즉, 접근 가능한 이름) 조합이 있어야 합니다.",
 			"help": "랜드마크가 고유한지 확인합니다."
 		},
-		"layout-table": {
-			"description": "프리젠테이션 <table> 요소가 <th>, <caption> 요소 또는 summary 속성을 사용하지 않도록 합니다.",
-			"help": "레이아웃 테이블은 데이터 테이블 요소가 아니므로 제목 셀, 표 제목, 요약 속성을 사용해서는 안됩니다."
-		},
 		"link-in-text-block": {
 			"description": "색상에 의존하지 않고 링크를 구별 할 수 있어야 합니다.",
 			"help": "링크는 색상에 의존하지 않는 방식으로 주변 텍스트와 구별 되어야 합니다."
@@ -272,10 +260,6 @@
 		"page-has-heading-one": {
 			"description": "페이지 또는 해당 프레임 중 하나 이상의 제목 레벨이 1인 요소가 포함되어 있는지 확인합니다.",
 			"help": "페이지는 제목 레벨이 1인 요소를 포함해야 합니다."
-		},
-		"radiogroup": {
-			"description": "관련 <input type=\"radio\"> 요소에 그룹이 있고 그룹 지정이 일관 되도록 합니다.",
-			"help": "name 속성 값이 동일한 radio 입력은 그룹의 일부여야 합니다."
 		},
 		"region": {
 			"description": "모든 페이지 콘텐츠가 랜드마크로 포함되어 있는지 확인합니다.",
@@ -332,10 +316,6 @@
 		"video-caption": {
 			"description": "<video> 요소에 캡션(자막)이 있는지 확인합니다.",
 			"help": "<video> 요소에는 캡션(자막)이 있어야 합니다."
-		},
-		"video-description": {
-			"description": "<video> 요소에 오디오 설명이 있는지 확인합니다.",
-			"help": "<video> 요소에는 오디오 설명 트랙이 있어야 합니다."
 		}
 	},
 	"checks": {
@@ -358,15 +338,11 @@
 		},
 		"aria-errormessage": {
 			"pass": "지원되고 있는 aria-errormessage 기술을 사용하고 있습니다.",
-			"fail": "aria-errormessage 값{{~it.data:value}} {=value}{{~}}는 메시지를 공지하는 방법을 사용해야 합니다.(예를 들어, aria-live, aria-describedby,role=alert 등)"
+			"fail": "aria-errormessage 값 ${data.values}는 메시지를 공지하는 방법을 사용해야 합니다.(예를 들어, aria-live, aria-describedby,role=alert 등)"
 		},
 		"has-widget-role": {
 			"pass": "요소에 widget 역할이 ​​있습니다.",
 			"fail": "요소에 widget 역할이 ​​없습니다."
-		},
-		"implicit-role-fallback": {
-			"pass": "요소의 내재된 ARIA 역할은 적절한 대안 입니다.",
-			"fail": "요소의 암시적 ARIA 역할은(지원되지 않는) 역할에 대한 좋은 대안이 아닙니다."
 		},
 		"invalidrole": {
 			"pass": "ARIA 역할이 유효합니다.",
@@ -374,7 +350,7 @@
 		},
 		"no-implicit-explicit-label": {
 			"pass": "<label>과 접근 가능한 이름이 일치하지 않습니다.",
-			"incomplete": "<label>이 ARIA {{=it.data}} 필드 이름의 일부일 필요는 없는지 확인하세요."
+			"incomplete": "<label>이 ARIA ${data} 필드 이름의 일부일 필요는 없는지 확인하세요."
 		},
 		"aria-required-attr": {
 			"description": "ARIA 역할을 가진 요소가 모든 필수 ARIA 속성을 갖도록 합니다.",
@@ -382,37 +358,37 @@
 		},
 		"aria-required-children": {
 			"pass": "필수적인 ARIA 역할이 존재합니다.",
-			"fail": "필수적인 ARIA 역할이 제공되지 않고 있습니다: {{~it.data:value}} {{=value}}{{~}}",
-			"incomplete": "ARIA의 자손 역할이 추가되어야 합니다: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "필수적인 ARIA 역할이 제공되지 않고 있습니다:  ${data.values}",
+			"incomplete": "ARIA의 자손 역할이 추가되어야 합니다:  ${data.values}"
 		},
 		"aria-required-parent": {
 			"pass": "필수적인 ARIA 역할이 존재합니다.",
-			"fail": "필수적인 ARIA 역할이 제공되지 않고 있습니다: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "필수적인 ARIA 역할이 제공되지 않고 있습니다:  ${data.values}"
 		},
 		"aria-unsupported-attr": {
 			"pass": "사용된 ARIA 속성은 지원되고 있습니다.",
-			"fail": "사용된 ARIA 속성은 스크린 리더나 보조 기술에 널리 지원되지 않고 있습니다: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "사용된 ARIA 속성은 스크린 리더나 보조 기술에 널리 지원되지 않고 있습니다:  ${data.values}"
 		},
 		"unsupportedrole": {
 			"pass": "사용된 ARIA 역할이 지원됩니다.",
-			"fail": "사용된 ARIA 속성은 스크린 리더나 보조 기술에 널리 지원되지 않고 있습니다.: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "사용된 ARIA 속성은 스크린 리더나 보조 기술에 널리 지원되지 않고 있습니다.:  ${data.values}"
 		},
 		"aria-valid-attr-value": {
 			"pass": "ARIA 속성이 유효합니다.",
-			"fail": "무효인 ARIA 속성입니다:{{~it.data:value}} {{=value}}{{~}}",
-			"incomplete": "페이지에 ARIA 속성의 요소 ID가 존재하지 않습니다:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": "무효인 ARIA 속성입니다: ${data.values}",
+			"incomplete": "페이지에 ARIA 속성의 요소 ID가 존재하지 않습니다: ${data.values}"
 		},
 		"aria-valid-attr": {
 			"pass": "ARIA 속성명이 유효합니다.",
-			"fail": "무효인 ARIA 속성명 입니다: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "무효인 ARIA 속성명 입니다:  ${data.values}"
 		},
 		"valid-scrollable-semantics": {
 			"pass": "요소는 포커스 순서에서 요소에 대한 유효한 의미를 갖습니다.",
 			"fail": "요소의 포커스 순서에서 요소에 대한 의미가 유효하지 않습니다."
 		},
 		"color-contrast": {
-			"pass": "{{=it.data.contrastRatio}} 요소의 색상 대비가 충분합니다.",
-			"fail": "{{=it.data.contrastRatio}} 요소의 색상 대비가 충분하지 않습니다. (foreground color: {{=it.data.fgColor}}, background color: {{=it.data.bgColor}}, font size: {{=it.data.fontSize}}, font weight: {{=it.data.fontWeight}}). {{=it.data.expectedContrastRatio}} 예상 대비 비율",
+			"pass": "${data.contrastRatio} 요소의 색상 대비가 충분합니다.",
+			"fail": "${data.contrastRatio} 요소의 색상 대비가 충분하지 않습니다. (foreground color: ${data.fgColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). ${data.expectedContrastRatio} 예상 대비 비율",
 			"incomplete": {
 				"bgImage": "배경 이미지로 인해 요소의 배경색을 확인할 수 없습니다.",
 				"bgGradient": "배경 그라데이션으로 인해 요소의 배경색을 결정할 수 없습니다.",
@@ -447,14 +423,6 @@
 			"pass": "autocomplete 속성이 올바르게 형식화 되었습니다.",
 			"fail": "autocomplete 속성의 형식이 잘못 되었습니다."
 		},
-		"fieldset": {
-			"pass": "요소가 Fieldset에 포함되어 있습니다.",
-			"fail": "{{var code = it.data && it.data.failureCode;}}{{? code === 'no-legend'}}Fieldset에 첫 번째 자식 요소로 legend가 없습니다{{?? code === 'empty-legend'}}legend에 스크린 리더에 표시되는 텍스트가 없습니다{{?? code === 'mixed-inputs'}}Fieldset에 관련 없는 inputs을 포함합니다{{?? code === 'no-group-label'}}ARIA 그룹은 aria-label 또는 aria-labelledby 설정이 없습니다{{?? code === 'group-mixed-inputs'}}ARIA 그룹에 관련 없는 inputs을 포함합니다{{??}}요소는 ARIA 그룹 또는 fieldset을 포함하지 않습니다{{?}}"
-		},
-		"group-labelledby": {
-			"pass": "이름이 \"{{=it.data.name}}\"인 요소는 공유 레이블과 고유 레이블이 모두 있으며, 이 레이블은 aria-labelledby를 통해 참조됩니다.",
-			"fail": "{{var code = it.data && it.data.failureCode;}}이(가) 있는 요소에는 모두 \"{{=it.data.name}}\" 이(가) 없습니다. {{? code === 'no-shared-label' }} 공유된 레이블{{?? code === 'no-unique-label' }}고유 레이블{{??}}공유 라벨과 고유 라벨 둘 다{{?}}, aria-labelledby을 통해 참조됩니다."
-		},
 		"accesskeys": {
 			"pass": "accesskey 속성 값은 고유합니다",
 			"fail": "문서에 동일한 accesskey를 가진 여러 요소가 있습니다."
@@ -480,8 +448,8 @@
 			"fail": "포커스 가능 콘텐츠는 tabindex='-1' 이거나 DOM에서 제거 되어야 합니다."
 		},
 		"landmark-is-top-level": {
-			"pass": "{{=it.data.role }} 랜드마크가 최상위 레벨에 있습니다.",
-			"fail": "{{=it.data.role } 랜드마크는 다른 랜드마크에 포함되어 있습니다."
+			"pass": "${data.role} 랜드마크가 최상위 레벨에 있습니다.",
+			"fail": "${data.role} 랜드마크는 다른 랜드마크에 포함되어 있습니다."
 		},
 		"page-has-heading-one": {
 			"pass": "페이지에 하나 이상의 제목 레벨 1이 있습니다.",
@@ -583,10 +551,6 @@
 			"pass": "멀티미디어 요소에는 자막 트랙이 있습니다.",
 			"incomplete": "요소에 캡션을 사용할 수 있는지 확인하세요."
 		},
-		"description": {
-			"pass": "멀티미디어 요소에는 오디오 설명 트랙이 있습니다.",
-			"incomplete": "요소에 대한 오디오 설명이 사용 가능한지 확인하세요."
-		},
 		"frame-tested": {
 			"pass": "iframe은 axe-core로 테스트 되었습니다.",
 			"fail": "iframe은 axe-core로 테스트 할 수 없습니다.",
@@ -603,7 +567,7 @@
 		},
 		"meta-viewport": {
 			"pass": "<meta> 태그는 모바일 장치에서 확대/축소를 비활성화하지 않습니다.",
-			"fail": "<meta> 태그의 {{= it.data}}는 모바일 장치에서 확대/축소를 사용하지 않습니다."
+			"fail": "<meta> 태그의 ${data}는 모바일 장치에서 확대/축소를 사용하지 않습니다."
 		},
 		"header-present": {
 			"pass": "페이지에 헤더가 있습니다.",
@@ -644,11 +608,11 @@
 		},
 		"duplicate-id-active": {
 			"pass": "문서에 같은 id 속성을 갖는 유효한 요소는 없습니다.",
-			"fail": "문서에 같은 id 속성을 갖는 유효한 요소가 있습니다: {{=it.data}}"
+			"fail": "문서에 같은 id 속성을 갖는 유효한 요소가 있습니다: ${data}"
 		},
 		"duplicate-id-aria": {
 			"pass": "문서에 ARIA로 참조된 요소나 동일한 id 속성을 공유하는 레이블이 없습니다.",
-			"fail": "동일한 id 속성을 가진 ARIA를 참조하는 여러 요소가 문서에 있습니다: {{=it.data}}"
+			"fail": "동일한 id 속성을 가진 ARIA를 참조하는 여러 요소가 문서에 있습니다: ${data}"
 		},
 		"duplicate-id": {
 			"pass": "문서에 동일한 id 속성을 공유하는 정적 요소가 없습니다.",
@@ -664,7 +628,10 @@
 		},
 		"avoid-inline-spacing": {
 			"pass": "텍스트 간격에 영향을 주는 '!important'를 가진 인라인 스타일이 지정되지 않았습니다.",
-			"fail": "인라인 스타일에서 '!important' 제거 {{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}}, 이 항목을 재정의하는 것은 대부분의 브라우저에서 지원되지 않습니다."
+			"fail": {
+				"singular": "인라인 스타일에서 '!important' 제거 s ${data.values}, 이 항목을 재정의하는 것은 대부분의 브라우저에서 지원되지 않습니다.",
+				"plural": "인라인 스타일에서 '!important' 제거  ${data.values}, 이 항목을 재정의하는 것은 대부분의 브라우저에서 지원되지 않습니다."
+			}
 		},
 		"button-has-visible-text": {
 			"pass": "요소에는 스크린 리더에 표시되는 내부 텍스트가 있습니다.",
@@ -695,7 +662,10 @@
 			"fail": "요소에 alt 속성이 존재하지 않거나, alt 속성이 비어 있습니다."
 		},
 		"non-empty-if-present": {
-			"pass": "요소 {{?it.data}} 비어 있지 않은 값 속성이 있습니다{{??}}값 속성이 없습니다{{?}}",
+			"pass": {
+				"default": "요소 값 속성이 없습니다",
+				"has-label": "요소 비어 있지 않은 값 속성이 있습니다"
+			},
 			"fail": "요소에 value 속성이 존재하고, value 속성이 비어있습니다."
 		},
 		"non-empty-title": {
@@ -717,18 +687,6 @@
 		"caption-faked": {
 			"pass": "테이블의 첫 번째 행은 캡션으로 사용되지 않습니다.",
 			"fail": "테이블의 첫 번째 자식은 테이블 셀 대신 캡션 이어야 합니다."
-		},
-		"has-caption": {
-			"pass": "레이아웃 테이블에 <caption> 요소를 사용하지 않았습니다.",
-			"fail": "레이아웃 테이블에 <caption> 요소를 사용하고 있습니다."
-		},
-		"has-summary": {
-			"pass": "레이아웃 테이블에 summary 속성을 사용하지 않았습니다.",
-			"fail": "레이아웃 테이블에 summary 속성을 사용했습니다."
-		},
-		"has-th": {
-			"pass": "레이아웃 테이블에 <th> 요소를 사용하지 않았습니다.",
-			"fail": "레이아웃 테이블에 <th> 요소를 사용했습니다."
 		},
 		"html5-scope": {
 			"pass": "scope 속성은 테이블 헤더 요소 (<th>)에서만 사용됩니다.",

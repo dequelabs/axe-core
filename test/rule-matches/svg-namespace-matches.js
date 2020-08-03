@@ -45,4 +45,55 @@ describe('svg-namespace-matches', function() {
 		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
 		assert.isFalse(rule.matches(node, virtualNode));
 	});
+
+	describe('Serial Virtual Node', function() {
+		it('should return true when passed an SVG element', function() {
+			var serialNode = new axe.SerialVirtualNode({
+				nodeName: 'svg'
+			});
+			var child = new axe.SerialVirtualNode({
+				nodeName: 'title',
+				nodeValue: 'Pretty picture'
+			});
+			child.parent = serialNode;
+			serialNode.children = [child];
+
+			assert.isTrue(rule.matches(null, serialNode));
+		});
+
+		it('returns true when passed an SVG circle element', function() {
+			var serialNode = new axe.SerialVirtualNode({
+				nodeName: 'svg'
+			});
+			var child = new axe.SerialVirtualNode({
+				nodeName: 'circle'
+			});
+			child.parent = serialNode;
+			serialNode.children = [child];
+
+			assert.isTrue(rule.matches(null, child));
+		});
+
+		it('returns false when passed an HTML element', function() {
+			var serialNode = new axe.SerialVirtualNode({
+				nodeName: 'h1',
+				nodeValue: 'Hello world'
+			});
+
+			assert.isFalse(rule.matches(null, serialNode));
+		});
+
+		it('should return false when passed an svg element without a parent', function() {
+			var serialNode = new axe.SerialVirtualNode({
+				nodeName: 'circle'
+			});
+			var parent = new axe.SerialVirtualNode({
+				nodeName: 'svg'
+			});
+			parent.children = [serialNode];
+			serialNode.parent = parent;
+
+			assert.isTrue(rule.matches(null, serialNode));
+		});
+	});
 });

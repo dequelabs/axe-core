@@ -1,8 +1,8 @@
 {
 	"id": "html-has-lang",
 	"selector": "html",
-	"matches": "window-is-top.js",
-	"tags": ["cat.language", "wcag2a", "wcag311"],
+	"matches": "window-is-top-matches",
+	"tags": ["cat.language", "wcag2a", "wcag311", "ACT"],
 	"metadata": {
 		"description": "Ensures every HTML document has a lang attribute",
 		"help": "<html> element must have a lang attribute"

@@ -1,6 +1,8 @@
-/*global Check, CheckResult, axe */
 describe('Check', function() {
 	'use strict';
+
+	var Check = axe._thisWillBeDeletedDoNotUse.base.Check;
+	var CheckResult = axe._thisWillBeDeletedDoNotUse.base.CheckResult;
 	var noop = function() {};
 
 	var fixture = document.getElementById('fixture');
@@ -36,8 +38,8 @@ describe('Check', function() {
 				var check = new Check({
 					options: ['foo']
 				});
-				check.configure({ options: 'fong' });
-				assert.equal('fong', check.test());
+				check.configure({ options: { value: 'fong' } });
+				assert.deepEqual({ value: 'fong' }, check.test());
 				delete Check.prototype.test;
 			});
 			it('should override evaluate', function() {
@@ -95,6 +97,62 @@ describe('Check', function() {
 				});
 				assert.equal('fong', check.test());
 				delete Check.prototype.test;
+			});
+			it('should override evaluate as ID', function() {
+				axe._load({});
+				axe._audit.metadataFunctionMap['custom-evaluate'] = function() {
+					return 'fong';
+				};
+
+				Check.prototype.test = function() {
+					return this.evaluate();
+				};
+				var check = new Check({
+					evaluate: 'function () { return "foo"; }'
+				});
+				check.configure({ evaluate: 'custom-evaluate' });
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+				delete axe._audit.metadataFunctionMap['custom-evaluate'];
+			});
+			it('should override after as ID', function() {
+				axe._load({});
+				axe._audit.metadataFunctionMap['custom-after'] = function() {
+					return 'fong';
+				};
+
+				Check.prototype.test = function() {
+					return this.after();
+				};
+				var check = new Check({
+					after: 'function () { return "foo"; }'
+				});
+				check.configure({ after: 'custom-after' });
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+				delete axe._audit.metadataFunctionMap['custom-after'];
+			});
+			it('should error if evaluate does not match an ID', function() {
+				function fn() {
+					var check = new Check({});
+					check.configure({ evaluate: 'does-not-exist' });
+				}
+
+				assert.throws(
+					fn,
+					'Function ID does not exist in the metadata-function-map: does-not-exist'
+				);
+			});
+			it('should error if after does not match an ID', function() {
+				function fn() {
+					var check = new Check({});
+					check.configure({ after: 'does-not-exist' });
+				}
+
+				assert.throws(
+					fn,
+					'Function ID does not exist in the metadata-function-map: does-not-exist'
+				);
 			});
 			it('should override enabled', function() {
 				Check.prototype.test = function() {
@@ -168,6 +226,15 @@ describe('Check', function() {
 				}).run(fixture, { options: expected }, {}, noop);
 			});
 
+			it('should normalize non-object options', function(done) {
+				new Check({
+					evaluate: function(node, options) {
+						assert.deepEqual(options, { value: 'foo' });
+						done();
+					}
+				}).run(fixture, { options: 'foo' }, {}, noop);
+			});
+
 			it('should pass the context through to check evaluate call', function(done) {
 				var configured = {
 					cssom: 'yay',
@@ -194,7 +261,7 @@ describe('Check', function() {
 				}).run(tree[0]);
 			});
 
-			it('should bind context to `bindCheckResult`', function(done) {
+			it.skip('should bind context to `bindCheckResult`', function(done) {
 				var orig = axe.utils.checkHelper,
 					cb = function() {
 						return true;
@@ -321,6 +388,15 @@ describe('Check', function() {
 				}).runSync(fixture, { options: expected }, {});
 			});
 
+			it('should normalize non-object options', function(done) {
+				new Check({
+					evaluate: function(node, options) {
+						assert.deepEqual(options, { value: 'foo' });
+						done();
+					}
+				}).run(fixture, { options: 'foo' }, {}, noop);
+			});
+
 			it('should pass the context through to check evaluate call', function() {
 				var configured = {
 					cssom: 'yay',
@@ -411,6 +487,36 @@ describe('Check', function() {
 				}
 			});
 		});
+
+		describe('getOptions', function() {
+			var check;
+			beforeEach(function() {
+				check = new Check({
+					options: {
+						foo: 'bar'
+					}
+				});
+			});
+
+			it('should return default check options', function() {
+				assert.deepEqual(check.getOptions(), { foo: 'bar' });
+			});
+
+			it('should merge options with Check defaults', function() {
+				var options = check.getOptions({ hello: 'world' });
+				assert.deepEqual(options, { foo: 'bar', hello: 'world' });
+			});
+
+			it('should override defaults', function() {
+				var options = check.getOptions({ foo: 'world' });
+				assert.deepEqual(options, { foo: 'world' });
+			});
+
+			it('should normalize passed in options', function() {
+				var options = check.getOptions('world');
+				assert.deepEqual(options, { foo: 'bar', value: 'world' });
+			});
+		});
 	});
 
 	describe('spec object', function() {
@@ -453,7 +559,7 @@ describe('Check', function() {
 		describe('.options', function() {
 			it('should be set', function() {
 				var spec = {
-					options: ['monkeys', 'bananas']
+					options: { value: ['monkeys', 'bananas'] }
 				};
 				assert.equal(new Check(spec).options, spec.options);
 			});
@@ -461,6 +567,13 @@ describe('Check', function() {
 			it('should have no default', function() {
 				var spec = {};
 				assert.equal(new Check(spec).options, spec.options);
+			});
+
+			it('should normalize non-object options', function() {
+				var spec = {
+					options: 'foo'
+				};
+				assert.deepEqual(new Check(spec).options, { value: 'foo' });
 			});
 		});
 

@@ -1,6 +1,6 @@
 {
 	"id": "has-alt",
-	"evaluate": "has-alt.js",
+	"evaluate": "has-alt-evaluate",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

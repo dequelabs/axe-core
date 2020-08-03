@@ -17,10 +17,6 @@
 			"description": "Garantiza que el atributo role tiene un valor apropiado para el elemento",
 			"help": "ARIA role debe ser apropiado para el elemento"
 		},
-		"aria-dpub-role-fallback": {
-			"description": "Garantiza que los 'DPUB roles' no admitidos solo se usan en elementos con roles alternativos implícitos",
-			"help": "Los 'DPUB ARIA roles' no admitidos deberían usarse en elementos con roles alternativos implícitos"
-		},
 		"aria-hidden-body": {
 			"description": "Garantiza que aria-hidden='true' no está presente en el 'body' del documento.",
 			"help": "aria-hidden='true' no debe estar presente en el 'body' del documento"
@@ -84,10 +80,6 @@
 		"bypass": {
 			"description": "Garantiza que cada página tiene al menos un medio para que un usuario pueda saltarse la navegación y pasar directamente al contenido",
 			"help": "Las páginas deben tener medios para saltarse bloques repetidos"
-		},
-		"checkboxgroup": {
-			"description": "Garantiza que los elementos <input type=\"checkbox\"> relacionados tienen un grupo y que la designación del grupo es consistente",
-			"help": "Los 'Checkbox inputs' con el mismo valor para el atributo name deben ser parte de un grupo"
 		},
 		"color-contrast": {
 			"description": "Garantiza que el contraste entre colores de primer plano y fondo cumple los límites de la ratio para contraste WCAG 2 AA",
@@ -225,10 +217,6 @@
 			"help": "Garantiza que los puntos de referencia son únicos",
 			"description": "Los puntos de referencia deben tener una única combinación de role o role/label/title (es decir, un nombre accesible único)"
 		},
-		"layout-table": {
-			"description": "Garantiza que los elementos de diseño en <table> no usan elementos <th>, <caption> o el atributo summary",
-			"help": "Las tablas de diseño no deben usar elementos de tablas de datos"
-		},
 		"link-in-text-block": {
 			"description": "Los enlaces pueden distinguirse sin depender del color",
 			"help": "Los enlaces deben distinguirse del texto adyacente por un medio que no dependa del color"
@@ -272,10 +260,6 @@
 		"page-has-heading-one": {
 			"description": "Garantizar que la página, o al menos uno de sus marcos, contiene un encabezado de nivel 1",
 			"help": "La página debe contener un encabezado de nivel 1"
-		},
-		"radiogroup": {
-			"description": "Garantiza que los elementos <input type=\"radio\"> relacionados tienen un grupo y que la designación del grupo es consistente",
-			"help": "'Radio inputs' con el mismo valor para el atributo name deben formar parte de un grupo"
 		},
 		"region": {
 			"description": "Garantiza que todo el contenido de la página está incluido en puntos de referencia",
@@ -332,10 +316,6 @@
 		"video-caption": {
 			"description": "Garantiza que los elementos <video> tienen subtítulos",
 			"help": "Los elementos <video> deben tener subtítulos"
-		},
-		"video-description": {
-			"description": "Garantiza que los elementos <video> tienen audiodescripciones",
-			"help": "Los elementos <video> deben tener una pista de audiodescripción"
 		}
 	},
 	"checks": {
@@ -345,12 +325,21 @@
 		},
 		"aria-allowed-attr": {
 			"pass": "Los atributos ARIA se usan correctamente para el rol definido",
-			"fail": "En ARIA, atributo{{=it.data && it.data.length > 1 ? 's no están permitidos' : 'no está permitido'}} :{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "En ARIA, atributos no están permitidos : ${data.values}",
+				"plural": "En ARIA, atributono está permitido : ${data.values}"
+			}
 		},
 		"aria-allowed-role": {
 			"pass": "El rol ARIA está permitido para el elemento proporcionado",
-			"fail": "En ARIA, role{{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}} {{=it.data && it.data.length > 1 ? 'no están permitidos' : ' no está permitido'}} para el elemento proporcionado",
-			"incomplete": "En ARIA, hay que eliminar role{{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}} cuando el elemento se haga visible, ya que {{=it.data && it.data.length > 1 ? 'no están permitidos' : 'no está permitido'}} para el elemento"
+			"fail": {
+				"singular": "En ARIA, roles ${data.values} no están permitidos para el elemento proporcionado",
+				"plural": "En ARIA, role ${data.values}  no está permitido para el elemento proporcionado"
+			},
+			"incomplete": {
+				"singular": "En ARIA, hay que eliminar roles ${data.values} cuando el elemento se haga visible, ya que no están permitidos para el elemento",
+				"plural": "En ARIA, hay que eliminar role ${data.values} cuando el elemento se haga visible, ya que no está permitido para el elemento"
+			}
 		},
 		"aria-hidden-body": {
 			"pass": "No hay ningún atributo aria-hidden presente en el 'body' del documento",
@@ -358,15 +347,14 @@
 		},
 		"aria-errormessage": {
 			"pass": "Usa una técnica admitida para aria-errormessage",
-			"fail": "En aria-errormessage, valor{{=it.data && it.data.length > 1 ? 'es' : ''}} {{~it.data:value}} `{{=value}}{{~}}`, se debe usar una técnica para anunciar el mensaje (p. ej., aria-live, aria-describedby, role=alert, etc.)"
+			"fail": {
+				"singular": "En aria-errormessage, valores  ${data.values}`, se debe usar una técnica para anunciar el mensaje (p. ej., aria-live, aria-describedby, role=alert, etc.)",
+				"plural": "En aria-errormessage, valor  ${data.values}`, se debe usar una técnica para anunciar el mensaje (p. ej., aria-live, aria-describedby, role=alert, etc.)"
+			}
 		},
 		"has-widget-role": {
 			"pass": "El elemento tiene un rol de widget.",
 			"fail": "El elemento no tiene un rol de widget."
-		},
-		"implicit-role-fallback": {
-			"pass": "El rol ARIA implícito de los elementos es una alternativa apropiada",
-			"fail": "El rol ARIA implícito de los elementos no es una buena alternativa para el rol (no admitido)"
 		},
 		"invalidrole": {
 			"pass": "El rol ARIA es válido",
@@ -374,45 +362,69 @@
 		},
 		"no-implicit-explicit-label": {
 			"pass": "No hay discordancia entre un <label> y el nombre accesible",
-			"incomplete": "Comprobar que el <label> no necesita ser parte del ARIA {{=it.data}} para el nombre del campo"
+			"incomplete": "Comprobar que el <label> no necesita ser parte del ARIA ${data} para el nombre del campo"
 		},
 		"aria-required-attr": {
 			"pass": "Todos los atributos ARIA requeridos están presentes",
-			"fail": "Atributo{{=it.data && it.data.length > 1 ? 's requeridos no presentes' : ' requerido no presente'}}:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "Atributos requeridos no presentes: ${data.values}",
+				"plural": "Atributo requerido no presente: ${data.values}"
+			}
 		},
 		"aria-required-children": {
 			"pass": "Los hijos ARIA requeridos están presentes",
-			"fail": "Rol de {{=it.data && it.data.length > 1 ? 'hijos' : 'hijo'}} requerido en ARIA no presente:{{~it.data:value}} {{=value}}{{~}}",
-			"incomplete": "Esperando que se añada rol ARIA para {{=it.data && it.data.length > 1 ? 'hijos' : 'hijo'}}:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "Rol de hijos requerido en ARIA no presente: ${data.values}",
+				"plural": "Rol de hijo requerido en ARIA no presente: ${data.values}"
+			},
+			"incomplete": {
+				"singular": "Esperando que se añada rol ARIA para hijos: ${data.values}",
+				"plural": "Esperando que se añada rol ARIA para hijo: ${data.values}"
+			}
 		},
 		"aria-required-parent": {
 			"pass": "Rol de padre requerido en ARIA presente",
-			"fail": "Rol de ARIA requerido para padre {{=it.data && it.data.length > 1 ? 's' : ''}} no presente:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "Rol de ARIA requerido para padre s no presente: ${data.values}",
+				"plural": "Rol de ARIA requerido para padre  no presente: ${data.values}"
+			}
 		},
 		"aria-unsupported-attr": {
 			"pass": "El atributo ARIA está admitido",
-			"fail": "El atributo ARIA no está ampliamente admitido en lectores de pantalla y tecnologías de apoyo: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "El atributo ARIA no está ampliamente admitido en lectores de pantalla y tecnologías de apoyo:  ${data.values}"
 		},
 		"unsupportedrole": {
 			"pass": "El rol ARIA está admitido",
-			"fail": "El rol usado no está ampliamente admitido en lectores de pantalla y tecnologías de apoyo: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "El rol usado no está ampliamente admitido en lectores de pantalla y tecnologías de apoyo:  ${data.values}"
 		},
 		"aria-valid-attr-value": {
 			"pass": "Los valores de los atributos ARIA son válidos",
-			"fail": "Valor{{=it.data && it.data.length > 1 ? 'es no válidos para atributo ARIA' : ' no válido para atributo ARIA'}}:{{~it.data:value}} {{=value}}{{~}}",
-			"incomplete": "Atributo{=it.data && it.data.length > 1 ? 's' : ''}} ARIA ID de elemento no existe en la página:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "Valores no válidos para atributo ARIA: ${data.values}",
+				"plural": "Valor no válido para atributo ARIA: ${data.values}"
+			},
+			"incomplete": {
+				"singular": "Atributos ARIA ID de elemento no existe en la página: ${data.values}",
+				"plural": "Atributo ARIA ID de elemento no existe en la página: ${data.values}"
+			}
 		},
 		"aria-valid-attr": {
-			"pass": "Nombre{{=it.data && it.data.length > 1 ? 's de atributos ARIA válidos' : 'de atributo ARIA válido'}}",
-			"fail": "Nombre{{=it.data && it.data.length > 1 ? 's de atributos ARIA no válidos' : ' de atributo ARIA no válido'}}: {{~it.data:value}} {{=value}}{{~}}"
+			"pass": {
+				"singular": "Nombres de atributos ARIA válidos",
+				"plural": "Nombrede atributo ARIA válido"
+			},
+			"fail": {
+				"singular": "Nombres de atributos ARIA no válidos:  ${data.values}",
+				"plural": "Nombre de atributo ARIA no válido:  ${data.values}"
+			}
 		},
 		"valid-scrollable-semantics": {
 			"pass": "El elemento tiene una semántica válida para un elemento en orden de foco.",
 			"fail": "El elemento tiene una semántica no válida para un elemento en orden de foco."
 		},
 		"color-contrast": {
-			"pass": "El elemento tiene un contraste de color suficiente de {{=it.data.contrastRatio}}",
-			"fail": "El elemento tiene un contraste de color insuficiente de {{=it.data.contrastRatio}} (color de primer plano: {{=it.data.fgColor}}, color de fondo: {{=it.data.bgColor}}, tamaño de fuente: {{=it.data.fontSize}}, grosor de fuente: {{=it.data.fontWeight}}). Ratio de contraste esperado: {{=it.data.expectedContrastRatio}}",
+			"pass": "El elemento tiene un contraste de color suficiente de ${data.contrastRatio}",
+			"fail": "El elemento tiene un contraste de color insuficiente de ${data.contrastRatio} (color de primer plano: ${data.fgColor}, color de fondo: ${data.bgColor}, tamaño de fuente: ${data.fontSize}, grosor de fuente: ${data.fontWeight}). Ratio de contraste esperado: ${data.expectedContrastRatio}",
 			"incomplete": {
 				"bgImage": "El color de fondo del elemento no se pudo determinar debido a una imagen de fondo",
 				"bgGradient": "El color de fondo del elemento no se pudo determinar debido a un degradado de fondo",
@@ -447,14 +459,6 @@
 			"pass": "el atributo autocomplete está formateado correctamente",
 			"fail": "el atributo autocomplete está formateado incorrectamente"
 		},
-		"fieldset": {
-			"pass": "El elemento está contenido en un fieldset",
-			"fail": "{{var code = it.data && it.data.failureCode;}}{{? code === 'no-legend'}}Fieldset no tiene un legend como primer hijo{{?? code === 'empty-legend'}}Legend no tiene texto visible para lectores de pantalla{{?? code === 'mixed-inputs'}}Fieldset contiene inputs no relacionados{{?? code === 'no-group-label'}}ARIA group no tiene aria-label o aria-labelledby{{?? code === 'group-mixed-inputs'}}ARIA group contiene inputs no relacionados{{??}}El elemento no tiene un fieldset o ARIA group contenedor{{?}}"
-		},
-		"group-labelledby": {
-			"pass": "Los elementos con el nombre \"{{=it.data.name}}\" tienen tanto una etiqueta compartida como una etiqueta única, referida mediante aria-labelledby",
-			"fail": "{{var code = it.data && it.data.failureCode;}}Los elementos con el nombre \"{{=it.data.name}}\", no todos tienen {{? code === 'no-shared-label' }}una etiqueta compartida{{?? code === 'no-unique-label' }}una etiqueta única{{??}}tanto una etiqueta compartida como una etiqueta única{{?}}, referida mediante aria-labelledby"
-		},
 		"accesskeys": {
 			"pass": "El valor del atributo accesskey es único",
 			"fail": "El documento tiene múltiples elementos con el mismo accesskey"
@@ -480,8 +484,8 @@
 			"fail": "El contenido que admita el foco debería tener tabindex='-1' o ser eliminado del DOM"
 		},
 		"landmark-is-top-level": {
-			"pass": "El punto de referencia {{=it.data.role }} está en el nivel superior.",
-			"fail": "El punto de referencia {{=it.data.role }} está contenido en otro punto de referencia."
+			"pass": "El punto de referencia ${data.role} está en el nivel superior.",
+			"fail": "El punto de referencia ${data.role} está contenido en otro punto de referencia."
 		},
 		"page-has-heading-one": {
 			"pass": "La página tiene al menos un encabezado de nivel 1",
@@ -583,10 +587,6 @@
 			"pass": "El elemento multimedia tiene una pista de subtítulos",
 			"incomplete": "Comprobar que hay disponibles subtítulos para el elemento"
 		},
-		"description": {
-			"pass": "El elemento multimedia tiene una pista de audiodescripción",
-			"incomplete": "Comprobar que hay disponible audiodescripción para el elemento"
-		},
 		"frame-tested": {
 			"pass": "El marco incorporado fue probado con axe-core",
 			"fail": "El marco incorporado no se pudo probar con axe-core",
@@ -603,7 +603,7 @@
 		},
 		"meta-viewport": {
 			"pass": "La etiqueta <meta> no impide el zum en dispositivos móviles",
-			"fail": "{{=it.data}} en la etiqueta <meta> impide el zum en dispositivos móviles"
+			"fail": "${data} en la etiqueta <meta> impide el zum en dispositivos móviles"
 		},
 		"header-present": {
 			"pass": "La página tiene un 'header'",
@@ -644,11 +644,11 @@
 		},
 		"duplicate-id-active": {
 			"pass": "El documento no tiene elementos activos que compartan el mismo atributo id",
-			"fail": "El documento tiene elementos activos con el mismo atributo id: {{=it.data}}"
+			"fail": "El documento tiene elementos activos con el mismo atributo id: ${data}"
 		},
 		"duplicate-id-aria": {
 			"pass": "El documento no tiene elementos referidos con ARIA o etiquetas que compartan el mismo atributo id",
-			"fail": "El documento tiene múltiples elementos referidos con ARIA con el mismo atributo id: {{=it.data}}"
+			"fail": "El documento tiene múltiples elementos referidos con ARIA con el mismo atributo id: ${data}"
 		},
 		"duplicate-id": {
 			"pass": "El documento no tiene elementos estáticos que compartan el mismo atributo id",
@@ -664,7 +664,10 @@
 		},
 		"avoid-inline-spacing": {
 			"pass": "No se han especificado estilos 'inline' con '!important' que afecten al espaciado de texto",
-			"fail": "Eliminar '!important' de inline style{{=it.data && it.data.length > 1 ? 's' : ''}} {{=it.data.join(', ')}}, porque su anulación no está admitida en la mayoría de navegadores"
+			"fail": {
+				"singular": "Eliminar '!important' de inline styles ${data.values}, porque su anulación no está admitida en la mayoría de navegadores",
+				"plural": "Eliminar '!important' de inline style ${data.values}, porque su anulación no está admitida en la mayoría de navegadores"
+			}
 		},
 		"button-has-visible-text": {
 			"pass": "El elemento tiene texto interno visible para lectores de pantalla",
@@ -695,7 +698,10 @@
 			"fail": "El elemento no tiene atributo alt o el atributo alt está vacío"
 		},
 		"non-empty-if-present": {
-			"pass": "El elemento {{?it.data}}tiene un atributo de valor no vacío{{??}}no tiene un atributo de valor{{?}}",
+			"pass": {
+				"default": "El elemento no tiene un atributo de valor",
+				"has-label": "El elemento tiene un atributo de valor no vacío"
+			},
 			"fail": "El elemento tiene un atributo de valor y el atributo de valor está vacío"
 		},
 		"non-empty-title": {
@@ -717,18 +723,6 @@
 		"caption-faked": {
 			"pass": "La primera fila de una tabla no se usa como título ('caption')",
 			"fail": "La primera fila de la tabla debería ser un título ('caption') en vez de una celda de tabla"
-		},
-		"has-caption": {
-			"pass": "la tabla de diseño no usa el elemento <caption>",
-			"fail": "La tabla de diseño usa el elemento <caption>"
-		},
-		"has-summary": {
-			"pass": "La tabla de diseño no usa el atributo summary",
-			"fail": "La tabla de diseño usa el atributo summary"
-		},
-		"has-th": {
-			"pass": "La tabla de diseño no usa elementos <th>",
-			"fail": "La tabla de diseño usa elementos <th>"
 		},
 		"html5-scope": {
 			"pass": "El atributo scope solo se usa en elementos de encabezados de tabla (<th>)",

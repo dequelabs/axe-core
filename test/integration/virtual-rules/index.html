@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Virtual Rules Test</title>
+
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="/node_modules/mocha/mocha.css"
+		/>
+		<script src="/node_modules/mocha/mocha.js"></script>
+		<script src="/node_modules/chai/chai.js"></script>
+		<script src="/axe.js"></script>
+		<script>
+			mocha.setup({
+				timeout: 10000,
+				ui: 'bdd'
+			});
+			var assert = chai.assert;
+		</script>
+	</head>
+	<body>
+		<div id="mocha"></div>
+		<script src="autocompelte-valid.js"></script>
+		<script src="image-alt.js"></script>
+		<script src="frame-title.js"></script>
+		<script src="input-image-alt.js"></script>
+		<script src="object-alt.js"></script>
+		<script src="label.js"></script>
+		<script src="button-name.js"></script>
+		<script src="input-button-name.js"></script>
+		<script src="aria-toggle-field-name.js"></script>
+		<script src="aria-input-field-name.js"></script>
+		<script src="area-alt.js"></script>
+		<script src="svg-img-alt.js"></script>
+		<script src="role-img-alt.js"></script>
+		<script src="link-name.js"></script>
+		<script src="/test/integration/adapter.js"></script>
+	</body>
+</html>

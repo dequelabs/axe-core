@@ -1,6 +1,6 @@
 {
 	"id": "abstractrole",
-	"evaluate": "abstractrole.js",
+	"evaluate": "abstractrole-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

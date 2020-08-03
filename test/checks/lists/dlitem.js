@@ -30,11 +30,11 @@ describe('dlitem', function() {
 		assert.isTrue(checks.dlitem.evaluate.apply(null, checkArgs));
 	});
 
-	it('should fail if the dt element has a parent <dl> with role="presentation"', function() {
+	it('should pass if the dt element has a parent <dl> with role="presentation"', function() {
 		var checkArgs = checkSetup(
 			'<dl role="presentation"><dt id="target">My list item</dt></dl>'
 		);
-		assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
+		assert.isTrue(checks.dlitem.evaluate.apply(null, checkArgs));
 	});
 
 	it('should fail if the dt element has a parent <dl> with a changed role', function() {

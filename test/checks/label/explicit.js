@@ -3,6 +3,7 @@ describe('explicit-label', function() {
 
 	var fixture = document.getElementById('fixture');
 	var fixtureSetup = axe.testUtils.fixtureSetup;
+	var queryFixture = axe.testUtils.queryFixture;
 	var shadowSupport = axe.testUtils.shadowSupport;
 
 	afterEach(function() {
@@ -10,33 +11,37 @@ describe('explicit-label', function() {
 	});
 
 	it('should return false if an empty label is present', function() {
-		fixtureSetup('<label for="target"></label><input type="text" id="target">');
-		var node = fixture.querySelector('#target');
-		assert.isFalse(checks['explicit-label'].evaluate(node));
+		var vNode = queryFixture(
+			'<label for="target"></label><input type="text" id="target">'
+		);
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('explicit-label')(null, {}, vNode)
+		);
 	});
 
 	it('should return true if a non-empty label is present', function() {
-		fixtureSetup(
+		var vNode = queryFixture(
 			'<label for="target">Text</label><input type="text" id="target">'
 		);
-		var node = fixture.querySelector('#target');
-		assert.isTrue(checks['explicit-label'].evaluate(node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('explicit-label')(null, {}, vNode)
+		);
 	});
 
 	it('should return true if an invisible non-empty label is present, to defer to hidden-explicit-label', function() {
-		fixtureSetup(
+		var vNode = queryFixture(
 			'<label for="target" style="display: none;">Text</label><input type="text" id="target">'
 		);
-		var node = fixture.querySelector('#target');
-		assert.isTrue(checks['explicit-label'].evaluate(node));
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('explicit-label')(null, {}, vNode)
+		);
 	});
 
 	it('should return false if a label is not present', function() {
-		var node = document.createElement('input');
-		node.type = 'text';
-		fixtureSetup(node);
-
-		assert.isFalse(checks['explicit-label'].evaluate(node));
+		var vNode = queryFixture('<input type="text" id="target" />');
+		assert.isFalse(
+			axe.testUtils.getCheckEvaluate('explicit-label')(null, {}, vNode)
+		);
 	});
 
 	(shadowSupport.v1 ? it : xit)(
@@ -48,8 +53,10 @@ describe('explicit-label', function() {
 				'<label for="target">American band</label><input id="target">';
 			fixtureSetup(root);
 
-			var node = shadow.querySelector('#target');
-			assert.isTrue(checks['explicit-label'].evaluate(node));
+			var vNode = axe.utils.getNodeFromTree(shadow.querySelector('#target'));
+			assert.isTrue(
+				axe.testUtils.getCheckEvaluate('explicit-label')(null, {}, vNode)
+			);
 		}
 	);
 
@@ -63,8 +70,10 @@ describe('explicit-label', function() {
 				'<label for="target"><slot></slot></label><input id="target">';
 			fixtureSetup(root);
 
-			var node = shadow.querySelector('#target');
-			assert.isTrue(checks['explicit-label'].evaluate(node));
+			var vNode = axe.utils.getNodeFromTree(shadow.querySelector('#target'));
+			assert.isTrue(
+				axe.testUtils.getCheckEvaluate('explicit-label')(null, {}, vNode)
+			);
 		}
 	);
 
@@ -77,8 +86,10 @@ describe('explicit-label', function() {
 			shadow.innerHTML = '<slot></slot><input id="target">';
 			fixtureSetup(root);
 
-			var node = shadow.querySelector('#target');
-			assert.isFalse(checks['explicit-label'].evaluate(node));
+			var vNode = axe.utils.getNodeFromTree(shadow.querySelector('#target'));
+			assert.isFalse(
+				axe.testUtils.getCheckEvaluate('explicit-label')(null, {}, vNode)
+			);
 		}
 	);
 
@@ -92,8 +103,25 @@ describe('explicit-label', function() {
 				'<label for="target">American band</label><slot></slot>';
 			fixtureSetup(root);
 
-			var node = root.querySelector('#target');
-			assert.isFalse(checks['explicit-label'].evaluate(node));
+			var vNode = axe.utils.getNodeFromTree(root.querySelector('#target'));
+			assert.isFalse(
+				axe.testUtils.getCheckEvaluate('explicit-label')(null, {}, vNode)
+			);
 		}
 	);
+
+	describe('SerialVirtualNode', function() {
+		it('should return undefined', function() {
+			var virtualNode = new axe.SerialVirtualNode({
+				nodeName: 'input',
+				attributes: {
+					type: 'text'
+				}
+			});
+
+			assert.isFalse(
+				axe.testUtils.getCheckEvaluate('explicit-label')(null, {}, virtualNode)
+			);
+		});
+	});
 });

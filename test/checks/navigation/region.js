@@ -5,6 +5,7 @@ describe('region', function() {
 	var shadowSupport = axe.testUtils.shadowSupport;
 	var checkSetup = axe.testUtils.checkSetup;
 	var fixtureSetup = axe.testUtils.fixtureSetup;
+	var checkEvaluate = axe.testUtils.getCheckEvaluate('region');
 
 	var checkContext = new axe.testUtils.MockCheckContext();
 
@@ -18,7 +19,7 @@ describe('region', function() {
 			'<div role="main"><a id="target" href="a.html#mainheader">Click Here</a><div><h1 id="mainheader" tabindex="0">Introduction</h1></div></div>'
 		);
 
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should return false when img content is outside the region', function() {
@@ -26,7 +27,7 @@ describe('region', function() {
 			'<img id="target" src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7"><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div>'
 		);
 
-		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should return true when textless text content is outside the region', function() {
@@ -34,7 +35,7 @@ describe('region', function() {
 			'<p id="target"></p><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div>'
 		);
 
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should return true when wrapper content is outside the region', function() {
@@ -42,7 +43,7 @@ describe('region', function() {
 			'<div id="target"><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div></div>'
 		);
 
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should return true when invisible content is outside the region', function() {
@@ -50,7 +51,7 @@ describe('region', function() {
 			'<p id="target" style="display: none">Click Here</p><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div>'
 		);
 
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should return true when there is a skiplink', function() {
@@ -58,7 +59,7 @@ describe('region', function() {
 			'<a id="target" href="#mainheader">Click Here</a><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div>'
 		);
 
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should return true when there is an Angular skiplink', function() {
@@ -66,7 +67,7 @@ describe('region', function() {
 			'<a id="target" href="/#mainheader">Click Here</a><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div>'
 		);
 
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should return false when there is a non-region element', function() {
@@ -74,7 +75,7 @@ describe('region', function() {
 			'<div id="target">This is random content.</div><div role="main"><h1 id="mainheader">Introduction</h1></div>'
 		);
 
-		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should return false when there is a non-skiplink', function() {
@@ -82,7 +83,7 @@ describe('region', function() {
 			'<a id="target" href="something.html#mainheader">Click Here</a><div role="main"><h1 id="mainheader">Introduction</h1></div>'
 		);
 
-		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should return true if the non-region element is a script', function() {
@@ -90,7 +91,7 @@ describe('region', function() {
 			'<script id="target">axe.run()</script><div role="main">Content</div>'
 		);
 
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should considered aria labelled elements as content', function() {
@@ -98,7 +99,7 @@ describe('region', function() {
 			'<div id="target" aria-label="axe-core logo" role="img"></div><div role="main">Content</div>'
 		);
 
-		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should allow native header elements', function() {
@@ -106,7 +107,7 @@ describe('region', function() {
 			'<header id="target">branding</header><main>Content </main><aside>stuff</aside><footer>copyright</footer>'
 		);
 
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should allow native main elements', function() {
@@ -114,7 +115,7 @@ describe('region', function() {
 			'<header>branding</header><main id="target">Content </main><aside>stuff</aside><footer>copyright</footer>'
 		);
 
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should allow native aside elements', function() {
@@ -122,7 +123,7 @@ describe('region', function() {
 			'<header>branding</header><main>Content </main><aside id="target">stuff</aside><footer>copyright</footer>'
 		);
 
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should allow native footer elements', function() {
@@ -130,7 +131,7 @@ describe('region', function() {
 			'<header>branding</header><main>Content </main><aside>stuff</aside><footer id="target">copyright</footer>'
 		);
 
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('ignores native landmark elements with an overwriting role', function() {
@@ -138,7 +139,7 @@ describe('region', function() {
 			'<main id="target" role="none">Content</main><div role="main">Content</div>'
 		);
 
-		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('returns false for content outside of form tags with accessible names', function() {
@@ -146,7 +147,7 @@ describe('region', function() {
 			'<p id="target">Text</p><form aria-label="form"></form>'
 		);
 
-		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('ignores unlabeled forms as they are not landmarks', function() {
@@ -154,21 +155,21 @@ describe('region', function() {
 			'<form id="target"><fieldset>foo</fieldset></form><div role="main">Content</div>'
 		);
 
-		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('treats <forms> with aria label as landmarks', function() {
 		var checkArgs = checkSetup(
 			'<form id="target" aria-label="foo"><p>This is random content.</p></form>'
 		);
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('treats role=forms with aria label as landmarks', function() {
 		var checkArgs = checkSetup(
 			'<div role="form" id="target" aria-label="foo"><p>This is random content.</p></div>'
 		);
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('treats forms without aria label as not a landmarks', function() {
@@ -176,7 +177,7 @@ describe('region', function() {
 			'<form id="target"><p>This is random content.</p></form><div role="main">Content</div>'
 		);
 
-		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('treats forms with an empty aria label as not a landmarks', function() {
@@ -184,7 +185,7 @@ describe('region', function() {
 			'<form id="target" aria-label=" "><p>This is random content.</p></form><div role="main">Content</div>'
 		);
 
-		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('treats forms with non empty titles as landmarks', function() {
@@ -192,7 +193,7 @@ describe('region', function() {
 			'<form id="target" title="Thing"><p>This is random content.</p></form>'
 		);
 
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('treats forms with empty titles not as landmarks', function() {
@@ -200,7 +201,7 @@ describe('region', function() {
 			'<form id="target" title=""><p>This is random content.</p></form><div role="main">Content</div>'
 		);
 
-		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('treats ARIA forms with no label or title as landmarks', function() {
@@ -208,63 +209,63 @@ describe('region', function() {
 			'<div role="form" id="target"><p>This is random content.</p></div>'
 		);
 
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('allows content in aria-live=assertive', function() {
 		var checkArgs = checkSetup(
 			'<div aria-live="assertive" id="target"><p>This is random content.</p></div>'
 		);
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('allows content in aria-live=polite', function() {
 		var checkArgs = checkSetup(
 			'<div aria-live="polite" id="target"><p>This is random content.</p></div>'
 		);
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('does not allow content in aria-live=off', function() {
 		var checkArgs = checkSetup(
 			'<div aria-live="off" id="target"><p>This is random content.</p></div><div role="main">Content</div>'
 		);
-		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('allows content in aria-live=assertive with explicit role set', function() {
 		var checkArgs = checkSetup(
 			'<div aria-live="assertive" role="alert" id="target"><p>This is random content.</p></div>'
 		);
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('allows content in aria-live=polite with explicit role set', function() {
 		var checkArgs = checkSetup(
 			'<div aria-live="polite" role="status" id="target"><p>This is random content.</p></div>'
 		);
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('allows content in implicit aria-live role alert', function() {
 		var checkArgs = checkSetup(
 			'<div role="alert" id="target"><p>This is random content.</p></div>'
 		);
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('allows content in implicit aria-live role log', function() {
 		var checkArgs = checkSetup(
 			'<div role="log" id="target"><p>This is random content.</p></div>'
 		);
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('allows content in implicit aria-live role status', function() {
 		var checkArgs = checkSetup(
 			'<div role="status" id="target"><p>This is random content.</p></div>'
 		);
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('treats role=dialog elements as regions', function() {
@@ -272,7 +273,7 @@ describe('region', function() {
 			'<div role="dialog" id="target"><p>This is random content.</p></div>'
 		);
 
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('returns the outermost element as the error', function() {
@@ -280,7 +281,22 @@ describe('region', function() {
 			'<div id="target"><p>This is random content.</p></div><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div>'
 		);
 
-		assert.isFalse(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
+	});
+
+	it('supports options.regionMatcher', function() {
+		var checkArgs = checkSetup(
+			'<div aria-live="off" id="target"><p>This is random content.</p></div><div role="main">Content</div>',
+			{
+				regionMatcher: {
+					attributes: {
+						'aria-live': 'off'
+					}
+				}
+			}
+		);
+
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	(shadowSupport.v1 ? it : xit)('should test Shadow tree content', function() {
@@ -292,7 +308,7 @@ describe('region', function() {
 
 		// fixture is the outermost element
 		assert.isFalse(
-			checks.region.evaluate.call(
+			checkEvaluate.call(
 				checkContext,
 				virutalNode.actualNode,
 				null,
@@ -308,7 +324,7 @@ describe('region', function() {
 		shadow.innerHTML = '<div role="main"><slot></slot></div>';
 		var checkArgs = checkSetup(div);
 
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	(shadowSupport.v1 ? it : xit)(
@@ -324,7 +340,7 @@ describe('region', function() {
 			var virutalNode = axe.utils.getNodeFromTree(div.querySelector('#target'));
 
 			assert.isFalse(
-				checks.region.evaluate.call(
+				checkEvaluate.call(
 					checkContext,
 					virutalNode.actualNode,
 					null,
@@ -344,7 +360,7 @@ describe('region', function() {
 				'<a href="#foo">skiplink</a><div role="main"><slot></slot></div>';
 			var checkArgs = checkSetup(div);
 
-			assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+			assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 			assert.lengthOf(checkContext._relatedNodes, 0);
 		}
 	);

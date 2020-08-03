@@ -29,7 +29,10 @@ exports = module.exports = function(grunt, options) {
 						':<%= connect.test.options.port %>/test/integration/rules/',
 					'http://' +
 						host +
-						':<%= connect.test.options.port %>/test/integration/api/external/'
+						':<%= connect.test.options.port %>/test/integration/api/external/',
+					'http://' +
+						host +
+						':<%= connect.test.options.port %>/test/integration/virtual-rules/'
 				],
 				run: true,
 				growlOnSuccess: false,

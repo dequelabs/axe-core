@@ -1,6 +1,6 @@
 {
 	"id": "valid-scrollable-semantics",
-	"evaluate": "valid-scrollable-semantics.js",
+	"evaluate": "valid-scrollable-semantics-evaluate",
 	"options": [],
 	"metadata": {
 		"impact": "minor",

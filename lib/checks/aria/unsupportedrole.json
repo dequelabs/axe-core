@@ -1,6 +1,6 @@
 {
 	"id": "unsupportedrole",
-	"evaluate": "unsupportedrole.js",
+	"evaluate": "unsupportedrole-evaluate",
 	"metadata": {
 		"impact": "critical",
 		"messages": {

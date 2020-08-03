@@ -1,9 +1,9 @@
 {
 	"id": "page-has-heading-one",
-	"evaluate": "page-has-elm.js",
-	"after": "page-has-elm-after.js",
+	"evaluate": "has-descendant-evaluate",
+	"after": "has-descendant-after",
 	"options": {
-		"selector": "h1:not([role]), [role=\"heading\"][aria-level=\"1\"]"
+		"selector": "h1:not([role]):not([aria-level]), h1:not([role])[aria-level=1], h2:not([role])[aria-level=1], h3:not([role])[aria-level=1], h4:not([role])[aria-level=1], h5:not([role])[aria-level=1], h6:not([role])[aria-level=1], [role=heading][aria-level=1]"
 	},
 	"metadata": {
 		"impact": "moderate",

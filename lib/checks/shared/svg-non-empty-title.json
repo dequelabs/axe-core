@@ -1,11 +1,12 @@
 {
 	"id": "svg-non-empty-title",
-	"evaluate": "svg-non-empty-title.js",
+	"evaluate": "svg-non-empty-title-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {
 			"pass": "element has a child that is a title",
-			"fail": "element has no child that is a title"
+			"fail": "element has no child that is a title",
+			"incomplete": "Unable to determine element has a child that is a title"
 		}
 	}
 }

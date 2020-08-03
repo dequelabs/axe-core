@@ -1,10 +1,20 @@
 {
 	"id": "color-contrast",
-	"evaluate": "color-contrast.js",
+	"evaluate": "color-contrast-evaluate",
 	"options": {
-		"noScroll": false,
 		"ignoreUnicode": true,
-		"ignoreLength": false
+		"ignoreLength": false,
+		"boldValue": 700,
+		"boldTextPt": 14,
+		"largeTextPt": 18,
+		"contrastRatio": {
+			"normal": {
+				"expected": 4.5
+			},
+			"large": {
+				"expected": 3
+			}
+		}
 	},
 	"metadata": {
 		"impact": "serious",

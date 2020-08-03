@@ -15,7 +15,7 @@ module.exports = function build(grunt, options, commons, callback) {
 			var json = grunt.file.readJSON(file);
 			var dirname = path.dirname(file);
 			Object.keys(templates).forEach(function(templateName) {
-				if (json[templateName]) {
+				if (json[templateName] && json[templateName].endsWith('.js')) {
 					json[templateName] = path.resolve(dirname, json[templateName]);
 					if (options.getFiles) {
 						json[templateName] = getSource(json[templateName], templateName);
@@ -37,7 +37,6 @@ module.exports = function build(grunt, options, commons, callback) {
 	callback({
 		rules: parseObject(options.rules),
 		checks: parseObject(options.checks),
-		misc: parseObject(options.misc),
-		commons: commons
+		misc: parseObject(options.misc)
 	});
 };

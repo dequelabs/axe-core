@@ -1,6 +1,6 @@
 {
 	"id": "aria-valid-attr-value",
-	"matches": "aria-has-attr-matches.js",
+	"matches": "aria-has-attr-matches",
 	"tags": ["cat.aria", "wcag2a", "wcag412"],
 	"metadata": {
 		"description": "Ensures all ARIA attributes have valid values",

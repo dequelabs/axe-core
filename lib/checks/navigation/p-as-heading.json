@@ -1,6 +1,6 @@
 {
 	"id": "p-as-heading",
-	"evaluate": "p-as-heading.js",
+	"evaluate": "p-as-heading-evaluate",
 	"options": {
 		"margins": [
 			{

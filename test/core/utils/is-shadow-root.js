@@ -77,26 +77,6 @@ describe('axe.utils.isShadowRoot', function() {
 			it('should support shadow DOM v1', function() {
 				assert.isDefined(fixture.firstChild.shadowRoot);
 			});
-			it('calls isShadowRoot to identify a shadow root', function() {
-				var isShadowRoot = axe.utils.isShadowRoot;
-				fixture.innerHTML = '<div></div>';
-				var div = fixture.querySelector('div');
-				var shadowRoot = div.attachShadow({ mode: 'open' });
-				shadowRoot.innerHTML = '<h1>Just a man in the back</h1>';
-
-				// Test without isShadowRoot overwritten
-				assert.equal(axe.utils.getFlattenedTree(div)[0].children.length, 1);
-
-				var called = false;
-				axe.utils.isShadowRoot = function() {
-					called = true;
-					return false;
-				};
-				// Test with isShadowRoot overwritten
-				assert.equal(axe.utils.getFlattenedTree(div)[0].children.length, 0);
-				assert.isTrue(called);
-				axe.utils.isShadowRoot = isShadowRoot;
-			});
 		});
 	}
 });

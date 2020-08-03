@@ -152,7 +152,7 @@ function buildRules(grunt, options, commons, callback) {
 		function replaceFunctions(string) {
 			return string
 				.replace(
-					/"(evaluate|after|gather|matches|source|commons)":\s*("[^"]+?")/g,
+					/"(evaluate|after|gather|matches|source|commons)":\s*("[^"]+?.js")/g,
 					function(m, p1, p2) {
 						return m.replace(p2, getSource(p2.replace(/^"|"$/g, ''), p1));
 					}
@@ -223,6 +223,9 @@ function buildRules(grunt, options, commons, callback) {
 		function parseImpactForRule(rule) {
 			function capitalize(s) {
 				return s.charAt(0).toUpperCase() + s.slice(1);
+			}
+			if (rule.impact) {
+				return capitalize(rule.impact);
 			}
 
 			function getUniqueArr(arr) {
@@ -352,7 +355,11 @@ function buildRules(grunt, options, commons, callback) {
 
 ${description.intro ? description.intro : ''}
 
-${descriptionTableHeader}${description.rules
+${
+	description.rules.length
+		? descriptionTableHeader
+		: '_There are no matching rules_'
+}${description.rules
 					.map(function(row) {
 						return '| ' + row.join(' | ') + ' |';
 					})
@@ -378,8 +385,7 @@ ${ruleTables}`;
 						lang: options.locale || 'en',
 						data: metadata,
 						rules: rules,
-						checks: checks,
-						commons: result.commons
+						checks: checks
 					},
 					blacklist
 				)
@@ -389,8 +395,7 @@ ${ruleTables}`;
 					{
 						data: metadata,
 						rules: rules,
-						checks: checks,
-						commons: result.commons
+						checks: checks
 					},
 					blacklist
 				)

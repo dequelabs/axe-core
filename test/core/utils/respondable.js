@@ -1,22 +1,6 @@
 describe('axe.utils.respondable', function() {
 	'use strict';
 
-	var mockUUID;
-	var originalUUID;
-	var getMockUUID = function() {
-		return mockUUID;
-	};
-
-	beforeEach(function() {
-		originalUUID = window.uuid.v1;
-		window.uuid.v1 = getMockUUID;
-		mockUUID = originalUUID();
-	});
-
-	afterEach(function() {
-		window.uuid.v1 = originalUUID;
-	});
-
 	it('should be a function', function() {
 		assert.isFunction(axe.utils.respondable);
 	});
@@ -88,317 +72,293 @@ describe('axe.utils.respondable', function() {
 		axe.utils.respondable(win, 'batman', 'nananana');
 	});
 
-	it('should create a uuid.v1 (time-based uuid)', function() {
-		var UUID = 'heheeh im a uuid';
-		var win = {
-			postMessage: function(msg) {
-				msg = JSON.parse(msg);
-
-				assert.equal(msg.uuid, UUID);
-			}
-		};
-		var orig = window.uuid.v1;
-		var success = false;
-		window.uuid.v1 = function() {
-			success = true;
-			return UUID;
-		};
-
-		axe.utils.respondable(win, 'batman', 'nananana');
-		assert.isTrue(success);
-
-		window.uuid.v1 = orig;
-	});
-
-	it('should pass messages that have all required properties', function() {
-		var success = false;
+	describe('messageHandler', function() {
 		var event = document.createEvent('Event');
 		// Define that the event name is 'build'.
 		event.initEvent('message', true, true);
-		event.data = JSON.stringify({
-			_respondable: true,
-			_source: 'axeAPI.2.0.0',
-			message: 'Help us Obi-Wan',
-			uuid: mockUUID,
-			_axeuuid: 'otherAxe'
-		});
 		event.source = window;
 
-		// this sets up the callback function but the post event from it
-		// is asynchronous so is will be ignored as the dispatch event
-		// that follows is synchronous and will trigger the callback
-		// (thats why there's no `done()` call)
-		axe.utils.respondable(window, 'Death star', null, true, function(data) {
-			success = true;
-			assert.equal(data, 'Help us Obi-Wan');
+		var eventData;
+		var win;
+		var axeVersion;
+
+		beforeEach(function() {
+			axeVersion = axe.version;
+			win = {
+				postMessage: function(message) {
+					var data = JSON.parse(message);
+					eventData.uuid = data.uuid;
+					event.data = JSON.stringify(eventData);
+					document.dispatchEvent(event);
+				}
+			};
 		});
-		document.dispatchEvent(event);
-		assert.isTrue(success);
-	});
 
-	it('should allow messages with _source axeAPI.x.y.z', function() {
-		var success = false;
-		var event = document.createEvent('Event');
-		// Define that the event name is 'build'.
-		event.initEvent('message', true, true);
-		event.data = JSON.stringify({
-			_respondable: true,
-			_source: 'axeAPI.x.y.z',
-			message: 'Help us Obi-Wan',
-			uuid: mockUUID,
-			_axeuuid: 'otherAxe'
+		afterEach(function() {
+			axe.version = axeVersion;
 		});
-		event.source = window;
 
-		axe.utils.respondable(window, 'Death star', null, true, function(data) {
-			success = true;
-			assert.equal(data, 'Help us Obi-Wan');
-		});
-		document.dispatchEvent(event);
-		assert.isTrue(success);
-	});
-
-	it('should allow messages if the axe version is x.y.z', function() {
-		var success = false;
-		var event = document.createEvent('Event');
-		var v = axe.version;
-		axe.version = 'x.y.z';
-		// Define that the event name is 'build'.
-		event.initEvent('message', true, true);
-		event.data = JSON.stringify({
-			_respondable: true,
-			_source: 'axeAPI.2.0.0',
-			message: 'Help us Obi-Wan',
-			uuid: mockUUID,
-			_axeuuid: 'otherAxe'
-		});
-		event.source = window;
-
-		axe.utils.respondable(window, 'Death star', null, true, function(data) {
-			success = true;
-			assert.equal(data, 'Help us Obi-Wan');
-		});
-		document.dispatchEvent(event);
-		assert.isTrue(success);
-		axe.version = v;
-	});
-
-	it('should reject messages if the axe version is different', function() {
-		var success = true;
-		var event = document.createEvent('Event');
-		var v = axe.version;
-		axe.version = '1.0.0';
-		// Define that the event name is 'build'.
-		event.initEvent('message', true, true);
-		event.data = JSON.stringify({
-			_respondable: true,
-			_source: 'axeAPI.2.0.0',
-			message: 'Help us Obi-Wan',
-			uuid: mockUUID,
-			_axeuuid: 'otherAxe'
-		});
-		event.source = window;
-
-		axe.utils.respondable(window, 'Death star', null, true, function() {
-			success = false;
-		});
-		document.dispatchEvent(event);
-		assert.isTrue(success);
-		axe.version = v;
-	});
-
-	it('should reject messages that are that are not strings', function() {
-		var success = true;
-		var event = document.createEvent('Event');
-		// Define that the event name is 'build'.
-		event.initEvent('message', true, true);
-		event.data = {
-			_respondable: true,
-			uuid: mockUUID,
-			_axeuuid: 'otherAxe'
-		};
-		event.source = window;
-
-		axe.utils.respondable(window, 'batman', 'nananana', true, function() {
-			success = false;
-		});
-		document.dispatchEvent(event);
-		assert.isTrue(success);
-	});
-
-	it('should reject messages that are invalid stringified objects', function() {
-		var success = true;
-		var event = document.createEvent('Event');
-		// Define that the event name is 'build'.
-		event.initEvent('message', true, true);
-		event.data =
-			JSON.stringify({
+		it('should pass messages that have all required properties', function(done) {
+			eventData = {
 				_respondable: true,
-				uuid: mockUUID,
+				_source: 'axeAPI.2.0.0',
+				message: 'Help us Obi-Wan',
 				_axeuuid: 'otherAxe'
-			}) + 'joker tricks!';
-		event.source = window;
+			};
 
-		axe.utils.respondable(window, 'batman', 'nananana', true, function() {
-			success = false;
-		});
-		document.dispatchEvent(event);
-		assert.isTrue(success);
-	});
-
-	it('should reject messages that do not have a uuid', function() {
-		var success = true;
-		var event = document.createEvent('Event');
-		// Define that the event name is 'build'.
-		event.initEvent('message', true, true);
-		event.data = JSON.stringify({
-			_respondable: true,
-			topic: 'batman',
-			_axeuuid: 'otherAxe'
-		});
-		event.source = window;
-
-		axe.utils.respondable(window, 'batman', 'nananana', true, function() {
-			success = false;
-		});
-		document.dispatchEvent(event);
-		assert.isTrue(success);
-	});
-
-	it('should reject messages that do not have a matching uuid', function() {
-		var success = true;
-		var event = document.createEvent('Event');
-		// Define that the event name is 'build'.
-		event.initEvent('message', true, true);
-		event.data = JSON.stringify({
-			_respondable: true,
-			topic: 'batman',
-			uuid: 'not-' + mockUUID,
-			_axeuuid: 'otherAxe'
-		});
-		event.source = window;
-
-		axe.utils.respondable(window, 'batman', 'nananana', true, function() {
-			success = false;
-		});
-		document.dispatchEvent(event);
-		assert.isTrue(success);
-	});
-
-	it('should reject messages that do not have `_respondable: true`', function() {
-		var success = true;
-		var event = document.createEvent('Event');
-		// Define that the event name is 'build'.
-		event.initEvent('message', true, true);
-		event.data = JSON.stringify({
-			uuid: mockUUID,
-			topic: 'batman',
-			_axeuuid: 'otherAxe'
-		});
-		event.source = window;
-
-		axe.utils.respondable(window, 'batman', 'nananana', true, function() {
-			success = false;
-		});
-		document.dispatchEvent(event);
-		assert.isTrue(success);
-	});
-
-	it('should reject messages that do not have `_axeuuid`', function() {
-		var success = true;
-		var event = document.createEvent('Event');
-		// Define that the event name is 'build'.
-		event.initEvent('message', true, true);
-		event.data = JSON.stringify({
-			_respondable: true,
-			topic: 'batman',
-			uuid: mockUUID
-		});
-		event.source = window;
-
-		axe.utils.respondable(window, 'batman', 'nananana', true, function() {
-			success = false;
-		});
-		document.dispatchEvent(event);
-		assert.isTrue(success);
-	});
-
-	it('should reject messages from the same axe instance (`_axeuuid`)', function() {
-		var success = true;
-		var event = document.createEvent('Event');
-		// Define that the event name is 'build'.
-		event.initEvent('message', true, true);
-		event.data = JSON.stringify({
-			_respondable: true,
-			topic: 'batman',
-			_axeuuid: axe._uuid,
-			uuid: mockUUID
-		});
-		event.source = window;
-
-		axe.utils.respondable(window, 'batman', 'nananana', true, function() {
-			success = false;
-		});
-		document.dispatchEvent(event);
-		assert.isTrue(success);
-	});
-
-	it('should throw if an error message was send', function() {
-		var success = false;
-		var event = document.createEvent('Event');
-		// Define that the event name is 'build'.
-		event.initEvent('message', true, true);
-		event.data = JSON.stringify({
-			_respondable: true,
-			_source: 'axeAPI.2.0.0',
-			error: {
-				name: 'ReferenceError',
-				message: 'The exhaust port is open!',
-				trail: '... boom'
-			},
-			uuid: mockUUID,
-			_axeuuid: 'otherAxe'
-		});
-		event.source = window;
-
-		axe.utils.respondable(window, 'Death star', null, true, function(data) {
-			success = true;
-			assert.instanceOf(data, ReferenceError);
-			assert.equal(data.message, 'The exhaust port is open!');
+			axe.utils.respondable(win, 'Death star', null, true, function(data) {
+				assert.equal(data, 'Help us Obi-Wan');
+				done();
+			});
 		});
 
-		document.dispatchEvent(event);
-		assert.isTrue(success);
-	});
+		it('should allow messages with _source axeAPI.x.y.z', function(done) {
+			eventData = {
+				_respondable: true,
+				_source: 'axeAPI.x.y.z',
+				message: 'Help us Obi-Wan',
+				_axeuuid: 'otherAxe'
+			};
 
-	it('should create an Error if an invalid error type is passed', function() {
-		var success = false;
-		var event = document.createEvent('Event');
-		window.evil = function() {};
-		// Define that the event name is 'build'.
-		event.initEvent('message', true, true);
-		event.data = JSON.stringify({
-			_respondable: true,
-			_source: 'axeAPI.2.0.0',
-			error: {
-				name: 'evil',
-				message: 'The exhaust port is open!',
-				trail: '... boom'
-			},
-			uuid: mockUUID,
-			_axeuuid: 'otherAxe'
-		});
-		event.source = window;
-
-		axe.utils.respondable(window, 'Death star', null, true, function(data) {
-			success = true;
-			assert.instanceOf(data, Error);
-			assert.equal(data.message, 'The exhaust port is open!');
+			axe.utils.respondable(win, 'Death star', null, true, function(data) {
+				assert.equal(data, 'Help us Obi-Wan');
+				done();
+			});
 		});
 
-		document.dispatchEvent(event);
-		assert.isTrue(success);
-		window.evil = undefined;
+		it('should allow messages if the axe version is x.y.z', function(done) {
+			axe.version = 'x.y.z';
+			eventData = {
+				_respondable: true,
+				_source: 'axeAPI.2.0.0',
+				message: 'Help us Obi-Wan',
+				_axeuuid: 'otherAxe'
+			};
+
+			axe.utils.respondable(win, 'Death star', null, true, function(data) {
+				assert.equal(data, 'Help us Obi-Wan');
+				done();
+			});
+		});
+
+		it('should reject messages if the axe version is different', function(done) {
+			axe.version = '1.0.0';
+			eventData = {
+				_respondable: true,
+				_source: 'axeAPI.2.0.0',
+				message: 'Help us Obi-Wan',
+				_axeuuid: 'otherAxe'
+			};
+
+			axe.utils.respondable(win, 'Death star', null, true, function() {
+				done(new Error('should not call callback'));
+			});
+
+			setTimeout(function() {
+				done();
+			}, 100);
+		});
+
+		it('should reject messages that are that are not strings', function(done) {
+			eventData = {
+				_respondable: true,
+				_source: 'axeAPI.2.0.0',
+				message: 'Help us Obi-Wan',
+				_axeuuid: 'otherAxe'
+			};
+
+			win = {
+				postMessage: function(message) {
+					var data = JSON.parse(message);
+					eventData.uuid = data.uuid;
+					event.data = eventData;
+					document.dispatchEvent(event);
+				}
+			};
+
+			axe.utils.respondable(win, 'Death star', null, true, function() {
+				done(new Error('should not call callback'));
+			});
+
+			setTimeout(function() {
+				done();
+			}, 100);
+		});
+
+		it('should reject messages that are invalid stringified objects', function(done) {
+			eventData = {
+				_respondable: true,
+				_source: 'axeAPI.2.0.0',
+				message: 'Help us Obi-Wan',
+				_axeuuid: 'otherAxe'
+			};
+
+			win = {
+				postMessage: function(message) {
+					var data = JSON.parse(message);
+					eventData.uuid = data.uuid;
+					event.data = JSON.stringify(eventData) + 'joker tricks!';
+					document.dispatchEvent(event);
+				}
+			};
+
+			axe.utils.respondable(win, 'Death star', null, true, function() {
+				done(new Error('should not call callback'));
+			});
+
+			setTimeout(function() {
+				done();
+			}, 100);
+		});
+
+		it('should reject messages that do not have a uuid', function(done) {
+			eventData = {
+				_respondable: true,
+				_source: 'axeAPI.2.0.0',
+				message: 'Help us Obi-Wan',
+				_axeuuid: 'otherAxe'
+			};
+
+			win = {
+				postMessage: function() {
+					event.data = JSON.stringify(eventData);
+					document.dispatchEvent(event);
+				}
+			};
+
+			axe.utils.respondable(win, 'Death star', null, true, function() {
+				done(new Error('should not call callback'));
+			});
+
+			setTimeout(function() {
+				done();
+			}, 100);
+		});
+
+		it('should reject messages that do not have a matching uuid', function(done) {
+			eventData = {
+				_respondable: true,
+				_source: 'axeAPI.2.0.0',
+				message: 'Help us Obi-Wan',
+				_axeuuid: 'otherAxe'
+			};
+
+			win = {
+				postMessage: function(message) {
+					var data = JSON.parse(message);
+					eventData.uuid = data.uuid + 'joker tricks!';
+					event.data = JSON.stringify(eventData);
+					document.dispatchEvent(event);
+				}
+			};
+
+			axe.utils.respondable(win, 'Death star', null, true, function() {
+				done(new Error('should not call callback'));
+			});
+
+			setTimeout(function() {
+				done();
+			}, 100);
+		});
+
+		it('should reject messages that do not have `_respondable: true`', function(done) {
+			eventData = {
+				_source: 'axeAPI.2.0.0',
+				message: 'Help us Obi-Wan',
+				_axeuuid: 'otherAxe'
+			};
+
+			axe.utils.respondable(win, 'Death star', null, true, function() {
+				done(new Error('should not call callback'));
+			});
+
+			setTimeout(function() {
+				done();
+			}, 100);
+		});
+
+		it('should reject messages that do not have `_axeuuid`', function(done) {
+			eventData = {
+				_respondable: true,
+				_source: 'axeAPI.2.0.0',
+				message: 'Help us Obi-Wan'
+			};
+
+			axe.utils.respondable(win, 'Death star', null, true, function() {
+				done(new Error('should not call callback'));
+			});
+
+			setTimeout(function() {
+				done();
+			}, 100);
+		});
+
+		it('should reject messages from the same axe instance (`_axeuuid`)', function(done) {
+			eventData = {
+				_respondable: true,
+				_source: 'axeAPI.2.0.0',
+				message: 'Help us Obi-Wan'
+			};
+
+			win = {
+				postMessage: function(message) {
+					var data = JSON.parse(message);
+					eventData.uuid = data.uuid;
+					eventData._axeuuid = data._axeuuid;
+					event.data = JSON.stringify(eventData);
+					document.dispatchEvent(event);
+				}
+			};
+
+			axe.utils.respondable(win, 'Death star', null, true, function() {
+				done(new Error('should not call callback'));
+			});
+
+			setTimeout(function() {
+				done();
+			}, 100);
+		});
+
+		it('should throw if an error message was send', function(done) {
+			eventData = {
+				_respondable: true,
+				_source: 'axeAPI.2.0.0',
+				error: {
+					name: 'ReferenceError',
+					message: 'The exhaust port is open!',
+					trail: '... boom'
+				},
+				_axeuuid: 'otherAxe'
+			};
+
+			axe.utils.respondable(win, 'Death star', null, true, function(data) {
+				assert.instanceOf(data, ReferenceError);
+				assert.equal(data.message, 'The exhaust port is open!');
+				done();
+			});
+		});
+
+		it('should create an Error if an invalid error type is passed', function(done) {
+			window.evil = function() {};
+
+			eventData = {
+				_respondable: true,
+				_source: 'axeAPI.2.0.0',
+				error: {
+					name: 'evil',
+					message: 'The exhaust port is open!',
+					trail: '... boom'
+				},
+				_axeuuid: 'otherAxe'
+			};
+
+			axe.utils.respondable(win, 'Death star', null, true, function(data) {
+				assert.instanceOf(data, Error);
+				assert.equal(data.message, 'The exhaust port is open!');
+				window.evil = undefined;
+				done();
+			});
+		});
 	});
 
 	it('uses respondable.isInFrame() to check if the page is in a frame or not', function() {

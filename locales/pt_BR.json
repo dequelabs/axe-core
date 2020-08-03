@@ -17,10 +17,6 @@
 			"description": "Certifique-se de que o atributo 'role' tem um valor apropriado para o elemento",
 			"help": "A função ARIA deve ser apropriada para o elemento"
 		},
-		"aria-dpub-role-fallback": {
-			"description": "Certifique-se de que as funções DPUB não suportadas são usados somente em elementos com funções implícitas (fallback)",
-			"help": "As funções DPUB não suportadas devem ser usadas em elementos com funções implícitas (fallback)"
-		},
 		"aria-hidden-body": {
 			"description": "Certifique-se de que aria-hidden='true' não está presente no elemento <body>.",
 			"help": "aria-hidden='true' não deve estar presente no elemento <body>"
@@ -88,10 +84,6 @@
 		"bypass": {
 			"description": "Certifique-se de que cada página tenha ao menos um mecanismo para o usuário ignorar a navegação e ir direto ao conteúdo",
 			"help": "A página deve ter meios para ignorar blocos repetidos"
-		},
-		"checkboxgroup": {
-			"description": "Certifique-se de que elementos <input type=\"checkbox\"> relacionados tenham um grupo e que a designação do grupo seja consistente",
-			"help": "Caixas de seleção com o mesmo valor do atributo 'name' devem ser parte de um grupo"
 		},
 		"color-contrast": {
 			"description": "Certifique-se de que o contraste entre as cores de primeiro plano e de fundo atenda aos limites de relação de contraste WCAG 2 AA",
@@ -237,10 +229,6 @@
 			"help": "Certifique-se de que as regiões são únicas",
 			"description": "As regiões devem ter um 'role' ou combinação de 'role'/'label'/'title' (ou seja, um nome acessível) únicos"
 		},
-		"layout-table": {
-			"description": "Certifique-se de que elementos <table> de apresentação não usem elementos <th>, <caption> ou o atributo 'summary'",
-			"help": "Tabelas de apresentação não devem usar elementos de tabela de dados"
-		},
 		"link-in-text-block": {
 			"description": "Links podem ser distinguidos sem depender da cor",
 			"help": "Links devem ser distinguidos do texto ao redor de uma maneira que não dependa da cor"
@@ -288,10 +276,6 @@
 		"page-has-heading-one": {
 			"description": "Certifique-se de que a página, ou pelo menos um dos seus 'frames', contenha um título de primeiro nível",
 			"help": "A página deve conter um título de primeiro nível"
-		},
-		"radiogroup": {
-			"description": "Certifique-se de que elementos <input type=\"radio\"> relacionados tenham o mesmo grupo e que o nome do grupo é consistente",
-			"help": "Controles do tipo 'botão de rádio' com o mesmo valor para o atributo 'name' devem ser parte de um grupo"
 		},
 		"region": {
 			"description": "Certifique-se de todo o conteúdo da página esteja contido em regiões (landmarks)",
@@ -352,10 +336,6 @@
 		"video-caption": {
 			"description": "Certifique-se de que elementos <video> tenham legendas",
 			"help": "Elementos <video> devem ter legendas"
-		},
-		"video-description": {
-			"description": "Certifique-se de que elementos <video> tenham descrição de áudio",
-			"help": "Elementos <video> devem ter uma faixa de áudio de descrição"
 		}
 	},
 	"checks": {
@@ -408,10 +388,6 @@
 			"pass": "Elemento tem um 'role' de 'widget'.",
 			"fail": "Elemento não tem um 'role' de 'widget'."
 		},
-		"implicit-role-fallback": {
-			"pass": "A função ARIA implícita do elemento é um 'fallback' apropriado",
-			"fail": "A função ARIA implícita do elemento não é um bom 'fallback' para esta função (não suportada)"
-		},
 		"invalidrole": {
 			"pass": "O ARIA 'role' é válido",
 			"fail": {
@@ -421,7 +397,7 @@
 		},
 		"no-implicit-explicit-label": {
 			"pass": "Não há nenhuma divergência entre <label> e o nome acessível",
-			"incomplete": "Verifique se o <label> não precisa fazer parte do nome do campo ARIA {{=it.data}}"
+			"incomplete": "Verifique se o <label> não precisa fazer parte do nome do campo ARIA ${data}"
 		},
 		"aria-required-attr": {
 			"pass": "Todos os atributos ARIA necessários estão presentes",
@@ -450,11 +426,11 @@
 		},
 		"aria-unsupported-attr": {
 			"pass": "O atributo ARIA é suportado",
-			"fail": "O atributo ARIA não é amplamente suportado em leitores de tela e tecnologias assistivas: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "O atributo ARIA não é amplamente suportado em leitores de tela e tecnologias assistivas:  ${data.values}"
 		},
 		"unsupportedrole": {
 			"pass": "O ARIA 'role' é suportado",
-			"fail": "O 'role' usado não é amplamente suportado em leitores de tela e tecnologias assistivas: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "O 'role' usado não é amplamente suportado em leitores de tela e tecnologias assistivas:  ${data.values}"
 		},
 		"aria-valid-attr-value": {
 			"pass": "Os valores dos atributos ARIA são válidos",
@@ -468,7 +444,10 @@
 			}
 		},
 		"aria-valid-attr": {
-			"pass": "{{=it.data && it.data.length > 1 ? 'Os nomes dos atributos ARIA são válidos' : 'O nome do atributo ARIA é valido'}}",
+			"pass": {
+				"singular": "Os nomes dos atributos ARIA são válidos",
+				"plural": "O nome do atributo ARIA é valido"
+			},
 			"fail": {
 				"singular": "Nome de atributo ARIA inválido: ${data.values}",
 				"plural": "Nomes de atributos ARIA inválidos: ${data.values}"
@@ -479,8 +458,8 @@
 			"fail": "O elemento possui semântica inválida para um elemento na ordem de foco."
 		},
 		"color-contrast": {
-			"pass": "O elemento tem contraste suficiente no valor de {{=it.data.contrastRatio}}",
-			"fail": "O elemento tem contraste insuficiente no valor de {{=it.data.contrastRatio}} (cor do primeiro plano: {{=it.data.fgColor}}, cor de fundo: {{=it.data.bgColor}}, tamanho da fonte: {{=it.data.fontSize}}, normal/negrito: {{=it.data.fontWeight}}). Contraste esperado no valor de {{=it.data.expectedContrastRatio}}",
+			"pass": "O elemento tem contraste suficiente no valor de ${data.contrastRatio}",
+			"fail": "O elemento tem contraste insuficiente no valor de ${data.contrastRatio} (cor do primeiro plano: ${data.fgColor}, cor de fundo: ${data.bgColor}, tamanho da fonte: ${data.fontSize}, normal/negrito: ${data.fontWeight}). Contraste esperado no valor de ${data.expectedContrastRatio}",
 			"incomplete": {
 				"default": "Impossível determinar o contraste",
 				"bgImage": "A cor de fundo do elemento não pôde ser determinada devido a uma imagem de fundo",
@@ -516,25 +495,6 @@
 			"pass": "o atributo 'autocomplete' está corretamente formatado",
 			"fail": "o atributo 'autocomplete' está incorretamente formatado"
 		},
-		"fieldset": {
-			"pass": "O elemento está contido em um <fieldset>",
-			"fail": {
-				"default": "O elemento não está contido em um >fieldset> ou grupo ARIA",
-				"no-legend": "O <fieldset> não tem um elemento <legend> como seu primeiro filho",
-				"empty-legend": "O elemento <legend> não tem texto visível para leitores de tela",
-				"mixed-inputs": "O <fieldset> contem controles não relacionados",
-				"no-group-label": "O grupo ARIA não tem um 'aria-label' ou 'aria-labelledby'",
-				"group-mixed-inputs": "O grupo ARIA contém controles não relacionados"
-			}
-		},
-		"group-labelledby": {
-			"pass": "Os elementos com o nome \"{{=it.data.name}}\" possuem tanto um 'label' compartilhado, como um 'label' único, referenciados através do 'aria-labelledby'",
-			"fail": {
-				"default": "Os elementos com o nome \"${data.name}\" não possuem todos tanto um 'label' compartilhado, como um 'label' único, referenciados através do 'aria-labelledby'",
-				"no-shared-label": "Os elementos com o nome \"${data.name}\" não possuem todos um 'label' compartilhado, referenciado através do 'aria-labelledby'",
-				"no-unique-label": "Os elementos com o nome \"${data.name}\" não possuem todos um 'label' único, referenciado através do 'aria-labelledby'"
-			}
-		},
 		"accesskeys": {
 			"pass": "O valor do atributo 'accesskey' é único",
 			"fail": "O documento tem múltiplos elementos com a mesma 'accesskey'"
@@ -564,8 +524,8 @@
 			"fail": "Conteúdo focalizável deve ter tabindex='-1' ou ser removido do DOM"
 		},
 		"landmark-is-top-level": {
-			"pass": "A região {{=it.data.role }} está no nível principal.",
-			"fail": "A região {{=it.data.role }} está contida em outra região."
+			"pass": "A região ${data.role} está no nível principal.",
+			"fail": "A região ${data.role} está contida em outra região."
 		},
 		"page-has-heading-one": {
 			"pass": "A página tem pelo menos um título de primeiro nível",
@@ -673,10 +633,6 @@
 			"pass": "O elemento multimídia tem uma trilha de legendas",
 			"incomplete": "Verifique se legendas estão disponíveis para o elemento"
 		},
-		"description": {
-			"pass": "O elemento multimídia tem uma trilha de audiodescrição",
-			"incomplete": "Verifique se a audiodescrição está disponível para o elemento"
-		},
 		"frame-tested": {
 			"pass": "O 'iframe' foi testado com o 'axe-core'",
 			"fail": "O 'iframe' não pôde ser testado com o 'axe-core'",
@@ -698,7 +654,7 @@
 		},
 		"meta-viewport": {
 			"pass": "A tag <meta> não desabilita o zoom em dispositivos móveis",
-			"fail": "{{=it.data}} na tag <meta> desabilita o zoom em dispositivos móveis"
+			"fail": "${data} na tag <meta> desabilita o zoom em dispositivos móveis"
 		},
 		"header-present": {
 			"pass": "A página tem um cabeçalho (header)",
@@ -743,11 +699,11 @@
 		},
 		"duplicate-id-active": {
 			"pass": "O documento não tem elementos ativos que compartilham o mesmo atributo 'id'",
-			"fail": "O documento tem elementos ativos com o mesmo atributo 'id': {{=it.data}}"
+			"fail": "O documento tem elementos ativos com o mesmo atributo 'id': ${data}"
 		},
 		"duplicate-id-aria": {
 			"pass": "O documento não tem elementos referenciados com ARIA ou rótulos que compartilham o mesmo atributo 'id'",
-			"fail": "O documento tem múltiplos elementos referenciados com ARIA com o mesmo atributo 'id': {{=it.data}}"
+			"fail": "O documento tem múltiplos elementos referenciados com ARIA com o mesmo atributo 'id': ${data}"
 		},
 		"duplicate-id": {
 			"pass": "O documento não tem elementos estáticos que compartilham o mesmo atributo 'id'",
@@ -826,18 +782,6 @@
 		"caption-faked": {
 			"pass": "A primeira linha de uma tabela não é usada como legenda",
 			"fail": "O primeiro elemento da tabela deve ser um <caption> em vez de uma célula da tabela"
-		},
-		"has-caption": {
-			"pass": "A tabela de layout não usa o elemento <caption>",
-			"fail": "A tabela de layout usa o elemento <caption>"
-		},
-		"has-summary": {
-			"pass": "A tabela de layout não usa o atributo 'summary'",
-			"fail": "A tabela de layout usa o atributo 'summary'"
-		},
-		"has-th": {
-			"pass": "A tabela de layout não usa elementos <th>",
-			"fail": "A tabela de layout usa elementos <th>"
 		},
 		"html5-scope": {
 			"pass": "O atributo 'scope' só é utilizado em elementos de cabeçalho de tabela (<th>)",

@@ -16,7 +16,10 @@ module.exports = function(grunt) {
 			 * as `axe` does not exist until grunt task `build:uglify` is complete,
 			 * hence cannot be required at the top of the file.
 			 */
-			const axe = require('../../axe');
+			const langOption = grunt.option('lang');
+			const fileNameSuffix =
+				langOption && langOption.length > 0 ? `.${langOption}` : '';
+			const axe = require(`../../axe${fileNameSuffix}`);
 			const listType = this.data.listType.toLowerCase();
 			const headings = {
 				main:

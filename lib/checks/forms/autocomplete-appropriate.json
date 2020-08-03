@@ -1,6 +1,6 @@
 {
 	"id": "autocomplete-appropriate",
-	"evaluate": "autocomplete-appropriate.js",
+	"evaluate": "autocomplete-appropriate-evaluate",
 	"metadata": {
 		"impact": "serious",
 		"messages": {

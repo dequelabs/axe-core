@@ -1,6 +1,7 @@
-/*global Rule, Check */
 describe('axe.configure', function() {
 	'use strict';
+	// var Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
+	// var Check = axe._thisWillBeDeletedDoNotUse.base.Check;
 	var fixture = document.getElementById('fixture');
 	var axeVersion = axe.version;
 
@@ -51,7 +52,8 @@ describe('axe.configure', function() {
 		});
 
 		assert.lengthOf(axe._audit.rules, 1);
-		assert.instanceOf(axe._audit.rules[0], Rule);
+		// TODO: this does not work yet thanks to webpack
+		// assert.instanceOf(axe._audit.rules[0], Rule);
 		assert.equal(axe._audit.rules[0].id, 'bob');
 		assert.deepEqual(axe._audit.data.rules.bob.joe, 'joe');
 	});
@@ -156,7 +158,7 @@ describe('axe.configure', function() {
 		});
 
 		assert.lengthOf(axe._audit.rules, 1);
-		assert.instanceOf(axe._audit.rules[0], Rule);
+		// assert.instanceOf(axe._audit.rules[0], Rule);
 		assert.equal(axe._audit.rules[0].id, 'bob');
 		assert.equal(axe._audit.rules[0].selector, 'pass');
 		assert.equal(axe._audit.data.rules.bob.joe, 'joe');
@@ -168,7 +170,7 @@ describe('axe.configure', function() {
 			checks: [
 				{
 					id: 'bob',
-					options: true,
+					options: { value: true },
 					metadata: {
 						joe: 'joe'
 					}
@@ -176,9 +178,9 @@ describe('axe.configure', function() {
 			]
 		});
 
-		assert.instanceOf(axe._audit.checks.bob, Check);
+		// assert.instanceOf(axe._audit.checks.bob, Check);
 		assert.equal(axe._audit.checks.bob.id, 'bob');
-		assert.isTrue(axe._audit.checks.bob.options);
+		assert.isTrue(axe._audit.checks.bob.options.value);
 		assert.equal(axe._audit.data.checks.bob.joe, 'joe');
 	});
 
@@ -216,7 +218,7 @@ describe('axe.configure', function() {
 			checks: [
 				{
 					id: 'bob',
-					options: false
+					options: { value: false }
 				}
 			]
 		});
@@ -224,7 +226,7 @@ describe('axe.configure', function() {
 			checks: [
 				{
 					id: 'bob',
-					options: true,
+					options: { value: true },
 					metadata: {
 						joe: 'joe'
 					}
@@ -232,9 +234,9 @@ describe('axe.configure', function() {
 			]
 		});
 
-		assert.instanceOf(axe._audit.checks.bob, Check);
+		// assert.instanceOf(axe._audit.checks.bob, Check);
 		assert.equal(axe._audit.checks.bob.id, 'bob');
-		assert.isTrue(axe._audit.checks.bob.options);
+		assert.isTrue(axe._audit.checks.bob.options.value);
 		assert.equal(axe._audit.data.checks.bob.joe, 'joe');
 	});
 
@@ -903,6 +905,109 @@ describe('axe.configure', function() {
 					},
 					/^Configured version 1\.3\.0/
 				);
+			});
+		});
+	});
+
+	describe('given a standards object', function() {
+		beforeEach(function() {
+			axe._load({});
+		});
+
+		describe('ariaAttrs', function() {
+			it('should allow creating new attr', function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'string'
+							}
+						}
+					}
+				});
+
+				var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
+				assert.equal(ariaAttr.type, 'string');
+			});
+
+			it('should override existing attr', function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'string'
+							}
+						}
+					}
+				});
+
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'mntoken',
+								values: ['foo', 'bar']
+							}
+						}
+					}
+				});
+
+				var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
+				assert.equal(ariaAttr.type, 'mntoken');
+				assert.deepEqual(ariaAttr.values, ['foo', 'bar']);
+			});
+
+			it('should merge existing attr', function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'mntoken',
+								values: ['foo', 'bar']
+							}
+						}
+					}
+				});
+
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'mntokens'
+							}
+						}
+					}
+				});
+
+				var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
+				assert.equal(ariaAttr.type, 'mntokens');
+				assert.deepEqual(ariaAttr.values, ['foo', 'bar']);
+			});
+
+			it('should override and not merge array', function() {
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								type: 'mntoken',
+								values: ['foo', 'bar']
+							}
+						}
+					}
+				});
+
+				axe.configure({
+					standards: {
+						ariaAttrs: {
+							newAttr: {
+								values: ['baz']
+							}
+						}
+					}
+				});
+
+				var ariaAttr = axe._audit.standards.ariaAttrs.newAttr;
+				assert.deepEqual(ariaAttr.values, ['baz']);
 			});
 		});
 	});

@@ -1,13 +1,15 @@
 describe('axe.utils.finalizeRuleResult', function() {
 	'use strict';
+	var original = axe._audit;
 
-	var origAggregate;
 	beforeEach(function() {
-		origAggregate = axe.utils.aggregateNodeResults;
+		axe._audit = {
+			rules: []
+		};
 	});
 
-	afterEach(function() {
-		axe.utils.aggregateNodeResults = origAggregate;
+	after(function() {
+		axe._audit = original;
 	});
 
 	it('should be a function', function() {
@@ -15,32 +17,63 @@ describe('axe.utils.finalizeRuleResult', function() {
 	});
 
 	it('returns the first param object', function() {
-		axe.utils.aggregateNodeResults = function() {};
-
-		var goingIn = {};
+		var goingIn = {
+			nodes: []
+		};
 		var comingOut = axe.utils.finalizeRuleResult(goingIn);
 
 		assert.equal(goingIn, comingOut);
 	});
 
-	it('passes the nodes property to utils.aggregateNodeResults', function() {
-		var isCalled = false;
-		var nodes = [];
-		axe.utils.aggregateNodeResults = function(n) {
-			assert.equal(n, nodes);
-			isCalled = true;
+	it('assigns impact if rule.impact is defined', function() {
+		axe._audit = {
+			rules: [{ id: 'foo', impact: 'critical' }]
 		};
-		axe.utils.finalizeRuleResult({ nodes: nodes });
-		assert.ok(isCalled);
+
+		var output = axe.utils.finalizeRuleResult({
+			id: 'foo',
+			nodes: [
+				{
+					any: [
+						{
+							result: false,
+							impact: 'minor'
+						}
+					],
+					all: [],
+					none: []
+				}
+			]
+		});
+
+		assert.equal(output.impact, 'critical');
+		assert.equal(output.violations[0].impact, 'critical');
+		assert.equal(output.violations[0].any[0].impact, 'critical');
 	});
 
-	it('adds properties returned from utils.aggregateNodeResults to the return value', function() {
-		axe.utils.aggregateNodeResults = function() {
-			return {
-				vulgaris: 'magistralis'
-			};
+	it('leaves impact as null when rule.impact is defined', function() {
+		axe._audit = {
+			rules: [{ id: 'foo', impact: 'critical' }]
 		};
-		var out = axe.utils.finalizeRuleResult({});
-		assert.equal(out.vulgaris, 'magistralis');
+
+		var output = axe.utils.finalizeRuleResult({
+			id: 'foo',
+			nodes: [
+				{
+					any: [
+						{
+							result: true,
+							impact: 'minor'
+						}
+					],
+					all: [],
+					none: []
+				}
+			]
+		});
+
+		assert.isNull(output.impact);
+		assert.isNull(output.passes[0].impact);
+		assert.equal(output.passes[0].any[0].impact, 'critical');
 	});
 });

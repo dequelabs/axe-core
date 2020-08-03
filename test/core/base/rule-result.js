@@ -1,6 +1,6 @@
-/*global RuleResult */
 describe('RuleResult', function() {
 	'use strict';
+	var RuleResult = axe._thisWillBeDeletedDoNotUse.base.RuleResult;
 
 	it('should be a function', function() {
 		assert.isFunction(RuleResult);

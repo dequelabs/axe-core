@@ -6,8 +6,8 @@
 			"fail": "Gebruik geen abstracte rollen (role)"
 		},
 		"color-contrast": {
-			"pass": "Element heeft voldoende contrast, namelijk {{=it.data.contrastRatio}}",
-			"fail": "Element heeft onvoldoende contrast, {{=it.data.contrastRatio}} (Voorgrondkleur: {{=it.data.fgColor}}, achtergrondkleur: {{=it.data.bgColor}}, tekstgrootte: {{=it.data.fontSize}}, tekstdikte: {{=it.data.fontWeight}})",
+			"pass": "Element heeft voldoende contrast, namelijk ${data.contrastRatio}",
+			"fail": "Element heeft onvoldoende contrast, ${data.contrastRatio} (Voorgrondkleur: ${data.fgColor}, achtergrondkleur: ${data.bgColor}, tekstgrootte: ${data.fontSize}, tekstdikte: ${data.fontWeight})",
 			"incomplete": {
 				"bgImage": "Element's achtergrondkleur kon niet worden bepaald vanwegen een achtergrondafbeelding",
 				"bgGradient": "Element's achtergrondkleur kon niet worden bepaald vanwegen een gradient kleur",

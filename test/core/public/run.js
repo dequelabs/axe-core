@@ -101,21 +101,6 @@ describe('axe.run', function() {
 		});
 	});
 
-	it('should clear axe._tree', function(done) {
-		var getFlattenedTree = axe.utils.getFlattenedTree;
-		var thing = 'honey badger';
-		axe.utils.getFlattenedTree = function() {
-			return thing;
-		};
-		axe._runRules = function() {
-			assert.isTrue(typeof axe._tree === 'undefined');
-			axe.utils.getFlattenedTree = getFlattenedTree;
-			done();
-		};
-
-		axe.run({ someOption: true }, noop);
-	});
-
 	it('should error if axe is already running', function(done) {
 		axe.run(noop);
 		axe.run(function(err) {
@@ -395,53 +380,6 @@ describe('axe.run', function() {
 						result.violations[0].nodes[0].none[0].relatedNodes[0].target,
 						['html > body > #fixture']
 					);
-					done();
-				}
-			);
-		});
-	});
-
-	describe('option restoreScroll', function() {
-		it('does not change scroll when restoreScroll is not set', function(done) {
-			var calls = 0;
-			var _getSS = axe.utils.getScrollState;
-			var _setSS = axe.utils.setScrollState;
-			axe.utils.setScrollState = function() {
-				calls++;
-			};
-			axe.utils.getScrollState = axe.utils.setScrollState;
-
-			axe.run('#fixture', {}, function() {
-				assert.equal(calls, 0);
-				axe.utils.getScrollState = _getSS;
-				axe.utils.setScrollState = _setSS;
-				done();
-			});
-		});
-
-		it('resets scrolLState after running the audit', function(done) {
-			var scrollState = {};
-			var calls = 0;
-			var _getSS = axe.utils.getScrollState;
-			var _setSS = axe.utils.setScrollState;
-
-			axe.utils.setScrollState = function(arg) {
-				assert.equal(scrollState, arg);
-				calls++;
-			};
-			axe.utils.getScrollState = function() {
-				return scrollState;
-			};
-
-			axe.run(
-				'#fixture',
-				{
-					restoreScroll: true
-				},
-				function() {
-					assert.equal(calls, 1);
-					axe.utils.getScrollState = _getSS;
-					axe.utils.setScrollState = _setSS;
 					done();
 				}
 			);

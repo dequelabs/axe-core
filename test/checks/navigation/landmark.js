@@ -4,24 +4,27 @@ describe('landmark', function() {
 	var fixture = document.getElementById('fixture');
 	var checkSetup = axe.testUtils.checkSetup;
 	var shadowSupport = axe.testUtils.shadowSupport;
+	var checkEvaluate = axe.testUtils.getCheckEvaluate('landmark');
+	var checkContext = axe.testUtils.MockCheckContext();
 
 	afterEach(function() {
 		fixture.innerHTML = '';
+		checkContext.reset();
 	});
 
 	it('should return true when role=main is found', function() {
 		var checkArgs = checkSetup('<div role="main"></div>', '#fixture');
-		assert.isTrue(checks.landmark.evaluate.apply(null, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should return true when <main> is found', function() {
 		var checkArgs = checkSetup('<main></main>', '#fixture');
-		assert.isTrue(checks.landmark.evaluate.apply(null, checkArgs));
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('should otherwise return false', function() {
 		var checkArgs = checkSetup('<div role="contentinfo"></div>', '#fixture');
-		assert.isFalse(checks.landmark.evaluate.apply(null, checkArgs));
+		assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	(shadowSupport.v1 ? it : xit)(
@@ -32,7 +35,7 @@ describe('landmark', function() {
 			shadow.innerHTML = '<div></div>';
 			var checkArgs = checkSetup(node, '#fixture');
 
-			assert.isFalse(checks.landmark.evaluate.apply(null, checkArgs));
+			assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
 		}
 	);
 
@@ -44,7 +47,7 @@ describe('landmark', function() {
 			shadow.innerHTML = '<main></main>';
 			var checkArgs = checkSetup(node, '#fixture');
 
-			assert.isTrue(checks.landmark.evaluate.apply(null, checkArgs));
+			assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 		}
 	);
 
@@ -57,7 +60,7 @@ describe('landmark', function() {
 			shadow.innerHTML = '<slot></slot>';
 			var checkArgs = checkSetup(node, '#fixture');
 
-			assert.isTrue(checks.landmark.evaluate.apply(null, checkArgs));
+			assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 		}
 	);
 });

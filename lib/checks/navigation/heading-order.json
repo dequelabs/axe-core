@@ -1,7 +1,7 @@
 {
 	"id": "heading-order",
-	"evaluate": "heading-order.js",
-	"after": "heading-order-after.js",
+	"evaluate": "heading-order-evaluate",
+	"after": "heading-order-after",
 	"metadata": {
 		"impact": "moderate",
 		"messages": {

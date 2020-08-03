@@ -1,6 +1,7 @@
 describe('forms.isNativeTextbox', function() {
 	'use strict';
 	var isNativeTextbox = axe.commons.forms.isNativeTextbox;
+	var queryFixture = axe.testUtils.queryFixture;
 
 	it('returns true for a text inputs', function() {
 		var textInputs = [
@@ -19,8 +20,7 @@ describe('forms.isNativeTextbox', function() {
 			'week'
 		];
 		textInputs.forEach(function(type) {
-			var node = document.createElement('input');
-			node.setAttribute('type', type);
+			var node = queryFixture('<input id="target" type="' + type + '"/>');
 			assert.isTrue(
 				isNativeTextbox(node),
 				'<input type="' + type + '"> is a native text input'
@@ -29,7 +29,7 @@ describe('forms.isNativeTextbox', function() {
 	});
 
 	it('returns true for a textarea element', function() {
-		var node = document.createElement('textarea');
+		var node = queryFixture('<textarea id="target"/>');
 		assert.isTrue(isNativeTextbox(node));
 	});
 
@@ -47,22 +47,22 @@ describe('forms.isNativeTextbox', function() {
 			'color'
 		];
 		nonTextInputs.forEach(function(type) {
-			var node = document.createElement('input');
-			node.setAttribute('type', type);
+			var node = queryFixture('<input id="target" type="' + type + '"/>');
 
-			// IE doesn't support color inputs
-			if (node.type !== 'text') {
-				assert.isFalse(
-					isNativeTextbox(node),
-					'<input type="' + type + '"> is not a native text input'
-				);
-			}
+			assert.isFalse(
+				isNativeTextbox(node),
+				'<input type="' + type + '"> is not a native text input'
+			);
 		});
 	});
 
 	it('return false for aria textbox elements', function() {
-		var node = document.createElement('div');
-		node.setAttribute('role', 'textbox');
+		var node = queryFixture('<div id="target" role="textbox"></div>');
 		assert.isFalse(isNativeTextbox(node));
+	});
+
+	it('should ignore type case', function() {
+		var node = queryFixture('<input id="target" type="TEXT"/>');
+		assert.isTrue(isNativeTextbox(node));
 	});
 });

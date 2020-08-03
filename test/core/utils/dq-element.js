@@ -1,7 +1,7 @@
-/*global DqElement */
 describe('DqElement', function() {
 	'use strict';
 
+	var DqElement = axe.utils.DqElement;
 	var fixture = document.getElementById('fixture');
 	var fixtureSetup = axe.testUtils.fixtureSetup;
 
@@ -90,23 +90,6 @@ describe('DqElement', function() {
 	});
 
 	describe('selector', function() {
-		it('should call axe.utils.getSelector', function() {
-			/*eslint no-unused-vars: 0*/
-			var orig = axe.utils.getSelector;
-			var success = false;
-			var expected = { monkeys: 'bananas' };
-
-			axe.utils.getSelector = function(p) {
-				success = true;
-				assert.equal(fixture, p);
-				return expected;
-			};
-
-			var result = new DqElement(fixture);
-			assert.deepEqual(result.selector, [expected]);
-			axe.utils.getSelector = orig;
-		});
-
 		it('should prefer selector from spec object', function() {
 			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
 			var result = new DqElement(
@@ -120,23 +103,21 @@ describe('DqElement', function() {
 		});
 	});
 
-	describe('xpath', function() {
-		it('should call axe.utils.getXpath', function() {
-			/*eslint no-unused-vars: 0*/
-			var orig = axe.utils.getXpath;
-			var success = false;
-			var expected = { monkeys: 'bananas' };
-
-			axe.utils.getXpath = function(p) {
-				success = true;
-				assert.equal(fixture, p);
-				return expected;
-			};
-			var result = new DqElement(fixture);
-			assert.deepEqual(result.xpath, [expected]);
-			axe.utils.getXpath = orig;
+	describe('ancestry', function() {
+		it('should prefer selector from spec object', function() {
+			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
+			var result = new DqElement(
+				fixture.firstChild,
+				{},
+				{
+					ancestry: 'woot'
+				}
+			);
+			assert.equal(result.ancestry, 'woot');
 		});
+	});
 
+	describe('xpath', function() {
 		it('should prefer selector from spec object', function() {
 			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
 			var result = new DqElement(
@@ -168,11 +149,64 @@ describe('DqElement', function() {
 			var expected = {
 				selector: 'foo > bar > joe',
 				source: '<joe aria-required="true">',
-				xpath: '/foo/bar/joe'
+				xpath: '/foo/bar/joe',
+				ancestry: 'foo > bar > joe'
 			};
 			var result = new DqElement('joe', {}, expected);
 
 			assert.deepEqual(JSON.stringify(result), JSON.stringify(expected));
+		});
+	});
+
+	describe('fromFrame', function() {
+		var dqMain, dqIframe;
+		beforeEach(function() {
+			var main = document.createElement('main');
+			main.id = 'main';
+			dqMain = new DqElement(
+				main,
+				{},
+				{
+					selector: ['#main'],
+					ancestry: ['html > body > main'],
+					xpath: ['/main']
+				}
+			);
+
+			var iframe = document.createElement('iframe');
+			iframe.id = 'iframe';
+			dqIframe = new DqElement(
+				iframe,
+				{},
+				{
+					selector: ['#iframe'],
+					ancestry: ['html > body > iframe'],
+					xpath: ['/iframe']
+				}
+			);
+		});
+
+		it('returns a new DqElement', function() {
+			assert.instanceOf(DqElement.fromFrame(dqMain, {}, dqIframe), DqElement);
+		});
+
+		it('sets options for DqElement', function() {
+			var options = { absolutePaths: true };
+			var dqElm = DqElement.fromFrame(dqMain, options, dqIframe);
+			assert.isTrue(dqElm._options.toRoot);
+		});
+
+		it('merges node and frame selectors', function() {
+			var dqElm = DqElement.fromFrame(dqMain, {}, dqIframe);
+			assert.deepEqual(dqElm.selector, [
+				dqIframe.selector[0],
+				dqMain.selector[0]
+			]);
+			assert.deepEqual(dqElm.ancestry, [
+				dqIframe.ancestry[0],
+				dqMain.ancestry[0]
+			]);
+			assert.deepEqual(dqElm.xpath, [dqIframe.xpath[0], dqMain.xpath[0]]);
 		});
 	});
 });

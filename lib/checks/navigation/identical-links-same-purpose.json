@@ -1,7 +1,7 @@
 {
 	"id": "identical-links-same-purpose",
-	"evaluate": "identical-links-same-purpose.js",
-	"after": "identical-links-same-purpose-after.js",
+	"evaluate": "identical-links-same-purpose-evaluate",
+	"after": "identical-links-same-purpose-after",
 	"metadata": {
 		"impact": "minor",
 		"messages": {

@@ -1,6 +1,6 @@
 {
 	"id": "multiple-label",
-	"evaluate": "multiple-label.js",
+	"evaluate": "multiple-label-evaluate",
 	"metadata": {
 		"impact": "moderate",
 		"messages": {

@@ -13,10 +13,6 @@
 			"description": "",
 			"help": "Elemente dürfen nur erlaubte ARIA-Attribute verwenden."
 		},
-		"aria-dpub-role-fallback": {
-			"description": "",
-			"help": "Nicht unterstützte DPUB ARIA-Rollen sollten in Elementen mit impliziten Fallback-Rollen verwendet werden."
-		},
 		"aria-hidden-body": {
 			"description": "",
 			"help": "Aria-hidden='true' darf nicht für den <body> des Dokumentes verwendet werden."
@@ -60,10 +56,6 @@
 		"bypass": {
 			"description": "",
 			"help": "Die Seite muss Wege bereitstellen, um mehrfache Blöcke zu übergehen."
-		},
-		"checkboxgroup": {
-			"description": "",
-			"help": "Checkbox-Eingaben mit demselben name-Attributwert müssen Teil einer Gruppe sein."
 		},
 		"color-contrast": {
 			"description": "",
@@ -165,10 +157,6 @@
 			"description": "",
 			"help": "Seite muss eine main landmark enthalten."
 		},
-		"layout-table": {
-			"description": "",
-			"help": "Layouttabellen dürfen keine Datentabellenelemente verwenden."
-		},
 		"link-in-text-block": {
 			"description": "",
 			"help": "Links müssen vom umgebenden Text auf eine Weise unterschieden werden können, die nicht allein auf Farbe beruht."
@@ -212,10 +200,6 @@
 		"page-has-heading-one": {
 			"description": "",
 			"help": "Die Seite muss eine Überschrift erster Ebene enthalten."
-		},
-		"radiogroup": {
-			"description": "",
-			"help": "Radio-Eingaben mit demselben name-Attributwert müssen Teil einer Gruppe sein."
 		},
 		"region": {
 			"description": "",
@@ -264,10 +248,6 @@
 		"video-caption": {
 			"description": "",
 			"help": "<video>-Elemente müssen Untertitel besitzen."
-		},
-		"video-description": {
-			"description": "",
-			"help": "<video>-Elemente müssen eine Audiodeskription besitzen."
 		}
 	},
 	"checks": {
@@ -277,7 +257,7 @@
 		},
 		"aria-allowed-attr": {
 			"pass": "",
-			"fail": "Die folgenden ARIA-Attribute sind (für die ARIA-Rolle des Elementes) nicht erlaubt:{{~it.data:value}} {{=value}}{{~}}."
+			"fail": "Die folgenden ARIA-Attribute sind (für die ARIA-Rolle des Elementes) nicht erlaubt: ${data.values}."
 		},
 		"aria-hidden-body": {
 			"pass": "",
@@ -285,15 +265,11 @@
 		},
 		"aria-errormessage": {
 			"pass": "",
-			"fail": "Der Wert der aria-errormessage {{~it.data:value}} `{{=value}}{{~}}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.)."
+			"fail": "Der Wert der aria-errormessage  ${data.values}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.)."
 		},
 		"has-widget-role": {
 			"pass": "",
 			"fail": "Das Element besitzt keine widget-Rolle."
-		},
-		"implicit-role-fallback": {
-			"pass": "",
-			"fail": "Die implizite ARIA-Rolle des Elementes ist keine gute Alternative für die (nicht unterstützte) Rolle."
 		},
 		"invalidrole": {
 			"pass": "",
@@ -301,23 +277,23 @@
 		},
 		"aria-required-attr": {
 			"pass": "",
-			"fail": "Die folgenden erforderlichen ARIA-Attribute sind nicht vorhanden:{{~it.data:value}} {{=value}}{{~}}."
+			"fail": "Die folgenden erforderlichen ARIA-Attribute sind nicht vorhanden: ${data.values}."
 		},
 		"aria-required-children": {
 			"pass": "",
-			"fail": "Die folgenden erforderlichen untergeordneten ARIA-Rollen (ARIA-Kind-Rollen) sind nicht vorhanden:{{~it.data:value}} {{=value}}{{~}}."
+			"fail": "Die folgenden erforderlichen untergeordneten ARIA-Rollen (ARIA-Kind-Rollen) sind nicht vorhanden: ${data.values}."
 		},
 		"aria-required-parent": {
 			"pass": "",
-			"fail": "Die folgenden erforderlichen übergeordneten ARIA-Rollen (ARIA-Eltern-Rollen) sind nicht vorhanden:{{~it.data:value}} {{=value}}{{~}}."
+			"fail": "Die folgenden erforderlichen übergeordneten ARIA-Rollen (ARIA-Eltern-Rollen) sind nicht vorhanden: ${data.values}."
 		},
 		"aria-valid-attr-value": {
 			"pass": "",
-			"fail": "Folgende ARIA-Attributwerte sind nicht valide:{{~it.data:value}} {{=value}}{{~}}."
+			"fail": "Folgende ARIA-Attributwerte sind nicht valide: ${data.values}."
 		},
 		"aria-valid-attr": {
 			"pass": "",
-			"fail": "Folgende ARIA-Attributnamen sind nicht valide:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": "Folgende ARIA-Attributnamen sind nicht valide: ${data.values}"
 		},
 		"valid-scrollable-semantics": {
 			"pass": "",
@@ -325,7 +301,7 @@
 		},
 		"color-contrast": {
 			"pass": "",
-			"fail": "Das Element hat einen unzureichenden Kontrast von {{=it.data.contrastRatio}} (Vordergrundfarbe: {{=it.data.fgColor}}, Hintergrundfarbe: {{=it.data.bgColor}}, Schriftgröße: {{=it.data.fontSize}}, Schriftstärke: {{=it.data.fontWeight}}).",
+			"fail": "Das Element hat einen unzureichenden Kontrast von ${data.contrastRatio} (Vordergrundfarbe: ${data.fgColor}, Hintergrundfarbe: ${data.bgColor}, Schriftgröße: ${data.fontSize}, Schriftstärke: ${data.fontWeight}).",
 			"incomplete": {
 				"bgImage": "Die Hintergrundfarbe des Elementes konnte aufgrund eines Hintergrundbildes nicht bestimmt werden.",
 				"bgGradient": "Die Hintergrundfarbe des Elementes konnte aufgrund eines Hintergrundfarbverlaufes nicht bestimmt werden.",
@@ -349,14 +325,6 @@
 				"default": "Das Kontrastverhältnis konnte nicht ermittelt werden."
 			}
 		},
-		"fieldset": {
-			"pass": "",
-			"fail": "{{var code = it.data && it.data.failureCode;}}{{? code === 'no-legend'}}Das Fieldset besitzt kein <legend>-Element als erstes Kindelement{{?? code === 'empty-legend'}}Das <legend>-Element enthält keinen Text, der für Screenreader sichtbar ist{{?? code === 'mixed-inputs'}}Das Fieldset besitzt unerlaubte Inputs{{?? code === 'no-group-label'}}Die ARIA-Gruppe besitzt kein aria-label- oder aria-labelledby-Attribut{{?? code === 'group-mixed-inputs'}}Die ARIA-Gruppe besitzt unerlaubte Inputs{{??}}Das Element besitzt kein(e) fieldset oder ARIA-Gruppe {{?}}"
-		},
-		"group-labelledby": {
-			"pass": "",
-			"fail": "Die Elemente mit dem name-Attribut \"{{=it.data.name}}\" referenzieren mit aria-labelledby nicht alle dasselbe Element."
-		},
 		"accesskeys": {
 			"pass": "",
 			"fail": "Das Dokument enthält mehrere Elemente mit demselben accesskey-Attribut."
@@ -367,7 +335,7 @@
 		},
 		"landmark-is-top-level": {
 			"pass": "",
-			"fail": "Die {{=it.data.role }} landmark befindet sich innerhalb einer anderen landmark."
+			"fail": "Die ${data.role} landmark befindet sich innerhalb einer anderen landmark."
 		},
 		"page-has-heading-one": {
 			"pass": "",
@@ -450,11 +418,6 @@
 			"fail": "Das Multimedia-Element enthält keine Untertitelung (captions track) zur Beschreibung der Audio-Inhalte.",
 			"incomplete": "Für das Element konnte keine Untertitelung (captions track) gefunden werden."
 		},
-		"description": {
-			"pass": "",
-			"fail": "Das Multimedia-Element enthält keine Deskriptionsspur zur Beschreibung der visuellen Inhalte.",
-			"incomplete": "Für das Element konnte keine Audio-Deskriptionsspur gefunden werden."
-		},
 		"frame-tested": {
 			"pass": "",
 			"fail": "Das iFrame konnte nicht mit axe-core getestet werden.",
@@ -522,7 +485,7 @@
 		},
 		"duplicate-id": {
 			"pass": "",
-			"fail": "Das Dokument besitzt mehrere Elemente mit demselben id-Attributwert: {{=it.data}}."
+			"fail": "Das Dokument besitzt mehrere Elemente mit demselben id-Attributwert: ${data}."
 		},
 		"exists": {
 			"pass": "",
@@ -567,18 +530,6 @@
 		"caption-faked": {
 			"pass": "",
 			"fail": "Die erste Zeile der Tabelle sollte eine Tabellenüberschrift anstelle einer Tabellenzelle sein."
-		},
-		"has-caption": {
-			"pass": "",
-			"fail": "Die Layout-Tabelle besitzt ein <caption>-Element."
-		},
-		"has-summary": {
-			"pass": "",
-			"fail": "Die Layout-Tabelle besitzt ein summary-Attribut."
-		},
-		"has-th": {
-			"pass": "",
-			"fail": "Die Layout-Tabelle besitzt ein oder mehrere <th>-Elemente."
 		},
 		"html5-scope": {
 			"pass": "",

@@ -5,17 +5,11 @@ describe('aria-errormessage', function() {
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
 	var checkContext = axe.testUtils.MockCheckContext();
-	var attrData = Object.assign(
-		{},
-		axe.commons.aria.lookupTable.attributes['aria-errormessage']
-	);
 
 	afterEach(function() {
-		axe.commons.aria.lookupTable.attributes[
-			'aria-errormessage'
-		] = Object.assign({}, attrData);
 		fixture.innerHTML = '';
 		checkContext.reset();
+		axe.reset();
 	});
 
 	it('should return false if aria-errormessage value is invalid', function() {
@@ -25,7 +19,9 @@ describe('aria-errormessage', function() {
 		var target = fixture.children[0];
 		target.setAttribute('aria-errormessage', 'plain');
 		assert.isFalse(
-			checks['aria-errormessage'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('aria-errormessage')
+				.call(checkContext, target)
 		);
 	});
 
@@ -36,7 +32,9 @@ describe('aria-errormessage', function() {
 		var target = fixture.children[0];
 		target.setAttribute('aria-errormessage', 'alert');
 		assert.isTrue(
-			checks['aria-errormessage'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('aria-errormessage')
+				.call(checkContext, target)
 		);
 	});
 
@@ -47,7 +45,9 @@ describe('aria-errormessage', function() {
 		var target = fixture.children[0];
 		target.setAttribute('aria-errormessage', 'live');
 		assert.isTrue(
-			checks['aria-errormessage'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('aria-errormessage')
+				.call(checkContext, target)
 		);
 	});
 
@@ -59,7 +59,9 @@ describe('aria-errormessage', function() {
 		target.setAttribute('aria-errormessage', 'plain');
 		target.setAttribute('aria-describedby', 'plain');
 		assert.isTrue(
-			checks['aria-errormessage'].evaluate.call(checkContext, target)
+			axe.testUtils
+				.getCheckEvaluate('aria-errormessage')
+				.call(checkContext, target)
 		);
 	});
 
@@ -69,33 +71,45 @@ describe('aria-errormessage', function() {
 		fixture.innerHTML = testHTML;
 		var target = fixture.children[0];
 		target.setAttribute('aria-errormessage', ' foo  bar \tbaz  ');
-		checks['aria-errormessage'].evaluate.call(checkContext, target);
+		axe.testUtils
+			.getCheckEvaluate('aria-errormessage')
+			.call(checkContext, target);
 		assert.deepEqual(checkContext._data, ['foo', 'bar', 'baz']);
 	});
 
 	it('returns true when aria-errormessage is empty, if that is allowed', function() {
-		axe.commons.aria.lookupTable.attributes[
-			'aria-errormessage'
-		].allowEmpty = true;
+		axe.configure({
+			standards: {
+				ariaAttrs: {
+					'aria-errormessage': {
+						allowEmpty: true
+					}
+				}
+			}
+		});
 		fixture.innerHTML = '<div aria-errormessage=" "></div>';
 		assert.isTrue(
-			checks['aria-errormessage'].evaluate.call(
-				checkContext,
-				fixture.children[0]
-			)
+			axe.testUtils
+				.getCheckEvaluate('aria-errormessage')
+				.call(checkContext, fixture.children[0])
 		);
 	});
 
 	it('returns false when aria-errormessage is empty, if that is not allowed', function() {
-		axe.commons.aria.lookupTable.attributes[
-			'aria-errormessage'
-		].allowEmpty = false;
+		axe.configure({
+			standards: {
+				ariaAttrs: {
+					'aria-errormessage': {
+						allowEmpty: false
+					}
+				}
+			}
+		});
 		fixture.innerHTML = '<div aria-errormessage=" "></div>';
 		assert.isFalse(
-			checks['aria-errormessage'].evaluate.call(
-				checkContext,
-				fixture.children[0]
-			)
+			axe.testUtils
+				.getCheckEvaluate('aria-errormessage')
+				.call(checkContext, fixture.children[0])
 		);
 	});
 
@@ -107,7 +121,9 @@ describe('aria-errormessage', function() {
 				'<div id="live" aria-live="assertive"></div>'
 			);
 			assert.isFalse(
-				checks['aria-errormessage'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-errormessage')
+					.apply(checkContext, params)
 			);
 		}
 	);
@@ -121,7 +137,9 @@ describe('aria-errormessage', function() {
 					'<div id="live" aria-live="assertive"></div>'
 			);
 			assert.isTrue(
-				checks['aria-errormessage'].evaluate.apply(checkContext, params)
+				axe.testUtils
+					.getCheckEvaluate('aria-errormessage')
+					.apply(checkContext, params)
 			);
 		}
 	);

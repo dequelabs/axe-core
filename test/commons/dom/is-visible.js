@@ -27,7 +27,7 @@ describe('dom.isVisible', function() {
 			window.getComputedStyle = orig;
 		});
 
-		it('should return true on staticly-positioned, visible elements', function() {
+		it('should return true on statically-positioned, visible elements', function() {
 			fixture.innerHTML = '<div id="target">Hello!</div>';
 			var el = document.getElementById('target');
 
@@ -111,7 +111,7 @@ describe('dom.isVisible', function() {
 			assert.isFalse(actual);
 		});
 
-		it('should return true if positioned staticly but top/left is set', function() {
+		it('should return true if positioned statically but top/left is set', function() {
 			fixture.innerHTML =
 				'<div id="target" style="top: -9999px; left: -9999px;' +
 				'right: -9999px; bottom: -9999px;">Hi</div>';

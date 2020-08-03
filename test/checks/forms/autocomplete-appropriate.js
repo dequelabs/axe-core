@@ -4,7 +4,7 @@ describe('autocomplete-appropriate', function() {
 	var fixture = document.getElementById('fixture');
 	var checkSetup = axe.testUtils.checkSetup;
 	var checkContext = axe.testUtils.MockCheckContext();
-	var evaluate = checks['autocomplete-appropriate'].evaluate;
+	var evaluate = axe.testUtils.getCheckEvaluate('autocomplete-appropriate');
 
 	beforeEach(function() {
 		axe._tree = undefined;

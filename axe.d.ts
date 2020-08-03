@@ -3,15 +3,47 @@
 // Definitions by: Marcy Sutton <https://github.com/marcysutton>
 
 declare namespace axe {
-	type ImpactValue = 'minor' | 'moderate' | 'serious' | 'critical';
+	type ImpactValue = 'minor' | 'moderate' | 'serious' | 'critical' | null;
 
-	type TagValue = 'wcag2a' | 'wcag2aa' | 'section508' | 'best-practice';
+	type TagValue = string;
 
 	type ReporterVersion = 'v1' | 'v2' | 'raw' | 'raw-env' | 'no-passes';
 
 	type RunOnlyType = 'rule' | 'rules' | 'tag' | 'tags';
 
 	type resultGroups = 'inapplicable' | 'passes' | 'incomplete' | 'violations';
+
+	type AriaAttrsType =
+		| 'boolean'
+		| 'nmtoken'
+		| 'mntokens'
+		| 'idref'
+		| 'idrefs'
+		| 'string'
+		| 'decimal'
+		| 'int';
+
+	type AriaRolesType = 'abstract' | 'widget' | 'structure' | 'landmark';
+
+	type DpubRolesType =
+		| 'section'
+		| 'landmark'
+		| 'link'
+		| 'listitem'
+		| 'img'
+		| 'navigation'
+		| 'note'
+		| 'separator'
+		| 'none'
+		| 'sectionhead';
+
+	type HtmlContentTypes =
+		| 'flow'
+		| 'sectioning'
+		| 'heading'
+		| 'phrasing'
+		| 'embedded'
+		| 'interactive';
 
 	type ContextObject = {
 		include?: string[] | string[][];
@@ -40,17 +72,22 @@ declare namespace axe {
 		type: RunOnlyType;
 		values: TagValue[] | string[];
 	}
+	interface RuleObject {
+		[key: string]: {
+			enabled: boolean;
+		};
+	}
 	interface RunOptions {
 		runOnly?: RunOnly | TagValue[] | string[];
-		rules?: Object;
-		iframes?: boolean;
-		elementRef?: boolean;
-		selectors?: boolean;
-		resultTypes?: resultGroups[];
+		rules?: RuleObject;
 		reporter?: ReporterVersion;
+		resultTypes?: resultGroups[];
+		selectors?: boolean;
+		ancestry?: boolean;
 		xpath?: boolean;
 		absolutePaths?: boolean;
-		restoreScroll?: boolean;
+		iframes?: boolean;
+		elementRef?: boolean;
 		frameWaitTime?: number;
 		preload?: boolean;
 		performanceTimer?: boolean;
@@ -81,10 +118,12 @@ declare namespace axe {
 		impact?: ImpactValue;
 		target: string[];
 		xpath?: string[];
+		ancestry?: string[];
 		any: CheckResult[];
 		all: CheckResult[];
 		none: CheckResult[];
 		failureSummary?: string;
+		element?: HTMLElement;
 	}
 	interface CheckResult {
 		id: string;
@@ -105,8 +144,8 @@ declare namespace axe {
 	}
 	interface CheckLocale {
 		[key: string]: {
-			pass: string;
-			fail: string;
+			pass: string | { [key: string]: string };
+			fail: string | { [key: string]: string };
 			incomplete: string | { [key: string]: string };
 		};
 	}
@@ -114,6 +153,39 @@ declare namespace axe {
 		lang?: string;
 		rules?: RuleLocale;
 		checks?: CheckLocale;
+	}
+	interface AriaAttrs {
+		type: AriaAttrsType;
+		values?: string[];
+		allowEmpty?: boolean;
+		global?: boolean;
+		unsupported?: boolean;
+	}
+	interface AriaRoles {
+		type: AriaRolesType | DpubRolesType;
+		requiredContext?: string[];
+		requiredOwned?: string[];
+		requiredAttrs?: string[];
+		allowedAttrs?: string[];
+		nameFromContent?: boolean;
+		unsupported?: boolean;
+	}
+	interface HtmlElmsVariant {
+		contentTypes?: HtmlContentTypes[];
+		allowedRoles: boolean | string[];
+		noAriaAttrs?: boolean;
+		shadowRoot?: boolean;
+		implicitAttrs?: { [key: string]: string };
+		namingMethods?: string[];
+	}
+	interface HtmlElms extends HtmlElmsVariant {
+		variant?: { [key: string]: HtmlElmsVariant };
+	}
+	interface Standards {
+		ariaAttrs?: { [key: string]: AriaAttrs };
+		ariaRoles?: { [key: string]: AriaRoles };
+		htmlElms?: { [key: string]: HtmlElms };
+		cssColors?: { [key: string]: number[] };
 	}
 	interface Spec {
 		branding?: {
@@ -123,8 +195,12 @@ declare namespace axe {
 		reporter?: ReporterVersion;
 		checks?: Check[];
 		rules?: Rule[];
+		standards?: Standards;
 		locale?: Locale;
+		disableOtherRules?: boolean;
 		axeVersion?: string;
+		// Deprecated - do not use.
+		ver?: string;
 	}
 	interface Check {
 		id: string;
@@ -137,6 +213,7 @@ declare namespace axe {
 	interface Rule {
 		id: string;
 		selector?: string;
+		impact?: ImpactValue;
 		excludeHidden?: boolean;
 		enabled?: boolean;
 		pageLevel?: boolean;
@@ -163,6 +240,7 @@ declare namespace axe {
 		tags: string[];
 	}
 
+	let version: string;
 	let plugins: any;
 
 	/**

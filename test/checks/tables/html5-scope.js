@@ -11,27 +11,22 @@ describe('html5-scope', function() {
 		fixture.innerHTML = '<table><tr><th scope="col"></th></tr></table>';
 		var node = fixture.querySelector('th');
 
-		assert.isTrue(checks['html5-scope'].evaluate(node));
+		assert.isTrue(axe.testUtils.getCheckEvaluate('html5-scope')(node));
 	});
 
 	it('should return false on TDs', function() {
 		fixture.innerHTML = '<table><tr><td scope="col"></td></tr></table>';
 		var node = fixture.querySelector('td');
 
-		assert.isFalse(checks['html5-scope'].evaluate(node));
+		assert.isFalse(axe.testUtils.getCheckEvaluate('html5-scope')(node));
 	});
 
 	it('should return true on non-HTML5 documents', function() {
-		var orig = axe.commons.dom.isHTML5;
-		axe.commons.dom.isHTML5 = function() {
-			return false;
-		};
-
+		var origPublicId = document.publicId;
 		fixture.innerHTML = '<table><tr><th scope="col"></th></tr></table>';
 		var node = fixture.querySelector('th');
 
-		assert.isTrue(checks['html5-scope'].evaluate(node));
-
-		axe.commons.dom.isHTML5 = orig;
+		assert.isTrue(axe.testUtils.getCheckEvaluate('html5-scope')(node));
+		document.publicId = origPublicId;
 	});
 });

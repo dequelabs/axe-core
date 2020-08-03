@@ -228,14 +228,13 @@ describe('axe.utils.querySelectorAllFilter', function() {
 });
 describe('axe.utils.querySelectorAll', function() {
 	'use strict';
-	it('should call axe.utils.querySelectorAllFilter', function() {
-		var saved = axe.utils.querySelectorAllFilter;
-		var called = false;
-		axe.utils.querySelectorAllFilter = function() {
-			called = true;
-		};
-		axe.utils.querySelectorAll();
-		assert.isTrue(called);
-		axe.utils.querySelectorAllFilter = saved;
+	var dom;
+	afterEach(function() {});
+	beforeEach(function() {
+		dom = getTestDom();
+	});
+	it('should find nodes using just the tag', function() {
+		var result = axe.utils.querySelectorAll(dom, 'li');
+		assert.equal(result.length, 4);
 	});
 });
