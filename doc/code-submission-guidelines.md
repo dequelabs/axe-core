@@ -86,7 +86,15 @@ Use the imperative, present tense: "change" not "changed" nor "changes", just li
 
 Reference any issue that this commit closes with its fully qualified URL to support both Bitbucket and Github.
 
-If needed, the footer should contain any information about Breaking Changes. Deprecation notices or breaking changes in the Changelog should inform users if they'll need to modify their code after this commit.
+If needed, the footer should contain any information about [Breaking Changes](https://www.conventionalcommits.org/en/v1.0.0/). Deprecation notices or breaking changes in the Changelog should inform users if they'll need to modify their code after this commit.
+
+A breaking change should be noted with `BREAKING CHANGE:` (all caps, followed by a colon) and a message.
+
+```
+feat(rules): remove deprecated rules
+
+BREAKING CHANGE: remove rules: th-has-headers, checkboxgroup, radiogroup
+```
 
 ## Submitting a pull request
 
