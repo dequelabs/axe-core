@@ -34,6 +34,68 @@ describe('Configure Options', function() {
 					}
 				);
 			});
+
+			it('should not normalize external check options', function(done) {
+				target.setAttribute('lang', 'en');
+
+				axe.configure({
+					checks: [
+						{
+							id: 'dylang',
+							options: ['dylan'],
+							evaluate:
+								'function (node, options) {\n        var lang = (node.getAttribute("lang") || "").trim().toLowerCase();\n        var xmlLang = (node.getAttribute("xml:lang") || "").trim().toLowerCase();\n        var invalid = [];\n        (options || []).forEach(function(cc) {\n          cc = cc.toLowerCase();\n          if (lang && (lang === cc || lang.indexOf(cc.toLowerCase() + "-") === 0)) {\n            lang = null;\n          }\n          if (xmlLang && (xmlLang === cc || xmlLang.indexOf(cc.toLowerCase() + "-") === 0)) {\n            xmlLang = null;\n          }\n        });\n        if (xmlLang) {\n          invalid.push(\'xml:lang="\' + xmlLang + \'"\');\n        }\n        if (lang) {\n          invalid.push(\'lang="\' + lang + \'"\');\n        }\n        if (invalid.length) {\n          this.data(invalid);\n          return true;\n        }\n        return false;\n      }',
+							messages: {
+								pass: 'Good language',
+								fail: 'You mst use the DYLAN language'
+							}
+						}
+					],
+					rules: [
+						{
+							id: 'dylang',
+							metadata: {
+								description:
+									"Ensures lang attributes have the value of 'dylan'",
+								help: "lang attribute must have the value of 'dylan'"
+							},
+							selector: '#target',
+							any: [],
+							all: [],
+							none: ['dylang'],
+							tags: ['wcag2aa']
+						}
+					],
+					data: {
+						rules: {
+							dylang: {
+								description:
+									"Ensures lang attributes have the value of 'dylan'",
+								help: "lang attribute must have the value of 'dylan'"
+							}
+						}
+					}
+				});
+
+				axe.run(
+					'#target',
+					{
+						runOnly: {
+							type: 'rule',
+							values: ['dylang']
+						}
+					},
+					function(err, results) {
+						try {
+							assert.isNull(err);
+							assert.lengthOf(results.violations, 1, 'violations');
+							done();
+						} catch (e) {
+							done(e);
+						}
+					}
+				);
+			});
 		});
 
 		describe('aria-required-attr', function() {
@@ -67,8 +129,8 @@ describe('Configure Options', function() {
 		});
 	});
 
-	describe('disableOtherRules', function(done) {
-		it('disables rules that are not in the `rules` array', function() {
+	describe('disableOtherRules', function() {
+		it('disables rules that are not in the `rules` array', function(done) {
 			axe.configure({
 				disableOtherRules: true,
 				rules: [
