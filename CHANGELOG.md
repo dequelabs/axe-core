@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [4.0.0](https://github.com/dequelabs/axe-core/compare/v3.5.3...v4.0.0) (2020-07-28)
+## [4.0.1](https://github.com/dequelabs/axe-core/compare/v4.0.0...v4.0.1) (2020-08-04)
+
+### Bug Fixes
+
+- **checks**: do not normalize options for custom checks ([#2435](https://github.com/dequelabs/axe-core/issues/2435)) ([83056ad](https://github.com/dequelabs/axe-core/commit/83056ada0e50dc943a5e2829c97323a744cb3b28))
+
+## [4.0.0](https://github.com/dequelabs/axe-core/compare/v3.5.5...v4.0.0) (2020-07-28)
 
 ### Breaking Changes
 
