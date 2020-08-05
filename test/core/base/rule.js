@@ -3,6 +3,8 @@ describe('Rule', function() {
 
 	var Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
 	var Check = axe._thisWillBeDeletedDoNotUse.base.Check;
+	var metadataFunctionMap =
+		axe._thisWillBeDeletedDoNotUse.base.metadataFunctionMap;
 	var fixture = document.getElementById('fixture');
 	var noop = function() {};
 	var isNotCalled = function(err) {
@@ -1940,10 +1942,10 @@ describe('Rule', function() {
 		});
 		it('should override matches (metadata function name)', function() {
 			axe._load({});
-			axe._audit.metadataFunctionMap['custom-matches'] = function() {
+			metadataFunctionMap['custom-matches'] = function() {
 				return 'custom-matches';
 			};
-			axe._audit.metadataFunctionMap['other-matches'] = function() {
+			metadataFunctionMap['other-matches'] = function() {
 				return 'other-matches';
 			};
 
@@ -1953,8 +1955,8 @@ describe('Rule', function() {
 			rule.configure({ matches: 'other-matches' });
 			assert.equal(rule._get('matches')(), 'other-matches');
 
-			delete axe._audit.metadataFunctionMap['custom-matches'];
-			delete axe._audit.metadataFunctionMap['other-matches'];
+			delete metadataFunctionMap['custom-matches'];
+			delete metadataFunctionMap['other-matches'];
 		});
 		it('should error if matches does not match an ID', function() {
 			function fn() {
