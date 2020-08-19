@@ -102,6 +102,32 @@ describe('label', function() {
 		assert.lengthOf(results.incomplete, 0);
 	});
 
+	it('should pass for role=presentation', function() {
+		var results = axe.runVirtualRule('label', {
+			nodeName: 'input',
+			attributes: {
+				role: 'presentation'
+			}
+		});
+
+		assert.lengthOf(results.passes, 1);
+		assert.lengthOf(results.violations, 0);
+		assert.lengthOf(results.incomplete, 0);
+	});
+
+	it('should pass for role=none', function() {
+		var results = axe.runVirtualRule('label', {
+			nodeName: 'input',
+			attributes: {
+				role: 'none'
+			}
+		});
+
+		assert.lengthOf(results.passes, 1);
+		assert.lengthOf(results.violations, 0);
+		assert.lengthOf(results.incomplete, 0);
+	});
+
 	it('should incomplete for both missing aria-label and implicit label', function() {
 		var results = axe.runVirtualRule('label', {
 			nodeName: 'input',
