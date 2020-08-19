@@ -20,7 +20,9 @@
 		"aria-labelledby",
 		"implicit-label",
 		"explicit-label",
-		"non-empty-title"
+		"non-empty-title",
+		"role-none",
+		"role-presentation"
 	],
 	"none": ["help-same-as-label", "hidden-explicit-label"]
 }
