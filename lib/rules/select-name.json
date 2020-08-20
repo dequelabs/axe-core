@@ -1,7 +1,6 @@
 {
-	"id": "label",
-	"selector": "input, textarea",
-	"matches": "label-matches",
+	"id": "select-name",
+	"selector": "select",
 	"tags": [
 		"cat.forms",
 		"wcag2a",
@@ -11,8 +10,8 @@
 		"section508.22.n"
 	],
 	"metadata": {
-		"description": "Ensures every form element has a label",
-		"help": "Form elements must have labels"
+		"description": "Ensures select element has an accessible name",
+		"help": "Select element must have and accessible name"
 	},
 	"all": [],
 	"any": [
@@ -21,7 +20,6 @@
 		"implicit-label",
 		"explicit-label",
 		"non-empty-title",
-		"non-empty-placeholder",
 		"role-none",
 		"role-presentation"
 	],
