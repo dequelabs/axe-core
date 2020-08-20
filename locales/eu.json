@@ -325,12 +325,21 @@
 		},
 		"aria-allowed-attr": {
 			"pass": "ARIA atributuak behar bezala erabiltzen dira zehaztutako rolerako",
-			"fail": "ARIAn, {{=it.data && it.data.length > 1 ? 'atributuak ez daude baimenduta' : 'atributua ez dago baimenduta'}} :{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "ARIAn, atributuak ez daude baimenduta : ${data.values}",
+				"plural": "ARIAn, atributua ez dago baimenduta : ${data.values}"
+			}
 		},
 		"aria-allowed-role": {
 			"pass": "ARIA rola baimenduta dago emandako elementurako",
-			"fail": "ARIAn, {{=it.data && it.data.length > 1 ? 'rolak' : 'rola'}} {{=it.data.join(', ')}} {{=it.data && it.data.length > 1 ? '-ak ez daude baimenduta' : '-a ez dago baimenduta'}} emandako elementurako",
-			"incomplete": "AREAN, {{=it.data && it.data.length > 1 ? 'rolak kendu behar dira' : 'rola kendu behar da'}} {{=it.data.join(', ')}} elementua ikusgai egiten denean, zeren elementurako {{=it.data && it.data.length > 1 ? ' ez daude baimenduta' : ' ez dago baimenduta'}} "
+			"fail": {
+				"singular": "ARIAn, rolak ${data.values} -ak ez daude baimenduta emandako elementurako",
+				"plural": "ARIAn, rola ${data.values} -a ez dago baimenduta emandako elementurako"
+			},
+			"incomplete": {
+				"singular": "AREAN, rolak kendu behar dira ${data.values} elementua ikusgai egiten denean, zeren elementurako  ez daude baimenduta",
+				"plural": "AREAN, rola kendu behar da ${data.values} elementua ikusgai egiten denean, zeren elementurako  ez dago baimenduta"
+			}
 		},
 		"aria-hidden-body": {
 			"pass": "Ez dago dokumentuko 'body'ean agertzen den aria-hidden atributurik",
@@ -338,7 +347,10 @@
 		},
 		"aria-errormessage": {
 			"pass": "Teknika onartu bat erabiltzen du aria-errormessagerako",
-			"fail": "aria-errormessagen, bailioa{{=it.data && it.data.length > 1 ? 'es' : ''}} {{~it.data:value}} `{{=value}}{{~}}`, mezua iragartzeko teknika bat erabili behar da (adibidez: aria-live, aria-describedby, role = alert, etab.)."
+			"fail": {
+				"singular": "aria-errormessagen, bailioaes  ${data.values}`, mezua iragartzeko teknika bat erabili behar da (adibidez: aria-live, aria-describedby, role = alert, etab.).",
+				"plural": "aria-errormessagen, bailioa  ${data.values}`, mezua iragartzeko teknika bat erabili behar da (adibidez: aria-live, aria-describedby, role = alert, etab.)."
+			}
 		},
 		"has-widget-role": {
 			"pass": "Elementuak widget rola du.",
@@ -350,45 +362,69 @@
 		},
 		"no-implicit-explicit-label": {
 			"pass": "Ez dago desadostasunik <label> baten eta izen irisgarriaren artean",
-			"incomplete": "Egiaztatu < label> zenbakiak ez duela zertan ARIAren {{=it.data}} parte izan eremuaren izenerako"
+			"incomplete": "Egiaztatu < label> zenbakiak ez duela zertan ARIAren ${data} parte izan eremuaren izenerako"
 		},
 		"aria-required-attr": {
 			"pass": "ARIA atributu guztiak daude",
-			"fail": "{{=it.data && it.data.length > 1 ? 'Eskatutako atributuak ez daude' : 'Eskatutako atributua ez dago'}}:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "Eskatutako atributuak ez daude: ${data.values}",
+				"plural": "Eskatutako atributua ez dago: ${data.values}"
+			}
 		},
 		"aria-required-children": {
 			"pass": "Eskatutako ARIA semeak bertan daude",
-			"fail": "Esktatutako ARIARren {{=it.data && it.data.length > 1 ? 'semeak ez daude' : 'semeaez dago'}} :{{~it.data:value}} {{=value}}{{~}}",
-			"incomplete": "ARIA rola {{=it.data && it.data.length > 1 ? 'semeentzako' : 'semearentzako'}}:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "Esktatutako ARIARren semeak ez daude : ${data.values}",
+				"plural": "Esktatutako ARIARren semeaez dago : ${data.values}"
+			},
+			"incomplete": {
+				"singular": "ARIA rola semeentzako: ${data.values}",
+				"plural": "ARIA rola semearentzako: ${data.values}"
+			}
 		},
 		"aria-required-parent": {
 			"pass": "ARIAn eskatzen den aitaren rola bertan dago",
-			"fail": "ARIAn eskatutako {{=it.data && it.data.length > 1 ? 'aitentzako rola ' : 'aitarentzako rola'}} ez dago:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "ARIAn eskatutako aitentzako rola  ez dago: ${data.values}",
+				"plural": "ARIAn eskatutako aitarentzako rola ez dago: ${data.values}"
+			}
 		},
 		"aria-unsupported-attr": {
 			"pass": "ARIA atributua onartuta dago",
-			"fail": "ARIA atributua ez dago oso onartuta pantaila-irakurgailuetan eta laguntza-teknologietan: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "ARIA atributua ez dago oso onartuta pantaila-irakurgailuetan eta laguntza-teknologietan:  ${data.values}"
 		},
 		"unsupportedrole": {
 			"pass": "ARIA rola onartuta dago",
-			"fail": "Erabilitako rola ez dago oso onartuta pantaila-irakurgailuetan eta laguntza-teknologietan: {{~it.data:value}} {{=value}}{{~}}"
+			"fail": "Erabilitako rola ez dago oso onartuta pantaila-irakurgailuetan eta laguntza-teknologietan:  ${data.values}"
 		},
 		"aria-valid-attr-value": {
 			"pass": "ARIA atributuen balioak baliozkoak dira",
-			"fail": "{{=it.data && it.data.length > 1 ? 'Balioak ez dira baliozkoak ARIA atributorako' : 'Balioa ez da baliozkoa ARIA atributorako'}}:{{~it.data:value}} {{=value}}{{~}}",
-			"incomplete": "{=it.data && it.data.length > 1 ? 'Elementuen atributua' : 'Elementuaren atributua}}  ARIA ID ez dago orrian:{{~it.data:value}} {{=value}}{{~}}"
+			"fail": {
+				"singular": "Balioak ez dira baliozkoak ARIA atributorako: ${data.values}",
+				"plural": "Balioa ez da baliozkoa ARIA atributorako: ${data.values}"
+			},
+			"incomplete": {
+				"singular": "Elementuen atributua  ARIA ID ez dago orrian: ${data.values}",
+				"plural": "Elementuaren atributua  ARIA ID ez dago orrian: ${data.values}"
+			}
 		},
 		"aria-valid-attr": {
-			"pass": "{{=it.data && it.data.length > 1 ? 'Baliozko ARIA atributuen izenak' : 'Baliozko ARIA atributuen izena'}}",
-			"fail": "{{=it.data && it.data.length > 1 ? 'Baliogabeko ARIA atributuen izenak' : 'Baliogabeko ARIA atributuen izenak'}}: {{~it.data:value}} {{=value}}{{~}}"
+			"pass": {
+				"singular": "Baliozko ARIA atributuen izenak",
+				"plural": "Baliozko ARIA atributuen izena"
+			},
+			"fail": {
+				"singular": "Baliogabeko ARIA atributuen izenak:  ${data.values}",
+				"plural": "Baliogabeko ARIA atributuen izenak:  ${data.values}"
+			}
 		},
 		"valid-scrollable-semantics": {
 			"pass": "Elementuak semantika balioduna du foku-ordenan dagoen elementu batentzat.",
 			"fail": "Elementuak foku-ordenan dagoen elementu batentzat baliozkoa ez den semantika bat du.."
 		},
 		"color-contrast": {
-			"pass": "Elementuak {{=it.data.contrastRatio}}-ko kolore-kontraste nahikoa du",
-			"fail": "Elementuaren {{=it.data.contrastRatio}}-ko kolore-kontrastea ez da nahikoa (ehen planoaren kolorea: {{=it.data.fgColor}}, hondoaren kolorea: {{=it.data.bgColor}}, letra-iturriaren tamaina: {{=it.data.fontSize}}, letra-iturriaren lodiera: {{=it.data.fontWeight}}). Espero den kontraste-ratioa: {{=it.data.expectedContrastRatio}}",
+			"pass": "Elementuak ${data.contrastRatio}-ko kolore-kontraste nahikoa du",
+			"fail": "Elementuaren ${data.contrastRatio}-ko kolore-kontrastea ez da nahikoa (ehen planoaren kolorea: ${data.fgColor}, hondoaren kolorea: ${data.bgColor}, letra-iturriaren tamaina: ${data.fontSize}, letra-iturriaren lodiera: ${data.fontWeight}). Espero den kontraste-ratioa: ${data.expectedContrastRatio}",
 			"incomplete": {
 				"bgImage": "Elementuaren hondoko kolorea ezin izan da zehaztu, hondoko irudi batengatik",
 				"bgGradient": "Elementuaren hondoko kolorea ezin izan da zehaztu hondoko degradatu baten ondorioz",
@@ -448,8 +484,8 @@
 			"fail": "Fokuak onartzen duen edukiak tabindex = '-1' izan beharko luke edo DOMetik ezabatu beharko litzateke"
 		},
 		"landmark-is-top-level": {
-			"pass": "{{=it.data.role }} erreferentzia-puntua goiko mailan dago",
-			"fail": "{{=it.data.role }} erreferentzia-puntua beste erreferentzia-puntu batean dago."
+			"pass": "${data.role} erreferentzia-puntua goiko mailan dago",
+			"fail": "${data.role} erreferentzia-puntua beste erreferentzia-puntu batean dago."
 		},
 		"page-has-heading-one": {
 			"pass": "Orrialdeak 1. mailako goiburu bat du, gutxienez.",
@@ -567,7 +603,7 @@
 		},
 		"meta-viewport": {
 			"pass": "<meta> etiketak ez du zoom eragozten gailu mugikorretan",
-			"fail": "{{=it.data}} < meta> etiketan, gailu mugikorretan zoom-a eragozten du"
+			"fail": "${data} < meta> etiketan, gailu mugikorretan zoom-a eragozten du"
 		},
 		"header-present": {
 			"pass": "Orriak 'header' bat dauka",
@@ -608,11 +644,11 @@
 		},
 		"duplicate-id-active": {
 			"pass": "Dokumentuak ez dauka id atributu bera partekatzen duen elementu aktiborik",
-			"fail": "Dokumentuak elementu aktiboak ditu, id atributu berarekin: {{=it.data}}"
+			"fail": "Dokumentuak elementu aktiboak ditu, id atributu berarekin: ${data}"
 		},
 		"duplicate-id-aria": {
 			"pass": "Dokumentuak ez dauka id atributu bera partekatzen duen Aari edo etiketekin lotutako elementurik",
-			"fail": "Dokumentuak hainbat elementu ditu, id atributu bereko aria batekin lotuta: {{=it.data}}"
+			"fail": "Dokumentuak hainbat elementu ditu, id atributu bereko aria batekin lotuta: ${data}"
 		},
 		"duplicate-id": {
 			"pass": "Dokumentuak ez dauka id atributu bera partekatzen duen elementu estatikorik",
@@ -628,7 +664,10 @@
 		},
 		"avoid-inline-spacing": {
 			"pass": "Ez da testu-tarteari eragiten dion '!important' estilorik zehaztu.",
-			"fail": "Ezabatu '!important' inline style{{=it.data && it.data.length > 1 ? 'etatik' : 'tik'}} {{=it.data.join(', ')}}, nabigatzaile gehienetan ez delako onartzen baliogabetzea."
+			"fail": {
+				"singular": "Ezabatu '!important' inline styleetatik ${data.values}, nabigatzaile gehienetan ez delako onartzen baliogabetzea.",
+				"plural": "Ezabatu '!important' inline styletik ${data.values}, nabigatzaile gehienetan ez delako onartzen baliogabetzea."
+			}
 		},
 		"button-has-visible-text": {
 			"pass": "Elementuak pantaila-irakurgailuek ikusteko moduko barne-testua du.",
@@ -659,7 +698,10 @@
 			"fail": "Elementuak ez du alt atributurik edo alt atributua hutsik dago"
 		},
 		"non-empty-if-present": {
-			"pass": "{{?it.data}} elementuak hutsik ez dagoen balio-atributua du {??}}, eta ez du {{?}} balio-atributurik",
+			"pass": {
+				"default": ", eta ez du  balio-atributurik",
+				"has-label": "elementuak hutsik ez dagoen balio-atributua du  balio-atributurik"
+			},
 			"fail": "Elementuak balio-atributua du, eta balio-atributua hutsik dago"
 		},
 		"non-empty-title": {

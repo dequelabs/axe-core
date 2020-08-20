@@ -3,6 +3,8 @@ describe('Rule', function() {
 
 	var Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
 	var Check = axe._thisWillBeDeletedDoNotUse.base.Check;
+	var metadataFunctionMap =
+		axe._thisWillBeDeletedDoNotUse.base.metadataFunctionMap;
 	var fixture = document.getElementById('fixture');
 	var noop = function() {};
 	var isNotCalled = function(err) {
@@ -1931,12 +1933,55 @@ describe('Rule', function() {
 			rule.configure({ tags: [] });
 			assert.deepEqual(rule._get('tags'), []);
 		});
-		it('should override matches', function() {
+		it('should override matches (doT.js function)', function() {
 			var rule = new Rule({ matches: 'function () {return "matches";}' });
 
 			assert.equal(rule._get('matches')(), 'matches');
 			rule.configure({ matches: 'function () {return "does not match";}' });
 			assert.equal(rule._get('matches')(), 'does not match');
+		});
+		it('should override matches (metadata function name)', function() {
+			axe._load({});
+			metadataFunctionMap['custom-matches'] = function() {
+				return 'custom-matches';
+			};
+			metadataFunctionMap['other-matches'] = function() {
+				return 'other-matches';
+			};
+
+			var rule = new Rule({ matches: 'custom-matches' });
+
+			assert.equal(rule._get('matches')(), 'custom-matches');
+			rule.configure({ matches: 'other-matches' });
+			assert.equal(rule._get('matches')(), 'other-matches');
+
+			delete metadataFunctionMap['custom-matches'];
+			delete metadataFunctionMap['other-matches'];
+		});
+		it('should error if matches does not match an ID', function() {
+			function fn() {
+				var rule = new Rule({});
+				rule.configure({ matches: 'does-not-exist' });
+			}
+
+			assert.throws(
+				fn,
+				'Function ID does not exist in the metadata-function-map: does-not-exist'
+			);
+		});
+		it('should override impact', function() {
+			var rule = new Rule({ impact: 'minor' });
+
+			assert.equal(rule._get('impact'), 'minor');
+			rule.configure({ impact: 'serious' });
+			assert.equal(rule._get('impact'), 'serious');
+		});
+		it('should throw if impact impact', function() {
+			var rule = new Rule({ impact: 'minor' });
+
+			assert.throws(function() {
+				rule.configure({ impact: 'hello' });
+			});
 		});
 	});
 });

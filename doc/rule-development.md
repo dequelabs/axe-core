@@ -6,7 +6,7 @@ A rule is a JSON Object that defines a test for axe-core to run. At a high level
 
 ## Rule Select and Matches
 
-Each rule has a 'selector' and optionally a 'matches' property. The selector is a CSS selector. Each element matching this selector will be tested by the rule, unless the matches function says otherwise. The `matches` property is a reference to a function that returns a boolean, which indicates if the element should be tested.
+Each rule has a `selector` and optionally a `matches` property. The selector is a CSS selector. Each element matching this selector will be tested by the rule, unless the matches function says otherwise. The `matches` property is a reference to a function that returns a boolean, which indicates if the element should be tested.
 
 The last thing that may influence if an element is selected for testing in the rule is it's visibility. By default, hidden elements are ignored by the rule, unless the `excludeHidden` is set to 'false'.
 

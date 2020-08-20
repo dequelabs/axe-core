@@ -6,7 +6,6 @@
    1. [Get Started](#getting-started)
 1. [Section 2: API Reference](#section-2-api-reference)
    1. [Overview](#overview)
-   1. [Required Globals](#required-globals)
    1. [API Notes](#api-notes)
    1. [API Name: axe.getRules](#api-name-axegetrules)
    1. [API Name: axe.configure](#api-name-axeconfigure)
@@ -54,19 +53,7 @@ The axe API can be used as part of a broader process that is performed on many, 
 
 ### Overview
 
-The axe APIs are provided in the javascript file axe.js. It must be included in the web page under test. Parameters are sent as javascript function parameters. Results are returned in JSON format.
-
-### Required Globals
-
-Axe requires a handful of global variables and interfaces to be available in order to run. See the [jsdom example](https://github.com/dequelabs/axe-core/blob/develop/doc/examples/jsdom/test/a11y.js) for how to set these up in a non-browser environment.
-
-- `window`
-- `document`
-- [`navigator`](https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator)
-- [`Node`](https://developer.mozilla.org/en-US/docs/Web/API/Node)
-- [`NodeList`](https://developer.mozilla.org/en-US/docs/Web/API/NodeList)
-- [`Element`](https://developer.mozilla.org/en-US/docs/Web/API/Element)
-- [`Document`](https://developer.mozilla.org/en-US/docs/Web/API/Document)
+The axe APIs are provided in the javascript file axe.js. It must be included in the web page under test, as well as each `iframe` under test. Parameters are sent as javascript function parameters. Results are returned in JSON format.
 
 ### Full API Reference for Developers
 
@@ -134,7 +121,7 @@ Returns a list of all rules with their ID and description
 
 - `tags` - **optional** Array of tags used to filter returned rules. If omitted, it will return all rules. See [axe-core tags](#axe-core-tags).
 
-**Returns:** Array of rules that match the input filter with each entry having a format of `{ruleId: <id>, description: <desc>}`
+**Returns:** Array of rules that match the input filter with each entry having a format of `{ruleId: <id>, description: <desc>, helpUrl: <url>, help: <help>, tags: <tags>}`
 
 #### Example 1
 
@@ -146,9 +133,32 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
 
 ```js
 [
-  { ruleId: "area-alt", description: "Checks the <area> elements of image…" },
-  { ruleId: "aria-allowed-attr", description: "Checks all attributes that start…" },
-  { ruleId: "aria-required-attr", description: "Checks all elements that contain…" },
+  {
+    description: "Ensures <area> elements of image maps have alternate text",
+    help: "Active <area> elements must have alternate text",
+    helpUrl: "https://dequeuniversity.com/rules/axe/3.5/area-alt?application=axeAPI",
+    ruleId: "area-alt",
+    tags: [
+      "cat.text-alternatives",
+      "wcag2a",
+      "wcag111",
+      "wcag244",
+      "wcag412",
+      "section508",
+      "section508.22.a"
+    ]
+  },
+  {
+    description: "Ensures ARIA attributes are allowed for an element's role",
+    help: "Elements must only use allowed ARIA attributes",
+    helpUrl: "https://dequeuniversity.com/rules/axe/3.5/aria-allowed-attr?application=axeAPI",
+    ruleId: "aria-allowed-attr",
+    tags: [
+      "cat.aria",
+      "wcag2a",
+      "wcag412"
+    ]
+  }
   …
 ]
 ```
@@ -176,8 +186,10 @@ axe.configure({
 	reporter: 'option',
 	checks: [Object],
 	rules: [Object],
+	standards: Object,
 	locale: Object,
-	axeVersion: String
+	axeVersion: String,
+	disableOtherRules: Boolean
 });
 ```
 
@@ -197,8 +209,8 @@ axe.configure({
     - The checks attribute is an array of check objects
     - Each check object can contain the following attributes
       - `id` - string(required). This uniquely identifies the check. If the check already exists, this will result in any supplied check properties being overridden. The properties below that are marked required if new are optional when the check is being overridden.
-      - `evaluate` - function(required for new). This is the function that implements the check's functionality.
-      - `after` - function(optional). This is the function that gets called for checks that operate on a page-level basis, to process the results from the iframes.
+      - `evaluate` - string(required for new). The ID of the function that implements the check's functionality. See the [`metadata-function-map`](../lib/core/base/metadata-function-map.js) file for all defined IDs.
+      - `after` - string(optional). The ID of the function that gets called for checks that operate on a page-level basis, to process the results from the iframes.
       - `options` - mixed(optional). This is the options structure that is passed to the evaluate function and is intended to be used to configure checks. It is the most common property that is intended to be overridden for existing checks.
       - `enabled` - boolean(optional, default `true`). This is used to indicate whether the check is on or off by default. Checks that are off are not evaluated, even when included in a rule. Overriding this is a common way to disable a particular check across multiple rules.
   - `rules` - Used to add rules to the existing set of rules, or to override the properties of existing rules
@@ -214,10 +226,12 @@ axe.configure({
       - `all` - array(optional, default `[]`). This is a list of checks that, if any "fails", will generate a violation.
       - `none` - array(optional, default `[]`). This is a list of checks that, if any "pass", will generate a violation.
       - `tags` - array(optional, default `[]`). A list if the tags that "classify" the rule. See [axe-core tags](#axe-core-tags).
-      - `matches` - function(optional, default `function() { return true }`). A filtering function that will exclude elements that match the `selector` property.
+      - `matches` - string(optional). The ID of the filtering function that will exclude elements that match the `selector` property. See the [`metadata-function-map`](../lib/core/base/metadata-function-map.js) file for all defined IDs.
+  - `standards` - object(optional). Used to configure the standards object. See the [Standards Object docs](./standards-object.md) for the structure of each standards object.
   - `disableOtherRules` - Disables all rules not included in the `rules` property.
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
   - `axeVersion` - Set the compatible version of a custom rule with the current axe version. Compatible versions are all patch and minor updates that are the same as, or newer than those of the `axeVersion` property.
+  - `disableOtherRules` - Disable all rules not listed in the `rules` parameter.
 
 **Returns:** Nothing
 
@@ -400,13 +414,12 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `rules`            | n/a     | Enable or disable rules using the `enabled` property                                                                                    |
 | `reporter`         | `v1`    | Which reporter to use (see [Configuration](#api-name-axeconfigure))                                                                     |
 | `resultTypes`      | n/a     | Limit which result types are processed and aggregated                                                                                   |
-| `selector`         | `true`  | Return CSS selector for elements, optimised for readability                                                                             |
+| `selectors`        | `true`  | Return CSS selector for elements, optimised for readability                                                                             |
 | `ancestry`         | `false` | Return CSS selector for elements, with all the element's ancestors                                                                      |
 | `xpath`            | `false` | Return xpath selectors for elements                                                                                                     |
 | `absolutePaths`    | `false` | Use absolute paths when creating element selectors                                                                                      |
 | `iframes`          | `true`  | Tell axe to run inside iframes                                                                                                          |
 | `elementRef`       | `false` | Return element references in addition to the target                                                                                     |
-| `restoreScroll`    | `false` | Scrolls elements back to before axe started                                                                                             |
 | `frameWaitTime`    | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out                                              |
 | `preload`          | `true`  | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details) |
 | `performanceTimer` | `false` | Log rule performance metrics to the console                                                                                             |
@@ -623,6 +636,14 @@ The URL of the page that was tested.
 
 The date and time that analysis was completed.
 
+###### `testEngine`
+
+The application and version that ran the audit.
+
+###### `testEnvironment`
+
+Information about the current browser or node application that ran the audit.
+
 ###### result arrays
 
 The results of axe are grouped according to their outcome into the following arrays:
@@ -836,25 +857,6 @@ axe.commons.dom.getRootNode(node);
 ##### Returns
 
 The top-level document or shadow DOM document fragment
-
-#### axe.commons.dom.findUp
-
-Recursively walk up the DOM, checking for a node which matches a selector. Warning: this should be used sparingly for performance reasons.
-
-##### Synopsis
-
-```js
-axe.commons.dom.findUp(node, '.selector');
-```
-
-##### Parameters
-
-- `element` – HTMLElement. The starting element
-- `selector` – String. The target selector for the HTMLElement
-
-##### Returns
-
-Either the matching HTMLElement or `null` if there was no match.
 
 ## Section 3: Example Reference
 

@@ -422,7 +422,10 @@
 			}
 		},
 		"aria-valid-attr": {
-			"pass": "{{=it.data && it.data.length > 1 ? 'Les noms d’attributs ARIA sont valides' : 'Le nom d’attribut ARIA est valide'}}",
+			"pass": {
+				"singular": "Les noms d’attributs ARIA sont valides",
+				"plural": "Le nom d’attribut ARIA est valide"
+			},
 			"fail": {
 				"singular": "Le nom d’attribut ARIA est invalide: ${data.values}",
 				"plural": "Les noms d’attributs ARIA sont invalides: ${data.values}"
@@ -433,8 +436,8 @@
 			"fail": "L’élément n’a pas une sémantique valide pour un élément dans l’ordre de tabulation."
 		},
 		"color-contrast": {
-			"pass": "L’élément a un contraste de couleurs suffisant de {{=it.data.contrastRatio}}",
-			"fail": "L’élément a un contraste de couleurs insuffisant de {{=it.data.contrastRatio}} (couleur du texte : {{=it.data.fgColor}}, couleur d’arrière-plan : {{=it.data.bgColor}}, corps : {{=it.data.fontSize}}, graisse : {{=it.data.fontWeight}}). Le rapport de contraste attendu est {{=it.data.expectedContrastRatio}}",
+			"pass": "L’élément a un contraste de couleurs suffisant de ${data.contrastRatio}",
+			"fail": "L’élément a un contraste de couleurs insuffisant de ${data.contrastRatio} (couleur du texte : ${data.fgColor}, couleur d’arrière-plan : ${data.bgColor}, corps : ${data.fontSize}, graisse : ${data.fontWeight}). Le rapport de contraste attendu est ${data.expectedContrastRatio}",
 			"incomplete": {
 				"default": "Impossible de déterminer le rapport de contraste",
 				"bgImage": "La couleur d’arrière-plan de l’élément n’a pu être déterminée à cause d’une image d’arrière-plan",
@@ -494,8 +497,8 @@
 			"fail": "Le contenu focalisable devrait se voir assigné un tabindex='-1' ou être retiré du DOM"
 		},
 		"landmark-is-top-level": {
-			"pass": "La région {{=it.data.role }} est au niveau le plus haut.",
-			"fail": "La région {{=it.data.role }} est contenue dans une autre région."
+			"pass": "La région ${data.role} est au niveau le plus haut.",
+			"fail": "La région ${data.role} est contenue dans une autre région."
 		},
 		"page-has-heading-one": {
 			"pass": "La page a au moins un titre de niveau un",
@@ -668,7 +671,7 @@
 		},
 		"duplicate-id": {
 			"pass": "Le document n’a pas d’éléments qui partagent le même attribut id",
-			"fail": "Le document a plusieurs éléments avec le même attribut id : {{=it.data}}"
+			"fail": "Le document a plusieurs éléments avec le même attribut id : ${data}"
 		},
 		"aria-label": {
 			"pass": "L’attribut aria-label existe et n’est pas vide",

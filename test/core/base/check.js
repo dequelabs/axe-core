@@ -3,6 +3,8 @@ describe('Check', function() {
 
 	var Check = axe._thisWillBeDeletedDoNotUse.base.Check;
 	var CheckResult = axe._thisWillBeDeletedDoNotUse.base.CheckResult;
+	var metadataFunctionMap =
+		axe._thisWillBeDeletedDoNotUse.base.metadataFunctionMap;
 	var noop = function() {};
 
 	var fixture = document.getElementById('fixture');
@@ -98,6 +100,60 @@ describe('Check', function() {
 				assert.equal('fong', check.test());
 				delete Check.prototype.test;
 			});
+			it('should override evaluate as ID', function() {
+				metadataFunctionMap['custom-evaluate'] = function() {
+					return 'fong';
+				};
+
+				Check.prototype.test = function() {
+					return this.evaluate();
+				};
+				var check = new Check({
+					evaluate: 'function () { return "foo"; }'
+				});
+				check.configure({ evaluate: 'custom-evaluate' });
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+				delete metadataFunctionMap['custom-evaluate'];
+			});
+			it('should override after as ID', function() {
+				metadataFunctionMap['custom-after'] = function() {
+					return 'fong';
+				};
+
+				Check.prototype.test = function() {
+					return this.after();
+				};
+				var check = new Check({
+					after: 'function () { return "foo"; }'
+				});
+				check.configure({ after: 'custom-after' });
+				assert.equal('fong', check.test());
+				delete Check.prototype.test;
+				delete metadataFunctionMap['custom-after'];
+			});
+			it('should error if evaluate does not match an ID', function() {
+				function fn() {
+					var check = new Check({});
+					check.configure({ evaluate: 'does-not-exist' });
+				}
+
+				assert.throws(
+					fn,
+					'Function ID does not exist in the metadata-function-map: does-not-exist'
+				);
+			});
+			it('should error if after does not match an ID', function() {
+				function fn() {
+					var check = new Check({});
+					check.configure({ after: 'does-not-exist' });
+				}
+
+				assert.throws(
+					fn,
+					'Function ID does not exist in the metadata-function-map: does-not-exist'
+				);
+			});
 			it('should override enabled', function() {
 				Check.prototype.test = function() {
 					return this.enabled;
@@ -170,10 +226,21 @@ describe('Check', function() {
 				}).run(fixture, { options: expected }, {}, noop);
 			});
 
-			it('should normalize non-object options', function(done) {
+			it('should normalize non-object options for internal checks', function(done) {
+				metadataFunctionMap['custom-check'] = function(node, options) {
+					assert.deepEqual(options, { value: 'foo' });
+					done();
+				};
+				new Check({
+					evaluate: 'custom-check'
+				}).run(fixture, { options: 'foo' }, {}, noop);
+				delete metadataFunctionMap['custom-check'];
+			});
+
+			it('should not normalize non-object options for external checks', function(done) {
 				new Check({
 					evaluate: function(node, options) {
-						assert.deepEqual(options, { value: 'foo' });
+						assert.deepEqual(options, 'foo');
 						done();
 					}
 				}).run(fixture, { options: 'foo' }, {}, noop);
@@ -332,13 +399,24 @@ describe('Check', function() {
 				}).runSync(fixture, { options: expected }, {});
 			});
 
-			it('should normalize non-object options', function(done) {
+			it('should normalize non-object options for internal checks', function(done) {
+				metadataFunctionMap['custom-check'] = function(node, options) {
+					assert.deepEqual(options, { value: 'foo' });
+					done();
+				};
+				new Check({
+					evaluate: 'custom-check'
+				}).runSync(fixture, { options: 'foo' }, {});
+				delete metadataFunctionMap['custom-check'];
+			});
+
+			it('should not normalize non-object options for external checks', function(done) {
 				new Check({
 					evaluate: function(node, options) {
-						assert.deepEqual(options, { value: 'foo' });
+						assert.deepEqual(options, 'foo');
 						done();
 					}
-				}).run(fixture, { options: 'foo' }, {}, noop);
+				}).runSync(fixture, { options: 'foo' }, {});
 			});
 
 			it('should pass the context through to check evaluate call', function() {
@@ -513,11 +591,19 @@ describe('Check', function() {
 				assert.equal(new Check(spec).options, spec.options);
 			});
 
-			it('should normalize non-object options', function() {
+			it('should normalize non-object options for internal checks', function() {
 				var spec = {
 					options: 'foo'
 				};
 				assert.deepEqual(new Check(spec).options, { value: 'foo' });
+			});
+
+			it('should not normalize non-object options for external checks', function() {
+				var spec = {
+					options: 'foo',
+					evaluate: function() {}
+				};
+				assert.deepEqual(new Check(spec).options, 'foo');
 			});
 		});
 

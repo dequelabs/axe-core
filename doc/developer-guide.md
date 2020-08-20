@@ -20,35 +20,35 @@ Axe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities fo
    1. [API Name: axe.utils.getFlattenedTree](#api-name-axeutilsgetflattenedtree)
    1. [API Name: axe.utils.getNodeFromTree](#api-name-axeutilsgetnodefromtree)
 1. [Test Utilities](#test-utilities)
-   1. [Test Util Name: axe.testUtils.MockCheckContext](#test-util-name-axetestutilsmockcheckcontext)
-   1. [Test Util Name: axe.testUtils.shadowSupport](#test-util-name-axetestutilsshadowsupport)
-   1. [Test Util Name: axe.testUtils.fixtureSetup](#test-util-name-axetestutilsfixturesetup)
-   1. [Test Util Name: axe.testUtils.checkSetup](#test-util-name-axetestutilschecksetup)
-1. [Using Rule Generation CLI](#axe-rule-generator)
+   1. [Test Util Name: axe.testUtils.MockCheckContext](#test-util-name-mockcheckcontext)
+   1. [Test Util Name: axe.testUtils.shadowSupport](#test-util-name-shadowsupport)
+   1. [Test Util Name: axe.testUtils.fixtureSetup](#test-util-name-fixturesetup)
+   1. [Test Util Name: axe.testUtils.checkSetup](#test-util-name-checksetup)
+1. [Using Rule Generation CLI](#using-rule-generation-cli)
 
 ## Getting Started
 
 ### Environment Pre-requisites
 
 1. You must have NodeJS installed.
-2. Grunt must be installed globally. `npm install -g grunt-cli` (You may need to do this as `sudo npm install -g grunt-cli`)
-3. Install npm development dependencies. In the root folder of your axe-core repository, run `npm install`
+1. Install npm development dependencies. In the root folder of your axe-core repository, run `npm install`
 
 ### Building axe.js
 
-To build axe.js, simply run `grunt build` in the root folder of the axe-core repository. axe.js and axe.min.js are placed into the root folder.
+To build axe.js, simply run `npm run build` in the root folder of the axe-core repository. axe.js and axe.min.js are placed into the root folder.
 
 ### Running Tests
 
-To run all tests from the command line you can run `grunt test`, which will run all unit and integration tests using headless chrome and Selenium Webdriver.
+To run all tests from the command line you can run `npm test`, which will run all unit and integration tests using headless chrome and Selenium Webdriver.
 
-You can also load tests in any supported browser, which is helpful for debugging. Tests require a local server to run, you must first start a local server to serve files. You can use Grunt to start one by running `grunt dev`. Once your local server is running you can load the following pages in any browser to run tests:
+You can also load tests in any supported browser, which is helpful for debugging. Tests require a local server to run, you must first start a local server to serve files. You can use Grunt to start one by running `npm start`. Once your local server is running you can load the following pages in any browser to run tests:
 
 1. [Core Tests](../test/core/)
 2. [Commons Tests](../test/commons/)
 3. [Check Tests](../test/checks/)
-4. [Integration Tests](../test/integration/rules/)
-5. There are additional tests located in [test/integration/full/](../test/integration/full/) for tests that need to be run against their own document.
+4. [Rule Matches](../test/rule-matches/)
+5. [Integration Tests](../test/integration/rules/)
+6. There are additional tests located in [test/integration/full/](../test/integration/full/) for tests that need to be run against their own document.
 
 ### API Reference
 
@@ -69,7 +69,7 @@ Axe tests for accessibility using objects called Rules. Each Rule tests for a hi
 
 Upon execution, a Rule runs each of its Checks against all relevant nodes. Which nodes are relevant is determined by the Rule's `selector` property and `matches` function. If a Rule has no Checks that apply to a given node, the Rule will result in an inapplicable result.
 
-After execution, a Check will return `true` or `false` depending on whether or not the tested condition was satisfied. The result, as well as more information on what caused the Check to pass or fail, will be stored in either the `passes` array or the `violations` array.
+After execution, a Check will return `true`, `false`, or `undefined` depending on whether or not the tested condition was satisfied. The result, as well as more information on what caused the Check to pass or fail, will be stored in either the `passes`, `violations`, or `incomplete` arrays.
 
 ### Rules
 
@@ -80,7 +80,8 @@ Rules are defined by JSON files in the [lib/rules directory](../lib/rules). The 
 - `excludeHidden` - **optional** `Boolean` Whether the rule should exclude hidden elements. Defaults to `true`.
 - `enabled` - **optional** `Boolean` Whether the rule is enabled by default. Defaults to `true`.
 - `pageLevel` - **optional** `Boolean` Whether the rule is page level. Page level rules will only run if given an entire `document` as context.
-- `matches` - **optional** `String` Relative path to the JavaScript file of a custom matching function. See [matches function](#matches-function) for more information.
+- `matches` - **optional** `String` The ID of the filtering function that will exclude elements that match the `selector` property. See the [`metadata-function-map`](../lib/core/base/metadata-function-map.js) file for all defined IDs.
+- `impact` - **optional** `String` (one of `minor`, `moderate`, `serious`, or `critical`). Override the impact defined by checks.
 - `tags` - **optional** `Array` Strings of the accessibility guidelines of which the Rule applies.
 - `metadata` - `Object` Consisting of:
   - `description` - `String` Text string that describes what the rule does.
@@ -95,11 +96,11 @@ The `any`, `all` and `none` arrays must contain either a `String` which referenc
 - `id` - `String` The unique ID of the Check.
 - `options` - `Mixed` Any options the Check requires that are specific to the Rule.
 
-There is a Grunt target which will ensure each Rule has a valid format, which can be run with `grunt validate`.
+There is a Grunt target which will ensure each Rule has a valid format, which can be run with `npx grunt validate`.
 
 #### Matches Function
 
-Custom `matches` functions are executed against each node which matches the Rule's `selector` and receive two parameters:
+A Rule's `matches` function is executed against each node which matches the Rule's `selector` and receive two parameters:
 
 - `node` – node, the DOM Node to test
 - `virtualNode`– object, the virtual DOM representation of the node. See [virtualNode documentation](#virtual-nodes) for more.
@@ -111,15 +112,15 @@ The matches function must return either `true` or `false`. Common functions are 
 Similar to Rules, Checks are defined by JSON files in the [lib/checks directory](../lib/checks). The JSON object is used to seed the [Check object](../lib/core/base/check.js). A valid Check JSON consists of the following:
 
 - `id` - `String` A unique name of the Check
-- `evaluate` - `String` Relative path to the JavaScript file which contains the function body of the Check itself
-- `after` - **optional** `String` Relative path to the JavaScript file which contains the function body of a Check's after (or post-processing) function.f
-- `options` - **optional** `Mixed` Any information the Check needs that you might need to customize and/or is locale specific. Options can be overridden at runtime (with the options parameter) or config-time. For example, the [valid-lang](../lib/checks/language/valid-lang.json) Check defines what ISO 639-1 language codes it should accept as valid. Options do not need to follow any specific format or type; it is up to the author of a Check to determine the most appropriate format.
+- `evaluate` - `String` The ID of the function that implements the check's functionality. See the [`metadata-function-map`](../lib/core/base/metadata-function-map.js) file for all defined IDs.
+- `after` - **optional** `String` The ID of the function that gets called for checks that operate on a page-level basis, to process the results from the iframes.
+- `options` - **optional** `Object` Any information the Check needs that you might need to customize and/or is locale specific. Options can be overridden at runtime (with the options parameter) or config-time. For example, the [valid-lang](../lib/checks/language/valid-lang.json) Check defines what ISO 639-1 language codes it should accept as valid. Options do not need to follow any specific format or type; it is up to the author of a Check to determine the most appropriate format.
 - `metadata` - `Object` Consisting of:
   - `impact` - `String` (one of `minor`, `moderate`, `serious`, or `critical`)
   - `messages` - `Object` These messages are displayed when the Check passes or fails
     - `pass` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check passes
     - `fail` - `String` [doT.js](http://olado.github.io/doT/) template string displayed when the Check fails
-    - `incomplete` – `String|Object` – [doT.js](http://olado.github.io/doT/) template string displayed when the Check is incomplete OR an object with `missingData` on why it returned incomplete. Refer to [rules.md](./rules.md).
+    - `incomplete` – `String|Object` – [doT.js](http://olado.github.io/doT/) template string displayed when the Check is incomplete OR an object with `missingData` on why it returned incomplete. Refer to [rules.md](./rule-development.md).
 
 #### Check `evaluate`
 
@@ -130,20 +131,18 @@ The following variables are defined for `Check#evaluate`:
 - `node` - `HTMLElement` The element that the Check is run against
 - `options` - `Mixed` Any options specific to this Check that may be necessary. If not specified by the user at run-time or configure-time; it will use `options` as defined by the Check's JSON file.
 - `virtualNode` – `Object` The virtualNode object for use with Shadow DOM. See [virtualNode documentation](#virtual-nodes).
-- `this.data()` - `Function` Free-form data that either the Check message requires or is presented as `data` in the CheckResult object. Subsequent calls to `this.data()` will overwrite previous. See [aria-valid-attr](../lib/checks/aria/valid-attr.js) for example usage.
-- `this.relatedNodes()` - `Function` Array or NodeList of elements that are related to this Check. For example the [duplicate-id](../lib/checks/shared/duplicate-id.js) Check will add all Elements which share the same ID.
-- `commons` - Common functions that may be used across multiple Checks. See [Common Functions](#common-functions) for more information.
+- `this.data()` - `Function` Free-form data that either the Check message requires or is presented as `data` in the CheckResult object. Subsequent calls to `this.data()` will overwrite previous. See [aria-valid-attr](../lib/checks/aria/aria-valid-attr-value-evaluate.js) for example usage.
+- `this.relatedNodes()` - `Function` Array or NodeList of elements that are related to this Check. For example the [duplicate-id](../lib/checks/parsing/duplicate-id-evaluate.js) Check will add all Elements which share the same ID.
 
 #### Check `after`
 
 You can use the `after` function to evaluate nodes that might be in other frames or to filter the number of violations or passes produced. The `after` function runs once for each Rule in the top-most (or originating) frame. Due to this, you should not perform DOM operations in after functions, but instead operate on `data` defined by the Check.
 
-For example, the [duplicate-id](../lib/checks/shared/duplicate-id.json) Check include an [after function](../lib/checks/shared/duplicate-id-after.js) which reduces the number of violations so that only one violation per instance of a duplicate ID is found.
+For example, the [duplicate-id](../lib/checks/parsing/duplicate-id.json) Check include an [after function](../lib/checks/parsing/duplicate-id-after.js) which reduces the number of violations so that only one violation per instance of a duplicate ID is found.
 
 The following variables are defined for `Check#after`:
 
 - `results` - `Array` Contains [CheckResults](#checkresult) for every matching node.
-- `commons` - Common functions that may be used across multiple Checks. See [Common Functions](#common-functions) for more information.
 
 The after function must return an `Array` of CheckResults, due to this, it is a very common pattern to just use `Array#filter` to filter results:
 
@@ -160,14 +159,17 @@ return results.filter(function(r) {
 
 #### Pass, Fail and Incomplete Templates
 
-Occasionally, you may want to add additional information about why a Check passed, failed or returned undefined into its message. For example, the [aria-valid-attr](../lib/checks/aria/valid-attr.json) will add information about any invalid ARIA attributes to its fail message. The message uses the [doT.js](http://olado.github.io/doT/) and is compiled to a JavaScript function at build-time. In the Check message, you have access to the `CheckResult` as `it`.
+Occasionally, you may want to add additional information about why a Check passed, failed or returned undefined into its message. For example, the [aria-valid-attr](../lib/checks/aria/valid-attr.json) will add information about any invalid ARIA attributes to its fail message. The message uses a [custom message format](./check-message-template.md). In the Check message, you have access to the `data` object as `data`.
 
 ```js
 // aria-valid-attr check
 "messages": {
   "pass": "ARIA attributes are used correctly for the defined role",
-  "fail": "ARIA attribute{{=it.data && it.data.length > 1 ? 's are' : ' is'}} not allowed:{{~it.data:value}} {{=value}}{{~}}",
-  "incomplete": "axe-core couldn't tell because of {{it.data.missingData}}"
+  "fail": {
+    "singular": "ARIA attribute is not allowed: ${data.values}",
+    "plural": "ARIA attributes are not allowed: ${data.values}"
+  },
+  "incomplete": "axe-core couldn't tell because of ${data.missingData}"
 }
 ```
 
@@ -187,72 +189,71 @@ A CheckResult has the following properties:
 
 ### Common Functions
 
-Common functions are an internal library used by the rules and checks. If you have code repeated across rules and checks, you can use these functions and contribute to them. They are made available to every function as `commons`. Documentation is available in [source code](../lib/commons/).
+Common functions are an internal library used by the rules and checks. If you have code repeated across rules and checks, you can use these functions and contribute to them. Documentation is available in [source code](../lib/commons/).
 
 #### Commons and Shadow DOM
 
-To support open Shadow DOM while maintaining backwards compatibility, commons functions that
-query DOM nodes must operate on an in-memory representation of the DOM using axe-core’s
-built-in [API methods and utility functions](./API.md#virtual-dom-utilities).
+To support open Shadow DOM while maintaining backwards compatibility, commons functions that query DOM nodes must operate on an in-memory representation of the DOM using axe-core’s built-in [API methods and utility functions](./API.md#virtual-dom-utilities).
 
-Commons functions should do the virtual tree lookup and call a `virtual` function
-including the rest of the commons code. The naming of this special function
-should contain the original commons function name with `Virtual` added to signify
-it expects to operate on a virtual DOM tree.
+Commons functions should do the virtual tree lookup and call a `virtual` function including the rest of the commons code. The naming of this special function should contain the original commons function name with `Virtual` added to signify it expects to operate on a virtual DOM tree.
 
 Let’s look at an example:
 
 ```js
-axe.commons.text.accessibleText = function(element, inLabelledbyContext) {
-	let virtualNode = axe.utils.getNodeFromTree(axe._tree[0], element); // throws an exception on purpose if axe._tree not correct
-	return axe.commons.text.accessibleTextVirtual(
-		virtualNode,
-		inLabelledbyContext
-	);
-};
+// lib/commons/text/accessible-text.js
+import { getNodeFromTree } from '../../core/utils';
+import accessibleTextVirtual from './accessible-text-virtual';
 
-axe.commons.text.accessibleTextVirtual = function(
-	element,
-	inLabelledbyContext
-) {
+function accessibleText(element, inLabelledbyContext) {
+	let virtualNode = getNodeFromTree(axe._tree[0], element); // throws an exception on purpose if axe._tree not correct
+	return accessibleTextVirtual(virtualNode, inLabelledbyContext);
+}
+
+export default accessibleText;
+
+// lib/commons/text/accessible-text-virtual.js
+function accessibleTextVirtual(element, inLabelledbyContext) {
 	// rest of the commons code minus the virtual tree lookup, since it’s passed in
-};
+}
 ```
 
-`accessibleTextVirtual` would only be called directly if you’ve got a virtual node
-you can use. If you don’t already have one, call the `accessibleText` lookup function,
-which passes on a virtual DOM node with both the light DOM and Shadow DOM (if applicable).
+`accessibleTextVirtual` would only be called directly if you’ve got a virtual node you can use. If you don’t already have one, call the `accessibleText` lookup function, which passes on a virtual DOM node with both the light DOM and Shadow DOM (if applicable).
 
 ### Virtual Nodes
 
-To support open Shadow DOM, axe-core has the ability to handle virtual nodes in [rule matches](#matches-function)
-and [check evaluate](#check-evaluate) functions. The full set of API methods for Shadow DOM can be
-found in the [API documentation](./API.md#virtual-dom-utilities), but the general
-structure for a virtualNode is as follows:
+To support open Shadow DOM, axe-core has the ability to handle virtual nodes in [rule matches](#matches-function) and [check evaluate](#check-evaluate) functions. The full set of API methods for Shadow DOM can be found in the [API documentation](./API.md#virtual-dom-utilities), but the general structure for a virtualNode is as follows:
 
 ```js
 {
   actualNode: <HTMLElement>,
   children: <Array>,
-  shadowId: <String>
+  parent: <VirtualNode>,
+  shadowId: <String>,
+  attr: <Function>,
+  hasAttr: <Function>,
+  props: <Object>,
 }
 ```
 
 - A virtualNode is an object containing an HTML DOM element (`actualNode`).
-- Children contains an array of child virtualNodes.
+- Children contains an array of child VirtualNodes.
+- Parent is the VirtualNode parent
 - The shadowID indicates whether the node is in an open shadow root and if it is, which one it is inside the boundary.
+- Attr is a function which returns the value of the passed in attribute, similar to `node.getAttribute()` (e.g. `vNode.attr('aria-label')`)
+- HasAttr is a function which returns true if the VirtualNode has the attribute, similar to `node.hasAttribute()` (e.g. `vNode.hasAttr('aria-label')`)
+- Props is an object of HTML DOM element properties. The general structure is as follows:
+  ```js
+  {
+    nodeName: <String>,
+    nodeType: <Number>,
+    id: <String>,
+    nodeValue: <String>
+  }
+  ```
 
 ### Core Utilities
 
 Core Utilities are an internal library that provides axe with functionality used throughout its core processes. Most notably among these are the queue function and the DqElement constructor.
-
-#### ARIA Lookup Tables
-
-axe.commons.aria provides a namespace for ARIA-related utilities, including a lookupTable for attributes and roles.
-
-- `axe.commons.aria.lookupTable.attributes`
-- `axe.commons.aria.lookupTable.globalAttributes`
-- `axe.commons.aria.lookupTable.role`
 
 #### Common Utility Functions
 
