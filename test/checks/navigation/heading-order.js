@@ -1,48 +1,51 @@
 describe('heading-order', function() {
 	'use strict';
 
-	var fixture = document.getElementById('fixture');
-
 	var checkContext = axe.testUtils.MockCheckContext();
+	var queryFixture = axe.testUtils.queryFixture;
 
 	afterEach(function() {
-		fixture.innerHTML = '';
 		checkContext.reset();
 	});
 
 	it('should store the correct header level for aria-level and return true', function() {
-		fixture.innerHTML =
-			'<div role="aria-heading" aria-level="1" id="target">One</h1><h3>Three</h3>';
-		var node = fixture.querySelector('#target');
+		var vNode = queryFixture(
+			'<div role="aria-heading" aria-level="1" id="target">One</h1><h3>Three</h3>'
+		);
 		assert.isTrue(
-			axe.testUtils.getCheckEvaluate('heading-order').call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('heading-order')
+				.call(checkContext, null, {}, vNode)
 		);
 		assert.equal(checkContext._data, 1);
 	});
 
 	it('should store the header level as a number', function() {
-		fixture.innerHTML = '<h1 id="target">One</h1><h3>Three</h3>';
-		var node = fixture.querySelector('#target');
+		var vNode = queryFixture('<h1 id="target">One</h1><h3>Three</h3>');
 		assert.isTrue(
-			axe.testUtils.getCheckEvaluate('heading-order').call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('heading-order')
+				.call(checkContext, null, {}, vNode)
 		);
 		assert.isNumber(checkContext._data);
 	});
 
 	it('should store the correct header level for hn tags and return true', function() {
-		fixture.innerHTML = '<h1 id="target">One</h1><h3>Three</h3>';
-		var node = fixture.querySelector('#target');
+		var vNode = queryFixture('<h1 id="target">One</h1><h3>Three</h3>');
 		assert.isTrue(
-			axe.testUtils.getCheckEvaluate('heading-order').call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('heading-order')
+				.call(checkContext, null, {}, vNode)
 		);
 		assert.equal(checkContext._data, 1);
 	});
 
 	it('should return true and put nothing in data for non-headers', function() {
-		fixture.innerHTML = '<div id="target">One</div><h3>Three</h3>';
-		var node = fixture.querySelector('#target');
+		var vNode = queryFixture('<div id="target">One</div><h3>Three</h3>');
 		assert.isTrue(
-			axe.testUtils.getCheckEvaluate('heading-order').call(checkContext, node)
+			axe.testUtils
+				.getCheckEvaluate('heading-order')
+				.call(checkContext, null, {}, vNode)
 		);
 		assert.equal(checkContext._data, null);
 	});
