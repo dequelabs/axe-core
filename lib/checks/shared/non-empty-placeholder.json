@@ -8,7 +8,10 @@
 		"impact": "serious",
 		"messages": {
 			"pass": "Element has a placeholder attribute",
-			"fail": "Element has no placeholder attribute or the placeholder attribute is empty"
+			"fail": {
+				"noAttr": "Element has no placeholder attribute",
+				"emptyAttr": "Element has an empty placeholder attribute"
+			}
 		}
 	}
 }
