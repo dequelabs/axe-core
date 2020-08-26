@@ -117,6 +117,39 @@ describe('aria-required-parent', function() {
 		);
 	});
 
+	it('should pass when intermediate node is role=presentation', function() {
+		var params = checkSetup(
+			'<div role="list"><div role="presentation"><p role="listitem" id="target">Nothing here.</p></div></div>'
+		);
+		assert.isTrue(
+			axe.testUtils
+				.getCheckEvaluate('aria-required-parent')
+				.apply(checkContext, params)
+		);
+	});
+
+	it('should pass when intermediate node is role=none', function() {
+		var params = checkSetup(
+			'<div role="list"><div role="none"><p role="listitem" id="target">Nothing here.</p></div></div>'
+		);
+		assert.isTrue(
+			axe.testUtils
+				.getCheckEvaluate('aria-required-parent')
+				.apply(checkContext, params)
+		);
+	});
+
+	it('should pass when intermediate node is not owned by parent', function() {
+		var params = checkSetup(
+			'<div role="list" aria-owns="target"><div role="navigation"><p role="listitem" id="target">Nothing here.</p></div></div>'
+		);
+		assert.isTrue(
+			axe.testUtils
+				.getCheckEvaluate('aria-required-parent')
+				.apply(checkContext, params)
+		);
+	});
+
 	(shadowSupported ? it : xit)(
 		'should pass when required parent is present across shadow boundary',
 		function() {
