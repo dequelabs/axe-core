@@ -106,6 +106,17 @@ describe('aria-required-parent', function() {
 		);
 	});
 
+	it('should fail when there is an intermediate role between the child and parent', function() {
+		var params = checkSetup(
+			'<div role="list"><div role="tabpanel"><p role="listitem" id="target">Nothing here.</p></div></div>'
+		);
+		assert.isFalse(
+			axe.testUtils
+				.getCheckEvaluate('aria-required-parent')
+				.apply(checkContext, params)
+		);
+	});
+
 	(shadowSupported ? it : xit)(
 		'should pass when required parent is present across shadow boundary',
 		function() {
