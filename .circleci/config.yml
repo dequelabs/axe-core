@@ -14,6 +14,8 @@ win_box: &win_box
 
 orbs:
   win: circleci/windows@1.0.0
+  puppeteer: threetreeslight/puppeteer@0.1.2
+
 
 set_npm_auth: &set_npm_auth
   run: npm config set "//registry.npmjs.org/:_authToken" $NPM_AUTH
