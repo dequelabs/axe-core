@@ -1,17 +1,14 @@
 describe('xml-lang-mismatch', function() {
 	'use strict';
 
-	var node;
-	var fixture = document.getElementById('fixture');
 	var checkContext = axe.testUtils.MockCheckContext();
+	var queryFixture = axe.testUtils.queryFixture;
 
 	beforeEach(function() {
 		// using a div element (instead of html), as the check is agnostic of element type
-		node = document.createElement('div');
 	});
 
 	afterEach(function() {
-		fixture.innerHTML = '';
 		checkContext.reset();
 	});
 
@@ -20,64 +17,63 @@ describe('xml-lang-mismatch', function() {
 	// rather than node type match - hence the check can be re-used.
 
 	it('should return false if a only lang is supplied', function() {
-		node.setAttribute('lang', 'en');
-		fixture.appendChild(node);
+		var vNode = queryFixture('<div id="target" lang="en"></div>');
 		assert.isFalse(
 			axe.testUtils
 				.getCheckEvaluate('xml-lang-mismatch')
-				.call(checkContext, node)
+				.call(checkContext, null, {}, vNode)
 		);
 	});
 
 	it('should return false if a only xml:lang is supplied albeit with region', function() {
-		node.setAttribute('xml:lang', 'fr-FR');
-		fixture.appendChild(node);
+		var vNode = queryFixture('<div id="target" xml:lang="fr-FR"></div>');
 		assert.isFalse(
 			axe.testUtils
 				.getCheckEvaluate('xml-lang-mismatch')
-				.call(checkContext, node)
+				.call(checkContext, null, {}, vNode)
 		);
 	});
 
 	it('should return false if lang is undefined', function() {
+		var node = document.createElement('div');
 		node.setAttribute('lang', undefined);
-		fixture.appendChild(node);
+		var tree = axe.testUtils.flatTreeSetup(node);
 		assert.isFalse(
 			axe.testUtils
 				.getCheckEvaluate('xml-lang-mismatch')
-				.call(checkContext, node)
+				.call(checkContext, null, {}, tree[0])
 		);
 	});
 
 	it('should return true if lang and xml:lang is identical', function() {
-		node.setAttribute('lang', 'en-GB');
-		node.setAttribute('xml:lang', 'en-GB');
-		fixture.appendChild(node);
+		var vNode = queryFixture(
+			'<div id="target" xml:lang="en-GB" lang="en-GB"></div>'
+		);
 		assert.isTrue(
 			axe.testUtils
 				.getCheckEvaluate('xml-lang-mismatch')
-				.call(checkContext, node)
+				.call(checkContext, null, {}, vNode)
 		);
 	});
 
 	it('should return true if lang and xml:lang have identical primary sub tag', function() {
-		node.setAttribute('lang', 'en-GB');
-		node.setAttribute('xml:lang', 'en-US');
-		fixture.appendChild(node);
+		var vNode = queryFixture(
+			'<div id="target" xml:lang="en-US" lang="en-GB"></div>'
+		);
 		assert.isTrue(
 			axe.testUtils
 				.getCheckEvaluate('xml-lang-mismatch')
-				.call(checkContext, node)
+				.call(checkContext, null, {}, vNode)
 		);
 	});
 
 	it('should return false if lang and xml:lang are not identical', function() {
-		node.setAttribute('lang', 'en');
-		node.setAttribute('xml:lang', 'fr-FR');
-		fixture.appendChild(node);
+		var vNode = queryFixture(
+			'<div id="target" xml:lang="fr-FR" lang="en"></div>'
+		);
 		var actual = axe.testUtils
 			.getCheckEvaluate('xml-lang-mismatch')
-			.call(checkContext, node);
+			.call(checkContext, null, {}, vNode);
 		assert.isFalse(actual);
 	});
 });
