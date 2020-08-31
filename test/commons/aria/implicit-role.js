@@ -387,6 +387,20 @@ describe('aria.implicitRole', function() {
 		assert.equal(implicitRole(node), 'cell');
 	});
 
+	it('should return gridcell for "td" with grid parent', function() {
+		fixture.innerHTML = '<table role="grid"><td id="target"></td></table>';
+		var node = fixture.querySelector('#target');
+		flatTreeSetup(fixture);
+		assert.equal(implicitRole(node), 'gridcell');
+	});
+
+	it('should return gridcell for "td" with treegrid parent', function() {
+		fixture.innerHTML = '<table role="treegrid"><td id="target"></td></table>';
+		var node = fixture.querySelector('#target');
+		flatTreeSetup(fixture);
+		assert.equal(implicitRole(node), 'gridcell');
+	});
+
 	it('should return rowheader for "th[scope=row]"', function() {
 		fixture.innerHTML = '<table><th id="target" scope="row"></th></table>';
 		var node = fixture.querySelector('#target');
