@@ -9,7 +9,7 @@
 				"default": "Element's default semantics were not overridden with role=\"none\" or role=\"presentation\"",
 				"globalAria": "Element's role is not presentational because it has a global ARIA attribute",
 				"focusable": "Element's role is not presentational because it is focusable",
-				"both": "Element's role is not presentational because it has a global aria attribute and is focusable"
+				"both": "Element's role is not presentational because it has a global ARIA attribute and is focusable"
 			}
 		}
 	}
