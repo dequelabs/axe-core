@@ -18,8 +18,6 @@
 		"has-visible-text",
 		"aria-label",
 		"aria-labelledby",
-		"role-presentation",
-		"role-none",
 		"non-empty-title"
 	],
 	"none": ["focusable-no-name"]
