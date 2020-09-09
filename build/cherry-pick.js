@@ -52,7 +52,7 @@ function getCommits(branch) {
 
 	// parse commits
 	const commits = [];
-	for (let i = 0; i < 30; i++) {
+	for (let i = 0; i < allCommits.length; i++) {
 		const commit = allCommits[i];
 
 		const hash = commit.substring(0, 8);
