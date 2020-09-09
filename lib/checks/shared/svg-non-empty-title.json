@@ -4,8 +4,11 @@
 	"metadata": {
 		"impact": "serious",
 		"messages": {
-			"pass": "element has a child that is a title",
-			"fail": "element has no child that is a title",
+			"pass": "Element has a child that is a title",
+			"fail": {
+				"noTitle": "Element has no child that is a title",
+				"emptyTitle": "Element child title is empty"
+			},
 			"incomplete": "Unable to determine element has a child that is a title"
 		}
 	}

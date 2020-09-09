@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.2](https://github.com/dequelabs/axe-core/compare/v4.0.1...v4.0.2) (2020-09-08)
+
+### Bug Fixes
+
+- **color-contrast:** dont error for floating element ([#2444](https://github.com/dequelabs/axe-core/issues/2444)) ([45eb746](https://github.com/dequelabs/axe-core/commit/45eb74682c8460fbd6f1de273e710b597ff01392))
+- **i18n:** proofreading of the french translations ([#2485](https://github.com/dequelabs/axe-core/issues/2485)) ([ebd0407](https://github.com/dequelabs/axe-core/commit/ebd04074f556b1927c9302e3f999e4c1cbc2de9e)), closes [#2484](https://github.com/dequelabs/axe-core/issues/2484)
+- **implicit-role:** return gridcell for td child of grid or treegrid ([#2501](https://github.com/dequelabs/axe-core/issues/2501)) ([0553d4d](https://github.com/dequelabs/axe-core/commit/0553d4d67d59127cd67420022cd7696dea167a6a))
+- **label:** pass when role none or presentation ([#2464](https://github.com/dequelabs/axe-core/issues/2464)) ([1d3c2fc](https://github.com/dequelabs/axe-core/commit/1d3c2fc28355c8476d3966d73664a2a1f4c6124d)), closes [#2458](https://github.com/dequelabs/axe-core/issues/2458)
+- **link-name:** fix regression where link was not named from title attribute ([#2492](https://github.com/dequelabs/axe-core/issues/2492)) ([b86c73b](https://github.com/dequelabs/axe-core/commit/b86c73b7dc61c2609afa6f384502f3c91f9a7f10))
+- **required-parent:** fail if intermediate role is not the required parent ([#2494](https://github.com/dequelabs/axe-core/issues/2494)) ([522865c](https://github.com/dequelabs/axe-core/commit/522865cabbe1f4815b1f3e980018e24c062c8e5e))
+- **svg-non-empty-title:** update fail message to indicate if the title element is empty or missing ([#2462](https://github.com/dequelabs/axe-core/issues/2462)) ([9598656](https://github.com/dequelabs/axe-core/commit/9598656bfac61da35f8b9f52e1fb32fcab6b484e)), closes [#2452](https://github.com/dequelabs/axe-core/issues/2452)
+- **valid-lang:** fail when lang attribute contains only whitespace ([#2504](https://github.com/dequelabs/axe-core/issues/2504)) ([8455a7f](https://github.com/dequelabs/axe-core/commit/8455a7f3a1aa83f487745306df0c07c39b6dc803))
+
 ## [4.0.1](https://github.com/dequelabs/axe-core/compare/v4.0.0...v4.0.1) (2020-08-04)
 
 ### Bug Fixes

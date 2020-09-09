@@ -14,6 +14,8 @@ win_box: &win_box
 
 orbs:
   win: circleci/windows@1.0.0
+  puppeteer: threetreeslight/puppeteer@0.1.2
+
 
 set_npm_auth: &set_npm_auth
   run: npm config set "//registry.npmjs.org/:_authToken" $NPM_AUTH
@@ -158,6 +160,7 @@ jobs:
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
       - run: npm run next-release
+      - run: .circleci/verify-release.sh
       - run: npm publish --tag=next
 
   # Release a "production" version
@@ -170,6 +173,7 @@ jobs:
       - <<: *restore_dependency_cache_unix
       - run: npm run build
       - run: npm run sri-validate
+      - run: .circleci/verify-release.sh
       - run: npm publish
 
   # Create a GitHub release.
@@ -185,6 +189,25 @@ jobs:
             curl https://raw.githubusercontent.com/dequelabs/attest-release-scripts/develop/src/node-github-release.sh -s -o ./node-github-release.sh
             chmod +x ./node-github-release.sh
             ./node-github-release.sh
+
+  # Verify released package has all required files
+  verify_release:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: .circleci/verify-release.sh post
+
+  # Verify canary released package has all required files
+  verify_next_release:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run next-release
+      - run: .circleci/verify-release.sh post
 
 workflows:
   version: 2
@@ -261,6 +284,19 @@ workflows:
           filters:
             branches:
               only: master
+      # Verify releases have all required files
+      - verify_release:
+          requires:
+            - release
+          filters:
+            branches:
+              only: master
+      - verify_next_release:
+          requires:
+            - next_release
+          filters:
+            branches:
+              only: develop
       - github_release:
           requires:
             - release
