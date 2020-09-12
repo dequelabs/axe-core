@@ -1,6 +1,6 @@
 {
-	"description": "flag-role tests",
-	"rule": "flag-role",
+	"description": "presentation-role-confict tests",
+	"rule": "presentation-role-confict",
 	"violations": [["#violation1"], ["#violation2"]],
 	"passes": [["#pass1"], ["#pass2"]]
 }

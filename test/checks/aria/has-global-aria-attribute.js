@@ -13,12 +13,6 @@ describe('has-global-aria-attribute', function() {
 		checkContext.reset();
 	});
 
-	afterEach(function() {
-		fixture.innerHTML = '';
-		axe._tree = undefined;
-		checkContext.reset();
-	});
-
 	it('should return true if any global ARIA attributes are found', function() {
 		var node = document.createElement('div');
 		node.id = 'test';

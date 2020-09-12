@@ -14,11 +14,13 @@ describe('is-element-focusable', function() {
 		node.id = 'target';
 		node.tabIndex = 1;
 		fixture.appendChild(node);
+		axe._tree = axe.utils.getFlattenedTree(fixture);
+		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
 
 		assert.isTrue(
 			axe.testUtils
 				.getCheckEvaluate('is-element-focusable')
-				.call(checkContext, node)
+				.call(checkContext, node, {}, virtualNode)
 		);
 	});
 
@@ -28,10 +30,12 @@ describe('is-element-focusable', function() {
 		node.role = 'link';
 		node.href = '#';
 		fixture.appendChild(node);
+		axe._tree = axe.utils.getFlattenedTree(fixture);
+		var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
 		assert.isFalse(
 			axe.testUtils
 				.getCheckEvaluate('is-element-focusable')
-				.call(checkContext, node)
+				.call(checkContext, node, {}, virtualNode)
 		);
 	});
 });
