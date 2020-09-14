@@ -1,5 +1,6 @@
 {
 	"tags": {
+		"allowUnknownTags": true,
 		"dictionaries": ["jsdoc"]
 	},
 	"source": {
@@ -12,5 +13,6 @@
 		"encoding": "utf8",
 		"recurse": true,
 		"template": "./node_modules/minami"
-	}
+	},
+	"plugins": ["plugins/markdown"]
 }
