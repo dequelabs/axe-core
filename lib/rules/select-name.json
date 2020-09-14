@@ -20,8 +20,7 @@
 		"implicit-label",
 		"explicit-label",
 		"non-empty-title",
-		"role-none",
-		"role-presentation"
+		"presentational-role"
 	],
 	"none": ["help-same-as-label", "hidden-explicit-label"]
 }

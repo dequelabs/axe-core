@@ -7,7 +7,17 @@
 		["#alempty"],
 		["#albmissing"],
 		["#albempty"],
-		["#buttonvalue"]
+		["#buttonvalue"],
+		["#fail1"],
+		["#fail2"]
 	],
-	"passes": [["#text"], ["#al"], ["#alb"], ["#combo"], ["#buttonTitle"]]
+	"passes": [
+		["#text"],
+		["#al"],
+		["#alb"],
+		["#combo"],
+		["#buttonTitle"],
+		["#pass1"],
+		["#pass2"]
+	]
 }

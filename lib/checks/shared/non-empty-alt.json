@@ -8,7 +8,10 @@
 		"impact": "critical",
 		"messages": {
 			"pass": "Element has a non-empty alt attribute",
-			"fail": "Element has no alt attribute or the alt attribute is empty"
+			"fail": {
+				"noAttr": "Element has no alt attribute",
+				"emptyAttr": "Element has an empty alt attribute"
+			}
 		}
 	}
 }

@@ -75,11 +75,12 @@ describe('select-name', function() {
 		assert.lengthOf(results.incomplete, 0);
 	});
 
-	it('should pass for role=presentation', function() {
+	it('should pass for role=presentation when disabled', function() {
 		var results = axe.runVirtualRule('select-name', {
 			nodeName: 'select',
 			attributes: {
-				role: 'presentation'
+				role: 'presentation',
+				disabled: true
 			}
 		});
 
@@ -88,11 +89,12 @@ describe('select-name', function() {
 		assert.lengthOf(results.incomplete, 0);
 	});
 
-	it('should pass for role=none', function() {
+	it('should pass for role=none when disabled', function() {
 		var results = axe.runVirtualRule('select-name', {
 			nodeName: 'select',
 			attributes: {
-				role: 'none'
+				role: 'none',
+				disabled: true
 			}
 		});
 
@@ -151,6 +153,38 @@ describe('select-name', function() {
 			nodeName: 'select',
 			attributes: {
 				title: ''
+			}
+		});
+		node.parent = null;
+
+		var results = axe.runVirtualRule('select-name', node);
+
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 1);
+		assert.lengthOf(results.incomplete, 0);
+	});
+
+	it('should pass for role=presentation', function() {
+		var node = new axe.SerialVirtualNode({
+			nodeName: 'select',
+			attributes: {
+				role: 'presentation'
+			}
+		});
+		node.parent = null;
+
+		var results = axe.runVirtualRule('select-name', node);
+
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 1);
+		assert.lengthOf(results.incomplete, 0);
+	});
+
+	it('should pass for role=none', function() {
+		var node = new axe.SerialVirtualNode({
+			nodeName: 'select',
+			attributes: {
+				role: 'none'
 			}
 		});
 		node.parent = null;

@@ -31,42 +31,6 @@ describe('link-name', function() {
 		assert.lengthOf(results.incomplete, 1);
 	});
 
-	it('should pass for role=presentation', function() {
-		var node = new axe.SerialVirtualNode({
-			nodeName: 'a',
-			attributes: {
-				href: '/foo.html',
-				tabindex: '-1',
-				role: 'presentation'
-			}
-		});
-		node.children = [];
-
-		var results = axe.runVirtualRule('link-name', node);
-
-		assert.lengthOf(results.passes, 1);
-		assert.lengthOf(results.violations, 0);
-		assert.lengthOf(results.incomplete, 0);
-	});
-
-	it('should pass for role=none', function() {
-		var node = new axe.SerialVirtualNode({
-			nodeName: 'a',
-			attributes: {
-				href: '/foo.html',
-				tabindex: '-1',
-				role: 'none'
-			}
-		});
-		node.children = [];
-
-		var results = axe.runVirtualRule('link-name', node);
-
-		assert.lengthOf(results.passes, 1);
-		assert.lengthOf(results.violations, 0);
-		assert.lengthOf(results.incomplete, 0);
-	});
-
 	it('should pass for visible text content', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'span',
@@ -80,6 +44,23 @@ describe('link-name', function() {
 			nodeValue: 'foobar'
 		});
 		node.children = [child];
+
+		var results = axe.runVirtualRule('link-name', node);
+
+		assert.lengthOf(results.passes, 1);
+		assert.lengthOf(results.violations, 0);
+		assert.lengthOf(results.incomplete, 0);
+	});
+
+	it('should pass for title', function() {
+		var node = new axe.SerialVirtualNode({
+			nodeName: 'a',
+			attributes: {
+				href: '/foo.html',
+				title: 'foobar'
+			}
+		});
+		node.children = [];
 
 		var results = axe.runVirtualRule('link-name', node);
 
@@ -159,6 +140,23 @@ describe('link-name', function() {
 			attributes: {
 				href: '/foo.html',
 				role: 'presentation'
+			}
+		});
+		node.children = [];
+
+		var results = axe.runVirtualRule('link-name', node);
+
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 1);
+		assert.lengthOf(results.incomplete, 0);
+	});
+
+	it('should fail when title is empty', function() {
+		var node = new axe.SerialVirtualNode({
+			nodeName: 'a',
+			attributes: {
+				href: '/foo.html',
+				title: ''
 			}
 		});
 		node.children = [];

@@ -1,7 +1,14 @@
 {
 	"description": "select-name test",
 	"rule": "select-name",
-	"violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"]],
+	"violations": [
+		["#fail1"],
+		["#fail2"],
+		["#fail3"],
+		["#fail4"],
+		["#fail5"],
+		["#fail6"]
+	],
 	"passes": [
 		["#pass1"],
 		["#pass2"],

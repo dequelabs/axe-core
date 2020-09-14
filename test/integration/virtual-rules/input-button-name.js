@@ -68,12 +68,13 @@ describe('input-button-name', function() {
 		assert.lengthOf(results.incomplete, 0);
 	});
 
-	it('should pass for role=presentation', function() {
+	it('should pass for role=presentation when disabled', function() {
 		var results = axe.runVirtualRule('input-button-name', {
 			nodeName: 'input',
 			attributes: {
 				type: 'button',
-				role: 'presentation'
+				role: 'presentation',
+				disabled: true
 			}
 		});
 
@@ -82,12 +83,13 @@ describe('input-button-name', function() {
 		assert.lengthOf(results.incomplete, 0);
 	});
 
-	it('should pass for role=none', function() {
+	it('should pass for role=none when disabled', function() {
 		var results = axe.runVirtualRule('input-button-name', {
 			nodeName: 'input',
 			attributes: {
 				type: 'button',
-				role: 'none'
+				role: 'none',
+				disabled: true
 			}
 		});
 
@@ -157,6 +159,34 @@ describe('input-button-name', function() {
 			attributes: {
 				type: 'button',
 				title: ''
+			}
+		});
+
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 1);
+		assert.lengthOf(results.incomplete, 0);
+	});
+
+	it('should pass for role=presentation', function() {
+		var results = axe.runVirtualRule('input-button-name', {
+			nodeName: 'input',
+			attributes: {
+				type: 'button',
+				role: 'presentation'
+			}
+		});
+
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 1);
+		assert.lengthOf(results.incomplete, 0);
+	});
+
+	it('should pass for role=none', function() {
+		var results = axe.runVirtualRule('input-button-name', {
+			nodeName: 'input',
+			attributes: {
+				type: 'button',
+				role: 'none'
 			}
 		});
 
