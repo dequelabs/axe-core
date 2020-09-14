@@ -8,7 +8,10 @@
 		"impact": "serious",
 		"messages": {
 			"pass": "Element has a title attribute",
-			"fail": "Element has no title attribute or the title attribute is empty"
+			"fail": {
+				"noAttr": "Element has no title attribute",
+				"emptyAttr": "Element has an empty title attribute"
+			}
 		}
 	}
 }

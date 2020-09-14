@@ -1,6 +1,7 @@
 {
 	"id": "role-presentation",
 	"evaluate": "matches-definition-evaluate",
+	"deprecated": true,
 	"options": {
 		"matcher": {
 			"attributes": {

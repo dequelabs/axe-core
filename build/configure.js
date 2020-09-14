@@ -87,6 +87,7 @@ function buildRules(grunt, options, commons, callback) {
 		var tags = options.tags ? options.tags.split(/\s*,\s*/) : [];
 		var rules = result.rules;
 		var checks = result.checks;
+		parseChecks(checks);
 
 		// Translate checks
 		if (locale && locale.checks) {

@@ -184,4 +184,19 @@ describe('text.nativeTextMethods', function() {
 			assert.equal(singleSpace(), ' ');
 		});
 	});
+
+	describe('placeholderText', function() {
+		var placeholderText = nativeTextMethods.placeholderText;
+		it('returns the placeholder attribute of actualNode', function() {
+			fixtureSetup('<input placeholder="foo" />');
+			var input = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
+			assert.equal(placeholderText(input), 'foo');
+		});
+
+		it('returns `` when there is no placeholder', function() {
+			fixtureSetup('<input />');
+			var input = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
+			assert.equal(placeholderText(input), '');
+		});
+	});
 });
