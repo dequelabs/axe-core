@@ -74,6 +74,13 @@ The [`ariaRoles`](../lib/standards/aria-roles.js) object defines valid ARIA role
 - `allowedAttrs` - array(optional). List of allowed attributes (besides any required and global ARIA attributes).
 - `nameFromContent` - boolean(optional. Default `false`). If the role allows name from content when calculating the accessible name.
 - `unsupported` - boolean(optional. Default `false`). If the role role is unsupported. Use this property to disable a role.
+- `contentTypes` - array(optional). List of [content types](https://www.w3.org/TR/html-aria/#allowed-aria-roles-states-and-properties) for the role. Valid values are:
+  - `flow`
+  - `document`
+  - `heading`
+  - `phrasing`
+  - `interactive`
+- `interactiveDescendant` - boolean(optional. Default `true`). If the role is allowed to have interactive descendants.
 
 ### Dpub Roles
 
