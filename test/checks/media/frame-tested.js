@@ -66,4 +66,21 @@ describe('frame-tested', function() {
 			checkEvaluate.call(checkContext, iframe);
 		});
 	});
+
+	it('should fail if iframe uses a different config of axe', function(done) {
+		iframe.src = '/test/mock/frames/different-config.html';
+		iframe.addEventListener('load', function() {
+			checkContext._onAsync = function(result) {
+				assert.isFalse(result);
+				assert.deepEqual(checkContext._data, {
+					messageKey: 'configure',
+					config: '{}',
+					iframeConfig: JSON.stringify({ foo: 'bar' })
+				});
+				done();
+			};
+
+			checkEvaluate.call(checkContext, iframe);
+		});
+	});
 });

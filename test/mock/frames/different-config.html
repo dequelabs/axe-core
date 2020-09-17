@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Double responding frame</title>
+	</head>
+	<body>
+		<script>
+			var axe = {
+				version: 'x.y.z',
+				constants: {}
+			};
+		</script>
+		<script src="../../../tmp/core/core.js"></script>
+
+		<script>
+			axe.utils.respondable.subscribe('axe.ping', function(
+				data,
+				keepalive,
+				respond
+			) {
+				respond({
+					axe: true,
+					version: 'x.y.z',
+					spec: {
+						foo: 'bar'
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
