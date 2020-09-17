@@ -18,7 +18,10 @@
 				keepalive,
 				respond
 			) {
-				respond({ axe: true });
+				respond({
+					axe: true,
+					version: 'x.y.z'
+				});
 			});
 			axe.utils.respondable.subscribe('axe.start', function(
 				data,

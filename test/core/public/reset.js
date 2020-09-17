@@ -60,6 +60,7 @@ describe('axe.reset', function() {
 			],
 			reporter: 'raw'
 		});
+		assert.isNotNull(axe._audit.spec);
 		assert.lengthOf(axe._audit.rules, 1);
 		// assert.instanceOf(axe._audit.rules[0], Rule);
 		assert.equal(axe._audit.rules[0].id, 'bob');
@@ -69,6 +70,7 @@ describe('axe.reset', function() {
 
 		axe.reset();
 
+		assert.isNull(axe._audit.spec);
 		assert.lengthOf(axe._audit.rules, 1);
 		// assert.instanceOf(axe._audit.rules[0], Rule);
 		assert.equal(axe._audit.rules[0].id, 'bob');

@@ -8,7 +8,11 @@
 		"impact": "critical",
 		"messages": {
 			"pass": "The iframe was tested with axe-core",
-			"fail": "The iframe could not be tested with axe-core",
+			"fail": {
+				"default": "The iframe could not be tested with axe-core",
+				"version": "The iframe is using a different version of axe;\nprimary version: ${data.version}\niframe version: ${data.iframeVersion}",
+				"configure": "The iframe is using a different configuration of axe;\nprimary config: ${data.config}\niframe config: ${data.iframeConfig}"
+			},
 			"incomplete": "The iframe still has to be tested with axe-core"
 		}
 	}

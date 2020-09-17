@@ -13,8 +13,8 @@ describe('frame-tested', function() {
 		checkContext._onAsync = function() {};
 	});
 
-	after(function() {
-		fixture = '';
+	afterEach(function() {
+		fixture.innerHTML = '';
 	});
 
 	it('passes if the iframe contains axe-core', function(done) {
@@ -48,5 +48,22 @@ describe('frame-tested', function() {
 		};
 		// Timeout after 10ms
 		checkEvaluate.call(checkContext, iframe, { timeout: 10 });
+	});
+
+	it('should fail if iframe uses a different version of axe', function(done) {
+		iframe.src = '/test/mock/frames/different-version.html';
+		iframe.addEventListener('load', function() {
+			checkContext._onAsync = function(result) {
+				assert.isFalse(result);
+				assert.deepEqual(checkContext._data, {
+					messageKey: 'version',
+					version: axe.version,
+					iframeVersion: '1.0.0'
+				});
+				done();
+			};
+
+			checkEvaluate.call(checkContext, iframe);
+		});
 	});
 });

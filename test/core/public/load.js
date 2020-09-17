@@ -41,7 +41,30 @@ describe('axe._load', function() {
 			var win = {
 				postMessage: function(message) {
 					var data = JSON.parse(message);
-					assert.deepEqual(data.message, { axe: true });
+					assert.deepEqual(data.message, { axe: true, version: axe.version });
+					done();
+				}
+			};
+
+			axe.utils.respondable._publish(win, { topic: 'axe.ping' });
+		});
+
+		it('should respond with axe configuration', function(done) {
+			var mockAudit = {
+				rules: [{ id: 'monkeys' }, { id: 'bananas' }]
+			};
+
+			axe._load({});
+			axe.configure(mockAudit);
+
+			var win = {
+				postMessage: function(message) {
+					var data = JSON.parse(message);
+					assert.deepEqual(data.message, {
+						axe: true,
+						version: axe.version,
+						spec: mockAudit
+					});
 					done();
 				}
 			};
