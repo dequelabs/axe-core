@@ -1,6 +1,6 @@
 {
 	"id": "label",
-	"selector": "input, select, textarea",
+	"selector": "input, textarea",
 	"matches": "label-matches",
 	"tags": [
 		"cat.forms",
@@ -20,7 +20,9 @@
 		"aria-labelledby",
 		"implicit-label",
 		"explicit-label",
-		"non-empty-title"
+		"non-empty-title",
+		"non-empty-placeholder",
+		"presentational-role"
 	],
 	"none": ["help-same-as-label", "hidden-explicit-label"]
 }

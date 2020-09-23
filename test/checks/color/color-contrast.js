@@ -188,6 +188,20 @@ describe('color-contrast', function() {
 		assert.deepEqual(checkContext._relatedNodes, [expectedRelatedNodes]);
 	});
 
+	it('should ignore position:fixed elements directly above the target', function() {
+		var params = checkSetup(
+			'<div style="background-color: #e5f1e5;" id="background">' +
+				'<div style="width:100%; position:fixed; top:0; height:400px; background: #F0F0F0; z-index: 200; color:#fff" >header</div>' +
+				'<div style="height: 10px;"></div>' +
+				'stuff <span id="target" style="color: rgba(91, 91, 90, 0.7)">This is some text</span>' +
+				'<div style="height: 10px;"></div>' +
+				'</div>'
+		);
+		var expectedRelatedNodes = fixture.querySelector('#background');
+		assert.isFalse(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._relatedNodes, [expectedRelatedNodes]);
+	});
+
 	it('should find contrast issues on position:fixed elements', function() {
 		var params = checkSetup(
 			'<div style="background-color: #e5f1e5;" id="background">' +

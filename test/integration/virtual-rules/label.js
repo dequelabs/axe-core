@@ -41,7 +41,7 @@ describe('label', function() {
 
 	it('should incomplete for aria-labelledby', function() {
 		var results = axe.runVirtualRule('label', {
-			nodeName: 'select',
+			nodeName: 'input',
 			attributes: {
 				'aria-labelledby': 'foobar'
 			}
@@ -102,6 +102,34 @@ describe('label', function() {
 		assert.lengthOf(results.incomplete, 0);
 	});
 
+	it('should pass for role=presentation when disabled', function() {
+		var results = axe.runVirtualRule('label', {
+			nodeName: 'input',
+			attributes: {
+				role: 'presentation',
+				disabled: true
+			}
+		});
+
+		assert.lengthOf(results.passes, 1);
+		assert.lengthOf(results.violations, 0);
+		assert.lengthOf(results.incomplete, 0);
+	});
+
+	it('should pass for role=none when disabled', function() {
+		var results = axe.runVirtualRule('label', {
+			nodeName: 'input',
+			attributes: {
+				role: 'none',
+				disabled: true
+			}
+		});
+
+		assert.lengthOf(results.passes, 1);
+		assert.lengthOf(results.violations, 0);
+		assert.lengthOf(results.incomplete, 0);
+	});
+
 	it('should incomplete for both missing aria-label and implicit label', function() {
 		var results = axe.runVirtualRule('label', {
 			nodeName: 'input',
@@ -152,6 +180,38 @@ describe('label', function() {
 			nodeName: 'input',
 			attributes: {
 				title: ''
+			}
+		});
+		node.parent = null;
+
+		var results = axe.runVirtualRule('label', node);
+
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 1);
+		assert.lengthOf(results.incomplete, 0);
+	});
+
+	it('should fail for role=presentation', function() {
+		var node = new axe.SerialVirtualNode({
+			nodeName: 'input',
+			attributes: {
+				role: 'presentation'
+			}
+		});
+		node.parent = null;
+
+		var results = axe.runVirtualRule('label', node);
+
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 1);
+		assert.lengthOf(results.incomplete, 0);
+	});
+
+	it('should fail for role=none', function() {
+		var node = new axe.SerialVirtualNode({
+			nodeName: 'input',
+			attributes: {
+				role: 'presentation'
 			}
 		});
 		node.parent = null;

@@ -67,4 +67,10 @@ describe('valid-lang', function() {
 		assert.isTrue(validLangEvaluate.apply(checkContext, params));
 		assert.deepEqual(checkContext._data, ['custom-lang="en_US"']);
 	});
+
+	it('should return true if lang value is just whitespace', function() {
+		var params = checkSetup('<div id="target" lang="  "></div>');
+
+		assert.isTrue(validLangEvaluate.apply(checkContext, params));
+	});
 });

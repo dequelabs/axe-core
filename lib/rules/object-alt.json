@@ -14,12 +14,10 @@
 	},
 	"all": [],
 	"any": [
-		"has-visible-text",
 		"aria-label",
 		"aria-labelledby",
 		"non-empty-title",
-		"role-presentation",
-		"role-none"
+		"presentational-role"
 	],
 	"none": []
 }

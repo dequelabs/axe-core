@@ -64,7 +64,7 @@ describe('object-alt', function() {
 		assert.lengthOf(results.incomplete, 0);
 	});
 
-	it('should pass for visible text content', function() {
+	it('should fail for visible text content', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'object'
 		});
@@ -77,20 +77,20 @@ describe('object-alt', function() {
 
 		var results = axe.runVirtualRule('object-alt', node);
 
-		assert.lengthOf(results.passes, 1);
-		assert.lengthOf(results.violations, 0);
+		assert.lengthOf(results.passes, 0);
+		assert.lengthOf(results.violations, 1);
 		assert.lengthOf(results.incomplete, 0);
 	});
 
-	it('should incomplete when alt and children are missing', function() {
+	it('should fail when alt and children are missing', function() {
 		var results = axe.runVirtualRule('object-alt', {
 			nodeName: 'object',
 			attributes: {}
 		});
 
 		assert.lengthOf(results.passes, 0);
-		assert.lengthOf(results.violations, 0);
-		assert.lengthOf(results.incomplete, 1);
+		assert.lengthOf(results.violations, 1);
+		assert.lengthOf(results.incomplete, 0);
 	});
 
 	it('should fail children contain no visible text', function() {

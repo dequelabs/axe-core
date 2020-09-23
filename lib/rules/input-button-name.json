@@ -18,8 +18,7 @@
 		"non-empty-value",
 		"aria-label",
 		"aria-labelledby",
-		"role-presentation",
-		"role-none",
+		"presentational-role",
 		"non-empty-title"
 	],
 	"none": []

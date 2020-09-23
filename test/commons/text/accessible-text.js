@@ -1026,8 +1026,7 @@ describe('text.accessibleTextVirtual', function() {
 			});
 		});
 
-		// not implemented yet, doesn't work accross ATs
-		it.skip('should find a placeholder attribute', function() {
+		it('should find a placeholder attribute', function() {
 			types.forEach(function(type) {
 				var t = type ? ' type="' + type + '"' : '';
 				fixture.innerHTML = '<input' + t + ' placeholder="Hello World">';
@@ -1118,8 +1117,7 @@ describe('text.accessibleTextVirtual', function() {
 			);
 		});
 
-		// not implemented yet, doesn't work accross ATs
-		it.skip('should find a placeholder attribute', function() {
+		it('should find a placeholder attribute', function() {
 			fixture.innerHTML = '<textarea placeholder="Hello World"></textarea>';
 			axe.testUtils.flatTreeSetup(fixture);
 
