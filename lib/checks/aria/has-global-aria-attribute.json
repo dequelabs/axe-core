@@ -4,7 +4,10 @@
 	"metadata": {
 		"impact": "minor",
 		"messages": {
-			"pass": "Element has global ARIA attribute",
+			"pass": {
+				"singular": "Element has global ARIA attribute: ${data.values}",
+				"plural": "Element has global ARIA attributes: ${data.values}"
+			},
 			"fail": "Element does not have global ARIA attribute"
 		}
 	}
