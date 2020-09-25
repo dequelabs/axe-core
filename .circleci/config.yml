@@ -197,6 +197,8 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
+      # Verifying the release keeps failing due to race condition
+      - run: sleep 10000
       - run: .circleci/verify-release.sh post
 
   # Verify canary released package has all required files
@@ -206,6 +208,8 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
+      # Verifying the release keeps failing due to race condition
+      - run: sleep 10000
       - run: npm run next-release
       - run: .circleci/verify-release.sh post
 
