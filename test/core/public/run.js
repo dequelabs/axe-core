@@ -109,6 +109,15 @@ describe('axe.run', function() {
 		});
 	});
 
+	it('should set "isTopWindow" from options', function(done) {
+		axe._runRules = function() {
+			assert.isTrue(axe._cache.get('isTopWindow'));
+			done();
+		};
+
+		axe.run({ isTopWindow: true }, noop);
+	});
+
 	describe('callback', function() {
 		it('gives errors to the first argument on the callback', function(done) {
 			axe._runRules = function(ctxt, opt, resolve, reject) {
