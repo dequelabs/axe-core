@@ -134,7 +134,7 @@
 		"selenium-webdriver": "~3.6.0",
 		"sinon": "^7.5.0",
 		"sri-toolbox": "^0.2.0",
-		"standard-version": "^8.0.0",
+		"standard-version": "^9.0.0",
 		"typescript": "^3.5.3",
 		"uglify-js": "^3.4.4",
 		"weakmap-polyfill": "^2.0.0",
