@@ -4,13 +4,17 @@ In order to adhere to the manifesto and at the same time be useful to developers
 
 ## Accessibility supported
 
-Boiled-down, accessibility supported means that in order for a technique to be valid, it must work on all viable platforms for all assistive technology that are widely used and freely available (paraphrased).
+Boiled-down, accessibility supported means that in order for a technique to be valid, it must work on all viable platforms for all assistive technology that are widely used and freely available (paraphrased). For axe-cores purposes, this means that for a screen reader, browser, or environment to be accessibility supported it must meet the following two criteria:
+
+1. Be used by more than 1% of users (currently extrapolated from the [WebAims Screen Reader User Survey](https://webaim.org/projects/screenreadersurvey8/#browsercombos))
+1. Introduce new coverage for a screen reader, browser, or environment not currently accessibility supported
 
 We currently test the following AT combinations for support
 
 1. VoiceOver and Safari on OS X
 1. VoiceOver and Safari on iOS
 1. JAWS and IE11 on Windows
+1. JAWS and Chrome on Windows
 1. NVDA and Firefox on Windows
 1. Talkback and Chrome on Android
 1. Dragon and Firefox on Windows
