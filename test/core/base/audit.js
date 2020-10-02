@@ -417,7 +417,9 @@ describe('Audit', function() {
 		it('should reset brand tagExlcude', function() {
 			var audit = new Audit();
 			assert.equal(audit.tagExclude, ['experimental']);
-			// TODO: Find where tagExclude is set
+			axe.configure({
+				tagExclude: ['ninjas']
+			});			
 			audit.resetRulesAndChecks();
 			assert.equal(audit.application, ['experimental']);
 		});
