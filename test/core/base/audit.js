@@ -394,6 +394,33 @@ describe('Audit', function() {
 			audit.resetRulesAndChecks();
 			assert.equal(audit.lang, 'en');
 		});
+		it('should reset brand', function() {
+			var audit = new Audit();
+			assert.equal(audit.brand, 'axe');
+			audit.setBranding({
+				brand: 'test'
+			});
+			assert.equal(audit.brand, 'test');
+			audit.resetRulesAndChecks();
+			assert.equal(audit.brand, 'axe');
+		});
+		it('should reset brand application', function() {
+			var audit = new Audit();
+			assert.equal(audit.application, 'axeAPI');
+			audit.setBranding({
+				application: 'test'
+			});
+			assert.equal(audit.application, 'test');
+			audit.resetRulesAndChecks();
+			assert.equal(audit.application, 'axeAPI');
+		});
+		it('should reset brand tagExlcude', function() {
+			var audit = new Audit();
+			assert.equal(audit.tagExclude, ['experimental']);
+			// TODO: Find where tagExclude is set
+			audit.resetRulesAndChecks();
+			assert.equal(audit.application, ['experimental']);
+		});
 	});
 
 	describe('Audit#addCheck', function() {
