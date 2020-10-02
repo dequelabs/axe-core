@@ -415,13 +415,13 @@ describe('Audit', function() {
 			assert.equal(audit.application, 'axeAPI');
 		});
 		it('should reset brand tagExlcude', function() {
-			var audit = new Audit();
-			assert.deepEqual(audit.tagExclude, ['experimental']);
+			axe._load({});
+			assert.deepEqual(axe._audit.tagExclude, ['experimental']);
 			axe.configure({
 				tagExclude: ['ninjas']
 			});
-			audit.resetRulesAndChecks();
-			assert.deepEqual(audit.tagExclude, ['experimental']);
+			axe._audit.resetRulesAndChecks();
+			assert.deepEqual(axe._audit.tagExclude, ['experimental']);
 		});
 	});
 
