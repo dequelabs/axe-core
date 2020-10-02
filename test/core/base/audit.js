@@ -416,12 +416,12 @@ describe('Audit', function() {
 		});
 		it('should reset brand tagExlcude', function() {
 			var audit = new Audit();
-			assert.equal(audit.tagExclude, ['experimental']);
+			assert.deepEqual(audit.tagExclude, ['experimental']);
 			axe.configure({
 				tagExclude: ['ninjas']
-			});			
+			});
 			audit.resetRulesAndChecks();
-			assert.equal(audit.application, ['experimental']);
+			assert.deepEqual(audit.tagExclude, ['experimental']);
 		});
 	});
 
