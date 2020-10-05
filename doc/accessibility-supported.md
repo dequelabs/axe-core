@@ -4,7 +4,7 @@ In order to adhere to the manifesto and at the same time be useful to developers
 
 ## Accessibility supported
 
-Boiled-down, accessibility supported means that in order for a technique to be valid, it must work on all viable platforms for all assistive technology that are widely used and freely available (paraphrased). For axe-cores purposes, this means that for a screen reader, browser, or environment to be accessibility supported it must meet the following two criteria:
+Accessibility supported means that in order for a technique to pass, it must work in some predefined set of browsers and assistive technologies. For axe-core this means that for a screen reader, browser, or environment to be added to the list of supported combinations, the following two criteria must be met:
 
 1. Be used by more than 1% of users (currently extrapolated from the [WebAims Screen Reader User Survey](https://webaim.org/projects/screenreadersurvey8/#browsercombos))
 1. Introduce new coverage for a screen reader, browser, or environment not currently accessibility supported
