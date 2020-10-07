@@ -174,4 +174,57 @@ describe('table.getHeaders', function() {
 		axe.testUtils.flatTreeSetup(fixture.firstChild);
 		assert.deepEqual(axe.commons.table.getHeaders(target), []);
 	});
+
+	it('should handle multiple headers with colspan', function() {
+		fixture.innerHTML =
+			'<table>' +
+			'<thead>' +
+			'<tr>' +
+			'<th id="t1">Product</th>' +
+			'<th id="t2">Amount</th>' +
+			'<th id="t3">Price</th>' +
+			'</tr>' +
+			'</thead>' +
+			'<tbody>' +
+			'<tr>' +
+			'<td colspan="3" id="target">No available products to display</td>' +
+			'</tr>' +
+			'</thead>' +
+			'</table>';
+
+		var target = $id('target');
+
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
+		assert.deepEqual(axe.commons.table.getHeaders(target), [
+			$id('t1'),
+			$id('t2'),
+			$id('t3')
+		]);
+	});
+
+	it('should handle multiple headers with rowspan', function() {
+		fixture.innerHTML =
+			'<table>' +
+			'<tbody>' +
+			'<tr>' +
+			'<th id="t1"><td>Projects</td><td rowspan="3" id="target">Foo</td>' +
+			'</tr>' +
+			'<tr>' +
+			'<th id="t2"><td>Projects</td>' +
+			'</tr>' +
+			'<tr>' +
+			'<th id="t3"><td>Projects</td>' +
+			'</tr>' +
+			'</thead>' +
+			'</table>';
+
+		var target = $id('target');
+
+		axe.testUtils.flatTreeSetup(fixture.firstChild);
+		assert.deepEqual(axe.commons.table.getHeaders(target), [
+			$id('t1'),
+			$id('t2'),
+			$id('t3')
+		]);
+	});
 });
