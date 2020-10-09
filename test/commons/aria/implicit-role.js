@@ -301,6 +301,13 @@ describe('aria.implicitRole', function() {
 		assert.equal(implicitRole(node), 'combobox');
 	});
 
+	it('should return textbox for "input[type=invalid]"', function() {
+		fixture.innerHTML = '<input id="target" type="invalid"/>';
+		var node = fixture.querySelector('#target');
+		flatTreeSetup(fixture);
+		assert.equal(implicitRole(node), 'textbox');
+	});
+
 	it('should return region for "section" with accessible name aria-label', function() {
 		fixture.innerHTML = '<section id="target" aria-label="foo"></section>';
 		var node = fixture.querySelector('#target');
