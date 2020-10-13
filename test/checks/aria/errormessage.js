@@ -25,6 +25,18 @@ describe('aria-errormessage', function() {
 		);
 	});
 
+	it('should return undefined if aria-errormessage references an element that does not exist', function() {
+		var testHTML = '<div></div>';
+		fixture.innerHTML = testHTML;
+		var target = fixture.children[0];
+		target.setAttribute('aria-errormessage', 'plain');
+		assert.isUndefined(
+			axe.testUtils
+				.getCheckEvaluate('aria-errormessage')
+				.call(checkContext, target)
+		);
+	});
+
 	it('should return true if aria-errormessage id is alert', function() {
 		var testHTML = '<div></div>';
 		testHTML += '<div id="alert" role="alert"></div>';
@@ -114,11 +126,27 @@ describe('aria-errormessage', function() {
 	});
 
 	(shadowSupported ? it : xit)(
-		'should return false if aria-errormessage value crosses shadow boundary',
+		'should return undefined if aria-errormessage value crosses shadow boundary',
 		function() {
 			var params = shadowCheckSetup(
 				'<div id="target" aria-errormessage="live"></div>',
 				'<div id="live" aria-live="assertive"></div>'
+			);
+			assert.isUndefined(
+				axe.testUtils
+					.getCheckEvaluate('aria-errormessage')
+					.apply(checkContext, params)
+			);
+		}
+	);
+
+	(shadowSupported ? it : xit)(
+		'should return false if aria-errormessage and invalid reference are both inside shadow dom',
+		function() {
+			var params = shadowCheckSetup(
+				'<div></div>',
+				'<div id="target" aria-errormessage="live"</div>' +
+					'<div id="live"></div>'
 			);
 			assert.isFalse(
 				axe.testUtils
@@ -129,7 +157,7 @@ describe('aria-errormessage', function() {
 	);
 
 	(shadowSupported ? it : xit)(
-		'should return true if aria-errormessage and value are inside shadow dom',
+		'should return true if aria-errormessage and valid reference are both inside shadow dom',
 		function() {
 			var params = shadowCheckSetup(
 				'<div></div>',
