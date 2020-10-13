@@ -14,6 +14,12 @@ describe('aria-form-field-name-matches', function() {
 		fixture.innerHTML = '';
 	});
 
+	it('returns false for node `a[href]`', function() {
+		var vNode = queryFixture('<a href="# role="checkbox" id="target"></a>');
+		var actual = rule.matches(null, vNode);
+		assert.isFalse(actual);
+	});
+
 	it('returns false for node `map area[href]`', function() {
 		var vNode = queryFixture(
 			'<map><area id="target" href="#" role="checkbox"></map>'
