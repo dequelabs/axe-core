@@ -380,4 +380,36 @@ describe('aria.getRole', function() {
 			);
 		});
 	});
+
+	describe('noPresentational is honored', function() {
+		it('handles no inheritance role = presentation', function() {
+			fixture.innerHTML =
+				'<ul role="presentation" id="target"><li>foo</li></ul>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.isNull(aria.getRole(node, { noPresentational: true }));
+		});
+
+		it('handles inheritance role = presentation', function() {
+			fixture.innerHTML =
+				'<ul role="presentation"><li id="target">foo</li></ul>';
+			flatTreeSetup(fixture);
+			var node = fixture.querySelector('#target');
+			assert.isNull(aria.getRole(node, { noPresentational: true }));
+		});
+
+		it('handles implicit role', function() {
+			var node = document.createElement('img');
+			node.setAttribute('alt', '');
+			flatTreeSetup(node);
+			assert.isNull(aria.getRole(node, { noPresentational: true }));
+		});
+
+		it('handles role = none', function() {
+			var node = document.createElement('div');
+			node.setAttribute('role', 'none');
+			flatTreeSetup(node);
+			assert.isNull(aria.getRole(node, { noPresentational: true }));
+		});
+	});
 });
