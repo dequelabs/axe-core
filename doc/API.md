@@ -183,7 +183,7 @@ axe.configure({
 		brand: String,
 		application: String
 	},
-	reporter: 'option',
+	reporter: 'option' | Function,
 	checks: [Object],
 	rules: [Object],
 	standards: Object,
@@ -199,7 +199,7 @@ axe.configure({
   - `branding` - mixed(optional) Used to set the branding of the helpUrls
     - `brand` - string(optional) sets the brand string - default "axe"
     - `application` - string(optional) sets the application string - default "axeAPI"
-  - `reporter` - Used to set the output format that the axe.run function will pass to the callback function
+  - `reporter` - Used to set the output format that the axe.run function will pass to the callback function. Can pass a reporter name or a custom reporter function. Valid names are:
     - `v1` to use the previous version's format: `axe.configure({ reporter: "v1" });`
     - `v2` to use the current version's format: `axe.configure({ reporter: "v2" });`
     - `raw` to return the raw result data without formating: `axe.configure({ reporter: "raw" });`
