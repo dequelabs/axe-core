@@ -36,11 +36,12 @@ describe('identical-links-same-purpose test', function() {
 			assert.lengthOf(results.incomplete, 1, 'incomplete');
 			assert.lengthOf(results.incomplete[0].nodes, 1);
 			assert.deepEqual(results.incomplete[0].nodes[0].target, [
-				'#incomplete-outside-frame'
+				'#myframe',
+				'#incomplete-inside-frame'
 			]);
 			assert.deepEqual(
 				results.incomplete[0].nodes[0].all[0].relatedNodes[0].target,
-				['#myframe', '#incomplete-inside-frame']
+				['#incomplete-outside-frame']
 			);
 
 			done();
