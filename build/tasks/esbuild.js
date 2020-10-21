@@ -6,6 +6,7 @@ module.exports = function(grunt) {
 		'esbuild',
 		'Task to run the esbuild javascript bundler',
 		function() {
+			const done = this.async();
 			const files = grunt.task.current.data.files;
 
 			files.forEach(file => {
@@ -23,7 +24,9 @@ module.exports = function(grunt) {
 						outfile: path.join(dest, name),
 						minify: false,
 						bundle: true
-					}).catch(() => process.exit(1));
+					})
+						.then(done)
+						.catch(() => process.exit(1));
 				});
 			});
 		}
