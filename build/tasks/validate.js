@@ -198,6 +198,10 @@ function createSchemas() {
 				type: 'array',
 				items: {
 					type: 'string'
+				},
+				conform: function hasCategoryTag(tags) { return tags.some(tag => tag.includes('cat.')) },
+				messages: {
+					conform: 'must include a category tag'
 				}
 			},
 			matches: {
