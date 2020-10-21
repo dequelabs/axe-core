@@ -11,8 +11,8 @@
 		["#heading7"],
 		["#heading8"],
 		["#heading9"],
-		["#heading10"],
 		["iframe", "#frame-heading1"],
-		["iframe", "#frame-heading2"]
+		["iframe", "#frame-heading2"],
+		["#heading10"]
 	]
 }
