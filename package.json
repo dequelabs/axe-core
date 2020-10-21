@@ -139,9 +139,7 @@
 		"uglify-js": "^3.4.4",
 		"weakmap-polyfill": "^2.0.0"
 	},
-	"dependencies": {
-		"esbuild": "^0.7.19"
-	},
+	"dependencies": {},
 	"lint-staged": {
 		"*.{md,json,ts,html}": [
 			"prettier --write",
