@@ -133,18 +133,6 @@ module.exports = function(grunt) {
 				]
 			}
 		},
-		esbuild: {
-			core: {
-				files: [
-					{
-						expand: true,
-						cwd: 'lib/core',
-						src: ['core.js'],
-						dest: 'tmp/core'
-					}
-				]
-			}
-		},
 		'aria-supported': {
 			data: {
 				entry: 'lib/commons/aria/index.js',
