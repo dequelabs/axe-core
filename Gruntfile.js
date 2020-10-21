@@ -150,6 +150,18 @@ module.exports = function(grunt) {
 		webpack: {
 			core: createWebpackConfig('lib/core/core.js', 'tmp/core', 'core.js')
 		},
+		esbuild: {
+			core: {
+				files: [
+					{
+						expand: true,
+						cwd: 'lib/core',
+						src: ['core.js'],
+						dest: 'tmp/core'
+					}
+				]
+			}
+		},
 		'aria-supported': {
 			data: {
 				entry: 'lib/commons/aria/index.js',
@@ -359,11 +371,11 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.registerTask('translate', ['validate', 'webpack', 'add-locale']);
+	grunt.registerTask('translate', ['validate', 'esbuild', 'add-locale']);
 	grunt.registerTask('build', [
 		'clean',
 		'validate',
-		'webpack',
+		'esbuild',
 		'configure',
 		'babel',
 		'concat:engine',
