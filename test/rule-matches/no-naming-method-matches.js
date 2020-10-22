@@ -1,4 +1,4 @@
-describe('aria-form-field-name-matches', function() {
+describe('no-naming-method-matches', function() {
 	'use strict';
 
 	var fixture = document.getElementById('fixture');
@@ -44,20 +44,14 @@ describe('aria-form-field-name-matches', function() {
 		assert.isFalse(actual);
 	});
 
-	it('returns false when node is not SVG with role=`img`', function() {
-		var vNode = queryFixture('<div id="target" role="img">');
+	it('returns false when node is not SVG', function() {
+		var vNode = queryFixture('<svg id="target"></svg>');
 		var actual = rule.matches(null, vNode);
 		assert.isFalse(actual);
 	});
 
 	it('returns false when node is BUTTON', function() {
-		var vNode = queryFixture('<button id="target" role="button"></button>');
-		var actual = rule.matches(null, vNode);
-		assert.isFalse(actual);
-	});
-
-	it('returns false when role=`button`', function() {
-		var vNode = queryFixture('<div id="target" role="button"></div>');
+		var vNode = queryFixture('<button id="target"></button>');
 		var actual = rule.matches(null, vNode);
 		assert.isFalse(actual);
 	});
@@ -78,5 +72,11 @@ describe('aria-form-field-name-matches', function() {
 		);
 		var actual = rule.matches(null, vNode);
 		assert.isFalse(actual);
+	});
+
+	it('returns true for a div with role=`button`', function() {
+		var vNode = queryFixture('<div id="target" role="button"></div>');
+		var actual = rule.matches(null, vNode);
+		assert.isTrue(actual);
 	});
 });

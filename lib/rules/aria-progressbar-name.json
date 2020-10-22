@@ -1,7 +1,7 @@
 {
 	"id": "aria-progressbar-name",
 	"selector": "[role=\"progressbar\"]",
-	"matches": "aria-form-field-name-matches",
+	"matches": "no-naming-method-matches",
 	"tags": ["cat.aria", "wcag2a", "wcag111"],
 	"metadata": {
 		"description": "Ensures every ARIA progressbar node has an accessible name",
