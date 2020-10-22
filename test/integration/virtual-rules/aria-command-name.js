@@ -1,15 +1,15 @@
-describe('aria-menuitem-name', function() {
+describe('aria-command-name', function() {
 	it('should pass for aria-label', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'div',
 			attributes: {
-				role: 'menuitem',
+				role: 'link',
 				'aria-label': 'foobar'
 			}
 		});
 		node.parent = null;
 
-		var results = axe.runVirtualRule('aria-menuitem-name', node);
+		var results = axe.runVirtualRule('aria-command-name', node);
 
 		assert.lengthOf(results.passes, 1);
 		assert.lengthOf(results.violations, 0);
@@ -20,13 +20,13 @@ describe('aria-menuitem-name', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'div',
 			attributes: {
-				role: 'menuitem',
+				role: 'button',
 				'aria-labelledby': 'foobar'
 			}
 		});
 		node.parent = null;
 
-		var results = axe.runVirtualRule('aria-menuitem-name', node);
+		var results = axe.runVirtualRule('aria-command-name', node);
 
 		assert.lengthOf(results.passes, 0);
 		assert.lengthOf(results.violations, 0);
@@ -46,7 +46,7 @@ describe('aria-menuitem-name', function() {
 		node.children = [];
 		node.parent = null;
 
-		var results = axe.runVirtualRule('aria-menuitem-name', node);
+		var results = axe.runVirtualRule('aria-command-name', node);
 
 		assert.lengthOf(results.passes, 1);
 		assert.lengthOf(results.violations, 0);
@@ -57,13 +57,13 @@ describe('aria-menuitem-name', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'div',
 			attributes: {
-				role: 'menuitem',
+				role: 'link',
 				'aria-label': ' \t   \n   '
 			}
 		});
 		node.children = [];
 
-		var results = axe.runVirtualRule('aria-menuitem-name', node);
+		var results = axe.runVirtualRule('aria-command-name', node);
 
 		assert.lengthOf(results.passes, 0);
 		assert.lengthOf(results.violations, 1);
@@ -74,13 +74,13 @@ describe('aria-menuitem-name', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'div',
 			attributes: {
-				role: 'menuitem',
+				role: 'button',
 				title: ''
 			}
 		});
 		node.children = [];
 
-		var results = axe.runVirtualRule('aria-menuitem-name', node);
+		var results = axe.runVirtualRule('aria-command-name', node);
 
 		assert.lengthOf(results.passes, 0);
 		assert.lengthOf(results.violations, 1);

@@ -31,27 +31,6 @@ describe('link-name', function() {
 		assert.lengthOf(results.incomplete, 1);
 	});
 
-	it('should pass for visible text content', function() {
-		var node = new axe.SerialVirtualNode({
-			nodeName: 'span',
-			attributes: {
-				role: 'link'
-			}
-		});
-		var child = new axe.SerialVirtualNode({
-			nodeName: '#text',
-			nodeType: 3,
-			nodeValue: 'foobar'
-		});
-		node.children = [child];
-
-		var results = axe.runVirtualRule('link-name', node);
-
-		assert.lengthOf(results.passes, 1);
-		assert.lengthOf(results.violations, 0);
-		assert.lengthOf(results.incomplete, 0);
-	});
-
 	it('should pass for title', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'a',
