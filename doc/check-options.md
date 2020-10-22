@@ -28,6 +28,7 @@
   - [p-as-heading](#p-as-heading)
   - [avoid-inline-spacing](#avoid-inline-spacing)
   - [scope-value](#scope-value)
+  - [region](#region)
 
 ## How Checks Work
 
@@ -366,3 +367,9 @@ h6:not([role]),
 | Option   | Default                                                   | Description                |
 | -------- | :-------------------------------------------------------- | :------------------------- |
 | `values` | <pre lang=js>['row', 'col', 'rowgroup', 'colgroup']</pre> | List of valid scope values |
+
+### region
+
+| Option          | Default                                        | Description                                                                 |
+| --------------- | :--------------------------------------------- | :-------------------------------------------------------------------------- |
+| `regionMatcher` | <pre lang=css>dialog, [role=dialog], svg</pre> | A matcher object or CSS selector to allow elements to be treated as regions |
