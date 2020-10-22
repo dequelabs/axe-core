@@ -1,21 +1,7 @@
-var path = require('path');
-
 /*eslint
 camelcase: ["error", {"properties": "never"}]
 */
 var testConfig = require('./build/test/config');
-
-function createWebpackConfig(input, output, outputFilename = 'index.js') {
-	return {
-		devtool: false,
-		mode: 'development',
-		entry: path.resolve(__dirname, input),
-		output: {
-			filename: outputFilename,
-			path: path.resolve(__dirname, output)
-		}
-	};
-}
 
 module.exports = function(grunt) {
 	'use strict';
@@ -29,7 +15,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-parallel');
 	grunt.loadNpmTasks('grunt-run');
-	grunt.loadNpmTasks('grunt-webpack');
 	grunt.loadTasks('build/tasks');
 
 	var langs;
@@ -134,21 +119,19 @@ module.exports = function(grunt) {
 						dest: 'axe' + lang + '.js'
 					};
 				})
-			},
-			commons: {
-				src: [
-					'lib/commons/intro.stub',
-
-					// output of webpack directories
-					'tmp/commons/index.js',
-
-					'lib/commons/outro.stub'
-				],
-				dest: 'tmp/commons.js'
 			}
 		},
-		webpack: {
-			core: createWebpackConfig('lib/core/core.js', 'tmp/core', 'core.js')
+		esbuild: {
+			core: {
+				files: [
+					{
+						expand: true,
+						cwd: 'lib/core',
+						src: ['core.js'],
+						dest: 'tmp/core'
+					}
+				]
+			}
 		},
 		'aria-supported': {
 			data: {
@@ -359,11 +342,11 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.registerTask('translate', ['validate', 'webpack', 'add-locale']);
+	grunt.registerTask('translate', ['validate', 'esbuild', 'add-locale']);
 	grunt.registerTask('build', [
 		'clean',
 		'validate',
-		'webpack',
+		'esbuild',
 		'configure',
 		'babel',
 		'concat:engine',

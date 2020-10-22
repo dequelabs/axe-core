@@ -44,6 +44,15 @@ describe('explicit-label', function() {
 		);
 	});
 
+	it('should work for multiple labels', function() {
+		var vNode = queryFixture(
+			'<label for="target"></label><label for="target">Text</label><input type="text" id="target">'
+		);
+		assert.isTrue(
+			axe.testUtils.getCheckEvaluate('explicit-label')(null, {}, vNode)
+		);
+	});
+
 	(shadowSupport.v1 ? it : xit)(
 		'should return true if input and label are in the same shadow root',
 		function() {
