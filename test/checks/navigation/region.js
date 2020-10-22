@@ -1,3 +1,9 @@
+// NOTE: due to how the region check works to return the top-most
+// node that is outside the region, all fixture content will need
+// a region node (in most cases the <div role="main">Content</div>)
+// in order for the check to not give false positives/negatives.
+// adding the region node forces the check to not return the #fixture
+// as the top-most element but instead use the #target element.
 describe('region', function() {
 	'use strict';
 
@@ -160,14 +166,14 @@ describe('region', function() {
 
 	it('treats <forms> with aria label as landmarks', function() {
 		var checkArgs = checkSetup(
-			'<form id="target" aria-label="foo"><p>This is random content.</p></form>'
+			'<form id="target" aria-label="foo"><p>This is random content.</p></form><div role="main">Content</div>'
 		);
 		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('treats role=forms with aria label as landmarks', function() {
 		var checkArgs = checkSetup(
-			'<div role="form" id="target" aria-label="foo"><p>This is random content.</p></div>'
+			'<div role="form" id="target" aria-label="foo"><p>This is random content.</p></div><div role="main">Content</div>'
 		);
 		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
@@ -188,14 +194,6 @@ describe('region', function() {
 		assert.isFalse(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
-	it('treats forms with non empty titles as landmarks', function() {
-		var checkArgs = checkSetup(
-			'<form id="target" title="Thing"><p>This is random content.</p></form>'
-		);
-
-		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
-	});
-
 	it('treats forms with empty titles not as landmarks', function() {
 		var checkArgs = checkSetup(
 			'<form id="target" title=""><p>This is random content.</p></form><div role="main">Content</div>'
@@ -206,7 +204,7 @@ describe('region', function() {
 
 	it('treats ARIA forms with no label or title as landmarks', function() {
 		var checkArgs = checkSetup(
-			'<div role="form" id="target"><p>This is random content.</p></div>'
+			'<div role="form" id="target"><p>This is random content.</p></div><div role="main">Content</div>'
 		);
 
 		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
@@ -214,14 +212,14 @@ describe('region', function() {
 
 	it('allows content in aria-live=assertive', function() {
 		var checkArgs = checkSetup(
-			'<div aria-live="assertive" id="target"><p>This is random content.</p></div>'
+			'<div aria-live="assertive" id="target"><p>This is random content.</p></div><div role="main">Content</div>'
 		);
 		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('allows content in aria-live=polite', function() {
 		var checkArgs = checkSetup(
-			'<div aria-live="polite" id="target"><p>This is random content.</p></div>'
+			'<div aria-live="polite" id="target"><p>This is random content.</p></div><div role="main">Content</div>'
 		);
 		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
@@ -235,42 +233,50 @@ describe('region', function() {
 
 	it('allows content in aria-live=assertive with explicit role set', function() {
 		var checkArgs = checkSetup(
-			'<div aria-live="assertive" role="alert" id="target"><p>This is random content.</p></div>'
+			'<div aria-live="assertive" role="alert" id="target"><p>This is random content.</p></div><div role="main">Content</div>'
 		);
 		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('allows content in aria-live=polite with explicit role set', function() {
 		var checkArgs = checkSetup(
-			'<div aria-live="polite" role="status" id="target"><p>This is random content.</p></div>'
+			'<div aria-live="polite" role="status" id="target"><p>This is random content.</p></div><div role="main">Content</div>'
 		);
 		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('allows content in implicit aria-live role alert', function() {
 		var checkArgs = checkSetup(
-			'<div role="alert" id="target"><p>This is random content.</p></div>'
+			'<div role="alert" id="target"><p>This is random content.</p></div><div role="main">Content</div>'
 		);
 		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('allows content in implicit aria-live role log', function() {
 		var checkArgs = checkSetup(
-			'<div role="log" id="target"><p>This is random content.</p></div>'
+			'<div role="log" id="target"><p>This is random content.</p></div><div role="main">Content</div>'
 		);
 		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('allows content in implicit aria-live role status', function() {
 		var checkArgs = checkSetup(
-			'<div role="status" id="target"><p>This is random content.</p></div>'
+			'<div role="status" id="target"><p>This is random content.</p></div><div role="main">Content</div>'
 		);
 		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
 	});
 
 	it('treats role=dialog elements as regions', function() {
 		var checkArgs = checkSetup(
-			'<div role="dialog" id="target"><p>This is random content.</p></div>'
+			'<div role="dialog" id="target"><p>This is random content.</p></div><div role="main">Content</div>'
+		);
+
+		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+	});
+
+	it('treats svg elements as regions', function() {
+		var checkArgs = checkSetup(
+			'<svg id="target"></svg><div role="main">Content</div>'
 		);
 
 		assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
