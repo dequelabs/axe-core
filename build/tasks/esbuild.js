@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 						bundle: true
 					})
 						.then(done)
-						.catch(() => process.exit(1));
+						.catch(done);
 				});
 			});
 		}
