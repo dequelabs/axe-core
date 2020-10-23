@@ -199,7 +199,9 @@ function createSchemas() {
 				items: {
 					type: 'string'
 				},
-				conform: function hasCategoryTag(tags) { return tags.some(tag => tag.includes('cat.')) },
+				conform: function hasCategoryTag(tags) {
+					return tags.some(tag => tag.includes('cat.'));
+				},
 				messages: {
 					conform: 'must include a category tag'
 				}
