@@ -1,8 +1,9 @@
 describe('aria-dialog-name', function() {
 	it('should pass for aria-label', function() {
 		var node = new axe.SerialVirtualNode({
-			nodeName: 'dialog',
+			nodeName: 'div',
 			attributes: {
+				role: 'dialog',
 				'aria-label': 'foobar'
 			}
 		});
@@ -19,7 +20,7 @@ describe('aria-dialog-name', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'div',
 			attributes: {
-				'role': 'dialog',
+				role: 'dialog',
 				'aria-labelledby': 'foobar'
 			}
 		});
@@ -34,7 +35,7 @@ describe('aria-dialog-name', function() {
 
 	it('should pass for title', function() {
 		var node = new axe.SerialVirtualNode({
-			nodeName: 'dialog',
+			nodeName: 'div',
 			attributes: {
 				role: 'alertdialog',
 				title: 'foobar'
@@ -71,8 +72,9 @@ describe('aria-dialog-name', function() {
 
 	it('should fail when title is empty', function() {
 		var node = new axe.SerialVirtualNode({
-			nodeName: 'dialog',
+			nodeName: 'div',
 			attributes: {
+				role: 'dialog',
 				title: ''
 			}
 		});
