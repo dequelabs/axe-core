@@ -90,6 +90,62 @@ describe('scrollable-region-focusable-matches', function() {
 		assert.isFalse(actual);
 	});
 
+	it('returns false when element has combobox ancestor', function() {
+		var target = queryFixture(
+			'<div role="combobox"><ul id="target" role="listbox" style="width: 12em; height: 2em; border: dotted; overflow: scroll;"><li role="option" style="height: 15rem">Option</li></ul></div>'
+		);
+		var actual = rule.matches(target.actualNode, target);
+		assert.isFalse(actual);
+	});
+
+	it('returns false when element is owned by combobox', function() {
+		var target = queryFixture(
+			'<input role="combobox" aria-owns="foo target"/><ul id="target" role="listbox" style="width: 12em; height: 2em; border: dotted; overflow: scroll;"><li role="option" style="height: 15rem">Option</li></ul>'
+		);
+		var actual = rule.matches(target.actualNode, target);
+		assert.isFalse(actual);
+	});
+
+	it('returns false when element is controlled by combobox', function() {
+		var target = queryFixture(
+			'<input role="combobox" aria-controls="foo target"/><ul id="target" role="listbox" style="width: 12em; height: 2em; border: dotted; overflow: scroll;"><li role="option" style="height: 15rem">Option</li></ul>'
+		);
+		var actual = rule.matches(target.actualNode, target);
+		assert.isFalse(actual);
+	});
+
+	it('returns false for combobox with tree', function() {
+		var target = queryFixture(
+			'<div role="combobox"><ul id="target" role="tree" style="width: 12em; height: 2em; border: dotted; overflow: scroll;"><li role="option" style="height: 15rem">Option</li></ul></div>'
+		);
+		var actual = rule.matches(target.actualNode, target);
+		assert.isFalse(actual);
+	});
+
+	it('returns false for combobox with grid', function() {
+		var target = queryFixture(
+			'<div role="combobox"><ul id="target" role="grid" style="width: 12em; height: 2em; border: dotted; overflow: scroll;"><li role="option" style="height: 15rem">Option</li></ul></div>'
+		);
+		var actual = rule.matches(target.actualNode, target);
+		assert.isFalse(actual);
+	});
+
+	it('returns false for combobox with dialog', function() {
+		var target = queryFixture(
+			'<div role="combobox"><ul id="target" role="dialog" style="width: 12em; height: 2em; border: dotted; overflow: scroll;"><li role="option" style="height: 15rem">Option</li></ul></div>'
+		);
+		var actual = rule.matches(target.actualNode, target);
+		assert.isFalse(actual);
+	});
+
+	it('returns true for combobox with non-valid role', function() {
+		var target = queryFixture(
+			'<div role="combobox"><ul id="target" role="section" style="width: 12em; height: 2em; border: dotted; overflow: scroll;"><li role="option" style="height: 15rem">Option</li></ul></div>'
+		);
+		var actual = rule.matches(target.actualNode, target);
+		assert.isTrue(actual);
+	});
+
 	describe('shadowDOM - scrollable-region-focusable-matches', function() {
 		before(function() {
 			if (!shadowSupported) {

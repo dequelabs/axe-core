@@ -94,3 +94,35 @@
 		<p>Content</p>
 	</div>
 </div>
+
+<div role="combobox">
+	<div
+		id="inapplicable7"
+		role="listbox"
+		style="height: 200px; overflow-y: auto"
+	>
+		<div role="option" style="height: 2000px">
+			<p>Content</p>
+		</div>
+	</div>
+</div>
+
+<div role="combobox" aria-owns="inapplicable8">
+	<div id="inapplicable8" role="grid" style="height: 200px; overflow-y: auto">
+		<div role="option" style="height: 2000px">
+			<p>Content</p>
+		</div>
+	</div>
+
+	<div role="combobox" aria-controls="inapplicable9">
+		<div
+			id="inapplicable9"
+			role="dialog"
+			style="height: 200px; overflow-y: auto"
+		>
+			<div role="option" style="height: 2000px">
+				<p>Content</p>
+			</div>
+		</div>
+	</div>
+</div>
