@@ -89,7 +89,7 @@ describe('aria-toggle-field-name', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'div',
 			attributes: {
-				role: 'menuitemcheckbox'
+				role: 'option'
 			}
 		});
 		node.children = [];
