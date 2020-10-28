@@ -269,8 +269,9 @@ module.exports = function(grunt) {
 				);
 				return false;
 			}
-			validateFiles(grunt, this.files, schemas[options.type]);
+			const valid = validateFiles(grunt, this.files, schemas[options.type]);
 			schemas[options.type].seen = {};
+			return valid;
 		}
 	);
 };
