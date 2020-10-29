@@ -39,7 +39,22 @@
 		<section aria-label="section 2">
 			<p>Content</p>
 		</section>
+		<section aria-label="in-region">
+			<iframe
+				title="in-region"
+				srcdoc="<p>inside</p><script src=/axe.js></script>"
+			></iframe>
+		</section>
+		<iframe
+			title="has-region"
+			srcdoc="<section aria-label=region><p>region</p></section><script src=/axe.js></script>"
+		></iframe>
+		<iframe
+			title="empty"
+			srcdoc="<p></p><script src=/axe.js></script>"
+		></iframe>
 		<div id="mocha" role="complementary"></div>
+		<script src="/test/testutils.js"></script>
 		<script src="region-pass.js"></script>
 		<script src="/test/integration/adapter.js"></script>
 	</body>

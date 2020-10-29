@@ -39,10 +39,21 @@
 				<p>Content</p>
 			</section>
 		</div>
+		<iframe
+			id="no-region"
+			title="no-region"
+			srcdoc="<p>no region</p><script src=/axe.js></script>"
+		></iframe>
+		<iframe
+			id="partial-region"
+			title="partial-region"
+			srcdoc="<section aria-label=pass><p>foo</p></section><p id=outside>outside</p><script src=/axe.js></script>"
+		></iframe>
 
 		This should be ignored
 
 		<main id="mocha"></main>
+		<script src="/test/testutils.js"></script>
 		<script src="region-fail.js"></script>
 		<script src="/test/integration/adapter.js"></script>
 	</body>

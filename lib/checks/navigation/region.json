@@ -1,6 +1,7 @@
 {
 	"id": "region",
 	"evaluate": "region-evaluate",
+	"after": "region-after",
 	"options": {
 		"regionMatcher": "dialog, [role=dialog], svg"
 	},
