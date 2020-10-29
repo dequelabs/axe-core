@@ -432,7 +432,7 @@ describe('color-contrast', function() {
 
 	it('should not return undefined if pseudo element is has zero dimension', function() {
 		var params = checkSetup(
-			'<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; height: 100%; background: red; }</style>' +
+			'<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 0; height: 100%; background: red; }</style>' +
 				'<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
 		);
 
