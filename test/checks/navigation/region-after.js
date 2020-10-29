@@ -64,4 +64,16 @@ describe('region-after', function() {
 
 		assert.isFalse(results[0].result);
 	});
+
+	it("doesn't throw an error if the iframe has no results", function() {
+		function fn() {
+			var vNode = queryFixture('<iframe id="target"></iframe>');
+			cache.set('regionlessNodes', [vNode]);
+			checks.region.after([
+				mockResult(false, vNode.actualNode) // iframe
+			]);
+		}
+
+		assert.doesNotThrow(fn);
+	});
 });
