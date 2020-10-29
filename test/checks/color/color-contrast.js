@@ -356,6 +356,98 @@ describe('color-contrast', function() {
 		);
 	});
 
+	it('should return undefined if :before pseudo element has a background color', function() {
+		var params = checkSetup(
+			'<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 100%; height: 100%; background: red; }</style>' +
+				'<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
+		);
+
+		assert.isUndefined(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._data, {
+			messageKey: 'pseudoContent'
+		});
+		assert.equal(
+			checkContext._relatedNodes[0],
+			document.querySelector('#background')
+		);
+	});
+
+	it('should return undefined if :after pseudo element has a background color', function() {
+		var params = checkSetup(
+			'<style>.foo { position: relative; } .foo:after { content: ""; position: absolute; width: 100%; height: 100%; background: red; }</style>' +
+				'<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
+		);
+
+		assert.isUndefined(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._data, {
+			messageKey: 'pseudoContent'
+		});
+		assert.equal(
+			checkContext._relatedNodes[0],
+			document.querySelector('#background')
+		);
+	});
+
+	it('should return undefined if pseudo element has a background image', function() {
+		var dataURI =
+			'data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/' +
+			'XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkA' +
+			'ABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKU' +
+			'E1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7';
+
+		var params = checkSetup(
+			'<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 100%; height: 100%; background: url(' +
+				dataURI +
+				') no-repeat left center; }</style>' +
+				'<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
+		);
+
+		assert.isUndefined(contrastEvaluate.apply(checkContext, params));
+		assert.deepEqual(checkContext._data, {
+			messageKey: 'pseudoContent'
+		});
+		assert.equal(
+			checkContext._relatedNodes[0],
+			document.querySelector('#background')
+		);
+	});
+
+	it('should not return undefined if pseudo element has no content', function() {
+		var params = checkSetup(
+			'<style>.foo { position: relative; } .foo:before { position: absolute; width: 100%; height: 100%; background: red; }</style>' +
+				'<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
+		);
+
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+	});
+
+	it('should not return undefined if pseudo element is not absolutely positioned no content', function() {
+		var params = checkSetup(
+			'<style>.foo { position: relative; } .foo:before { content: ""; width: 100%; height: 100%; background: red; }</style>' +
+				'<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
+		);
+
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+	});
+
+	it('should not return undefined if pseudo element is has zero dimension', function() {
+		var params = checkSetup(
+			'<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; height: 100%; background: red; }</style>' +
+				'<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
+		);
+
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+	});
+
+	it("should not return undefined if pseudo element doesn't have a background", function() {
+		var params = checkSetup(
+			'<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 100%; height: 100%; }</style>' +
+				'<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
+		);
+
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+	});
+
 	it('should return undefined for a single character text with insufficient contrast', function() {
 		var params = checkSetup(
 			'<div style="background-color: #FFF;">' +
