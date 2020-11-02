@@ -242,7 +242,7 @@ Page level rules split their evaluation into two phases. A 'data collection' pha
 Page level rules raise violations on the entire document and not on individual nodes or frames from which the data was collected. For an example of how this works, see the heading order check:
 
 - [lib/checks/navigation/heading-order.json](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order.json)
-- [lib/checks/navigation/heading-order.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order.js)
+- [lib/checks/navigation/heading-order-evaluate.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order-evaluate.js)
 - [lib/checks/navigation/heading-order-after.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order-after.js)
 
 ### API Name: axe.reset
