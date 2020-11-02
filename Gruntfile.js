@@ -15,6 +15,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-parallel');
 	grunt.loadNpmTasks('grunt-run');
+	grunt.loadNpmTasks('grunt-bytesize');
 	grunt.loadTasks('build/tasks');
 
 	var langs;
@@ -339,6 +340,13 @@ module.exports = function(grunt) {
 				sound: 'Pop',
 				timeout: 2
 			}
+		},
+		bytesize: {
+			all: {
+				src: langs.map(function(lang) {
+					return ['./axe' + lang + '.js', './axe' + lang + '.min.js'];
+				})
+			}
 		}
 	});
 
@@ -351,7 +359,8 @@ module.exports = function(grunt) {
 		'babel',
 		'concat:engine',
 		'uglify',
-		'aria-supported'
+		'aria-supported',
+		'bytesize'
 	]);
 	grunt.registerTask('prepare', [
 		'build',
