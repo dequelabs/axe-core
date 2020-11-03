@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" id="main">
+	<head>
+		<title>frame exclude test</title>
+		<meta charset="utf8" />
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="/node_modules/mocha/mocha.css"
+		/>
+		<script src="/node_modules/mocha/mocha.js"></script>
+		<script src="/node_modules/chai/chai.js"></script>
+		<script src="/axe.js"></script>
+		<script>
+			mocha.setup({
+				timeout: 10000,
+				ui: 'bdd'
+			});
+			var assert = chai.assert;
+		</script>
+	</head>
+	<body>
+		<header>
+			<h1>Foo</h1>
+		</header>
+		<main>
+			<h2>bar</h2>
+		</main>
+		<iframe src="frames/heading.html"></iframe>
+		<footer>
+			<h4>Baz</h4>
+		</footer>
+		<div id="mocha"></div>
+		<script src="/test/testutils.js"></script>
+		<script src="partial-context-with-iframe-excluded.js"></script>
+		<script src="/test/integration/adapter.js"></script>
+	</body>
+</html>
