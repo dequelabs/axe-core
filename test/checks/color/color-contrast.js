@@ -705,4 +705,16 @@ describe('color-contrast', function() {
 		);
 		assert.isTrue(contrastEvaluate.apply(checkContext, params));
 	});
+
+	it('fails if text shadows have sufficient contrast with the background if its with is thicker than `shadowOutlineEmMax`', function() {
+		var checkOptions = { shadowOutlineEmMax: 0.05 };
+		var params = checkSetup(
+			'<div id="target" style="background-color: #aaa; color:#666; ' +
+				'text-shadow: 0 0 0.09em #000, 0 0 0.09em #000, 0 0 0.09em #000;">' +
+				'  Hello world' +
+				'</div>',
+			checkOptions
+		);
+		assert.isFalse(contrastEvaluate.apply(checkContext, params));
+	});
 });

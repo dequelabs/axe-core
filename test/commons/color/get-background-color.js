@@ -1010,4 +1010,22 @@ describe('color.getBackgroundColor', function() {
 		assert.equal(actual.blue, 0);
 		assert.equal(actual.alpha, 1);
 	});
+
+	it('ignores text-shadows thinner than shadowOutlineEmMax', function() {
+		fixture.innerHTML =
+			'<div style="height: 40px; width: 30px; background-color: #800000;">' +
+			'<div id="target" style="height: 20px; width: 15px; text-shadow: red 0 0 1em, green 0 0 0.5em">foo' +
+			'</div></div>';
+		var target = fixture.querySelector('#target');
+		var bgNodes = [];
+		axe.testUtils.flatTreeSetup(fixture);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes, 1);
+
+		// is 128 without the shadow
+		var expected = new axe.commons.color.Color(145, 0, 0, 1);
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
+	});
 });

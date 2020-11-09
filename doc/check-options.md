@@ -147,6 +147,7 @@ All checks allow these global options:
 | `boldValue`                                                 | `700`   | The minimum CSS `font-weight` value that designates bold text                                               |
 | `boldTextPt`                                                | `14`    | The minimum CSS `font-size` pt value that designates bold text as being large                               |
 | `largeTextPt`                                               | `18`    | The minimum CSS `font-size` pt value that designates text as being large                                    |
+| `shadowOutlineEmMax`                                        | `0.1`   | Maximum thickness of `text-shadow` in `em` at which it can server as an outline                             |
 | `contrastRatio`                                             | N/A     | Contrast ratio options                                                                                      |
 | &nbsp;&nbsp;`contrastRatio.normal`                          | N/A     | Contrast ratio requirements for normal text (non-bold text or text smaller than `largeTextPt`)              |
 | &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.expected`     | `4.5`   | The expected contrast ratio for normal text                                                                 |
