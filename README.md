@@ -1,4 +1,5 @@
 # axe-core
+
 [![License](https://img.shields.io/npm/l/axe-core.svg)](LICENSE)
 [![Version](https://img.shields.io/npm/v/axe-core.svg)](https://www.npmjs.com/package/axe-core)
 [![Total npm downloads](https://img.shields.io/npm/dt/axe-core.svg)](https://www.npmjs.com/package/axe-core)
