@@ -530,15 +530,16 @@
 		) {
 			console.log(res);
 			/*
-      False positives:
-      - b5-r3-i1, b5-r3-i2
-      - b7-r3-i1, b7-r3-i2
+			All these test cases are on the edge of pass and fail. If we ever revisit them, these are the ones could be improved on:
 
-      False negatives:
-      - b3-r1-i1
-      - b4-r1-i1, b4-r2-i1
-      - b8-r1-i1, b8-r5-i1
-      */
+			- False positives:
+				- b5-r3-i1, b5-r3-i2
+				- b7-r3-i1, b7-r3-i2
+			- False negatives:
+				- b3-r1-i1
+				- b4-r1-i1, b4-r2-i1
+				- b8-r1-i1, b8-r5-i1
+			*/
 			['violations', 'incomplete', 'passes'].forEach(key => {
 				if (res[key][0]) {
 					res[key][0].nodes.forEach(({ element }) => {
