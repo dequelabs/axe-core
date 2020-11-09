@@ -1,6 +1,7 @@
 {
 	"id": "image-alt",
 	"selector": "img",
+	"matches": "no-explicit-name-required-matches",
 	"tags": [
 		"cat.text-alternatives",
 		"wcag2a",
