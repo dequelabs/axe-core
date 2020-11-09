@@ -1,6 +1,7 @@
 {
 	"id": "input-image-alt",
 	"selector": "input[type=\"image\"]",
+	"matches": "no-explicit-name-required-matches",
 	"tags": [
 		"cat.text-alternatives",
 		"wcag2a",
