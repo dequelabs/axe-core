@@ -125,4 +125,31 @@ describe('axe.commons.color.getTextShadowColors', function() {
 		assert.equal(shadowColors[0].green, 0);
 		assert.equal(shadowColors[0].blue, 0);
 	});
+
+	it('does not return shadows with a ratio less than minRatio', function() {
+		fixture.innerHTML =
+			'<span style="text-shadow: ' +
+			'0 0 1em #F00, 0 0 0.5em #0F0, 1px 1px 0.2em #00F;' +
+			'">Hello world</span>';
+
+		var span = fixture.querySelector('span');
+		var shadowColors = getTextShadowColors(span, { minRatio: 0.5 });
+
+		assert.lengthOf(shadowColors, 2);
+		assert.equal(shadowColors[0].red, 255);
+		assert.equal(shadowColors[1].green, 255);
+	});
+
+	it('does not return shadows with a ratio less than maxRatio', function() {
+		fixture.innerHTML =
+			'<span style="text-shadow: ' +
+			'0 0 1em #F00, 0 0 0.5em #0F0, 1px 1px 0.2em #00F;' +
+			'">Hello world</span>';
+
+		var span = fixture.querySelector('span');
+		var shadowColors = getTextShadowColors(span, { maxRatio: 0.5 });
+
+		assert.lengthOf(shadowColors, 1);
+		assert.equal(shadowColors[0].blue, 255);
+	});
 });
