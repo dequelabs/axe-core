@@ -73,7 +73,7 @@ The [`ariaRoles`](../lib/standards/aria-roles.js) object defines valid ARIA role
 - `requiredAttrs` - array(optional). List of required attributes.
 - `allowedAttrs` - array(optional). List of allowed attributes (besides any required and global ARIA attributes).
 - `superclassRole` - array(optional). List of superclass roles.
-- `accessibleNameDrequired` - boolean(optional. Default `false`). If elements with this role require an accessible name.
+- `accessibleNameRequired` - boolean(optional. Default `false`). If elements with this role require an accessible name.
 - `nameFromContent` - boolean(optional. Default `false`). If the role allows name from content when calculating the accessible name.
 - `unsupported` - boolean(optional. Default `false`). If the role is unsupported. Use this property to disable a role.
 
