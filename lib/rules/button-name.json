@@ -1,6 +1,7 @@
 {
 	"id": "button-name",
 	"selector": "button",
+	"matches": "no-explicit-name-required-matches",
 	"tags": [
 		"cat.name-role-value",
 		"wcag2a",

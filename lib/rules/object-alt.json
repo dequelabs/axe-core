@@ -1,6 +1,7 @@
 {
 	"id": "object-alt",
 	"selector": "object",
+	"matches": "no-explicit-name-required-matches",
 	"tags": [
 		"cat.text-alternatives",
 		"wcag2a",
