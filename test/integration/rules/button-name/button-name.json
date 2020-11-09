@@ -9,7 +9,9 @@
 		["#albempty"],
 		["#buttonvalue"],
 		["#fail1"],
-		["#fail2"]
+		["#fail2"],
+		["#fail3"],
+		["#fail4"]
 	],
 	"passes": [
 		["#text"],

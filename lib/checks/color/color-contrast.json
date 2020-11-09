@@ -14,7 +14,8 @@
 			"large": {
 				"expected": 3
 			}
-		}
+		},
+		"shadowOutlineEmMax": 0.1
 	},
 	"metadata": {
 		"impact": "serious",

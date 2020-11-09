@@ -15,6 +15,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-parallel');
 	grunt.loadNpmTasks('grunt-run');
+	grunt.loadNpmTasks('grunt-bytesize');
 	grunt.loadTasks('build/tasks');
 
 	var langs;
@@ -233,13 +234,14 @@ module.exports = function(grunt) {
 			}, [])
 		},
 		watch: {
-			files: [
-				'lib/**/*',
-				'test/**/*.js',
-				'test/integration/**/!(index).{html,json}',
-				'Gruntfile.js'
-			],
-			tasks: ['build', 'testconfig', 'fixture', 'notify']
+			axe: {
+				files: ['lib/**/*', 'Gruntfile.js'],
+				tasks: ['build', 'notify']
+			},
+			tests: {
+				files: ['test/**/*.js', 'test/integration/**/!(index).{html,json}'],
+				tasks: ['testconfig', 'fixture']
+			}
 		},
 		testconfig: {
 			test: {
@@ -339,6 +341,13 @@ module.exports = function(grunt) {
 				sound: 'Pop',
 				timeout: 2
 			}
+		},
+		bytesize: {
+			all: {
+				src: langs.map(function(lang) {
+					return ['./axe' + lang + '.js', './axe' + lang + '.min.js'];
+				})
+			}
 		}
 	});
 
@@ -351,7 +360,8 @@ module.exports = function(grunt) {
 		'babel',
 		'concat:engine',
 		'uglify',
-		'aria-supported'
+		'aria-supported',
+		'bytesize'
 	]);
 	grunt.registerTask('prepare', [
 		'build',

@@ -685,4 +685,36 @@ describe('color-contrast', function() {
 			assert.deepEqual(checkContext._relatedNodes, [container]);
 		}
 	);
+
+	it('passes if thin text shadows have sufficient contrast with the text', function() {
+		var params = checkSetup(
+			'<div id="target" style="background-color: #666; color:#aaa; ' +
+				'text-shadow: 0 0 0.09em #000, 0 0 0.09em #000, 0 0 0.09em #000;">' +
+				'  Hello world' +
+				'</div>'
+		);
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+	});
+
+	it('passes if thin text shadows have sufficient contrast with the background', function() {
+		var params = checkSetup(
+			'<div id="target" style="background-color: #aaa; color:#666; ' +
+				'text-shadow: 0 0 0.09em #000, 0 0 0.09em #000, 0 0 0.09em #000;">' +
+				'  Hello world' +
+				'</div>'
+		);
+		assert.isTrue(contrastEvaluate.apply(checkContext, params));
+	});
+
+	it('fails if text shadows have sufficient contrast with the background if its with is thicker than `shadowOutlineEmMax`', function() {
+		var checkOptions = { shadowOutlineEmMax: 0.05 };
+		var params = checkSetup(
+			'<div id="target" style="background-color: #aaa; color:#666; ' +
+				'text-shadow: 0 0 0.09em #000, 0 0 0.09em #000, 0 0 0.09em #000;">' +
+				'  Hello world' +
+				'</div>',
+			checkOptions
+		);
+		assert.isFalse(contrastEvaluate.apply(checkContext, params));
+	});
 });
