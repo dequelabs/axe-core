@@ -8,11 +8,6 @@
 		["#heading3"],
 		["#heading4"],
 		["#heading5"],
-		["#heading7"],
-		["#heading8"],
-		["#heading9"],
-		["iframe", "#frame-heading1"],
-		["iframe", "#frame-heading2"],
-		["#heading10"]
+		["#heading7"]
 	]
 }
