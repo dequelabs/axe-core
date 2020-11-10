@@ -23,8 +23,8 @@ describe('heading-order-partial-context-with-iframe test', function() {
 	});
 
 	describe('passes', function() {
-		it('should find 3', function() {
-			assert.lengthOf(results.passes[0].nodes, 3);
+		it('should find 4', function() {
+			assert.lengthOf(results.passes[0].nodes, 4);
 		});
 	});
 });
