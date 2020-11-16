@@ -1,6 +1,6 @@
 {
 	"id": "label",
-	"selector": "input, select, textarea",
+	"selector": "input, textarea",
 	"matches": "label-matches",
 	"tags": [
 		"cat.forms",
@@ -8,7 +8,8 @@
 		"wcag412",
 		"wcag131",
 		"section508",
-		"section508.22.n"
+		"section508.22.n",
+		"ACT"
 	],
 	"metadata": {
 		"description": "Ensures every form element has a label",
@@ -21,8 +22,8 @@
 		"implicit-label",
 		"explicit-label",
 		"non-empty-title",
-		"role-none",
-		"role-presentation"
+		"non-empty-placeholder",
+		"presentational-role"
 	],
 	"none": ["help-same-as-label", "hidden-explicit-label"]
 }

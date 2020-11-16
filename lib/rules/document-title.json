@@ -1,7 +1,7 @@
 {
 	"id": "document-title",
 	"selector": "html",
-	"matches": "window-is-top-matches",
+	"matches": "is-initiator-matches",
 	"tags": ["cat.text-alternatives", "wcag2a", "wcag242", "ACT"],
 	"metadata": {
 		"description": "Ensures each HTML document contains a non-empty <title> element",

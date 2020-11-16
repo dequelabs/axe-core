@@ -1518,6 +1518,52 @@ describe('Rule', function() {
 				assert.isTrue(success);
 			});
 
+			it('should add the check node to the check result', function() {
+				var success = false;
+
+				var rule = new Rule(
+					{
+						id: 'cats',
+						any: ['cats']
+					},
+					{
+						checks: {
+							cats: {
+								id: 'cats',
+								enabled: true,
+								after: function(results) {
+									assert.equal(results[0].node, 'customNode');
+									success = true;
+									return results;
+								}
+							}
+						}
+					}
+				);
+
+				rule.after(
+					{
+						id: 'cats',
+						nodes: [
+							{
+								all: [],
+								none: [],
+								any: [
+									{
+										id: 'cats',
+										result: true
+									}
+								],
+								node: 'customNode'
+							}
+						]
+					},
+					{ checks: { cats: { options: { dogs: true } } } }
+				);
+
+				assert.isTrue(success);
+			});
+
 			it('should filter removed checks', function() {
 				var rule = new Rule(
 					{

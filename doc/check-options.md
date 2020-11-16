@@ -28,6 +28,7 @@
   - [p-as-heading](#p-as-heading)
   - [avoid-inline-spacing](#avoid-inline-spacing)
   - [scope-value](#scope-value)
+  - [region](#region)
 
 ## How Checks Work
 
@@ -146,6 +147,7 @@ All checks allow these global options:
 | `boldValue`                                                 | `700`   | The minimum CSS `font-weight` value that designates bold text                                               |
 | `boldTextPt`                                                | `14`    | The minimum CSS `font-size` pt value that designates bold text as being large                               |
 | `largeTextPt`                                               | `18`    | The minimum CSS `font-size` pt value that designates text as being large                                    |
+| `shadowOutlineEmMax`                                        | `0.1`   | The maximum `blur-radius` value (in ems) of the CSS `text-shadow` property. `blur-radius` values greater than this value will be treated as a background color rather than an outline color.                             |
 | `contrastRatio`                                             | N/A     | Contrast ratio options                                                                                      |
 | &nbsp;&nbsp;`contrastRatio.normal`                          | N/A     | Contrast ratio requirements for normal text (non-bold text or text smaller than `largeTextPt`)              |
 | &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.expected`     | `4.5`   | The expected contrast ratio for normal text                                                                 |
@@ -366,3 +368,9 @@ h6:not([role]),
 | Option   | Default                                                   | Description                |
 | -------- | :-------------------------------------------------------- | :------------------------- |
 | `values` | <pre lang=js>['row', 'col', 'rowgroup', 'colgroup']</pre> | List of valid scope values |
+
+### region
+
+| Option          | Default                                        | Description                                                                 |
+| --------------- | :--------------------------------------------- | :-------------------------------------------------------------------------- |
+| `regionMatcher` | <pre lang=css>dialog, [role=dialog], svg</pre> | A matcher object or CSS selector to allow elements to be treated as regions |

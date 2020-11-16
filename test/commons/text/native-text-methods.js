@@ -178,10 +178,60 @@ describe('text.nativeTextMethods', function() {
 		});
 	});
 
+	describe('svgTitleText', function() {
+		var svgTitleText = nativeTextMethods.svgTitleText;
+		it('returns the title text', function() {
+			fixtureSetup(
+				'<svg>' + '  <title>My title</title>' + '  some content' + '</svg>'
+			);
+			var svg = axe.utils.querySelectorAll(axe._tree[0], 'svg')[0];
+			assert.equal(svgTitleText(svg), 'My title');
+		});
+
+		it('returns `` when there is no title', function() {
+			it('returns the title text', function() {
+				fixtureSetup('<svg>' + '  some content' + '</svg>');
+				var svg = axe.utils.querySelectorAll(axe._tree[0], 'svg')[0];
+				assert.equal(svgTitleText(svg), '');
+			});
+		});
+
+		it('returns `` when if the title is nested in another svg', function() {
+			it('returns the title text', function() {
+				fixtureSetup(
+					'<svg id="fig1">' +
+						'  <svg>' +
+						'    <title>No title</title>' +
+						'    some content' +
+						'  </svg>' +
+						'  some other content' +
+						'</svg>'
+				);
+				var svg = axe.utils.querySelectorAll(axe._tree[0], '#fig1')[0];
+				assert.equal(svgTitleText(svg), '');
+			});
+		});
+	});
+
 	describe('singleSpace', function() {
 		var singleSpace = nativeTextMethods.singleSpace;
 		it('returns a single space', function() {
 			assert.equal(singleSpace(), ' ');
+		});
+	});
+
+	describe('placeholderText', function() {
+		var placeholderText = nativeTextMethods.placeholderText;
+		it('returns the placeholder attribute of actualNode', function() {
+			fixtureSetup('<input placeholder="foo" />');
+			var input = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
+			assert.equal(placeholderText(input), 'foo');
+		});
+
+		it('returns `` when there is no placeholder', function() {
+			fixtureSetup('<input />');
+			var input = axe.utils.querySelectorAll(axe._tree[0], 'input')[0];
+			assert.equal(placeholderText(input), '');
 		});
 	});
 });

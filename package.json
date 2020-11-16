@@ -1,7 +1,7 @@
 {
 	"name": "axe-core",
 	"description": "Accessibility engine for automated Web UI testing",
-	"version": "4.0.2",
+	"version": "4.1.0",
 	"license": "MPL-2.0",
 	"engines": {
 		"node": ">=4"
@@ -89,13 +89,16 @@
 		"blanket": "~1.2.3",
 		"browserify": "^16.2.3",
 		"chai": "~4.2.0",
+		"chalk": "^4.1.0",
 		"clone": "~2.1.1",
+		"conventional-commits-parser": "^3.1.0",
 		"core-js": "^3.2.1",
 		"core-js-pure": "^3.6.5",
 		"css-selector-parser": "^1.3.0",
 		"derequire": "^2.1.1",
 		"emoji-regex": "8.0.0",
 		"es6-promise": "^4.2.6",
+		"esbuild": "^0.7.19",
 		"eslint": "^6.1.0",
 		"eslint-config-prettier": "^6.2.0",
 		"execa": "^2.0.2",
@@ -103,6 +106,7 @@
 		"globby": "^10.0.0",
 		"grunt": "^1.0.3",
 		"grunt-babel": "^8.0.0",
+		"grunt-bytesize": "^0.2.0",
 		"grunt-contrib-clean": "^2.0.0",
 		"grunt-contrib-concat": "^1.0.1",
 		"grunt-contrib-connect": "^2.0.0",
@@ -111,7 +115,6 @@
 		"grunt-contrib-watch": "^1.1.0",
 		"grunt-parallel": "^0.5.1",
 		"grunt-run": "^0.8.1",
-		"grunt-webpack": "^3.1.3",
 		"html-entities": "^1.2.0",
 		"husky": "^3.0.0",
 		"jquery": "^3.0.0",
@@ -132,11 +135,10 @@
 		"selenium-webdriver": "~3.6.0",
 		"sinon": "^7.5.0",
 		"sri-toolbox": "^0.2.0",
-		"standard-version": "^8.0.0",
+		"standard-version": "^9.0.0",
 		"typescript": "^3.5.3",
 		"uglify-js": "^3.4.4",
-		"weakmap-polyfill": "^2.0.0",
-		"webpack": "^4.42.0"
+		"weakmap-polyfill": "^2.0.0"
 	},
 	"dependencies": {},
 	"lint-staged": {

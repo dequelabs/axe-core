@@ -183,7 +183,7 @@ axe.configure({
 		brand: String,
 		application: String
 	},
-	reporter: 'option',
+	reporter: 'option' | Function,
 	checks: [Object],
 	rules: [Object],
 	standards: Object,
@@ -199,7 +199,7 @@ axe.configure({
   - `branding` - mixed(optional) Used to set the branding of the helpUrls
     - `brand` - string(optional) sets the brand string - default "axe"
     - `application` - string(optional) sets the application string - default "axeAPI"
-  - `reporter` - Used to set the output format that the axe.run function will pass to the callback function
+  - `reporter` - Used to set the output format that the axe.run function will pass to the callback function. Can pass a reporter name or a custom reporter function. Valid names are:
     - `v1` to use the previous version's format: `axe.configure({ reporter: "v1" });`
     - `v2` to use the current version's format: `axe.configure({ reporter: "v2" });`
     - `raw` to return the raw result data without formating: `axe.configure({ reporter: "raw" });`
@@ -218,6 +218,7 @@ axe.configure({
     - each rule object can contain the following attributes
       - `id` - string(required). This uniquely identifies the rule. If the rule already exists, it will be overridden with any of the attributes supplied. The attributes below that are marked required, are only required for new rules.
       - `impact` - string(optional). Override the impact defined by checks
+      - `reviewOnFail` - boolean(option, default `false`). Override the result of a rule to return "Needs Review" rather than "Violation" if the rule fails.
       - `selector` - string(optional, default `*`). A [CSS selector](./developer-guide.md#supported-css-selectors) used to identify the elements that are passed into the rule for evaluation.
       - `excludeHidden` - boolean(optional, default `true`). This indicates whether elements that are hidden from all users are to be passed into the rule for evaluation.
       - `enabled` - boolean(optional, default `true`). Whether the rule is turned on. This is a common attribute for overriding.
@@ -231,7 +232,6 @@ axe.configure({
   - `disableOtherRules` - Disables all rules not included in the `rules` property.
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
   - `axeVersion` - Set the compatible version of a custom rule with the current axe version. Compatible versions are all patch and minor updates that are the same as, or newer than those of the `axeVersion` property.
-  - `disableOtherRules` - Disable all rules not listed in the `rules` parameter.
 
 **Returns:** Nothing
 
@@ -242,7 +242,7 @@ Page level rules split their evaluation into two phases. A 'data collection' pha
 Page level rules raise violations on the entire document and not on individual nodes or frames from which the data was collected. For an example of how this works, see the heading order check:
 
 - [lib/checks/navigation/heading-order.json](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order.json)
-- [lib/checks/navigation/heading-order.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order.js)
+- [lib/checks/navigation/heading-order-evaluate.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order-evaluate.js)
 - [lib/checks/navigation/heading-order-after.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order-after.js)
 
 ### API Name: axe.reset

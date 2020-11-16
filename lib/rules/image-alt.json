@@ -1,12 +1,14 @@
 {
 	"id": "image-alt",
 	"selector": "img",
+	"matches": "no-explicit-name-required-matches",
 	"tags": [
 		"cat.text-alternatives",
 		"wcag2a",
 		"wcag111",
 		"section508",
-		"section508.22.a"
+		"section508.22.a",
+		"ACT"
 	],
 	"metadata": {
 		"description": "Ensures <img> elements have alternate text or a role of none or presentation",
@@ -18,8 +20,7 @@
 		"aria-label",
 		"aria-labelledby",
 		"non-empty-title",
-		"role-presentation",
-		"role-none"
+		"presentational-role"
 	],
 	"none": ["alt-space-value"]
 }

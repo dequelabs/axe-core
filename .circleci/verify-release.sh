@@ -2,6 +2,29 @@
 
 set -e
 
+# Verifying the release can fail due to race condition of
+# npm not publishing the package before we try to install
+# it
+function wait_for_publish() {
+  echo "Installing $1@$2"
+
+  set +e
+  for i in {1..10}; do
+    npm install "$1@$2" 2> /dev/null
+    if [ $? -eq 0 ]; then
+      echo "Successfully installed"
+      set -e
+      return
+    else
+      echo "Retrying..."
+      sleep 10
+    fi
+  done
+
+  echo "Unable to install. Exiting..."
+  exit 1
+}
+
 if [ -n "$1" ] && [ "$1" == "post" ]
 then
   # verify the released npm package in another dir as we can't
@@ -12,7 +35,9 @@ then
   mkdir "verify-release-$version"
   cd "verify-release-$version"
   npm init -y
-  npm install "$name@$version"
+
+  wait_for_publish "$name" "$version"
+
   node -pe "window={}; document={}; require('$name')"
 
   cd "node_modules/${name}"

@@ -14,7 +14,8 @@
 			"large": {
 				"expected": 3
 			}
-		}
+		},
+		"shadowOutlineEmMax": 0.1
 	},
 	"metadata": {
 		"impact": "serious",
@@ -33,7 +34,8 @@
 				"outsideViewport": "Element's background color could not be determined because it's outside the viewport",
 				"equalRatio": "Element has a 1:1 contrast ratio with the background",
 				"shortTextContent": "Element content is too short to determine if it is actual text content",
-				"nonBmp": "Element content contains only non-text characters"
+				"nonBmp": "Element content contains only non-text characters",
+				"pseudoContent": "Element's background color could not be determined due to a pseudo element"
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 {
 	"id": "object-alt",
 	"selector": "object",
+	"matches": "no-explicit-name-required-matches",
 	"tags": [
 		"cat.text-alternatives",
 		"wcag2a",
@@ -14,12 +15,10 @@
 	},
 	"all": [],
 	"any": [
-		"has-visible-text",
 		"aria-label",
 		"aria-labelledby",
 		"non-empty-title",
-		"role-presentation",
-		"role-none"
+		"presentational-role"
 	],
 	"none": []
 }

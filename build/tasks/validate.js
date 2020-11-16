@@ -198,6 +198,12 @@ function createSchemas() {
 				type: 'array',
 				items: {
 					type: 'string'
+				},
+				conform: function hasCategoryTag(tags) {
+					return tags.some(tag => tag.includes('cat.'));
+				},
+				messages: {
+					conform: 'must include a category tag'
 				}
 			},
 			matches: {
@@ -263,8 +269,9 @@ module.exports = function(grunt) {
 				);
 				return false;
 			}
-			validateFiles(grunt, this.files, schemas[options.type]);
+			const valid = validateFiles(grunt, this.files, schemas[options.type]);
 			schemas[options.type].seen = {};
+			return valid;
 		}
 	);
 };

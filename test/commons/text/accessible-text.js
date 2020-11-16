@@ -257,12 +257,12 @@ describe('text.accessibleTextVirtual', function() {
 		axe.testUtils.flatTreeSetup(fixture);
 
 		var target = axe.utils.querySelectorAll(axe._tree, '#t2label')[0];
-		// Chrome 72: This is This is a label of
-		// Firefox 62: This is ARIA Label
-		// Safari 12.0: This is This is a label of
+		// Chrome 86: This is This is a label of
+		// Firefox 82: This is ARIA Label everything
+		// Safari 14.0: This is This is a label of everything
 		assert.equal(
 			axe.commons.text.accessibleTextVirtual(target),
-			'This is This is a label of'
+			'This is This is a label of everything'
 		);
 	});
 
@@ -1026,8 +1026,7 @@ describe('text.accessibleTextVirtual', function() {
 			});
 		});
 
-		// not implemented yet, doesn't work accross ATs
-		it.skip('should find a placeholder attribute', function() {
+		it('should find a placeholder attribute', function() {
 			types.forEach(function(type) {
 				var t = type ? ' type="' + type + '"' : '';
 				fixture.innerHTML = '<input' + t + ' placeholder="Hello World">';
@@ -1118,8 +1117,7 @@ describe('text.accessibleTextVirtual', function() {
 			);
 		});
 
-		// not implemented yet, doesn't work accross ATs
-		it.skip('should find a placeholder attribute', function() {
+		it('should find a placeholder attribute', function() {
 			fixture.innerHTML = '<textarea placeholder="Hello World"></textarea>';
 			axe.testUtils.flatTreeSetup(fixture);
 

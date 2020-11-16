@@ -8,7 +8,10 @@
 		"impact": "critical",
 		"messages": {
 			"pass": "Element has a non-empty value attribute",
-			"fail": "Element has no value attribute or the value attribute is empty"
+			"fail": {
+				"noAttr": "Element has no value attribute",
+				"emptyAttr": "Element has an empty value attribute"
+			}
 		}
 	}
 }

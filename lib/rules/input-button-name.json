@@ -1,6 +1,7 @@
 {
 	"id": "input-button-name",
 	"selector": "input[type=\"button\"], input[type=\"submit\"], input[type=\"reset\"]",
+	"matches": "no-explicit-name-required-matches",
 	"tags": [
 		"cat.name-role-value",
 		"wcag2a",
@@ -18,8 +19,7 @@
 		"non-empty-value",
 		"aria-label",
 		"aria-labelledby",
-		"role-presentation",
-		"role-none",
+		"presentational-role",
 		"non-empty-title"
 	],
 	"none": []

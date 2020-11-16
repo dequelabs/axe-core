@@ -89,6 +89,34 @@ describe('utils.matches', function() {
 			);
 			assert.isFalse(matches(virtualNode, '[foo="baz"][bar="foo"][baz="bar"]'));
 		});
+
+		it('returns true if attribute starts with value', function() {
+			var virtualNode = queryFixture(
+				'<span id="target" foo="bazaphone" bar="foo" baz="bar"></span>'
+			);
+			assert.isTrue(matches(virtualNode, '[foo^="baz"]'));
+		});
+
+		it('returns true if attribute ends with value', function() {
+			var virtualNode = queryFixture(
+				'<span id="target" foo="bazaphone" bar="foo" baz="bar"></span>'
+			);
+			assert.isTrue(matches(virtualNode, '[foo$="hone"]'));
+		});
+
+		it('returns true if attribute contains value', function() {
+			var virtualNode = queryFixture(
+				'<span id="target" foo="bazaphone" bar="foo" baz="bar"></span>'
+			);
+			assert.isTrue(matches(virtualNode, '[foo*="baz"]'));
+		});
+
+		it('returns true if attribute has value', function() {
+			var virtualNode = queryFixture(
+				'<span id="target" foo="bar baz" bar="foo" baz="bar"></span>'
+			);
+			assert.isTrue(matches(virtualNode, '[foo~="baz"]'));
+		});
 	});
 
 	describe('id', function() {

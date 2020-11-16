@@ -978,19 +978,54 @@ describe('color.getBackgroundColor', function() {
 	it('should return the text-shadow mixed in with the background', function() {
 		fixture.innerHTML =
 			'<div id="parent" style="height: 40px; width: 30px; background-color: #800000;">' +
-			'<div id="target" style="height: 20px; width: 15px; text-shadow: red 0 0 2px">foo' +
+			'<div id="target" style="height: 20px; width: 15px; text-shadow: red 0 0 1em">foo' +
 			'</div></div>';
 		var target = fixture.querySelector('#target');
 		var parent = fixture.querySelector('#parent');
 		var bgNodes = [];
 		axe.testUtils.flatTreeSetup(fixture);
 		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+
 		// is 128 without the shadow
-		var expected = new axe.commons.color.Color(175, 0, 0, 1);
+		var expected = new axe.commons.color.Color(145, 0, 0, 1);
 		assert.closeTo(actual.red, expected.red, 0.5);
 		assert.closeTo(actual.green, expected.green, 0.5);
 		assert.closeTo(actual.blue, expected.blue, 0.5);
 		assert.closeTo(actual.alpha, expected.alpha, 0.1);
 		assert.deepEqual(bgNodes, [parent]);
+	});
+
+	it('ignores thin text-shadows', function() {
+		fixture.innerHTML =
+			'<div id="parent" style="height: 40px; width: 30px; background-color: #000;">' +
+			'<div id="target" style="height: 20px; width: 15px; text-shadow: red 0 0 0.05em">foo' +
+			'</div></div>';
+		var target = fixture.querySelector('#target');
+		var bgNodes = [];
+		axe.testUtils.flatTreeSetup(fixture);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+
+		assert.equal(actual.red, 0);
+		assert.equal(actual.green, 0);
+		assert.equal(actual.blue, 0);
+		assert.equal(actual.alpha, 1);
+	});
+
+	it('ignores text-shadows thinner than shadowOutlineEmMax', function() {
+		fixture.innerHTML =
+			'<div style="height: 40px; width: 30px; background-color: #800000;">' +
+			'<div id="target" style="height: 20px; width: 15px; text-shadow: red 0 0 1em, green 0 0 0.5em">foo' +
+			'</div></div>';
+		var target = fixture.querySelector('#target');
+		var bgNodes = [];
+		axe.testUtils.flatTreeSetup(fixture);
+		var actual = axe.commons.color.getBackgroundColor(target, bgNodes, 1);
+
+		// is 128 without the shadow
+		var expected = new axe.commons.color.Color(145, 0, 0, 1);
+		assert.closeTo(actual.red, expected.red, 0.5);
+		assert.closeTo(actual.green, expected.green, 0.5);
+		assert.closeTo(actual.blue, expected.blue, 0.5);
+		assert.closeTo(actual.alpha, expected.alpha, 0.1);
 	});
 });
