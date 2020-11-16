@@ -30,38 +30,42 @@ describe('aria.getAccessibleRefs', function() {
 
 	it('returns array of nodes for IDs used in aria IDREF attributes', function() {
 		setLookup({ 'aria-foo': { type: 'idref' } });
-		fixture.innerHTML = '<div aria-foo="foo"></div><i id="foo"></i>';
+		fixture.innerHTML = '<div id="ref" aria-foo="foo"></div><i id="foo"></i>';
 		var node = document.getElementById('foo');
-		assert.lengthOf(getAccessibleRefs(node), 1);
+		var ref = document.getElementById('ref');
+		assert.deepEqual(getAccessibleRefs(node), [ref]);
 	});
 
 	it('returns array of nodes for IDs used in aria IDREFS attributes', function() {
 		setLookup({ 'aria-bar': { type: 'idrefs' } });
 		fixture.innerHTML =
-			'<div aria-bar="foo bar"></div><i id="foo"></i><b id="bar"></b>';
+			'<div id="ref" aria-bar="foo bar"></div><i id="foo"></i><b id="bar"></b>';
 
 		var node1 = document.getElementById('foo');
 		var node2 = document.getElementById('bar');
-		assert.lengthOf(getAccessibleRefs(node1), 1);
-		assert.lengthOf(getAccessibleRefs(node2), 1);
+		var ref = document.getElementById('ref');
+		assert.deepEqual(getAccessibleRefs(node1), [ref]);
+		assert.deepEqual(getAccessibleRefs(node2), [ref]);
 	});
 
 	it('returns array of nodes for IDs used in label[for] attributes', function() {
 		setLookup({ 'aria-foo': { type: 'idref' } });
-		fixture.innerHTML = '<label for="baz">baz</label><input id="baz">';
+		fixture.innerHTML = '<label id="ref" for="baz">baz</label><input id="baz">';
 		var node = document.getElementById('baz');
-		assert.lengthOf(getAccessibleRefs(node), 1);
+		var ref = document.getElementById('ref');
+		assert.deepEqual(getAccessibleRefs(node), [ref]);
 	});
 
 	it('returns all nodes used in aria IDREF attributes', function() {
 		setLookup({ 'aria-bar': { type: 'idrefs' } });
 		fixture.innerHTML =
-			'<div aria-bar="foo bar"><div aria-bar="foo bar"></div><i id="foo"></i><b id="bar"></b>';
+			'<div id="ref1" aria-bar="foo"><div id="ref2" aria-bar="foo"></div><i id="foo"></i>';
 
-		var node1 = document.getElementById('foo');
-		var node2 = document.getElementById('bar');
-		assert.lengthOf(getAccessibleRefs(node1), 2);
-		assert.lengthOf(getAccessibleRefs(node2), 2);
+		var node = document.getElementById('foo');
+		var ref1 = document.getElementById('ref1');
+		var ref2 = document.getElementById('ref2');
+
+		assert.deepEqual(getAccessibleRefs(node), [ref1, ref2]);
 	});
 
 	(shadowSupport ? it : xit)('works inside shadow DOM', function() {
@@ -69,10 +73,11 @@ describe('aria.getAccessibleRefs', function() {
 		fixture.innerHTML = '<div id="foo"></div>';
 
 		var shadow = document.getElementById('foo').attachShadow({ mode: 'open' });
-		shadow.innerHTML = '<div aria-bar="bar"></div><b id="bar"></b>';
+		shadow.innerHTML = '<div id="ref" aria-bar="bar"></div><b id="bar"></b>';
 
 		var node = shadow.getElementById('bar');
-		assert.lengthOf(getAccessibleRefs(node), 1);
+		var ref = shadow.getElementById('ref');
+		assert.deepEqual(getAccessibleRefs(node), [ref]);
 	});
 
 	(shadowSupport ? it : xit)(
@@ -107,4 +112,22 @@ describe('aria.getAccessibleRefs', function() {
 			assert.lengthOf(getAccessibleRefs(node), 0);
 		}
 	);
+
+	(shadowSupport ? it : xit)('separates IDREFs by roots', function() {
+		setLookup({ 'aria-bar': { type: 'idref' } });
+		fixture.innerHTML =
+			'<div id="foo"></div><div id="outside" aria-bar="foo"></div><div id="shadow"></div>';
+
+		var shadow = document
+			.getElementById('shadow')
+			.attachShadow({ mode: 'open' });
+		shadow.innerHTML = '<div id="foo"><div id="inside" aria-bar="foo"></div>';
+
+		var outsideNode = document.getElementById('foo');
+		var outsideRef = document.getElementById('outside');
+		var insideNode = shadow.getElementById('foo');
+		var insideRef = shadow.getElementById('inside');
+		assert.deepEqual(getAccessibleRefs(outsideNode), [outsideRef]);
+		assert.deepEqual(getAccessibleRefs(insideNode), [insideRef]);
+	});
 });
