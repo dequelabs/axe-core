@@ -24,4 +24,8 @@ describe('axe.utils.tokenList', function() {
 			'42'
 		]);
 	});
+
+	it('should return empty array for null value', function() {
+		assert.deepEqual(axe.utils.tokenList(null), []);
+	});
 });
