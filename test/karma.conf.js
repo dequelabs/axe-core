@@ -69,7 +69,7 @@ module.exports = function(config) {
 		client: {
 			useIframe: false,
 			mocha: {
-				timeout: 4000,
+				timeout: 10000,
 				reporter: 'html'
 			}
 		}
