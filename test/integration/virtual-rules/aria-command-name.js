@@ -1,4 +1,4 @@
-describe('aria-command-name', function() {
+describe('aria-command-name virtual-rule', function() {
 	it('should pass for aria-label', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'div',

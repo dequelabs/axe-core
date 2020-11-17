@@ -1,4 +1,4 @@
-describe('button-name', function() {
+describe('button-name virtual-rule', function() {
 	it('should pass for aria-label', function() {
 		var results = axe.runVirtualRule('button-name', {
 			nodeName: 'button',

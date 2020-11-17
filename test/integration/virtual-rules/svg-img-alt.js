@@ -1,4 +1,4 @@
-describe('svg-img-alt', function() {
+describe('svg-img-alt virtual-rule', function() {
 	it('should pass for aria-label', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'svg',

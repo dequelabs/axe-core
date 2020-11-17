@@ -1,4 +1,4 @@
-describe('aria-progressbar-name', function() {
+describe('aria-progressbar-name virtual-rule', function() {
 	it('should pass for aria-label', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'div',

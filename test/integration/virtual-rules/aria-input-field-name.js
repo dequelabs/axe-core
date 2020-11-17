@@ -1,4 +1,4 @@
-describe('aria-input-field-name', function() {
+describe('aria-input-field-name virtual-rule', function() {
 	it('should pass for aria-label', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'div',

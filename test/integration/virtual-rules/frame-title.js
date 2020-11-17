@@ -1,4 +1,4 @@
-describe('frame-title', function() {
+describe('frame-title virtual-rule', function() {
 	it('should pass for aria-label', function() {
 		var results = axe.runVirtualRule('frame-title', {
 			nodeName: 'iframe',

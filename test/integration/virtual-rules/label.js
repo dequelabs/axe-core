@@ -1,4 +1,4 @@
-describe('label', function() {
+describe('label virtual-rule', function() {
 	it('should not apply if input type is hidden', function() {
 		var results = axe.runVirtualRule('label', {
 			nodeName: 'input',
