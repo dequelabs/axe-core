@@ -22,17 +22,17 @@ args.forEach(function(arg) {
 
 var testPaths = testDirs.map(function(dir) {
 	if (dir === 'integration') {
-		return path.join(dir, '**/*.json');
+		return path.join('test', dir, '**/*.json');
 	} else if (['virtual-rules', 'api'].includes(dir)) {
-		return path.join('integration', dir, '**/*.js');
+		return path.join('test', 'integration', dir, '**/*.js');
 	}
 
-	return path.join(dir, '**/*.js');
+	return path.join('test', dir, '**/*.js');
 });
 
 module.exports = function(config) {
 	config.set({
-		basePath: '',
+		basePath: '../',
 		singleRun: true,
 		autoWatch: true,
 		plugins: [
@@ -46,30 +46,34 @@ module.exports = function(config) {
 		],
 		frameworks: ['mocha', 'chai'],
 		files: [
-			{ pattern: 'mock/**/*.html', included: false, served: true },
-			{ pattern: 'integration/**/*.css', included: false, served: true },
-			{ pattern: 'assets/**/*.*', included: false, served: true },
-			{ pattern: 'integration/rules/**/*.html', included: false, served: true },
-			'../axe.js',
+			{ pattern: 'test/mock/**/*.html', included: false, served: true },
+			{ pattern: 'test/integration/**/*.css', included: false, served: true },
+			{ pattern: 'test/assets/**/*.*', included: false, served: true },
+			{
+				pattern: 'test/integration/rules/**/*.html',
+				included: false,
+				served: true
+			},
+			'axe.js',
 
-			'testutils.js',
-			'version.js'
+			'test/testutils.js',
+			'test/version.js'
 		].concat(testPaths),
 		proxies: {
-			'/test': '/base',
-			'/mock': '/base/mock',
-			'/integration': '/base/integration',
-			'/axe.js': path.join('/absolute', __dirname, '../axe.js')
+			'/test': '/base/test',
+			'/mock': '/base/test/mock',
+			'/integration': '/base/test/integration',
+			'/axe.js': '/base/axe.js'
 		},
 		browsers: ['ChromeHeadless'],
 		reporters: ['mocha'],
 		preprocessors: {
-			'integration/rules/**/*.json': ['integration']
+			'test/integration/rules/**/*.json': ['integration']
 		},
 		client: {
 			useIframe: false,
 			mocha: {
-				timeout: 10000,
+				timeout: 4000,
 				reporter: 'html'
 			}
 		}
