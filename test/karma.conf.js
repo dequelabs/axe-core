@@ -41,6 +41,7 @@ module.exports = function(config) {
 			'karma-mocha-reporter',
 			'karma-chrome-launcher',
 			'karma-firefox-launcher',
+			'karma-ie-launcher',
 			require('./integration/rules/preprocessor')
 		],
 		frameworks: ['mocha', 'chai'],
