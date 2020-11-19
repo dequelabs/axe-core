@@ -76,7 +76,12 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
-      - run: npm run test -- --browsers Chrome,Firefox
+      # - run: npm run test:unit -- --browsers Chrome,Firefox
+      - run:
+          command: npm run start
+          background: true
+      - run: npm run test:integration -- browser=chrome
+      - run: npm run test:integration -- browser=firefox
 
   # Run the test suite in IE in windows
   test_win:
@@ -87,12 +92,16 @@ jobs:
       # npm i or restore cache
       - <<: *restore_dependency_cache_win
       - run: npm run build
-      - run: npm run test -- --browsers IE
+      # - run: npm run test:unit -- --browsers IE
       # install selenium
-      # - run: |
-      #     choco install selenium-ie-driver --version 3.141.5
-      #     export PATH=/c/tools/selenium:$PATH
-      #     echo $PATH
+      - run: |
+          choco install selenium-ie-driver --version 3.141.5
+          export PATH=/c/tools/selenium:$PATH
+          echo $PATH
+      - run:
+          command: npm run start
+          background: true
+      - run: npm run test:integration -- browser=ie
       # build `axe`
       # - run: npm run build
       # get fixtures ready for running tests

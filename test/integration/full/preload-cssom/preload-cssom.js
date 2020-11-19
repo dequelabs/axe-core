@@ -2,6 +2,11 @@
 describe('preload cssom integration test', function() {
 	'use strict';
 
+	// axe-core preload timeout is set to 10s so we need a
+	// timeout slightly above that to ensure there's enough
+	// time to resolve tests that we want to throw
+	this.timeout(15000);
+
 	var shadowSupported = axe.testUtils.shadowSupport.v1;
 	var isIE11 = axe.testUtils.isIE11;
 	var styleSheets = {

@@ -10,10 +10,6 @@ if (window.__AXE_EXTENSION__) {
 /*eslint indent: 0*/
 var testUtils = {};
 
-var fixture = document.createElement('div');
-fixture.setAttribute('id', 'fixture');
-document.body.insertBefore(fixture, document.body.firstChild);
-
 /*eslint no-unused-vars: 0*/
 var checks, commons;
 var originalChecks = (checks = axe._audit.checks);
@@ -405,6 +401,14 @@ testUtils.isIE11 = (function isIE11(navigator) {
 })(navigator);
 
 axe.testUtils = testUtils;
+
+// add fixture to the body if it's not already
+var fixture = document.getElementById('fixture');
+if (!fixture) {
+	fixture = document.createElement('div');
+	fixture.setAttribute('id', 'fixture');
+	document.body.insertBefore(fixture, document.body.firstChild);
+}
 
 afterEach(function() {
 	axe._cache.clear();

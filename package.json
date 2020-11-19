@@ -56,13 +56,16 @@
 		}
 	},
 	"scripts": {
-		"start": "npm run develop",
+		"start": "http-server -p 9876",
 		"develop": "grunt dev --force",
 		"api-docs": "jsdoc --configure .jsdoc.json",
 		"imports-gen": "node ./build/imports-generator",
 		"build": "grunt",
 		"eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
-		"test": "tsc && karma start test/karma.conf.js",
+		"test": "npm run test:tsc && npm run test:unit",
+		"test:tsc": "tsc",
+		"test:unit": "karma start test/karma.conf.js",
+		"test:integration": "node test/integration/full/test-webdriver.js",
 		"test:examples": "node ./doc/examples/test-examples",
 		"test:locales": "mocha test/test-locales.js",
 		"test:rule-help-version": "mocha test/test-rule-help-version.js",
