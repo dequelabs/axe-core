@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.1](https://github.com/dequelabs/axe-core/compare/v4.1.0...v4.1.1) (2020-11-19)
+
+### Bug Fixes
+
+- remove axios import ([#2653](https://github.com/dequelabs/axe-core/issues/2653)) ([2d20cde](https://github.com/dequelabs/axe-core/commit/2d20cdee819265f3c4efcb3ccb61da0a9a88981c))
+- **color-contrast:** greatly improve color-contrast-matches speed. add aria/get-accessible-ref ([#2635](https://github.com/dequelabs/axe-core/issues/2635)) ([ba174bd](https://github.com/dequelabs/axe-core/commit/ba174bd5496d7146c1baf982cb762444cda26cff))
+
 ## [4.1.0](https://github.com/dequelabs/axe-core/compare/v4.0.2...v4.1.0) (2020-11-13)
 
 ### Features
