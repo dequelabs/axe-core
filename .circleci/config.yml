@@ -164,6 +164,7 @@ jobs:
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
+      - run: npm run build
       - run: npm run next-release
       - run: .circleci/verify-release.sh
       - run: npm publish --tag=next
