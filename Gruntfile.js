@@ -68,7 +68,10 @@ module.exports = function(grunt) {
 			});
 			return driverTests;
 		})(),
-		clean: ['dist', 'tmp', 'axe.js', 'axe.*.js'],
+		clean: {
+			core: ['dist', 'tmp/core', 'tmp/rules.js', 'axe.js', 'axe.*.js'],
+			tests: ['tmp/integration-tests.js']
+		},
 		babel: {
 			options: {
 				compact: false
@@ -240,7 +243,7 @@ module.exports = function(grunt) {
 			},
 			tests: {
 				files: ['test/**/*.js', 'test/integration/**/!(index).{html,json}'],
-				tasks: ['testconfig', 'fixture']
+				tasks: ['clean:tests', 'testconfig', 'fixture']
 			}
 		},
 		testconfig: {
@@ -353,7 +356,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('translate', ['validate', 'esbuild', 'add-locale']);
 	grunt.registerTask('build', [
-		'clean',
+		'clean:core',
 		'validate',
 		'esbuild',
 		'configure',

@@ -8,4 +8,8 @@ describe('text.sanitize', function() {
 		assert.equal(axe.commons.text.sanitize(' hi\r\nok'), 'hi\nok');
 		assert.equal(axe.commons.text.sanitize('hello\u00A0there'), 'hello there');
 	});
+
+	it('should accept null', function() {
+		assert.equal(axe.commons.text.sanitize(null), '');
+	});
 });
