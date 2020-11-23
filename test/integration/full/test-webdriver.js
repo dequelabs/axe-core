@@ -10,18 +10,17 @@ var args = process.argv.slice(2);
 
 // allow running certain browsers through command line args
 // (only one browser supported, run multiple times for more browsers)
-var browser = 'chrome';
-args.forEach(function(arg) {
-	// pattern: browsers=Chrome
-	var parts = arg.split('=');
-	if (parts[0] === 'browser') {
-		browser = parts[1].toLowerCase();
+var browsers = ['chrome'];
+args.forEach(function(arg, index) {
+	// pattern: --browsers Chrome
+	if (arg === '--browsers' && args[index + 1]) {
+		browsers = args[index + 1].toLowerCase().split(',');
 	}
 });
 
 // circle has everything configured to run chrome but local install
 // may not
-if (browser === 'chrome' && !isCI) {
+if (browsers.includes('chrome') && !isCI) {
 	var service = new chrome.ServiceBuilder(chromedriver.path).build();
 	chrome.setDefaultService(service);
 }
@@ -210,27 +209,34 @@ function start(options) {
 		.implicitlyWait(50000);
 
 	// Test all pages
-	runTestUrls(driver, isMobile, testUrls)
-		.then(function(testErrors) {
-			// log each error and abort
-			testErrors.forEach(function(err) {
-				console.log();
-				console.log('URL: ' + err.url);
-				console.log('Browser: ' + err.browser);
-				console.log('Describe: ' + err.titles.join(' > '));
-				console.log('it ' + err.name);
-				console.log(err.stack);
-				console.log();
-			});
-
-			process.exit(testErrors.length);
-
-			// catch any potential problems
-		})
-		.catch(function(err) {
-			console.log(err);
-			process.exit(1);
-		});
+	return runTestUrls(driver, isMobile, testUrls).catch(function(err) {
+		console.log(err);
+		process.exit(1);
+	});
 }
 
-start({ browser: browser });
+var promises = [];
+browsers.forEach(function(browser) {
+	promises.push(start({ browser: browser }));
+});
+
+Promise.all(promises).then(function(browserErrors) {
+	// log each error and abort
+	var errors = 0;
+
+	browserErrors.forEach(function(testErrors) {
+		testErrors.forEach(function(err) {
+			errors++;
+			console.log();
+			console.log('URL: ' + err.url);
+			console.log('Browser: ' + err.browser);
+			console.log('Describe: ' + err.titles.join(' > '));
+			console.log('it ' + err.name);
+			console.log(err.stack);
+			console.log();
+		});
+	});
+
+	// catch any potential problems
+	process.exit(errors);
+});

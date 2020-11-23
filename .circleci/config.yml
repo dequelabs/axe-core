@@ -80,8 +80,7 @@ jobs:
       - run:
           command: npm run start
           background: true
-      - run: npm run test:integration -- browser=chrome
-      - run: npm run test:integration -- browser=firefox
+      - run: npm run test:integration -- --browsers Chrome,Firefox
 
   # Run the test suite in IE in windows
   test_win:
@@ -101,7 +100,7 @@ jobs:
       - run:
           command: npm run start
           background: true
-      - run: npm run test:integration -- browser=ie
+      - run: npm run test:integration -- --browsers IE
       # test examples
       # Note: Jasmine karma-chrome-launcher requires chrome browser
       - run: choco install googlechrome --ignore-checksums
