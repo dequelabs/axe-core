@@ -31,6 +31,33 @@ describe('heading-order', function() {
 		});
 	});
 
+	it('should handle incorrect aria-level values', function() {
+		var vNode = queryFixture(
+			'<div role="heading" aria-level="-1" id="target">One</div><div role="heading" aria-level="12">Two</div><div role="heading">Three</div>'
+		);
+		assert.isTrue(
+			axe.testUtils
+				.getCheckEvaluate('heading-order')
+				.call(checkContext, null, {}, vNode, {})
+		);
+		assert.deepEqual(checkContext._data, {
+			headingOrder: [
+				{
+					ancestry: ['html > body > div:nth-child(1) > div:nth-child(1)'],
+					level: 2
+				},
+				{
+					ancestry: ['html > body > div:nth-child(1) > div:nth-child(2)'],
+					level: 2
+				},
+				{
+					ancestry: ['html > body > div:nth-child(1) > div:nth-child(3)'],
+					level: 2
+				}
+			]
+		});
+	});
+
 	it('should store the correct header level for hn tags and return true', function() {
 		var vNode = queryFixture('<h1 id="target">One</h1><h3>Three</h3>');
 		assert.isTrue(
