@@ -22,7 +22,7 @@ describe('aria-required-children', function() {
         .getCheckEvaluate('aria-required-children')
         .apply(checkContext, params)
     );
-    assert.deepEqual(checkContext._data, ['listitem']);
+    assert.deepEqual(checkContext._data, ['group', 'listitem']);
   });
 
   (shadowSupported ? it : xit)(
@@ -43,7 +43,7 @@ describe('aria-required-children', function() {
           .getCheckEvaluate('aria-required-children')
           .apply(checkContext, params)
       );
-      assert.deepEqual(checkContext._data, ['listitem']);
+      assert.deepEqual(checkContext._data, ['group', 'listitem']);
     }
   );
 
@@ -309,7 +309,7 @@ describe('aria-required-children', function() {
         .apply(checkContext, params)
     );
 
-    assert.deepEqual(checkContext._data, ['listitem']);
+    assert.deepEqual(checkContext._data, ['group', 'listitem']);
   });
 
   it('should fail when list has intermediate child with role that is not a required role', function() {
@@ -322,7 +322,7 @@ describe('aria-required-children', function() {
         .apply(checkContext, params)
     );
 
-    assert.deepEqual(checkContext._data, ['listitem']);
+    assert.deepEqual(checkContext._data, ['group', 'listitem']);
   });
 
   it('should fail when nested child with role row  does not have required child role cell', function() {
@@ -484,6 +484,72 @@ describe('aria-required-children', function() {
   it('should not accept implicit nodes with a different role', function() {
     var params = checkSetup(
       '<div role="combobox" id="target"><input type="search" role="spinbutton"><p role="listbox">Textbox</p></div>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-children')
+        .apply(checkContext, params)
+    );
+  });
+
+  it('should pass when role allows group and group has required child', function() {
+    var params = checkSetup(
+      '<div role="menu" id="target"><ul role="group"><li role="menuitem">Menuitem</li></ul></div>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-children')
+        .apply(checkContext, params)
+    );
+  });
+
+  it('should fail when role allows group and group does not have required child', function() {
+    var params = checkSetup(
+      '<div role="menu" id="target"><ul role="group"><li>Menuitem</li></ul></div>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-children')
+        .apply(checkContext, params)
+    );
+  });
+
+  it('should fail when role does not allow group', function() {
+    var params = checkSetup(
+      '<div role="listbox" id="target"><ul role="group"><li role="option">Option</li></ul></div>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-children')
+        .apply(checkContext, params)
+    );
+  });
+
+  it('should pass when role allows rowgroup and rowgroup has required child', function() {
+    var params = checkSetup(
+      '<div role="table" id="target"><ul role="rowgroup"><li role="row">Row</li></ul></div>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-children')
+        .apply(checkContext, params)
+    );
+  });
+
+  it('should fail when role allows rowgroup and rowgroup does not have required child', function() {
+    var params = checkSetup(
+      '<div role="table" id="target"><ul role="rowgroup"><li>Row</li></ul></div>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-children')
+        .apply(checkContext, params)
+    );
+  });
+
+  it('should fail when role does not allow rowgroup', function() {
+    var params = checkSetup(
+      '<div role="listbox" id="target"><ul role="rowgroup"><li role="option">Option</li></ul></div>'
     );
     assert.isFalse(
       axe.testUtils
