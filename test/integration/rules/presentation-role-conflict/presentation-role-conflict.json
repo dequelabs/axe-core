@@ -1,6 +1,6 @@
 {
-	"rule": "presentation-role-conflict",
-	"description": "presentation-role-conflict tests",
-	"violations": [["#violation1"], ["#violation2"]],
-	"passes": [["#pass1"], ["#pass2"]]
+  "rule": "presentation-role-conflict",
+  "description": "presentation-role-conflict tests",
+  "violations": [["#violation1"], ["#violation2"]],
+  "passes": [["#pass1"], ["#pass2"]]
 }

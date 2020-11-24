@@ -149,11 +149,11 @@ The after function must return an `Array` of CheckResults, due to this, it is a 
 ```js
 var uniqueIds = [];
 return results.filter(function(r) {
-	if (uniqueIds.indexOf(r.data) === -1) {
-		uniqueIds.push(r.data);
-		return true;
-	}
-	return false;
+  if (uniqueIds.indexOf(r.data) === -1) {
+    uniqueIds.push(r.data);
+    return true;
+  }
+  return false;
 });
 ```
 
@@ -205,15 +205,15 @@ import { getNodeFromTree } from '../../core/utils';
 import accessibleTextVirtual from './accessible-text-virtual';
 
 function accessibleText(element, inLabelledbyContext) {
-	let virtualNode = getNodeFromTree(axe._tree[0], element); // throws an exception on purpose if axe._tree not correct
-	return accessibleTextVirtual(virtualNode, inLabelledbyContext);
+  let virtualNode = getNodeFromTree(axe._tree[0], element); // throws an exception on purpose if axe._tree not correct
+  return accessibleTextVirtual(virtualNode, inLabelledbyContext);
 }
 
 export default accessibleText;
 
 // lib/commons/text/accessible-text-virtual.js
 function accessibleTextVirtual(element, inLabelledbyContext) {
-	// rest of the commons code minus the virtual tree lookup, since it’s passed in
+  // rest of the commons code minus the virtual tree lookup, since it’s passed in
 }
 ```
 
@@ -322,11 +322,11 @@ An array of objects, where each object is a virtualNode:
 
 ```js
 [
-	{
-		actualNode: body,
-		children: [virtualNodes],
-		shadowId: undefined
-	}
+  {
+    actualNode: body,
+    children: [virtualNodes],
+    shadowId: undefined
+  }
 ];
 ```
 
@@ -371,19 +371,19 @@ Create a check context for mocking and resetting data and relatedNodes in tests.
 
 ```js
 describe('region', function() {
-	var fixture = document.getElementById('fixture');
+  var fixture = document.getElementById('fixture');
 
-	var checkContext = new axe.testUtils.MockCheckContext();
+  var checkContext = new axe.testUtils.MockCheckContext();
 
-	afterEach(function() {
-		fixture.innerHTML = '';
-		checkContext.reset();
-	});
+  afterEach(function() {
+    fixture.innerHTML = '';
+    checkContext.reset();
+  });
 
-	it('should return true when all content is inside the region', function() {
-		assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
-		assert.equal(checkContext._relatedNodes.length, 0);
-	});
+  it('should return true when all content is inside the region', function() {
+    assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+    assert.equal(checkContext._relatedNodes.length, 0);
+  });
 });
 ```
 
@@ -411,10 +411,10 @@ Provides an API for determining Shadow DOM v0 and v1 support in tests. For examp
 
 ```js
 (axe.testUtils.shadowSupport.v1 ? it : xit)(
-	'should test Shadow tree content',
-	function() {
-		// The rest of the shadow DOM test
-	}
+  'should test Shadow tree content',
+  function() {
+    // The rest of the shadow DOM test
+  }
 );
 ```
 
@@ -434,22 +434,22 @@ Method for injecting content into a fixture and caching the flattened DOM tree (
 
 ```js
 it(
-	'should return true if there is only one ' +
-		type +
-		' element with the same name',
-	function() {
-		axe.testUtils.fixtureSetup(
-			'<input type="' +
-				type +
-				'" id="target" name="uniqueyname">' +
-				'<input type="' +
-				type +
-				'" name="differentname">'
-		);
+  'should return true if there is only one ' +
+    type +
+    ' element with the same name',
+  function() {
+    axe.testUtils.fixtureSetup(
+      '<input type="' +
+        type +
+        '" id="target" name="uniqueyname">' +
+        '<input type="' +
+        type +
+        '" name="differentname">'
+    );
 
-		var node = fixture.querySelector('#target');
-		assert.isTrue(check.evaluate.call(checkContext, node));
-	}
+    var node = fixture.querySelector('#target');
+    assert.isTrue(check.evaluate.call(checkContext, node));
+  }
 );
 ```
 
@@ -469,12 +469,12 @@ Create check arguments.
 
 ```js
 it('should return true when all content is inside the region', function() {
-	var checkArgs = checkSetup(
-		'<div id="target"><div role="main"><a href="a.html#mainheader">Click Here</a><div><h1 id="mainheader" tabindex="0">Introduction</h1></div></div></div>'
-	);
+  var checkArgs = checkSetup(
+    '<div id="target"><div role="main"><a href="a.html#mainheader">Click Here</a><div><h1 id="mainheader" tabindex="0">Introduction</h1></div></div></div>'
+  );
 
-	assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
-	assert.equal(checkContext._relatedNodes.length, 0);
+  assert.isTrue(checks.region.evaluate.apply(checkContext, checkArgs));
+  assert.equal(checkContext._relatedNodes.length, 0);
 });
 ```
 

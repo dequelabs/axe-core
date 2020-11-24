@@ -60,31 +60,31 @@ Classes should contain a jsdoc comment block for each attribute. For example:
  * @param {Object} check CheckResult specification
  */
 function CheckResult(check) {
-	'use strict';
+  'use strict';
 
-	/**
-	 * ID of the check.  Unique in the context of a rule.
-	 * @type {String}
-	 */
-	this.id = check.id;
+  /**
+   * ID of the check.  Unique in the context of a rule.
+   * @type {String}
+   */
+  this.id = check.id;
 
-	/**
-	 * Any data passed by Check (by calling `this.data()`)
-	 * @type {Mixed}
-	 */
-	this.data = null;
+  /**
+   * Any data passed by Check (by calling `this.data()`)
+   * @type {Mixed}
+   */
+  this.data = null;
 
-	/**
-	 * Any node that is related to the Check, specified by calling `this.relatedNodes([HTMLElement...])` inside the Check
-	 * @type {Array}
-	 */
-	this.relatedNodes = [];
+  /**
+   * Any node that is related to the Check, specified by calling `this.relatedNodes([HTMLElement...])` inside the Check
+   * @type {Array}
+   */
+  this.relatedNodes = [];
 
-	/**
-	 * The return value of the Check's evaluate function
-	 * @type {Mixed}
-	 */
-	this.result = null;
+  /**
+   * The return value of the Check's evaluate function
+   * @type {Mixed}
+   */
+  this.result = null;
 }
 ```
 
@@ -136,12 +136,12 @@ Installing axe to run accessibility tests in your TypeScript project should be a
 import * as axe from 'axe-core';
 
 describe('Module', () => {
-	it('should have no accessibility violations', done => {
-		axe.run(compiledFixture).then(results => {
-			expect(results.violations.length).toBe(0);
-			done();
-		}, done);
-	});
+  it('should have no accessibility violations', done => {
+    axe.run(compiledFixture).then(results => {
+      expect(results.violations.length).toBe(0);
+      done();
+    }, done);
+  });
 });
 ```
 
