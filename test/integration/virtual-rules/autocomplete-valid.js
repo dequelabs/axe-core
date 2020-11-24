@@ -1,4 +1,4 @@
-describe('autocomplete-valid', function() {
+describe('autocomplete-valid virtual-rule', function() {
 	it('should pass when autocomplete is valid', function() {
 		var results = axe.runVirtualRule('autocomplete-valid', {
 			nodeName: 'input',

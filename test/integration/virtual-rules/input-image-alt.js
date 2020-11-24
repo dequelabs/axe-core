@@ -1,4 +1,4 @@
-describe('input-image-alt', function() {
+describe('input-image-alt virtual-rule', function() {
 	it('should pass for alt', function() {
 		var results = axe.runVirtualRule('input-image-alt', {
 			nodeName: 'input',

@@ -1,4 +1,4 @@
-describe('select-name', function() {
+describe('select-name virtual-rule', function() {
 	it('should pass for aria-label', function() {
 		var results = axe.runVirtualRule('select-name', {
 			nodeName: 'select',

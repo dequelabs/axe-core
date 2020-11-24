@@ -1,4 +1,4 @@
-describe('aria-treeitem-name', function() {
+describe('aria-treeitem-name virtual-rule', function() {
 	it('should pass for aria-label', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'div',

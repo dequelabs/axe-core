@@ -166,7 +166,7 @@ describe('axe.utils.preload integration test', function() {
 			return true;
 		}
 
-		before(function(done) {
+		beforeEach(function(done) {
 			// These tests currently break in IE11
 			if (isIE11) {
 				this.skip();

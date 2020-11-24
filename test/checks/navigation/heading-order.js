@@ -469,5 +469,58 @@ describe('heading-order', function() {
 			var afterResults = checks['heading-order'].after(results);
 			assert.isTrue(afterResults[1].result);
 		});
+
+		it('should throw error if iframe cannot be replaced', function() {
+			var results = [
+				{
+					data: {
+						headingOrder: [
+							{
+								ancestry: 'path1',
+								level: 1
+							},
+							{
+								ancestry: 'iframe',
+								level: -1
+							},
+							{
+								ancestry: 'path3',
+								level: 3
+							}
+						]
+					},
+					node: {
+						_fromFrame: false,
+						ancestry: ['path1']
+					},
+					result: true
+				},
+				{
+					data: {
+						headingOrder: [
+							{
+								ancestry: 'path2',
+								level: 2
+							}
+						]
+					},
+					node: {
+						_fromFrame: true,
+						ancestry: ['uknown iframe', 'path2']
+					},
+					result: true
+				},
+				{
+					node: {
+						_fromFrame: false,
+						ancestry: ['path3']
+					},
+					result: true
+				}
+			];
+			assert.throws(function() {
+				checks['heading-order'].after(results);
+			});
+		});
 	});
 });

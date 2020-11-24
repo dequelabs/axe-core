@@ -2,6 +2,64 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.1](https://github.com/dequelabs/axe-core/compare/v4.1.0...v4.1.1) (2020-11-19)
+
+### Bug Fixes
+
+- remove axios import ([#2653](https://github.com/dequelabs/axe-core/issues/2653)) ([2d20cde](https://github.com/dequelabs/axe-core/commit/2d20cdee819265f3c4efcb3ccb61da0a9a88981c))
+- **color-contrast:** greatly improve color-contrast-matches speed. add aria/get-accessible-ref ([#2635](https://github.com/dequelabs/axe-core/issues/2635)) ([ba174bd](https://github.com/dequelabs/axe-core/commit/ba174bd5496d7146c1baf982cb762444cda26cff))
+
+## [4.1.0](https://github.com/dequelabs/axe-core/compare/v4.0.2...v4.1.0) (2020-11-13)
+
+### Features
+
+- **new-rule:** check that treeitem role has an accessible name ([#2615](https://github.com/dequelabs/axe-core/issues/2615)) ([5e95153](https://github.com/dequelabs/axe-core/commit/5e951536a6b4f21ef4d4a849b575b5a3c1ec6b85))
+- Add aria-dialog-name ([#2609](https://github.com/dequelabs/axe-core/issues/2609)) ([b0e14b0](https://github.com/dequelabs/axe-core/commit/b0e14b0bc1df221ef379bf7ea830d3ceb030787a))
+- **aria-toggle-field-name:** add option role ([#2605](https://github.com/dequelabs/axe-core/issues/2605)) ([0af0551](https://github.com/dequelabs/axe-core/commit/0af0551e57c2b8347eeb9ce6550056c1888b5f4a))
+- **checks:** deprecate role-none and role-presentation for presentational-role ([#2503](https://github.com/dequelabs/axe-core/issues/2503)) ([cef54a0](https://github.com/dequelabs/axe-core/commit/cef54a0fd4156f7b1e6f6ba9cb36bde060a65622))
+- **get-role:** add noPresentational option ([#2549](https://github.com/dequelabs/axe-core/issues/2549)) ([4f39299](https://github.com/dequelabs/axe-core/commit/4f39299805d6e2c0fd09a1952d08c44800ca5dfc)), closes [#1792](https://github.com/dequelabs/axe-core/issues/1792)
+- **imports:** deprecate axios ([#2542](https://github.com/dequelabs/axe-core/issues/2542)) ([82d43a0](https://github.com/dequelabs/axe-core/commit/82d43a0593a8dc9733b97138f8e6f934ed25dea2))
+- **label,select-name:** allow placeholder to pass label rule, add select-name rule ([#2448](https://github.com/dequelabs/axe-core/issues/2448)) ([1315f8e](https://github.com/dequelabs/axe-core/commit/1315f8e2fb3eb6851657be2039014e3d13127210))
+- **new-rule:** ARIA links, buttons, menuitems have an accessible name ([#2571](https://github.com/dequelabs/axe-core/issues/2571)) ([9476a1f](https://github.com/dequelabs/axe-core/commit/9476a1f5170bbc85b683c6524f44f49c1835054a))
+- **new-rule:** aria-tooltip-name ([#2548](https://github.com/dequelabs/axe-core/issues/2548)) ([d00f378](https://github.com/dequelabs/axe-core/commit/d00f3781fb5c9c7c7f88e6790de3741788e8ddd9))
+- **new-rule:** check that meter role has an accessible name ([#2607](https://github.com/dequelabs/axe-core/issues/2607)) ([3ca2f04](https://github.com/dequelabs/axe-core/commit/3ca2f04b0f737914dda667c26f0193b7b312e6f6))
+- **new-rule:** check that progressbars have an accessible name ([#2555](https://github.com/dequelabs/axe-core/issues/2555)) ([dd0b44a](https://github.com/dequelabs/axe-core/commit/dd0b44ad8aeed9e4b7b45478c62c655a6cbf10ed))
+- **presentation-role-conflict:** create rule to flag elements with role conflict resolution ([#2440](https://github.com/dequelabs/axe-core/issues/2440)) ([e4edffc](https://github.com/dequelabs/axe-core/commit/e4edffc09f2305d8b4e69af266759cf32a5326f4))
+- **rule-matches:** depreacte window-is-top-matches for is-intiator-matches ([#2531](https://github.com/dequelabs/axe-core/issues/2531)) ([db2be93](https://github.com/dequelabs/axe-core/commit/db2be93d07dda488f9d5ca66d193709eb41bf8cd))
+- **standards:** add superclassRole to ariaRoles ([#2600](https://github.com/dequelabs/axe-core/issues/2600)) ([a5e9ce0](https://github.com/dequelabs/axe-core/commit/a5e9ce03befdc8f914f72a4eb1e49a95d6a2aa91))
+- **standards:** add superclassRole to dpubRoles ([#2606](https://github.com/dequelabs/axe-core/issues/2606)) ([1b66930](https://github.com/dequelabs/axe-core/commit/1b6693092d44aa10b9d4fd093baff674a17a2d30))
+- **utils:** deprecate get/set-scroll-state ([#2581](https://github.com/dequelabs/axe-core/issues/2581)) ([3c4827f](https://github.com/dequelabs/axe-core/commit/3c4827f7e3fdab4851697111bbe7cab55539bfbd))
+- **valid-langs:** deprecate validLangs, add isValidLangs, reduce file size ([#2527](https://github.com/dequelabs/axe-core/issues/2527)) ([8a699ec](https://github.com/dequelabs/axe-core/commit/8a699ecba6c77f6a705d44616f1bcefd634ff89b))
+
+### Bug Fixes
+
+- **commons/get-text-element-stack:** account for newline characters when text is larger than container ([#2631](https://github.com/dequelabs/axe-core/issues/2631)) ([3c2429b](https://github.com/dequelabs/axe-core/commit/3c2429b4032d29cdcfd3083e46e91854dccd733b))
+- Update ACT rule tags ([#2625](https://github.com/dequelabs/axe-core/issues/2625)) ([c640d4f](https://github.com/dequelabs/axe-core/commit/c640d4fc18a7625d30c6d0572e15f26c984511e4))
+- **aria-errormessage:** allow aria-live="polite" on aria-errormessage target ([926b6a8](https://github.com/dequelabs/axe-core/commit/926b6a8fe7aad0444d9bc97f2e6c8564023ab58f))
+- **aria-errormessage:** allow aria-live=polite on aria-errormessage target ([#2597](https://github.com/dequelabs/axe-core/issues/2597)) ([0d5cfb1](https://github.com/dequelabs/axe-core/commit/0d5cfb15941cc23d2b5065c203e9ccdc01c57b82))
+- **aria-roles:** add group to menuitemradio context ([#2518](https://github.com/dequelabs/axe-core/issues/2518)) ([52b89f1](https://github.com/dequelabs/axe-core/commit/52b89f1ca67b2c04b8e96495cd6fe601e5c3eb54))
+- **aria-roles:** Add WAI-ARIA 1.2 roles ([#2544](https://github.com/dequelabs/axe-core/issues/2544)) ([635b084](https://github.com/dequelabs/axe-core/commit/635b084c5460a3328118ec4f5db678deb082966b)), closes [#2107](https://github.com/dequelabs/axe-core/issues/2107) [#2107](https://github.com/dequelabs/axe-core/issues/2107) [#2107](https://github.com/dequelabs/axe-core/issues/2107) [#2107](https://github.com/dequelabs/axe-core/issues/2107)
+- **attr-non-space-content-evaluate:** Split no attribute and empty attribute message ([#2495](https://github.com/dequelabs/axe-core/issues/2495)) ([5f822f4](https://github.com/dequelabs/axe-core/commit/5f822f4f32ce5597e78dd7db77b8412aea1154a5))
+- **audit:** updated axe.reset() to reset branding, application, and tagExcludes. ([#2537](https://github.com/dequelabs/axe-core/issues/2537)) ([828864b](https://github.com/dequelabs/axe-core/commit/828864bd9c32a6866e0e0dc6d7b263668a01497e))
+- **autocomplete-valid:** allow type=tel for appropriate cc types ([#2575](https://github.com/dequelabs/axe-core/issues/2575)) ([ae21713](https://github.com/dequelabs/axe-core/commit/ae2171364bee2fe1912a9da427525be4fa99a1db))
+- **checks/aria:** Mark elements missing from aria-errormessage for review ([#2550](https://github.com/dequelabs/axe-core/issues/2550)) ([8f9a035](https://github.com/dequelabs/axe-core/commit/8f9a035dca4aaa6f9fe20766d5a6f58ec1c4039c)), closes [#2460](https://github.com/dequelabs/axe-core/issues/2460)
+- **color-contrast:** allow small text shadows to serve as text outline ([#2627](https://github.com/dequelabs/axe-core/issues/2627)) ([432e1f3](https://github.com/dequelabs/axe-core/commit/432e1f367f1017d1c2c59d2242909852fecb0607))
+- **color-contrast:** mark elements with pseudo content as needs review ([#2613](https://github.com/dequelabs/axe-core/issues/2613)) ([fcdbdbc](https://github.com/dequelabs/axe-core/commit/fcdbdbc4d7324c952d08f69607870461f707c29b))
+- **color-contrast:** properly handle scrolling text ([#2619](https://github.com/dequelabs/axe-core/issues/2619)) ([984e7e2](https://github.com/dequelabs/axe-core/commit/984e7e2a96fc0cf8a1a810a17a771511225c5257))
+- **docs/rules:** add missing category tags to rules metadata ([#2569](https://github.com/dequelabs/axe-core/issues/2569)) ([285c442](https://github.com/dequelabs/axe-core/commit/285c442152d8a80dd13edb9ac064ac5030199524)), closes [#2554](https://github.com/dequelabs/axe-core/issues/2554)
+- **explicit-label:** work with multiple labels ([#2573](https://github.com/dequelabs/axe-core/issues/2573)) ([d26f106](https://github.com/dequelabs/axe-core/commit/d26f10699d099c8a4f2aacf180862890d8dbbe18))
+- **get-headers:** fix for rowspan and colspan ([#2545](https://github.com/dequelabs/axe-core/issues/2545)) ([3f02d14](https://github.com/dequelabs/axe-core/commit/3f02d14cbe3562e22762664843f8852f779be2a3))
+- **heading-order:** evaluate headings from iframes in DOM order ([#2572](https://github.com/dequelabs/axe-core/issues/2572)) ([46f6628](https://github.com/dequelabs/axe-core/commit/46f6628cc710b9aaa8b872790a0b8c42032a8134))
+- **implilcit-role:** use type property instead of attribute to resolve input role ([#2547](https://github.com/dequelabs/axe-core/issues/2547)) ([35e853d](https://github.com/dequelabs/axe-core/commit/35e853d91e1067b9156dfb6e89da0c7445baa86f)), closes [#2514](https://github.com/dequelabs/axe-core/issues/2514)
+- **link-name:** pass landmark content as link text ([#2617](https://github.com/dequelabs/axe-core/issues/2617)) ([e77992e](https://github.com/dequelabs/axe-core/commit/e77992eb1fb5e2c2365154a0f431f223e1b158ee))
+- **name-rules:** ignore when explicit roles don't require a name ([#2629](https://github.com/dequelabs/axe-core/issues/2629)) ([52fb138](https://github.com/dequelabs/axe-core/commit/52fb13872f2ff477b3a32d10d1fb5c72fde3adda))
+- **region:** allow role=dialog and svg elements outside regions ([#2586](https://github.com/dequelabs/axe-core/issues/2586)) ([fab58d4](https://github.com/dequelabs/axe-core/commit/fab58d4bf60a4d7b1c935b31384eecd0c57f92f5))
+- **region:** treat iframes as regions ([#2614](https://github.com/dequelabs/axe-core/issues/2614)) ([936db81](https://github.com/dequelabs/axe-core/commit/936db8105b7bfa1323568ab572a1e4b0428b4566))
+- **rule:** add check node to the check result object ([#2608](https://github.com/dequelabs/axe-core/issues/2608)) ([b188911](https://github.com/dequelabs/axe-core/commit/b188911613812a9aaaa95fb86606f842ee39b11a))
+- **scrollable-region-focusalbe:** do not fail for combobox pattern ([#2601](https://github.com/dequelabs/axe-core/issues/2601)) ([ac71a57](https://github.com/dequelabs/axe-core/commit/ac71a574f0285eceb11960416902169f7dce030d))
+- deprecate aria-form-field-name-matches for no-name-method-matches ([#2584](https://github.com/dequelabs/axe-core/issues/2584)) ([8be89e3](https://github.com/dequelabs/axe-core/commit/8be89e39883e5c421da06b1343c810502ac6e9a7))
+- do not allow fallback content for objects ([#2525](https://github.com/dequelabs/axe-core/issues/2525)) ([486eafe](https://github.com/dequelabs/axe-core/commit/486eafe72ca8e1b47edd53c0142aaab415b2d2d5))
+
 ### [4.0.2](https://github.com/dequelabs/axe-core/compare/v4.0.1...v4.0.2) (2020-09-08)
 
 ### Bug Fixes

@@ -1,4 +1,4 @@
-describe('input-button-name', function() {
+describe('input-button-name virtual-rule', function() {
 	it('should pass for type=submit without value', function() {
 		var results = axe.runVirtualRule('input-button-name', {
 			nodeName: 'input',
