@@ -1,4 +1,4 @@
-describe('area-alt', function() {
+describe('area-alt virtual-rule', function() {
 	it('should pass for aria-label', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'map'

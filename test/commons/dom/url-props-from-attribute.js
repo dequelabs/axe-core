@@ -55,19 +55,9 @@ describe('dom.urlPropsFromAttribute', function() {
 			vNode.actualNode,
 			'href'
 		);
-		/**
-		 * Note:
-		 * Given `a` has empty `href`, the url props will depend on the context in which the page is loaded
-		 * eg:
-		 * 	- http://localhost:9876/test/commons
-		 *  - http://localhost:9876/test/commons/?grep=url...
-		 *
-		 * Hence only asserting the what we know to be static values
-		 */
-		assert.equal(actual.protocol, 'http:');
-		assert.equal(actual.hostname, 'localhost');
-		assert.equal(actual.port, '9876');
-		assert.equal(actual.pathname, '/test/commons/');
+		assert.equal(actual.protocol, location.protocol);
+		assert.equal(actual.hostname, location.hostname);
+		assert.equal(actual.port, location.port);
 	});
 
 	it('returns URL properties for `A` with `HREF` (having HTTPS protocol)', function() {

@@ -75,7 +75,12 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
-      - run: npm run test
+      - run: npm run build
+      - run: npm run test:unit -- --browsers Chrome,Firefox
+      - run:
+          command: npm run start
+          background: true
+      - run: npm run test:integration -- --browsers Chrome,Firefox
 
   # Run the test suite in IE in windows
   test_win:
@@ -85,18 +90,17 @@ jobs:
       - checkout
       # npm i or restore cache
       - <<: *restore_dependency_cache_win
+      - run: npm run build
+      - run: npm run test:unit -- --browsers IE
       # install selenium
       - run: |
           choco install selenium-ie-driver --version 3.141.5
           export PATH=/c/tools/selenium:$PATH
           echo $PATH
-      # build `axe`
-      - run: npm run build
-      # get fixtures ready for running tests
-      - run: npx grunt testconfig
-      - run: npx grunt fixture
-      # run IE webdriver tests
-      - run: npx grunt connect test-webdriver:ie
+      - run:
+          command: npm run start
+          background: true
+      - run: npm run test:integration -- --browsers IE
       # test examples
       # Note: Jasmine karma-chrome-launcher requires chrome browser
       - run: choco install googlechrome --ignore-checksums
@@ -159,6 +163,7 @@ jobs:
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
+      - run: npm run build
       - run: npm run next-release
       - run: .circleci/verify-release.sh
       - run: npm publish --tag=next

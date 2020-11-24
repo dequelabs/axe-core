@@ -3,7 +3,7 @@ describe('axe.utils.processMessage', function() {
 
 	var original = axe._audit;
 
-	before(function() {
+	beforeEach(function() {
 		axe._audit = {
 			data: {
 				incompleteFallbackMessage: 'fallback message'

@@ -93,8 +93,8 @@ describe('external API', function() {
 				flat(axe._tree[0])
 			);
 		});
-		it('must return undefined for nodes not in the axe._tree', function() {
-			assert.isUndefined(axe.utils.getNodeFromTree(randomElement()));
+		it('must return null for nodes not in the axe._tree', function() {
+			assert.isNull(axe.utils.getNodeFromTree(randomElement()));
 		});
 	});
 

@@ -1,4 +1,4 @@
-describe('aria-tooltip-name', function() {
+describe('aria-tooltip-name virtual-rule', function() {
 	it('should pass for aria-label', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'div',

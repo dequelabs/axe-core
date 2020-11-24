@@ -1,4 +1,4 @@
-describe('object-alt', function() {
+describe('object-alt virtual-rule', function() {
 	it('should pass for aria-label', function() {
 		var results = axe.runVirtualRule('object-alt', {
 			nodeName: 'object',

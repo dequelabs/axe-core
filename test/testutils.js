@@ -10,6 +10,13 @@ if (window.__AXE_EXTENSION__) {
 /*eslint indent: 0*/
 var testUtils = {};
 
+/*eslint no-unused-vars: 0*/
+var checks, commons;
+var originalChecks = (checks = axe._audit.checks);
+var originalAudit = axe._audit;
+var originalRules = axe._audit.rules;
+var originalCommons = (commons = axe.commons);
+
 /**
  * Create a check context for mocking/resetting data and relatedNodes in tests
  *
@@ -395,6 +402,34 @@ testUtils.isIE11 = (function isIE11(navigator) {
 
 axe.testUtils = testUtils;
 
+// add fixture to the body if it's not already
+var fixture = document.getElementById('fixture');
+if (!fixture) {
+	fixture = document.createElement('div');
+	fixture.setAttribute('id', 'fixture');
+	document.body.insertBefore(fixture, document.body.firstChild);
+}
+
 afterEach(function() {
 	axe._cache.clear();
+
+	// remove all attributes from fixture (otherwise a leftover
+	// style attribute would cause avoid-inline-spacing integration
+	// test to fail with [#fixture] being included in the results)
+	var attrs = fixture.attributes;
+	for (var i = 0; i < attrs.length; i++) {
+		var attrName = attrs[i].name;
+		if (attrName !== 'id') {
+			fixture.removeAttribute(attrs[i].name);
+		}
+	}
+
+	// reset body styles
+	document.body.removeAttribute('style');
+
+	// reset from axe._load overriding
+	checks = originalChecks;
+	axe._audit = originalAudit;
+	axe._audit.rules = originalRules;
+	commons = axe.commons = originalCommons;
 });

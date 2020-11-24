@@ -1,4 +1,4 @@
-describe('aria-dialog-name', function() {
+describe('aria-dialog-name virtual-rule', function() {
 	it('should pass for aria-label', function() {
 		var node = new axe.SerialVirtualNode({
 			nodeName: 'div',

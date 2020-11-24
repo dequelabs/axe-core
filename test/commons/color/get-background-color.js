@@ -743,13 +743,14 @@ describe('color.getBackgroundColor', function() {
 
 	it('should return the html canvas inherited from body bgColor when element content does not overlap with body', function() {
 		fixture.innerHTML =
-			'<div id="target" style="position: relative; top: 2px;">Text</div>';
+			'<div id="target" style="position: relative; top: 2px; height: 10px;">Text</div>';
 
 		// size body element so that target element is positioned outside of background
 		var originalHeight = document.body.style.height;
 		var originalBg = document.body.style.background;
 		document.body.style.height = '1px';
 		document.body.style.background = '#000';
+		document.body.style.margin = 0;
 
 		axe.testUtils.flatTreeSetup(fixture);
 		var target = fixture.querySelector('#target');
