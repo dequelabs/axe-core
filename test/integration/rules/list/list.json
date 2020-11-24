@@ -1,24 +1,24 @@
 {
-	"description": "list test",
-	"rule": "list",
-	"violations": [
-		["#divul"],
-		["#mixedul"],
-		["#divol"],
-		["#mixedol"],
-		["#ulrolledallli"],
-		["#olrolledallli"]
-	],
-	"passes": [
-		["#emptyul"],
-		["#scriptemptyul"],
-		["#properul"],
-		["#scriptproperul"],
-		["#emptyol"],
-		["#scriptemptyol"],
-		["#properol"],
-		["#scriptproperol"],
-		["#ulrolledli"],
-		["#olrolledli"]
-	]
+  "description": "list test",
+  "rule": "list",
+  "violations": [
+    ["#divul"],
+    ["#mixedul"],
+    ["#divol"],
+    ["#mixedol"],
+    ["#ulrolledallli"],
+    ["#olrolledallli"]
+  ],
+  "passes": [
+    ["#emptyul"],
+    ["#scriptemptyul"],
+    ["#properul"],
+    ["#scriptproperul"],
+    ["#emptyol"],
+    ["#scriptemptyol"],
+    ["#properol"],
+    ["#scriptproperol"],
+    ["#ulrolledli"],
+    ["#olrolledli"]
+  ]
 }

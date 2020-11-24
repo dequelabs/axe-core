@@ -4,14 +4,14 @@ The [standards object](../lib/standards) is JSON object of ARIA and HTML spec in
 
 ```js
 axe.configure({
-	standards: {
-		ariaAttrs: {
-			'aria-relevant': {
-				// make the aria-relevant attribute global
-				global: true
-			}
-		}
-	}
+  standards: {
+    ariaAttrs: {
+      'aria-relevant': {
+        // make the aria-relevant attribute global
+        global: true
+      }
+    }
+  }
 });
 ```
 

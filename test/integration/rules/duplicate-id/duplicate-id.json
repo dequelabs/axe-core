@@ -1,6 +1,6 @@
 {
-	"description": "duplicate-id test",
-	"rule": "duplicate-id",
-	"violations": [[".fail1"]],
-	"passes": [["#fixture"], ["#pass1"], ["#pass2"], ["#pass3"]]
+  "description": "duplicate-id test",
+  "rule": "duplicate-id",
+  "violations": [[".fail1"]],
+  "passes": [["#fixture"], ["#pass1"], ["#pass2"], ["#pass3"]]
 }

@@ -1,11 +1,11 @@
 {
-	"id": "has-alt",
-	"evaluate": "has-alt-evaluate",
-	"metadata": {
-		"impact": "critical",
-		"messages": {
-			"pass": "Element has an alt attribute",
-			"fail": "Element does not have an alt attribute"
-		}
-	}
+  "id": "has-alt",
+  "evaluate": "has-alt-evaluate",
+  "metadata": {
+    "impact": "critical",
+    "messages": {
+      "pass": "Element has an alt attribute",
+      "fail": "Element does not have an alt attribute"
+    }
+  }
 }

@@ -90,7 +90,7 @@ data returned:
 
 ```js
 this.data({
-	missingData: 'bgImage'
+  missingData: 'bgImage'
 });
 ```
 

@@ -8,9 +8,9 @@ A simple message is just a string that doesn't use the `data` property. Most che
 
 ```json
 {
-	"messages": {
-		"pass": "Simple message for a passing check"
-	}
+  "messages": {
+    "pass": "Simple message for a passing check"
+  }
 }
 ```
 

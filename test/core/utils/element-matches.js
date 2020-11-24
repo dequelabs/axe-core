@@ -1,70 +1,70 @@
 describe('utils.matchesSelector', function() {
-	'use strict';
-	var matchesSelector = axe.utils.matchesSelector;
+  'use strict';
+  var matchesSelector = axe.utils.matchesSelector;
 
-	function mockMethod(method, returnValue) {
-		var result = {};
-		result[method] = function() {
-			return returnValue;
-		};
-		result.ownerDocument = {
-			defaultView: {
-				Element: {
-					prototype: {}
-				}
-			}
-		};
-		result.ownerDocument.defaultView.Element.prototype[method] = function() {};
+  function mockMethod(method, returnValue) {
+    var result = {};
+    result[method] = function() {
+      return returnValue;
+    };
+    result.ownerDocument = {
+      defaultView: {
+        Element: {
+          prototype: {}
+        }
+      }
+    };
+    result.ownerDocument.defaultView.Element.prototype[method] = function() {};
 
-		return result;
-	}
+    return result;
+  }
 
-	it('should check the prototype of the Element object for matching methods', function() {
-		assert.equal(matchesSelector(mockMethod('matches', 'test1')), 'test1');
-		assert.equal(
-			matchesSelector(mockMethod('matchesSelector', 'test2')),
-			'test2'
-		);
-		assert.equal(
-			matchesSelector(mockMethod('mozMatchesSelector', 'test3')),
-			'test3'
-		);
-		assert.equal(
-			matchesSelector(mockMethod('webkitMatchesSelector', 'test4')),
-			'test4'
-		);
-		assert.equal(
-			matchesSelector(mockMethod('msMatchesSelector', 'test5')),
-			'test5'
-		);
-	});
+  it('should check the prototype of the Element object for matching methods', function() {
+    assert.equal(matchesSelector(mockMethod('matches', 'test1')), 'test1');
+    assert.equal(
+      matchesSelector(mockMethod('matchesSelector', 'test2')),
+      'test2'
+    );
+    assert.equal(
+      matchesSelector(mockMethod('mozMatchesSelector', 'test3')),
+      'test3'
+    );
+    assert.equal(
+      matchesSelector(mockMethod('webkitMatchesSelector', 'test4')),
+      'test4'
+    );
+    assert.equal(
+      matchesSelector(mockMethod('msMatchesSelector', 'test5')),
+      'test5'
+    );
+  });
 
-	it('should actually work', function() {
-		var target,
-			fixture = document.getElementById('fixture');
+  it('should actually work', function() {
+    var target,
+      fixture = document.getElementById('fixture');
 
-		fixture.innerHTML = '<div id="test">Hi</div>';
-		target = document.getElementById('test');
-		assert.ok(matchesSelector(target, '#test'));
+    fixture.innerHTML = '<div id="test">Hi</div>';
+    target = document.getElementById('test');
+    assert.ok(matchesSelector(target, '#test'));
 
-		fixture.innerHTML = '';
-	});
+    fixture.innerHTML = '';
+  });
 
-	it('should return false if the element does not have a matching method', function() {
-		var target,
-			fixture = document.getElementById('fixture');
+  it('should return false if the element does not have a matching method', function() {
+    var target,
+      fixture = document.getElementById('fixture');
 
-		fixture.innerHTML = '<div id="test">Hi</div>';
-		target = document.getElementById('test');
+    fixture.innerHTML = '<div id="test">Hi</div>';
+    target = document.getElementById('test');
 
-		target.matches = null;
-		target.matchesSelector = null;
-		target.mozMatchesSelector = null;
-		target.webkitMatchesSelector = null;
-		target.msMatchesSelector = null;
+    target.matches = null;
+    target.matchesSelector = null;
+    target.mozMatchesSelector = null;
+    target.webkitMatchesSelector = null;
+    target.msMatchesSelector = null;
 
-		assert.isFalse(matchesSelector(target, '#test'));
+    assert.isFalse(matchesSelector(target, '#test'));
 
-		fixture.innerHTML = '';
-	});
+    fixture.innerHTML = '';
+  });
 });

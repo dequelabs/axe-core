@@ -48,15 +48,15 @@ Now insert calls at each point in your tests where a new piece of UI becomes vis
 
 ```js
 axe
-	.run()
-	.then(results => {
-		if (results.violations.length) {
-			throw new Error('Accessibility issues found');
-		}
-	})
-	.catch(err => {
-		console.error('Something bad happened:', err.message);
-	});
+  .run()
+  .then(results => {
+    if (results.violations.length) {
+      throw new Error('Accessibility issues found');
+    }
+  })
+  .catch(err => {
+    console.error('Something bad happened:', err.message);
+  });
 ```
 
 ## Supported Browsers
@@ -102,26 +102,26 @@ Additionally, locale can be applied at runtime by passing a `locale` object to `
 
 ```js
 axe.configure({
-	locale: {
-		lang: 'de',
-		rules: {
-			accesskeys: {
-				help: 'Der Wert des accesskey-Attributes muss einzigartig sein.'
-			}
-			// ...
-		},
-		checks: {
-			abstractrole: {
-				fail: 'Abstrakte ARIA-Rollen dürfen nicht direkt verwendet werden.'
-			},
-			'aria-errormessage': {
-				// Note: doT (https://github.com/olado/dot) templates are supported here.
-				fail:
-					'Der Wert der aria-errormessage ${data.values}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
-			}
-			// ...
-		}
-	}
+  locale: {
+    lang: 'de',
+    rules: {
+      accesskeys: {
+        help: 'Der Wert des accesskey-Attributes muss einzigartig sein.'
+      }
+      // ...
+    },
+    checks: {
+      abstractrole: {
+        fail: 'Abstrakte ARIA-Rollen dürfen nicht direkt verwendet werden.'
+      },
+      'aria-errormessage': {
+        // Note: doT (https://github.com/olado/dot) templates are supported here.
+        fail:
+          'Der Wert der aria-errormessage ${data.values}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
+      }
+      // ...
+    }
+  }
 });
 ```
 

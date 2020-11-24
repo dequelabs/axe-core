@@ -8,17 +8,17 @@ const inquirer = require('inquirer');
  * @returns {Array}
  */
 const getChecks = async (checks = []) => {
-	const checkDetails = await inquirer.prompt([
-		questions.getCheckName,
-		questions.getCheckCategory,
-		questions.getCheckType,
-		questions.getIsAnotherCheck
-	]);
-	checks.push(checkDetails);
-	if (checkDetails.getIsAnotherCheck) {
-		await getChecks(checks);
-	}
-	return checks;
+  const checkDetails = await inquirer.prompt([
+    questions.getCheckName,
+    questions.getCheckCategory,
+    questions.getCheckType,
+    questions.getIsAnotherCheck
+  ]);
+  checks.push(checkDetails);
+  if (checkDetails.getIsAnotherCheck) {
+    await getChecks(checks);
+  }
+  return checks;
 };
 
 /**
@@ -27,35 +27,35 @@ const getChecks = async (checks = []) => {
  * @returns {Object} answers
  */
 const getAnswers = async () => {
-	// answers for RULE meta data
-	const { getRuleName, getIsRuleMatches } = await inquirer.prompt([
-		questions.getRuleName,
-		questions.getIsRuleMatches
-	]);
+  // answers for RULE meta data
+  const { getRuleName, getIsRuleMatches } = await inquirer.prompt([
+    questions.getRuleName,
+    questions.getIsRuleMatches
+  ]);
 
-	// answers for CHECK meta data
-	let ruleChecks = [];
-	const { getIsCheck } = await inquirer.prompt([questions.getIsCheck]);
-	if (getIsCheck) {
-		ruleChecks = await getChecks();
-	}
+  // answers for CHECK meta data
+  let ruleChecks = [];
+  const { getIsCheck } = await inquirer.prompt([questions.getIsCheck]);
+  if (getIsCheck) {
+    ruleChecks = await getChecks();
+  }
 
-	// answers if TEST files to be created
-	const {
-		getIsUnitTestAssets,
-		getIsIntegrationTestAssets
-	} = await inquirer.prompt([
-		questions.getIsUnitTestAssets,
-		questions.getIsIntegrationTestAssets
-	]);
+  // answers if TEST files to be created
+  const {
+    getIsUnitTestAssets,
+    getIsIntegrationTestAssets
+  } = await inquirer.prompt([
+    questions.getIsUnitTestAssets,
+    questions.getIsIntegrationTestAssets
+  ]);
 
-	return {
-		ruleName: getRuleName.toLowerCase(),
-		ruleHasMatches: getIsRuleMatches,
-		ruleChecks,
-		ruleHasUnitTestAssets: getIsUnitTestAssets,
-		ruleHasIntegrationTestAssets: getIsIntegrationTestAssets
-	};
+  return {
+    ruleName: getRuleName.toLowerCase(),
+    ruleHasMatches: getIsRuleMatches,
+    ruleChecks,
+    ruleHasUnitTestAssets: getIsUnitTestAssets,
+    ruleHasIntegrationTestAssets: getIsIntegrationTestAssets
+  };
 };
 
 module.exports = getAnswers;

@@ -1,6 +1,6 @@
 {
-	"description": "audio-caption test",
-	"rule": "audio-caption",
-	"incomplete": [["#empty"]],
-	"passes": [["#caption"]]
+  "description": "audio-caption test",
+  "rule": "audio-caption",
+  "incomplete": [["#empty"]],
+  "passes": [["#caption"]]
 }
