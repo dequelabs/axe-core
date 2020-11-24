@@ -265,7 +265,8 @@ describe('runRules', function() {
                           "/iframe[@id='context-test']",
                           "/div[@id='foo']"
                         ],
-                        source: '<div id="foo">\n			<div id="bar"></div>\n		</div>'
+                        source:
+                          '<div id="foo">\n      <div id="bar"></div>\n    </div>'
                       },
                       any: [
                         {
@@ -283,7 +284,7 @@ describe('runRules', function() {
                                 "/div[@id='foo']"
                               ],
                               source:
-                                '<div id="foo">\n			<div id="bar"></div>\n		</div>'
+                                '<div id="foo">\n      <div id="bar"></div>\n    </div>'
                             }
                           ]
                         }
