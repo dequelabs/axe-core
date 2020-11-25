@@ -11,6 +11,7 @@ var args = process.argv.slice(2);
 
 // start local server in the background
 var startServer = execa('npm', ['run', 'start']);
+startServer.stdout.pipe(process.stdout);
 
 // allow running certain browsers through command line args
 // (only one browser supported, run multiple times for more browsers)
@@ -163,25 +164,6 @@ function buildWebDriver(browser) {
 }
 
 /**
- * Clean up and terminate
- */
-function end(options) {
-  var errCode = options.errCode;
-  var killResult = startServer.kill('SIGTERM', {
-    forceKillAfterTimeout: 500
-  });
-
-  // end the program immediately if the server was terminated
-  // successfully, otherwise wait a second for the force kill
-  setTimeout(
-    function() {
-      process.exit(errCode);
-    },
-    killResult ? 0 : 1000
-  );
-}
-
-/**
  * Start the integration tests
  */
 function start(options) {
@@ -208,7 +190,7 @@ function start(options) {
     console.log(
       'Skipped ' + options.browser + ' as it is not supported on this platform'
     );
-    return end();
+    return process.exit();
   }
 
   // try to load the browser
@@ -221,7 +203,7 @@ function start(options) {
     console.log();
     console.log(err.message);
     console.log('Aborted testing using ' + options.browser);
-    return end();
+    return process.exit();
   }
 
   // Give driver timeout options for scripts
@@ -249,13 +231,13 @@ function start(options) {
         console.log();
       });
 
-      end({ errCode: testErrors.length });
+      process.exit(testErrors.length);
 
       // catch any potential problems
     })
     .catch(function(err) {
       console.log(err);
-      end({ errCode: 1 });
+      process.exit(1);
     });
 }
 
@@ -267,6 +249,11 @@ startServer.stdout.on('data', function(chunk) {
   // local server we will need to update this to match the
   // server start output
   if (str.includes('Starting up')) {
-    start({ browser: browser });
+    // give enough time to finish the startup before starting
+    // test
+    setTimeout(function() {
+      console.log('\nStarting integration test\n');
+      start({ browser: browser });
+    }, 500);
   }
 });
