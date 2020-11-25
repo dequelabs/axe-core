@@ -77,8 +77,8 @@ jobs:
       - <<: *restore_dependency_cache_unix
       - run: npm run build
       - run: npm run test:unit -- --browsers Chrome,Firefox
-      - run: npm run test:integration -- browser=Chrome
-      - run: npm run test:integration -- browser=Firefox
+      - run: npm run test:integration:chrome
+      - run: npm run test:integration:firefox
 
   # Run the test suite in IE in windows
   test_win:
@@ -95,7 +95,7 @@ jobs:
           choco install selenium-ie-driver --version 3.141.5
           export PATH=/c/tools/selenium:$PATH
           echo $PATH
-      - run: npm run test:integration -- browser=IE
+      - run: npm run test:integration:ie
       # test examples
       # Note: Jasmine karma-chrome-launcher requires chrome browser
       - run: choco install googlechrome --ignore-checksums
