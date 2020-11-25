@@ -5,8 +5,12 @@ var WebDriver = require('selenium-webdriver');
 var chrome = require('selenium-webdriver/chrome');
 var chromedriver = require('chromedriver');
 var isCI = require('is-ci');
+var execa = require('execa');
 
 var args = process.argv.slice(2);
+
+// start local server in the background
+var startServer = execa('npm', ['run', 'start']);
 
 // allow running certain browsers through command line args
 // (only one browser supported, run multiple times for more browsers)
@@ -158,6 +162,28 @@ function buildWebDriver(browser) {
   };
 }
 
+/**
+ * Clean up and terminate
+ */
+function end(options) {
+  var errCode = options.errCode;
+  var killResult = startServer.kill('SIGTERM', {
+    forceKillAfterTimeout: 500
+  });
+
+  // end the program immediately if the server was terminated
+  // successfully, otherwise wait a second for the force kill
+  setTimeout(
+    function() {
+      process.exit(errCode);
+    },
+    killResult ? 0 : 1000
+  );
+}
+
+/**
+ * Start the integration tests
+ */
 function start(options) {
   var driver;
   var isMobile = false;
@@ -182,7 +208,7 @@ function start(options) {
     console.log(
       'Skipped ' + options.browser + ' as it is not supported on this platform'
     );
-    return process.exit();
+    return end();
   }
 
   // try to load the browser
@@ -195,7 +221,7 @@ function start(options) {
     console.log();
     console.log(err.message);
     console.log('Aborted testing using ' + options.browser);
-    return process.exit();
+    return end();
   }
 
   // Give driver timeout options for scripts
@@ -223,14 +249,24 @@ function start(options) {
         console.log();
       });
 
-      process.exit(testErrors.length);
+      end({ errCode: testErrors.length });
 
       // catch any potential problems
     })
     .catch(function(err) {
       console.log(err);
-      process.exit(1);
+      end({ errCode: 1 });
     });
 }
 
-start({ browser: browser });
+// start the test once the sever is started
+startServer.stdout.on('data', function(chunk) {
+  var str = chunk.toString();
+
+  // NOTE: this is specific from http-server. if we change the
+  // local server we will need to update this to match the
+  // server start output
+  if (str.includes('Starting up')) {
+    start({ browser: browser });
+  }
+});
