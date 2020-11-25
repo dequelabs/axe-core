@@ -5,13 +5,8 @@ var WebDriver = require('selenium-webdriver');
 var chrome = require('selenium-webdriver/chrome');
 var chromedriver = require('chromedriver');
 var isCI = require('is-ci');
-var execa = require('execa');
 
 var args = process.argv.slice(2);
-
-// start local server in the background
-var startServer = execa('npm', ['run', 'start']);
-startServer.stdout.pipe(process.stdout);
 
 // allow running certain browsers through command line args
 // (only one browser supported, run multiple times for more browsers)
@@ -163,9 +158,6 @@ function buildWebDriver(browser) {
   };
 }
 
-/**
- * Start the integration tests
- */
 function start(options) {
   var driver;
   var isMobile = false;
@@ -241,19 +233,4 @@ function start(options) {
     });
 }
 
-// start the test once the sever is started
-startServer.stdout.on('data', function(chunk) {
-  var str = chunk.toString();
-
-  // NOTE: this is specific from http-server. if we change the
-  // local server we will need to update this to match the
-  // server start output
-  if (str.includes('Starting up')) {
-    // give enough time to finish the startup before starting
-    // test
-    setTimeout(function() {
-      console.log('\nStarting integration test\n');
-      start({ browser: browser });
-    }, 500);
-  }
-});
+start({ browser: browser });
