@@ -2,7 +2,7 @@
   "id": "region",
   "evaluate": "region-evaluate",
   "options": {
-    "regionMatcher": "dialog, [role=dialog], svg, iframe"
+    "regionMatcher": "dialog, [role=dialog], [role=alertdialog], svg, iframe"
   },
   "metadata": {
     "impact": "moderate",

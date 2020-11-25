@@ -274,6 +274,14 @@ describe('region', function() {
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
   });
 
+  it('treats role=alertdialog elements as regions', function() {
+    var checkArgs = checkSetup(
+      '<div role="alertdialog" id="target"><p>This is random content.</p></div><div role="main">Content</div>'
+    );
+
+    assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
   it('treats svg elements as regions', function() {
     var checkArgs = checkSetup(
       '<svg id="target"></svg><div role="main">Content</div>'
