@@ -1,0 +1,14 @@
+{
+	"id": "target-space",
+	"evaluate": "target-space-evaluate",
+	"options": {
+		"minSpacing": 24
+	},
+	"metadata": {
+		"impact": "serious",
+		"messages": {
+			"pass": "Target is sufficiently spaced from its neighbours",
+			"fail": "Target is insufficiently spaced from its neighbours"
+		}
+	}
+}
