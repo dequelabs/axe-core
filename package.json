@@ -57,7 +57,7 @@
   },
   "scripts": {
     "start": "http-server -p 9876",
-    "develop": "grunt dev --force",
+    "develop": "grunt dev",
     "api-docs": "jsdoc --configure .jsdoc.json",
     "build": "grunt",
     "eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
@@ -102,6 +102,7 @@
     "grunt-bytesize": "^0.2.0",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-connect": "^3.0.0",
     "grunt-contrib-uglify": "^4.0.0",
     "grunt-contrib-watch": "^1.1.0",
     "html-entities": "^1.2.0",

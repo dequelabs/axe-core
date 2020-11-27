@@ -1,12 +1,9 @@
-/*eslint
-camelcase: ["error", {"properties": "never"}]
-*/
+/*eslint camelcase: ["error", {"properties": "never"}] */
 module.exports = function(grunt) {
-  'use strict';
-
   grunt.loadNpmTasks('grunt-babel');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-bytesize');
@@ -199,6 +196,15 @@ module.exports = function(grunt) {
         tasks: ['build', 'notify']
       }
     },
+    connect: {
+      test: {
+        options: {
+          hostname: '0.0.0.0',
+          port: grunt.option('port') || 9876,
+          base: ['.']
+        }
+      }
+    },
     notify: {
       data: {
         title: 'Axe-core',
@@ -228,6 +234,7 @@ module.exports = function(grunt) {
     'aria-supported',
     'bytesize'
   ]);
+  grunt.registerTask('prepare', ['build', 'connect']);
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('dev', ['watch']);
+  grunt.registerTask('dev', ['prepare', 'watch']);
 };
