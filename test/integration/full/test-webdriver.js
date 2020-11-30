@@ -4,7 +4,6 @@ var globby = require('globby');
 var WebDriver = require('selenium-webdriver');
 var chrome = require('selenium-webdriver/chrome');
 var chromedriver = require('chromedriver');
-var isCI = require('is-ci');
 
 var args = process.argv.slice(2);
 
@@ -18,13 +17,6 @@ args.forEach(function(arg) {
     browser = parts[1].toLowerCase();
   }
 });
-
-// circle has everything configured to run chrome but local install
-// may not
-if (browser === 'chrome' && !isCI) {
-  var service = new chrome.ServiceBuilder(chromedriver.path).build();
-  chrome.setDefaultService(service);
-}
 
 /**
  * Keep injecting scripts until window.mochaResults is set
@@ -137,6 +129,9 @@ function buildWebDriver(browser) {
   // fix chrome DevToolsActivePort file doesn't exist in CricleCI
   // @see https://stackoverflow.com/questions/50642308/webdriverexception-unknown-error-devtoolsactiveport-file-doesnt-exist-while-t
   if (browser === 'chrome') {
+    var service = new chrome.ServiceBuilder(chromedriver.path).build();
+    chrome.setDefaultService(service);
+
     capabilities = WebDriver.Capabilities.chrome();
     capabilities.set('chromeOptions', {
       args: [
