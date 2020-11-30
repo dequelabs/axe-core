@@ -134,7 +134,7 @@ function buildWebDriver(browser) {
     };
   }
 
-  // fix chrome DevToolsActivePort file doesn't exist
+  // fix chrome DevToolsActivePort file doesn't exist in CricleCI
   // @see https://stackoverflow.com/questions/50642308/webdriverexception-unknown-error-devtoolsactiveport-file-doesnt-exist-while-t
   if (browser === 'chrome') {
     capabilities = WebDriver.Capabilities.chrome();
