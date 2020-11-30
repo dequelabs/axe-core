@@ -140,10 +140,10 @@ function buildWebDriver(browser) {
     capabilities = WebDriver.Capabilities.chrome();
     capabilities.set('chromeOptions', {
       args: [
-        'disable-infobars',
+        '--no-sandbox',
         '--disable-extensions',
         '--disable-dev-shm-usage',
-        '--no-sandbox'
+        '--remote-debugging-port=9222'
       ]
     });
   }
