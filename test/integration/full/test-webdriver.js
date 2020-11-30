@@ -117,6 +117,7 @@ function runTestUrls(driver, isMobile, urls, errors) {
 function buildWebDriver(browser) {
   var capabilities;
   var mobileBrowser = browser.split('-mobile');
+
   if (mobileBrowser.length > 1) {
     browser = mobileBrowser[0];
     capabilities = {
@@ -131,6 +132,20 @@ function buildWebDriver(browser) {
         }
       }
     };
+  }
+
+  // fix chrome DevToolsActivePort file doesn't exist
+  // @see https://stackoverflow.com/questions/50642308/webdriverexception-unknown-error-devtoolsactiveport-file-doesnt-exist-while-t
+  if (browser === 'chrome') {
+    capabilities = WebDriver.Capabilities.chrome();
+    capabilities.set('chromeOptions', {
+      args: [
+        'disable-infobars',
+        '--disable-extensions',
+        '--disable-dev-shm-usage',
+        '--no-sandbox'
+      ]
+    });
   }
 
   var webdriver = new WebDriver.Builder()
