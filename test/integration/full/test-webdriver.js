@@ -136,8 +136,10 @@ function buildWebDriver(browser) {
     capabilities.set('chromeOptions', {
       args: [
         '--no-sandbox',
+        '--headless',
         '--disable-extensions',
         '--disable-dev-shm-usage',
+        '-disable-gpu',
         '--remote-debugging-port=9222'
       ]
     });
