@@ -126,7 +126,9 @@ function buildWebDriver(browser) {
     };
   }
 
-  // fix chrome DevToolsActivePort file doesn't exist in CricleCI
+  // fix chrome DevToolsActivePort file doesn't exist in CricleCI (as well as a
+  // host of other problems with starting Chrome). the only thing that seems to
+  // allow Chrome to start without problems consistently is using ChromeHeadless
   // @see https://stackoverflow.com/questions/50642308/webdriverexception-unknown-error-devtoolsactiveport-file-doesnt-exist-while-t
   if (browser === 'chrome') {
     var service = new chrome.ServiceBuilder(chromedriver.path).build();
@@ -138,9 +140,7 @@ function buildWebDriver(browser) {
         '--no-sandbox',
         '--headless',
         '--disable-extensions',
-        '--disable-dev-shm-usage',
-        '-disable-gpu',
-        '--remote-debugging-port=9222'
+        '--disable-dev-shm-usage'
       ]
     });
   }
