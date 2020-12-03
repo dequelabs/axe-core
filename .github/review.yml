@@ -2,7 +2,7 @@
 review_merges: true
 
 approve_button_tooltip: No security or PR title concerns
-decline_button_tooltip: Found security or PR title  concerns
+decline_button_tooltip: Found security or PR title concerns
 
 pending_description: Pull request not yet approved for security and a correct PR title
 pending_summary: >
