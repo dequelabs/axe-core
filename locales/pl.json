@@ -1,5 +1,5 @@
 {
-	"lang": "pl.",
+	"lang": "pl",
 	"rules": {
 		"accesskeys": {
 			"description": "Każdy atrybut accessskey jest unikalny.",
