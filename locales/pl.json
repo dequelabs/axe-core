@@ -82,7 +82,7 @@
 			"help": "Atrybuty ARIA muszą mieć poprawne wartości."
 		},
 		"aria-valid-attr": {
-			"description": "Atrybuty, które rozpoczynają się od aria- są  poprawnymi atrybutami ARIA.",
+			"description": "Atrybuty, które rozpoczynają się od aria- są poprawnymi atrybutami ARIA.",
 			"help": "Atrybuty ARIA muszą być mieć poprawne nazwy."
 		},
 		"audio-caption": {
@@ -114,7 +114,7 @@
 			"help": "Elementy muszą mieć wystarczający kontrast kolorów."
 		},
 		"css-orientation-lock": {
-			"description": "Treść nie jest zablokowana w żadnej konkretnej orientacji wyświetlacza i  jest obsługiwana we wszystkich orientacjach wyświetlacza.",
+			"description": "Treść nie jest zablokowana w żadnej konkretnej orientacji wyświetlacza i jest obsługiwana we wszystkich orientacjach wyświetlacza.",
 			"help": "Zapytania medialne nie są wykorzystywane do blokowania orientacji wyświetlacza."
 		},
 		"definition-list": {
@@ -218,7 +218,7 @@
 			"help": "Element formularza musi mieć etykietę."
 		},
 		"landmark-banner-is-top-level": {
-			"description": "Obszar banner jest obszarem kluczowym  najwyższego poziomu.",
+			"description": "Obszar banner jest obszarem kluczowym najwyższego poziomu.",
 			"help": "Punkt orientacyjny banner nie może być zawarty wewnątrz innego obszaru kluczowego."
 		},
 		"landmark-complementary-is-top-level": {
@@ -334,7 +334,7 @@
 			"help": "Cel łącza pomijającego powinien istnieć i przyjmować fokus."
 		},
 		"svg-img-alt": {
-			"description": "Elementy svg z rolą img,  graphics-document lub graphics-symbol mają dostępny tekst.",
+			"description": "Elementy svg z rolą img, graphics-document lub graphics-symbol mają dostępny tekst.",
 			"help": "Elementy svg z rolą img mają tekst alternatywny."
 		},
 		"tabindex": {
@@ -510,7 +510,7 @@
 				"bgGradient": "Nie można określić koloru tła elementu, ponieważ element ma gradientowe tło.",
 				"imgNode": "Nie można określić koloru tła elementu, ponieważ element zawiera węzeł obrazu.",
 				"bgOverlap": "Nie można określić koloru tła elementu, ponieważ nakłada się na niego inny element.",
-				"fgAlpha": "Nie można określić koloru pierwszego planu elementu  powodu przezroczystości alfa.",
+				"fgAlpha": "Nie można określić koloru pierwszego planu elementu z powodu przezroczystości alfa.",
 				"elmPartiallyObscured": "Nie można określić koloru tła elementu, ponieważ jest on częściowo zasłonięty przez inny element.",
 				"elmPartiallyObscuring": "Nie można określić koloru tła elementu, ponieważ częściowo nakłada się on na inne elementy.",
 				"outsideViewport": "Nie można określić koloru tła elementu, ponieważ znajduje się on poza obszarem operacyjnym.",
@@ -527,8 +527,8 @@
 				"default": "Nie można określić współczynnika kontrastu.",
 				"bgContrast": "Nie można określić współczynnika kontrastu elementu. Sprawdź, czy nie ma odrębnego stylu stanów hover/fokus.",
 				"bgImage": "Nie można określić współczynnika kontrastu elementu ze względu na obraz tła.",
-				"bgGradient": "Nie można określić współczynnika kontrastu elementu ze względu  na gradient tła.",
-				"imgNode": "Nie można określić współczynnika kontrastu elementu,  ponieważ element zawiera węzeł obrazu.",
+				"bgGradient": "Nie można określić współczynnika kontrastu elementu ze względu na gradient tła.",
+				"imgNode": "Nie można określić współczynnika kontrastu elementu, ponieważ element zawiera węzeł obrazu.",
 				"bgOverlap": "Nie można określić współczynnika kontrastu elementu ze względu na nakładanie się elementów."
 			}
 		},
@@ -571,7 +571,7 @@
 		},
 		"landmark-is-top-level": {
 			"pass": "Punkt orientacyjny ${data.role} jest na najwyższym poziomie.",
-			"fail": "Punkt orientacyjny {data.role}  jest wewnątrz innego obszaru kluczowego."
+			"fail": "Punkt orientacyjny {data.role} jest wewnątrz innego obszaru kluczowego."
 		},
 		"page-has-heading-one": {
 			"pass": "Strona ma co najmniej jeden nagłówek 1. poziomu.",
@@ -648,7 +648,7 @@
 			}
 		},
 		"valid-lang": {
-			"pass": "Wartość atrybutu lang znajduje się na liście poprawnych kodów  języków.",
+			"pass": "Wartość atrybutu lang znajduje się na liście poprawnych kodów języków.",
 			"fail": "Wartości atrybutu lang nie ma na liście poprawnych kodów języków."
 		},
 		"xml-lang-mismatch": {
@@ -667,8 +667,8 @@
 			}
 		},
 		"only-dlitems": {
-			"pass": "Element <dl>  ma wewnątrz tylko dozwolone jako bezpośrednie elementy potomne (dzieci)  elementy <dt> lub <dd> .",
-			"fail": "Element listy ma wewnątrz bezpośrednie elementy dzieci, które nie są dozwolone wewnątrz listy opisowej ??????????."
+			"pass": "Element <dl>  ma wewnątrz tylko dozwolone jako bezpośrednie elementy potomne (dzieci) elementy <dt> lub <dd> .",
+			"fail": "Element listy ma wewnątrz bezpośrednie elementy dzieci, które nie są dozwolone wewnątrz listy opisowej."
 		},
 		"only-listitems": {
 			"pass": "Element lista ma wewnątrz tylko dozwolone  jako bezpośrednie elementy potomne (dzieci) elementy <li>.",
@@ -697,7 +697,7 @@
 		},
 		"css-orientation-lock": {
 			"pass": "Wyświetlacz działa sprawnie,  orientacja nie jest blokowana.",
-			"fail": "Zastosowano blokadę orientacji wyświetlacza,  w rezultacie wyświetlacz nie działa sprawnie.",
+			"fail": "Zastosowano blokadę orientacji wyświetlacza, w rezultacie wyświetlacz nie działa sprawnie.",
 			"incomplete": "Nie można blokować orientacji wyświetlacza za pomocą ustawień CSS."
 		},
 		"meta-viewport-large": {
@@ -813,9 +813,9 @@
 		"non-empty-if-present": {
 			"pass": {
 				"default": "Element nie posiada atrybutu bez określonej wartości.",
-				"has-label": "Element ma atrybuty bez określonej wartości ???????."
+				"has-label": "Element ma atrybuty bez określonej wartości."
 			},
-			"fail": "Element ma atrybut wartości, a atrybut wartości jest pusty ??????."
+			"fail": "Element ma atrybut wartości, a atrybut wartości jest pusty."
 		},
 		"non-empty-placeholder": {
 			"pass": "Element ma atrybut placeholder.",
@@ -901,10 +901,10 @@
 	},
 	"failureSummaries": {
 		"any": {
-			"failureMessage": "Napraw następujące elementy: {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+			"failureMessage": "Napraw następujące elementy: {{~it:value}}\n {{=value.split('\\n').join('\\n ')}}{{~}}"
 		},
 		"none": {
-			"failureMessage": "Napraw wszystkie poniższe: {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+			"failureMessage": "Napraw wszystkie poniższe: {{~it:value}}\n {{=value.split('\\n').join('\\n ')}}{{~}}"
 		}
 	},
 	"incompleteFallbackMessage": "AXE nie potrafił określić powodu. Czas użyć inspektora elementów!"
