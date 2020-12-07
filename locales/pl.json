@@ -6,7 +6,7 @@
 			"help": "Wartość atrybutu Accessskey musi być unikalna."
 		},
 		"area-alt": {
-			"description": "Element <area> w graficznych mapach odnośników mają tekst zastępczy.",
+			"description": "Elementy <area> w graficznych mapach odnośników mają tekst zastępczy.",
 			"help": "Elementy aktywne <area> muszą mieć tekst alternatywny."
 		},
 		"aria-allowed-attr": {
@@ -23,7 +23,7 @@
 		},
 		"aria-dialog-name": {
 			"description": "Każde okno dialogowe ARIA i węzeł alertdialog ma dostępną nazwę.",
-			"help": "Okno dialogowe ARIA i węzły alarmowo-dialogowe muszą mieć dostępną nazwę."
+			"help": "Okno dialogowe ARIA i węzły alertdialog muszą mieć dostępną nazwę."
 		},
 		"aria-hidden-body": {
 			"description": "W korpusie dokumentu nie ma atrybutu aria-hidden='true'.",
@@ -31,7 +31,7 @@
 		},
 		"aria-hidden-focus": {
 			"description": "Elementy z aria-hidden nie mogą obejmować elementów przyjmujących fokus.",
-			"help": "Ukryty element ARIA nie może zawierać elementów skupiających uwagę."
+			"help": "Ukryty element ARIA nie może zawierać elementów przyjmujących fokus."
 		},
 		"aria-input-field-name": {
 			"description": "Każde pole wejściowe ARIA ma dostępną nazwę.",
@@ -47,7 +47,7 @@
 		},
 		"aria-required-attr": {
 			"description": "Elementy z rolami ARIA mają wszystkie wymagane atrybuty ARIA.",
-			"help": "Wymagane atrybuty ARIA muszą być dostarczone."
+			"help": "Wymagane atrybuty ARIA muszą istnieć."
 		},
 		"aria-required-children": {
 			"description": "Elementy z rolą ARIA, które wymagają ról potomnych, zawierają je.",
@@ -79,11 +79,11 @@
 		},
 		"aria-valid-attr-value": {
 			"description": "Wszystkie atrybuty ARIA mają poprawne wartości.",
-			"help": "Atrybuty ARIA muszą być zgodne z ważnymi wartościami."
+			"help": "Atrybuty ARIA muszą mieć poprawne wartości."
 		},
 		"aria-valid-attr": {
 			"description": "Atrybuty, które rozpoczynają się od aria- są  poprawnymi atrybutami ARIA.",
-			"help": "Atrybuty ARIA muszą być zgodne z ważnymi nazwami."
+			"help": "Atrybuty ARIA muszą być mieć poprawne nazwy."
 		},
 		"audio-caption": {
 			"description": "Elementy <audio> mają napisy rozszerzone.",
@@ -415,14 +415,14 @@
 			"pass": "Wszystkie wymagane atrybuty ARIA istnieją.",
 			"fail": {
 				"singular": "Wymagany atrybut ARIA nie istnieje: ${data.values}.",
-				"plural": ": Wymagane atrybuty ARIA nie istnieją: ${data.values}."
+				"plural": "Wymagane atrybuty ARIA nie istnieją: ${data.values}."
 			}
 		},
 		"aria-required-children": {
 			"pass": "Wymagane dzieci ARIA istnieją.",
 			"fail": {
 				"singular": "Wymagana rola dziecka ARIA nie istnieje: ${data.values}.",
-				"plural": ": Wymagane role dzieci ARIA nie istnieją: ${data.values}."
+				"plural": "Wymagane role dzieci ARIA nie istnieją: ${data.values}."
 			},
 			"incomplete": {
 				"singular": "Należy dodać oczekiwaną rolę dziecka ARIA: ${data.values}.",
@@ -433,7 +433,7 @@
 			"pass": "Wymagana rola rodzica ARIA istnieje.",
 			"fail": {
 				"singular": "Wymagana rola rodzica ARIA nie istnieje: ${data.values}.",
-				"plural": ": Wymagane role rodziców ARIA nie istnieją: ${data.values}."
+				"plural": "Wymagane role rodziców ARIA nie istnieją: ${data.values}."
 			}
 		},
 		"aria-roledescription": {
@@ -733,7 +733,7 @@
 			"fail": "Znacznik <meta> wymusza odświeżenie strony."
 		},
 		"p-as-heading": {
-			"pass": "<p> elementy nie są stylizowane na nagłówki.",
+			"pass": "Elementy <p> nie są stylizowane na nagłówki.",
 			"fail": "Zamiast stylizowanych na nagłówki elementów p muszą być używane nagłówki semantyczne."
 		},
 		"region": {
