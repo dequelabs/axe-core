@@ -86,6 +86,18 @@ describe('axe.utils.getFlattenedTree', function() {
     assert(tree[0].parent === null);
   });
 
+  it('should cache selector', function() {
+    fixture.innerHTML = '<div></div><span></span><main></main>';
+    axe.utils.getFlattenedTree(fixture);
+    assert.exists(axe._cache.get('selectorMap'));
+    assert.lengthOf(axe._cache.get('selectorMap')['*'], 4);
+  });
+
+  it('should designate the top node', function() {
+    var tree = axe.utils.getFlattenedTree();
+    assert.exists(tree[0]._selectorMap);
+  });
+
   if (shadowSupport.v0) {
     describe('shadow DOM v0', function() {
       afterEach(function() {

@@ -254,6 +254,11 @@ describe('utils.matches', function() {
       assert.isFalse(matches(virtualNode, 'div span > td h1'));
     });
 
+    it('returns false if node does not have parent to match', function() {
+      queryFixture('<span id="target" class="foo bar baz"></span>');
+      assert.isFalse(matches(axe._tree[0], 'html *'));
+    });
+
     it('throws error if combinator is not implemented', function() {
       var virtualNode = queryFixture('<div></div><h1 id="target">foo</h1>');
       assert.throws(function() {
