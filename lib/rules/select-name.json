@@ -12,7 +12,7 @@
   ],
   "metadata": {
     "description": "Ensures select element has an accessible name",
-    "help": "Select element must have and accessible name"
+    "help": "Select element must have an accessible name"
   },
   "all": [],
   "any": [
