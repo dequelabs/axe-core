@@ -58,11 +58,13 @@ describe('axe.utils.querySelectorAllFilter', function() {
       if (describeName === 'without cache') {
         beforeEach(function() {
           dom = getTestDom();
-          axe._cache.clear();
+
+          // prove we're using the DOM by deleting the cache
+          delete dom[0]._selectorCache;
         });
 
         it('should not have a primed cache', function() {
-          assert.isUndefined(axe._cache.get('selectorMap'));
+          assert.isUndefined(dom[0]._selectorCache);
         });
       } else {
         beforeEach(function() {

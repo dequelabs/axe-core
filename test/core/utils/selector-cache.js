@@ -161,12 +161,15 @@ describe('utils.selector-map', function() {
       cacheNodeSelectors(vNode);
       tree[0]._selectorMap = cache.get('selectorMap');
 
-      var nodes = getNodesMatchingSelector(tree, 'div, [aria-label]', function(
-        node
-      ) {
+      function filter(node) {
         return node.hasAttr('role');
-      });
-      assert.lengthOf(nodes, 1);
+      }
+
+      assert.lengthOf(getNodesMatchingSelector(tree, 'div, [aria-label]'), 2);
+      assert.lengthOf(
+        getNodesMatchingSelector(tree, 'div, [aria-label]', filter),
+        1
+      );
     });
   });
 });
