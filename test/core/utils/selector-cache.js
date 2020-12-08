@@ -159,6 +159,7 @@ describe('utils.selector-map', function() {
       fixture.innerHTML = '<div role="button" aria-label="other"></div>';
       vNode = new axe.VirtualNode(fixture.firstChild);
       cacheNodeSelectors(vNode);
+      tree[0]._selectorMap = cache.get('selectorMap');
 
       var nodes = getNodesMatchingSelector(tree, 'div, [aria-label]', function(
         node
