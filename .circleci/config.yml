@@ -76,7 +76,7 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
-      - run: npm run test:unit -- --browsers Chrome,Firefox
+      - run: npm run test -- --browsers Chrome,Firefox
       - run: npm run test:integration:chrome
       - run: npm run test:integration:firefox
 
@@ -89,7 +89,7 @@ jobs:
       # npm i or restore cache
       - <<: *restore_dependency_cache_win
       - run: npm run build
-      - run: npm run test:unit -- --browsers IE
+      - run: npm run test -- --browsers IE
       # install selenium
       - run: |
           choco install selenium-ie-driver --version 3.141.5
