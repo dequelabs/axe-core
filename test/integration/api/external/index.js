@@ -123,7 +123,9 @@ var inTree = [];
 var walker = collectNodes();
 var next = walker.iterate().next();
 while (!next.done) {
-  inTree.push(next.value);
+  if (next.value.nodeType === 1) {
+    inTree.push(next.value);
+  }
   next = walker.iterate().next();
 }
 
