@@ -10,6 +10,7 @@ var testDirs = [
   'integration',
   'virtual-rules'
 ];
+var testFiles = [];
 var args = process.argv.slice(2);
 
 args.forEach(function(arg) {
@@ -18,17 +19,43 @@ args.forEach(function(arg) {
   if (parts[0] === 'testDirs') {
     testDirs = parts[1].split(',');
   }
-});
-
-var testPaths = testDirs.map(function(dir) {
-  if (dir === 'integration') {
-    return path.join('test', dir, '**/*.json');
-  } else if (['virtual-rules', 'api'].includes(dir)) {
-    return path.join('test', 'integration', dir, '**/*.js');
+  // pattern: testFiles=path/to/file
+  else if (parts[0] === 'testFiles') {
+    testFiles = parts[1].split(',');
   }
-
-  return path.join('test', dir, '**/*.js');
 });
+
+var testPaths = [];
+if (testFiles.length) {
+  testPaths = testFiles.map(function(file) {
+    var basename = path.basename(file);
+
+    // do not transform test files
+    if (file.includes('test/')) {
+      return file;
+    } else if (file.includes('lib/checks') || file.includes('lib/commons')) {
+      var filePath = file.replace('lib/', 'test/');
+
+      if (file.includes('-evaluate.js')) {
+        return filePath.replace('-evaluate.js', '.js');
+      }
+
+      return filePath;
+    } else if (basename.includes('-matches.js')) {
+      return path.join('test/rule-matches', basename);
+    }
+  });
+} else if (testDirs.length) {
+  testPaths = testDirs.map(function(dir) {
+    if (dir === 'integration') {
+      return path.join('test', dir, '**/*.json');
+    } else if (['virtual-rules', 'api'].includes(dir)) {
+      return path.join('test', 'integration', dir, '**/*.js');
+    }
+
+    return path.join('test', dir, '**/*.js');
+  });
+}
 
 module.exports = function(config) {
   config.set({
