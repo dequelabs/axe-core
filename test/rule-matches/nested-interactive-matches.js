@@ -18,6 +18,11 @@ describe('nested-interactive-matches', function() {
     assert.isTrue(rule.matches(null, vNode));
   });
 
+  it('should match if aria element has children presentational', function() {
+    var vNode = queryFixture('<div role="button" id="target"></div>');
+    assert.isTrue(rule.matches(null, vNode));
+  });
+
   it('should not match if element does not have children presentational', function() {
     var vNode = queryFixture('<a href="foo.html" id="target"></a>');
     assert.isFalse(rule.matches(null, vNode));
