@@ -4,17 +4,21 @@ Add your project/integration to this file and submit a pull request.
 
 ## Deque Projects
 
-1. [WorldSpace Attest](https://www.deque.com/products/worldspace-attest/)
-1. [WorldSpace Assure](https://www.deque.com/products/worldspace-assure/)
-1. [WorldSpace Comply](https://www.deque.com/products/worldspace-comply/)
+1. [Axe DevTools](https://www.deque.com/axe/devtools/)
+1. [Axe Auditor](https://www.deque.com/axe/auditor/)
+1. [Axe Monitor](https://www.deque.com/axe/monitor/)
 1. [Axe Chrome Extension](https://chrome.google.com/webstore/detail/axe/lhdoppojpmngadmnindnejefpokejbdd)
 1. [Axe Firefox Extension](https://addons.mozilla.org/en-US/firefox/addon/axe-devtools/)
-1. [axe-cli](https://www.npmjs.com/package/axe-cli)
-1. [axe-webdriverjs](https://www.npmjs.com/package/axe-webdriverjs)
-1. [grunt-axe-webdriver](https://www.npmjs.com/package/grunt-axe-webdriver)
-1. [react-axe](https://github.com/dequelabs/react-axe)
-1. [axe-matchers (Ruby)](https://github.com/dequelabs/axe-matchers)
-1. [axe-selenium-java](https://github.com/dequelabs/axe-selenium-java)
+1. [axe-core/react](https://www.npmjs.com/package/@axe-core/react)
+1. [axe-core/cli](https://www.npmjs.com/package/@axe-core/cli)
+1. [axe-core/webdriverjs](https://www.npmjs.com/package/@axe-core/webdriverjs)
+1. [axe-core/puppeteer](https://www.npmjs.com/package/@axe-core/puppeteer)
+1. [axe-core-selenium (Java)](https://search.maven.org/artifact/com.deque.html.axe-core/selenium)
+1. [axe-core-capybara (Ruby)](https://rubygems.org/gems/axe-core-capybara/)
+1. [axe-core-cucumber (Ruby)](https://rubygems.org/gems/axe-core-cucumber/)
+1. [axe-core-rspec (Ruby)](https://rubygems.org/gems/axe-core-rspec/)
+1. [axe-core-selenium (Ruby)](https://rubygems.org/gems/axe-core-selenium/)
+1. [axe-core-watir (Ruby)](https://rubygems.org/gems/axe-core-watir/)
 
 ## Community Projects
 
