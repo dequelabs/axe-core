@@ -208,6 +208,11 @@ module.exports = function(grunt) {
         options: { spawn: false },
         files: ['lib/**/*', 'Gruntfile.js'],
         tasks: ['build', 'notify', 'test']
+      },
+      tests: {
+        options: { spawn: false },
+        files: ['test/**/*'],
+        tasks: ['test']
       }
     },
     notify: {
