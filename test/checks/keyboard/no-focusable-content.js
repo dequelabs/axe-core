@@ -1,4 +1,4 @@
-describe.only('no-focusable-content tests', function() {
+describe('no-focusable-content tests', function() {
   var fixture = document.querySelector('#fixture');
   var queryFixture = axe.testUtils.queryFixture;
   var noFocusableContent = axe.testUtils.getCheckEvaluate(
