@@ -61,7 +61,7 @@ module.exports = function(config) {
   config.set({
     basePath: '../',
     singleRun: true,
-    autoWatch: true,
+    autoWatch: false,
     plugins: [
       'karma-mocha',
       'karma-chai',
