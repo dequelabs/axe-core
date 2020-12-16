@@ -65,8 +65,6 @@ describe('is-focusable', function() {
       flatTreeSetup(fixture);
       var el = document.getElementById('target').childNodes[0];
 
-      // console.log('el:', el.children);
-
       assert.isFalse(axe.commons.dom.isFocusable(el));
     });
 
