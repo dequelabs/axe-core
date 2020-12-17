@@ -11,16 +11,15 @@ Submitting code to the project? Please review and follow our
 
 ### Code Quality
 
-Although we do not have official code style guidelines, we can and will request you to make changes if we think that your code is sloppy. You can take clues from the existing code base to see what we consider to be reasonable code quality. Please be prepared to make changes that we ask of you even if you might not agree with the request(s).
+Although we do not have official code style guidelines, we can and will request you to make changes if we feel the changes are warranted. You can take clues from the existing code base to see what we consider to be reasonable code quality. Please be prepared to make changes that we ask of you even if you might not agree with the request(s).
 
 Please respect the coding style of the files you are changing and adhere to that.
 
-The JavaScript files in this project are formatted by [Prettier](https://prettier.io/). Additionally, we prefer:
+The files in this project are formatted by [Prettier](https://prettier.io/) and [ESLint](https://eslint.org/). Both are run when code is committed. Additionally, you can run ESLint manually:
 
-1. Spaces over tabs
-1. Single quotes for string literals
-1. Function definitions like `function functionName(arguments) {`
-1. Using `const` for variables that do not change and `let` for ones that do
+```console
+npm run eslint
+```
 
 ### Shadow DOM
 
