@@ -1,0 +1,12 @@
+{
+  "id": "aria-text",
+  "selector": "[role=text]",
+  "tags": ["cat.aria", "best-practice"],
+  "metadata": {
+    "description": "Ensures \"role=text\" is used correctly",
+    "help": "\"role=text\" should only be used on elements with no focusable descendants"
+  },
+  "all": [],
+  "any": ["no-focusable-content"],
+  "none": []
+}
