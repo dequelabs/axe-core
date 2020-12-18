@@ -60,6 +60,14 @@ describe('is-focusable', function() {
       assert.isTrue(axe.commons.dom.isFocusable(el));
     });
 
+    it('should return false for non-element nodes', function() {
+      fixture.innerHTML = '<span id="target">Hello World</span>';
+      flatTreeSetup(fixture);
+      var el = document.getElementById('target').childNodes[0];
+
+      assert.isFalse(axe.commons.dom.isFocusable(el));
+    });
+
     it('should return false for disabled elements', function() {
       fixture.innerHTML = '<input type="text" id="target" disabled>';
       var el = document.getElementById('target');
