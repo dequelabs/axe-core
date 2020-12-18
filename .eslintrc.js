@@ -38,7 +38,7 @@ module.exports = {
     'no-cond-assign': 0,
     'no-debugger': 2,
     'no-eq-null': 0,
-    'no-eval': 0,
+    'no-eval': 2,
     'no-unused-expressions': 0,
     'block-scoped-var': 0,
     'no-iterator': 0,
@@ -79,6 +79,10 @@ module.exports = {
       globals: {
         window: true,
         document: true
+      },
+      rules: {
+        'func-names': [2, 'as-needed'],
+        'prefer-const': 2
       }
     },
     {
