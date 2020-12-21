@@ -129,6 +129,10 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
+      # Install Chrome Canary
+      - run: wget https://dl.google.com/chrome/mac/canary/googlechromecanary.dmg
+        open ~/Downloads/googlechromecanary.dmg
+        sudo cp -r /Volumes/Google\ Chrome\ Canary/Google\ Chrome\ Canary.app /Applications/
       - run: npm run test -- --browsers ChromeCanary,FirefoxNightly
 
   # Test api docs can be built
