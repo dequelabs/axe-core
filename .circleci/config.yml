@@ -239,9 +239,6 @@ workflows:
           requires:
             - dependencies_unix
             - lint
-      - test_nightly:
-          requires:
-            - dependencies_unix
       # Run IE/ Windows test on all commits
       - test_win:
           requires:
@@ -317,3 +314,17 @@ workflows:
       - github_release:
           requires:
             - release
+  nightly:
+    triggers:
+      - schedule:
+          # run at 22:15 UTC every day
+          cron: "15 22 * * *"
+          filters:
+            branches:
+              only:
+                - develop
+    jobs:
+      - dependencies_unix
+      - test_nightly:
+          requires:
+            - dependencies_unix
