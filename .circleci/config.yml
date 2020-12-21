@@ -132,7 +132,7 @@ jobs:
       # install Chrome Canary
       - run: |
           wget https://dl.google.com/linux/direct/google-chrome-unstable_current_amd64.deb
-          sudo apt-install ./google-chrome-unstable_current_amd64.deb
+          sudo apt install ./google-chrome-unstable_current_amd64.deb
       - run: npm run test -- --browsers ChromeCanary,FirefoxNightly
 
   # Test api docs can be built
