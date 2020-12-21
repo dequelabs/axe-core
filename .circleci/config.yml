@@ -317,8 +317,8 @@ workflows:
   nightly:
     triggers:
       - schedule:
-          # run at 22:15 UTC every day
-          cron: "15 22 * * *"
+          # run at 00:00 UTC every day
+          cron: "0 0 * * *"
           filters:
             branches:
               only:
