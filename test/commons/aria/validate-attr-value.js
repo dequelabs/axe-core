@@ -434,7 +434,7 @@ describe('aria.validateAttrValue', function() {
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'pigs'));
       });
 
-      it('should return true for value less than the minValue', function() {
+      it('should return false for value less than the minValue', function() {
         axe.configure({
           standards: {
             ariaAttrs: {
