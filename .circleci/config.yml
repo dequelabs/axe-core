@@ -121,6 +121,16 @@ jobs:
       - run: npm run build
       - run: npm run test:locales
 
+  # Run the test suite for nightly builds.
+  test_nightly:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      - run: npm run test -- --browsers ChromeCanary,FirefoxNightly
+
   # Test api docs can be built
   build_api_docs:
     <<: *defaults
@@ -225,6 +235,9 @@ workflows:
           requires:
             - dependencies_unix
             - lint
+      - test_nightly:
+          requires:
+            - dependencies_unix
       # Run IE/ Windows test on all commits
       - test_win:
           requires:
