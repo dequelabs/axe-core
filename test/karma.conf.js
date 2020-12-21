@@ -29,9 +29,15 @@ var testPaths = [];
 if (testFiles.length) {
   testPaths = testFiles.map(function(file) {
     var basename = path.basename(file);
+    var extname = path.extname(file);
 
-    // do not transform test files
+    // do not transform test files unless it is the integration/rule
+    // html, in which case run the json test file
     if (file.includes('test/')) {
+      if (file.includes('integration/rules') && extname === '.html') {
+        return file.replace('.html', '.json');
+      }
+
       return file;
     } else if (file.includes('lib/checks') || file.includes('lib/commons')) {
       var filePath = file.replace('lib/', 'test/');
