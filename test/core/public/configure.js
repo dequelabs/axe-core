@@ -1011,4 +1011,75 @@ describe('axe.configure', function() {
       });
     });
   });
+
+  describe('given a runOnly object', function() {
+    beforeEach(function() {
+      axe._load({
+        rules: [
+          {
+            id: 'color-contrast'
+          }
+        ],
+        tags: [
+          {
+            id: 'aria-allowed-attr'
+          }
+        ]
+      });
+    });
+
+    describe('rules', function() {
+      it('should set the runOnly option as array', function() {
+        axe.configure({
+          runOnly: ['color-contrast']
+        });
+
+        assert.deepEqual(axe._audit.runOnly, {
+          type: 'rule',
+          values: ['color-contrast']
+        });
+      });
+
+      it('should set the runOnly option as object', function() {
+        axe.configure({
+          runOnly: {
+            type: 'rule',
+            values: ['color-contrast']
+          }
+        });
+
+        assert.deepEqual(axe._audit.runOnly, {
+          type: 'rule',
+          values: ['color-contrast']
+        });
+      });
+    });
+
+    describe('tags', function() {
+      it('should set the runOnly option as array', function() {
+        axe.configure({
+          runOnly: ['aria-allowed-attr']
+        });
+
+        assert.deepEqual(axe._audit.runOnly, {
+          type: 'tag',
+          values: ['aria-allowed-attr']
+        });
+      });
+
+      it('should set the runOnly option as object', function() {
+        axe.configure({
+          runOnly: {
+            type: 'tag',
+            values: ['aria-allowed-attr']
+          }
+        });
+
+        assert.deepEqual(axe._audit.runOnly, {
+          type: 'tag',
+          values: ['aria-allowed-attr']
+        });
+      });
+    });
+  });
 });
