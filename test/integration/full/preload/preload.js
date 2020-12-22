@@ -3,7 +3,6 @@
 describe('axe.utils.preload integration test', function() {
   'use strict';
 
-  var isIE11 = axe.testUtils.isIE11;
   var styleSheets = {
     crossOriginLinkHref: {
       id: 'crossOriginLinkHref',
@@ -167,53 +166,48 @@ describe('axe.utils.preload integration test', function() {
     }
 
     beforeEach(function(done) {
-      // These tests currently break in IE11
-      if (isIE11) {
-        this.skip();
-      } else {
-        /**
-         * Load custom rule & check
-         * -> one check is preload dependent
-         * -> another check is not preload dependent
-         */
-        axe._load({
-          rules: [
-            {
-              // this rule is not preload dependent and can run immediately
-              id: 'run-now-rule',
-              selector: 'div#run-now-target',
-              any: ['check-context-exists']
-            },
-            {
-              // this rule requires preload and will run after preload assets are ready
-              id: 'run-later-rule',
-              selector: 'div#run-later-target',
-              any: ['check-context-has-assets'],
-              preload: {
-                assets: ['cssom']
-              }
+      /**
+       * Load custom rule & check
+       * -> one check is preload dependent
+       * -> another check is not preload dependent
+       */
+      axe._load({
+        rules: [
+          {
+            // this rule is not preload dependent and can run immediately
+            id: 'run-now-rule',
+            selector: 'div#run-now-target',
+            any: ['check-context-exists']
+          },
+          {
+            // this rule requires preload and will run after preload assets are ready
+            id: 'run-later-rule',
+            selector: 'div#run-later-target',
+            any: ['check-context-has-assets'],
+            preload: {
+              assets: ['cssom']
             }
-          ],
-          checks: [
-            {
-              id: 'check-context-exists',
-              evaluate: customCheckEvalFn
-            },
-            {
-              id: 'check-context-has-assets',
-              evaluate: customCheckEvalFn
-            }
-          ]
-        });
+          }
+        ],
+        checks: [
+          {
+            id: 'check-context-exists',
+            evaluate: customCheckEvalFn
+          },
+          {
+            id: 'check-context-has-assets',
+            evaluate: customCheckEvalFn
+          }
+        ]
+      });
 
-        // load stylesheets
-        stylesForPage = [
-          styleSheets.crossOriginLinkHref,
-          styleSheets.crossOriginLinkHrefMediaPrint,
-          styleSheets.styleTag
-        ];
-        attachStylesheets({ styles: stylesForPage }, done);
-      }
+      // load stylesheets
+      stylesForPage = [
+        styleSheets.crossOriginLinkHref,
+        styleSheets.crossOriginLinkHrefMediaPrint,
+        styleSheets.styleTag
+      ];
+      attachStylesheets({ styles: stylesForPage }, done);
     });
 
     after(function(done) {

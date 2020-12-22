@@ -8,7 +8,6 @@ describe('preload cssom integration test', function() {
   this.timeout(15000);
 
   var shadowSupported = axe.testUtils.shadowSupport.v1;
-  var isIE11 = axe.testUtils.isIE11;
   var styleSheets = {
     crossOriginLinkHref: {
       id: 'crossOriginLinkHref',
@@ -431,7 +430,7 @@ describe('preload cssom integration test', function() {
 
   describe('tests for nested document', function() {
     before(function() {
-      if (!nestedFrame || isIE11) {
+      if (!nestedFrame) {
         this.skip();
       }
     });
