@@ -14,7 +14,7 @@
       "help": "Elemente dürfen nur erlaubte ARIA-Attribute verwenden."
     },
     "aria-allowed-role": {
-      "description": "Der Wert des role-Attributes muss gültig sein.",
+      "description": "Stellt sicher, dass der Wert des role-Attributes für dieses Element geeignet ist.",
       "help": "Der Wert des role-Attributes muss für dieses Element geeignet sein."
     },
     "aria-command-name": {
@@ -67,15 +67,15 @@
     },
     "aria-toggle-field-name": {
       "description": "Stellt sicher, dass jedes ARIA-toggle-Feld ein barrierefreien Namen besitzt.",
-      "help": "ARIA-toggle-Felder besitzen einen barrierefreien Namen."
+      "help": "ARIA-toggle-Felder benötigen einen barrierefreien Namen."
     },
     "aria-tooltip-name": {
       "description": "Stellt sicher, dass jeder ARIA-tooltip Knoten einen barrierefreien Namen besitzt.",
-      "help": "ARIA-tooltip Knoten benötigen einen barrierefreien Namen."
+      "help": "ARIA-tooltip-Knoten benötigen einen barrierefreien Namen."
     },
     "aria-treeitem-name": {
       "description": "Stellt sicher, dass jeder ARIA-treeitem Knoten einen barrierefreien Namen besitzt.",
-      "help": "ARIA-treeitem Knoten benötigen einen barrierefreien Namen."
+      "help": "ARIA-treeitem-Knoten benötigen einen barrierefreien Namen."
     },
     "aria-valid-attr-value": {
       "description": "",
@@ -107,7 +107,7 @@
     },
     "bypass": {
       "description": "",
-      "help": "Die Seite muss Wege bereitstellen, um mehrfache Blöcke zu übergehen."
+      "help": "Wiederholende Blöcke müssen vom Nutzer mit Hilfe von der Seite bereitgestellten Mitteln übersprungen werden können."
     },
     "color-contrast": {
       "description": "",
@@ -303,7 +303,7 @@
     },
     "presentation-role-conflict": {
       "description": "Markiert Elemente welche eine Rolle besitzen, welche none oder presentation ist und welche eine Rollenauflösung benötigen.",
-      "help": "Elemente mit Rolle none oder presentation sollten markiert werden."
+      "help": "Elemente mit Rolle none oder presentation dürfen mit anderen Rollen nicht in Konflikt stehen."
     },
     "region": {
       "description": "",
@@ -339,7 +339,7 @@
     },
     "tabindex": {
       "description": "",
-      "help": "Elemenete sollten keinen tabindex besitzen, der größer als null ist."
+      "help": "Elemente sollten keinen tabindex besitzen, der größer als null ist."
     },
     "table-duplicate-name": {
       "description": "",
@@ -375,7 +375,7 @@
       "pass": "",
       "fail": {
         "singular": "abstract Rolle kann nicht so verwendet werden: ${data.values}",
-        "plural": "abstract Rolle kann nicht so verwendet werden: ${data.values}"
+        "plural": "abstract Rollen können nicht so verwendet werden: ${data.values}"
       }
     },
     "aria-allowed-attr": {
@@ -491,7 +491,7 @@
     },
     "no-implicit-explicit-label": {
       "pass": "Kein Unterschied zwischen dem <label> und dem zugänglichen Namen.",
-      "incomplete": "Überprüfe, dass das <label> kein Teil des ARIA ${data} Feldname ist."
+      "incomplete": "Überprüfe, dass das <label> nicht Teil des ARIA ${data} Feldnamens ist."
     },
     "unsupportedrole": {
       "pass": "ARIA Rolle wird unterstützt.",
@@ -562,7 +562,7 @@
     },
     "focusable-no-name": {
       "pass": "",
-      "fail": "Das Element befindet sich in der Tabreihenfolge und enthält keinen erreichbaren Text.",
+      "fail": "Das Element befindet sich in der Tabreihenfolge und enthält keinen zugänglichen Text.",
       "incomplete": "Es ist nicht möglich herauszufinden ob das Element einen zugänglichen Namen besitzt."
     },
     "focusable-not-tabbable": {
@@ -617,7 +617,7 @@
     "hidden-explicit-label": {
       "pass": "Das <form> Element besitzt ein sichtbares explizites <label>.",
       "fail": "Das <form> Element besitzt ein <label>, welches nicht sichtbar ist.",
-      "incomplete": "Nicht möglich herauszufinden ob <form> Element ein nicht sichtbares <label> besitzt."
+      "incomplete": "Nicht möglich herauszufinden ob <form> Element ein sichtbares <label> besitzt."
     },
     "implicit-label": {
       "pass": "",
@@ -710,7 +710,7 @@
     },
     "header-present": {
       "pass": "",
-      "fail": "Die Seite besitzt keinen header."
+      "fail": "Die Seite besitzt keine Seitenüberschrift."
     },
     "heading-order": {
       "pass": "",
@@ -827,15 +827,15 @@
     "non-empty-title": {
       "pass": "",
       "fail": {
-        "noAttr": "Element hat ein Titelattribut.",
-        "emptyAttr": "Element hat kein Titelattribut."
+        "noAttr": "Element hat kein Titelattribut.",
+        "emptyAttr": "Element hat ein leeres Titelattribut."
       }
     },
     "non-empty-value": {
       "pass": "",
       "fail": {
-        "noAttr": "Element hat ein value-Attribut.",
-        "emptyAttr": "Element hat kein value-Attribut."
+        "noAttr": "Element hat kein value-Attribut.",
+        "emptyAttr": "Element hat ein leeres value-Attribut."
       }
     },
     "presentational-role": {
