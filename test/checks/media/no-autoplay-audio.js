@@ -3,11 +3,21 @@ describe('no-autoplay-audio', function() {
 
   var check;
   var fixture = document.getElementById('fixture');
+  var isIE11 = axe.testUtils.isIE11;
   var checkSetup = axe.testUtils.checkSetup;
   var checkContext = axe.testUtils.MockCheckContext();
   var preloadOptions = { preload: { assets: ['media'] } };
 
   before(function() {
+    // our circle ci windows machine cannot play audio elements
+    // (mp3 nor wav formats). setting an onerror event handler
+    // resulted in error code 4: MEDIA_ERR_SRC_NOT_SUPPORTED.
+    // looking around it might be due to a setting in ie11 that
+    // prevents audio from playing
+    // @see https://stackoverflow.com/questions/34802319/audio-tag-is-not-working-in-ie11/41172831
+    if (isIE11) {
+      this.skip();
+    }
     check = checks['no-autoplay-audio'];
   });
 
