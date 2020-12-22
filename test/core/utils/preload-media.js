@@ -1,11 +1,9 @@
 describe('axe.utils.preloadMedia', function() {
   'use strict';
 
-  // preload timeout is 10 seconds
-  this.timeout(12000);
-
   var fixture = document.getElementById('fixture');
   var fixtureSetup = axe.testUtils.fixtureSetup;
+  var isIE11 = axe.testUtils.isIE11;
 
   afterEach(function() {
     fixture.innerHTML = '';
@@ -59,8 +57,11 @@ describe('axe.utils.preloadMedia', function() {
   });
 
   it.only('returns media node (audio) after their metadata has been preloaded', function(done) {
+    var source = isIE11
+      ? '/test/assets/moon-speech.wav'
+      : '/test/assets/moon-speech.mp3';
     fixtureSetup(
-      '<audio src="/test/assets/moon-speech.mp3" autoplay="true" controls></audio>'
+      '<audio src="' + source + '" autoplay="true" controls></audio>'
     );
 
     axe.utils
