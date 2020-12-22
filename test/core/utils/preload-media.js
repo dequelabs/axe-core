@@ -3,15 +3,6 @@ describe('axe.utils.preloadMedia', function() {
 
   var fixture = document.getElementById('fixture');
   var fixtureSetup = axe.testUtils.fixtureSetup;
-  var isIE11 = axe.testUtils.isIE11;
-
-  before(function() {
-    // The tests actually pass in IE10/11 in Windows machine, but fails in IE in selenium-ie-driver
-    // Issue has been created to debug selenium ie failing tests
-    if (isIE11) {
-      this.skip();
-    }
-  });
 
   afterEach(function() {
     fixture.innerHTML = '';

@@ -3,17 +3,11 @@ describe('no-autoplay-audio', function() {
 
   var check;
   var fixture = document.getElementById('fixture');
-  var isIE11 = axe.testUtils.isIE11;
   var checkSetup = axe.testUtils.checkSetup;
   var checkContext = axe.testUtils.MockCheckContext();
   var preloadOptions = { preload: { assets: ['media'] } };
 
   before(function() {
-    // The tests actually pass in IE10/11 in Windows machine, but fails in IE in selenium-ie-driver
-    // Issue has been created to debug selenium ie failing tests
-    if (isIE11) {
-      this.skip();
-    }
     check = checks['no-autoplay-audio'];
   });
 
