@@ -1,6 +1,9 @@
 describe('axe.utils.preloadMedia', function() {
   'use strict';
 
+  // preload timeout is 10 seconds
+  this.timeout(12000);
+
   var fixture = document.getElementById('fixture');
   var fixtureSetup = axe.testUtils.fixtureSetup;
 
