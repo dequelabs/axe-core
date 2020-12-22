@@ -34,7 +34,7 @@ describe('css-orientation-lock violations test', function() {
   }
 
   // This currently breaks in IE11
-  (isIE11 ? it.skip : it)(
+it(
     'returns VIOLATIONS if preload is set to TRUE',
     function(done) {
       // the sheets included in the html, have styles for transform and rotate, hence the violation

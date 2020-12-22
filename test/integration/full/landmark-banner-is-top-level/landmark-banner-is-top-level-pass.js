@@ -24,7 +24,7 @@ describe('landmark-banner-is-top-level test pass', function() {
 
   describe('passes', function() {
     // This currently breaks in IE11
-    (isIE11 ? it.skip : it)('should find 3', function() {
+    it('should find 3', function() {
       assert.lengthOf(results.passes[0].nodes, 2);
     });
   });
