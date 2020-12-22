@@ -94,7 +94,7 @@ Axe can be built using your local language. To do so, a localization file must b
 
 or equivalently:
 
-`npm build -- --lang=nl`
+`npm run build -- --lang=nl`
 
 This will create a new build for axe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build localized versions, simply pass in `--all-lang` instead.
 
