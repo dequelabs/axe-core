@@ -5,7 +5,7 @@
     "impact": "serious",
     "messages": {
       "pass": "aria-label used on a supported role",
-      "fail": "aria-label "
+      "fail": "aria-label used on a static element or role"
     }
   }
 }
