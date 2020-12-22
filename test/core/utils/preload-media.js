@@ -58,7 +58,7 @@ describe('axe.utils.preloadMedia', function() {
       .catch(done);
   });
 
-  it('returns media node (audio) after their metadata has been preloaded', function(done) {
+  it.only('returns media node (audio) after their metadata has been preloaded', function(done) {
     fixtureSetup(
       '<audio src="/test/assets/moon-speech.mp3" autoplay="true" controls></audio>'
     );
