@@ -92,6 +92,10 @@ Axe can be built using your local language. To do so, a localization file must b
 
 `grunt build --lang=nl`
 
+or equivalently:
+
+`npm build -- --lang=nl`
+
 This will create a new build for axe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build localized versions, simply pass in `--all-lang` instead.
 
 To create a new translation for axe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below. For details on the message syntax, see [Check Message Template](/docs/check-message-template.md).
