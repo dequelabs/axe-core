@@ -162,7 +162,8 @@ var spec: axe.Spec = {
       id: 'custom-rule',
       any: ['custom-check']
     }
-  ]
+  ],
+  runOnly: ['custom-rule']
 };
 axe.configure(spec);
 

@@ -201,6 +201,7 @@ declare namespace axe {
     axeVersion?: string;
     // Deprecated - do not use.
     ver?: string;
+    runOnly?: RunOnly | TagValue[] | string[];
   }
   interface Check {
     id: string;
