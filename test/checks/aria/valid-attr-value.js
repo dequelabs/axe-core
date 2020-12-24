@@ -222,6 +222,16 @@ describe('aria-valid-attr-value', function() {
     );
   });
 
+  it('should return undefined on aria-labelledby when the element is not in the DOM', function() {
+    fixtureSetup('<button aria-labelledby="test">Button</button>');
+    var undefined1 = fixture.querySelector('button');
+    assert.isUndefined(
+      axe.testUtils
+        .getCheckEvaluate('aria-valid-attr-value')
+        .call(checkContext, undefined1)
+    );
+  });
+
   it('should return undefined on aria-current with invalid value', function() {
     fixtureSetup('<button aria-current="test">Button</button>');
     var undefined1 = fixture.querySelector('button');
