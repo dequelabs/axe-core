@@ -2,9 +2,7 @@ describe('autocomplete-matches', function() {
   'use strict';
   var fixture = document.getElementById('fixture');
   var queryFixture = axe.testUtils.queryFixture;
-  var rule = axe._audit.rules.find(function(rule) {
-    return rule.id === 'autocomplete-valid';
-  });
+  var rule = axe.utils.getRule('autocomplete-valid');
 
   afterEach(function() {
     fixture.innerHTML = '';

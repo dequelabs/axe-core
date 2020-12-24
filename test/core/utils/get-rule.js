@@ -17,8 +17,9 @@ describe('axe.utils.getRule', function() {
     assert.isTrue(rule.id === 'rule1');
   });
 
-  it("should return undefined if the rule doesn't exist", function() {
-    var rule = axe.utils.getRule('no-id');
-    assert.isUndefined(rule);
+  it("should throw error if the rule doesn't exist", function() {
+    assert.throws(function() {
+      axe.utils.getRule('no-id');
+    });
   });
 });

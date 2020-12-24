@@ -6,9 +6,7 @@ describe('aria-required-children-matches', function() {
   var rule;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'aria-required-children';
-    });
+    rule = axe.utils.getRule('aria-required-children');
   });
 
   afterEach(function() {

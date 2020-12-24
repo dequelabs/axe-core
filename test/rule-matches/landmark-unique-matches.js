@@ -16,9 +16,7 @@ describe('landmark-unique-matches', function() {
   beforeEach(function() {
     fixture = document.getElementById('fixture');
     axeFixtureSetup = axe.testUtils.fixtureSetup;
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'landmark-unique';
-    });
+    rule = axe.utils.getRule('landmark-unique');
   });
 
   it('should not match because not a landmark', function() {

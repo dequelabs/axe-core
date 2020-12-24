@@ -5,9 +5,7 @@ describe('aria-allowed-attr-matches', function() {
   var rule;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'aria-allowed-attr';
-    });
+    rule = axe.utils.getRule('aria-allowed-attr');
   });
 
   afterEach(function() {

@@ -31,9 +31,7 @@
   }
 
   var fixture = document.getElementById('fixture');
-  var rule = axe._audit.rules.find(function(rule) {
-    return rule.id === ruleId;
-  });
+  var rule = axe.utils.getRule(ruleId);
 
   if (!rule) {
     return;

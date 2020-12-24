@@ -4,9 +4,7 @@ describe('nested-interactive-matches', function() {
   var rule;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'nested-interactive';
-    });
+    rule = axe.utils.getRule('nested-interactive');
   });
 
   afterEach(function() {

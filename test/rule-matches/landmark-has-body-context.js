@@ -5,9 +5,7 @@ describe('landmark-has-body-context', function() {
   var shadowSupport = axe.testUtils.shadowSupport.v1;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'landmark-banner-is-top-level';
-    });
+    rule = axe.utils.getRule('landmark-banner-is-top-level');
   });
 
   it('returns true for elements with a role', function() {

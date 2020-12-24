@@ -5,9 +5,7 @@ describe('aria-hidden-focus-matches', function() {
   var fixtureSetup = axe.testUtils.fixtureSetup;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'aria-hidden-focus';
-    });
+    rule = axe.utils.getRule('aria-hidden-focus');
   });
 
   afterEach(function() {
