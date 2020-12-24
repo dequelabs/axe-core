@@ -107,6 +107,22 @@ describe('table.getHeaders', function() {
     ]);
   });
 
+  it('should handle rowspan=0', function() {
+    fixture.innerHTML =
+      '<table>' +
+      '<tr><td rowspan="0"></td><th scope="col">1</th><th scope="col" id="t1">2</th></tr>' +
+      '<tr><th scope="row" id="t2"></th><td id="target"></td></tr>' +
+      '</table>';
+
+    var target = $id('target');
+
+    axe.testUtils.flatTreeSetup(fixture.firstChild);
+    assert.deepEqual(axe.commons.table.getHeaders(target), [
+      $id('t1'),
+      $id('t2')
+    ]);
+  });
+
   it('should handle headers attribute', function() {
     fixture.innerHTML =
       '<table>' +
