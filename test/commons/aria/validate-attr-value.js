@@ -396,7 +396,7 @@ describe('aria.validateAttrValue', function() {
         });
       });
 
-      it('should only allow for numbers by an optional preceeding sign', function() {
+      it('should only allow for numbers by an optional preceding sign', function() {
         node.setAttribute('pigs', '+1234234');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
 
@@ -407,8 +407,46 @@ describe('aria.validateAttrValue', function() {
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
       });
 
+      it('should return true for value greater than or equal to minValue', function() {
+        axe.configure({
+          standards: {
+            ariaAttrs: {
+              pigs: {
+                type: 'int',
+                minValue: -1
+              }
+            }
+          }
+        });
+
+        node.setAttribute('pigs', '-1');
+        assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
+
+        node.setAttribute('pigs', '0');
+        assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
+
+        node.setAttribute('pigs', '1000');
+        assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
+      });
+
       it('returns false for empty strings without allowEmpty:true', function() {
         node.setAttribute('pigs', '');
+        assert.isFalse(axe.commons.aria.validateAttrValue(node, 'pigs'));
+      });
+
+      it('should return false for value less than the minValue', function() {
+        axe.configure({
+          standards: {
+            ariaAttrs: {
+              pigs: {
+                type: 'int',
+                minValue: 0
+              }
+            }
+          }
+        });
+
+        node.setAttribute('pigs', '-1');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'pigs'));
       });
     });

@@ -212,6 +212,16 @@ describe('aria-valid-attr-value', function() {
     );
   });
 
+  it('should fail on aria-level when the value is less than 1', function() {
+    fixtureSetup('<div role="heading" aria-level="0">Heading</div>');
+    var failing1 = fixture.querySelector('div');
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-valid-attr-value')
+        .call(checkContext, failing1)
+    );
+  });
+
   it('should return undefined on aria-describedby when the element is not in the DOM', function() {
     fixtureSetup('<button aria-describedby="test">Button</button>');
     var undefined1 = fixture.querySelector('button');

@@ -45,6 +45,7 @@ The [`ariaAttrs`](../lib/standards/aria-attrs.js) object defines valid ARIA attr
   - `decimal` - Decimal attributes accept any number or decimal value (e.g. `aria-valuemax`).
   - `int` - Integer attributes only accept whole number values (e.g. `aria-level`).
 - `values` - array(required for only `mntoken` and `mntokens`). The list of valid values for the attribute.
+- `minValue` - number(required for only `int`). The minimum value allowed for the attribute.
 - `allowEmpty` - boolean(optional, default `false`). If the attribute is allowed to have no value.
 - `global` - boolean(optional, default `false`). If the attribute is a [global ARIA attribute](https://www.w3.org/TR/wai-aria-1.1/#global_states).
 - `unsupported` - boolean(optional, default `false`). If the attribute is unsupported. Use this property to disable an attribute.

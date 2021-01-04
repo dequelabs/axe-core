@@ -40,6 +40,16 @@
   <div id="violation35-ref"></div>
   <div aria-valuetext="" id="violation36"></div>
   <!-- don't allow empty aria-valuetext -->
+
+  <div aria-level="0" id="violation37">hi</div>
+  <div aria-level="-1" id="violation38">hi</div>
+  <div aria-level="-22" id="violation39">hi</div>
+
+  <div aria-posinset="0" id="violation40">hi</div>
+  <div aria-posinset="-1" id="violation41">hi</div>
+  <div aria-posinset="-22" id="violation42">hi</div>
+
+  <div aria-setsize="-22" id="violation43">hi</div>
 </div>
 <h2>Possible False Positives</h2>
 <div>
@@ -119,13 +129,10 @@
   <div aria-labelledby="ref ref2 failedref" id="pass57">hi</div>
   <div aria-labelledby=" ref ref2 " id="pass58">hi</div>
 
-  <div aria-level="0" id="pass59">hi</div>
-  <div aria-level="1" id="pass60">hi</div>
-  <div aria-level="22" id="pass61">hi</div>
-  <div aria-level="-1" id="pass62">hi</div>
-  <div aria-level="-22" id="pass63">hi</div>
-  <div aria-level="+1" id="pass64">hi</div>
-  <div aria-level="+22" id="pass65">hi</div>
+  <div aria-level="1" id="pass59">hi</div>
+  <div aria-level="22" id="pass60">hi</div>
+  <div aria-level="+1" id="pass61">hi</div>
+  <div aria-level="+22" id="pass62">hi</div>
 
   <div aria-live="off" id="pass66">hi</div>
   <div aria-live="polite" id="pass67">hi</div>
@@ -147,13 +154,10 @@
   <div aria-owns="ref ref2 failedref" id="pass78">hi</div>
   <div aria-owns=" ref ref2 " id="pass79">hi</div>
 
-  <div aria-posinset="0" id="pass80">hi</div>
-  <div aria-posinset="1" id="pass81">hi</div>
-  <div aria-posinset="22" id="pass82">hi</div>
-  <div aria-posinset="-1" id="pass83">hi</div>
-  <div aria-posinset="-22" id="pass84">hi</div>
-  <div aria-posinset="+1" id="pass85">hi</div>
-  <div aria-posinset="+22" id="pass86">hi</div>
+  <div aria-posinset="1" id="pass80">hi</div>
+  <div aria-posinset="22" id="pass81">hi</div>
+  <div aria-posinset="+1" id="pass82">hi</div>
+  <div aria-posinset="+22" id="pass83">hi</div>
 
   <div aria-pressed="true" id="pass87">hi</div>
   <div aria-pressed="false" id="pass88">hi</div>
@@ -179,9 +183,8 @@
   <div aria-setsize="1" id="pass103">hi</div>
   <div aria-setsize="22" id="pass104">hi</div>
   <div aria-setsize="-1" id="pass105">hi</div>
-  <div aria-setsize="-22" id="pass106">hi</div>
-  <div aria-setsize="+1" id="pass107">hi</div>
-  <div aria-setsize="+22" id="pass108">hi</div>
+  <div aria-setsize="+1" id="pass106">hi</div>
+  <div aria-setsize="+22" id="pass107">hi</div>
 
   <div aria-sort="ascending" id="pass109">hi</div>
   <div aria-sort="descending" id="pass110">hi</div>
