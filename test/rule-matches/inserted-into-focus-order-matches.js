@@ -42,4 +42,11 @@ describe('inserted-into-focus-order-matches', function() {
     var node = fixture.firstChild;
     assert.isFalse(rule.matches(node));
   });
+
+  it('should return false for non-numeric tabindex value', function() {
+    fixture.innerHTML = '<div tabindex="abc"></div>';
+    flatTreeSetup(fixture);
+    var node = fixture.firstChild;
+    assert.isFalse(rule.matches(node));
+  });
 });
