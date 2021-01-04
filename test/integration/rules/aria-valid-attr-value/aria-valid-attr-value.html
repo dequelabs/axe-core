@@ -36,7 +36,9 @@
   <div aria-valuemax="stuff" id="violation32">hi</div>
   <div aria-valuemin="stuff" id="violation33">hi</div>
   <div aria-valuenow="stuff" id="violation34">hi</div>
-  <div aria-errormessage="violation35-ref" id="violation35">hi</div>
+  <div aria-errormessage="violation35-ref" aria-invalid="true" id="violation35">
+    hi
+  </div>
   <div id="violation35-ref"></div>
   <div aria-valuetext="" id="violation36"></div>
   <!-- don't allow empty aria-valuetext -->
@@ -248,17 +250,24 @@
   <div aria-valuenow="-.1" id="pass165">hi</div>
   <div aria-valuenow="-412" id="pass166">hi</div>
   <div aria-valuetext="stuff" id="pass167">hi</div>
-  <div aria-errormessage="pass168-ref" id="pass168">hi</div>
+  <div aria-errormessage="pass168-ref" id="pass168" aria-invalid="true">hi</div>
   <div id="pass168-ref" role="alert"></div>
-  <div aria-errormessage="pass68" id="pass169">hi</div>
-  <div aria-errormessage="ref" aria-describedby="ref" id="pass170">hi</div>
+  <div aria-errormessage="pass68" id="pass169" aria-invalid="true">hi</div>
+  <div
+    aria-errormessage="ref"
+    aria-describedby="ref"
+    aria-invalid="true"
+    id="pass170"
+  >
+    hi
+  </div>
 
   <div aria-activedescendant="" id="pass171">hi</div>
   <div aria-current="" id="pass172">hi</div>
   <div aria-invalid="" id="pass173">hi</div>
   <div aria-controls="" id="pass174">hi</div>
   <div aria-describedby="" id="pass175">hi</div>
-  <div aria-errormessage="" id="pass176">hi</div>
+  <div aria-errormessage="" id="pass176" aria-invalid="true">hi</div>
   <div aria-flowto="" id="pass177">hi</div>
   <div aria-haspopup="" id="pass178">hi</div>
   <div aria-invalid="" id="pass179">hi</div>
@@ -267,6 +276,8 @@
   <div aria-labelledby="" id="pass182">hi</div>
   <div aria-owns="" id="pass183">hi</div>
   <div aria-placeholder="" id="pass184">hi</div>
+  <div aria-errormessage="invalidId" id="pass185">hi</div>
+  <div aria-errormessage="invalidId" aria-invalid="false" id="pass186">hi</div>
 
   <div id="ref">Hi</div>
   <div id="ref2">Hi2</div>
