@@ -6,9 +6,7 @@ describe('data-table-matches', function() {
   var rule;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'th-has-data-cells';
-    });
+    rule = axe.utils.getRule('th-has-data-cells');
   });
 
   afterEach(function() {

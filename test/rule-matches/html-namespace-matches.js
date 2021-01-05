@@ -7,9 +7,7 @@ describe('html-namespace-matches', function() {
   beforeEach(function() {
     fixture = document.getElementById('fixture');
     axeFixtureSetup = axe.testUtils.fixtureSetup;
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'role-img-alt';
-    });
+    rule = axe.utils.getRule('role-img-alt');
   });
 
   afterEach(function() {

@@ -3,12 +3,7 @@ describe('no-naming-method-matches', function() {
 
   var fixture = document.getElementById('fixture');
   var queryFixture = axe.testUtils.queryFixture;
-  var rule = axe._audit.rules.find(function(rule) {
-    return (
-      rule.id === 'aria-toggle-field-name' ||
-      rule.id === 'aria-input-field-name'
-    );
-  });
+  var rule = axe.utils.getRule('aria-toggle-field-name');
 
   afterEach(function() {
     fixture.innerHTML = '';

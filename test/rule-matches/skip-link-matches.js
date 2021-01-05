@@ -5,9 +5,7 @@ describe('skip-link-matches', function() {
   var fixture = document.getElementById('fixture');
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'skip-link';
-    });
+    rule = axe.utils.getRule('skip-link');
     fixture.innerHTML =
       '<a href="" id="target" style="position: absolute; left: -10000px;">Click me</a><div id="main"></div>';
     link = fixture.querySelector('#target');

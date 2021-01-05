@@ -7,9 +7,7 @@ describe('svg-namespace-matches', function() {
   beforeEach(function() {
     fixture = document.getElementById('fixture');
     axeFixtureSetup = axe.testUtils.fixtureSetup;
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'svg-img-alt';
-    });
+    rule = axe.utils.getRule('svg-img-alt');
   });
 
   afterEach(function() {

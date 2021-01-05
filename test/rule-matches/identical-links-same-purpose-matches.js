@@ -4,9 +4,7 @@ describe('identical-links-same-purpose-matches tests', function() {
   var fixture = document.getElementById('fixture');
   var queryFixture = axe.testUtils.queryFixture;
   var isPhantom = window.PHANTOMJS ? true : false;
-  var rule = axe._audit.rules.find(function(rule) {
-    return rule.id === 'identical-links-same-purpose';
-  });
+  var rule = axe.utils.getRule('identical-links-same-purpose');
 
   afterEach(function() {
     fixture.innerHTML = '';
