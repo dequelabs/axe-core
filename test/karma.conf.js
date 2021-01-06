@@ -39,7 +39,9 @@ if (testFiles.length) {
       }
 
       return file;
-    } else if (file.includes('lib/checks') || file.includes('lib/commons')) {
+    } else if (basename.includes('-matches.js')) {
+      return path.join('test/rule-matches', basename);
+    } else {
       var filePath = file.replace('lib/', 'test/');
 
       if (file.includes('-evaluate.js')) {
@@ -47,8 +49,6 @@ if (testFiles.length) {
       }
 
       return filePath;
-    } else if (basename.includes('-matches.js')) {
-      return path.join('test/rule-matches', basename);
     }
   });
 } else if (testDirs.length) {
