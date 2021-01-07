@@ -36,6 +36,17 @@ describe('AbstractVirtualNode', function() {
     assert.throws(fn);
   });
 
+  it('should throw an error when accessing attrNames', function() {
+    function fn() {
+      var abstractNode = new axe.AbstractVirtualNode();
+      if (abstractNode.attrNames()) {
+        return;
+      }
+    }
+
+    assert.throws(fn);
+  });
+
   it('should throw an error when accessing hasAttr', function() {
     function fn() {
       var abstractNode = new axe.AbstractVirtualNode();
