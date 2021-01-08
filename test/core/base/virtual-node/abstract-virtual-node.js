@@ -17,12 +17,10 @@ describe('AbstractVirtualNode', function() {
   it('should throw an error when accessing attrNames', function() {
     function fn() {
       var abstractNode = new axe.AbstractVirtualNode();
-      if (abstractNode.attrNames.length) {
-        return;
-      }
+      return abstractNode.attrNames;
     }
 
-    assert.throws(fn);
+    assert.throws(fn, 'VirtualNode class must have an "attrNames" property');
   });
 
   it('should throw an error when accessing hasClass', function() {
