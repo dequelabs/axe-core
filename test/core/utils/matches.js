@@ -175,7 +175,7 @@ describe('utils.matches', function() {
 
       it('returns false if :not matches one of the selectors', function() {
         var virtualNode = queryFixture('<h1 id="target">foo</h1>');
-        assert.isFalse(matches(virtualNode, 'h1:not([role=heading], h1)'));
+        assert.isFalse(matches(virtualNode, 'h1:not([role=heading], [id])'));
       });
     });
 
