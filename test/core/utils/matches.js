@@ -214,6 +214,13 @@ describe('utils.matches', function() {
         var virtualNode = queryFixture('<h1 id="target">foo</h1>');
         assert.isFalse(matches(virtualNode, 'h1:is([class])'));
       });
+
+      it('returns false if :is matches none of the selectors', function() {
+        var virtualNode = queryFixture('<h1 id="target">foo</h1>');
+        assert.isFalse(
+          matches(virtualNode, 'h1:is([class], span, #foo, .bar)')
+        );
+      });
     });
   });
 
