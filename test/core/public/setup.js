@@ -21,9 +21,23 @@ describe('axe.setup', function() {
     assert.equal(axe._tree[0].actualNode, document.body);
   });
 
+  it('should return the root node', function() {
+    var vNode = axe.setup(document.body);
+    assert.equal(vNode.actualNode, document.body);
+  });
+
   it('should setup selector data', function() {
     axe._selectorData = undefined;
     axe.setup();
     assert.exists(axe._selectorData);
+  });
+
+  it('should throw if called twice in a row', function() {
+    function fn() {
+      axe.setup();
+      axe.setup();
+    }
+
+    assert.throws(fn);
   });
 });
