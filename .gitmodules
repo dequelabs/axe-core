@@ -1,0 +1,5 @@
+[submodule "act-rules-repo"]
+	path = test/act/act-rules-repo
+	url = git@github.com:act-rules/act-rules.github.io.git
+	branch = master
+	shallow = true

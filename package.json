@@ -72,6 +72,7 @@
     "test:unit:api": "npm run test:unit -- testDirs=api",
     "test:unit:integration": "npm run test:unit -- testDirs=integration",
     "test:unit:virtual-rules": "npm run test:unit -- testDirs=virtual-rules",
+    "test:unit:act": "npm run test:unit -- testDirs=act",
     "integration": "node test/integration/full/test-webdriver.js",
     "integration:chrome": "npm run integration -- browser=Chrome",
     "integration:firefox": "npm run integration -- browser=Firefox",
