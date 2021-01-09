@@ -2,7 +2,7 @@
   "lang": "de",
   "rules": {
     "accesskeys": {
-      "description": "Stellt sicher, dass die Wertr der accesskey-Attribute einzigartig sind.",
+      "description": "Stellt sicher, dass die Werte der accesskey-Attribute einzigartig sind.",
       "help": "Der Wert des accesskey-Attributes muss einzigartig sein."
     },
     "area-alt": {
@@ -490,7 +490,7 @@
       "fail": "Element ist nicht Fokussierbar."
     },
     "no-implicit-explicit-label": {
-      "pass": "Kein Unterschied zwischen dem <label> und dem Namen des Zugänglichkeits-Objekts.",
+      "pass": "Kein Unterschied zwischen dem <label> und dem zugänglichen Namen (accessible name).",
       "incomplete": "Überprüfe, dass das <label> nicht Teil des ARIA ${data} Feldnamens ist."
     },
     "unsupportedrole": {
@@ -563,7 +563,7 @@
     "focusable-no-name": {
       "pass": "Das Element befindet sich nicht in der Tabreihenfolge und enthält keinen zugänglichen Text.",
       "fail": "Das Element befindet sich in der Tabreihenfolge und enthält keinen zugänglichen Text.",
-      "incomplete": "Es ist nicht möglich herauszufinden ob das Zugänglichkeit-Objekt des Elements einen Namen besitzt."
+      "incomplete": "Es ist nicht möglich herauszufinden ob Element einen zugänglichen Namen (accessible name) besitzt."
     },
     "focusable-not-tabbable": {
       "pass": "Keine fokussierbaren Elemente innerhalb des Elements.",
@@ -625,8 +625,8 @@
       "incomplete": "Nicht möglich herauszufinden ob das <form> Element ein implizites (umschlossenes) <label> besitzt."
     },
     "label-content-name-mismatch": {
-      "pass": "Element beeinhaltet sichtbaren Text als Teil des Namens des Zugänglichkeit-Objekts.",
-      "fail": "Das Element beeinhaltet Text, welcher nicht Teil des Namens des Zugänglichkeit-Objekts ist."
+      "pass": "Element beeinhaltet sichtbaren Text als Teil des zugänglichen Namens (accessible name).",
+      "fail": "Das Element beeinhaltet Text, welcher nicht Teil des zugänglichen Namens (accessible name) ist."
     },
     "multiple-label": {
       "pass": "Das <form>-Element besitzt keine multiplen <label>-Elemente.",
