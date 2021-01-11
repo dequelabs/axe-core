@@ -66,7 +66,10 @@
     ["#pass-dpub-6"],
     ["#pass-dpub-7"],
     ["#hr-presentation"],
-    ["#hr-none"]
+    ["#hr-none"],
+    ["#span-text"],
+    ["#div-text"],
+    ["#p-text"]
   ],
   "violations": [
     ["#fail-dd-no-role"],
@@ -88,7 +91,11 @@
     ["#fail-dpub-4"],
     ["#fail-dpub-5"],
     ["#fail-dpub-6"],
-    ["#fail-dpub-7"]
+    ["#fail-dpub-7"],
+    ["#fail-text-1"],
+    ["#fail-text-2"],
+    ["#fail-text-3"],
+    ["#fail-text-4"]
   ],
   "incomplete": [["#incomplete1"], ["#incomplete2"]]
 }
