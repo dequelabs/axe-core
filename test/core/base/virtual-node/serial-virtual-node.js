@@ -274,4 +274,22 @@ describe('SerialVirtualNode', function() {
       assert.isTrue(nodeWithClass.hasAttr('class'));
     });
   });
+
+  describe('attrNames', function() {
+    it('should return a list of attribute names', function() {
+      var vNode = new SerialVirtualNode({
+        nodeName: 'div',
+        attributes: { foo: 'bar' }
+      });
+
+      assert.deepEqual(vNode.attrNames, ['foo']);
+    });
+
+    it('should return an empty array if there are no attributes', function() {
+      var vNode = new SerialVirtualNode({
+        nodeName: 'div'
+      });
+      assert.deepEqual(vNode.attrNames, []);
+    });
+  });
 });
