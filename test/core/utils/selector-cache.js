@@ -1,14 +1,12 @@
-describe('utils.selector-map', function() {
+describe('utils.selector-cache', function() {
   var fixture = document.querySelector('#fixture');
   var cacheNodeSelectors =
     axe._thisWillBeDeletedDoNotUse.utils.cacheNodeSelectors;
   var getNodesMatchingSelector =
     axe._thisWillBeDeletedDoNotUse.utils.getNodesMatchingSelector;
-  var cache = axe._cache;
 
   var vNode;
   beforeEach(function() {
-    cache.set('selectorMap', {});
     fixture.innerHTML = '<div id="target" class="foo" aria-label="bar"></div>';
     vNode = new axe.VirtualNode(fixture.firstChild);
   });
@@ -20,31 +18,31 @@ describe('utils.selector-map', function() {
   describe('cacheNodeSelectors', function() {
     it('should add the node to the global selector', function() {
       cacheNodeSelectors(vNode);
-      assert.deepEqual(cache.get('selectorMap')['*'], [vNode]);
+      assert.deepEqual(vNode._selectorMap['*'], [vNode]);
     });
 
     it('should add the node to the nodeName', function() {
       cacheNodeSelectors(vNode);
-      assert.deepEqual(cache.get('selectorMap').div, [vNode]);
+      assert.deepEqual(vNode._selectorMap.div, [vNode]);
     });
 
     it('should add the node to all attribute selectors', function() {
       cacheNodeSelectors(vNode);
-      assert.deepEqual(cache.get('selectorMap')['[id]'], [vNode]);
-      assert.deepEqual(cache.get('selectorMap')['[class]'], [vNode]);
-      assert.deepEqual(cache.get('selectorMap')['[aria-label]'], [vNode]);
+      assert.deepEqual(vNode._selectorMap['[id]'], [vNode]);
+      assert.deepEqual(vNode._selectorMap['[class]'], [vNode]);
+      assert.deepEqual(vNode._selectorMap['[aria-label]'], [vNode]);
     });
 
     it('should not add the node to selectors it does not match', function() {
       cacheNodeSelectors(vNode);
-      assert.isUndefined(cache.get('selectorMap')['[for]']);
-      assert.isUndefined(cache.get('selectorMap').h1);
+      assert.isUndefined(vNode._selectorMap['[for]']);
+      assert.isUndefined(vNode._selectorMap.h1);
     });
 
     it('should set the node index', function() {
       assert.isUndefined(vNode._nodeIndex);
-      cacheNodeSelectors(vNode);
-      assert.equal(vNode._nodeIndex, 0);
+      cacheNodeSelectors(vNode, 2);
+      assert.equal(vNode._nodeIndex, 2);
     });
 
     it('should ignore non-element nodes', function() {
@@ -52,20 +50,30 @@ describe('utils.selector-map', function() {
       vNode = new axe.VirtualNode(fixture.firstChild);
       cacheNodeSelectors(vNode);
 
-      assert.isUndefined(cache.get('selectorMap')['#text']);
+      assert.isUndefined(vNode._selectorMap);
     });
   });
 
   describe('getNodesMatchingSelector', function() {
     var tree;
+
+    function createTree(useShadowId) {
+      tree = [];
+      for (var i = 0; i < fixture.children.length; i++) {
+        var child = fixture.children[i];
+        vNode = new axe.VirtualNode(child, null, useShadowId ? i : null);
+        cacheNodeSelectors(vNode, i);
+        tree.push(vNode);
+      }
+    }
+
     beforeEach(function() {
       cacheNodeSelectors(vNode);
       tree = [vNode];
-      tree[0]._selectorMap = cache.get('selectorMap');
     });
 
     it('should return undefined if the cache is not primed', function() {
-      tree[0]._selectorMap = null;
+      vNode._selectorMap = null;
       assert.isUndefined(getNodesMatchingSelector(tree, 'div'));
     });
 
@@ -82,10 +90,8 @@ describe('utils.selector-map', function() {
     });
 
     it('should only return nodes matching shadowId when matching by id', function() {
-      fixture.innerHTML = '<div id="target"></div>';
-      vNode = new axe.VirtualNode(fixture.firstChild, null, 'a');
-      cacheNodeSelectors(vNode);
-      tree[0]._selectorMap = cache.get('selectorMap');
+      fixture.innerHTML = '<div id="target"></div><div id="target"></div>';
+      createTree(true);
       assert.lengthOf(getNodesMatchingSelector(tree, '#target'), 1);
     });
 
@@ -102,38 +108,31 @@ describe('utils.selector-map', function() {
     });
 
     it('should return nodes for each expression', function() {
-      fixture.innerHTML = '<div role="button" aria-label="other"></div>';
-      vNode = new axe.VirtualNode(fixture.firstChild);
-      cacheNodeSelectors(vNode);
-      tree[0]._selectorMap = cache.get('selectorMap');
-
+      fixture.innerHTML =
+        '<div role="button" aria-label="other"></div><span id="foo"></span>';
+      createTree();
       assert.lengthOf(getNodesMatchingSelector(tree, '[role], [id]'), 2);
     });
 
     it('should remove duplicates', function() {
       fixture.innerHTML = '<div role="button" aria-label="other"></div>';
-      vNode = new axe.VirtualNode(fixture.firstChild);
-      cacheNodeSelectors(vNode);
-      tree.push(vNode);
-      tree[0]._selectorMap = cache.get('selectorMap');
-
-      assert.lengthOf(getNodesMatchingSelector(tree, 'div, [aria-label]'), 2);
+      createTree();
+      assert.lengthOf(getNodesMatchingSelector(tree, 'div, [aria-label]'), 1);
     });
 
     it('should sort nodes by added order', function() {
-      cache.clear();
-      for (var i = 0; i < 10; i++) {
-        if (i % 2 === 0) {
-          fixture.innerHTML = '<div id="id' + i + '"></div>';
-        } else {
-          fixture.innerHTML = '<span id="id' + i + '"></span>';
-        }
-
-        vNode = new axe.VirtualNode(fixture.firstChild);
-        cacheNodeSelectors(vNode);
-      }
-
-      tree[0]._selectorMap = cache.get('selectorMap');
+      fixture.innerHTML =
+        '<div id="id0"></div>' +
+        '<span id="id1"></span>' +
+        '<div id="id2"></div>' +
+        '<span id="id3"></span>' +
+        '<div id="id4"></div>' +
+        '<span id="id5"></span>' +
+        '<div id="id6"></div>' +
+        '<span id="id7"></span>' +
+        '<div id="id8"></div>' +
+        '<span id="id9"></span>';
+      createTree();
 
       var nodes = getNodesMatchingSelector(tree, 'div, span');
       var ids = [];
@@ -156,20 +155,25 @@ describe('utils.selector-map', function() {
     });
 
     it('should filter nodes', function() {
-      fixture.innerHTML = '<div role="button" aria-label="other"></div>';
-      vNode = new axe.VirtualNode(fixture.firstChild);
-      cacheNodeSelectors(vNode);
-      tree[0]._selectorMap = cache.get('selectorMap');
+      fixture.innerHTML =
+        '<div role="button" aria-label="other"></div><div></div>';
+      createTree();
 
       function filter(node) {
         return node.hasAttr('role');
       }
 
-      assert.lengthOf(getNodesMatchingSelector(tree, 'div, [aria-label]'), 2);
-      assert.lengthOf(
-        getNodesMatchingSelector(tree, 'div, [aria-label]', filter),
-        1
+      var nonFilteredNodes = getNodesMatchingSelector(
+        tree,
+        'div, [aria-label]'
       );
+      var filteredNodes = getNodesMatchingSelector(
+        tree,
+        'div, [aria-label]',
+        filter
+      );
+      assert.lengthOf(nonFilteredNodes, 2);
+      assert.lengthOf(filteredNodes, 1);
     });
   });
 });
