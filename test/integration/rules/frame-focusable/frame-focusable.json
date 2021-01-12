@@ -1,0 +1,14 @@
+{
+  "description": "frame-focusable test",
+  "rule": "frame-focusable",
+  "violations": [
+    ["#fail-1", "#focusable"],
+    ["#fail-2", "#level1-focusable-frame", "#focusable"]
+  ],
+  "passes": [
+    ["#pass-1", "#no-focusable"],
+    ["#pass-2", "#level1-no-focusable"],
+    ["#pass-2", "#level1-no-focusable-frame", "#no-focusable"],
+    ["#fail-2", "#level1-focusable"]
+  ]
+}

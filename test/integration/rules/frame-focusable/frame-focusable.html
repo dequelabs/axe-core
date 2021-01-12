@@ -1,0 +1,26 @@
+<iframe tabindex="-1" src="/integration/rules/frame-focusable/frames/no-focusable.html"
+  id="pass-1"></iframe>
+<iframe tabindex="-1" src="/integration/rules/frame-focusable/frames/level1-no-focusable.html"
+  id="pass-2"></iframe>
+
+<iframe tabindex="-1" src="/integration/rules/frame-focusable/frames/focusable.html"
+  id="fail-1"></iframe>
+<iframe tabindex="-1" src="/integration/rules/frame-focusable/frames/level1-focusable.html"
+  id="fail-2"></iframe>
+
+<!-- nested frames with failures -->
+<iframe src="/integration/rules/frame-focusable/frames/level1-level2-negative.html" id="fail-3"></iframe>
+
+<!-- inapplicable -->
+<iframe src="/integration/rules/frame-focusable/frames/focusable.html"
+  id="inapplicable-1"></iframe>
+<iframe src="/integration/rules/frame-focusable/frames/no-focusable.html"
+  id="inapplicable-2"></iframe>
+<iframe tabindex="0" src="/integration/rules/frame-focusable/frames/focusable.html"
+  id="inapplicable-3"></iframe>
+<iframe tabindex="0" src="/integration/rules/frame-focusable/frames/no-focusable.html"
+  id="inapplicable-4"></iframe>
+<iframe src="/integration/rules/frame-focusable/frames/level1-focusable.html"
+  id="inapplicable-5"></iframe>
+<iframe src="/integration/rules/frame-focusable/frames/level1-no-focusable.html"
+  id="inapplicable-6"></iframe>
