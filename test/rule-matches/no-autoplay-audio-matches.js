@@ -7,9 +7,7 @@ describe('no-autoplay-audio-matches', function() {
   var rule;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'no-autoplay-audio';
-    });
+    rule = axe.utils.getRule('no-autoplay-audio');
   });
 
   afterEach(function() {

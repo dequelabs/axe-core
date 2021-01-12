@@ -1,6 +1,6 @@
 {
   "id": "role-img-alt",
-  "selector": "[role='img']:not(img):not(area):not(input):not(object)",
+  "selector": "[role='img']:not(img, area, input, object)",
   "matches": "html-namespace-matches",
   "tags": [
     "cat.text-alternatives",

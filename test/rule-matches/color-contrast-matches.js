@@ -7,9 +7,7 @@ describe('color-contrast-matches', function() {
   var rule;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'color-contrast';
-    });
+    rule = axe.utils.getRule('color-contrast');
   });
 
   afterEach(function() {

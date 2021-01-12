@@ -4,9 +4,7 @@ describe('scrollable-region-focusable-matches', function() {
   var fixture = document.getElementById('fixture');
   var queryFixture = axe.testUtils.queryFixture;
   var shadowSupported = axe.testUtils.shadowSupport.v1;
-  var rule = axe._audit.rules.find(function(rule) {
-    return rule.id === 'scrollable-region-focusable';
-  });
+  var rule = axe.utils.getRule('scrollable-region-focusable');
 
   afterEach(function() {
     fixture.innerHTML = '';

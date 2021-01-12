@@ -6,9 +6,7 @@ describe('aria-allowed-role-matches', function() {
   var rule;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'aria-allowed-role';
-    });
+    rule = axe.utils.getRule('aria-allowed-role');
   });
 
   afterEach(function() {

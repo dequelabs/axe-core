@@ -5,9 +5,7 @@ describe('p-as-heading-matches', function() {
   var fixture = document.getElementById('fixture');
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'p-as-heading';
-    });
+    rule = axe.utils.getRule('p-as-heading');
   });
 
   afterEach(function() {

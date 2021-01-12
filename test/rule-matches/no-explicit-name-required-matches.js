@@ -6,9 +6,7 @@ describe('no-explicit-name-matches', function() {
   var rule;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'button-name';
-    });
+    rule = axe.utils.getRule('button-name');
   });
 
   afterEach(function() {

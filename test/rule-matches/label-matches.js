@@ -7,9 +7,7 @@ describe('label-matches', function() {
 
   beforeEach(function() {
     fixture.innerHTML = '';
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'label';
-    });
+    rule = axe.utils.getRule('label');
   });
 
   it('returns true for non-input elements', function() {

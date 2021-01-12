@@ -9,8 +9,12 @@ describe('no-autoplay-audio', function() {
   var preloadOptions = { preload: { assets: ['media'] } };
 
   before(function() {
-    // The tests actually pass in IE10/11 in Windows machine, but fails in IE in selenium-ie-driver
-    // Issue has been created to debug selenium ie failing tests
+    // our circle ci windows machine cannot play audio elements
+    // (mp3 nor wav formats). setting an onerror event handler
+    // resulted in error code 4: MEDIA_ERR_SRC_NOT_SUPPORTED.
+    // looking around it might be due to a setting in ie11 that
+    // prevents audio from playing
+    // @see https://stackoverflow.com/questions/34802319/audio-tag-is-not-working-in-ie11/41172831
     if (isIE11) {
       this.skip();
     }
