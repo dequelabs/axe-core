@@ -1,8 +1,6 @@
 describe('text.subtreeText', function() {
   var fixtureSetup = axe.testUtils.fixtureSetup;
   var subtreeText = axe.commons.text.subtreeText;
-  var flatTreeSetup = axe.testUtils.flatTreeSetup;
-  var fixture = document.querySelector('#fixture');
 
   it('concatinated the accessible name for child elements', function() {
     fixtureSetup('<span>foo</span> <span>bar</span> <span>baz</span>');
@@ -37,12 +35,14 @@ describe('text.subtreeText', function() {
   });
 
   describe('context.processed', function() {
-    it('appends the element to context.processed to prevent duplication', function() {
+    beforeEach(function() {
       fixtureSetup('<h1>foo</h1>');
+    });
+
+    it('appends the element to context.processed to prevent duplication', function() {
       var h1 = axe.utils.querySelectorAll(axe._tree[0], 'h1')[0];
       var text = h1.children[0];
       var context = { processed: [] };
-      flatTreeSetup(fixture);
       subtreeText(h1, context);
       assert.deepEqual(context.processed, [h1, text]);
     });
@@ -51,14 +51,12 @@ describe('text.subtreeText', function() {
       var h1 = axe.utils.querySelectorAll(axe._tree[0], 'h1')[0];
       var text = h1.children[0];
       var emptyContext = {};
-      flatTreeSetup(fixture);
       subtreeText(h1, emptyContext);
       assert.deepEqual(emptyContext.processed, [h1, text]);
     });
 
     it('returns `` when the element is in the `processed` array', function() {
       var h1 = axe.utils.querySelectorAll(axe._tree[0], 'h1')[0];
-      flatTreeSetup(fixture);
       var context = {
         processed: [h1]
       };
