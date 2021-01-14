@@ -88,4 +88,20 @@ describe('valid-lang virtual-rule', function() {
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
+
+  it('should not apply for html element', function() {
+    var node = {
+      nodeName: 'html',
+      attributes: {
+        'xml:lang': 'a'
+      }
+    };
+
+    var results = axe.runVirtualRule('valid-lang', node);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+    assert.lengthOf(results.inapplicable, 1);
+  });
 });
