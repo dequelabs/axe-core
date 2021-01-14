@@ -5,9 +5,7 @@ describe('not-html-matches', function() {
   var rule;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'valid-lang';
-    });
+    rule = axe.utils.getRule('valid-lang');
   });
 
   afterEach(function() {
