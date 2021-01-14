@@ -411,7 +411,7 @@ if (!fixture) {
 }
 
 afterEach(function() {
-  axe._cache.clear();
+  axe.teardown();
 
   // remove all attributes from fixture (otherwise a leftover
   // style attribute would cause avoid-inline-spacing integration

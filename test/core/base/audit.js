@@ -1166,6 +1166,10 @@ describe('Audit', function() {
           throw new Error('Launch the super sheep!');
         }
       });
+
+      // check error node requires _selectorCache to be setup
+      axe.setup();
+
       a.run(
         { include: [axe.utils.getFlattenedTree(fixture)[0]] },
         {
