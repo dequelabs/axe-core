@@ -6,9 +6,7 @@ describe('link-in-text-block-matches', function() {
   var rule;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'link-in-text-block';
-    });
+    rule = axe.utils.getRule('link-in-text-block');
   });
 
   afterEach(function() {

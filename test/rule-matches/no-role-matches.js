@@ -5,9 +5,7 @@ describe('link-in-text-block-matches', function() {
   var rule;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'definition-list';
-    });
+    rule = axe.utils.getRule('definition-list');
   });
 
   afterEach(function() {
