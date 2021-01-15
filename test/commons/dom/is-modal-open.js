@@ -6,10 +6,6 @@ describe('dom.isModalOpen', function() {
   var dialogElSupport =
     typeof document.createElement('dialog').open !== 'undefined';
 
-  afterEach(function() {
-    fixtureSetup('');
-  });
-
   it('returns true if there is a visible element with role=dialog', function() {
     fixtureSetup('<div role="dialog">Modal</div>');
     assert.isTrue(isModalOpen());
