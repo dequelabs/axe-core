@@ -74,7 +74,7 @@ describe('aria-allowed-attr', function() {
 
   it('should not report on allowed attributes', function() {
     var vNode = queryFixture(
-      '<div role="radio" id="target" tabIndex="1" aria-required="true" aria-checked="true"></div>'
+      '<div role="radio" id="target" tabindex="1" aria-required="true" aria-checked="true"></div>'
     );
 
     assert.isTrue(
