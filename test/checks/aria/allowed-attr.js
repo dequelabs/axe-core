@@ -61,7 +61,7 @@ describe('aria-allowed-attr', function() {
 
   it('should not report on invalid attributes', function() {
     var vNode = queryFixture(
-      '<div role="dialog" id="target" tabIndex="1" aria-cats="true"></div>'
+      '<div role="dialog" id="target" tabindex="1" aria-cats="true"></div>'
     );
 
     assert.isTrue(
