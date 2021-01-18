@@ -48,7 +48,7 @@ describe('aria-allowed-attr', function() {
 
   it('should return true if there is no role', function() {
     var vNode = queryFixture(
-      '<div id="target" tabIndex="1" aria-selected="true" aria-checked="true"></div>'
+      '<div id="target" tabindex="1" aria-selected="true" aria-checked="true"></div>'
     );
 
     assert.isTrue(
