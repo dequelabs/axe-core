@@ -10,7 +10,7 @@ describe('aria-allowed-attr', function() {
 
   it('should detect incorrectly used attributes', function() {
     var vNode = queryFixture(
-      '<div role="link" id="target" tabIndex="1" aria-selected="true"></div>'
+      '<div role="link" id="target" tabindex="1" aria-selected="true"></div>'
     );
 
     assert.isFalse(
