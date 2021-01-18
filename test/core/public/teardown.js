@@ -13,6 +13,12 @@ describe('axe.teardown', function() {
     assert.isUndefined(axe._selectorData);
   });
 
+  it('should reset selector data', function() {
+    axe._selectCache = 'foo';
+    axe.teardown();
+    assert.isUndefined(axe._selectCache);
+  });
+
   it('should reset memozied functions', function() {
     var orgFn = axe._memoizedFns[0];
     var called = false;

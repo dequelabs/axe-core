@@ -5,12 +5,7 @@ describe('not-html-matches', function() {
   var rule;
 
   beforeEach(function() {
-    axe.teardown();
     rule = axe.utils.getRule('valid-lang');
-  });
-
-  afterEach(function() {
-    fixture.innerHTML = '';
   });
 
   it('returns true when element is not the html element', function() {
