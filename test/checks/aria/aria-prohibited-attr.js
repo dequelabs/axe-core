@@ -22,7 +22,12 @@ describe.only('aria-prohibited-attr', function() {
       '<div id="target" role="code" aria-hidden="false"  aria-label="foo" aria-labelledby="foo">Contents</div>'
     );
     assert.isTrue(checkEvaluate.apply(checkContext, params));
-    assert.deepEqual(checkContext._data, ['aria-label', 'aria-labelledby']);
+
+    // attribute order not important
+    assert.sameDeepMembers(checkContext._data, [
+      'aria-label',
+      'aria-labelledby'
+    ]);
   });
 
   it('should return false if all attributes are allowed', function() {
