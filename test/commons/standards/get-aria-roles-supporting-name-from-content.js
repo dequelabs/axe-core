@@ -49,7 +49,8 @@ describe('standards.getAriaRolesSupportingNameFromContent', function() {
       'doc-backlink',
       'doc-biblioref',
       'doc-glossref',
-      'doc-noteref'
+      'doc-noteref',
+      'graphics-object'
     ]);
   });
 

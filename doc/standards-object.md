@@ -20,6 +20,7 @@ The following properties are currently available in axe-core `standards`:
 1.  [ARIA Attrs](#aria-attrs)
 1.  [ARIA Roles](#aria-roles)
 1.  [DPUB Roles](#dpub-roles)
+1.  [Graphics Roles][#graphics-roles]
 1.  [HTML Elms](#html-elms)
 1.  [CSS Colors](#css-colors)
 
@@ -81,6 +82,10 @@ The [`ariaRoles`](../lib/standards/aria-roles.js) object defines valid ARIA role
 ### Dpub Roles
 
 Dpub roles are defined in the [dpub-roles](../lib/standards/dpub-roles.js) file. Their structure is the exact same as the aria roles standard (albeit they have different `type`s) and is combined into the `ariaRoles` table. They are only separated for organizational purposes.
+
+### Graphics Roles
+
+Graphics roles are defined in the [graphics-roles](../lib/standards/graphics-roles.js) file. They are extensions of the standard ARIA roles and therefore have the exact same structure. The graphics roles are combined into the `ariaRoles` table and they are only separated for organizational purposes.
 
 ## HTML Elms
 

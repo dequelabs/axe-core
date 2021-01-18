@@ -37,6 +37,11 @@ declare namespace axe {
     | 'none'
     | 'sectionhead';
 
+  type GraphicsRolesType =
+    | 'graphics-document'
+    | 'graphics-object'
+    | 'graphics-symbol';
+
   type HtmlContentTypes =
     | 'flow'
     | 'sectioning'
@@ -162,7 +167,7 @@ declare namespace axe {
     unsupported?: boolean;
   }
   interface AriaRoles {
-    type: AriaRolesType | DpubRolesType;
+    type: AriaRolesType | DpubRolesType | GraphicsRolesType;
     requiredContext?: string[];
     requiredOwned?: string[];
     requiredAttrs?: string[];
