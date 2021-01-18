@@ -23,7 +23,7 @@ describe('aria-allowed-attr', function() {
 
   it('should not report on required attributes', function() {
     var vNode = queryFixture(
-      '<div role="checkbox" id="target" tabIndex="1" aria-checked="true"></div>'
+      '<div role="checkbox" id="target" tabindex="1" aria-checked="true"></div>'
     );
 
     assert.isTrue(
