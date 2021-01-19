@@ -1,7 +1,7 @@
 {
 	"name": "axe-core-for-daisy-ace",
 	"description": "Accessibility engine for automated Web UI testing",
-	"version": "4.1.1",
+	"version": "4.1.1-daisy.0",
 	"license": "MPL-2.0",
 	"engines": {
 		"node": ">=4"
@@ -64,6 +64,7 @@
 		"eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
 		"test:headless": "node ./build/test/headless",
 		"test": "tsc && grunt test",
+		"test-fast": "tsc && grunt test-fast",
 		"test:examples": "node ./doc/examples/test-examples",
 		"test:locales": "mocha test/test-locales.js",
 		"test:rule-help-version": "mocha test/test-rule-help-version.js",
