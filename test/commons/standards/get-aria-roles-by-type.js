@@ -1,18 +1,6 @@
 describe('standards.getAriaRolesByType', function() {
   var getAriaRolesByType = axe.commons.standards.getAriaRolesByType;
 
-  before(function() {
-    axe._load({
-      standards: {
-        ariaRoles: {}
-      }
-    });
-  });
-
-  after(function() {
-    axe.reset();
-  });
-
   it('should return a list of role names by type', function() {
     // first remove all role types
     var roleNames = Object.keys(axe._audit.standards.ariaRoles);

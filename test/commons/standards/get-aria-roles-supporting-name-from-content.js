@@ -2,14 +2,6 @@ describe('standards.getAriaRolesSupportingNameFromContent', function() {
   var getAriaRolesSupportingNameFromContent =
     axe.commons.standards.getAriaRolesSupportingNameFromContent;
 
-  before(function() {
-    axe._load({});
-  });
-
-  after(function() {
-    axe.reset();
-  });
-
   it('should return a list of role names which are named from content', function() {
     // first remove all namedFromContent
     var roleNames = Object.keys(axe._audit.standards.ariaRoles);
