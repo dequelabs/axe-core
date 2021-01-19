@@ -50,7 +50,10 @@ describe('standards.getAriaRolesByType', function() {
       'text',
       'time',
       'toolbar',
-      'tooltip'
+      'tooltip',
+      'graphics-document',
+      'graphics-object',
+      'graphics-symbol'
     ]);
   });
 
