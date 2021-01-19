@@ -11,46 +11,31 @@ describe('standards.getAriaRolesSupportingNameFromContent', function() {
   });
 
   it('should return a list of role names which are named from content', function() {
-    // Source: https://www.w3.org/TR/wai-aria-1.1/#namefromcontent
-    // Source: https://www.w3.org/TR/dpub-aria-1.0/
-    // Note: we have added roles in our spec. also note that
-    // although "tree" is listed as supporting name from content
-    // it's role definition does not list contents in the name from
-    // section (it was removed from the list in WAI ARIA 1.2)
+    // first remove all namedFromContent
+    var roleNames = Object.keys(axe._audit.standards.ariaRoles);
+    var ariaRoles = {};
+    for (var i = 0; i < roleNames.length; i++) {
+      ariaRoles[roleNames[i]] = { nameFromContent: false };
+    }
+
+    // then turn on a few specific roles
+    ariaRoles.button = { nameFromContent: true };
+    ariaRoles.cell = { nameFromContent: true };
+    ariaRoles.checkbox = { nameFromContent: true };
+    ariaRoles.columnheader = { nameFromContent: true };
+
+    axe.configure({
+      standards: {
+        ariaRoles: ariaRoles
+      }
+    });
+
     var contentRoles = getAriaRolesSupportingNameFromContent();
     assert.deepEqual(contentRoles, [
       'button',
       'cell',
       'checkbox',
-      'columnheader',
-      'directory',
-      'figure',
-      'gridcell',
-      'heading',
-      'link',
-      'listitem',
-      'menuitem',
-      'menuitemcheckbox',
-      'menuitemradio',
-      'option',
-      'radio',
-      'row',
-      'rowgroup',
-      'rowheader',
-      'section',
-      'sectionhead',
-      'switch',
-      'tab',
-      'table',
-      'term',
-      'text',
-      'tooltip',
-      'treeitem',
-      'doc-backlink',
-      'doc-biblioref',
-      'doc-glossref',
-      'doc-noteref',
-      'graphics-object'
+      'columnheader'
     ]);
   });
 
