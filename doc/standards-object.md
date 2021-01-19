@@ -74,6 +74,8 @@ The [`ariaRoles`](../lib/standards/aria-roles.js) object defines valid ARIA role
 - `requiredOwned` - array(optional). List of required owned roles.
 - `requiredAttrs` - array(optional). List of required attributes.
 - `allowedAttrs` - array(optional). List of allowed attributes (besides any required and global ARIA attributes).
+- `prohibitedAttrs` - array(optional). List of prohibited attributes.
+- `unsuportedAttrs` - array(optional). List of attributes that are not widely supported in screen readers and assistive technologies.
 - `superclassRole` - array(optional). List of superclass roles.
 - `accessibleNameRequired` - boolean(optional. Default `false`). If elements with this role require an accessible name.
 - `nameFromContent` - boolean(optional. Default `false`). If the role allows name from content when calculating the accessible name.

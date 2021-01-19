@@ -44,10 +44,29 @@ describe('unsupportedattr', function() {
       '<div id="target" aria-mccheddarton="true" aria-bagleypants="false" aria-label="Nope">Contents</div>'
     );
     assert.isTrue(check.evaluate.apply(checkContext, params));
-    assert.deepEqual(checkContext._data, [
-      'aria-mccheddarton',
-      'aria-bagleypants'
-    ]);
+    assert.deepEqual(checkContext._data, {
+      values: ['aria-mccheddarton', 'aria-bagleypants']
+    });
+  });
+
+  it('should return true for role with unsupportedAttrs', function() {
+    axe.configure({
+      standards: {
+        ariaRoles: {
+          button: {
+            unsupportedAttrs: ['aria-selected']
+          }
+        }
+      }
+    });
+    var params = checkSetup(
+      '<button id="target" aria-selected="true">Contents</button>'
+    );
+    assert.isTrue(check.evaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      values: ['aria-selected'],
+      messageKey: 'roleUnsupported'
+    });
   });
 
   it('should return false if applied to a supported attribute', function() {
