@@ -8,15 +8,13 @@ describe('not-html-matches', function() {
     rule = axe.utils.getRule('valid-lang');
   });
 
-  afterEach(function() {
-    fixture.innerHTML = '';
-  });
-
   it('returns true when element is not the html element', function() {
-    assert.isTrue(rule.matches(fixture));
+    var vNode = axe.setup(fixture);
+    assert.isTrue(rule.matches(null, vNode));
   });
 
   it('returns false when element is the html element', function() {
-    assert.isFalse(rule.matches(document.documentElement));
+    var vNode = axe.setup(document.documentElement);
+    assert.isFalse(rule.matches(null, vNode));
   });
 });
