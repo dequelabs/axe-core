@@ -5,7 +5,7 @@
   "tags": ["cat.text-alternatives", "best-practice"],
   "metadata": {
     "description": "Ensures <iframe> and <frame> elements contain a unique title attribute",
-    "help": "Frames must have a unique title attribute"
+    "help": "Frames should have a unique title attribute"
   },
   "all": [],
   "any": [],

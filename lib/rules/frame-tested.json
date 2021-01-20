@@ -4,7 +4,7 @@
   "tags": ["cat.structure", "review-item", "best-practice"],
   "metadata": {
     "description": "Ensures <iframe> and <frame> elements contain the axe-core script",
-    "help": "Frames must be tested with axe-core"
+    "help": "Frames should be tested with axe-core"
   },
   "all": ["frame-tested"],
   "any": [],
