@@ -9,10 +9,10 @@
   },
   "all": [],
   "any": [
+    "has-visible-text",
     "aria-label",
     "aria-labelledby",
-    "non-empty-title",
-    "has-visible-text"
+    "non-empty-title"
   ],
   "none": []
 }

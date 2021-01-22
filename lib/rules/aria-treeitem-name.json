@@ -10,8 +10,8 @@
   "all": [],
   "any": [
     "has-visible-text",
-    "aria-labelledby",
     "aria-label",
+    "aria-labelledby",
     "non-empty-title"
   ],
   "none": []
