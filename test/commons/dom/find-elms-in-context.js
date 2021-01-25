@@ -5,12 +5,8 @@ describe('dom.findElmsInContext', function() {
   var fixtureSetup = axe.testUtils.fixtureSetup;
   var findElmsInContext = axe.commons.dom.findElmsInContext;
 
-  afterEach(function() {
-    fixtureSetup('');
-  });
-
   it('returns an array or elements in the same context', function() {
-    var fixture = fixtureSetup(
+    var rootNode = fixtureSetup(
       '<b name="foo">1</b>' +
         '<b name="foo">2</b>' +
         '<b name="bar">3</b>' +
@@ -22,7 +18,7 @@ describe('dom.findElmsInContext', function() {
         elm: 'b',
         attr: 'name',
         value: 'foo',
-        context: fixture
+        context: rootNode.actualNode
       }),
       Array.from(document.querySelectorAll('b[name=foo]'))
     );
@@ -35,13 +31,13 @@ describe('dom.findElmsInContext', function() {
       node.innerHTML = '<b name="foo">1</b>';
       var shadow = node.attachShadow({ mode: 'open' });
       shadow.innerHTML = '<b name="foo">2</b> <slot></slot>';
-      var fixture = fixtureSetup(node);
+      var rootNode = fixtureSetup(node);
 
       var result = findElmsInContext({
         elm: 'b',
         attr: 'name',
         value: 'foo',
-        context: fixture
+        context: rootNode.actualNode
       });
       assert.lengthOf(result, 1);
       assert.equal(result[0].innerText, '1');

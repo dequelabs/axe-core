@@ -69,7 +69,10 @@
     ["#hr-none"],
     ["#span-text"],
     ["#div-text"],
-    ["#p-text"]
+    ["#p-text"],
+    ["#pass-graphics-document"],
+    ["#pass-graphics-object"],
+    ["#pass-graphics-symbol"]
   ],
   "violations": [
     ["#fail-dd-no-role"],

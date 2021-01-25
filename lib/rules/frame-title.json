@@ -15,9 +15,9 @@
   },
   "all": [],
   "any": [
+    "non-empty-title",
     "aria-label",
     "aria-labelledby",
-    "non-empty-title",
     "presentational-role"
   ],
   "none": []

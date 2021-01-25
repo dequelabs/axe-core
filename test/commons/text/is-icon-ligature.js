@@ -170,9 +170,7 @@ describe('text.isIconLigature', function() {
       isIconLigature(target.children[0]);
 
       // change text to non-icon
-      var target = queryFixture(
-        '<div id="target" style="font-family: \'LigatureSymbols\'">__non-icon text__</div>'
-      );
+      target.children[0].actualNode.textContent = '__non-icon text__';
       assert.isTrue(isIconLigature(target.children[0]));
     }
   );
@@ -189,9 +187,7 @@ describe('text.isIconLigature', function() {
       isIconLigature(target.children[0]);
 
       // change text to icon
-      var target = queryFixture(
-        '<div id="target" style="font-family: \'Roboto\'">delete</div>'
-      );
+      target.children[0].actualNode.textContent = 'delete';
       assert.isFalse(isIconLigature(target.children[0]));
     }
   );
@@ -231,9 +227,7 @@ describe('text.isIconLigature', function() {
         isIconLigature(target.children[0]);
 
         // change text to non-icon
-        var target = queryFixture(
-          '<div id="target" style="font-family: \'LigatureSymbols\'">__non-icon text__</div>'
-        );
+        target.children[0].actualNode.textContent = '__non-icon text__';
         assert.isTrue(isIconLigature(target.children[0], 0.1, 1));
         assert.isFalse(isIconLigature(target.children[0]));
       }

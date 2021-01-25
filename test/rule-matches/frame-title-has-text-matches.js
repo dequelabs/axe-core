@@ -5,9 +5,7 @@ describe('layout-table-matches', function() {
   var rule;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'frame-title-unique';
-    });
+    rule = axe.utils.getRule('frame-title-unique');
   });
 
   afterEach(function() {

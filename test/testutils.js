@@ -17,6 +17,14 @@ var originalAudit = axe._audit;
 var originalRules = axe._audit.rules;
 var originalCommons = (commons = axe.commons);
 
+// add fixture to the body if it's not already
+var fixture = document.getElementById('fixture');
+if (!fixture) {
+  fixture = document.createElement('div');
+  fixture.setAttribute('id', 'fixture');
+  document.body.insertBefore(fixture, document.body.firstChild);
+}
+
 /**
  * Create a check context for mocking/resetting data and relatedNodes in tests
  *
@@ -74,15 +82,21 @@ testUtils.shadowSupport = (function(document) {
 })(document);
 
 /**
- * Method for injecting content into a fixture and caching
- * the flattened DOM tree (light and Shadow DOM together)
- *
+ * Return the fixture element
+ * @return HTMLElement
+ */
+testUtils.getFixture = function() {
+  'use strict';
+  return fixture;
+};
+
+/**
+ * Method for injecting content into a fixture
  * @param {String|Node} content Stuff to go into the fixture (html or DOM node)
  * @return HTMLElement
  */
-testUtils.fixtureSetup = function(content) {
+testUtils.injectIntoFixture = function(content) {
   'use strict';
-  var fixture = document.querySelector('#fixture');
   if (typeof content !== 'undefined') {
     fixture.innerHTML = '';
   }
@@ -96,10 +110,22 @@ testUtils.fixtureSetup = function(content) {
       fixture.appendChild(node);
     });
   }
-  axe._tree = axe.utils.getFlattenedTree(fixture);
-  axe._selectorData = axe.utils.getSelectorData(axe._tree);
 
   return fixture;
+};
+
+/**
+ * Method for injecting content into a fixture and caching
+ * the flattened DOM tree (light and Shadow DOM together)
+ *
+ * @param {String|Node} content Stuff to go into the fixture (html or DOM node)
+ * @return HTMLElement
+ */
+testUtils.fixtureSetup = function(content) {
+  'use strict';
+  testUtils.injectIntoFixture(content);
+  axe.teardown();
+  return axe.setup(fixture);
 };
 
 /**
@@ -119,11 +145,11 @@ testUtils.checkSetup = function(content, options, target) {
   }
   // Normalize target, allow it to be the inserted node or '#target'
   target = target || (content instanceof Node ? content : '#target');
-  testUtils.fixtureSetup(content);
+  var rootNode = testUtils.fixtureSetup(content);
 
   var node;
   if (typeof target === 'string') {
-    node = axe.utils.querySelectorAll(axe._tree[0], target)[0];
+    node = axe.utils.querySelectorAll(rootNode, target)[0];
   } else if (target instanceof Node) {
     node = axe.utils.getNodeFromTree(target);
   } else {
@@ -160,7 +186,7 @@ testUtils.shadowCheckSetup = function(
     options = {};
   }
 
-  var fixture = testUtils.fixtureSetup(content);
+  var fixture = testUtils.injectIntoFixture(content);
   var targetCandidate = fixture.querySelector(targetSelector);
   var container = targetCandidate;
   if (!targetCandidate) {
@@ -186,7 +212,7 @@ testUtils.shadowCheckSetup = function(
   }
 
   // query the composed tree AFTER shadowDOM has been attached
-  axe._tree = axe.utils.getFlattenedTree(fixture);
+  axe.setup(fixture);
   var node = axe.utils.getNodeFromTree(targetCandidate);
   return [node.actualNode, options, node];
 };
@@ -373,8 +399,8 @@ testUtils.assertStylesheet = function assertStylesheet(
  * @return HTMLElement
  */
 testUtils.queryFixture = function queryFixture(html, query) {
-  testUtils.fixtureSetup(html);
-  return axe.utils.querySelectorAll(axe._tree, query || '#target')[0];
+  var rootNode = testUtils.fixtureSetup(html);
+  return axe.utils.querySelectorAll(rootNode, query || '#target')[0];
 };
 
 /**
@@ -402,16 +428,17 @@ testUtils.isIE11 = (function isIE11(navigator) {
 
 axe.testUtils = testUtils;
 
-// add fixture to the body if it's not already
-var fixture = document.getElementById('fixture');
-if (!fixture) {
-  fixture = document.createElement('div');
-  fixture.setAttribute('id', 'fixture');
-  document.body.insertBefore(fixture, document.body.firstChild);
-}
+beforeEach(function() {
+  // reset from axe._load overriding
+  checks = originalChecks;
+  axe._audit = originalAudit;
+  axe._audit.rules = originalRules;
+  commons = axe.commons = originalCommons;
+});
 
 afterEach(function() {
-  axe._cache.clear();
+  axe.teardown();
+  fixture.innerHTML = '';
 
   // remove all attributes from fixture (otherwise a leftover
   // style attribute would cause avoid-inline-spacing integration
@@ -426,10 +453,4 @@ afterEach(function() {
 
   // reset body styles
   document.body.removeAttribute('style');
-
-  // reset from axe._load overriding
-  checks = originalChecks;
-  axe._audit = originalAudit;
-  axe._audit.rules = originalRules;
-  commons = axe.commons = originalCommons;
 });

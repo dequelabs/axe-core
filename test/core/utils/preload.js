@@ -3,8 +3,8 @@ describe('axe.utils.preload', function() {
 
   var fixture = document.getElementById('fixture');
 
-  before(function() {
-    axe._tree = axe.utils.getFlattenedTree(fixture);
+  beforeEach(function() {
+    axe.setup(fixture);
   });
 
   it('returns `undefined` when `preload` option is set to false.', function(done) {
@@ -29,15 +29,17 @@ describe('axe.utils.preload', function() {
       }
     };
     var actual = axe.utils.preload(options);
-    actual.then(function(results) {
-      assert.isDefined(results);
-      assert.property(results, 'cssom');
+    actual
+      .then(function(results) {
+        assert.isDefined(results);
+        assert.property(results, 'cssom');
 
-      axe.utils.preloadCssom(options).then(function(resultFromPreloadCssom) {
-        assert.deepEqual(results.cssom, resultFromPreloadCssom);
-        done();
-      });
-    });
+        axe.utils.preloadCssom(options).then(function(resultFromPreloadCssom) {
+          assert.deepEqual(results.cssom, resultFromPreloadCssom);
+          done();
+        });
+      })
+      .catch(done);
   });
 
   describe('axe.utils.shouldPreload', function() {
