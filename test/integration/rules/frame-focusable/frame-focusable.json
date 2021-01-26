@@ -3,12 +3,11 @@
   "rule": "frame-focusable",
   "violations": [
     ["#fail-1", "#focusable"],
-    ["#fail-2", "#level1-focusable-frame", "#focusable"]
+    ["#fail-2", "#level1-focusable"],
+    ["#fail-3", "#level1-level2-frame", "#level2-focusable-frame", "#focusable"]
   ],
   "passes": [
     ["#pass-1", "#no-focusable"],
-    ["#pass-2", "#level1-no-focusable"],
-    ["#pass-2", "#level1-no-focusable-frame", "#no-focusable"],
-    ["#fail-2", "#level1-focusable"]
+    ["#pass-2", "#level1-no-focusable"]
   ]
 }
