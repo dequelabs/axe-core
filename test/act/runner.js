@@ -11,7 +11,7 @@
     var parser = new DOMParser();
     html = html.replace(
       /\/test-assets\//g,
-      '/test/act/act-rules-repo/test-assets/'
+      '/node_modules/act-rules.github.io/test-assets/'
     );
 
     var newDoc = parser.parseFromString(html, 'text/html');
@@ -40,6 +40,10 @@
   }
 
   function runTestCases(axeOptions, testcases) {
+    it('has tests', function() {
+      assert.notEqual(testcases.length, 0);
+    });
+
     testcases.forEach(function(testcase) {
       var test = shouldSkip(testcase) ? xit : it;
 
@@ -67,6 +71,10 @@
   }
 
   describe('ACT rules', function() {
+    it('has tests', function() {
+      assert.notEqual(actRuleIDs.length, 0);
+    });
+
     actRuleIDs.forEach(function(ruleId) {
       var rule = actRules[ruleId];
       var axeOptions = {

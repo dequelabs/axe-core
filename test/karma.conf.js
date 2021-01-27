@@ -64,7 +64,6 @@ module.exports = function(config) {
     basePath: '../',
     singleRun: true,
     autoWatch: false,
-    failOnEmptyTestSuite: false,
     plugins: [
       'karma-mocha',
       'karma-chai',
@@ -79,7 +78,7 @@ module.exports = function(config) {
     files: [
       { pattern: 'test/mock/**/*.html', included: false, served: true },
       {
-        pattern: 'test/act/act-rules-repo/test-assets/**/*',
+        pattern: 'node_modules/act-rules.github.io/test-assets/**/*',
         included: false,
         served: true
       },

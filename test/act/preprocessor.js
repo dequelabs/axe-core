@@ -1,14 +1,11 @@
 var path = require('path');
 var fs = require('fs');
-var template = fs.readFileSync(path.join(__dirname, 'runner.js'), 'utf-8');
+var template = fs.readFileSync('test/act/runner.js', 'utf-8');
 
-var testcases = [];
-var testcaseFilePath = path.resolve(__dirname, 'act-rules-repo/testcases.json');
-if (fs.existsSync(testcaseFilePath)) {
-  var testcaseFile = fs.readFileSync(testcaseFilePath, 'utf-8');
-  var testcaseContent = JSON.parse(testcaseFile);
-  testcases = testcaseContent.testcases;
-}
+var actRepoDir = 'node_modules/act-rules.github.io/';
+var testcaseFilePath = path.resolve(actRepoDir, 'testcases.json');
+var testcaseContent = require(testcaseFilePath);
+var testcases = testcaseContent.testcases;
 
 function getTestCases(actRules) {
   var tests = {};
@@ -20,11 +17,7 @@ function getTestCases(actRules) {
       return testcase.ruleId === ruleId;
     });
     ruleTestCases.forEach(function(testcase) {
-      var testcasePath = path.resolve(
-        __dirname,
-        'act-rules-repo',
-        testcase.relativePath
-      );
+      var testcasePath = path.resolve(actRepoDir, testcase.relativePath);
       testcase.html = fs.readFileSync(testcasePath, 'utf-8');
     });
 

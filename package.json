@@ -99,6 +99,7 @@
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.5.4",
     "@deque/dot": "^1.1.5",
+    "act-rules.github.io": "github:act-rules/act-rules.github.io#master",
     "aria-query": "^3.0.0",
     "chai": "~4.2.0",
     "chalk": "^4.1.0",
