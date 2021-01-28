@@ -405,7 +405,9 @@ describe('Context', function() {
         'flatTree',
         'initiator',
         'page',
-        'frames'
+        'frames',
+        'focusable',
+        'boundingClientRect'
       ]);
       assert.isArray(context.flatTree);
       assert.isAtLeast(context.flatTree.length, 1);
@@ -424,7 +426,9 @@ describe('Context', function() {
         'flatTree',
         'initiator',
         'page',
-        'frames'
+        'frames',
+        'focusable',
+        'boundingClientRect'
       ]);
       assert.lengthOf(context.include, 1);
       assert.equal(
@@ -511,6 +515,54 @@ describe('Context', function() {
       assert.isTrue(new Context(null).page);
       assert.isTrue(new Context().page);
       assert.isTrue(new Context(false).page);
+    });
+  });
+
+  describe('focusable', function() {
+    it('should default to true', function() {
+      var result = new Context();
+      assert.isTrue(result.focusable);
+    });
+
+    it('should use passed in value', function() {
+      var result = new Context({
+        focusable: false
+      });
+      assert.isFalse(result.focusable);
+    });
+
+    it('should reject bad values', function() {
+      var result = new Context({
+        focusable: 'hello'
+      });
+      assert.isTrue(result.focusable);
+    });
+  });
+
+  describe('boundingClientRect', function() {
+    it('should default to empty object', function() {
+      var result = new Context();
+      assert.deepEqual(result.boundingClientRect, {});
+    });
+
+    it('should use passed in value', function() {
+      var result = new Context({
+        boundingClientRect: {
+          width: 10,
+          height: 20
+        }
+      });
+      assert.deepEqual(result.boundingClientRect, {
+        width: 10,
+        height: 20
+      });
+    });
+
+    it('should reject bad values', function() {
+      var result = new Context({
+        boundingClientRect: 'hello'
+      });
+      assert.deepEqual(result.boundingClientRect, {});
     });
   });
 });

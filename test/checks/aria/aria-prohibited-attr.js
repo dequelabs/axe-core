@@ -1,4 +1,4 @@
-describe.only('aria-prohibited-attr', function() {
+describe('aria-prohibited-attr', function() {
   'use strict';
 
   var checkContext = axe.testUtils.MockCheckContext();
