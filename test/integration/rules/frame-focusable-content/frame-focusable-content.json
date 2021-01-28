@@ -1,0 +1,6 @@
+{
+  "description": "frame-focusable-content tests",
+  "rule": "frame-focusable-content",
+  "violations": [["#fail1", "#focusable"]],
+  "passes": [["#pass1", "#not-focusable"]]
+}
