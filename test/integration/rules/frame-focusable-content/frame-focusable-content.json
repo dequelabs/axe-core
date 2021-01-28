@@ -1,6 +1,12 @@
 {
   "description": "frame-focusable-content tests",
   "rule": "frame-focusable-content",
-  "violations": [["#fail1", "#focusable"]],
-  "passes": [["#pass1", "#not-focusable"]]
+  "violations": [
+    ["#fail1", "#focusable"],
+    ["#fail2", "#level1-focusable"]
+  ],
+  "passes": [
+    ["#pass1", "#not-focusable"],
+    ["#pass2", "#level1-not-focusable"]
+  ]
 }
