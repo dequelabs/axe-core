@@ -111,6 +111,16 @@ jobs:
       - run: npm run build
       - run: npm run test:examples
 
+  # Run ACT test cases
+  test_act:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      - run: npm run test:act
+
   # Test locale files
   test_locales:
     <<: *defaults
@@ -230,6 +240,9 @@ workflows:
           requires:
             - dependencies_win
       - test_examples:
+          requires:
+            - test_unix
+      - test_act:
           requires:
             - test_unix
       - test_locales:

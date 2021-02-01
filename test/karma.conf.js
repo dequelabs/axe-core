@@ -49,12 +49,10 @@ if (testFiles.length) {
   testPaths = testDirs.map(function(dir) {
     if (dir === 'integration') {
       return path.join('test', dir, '**/*.json');
-    } else if (['virtual-rules', 'api'].includes(dir)) {
-      return path.join('test', 'integration', dir, '**/*.js');
-    } else if (dir === 'act') {
-      return path.join('test', 'act', 'act-rules.json');
     }
-
+    if (['virtual-rules', 'api'].includes(dir)) {
+      return path.join('test', 'integration', dir, '**/*.js');
+    }
     return path.join('test', dir, '**/*.js');
   });
 }
@@ -71,17 +69,11 @@ module.exports = function(config) {
       'karma-chrome-launcher',
       'karma-firefox-launcher',
       'karma-ie-launcher',
-      require('./integration/rules/preprocessor'),
-      require('./act/preprocessor')
+      require('./integration/rules/preprocessor')
     ],
     frameworks: ['mocha', 'chai'],
     files: [
       { pattern: 'test/mock/**/*.html', included: false, served: true },
-      {
-        pattern: 'node_modules/act-rules.github.io/test-assets/**/*',
-        included: false,
-        served: true
-      },
       { pattern: 'test/integration/**/*.css', included: false, served: true },
       { pattern: 'test/assets/**/*.*', included: false, served: true },
       {
@@ -90,7 +82,6 @@ module.exports = function(config) {
         served: true
       },
       'axe.js',
-
       'test/testutils.js',
       'test/version.js'
     ].concat(testPaths),
@@ -103,8 +94,7 @@ module.exports = function(config) {
     browsers: ['ChromeHeadless'],
     reporters: ['mocha'],
     preprocessors: {
-      'test/integration/rules/**/*.json': ['integration'],
-      'test/act/act-rules.json': ['act']
+      'test/integration/rules/**/*.json': ['integration']
     },
     client: {
       useIframe: false,
