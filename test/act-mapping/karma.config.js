@@ -1,6 +1,6 @@
 module.exports = function(config) {
   config.set({
-    basePath: '../../../',
+    basePath: '../../',
     singleRun: true,
     autoWatch: false,
     plugins: [
@@ -13,7 +13,7 @@ module.exports = function(config) {
     frameworks: ['mocha', 'chai'],
     files: [
       'axe.js',
-      'test/integration/act/*.json',
+      'test/act-mapping/*.json',
       {
         pattern: 'node_modules/act-rules.github.io/test-assets/**/*',
         included: false,
