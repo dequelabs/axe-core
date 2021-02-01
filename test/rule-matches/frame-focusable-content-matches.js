@@ -7,14 +7,25 @@ describe('frame-focusable-content-matches', function() {
   });
 
   it('returns false for the top-level context', function() {
-    var result = rule.matches(null, null, { initiator: true });
+    var result = rule.matches(null, null, {
+      initiator: true,
+      focusable: false,
+      boundingClientRect: {
+        width: 100,
+        height: 100
+      }
+    });
     assert.isFalse(result);
   });
 
   it('returns false for focusable iframes', function() {
     var result = rule.matches(null, null, {
       initiator: false,
-      focusable: true
+      focusable: true,
+      boundingClientRect: {
+        width: 100,
+        height: 100
+      }
     });
     assert.isFalse(result);
   });
