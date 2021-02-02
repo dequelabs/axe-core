@@ -45,11 +45,6 @@
 
   function exampleSetup(html) {
     var parser = new DOMParser();
-    html = html.replace(
-      /\/test-assets\//g,
-      '/node_modules/act-rules.github.io/test-assets/'
-    );
-
     var newDoc = parser.parseFromString(html, 'text/html');
     document.head.innerHTML = newDoc.head.innerHTML;
     document.body.innerHTML += newDoc.body.innerHTML;

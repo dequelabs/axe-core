@@ -15,6 +15,8 @@ function createActPreprocessor(logger) {
   return function(actRuleJson, file, done) {
     try {
       log.debug('Processing "%s".', file.originalPath);
+      file.path = file.originalPath.replace(/\.json$/, '.js');
+
       var actRule = JSON.parse(actRuleJson);
       var actRule = applyTestCases(actRule);
       var testContent = JSON.stringify(actRule, null, 2);

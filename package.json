@@ -82,6 +82,7 @@
     "test:integration:ie": "start-server-and-test 9876 integration:ie",
     "test:examples": "node ./doc/examples/test-examples",
     "test:act": "karma start test/act-mapping/karma.config.js",
+    "test:act:debug": "npm run test:act -- --no-single-run --browsers=Chrome",
     "test:locales": "mocha test/test-locales.js",
     "test:rule-help-version": "mocha test/test-rule-help-version.js",
     "test:node": "mocha test/node/*.js",

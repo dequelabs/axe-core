@@ -21,6 +21,9 @@ module.exports = function(config) {
       }
     ],
     browsers: ['ChromeHeadless'],
+    proxies: {
+      '/test-assets': '/base/node_modules/act-rules.github.io/test-assets'
+    },
     reporters: ['mocha'],
     preprocessors: {
       '**/*.json': ['act']
