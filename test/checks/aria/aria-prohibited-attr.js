@@ -30,9 +30,16 @@ describe('aria-prohibited-attr', function() {
     ]);
   });
 
-  it('should return true if element has no role', function() {
+  it('should return undefined if element has no role and has text content', function() {
     var params = checkSetup(
       '<div id="target" aria-label="foo" aria-labelledby="foo">Contents</div>'
+    );
+    assert.isUndefined(checkEvaluate.apply(checkContext, params));
+  });
+
+  it('should return true if element has no role and no text content', function() {
+    var params = checkSetup(
+      '<div id="target" aria-label="foo" aria-labelledby="foo"></div>'
     );
     assert.isTrue(checkEvaluate.apply(checkContext, params));
   });
