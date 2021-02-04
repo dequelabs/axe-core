@@ -86,11 +86,11 @@ describe('DqElement', function() {
       assert.equal(result.source, 'woot');
     });
 
-    it('should return empty string if audit.noHtml is set', function() {
+    it('should return null if audit.noHtml is set', function() {
       axe.configure({ noHtml: true });
       fixture.innerHTML = '<div class="bar" id="foo">Hello!</div>';
       var result = new DqElement(fixture.firstChild);
-      assert.equal(result.source, '');
+      assert.isNull(result.source);
     });
 
     it('should not use spec object over passed element if audit.noHtml is set', function() {
@@ -103,7 +103,7 @@ describe('DqElement', function() {
           source: 'woot'
         }
       );
-      assert.equal(result.source, '');
+      assert.isNull(result.source);
     });
   });
 
