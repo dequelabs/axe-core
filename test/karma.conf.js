@@ -89,8 +89,7 @@ module.exports = function(config) {
       },
       'axe.js',
 
-      'test/testutils.js',
-      'test/version.js'
+      'test/testutils.js'
     ].concat(testPaths),
     proxies: {
       '/test': '/base/test',
