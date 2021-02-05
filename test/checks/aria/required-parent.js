@@ -128,6 +128,28 @@ describe('aria-required-parent', function() {
     );
   });
 
+  it('should pass when intermediate node is role=group and required parent is present', function() {
+    var params = checkSetup(
+      '<ul role="menu"><li role="group"><button role="menuitem" id="target">Nothing here.</button></li></ul>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-parent')
+        .apply(checkContext, params)
+    );
+  });
+
+  it('should fail when intermediate node is role=group but required parent is missing', function() {
+    var params = checkSetup(
+      '<ul role="none"><li role="group"><button role="menuitem" id="target">Nothing here.</button></li></ul>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-parent')
+        .apply(checkContext, params)
+    );
+  });
+
   it('should pass when intermediate node is role=none', function() {
     var params = checkSetup(
       '<div role="list"><div role="none"><p role="listitem" id="target">Nothing here.</p></div></div>'
