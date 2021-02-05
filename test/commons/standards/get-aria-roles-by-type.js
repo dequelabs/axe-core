@@ -47,9 +47,13 @@ describe('standards.getAriaRolesByType', function() {
       'superscript',
       'table',
       'term',
+      'text',
       'time',
       'toolbar',
-      'tooltip'
+      'tooltip',
+      'graphics-document',
+      'graphics-object',
+      'graphics-symbol'
     ]);
   });
 

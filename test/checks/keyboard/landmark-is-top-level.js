@@ -23,10 +23,19 @@ describe('landmark-is-top-level', function() {
 
   it('should return false if the complementary landmark is in another landmark', function() {
     var params = checkSetup(
-      '<main><div role="complementary" id="target"></div></main>'
+      '<nav><div role="complementary" id="target"></div></nav>'
     );
     axe.utils.getFlattenedTree(document.documentElement);
     assert.isFalse(check.evaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, { role: 'complementary' });
+  });
+
+  it('should return true if the complementary landmark is in main landmark', function() {
+    var params = checkSetup(
+      '<main><div role="complementary" id="target"></div></main>'
+    );
+    axe.utils.getFlattenedTree(document.documentElement);
+    assert.isTrue(check.evaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._data, { role: 'complementary' });
   });
 

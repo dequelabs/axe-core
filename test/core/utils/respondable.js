@@ -101,36 +101,7 @@ describe('axe.utils.respondable', function() {
     it('should pass messages that have all required properties', function(done) {
       eventData = {
         _respondable: true,
-        _source: 'axeAPI.2.0.0',
-        message: 'Help us Obi-Wan',
-        _axeuuid: 'otherAxe'
-      };
-
-      axe.utils.respondable(win, 'Death star', null, true, function(data) {
-        assert.equal(data, 'Help us Obi-Wan');
-        done();
-      });
-    });
-
-    it('should allow messages with _source axeAPI.x.y.z', function(done) {
-      eventData = {
-        _respondable: true,
-        _source: 'axeAPI.x.y.z',
-        message: 'Help us Obi-Wan',
-        _axeuuid: 'otherAxe'
-      };
-
-      axe.utils.respondable(win, 'Death star', null, true, function(data) {
-        assert.equal(data, 'Help us Obi-Wan');
-        done();
-      });
-    });
-
-    it('should allow messages if the axe version is x.y.z', function(done) {
-      axe.version = 'x.y.z';
-      eventData = {
-        _respondable: true,
-        _source: 'axeAPI.2.0.0',
+        _source: 'axeAPI.' + axe.version,
         message: 'Help us Obi-Wan',
         _axeuuid: 'otherAxe'
       };
@@ -159,10 +130,27 @@ describe('axe.utils.respondable', function() {
       }, 100);
     });
 
+    it('should reject messages if the axe version is x.y.z', function(done) {
+      eventData = {
+        _respondable: true,
+        _source: 'axeAPI.x.y.z',
+        message: 'Help us Obi-Wan',
+        _axeuuid: 'otherAxe'
+      };
+
+      axe.utils.respondable(win, 'Death star', null, true, function() {
+        done(new Error('should not call callback'));
+      });
+
+      setTimeout(function() {
+        done();
+      }, 100);
+    });
+
     it('should reject messages that are that are not strings', function(done) {
       eventData = {
         _respondable: true,
-        _source: 'axeAPI.2.0.0',
+        _source: 'axeAPI.' + axe.version,
         message: 'Help us Obi-Wan',
         _axeuuid: 'otherAxe'
       };
@@ -188,7 +176,7 @@ describe('axe.utils.respondable', function() {
     it('should reject messages that are invalid stringified objects', function(done) {
       eventData = {
         _respondable: true,
-        _source: 'axeAPI.2.0.0',
+        _source: 'axeAPI.' + axe.version,
         message: 'Help us Obi-Wan',
         _axeuuid: 'otherAxe'
       };
@@ -214,7 +202,7 @@ describe('axe.utils.respondable', function() {
     it('should reject messages that do not have a uuid', function(done) {
       eventData = {
         _respondable: true,
-        _source: 'axeAPI.2.0.0',
+        _source: 'axeAPI.' + axe.version,
         message: 'Help us Obi-Wan',
         _axeuuid: 'otherAxe'
       };
@@ -238,7 +226,7 @@ describe('axe.utils.respondable', function() {
     it('should reject messages that do not have a matching uuid', function(done) {
       eventData = {
         _respondable: true,
-        _source: 'axeAPI.2.0.0',
+        _source: 'axeAPI.' + axe.version,
         message: 'Help us Obi-Wan',
         _axeuuid: 'otherAxe'
       };
@@ -263,7 +251,7 @@ describe('axe.utils.respondable', function() {
 
     it('should reject messages that do not have `_respondable: true`', function(done) {
       eventData = {
-        _source: 'axeAPI.2.0.0',
+        _source: 'axeAPI.' + axe.version,
         message: 'Help us Obi-Wan',
         _axeuuid: 'otherAxe'
       };
@@ -280,7 +268,7 @@ describe('axe.utils.respondable', function() {
     it('should reject messages that do not have `_axeuuid`', function(done) {
       eventData = {
         _respondable: true,
-        _source: 'axeAPI.2.0.0',
+        _source: 'axeAPI.' + axe.version,
         message: 'Help us Obi-Wan'
       };
 
@@ -296,7 +284,7 @@ describe('axe.utils.respondable', function() {
     it('should reject messages from the same axe instance (`_axeuuid`)', function(done) {
       eventData = {
         _respondable: true,
-        _source: 'axeAPI.2.0.0',
+        _source: 'axeAPI.' + axe.version,
         message: 'Help us Obi-Wan'
       };
 
@@ -322,7 +310,7 @@ describe('axe.utils.respondable', function() {
     it('should throw if an error message was send', function(done) {
       eventData = {
         _respondable: true,
-        _source: 'axeAPI.2.0.0',
+        _source: 'axeAPI.' + axe.version,
         error: {
           name: 'ReferenceError',
           message: 'The exhaust port is open!',
@@ -343,7 +331,7 @@ describe('axe.utils.respondable', function() {
 
       eventData = {
         _respondable: true,
-        _source: 'axeAPI.2.0.0',
+        _source: 'axeAPI.' + axe.version,
         error: {
           name: 'evil',
           message: 'The exhaust port is open!',

@@ -17,10 +17,10 @@
   },
   "all": [],
   "any": [
-    "aria-label",
-    "aria-labelledby",
     "implicit-label",
     "explicit-label",
+    "aria-label",
+    "aria-labelledby",
     "non-empty-title",
     "non-empty-placeholder",
     "presentational-role"

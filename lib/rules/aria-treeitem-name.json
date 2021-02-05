@@ -5,13 +5,13 @@
   "tags": ["cat.aria", "best-practice"],
   "metadata": {
     "description": "Ensures every ARIA treeitem node has an accessible name",
-    "help": "ARIA treeitem nodes must have an accessible name"
+    "help": "ARIA treeitem nodes should have an accessible name"
   },
   "all": [],
   "any": [
     "has-visible-text",
-    "aria-labelledby",
     "aria-label",
+    "aria-labelledby",
     "non-empty-title"
   ],
   "none": []

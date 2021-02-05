@@ -1,114 +1,86 @@
 describe('aria-allowed-attr', function() {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var flatTreeSetup = axe.testUtils.flatTreeSetup;
+  var queryFixture = axe.testUtils.queryFixture;
   var checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function() {
-    fixture.innerHTML = '';
     checkContext.reset();
-    axe.reset();
   });
 
   it('should detect incorrectly used attributes', function() {
-    var node = document.createElement('div');
-    node.setAttribute('role', 'link');
-    node.id = 'test';
-    node.tabIndex = 1;
-    node.setAttribute('aria-selected', 'true');
-    fixture.appendChild(node);
-    flatTreeSetup(fixture);
+    var vNode = queryFixture(
+      '<div role="link" id="target" tabindex="1" aria-selected="true"></div>'
+    );
 
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-allowed-attr')
-        .call(checkContext, node)
+        .call(checkContext, null, null, vNode)
     );
     assert.deepEqual(checkContext._data, ['aria-selected="true"']);
   });
 
   it('should not report on required attributes', function() {
-    var node = document.createElement('div');
-    node.setAttribute('role', 'checkbox');
-    node.id = 'test';
-    node.tabIndex = 1;
-    node.setAttribute('aria-checked', 'true');
-    fixture.appendChild(node);
-    flatTreeSetup(fixture);
+    var vNode = queryFixture(
+      '<div role="checkbox" id="target" tabindex="1" aria-checked="true"></div>'
+    );
 
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-allowed-attr')
-        .call(checkContext, node)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should detect incorrectly used attributes - implicit role', function() {
-    var node = document.createElement('a');
-    node.href = '#';
-    node.id = 'test';
-    node.tabIndex = 1;
-    node.setAttribute('aria-selected', 'true');
-    fixture.appendChild(node);
-    flatTreeSetup(fixture);
+    var vNode = queryFixture(
+      '<a href="#" id="target" tabindex="1" aria-selected="true"></a>'
+    );
 
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-allowed-attr')
-        .call(checkContext, node)
+        .call(checkContext, null, null, vNode)
     );
     assert.deepEqual(checkContext._data, ['aria-selected="true"']);
   });
 
   it('should return true if there is no role', function() {
-    var node = document.createElement('div');
-    node.id = 'test';
-    node.tabIndex = 1;
-    node.setAttribute('aria-selected', 'true');
-    node.setAttribute('aria-checked', 'true');
-    fixture.appendChild(node);
-    flatTreeSetup(fixture);
+    var vNode = queryFixture(
+      '<div id="target" tabindex="1" aria-selected="true" aria-checked="true"></div>'
+    );
 
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-allowed-attr')
-        .call(checkContext, node)
+        .call(checkContext, null, null, vNode)
     );
     assert.isNull(checkContext._data);
   });
 
   it('should not report on invalid attributes', function() {
-    var node = document.createElement('div');
-    node.id = 'test';
-    node.tabIndex = 1;
-    node.setAttribute('aria-cats', 'true');
-    node.setAttribute('role', 'dialog');
-    fixture.appendChild(node);
-    flatTreeSetup(fixture);
+    var vNode = queryFixture(
+      '<div role="dialog" id="target" tabindex="1" aria-cats="true"></div>'
+    );
 
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-allowed-attr')
-        .call(checkContext, node)
+        .call(checkContext, null, null, vNode)
     );
     assert.isNull(checkContext._data);
   });
 
   it('should not report on allowed attributes', function() {
-    var node = document.createElement('div');
-    node.id = 'test';
-    node.tabIndex = 1;
-    node.setAttribute('role', 'radio');
-    node.setAttribute('aria-required', 'true');
-    node.setAttribute('aria-checked', 'true');
-    fixture.appendChild(node);
-    flatTreeSetup(fixture);
+    var vNode = queryFixture(
+      '<div role="radio" id="target" tabindex="1" aria-required="true" aria-checked="true"></div>'
+    );
 
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-allowed-attr')
-        .call(checkContext, node)
+        .call(checkContext, null, null, vNode)
     );
     assert.isNull(checkContext._data);
   });
@@ -125,23 +97,25 @@ describe('aria-allowed-attr', function() {
         }
       });
 
-      fixture.innerHTML =
-        '<div role="mccheddarton" id="target" aria-checked="true" aria-selected="true"></div>';
-      var target = fixture.children[0];
-      flatTreeSetup(fixture);
+      var vNode = queryFixture(
+        '<div role="mccheddarton" id="target" aria-checked="true" aria-selected="true"></div>'
+      );
 
       assert.isFalse(
         axe.testUtils
           .getCheckEvaluate('aria-allowed-attr')
-          .call(checkContext, target)
+          .call(checkContext, null, null, vNode)
       );
 
       assert.isTrue(
-        axe.testUtils
-          .getCheckEvaluate('aria-allowed-attr')
-          .call(checkContext, target, {
+        axe.testUtils.getCheckEvaluate('aria-allowed-attr').call(
+          checkContext,
+          null,
+          {
             mccheddarton: ['aria-checked', 'aria-selected']
-          })
+          },
+          vNode
+        )
       );
     });
 
@@ -159,25 +133,24 @@ describe('aria-allowed-attr', function() {
         }
       });
 
-      fixture.innerHTML =
-        '<div role="bagley" id="target" aria-selected="true"></div>';
-      var target = fixture.children[0];
+      var vNode = queryFixture(
+        '<div role="bagley" id="target" aria-selected="true"></div>'
+      );
       var options = {
         mccheddarton: ['aria-selected'],
         bagley: ['aria-selected']
       };
-      flatTreeSetup(fixture);
 
       assert.isFalse(
         axe.testUtils
           .getCheckEvaluate('aria-allowed-attr')
-          .call(checkContext, target)
+          .call(checkContext, null, null, vNode)
       );
 
       assert.isTrue(
         axe.testUtils
           .getCheckEvaluate('aria-allowed-attr')
-          .call(checkContext, target, options)
+          .call(checkContext, null, options, vNode)
       );
     });
   });

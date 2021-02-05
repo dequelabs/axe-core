@@ -33,6 +33,12 @@ describe('axe.utils.processMessage', function() {
     assert.equal(output, 'Hello World!');
   });
 
+  it('should replace ${data.prop}', function() {
+    var message = 'Hello ${data.world}';
+    var output = axe.utils.processMessage(message, { world: undefined });
+    assert.equal(output, 'Hello ');
+  });
+
   it('should replace ${ data.prop } (with whitespace)', function() {
     var message = 'Hello ${ data.world }';
     var output = axe.utils.processMessage(message, { world: 'World!' });

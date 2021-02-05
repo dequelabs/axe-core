@@ -6,9 +6,7 @@ describe('inserted-into-focus-order-matches', function() {
   var rule;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'focus-order-semantics';
-    });
+    rule = axe.utils.getRule('focus-order-semantics');
   });
 
   afterEach(function() {
