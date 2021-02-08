@@ -150,6 +150,17 @@ describe('aria-required-parent', function() {
     );
   });
 
+  it('should fail when intermediate node is role=group but this not an allowed context', function() {
+    var params = checkSetup(
+      '<div role="list"><div role="group"><p role="listitem" id="target">Nothing here.</p></div></div>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-parent')
+        .apply(checkContext, params)
+    );
+  });
+
   it('should pass when intermediate node is role=none', function() {
     var params = checkSetup(
       '<div role="list"><div role="none"><p role="listitem" id="target">Nothing here.</p></div></div>'
