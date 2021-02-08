@@ -271,7 +271,7 @@ describe('runRules', function() {
 													"/div[@id='foo']"
 												],
 												source:
-													'<div id="foo">\n      <div id="bar"></div>\n    </div>'
+													'<div id="foo">\n\t\t\t<div id="bar"></div>\n\t\t</div>'
 											},
 											any: [
 												{
@@ -289,7 +289,7 @@ describe('runRules', function() {
 																"/div[@id='foo']"
 															],
 															source:
-																'<div id="foo">\n      <div id="bar"></div>\n    </div>'
+																'<div id="foo">\n\t\t\t<div id="bar"></div>\n\t\t</div>'
 														}
 													]
 												}

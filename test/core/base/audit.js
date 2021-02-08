@@ -1190,10 +1190,12 @@ describe('Audit', function() {
 			});
 
 			// check error node requires _selectorCache to be setup
-			axe.setup();
+			// axe.setup();
+			axe._tree = axe.utils.getFlattenedTree(fixture);
+			axe._selectorData = axe.utils.getSelectorData(axe._tree);
 
 			a.run(
-				{ include: [axe.utils.getFlattenedTree(fixture)[0]] },
+				{ include: [axe._tree[0]] },
 				{
 					debug: true,
 					runOnly: {
