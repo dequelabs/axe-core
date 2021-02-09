@@ -6,9 +6,7 @@ describe('duplicate-id-active matches', function() {
   var rule;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'duplicate-id-active';
-    });
+    rule = axe.utils.getRule('duplicate-id-active');
   });
 
   afterEach(function() {

@@ -4,7 +4,7 @@
   "tags": ["cat.semantics", "best-practice"],
   "metadata": {
     "help": "Ensures landmarks are unique",
-    "description": "Landmarks must have a unique role or role/label/title (i.e. accessible name) combination"
+    "description": "Landmarks should have a unique role or role/label/title (i.e. accessible name) combination"
   },
   "matches": "landmark-unique-matches",
   "all": [],

@@ -70,6 +70,21 @@ describe('table.toGrid', function() {
     ]);
   });
 
+  it('should handle rowspan=0', function() {
+    fixture.innerHTML =
+      '<table>' +
+      '<tr><td id="t1">2</td><td rowspan="0" id="t2">ok</td><td id="t3"></td></tr>' +
+      '<tr><td id="t4">4</td><td id="t5">5</td></tr>' +
+      '</table>';
+
+    var target = fixture.querySelector('table');
+
+    assert.deepEqual(axe.commons.table.toGrid(target), [
+      [$id('t1'), $id('t2'), $id('t3')],
+      [$id('t4'), $id('t2'), $id('t5')]
+    ]);
+  });
+
   it('should insert an empty array for empty rows', function() {
     fixture.innerHTML =
       '<table>' + '<tr></tr>' + '<tr><td id="t1">ok</td></tr>' + '</table>';

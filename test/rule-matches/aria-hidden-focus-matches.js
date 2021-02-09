@@ -2,17 +2,10 @@ describe('aria-hidden-focus-matches', function() {
   'use strict';
 
   var rule;
-  var fixtureSetup = axe.testUtils.fixtureSetup;
+  var queryFixture = axe.testUtils.queryFixture;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'aria-hidden-focus';
-    });
-  });
-
-  afterEach(function() {
-    var fixture = document.getElementById('fixture');
-    fixture.innerHTML = '';
+    rule = axe.utils.getRule('aria-hidden-focus');
   });
 
   it('is a function', function() {
@@ -20,26 +13,24 @@ describe('aria-hidden-focus-matches', function() {
   });
 
   it('return true when there is no parent with aria-hidden', function() {
-    var fixture = fixtureSetup('<div id="target">' + '</div>');
-    var node = fixture.querySelector('#target');
-    var actual = rule.matches(node);
+    var vNode = queryFixture('<div id="target">' + '</div>');
+    var actual = rule.matches(vNode.actualNode);
     assert.isTrue(actual);
   });
 
   it('return false when has a parent element with aria-hidden', function() {
-    var fixture = fixtureSetup(
+    var vNode = queryFixture(
       '<div aria-hidden="true">' +
         '<div id="target" aria-hidden="true">' +
         '</div>' +
         '</div>'
     );
-    var node = fixture.querySelector('#target');
-    var actual = rule.matches(node);
+    var actual = rule.matches(vNode.actualNode);
     assert.isFalse(actual);
   });
 
   it('return false when has any parent element with aria-hidden', function() {
-    var fixture = fixtureSetup(
+    var vNode = queryFixture(
       '<div aria-hidden="true">' +
         '<div>' +
         '<div id="target" aria-hidden="true">' +
@@ -47,21 +38,19 @@ describe('aria-hidden-focus-matches', function() {
         '</div>' +
         '</div>'
     );
-    var node = fixture.querySelector('#target');
-    var actual = rule.matches(node);
+    var actual = rule.matches(vNode.actualNode);
     assert.isFalse(actual);
   });
 
   it('return false when has any parent element with aria-hidden', function() {
-    var fixture = fixtureSetup(
+    var vNode = queryFixture(
       '<div aria-hidden="true">' +
         '<div aria-hidden="true">' +
         '<button id="target">btn</button>' +
         '</div>' +
         '</div>'
     );
-    var node = fixture.querySelector('#target');
-    var actual = rule.matches(node);
+    var actual = rule.matches(vNode.actualNode);
     assert.isFalse(actual);
   });
 });

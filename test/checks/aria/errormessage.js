@@ -13,9 +13,9 @@ describe('aria-errormessage', function() {
   });
 
   it('should return false if aria-errormessage value is invalid', function() {
-    var testHTML = '<div></div>';
-    testHTML += '<div id="plain"></div>';
-    fixture.innerHTML = testHTML;
+    fixture.innerHTML =
+      '<div aria-errormessage="plain" aria-invalid="true">' +
+      '<div id="plain"></div>';
     var target = fixture.children[0];
     target.setAttribute('aria-errormessage', 'plain');
     assert.isFalse(
@@ -26,8 +26,8 @@ describe('aria-errormessage', function() {
   });
 
   it('should return undefined if aria-errormessage references an element that does not exist', function() {
-    var testHTML = '<div></div>';
-    fixture.innerHTML = testHTML;
+    fixture.innerHTML =
+      '<div aria-errormessage="plain" aria-invalid="true">' + '<div></div>';
     var target = fixture.children[0];
     target.setAttribute('aria-errormessage', 'plain');
     assert.isUndefined(
@@ -38,9 +38,9 @@ describe('aria-errormessage', function() {
   });
 
   it('should return true if aria-errormessage id is alert', function() {
-    var testHTML = '<div></div>';
-    testHTML += '<div id="alert" role="alert"></div>';
-    fixture.innerHTML = testHTML;
+    fixture.innerHTML =
+      '<div aria-errormessage="alert" aria-invalid="true">' +
+      '<div id="alert" role="alert"></div>';
     var target = fixture.children[0];
     target.setAttribute('aria-errormessage', 'alert');
     assert.isTrue(
@@ -51,9 +51,9 @@ describe('aria-errormessage', function() {
   });
 
   it('should return true if aria-errormessage id is aria-live=assertive', function() {
-    var testHTML = '<div></div>';
-    testHTML += '<div id="live" aria-live="assertive"></div>';
-    fixture.innerHTML = testHTML;
+    fixture.innerHTML =
+      '<div aria-errormessage="live" aria-invalid="true">' +
+      '<div id="live" aria-live="assertive"></div>';
     var target = fixture.children[0];
     target.setAttribute('aria-errormessage', 'live');
     assert.isTrue(
@@ -64,12 +64,10 @@ describe('aria-errormessage', function() {
   });
 
   it('should return true if aria-errormessage id is aria-describedby', function() {
-    var testHTML = '<div></div>';
-    testHTML += '<div id="plain"></div>';
-    fixture.innerHTML = testHTML;
+    fixture.innerHTML =
+      '<div aria-errormessage="plain" aria-describedby="plain" aria-invalid="true">' +
+      '<div id="plain"></div>';
     var target = fixture.children[0];
-    target.setAttribute('aria-errormessage', 'plain');
-    target.setAttribute('aria-describedby', 'plain');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-errormessage')
@@ -78,11 +76,10 @@ describe('aria-errormessage', function() {
   });
 
   it('sets an array of IDs in data', function() {
-    var testHTML = '<div></div>';
-    testHTML += '<div id="plain"></div>';
-    fixture.innerHTML = testHTML;
+    fixture.innerHTML =
+      '<div aria-errormessage=" foo  bar \tbaz  " aria-invalid="true">' +
+      '<div id="plain"></div>';
     var target = fixture.children[0];
-    target.setAttribute('aria-errormessage', ' foo  bar \tbaz  ');
     axe.testUtils
       .getCheckEvaluate('aria-errormessage')
       .call(checkContext, target);
@@ -99,11 +96,36 @@ describe('aria-errormessage', function() {
         }
       }
     });
-    fixture.innerHTML = '<div aria-errormessage=" "></div>';
+    fixture.innerHTML = '<div aria-errormessage=" " aria-invalid="true"></div>';
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-errormessage')
         .call(checkContext, fixture.children[0])
+    );
+  });
+
+  it('should return true when aria-invalid is not set', function() {
+    fixture.innerHTML =
+      '<div aria-errormessage="plain">' + '<div id="plain"></div>';
+    var target = fixture.children[0];
+    target.setAttribute('aria-errormessage', 'plain');
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-errormessage')
+        .call(checkContext, target)
+    );
+  });
+
+  it('should return true when aria-invalid=false', function() {
+    fixture.innerHTML =
+      '<div aria-errormessage="plain" aria-invalid="false">' +
+      '<div id="plain"></div>';
+    var target = fixture.children[0];
+    target.setAttribute('aria-errormessage', 'plain');
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-errormessage')
+        .call(checkContext, target)
     );
   });
 
@@ -117,7 +139,7 @@ describe('aria-errormessage', function() {
         }
       }
     });
-    fixture.innerHTML = '<div aria-errormessage=" "></div>';
+    fixture.innerHTML = '<div aria-errormessage=" " aria-invalid="true"></div>';
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-errormessage')
@@ -129,7 +151,7 @@ describe('aria-errormessage', function() {
     'should return undefined if aria-errormessage value crosses shadow boundary',
     function() {
       var params = shadowCheckSetup(
-        '<div id="target" aria-errormessage="live"></div>',
+        '<div id="target" aria-errormessage="live" aria-invalid="true"></div>',
         '<div id="live" aria-live="assertive"></div>'
       );
       assert.isUndefined(
@@ -145,7 +167,7 @@ describe('aria-errormessage', function() {
     function() {
       var params = shadowCheckSetup(
         '<div></div>',
-        '<div id="target" aria-errormessage="live"</div>' +
+        '<div id="target" aria-errormessage="live" aria-invalid="true"></div>' +
           '<div id="live"></div>'
       );
       assert.isFalse(
@@ -161,7 +183,7 @@ describe('aria-errormessage', function() {
     function() {
       var params = shadowCheckSetup(
         '<div></div>',
-        '<div id="target" aria-errormessage="live"</div>' +
+        '<div id="target" aria-errormessage="live" aria-invalid="true"></div>' +
           '<div id="live" aria-live="assertive"></div>'
       );
       assert.isTrue(

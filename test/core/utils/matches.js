@@ -132,31 +132,6 @@ describe('utils.matches', function() {
   });
 
   describe('pseudos', function() {
-    it('returns true if :not matches using tag', function() {
-      var virtualNode = queryFixture('<h1 id="target">foo</h1>');
-      assert.isTrue(matches(virtualNode, 'h1:not(span)'));
-    });
-
-    it('returns true if :not matches using class', function() {
-      var virtualNode = queryFixture('<h1 id="target">foo</h1>');
-      assert.isTrue(matches(virtualNode, 'h1:not(.foo)'));
-    });
-
-    it('returns true if :not matches using attribute', function() {
-      var virtualNode = queryFixture('<h1 id="target">foo</h1>');
-      assert.isTrue(matches(virtualNode, 'h1:not([class])'));
-    });
-
-    it('returns true if :not matches using id', function() {
-      var virtualNode = queryFixture('<h1 id="target">foo</h1>');
-      assert.isTrue(matches(virtualNode, 'h1:not(#foo)'));
-    });
-
-    it('returns false if :not matches element', function() {
-      var virtualNode = queryFixture('<h1 id="target">foo</h1>');
-      assert.isFalse(matches(virtualNode, 'h1:not([id])'));
-    });
-
     it('throws error if pseudo is not implemented', function() {
       var virtualNode = queryFixture('<h1 id="target">foo</h1>');
       assert.throws(function() {
@@ -164,6 +139,87 @@ describe('utils.matches', function() {
       });
       assert.throws(function() {
         matches(virtualNode, 'h1::before');
+      });
+    });
+
+    describe(':not', function() {
+      it('returns true if :not matches using tag', function() {
+        var virtualNode = queryFixture('<h1 id="target">foo</h1>');
+        assert.isTrue(matches(virtualNode, 'h1:not(span)'));
+      });
+
+      it('returns true if :not matches using class', function() {
+        var virtualNode = queryFixture('<h1 id="target">foo</h1>');
+        assert.isTrue(matches(virtualNode, 'h1:not(.foo)'));
+      });
+
+      it('returns true if :not matches using attribute', function() {
+        var virtualNode = queryFixture('<h1 id="target">foo</h1>');
+        assert.isTrue(matches(virtualNode, 'h1:not([class])'));
+      });
+
+      it('returns true if :not matches using id', function() {
+        var virtualNode = queryFixture('<h1 id="target">foo</h1>');
+        assert.isTrue(matches(virtualNode, 'h1:not(#foo)'));
+      });
+
+      it('returns true if :not matches none of the selectors', function() {
+        var virtualNode = queryFixture('<h1 id="target">foo</h1>');
+        assert.isTrue(matches(virtualNode, 'h1:not([role=heading], span)'));
+      });
+
+      it('returns false if :not matches element', function() {
+        var virtualNode = queryFixture('<h1 id="target">foo</h1>');
+        assert.isFalse(matches(virtualNode, 'h1:not([id])'));
+      });
+
+      it('returns false if :not matches one of the selectors', function() {
+        var virtualNode = queryFixture('<h1 id="target">foo</h1>');
+        assert.isFalse(matches(virtualNode, 'h1:not([role=heading], [id])'));
+      });
+    });
+
+    describe(':is', function() {
+      it('returns true if :is matches using tag', function() {
+        var virtualNode = queryFixture('<h1 id="target">foo</h1>');
+        assert.isTrue(matches(virtualNode, ':is(h1)'));
+      });
+
+      it('returns true if :is matches using class', function() {
+        var virtualNode = queryFixture('<h1 id="target" class="foo">foo</h1>');
+        assert.isTrue(matches(virtualNode, 'h1:is(.foo)'));
+      });
+
+      it('returns true if :is matches using attribute', function() {
+        var virtualNode = queryFixture('<h1 id="target" class="foo">foo</h1>');
+        assert.isTrue(matches(virtualNode, 'h1:is([class])'));
+      });
+
+      it('returns true if :is matches using id', function() {
+        var virtualNode = queryFixture('<h1 id="target">foo</h1>');
+        assert.isTrue(matches(virtualNode, 'h1:is(#target)'));
+      });
+
+      it('returns true if :is matches one of the selectors', function() {
+        var virtualNode = queryFixture('<h1 id="target">foo</h1>');
+        assert.isTrue(matches(virtualNode, ':is([role=heading], h1)'));
+      });
+
+      it('returns true if :is matches complex selector', function() {
+        var virtualNode = queryFixture('<div><h1 id="target">foo</h1></div>');
+        assert.isTrue(matches(virtualNode, 'h1:is(div > #target)'));
+      });
+
+      it('returns false if :is does not match element', function() {
+        var virtualNode = queryFixture('<h1 id="target">foo</h1>');
+        assert.isFalse(matches(virtualNode, 'h1:is([class])'));
+      });
+
+      it('returns false if :is matches none of the selectors', function() {
+        var virtualNode = queryFixture('<h1 id="target">foo</h1>');
+        assert.isFalse(
+          matches(virtualNode, 'h1:is([class], span, #foo, .bar)')
+        );
       });
     });
   });

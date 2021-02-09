@@ -3,9 +3,7 @@ describe('label-content-name-mismatch-matches tests', function() {
 
   var fixture = document.getElementById('fixture');
   var queryFixture = axe.testUtils.queryFixture;
-  var rule = axe._audit.rules.find(function(rule) {
-    return rule.id === 'label-content-name-mismatch';
-  });
+  var rule = axe.utils.getRule('label-content-name-mismatch');
 
   afterEach(function() {
     fixture.innerHTML = '';

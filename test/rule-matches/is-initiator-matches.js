@@ -4,9 +4,7 @@ describe('is-initiator-matches', function() {
   var rule;
 
   beforeEach(function() {
-    rule = axe._audit.rules.find(function(rule) {
-      return rule.id === 'html-has-lang';
-    });
+    rule = axe.utils.getRule('html-has-lang');
   });
 
   afterEach(function() {

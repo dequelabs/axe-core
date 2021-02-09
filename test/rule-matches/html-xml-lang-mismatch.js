@@ -8,9 +8,7 @@ describe('xml-lang-mismatch-matches', function() {
     var fixture = document.getElementById('fixture');
 
     beforeEach(function() {
-      rule = axe._audit.rules.find(function(rule) {
-        return rule.id === 'html-xml-lang-mismatch';
-      });
+      rule = axe.utils.getRule('html-xml-lang-mismatch');
       dom = document.createElement('html');
     });
 

@@ -19,8 +19,8 @@
     "button-has-visible-text",
     "aria-label",
     "aria-labelledby",
-    "presentational-role",
-    "non-empty-title"
+    "non-empty-title",
+    "presentational-role"
   ],
   "none": []
 }

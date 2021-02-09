@@ -131,6 +131,20 @@ jobs:
       - run: npm run build
       - run: npm run test:locales
 
+  # Run the test suite for nightly builds.
+  test_nightly:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      # install Chrome Canary
+      - run: |
+          wget https://dl.google.com/linux/direct/google-chrome-unstable_current_amd64.deb
+          sudo apt install ./google-chrome-unstable_current_amd64.deb
+      - run: npm run test -- --browsers ChromeCanary,FirefoxNightly
+
   # Test api docs can be built
   build_api_docs:
     <<: *defaults
@@ -313,3 +327,17 @@ workflows:
       - github_release:
           requires:
             - release
+  nightly:
+    triggers:
+      - schedule:
+          # run at 00:00 UTC every day
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - develop
+    jobs:
+      - dependencies_unix
+      - test_nightly:
+          requires:
+            - dependencies_unix

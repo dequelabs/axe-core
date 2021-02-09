@@ -129,6 +129,29 @@ describe('VirtualNode', function() {
       });
     });
 
+    describe('attrNames', function() {
+      it('should return a list of attribute names', function() {
+        node.setAttribute('foo', 'bar');
+        var vNode = new VirtualNode(node);
+
+        assert.deepEqual(vNode.attrNames, ['foo']);
+      });
+
+      it('should work with clobbered attributes', function() {
+        var node = document.createElement('form');
+        node.setAttribute('id', '123');
+        node.innerHTML = '<select name="attributes"></select>';
+        var vNode = new VirtualNode(node);
+
+        assert.deepEqual(vNode.attrNames, ['id']);
+      });
+
+      it('should return an empty array if there are no attributes', function() {
+        var vNode = new VirtualNode(node);
+        assert.deepEqual(vNode.attrNames, []);
+      });
+    });
+
     describe.skip('isFocusable', function() {
       var commons;
 

@@ -3,7 +3,6 @@ describe('dom.isVisible', function() {
 
   var fixture = document.getElementById('fixture');
   var queryFixture = axe.testUtils.queryFixture;
-  var fixtureSetup = axe.testUtils.fixtureSetup;
   var isIE11 = axe.testUtils.isIE11;
   var shadowSupported = axe.testUtils.shadowSupport.v1;
   var fakeNode = {
@@ -85,29 +84,26 @@ describe('dom.isVisible', function() {
     });
 
     it('should return false on STYLE tag', function() {
-      var fixture = fixtureSetup(
+      var vNode = queryFixture(
         '<style id="target"> @import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"; .green { background-color: green; } </style>'
       );
-      var node = fixture.querySelector('#target');
-      var actual = axe.commons.dom.isVisible(node);
+      var actual = axe.commons.dom.isVisible(vNode.actualNode);
       assert.isFalse(actual);
     });
 
     it('should return false on NOSCRIPT tag', function() {
-      var fixture = fixtureSetup(
+      var vNode = queryFixture(
         '<noscript id="target"><p class="invisible"><img src="/piwik/piwik.php?idsite=1" alt="" /></p></noscript>'
       );
-      var node = fixture.querySelector('#target');
-      var actual = axe.commons.dom.isVisible(node);
+      var actual = axe.commons.dom.isVisible(vNode.actualNode);
       assert.isFalse(actual);
     });
 
     it('should return false on TEMPLATE tag', function() {
-      var fixture = fixtureSetup(
+      var vNode = queryFixture(
         '<template id="target"><div>Name:</div></template>'
       );
-      var node = fixture.querySelector('#target');
-      var actual = axe.commons.dom.isVisible(node);
+      var actual = axe.commons.dom.isVisible(vNode.actualNode);
       assert.isFalse(actual);
     });
 

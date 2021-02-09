@@ -9,7 +9,9 @@
     window.addEventListener('load', function() {
       axe.run(document, function(err, res) {
         console.log(res.violations);
-        res.incomplete.forEach(issue => console.log(issue));
+        res.incomplete.forEach(function(issue) {
+          console.log(issue);
+        });
       });
     });
   </script>
