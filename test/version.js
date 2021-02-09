@@ -1,2 +1,2 @@
 // This is temporary as the tests still need to use this file
-axe.version = '4.1.1';
+axe.version = '4.1.2';
