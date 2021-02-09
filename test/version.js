@@ -1,5 +1,2 @@
-/*global axe */
-
-// This enables free communication between frames with
-// to the current version of axe:
-axe.version = 'x.y.z';
+// This is temporary as the tests still need to use this file
+axe.version = '4.1.2';

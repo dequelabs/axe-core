@@ -1,5 +1,6 @@
 describe('runRules', function() {
 	'use strict';
+	var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
 
 	// These tests can sometimes be flaky in IE, allow for up to 3 retries
 	if (axe.testUtils.isIE11) {
@@ -206,7 +207,9 @@ describe('runRules', function() {
 								{
 									id: 'div#target',
 									helpUrl:
-										'https://dequeuniversity.com/rules/axe/x.y/div#target?application=axeAPI',
+										'https://dequeuniversity.com/rules/axe/' +
+										ver +
+										'/div#target?application=axeAPI',
 									pageLevel: false,
 									impact: null,
 									inapplicable: [],
@@ -245,7 +248,9 @@ describe('runRules', function() {
 								{
 									id: 'first-div',
 									helpUrl:
-										'https://dequeuniversity.com/rules/axe/x.y/first-div?application=axeAPI',
+										'https://dequeuniversity.com/rules/axe/' +
+										ver +
+										'/first-div?application=axeAPI',
 									pageLevel: false,
 									impact: null,
 									inapplicable: [],
@@ -265,7 +270,8 @@ describe('runRules', function() {
 													"/iframe[@id='context-test']",
 													"/div[@id='foo']"
 												],
-												source: '<div id="foo">\n			<div id="bar"></div>\n		</div>'
+												source:
+													'<div id="foo">\n\t\t\t<div id="bar"></div>\n\t\t</div>'
 											},
 											any: [
 												{
@@ -283,7 +289,7 @@ describe('runRules', function() {
 																"/div[@id='foo']"
 															],
 															source:
-																'<div id="foo">\n			<div id="bar"></div>\n		</div>'
+																'<div id="foo">\n\t\t\t<div id="bar"></div>\n\t\t</div>'
 														}
 													]
 												}
@@ -511,7 +517,9 @@ describe('runRules', function() {
 						{
 							id: 'div#target',
 							helpUrl:
-								'https://dequeuniversity.com/rules/axe/x.y/div#target?application=axeAPI',
+								'https://dequeuniversity.com/rules/axe/' +
+								ver +
+								'/div#target?application=axeAPI',
 							pageLevel: false,
 							foo: 'bar',
 							stuff: 'blah',
@@ -551,7 +559,9 @@ describe('runRules', function() {
 						{
 							id: 'first-div',
 							helpUrl:
-								'https://dequeuniversity.com/rules/axe/x.y/first-div?application=axeAPI',
+								'https://dequeuniversity.com/rules/axe/' +
+								ver +
+								'/first-div?application=axeAPI',
 							pageLevel: false,
 							bar: 'foo',
 							stuff: 'no',
