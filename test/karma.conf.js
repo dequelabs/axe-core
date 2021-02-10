@@ -55,10 +55,10 @@ if (testFiles.length) {
   testPaths = testDirs.map(function(dir) {
     if (dir === 'integration') {
       return path.join('test', dir, '**/*.json');
-    } else if (['virtual-rules', 'api'].includes(dir)) {
+    }
+    if (['virtual-rules', 'api'].includes(dir)) {
       return path.join('test', 'integration', dir, '**/*.js');
     }
-
     return path.join('test', dir, '**/*.js');
   });
 }
@@ -88,7 +88,6 @@ module.exports = function(config) {
         served: true
       },
       'axe.js',
-
       'test/testutils.js'
     ].concat(testPaths),
     proxies: {
