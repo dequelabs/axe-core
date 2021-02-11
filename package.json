@@ -155,7 +155,6 @@
     "uglify-js": "^3.4.4",
     "weakmap-polyfill": "^2.0.0"
   },
-  "dependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
