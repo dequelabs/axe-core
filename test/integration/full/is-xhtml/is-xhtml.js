@@ -1,7 +1,7 @@
 describe('axe.utils.isXHTML', function() {
-	'use strict';
+  'use strict';
 
-	it('should return true on any document that is XHTML', function() {
-		assert.isTrue(axe.utils.isXHTML(document));
-	});
+  it('should return true on any document that is XHTML', function() {
+    assert.isTrue(axe.utils.isXHTML(document));
+  });
 });

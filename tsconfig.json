@@ -1,7 +1,7 @@
 {
-	"compilerOptions": {
-		"noImplicitAny": true
-	},
-	"include": ["typings/axe-core/axe-core-tests.ts"],
-	"exclude": ["node_modules"]
+  "compilerOptions": {
+    "noImplicitAny": true
+  },
+  "include": ["typings/axe-core/axe-core-tests.ts"],
+  "exclude": ["node_modules"]
 }

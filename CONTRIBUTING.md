@@ -11,32 +11,27 @@ Submitting code to the project? Please review and follow our
 
 ### Code Quality
 
-Although we do not have official code style guidelines, we can and will request you to make changes
-if we think that your code is sloppy. You can take clues from the existing code base to see what we
-consider to be reasonable code quality. Please be prepared to make changes that we ask of you even
-if you might not agree with the request(s).
+Although we do not have official code style guidelines, we can and will request you to make changes if we feel the changes are warranted. You can take clues from the existing code base to see what we consider to be reasonable code quality. Please be prepared to make changes that we ask of you even if you might not agree with the request(s).
 
 Please respect the coding style of the files you are changing and adhere to that.
 
-The JavaScript files in this project are formatted by [Prettier](https://prettier.io/). Additionally, we prefer:
+The files in this project are formatted by [Prettier](https://prettier.io/) and [ESLint](https://eslint.org/). Both are run when code is committed. Additionally, you can run ESLint manually:
 
-1. Tabs over spaces
-2. Single quotes for string literals
-3. Function definitions like `function functionName(arguments) {`
-4. Variable function definitions like `Class.prototype.functionName = function (arguments) {`
-5. Use of 'use strict'
-6. Variables declared at the top of functions
+```console
+npm run eslint
+```
 
 ### Shadow DOM
 
-For any proposed changes to rules, checks, commons, or other APIs to be accepted
-in axe-core, your code must support open Shadow DOM. See [API.md](./doc/API.md) and the
-[developer guide](./doc/developer-guide.md) for documentation on the available methods
-and test utilities. You can also look at existing tests for examples using our APIs.
+For any proposed changes to rules, checks, commons, or other APIs to be accepted in axe-core, your code must support open Shadow DOM. See [API.md](./doc/API.md) and the [developer guide](./doc/developer-guide.md) for documentation on the available methods and test utilities. You can also look at existing tests for examples using our APIs.
 
 ### Testing
 
 We expect all code to be 100% covered by tests. We don't have or want code coverage metrics but we will review tests and suggest changes when we think the test(s) do(es) not adequately exercise the code/code changes.
+
+Tests should be added to the `test` directory using the same file path and name of the source file the test is for. For example, the source file `lib/commons/text/sanitize.js` should have a test file at `test/commons/text/sanitize.js`.
+
+Axe uses Karma / Mocha / Chai as its testing framework.
 
 ### Documentation and Comments
 
@@ -60,31 +55,29 @@ Classes should contain a jsdoc comment block for each attribute. For example:
  * @param {Object} check CheckResult specification
  */
 function CheckResult(check) {
-	'use strict';
+  /**
+   * ID of the check.  Unique in the context of a rule.
+   * @type {String}
+   */
+  this.id = check.id;
 
-	/**
-	 * ID of the check.  Unique in the context of a rule.
-	 * @type {String}
-	 */
-	this.id = check.id;
+  /**
+   * Any data passed by Check (by calling `this.data()`)
+   * @type {Mixed}
+   */
+  this.data = null;
 
-	/**
-	 * Any data passed by Check (by calling `this.data()`)
-	 * @type {Mixed}
-	 */
-	this.data = null;
+  /**
+   * Any node that is related to the Check, specified by calling `this.relatedNodes([HTMLElement...])` inside the Check
+   * @type {Array}
+   */
+  this.relatedNodes = [];
 
-	/**
-	 * Any node that is related to the Check, specified by calling `this.relatedNodes([HTMLElement...])` inside the Check
-	 * @type {Array}
-	 */
-	this.relatedNodes = [];
-
-	/**
-	 * The return value of the Check's evaluate function
-	 * @type {Mixed}
-	 */
-	this.result = null;
+  /**
+   * The return value of the Check's evaluate function
+   * @type {Mixed}
+   */
+  this.result = null;
 }
 ```
 
@@ -98,16 +91,84 @@ Once the basic infrastructure is installed, from the repository root, do the fol
 npm install
 ```
 
-To run tests:
+Then build the package:
 
 ```console
-grunt test
+npm run build
 ```
 
-To build the package:
+## Developing and testing
+
+In order to run axe tests, `axe.js` must be built using `npm run build`. To run the unit tests:
 
 ```console
-grunt build
+npm test
+```
+
+To continually watch changes to the axe source files and re-build on changes, use:
+
+```console
+npm run develop
+```
+
+This will also rerun any tests that have been changed, and any changes to the axe source files will trigger a rerun of that files tests.
+
+To run axe integration tests:
+
+```console
+npm run test:integration
+```
+
+Lastly, there are a few other tests that get run during the continuous integration process:
+
+```console
+# run the tests from `doc/examples/*` using the current local build of `axe.js`
+npm run test:examples
+
+# run the tests from `test/node`
+npm run test:node
+```
+
+### Running and debugging specific unit tests
+
+If you want to run a specific set of unit tests instead of all the unit tests, you can use one of the following commands:
+
+```console
+# run just the tests from `test/core`
+npm run test:unit:core
+
+# run just the tests from `test/commons`
+npm run test:unit:commons
+
+# run just the tests from `test/rule-matches`
+npm run test:unit:rule-matches
+
+# run just the tests from `test/checks`
+npm run test:unit:checks
+
+# run just the tests from `test/integration/rules`
+npm run test:unit:integration
+
+# run just the tests from `test/integration/api`
+npm run test:unit:api
+
+# run just the tests from `test/integration/virtual-rules`
+npm run test:unit:virtual-rules
+```
+
+If you need to debug the unit tests in a browser, you can run:
+
+```console
+npm run test:debug
+```
+
+This will start the Karma server and open up the Chrome browser. Click the `Debug` button to start debugging the tests. You can also navigate to the listed URL in your browser of choice to debug tests using that browser.
+
+Because the amount of tests is so large, it's recommended to debug only a specific set of unit tests rather than the whole test suite. You can use the `testDirs` argument when using the debug command and pass a specific test directory. The test directory names are the same as those used for `test:unit:*`:
+
+```console
+# accepts a single directory or a comma-separated list of directories
+npm run test:debug -- testDirs=core,commons
 ```
 
 ## Using axe with TypeScript
@@ -116,16 +177,10 @@ grunt build
 
 The TypeScript definition file for axe-core is distributed with this module and can be found in [axe.d.ts](./axe.d.ts). It currently supports TypeScript 2.0+.
 
-To maintain axe support for TypeScript you must first install it (globally recommended):
+You can run TypeScript definition tests using the following command:
 
 ```console
-sudo npm -g install typescript
-```
-
-Once that's installed, you can run TypeScript definition tests (with the optional `--noImplicitAny` flag):
-
-```console
-tsc --noImplicitAny typings/axe-core/axe-core-tests.ts
+npm run test:tsc
 ```
 
 ## Including axe's type definition in tests
@@ -136,12 +191,12 @@ Installing axe to run accessibility tests in your TypeScript project should be a
 import * as axe from 'axe-core';
 
 describe('Module', () => {
-	it('should have no accessibility violations', done => {
-		axe.run(compiledFixture).then(results => {
-			expect(results.violations.length).toBe(0);
-			done();
-		}, done);
-	});
+  it('should have no accessibility violations', done => {
+    axe.run(compiledFixture).then(results => {
+      expect(results.violations.length).toBe(0);
+      done();
+    }, done);
+  });
 });
 ```
 

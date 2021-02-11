@@ -1,0 +1,16 @@
+# Require that merge commits have security review performed on them.
+review_merges: true
+
+approve_button_tooltip: No security or PR title concerns
+decline_button_tooltip: Found security or PR title concerns
+
+pending_description: Pull request not yet approved for security and a correct PR title
+pending_summary: >
+  Awaiting security and PR title review. To approve this pull request, please click the "Approve" button above.
+  You may **not** review your own Pull Request.
+  
+approved_description: Pull request has been reviewed and approved for security and a correct PR title
+approved_summary: Pull request has been approved for security and having an incorrect PR title by @${approver}.
+
+declined_description: Pull request contains security concerns or has an incorrect PR title
+declined_summary: Commit was reviewed and declined for security and/or an incorrect PR title by @${approver}.

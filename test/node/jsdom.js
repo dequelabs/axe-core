@@ -3,50 +3,50 @@ var jsdom = require('jsdom');
 var assert = require('assert');
 
 var domStr =
-	'<!DOCTYPE html>' +
-	'<html lang="en">' +
-	'<head>' +
-	'<meta charset="UTF-8">' +
-	'<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
-	'<title>Document</title>' +
-	'</head>' +
-	'<body>' +
-	'Hello' +
-	'</body>' +
-	'</html>';
+  '<!DOCTYPE html>' +
+  '<html lang="en">' +
+  '<head>' +
+  '<meta charset="UTF-8">' +
+  '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+  '<title>Document</title>' +
+  '</head>' +
+  '<body>' +
+  'Hello' +
+  '</body>' +
+  '</html>';
 
 describe('jsdom axe-core', function() {
-	it('should run without setting globals', function() {
-		var dom = new jsdom.JSDOM(domStr);
+  it('should run without setting globals', function() {
+    var dom = new jsdom.JSDOM(domStr);
 
-		return axe
-			.run(dom.window.document.documentElement, {
-				rules: { 'color-contrast': { enabled: false } }
-			})
-			.then(function(results) {
-				assert.notEqual(results.violations.length, 0);
-			});
-	});
+    return axe
+      .run(dom.window.document.documentElement, {
+        rules: { 'color-contrast': { enabled: false } }
+      })
+      .then(function(results) {
+        assert.notEqual(results.violations.length, 0);
+      });
+  });
 
-	it('should unset globals so it can run with a new set of globals', function() {
-		var dom = new jsdom.JSDOM(domStr);
+  it('should unset globals so it can run with a new set of globals', function() {
+    var dom = new jsdom.JSDOM(domStr);
 
-		return axe
-			.run(dom.window.document.documentElement, {
-				rules: { 'color-contrast': { enabled: false } }
-			})
-			.then(function(results) {
-				assert.notEqual(results.violations.length, 0);
+    return axe
+      .run(dom.window.document.documentElement, {
+        rules: { 'color-contrast': { enabled: false } }
+      })
+      .then(function(results) {
+        assert.notEqual(results.violations.length, 0);
 
-				var dom = new jsdom.JSDOM(domStr);
+        var dom = new jsdom.JSDOM(domStr);
 
-				return axe
-					.run(dom.window.document.documentElement, {
-						rules: { 'color-contrast': { enabled: false } }
-					})
-					.then(function(results) {
-						assert.notEqual(results.violations.length, 0);
-					});
-			});
-	});
+        return axe
+          .run(dom.window.document.documentElement, {
+            rules: { 'color-contrast': { enabled: false } }
+          })
+          .then(function(results) {
+            assert.notEqual(results.violations.length, 0);
+          });
+      });
+  });
 });

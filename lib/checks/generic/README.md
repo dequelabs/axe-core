@@ -4,10 +4,10 @@ To use these checks, pass the check id (found in the metadata-function-map file)
 
 ```json
 {
-	"id": "my-check",
-	"evaluate": "generic-check-id",
-	"options": {
-		"required": true
-	}
+  "id": "my-check",
+  "evaluate": "generic-check-id",
+  "options": {
+    "required": true
+  }
 }
 ```

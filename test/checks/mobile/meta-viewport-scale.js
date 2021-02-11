@@ -1,198 +1,242 @@
 describe('meta-viewport', function() {
-	'use strict';
+  'use strict';
 
-	var fixture = document.getElementById('fixture');
-	var checkContext = axe.testUtils.MockCheckContext();
+  var queryFixture = axe.testUtils.queryFixture;
+  var checkContext = axe.testUtils.MockCheckContext();
 
-	afterEach(function() {
-		fixture.innerHTML = '';
-		checkContext.reset();
-	});
-	describe('; separator', function() {
-		it('should return false on user-scalable=no', function() {
-			fixture.innerHTML =
-				'<meta name="viewport" content="foo=bar, cats=dogs, user-scalable=no">';
-			var node = fixture.querySelector('meta');
+  afterEach(function() {
+    checkContext.reset();
+  });
 
-			assert.isFalse(
-				axe.testUtils.getCheckEvaluate('meta-viewport').call(checkContext, node)
-			);
-			assert.deepEqual(checkContext._data, 'user-scalable=no');
-		});
+  describe('; separator', function() {
+    it('should return false on user-scalable=no', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, cats=dogs, user-scalable=no">'
+      );
 
-		it('should return false on user-scalable=no', function() {
-			fixture.innerHTML =
-				'<meta name="viewport" content="foo=bar, cats=dogs, user-scalable=no, more-stuff=ok">';
-			var node = fixture.querySelector('meta');
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('meta-viewport')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.deepEqual(checkContext._data, 'user-scalable=no');
+    });
 
-			assert.isFalse(
-				axe.testUtils.getCheckEvaluate('meta-viewport').call(checkContext, node)
-			);
-		});
+    it('should return false on user-scalable=no', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, cats=dogs, user-scalable=no, more-stuff=ok">'
+      );
 
-		it('should return true on user-scalable=yes', function() {
-			fixture.innerHTML =
-				'<meta name="viewport" content="foo=bar, cats=dogs, user-scalable=yes, more-stuff=ok">';
-			var node = fixture.querySelector('meta');
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('meta-viewport')
+          .call(checkContext, null, null, vNode)
+      );
+    });
 
-			assert.isTrue(axe.testUtils.getCheckEvaluate('meta-viewport')(node));
-		});
+    it('should return true on user-scalable=yes', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, cats=dogs, user-scalable=yes, more-stuff=ok">'
+      );
 
-		it('should return false on maximum-scale=yes (translates to 1)', function() {
-			fixture.innerHTML = '<meta name="viewport" content="maximum-scale=yes">';
-			var node = fixture.querySelector('meta');
-			assert.isFalse(
-				axe.testUtils.getCheckEvaluate('meta-viewport').call(checkContext, node)
-			);
-		});
+      assert.isTrue(
+        axe.testUtils.getCheckEvaluate('meta-viewport')(null, null, vNode)
+      );
+    });
 
-		it('should return true on negative maximum scale (should be ignored)', function() {
-			fixture.innerHTML = '<meta name="viewport" content="maximum-scale=-1">';
-			var node = fixture.querySelector('meta');
-			assert.isTrue(
-				axe.testUtils.getCheckEvaluate('meta-viewport').call(checkContext, node)
-			);
-		});
+    it('should return false on maximum-scale=yes (translates to 1)', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="maximum-scale=yes">'
+      );
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('meta-viewport')
+          .call(checkContext, null, null, vNode)
+      );
+    });
 
-		it('should return true if maximum-scale >= options.scaleMinimum', function() {
-			fixture.innerHTML =
-				'<meta name="viewport" content="foo=bar, maximum-scale=5, cats=dogs">';
-			var node = fixture.querySelector('meta');
+    it('should return true on negative maximum scale (should be ignored)', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="maximum-scale=-1">'
+      );
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('meta-viewport')
+          .call(checkContext, null, null, vNode)
+      );
+    });
 
-			assert.isTrue(
-				axe.testUtils
-					.getCheckEvaluate('meta-viewport')
-					.call(checkContext, node, {
-						scaleMinimum: 2
-					})
-			);
+    it('should return true if maximum-scale >= options.scaleMinimum', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, maximum-scale=5, cats=dogs">'
+      );
 
-			fixture.innerHTML =
-				'<meta name="viewport" content="foo=bar, maximum-scale=3, cats=dogs">';
-			node = fixture.querySelector('meta');
+      assert.isTrue(
+        axe.testUtils.getCheckEvaluate('meta-viewport').call(
+          checkContext,
+          null,
+          {
+            scaleMinimum: 2
+          },
+          vNode
+        )
+      );
 
-			assert.isTrue(
-				axe.testUtils.getCheckEvaluate('meta-viewport').call(checkContext, node)
-			);
-		});
+      vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, maximum-scale=3, cats=dogs">'
+      );
 
-		it('should return false on maximum-scale < options.scaleMinimum', function() {
-			fixture.innerHTML =
-				'<meta name="viewport" content="foo=bar, cats=dogs, user-scalable=yes, maximum-scale=1.5">';
-			var node = fixture.querySelector('meta');
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('meta-viewport')
+          .call(checkContext, null, null, vNode)
+      );
+    });
 
-			assert.isFalse(
-				axe.testUtils
-					.getCheckEvaluate('meta-viewport')
-					.call(checkContext, node, {
-						scaleMinimum: 2
-					})
-			);
-			assert.deepEqual(checkContext._data, 'maximum-scale');
-		});
+    it('should return false on maximum-scale < options.scaleMinimum', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, cats=dogs, user-scalable=yes, maximum-scale=1.5">'
+      );
 
-		it('should return true if neither user-scalable or maximum-scale are set', function() {
-			fixture.innerHTML = '<meta name="viewport" content="foo=bar, cats=dogs">';
-			var node = fixture.querySelector('meta');
+      assert.isFalse(
+        axe.testUtils.getCheckEvaluate('meta-viewport').call(
+          checkContext,
+          null,
+          {
+            scaleMinimum: 2
+          },
+          vNode
+        )
+      );
+      assert.deepEqual(checkContext._data, 'maximum-scale');
+    });
 
-			assert.isTrue(
-				axe.testUtils.getCheckEvaluate('meta-viewport').call(checkContext, node)
-			);
-		});
+    it('should return true if neither user-scalable or maximum-scale are set', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, cats=dogs">'
+      );
 
-		it('should not crash if viewport property does not have a value', function() {
-			fixture.innerHTML =
-				'<meta name="viewport" content="user-scalable=1, minimal-ui">';
-			var node = fixture.querySelector('meta');
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('meta-viewport')
+          .call(checkContext, null, null, vNode)
+      );
+    });
 
-			assert.isTrue(axe.testUtils.getCheckEvaluate('meta-viewport')(node));
-		});
+    it('should not crash if viewport property does not have a value', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="user-scalable=1, minimal-ui">'
+      );
 
-		it('should not crash if viewport property does not have a value', function() {
-			fixture.innerHTML =
-				'<meta name="viewport" content="user-scalable=1, minimal-ui">';
-			var node = fixture.querySelector('meta');
+      assert.isTrue(
+        axe.testUtils.getCheckEvaluate('meta-viewport')(null, null, vNode)
+      );
+    });
 
-			assert.isTrue(checks['meta-viewport'].evaluate.call(checkContext, node));
-		});
-	});
+    it('should not crash if viewport property does not have a value', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="user-scalable=1, minimal-ui">'
+      );
 
-	describe(', separator', function() {
-		it('should return false on user-scalable=no', function() {
-			fixture.innerHTML =
-				'<meta name="viewport" content="foo=bar, cats=dogs, user-scalable=no">';
-			var node = fixture.querySelector('meta');
+      assert.isTrue(
+        checks['meta-viewport'].evaluate.call(checkContext, null, null, vNode)
+      );
+    });
+  });
 
-			assert.isFalse(
-				axe.testUtils.getCheckEvaluate('meta-viewport').call(checkContext, node)
-			);
-			assert.deepEqual(checkContext._data, 'user-scalable=no');
-		});
+  describe(', separator', function() {
+    it('should return false on user-scalable=no', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, cats=dogs, user-scalable=no">'
+      );
 
-		it('should return false on user-scalable=no', function() {
-			fixture.innerHTML =
-				'<meta name="viewport" content="foo=bar, cats=dogs, user-scalable=no, more-stuff=ok">';
-			var node = fixture.querySelector('meta');
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('meta-viewport')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.deepEqual(checkContext._data, 'user-scalable=no');
+    });
 
-			assert.isFalse(
-				axe.testUtils.getCheckEvaluate('meta-viewport').call(checkContext, node)
-			);
-			assert.deepEqual(checkContext._data, 'user-scalable=no');
-		});
+    it('should return false on user-scalable=no', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, cats=dogs, user-scalable=no, more-stuff=ok">'
+      );
 
-		it('should return true on user-scalable=yes', function() {
-			fixture.innerHTML =
-				'<meta name="viewport" content="foo=bar, cats=dogs, user-scalable=yes, more-stuff=ok">';
-			var node = fixture.querySelector('meta');
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('meta-viewport')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.deepEqual(checkContext._data, 'user-scalable=no');
+    });
 
-			assert.isTrue(
-				axe.testUtils.getCheckEvaluate('meta-viewport').call(checkContext, node)
-			);
-		});
+    it('should return true on user-scalable=yes', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, cats=dogs, user-scalable=yes, more-stuff=ok">'
+      );
 
-		it('should return true if maximum-scale >= options.scaleMinimum', function() {
-			fixture.innerHTML =
-				'<meta name="viewport" content="foo=bar, maximum-scale=5, cats=dogs">';
-			var node = fixture.querySelector('meta');
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('meta-viewport')
+          .call(checkContext, null, null, vNode)
+      );
+    });
 
-			assert.isTrue(
-				axe.testUtils.getCheckEvaluate('meta-viewport').call(checkContext, node)
-			);
+    it('should return true if maximum-scale >= options.scaleMinimum', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, maximum-scale=5, cats=dogs">'
+      );
 
-			fixture.innerHTML =
-				'<meta name="viewport" content="foo=bar, maximum-scale=2, cats=dogs">';
-			node = fixture.querySelector('meta');
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('meta-viewport')
+          .call(checkContext, null, null, vNode)
+      );
 
-			assert.isTrue(
-				axe.testUtils
-					.getCheckEvaluate('meta-viewport')
-					.call(checkContext, node, {
-						scaleMinimum: 2
-					})
-			);
-		});
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, maximum-scale=2, cats=dogs">'
+      );
 
-		it('should return false on maximum-scale < options.scaleMinimum', function() {
-			fixture.innerHTML =
-				'<meta name="viewport" content="foo=bar, cats=dogs, user-scalable=yes, maximum-scale=1.5">';
-			var node = fixture.querySelector('meta');
+      assert.isTrue(
+        axe.testUtils.getCheckEvaluate('meta-viewport').call(
+          checkContext,
+          null,
+          {
+            scaleMinimum: 2
+          },
+          vNode
+        )
+      );
+    });
 
-			assert.isFalse(
-				axe.testUtils
-					.getCheckEvaluate('meta-viewport')
-					.call(checkContext, node, {
-						scaleMinimum: 2
-					})
-			);
-		});
+    it('should return false on maximum-scale < options.scaleMinimum', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, cats=dogs, user-scalable=yes, maximum-scale=1.5">'
+      );
 
-		it('should return true if neither user-scalable or maximum-scale are set', function() {
-			fixture.innerHTML = '<meta name="viewport" content="foo=bar, cats=dogs">';
-			var node = fixture.querySelector('meta');
+      assert.isFalse(
+        axe.testUtils.getCheckEvaluate('meta-viewport').call(
+          checkContext,
+          null,
+          {
+            scaleMinimum: 2
+          },
+          vNode
+        )
+      );
+    });
 
-			assert.isTrue(
-				axe.testUtils.getCheckEvaluate('meta-viewport').call(checkContext, node)
-			);
-		});
-	});
+    it('should return true if neither user-scalable or maximum-scale are set', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, cats=dogs">'
+      );
+
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('meta-viewport')
+          .call(checkContext, null, null, vNode)
+      );
+    });
+  });
 });
