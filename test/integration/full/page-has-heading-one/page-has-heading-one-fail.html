@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" id="fail1">
-	<head>
-		<meta charset="utf8" />
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="/node_modules/mocha/mocha.css"
-		/>
-		<script src="/node_modules/mocha/mocha.js"></script>
-		<script src="/node_modules/chai/chai.js"></script>
-		<script src="/axe.js"></script>
-		<script>
-			mocha.setup({
-				timeout: 10000,
-				ui: 'bdd'
-			});
-			var assert = chai.assert;
-		</script>
-	</head>
-	<body>
-		<p>No h1 here</p>
-		<h1 role="alert">Hello!</h1>
-		<h1 aria-level="2">Goodbye</h1>
-		<h1 role="alert" aria-level="1">Error</h1>
-		<iframe id="frame1" src="frames/level1-fail.html"></iframe>
-		<div id="mocha"></div>
-		<script src="/test/testutils.js"></script>
-		<script src="page-has-heading-one-fail.js"></script>
-		<script src="/test/integration/adapter.js"></script>
-	</body>
+  <head>
+    <meta charset="utf8" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/node_modules/mocha/mocha.css"
+    />
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/chai/chai.js"></script>
+    <script src="/axe.js"></script>
+    <script>
+      mocha.setup({
+        timeout: 10000,
+        ui: 'bdd'
+      });
+      var assert = chai.assert;
+    </script>
+  </head>
+  <body>
+    <p>No h1 here</p>
+    <h1 role="alert">Hello!</h1>
+    <h1 aria-level="2">Goodbye</h1>
+    <h1 role="alert" aria-level="1">Error</h1>
+    <iframe id="frame1" src="frames/level1-fail.html"></iframe>
+    <div id="mocha"></div>
+    <script src="/test/testutils.js"></script>
+    <script src="page-has-heading-one-fail.js"></script>
+    <script src="/test/integration/adapter.js"></script>
+  </body>
 </html>

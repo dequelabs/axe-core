@@ -1,5 +1,5 @@
 {
-	"description": "server-side-image-map test",
-	"rule": "server-side-image-map",
-	"incomplete": [["#incomplete"]]
+  "description": "server-side-image-map test",
+  "rule": "server-side-image-map",
+  "incomplete": [["#incomplete"]]
 }

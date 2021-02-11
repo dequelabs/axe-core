@@ -1,11 +1,11 @@
 module.exports = function(grunt) {
-	'use strict';
+  'use strict';
 
-	grunt.loadNpmTasks('grunt-contrib-qunit');
+  grunt.loadNpmTasks('grunt-contrib-qunit');
 
-	grunt.initConfig({
-		qunit: {
-			all: ['test/**/*.html']
-		}
-	});
+  grunt.initConfig({
+    qunit: {
+      all: ['test/**/*.html']
+    }
+  });
 };

@@ -4,14 +4,14 @@ The [standards object](../lib/standards) is JSON object of ARIA and HTML spec in
 
 ```js
 axe.configure({
-	standards: {
-		ariaAttrs: {
-			'aria-relevant': {
-				// make the aria-relevant attribute global
-				global: true
-			}
-		}
-	}
+  standards: {
+    ariaAttrs: {
+      'aria-relevant': {
+        // make the aria-relevant attribute global
+        global: true
+      }
+    }
+  }
 });
 ```
 
@@ -20,6 +20,7 @@ The following properties are currently available in axe-core `standards`:
 1.  [ARIA Attrs](#aria-attrs)
 1.  [ARIA Roles](#aria-roles)
 1.  [DPUB Roles](#dpub-roles)
+1.  [Graphics Roles][#graphics-roles]
 1.  [HTML Elms](#html-elms)
 1.  [CSS Colors](#css-colors)
 
@@ -45,6 +46,7 @@ The [`ariaAttrs`](../lib/standards/aria-attrs.js) object defines valid ARIA attr
   - `decimal` - Decimal attributes accept any number or decimal value (e.g. `aria-valuemax`).
   - `int` - Integer attributes only accept whole number values (e.g. `aria-level`).
 - `values` - array(required for only `mntoken` and `mntokens`). The list of valid values for the attribute.
+- `minValue` - number(required for only `int`). The minimum value allowed for the attribute.
 - `allowEmpty` - boolean(optional, default `false`). If the attribute is allowed to have no value.
 - `global` - boolean(optional, default `false`). If the attribute is a [global ARIA attribute](https://www.w3.org/TR/wai-aria-1.1/#global_states).
 - `unsupported` - boolean(optional, default `false`). If the attribute is unsupported. Use this property to disable an attribute.
@@ -80,6 +82,10 @@ The [`ariaRoles`](../lib/standards/aria-roles.js) object defines valid ARIA role
 ### Dpub Roles
 
 Dpub roles are defined in the [dpub-roles](../lib/standards/dpub-roles.js) file. Their structure is the exact same as the aria roles standard (albeit they have different `type`s) and is combined into the `ariaRoles` table. They are only separated for organizational purposes.
+
+### Graphics Roles
+
+Graphics roles are defined in the [graphics-roles](../lib/standards/graphics-roles.js) file. They are extensions of the standard ARIA roles and therefore have the exact same structure. The graphics roles are combined into the `ariaRoles` table and they are only separated for organizational purposes.
 
 ## HTML Elms
 

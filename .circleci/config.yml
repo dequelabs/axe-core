@@ -75,7 +75,10 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
-      - run: npm run test
+      - run: npm run build
+      - run: npm run test -- --browsers Chrome,Firefox
+      - run: npm run test:integration:chrome
+      - run: npm run test:integration:firefox
 
   # Run the test suite in IE in windows
   test_win:
@@ -85,18 +88,14 @@ jobs:
       - checkout
       # npm i or restore cache
       - <<: *restore_dependency_cache_win
+      - run: npm run build
+      - run: npm run test -- --browsers IE
       # install selenium
       - run: |
           choco install selenium-ie-driver --version 3.141.5
           export PATH=/c/tools/selenium:$PATH
           echo $PATH
-      # build `axe`
-      - run: npm run build
-      # get fixtures ready for running tests
-      - run: npx grunt testconfig
-      - run: npx grunt fixture
-      # run IE webdriver tests
-      - run: npx grunt connect test-webdriver:ie
+      - run: npm run test:integration:ie
       # test examples
       # Note: Jasmine karma-chrome-launcher requires chrome browser
       - run: choco install googlechrome --ignore-checksums
@@ -112,6 +111,16 @@ jobs:
       - run: npm run build
       - run: npm run test:examples
 
+  # Run ACT test cases
+  test_act:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      - run: npm run test:act
+
   # Test locale files
   test_locales:
     <<: *defaults
@@ -121,6 +130,20 @@ jobs:
       - <<: *restore_dependency_cache_unix
       - run: npm run build
       - run: npm run test:locales
+
+  # Run the test suite for nightly builds.
+  test_nightly:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      # install Chrome Canary
+      - run: |
+          wget https://dl.google.com/linux/direct/google-chrome-unstable_current_amd64.deb
+          sudo apt install ./google-chrome-unstable_current_amd64.deb
+      - run: npm run test -- --browsers ChromeCanary,FirefoxNightly
 
   # Test api docs can be built
   build_api_docs:
@@ -159,6 +182,7 @@ jobs:
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
+      - run: npm run build
       - run: npm run next-release
       - run: .circleci/verify-release.sh
       - run: npm publish --tag=next
@@ -232,6 +256,9 @@ workflows:
       - test_examples:
           requires:
             - test_unix
+      - test_act:
+          requires:
+            - test_unix
       - test_locales:
           requires:
             - test_unix
@@ -300,3 +327,17 @@ workflows:
       - github_release:
           requires:
             - release
+  nightly:
+    triggers:
+      - schedule:
+          # run at 00:00 UTC every day
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - develop
+    jobs:
+      - dependencies_unix
+      - test_nightly:
+          requires:
+            - dependencies_unix

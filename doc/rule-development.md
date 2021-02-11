@@ -43,7 +43,7 @@ The actual testing of elements in axe-core is done by checks. A rule has one or 
 | evaluate                     | Evaluating function, returning a boolean value |
 | options                      | Configurable value for the check               |
 | after                        | Cleanup function, run after check is done      |
-| metadata impact              | "minor", "serious", "critical"                 |
+| metadata.impact              | "minor", "serious", "critical"                 |
 | metadata.messages.pass       | Describes why the check passed                 |
 | metadata.messages.fail       | Describes why the check failed                 |
 | metadata.messages.incomplete | Describes why the check didn’t complete        |
@@ -90,7 +90,7 @@ data returned:
 
 ```js
 this.data({
-	missingData: 'bgImage'
+  missingData: 'bgImage'
 });
 ```
 

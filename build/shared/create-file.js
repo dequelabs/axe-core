@@ -12,6 +12,6 @@ const writeFile = promisify(fs.writeFile);
  * @returns {Promise}
  */
 const createFile = (path, content) =>
-	makeDir(getDirName(path)).then(() => writeFile(path, content));
+  makeDir(getDirName(path)).then(() => writeFile(path, content));
 
 module.exports = createFile;

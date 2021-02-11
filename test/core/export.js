@@ -1,5 +1,5 @@
 describe('export', function() {
-	'use strict';
+  'use strict';
 
 	it('should publish a global `axe` variable', function() {
 		assert.isDefined(window.axe);

@@ -281,7 +281,7 @@ Runs a number of rules against the provided HTML page and returns the resulting 
 
 ```js
 axe.run(context, options, (err, results) => {
-	// ...
+  // ...
 });
 ```
 
@@ -320,13 +320,13 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 
 ```js
 axe.run(
-	{
-		include: $fixture[0],
-		exclude: $fixture[0].firstChild
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    include: $fixture[0],
+    exclude: $fixture[0].firstChild
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -334,13 +334,13 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		include: [['#fix']],
-		exclude: [['#fix div']]
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    include: [['#fix']],
+    exclude: [['#fix div']]
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -348,12 +348,12 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		exclude: [['.exclude1'], ['.exclude2']]
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    exclude: [['.exclude1'], ['.exclude2']]
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -361,12 +361,12 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		include: [['#frame', '#fix']]
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    include: [['#frame', '#fix']]
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -374,12 +374,12 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		include: [['#frame1', '#frame2', '#fix']]
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    include: [['#frame1', '#frame2', '#fix']]
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -391,12 +391,12 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		include: [['#header'], ['a'], ['#frame1', '#frame2', '#fix']]
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    include: [['#header'], ['a'], ['#frame1', '#frame2', '#fix']]
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -434,15 +434,15 @@ To run only WCAG 2.0 Level A rules, specify `options` as:
 
 ```js
 axe.run(
-	{
-		runOnly: {
-			type: 'tag',
-			values: ['wcag2a']
-		}
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    runOnly: {
+      type: 'tag',
+      values: ['wcag2a']
+    }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -450,15 +450,15 @@ To run both WCAG 2.0 Level A and Level AA rules, you must specify both `wcag2a` 
 
 ```js
 axe.run(
-	{
-		runOnly: {
-			type: 'tag',
-			values: ['wcag2a', 'wcag2aa']
-		}
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    runOnly: {
+      type: 'tag',
+      values: ['wcag2a', 'wcag2aa']
+    }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -478,15 +478,15 @@ If you only want to run certain rules, specify options as:
 
 ```js
 axe.run(
-	{
-		runOnly: {
-			type: 'rule',
-			values: ['ruleId1', 'ruleId2', 'ruleId3']
-		}
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    runOnly: {
+      type: 'rule',
+      values: ['ruleId1', 'ruleId2', 'ruleId3']
+    }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -508,15 +508,15 @@ The default operation for axe.run is to run all rules except for rules with the 
 
 ```js
 axe.run(
-	{
-		rules: {
-			'color-contrast': { enabled: false },
-			'valid-lang': { enabled: false }
-		}
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    rules: {
+      'color-contrast': { enabled: false },
+      'valid-lang': { enabled: false }
+    }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -528,19 +528,19 @@ By combining runOnly with type: tags and the rules option, a modified set can be
 
 ```js
 axe.run(
-	{
-		runOnly: {
-			type: 'tag',
-			values: ['wcag2a']
-		},
-		rules: {
-			'color-contrast': { enabled: true },
-			'valid-lang': { enabled: false }
-		}
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    runOnly: {
+      type: 'tag',
+      values: ['wcag2a']
+    },
+    rules: {
+      'color-contrast': { enabled: true },
+      'valid-lang': { enabled: false }
+    }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -556,12 +556,12 @@ Types listed in this option will cause rules that fall under those types to show
 
 ```js
 axe.run(
-	{
-		resultTypes: ['violations', 'incomplete', 'inapplicable']
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    resultTypes: ['violations', 'incomplete', 'inapplicable']
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -575,12 +575,12 @@ The `preload` attribute (defaults to `true`) in options parameter, accepts a `bo
 
 ```js
 axe.run(
-	{
-		preload: true
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    preload: true
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -588,12 +588,12 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		preload: { assets: ['cssom'], timeout: 50000 }
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    preload: { assets: ['cssom'], timeout: 50000 }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -684,8 +684,8 @@ In this example, we will pass the selector for the entire document, pass no opti
 
 ```js
 axe.run(document, function(err, results) {
-	if (err) throw err;
-	console.log(results);
+  if (err) throw err;
+  console.log(results);
 });
 ```
 
@@ -740,17 +740,17 @@ In this example, we pass the selector for the entire document, enable two additi
 
 ```js
 axe.run(
-	document,
-	{
-		rules: {
-			'link-in-text-block': { enabled: true },
-			'p-as-heading': { enabled: true }
-		}
-	},
-	function(err, results) {
-		if (err) throw err;
-		console.log(results);
-	}
+  document,
+  {
+    rules: {
+      'link-in-text-block': { enabled: true },
+      'p-as-heading': { enabled: true }
+    }
+  },
+  function(err, results) {
+    if (err) throw err;
+    console.log(results);
+  }
 );
 ```
 
@@ -762,14 +762,14 @@ This example shows a result object that points to an open shadow DOM element.
 
 ```json
 {
-	"help": "Elements must have sufficient color contrast",
-	"helpUrl": "https://dequeuniversity.com/rules/axe/2.1/color-contrast?application=axeAPI",
-	"id": "color-contrast",
-	"nodes": [
-		{
-			"target": [["header > aria-menu", "li.expanded"]]
-		}
-	]
+  "help": "Elements must have sufficient color contrast",
+  "helpUrl": "https://dequeuniversity.com/rules/axe/2.1/color-contrast?application=axeAPI",
+  "id": "color-contrast",
+  "nodes": [
+    {
+      "target": [["header > aria-menu", "li.expanded"]]
+    }
+  ]
 }
 ```
 
@@ -882,12 +882,12 @@ An approach you can take to reducing the time is use the `resultTypes` option. B
 
 ```js
 axe.run(
-	{
-		resultTypes: ['violations']
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    resultTypes: ['violations']
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 

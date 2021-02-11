@@ -2,41 +2,41 @@ describe('axe.getRules', function() {
 	'use strict';
 	var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
 
-	beforeEach(function() {
-		axe._load({
-			messages: [],
-			rules: [
-				{
-					id: 'awesomeRule1',
-					selector: '',
-					excludeHidden: false,
-					any: [],
-					tags: ['tag1']
-				},
-				{
-					id: 'awesomeRule2',
-					any: [],
-					tags: ['tag1', 'tag2']
-				}
-			],
-			data: {
-				rules: {
-					awesomeRule1: {
-						description: 'some interesting information',
-						help: 'halp'
-					},
-					awesomeRule2: {
-						description: 'also some interesting information',
-						help: 'halp me!'
-					}
-				}
-			}
-		});
-	});
+  beforeEach(function() {
+    axe._load({
+      messages: [],
+      rules: [
+        {
+          id: 'awesomeRule1',
+          selector: '',
+          excludeHidden: false,
+          any: [],
+          tags: ['tag1']
+        },
+        {
+          id: 'awesomeRule2',
+          any: [],
+          tags: ['tag1', 'tag2']
+        }
+      ],
+      data: {
+        rules: {
+          awesomeRule1: {
+            description: 'some interesting information',
+            help: 'halp'
+          },
+          awesomeRule2: {
+            description: 'also some interesting information',
+            help: 'halp me!'
+          }
+        }
+      }
+    });
+  });
 
-	afterEach(function() {
-		axe._audit = null;
-	});
+  afterEach(function() {
+    axe._audit = null;
+  });
 
 	it('should return rules', function() {
 		var retValue = axe.getRules(['tag1']);
@@ -79,11 +79,11 @@ describe('axe.getRules', function() {
 		assert.deepEqual(retValue[0].tags, ['tag1', 'tag2']);
 	});
 
-	it('should not return nothing', function() {
-		var retValue = axe.getRules(['bob']);
-		assert.isArray(retValue);
-		assert.lengthOf(retValue, 0);
-	});
+  it('should not return nothing', function() {
+    var retValue = axe.getRules(['bob']);
+    assert.isArray(retValue);
+    assert.lengthOf(retValue, 0);
+  });
 
 	it('should return all rules if given no tags - undefined', function() {
 		var retValue = axe.getRules();

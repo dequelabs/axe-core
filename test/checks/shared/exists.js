@@ -1,7 +1,7 @@
 describe('exists', function() {
-	'use strict';
+  'use strict';
 
-	it('should return undefined', function() {
-		assert.isUndefined(checks.exists.evaluate());
-	});
+  it('should return undefined', function() {
+    assert.isUndefined(checks.exists.evaluate());
+  });
 });
