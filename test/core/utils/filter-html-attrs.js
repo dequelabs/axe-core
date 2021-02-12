@@ -215,5 +215,32 @@ describe('axe.utils.filterHtmlAttrs', function() {
         '<div class="foo"/>'
       );
     });
+
+    it('should handle complicated attributes', function() {
+      var html =
+        '<div type="text" value="my value again" othervalue=foo ha=\'bar\' haha=\'"foo"\' again="\'thing\'" data-thing="foo" thing=bar bar=baz checked thing2=bar thing3="\'foo\' asdf" hello=\'"foo"\' goodbye=\' hello "doo" \' hellomore="goodbye=hello" thing"hi"="good" thing"other" empty=""></div>';
+      var config = {
+        type: 'text',
+        value: 'my value again',
+        othervalue: 'foo',
+        ha: 'bar',
+        haha: '"foo"',
+        again: "'thing'",
+        'data-thing': 'foo',
+        thing: 'bar',
+        bar: 'baz',
+        checked: true,
+        thing2: 'bar',
+        thing3: "'foo' asdf",
+        hello: '"foo"',
+        goodbye: ' hello "doo" ',
+        hellomore: 'goodbye=hello',
+        'thing"hi"': 'good',
+        'thing"other"': true,
+        empty: true
+      };
+
+      assert.equal(filterHtmlAttrs(html, config), '<div ></div>');
+    });
   });
 });
