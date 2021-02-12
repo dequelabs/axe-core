@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -155,7 +155,6 @@
     "uglify-js": "^3.4.4",
     "weakmap-polyfill": "^2.0.0"
   },
-  "dependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
