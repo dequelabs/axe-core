@@ -151,33 +151,10 @@ describe('axe.utils.filterHtmlAttrs', function() {
       );
     });
 
-    it('should handle attribute with double quotes and escaped double quotes', function() {
-      assert.equal(
-        filterHtmlAttrs('<div class=""hello"">', { className: '"hello"' }),
-        '<div >'
-      );
-    });
-
-    it('should handle attribute with single quotes and escaped single quotes', function() {
-      assert.equal(
-        filterHtmlAttrs("<div class=''hello''>", { className: "'hello'" }),
-        '<div >'
-      );
-    });
-
     it('should handle attribute with mixed quotes', function() {
       assert.equal(
         filterHtmlAttrs('<div class="\'hello\'">', { className: "'hello'" }),
         '<div >'
-      );
-    });
-
-    it('should handle attribute with escaped quotes in middle of string', function() {
-      assert.equal(
-        filterHtmlAttrs('<div class=""hello"" id="foo">', {
-          className: '"hello"'
-        }),
-        '<div id="foo">'
       );
     });
 
