@@ -1,0 +1,12 @@
+{
+	"id": "aria-empty-table-header",
+	"selector": "th, [role=\"rowheader\"], [role=\"columnheader\"]",
+	"tags": ["wcag131"],
+	"metadata": {
+		"description": "Ensures table headers have discernible text",
+		"help": "Table header text must not be empty"
+	},
+	"all": ["has-accessible-text"],
+	"any": [],
+	"none": []
+}

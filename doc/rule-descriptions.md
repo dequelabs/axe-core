@@ -69,10 +69,11 @@
 
 ## WCAG 2.1 Level A & AA Rules
 
-| Rule ID                                                                                                            | Description                                                                                   | Impact  | Tags                              | Issue Type |
-| :----------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------- | :------ | :-------------------------------- | :--------- |
-| [autocomplete-valid](https://dequeuniversity.com/rules/axe/4.1/autocomplete-valid?application=RuleDescription)     | Ensure the autocomplete attribute is correct and suitable for the form field                  | Serious | cat.forms, wcag21aa, wcag135      | failure    |
-| [avoid-inline-spacing](https://dequeuniversity.com/rules/axe/4.1/avoid-inline-spacing?application=RuleDescription) | Ensure that text spacing set through style attributes can be adjusted with custom stylesheets | Serious | cat.structure, wcag21aa, wcag1412 | failure    |
+| Rule ID                                                                                                                  | Description                                                                                   | Impact  | Tags                         | Issue Type |
+| :----------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------- | :------ | :--------------------------- | :--------- |
+| [aria-empty-table-header](https://dequeuniversity.com/rules/axe/3.5/aria-empty-table-header?application=RuleDescription) | Ensures table headers have discernible text                                                   | Minor   | wcag131                      | failure    |
+| [autocomplete-valid](https://dequeuniversity.com/rules/axe/3.5/autocomplete-valid?application=RuleDescription)           | Ensure the autocomplete attribute is correct and suitable for the form field                  | Serious | cat.forms, wcag21aa, wcag135 | failure    |
+| [avoid-inline-spacing](https://dequeuniversity.com/rules/axe/3.5/avoid-inline-spacing?application=RuleDescription)       | Ensure that text spacing set through style attributes can be adjusted with custom stylesheets | Serious | wcag21aa, wcag1412           | failure    |
 
 ## Best Practices Rules
 

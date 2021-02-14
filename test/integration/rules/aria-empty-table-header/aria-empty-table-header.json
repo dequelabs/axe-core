@@ -1,0 +1,6 @@
+{
+	"description": "aria-empty-table-header tests",
+	"rule": "aria-empty-table-header",
+	"violations": [],
+	"passes": []
+}
