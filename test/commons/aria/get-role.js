@@ -315,11 +315,29 @@ describe('aria.getRole', function() {
 			assert.equal(aria.getRole(node, { dpub: true }), 'doc-chapter');
 		});
 
-		it('does not returns DPUB roles with `dpub: false`', function() {
+		it('returns DPUB roles with `dpub: true` whilst ignoring implicit roles', function() {
+			var node = document.createElement('li');
+			node.setAttribute('role', 'doc-chapter');
+			flatTreeSetup(node);
+			assert.equal(aria.getRole(node, { dpub: true }), 'doc-chapter');
+		});
+
+		it('returns non-DPUB implicit roles with `dpub: false/undefined`', function() {
+			var node = document.createElement('li');
+			node.setAttribute('role', 'doc-chapter');
+			var parentNode = document.createElement('div');
+			parentNode.appendChild(node);
+			flatTreeSetup(parentNode);
+			assert.equal(aria.getRole(node, { dpub: false }), 'listitem');
+			assert.equal(aria.getRole(node, { dpub: undefined }), 'listitem');
+		});
+
+		it('does not returns DPUB roles with `dpub: false/undefined`', function() {
 			var node = document.createElement('section');
 			node.setAttribute('role', 'doc-chapter');
 			flatTreeSetup(node);
 			assert.isNull(aria.getRole(node, { dpub: false }));
+			assert.isNull(aria.getRole(node, { dpub: undefined }));
 		});
 	});
 
@@ -377,6 +395,54 @@ describe('aria.getRole', function() {
 			assert.equal(
 				aria.getRole(node, { fallback: true, dpub: true }),
 				'doc-chapter'
+			);
+		});
+
+		it('respect the `dpub: false/undefined` option, whilst skipping the implicit roles due to non-abstract explicit role', function() {
+			var node = document.createElement('li');
+			node.setAttribute('role', 'doc-chapter region');
+			var parentNode = document.createElement('div');
+			parentNode.appendChild(node);
+			flatTreeSetup(parentNode);
+			assert.equal(
+				aria.getRole(node, { fallback: true, dpub: false }),
+				'region'
+			);
+			assert.equal(
+				aria.getRole(node, { fallback: true, dpub: undefined }),
+				'region'
+			);
+		});
+
+		it('respect the `dpub: false/undefined` option, whilst ignoring the implicit roles and abstract explicit role', function() {
+			var node = document.createElement('li');
+			node.setAttribute('role', 'doc-chapter section');
+			var parentNode = document.createElement('div');
+			parentNode.appendChild(node);
+			flatTreeSetup(parentNode);
+			assert.isNull(
+				aria.getRole(node, { noImplicit: true, fallback: true, dpub: false })
+			);
+			assert.isNull(
+				aria.getRole(node, {
+					noImplicit: true,
+					fallback: true,
+					dpub: undefined
+				})
+			);
+		});
+
+		it('respect the `dpub: false/undefined` option', function() {
+			var node = document.createElement('div');
+			node.setAttribute('role', 'doc-chapter region');
+			flatTreeSetup(node);
+			assert.equal(
+				aria.getRole(node, { fallback: true, dpub: false }),
+				'region'
+			);
+			assert.equal(
+				aria.getRole(node, { fallback: true, dpub: undefined }),
+				'region'
 			);
 		});
 	});
