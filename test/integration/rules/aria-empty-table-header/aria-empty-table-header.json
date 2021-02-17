@@ -1,6 +1,6 @@
 {
 	"description": "aria-empty-table-header tests",
 	"rule": "aria-empty-table-header",
-	"violations": [],
-	"passes": []
+	"violations": [["fail1"], ["fail2"], ["fail3"]],
+	"passes": [["#pass1"], ["#pass2"], ["#pass3"]]
 }
