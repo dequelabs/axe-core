@@ -199,7 +199,7 @@ declare namespace axe {
     locale?: Locale;
     disableOtherRules?: boolean;
     axeVersion?: string;
-		noHtml?:boolean;
+    noHtml?: boolean;
     // Deprecated - do not use.
     ver?: string;
   }
