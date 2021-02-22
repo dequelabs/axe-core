@@ -76,7 +76,7 @@ The [axe-core API](doc/API.md) fully supports the following browsers:
 - Google Chrome v42 and above
 - Mozilla Firefox v38 and above
 - Apple Safari v7 and above
-- Internet Explorer v9, 10, 11
+- Internet Explorer v11
 
 Support means that we will fix bugs and attempt to test each browser regularly. Only Firefox, Chrome, and Internet Explorer 11 are currently tested on every pull request.
 
