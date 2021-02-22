@@ -1,21 +1,49 @@
-<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>empty-table-header test</title>
-		<meta charset="utf8" />
-		<script src="/axe.js"></script>
-	</head>
+  <head>
+    <title>empty-table-header test</title>
+    <meta charset="utf8" />
+    <script src="/axe.js"></script>
+  </head>
 
-	<body>
-		<th id="pass1">Ok</th>
-		<td id="pass2" role="rowheader">rowheader with name</td>
-		<td id="pass3" role="columnheader">columnheader with name</td>
-		<th id="fail1"></th>
-		<td id="fail2" role="rowheader">
-			<div style="display: none">Not Ok</div>
-		</td>
-		<td id="fail3" role="columnheader">
-			<div style="display: none">Not Ok</div>
-		</td>
-	</body>
+  <body>
+    <table id="pass1">
+      <tr>
+        <th>Ok</th>
+      </tr>
+    </table>
+
+    <table id="pass2">
+      <tr>
+        <td role="rowheader">rowheader with name</td>
+      </tr>
+    </table>
+
+    <table id="pass3">
+      <tr>
+        <td role="columnheader">columnheader with name</td>
+      </tr>
+    </table>
+
+    <table id="fail1">
+      <tr>
+        <th></th>
+      </tr>
+    </table>
+
+    <table id="fail2">
+      <tr>
+        <td role="rowheader">
+          <div style="display: none">Not Ok</div>
+        </td>
+      </tr>
+    </table>
+
+    <table id="fail3">
+      <tr>
+        <td role="columnheader">
+          <div style="display: none">Not Ok</div>
+        </td>
+      </tr>
+    </table>
+  </body>
 </html>
