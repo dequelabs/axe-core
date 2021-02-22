@@ -41,7 +41,7 @@ describe('axe.utils.filterHtmlAttrs', function() {
     assert.equal(
       filterHtmlAttrs(html, {
         type: true,
-        value: true
+        value: '[value="my value"]'
       }).outerHTML,
       '<label> My Label <input></label>'
     );
