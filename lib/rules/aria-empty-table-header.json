@@ -1,7 +1,6 @@
 {
-  "id": "aria-empty-table-header",
+  "id": "empty-table-header",
   "selector": "th, [role=\"rowheader\"], [role=\"columnheader\"]",
-  "matches": "heading-matches",
   "tags": ["wcag131", "cat.aria"],
   "reviewOnFail": true,
   "metadata": {
