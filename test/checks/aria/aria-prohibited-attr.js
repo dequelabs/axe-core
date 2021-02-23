@@ -57,4 +57,11 @@ describe('aria-prohibited-attr', function() {
     );
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
+
+  it('should return false if prohibited attributes have no value', function() {
+    var params = checkSetup(
+      '<div id="target" role="code" aria-label="  " aria-labelledby="  ">Contents</div>'
+    );
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
+  });
 });
