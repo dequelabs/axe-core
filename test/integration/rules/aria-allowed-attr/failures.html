@@ -20,5 +20,7 @@
 <div role="subscript" aria-labelledby="value" id="fail20">fail</div>
 <div role="superscript" aria-label="value" id="fail21">fail</div>
 <div role="superscript" aria-labelledby="value" id="fail22">fail</div>
-<fieldset aria-required="false" id="fail23">fail</fieldset>
+<fieldset role="radiogroup" aria-required="true" id="fail23">
+  <input type="radio" />fail
+</fieldset>
 <!-- technically presentation and none roles do not allow aria-label and aria-labelledby, but since those are global attributes the presentation role conflict will not resolve the roles to none or presentation -->
