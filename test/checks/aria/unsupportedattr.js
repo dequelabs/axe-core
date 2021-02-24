@@ -7,7 +7,6 @@ describe('unsupportedattr', function() {
 
   afterEach(function() {
     checkContext.reset();
-    axe.reset();
   });
 
   it('should return true if applied to an unsupported attribute', function() {
