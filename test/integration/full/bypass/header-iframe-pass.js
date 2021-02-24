@@ -21,9 +21,9 @@ describe('bypass iframe test pass', function() {
     });
   });
 
-  describe('violations', function() {
+  describe('incomplete', function() {
     it('should find none', function() {
-      assert.lengthOf(results.violations, 0);
+      assert.lengthOf(results.incomplete, 0);
     });
   });
 

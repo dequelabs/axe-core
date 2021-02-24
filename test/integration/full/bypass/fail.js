@@ -17,13 +17,13 @@ describe('bypass fail test', function() {
     });
   });
 
-  describe('violations', function() {
+  describe('incomplete', function() {
     it('should find 1', function() {
-      assert.lengthOf(results.violations, 1);
+      assert.lengthOf(results.incomplete, 1);
     });
 
     it('should find html', function() {
-      assert.deepEqual(results.violations[0].nodes[0].target, ['html']);
+      assert.deepEqual(results.incomplete[0].nodes[0].target, ['html']);
     });
   });
 
