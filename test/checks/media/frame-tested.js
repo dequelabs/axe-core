@@ -18,7 +18,7 @@ describe('frame-tested', function() {
   });
 
   it('passes if the iframe contains axe-core', function(done) {
-    iframe.src = '/test/mock/frames/responder.html';
+    iframe.src = '/test/mock/frames/test.html';
     iframe.addEventListener('load', function() {
       checkContext._onAsync = function(result) {
         assert.isTrue(result);
