@@ -1,0 +1,49 @@
+<html lang="en">
+  <head>
+    <title>empty-table-header test</title>
+    <meta charset="utf8" />
+    <script src="/axe.js"></script>
+  </head>
+
+  <body>
+    <table>
+      <tr>
+        <th id="pass1">Ok</th>
+      </tr>
+    </table>
+
+    <table>
+      <tr>
+        <td id="pass2" role="rowheader">rowheader with name</td>
+      </tr>
+    </table>
+
+    <table>
+      <tr>
+        <td id="pass3" role="columnheader">columnheader with name</td>
+      </tr>
+    </table>
+
+    <table>
+      <tr>
+        <th id="incomplete1"></th>
+      </tr>
+    </table>
+
+    <table>
+      <tr>
+        <td id="incomplete2" role="rowheader">
+          <div style="display: none">Not Ok</div>
+        </td>
+      </tr>
+    </table>
+
+    <table>
+      <tr>
+        <td id="incomplete3" role="columnheader">
+          <div style="display: none">Not Ok</div>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
