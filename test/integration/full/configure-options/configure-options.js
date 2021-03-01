@@ -161,6 +161,7 @@ describe('Configure Options', function() {
   });
 
   describe('noHtml', function() {
+    var captureError = axe.testUtils.captureError;
     it('prevents html property on nodes', function(done) {
       target.setAttribute('role', 'slider');
       axe.configure({
@@ -180,19 +181,16 @@ describe('Configure Options', function() {
             values: ['aria-required-attr']
           }
         },
-        function(error, results) {
-          try {
-            assert.isNull(results.violations[0].nodes[0].html);
-            done();
-          } catch (e) {
-            done(e);
-          }
-        }
+        captureError(function(error, results) {
+          assert.isNull(error);
+          assert.isNull(results.violations[0].nodes[0].html);
+          done();
+        }, done)
       );
     });
 
     it('prevents html property on nodes from iframes', function(done) {
-      axe.configure({
+      var config = {
         noHtml: true,
         rules: [
           {
@@ -202,11 +200,14 @@ describe('Configure Options', function() {
             selector: 'foo'
           }
         ]
-      });
+      };
 
       var iframe = document.createElement('iframe');
       iframe.src = '/test/mock/frames/context.html';
       iframe.onload = function() {
+        axe.configure(config);
+        iframe.contentWindow.axe.configure(config);
+
         axe.run(
           '#target',
           {
@@ -215,25 +216,22 @@ describe('Configure Options', function() {
               values: ['div#target']
             }
           },
-          function(error, results) {
-            try {
-              assert.deepEqual(results.passes[0].nodes[0].target, [
-                'iframe',
-                '#target'
-              ]);
-              assert.isNull(results.passes[0].nodes[0].html);
-              done();
-            } catch (e) {
-              done(e);
-            }
-          }
+          captureError(function(error, results) {
+            assert.isNull(error);
+            assert.deepEqual(results.passes[0].nodes[0].target, [
+              'iframe',
+              '#target'
+            ]);
+            assert.isNull(results.passes[0].nodes[0].html);
+            done();
+          }, done)
         );
       };
       target.appendChild(iframe);
     });
 
     it('prevents html property in postMesage', function(done) {
-      axe.configure({
+      var config = {
         noHtml: true,
         rules: [
           {
@@ -243,11 +241,14 @@ describe('Configure Options', function() {
             selector: 'foo'
           }
         ]
-      });
+      };
 
       var iframe = document.createElement('iframe');
       iframe.src = '/test/mock/frames/noHtml-config.html';
       iframe.onload = function() {
+        axe.configure(config);
+        iframe.contentWindow.axe.configure(config);
+
         axe.run('#target', {
           runOnly: {
             type: 'rule',
