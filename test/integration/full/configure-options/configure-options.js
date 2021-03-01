@@ -1,18 +1,18 @@
 describe('Configure Options', function() {
 	'use strict';
 
-  var target = document.querySelector('#target');
+	var target = document.querySelector('#target');
 
-  afterEach(function() {
-    axe.reset();
-    target.innerHTML = '';
-  });
+	afterEach(function() {
+		axe.reset();
+		target.innerHTML = '';
+	});
 
-  describe('Check', function() {
-    describe('aria-allowed-attr', function() {
-      it('should allow an attribute supplied in options', function(done) {
-        target.setAttribute('role', 'separator');
-        target.setAttribute('aria-valuenow', '0');
+	describe('Check', function() {
+		describe('aria-allowed-attr', function() {
+			it('should allow an attribute supplied in options', function(done) {
+				target.setAttribute('role', 'separator');
+				target.setAttribute('aria-valuenow', '0');
 
 				axe.configure({
 					checks: [
@@ -152,122 +152,123 @@ describe('Configure Options', function() {
 				assert.lengthOf(results.passes, 1, 'passes');
 				assert.equal(results.passes[0].id, 'html-has-lang');
 
-        assert.lengthOf(results.violations, 0, 'violations');
-        assert.lengthOf(results.incomplete, 0, 'incomplete');
-        assert.lengthOf(results.inapplicable, 0, 'inapplicable');
-        done();
-      });
-    });
-  });
+				assert.lengthOf(results.violations, 0, 'violations');
+				assert.lengthOf(results.incomplete, 0, 'incomplete');
+				assert.lengthOf(results.inapplicable, 0, 'inapplicable');
+				done();
+			});
+		});
+	});
 
-  describe('noHtml', function() {
-    it('prevents html property on nodes', function(done) {
-      target.setAttribute('role', 'slider');
-      axe.configure({
-        noHtml: true,
-        checks: [
-          {
-            id: 'aria-required-attr',
-            options: { slider: ['aria-snuggles'] }
-          }
-        ]
-      });
-      axe.run(
-        '#target',
-        {
-          runOnly: {
-            type: 'rule',
-            values: ['aria-required-attr']
-          }
-        },
-        function(error, results) {
-          try {
-            assert.isNull(results.violations[0].nodes[0].html);
-            done();
-          } catch (e) {
-            done(e);
-          }
-        }
-      );
-    });
+	describe('noHtml', function() {
+		var captureError = axe.testUtils.captureError;
+		it('prevents html property on nodes', function(done) {
+			target.setAttribute('role', 'slider');
+			axe.configure({
+				noHtml: true,
+				checks: [
+					{
+						id: 'aria-required-attr',
+						options: { slider: ['aria-snuggles'] }
+					}
+				]
+			});
+			axe.run(
+				'#target',
+				{
+					runOnly: {
+						type: 'rule',
+						values: ['aria-required-attr']
+					}
+				},
+				captureError(function(error, results) {
+					assert.isNull(error);
+					assert.isNull(results.violations[0].nodes[0].html);
+					done();
+				}, done)
+			);
+		});
 
-    it('prevents html property on nodes from iframes', function(done) {
-      axe.configure({
-        noHtml: true,
-        rules: [
-          {
-            id: 'div#target',
-            // purposefully don't match so the first result is from
-            // the iframe
-            selector: 'foo'
-          }
-        ]
-      });
+		it('prevents html property on nodes from iframes', function(done) {
+			var config = {
+				noHtml: true,
+				rules: [
+					{
+						id: 'div#target',
+						// purposefully don't match so the first result is from
+						// the iframe
+						selector: 'foo'
+					}
+				]
+			};
 
-      var iframe = document.createElement('iframe');
-      iframe.src = '/test/mock/frames/context.html';
-      iframe.onload = function() {
-        axe.run(
-          '#target',
-          {
-            runOnly: {
-              type: 'rule',
-              values: ['div#target']
-            }
-          },
-          function(error, results) {
-            try {
-              assert.deepEqual(results.passes[0].nodes[0].target, [
-                'iframe',
-                '#target'
-              ]);
-              assert.isNull(results.passes[0].nodes[0].html);
-              done();
-            } catch (e) {
-              done(e);
-            }
-          }
-        );
-      };
-      target.appendChild(iframe);
-    });
+			var iframe = document.createElement('iframe');
+			iframe.src = '/test/mock/frames/context.html';
+			iframe.onload = function() {
+				axe.configure(config);
+				iframe.contentWindow.axe.configure(config);
 
-    it('prevents html property in postMesage', function(done) {
-      axe.configure({
-        noHtml: true,
-        rules: [
-          {
-            id: 'div#target',
-            // purposefully don't match so the first result is from
-            // the iframe
-            selector: 'foo'
-          }
-        ]
-      });
+				axe.run(
+					'#target',
+					{
+						runOnly: {
+							type: 'rule',
+							values: ['div#target']
+						}
+					},
+					captureError(function(error, results) {
+						assert.isNull(error);
+						assert.deepEqual(results.passes[0].nodes[0].target, [
+							'iframe',
+							'#target'
+						]);
+						assert.isNull(results.passes[0].nodes[0].html);
+						done();
+					}, done)
+				);
+			};
+			target.appendChild(iframe);
+		});
 
-      var iframe = document.createElement('iframe');
-      iframe.src = '/test/mock/frames/noHtml-config.html';
-      iframe.onload = function() {
-        axe.run('#target', {
-          runOnly: {
-            type: 'rule',
-            values: ['div#target']
-          }
-        });
-      };
-      target.appendChild(iframe);
+		it('prevents html property in postMesage', function(done) {
+			var config = {
+				noHtml: true,
+				rules: [
+					{
+						id: 'div#target',
+						// purposefully don't match so the first result is from
+						// the iframe
+						selector: 'foo'
+					}
+				]
+			};
 
-      window.addEventListener('message', function(e) {
-        var data = JSON.parse(e.data);
-        if (Array.isArray(data.message)) {
-          try {
-            assert.isNull(data.message[0].nodes[0].node.source);
-            done();
-          } catch (e) {
-            done(e);
-          }
-        }
-      });
-    });
-  });
+			var iframe = document.createElement('iframe');
+			iframe.src = '/test/mock/frames/noHtml-config.html';
+			iframe.onload = function() {
+				axe.configure(config);
+				iframe.contentWindow.axe.configure(config);
+
+				axe.run('#target', {
+					runOnly: {
+						type: 'rule',
+						values: ['div#target']
+					}
+				});
+			};
+			target.appendChild(iframe);
+
+			window.addEventListener('message', function(e) {
+				var data = JSON.parse(e.data);
+				if (Array.isArray(data.message)) {
+					try {
+						assert.isNull(data.message[0].nodes[0].node.source);
+						done();
+					} catch (e) {
+						done(e);
+					}
+				}
+			});
+		});
+	});
 });

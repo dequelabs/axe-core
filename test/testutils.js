@@ -398,3 +398,13 @@ axe.testUtils = testUtils;
 afterEach(function() {
 	axe._cache.clear();
 });
+
+testUtils.captureError = function captureError(cb, errorHandler) {
+	return function() {
+		try {
+			cb.apply(null, arguments);
+		} catch (e) {
+			errorHandler(e);
+		}
+	};
+};
