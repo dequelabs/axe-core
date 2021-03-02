@@ -215,9 +215,9 @@ axe.configure({
       - `options` - mixed(optional). This is the options structure that is passed to the evaluate function and is intended to be used to configure checks. It is the most common property that is intended to be overridden for existing checks.
       - `enabled` - boolean(optional, default `true`). This is used to indicate whether the check is on or off by default. Checks that are off are not evaluated, even when included in a rule. Overriding this is a common way to disable a particular check across multiple rules.
   - `rules` - Used to add rules to the existing set of rules, or to override the properties of existing rules
-    - The rules attribute is an Array of rule objects
-    - each rule object can contain the following attributes
-      - `id` - string(required). This uniquely identifies the rule. If the rule already exists, it will be overridden with any of the attributes supplied. The attributes below that are marked required, are only required for new rules.
+    - The rules attribute is an object with key-value pairs, the key is the `id` of a rule and the value is a rule object for that rule
+    - each rule object can contain the following attributes If the rule already exists, it will be overridden with any of the attributes supplied. The attributes below that are marked required, are only required for new rules.
+      - `id` - string(required) for new rules, this is the new ID, otherwise the key of this object is the ID (see above)
       - `impact` - string(optional). Override the impact defined by checks
       - `reviewOnFail` - boolean(option, default `false`). Override the result of a rule to return "Needs Review" rather than "Violation" if the rule fails.
       - `selector` - string(optional, default `*`). A [CSS selector](./developer-guide.md#supported-css-selectors) used to identify the elements that are passed into the rule for evaluation.
