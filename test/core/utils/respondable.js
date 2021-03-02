@@ -34,6 +34,7 @@ describe('axe.utils.respondable', function() {
 	this.timeout(1000);
 
 	beforeEach(function(done) {
+		axe._load({});
 		respondable = axe.utils.respondable;
 		axeVersion = axe.version;
 		axeLog = axe.log;
@@ -263,6 +264,11 @@ describe('axe.utils.respondable', function() {
 		it('throws when targeting a window that is not a frame in the page', function() {
 			var blankPage = window.open('');
 			var frameCopy = window.open(frameWin.location.href);
+
+			// seems our non-karma tests can't open new windows?
+			if (!blankPage) {
+				return;
+			}
 			// Cleanup
 			setTimeout(function() {
 				blankPage.close();
