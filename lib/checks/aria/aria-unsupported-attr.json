@@ -7,7 +7,7 @@
       "pass": "ARIA attribute is supported",
       "fail": {
         "default": "ARIA attribute is not widely supported in screen readers and assistive technologies: ${data.values}",
-        "roleUnsupported": "ARIA attribute is not widely supported in screen readers and assistive technologies when used on the specific role: ${data.values}"
+        "roleUnsupported": "ARIA attribute is not widely supported in screen readers and assistive technologies when used on the ${data.role} role: ${data.attrs}"
       }
     }
   }
