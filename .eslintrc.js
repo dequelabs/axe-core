@@ -100,9 +100,11 @@ module.exports = {
         helpers: true,
         checks: true
       },
+      plugins: ['mocha-no-only'],
       rules: {
         'new-cap': 0,
-        'no-use-before-define': 0
+        'no-use-before-define': 0,
+        'mocha-no-only/mocha-no-only': ['error']
       }
     }
   ]
