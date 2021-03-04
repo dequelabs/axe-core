@@ -865,7 +865,7 @@ axe.utils.getRule('color-contrast');
 
 ##### Returns
 
-An axe-core Rule instance.
+An axe-core `Rule` instance.
 
 ### Common Functions
 
