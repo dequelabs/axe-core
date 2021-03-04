@@ -851,7 +851,7 @@ An Array of filtered HTML nodes.
 
 ##### Description
 
-Get an axe-core Rule instance by ID.
+Get an axe-core `Rule` instance by ID.
 
 ##### Synopsis
 
