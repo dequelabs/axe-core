@@ -810,7 +810,7 @@ axe.setup(DomNode);
 
 ### API Name: axe.teardown
 
-Cleanup the VirtualNode tree and internal caches. `axe.run` will call this function at the end of the run so there's no need to call it yourself afterwards.
+Cleanup the `VirtualNode` tree and internal caches. `axe.run` will call this function at the end of the run so there's no need to call it yourself afterwards.
 
 The signature is:
 
