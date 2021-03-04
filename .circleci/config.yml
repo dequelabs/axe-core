@@ -97,10 +97,6 @@ jobs:
       - run: npx grunt fixture
       # run IE webdriver tests
       - run: npx grunt connect test-webdriver:ie
-      # test examples
-      # Note: Jasmine karma-chrome-launcher requires chrome browser
-      - run: choco install googlechrome --ignore-checksums
-      - run: npm run test:examples
 
   # Run examples under `doc/examples`
   test_examples:
