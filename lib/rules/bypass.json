@@ -3,6 +3,7 @@
   "selector": "html",
   "pageLevel": true,
   "matches": "bypass-matches",
+  "reviewOnFail": true,
   "tags": [
     "cat.keyboard",
     "wcag2a",

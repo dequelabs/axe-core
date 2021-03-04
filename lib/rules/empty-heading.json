@@ -6,7 +6,7 @@
   "impact": "minor",
   "metadata": {
     "description": "Ensures headings have discernible text",
-    "help": "Headings must not be empty"
+    "help": "Headings should not be empty"
   },
   "all": [],
   "any": [

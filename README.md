@@ -5,7 +5,8 @@
 [![Total npm downloads](https://img.shields.io/npm/dt/axe-core.svg)](https://www.npmjs.com/package/axe-core)
 [![Commits](https://img.shields.io/github/commit-activity/y/dequelabs/axe-core.svg)](https://github.com/dequelabs/axe-core/commits/develop)
 [![GitHub contributors](https://img.shields.io/github/contributors/dequelabs/axe-core.svg)](https://github.com/dequelabs/axe-core/graphs/contributors)
-[![Join our Slack chat](https://img.shields.io/badge/slack-chat-purple.svg?logo=slack)](https://accessibility.deque.com/axe-community)[![Package Quality](http://npm.packagequality.com/shield/axe-core.svg)](http://packagequality.com/#?package=axe-core)
+[![Join our Slack chat](https://img.shields.io/badge/slack-chat-purple.svg?logo=slack)](https://accessibility.deque.com/axe-community)
+[![Package Quality](http://npm.packagequality.com/shield/axe-core.svg)](http://packagequality.com/#?package=axe-core)
 
 Axe is an accessibility testing engine for websites and other HTML-based user interfaces. It's fast, secure, lightweight, and was built to seamlessly integrate with any existing test environment so you can automate accessibility testing alongside your regular functional testing.
 
@@ -75,7 +76,7 @@ The [axe-core API](doc/API.md) fully supports the following browsers:
 - Google Chrome v42 and above
 - Mozilla Firefox v38 and above
 - Apple Safari v7 and above
-- Internet Explorer v9, 10, 11
+- Internet Explorer v11
 
 Support means that we will fix bugs and attempt to test each browser regularly. Only Firefox, Chrome, and Internet Explorer 11 are currently tested on every pull request.
 

@@ -1,0 +1,5 @@
+{
+  "id": "6cfa84",
+  "title": "Element with aria-hidden has no focusable content",
+  "axeRules": ["aria-hidden-focus"]
+}

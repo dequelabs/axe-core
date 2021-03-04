@@ -235,20 +235,27 @@ function createSchemas() {
   return schemas;
 }
 
-function validateFiles(grunt, files, schema) {
+function validateFiles(grunt, files, schema, type) {
   var valid = true;
   files.forEach(function(f) {
     f.src.forEach(function(pathArg) {
       var file = grunt.file.readJSON(pathArg);
       file._path = pathArg;
       var result = revalidator(file, schema);
-
       if (!result.valid) {
         result.errors.forEach(function(err) {
           grunt.log.error(pathArg, err.property + ' ' + err.message);
         });
         valid = false;
-      } else {
+      }
+
+      const ruleIssues = type === 'rule' ? validateRule(file) : [];
+      if (ruleIssues.length > 0) {
+        ruleIssues.forEach(issue => grunt.log.error(pathArg, issue));
+        valid = false;
+      }
+
+      if (valid) {
         grunt.verbose.ok();
       }
     });
@@ -261,17 +268,38 @@ module.exports = function(grunt) {
     'validate',
     'Task for validating API schema for checks and rules',
     function() {
-      var schemas = createSchemas();
-      var options = this.options();
-      if (!options.type || !schemas[options.type]) {
+      const { type } = this.options();
+      const schemas = createSchemas();
+      const schema = schemas[type];
+      if (!schema) {
         grunt.log.error(
           'Please specify a valid type to validate: ' + Object.keys(schemas)
         );
         return false;
       }
-      const valid = validateFiles(grunt, this.files, schemas[options.type]);
-      schemas[options.type].seen = {};
+      const valid = validateFiles(grunt, this.files, schema, type);
+      schema.seen = {};
       return valid;
     }
   );
 };
+
+function validateRule({ tags, metadata }) {
+  if (!Array.isArray(tags) || typeof metadata !== 'object') {
+    return [];
+  }
+  const issues = [];
+  const prohibitedWord = tags.includes('best-practice') ? 'must' : 'should';
+  const { description, help } = metadata;
+
+  if (description.toLowerCase().includes(prohibitedWord)) {
+    issues.push(
+      `metadata.description can not contain the word '${prohibitedWord}'.`
+    );
+  }
+
+  if (help.toLowerCase().includes(prohibitedWord)) {
+    issues.push(`metadata.help can not contain the word '${prohibitedWord}'.`);
+  }
+  return issues;
+}

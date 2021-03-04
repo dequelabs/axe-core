@@ -17,6 +17,6 @@
     "help": "Active <area> elements must have alternate text"
   },
   "all": [],
-  "any": ["non-empty-alt", "non-empty-title", "aria-label", "aria-labelledby"],
+  "any": ["non-empty-alt", "aria-label", "aria-labelledby", "non-empty-title"],
   "none": []
 }

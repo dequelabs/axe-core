@@ -5,7 +5,7 @@ describe('cleanup', function() {
   function createFrames(callback) {
     var frame;
     frame = document.createElement('iframe');
-    frame.src = '../mock/frames/responder.html';
+    frame.src = '../mock/frames/test.html';
     frame.addEventListener('load', function() {
       setTimeout(callback, 500);
     });
@@ -93,7 +93,7 @@ describe('cleanup', function() {
       win.addEventListener('message', function(message) {
         var data = JSON.parse(message.data);
         if (data.topic === 'axe.start') {
-          assert.deepEqual(data.message, { command: 'cleanup-plugin' });
+          assert.deepEqual(data.payload, { command: 'cleanup-plugin' });
           done();
         }
       });

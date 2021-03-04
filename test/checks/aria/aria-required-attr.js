@@ -1,13 +1,11 @@
 describe('aria-required-attr', function() {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
   var queryFixture = axe.testUtils.queryFixture;
   var checkContext = axe.testUtils.MockCheckContext();
   var options = undefined;
 
   afterEach(function() {
-    fixture.innerHTML = '';
     checkContext.reset();
     axe.reset();
   });
