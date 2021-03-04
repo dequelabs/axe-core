@@ -20,8 +20,11 @@
       1. [Results Object](#results-object)
    1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
    1. [API Name: axe.cleanup](#api-name-axecleanup)
+   1. [API Name: axe.setup](#api-name-axesetup)
+   1. [API Name: axe.teardown](#api-name-teardown)
    1. [Virtual DOM Utilities](#virtual-dom-utilities)
       1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
+      1. [API Name: axe.utils.getRule](#api-name-axeutilsgetrule)
    1. [Common Functions](#common-functions)
 1. [Section 3: Example Reference](#section-3-example-reference)
 1. [Section 4: Performance](#section-4-performance)
@@ -793,6 +796,28 @@ axe.cleanup(resolve, reject);
 
 `resolve` takes no arguments and `reject` takes a single argument that must be a string or have a toString() method in its prototype.
 
+### API Name: axe.setup
+
+Setup axe-cores internal VirtualNode tree and other required properties required to run functions in `axe.commons`.
+
+The signature is:
+
+```js
+axe.setup(DomNode);
+```
+
+`DomNode` - is an optional DomNode to use as the root of the VirtualNode tree. Default is `document.documentElement`.
+
+### API Name: axe.teardown
+
+Cleanup the VirtualNode tree and internal caches. `axe.run` will call this function at the end of the run so there's no need to call it yourself afterwards.
+
+The signature is:
+
+```js
+axe.teardown();
+```
+
 ### Virtual DOM Utilities
 
 Note: If you’re writing rules or checks, you’ll have both the `node` and `virtualNode` passed in.
@@ -821,6 +846,26 @@ axe.utils.querySelectorAll(virtualNode, 'a[href]');
 ##### Returns
 
 An Array of filtered HTML nodes.
+
+#### API Name: axe.utils.getRule
+
+##### Description
+
+Get an axe-core Rule instance by ID.
+
+##### Synopsis
+
+```js
+axe.utils.getRule('color-contrast');
+```
+
+##### Parameters
+
+- `ruleId` - The ID of the rule.
+
+##### Returns
+
+An axe-core Rule instance.
 
 ### Common Functions
 
