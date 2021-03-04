@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.3](https://github.com/dequelabs/axe-core/compare/v4.1.2...v4.1.3) (2021-03-04)
+
+t/8a699ecba6c77f6a705d44616f1bcefd634ff89b))
+
+### Bug Fixes
+
+- **respondable:** Avoid message duplication with messageId ([#2816](https://github.com/dequelabs/axe-core/issues/2816)) ([9b6eb59](https://github.com/dequelabs/axe-core/commit/9b6eb5987da104398acaae60b7b7ee4e0b2d3c8f))
+- **types:** Add noHtml option ([#2810](https://github.com/dequelabs/axe-core/issues/2810)) ([8bc0bae](https://github.com/dequelabs/axe-core/commit/8bc0baec5c997873daf43ff5de61ea22a8e8c896))
+
 ### [4.1.2](https://github.com/dequelabs/axe-core/compare/v4.1.1...v4.1.2) (2021-02-08)
 
 ### Bug Fixes
