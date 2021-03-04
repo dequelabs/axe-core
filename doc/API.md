@@ -798,7 +798,7 @@ axe.cleanup(resolve, reject);
 
 ### API Name: axe.setup
 
-Setup axe-cores internal VirtualNode tree and other required properties required to run functions in `axe.commons`.
+Setup axe-cores internal `VirtualNode` tree and other required properties required to run functions in `axe.commons`.
 
 The signature is:
 
