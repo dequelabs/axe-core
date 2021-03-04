@@ -806,7 +806,7 @@ The signature is:
 axe.setup(DomNode);
 ```
 
-`DomNode` - is an optional DomNode to use as the root of the VirtualNode tree. Default is `document.documentElement`.
+`DomNode` - is an optional DOM node to use as the root of the `VirtualNode` tree. Default is `document.documentElement`.
 
 ### API Name: axe.teardown
 
