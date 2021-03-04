@@ -392,6 +392,9 @@ describe('axe.run iframes', function() {
 
 	var fixture = document.getElementById('fixture');
 	var origRunRules = axe._runRules;
+	var captureError = axe.testUtils.captureError;
+
+	this.timeout(1000);
 
 	beforeEach(function() {
 		fixture.innerHTML = '<div id="target">Target in top frame</div>';
@@ -422,37 +425,33 @@ describe('axe.run iframes', function() {
 
 	it('includes iframes by default', function(done) {
 		var frame = document.createElement('iframe');
-
 		frame.addEventListener('load', function() {
-			var safetyTimeout = window.setTimeout(function() {
-				done();
-			}, 1000);
-
-			axe.run('#fixture', {}, function(err, result) {
-				assert.equal(result.violations.length, 1);
-				var violation = result.violations[0];
-				assert.equal(
-					violation.nodes.length,
-					2,
-					'one node for top frame, one for iframe'
-				);
-				assert.isTrue(
-					violation.nodes.some(function(node) {
-						return node.target.length === 1 && node.target[0] === '#target';
-					}),
-					'one result from top frame'
-				);
-				assert.isTrue(
-					violation.nodes.some(function(node) {
-						return (
-							node.target.length === 2 && node.target[0] === '#fixture > iframe'
-						);
-					}),
-					'one result from iframe'
-				);
-				window.clearTimeout(safetyTimeout);
-				done();
-			});
+			axe.run(
+				'#fixture',
+				{},
+				captureError(function(err, result) {
+					assert.equal(result.violations.length, 1);
+					var violation = result.violations[0];
+					assert.equal(
+						violation.nodes.length,
+						2,
+						'one node for top frame, one for iframe'
+					);
+					assert.isTrue(
+						violation.nodes.some(function(node) {
+							return node.target.length === 1 && node.target[0] === '#target';
+						}),
+						'one result from top frame'
+					);
+					assert.isTrue(
+						violation.nodes.some(function(node) {
+							return node.target.length === 2 && node.target[0] === 'iframe';
+						}),
+						'one result from iframe'
+					);
+					done();
+				}, done)
+			);
 		});
 
 		frame.src = '../mock/frames/test.html';
@@ -461,21 +460,19 @@ describe('axe.run iframes', function() {
 
 	it('excludes iframes if iframes is false', function(done) {
 		var frame = document.createElement('iframe');
-
 		frame.addEventListener('load', function() {
-			var safetyTimeout = setTimeout(function() {
-				done();
-			}, 1000);
-
-			axe.run('#fixture', { iframes: false }, function(err, result) {
-				assert.equal(result.violations.length, 1);
-				var violation = result.violations[0];
-				assert.equal(violation.nodes.length, 1, 'only top frame');
-				assert.equal(violation.nodes[0].target.length, 1);
-				assert.equal(violation.nodes[0].target[0], '#target');
-				window.clearTimeout(safetyTimeout);
-				done();
-			});
+			axe.run(
+				'#fixture',
+				{ iframes: false },
+				captureError(function(err, result) {
+					assert.equal(result.violations.length, 1);
+					var violation = result.violations[0];
+					assert.equal(violation.nodes.length, 1, 'only top frame');
+					assert.equal(violation.nodes[0].target.length, 1);
+					assert.equal(violation.nodes[0].target[0], '#target');
+					done();
+				}, done)
+			);
 		});
 
 		frame.src = '../mock/frames/test.html';
@@ -484,18 +481,16 @@ describe('axe.run iframes', function() {
 
 	it('ignores unexpected messages from non-axe iframes', function(done) {
 		var frame = document.createElement('iframe');
-
 		frame.addEventListener('load', function() {
-			var safetyTimeout = window.setTimeout(function() {
-				done('timeout');
-			}, 1000);
-
-			axe.run('#fixture', {}, function(err, result) {
-				assert.isNull(err);
-				assert.equal(result.violations.length, 1);
-				window.clearTimeout(safetyTimeout);
-				done();
-			});
+			axe.run(
+				'#fixture',
+				{},
+				captureError(function(err, result) {
+					assert.isNull(err);
+					assert.equal(result.violations.length, 1);
+					done();
+				}, done)
+			);
 		});
 
 		frame.src = '../mock/frames/with-echo.html';
@@ -506,18 +501,15 @@ describe('axe.run iframes', function() {
 		var frame = document.createElement('iframe');
 
 		frame.addEventListener('load', function() {
-			var safetyTimeout = window.setTimeout(function() {
-				done('timeout');
-			}, 1000);
-			if (!axe._audit) {
-				throw new Error('no _audit');
-			}
-			axe.run('#fixture', {}, function(err, result) {
-				assert.isNull(err);
-				assert.equal(result.violations.length, 1);
-				window.clearTimeout(safetyTimeout);
-				done();
-			});
+			axe.run(
+				'#fixture',
+				{},
+				captureError(function(err, result) {
+					assert.isNull(err);
+					assert.equal(result.violations.length, 1);
+					done();
+				}, done)
+			);
 		});
 
 		frame.src = '../mock/frames/with-echo-axe.html';

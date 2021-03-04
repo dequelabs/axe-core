@@ -143,9 +143,11 @@ describe('axe.utils.collectResultsFromFrames', function() {
 			axe.utils.collectResultsFromFrames(
 				context,
 				{},
-				'command',
-				'params',
-				noop,
+				'rules',
+				'morestuff',
+				function() {
+					done(new Error('Should not be called'));
+				},
 				function(err) {
 					assert.instanceOf(err, Error);
 					assert.equal(err.message.split(/\n/)[0], 'error in axe.throw');

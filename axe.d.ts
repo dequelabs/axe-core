@@ -54,191 +54,192 @@ declare namespace axe {
 
 	type ElementContext = Node | string | ContextObject;
 
-	interface TestEngine {
-		name: string;
-		version: string;
-	}
-	interface TestRunner {
-		name: string;
-	}
-	interface TestEnvironment {
-		userAgent: string;
-		windowWidth: number;
-		windowHeight: number;
-		orientationAngle?: number;
-		orientationType?: string;
-	}
-	interface RunOnly {
-		type: RunOnlyType;
-		values: TagValue[] | string[];
-	}
-	interface RuleObject {
-		[key: string]: {
-			enabled: boolean;
-		};
-	}
-	interface RunOptions {
-		runOnly?: RunOnly | TagValue[] | string[];
-		rules?: RuleObject;
-		reporter?: ReporterVersion;
-		resultTypes?: resultGroups[];
-		selectors?: boolean;
-		ancestry?: boolean;
-		xpath?: boolean;
-		absolutePaths?: boolean;
-		iframes?: boolean;
-		elementRef?: boolean;
-		frameWaitTime?: number;
-		preload?: boolean;
-		performanceTimer?: boolean;
-	}
-	interface AxeResults {
-		toolOptions: RunOptions;
-		testEngine: TestEngine;
-		testRunner: TestRunner;
-		testEnvironment: TestEnvironment;
-		url: string;
-		timestamp: string;
-		passes: Result[];
-		violations: Result[];
-		incomplete: Result[];
-		inapplicable: Result[];
-	}
-	interface Result {
-		description: string;
-		help: string;
-		helpUrl: string;
-		id: string;
-		impact?: ImpactValue;
-		tags: TagValue[];
-		nodes: NodeResult[];
-	}
-	interface NodeResult {
-		html: string;
-		impact?: ImpactValue;
-		target: string[];
-		xpath?: string[];
-		ancestry?: string[];
-		any: CheckResult[];
-		all: CheckResult[];
-		none: CheckResult[];
-		failureSummary?: string;
-		element?: HTMLElement;
-	}
-	interface CheckResult {
-		id: string;
-		impact: string;
-		message: string;
-		data: any;
-		relatedNodes?: RelatedNode[];
-	}
-	interface RelatedNode {
-		target: string[];
-		html: string;
-	}
-	interface RuleLocale {
-		[key: string]: {
-			description: string;
-			help: string;
-		};
-	}
-	interface CheckLocale {
-		[key: string]: {
-			pass: string | { [key: string]: string };
-			fail: string | { [key: string]: string };
-			incomplete: string | { [key: string]: string };
-		};
-	}
-	interface Locale {
-		lang?: string;
-		rules?: RuleLocale;
-		checks?: CheckLocale;
-	}
-	interface AriaAttrs {
-		type: AriaAttrsType;
-		values?: string[];
-		allowEmpty?: boolean;
-		global?: boolean;
-		unsupported?: boolean;
-	}
-	interface AriaRoles {
-		type: AriaRolesType | DpubRolesType;
-		requiredContext?: string[];
-		requiredOwned?: string[];
-		requiredAttrs?: string[];
-		allowedAttrs?: string[];
-		nameFromContent?: boolean;
-		unsupported?: boolean;
-	}
-	interface HtmlElmsVariant {
-		contentTypes?: HtmlContentTypes[];
-		allowedRoles: boolean | string[];
-		noAriaAttrs?: boolean;
-		shadowRoot?: boolean;
-		implicitAttrs?: { [key: string]: string };
-		namingMethods?: string[];
-	}
-	interface HtmlElms extends HtmlElmsVariant {
-		variant?: { [key: string]: HtmlElmsVariant };
-	}
-	interface Standards {
-		ariaAttrs?: { [key: string]: AriaAttrs };
-		ariaRoles?: { [key: string]: AriaRoles };
-		htmlElms?: { [key: string]: HtmlElms };
-		cssColors?: { [key: string]: number[] };
-	}
-	interface Spec {
-		branding?: {
-			brand?: string;
-			application?: string;
-		};
-		reporter?: ReporterVersion;
-		checks?: Check[];
-		rules?: Rule[];
-		standards?: Standards;
-		locale?: Locale;
-		disableOtherRules?: boolean;
-		axeVersion?: string;
-		// Deprecated - do not use.
-		ver?: string;
-	}
-	interface Check {
-		id: string;
-		evaluate: Function | string;
-		after?: Function | string;
-		options?: any;
-		matches?: string;
-		enabled?: boolean;
-	}
-	interface Rule {
-		id: string;
-		selector?: string;
-		impact?: ImpactValue;
-		excludeHidden?: boolean;
-		enabled?: boolean;
-		pageLevel?: boolean;
-		any?: string[];
-		all?: string[];
-		none?: string[];
-		tags?: string[];
-		matches?: string;
-	}
-	interface AxePlugin {
-		id: string;
-		run(...args: any[]): any;
-		commands: {
-			id: string;
-			callback(...args: any[]): void;
-		}[];
-		cleanup?(callback: Function): void;
-	}
-	interface RuleMetadata {
-		ruleId: string;
-		description: string;
-		help: string;
-		helpUrl: string;
-		tags: string[];
-	}
+  interface TestEngine {
+    name: string;
+    version: string;
+  }
+  interface TestRunner {
+    name: string;
+  }
+  interface TestEnvironment {
+    userAgent: string;
+    windowWidth: number;
+    windowHeight: number;
+    orientationAngle?: number;
+    orientationType?: string;
+  }
+  interface RunOnly {
+    type: RunOnlyType;
+    values: TagValue[] | string[];
+  }
+  interface RuleObject {
+    [key: string]: {
+      enabled: boolean;
+    };
+  }
+  interface RunOptions {
+    runOnly?: RunOnly | TagValue[] | string[];
+    rules?: RuleObject;
+    reporter?: ReporterVersion;
+    resultTypes?: resultGroups[];
+    selectors?: boolean;
+    ancestry?: boolean;
+    xpath?: boolean;
+    absolutePaths?: boolean;
+    iframes?: boolean;
+    elementRef?: boolean;
+    frameWaitTime?: number;
+    preload?: boolean;
+    performanceTimer?: boolean;
+  }
+  interface AxeResults {
+    toolOptions: RunOptions;
+    testEngine: TestEngine;
+    testRunner: TestRunner;
+    testEnvironment: TestEnvironment;
+    url: string;
+    timestamp: string;
+    passes: Result[];
+    violations: Result[];
+    incomplete: Result[];
+    inapplicable: Result[];
+  }
+  interface Result {
+    description: string;
+    help: string;
+    helpUrl: string;
+    id: string;
+    impact?: ImpactValue;
+    tags: TagValue[];
+    nodes: NodeResult[];
+  }
+  interface NodeResult {
+    html: string;
+    impact?: ImpactValue;
+    target: string[];
+    xpath?: string[];
+    ancestry?: string[];
+    any: CheckResult[];
+    all: CheckResult[];
+    none: CheckResult[];
+    failureSummary?: string;
+    element?: HTMLElement;
+  }
+  interface CheckResult {
+    id: string;
+    impact: string;
+    message: string;
+    data: any;
+    relatedNodes?: RelatedNode[];
+  }
+  interface RelatedNode {
+    target: string[];
+    html: string;
+  }
+  interface RuleLocale {
+    [key: string]: {
+      description: string;
+      help: string;
+    };
+  }
+  interface CheckLocale {
+    [key: string]: {
+      pass: string | { [key: string]: string };
+      fail: string | { [key: string]: string };
+      incomplete: string | { [key: string]: string };
+    };
+  }
+  interface Locale {
+    lang?: string;
+    rules?: RuleLocale;
+    checks?: CheckLocale;
+  }
+  interface AriaAttrs {
+    type: AriaAttrsType;
+    values?: string[];
+    allowEmpty?: boolean;
+    global?: boolean;
+    unsupported?: boolean;
+  }
+  interface AriaRoles {
+    type: AriaRolesType | DpubRolesType;
+    requiredContext?: string[];
+    requiredOwned?: string[];
+    requiredAttrs?: string[];
+    allowedAttrs?: string[];
+    nameFromContent?: boolean;
+    unsupported?: boolean;
+  }
+  interface HtmlElmsVariant {
+    contentTypes?: HtmlContentTypes[];
+    allowedRoles: boolean | string[];
+    noAriaAttrs?: boolean;
+    shadowRoot?: boolean;
+    implicitAttrs?: { [key: string]: string };
+    namingMethods?: string[];
+  }
+  interface HtmlElms extends HtmlElmsVariant {
+    variant?: { [key: string]: HtmlElmsVariant };
+  }
+  interface Standards {
+    ariaAttrs?: { [key: string]: AriaAttrs };
+    ariaRoles?: { [key: string]: AriaRoles };
+    htmlElms?: { [key: string]: HtmlElms };
+    cssColors?: { [key: string]: number[] };
+  }
+  interface Spec {
+    branding?: {
+      brand?: string;
+      application?: string;
+    };
+    reporter?: ReporterVersion;
+    checks?: Check[];
+    rules?: Rule[];
+    standards?: Standards;
+    locale?: Locale;
+    disableOtherRules?: boolean;
+    axeVersion?: string;
+    noHtml?: boolean;
+    // Deprecated - do not use.
+    ver?: string;
+  }
+  interface Check {
+    id: string;
+    evaluate: Function | string;
+    after?: Function | string;
+    options?: any;
+    matches?: string;
+    enabled?: boolean;
+  }
+  interface Rule {
+    id: string;
+    selector?: string;
+    impact?: ImpactValue;
+    excludeHidden?: boolean;
+    enabled?: boolean;
+    pageLevel?: boolean;
+    any?: string[];
+    all?: string[];
+    none?: string[];
+    tags?: string[];
+    matches?: string;
+  }
+  interface AxePlugin {
+    id: string;
+    run(...args: any[]): any;
+    commands: {
+      id: string;
+      callback(...args: any[]): void;
+    }[];
+    cleanup?(callback: Function): void;
+  }
+  interface RuleMetadata {
+    ruleId: string;
+    description: string;
+    help: string;
+    helpUrl: string;
+    tags: string[];
+  }
 
 	let version: string;
 	let plugins: any;
