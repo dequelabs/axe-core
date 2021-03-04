@@ -100,21 +100,11 @@ module.exports = {
         helpers: true,
         checks: true
       },
+      plugins: ['mocha-no-only'],
       rules: {
         'new-cap': 0,
         'no-use-before-define': 0,
-        'no-restricted-syntax': [
-          'error',
-          {
-            selector:
-              'MemberExpression[object.name=describe][property.name=only]',
-            message: "Don't use describe.only()"
-          },
-          {
-            selector: 'MemberExpression[object.name=it][property.name=only]',
-            message: "Don't use it.only()"
-          }
-        ]
+        'mocha-no-only/mocha-no-only': ['error']
       }
     }
   ]
