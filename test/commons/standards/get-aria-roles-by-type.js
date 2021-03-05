@@ -1,59 +1,32 @@
 describe('standards.getAriaRolesByType', function() {
   var getAriaRolesByType = axe.commons.standards.getAriaRolesByType;
 
-  before(function() {
-    axe._load({});
-  });
-
-  after(function() {
-    axe.reset();
-  });
-
   it('should return a list of role names by type', function() {
-    // Source: https://www.w3.org/TR/wai-aria-1.1/#document_structure_roles
+    // first remove all role types
+    var roleNames = Object.keys(axe._audit.standards.ariaRoles);
+    var ariaRoles = {};
+    for (var i = 0; i < roleNames.length; i++) {
+      ariaRoles[roleNames[i]] = { type: 'off' };
+    }
+
+    // then turn on a few specific roles
+    ariaRoles.article = { type: 'structure' };
+    ariaRoles.blockquote = { type: 'structure' };
+    ariaRoles.caption = { type: 'structure' };
+    ariaRoles.cell = { type: 'structure' };
+
+    axe.configure({
+      standards: {
+        ariaRoles: ariaRoles
+      }
+    });
+
     var structureRoles = getAriaRolesByType('structure');
     assert.deepEqual(structureRoles, [
       'article',
       'blockquote',
       'caption',
-      'cell',
-      'code',
-      'columnheader',
-      'definition',
-      'deletion',
-      'directory',
-      'document',
-      'emphasis',
-      'feed',
-      'figure',
-      'group',
-      'heading',
-      'img',
-      'insertion',
-      'list',
-      'listitem',
-      'math',
-      'meter',
-      'none',
-      'note',
-      'paragraph',
-      'presentation',
-      'row',
-      'rowgroup',
-      'rowheader',
-      'separator',
-      'strong',
-      'subscript',
-      'superscript',
-      'table',
-      'term',
-      'text',
-      'time',
-      'toolbar',
-      'tooltip',
-      'graphics-document',
-      'graphics-object',
-      'graphics-symbol'
+      'cell'
     ]);
   });
 
