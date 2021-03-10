@@ -28,7 +28,9 @@ const getTestUrls = async (host = `localhost`, port = `9876`) => {
 		...(
 			await globby([
 				'test/integration/full/landmark-one-main/**/*.html',
-				'!test/integration/full/landmark-one-main/**/frames/**/*.html'
+				'!test/integration/full/landmark-one-main/**/frames/**/*.html',
+				'test/integration/full/landmark-no-duplicate-main/**/*.html',
+				'!test/integration/full/landmark-no-duplicate-main/**/frames/**/*.html'
 				// 'test/integration/full/**/*.html',
 				// '!test/integration/full/**/frames/**/*.html'
 			])
