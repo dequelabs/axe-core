@@ -15,11 +15,11 @@ describe('landmark-one-main test failure', function() {
 	});
 
 	describe('violations', function() {
-		it('should find 1', function() {
+		it('should find 2', function() {
 			assert.lengthOf(results.violations[0].nodes, 2);
 		});
 
-		it('should find #frame1', function() {
+		it('should find #fail1', function() {
 			assert.deepEqual(results.violations[0].nodes[0].target, ['#fail1']);
 		});
 
