@@ -1,0 +1,11 @@
+{
+	"id": "matching-aria-role",
+	"evaluate": "matching-aria-role-evaluate",
+	"metadata": {
+		"impact": "minor",
+		"messages": {
+			"pass": "Element has an ARIA role matching its epub:type",
+			"fail": "Element has no ARIA role matching its epub:type"
+		}
+	}
+}

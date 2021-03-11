@@ -242,7 +242,10 @@ module.exports = function(grunt) {
 				tasks: ['build', 'notify']
 			},
 			tests: {
-				files: ['test/**/*.js', 'test/integration/**/!(index).{html,json}'],
+				files: [
+					'test/**/*.js',
+					'test/integration/**/!(index).{xhtml,html,json}'
+				],
 				tasks: ['clean:tests', 'testconfig', 'fixture']
 			}
 		},
