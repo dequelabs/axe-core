@@ -1,6 +1,6 @@
 {
   "id": "label-hidden-field",
-  "selector": "",
+  "selector": "input[hidden], input[type=\"hidden\"]",
   "tags": [],
   "metadata": {
     "description": "",
