@@ -1,13 +1,13 @@
 {
   "id": "label-hidden-field",
   "selector": "",
-  "tags": [],
+  "tags": ["cat.forms", "wcag21aa", "wcag246"],
   "metadata": {
-    "description": "",
-    "help": ""
+    "description": "Ensures that input type=hidden do not have a label",
+    "help": "input type=hidden should not have a label"
   },
   "preload": false,
   "all": [],
   "any": [],
-  "none": []
+  "none": ["explicit-label", "implicit-label"]
 }
