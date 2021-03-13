@@ -1,6 +1,6 @@
 {
   "id": "label-hidden-field",
-  "selector": "",
+  "selector": "input[hidden], input[type=\"hidden\"]",
   "tags": ["cat.forms", "wcag21aa", "wcag246"],
   "metadata": {
     "description": "Ensures that input type=hidden do not have a label",
