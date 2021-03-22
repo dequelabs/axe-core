@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.4.1](https://github.com/dequelabs/axe-core/compare/v4.4.0...v4.4.1) (2022-02-03)
+
+### Bug Fixes
+
+- **DPUB:** deprecate endnote, rather than endnotes (plural) ([#3373](https://github.com/dequelabs/axe-core/issues/3373)) ([1ba9917](https://github.com/dequelabs/axe-core/pull/3377/commits/1ba9917801df9194092769c7c58f048884bc25fd))
+- **d.ts:** correct getFrameContexts return type ([#3370](https://github.com/dequelabs/axe-core/issues/3370)) ([a1b9611](https://github.com/dequelabs/axe-core/commit/a1b96113add29756a421e3934cb089d3734dec16))
+
 ## [4.4.0](https://github.com/dequelabs/axe-core/compare/v4.3.5...v4.4.0) (2022-01-26)
 
 ### Features
