@@ -12,6 +12,9 @@
 		.c1.violations {
 			background: blueviolet !important;
 		}
+		[hidden] {
+			display: none !important;
+		}
 	</style>
 
 	<style>
@@ -45,8 +48,20 @@
 			left: 3px;
 			color: #333;
 		}
-		.rnd {
+		.rnd-50 {
 			border-radius: 50%;
+		}
+		.rnd-0-25 {
+			border-radius: 0 25%;
+		}
+		.rnd-0-50 {
+			border-radius: 0 50%;
+		}
+		.rnd-0-75 {
+			border-radius: 0 75%;
+		}
+		.rnd-0-100 {
+			border-radius: 0 100%;
 		}
 		.rot30 {
 			transform: rotate(-30deg);
@@ -224,276 +239,276 @@
 	</style>
 
 	<!-- Block A -->
-	<section class="sample">
+	<section class="sample" hidden>
 		<div>
-			<span class="c1 h4 w4"></span>
-			<span class="c1 h4 w4"></span>
-			<span class="c1 h4 w4"></span>
+			<span role="link" class="c1 h4 w4"></span>
+			<span role="link" class="c1 h4 w4"></span>
+			<span role="link" class="c1 h4 w4"></span>
 		</div>
 		<div>
-			<span class="c1 h3 w4"></span>
-			<span class="c1 h3 w4"></span>
-			<span class="c1 h3 w4"></span>
+			<span role="link" class="c1 h3 w4"></span>
+			<span role="link" class="c1 h3 w4"></span>
+			<span role="link" class="c1 h3 w4"></span>
 		</div>
 		<div>
-			<span class="c1 h2 w4"></span>
-			<span class="c1 h2 w4"></span>
-			<span class="c1 h2 w4"></span>
+			<span role="link" class="c1 h2 w4"></span>
+			<span role="link" class="c1 h2 w4"></span>
+			<span role="link" class="c1 h2 w4"></span>
 		</div>
 		<div>
-			<span class="c1 h1 w4"></span>
-			<span class="c1 h1 w4"></span>
-			<span class="c1 h1 w4"></span>
+			<span role="link" class="c1 h1 w4"></span>
+			<span role="link" class="c1 h1 w4"></span>
+			<span role="link" class="c1 h1 w4"></span>
 		</div>
 	</section>
 
 	<p>Examples B1 - B3 pass, B4 fails.</p>
 	<!-- Block B -->
-	<section class="sample">
+	<section class="sample" hidden>
 		<div>
-			<span class="c1 h2 w3"></span>
-			<span class="c1 h2 w3 ml3 mr3"></span>
-			<span class="c1 h2 w3"></span>
+			<span role="link" class="c1 h2 w3"></span>
+			<span role="link" class="c1 h2 w3 ml3 mr3"></span>
+			<span role="link" class="c1 h2 w3"></span>
 		</div>
 		<div>
-			<span class="c1 h2 w3"></span>
-			<span class="c1 h2 w3 ml2 mr2"></span>
-			<span class="c1 h2 w3"></span>
+			<span role="link" class="c1 h2 w3"></span>
+			<span role="link" class="c1 h2 w3 ml2 mr2"></span>
+			<span role="link" class="c1 h2 w3"></span>
 		</div>
 		<div>
-			<span class="c1 h2 w3"></span>
-			<span class="c1 h2 w3 ml1 mr1"></span>
-			<span class="c1 h2 w3"></span>
+			<span role="link" class="c1 h2 w3"></span>
+			<span role="link" class="c1 h2 w3 ml1 mr1"></span>
+			<span role="link" class="c1 h2 w3"></span>
 		</div>
 		<div>
-			<span class="c2 h2 w3"></span>
-			<span class="c2 h2 w3"></span>
-			<span class="c2 h2 w3"></span>
+			<span role="link" class="c2 h2 w3"></span>
+			<span role="link" class="c2 h2 w3"></span>
+			<span role="link" class="c2 h2 w3"></span>
 		</div>
 	</section>
 
 	<p>Examples C1 and C2 pass, C3 and C4 fail.</p>
 	<!-- Block C -->
-	<section class="sample">
+	<section class="sample" hidden>
 		<div>
-			<span class="c1 h2 w2"></span>
-			<span class="c1 h2 w2 ml3 mr3"></span>
-			<span class="c1 h2 w2"></span>
+			<span role="link" class="c1 h2 w2"></span>
+			<span role="link" class="c1 h2 w2 ml3 mr3"></span>
+			<span role="link" class="c1 h2 w2"></span>
 		</div>
 		<div>
-			<span class="c1 h2 w2"></span>
-			<span class="c1 h2 w2 ml2 mr2"></span>
-			<span class="c1 h2 w2"></span>
+			<span role="link" class="c1 h2 w2"></span>
+			<span role="link" class="c1 h2 w2 ml2 mr2"></span>
+			<span role="link" class="c1 h2 w2"></span>
 		</div>
 		<div>
-			<span class="c2 h2 w2"></span>
-			<span class="c2 h2 w2 ml1 mr1"></span>
-			<span class="c2 h2 w2"></span>
+			<span role="link" class="c2 h2 w2"></span>
+			<span role="link" class="c2 h2 w2 ml1 mr1"></span>
+			<span role="link" class="c2 h2 w2"></span>
 		</div>
 		<div>
-			<span class="c2 h2 w2"></span>
-			<span class="c2 h2 w2"></span>
-			<span class="c2 h2 w2"></span>
+			<span role="link" class="c2 h2 w2"></span>
+			<span role="link" class="c2 h2 w2"></span>
+			<span role="link" class="c2 h2 w2"></span>
 		</div>
 	</section>
 
 	<p>Example D1 passex, D2 - D4 fail.</p>
 	<!-- Block D -->
-	<section class="sample">
+	<section class="sample" hidden>
 		<div>
-			<span class="c1 h2 w1"></span>
-			<span class="c1 h2 w1 ml3 mr3"></span>
-			<span class="c1 h2 w1"></span>
+			<span role="link" class="c1 h2 w1"></span>
+			<span role="link" class="c1 h2 w1 ml3 mr3"></span>
+			<span role="link" class="c1 h2 w1"></span>
 		</div>
 		<div>
-			<span class="c2 h2 w1"></span>
-			<span class="c2 h2 w1 ml2 mr2"></span>
-			<span class="c2 h2 w1"></span>
+			<span role="link" class="c2 h2 w1"></span>
+			<span role="link" class="c2 h2 w1 ml2 mr2"></span>
+			<span role="link" class="c2 h2 w1"></span>
 		</div>
 		<div>
-			<span class="c2 h2 w1"></span>
-			<span class="c2 h2 w1 ml1 mr1"></span>
-			<span class="c2 h2 w1"></span>
+			<span role="link" class="c2 h2 w1"></span>
+			<span role="link" class="c2 h2 w1 ml1 mr1"></span>
+			<span role="link" class="c2 h2 w1"></span>
 		</div>
 		<div>
-			<span class="c2 h2 w1"></span>
-			<span class="c2 h2 w1"></span>
-			<span class="c2 h2 w1"></span>
+			<span role="link" class="c2 h2 w1"></span>
+			<span role="link" class="c2 h2 w1"></span>
+			<span role="link" class="c2 h2 w1"></span>
 		</div>
 	</section>
 
 	<p>Example E1 and E2 pass, the two outside elements of E3 and E4 fail.</p>
 	<!-- Block E -->
-	<section class="sample">
+	<section class="sample" hidden>
 		<div>
-			<span class="c1 h2 w2"></span>
-			<span class="c1 h2 w4 ml3 mr3"></span>
-			<span class="c1 h2 w2"></span>
+			<span role="link" class="c1 h2 w2"></span>
+			<span role="link" class="c1 h2 w4 ml3 mr3"></span>
+			<span role="link" class="c1 h2 w2"></span>
 		</div>
 		<div>
-			<span class="c1 h2 w2"></span>
-			<span class="c1 h2 w4 ml2 mr2"></span>
-			<span class="c1 h2 w2"></span>
+			<span role="link" class="c1 h2 w2"></span>
+			<span role="link" class="c1 h2 w4 ml2 mr2"></span>
+			<span role="link" class="c1 h2 w2"></span>
 		</div>
 		<div>
-			<span class="c2 h2 w2"></span>
-			<span class="c1 h2 w4 ml1 mr1"></span>
-			<span class="c2 h2 w2"></span>
+			<span role="link" class="c2 h2 w2"></span>
+			<span role="link" class="c1 h2 w4 ml1 mr1"></span>
+			<span role="link" class="c2 h2 w2"></span>
 		</div>
 		<div>
-			<span class="c2 h2 w2"></span>
-			<span class="c1 h2 w4"></span>
-			<span class="c2 h2 w2"></span>
+			<span role="link" class="c2 h2 w2"></span>
+			<span role="link" class="c1 h2 w4"></span>
+			<span role="link" class="c2 h2 w2"></span>
 		</div>
 	</section>
 
 	<p>Example F1 and F2 pass, the inside element of F3 and F4 fail.</p>
 	<!-- Block F -->
-	<section class="sample">
+	<section class="sample" hidden>
 		<div>
-			<span class="c1 h2 w4"></span>
-			<span class="c1 h2 w2 ml3 mr3"></span>
-			<span class="c1 h2 w4"></span>
+			<span role="link" class="c1 h2 w4"></span>
+			<span role="link" class="c1 h2 w2 ml3 mr3"></span>
+			<span role="link" class="c1 h2 w4"></span>
 		</div>
 		<div>
-			<span class="c1 h2 w4"></span>
-			<span class="c1 h2 w2 ml2 mr2"></span>
-			<span class="c1 h2 w4"></span>
+			<span role="link" class="c1 h2 w4"></span>
+			<span role="link" class="c1 h2 w2 ml2 mr2"></span>
+			<span role="link" class="c1 h2 w4"></span>
 		</div>
 		<div>
-			<span class="c1 h2 w4"></span>
-			<span class="c2 h2 w2 ml1 mr1"></span>
-			<span class="c1 h2 w4"></span>
+			<span role="link" class="c1 h2 w4"></span>
+			<span role="link" class="c2 h2 w2 ml1 mr1"></span>
+			<span role="link" class="c1 h2 w4"></span>
 		</div>
 		<div>
-			<span class="c1 h2 w4"></span>
-			<span class="c2 h2 w2"></span>
-			<span class="c1 h2 w4"></span>
+			<span role="link" class="c1 h2 w4"></span>
+			<span role="link" class="c2 h2 w2"></span>
+			<span role="link" class="c1 h2 w4"></span>
 		</div>
 	</section>
 
 	<p>Example G1 - G3 pass, the outer element of G4 fail.</p>
 	<!-- Block G -->
-	<section class="sample">
+	<section class="sample" hidden>
 		<div>
-			<span class="c1 h6 w6 ml4">
-				<span class="c1 h4 w4 mt1 ml-n4"></span>
+			<span role="link" class="c1 h6 w6 ml4">
+				<span role="link" class="c1 h4 w4 mt1 ml-n4"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c1 h6 w6 ml3">
-				<span class="c1 h4 w4 mt1 ml-n3"></span>
+			<span role="link" class="c1 h6 w6 ml3">
+				<span role="link" class="c1 h4 w4 mt1 ml-n3"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c1 h6 w6 ml2">
-				<span class="c1 h4 w4 mt1 ml-n2"></span>
+			<span role="link" class="c1 h6 w6 ml2">
+				<span role="link" class="c1 h4 w4 mt1 ml-n2"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c2 h6 w6 ml1">
-				<span class="c1 h4 w4 mt1 ml-n1"></span>
+			<span role="link" class="c2 h6 w6 ml1">
+				<span role="link" class="c1 h4 w4 mt1 ml-n1"></span>
 			</span>
 		</div>
 	</section>
 
 	<p>Example H1 and H2 pass, the outer element of H3 and H4 fail.</p>
 	<!-- Block H -->
-	<section class="sample">
+	<section class="sample" hidden>
 		<div>
-			<span class="c1 h6 w10">
-				<span class="c1 h4 w4 mt1 ml1"></span>
+			<span role="link" class="c1 h6 w10">
+				<span role="link" class="c1 h4 w4 mt1 ml1"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c1 h6 w10">
-				<span class="c1 h4 w4 mt1 ml2"></span>
+			<span role="link" class="c1 h6 w10">
+				<span role="link" class="c1 h4 w4 mt1 ml2"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c2 h6 w10">
-				<span class="c1 h4 w4 mt1 ml3"></span>
+			<span role="link" class="c2 h6 w10">
+				<span role="link" class="c1 h4 w4 mt1 ml3"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c2 h6 w10">
-				<span class="c1 h4 w4 mt1 ml1"></span>
-				<span class="c1 h4 w4 mt1"></span>
+			<span role="link" class="c2 h6 w10">
+				<span role="link" class="c1 h4 w4 mt1 ml1"></span>
+				<span role="link" class="c1 h4 w4 mt1"></span>
 			</span>
 		</div>
 	</section>
 
 	<p>Example I1 and I2 pass, I3 and I4 fail.</p>
 	<!-- Block I -->
-	<section class="sample">
+	<section class="sample" hidden>
 		<div>
-			<span class="c1 h4 w6 ml6">
-				<span class="c1 h2 w6 mt1 ml-n6"></span>
+			<span role="link" class="c1 h4 w6 ml6">
+				<span role="link" class="c1 h2 w6 mt1 ml-n6"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c1 h4 w6 ml4">
-				<span class="c1 h2 w6 mt1 ml-n4"></span>
+			<span role="link" class="c1 h4 w6 ml4">
+				<span role="link" class="c1 h2 w6 mt1 ml-n4"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c2 h4 w6 ml2">
-				<span class="c2 h2 w6 mt1 ml-n2"></span>
+			<span role="link" class="c2 h4 w6 ml2">
+				<span role="link" class="c2 h2 w6 mt1 ml-n2"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c2 h4 w6">
-				<span class="c2 h2 w6 mt1"></span>
+			<span role="link" class="c2 h4 w6">
+				<span role="link" class="c2 h2 w6 mt1"></span>
 			</span>
 		</div>
 	</section>
 
 	<p>Example J1 and J2 pass, J3 and J4 fail.</p>
 	<!-- Block J -->
-	<section class="sample">
+	<section class="sample" hidden>
 		<div>
-			<span class="c1 h4 w6 ml6">
-				<span class="c1 h2 w6 ml-n6"></span>
+			<span role="link" class="c1 h4 w6 ml6">
+				<span role="link" class="c1 h2 w6 ml-n6"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c1 h4 w6 ml4">
-				<span class="c1 h2 w6 ml-n4"></span>
+			<span role="link" class="c1 h4 w6 ml4">
+				<span role="link" class="c1 h2 w6 ml-n4"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c2 h4 w6 ml2">
-				<span class="c2 h2 w6 ml-n2"></span>
+			<span role="link" class="c2 h4 w6 ml2">
+				<span role="link" class="c2 h2 w6 ml-n2"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c2 h4 w6">
-				<span class="c2 h2 w6"></span>
+			<span role="link" class="c2 h4 w6">
+				<span role="link" class="c2 h2 w6"></span>
 			</span>
 		</div>
 	</section>
 
 	<p>Example K1 - K3 pass, the middle element of K4 fails.</p>
 	<!-- Block K -->
-	<section class="sample">
+	<section class="sample" hidden>
 		<div>
-			<span class="c1 h4 w6 ml4">
-				<span class="c1 h2 w5 mt1 ml-n4"></span>
+			<span role="link" class="c1 h4 w6 ml4">
+				<span role="link" class="c1 h2 w5 mt1 ml-n4"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c1 h4 w6 ml4">
-				<span class="c1 h2 w6 mt1 ml-n4"></span>
+			<span role="link" class="c1 h4 w6 ml4">
+				<span role="link" class="c1 h2 w6 mt1 ml-n4"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c2 h4 w6 ml4">
-				<span class="c1 h2 w7 mt1 ml-n4"></span>
+			<span role="link" class="c2 h4 w6 ml4">
+				<span role="link" class="c1 h2 w7 mt1 ml-n4"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c2 h4 w6 ml4">
-				<span class="c1 h2 w8 mt1 ml-n4"></span>
+			<span role="link" class="c2 h4 w6 ml4">
+				<span role="link" class="c1 h2 w8 mt1 ml-n4"></span>
 			</span>
 		</div>
 	</section>
@@ -501,51 +516,51 @@
 	<p>Example L1 and L2 pass, the outer element of L3 and L4 fail.</p>
 	<!-- Block L -->
 	<section class="sample">
-		<div>
-			<span class="c1 h2 w2 rnd"></span>
-			<span class="c1 h2 w2 mt4 ml-n2 rnd"></span>
-			<span class="c1 h2 w2 mt8 ml-n2 rnd"></span>
+		<div hidden>
+			<span role="link" class="c1 h2 w2 rnd-50"></span>
+			<span role="link" class="c1 h2 w2 mt4 ml-n2 rnd-50"></span>
+			<span role="link" class="c1 h2 w2 mt8 ml-n2 rnd-50"></span>
 		</div>
-		<div>
+		<div hidden>
 			<div class="rot30">
-				<span class="c1 h2 w2 rnd"></span>
-				<span class="c1 h2 w2 mt4 ml-n2 rnd"></span>
-				<span class="c1 h2 w2 mt8 ml-n2 rnd"></span>
+				<span role="link" class="c1 h2 w2 rnd-50"></span>
+				<span role="link" class="c1 h2 w2 mt4 ml-n2 rnd-50"></span>
+				<span role="link" class="c1 h2 w2 mt8 ml-n2 rnd-50"></span>
 			</div>
 		</div>
-		<div>
-			<span class="c1 h2 w2 rnd"></span>
-			<span class="c1 h2 w2 mt3 ml1 rnd"></span>
-			<span class="c1 h2 w2 mt6 ml1 rnd"></span>
+		<div hidden>
+			<span role="link" class="c1 h2 w2 rnd-50"></span>
+			<span role="link" class="c1 h2 w2 mt3 ml1 rnd-50"></span>
+			<span role="link" class="c1 h2 w2 mt6 ml1 rnd-50"></span>
 		</div>
 		<div>
-			<span class="c1 h2 w2"></span>
-			<span class="c2 h2 w2 mt3 ml1 rnd"></span>
-			<span class="c1 h2 w2 mt6 ml1"></span>
+			<span role="link" class="c1 h2 w2"></span>
+			<span role="link" class="c2 h2 w2 mt3 ml1 rnd-50"></span>
+			<span role="link" class="c1 h2 w2 mt6 ml1" hidden></span>
 		</div>
 	</section>
 
 	<p>Example M1 - M3 pass, the outer element of M4 fail.</p>
 	<!-- Block M -->
-	<section class="sample">
+	<section class="sample" hidden>
 		<div>
-			<span class="c1 h6 w6 ml4 rnd">
-				<span class="c1 h4 w4 mt1 ml-n4"></span>
+			<span role="link" class="c1 h6 w6 ml4 rnd-50">
+				<span role="link" class="c1 h4 w4 mt1 ml-n4"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c1 h6 w6 ml3 rnd">
-				<span class="c1 h4 w4 mt1 ml-n3"></span>
+			<span role="link" class="c1 h6 w6 ml3 rnd-50">
+				<span role="link" class="c1 h4 w4 mt1 ml-n3"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c1 h6 w6 ml2 rnd">
-				<span class="c1 h4 w4 mt1 ml-n2"></span>
+			<span role="link" class="c1 h6 w6 ml2 rnd-50">
+				<span role="link" class="c1 h4 w4 mt1 ml-n2"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c2 h6 w6 ml1 rnd">
-				<span class="c1 h4 w4 mt1 ml-n1"></span>
+			<span role="link" class="c2 h6 w6 ml1 rnd-50">
+				<span role="link" class="c1 h4 w4 mt1 ml-n1"></span>
 			</span>
 		</div>
 	</section>
@@ -554,26 +569,82 @@
 	<!-- Block N -->
 	<section class="sample">
 		<div>
-			<span class="c1 h6 w10 rnd">
-				<span class="c1 h4 w4 mt1"></span>
+			<span role="link" class="c1 h6 w10 rnd-50">
+				<span role="link" class="c1 h4 w4 mt1"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c1 h6 w10 rnd">
-				<span class="c1 h4 w4 mt1 ml1"></span>
+			<span role="link" class="c1 h6 w10 rnd-50">
+				<span role="link" class="c1 h4 w4 mt1 ml1"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c1 h6 w10 rnd">
-				<span class="c1 h4 w4 mt1 ml2"></span>
+			<span role="link" class="c1 h6 w10 rnd-50">
+				<span role="link" class="c1 h4 w4 mt1 ml2"></span>
 			</span>
 		</div>
 		<div>
-			<span class="c2 h6 w10 rnd">
-				<span class="c1 h4 w4 mt1 ml3"></span>
+			<span role="link" class="c2 h6 w10 rnd-50">
+				<span role="link" class="c1 h4 w4 mt1 ml3"></span>
 			</span>
 		</div>
 	</section>
+
+	<p>Example O1 and O2 pass, the inner element of O3 and O4 fail.</p>
+	<!-- Block O -->
+	<section class="sample">
+		<div>
+			<span role="link" class="c1 h6 w6 ml4">
+				<span role="link" class="c1 h4 w4 mt1 ml-n4"></span>
+			</span>
+			<span role="link" class="c1 h4 w4 mt1 ml-n1"></span>
+		</div>
+		<div>
+			<span role="link" class="c1 h6 w6 ml3">
+				<span role="link" class="c1 h4 w4 mt1 ml-n3"></span>
+			</span>
+			<span role="link" class="c1 h4 w4 mt1 ml-n1"></span>
+		</div>
+		<div>
+			<span role="link" class="c2 h6 w6 ml2">
+				<span role="link" class="c1 h4 w4 mt1 ml-n2"></span>
+			</span>
+			<span role="link" class="c1 h4 w4 mt1 ml-n1"></span>
+		</div>
+		<div>
+			<span role="link" class="c2 h6 w6 ml1">
+				<span role="link" class="c1 h4 w4 mt1 ml-n1"></span>
+			</span>
+			<span role="link" class="c1 h4 w4 mt1 ml-n1"></span>
+		</div>
+	</section>
+
+	<p>Example P.</p>
+	<!-- Block P -->
+	<section class="sample">
+		<div>
+			<span role="link" class="c1 h6 w10 rnd-0-25">
+				<span role="link" class="c1 h4 w4 mt1 ml1"></span>
+			</span>
+		</div>
+		<div>
+			<span role="link" class="c1 h6 w10 rnd-0-50">
+				<span role="link" class="c1 h4 w4 mt1 ml1"></span>
+			</span>
+		</div>
+		<div>
+			<span role="link" class="c1 h6 w10 rnd-0-75">
+				<span role="link" class="c1 h4 w4 mt1 ml1"></span>
+			</span>
+		</div>
+		<div>
+			<span role="link" class="c1 h6 w10 rnd-0-100">
+				<span role="link" class="c1 h4 w4 mt1 ml1"></span>
+			</span>
+		</div>
+	</section>
+
+	<p>TODO: Clipped nodes</p>
 
 	<script src="/axe.js"></script>
 	<script>
@@ -586,16 +657,29 @@
 		});
 
 		window.onload = async function() {
-			const results = await axe.run({ runOnly: ['bypass'], elementRef: true });
-			console.log(results);
-
-			['violations', 'incomplete', 'passes'].forEach(key => {
-				if (results[key][0]) {
-					results[key][0].nodes.forEach(({ element }) => {
-						element.classList.add(key);
-					});
-				}
+			const results = await axe.run({
+				runOnly: ['target-size'],
+				elementRef: true
 			});
+			if (results.incomplete.length) {
+				console.log(results.incomplete);
+			}
+			const report = { passes: 0, violations: 0, incomplete: 0, incorrect: 0 };
+			// console.log(results)
+			['violations', 'incomplete', 'passes'].forEach(key => {
+				if (!results[key][0]) return;
+
+				results[key][0].nodes.forEach(result => {
+					report[key]++;
+					const { element } = result;
+					element.classList.add(key);
+					if (element.matches('.c2.passes, .c1.violations')) {
+						report.incorrect++;
+						console.log(result);
+					}
+				});
+			});
+			console.log(report);
 		};
 	</script>
 </html>
