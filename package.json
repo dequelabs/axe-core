@@ -136,6 +136,7 @@
     "karma-ie-launcher": "^1.0.0",
     "karma-mocha": "^2.0.1",
     "karma-mocha-reporter": "^2.2.5",
+    "karma-sinon": "^1.0.5",
     "lint-staged": "^9.2.1",
     "make-dir": "^3.0.0",
     "markdown-table": "^1.1.2",

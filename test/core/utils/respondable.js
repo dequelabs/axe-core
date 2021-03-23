@@ -59,6 +59,82 @@ describe('axe.utils.respondable', function() {
     window.postMessage = postMessage;
   });
 
+  describe('updateMessenger', function() {
+    var noop = sinon.spy();
+
+    afterEach(function() {
+      axe._thisWillBeDeletedDoNotUse.utils.defaultFrameMessenger();
+    });
+
+    it('should error if open is not a function', function() {
+      assert.throws(function() {
+        respondable.updateMessenger({
+          post: noop,
+          close: noop
+        });
+      });
+    });
+
+    it('should error if close is not a function', function() {
+      assert.throws(function() {
+        respondable.updateMessenger({
+          post: noop,
+          open: noop
+        });
+      });
+    });
+
+    it('should error if post is not a function', function() {
+      assert.throws(function() {
+        respondable.updateMessenger({
+          close: noop,
+          open: noop
+        });
+      });
+    });
+
+    it('should call the open function and pass the listener', function() {
+      var open = sinon.spy();
+      respondable.updateMessenger({
+        open: open,
+        close: noop,
+        post: noop
+      });
+
+      assert.isTrue(open.called);
+      assert.isTrue(typeof open.args[0][0] === 'function');
+    });
+
+    it('should call previous close function', function() {
+      var close = sinon.spy();
+      respondable.updateMessenger({
+        close: close,
+        open: noop,
+        post: noop
+      });
+
+      respondable.updateMessenger({
+        close: noop,
+        open: noop,
+        post: noop
+      });
+
+      assert.isTrue(close.called);
+    });
+
+    it('should use the post function when making a frame post', function() {
+      var post = sinon.spy();
+      respondable.updateMessenger({
+        close: noop,
+        open: noop,
+        post: post
+      });
+
+      respondable(frameWin, 'greeting');
+      assert.isTrue(post.called);
+    });
+  });
+
   it('can be subscribed to', function(done) {
     frameSubscribe('greeting', function() {
       done();
@@ -119,7 +195,10 @@ describe('axe.utils.respondable', function() {
 
   it('does not expose private methods', function() {
     var methods = Object.keys(respondable).sort();
-    assert.deepEqual(methods, ['subscribe', 'isInFrame'].sort());
+    assert.deepEqual(
+      methods,
+      ['subscribe', 'isInFrame', 'updateMessenger'].sort()
+    );
   });
 
   it('passes serialized information only', function(done) {
