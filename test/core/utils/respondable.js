@@ -63,7 +63,9 @@ describe('axe.utils.respondable', function() {
     var noop = sinon.spy();
 
     afterEach(function() {
-      axe._thisWillBeDeletedDoNotUse.utils.defaultFrameMessenger();
+      axe._thisWillBeDeletedDoNotUse.utils.setDefaultFrameMessenger(
+        respondable
+      );
     });
 
     it('should error if open is not a function', function() {
