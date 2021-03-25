@@ -277,7 +277,7 @@ describe('axe.utils.respondable', function() {
       });
     });
 
-    it('is not triggered by "repeaters"', function(done) {
+    it('is not triggered by "repeaters" (subscribe)', function(done) {
       var calls = 0;
       frameSubscribe('greeting', function() {
         calls++;
@@ -520,7 +520,7 @@ describe('axe.utils.respondable', function() {
       });
     });
 
-    it('is not triggered by "repeaters"', function(done) {
+    it('is not triggered by "repeaters" (respond)', function(done) {
       // Repeat fire the event
       window.addEventListener('message', function handler(evt) {
         frameWin.parent.postMessage(evt.data, '*');
