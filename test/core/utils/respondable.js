@@ -135,6 +135,51 @@ describe('axe.utils.respondable', function() {
       respondable(frameWin, 'greeting');
       assert.isTrue(post.called);
     });
+
+    it('should pass the post function the correct parameters', function() {
+      var post = sinon.spy();
+      var callback = sinon.spy();
+
+      respondable.updateMessenger({
+        close: noop,
+        open: noop,
+        post: post
+      });
+
+      respondable(frameWin, 'greeting', 'hello', true, callback);
+      assert.isTrue(
+        post.calledWith(
+          frameWin,
+          sinon.match({
+            topic: 'greeting',
+            message: 'hello',
+            keepalive: true,
+            sendToParent: false
+          }),
+          callback
+        )
+      );
+    });
+
+    it('should work as a full integration', function() {
+      var listeners = {};
+      var listener = sinon.spy();
+
+      respondable.updateMessenger({
+        open: function() {
+          listeners.greeting = listener;
+        },
+        post: function(win, data) {
+          if (listeners[data.topic]) {
+            listeners[data.topic]();
+          }
+        },
+        close: noop
+      });
+
+      respondable(frameWin, 'greeting', 'hello');
+      assert.isTrue(listener.called);
+    });
   });
 
   it('can be subscribed to', function(done) {
