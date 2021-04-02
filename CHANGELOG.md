@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.4](https://github.com/dequelabs/axe-core/compare/v4.1.3...v4.1.4) (2021-04-01)
+
+### Bug Fixes
+
+- **respondable:** work on iframes in shadow DOM ([#2857](https://github.com/dequelabs/axe-core/issues/2857)) ([65cbfd0](https://github.com/dequelabs/axe-core/commit/65cbfd04edbbf48ceee2ef35f500575a4ad88afc))
+- **utils:** fix warning thrown by Webpack ([#2843](https://github.com/dequelabs/axe-core/issues/2843)) ([df5d01b](https://github.com/dequelabs/axe-core/commit/df5d01b94fef43e6ca8d2fab5219f90811700405)), closes [#2840](https://github.com/dequelabs/axe-core/issues/2840)
+
 ### [4.1.3](https://github.com/dequelabs/axe-core/compare/v4.1.2...v4.1.3) (2021-03-04)
 
 t/8a699ecba6c77f6a705d44616f1bcefd634ff89b))
