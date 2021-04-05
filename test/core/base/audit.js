@@ -101,6 +101,11 @@ describe('Audit', function() {
       var audit = new Audit();
       assert.isFalse(audit.noHtml);
     });
+
+    it('should set allowedOrigins', function() {
+      var audit = new Audit();
+      assert.deepEqual(audit.allowedOrigins, [window.origin]);
+    });
   });
 
   describe('Audit#_constructHelpUrls', function() {
@@ -444,6 +449,13 @@ describe('Audit', function() {
       audit.noHtml = true;
       audit.resetRulesAndChecks();
       assert.isFalse(audit.noHtml);
+    });
+
+    it('should reset noHtml', function() {
+      var audit = new Audit();
+      audit.allowedOrigins = ['hello'];
+      audit.resetRulesAndChecks();
+      assert.deepEqual(audit.allowedOrigins, [window.origin]);
     });
   });
 

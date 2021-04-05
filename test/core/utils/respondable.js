@@ -56,6 +56,7 @@ describe('axe.utils.respondable', function() {
     axe.version = axeVersion;
     axe._audit.application = axeApplication;
     axe.log = axeLog;
+    axe.reset();
     window.postMessage = postMessage;
   });
 
@@ -261,6 +262,40 @@ describe('axe.utils.respondable', function() {
     respondable(frameWin, 'greeting', div);
   });
 
+  it('posts message to allowed origins', function() {
+    axe.configure({
+      allowedOrigins: [window.origin, 'http://customOrigin.com']
+    });
+
+    var spy = sinon.spy(frameWin, 'postMessage');
+    respondable(frameWin, 'greeting');
+    assert.equal(spy.callCount, 2);
+    assert.deepEqual(spy.firstCall.args[1], window.origin);
+    assert.deepEqual(spy.secondCall.args[1], 'http://customOrigin.com');
+  });
+
+  it('posts message to allowed origins using <same_origin>', function() {
+    axe.configure({
+      allowedOrigins: ['<same_origin>']
+    });
+
+    var spy = sinon.spy(frameWin, 'postMessage');
+    respondable(frameWin, 'greeting');
+    assert.equal(spy.callCount, 1);
+    assert.deepEqual(spy.firstCall.args[1], window.origin);
+  });
+
+  it('posts message to allowed origins using <unsafe_all_origins>', function() {
+    axe.configure({
+      allowedOrigins: ['http://customOrigin.com', '<unsafe_all_origins>']
+    });
+
+    var spy = sinon.spy(frameWin, 'postMessage');
+    respondable(frameWin, 'greeting');
+    assert.equal(spy.callCount, 1);
+    assert.deepEqual(spy.firstCall.args[1], '*');
+  });
+
   describe('subscribe', function() {
     it('is called with the same topic', function(done) {
       var called = false;
@@ -422,6 +457,36 @@ describe('axe.utils.respondable', function() {
         }, done),
         100
       );
+    });
+
+    it('is not called if origin does not match', function(done) {
+      axe.configure({
+        allowedOrigins: ['http://customOrigin.com']
+      });
+      var spy = sinon.spy();
+
+      frameSubscribe('greeting', spy);
+      respondable(frameWin, 'greeting', 'hello');
+
+      setTimeout(function() {
+        assert.isFalse(spy.called);
+        done();
+      }, 500);
+    });
+
+    it('is called if origin is <unsafe_all_origins>', function(done) {
+      axe.configure({
+        allowedOrigins: ['<unsafe_all_origins>']
+      });
+      var spy = sinon.spy();
+
+      frameSubscribe('greeting', spy);
+      respondable(frameWin, 'greeting', 'hello');
+
+      setTimeout(function() {
+        assert.isTrue(spy.called);
+        done();
+      }, 500);
     });
   });
 
