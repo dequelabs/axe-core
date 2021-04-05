@@ -104,7 +104,7 @@ describe('Audit', function() {
 
     it('should set allowedOrigins', function() {
       var audit = new Audit();
-      assert.deepEqual(audit.allowedOrigins, [window.origin]);
+      assert.deepEqual(audit.allowedOrigins, [window.location.origin]);
     });
   });
 
@@ -455,7 +455,7 @@ describe('Audit', function() {
       var audit = new Audit();
       audit.allowedOrigins = ['hello'];
       audit.resetRulesAndChecks();
-      assert.deepEqual(audit.allowedOrigins, [window.origin]);
+      assert.deepEqual(audit.allowedOrigins, [window.location.origin]);
     });
   });
 

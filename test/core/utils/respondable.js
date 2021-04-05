@@ -264,13 +264,13 @@ describe('axe.utils.respondable', function() {
 
   it('posts message to allowed origins', function() {
     axe.configure({
-      allowedOrigins: [window.origin, 'http://customOrigin.com']
+      allowedOrigins: [window.location.origin, 'http://customOrigin.com']
     });
 
     var spy = sinon.spy(frameWin, 'postMessage');
     respondable(frameWin, 'greeting');
     assert.equal(spy.callCount, 2);
-    assert.deepEqual(spy.firstCall.args[1], window.origin);
+    assert.deepEqual(spy.firstCall.args[1], window.location.origin);
     assert.deepEqual(spy.secondCall.args[1], 'http://customOrigin.com');
   });
 
@@ -282,7 +282,7 @@ describe('axe.utils.respondable', function() {
     var spy = sinon.spy(frameWin, 'postMessage');
     respondable(frameWin, 'greeting');
     assert.equal(spy.callCount, 1);
-    assert.deepEqual(spy.firstCall.args[1], window.origin);
+    assert.deepEqual(spy.firstCall.args[1], window.location.origin);
   });
 
   it('posts message to allowed origins using <unsafe_all_origins>', function() {
