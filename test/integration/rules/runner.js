@@ -97,9 +97,20 @@
 
 							it('should not return other results', function() {
 								if (typeof nodes !== 'undefined') {
-									var targets = nodes.map(function(node) {
-										return node.target;
-									});
+									var targets = nodes
+										.filter(function(node) {
+											return node.impact !== null;
+										})
+										.map(function(node) {
+											return node.target;
+										});
+									if (targets && targets.length) {
+										console.log(
+											JSON.stringify(results[collection]),
+											' ---- ',
+											JSON.stringify(test[collection])
+										);
+									}
 									// check that all nodes are removed
 									assert.equal(JSON.stringify(targets), '[]');
 								} else {
