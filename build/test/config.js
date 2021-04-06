@@ -46,6 +46,7 @@ exports = module.exports = function(grunt, options) {
 				log: true,
 				urls: mapToUrl(
 					[
+						'test/integration/full/**/*__.xhtml',
 						'test/integration/full/**/*.html',
 						'!test/integration/full/**/frames/**/*.html'
 					],

@@ -14,7 +14,13 @@ module.exports = function(grunt) {
 			this.files.forEach(function(f) {
 				f.src.forEach(function(filepath) {
 					var config = grunt.file.readJSON(filepath);
-					config.content = grunt.file.read(filepath.replace(/json$/, 'html'));
+					try {
+						config.content = grunt.file.read(filepath.replace(/json$/, 'html'));
+					} catch (e) {
+						config.content = grunt.file.read(
+							filepath.replace(/json$/, 'xhtml')
+						);
+					}
 					result.tests[config.rule] = result.tests[config.rule] || [];
 					result.tests[config.rule].push(config);
 				});

@@ -1,5 +1,5 @@
 {
-	"name": "axe-core",
+	"name": "@daisy/axe-core-for-ace",
 	"description": "Accessibility engine for automated Web UI testing",
 	"version": "4.1.4",
 	"license": "MPL-2.0",
@@ -50,6 +50,15 @@
 	],
 	"main": "axe.js",
 	"typings": "axe.d.ts",
+	"files": [
+		"LICENSE",
+		"README.md",
+		"CHANGELOG.md",
+		"locales/**/*",
+		"axe.js",
+		"axe.min.js",
+		"axe.d.ts"
+	],
 	"standard-version": {
 		"scripts": {
 			"postbump": "npm ci && npm run sri-update"
@@ -64,6 +73,7 @@
 		"eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
 		"test:headless": "node ./build/test/headless",
 		"test": "tsc && grunt test",
+		"test-fast": "tsc && grunt test-fast",
 		"test:examples": "node ./doc/examples/test-examples",
 		"test:locales": "mocha test/test-locales.js",
 		"test:rule-help-version": "mocha test/test-rule-help-version.js",
@@ -150,5 +160,8 @@
 			"prettier --write",
 			"git add"
 		]
+	},
+	"publishConfig": {
+		"access": "public"
 	}
 }

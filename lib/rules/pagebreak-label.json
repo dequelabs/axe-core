@@ -1,0 +1,12 @@
+{
+	"id": "pagebreak-label",
+	"matches": "pagebreak-label-matches",
+	"tags": ["cat.epub"],
+	"metadata": {
+		"description": "Ensure page markers have an accessible label",
+		"help": "Page markers should have an accessible label"
+	},
+	"all": [],
+	"any": ["aria-label", "non-empty-title"],
+	"none": []
+}

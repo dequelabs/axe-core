@@ -1,6 +1,13 @@
 {
 	"lang": "pt_BR",
 	"rules": {
+		"epub-type-has-matching-role": {
+			"desc": "Certifique-se de que o elemento tem um ARIA 'role' correspondente ao seu epub:type",
+			"help": "Um ARIA 'role' deve ser usado em conjunto com o epub:type"
+		},
+		"pagebreak-label": {
+			"desc": "Certifique-se de que os marcadores de páginas tenham um rótulo acessível"
+		},
 		"accesskeys": {
 			"description": "Certifique-se de que cada valor do atributo 'acesskey' é único",
 			"help": "O valor do atributo 'accesskey' deve ser único"
@@ -339,6 +346,10 @@
 		}
 	},
 	"checks": {
+		"matching-aria-role": {
+			"fail": "O elemento não tem um ARIA 'role' correspondente ao seu epub:type",
+			"pass": "O elemento tem um ARIA 'role' correspondente ao seu epub:type"
+		},
 		"abstractrole": {
 			"pass": "As funções abstratas não são utilizadas",
 			"fail": {

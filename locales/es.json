@@ -1,6 +1,13 @@
 {
 	"lang": "es",
 	"rules": {
+		"epub-type-has-matching-role": {
+			"desc": "Asegurarse de que el elemento tiene un rol ARIA que corresponda a su epub:type",
+			"help": "Debería usarse ARIA role, además de epub:type"
+		},
+		"pagebreak-label": {
+			"desc": "Garantizar que los marcadores de página tienen una etiqueta accesible"
+		},
 		"accesskeys": {
 			"description": "Garantiza que cada valor para el atributo accesskey es único",
 			"help": "El valor del atributo accesskey debe ser único"
@@ -319,6 +326,10 @@
 		}
 	},
 	"checks": {
+		"matching-aria-role": {
+			"fail": "El elemento no tiene un rol ARIA que corresponda a su epub:type",
+			"pass": "El elemento tiene un rol ARIA que corresponde a su epub:type"
+		},
 		"abstractrole": {
 			"pass": "No se usan 'abstract roles'",
 			"fail": "Los 'abstract roles' no se pueden usar directamente"

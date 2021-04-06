@@ -2,6 +2,8 @@
 (function() {
 	'use strict';
 
+	// axe.configure({}); // DAISY ACE BREAKPOINT AXE CONFIGURE
+
 	function flattenResult(results) {
 		return {
 			passes: results.passes[0],

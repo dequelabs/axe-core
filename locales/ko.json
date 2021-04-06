@@ -1,6 +1,13 @@
 {
 	"lang": "ko",
 	"rules": {
+		"epub-type-has-matching-role": {
+			"desc": "Ensure the element has an ARIA role matching its epub:type",
+			"help": "ARIA role should be used in addition to epub:type"
+		},
+		"pagebreak-label": {
+			"desc": "Ensure page markers have an accessible label"
+		},
 		"accesskeys": {
 			"description": "모든 accesskey 속성 값이 고유한지 확인합니다.",
 			"help": "accesskey 속성 값은 고유해야 합니다."
@@ -319,6 +326,10 @@
 		}
 	},
 	"checks": {
+		"matching-aria-role": {
+			"pass": "Element has an ARIA role matching its epub:type",
+			"fail": "Element has no ARIA role matching its epub:type"
+		},
 		"abstractrole": {
 			"pass": "추상 역할은 직접 사용하지 않습니다.",
 			"fail": "추상 역할은 직접 사용할 수 없습니다."

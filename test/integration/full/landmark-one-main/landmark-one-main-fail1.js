@@ -1,4 +1,4 @@
-describe('landmark-one-main test pass 3', function() {
+describe('landmark-one-main test failure 1', function() {
 	'use strict';
 	var results;
 	before(function(done) {
@@ -15,8 +15,15 @@ describe('landmark-one-main test pass 3', function() {
 	});
 
 	describe('violations', function() {
-		it('should find 0', function() {
-			assert.lengthOf(results.violations, 0);
+		it('should find 1', function() {
+			assert.lengthOf(results.violations[0].nodes, 1);
+		});
+
+		it('should find #frame1, #violation2', function() {
+			assert.deepEqual(results.violations[0].nodes[0].target, [
+				'#frame1',
+				'#violation2'
+			]);
 		});
 	});
 

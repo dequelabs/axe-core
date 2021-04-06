@@ -1,10 +1,10 @@
-describe('landmark-one-main test pass 3', function() {
+describe('landmark-no-duplicate-main test pass 1', function() {
 	'use strict';
 	var results;
 	before(function(done) {
 		axe.testUtils.awaitNestedLoad(function() {
 			axe.run(
-				{ runOnly: { type: 'rule', values: ['landmark-one-main'] } },
+				{ runOnly: { type: 'rule', values: ['landmark-no-duplicate-main'] } },
 				function(err, r) {
 					assert.isNull(err);
 					results = r;
@@ -21,17 +21,14 @@ describe('landmark-one-main test pass 3', function() {
 	});
 
 	describe('passes', function() {
-		it('should find 1', function() {
-			assert.lengthOf(results.passes[0].nodes, 1);
-		});
-
-		it('should find #pass1', function() {
-			assert.deepEqual(results.passes[0].nodes[0].target, ['#pass1']);
+		it('should find 0', function() {
+			assert.lengthOf(results.passes, 0);
 		});
 	});
 
-	it('should find 0 inapplicable', function() {
-		assert.lengthOf(results.inapplicable, 0);
+	it('should find 1 inapplicable', function() {
+		assert.lengthOf(results.inapplicable, 1);
+		assert.lengthOf(results.inapplicable[0].nodes, 0);
 	});
 
 	it('should find 0 incomplete', function() {
