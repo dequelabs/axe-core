@@ -4,7 +4,8 @@ describe('Audit', function() {
 
 	var Audit = axe._thisWillBeDeletedDoNotUse.base.Audit;
 	var Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
-	var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
+	var _v = axe.version.replace(/-\w+\.\w+$/, '');
+	var ver = _v.substring(0, _v.lastIndexOf('.'));
 	var a, getFlattenedTree;
 	var isNotCalled = function(err) {
 		throw err || new Error('Reject should not be called');

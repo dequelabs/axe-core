@@ -1,6 +1,7 @@
 describe('runRules', function() {
 	'use strict';
-	var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
+	var _v = axe.version.replace(/-\w+\.\w+$/, '');
+	var ver = _v.substring(0, _v.lastIndexOf('.'));
 
 	// These tests can sometimes be flaky in IE, allow for up to 3 retries
 	if (axe.testUtils.isIE11) {

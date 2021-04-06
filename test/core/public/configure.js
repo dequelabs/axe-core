@@ -4,7 +4,8 @@ describe('axe.configure', function() {
 	// var Check = axe._thisWillBeDeletedDoNotUse.base.Check;
 	var fixture = document.getElementById('fixture');
 	var axeVersion = axe.version;
-	var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
+	var _v = axe.version.replace(/-\w+\.\w+$/, '');
+	var ver = _v.substring(0, _v.lastIndexOf('.'));
 
 	afterEach(function() {
 		fixture.innerHTML = '';
