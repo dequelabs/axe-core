@@ -10,6 +10,7 @@
     "section508.22.a",
     "ACT"
   ],
+  "actIds": ["23a2a8"],
   "metadata": {
     "description": "Ensures <img> elements have alternate text or a role of none or presentation",
     "help": "Images must have alternate text"

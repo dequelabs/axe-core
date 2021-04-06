@@ -12,6 +12,7 @@
     "section508.22.a",
     "ACT"
   ],
+  "actIds": ["c487ae"],
   "metadata": {
     "description": "Ensures <area> elements of image maps have alternate text",
     "help": "Active <area> elements must have alternate text"
