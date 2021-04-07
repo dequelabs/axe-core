@@ -307,7 +307,7 @@ describe('axe.configure', function() {
 
   it("should allow overriding an audit's allowedOrigins", function() {
     axe._load({});
-    assert.deepEqual(axe._audit.allowedOrigins, [window.location.origin]);
+    assert.notDeepEqual(axe._audit.allowedOrigins, ['foo']);
 
     axe.configure({ allowedOrigins: ['foo'] });
     assert.deepEqual(axe._audit.allowedOrigins, ['foo']);

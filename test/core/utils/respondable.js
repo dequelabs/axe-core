@@ -78,20 +78,21 @@ describe('axe.utils.respondable', function() {
       });
     });
 
-    it('should error if close is not a function', function() {
+    it('should error if post is not a function', function() {
       assert.throws(function() {
         respondable.updateMessenger({
-          post: noop,
           open: noop
         });
       });
     });
 
-    it('should error if post is not a function', function() {
+    it('should error if open function return is not a function', function() {
       assert.throws(function() {
         respondable.updateMessenger({
-          close: noop,
-          open: noop
+          post: noop,
+          open: function() {
+            return 1;
+          }
         });
       });
     });
@@ -100,7 +101,6 @@ describe('axe.utils.respondable', function() {
       var open = sinon.spy();
       respondable.updateMessenger({
         open: open,
-        close: noop,
         post: noop
       });
 
@@ -111,13 +111,13 @@ describe('axe.utils.respondable', function() {
     it('should call previous close function', function() {
       var close = sinon.spy();
       respondable.updateMessenger({
-        close: close,
-        open: noop,
+        open: function() {
+          return close;
+        },
         post: noop
       });
 
       respondable.updateMessenger({
-        close: noop,
         open: noop,
         post: noop
       });
@@ -128,7 +128,6 @@ describe('axe.utils.respondable', function() {
     it('should use the post function when making a frame post', function() {
       var post = sinon.spy();
       respondable.updateMessenger({
-        close: noop,
         open: noop,
         post: post
       });
@@ -142,7 +141,6 @@ describe('axe.utils.respondable', function() {
       var callback = sinon.spy();
 
       respondable.updateMessenger({
-        close: noop,
         open: noop,
         post: post
       });
@@ -154,8 +152,7 @@ describe('axe.utils.respondable', function() {
           sinon.match({
             topic: 'greeting',
             message: 'hello',
-            keepalive: true,
-            sendToParent: false
+            keepalive: true
           }),
           callback
         )
@@ -268,7 +265,8 @@ describe('axe.utils.respondable', function() {
     });
 
     var spy = sinon.spy(frameWin, 'postMessage');
-    respondable(frameWin, 'greeting');
+    var posted = respondable(frameWin, 'greeting');
+    assert.isTrue(posted);
     assert.equal(spy.callCount, 2);
     assert.deepEqual(spy.firstCall.args[1], window.location.origin);
     assert.deepEqual(spy.secondCall.args[1], 'http://customOrigin.com');
@@ -280,7 +278,8 @@ describe('axe.utils.respondable', function() {
     });
 
     var spy = sinon.spy(frameWin, 'postMessage');
-    respondable(frameWin, 'greeting');
+    var posted = respondable(frameWin, 'greeting');
+    assert.isTrue(posted);
     assert.equal(spy.callCount, 1);
     assert.deepEqual(spy.firstCall.args[1], window.location.origin);
   });
@@ -291,9 +290,47 @@ describe('axe.utils.respondable', function() {
     });
 
     var spy = sinon.spy(frameWin, 'postMessage');
-    respondable(frameWin, 'greeting');
+    var posted = respondable(frameWin, 'greeting');
+    assert.isTrue(posted);
     assert.equal(spy.callCount, 1);
     assert.equal(spy.firstCall.args[1], '*');
+  });
+
+  it('does not post message if no allowed origins', function() {
+    axe.configure({
+      allowedOrigins: []
+    });
+    var spy = sinon.spy(frameWin, 'postMessage');
+    var posted = respondable(frameWin, 'greeting');
+    assert.isFalse(posted);
+    assert.isFalse(spy.called);
+  });
+
+  it('does not post message if no allowed origins', function() {
+    axe._audit.allowedOrigins = null;
+    var spy = sinon.spy(frameWin, 'postMessage');
+    var posted = respondable(frameWin, 'greeting');
+    assert.isFalse(posted);
+    assert.isFalse(spy.called);
+  });
+
+  it('does not post message if allowed origins is empty', function() {
+    axe.configure({
+      allowedOrigins: []
+    });
+    var spy = sinon.spy(frameWin, 'postMessage');
+    var posted = respondable(frameWin, 'greeting');
+    assert.isFalse(posted);
+    assert.isFalse(spy.called);
+  });
+
+  it('throws error if origin is invalid', function() {
+    axe.configure({
+      allowedOrigins: ['foo.com']
+    });
+    assert.throws(function() {
+      respondable(frameWin, 'greeting');
+    }, 'allowedOrigins value "foo.com" is not a valid origin');
   });
 
   describe('subscribe', function() {
