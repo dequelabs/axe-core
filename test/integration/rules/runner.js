@@ -63,6 +63,11 @@
 							test[collection].forEach(function(selector) {
 								it('should find ' + JSON.stringify(selector), function() {
 									if (!nodes) {
+										console.log(
+											JSON.stringify(results, null, 4),
+											' ---- ',
+											JSON.stringify(test[collection], null, 4)
+										);
 										assert(false, 'there are no ' + collection);
 										return;
 									}
@@ -81,10 +86,20 @@
 									});
 
 									if (matches.length === 0) {
+										console.log(
+											JSON.stringify(results, null, 4),
+											' ---- ',
+											JSON.stringify(test[collection], null, 4)
+										);
 										assert(false, 'Element not found');
 									} else if (matches.length === 1) {
 										assert(true, 'Element found');
 									} else {
+										console.log(
+											JSON.stringify(results, null, 4),
+											' ---- ',
+											JSON.stringify(test[collection], null, 4)
+										);
 										assert(
 											false,
 											'Found ' +
@@ -106,14 +121,20 @@
 										});
 									if (targets && targets.length) {
 										console.log(
-											JSON.stringify(results[collection]),
+											JSON.stringify(results, null, 4),
 											' ---- ',
-											JSON.stringify(test[collection])
+											JSON.stringify(test[collection], null, 4)
 										);
 									}
 									// check that all nodes are removed
 									assert.equal(JSON.stringify(targets), '[]');
 								} else {
+									console.log(
+										JSON.stringify(results, null, 4),
+										' ---- ',
+										JSON.stringify(test[collection], null, 4)
+									);
+
 									assert(false, 'there are no ' + collection);
 								}
 							});
