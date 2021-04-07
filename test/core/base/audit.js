@@ -451,7 +451,7 @@ describe('Audit', function() {
       assert.isFalse(audit.noHtml);
     });
 
-    it('should reset noHtml', function() {
+    it('should reset allowedOrigins', function() {
       var audit = new Audit();
       audit.allowedOrigins = ['hello'];
       audit.resetRulesAndChecks();
