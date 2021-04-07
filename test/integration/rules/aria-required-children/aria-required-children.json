@@ -28,7 +28,9 @@
 		["#pass15"],
 		["#pass16"],
 		["#pass17"],
-		["#pass18"]
+		["#pass18"],
+		["#pass19"],
+		["#pass20"]
 	],
 	"incomplete": [
 		["#incomplete1"],
@@ -39,8 +41,6 @@
 		["#incomplete6"],
 		["#incomplete7"],
 		["#incomplete8"],
-		["#incomplete9"],
-		["#incomplete10"],
 		["#incomplete11"]
 	]
 }
