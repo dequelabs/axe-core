@@ -9,6 +9,9 @@
 		["#pass-object-role-document"],
 		["#pass-section-role-doc-afterword"],
 		["#pass-section-role-doc-bib"],
+		["#pass-li-role-doc-biblioentry2"],
+		["#pass-li-role-doc-endnote2"],
+		["#pass-li-role-doc-endnote"],
 		["#pass-li-role-doc-biblioentry"],
 		["#pass-aside-doc-example"],
 		["#pass-figure-doc-example"],
@@ -67,7 +70,9 @@
 		["#pass-dpub-6"],
 		["#pass-dpub-7"],
 		["#hr-presentation"],
-		["#hr-none"]
+		["#hr-none"],
+		["#fail-dpub-6"],
+		["#fail-dpub-7"]
 	],
 	"violations": [
 		["#fail-dd-no-role"],
@@ -87,9 +92,7 @@
 		["#fail-dpub-2"],
 		["#fail-dpub-3"],
 		["#fail-dpub-4"],
-		["#fail-dpub-5"],
-		["#fail-dpub-6"],
-		["#fail-dpub-7"]
+		["#fail-dpub-5"]
 	],
 	"incomplete": [["#incomplete1"], ["#incomplete2"]]
 }

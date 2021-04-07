@@ -12,6 +12,7 @@ describe('standards.getAriaRolesByType', function() {
 	it('should return a list of role names by type', function() {
 		// Source: https://www.w3.org/TR/wai-aria-1.1/#document_structure_roles
 		var structureRoles = getAriaRolesByType('structure');
+		// console.log(JSON.stringify(structureRoles, null, 4));
 		assert.deepEqual(structureRoles, [
 			'article',
 			'blockquote',
@@ -50,6 +51,8 @@ describe('standards.getAriaRolesByType', function() {
 			'time',
 			'toolbar',
 			'tooltip',
+			'doc-biblioentry',
+			'doc-endnote',
 			'doc-example'
 		]);
 	});
