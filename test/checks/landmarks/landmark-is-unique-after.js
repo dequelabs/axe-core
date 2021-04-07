@@ -30,23 +30,23 @@ describe('landmark-is-unique-after', function() {
 		var result = checks['landmark-is-unique'].after([
 			createResultWithSameRelatedNodes(true, {
 				role: 'doc-afterword',
-				accessibleText: 'some accessibleText',
-				isLandmark: true // truthy
+				accessibleText: 'some accessibleText'
+				// isLandmark: true // truthy
 			}),
 			createResultWithSameRelatedNodes(true, {
 				role: 'doc-afterword',
-				accessibleText: 'some accessibleText',
-				isLandmark: 111 // truthy
+				accessibleText: 'some accessibleText'
+				// isLandmark: 111 // truthy
 			}),
 			createResultWithSameRelatedNodes(true, {
 				role: 'alertdialog',
-				accessibleText: 'some accessibleText',
-				isLandmark: false // falsy
+				accessibleText: 'some accessibleText'
+				// isLandmark: false // falsy
 			}),
 			createResultWithSameRelatedNodes(true, {
 				role: 'doc-afterword',
-				accessibleText: 'different accessibleText',
-				isLandmark: 'true' // truthy
+				accessibleText: 'different accessibleText'
+				// isLandmark: 'true' // truthy
 			})
 		]);
 		// console.log("result: ", JSON.stringify(result, null, 4));
@@ -56,14 +56,14 @@ describe('landmark-is-unique-after', function() {
 				false,
 				{
 					role: 'doc-afterword',
-					accessibleText: 'some accessibleText',
-					isLandmark: true // truthy
+					accessibleText: 'some accessibleText'
+					// isLandmark: true // truthy
 				},
 				[
 					createResult(true, {
 						role: 'doc-afterword',
-						accessibleText: 'some accessibleText',
-						isLandmark: 111 // truthy
+						accessibleText: 'some accessibleText'
+						// isLandmark: 111 // truthy
 					})
 				]
 			),
@@ -71,8 +71,8 @@ describe('landmark-is-unique-after', function() {
 				true,
 				{
 					role: 'alertdialog',
-					accessibleText: 'some accessibleText',
-					isLandmark: false // falsy
+					accessibleText: 'some accessibleText'
+					// isLandmark: false // falsy
 				},
 				[]
 			),
@@ -80,8 +80,8 @@ describe('landmark-is-unique-after', function() {
 				true,
 				{
 					role: 'doc-afterword',
-					accessibleText: 'different accessibleText',
-					isLandmark: 'true' // truthy
+					accessibleText: 'different accessibleText'
+					// isLandmark: 'true' // truthy
 				},
 				[]
 			)
