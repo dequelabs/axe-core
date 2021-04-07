@@ -66,7 +66,7 @@
 										console.log(
 											JSON.stringify(results, null, 4),
 											' ---- ',
-											JSON.stringify(test[collection], null, 4)
+											JSON.stringify(test, null, 4)
 										);
 										assert(false, 'there are no ' + collection);
 										return;
@@ -89,7 +89,7 @@
 										console.log(
 											JSON.stringify(results, null, 4),
 											' ---- ',
-											JSON.stringify(test[collection], null, 4)
+											JSON.stringify(test, null, 4)
 										);
 										assert(false, 'Element not found');
 									} else if (matches.length === 1) {
@@ -98,7 +98,7 @@
 										console.log(
 											JSON.stringify(results, null, 4),
 											' ---- ',
-											JSON.stringify(test[collection], null, 4)
+											JSON.stringify(test, null, 4)
 										);
 										assert(
 											false,
@@ -123,7 +123,7 @@
 										console.log(
 											JSON.stringify(results, null, 4),
 											' ---- ',
-											JSON.stringify(test[collection], null, 4)
+											JSON.stringify(test, null, 4)
 										);
 									}
 									// check that all nodes are removed
@@ -132,7 +132,7 @@
 									console.log(
 										JSON.stringify(results, null, 4),
 										' ---- ',
-										JSON.stringify(test[collection], null, 4)
+										JSON.stringify(test, null, 4)
 									);
 
 									assert(false, 'there are no ' + collection);

@@ -20,6 +20,7 @@ describe('landmark-is-unique', function() {
 		var node = fixture.querySelector('div');
 		var expectedData = {
 			accessibleText: null,
+			isLandmark: true,
 			role: 'main'
 		};
 		axe._tree = axe.utils.getFlattenedTree(fixture);
@@ -38,6 +39,7 @@ describe('landmark-is-unique', function() {
 		var node = fixture.querySelector('div');
 		var expectedData = {
 			accessibleText: 'test text',
+			isLandmark: true,
 			role: 'main'
 		};
 		axe._tree = axe.utils.getFlattenedTree(fixture);
