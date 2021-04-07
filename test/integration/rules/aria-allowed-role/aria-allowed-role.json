@@ -11,6 +11,7 @@
 		["#pass-section-role-doc-bib"],
 		["#pass-li-role-doc-biblioentry"],
 		["#pass-aside-doc-example"],
+		["#pass-figure-doc-example"],
 		["#pass-div-valid-role"],
 		["#pass-ol-valid-role"],
 		["#pass-nav-role-doc-index"],

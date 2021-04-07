@@ -49,7 +49,8 @@ describe('standards.getAriaRolesByType', function() {
 			'term',
 			'time',
 			'toolbar',
-			'tooltip'
+			'tooltip',
+			'doc-example'
 		]);
 	});
 
