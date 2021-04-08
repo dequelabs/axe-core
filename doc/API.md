@@ -818,6 +818,47 @@ The signature is:
 axe.teardown();
 ```
 
+### API Name: axe.frameMessenger
+
+Configure how axe-core communicates with iframes. By default it uses `frame.postMessage`.
+
+The signature is:
+
+```js
+axe.frameMessenger({
+  open(topicHandler) {
+    let handler = function(event) {
+      const data = JSON.parse(event.data);
+      // do any validation or sanitation
+
+      topicHandler(data, topicCallback);
+    };
+    window.addEventListener('message', handler);
+
+    return () => {
+      window.removeEventListener('message', handler);
+    };
+  },
+  post(frameWindow, data, replyCallback) {
+    frameWindow.postMessage(JSON.stringify(data), '*');
+  }
+});
+```
+
+- `open` is a function that should setup the communication channel with iframes. It is passed a `topicHandler` function that you should call to have axe-core handle calling any subscribed listener functions.
+
+The `topicHandler` function takes two arguments: the `data` object and a callback function that is called when the subscribed listener completes. The `data` object has the following signature:
+
+```
+topic: String,      // command to send axe-core (`axe.ping`, `axe.run`, etc.)
+message: any,       // data passed along with the command (run results, etc.)
+keepAlive: Boolean, // if the message listener should stay active
+```
+
+The `open` function can return an optional cleanup function that is called if `axe.frameMessenger` is called a second time.
+
+- `post` is a function that dictates how axe-core talks to an iframe. It is passed three arguments: `frameWindow`, which is the iframes `contentWindow`, the `data` object (same structure as above), and an optional callback that is called when the message is resolved.
+
 ### Virtual DOM Utilities
 
 Note: If you’re writing rules or checks, you’ll have both the `node` and `virtualNode` passed in.

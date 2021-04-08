@@ -104,7 +104,7 @@ describe('Audit', function() {
 
     it('should set allowedOrigins', function() {
       var audit = new Audit();
-      assert.deepEqual(audit.allowedOrigins, [axe.constants.sameOrigin]);
+      assert.deepEqual(audit.allowedOrigins, [window.location.origin]);
     });
   });
 
@@ -455,7 +455,7 @@ describe('Audit', function() {
       var audit = new Audit();
       audit.allowedOrigins = ['hello'];
       audit.resetRulesAndChecks();
-      assert.deepEqual(audit.allowedOrigins, [axe.constants.sameOrigin]);
+      assert.deepEqual(audit.allowedOrigins, [window.location.origin]);
     });
   });
 
@@ -533,6 +533,20 @@ describe('Audit', function() {
       assert.equal(typeof audit.checks.target.evaluate, 'function');
       assert.equal(typeof audit.data.checks.target.messages.fail, 'function');
       assert.equal(audit.data.checks.target.messages.fail(), 'it failed');
+    });
+  });
+
+  describe('Audit#setAllowedOrigins', function() {
+    it('should set allowedOrigins', function() {
+      var audit = new Audit();
+      audit.setAllowedOrigins(['foo.com']);
+      assert.deepEqual(audit.allowedOrigins, ['foo.com']);
+    });
+
+    it('should normalize allowedOrigins', function() {
+      var audit = new Audit();
+      audit.setAllowedOrigins(['<unsafe_all_origins>', '<same_origin>']);
+      assert.deepEqual(audit.allowedOrigins, ['*', window.location.origin]);
     });
   });
 
