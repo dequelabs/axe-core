@@ -262,7 +262,7 @@ axe.configure({
 });
 ```
 
-The `allowedOrigins` option has two wildcard options. `<same_origin>` always corresponds to the current domain. If you want to block all frame communication, set `allowedOrigins` to `[]`. To configure axe-core to communicate to all origins, use `<unsafe_all_origins>`. **This is not recommended**.
+The `allowedOrigins` option has two wildcard options. `<same_origin>` always corresponds to the current domain. If you want to block all frame communication, set `allowedOrigins` to `[]`. To configure axe-core to communicate to all origins, use `<unsafe_all_origins>`. **This is not recommended**, except for use with pages served exclusively using the `file://` protocol.
 
 Use of `allowedOrigins` is not necessary if an alternative [frameMessenger](#api-name-axeframemessenger) is used.
 
