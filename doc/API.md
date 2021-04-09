@@ -258,7 +258,7 @@ Axe-core will only communicate results to frames of the same origin (the URL dom
 
 ```js
 axe.configure({
-  allowedOrigins: ['<same_origin>', 'deque.com', 'dequeuniversity.com']
+  allowedOrigins: ['<same_origin>', 'https://deque.com']
 });
 ```
 

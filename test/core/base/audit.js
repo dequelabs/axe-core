@@ -539,26 +539,29 @@ describe('Audit', function() {
   describe('Audit#setAllowedOrigins', function() {
     it('should set allowedOrigins', function() {
       var audit = new Audit();
-      audit.setAllowedOrigins(['deque.com', 'dequeuniversity.com']);
+      audit.setAllowedOrigins([
+        'https://deque.com',
+        'https://dequeuniversity.com'
+      ]);
       assert.deepEqual(audit.allowedOrigins, [
-        'deque.com',
-        'dequeuniversity.com'
+        'https://deque.com',
+        'https://dequeuniversity.com'
       ]);
     });
 
     it('should normalize <same_origin>', function() {
       var audit = new Audit();
-      audit.setAllowedOrigins(['<same_origin>', 'deque.com']);
+      audit.setAllowedOrigins(['<same_origin>', 'https://deque.com']);
       assert.deepEqual(audit.allowedOrigins, [
         window.location.origin,
-        'deque.com'
+        'https://deque.com'
       ]);
     });
 
     it('should normalize <unsafe_all_origins>', function() {
       var audit = new Audit();
       audit.setAllowedOrigins([
-        'deque.com',
+        'https://deque.com',
         '<unsafe_all_origins>',
         '<same_origin>'
       ]);
