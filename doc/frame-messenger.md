@@ -9,9 +9,9 @@ axe.frameMessenger({
   // Called to initialize message handling
   open(topicHandler) {
     // Start listening for "axe-core" events
-    const unsubscribe = bridge.subscribe('axe-core', data) => {
+    const unsubscribe = bridge.subscribe('axe-core', data => {
       topicHandler(data);
-    }));
+    });
     // Tell axe how to close the connection if it needs to
     return unsubscribe;
   },
@@ -19,10 +19,10 @@ axe.frameMessenger({
   // Called when axe needs to send a message to another frame
   async post(frameWindow, data, replyHandler) {
     // Send a message to another frame for "axe-core"
-    const replies = bridge.send(frameWindow, 'axe-core', data)
+    const replies = bridge.send(frameWindow, 'axe-core', data);
     // Async handling replies as they come back
     for await (let data of replies) {
-      replyHandler(data)
+      replyHandler(data);
     }
   }
 });
@@ -38,6 +38,6 @@ The `open` function can `return` an optional cleanup function, which is called w
 
 ## axe.frameMessenger({ post })
 
-`post` is a function that dictates how axe-core communicates with frames. It is passed three arguments: `frameWindow`, which is the frames `contentWindow`, the `data` object, and an optional `replyHandler` that is called when responses are received.
+`post` is a function that dictates how axe-core communicates with frames. It is passed three arguments: `frameWindow`, which is the frames `contentWindow`, the `data` object, and a `replyHandler` that must be called when responses are received.
 
 **note**: Currently, axe-core will only call `replyHandler` once, so promises can also be used here. This may change in the future, so it is preferable to make it possible for `replyHandler` to be called multiple times.

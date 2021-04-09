@@ -316,7 +316,11 @@ declare namespace axe {
   // axe.frameMessenger
   type FrameMessenger = {
     open: (topicHandler: TopicHandler) => Close | void;
-    post: (frame: Frame, data: TopicData, replyHandler: ReplyHandler) => void;
+    post: (
+      frameWindow: Window,
+      data: TopicData,
+      replyHandler: ReplyHandler
+    ) => void;
   };
   type TopicHandler = (data: ReplyData) => void;
   type ReplyHandler = (data: ReplyData) => void;
@@ -324,7 +328,6 @@ declare namespace axe {
   type TopicData = { topic: String } & MessageData;
   type ReplyData = { channelId: String } & MessageData;
   type MessageData = { message: any; keepAlive: Boolean };
-  type Frame = HTMLIFrameElement | HTMLFrameElement;
 }
 
 export = axe;
