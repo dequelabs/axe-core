@@ -21,7 +21,8 @@
    1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
    1. [API Name: axe.cleanup](#api-name-axecleanup)
    1. [API Name: axe.setup](#api-name-axesetup)
-   1. [API Name: axe.teardown](#api-name-teardown)
+   1. [API Name: axe.teardown](#api-name-axeteardown)
+   1. [API Name: axe.frameMessenger](#api-name-axeframemessenger)
    1. [Virtual DOM Utilities](#virtual-dom-utilities)
       1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
       1. [API Name: axe.utils.getRule](#api-name-axeutilsgetrule)
@@ -237,6 +238,7 @@ axe.configure({
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
   - `axeVersion` - Set the compatible version of a custom rule with the current axe version. Compatible versions are all patch and minor updates that are the same as, or newer than those of the `axeVersion` property.
   - `noHtml` - Disables the HTML output of nodes from rules.
+  - `allowedOrigins` - Set which origins (URL domains) will communicate test data with. See [allowedOrigins](#allowedorigins).
 
 **Returns:** Nothing
 
@@ -249,6 +251,20 @@ Page level rules raise violations on the entire document and not on individual n
 - [lib/checks/navigation/heading-order.json](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order.json)
 - [lib/checks/navigation/heading-order-evaluate.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order-evaluate.js)
 - [lib/checks/navigation/heading-order-after.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order-after.js)
+
+##### allowedOrigins
+
+Axe-core will only communicate results to frames of the same origin (the URL domain). To configure axe so that it exchanges results across different origins, you can configure allowedOrigins. This configuration must happen in **every frame**. For example:
+
+```js
+axe.configure({
+  allowedOrigins: ['<same_origin>', 'deque.com', 'dequeuniversity.com']
+});
+```
+
+The `allowedOrigins` option has two wildcard options. `<same_origin>` always corresponds to the current domain. If you want to block all frame communication, set `allowedOrigins` to `[]`. To configure axe-core to communicate to all origins, use `<unsafe_all_origins>`. **This is not recommended**.
+
+Use of `allowedOrigins` is not necessary if an alternative [frameMessenger](#api-name-axeframemessenger) is used.
 
 ### API Name: axe.reset
 
@@ -820,44 +836,7 @@ axe.teardown();
 
 ### API Name: axe.frameMessenger
 
-Configure how axe-core communicates with iframes. By default it uses `frame.postMessage`.
-
-The signature is:
-
-```js
-axe.frameMessenger({
-  open(topicHandler) {
-    let handler = function(event) {
-      const data = JSON.parse(event.data);
-      // do any validation or sanitation
-
-      topicHandler(data, topicCallback);
-    };
-    window.addEventListener('message', handler);
-
-    return () => {
-      window.removeEventListener('message', handler);
-    };
-  },
-  post(frameWindow, data, replyCallback) {
-    frameWindow.postMessage(JSON.stringify(data), '*');
-  }
-});
-```
-
-- `open` is a function that should setup the communication channel with iframes. It is passed a `topicHandler` function that you should call to have axe-core handle calling any subscribed listener functions.
-
-The `topicHandler` function takes two arguments: the `data` object and a callback function that is called when the subscribed listener completes. The `data` object has the following signature:
-
-```
-topic: String,      // command to send axe-core (`axe.ping`, `axe.run`, etc.)
-message: any,       // data passed along with the command (run results, etc.)
-keepAlive: Boolean, // if the message listener should stay active
-```
-
-The `open` function can return an optional cleanup function that is called if `axe.frameMessenger` is called a second time.
-
-- `post` is a function that dictates how axe-core talks to an iframe. It is passed three arguments: `frameWindow`, which is the iframes `contentWindow`, the `data` object (same structure as above), and an optional callback that is called when the message is resolved.
+Set up a alternative communication channel between parent and child frames. By default, axe-core uses `window.postMessage()`. See [frame-messenger.md](frame-messenger.md) for details.
 
 ### Virtual DOM Utilities
 
