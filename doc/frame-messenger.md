@@ -2,7 +2,7 @@
 
 Axe frameMessenger can be used to configure how axe-core communicates information between frames. By default, axe-core uses `window.postMessage()`. Since other scripts on the page may also use `window.postMessage`, axe-core's use of it can sometimes disrupt page functionality. This can be avoided by providing `axe.frameMessenger()` a way to communicate to frames that does not use `window.postMessage`.
 
-Tools like browser extensions and testing environments often have different channels through which information can be communicated.
+Tools like browser extensions and testing environments often have different channels through which information can be communicated. `axe.frameMessenger` must be set up in **every frame** axe-core is included.
 
 ```js
 axe.frameMessenger({

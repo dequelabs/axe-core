@@ -318,16 +318,20 @@ declare namespace axe {
     open: (topicHandler: TopicHandler) => Close | void;
     post: (
       frameWindow: Window,
-      data: TopicData,
+      data: TopicData | ReplyData,
       replyHandler: ReplyHandler
     ) => void;
   };
-  type TopicHandler = (data: ReplyData) => void;
-  type ReplyHandler = (data: ReplyData) => void;
   type Close = Function;
-  type TopicData = { topic: String } & MessageData;
-  type ReplyData = { channelId: String } & MessageData;
-  type MessageData = { message: any; keepAlive: Boolean };
+  type TopicHandler = (data: TopicData, responder?: Responder) => void;
+  type ReplyHandler = (data: ReplyData, responder?: Responder) => void;
+  type Responder = (
+    message: any,
+    keepalive: boolean,
+    replyHandler: ReplyHandler
+  ) => void;
+  type TopicData = { topic: String } & ReplyData;
+  type ReplyData = { channelId: String; message: any; keepAlive: Boolean };
 }
 
 export = axe;
