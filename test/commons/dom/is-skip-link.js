@@ -8,7 +8,7 @@ describe('dom.isSkipLink', function() {
     fixture.innerHTML = '';
 
     if (baseEl) {
-      baseEl.remove();
+      baseEl.parentNode.removeChild(baseEl);
     }
   });
 
