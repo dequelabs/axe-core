@@ -196,6 +196,16 @@ jobs:
       - run: .circleci/verify-release.sh
       - run: npm publish
 
+  # Distribute js/json for monitor
+  axe-monitor_distribution:
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *set_npm_auth
+      - <<: *restore_dependency_cache_unix
+      - run: cd ~/axe-core; pwd; cp S3/axe-core-package-gen.sh ./; ./axe-core-package-gen.sh;
+
+
   # Create a GitHub release.
   github_release:
     docker:
@@ -307,6 +317,18 @@ workflows:
           filters:
             branches:
               only: master
+      #Distribute files for axe-monitor consumption
+      - axe-monitor_distribution:
+          requires:
+            - dependencies_unix
+            - test_unix
+            - test_examples
+            - test_locales
+            - build_api_docs
+            - test_node
+          filters:
+            branches:
+              only: axe-monitor_distribution
       # Verify releases have all required files
       - verify_release:
           requires:
