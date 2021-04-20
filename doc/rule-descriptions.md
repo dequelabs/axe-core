@@ -71,9 +71,9 @@
 
 | Rule ID                                                                                                            | Description                                                                                   | Impact  | Tags                              | Issue Type                 |
 | :----------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------- | :------ | :-------------------------------- | :------------------------- |
-| [empty-table-header](https://dequeuniversity.com/rules/axe/4.1/empty-table-header?application=RuleDescription)     | Ensures table headers have discernible text                                                   | Minor   | wcag131, cat.aria                 | failure, needs&nbsp;review |
 | [autocomplete-valid](https://dequeuniversity.com/rules/axe/4.1/autocomplete-valid?application=RuleDescription)     | Ensure the autocomplete attribute is correct and suitable for the form field                  | Serious | cat.forms, wcag21aa, wcag135      | failure                    |
 | [avoid-inline-spacing](https://dequeuniversity.com/rules/axe/4.1/avoid-inline-spacing?application=RuleDescription) | Ensure that text spacing set through style attributes can be adjusted with custom stylesheets | Serious | cat.structure, wcag21aa, wcag1412 | failure                    |
+| [empty-table-header](https://dequeuniversity.com/rules/axe/4.1/empty-table-header?application=RuleDescription)     | Ensures table headers have discernible text                                                   | Minor   | wcag131, cat.aria                 | failure, needs&nbsp;review |
 
 ## Best Practices Rules
 

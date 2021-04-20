@@ -87,9 +87,9 @@ function buildRules(grunt, options, commons, callback) {
     var tags = options.tags ? options.tags.split(/\s*,\s*/) : [];
     var rules = result.rules;
     var checks = result.checks;
-    parseChecks(checks);
 
-    // Translate checks
+    // Translate checks before parsing them so that translations
+    // get applied to the metadata object
     if (locale && locale.checks) {
       checks.forEach(function(check) {
         if (locale.checks[check.id] && check.metadata) {
@@ -97,6 +97,8 @@ function buildRules(grunt, options, commons, callback) {
         }
       });
     }
+
+    parseChecks(checks);
 
     function parseMetaData(source, propType) {
       var data = source.metadata;
