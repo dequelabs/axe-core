@@ -98,7 +98,8 @@ module.exports = {
       globals: {
         assert: true,
         helpers: true,
-        checks: true
+        checks: true,
+        sinon: true
       },
       plugins: ['mocha-no-only'],
       rules: {
