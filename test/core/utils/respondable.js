@@ -31,7 +31,8 @@ describe('axe.utils.respondable', function() {
   var postMessage = window.postMessage;
   var captureError = axe.testUtils.captureError;
   var isIE11 = axe.testUtils.isIE11;
-  this.timeout(4000);
+  var shadowSupported = axe.testUtils.shadowSupport.v1;
+  this.timeout(1000);
 
   beforeEach(function(done) {
     respondable = axe.utils.respondable;
@@ -349,6 +350,37 @@ describe('axe.utils.respondable', function() {
       );
     });
 
+    (shadowSupported ? it : xit)('works with frames in shadow DOM', function(
+      done
+    ) {
+      fixture.innerHTML = '<div id="shadow-root"></div>';
+      var shadowRoot = fixture
+        .querySelector('#shadow-root')
+        .attachShadow({ mode: 'open' });
+      frame = document.createElement('iframe');
+      frame.src = '../mock/frames/test.html';
+
+      frame.addEventListener('load', function() {
+        var called = false;
+        frameWin = frame.contentWindow;
+        frameSubscribe = frameWin.axe.utils.respondable.subscribe;
+
+        frameSubscribe('greeting', function(msg) {
+          assert.equal(msg, 'hello');
+          called = true;
+        });
+        respondable(frameWin, 'greeting', 'hello');
+        afterMessage(
+          frameWin,
+          captureError(function() {
+            assert.isTrue(called);
+            done();
+          }, done)
+        );
+      });
+      shadowRoot.appendChild(frame);
+    });
+
     it('is not called on a different topic', function(done) {
       var called = false;
       frameSubscribe('otherTopic', function() {
@@ -426,6 +458,17 @@ describe('axe.utils.respondable', function() {
 
     (isIE11 ? it.skip : it)(
       // In IE win.parent is read-only
+      'throws if frame.parent is not the window',
+      function() {
+        frameWin.parent = frameWin;
+        assert.throws(function() {
+          respondable(frameWin, 'greeting');
+        });
+      }
+    );
+
+    (isIE11 ? it.skip : it)(
+      // In IE win.parent is read-only
       'is not called when the source is not a frame in the page',
       function(done) {
         var doneOnce = once(done);
@@ -437,8 +480,10 @@ describe('axe.utils.respondable', function() {
         frameSubscribe('greeting', function() {
           doneOnce(new Error('subscribe should not be called'));
         });
-        frameWin.parent = frameWin;
         respondable(frameWin, 'greeting');
+        // Swap parent after the message is sent, but before it is received:
+        frameWin.parent = frameWin;
+
         setTimeout(
           captureError(function() {
             assert.isTrue(called);
