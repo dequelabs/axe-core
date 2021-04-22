@@ -200,6 +200,7 @@ declare namespace axe {
     disableOtherRules?: boolean;
     axeVersion?: string;
     noHtml?: boolean;
+    allowedOrigins?: string[];
     // Deprecated - do not use.
     ver?: string;
   }
@@ -306,6 +307,31 @@ declare namespace axe {
    * Function to clean up plugin configuration in document and its subframes
    */
   function cleanup(): void;
+
+  /**
+   * Set up alternative frame communication
+   */
+  function frameMessenger(frameMessenger: FrameMessenger): void;
+
+  // axe.frameMessenger
+  type FrameMessenger = {
+    open: (topicHandler: TopicHandler) => Close | void;
+    post: (
+      frameWindow: Window,
+      data: TopicData | ReplyData,
+      replyHandler: ReplyHandler
+    ) => void;
+  };
+  type Close = Function;
+  type TopicHandler = (data: TopicData, responder?: Responder) => void;
+  type ReplyHandler = (data: ReplyData, responder?: Responder) => void;
+  type Responder = (
+    message: any,
+    keepalive: boolean,
+    replyHandler: ReplyHandler
+  ) => void;
+  type TopicData = { topic: String } & ReplyData;
+  type ReplyData = { channelId: String; message: any; keepAlive: Boolean };
 }
 
 export = axe;

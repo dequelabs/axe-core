@@ -36,7 +36,7 @@ describe('jsdom axe-core', function() {
         rules: { 'color-contrast': { enabled: false } }
       })
       .then(function(results) {
-        assert.notEqual(results.violations.length, 0);
+        assert.notStrictEqual(results.violations.length, 0);
 
         var dom = new jsdom.JSDOM(domStr);
 
@@ -45,8 +45,17 @@ describe('jsdom axe-core', function() {
             rules: { 'color-contrast': { enabled: false } }
           })
           .then(function(results) {
-            assert.notEqual(results.violations.length, 0);
+            assert.notStrictEqual(results.violations.length, 0);
           });
       });
+  });
+
+  describe('audit', function() {
+    var audit = axe._audit;
+
+    it('should have an empty allowedOrigins', function() {
+      // JSDOM does not have window.location, so there is no default origin
+      assert.strictEqual(audit.allowedOrigins.length, 0);
+    });
   });
 });
