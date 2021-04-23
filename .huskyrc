@@ -1,5 +1,5 @@
 {
-	"hooks": {
-		"pre-commit": "grunt configure && lint-staged"
-	}
+  "hooks": {
+    "pre-commit": "grunt configure && lint-staged"
+  }
 }
