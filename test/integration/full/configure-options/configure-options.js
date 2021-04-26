@@ -260,9 +260,9 @@ describe('Configure Options', function() {
 
       window.addEventListener('message', function(e) {
         var data = JSON.parse(e.data);
-        if (Array.isArray(data.message)) {
+        if (Array.isArray(data.payload)) {
           try {
-            assert.isNull(data.message[0].nodes[0].node.source);
+            assert.isNull(data.payload[0].nodes[0].node.source);
             done();
           } catch (e) {
             done(e);
