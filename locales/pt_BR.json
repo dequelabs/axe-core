@@ -18,7 +18,7 @@
       "help": "A função ARIA deve ser apropriada para o elemento"
     },
     "aria-command-name": {
-      "description": "Certifique-se de que cada botão ARIA, link e item de menu tenha um nome acessível",
+      "description": "Certifique-se de que cada botão, link e item de menu ARIA tenha um nome acessível",
       "help": "Comandos ARIA devem ter um nome acessível"
     },
     "aria-dialog-name": {
@@ -298,7 +298,7 @@
       "help": "O zoom e a ampliação de texto não devem ser desabilitados"
     },
     "nested-interactive": {
-      "description": "Controles iterativos aninhados não são anunciados por leitores de tela",
+      "description": "Controles interativos aninhados não são anunciados por leitores de tela",
       "help": "Certifique-se de que controles interativos não estejam aninhados"
     },
     "no-autoplay-audio": {
@@ -318,7 +318,7 @@
       "help": "A página deve conter um título de primeiro nível"
     },
     "presentation-role-conflict": {
-      "description": "Sinaliza elementos cuja função é 'none' ou 'presentation', e o que causou o acionamento da resolução de conflito de funções.",
+      "description": "Sinaliza elementos cuja função é 'none' ou 'presentation', e que causam o acionamento da resolução de conflito de funções.",
       "help": "Elementos com função 'none' ou 'presentation' devem ser sinalizados"
     },
     "region": {
@@ -338,7 +338,7 @@
       "help": "Certificar-se de que regiões roláveis tenham acesso via teclado"
     },
     "select-name": {
-      "description": "Certifique-se de o elemento 'select' tenha um nome acessível",
+      "description": "Certifique-se que o elemento 'select' tenha um nome acessível",
       "help": "O elemento 'select' deve ter um nome acessível"
     },
     "server-side-image-map": {
@@ -419,7 +419,7 @@
         "plural": "Os valores de 'aria-errormessage' `${data.values}` devem usar uma técnica para anunciar a mensagem (por exemplo, 'aria-live', 'aria-describedby', role=alert, etc.)"
       },
       "incomplete": {
-        "singular": "certifque-se de que o valor de 'aria-errormessage' `${data.values}` referencia um elemento existente",
+        "singular": "certifique-se de que o valor de 'aria-errormessage' `${data.values}` referencia um elemento existente",
         "plural": "certifque-se de que os valores de 'aria-errormessage' `${data.values}` referenciem elementos existentes"
       }
     },
@@ -519,7 +519,7 @@
     },
     "unsupportedrole": {
       "pass": "O ARIA 'role' é suportado",
-      "fail": "O 'role' usado não é amplamente suportado em leitores de tela e tecnologias assistivas:  ${data.values}"
+      "fail": "O 'role' usado não é amplamente suportado em leitores de tela e tecnologias assistivas: ${data.values}"
     },
     "valid-scrollable-semantics": {
       "pass": "O elemento possui semântica válida para um elemento na ordem de foco.",
@@ -802,7 +802,7 @@
     "aria-labelledby": {
       "pass": "O atributo 'aria-labelledby' existe e referencia elementos que são visíveis aos leitores de tela",
       "fail": "O atributo 'aria-labelledby' não existe, referencia elementos que não existem ou são vazios",
-      "incomplete": "certifque-se de que 'aria-labelledby' referencie um elemento existente"
+      "incomplete": "certifique-se de que 'aria-labelledby' referencie um elemento existente"
     },
     "avoid-inline-spacing": {
       "pass": "Nenhum estilo 'inline' com '!important' que afete o espaçamento do texto foi especificado",
