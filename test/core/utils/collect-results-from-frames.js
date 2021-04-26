@@ -1,163 +1,163 @@
 describe('axe.utils.collectResultsFromFrames', function() {
-	'use strict';
+  'use strict';
 
-	var Context = axe._thisWillBeDeletedDoNotUse.base.Context;
-	var fixture = document.getElementById('fixture');
-	var noop = function() {};
+  var Context = axe._thisWillBeDeletedDoNotUse.base.Context;
+  var fixture = document.getElementById('fixture');
+  var noop = function() {};
 
-	function contextSetup(scope) {
-		var context = new Context(scope);
-		axe._tree = context.flatTree;
-		axe._selectorData = axe.utils.getSelectorData(context.flatTree);
+  function contextSetup(scope) {
+    var context = new Context(scope);
+    axe._tree = context.flatTree;
+    axe._selectorData = axe.utils.getSelectorData(context.flatTree);
 
-		return context;
-	}
+    return context;
+  }
 
-	afterEach(function() {
-		fixture.innerHTML = '';
-		axe._tree = undefined;
-		axe._selectorData = undefined;
-	});
+  afterEach(function() {
+    fixture.innerHTML = '';
+    axe._tree = undefined;
+    axe._selectorData = undefined;
+  });
 
-	it('should timeout after 60s', function(done) {
-		var orig = window.setTimeout;
-		window.setTimeout = function(fn, to) {
-			if (to === 60000) {
-				assert.ok('timeout set');
-				fn();
-			} else {
-				// ping timeout
-				return orig(fn, to);
-			}
-			return 'cats';
-		};
+  it('should timeout after 60s', function(done) {
+    var orig = window.setTimeout;
+    window.setTimeout = function(fn, to) {
+      if (to === 60000) {
+        assert.ok('timeout set');
+        fn();
+      } else {
+        // ping timeout
+        return orig(fn, to);
+      }
+      return 'cats';
+    };
 
-		var frame = document.createElement('iframe');
-		frame.addEventListener('load', function() {
-			var context = contextSetup(document);
-			axe.utils.collectResultsFromFrames(
-				context,
-				{},
-				'stuff',
-				'morestuff',
-				noop,
-				function(err) {
-					assert.instanceOf(err, Error);
-					assert.equal(err.message.split(/: /)[0], 'Axe in frame timed out');
-					window.setTimeout = orig;
-					done();
-				}
-			);
-		});
+    var frame = document.createElement('iframe');
+    frame.addEventListener('load', function() {
+      var context = contextSetup(document);
+      axe.utils.collectResultsFromFrames(
+        context,
+        {},
+        'stuff',
+        'morestuff',
+        noop,
+        function(err) {
+          assert.instanceOf(err, Error);
+          assert.equal(err.message.split(/: /)[0], 'Axe in frame timed out');
+          window.setTimeout = orig;
+          done();
+        }
+      );
+    });
 
-		frame.id = 'level0';
-		frame.src = '../mock/frames/results-timeout.html';
-		fixture.appendChild(frame);
-	});
+    frame.id = 'level0';
+    frame.src = '../mock/frames/results-timeout.html';
+    fixture.appendChild(frame);
+  });
 
-	it('should override the timeout with `options.frameWaitTime`, if provided', function(done) {
-		var orig = window.setTimeout;
-		window.setTimeout = function(fn, to) {
-			if (to === 90000) {
-				assert.ok('timeout set');
-				fn();
-			} else {
-				// ping timeout
-				return orig(fn, to);
-			}
-			return 'cats';
-		};
+  it('should override the timeout with `options.frameWaitTime`, if provided', function(done) {
+    var orig = window.setTimeout;
+    window.setTimeout = function(fn, to) {
+      if (to === 90000) {
+        assert.ok('timeout set');
+        fn();
+      } else {
+        // ping timeout
+        return orig(fn, to);
+      }
+      return 'cats';
+    };
 
-		var frame = document.createElement('iframe');
-		frame.addEventListener('load', function() {
-			var context = contextSetup(document);
-			var params = { frameWaitTime: 90000 };
+    var frame = document.createElement('iframe');
+    frame.addEventListener('load', function() {
+      var context = contextSetup(document);
+      var params = { frameWaitTime: 90000 };
 
-			axe.utils.collectResultsFromFrames(
-				context,
-				params,
-				'stuff',
-				'morestuff',
-				noop,
-				function(err) {
-					assert.instanceOf(err, Error);
-					assert.equal(err.message.split(/: /)[0], 'Axe in frame timed out');
-					window.setTimeout = orig;
-					done();
-				}
-			);
-		});
+      axe.utils.collectResultsFromFrames(
+        context,
+        params,
+        'stuff',
+        'morestuff',
+        noop,
+        function(err) {
+          assert.instanceOf(err, Error);
+          assert.equal(err.message.split(/: /)[0], 'Axe in frame timed out');
+          window.setTimeout = orig;
+          done();
+        }
+      );
+    });
 
-		frame.id = 'level0';
-		frame.src = '../mock/frames/results-timeout.html';
-		fixture.appendChild(frame);
-	});
+    frame.id = 'level0';
+    frame.src = '../mock/frames/results-timeout.html';
+    fixture.appendChild(frame);
+  });
 
-	it('should not throw given a recursive iframe', function(done) {
-		axe._load({
-			rules: [
-				{
-					id: 'iframe',
-					selector: 'iframe',
-					any: [
-						{
-							id: 'iframe',
-							evaluate: function() {
-								return true;
-							}
-						}
-					]
-				}
-			],
-			messages: {}
-		});
+  it('should not throw given a recursive iframe', function(done) {
+    axe._load({
+      rules: [
+        {
+          id: 'iframe',
+          selector: 'iframe',
+          any: [
+            {
+              id: 'iframe',
+              evaluate: function() {
+                return true;
+              }
+            }
+          ]
+        }
+      ],
+      messages: {}
+    });
 
-		var frame = document.createElement('iframe');
-		frame.addEventListener('load', function() {
-			var context = contextSetup(document);
+    var frame = document.createElement('iframe');
+    frame.addEventListener('load', function() {
+      var context = contextSetup(document);
 
-			axe.utils.collectResultsFromFrames(
-				context,
-				{},
-				'rules',
-				'morestuff',
-				function() {
-					done();
-				},
-				function(e) {
-					assert.ok(false, e);
-					done();
-				}
-			);
-		});
+      axe.utils.collectResultsFromFrames(
+        context,
+        {},
+        'rules',
+        'morestuff',
+        function() {
+          done();
+        },
+        function(e) {
+          assert.ok(false, e);
+          done();
+        }
+      );
+    });
 
-		frame.id = 'level0';
-		frame.src = '../mock/frames/nested0.html';
-		fixture.appendChild(frame);
-	});
+    frame.id = 'level0';
+    frame.src = '../mock/frames/nested0.html';
+    fixture.appendChild(frame);
+  });
 
-	it('returns errors send from the frame', function(done) {
-		var frame = document.createElement('iframe');
-		frame.addEventListener('load', function() {
-			var context = contextSetup(document);
-			axe.utils.collectResultsFromFrames(
-				context,
-				{},
-				'rules',
-				'morestuff',
-				function() {
-					done(new Error('Should not be called'));
-				},
-				function(err) {
-					assert.instanceOf(err, Error);
-					assert.equal(err.message.split(/\n/)[0], 'error in axe.throw');
-					done();
-				}
-			);
-		});
+  it('returns errors send from the frame', function(done) {
+    var frame = document.createElement('iframe');
+    frame.addEventListener('load', function() {
+      var context = contextSetup(document);
+      axe.utils.collectResultsFromFrames(
+        context,
+        {},
+        'rules',
+        'morestuff',
+        function() {
+          done(new Error('Should not be called'));
+        },
+        function(err) {
+          assert.instanceOf(err, Error);
+          assert.equal(err.message.split(/\n/)[0], 'error in axe.throw');
+          done();
+        }
+      );
+    });
 
-		frame.id = 'level0';
-		frame.src = '../mock/frames/throwing.html';
-		fixture.appendChild(frame);
-	});
+    frame.id = 'level0';
+    frame.src = '../mock/frames/throwing.html';
+    fixture.appendChild(frame);
+  });
 });

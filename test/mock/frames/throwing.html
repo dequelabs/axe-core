@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html id="frameContent">
-	<head>
-		<title>Error returning frame frame</title>
-	</head>
-	<body>
-		<script src="/axe.js"></script>
-		<script>
-			axe._audit.run = function() {
-				throw new Error('error in axe.throw');
-			};
-		</script>
-	</body>
+  <head>
+    <title>Error returning frame frame</title>
+  </head>
+  <body>
+    <script src="/axe.js"></script>
+    <script>
+      axe._audit.run = function() {
+        throw new Error('error in axe.throw');
+      };
+    </script>
+  </body>
 </html>

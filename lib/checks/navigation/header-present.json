@@ -1,15 +1,15 @@
 {
-	"id": "header-present",
-	"evaluate": "has-descendant-evaluate",
-	"after": "has-descendant-after",
-	"options": {
-		"selector": "h1:not([role]), h2:not([role]), h3:not([role]), h4:not([role]), h5:not([role]), h6:not([role]), [role=heading]"
-	},
-	"metadata": {
-		"impact": "serious",
-		"messages": {
-			"pass": "Page has a heading",
-			"fail": "Page does not have a heading"
-		}
-	}
+  "id": "header-present",
+  "evaluate": "has-descendant-evaluate",
+  "after": "has-descendant-after",
+  "options": {
+    "selector": ":is(h1, h2, h3, h4, h5, h6):not([role]), [role=heading]"
+  },
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "Page has a heading",
+      "fail": "Page does not have a heading"
+    }
+  }
 }

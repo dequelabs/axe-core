@@ -11,8 +11,8 @@ const { CIRCLE_SHA1, CIRCLE_BRANCH } = process.env;
 assert(CIRCLE_BRANCH, 'CIRCLE_BRANCH environment variable not set');
 assert(CIRCLE_SHA1, 'CIRCLE_SHA1 environment variable not set');
 assert(
-	CIRCLE_BRANCH === 'develop',
-	'This script should only be run from "develop"'
+  CIRCLE_BRANCH === 'develop',
+  'This script should only be run from "develop"'
 );
 
 // Shorten the SHA

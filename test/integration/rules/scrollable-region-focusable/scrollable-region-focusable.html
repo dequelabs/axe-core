@@ -1,128 +1,128 @@
 <!-- pass -->
 <div id="pass1" style="overflow-y: scroll; height: 5px;">
-	<input type="text" />
+  <input type="text" />
 </div>
 
 <div id="pass2" style="height: 200px; overflow-y: auto" tabindex="0">
-	<div style="height: 2000px">
-		<p>Content</p>
-	</div>
+  <div style="height: 2000px">
+    <p>Content</p>
+  </div>
 </div>
 
 <div id="pass3" style="height: 20px; overflow: auto;">
-	<input type="text" tabindex="-1" />
-	<select tabindex="-1"></select>
-	<textarea tabindex="-1"></textarea>
-	<p style="height: 200px;" tabindex="0"></p>
+  <input type="text" tabindex="-1" />
+  <select tabindex="-1"></select>
+  <textarea tabindex="-1"></textarea>
+  <p style="height: 200px;" tabindex="0"></p>
 </div>
 
 <div id="pass4" style="height: 200px; overflow-y: auto" contenteditable="true">
-	<div style="height: 2000px">
-		<p>Content</p>
-	</div>
+  <div style="height: 2000px">
+    <p>Content</p>
+  </div>
 </div>
 
 <div id="pass5" style="height: 200px; overflow-y: auto" contenteditable="true">
-	<div style="height: 2000px">
-		<div
-			id="pass6"
-			style="height: 200px; overflow-y: auto"
-			contenteditable="invalid"
-		>
-			<div style="height: 2000px">
-				<p>Content</p>
-			</div>
-		</div>
-	</div>
+  <div style="height: 2000px">
+    <div
+      id="pass6"
+      style="height: 200px; overflow-y: auto"
+      contenteditable="invalid"
+    >
+      <div style="height: 2000px">
+        <p>Content</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- fail -->
 <div id="fail1" style="height: 5px; overflow: auto;">
-	<input type="text" tabindex="-1" />
+  <input type="text" tabindex="-1" />
 </div>
 
 <div id="fail2" style="height: 5px; overflow: auto;">
-	<input type="text" tabindex="-1" />
-	<select tabindex="-1"></select>
-	<textarea tabindex="-1"></textarea>
+  <input type="text" tabindex="-1" />
+  <select tabindex="-1"></select>
+  <textarea tabindex="-1"></textarea>
 </div>
 
 <div id="fail3" style="height: 200px; overflow-y: auto" contenteditable="false">
-	<div style="height: 2000px">
-		<p>Content</p>
-	</div>
+  <div style="height: 2000px">
+    <p>Content</p>
+  </div>
 </div>
 
 <!-- inapplicable -->
 <section id="inapplicable1">This element is not scrollable</section>
 
 <div id="inapplicable2" style="height: 200px; width: 200px; overflow: auto;">
-	<div style="height: 10px; width: 100x;">Content</div>
+  <div style="height: 10px; width: 100x;">Content</div>
 </div>
 
 <p
-	id="inapplicable3"
-	style="width: 12em; height: 2em; border: dotted; overflow: visible;"
+  id="inapplicable3"
+  style="width: 12em; height: 2em; border: dotted; overflow: visible;"
 >
-	Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-	doloremque laudantium.
+  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+  doloremque laudantium.
 </p>
 
 <div
-	id="inapplicable4"
-	style="display: none; height: 200px; overflow: hidden"
-	tabindex="0"
+  id="inapplicable4"
+  style="display: none; height: 200px; overflow: hidden"
+  tabindex="0"
 >
-	<div style="height: 2000px">
-		<p>Content</p>
-	</div>
+  <div style="height: 2000px">
+    <p>Content</p>
+  </div>
 </div>
 
 <div
-	id="inapplicable5"
-	aria-hidden="true"
-	style="height: 200px; overflow: hidden"
-	tabindex="0"
+  id="inapplicable5"
+  aria-hidden="true"
+  style="height: 200px; overflow: hidden"
+  tabindex="0"
 >
-	<div style="height: 2000px">
-		<p>Content</p>
-	</div>
+  <div style="height: 2000px">
+    <p>Content</p>
+  </div>
 </div>
 
 <div id="inapplicable6" style="height: 200px; width: 200px; overflow: hidden">
-	<div style="height: 2000px; width: 100px;">
-		<p>Content</p>
-	</div>
+  <div style="height: 2000px; width: 100px;">
+    <p>Content</p>
+  </div>
 </div>
 
 <div role="combobox">
-	<div
-		id="inapplicable7"
-		role="listbox"
-		style="height: 200px; overflow-y: auto"
-	>
-		<div role="option" style="height: 2000px">
-			<p>Content</p>
-		</div>
-	</div>
+  <div
+    id="inapplicable7"
+    role="listbox"
+    style="height: 200px; overflow-y: auto"
+  >
+    <div role="option" style="height: 2000px">
+      <p>Content</p>
+    </div>
+  </div>
 </div>
 
 <div role="combobox" aria-owns="inapplicable8">
-	<div id="inapplicable8" role="grid" style="height: 200px; overflow-y: auto">
-		<div role="option" style="height: 2000px">
-			<p>Content</p>
-		</div>
-	</div>
+  <div id="inapplicable8" role="grid" style="height: 200px; overflow-y: auto">
+    <div role="option" style="height: 2000px">
+      <p>Content</p>
+    </div>
+  </div>
 
-	<div role="combobox" aria-controls="inapplicable9">
-		<div
-			id="inapplicable9"
-			role="dialog"
-			style="height: 200px; overflow-y: auto"
-		>
-			<div role="option" style="height: 2000px">
-				<p>Content</p>
-			</div>
-		</div>
-	</div>
+  <div role="combobox" aria-controls="inapplicable9">
+    <div
+      id="inapplicable9"
+      role="dialog"
+      style="height: 200px; overflow-y: auto"
+    >
+      <div role="option" style="height: 2000px">
+        <p>Content</p>
+      </div>
+    </div>
+  </div>
 </div>

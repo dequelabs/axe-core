@@ -20,8 +20,12 @@
       1. [Results Object](#results-object)
    1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
    1. [API Name: axe.cleanup](#api-name-axecleanup)
+   1. [API Name: axe.setup](#api-name-axesetup)
+   1. [API Name: axe.teardown](#api-name-axeteardown)
+   1. [API Name: axe.frameMessenger](#api-name-axeframemessenger)
    1. [Virtual DOM Utilities](#virtual-dom-utilities)
       1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
+      1. [API Name: axe.utils.getRule](#api-name-axeutilsgetrule)
    1. [Common Functions](#common-functions)
 1. [Section 3: Example Reference](#section-3-example-reference)
 1. [Section 4: Performance](#section-4-performance)
@@ -234,6 +238,7 @@ axe.configure({
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
   - `axeVersion` - Set the compatible version of a custom rule with the current axe version. Compatible versions are all patch and minor updates that are the same as, or newer than those of the `axeVersion` property.
   - `noHtml` - Disables the HTML output of nodes from rules.
+  - `allowedOrigins` - Set which origins (URL domains) will communicate test data with. See [allowedOrigins](#allowedorigins).
 
 **Returns:** Nothing
 
@@ -246,6 +251,20 @@ Page level rules raise violations on the entire document and not on individual n
 - [lib/checks/navigation/heading-order.json](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order.json)
 - [lib/checks/navigation/heading-order-evaluate.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order-evaluate.js)
 - [lib/checks/navigation/heading-order-after.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order-after.js)
+
+##### allowedOrigins
+
+Axe-core will only communicate results to frames of the same origin (the URL domain). To configure axe so that it exchanges results across different origins, you can configure allowedOrigins. This configuration must happen in **every frame**. For example:
+
+```js
+axe.configure({
+  allowedOrigins: ['<same_origin>', 'https://deque.com']
+});
+```
+
+The `allowedOrigins` option has two wildcard options. `<same_origin>` always corresponds to the current domain. If you want to block all frame communication, set `allowedOrigins` to `[]`. To configure axe-core to communicate to all origins, use `<unsafe_all_origins>`. **This is not recommended**. Because this is the only way to test iframes on `file://`, it is recommended to use a localhost server such as [http-server](https://www.npmjs.com/package/http-server) instead.
+
+Use of `allowedOrigins` is not necessary if an alternative [frameMessenger](#api-name-axeframemessenger) is used.
 
 ### API Name: axe.reset
 
@@ -281,7 +300,7 @@ Runs a number of rules against the provided HTML page and returns the resulting 
 
 ```js
 axe.run(context, options, (err, results) => {
-	// ...
+  // ...
 });
 ```
 
@@ -320,13 +339,13 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 
 ```js
 axe.run(
-	{
-		include: $fixture[0],
-		exclude: $fixture[0].firstChild
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    include: $fixture[0],
+    exclude: $fixture[0].firstChild
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -334,13 +353,13 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		include: [['#fix']],
-		exclude: [['#fix div']]
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    include: [['#fix']],
+    exclude: [['#fix div']]
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -348,12 +367,12 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		exclude: [['.exclude1'], ['.exclude2']]
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    exclude: [['.exclude1'], ['.exclude2']]
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -361,12 +380,12 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		include: [['#frame', '#fix']]
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    include: [['#frame', '#fix']]
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -374,12 +393,12 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		include: [['#frame1', '#frame2', '#fix']]
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    include: [['#frame1', '#frame2', '#fix']]
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -391,12 +410,12 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		include: [['#header'], ['a'], ['#frame1', '#frame2', '#fix']]
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    include: [['#header'], ['a'], ['#frame1', '#frame2', '#fix']]
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -434,15 +453,15 @@ To run only WCAG 2.0 Level A rules, specify `options` as:
 
 ```js
 axe.run(
-	{
-		runOnly: {
-			type: 'tag',
-			values: ['wcag2a']
-		}
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    runOnly: {
+      type: 'tag',
+      values: ['wcag2a']
+    }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -450,15 +469,15 @@ To run both WCAG 2.0 Level A and Level AA rules, you must specify both `wcag2a` 
 
 ```js
 axe.run(
-	{
-		runOnly: {
-			type: 'tag',
-			values: ['wcag2a', 'wcag2aa']
-		}
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    runOnly: {
+      type: 'tag',
+      values: ['wcag2a', 'wcag2aa']
+    }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -478,15 +497,15 @@ If you only want to run certain rules, specify options as:
 
 ```js
 axe.run(
-	{
-		runOnly: {
-			type: 'rule',
-			values: ['ruleId1', 'ruleId2', 'ruleId3']
-		}
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    runOnly: {
+      type: 'rule',
+      values: ['ruleId1', 'ruleId2', 'ruleId3']
+    }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -508,15 +527,15 @@ The default operation for axe.run is to run all rules except for rules with the 
 
 ```js
 axe.run(
-	{
-		rules: {
-			'color-contrast': { enabled: false },
-			'valid-lang': { enabled: false }
-		}
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    rules: {
+      'color-contrast': { enabled: false },
+      'valid-lang': { enabled: false }
+    }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -528,19 +547,19 @@ By combining runOnly with type: tags and the rules option, a modified set can be
 
 ```js
 axe.run(
-	{
-		runOnly: {
-			type: 'tag',
-			values: ['wcag2a']
-		},
-		rules: {
-			'color-contrast': { enabled: true },
-			'valid-lang': { enabled: false }
-		}
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    runOnly: {
+      type: 'tag',
+      values: ['wcag2a']
+    },
+    rules: {
+      'color-contrast': { enabled: true },
+      'valid-lang': { enabled: false }
+    }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -556,12 +575,12 @@ Types listed in this option will cause rules that fall under those types to show
 
 ```js
 axe.run(
-	{
-		resultTypes: ['violations', 'incomplete', 'inapplicable']
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    resultTypes: ['violations', 'incomplete', 'inapplicable']
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -575,12 +594,12 @@ The `preload` attribute (defaults to `true`) in options parameter, accepts a `bo
 
 ```js
 axe.run(
-	{
-		preload: true
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    preload: true
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -588,12 +607,12 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		preload: { assets: ['cssom'], timeout: 50000 }
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    preload: { assets: ['cssom'], timeout: 50000 }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -684,8 +703,8 @@ In this example, we will pass the selector for the entire document, pass no opti
 
 ```js
 axe.run(document, function(err, results) {
-	if (err) throw err;
-	console.log(results);
+  if (err) throw err;
+  console.log(results);
 });
 ```
 
@@ -740,17 +759,17 @@ In this example, we pass the selector for the entire document, enable two additi
 
 ```js
 axe.run(
-	document,
-	{
-		rules: {
-			'link-in-text-block': { enabled: true },
-			'p-as-heading': { enabled: true }
-		}
-	},
-	function(err, results) {
-		if (err) throw err;
-		console.log(results);
-	}
+  document,
+  {
+    rules: {
+      'link-in-text-block': { enabled: true },
+      'p-as-heading': { enabled: true }
+    }
+  },
+  function(err, results) {
+    if (err) throw err;
+    console.log(results);
+  }
 );
 ```
 
@@ -762,14 +781,14 @@ This example shows a result object that points to an open shadow DOM element.
 
 ```json
 {
-	"help": "Elements must have sufficient color contrast",
-	"helpUrl": "https://dequeuniversity.com/rules/axe/2.1/color-contrast?application=axeAPI",
-	"id": "color-contrast",
-	"nodes": [
-		{
-			"target": [["header > aria-menu", "li.expanded"]]
-		}
-	]
+  "help": "Elements must have sufficient color contrast",
+  "helpUrl": "https://dequeuniversity.com/rules/axe/2.1/color-contrast?application=axeAPI",
+  "id": "color-contrast",
+  "nodes": [
+    {
+      "target": [["header > aria-menu", "li.expanded"]]
+    }
+  ]
 }
 ```
 
@@ -792,6 +811,32 @@ axe.cleanup(resolve, reject);
 `resolve` and `reject` are functions that will be invoked on success or failure respectively.
 
 `resolve` takes no arguments and `reject` takes a single argument that must be a string or have a toString() method in its prototype.
+
+### API Name: axe.setup
+
+Setup axe-cores internal `VirtualNode` tree and other required properties required to run functions in `axe.commons`.
+
+The signature is:
+
+```js
+axe.setup(DomNode);
+```
+
+`DomNode` - is an optional DOM node to use as the root of the `VirtualNode` tree. Default is `document.documentElement`.
+
+### API Name: axe.teardown
+
+Cleanup the `VirtualNode` tree and internal caches. `axe.run` will call this function at the end of the run so there's no need to call it yourself afterwards.
+
+The signature is:
+
+```js
+axe.teardown();
+```
+
+### API Name: axe.frameMessenger
+
+Set up a alternative communication channel between parent and child frames. By default, axe-core uses `window.postMessage()`. See [frame-messenger.md](frame-messenger.md) for details.
 
 ### Virtual DOM Utilities
 
@@ -821,6 +866,26 @@ axe.utils.querySelectorAll(virtualNode, 'a[href]');
 ##### Returns
 
 An Array of filtered HTML nodes.
+
+#### API Name: axe.utils.getRule
+
+##### Description
+
+Get an axe-core `Rule` instance by ID.
+
+##### Synopsis
+
+```js
+axe.utils.getRule('color-contrast');
+```
+
+##### Parameters
+
+- `ruleId` - The ID of the rule.
+
+##### Returns
+
+An axe-core `Rule` instance.
 
 ### Common Functions
 
@@ -882,12 +947,12 @@ An approach you can take to reducing the time is use the `resultTypes` option. B
 
 ```js
 axe.run(
-	{
-		resultTypes: ['violations']
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    resultTypes: ['violations']
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 

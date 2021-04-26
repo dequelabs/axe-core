@@ -22,55 +22,55 @@ In order to create such a plugin, we need to implement the "run" function for th
 
 ```js
 axe.registerPlugin({
-	id: 'doStuff',
-	run: function(id, action, options, callback) {
-		var frames;
-		var q = axe.utils.queue();
-		var that = this;
-		frames = axe.utils.toArray(document.querySelectorAll('iframe, frame'));
+  id: 'doStuff',
+  run: function(id, action, options, callback) {
+    var frames;
+    var q = axe.utils.queue();
+    var that = this;
+    frames = axe.utils.toArray(document.querySelectorAll('iframe, frame'));
 
-		frames.forEach(function(frame) {
-			q.defer(function(done) {
-				axe.utils.sendCommandToFrame(
-					frame,
-					{
-						options: options,
-						command: 'run-doStuff',
-						parameter: id,
-						action: action
-					},
-					function() {
-						done();
-					}
-				);
-			});
-		});
+    frames.forEach(function(frame) {
+      q.defer(function(done) {
+        axe.utils.sendCommandToFrame(
+          frame,
+          {
+            options: options,
+            command: 'run-doStuff',
+            parameter: id,
+            action: action
+          },
+          function() {
+            done();
+          }
+        );
+      });
+    });
 
-		if (!options.context.length) {
-			q.defer(function(done) {
-				that._registry[id][action].call(
-					that._registry[id],
-					document,
-					options,
-					done
-				);
-			});
-		}
-		q.then(callback);
-	},
-	commands: [
-		{
-			id: 'run-doStuff',
-			callback: function(data, callback) {
-				return axe.plugins.doStuff.run(
-					data.parameter,
-					data.action,
-					data.options,
-					callback
-				);
-			}
-		}
-	]
+    if (!options.context.length) {
+      q.defer(function(done) {
+        that._registry[id][action].call(
+          that._registry[id],
+          document,
+          options,
+          done
+        );
+      });
+    }
+    q.then(callback);
+  },
+  commands: [
+    {
+      id: 'run-doStuff',
+      callback: function(data, callback) {
+        return axe.plugins.doStuff.run(
+          data.parameter,
+          data.action,
+          data.options,
+          callback
+        );
+      }
+    }
+  ]
 });
 ```
 
@@ -98,21 +98,21 @@ Lets implement a basic plugin instance to see how this works. This instance will
 
 ```js
 var highlight = {
-	id: 'highlight',
-	highlighter: new Highlighter(),
-	run: function(contextNode, options, done) {
-		var that = this;
-		Array.prototype.slice
-			.call(contextNode.querySelectorAll(options.selector))
-			.forEach(function(node) {
-				that.highlighter.highlight(node, options);
-			});
-		done();
-	},
-	cleanup: function(done) {
-		this.highlighter.clear();
-		done();
-	}
+  id: 'highlight',
+  highlighter: new Highlighter(),
+  run: function(contextNode, options, done) {
+    var that = this;
+    Array.prototype.slice
+      .call(contextNode.querySelectorAll(options.selector))
+      .forEach(function(node) {
+        that.highlighter.highlight(node, options);
+      });
+    done();
+  },
+  cleanup: function(done) {
+    this.highlighter.clear();
+    done();
+  }
 };
 
 axe.plugins.doStuff.add(highlight);

@@ -8,12 +8,12 @@ var returnVal = new Array(16).fill(0);
 var cryptoStub = sinon.stub(crypto, 'randomBytes').returns(returnVal);
 
 describe('uuid.v4', function() {
-	var axe = proxyquire('../../', { crypto: cryptoStub });
-	var uuidV4 = axe.utils.uuid.v4;
+  var axe = proxyquire('../../', { crypto: cryptoStub });
+  var uuidV4 = axe.utils.uuid.v4;
 
-	it('uses node crypto', function() {
-		var uuid = uuidV4();
-		assert.isTrue(cryptoStub.randomBytes.called);
-		assert.deepEqual(uuid, '00000000-0000-4000-8000-000000000000');
-	});
+  it('uses node crypto', function() {
+    var uuid = uuidV4();
+    assert.isTrue(cryptoStub.randomBytes.called);
+    assert.deepEqual(uuid, '00000000-0000-4000-8000-000000000000');
+  });
 });

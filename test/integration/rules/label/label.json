@@ -1,31 +1,31 @@
 {
-	"description": "label test",
-	"rule": "label",
-	"violations": [
-		["#fail1"],
-		["#fail3"],
-		["#fail4"],
-		["#fail6"],
-		["#fail7"],
-		["#fail9"],
-		["#fail11"],
-		["#fail22"],
-		["#fail25"],
-		["#fail27"]
-	],
-	"passes": [
-		["#pass1"],
-		["#pass3"],
-		["#pass4"],
-		["#pass6"],
-		["#pass7"],
-		["#pass9"],
-		["#pass10"],
-		["#pass12"],
-		["#pass13"],
-		["#pass15"],
-		["#pass16"],
-		["#pass17"],
-		["#pass-gh1176"]
-	]
+  "description": "label test",
+  "rule": "label",
+  "violations": [
+    ["#fail1"],
+    ["#fail3"],
+    ["#fail4"],
+    ["#fail6"],
+    ["#fail7"],
+    ["#fail9"],
+    ["#fail11"],
+    ["#fail22"],
+    ["#fail25"],
+    ["#fail27"]
+  ],
+  "passes": [
+    ["#pass1"],
+    ["#pass3"],
+    ["#pass4"],
+    ["#pass6"],
+    ["#pass7"],
+    ["#pass9"],
+    ["#pass10"],
+    ["#pass12"],
+    ["#pass13"],
+    ["#pass15"],
+    ["#pass16"],
+    ["#pass17"],
+    ["#pass-gh1176"]
+  ]
 }

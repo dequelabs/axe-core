@@ -42,56 +42,56 @@
 <!-- native links, with different accessible name -->
 <a id="pass11" href="/home">Pass 11</a>
 <a id="pass11-identical-resource-but-different-name" href="/home"
-	>Pass 11, but different accessible name</a
+  >Pass 11, but different accessible name</a
 >
 
 <!-- ARIA links, with different accessible name -->
 <button id="pass12" role="link">Pass 12</button>
 <button id="pass12-identical-resource-but-different-name" role="link">
-	Pass 12, but different accessible name
+  Pass 12, but different accessible name
 </button>
 
 <!-- area[href], with parent map, which is referred by img[usemap], with different accessible name -->
 <map name="shapes-map">
-	<area
-		id="pass13"
-		shape="rect"
-		aria-label="Pass 13"
-		coords="19,28,222,228"
-		href="foo"
-	/>
-	<area
-		id="pass13-identical-resource-but-different-name"
-		shape="circle"
-		aria-label="Pass 13, but different accessible name"
-		coords="361,132,96"
-		href="foo"
-	/>
+  <area
+    id="pass13"
+    shape="rect"
+    aria-label="Pass 13"
+    coords="19,28,222,228"
+    href="foo"
+  />
+  <area
+    id="pass13-identical-resource-but-different-name"
+    shape="circle"
+    aria-label="Pass 13, but different accessible name"
+    coords="361,132,96"
+    href="foo"
+  />
 </map>
 <img src="shape.png" usemap="#shapes-map" alt="" />
 
 <!-- AREA with same accessible name, and serve same purpose -->
 <map name="infographic-pass">
-	<area
-		id="pass14"
-		shape="poly"
-		coords="130,147,200,107,254,219,130,228"
-		href="https://developer.mozilla.org/docs/Web/HTML"
-		title="HTML Logo"
-	/>
-	<area
-		id="pass14-identical1"
-		shape="poly"
-		coords="130,147,130,228,6,219,59,107"
-		href="https://developer.mozilla.org/docs/Web/HTML"
-		target="_blank"
-		aria-label="HTML Logo"
-	/>
+  <area
+    id="pass14"
+    shape="poly"
+    coords="130,147,200,107,254,219,130,228"
+    href="https://developer.mozilla.org/docs/Web/HTML"
+    title="HTML Logo"
+  />
+  <area
+    id="pass14-identical1"
+    shape="poly"
+    coords="130,147,130,228,6,219,59,107"
+    href="https://developer.mozilla.org/docs/Web/HTML"
+    target="_blank"
+    aria-label="HTML Logo"
+  />
 </map>
 <img
-	usemap="#infographic-pass"
-	src="https://interactive-examples.mdn.mozilla.net/media/examples/mdn-info2.png"
-	alt="MDN infographic"
+  usemap="#infographic-pass"
+  src="https://interactive-examples.mdn.mozilla.net/media/examples/mdn-info2.png"
+  alt="MDN infographic"
 />
 
 <!-- native links, same resource (one specified as relative and another as absolute) -->
@@ -102,29 +102,29 @@
 <!-- ARIA links, with same resource, where one inside svg document -->
 <a id="pass16" href="http://deque.com">Pass 16</a>
 <svg
-	viewBox="0 0 100 100"
-	xmlns="http://www.w3.org/2000/svg"
-	xmlns:xlink="http://www.w3.org/1999/xlink"
+  viewBox="0 0 100 100"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
 >
-	<a id="pass16-identical1" href="http://deque.com" aria-label="Pass 16">
-		<circle cx="50" cy="40" r="35" />
-	</a>
+  <a id="pass16-identical1" href="http://deque.com" aria-label="Pass 16">
+    <circle cx="50" cy="40" r="35" />
+  </a>
 </svg>
 
 <!-- ARIA links, with same resource, both are inside svg document -->
 <svg
-	viewBox="0 0 100 100"
-	xmlns="http://www.w3.org/2000/svg"
-	xmlns:xlink="http://www.w3.org/1999/xlink"
+  viewBox="0 0 100 100"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
 >
-	<a href="http://deque.com" aria-label="Pass 17" id="pass17">
-		<circle cx="50" cy="40" r="35" />
-	</a>
-	<a href="http://deque.com" id="pass17-identical1">
-		<text x="50" y="90" text-anchor="middle">
-			Pass 17
-		</text>
-	</a>
+  <a href="http://deque.com" aria-label="Pass 17" id="pass17">
+    <circle cx="50" cy="40" r="35" />
+  </a>
+  <a href="http://deque.com" id="pass17-identical1">
+    <text x="50" y="90" text-anchor="middle">
+      Pass 17
+    </text>
+  </a>
 </svg>
 
 <!-- native links with identical name and empty resource (href) -->
@@ -179,34 +179,34 @@
 
 <!-- AREA with same accessible name, but different resource -->
 <map name="infographic-incomplete">
-	<area
-		id="incomplete12"
-		shape="poly"
-		coords="130,147,200,107,254,219,130,228"
-		href="https://developer.mozilla.org/docs/Web/HTML"
-		title="HTML"
-	/>
-	<area
-		id="incomplete12-identical1"
-		shape="poly"
-		coords="130,147,130,228,6,219,59,107"
-		href="https://developer.mozilla.org/docs/Web/CSS"
-		target="_blank"
-		title="HTML"
-	/>
-	<area
-		id="incomplete12-identical2"
-		shape="poly"
-		coords="130,147,200,107,130,4,59,107"
-		href="https://developer.mozilla.org/docs/Web/JavaScript"
-		target="_blank"
-		aria-label="HTML"
-	/>
+  <area
+    id="incomplete12"
+    shape="poly"
+    coords="130,147,200,107,254,219,130,228"
+    href="https://developer.mozilla.org/docs/Web/HTML"
+    title="HTML"
+  />
+  <area
+    id="incomplete12-identical1"
+    shape="poly"
+    coords="130,147,130,228,6,219,59,107"
+    href="https://developer.mozilla.org/docs/Web/CSS"
+    target="_blank"
+    title="HTML"
+  />
+  <area
+    id="incomplete12-identical2"
+    shape="poly"
+    coords="130,147,200,107,130,4,59,107"
+    href="https://developer.mozilla.org/docs/Web/JavaScript"
+    target="_blank"
+    aria-label="HTML"
+  />
 </map>
 <img
-	usemap="#infographic-incomplete"
-	src="https://interactive-examples.mdn.mozilla.net/media/examples/mdn-info2.png"
-	alt="MDN infographic"
+  usemap="#infographic-incomplete"
+  src="https://interactive-examples.mdn.mozilla.net/media/examples/mdn-info2.png"
+  alt="MDN infographic"
 />
 
 <!-- native links with different purpose -->
@@ -215,43 +215,43 @@
 
 <!-- multiple native links with differnt URLS with same filename but different pathname -->
 <a id="incomplete14" href="/test/integration/full/directory-one/foo.html"
-	>Incomplete 14</a
+  >Incomplete 14</a
 >
 <a id="incomplete14-identical1" href="foo.html">Incomplete 14</a>
 <a id="incomplete14-identical2" href="../directory-two/foo.html"
-	>Incomplete 14</a
+  >Incomplete 14</a
 >
 
 <!-- inapplicable -->
 <!-- area element has no parent map -->
 <area
-	id="inapplicable1"
-	shape="poly"
-	coords="130,147,200,107,254,219,130,228"
-	href="https://developer.mozilla.org/docs/Web/HTML"
-	title="Inapplicable AREA"
+  id="inapplicable1"
+  shape="poly"
+  coords="130,147,200,107,254,219,130,228"
+  href="https://developer.mozilla.org/docs/Web/HTML"
+  title="Inapplicable AREA"
 />
 
 <!-- area has map parent, which has no name -->
 <map>
-	<area
-		id="inapplicable2"
-		shape="poly"
-		coords="130,147,200,107,254,219,130,228"
-		href="https://developer.mozilla.org/docs/Web/HTML"
-		title="Inapplicable AREA"
-	/>
+  <area
+    id="inapplicable2"
+    shape="poly"
+    coords="130,147,200,107,254,219,130,228"
+    href="https://developer.mozilla.org/docs/Web/HTML"
+    title="Inapplicable AREA"
+  />
 </map>
 
 <!-- area has map parent, which has name, but not referred by img[usemap] -->
 <map name="iam-not-used-anywhere">
-	<area
-		id="inapplicable3"
-		shape="poly"
-		coords="130,147,200,107,254,219,130,228"
-		href="https://developer.mozilla.org/docs/Web/HTML"
-		title="Inapplicable AREA"
-	/>
+  <area
+    id="inapplicable3"
+    shape="poly"
+    coords="130,147,200,107,254,219,130,228"
+    href="https://developer.mozilla.org/docs/Web/HTML"
+    title="Inapplicable AREA"
+  />
 </map>
 
 <!-- native link with no href attribute -->
@@ -259,11 +259,11 @@
 
 <!-- AREA with map, referred by img, has no href-->
 <map name="infographic-inapplicable5">
-	<area
-		id="inapplicable5"
-		shape="poly"
-		coords="130,147,200,107,254,219,130,228"
-		title="Inapplicable HTML Logo"
-	/>
+  <area
+    id="inapplicable5"
+    shape="poly"
+    coords="130,147,200,107,254,219,130,228"
+    title="Inapplicable HTML Logo"
+  />
 </map>
 <img usemap="#infographic-inapplicable5" alt="MDN infographic" />
