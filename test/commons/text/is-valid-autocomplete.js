@@ -48,7 +48,7 @@ describe('text.isValidAutocomplete', function() {
     );
   });
 
-  it('returns true if "home", "work", "mobile", "fax" or "pager" is used before aqualifier', function() {
+  it('returns true if "home", "work", "mobile", "fax" or "pager" is used before a qualifier', function() {
     ['home', 'work', 'mobile', 'fax', 'pager'].forEach(function(qualifier) {
       assert.isTrue(
         isValidAutocomplete(qualifier + ' qualified-term', options),
