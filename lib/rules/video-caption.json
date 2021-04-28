@@ -9,6 +9,7 @@
     "section508",
     "section508.22.a"
   ],
+  "actIds": ["eac66b"],
   "metadata": {
     "description": "Ensures <video> elements have captions",
     "help": "<video> elements must have captions"

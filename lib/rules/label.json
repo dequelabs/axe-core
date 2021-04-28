@@ -11,6 +11,7 @@
     "section508.22.n",
     "ACT"
   ],
+  "actIds": ["e086e5", "307n5z"],
   "metadata": {
     "description": "Ensures every form element has a label",
     "help": "Form elements must have labels"
