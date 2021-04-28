@@ -206,7 +206,7 @@ declare namespace axe {
   }
   interface Check {
     id: string;
-    evaluate: Function | string;
+    evaluate?: Function | string;
     after?: Function | string;
     options?: any;
     matches?: string;
