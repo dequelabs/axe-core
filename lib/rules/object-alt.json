@@ -9,6 +9,7 @@
     "section508",
     "section508.22.a"
   ],
+  "actIds": ["8fc3b6"],
   "metadata": {
     "description": "Ensures <object> elements have alternate text",
     "help": "<object> elements must have alternate text"
