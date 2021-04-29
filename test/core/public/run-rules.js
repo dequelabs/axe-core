@@ -1,6 +1,7 @@
 /*global runRules */
 describe('runRules', function () {
 	'use strict';
+	var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
 
 	function iframeReady(src, context, id, cb) {
 		var i = document.createElement('iframe');
@@ -158,7 +159,7 @@ describe('runRules', function () {
 			runRules('#fixture', {}, function (results) {
 				assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 					id: 'div#target',
-					helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/div#target?application=axeAPI',
+					helpUrl: 'https://dequeuniversity.com/rules/axe/' + ver + '/div#target?application=axeAPI',
 					pageLevel: false,
 					impact: null,
 					inapplicable: [],
@@ -184,7 +185,7 @@ describe('runRules', function () {
 					tags: []
 				}, {
 					id: 'first-div',
-					helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/first-div?application=axeAPI',
+					helpUrl: 'https://dequeuniversity.com/rules/axe/' + ver + '/first-div?application=axeAPI',
 					pageLevel: false,
 					impact: null,
 					inapplicable: [],
@@ -378,7 +379,7 @@ describe('runRules', function () {
 		runRules('#fixture', {}, function (results) {
 			assert.deepEqual(JSON.parse(JSON.stringify(results)), [{
 				id: 'div#target',
-				helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/div#target?application=axeAPI',
+				helpUrl: 'https://dequeuniversity.com/rules/axe/' + ver + '/div#target?application=axeAPI',
 				pageLevel: false,
 				foo: 'bar',
 				stuff: 'blah',
@@ -409,7 +410,7 @@ describe('runRules', function () {
 				tags: []
 			}, {
 				id: 'first-div',
-				helpUrl: 'https://dequeuniversity.com/rules/axe/x.y/first-div?application=axeAPI',
+				helpUrl: 'https://dequeuniversity.com/rules/axe/' + ver + '/first-div?application=axeAPI',
 				pageLevel: false,
 				bar: 'foo',
 				stuff: 'no',
