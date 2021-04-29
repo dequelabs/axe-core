@@ -99,6 +99,5 @@
     "selenium-webdriver": "~3.6.0",
     "sri-toolbox": "^0.2.0",
     "standard-version": "^4.2.0"
-  },
-  "dependencies": {}
+  }
 }

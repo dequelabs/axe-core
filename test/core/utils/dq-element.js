@@ -5,6 +5,10 @@ describe('DqElement', function () {
 	var fixture = document.getElementById('fixture');
 	var fixtureSetup = axe.testUtils.fixtureSetup;
 
+	beforeEach(function() {
+		axe._load({});
+	});
+
 	afterEach(function () {
 		fixture.innerHTML = '';
 		axe._tree = undefined;
@@ -81,6 +85,26 @@ describe('DqElement', function () {
 				source: 'woot'
 			});
 			assert.equal(result.source, 'woot');
+		});
+
+		it('should return null if audit.noHtml is set', function() {
+			axe.configure({ noHtml: true });
+			fixture.innerHTML = '<div class="bar" id="foo">Hello!</div>';
+			var result = new DqElement(fixture.firstChild);
+			assert.isNull(result.source);
+		});
+
+		it('should not use spec object over passed element if audit.noHtml is set', function() {
+			axe.configure({ noHtml: true });
+			fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
+			var result = new DqElement(
+				fixture.firstChild,
+				{},
+				{
+					source: 'woot'
+				}
+			);
+			assert.isNull(result.source);
 		});
 	});
 

@@ -79,7 +79,8 @@ declare module axe {
 		},
 		reporter?: ReporterVersion,
 		checks?: Check[],
-		rules?: Rule[]
+		rules?: Rule[],
+		noHtml?: boolean
 	}
 	interface Check {
 		id: string,
