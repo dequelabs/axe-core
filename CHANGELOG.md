@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.4"></a>
+## [3.0.4](https://github.com/dequelabs/axe-core/compare/v3.0.3...v3.0.4) (2021-04-30)
+
+
+### Bug Fixes
+
+* add noHtml to axe.configure ([2e18f0c](https://github.com/dequelabs/axe-core/commit/2e18f0c))
+* do not allow postMessage with axe version of x.y.z ([9e62c8c](https://github.com/dequelabs/axe-core/commit/9e62c8c))
+
+
+
 <a name="3.0.3"></a>
 ## [3.0.3](https://github.com/dequelabs/axe-core/compare/v3.0.2...v3.0.3) (2018-06-04)
 

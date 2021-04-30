@@ -2,4 +2,4 @@
 
 // This enables free communication between frames with
 // to the current version of axe:
-axe.version = '3.0.3';
+axe.version = '3.0.4';
