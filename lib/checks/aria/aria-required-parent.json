@@ -2,7 +2,7 @@
   "id": "aria-required-parent",
   "evaluate": "aria-required-parent-evaluate",
   "options": {
-    "selfNestingGroupRoles": ["listitem", "treeitem"]
+    "ownGroupRoles": ["listitem", "treeitem"]
   },
   "metadata": {
     "impact": "critical",

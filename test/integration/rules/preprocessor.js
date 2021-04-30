@@ -20,7 +20,11 @@ var createIntegrationPreprocessor = function(logger) {
       // and add the test data to it
       var htmlpath = file.originalPath.replace(extRegex, '.html');
       var html = fs.readFileSync(htmlpath, 'utf-8');
-      var test = JSON.parse(content);
+      try {
+        var test = JSON.parse(content);
+      } catch (e) {
+        throw new Error('Unable to parse content of ' + file.originalPath)
+      }
       test.content = html;
 
       var result = template.replace('{}; /*tests*/', JSON.stringify(test));
