@@ -177,6 +177,22 @@ describe('aria-required-parent', function() {
     );
   });
 
+  it('should fail when group is nested in an element of the same menuitem role', function() {
+    var params = checkSetup(
+      '<div role="menu">' +
+        '<div role="menuitem">' +
+        '<div role="group">' +
+        '<div role="menuitem" id="target">' +
+        '</div></div></div></div>'
+    );
+
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-parent')
+        .apply(checkContext, params)
+    );
+  });
+
   it('should pass when intermediate node is role=none', function() {
     var params = checkSetup(
       '<div role="list"><div role="none"><p role="listitem" id="target">Nothing here.</p></div></div>'
