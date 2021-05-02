@@ -7,6 +7,7 @@
   - [Global Options](#global-options)
   - [aria-allowed-role](#aria-allowed-role)
   - [aria-required-children](#aria-required-children)
+  - [aria-required-parent](#aria-required-parent)
   - [aria-roledescription](#aria-roledescription)
   - [color-contrast](#color-contrast)
   - [page-has-heading-one](#page-has-heading-one)
@@ -103,6 +104,29 @@ All checks allow these global options:
 ]</code></pre>
         </td>
       <td align="left">List of ARIA roles that should be flagged as "Needs Review" rather than a violation if the element has no owned children</td>
+    </tr>
+  </tbody>
+</table>
+
+### aria-required-parent
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th align="left">Default</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>ownGroupRoles</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>['listitem', 'treeitem']</code></pre>
+        </td>
+      <td align="left">List of ARIA roles that when used in a group can have a grand parent with the same role. E.g. <code>list > listitem > group > listitem</code>.</td>
     </tr>
   </tbody>
 </table>
