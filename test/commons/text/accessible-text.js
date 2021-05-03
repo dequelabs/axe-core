@@ -3208,6 +3208,17 @@ describe('text.accessibleTextVirtual', function() {
       assert.equal(accessibleText(target), 'Country of origin: United States');
     });
 
+    it('passes test 160', function() {
+      fixture.innerHTML =
+        '<a id="test" href="../images/index.html">Images tool test page<img id="img18" aria-label="aria-label text" alt="logo" src="../images/Accessibility.jpg" width="50" height="50"></a>';
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#test');
+      assert.equal(
+        accessibleText(target),
+        'Images tool test page aria-label text'
+      );
+    });
+
     /**
 	// In case anyone even wants it, here's the script used to generate these test cases
 	function getTestCase(content, index = 0) {
