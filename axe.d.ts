@@ -98,6 +98,7 @@ declare namespace axe {
 		checks?: Check[];
 		rules?: Rule[];
 		locale?: Locale;
+		noHtml?: boolean;
 	}
 	interface Check {
 		id: string;
