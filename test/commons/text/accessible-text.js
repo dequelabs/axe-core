@@ -1421,9 +1421,21 @@ describe('text.accessibleTextVirtual', function() {
         assert.equal(axe.commons.text.accessibleTextVirtual(target), '');
       });
     });
+
+    it('inserts a space before img alt text', function() {
+      var accessibleText = axe.commons.text.accessibleText;
+      fixture.innerHTML =
+        '<a id="test" href="../images/index.html">Images tool test page<img id="img18" aria-label="aria-label text" alt="logo" src="../images/Accessibility.jpg" width="50" height="50"></a>';
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#test');
+      assert.equal(
+        accessibleText(target),
+        'Images tool test page aria-label text'
+      );
+    });
   });
 
-  describe('text.accessibleText acceptence tests', function() {
+  describe('text.accessibleText acceptance tests', function() {
     'use strict';
     // Tests borrowed from the AccName 1.1 testing docs
     // https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_539
@@ -3206,17 +3218,6 @@ describe('text.accessibleTextVirtual', function() {
       axe.testUtils.flatTreeSetup(fixture);
       var target = fixture.querySelector('#test');
       assert.equal(accessibleText(target), 'Country of origin: United States');
-    });
-
-    it('passes test 160', function() {
-      fixture.innerHTML =
-        '<a id="test" href="../images/index.html">Images tool test page<img id="img18" aria-label="aria-label text" alt="logo" src="../images/Accessibility.jpg" width="50" height="50"></a>';
-      axe.testUtils.flatTreeSetup(fixture);
-      var target = fixture.querySelector('#test');
-      assert.equal(
-        accessibleText(target),
-        'Images tool test page aria-label text'
-      );
     });
 
     /**
