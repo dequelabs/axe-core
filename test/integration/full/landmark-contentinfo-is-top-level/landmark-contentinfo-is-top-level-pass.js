@@ -1,4 +1,4 @@
-describe('landmark-contentinfo-is-top-level test pass', function() {
+describe.skip('landmark-contentinfo-is-top-level test pass', function() {
 	'use strict';
 	var results;
 	before(function(done) {

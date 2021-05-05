@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.1.3"></a>
+## [3.1.3](https://github.com/dequelabs/axe-core/compare/v3.1.2...v3.1.3) (2021-05-05)
+
+
+### Bug Fixes
+
+* add noHtml to axe.configure ([dee205b](https://github.com/dequelabs/axe-core/commit/dee205b))
+* do not allow postMessage with axe version of x.y.z ([e93f394](https://github.com/dequelabs/axe-core/commit/e93f394))
+
+
+
 <a name="3.1.2"></a>
 ## [3.1.2](https://github.com/dequelabs/axe-core/compare/v3.0.3...v3.1.2) (2018-09-07)
 
@@ -76,6 +87,17 @@ All notable changes to this project will be documented in this file. See [standa
 * **i18n:** Update FR (french) translation file for 3.1 release ([#1089](https://github.com/dequelabs/axe-core/issues/1089)) ([4a5cad0](https://github.com/dequelabs/axe-core/commit/4a5cad0))
 * **i18n:** Update ja (Japanese) locale for 3.1 release ([#1101](https://github.com/dequelabs/axe-core/issues/1101)) ([ef6cd86](https://github.com/dequelabs/axe-core/commit/ef6cd86))
 * **deprecate:** Deprecate audio-caption rule ([#1071](https://github.com/dequelabs/axe-core/issues/1071)) ([3b05fee](https://github.com/dequelabs/axe-core/commit/3b05fee))
+
+
+
+<a name="3.0.4"></a>
+## [3.0.4](https://github.com/dequelabs/axe-core/compare/v3.0.3...v3.0.4) (2021-04-30)
+
+
+### Bug Fixes
+
+* add noHtml to axe.configure ([2e18f0c](https://github.com/dequelabs/axe-core/commit/2e18f0c))
+* do not allow postMessage with axe version of x.y.z ([9e62c8c](https://github.com/dequelabs/axe-core/commit/9e62c8c))
 
 
 

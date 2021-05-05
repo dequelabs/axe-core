@@ -2,7 +2,7 @@ version: 2
 
 defaults: &defaults
   docker:
-    - image: circleci/node:6.12.3-browsers
+    - image: circleci/node:10-browsers
   working_directory: ~/axe-core
 
 restore_dependency_cache: &restore_dependency_cache

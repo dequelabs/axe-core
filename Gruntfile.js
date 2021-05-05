@@ -397,8 +397,8 @@ module.exports = function(grunt) {
 		'connect',
 		'mocha',
 		'parallel',
-		'eslint',
-		'markdownlint'
+		// 'eslint',
+		// 'markdownlint'
 	]);
 
 	grunt.registerTask('ci-build', [
