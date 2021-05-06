@@ -606,7 +606,7 @@
       "fail": "Das Element besitzt ein <img>-Element mit Alternativtext, der vorhandenen Text wiederholt."
     },
     "explicit-label": {
-      "pass": "Form element has an explicit <label>",
+      "pass": "Das <form>-Element besitzt ein explizites <label>.",
       "fail": "Das <form>-Element besitzt kein explizites <label>.",
       "incomplete": "Es ist nicht möglich herauszufinden ob das <form> Element ein explizites <label> besitzt."
     },
