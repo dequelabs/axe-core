@@ -31,7 +31,7 @@
     },
     "aria-hidden-focus": {
       "description": "Stellt sicher, dass ARIA-hidden Elemente keine fokussierbaren Elemente beinhalten.",
-      "help": "ARIA-hidden Elemente dürfen keine fokussierbaren Elemente beeinhalten."
+      "help": "ARIA-hidden Elemente dürfen keine fokussierbaren Elemente beinhalten."
     },
     "aria-input-field-name": {
       "description": "Stellt sicher, dass jeder ARIA-input einen zugänglichen Namen (accessible name) besitzt.",
@@ -142,7 +142,7 @@
       "help": "Der Wert des id-Attributes muss einzigartig sein."
     },
     "empty-heading": {
-      "description": "Stellt sicher, dass Überschriften einen wahrnehmbaren Text beeinhalten.",
+      "description": "Stellt sicher, dass Überschriften einen wahrnehmbaren Text beinhalten.",
       "help": "Überschriften dürfen nichtleer sein."
     },
     "focus-order-semantics": {
@@ -154,7 +154,7 @@
       "help": "form-Felder sollten nur ein label-Element besitzen."
     },
     "frame-tested": {
-      "description": "Stellt sicher, dass <iframe> und <frame>-Elemente das axe-core Script beeinhalten.",
+      "description": "Stellt sicher, dass <iframe> und <frame>-Elemente das axe-core Script beinhalten.",
       "help": "Frames müssen mit axe-core getestet werden."
     },
     "frame-title-unique": {
