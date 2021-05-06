@@ -594,7 +594,7 @@
       "fail": "Das Dokument besitzt mehr als eine main landmark."
     },
     "tabindex": {
-      "pass": "Das Element besitzt einen tabindex-Attributwert der nicht gerößer als 0 ist.",
+      "pass": "Das Element besitzt einen tabindex-Attributwert der nicht größer als 0 ist.",
       "fail": "Das Element besitzt einen tabindex-Attributwert größer als 0."
     },
     "alt-space-value": {
