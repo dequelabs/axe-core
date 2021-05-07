@@ -397,7 +397,7 @@
       }
     },
     "aria-errormessage": {
-      "pass": "aria-errormessage Attribut existiert und referenziert Elemente, welche sichtbar für Screen Reader sind, welche die entsprechende Technologie unterstützen.",
+      "pass": "aria-errormessage Attribut existiert und referenziert Elemente, die sichtbar für Screen Reader sind, welche die entsprechende Technologie unterstützen.",
       "fail": {
         "singular": "aria-errormessage Wert `${data.values}` benötigt eine Möglichkeit um entsprechend vorgeschlagen zu werden (z.B. aria-live, aria-describedby, role=alert, usw.).",
         "plural": "aria-errormessage Werte `${data.values}` benötigen eine Möglichkeit um entsprechend vorgeschlagen zu werden (z.B. aria-live, aria-describedby, role=alert, usw.)."
