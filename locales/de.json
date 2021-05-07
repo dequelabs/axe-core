@@ -542,7 +542,7 @@
     },
     "accesskeys": {
       "pass": "Alle accesskey-Attribute sind einzigartig.",
-      "fail": "Das Dokument enthält mehrere Elemente mit demselben accesskey-Attribut."
+      "fail": "Das Dokument enthält mehrere Elemente mit dem gleichen accesskey-Attribut."
     },
     "focusable-content": {
       "pass": "Das Element beeinhaltet fokussierbaren Inhalt.",
