@@ -206,7 +206,7 @@
       "help": "<input type=\"image\">-Elemente müssen einen Alternativtext besitzen."
     },
     "label-content-name-mismatch": {
-      "description": "Stellt sicher, dass Elemente die durch ihren Inhalt beschrieben sind auch ihren sichtbaren Text als Teil des zugänglichen Namens (accessible name) haben.",
+      "description": "Stellt sicher, dass Elemente, die durch ihren Inhalt beschrieben sind, auch ihren sichtbaren Text als Teil des zugänglichen Namens (accessible name) haben.",
       "help": "Elemente müssen ihren sichtbaren Text auch als Teil des zugänglichen Namens (accessible name) haben."
     },
     "label-title-only": {
