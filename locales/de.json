@@ -448,7 +448,7 @@
     "aria-valid-attr-value": {
       "pass": "ARIA Attributwerte sind gültig.",
       "fail": {
-        "singular": "Ungültiger Wert des ARIA Attribtutes ${data.values}",
+        "singular": "Ungültiger Wert des ARIA Attributes ${data.values}",
         "plural": "Ungültige Werte der ARIA Attribute: ${data.values}"
       },
       "incomplete": {
