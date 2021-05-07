@@ -282,7 +282,7 @@
       "help": "Benutzer sollten in der Lage sein, den Text um bis zu 500% vergrößern und skalieren zu können."
     },
     "meta-viewport": {
-      "description": "Stellt sicher, dass <meta name=\"viewport\"> Textskalierung und -zoom nicht verhindert.",
+      "description": "Stellt sicher, dass <meta name=\"viewport\"> Textskalierung und -zoom nicht verhindert werden.",
       "help": "Zoomen und Skalieren darf nicht deaktiviert werden."
     },
     "no-autoplay-audio": {
