@@ -182,8 +182,8 @@
       "help": "Das <html>-Element muss einen gültigen Attributwert für das lang-Attribut besitzen."
     },
     "html-xml-lang-mismatch": {
-      "description": "Stellt sicher, dass HTML Elemente mit validen lang und xml:lang Attributen diesselbe Angabe über die Sprache machen.",
-      "help": "HTML Elemente mit lang und xml:lang Attributen müssen diesselbe Sprache ausweisen."
+      "description": "Stellt sicher, dass HTML Elemente mit validen lang und xml:lang Attributen dieselbe Angabe über die Sprache machen.",
+      "help": "HTML Elemente mit lang und xml:lang Attributen müssen dieselbe Sprache ausweisen."
     },
     "identical-links-same-purpose": {
       "description": "Stellt sicher, dass links mit dem selben zugänglichen Namen (accessible name) denselben Zweck folgen.",
