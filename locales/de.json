@@ -186,7 +186,7 @@
       "help": "HTML Elemente mit lang und xml:lang Attributen müssen dieselbe Sprache ausweisen."
     },
     "identical-links-same-purpose": {
-      "description": "Stellt sicher, dass links mit dem selben zugänglichen Namen (accessible name) denselben Zweck folgen.",
+      "description": "Stellt sicher, dass Links mit dem selben zugänglichen Namen (accessible name) denselben Zweck folgen.",
       "help": "Links mit dem selben zugänglichen Namen (accessible name) verfolgen denselben Zweck."
     },
     "image-alt": {
