@@ -521,7 +521,7 @@
       }
     },
     "link-in-text-block": {
-      "pass": "Links können vom umgebenenden Text auf unterschiedliche Art und Weiße unterschieden werden.",
+      "pass": "Links können vom umgebenenden Text auf unterschiedliche Art und Weise unterschieden werden.",
       "fail": "Links können (abgesehen von einer farblichen Kennzeichnung) nicht vom umgebenden Text unterschieden werden.",
       "incomplete": {
         "default": "Das Kontrastverhältnis konnte nicht ermittelt werden.",
