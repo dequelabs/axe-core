@@ -262,7 +262,7 @@
       "help": "Links müssen wahrnehmbaren Text enthalten."
     },
     "list": {
-      "description": "Stellt sicher, dass Listen korrekt Strukturiert sind.",
+      "description": "Stellt sicher, dass Listen korrekt strukturiert sind.",
       "help": "<ul>- und <ol>-Elemente dürfen unmittelbar nur <li>-, <script>- oder <template>-Elemente enthalten."
     },
     "listitem": {
