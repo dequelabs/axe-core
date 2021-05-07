@@ -266,7 +266,7 @@
       "help": "<ul>- und <ol>-Elemente dürfen unmittelbar nur <li>-, <script>- oder <template>-Elemente enthalten."
     },
     "listitem": {
-      "description": "Stellt sicher, dass <li>-Elemente semantisch Korrekt verwendet werden.",
+      "description": "Stellt sicher, dass <li>-Elemente semantisch korrekt verwendet werden.",
       "help": "<li>-Elemente müssen in einem <ul>- oder <ol>-Element enthalten sein."
     },
     "marquee": {
