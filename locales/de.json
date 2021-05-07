@@ -302,7 +302,7 @@
       "help": "Die Seite muss eine Überschrift der ersten Ebene enthalten."
     },
     "presentation-role-conflict": {
-      "description": "Markiert Elemente welche eine Rolle besitzen, welche none oder presentation ist und welche eine Rollenauflösung benötigen.",
+      "description": "Markiert Elemente welche eine Rolle besitzen, die none oder presentation ist und die eine Rollenauflösung benötigen.",
       "help": "Elemente mit Rolle none oder presentation dürfen mit anderen Rollen nicht in Konflikt stehen."
     },
     "region": {
