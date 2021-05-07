@@ -599,7 +599,7 @@
     },
     "alt-space-value": {
       "pass": "Element hat ein valides alt Attribut.",
-      "fail": "Element hat ein alt Attribut, welches ausschließlich Leerzeichen beeinhaltet, welche jedoch nicht durch Screenreader ignoriert werden."
+      "fail": "Element hat ein alt Attribut, welches ausschließlich Leerzeichen beeinhaltet, die jedoch nicht durch Screenreader ignoriert werden."
     },
     "duplicate-img-label": {
       "pass": "Das Element besitzt einen Alternativtext der anderweitig vorhanden Text nicht wiederholt.",
