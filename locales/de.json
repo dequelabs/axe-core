@@ -557,7 +557,7 @@
       "fail": "Element sollte fokussierbar sein."
     },
     "focusable-modal-open": {
-      "pass": "Keine fokussierbaren Elemente während ein Model offen ist.",
+      "pass": "Keine fokussierbaren Elemente während ein modaler Dialog offen ist.",
       "incomplete": "Üerprüfe ob Elemente fokussierbar während des derzeitigen Status sind."
     },
     "focusable-no-name": {
