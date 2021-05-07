@@ -486,8 +486,8 @@
       }
     },
     "is-element-focusable": {
-      "pass": "Element ist Fokussierbar.",
-      "fail": "Element ist nicht Fokussierbar."
+      "pass": "Element ist fokussierbar.",
+      "fail": "Element ist nicht fokussierbar."
     },
     "no-implicit-explicit-label": {
       "pass": "Kein Unterschied zwischen dem <label> und dem zugänglichen Namen (accessible name).",
