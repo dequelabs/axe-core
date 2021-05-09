@@ -766,7 +766,7 @@
       "fail": "Es existiert kein aria-label-Attribut oder das Attribut ist leer."
     },
     "aria-labelledby": {
-      "pass": "Das aria-labelledby-Attribut existiert und referenziert es Element, welches für Screen Reader sichtbar ist.",
+      "pass": "Das aria-labelledby-Attribut existiert und referenziert ein Element, welches für Screen Reader sichtbar ist.",
       "fail": "Das aria-labelledby-Attribut existiert nicht oder referenziert ein Element, das nicht existiert, nicht sichtbar oder leer ist.",
       "incomplete": "Es sollte sichergestellt werden, dass aria-labelledby auf ein existierendes Element verweist."
     },
