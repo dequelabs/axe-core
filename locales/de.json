@@ -725,7 +725,7 @@
       "fail": "Kein gültiger Skip-Link gefunden."
     },
     "landmark": {
-      "pass": "Die Seite ebsitzt eine landmark region.",
+      "pass": "Die Seite besitzt eine landmark region.",
       "fail": "Die Seite besitzt keine landmark region."
     },
     "meta-refresh": {
