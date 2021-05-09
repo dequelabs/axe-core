@@ -354,8 +354,8 @@
       "help": "In Tabellen, die größer als 3 mal 3 sind, müssen alle nichtleeren <td>-Elemente einen zugehörigen Tabellenkopf haben."
     },
     "td-headers-attr": {
-      "description": "Stellt sicher, dass jede Zelle in einer Tabelle, welche das header-Attribute verwenden, sich nur auf andere Zellen derselben Tabelle beziehen.",
-      "help": "Innerhalb eines <table>-Elementes dürfen sich Zellen, die das header-Attribut verwenden, nur auf andere Zellen derselben Tabelle beziehen."
+      "description": "Stellt sicher, dass jede Zelle in einer Tabelle, welche das headers-Attribute verwenden, sich nur auf andere Zellen derselben Tabelle beziehen.",
+      "help": "Innerhalb eines <table>-Elementes dürfen sich Zellen, die das headers-Attribut verwenden, nur auf andere Zellen derselben Tabelle beziehen."
     },
     "th-has-data-cells": {
       "description": "Stellt sicher, dass jeder Tabellenkopf in einer Datentabelle sich auf Datenzellen bezieht.",
@@ -884,8 +884,8 @@
       "fail": "Nicht alle (nichtleeren) Datenzellen haben eine Tabellenkopfzelle."
     },
     "td-headers-attr": {
-      "pass": "Das header-Attribut wird ausschließlich dafür verwendet, um auf andere Zellen in der Tabelle zu verweisen.",
-      "incomplete": "Das header-Attribut ist leer.",
+      "pass": "Das headers-Attribut wird ausschließlich dafür verwendet, um auf andere Zellen in der Tabelle zu verweisen.",
+      "incomplete": "Das headers-Attribut ist leer.",
       "fail": "Das headers-Attribut wird nicht ausschließlich dafür verwendet, um auf andere Zellen in der Tabelle zu verweisen."
     },
     "th-has-data-cells": {
