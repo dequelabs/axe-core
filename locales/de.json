@@ -780,7 +780,7 @@
     "button-has-visible-text": {
       "pass": "Das Element besitzt Text, der für Screenreader sichtbar ist.",
       "fail": "Das Element besitzt keinen Text, der für Screenreader sichtbar ist.",
-      "incomplete": "Unable to determine if element has children"
+      "incomplete": "Ob das Element über Kindelemente bzw. textuelle Inhalte verfügt, kann nicht ermittelt werden."
     },
     "doc-has-title": {
       "pass": "Test",
