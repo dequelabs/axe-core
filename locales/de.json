@@ -844,7 +844,7 @@
         "default": "Die Standardsemantik des Elements wurden nicht mit der Rolle role=\"none\" oder role=\"presentation\" überschrieben.",
         "globalAria": "Die Rolle des Elements ist nicht präsentativ aufgrund des globalen ARIA Attributs.",
         "focusable": "Die Rolle des Elements ist nicht präsentativ aufgrund der Möglichkeit es zu fokussieren.",
-        "both": "Die Rolle des Elements ist nicht präsentativ aufgrund des zugewiesenen globalen ARIA Attributs und der Möglichkeit es zu Fokussieren."
+        "both": "Die Rolle des Elements ist nicht präsentativ aufgrund des zugewiesenen globalen ARIA Attributs und der Möglichkeit es zu fokussieren."
       }
     },
     "role-none": {
