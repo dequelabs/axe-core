@@ -151,7 +151,8 @@ axe.configure({
 	reporter: 'option',
 	checks: [Object],
 	rules: [Object],
-	locale: Object
+	locale: Object,
+	noHtml: Boolean
 });
 ```
 
@@ -187,6 +188,7 @@ axe.configure({
       - `matches` - string(optional, default `*`). A filtering CSS selector that will exclude elements that do not match the CSS selector.
   - `disableOtherRules` - Disables all rules not included in the `rules` property.
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
+  - `noHtml` - Disables the HTML output of nodes from rules.
 
 **Returns:** Nothing
 

@@ -114,7 +114,7 @@
 		"markdown-table": "^1.1.2",
 		"minami": "^1.2.3",
 		"mkdirp": "^0.5.1",
-		"mocha": "^6.0.0",
+		"mocha": "^5.2.0",
 		"prettier": "^1.14.0",
 		"retire": "^2.0.1",
 		"revalidator": "~0.3.1",
@@ -124,7 +124,6 @@
 		"typescript": "^2.9.2",
 		"uglify-js": "^3.4.4"
 	},
-	"dependencies": {},
 	"lint-staged": {
 		"*.{md,json,ts}": [
 			"prettier --write",

@@ -97,6 +97,13 @@ describe('Audit', function() {
 		assert.isFunction(Audit);
 	});
 
+	describe('defaults', function() {
+		it('should set noHtml', function() {
+			var audit = new Audit();
+			assert.isFalse(audit.noHtml);
+		});
+	});
+
 	describe('Audit#_constructHelpUrls', function() {
 		it('should create default help URLS', function() {
 			var audit = new Audit();
@@ -367,6 +374,13 @@ describe('Audit', function() {
 			assert.equal(audit.checks.target.options, 'jane');
 			audit.resetRulesAndChecks();
 			assert.equal(audit.checks.target, undefined);
+		});
+
+		it('should reset noHtml', function() {
+			var audit = new Audit();
+			audit.noHtml = true;
+			audit.resetRulesAndChecks();
+			assert.isFalse(audit.noHtml);
 		});
 	});
 
