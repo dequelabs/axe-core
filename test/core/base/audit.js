@@ -1,6 +1,7 @@
 /*global Audit, Rule */
 describe('Audit', function() {
 	'use strict';
+	var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
 
 	var a, getFlattenedTree;
 	var isNotCalled = function(err) {
@@ -117,7 +118,9 @@ describe('Audit', function() {
 			audit._constructHelpUrls();
 			assert.deepEqual(audit.data.rules.target, {
 				helpUrl:
-					'https://dequeuniversity.com/rules/axe/x.y/target?application=axeAPI'
+					'https://dequeuniversity.com/rules/axe/' +
+					ver +
+					'/target?application=axeAPI'
 			});
 		});
 		it('should use changed branding', function() {
@@ -133,7 +136,9 @@ describe('Audit', function() {
 			audit._constructHelpUrls();
 			assert.deepEqual(audit.data.rules.target, {
 				helpUrl:
-					'https://dequeuniversity.com/rules/thing/x.y/target?application=axeAPI'
+					'https://dequeuniversity.com/rules/thing/' +
+					ver +
+					'/target?application=axeAPI'
 			});
 		});
 		it('should use changed application', function() {
@@ -149,7 +154,9 @@ describe('Audit', function() {
 			audit._constructHelpUrls();
 			assert.deepEqual(audit.data.rules.target, {
 				helpUrl:
-					'https://dequeuniversity.com/rules/axe/x.y/target?application=thing'
+					'https://dequeuniversity.com/rules/axe/' +
+					ver +
+					'/target?application=thing'
 			});
 		});
 
@@ -161,7 +168,9 @@ describe('Audit', function() {
 				selector: 'bob',
 				metadata: {
 					helpUrl:
-						'https://dequeuniversity.com/rules/myproject/x.y/target1?application=axeAPI'
+						'https://dequeuniversity.com/rules/myproject/' +
+						ver +
+						'/target1?application=axeAPI'
 				}
 			});
 			audit.addRule({
@@ -172,7 +181,9 @@ describe('Audit', function() {
 
 			assert.equal(
 				audit.data.rules.target1.helpUrl,
-				'https://dequeuniversity.com/rules/myproject/x.y/target1?application=axeAPI'
+				'https://dequeuniversity.com/rules/myproject/' +
+					ver +
+					'/target1?application=axeAPI'
 			);
 			assert.isUndefined(audit.data.rules.target2);
 
@@ -182,11 +193,15 @@ describe('Audit', function() {
 
 			assert.equal(
 				audit.data.rules.target1.helpUrl,
-				'https://dequeuniversity.com/rules/myproject/x.y/target1?application=axeAPI'
+				'https://dequeuniversity.com/rules/myproject/' +
+					ver +
+					'/target1?application=axeAPI'
 			);
 			assert.equal(
 				audit.data.rules.target2.helpUrl,
-				'https://dequeuniversity.com/rules/thing/x.y/target2?application=axeAPI'
+				'https://dequeuniversity.com/rules/thing/' +
+					ver +
+					'/target2?application=axeAPI'
 			);
 		});
 		it('understands prerelease type version numbers', function() {
@@ -205,24 +220,6 @@ describe('Audit', function() {
 			assert.equal(
 				audit.data.rules.target.helpUrl,
 				'https://dequeuniversity.com/rules/axe/3.2/target?application=axeAPI'
-			);
-		});
-		it('sets x.y as version for invalid versions', function() {
-			var tempVersion = axe.version;
-			var audit = new Audit();
-			audit.addRule({
-				id: 'target',
-				matches: 'function () {return "hello";}',
-				selector: 'bob'
-			});
-
-			axe.version = 'in-3.0-valid';
-			audit._constructHelpUrls();
-
-			axe.version = tempVersion;
-			assert.equal(
-				audit.data.rules.target.helpUrl,
-				'https://dequeuniversity.com/rules/axe/x.y/target?application=axeAPI'
 			);
 		});
 		it('matches major release versions', function() {
@@ -280,7 +277,9 @@ describe('Audit', function() {
 			});
 			assert.deepEqual(audit.data.rules.target, {
 				helpUrl:
-					'https://dequeuniversity.com/rules/axe/x.y/target?application=thing'
+					'https://dequeuniversity.com/rules/axe/' +
+					ver +
+					'/target?application=thing'
 			});
 		});
 		it('should call _constructHelpUrls even when nothing changed', function() {
@@ -295,7 +294,9 @@ describe('Audit', function() {
 			audit.setBranding(undefined);
 			assert.deepEqual(audit.data.rules.target, {
 				helpUrl:
-					'https://dequeuniversity.com/rules/axe/x.y/target?application=axeAPI'
+					'https://dequeuniversity.com/rules/axe/' +
+					ver +
+					'/target?application=axeAPI'
 			});
 		});
 		it('should not replace custom set branding', function() {
@@ -306,7 +307,9 @@ describe('Audit', function() {
 				selector: 'bob',
 				metadata: {
 					helpUrl:
-						'https://dequeuniversity.com/rules/customer-x/x.y/target?application=axeAPI'
+						'https://dequeuniversity.com/rules/customer-x/' +
+						ver +
+						'/target?application=axeAPI'
 				}
 			});
 			audit.setBranding({
@@ -315,7 +318,9 @@ describe('Audit', function() {
 			});
 			assert.equal(
 				audit.data.rules.target.helpUrl,
-				'https://dequeuniversity.com/rules/customer-x/x.y/target?application=axeAPI'
+				'https://dequeuniversity.com/rules/customer-x/' +
+					ver +
+					'/target?application=axeAPI'
 			);
 		});
 	});

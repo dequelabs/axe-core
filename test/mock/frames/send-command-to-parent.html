@@ -1,22 +1,20 @@
 <!doctype html>
 <html>
 <head>
-  <title>Message Iframe Fixture</title>
+  <title>Double responding frame</title>
 </head>
 <body>
 <script src="../../../lib/core/utils/uuid.js"></script>
 <script>
 var utils = {};
 var axe = {
-	version: '3.2.3'
+  version: '3.0.3'
 };
 </script>
 <script src="../../../lib/core/utils/respondable.js"></script>
 
 <script>
-  utils.respondable.subscribe('axe.ping', function (data, keepalive, respond) {
-    respond({axe: true});
-  });
+  utils.respondable(window.parent, 'catman',  null, undefined);
 </script>
 </body>
 </html>
