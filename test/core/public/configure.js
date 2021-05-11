@@ -240,6 +240,14 @@ describe('axe.configure', function() {
 		assert.equal(axe._audit.rules[3].enabled, true);
 	});
 
+	it("should allow overriding an audit's noHtml", function() {
+		axe._load({});
+		assert.isFalse(axe._audit.noHtml);
+
+		axe.configure({ noHtml: true });
+		assert.isTrue(axe._audit.noHtml);
+	});
+
 	describe('given a locale object', function() {
 		beforeEach(function() {
 			axe._load({});
