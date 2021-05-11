@@ -6,8 +6,11 @@ describe('axe.utils.respondable', function() {
 	var getMockUUID = function() {
 		return mockUUID;
 	};
+	var version;
+	var fixture = document.querySelector('#fixture');
 
 	beforeEach(function() {
+		version = axe.version;
 		originalUUID = window.uuid.v1;
 		window.uuid.v1 = getMockUUID;
 		mockUUID = originalUUID();
@@ -15,6 +18,8 @@ describe('axe.utils.respondable', function() {
 
 	afterEach(function() {
 		window.uuid.v1 = originalUUID;
+		axe.version = version;
+		fixture.innerHTML = '';
 	});
 
 	it('should be a function', function() {
@@ -117,7 +122,7 @@ describe('axe.utils.respondable', function() {
 		event.initEvent('message', true, true);
 		event.data = JSON.stringify({
 			_respondable: true,
-			_source: 'axeAPI.2.0.0',
+			_source: 'axeAPI.' + axe.version,
 			topic: 'Death star',
 			message: 'Help us Obi-Wan',
 			uuid: mockUUID
@@ -130,53 +135,6 @@ describe('axe.utils.respondable', function() {
 		});
 		document.dispatchEvent(event);
 		assert.isTrue(success);
-	});
-
-	it('should allow messages with _source axeAPI.x.y.z', function() {
-		var success = false;
-		var event = document.createEvent('Event');
-		// Define that the event name is 'build'.
-		event.initEvent('message', true, true);
-		event.data = JSON.stringify({
-			_respondable: true,
-			_source: 'axeAPI.x.y.z',
-			topic: 'Death star',
-			message: 'Help us Obi-Wan',
-			uuid: mockUUID
-		});
-		event.source = window;
-
-		axe.utils.respondable(window, 'Death star', null, true, function(data) {
-			success = true;
-			assert.equal(data, 'Help us Obi-Wan');
-		});
-		document.dispatchEvent(event);
-		assert.isTrue(success);
-	});
-
-	it('should allow messages if the axe version is x.y.z', function() {
-		var success = false;
-		var event = document.createEvent('Event');
-		var v = axe.version;
-		axe.version = 'x.y.z';
-		// Define that the event name is 'build'.
-		event.initEvent('message', true, true);
-		event.data = JSON.stringify({
-			_respondable: true,
-			_source: 'axeAPI.2.0.0',
-			topic: 'Death star',
-			message: 'Help us Obi-Wan',
-			uuid: mockUUID
-		});
-		event.source = window;
-
-		axe.utils.respondable(window, 'Death star', null, true, function(data) {
-			success = true;
-			assert.equal(data, 'Help us Obi-Wan');
-		});
-		document.dispatchEvent(event);
-		assert.isTrue(success);
-		axe.version = v;
 	});
 
 	it('should reject messages if the axe version is different', function() {
@@ -307,7 +265,7 @@ describe('axe.utils.respondable', function() {
 		event.initEvent('message', true, true);
 		event.data = JSON.stringify({
 			_respondable: true,
-			_source: 'axeAPI.2.0.0',
+			_source: 'axeAPI.' + axe.version,
 			topic: 'Death star',
 			error: {
 				name: 'ReferenceError',
@@ -336,7 +294,7 @@ describe('axe.utils.respondable', function() {
 		event.initEvent('message', true, true);
 		event.data = JSON.stringify({
 			_respondable: true,
-			_source: 'axeAPI.2.0.0',
+			_source: 'axeAPI.' + axe.version,
 			topic: 'Death star',
 			error: {
 				name: 'evil',
@@ -499,6 +457,26 @@ describe('axe.utils.respondable', function() {
 					done();
 				}
 			});
+		});
+
+		it('does not run if the command did not come from the parent iframe', function(done) {
+			var published = false;
+			axe.utils.respondable.subscribe('catman', function() {
+				published = true;
+			});
+
+			var frame = document.createElement('iframe');
+			frame.addEventListener('load', function() {
+				axe._tree = axe.utils.getFlattenedTree(document.documentElement);
+				setTimeout(function() {
+					assert.ok(!published, 'Subscriber should not be called');
+					done();
+				}, 10);
+			});
+
+			frame.id = 'level0';
+			frame.src = '../mock/frames/send-command-to-parent.html';
+			fixture.appendChild(frame);
 		});
 	});
 });
