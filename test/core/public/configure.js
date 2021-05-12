@@ -3,6 +3,7 @@ describe('axe.configure', function() {
 	'use strict';
 	var fixture = document.getElementById('fixture');
 	var axeVersion = axe.version;
+	var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
 
 	afterEach(function() {
 		fixture.innerHTML = '';
@@ -70,7 +71,7 @@ describe('axe.configure', function() {
 		assert.lengthOf(axe._audit.rules, 1);
 		assert.equal(
 			axe._audit.data.rules.bob.helpUrl,
-			'https://dequeuniversity.com/rules/axe/x.y/bob?application=axeAPI'
+			'https://dequeuniversity.com/rules/axe/' + ver + '/bob?application=axeAPI'
 		);
 		axe.configure({
 			branding: {
@@ -80,7 +81,9 @@ describe('axe.configure', function() {
 		});
 		assert.equal(
 			axe._audit.data.rules.bob.helpUrl,
-			'https://dequeuniversity.com/rules/thung/x.y/bob?application=thing'
+			'https://dequeuniversity.com/rules/thung/' +
+				ver +
+				'/bob?application=thing'
 		);
 	});
 
@@ -103,7 +106,9 @@ describe('axe.configure', function() {
 
 		assert.equal(
 			axe._audit.data.rules.bob.helpUrl,
-			'https://dequeuniversity.com/rules/thung/x.y/bob?application=thing'
+			'https://dequeuniversity.com/rules/thung/' +
+				ver +
+				'/bob?application=thing'
 		);
 	});
 
