@@ -125,6 +125,7 @@ declare namespace axe {
 		rules?: Rule[];
 		locale?: Locale;
 		axeVersion?: string;
+		noHtml?: boolean;
 	}
 	interface Check {
 		id: string;
