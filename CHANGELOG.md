@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.3](https://github.com/dequelabs/axe-core/compare/v3.4.2...v3.4.3) (2021-05-12)
+
+### Bug Fixes
+
+- add noHtml to axe.configure ([eec4282](https://github.com/dequelabs/axe-core/commit/eec42827c971ca60b3363d45d427ebd969fe0156))
+- do not allow postMessage with axe version of x.y.z ([b317100](https://github.com/dequelabs/axe-core/commit/b3171004a6a427a74d65aee3d311315691b635cc))
+
 ### [3.4.2](https://github.com/dequelabs/axe-core/compare/v3.4.0...v3.4.2) (2020-02-04)
 
 ### Features
@@ -103,6 +110,13 @@ All notable changes to this project will be documented in this file. See [standa
 - **runVirtualNode:** Allow serialised nodes [experimental](<[512d51b](https://github.com/dequelabs/axe-core/commit/512d51b)>)
 - **video-description:** deprecate video-description rule ([#1737](https://github.com/dequelabs/axe-core/issues/1737)) ([e91c25f](https://github.com/dequelabs/axe-core/commit/e91c25f))
 
+### [3.3.4](https://github.com/dequelabs/axe-core/compare/v3.3.3...v3.3.4) (2021-05-11)
+
+### Bug Fixes
+
+- add noHtml to axe.configure ([ec5a4d7](https://github.com/dequelabs/axe-core/commit/ec5a4d783ad8a417df65dc1e5e4781efdeddbfa8))
+- do not allow postMessage with axe version of x.y.z ([7ccd858](https://github.com/dequelabs/axe-core/commit/7ccd858fb2b58b29a955f8174298f94f87f71d26))
+
 ### [3.3.2](https://github.com/dequelabs/axe-core/compare/v3.3.1...v3.3.2) (2019-08-12)
 
 ### Bug Fixes
@@ -203,6 +217,20 @@ All notable changes to this project will be documented in this file. See [standa
 - only run IE11 tests in appveyor ([#1571](https://github.com/dequelabs/axe-core/issues/1571)) ([35261ef](https://github.com/dequelabs/axe-core/commit/35261ef))
 - watch integration html and json files ([#1598](https://github.com/dequelabs/axe-core/issues/1598)) ([3de0b05](https://github.com/dequelabs/axe-core/commit/3de0b05))
 
+## [3.2.4](https://github.com/dequelabs/axe-core/compare/v3.2.3...v3.2.4) (2021-05-10)
+
+### Bug Fixes
+
+- add noHtml to axe.configure ([e994323](https://github.com/dequelabs/axe-core/commit/e99432311dfd45d20c8bafe823f7f8eb61065cb0))
+- do not allow postMessage with axe version of x.y.z ([a05264f](https://github.com/dequelabs/axe-core/commit/a05264f0d1615e0434d5dd1efa4fca5ef76f7021))
+
+## [3.2.3](https://github.com/dequelabs/axe-core/compare/v3.2.2...v3.2.3) (2020-02-04)
+
+### Bug Fixes
+
+- **color-contrast:** support IE extension context ([#2008](https://github.com/dequelabs/axe-core/issues/2008)) ([cd651a0](https://github.com/dequelabs/axe-core/commit/cd651a0713fa2f4b307cc7fc2be033f8636b40d2))
+- **unicode:** stop parsing escaped unicode strings ([#1997](https://github.com/dequelabs/axe-core/issues/1997)) ([523a31c](https://github.com/dequelabs/axe-core/commit/523a31c19fefd330e0b4f4c45f51d400c6f66164))
+
 ## [3.2.2](https://github.com/dequelabs/axe-core/compare/v3.2.0...v3.2.2) (2019-03-07)
 
 ### Bug Fixes
@@ -278,6 +306,15 @@ All notable changes to this project will be documented in this file. See [standa
 
 - Deprecate axe.commons.utils namespace ([#1330](https://github.com/dequelabs/axe-core/issues/1330)) ([df93272](https://github.com/dequelabs/axe-core/commit/df93272))
 
+<a name="3.1.3"></a>
+
+## [3.1.3](https://github.com/dequelabs/axe-core/compare/v3.1.2...v3.1.3) (2021-05-05)
+
+### Bug Fixes
+
+- add noHtml to axe.configure ([dee205b](https://github.com/dequelabs/axe-core/commit/dee205b))
+- do not allow postMessage with axe version of x.y.z ([e93f394](https://github.com/dequelabs/axe-core/commit/e93f394))
+
 <a name="3.1.2"></a>
 
 ## [3.1.2](https://github.com/dequelabs/axe-core/compare/v3.0.3...v3.1.2) (2018-09-07)
@@ -347,6 +384,13 @@ All notable changes to this project will be documented in this file. See [standa
 - **i18n:** Update FR (french) translation file for 3.1 release ([#1089](https://github.com/dequelabs/axe-core/issues/1089)) ([4a5cad0](https://github.com/dequelabs/axe-core/commit/4a5cad0))
 - **i18n:** Update ja (Japanese) locale for 3.1 release ([#1101](https://github.com/dequelabs/axe-core/issues/1101)) ([ef6cd86](https://github.com/dequelabs/axe-core/commit/ef6cd86))
 - **deprecate:** Deprecate audio-caption rule ([#1071](https://github.com/dequelabs/axe-core/issues/1071)) ([3b05fee](https://github.com/dequelabs/axe-core/commit/3b05fee))
+
+## [3.0.4](https://github.com/dequelabs/axe-core/compare/v3.0.3...v3.0.4) (2021-04-30)
+
+### Bug Fixes
+
+- add noHtml to axe.configure ([2e18f0c](https://github.com/dequelabs/axe-core/commit/2e18f0c))
+- do not allow postMessage with axe version of x.y.z ([9e62c8c](https://github.com/dequelabs/axe-core/commit/9e62c8c))
 
 <a name="3.0.3"></a>
 
