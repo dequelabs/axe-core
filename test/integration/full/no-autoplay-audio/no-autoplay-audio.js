@@ -22,7 +22,7 @@ describe('landmark-no-duplicate-main test failure', function() {
 	});
 
 	describe('passes', function() {
-		it('should find 5', function() {
+		(isIE11 ? xit : it)('should find 5', function() {
 			assert.isDefined(results.passes);
 
 			var passNodes = results.passes[0].nodes;
@@ -36,7 +36,7 @@ describe('landmark-no-duplicate-main test failure', function() {
 	});
 
 	describe('violations', function() {
-		it('should find 4', function() {
+		(isIE11 ? xit : it)('should find 4', function() {
 			assert.isDefined(results.violations);
 
 			var failNodes = results.violations[0].nodes;
@@ -48,11 +48,11 @@ describe('landmark-no-duplicate-main test failure', function() {
 		});
 	});
 
-	it('should find 0 inapplicable', function() {
+	(isIE11 ? xit : it)('should find 0 inapplicable', function() {
 		assert.lengthOf(results.inapplicable, 0);
 	});
 
-	it('should find 0 incomplete', function() {
+	(isIE11 ? xit : it)('should find 0 incomplete', function() {
 		assert.lengthOf(results.incomplete, 0);
 	});
 });
