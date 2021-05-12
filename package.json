@@ -119,7 +119,7 @@
 		"memoizee": "^0.4.14",
 		"minami": "^1.2.3",
 		"mkdirp": "^0.5.1",
-		"mocha": "^6.1.2",
+		"mocha": "^5.2.0",
 		"mocha-headless-chrome": "^2.0.3",
 		"prettier": "^1.17.1",
 		"puppeteer": "^2.0.0",
@@ -132,7 +132,6 @@
 		"uglify-js": "^3.4.4",
 		"weakmap-polyfill": "^2.0.0"
 	},
-	"dependencies": {},
 	"lint-staged": {
 		"*.{md,json,ts,html}": [
 			"prettier --write",

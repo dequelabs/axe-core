@@ -166,7 +166,8 @@ axe.configure({
 	checks: [Object],
 	rules: [Object],
 	locale: Object,
-	axeVersion: String
+	axeVersion: String,
+	noHtml: Boolean
 });
 ```
 
@@ -206,6 +207,7 @@ axe.configure({
   - `disableOtherRules` - Disables all rules not included in the `rules` property.
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
   - `axeVersion` - Set the compatible version of a custom rule with the current axe version. Compatible versions are all patch and minor updates that are the same as, or newer than those of the `axeVersion` property.
+  - `noHtml` - Disables the HTML output of nodes from rules.
 
 **Returns:** Nothing
 
