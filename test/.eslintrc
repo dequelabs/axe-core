@@ -18,7 +18,8 @@
     "chai": true,
     "assert": true,
     "axe": true,
-    "helpers": true
+    "helpers": true,
+    "sinon": true
   },
   "rules": {
     "no-bitwise": 2,

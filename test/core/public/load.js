@@ -31,22 +31,19 @@ describe('axe._load', function() {
 	});
 
 	describe('respondable subscriber', function() {
-		it('should add a respondable subscriber for axe.ping', function(done) {
+		it('should add a respondable subscriber for axe.ping', function() {
 			var mockAudit = {
 				rules: [{ id: 'monkeys' }, { id: 'bananas' }]
 			};
 
+			var spy = sinon.spy(axe.utils.respondable, 'subscribe');
+
 			axe._load(mockAudit);
 
-			var win = {
-				postMessage: function(message) {
-					var data = JSON.parse(message);
-					assert.deepEqual(data.message, { axe: true });
-					done();
-				}
-			};
+			assert.isTrue(spy.called);
+			assert.equal(spy.firstCall.args[0], 'axe.ping');
 
-			axe.utils.respondable._publish(win, { topic: 'axe.ping' });
+			spy.restore();
 		});
 
 		describe('given command rules', function() {

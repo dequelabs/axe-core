@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Double responding frame</title>
+	</head>
+	<body>
+		<script src="../../../lib/core/utils/uuid.js"></script>
+		<script>
+			var utils = {};
+			var axe = {
+				version: '4.0.2'
+			};
+		</script>
+		<script src="../../../tmp/core/base/cache.js"></script>
+		<script src="../../../lib/core/utils/respondable.js"></script>
+
+		<script>
+			utils.respondable(window.parent, 'catman', null, undefined);
+		</script>
+	</body>
+</html>

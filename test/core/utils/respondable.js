@@ -1,5 +1,16 @@
 describe('axe.utils.respondable', function() {
 	'use strict';
+	var version;
+	var fixture = document.querySelector('#fixture');
+
+	beforeEach(function() {
+		version = axe.version;
+	});
+
+	afterEach(function() {
+		axe.version = version;
+		fixture.innerHTML = '';
+	});
 
 	it('should be a function', function() {
 		assert.isFunction(axe.utils.respondable);
@@ -101,36 +112,7 @@ describe('axe.utils.respondable', function() {
 		it('should pass messages that have all required properties', function(done) {
 			eventData = {
 				_respondable: true,
-				_source: 'axeAPI.2.0.0',
-				message: 'Help us Obi-Wan',
-				_axeuuid: 'otherAxe'
-			};
-
-			axe.utils.respondable(win, 'Death star', null, true, function(data) {
-				assert.equal(data, 'Help us Obi-Wan');
-				done();
-			});
-		});
-
-		it('should allow messages with _source axeAPI.x.y.z', function(done) {
-			eventData = {
-				_respondable: true,
-				_source: 'axeAPI.x.y.z',
-				message: 'Help us Obi-Wan',
-				_axeuuid: 'otherAxe'
-			};
-
-			axe.utils.respondable(win, 'Death star', null, true, function(data) {
-				assert.equal(data, 'Help us Obi-Wan');
-				done();
-			});
-		});
-
-		it('should allow messages if the axe version is x.y.z', function(done) {
-			axe.version = 'x.y.z';
-			eventData = {
-				_respondable: true,
-				_source: 'axeAPI.2.0.0',
+				_source: 'axeAPI.' + axe.version,
 				message: 'Help us Obi-Wan',
 				_axeuuid: 'otherAxe'
 			};
@@ -162,7 +144,7 @@ describe('axe.utils.respondable', function() {
 		it('should reject messages that are that are not strings', function(done) {
 			eventData = {
 				_respondable: true,
-				_source: 'axeAPI.2.0.0',
+				_source: 'axeAPI.' + axe.version,
 				message: 'Help us Obi-Wan',
 				_axeuuid: 'otherAxe'
 			};
@@ -188,7 +170,7 @@ describe('axe.utils.respondable', function() {
 		it('should reject messages that are invalid stringified objects', function(done) {
 			eventData = {
 				_respondable: true,
-				_source: 'axeAPI.2.0.0',
+				_source: 'axeAPI.' + axe.version,
 				message: 'Help us Obi-Wan',
 				_axeuuid: 'otherAxe'
 			};
@@ -214,7 +196,7 @@ describe('axe.utils.respondable', function() {
 		it('should reject messages that do not have a uuid', function(done) {
 			eventData = {
 				_respondable: true,
-				_source: 'axeAPI.2.0.0',
+				_source: 'axeAPI.' + axe.version,
 				message: 'Help us Obi-Wan',
 				_axeuuid: 'otherAxe'
 			};
@@ -238,7 +220,7 @@ describe('axe.utils.respondable', function() {
 		it('should reject messages that do not have a matching uuid', function(done) {
 			eventData = {
 				_respondable: true,
-				_source: 'axeAPI.2.0.0',
+				_source: 'axeAPI.' + axe.version,
 				message: 'Help us Obi-Wan',
 				_axeuuid: 'otherAxe'
 			};
@@ -263,7 +245,7 @@ describe('axe.utils.respondable', function() {
 
 		it('should reject messages that do not have `_respondable: true`', function(done) {
 			eventData = {
-				_source: 'axeAPI.2.0.0',
+				_source: 'axeAPI.' + axe.version,
 				message: 'Help us Obi-Wan',
 				_axeuuid: 'otherAxe'
 			};
@@ -280,7 +262,7 @@ describe('axe.utils.respondable', function() {
 		it('should reject messages that do not have `_axeuuid`', function(done) {
 			eventData = {
 				_respondable: true,
-				_source: 'axeAPI.2.0.0',
+				_source: 'axeAPI.' + axe.version,
 				message: 'Help us Obi-Wan'
 			};
 
@@ -296,7 +278,7 @@ describe('axe.utils.respondable', function() {
 		it('should reject messages from the same axe instance (`_axeuuid`)', function(done) {
 			eventData = {
 				_respondable: true,
-				_source: 'axeAPI.2.0.0',
+				_source: 'axeAPI.' + axe.version,
 				message: 'Help us Obi-Wan'
 			};
 
@@ -322,7 +304,7 @@ describe('axe.utils.respondable', function() {
 		it('should throw if an error message was send', function(done) {
 			eventData = {
 				_respondable: true,
-				_source: 'axeAPI.2.0.0',
+				_source: 'axeAPI.' + axe.version,
 				error: {
 					name: 'ReferenceError',
 					message: 'The exhaust port is open!',
@@ -343,7 +325,7 @@ describe('axe.utils.respondable', function() {
 
 			eventData = {
 				_respondable: true,
-				_source: 'axeAPI.2.0.0',
+				_source: 'axeAPI.' + axe.version,
 				error: {
 					name: 'evil',
 					message: 'The exhaust port is open!',
@@ -522,6 +504,26 @@ describe('axe.utils.respondable', function() {
 					done();
 				}
 			});
+		});
+
+		it('does not run if the command did not come from the parent iframe', function(done) {
+			var published = false;
+			axe.utils.respondable.subscribe('catman', function() {
+				published = true;
+			});
+
+			var frame = document.createElement('iframe');
+			frame.addEventListener('load', function() {
+				axe._tree = axe.utils.getFlattenedTree(document.documentElement);
+				setTimeout(function() {
+					assert.ok(!published, 'Subscriber should not be called');
+					done();
+				}, 10);
+			});
+
+			frame.id = 'level0';
+			frame.src = '../mock/frames/send-command-to-parent.html';
+			fixture.appendChild(frame);
 		});
 	});
 });
