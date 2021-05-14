@@ -201,6 +201,7 @@ declare namespace axe {
 		axeVersion?: string;
 		// Deprecated - do not use.
 		ver?: string;
+		noHtml?: boolean;
 	}
 	interface Check {
 		id: string;
