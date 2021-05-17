@@ -1,16 +1,7 @@
 {
   "description": "autocomplete-valid tests",
   "rule": "autocomplete-valid",
-  "violations": [
-    ["#fail1"],
-    ["#fail2"],
-    ["#fail3"],
-    ["#fail4"],
-    ["#fail5"],
-    ["#fail6"],
-    ["#fail7"],
-    ["#fail8"]
-  ],
+  "violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"]],
   "passes": [
     ["#pass1"],
     ["#pass2"],
