@@ -6,7 +6,7 @@
     "description": "Ensure the autocomplete attribute is correct and suitable for the form field",
     "help": "autocomplete attribute must be used correctly"
   },
-  "all": ["autocomplete-valid", "autocomplete-appropriate"],
+  "all": ["autocomplete-valid"],
   "any": [],
   "none": []
 }
