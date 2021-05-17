@@ -243,6 +243,27 @@ describe('aria.implicitRole', function() {
     assert.equal(implicitRole(node), 'textbox');
   });
 
+  it('should return textbox for "input[type=password]"', function() {
+    fixture.innerHTML = '<input id="target" type="password"/>';
+    var node = fixture.querySelector('#target');
+    flatTreeSetup(fixture);
+    assert.equal(implicitRole(node), 'textbox');
+  });
+
+  it('should return textbox for "input[type=time]"', function() {
+    fixture.innerHTML = '<input id="target" type="time"/>';
+    var node = fixture.querySelector('#target');
+    flatTreeSetup(fixture);
+    assert.equal(implicitRole(node), 'textbox');
+  });
+
+  it('should return textbox for "input[type=date]"', function() {
+    fixture.innerHTML = '<input id="target" type="date"/>';
+    var node = fixture.querySelector('#target');
+    flatTreeSetup(fixture);
+    assert.equal(implicitRole(node), 'textbox');
+  });
+
   it('should return textbox for "input:not([type])"', function() {
     fixture.innerHTML = '<input id="target"/>';
     var node = fixture.querySelector('#target');
@@ -260,6 +281,14 @@ describe('aria.implicitRole', function() {
 
   it('should return textbox for "input[list]" that does not point to a datalist', function() {
     fixture.innerHTML = '<input id="target" list="list"/><div id="list"></div>';
+    var node = fixture.querySelector('#target');
+    flatTreeSetup(fixture);
+    assert.equal(implicitRole(node), 'textbox');
+  });
+
+  it('should return textbox for "input[type=password][list]"', function() {
+    fixture.innerHTML = '<input id="target" type="password" list="list"/>' +
+      '<datalist id="list"></datalist>';
     var node = fixture.querySelector('#target');
     flatTreeSetup(fixture);
     assert.equal(implicitRole(node), 'textbox');
