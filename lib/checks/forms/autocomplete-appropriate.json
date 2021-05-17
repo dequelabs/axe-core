@@ -3,7 +3,7 @@
   "evaluate": "autocomplete-appropriate-evaluate",
   "deprecated": true,
   "metadata": {
-    "impact": "serious",
+    "impact": "minor",
     "messages": {
       "pass": "the autocomplete value is on an appropriate element",
       "fail": "the autocomplete value is inappropriate for this type of input"
