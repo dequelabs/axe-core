@@ -6,6 +6,7 @@
 - [Options](#options)
   - [Global Options](#global-options)
   - [aria-allowed-role](#aria-allowed-role)
+  - [aria-prohibited-attr](#aria-prohibited-attr)
   - [aria-required-children](#aria-required-children)
   - [aria-required-parent](#aria-required-parent)
   - [aria-roledescription](#aria-roledescription)
@@ -73,6 +74,43 @@ All checks allow these global options:
 | --------------- | :------ | :---------------------------------------------------------------- |
 | `allowImplicit` | `true`  | Allow the explicit role to match the implicit role of the element |
 | `ignoredTags`   | `[]`    | Do not check for allowed roles in the provided HTML elements list |
+
+### aria-prohibited-attr
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th align="left">Default</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>elementsAllowedAriaLabel</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>[
+  "audio",
+  "applet",
+  "canvas",
+  "dl",
+  "embed",
+  "iframe",
+  "input",
+  "label",
+  "meter",
+  "object",
+  "span",
+  "svg",
+  "video"
+]</code></pre>
+        </td>
+      <td align="left">List of element names that without a role, are allowed an `aria-label` and `aria-labelledby` attribute</td>
+    </tr>
+  </tbody>
+</table>
 
 ### aria-required-children
 
