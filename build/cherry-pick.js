@@ -93,7 +93,7 @@ function getCommits(branch) {
     // filter merge commits and any types that don't match the release type
     if (
       !merge &&
-      !subject.startsWith('merge branch') &&
+      subject && !subject.startsWith('merge branch') &&
       scope !== 'release' &&
       commitType[releaseType] &&
       !ignoreCommits.includes(hash)
