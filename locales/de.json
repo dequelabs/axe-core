@@ -31,7 +31,7 @@
     },
     "aria-hidden-focus": {
       "description": "Stellt sicher, dass ARIA-hidden Elemente keine fokussierbaren Elemente beinhalten.",
-      "help": "ARIA-hidden Elemente dürfen keine fokussierbaren Elemente beeinhalten."
+      "help": "ARIA-hidden Elemente dürfen keine fokussierbaren Elemente beinhalten."
     },
     "aria-input-field-name": {
       "description": "Stellt sicher, dass jeder ARIA-input einen zugänglichen Namen (accessible name) besitzt.",
@@ -142,7 +142,7 @@
       "help": "Der Wert des id-Attributes muss einzigartig sein."
     },
     "empty-heading": {
-      "description": "Stellt sicher, dass Überschriften einen wahrnehmbaren Text beeinhalten.",
+      "description": "Stellt sicher, dass Überschriften einen wahrnehmbaren Text beinhalten.",
       "help": "Überschriften dürfen nichtleer sein."
     },
     "focus-order-semantics": {
@@ -154,7 +154,7 @@
       "help": "form-Felder sollten nur ein label-Element besitzen."
     },
     "frame-tested": {
-      "description": "Stellt sicher, dass <iframe> und <frame>-Elemente das axe-core Script beeinhalten.",
+      "description": "Stellt sicher, dass <iframe> und <frame>-Elemente das axe-core Script beinhalten.",
       "help": "Frames müssen mit axe-core getestet werden."
     },
     "frame-title-unique": {
@@ -182,11 +182,11 @@
       "help": "Das <html>-Element muss einen gültigen Attributwert für das lang-Attribut besitzen."
     },
     "html-xml-lang-mismatch": {
-      "description": "Stellt sicher, dass HTML Elemente mit validen lang und xml:lang Attributen diesselbe Angabe über die Sprache machen.",
-      "help": "HTML Elemente mit lang und xml:lang Attributen müssen diesselbe Sprache ausweisen."
+      "description": "Stellt sicher, dass HTML Elemente mit validen lang und xml:lang Attributen dieselbe Angabe über die Sprache machen.",
+      "help": "HTML Elemente mit lang und xml:lang Attributen müssen dieselbe Sprache ausweisen."
     },
     "identical-links-same-purpose": {
-      "description": "Stellt sicher, dass links mit dem selben zugänglichen Namen (accessible name) denselben Zweck folgen.",
+      "description": "Stellt sicher, dass Links mit dem selben zugänglichen Namen (accessible name) denselben Zweck folgen.",
       "help": "Links mit dem selben zugänglichen Namen (accessible name) verfolgen denselben Zweck."
     },
     "image-alt": {
@@ -206,7 +206,7 @@
       "help": "<input type=\"image\">-Elemente müssen einen Alternativtext besitzen."
     },
     "label-content-name-mismatch": {
-      "description": "Stellt sicher, dass Elemente die durch ihren Inhalt beschrieben sind auch ihren sichtbaren Text als Teil des zugänglichen Namens (accessible name) haben.",
+      "description": "Stellt sicher, dass Elemente, die durch ihren Inhalt beschrieben sind, auch ihren sichtbaren Text als Teil des zugänglichen Namens (accessible name) haben.",
       "help": "Elemente müssen ihren sichtbaren Text auch als Teil des zugänglichen Namens (accessible name) haben."
     },
     "label-title-only": {
@@ -262,11 +262,11 @@
       "help": "Links müssen wahrnehmbaren Text enthalten."
     },
     "list": {
-      "description": "Stellt sicher, dass Listen korrekt Strukturiert sind.",
+      "description": "Stellt sicher, dass Listen korrekt strukturiert sind.",
       "help": "<ul>- und <ol>-Elemente dürfen unmittelbar nur <li>-, <script>- oder <template>-Elemente enthalten."
     },
     "listitem": {
-      "description": "Stellt sicher, dass <li>-Elemente semantisch Korrekt verwendet werden.",
+      "description": "Stellt sicher, dass <li>-Elemente semantisch korrekt verwendet werden.",
       "help": "<li>-Elemente müssen in einem <ul>- oder <ol>-Element enthalten sein."
     },
     "marquee": {
@@ -282,7 +282,7 @@
       "help": "Benutzer sollten in der Lage sein, den Text um bis zu 500% vergrößern und skalieren zu können."
     },
     "meta-viewport": {
-      "description": "Stellt sicher, dass <meta name=\"viewport\"> Textskalierung und -zoom nicht verhindert.",
+      "description": "Stellt sicher, dass <meta name=\"viewport\"> Textskalierung und -zoom nicht verhindert werden.",
       "help": "Zoomen und Skalieren darf nicht deaktiviert werden."
     },
     "no-autoplay-audio": {
@@ -302,7 +302,7 @@
       "help": "Die Seite muss eine Überschrift der ersten Ebene enthalten."
     },
     "presentation-role-conflict": {
-      "description": "Markiert Elemente welche eine Rolle besitzen, welche none oder presentation ist und welche eine Rollenauflösung benötigen.",
+      "description": "Markiert Elemente welche eine Rolle besitzen, die none oder presentation ist und die eine Rollenauflösung benötigen.",
       "help": "Elemente mit Rolle none oder presentation dürfen mit anderen Rollen nicht in Konflikt stehen."
     },
     "region": {
@@ -354,8 +354,8 @@
       "help": "In Tabellen, die größer als 3 mal 3 sind, müssen alle nichtleeren <td>-Elemente einen zugehörigen Tabellenkopf haben."
     },
     "td-headers-attr": {
-      "description": "Stellt sicher, dass jede Zelle in einer Tabelle, welche das header-Attribute verwenden, sich nur auf andere Zellen derselben Tabelle beziehen.",
-      "help": "Innerhalb eines <table>-Elementes dürfen sich Zellen, die das header-Attribut verwenden, nur auf andere Zellen derselben Tabelle beziehen."
+      "description": "Stellt sicher, dass jede Zelle in einer Tabelle, welche das headers-Attribute verwenden, sich nur auf andere Zellen derselben Tabelle beziehen.",
+      "help": "Innerhalb eines <table>-Elementes dürfen sich Zellen, die das headers-Attribut verwenden, nur auf andere Zellen derselben Tabelle beziehen."
     },
     "th-has-data-cells": {
       "description": "Stellt sicher, dass jeder Tabellenkopf in einer Datentabelle sich auf Datenzellen bezieht.",
@@ -397,7 +397,7 @@
       }
     },
     "aria-errormessage": {
-      "pass": "aria-errormessage Attribut existiert und referenziert Elemente, welche sichtbar für Screen Reader sind, welche die entsprechende Technologie unterstützen.",
+      "pass": "aria-errormessage Attribut existiert und referenziert Elemente, die sichtbar für Screen Reader sind, welche die entsprechende Technologie unterstützen.",
       "fail": {
         "singular": "aria-errormessage Wert `${data.values}` benötigt eine Möglichkeit um entsprechend vorgeschlagen zu werden (z.B. aria-live, aria-describedby, role=alert, usw.).",
         "plural": "aria-errormessage Werte `${data.values}` benötigen eine Möglichkeit um entsprechend vorgeschlagen zu werden (z.B. aria-live, aria-describedby, role=alert, usw.)."
@@ -448,7 +448,7 @@
     "aria-valid-attr-value": {
       "pass": "ARIA Attributwerte sind gültig.",
       "fail": {
-        "singular": "Ungültiger Wert des ARIA Attribtutes ${data.values}",
+        "singular": "Ungültiger Wert des ARIA Attributes ${data.values}",
         "plural": "Ungültige Werte der ARIA Attribute: ${data.values}"
       },
       "incomplete": {
@@ -486,8 +486,8 @@
       }
     },
     "is-element-focusable": {
-      "pass": "Element ist Fokussierbar.",
-      "fail": "Element ist nicht Fokussierbar."
+      "pass": "Element ist fokussierbar.",
+      "fail": "Element ist nicht fokussierbar."
     },
     "no-implicit-explicit-label": {
       "pass": "Kein Unterschied zwischen dem <label> und dem zugänglichen Namen (accessible name).",
@@ -521,7 +521,7 @@
       }
     },
     "link-in-text-block": {
-      "pass": "Links können vom umgebenenden Text auf unterschiedliche Art und Weiße unterschieden werden.",
+      "pass": "Links können vom umgebenenden Text auf unterschiedliche Art und Weise unterschieden werden.",
       "fail": "Links können (abgesehen von einer farblichen Kennzeichnung) nicht vom umgebenden Text unterschieden werden.",
       "incomplete": {
         "default": "Das Kontrastverhältnis konnte nicht ermittelt werden.",
@@ -542,7 +542,7 @@
     },
     "accesskeys": {
       "pass": "Alle accesskey-Attribute sind einzigartig.",
-      "fail": "Das Dokument enthält mehrere Elemente mit demselben accesskey-Attribut."
+      "fail": "Das Dokument enthält mehrere Elemente mit dem gleichen accesskey-Attribut."
     },
     "focusable-content": {
       "pass": "Das Element beeinhaltet fokussierbaren Inhalt.",
@@ -557,7 +557,7 @@
       "fail": "Element sollte fokussierbar sein."
     },
     "focusable-modal-open": {
-      "pass": "Keine fokussierbaren Elemente während ein Model offen ist.",
+      "pass": "Keine fokussierbaren Elemente während ein modaler Dialog offen ist.",
       "incomplete": "Üerprüfe ob Elemente fokussierbar während des derzeitigen Status sind."
     },
     "focusable-no-name": {
@@ -594,19 +594,19 @@
       "fail": "Das Dokument besitzt mehr als eine main landmark."
     },
     "tabindex": {
-      "pass": "Das Element besitzt einen tabindex-Attributwert der nicht gerößer als 0 ist.",
+      "pass": "Das Element besitzt einen tabindex-Attributwert der nicht größer als 0 ist.",
       "fail": "Das Element besitzt einen tabindex-Attributwert größer als 0."
     },
     "alt-space-value": {
       "pass": "Element hat ein valides alt Attribut.",
-      "fail": "Element hat ein alt Attribut, welches ausschließlich Leerzeichen beeinhaltet, welche jedoch nicht durch Screenreader ignoriert werden."
+      "fail": "Element hat ein alt Attribut, welches ausschließlich Leerzeichen beeinhaltet, die jedoch nicht durch Screenreader ignoriert werden."
     },
     "duplicate-img-label": {
       "pass": "Das Element besitzt einen Alternativtext der anderweitig vorhanden Text nicht wiederholt.",
       "fail": "Das Element besitzt ein <img>-Element mit Alternativtext, der vorhandenen Text wiederholt."
     },
     "explicit-label": {
-      "pass": "Form element has an explicit <label>",
+      "pass": "Das <form>-Element besitzt ein explizites <label>.",
       "fail": "Das <form>-Element besitzt kein explizites <label>.",
       "incomplete": "Es ist nicht möglich herauszufinden ob das <form> Element ein explizites <label> besitzt."
     },
@@ -725,7 +725,7 @@
       "fail": "Kein gültiger Skip-Link gefunden."
     },
     "landmark": {
-      "pass": "Die Seite ebsitzt eine landmark region.",
+      "pass": "Die Seite besitzt eine landmark region.",
       "fail": "Die Seite besitzt keine landmark region."
     },
     "meta-refresh": {
@@ -766,7 +766,7 @@
       "fail": "Es existiert kein aria-label-Attribut oder das Attribut ist leer."
     },
     "aria-labelledby": {
-      "pass": "Das aria-labelledby-Attribut existiert und referenziert es Element, welches für Screen Reader sichtbar ist.",
+      "pass": "Das aria-labelledby-Attribut existiert und referenziert ein Element, welches für Screen Reader sichtbar ist.",
       "fail": "Das aria-labelledby-Attribut existiert nicht oder referenziert ein Element, das nicht existiert, nicht sichtbar oder leer ist.",
       "incomplete": "Es sollte sichergestellt werden, dass aria-labelledby auf ein existierendes Element verweist."
     },
@@ -780,7 +780,7 @@
     "button-has-visible-text": {
       "pass": "Das Element besitzt Text, der für Screenreader sichtbar ist.",
       "fail": "Das Element besitzt keinen Text, der für Screenreader sichtbar ist.",
-      "incomplete": "Unable to determine if element has children"
+      "incomplete": "Ob das Element über Kindelemente bzw. textuelle Inhalte verfügt, kann nicht ermittelt werden."
     },
     "doc-has-title": {
       "pass": "Test",
@@ -844,7 +844,7 @@
         "default": "Die Standardsemantik des Elements wurden nicht mit der Rolle role=\"none\" oder role=\"presentation\" überschrieben.",
         "globalAria": "Die Rolle des Elements ist nicht präsentativ aufgrund des globalen ARIA Attributs.",
         "focusable": "Die Rolle des Elements ist nicht präsentativ aufgrund der Möglichkeit es zu fokussieren.",
-        "both": "Die Rolle des Elements ist nicht präsentativ aufgrund des zugewiesenen globalen ARIA Attributs und der Möglichkeit es zu Fokussieren."
+        "both": "Die Rolle des Elements ist nicht präsentativ aufgrund des zugewiesenen globalen ARIA Attributs und der Möglichkeit es zu fokussieren."
       }
     },
     "role-none": {
@@ -884,8 +884,8 @@
       "fail": "Nicht alle (nichtleeren) Datenzellen haben eine Tabellenkopfzelle."
     },
     "td-headers-attr": {
-      "pass": "Das header-Attribut wird ausschließlich dafür verwendet, um auf andere Zellen in der Tabelle zu verweisen.",
-      "incomplete": "Das header-Attribut ist leer.",
+      "pass": "Das headers-Attribut wird ausschließlich dafür verwendet, um auf andere Zellen in der Tabelle zu verweisen.",
+      "incomplete": "Das headers-Attribut ist leer.",
       "fail": "Das headers-Attribut wird nicht ausschließlich dafür verwendet, um auf andere Zellen in der Tabelle zu verweisen."
     },
     "th-has-data-cells": {
