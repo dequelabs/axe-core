@@ -102,7 +102,6 @@ All checks allow these global options:
   "label",
   "meter",
   "object",
-  "span",
   "svg",
   "video"
 ]</code></pre>
