@@ -64,4 +64,20 @@ describe('aria-prohibited-attr', function() {
     );
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
+
+  it('should allow `elementsAllowedAriaLabel` nodes to have aria-label', function () {
+    var params = checkSetup(
+      '<div id="target" aria-label="hello world"></div>',
+      { elementsAllowedAriaLabel: ['div'] }
+    );
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
+  });
+  
+  it('should not allow `elementsAllowedAriaLabel` nodes with a prohibited role', function () {
+    var params = checkSetup(
+      '<div id="target" role="code" aria-label="hello world"></div>',
+      { elementsAllowedAriaLabel: ['div'] }
+    );
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+  });
 });
