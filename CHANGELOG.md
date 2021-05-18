@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.2.1](https://github.com/dequelabs/axe-core/compare/v4.2.0...v4.2.1) (2021-05-18)
+
+### Bug Fixes
+
+- **aria-allowed-attr:** pass aria-label on some HTML elements ([#2935](https://github.com/dequelabs/axe-core/issues/2935)) ([695aa77](https://github.com/dequelabs/axe-core/commit/695aa7751246c0e5e786a66df7808faa7a244576))
+- treat input with no role as textbox ([#2929](https://github.com/dequelabs/axe-core/issues/2929)) ([de18030](https://github.com/dequelabs/axe-core/commit/de180307fd876cfc6a1a0bdb828818a323976c81))
+- **autocomplete-appropriate:** pass for autocomplete=username and type=email ([#2896](https://github.com/dequelabs/axe-core/issues/2896)) ([8b478c8](https://github.com/dequelabs/axe-core/commit/8b478c82b3362fc27df8a0087c779327e6a9d6d0))
+- **getStandards:** Read standards from utils ([#2903](https://github.com/dequelabs/axe-core/issues/2903)) ([52ad4c6](https://github.com/dequelabs/axe-core/commit/52ad4c69991e433d413846c4c9778fdd863aebeb))
+- **required-parent:** Allow *item > group > *item nesting ([#2898](https://github.com/dequelabs/axe-core/issues/2898)) ([3acd229](https://github.com/dequelabs/axe-core/commit/3acd229b08b806ea359e7e08e37e8721cddc5290))
+- **types:** make `evaluate` check optional ([#2902](https://github.com/dequelabs/axe-core/issues/2902)) ([75fabfe](https://github.com/dequelabs/axe-core/commit/75fabfef3adeade350902f2dd18928e44fbb7cf4))
+
 ## [4.2.0](https://github.com/dequelabs/axe-core/compare/v4.1.2...v4.2.0) (2021-04-23)
 
 ### Features
