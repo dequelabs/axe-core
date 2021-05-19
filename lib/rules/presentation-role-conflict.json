@@ -1,5 +1,6 @@
 {
   "id": "presentation-role-conflict",
+  "matches": "presentation-role-conflict-matches",
   "selector": "[role=\"none\"], [role=\"presentation\"]",
   "tags": ["cat.aria", "best-practice"],
   "metadata": {
