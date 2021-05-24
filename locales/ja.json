@@ -42,7 +42,7 @@
       "help": "ARIA meterノードにはアクセシブルな名前がなければなりません"
     },
     "aria-progressbar-name": {
-      "description": "すべてのARIA progressbarノードにはアクセシブルな名前があることを確認します",
+      "description": "すべてのARIA progressbarノードにアクセシブルな名前があることを確認します",
       "help": "ARIA progressbarノードにはアクセシブルな名前がなければなりません"
     },
     "aria-required-attr": {
