@@ -853,8 +853,8 @@
     "non-empty-title": {
       "pass": "要素にtitle属性が存在しています",
       "fail": {
-        "noAttr": "要素にはtitle属性が指定されていません",
-        "emptyAttr": "要素には空のtitle属性が指定されています"
+        "noAttr": "要素にtitle属性が指定されていません",
+        "emptyAttr": "要素に空のtitle属性が指定されています"
       }
     },
     "non-empty-value": {
