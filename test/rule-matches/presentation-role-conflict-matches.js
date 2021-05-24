@@ -3,7 +3,7 @@ describe('presentation-role-conflict-matches', function() {
 
   var rule;
   var fixture = document.getElementById('fixture');
-  var flatTreeSetup = axe.testUtils.flatTreeSetup;
+  var queryFixture = axe.testUtils.queryFixture;
 
   beforeEach(function() {
     rule = axe.utils.getRule('presentation-role-conflict');
@@ -18,26 +18,19 @@ describe('presentation-role-conflict-matches', function() {
   });
 
   it('matches elements with an implicit role', function() {
-    fixture.innerHTML = '<main id="target"></main>';
-    flatTreeSetup(fixture);
-    var target = fixture.querySelector('#target');
-
-    assert.isTrue(rule.matches(target));
+    var vNode = queryFixture('<main id="target"></main>');
+    assert.isTrue(rule.matches(null, vNode));
   });
 
   it('does not match elements with no implicit role', function() {
-    fixture.innerHTML = '<div id="target"></div>';
-    flatTreeSetup(fixture);
-    var target = fixture.querySelector('#target');
-
-    assert.isFalse(rule.matches(target));
+    var vNode = queryFixture('<div id="target"></div>');
+    assert.isFalse(rule.matches(null, vNode));
   });
 
   it('does not match elements with no implicit role even if they are focusable and have an explicit role', function() {
-    fixture.innerHTML = '<div id="target" role="none" tabindex="1"></div>';
-    flatTreeSetup(fixture);
-    var target = fixture.querySelector('#target');
-
-    assert.isFalse(rule.matches(target));
+    var vNode = queryFixture(
+      '<div id="target" role="none" tabindex="1"></div>'
+    );
+    assert.isFalse(rule.matches(null, vNode));
   });
 });
