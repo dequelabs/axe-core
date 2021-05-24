@@ -844,10 +844,10 @@
       "fail": "要素にvalue属性が存在し、value属性が空です"
     },
     "non-empty-placeholder": {
-      "pass": "要素にはplaceholder属性が指定されています",
+      "pass": "要素にplaceholder属性が指定されています",
       "fail": {
-        "noAttr": "要素にはplacehoder属性が指定されていません",
-        "emptyAttr": "要素には空のplacehoder属性が指定されています"
+        "noAttr": "要素にplacehoder属性が指定されていません",
+        "emptyAttr": "要素に空のplacehoder属性が指定されています"
       }
     },
     "non-empty-title": {
