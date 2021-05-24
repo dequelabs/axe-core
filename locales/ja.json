@@ -38,7 +38,7 @@
       "help": "ARIA入力欄にアクセシブルな名前があります"
     },
     "aria-meter-name": {
-      "description": "すべてのARIA meterノードにはアクセシブルな名前があることを確認します",
+      "description": "すべてのARIA meterノードにアクセシブルな名前があることを確認します",
       "help": "ARIA meterノードにはアクセシブルな名前がなければなりません"
     },
     "aria-progressbar-name": {
