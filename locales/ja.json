@@ -19,7 +19,7 @@
     },
     "aria-command-name": {
       "description": "すべてのARIA button、link、menuitemにアクセシブルな名前があることを確認します",
-      "help": "ARIA コマンドにはアクセシブルな名前がなければなりません"
+      "help": "ARIAコマンドにはアクセシブルな名前がなければなりません"
     },
     "aria-dialog-name": {
       "description": "Ensures every ARIA dialog and alertdialog node has an accessible name",
