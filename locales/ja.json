@@ -867,7 +867,7 @@
     "presentational-role": {
       "pass": "要素のデフォルトのセマンティクスはrole=\"${data.role}\"で上書きされました",
       "fail": {
-        "default": "要素のデフォルトのセマンティクスは role=\"none\" または role=\"presentation\"で上書きされませんでした",
+        "default": "要素のデフォルトのセマンティクスはrole=\"none\"またはrole=\"presentation\"で上書きされませんでした",
         "globalAria": "要素にはARIAのグローバル属性が指定されているため、roleはpresentation系のものになりません",
         "focusable": "要素がフォーカス可能なため、roleはpresentation系のものにはなりません",
         "both": "ようそにはARIAのグローバル属性が指定されており、フォーカス可能なため、roleはpresentation系のものにはなりません"
