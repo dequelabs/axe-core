@@ -22,7 +22,6 @@
       "help": "ARIAコマンドにはアクセシブルな名前がなければなりません"
     },
     "aria-dialog-name": {
-      "description": "Ensures every ARIA dialog and alertdialog node has an accessible name",
       "description": "すべてのARIA dialog、alertdialogノードにアクセシブルな名前があることを確認します",
       "help": "ARIA dialogとalertdialogノードにはアクセシブルな名前がなければなりません"
     },
