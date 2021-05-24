@@ -860,8 +860,8 @@
     "non-empty-value": {
       "pass": "要素に空ではないvalue属性が存在しています",
       "fail": {
-        "noAttr": "要素にはvalue属性が指定されていません",
-        "emptyAttr": "要素には空のvalue属性が指定されています"
+        "noAttr": "要素にvalue属性が指定されていません",
+        "emptyAttr": "要素に空のvalue属性が指定されています"
       }
     },
     "presentational-role": {
