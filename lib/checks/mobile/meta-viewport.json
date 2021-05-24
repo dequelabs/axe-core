@@ -1,7 +1,6 @@
 {
   "id": "meta-viewport",
   "evaluate": "meta-viewport-scale-evaluate",
-  "matches": "is-initiator-matches",
   "options": {
     "scaleMinimum": 2
   },
