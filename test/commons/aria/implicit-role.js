@@ -32,6 +32,20 @@ describe('aria.implicitRole', function() {
     assert.isNull(implicitRole(node));
   });
 
+  it('should return null if there is no implicit role when not considering chromium', function() {
+    fixture.innerHTML = '<canvas id="target" aria-label="hello"></canvas>';
+    var node = fixture.querySelector('#target');
+    flatTreeSetup(fixture);
+    assert.isNull(implicitRole(node));
+  });
+
+  it('should return the chromium implicit role for elements that have one', function() {
+    fixture.innerHTML = '<canvas id="target" aria-label="hello"></canvas>';
+    var node = fixture.querySelector('#target');
+    flatTreeSetup(fixture);
+    assert.equal(implicitRole(node, { chromiumRoles: true }), 'Canvas');
+  });
+
   it('should return link for "a[href]"', function() {
     fixture.innerHTML = '<a id="target" href>link</a>';
     var node = fixture.querySelector('#target');
@@ -287,7 +301,8 @@ describe('aria.implicitRole', function() {
   });
 
   it('should return textbox for "input[type=password][list]"', function() {
-    fixture.innerHTML = '<input id="target" type="password" list="list"/>' +
+    fixture.innerHTML =
+      '<input id="target" type="password" list="list"/>' +
       '<datalist id="list"></datalist>';
     var node = fixture.querySelector('#target');
     flatTreeSetup(fixture);
