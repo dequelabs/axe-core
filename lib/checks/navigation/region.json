@@ -1,8 +1,9 @@
 {
   "id": "region",
   "evaluate": "region-evaluate",
+  "after": "region-after",
   "options": {
-    "regionMatcher": "dialog, [role=dialog], [role=alertdialog], svg, iframe"
+    "regionMatcher": "dialog, [role=dialog], [role=alertdialog], svg"
   },
   "metadata": {
     "impact": "moderate",
