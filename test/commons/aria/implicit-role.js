@@ -43,7 +43,7 @@ describe('aria.implicitRole', function() {
     fixture.innerHTML = '<canvas id="target" aria-label="hello"></canvas>';
     var node = fixture.querySelector('#target');
     flatTreeSetup(fixture);
-    assert.equal(implicitRole(node, { chromiumRoles: true }), 'Canvas');
+    assert.equal(implicitRole(node, { includeChromiumRoles: true }), 'Canvas');
   });
 
   it('should return link for "a[href]"', function() {
