@@ -1,6 +1,6 @@
 {
   "id": "presentation-role-conflict",
-  "matches": "presentation-role-conflict-matches",
+  "matches": "has-implicit-chromium-role-matches",
   "selector": "[role=\"none\"], [role=\"presentation\"]",
   "tags": ["cat.aria", "best-practice"],
   "metadata": {

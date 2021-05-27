@@ -1,4 +1,4 @@
-describe('presentation-role-conflict-matches', function() {
+describe('has-implicit-chromium-role-matches', function() {
   'use strict';
 
   var rule;
