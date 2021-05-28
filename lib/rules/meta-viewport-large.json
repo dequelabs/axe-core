@@ -1,6 +1,7 @@
 {
   "id": "meta-viewport-large",
   "selector": "meta[name=\"viewport\"]",
+  "matches": "is-initiator-matches",
   "excludeHidden": false,
   "tags": ["cat.sensory-and-visual-cues", "best-practice"],
   "metadata": {
