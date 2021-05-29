@@ -111,26 +111,20 @@ describe('heading-order', function() {
           data: {
             headingOrder: [
               {
-                ancestry: 'path1',
+                ancestry: ['path1'],
                 level: 1
               },
               {
-                ancestry: 'path2',
+                ancestry: ['path2'],
                 level: 3
               }
             ]
           },
-          node: {
-            _fromFrame: false,
-            ancestry: ['path1']
-          },
+          node: { ancestry: ['path1'] },
           result: true
         },
         {
-          node: {
-            _fromFrame: false,
-            ancestry: ['path2']
-          },
+          node: { ancestry: ['path2'] },
           result: true
         }
       ];
@@ -143,26 +137,20 @@ describe('heading-order', function() {
           data: {
             headingOrder: [
               {
-                ancestry: 'path1',
+                ancestry: ['path1'],
                 level: 2
               },
               {
-                ancestry: 'path2',
+                ancestry: ['path2'],
                 level: 1
               }
             ]
           },
-          node: {
-            _fromFrame: false,
-            ancestry: ['path1']
-          },
+          node: { ancestry: ['path1'] },
           result: true
         },
         {
-          node: {
-            _fromFrame: false,
-            ancestry: ['path2']
-          },
+          node: { ancestry: ['path2'] },
           result: true
         }
       ];
@@ -175,26 +163,20 @@ describe('heading-order', function() {
           data: {
             headingOrder: [
               {
-                ancestry: 'path1',
+                ancestry: ['path1'],
                 level: 3
               },
               {
-                ancestry: 'path2',
+                ancestry: ['path2'],
                 level: 1
               }
             ]
           },
-          node: {
-            _fromFrame: false,
-            ancestry: ['path1']
-          },
+          node: { ancestry: ['path1'] },
           result: true
         },
         {
-          node: {
-            _fromFrame: false,
-            ancestry: ['path2']
-          },
+          node: { ancestry: ['path2'] },
           result: true
         }
       ];
@@ -207,15 +189,12 @@ describe('heading-order', function() {
           data: {
             headingOrder: [
               {
-                ancestry: 'path1',
+                ancestry: ['path1'],
                 level: 1
               }
             ]
           },
-          node: {
-            _fromFrame: false,
-            ancestry: ['path1']
-          },
+          node: { ancestry: ['path1'] },
           result: true
         }
       ];
@@ -228,24 +207,22 @@ describe('heading-order', function() {
           data: {
             headingOrder: [
               {
-                ancestry: 'path1',
+                ancestry: ['path1'],
                 level: 1
               },
               {
-                ancestry: 'path2',
+                ancestry: ['path2'],
                 level: 2
               }
             ]
           },
           node: {
-            _fromFrame: false,
             ancestry: ['path1']
           },
           result: true
         },
         {
           node: {
-            _fromFrame: false,
             ancestry: ['path2']
           },
           result: true
@@ -260,21 +237,20 @@ describe('heading-order', function() {
           data: {
             headingOrder: [
               {
-                ancestry: 'path1',
+                ancestry: ['path1'],
                 level: 1
               },
               {
-                ancestry: 'iframe',
+                ancestry: ['iframe'],
                 level: -1
               },
               {
-                ancestry: 'path3',
+                ancestry: ['path3'],
                 level: 3
               }
             ]
           },
           node: {
-            _fromFrame: false,
             ancestry: ['path1']
           },
           result: true
@@ -289,14 +265,12 @@ describe('heading-order', function() {
             ]
           },
           node: {
-            _fromFrame: true,
             ancestry: ['iframe', 'path2']
           },
           result: true
         },
         {
           node: {
-            _fromFrame: false,
             ancestry: ['path3']
           },
           result: true
@@ -313,21 +287,20 @@ describe('heading-order', function() {
           data: {
             headingOrder: [
               {
-                ancestry: 'path1',
+                ancestry: ['path1'],
                 level: 1
               },
               {
-                ancestry: 'iframe',
+                ancestry: ['iframe'],
                 level: -1
               },
               {
-                ancestry: 'path3',
+                ancestry: ['path3'],
                 level: 3
               }
             ]
           },
           node: {
-            _fromFrame: false,
             ancestry: ['path1']
           },
           result: true
@@ -336,20 +309,18 @@ describe('heading-order', function() {
           data: {
             headingOrder: [
               {
-                ancestry: 'path2',
+                ancestry: ['path2'],
                 level: 4
               }
             ]
           },
           node: {
-            _fromFrame: true,
             ancestry: ['iframe', 'path2']
           },
           result: true
         },
         {
           node: {
-            _fromFrame: false,
             ancestry: ['path3']
           },
           result: true
@@ -366,21 +337,20 @@ describe('heading-order', function() {
           data: {
             headingOrder: [
               {
-                ancestry: 'path1',
+                ancestry: ['path1'],
                 level: 1
               },
               {
-                ancestry: 'iframe',
+                ancestry: ['iframe'],
                 level: -1
               },
               {
-                ancestry: 'path4',
+                ancestry: ['path4'],
                 level: 3
               }
             ]
           },
           node: {
-            _fromFrame: false,
             ancestry: ['path1']
           },
           result: true
@@ -389,13 +359,12 @@ describe('heading-order', function() {
           data: {
             headingOrder: [
               {
-                ancestry: 'path2',
+                ancestry: ['path2'],
                 level: 2
               }
             ]
           },
           node: {
-            _fromFrame: true,
             ancestry: ['iframe', 'iframe2', 'path2']
           },
           result: true
@@ -414,14 +383,12 @@ describe('heading-order', function() {
             ]
           },
           node: {
-            _fromFrame: true,
             ancestry: ['iframe', 'path3']
           },
           result: true
         },
         {
           node: {
-            _fromFrame: false,
             ancestry: ['path4']
           },
           result: true
@@ -433,94 +400,81 @@ describe('heading-order', function() {
       assert.isTrue(afterResults[3].result);
     });
 
-    it('should skip iframes not in context', function() {
+    it('sets the result to undefined when the heading is not in the map', function() {
       var results = [
         {
           data: {
             headingOrder: [
               {
-                ancestry: 'path1',
+                ancestry: ['path1'],
                 level: 1
-              },
-              {
-                ancestry: 'iframe',
-                level: -1
-              },
-              {
-                ancestry: 'path2',
-                level: 2
               }
             ]
           },
           node: {
-            _fromFrame: false,
             ancestry: ['path1']
           },
           result: true
         },
         {
           node: {
-            _fromFrame: false,
-            ancestry: ['path2']
+            ancestry: ['unknown']
           },
           result: true
         }
       ];
+
       var afterResults = checks['heading-order'].after(results);
-      assert.isTrue(afterResults[1].result);
+      assert.isTrue(afterResults[0].result);
+      assert.isUndefined(afterResults[1].result);
     });
 
-    it('should throw error if iframe cannot be replaced', function() {
+    it('sets results to undefined if preceded by an unreplaced iframe', function() {
       var results = [
         {
           data: {
             headingOrder: [
               {
-                ancestry: 'path1',
+                ancestry: ['path1'],
                 level: 1
               },
               {
-                ancestry: 'iframe',
+                ancestry: ['iframe'],
                 level: -1
               },
               {
-                ancestry: 'path3',
+                ancestry: ['path2'],
                 level: 3
+              },
+              {
+                ancestry: ['path3'],
+                level: 4
               }
             ]
           },
           node: {
-            _fromFrame: false,
             ancestry: ['path1']
           },
           result: true
         },
         {
-          data: {
-            headingOrder: [
-              {
-                ancestry: 'path2',
-                level: 2
-              }
-            ]
-          },
           node: {
-            _fromFrame: true,
-            ancestry: ['uknown iframe', 'path2']
+            ancestry: ['path2']
           },
           result: true
         },
         {
           node: {
-            _fromFrame: false,
             ancestry: ['path3']
           },
           result: true
         }
       ];
-      assert.throws(function() {
-        checks['heading-order'].after(results);
-      });
+
+      var afterResults = checks['heading-order'].after(results);
+      assert.isTrue(afterResults[0].result);
+      assert.isUndefined(afterResults[1].result);
+      assert.isTrue(afterResults[2].result);
     });
 
     it('should not error if iframe is first result', function() {
@@ -529,13 +483,12 @@ describe('heading-order', function() {
           data: {
             headingOrder: [
               {
-                ancestry: 'path2',
+                ancestry: ['path2'],
                 level: 1
               }
             ]
           },
           node: {
-            _fromFrame: true,
             ancestry: ['iframe', 'path2']
           },
           result: true
@@ -544,28 +497,26 @@ describe('heading-order', function() {
           data: {
             headingOrder: [
               {
-                ancestry: 'iframe',
+                ancestry: ['iframe'],
                 level: -1
               },
               {
-                ancestry: 'path1',
+                ancestry: ['path1'],
                 level: 2
               },
               {
-                ancestry: 'path3',
+                ancestry: ['path3'],
                 level: 3
               }
             ]
           },
           node: {
-            _fromFrame: false,
             ancestry: ['path1']
           },
           result: true
         },
         {
           node: {
-            _fromFrame: false,
             ancestry: ['path3']
           },
           result: true
@@ -574,6 +525,186 @@ describe('heading-order', function() {
       var afterResults = checks['heading-order'].after(results);
       assert.isTrue(afterResults[1].result);
       assert.isTrue(afterResults[2].result);
+    });
+
+    it('runs when the top frame has no heading', function() {
+      var results = [
+        {
+          data: {
+            headingOrder: [
+              {
+                ancestry: ['path1'],
+                level: 1
+              },
+              {
+                ancestry: ['path2'],
+                level: 3
+              }
+            ]
+          },
+          node: {
+            ancestry: ['iframe', 'path1']
+          },
+          result: true
+        },
+        {
+          node: {
+            ancestry: ['iframe', 'path2']
+          },
+          result: true
+        }
+      ];
+
+      var afterResults = checks['heading-order'].after(results);
+      assert.isTrue(afterResults[0].result);
+      assert.isFalse(afterResults[1].result);
+    });
+
+    it('understand shadow DOM in ancestries', function() {
+      var results = [
+        {
+          data: {
+            headingOrder: [
+              {
+                ancestry: ['path1'],
+                level: 1
+              },
+              {
+                ancestry: [['custom-elm1', 'iframe1']],
+                level: -1
+              },
+              {
+                ancestry: [['custom-elm2', 'iframe2']],
+                level: -1
+              },
+              {
+                ancestry: [['custom-elm3', 'path4']],
+                level: 4
+              }
+            ]
+          },
+          node: { ancestry: ['path1'] },
+          result: true
+        },
+        {
+          data: {
+            headingOrder: [
+              {
+                ancestry: ['path2'],
+                level: 2
+              }
+            ]
+          },
+          node: { ancestry: [['custom-elm1', 'iframe1'], 'path2'] },
+          result: true
+        },
+        {
+          data: {
+            headingOrder: [
+              {
+                ancestry: ['path3'],
+                level: 3
+              }
+            ]
+          },
+          node: { ancestry: [['custom-elm2', 'iframe2'], 'path3'] },
+          result: true
+        },
+        {
+          node: { ancestry: [['custom-elm3', 'path4']] },
+          result: true
+        }
+      ];
+
+      var afterResults = checks['heading-order'].after(results);
+      assert.isTrue(afterResults[0].result);
+      assert.isTrue(afterResults[1].result);
+      assert.isTrue(afterResults[2].result);
+      assert.isTrue(afterResults[3].result);
+    });
+
+    it('run when an in-between frame has no heading', function() {
+      var results = [
+        {
+          data: {
+            headingOrder: [
+              {
+                ancestry: ['path1'],
+                level: 1
+              },
+              {
+                ancestry: ['iframe1'],
+                level: -1
+              },
+              {
+                ancestry: ['path4'],
+                level: 4
+              }
+            ]
+          },
+          node: { ancestry: ['path1'] },
+          result: true
+        },
+        {
+          data: {
+            headingOrder: [
+              {
+                ancestry: ['path2'],
+                level: 2
+              }
+            ]
+          },
+          node: { ancestry: ['iframe1', 'iframe2', 'path2'] },
+          result: true
+        },
+        {
+          data: {
+            headingOrder: [
+              {
+                ancestry: ['path3'],
+                level: 3
+              }
+            ]
+          },
+          node: { ancestry: ['iframe1', 'iframe3', 'path3'] },
+          result: true
+        },
+        {
+          node: { ancestry: ['path4'] },
+          result: true
+        }
+      ];
+
+      var afterResults = checks['heading-order'].after(results);
+      assert.isTrue(afterResults[0].result);
+      assert.isTrue(afterResults[1].result);
+      assert.isTrue(afterResults[2].result);
+      assert.isTrue(afterResults[3].result);
+    });
+
+    it('can fail the second heading, if the first is excluded', function() {
+      var results = [
+        {
+          data: {
+            headingOrder: [
+              {
+                ancestry: ['path1'],
+                level: 1
+              },
+              {
+                ancestry: ['path2'],
+                level: 3
+              }
+            ]
+          },
+          node: {
+            ancestry: ['path2']
+          },
+          result: true
+        }
+      ];
+      const afterResults = checks['heading-order'].after(results);
+      assert.isFalse(afterResults[0].result);
     });
   });
 });
