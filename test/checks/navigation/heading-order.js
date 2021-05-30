@@ -703,7 +703,7 @@ describe('heading-order', function() {
           result: true
         }
       ];
-      const afterResults = checks['heading-order'].after(results);
+      var afterResults = checks['heading-order'].after(results);
       assert.isFalse(afterResults[0].result);
     });
   });
