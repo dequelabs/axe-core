@@ -1,18 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="eng">
   <title>O hai</title>
-
-  <div class="foo" id="foo">foo</div>
+  <h1>hello</h1>
+  <iframe src="test.html" title="test"></iframe>
+  <h4>hello</h4>
 
   <script src="/axe.js"></script>
+  <script src="/test/testutils.js"></script>
   <script>
-    window.addEventListener('load', function() {
-      axe.run(document, function(err, res) {
-        console.log(res.violations);
-        res.incomplete.forEach(function(issue) {
-          console.log(issue);
-        });
+    axe.testUtils.awaitNestedLoad(async () => {
+      const res = await axe.run({
+        // frameWaitTime: 1000,
+        runOnly: ['heading-order']
       });
-    });
+      console.log(res);
+    })[
+      ({
+        ancestry: ['html > body > h1:nth-child(2)'],
+        level: 1
+      },
+      {
+        ancestry: ['html > body > h4:nth-child(4)'],
+        level: 4
+      },
+      {
+        ancestry: ['html > body > h2'],
+        level: 2
+      },
+      {
+        ancestry: ['html > body > h3:nth-child(2)'],
+        level: 3
+      })
+    ];
   </script>
 </html>
