@@ -429,7 +429,7 @@ describe('heading-order', function() {
       assert.isUndefined(afterResults[1].result);
     });
 
-    it('sets results to undefined if preceded by an unreplaced iframe', function() {
+    it('ignores frames for which there are no results', function() {
       var results = [
         {
           data: {
@@ -473,7 +473,7 @@ describe('heading-order', function() {
 
       var afterResults = checks['heading-order'].after(results);
       assert.isTrue(afterResults[0].result);
-      assert.isUndefined(afterResults[1].result);
+      assert.isFalse(afterResults[1].result);
       assert.isTrue(afterResults[2].result);
     });
 
