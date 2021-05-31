@@ -34,6 +34,30 @@ describe('meta-viewport', function() {
       );
     });
 
+    it('should return false on user-scalable in the range <-1, 1>', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, cats=dogs, user-scalable=0, more-stuff=ok">'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('meta-viewport')
+          .call(checkContext, null, null, vNode)
+      );
+    });
+
+    it('should return false on user-scalable in the range <-1, 1>', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, cats=dogs, user-scalable=-0.5, more-stuff=ok">'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('meta-viewport')
+          .call(checkContext, null, null, vNode)
+      );
+    });
+
     it('should return true on user-scalable=yes', function() {
       var vNode = queryFixture(
         '<meta id="target" name="viewport" content="foo=bar, cats=dogs, user-scalable=yes, more-stuff=ok">'
@@ -169,6 +193,30 @@ describe('meta-viewport', function() {
           .call(checkContext, null, null, vNode)
       );
       assert.deepEqual(checkContext._data, 'user-scalable=no');
+    });
+
+    it('should return false on user-scalable in the range <-1, 1>', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, cats=dogs, user-scalable=0, more-stuff=ok">'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('meta-viewport')
+          .call(checkContext, null, null, vNode)
+      );
+    });
+
+    it('should return false on user-scalable in the range <-1, 1>', function() {
+      var vNode = queryFixture(
+        '<meta id="target" name="viewport" content="foo=bar, cats=dogs, user-scalable=-0.5, more-stuff=ok">'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('meta-viewport')
+          .call(checkContext, null, null, vNode)
+      );
     });
 
     it('should return true on user-scalable=yes', function() {
