@@ -27,6 +27,11 @@ describe('has-implicit-chromium-role-matches', function() {
     assert.isFalse(rule.matches(null, vNode));
   });
 
+  it('matches elements with an implicit role in chromium', function() {
+    var vNode = queryFixture('<svg id="target"></svg>');
+    assert.isTrue(rule.matches(null, vNode));
+  });
+
   it('does not match elements with no implicit role even if they are focusable and have an explicit role', function() {
     var vNode = queryFixture(
       '<div id="target" role="none" tabindex="1"></div>'
