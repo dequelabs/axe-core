@@ -1,7 +1,8 @@
 describe('axe._load', function() {
-  'use strict';
+  var fixture = document.querySelector('#fixture');
+  var captureError = axe.testUtils.captureError;
+  var isIE11 = axe.testUtils.isIE11;
 
-  // var Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
   afterEach(function() {
     axe._audit = null;
   });
@@ -31,23 +32,34 @@ describe('axe._load', function() {
   });
 
   describe('respondable subscriber', function() {
-    it('should add a respondable subscriber for axe.ping', function(done) {
-      var mockAudit = {
-        rules: [{ id: 'monkeys' }, { id: 'bananas' }]
-      };
+    (isIE11 ? it.skip : it)(
+      // In IE win.parent is read-only
+      'should add a respondable subscriber for axe.ping',
+      function(done) {
+        var winParent = window.parent;
+        var mockAudit = {
+          rules: [{ id: 'monkeys' }, { id: 'bananas' }]
+        };
 
-      axe._load(mockAudit);
+        axe._load(mockAudit);
 
-      var win = {
-        postMessage: function(message) {
-          var data = JSON.parse(message);
-          assert.deepEqual(data.message, { axe: true });
-          done();
-        }
-      };
+        var frame = document.createElement('iframe');
+        frame.src = '../mock/frames/test.html';
+        frame.addEventListener('load', function() {
+          var win = frame.contentWindow;
+          window.parent = win;
+          win.postMessage = captureError(function(message) {
+            var data = JSON.parse(message);
+            assert.deepEqual(data.payload, { axe: true });
+            window.parent = winParent;
+            done();
+          }, done);
+          axe.utils.respondable(win, 'axe.ping', { axe: true });
+        });
 
-      axe.utils.respondable._publish(win, { topic: 'axe.ping' });
-    });
+        fixture.appendChild(frame);
+      }
+    );
 
     describe('given command rules', function() {
       // todo: see issue - https://github.com/dequelabs/axe-core/issues/2168

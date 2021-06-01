@@ -17,6 +17,7 @@
       "description": "role属性の値が要素に対して適切であることを確認します",
       "help": "ARIAロールは要素に対して適切でなければなりません"
     },
+<<<<<<< HEAD
     "aria-command-name": {
       "description": "すべてのARIA button、link、menuitemにアクセシブルな名前があることを確認します",
       "help": "ARIAコマンドにはアクセシブルな名前がなければなりません"
@@ -25,6 +26,8 @@
       "description": "すべてのARIA dialog、alertdialogノードにアクセシブルな名前があることを確認します",
       "help": "ARIA dialogとalertdialogノードにはアクセシブルな名前がなければなりません"
     },
+=======
+>>>>>>> upstream/develop
     "aria-hidden-body": {
       "description": "ドキュメント本体にaria-hidden='true'が存在していないことを確認します",
       "help": "ドキュメント本体にaria-hidden='true'が存在してはなりません"
@@ -37,6 +40,7 @@
       "description": "すべてのARIA入力欄にアクセシブルな名前があることを確認します",
       "help": "ARIA入力欄にアクセシブルな名前があります"
     },
+<<<<<<< HEAD
     "aria-meter-name": {
       "description": "すべてのARIA meterノードにアクセシブルな名前があることを確認します",
       "help": "ARIA meterノードにはアクセシブルな名前がなければなりません"
@@ -45,6 +49,8 @@
       "description": "すべてのARIA progressbarノードにアクセシブルな名前があることを確認します",
       "help": "ARIA progressbarノードにはアクセシブルな名前がなければなりません"
     },
+=======
+>>>>>>> upstream/develop
     "aria-required-attr": {
       "description": "ARIAロールのある要素にすべての必須ARIA属性が存在することを確認します",
       "help": "必須のARIA属性が提供されていなければなりません"
@@ -65,14 +71,18 @@
       "description": "すべてのロール属性が指定された要素で、有効な値が使用されていることを確認します",
       "help": "使用されているARIAロールは有効な値に一致しなければなりません"
     },
+<<<<<<< HEAD
     "aria-text": {
       "description": "role=\"text\"が指定されている要素にフォーカス可能な子孫がないことを確認します",
       "help": "\"role=text\"が指定されている要素には、フォーカス可能な子孫が含まれていてはなりません"
     },
+=======
+>>>>>>> upstream/develop
     "aria-toggle-field-name": {
       "description": "すべてのARIAトグル欄にアクセシブルな名前があることを確認します",
       "help": "ARIAトグル欄にアクセシブルな名前があります"
     },
+<<<<<<< HEAD
     "aria-tooltip-name": {
       "description": "すべてのARIA tooltipノードにはアクセシブルな名前があることを確認します",
       "help": "ARIA tooltipノードにはアクセシブルな名前がなければなりません"
@@ -81,6 +91,8 @@
       "description": "すべてのARIA treeitemノードにはアクセシブルな名前があることを確認します",
       "help": "ARIA treeitemノードにはアクセシブルな名前がなければなりません"
     },
+=======
+>>>>>>> upstream/develop
     "aria-valid-attr-value": {
       "description": "すべてのARIA属性に有効な値が存在することを確認します",
       "help": "ARIA属性は有効な値に一致しなければなりません"
@@ -157,10 +169,13 @@
       "description": "フォームフィールドに複数のlabel要素が存在しないことを確認します",
       "help": "複数のlabel要素をフォームフィールドに付与するべきではありません"
     },
+<<<<<<< HEAD
     "frame-focusable-content": {
       "description": "tabindex=-1が指定されている<frame>と<iframe>要素が、フォーカス可能なコンテンツを含まないことを確認します",
       "help": "tabindex=-1が指定されているフレームには、フォーカス可能なコンテンツが含まれていてはなりません"
     },
+=======
+>>>>>>> upstream/develop
     "frame-tested": {
       "description": "<iframe>および<frame>要素にaxe-coreスクリプトが含まれていることを確認します",
       "help": "フレームはaxe-coreでテストする必要があります"
@@ -293,10 +308,13 @@
       "description": "<meta name=\"viewport\">がテキストの拡大縮小およびズーミングを無効化しないことを確認します",
       "help": "ズーミングや拡大縮小は無効にしてはなりません"
     },
+<<<<<<< HEAD
     "nested-interactive": {
       "description": "ネストされた対話的なコントロールはスクリーン・リーダーで読み上げられません",
       "help": "対話的なコントロールがネストされていないことを確認します"
     },
+=======
+>>>>>>> upstream/develop
     "no-autoplay-audio": {
       "description": "<video> または <audio> 要素が音声を停止またはミュートするコントロールなしに音声を3秒より長く自動再生しないことを確認します",
       "help": "<video> または <audio> 要素は音声を自動再生しません"
@@ -313,10 +331,13 @@
       "description": "ページ、またはそのフレームの少なくとも1つにはレベル1の見出しが含まれていることを確認します",
       "help": "ページにはレベル1の見出しが含まれていなければなりません"
     },
+<<<<<<< HEAD
     "presentation-role-conflict": {
       "description": "roleがnoneまたはpresentationで、roleの競合の解決が必要な要素をマークします",
       "help": "roleがnoneまたはpresentationの要素をマークしなければなりません"
     },
+=======
+>>>>>>> upstream/develop
     "region": {
       "description": "ページのすべてのコンテンツがlandmarkに含まれていることを確認します",
       "help": "ページのすべてのコンテンツはlandmarkに含まれていなければなりません"
@@ -333,10 +354,13 @@
       "description": "スクロール可能なコンテンツを持つ要素はキーボードでアクセスできるようにするべきです",
       "help": "スクロール可能な領域にキーボードでアクセスできるようにします"
     },
+<<<<<<< HEAD
     "select-name": {
       "description": "select要素にはアクセシブルな名前があることを確認します",
       "help": "select要素にはアクセシブルな名前がなければなりません"
     },
+=======
+>>>>>>> upstream/develop
     "server-side-image-map": {
       "description": "サーバーサイドのイメージマップが使用されていないことを確認します",
       "help": "サーバーサイドのイメージマップを使用してはなりません"
@@ -408,11 +432,24 @@
         "plural": "ARIA ロール ${data.values} この要素に許可されていないため、要素が表示されたときはARIAロールを削除する必要があります"
       }
     },
+<<<<<<< HEAD
+=======
+    "aria-hidden-body": {
+      "pass": "ドキュメント本体にaria-hidden属性は存在していません",
+      "fail": "aria-hidden=trueはドキュメント本体に存在してはなりません"
+    },
+    "aria-roledescription": {
+      "pass": "aria-roledescriptionはサポートされたセマンティックなロールに使用されています",
+      "incomplete": "aria-roledescriptionがサポートされたスクリーン・リーダーで読み上げられることを確認しましょう",
+      "fail": "aria-roledescriptionをサポートするロールを要素に付与しましょう"
+    },
+>>>>>>> upstream/develop
     "aria-errormessage": {
       "pass": "サポートされているaria-errormessageの技術を使用しています",
       "fail": {
         "singular": "aria-errormessage の値 `${data.values}` はメッセージを通知する方法を使用しなければなりません (例えば、aria-live、aria-describedby、role=alert等)",
         "plural": "aria-errormessage の値 `${data.values}` はメッセージを通知する方法を使用しなければなりません (例えば、aria-live、aria-describedby、role=alert等)"
+<<<<<<< HEAD
       },
       "incomplete": {
         "singular": "aria-errormessageの値 `${data.values}` は存在する要素を参照していることを確認しましょう",
@@ -426,6 +463,28 @@
     "aria-prohibited-attr": {
       "pass": "ARIA属性は使用できます",
       "fail": "ARIA属性は使用できません: ${data.values}"
+=======
+      }
+    },
+    "fallbackrole": {
+      "pass": "1つのロール値のみ使用されています",
+      "fail": "古いブラウザーではフォールバックロールがサポートされていないため、ロール値は1つのみ使用します"
+    },
+    "has-widget-role": {
+      "pass": "要素にはwidgetロールが存在しています",
+      "fail": "要素にはwidgetロールが存在していません"
+    },
+    "invalidrole": {
+      "pass": "ARIAロールが有効です",
+      "fail": {
+        "singular": "ロールは有効なARIAロールのうちの1つでなければなりません: ${data.values}",
+        "plural": "ロールは有効なARIAロールのうちの1つでなければなりません: ${data.values}"
+      }
+    },
+    "no-implicit-explicit-label": {
+      "pass": "<label> とアクセシブルな名前の間に不一致はありません",
+      "incomplete": "<label> が ARIA ${data} 欄の名前の一部である必要がないことを確認しましょう"
+>>>>>>> upstream/develop
     },
     "aria-required-attr": {
       "pass": "すべての必須のARIA属性が存在しています",
@@ -452,15 +511,25 @@
         "plural": "必須のARIA親ロールが提供されていません: ${data.values}"
       }
     },
+<<<<<<< HEAD
     "aria-roledescription": {
       "pass": "aria-roledescriptionはサポートされたセマンティックなロールに使用されています",
       "incomplete": "aria-roledescriptionがサポートされたスクリーン・リーダーで読み上げられることを確認しましょう",
       "fail": "aria-roledescriptionをサポートするロールを要素に付与しましょう"
     },
+=======
+>>>>>>> upstream/develop
     "aria-unsupported-attr": {
       "pass": "ARIA属性はサポートされています",
       "fail": "ARIA属性はスクリーン・リーダーや支援技術に広くサポートされていません: ${data.values}"
     },
+<<<<<<< HEAD
+=======
+    "unsupportedrole": {
+      "pass": "ARIAロールはサポートされています",
+      "fail": "使用されているロールはスクリーン・リーダーや支援技術に広くサポートされていません: ${data.values}"
+    },
+>>>>>>> upstream/develop
     "aria-valid-attr-value": {
       "pass": "ARIA属性値が有効です",
       "fail": {
@@ -479,6 +548,7 @@
         "plural": "無効なARIA属性名です: ${data.values}"
       }
     },
+<<<<<<< HEAD
     "fallbackrole": {
       "pass": "1つのロール値のみ使用されています",
       "fail": "古いブラウザーではフォールバックロールがサポートされていないため、ロール値は1つのみ使用します"
@@ -513,6 +583,8 @@
       "pass": "ARIAロールはサポートされています",
       "fail": "使用されているロールはスクリーン・リーダーや支援技術に広くサポートされていません: ${data.values}"
     },
+=======
+>>>>>>> upstream/develop
     "valid-scrollable-semantics": {
       "pass": "要素はフォーカス順序に含まれる要素に対して有効なセマンティクスを持ちます",
       "fail": "要素はフォーカス順序に含まれる要素に対して無効なセマンティクスを持ちます"
@@ -532,8 +604,12 @@
         "outsideViewport": "ビューポートの外にあるため、要素の背景色を判定できません",
         "equalRatio": "要素のコントラスト比が背景と1:1です",
         "shortTextContent": "実際のテキストコンテンツであるかを判断するには要素のコンテンツが短すぎます",
+<<<<<<< HEAD
         "nonBmp": "要素のコンテンツはテキストではない文字のみを含んでいます",
         "pseudoContent": "擬似要素のため、要素の背景色を判定することができませんでした"
+=======
+        "nonBmp": "要素のコンテンツはテキストではない文字のみを含んでいます"
+>>>>>>> upstream/develop
       }
     },
     "link-in-text-block": {
@@ -578,27 +654,37 @@
     },
     "focusable-no-name": {
       "pass": "要素がタブ順序にない、またはアクセシブルなテキストが存在しています",
+<<<<<<< HEAD
       "fail": "要素がタブ順序にあり、アクセシブルなテキストが存在していません",
       "incomplete": "要素にアクセシブルな名前があるか判定できません"
+=======
+      "fail": "要素がタブ順序にあり、アクセシブルなテキストが存在していません"
+>>>>>>> upstream/develop
     },
     "focusable-not-tabbable": {
       "pass": "要素内にフォーカス不可能な要素は含まれていません",
       "fail": "フォーカス可能なコンテンツは tabindex='-1' を指定するか、DOMから削除するべきです"
     },
+<<<<<<< HEAD
     "frame-focusable-content": {
       "pass": "要素の子孫にフォーカス可能なものはありません",
       "fail": "要素の子孫にフォーカス可能なものがあります",
       "incomplete": "要素に子孫があるか判定できませんでした"
     },
+=======
+>>>>>>> upstream/develop
     "landmark-is-top-level": {
       "pass": "${data.role} ランドマークはトップレベルにあります",
       "fail": "${data.role} ランドマークが他のランドマークに含まれています"
     },
+<<<<<<< HEAD
     "no-focusable-content": {
       "pass": "要素の子孫にフォーカス可能なものはありません",
       "fail": "要素の子孫にフォーカス可能なものがあります",
       "incomplete": "要素に子孫があるか判定できませんでした"
     },
+=======
+>>>>>>> upstream/develop
     "page-has-heading-one": {
       "pass": "ページには少なくとも1つのレベル1の見出しがあります",
       "fail": "ページにはレベル1の見出しがなければなりません"
@@ -632,15 +718,21 @@
       "fail": "要素が既存のテキストと重複した代替テキストの存在する<img>要素を含んでいます"
     },
     "explicit-label": {
+<<<<<<< HEAD
       "pass": "フォームの要素に明確な<label>が存在しています",
       "fail": "フォームの要素に明確な<label>が存在していません",
       "incomplete": "フォームの要素に明確な <label> があるか判定できませんでした"
+=======
+      "pass": "フォーム要素に明確な<label>が存在しています",
+      "fail": "フォーム要素に明確な<label>が存在していません"
+>>>>>>> upstream/develop
     },
     "help-same-as-label": {
       "pass": "ヘルプテキスト（titleまたはaria-describedby）はラベルテキストと重複していません",
       "fail": "ヘルプテキスト（titleまたはaria-describedby）がラベルテキストと同じです"
     },
     "hidden-explicit-label": {
+<<<<<<< HEAD
       "pass": "フォームの要素に視認可能で明確な<label>があります",
       "fail": "フォームの要素に非表示の明確な<label>があります",
       "incomplete": "フォームの要素に明確な非表示の <label> があるか判定できませんでした"
@@ -649,6 +741,14 @@
       "pass": "フォームの要素に暗黙の（包含された）<label>が存在しています",
       "fail": "フォームの要素に暗黙の（包含された）<label>が存在していません",
       "incomplete": "フォームの要素に暗黙の（包含された）<label>が存在するか判定できません"
+=======
+      "pass": "フォーム要素に視認可能で明確な<label>があります",
+      "fail": "フォーム要素に非表示の明確な<label>があります"
+    },
+    "implicit-label": {
+      "pass": "フォーム要素に暗黙の（包含された）<label>が存在しています",
+      "fail": "フォーム要素に暗黙の（包含された）<label>が存在していません"
+>>>>>>> upstream/develop
     },
     "label-content-name-mismatch": {
       "pass": "視認可能なテキストが要素のアクセシブルな名前の一部に含まれています",
@@ -668,10 +768,14 @@
     },
     "has-lang": {
       "pass": "<html>要素にlang属性が存在しています",
+<<<<<<< HEAD
       "fail": {
         "noXHTML": "HTMLページで xml:lang 属性は有効ではありません、 lang 属性を使用してください。",
         "noLang": "<html> 要素に lang 属性が指定されていません"
       }
+=======
+      "fail": "<html>要素にlang属性が存在していません"
+>>>>>>> upstream/develop
     },
     "valid-lang": {
       "pass": "lang属性の値が有効な言語の一覧に含まれています",
@@ -793,8 +897,12 @@
     },
     "aria-labelledby": {
       "pass": "aria-labelledby属性が存在し、スクリーン・リーダーに認識可能な要素を参照しています",
+<<<<<<< HEAD
       "fail": "aria-labelledby属性が存在しない、存在しない要素を参照している、または空の要素を参照しています",
       "incomplete": "aria-labelledby属性が、存在する要素を参照していることを確認しましょう"
+=======
+      "fail": "aria-labelledby属性が存在しない、存在しない要素を参照している、または空の要素を参照しています"
+>>>>>>> upstream/develop
     },
     "avoid-inline-spacing": {
       "pass": "テキストの間隔に影響する '!important' のついたインラインスタイルは指定されていません",
@@ -805,8 +913,12 @@
     },
     "button-has-visible-text": {
       "pass": "要素にスクリーン・リーダーが認識可能な内部テキストが存在しています",
+<<<<<<< HEAD
       "fail": "要素にスクリーン・リーダーが認識可能な内部テキストが存在していません",
       "incomplete": "要素に子ノードがあるか判定できません"
+=======
+      "fail": "要素にスクリーン・リーダーが認識可能な内部テキストが存在していません"
+>>>>>>> upstream/develop
     },
     "doc-has-title": {
       "pass": "ドキュメントに空ではない<title>要素が存在しています",
@@ -822,8 +934,12 @@
     },
     "has-visible-text": {
       "pass": "要素にスクリーン・リーダーが認識可能なテキストが存在しています",
+<<<<<<< HEAD
       "fail": "要素にスクリーン・リーダーが認識可能なテキストが存在していません",
       "incomplete": "要素に子ノードがあるか判定できません"
+=======
+      "fail": "要素にスクリーン・リーダーが認識可能なテキストが存在していません"
+>>>>>>> upstream/develop
     },
     "is-on-screen": {
       "pass": "要素が表示されていません",
@@ -831,10 +947,14 @@
     },
     "non-empty-alt": {
       "pass": "要素に空ではないalt属性が存在しています",
+<<<<<<< HEAD
       "fail": {
         "noAttr": "要素にalt属性が指定されていません",
         "emptyAttr": "要素に空のalt属性が指定されています"
       }
+=======
+      "fail": "要素にalt属性が存在していない、またはalt属性が空です"
+>>>>>>> upstream/develop
     },
     "non-empty-if-present": {
       "pass": {
@@ -843,6 +963,7 @@
       },
       "fail": "要素にvalue属性が存在し、value属性が空です"
     },
+<<<<<<< HEAD
     "non-empty-placeholder": {
       "pass": "要素にplaceholder属性が指定されています",
       "fail": {
@@ -872,6 +993,15 @@
         "focusable": "要素がフォーカス可能なため、role=\"none\"またはrole=\"presentation\"にはなりません",
         "both": "要素にはARIAのグローバル属性が指定されており、フォーカス可能なため、role=\"none\"またはrole=\"presentation\"にはなりません"
       }
+=======
+    "non-empty-title": {
+      "pass": "要素にtitle属性が存在しています",
+      "fail": "要素にtitle属性が存在していない、またはtitle属性が空です"
+    },
+    "non-empty-value": {
+      "pass": "要素に空ではないvalue要素が存在しています",
+      "fail": "要素にvalue属性が存在していない、またはvalue属性が空です"
+>>>>>>> upstream/develop
     },
     "role-none": {
       "pass": "要素のデフォルトのセマンティクスがrole=\"none\"で上書きされました",
@@ -882,12 +1012,17 @@
       "fail": "要素のデフォルトのセマンティクスはrole=\"presentation\"で上書きされませんでした"
     },
     "svg-non-empty-title": {
+<<<<<<< HEAD
       "pass": "要素の子要素にtitle要素が存在します",
       "fail": {
         "noTitle": "要素の子要素にtitle要素が存在しません",
         "emptyTitle": "子要素のtitle要素が空です"
       },
       "incomplete": "要素の子要素にtitle要素があるか判定できません"
+=======
+      "pass": "要素にタイトルとしての子が存在します",
+      "fail": "要素にタイトルとしての子が存在しません"
+>>>>>>> upstream/develop
     },
     "caption-faked": {
       "pass": "テーブルの一行目がキャプションとして使用されていません",
@@ -911,7 +1046,10 @@
     },
     "td-headers-attr": {
       "pass": "headers属性はテーブル内の他のセルを参照するためだけに使用されています",
+<<<<<<< HEAD
       "incomplete": "headers属性が空です",
+=======
+>>>>>>> upstream/develop
       "fail": "headers属性がテーブル内の他のセルを参照するためだけに使用されていません"
     },
     "th-has-data-cells": {

@@ -20,8 +20,12 @@
       1. [Results Object](#results-object)
    1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
    1. [API Name: axe.cleanup](#api-name-axecleanup)
+   1. [API Name: axe.setup](#api-name-axesetup)
+   1. [API Name: axe.teardown](#api-name-axeteardown)
+   1. [API Name: axe.frameMessenger](#api-name-axeframemessenger)
    1. [Virtual DOM Utilities](#virtual-dom-utilities)
       1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
+      1. [API Name: axe.utils.getRule](#api-name-axeutilsgetrule)
    1. [Common Functions](#common-functions)
 1. [Section 3: Example Reference](#section-3-example-reference)
 1. [Section 4: Performance](#section-4-performance)
@@ -234,6 +238,7 @@ axe.configure({
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
   - `axeVersion` - Set the compatible version of a custom rule with the current axe version. Compatible versions are all patch and minor updates that are the same as, or newer than those of the `axeVersion` property.
   - `noHtml` - Disables the HTML output of nodes from rules.
+  - `allowedOrigins` - Set which origins (URL domains) will communicate test data with. See [allowedOrigins](#allowedorigins).
 
 **Returns:** Nothing
 
@@ -246,6 +251,20 @@ Page level rules raise violations on the entire document and not on individual n
 - [lib/checks/navigation/heading-order.json](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order.json)
 - [lib/checks/navigation/heading-order-evaluate.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order-evaluate.js)
 - [lib/checks/navigation/heading-order-after.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order-after.js)
+
+##### allowedOrigins
+
+Axe-core will only communicate results to frames of the same origin (the URL domain). To configure axe so that it exchanges results across different origins, you can configure allowedOrigins. This configuration must happen in **every frame**. For example:
+
+```js
+axe.configure({
+  allowedOrigins: ['<same_origin>', 'https://deque.com']
+});
+```
+
+The `allowedOrigins` option has two wildcard options. `<same_origin>` always corresponds to the current domain. If you want to block all frame communication, set `allowedOrigins` to `[]`. To configure axe-core to communicate to all origins, use `<unsafe_all_origins>`. **This is not recommended**. Because this is the only way to test iframes on `file://`, it is recommended to use a localhost server such as [http-server](https://www.npmjs.com/package/http-server) instead.
+
+Use of `allowedOrigins` is not necessary if an alternative [frameMessenger](#api-name-axeframemessenger) is used.
 
 ### API Name: axe.reset
 
@@ -793,6 +812,32 @@ axe.cleanup(resolve, reject);
 
 `resolve` takes no arguments and `reject` takes a single argument that must be a string or have a toString() method in its prototype.
 
+### API Name: axe.setup
+
+Setup axe-cores internal `VirtualNode` tree and other required properties required to run functions in `axe.commons`.
+
+The signature is:
+
+```js
+axe.setup(DomNode);
+```
+
+`DomNode` - is an optional DOM node to use as the root of the `VirtualNode` tree. Default is `document.documentElement`.
+
+### API Name: axe.teardown
+
+Cleanup the `VirtualNode` tree and internal caches. `axe.run` will call this function at the end of the run so there's no need to call it yourself afterwards.
+
+The signature is:
+
+```js
+axe.teardown();
+```
+
+### API Name: axe.frameMessenger
+
+Set up a alternative communication channel between parent and child frames. By default, axe-core uses `window.postMessage()`. See [frame-messenger.md](frame-messenger.md) for details.
+
 ### Virtual DOM Utilities
 
 Note: If you’re writing rules or checks, you’ll have both the `node` and `virtualNode` passed in.
@@ -821,6 +866,26 @@ axe.utils.querySelectorAll(virtualNode, 'a[href]');
 ##### Returns
 
 An Array of filtered HTML nodes.
+
+#### API Name: axe.utils.getRule
+
+##### Description
+
+Get an axe-core `Rule` instance by ID.
+
+##### Synopsis
+
+```js
+axe.utils.getRule('color-contrast');
+```
+
+##### Parameters
+
+- `ruleId` - The ID of the rule.
+
+##### Returns
+
+An axe-core `Rule` instance.
 
 ### Common Functions
 
@@ -862,7 +927,7 @@ The top-level document or shadow DOM document fragment
 
 ## Section 3: Example Reference
 
-This package contains examples for [jasmine](examples/jasmine), [mocha](examples/mocha), [phantomjs](examples/phantomjs), [qunit](examples/qunit), and [generating HTML from the violations array](examples/html-handlebars.md). Each of these examples is in the [doc/examples](examples) folder. In each folder, there is a README.md file which contains specific information about each example.
+This package contains examples for [jasmine](examples/jasmine), [mocha](examples/mocha), [qunit](examples/qunit), and [generating HTML from the violations array](examples/html-handlebars.md). Each of these examples is in the [doc/examples](examples) folder. In each folder, there is a README.md file which contains specific information about each example.
 
 See [axe-webdriverjs](https://github.com/dequelabs/axe-webdriverjs#axe-webdriverjs) for selenium webdriver javascript examples.
 

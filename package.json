@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.1.2",
+  "version": "4.2.0",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -92,7 +92,7 @@
     "next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "sri-validate": "node build/sri-update --validate",
-    "fmt": "prettier --write *.{json,md,js} **/*.ts './{.github,build,doc,lib,test}/**/*.{json,md,js,ts,html}'"
+    "fmt": "prettier --write .*.json *.{json,md,js} **/*.ts './{.circleci,.github,build,doc,lib,locales,test,typings}/**/*.{json,md,js,ts,html}'"
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",
@@ -113,6 +113,7 @@
     "esbuild": "^0.7.19",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.2.0",
+    "eslint-plugin-mocha-no-only": "^1.1.1",
     "execa": "^2.0.2",
     "globby": "^10.0.0",
     "grunt": "^1.0.3",
@@ -128,13 +129,14 @@
     "jquery": "^3.0.0",
     "jsdoc": "^3.5.5",
     "jsdom": "^16.3.0",
-    "karma": "^5.2.3",
+    "karma": "^6.3.2",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-firefox-launcher": "^2.1.0",
     "karma-ie-launcher": "^1.0.0",
     "karma-mocha": "^2.0.1",
     "karma-mocha-reporter": "^2.2.5",
+    "karma-sinon": "^1.0.5",
     "lint-staged": "^9.2.1",
     "make-dir": "^3.0.0",
     "markdown-table": "^1.1.2",
@@ -144,6 +146,7 @@
     "node-notifier": "^8.0.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.17.1",
+    "proxyquire": "^2.1.3",
     "revalidator": "~0.3.1",
     "selenium-webdriver": "~3.6.0",
     "sinon": "^7.5.0",
@@ -157,7 +160,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "grunt configure && lint-staged"
     }
   },
   "lint-staged": {

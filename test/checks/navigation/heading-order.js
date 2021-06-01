@@ -522,5 +522,58 @@ describe('heading-order', function() {
         checks['heading-order'].after(results);
       });
     });
+
+    it('should not error if iframe is first result', function() {
+      var results = [
+        {
+          data: {
+            headingOrder: [
+              {
+                ancestry: 'path2',
+                level: 1
+              }
+            ]
+          },
+          node: {
+            _fromFrame: true,
+            ancestry: ['iframe', 'path2']
+          },
+          result: true
+        },
+        {
+          data: {
+            headingOrder: [
+              {
+                ancestry: 'iframe',
+                level: -1
+              },
+              {
+                ancestry: 'path1',
+                level: 2
+              },
+              {
+                ancestry: 'path3',
+                level: 3
+              }
+            ]
+          },
+          node: {
+            _fromFrame: false,
+            ancestry: ['path1']
+          },
+          result: true
+        },
+        {
+          node: {
+            _fromFrame: false,
+            ancestry: ['path3']
+          },
+          result: true
+        }
+      ];
+      var afterResults = checks['heading-order'].after(results);
+      assert.isTrue(afterResults[1].result);
+      assert.isTrue(afterResults[2].result);
+    });
   });
 });

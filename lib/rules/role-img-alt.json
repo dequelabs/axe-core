@@ -10,6 +10,7 @@
     "section508.22.a",
     "ACT"
   ],
+  "actIds": ["23a2a8"],
   "metadata": {
     "description": "Ensures [role='img'] elements have alternate text",
     "help": "[role='img'] elements have an alternative text"

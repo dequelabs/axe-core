@@ -6,7 +6,9 @@
 - [Options](#options)
   - [Global Options](#global-options)
   - [aria-allowed-role](#aria-allowed-role)
+  - [aria-prohibited-attr](#aria-prohibited-attr)
   - [aria-required-children](#aria-required-children)
+  - [aria-required-parent](#aria-required-parent)
   - [aria-roledescription](#aria-roledescription)
   - [color-contrast](#color-contrast)
   - [page-has-heading-one](#page-has-heading-one)
@@ -73,6 +75,42 @@ All checks allow these global options:
 | `allowImplicit` | `true`  | Allow the explicit role to match the implicit role of the element |
 | `ignoredTags`   | `[]`    | Do not check for allowed roles in the provided HTML elements list |
 
+### aria-prohibited-attr
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th align="left">Default</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>elementsAllowedAriaLabel</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>[
+  "audio",
+  "applet",
+  "canvas",
+  "dl",
+  "embed",
+  "iframe",
+  "input",
+  "label",
+  "meter",
+  "object",
+  "svg",
+  "video"
+]</code></pre>
+        </td>
+      <td align="left">List of element names that without a role, are allowed an `aria-label` and `aria-labelledby` attribute</td>
+    </tr>
+  </tbody>
+</table>
+
 ### aria-required-children
 
 <table>
@@ -103,6 +141,29 @@ All checks allow these global options:
 ]</code></pre>
         </td>
       <td align="left">List of ARIA roles that should be flagged as "Needs Review" rather than a violation if the element has no owned children</td>
+    </tr>
+  </tbody>
+</table>
+
+### aria-required-parent
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th align="left">Default</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>ownGroupRoles</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>['listitem', 'treeitem']</code></pre>
+        </td>
+      <td align="left">List of ARIA roles that when used in a group can have a grand parent with the same role. E.g. <code>list > listitem > group > listitem</code>.</td>
     </tr>
   </tbody>
 </table>

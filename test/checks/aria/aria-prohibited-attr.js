@@ -30,6 +30,20 @@ describe('aria-prohibited-attr', function() {
     ]);
   });
 
+  it('should return undefined if element has no role and has text content', function() {
+    var params = checkSetup(
+      '<div id="target" aria-label="foo" aria-labelledby="foo">Contents</div>'
+    );
+    assert.isUndefined(checkEvaluate.apply(checkContext, params));
+  });
+
+  it('should return true if element has no role and no text content', function() {
+    var params = checkSetup(
+      '<div id="target" aria-label="foo" aria-labelledby="foo"></div>'
+    );
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+  });
+
   it('should return false if all attributes are allowed', function() {
     var params = checkSetup(
       '<div id="target" role="button" aria-label="foo" aria-labelledby="foo">Contents</div>'
@@ -37,10 +51,33 @@ describe('aria-prohibited-attr', function() {
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
-  it('should return false if element has no role', function() {
+  it('should return false if no prohibited attributes are used', function() {
     var params = checkSetup(
-      '<div id="target" aria-label="foo" aria-labelledby="foo">Contents</div>'
+      '<div id="target" role="code" aria-selected="true">Contents</div>'
     );
     assert.isFalse(checkEvaluate.apply(checkContext, params));
+  });
+
+  it('should return false if prohibited attributes have no value', function() {
+    var params = checkSetup(
+      '<div id="target" role="code" aria-label="  " aria-labelledby="  ">Contents</div>'
+    );
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
+  });
+
+  it('should allow `elementsAllowedAriaLabel` nodes to have aria-label', function () {
+    var params = checkSetup(
+      '<div id="target" aria-label="hello world"></div>',
+      { elementsAllowedAriaLabel: ['div'] }
+    );
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
+  });
+  
+  it('should not allow `elementsAllowedAriaLabel` nodes with a prohibited role', function () {
+    var params = checkSetup(
+      '<div id="target" role="code" aria-label="hello world"></div>',
+      { elementsAllowedAriaLabel: ['div'] }
+    );
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
   });
 });

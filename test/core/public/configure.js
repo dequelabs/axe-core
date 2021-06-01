@@ -305,6 +305,28 @@ describe('axe.configure', function() {
     assert.isTrue(axe._audit.noHtml);
   });
 
+  it("should allow overriding an audit's allowedOrigins", function() {
+    axe._load({});
+    assert.notDeepEqual(axe._audit.allowedOrigins, ['foo']);
+
+    axe.configure({ allowedOrigins: ['foo'] });
+    assert.deepEqual(axe._audit.allowedOrigins, ['foo']);
+  });
+
+  it('should throw error if allowedOrigins is not an array', function() {
+    axe._load({});
+    assert.throws(function() {
+      axe.configure({ allowedOrigins: 'foo' });
+    });
+  });
+
+  it("should throw error if the origin is '*'", function() {
+    axe._load({});
+    assert.throws(function() {
+      axe.configure({ allowedOrigins: ['foo', '*'] });
+    });
+  });
+
   describe('given a locale object', function() {
     beforeEach(function() {
       axe._load({});
