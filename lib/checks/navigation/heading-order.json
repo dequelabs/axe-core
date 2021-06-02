@@ -6,7 +6,8 @@
     "impact": "moderate",
     "messages": {
       "pass": "Heading order valid",
-      "fail": "Heading order invalid"
+      "fail": "Heading order invalid",
+      "incomplete": "Unable to determine previous heading"
     }
   }
 }
