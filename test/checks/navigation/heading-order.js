@@ -439,7 +439,7 @@ describe('heading-order', function() {
                 level: 1
               },
               {
-                ancestry: ['iframe'],
+                ancestry: ['iframe1'],
                 level: -1
               },
               {
@@ -447,7 +447,7 @@ describe('heading-order', function() {
                 level: 2
               },
               {
-                ancestry: ['iframe'],
+                ancestry: ['iframe2'],
                 level: -1
               },
               {
