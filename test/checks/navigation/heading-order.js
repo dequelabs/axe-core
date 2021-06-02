@@ -444,7 +444,11 @@ describe('heading-order', function() {
               },
               {
                 ancestry: ['path2'],
-                level: 3
+                level: 2
+              },
+              {
+                ancestry: ['iframe'],
+                level: -1
               },
               {
                 ancestry: ['path3'],
@@ -473,8 +477,8 @@ describe('heading-order', function() {
 
       var afterResults = checks['heading-order'].after(results);
       assert.isTrue(afterResults[0].result);
-      assert.isFalse(afterResults[1].result);
-      assert.isTrue(afterResults[2].result);
+      assert.isTrue(afterResults[1].result);
+      assert.isFalse(afterResults[2].result);
     });
 
     it('should not error if iframe is first result', function() {
