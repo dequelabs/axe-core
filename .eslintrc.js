@@ -1,7 +1,7 @@
 module.exports = {
   extends: ['prettier'],
   parserOptions: {
-    ecmaVersion: 9
+    ecmaVersion: 2021
   },
   env: {
     node: true,
