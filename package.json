@@ -53,6 +53,9 @@
   "standard-version": {
     "scripts": {
       "postbump": "npm ci && npm run sri-update"
+    },
+    "skip": {
+      "tag": true
     }
   },
   "scripts": {
@@ -87,7 +90,7 @@
     "test:rule-help-version": "mocha test/test-rule-help-version.js",
     "test:node": "mocha test/node/*.js",
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
-    "release": "standard-version -a",
+    "release": "git fetch origin --tags --force && standard-version -a",
     "rule-gen": "node build/rule-generator",
     "next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
