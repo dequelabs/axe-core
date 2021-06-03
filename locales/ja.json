@@ -430,7 +430,7 @@
     "aria-prohibited-attr": {
       "pass": "ARIA属性は使用できます",
       "fail": "ARIA属性は使用できません: ${data.values}",
-      "incomplete": "要素でのARIA属性のサポートが不充分なため、代わりにコンテンツのテキストが用いられます: ${data.values}"
+      "incomplete": "ARIA attribute is not well supported on the element and the text content will be used instead: ${data.values}"
     },
     "aria-required-attr": {
       "pass": "すべての必須のARIA属性が存在しています",
@@ -746,7 +746,7 @@
     "heading-order": {
       "pass": "見出しの順序が有効です",
       "fail": "見出しの順序が無効です",
-      "incomplete": "Unable to determine previous heading"
+      "incomplete": "1つ前の見出しを特定できません"
     },
     "identical-links-same-purpose": {
       "pass": "同じ名前で異なるURLに遷移する他のリンクはありません",
