@@ -149,6 +149,10 @@
       "description": "見出しに認識可能なテキストが存在することを確認します",
       "help": "見出しは空にしてはなりません"
     },
+    "empty-table-header": {
+      "description": "テーブルのヘッダーに認識可能なテキストが存在することを確認します",
+      "help": "テーブルのヘッダーは空にしてはなりません"
+    },
     "focus-order-semantics": {
       "description": "フォーカス順序に含まれる要素に適切なロールがあることを確認します",
       "help": "フォーカス順序に含まれる要素には、インタラクティブコンテンツに適したロールが必要です"
@@ -425,7 +429,8 @@
     },
     "aria-prohibited-attr": {
       "pass": "ARIA属性は使用できます",
-      "fail": "ARIA属性は使用できません: ${data.values}"
+      "fail": "ARIA属性は使用できません: ${data.values}",
+      "incomplete": "要素でのARIA属性のサポートが不充分なため、代わりにコンテンツのテキストが用いられます: ${data.values}"
     },
     "aria-required-attr": {
       "pass": "すべての必須のARIA属性が存在しています",
@@ -740,7 +745,8 @@
     },
     "heading-order": {
       "pass": "見出しの順序が有効です",
-      "fail": "見出しの順序が無効です"
+      "fail": "見出しの順序が無効です",
+      "incomplete": "Unable to determine previous heading"
     },
     "identical-links-same-purpose": {
       "pass": "同じ名前で異なるURLに遷移する他のリンクはありません",
