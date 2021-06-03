@@ -430,7 +430,7 @@
     "aria-prohibited-attr": {
       "pass": "ARIA属性は使用できます",
       "fail": "ARIA属性は使用できません: ${data.values}",
-      "incomplete": "ARIA attribute is not well supported on the element and the text content will be used instead: ${data.values}"
+      "incomplete": "要素でのARIA属性のサポートが不充分なため、代わりにコンテンツのテキストが用いられます: ${data.values}"
     },
     "aria-required-attr": {
       "pass": "すべての必須のARIA属性が存在しています",
