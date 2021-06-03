@@ -1,0 +1,5 @@
+{
+  "description": "meta-viewport passes when zooming is disabled on an iframe on the page",
+  "rule": "meta-viewport",
+  "passes": [["#mvp"]]
+}
