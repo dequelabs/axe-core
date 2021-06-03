@@ -48,7 +48,9 @@ let targetVersion = releaseType === 'patch' ? version : `${major}.${minor}.0`;
 // get all commits from a branch
 function getCommits(branch) {
   const stdout = execSync(`git log ${branch || ''} --abbrev-commit`).toString();
-  const allCommits = stdout.split('commit ').filter(commit => !!commit);
+  const allCommits = stdout
+    .split(/commit (?=[\w\d]{8}[\n\r])/)
+    .filter(commit => !!commit);
 
   // parse commits
   const commits = [];
@@ -93,7 +95,8 @@ function getCommits(branch) {
     // filter merge commits and any types that don't match the release type
     if (
       !merge &&
-      subject && !subject.startsWith('merge branch') &&
+      subject &&
+      !subject.startsWith('merge branch') &&
       scope !== 'release' &&
       commitType[releaseType] &&
       !ignoreCommits.includes(hash)
