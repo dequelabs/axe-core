@@ -1,17 +1,18 @@
-describe('heading-order-partial-context test', function() {
+describe('heading-order-partial-context-with-iframe test', function() {
   'use strict';
 
   var results;
   before(function(done) {
-    axe.run(
-      { include: [['header'], ['footer']] },
-      { runOnly: ['heading-order'] },
-      function(err, r) {
+    axe.testUtils.awaitNestedLoad(function() {
+      axe.run({ exclude: ['#mocha'] }, { runOnly: ['heading-order'] }, function(
+        err,
+        r
+      ) {
         assert.isNull(err);
         results = r;
         done();
-      }
-    );
+      });
+    });
   });
 
   it('should find 2 passes', function() {
@@ -23,7 +24,7 @@ describe('heading-order-partial-context test', function() {
     assert.lengthOf(results.violations, 0);
   });
 
-  it('should find 0 incomplete', function() {
+  it('should find 0 incompletes', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 });

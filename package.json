@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -53,6 +53,9 @@
   "standard-version": {
     "scripts": {
       "postbump": "npm ci && npm run sri-update"
+    },
+    "skip": {
+      "tag": true
     }
   },
   "scripts": {
@@ -87,7 +90,7 @@
     "test:rule-help-version": "mocha test/test-rule-help-version.js",
     "test:node": "mocha test/node/*.js",
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
-    "release": "standard-version -a",
+    "release": "git fetch origin --tags --force && standard-version -a",
     "rule-gen": "node build/rule-generator",
     "next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
@@ -111,7 +114,7 @@
     "emoji-regex": "8.0.0",
     "es6-promise": "^4.2.6",
     "esbuild": "^0.7.19",
-    "eslint": "^6.1.0",
+    "eslint": "^7.27.0",
     "eslint-config-prettier": "^6.2.0",
     "eslint-plugin-mocha-no-only": "^1.1.1",
     "execa": "^2.0.2",
