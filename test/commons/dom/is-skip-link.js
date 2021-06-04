@@ -2,9 +2,14 @@ describe('dom.isSkipLink', function() {
   'use strict';
 
   var fixture = document.getElementById('fixture');
+  var baseEl;
 
   afterEach(function() {
     fixture.innerHTML = '';
+
+    if (baseEl) {
+      baseEl.parentNode.removeChild(baseEl);
+    }
   });
 
   it('should return true if the href points to an ID', function() {
@@ -33,6 +38,20 @@ describe('dom.isSkipLink', function() {
     axe._tree = axe.utils.getFlattenedTree(fixture);
     var node = fixture.querySelector('a');
     assert.isTrue(axe.commons.dom.isSkipLink(node));
+  });
+
+  it('should return false if the URI is angular #!', function() {
+    fixture.innerHTML = '<a href="#!target">Click Here</a>';
+    axe._tree = axe.utils.getFlattenedTree(fixture);
+    var node = fixture.querySelector('a');
+    assert.isFalse(axe.commons.dom.isSkipLink(node));
+  });
+
+  it('should return false if the URI is angular #/', function() {
+    fixture.innerHTML = '<a href="#/target">Click Here</a>';
+    axe._tree = axe.utils.getFlattenedTree(fixture);
+    var node = fixture.querySelector('a');
+    assert.isFalse(axe.commons.dom.isSkipLink(node));
   });
 
   it('should return true for multiple skip-links', function() {
@@ -67,5 +86,42 @@ describe('dom.isSkipLink', function() {
     axe._tree = axe.utils.getFlattenedTree(fixture);
     var node = fixture.querySelector('#skip-link');
     assert.isTrue(axe.commons.dom.isSkipLink(node));
+  });
+
+  it('should return true for hash href that resolves to current page', function() {
+    fixture.innerHTML =
+      '<a href="' + window.location.pathname + '#target">Click Here</a>';
+    axe._tree = axe.utils.getFlattenedTree(fixture);
+    var node = fixture.querySelector('a');
+    assert.isTrue(axe.commons.dom.isSkipLink(node));
+  });
+
+  it('should return true for absolute path hash href', function() {
+    var url = window.location.href;
+    fixture.innerHTML = '<a href="' + url + '#target">Click Here</a>';
+    axe._tree = axe.utils.getFlattenedTree(fixture);
+    var node = fixture.querySelector('a');
+    assert.isTrue(axe.commons.dom.isSkipLink(node));
+  });
+
+  it('should return false for absolute path href that points to another document', function() {
+    var origin = window.location.origin;
+    fixture.innerHTML =
+      '<a href="' + origin + '/something.html#target">Click Here</a>';
+    axe._tree = axe.utils.getFlattenedTree(fixture);
+    var node = fixture.querySelector('a');
+    assert.isFalse(axe.commons.dom.isSkipLink(node));
+  });
+
+  it('should return false for href with <base> tag that points to another document', function() {
+    baseEl = document.createElement('base');
+    baseEl.href = 'https://www.google.com/';
+    document.getElementsByTagName('head')[0].appendChild(baseEl);
+
+    fixture.innerHTML =
+      '<a href="' + window.location.pathname + '#target">Click Here</a>';
+    axe._tree = axe.utils.getFlattenedTree(fixture);
+    var node = fixture.querySelector('a');
+    assert.isFalse(axe.commons.dom.isSkipLink(node));
   });
 });
