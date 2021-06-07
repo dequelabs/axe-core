@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.2.2](https://github.com/dequelabs/axe-core/compare/v4.2.1...v4.2.2) (2021-06-03)
+
+### Bug Fixes
+
+- **aria-allowed-attr:** allow aria-posinset and aria-setsize on row elements for treegrids ([#2952](https://github.com/dequelabs/axe-core/issues/2952)) ([3023e69](https://github.com/dequelabs/axe-core/commit/3023e697b85c13f18f2cbb46b202400d8ce6a10d))
+- **heading-order:** Prevent crash on page with iframes but no headings ([#2965](https://github.com/dequelabs/axe-core/issues/2965)) ([4b7db37](https://github.com/dequelabs/axe-core/commit/4b7db3763735891972b8a13d6622fa30a687f3cb))
+- **meta-viewport:** test that a user-scalable number does not prevent zoom ([048c5c1](https://github.com/dequelabs/axe-core/commit/048c5c18c8245a43721a12237ac5f07f5b4a856b))
+- JS error in @axe-core/react caused by stale reference to heading ([3afda4e](https://github.com/dequelabs/axe-core/commit/3afda4effc4a099632138c5874ab305baaa5934a))
+
 ### [4.2.1](https://github.com/dequelabs/axe-core/compare/v4.2.0...v4.2.1) (2021-05-18)
 
 ### Bug Fixes
