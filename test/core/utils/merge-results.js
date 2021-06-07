@@ -1,5 +1,7 @@
 describe('axe.utils.mergeResults', function() {
   'use strict';
+  var queryFixture = axe.testUtils.queryFixture;
+
   it('should normalize empty results', function() {
     var result = axe.utils.mergeResults([
       { results: [] },
@@ -14,16 +16,16 @@ describe('axe.utils.mergeResults', function() {
   });
 
   it('merges frame content, including all selector types', function() {
-    var iframe = document.createElement('iframe');
-    iframe.id = 'myframe';
+    var iframe = queryFixture('<iframe id="target"></iframe>').actualNode;
     var node = {
       selector: ['#foo'],
       xpath: ['html/#foo'],
-      ancestry: ['html > div']
+      ancestry: ['html > div'],
+      nodeIndexes: [123]
     };
     var result = axe.utils.mergeResults([
       {
-        frame: '#myframe',
+        frame: '#target',
         frameElement: iframe,
         results: [
           {
@@ -39,9 +41,13 @@ describe('axe.utils.mergeResults', function() {
     assert.lengthOf(result[0].nodes, 1);
 
     var node = result[0].nodes[0].node;
-    assert.deepEqual(node.selector, ['#myframe', '#foo']);
-    assert.deepEqual(node.xpath, ['/iframe', 'html/#foo']);
-    assert.deepEqual(node.ancestry, ['iframe', 'html > div']);
+    assert.deepEqual(node.selector, ['#target', '#foo']);
+    assert.deepEqual(node.xpath, ['/iframe[@id=\'target\']', 'html/#foo']);
+    assert.deepEqual(node.ancestry, [
+      'html > body > div:nth-child(1) > iframe',
+      'html > div'
+    ]);
+    assert.deepEqual(node.nodeIndexes, [1, 123]);
   });
 
   it('sorts results from iframes into their correct DOM position', function() {

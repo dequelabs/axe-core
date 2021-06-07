@@ -4,204 +4,198 @@ describe('DqElement', function() {
   var DqElement = axe.utils.DqElement;
   var fixture = document.getElementById('fixture');
   var fixtureSetup = axe.testUtils.fixtureSetup;
+  var queryFixture = axe.testUtils.queryFixture;
 
   afterEach(function() {
     axe.reset();
-  });
-
-  it('should be a function', function() {
-    assert.isFunction(DqElement);
   });
 
   it('should be exposed to utils', function() {
     assert.equal(axe.utils.DqElement, DqElement);
   });
 
-  it('should take a node as a parameter and return an object', function() {
-    var node = document.createElement('div');
-    var result = new DqElement(node);
-
-    assert.isObject(result);
+  it('should take a virtual node as a parameter and return an object', function() {
+    var vNode = queryFixture('<div id="target"></div>')
+    var result = new DqElement(vNode);
+    assert.equal(result.element, vNode.actualNode);
   });
+
+  it('should take an actual node as a parameter and return an object', function() {
+    var vNode = queryFixture('<div id="target"></div>')
+    var result = new DqElement(vNode.actualNode);
+    assert.equal(result.element, vNode.actualNode);
+  });
+
   describe('element', function() {
     it('should store reference to the element', function() {
-      var div = document.createElement('div');
-      var dqEl = new DqElement(div);
-      assert.equal(dqEl.element, div);
+      var vNode = queryFixture('<div id="target"></div>');
+      var dqEl = new DqElement(vNode);
+      assert.equal(dqEl.element, vNode.actualNode);
     });
 
     it('should not be present in stringified version', function() {
-      var div = document.createElement('div');
-      fixtureSetup();
-
-      var dqEl = new DqElement(div);
-
+      var vNode = queryFixture('<div id="target"></div>');
+      var dqEl = new DqElement(vNode);
       assert.isUndefined(JSON.parse(JSON.stringify(dqEl)).element);
     });
   });
 
   describe('source', function() {
     it('should include the outerHTML of the element', function() {
-      fixture.innerHTML = '<div class="bar" id="foo">Hello!</div>';
-
-      var result = new DqElement(fixture.firstChild);
-      assert.equal(result.source, fixture.firstChild.outerHTML);
+      var vNode = queryFixture('<div class="bar" id="target">Hello!</div>');
+      var outerHTML = vNode.actualNode.outerHTML;
+      var result = new DqElement(vNode);
+      assert.equal(result.source, outerHTML);
     });
 
     it('should work with SVG elements', function() {
-      fixture.innerHTML = '<svg aria-label="foo"></svg>';
-
-      var result = new DqElement(fixture.firstChild);
-      assert.isString(result.source);
+      var vNode = queryFixture('<svg aria-label="foo" id="target"></svg>');
+      var outerHTML = vNode.actualNode.outerHTML;
+      var result = new DqElement(vNode);
+      assert.equal(result.source, outerHTML);
     });
-    it('should work with MathML', function() {
-      fixture.innerHTML =
-        '<math display="block"><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></math>';
 
-      var result = new DqElement(fixture.firstChild);
-      assert.isString(result.source);
+    it('should work with MathML', function() {
+      var vNode = queryFixture(
+        '<math display="block" id="target">' +
+        '<mrow><msup><mi>x</mi><mn>2</mn></msup></mrow>' +
+        '</math>'
+      );
+      var outerHTML = vNode.actualNode.outerHTML;
+      var result = new DqElement(vNode);
+      assert.equal(result.source, outerHTML);
     });
 
     it('should truncate large elements', function() {
-      var div = '<div class="foo" id="foo">';
+      var div = '<div class="foo" id="target">';
       for (var i = 0; i < 300; i++) {
         div += i;
       }
       div += '</div>';
-      fixture.innerHTML = div;
-
-      var result = new DqElement(fixture.firstChild);
-      assert.equal(result.source.length, '<div class="foo" id="foo">'.length);
+      var vNode = queryFixture(div);
+      var result = new DqElement(vNode);
+      assert.equal(result.source, '<div class="foo" id="target">');
     });
 
     it('should use spec object over passed element', function() {
-      fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
-      var result = new DqElement(
-        fixture.firstChild,
-        {},
-        {
-          source: 'woot'
-        }
-      );
+      var vNode = queryFixture('<div id="target" class="bar">Hello!</div>');
+      var spec = { source: 'woot' };
+      var result = new DqElement(vNode, {}, spec);
       assert.equal(result.source, 'woot');
     });
 
     it('should return null if audit.noHtml is set', function() {
       axe.configure({ noHtml: true });
-      fixture.innerHTML = '<div class="bar" id="foo">Hello!</div>';
-      var result = new DqElement(fixture.firstChild);
+      var vNode = queryFixture('<div class="bar" id="target">Hello!</div>');
+      var result = new DqElement(vNode);
       assert.isNull(result.source);
     });
 
     it('should not use spec object over passed element if audit.noHtml is set', function() {
       axe.configure({ noHtml: true });
-      fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
-      var result = new DqElement(
-        fixture.firstChild,
-        {},
-        {
-          source: 'woot'
-        }
-      );
+      var vNode = queryFixture('<div id="target" class="bar">Hello!</div>');
+      var spec = { source: 'woot' };
+      var result = new DqElement(vNode, {}, spec);
       assert.isNull(result.source);
     });
   });
 
   describe('selector', function() {
     it('should prefer selector from spec object', function() {
-      fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
-      var result = new DqElement(
-        fixture.firstChild,
-        {},
-        {
-          selector: 'woot'
-        }
-      );
+      var vNode = queryFixture('<div id="target" class="bar">Hello!</div>');
+      var spec = { selector: 'woot' }
+      var result = new DqElement(vNode, {}, spec);
       assert.equal(result.selector, 'woot');
     });
   });
 
   describe('ancestry', function() {
     it('should prefer selector from spec object', function() {
-      fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
-      var result = new DqElement(
-        fixture.firstChild,
-        {},
-        {
-          ancestry: 'woot'
-        }
-      );
+      var vNode = queryFixture('<div id="target" class="bar">Hello!</div>');
+      var spec = { ancestry: 'woot' }
+      var result = new DqElement(vNode, {}, spec);
       assert.equal(result.ancestry, 'woot');
     });
   });
 
   describe('xpath', function() {
     it('should prefer selector from spec object', function() {
-      fixture.innerHTML = '<div id="foo" class="bar">Hello!</div>';
-      var result = new DqElement(
-        fixture.firstChild,
-        {},
-        {
-          xpath: 'woot'
-        }
-      );
+      var vNode = queryFixture('<div id="target" class="bar">Hello!</div>');
+      var spec = { xpath: 'woot' }
+      var result = new DqElement(vNode, {}, spec);
       assert.equal(result.xpath, 'woot');
     });
   });
 
   describe('absolutePaths', function() {
     it('creates a path all the way to root', function() {
-      fixtureSetup('<div id="foo" class="bar">Hello!</div>');
-
-      var result = new DqElement(fixture.firstChild, {
+      var vNode = queryFixture('<div id="target" class="bar">Hello!</div>');
+      var result = new DqElement(vNode, {
         absolutePaths: true
       });
       assert.include(result.selector[0], 'html > ');
       assert.include(result.selector[0], '#fixture > ');
-      assert.include(result.selector[0], '#foo');
+      assert.include(result.selector[0], '#target');
+    });
+  });
+
+  describe('nodeIndexes', function () {
+    it('is taken from virtualNode', function () {
+      fixtureSetup('<i></i><b></b><s></s>');
+      assert.deepEqual(new DqElement(fixture.children[0]).nodeIndexes, [1]);
+      assert.deepEqual(new DqElement(fixture.children[1]).nodeIndexes, [2]);
+      assert.deepEqual(new DqElement(fixture.children[2]).nodeIndexes, [3]);
+    });
+
+    it('is taken from spec, over virtualNode', function () {
+      var vNode = queryFixture('<div id="target"></div>');
+      var spec = { nodeIndexes: [123, 456] };
+      var dqElm = new DqElement(vNode, {}, spec);
+      assert.deepEqual(dqElm.nodeIndexes, [123, 456]);
+    });
+
+    it('is [] when the element is unknown.', function () {
+      var div = document.createElement('div')
+      var dqElm = new DqElement(div);
+      assert.deepEqual(dqElm.nodeIndexes, []);
     });
   });
 
   describe('toJSON', function() {
     it('should only stringify selector and source', function() {
-      var expected = {
+      var spec = {
         selector: 'foo > bar > joe',
         source: '<joe aria-required="true">',
         xpath: '/foo/bar/joe',
-        ancestry: 'foo > bar > joe'
+        ancestry: 'foo > bar > joe',
+        nodeIndexes: [123, 456]
       };
-      var result = new DqElement('joe', {}, expected);
-
-      assert.deepEqual(JSON.stringify(result), JSON.stringify(expected));
+      
+      var div = document.createElement('div')
+      var result = new DqElement(div, {}, spec);
+      assert.deepEqual(result.toJSON(), spec);
     });
   });
 
   describe('fromFrame', function() {
     var dqMain, dqIframe;
     beforeEach(function() {
-      var main = document.createElement('main');
-      main.id = 'main';
-      dqMain = new DqElement(
-        main,
-        {},
-        {
-          selector: ['#main'],
-          ancestry: ['html > body > main'],
-          xpath: ['/main']
-        }
-      );
+      var tree = fixtureSetup('<main id="main"></main><iframe id="iframe"></iframe>');
+      var main = axe.utils.querySelectorAll(tree, 'main')[0];
+      var mainSpec = {
+        selector: ['#main'],
+        ancestry: ['html > body > main'],
+        xpath: ['/main']
+      }
+      dqMain = new DqElement(main, {}, mainSpec);
 
-      var iframe = document.createElement('iframe');
-      iframe.id = 'iframe';
-      dqIframe = new DqElement(
-        iframe,
-        {},
-        {
-          selector: ['#iframe'],
-          ancestry: ['html > body > iframe'],
-          xpath: ['/iframe']
-        }
-      );
+      var iframe = axe.utils.querySelectorAll(tree, 'iframe')[0];
+      var iframeSpec = {
+        selector: ['#iframe'],
+        ancestry: ['html > body > iframe'],
+        xpath: ['/iframe']
+      }
+      dqIframe = new DqElement(iframe, {}, iframeSpec);
     });
 
     it('returns a new DqElement', function() {
@@ -226,5 +220,13 @@ describe('DqElement', function() {
       ]);
       assert.deepEqual(dqElm.xpath, [dqIframe.xpath[0], dqMain.xpath[0]]);
     });
+
+    it('merges nodeIndexes', function () {
+      var dqElm = DqElement.fromFrame(dqMain, {}, dqIframe);
+      assert.deepEqual(dqElm.nodeIndexes, [
+        dqIframe.nodeIndexes[0],
+        dqMain.nodeIndexes[0]
+      ]);
+    })
   });
 });
