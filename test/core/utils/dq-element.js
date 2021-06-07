@@ -15,13 +15,13 @@ describe('DqElement', function() {
   });
 
   it('should take a virtual node as a parameter and return an object', function() {
-    var vNode = queryFixture('<div id="target"></div>')
+    var vNode = queryFixture('<div id="target"></div>');
     var result = new DqElement(vNode);
     assert.equal(result.element, vNode.actualNode);
   });
 
   it('should take an actual node as a parameter and return an object', function() {
-    var vNode = queryFixture('<div id="target"></div>')
+    var vNode = queryFixture('<div id="target"></div>');
     var result = new DqElement(vNode.actualNode);
     assert.equal(result.element, vNode.actualNode);
   });
@@ -55,22 +55,22 @@ describe('DqElement', function() {
       if (axe.testUtils.isIE11) {
         assert.isString(result.source);
       } else {
-        assert.equal(result.source, vNode.actualNode.outerHTML)
+        assert.equal(result.source, vNode.actualNode.outerHTML);
       }
     });
 
     it('should work with MathML', function() {
       var vNode = queryFixture(
         '<math display="block" id="target">' +
-        '<mrow><msup><mi>x</mi><mn>2</mn></msup></mrow>' +
-        '</math>'
+          '<mrow><msup><mi>x</mi><mn>2</mn></msup></mrow>' +
+          '</math>'
       );
 
       var result = new DqElement(vNode);
       if (axe.testUtils.isIE11) {
         assert.isString(result.source);
       } else {
-        assert.equal(result.source, vNode.actualNode.outerHTML)
+        assert.equal(result.source, vNode.actualNode.outerHTML);
       }
     });
 
@@ -111,7 +111,7 @@ describe('DqElement', function() {
   describe('selector', function() {
     it('should prefer selector from spec object', function() {
       var vNode = queryFixture('<div id="target" class="bar">Hello!</div>');
-      var spec = { selector: 'woot' }
+      var spec = { selector: 'woot' };
       var result = new DqElement(vNode, {}, spec);
       assert.equal(result.selector, 'woot');
     });
@@ -120,7 +120,7 @@ describe('DqElement', function() {
   describe('ancestry', function() {
     it('should prefer selector from spec object', function() {
       var vNode = queryFixture('<div id="target" class="bar">Hello!</div>');
-      var spec = { ancestry: 'woot' }
+      var spec = { ancestry: 'woot' };
       var result = new DqElement(vNode, {}, spec);
       assert.equal(result.ancestry, 'woot');
     });
@@ -129,7 +129,7 @@ describe('DqElement', function() {
   describe('xpath', function() {
     it('should prefer selector from spec object', function() {
       var vNode = queryFixture('<div id="target" class="bar">Hello!</div>');
-      var spec = { xpath: 'woot' }
+      var spec = { xpath: 'woot' };
       var result = new DqElement(vNode, {}, spec);
       assert.equal(result.xpath, 'woot');
     });
@@ -147,23 +147,23 @@ describe('DqElement', function() {
     });
   });
 
-  describe('nodeIndexes', function () {
-    it('is taken from virtualNode', function () {
+  describe('nodeIndexes', function() {
+    it('is taken from virtualNode', function() {
       fixtureSetup('<i></i><b></b><s></s>');
       assert.deepEqual(new DqElement(fixture.children[0]).nodeIndexes, [1]);
       assert.deepEqual(new DqElement(fixture.children[1]).nodeIndexes, [2]);
       assert.deepEqual(new DqElement(fixture.children[2]).nodeIndexes, [3]);
     });
 
-    it('is taken from spec, over virtualNode', function () {
+    it('is taken from spec, over virtualNode', function() {
       var vNode = queryFixture('<div id="target"></div>');
       var spec = { nodeIndexes: [123, 456] };
       var dqElm = new DqElement(vNode, {}, spec);
       assert.deepEqual(dqElm.nodeIndexes, [123, 456]);
     });
 
-    it('is [] when the element is unknown.', function () {
-      var div = document.createElement('div')
+    it('is [] when the element is unknown.', function() {
+      var div = document.createElement('div');
       var dqElm = new DqElement(div);
       assert.deepEqual(dqElm.nodeIndexes, []);
     });
@@ -178,8 +178,8 @@ describe('DqElement', function() {
         ancestry: 'foo > bar > joe',
         nodeIndexes: [123, 456]
       };
-      
-      var div = document.createElement('div')
+
+      var div = document.createElement('div');
       var result = new DqElement(div, {}, spec);
       assert.deepEqual(result.toJSON(), spec);
     });
@@ -188,13 +188,15 @@ describe('DqElement', function() {
   describe('fromFrame', function() {
     var dqMain, dqIframe;
     beforeEach(function() {
-      var tree = fixtureSetup('<main id="main"></main><iframe id="iframe"></iframe>');
+      var tree = fixtureSetup(
+        '<main id="main"></main><iframe id="iframe"></iframe>'
+      );
       var main = axe.utils.querySelectorAll(tree, 'main')[0];
       var mainSpec = {
         selector: ['#main'],
         ancestry: ['html > body > main'],
         xpath: ['/main']
-      }
+      };
       dqMain = new DqElement(main, {}, mainSpec);
 
       var iframe = axe.utils.querySelectorAll(tree, 'iframe')[0];
@@ -202,21 +204,21 @@ describe('DqElement', function() {
         selector: ['#iframe'],
         ancestry: ['html > body > iframe'],
         xpath: ['/iframe']
-      }
+      };
       dqIframe = new DqElement(iframe, {}, iframeSpec);
     });
 
-    describe('DqElement.fromFrame', function () {
+    describe('DqElement.fromFrame', function() {
       it('returns a new DqElement', function() {
         assert.instanceOf(DqElement.fromFrame(dqMain, {}, dqIframe), DqElement);
       });
-  
+
       it('sets options for DqElement', function() {
         var options = { absolutePaths: true };
         var dqElm = DqElement.fromFrame(dqMain, options, dqIframe);
         assert.isTrue(dqElm._options.toRoot);
       });
-  
+
       it('merges node and frame selectors', function() {
         var dqElm = DqElement.fromFrame(dqMain, {}, dqIframe);
         assert.deepEqual(dqElm.selector, [
@@ -229,31 +231,31 @@ describe('DqElement', function() {
         ]);
         assert.deepEqual(dqElm.xpath, [dqIframe.xpath[0], dqMain.xpath[0]]);
       });
-  
-      it('merges nodeIndexes', function () {
+
+      it('merges nodeIndexes', function() {
         var dqElm = DqElement.fromFrame(dqMain, {}, dqIframe);
         assert.deepEqual(dqElm.nodeIndexes, [
           dqIframe.nodeIndexes[0],
           dqMain.nodeIndexes[0]
         ]);
-      })
+      });
     });
 
-    describe('DqElement.prototype.fromFrame', function () {
-      it('is false when created without a spec', function () {
+    describe('DqElement.prototype.fromFrame', function() {
+      it('is false when created without a spec', function() {
         assert.isFalse(dqMain.fromFrame);
       });
 
-      it('is false when spec is not from a frame', function () {
+      it('is false when spec is not from a frame', function() {
         var specMain = dqMain.toJSON();
         var dqElm = new DqElement(dqMain, {}, specMain);
         assert.isFalse(dqElm.fromFrame);
-      })
-  
-      it('is true when created with a spec', function () {
+      });
+
+      it('is true when created with a spec', function() {
         var dqElm = DqElement.fromFrame(dqMain, {}, dqIframe);
         assert.isTrue(dqElm.fromFrame);
-      })
-    })
+      });
+    });
   });
 });

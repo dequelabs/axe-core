@@ -152,7 +152,7 @@ describe('VirtualNode', function() {
       });
     });
 
-    describe('nodeIndex', function () {
+    describe('nodeIndex', function() {
       it('increments nodeIndex when a parent is passed', function() {
         var vHtml = new VirtualNode({ nodeName: 'html' });
         var vHead = new VirtualNode({ nodeName: 'head' }, vHtml);
@@ -175,8 +175,8 @@ describe('VirtualNode', function() {
         vHead = new VirtualNode({ nodeName: 'head' }, vHtml);
         assert.equal(vHtml.nodeIndex, 0);
         assert.equal(vHead.nodeIndex, 1);
-      })
-    })
+      });
+    });
 
     describe.skip('isFocusable', function() {
       var commons;
