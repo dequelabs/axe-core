@@ -198,35 +198,54 @@ describe('DqElement', function() {
       dqIframe = new DqElement(iframe, {}, iframeSpec);
     });
 
-    it('returns a new DqElement', function() {
-      assert.instanceOf(DqElement.fromFrame(dqMain, {}, dqIframe), DqElement);
+    describe('DqElement.fromFrame', function () {
+      it('returns a new DqElement', function() {
+        assert.instanceOf(DqElement.fromFrame(dqMain, {}, dqIframe), DqElement);
+      });
+  
+      it('sets options for DqElement', function() {
+        var options = { absolutePaths: true };
+        var dqElm = DqElement.fromFrame(dqMain, options, dqIframe);
+        assert.isTrue(dqElm._options.toRoot);
+      });
+  
+      it('merges node and frame selectors', function() {
+        var dqElm = DqElement.fromFrame(dqMain, {}, dqIframe);
+        assert.deepEqual(dqElm.selector, [
+          dqIframe.selector[0],
+          dqMain.selector[0]
+        ]);
+        assert.deepEqual(dqElm.ancestry, [
+          dqIframe.ancestry[0],
+          dqMain.ancestry[0]
+        ]);
+        assert.deepEqual(dqElm.xpath, [dqIframe.xpath[0], dqMain.xpath[0]]);
+      });
+  
+      it('merges nodeIndexes', function () {
+        var dqElm = DqElement.fromFrame(dqMain, {}, dqIframe);
+        assert.deepEqual(dqElm.nodeIndexes, [
+          dqIframe.nodeIndexes[0],
+          dqMain.nodeIndexes[0]
+        ]);
+      })
     });
 
-    it('sets options for DqElement', function() {
-      var options = { absolutePaths: true };
-      var dqElm = DqElement.fromFrame(dqMain, options, dqIframe);
-      assert.isTrue(dqElm._options.toRoot);
-    });
+    describe('DqElement.prototype.fromFrame', function () {
+      it('is false when created without a spec', function () {
+        assert.isFalse(dqMain.fromFrame);
+      });
 
-    it('merges node and frame selectors', function() {
-      var dqElm = DqElement.fromFrame(dqMain, {}, dqIframe);
-      assert.deepEqual(dqElm.selector, [
-        dqIframe.selector[0],
-        dqMain.selector[0]
-      ]);
-      assert.deepEqual(dqElm.ancestry, [
-        dqIframe.ancestry[0],
-        dqMain.ancestry[0]
-      ]);
-      assert.deepEqual(dqElm.xpath, [dqIframe.xpath[0], dqMain.xpath[0]]);
-    });
-
-    it('merges nodeIndexes', function () {
-      var dqElm = DqElement.fromFrame(dqMain, {}, dqIframe);
-      assert.deepEqual(dqElm.nodeIndexes, [
-        dqIframe.nodeIndexes[0],
-        dqMain.nodeIndexes[0]
-      ]);
+      it('is false when spec is not from a frame', function () {
+        var specMain = dqMain.toJSON();
+        var dqElm = new DqElement(dqMain, {}, specMain);
+        assert.isFalse(dqElm.fromFrame);
+      })
+  
+      it('is true when created with a spec', function () {
+        var dqElm = DqElement.fromFrame(dqMain, {}, dqIframe);
+        assert.isTrue(dqElm.fromFrame);
+      })
     })
   });
 });
