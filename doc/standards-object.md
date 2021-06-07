@@ -95,7 +95,7 @@ The [`htmlElms`](../lib/standards/html-elms.js) object defines valid HTML elemen
 
 - `aria-allowed-attr` - Checks if the attribute can be used on the element from the `noAriaAttrs` property.
 - `aria-allowed-role` - Checks if the role can be used on the HTML element from the `allowedRoles` property.
-- `aria-required-attrs` - Checks if any required attrs are defied implicitly on the element from the `implicitAttrs` property.
+- `aria-required-attrs` - Checks if any required attrs are defined implicitly on the element from the `implicitAttrs` property.
 
 ### Structure
 

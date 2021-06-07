@@ -5,7 +5,7 @@ describe('heading-order-partial-context-with-iframe test', function() {
   before(function(done) {
     axe.testUtils.awaitNestedLoad(function() {
       axe.run(
-        { include: [['header'], ['footer']] },
+        { exclude: ['#mocha'] },
         { runOnly: ['heading-order'] },
         function(err, r) {
           assert.isNull(err);
@@ -16,15 +16,13 @@ describe('heading-order-partial-context-with-iframe test', function() {
     });
   });
 
-
-  it('should find 1 passes', function() {
+  it('should find 2 passes', function() {
     assert.lengthOf(results.passes, 1);
-    assert.lengthOf(results.passes[0].nodes, 1);
+    assert.lengthOf(results.passes[0].nodes, 2);
   });
 
-  it('should find 1 violation', function() {
-    assert.lengthOf(results.violations, 1);
-    assert.lengthOf(results.violations[0].nodes, 1);
+  it('should find 0 violations', function() {
+    assert.lengthOf(results.violations, 0);
   });
 
   it('should find 0 incompletes', function() {

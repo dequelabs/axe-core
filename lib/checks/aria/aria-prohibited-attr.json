@@ -2,20 +2,7 @@
   "id": "aria-prohibited-attr",
   "evaluate": "aria-prohibited-attr-evaluate",
   "options": {
-    "elementsAllowedAriaLabel": [
-      "audio",
-      "applet",
-      "canvas",
-      "dl",
-      "embed",
-      "iframe",
-      "input",
-      "label",
-      "meter",
-      "object",
-      "svg",
-      "video"
-    ]
+    "elementsAllowedAriaLabel": ["applet", "input"]
   },
   "metadata": {
     "impact": "serious",

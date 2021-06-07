@@ -69,6 +69,20 @@ describe('meta-viewport virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
+  it('should fail for user-scalable=0', function() {
+    var results = axe.runVirtualRule('meta-viewport', {
+      nodeName: 'meta',
+      attributes: {
+        name: 'viewport',
+        content: 'user-scalable=0'
+      }
+    });
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
   it('should fail for maximum-scale=yes', function() {
     var results = axe.runVirtualRule('meta-viewport', {
       nodeName: 'meta',
