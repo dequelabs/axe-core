@@ -50,9 +50,13 @@ describe('DqElement', function() {
 
     it('should work with SVG elements', function() {
       var vNode = queryFixture('<svg aria-label="foo" id="target"></svg>');
-      var outerHTML = vNode.actualNode.outerHTML;
       var result = new DqElement(vNode);
-      assert.equal(result.source, outerHTML);
+
+      if (axe.testUtils.isIE11) {
+        assert.isString(result.source);
+      } else {
+        assert.equal(result.source, vNode.actualNode.outerHTML)
+      }
     });
 
     it('should work with MathML', function() {
@@ -61,9 +65,13 @@ describe('DqElement', function() {
         '<mrow><msup><mi>x</mi><mn>2</mn></msup></mrow>' +
         '</math>'
       );
-      var outerHTML = vNode.actualNode.outerHTML;
+
       var result = new DqElement(vNode);
-      assert.equal(result.source, outerHTML);
+      if (axe.testUtils.isIE11) {
+        assert.isString(result.source);
+      } else {
+        assert.equal(result.source, vNode.actualNode.outerHTML)
+      }
     });
 
     it('should truncate large elements', function() {
