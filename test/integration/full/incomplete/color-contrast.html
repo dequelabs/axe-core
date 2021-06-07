@@ -43,7 +43,25 @@
       <div style="background-image:linear-gradient(red, orange); color:#fff;">
         Text over gradient
       </div>
+
+      <style type="text/css">
+        #pseudoOnButton::before {
+          background-color: #000;
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          z-index: -1;
+        }
+      </style>
+      <button
+        id="pseudoOnButton"
+        style="position: relative; background-color: transparent; color: #ffffaa"
+      >
+        Button with ::before
+      </button>
     </div>
+
     <div id="mocha"></div>
     <script src="/test/testutils.js"></script>
     <script src="color-contrast.js"></script>
