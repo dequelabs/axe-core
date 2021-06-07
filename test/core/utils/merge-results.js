@@ -51,80 +51,52 @@ describe('axe.utils.mergeResults', function() {
   });
 
   it('sorts results from iframes into their correct DOM position', function() {
-    var iframe1 = document.createElement('iframe');
-    iframe1.id = 'iframe1';
-    var iframe2 = document.createElement('iframe');
-    iframe2.id = 'iframe2';
-    var h1 = document.createElement('h1');
-    var h4 = document.createElement('h4');
-    var fixture = document.querySelector('#fixture');
-
-    fixture.appendChild(h1);
-    fixture.appendChild(iframe1);
-    fixture.appendChild(iframe2);
-    fixture.appendChild(h4);
-
-    var result = axe.utils.mergeResults([
-      {
-        results: [
-          {
-            id: 'a',
-            result: 'a',
-            nodes: [
-              {
-                node: {
-                  selector: ['h1'],
-                  element: h1
-                }
-              }
-            ]
-          },
-          {
-            id: 'a',
-            result: 'd',
-            nodes: [
-              {
-                node: {
-                  selector: ['h4'],
-                  element: h4
-                }
-              }
-            ]
-          },
-          {
-            id: 'a',
-            result: 'b',
-            nodes: [
-              {
-                node: {
-                  selector: ['iframe1'],
-                  element: iframe1,
-                  _fromFrame: true
-                }
-              }
-            ]
-          },
-          {
-            id: 'a',
-            result: 'c',
-            nodes: [
-              {
-                node: {
-                  selector: ['iframe2'],
-                  element: iframe2,
-                  _fromFrame: true
-                }
-              }
-            ]
-          }
-        ]
-      }
-    ]);
+    var result = axe.utils.mergeResults([{
+      results: [{
+          id: 'a',
+          result: 'a',
+          nodes: [{
+            node: {
+              selector: ['h1'],
+              nodeIndexes: [1]
+            }
+          }]
+        }, {
+          id: 'a',
+          result: 'd',
+          nodes: [{
+            node: {
+              selector: ['h4'],
+              nodeIndexes: [4]
+            }
+          }]
+        }, {
+          id: 'a',
+          result: 'b',
+          nodes: [{
+            node: {
+              selector: ['iframe1', 'h2'],
+              nodeIndexes: [2, 1],
+              fromFrame: true
+            }
+          }]
+        }, {
+          id: 'a',
+          result: 'c',
+          nodes: [{
+            node: {
+              selector: ['iframe1', 'h3'],
+              nodeIndexes: [2, 2],
+              fromFrame: true
+            }
+          }]
+        }
+      ]
+    }]);
 
     var ids = result[0].nodes.map(function(el) {
-      return el.node.selector;
+      return el.node.selector.join(' >> ');
     });
-
-    assert.deepEqual(ids, [['h1'], ['iframe1'], ['iframe2'], ['h4']]);
+    assert.deepEqual(ids, ['h1', 'iframe1 >> h2', 'iframe1 >> h3', 'h4']);
   });
 });
