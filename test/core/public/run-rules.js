@@ -134,14 +134,17 @@ describe('runRules', function() {
             var nodes = r[0].passes.map(function(detail) {
               return detail.node.selector;
             });
-
-            assert.deepEqual(nodes, [
-              ['#level0'],
-              ['#level0', '#level1'],
-              ['#level0', '#level1', '#level2a'],
-              ['#level0', '#level1', '#level2b']
-            ]);
-            done();
+            try {
+              assert.deepEqual(nodes, [
+                ['#level0'],
+                ['#level0', '#level1'],
+                ['#level0', '#level1', '#level2a'],
+                ['#level0', '#level1', '#level2b']
+              ]);
+              done();
+            } catch (e) {
+              done(e);
+            }
           },
           isNotCalled
         );
