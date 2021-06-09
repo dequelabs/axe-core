@@ -90,15 +90,21 @@ describe('axe.utils.getFlattenedTree', function() {
   });
 
   it('creates virtual nodes in the correct order', function() {
-    fixture.innerHTML = '<p><b><i></i></b><p><u><s></s></u>';
+    fixture.innerHTML = '<p><b><i></i></b></p><u><s></s></u>';
 
     var vNode = axe.utils.getFlattenedTree(fixture)[0];
     assert.equal(vNode.nodeIndex, 0);
+    assert.equal(vNode.props.nodeName, 'div');
     assert.equal(vNode.children[0].nodeIndex, 1);
+    assert.equal(vNode.children[0].props.nodeName, 'p');
     assert.equal(vNode.children[0].children[0].nodeIndex, 2);
+    assert.equal(vNode.children[0].children[0].props.nodeName, 'b');
     assert.equal(vNode.children[0].children[0].children[0].nodeIndex, 3);
+    assert.equal(vNode.children[0].children[0].children[0].props.nodeName, 'i');
     assert.equal(vNode.children[1].nodeIndex, 4);
+    assert.equal(vNode.children[1].props.nodeName, 'u');
     assert.equal(vNode.children[1].children[0].nodeIndex, 5);
+    assert.equal(vNode.children[1].children[0].props.nodeName, 's');
   });
 
   if (shadowSupport.v0) {

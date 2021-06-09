@@ -162,7 +162,7 @@ describe('DqElement', function() {
       assert.deepEqual(dqElm.nodeIndexes, [123, 456]);
     });
 
-    it('is [] when the element is unknown.', function() {
+    it('is [] when the element is not in the virtual tree.', function() {
       var div = document.createElement('div');
       var dqElm = new DqElement(div);
       assert.deepEqual(dqElm.nodeIndexes, []);
