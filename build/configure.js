@@ -273,7 +273,12 @@ function buildRules(grunt, options, commons, callback) {
 
     function parseFailureForRule(rule) {
       function hasFailure(definition, out) {
-        if (definition && definition.metadata && definition.metadata.impact) {
+        if (
+          !rule.reviewOnFail &&
+          definition &&
+          definition.metadata &&
+          definition.metadata.impact
+        ) {
           out = out || !!definition.metadata.messages.fail;
         }
         return out;
