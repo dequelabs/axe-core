@@ -113,4 +113,149 @@ describe('axe.utils.mergeResults', function() {
     });
     assert.deepEqual(ids, ['h1', 'iframe1 >> h2', 'iframe1 >> h3', 'h4']);
   });
+
+  it('sorts nested iframes', function() {
+    var result = axe.utils.mergeResults([
+      {
+        results: [
+          {
+            id: 'heading-order',
+            result: true,
+            nodes: [
+              {
+                node: {
+                  selector: ['h1'],
+                  nodeIndexes: [1]
+                }
+              },
+              {
+                node: {
+                  selector: ['h5'],
+                  nodeIndexes: [3]
+                }
+              }
+            ]
+          },
+          {
+            id: 'heading-order',
+            result: true,
+            nodes: [
+              {
+                node: {
+                  selector: ['iframe1', 'h2'],
+                  nodeIndexes: [2, 1],
+                  fromFrame: true
+                }
+              },
+              {
+                node: {
+                  selector: ['iframe1', 'h4'],
+                  nodeIndexes: [2, 3],
+                  fromFrame: true
+                }
+              }
+            ]
+          },
+          {
+            id: 'heading-order',
+            result: true,
+            nodes: [
+              {
+                node: {
+                  selector: ['iframe1', 'iframe2', 'h3'],
+                  nodeIndexes: [2, 2, 1],
+                  fromFrame: true
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]);
+
+    var ids = result[0].nodes.map(function(el) {
+      return el.node.selector.join(' >> ');
+    });
+    assert.deepEqual(ids, [
+      'h1',
+      'iframe1 >> h2',
+      'iframe1 >> iframe2 >> h3',
+      'iframe1 >> h4',
+      'h5'
+    ]);
+  });
+
+  it('sorts results even if nodeIndexes are missing', function () {
+    var result = axe.utils.mergeResults([
+      {
+        results: [
+          {
+            id: 'heading-order',
+            result: true,
+            nodes: [
+              {
+                node: {
+                  selector: ['h1'],
+                  nodeIndexes: [1]
+                }
+              },
+              {
+                node: {
+                  selector: ['nill']
+                }
+              },
+              {
+                node: {
+                  selector: ['h3'],
+                  nodeIndexes: [3]
+                }
+              },
+            ]
+          },
+          {
+            id: 'heading-order',
+            result: true,
+            nodes: [
+              {
+                node: {
+                  selector: ['nill']
+                }
+              }
+            ]
+          },
+          {
+            id: 'heading-order',
+            result: true,
+            nodes: [
+              {
+                node: {
+                  selector: ['iframe1', 'h2'],
+                  nodeIndexes: [2, 1],
+                  fromFrame: true
+                }
+              },
+              {
+                node: {
+                  selector: ['nill']
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]);
+
+    var ids = result[0].nodes.map(function(el) {
+      return el.node.selector.join(' >> ');
+    });
+    // Order of "nill" varies between JS engines
+    assert.deepEqual(ids, [
+      'nill',
+      'nill',
+      'nill',
+      'h1',
+      'iframe1 >> h2',
+      'h3'
+    ]);
+  })
 });
