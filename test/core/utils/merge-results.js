@@ -185,6 +185,83 @@ describe('axe.utils.mergeResults', function() {
     ]);
   });
 
+  it('sorts results even if nodeIndexes are empty', function () {
+    var result = axe.utils.mergeResults([
+      {
+        results: [
+          {
+            id: 'heading-order',
+            result: true,
+            nodes: [
+              {
+                node: {
+                  selector: ['h1'],
+                  nodeIndexes: [1]
+                }
+              },
+              {
+                node: {
+                  selector: ['nill'],
+                  nodeIndexes: []
+                }
+              },
+              {
+                node: {
+                  selector: ['h3'],
+                  nodeIndexes: [3]
+                }
+              },
+            ]
+          },
+          {
+            id: 'heading-order',
+            result: true,
+            nodes: [
+              {
+                node: {
+                  selector: ['nill'],
+                  nodeIndexes: []
+                }
+              }
+            ]
+          },
+          {
+            id: 'heading-order',
+            result: true,
+            nodes: [
+              {
+                node: {
+                  selector: ['iframe1', 'h2'],
+                  nodeIndexes: [2, 1],
+                  fromFrame: true
+                }
+              },
+              {
+                node: {
+                  selector: ['nill'],
+                  nodeIndexes: []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]);
+
+    var ids = result[0].nodes.map(function(el) {
+      return el.node.selector.join(' >> ');
+    });
+    // Order of "nill" varies between JS engines
+    assert.deepEqual(ids, [
+      'nill',
+      'nill',
+      'nill',
+      'h1',
+      'iframe1 >> h2',
+      'h3'
+    ]);
+  });
+
   it('sorts results even if nodeIndexes are missing', function () {
     var result = axe.utils.mergeResults([
       {
@@ -257,5 +334,5 @@ describe('axe.utils.mergeResults', function() {
       'iframe1 >> h2',
       'h3'
     ]);
-  })
+  });
 });
