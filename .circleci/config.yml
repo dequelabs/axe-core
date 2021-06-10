@@ -139,7 +139,9 @@ jobs:
       - run: |
           wget https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb
           sudo apt install ./google-chrome-beta_current_amd64.deb
-      - run: CHROME_BIN="$(which google-chrome-beta)" npm run test -- --browsers Chrome,FirefoxNightly
+      - run: |
+          CHROME_BIN="$(which google-chrome-beta)" && echo $CHROME_BIN
+          npm run test -- --browsers Chrome,FirefoxNightly
 
   # Test api docs can be built
   build_api_docs:
