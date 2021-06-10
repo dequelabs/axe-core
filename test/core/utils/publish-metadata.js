@@ -1214,35 +1214,30 @@ describe('axe.utils.publishMetaData', function() {
       ]
     };
     axe.utils.publishMetaData(result);
-    assert.deepEqual(result, {
-      id: 'cats',
-      help: 'cats-rule',
-      tags: [],
-      nodes: [
-        {
-          any: [
-            {
-              result: undefined,
-              id: 'cats-ANY',
-              message: 'fail-ANY'
-            }
-          ],
-          none: [
-            {
-              result: undefined,
-              id: 'cats-NONE',
-              message: 'fail-NONE'
-            }
-          ],
-          all: [
-            {
-              result: undefined,
-              id: 'cats-ALL',
-              message: 'fail-ALL'
-            }
-          ]
-        }
-      ]
-    });
+    assert.deepEqual(result.nodes, [
+      {
+        any: [
+          {
+            result: undefined,
+            id: 'cats-ANY',
+            message: 'fail-ANY'
+          }
+        ],
+        none: [
+          {
+            result: undefined,
+            id: 'cats-NONE',
+            message: 'fail-NONE'
+          }
+        ],
+        all: [
+          {
+            result: undefined,
+            id: 'cats-ALL',
+            message: 'fail-ALL'
+          }
+        ]
+      }
+    ]);
   });
 });
