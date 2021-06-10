@@ -294,7 +294,10 @@ function buildRules(grunt, options, commons, callback) {
     function parseIncompleteForRule(rule) {
       function hasIncomplete(definition, out) {
         if (definition && definition.metadata && definition.metadata.impact) {
-          out = out || !!definition.metadata.messages.incomplete;
+          out =
+            out ||
+            !!definition.metadata.messages.incomplete ||
+            rule.reviewOnFail;
         }
         return out;
       }
