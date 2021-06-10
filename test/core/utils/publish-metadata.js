@@ -1136,4 +1136,113 @@ describe('axe.utils.publishMetaData', function() {
       });
     });
   });
+
+  it('should use fail message for rules with "reviewOnFaill: true"', function() {
+    axe._load({
+      rules: [
+        {
+          id: 'cats',
+          reviewOnFail: true
+        }
+      ],
+      data: {
+        rules: {
+          cats: {
+            help: function() {
+              return 'cats-rule';
+            }
+          }
+        },
+        checks: {
+          'cats-NONE': {
+            messages: {
+              fail: function() {
+                return 'fail-NONE';
+              },
+              pass: function() {
+                return 'pass-NONE';
+              }
+            }
+          },
+          'cats-ANY': {
+            messages: {
+              fail: function() {
+                return 'fail-ANY';
+              },
+              pass: function() {
+                return 'pass-ANY';
+              }
+            }
+          },
+          'cats-ALL': {
+            messages: {
+              fail: function() {
+                return 'fail-ALL';
+              },
+              pass: function() {
+                return 'pass-ALL';
+              }
+            }
+          }
+        }
+      }
+    });
+
+    var result = {
+      id: 'cats',
+      nodes: [
+        {
+          any: [
+            {
+              result: undefined,
+              id: 'cats-ANY'
+            }
+          ],
+          none: [
+            {
+              result: undefined,
+              id: 'cats-NONE'
+            }
+          ],
+          all: [
+            {
+              result: undefined,
+              id: 'cats-ALL'
+            }
+          ]
+        }
+      ]
+    };
+    axe.utils.publishMetaData(result);
+    assert.deepEqual(result, {
+      id: 'cats',
+      help: 'cats-rule',
+      tags: [],
+      nodes: [
+        {
+          any: [
+            {
+              result: undefined,
+              id: 'cats-ANY',
+              message: 'fail-ANY'
+            }
+          ],
+          none: [
+            {
+              result: undefined,
+              id: 'cats-NONE',
+              message: 'fail-NONE'
+            }
+          ],
+          all: [
+            {
+              result: undefined,
+              id: 'cats-ALL',
+              message: 'fail-ALL'
+            }
+          ]
+        }
+      ]
+    });
+  });
 });
