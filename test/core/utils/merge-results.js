@@ -253,12 +253,12 @@ describe('axe.utils.mergeResults', function() {
     });
     // Order of "nill" varies between JS engines
     assert.deepEqual(ids, [
-      'nill',
-      'nill',
-      'nill',
       'h1',
       'iframe1 >> h2',
-      'h3'
+      'h3',
+      'nill',
+      'nill',
+      'nill'
     ]);
   });
 
@@ -327,12 +327,12 @@ describe('axe.utils.mergeResults', function() {
     });
     // Order of "nill" varies between JS engines
     assert.deepEqual(ids, [
-      'nill',
-      'nill',
-      'nill',
       'h1',
       'iframe1 >> h2',
-      'h3'
+      'h3',
+      'nill',
+      'nill',
+      'nill'
     ]);
   });
 });
