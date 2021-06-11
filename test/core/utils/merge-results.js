@@ -251,7 +251,7 @@ describe('axe.utils.mergeResults', function() {
     var ids = result[0].nodes.map(function(el) {
       return el.node.selector.join(' >> ');
     });
-    // Order of "nill" varies between JS engines
+    // Order of "nill" varies in IE
     assert.deepEqual(ids, [
       'h1',
       'iframe1 >> h2',
@@ -325,7 +325,7 @@ describe('axe.utils.mergeResults', function() {
     var ids = result[0].nodes.map(function(el) {
       return el.node.selector.join(' >> ');
     });
-    // Order of "nill" varies between JS engines
+    // Order of "nill" varies in IE
     assert.deepEqual(ids, [
       'h1',
       'iframe1 >> h2',
