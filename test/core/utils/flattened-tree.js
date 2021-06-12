@@ -86,6 +86,13 @@ describe('axe.utils.getFlattenedTree', function() {
     assert(tree[0].parent === null);
   });
 
+  it('should cache selectors', function() {
+    fixture.innerHTML = '<div></div><span></span><main></main>';
+    var tree = axe.utils.getFlattenedTree(fixture);
+    assert.exists(tree[0]._selectorMap);
+    assert.lengthOf(tree[0]._selectorMap['*'], 4);
+  });
+
   if (shadowSupport.v0) {
     describe('shadow DOM v0', function() {
       afterEach(function() {
