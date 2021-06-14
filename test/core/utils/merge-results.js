@@ -185,7 +185,7 @@ describe('axe.utils.mergeResults', function() {
     ]);
   });
 
-  it('sorts results even if nodeIndexes are empty', function () {
+  it('sorts results even if nodeIndexes are empty', function() {
     var result = axe.utils.mergeResults([
       {
         results: [
@@ -210,7 +210,7 @@ describe('axe.utils.mergeResults', function() {
                   selector: ['h3'],
                   nodeIndexes: [3]
                 }
-              },
+              }
             ]
           },
           {
@@ -262,7 +262,7 @@ describe('axe.utils.mergeResults', function() {
     ]);
   });
 
-  it('sorts results even if nodeIndexes are missing', function () {
+  it('sorts results even if nodeIndexes are undefined', function() {
     var result = axe.utils.mergeResults([
       {
         results: [
@@ -286,7 +286,7 @@ describe('axe.utils.mergeResults', function() {
                   selector: ['h3'],
                   nodeIndexes: [3]
                 }
-              },
+              }
             ]
           },
           {
@@ -333,6 +333,56 @@ describe('axe.utils.mergeResults', function() {
       'nill',
       'nill',
       'nill'
+    ]);
+  });
+
+  it('sorts nodes all placed on the same result', function() {
+    var result = axe.utils.mergeResults([
+      {
+        results: [
+          {
+            id: 'iframe',
+            result: 'inapplicable',
+            nodes: [
+              {
+                node: {
+                  selector: ['#level0', '#level1', '#level2a'],
+                  nodeIndexes: [12, 14, 14]
+                }
+              },
+              {
+                node: {
+                  selector: ['#level0', '#level1', '#level2b'],
+                  nodeIndexes: [12, 14, 16]
+                }
+              },
+              {
+                node: {
+                  selector: ['#level0', '#level1'],
+                  nodeIndexes: [12, 14]
+                }
+              },
+              {
+                node: {
+                  selector: ['#level0'],
+                  nodeIndexes: [12]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]);
+
+    var ids = result[0].nodes.map(function(el) {
+      return el.node.selector.join(' >> ');
+    });
+
+    assert.deepEqual(ids, [
+      '#level0',
+      '#level0 >> #level1',
+      '#level0 >> #level1 >> #level2a',
+      '#level0 >> #level1 >> #level2b'
     ]);
   });
 });
