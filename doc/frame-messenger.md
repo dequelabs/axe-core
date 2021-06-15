@@ -8,9 +8,9 @@ Tools like browser extensions and testing environments often have different chan
 axe.frameMessenger({
   // Called to initialize message handling
   open(topicHandler) {
-    // Map data from the bridge to
+    // Map data from the bridge to topicHandler
     function subscriber(frameWin, data, response) {
-      // Data serializations / validation / etc. here
+      // Data deserializations / validation / etc. here
       topicHandler(data, response);
     }
     // Start listening for "axe-core" events
@@ -37,11 +37,11 @@ axe.frameMessenger({
 
 The `topicHandler` function takes two arguments: the `data` object and a callback function that is called when the subscribed listener completes. The `data` object is exclusively passed data that can be serialized with `JSON.stringify()`, which depending on the system may need to be used.
 
-The `open` function can `return` an optional cleanup function, which is called when another frameMessenger is registered.
+The `open` function can `return` an optional `close` function. Axe-core will only ever have one frameMessenger open at a time. The `close` function is called when another frameMessenger is registered.
 
 ## axe.frameMessenger({ post })
 
-`post` is a function that dictates how axe-core communicates with frames. It is passed three arguments: `frameWindow`, which is the frames `contentWindow`, the `data` object, and a `replyHandler` that must be called when responses are received. To inform axe-core that no message was sent, return `false`. This informs axe-core not to await for the ping to time out.
+`post` is a function that dictates how axe-core communicates with frames. It is passed three arguments: `frameWindow`, which is the frame's `contentWindow`, the `data` object, and a `replyHandler` that must be called when responses are received. To inform axe-core that no message was sent, return `false`. This informs axe-core not to await for the ping to time out.
 
 Currently, axe-core will only require `replyHandler` to be called once, so promises can also be used here. This may change in the future, so it is preferable to make it possible for `replyHandler` to be called multiple times. Some axe-core [plugins](plugins.md) may rely on this feature.
 
@@ -60,8 +60,8 @@ axe.frameMessenger({
   },
 
   open(topicHandler) {
-    function subscriber(frameWin, data, response) {
-      const { channelId, message, messageId } = data;
+    function subscriber(frameWin, data) {
+      const { channelId, message, keepalive } = data;
       // Create a callback to invoke on a reply.
       const responder = createResponder(frameWin, channelId);
 
@@ -100,6 +100,8 @@ function createResponder(frameWin, channelId) {
 
 ## Error handling & Timeouts
 
-If for some reason the frameMessenger fails to open, post, or close you should not throw an error. Axe-core will handle missing results by reporting on them in the `frame-tested` rule. It should not be possible for the topicHandler and replyHandler callbacks to throw an error. If this happens, please file an issue.
+If for some reason the frameMessenger fails to open, post, or close you should not throw an error. Axe-core will handle missing results by reporting on them in the `frame-tested` rule. It should not be possible for the `topicHandler` and `replyHandler` callbacks to throw an error. If this happens, please file an issue.
 
 Axe-core has a timeout mechanism built in, which pings frames to see if they respond before instructing them to run. There is no retry behavior in axe-core, which assumes that whatever channel is used is stable. If this isn't the case, this will need to be built into frameMessenger.
+
+The `message` passed to responder may be an `Error`. If axe-core passes an `Error`, this should be propagated "as is". If this is not possible because the message needs to be serialized, a new `Error` object must be constructed as part of deserialization.
