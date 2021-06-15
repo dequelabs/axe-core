@@ -127,7 +127,7 @@ describe('frame-tested', function() {
         {
           result: undefined,
           node: {
-            ancestry: ['html > body > iframe#1']
+            ancestry: [['html > body > custom-elm1', 'iframe#1']]
           }
         },
         {
@@ -139,13 +139,7 @@ describe('frame-tested', function() {
         {
           result: undefined,
           node: {
-            ancestry: ['html > body > iframe#1', 'html']
-          }
-        },
-        {
-          result: undefined,
-          node: {
-            ancestry: [['html > body > custom-elm1', 'iframe#2'], 'html']
+            ancestry: [['html > body > custom-elm1', 'iframe#1'], 'html']
           }
         }
       ];
@@ -155,10 +149,10 @@ describe('frame-tested', function() {
 
       assert.isTrue(afterResults[0].result);
       assert.deepEqual(afterResults[0].node.ancestry, [
-        'html > body > iframe#1'
+        ['html > body > custom-elm1', 'iframe#1']
       ]);
 
-      assert.isTrue(afterResults[1].result);
+      assert.isUndefined(afterResults[1].result);
       assert.deepEqual(afterResults[1].node.ancestry, [
         ['html > body > custom-elm1', 'iframe#2']
       ]);
@@ -210,6 +204,15 @@ describe('frame-tested', function() {
           node: {
             ancestry: [
               ['html > body > custom-elm1', 'iframe#2'],
+              ['html > body > other-element', 'iframe#4']
+            ]
+          }
+        },
+        {
+          result: undefined,
+          node: {
+            ancestry: [
+              ['html > body > custom-elm1', 'iframe#2'],
               ['html > body > other-element', 'iframe#3'],
               'html'
             ]
@@ -218,7 +221,7 @@ describe('frame-tested', function() {
       ];
 
       var afterResults = frameTestedAfter(results);
-      assert.lengthOf(afterResults, 3);
+      assert.lengthOf(afterResults, 4);
 
       assert.isTrue(afterResults[0].result);
       assert.deepEqual(afterResults[0].node.ancestry, [
@@ -234,6 +237,12 @@ describe('frame-tested', function() {
       assert.deepEqual(afterResults[2].node.ancestry, [
         ['html > body > custom-elm1', 'iframe#2'],
         ['html > body > other-element', 'iframe#3']
+      ]);
+
+      assert.isUndefined(afterResults[3].result);
+      assert.deepEqual(afterResults[3].node.ancestry, [
+        ['html > body > custom-elm1', 'iframe#2'],
+        ['html > body > other-element', 'iframe#4']
       ]);
     });
   });
