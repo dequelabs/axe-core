@@ -2,17 +2,20 @@
 <html lang="en">
   <title>O hai</title>
 
-  <div class="foo" id="foo">foo</div>
+  <iframe src="testframe1.html" id="fr1" title="x"></iframe>
+  <iframe src="testframe1.html" id="fr2" title="x"></iframe>
 
   <script src="/axe.js"></script>
   <script>
-    window.addEventListener('load', function() {
-      axe.run(document, function(err, res) {
-        console.log(res.violations);
-        res.incomplete.forEach(function(issue) {
-          console.log(issue);
-        });
-      });
+    window.addEventListener('load', async () => {
+      const results = await axe.run({
+        include: [
+          ['#fr1', 'main'],
+          ['#fr2', 'header'],
+        ]
+      }, {
+        runOnly: ['heading-order']
+      })
     });
   </script>
 </html>
