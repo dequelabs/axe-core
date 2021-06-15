@@ -3,7 +3,6 @@ var shadowSupport = axe.testUtils.shadowSupport;
 
 describe('axe.utils.getFlattenedTree', function() {
   'use strict';
-
   function createStyle(box) {
     var style = document.createElement('style');
     style.textContent =
@@ -75,6 +74,10 @@ describe('axe.utils.getFlattenedTree', function() {
     );
   }
 
+  afterEach(function() {
+    fixture.innerHTML = '';
+  });
+
   it('should default to document', function() {
     fixture.innerHTML = '';
     var tree = axe.utils.getFlattenedTree();
@@ -86,11 +89,26 @@ describe('axe.utils.getFlattenedTree', function() {
     assert(tree[0].parent === null);
   });
 
+  it('creates virtual nodes in the correct order', function() {
+    fixture.innerHTML = '<p><b><i></i></b></p><u><s></s></u>';
+
+    var vNode = axe.utils.getFlattenedTree(fixture)[0];
+    assert.equal(vNode.nodeIndex, 0);
+    assert.equal(vNode.props.nodeName, 'div');
+    assert.equal(vNode.children[0].nodeIndex, 1);
+    assert.equal(vNode.children[0].props.nodeName, 'p');
+    assert.equal(vNode.children[0].children[0].nodeIndex, 2);
+    assert.equal(vNode.children[0].children[0].props.nodeName, 'b');
+    assert.equal(vNode.children[0].children[0].children[0].nodeIndex, 3);
+    assert.equal(vNode.children[0].children[0].children[0].props.nodeName, 'i');
+    assert.equal(vNode.children[1].nodeIndex, 4);
+    assert.equal(vNode.children[1].props.nodeName, 'u');
+    assert.equal(vNode.children[1].children[0].nodeIndex, 5);
+    assert.equal(vNode.children[1].children[0].props.nodeName, 's');
+  });
+
   if (shadowSupport.v0) {
     describe('shadow DOM v0', function() {
-      afterEach(function() {
-        fixture.innerHTML = '';
-      });
       beforeEach(function() {
         function createStoryGroup(className, contentSelector) {
           var group = document.createElement('div');
@@ -139,9 +157,6 @@ describe('axe.utils.getFlattenedTree', function() {
 
   if (shadowSupport.v1) {
     describe('shadow DOM v1', function() {
-      afterEach(function() {
-        fixture.innerHTML = '';
-      });
       beforeEach(function() {
         function createStoryGroup(className, slotName) {
           var group = document.createElement('div');
