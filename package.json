@@ -154,7 +154,7 @@
     "selenium-webdriver": "~3.6.0",
     "sinon": "^7.5.0",
     "sri-toolbox": "^0.2.0",
-    "standard-version": "^9.0.0",
+    "standard-version": "^9.3.0",
     "start-server-and-test": "^1.11.7",
     "typedarray": "^0.0.6",
     "typescript": "^3.5.3",
