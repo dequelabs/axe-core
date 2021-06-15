@@ -51,8 +51,16 @@ describe('frame-tested', function() {
 
       var afterResults = frameTestedAfter(results);
       assert.lengthOf(afterResults, 2);
+
       assert.isTrue(afterResults[0].result);
+      assert.deepEqual(afterResults[0].node.ancestry, [
+        'html > body > iframe#1'
+      ]);
+
       assert.isTrue(afterResults[1].result);
+      assert.deepEqual(afterResults[1].node.ancestry, [
+        'html > body > iframe#2'
+      ]);
     });
 
     it('does not change result when iframe has not been tested', function() {
@@ -76,6 +84,12 @@ describe('frame-tested', function() {
           }
         },
         {
+          result: false,
+          node: {
+            ancestry: ['html > body > iframe#3']
+          }
+        },
+        {
           result: undefined,
           node: {
             ancestry: ['html > body > iframe#1', 'html']
@@ -84,9 +98,22 @@ describe('frame-tested', function() {
       ];
 
       var afterResults = frameTestedAfter(results);
-      assert.lengthOf(afterResults, 2);
+      assert.lengthOf(afterResults, 3);
+
       assert.isTrue(afterResults[0].result);
+      assert.deepEqual(afterResults[0].node.ancestry, [
+        'html > body > iframe#1'
+      ]);
+
       assert.isUndefined(afterResults[1].result);
+      assert.deepEqual(afterResults[1].node.ancestry, [
+        'html > body > iframe#2'
+      ]);
+
+      assert.isFalse(afterResults[2].result);
+      assert.deepEqual(afterResults[2].node.ancestry, [
+        'html > body > iframe#3'
+      ]);
     });
 
     it('works with shadow DOM', function() {
@@ -125,8 +152,16 @@ describe('frame-tested', function() {
 
       var afterResults = frameTestedAfter(results);
       assert.lengthOf(afterResults, 2);
+
       assert.isTrue(afterResults[0].result);
+      assert.deepEqual(afterResults[0].node.ancestry, [
+        'html > body > iframe#1'
+      ]);
+
       assert.isTrue(afterResults[1].result);
+      assert.deepEqual(afterResults[1].node.ancestry, [
+        ['html > body > custom-elm1', 'iframe#2']
+      ]);
     });
 
     it('works with nested shadow DOM and iframes', function() {
@@ -184,9 +219,22 @@ describe('frame-tested', function() {
 
       var afterResults = frameTestedAfter(results);
       assert.lengthOf(afterResults, 3);
+
       assert.isTrue(afterResults[0].result);
+      assert.deepEqual(afterResults[0].node.ancestry, [
+        'html > body > iframe#1'
+      ]);
+
       assert.isTrue(afterResults[1].result);
+      assert.deepEqual(afterResults[1].node.ancestry, [
+        ['html > body > custom-elm1', 'iframe#2']
+      ]);
+
       assert.isTrue(afterResults[2].result);
+      assert.deepEqual(afterResults[2].node.ancestry, [
+        ['html > body > custom-elm1', 'iframe#2'],
+        ['html > body > other-element', 'iframe#3']
+      ]);
     });
   });
 });
