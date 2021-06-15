@@ -356,6 +356,13 @@ describe('dom.isVisible', function() {
         assert.isFalse(axe.commons.dom.isVisible(el.actualNode));
       }
     );
+    it('should return false if element is visually hidden using position absolute, overflow hidden, and a very small height', function() {
+      fixture.innerHTML =
+        '<div id="target" style="position:absolute; height: 1px; overflow: hidden;">StickySticky</div>';
+      var el = document.getElementById('target');
+
+      assert.isFalse(axe.commons.dom.isVisible(el));
+    });
   });
 
   describe('screen readers', function() {
