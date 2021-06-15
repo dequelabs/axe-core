@@ -70,6 +70,22 @@ describe('axe.commons.color.getTextShadowColors', function() {
     assert.closeTo(shadowColors[2].alpha, expected2, 0.05);
   });
 
+  it('returns an alpha of 1 if blur radius is 0', function() {
+    fixture.innerHTML =
+      '<span style="text-shadow: ' +
+      '0px 0px 0 red, blue 0 0 0, \n0\t 0  0 green, 0px 0px red;' +
+      '">Hello world</span>';
+
+    var span = fixture.querySelector('span');
+    var shadowColors = getTextShadowColors(span);
+
+    assert.lengthOf(shadowColors, 4);
+    assert.equal(shadowColors[0].alpha, 1);
+    assert.equal(shadowColors[1].alpha, 1);
+    assert.equal(shadowColors[2].alpha, 1);
+    assert.equal(shadowColors[3].alpha, 1);
+  });
+
   it('handles floating point values', function() {
     fixture.innerHTML =
       '<span style="text-shadow: ' +
