@@ -45,7 +45,7 @@ The `open` function can `return` an optional `close` function. Axe-core will onl
 
 Currently, axe-core will only require `replyHandler` to be called once, so promises can also be used here. This may change in the future, so it is preferable to make it possible for `replyHandler` to be called multiple times. Some axe-core [plugins](plugins.md) may rely on this feature.
 
-A second frameMessenger feature available to plugins, but not used in axe-core by default is to reply to a reply. This works by passing `replyHandler` a `responder` callback as a second argument. This requires a different setup, in which callbacks as stored based on their `channelId` property.
+A second frameMessenger feature available to plugins, but not used in axe-core by default is to reply to a reply. This works by passing `replyHandler` a `responder` callback as a second argument. This requires a different setup, in which callbacks are stored based on their `channelId` property.
 
 ```js
 // store handlers based on channelId
