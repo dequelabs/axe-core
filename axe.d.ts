@@ -324,7 +324,7 @@ declare namespace axe {
   };
   type Close = Function;
   type TopicHandler = (data: TopicData, responder: Responder) => void;
-  type ReplyHandler = (data: ReplyData, responder?: Responder) => void;
+  type ReplyHandler = (message: any | Error, keepalive: boolean, responder: Responder) => void;
   type Responder = (
     message: any | Error,
     keepalive?: boolean,
