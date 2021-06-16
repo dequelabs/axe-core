@@ -78,7 +78,7 @@ declare namespace axe {
     };
   }
   interface RunOptions {
-    runOnly?: RunOnly | TagValue[] | string[];
+    runOnly?: RunOnly | TagValue[] | string[] | string;
     rules?: RuleObject;
     reporter?: ReporterVersion;
     resultTypes?: resultGroups[];
