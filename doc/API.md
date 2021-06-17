@@ -484,11 +484,27 @@ axe.run(
 Alternatively, runOnly can be passed an array of tags:
 
 ```js
-axe.run({
-	runOnly: ['wcag2a', 'wcag2aa'];
-}, (err, results) => {
-  // ...
-})
+axe.run(
+  {
+    runOnly: ['wcag2a', 'wcag2aa']
+  },
+  (err, results) => {
+    // ...
+  }
+);
+```
+
+If you want to specify just one tag, you can pass in a string.
+
+```js
+axe.run(
+  {
+    runOnly: 'wcag2a'
+  },
+  (err, results) => {
+    // ...
+  }
+);
 ```
 
 2. Run only a specified list of Rules
@@ -519,6 +535,19 @@ axe.run({
 }, (err, results) => {
   // ...
 })
+```
+
+If you want to specify just one rule, you can pass in a string.
+
+```js
+axe.run(
+  {
+    runOnly: 'ruleId1'
+  },
+  (err, results) => {
+    // ...
+  }
+);
 ```
 
 3. Run all enabled Rules except for a list of rules
