@@ -307,7 +307,7 @@ axe.run(context, options, (err, results) => {
 #### Parameters axe.run
 
 - [`context`](#context-parameter): (optional) Defines the scope of the analysis - the part of the DOM that you would like to analyze. This will typically be the `document` or a specific selector such as class name, ID, selector, etc.
-- [`options`](#options-parameter): (optional) Set of options passed into rules or checks, temporarily modifying them. This contrasts with `axe.configure`, which is more permanent.
+- [`options`](#options-parameter): (optional) Set of options that change how `axe.run` works, including what rules will run. To pass options to specific checks, use `axe.configure`.
 - [`callback`](#callback-parameter): (optional) The callback function which receives either null or an [error result](#error-result) as the first parameter, and the [results object](#results-object) when analysis is completed successfully, or undefined if it did not.
 
 ##### Context Parameter
