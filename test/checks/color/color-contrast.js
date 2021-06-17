@@ -388,6 +388,18 @@ describe('color-contrast', function() {
     );
   });
 
+  it('should not return undefined if ignorePseudo option is used', function() {
+    var params = checkSetup(
+      '<style>.foo { position: relative; } .foo:after { content: ""; position: absolute; width: 100%; height: 100%; background: red; }</style>' +
+        '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>',
+      {
+        ignorePseudo: true
+      }
+    );
+
+    assert.isTrue(contrastEvaluate.apply(checkContext, params));
+  });
+
   it('should return undefined if pseudo element has a background image', function() {
     var dataURI =
       'data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/' +
@@ -442,6 +454,24 @@ describe('color-contrast', function() {
   it("should not return undefined if pseudo element doesn't have a background", function() {
     var params = checkSetup(
       '<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 100%; height: 100%; }</style>' +
+        '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
+    );
+
+    assert.isTrue(contrastEvaluate.apply(checkContext, params));
+  });
+
+  it('should not return undefined if pseudo element has visibility: hidden', function() {
+    var params = checkSetup(
+      '<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 100%; height: 100%; background-color: red; visibility: hidden; }</style>' +
+        '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
+    );
+
+    assert.isTrue(contrastEvaluate.apply(checkContext, params));
+  });
+
+  it('should not return undefined if pseudo element has display: none', function() {
+    var params = checkSetup(
+      '<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 100%; height: 100%; background-color: red; display: none; }</style>' +
         '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
     );
 
