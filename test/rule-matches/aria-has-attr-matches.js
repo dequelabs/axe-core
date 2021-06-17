@@ -1,15 +1,12 @@
 describe('aria-has-attr-matches', function() {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
+  var queryFixture = axe.testUtils.queryFixture;
+  var fixtureSetup = axe.testUtils.fixtureSetup;
   var rule;
 
   beforeEach(function() {
     rule = axe.utils.getRule('aria-valid-attr-value');
-  });
-
-  afterEach(function() {
-    fixture.innerHTML = '';
   });
 
   it('is a function', function() {
@@ -17,17 +14,16 @@ describe('aria-has-attr-matches', function() {
   });
 
   it('should return false if an element has no attributes', function() {
-    var div = document.createElement('div');
-    assert.isFalse(rule.matches(div));
+    var vNode = fixtureSetup('<div></div>');
+    assert.isFalse(rule.matches(null, vNode));
   });
+
   it('should return false if an element has no ARIA attributes', function() {
-    var div = document.createElement('div');
-    div.id = 'monkeys';
-    assert.isFalse(rule.matches(div));
+    var vNode = queryFixture('<div id="target"></div>');
+    assert.isFalse(rule.matches(null, vNode));
   });
   it('should return true if an element has ARIA attributes', function() {
-    var div = document.createElement('div');
-    div.setAttribute('aria-bats', 'monkeys');
-    assert.isTrue(rule.matches(div));
+    var vNode = queryFixture('<div id="target" aria-bats="monkeys"></div>');
+    assert.isTrue(rule.matches(null, vNode));
   });
 });
