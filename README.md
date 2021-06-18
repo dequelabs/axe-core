@@ -136,6 +136,13 @@ axe.configure({
 });
 ```
 
+## Updates & Security
+
+Axe-core has a new minor release every 3 to 5 months, which usually introduces new rules and features. We recommend scheduling time to upgrade to these versions. Security updates will be made available for minor version lines up to **18 months old**. 
+
+- See [release and support](doc/release-and-support.md) for details on the frequency of releases, long-term support and recommendations on upgrading axe-core.
+- See [backward compatibility](doc/backwards-compatibility-doc.md) for details on the types of changes different releases may introduce.
+
 ## Supported ARIA Roles and Attributes.
 
 Refer [axe-core ARIA support](./doc/aria-supported.md) for a complete list of ARIA supported roles and attributes by axe.
