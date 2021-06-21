@@ -117,4 +117,37 @@ describe('region-after', function() {
     assert.equal(results[1].result, true);
     assert.equal(results[2].result, true);
   });
+
+  it('should pass content if a grandparent frame passes', function() {
+    var results = checks.region.after([
+      {
+        data: { isIframe: true },
+        node: {
+          ancestry: ['html > body > iframe']
+        },
+        result: true
+      },
+      {
+        data: { isIframe: true },
+        node: {
+          ancestry: ['html > body > iframe', 'html > body > iframe']
+        },
+        result: false
+      },
+      {
+        data: { isIframe: false },
+        node: {
+          ancestry: [
+            'html > body > iframe',
+            'html > body > iframe',
+            'html > body > p'
+          ]
+        },
+        result: false
+      }
+    ]);
+    assert.equal(results[0].result, true);
+    assert.equal(results[1].result, true);
+    assert.equal(results[2].result, true);
+  });
 });
