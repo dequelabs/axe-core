@@ -1,18 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
   <title>O hai</title>
+  <main id="mocha">
+    <iframe src="./integration/full/region/frames/region-nested.html"></iframe>
 
-  <div class="foo" id="foo">foo</div>
+    <style>
+      a[href]::before {
+        background-color: #0f833e;
+        content: '';
+        width: 15px;
+        display: inline-block;
+        position: absolute;
+        height: 15px;
+        visibility: hidden;
+      }
+    </style>
+    <a href="#">Hello World</a>
+  </main>
 
   <script src="/axe.js"></script>
   <script>
     window.addEventListener('load', function() {
-      axe.run(document, function(err, res) {
-        console.log(res.violations);
-        res.incomplete.forEach(function(issue) {
-          console.log(issue);
-        });
+      axe.configure({
+        checks: [
+          {
+            id: 'color-contrast',
+            options: {
+              ignoreUnicode: true,
+              ignoreLength: false,
+              ignorePseudo: false,
+              boldValue: 700,
+              boldTextPt: 14,
+              largeTextPt: 18,
+              contrastRatio: {
+                normal: {
+                  expected: 4.5
+                },
+                large: {
+                  expected: 3
+                }
+              },
+              shadowOutlineEmMax: 0.1
+            }
+          }
+        ]
       });
+      axe.run(
+        {
+          runOnly: ['color-contrast']
+        },
+        function(err, res) {
+          console.log(res);
+        }
+      );
     });
   </script>
 </html>
