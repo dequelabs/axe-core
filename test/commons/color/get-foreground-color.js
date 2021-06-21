@@ -124,6 +124,22 @@ describe('color.getForegroundColor', function() {
     assert.closeTo(actual.alpha, expected.alpha, 0.1);
   });
 
+  it('should return text shadow color if foreground is transparent', function() {
+    fixture.innerHTML =
+      '<div style="height: 40px; width: 120px; background-color: white;">' +
+      '<div id="target" style="height: 20px; width: 120px; color: rgba(0,0,0,0); text-shadow: 0 0 0 rgba(32, 32, 64, 1)">' +
+      'This is my text' +
+      '</div></div>';
+    axe.testUtils.flatTreeSetup(fixture);
+    var target = fixture.querySelector('#target');
+    var actual = axe.commons.color.getForegroundColor(target);
+    var expected = new axe.commons.color.Color(32, 32, 64, 1);
+    assert.equal(actual.red, expected.red);
+    assert.equal(actual.green, expected.green);
+    assert.equal(actual.blue, expected.blue);
+    assert.equal(actual.alpha, expected.alpha);
+  });
+
   (shadowSupported ? it : xit)(
     'should return the fgcolor from inside of Shadow DOM',
     function() {
