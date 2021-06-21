@@ -696,6 +696,22 @@ describe('color-contrast', function() {
     assert.isTrue(contrastEvaluate.apply(checkContext, params));
   });
 
+  it('does not count text shadows of offset 0, blur 0 as part of the background color', function() {
+    var params = checkSetup(
+      '<div id="target" style="background-color: #fff; color:#0f833e; ' +
+        'text-shadow: 0 0 0 #000">' +
+        '  Hello world' +
+        '</div>'
+    );
+
+    var white = new axe.commons.color.Color(255, 255, 255, 1);
+
+    assert.isTrue(contrastEvaluate.apply(checkContext, params));
+    assert.equal(checkContext._data.bgColor, white.toHexString());
+    assert.equal(checkContext._data.fgColor, '#0f833e');
+    assert.equal(checkContext._data.contrastRatio, '4.84');
+  });
+
   it('passes if thin text shadows have sufficient contrast with the background', function() {
     var params = checkSetup(
       '<div id="target" style="background-color: #aaa; color:#666; ' +
