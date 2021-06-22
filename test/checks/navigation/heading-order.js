@@ -79,6 +79,29 @@ describe('heading-order', function() {
     });
   });
 
+  it('should allow aria-level to override semantic level for hn tags and return true', function() {
+    var vNode = queryFixture(
+      '<h1 aria-level="2" id="target">Two</h1><h3 aria-level="4">Four</h3>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('heading-order')
+        .call(checkContext, null, {}, vNode, {})
+    );
+    assert.deepEqual(checkContext._data, {
+      headingOrder: [
+        {
+          ancestry: ['html > body > div:nth-child(1) > h1:nth-child(1)'],
+          level: 2
+        },
+        {
+          ancestry: ['html > body > div:nth-child(1) > h3:nth-child(2)'],
+          level: 4
+        }
+      ]
+    });
+  });
+
   it('should store the location of iframes', function() {
     var vNode = queryFixture(
       '<h1 id="target">One</h1><iframe></iframe><h3>Three</h3>'
