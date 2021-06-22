@@ -266,17 +266,14 @@ describe('utils.getFrameContexts', function() {
     var shadowRoot = div.attachShadow({ mode: 'open' });
     shadowRoot.innerHTML = '<main><iframe id="f1"></iframe></main>';
 
-    var context = {
-      include: [['#fixture', 'header']]
-    };
-    var contexts = getFrameContexts(context).map(function(frameData) {
-      return frameData.frameContext;
-    });
+    var frameContext = getFrameContexts();
 
-    assert.lengthOf(contexts, 1);
-    assert.deepEqual(contexts[0], {
+    assert.lengthOf(frameContext, 1);
+    assert.lengthOf(frameContext[0].frameSelector, 2);
+    assert.equal(frameContext[0].frameSelector[1], 'main > iframe');
+    assert.deepEqual(frameContext[0].frameContext, {
       initiator: false,
-      include: [['header']],
+      include: [],
       exclude: []
     });
   });
