@@ -102,6 +102,68 @@ describe('heading-order', function() {
     });
   });
 
+  it('should ignore aria-level on iframe when not used with role=heading', function() {
+    var vNode = queryFixture('<iframe aria-level="2"></iframe>');
+    axe.testUtils
+      .getCheckEvaluate('heading-order')
+      .call(checkContext, null, {}, vNode, { initiator: true });
+    //assert.equal(checkContext._data.headingOrder[0].ancestry[0], 'html > body > div:nth-child(1) > iframe:nth-child(1)');
+    assert.deepEqual(checkContext._data, {
+      headingOrder: [
+        {
+          ancestry: ['html > body > div:nth-child(1) > iframe'],
+          level: -1
+        }
+      ]
+    });
+  });
+
+  it('should correctly give level on hn tag with role=heading', function() {
+    var vNode = queryFixture(
+      '<h1 role="heading" id="target">One</h1><h3 role="heading">Three</h3>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('heading-order')
+        .call(checkContext, null, {}, vNode, {})
+    );
+    assert.deepEqual(checkContext._data, {
+      headingOrder: [
+        {
+          ancestry: ['html > body > div:nth-child(1) > h1:nth-child(1)'],
+          level: 1
+        },
+        {
+          ancestry: ['html > body > div:nth-child(1) > h3:nth-child(2)'],
+          level: 3
+        }
+      ]
+    });
+  });
+
+  it('should return 2 when an hn tag has an invalid aria-level', function() {
+    var vNode = queryFixture(
+      '<h1 aria-level="-1" id="target">One</h1><h3 aria-level="12">Three</h3>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('heading-order')
+        .call(checkContext, null, {}, vNode, {})
+    );
+    assert.deepEqual(checkContext._data, {
+      headingOrder: [
+        {
+          ancestry: ['html > body > div:nth-child(1) > h1:nth-child(1)'],
+          level: 2
+        },
+        {
+          ancestry: ['html > body > div:nth-child(1) > h3:nth-child(2)'],
+          level: 2
+        }
+      ]
+    });
+  });
+
   it('should store the location of iframes', function() {
     var vNode = queryFixture(
       '<h1 id="target">One</h1><iframe></iframe><h3>Three</h3>'
