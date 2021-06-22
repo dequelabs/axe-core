@@ -141,7 +141,7 @@ describe('heading-order', function() {
     });
   });
 
-  it('should return 2 when an hn tag has an invalid aria-level', function() {
+  it('should return the heading level when an hn tag has an invalid aria-level', function() {
     var vNode = queryFixture(
       '<h1 aria-level="-1" id="target">One</h1><h3 aria-level="12">Three</h3>'
     );
@@ -154,11 +154,11 @@ describe('heading-order', function() {
       headingOrder: [
         {
           ancestry: ['html > body > div:nth-child(1) > h1:nth-child(1)'],
-          level: 2
+          level: 1
         },
         {
           ancestry: ['html > body > div:nth-child(1) > h3:nth-child(2)'],
-          level: 2
+          level: 3
         }
       ]
     });
