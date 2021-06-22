@@ -32,7 +32,9 @@ describe('axe.utils.respondable', function() {
   var captureError = axe.testUtils.captureError;
   var isIE11 = axe.testUtils.isIE11;
   var shadowSupported = axe.testUtils.shadowSupport.v1;
+
   this.timeout(1000);
+  this.retries(3);
 
   beforeEach(function(done) {
     respondable = axe.utils.respondable;

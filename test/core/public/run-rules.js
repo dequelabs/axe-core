@@ -134,14 +134,17 @@ describe('runRules', function() {
             var nodes = r[0].passes.map(function(detail) {
               return detail.node.selector;
             });
-
-            assert.deepEqual(nodes, [
-              ['#level0'],
-              ['#level0', '#level1'],
-              ['#level0', '#level1', '#level2a'],
-              ['#level0', '#level1', '#level2b']
-            ]);
-            done();
+            try {
+              assert.deepEqual(nodes, [
+                ['#level0'],
+                ['#level0', '#level1'],
+                ['#level0', '#level1', '#level2a'],
+                ['#level0', '#level1', '#level2b']
+              ]);
+              done();
+            } catch (e) {
+              done(e);
+            }
           },
           isNotCalled
         );
@@ -229,7 +232,8 @@ describe('runRules', function() {
                           "/iframe[@id='context-test']",
                           "/div[@id='target']"
                         ],
-                        source: '<div id="target"></div>'
+                        source: '<div id="target"></div>',
+                        nodeIndexes: [12, 14]
                       },
                       any: [
                         {
@@ -271,7 +275,8 @@ describe('runRules', function() {
                           "/div[@id='foo']"
                         ],
                         source:
-                          '<div id="foo">\n      <div id="bar"></div>\n    </div>'
+                          '<div id="foo">\n      <div id="bar"></div>\n    </div>',
+                        nodeIndexes: [12, 9]
                       },
                       any: [
                         {
@@ -289,7 +294,8 @@ describe('runRules', function() {
                                 "/div[@id='foo']"
                               ],
                               source:
-                                '<div id="foo">\n      <div id="bar"></div>\n    </div>'
+                                '<div id="foo">\n      <div id="bar"></div>\n    </div>',
+                              nodeIndexes: [12, 9]
                             }
                           ]
                         }
@@ -536,7 +542,8 @@ describe('runRules', function() {
                       'html > body > div:nth-child(1) > div:nth-child(1)'
                     ],
                     xpath: ["/div[@id='target']"],
-                    source: '<div id="target">Target!</div>'
+                    source: '<div id="target">Target!</div>',
+                    nodeIndexes: [12]
                   },
                   impact: 'moderate',
                   any: [
@@ -579,7 +586,8 @@ describe('runRules', function() {
                     ancestry: [
                       'html > body > div:nth-child(1) > div:nth-child(1)'
                     ],
-                    source: '<div id="target">Target!</div>'
+                    source: '<div id="target">Target!</div>',
+                    nodeIndexes: [12]
                   },
                   any: [
                     {
@@ -595,7 +603,8 @@ describe('runRules', function() {
                             'html > body > div:nth-child(1) > div:nth-child(1)'
                           ],
                           xpath: ["/div[@id='target']"],
-                          source: '<div id="target">Target!</div>'
+                          source: '<div id="target">Target!</div>',
+                          nodeIndexes: [12]
                         }
                       ]
                     }

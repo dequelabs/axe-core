@@ -1,6 +1,7 @@
 {
   "id": "frame-tested",
   "evaluate": "frame-tested-evaluate",
+  "after": "frame-tested-after",
   "options": {
     "isViolation": false
   },
