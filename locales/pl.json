@@ -262,7 +262,7 @@
       "help": "Dokument może mieć tylko jeden obszar kluczowy main."
     },
     "landmark-unique": {
-      "help": "Punkty orientacyjne mają mają unikalną rolę lub kombinację roli/etykiety/tytułu (tj. dostępną nazwę).",
+      "help": "Punkty orientacyjne mają unikalną rolę lub kombinację roli/etykiety/tytułu (tj. dostępną nazwę).",
       "description": "Punkty orientacyjne (obszary kluczowe) są unikalne."
     },
     "link-in-text-block": {
