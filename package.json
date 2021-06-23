@@ -1,7 +1,7 @@
 {
-  "name": "axe-core",
+  "name": "@daisy/axe-core-for-ace",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.2.3",
+  "version": "4.2.3-canary.1",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -34,10 +34,10 @@
       "url": "http://deque.com/"
     }
   ],
-  "homepage": "https://www.deque.com/axe/",
+  "homepage": "https://github.com/daisy/axe-core/pull/5",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dequelabs/axe-core.git"
+    "url": "https://github.com/daisy/axe-core.git"
   },
   "keywords": [
     "Accessibility",
@@ -176,5 +176,8 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

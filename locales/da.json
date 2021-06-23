@@ -1,6 +1,13 @@
 {
   "lang": "da",
   "rules": {
+    "epub-type-has-matching-role": {
+      "desc": "Sikrer at elementet har en ARIA rolle, som matcher 'epub:type'",
+      "help": "ARIA rolle skal være til stede og matche den angivne 'epub:type'"
+    },
+    "pagebreak-label": {
+      "desc": "Sikrer at sidemarkører har en tilgængelig etiket ('label')"
+    },
     "accesskeys": {
       "description": "",
       "help": "Værdien for attributten 'accesskey' skal være unik"
@@ -323,6 +330,10 @@
     }
   },
   "checks": {
+    "matching-aria-role": {
+      "fail": "Elementet har ingen ARIA rolle, som matcher 'epub:type'",
+      "pass": "Elementet har en ARIA rolle, som matcher 'epub:type'"
+    },
     "abstractrole": {
       "pass": "Abstrakte roller er ikke brugt",
       "fail": "Abstrakte roller bør ikke bruges"

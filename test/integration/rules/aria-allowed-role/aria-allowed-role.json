@@ -72,7 +72,13 @@
     ["#p-text"],
     ["#pass-graphics-document"],
     ["#pass-graphics-object"],
-    ["#pass-graphics-symbol"]
+    ["#pass-graphics-symbol"],
+    ["#fail-dpub-6"],
+    ["#fail-dpub-7"],
+    ["#pass-figure-doc-example"],
+    ["#pass-li-role-doc-biblioentry2"],
+    ["#pass-li-role-doc-endnote2"],
+    ["#pass-li-role-doc-endnote"]
   ],
   "violations": [
     ["#fail-dd-no-role"],
@@ -93,8 +99,6 @@
     ["#fail-dpub-3"],
     ["#fail-dpub-4"],
     ["#fail-dpub-5"],
-    ["#fail-dpub-6"],
-    ["#fail-dpub-7"],
     ["#fail-text-1"],
     ["#fail-text-2"],
     ["#fail-text-3"],
