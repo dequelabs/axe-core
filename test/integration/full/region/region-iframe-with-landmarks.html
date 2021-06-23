@@ -19,32 +19,10 @@
     </script>
   </head>
   <body>
-    <div id="wrapper">
-      <a href="stuff.html#mainheader" id="notskiplink"
-        >This is not a skip link.</a
-      >
-      <form>
-        <div>
-          <h1 id="mainheader" tabindex="0">This is a header.</h1>
-        </div>
-      </form>
-      <ul>
-        <li>Home</li>
-        <li>Other</li>
-      </ul>
-      <section>
-        <p>Content</p>
-      </section>
-      <section title="section 3">
-        <p>Content</p>
-      </section>
-    </div>
-
-    This should be ignored
-
     <main id="mocha"></main>
+    <iframe id="region-frame" src="frames/region.html"></iframe>
     <script src="/test/testutils.js"></script>
-    <script src="region-fail.js"></script>
+    <script src="region-pass.js"></script>
     <script src="/test/integration/adapter.js"></script>
   </body>
 </html>

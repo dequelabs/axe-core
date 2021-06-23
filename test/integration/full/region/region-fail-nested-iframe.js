@@ -20,7 +20,11 @@ describe('region fail test', function() {
     });
 
     it('should find wrapper', function() {
-      assert.deepEqual(results.violations[0].nodes[0].target, ['#wrapper']);
+      assert.deepEqual(results.violations[0].nodes[0].target, [
+        'iframe',
+        'iframe',
+        '#wrapper'
+      ]);
     });
   });
 });
