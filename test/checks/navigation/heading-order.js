@@ -107,7 +107,6 @@ describe('heading-order', function() {
     axe.testUtils
       .getCheckEvaluate('heading-order')
       .call(checkContext, null, {}, vNode, { initiator: true });
-    //assert.equal(checkContext._data.headingOrder[0].ancestry[0], 'html > body > div:nth-child(1) > iframe:nth-child(1)');
     assert.deepEqual(checkContext._data, {
       headingOrder: [
         {
