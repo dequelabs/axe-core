@@ -5,7 +5,8 @@
     "impact": "serious",
     "messages": {
       "pass": "Only one role value used",
-      "fail": "Use only one role value, since fallback roles are not supported in older browsers"
+      "fail": "Use only one role value, since fallback roles are not supported in older browsers",
+      "incomplete": "Use only role 'presentation' or 'none' since they are synonymous."
     }
   }
 }
