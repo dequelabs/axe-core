@@ -172,7 +172,7 @@ describe('color-contrast', function() {
 
     assert.isFalse(contrastEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._relatedNodes, [params[0]]);
-    assert.deepEqual(checkContext._data.messageKey, 'fgOnBgColor');
+    assert.deepEqual(checkContext._data.messageKey, null);
   });
 
   it('should ignore position:fixed elements above the target', function() {
@@ -733,7 +733,7 @@ describe('color-contrast', function() {
       checkOptions
     );
     assert.isFalse(contrastEvaluate.apply(checkContext, params));
-    assert.equal(checkContext._data.messageKey, 'fgOnBgColor');
+    assert.equal(checkContext._data.messageKey, null);
   });
 
   it('fails if text shadows do not have sufficient contrast with the foreground', function() {
