@@ -82,28 +82,16 @@ describe('aria-required-children', function() {
     }
   );
 
-  it('should detect multiple missing required children when all required', function() {
-    var params = checkSetup(
-      '<div role="combobox" id="target" aria-expanded="true"><p>Nothing here.</p></div>'
-    );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-    assert.deepEqual(checkContext._data, ['listbox', 'textbox']);
-  });
-
   it('should detect single missing required child when all required', function() {
     var params = checkSetup(
-      '<div role="combobox" id="target" aria-expanded="true"><p role="listbox">Nothing here.</p></div>'
+      '<div role="combobox" id="target" aria-expanded="true"></div>'
     );
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-required-children')
         .apply(checkContext, params)
     );
-    assert.deepEqual(checkContext._data, ['textbox']);
+    assert.deepEqual(checkContext._data, ['listbox']);
   });
 
   it('should pass all existing required children when all required', function() {
@@ -475,17 +463,6 @@ describe('aria-required-children', function() {
       '<div role="combobox" id="target"><input type="search"><p role="listbox">Textbox</p></div>'
     );
     assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-  });
-
-  it('should not accept implicit nodes with a different role', function() {
-    var params = checkSetup(
-      '<div role="combobox" id="target"><input type="search" role="spinbutton"><p role="listbox">Textbox</p></div>'
-    );
-    assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-required-children')
         .apply(checkContext, params)
