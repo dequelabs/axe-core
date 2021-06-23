@@ -162,34 +162,31 @@ describe('utils.getFrameContexts', function() {
   });
 
   it('normalizes the context', function() {
-    var contexts;
+    var frameContexts;
     fixture.innerHTML =
       '<iframe id="f1"></iframe>' + '<iframe id="f2"></iframe>';
-    contexts = getFrameContexts('#f1').map(function(frameData) {
-      return frameData.frameContext;
-    });
-    assert.lengthOf(contexts, 1);
-    assert.deepEqual(contexts[0], {
+    frameContexts = getFrameContexts('#f1');
+    assert.lengthOf(frameContexts, 1);
+    assert.include(frameContexts[0].frameSelector, 'iframe:nth-child(1)');
+    assert.deepEqual(frameContexts[0].frameContext, {
       initiator: false,
       include: [],
       exclude: []
     });
 
-    contexts = getFrameContexts({ include: ['#f1'] }).map(function(frameData) {
-      return frameData.frameContext;
-    });
-    assert.lengthOf(contexts, 1);
-    assert.deepEqual(contexts[0], {
+    frameContexts = getFrameContexts({ include: ['#f1'] });
+    assert.lengthOf(frameContexts, 1);
+    assert.include(frameContexts[0].frameSelector, 'iframe:nth-child(1)');
+    assert.deepEqual(frameContexts[0].frameContext, {
       initiator: false,
       include: [],
       exclude: []
     });
 
-    contexts = getFrameContexts({ exclude: ['#f2'] }).map(function(frameData) {
-      return frameData.frameContext;
-    });
-    assert.lengthOf(contexts, 1);
-    assert.deepEqual(contexts[0], {
+    frameContexts = getFrameContexts({ exclude: ['#f2'] });
+    assert.include(frameContexts[0].frameSelector, 'iframe:nth-child(1)');
+    assert.lengthOf(frameContexts, 1);
+    assert.deepEqual(frameContexts[0].frameContext, {
       initiator: false,
       include: [],
       exclude: []
@@ -197,36 +194,33 @@ describe('utils.getFrameContexts', function() {
   });
 
   it('accepts elements', function() {
-    var contexts;
+    var frameContexts;
     fixture.innerHTML =
       '<iframe id="f1"></iframe>' + '<iframe id="f2"></iframe>';
     var f1 = fixture.querySelector('#f1');
     var f2 = fixture.querySelector('#f2');
-    contexts = getFrameContexts(f1).map(function(frameData) {
-      return frameData.frameContext;
-    });
-    assert.lengthOf(contexts, 1);
-    assert.deepEqual(contexts[0], {
+    frameContexts = getFrameContexts(f1);
+    assert.lengthOf(frameContexts, 1);
+    assert.include(frameContexts[0].frameSelector, 'iframe:nth-child(1)');
+    assert.deepEqual(frameContexts[0].frameContext, {
       initiator: false,
       include: [],
       exclude: []
     });
 
-    contexts = getFrameContexts({ include: [f1] }).map(function(frameData) {
-      return frameData.frameContext;
-    });
-    assert.lengthOf(contexts, 1);
-    assert.deepEqual(contexts[0], {
+    frameContexts = getFrameContexts({ include: [f1] });
+    assert.lengthOf(frameContexts, 1);
+    assert.include(frameContexts[0].frameSelector, 'iframe:nth-child(1)');
+    assert.deepEqual(frameContexts[0].frameContext, {
       initiator: false,
       include: [],
       exclude: []
     });
 
-    contexts = getFrameContexts({ exclude: [f2] }).map(function(frameData) {
-      return frameData.frameContext;
-    });
-    assert.lengthOf(contexts, 1);
-    assert.deepEqual(contexts[0], {
+    frameContexts = getFrameContexts({ exclude: [f2] });
+    assert.include(frameContexts[0].frameSelector, 'iframe:nth-child(1)');
+    assert.lengthOf(frameContexts, 1);
+    assert.deepEqual(frameContexts[0].frameContext, {
       initiator: false,
       include: [],
       exclude: []
