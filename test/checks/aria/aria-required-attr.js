@@ -57,6 +57,54 @@ describe('aria-required-attr', function() {
     );
   });
 
+  describe('combobox special case', function() {
+    it('should pass comboboxes that have aria-owns and aria-expanded', function() {
+      var vNode = queryFixture(
+        '<div id="target" role="combobox" aria-exanded="false" aria-owns="ownedchild"></div>'
+      );
+
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-required-attr')
+          .call(checkContext, vNode.actualNode, options, vNode)
+      );
+    });
+
+    it('should pass comboboxes that have aria-controls and aria-expanded', function() {
+      var vNode = queryFixture(
+        '<div id="target" role="combobox" aria-exanded="false" aria-controls="test"></div>'
+      );
+
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-required-attr')
+          .call(checkContext, vNode.actualNode, options, vNode)
+      );
+    });
+
+    it('should fail comboboxes that have aria-expanded only', function() {
+      var vNode = queryFixture(
+        '<div id="target" role="combobox" aria-exanded="false"></div>'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-required-attr')
+          .call(checkContext, vNode.actualNode, options, vNode)
+      );
+    });
+
+    it('should fail comboboxes that have no required attributes', function() {
+      var vNode = queryFixture('<div id="target" role="combobox"></div>');
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-required-attr')
+          .call(checkContext, vNode.actualNode, options, vNode)
+      );
+    });
+  });
+
   describe('options', function() {
     it('should require provided attribute names for a role', function() {
       axe.configure({
