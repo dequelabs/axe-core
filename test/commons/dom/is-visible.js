@@ -158,6 +158,20 @@ describe('dom.isVisible', function() {
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
+    it('should detect when clip is not applied because of positioning', function() {
+      var el,
+        clip =
+          'clip: rect(1px 1px 1px 1px);' +
+          'clip: rect(1px, 1px, 1px, 1px);' +
+          'position: relative;' +
+          'overflow: hidden;';
+
+      fixture.innerHTML = '<div id="target" style="' + clip + '">Hi</div>';
+
+      el = document.getElementById('target');
+      assert.isTrue(axe.commons.dom.isVisible(el));
+    });
+
     it('should detect clip rect hidden text technique on parent', function() {
       var el,
         clip =
@@ -172,6 +186,21 @@ describe('dom.isVisible', function() {
 
       el = document.getElementById('target');
       assert.isFalse(axe.commons.dom.isVisible(el));
+    });
+
+    it('should detect when clip is not applied because of positioning on parent', function() {
+      var el,
+        clip =
+          'clip: rect(1px 1px 1px 1px);' +
+          'clip: rect(1px, 1px, 1px, 1px);' +
+          'position: relative;' +
+          'overflow: hidden;';
+
+      fixture.innerHTML =
+        '<div style="' + clip + '">' + '<div id="target">Hi</div>' + '</div>';
+
+      el = document.getElementById('target');
+      assert.isTrue(axe.commons.dom.isVisible(el));
     });
 
     it('should detect poorly hidden clip rects', function() {
@@ -513,6 +542,20 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
+    it('should detect even when clip is not applied because of positioning', function() {
+      var el,
+        clip =
+          'clip: rect(1px 1px 1px 1px);' +
+          'clip: rect(1px, 1px, 1px, 1px);' +
+          'position: relative;' +
+          'overflow: hidden;';
+
+      fixture.innerHTML = '<div id="target" style="' + clip + '">Hi</div>';
+
+      el = document.getElementById('target');
+      assert.isTrue(axe.commons.dom.isVisible(el, true));
+    });
+
     it('should detect clip rect hidden text technique on parent', function() {
       var el,
         clip =
@@ -524,6 +567,20 @@ describe('dom.isVisible', function() {
 
       fixture.innerHTML =
         '<div style="' + clip + '">' + '<div id="target">Hi</div>' + '</div>';
+
+      el = document.getElementById('target');
+      assert.isTrue(axe.commons.dom.isVisible(el, true));
+    });
+
+    it('should detect even when clip is not applied because of positioning', function() {
+      var el,
+        clip =
+          'clip: rect(1px 1px 1px 1px);' +
+          'clip: rect(1px, 1px, 1px, 1px);' +
+          'position: relative;' +
+          'overflow: hidden;';
+
+      fixture.innerHTML = '<div id="target" style="' + clip + '">Hi</div>';
 
       el = document.getElementById('target');
       assert.isTrue(axe.commons.dom.isVisible(el, true));
