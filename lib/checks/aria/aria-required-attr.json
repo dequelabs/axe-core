@@ -7,9 +7,7 @@
       "pass": "All required ARIA attributes are present",
       "fail": {
         "singular": "Required ARIA attribute not present: ${data.values}",
-        "plural": "Required ARIA attributes not present: ${data.values}",
-        "comboboxWithExpanded": "Required ARIA attributes not present: one of aria-owns or aria-controls",
-        "comboboxAll": "Required ARIA attributes not present: aria-expanded and one of aria-owns or aria-controls"
+        "plural": "Required ARIA attributes not present: ${data.values}"
       }
     }
   }

@@ -60,7 +60,7 @@ describe('aria-required-attr', function() {
   describe('combobox special case', function() {
     it('should pass comboboxes that have aria-owns and aria-expanded', function() {
       var vNode = queryFixture(
-        '<div id="target" role="combobox" aria-exanded="false" aria-owns="ownedchild"></div>'
+        '<div id="target" role="combobox" aria-expanded="false" aria-owns="ownedchild"></div>'
       );
 
       assert.isTrue(
@@ -72,7 +72,7 @@ describe('aria-required-attr', function() {
 
     it('should pass comboboxes that have aria-controls and aria-expanded', function() {
       var vNode = queryFixture(
-        '<div id="target" role="combobox" aria-exanded="false" aria-controls="test"></div>'
+        '<div id="target" role="combobox" aria-expanded="false" aria-controls="test"></div>'
       );
 
       assert.isTrue(
@@ -84,7 +84,7 @@ describe('aria-required-attr', function() {
 
     it('should fail comboboxes that have aria-expanded only', function() {
       var vNode = queryFixture(
-        '<div id="target" role="combobox" aria-exanded="false"></div>'
+        '<div id="target" role="combobox" aria-expanded="false"></div>'
       );
 
       assert.isFalse(
