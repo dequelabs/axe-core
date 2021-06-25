@@ -33,7 +33,7 @@ describe('heading-order', function() {
 
   it('should handle incorrect aria-level values', function() {
     var vNode = queryFixture(
-      '<div role="heading" aria-level="-1" id="target">One</div><div role="heading" aria-level="12">Two</div><div role="heading">Three</div>'
+      '<div role="heading" aria-level="-1" id="target">One</div><div role="heading">Two</div>'
     );
     assert.isTrue(
       axe.testUtils
@@ -49,10 +49,25 @@ describe('heading-order', function() {
         {
           ancestry: ['html > body > div:nth-child(1) > div:nth-child(2)'],
           level: 2
-        },
+        }
+      ]
+    });
+  });
+
+  it('should allow high aria-level values', function() {
+    var vNode = queryFixture(
+      '<div role="heading" aria-level="12" id="target">One</div>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('heading-order')
+        .call(checkContext, null, {}, vNode, {})
+    );
+    assert.deepEqual(checkContext._data, {
+      headingOrder: [
         {
-          ancestry: ['html > body > div:nth-child(1) > div:nth-child(3)'],
-          level: 2
+          ancestry: ['html > body > div:nth-child(1) > div'],
+          level: 12
         }
       ]
     });
@@ -142,9 +157,7 @@ describe('heading-order', function() {
   });
 
   it('should return the heading level when an hn tag has an invalid aria-level', function() {
-    var vNode = queryFixture(
-      '<h1 aria-level="-1" id="target">One</h1><h3 aria-level="12">Three</h3>'
-    );
+    var vNode = queryFixture('<h1 aria-level="-1" id="target">One</h1>');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('heading-order')
@@ -153,12 +166,8 @@ describe('heading-order', function() {
     assert.deepEqual(checkContext._data, {
       headingOrder: [
         {
-          ancestry: ['html > body > div:nth-child(1) > h1:nth-child(1)'],
+          ancestry: ['html > body > div:nth-child(1) > h1'],
           level: 1
-        },
-        {
-          ancestry: ['html > body > div:nth-child(1) > h3:nth-child(2)'],
-          level: 3
         }
       ]
     });
