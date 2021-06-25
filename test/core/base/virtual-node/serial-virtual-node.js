@@ -46,10 +46,20 @@ describe('SerialVirtualNode', function() {
       assert.equal(vNode.props.nodeType, 1);
     });
 
+    it('does not throw if nodeType is falsy', function() {
+      [null, undefined].forEach(function(nonThrowingNodeType) {
+        assert.doesNotThrow(function() {
+          // eslint-disable-next-line no-new
+          new SerialVirtualNode({
+            nodeType: nonThrowingNodeType,
+            nodeName: 'div'
+          });
+        });
+      });
+    });
+
     it('throws if nodeType is a not a number', function() {
-      [true, 'one', '1', null, { foo: 'bar' }].forEach(function(
-        throwingNodeType
-      ) {
+      [true, 'one', '1', { foo: 'bar' }].forEach(function(throwingNodeType) {
         assert.throws(function() {
           // eslint-disable-next-line no-new
           new SerialVirtualNode({
