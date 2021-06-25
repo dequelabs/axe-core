@@ -92,6 +92,19 @@ describe('SerialVirtualNode', function() {
       assert.equal(vNode11.props.nodeType, 11);
     });
 
+    it('defaults to the correct nodeName for certain nodeTypes', function() {
+      var vNode2 = new SerialVirtualNode({ nodeType: 2 });
+      assert.equal(vNode2.props.nodeName, '#cdata-section');
+      var vNode3 = new SerialVirtualNode({ nodeType: 3 });
+      assert.equal(vNode3.props.nodeName, '#text');
+      var vNode8 = new SerialVirtualNode({ nodeType: 8 });
+      assert.equal(vNode8.props.nodeName, '#comment');
+      var vNode9 = new SerialVirtualNode({ nodeType: 9 });
+      assert.equal(vNode9.props.nodeName, '#document');
+      var vNode11 = new SerialVirtualNode({ nodeType: 11 });
+      assert.equal(vNode11.props.nodeName, '#document-fragment');
+    });
+
     it('throws if nodeName is not a string', function() {
       [123, true, null, {}, undefined, []].forEach(function(notAString) {
         assert.throws(function() {
