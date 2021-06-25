@@ -3,17 +3,44 @@ describe('aria.validateAttrValue', function() {
 
   var fixture = document.getElementById('fixture');
   var shadowSupport = axe.testUtils.shadowSupport;
+  var node;
+
+  function setAttr(node, attrName, attrValue) {
+    node.setAttribute(attrName, attrValue);
+    axe.teardown();
+    return axe.setup(node);
+  }
+
+  beforeEach(function() {
+    node = document.createElement('div');
+  });
 
   afterEach(function() {
-    fixture.innerHTML = '';
     axe.reset();
   });
 
   it('should return true if there is no matching attribute (future-compat???)', function() {
-    var node = document.createElement('div');
-    node.setAttribute('unknown-attr', 'hello');
+    setAttr(node, 'unknown-attr', 'hello');
 
     assert.isTrue(axe.commons.aria.validateAttrValue(node, 'unknown-attr'));
+  });
+
+  it('works on virtual nodes', function() {
+    axe.configure({
+      standards: {
+        ariaAttrs: {
+          cats: {
+            type: 'nmtoken',
+            values: ['valid'],
+            allowEmpty: true
+          }
+        }
+      }
+    });
+    var vNode = axe.testUtils.queryFixture(
+      '<div id="target" cats="valid"></div>'
+    );
+    assert.isTrue(axe.commons.aria.validateAttrValue(vNode, 'cats'));
   });
 
   describe('allowEmpty', function() {
@@ -56,50 +83,48 @@ describe('aria.validateAttrValue', function() {
     });
 
     it('returns true for empty attributes with allowEmpty:true', function() {
-      var node = document.createElement('div');
-      node.setAttribute('cats', '');
+      setAttr(node, 'cats', '');
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cats'));
 
-      node.setAttribute('dogs', '');
+      setAttr(node, 'dogs', '');
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'dogs'));
 
-      node.setAttribute('goats', '');
+      setAttr(node, 'goats', '');
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'goats'));
 
-      node.setAttribute('sheep', '');
+      setAttr(node, 'sheep', '');
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-      node.setAttribute('cows', '');
+      setAttr(node, 'cows', '');
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cows'));
 
-      node.setAttribute('pigs', '');
+      setAttr(node, 'pigs', '');
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
 
-      node.setAttribute('horses', '');
+      setAttr(node, 'horses', '');
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'horses'));
     });
 
     it('returns true for whitespace-only attributes with allowEmpty:true', function() {
-      var node = document.createElement('div');
-      node.setAttribute('cats', '  \r\n\t  ');
+      setAttr(node, 'cats', '  \r\n\t  ');
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cats'));
 
-      node.setAttribute('dogs', '  \r\n\t  ');
+      setAttr(node, 'dogs', '  \r\n\t  ');
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'dogs'));
 
-      node.setAttribute('goats', '  \r\n\t  ');
+      setAttr(node, 'goats', '  \r\n\t  ');
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'goats'));
 
-      node.setAttribute('cows', '  \r\n\t  ');
+      setAttr(node, 'cows', '  \r\n\t  ');
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cows'));
 
-      node.setAttribute('pigs', '  \r\n\t  ');
+      setAttr(node, 'pigs', '  \r\n\t  ');
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-      node.setAttribute('sheep', '  \r\n\t  ');
+      setAttr(node, 'sheep', '  \r\n\t  ');
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
 
-      node.setAttribute('horses', '  \r\n\t  ');
+      setAttr(node, 'horses', '  \r\n\t  ');
       assert.isTrue(axe.commons.aria.validateAttrValue(node, 'horses'));
     });
   });
@@ -120,26 +145,23 @@ describe('aria.validateAttrValue', function() {
       });
 
       it('should validate against enumerated .values if present', function() {
-        var node = document.createElement('div');
-        node.setAttribute('cats', 'valid');
+        setAttr(node, 'cats', 'valid');
 
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cats'));
 
-        node.setAttribute('cats', 'invalid');
+        setAttr(node, 'cats', 'invalid');
 
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'cats'));
       });
 
       it('should be case-insensitive for enumerated values', function() {
-        var node = document.createElement('div');
-        node.setAttribute('cats', 'vaLiD');
+        setAttr(node, 'cats', 'vaLiD');
 
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cats'));
       });
 
       it('should reject empty strings', function() {
-        var node = document.createElement('div');
-        node.setAttribute('cats', '');
+        setAttr(node, 'cats', '');
 
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'cats'));
       });
@@ -159,12 +181,11 @@ describe('aria.validateAttrValue', function() {
       });
 
       it('should validate the referenced node exists', function() {
-        var node = document.createElement('div');
         fixture.innerHTML = '<div id="target"></div>';
-        node.setAttribute('dogs', 'target');
+        setAttr(node, 'dogs', 'target');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'dogs'));
 
-        node.setAttribute('dogs', 'invalid');
+        setAttr(node, 'dogs', 'invalid');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'dogs'));
       });
 
@@ -176,6 +197,7 @@ describe('aria.validateAttrValue', function() {
           // to specifically test this
           fixture.innerHTML = '<div></div>';
           makeShadowTreeVAV(fixture.firstChild);
+          axe.setup(fixture);
           shadEl = fixture.firstChild.shadowRoot.querySelector('input#myinput');
           assert.isTrue(
             axe.commons.aria.validateAttrValue(shadEl, 'aria-labelledby')
@@ -188,15 +210,12 @@ describe('aria.validateAttrValue', function() {
       });
 
       it('returns false if empty without allowEmpty: true', function() {
-        var node = document.createElement('div');
-        node.setAttribute('dogs', '');
+        setAttr(node, 'dogs', '');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'dogs'));
       });
     });
 
     describe('idrefs', function() {
-      var node = document.createElement('div');
-
       beforeEach(function() {
         axe.configure({
           standards: {
@@ -210,40 +229,39 @@ describe('aria.validateAttrValue', function() {
       });
 
       it('should return false when a single referenced node is not found', function() {
-        node.setAttribute('goats', 'invalid');
+        setAttr(node, 'goats', 'invalid');
         // target2 not found
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'goats'));
       });
 
       it('should return false when no referenced element is found', function() {
         fixture.innerHTML = '<div id="target"></div>';
-        node.setAttribute('goats', 'target2 target3');
+        setAttr(node, 'goats', 'target2 target3');
         // target2 not found
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'goats'));
       });
 
       it('should return true when at least one referenced element is found', function() {
         fixture.innerHTML = '<div id="target"></div>';
-        node.setAttribute('goats', 'target target2');
+        setAttr(node, 'goats', 'target target2');
         // target2 not found
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'goats'));
       });
 
       it('should return true when all targets are found', function() {
         fixture.innerHTML = '<div id="target"></div><div id="target2"></div>';
-        node.setAttribute('goats', 'target target2');
+        setAttr(node, 'goats', 'target target2');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'goats'));
       });
 
       it('should not fail on weird whitespace', function() {
         fixture.innerHTML = '<div id="target"></div><div id="target2"></div>';
-        node.setAttribute('goats', ' \t \ttarget   \t   target2      ');
+        setAttr(node, 'goats', ' \t \ttarget   \t   target2      ');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'goats'));
       });
 
       it('returns false if empty without allowEmpty: true', function() {
-        var node = document.createElement('div');
-        node.setAttribute('goats', '');
+        setAttr(node, 'goats', '');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'goats'));
       });
     });
@@ -262,21 +280,17 @@ describe('aria.validateAttrValue', function() {
       });
 
       it('returns true for non-empty strings', function() {
-        var node = document.createElement('div');
-        node.setAttribute('cows', 'hi');
+        setAttr(node, 'cows', 'hi');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'cows'));
       });
 
       it('returns false for non-empty strings without allowEmpty:true', function() {
-        var node = document.createElement('div');
-        node.setAttribute('cows', '');
+        setAttr(node, 'cows', '');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'cows'));
       });
     });
 
     describe('decimal', function() {
-      var node = document.createElement('div');
-
       beforeEach(function() {
         axe.configure({
           standards: {
@@ -290,100 +304,98 @@ describe('aria.validateAttrValue', function() {
       });
 
       it('should allow, but not require, a preceeding sign', function() {
-        node.setAttribute('sheep', '+1.12');
+        setAttr(node, 'sheep', '+1.12');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', '-1.12');
+        setAttr(node, 'sheep', '-1.12');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', '1.12');
+        setAttr(node, 'sheep', '1.12');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
       });
 
       it('should make the decimal separator optional', function() {
-        node.setAttribute('sheep', '+1');
+        setAttr(node, 'sheep', '+1');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', '-1');
+        setAttr(node, 'sheep', '-1');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', '1');
+        setAttr(node, 'sheep', '1');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
       });
 
       it('should make the whole number optional', function() {
-        node.setAttribute('sheep', '+.1');
+        setAttr(node, 'sheep', '+.1');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', '-.1');
+        setAttr(node, 'sheep', '-.1');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', '.1');
+        setAttr(node, 'sheep', '.1');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
       });
 
       it('should make the right-side optional', function() {
-        node.setAttribute('sheep', '+1.');
+        setAttr(node, 'sheep', '+1.');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', '-1.');
+        setAttr(node, 'sheep', '-1.');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', '1.');
+        setAttr(node, 'sheep', '1.');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'sheep'));
       });
 
       it('should validate the entire string', function() {
-        node.setAttribute('sheep', ' +1.12 ');
+        setAttr(node, 'sheep', ' +1.12 ');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', 'invalid +1.12');
+        setAttr(node, 'sheep', 'invalid +1.12');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', '+1.12 invalid');
+        setAttr(node, 'sheep', '+1.12 invalid');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
       });
 
       it('should only allow for numbers', function() {
-        node.setAttribute('sheep', '+a.12');
+        setAttr(node, 'sheep', '+a.12');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', '+1.b');
+        setAttr(node, 'sheep', '+1.b');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', 'b1.1');
+        setAttr(node, 'sheep', 'b1.1');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
       });
 
       it('should require at least one number', function() {
-        node.setAttribute('sheep', '+.');
+        setAttr(node, 'sheep', '+.');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', '-.');
+        setAttr(node, 'sheep', '-.');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', '+');
+        setAttr(node, 'sheep', '+');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', '-');
+        setAttr(node, 'sheep', '-');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', '.');
+        setAttr(node, 'sheep', '.');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
 
-        node.setAttribute('sheep', '');
+        setAttr(node, 'sheep', '');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
       });
 
       it('returns false for empty strings without allowEmpty:true', function() {
-        node.setAttribute('sheep', '');
+        setAttr(node, 'sheep', '');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'sheep'));
       });
     });
 
     describe('int', function() {
-      var node = document.createElement('div');
-
       beforeEach(function() {
         axe.configure({
           standards: {
@@ -397,13 +409,13 @@ describe('aria.validateAttrValue', function() {
       });
 
       it('should only allow for numbers by an optional preceding sign', function() {
-        node.setAttribute('pigs', '+1234234');
+        setAttr(node, 'pigs', '+1234234');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
 
-        node.setAttribute('pigs', '-137456745');
+        setAttr(node, 'pigs', '-137456745');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
 
-        node.setAttribute('pigs', '1234523452');
+        setAttr(node, 'pigs', '1234523452');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
       });
 
@@ -419,18 +431,18 @@ describe('aria.validateAttrValue', function() {
           }
         });
 
-        node.setAttribute('pigs', '-1');
+        setAttr(node, 'pigs', '-1');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
 
-        node.setAttribute('pigs', '0');
+        setAttr(node, 'pigs', '0');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
 
-        node.setAttribute('pigs', '1000');
+        setAttr(node, 'pigs', '1000');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'pigs'));
       });
 
       it('returns false for empty strings without allowEmpty:true', function() {
-        node.setAttribute('pigs', '');
+        setAttr(node, 'pigs', '');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'pigs'));
       });
 
@@ -446,7 +458,7 @@ describe('aria.validateAttrValue', function() {
           }
         });
 
-        node.setAttribute('pigs', '-1');
+        setAttr(node, 'pigs', '-1');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'pigs'));
       });
     });
@@ -465,33 +477,29 @@ describe('aria.validateAttrValue', function() {
       });
 
       it('returns true for boolean value', function() {
-        var node = document.createElement('div');
-        node.setAttribute('horses', 'true');
+        setAttr(node, 'horses', 'true');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'horses'));
 
-        node.setAttribute('horses', 'false');
+        setAttr(node, 'horses', 'false');
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'horses'));
       });
 
       it('should be case-insensitive', function() {
-        var node = document.createElement('div');
-        node.setAttribute('horses', 'trUE');
+        setAttr(node, 'horses', 'trUE');
 
         assert.isTrue(axe.commons.aria.validateAttrValue(node, 'horses'));
       });
 
       it('returns false for non-boolean values', function() {
-        var node = document.createElement('div');
-        node.setAttribute('horses', 'hi');
+        setAttr(node, 'horses', 'hi');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'horses'));
 
-        node.setAttribute('horses', '1');
+        setAttr(node, 'horses', '1');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'horses'));
       });
 
       it('returns false for non-empty strings without allowEmpty:true', function() {
-        var node = document.createElement('div');
-        node.setAttribute('horses', '');
+        setAttr(node, 'horses', '');
         assert.isFalse(axe.commons.aria.validateAttrValue(node, 'horses'));
       });
     });

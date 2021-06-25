@@ -2,6 +2,7 @@ describe('aria-valid-attr-value', function() {
   'use strict';
 
   var fixture = document.getElementById('fixture');
+  var queryFixture = axe.testUtils.queryFixture;
   var checkContext = axe.testUtils.MockCheckContext();
   var fixtureSetup = axe.testUtils.fixtureSetup;
 
@@ -11,257 +12,258 @@ describe('aria-valid-attr-value', function() {
   });
 
   it('should not check the validity of attribute names', function() {
-    var node = document.createElement('div');
-    node.id = 'test';
-    node.tabIndex = 1;
-    node.setAttribute('aria-cats', 'true');
-    node.setAttribute('aria-selected', 'true');
-    fixture.appendChild(node);
+    var vNode = queryFixture(
+      '<div id="target" aria-cats="true" aria-selected="true"></div>'
+    );
 
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, node)
+        .call(checkContext, null, null, vNode)
     );
     assert.isNull(checkContext._data);
   });
 
   it('should return true if all values are valid', function() {
-    var node = document.createElement('div');
-    node.id = 'test';
-    node.tabIndex = 1;
-    node.setAttribute('aria-selected', 'true');
-    node.setAttribute('aria-checked', 'true');
-    node.setAttribute('aria-relevant', 'additions removals');
-    fixture.appendChild(node);
+    var vNode = queryFixture(
+      '<div id="target" aria-selected="true" aria-checked="true" aria-relevant="additions removals"></div>'
+    );
 
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, node)
+        .call(checkContext, null, null, vNode)
     );
     assert.isNull(checkContext._data);
   });
 
   it('should return true if idref(s) values are valid', function() {
-    var node = document.createElement('div');
-    var testTgt1 = document.createElement('div');
-    var testTgt2 = document.createElement('div');
-
-    node.id = 'test';
-    testTgt1.id = 'test_tgt1';
-    testTgt2.id = 'test_tgt2';
-    node.setAttribute('aria-owns', 'test_tgt1 test_tgt2');
-    node.setAttribute('aria-activedescendant', 'test_tgt1');
-
-    node.tabIndex = 1;
-    fixture.appendChild(node);
-    fixture.appendChild(testTgt1);
-    fixture.appendChild(testTgt2);
+    var vNode = queryFixture(
+      '<div id="target" aria-owns="test_tgt1 test_tgt2" aria-activedescendant="test_tgt1"></div>' +
+        '<div id="test_tgt1"></div>' +
+        '<div id="test_tgt2"></div>'
+    );
 
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, node)
+        .call(checkContext, null, null, vNode)
     );
     assert.isNull(checkContext._data);
   });
 
   it('should return false if any values are invalid', function() {
-    var node = document.createElement('div');
-    node.id = 'test';
-    node.tabIndex = 1;
-    node.setAttribute('aria-live', 'polite');
-    node.setAttribute('aria-selected', '0');
-    fixture.appendChild(node);
+    var vNode = queryFixture(
+      '<div id="target" aria-live="polite" aria-selected="0"></div>'
+    );
 
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, node)
+        .call(checkContext, null, null, vNode)
     );
     assert.deepEqual(checkContext._data, ['aria-selected="0"']);
   });
 
   it('should allow empty strings rather than idref', function() {
-    fixtureSetup(
+    var tree = fixtureSetup(
       '<button aria-controls="">Button</button>' +
         '<div aria-activedescendant=""></div>'
     );
-    var passing1 = fixture.querySelector('button');
-    var passing2 = fixture.querySelector('div');
+    var passing1 = tree.children[0];
+    var passing2 = tree.children[1];
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, passing1)
+        .call(checkContext, null, null, passing1)
     );
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, passing2)
+        .call(checkContext, null, null, passing2)
     );
   });
 
   it('should allow empty strings rather than idrefs', function() {
-    fixtureSetup(
+    var tree = fixtureSetup(
       '<button aria-labelledby="">Button</button>' + '<div aria-owns=""></div>'
     );
-    var passing1 = fixture.querySelector('button');
-    var passing2 = fixture.querySelector('div');
+    var passing1 = tree.children[0];
+    var passing2 = tree.children[1];
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, passing1)
+        .call(checkContext, null, null, passing1)
     );
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, passing2)
+        .call(checkContext, null, null, passing2)
     );
   });
 
   it('should pass on aria-controls and aria-expanded=false when the element is not in the DOM', function() {
-    fixtureSetup(
-      '<button aria-controls="test" aria-expanded="false">Button</button>'
+    var vNode = queryFixture(
+      '<button id="target" aria-controls="test" aria-expanded="false">Button</button>'
     );
-    var passing1 = fixture.querySelector('button');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, passing1)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should pass on aria-controls and aria-selected=false when the element is not in the DOM', function() {
-    fixtureSetup(
-      '<button aria-controls="test" aria-selected="false">Button</button>'
+    var vNode = queryFixture(
+      '<button id="target" aria-controls="test" aria-selected="false">Button</button>'
     );
-    var passing1 = fixture.querySelector('button');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, passing1)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should fail on aria-controls and aria-expanded=true when the element is not in the DOM', function() {
-    fixtureSetup(
-      '<button aria-controls="test" aria-expanded="true">Button</button>'
+    var vNode = queryFixture(
+      '<button id="target" aria-controls="test" aria-expanded="true">Button</button>'
     );
-    var failing1 = fixture.querySelector('button');
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, failing1)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should fail on aria-controls and aria-selected=true when the element is not in the DOM', function() {
-    fixtureSetup(
-      '<button aria-controls="test" aria-selected="true">Button</button>'
+    var vNode = queryFixture(
+      '<button id="target" aria-controls="test" aria-selected="true">Button</button>'
     );
-    var failing1 = fixture.querySelector('button');
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, failing1)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should fail on aria-controls when the element is not in the DOM', function() {
-    fixtureSetup('<button aria-controls="test">Button</button>');
-    var failing1 = fixture.querySelector('button');
+    var vNode = queryFixture(
+      '<button id="target" aria-controls="test">Button</button>'
+    );
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, failing1)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should pass on aria-owns and aria-expanded=false when the element is not in the DOM', function() {
-    fixtureSetup(
-      '<button aria-owns="test" aria-expanded="false">Button</button>'
+    var vNode = queryFixture(
+      '<button id="target" aria-owns="test" aria-expanded="false">Button</button>'
     );
-    var passing1 = fixture.querySelector('button');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, passing1)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should fail on aria-owns and aria-expanded=true when the element is not in the DOM', function() {
-    fixtureSetup(
-      '<button aria-owns="test" aria-expanded="true">Button</button>'
+    var vNode = queryFixture(
+      '<button id="target" aria-owns="test" aria-expanded="true">Button</button>'
     );
-    var failing1 = fixture.querySelector('button');
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, failing1)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should fail on aria-owns when the element is not in the DOM', function() {
-    fixtureSetup('<button aria-owns="test">Button</button>');
-    var failing1 = fixture.querySelector('button');
+    var vNode = queryFixture(
+      '<button id="target" aria-owns="test">Button</button>'
+    );
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, failing1)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should fail on aria-level when the value is less than 1', function() {
-    fixtureSetup('<div role="heading" aria-level="0">Heading</div>');
-    var failing1 = fixture.querySelector('div');
+    var vNode = queryFixture(
+      '<div id="target" role="heading" aria-level="0">Heading</div>'
+    );
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, failing1)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should return undefined on aria-describedby when the element is not in the DOM', function() {
-    fixtureSetup('<button aria-describedby="test">Button</button>');
-    var undefined1 = fixture.querySelector('button');
+    var vNode = queryFixture(
+      '<button id="target" aria-describedby="test">Button</button>'
+    );
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, undefined1)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should return undefined on aria-labelledby when the element is not in the DOM', function() {
-    fixtureSetup('<button aria-labelledby="test">Button</button>');
-    var undefined1 = fixture.querySelector('button');
+    var vNode = queryFixture(
+      '<button id="target" aria-labelledby="test">Button</button>'
+    );
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, undefined1)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should return undefined on aria-current with invalid value', function() {
-    fixtureSetup('<button aria-current="test">Button</button>');
-    var undefined1 = fixture.querySelector('button');
+    var vNode = queryFixture(
+      '<button id="target" aria-current="test">Button</button>'
+    );
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('aria-valid-attr-value')
-        .call(checkContext, undefined1)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   describe('options', function() {
     it('should exclude supplied attributes', function() {
-      fixture.innerHTML =
-        '<div id="target" aria-live="nope" aria-describedby="no exist k thx"></div>';
-      var target = fixture.querySelector('#target');
+      var vNode = queryFixture(
+        '<div id="target" aria-live="nope" aria-describedby="no exist k thx"></div>'
+      );
       assert.isTrue(
         axe.testUtils
           .getCheckEvaluate('aria-valid-attr-value')
-          .call(checkContext, target, ['aria-live', 'aria-describedby'])
+          .call(checkContext, null, ['aria-live', 'aria-describedby'], vNode)
       );
+    });
+  });
+
+  describe('SerialVirtualNode', function() {
+    it('should return undefined for idref attribute', function() {
+      var vNode = new axe.SerialVirtualNode({
+        nodeName: 'button',
+        attributes: {
+          'aria-owns': 'test'
+        }
+      });
+      assert.isUndefined(
+        axe.testUtils
+          .getCheckEvaluate('aria-valid-attr-value')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'idrefs',
+        needsReview: 'aria-owns="test"'
+      });
     });
   });
 });
