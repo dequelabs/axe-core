@@ -265,5 +265,19 @@ describe('aria-valid-attr-value', function() {
         needsReview: 'aria-owns="test"'
       });
     });
+
+    it('should return true for empty idref attribute', function() {
+      var vNode = new axe.SerialVirtualNode({
+        nodeName: 'button',
+        attributes: {
+          'aria-owns': ''
+        }
+      });
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-valid-attr-value')
+          .call(checkContext, null, null, vNode)
+      );
+    });
   });
 });
