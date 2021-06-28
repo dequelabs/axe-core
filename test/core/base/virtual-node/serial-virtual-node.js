@@ -46,10 +46,20 @@ describe('SerialVirtualNode', function() {
       assert.equal(vNode.props.nodeType, 1);
     });
 
+    it('does not throw if nodeType is falsy', function() {
+      [null, undefined].forEach(function(nonThrowingNodeType) {
+        assert.doesNotThrow(function() {
+          // eslint-disable-next-line no-new
+          new SerialVirtualNode({
+            nodeType: nonThrowingNodeType,
+            nodeName: 'div'
+          });
+        });
+      });
+    });
+
     it('throws if nodeType is a not a number', function() {
-      [true, 'one', '1', null, { foo: 'bar' }].forEach(function(
-        throwingNodeType
-      ) {
+      [true, 'one', '1', { foo: 'bar' }].forEach(function(throwingNodeType) {
         assert.throws(function() {
           // eslint-disable-next-line no-new
           new SerialVirtualNode({
@@ -75,6 +85,34 @@ describe('SerialVirtualNode', function() {
         var vNode = new SerialVirtualNode({ nodeName: nodeName });
         assert.equal(vNode.props.nodeName, nodeName.toLowerCase());
       });
+    });
+
+    it('defaults to the correct nodeType for certain nodeNames', function() {
+      var vNode1 = new SerialVirtualNode({ nodeName: 'DIV' });
+      assert.equal(vNode1.props.nodeType, 1);
+      var vNode2 = new SerialVirtualNode({ nodeName: '#cdata-section' });
+      assert.equal(vNode2.props.nodeType, 2);
+      var vNode3 = new SerialVirtualNode({ nodeName: '#text' });
+      assert.equal(vNode3.props.nodeType, 3);
+      var vNode8 = new SerialVirtualNode({ nodeName: '#comment' });
+      assert.equal(vNode8.props.nodeType, 8);
+      var vNode9 = new SerialVirtualNode({ nodeName: '#document' });
+      assert.equal(vNode9.props.nodeType, 9);
+      var vNode11 = new SerialVirtualNode({ nodeName: '#document-fragment' });
+      assert.equal(vNode11.props.nodeType, 11);
+    });
+
+    it('defaults to the correct nodeName for certain nodeTypes', function() {
+      var vNode2 = new SerialVirtualNode({ nodeType: 2 });
+      assert.equal(vNode2.props.nodeName, '#cdata-section');
+      var vNode3 = new SerialVirtualNode({ nodeType: 3 });
+      assert.equal(vNode3.props.nodeName, '#text');
+      var vNode8 = new SerialVirtualNode({ nodeType: 8 });
+      assert.equal(vNode8.props.nodeName, '#comment');
+      var vNode9 = new SerialVirtualNode({ nodeType: 9 });
+      assert.equal(vNode9.props.nodeName, '#document');
+      var vNode11 = new SerialVirtualNode({ nodeType: 11 });
+      assert.equal(vNode11.props.nodeName, '#document-fragment');
     });
 
     it('throws if nodeName is not a string', function() {
