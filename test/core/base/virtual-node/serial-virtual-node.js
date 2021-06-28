@@ -158,12 +158,14 @@ describe('SerialVirtualNode', function() {
         attributes: {
           foo: 'foo',
           bar: 123,
-          baz: true
+          baz: true,
+          qux: ''
         }
       });
       assert.equal(vNode.attr('foo'), 'foo');
       assert.equal(vNode.attr('bar'), '123');
       assert.equal(vNode.attr('baz'), 'true');
+      assert.equal(vNode.attr('qux'), '');
     });
 
     it('returns null if the attribute is null', function() {
