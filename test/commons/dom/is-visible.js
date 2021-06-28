@@ -158,6 +158,21 @@ describe('dom.isVisible', function() {
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
+    it('should detect clip rect hidden text technique using position: fixed', function() {
+      var el,
+        clip =
+          'clip: rect(1px 1px 1px 1px);' +
+          'clip: rect(1px, 1px, 1px, 1px);' +
+          'width: 1px; height: 1px;' +
+          'position: fixed;' +
+          'overflow: hidden;';
+
+      fixture.innerHTML = '<div id="target" style="' + clip + '">Hi</div>';
+
+      el = document.getElementById('target');
+      assert.isFalse(axe.commons.dom.isVisible(el));
+    });
+
     it('should detect when clip is not applied because of positioning', function() {
       var el,
         clip =
@@ -572,7 +587,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should detect even when clip is not applied because of positioning', function() {
+    it('should detect even when clip is not applied because of positioning on parent', function() {
       var el,
         clip =
           'clip: rect(1px 1px 1px 1px);' +
@@ -580,7 +595,8 @@ describe('dom.isVisible', function() {
           'position: relative;' +
           'overflow: hidden;';
 
-      fixture.innerHTML = '<div id="target" style="' + clip + '">Hi</div>';
+      fixture.innerHTML =
+        '<div style="' + clip + '">' + '<div id="target">Hi</div>' + '</div>';
 
       el = document.getElementById('target');
       assert.isTrue(axe.commons.dom.isVisible(el, true));
