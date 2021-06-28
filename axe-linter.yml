@@ -1,0 +1,3 @@
+# See: https://marketplace.visualstudio.com/items?itemName=deque-systems.vscode-axe-linter&ssr=false#overview
+exclude:
+  test/**/*
