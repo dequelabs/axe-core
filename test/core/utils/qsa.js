@@ -24,6 +24,14 @@ function getTestDom() {
     '<li role="button" id="one"></li>' +
     '</ul>' +
     '</div>' +
+    '<span class="fourth">' +
+    '<span>' +
+    '<span>' +
+    '<span></span>' +
+    '<span></span>' +
+    '</span>' +
+    '</span>' +
+    '</span>' +
     '</body>';
 
   // remove the head node
@@ -63,6 +71,13 @@ describe('axe.utils.querySelectorAllFilter', function() {
   it('should NOT find nodes using parent selector', function() {
     var result = axe.utils.querySelectorAllFilter(dom, 'div > li');
     assert.equal(result.length, 0);
+  });
+  it('should find nodes using nested parent selectors', function() {
+    var result = axe.utils.querySelectorAllFilter(
+      dom,
+      'span > span > span > span'
+    );
+    assert.equal(result.length, 2);
   });
   it('should find nodes using hierarchical selector', function() {
     var result = axe.utils.querySelectorAllFilter(dom, 'div li');
