@@ -53,7 +53,8 @@
   "files": [
     "axe.js",
     "axe.min.js",
-    "axe.d.ts"
+    "axe.d.ts",
+    "locales/"
   ],
   "standard-version": {
     "scripts": {
