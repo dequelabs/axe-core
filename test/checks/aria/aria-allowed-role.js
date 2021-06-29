@@ -1,42 +1,40 @@
 describe('aria-allowed-role', function() {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
+  var fixture = document.querySelector('#fixture');
+  var queryFixture = axe.testUtils.queryFixture;
   var checkContext = axe.testUtils.MockCheckContext();
   var flatTreeSetup = axe.testUtils.flatTreeSetup;
 
   afterEach(function() {
-    fixture.innerHTML = '';
     checkContext.reset();
   });
 
   it('returns true if given element is an ignoredTag in options', function() {
-    var node = document.createElement('article');
-    node.setAttribute('role', 'presentation');
-    fixture.appendChild(node);
-    flatTreeSetup(fixture);
+    var vNode = queryFixture(
+      '<article id="target" role="presentation"></article>'
+    );
     var options = {
       ignoredTags: ['article']
     };
     var actual = axe.testUtils
       .getCheckEvaluate('aria-allowed-role')
-      .call(checkContext, node, options);
+      .call(checkContext, null, options, vNode);
     var expected = true;
     assert.equal(actual, expected);
     assert.isNull(checkContext._data, null);
   });
 
   it('returns false with implicit role of row for TR when allowImplicit is set to false via options', function() {
-    fixture.innerHTML =
-      '<table role="grid"><tr id="target" role="row"></tr></table>';
-    var target = fixture.querySelector('#target');
-    flatTreeSetup(fixture);
+    var vNode = queryFixture(
+      '<table role="grid"><tr id="target" role="row"></tr></table>'
+    );
     var options = {
       allowImplicit: false
     };
     var actual = axe.testUtils
       .getCheckEvaluate('aria-allowed-role')
-      .call(checkContext, target, options);
+      .call(checkContext, null, options, vNode);
     var expected = false;
     assert.equal(actual, expected);
     assert.deepEqual(checkContext._data, ['row']);
