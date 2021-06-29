@@ -205,7 +205,10 @@ describe('aria-errormessage', function() {
           .getCheckEvaluate('aria-errormessage')
           .call(checkContext, null, null, vNode)
       );
-      assert.deepEqual(checkContext._data, ['test']);
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'idrefs',
+        values: ['test']
+      });
     });
   });
 });
