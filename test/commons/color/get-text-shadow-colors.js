@@ -183,7 +183,7 @@ describe('axe.commons.color.getTextShadowColors', function() {
 
   it('returns a transparent shadow when y offset is greater than blur', function() {
     fixture.innerHTML =
-      '<span style="text-shadow: ' + '0 1px 0 #F00' + '">Hello world</span>';
+      '<span style="text-shadow: 0 1px 0 #F00">Hello world</span>';
     var span = fixture.querySelector('span');
     var shadowColors = getTextShadowColors(span);
     assert.lengthOf(shadowColors, 1);
