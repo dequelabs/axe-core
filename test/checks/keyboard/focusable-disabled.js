@@ -41,6 +41,30 @@ describe('focusable-disabled', function() {
     assert.isTrue(actual);
   });
 
+  it('returns true when content made unfocusable through disabled fieldset', function() {
+    var params = checkSetup(
+      '<fieldset disabled aria-hidden="true"><input id="target" /></fieldset>'
+    );
+    var actual = check.evaluate.apply(checkContext, params);
+    assert.isTrue(actual);
+  });
+
+  it('returns false when content is in the legend of a disabled fieldset', function() {
+    var params = checkSetup(
+      '<fieldset disabled aria-hidden="true"><legend><input id="target" /></legend></fieldset>'
+    );
+    var actual = check.evaluate.apply(checkContext, params);
+    assert.isFalse(actual);
+  });
+
+  it('returns false when content is in an aria-hidden but not disabled fieldset', function() {
+    var params = checkSetup(
+      '<fieldset aria-hidden="true"><input id="target" /></fieldset>'
+    );
+    var actual = check.evaluate.apply(checkContext, params);
+    assert.isFalse(actual);
+  });
+
   it('returns true when focusable off screen link (cannot be disabled)', function() {
     var params = checkSetup(
       '<div id="target" aria-hidden="true"><a href="/" style="position:absolute; top:-999em">Link</a></div>'
