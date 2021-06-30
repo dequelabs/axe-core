@@ -312,13 +312,32 @@ describe('Context', function() {
   });
 
   describe('page', function() {
-    it('should be true if given an entire document', function() {
-      assert.isTrue(new Context(document).page);
+    it('takes the page argument as default', function() {
+      assert.isTrue(new Context({ page: true }).page);
+      assert.isFalse(new Context({ page: false }).page);
     });
-    it('should be true if given falsey parameter', function() {
-      assert.isTrue(new Context(null).page);
-      assert.isTrue(new Context().page);
-      assert.isTrue(new Context(false).page);
+
+    it('is true if the document element is included', function() {
+      assert.isTrue(new Context(document).page);
+      assert.isTrue(new Context(document.documentElement).page);
+      assert.isTrue(new Context('html').page);
+      assert.isTrue(new Context(':root').page);
+    });
+
+    it('is true, with exclude used', function () {
+      // What matters is that the documentElement is included
+      // not that parts within that are excluded
+      assert.isTrue(new Context({
+        include: [document],
+        exclude: ['#mocha']
+      }).page);
+    });
+
+    it('is false if the context does not include documentElement', function () {
+      assert.isFalse(new Context(fixture).page);
+      assert.isFalse(new Context('#fixture').page);
+      assert.isFalse(new Context(['#fixture']).page);
+      assert.isFalse(new Context({ include: ['#fixture'] }).page);
     });
   });
 
@@ -470,13 +489,15 @@ describe('Context', function() {
     })
 
     describe('.page', function () {
-      it('is true if the parent context is also page', function (done) {
+      it('is true if context includes the document element', function (done) {
         iframeReady(
           '../mock/frames/context.html',
           $id('fixture'),
           'target',
           function() {
-            var result = new Context(document);
+            var result = new Context({
+              exclude: [['#mocha']]
+            });
             assert.lengthOf(result.frames, 1);
             assert.isTrue(result.frames[0].page);
           },
@@ -484,13 +505,15 @@ describe('Context', function() {
         );
       });
   
-      it('is false if the parent context is also page', function (done) {
+      it('can be false, even if the frame\'s documentElement is included', function (done) {
         iframeReady(
           '../mock/frames/context.html',
           $id('fixture'),
           'target',
           function() {
-            var result = new Context('#fixture');
+            var result = new Context({
+              include: [['#fixture']]
+            });
             assert.lengthOf(result.frames, 1);
             assert.isFalse(result.frames[0].page);
           },

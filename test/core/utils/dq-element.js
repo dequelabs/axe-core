@@ -185,7 +185,7 @@ describe('DqElement', function() {
     });
   });
 
-  describe('fromFrame', function() {
+  describe('merging frames', function() {
     var dqMain, dqIframe;
     beforeEach(function() {
       var tree = fixtureSetup(
@@ -208,6 +208,35 @@ describe('DqElement', function() {
       dqIframe = new DqElement(iframe, {}, iframeSpec);
     });
 
+    describe('.mergeSpecs', function () {
+      var mainSpec, iframeSpec
+      beforeEach(function () {
+        mainSpec = dqMain.toJSON();
+        iframeSpec = dqIframe.toJSON();
+      });
+
+      it('merges node and frame selectors', function() {
+        var mergedSpec = DqElement.mergeSpecs(mainSpec, iframeSpec);
+        assert.deepEqual(mergedSpec.selector, [
+          iframeSpec.selector[0],
+          mainSpec.selector[0]
+        ]);
+        assert.deepEqual(mergedSpec.ancestry, [
+          iframeSpec.ancestry[0],
+          mainSpec.ancestry[0]
+        ]);
+        assert.deepEqual(mergedSpec.xpath, [iframeSpec.xpath[0], mainSpec.xpath[0]]);
+      });
+
+      it('merges nodeIndexes', function() {
+        var mergedSpec = DqElement.mergeSpecs(mainSpec, iframeSpec);
+        assert.deepEqual(mergedSpec.nodeIndexes, [
+          iframeSpec.nodeIndexes[0],
+          mainSpec.nodeIndexes[0]
+        ]);
+      });
+    })
+
     describe('DqElement.fromFrame', function() {
       it('returns a new DqElement', function() {
         assert.instanceOf(DqElement.fromFrame(dqMain, {}, dqIframe), DqElement);
@@ -219,26 +248,11 @@ describe('DqElement', function() {
         assert.isTrue(dqElm._options.toRoot);
       });
 
-      it('merges node and frame selectors', function() {
+      it('has props as from mergeSpecs', function () {
+        var spec = DqElement.mergeSpecs(dqMain.toJSON(), dqIframe.toJSON());
         var dqElm = DqElement.fromFrame(dqMain, {}, dqIframe);
-        assert.deepEqual(dqElm.selector, [
-          dqIframe.selector[0],
-          dqMain.selector[0]
-        ]);
-        assert.deepEqual(dqElm.ancestry, [
-          dqIframe.ancestry[0],
-          dqMain.ancestry[0]
-        ]);
-        assert.deepEqual(dqElm.xpath, [dqIframe.xpath[0], dqMain.xpath[0]]);
-      });
-
-      it('merges nodeIndexes', function() {
-        var dqElm = DqElement.fromFrame(dqMain, {}, dqIframe);
-        assert.deepEqual(dqElm.nodeIndexes, [
-          dqIframe.nodeIndexes[0],
-          dqMain.nodeIndexes[0]
-        ]);
-      });
+        assert.deepEqual(dqElm.toJSON(), spec);
+      })
     });
 
     describe('DqElement.prototype.fromFrame', function() {

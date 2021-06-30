@@ -428,32 +428,34 @@ testUtils.isIE11 = (function isIE11(navigator) {
 
 axe.testUtils = testUtils;
 
-beforeEach(function() {
-  // reset from axe._load overriding
-  checks = originalChecks;
-  axe._audit = originalAudit;
-  axe._audit.rules = originalRules;
-  commons = axe.commons = originalCommons;
-});
+if (typeof beforeEach !== 'undefined' && typeof afterEach !== 'undefined') {
+  beforeEach(function() {
+    // reset from axe._load overriding
+    checks = originalChecks;
+    axe._audit = originalAudit;
+    axe._audit.rules = originalRules;
+    commons = axe.commons = originalCommons;
+  });
 
-afterEach(function() {
-  axe.teardown();
-  fixture.innerHTML = '';
-
-  // remove all attributes from fixture (otherwise a leftover
-  // style attribute would cause avoid-inline-spacing integration
-  // test to fail with [#fixture] being included in the results)
-  var attrs = fixture.attributes;
-  for (var i = 0; i < attrs.length; i++) {
-    var attrName = attrs[i].name;
-    if (attrName !== 'id') {
-      fixture.removeAttribute(attrs[i].name);
+  afterEach(function() {
+    axe.teardown();
+    fixture.innerHTML = '';
+  
+    // remove all attributes from fixture (otherwise a leftover
+    // style attribute would cause avoid-inline-spacing integration
+    // test to fail with [#fixture] being included in the results)
+    var attrs = fixture.attributes;
+    for (var i = 0; i < attrs.length; i++) {
+      var attrName = attrs[i].name;
+      if (attrName !== 'id') {
+        fixture.removeAttribute(attrs[i].name);
+      }
     }
-  }
-
-  // reset body styles
-  document.body.removeAttribute('style');
-});
+  
+    // reset body styles
+    document.body.removeAttribute('style');
+  });
+}
 
 testUtils.captureError = function captureError(cb, errorHandler) {
   return function() {
@@ -464,3 +466,35 @@ testUtils.captureError = function captureError(cb, errorHandler) {
     }
   };
 };
+
+
+
+testUtils.runPartialRecursive = function runPartialRecursive(
+  context, options = {}, win = window
+) {
+  var axe = win.axe;
+  
+  // axe.utils.getFrameContexts mutates
+  // https://github.com/dequelabs/axe-core/issues/3045
+  var contextCopy = axe.utils.clone(context);
+  var frameContexts = axe.utils.getFrameContexts(contextCopy)
+  var promiseResults = [axe.runPartial(context, options)]
+
+  frameContexts.forEach(function (c) {
+    var frame = testUtils.shadowQuerySelector(c.frameSelector, win.document);
+    var frameWin = frame.contentWindow;
+    var frameResults = testUtils.runPartialRecursive(c.frameContext, options, frameWin)
+    promiseResults = promiseResults.concat(frameResults);
+  })
+  return promiseResults;
+}
+
+testUtils.shadowQuerySelector = function shadowQuerySelector(axeSelector, doc = document) {
+  var elm;
+  axeSelector = Array.isArray(axeSelector) ? axeSelector : [axeSelector]
+  axeSelector.forEach(function (selectorStr) {
+    elm = doc?.querySelector(selectorStr);
+    doc = elm?.shadowRoot;
+  })
+  return elm;
+}
