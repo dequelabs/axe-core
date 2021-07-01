@@ -115,7 +115,7 @@ describe('reporters - raw', function() {
     fixture.innerHTML = '';
   });
 
-  it('should serialize DqElements (#1195)', function() {
+  it('should serialize DqElements', function(done) {
     axe.getReporter('rawEnv')(runResults, {}, function(results) {
       for (var i = 0; i < results.length; i++) {
         var result = results[i];
@@ -124,6 +124,18 @@ describe('reporters - raw', function() {
           assert.notInstanceOf(p.node, axe.utils.DqElement);
         }
       }
+      done()
+    });
+  });
+
+  it('does not throw on serialized nodes', function(done) {
+    var rawReporter = axe.getReporter('rawEnv');
+    rawReporter(runResults, {}, function(serializedResults) {
+      assert.doesNotThrow(function () {
+        rawReporter(serializedResults, {}, function () {
+          done();
+        })
+      });
     });
   });
 });
