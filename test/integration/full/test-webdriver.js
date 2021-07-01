@@ -28,7 +28,7 @@ function collectTestResults(driver) {
       var callback = arguments[arguments.length - 1];
       setTimeout(function() {
         if (!window.mocha) {
-          callback('mocha-missing;' + window.location.href)
+          callback('mocha-missing;' + window.location.href);
         }
         // return the mocha results (or undefined if not finished)
         callback(window.mochaResults);
@@ -38,8 +38,10 @@ function collectTestResults(driver) {
       // If there are no results, listen a little longer
       if (typeof result === 'string' && result.includes('mocha-missing')) {
         throw new Error(
-          'Mocha does not exist in: ' + result.split(';')[1] +
-          '\nIf using a frame, put the file in a subdirectory');
+          'Mocha does not exist in: ' +
+            result.split(';')[1] +
+            '\nIf using a frame, put the file in a subdirectory'
+        );
       }
       if (!result) {
         return collectTestResults(driver);

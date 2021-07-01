@@ -279,6 +279,26 @@ declare namespace axe {
   ): void;
 
   /**
+   * TODO
+   * @param context
+   * @param options
+   */
+  function runPartial(
+    context: ElementContext,
+    options: RunOptions
+  ): Promise<unknown>;
+
+  /**
+   * TODO
+   * @param partialResults
+   * @param options
+   */
+  function finishRun(
+    partialResults: unknown,
+    options: RunOptions
+  ): Promise<AxeResults>;
+
+  /**
    * Method for configuring the data format used by axe. Helpful for adding new
    * rules, which must be registered with the library to execute.
    * @param  {Spec}       Spec Object with valid `branding`, `reporter`, `checks` and `rules` data
@@ -324,7 +344,11 @@ declare namespace axe {
   };
   type Close = Function;
   type TopicHandler = (data: TopicData, responder: Responder) => void;
-  type ReplyHandler = (message: any | Error, keepalive: boolean, responder: Responder) => void;
+  type ReplyHandler = (
+    message: any | Error,
+    keepalive: boolean,
+    responder: Responder
+  ) => void;
   type Responder = (
     message: any | Error,
     keepalive?: boolean,

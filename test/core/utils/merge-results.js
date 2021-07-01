@@ -25,8 +25,42 @@ describe('axe.utils.mergeResults', function() {
     };
     var result = axe.utils.mergeResults([
       {
-        frame: '#target',
         frameElement: iframe,
+        results: [
+          {
+            id: 'a',
+            result: 'b',
+            nodes: [{ node: node }]
+          }
+        ]
+      }
+    ]);
+
+    assert.lengthOf(result, 1);
+    assert.lengthOf(result[0].nodes, 1);
+
+    var node = result[0].nodes[0].node;
+    assert.deepEqual(node.selector, ['#target', '#foo']);
+    assert.deepEqual(node.xpath, ["/iframe[@id='target']", 'html/#foo']);
+    assert.deepEqual(node.ancestry, [
+      'html > body > div:nth-child(1) > iframe',
+      'html > div'
+    ]);
+    assert.deepEqual(node.nodeIndexes, [1, 123]);
+  });
+
+  it('merges frame specs', function() {
+    var iframe = queryFixture('<iframe id="target"></iframe>').actualNode;
+    var frameSpec = new axe.utils.DqElement(iframe).toJSON();
+    var node = {
+      selector: ['#foo'],
+      xpath: ['html/#foo'],
+      ancestry: ['html > div'],
+      nodeIndexes: [123]
+    };
+    var result = axe.utils.mergeResults([
+      {
+        frameSpec: frameSpec,
         results: [
           {
             id: 'a',

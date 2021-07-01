@@ -38,8 +38,8 @@ describe('utils.getFrameContexts', function() {
 
   it('sets frameContext.focusable depending on the frame', function() {
     fixture.innerHTML =
-      '<iframe></iframe>' + 
-      '<iframe tabindex="0"></iframe>' + 
+      '<iframe></iframe>' +
+      '<iframe tabindex="0"></iframe>' +
       '<iframe tabindex="-1"></iframe>';
 
     var contexts = getFrameContexts().map(function(frameData) {
@@ -53,12 +53,12 @@ describe('utils.getFrameContexts', function() {
 
   it('sets frameContext.size based on frame size', function() {
     fixture.innerHTML =
-      '<iframe width="1" height="1"></iframe>' + 
-      '<iframe width="10" height="10"></iframe>' + 
+      '<iframe width="1" height="1"></iframe>' +
+      '<iframe width="10" height="10"></iframe>' +
       '<iframe width="100" height="100"></iframe>';
 
     var frameSize = getFrameContexts().map(function(frameData) {
-      return frameData.frameContext.size
+      return frameData.frameContext.size;
     });
     assert.lengthOf(frameSize, 3);
     assert.deepEqual(frameSize[0], {
@@ -75,7 +75,7 @@ describe('utils.getFrameContexts', function() {
     });
   });
 
-  describe('include / exclude', function () {
+  describe('include / exclude', function() {
     it('returns a `frameContext` for each included frame', function() {
       fixture.innerHTML =
         '<iframe id="f1"></iframe>' +
@@ -91,7 +91,7 @@ describe('utils.getFrameContexts', function() {
       var contexts = getFrameContexts(context).map(function(frameData) {
         return frameData.frameContext;
       });
-  
+
       assert.lengthOf(contexts, 3);
       assert.deepEqual(contexts[0].include, [['header']]);
       assert.deepEqual(contexts[0].exclude, []);
@@ -253,7 +253,8 @@ describe('utils.getFrameContexts', function() {
       fixture.innerHTML = '<div id="shadow"></div>';
       var div = fixture.querySelector('div');
       var shadowRoot = div.attachShadow({ mode: 'open' });
-      shadowRoot.innerHTML = '<main><iframe id="f1" width="100" height="100"></iframe></main>';
+      shadowRoot.innerHTML =
+        '<main><iframe id="f1" width="100" height="100"></iframe></main>';
 
       var frameContext = getFrameContexts();
 
@@ -263,5 +264,5 @@ describe('utils.getFrameContexts', function() {
       assert.deepEqual(frameContext[0].frameContext.include, []);
       assert.deepEqual(frameContext[0].frameContext.exclude, []);
     });
-  })
+  });
 });
