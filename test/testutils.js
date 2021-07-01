@@ -440,7 +440,7 @@ if (typeof beforeEach !== 'undefined' && typeof afterEach !== 'undefined') {
   afterEach(function() {
     axe.teardown();
     fixture.innerHTML = '';
-  
+
     // remove all attributes from fixture (otherwise a leftover
     // style attribute would cause avoid-inline-spacing integration
     // test to fail with [#fixture] being included in the results)
@@ -451,7 +451,7 @@ if (typeof beforeEach !== 'undefined' && typeof afterEach !== 'undefined') {
         fixture.removeAttribute(attrs[i].name);
       }
     }
-  
+
     // reset body styles
     document.body.removeAttribute('style');
   });
@@ -467,34 +467,41 @@ testUtils.captureError = function captureError(cb, errorHandler) {
   };
 };
 
-
-
 testUtils.runPartialRecursive = function runPartialRecursive(
-  context, options = {}, win = window
+  context,
+  options,
+  win
 ) {
+  options = options || {};
+  win = win || window;
   var axe = win.axe;
-  
+
   // axe.utils.getFrameContexts mutates
   // https://github.com/dequelabs/axe-core/issues/3045
   var contextCopy = axe.utils.clone(context);
-  var frameContexts = axe.utils.getFrameContexts(contextCopy)
-  var promiseResults = [axe.runPartial(context, options)]
+  var frameContexts = axe.utils.getFrameContexts(contextCopy);
+  var promiseResults = [axe.runPartial(context, options)];
 
-  frameContexts.forEach(function (c) {
+  frameContexts.forEach(function(c) {
     var frame = testUtils.shadowQuerySelector(c.frameSelector, win.document);
     var frameWin = frame.contentWindow;
-    var frameResults = testUtils.runPartialRecursive(c.frameContext, options, frameWin)
+    var frameResults = testUtils.runPartialRecursive(
+      c.frameContext,
+      options,
+      frameWin
+    );
     promiseResults = promiseResults.concat(frameResults);
-  })
+  });
   return promiseResults;
-}
+};
 
-testUtils.shadowQuerySelector = function shadowQuerySelector(axeSelector, doc = document) {
+testUtils.shadowQuerySelector = function shadowQuerySelector(axeSelector, doc) {
   var elm;
-  axeSelector = Array.isArray(axeSelector) ? axeSelector : [axeSelector]
-  axeSelector.forEach(function (selectorStr) {
-    elm = doc?.querySelector(selectorStr);
-    doc = elm?.shadowRoot;
-  })
+  doc = doc || document;
+  axeSelector = Array.isArray(axeSelector) ? axeSelector : [axeSelector];
+  axeSelector.forEach(function(selectorStr) {
+    elm = doc && doc.querySelector(selectorStr);
+    doc = elm && elm.shadowRoot;
+  });
   return elm;
-}
+};

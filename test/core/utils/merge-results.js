@@ -49,7 +49,7 @@ describe('axe.utils.mergeResults', function() {
     assert.deepEqual(node.nodeIndexes, [1, 123]);
   });
 
-  it('merges frame specs', function () {
+  it('merges frame specs', function() {
     var iframe = queryFixture('<iframe id="target"></iframe>').actualNode;
     var frameSpec = new axe.utils.DqElement(iframe).toJSON();
     var node = {
@@ -82,7 +82,7 @@ describe('axe.utils.mergeResults', function() {
       'html > div'
     ]);
     assert.deepEqual(node.nodeIndexes, [1, 123]);
-  })
+  });
 
   it('sorts results from iframes into their correct DOM position', function() {
     var result = axe.utils.mergeResults([

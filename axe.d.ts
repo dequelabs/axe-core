@@ -280,8 +280,8 @@ declare namespace axe {
 
   /**
    * TODO
-   * @param context 
-   * @param options 
+   * @param context
+   * @param options
    */
   function runPartial(
     context: ElementContext,
@@ -290,8 +290,8 @@ declare namespace axe {
 
   /**
    * TODO
-   * @param partialResults 
-   * @param options 
+   * @param partialResults
+   * @param options
    */
   function finishRun(
     partialResults: unknown,
@@ -344,7 +344,11 @@ declare namespace axe {
   };
   type Close = Function;
   type TopicHandler = (data: TopicData, responder: Responder) => void;
-  type ReplyHandler = (message: any | Error, keepalive: boolean, responder: Responder) => void;
+  type ReplyHandler = (
+    message: any | Error,
+    keepalive: boolean,
+    responder: Responder
+  ) => void;
   type Responder = (
     message: any | Error,
     keepalive?: boolean,

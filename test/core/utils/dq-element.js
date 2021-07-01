@@ -208,9 +208,9 @@ describe('DqElement', function() {
       dqIframe = new DqElement(iframe, {}, iframeSpec);
     });
 
-    describe('.mergeSpecs', function () {
-      var mainSpec, iframeSpec
-      beforeEach(function () {
+    describe('.mergeSpecs', function() {
+      var mainSpec, iframeSpec;
+      beforeEach(function() {
         mainSpec = dqMain.toJSON();
         iframeSpec = dqIframe.toJSON();
       });
@@ -225,7 +225,10 @@ describe('DqElement', function() {
           iframeSpec.ancestry[0],
           mainSpec.ancestry[0]
         ]);
-        assert.deepEqual(mergedSpec.xpath, [iframeSpec.xpath[0], mainSpec.xpath[0]]);
+        assert.deepEqual(mergedSpec.xpath, [
+          iframeSpec.xpath[0],
+          mainSpec.xpath[0]
+        ]);
       });
 
       it('merges nodeIndexes', function() {
@@ -235,7 +238,7 @@ describe('DqElement', function() {
           mainSpec.nodeIndexes[0]
         ]);
       });
-    })
+    });
 
     describe('DqElement.fromFrame', function() {
       it('returns a new DqElement', function() {
@@ -248,11 +251,11 @@ describe('DqElement', function() {
         assert.isTrue(dqElm._options.toRoot);
       });
 
-      it('has props as from mergeSpecs', function () {
+      it('has props as from mergeSpecs', function() {
         var spec = DqElement.mergeSpecs(dqMain.toJSON(), dqIframe.toJSON());
         var dqElm = DqElement.fromFrame(dqMain, {}, dqIframe);
         assert.deepEqual(dqElm.toJSON(), spec);
-      })
+      });
     });
 
     describe('DqElement.prototype.fromFrame', function() {

@@ -124,17 +124,17 @@ describe('reporters - raw', function() {
           assert.notInstanceOf(p.node, axe.utils.DqElement);
         }
       }
-      done()
+      done();
     });
   });
 
   it('does not throw on serialized nodes', function(done) {
     var rawReporter = axe.getReporter('rawEnv');
     rawReporter(runResults, {}, function(serializedResults) {
-      assert.doesNotThrow(function () {
-        rawReporter(serializedResults, {}, function () {
+      assert.doesNotThrow(function() {
+        rawReporter(serializedResults, {}, function() {
           done();
-        })
+        });
       });
     });
   });

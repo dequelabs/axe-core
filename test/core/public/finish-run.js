@@ -1,14 +1,14 @@
 describe('axe.finishRun', function() {
   var fixture = document.querySelector('#fixture');
 
-  afterEach(function () {
+  afterEach(function() {
     fixture.innerHTML = '';
-  })
+  });
 
   it('takes a single partial results and outputs a finished report', function(done) {
     axe
       .runPartial()
-      .then(function (result) {
+      .then(function(result) {
         return axe.finishRun([result]);
       })
       .then(function(results) {
@@ -28,13 +28,13 @@ describe('axe.finishRun', function() {
         return axe.finishRun([partialResult], { reporter: 'raw' });
       })
       .then(function(rawResults) {
-        assert.notEqual(rawResults.length, 0)
-        rawResults.forEach(function (rawResult) {
+        assert.notEqual(rawResults.length, 0);
+        rawResults.forEach(function(rawResult) {
           assert.property(rawResult, 'violations');
           assert.property(rawResult, 'passes');
           assert.property(rawResult, 'incomplete');
           assert.property(rawResult, 'inapplicable');
-        })
+        });
         done();
       })
       .catch(done);
@@ -44,7 +44,7 @@ describe('axe.finishRun', function() {
     fixture.innerHTML = '<div aria-label="foo"></div>';
     axe
       .runPartial({ include: ['#fixture'] }, { runOnly: 'aria-allowed-attr' })
-      .then(function (result) {
+      .then(function(result) {
         return axe.finishRun([result]);
       })
       .then(function(results) {
@@ -62,7 +62,7 @@ describe('axe.finishRun', function() {
 
     axe
       .runPartial({ include: ['#fixture'] }, { runOnly: 'aria-allowed-attr' })
-      .then(function (result) {
+      .then(function(result) {
         return axe.finishRun([result]);
       })
       .then(function(results) {
@@ -76,15 +76,14 @@ describe('axe.finishRun', function() {
   });
 
   it('can report incomplete results', function(done) {
-    fixture.innerHTML =
-      '<div aria-describedby="missing"></div>';
+    fixture.innerHTML = '<div aria-describedby="missing"></div>';
 
     axe
       .runPartial(
         { include: ['#fixture'] },
         { runOnly: 'aria-valid-attr-value' }
       )
-      .then(function (result) {
+      .then(function(result) {
         return axe.finishRun([result]);
       })
       .then(function(results) {
@@ -100,7 +99,7 @@ describe('axe.finishRun', function() {
   it('can report inapplicable results', function(done) {
     axe
       .runPartial({ include: ['#fixture'] }, { runOnly: 'aria-allowed-attr' })
-      .then(function (result) {
+      .then(function(result) {
         return axe.finishRun([result]);
       })
       .then(function(results) {
@@ -151,100 +150,106 @@ describe('axe.finishRun', function() {
 
   describe('frames', function() {
     function createIframe(html, parent) {
-      return new Promise(function (resolve) {
+      return new Promise(function(resolve) {
         parent = parent || fixture;
-        var doc = parent.ownerDocument
-        var iframe = doc.createElement('iframe')
+        var doc = parent.ownerDocument;
+        var iframe = doc.createElement('iframe');
         parent.appendChild(iframe);
         var frameDoc = iframe.contentDocument;
-        frameDoc.write(html + '<script src="/axe.js"></script>')
+        frameDoc.write(html + '<script src="/axe.js"></script>');
         frameDoc.close();
-        frameDoc.querySelector('script').onload = function () {
+        frameDoc.querySelector('script').onload = function() {
           resolve(iframe.contentWindow);
-        }
-      })
+        };
+      });
     }
 
-    it('reconstructs which node is in which frame', function (done) {
+    it('reconstructs which node is in which frame', function(done) {
       createIframe('<h1></h1>')
-      .then(function (frameWin) {
-        return Promise.all([
-          window.axe.runPartial({ runOnly: 'empty-heading' }),
-          frameWin.axe.runPartial({ runOnly: 'empty-heading' })
-        ])
-      })
-      .then(axe.finishRun)
-      .then(function (results) {
-        var nodes = results.violations[0].nodes;
-        assert.deepEqual(nodes[0].target, ['iframe', 'h1']);
-        done();
-      }).catch(done);
+        .then(function(frameWin) {
+          return Promise.all([
+            window.axe.runPartial({ runOnly: 'empty-heading' }),
+            frameWin.axe.runPartial({ runOnly: 'empty-heading' })
+          ]);
+        })
+        .then(axe.finishRun)
+        .then(function(results) {
+          var nodes = results.violations[0].nodes;
+          assert.deepEqual(nodes[0].target, ['iframe', 'h1']);
+          done();
+        })
+        .catch(done);
     });
 
-    it('handles nodes in nested iframes', function (done) {
-      var windows = [window]
+    it('handles nodes in nested iframes', function(done) {
+      var windows = [window];
       fixture.innerHTML = '<h1></h1>';
       createIframe('<h2></h2>')
-      .then(function (frameWin) {
-        windows.push(frameWin);
-        return createIframe('<h3></h3>', frameWin.document.body)
-      })
-      .then(function (nestedWin) {
-        windows.push(nestedWin);
-        var promisedResults = windows.map(function (win) {
-          return win.axe.runPartial({ runOnly: 'empty-heading' })
+        .then(function(frameWin) {
+          windows.push(frameWin);
+          return createIframe('<h3></h3>', frameWin.document.body);
         })
-        return Promise.all(promisedResults);
-      })
-      .then(axe.finishRun)
-      .then(function (results) {
-        var nodes = results.violations[0].nodes
-        assert.deepEqual(nodes[0].target, ['h1'])
-        assert.deepEqual(nodes[1].target, ['iframe', 'h2'])
-        assert.deepEqual(nodes[2].target, ['iframe', 'iframe', 'h3'])
-        done();
-      }).catch(done)
+        .then(function(nestedWin) {
+          windows.push(nestedWin);
+          var promisedResults = windows.map(function(win) {
+            return win.axe.runPartial({ runOnly: 'empty-heading' });
+          });
+          return Promise.all(promisedResults);
+        })
+        .then(axe.finishRun)
+        .then(function(results) {
+          var nodes = results.violations[0].nodes;
+          assert.deepEqual(nodes[0].target, ['h1']);
+          assert.deepEqual(nodes[1].target, ['iframe', 'h2']);
+          assert.deepEqual(nodes[2].target, ['iframe', 'iframe', 'h3']);
+          done();
+        })
+        .catch(done);
     });
   });
 
   describe('calling audit.after', function() {
-    it('passes results with iframe ancestries', function (done) {
+    it('passes results with iframe ancestries', function(done) {
       fixture.innerHTML = '<i id="i"></i> <i id="i"></i>';
-      axe.runPartial(fixture, { runOnly: 'duplicate-id' })
-      .then(function (partialResult) {
-        return axe.finishRun([partialResult], { runOnly: 'duplicate-id' })
-      })
-      .then(function (result) {
-        var nodes = result.violations[0].nodes
-        var relatedNodes = nodes[0].any[0].relatedNodes;
+      axe
+        .runPartial(fixture, { runOnly: 'duplicate-id' })
+        .then(function(partialResult) {
+          return axe.finishRun([partialResult], { runOnly: 'duplicate-id' });
+        })
+        .then(function(result) {
+          var nodes = result.violations[0].nodes;
+          var relatedNodes = nodes[0].any[0].relatedNodes;
 
-        assert.lengthOf(nodes, 1);
-        assert.deepEqual(nodes[0].target, ['i:nth-child(1)']);
-        assert.lengthOf(relatedNodes, 1);
-        assert.deepEqual(relatedNodes[0].target, ['i:nth-child(2)']);
-        done();
-      }).catch(done);
+          assert.lengthOf(nodes, 1);
+          assert.deepEqual(nodes[0].target, ['i:nth-child(1)']);
+          assert.lengthOf(relatedNodes, 1);
+          assert.deepEqual(relatedNodes[0].target, ['i:nth-child(2)']);
+          done();
+        })
+        .catch(done);
     });
 
-    it('provides the options object', function (done) {
-      var spy
+    it('provides the options object', function(done) {
+      var spy;
       fixture.innerHTML = '<i id="i"></i> <i id="i"></i>';
-      axe.runPartial(fixture, { runOnly: 'duplicate-id' })
-      .then(function (partialResult) {
-        spy = sinon.spy(axe._audit, 'after')
-        return axe.finishRun([partialResult], { runOnly: 'duplicate-id' })
-      })
-      .then(function () {
-        assert.lengthOf(axe._audit.after.args, 1)
-        assert.deepEqual(axe._audit.after.args[0][1], {
-          runOnly: 'duplicate-id'
+      axe
+        .runPartial(fixture, { runOnly: 'duplicate-id' })
+        .then(function(partialResult) {
+          spy = sinon.spy(axe._audit, 'after');
+          return axe.finishRun([partialResult], { runOnly: 'duplicate-id' });
         })
-        spy.restore();
-        done();
-      }).catch(function (err) {
-        spy.restore();
-        done(err);
-      });
+        .then(function() {
+          assert.lengthOf(axe._audit.after.args, 1);
+          assert.deepEqual(axe._audit.after.args[0][1], {
+            runOnly: 'duplicate-id'
+          });
+          spy.restore();
+          done();
+        })
+        .catch(function(err) {
+          spy.restore();
+          done(err);
+        });
     });
   });
 });
