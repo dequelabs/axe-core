@@ -1,4 +1,4 @@
-describe('run-partial', function() {
+describe('run-partial, page-level', function() {
   'use strict';
   var ruleName = 'bypass';
   var runPartialRecursive = axe.testUtils.runPartialRecursive;

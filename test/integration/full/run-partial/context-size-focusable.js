@@ -1,4 +1,4 @@
-describe('run-partial', function() {
+describe('run-partial, context-size-focusable', function() {
   'use strict';
   var ruleName = 'frame-focusable-content';
   var runPartialRecursive = axe.testUtils.runPartialRecursive;

@@ -1,4 +1,4 @@
-describe('run-partial', function() {
+describe('run-partial, initiator', function() {
   'use strict';
   var ruleName = 'document-title';
   var runPartialRecursive = axe.testUtils.runPartialRecursive;

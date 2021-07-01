@@ -1,4 +1,4 @@
-describe('run-partial', function() {
+describe('run-partial, after-method', function() {
   'use strict';
   var ruleName = 'heading-order';
   var runPartialRecursive = axe.testUtils.runPartialRecursive;
