@@ -9,18 +9,13 @@ describe('aria-prohibited-attr', function() {
     checkContext.reset();
   });
 
-  it('should return true if aria-level is 6', function() {
+  it('should return true if aria-level is less than 6', function() {
     var params = checkSetup('<div id="target" aria-level="2">Contents</div>');
     assert.isTrue(checkEvaluate.apply(checkContext, params));
   });
 
-  it('should return true if aria-level is less than 6', function() {
+  it('should return true if aria-level is 6', function() {
     var params = checkSetup('<div id="target" aria-level="6">Contents</div>');
-    assert.isTrue(checkEvaluate.apply(checkContext, params));
-  });
-
-  it('should return true if aria-level is negative', function() {
-    var params = checkSetup('<div id="target" aria-level="-2">Contents</div>');
     assert.isTrue(checkEvaluate.apply(checkContext, params));
   });
 
