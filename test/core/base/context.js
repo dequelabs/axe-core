@@ -22,6 +22,17 @@ describe('Context', function() {
       assert.deepEqual([result.include[0].actualNode], [$id('foo')]);
     });
 
+    it('should accept a single selector that is in shadow dom', function() {
+      fixture.innerHTML = '<div id="foo"></div>';
+      var shadow = document.querySelector('#foo');
+      var shadowRoot = shadow.attachShadow({ mode: 'open' });
+      shadowRoot.innerHTML =
+        '<main id="shadowMain"><iframe id="f1"></iframe></main>';
+      var result = new Context('#shadowMain');
+
+      assert.deepEqual([result.include[0].actualNode], [$id('shadowMain')]);
+    });
+
     it('should accept multiple selectors', function() {
       fixture.innerHTML = '<div id="foo"><div id="bar"></div></div>';
       var result = new Context([['#foo'], ['#bar']]);
