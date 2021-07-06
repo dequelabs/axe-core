@@ -2,17 +2,29 @@
 <html lang="en">
   <title>O hai</title>
 
-  <div class="foo" id="foo">foo</div>
+  <div id="shadow"></div>
+  '
 
   <script src="/axe.js"></script>
   <script>
+    (async () => {
+      var shadow = document.querySelector('#shadow');
+      var shadowRoot = shadow.attachShadow({ mode: 'open' });
+      shadowRoot.innerHTML =
+        '<main id="hello"><iframe id="f1"></iframe></main>';
+      setTimeout(async function() {
+        await axe.run({ include: [['#hello']] }); // Error: No elements found for include in page Context
+      }, 1000);
+    })();
+  </script>
+  <script>
     window.addEventListener('load', function() {
-      axe.run(document, function(err, res) {
+      /* axe.run({ runOnly: ['aria-hidden-focus']}, function(err, res) {
         console.log(res.violations);
         res.incomplete.forEach(function(issue) {
           console.log(issue);
         });
-      });
+      }); */
     });
   </script>
 </html>
