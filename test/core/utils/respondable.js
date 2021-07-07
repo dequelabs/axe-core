@@ -32,7 +32,9 @@ describe('axe.utils.respondable', function() {
   var captureError = axe.testUtils.captureError;
   var isIE11 = axe.testUtils.isIE11;
   var shadowSupported = axe.testUtils.shadowSupport.v1;
+
   this.timeout(1000);
+  this.retries(3);
 
   beforeEach(function(done) {
     respondable = axe.utils.respondable;
@@ -57,7 +59,128 @@ describe('axe.utils.respondable', function() {
     axe.version = axeVersion;
     axe._audit.application = axeApplication;
     axe.log = axeLog;
+    axe.reset();
     window.postMessage = postMessage;
+  });
+
+  describe('updateMessenger', function() {
+    var noop = sinon.spy();
+
+    afterEach(function() {
+      axe._thisWillBeDeletedDoNotUse.utils.setDefaultFrameMessenger(
+        respondable
+      );
+    });
+
+    it('should error if open is not a function', function() {
+      assert.throws(function() {
+        respondable.updateMessenger({
+          post: noop,
+          close: noop
+        });
+      });
+    });
+
+    it('should error if post is not a function', function() {
+      assert.throws(function() {
+        respondable.updateMessenger({
+          open: noop
+        });
+      });
+    });
+
+    it('should error if open function return is not a function', function() {
+      assert.throws(function() {
+        respondable.updateMessenger({
+          post: noop,
+          open: function() {
+            return 1;
+          }
+        });
+      });
+    });
+
+    it('should call the open function and pass the listener', function() {
+      var open = sinon.spy();
+      respondable.updateMessenger({
+        open: open,
+        post: noop
+      });
+
+      assert.isTrue(open.called);
+      assert.isTrue(typeof open.args[0][0] === 'function');
+    });
+
+    it('should call previous close function', function() {
+      var close = sinon.spy();
+      respondable.updateMessenger({
+        open: function() {
+          return close;
+        },
+        post: noop
+      });
+
+      respondable.updateMessenger({
+        open: noop,
+        post: noop
+      });
+
+      assert.isTrue(close.called);
+    });
+
+    it('should use the post function when making a frame post', function() {
+      var post = sinon.spy();
+      respondable.updateMessenger({
+        open: noop,
+        post: post
+      });
+
+      respondable(frameWin, 'greeting');
+      assert.isTrue(post.called);
+    });
+
+    it('should pass the post function the correct parameters', function() {
+      var post = sinon.spy();
+      var callback = sinon.spy();
+
+      respondable.updateMessenger({
+        open: noop,
+        post: post
+      });
+
+      respondable(frameWin, 'greeting', 'hello', true, callback);
+      assert.isTrue(
+        post.calledWith(
+          frameWin,
+          sinon.match({
+            topic: 'greeting',
+            message: 'hello',
+            keepalive: true
+          }),
+          callback
+        )
+      );
+    });
+
+    it('should work as a full integration', function() {
+      var listeners = {};
+      var listener = sinon.spy();
+
+      respondable.updateMessenger({
+        open: function() {
+          listeners.greeting = listener;
+        },
+        post: function(win, data) {
+          if (listeners[data.topic]) {
+            listeners[data.topic]();
+          }
+        },
+        close: noop
+      });
+
+      respondable(frameWin, 'greeting', 'hello');
+      assert.isTrue(listener.called);
+    });
   });
 
   it('can be subscribed to', function(done) {
@@ -120,7 +243,10 @@ describe('axe.utils.respondable', function() {
 
   it('does not expose private methods', function() {
     var methods = Object.keys(respondable).sort();
-    assert.deepEqual(methods, ['subscribe', 'isInFrame'].sort());
+    assert.deepEqual(
+      methods,
+      ['subscribe', 'isInFrame', 'updateMessenger'].sort()
+    );
   });
 
   it('passes serialized information only', function(done) {
@@ -134,6 +260,80 @@ describe('axe.utils.respondable', function() {
     );
 
     respondable(frameWin, 'greeting', div);
+  });
+
+  it('posts message to allowed origins', function() {
+    axe.configure({
+      allowedOrigins: [window.location.origin, 'http://customOrigin.com']
+    });
+
+    var spy = sinon.spy(frameWin, 'postMessage');
+    var posted = respondable(frameWin, 'greeting');
+    assert.isTrue(posted);
+    assert.equal(spy.callCount, 2);
+    assert.deepEqual(spy.firstCall.args[1], window.location.origin);
+    assert.deepEqual(spy.secondCall.args[1], 'http://customOrigin.com');
+  });
+
+  it('posts message to allowed origins using <same_origin>', function() {
+    axe.configure({
+      allowedOrigins: ['<same_origin>']
+    });
+
+    var spy = sinon.spy(frameWin, 'postMessage');
+    var posted = respondable(frameWin, 'greeting');
+    assert.isTrue(posted);
+    assert.equal(spy.callCount, 1);
+    assert.deepEqual(spy.firstCall.args[1], window.location.origin);
+  });
+
+  it('posts message to allowed origins using <unsafe_all_origins>', function() {
+    axe.configure({
+      allowedOrigins: ['http://customOrigin.com', '<unsafe_all_origins>']
+    });
+
+    var spy = sinon.spy(frameWin, 'postMessage');
+    var posted = respondable(frameWin, 'greeting');
+    assert.isTrue(posted);
+    assert.equal(spy.callCount, 1);
+    assert.equal(spy.firstCall.args[1], '*');
+  });
+
+  it('does not post message if no allowed origins', function() {
+    axe.configure({
+      allowedOrigins: []
+    });
+    var spy = sinon.spy(frameWin, 'postMessage');
+    var posted = respondable(frameWin, 'greeting');
+    assert.isFalse(posted);
+    assert.isFalse(spy.called);
+  });
+
+  it('does not post message if no allowed origins', function() {
+    axe._audit.allowedOrigins = null;
+    var spy = sinon.spy(frameWin, 'postMessage');
+    var posted = respondable(frameWin, 'greeting');
+    assert.isFalse(posted);
+    assert.isFalse(spy.called);
+  });
+
+  it('does not post message if allowed origins is empty', function() {
+    axe.configure({
+      allowedOrigins: []
+    });
+    var spy = sinon.spy(frameWin, 'postMessage');
+    var posted = respondable(frameWin, 'greeting');
+    assert.isFalse(posted);
+    assert.isFalse(spy.called);
+  });
+
+  it('throws error if origin is invalid', function() {
+    axe.configure({
+      allowedOrigins: ['foo.com']
+    });
+    assert.throws(function() {
+      respondable(frameWin, 'greeting');
+    }, 'allowedOrigins value "foo.com" is not a valid origin');
   });
 
   describe('subscribe', function() {
@@ -308,6 +508,12 @@ describe('axe.utils.respondable', function() {
     it('throws when targeting a window that is not a frame in the page', function() {
       var blankPage = window.open('');
       var frameCopy = window.open(frameWin.location.href);
+
+      // seems ie11 can't open new windows?
+      if (!blankPage) {
+        return;
+      }
+
       // Cleanup
       setTimeout(function() {
         blankPage.close();
@@ -341,6 +547,36 @@ describe('axe.utils.respondable', function() {
         }, done),
         100
       );
+    });
+
+    it('is not called if origin does not match', function(done) {
+      axe.configure({
+        allowedOrigins: ['http://customOrigin.com']
+      });
+      var spy = sinon.spy();
+
+      frameSubscribe('greeting', spy);
+      respondable(frameWin, 'greeting', 'hello');
+
+      setTimeout(function() {
+        assert.isFalse(spy.called);
+        done();
+      }, 500);
+    });
+
+    it('is called if origin is <unsafe_all_origins>', function(done) {
+      axe.configure({
+        allowedOrigins: ['<unsafe_all_origins>']
+      });
+      var spy = sinon.spy();
+
+      frameSubscribe('greeting', spy);
+      respondable(frameWin, 'greeting', 'hello');
+
+      setTimeout(function() {
+        assert.isTrue(spy.called);
+        done();
+      }, 500);
     });
   });
 

@@ -101,6 +101,11 @@ describe('Audit', function() {
       var audit = new Audit();
       assert.isFalse(audit.noHtml);
     });
+
+    it('should set allowedOrigins', function() {
+      var audit = new Audit();
+      assert.deepEqual(audit.allowedOrigins, [window.location.origin]);
+    });
   });
 
   describe('Audit#_constructHelpUrls', function() {
@@ -445,6 +450,13 @@ describe('Audit', function() {
       audit.resetRulesAndChecks();
       assert.isFalse(audit.noHtml);
     });
+
+    it('should reset allowedOrigins', function() {
+      var audit = new Audit();
+      audit.allowedOrigins = ['hello'];
+      audit.resetRulesAndChecks();
+      assert.deepEqual(audit.allowedOrigins, [window.location.origin]);
+    });
   });
 
   describe('Audit#addCheck', function() {
@@ -521,6 +533,39 @@ describe('Audit', function() {
       assert.equal(typeof audit.checks.target.evaluate, 'function');
       assert.equal(typeof audit.data.checks.target.messages.fail, 'function');
       assert.equal(audit.data.checks.target.messages.fail(), 'it failed');
+    });
+  });
+
+  describe('Audit#setAllowedOrigins', function() {
+    it('should set allowedOrigins', function() {
+      var audit = new Audit();
+      audit.setAllowedOrigins([
+        'https://deque.com',
+        'https://dequeuniversity.com'
+      ]);
+      assert.deepEqual(audit.allowedOrigins, [
+        'https://deque.com',
+        'https://dequeuniversity.com'
+      ]);
+    });
+
+    it('should normalize <same_origin>', function() {
+      var audit = new Audit();
+      audit.setAllowedOrigins(['<same_origin>', 'https://deque.com']);
+      assert.deepEqual(audit.allowedOrigins, [
+        window.location.origin,
+        'https://deque.com'
+      ]);
+    });
+
+    it('should normalize <unsafe_all_origins>', function() {
+      var audit = new Audit();
+      audit.setAllowedOrigins([
+        'https://deque.com',
+        '<unsafe_all_origins>',
+        '<same_origin>'
+      ]);
+      assert.deepEqual(audit.allowedOrigins, ['*']);
     });
   });
 
@@ -1307,6 +1352,13 @@ describe('Audit', function() {
       var out = a.normalizeOptions(opt);
       assert(out.runOnly.type, 'rule');
       assert.deepEqual(out.runOnly.values, ['positive1', 'negative1']);
+    });
+
+    it('allows runOnly as a string as an alternative to an array', function() {
+      var opt = { runOnly: 'positive1' };
+      var out = a.normalizeOptions(opt);
+      assert(out.runOnly.type, 'rule');
+      assert.deepEqual(out.runOnly.values, ['positive1']);
     });
 
     it('throws an error if runOnly contains both rules and tags', function() {

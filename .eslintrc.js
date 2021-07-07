@@ -1,14 +1,15 @@
 module.exports = {
   extends: ['prettier'],
   parserOptions: {
-    ecmaVersion: 9
+    ecmaVersion: 2021
   },
   env: {
     node: true,
     es6: true
   },
   globals: {
-    axe: true
+    axe: true,
+    Promise: true
   },
   rules: {
     'no-bitwise': 2,
@@ -98,7 +99,8 @@ module.exports = {
       globals: {
         assert: true,
         helpers: true,
-        checks: true
+        checks: true,
+        sinon: true
       },
       plugins: ['mocha-no-only'],
       rules: {

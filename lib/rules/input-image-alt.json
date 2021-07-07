@@ -10,6 +10,7 @@
     "section508.22.a",
     "ACT"
   ],
+  "actIds": ["59796f"],
   "metadata": {
     "description": "Ensures <input type=\"image\"> elements have alternate text",
     "help": "Image buttons must have alternate text"

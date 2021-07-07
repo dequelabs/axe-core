@@ -78,7 +78,7 @@ declare namespace axe {
     };
   }
   interface RunOptions {
-    runOnly?: RunOnly | TagValue[] | string[];
+    runOnly?: RunOnly | TagValue[] | string[] | string;
     rules?: RuleObject;
     reporter?: ReporterVersion;
     resultTypes?: resultGroups[];
@@ -200,12 +200,13 @@ declare namespace axe {
     disableOtherRules?: boolean;
     axeVersion?: string;
     noHtml?: boolean;
+    allowedOrigins?: string[];
     // Deprecated - do not use.
     ver?: string;
   }
   interface Check {
     id: string;
-    evaluate: Function | string;
+    evaluate?: Function | string;
     after?: Function | string;
     options?: any;
     matches?: string;
@@ -278,6 +279,26 @@ declare namespace axe {
   ): void;
 
   /**
+   * TODO
+   * @param context
+   * @param options
+   */
+  function runPartial(
+    context: ElementContext,
+    options: RunOptions
+  ): Promise<unknown>;
+
+  /**
+   * TODO
+   * @param partialResults
+   * @param options
+   */
+  function finishRun(
+    partialResults: unknown,
+    options: RunOptions
+  ): Promise<AxeResults>;
+
+  /**
    * Method for configuring the data format used by axe. Helpful for adding new
    * rules, which must be registered with the library to execute.
    * @param  {Spec}       Spec Object with valid `branding`, `reporter`, `checks` and `rules` data
@@ -306,6 +327,35 @@ declare namespace axe {
    * Function to clean up plugin configuration in document and its subframes
    */
   function cleanup(): void;
+
+  /**
+   * Set up alternative frame communication
+   */
+  function frameMessenger(frameMessenger: FrameMessenger): void;
+
+  // axe.frameMessenger
+  type FrameMessenger = {
+    open: (topicHandler: TopicHandler) => Close | void;
+    post: (
+      frameWindow: Window,
+      data: TopicData,
+      replyHandler: ReplyHandler
+    ) => boolean | void;
+  };
+  type Close = Function;
+  type TopicHandler = (data: TopicData, responder: Responder) => void;
+  type ReplyHandler = (
+    message: any | Error,
+    keepalive: boolean,
+    responder: Responder
+  ) => void;
+  type Responder = (
+    message: any | Error,
+    keepalive?: boolean,
+    replyHandler?: ReplyHandler
+  ) => void;
+  type TopicData = { topic: string } & ReplyData;
+  type ReplyData = { channelId: string; message: any; keepalive: boolean };
 }
 
 export = axe;

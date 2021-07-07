@@ -5,15 +5,17 @@ describe('bypass fail test', function() {
     var mocha = document.getElementById('mocha'),
       html = mocha.innerHTML;
     mocha.innerHTML = '';
-    axe.run({ runOnly: { type: 'rule', values: ['bypass'] } }, function(
-      err,
-      r
-    ) {
-      assert.isNull(err);
+    axe.testUtils.awaitNestedLoad(function() {
+      axe.run({ runOnly: { type: 'rule', values: ['bypass'] } }, function(
+        err,
+        r
+      ) {
+        assert.isNull(err);
 
-      results = r;
-      mocha.innerHTML = html;
-      done();
+        results = r;
+        mocha.innerHTML = html;
+        done();
+      });
     });
   });
 

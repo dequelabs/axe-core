@@ -16,7 +16,7 @@ var axeVersion = packageJSON.version.substring(
 );
 
 var descriptionTableHeader =
-  '| Rule ID | Description | Impact | Tags | Issue Type |\n| :------- | :------- | :------- | :------- | :------- |\n';
+  '| Rule ID | Description | Impact | Tags | Issue Type | ACT Rules |\n| :------- | :------- | :------- | :------- | :------- | :------- |\n';
 
 dot.templateSettings.strip = false;
 
@@ -273,7 +273,12 @@ function buildRules(grunt, options, commons, callback) {
 
     function parseFailureForRule(rule) {
       function hasFailure(definition, out) {
-        if (definition && definition.metadata && definition.metadata.impact) {
+        if (
+          !rule.reviewOnFail &&
+          definition &&
+          definition.metadata &&
+          definition.metadata.impact
+        ) {
           out = out || !!definition.metadata.messages.fail;
         }
         return out;
@@ -289,7 +294,10 @@ function buildRules(grunt, options, commons, callback) {
     function parseIncompleteForRule(rule) {
       function hasIncomplete(definition, out) {
         if (definition && definition.metadata && definition.metadata.impact) {
-          out = out || !!definition.metadata.messages.incomplete;
+          out =
+            out ||
+            !!definition.metadata.messages.incomplete ||
+            rule.reviewOnFail;
         }
         return out;
       }
@@ -299,6 +307,15 @@ function buildRules(grunt, options, commons, callback) {
         traverseChecks(rule.all, hasIncomplete, false) ||
         traverseChecks(rule.none, hasIncomplete, false)
       );
+    }
+
+    function createActLinksForRule(rule) {
+      var actIds = rule.actIds || [];
+      var actLinks = [];
+      actIds.forEach(id =>
+        actLinks.push(`[${id}](https://act-rules.github.io/rules/${id})`)
+      );
+      return actLinks.join(', ');
     }
 
     rules.map(function(rule) {
@@ -334,12 +351,15 @@ function buildRules(grunt, options, commons, callback) {
         issueType.push('needs&nbsp;review');
       }
 
+      var actLinks = createActLinksForRule(rule);
+
       rules.push([
         `[${rule.id}](https://dequeuniversity.com/rules/axe/${axeVersion}/${rule.id}?application=RuleDescription)`,
         entities.encode(rule.metadata.description),
         impact,
         rule.tags.join(', '),
-        issueType.join(', ')
+        issueType.join(', '),
+        actLinks
       ]);
       if (tags.length) {
         rule.enabled = !!rule.tags.filter(function(t) {

@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.1.4",
+  "version": "4.2.3",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -53,6 +53,9 @@
   "standard-version": {
     "scripts": {
       "postbump": "npm ci && npm run sri-update"
+    },
+    "skip": {
+      "tag": true
     }
   },
   "scripts": {
@@ -87,12 +90,12 @@
     "test:rule-help-version": "mocha test/test-rule-help-version.js",
     "test:node": "mocha test/node/*.js",
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",
-    "release": "standard-version -a",
+    "release": "git fetch origin --tags --force && standard-version -a",
     "rule-gen": "node build/rule-generator",
     "next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "sri-validate": "node build/sri-update --validate",
-    "fmt": "prettier --write *.{json,md,js} **/*.ts './{.github,build,doc,lib,test}/**/*.{json,md,js,ts,html}'"
+    "fmt": "prettier --write .*.json *.{json,md,js} **/*.ts './{.circleci,.github,build,doc,lib,locales,test,typings}/**/*.{json,md,js,ts,html}'"
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",
@@ -104,14 +107,14 @@
     "aria-query": "^3.0.0",
     "chai": "~4.2.0",
     "chalk": "^4.1.0",
-    "chromedriver": "latest",
+    "chromedriver": "^90.0.0",
     "clone": "^2.1.2",
     "conventional-commits-parser": "^3.1.0",
     "css-selector-parser": "^1.3.0",
     "emoji-regex": "8.0.0",
     "es6-promise": "^4.2.6",
     "esbuild": "^0.7.19",
-    "eslint": "^6.1.0",
+    "eslint": "^7.27.0",
     "eslint-config-prettier": "^6.2.0",
     "eslint-plugin-mocha-no-only": "^1.1.1",
     "execa": "^2.0.2",
@@ -129,13 +132,14 @@
     "jquery": "^3.0.0",
     "jsdoc": "^3.5.5",
     "jsdom": "^16.3.0",
-    "karma": "^5.2.3",
+    "karma": "^6.3.2",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-firefox-launcher": "^2.1.0",
     "karma-ie-launcher": "^1.0.0",
     "karma-mocha": "^2.0.1",
     "karma-mocha-reporter": "^2.2.5",
+    "karma-sinon": "^1.0.5",
     "lint-staged": "^9.2.1",
     "make-dir": "^3.0.0",
     "markdown-table": "^1.1.2",
@@ -159,7 +163,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "grunt configure && lint-staged"
     }
   },
   "lint-staged": {

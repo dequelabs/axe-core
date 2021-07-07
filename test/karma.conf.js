@@ -71,13 +71,14 @@ module.exports = function(config) {
     plugins: [
       'karma-mocha',
       'karma-chai',
+      'karma-sinon',
       'karma-mocha-reporter',
       'karma-chrome-launcher',
       'karma-firefox-launcher',
       'karma-ie-launcher',
       require('./integration/rules/preprocessor')
     ],
-    frameworks: ['mocha', 'chai'],
+    frameworks: ['mocha', 'chai', 'sinon'],
     files: [
       { pattern: 'test/mock/**/*.html', included: false, served: true },
       { pattern: 'test/integration/**/*.css', included: false, served: true },
