@@ -144,6 +144,11 @@ describe('utils.matches', function() {
       });
     });
 
+    it('returns true if :root matches', function() {
+      var tree = axe.setup();
+      assert.isTrue(matches(tree, ':root'));
+    });
+
     describe(':not', function() {
       it('returns true if :not matches using tag', function() {
         var virtualNode = queryFixture('<h1 id="target">foo</h1>');
