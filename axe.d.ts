@@ -45,9 +45,11 @@ declare namespace axe {
     | 'embedded'
     | 'interactive';
 
+  type Selector = Array<string | string[]>
+
   type ContextObject = {
-    include?: string[] | string[][];
-    exclude?: string[] | string[][];
+    include?: Selector;
+    exclude?: Selector;
   };
 
   type RunCallback = (error: Error, results: AxeResults) => void;
@@ -241,9 +243,35 @@ declare namespace axe {
     helpUrl: string;
     tags: string[];
   }
+  interface SerialDqElement {
+    source: string
+    nodeIndexes: number[]
+    selector: number[],
+    xpath: number[],
+    ancestry: number[],
+  }
+  interface PartialRuleResult {
+    id: string,
+    result: 'inapplicable',
+    pageLevel: boolean,
+    impact: null,
+    nodes: object[],
+  }
+  interface PartialResult {
+    frames: SerialDqElement[]
+    results: PartialRuleResult[]
+  }
+  interface FrameContext {
+    frameSelector: Selector,
+    frameContext: ContextObject
+  }
+  interface Utils {
+    getFrameContexts: (context: ElementContext | null) => FrameContext[]
+  }
 
   let version: string;
   let plugins: any;
+  let utils: Utils;
 
   /**
    * Source string to use as an injected script in Selenium
@@ -279,31 +307,32 @@ declare namespace axe {
   ): void;
 
   /**
-   * TODO
-   * @param context
-   * @param options
-   */
-  function runPartial(
-    context: ElementContext,
-    options: RunOptions
-  ): Promise<unknown>;
-
-  /**
-   * TODO
-   * @param partialResults
-   * @param options
-   */
-  function finishRun(
-    partialResults: unknown,
-    options: RunOptions
-  ): Promise<AxeResults>;
-
-  /**
    * Method for configuring the data format used by axe. Helpful for adding new
    * rules, which must be registered with the library to execute.
    * @param  {Spec}       Spec Object with valid `branding`, `reporter`, `checks` and `rules` data
    */
   function configure(spec: Spec): void;
+
+  /**
+   * Run axe in the current window only
+   * @param   {ElementContext} context  Optional The `Context` specification object @see Context
+   * @param   {RunOptions}     options  Optional Options passed into rules or checks, temporarily modifying them.
+   * @returns {Promise<PartialResult>}  Partial result, for use in axe.finishRun.
+   */
+  function runPartial(
+    context: ElementContext,
+    options: RunOptions
+  ): Promise<PartialResult>;
+
+  /**
+   * Create a report from axe.runPartial results
+   * @param   {PartialResult[]}     partialResults  Results from axe.runPartial, calls in different frames on the page.
+   * @param   {RunOptions}     options  Optional Options passed into rules or checks, temporarily modifying them.
+   */
+  function finishRun(
+    partialResults: PartialResult[],
+    options: RunOptions
+  ): Promise<AxeResults>;
 
   /**
    * Searches and returns rules that contain a tag in the list of tags.
