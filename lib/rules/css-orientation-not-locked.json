@@ -1,0 +1,18 @@
+{
+  "id": "css-orientation-not-locked",
+  "matches": "css-orientation-not-locked-matches.js",
+  "tags": [
+    "cat.structure",
+    "wcag262",
+    "wcag21aa"
+  ],
+  "metadata": {
+    "description": "",
+    "help": ""
+  },
+  "all": [
+    "css-orientation-not-locked"
+  ],
+  "any": [],
+  "none": []
+}
