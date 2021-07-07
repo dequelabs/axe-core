@@ -33,7 +33,7 @@ describe('heading-order', function() {
 
   it('should handle incorrect aria-level values', function() {
     var vNode = queryFixture(
-      '<div role="heading" aria-level="-1" id="target">One</div><div role="heading" aria-level="12">Two</div><div role="heading">Three</div>'
+      '<div role="heading" aria-level="-1" id="target">One</div><div role="heading">Two</div>'
     );
     assert.isTrue(
       axe.testUtils
@@ -49,10 +49,25 @@ describe('heading-order', function() {
         {
           ancestry: ['html > body > div:nth-child(1) > div:nth-child(2)'],
           level: 2
-        },
+        }
+      ]
+    });
+  });
+
+  it('should allow high aria-level values', function() {
+    var vNode = queryFixture(
+      '<div role="heading" aria-level="12" id="target">One</div>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('heading-order')
+        .call(checkContext, null, {}, vNode, {})
+    );
+    assert.deepEqual(checkContext._data, {
+      headingOrder: [
         {
-          ancestry: ['html > body > div:nth-child(1) > div:nth-child(3)'],
-          level: 2
+          ancestry: ['html > body > div:nth-child(1) > div'],
+          level: 12
         }
       ]
     });
@@ -74,6 +89,84 @@ describe('heading-order', function() {
         {
           ancestry: ['html > body > div:nth-child(1) > h3:nth-child(2)'],
           level: 3
+        }
+      ]
+    });
+  });
+
+  it('should allow aria-level to override semantic level for hn tags and return true', function() {
+    var vNode = queryFixture(
+      '<h1 aria-level="2" id="target">Two</h1><h3 aria-level="4">Four</h3>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('heading-order')
+        .call(checkContext, null, {}, vNode, {})
+    );
+    assert.deepEqual(checkContext._data, {
+      headingOrder: [
+        {
+          ancestry: ['html > body > div:nth-child(1) > h1:nth-child(1)'],
+          level: 2
+        },
+        {
+          ancestry: ['html > body > div:nth-child(1) > h3:nth-child(2)'],
+          level: 4
+        }
+      ]
+    });
+  });
+
+  it('should ignore aria-level on iframe when not used with role=heading', function() {
+    var vNode = queryFixture('<iframe aria-level="2"></iframe>');
+    axe.testUtils
+      .getCheckEvaluate('heading-order')
+      .call(checkContext, null, {}, vNode, { initiator: true });
+    assert.deepEqual(checkContext._data, {
+      headingOrder: [
+        {
+          ancestry: ['html > body > div:nth-child(1) > iframe'],
+          level: -1
+        }
+      ]
+    });
+  });
+
+  it('should correctly give level on hn tag with role=heading', function() {
+    var vNode = queryFixture(
+      '<h1 role="heading" id="target">One</h1><h3 role="heading">Three</h3>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('heading-order')
+        .call(checkContext, null, {}, vNode, {})
+    );
+    assert.deepEqual(checkContext._data, {
+      headingOrder: [
+        {
+          ancestry: ['html > body > div:nth-child(1) > h1:nth-child(1)'],
+          level: 1
+        },
+        {
+          ancestry: ['html > body > div:nth-child(1) > h3:nth-child(2)'],
+          level: 3
+        }
+      ]
+    });
+  });
+
+  it('should return the heading level when an hn tag has an invalid aria-level', function() {
+    var vNode = queryFixture('<h1 aria-level="-1" id="target">One</h1>');
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('heading-order')
+        .call(checkContext, null, {}, vNode, {})
+    );
+    assert.deepEqual(checkContext._data, {
+      headingOrder: [
+        {
+          ancestry: ['html > body > div:nth-child(1) > h1'],
+          level: 1
         }
       ]
     });

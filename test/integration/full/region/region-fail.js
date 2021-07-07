@@ -2,13 +2,15 @@ describe('region fail test', function() {
   'use strict';
   var results;
   before(function(done) {
-    axe.run({ runOnly: { type: 'rule', values: ['region'] } }, function(
-      err,
-      r
-    ) {
-      assert.isNull(err);
-      results = r;
-      done();
+    axe.testUtils.awaitNestedLoad(function() {
+      axe.run({ runOnly: { type: 'rule', values: ['region'] } }, function(
+        err,
+        r
+      ) {
+        assert.isNull(err);
+        results = r;
+        done();
+      });
     });
   });
 

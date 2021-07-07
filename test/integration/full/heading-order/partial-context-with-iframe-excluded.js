@@ -16,7 +16,6 @@ describe('heading-order-partial-context-with-iframe test', function() {
     });
   });
 
-
   it('should find 1 passes', function() {
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.passes[0].nodes, 1);

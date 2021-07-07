@@ -152,6 +152,32 @@ describe('VirtualNode', function() {
       });
     });
 
+    describe('nodeIndex', function() {
+      it('increments nodeIndex when a parent is passed', function() {
+        var vHtml = new VirtualNode({ nodeName: 'html' });
+        var vHead = new VirtualNode({ nodeName: 'head' }, vHtml);
+        var vTitle = new VirtualNode({ nodeName: 'title' }, vHead);
+        var vBody = new VirtualNode({ nodeName: 'body' }, vHtml);
+
+        assert.equal(vHtml.nodeIndex, 0);
+        assert.equal(vHead.nodeIndex, 1);
+        assert.equal(vTitle.nodeIndex, 2);
+        assert.equal(vBody.nodeIndex, 3);
+      });
+
+      it('resets nodeIndex when no parent is passed', function() {
+        var vHtml = new VirtualNode({ nodeName: 'html' });
+        var vHead = new VirtualNode({ nodeName: 'head' }, vHtml);
+        assert.equal(vHtml.nodeIndex, 0);
+        assert.equal(vHead.nodeIndex, 1);
+
+        vHtml = new VirtualNode({ nodeName: 'html' });
+        vHead = new VirtualNode({ nodeName: 'head' }, vHtml);
+        assert.equal(vHtml.nodeIndex, 0);
+        assert.equal(vHead.nodeIndex, 1);
+      });
+    });
+
     describe.skip('isFocusable', function() {
       var commons;
 

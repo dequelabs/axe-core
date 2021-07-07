@@ -4,6 +4,7 @@
   "options": {
     "ignoreUnicode": true,
     "ignoreLength": false,
+    "ignorePseudo": false,
     "boldValue": 700,
     "boldTextPt": 14,
     "largeTextPt": 18,

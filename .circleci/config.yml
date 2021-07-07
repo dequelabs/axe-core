@@ -135,11 +135,13 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
-      # install Chrome Canary
+      # install Chrome Beta
       - run: |
-          wget https://dl.google.com/linux/direct/google-chrome-unstable_current_amd64.deb
-          sudo apt install ./google-chrome-unstable_current_amd64.deb
-      - run: npm run test -- --browsers ChromeCanary,FirefoxNightly
+          wget https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb
+          sudo apt install ./google-chrome-beta_current_amd64.deb
+      - run: |
+          CHROME_BIN="$(which google-chrome-beta)" && echo "CHROME_BIN: $CHROME_BIN"
+          npm run test -- --browsers Chrome,FirefoxNightly
 
   # Test api docs can be built
   build_api_docs:

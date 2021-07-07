@@ -12,6 +12,8 @@ Add your project/integration to this file and submit a pull request.
 1. [axe-core/react](https://www.npmjs.com/package/@axe-core/react)
 1. [axe-core/cli](https://www.npmjs.com/package/@axe-core/cli)
 1. [axe-core/webdriverjs](https://www.npmjs.com/package/@axe-core/webdriverjs)
+1. [axe-core/webdriverio](https://www.npmjs.com/package/@axe-core/webdriverio)
+1. [axe-core/playwright](https://www.npmjs.com/package/@axe-core/playwright)
 1. [axe-core/puppeteer](https://www.npmjs.com/package/@axe-core/puppeteer)
 1. [axe-core-selenium (Java)](https://search.maven.org/artifact/com.deque.html.axe-core/selenium)
 1. [axe-core-capybara (Ruby)](https://rubygems.org/gems/axe-core-capybara/)

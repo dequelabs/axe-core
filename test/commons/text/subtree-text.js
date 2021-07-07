@@ -34,6 +34,21 @@ describe('text.subtreeText', function() {
     assert.equal(subtreeText(fixture), 'foobarbazfizzbuzz');
   });
 
+  it('returns `` for embedded content', function() {
+    fixtureSetup(
+      '<video>foo</video>' +
+      '<audio>foo</audio>' +
+      '<canvas>foo</canvas>' +
+      '<iframe>foo</iframe>' +
+      '<svg>foo</svg>'
+    );
+    var children = axe._tree[0].children;
+    assert.lengthOf(children, 5);
+    children.forEach(function (embeddedContent) {
+      assert.equal(subtreeText(embeddedContent), '');
+    });
+  });
+
   describe('context.processed', function() {
     beforeEach(function() {
       fixtureSetup('<h1>foo</h1>');

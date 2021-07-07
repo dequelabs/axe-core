@@ -26,7 +26,6 @@ describe('standards.getElementsByContentType', function() {
       'img',
       'math',
       'object',
-      'picture',
       'svg',
       'video'
     ]);
