@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.2.3](https://github.com/dequelabs/axe-core/compare/v4.2.2...v4.2.3) (2021-06-22)
+
+### Bug Fixes
+
+- **accText:** ignore text in embedded content elements ([#3022](https://github.com/dequelabs/axe-core/issues/3022)) ([8fb4635](https://github.com/dequelabs/axe-core/commit/8fb4635e01c82b80ff23994edad180dd73730a98)), closes [#3017](https://github.com/dequelabs/axe-core/issues/3017)
+- **color-contrast:** add special case for new sr-only technique ([#2985](https://github.com/dequelabs/axe-core/issues/2985)) ([79cbf01](https://github.com/dequelabs/axe-core/commit/79cbf0168bdb9311db2e31043ad36c20b77e39fe))
+- **color-contrast:** check for pseudo elements on element itself, not just parents ([#2980](https://github.com/dequelabs/axe-core/issues/2980)) ([3122550](https://github.com/dequelabs/axe-core/commit/3122550b1beaeafaac62c81fb47bcd4290ba266a))
+- **frame-tested:** run without respondable ([#2942](https://github.com/dequelabs/axe-core/issues/2942)) ([a1d725d](https://github.com/dequelabs/axe-core/commit/a1d725d5cdedc4bfd6ba69bb25aa0a1213fd63cf))
+- **publish-metadata:** use fail message for rules with reviewOnFail:true ([#2987](https://github.com/dequelabs/axe-core/issues/2987)) ([00fefa9](https://github.com/dequelabs/axe-core/commit/00fefa9bfb9479279afc89b2da45e748bace77d2))
+- **sri-history:** add backported releases ([#3004](https://github.com/dequelabs/axe-core/issues/3004)) ([0332e80](https://github.com/dequelabs/axe-core/commit/0332e806524ca9ca78512423a70eb80d623795eb))
+
+### [4.2.2](https://github.com/dequelabs/axe-core/compare/v4.2.1...v4.2.2) (2021-06-03)
+
+### Bug Fixes
+
+- **aria-allowed-attr:** allow aria-posinset and aria-setsize on row elements for treegrids ([#2952](https://github.com/dequelabs/axe-core/issues/2952)) ([3023e69](https://github.com/dequelabs/axe-core/commit/3023e697b85c13f18f2cbb46b202400d8ce6a10d))
+- **heading-order:** Prevent crash on page with iframes but no headings ([#2965](https://github.com/dequelabs/axe-core/issues/2965)) ([4b7db37](https://github.com/dequelabs/axe-core/commit/4b7db3763735891972b8a13d6622fa30a687f3cb))
+- **meta-viewport:** test that a user-scalable number does not prevent zoom ([048c5c1](https://github.com/dequelabs/axe-core/commit/048c5c18c8245a43721a12237ac5f07f5b4a856b))
+- JS error in @axe-core/react caused by stale reference to heading ([3afda4e](https://github.com/dequelabs/axe-core/commit/3afda4effc4a099632138c5874ab305baaa5934a))
+
 ### [4.2.1](https://github.com/dequelabs/axe-core/compare/v4.2.0...v4.2.1) (2021-05-18)
 
 ### Bug Fixes

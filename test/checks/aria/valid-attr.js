@@ -1,38 +1,33 @@
 describe('aria-valid-attr', function() {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
+  var queryFixture = axe.testUtils.queryFixture;
   var checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function() {
-    fixture.innerHTML = '';
     checkContext.reset();
-    axe.reset();
   });
 
   it('should return false if any invalid ARIA attributes are found', function() {
-    var node = document.createElement('div');
-    node.id = 'test';
-    node.tabIndex = 1;
-    node.setAttribute('aria-cats', 'true');
-    node.setAttribute('aria-dogs', 'true');
-    fixture.appendChild(node);
-
+    var vNode = queryFixture(
+      '<div id="target" tabindex="1" aria-cats="true" aria-dogs="true"></div>'
+    );
     assert.isFalse(
-      axe.testUtils.getCheckEvaluate('aria-valid-attr').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('aria-valid-attr')
+        .call(checkContext, null, null, vNode)
     );
     assert.deepEqual(checkContext._data, ['aria-cats', 'aria-dogs']);
   });
 
   it('should return true if no invalid ARIA attributes are found', function() {
-    var node = document.createElement('div');
-    node.id = 'test';
-    node.tabIndex = 1;
-    node.setAttribute('aria-selected', 'true');
-    fixture.appendChild(node);
-
+    var vNode = queryFixture(
+      '<div id="target" tabindex="1" aria-selected="true"></div>'
+    );
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('aria-valid-attr').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('aria-valid-attr')
+        .call(checkContext, null, null, vNode)
     );
     assert.isNull(checkContext._data);
   });
@@ -48,27 +43,26 @@ describe('aria-valid-attr', function() {
       }
     });
 
-    var node = document.createElement('div');
-    node.id = 'test';
-    node.tabIndex = 1;
-    node.setAttribute('aria-mccheddarton', 'true');
-    fixture.appendChild(node);
-
+    var vNode = queryFixture(
+      '<div id="target" tabindex="1" aria-mccheddarton="true"></div>'
+    );
     assert.isTrue(
-      axe.testUtils.getCheckEvaluate('aria-valid-attr').call(checkContext, node)
+      axe.testUtils
+        .getCheckEvaluate('aria-valid-attr')
+        .call(checkContext, null, null, vNode)
     );
     assert.isNull(checkContext._data);
   });
 
   describe('options', function() {
     it('should exclude provided attribute names', function() {
-      fixture.innerHTML =
-        '<div id="target" aria-bats="cats" aria-puppies="2"></div>';
-      var target = fixture.children[0];
+      var vNode = queryFixture(
+        '<div id="target" aria-bats="cat" aria-puppies="2"></div>'
+      );
       assert.isTrue(
         axe.testUtils
           .getCheckEvaluate('aria-valid-attr')
-          .call(checkContext, target, ['aria-bats', 'aria-puppies'])
+          .call(checkContext, null, ['aria-bats', 'aria-puppies'], vNode)
       );
     });
   });

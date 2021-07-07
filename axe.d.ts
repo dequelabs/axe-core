@@ -78,7 +78,7 @@ declare namespace axe {
     };
   }
   interface RunOptions {
-    runOnly?: RunOnly | TagValue[] | string[];
+    runOnly?: RunOnly | TagValue[] | string[] | string;
     rules?: RuleObject;
     reporter?: ReporterVersion;
     resultTypes?: resultGroups[];
@@ -279,6 +279,26 @@ declare namespace axe {
   ): void;
 
   /**
+   * TODO
+   * @param context
+   * @param options
+   */
+  function runPartial(
+    context: ElementContext,
+    options: RunOptions
+  ): Promise<unknown>;
+
+  /**
+   * TODO
+   * @param partialResults
+   * @param options
+   */
+  function finishRun(
+    partialResults: unknown,
+    options: RunOptions
+  ): Promise<AxeResults>;
+
+  /**
    * Method for configuring the data format used by axe. Helpful for adding new
    * rules, which must be registered with the library to execute.
    * @param  {Spec}       Spec Object with valid `branding`, `reporter`, `checks` and `rules` data
@@ -318,20 +338,24 @@ declare namespace axe {
     open: (topicHandler: TopicHandler) => Close | void;
     post: (
       frameWindow: Window,
-      data: TopicData | ReplyData,
+      data: TopicData,
       replyHandler: ReplyHandler
-    ) => void;
+    ) => boolean | void;
   };
   type Close = Function;
-  type TopicHandler = (data: TopicData, responder?: Responder) => void;
-  type ReplyHandler = (data: ReplyData, responder?: Responder) => void;
-  type Responder = (
-    message: any,
+  type TopicHandler = (data: TopicData, responder: Responder) => void;
+  type ReplyHandler = (
+    message: any | Error,
     keepalive: boolean,
-    replyHandler: ReplyHandler
+    responder: Responder
   ) => void;
-  type TopicData = { topic: String } & ReplyData;
-  type ReplyData = { channelId: String; message: any; keepAlive: Boolean };
+  type Responder = (
+    message: any | Error,
+    keepalive?: boolean,
+    replyHandler?: ReplyHandler
+  ) => void;
+  type TopicData = { topic: string } & ReplyData;
+  type ReplyData = { channelId: string; message: any; keepalive: boolean };
 }
 
 export = axe;

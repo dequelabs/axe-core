@@ -8,7 +8,8 @@ module.exports = {
     es6: true
   },
   globals: {
-    axe: true
+    axe: true,
+    Promise: true
   },
   rules: {
     'no-bitwise': 2,
