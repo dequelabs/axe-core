@@ -39,7 +39,8 @@ describe('axe.reset', function() {
           selector: 'fail'
         }
       ],
-      reporter: 'v2'
+      reporter: 'v2',
+      runOnly: ['bob']
     });
     assert.lengthOf(axe._audit.rules, 1);
     // TODO: this does not work yet thanks to webpack
@@ -75,6 +76,7 @@ describe('axe.reset', function() {
     assert.equal(axe._audit.rules[0].selector, 'fail');
     assert.equal(axe._audit.reporter, 'v2');
     assert.equal(axe._audit.data.rules.bob.knows, 'not-joe');
+    assert.isNull(axe._audit.runOnly);
   });
 
   describe('when custom locale was provided', function() {
