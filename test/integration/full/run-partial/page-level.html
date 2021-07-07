@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>runPartial, test rule.pageLevel</title>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/node_modules/mocha/mocha.css"
+    />
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/chai/chai.js"></script>
+    <script src="/axe.js"></script>
+    <script>
+      mocha.setup({
+        timeout: 10000,
+        ui: 'bdd'
+      });
+      var assert = chai.assert;
+    </script>
+    <script src="/test/integration/no-ui-reporter.js"></script>
+  </head>
+  <body>
+    <article>
+      <p>No h1 content</p>
+      <iframe id="frame1" src="frames/link.html"></iframe>
+      <a href="http://www.deque.com">stuff</a>
+    </article>
+
+    <div id="mocha"></div>
+    <script src="/test/testutils.js"></script>
+    <script src="page-level.js"></script>
+    <script src="/test/integration/adapter.js"></script>
+  </body>
+</html>

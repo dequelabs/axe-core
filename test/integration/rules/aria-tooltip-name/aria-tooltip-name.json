@@ -1,0 +1,6 @@
+{
+  "description": "aria-tooltip-name test",
+  "rule": "aria-tooltip-name",
+  "passes": [["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"]],
+  "violations": [["#fail1"], ["#fail2"], ["#fail3"]]
+}

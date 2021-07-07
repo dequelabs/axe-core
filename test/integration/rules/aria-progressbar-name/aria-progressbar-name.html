@@ -1,0 +1,26 @@
+<!-- PASS -->
+<div id="pass1" role="progressbar" title="Loading, please wait"></div>
+<div id="pass2" role="progressbar" aria-label="loading, please wait"></div>
+<div id="pass3" role="progressbar" aria-labelledby="loading"></div>
+
+<div id="loading">loading, please wait</div>
+
+<!-- FAIL -->
+<div id="fail1" role="progressbar">loading, please wait</div>
+<div id="fail2" role="progressbar"></div>
+<div id="fail3" role="progressbar" aria-labelledby="loading-non-existant"></div>
+<div id="fail4" role="progressbar" aria-labelledby="loading-empty"></div>
+
+<div id="loading-empty"></div>
+
+<!-- INAPPLICABLE -->
+<img role="progressbar" alt="Label" id="inapplicable1" />
+<input role="progressbar" title="Label" id="inapplicable2" />
+<button role="progressbar" title="Label" id="inapplicable3"></button>
+<a href="#" role="progressbar" title="Label" id="inapplicable4"></a>
+<select role="progressbar" title="Label" id="inapplicable5">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="opel">Opel</option>
+</select>
+<textarea role="progressbar" id="inapplicable6" title="Label"></textarea>

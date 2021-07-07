@@ -1,0 +1,6 @@
+{
+  "description": "aria-treeitem-name test",
+  "rule": "aria-treeitem-name",
+  "passes": [["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"]],
+  "violations": [["#fail1"], ["#fail2"], ["#fail3"]]
+}

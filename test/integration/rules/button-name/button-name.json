@@ -1,13 +1,25 @@
 {
-	"description": "button-name test",
-	"rule": "button-name",
-	"violations": [
-		["#empty"],
-		["#val"],
-		["#alempty"],
-		["#albmissing"],
-		["#albempty"],
-		["#buttonvalue"]
-	],
-	"passes": [["#text"], ["#al"], ["#alb"], ["#combo"], ["#buttonTitle"]]
+  "description": "button-name test",
+  "rule": "button-name",
+  "violations": [
+    ["#empty"],
+    ["#val"],
+    ["#alempty"],
+    ["#albmissing"],
+    ["#albempty"],
+    ["#buttonvalue"],
+    ["#fail1"],
+    ["#fail2"],
+    ["#fail3"],
+    ["#fail4"]
+  ],
+  "passes": [
+    ["#text"],
+    ["#al"],
+    ["#alb"],
+    ["#combo"],
+    ["#buttonTitle"],
+    ["#pass1"],
+    ["#pass2"]
+  ]
 }

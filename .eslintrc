@@ -74,7 +74,9 @@
   "overrides": [
     {
       "files": [
-        "lib/**/*.js"
+        "lib/index.js",
+        "lib/core/**/*.js",
+        "lib/commons/**/*.js"
       ],
       "parserOptions":{
         "sourceType": "module"

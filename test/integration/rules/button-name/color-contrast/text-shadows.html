@@ -1,0 +1,552 @@
+<style>
+  section {
+    display: inline-block;
+    padding: 18px;
+    font-size: 36px;
+  }
+  section > div {
+    display: flex;
+  }
+  i {
+    display: inline-block;
+    padding: 3px 12px;
+    font-style: normal;
+    min-width: 135px;
+    position: relative;
+  }
+
+  .incomplete:after,
+  .violations:after,
+  .passes:after {
+    position: absolute;
+    top: 3px;
+    right: 6px;
+    font-size: 12px;
+    text-shadow: none;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 4px;
+    width: 14px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  section .violations:after {
+    content: '×';
+    color: salmon;
+  }
+  section .incomplete:after {
+    content: '?';
+    color: khaki;
+  }
+  section .passes:after {
+    content: '✓';
+    color: lightgreen;
+  }
+
+  .s1 {
+    color: #666;
+    background-color: #aaa;
+  }
+  .s2 {
+    color: #aaa;
+    background-color: #666;
+  }
+  .s3 {
+    color: #666;
+    background-color: #666;
+  }
+  .s4 {
+    color: #aaa;
+    background-color: #aaa;
+  }
+  .s5 {
+    color: #aaa;
+    background-color: #333;
+  }
+
+  .f1 {
+    font-size: 12px;
+  }
+  .f2 {
+    font-size: 16px;
+  }
+  .f3 {
+    font-size: 20px;
+  }
+  .f4 {
+    font-size: 24px;
+  }
+  .f5 {
+    font-size: 28px;
+  }
+
+  .r1 i:nth-child(1) {
+    text-shadow: 0 0 0.03em #000, 0 0 0.03em #000, 0 0 0.03em #000;
+  }
+  .r1 i:nth-child(2) {
+    text-shadow: 0 0 0.06em #000, 0 0 0.06em #000, 0 0 0.06em #000;
+  }
+  .r1 i:nth-child(3) {
+    text-shadow: 0 0 0.12em #000, 0 0 0.12em #000, 0 0 0.12em #000;
+  }
+  .r1 i:nth-child(4) {
+    text-shadow: 0 0 0.25em #000, 0 0 0.25em #000, 0 0 0.25em #000;
+  }
+
+  .r2 i:nth-child(1) {
+    text-shadow: 0 0 0.03em #444, 0 0 0.03em #444, 0 0 0.03em #444;
+  }
+  .r2 i:nth-child(2) {
+    text-shadow: 0 0 0.06em #444, 0 0 0.06em #444, 0 0 0.06em #444;
+  }
+  .r2 i:nth-child(3) {
+    text-shadow: 0 0 0.12em #444, 0 0 0.12em #444, 0 0 0.12em #444;
+  }
+  .r2 i:nth-child(4) {
+    text-shadow: 0 0 0.25em #444, 0 0 0.25em #444, 0 0 0.25em #444;
+  }
+
+  .r3 i:nth-child(1) {
+    text-shadow: 0 0 0.03em #888, 0 0 0.03em #888, 0 0 0.03em #888;
+  }
+  .r3 i:nth-child(2) {
+    text-shadow: 0 0 0.06em #888, 0 0 0.06em #888, 0 0 0.06em #888;
+  }
+  .r3 i:nth-child(3) {
+    text-shadow: 0 0 0.12em #888, 0 0 0.12em #888, 0 0 0.12em #888;
+  }
+  .r3 i:nth-child(4) {
+    text-shadow: 0 0 0.25em #888, 0 0 0.25em #888, 0 0 0.25em #888;
+  }
+
+  .r4 i:nth-child(1) {
+    text-shadow: 0 0 0.03em #ccc, 0 0 0.03em #ccc, 0 0 0.03em #ccc;
+  }
+  .r4 i:nth-child(2) {
+    text-shadow: 0 0 0.06em #ccc, 0 0 0.06em #ccc, 0 0 0.06em #ccc;
+  }
+  .r4 i:nth-child(3) {
+    text-shadow: 0 0 0.12em #ccc, 0 0 0.12em #ccc, 0 0 0.12em #ccc;
+  }
+  .r4 i:nth-child(4) {
+    text-shadow: 0 0 0.25em #ccc, 0 0 0.25em #ccc, 0 0 0.25em #ccc;
+  }
+
+  .r5 i:nth-child(1) {
+    text-shadow: 0 0 0.03em #fff, 0 0 0.03em #fff, 0 0 0.03em #fff;
+  }
+  .r5 i:nth-child(2) {
+    text-shadow: 0 0 0.06em #fff, 0 0 0.06em #fff, 0 0 0.06em #fff;
+  }
+  .r5 i:nth-child(3) {
+    text-shadow: 0 0 0.12em #fff, 0 0 0.12em #fff, 0 0 0.12em #fff;
+  }
+  .r5 i:nth-child(4) {
+    text-shadow: 0 0 0.25em #fff, 0 0 0.25em #fff, 0 0 0.25em #fff;
+  }
+
+  .r6 i:nth-child(1) {
+    text-shadow: 0 0 0.03em #000, 0 0 0.03em #000, 0 0 0.03em #000,
+      0 0 0.5em #000, 0 0 0.5em #000;
+  }
+  .r6 i:nth-child(2) {
+    text-shadow: 0 0 0.06em #000, 0 0 0.06em #000, 0 0 0.06em #000,
+      0 0 0.5em #000, 0 0 0.5em #000;
+  }
+  .r6 i:nth-child(3) {
+    text-shadow: 0 0 0.12em #000, 0 0 0.12em #000, 0 0 0.12em #000,
+      0 0 0.5em #000, 0 0 0.5em #000;
+  }
+  .r6 i:nth-child(4) {
+    text-shadow: 0 0 0.25em #000, 0 0 0.25em #000, 0 0 0.25em #000,
+      0 0 0.5em #000, 0 0 0.5em #000;
+  }
+
+  .r7 i:nth-child(1) {
+    text-shadow: 0 0 0.03em #444, 0 0 0.03em #444, 0 0 0.03em #444,
+      0 0 0.5em #000, 0 0 0.5em #000;
+  }
+  .r7 i:nth-child(2) {
+    text-shadow: 0 0 0.06em #444, 0 0 0.06em #444, 0 0 0.06em #444,
+      0 0 0.5em #000, 0 0 0.5em #000;
+  }
+  .r7 i:nth-child(3) {
+    text-shadow: 0 0 0.12em #444, 0 0 0.12em #444, 0 0 0.12em #444,
+      0 0 0.5em #000, 0 0 0.5em #000;
+  }
+  .r7 i:nth-child(4) {
+    text-shadow: 0 0 0.25em #444, 0 0 0.25em #444, 0 0 0.25em #444,
+      0 0 0.5em #000, 0 0 0.5em #000;
+  }
+
+  .r8 i:nth-child(1) {
+    text-shadow: 0 0 0.03em #888, 0 0 0.03em #888, 0 0 0.03em #888,
+      0 0 0.5em #000, 0 0 0.5em #000;
+  }
+  .r8 i:nth-child(2) {
+    text-shadow: 0 0 0.06em #888, 0 0 0.06em #888, 0 0 0.06em #888,
+      0 0 0.5em #000, 0 0 0.5em #000;
+  }
+  .r8 i:nth-child(3) {
+    text-shadow: 0 0 0.12em #888, 0 0 0.12em #888, 0 0 0.12em #888,
+      0 0 0.5em #000, 0 0 0.5em #000;
+  }
+  .r8 i:nth-child(4) {
+    text-shadow: 0 0 0.25em #888, 0 0 0.25em #888, 0 0 0.25em #888,
+      0 0 0.5em #000, 0 0 0.5em #000;
+  }
+
+  .r9 i:nth-child(1) {
+    text-shadow: 0 0 0.03em #ccc, 0 0 0.03em #ccc, 0 0 0.03em #ccc,
+      0 0 0.5em #000, 0 0 0.5em #000;
+  }
+  .r9 i:nth-child(2) {
+    text-shadow: 0 0 0.06em #ccc, 0 0 0.06em #ccc, 0 0 0.06em #ccc,
+      0 0 0.5em #000, 0 0 0.5em #000;
+  }
+  .r9 i:nth-child(3) {
+    text-shadow: 0 0 0.12em #ccc, 0 0 0.12em #ccc, 0 0 0.12em #ccc,
+      0 0 0.5em #000, 0 0 0.5em #000;
+  }
+  .r9 i:nth-child(4) {
+    text-shadow: 0 0 0.25em #ccc, 0 0 0.25em #ccc, 0 0 0.25em #ccc,
+      0 0 0.5em #000, 0 0 0.5em #000;
+  }
+
+  .r10 i:nth-child(1) {
+    text-shadow: 0 0 0.03em #fff, 0 0 0.03em #fff, 0 0 0.03em #fff,
+      0 0 0.5em #000, 0 0 0.5em #000, 0 0 0.5em #000;
+  }
+  .r10 i:nth-child(2) {
+    text-shadow: 0 0 0.06em #fff, 0 0 0.06em #fff, 0 0 0.06em #fff,
+      0 0 0.5em #000, 0 0 0.5em #000, 0 0 0.5em #000;
+  }
+  .r10 i:nth-child(3) {
+    text-shadow: 0 0 0.12em #fff, 0 0 0.12em #fff, 0 0 0.12em #fff,
+      0 0 0.5em #000, 0 0 0.5em #000, 0 0 0.5em #000;
+  }
+  .r10 i:nth-child(4) {
+    text-shadow: 0 0 0.25em #fff, 0 0 0.25em #fff, 0 0 0.25em #fff,
+      0 0 0.5em #000, 0 0 0.5em #000, 0 0 0.5em #000;
+  }
+
+  .l1 i:nth-child(1) {
+    text-shadow: 0 0 0.03em #fff;
+  }
+  .l1 i:nth-child(2) {
+    text-shadow: 0 0 0.03em #fff, 0 0 0.03em #fff;
+  }
+  .l1 i:nth-child(3) {
+    text-shadow: 0 0 0.03em #fff, 0 0 0.03em #fff, 0 0 0.03em #fff;
+  }
+  .l1 i:nth-child(4) {
+    text-shadow: 0 0 0.03em #fff, 0 0 0.03em #fff, 0 0 0.03em #fff,
+      0 0 0.03em #fff;
+  }
+
+  .l2 i:nth-child(1) {
+    text-shadow: 0 0 0.06em #fff;
+  }
+  .l2 i:nth-child(2) {
+    text-shadow: 0 0 0.06em #fff, 0 0 0.06em #fff;
+  }
+  .l2 i:nth-child(3) {
+    text-shadow: 0 0 0.06em #fff, 0 0 0.06em #fff, 0 0 0.06em #fff;
+  }
+  .l2 i:nth-child(4) {
+    text-shadow: 0 0 0.06em #fff, 0 0 0.06em #fff, 0 0 0.06em #fff,
+      0 0 0.06em #fff;
+  }
+
+  .l3 i:nth-child(1) {
+    text-shadow: 0 0 0.12em #fff;
+  }
+  .l3 i:nth-child(2) {
+    text-shadow: 0 0 0.12em #fff, 0 0 0.12em #fff;
+  }
+  .l3 i:nth-child(3) {
+    text-shadow: 0 0 0.12em #fff, 0 0 0.12em #fff, 0 0 0.12em #fff;
+  }
+  .l3 i:nth-child(4) {
+    text-shadow: 0 0 0.12em #fff, 0 0 0.12em #fff, 0 0 0.12em #fff,
+      0 0 0.12em #fff;
+  }
+
+  .l4 i:nth-child(1) {
+    text-shadow: 0 0 0.25em #fff;
+  }
+  .l4 i:nth-child(2) {
+    text-shadow: 0 0 0.25em #fff, 0 0 0.25em #fff;
+  }
+  .l4 i:nth-child(3) {
+    text-shadow: 0 0 0.25em #fff, 0 0 0.25em #fff, 0 0 0.25em #fff;
+  }
+  .l4 i:nth-child(4) {
+    text-shadow: 0 0 0.25em #fff, 0 0 0.25em #fff, 0 0 0.25em #fff,
+      0 0 0.25em #fff;
+  }
+
+  .l5 i:nth-child(1) {
+    text-shadow: 0 0 0.5em #fff;
+  }
+  .l5 i:nth-child(2) {
+    text-shadow: 0 0 0.5em #fff, 0 0 0.5em #fff;
+  }
+  .l5 i:nth-child(3) {
+    text-shadow: 0 0 0.5em #fff, 0 0 0.5em #fff, 0 0 0.5em #fff;
+  }
+  .l5 i:nth-child(4) {
+    text-shadow: 0 0 0.5em #fff, 0 0 0.5em #fff, 0 0 0.5em #fff, 0 0 0.5em #fff;
+  }
+</style>
+
+<section class="s1" id="b1">
+  <div class="r0"><i id="sample1">Sample</i></div>
+  <div class="r1">
+    <i>b1-r1-i1</i> <i>b1-r1-i2</i> <i>b1-r1-i3</i> <i>b1-r1-i4</i>
+  </div>
+  <div class="r2">
+    <i>b1-r2-i1</i> <i>b1-r2-i2</i> <i>b1-r2-i3</i> <i>b1-r2-i4</i>
+  </div>
+  <div class="r3">
+    <i>b1-r3-i1</i> <i>b1-r3-i2</i> <i>b1-r3-i3</i> <i>b1-r3-i4</i>
+  </div>
+  <div class="r4">
+    <i>b1-r4-i1</i> <i>b1-r4-i2</i> <i>b1-r4-i3</i> <i>b1-r4-i4</i>
+  </div>
+  <div class="r5">
+    <i>b1-r5-i1</i> <i>b1-r5-i2</i> <i>b1-r5-i3</i> <i>b1-r5-i4</i>
+  </div>
+</section>
+
+<section class="s2" id="b2">
+  <div class="r0"><i id="sample2">Sample</i></div>
+  <div class="r1">
+    <i>b2-r1-i1</i> <i>b2-r1-i2</i> <i>b2-r1-i3</i> <i>b2-r1-i4</i>
+  </div>
+  <div class="r2">
+    <i>b2-r2-i1</i> <i>b2-r2-i2</i> <i>b2-r2-i3</i> <i>b2-r2-i4</i>
+  </div>
+  <div class="r3">
+    <i>b2-r3-i1</i> <i>b2-r3-i2</i> <i>b2-r3-i3</i> <i>b2-r3-i4</i>
+  </div>
+  <div class="r4">
+    <i>b2-r4-i1</i> <i>b2-r4-i2</i> <i>b2-r4-i3</i> <i>b2-r4-i4</i>
+  </div>
+  <div class="r5">
+    <i>b2-r5-i1</i> <i>b2-r5-i2</i> <i>b2-r5-i3</i> <i>b2-r5-i4</i>
+  </div>
+</section>
+
+<section class="s3" id="b3">
+  <div class="r1">
+    <i>b3-r1-i1</i> <i>b3-r1-i2</i> <i>b3-r1-i3</i> <i>b3-r1-i4</i>
+  </div>
+  <div class="r2">
+    <i>b3-r2-i1</i> <i>b3-r2-i2</i> <i>b3-r2-i3</i> <i>b3-r2-i4</i>
+  </div>
+  <div class="r3">
+    <i>b3-r3-i1</i> <i>b3-r3-i2</i> <i>b3-r3-i3</i> <i>b3-r3-i4</i>
+  </div>
+  <div class="r4">
+    <i>b3-r4-i1</i> <i>b3-r4-i2</i> <i>b3-r4-i3</i> <i>b3-r4-i4</i>
+  </div>
+  <div class="r5">
+    <i>b3-r5-i1</i> <i>b3-r5-i2</i> <i>b3-r5-i3</i> <i>b3-r5-i4</i>
+  </div>
+</section>
+
+<section class="s4" id="b4">
+  <div class="r1">
+    <i>b4-r1-i1</i> <i>b4-r1-i2</i> <i>b4-r1-i3</i> <i>b4-r1-i4</i>
+  </div>
+  <div class="r2">
+    <i>b4-r2-i1</i> <i>b4-r2-i2</i> <i>b4-r2-i3</i> <i>b4-r2-i4</i>
+  </div>
+  <div class="r3">
+    <i>b4-r3-i1</i> <i>b4-r3-i2</i> <i>b4-r3-i3</i> <i>b4-r3-i4</i>
+  </div>
+  <div class="r4">
+    <i>b4-r4-i1</i> <i>b4-r4-i2</i> <i>b4-r4-i3</i> <i>b4-r4-i4</i>
+  </div>
+  <div class="r5">
+    <i>b4-r5-i1</i> <i>b4-r5-i2</i> <i>b4-r5-i3</i> <i>b4-r5-i4</i>
+  </div>
+</section>
+
+<section class="s5" id="b5">
+  <div class="r1">
+    <i>b5-r1-i1</i> <i>b5-r1-i2</i> <i>b5-r1-i3</i> <i>b5-r1-i4</i>
+  </div>
+  <div class="r2">
+    <i>b5-r2-i1</i> <i>b5-r2-i2</i> <i>b5-r2-i3</i> <i>b5-r2-i4</i>
+  </div>
+  <div class="r3">
+    <i>b5-r3-i1</i> <i>b5-r3-i2</i> <i>b5-r3-i3</i> <i>b5-r3-i4</i>
+  </div>
+  <div class="r4">
+    <i>b5-r4-i1</i> <i>b5-r4-i2</i> <i>b5-r4-i3</i> <i>b5-r4-i4</i>
+  </div>
+  <div class="r5">
+    <i>b5-r5-i1</i> <i>b5-r5-i2</i> <i>b5-r5-i3</i> <i>b5-r5-i4</i>
+  </div>
+</section>
+
+<section class="s4" id="b6">
+  <!-- false negative: "#b6 > .c8 > i:nth-child(4)" -->
+  <div class="r6">
+    <i>b6-r1-i1</i> <i>b6-r1-i2</i> <i>b6-r1-i3</i> <i>b6-r1-i4</i>
+  </div>
+  <div class="r7">
+    <i>b6-r2-i1</i> <i>b6-r2-i2</i> <i>b6-r2-i3</i> <i>b6-r2-i4</i>
+  </div>
+  <div class="r8">
+    <i>b6-r3-i1</i> <i>b6-r3-i2</i> <i>b6-r3-i3</i> <i>b6-r3-i4</i>
+  </div>
+  <div class="r9">
+    <i>b6-r4-i1</i> <i>b6-r4-i2</i> <i>b6-r4-i3</i> <i>b6-r4-i4</i>
+  </div>
+  <div class="r10">
+    <i>b6-r5-i1</i> <i>b6-r5-i2</i> <i>b6-r5-i3</i> <i>b6-r5-i4</i>
+  </div>
+</section>
+
+<section class="s2" id="b7">
+  <!-- false negative: "#b7 > .c10 > i:nth-child(4)"-->
+  <div class="r6">
+    <i>b7-r1-i1</i> <i>b7-r1-i2</i> <i>b7-r1-i3</i> <i>b7-r1-i4</i>
+  </div>
+  <div class="r7">
+    <i>b7-r2-i1</i> <i>b7-r2-i2</i> <i>b7-r2-i3</i> <i>b7-r2-i4</i>
+  </div>
+  <div class="r8">
+    <i>b7-r3-i1</i> <i>b7-r3-i2</i> <i>b7-r3-i3</i> <i>b7-r3-i4</i>
+  </div>
+  <div class="r9">
+    <i>b7-r4-i1</i> <i>b7-r4-i2</i> <i>b7-r4-i3</i> <i>b7-r4-i4</i>
+  </div>
+  <div class="r10">
+    <i>b7-r5-i1</i> <i>b7-r5-i2</i> <i>b7-r5-i3</i> <i>b7-r5-i4</i>
+  </div>
+</section>
+
+<section class="s1" id="b8">
+  <div class="r6">
+    <i>b8-r1-i1</i> <i>b8-r1-i2</i> <i>b8-r1-i3</i> <i>b8-r1-i4</i>
+  </div>
+  <div class="r7">
+    <i>b8-r2-i1</i> <i>b8-r2-i2</i> <i>b8-r2-i3</i> <i>b8-r2-i4</i>
+  </div>
+  <div class="r8">
+    <i>b8-r3-i1</i> <i>b8-r3-i2</i> <i>b8-r3-i3</i> <i>b8-r3-i4</i>
+  </div>
+  <div class="r9">
+    <i>b8-r4-i1</i> <i>b8-r4-i2</i> <i>b8-r4-i3</i> <i>b8-r4-i4</i>
+  </div>
+  <div class="r10">
+    <i>b8-r5-i1</i> <i>b8-r5-i2</i> <i>b8-r5-i3</i> <i>b8-r5-i4</i>
+  </div>
+</section>
+
+<section class="s2 r2" id="b9">
+  <div class="f1">
+    <i>b9-f1-i1</i> <i>b9-f1-i2</i> <i>b9-f1-i3</i> <i>b9-f1-i4</i>
+  </div>
+  <div class="f2">
+    <i>b9-f2-i1</i> <i>b9-f2-i2</i> <i>b9-f2-i3</i> <i>b9-f2-i4</i>
+  </div>
+  <div class="f3">
+    <i>b9-f3-i1</i> <i>b9-f3-i2</i> <i>b9-f3-i3</i> <i>b9-f3-i4</i>
+  </div>
+  <div class="f4">
+    <i>b9-f4-i1</i> <i>b9-f4-i2</i> <i>b9-f4-i3</i> <i>b9-f4-i4</i>
+  </div>
+  <div class="f5">
+    <i>b9-f5-i1</i> <i>b9-f5-i2</i> <i>b9-f5-i3</i> <i>b9-f5-i4</i>
+  </div>
+</section>
+
+<section class="s1 r1" id="b10">
+  <div class="f1">
+    <i>b10-f1-i1</i> <i>b10-f1-i2</i> <i>b10-f1-i3</i> <i>b10-f1-i4</i>
+  </div>
+  <div class="f2">
+    <i>b10-f2-i1</i> <i>b10-f2-i2</i> <i>b10-f2-i3</i> <i>b10-f2-i4</i>
+  </div>
+  <div class="f3">
+    <i>b10-f3-i1</i> <i>b10-f3-i2</i> <i>b10-f3-i3</i> <i>b10-f3-i4</i>
+  </div>
+  <div class="f4">
+    <i>b10-f4-i1</i> <i>b10-f4-i2</i> <i>b10-f4-i3</i> <i>b10-f4-i4</i>
+  </div>
+  <div class="f5">
+    <i>b10-f5-i1</i> <i>b10-f5-i2</i> <i>b10-f5-i3</i> <i>b10-f5-i4</i>
+  </div>
+</section>
+
+<section class="s4 r7" id="b11">
+  <div class="f1">
+    <i>b11-f1-i1</i> <i>b11-f1-i2</i> <i>b11-f1-i3</i> <i>b11-f1-i4</i>
+  </div>
+  <div class="f2">
+    <i>b11-f2-i1</i> <i>b11-f2-i2</i> <i>b11-f2-i3</i> <i>b11-f2-i4</i>
+  </div>
+  <div class="f3">
+    <i>b11-f3-i1</i> <i>b11-f3-i2</i> <i>b11-f3-i3</i> <i>b11-f3-i4</i>
+  </div>
+  <div class="f4">
+    <i>b11-f4-i1</i> <i>b11-f4-i2</i> <i>b11-f4-i3</i> <i>b11-f4-i4</i>
+  </div>
+  <div class="f5">
+    <i>b11-f5-i1</i> <i>b11-f5-i2</i> <i>b11-f5-i3</i> <i>b11-f5-i4</i>
+  </div>
+</section>
+
+<section class="s3" id="b12">
+  <div class="l1">
+    <i>b12-l1-i1</i> <i>b12-l1-i2</i> <i>b12-l1-i3</i> <i>b12-l1-i4</i>
+  </div>
+  <div class="l2">
+    <i>b12-l2-i1</i> <i>b12-l2-i2</i> <i>b12-l2-i3</i> <i>b12-l2-i4</i>
+  </div>
+  <div class="l3">
+    <i>b12-l3-i1</i> <i>b12-l3-i2</i> <i>b12-l3-i3</i> <i>b12-l3-i4</i>
+  </div>
+  <div class="l4">
+    <i>b12-l4-i1</i> <i>b12-l4-i2</i> <i>b12-l4-i3</i> <i>b12-l4-i4</i>
+  </div>
+  <div class="l5">
+    <i>b12-l5-i1</i> <i>b12-l5-i2</i> <i>b12-l5-i3</i> <i>b12-l5-i4</i>
+  </div>
+</section>
+
+<script src="/axe.js"></script>
+<script>
+  // Script added for testing purposes, does not run in automated tests
+  if (window.top == window.self) {
+    axe.run({ runOnly: ['color-contrast'], elementRef: true }, function(
+      err,
+      res
+    ) {
+      console.log(res);
+      /*
+			All these test cases are on the edge of pass and fail. If we ever revisit them, these are the ones could be improved on:
+
+			- False positives:
+				- b5-r3-i1, b5-r3-i2
+				- b7-r3-i1, b7-r3-i2
+			- False negatives:
+				- b3-r1-i1
+				- b4-r1-i1, b4-r2-i1
+				- b8-r1-i1, b8-r5-i1
+			*/
+      ['violations', 'incomplete', 'passes'].forEach(key => {
+        if (res[key][0]) {
+          res[key][0].nodes.forEach(({ element }) => {
+            element.classList.add(key);
+          });
+        }
+      });
+    });
+  }
+</script>

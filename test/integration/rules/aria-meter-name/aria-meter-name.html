@@ -1,0 +1,26 @@
+<!-- PASS -->
+<div id="pass1" role="meter" title="CPU usage"></div>
+<div id="pass2" role="meter" aria-label="CPU usage"></div>
+<div id="pass3" role="meter" aria-labelledby="usage"></div>
+
+<div id="usage">CPU usage</div>
+
+<!-- FAIL -->
+<div id="fail1" role="meter">CPU usage</div>
+<div id="fail2" role="meter"></div>
+<div id="fail3" role="meter" aria-labelledby="usage-non-existant"></div>
+<div id="fail4" role="meter" aria-labelledby="usage-empty"></div>
+
+<div id="usage-empty"></div>
+
+<!-- INAPPLICABLE -->
+<img role="meter" alt="Label" id="inapplicable1" />
+<input role="meter" title="Label" id="inapplicable2" />
+<button role="meter" title="Label" id="inapplicable3"></button>
+<a href="#" role="meter" title="Label" id="inapplicable4"></a>
+<select role="meter" title="Label" id="inapplicable5">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="opel">Opel</option>
+</select>
+<textarea role="meter" id="inapplicable6" title="Label"></textarea>

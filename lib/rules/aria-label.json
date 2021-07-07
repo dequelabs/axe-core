@@ -1,0 +1,12 @@
+{
+  "id": "aria-label",
+  "selector": "[aria-label], [aria-labelledby], [aria-describedby]",
+  "tags": ["cat.aria", "best-practice"],
+  "metadata": {
+    "description": "Ensure aria-label(ledby) is only used on non-static elements",
+    "help": "Use aria-label, aria-labelledby, and aria-describedby on elements with non-static roles"
+  },
+  "all": [],
+  "any": ["aria-label-valid-use"],
+  "none": []
+}

@@ -1,0 +1,6 @@
+{
+  "description": "aria-progressbar-name test",
+  "rule": "aria-progressbar-name",
+  "passes": [["#pass1"], ["#pass2"], ["#pass3"]],
+  "violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"]]
+}

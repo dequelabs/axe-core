@@ -5,9 +5,9 @@ const directories = require('./directories');
  * @param {String} str given string to be camel cased
  */
 const camelCase = str => {
-	return str.replace(/-([a-z])/g, g => {
-		return g[1].toUpperCase();
-	});
+  return str.replace(/-([a-z])/g, g => {
+    return g[1].toUpperCase();
+  });
 };
 
 /**
@@ -19,36 +19,36 @@ const camelCase = str => {
  * @returns {Object} meta data of file
  */
 const getRuleSpecFileMeta = (ruleName, ruleHasMatches, ruleChecks) => {
-	return {
-		name: `${ruleName}.json`,
-		content: JSON.stringify(
-			{
-				id: `${ruleName}`,
-				selector: '',
-				...(ruleHasMatches && {
-					matches: `${ruleName}-matches`
-				}),
-				tags: [],
-				metadata: {
-					description: '',
-					help: ''
-				},
-				preload: false,
-				all: ruleChecks
-					.filter(c => c.getCheckType === 'all')
-					.map(c => c.getCheckName.toLowerCase()),
-				any: ruleChecks
-					.filter(c => c.getCheckType === 'any')
-					.map(c => c.getCheckName.toLowerCase()),
-				none: ruleChecks
-					.filter(c => c.getCheckType === 'none')
-					.map(c => c.getCheckName.toLowerCase())
-			},
-			undefined,
-			2
-		),
-		dir: directories.rules
-	};
+  return {
+    name: `${ruleName}.json`,
+    content: JSON.stringify(
+      {
+        id: `${ruleName}`,
+        selector: '',
+        ...(ruleHasMatches && {
+          matches: `${ruleName}-matches`
+        }),
+        tags: [],
+        metadata: {
+          description: '',
+          help: ''
+        },
+        preload: false,
+        all: ruleChecks
+          .filter(c => c.getCheckType === 'all')
+          .map(c => c.getCheckName.toLowerCase()),
+        any: ruleChecks
+          .filter(c => c.getCheckType === 'any')
+          .map(c => c.getCheckName.toLowerCase()),
+        none: ruleChecks
+          .filter(c => c.getCheckType === 'none')
+          .map(c => c.getCheckName.toLowerCase())
+      },
+      undefined,
+      2
+    ),
+    dir: directories.rules
+  };
 };
 
 /**
@@ -60,17 +60,17 @@ const getRuleSpecFileMeta = (ruleName, ruleHasMatches, ruleChecks) => {
  * @returns {Array<Object>} meta data of files
  */
 const getRuleMatchesFileMeta = (
-	ruleName,
-	ruleHasMatches,
-	ruleHasUnitTestAssets
+  ruleName,
+  ruleHasMatches,
+  ruleHasUnitTestAssets
 ) => {
-	let files = [];
+  let files = [];
 
-	if (ruleHasMatches) {
-		const fnName = `${camelCase(ruleName)}Matches`;
-		const ruleMatchesJs = {
-			name: `${ruleName}-matches.js`,
-			content: `
+  if (ruleHasMatches) {
+    const fnName = `${camelCase(ruleName)}Matches`;
+    const ruleMatchesJs = {
+      name: `${ruleName}-matches.js`,
+      content: `
 			// TODO: Filter node(s)	
 			
 			function ${fnName}(node, virtualNode) {
@@ -79,26 +79,26 @@ const getRuleMatchesFileMeta = (
 
 			export default ${fnName}
 			`,
-			dir: directories.rules
-		};
-		files.push(ruleMatchesJs);
-	}
+      dir: directories.rules
+    };
+    files.push(ruleMatchesJs);
+  }
 
-	if (ruleHasUnitTestAssets) {
-		const ruleMatchesTestJs = {
-			name: `${ruleName}-matches.js`,
-			content: `
+  if (ruleHasUnitTestAssets) {
+    const ruleMatchesTestJs = {
+      name: `${ruleName}-matches.js`,
+      content: `
 			describe('${ruleName}-matches', function() {
 				'use strict';
 				// TODO: Write tests
 			})
 			`,
-			dir: directories.testRuleMatches
-		};
-		files.push(ruleMatchesTestJs);
-	}
+      dir: directories.testRuleMatches
+    };
+    files.push(ruleMatchesTestJs);
+  }
 
-	return files;
+  return files;
 };
 
 /**
@@ -109,26 +109,26 @@ const getRuleMatchesFileMeta = (
  * @returns {Object} meta data of file
  */
 const getCheckSpecFileMeta = (name, dir) => {
-	return {
-		name: `${name}.json`,
-		content: JSON.stringify(
-			{
-				id: `${name}`,
-				evaluate: `${name}-evaluate`,
-				metadata: {
-					impact: '',
-					messages: {
-						pass: '',
-						fail: '',
-						incomplete: ''
-					}
-				}
-			},
-			undefined,
-			2
-		),
-		dir
-	};
+  return {
+    name: `${name}.json`,
+    content: JSON.stringify(
+      {
+        id: `${name}`,
+        evaluate: `${name}-evaluate`,
+        metadata: {
+          impact: '',
+          messages: {
+            pass: '',
+            fail: '',
+            incomplete: ''
+          }
+        }
+      },
+      undefined,
+      2
+    ),
+    dir
+  };
 };
 
 /**
@@ -139,18 +139,18 @@ const getCheckSpecFileMeta = (name, dir) => {
  * @returns {Object} meta data of file
  */
 const getCheckJsFileMeta = (name, dir) => {
-	const fnName = `${camelCase(name)}Evaluate`;
-	return {
-		name: `${name}-evaluate.js`,
-		content: `
+  const fnName = `${camelCase(name)}Evaluate`;
+  return {
+    name: `${name}-evaluate.js`,
+    content: `
 		// TODO: Logic for check
 		function ${fnName}(node, options, virtualNode) {
 			return true
 		}
 		export default ${fnName};
 		`,
-		dir
-	};
+    dir
+  };
 };
 
 /**
@@ -161,16 +161,16 @@ const getCheckJsFileMeta = (name, dir) => {
  * @returns {Object} meta data of file
  */
 const getCheckTestJsFileMeta = (name, dir) => {
-	return {
-		name: `${name}.js`,
-		content: `
+  return {
+    name: `${name}.js`,
+    content: `
 		describe('${name} tests', function() {
 			'use strict';
 			// TODO: Write tests
 		})
 		`,
-		dir
-	};
+    dir
+  };
 };
 
 /**
@@ -181,27 +181,27 @@ const getCheckTestJsFileMeta = (name, dir) => {
  * @returns {Array<Object>} meta data of files
  */
 const getChecksFileMeta = (ruleChecks, ruleHasUnitTestAssets) => {
-	const checkFiles = ruleChecks
-		.map(c => {
-			const cName = c.getCheckName.toLowerCase();
-			const outDir = `${directories.checks}/${c.getCheckCategory}`;
-			const outTestDir = `${directories.testChecksUnit}/${c.getCheckCategory}`;
-			const checkJson = getCheckSpecFileMeta(cName, outDir);
-			const checkJs = getCheckJsFileMeta(cName, outDir);
-			const checkTestJs = getCheckTestJsFileMeta(cName, outTestDir);
-			let files = [checkJson, checkJs];
-			if (ruleHasUnitTestAssets) {
-				files = files.concat(checkTestJs);
-			}
-			return files;
-		})
-		.reduce((out, item) => {
-			// flatten array of array's
-			out = out.concat(item);
-			return out;
-		}, []);
+  const checkFiles = ruleChecks
+    .map(c => {
+      const cName = c.getCheckName.toLowerCase();
+      const outDir = `${directories.checks}/${c.getCheckCategory}`;
+      const outTestDir = `${directories.testChecksUnit}/${c.getCheckCategory}`;
+      const checkJson = getCheckSpecFileMeta(cName, outDir);
+      const checkJs = getCheckJsFileMeta(cName, outDir);
+      const checkTestJs = getCheckTestJsFileMeta(cName, outTestDir);
+      let files = [checkJson, checkJs];
+      if (ruleHasUnitTestAssets) {
+        files = files.concat(checkTestJs);
+      }
+      return files;
+    })
+    .reduce((out, item) => {
+      // flatten array of array's
+      out = out.concat(item);
+      return out;
+    }, []);
 
-	return checkFiles;
+  return checkFiles;
 };
 
 /**
@@ -212,33 +212,33 @@ const getChecksFileMeta = (ruleChecks, ruleHasUnitTestAssets) => {
  * @returns {Array<Object>} meta data of files
  */
 const getIntegrationTestAssets = (ruleName, ruleHasIntegrationTestAssets) => {
-	let files = [];
+  let files = [];
 
-	if (ruleHasIntegrationTestAssets) {
-		const htmlFile = {
-			name: `${ruleName}.html`,
-			content: `<!-- HTML Snippets-->`,
-			dir: `${directories.testChecksIntegration}/${ruleName}`
-		};
-		files.push(htmlFile);
+  if (ruleHasIntegrationTestAssets) {
+    const htmlFile = {
+      name: `${ruleName}.html`,
+      content: `<!-- HTML Snippets-->`,
+      dir: `${directories.testChecksIntegration}/${ruleName}`
+    };
+    files.push(htmlFile);
 
-		const jsonFile = {
-			name: `${ruleName}.json`,
-			content: JSON.stringify(
-				{
-					description: `${ruleName} tests`,
-					rule: `${ruleName}`,
-					violations: [],
-					passes: []
-				},
-				undefined,
-				2
-			),
-			dir: `${directories.testChecksIntegration}/${ruleName}`
-		};
-		files.push(jsonFile);
-	}
-	return files;
+    const jsonFile = {
+      name: `${ruleName}.json`,
+      content: JSON.stringify(
+        {
+          description: `${ruleName} tests`,
+          rule: `${ruleName}`,
+          violations: [],
+          passes: []
+        },
+        undefined,
+        2
+      ),
+      dir: `${directories.testChecksIntegration}/${ruleName}`
+    };
+    files.push(jsonFile);
+  }
+  return files;
 };
 
 /**
@@ -248,40 +248,40 @@ const getIntegrationTestAssets = (ruleName, ruleHasIntegrationTestAssets) => {
  * @returns {Array<Object>} meta data of files
  */
 const getFilesMetaData = answers => {
-	const {
-		ruleName,
-		ruleHasMatches,
-		ruleChecks,
-		ruleHasUnitTestAssets,
-		ruleHasIntegrationTestAssets
-	} = answers;
+  const {
+    ruleName,
+    ruleHasMatches,
+    ruleChecks,
+    ruleHasUnitTestAssets,
+    ruleHasIntegrationTestAssets
+  } = answers;
 
-	// get rule spec file
-	const ruleSpecFile = getRuleSpecFileMeta(
-		ruleName,
-		ruleHasMatches,
-		ruleChecks
-	);
-	// get rule matches and test assets
-	const ruleMatchesFiles = getRuleMatchesFileMeta(
-		ruleName,
-		ruleHasMatches,
-		ruleHasUnitTestAssets
-	);
-	// get checks and test assets
-	const checkFiles = getChecksFileMeta(ruleChecks, ruleHasUnitTestAssets);
-	// integration test assets
-	const integrationFiles = getIntegrationTestAssets(
-		ruleName,
-		ruleHasIntegrationTestAssets
-	);
+  // get rule spec file
+  const ruleSpecFile = getRuleSpecFileMeta(
+    ruleName,
+    ruleHasMatches,
+    ruleChecks
+  );
+  // get rule matches and test assets
+  const ruleMatchesFiles = getRuleMatchesFileMeta(
+    ruleName,
+    ruleHasMatches,
+    ruleHasUnitTestAssets
+  );
+  // get checks and test assets
+  const checkFiles = getChecksFileMeta(ruleChecks, ruleHasUnitTestAssets);
+  // integration test assets
+  const integrationFiles = getIntegrationTestAssets(
+    ruleName,
+    ruleHasIntegrationTestAssets
+  );
 
-	return [
-		ruleSpecFile,
-		...ruleMatchesFiles,
-		...checkFiles,
-		...integrationFiles
-	];
+  return [
+    ruleSpecFile,
+    ...ruleMatchesFiles,
+    ...checkFiles,
+    ...integrationFiles
+  ];
 };
 
 module.exports = getFilesMetaData;

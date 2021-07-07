@@ -1,8 +1,8 @@
 <input autocomplete="username" id="pass1" />
 
 <select autocomplete="bday-month" id="pass2">
-	<option>January</option>
-	<option>...</option>
+  <option>January</option>
+  <option>...</option>
 </select>
 
 <textarea autocomplete="Street-Address" id="pass3"></textarea>
@@ -25,9 +25,6 @@
 <!-- comma seperated rather than space separated list -->
 <input autocomplete="work,email" id="fail4" />
 
-<!-- inappropriate field type -->
-<input type="number" autocomplete="email" id="fail5" />
-
 <!-- Incorrect element -->
 <button autocomplete="username" id="inapplicable1"></button>
 
@@ -39,11 +36,11 @@
 
 <!-- Off screen and not focusable -->
 <input
-	autocomplete="username"
-	tabindex="-1"
-	aria-hidden="true"
-	style="position:absolute; top:-9999em"
-	id="inapplicable4"
+  autocomplete="username"
+  tabindex="-1"
+  aria-hidden="true"
+  style="position:absolute; top:-9999em"
+  id="inapplicable4"
 />
 
 <!-- input button -->
@@ -60,11 +57,11 @@
 
 <!-- non-widget element -->
 <input
-	type="button"
-	role="none"
-	tabindex="-1"
-	autocomplete="username"
-	id="inapplicable9"
+  type="button"
+  role="none"
+  tabindex="-1"
+  autocomplete="username"
+  id="inapplicable9"
 />
 <input autocomplete="  " id="inapplicable10" />
 
@@ -124,14 +121,15 @@
 <input autocomplete="work tel-local-suffix" id="pass60" />
 <input autocomplete="SECTION-foo mobile tel-extension" id="pass61" />
 <input autocomplete="fax email" id="pass62" />
+<input type="username" autocomplete="email" id="pass83" />
 <input autocomplete="pager impp" id="pass63" />
 <input
-	autocomplete="off"
-	id="pass64"
-	name="input_1"
-	placeholder="Numeric Input Field"
-	value="42"
-	type="tel"
+  autocomplete="off"
+  id="pass64"
+  name="input_1"
+  placeholder="Numeric Input Field"
+  value="42"
+  type="tel"
 />
 <input autocomplete="on" id="pass65" value="" type="url" />
 <input autocomplete="off" id="pass66" value="42" type="datetime-local" />
@@ -149,6 +147,8 @@
 
 <input autocomplete="one-time-code" id="pass77" />
 
-<input autocomplete="street-address" id="fail6" type="file" />
-<input autocomplete="bday-month" type="month" id="fail7" />
-<input type="NUMBER" autocomplete="email" id="fail8" />
+<input autocomplete="cc-number" type="tel" id="pass78" />
+<input autocomplete="cc-exp" type="tel" id="pass79" />
+<input autocomplete="cc-exp-month" type="tel" id="pass80" />
+<input autocomplete="cc-exp-year" type="tel" id="pass81" />
+<input autocomplete="cc-csc" type="tel" id="pass82" />

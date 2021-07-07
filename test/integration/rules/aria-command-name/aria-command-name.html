@@ -1,0 +1,53 @@
+<!-- PASS -->
+<div id="pass1" role="link">Home</div>
+<div id="pass2" role="link" title="About"></div>
+<div id="pass3" role="link" aria-label="Products"></div>
+<div id="pass4" role="link" aria-labelledby="contact"></div>
+<div id="contact">Contact us</div>
+
+<div id="pass5" role="button">Submit</div>
+<div id="pass6" role="button" title="Upload"></div>
+<div id="pass7" role="button" aria-label="Download"></div>
+<div id="pass8" role="button" aria-labelledby="print"></div>
+
+<div role="menu">
+  <div id="pass9" role="menuitem">New</div>
+  <div id="pass10" role="menuitem" title="Open"></div>
+  <div id="pass11" role="menuitem" aria-label="Save"></div>
+  <div id="pass12" role="menuitem" aria-labelledby="print"></div>
+</div>
+
+<div id="print">print file</div>
+
+<!-- FAIL -->
+<div id="fail1" role="link"></div>
+<div id="fail2" role="link" aria-labelledby="non-existant"></div>
+<div id="fail3" role="link" aria-labelledby="div-empty"></div>
+
+<div id="fail4" role="button"></div>
+<div id="fail5" role="button" aria-labelledby="non-existant"></div>
+<div id="fail6" role="button" aria-labelledby="div-empty"></div>
+
+<div role="menu">
+  <div id="fail7" role="menuitem"></div>
+  <div id="fail8" role="menuitem" aria-labelledby="non-existant"></div>
+  <div id="fail9" role="menuitem" aria-labelledby="div-empty"></div>
+</div>
+
+<div id="div-empty"></div>
+
+<!-- INAPPLICABLE -->
+<a href="/" role="link">Home</a>
+<button role="button">Save</button>
+<img role="button" alt="Send" id="inapplicable1" />
+<div role="menu">
+  <input role="menuitem" title="Label" id="inapplicable2" />
+  <button role="menuitem" title="Label" id="inapplicable3"></button>
+  <a href="#" role="menuitem" title="Label" id="inapplicable4"></a>
+  <select role="menuitem" title="Label" id="inapplicable5">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="opel">Opel</option>
+  </select>
+  <textarea role="menuitem" id="inapplicable6" title="Label"></textarea>
+</div>

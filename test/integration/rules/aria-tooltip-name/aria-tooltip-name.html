@@ -1,0 +1,26 @@
+<!-- PASS -->
+<div id="pass1" role="tooltip">Copy this content</div>
+<div id="pass2" role="tooltip" title="Copy this content"></div>
+<div id="pass3" role="tooltip" aria-label="Copy this content"></div>
+<div id="pass4" role="tooltip" aria-labelledby="copy"></div>
+
+<div id="copy">Copy this content</div>
+
+<!-- FAIL -->
+<div id="fail1" role="tooltip"></div>
+<div id="fail2" role="tooltip" aria-labelledby="copy-non-existant"></div>
+<div id="fail3" role="tooltip" aria-labelledby="copy-empty"></div>
+
+<div id="copy-empty"></div>
+
+<!-- INAPPLICABLE -->
+<img role="tooltip" alt="Label" id="inapplicable1" />
+<input role="tooltip" title="Label" id="inapplicable2" />
+<button role="tooltip" title="Label" id="inapplicable3"></button>
+<a href="#" role="tooltip" title="Label" id="inapplicable4"></a>
+<select role="tooltip" title="Label" id="inapplicable5">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="opel">Opel</option>
+</select>
+<textarea role="tooltip" id="inapplicable6" title="Label"></textarea>

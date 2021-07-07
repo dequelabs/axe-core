@@ -1,0 +1,32 @@
+<!-- PASS -->
+<div role="tree">
+  <div id="pass1" role="treeitem">Item</div>
+  <div id="pass2" role="treeitem" title="Item"></div>
+  <div id="pass3" role="treeitem" aria-label="Item"></div>
+  <div id="pass4" role="treeitem" aria-labelledby="item"></div>
+</div>
+
+<div id="item">Item</div>
+
+<!-- FAIL -->
+<div role="tree">
+  <div id="fail1" role="treeitem"></div>
+  <div id="fail2" role="treeitem" aria-labelledby="item-non-existant"></div>
+  <div id="fail3" role="treeitem" aria-labelledby="item-empty"></div>
+</div>
+
+<div id="item-empty"></div>
+
+<!-- INAPPLICABLE -->
+<div role="tree">
+  <img role="treeitem" alt="Label" id="inapplicable1" />
+  <input role="treeitem" title="Label" id="inapplicable2" />
+  <button role="treeitem" title="Label" id="inapplicable3"></button>
+  <a href="#" role="treeitem" title="Label" id="inapplicable4"></a>
+  <select role="treeitem" title="Label" id="inapplicable5">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="opel">Opel</option>
+  </select>
+  <textarea role="treeitem" id="inapplicable6" title="Label"></textarea>
+</div>

@@ -1,0 +1,36 @@
+<form action="#">
+  <select id="fail1"></select>
+  <select aria-label="label" id="pass1"></select>
+  <select aria-labelledby="label" id="pass2"></select>
+  <div id="label">Label</div>
+  <label>
+    Label
+    <select id="pass3"></select>
+  </label>
+
+  <label><select id="fail2"></select></label>
+  <label for="fail3">
+    <select id="fail3">
+      <option>Thing</option>
+    </select>
+  </label>
+  <label for="pass4">Label</label>
+  <select id="pass4"></select>
+
+  <select id="pass5" title="Label"></select>
+
+  <div>
+    <label>
+      <select id="fail4">
+        <option selected="selected">Chosen</option>
+        <option>Not Selected</option>
+      </select>
+    </label>
+  </div>
+
+  <select id="fail5" role="presentation"></select>
+  <select id="fail6" role="none"></select>
+
+  <select id="pass6" role="presentation" disabled></select>
+  <select id="pass7" role="none" disabled></select>
+</form>

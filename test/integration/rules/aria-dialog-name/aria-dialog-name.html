@@ -1,0 +1,34 @@
+<!-- PASS -->
+<div id="pass1" role="dialog" aria-label="Cookies"></div>
+<div id="pass2" role="dialog" title="Cookies"></div>
+<div id="pass3" role="dialog" aria-labelledby="dialog-div-heading">
+  <h2 id="dialog-div-heading">Cookies</h2>
+</div>
+<dialog id="pass4" open role="alertdialog" aria-label="Cookies"></dialog>
+<dialog id="pass5" open role="alertdialog" title="Cookies"></dialog>
+<dialog
+  id="pass6"
+  open
+  role="alertdialog"
+  aria-labelledby="alertdialog-heading"
+>
+  <h2 id="alertdialog-heading">Cookies</h2>
+</dialog>
+<div id="pass7" role="alertdialog" aria-label="Cookies"></div>
+<div id="pass8" role="alertdialog" title="Cookies"></div>
+<div id="pass9" role="alertdialog" aria-labelledby="alertdialog-div-heading">
+  <h2 id="alertdialog-div-heading">Cookies</h2>
+</div>
+
+<!-- FAIL -->
+<div id="fail1" role="dialog"></div>
+<div id="fail2" role="dialog" aria-labelledby="non-existent"></div>
+<dialog id="fail3" open role="alertdialog"></dialog>
+<dialog
+  id="fail4"
+  open
+  role="alertdialog"
+  aria-labelledby="non-existent"
+></dialog>
+<div id="fail5" role="alertdialog"></div>
+<div id="fail6" role="alertdialog" aria-labelledby="non-existent"></div>

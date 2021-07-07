@@ -1,30 +1,14 @@
 <!DOCTYPE html>
 <html id="frameContent">
-	<head>
-		<title>Error returning frame frame</title>
-	</head>
-	<body>
-		<script>
-			var axe = {
-				version: '2.0.0',
-				constants: {}
-			};
-		</script>
-		<script src="../../../tmp/core/core.js"></script>
-
-		<script>
-			window.axeName = 'frameContent';
-			axe.utils.respondable.subscribe('axe.ping', function(
-				data,
-				keepalive,
-				respond
-			) {
-				respond({ axe: true });
-			});
-			axe.utils.respondable.subscribe('axe.start', function() {
-				// respond the number of times requested, keeping alive if requested
-				throw new Error('error in axe.throw');
-			});
-		</script>
-	</body>
+  <head>
+    <title>Error returning frame frame</title>
+  </head>
+  <body>
+    <script src="/axe.js"></script>
+    <script>
+      axe._audit.run = function() {
+        throw new Error('error in axe.throw');
+      };
+    </script>
+  </body>
 </html>
