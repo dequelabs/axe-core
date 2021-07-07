@@ -28,7 +28,7 @@ describe('Context', function() {
       var shadowRoot = shadow.attachShadow({ mode: 'open' });
       shadowRoot.innerHTML =
         '<main id="shadowMain"><iframe id="f1"></iframe></main>';
-      var result = new Context('#shadowMain');
+      var result = new Context('main');
 
       assert.deepEqual([result.include[0].actualNode], [$id('shadowMain')]);
     });
