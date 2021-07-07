@@ -13,7 +13,7 @@
       shadowRoot.innerHTML =
         '<main id="hello"><iframe id="f1"></iframe></main>';
       setTimeout(async function() {
-        await axe.run({ include: [['#hello']] }); // Error: No elements found for include in page Context
+        await axe.run({ include: [['main']] }); // Error: No elements found for include in page Context
       }, 1000);
     })();
   </script>
