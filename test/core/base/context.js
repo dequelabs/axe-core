@@ -29,8 +29,10 @@ describe('Context', function() {
       shadowRoot.innerHTML =
         '<main id="shadowMain"><iframe id="f1"></iframe></main>';
       var result = new Context('main');
-
-      assert.deepEqual([result.include[0].actualNode], [$id('shadowMain')]);
+      assert.deepEqual(
+        [result.include[0].actualNode],
+        [shadowRoot.querySelector('#shadowMain')]
+      );
     });
 
     it('should accept multiple selectors', function() {
