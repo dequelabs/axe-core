@@ -1,0 +1,11 @@
+{
+  "id": "aria-label-valid-use",
+  "evaluate": "aria-label-valid-use-evaluate",
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "aria-label used on a supported role",
+      "fail": "aria-label used on a static element or role"
+    }
+  }
+}
