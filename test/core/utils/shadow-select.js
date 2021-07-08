@@ -53,7 +53,7 @@ testSuite('utils.shadowSelect', function () {
 
     it('returns null if an intermediate node is not a shadow root', function () {
       var shadowRoot = appendShadowTree(fixture, 'article');
-      shadowRoot.innerHTML = '<section></section>';
+      shadowRoot.innerHTML = '<section><p class="hello"></p></section>';
       assert.isNull(shadowSelect(['#fixture > article', 'section', 'p']));
     });
 
