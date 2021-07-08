@@ -136,7 +136,7 @@ describe('aria-allowed-role', function() {
   });
 
   it('returns true when input of type image and no role', function() {
-    var vNode = queryFixture('<img id="target" type="image"/>');
+    var vNode = queryFixture('<input id="target" type="image"/>');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-allowed-role')
