@@ -80,7 +80,7 @@ describe('aria.getElementUnallowedRoles', function() {
     assert.include(actual, 'row');
   });
 
-  it('works with SerialVirtualNode', function() {
+  it('returns true for a SerialVirtualNode of INPUT with type checkbox and aria-pressed attribute', function() {
     var vNode = new axe.SerialVirtualNode({
       nodeName: 'input',
       attributes: {
@@ -90,5 +90,19 @@ describe('aria.getElementUnallowedRoles', function() {
     });
     var actual = getElementUnallowedRoles(vNode);
     assert.isEmpty(actual);
+  });
+
+  it('returns false for a SerialVirtualNode of INPUT with role application', function() {
+    var vNode = new axe.SerialVirtualNode({
+      nodeName: 'input',
+      attributes: {
+        role: 'application',
+        type: '',
+        'aria-pressed': ''
+      }
+    });
+    var actual = getElementUnallowedRoles(vNode);
+    assert.isNotEmpty(actual);
+    assert.include(actual, 'application');
   });
 });
