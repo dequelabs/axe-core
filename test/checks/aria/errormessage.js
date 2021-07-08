@@ -1,88 +1,83 @@
 describe('aria-errormessage', function() {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
+  var queryFixture = axe.testUtils.queryFixture;
   var shadowSupported = axe.testUtils.shadowSupport.v1;
   var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
   var checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function() {
-    fixture.innerHTML = '';
     checkContext.reset();
-    axe.reset();
   });
 
   it('should return false if aria-errormessage value is invalid', function() {
-    fixture.innerHTML =
-      '<div aria-errormessage="plain" aria-invalid="true">' +
-      '<div id="plain"></div>';
-    var target = fixture.children[0];
-    target.setAttribute('aria-errormessage', 'plain');
+    var vNode = queryFixture(
+      '<div id="target" aria-errormessage="plain" aria-invalid="true">' +
+        '<div id="plain"></div>'
+    );
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-errormessage')
-        .call(checkContext, target)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should return undefined if aria-errormessage references an element that does not exist', function() {
-    fixture.innerHTML =
-      '<div aria-errormessage="plain" aria-invalid="true">' + '<div></div>';
-    var target = fixture.children[0];
-    target.setAttribute('aria-errormessage', 'plain');
+    var vNode = queryFixture(
+      '<div id="target" aria-errormessage="plain" aria-invalid="true">' +
+        '<div></div>'
+    );
     assert.isUndefined(
       axe.testUtils
         .getCheckEvaluate('aria-errormessage')
-        .call(checkContext, target)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should return true if aria-errormessage id is alert', function() {
-    fixture.innerHTML =
-      '<div aria-errormessage="alert" aria-invalid="true">' +
-      '<div id="alert" role="alert"></div>';
-    var target = fixture.children[0];
-    target.setAttribute('aria-errormessage', 'alert');
+    var vNode = queryFixture(
+      '<div id="target" aria-errormessage="alert" aria-invalid="true">' +
+        '<div id="alert" role="alert"></div>'
+    );
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-errormessage')
-        .call(checkContext, target)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should return true if aria-errormessage id is aria-live=assertive', function() {
-    fixture.innerHTML =
-      '<div aria-errormessage="live" aria-invalid="true">' +
-      '<div id="live" aria-live="assertive"></div>';
-    var target = fixture.children[0];
-    target.setAttribute('aria-errormessage', 'live');
+    var vNode = queryFixture(
+      '<div id="target" aria-errormessage="live" aria-invalid="true">' +
+        '<div id="live" aria-live="assertive"></div>'
+    );
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-errormessage')
-        .call(checkContext, target)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should return true if aria-errormessage id is aria-describedby', function() {
-    fixture.innerHTML =
-      '<div aria-errormessage="plain" aria-describedby="plain" aria-invalid="true">' +
-      '<div id="plain"></div>';
-    var target = fixture.children[0];
+    var vNode = queryFixture(
+      '<div id="target" aria-errormessage="plain" aria-describedby="plain" aria-invalid="true">' +
+        '<div id="plain"></div>'
+    );
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-errormessage')
-        .call(checkContext, target)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('sets an array of IDs in data', function() {
-    fixture.innerHTML =
-      '<div aria-errormessage=" foo  bar \tbaz  " aria-invalid="true">' +
-      '<div id="plain"></div>';
-    var target = fixture.children[0];
+    var vNode = queryFixture(
+      '<div id="target" aria-errormessage=" foo  bar \tbaz  " aria-invalid="true">' +
+        '<div id="plain"></div>'
+    );
     axe.testUtils
       .getCheckEvaluate('aria-errormessage')
-      .call(checkContext, target);
+      .call(checkContext, null, null, vNode);
     assert.deepEqual(checkContext._data, ['foo', 'bar', 'baz']);
   });
 
@@ -96,36 +91,36 @@ describe('aria-errormessage', function() {
         }
       }
     });
-    fixture.innerHTML = '<div aria-errormessage=" " aria-invalid="true"></div>';
+    var vNode = queryFixture(
+      '<div id="target" aria-errormessage=" " aria-invalid="true"></div>'
+    );
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-errormessage')
-        .call(checkContext, fixture.children[0])
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should return true when aria-invalid is not set', function() {
-    fixture.innerHTML =
-      '<div aria-errormessage="plain">' + '<div id="plain"></div>';
-    var target = fixture.children[0];
-    target.setAttribute('aria-errormessage', 'plain');
+    var vNode = queryFixture(
+      '<div id="target" aria-errormessage="plain">' + '<div id="plain"></div>'
+    );
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-errormessage')
-        .call(checkContext, target)
+        .call(checkContext, null, null, vNode)
     );
   });
 
   it('should return true when aria-invalid=false', function() {
-    fixture.innerHTML =
-      '<div aria-errormessage="plain" aria-invalid="false">' +
-      '<div id="plain"></div>';
-    var target = fixture.children[0];
-    target.setAttribute('aria-errormessage', 'plain');
+    var vNode = queryFixture(
+      '<div id="target" aria-errormessage="plain" aria-invalid="false">' +
+        '<div id="plain"></div>'
+    );
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('aria-errormessage')
-        .call(checkContext, target)
+        .call(checkContext, null, null, vNode)
     );
   });
 
@@ -139,11 +134,13 @@ describe('aria-errormessage', function() {
         }
       }
     });
-    fixture.innerHTML = '<div aria-errormessage=" " aria-invalid="true"></div>';
+    var vNode = queryFixture(
+      '<div id="target" aria-errormessage=" " aria-invalid="true"></div>'
+    );
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-errormessage')
-        .call(checkContext, fixture.children[0])
+        .call(checkContext, null, null, vNode)
     );
   });
 
@@ -193,4 +190,25 @@ describe('aria-errormessage', function() {
       );
     }
   );
+
+  describe('SerialVirtualNode', function() {
+    it('should return undefined', function() {
+      var vNode = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          'aria-invalid': 'true',
+          'aria-errormessage': 'test'
+        }
+      });
+      assert.isUndefined(
+        axe.testUtils
+          .getCheckEvaluate('aria-errormessage')
+          .call(checkContext, null, null, vNode)
+      );
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'idrefs',
+        values: ['test']
+      });
+    });
+  });
 });
