@@ -246,16 +246,16 @@ declare namespace axe {
   interface SerialDqElement {
     source: string
     nodeIndexes: number[]
-    selector: number[],
-    xpath: number[],
-    ancestry: number[],
+    selector: Selector,
+    xpath: string[],
+    ancestry: Selector,
   }
   interface PartialRuleResult {
     id: string,
     result: 'inapplicable',
     pageLevel: boolean,
     impact: null,
-    nodes: object[],
+    nodes: Array<Record<string, unknown>>,
   }
   interface PartialResult {
     frames: SerialDqElement[]
@@ -266,7 +266,7 @@ declare namespace axe {
     frameContext: ContextObject
   }
   interface Utils {
-    getFrameContexts: (context: ElementContext | null) => FrameContext[]
+    getFrameContexts: (context?: ElementContext) => FrameContext[]
   }
 
   let version: string;
