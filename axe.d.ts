@@ -45,11 +45,13 @@ declare namespace axe {
     | 'embedded'
     | 'interactive';
 
-  type Selector = Array<string | string[]>
+  type BaseSelector = string;
+  type CrossTreeSelector = BaseSelector | BaseSelector[];
+  type CrossFrameSelector = CrossTreeSelector[];
 
   type ContextObject = {
-    include?: Selector;
-    exclude?: Selector;
+    include?: BaseSelector | Array<BaseSelector | BaseSelector[]>;
+    exclude?: BaseSelector | Array<BaseSelector | BaseSelector[]>;
   };
 
   type RunCallback = (error: Error, results: AxeResults) => void;
@@ -244,29 +246,30 @@ declare namespace axe {
     tags: string[];
   }
   interface SerialDqElement {
-    source: string
-    nodeIndexes: number[]
-    selector: Selector,
-    xpath: string[],
-    ancestry: Selector,
+    source: string;
+    nodeIndexes: number[];
+    selector: CrossFrameSelector;
+    xpath: string[];
+    ancestry: CrossFrameSelector;
   }
   interface PartialRuleResult {
-    id: string,
-    result: 'inapplicable',
-    pageLevel: boolean,
-    impact: null,
-    nodes: Array<Record<string, unknown>>,
+    id: string;
+    result: 'inapplicable';
+    pageLevel: boolean;
+    impact: null;
+    nodes: Array<Record<string, unknown>>;
   }
   interface PartialResult {
-    frames: SerialDqElement[]
-    results: PartialRuleResult[]
+    frames: SerialDqElement[];
+    results: PartialRuleResult[];
   }
   interface FrameContext {
-    frameSelector: Selector,
-    frameContext: ContextObject
+    frameSelector: CrossTreeSelector;
+    frameContext: ContextObject;
   }
   interface Utils {
-    getFrameContexts: (context?: ElementContext) => FrameContext[]
+    getFrameContexts: (context?: ElementContext) => FrameContext[];
+    shadowSelect: (selector: CrossTreeSelector) => Element | null;
   }
 
   let version: string;
