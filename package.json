@@ -50,6 +50,12 @@
   ],
   "main": "axe.js",
   "typings": "axe.d.ts",
+  "files": [
+    "axe.js",
+    "axe.min.js",
+    "axe.d.ts",
+    "locales/"
+  ],
   "standard-version": {
     "scripts": {
       "postbump": "npm ci && npm run sri-update"
