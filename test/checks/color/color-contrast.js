@@ -164,7 +164,7 @@ describe('color-contrast', function() {
     assert.deepEqual(checkContext._relatedNodes, []);
   });
 
-  it('should return false when there is not sufficient contrast', function() {
+  it('should return false when there is not sufficient contrast between foreground and background', function() {
     var params = checkSetup(
       '<div style="color: yellow; background-color: white;" id="target">' +
         'My text</div>'
@@ -172,6 +172,7 @@ describe('color-contrast', function() {
 
     assert.isFalse(contrastEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._relatedNodes, [params[0]]);
+    assert.deepEqual(checkContext._data.messageKey, null);
   });
 
   it('should ignore position:fixed elements above the target', function() {
@@ -726,6 +727,22 @@ describe('color-contrast', function() {
     assert.isTrue(contrastEvaluate.apply(checkContext, params));
   });
 
+  it('does not count text shadows of offset 0, blur 0 as part of the background color', function() {
+    var params = checkSetup(
+      '<div id="target" style="background-color: #fff; color:#0f833e; ' +
+        'text-shadow: 0 0 0 #000">' +
+        '  Hello world' +
+        '</div>'
+    );
+
+    var white = new axe.commons.color.Color(255, 255, 255, 1);
+
+    assert.isTrue(contrastEvaluate.apply(checkContext, params));
+    assert.equal(checkContext._data.bgColor, white.toHexString());
+    assert.equal(checkContext._data.fgColor, '#0f833e');
+    assert.equal(checkContext._data.contrastRatio, '4.84');
+  });
+
   it('passes if thin text shadows have sufficient contrast with the background', function() {
     var params = checkSetup(
       '<div id="target" style="background-color: #aaa; color:#666; ' +
@@ -736,7 +753,7 @@ describe('color-contrast', function() {
     assert.isTrue(contrastEvaluate.apply(checkContext, params));
   });
 
-  it('fails if text shadows have sufficient contrast with the background if its with is thicker than `shadowOutlineEmMax`', function() {
+  it('fails if text shadows have sufficient contrast with the background if its width is thicker than `shadowOutlineEmMax`', function() {
     var checkOptions = { shadowOutlineEmMax: 0.05 };
     var params = checkSetup(
       '<div id="target" style="background-color: #aaa; color:#666; ' +
@@ -746,5 +763,28 @@ describe('color-contrast', function() {
       checkOptions
     );
     assert.isFalse(contrastEvaluate.apply(checkContext, params));
+    assert.equal(checkContext._data.messageKey, null);
+  });
+
+  it('fails if text shadows do not have sufficient contrast with the foreground', function() {
+    var params = checkSetup(
+      '<div id="target" style="background-color: #aaa; color:#666; ' +
+        'text-shadow: 1px 1px 0.01em #000">' +
+        '  Hello world' +
+        '</div>'
+    );
+    assert.isFalse(contrastEvaluate.apply(checkContext, params));
+    assert.equal(checkContext._data.messageKey, 'fgOnShadowColor');
+  });
+
+  it('fails if text shadows do not have sufficient contrast with the background', function() {
+    var params = checkSetup(
+      '<div id="target" style="background-color: #aaa; color:#666; ' +
+        'text-shadow: 0 0 0.01em #000">' +
+        '  Hello world' +
+        '</div>'
+    );
+    assert.isFalse(contrastEvaluate.apply(checkContext, params));
+    assert.equal(checkContext._data.messageKey, 'shadowOnBgColor');
   });
 });

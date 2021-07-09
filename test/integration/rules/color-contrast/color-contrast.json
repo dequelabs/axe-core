@@ -10,7 +10,8 @@
     ["#pass5"],
     ["#pass7"],
     ["#pass7 > input"],
-    ["#pass8"]
+    ["#pass8"],
+    ["#text-shadow-fg-pass"]
   ],
   "incomplete": [
     ["#canttell1"],
