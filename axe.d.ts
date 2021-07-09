@@ -45,9 +45,13 @@ declare namespace axe {
     | 'embedded'
     | 'interactive';
 
+  type BaseSelector = string;
+  type CrossTreeSelector = BaseSelector | BaseSelector[];
+  type CrossFrameSelector = CrossTreeSelector[];
+
   type ContextObject = {
-    include?: string[] | string[][];
-    exclude?: string[] | string[][];
+    include?: BaseSelector | Array<BaseSelector | BaseSelector[]>;
+    exclude?: BaseSelector | Array<BaseSelector | BaseSelector[]>;
   };
 
   type RunCallback = (error: Error, results: AxeResults) => void;
@@ -241,9 +245,36 @@ declare namespace axe {
     helpUrl: string;
     tags: string[];
   }
+  interface SerialDqElement {
+    source: string;
+    nodeIndexes: number[];
+    selector: CrossFrameSelector;
+    xpath: string[];
+    ancestry: CrossFrameSelector;
+  }
+  interface PartialRuleResult {
+    id: string;
+    result: 'inapplicable';
+    pageLevel: boolean;
+    impact: null;
+    nodes: Array<Record<string, unknown>>;
+  }
+  interface PartialResult {
+    frames: SerialDqElement[];
+    results: PartialRuleResult[];
+  }
+  interface FrameContext {
+    frameSelector: CrossTreeSelector;
+    frameContext: ContextObject;
+  }
+  interface Utils {
+    getFrameContexts: (context?: ElementContext) => FrameContext[];
+    shadowSelect: (selector: CrossTreeSelector) => Element | null;
+  }
 
   let version: string;
   let plugins: any;
+  let utils: Utils;
 
   /**
    * Source string to use as an injected script in Selenium
@@ -279,31 +310,32 @@ declare namespace axe {
   ): void;
 
   /**
-   * TODO
-   * @param context
-   * @param options
-   */
-  function runPartial(
-    context: ElementContext,
-    options: RunOptions
-  ): Promise<unknown>;
-
-  /**
-   * TODO
-   * @param partialResults
-   * @param options
-   */
-  function finishRun(
-    partialResults: unknown,
-    options: RunOptions
-  ): Promise<AxeResults>;
-
-  /**
    * Method for configuring the data format used by axe. Helpful for adding new
    * rules, which must be registered with the library to execute.
    * @param  {Spec}       Spec Object with valid `branding`, `reporter`, `checks` and `rules` data
    */
   function configure(spec: Spec): void;
+
+  /**
+   * Run axe in the current window only
+   * @param   {ElementContext} context  Optional The `Context` specification object @see Context
+   * @param   {RunOptions}     options  Optional Options passed into rules or checks, temporarily modifying them.
+   * @returns {Promise<PartialResult>}  Partial result, for use in axe.finishRun.
+   */
+  function runPartial(
+    context: ElementContext,
+    options: RunOptions
+  ): Promise<PartialResult>;
+
+  /**
+   * Create a report from axe.runPartial results
+   * @param   {PartialResult[]}     partialResults  Results from axe.runPartial, calls in different frames on the page.
+   * @param   {RunOptions}     options  Optional Options passed into rules or checks, temporarily modifying them.
+   */
+  function finishRun(
+    partialResults: PartialResult[],
+    options: RunOptions
+  ): Promise<AxeResults>;
 
   /**
    * Searches and returns rules that contain a tag in the list of tags.
