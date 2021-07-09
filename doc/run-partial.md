@@ -75,6 +75,12 @@ axe.finishRun([
 
 **important**: Since `axe.finishRun` may have access to cross-origin information, it should only be called in an environment that is known not to have third-party scripts. When using a browser driver, this can for example by done in a blank page.
 
+## axe.utils.getFrameContexts(context): FrameContext[]
+
+The `axe.utils.getFrameContexts` method takes any valid context, and returns an array of objects. Each object represents a frame that is in the context. The object has the following properties:
+
+- `frameSelector`: This is a CSS selector, or array of CSS selectors in case of nodes in a shadow DOM tree to locate the frame element to be tested.
+- `frameContext`: This is an object is a context object that should be tested in the particular frame.
 ## Recommendations
 
 When building integrations with browser drivers using axe-core, it is safer and more stable to use `axe.runPartial` and `axe.finishRun` then to use `axe.run`. These two methods ensure that no information from one frame is ever handed off to another. That way if any script in a frame interferes with the `axe` object, or with `window.postMessage`, other frames will not be affected.
