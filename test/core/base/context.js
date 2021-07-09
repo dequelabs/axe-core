@@ -14,6 +14,13 @@ describe('Context', function() {
     fixture.innerHTML = '';
   });
 
+  it('should not mutate its input', function() {
+    var context = { exclude: [['iframe', 'foo']] };
+    // eslint-disable-next-line no-new
+    new Context(context);
+    assert.deepEqual(context, { exclude: [['iframe', 'foo']] });
+  });
+
   describe('include', function() {
     it('should accept a single selector', function() {
       fixture.innerHTML = '<div id="foo"></div>';
