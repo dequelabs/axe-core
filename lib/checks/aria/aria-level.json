@@ -1,0 +1,11 @@
+{
+  "id": "aria-level",
+  "evaluate": "aria-level-evaluate",
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "aria-level values are valid",
+      "incomplete": "aria-level values greater than 6 are not supported in all screenreader and browser combinations"
+    }
+  }
+}
