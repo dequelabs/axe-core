@@ -4,7 +4,7 @@
 
 To use these methods, call `axe.runPartial()` in the top window, and in all nested frames and iframes. The results are then put into an array, and then passed to `axe.finishRun()`. `axe.finishRun()` then complete the test and generates the axe report.
 
-This results in code that looks something like this:
+This results in code that looks something like the following. The `context` and `options` arguments used are the same as would be passed to `axe.run`. See [API.md](api.md) for details.
 
 ```js
 const partialResults = await Promise.all(
