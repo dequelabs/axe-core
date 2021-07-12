@@ -354,7 +354,7 @@
       "help": "In Tabellen, die größer als 3 mal 3 sind, müssen alle nichtleeren <td>-Elemente einen zugehörigen Tabellenkopf haben."
     },
     "td-headers-attr": {
-      "description": "Stellt sicher, dass jede Zelle in einer Tabelle, welche das headers-Attribute verwenden, sich nur auf andere Zellen derselben Tabelle beziehen.",
+      "description": "Stellt sicher, dass jede Zelle in einer Tabelle, welche das headers-Attribut verwendet, sich nur auf andere Zellen derselben Tabelle beziehen.",
       "help": "Innerhalb eines <table>-Elementes dürfen sich Zellen, die das headers-Attribut verwenden, nur auf andere Zellen derselben Tabelle beziehen."
     },
     "th-has-data-cells": {

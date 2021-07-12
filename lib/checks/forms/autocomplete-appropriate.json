@@ -1,6 +1,7 @@
 {
   "id": "autocomplete-appropriate",
   "evaluate": "autocomplete-appropriate-evaluate",
+  "deprecated": true,
   "metadata": {
     "impact": "serious",
     "messages": {

@@ -16,7 +16,7 @@ Axe is an accessibility testing engine for websites and other HTML-based user in
 
 Axe-core has different types of rules, for WCAG 2.0 and 2.1 on level A and AA, as well as a number of best practices that help you identify common accessibility practices like ensuring every page has an `h1` heading, and to help you avoid "gotchas" in ARIA like where an ARIA attribute you used will get ignored.
 
-With axe-core, you can find **on average 57% of WCAG issues automatically**. Additionally, axe-core will return elements as "incomplete" where axe-core could not be certain, and manual review is needed. 
+With axe-core, you can find **on average 57% of WCAG issues automatically**. Additionally, axe-core will return elements as "incomplete" where axe-core could not be certain, and manual review is needed.
 
 To catch bugs earlier in the development cycle we recommend using the [axe-linter vscode extension](https://marketplace.visualstudio.com/items?itemName=deque-systems.vscode-axe-linter). To improve test coverage even further we recommend the [intelligent guided tests](https://www.youtube.com/watch?v=AtsX0dPCG_4&feature=youtu.be&ab_channel=DequeSystems) in the [axe Extension](https://www.deque.com/axe/browser-extensions/).
 
@@ -103,7 +103,7 @@ or equivalently:
 
 `npm run build -- --lang=nl`
 
-This will create a new build for axe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build localized versions, simply pass in `--all-lang` instead.
+This will create a new build for axe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build localized versions, simply pass in `--all-lang` instead. If you want to build multiple localized versions (but not all of them), you can pass in a comma-separated list of langages to the `--lang` flag, like `--lang=nl,ja`.
 
 To create a new translation for axe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below. For details on the message syntax, see [Check Message Template](/docs/check-message-template.md).
 
@@ -135,6 +135,28 @@ axe.configure({
   }
 });
 ```
+
+### Supported Locales
+
+Axe-core supports the following locales. Do note that since locales are contributed by our community, they are not guaranteed to include all translations needed in a release.
+
+- Basque
+- Danish
+- Dutch
+- French
+- German
+- Japanese
+- Korean
+- Polish
+- Portuguese (Brazilian)
+- Spanish
+
+## Updates & Security
+
+Axe-core has a new minor release every 3 to 5 months, which usually introduces new rules and features. We recommend scheduling time to upgrade to these versions. Security updates will be made available for minor version lines up to **18 months old**.
+
+- See [release and support](doc/release-and-support.md) for details on the frequency of releases, long-term support and recommendations on upgrading axe-core.
+- See [backward compatibility](doc/backwards-compatibility-doc.md) for details on the types of changes different releases may introduce.
 
 ## Supported ARIA Roles and Attributes.
 

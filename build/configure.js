@@ -16,7 +16,7 @@ var axeVersion = packageJSON.version.substring(
 );
 
 var descriptionTableHeader =
-  '| Rule ID | Description | Impact | Tags | Issue Type |\n| :------- | :------- | :------- | :------- | :------- |\n';
+  '| Rule ID | Description | Impact | Tags | Issue Type | ACT Rules |\n| :------- | :------- | :------- | :------- | :------- | :------- |\n';
 
 dot.templateSettings.strip = false;
 
@@ -309,6 +309,15 @@ function buildRules(grunt, options, commons, callback) {
       );
     }
 
+    function createActLinksForRule(rule) {
+      var actIds = rule.actIds || [];
+      var actLinks = [];
+      actIds.forEach(id =>
+        actLinks.push(`[${id}](https://act-rules.github.io/rules/${id})`)
+      );
+      return actLinks.join(', ');
+    }
+
     rules.map(function(rule) {
       var impact = parseImpactForRule(rule);
       var canFail = parseFailureForRule(rule);
@@ -342,12 +351,15 @@ function buildRules(grunt, options, commons, callback) {
         issueType.push('needs&nbsp;review');
       }
 
+      var actLinks = createActLinksForRule(rule);
+
       rules.push([
         `[${rule.id}](https://dequeuniversity.com/rules/axe/${axeVersion}/${rule.id}?application=RuleDescription)`,
         entities.encode(rule.metadata.description),
         impact,
         rule.tags.join(', '),
-        issueType.join(', ')
+        issueType.join(', '),
+        actLinks
       ]);
       if (tags.length) {
         rule.enabled = !!rule.tags.filter(function(t) {

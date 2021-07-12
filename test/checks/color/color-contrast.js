@@ -164,7 +164,7 @@ describe('color-contrast', function() {
     assert.deepEqual(checkContext._relatedNodes, []);
   });
 
-  it('should return false when there is not sufficient contrast', function() {
+  it('should return false when there is not sufficient contrast between foreground and background', function() {
     var params = checkSetup(
       '<div style="color: yellow; background-color: white;" id="target">' +
         'My text</div>'
@@ -172,6 +172,7 @@ describe('color-contrast', function() {
 
     assert.isFalse(contrastEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._relatedNodes, [params[0]]);
+    assert.deepEqual(checkContext._data.messageKey, null);
   });
 
   it('should ignore position:fixed elements above the target', function() {
@@ -388,6 +389,18 @@ describe('color-contrast', function() {
     );
   });
 
+  it('should not return undefined if ignorePseudo option is used', function() {
+    var params = checkSetup(
+      '<style>.foo { position: relative; } .foo:after { content: ""; position: absolute; width: 100%; height: 100%; background: red; }</style>' +
+        '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>',
+      {
+        ignorePseudo: true
+      }
+    );
+
+    assert.isTrue(contrastEvaluate.apply(checkContext, params));
+  });
+
   it('should return undefined if pseudo element has a background image', function() {
     var dataURI =
       'data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/' +
@@ -442,6 +455,24 @@ describe('color-contrast', function() {
   it("should not return undefined if pseudo element doesn't have a background", function() {
     var params = checkSetup(
       '<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 100%; height: 100%; }</style>' +
+        '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
+    );
+
+    assert.isTrue(contrastEvaluate.apply(checkContext, params));
+  });
+
+  it('should not return undefined if pseudo element has visibility: hidden', function() {
+    var params = checkSetup(
+      '<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 100%; height: 100%; background-color: red; visibility: hidden; }</style>' +
+        '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
+    );
+
+    assert.isTrue(contrastEvaluate.apply(checkContext, params));
+  });
+
+  it('should not return undefined if pseudo element has display: none', function() {
+    var params = checkSetup(
+      '<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 100%; height: 100%; background-color: red; display: none; }</style>' +
         '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
     );
 
@@ -696,6 +727,22 @@ describe('color-contrast', function() {
     assert.isTrue(contrastEvaluate.apply(checkContext, params));
   });
 
+  it('does not count text shadows of offset 0, blur 0 as part of the background color', function() {
+    var params = checkSetup(
+      '<div id="target" style="background-color: #fff; color:#0f833e; ' +
+        'text-shadow: 0 0 0 #000">' +
+        '  Hello world' +
+        '</div>'
+    );
+
+    var white = new axe.commons.color.Color(255, 255, 255, 1);
+
+    assert.isTrue(contrastEvaluate.apply(checkContext, params));
+    assert.equal(checkContext._data.bgColor, white.toHexString());
+    assert.equal(checkContext._data.fgColor, '#0f833e');
+    assert.equal(checkContext._data.contrastRatio, '4.84');
+  });
+
   it('passes if thin text shadows have sufficient contrast with the background', function() {
     var params = checkSetup(
       '<div id="target" style="background-color: #aaa; color:#666; ' +
@@ -706,7 +753,7 @@ describe('color-contrast', function() {
     assert.isTrue(contrastEvaluate.apply(checkContext, params));
   });
 
-  it('fails if text shadows have sufficient contrast with the background if its with is thicker than `shadowOutlineEmMax`', function() {
+  it('fails if text shadows have sufficient contrast with the background if its width is thicker than `shadowOutlineEmMax`', function() {
     var checkOptions = { shadowOutlineEmMax: 0.05 };
     var params = checkSetup(
       '<div id="target" style="background-color: #aaa; color:#666; ' +
@@ -716,5 +763,28 @@ describe('color-contrast', function() {
       checkOptions
     );
     assert.isFalse(contrastEvaluate.apply(checkContext, params));
+    assert.equal(checkContext._data.messageKey, null);
+  });
+
+  it('fails if text shadows do not have sufficient contrast with the foreground', function() {
+    var params = checkSetup(
+      '<div id="target" style="background-color: #aaa; color:#666; ' +
+        'text-shadow: 1px 1px 0.01em #000">' +
+        '  Hello world' +
+        '</div>'
+    );
+    assert.isFalse(contrastEvaluate.apply(checkContext, params));
+    assert.equal(checkContext._data.messageKey, 'fgOnShadowColor');
+  });
+
+  it('fails if text shadows do not have sufficient contrast with the background', function() {
+    var params = checkSetup(
+      '<div id="target" style="background-color: #aaa; color:#666; ' +
+        'text-shadow: 0 0 0.01em #000">' +
+        '  Hello world' +
+        '</div>'
+    );
+    assert.isFalse(contrastEvaluate.apply(checkContext, params));
+    assert.equal(checkContext._data.messageKey, 'shadowOnBgColor');
   });
 });

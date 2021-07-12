@@ -1354,6 +1354,13 @@ describe('Audit', function() {
       assert.deepEqual(out.runOnly.values, ['positive1', 'negative1']);
     });
 
+    it('allows runOnly as a string as an alternative to an array', function() {
+      var opt = { runOnly: 'positive1' };
+      var out = a.normalizeOptions(opt);
+      assert(out.runOnly.type, 'rule');
+      assert.deepEqual(out.runOnly.values, ['positive1']);
+    });
+
     it('throws an error if runOnly contains both rules and tags', function() {
       assert.throws(function() {
         a.normalizeOptions({

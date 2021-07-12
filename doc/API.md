@@ -23,6 +23,7 @@
    1. [API Name: axe.setup](#api-name-axesetup)
    1. [API Name: axe.teardown](#api-name-axeteardown)
    1. [API Name: axe.frameMessenger](#api-name-axeframemessenger)
+   1. [API name: axe.runPartial / axe.finishRun](#api-name-axerunpartial-/-axefinishrun)
    1. [Virtual DOM Utilities](#virtual-dom-utilities)
       1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
       1. [API Name: axe.utils.getRule](#api-name-axeutilsgetrule)
@@ -484,11 +485,27 @@ axe.run(
 Alternatively, runOnly can be passed an array of tags:
 
 ```js
-axe.run({
-	runOnly: ['wcag2a', 'wcag2aa'];
-}, (err, results) => {
-  // ...
-})
+axe.run(
+  {
+    runOnly: ['wcag2a', 'wcag2aa']
+  },
+  (err, results) => {
+    // ...
+  }
+);
+```
+
+If you want to specify just one tag, you can pass in a string.
+
+```js
+axe.run(
+  {
+    runOnly: 'wcag2a'
+  },
+  (err, results) => {
+    // ...
+  }
+);
 ```
 
 2. Run only a specified list of Rules
@@ -519,6 +536,19 @@ axe.run({
 }, (err, results) => {
   // ...
 })
+```
+
+If you want to specify just one rule, you can pass in a string.
+
+```js
+axe.run(
+  {
+    runOnly: 'ruleId1'
+  },
+  (err, results) => {
+    // ...
+  }
+);
 ```
 
 3. Run all enabled Rules except for a list of rules
@@ -838,6 +868,10 @@ axe.teardown();
 
 Set up a alternative communication channel between parent and child frames. By default, axe-core uses `window.postMessage()`. See [frame-messenger.md](frame-messenger.md) for details.
 
+### API name: axe.runPartial / axe.finishRun
+
+Run axe without frame communication. This is the recommended way to run axe in browser drivers such as Selenium and Puppeteer. See [run-partial.md](run-partial.md) for details.
+
 ### Virtual DOM Utilities
 
 Note: If you’re writing rules or checks, you’ll have both the `node` and `virtualNode` passed in.
@@ -927,7 +961,7 @@ The top-level document or shadow DOM document fragment
 
 ## Section 3: Example Reference
 
-This package contains examples for [jasmine](examples/jasmine), [mocha](examples/mocha), [phantomjs](examples/phantomjs), [qunit](examples/qunit), and [generating HTML from the violations array](examples/html-handlebars.md). Each of these examples is in the [doc/examples](examples) folder. In each folder, there is a README.md file which contains specific information about each example.
+This package contains examples for [jasmine](examples/jasmine), [mocha](examples/mocha), [qunit](examples/qunit), and [generating HTML from the violations array](examples/html-handlebars.md). Each of these examples is in the [doc/examples](examples) folder. In each folder, there is a README.md file which contains specific information about each example.
 
 See [axe-webdriverjs](https://github.com/dequelabs/axe-webdriverjs#axe-webdriverjs) for selenium webdriver javascript examples.
 

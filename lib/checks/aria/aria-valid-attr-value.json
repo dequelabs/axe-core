@@ -12,7 +12,8 @@
       },
       "incomplete": {
         "noId": "ARIA attribute element ID does not exist on the page: ${data.needsReview}",
-        "ariaCurrent": "ARIA attribute value is invalid and will be treated as \"aria-current=true\": ${data.needsReview}"
+        "ariaCurrent": "ARIA attribute value is invalid and will be treated as \"aria-current=true\": ${data.needsReview}",
+        "idrefs": "Unable to determine if ARIA attribute element ID exists on the page: ${data.needsReview}"
       }
     }
   }
