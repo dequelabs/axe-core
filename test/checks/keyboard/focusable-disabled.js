@@ -43,7 +43,7 @@ describe('focusable-disabled', function() {
 
   it('returns true when content made unfocusable through disabled fieldset', function() {
     var params = checkSetup(
-      '<fieldset disabled aria-hidden="true"><input id="target" /></fieldset>'
+      '<fieldset id="target" disabled aria-hidden="true"><input /></fieldset>'
     );
     var actual = check.evaluate.apply(checkContext, params);
     assert.isTrue(actual);
@@ -55,6 +55,7 @@ describe('focusable-disabled', function() {
       var fieldset = document.createElement('fieldset');
       fieldset.setAttribute('disabled', 'true');
       fieldset.setAttribute('aria-hidden', 'true');
+      fieldset.setAttribute('id', 'target');
       var disabledInput = document.createElement('input');
       fieldset.appendChild(disabledInput);
       var shadowRoot = document.createElement('div');
@@ -71,7 +72,7 @@ describe('focusable-disabled', function() {
 
   it('returns false when content is in the legend of a disabled fieldset', function() {
     var params = checkSetup(
-      '<fieldset disabled aria-hidden="true"><legend><input id="target" /></legend></fieldset>'
+      '<fieldset id="target" disabled aria-hidden="true"><legend><input /></legend></fieldset>'
     );
     var actual = check.evaluate.apply(checkContext, params);
     assert.isFalse(actual);
@@ -79,7 +80,7 @@ describe('focusable-disabled', function() {
 
   it('returns false when content is in an aria-hidden but not disabled fieldset', function() {
     var params = checkSetup(
-      '<fieldset aria-hidden="true"><input id="target" /></fieldset>'
+      '<fieldset id="target" aria-hidden="true"><input /></fieldset>'
     );
     var actual = check.evaluate.apply(checkContext, params);
     assert.isFalse(actual);
