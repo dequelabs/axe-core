@@ -14,11 +14,20 @@ describe('Context', function() {
     fixture.innerHTML = '';
   });
 
-  it('should not mutate its input', function() {
-    var context = { exclude: [['iframe', 'foo']] };
+  it('should not mutate exclude in input', function() {
+    fixture.innerHTML = '<div id="foo"></div>';
+    var context = { exclude: [['iframe', '#foo']] };
     // eslint-disable-next-line no-new
     new Context(context);
-    assert.deepEqual(context, { exclude: [['iframe', 'foo']] });
+    assert.deepEqual(context, { exclude: [['iframe', '#foo']] });
+  });
+
+  it('should not mutate its include input', function() {
+    fixture.innerHTML = '<div id="foo"></div>';
+    var context = { include: [['#foo']] };
+    // eslint-disable-next-line no-new
+    new Context(context);
+    assert.deepEqual(context, { include: [['#foo']] });
   });
 
   describe('include', function() {
