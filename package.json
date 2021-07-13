@@ -54,6 +54,7 @@
     "axe.js",
     "axe.min.js",
     "axe.d.ts",
+    "sri-history.json",
     "locales/"
   ],
   "standard-version": {
