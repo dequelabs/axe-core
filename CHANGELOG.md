@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.1](https://github.com/dequelabs/axe-core/compare/v4.3.0...v4.3.1) (2021-07-13)
+
+### Bug Fixes
+
+- add sri-history.json to npm bundle ([#3078](https://github.com/dequelabs/axe-core/issues/3078)) ([b525275](https://github.com/dequelabs/axe-core/commit/b52527515302dcafe6d5a8efd48c60d2d1d21a35))
+
 ## [4.3.0](https://github.com/dequelabs/axe-core/compare/v4.2.3...v4.3.0) (2021-07-09)
 
 ### Features
