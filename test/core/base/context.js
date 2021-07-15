@@ -14,6 +14,48 @@ describe('Context', function() {
     fixture.innerHTML = '';
   });
 
+  it('should not mutate exclude in input', function() {
+    fixture.innerHTML = '<div id="foo"></div>';
+    var context = { exclude: [['iframe', '#foo']] };
+    // eslint-disable-next-line no-new
+    new Context(context);
+    assert.deepEqual(context, { exclude: [['iframe', '#foo']] });
+  });
+
+  it('should not mutate its include input', function() {
+    fixture.innerHTML = '<div id="foo"></div>';
+    var context = { include: [['#foo']] };
+    // eslint-disable-next-line no-new
+    new Context(context);
+    assert.deepEqual(context, { include: [['#foo']] });
+  });
+
+  it('should not share memory with complex object', function() {
+    fixture.innerHTML = '<div id="foo"><a href="">Click me</a></div>';
+    var spec = {
+      include: [['#foo'], ['a']],
+      exclude: [['iframe', '#foo2']],
+      size: { width: 100, height: 100 }
+    };
+    var context = new Context(spec);
+    assert.notStrictEqual(spec.include, context.include);
+    spec.include.forEach(function(_, index) {
+      assert.notStrictEqual(spec.include[index], context.include[index]);
+    });
+    assert.notStrictEqual(spec.exclude, context.exclude);
+    spec.exclude.forEach(function(_, index) {
+      assert.notStrictEqual(spec.exclude[index], context.exclude[index]);
+    });
+    assert.notStrictEqual(spec.size, context.size);
+  });
+
+  it('should not share memory with simple array', function() {
+    fixture.innerHTML = '<div id="foo"></div>';
+    var spec = ['#foo'];
+    var context = new Context(spec);
+    assert.notStrictEqual(spec, context.include);
+  });
+
   describe('include', function() {
     it('should accept a single selector', function() {
       fixture.innerHTML = '<div id="foo"></div>';
