@@ -124,6 +124,47 @@ describe('color.getForegroundColor', function() {
     assert.closeTo(actual.alpha, expected.alpha, 0.1);
   });
 
+  it('should return text shadow color if foreground is transparent', function() {
+    fixture.innerHTML =
+      '<div style="height: 40px; width: 120px; background-color: white;">' +
+      '<div id="target" style="height: 20px; width: 120px; color: rgba(0,0,0,0); text-shadow: 0 0 0 rgba(32, 32, 64, 1)">' +
+      'This is my text' +
+      '</div></div>';
+    axe.testUtils.flatTreeSetup(fixture);
+    var target = fixture.querySelector('#target');
+    var actual = axe.commons.color.getForegroundColor(target);
+    var expected = new axe.commons.color.Color(32, 32, 64, 1);
+    assert.equal(actual.red, expected.red);
+    assert.equal(actual.green, expected.green);
+    assert.equal(actual.blue, expected.blue);
+    assert.equal(actual.alpha, expected.alpha);
+  });
+
+  it('should return a mix of colors if there is a shadow, foreground with alpha < 1, and background color', function() {
+    fixture.innerHTML =
+      '<div style="height: 40px; width: 120px; background-color: white;">' +
+      '<div id="target" style="height: 20px; width: 120px; color: rgba(128, 0, 0, .5); text-shadow: 0 0 0 rgba(32, 32, 64, 1)">' +
+      'This is my text' +
+      '</div></div>';
+    axe.testUtils.flatTreeSetup(fixture);
+    var target = fixture.querySelector('#target');
+    var actual = axe.commons.color.getForegroundColor(target);
+    var shadowExpected = new axe.commons.color.Color(32, 32, 64, 1);
+    var bgExpected = new axe.commons.color.Color(255, 255, 255, 1);
+    var fgExpected = new axe.commons.color.Color(128, 0, 0, 0.5);
+    assert.notEqual(actual.red, shadowExpected.red);
+    assert.notEqual(actual.green, shadowExpected.green);
+    assert.notEqual(actual.blue, shadowExpected.blue);
+
+    assert.notEqual(actual.red, bgExpected.red);
+    assert.notEqual(actual.green, bgExpected.green);
+    assert.notEqual(actual.blue, bgExpected.blue);
+
+    assert.notEqual(actual.red, fgExpected.red);
+    assert.notEqual(actual.green, fgExpected.green);
+    assert.notEqual(actual.blue, fgExpected.blue);
+  });
+
   (shadowSupported ? it : xit)(
     'should return the fgcolor from inside of Shadow DOM',
     function() {

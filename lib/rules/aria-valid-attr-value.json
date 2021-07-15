@@ -7,7 +7,7 @@
     "description": "Ensures all ARIA attributes have valid values",
     "help": "ARIA attributes must conform to valid values"
   },
-  "all": ["aria-valid-attr-value", "aria-errormessage"],
+  "all": ["aria-valid-attr-value", "aria-errormessage", "aria-level"],
   "any": [],
   "none": []
 }

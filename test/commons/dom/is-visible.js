@@ -5,25 +5,24 @@ describe('dom.isVisible', function() {
   var queryFixture = axe.testUtils.queryFixture;
   var isIE11 = axe.testUtils.isIE11;
   var shadowSupported = axe.testUtils.shadowSupport.v1;
-  var fakeNode = {
-    nodeType: Node.ELEMENT_NODE,
-    nodeName: 'div'
-  };
+  var computedStyleStub;
 
   afterEach(function() {
     document.getElementById('fixture').innerHTML = '';
     axe._tree = undefined;
+
+    if (computedStyleStub) {
+      computedStyleStub.restore();
+      computedStyleStub = null;
+    }
   });
 
   describe('default usage', function() {
     // Firefox returns `null` if accessed inside a hidden iframe
     it('should return false if computedStyle return null for whatever reason', function() {
-      var orig = window.getComputedStyle;
-      window.getComputedStyle = function() {
-        return null;
-      };
-      assert.isFalse(axe.commons.dom.isVisible(fakeNode));
-      window.getComputedStyle = orig;
+      computedStyleStub = sinon.stub(window, 'getComputedStyle').returns(null);
+      var el = document.createElement('div');
+      assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
     it('should return true on statically-positioned, visible elements', function() {
@@ -158,6 +157,35 @@ describe('dom.isVisible', function() {
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
+    it('should detect clip rect hidden text technique using position: fixed', function() {
+      var el,
+        clip =
+          'clip: rect(1px 1px 1px 1px);' +
+          'clip: rect(1px, 1px, 1px, 1px);' +
+          'width: 1px; height: 1px;' +
+          'position: fixed;' +
+          'overflow: hidden;';
+
+      fixture.innerHTML = '<div id="target" style="' + clip + '">Hi</div>';
+
+      el = document.getElementById('target');
+      assert.isFalse(axe.commons.dom.isVisible(el));
+    });
+
+    it('should detect when clip is not applied because of positioning', function() {
+      var el,
+        clip =
+          'clip: rect(1px 1px 1px 1px);' +
+          'clip: rect(1px, 1px, 1px, 1px);' +
+          'position: relative;' +
+          'overflow: hidden;';
+
+      fixture.innerHTML = '<div id="target" style="' + clip + '">Hi</div>';
+
+      el = document.getElementById('target');
+      assert.isTrue(axe.commons.dom.isVisible(el));
+    });
+
     it('should detect clip rect hidden text technique on parent', function() {
       var el,
         clip =
@@ -172,6 +200,21 @@ describe('dom.isVisible', function() {
 
       el = document.getElementById('target');
       assert.isFalse(axe.commons.dom.isVisible(el));
+    });
+
+    it('should detect when clip is not applied because of positioning on parent', function() {
+      var el,
+        clip =
+          'clip: rect(1px 1px 1px 1px);' +
+          'clip: rect(1px, 1px, 1px, 1px);' +
+          'position: relative;' +
+          'overflow: hidden;';
+
+      fixture.innerHTML =
+        '<div style="' + clip + '">' + '<div id="target">Hi</div>' + '</div>';
+
+      el = document.getElementById('target');
+      assert.isTrue(axe.commons.dom.isVisible(el));
     });
 
     it('should detect poorly hidden clip rects', function() {
@@ -368,12 +411,9 @@ describe('dom.isVisible', function() {
   describe('screen readers', function() {
     // Firefox returns `null` if accessed inside a hidden iframe
     it('should return false if computedStyle return null for whatever reason', function() {
-      var orig = window.getComputedStyle;
-      window.getComputedStyle = function() {
-        return null;
-      };
-      assert.isFalse(axe.commons.dom.isVisible(fakeNode, true));
-      window.getComputedStyle = orig;
+      computedStyleStub = sinon.stub(window, 'getComputedStyle').returns(null);
+      var el = document.createElement('div');
+      assert.isFalse(axe.commons.dom.isVisible(el, true));
     });
 
     it('should return true on staticly-positioned, visible elements', function() {
@@ -513,6 +553,20 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
+    it('should detect even when clip is not applied because of positioning', function() {
+      var el,
+        clip =
+          'clip: rect(1px 1px 1px 1px);' +
+          'clip: rect(1px, 1px, 1px, 1px);' +
+          'position: relative;' +
+          'overflow: hidden;';
+
+      fixture.innerHTML = '<div id="target" style="' + clip + '">Hi</div>';
+
+      el = document.getElementById('target');
+      assert.isTrue(axe.commons.dom.isVisible(el, true));
+    });
+
     it('should detect clip rect hidden text technique on parent', function() {
       var el,
         clip =
@@ -520,6 +574,21 @@ describe('dom.isVisible', function() {
           'clip: rect(1px, 1px, 1px, 1px);' +
           'width: 1px; height: 1px;' +
           'position: absolute;' +
+          'overflow: hidden;';
+
+      fixture.innerHTML =
+        '<div style="' + clip + '">' + '<div id="target">Hi</div>' + '</div>';
+
+      el = document.getElementById('target');
+      assert.isTrue(axe.commons.dom.isVisible(el, true));
+    });
+
+    it('should detect even when clip is not applied because of positioning on parent', function() {
+      var el,
+        clip =
+          'clip: rect(1px 1px 1px 1px);' +
+          'clip: rect(1px, 1px, 1px, 1px);' +
+          'position: relative;' +
           'overflow: hidden;';
 
       fixture.innerHTML =
@@ -560,6 +629,76 @@ describe('dom.isVisible', function() {
 
       var el = document.getElementById('target');
       assert.isTrue(axe.commons.dom.isVisible(el, true));
+    });
+  });
+
+  describe('SerialVirtualNode', function() {
+    it('should return true on statically-positioned, visible elements', function() {
+      var vNode = new axe.SerialVirtualNode({
+        nodeName: 'div'
+      });
+      assert.isTrue(axe.commons.dom.isVisible(vNode));
+    });
+
+    it('should return false on STYLE tag', function() {
+      var vNode = new axe.SerialVirtualNode({
+        nodeName: 'style'
+      });
+      var actual = axe.commons.dom.isVisible(vNode);
+      assert.isFalse(actual);
+    });
+
+    it('should return false on NOSCRIPT tag', function() {
+      var vNode = new axe.SerialVirtualNode({
+        nodeName: 'noscript'
+      });
+      var actual = axe.commons.dom.isVisible(vNode);
+      assert.isFalse(actual);
+    });
+
+    it('should return false on TEMPLATE tag', function() {
+      var vNode = new axe.SerialVirtualNode({
+        nodeName: 'template'
+      });
+      var actual = axe.commons.dom.isVisible(vNode);
+      assert.isFalse(actual);
+    });
+
+    it('should not be affected by `aria-hidden`', function() {
+      var vNode = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          'aria-hidden': true
+        }
+      });
+      assert.isTrue(axe.commons.dom.isVisible(vNode));
+    });
+
+    describe('screen readers', function() {
+      it('should return false if `aria-hidden` is set', function() {
+        var vNode = new axe.SerialVirtualNode({
+          nodeName: 'div',
+          attributes: {
+            'aria-hidden': true
+          }
+        });
+        assert.isFalse(axe.commons.dom.isVisible(vNode, true));
+      });
+
+      it('should return false if `aria-hidden` is set on parent', function() {
+        var vNode = new axe.SerialVirtualNode({
+          nodeName: 'div'
+        });
+        var parentVNode = new axe.SerialVirtualNode({
+          nodeName: 'div',
+          attributes: {
+            'aria-hidden': true
+          }
+        });
+        parentVNode.children = [vNode];
+        vNode.parent = parentVNode;
+        assert.isFalse(axe.commons.dom.isVisible(vNode, true));
+      });
     });
   });
 });

@@ -23,6 +23,7 @@
    1. [API Name: axe.setup](#api-name-axesetup)
    1. [API Name: axe.teardown](#api-name-axeteardown)
    1. [API Name: axe.frameMessenger](#api-name-axeframemessenger)
+   1. [API name: axe.runPartial / axe.finishRun](#api-name-axerunpartial-/-axefinishrun)
    1. [Virtual DOM Utilities](#virtual-dom-utilities)
       1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
       1. [API Name: axe.utils.getRule](#api-name-axeutilsgetrule)
@@ -307,7 +308,7 @@ axe.run(context, options, (err, results) => {
 #### Parameters axe.run
 
 - [`context`](#context-parameter): (optional) Defines the scope of the analysis - the part of the DOM that you would like to analyze. This will typically be the `document` or a specific selector such as class name, ID, selector, etc.
-- [`options`](#options-parameter): (optional) Set of options passed into rules or checks, temporarily modifying them. This contrasts with `axe.configure`, which is more permanent.
+- [`options`](#options-parameter): (optional) Set of options that change how `axe.run` works, including what rules will run. To pass options to specific checks, use `axe.configure`.
 - [`callback`](#callback-parameter): (optional) The callback function which receives either null or an [error result](#error-result) as the first parameter, and the [results object](#results-object) when analysis is completed successfully, or undefined if it did not.
 
 ##### Context Parameter
@@ -484,11 +485,27 @@ axe.run(
 Alternatively, runOnly can be passed an array of tags:
 
 ```js
-axe.run({
-	runOnly: ['wcag2a', 'wcag2aa'];
-}, (err, results) => {
-  // ...
-})
+axe.run(
+  {
+    runOnly: ['wcag2a', 'wcag2aa']
+  },
+  (err, results) => {
+    // ...
+  }
+);
+```
+
+If you want to specify just one tag, you can pass in a string.
+
+```js
+axe.run(
+  {
+    runOnly: 'wcag2a'
+  },
+  (err, results) => {
+    // ...
+  }
+);
 ```
 
 2. Run only a specified list of Rules
@@ -519,6 +536,19 @@ axe.run({
 }, (err, results) => {
   // ...
 })
+```
+
+If you want to specify just one rule, you can pass in a string.
+
+```js
+axe.run(
+  {
+    runOnly: 'ruleId1'
+  },
+  (err, results) => {
+    // ...
+  }
+);
 ```
 
 3. Run all enabled Rules except for a list of rules
@@ -837,6 +867,10 @@ axe.teardown();
 ### API Name: axe.frameMessenger
 
 Set up a alternative communication channel between parent and child frames. By default, axe-core uses `window.postMessage()`. See [frame-messenger.md](frame-messenger.md) for details.
+
+### API name: axe.runPartial / axe.finishRun
+
+Run axe without frame communication. This is the recommended way to run axe in browser drivers such as Selenium and Puppeteer. See [run-partial.md](run-partial.md) for details.
 
 ### Virtual DOM Utilities
 

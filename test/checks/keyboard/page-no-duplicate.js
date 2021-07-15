@@ -59,6 +59,15 @@ describe('page-no-duplicate', function() {
       assert.isTrue(check.evaluate.apply(checkContext, params));
     });
 
+    it('should return true if there is more than one element matching the selector but only one is visible to screenreaders', function() {
+      var options = { selector: 'main' };
+      var params = checkSetup(
+        '<div><main id="target" aria-hidden="true"></main><main id="dup"></main></div>',
+        options
+      );
+      assert.isTrue(check.evaluate.apply(checkContext, params));
+    });
+
     (shadowSupported ? it : xit)(
       'should return false if there is a second matching element inside the shadow dom',
       function() {
@@ -74,6 +83,30 @@ describe('page-no-duplicate', function() {
         var vNode = axe.utils.querySelectorAll(axe._tree, '#target')[0];
 
         assert.isFalse(
+          check.evaluate.call(checkContext, vNode.actualNode, options, vNode)
+        );
+        assert.deepEqual(checkContext._relatedNodes, [
+          shadow.querySelector('main')
+        ]);
+      }
+    );
+
+    (shadowSupported ? it : xit)(
+      'should return true if there is a second matching element inside the shadow dom but only one is visible to screenreaders',
+      function() {
+        var options = { selector: 'main' };
+        var div = document.createElement('div');
+        div.innerHTML =
+          '<div id="shadow"></div><main id="target" aria-hidden="true"></main>';
+
+        var shadow = div
+          .querySelector('#shadow')
+          .attachShadow({ mode: 'open' });
+        shadow.innerHTML = '<main></main>';
+        axe.testUtils.fixtureSetup(div);
+        var vNode = axe.utils.querySelectorAll(axe._tree, '#target')[0];
+
+        assert.isTrue(
           check.evaluate.call(checkContext, vNode.actualNode, options, vNode)
         );
         assert.deepEqual(checkContext._relatedNodes, [

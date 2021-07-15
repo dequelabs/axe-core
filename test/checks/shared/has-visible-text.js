@@ -13,7 +13,7 @@ describe('has-visible-text', function() {
   });
 
   it('should return false if there is no visible text', function() {
-    var params = checkSetup('<object id="target"></object>');
+    var params = checkSetup('<p id="target"></p>');
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('has-visible-text')
@@ -23,7 +23,7 @@ describe('has-visible-text', function() {
 
   it('should return false if there is text, but its hidden', function() {
     var params = checkSetup(
-      '<object id="target"><span style="display:none">hello!</span></object>'
+      '<p id="target"><span style="display:none">hello!</span></p>'
     );
     assert.isFalse(
       axe.testUtils
@@ -33,7 +33,7 @@ describe('has-visible-text', function() {
   });
 
   it('should return true if there is visible text', function() {
-    var params = checkSetup('<object id="target">hello!</object>');
+    var params = checkSetup('<p id="target">hello!</p>');
     assert.isTrue(
       axe.testUtils
         .getCheckEvaluate('has-visible-text')
@@ -75,7 +75,7 @@ describe('has-visible-text', function() {
 
     it('should return true if there is visible text', function() {
       var node = new axe.SerialVirtualNode({
-        nodeName: 'object'
+        nodeName: 'p'
       });
       var child = new axe.SerialVirtualNode({
         nodeName: '#text',

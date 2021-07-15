@@ -2,13 +2,15 @@ describe('bypass aria header test ' + window.location.pathname, function() {
   'use strict';
   var results;
   before(function(done) {
-    axe.run({ runOnly: { type: 'rule', values: ['bypass'] } }, function(
-      err,
-      r
-    ) {
-      assert.isNull(err);
-      results = r;
-      done();
+    axe.testUtils.awaitNestedLoad(function() {
+      axe.run({ runOnly: { type: 'rule', values: ['bypass'] } }, function(
+        err,
+        r
+      ) {
+        assert.isNull(err);
+        results = r;
+        done();
+      });
     });
   });
 
