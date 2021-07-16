@@ -22,12 +22,12 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
     assert.equal(actual, expected);
   });
 
-  it('returns false for SVG with role alertdialog', function() {
+  it('returns true for SVG with role alertdialog', function() {
     var node = document.createElement('svg');
     var role = 'alertdialog';
     node.setAttribute('role', role);
     flatTreeSetup(node);
-    assert.isFalse(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
+    assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true for OBJECT with role application', function() {
