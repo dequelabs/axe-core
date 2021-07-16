@@ -148,6 +148,7 @@ describe('aria-required-parent', function() {
         .getCheckEvaluate('aria-required-parent')
         .apply(checkContext, params)
     );
+    assert.deepEqual(checkContext._data, ['menu', 'menubar']);
   });
 
   it('should fail when intermediate node is role=group but this not an allowed context', function() {
@@ -161,36 +162,38 @@ describe('aria-required-parent', function() {
     );
   });
 
-  describe('group with ownGroupRoles', function () {
+  describe('group with ownGroupRoles', function() {
     it('should pass when the role and grand parent role is in ownGroupRoles', function() {
       var params = checkSetup(
         '<div role="list">' +
           '<div role="listitem">' +
           '<div role="group">' +
           '<div role="listitem" id="target">' +
-          '</div></div></div></div>', {
-            ownGroupRoles: ['listitem']
-          }
+          '</div></div></div></div>',
+        {
+          ownGroupRoles: ['listitem']
+        }
       );
-  
+
       assert.isTrue(
         axe.testUtils
           .getCheckEvaluate('aria-required-parent')
           .apply(checkContext, params)
       );
     });
-  
+
     it('should fail when the role and grand parent role is in ownGroupRoles', function() {
       var params = checkSetup(
         '<div role="menu">' +
           '<div role="menuitem">' +
           '<div role="group">' +
           '<div role="menuitem" id="target">' +
-          '</div></div></div></div>', {
-            ownGroupRoles: ['listitem']
-          }
+          '</div></div></div></div>',
+        {
+          ownGroupRoles: ['listitem']
+        }
       );
-  
+
       assert.isFalse(
         axe.testUtils
           .getCheckEvaluate('aria-required-parent')
@@ -198,23 +201,24 @@ describe('aria-required-parent', function() {
       );
     });
 
-    it('should fail when the role is not in a group', function () {
+    it('should fail when the role is not in a group', function() {
       var params = checkSetup(
         '<div role="list">' +
           '<div role="listitem">' +
           '<div role="none">' +
           '<div role="listitem" id="target">' +
-          '</div></div></div></div>', {
-            ownGroupRoles: ['listitem']
-          }
+          '</div></div></div></div>',
+        {
+          ownGroupRoles: ['listitem']
+        }
       );
-  
+
       assert.isFalse(
         axe.testUtils
           .getCheckEvaluate('aria-required-parent')
           .apply(checkContext, params)
       );
-    })
+    });
   });
 
   it('should pass when intermediate node is role=none', function() {
