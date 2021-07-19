@@ -41,6 +41,51 @@ describe('focusable-disabled', function() {
     assert.isTrue(actual);
   });
 
+  it('returns true when content made unfocusable through disabled fieldset', function() {
+    var params = checkSetup(
+      '<fieldset id="target" disabled aria-hidden="true"><input /></fieldset>'
+    );
+    var actual = check.evaluate.apply(checkContext, params);
+    assert.isTrue(actual);
+  });
+
+  (shadowSupported ? it : xit)(
+    'returns false when content is in a disabled fieldset but in another shadow tree',
+    function() {
+      var fieldset = document.createElement('fieldset');
+      fieldset.setAttribute('disabled', 'true');
+      fieldset.setAttribute('aria-hidden', 'true');
+      fieldset.setAttribute('id', 'target');
+      var disabledInput = document.createElement('input');
+      fieldset.appendChild(disabledInput);
+      var shadowRoot = document.createElement('div');
+      fieldset.appendChild(shadowRoot);
+      var shadow = shadowRoot.attachShadow({ mode: 'open' });
+      shadow.innerHTML = '<label>Shadow input <input /></label>';
+      var params = checkSetup(fieldset);
+
+      var actual = check.evaluate.apply(checkContext, params);
+
+      assert.isFalse(actual);
+    }
+  );
+
+  it('returns false when content is in the legend of a disabled fieldset', function() {
+    var params = checkSetup(
+      '<fieldset id="target" disabled aria-hidden="true"><legend><input /></legend></fieldset>'
+    );
+    var actual = check.evaluate.apply(checkContext, params);
+    assert.isFalse(actual);
+  });
+
+  it('returns false when content is in an aria-hidden but not disabled fieldset', function() {
+    var params = checkSetup(
+      '<fieldset id="target" aria-hidden="true"><input /></fieldset>'
+    );
+    var actual = check.evaluate.apply(checkContext, params);
+    assert.isFalse(actual);
+  });
+
   it('returns true when focusable off screen link (cannot be disabled)', function() {
     var params = checkSetup(
       '<div id="target" aria-hidden="true"><a href="/" style="position:absolute; top:-999em">Link</a></div>'
