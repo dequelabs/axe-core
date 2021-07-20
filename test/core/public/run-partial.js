@@ -35,10 +35,21 @@ describe('axe.runPartial', function() {
 
   it('normalizes the options argument', function(done) {
     axe
-      .runPartial(/* no context */{ runOnly: 'image-alt' })
+      .runPartial(/* no context */ { runOnly: 'image-alt' })
       .then(function(partialResult) {
         assert.lengthOf(partialResult.results, 1);
         assert.equal(partialResult.results[0].id, 'image-alt');
+        done();
+      })
+      .catch(done);
+  });
+
+  it('does not mutate the options object', function(done) {
+    var options = {};
+    axe
+      .runPartial(options)
+      .then(function() {
+        assert.deepEqual(options, {});
         done();
       })
       .catch(done);
