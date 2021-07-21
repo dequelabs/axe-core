@@ -115,6 +115,28 @@ describe('aria-required-attr', function() {
           .call(checkContext, vNode.actualNode, options, vNode)
       );
     });
+
+    it('should report missing of multiple attributes correctly', function() {
+      axe.configure({
+        standards: {
+          ariaRoles: {
+            combobox: {
+              requiredAttrs: ['aria-expanded', 'aria-label', 'aria-controls']
+            }
+          }
+        }
+      });
+
+      var vNode = queryFixture(
+        '<div id="target" role="combobox" aria-expanded="false"></div>'
+      );
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-required-attr')
+          .call(checkContext, vNode.actualNode, options, vNode)
+      );
+      assert.deepEqual(checkContext._data, ['aria-label']);
+    });
   });
 
   describe('options', function() {
