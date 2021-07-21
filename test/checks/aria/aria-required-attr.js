@@ -58,16 +58,6 @@ describe('aria-required-attr', function() {
   });
 
   describe('combobox special case', function() {
-    it('should fail comboboxes that have do not have aria-expanded', function() {
-      var vNode = queryFixture('<div id="target" role="combobox"></div>');
-
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-attr')
-          .call(checkContext, vNode.actualNode, options, vNode)
-      );
-    });
-
     it('should pass comboboxes that have aria-expanded="false"', function() {
       var vNode = queryFixture(
         '<div id="target" role="combobox" aria-expanded="false"></div>'
@@ -98,6 +88,16 @@ describe('aria-required-attr', function() {
       );
 
       assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-required-attr')
+          .call(checkContext, vNode.actualNode, options, vNode)
+      );
+    });
+
+    it('should fail comboboxes that have no required attributes', function() {
+      var vNode = queryFixture('<div id="target" role="combobox"></div>');
+
+      assert.isFalse(
         axe.testUtils
           .getCheckEvaluate('aria-required-attr')
           .call(checkContext, vNode.actualNode, options, vNode)
