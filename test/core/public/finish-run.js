@@ -67,6 +67,22 @@ describe('axe.finishRun', function() {
       .catch(done);
   });
 
+  it('normalizes the runOnly option in the reporter', function(done) {
+    axe
+      .runPartial()
+      .then(function(partialResult) {
+        return axe.finishRun([partialResult], { runOnly: 'region' });
+      })
+      .then(function(results) {
+        assert.deepEqual(results.toolOptions.runOnly, {
+          type: 'rule',
+          values: ['region']
+        });
+        done();
+      })
+      .catch(done);
+  });
+
   it('can report violations results', function(done) {
     fixture.innerHTML = '<div aria-label="foo"></div>';
     axe
@@ -268,7 +284,7 @@ describe('axe.finishRun', function() {
         .then(function() {
           assert.lengthOf(axe._audit.after.args, 1);
           assert.deepEqual(axe._audit.after.args[0][1], {
-            runOnly: 'duplicate-id',
+            runOnly: { type: 'rule', values: ['duplicate-id'] },
             reporter: 'v1'
           });
           spy.restore();
