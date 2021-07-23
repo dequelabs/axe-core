@@ -21,6 +21,20 @@ describe('axe.finishRun', function() {
       .catch(done);
   });
 
+  it('does not mutate the options object', function(done) {
+    var options = {};
+    axe
+      .runPartial(options)
+      .then(function(result) {
+        return axe.finishRun([result], options);
+      })
+      .then(function() {
+        assert.deepEqual(options, {});
+        done();
+      })
+      .catch(done);
+  });
+
   it('uses option.reporter to create the report', function(done) {
     axe
       .runPartial()
@@ -34,6 +48,35 @@ describe('axe.finishRun', function() {
           assert.property(rawResult, 'passes');
           assert.property(rawResult, 'incomplete');
           assert.property(rawResult, 'inapplicable');
+        });
+        done();
+      })
+      .catch(done);
+  });
+
+  it('defaults options.reporter to v1', function(done) {
+    axe
+      .runPartial()
+      .then(function(partialResult) {
+        return axe.finishRun([partialResult]);
+      })
+      .then(function(results) {
+        assert.equal(results.toolOptions.reporter, 'v1');
+        done();
+      })
+      .catch(done);
+  });
+
+  it('normalizes the runOnly option in the reporter', function(done) {
+    axe
+      .runPartial()
+      .then(function(partialResult) {
+        return axe.finishRun([partialResult], { runOnly: 'region' });
+      })
+      .then(function(results) {
+        assert.deepEqual(results.toolOptions.runOnly, {
+          type: 'rule',
+          values: ['region']
         });
         done();
       })
@@ -241,7 +284,8 @@ describe('axe.finishRun', function() {
         .then(function() {
           assert.lengthOf(axe._audit.after.args, 1);
           assert.deepEqual(axe._audit.after.args[0][1], {
-            runOnly: 'duplicate-id'
+            runOnly: { type: 'rule', values: ['duplicate-id'] },
+            reporter: 'v1'
           });
           spy.restore();
           done();
