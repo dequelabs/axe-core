@@ -470,8 +470,9 @@ describe('color-contrast', function() {
 
     it('should return undefined if pseudo element is more than 25% of the element', function () {
       var params = checkSetup(
-        '<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 26%; height: 100%; background: red; }</style>' +
-          '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
+        '<style>.foo { position: relative; width: 100px; height: 100px; } ' +
+          '.foo:before { content: ""; position: absolute; width: 26%; height: 100%; background: red; }</style>' +
+          '<p id="target" class="foo">Content</p>'
       );
       assert.isUndefined(contrastEvaluate.apply(checkContext, params));
     });
@@ -726,8 +727,9 @@ describe('color-contrast', function() {
     
     it('should adjust the pseudo element minimum size with the options.pseudoSizeThreshold', function () {
       var params = checkSetup(
-        '<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 22%; height: 100%; background: red; }</style>' +
-          '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>',
+        '<style>.foo { position: relative; width: 100px; height: 100px }' + 
+        '.foo:before { content: ""; position: absolute; width: 22%; height: 100%; background: red; }</style>' +
+          '<p id="target" class="foo">Content</p>',
         {
           pseudoSizeThreshold: 0.20
         }
