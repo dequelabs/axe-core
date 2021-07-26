@@ -249,6 +249,35 @@ describe('axe.finishRun', function() {
         })
         .catch(done);
     });
+
+    it('should handle null results and set target correctly', function(done) {
+      var windows = [window];
+      fixture.innerHTML = '<h1></h1>';
+      createIframe('<h2></h2>')
+        .then(function(frameWin) {
+          windows.push(frameWin);
+          return createIframe('<h3></h3>');
+        })
+        .then(function(nestedWin) {
+          windows.push(nestedWin);
+          var promisedResults = windows.map(function(win) {
+            return win.axe.runPartial({ runOnly: 'empty-heading' });
+          });
+          return Promise.all(promisedResults);
+        })
+        .then(function(partialResults) {
+          partialResults[1] = null;
+          return partialResults;
+        })
+        .then(axe.finishRun)
+        .then(function(results) {
+          var nodes = results.violations[0].nodes;
+          assert.deepEqual(nodes[0].target, ['h1']);
+          assert.deepEqual(nodes[1].target, ['iframe:nth-child(3)', 'h3']);
+          done();
+        })
+        .catch(done);
+    });
   });
 
   describe('calling audit.after', function() {
