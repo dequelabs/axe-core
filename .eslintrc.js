@@ -83,7 +83,8 @@ module.exports = {
       },
       rules: {
         'func-names': [2, 'as-needed'],
-        'prefer-const': 2
+        'prefer-const': 2,
+        'no-use-before-define': 'off'
       }
     },
     {
