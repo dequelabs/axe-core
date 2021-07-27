@@ -333,7 +333,7 @@ declare namespace axe {
    * @param   {RunOptions}     options  Optional Options passed into rules or checks, temporarily modifying them.
    */
   function finishRun(
-    partialResults: PartialResult[],
+    partialResults: Array<PartialResult | null>,
     options: RunOptions
   ): Promise<AxeResults>;
 

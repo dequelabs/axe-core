@@ -475,11 +475,7 @@ testUtils.runPartialRecursive = function runPartialRecursive(
   options = options || {};
   win = win || window;
   var axe = win.axe;
-
-  // axe.utils.getFrameContexts mutates
-  // https://github.com/dequelabs/axe-core/issues/3045
-  var contextCopy = axe.utils.clone(context);
-  var frameContexts = axe.utils.getFrameContexts(contextCopy);
+  var frameContexts = axe.utils.getFrameContexts(context);
   var promiseResults = [axe.runPartial(context, options)];
 
   frameContexts.forEach(function(c) {
