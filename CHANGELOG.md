@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.2](https://github.com/dequelabs/axe-core/compare/v4.3.1...v4.3.2) (2021-07-27)
+
+### Bug Fixes
+
+- **aria-hidden-focusable:** disabled aria-hidden fieldset should not have focusable children ([#3056](https://github.com/dequelabs/axe-core/issues/3056)) ([0865bd7](https://github.com/dequelabs/axe-core/commit/0865bd797f60da2befc52113464bc841f2cb2a47))
+- **aria-required-attr:** only require aria-controls if aria-expanded=true ([#3089](https://github.com/dequelabs/axe-core/issues/3089)) ([63b6c7b](https://github.com/dequelabs/axe-core/commit/63b6c7b04c6837a313251f1621be6032933c8289))
+- **aria-required-parent:** Filter out group from required parent roles if group is present ([#3084](https://github.com/dequelabs/axe-core/issues/3084)) ([1cb270c](https://github.com/dequelabs/axe-core/commit/1cb270c355338238acefd21789373f10aa4cb3ec))
+- **axe.d.ts:** fix finishRun types ([#3098](https://github.com/dequelabs/axe-core/issues/3098)) ([e79c65c](https://github.com/dequelabs/axe-core/commit/e79c65cf7def687c54cc3bc249354c4eacf3e152))
+- **color-contrast:** check for size before ignoring pseudo elements ([#3097](https://github.com/dequelabs/axe-core/issues/3097)) ([e0f6c0c](https://github.com/dequelabs/axe-core/commit/e0f6c0cfb8425bc0f7548c79919ac2cbd8393e83))
+- **core:** stop mutating Context's input ([#3076](https://github.com/dequelabs/axe-core/issues/3076)) ([5dc34ee](https://github.com/dequelabs/axe-core/commit/5dc34eed3272409ae6486c76dad1394f1d557b5e))
+- **finishRun:** handle null for failed iframe results ([#3096](https://github.com/dequelabs/axe-core/issues/3096)) ([8947099](https://github.com/dequelabs/axe-core/commit/8947099ea1113dbe1890e53c56f70e974317b144))
+- **run,finishRun:** don't mutate options, set default reporter to v1 ([#3088](https://github.com/dequelabs/axe-core/issues/3088)) ([90f0b27](https://github.com/dequelabs/axe-core/commit/90f0b275a83dec38a9cae555ea1ddf9b4938b14d))
+
 ### [4.3.1](https://github.com/dequelabs/axe-core/compare/v4.3.0...v4.3.1) (2021-07-13)
 
 ### Bug Fixes
