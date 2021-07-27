@@ -16,6 +16,7 @@
         "expected": 3
       }
     },
+    "pseudoSizeThreshold": 0.25,
     "shadowOutlineEmMax": 0.1
   },
   "metadata": {
