@@ -6,6 +6,7 @@ describe('color-contrast', function() {
   var checkSetup = axe.testUtils.checkSetup;
   var shadowSupported = axe.testUtils.shadowSupport.v1;
   var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
+  var isIE11 = axe.testUtils.isIE11;
   var checkContext = axe.testUtils.MockCheckContext();
   var contrastEvaluate = axe.testUtils.getCheckEvaluate('color-contrast');
 
@@ -471,7 +472,7 @@ describe('color-contrast', function() {
     it('should return undefined if pseudo element is more than 25% of the element', function () {
       var params = checkSetup(
         '<style>.foo { position: relative; width: 100px; height: 100px; } ' +
-          '.foo:before { content: ""; position: absolute; width: 26%; height: 100%; background: red; }</style>' +
+          '.foo:before { content: ""; position: absolute; width: 26px; height: 100px; background: red; }</style>' +
           '<p id="target" class="foo">Content</p>'
       );
       assert.isUndefined(contrastEvaluate.apply(checkContext, params));
@@ -479,10 +480,20 @@ describe('color-contrast', function() {
 
     it('should not return undefined if pseudo element is 25% of the element', function () {
       var params = checkSetup(
-        '<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 25%; height: 100%; background: red; }</style>' +
-          '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
+        '<style>.foo { position: relative; width: 100px; height: 100px; } ' +
+          '.foo:before { content: ""; position: absolute; width: 25px; height: 100px; background: red; }</style>' +
+          '<p id="target" class="foo">Content</p>'
       );
       assert.isTrue(contrastEvaluate.apply(checkContext, params));
+    });
+
+    (isIE11 ? it : xit)('should return undefined if the unit is not in px', function () {
+      var params = checkSetup(
+        '<style>.foo { position: relative; } ' +
+          '.foo:before { content: ""; position: absolute; width: 25%; height: 100%; background: red; }</style>' +
+          '<p id="target" class="foo">Content</p>'
+      );
+      assert.isUndefined(contrastEvaluate.apply(checkContext, params));
     });
   });
 
