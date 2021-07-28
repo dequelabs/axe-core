@@ -39,14 +39,14 @@ module.exports = function(grunt) {
 
       const { diff: rolesTable, notes: rolesFootnotes } = getDiff(
         roles,
-        axe.commons.aria.lookupTable.role,
+        axe.utils.getStandards().ariaRoles,
         listType
       );
 
       const ariaQueryAriaAttributes = getAriaQueryAttributes();
       const { diff: attributesTable, notes: attributesFootnotes } = getDiff(
         ariaQueryAriaAttributes,
-        axe.commons.aria.lookupTable.attributes,
+        axe.utils.getStandards().ariaAttrs,
         listType
       );
       const attributesTableMarkdown = mdTable([
