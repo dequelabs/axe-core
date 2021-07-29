@@ -1,4 +1,6 @@
 (function() {
+  "use strict";
+
   // this line is replaced with the test object in preprocessor.js
   var test = {}; /*tests*/
 
@@ -14,18 +16,21 @@
   }
 
   function waitForFrames(context, cb) {
+    var loaded = 0;
+    var frames = context.querySelectorAll('iframe');
+    var length = frames.length;
+    if (!length) {
+      return cb();
+    }
+
     function loadListener() {
       loaded++;
       if (loaded === length) {
         cb();
       }
     }
-    var loaded = 0;
-    var frames = context.querySelectorAll('iframe');
-    if (!frames.length) {
-      return cb();
-    }
-    for (var index = 0, length = frames.length; index < length; index++) {
+
+    for (var index = 0; index < length; index++) {
       frames[index].addEventListener('load', loadListener);
     }
   }
@@ -39,7 +44,7 @@
 
   // don't run rules that are deprecated and disabled
   var deprecated = rule.tags.indexOf('deprecated') !== -1;
-  (deprecated && !rule.enabled ? describe.skip : describe)(ruleId, function() {
+  (deprecated && !rule.enabled ? describe.skip : ruleId === 'frame-title' ? describe.only : describe)(ruleId, function() {
     describe(testName, function() {
       function runTest(test, collection) {
         if (!test[collection]) {

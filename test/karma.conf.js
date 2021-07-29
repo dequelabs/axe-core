@@ -63,6 +63,8 @@ if (testFiles.length) {
   });
 }
 
+testPaths = [path.join('test', 'integration', '**/*.json')]
+
 module.exports = function(config) {
   config.set({
     basePath: '../',
