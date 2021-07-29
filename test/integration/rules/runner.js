@@ -1,5 +1,5 @@
 (function() {
-  "use strict";
+  'use strict';
 
   // this line is replaced with the test object in preprocessor.js
   var test = {}; /*tests*/
@@ -44,7 +44,7 @@
 
   // don't run rules that are deprecated and disabled
   var deprecated = rule.tags.indexOf('deprecated') !== -1;
-  (deprecated && !rule.enabled ? describe.skip : ruleId === 'frame-title' ? describe.only : describe)(ruleId, function() {
+  (deprecated && !rule.enabled ? describe.skip : describe)(ruleId, function() {
     describe(testName, function() {
       function runTest(test, collection) {
         if (!test[collection]) {
