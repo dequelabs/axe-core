@@ -80,6 +80,7 @@
               });
 
               if (matches.length === 0) {
+                console.log('results', JSON.stringify(results, null, 2));
                 assert(false, 'Element not found');
               } else if (matches.length === 1) {
                 assert(true, 'Element found');
