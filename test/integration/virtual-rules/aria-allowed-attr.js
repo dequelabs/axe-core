@@ -42,7 +42,20 @@ describe('aria-allowed-attr virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for element with no role', function() {
+  it('should pass for global attributes and element with no role', function() {
+    var results = axe.runVirtualRule('aria-allowed-attr', {
+      nodeName: 'div',
+      attributes: {
+        'aria-busy': true
+      }
+    });
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should fail for non-global attributes and element with no role', function() {
     var results = axe.runVirtualRule('aria-allowed-attr', {
       nodeName: 'div',
       attributes: {
@@ -50,8 +63,8 @@ describe('aria-allowed-attr virtual-rule', function() {
       }
     });
 
-    assert.lengthOf(results.passes, 1);
-    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 

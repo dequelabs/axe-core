@@ -46,9 +46,9 @@ describe('aria-allowed-attr', function() {
     assert.deepEqual(checkContext._data, ['aria-selected="true"']);
   });
 
-  it('should return true if there is no role', function() {
+  it('should return true for global attributes if there is no role', function() {
     var vNode = queryFixture(
-      '<div id="target" tabindex="1" aria-selected="true" aria-checked="true"></div>'
+      '<div id="target" tabindex="1" aria-busy="true" aria-owns="foo"></div>'
     );
 
     assert.isTrue(
@@ -57,6 +57,19 @@ describe('aria-allowed-attr', function() {
         .call(checkContext, null, null, vNode)
     );
     assert.isNull(checkContext._data);
+  });
+
+  it('should return false for non-global attributes if there is no role', function() {
+    var vNode = queryFixture(
+      '<div id="target" tabindex="1" aria-selected="true" aria-owns="foo"></div>'
+    );
+
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, ['aria-selected="true"']);
   });
 
   it('should not report on invalid attributes', function() {
