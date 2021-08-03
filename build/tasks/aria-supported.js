@@ -37,16 +37,17 @@ module.exports = function(grunt) {
         attributesMdTableHeader: ['aria-attribute', 'axe-core support']
       };
 
+      const { ariaRoles, ariaAttrs } = axe.utils.getStandards();
       const { diff: rolesTable, notes: rolesFootnotes } = getDiff(
         roles,
-        axe.commons.aria.lookupTable.role,
+        ariaRoles,
         listType
       );
 
       const ariaQueryAriaAttributes = getAriaQueryAttributes();
       const { diff: attributesTable, notes: attributesFootnotes } = getDiff(
         ariaQueryAriaAttributes,
-        axe.commons.aria.lookupTable.attributes,
+        ariaAttrs,
         listType
       );
       const attributesTableMarkdown = mdTable([
