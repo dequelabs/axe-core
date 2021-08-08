@@ -9,7 +9,7 @@
 - [Deprecated Rules](#deprecated-rules)
 
 ## WCAG 2.0 Level A & AA Rules
-
+ 
 | Rule ID                                                                                                                          | Description                                                                                                   | Impact            | Tags                                                                                       | Issue Type                 | ACT Rules                                                                                              |
 | :------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------ | :---------------- | :----------------------------------------------------------------------------------------- | :------------------------- | :----------------------------------------------------------------------------------------------------- |
 | [area-alt](https://dequeuniversity.com/rules/axe/4.3/area-alt?application=RuleDescription)                                       | Ensures &lt;area&gt; elements of image maps have alternate text                                               | Critical          | cat.text-alternatives, wcag2a, wcag111, wcag244, wcag412, section508, section508.22.a, ACT | failure, needs&nbsp;review | [c487ae](https://act-rules.github.io/rules/c487ae)                                                     |
