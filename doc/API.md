@@ -1,7 +1,7 @@
 # Axe Javascript Accessibility API
 
 ## Table of Contents
-
+ 
 1. [Section 1: Introduction](#section-1-introduction)
    1. [Get Started](#getting-started)
 1. [Section 2: API Reference](#section-2-api-reference)
