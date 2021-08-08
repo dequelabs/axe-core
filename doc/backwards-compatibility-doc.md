@@ -3,7 +3,7 @@
 ## What is part of the public axe-core API?
 
 The axe-core API includes:
-
+ 
 - Any APIs documented here: [https://github.com/dequelabs/axe-core/blob/develop/doc/API.md](https://github.com/dequelabs/axe-core/blob/develop/doc/API.md)
 - The selectors generated and included in the node information in the results arrays for any given HTML page
 - The JSON structures passed into and out of any API functions
