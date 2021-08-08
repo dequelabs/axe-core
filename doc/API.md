@@ -1,5 +1,5 @@
 # Axe Javascript Accessibility API
-
+ 
 ## Table of Contents
 
 1. [Section 1: Introduction](#section-1-introduction)
