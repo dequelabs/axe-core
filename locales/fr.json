@@ -465,7 +465,7 @@
     "aria-roledescription": {
       "pass": "aria-roledescription utilisé sur un élément sémantique supporté",
       "incomplete": "Vérifier que la valeur d’aria-roledescription est annoncée par les lecteurs d’écran supportés",
-      "fail": "Attribuer à l’élément un role qui supporte aria-roledescription"
+      "fail": "Attribuer à l’élément un rôle qui supporte aria-roledescription"
     },
     "aria-unsupported-attr": {
       "pass": "L’attribut ARIA est supporté",
@@ -496,7 +496,7 @@
     "fallbackrole": {
       "pass": "Une seule valeur de rôle utilisée",
       "fail": "Utiliser une seule valeur de rôle, dans la mesure où les rôles de secours ne sont pas supportés par les navigateurs anciens",
-      "incomplete": "Utiliser seulement les rôles 'presentation' ou 'none' comme ils sont synonymes."
+      "incomplete": "Utiliser seulement les rôles 'presentation' ou 'none' puisqu’ils sont synonymes."
     },
     "has-global-aria-attribute": {
       "pass": {
