@@ -464,7 +464,7 @@
     },
     "aria-unsupported-attr": {
       "pass": "ARIA 어트리뷰트가 지원됩니다.",
-      "fail": "ARIA 어트리뷰트가 스크린리더와 보조 기술에서 널리 지원되지 않습니다: ${data.values}"
+      "fail": "ARIA 어트리뷰트가 스크린리더와 보조기술에서 널리 지원되지 않습니다: ${data.values}"
     },
     "aria-valid-attr-value": {
       "pass": "ARIA 어트리뷰트 값이 유효합니다.",
@@ -487,7 +487,7 @@
     "fallbackrole": {
       "pass": "하나의 역할(role) 값만 사용되었습니다.",
       "fail": "폴백 역할(role)들은 구형 브라우저들에서 지원되지 않으므로, 단 하나의 값만 사용하세요.",
-      "incomplete": "'presentation'나 'none' 역할(role)만 사용하세요, 둘은 동의어입니다."
+      "incomplete": "'presentation'이나 'none' 역할(role)만 사용하세요, 둘은 동의어입니다."
     },
     "has-global-aria-attribute": {
       "pass": {
@@ -512,12 +512,12 @@
       "fail": "엘리먼트가 초점을 얻을 수 없습니다(not focusable)."
     },
     "no-implicit-explicit-label": {
-      "pass": "<label>과 접근 가능한 이름 사이에 불일치가 없습니다.",
+      "pass": "<label>과 접근 가능한 이름이 일치합니다.",
       "incomplete": "<label>이 ARIA ${data} 필드의 이름의 일부일 필요가 없는지 확인하세요."
     },
     "unsupportedrole": {
       "pass": "ARIA 역할(role)이 지원됩니다.",
-      "fail": "사용된 역할(role)이 스크린리더와 보조 기술에서 널리 지원되지 않습니다: ${data.values}"
+      "fail": "사용된 역할(role)이 스크린리더와 보조기술에서 널리 지원되지 않습니다: ${data.values}"
     },
     "valid-scrollable-semantics": {
       "pass": "엘리먼트가 초점 순서(focus order)의 엘리먼트에 유효한 의미론을 가집니다.",
@@ -610,7 +610,7 @@
       "fail": "페이지가 반드시 1 레벨 제목을 가져야 합니다."
     },
     "page-has-main": {
-      "pass": "문서에 main 랜드마크가 최소 하나 있습니다.",
+      "pass": "문서에 최소 하나의 main 랜드마크가 있습니다.",
       "fail": "문서에 main 랜드마크가 없습니다."
     },
     "page-no-duplicate-banner": {
@@ -662,11 +662,11 @@
     },
     "multiple-label": {
       "pass": "form 필드가 여러 레이블 엘리먼트를 가지고 있지 않습니다.",
-      "incomplete": "여러 레이블 엘리먼트는 보조 기술에서 널리 지원되지 않습니다. 첫 번째 레이블이 모든 필요한 정보를 포함하는지 확인하세요."
+      "incomplete": "여러 레이블 엘리먼트는 보조기술에서 널리 지원되지 않습니다. 첫 번째 레이블이 모든 필요한 정보를 포함하는지 확인하세요."
     },
     "title-only": {
       "pass": "form 엘리먼트가 레이블을 위해 title 어트리뷰트만 단독으로 사용하지 않습니다.",
-      "fail": "form 엘리먼트에 레이블을 생성하는데 title만 사용되었습니다."
+      "fail": "form 엘리먼트의 레이블을 생성하는데 title만 사용되었습니다."
     },
     "landmark-is-unique": {
       "pass": "랜드마크는 반드시 고유한 역할(role)이나 role/label/title 조합(즉, 접근 가능한 이름)을 가져야 합니다.",
@@ -720,7 +720,7 @@
     "frame-tested": {
       "pass": "iframe이 axe-core로 테스트 되었습니다.",
       "fail": "iframe이 axe-core로 테스트 될 수 없습니다.",
-      "incomplete": "iframe은 아직 axe-core로 테스트 되어야 합니다."
+      "incomplete": "iframe은 아직 axe-core로 테스트 되지 않았습니다."
     },
     "no-autoplay-audio": {
       "pass": "<video>나 <audio>가 허용된 지속 시간을 초과하여 오디오를 출력하지 않거나 제어 메커니즘을 가지고 있습니다.",
@@ -733,7 +733,7 @@
       "incomplete": "CSS 방향 잠금이 확인될 수 없습니다."
     },
     "meta-viewport-large": {
-      "pass": "<meta> 태그가 모바일 기기에서 상당하게 확대/축소하는 것을 막지 않습니다.",
+      "pass": "<meta> 태그가 모바일 기기에서 상당하게 확대/축소하는 것을 제한하지 않습니다.",
       "fail": "<meta> 태그가 모바일 기기에서 확대/축소하는 것을 제한하고 있습니다."
     },
     "meta-viewport": {
@@ -767,7 +767,7 @@
     },
     "p-as-heading": {
       "pass": "<p> 엘리먼트가 제목으로 스타일되지 않았습니다.",
-      "fail": "제목 엘리먼트가 스타일링된 p 엘리먼트로 대신 사용되지 않아야 합니다."
+      "fail": "스타일링된 p 엘리먼트는 제목 엘리먼트 대신 사용되지 않아야 합니다."
     },
     "region": {
       "pass": "모든 페이지 콘텐츠가 랜드마크에 포함되어 있습니다.",
@@ -898,7 +898,7 @@
     },
     "caption-faked": {
       "pass": "테이블의 첫 번째 행이 캡션으로 사용되지 않았습니다.",
-      "fail": "테이블의 첫 번재 자식은 테이블 셀 대신 caption이어야 합니다."
+      "fail": "테이블의 첫 번째 자식은 테이블 셀 대신 caption이어야 합니다."
     },
     "html5-scope": {
       "pass": "scope 어트리뷰트가 테이블 헤더 엘리먼트(<th>)에만 사용되었습니다.",
