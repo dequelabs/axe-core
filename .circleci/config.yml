@@ -23,14 +23,14 @@ set_npm_auth: &set_npm_auth
 restore_dependency_cache_unix: &restore_dependency_cache_unix
   restore_cache:
     keys:
-      - v9-cache-unix-{{ checksum "package-lock.json" }}
-      - v9-cache-unix-
+      - v10-cache-unix-{{ checksum "package-lock.json" }}
+      - v10-cache-unix-
 
 restore_dependency_cache_win: &restore_dependency_cache_win
   restore_cache:
     keys:
-      - v9-cache-win-{{ checksum "package-lock.json" }}
-      - v9-cache-win-
+      - v10-cache-win-{{ checksum "package-lock.json" }}
+      - v10-cache-win-
 
 jobs:
   # Fetch and cache dependencies.
@@ -43,7 +43,7 @@ jobs:
       - <<: *restore_dependency_cache_unix
       - run: npm ci
       - save_cache:
-          key: v9-cache-unix-{{ checksum "package-lock.json" }}
+          key: v10-cache-unix-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
   dependencies_win:
@@ -55,7 +55,7 @@ jobs:
       - <<: *restore_dependency_cache_win
       - run: npm ci
       - save_cache:
-          key: v9-cache-win-{{ checksum "package-lock.json" }}
+          key: v10-cache-win-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
 
