@@ -70,6 +70,14 @@ describe('axe.run', function() {
     axe.run(document, noop);
   });
 
+  it('does not mutate the options object', function(done) {
+    var options = {};
+    axe.run(options, function() {
+      assert.deepEqual(options, {});
+      done();
+    });
+  });
+
   it('works with performance logging enabled', function(done) {
     axe.run(document, { performanceTimer: true }, function(err, result) {
       assert.isObject(result);
