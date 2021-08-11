@@ -318,7 +318,7 @@
       "help": "La page doit contenir un titre de niveau 1"
     },
     "presentation-role-conflict": {
-      "description": "Signaler les éléments dont le rôle est 'none' ou 'presentation' et qui provoquent le déclenchement de la résolution de conflits de rôles.",
+      "description": "Signaler les éléments dont le rôle est 'none' ou 'presentation' et qui déclenchent la résolution de conflits de rôles.",
       "help": "Les éléments avec un rôle 'none' ou 'presentation' doivent être signalés"
     },
     "region": {
