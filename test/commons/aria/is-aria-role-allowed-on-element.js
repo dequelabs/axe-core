@@ -186,6 +186,14 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
     assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
+  it('returns false when PROGRESS has role button', function() {
+    var node = document.createElement('progress');
+    var role = 'button';
+    node.setAttribute('role', role);
+    flatTreeSetup(node);
+    assert.isFalse(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
+  });
+
   it('returns true if given element can have any role', function() {
     var node = document.createElement('div');
     flatTreeSetup(node);
