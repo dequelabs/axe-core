@@ -366,7 +366,7 @@
       "help": "데이터 테이블에 캡션을 제공하는데 데이터 셀이나 헤더 셀이 반드시 사용되지 않아야 합니다."
     },
     "td-has-header": {
-      "description": "큰 테이블의 각 비어 있지 않은 데이터 셀이 하나 또는 그 이상의 테이블 헤더를 가지고 있는지 확인하세요.",
+      "description": "큰 테이블의 비어 있지 않은 각 데이터 셀이 하나 또는 그 이상의 테이블 헤더를 가지고 있는지 확인하세요.",
       "help": "3x3보다 큰 테이블에서 모든 비어있지 않은 td 엘리먼트는 반드시 연관된 테이블 헤더를 가져야 합니다."
     },
     "td-headers-attr": {
@@ -375,7 +375,7 @@
     },
     "th-has-data-cells": {
       "description": "데이터 테이블의 각 테이블 헤더가 데이터 셀을 참조하고 있는지 확인하세요.",
-      "help": "모든 th 엘리먼트와 role=columnheader/rowheader를 가진 엘리먼트는 반드시 그들이 설명하는 데이터 셀을 가져야 합니다."
+      "help": "모든 th 엘리먼트와 role=columnheader/rowheader를 가진 엘리먼트는 반드시 그것들이 설명하는 데이터 셀을 가져야 합니다."
     },
     "valid-lang": {
       "description": "lang 어트리뷰트가 유효한 값을 가지고 있는지 확인하세요.",
@@ -458,9 +458,9 @@
       }
     },
     "aria-roledescription": {
-      "pass": "aria-roledescription이 지원되는 의미론 역할(role)에 사용되었습니다.",
+      "pass": "aria-roledescription이 지원되는 의미론적 역할(role)에 사용되었습니다.",
       "incomplete": "지원되는 스크린리더에서 aria-roledescription이 낭독되는지 검사하세요.",
-      "fail": "엘리먼트에 aria-roledescription을 지원하는 역할(role)을 제공하세요."
+      "fail": "엘리먼트에 aria-roledescription을 지원하는 역할(role)을 제공되지 않았습니다."
     },
     "aria-unsupported-attr": {
       "pass": "ARIA 어트리뷰트가 지원됩니다.",
