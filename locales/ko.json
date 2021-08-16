@@ -287,7 +287,7 @@
     },
     "meta-refresh": {
       "description": "<meta http-equiv=\"refresh\">가 사용되지 않도록 하세요.",
-      "help": "시간 제한 새로고침은 반드시 없어야 햡니다."
+      "help": "시간 제한 새로고침은 존재하지 않아야 합니다."
     },
     "meta-viewport-large": {
       "description": "<meta name=\"viewport\">가 크기를 조정할 수 있는지 확인하세요.",
