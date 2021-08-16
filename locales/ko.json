@@ -6,8 +6,8 @@
       "help": "accesskey 어트리뷰트 값은 고유해야 합니다."
     },
     "area-alt": {
-      "description": "이미지 맵의 <area> 엘리먼트가 대체 텍스트를 가지고 있는지 확인하세요.",
-      "help": "활성 <area> 엘리먼트는 반드시 대체 텍스트를 가져야 합니다."
+      "description": "이미지 맵의 <area> 엘리먼트가 대체텍스트를 가지고 있는지 확인하세요.",
+      "help": "활성 <area> 엘리먼트는 반드시 대체텍스트를 가져야 합니다."
     },
     "aria-allowed-attr": {
       "description": "ARIA 어트리뷰트가 엘리먼트의 역할(role)에 허용되었는지 확인하세요.",
@@ -71,7 +71,7 @@
     },
     "aria-toggle-field-name": {
       "description": "모든 ARIA toggle 필드가 접근 가능한 이름을 가지고 있는지 확인하세요.",
-      "help": "ARIA toggle 필드는 접근 가능한 이름을 가집니다."
+      "help": "ARIA toggle 필드는 접근 가능한 이름을 가져야 합니다."
     },
     "aria-tooltip-name": {
       "description": "모든 ARIA tooltip 노드가 접근 가능한 이름을 가지고 있는지 확인하세요.",
@@ -115,7 +115,7 @@
     },
     "color-contrast": {
       "description": "전경색과 배경색 사이의 대비가 WCAG 2 AA 명암비 기준치를 충족하는지 확인하세요.",
-      "help": "엘리먼트는 반드시 충분한 색상 대비를 가져야 합니다."
+      "help": "엘리먼트는 반드시 충분한 명도 대비를 가져야 합니다."
     },
     "css-orientation-lock": {
       "description": "콘텐츠가 특정 디스플레이 방향으로 고정되지 않고, 콘텐츠가 모든 디스플레이 방향에서 사용 가능한지 확인하세요.",
@@ -202,20 +202,20 @@
       "help": "동일한 이름을 가진 링크는 비슷한 용도를 가집니다."
     },
     "image-alt": {
-      "description": "<img> 엘리먼트가 대체 텍스트를 가지고 있거나 none 또는 presentation 역할(role)을 가지고 있는지 확인하세요.",
-      "help": "이미지는 반드시 대체 텍스트를 가져야 합니다."
+      "description": "<img> 엘리먼트가 대체텍스트를 가지고 있거나 none 또는 presentation 역할(role)을 가지고 있는지 확인하세요.",
+      "help": "이미지는 반드시 대체텍스트를 가져야 합니다."
     },
     "image-redundant-alt": {
-      "description": "이미지 대체 텍스트가 텍스트와 반복되지 않도록 하세요.",
-      "help": "이미지의 대체 텍스트는 텍스트와 반복되지 않아야 합니다."
+      "description": "이미지 대체텍스트가 텍스트와 반복되지 않도록 하세요.",
+      "help": "이미지의 대체텍스트는 텍스트와 반복되지 않아야 합니다."
     },
     "input-button-name": {
       "description": "입력 버튼이 인식 가능한 텍스트를 가지고 있는지 확인하세요.",
       "help": "입력 버튼은 반드시 인식 가능한 텍스트를 가져야 합니다."
     },
     "input-image-alt": {
-      "description": "<input type=\"image\"> 엘리먼트가 대체 텍스트를 가지고 있는지 확인하세요.",
-      "help": "이미지 버튼은 반드시 대체 텍스트를 가져야 합니다."
+      "description": "<input type=\"image\"> 엘리먼트가 대체텍스트를 가지고 있는지 확인하세요.",
+      "help": "이미지 버튼은 반드시 대체텍스트를 가져야 합니다."
     },
     "label-content-name-mismatch": {
       "description": "콘텐츠로부터 레이블이 지정되는 엘리먼트가 접근 가능한 이름의 일부로 눈에 보이는 텍스트를 반드시 가지도록 하세요.",
@@ -247,15 +247,15 @@
     },
     "landmark-no-duplicate-banner": {
       "description": "문서가 최대 하나의 banner 랜드마크를 가지고 있는지 확인하세요.",
-      "help": "문서는 banner 랜드마크를 하나를 초과하여 가지지 않아야 합니다."
+      "help": "문서는 하나를 초과하는 banner 랜드마크를 가지지 않아야 합니다."
     },
     "landmark-no-duplicate-contentinfo": {
       "description": "문서가 최대 하나의 contentinfo 랜드마크를 가지고 있는지 확인하세요.",
-      "help": "문서는 contentinfo 랜드마크를 하나를 초과하여 가지지 않아야 합니다."
+      "help": "문서는 하나를 초과하는 contentinfo 랜드마크를 가지지 않아야 합니다."
     },
     "landmark-no-duplicate-main": {
       "description": "문서가 최대 하나의 main 랜드마크를 가지고 있는지 확인하세요.",
-      "help": "문서는 main 랜드마크를 하나를 초과하여 가지지 않아야 합니다."
+      "help": "문서는 하나를 초과하는 main 랜드마크를 가지지 않아야 합니다."
     },
     "landmark-one-main": {
       "description": "문서가 main 랜드마크를 가지고 있는지 확인하세요,",
@@ -290,7 +290,7 @@
       "help": "시간 제한 새로고침은 반드시 없어야 햡니다."
     },
     "meta-viewport-large": {
-      "description": "<meta name=\"viewport\">가 상당하게 크기를 조정할 수 있는지 확인하세요.",
+      "description": "<meta name=\"viewport\">가 크기를 조정할 수 있는지 확인하세요.",
       "help": "사용자는 텍스트를 최대 500%까지 확대/축소 또는 크기를 조정할 수 있어야 합니다."
     },
     "meta-viewport": {
@@ -303,15 +303,15 @@
     },
     "no-autoplay-audio": {
       "description": "<video>나 <audio> 엘리먼트가 중지 시키거나 오디오를 음소거하는 제어 메커니즘 없이 3초를 초과하여 오디오를 자동 재생하지 않게 하세요.",
-      "help": "<video>나 <audio> 엘리먼트는 오디오를 자동 재생하지 않습니다."
+      "help": "<video>나 <audio> 엘리먼트는 오디오를 자동 재생하지 않아야 합니다."
     },
     "object-alt": {
-      "description": "<object> 엘리먼트가 대체 텍스트를 가지고 있는지 확인하세요.",
-      "help": "<object> 엘리먼트는 반드시 대체 텍스트를 가져야 합니다."
+      "description": "<object> 엘리먼트가 대체텍스트를 가지고 있는지 확인하세요.",
+      "help": "<object> 엘리먼트는 반드시 대체텍스트를 가져야 합니다."
     },
     "p-as-heading": {
       "description": "p 엘리먼트를 스타일링하여 제목으로 사용되지 않도록 하세요.",
-      "help": "굵은 텍스트, 기울임 꼴, 글꼴 크기를 p 엘리먼트를 제목으로 스타일링하는데 사용하지 않습니다."
+      "help": "굵은 텍스트, 기울임 꼴, 글꼴 크기를 p 엘리먼트를 제목으로 스타일링하는데 사용하지 않아야 합니다."
     },
     "page-has-heading-one": {
       "description": "페이지 또는 프레임 중 최소 하나의 프레임이 1 레벨 제목을 포함하고 있는지 확인하세요.",
@@ -326,8 +326,8 @@
       "help": "모든 페이지 콘텐츠는 랜드마크에 포함되어야 합니다."
     },
     "role-img-alt": {
-      "description": "[role='img'] 엘리먼트가 대체 텍스트를 가지고 있는지 확인하세요.",
-      "help": "[role='img'] 엘리먼트는 대체 텍스트를 가집니다."
+      "description": "[role='img'] 엘리먼트가 대체텍스트를 가지고 있는지 확인하세요.",
+      "help": "[role='img'] 엘리먼트는 대체텍스트를 가저야 합니다."
     },
     "scope-attr-valid": {
       "description": "scope 어트리뷰트가 테이블에 올바르게 사용되고 있는지 확인하세요.",
@@ -335,7 +335,7 @@
     },
     "scrollable-region-focusable": {
       "description": "스크롤 가능한 콘텐츠를 가진 엘리먼트는 반드시 키보드로 접근 가능해야 합니다.",
-      "help": "스크롤 가능한 영역이 키보드 접근을 가지도록 하세요."
+      "help": "스크롤 가능한 영역이 키보드 접근을 가져야 합니다."
     },
     "select-name": {
       "description": "select 엘리먼트가 접근 가능한 이름을 가지고 있는지 확인하세요.",
@@ -351,7 +351,7 @@
     },
     "svg-img-alt": {
       "description": "이미지, 그래픽 문서, 그래픽 심볼 역할(role)을 가진 svg 엘리먼트가 접근 가능한 텍스트를 가지고 있는지 확인하세요.",
-      "help": "img 역할(role)을 가진 svg 엘리먼트는 접근 가능한 텍스트를 가집니다."
+      "help": "img 역할(role)을 가진 svg 엘리먼트는 접근 가능한 텍스트를 가져야 합니다."
     },
     "tabindex": {
       "description": "tabindex 어트리뷰트 값이 0보다 크지 않게 하세요.",
@@ -486,7 +486,7 @@
     },
     "fallbackrole": {
       "pass": "하나의 역할(role) 값만 사용되었습니다.",
-      "fail": "폴백 역할(role)들은 구형 브라우저들에서 지원되지 않으므로, 단 하나의 값만 사용하세요.",
+      "fail": "폴백 역할(role)들은 구형 브라우저들에서 지원되지 않으므로, 단 하나의 값만 사용해야 합니다.",
       "incomplete": "'presentation'이나 'none' 역할(role)만 사용하세요, 둘은 동의어입니다."
     },
     "has-global-aria-attribute": {
@@ -524,8 +524,8 @@
       "fail": "엘리먼트가 초점 순서(focus order)의 엘리먼트에 유효하지 않은 의미론을 가집니다."
     },
     "color-contrast": {
-      "pass": "엘리먼트가 ${data.contrastRatio}의 충분한 색상 대비를 가집니다.",
-      "fail": "엘리먼트가 ${data.contrastRatio} (전경색: ${data.fgColor}, 배경색: ${data.bgColor}, 글꼴 크기: ${data.fontSize}, 글꼴 두께: ${data.fontWeight})의 불충분한 색상 대비를 가집니다. 기대 명암비: ${data.expectedContrastRatio}",
+      "pass": "엘리먼트가 ${data.contrastRatio}의 충분한 명도 대비를 가집니다.",
+      "fail": "엘리먼트가 ${data.contrastRatio} (전경색: ${data.fgColor}, 배경색: ${data.bgColor}, 글꼴 크기: ${data.fontSize}, 글꼴 두께: ${data.fontWeight})의 불충분한 명도 대비를 가집니다. 기대 명암비: ${data.expectedContrastRatio}",
       "incomplete": {
         "default": "명암비를 확인할 수 없습니다.",
         "bgImage": "배경 이미지로 인해 엘리먼트의 배경색이 확인될 수 없습니다.",
@@ -733,7 +733,7 @@
       "incomplete": "CSS 방향 잠금이 확인될 수 없습니다."
     },
     "meta-viewport-large": {
-      "pass": "<meta> 태그가 모바일 기기에서 상당하게 확대/축소하는 것을 제한하지 않습니다.",
+      "pass": "<meta> 태그가 모바일 기기에서 확대/축소하는 것을 제한하지 않습니다.",
       "fail": "<meta> 태그가 모바일 기기에서 확대/축소하는 것을 제한하고 있습니다."
     },
     "meta-viewport": {
