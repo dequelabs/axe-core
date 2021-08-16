@@ -162,7 +162,7 @@
       "help": "form 필드는 반드시 여러 개의 레이블 엘리먼트를 가지지 않아야 합니다."
     },
     "frame-focusable-content": {
-      "description": "초점을 얻을 수 있는(focusable) 콘텐츠를 가진 <frame>과 <iframe> 엘리먼트에 tabindex=-1가 없게 하세요",
+      "description": "초점을 얻을 수 있는(focusable) 콘텐츠를 가진 <frame>과 <iframe> 엘리먼트에 tabindex=-1이 없게 하세요",
       "help": "초점을 얻을 수 있는(focusable) 콘텐츠를 가진 프레임에는 반드시 tabindex=-1 이 없어야 합니다."
     },
     "frame-tested": {
