@@ -420,12 +420,17 @@
       },
       "incomplete": {
         "singular": "aria-errormessage 값 `${data.values}`이(가) 기존 엘리먼트를 참조하는지 확인하세요.",
-        "plural": "aria-errormessage 값들 `${data.values}`이(가) 기존 엘리먼트를 참조하는지 확인하세요."
+        "plural": "aria-errormessage 값들 `${data.values}`이(가) 기존 엘리먼트를 참조하는지 확인하세요.",
+        "idrefs": "aria-errormessage 엘리먼트가 페이지에 존재하는지 확인할 수 없습니다: ${data.values}"
       }
     },
     "aria-hidden-body": {
       "pass": "문서 body에 aria-hidden 어트리뷰트가 없습니다.",
       "fail": "문서 body에 aria-hidden=true가 없어야 합니다."
+    },
+    "aria-level": {
+      "pass": "aria-level 값이 유효합니다.",
+      "incomplete": "6보다 큰 aria-level 값은 모든 스크린리더와 브라우저 조합에서 지원되지 않습니다."
     },
     "aria-prohibited-attr": {
       "pass": "ARIA 어트리뷰트가 혀용되었습니다.",
@@ -474,7 +479,8 @@
       },
       "incomplete": {
         "noId": "ARIA 어트리뷰트 엘리먼트 ID가 페이지에 없습니다: ${data.needsReview}",
-        "ariaCurrent": "ARIA 어트리뷰트 값이 유효하지 않으며 \"aria-current=true\"로 취급 될 것입니다: ${data.needsReview}"
+        "ariaCurrent": "ARIA 어트리뷰트 값이 유효하지 않으며 \"aria-current=true\"로 취급 될 것입니다: ${data.needsReview}",
+        "idrefs": "페이지에 ARIA 어트리뷰트 엘리먼트 ID가 존재하는지 확인할 수 없습니다: ${data.needsReview}"
       }
     },
     "aria-valid-attr": {
@@ -525,7 +531,11 @@
     },
     "color-contrast": {
       "pass": "엘리먼트가 ${data.contrastRatio}의 충분한 명도 대비를 가집니다.",
-      "fail": "엘리먼트가 ${data.contrastRatio} (전경색: ${data.fgColor}, 배경색: ${data.bgColor}, 글꼴 크기: ${data.fontSize}, 글꼴 두께: ${data.fontWeight})의 불충분한 명도 대비를 가집니다. 기대 명암비: ${data.expectedContrastRatio}",
+      "fail": {
+        "default": "엘리먼트가 ${data.contrastRatio} (전경색: ${data.fgColor}, 배경색: ${data.bgColor}, 글꼴 크기: ${data.fontSize}, 글꼴 두께: ${data.fontWeight})의 불충분한 명도 대비를 가집니다. 기대 명암비: ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "엘리먼트가 전경색과 그림자 색상 (전경색: ${data.fgColor}, 텍스트 그림자 색상: ${data.shadowColor}, 글꼴 크기: ${data.fontSize}, 글꼴 두께: ${data.fontWeight}) 사이에 ${data.contrastRatio}의 불충분한 명도 대비를 가집니다. 기대 명암비: ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "엘리먼트가 그림자 색상과 배경색 (텍스트 그림자 색상: ${data.shadowColor}, 배경색: ${data.bgColor}, 글꼴 크기: ${data.fontSize}, 글꼴 두께: ${data.fontWeight}) 사이에 ${data.contrastRatio}의 불충분한 명도 대비를 가집니다. 기대 명암비: ${data.expectedContrastRatio}"
+      },
       "incomplete": {
         "default": "명암비를 확인할 수 없습니다.",
         "bgImage": "배경 이미지로 인해 엘리먼트의 배경색이 확인될 수 없습니다.",
