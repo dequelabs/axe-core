@@ -83,6 +83,24 @@ describe('axe.finishRun', function() {
       .catch(done);
   });
 
+  it('takes partialResult.environmentData to the reporter', function (done) {
+    var testEngine = {
+      name: 'dummy-engine',
+      version: '1.2.3.4.5'
+    };
+    axe
+      .runPartial()
+      .then(function(partialResult) {
+        partialResult.environmentData = { testEngine: testEngine }
+        return axe.finishRun([partialResult], { runOnly: 'region' });
+      })
+      .then(function(results) {
+        assert.deepEqual(results.testEngine, testEngine);
+        done();
+      })
+      .catch(done);
+  });
+
   it('can report violations results', function(done) {
     fixture.innerHTML = '<div aria-label="foo"></div>';
     axe

@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   extends: ['prettier'],
   parserOptions: {
     ecmaVersion: 2021
@@ -70,6 +71,10 @@ module.exports = {
   overrides: [
     {
       files: ['lib/**/*.js'],
+      excludedFiles: [
+        'lib/core/reporters/**/*.js',
+        'lib/**/*-after.js'
+      ],
       parserOptions: {
         sourceType: 'module'
       },
@@ -85,6 +90,15 @@ module.exports = {
         'func-names': [2, 'as-needed'],
         'prefer-const': 2,
         'no-use-before-define': 'off'
+      }
+    },
+    {
+      files: [
+        'lib/**/*-after.js',
+        'lib/core/reporters/**/*.js'
+      ],
+      parserOptions: {
+        sourceType: 'module'
       }
     },
     {
