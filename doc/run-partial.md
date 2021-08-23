@@ -81,6 +81,13 @@ The `axe.utils.getFrameContexts` method takes any valid context, and returns an 
 
 - `frameSelector`: This is a CSS selector, or array of CSS selectors in case of nodes in a shadow DOM tree to locate the frame element to be tested.
 - `frameContext`: This is an object is a context object that should be tested in the particular frame.
+
+## Custom Rulesets and Reporters
+
+Because `axe.finishRun` does not run inside the page, the `reporter` and `after` methods do not have access to the top-level `window` and `document` objects, and might not have access to common browser APIs. Axe-core reporter use the `environmentData` property that is set on the partialResult object of the initiator.
+
+Because of this constraint, custom reporters, and custom rulesets that add `after` methods must not rely on browser APIs or globals. Any data needed for either should either be taken from the `environmentData` property, or collected in an `evaluate` method of a check, and stored using its `.data()` method.
+
 ## Recommendations
 
 When building integrations with browser drivers using axe-core, it is safer and more stable to use `axe.runPartial` and `axe.finishRun` then to use `axe.run`. These two methods ensure that no information from one frame is ever handed off to another. That way if any script in a frame interferes with the `axe` object, or with `window.postMessage`, other frames will not be affected.

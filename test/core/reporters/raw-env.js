@@ -129,11 +129,20 @@ describe('reporters - raw-env', function() {
 
   it('should pass env object', function() {
     axe.getReporter('rawEnv')(runResults, {}, function(results) {
-      assert.isNotNull(results.env);
-      assert.isNotNull(results.env.url);
-      assert.isNotNull(results.env.timestamp);
-      assert.isNotNull(results.env.testEnvironement);
-      assert.isNotNull(results.env.testRunner);
+      assert.isDefined(results.env);
+      assert.isDefined(results.env.url);
+      assert.isDefined(results.env.timestamp);
+      assert.isDefined(results.env.testEnvironment);
+      assert.isDefined(results.env.testRunner);
+    });
+  });
+
+  it('uses the environmentData option instead of environment data if specified', function () {
+    var environmentData = {
+      myReporter: 'hello world'
+    }
+    axe.getReporter('rawEnv')(runResults, { environmentData: environmentData }, function(results) {
+      assert.deepEqual(results.env, environmentData);
     });
   });
 });
