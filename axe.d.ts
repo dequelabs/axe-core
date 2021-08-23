@@ -263,6 +263,7 @@ declare namespace axe {
     frames: SerialDqElement[];
     results: PartialRuleResult[];
   }
+  type PartialResults = Array<PartialResult | null>
   interface FrameContext {
     frameSelector: CrossTreeSelector;
     frameContext: ContextObject;
@@ -333,7 +334,7 @@ declare namespace axe {
    * @param   {RunOptions}     options  Optional Options passed into rules or checks, temporarily modifying them.
    */
   function finishRun(
-    partialResults: Array<PartialResult | null>,
+    partialResults: PartialResults,
     options: RunOptions
   ): Promise<AxeResults>;
 
