@@ -96,13 +96,8 @@ declare namespace axe {
     preload?: boolean;
     performanceTimer?: boolean;
   }
-  interface AxeResults {
+  interface AxeResults extends EnvironmentData {
     toolOptions: RunOptions;
-    testEngine: TestEngine;
-    testRunner: TestRunner;
-    testEnvironment: TestEnvironment;
-    url: string;
-    timestamp: string;
     passes: Result[];
     violations: Result[];
     incomplete: Result[];
@@ -262,6 +257,7 @@ declare namespace axe {
   interface PartialResult {
     frames: SerialDqElement[];
     results: PartialRuleResult[];
+    environmentData?: EnvironmentData;
   }
   type PartialResults = Array<PartialResult | null>
   interface FrameContext {
@@ -271,6 +267,13 @@ declare namespace axe {
   interface Utils {
     getFrameContexts: (context?: ElementContext) => FrameContext[];
     shadowSelect: (selector: CrossTreeSelector) => Element | null;
+  }
+  interface EnvironmentData {
+    testEngine: TestEngine;
+    testRunner: TestRunner;
+    testEnvironment: TestEnvironment;
+    url: string;
+    timestamp: string;
   }
 
   let version: string;
