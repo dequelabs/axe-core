@@ -93,6 +93,7 @@ module.exports = {
       }
     },
     {
+      // after functions and reporters will not be run inside the same context as axe.run so should not access browser globals that require context specific information (window.location, window.getComputedStyles, etc.)
       files: [
         'lib/**/*-after.js',
         'lib/core/reporters/**/*.js'
