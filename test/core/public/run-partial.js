@@ -130,7 +130,7 @@ describe('axe.runPartial', function() {
   });
 
   describe('environmentData', function () {
-    it('is include environment data for the initiator', function (done) {
+    it('includes environment data for the initiator', function (done) {
       var context = {
         include: ['#fixture']
       }

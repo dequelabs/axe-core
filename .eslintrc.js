@@ -99,6 +99,13 @@ module.exports = {
       ],
       parserOptions: {
         sourceType: 'module'
+      },
+      env: {},
+      globals: {},
+      rules: {
+        'func-names': [2, 'as-needed'],
+        'prefer-const': 2,
+        'no-use-before-define': 'off'
       }
     },
     {
