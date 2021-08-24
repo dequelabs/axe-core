@@ -285,15 +285,27 @@ describe('reporters - v1', function() {
   });
   it('should add environment data', function() {
     axe.getReporter('v1')(runResults, {}, function(results) {
-      assert.isNotNull(results.url);
-      assert.isNotNull(results.timestamp);
-      assert.isNotNull(results.testEnvironement);
-      assert.isNotNull(results.testRunner);
+      assert.isDefined(results.url);
+      assert.isDefined(results.timestamp);
+      assert.isDefined(results.testEnvironment);
+      assert.isDefined(results.testRunner);
     });
   });
   it('should add toolOptions property', function() {
     axe.getReporter('v1')(runResults, {}, function(results) {
-      assert.isNotNull(results.toolOptions);
+      assert.isDefined(results.toolOptions);
+    });
+  });
+  it('uses the environmentData option instead of environment data if specified', function () {
+    var environmentData = {
+      myReporter: 'hello world'
+    }
+    axe.getReporter('v1')(runResults, { environmentData: environmentData }, function(results) {
+      assert.equal(results.myReporter, 'hello world');
+      assert.isUndefined(results.url);
+      assert.isUndefined(results.timestamp);
+      assert.isUndefined(results.testEnvironment);
+      assert.isUndefined(results.testRunner);
     });
   });
 });

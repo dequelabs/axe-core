@@ -17,6 +17,14 @@
       "description": "Vérifier que l’attribut role a une valeur valide pour cet élément",
       "help": "Le rôle ARIA doit être valide pour cet élément"
     },
+    "aria-command-name": {
+      "description": "Vérifier que chaque \"button\", \"link\" et \"menuitem\" ARIA a un nom accessible",
+      "help": "Les commandes ARIA doivent avoir un nom accessible"
+    },
+    "aria-dialog-name": {
+      "description": "Vérifier que chaque nœud ARIA \"dialog\" et \"alertdialog\" a un nom accessible",
+      "help": "Les nœuds ARIA \"dialog\" and \"alertdialog\" doivent avoir un nom accessible"
+    },
     "aria-hidden-body": {
       "description": "Vérifier qu’aria-hidden='true' n’est pas présent sur le corps du document (élément body)",
       "help": "aria-hidden='true' ne doit pas être présent sur <body>"
@@ -28,6 +36,14 @@
     "aria-input-field-name": {
       "description": "Vérifier que chaque champ de formulaire avec ARIA est doté d’un intitulé accessible",
       "help": "Les champs de formulaire ARIA ont un intitulé accessible"
+    },
+    "aria-meter-name": {
+      "description": "Vérifier que chaque nœud ARIA \"meter\" a un nom accessible",
+      "help": "Les nœuds ARIA \"meter\" doivent avoir un nom accessible"
+    },
+    "aria-progressbar-name": {
+      "description": "Vérifier que chaque nœud ARIA \"progressbar\" a un nom accessible",
+      "help": "Les nœuds ARIA \"progressbar\" doivent avoir un nom accessible"
     },
     "aria-required-attr": {
       "description": "Vérifier que les éléments avec des rôles ARIA ont les attributs ARIA requis",
@@ -49,9 +65,21 @@
       "description": "Vérifier que les éléments avec un attribut role utilisent une valeur valide",
       "help": "Les rôles ARIA doivent se conformer aux valeurs valides"
     },
+    "aria-text": {
+      "description": "Vérifier que \"role=text\" est uniquement utilisé sur des éléments sans descendants focalisables",
+      "help": "\"role=text\" ne doit pas avoir de descendant focalisable"
+    },
     "aria-toggle-field-name": {
       "description": "Vérifier que chaque champ de basculement ARIA a un libellé accessible",
       "help": "Les champs de basculement ARIA ont un libellé accessible"
+    },
+    "aria-tooltip-name": {
+      "description": "Vérifier que chaque nœud ARIA \"tooltip\" a un nom accessible",
+      "help": "Les nœuds ARIA \"tooltip\" doivent avoir un nom accessible"
+    },
+    "aria-treeitem-name": {
+      "description": "Vérifier que chaque nœud ARIA \"treeitem\" a un nom accessible",
+      "help": "Les nœuds ARIA \"treeitem\" doivent avoir un nom accessible"
     },
     "aria-valid-attr-value": {
       "description": "Vérifier que tous les attributs ARIA comportent des valeurs valides",
@@ -121,6 +149,10 @@
       "description": "Vérifier que les niveaux de titre ont un texte perceptible",
       "help": "Les niveaux de titre ne doivent pas être vides"
     },
+    "empty-table-header": {
+      "description": "Vérifier que les entêtes de tableaux ont un texte perceptible",
+      "help": "Les textes d’entêtes de tableaux ne doivent pas être vides"
+    },
     "focus-order-semantics": {
       "description": "Vérifier que les éléments dans le parcours du focus ont un rôle approprié",
       "help": "Les éléments dans le parcours du focus doivent avoir un rôle approprié pour le contenu interactif"
@@ -128,6 +160,10 @@
     "form-field-multiple-labels": {
       "description": "Vérifier que le champ de formulaire n’a pas plusieurs éléments d’étiquettes",
       "help": "Le champ de formulaire ne devrait pas comporter plusieurs éléments d’étiquettes"
+    },
+    "frame-focusable-content": {
+      "description": "Vérifier que les éléments <frame> et <iframe> avec du contenu focalisable n’ont pas de tabindex=-1",
+      "help": "Les cadres avec du contenu focalisable ne doivent pas avoir tabindex=-1"
     },
     "frame-tested": {
       "description": "Vérifier que les éléments <iframe> et <frame> contiennent le script axe-core",
@@ -160,6 +196,10 @@
     "html-xml-lang-mismatch": {
       "description": "Vérifier que les éléments HTML avec les attributs lang et xml:lang valides indiquent la même langue de base pour la page",
       "help": "Les éléments HTML avec les attributs lang et xml:lang doivent avoir la même langue de base"
+    },
+    "identical-links-same-purpose": {
+      "description": "Vérifier que les liens qui ont le même nom accessible ont la même finalité",
+      "help": "Les liens avec le même nom ont la même finalité"
     },
     "image-alt": {
       "description": "Vérifier que les éléments <img> ont une alternative textuelle, ou un rôle de type 'none' ou 'presentation'",
@@ -257,6 +297,14 @@
       "description": "Vérifier que <meta name=\"viewport\"> ne désactive pas le zoom ni l’agrandissement",
       "help": "Le zoom et l’agrandissement ne doivent pas être désactivés"
     },
+    "nested-interactive": {
+      "description": "Les éléments interactifs imbriqués ne sont pas annoncés par les lecteurs d’écrans",
+      "help": "Verifier que les éléments interactifs ne sont pas imbriqués"
+    },
+    "no-autoplay-audio": {
+      "description": "Vérifier que les éléments <video> ou <audio> ne jouent pas de son automatiquement pendant plus de 3 secondes sans mécanisme de contrôle pour stopper la lecture ou couper le son.",
+      "help": "Les éléments <video> ou <audio> ne jouent pas de son automatiquement"
+    },
     "object-alt": {
       "description": "Vérifier que les éléments <object> ont une alternative textuelle",
       "help": "Les éléments <object> doivent avoir une alternative textuelle"
@@ -268,6 +316,10 @@
     "page-has-heading-one": {
       "description": "Vérifier que la page, ou au moins une de ses iframes, contient un titre de niveau 1",
       "help": "La page doit contenir un titre de niveau 1"
+    },
+    "presentation-role-conflict": {
+      "description": "Signaler les éléments dont le rôle est 'none' ou 'presentation' et qui déclenchent la résolution de conflits de rôles.",
+      "help": "Les éléments avec un rôle 'none' ou 'presentation' doivent être signalés"
     },
     "region": {
       "description": "Vérifier que tout le contenu est localisé dans une région",
@@ -285,6 +337,10 @@
       "description": "Les éléments dont le contenu défile devraient être accessibles au clavier",
       "help": "Vérifier que les régions défilantes sont accessibles au clavier"
     },
+    "select-name": {
+      "description": "Vérifier que l’élément 'select' a un nom accessible",
+      "help": "L’élément 'select' doit avoir un nom accessible"
+    },
     "server-side-image-map": {
       "description": "Vérifier que les images réactives côté serveur ne sont pas utilisées",
       "help": "Les images réactives côté serveur ne devraient pas être utilisées"
@@ -292,6 +348,10 @@
     "skip-link": {
       "description": "Vérifier que tous les liens d’évitement ont une cible pouvant recevoir le focus",
       "help": "La cible d’un lien d’évitement doit exister et pouvoir recevoir le focus"
+    },
+    "svg-img-alt": {
+      "description": "Vérifier que les éléments svg avec un rôle 'img', 'graphics-document', ou 'graphics-symbol' ont un texte accessible",
+      "help": "Les éléments svg avec un rôle 'img' ont un texte alternatif"
     },
     "tabindex": {
       "description": "Vérifier que les valeurs de l’attribut tabindex ne sont pas supérieures à 0",
@@ -329,7 +389,10 @@
   "checks": {
     "abstractrole": {
       "pass": "Les rôles abstraits ne sont pas utilisés",
-      "fail": "Les rôles abstraits ne peuvent pas être utilisés directement"
+      "fail": {
+        "singular": "Le rôle abstrait ne peut pas être utilisé directement : ${data.values}",
+        "plural": "Les rôles abstraits ne peuvent pas être utilisés directement : ${data.values}"
+      }
     },
     "aria-allowed-attr": {
       "pass": "Les attributs ARIA sont utilisés correctement pour le rôle défini",
@@ -349,33 +412,30 @@
         "plural": "Les rôles ARIA ${data.values} doivent être retirés lorsque l’élément est rendu visible, car ils ne sont pas autorisés pour cet élément"
       }
     },
-    "aria-hidden-body": {
-      "pass": "Aucun attribut aria-hidden n’est présent sur body",
-      "fail": "aria-hidden=true ne devrait pas être présent sur body"
-    },
-    "aria-roledescription": {
-      "pass": "aria-roledescription utilisé sur un élément sémantique supporté",
-      "incomplete": "Vérifier que la valeur d’aria-roledescription est annoncée par les lecteurs d’écran supportés",
-      "fail": "Attribuer à l’élément un role qui supporte aria-roledescription"
-    },
     "aria-errormessage": {
       "pass": "Utiliser une technique prise en charge pour aria-errormessage",
       "fail": {
         "singular": "La valeur d’aria-errormessage `${data.values}` doit recourir à une technique pour annoncer le message (aria-live, aria-describedby, role=alert, etc.)",
         "plural": "Les valeurs aria-errormessage `${data.values}` doivent recourir à une technique pour annoncer le message (aria-live, aria-describedby, role=alert, etc.)"
+      },
+      "incomplete": {
+        "singular": "Vérifier que la valeur de l’attribut 'aria-errormessage' `${data.values}` se réfère à un élément existant",
+        "plural": "Vérifier que les valeurs de l’attribut 'aria-errormessage' `${data.values}` se réfèrent à des éléments existants",
+        "idrefs": "Impossible de déterminer si l’élément référencé par 'aria-errormessage' existe dans la page : ${data.values}"
       }
     },
-    "has-widget-role": {
-      "pass": "L’élément a un rôle widget.",
-      "fail": "L’élément n’a pas de rôle widget."
+    "aria-hidden-body": {
+      "pass": "Aucun attribut aria-hidden n’est présent sur body",
+      "fail": "aria-hidden=true ne devrait pas être présent sur body"
     },
-    "invalidrole": {
-      "pass": "Le rôle ARIA est valide",
-      "fail": "Le rôle doit être un des rôles ARIA valides"
+    "aria-level": {
+      "pass": "Les valeurs d’aria-level sont valides",
+      "incomplete": "Les valeurs d’aria-level supérieures à 6 ne sont pas supportées par toutes les combinaisons de navigateurs et de lecteurs d’écrans"
     },
-    "no-implicit-explicit-label": {
-      "pass": "Il n’y a pas de décalage entre le <label> et l’intitulé accessible",
-      "incomplete": "Vérifier que le <label> n’a pas à faire partie du nom du champ de formulaire ARIA ${data}"
+    "aria-prohibited-attr":{
+      "pass": "L’attribut ARIA est autorisé",
+      "fail": "L’attribut ARIA ne peut pas être utilisé, ajoutez un attribut role ou utilisez un élément différent : ${data.values}",
+      "incomplete": "L’attribut ARIA n’est pas bien supporté sur l’élément et le contenu texte sera utilisé à la place : ${data.values}"
     },
     "aria-required-attr": {
       "pass": "Tous les attributs ARIA requis sont présents",
@@ -402,13 +462,14 @@
         "plural": "Les rôles parents ARIA requis sont manquants : ${data.values}"
       }
     },
+    "aria-roledescription": {
+      "pass": "aria-roledescription utilisé sur un élément sémantique supporté",
+      "incomplete": "Vérifier que la valeur d’aria-roledescription est annoncée par les lecteurs d’écran supportés",
+      "fail": "Attribuer à l’élément un rôle qui supporte aria-roledescription"
+    },
     "aria-unsupported-attr": {
       "pass": "L’attribut ARIA est supporté",
       "fail": "L’attribut ARIA n’est pas suffisamment supporté par les lecteurs d’écran et autres technologies d’assistance : ${data.values}"
-    },
-    "unsupportedrole": {
-      "pass": "Le rôle ARIA est supporté",
-      "fail": "Le rôle utilisé n’est pas suffisamment supporté par les technologies d’assistance"
     },
     "aria-valid-attr-value": {
       "pass": "Les valeurs d’attribut ARIA sont valides",
@@ -417,8 +478,9 @@
         "plural": "Les valeurs d’attribut ARIA sont invalides : ${data.values}"
       },
       "incomplete": {
-        "singular": "L’id de l’attribut ARIA de l’élément n’existe pas dans cette page : ${data.values}",
-        "plural": "L’id de l’attribut ARIA des éléments n’existent pas dans cette page : ${data.values}"
+        "noId": "L’ID d’élément référencé par l’attribut ARIA n’existe pas dans la page : ${data.needsReview}",
+        "ariaCurrent": "La valeur de l’attribut ARIA est invalide et sera traitée comme \"aria-current=true\" : ${data.needsReview}",
+        "idrefs": "Impossible de vérifier si l’ID d’élément référencé par l’attribut ARIA existe dans la page : ${data.needsReview}"
       }
     },
     "aria-valid-attr": {
@@ -431,13 +493,52 @@
         "plural": "Les noms d’attributs ARIA sont invalides : ${data.values}"
       }
     },
+    "fallbackrole": {
+      "pass": "Une seule valeur de rôle utilisée",
+      "fail": "Utiliser une seule valeur de rôle, dans la mesure où les rôles de secours ne sont pas supportés par les navigateurs anciens",
+      "incomplete": "Utiliser seulement les rôles 'presentation' ou 'none' puisqu’ils sont synonymes."
+    },
+    "has-global-aria-attribute": {
+      "pass": {
+        "singular": "L’élément a un attribut ARIA global : ${data.values}",
+        "plural": "L’élément a des attributs ARIA globaux : ${data.values}"
+      },
+      "fail": "L’élément n’a pas d’attribut ARIA global"
+    },
+    "has-widget-role": {
+      "pass": "L’élément a un rôle widget.",
+      "fail": "L’élément n’a pas de rôle widget."
+    },
+    "invalidrole": {
+      "pass": "Le rôle ARIA est valide",
+      "fail": {
+        "singular": "Le rôle doit être un rôle ARIA valide : ${data.values}",
+        "plural": "Les rôles doivent être des rôles ARIA valides : ${data.values}"
+      }
+    },
+    "is-element-focusable": {
+      "pass": "L’élément est focalisable.",
+      "fail": "L’élément n’est pas focalisable."
+    },
+    "no-implicit-explicit-label": {
+      "pass": "Il n’y a pas de décalage entre le <label> et l’intitulé accessible",
+      "incomplete": "Vérifier que le <label> n’a pas à faire partie du nom du champ de formulaire ARIA ${data}"
+    },
+    "unsupportedrole": {
+      "pass": "Le rôle ARIA est supporté",
+      "fail": "Le rôle utilisé n’est pas suffisamment supporté par les technologies d’assistance"
+    },
     "valid-scrollable-semantics": {
       "pass": "L’élément a une sémantique valide pour un élément dans l’ordre de tabulation.",
       "fail": "L’élément n’a pas une sémantique valide pour un élément dans l’ordre de tabulation."
     },
     "color-contrast": {
       "pass": "L’élément a un contraste de couleurs suffisant de ${data.contrastRatio}",
-      "fail": "L’élément a un contraste de couleurs insuffisant de ${data.contrastRatio} (couleur du texte : ${data.fgColor}, couleur d’arrière-plan : ${data.bgColor}, corps : ${data.fontSize}, graisse : ${data.fontWeight}). Le rapport de contraste attendu est ${data.expectedContrastRatio}",
+      "fail": {
+        "default": "L’élément a un contraste de couleurs insuffisant de ${data.contrastRatio} (couleur d’avant plan : ${data.fgColor}, couleur d’arrière plan : ${data.bgColor}, taille de police : ${data.fontSize}, graisse : ${data.fontWeight}). Contraste de couleur attendu : ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "L’élément a un contraste de couleurs insuffisant de ${data.contrastRatio} entre l’avant plan et la couleur de l’ombre de texte (couleur d’avant plan : ${data.fgColor}, couleur de l’ombre de texte : ${data.shadowColor}, taille de police : ${data.fontSize}, graisse: ${data.fontWeight}). Contraste de couleurs attendu : ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "L’élément a un contraste de couleurs insuffisant de ${data.contrastRatio} entre la couleur de l’ombre de texte et l’arrière plan (couleur de l’ombre de texte : ${data.shadowColor}, couleur d’arrière plan : ${data.bgColor}, taille de police : ${data.fontSize}, graisse: ${data.fontWeight}). Contraste de couleurs attendu : ${data.expectedContrastRatio}"
+      },
       "incomplete": {
         "default": "Impossible de déterminer le rapport de contraste",
         "bgImage": "La couleur d’arrière-plan de l’élément n’a pu être déterminée à cause d’une image d’arrière-plan",
@@ -449,7 +550,9 @@
         "elmPartiallyObscuring": "La couleur d’arrière-plan de l’élément n’a pu être déterminée, car il chevauche partiellement un autre élément",
         "outsideViewport": "La couleur d’arrière-plan de l’élément n’a pu être déterminée, car il est à l’extérieur du viewport",
         "equalRatio": "L’élément a un rapport de contraste de 1:1 avec son arrière-plan",
-        "shortTextContent": "Le contenu de l’élément est trop court pour déterminer s’il s’agit réellement d’un contenu textuel"
+        "shortTextContent": "Le contenu de l’élément est trop court pour déterminer s’il s’agit réellement d’un contenu textuel",
+        "nonBmp": "Le contenu de l’élément contient seulement des caractères non textuels",
+        "pseudoContent": "La couleur d’arrière plan de l’élément n’a pu être déterminée à cause d’un pseudo-élément"
       }
     },
     "link-in-text-block": {
@@ -488,17 +591,32 @@
       "pass": "L’élément est focalisable",
       "fail": "L’élément devrait être focalisable"
     },
+    "focusable-modal-open": {
+      "pass": "Pas d’élément focalisable quand une modale est ouverte",
+      "incomplete": "Vérifiez que les éléments focalisables ne sont pas atteignables via la tabulation dans l’état actuel"
+    },
     "focusable-no-name": {
       "pass": "L’élément n’est pas dans l’ordre de tabulation ou a un intitulé accessible",
-      "fail": "L’élément est dans l’ordre de tabulation et n’a pas d’intitulé accessible"
+      "fail": "L’élément est dans l’ordre de tabulation et n’a pas d’intitulé accessible",
+      "incomplete": "Impossible de déterminer si l’élément a un nom accessible"
     },
     "focusable-not-tabbable": {
       "pass": "Aucun élément focalisable contenu dans l’élément",
       "fail": "Le contenu focalisable devrait se voir assigné un tabindex='-1' ou être retiré du DOM"
     },
+    "frame-focusable-content": {
+      "pass": "L’élément n’a pas de descendants focalisables",
+      "fail": "L’élément a des descendants focalisables",
+      "incomplete": "Impossible de déterminer si l’élément a des descendants"
+    },
     "landmark-is-top-level": {
       "pass": "La région ${data.role} est au niveau le plus haut.",
       "fail": "La région ${data.role} est contenue dans une autre région."
+    },
+    "no-focusable-content": {
+      "pass": "L’élément n’a pas de descendants focalisables",
+      "fail": "L’élément a des descendants focalisables",
+      "incomplete": "Impossible de déterminer si l’élément a des descendants"
     },
     "page-has-heading-one": {
       "pass": "La page a au moins un titre de niveau un",
@@ -534,7 +652,8 @@
     },
     "explicit-label": {
       "pass": "L’élément de formulaire a un <label> explicite",
-      "fail": "L’élément de formulaire n’a pas de <label> explicite"
+      "fail": "L’élément de formulaire n’a pas de <label> explicite",
+      "incomplete": "Impossible de déterminer si l’élément de formulaire a un <label> explicite"
     },
     "help-same-as-label": {
       "pass": "L’aide à la saisie (title ou aria-describedby) ne duplique pas le contenu du label",
@@ -542,11 +661,13 @@
     },
     "hidden-explicit-label": {
       "pass": "L’élément de formulaire a un <label> visible et explicite",
-      "fail": "L’élément de formulaire a un <label> explicite qui est masqué"
+      "fail": "L’élément de formulaire a un <label> explicite qui est masqué",
+      "incomplete": "Impossible de déterminer si l’élément de formulaire a un <label> explicite qui est masqué"
     },
     "implicit-label": {
       "pass": "L’élément de formulaire a un <label> implicite (imbriqué)",
-      "fail": "L’élément de formulaire n’a pas de <label> implicite (imbriqué)"
+      "fail": "L’élément de formulaire n’a pas de <label> implicite (imbriqué)",
+      "incomplete": "Impossible de déterminer si l’élément de formulaire a un <label> implicite (imbriqué)"
     },
     "label-content-name-mismatch": {
       "pass": "L’élément contient du texte visible qui n’est pas inclus dans l’intitulé accessible",
@@ -566,7 +687,10 @@
     },
     "has-lang": {
       "pass": "L’élément <html> a un attribut lang",
-      "fail": "L’élément <html> n’a pas d’attribut lang"
+      "fail": {
+        "noXHTML": "L’attribut xml:lang n’est pas valide sur les pages HTML, utiliser l’attribut lang.",
+        "noLang": "L’élément <html> n’a pas d’attribut lang"
+      }
     },
     "valid-lang": {
       "pass": "La valeur de l’attribut lang fait partie des codes de langues valides",
@@ -611,6 +735,11 @@
       "fail": "L’iframe n’a pu être testée avec axe-core",
       "incomplete": "L’iframe doit encore être testée avec axe-core"
     },
+    "no-autoplay-audio": {
+      "pass": "<video> ou <audio> ne produit pas de son pour une durée plus grande que celle permise ou a un mécanisme de contrôle",
+      "fail": "<video> ou <audio> produisent du son pour une durée plus grande que celle permise et n’ont pas de mécanisme de contrôle",
+      "incomplete": "Verifier que l’élément <video> ou <audio> ne produit pas de son pour une durée plus grande que celle permise ou a un mécanisme de contrôle"
+    },
     "css-orientation-lock": {
       "pass": "L’utilisation de l’écran est indépendante de l’orientation et n’est pas limitée à un mode d’affichage donné",
       "fail": "L’utilisation de l’écran est limitée à une orientation donnée par CSS, rendant l’affichage inutilisable",
@@ -630,7 +759,12 @@
     },
     "heading-order": {
       "pass": "Hiérarchie entre les titres valide",
-      "fail": "Hiérarchie entre les titres invalide"
+      "fail": "Hiérarchie entre les titres invalide",
+      "incomplete": "Impossible de déterminer le titre précédent"
+    },
+    "identical-links-same-purpose": {
+      "pass": "Il n’y a pas d’autre lien avec le même nom qui a pour destination une URL différente",
+      "incomplete": "Vérifier que les liens ont la même finalité ou sont volontairement ambigus."
     },
     "internal-link-present": {
       "pass": "Lien d’évitement valide trouvé",
@@ -679,7 +813,8 @@
     },
     "aria-labelledby": {
       "pass": "L’attribut aria-labelledby existe et fait référence à des éléments visibles par les lecteurs d’écran",
-      "fail": "L’attribut aria-labelledby n’existe pas, fait référence à des éléments qui n’existent pas ou à des éléments vides ou non visibles"
+      "fail": "L’attribut aria-labelledby n’existe pas, fait référence à des éléments qui n’existent pas ou à des éléments vides ou non visibles",
+      "incomplete": "S’assurer que l’attribut aria-labelledby fait référence à un élément existant"
     },
     "avoid-inline-spacing": {
       "pass": "Aucun style inline affectant l’espacement du texte avec '!important' n’a été spécifié",
@@ -690,7 +825,8 @@
     },
     "button-has-visible-text": {
       "pass": "L’élément a un contenu textuel visible par les lecteurs d’écran",
-      "fail": "L’élément n’a aucun contenu textuel visible par les lecteurs d’écran"
+      "fail": "L’élément n’a aucun contenu textuel visible par les lecteurs d’écran",
+      "incomplete": "Impossible de vérifier si l’élément a des enfants"
     },
     "doc-has-title": {
       "pass": "Le document a un élément <title> non vide",
@@ -706,7 +842,8 @@
     },
     "has-visible-text": {
       "pass": "L’élément a un contenu textuel visible par les lecteurs d’écran",
-      "fail": "L’élément n’a aucun contenu textuel visible par les lecteurs d’écran"
+      "fail": "L’élément n’a aucun contenu textuel visible par les lecteurs d’écran",
+      "incomplete": "Impossible de vérifier si l’élément a des enfants"
     },
     "is-on-screen": {
       "pass": "L’élément n’est pas visible",
@@ -714,7 +851,10 @@
     },
     "non-empty-alt": {
       "pass": "L’élément a un attribut alt non vide",
-      "fail": "L’élément n’a pas d’attribut alt ou l’attribut alt est vide"
+      "fail": {
+        "noAttr": "L’élément n’a pas d’attribut alt",
+        "emptyAttr": "L’élément a un attribut alt vide"
+      }
     },
     "non-empty-if-present": {
       "pass": {
@@ -723,13 +863,35 @@
       },
       "fail": "L’élément a un attribut value, et cet attribut est vide"
     },
+    "non-empty-placeholder": {
+      "pass": "L’élément a un attribut placeholder",
+      "fail": {
+        "noAttr": "L’élément n’a pas d’attribut placeholder",
+        "emptyAttr": "L’élément a un attribut placeholder vide"
+      }
+    },
     "non-empty-title": {
       "pass": "L’élément a un attribut title",
-      "fail": "L’élément n’a pas d’attribut title ou l’attribut title est vide."
+      "fail": {
+        "noAttr": "L’élément n’a pas d’attribut title",
+        "emptyAttr": "L’élément a un attribut title vide"
+      }
     },
     "non-empty-value": {
       "pass": "L’élément a un attribut value non vide",
-      "fail": "L’élément n’a pas d’attribut value, ou a un attribut value vide"
+      "fail": {
+        "noAttr": "L’élément n’a pas d’attribut value",
+        "emptyAttr": "L’élément a un attribut value vide"
+      }
+    },
+    "presentational-role": {
+      "pass": "La sémantique par défaut de l’élément a été remplacée par role=\"${data.role}\"",
+      "fail": {
+        "default": "La sémantique par défaut de l’élément n’a pas été remplacée par role=\"none\" ou role=\"presentation\"",
+        "globalAria": "Le rôle de l’élément n’est pas un rôle de présentation car il a un attribut ARIA global",
+        "focusable": "Le rôle de l’élément n’est pas un rôle de présentation car il est focalisable",
+        "both": "Le rôle de l’élément n’est pas un rôle de présentation car il a un attribut ARIA global et est focalisable"
+      }
     },
     "role-none": {
       "pass": "La sémantique par défaut de l’élément est annulée avec role=\"none\"",
@@ -738,6 +900,14 @@
     "role-presentation": {
       "pass": "La sémantique par défaut de l’élément est annulée avec role=\"presentation\"",
       "fail": "La sémantique par défaut de l’élément n’est pas annulée avec role=\"presentation\""
+    },
+    "svg-non-empty-title": {
+      "pass": "L’élément a un enfant qui est un titre",
+      "fail": {
+        "noTitle": "L’élément n’a pas d’enfant qui est un titre",
+        "emptyTitle": "Le titre qui est enfant de cet élément est vide"
+      },
+      "incomplete": "Impossible de déterminer si l’élément a un enfant qui est un titre"
     },
     "caption-faked": {
       "pass": "La première ligne d’un tableau n’est pas utilisée en guise de légende",
@@ -761,6 +931,7 @@
     },
     "td-headers-attr": {
       "pass": "L’attribut headers est utilisé exclusivement pour faire référence à d’autres cellules dans le tableau",
+      "incomplete": "L’attribut headers est vide",
       "fail": "L’attribut headers n’est pas utilisé exclusivement pour faire référence à d’autres cellules dans le tableau"
     },
     "th-has-data-cells": {

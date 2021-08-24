@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.3](https://github.com/dequelabs/axe-core/compare/v4.3.2...v4.3.3) (2021-08-24)
+
+### Bug Fixes
+
+- **aria-allowed-role:** Update allowed roles based on ARIA spec updates ([#3124](https://github.com/dequelabs/axe-core/issues/3124)) ([a1f637f](https://github.com/dequelabs/axe-core/commit/a1f637f3f5ebf0e483fd21865bd2191c24ccb87a))
+- **d.ts:** Add PartialResults type ([#3126](https://github.com/dequelabs/axe-core/issues/3126)) ([5cdaf01](https://github.com/dequelabs/axe-core/commit/5cdaf012a2f09834d8b7e5f3a645a40e61d47ea9))
+- **reporter:** Run inside isolated contexts ([#3129](https://github.com/dequelabs/axe-core/issues/3129)) ([98066f8](https://github.com/dequelabs/axe-core/commit/98066f8864d4ef09b4b3de12456992d3ca3207b4))
+
 ### [4.3.2](https://github.com/dequelabs/axe-core/compare/v4.3.1...v4.3.2) (2021-07-27)
 
 ### Bug Fixes

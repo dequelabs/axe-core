@@ -12,20 +12,17 @@ describe('text.isIconLigature', function() {
 
     var firaFont = new FontFace(
       'Fira Code',
-      'url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.207/distr/woff/FiraCode-Regular.woff)'
+      'url(/test/assets/FiraCode-Regular.woff)'
     );
     var ligatureFont = new FontFace(
       'LigatureSymbols',
-      'url(https://cdn.jsdelivr.net/gh/kudakurage/LigatureSymbols/LigatureSymbols-2.11.woff)'
+      'url(/test/assets/LigatureSymbols.woff)'
     );
     var materialFont = new FontFace(
       'Material Icons',
-      'url(https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2)'
+      'url(/test/assets/MaterialIcons.woff2)'
     );
-    var robotoFont = new FontFace(
-      'Roboto',
-      'url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2)'
-    );
+    var robotoFont = new FontFace('Roboto', 'url(/test/assets/Roboto.woff2)');
 
     window.Promise.all([
       firaFont.load(),
