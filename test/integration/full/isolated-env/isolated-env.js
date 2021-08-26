@@ -39,28 +39,28 @@ describe('isolated-env test', function() {
     if (isIE11) {
       return this.skip();
     }
-      axe.testUtils.awaitNestedLoad(function() {
-        win = fixture.querySelector('#isolated-frame').contentWindow;
-        var focusableFrame = fixture.querySelector('#focusable-iframe');
 
-        // trigger frame-focusable-content rule
-        var iframePromise = focusableFrame.contentWindow.axe.runPartial({
-          include: [],
-          exclude: [],
-          initiator: false,
-          focusable: false,
-          size: { width: 10, height: 10 }
-        });
+    axe.testUtils.awaitNestedLoad(function() {
+      win = fixture.querySelector('#isolated-frame').contentWindow;
+      var focusableFrame = fixture.querySelector('#focusable-iframe');
 
-        var promises = [axe.runPartial(), iframePromise];
-        Promise.all(promises)
-          .then(function(r) {
-            origPartialResults = r;
-            done();
-          })
-          .catch(done);
+      // trigger frame-focusable-content rule
+      var iframePromise = focusableFrame.contentWindow.axe.runPartial({
+        include: [],
+        exclude: [],
+        initiator: false,
+        focusable: false,
+        size: { width: 10, height: 10 }
       });
-    }
+
+      var promises = [axe.runPartial(), iframePromise];
+      Promise.all(promises)
+        .then(function(r) {
+          origPartialResults = r;
+          done();
+        })
+        .catch(done);
+    });
   });
 
   beforeEach(function() {
