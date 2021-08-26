@@ -37,8 +37,8 @@ describe('isolated-env test', function() {
 
   before(function(done) {
     if (isIE11) {
-      this.skip();
-    } else {
+      return this.skip();
+    }
       axe.testUtils.awaitNestedLoad(function() {
         win = fixture.querySelector('#isolated-frame').contentWindow;
         var focusableFrame = fixture.querySelector('#focusable-iframe');
