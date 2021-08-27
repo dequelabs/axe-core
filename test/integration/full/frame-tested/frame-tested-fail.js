@@ -12,9 +12,13 @@ describe('frame-tested-fail test', function() {
           }
         },
         function(err, r) {
-          assert.isNull(err);
-          results = r;
-          done();
+          try {
+            assert.isNull(err);
+            results = r;
+            done();
+          } catch (e) {
+            done(e);
+          }
         }
       );
     });

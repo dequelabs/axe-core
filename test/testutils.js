@@ -429,6 +429,12 @@ testUtils.isIE11 = (function isIE11(navigator) {
 axe.testUtils = testUtils;
 
 if (typeof beforeEach !== 'undefined' && typeof afterEach !== 'undefined') {
+  before(function () {
+    // Make document / window unavailable to after methods
+    console.log(`axe._audit._noGlobalsAfterTest = true`)
+    axe._audit._noGlobalsAfterTest = true;
+  });
+
   beforeEach(function() {
     // reset from axe._load overriding
     checks = originalChecks;
