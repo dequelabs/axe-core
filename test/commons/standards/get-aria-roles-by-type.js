@@ -15,6 +15,10 @@ describe('standards.getAriaRolesByType', function() {
     ariaRoles.caption = { type: 'structure' };
     ariaRoles.cell = { type: 'structure' };
 
+    ariaRoles['doc-biblioentry'] = { type: 'structure' };
+    ariaRoles['doc-endnote'] = { type: 'structure' };
+    ariaRoles['doc-example'] = { type: 'structure' };
+
     axe.configure({
       standards: {
         ariaRoles: ariaRoles
@@ -26,7 +30,10 @@ describe('standards.getAriaRolesByType', function() {
       'article',
       'blockquote',
       'caption',
-      'cell'
+      'cell',
+      'doc-biblioentry',
+      'doc-endnote',
+      'doc-example'
     ]);
   });
 
