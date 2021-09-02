@@ -22,12 +22,12 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
     assert.equal(actual, expected);
   });
 
-  it('returns false for SVG with role alertdialog', function() {
+  it('returns true for SVG with role alertdialog', function() {
     var node = document.createElement('svg');
     var role = 'alertdialog';
     node.setAttribute('role', role);
     flatTreeSetup(node);
-    assert.isFalse(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
+    assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true for OBJECT with role application', function() {
@@ -157,6 +157,38 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
     var node = document.createElement('menu');
     var role = 'navigation';
     node.setAttribute('type', 'context');
+    node.setAttribute('role', role);
+    flatTreeSetup(node);
+    assert.isFalse(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
+  });
+
+  it('returns true when B has role navigation', function() {
+    var node = document.createElement('b');
+    var role = 'navigation';
+    node.setAttribute('role', role);
+    flatTreeSetup(node);
+    assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
+  });
+
+  it('returns true when NAV has role menubar', function() {
+    var node = document.createElement('nav');
+    var role = 'menubar';
+    node.setAttribute('role', role);
+    flatTreeSetup(node);
+    assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
+  });
+
+  it('returns true when NAV has role tablist', function() {
+    var node = document.createElement('nav');
+    var role = 'tablist';
+    node.setAttribute('role', role);
+    flatTreeSetup(node);
+    assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
+  });
+
+  it('returns false when PROGRESS has role button', function() {
+    var node = document.createElement('progress');
+    var role = 'button';
     node.setAttribute('role', role);
     flatTreeSetup(node);
     assert.isFalse(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));

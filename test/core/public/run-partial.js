@@ -129,6 +129,30 @@ describe('axe.runPartial', function() {
     });
   });
 
+  describe('environmentData', function () {
+    it('includes environment data for the initiator', function (done) {
+      var context = {
+        include: ['#fixture']
+      }
+      axe.runPartial(context, { runOnly: 'image-alt' }).then(function(out) {
+        var keys = Object.keys(axe.utils.getEnvironmentData());
+        assert.hasAllKeys(out.environmentData, keys);
+        done();
+      }).catch(done);
+    });
+
+    it('is undefined for frames', function (done) {
+      var context = {
+        include: ['#fixture'],
+        initiator: false
+      }
+      axe.runPartial(context, { runOnly: 'image-alt' }).then(function(out) {
+        assert.isUndefined(out.environmentData);
+        done();
+      }).catch(done);
+    });
+  });
+
   describe('guards', function() {
     var audit = axe._audit;
     afterEach(function() {

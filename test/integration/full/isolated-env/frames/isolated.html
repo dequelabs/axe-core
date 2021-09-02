@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      window
+        .fetch('/axe.js')
+        .then(function(response) {
+          return response.text();
+        })
+        .then(function(axeSource) {
+          // add axe to the "this" object instead of
+          // window so we can ensure window and document
+          // do not exist for after and reporter
+          // functions
+          window.eval(`
+            var win = window;
+            (function() {
+              var window = undefined;
+              var document = undefined;
+
+              ${axeSource}
+
+              win.axeConfigure = this.axe.configure;
+              win.axeFinishRun = this.axe.finishRun;
+            }).call({
+              document: document,
+              getComputedStyle: function () {}
+            });
+          `);
+          window.parent.postMessage('axe-loaded');
+        });
+    </script>
+  </body>
+</html>

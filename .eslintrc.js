@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   extends: ['prettier'],
   parserOptions: {
     ecmaVersion: 2021
@@ -70,6 +71,10 @@ module.exports = {
   overrides: [
     {
       files: ['lib/**/*.js'],
+      excludedFiles: [
+        'lib/core/reporters/**/*.js',
+        'lib/**/*-after.js'
+      ],
       parserOptions: {
         sourceType: 'module'
       },
@@ -81,6 +86,23 @@ module.exports = {
         window: true,
         document: true
       },
+      rules: {
+        'func-names': [2, 'as-needed'],
+        'prefer-const': 2,
+        'no-use-before-define': 'off'
+      }
+    },
+    {
+      // after functions and reporters will not be run inside the same context as axe.run so should not access browser globals that require context specific information (window.location, window.getComputedStyles, etc.)
+      files: [
+        'lib/**/*-after.js',
+        'lib/core/reporters/**/*.js'
+      ],
+      parserOptions: {
+        sourceType: 'module'
+      },
+      env: {},
+      globals: {},
       rules: {
         'func-names': [2, 'as-needed'],
         'prefer-const': 2,
