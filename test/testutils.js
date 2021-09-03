@@ -502,5 +502,5 @@ testUtils.shadowQuerySelector = function shadowQuerySelector(axeSelector, doc) {
   return elm;
 };
 
-// test commit 1 & 3 
+// test commit 1 
 
