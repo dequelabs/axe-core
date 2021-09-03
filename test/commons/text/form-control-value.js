@@ -149,6 +149,17 @@ describe('text.formControlValue', function() {
       assert.equal(nativeSelectValue(target), 'baz');
     });
 
+    it('returns the selected option text after selection', function() {
+      var target = queryFixture(
+        '<select id="target">' +
+          '  <option value="foo" selected>foo</option>' +
+          '  <option value="bar">baz</option>' +
+          '</select>'
+      );
+      target.actualNode.value = 'bar';
+      assert.equal(nativeSelectValue(target), 'baz');
+    });
+
     it('returns multiple options, space seperated', function() {
       // Can't apply multiple "selected" props without setting "multiple"
       var target = queryFixture(
