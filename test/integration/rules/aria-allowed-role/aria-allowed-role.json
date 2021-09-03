@@ -72,7 +72,8 @@
     ["#p-text"],
     ["#pass-graphics-document"],
     ["#pass-graphics-object"],
-    ["#pass-graphics-symbol"]
+    ["#pass-graphics-symbol"],
+    ["#pass-header-banner"]
   ],
   "violations": [
     ["#fail-dd-no-role"],
