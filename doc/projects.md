@@ -54,3 +54,4 @@ Add your project/integration to this file and submit a pull request.
 1. [axe-sarif-converter](https://github.com/microsoft/axe-sarif-converter)
 1. [Selenium.Axe for .NET](https://github.com/TroyWalshProf/SeleniumAxeDotnet)
 1. [vue-axe](https://github.com/vue-a11y/vue-axe-next)
+1. [a11y-sitechecker](https://github.com/forsti0506/a11y-sitechecker)
