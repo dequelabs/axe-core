@@ -144,6 +144,54 @@ describe('aria-errormessage', function() {
     );
   });
 
+  it('should return false when hidden attribute is used', function() {
+    var vNode = queryFixture(
+      '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1"></div>' +
+        '<div id="id-message-1" hidden>Error message 1</div>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-errormessage')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'hidden',
+      values: ['id-message-1']
+    });
+  });
+
+  it('should return false when display: "none" is used', function() {
+    var vNode = queryFixture(
+      '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1"></div>' +
+        '<div id="id-message-1" style="display: none">Error message 1</div>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-errormessage')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'hidden',
+      values: ['id-message-1']
+    });
+  });
+
+  it('should return false when visibility: "hidden" is used', function() {
+    var vNode = queryFixture(
+      '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1"></div>' +
+        '<div id="id-message-1" style="visibility: hidden">Error message 1</div>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-errormessage')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'hidden',
+      values: ['id-message-1']
+    });
+  });
+
   (shadowSupported ? it : xit)(
     'should return undefined if aria-errormessage value crosses shadow boundary',
     function() {
