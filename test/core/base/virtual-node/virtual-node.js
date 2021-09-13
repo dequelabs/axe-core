@@ -39,6 +39,16 @@ describe('VirtualNode', function() {
       assert.equal(vNode.props.type, 'text');
     });
 
+    it('should reflect selected property', function() {
+      node = document.createElement('option');
+      var vNode = new VirtualNode(node);
+      assert.equal(vNode.props.selected, false);
+
+      node.selected = true;
+      vNode = new VirtualNode(node);
+      assert.equal(vNode.props.selected, true);
+    });
+
     it('should lowercase type', function() {
       var node = document.createElement('input');
       node.setAttribute('type', 'COLOR');
