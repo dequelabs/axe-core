@@ -94,6 +94,30 @@ describe('nested-interactive virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
+  it('should pass for element with interactive control with aria-hidden="true"', function() {
+    var node = new axe.SerialVirtualNode({
+      nodeName: 'div',
+      attributes: {
+        role: 'button'
+      }
+    });
+    var child = new axe.SerialVirtualNode({
+      nodeName: 'button',
+      attributes: {
+        'aria-hidden': true,
+        tabindex: -1
+      }
+    });
+    child.children = [];
+    node.children = [child];
+
+    var results = axe.runVirtualRule('nested-interactive', node);
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
   it('should return incomplete if element has undefined children', function() {
     var node = new axe.SerialVirtualNode({
       nodeName: 'button'
