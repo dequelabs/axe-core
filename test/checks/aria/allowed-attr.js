@@ -97,30 +97,72 @@ describe('aria-allowed-attr', function() {
     );
     assert.isNull(checkContext._data);
   });
-  // 4 tests for loop
-  // it.only('should return false when aria-expanded, aria-posinset, aria-setsize and aria-level are used on role=row that descends from a table', function() {
-  //   var vNode = queryFixture(
-  //     ' <div role="table">' +
-  //       '<div  id="target" role="row" aria-expanded="false"></div>' +
-  //       '<div id="row12" role="row" aria-posinset="1"><div role="cell"></div></div>' +
-  //       '<div id="row13" role="row" aria-setsize="10"><div role="cell"></div></div>' +
-  //       '<div id="row14" role="row" aria-level="1"><div role="cell"></div></div>' +
-  //       '</div>'
-  //   );
 
-  //   assert.isFalse(
-  //     axe.testUtils
-  //       .getCheckEvaluate('aria-allowed-attr')
-  //       .call(checkContext, null, null, vNode)
-  //   );
-  // console.log(checkContext._data);
+  [
+    'aria-posinset="1"',
+    'aria-setsize="1"',
+    'aria-expanded="true"',
+    'aria-level="1"'
+  ].forEach(function(attrName) {
+    it(
+      'should return false when ' +
+        attrName +
+        ' is used on role=row thats parent is a table',
+      function() {
+        var vNode = queryFixture(
+          ' <div role="table">' +
+            '<div  id="target" role="row" ' +
+            attrName +
+            '></div>' +
+            '</div>'
+        );
 
-  //   assert.deepEqual(checkContext._data, {
-  //     messageKey: 'table',
-  //     values: ['aria-expanded="false"'],
-  //     roleTable: 'table'
-  //   });
-  // });
+        assert.isFalse(
+          axe.testUtils
+            .getCheckEvaluate('aria-allowed-attr')
+            .call(checkContext, null, null, vNode)
+        );
+        assert.deepEqual(checkContext._data, {
+          messageKey: 'table',
+          values: [attrName],
+          tableRole: 'table'
+        });
+      }
+    );
+  });
+
+  [
+    'aria-posinset="1"',
+    'aria-setsize="1"',
+    'aria-expanded="true"',
+    'aria-level="1"'
+  ].forEach(function(attrName) {
+    it(
+      'should return false when ' +
+        attrName +
+        ' is used on role=row thats parent is a grid',
+      function() {
+        var vNode = queryFixture(
+          ' <div role="grid">' +
+            '<div  id="target" role="row" ' +
+            attrName +
+            '></div>' +
+            '</div>'
+        );
+
+        assert.isFalse(
+          axe.testUtils
+            .getCheckEvaluate('aria-allowed-attr')
+            .call(checkContext, null, null, vNode)
+        );
+        assert.deepEqual(checkContext._data, {
+          messageKey: 'table',
+          values: [attrName],
+          tableRole: 'grid'
+        });
+      }
+    );
+  });
 
   describe('options', function() {
     it('should allow provided attribute names for a role', function() {
