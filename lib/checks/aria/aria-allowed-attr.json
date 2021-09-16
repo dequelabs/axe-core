@@ -8,8 +8,7 @@
       "fail": {
         "singular": "ARIA attribute is not allowed: ${data.values}",
         "plural": "ARIA attributes are not allowed: ${data.values}",
-        "table": "ARIA attributes are not allowed: ${data.values} when a descendant of a table",
-        "grid": "ARIA attributes are not allowed: ${data.values} when a descendant of a grid"
+        "table": "ARIA attributes are not allowed: ${data.values} on role=row when a descendant of ${data.roleTable}"
       }
     }
   }
