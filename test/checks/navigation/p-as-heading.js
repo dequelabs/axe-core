@@ -141,6 +141,26 @@ describe('p-as-heading', function() {
     );
   });
 
+  it('returns true if the heading elm length is greater than the paragraph elm', function() {
+    var params = checkSetup(
+      '<p id="target">elm1elm1</p>' + '<p>elm2</p>',
+      testOptions
+    );
+    assert.isTrue(
+      axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
+    );
+  });
+
+  it('returns false if the heading is 200% shorter than the paragraph ', function() {
+    var params = checkSetup(
+      '<p id="target"><b>el1</b></p>' + '<p>elm2elm2</p>',
+      testOptions
+    );
+    assert.isFalse(
+      axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
+    );
+  });
+
   describe('option.margin', function() {
     it('passes if no margins are set', function() {
       var options = {};
@@ -241,27 +261,6 @@ describe('p-as-heading', function() {
           .apply(checkContext, params)
       );
     });
-  });
-
-  it('returns true if the possible heading is longer than the supposed paragraph', function() {
-    var params = checkSetup(
-      '<p id="target" style="font-size: 24px; font-weight: 400;">The size of possible headling is longer than supposed paragraph</p>' +
-        '<p>maybe</p>',
-      testOptions
-    );
-    assert.isTrue(
-      axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
-    );
-  });
-
-  it('returns undefined if the heading is less than twice as long', function() {
-    var params = checkSetup(
-      '<p id="target">heading</p>' + '<p>headingheadings</p>',
-      testOptions
-    );
-    assert.isUndefined(
-      axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
-    );
   });
 
   (shadowSupported ? it : xit)(
