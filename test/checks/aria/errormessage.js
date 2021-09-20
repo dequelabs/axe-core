@@ -146,7 +146,7 @@ describe('aria-errormessage', function() {
 
   it('should return false when hidden attribute is used', function() {
     var vNode = queryFixture(
-      '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1"></div>' +
+      '<div><input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1"></div>' +
         '<div id="id-message-1" hidden>Error message 1</div>'
     );
     assert.isFalse(
@@ -190,6 +190,18 @@ describe('aria-errormessage', function() {
       messageKey: 'hidden',
       values: ['id-message-1']
     });
+  });
+
+  it('should return true when no hidden functionality is used', function() {
+    var vNode = queryFixture(
+      '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1"></div>' +
+        '<div id="id-message-1" aria-live="assertive">Error message 1</div>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-errormessage')
+        .call(checkContext, null, null, vNode)
+    );
   });
 
   (shadowSupported ? it : xit)(
