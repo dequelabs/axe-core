@@ -146,7 +146,7 @@ describe('aria-errormessage', function() {
 
   it('should return false when hidden attribute is used', function() {
     var vNode = queryFixture(
-      '<div><input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1"></div>' +
+      '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1">' +
         '<div id="id-message-1" hidden>Error message 1</div>'
     );
     assert.isFalse(
@@ -154,6 +154,7 @@ describe('aria-errormessage', function() {
         .getCheckEvaluate('aria-errormessage')
         .call(checkContext, null, null, vNode)
     );
+    console.log(checkContext._data);
     assert.deepEqual(checkContext._data, {
       messageKey: 'hidden',
       values: ['id-message-1']
@@ -162,7 +163,7 @@ describe('aria-errormessage', function() {
 
   it('should return false when display: "none" is used', function() {
     var vNode = queryFixture(
-      '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1"></div>' +
+      '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1">' +
         '<div id="id-message-1" style="display: none">Error message 1</div>'
     );
     assert.isFalse(
@@ -178,7 +179,7 @@ describe('aria-errormessage', function() {
 
   it('should return false when visibility: "hidden" is used', function() {
     var vNode = queryFixture(
-      '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1"></div>' +
+      '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1">' +
         '<div id="id-message-1" style="visibility: hidden">Error message 1</div>'
     );
     assert.isFalse(
@@ -194,7 +195,7 @@ describe('aria-errormessage', function() {
 
   it('should return false when aria-hidden=true is used', function() {
     var vNode = queryFixture(
-      '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1"></div>' +
+      '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1">' +
         '<div id="id-message-1" aria-hidden="true">Error message 1</div>'
     );
     assert.isFalse(
@@ -210,7 +211,7 @@ describe('aria-errormessage', function() {
 
   it('should return true when aria-hidden=false is used', function() {
     var vNode = queryFixture(
-      '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1"></div>' +
+      '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1">' +
         '<div id="id-message-1" aria-live="assertive" aria-hidden="false">Error message 1</div>'
     );
     assert.isTrue(
@@ -222,7 +223,7 @@ describe('aria-errormessage', function() {
 
   it('should return true when no hidden functionality is used', function() {
     var vNode = queryFixture(
-      '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1"></div>' +
+      '<input type="text" id="target" aria-invalid="true" aria-errormessage="id-message-1">' +
         '<div id="id-message-1" aria-live="assertive">Error message 1</div>'
     );
     assert.isTrue(
