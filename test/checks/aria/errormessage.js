@@ -154,7 +154,6 @@ describe('aria-errormessage', function() {
         .getCheckEvaluate('aria-errormessage')
         .call(checkContext, null, null, vNode)
     );
-    console.log(checkContext._data);
     assert.deepEqual(checkContext._data, {
       messageKey: 'hidden',
       values: ['id-message-1']
