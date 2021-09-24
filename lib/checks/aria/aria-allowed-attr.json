@@ -1,6 +1,9 @@
 {
   "id": "aria-allowed-attr",
   "evaluate": "aria-allowed-attr-evaluate",
+  "options": {
+    "ariaAttr": ["aria-posinset", "aria-setsize", "aria-expanded", "aria-level"]
+  },
   "metadata": {
     "impact": "critical",
     "messages": {
