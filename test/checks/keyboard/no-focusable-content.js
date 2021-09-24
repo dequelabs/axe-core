@@ -70,4 +70,26 @@ describe('no-focusable-content tests', function() {
     assert.deepEqual(checkContext._data, { messageKey: 'notHidden' });
     assert.deepEqual(checkContext._relatedNodes, [params[2].children[0]]);
   });
+
+  it('should return true on span with tabindex=-1', function() {
+    var vNode = queryFixture('<span id="target" role="text"> some text '
+        +'<span tabIndex="-1">JavaScript is able to focus this</span> '
+        +'</span>');
+    assert.isTrue(noFocusableContent(null, null, vNode));
+  });
+
+  it('should return true on aria-hidden span with tabindex=-1', function() {
+    var vNode = queryFixture('<span id="target" role="text"> some text '
+        +'<span tabIndex="-1" aria-hidden="true">JavaScript is able to focus this</span> '
+        +'</span>');
+    assert.isTrue(noFocusableContent(null, null, vNode));
+  });
+
+  it('should return false on span with tabindex=0', function() {
+    var vNode = queryFixture('<span id="target" role="text"> some text '
+        +'<span tabIndex="0">anyone is able to focus this</span> '
+        +'</span>');
+    assert.isFalse(noFocusableContent(null, null, vNode));
+  });
+
 });
