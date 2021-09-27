@@ -97,61 +97,92 @@ describe('aria-allowed-attr', function() {
     );
     assert.isNull(checkContext._data);
   });
+  describe('should return false if aria-attributes are invalid for table or a grid', function() {
+    [
+      'aria-posinset="1"',
+      'aria-setsize="1"',
+      'aria-expanded="true"',
+      'aria-level="1"'
+    ].forEach(function(attrName) {
+      it(
+        'should return false when ' +
+          attrName +
+          ' is used on role=row thats parent is a table',
+        function() {
+          var vNode = queryFixture(
+            ' <div role="table">' +
+              '<div  id="target" role="row" ' +
+              attrName +
+              '></div>' +
+              '</div>'
+          );
+          assert.isFalse(
+            axe.testUtils
+              .getCheckEvaluate('aria-allowed-attr')
+              .call(checkContext, null, null, vNode)
+          );
+          assert.isNotNull(checkContext._data);
+        }
+      );
+    });
 
-  [
-    'aria-posinset="1"',
-    'aria-setsize="1"',
-    'aria-expanded="true"',
-    'aria-level="1"'
-  ].forEach(function(attrName) {
-    it(
-      'should return false when ' +
-        attrName +
-        ' is used on role=row thats parent is a table',
-      function() {
-        var vNode = queryFixture(
-          ' <div role="table">' +
-            '<div  id="target" role="row" ' +
-            attrName +
-            '></div>' +
-            '</div>'
-        );
-        assert.isFalse(
-          axe.testUtils
-            .getCheckEvaluate('aria-allowed-attr')
-            .call(checkContext, null, null, vNode)
-        );
-        assert.isNotNull(checkContext._data);
-      }
-    );
-  });
+    [
+      'aria-posinset="1"',
+      'aria-setsize="1"',
+      'aria-expanded="true"',
+      'aria-level="1"'
+    ].forEach(function(attrName) {
+      it(
+        'should return false when ' +
+          attrName +
+          ' is used on role=row thats parent is a grid',
+        function() {
+          var vNode = queryFixture(
+            ' <div role="grid">' +
+              '<div  id="target" role="row" ' +
+              attrName +
+              '></div>' +
+              '</div>'
+          );
+          assert.isFalse(
+            axe.testUtils
+              .getCheckEvaluate('aria-allowed-attr')
+              .call(checkContext, null, null, vNode)
+          );
+          assert.isNotNull(checkContext._data);
+        }
+      );
+    });
 
-  [
-    'aria-posinset="1"',
-    'aria-setsize="1"',
-    'aria-expanded="true"',
-    'aria-level="1"'
-  ].forEach(function(attrName) {
-    it(
-      'should return false when ' +
-        attrName +
-        ' is used on role=row thats parent is a grid',
-      function() {
-        var vNode = queryFixture(
-          ' <div role="grid">' +
-            '<div  id="target" role="row" ' +
-            attrName +
-            '></div>' +
-            '</div>'
-        );
-        assert.isFalse(
-          axe.testUtils
-            .getCheckEvaluate('aria-allowed-attr')
-            .call(checkContext, null, null, vNode)
-        );
-        assert.isNotNull(checkContext._data);
-      }
-    );
+    it('should return false when provided a single aria-attribute is provided ', function() {
+      axe.configure({
+        checks: [
+          {
+            id: 'aria-allowed-attr',
+            options: {
+              ariaAttr: ['aria-posinset']
+            }
+          }
+        ]
+      });
+
+      var options = {
+        ariaAttr: ['aria-posinset']
+      };
+      var vNode = queryFixture(
+        ' <div role="table">' +
+          '<div id="target" role="row" aria-posinset="2"><div role="cell"></div></div>' +
+          '<div id="row23" role="row" aria-setsize="8"><div role="cell"></div></div>' +
+          '<div id="row24" role="row" aria-level="3"><div role="cell"></div></div>' +
+          '</div>'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, options, vNode)
+      );
+    });
   });
 
   describe('options', function() {
