@@ -1,6 +1,6 @@
 # Issue Impacts
 
-axe-core assigns an impact according to our assessment of the likely impact of an issue on a user with a disability that would be affected by this issue.
+Axe-core assigns an impact according to our assessment of the likely impact of an issue on a user with a disability that would be affected by this issue.
 
 In any given context the actual impact for the user could be lower and in some instances, it could be higher.
 
