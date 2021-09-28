@@ -153,12 +153,74 @@ describe('p-as-heading', function() {
 
   it('returns false if the heading is 200% shorter than the paragraph ', function() {
     var params = checkSetup(
-      '<p id="target"><b>el1</b></p>' + '<p>elm2elm2</p>',
+      '<p id="target">el1</p>' + '<p>elm2elm2</p>',
       testOptions
     );
     assert.isFalse(
       axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
     );
+  });
+
+  it('returns undefined if the heading is twice as long but not greater than the length of the pararaph ', function() {
+    var params = checkSetup(
+      '<p id="target">elel</p>' + '<p>elm2elm2</p>',
+      testOptions
+    );
+    assert.isUndefined(
+      axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
+    );
+  });
+  describe('options.lengthThreshold', function() {
+    it('returns true when options.lengthThreshold.headingLength is greater than the paragraph', function() {
+      var options = {
+        lengthThreshold: {
+          headingLength: ['3']
+        }
+      };
+      var params = checkSetup(
+        '<p id="target">elm2</p>' + '<p>elm2elm2/p>',
+        options
+      );
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('p-as-heading')
+          .apply(checkContext, params)
+      );
+    });
+
+    it('returns false when options.lengthThreshold.headingLength 200% shorter than the paragraph', function() {
+      var options = {
+        lengthThreshold: {
+          headingLength: ['2']
+        }
+      };
+      var params = checkSetup(
+        '<p id="target">el</p>' + '<p>elm2elm2elm2elm2</p>',
+        options
+      );
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('p-as-heading')
+          .apply(checkContext, params)
+      );
+    });
+
+    it('returns undefined when options.lengthThreshold.headingLength is twice as long but not greater than the paragraph', function() {
+      var options = {
+        lengthThreshold: {
+          headingLength: ['2']
+        }
+      };
+      var params = checkSetup(
+        '<p id="target">el</p>' + '<p>elm2elm2</p>',
+        options
+      );
+      assert.isUndefined(
+        axe.testUtils
+          .getCheckEvaluate('p-as-heading')
+          .apply(checkContext, params)
+      );
+    });
   });
 
   describe('option.margin', function() {
