@@ -97,7 +97,7 @@ describe('aria-allowed-attr', function() {
     );
     assert.isNull(checkContext._data);
   });
-  describe('should return false if aria-attributes are invalid for table or a grid', function() {
+  describe('invalid aria-attributes when used on role=row as a descendant of a table or a grid', function() {
     [
       'aria-posinset="1"',
       'aria-setsize="1"',
@@ -153,27 +153,27 @@ describe('aria-allowed-attr', function() {
         }
       );
     });
+  });
 
-    it('should return false when provided a single aria-attribute is provided ', function() {
+  describe('options.invalidRowAttrs on role=row when a descendant of a table or a grid', function() {
+    it('should return false when provided a single aria-attribute is provided for a table', function() {
       axe.configure({
         checks: [
           {
             id: 'aria-allowed-attr',
             options: {
-              ariaAttr: ['aria-posinset']
+              invalidRowAttrs: ['aria-posinset']
             }
           }
         ]
       });
 
       var options = {
-        ariaAttr: ['aria-posinset']
+        invalidRowAttrs: ['aria-posinset']
       };
       var vNode = queryFixture(
         ' <div role="table">' +
           '<div id="target" role="row" aria-posinset="2"><div role="cell"></div></div>' +
-          '<div id="row23" role="row" aria-setsize="8"><div role="cell"></div></div>' +
-          '<div id="row24" role="row" aria-level="3"><div role="cell"></div></div>' +
           '</div>'
       );
 
@@ -182,6 +182,36 @@ describe('aria-allowed-attr', function() {
           .getCheckEvaluate('aria-allowed-attr')
           .call(checkContext, null, options, vNode)
       );
+      assert.isNotNull(checkContext._data);
+    });
+
+    it('should return false when provided a single aria-attribute is provided for a grid', function() {
+      axe.configure({
+        checks: [
+          {
+            id: 'aria-allowed-attr',
+            options: {
+              invalidRowAttrs: ['aria-posinset']
+            }
+          }
+        ]
+      });
+
+      var options = {
+        invalidRowAttrs: ['aria-level']
+      };
+      var vNode = queryFixture(
+        ' <div role="grid">' +
+          '<div id="target" role="row" aria-level="2"><div role="gridcell"></div></div>' +
+          '</div>'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, options, vNode)
+      );
+      assert.isNotNull(checkContext._data);
     });
   });
 
