@@ -1,7 +1,7 @@
 var path = require('path');
 var assert = require('chai').assert;
 var glob = require('glob');
-var axe = require(path.join(__dirname, '../axe'));
+var axe = require('../axe');
 
 var files = glob.sync(path.join(__dirname, 'integration/virtual-rules/*.js'));
 
