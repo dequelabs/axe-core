@@ -129,6 +129,16 @@ jobs:
       - run: npm run build
       - run: npm run test:locales
 
+  # Test virtual rules
+  test_virtual_rules:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      - run: npm run test:virtual-rules
+
   # Run the test suite for nightly builds.
   test_nightly:
     <<: *defaults
@@ -262,6 +272,9 @@ workflows:
       - test_locales:
           requires:
             - test_unix
+      - test_virtual_rules:
+          requires:
+            - test_unix
       - build_api_docs:
           requires:
             - test_unix
@@ -279,6 +292,7 @@ workflows:
             - test_win
             - test_examples
             - test_locales
+            - test_virtual_rules
             - build_api_docs
             - test_rule_help_version
             - test_node
@@ -293,6 +307,7 @@ workflows:
             - test_unix
             - test_examples
             - test_locales
+            - test_virtual_rules
             - build_api_docs
           filters:
             branches:
@@ -304,6 +319,7 @@ workflows:
             - test_unix
             - test_examples
             - test_locales
+            - test_virtual_rules
             - build_api_docs
             - test_rule_help_version
             - test_node
