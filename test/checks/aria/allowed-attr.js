@@ -191,7 +191,7 @@ describe('aria-allowed-attr', function() {
           {
             id: 'aria-allowed-attr',
             options: {
-              invalidRowAttrs: ['aria-posinset']
+              invalidRowAttrs: ['aria-level']
             }
           }
         ]
