@@ -212,7 +212,7 @@ All checks allow these global options:
   <tbody>
     <tr>
       <td>
-        <code>invalidRowAttrs</code>
+        <code>validTreeRowAttrs</code>
       </td>
       <td align="left">
         <pre lang=js><code>[

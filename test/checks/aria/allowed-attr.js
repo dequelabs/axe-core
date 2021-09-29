@@ -162,14 +162,14 @@ describe('aria-allowed-attr', function() {
           {
             id: 'aria-allowed-attr',
             options: {
-              invalidRowAttrs: ['aria-posinset']
+              validTreeRowAttrs: ['aria-posinset']
             }
           }
         ]
       });
 
       var options = {
-        invalidRowAttrs: ['aria-posinset']
+        validTreeRowAttrs: ['aria-posinset']
       };
       var vNode = queryFixture(
         ' <div role="table">' +
@@ -191,14 +191,14 @@ describe('aria-allowed-attr', function() {
           {
             id: 'aria-allowed-attr',
             options: {
-              invalidRowAttrs: ['aria-level']
+              validTreeRowAttrs: ['aria-level']
             }
           }
         ]
       });
 
       var options = {
-        invalidRowAttrs: ['aria-level']
+        validTreeRowAttrs: ['aria-level']
       };
       var vNode = queryFixture(
         ' <div role="grid">' +

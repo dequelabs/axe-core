@@ -2,7 +2,7 @@
   "id": "aria-allowed-attr",
   "evaluate": "aria-allowed-attr-evaluate",
   "options": {
-    "invalidRowAttrs": [
+    "validTreeRowAttrs": [
       "aria-posinset",
       "aria-setsize",
       "aria-expanded",
