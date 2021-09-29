@@ -8,6 +8,6 @@
     "help": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements"
   },
   "all": [],
-  "any": [],
-  "none": ["only-listitems"]
+  "any": ["only-listitems"],
+  "none": []
 }

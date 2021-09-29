@@ -412,7 +412,26 @@ testUtils.getCheckEvaluate = function getCheckEvaluate(checkId) {
   var check = checks[checkId];
   return function evaluateWrapper(node, options, virtualNode, context) {
     var opts = check.getOptions(options);
-    return check.evaluate.call(this, node, opts, virtualNode, context);
+    var result = check.evaluate.call(this, node, opts, virtualNode, context);
+
+    // ensure that every result has a corresponding message
+    var messages = axe._audit.data.checks[checkId].messages;
+    var messageKey = this._data && this._data.messageKey;
+    var key =
+      result === true ? 'pass' : result === false ? 'fail' : 'incomplete';
+
+    assert.exists(
+      messages[key],
+      'Missing "' + key + '" message for check result of ' + result
+    );
+    if (messageKey) {
+      assert.exists(
+        messages[key][messageKey],
+        'Missing message key "' + messageKey + '" for check result of ' + result
+      );
+    }
+
+    return result;
   };
 };
 
