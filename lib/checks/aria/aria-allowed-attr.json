@@ -1,6 +1,14 @@
 {
   "id": "aria-allowed-attr",
   "evaluate": "aria-allowed-attr-evaluate",
+  "options": {
+    "validTreeRowAttrs": [
+      "aria-posinset",
+      "aria-setsize",
+      "aria-expanded",
+      "aria-level"
+    ]
+  },
   "metadata": {
     "impact": "critical",
     "messages": {
