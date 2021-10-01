@@ -36,7 +36,7 @@ describe('p-as-heading', function() {
 
   it('returns false if the font-weight is heavier', function() {
     var params = checkSetup(
-      '<p id="target" style="font-weight:bold">elm 1</p>' + '<p>elm 2</p>',
+      '<p id="target" style="font-weight:bold">elm 1</p>' + '<p>elm 2elm 2</p>',
       testOptions
     );
     assert.isFalse(
@@ -46,7 +46,7 @@ describe('p-as-heading', function() {
 
   it('returns false if the font-size is bigger', function() {
     var params = checkSetup(
-      '<p id="target" style="font-size:150%">elm 1</p> <p>elm 2</p>',
+      '<p id="target" style="font-size:150%">elm 1</p> <p>elm 2elm 2</p>',
       testOptions
     );
     assert.isFalse(
@@ -56,7 +56,7 @@ describe('p-as-heading', function() {
 
   it('returns false if the fake heading is italic and the text is not', function() {
     var params = checkSetup(
-      '<p id="target" style="font-style:italic">elm 1</p> <p>elm 2</p>',
+      '<p id="target" style="font-style:italic">elm 1</p> <p>elm 2elm 2</p>',
       testOptions
     );
     assert.isFalse(
@@ -67,7 +67,7 @@ describe('p-as-heading', function() {
   it('returns true if both texts are bold, italic and larger', function() {
     var params = checkSetup(
       '<p id="target" style="font-weight:bold; font-size:120%; font-style:italic">elm 1</p>' +
-        '<p style="font: italic bold 120% bold">elm 2</p>',
+        '<p style="font: italic bold 120% bold">elm 2elm 2</p>',
       testOptions
     );
     assert.isTrue(
@@ -77,7 +77,7 @@ describe('p-as-heading', function() {
 
   it('considers styles of elements inside the paragraph', function() {
     var params = checkSetup(
-      '<p id="target"><b>elm 1</b></p> <p>elm 2</p>',
+      '<p id="target"><b>elm 1</b></p> <p>elm 2elm 2</p>',
       testOptions
     );
     assert.isFalse(
@@ -87,7 +87,7 @@ describe('p-as-heading', function() {
 
   it('ignores empty child element for style', function() {
     var params = checkSetup(
-      '<p id="target"><span> </span><b>elm 1</b></p> <p>elm 2</p>',
+      '<p id="target"><span> </span><b>elm 1</b></p> <p>elm 2elm 2</p>',
       testOptions
     );
     assert.isFalse(
@@ -97,7 +97,7 @@ describe('p-as-heading', function() {
 
   it('considers styles of elements that do not contain all the text', function() {
     var params = checkSetup(
-      '<p id="target"><b>elm</b> 1</p> <p>elm 2</p>',
+      '<p id="target"><b>elm</b> 1</p> <p>elm 2elm 2</p>',
       testOptions
     );
     assert.isTrue(
@@ -108,7 +108,7 @@ describe('p-as-heading', function() {
   it('returns undefined instead of false if the element is inside a blockquote', function() {
     var params = checkSetup(
       '<blockquote>' +
-        '<p style="font-weight:bold" id="target">elm 1</p> <p>elm 2</p>' +
+        '<p style="font-weight:bold" id="target">elm 1</p> <p>elm 2elm 2</p>' +
         '</blockquote>',
       testOptions
     );
@@ -120,7 +120,7 @@ describe('p-as-heading', function() {
   it('returns true over undefined from within a blockquote', function() {
     var params = checkSetup(
       '<blockquote>' +
-        '<p id="target">elm 1</p> <p>elm 2</p>' +
+        '<p id="target">elm 1</p> <p>elm 2elm 2</p>' +
         '</blockquote>',
       testOptions
     );
@@ -141,7 +141,7 @@ describe('p-as-heading', function() {
     );
   });
 
-  it('returns true if the heading elm length is greater than the paragraph elm', function() {
+  it('returns true if the heading is greater than the paragraph', function() {
     var params = checkSetup(
       '<p id="target">elm1elm1</p>' + '<p>elm2</p>',
       testOptions
@@ -151,34 +151,25 @@ describe('p-as-heading', function() {
     );
   });
 
-  it('returns false if the heading is 200% shorter than the paragraph ', function() {
+  it('returns undefined if the heading is twice as long but not greater than the length of the pararaph', function() {
     var params = checkSetup(
-      '<p id="target">el1</p>' + '<p>elm2elm2</p>',
-      testOptions
-    );
-    assert.isFalse(
-      axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
-    );
-  });
-
-  it('returns undefined if the heading is twice as long but not greater than the length of the pararaph ', function() {
-    var params = checkSetup(
-      '<p id="target">elel</p>' + '<p>elm2elm2</p>',
+      '<p id="target" style="font-weight:bold">elm1elm</p>' + '<p>elm2elm2</p>',
       testOptions
     );
     assert.isUndefined(
       axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
     );
   });
-  describe('options.lengthThreshold', function() {
-    it('returns true when options.lengthThreshold.headingLength is greater than the paragraph', function() {
+
+  describe('options.passLength and options.failLength', function() {
+    it('returns true if the heading is greater than the paragraph using options.passLength', function() {
       var options = {
-        lengthThreshold: {
-          headingLength: ['3']
-        }
+        margins: [{ weight: 100 }, { italic: true }, { size: 1.2 }],
+        passLength: 2
       };
+
       var params = checkSetup(
-        '<p id="target">elm2</p>' + '<p>elm2elm2/p>',
+        '<p id="target">elm1elm1elm1</p>' + '<p>elm2</p>',
         options
       );
       assert.isTrue(
@@ -188,34 +179,17 @@ describe('p-as-heading', function() {
       );
     });
 
-    it('returns false when options.lengthThreshold.headingLength 200% shorter than the paragraph', function() {
+    it('returns undefined if the heading is twice as long but not greater than the length of the pararaph using options.failLength ', function() {
       var options = {
-        lengthThreshold: {
-          headingLength: ['2']
-        }
+        margins: [{ weight: 100 }, { italic: true }, { size: 1.2 }],
+        failLength: 0.6
       };
       var params = checkSetup(
-        '<p id="target">el</p>' + '<p>elm2elm2elm2elm2</p>',
+        '<p id="target" style="font-weight:bold">elm1elm</p>' +
+          '<p>elm2elm2elm2</p>',
         options
       );
       assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('p-as-heading')
-          .apply(checkContext, params)
-      );
-    });
-
-    it('returns undefined when options.lengthThreshold.headingLength is twice as long but not greater than the paragraph', function() {
-      var options = {
-        lengthThreshold: {
-          headingLength: ['2']
-        }
-      };
-      var params = checkSetup(
-        '<p id="target">el</p>' + '<p>elm2elm2</p>',
-        options
-      );
-      assert.isUndefined(
         axe.testUtils
           .getCheckEvaluate('p-as-heading')
           .apply(checkContext, params)
@@ -228,7 +202,7 @@ describe('p-as-heading', function() {
       var options = {};
 
       var params = checkSetup(
-        '<p id="target"><b>elm 1</b></p> <p>elm 2</p>',
+        '<p id="target"><b>elm 1</b></p> <p>elm 2elm 2</p>',
         options
       );
       assert.isTrue(
@@ -244,7 +218,7 @@ describe('p-as-heading', function() {
       };
 
       var params = checkSetup(
-        '<p id="target"><b>elm 1</b></p> <p>elm 2</p>',
+        '<p id="target"><b>elm 1</b></p> <p>elm 2elm 2</p>',
         options
       );
       assert.isTrue(
@@ -261,7 +235,7 @@ describe('p-as-heading', function() {
 
       var params = checkSetup(
         '<p id="target" style="font-size:1.5em; font-weight:bold">elm 1</p>' +
-          '<p>elm 2</p>',
+          '<p>elm 2elm 2</p>',
         options
       );
       assert.isFalse(
@@ -293,7 +267,8 @@ describe('p-as-heading', function() {
       };
 
       var params = checkSetup(
-        '<p id="target" style="font-style:italic">elm 1</p>' + '<p>elm 2</p>',
+        '<p id="target" style="font-style:italic">elm 1</p>' +
+          '<p>elm 2elm 2</p>',
         options
       );
       assert.isFalse(

@@ -19,10 +19,8 @@
         "size": 1.4
       }
     ],
-    "lengthThreshold": {
-      "headingLength": ["1"],
-      "paragraphLength": ["1"]
-    }
+    "passLength": 1,
+    "failLength": 0.5
   },
   "metadata": {
     "impact": "serious",
