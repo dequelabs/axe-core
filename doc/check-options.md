@@ -432,7 +432,7 @@ h6:not([role]),
       <td align="left">
         <pre lang=js><code>"failLength": 0.5</code></pre>
         </td>
-      <td align="left">Invalid length used to check if a paragraph element is being used as a heading</td>
+      <td align="left">Relative length, if the the candidate heading is X times or less the length of the candidate paragraph, it can fail.</td>
       </tr>
   </tbody>
 </table>
