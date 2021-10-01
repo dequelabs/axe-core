@@ -199,6 +199,34 @@ All checks allow these global options:
   </tbody>
 </table>
 
+### aria-allowed-attr
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th align="left">Default</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>validTreeRowAttrs</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>[
+  'aria-posinset',
+  'aria-setsize',
+  'aria-expanded',
+  'aria-level',
+]</code></pre>
+        </td>
+      <td align="left">List of ARIA attributes that are not allowed on <code>role=row</code> when a descendant of a table or a grid</td>
+    </tr>
+  </tbody>
+</table>
+
 ### color-contrast
 
 | Option                                                      | Default | Description                                                                                                                                                                                  |
