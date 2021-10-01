@@ -261,6 +261,14 @@ describe('dom.isVisible', function() {
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
+    it('should return false for 0 width scrollable region', function() {
+      fixture.innerHTML =
+        '<div style="overflow: scroll; width: 0"><div id="target">Hello!</div></div>';
+      var el = document.getElementById('target');
+
+      assert.isFalse(axe.commons.dom.isVisible(el));
+    });
+
     it('returns false for `AREA` without closest `MAP` element', function() {
       var vNode = queryFixture(
         '<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>'
