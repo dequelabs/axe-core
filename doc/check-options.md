@@ -415,8 +415,25 @@ h6:not([role]),
   { "size": 1.4 }
 ]</code></pre>
         </td>
-      <td align="left">Common CSS values used to display `p` elements as `h1-h6` elements determining if a `p` element is being improperly repurposed</td>
     </tr>
+    <tr>
+     <td>
+        <code>passLength</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>"passLength": 1</code></pre>
+        </td>
+      <td align="left">Valid length used to check if a paragraph element is not being used as a heading</td>
+      </tr>
+       <tr>
+     <td>
+        <code>faiLength</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>"failLength": 0.5</code></pre>
+        </td>
+      <td align="left">Invalid length used to check if a paragraph element is being used as a heading</td>
+      </tr>
   </tbody>
 </table>
 
