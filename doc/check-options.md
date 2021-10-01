@@ -423,7 +423,7 @@ h6:not([role]),
       <td align="left">
         <pre lang=js><code>"passLength": 1</code></pre>
         </td>
-      <td align="left">Valid length used to check if a paragraph element is not being used as a heading</td>
+      <td align="left">Relative length, if the the candidate heading is X times or greater the length of the candidate paragraph, it will pass.</td>
       </tr>
        <tr>
      <td>
