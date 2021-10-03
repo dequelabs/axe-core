@@ -97,6 +97,123 @@ describe('aria-allowed-attr', function() {
     );
     assert.isNull(checkContext._data);
   });
+  describe('invalid aria-attributes when used on role=row as a descendant of a table or a grid', function() {
+    [
+      'aria-posinset="1"',
+      'aria-setsize="1"',
+      'aria-expanded="true"',
+      'aria-level="1"'
+    ].forEach(function(attrName) {
+      it(
+        'should return false when ' +
+          attrName +
+          ' is used on role=row thats parent is a table',
+        function() {
+          var vNode = queryFixture(
+            ' <div role="table">' +
+              '<div  id="target" role="row" ' +
+              attrName +
+              '></div>' +
+              '</div>'
+          );
+          assert.isFalse(
+            axe.testUtils
+              .getCheckEvaluate('aria-allowed-attr')
+              .call(checkContext, null, null, vNode)
+          );
+          assert.isNotNull(checkContext._data);
+        }
+      );
+    });
+
+    [
+      'aria-posinset="1"',
+      'aria-setsize="1"',
+      'aria-expanded="true"',
+      'aria-level="1"'
+    ].forEach(function(attrName) {
+      it(
+        'should return false when ' +
+          attrName +
+          ' is used on role=row thats parent is a grid',
+        function() {
+          var vNode = queryFixture(
+            ' <div role="grid">' +
+              '<div  id="target" role="row" ' +
+              attrName +
+              '></div>' +
+              '</div>'
+          );
+          assert.isFalse(
+            axe.testUtils
+              .getCheckEvaluate('aria-allowed-attr')
+              .call(checkContext, null, null, vNode)
+          );
+          assert.isNotNull(checkContext._data);
+        }
+      );
+    });
+  });
+
+  describe('options.invalidRowAttrs on role=row when a descendant of a table or a grid', function() {
+    it('should return false when provided a single aria-attribute is provided for a table', function() {
+      axe.configure({
+        checks: [
+          {
+            id: 'aria-allowed-attr',
+            options: {
+              validTreeRowAttrs: ['aria-posinset']
+            }
+          }
+        ]
+      });
+
+      var options = {
+        validTreeRowAttrs: ['aria-posinset']
+      };
+      var vNode = queryFixture(
+        ' <div role="table">' +
+          '<div id="target" role="row" aria-posinset="2"><div role="cell"></div></div>' +
+          '</div>'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, options, vNode)
+      );
+      assert.isNotNull(checkContext._data);
+    });
+
+    it('should return false when provided a single aria-attribute is provided for a grid', function() {
+      axe.configure({
+        checks: [
+          {
+            id: 'aria-allowed-attr',
+            options: {
+              validTreeRowAttrs: ['aria-level']
+            }
+          }
+        ]
+      });
+
+      var options = {
+        validTreeRowAttrs: ['aria-level']
+      };
+      var vNode = queryFixture(
+        ' <div role="grid">' +
+          '<div id="target" role="row" aria-level="2"><div role="gridcell"></div></div>' +
+          '</div>'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, options, vNode)
+      );
+      assert.isNotNull(checkContext._data);
+    });
+  });
 
   describe('options', function() {
     it('should allow provided attribute names for a role', function() {
