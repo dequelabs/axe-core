@@ -8,6 +8,6 @@
     "help": "Interactive controls must not be nested"
   },
   "all": [],
-  "any": ["no-focusable-content"],
+  "any": ["no-focusable-content-for-nested-interactive"],
   "none": []
 }
