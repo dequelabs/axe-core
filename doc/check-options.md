@@ -443,6 +443,7 @@ h6:not([role]),
   { "size": 1.4 }
 ]</code></pre>
         </td>
+      <td align="left">Common CSS values used to display `p` elements as `h1-h6` elements determining if a `p` element is being improperly repurposed</td>
     </tr>
     <tr>
      <td>
