@@ -23,7 +23,7 @@ describe('non-empty-if-present', function() {
 
     assert.isFalse(
       axe.testUtils
-        .getCheckEvaluate('non-empty-if-present')
+        .getCheckEvaluate('non-empty-if-present', { verifyMessage: false })
         .call(checkContext, null, {}, vNode)
     );
     assert.equal(checkContext._data.messageKey, 'has-label');

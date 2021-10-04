@@ -25,6 +25,30 @@ if (!fixture) {
   document.body.insertBefore(fixture, document.body.firstChild);
 }
 
+// determine which checks are used only in the `none` array of rules
+var noneChecks = [];
+
+function verifyIsNoneCheck(check) {
+  var index = noneChecks.indexOf(check);
+  if (index !== -1) {
+    noneChecks.splice(index, 1);
+  }
+}
+
+axe._audit.rules.forEach(function(rule) {
+  rule.none.forEach(function(check) {
+    check = check.id || check;
+    if (noneChecks.indexOf(check) === -1) {
+      noneChecks.push(check);
+    }
+  });
+});
+
+axe._audit.rules.forEach(function(rule) {
+  rule.any.forEach(verifyIsNoneCheck);
+  rule.all.forEach(verifyIsNoneCheck);
+});
+
 /**
  * Create a check context for mocking/resetting data and relatedNodes in tests
  *
@@ -408,27 +432,58 @@ testUtils.queryFixture = function queryFixture(html, query) {
  * @param {String} checkId - ID of the check
  * @return Function
  */
-testUtils.getCheckEvaluate = function getCheckEvaluate(checkId) {
+testUtils.getCheckEvaluate = function getCheckEvaluate(checkId, testOptions) {
   var check = checks[checkId];
+  testOptions = testOptions || {};
+
   return function evaluateWrapper(node, options, virtualNode, context) {
     var opts = check.getOptions(options);
     var result = check.evaluate.call(this, node, opts, virtualNode, context);
 
     // ensure that every result has a corresponding message
-    var messages = axe._audit.data.checks[checkId].messages;
-    var messageKey = this._data && this._data.messageKey;
-    var key =
-      result === true ? 'pass' : result === false ? 'fail' : 'incomplete';
+    if (testOptions.verifyMessage !== false) {
+      var messages = axe._audit.data.checks[checkId].messages;
+      var messageKey = this._data && this._data.messageKey;
 
-    assert.exists(
-      messages[key],
-      'Missing "' + key + '" message for check result of ' + result
-    );
-    if (messageKey) {
+      // see how the check is used to know where to find the message
+      // e.g. a check used only in the `none` array of a rule will look at
+      // the messageKey of a passing result in the `fail` messages
+      var keyResult = result;
+      var isNoneCheck = noneChecks.indexOf(checkId) !== -1;
+      if (isNoneCheck) {
+        keyResult = result === true ? false : result === false ? true : result;
+      }
+
+      var key =
+        keyResult === true
+          ? 'pass'
+          : keyResult === false
+          ? 'fail'
+          : 'incomplete';
+      var noneCheckMessage = isNoneCheck
+        ? '. Note that since this check is only used in the "none" array of all rules, the messages use the inverse of the result (e.g. a result of false uses the "pass" messages'
+        : '';
+
       assert.exists(
-        messages[key][messageKey],
-        'Missing message key "' + messageKey + '" for check result of ' + result
+        messages[key],
+        'Missing "' +
+          key +
+          '" message for check result of ' +
+          result +
+          noneCheckMessage
       );
+      if (messageKey) {
+        assert.exists(
+          messages[key][messageKey],
+          'Missing ' +
+            key +
+            ' message key "' +
+            messageKey +
+            '" for check result of ' +
+            result +
+            noneCheckMessage
+        );
+      }
     }
 
     return result;
