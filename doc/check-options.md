@@ -199,6 +199,34 @@ All checks allow these global options:
   </tbody>
 </table>
 
+### aria-allowed-attr
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th align="left">Default</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>validTreeRowAttrs</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>[
+  'aria-posinset',
+  'aria-setsize',
+  'aria-expanded',
+  'aria-level',
+]</code></pre>
+        </td>
+      <td align="left">List of ARIA attributes that are not allowed on <code>role=row</code> when a descendant of a table or a grid</td>
+    </tr>
+  </tbody>
+</table>
+
 ### color-contrast
 
 | Option                                                      | Default | Description                                                                                                                                                                                  |
@@ -415,8 +443,25 @@ h6:not([role]),
   { "size": 1.4 }
 ]</code></pre>
         </td>
-      <td align="left">Common CSS values used to display `p` elements as `h1-h6` elements determining if a `p` element is being improperly repurposed</td>
     </tr>
+    <tr>
+     <td>
+        <code>passLength</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>"passLength": 1</code></pre>
+        </td>
+      <td align="left">Relative length, if the the candidate heading is X times or greater the length of the candidate paragraph, it will pass.</td>
+      </tr>
+       <tr>
+     <td>
+        <code>faiLength</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>"failLength": 0.5</code></pre>
+        </td>
+      <td align="left">Relative length, if the the candidate heading is X times or less the length of the candidate paragraph, it can fail.</td>
+      </tr>
   </tbody>
 </table>
 
