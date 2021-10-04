@@ -461,7 +461,7 @@ testUtils.getCheckEvaluate = function getCheckEvaluate(checkId, testOptions) {
           ? 'fail'
           : 'incomplete';
       var noneCheckMessage = isNoneCheck
-        ? '. Note that since this check is only used in the "none" array of all rules, the messages use the inverse of the result (e.g. a result of false uses the "pass" messages'
+        ? '. Note that since this check is only used in the "none" array of all rules, the messages use the inverse of the result (e.g. a result of false uses the "pass" messages)'
         : '';
 
       assert.exists(
