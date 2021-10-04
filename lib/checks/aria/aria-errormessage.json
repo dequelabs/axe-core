@@ -13,7 +13,7 @@
       "incomplete": {
         "singular": "ensure aria-errormessage value `${data.values}` references an existing element",
         "plural": "ensure aria-errormessage values `${data.values}` reference existing elements",
-        "idrefs": "Unable to determine if ARIA attribute element ID exists on the page: `${data.values}`"
+        "idrefs": "unable to determine if aria-errormessage element exists on the page: ${data.values}"
       }
     }
   }

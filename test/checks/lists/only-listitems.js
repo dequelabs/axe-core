@@ -151,7 +151,7 @@ describe('only-listitems', function() {
     );
     assert.isTrue(
       axe.testUtils
-        .getCheckEvaluate('only-listitems', { verifyMessage: false })
+        .getCheckEvaluate('only-listitems')
         .apply(checkContext, checkArgs)
     );
     assert.deepEqual(checkContext._data, {
@@ -171,7 +171,7 @@ describe('only-listitems', function() {
 
     assert.isTrue(
       axe.testUtils
-        .getCheckEvaluate('only-listitems', { verifyMessage: false })
+        .getCheckEvaluate('only-listitems')
         .apply(checkContext, checkArgs)
     );
   });
