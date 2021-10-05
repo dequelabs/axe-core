@@ -4,7 +4,7 @@
   "matches": "label-matches",
   "tags": ["cat.forms", "best-practice"],
   "metadata": {
-    "description": "Ensures that every form element is not solely labeled using the title or aria-describedby attributes",
+    "description": "Ensures that every form element has a visible label and is not solely labeled using hidden labels, or the title or aria-describedby attributes",
     "help": "Form elements should have a visible label"
   },
   "all": [],
