@@ -9,7 +9,8 @@ describe('color-contrast blending test', function() {
     'rgb(179, 38, 0)',
     'rgb(179, 0, 77)',
     'rgb(143, 192, 80)',
-    'rgb(147, 153, 119)'
+    'rgb(147, 153, 119)',
+    'rgb(221, 221, 221)'
   ];
   var testElms = document.querySelectorAll('#fixture > div');
   testElms.forEach(function(testElm) {
