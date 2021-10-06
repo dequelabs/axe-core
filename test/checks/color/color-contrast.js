@@ -358,13 +358,55 @@ describe('color-contrast', function() {
     );
   });
 
-  describe('with pseudo elements', function () {
+  it('should not error if client rects do not fill entire bounding rect', function() {
+    var params = checkSetup(
+      '<pre style="overflow-x: auto; background-color: #333"><span id="target" style="color: #000">' +
+        '\nx x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x ' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\nx' +
+        '\n</span></pre>'
+    );
+    assert.doesNotThrow(function() {
+      contrastEvaluate.apply(checkContext, params);
+    });
+  });
+
+  describe('with pseudo elements', function() {
     it('should return undefined if :before pseudo element has a background color', function() {
       var params = checkSetup(
         '<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 100%; height: 100%; background: red; }</style>' +
           '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
       );
-  
+
       assert.isUndefined(contrastEvaluate.apply(checkContext, params));
       assert.deepEqual(checkContext._data, {
         messageKey: 'pseudoContent'
@@ -374,13 +416,13 @@ describe('color-contrast', function() {
         document.querySelector('#background')
       );
     });
-  
+
     it('should return undefined if :after pseudo element has a background color', function() {
       var params = checkSetup(
         '<style>.foo { position: relative; } .foo:after { content: ""; position: absolute; width: 100%; height: 100%; background: red; }</style>' +
           '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
       );
-  
+
       assert.isUndefined(contrastEvaluate.apply(checkContext, params));
       assert.deepEqual(checkContext._data, {
         messageKey: 'pseudoContent'
@@ -390,21 +432,21 @@ describe('color-contrast', function() {
         document.querySelector('#background')
       );
     });
-  
+
     it('should return undefined if pseudo element has a background image', function() {
       var dataURI =
         'data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/' +
         'XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkA' +
         'ABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKU' +
         'E1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7';
-  
+
       var params = checkSetup(
         '<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 100%; height: 100%; background: url(' +
           dataURI +
           ') no-repeat left center; }</style>' +
           '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
       );
-  
+
       assert.isUndefined(contrastEvaluate.apply(checkContext, params));
       assert.deepEqual(checkContext._data, {
         messageKey: 'pseudoContent'
@@ -414,62 +456,62 @@ describe('color-contrast', function() {
         document.querySelector('#background')
       );
     });
-  
+
     it('should not return undefined if pseudo element has no content', function() {
       var params = checkSetup(
         '<style>.foo { position: relative; } .foo:before { position: absolute; width: 100%; height: 100%; background: red; }</style>' +
           '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
       );
-  
+
       assert.isTrue(contrastEvaluate.apply(checkContext, params));
     });
-  
+
     it('should not return undefined if pseudo element is not absolutely positioned no content', function() {
       var params = checkSetup(
         '<style>.foo { position: relative; } .foo:before { content: ""; width: 100%; height: 100%; background: red; }</style>' +
           '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
       );
-  
+
       assert.isTrue(contrastEvaluate.apply(checkContext, params));
     });
-  
+
     it('should not return undefined if pseudo element is has zero dimension', function() {
       var params = checkSetup(
         '<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 0; height: 100%; background: red; }</style>' +
           '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
       );
-  
+
       assert.isTrue(contrastEvaluate.apply(checkContext, params));
     });
-  
+
     it("should not return undefined if pseudo element doesn't have a background", function() {
       var params = checkSetup(
         '<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 100%; height: 100%; }</style>' +
           '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
       );
-  
+
       assert.isTrue(contrastEvaluate.apply(checkContext, params));
     });
-  
+
     it('should not return undefined if pseudo element has visibility: hidden', function() {
       var params = checkSetup(
         '<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 100%; height: 100%; background-color: red; visibility: hidden; }</style>' +
           '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
       );
-  
+
       assert.isTrue(contrastEvaluate.apply(checkContext, params));
     });
-  
+
     it('should not return undefined if pseudo element has display: none', function() {
       var params = checkSetup(
         '<style>.foo { position: relative; } .foo:before { content: ""; position: absolute; width: 100%; height: 100%; background-color: red; display: none; }</style>' +
           '<div id="background" class="foo"><p id="target" style="#000">Content</p></div>'
       );
-  
+
       assert.isTrue(contrastEvaluate.apply(checkContext, params));
     });
 
-    it('should return undefined if pseudo element is more than 25% of the element', function () {
+    it('should return undefined if pseudo element is more than 25% of the element', function() {
       var params = checkSetup(
         '<style>.foo { position: relative; width: 100px; height: 100px; } ' +
           '.foo:before { content: ""; position: absolute; width: 26px; height: 100px; background: red; }</style>' +
@@ -478,7 +520,7 @@ describe('color-contrast', function() {
       assert.isUndefined(contrastEvaluate.apply(checkContext, params));
     });
 
-    it('should not return undefined if pseudo element is 25% of the element', function () {
+    it('should not return undefined if pseudo element is 25% of the element', function() {
       var params = checkSetup(
         '<style>.foo { position: relative; width: 100px; height: 100px; } ' +
           '.foo:before { content: ""; position: absolute; width: 25px; height: 100px; background: red; }</style>' +
@@ -487,17 +529,20 @@ describe('color-contrast', function() {
       assert.isTrue(contrastEvaluate.apply(checkContext, params));
     });
 
-    (isIE11 ? it : xit)('should return undefined if the unit is not in px', function () {
-      var params = checkSetup(
-        '<style>.foo { position: relative; } ' +
-          '.foo:before { content: ""; position: absolute; width: 25%; height: 100%; background: red; }</style>' +
-          '<p id="target" class="foo">Content</p>'
-      );
-      assert.isUndefined(contrastEvaluate.apply(checkContext, params));
-    });
+    (isIE11 ? it : xit)(
+      'should return undefined if the unit is not in px',
+      function() {
+        var params = checkSetup(
+          '<style>.foo { position: relative; } ' +
+            '.foo:before { content: ""; position: absolute; width: 25%; height: 100%; background: red; }</style>' +
+            '<p id="target" class="foo">Content</p>'
+        );
+        assert.isUndefined(contrastEvaluate.apply(checkContext, params));
+      }
+    );
   });
 
-  describe('with special texts', function () {
+  describe('with special texts', function() {
     it('should return undefined for a single character text with insufficient contrast', function() {
       var params = checkSetup(
         '<div style="background-color: #FFF;">' +
@@ -582,7 +627,7 @@ describe('color-contrast', function() {
     });
   });
 
-  describe('options', function () {
+  describe('options', function() {
     it('should support options.boldValue', function() {
       var params = checkSetup(
         '<div style="color: gray; background-color: white; font-size: 14pt; font-weight: 100" id="target">' +
@@ -732,24 +777,24 @@ describe('color-contrast', function() {
           ignorePseudo: true
         }
       );
-  
+
       assert.isTrue(contrastEvaluate.apply(checkContext, params));
     });
-    
-    it('should adjust the pseudo element minimum size with the options.pseudoSizeThreshold', function () {
+
+    it('should adjust the pseudo element minimum size with the options.pseudoSizeThreshold', function() {
       var params = checkSetup(
-        '<style>.foo { position: relative; width: 100px; height: 100px }' + 
-        '.foo:before { content: ""; position: absolute; width: 22%; height: 100%; background: red; }</style>' +
+        '<style>.foo { position: relative; width: 100px; height: 100px }' +
+          '.foo:before { content: ""; position: absolute; width: 22%; height: 100%; background: red; }</style>' +
           '<p id="target" class="foo">Content</p>',
         {
-          pseudoSizeThreshold: 0.20
+          pseudoSizeThreshold: 0.2
         }
       );
       assert.isUndefined(contrastEvaluate.apply(checkContext, params));
     });
   });
 
-  describe('with shadowDOM', function () {
+  describe('with shadowDOM', function() {
     (shadowSupported ? it : xit)(
       'returns colors across Shadow DOM boundaries',
       function() {
