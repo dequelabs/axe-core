@@ -62,6 +62,12 @@ function buildRules(grunt, options, commons, callback) {
           'Rules that do not necessarily conform to WCAG success criterion but are industry accepted practices that improve the user experience.',
         rules: []
       },
+      wcag2aaa: {
+        title: 'WCAG 2.0 and 2.1 level AAA rules',
+        intro:
+          'Rules that check for conformance to WCAG AAA success criteria that can be fully automated.',
+        rules: []
+      },
       experimental: {
         title: 'Experimental Rules',
         intro:
@@ -335,6 +341,8 @@ function buildRules(grunt, options, commons, callback) {
         rules = descriptions.deprecated.rules;
       } else if (rule.tags.includes('experimental')) {
         rules = descriptions.experimental.rules;
+      } else if (rule.tags.find(tag => tag.includes('aaa'))) {
+        rules = descriptions.wcag2aaa.rules;
       } else if (rule.tags.includes('best-practice')) {
         rules = descriptions.bestPractice.rules;
       } else if (rule.tags.find(tag => tag.startsWith('wcag2a'))) {
