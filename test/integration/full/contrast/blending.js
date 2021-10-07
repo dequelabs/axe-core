@@ -12,7 +12,7 @@ describe('color-contrast blending test', function() {
     'rgb(147, 153, 119)',
     'rgb(221, 221, 221)'
   ];
-  var testElms = document.querySelectorAll('#fixture > div');
+  var testElms = Array.from(document.querySelectorAll('#fixture > div'));
   testElms.forEach(function(testElm) {
     var id = testElm.id;
     var target = testElm.querySelector('#' + id + '-target');
