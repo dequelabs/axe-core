@@ -1286,6 +1286,14 @@ describe('Audit', function() {
   });
 
   describe('Audit#normalizeOptions', function() {
+    var axeLog;
+    beforeEach(function () {
+      axeLog = axe.log;
+    });
+    afterEach(function () {
+      axe.log = axeLog;  
+    });
+
     it('returns the options object when it is valid', function() {
       var opt = {
         runOnly: {
@@ -1439,6 +1447,34 @@ describe('Audit', function() {
           }
         });
       });
+    });
+
+    it('logs an issue when a tag is unknown', function () {
+      var message = '';
+      axe.log = function (m) {
+        message = m;
+      };
+      a.normalizeOptions({
+        runOnly: {
+          type: 'tags',
+          values: ['unknwon-tag']
+        }
+      });
+      assert.include(message, 'Could not find tags');
+    });
+
+    it('logs no issues for unknown WCAG level tags', function () {
+      var message = '';
+      axe.log = function (m) {
+        message = m;
+      };
+      a.normalizeOptions({
+        runOnly: {
+          type: 'tags',
+          values: ['wcag23aaa']
+        }
+      });
+      assert.isEmpty(message);
     });
   });
 });
