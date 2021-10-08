@@ -1476,5 +1476,19 @@ describe('Audit', function() {
       });
       assert.isEmpty(message);
     });
+
+    it('logs an issue when a tag is unknown, together with a wcag level tag', function () {
+      var message = '';
+      axe.log = function (m) {
+        message = m;
+      };
+      a.normalizeOptions({
+        runOnly: {
+          type: 'tags',
+          values: ['wcag23aaa', 'unknwon-tag']
+        }
+      });
+      assert.include(message, 'Could not find tags');
+    });
   });
 });
