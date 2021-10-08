@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Color Contrast Blending Verification Tests</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/node_modules/mocha/mocha.css"
+    />
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/chai/chai.js"></script>
+    <script src="/axe.js"></script>
+    <script>
+      mocha.setup({
+        timeout: 10000,
+        ui: 'bdd'
+      });
+      var assert = chai.assert;
+    </script>
+    <style>
+      body {
+        margin: 4rem 2rem;
+      }
+
+      #fixture {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+
+      #fixture > div {
+        display: flex;
+        flex-direction: row;
+        border: 1px solid white;
+      }
+
+      #fixture * {
+        width: 100px;
+        height: 100px;
+        flex-shrink: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <p>
+      Use this page to verify that axe-core produces the correct colors for each
+      blended background. <b>If using Chrome</b>, please ensure it is using the
+      sRGB color profile by navigating to chrome://flags/, searching for "Force
+      color profile" and setting it to "sRGB" (otherwise it uses the OS color
+      profile which for Mac, which we believe is "Display P3 D65" and will
+      produce the incorrect result color when blending).
+    </p>
+    <p>
+      For more information, see
+      <a href="https://github.com/dequelabs/axe-core/issues/2924"
+        >https://github.com/dequelabs/axe-core/issues/2924</a
+      >
+    </p>
+    <div id="fixture">
+      <div id="test1">
+        <div style="background-color: rgba(255, 255, 255, 1.0);">
+          <div style="background-color: rgba(0, 128, 0, 0.25);">
+            <div
+              id="test1-target"
+              style="background-color: rgba(255, 0, 0, 0.5);"
+            >
+              Test1
+            </div>
+          </div>
+        </div>
+        <div id="test1-result">Test1 result</div>
+      </div>
+
+      <div id="test2">
+        <div style="background-color: rgba(255, 255, 255, 1.0);">
+          <div
+            id="test2-target"
+            style="background-color: rgba(255, 0, 0, 0.5);"
+          >
+            Test2
+          </div>
+        </div>
+        <div id="test2-result">Test2 result</div>
+      </div>
+
+      <div id="test3">
+        <div style="background-color: rgba(255, 255, 255, 1.0);">
+          <div
+            id="test3-target"
+            style="background-color: rgba(0, 128, 0, 0.25);"
+          >
+            Test3
+          </div>
+        </div>
+        <div id="test3-result">Test3 result</div>
+      </div>
+
+      <div id="test4">
+        <div style="background-color: red;">
+          <div style="background-color: rgba(0, 0, 255, 0.3);">
+            <div
+              id="test4-target"
+              style="background-color: rgba(0, 128, 0, 0.3);"
+            >
+              Test4
+            </div>
+          </div>
+        </div>
+        <div id="test4-result">Test4 result</div>
+      </div>
+
+      <div id="test5">
+        <div style="background-color: red;">
+          <div
+            id="test5-target"
+            style="background-color: rgba(0, 128, 0, 0.3);"
+          >
+            Test5
+          </div>
+        </div>
+        <div id="test5-result">Test5 result</div>
+      </div>
+
+      <div id="test6">
+        <div style="background-color: red;">
+          <div
+            id="test6-target"
+            style="background-color: rgba(0, 0, 255, 0.3);"
+          >
+            Test6
+          </div>
+        </div>
+        <div id="test6-result">Test6 result</div>
+      </div>
+
+      <div id="test7">
+        <div style="background-color: rgba(255, 0, 0, 0.25);">
+          <div style="background-color: rgba(255, 0, 0, 0.25);">
+            <div style="background-color: rgba(0, 255, 0, 0.25);">
+              <div
+                id="test7-target"
+                style="background-color: rgba(0, 255, 0, 0.25);"
+              >
+                Test7
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="test7-result">Test7 result</div>
+      </div>
+
+      <div id="test8">
+        <div style="background-color: rgba(255, 0, 0, 0.25);">
+          <div style="background-color: rgba(255, 0, 0, 0.25);">
+            <div style="background-color: rgba(0, 255, 0, 0.25);">
+              <div style="background-color: rgba(0, 255, 0, 0.10);">
+                <div style="background-color: rgba(0, 0, 255, 0.10);">
+                  <div
+                    id="test8-target"
+                    style="background-color: rgba(0, 0, 255, 0.05);"
+                  >
+                    Test8
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="test8-result">Test8 result</div>
+      </div>
+
+      <div id="test9">
+        <div style="background-color: rgba(204, 204, 204, 0.43);">
+          <div
+            id="test9-target"
+            style="background-color: rgba(204, 204, 204, 0.43);"
+          >
+            Test9
+          </div>
+        </div>
+        <div id="test9-result">Test9 result</div>
+      </div>
+    </div>
+
+    <div id="mocha"></div>
+    <script src="blending.js"></script>
+    <script src="/test/integration/adapter.js"></script>
+  </body>
+</html>
