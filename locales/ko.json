@@ -601,7 +601,7 @@
       "pass": "엘리먼트 안에 초점을 얻을 수 있는(focusable) 엘리먼트가 없습니다.",
       "fail": "초점을 얻을 수 있는(focusable) 콘텐츠는 tabindex='-1'을 가지거나 DOM에서 제거되어야 합니다."
     },
-    "frame-focusable-content": {
+    "no-focusable-content-for-frame": {
       "pass": "엘리먼트에 초점을 얻을 수 있는(focusable) 후손 항목이 없습니다.",
       "fail": "엘리먼트에 초점을 얻을 수 있는(focusable) 후손 항목이 있습니다.",
       "incomplete": "엘리먼트에 후손 항목이 있는지 확인할 수 없습니다."
