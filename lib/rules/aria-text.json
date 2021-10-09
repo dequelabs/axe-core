@@ -7,6 +7,6 @@
     "help": "\"role=text\" should have no focusable descendants"
   },
   "all": [],
-  "any": ["no-focusable-content-for-aria-text"],
+  "any": ["no-focusable-content"],
   "none": []
 }

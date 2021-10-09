@@ -1,6 +1,6 @@
 {
-  "id": "no-focusable-content-for-aria-text",
-  "evaluate": "no-focusable-content-for-aria-text-evaluate",
+  "id": "no-focusable-content",
+  "evaluate": "no-focusable-content-evaluate",
   "metadata": {
     "impact": "serious",
     "messages": {
