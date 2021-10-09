@@ -590,7 +590,7 @@
       "pass": "要素内にフォーカス不可能な要素は含まれていません",
       "fail": "フォーカス可能なコンテンツは tabindex='-1' を指定するか、DOMから削除するべきです"
     },
-    "no-focusable-content-for-frame": {
+    "frame-focusable-content": {
       "pass": "要素の子孫にフォーカス可能なものはありません",
       "fail": "要素の子孫にフォーカス可能なものがあります",
       "incomplete": "要素に子孫があるか判定できませんでした"

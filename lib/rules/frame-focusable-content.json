@@ -8,6 +8,6 @@
     "help": "Frames with focusable content must not have tabindex=-1"
   },
   "all": [],
-  "any": ["no-focusable-content-for-frame"],
+  "any": ["frame-focusable-content"],
   "none": []
 }

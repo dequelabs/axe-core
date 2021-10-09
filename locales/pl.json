@@ -590,7 +590,7 @@
       "pass": "Nie ma elementów przyjmujących fokus wewnątrz elementu.",
       "fail": "Treść przyjmująca fokus powinna mieć tabindex=-1 lub być usunięta z DOM."
     },
-    "no-focusable-content-for-frame": {
+    "frame-focusable-content": {
       "pass": "Element nie ma potomków przyjmujących fokus",
       "fail": "Element ma elementy potomne przyjmujące fokus",
       "incomplete": "Nie można ustalić, czy element ma elementy potomne"
