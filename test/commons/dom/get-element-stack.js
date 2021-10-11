@@ -348,6 +348,46 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, []);
     });
 
+    it('should throw error if element midpoint-x exceeds the grid', function() {
+      fixture.innerHTML = '<div id="target">Hello World</div>';
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#target');
+      var vNode = axe.utils.getNodeFromTree(target);
+      Object.defineProperty(vNode, 'boundingClientRect', {
+        get: function() {
+          return {
+            left: 0,
+            top: 10,
+            width: 10000,
+            height: 10
+          };
+        }
+      });
+      assert.throws(function() {
+        getElementStack(target);
+      }, 'Element midpoint exceeds the grid bounds');
+    });
+
+    it('should throw error if element midpoint-y exceeds the grid', function() {
+      fixture.innerHTML = '<div id="target">Hello World</div>';
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#target');
+      var vNode = axe.utils.getNodeFromTree(target);
+      Object.defineProperty(vNode, 'boundingClientRect', {
+        get: function() {
+          return {
+            left: 0,
+            top: 10,
+            width: 10,
+            height: 10000
+          };
+        }
+      });
+      assert.throws(function() {
+        getElementStack(target);
+      }, 'Element midpoint exceeds the grid bounds');
+    });
+
     // IE11 either only supports clip paths defined by url() or not at all,
     // MDN and caniuse.com give different results...
     (isIE11 ? it.skip : it)(
