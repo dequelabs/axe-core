@@ -80,8 +80,10 @@ The `experimental`, `ACT` and `section508` tags are only added to some rules. Ea
 | ---------------- | ---------------------------------------------------- |
 | `wcag2a`         | WCAG 2.0 Level A                                     |
 | `wcag2aa`        | WCAG 2.0 Level AA                                    |
+| `wcag2aaa`       | WCAG 2.0 Level AAA                                   |
 | `wcag21a`        | WCAG 2.1 Level A                                     |
 | `wcag21aa`       | WCAG 2.1 Level AA                                    |
+| `wcag21aaa`      | WCAG 2.1 Level AAA                                   |
 | `best-practice`  | Common accessibility best practices                  |
 | `wcag***`        | WCAG success criterion e.g. wcag111 maps to SC 1.1.1 |
 | `ACT`            | W3C approved Accessibility Conformance Testing rules |
