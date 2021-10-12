@@ -142,6 +142,18 @@ describe('dom.visuallyContains', function() {
     assert.isTrue(result);
   });
 
+  it('should return false if element is outside overflow hidden', function() {
+    var target = queryFixture(
+      '<div id="parent" style="width: 200px; height: 200px; overflow: hidden;">' +
+        '<div id="target" style="margin-top: 300px;">Some text</div>' +
+        '</div>'
+    );
+
+    var parent = fixture.querySelector('#parent');
+    var result = axe.commons.dom.visuallyContains(target.actualNode, parent);
+    assert.isFalse(result);
+  });
+
   (shadowSupported ? it : xit)(
     'should return true when element is visually contained across shadow boundary',
     function() {
