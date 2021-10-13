@@ -9,10 +9,7 @@
     "impact": "serious",
     "messages": {
       "pass": "ARIA attribute is allowed",
-      "fail": {
-        "default": "ARIA attribute cannot be used, add a role attribute or use a different element: ${data.values}",
-        "prohibitedRoleAttr": "ARIA attribute: ${data.prohibited} not allowed on role=${data.role}."
-      },
+      "fail": "ARIA attribute: ${data.values} is not allowed. Use a different role attribute or a different element.",
       "incomplete": "ARIA attribute is not well supported on the element and the text content will be used instead: ${data.values}"
     }
   }
