@@ -1,6 +1,5 @@
 {
   "id": "aria-prohibited-attr",
-  "selector": "code",
   "evaluate": "aria-prohibited-attr-evaluate",
   "options": {
     "elementsAllowedAriaLabel": ["applet", "input"]
