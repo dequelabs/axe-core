@@ -34,6 +34,20 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '2', '1', 'fixture']);
     });
 
+    it('should not return elements outside of the stack', function() {
+      fixture.innerHTML =
+        '<main id="1">' +
+        '<div id="2">' +
+        '<span style="display:block">Foo</span>' +
+        '<p id="target">Hello World</p>' +
+        '</div>' +
+        '</main>';
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#target');
+      var stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['target', '2', '1', 'fixture']);
+    });
+
     it('should return stack in DOM order of non-positioned elements with z-index', function() {
       fixture.innerHTML =
         '<div id="1" style=";width:40px;height:40px;">' +
