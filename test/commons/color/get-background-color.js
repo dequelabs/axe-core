@@ -4,18 +4,9 @@ describe('color.getBackgroundColor', function() {
   var fixture = document.getElementById('fixture');
 
   var shadowSupported = axe.testUtils.shadowSupport.v1;
-  var origBodyBg;
-  var origHtmlBg;
-
-  before(function() {
-    origBodyBg = document.body.style.background;
-    origHtmlBg = document.documentElement.style.background;
-  });
 
   afterEach(function() {
-    document.body.style.background = origBodyBg;
-    document.documentElement.style.background = origHtmlBg;
-
+    document.getElementById('fixture').innerHTML = '';
     axe.commons.color.incompleteData.clear();
     axe._tree = undefined;
   });
@@ -644,6 +635,7 @@ describe('color.getBackgroundColor', function() {
       'style="z-index:-1; position:absolute; width:100%; height:2em; background: #000"></div>' +
       '<div id="target">Some text</div>';
 
+    var orig = document.body.style.background;
     document.body.style.background = '#FFF';
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(
@@ -657,23 +649,65 @@ describe('color.getBackgroundColor', function() {
     assert.closeTo(actual.green, expected.green, 0.5);
     assert.closeTo(actual.blue, expected.blue, 0.5);
     assert.closeTo(actual.alpha, expected.alpha, 0.1);
+
+    document.body.style.background = orig;
   });
 
-  it('should return null for negative z-index element when html and body have a background', function() {
-    fixture.innerHTML =
-      '<div style="width: 200px; height: 200px;"></div>' +
-      '<div id="target" ' +
-      'style="z-index:-1; position:absolute; top: 100px; width:100%; height:2em; background: #000"></div>';
+  it('returns the body background', function() {
+    fixture.innerHTML = '<div id="target">elm</div>';
+    var orig = document.body.style.background;
+    document.body.style.background = '#F00';
 
-    document.documentElement.style.background = '#0F0';
-    document.body.style.background = '#FFF';
     axe.testUtils.flatTreeSetup(fixture);
     var actual = axe.commons.color.getBackgroundColor(
       document.getElementById('target'),
       []
     );
+    var expected = new axe.commons.color.Color(255, 0, 0, 1);
+    document.body.style.background = orig;
 
-    assert.isNull(actual);
+    assert.closeTo(actual.red, expected.red, 0.5);
+    assert.closeTo(actual.green, expected.green, 0.5);
+    assert.closeTo(actual.blue, expected.blue, 0.5);
+    assert.closeTo(actual.alpha, expected.alpha, 0.1);
+  });
+
+  it('returns the body background even when the body is MUCH larger than the screen', function() {
+    fixture.innerHTML = '<div id="target" style="height:20000px;">elm</div>';
+    var orig = document.body.style.background;
+    document.body.style.background = '#F00';
+
+    axe.testUtils.flatTreeSetup(fixture);
+    var actual = axe.commons.color.getBackgroundColor(
+      document.getElementById('target'),
+      []
+    );
+    var expected = new axe.commons.color.Color(255, 0, 0, 1);
+    document.body.style.background = orig;
+
+    assert.closeTo(actual.red, expected.red, 0.5);
+    assert.closeTo(actual.green, expected.green, 0.5);
+    assert.closeTo(actual.blue, expected.blue, 0.5);
+    assert.closeTo(actual.alpha, expected.alpha, 0.1);
+  });
+
+  it('returns the html background', function() {
+    fixture.innerHTML = '<div id="target"><label>elm<input></label></div>';
+    var orig = document.documentElement.style.background;
+    document.documentElement.style.background = '#0F0';
+
+    axe.testUtils.flatTreeSetup(fixture);
+    var actual = axe.commons.color.getBackgroundColor(
+      document.getElementById('target'),
+      []
+    );
+    var expected = new axe.commons.color.Color(0, 255, 0, 1);
+    document.documentElement.style.background = orig;
+
+    assert.closeTo(actual.red, expected.red, 0.5);
+    assert.closeTo(actual.green, expected.green, 0.5);
+    assert.closeTo(actual.blue, expected.blue, 0.5);
+    assert.closeTo(actual.alpha, expected.alpha, 0.1);
   });
 
   it('should return background color for inline elements that do not fit the viewport', function() {
@@ -713,7 +747,7 @@ describe('color.getBackgroundColor', function() {
 
     // size body element so that target element is positioned outside of background
     var originalHeight = document.body.style.height;
-    var originalMargin = document.body.style.margin;
+    var originalBg = document.body.style.background;
     document.body.style.height = '1px';
     document.body.style.background = '#000';
     document.body.style.margin = 0;
@@ -728,7 +762,7 @@ describe('color.getBackgroundColor', function() {
     assert.closeTo(actual.alpha, 1, 0);
 
     document.body.style.height = originalHeight;
-    document.body.style.margin = originalMargin;
+    document.body.style.background = originalBg;
   });
 
   it('should return the html canvas bgColor when element content does not overlap with body', function() {
@@ -737,6 +771,8 @@ describe('color.getBackgroundColor', function() {
 
     // size body element so that target element is positioned outside of background
     var originalHeight = document.body.style.height;
+    var originalBg = document.body.style.background;
+    var originalRootBg = document.documentElement.style.background;
     document.body.style.height = '1px';
     document.body.style.background = '#0f0';
     document.documentElement.style.background = '#f00';
@@ -751,6 +787,8 @@ describe('color.getBackgroundColor', function() {
     assert.closeTo(actual.alpha, 1, 0);
 
     document.body.style.height = originalHeight;
+    document.body.style.background = originalBg;
+    document.documentElement.style.background = originalRootBg;
   });
 
   (shadowSupported ? it : xit)('finds colors in shadow boundaries', function() {
@@ -990,113 +1028,5 @@ describe('color.getBackgroundColor', function() {
     assert.closeTo(actual.green, expected.green, 0.5);
     assert.closeTo(actual.blue, expected.blue, 0.5);
     assert.closeTo(actual.alpha, expected.alpha, 0.1);
-  });
-
-  describe('body and document', function() {
-    it('returns the body background', function() {
-      fixture.innerHTML = '<div id="target">elm</div>';
-      document.body.style.background = '#F00';
-
-      axe.testUtils.flatTreeSetup(fixture);
-      var actual = axe.commons.color.getBackgroundColor(
-        document.getElementById('target'),
-        []
-      );
-      var expected = new axe.commons.color.Color(255, 0, 0, 1);
-
-      assert.closeTo(actual.red, expected.red, 0.5);
-      assert.closeTo(actual.green, expected.green, 0.5);
-      assert.closeTo(actual.blue, expected.blue, 0.5);
-      assert.closeTo(actual.alpha, expected.alpha, 0.1);
-    });
-
-    it('returns the body background even when the body is MUCH larger than the screen', function() {
-      fixture.innerHTML = '<div id="target" style="height:20000px;">elm</div>';
-      document.body.style.background = '#F00';
-
-      axe.testUtils.flatTreeSetup(fixture);
-      var actual = axe.commons.color.getBackgroundColor(
-        document.getElementById('target'),
-        []
-      );
-      var expected = new axe.commons.color.Color(255, 0, 0, 1);
-
-      assert.closeTo(actual.red, expected.red, 0.5);
-      assert.closeTo(actual.green, expected.green, 0.5);
-      assert.closeTo(actual.blue, expected.blue, 0.5);
-      assert.closeTo(actual.alpha, expected.alpha, 0.1);
-    });
-
-    it('returns the html background', function() {
-      fixture.innerHTML = '<div id="target"><label>elm<input></label></div>';
-      document.documentElement.style.background = '#0F0';
-
-      axe.testUtils.flatTreeSetup(fixture);
-      var actual = axe.commons.color.getBackgroundColor(
-        document.getElementById('target'),
-        []
-      );
-      var expected = new axe.commons.color.Color(0, 255, 0, 1);
-
-      assert.closeTo(actual.red, expected.red, 0.5);
-      assert.closeTo(actual.green, expected.green, 0.5);
-      assert.closeTo(actual.blue, expected.blue, 0.5);
-      assert.closeTo(actual.alpha, expected.alpha, 0.1);
-    });
-
-    it('returns the html background when body does not cover the element', function() {
-      fixture.innerHTML =
-        '<div id="target" style="position: absolute; top: 1000px;"><label>elm<input></label></div>';
-      document.documentElement.style.background = '#0F0';
-      document.body.style.background = '#00F';
-
-      axe.testUtils.flatTreeSetup(fixture);
-      var actual = axe.commons.color.getBackgroundColor(
-        document.getElementById('target'),
-        []
-      );
-      var expected = new axe.commons.color.Color(0, 255, 0, 1);
-
-      assert.closeTo(actual.red, expected.red, 0.5);
-      assert.closeTo(actual.green, expected.green, 0.5);
-      assert.closeTo(actual.blue, expected.blue, 0.5);
-      assert.closeTo(actual.alpha, expected.alpha, 0.1);
-    });
-
-    it('returns the body background when body does cover the element', function() {
-      fixture.innerHTML = '<div id="target"><label>elm<input></label></div>';
-      document.documentElement.style.background = '#0F0';
-      document.body.style.background = '#00F';
-
-      axe.testUtils.flatTreeSetup(fixture);
-      var actual = axe.commons.color.getBackgroundColor(
-        document.getElementById('target'),
-        []
-      );
-      var expected = new axe.commons.color.Color(0, 0, 255, 1);
-
-      assert.closeTo(actual.red, expected.red, 0.5);
-      assert.closeTo(actual.green, expected.green, 0.5);
-      assert.closeTo(actual.blue, expected.blue, 0.5);
-      assert.closeTo(actual.alpha, expected.alpha, 0.1);
-    });
-
-    it('returns both the html and body background if the body has alpha', function() {
-      fixture.innerHTML = '<div id="target"><label>elm<input></label></div>';
-      document.documentElement.style.background = '#0F0';
-      document.body.style.background = 'rgba(0, 0, 255, 0.5)';
-
-      axe.testUtils.flatTreeSetup(fixture);
-      var actual = axe.commons.color.getBackgroundColor(
-        document.getElementById('target'),
-        []
-      );
-      var expected = new axe.commons.color.Color(0, 128, 128, 1);
-
-      assert.closeTo(actual.red, expected.red, 0.5);
-      assert.closeTo(actual.green, expected.green, 0.5);
-      assert.closeTo(actual.blue, expected.blue, 0.5);
-      assert.closeTo(actual.alpha, expected.alpha, 0.1);
-    });
   });
 });
