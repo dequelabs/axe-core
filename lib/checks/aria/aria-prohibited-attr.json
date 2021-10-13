@@ -11,7 +11,7 @@
       "pass": "ARIA attribute is allowed",
       "fail": {
         "default": "ARIA attribute cannot be used, add a role attribute or use a different element: ${data.values}",
-        "prohibitedRoleAttr": "ARIA attrtibute: ${data.prohibited} not allowed on role=${data.role}."
+        "prohibitedRoleAttr": "ARIA attribute: ${data.prohibited} not allowed on role=${data.role}."
       },
       "incomplete": "ARIA attribute is not well supported on the element and the text content will be used instead: ${data.values}"
     }
