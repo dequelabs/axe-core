@@ -28,7 +28,7 @@ Example: "Elements must only use allowed ARIA attributes"
 
 #### Tags
 
-Indicate which tags the rule should use.
+Indicate which tags the rule should use. More information available in the [how we assign tags documentation](https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#axe-core-tags).
 
 Example: wcag2a, wcag211, cat.keyboard
 
