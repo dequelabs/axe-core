@@ -11,8 +11,7 @@
     ["#pass7"],
     ["#pass7 > input"],
     ["#pass8"],
-    ["#text-shadow-fg-pass"],
-    ["#pass9"]
+    ["#text-shadow-fg-pass"]
   ],
   "incomplete": [
     ["#canttell1"],
