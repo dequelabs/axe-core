@@ -494,8 +494,8 @@ describe('axe.utils.getSelector', function() {
     img2.setAttribute('src', '//deque.com/logo.png');
 
     fixtureSetup([link1, link2, img1, img2]);
-    assert.equal(axe.utils.getSelector(link2), 'a[href$="about\\/"]');
-    assert.equal(axe.utils.getSelector(img2), 'img[src$="logo\\.png"]');
+    assert.equal(axe.utils.getSelector(link2), 'a[href$="about/"]');
+    assert.equal(axe.utils.getSelector(img2), 'img[src$="logo.png"]');
   });
 
   it('should escape href attributes', function() {
@@ -510,6 +510,17 @@ describe('axe.utils.getSelector', function() {
       axe.utils.getSelector(link2),
       'a[href="\\/\\/deque\\.com\\/child\\/\\ \\a \\a \\a "]'
     );
+  });
+
+  it('should not URL encode or token escape href attribute', function() {
+    var link1 = document.createElement('a');
+    link1.setAttribute('href', '3 Seater');
+
+    var link2 = document.createElement('a');
+    link2.setAttribute('href', '1 Seater');
+
+    fixtureSetup([link1, link2]);
+    assert.equal(axe.utils.getSelector(link2), 'a[href$="1 Seater"]');
   });
 
   it('should not generate universal selectors', function() {
