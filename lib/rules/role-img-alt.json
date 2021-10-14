@@ -13,7 +13,7 @@
   "actIds": ["23a2a8"],
   "metadata": {
     "description": "Ensures [role='img'] elements have alternate text",
-    "help": "[role='img'] elements have an alternative text"
+    "help": "[role='img'] elements must have an alternative text"
   },
   "all": [],
   "any": ["aria-label", "aria-labelledby", "non-empty-title"],
