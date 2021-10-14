@@ -117,6 +117,10 @@
       "description": "前景色と背景色のコントラストがWCAG 2のAAコントラスト比のしきい値を満たすことを確認します",
       "help": "要素には十分な色のコントラストがなければなりません"
     },
+    "color-contrast-enhanced": {
+      "description": "前景色と背景色のコントラストがWCAG 2のAAAコントラスト比のしきい値を満たすことを確認します",
+      "help": "要素には十分な色のコントラストがなければなりません"
+    },
     "css-orientation-lock": {
       "description": "コンテンツが特定のディスプレイの向きに固定されていないこと、およびコンテンツがすべてのディスプレイの向きで操作可能なことを確認します",
       "help": "ディスプレイの向きを固定するためにCSSメディアクエリーは使用されていません"
@@ -523,6 +527,25 @@
       "fail": "要素はフォーカス順序に含まれる要素に対して無効なセマンティクスを持ちます"
     },
     "color-contrast": {
+      "pass": "要素には${data.contrastRatio}の十分なコントラスト比があります",
+      "fail": "要素のコントラスト比が不十分です ${data.contrastRatio}（前景色: ${data.fgColor}、背景色: ${data.bgColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします",
+      "incomplete": {
+        "default": "コントラスト比を判定できません",
+        "bgImage": "背景画像のため、要素の背景色を判定できません",
+        "bgGradient": "背景グラデーションのため、要素の背景色を判定できません",
+        "imgNode": "画像ノードが含まれるため、要素の背景色を判定できません",
+        "bgOverlap": "他の要素と重なっているため、要素の背景色を判定できません",
+        "fgAlpha": "アルファ透明度により、要素の前景色を判定できません",
+        "elmPartiallyObscured": "他の要素により部分的に不明瞭なため、要素の背景色を判定できません",
+        "elmPartiallyObscuring": "他の要素と部分的に重なっているため、要素の背景色を判定できません",
+        "outsideViewport": "ビューポートの外にあるため、要素の背景色を判定できません",
+        "equalRatio": "要素のコントラスト比が背景と1:1です",
+        "shortTextContent": "実際のテキストコンテンツであるかを判断するには要素のコンテンツが短すぎます",
+        "nonBmp": "要素のコンテンツはテキストではない文字のみを含んでいます",
+        "pseudoContent": "擬似要素のため、要素の背景色を判定することができませんでした"
+      }
+    },
+    "color-contrast-enhanced": {
       "pass": "要素には${data.contrastRatio}の十分なコントラスト比があります",
       "fail": "要素のコントラスト比が不十分です ${data.contrastRatio}（前景色: ${data.fgColor}、背景色: ${data.bgColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします",
       "incomplete": {

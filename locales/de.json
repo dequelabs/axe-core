@@ -113,6 +113,10 @@
       "description": "Stellt sicher, dass der Kontrast zwischen Vorder- und Hintergrundfarbe den in der WCAG 2 als AA ausgewiesenen Kontrastgrenzwerten entspricht.",
       "help": "Elemente müssen einen ausreichenden Farbkontrast haben."
     },
+    "color-contrast-enhanced": {
+      "description": "Stellt sicher, dass der Kontrast zwischen Vorder- und Hintergrundfarbe den in der WCAG 2 als AAA ausgewiesenen Kontrastgrenzwerten entspricht.",
+      "help": "Elemente müssen einen ausreichenden Farbkontrast haben."
+    },
     "css-orientation-lock": {
       "description": "Stellt sicher, dass der Inhalt nicht nur auf einer sondern auf allen spezifischen Bildschirmausrichtungen angezeigt werden kann.",
       "help": "CSS Media Queries dürfen nicht genutzt werden um die Bildschirmausrichtung zu sperren."
@@ -502,6 +506,25 @@
       "fail": "Das Element hat eine ungültige Semantik für ein Element in der Fokusreihenfolge."
     },
     "color-contrast": {
+      "pass": "Das Element hat einen ausreichenden Kontrast von ${data.contrastRatio}.",
+      "fail": "Das Element hat einen unzureichenden Kontrast von ${data.contrastRatio} (Vordergrundfarbe: ${data.fgColor}, Hintergrundfarbe: ${data.bgColor}, Schriftgröße: ${data.fontSize}, Schriftstärke: ${data.fontWeight}).",
+      "incomplete": {
+        "default": "Das Kontrastverhältnis konnte nicht ermittelt werden.",
+        "bgImage": "Die Hintergrundfarbe des Elementes konnte aufgrund eines Hintergrundbildes nicht bestimmt werden.",
+        "bgGradient": "Die Hintergrundfarbe des Elementes konnte aufgrund eines Hintergrundfarbverlaufes nicht bestimmt werden.",
+        "imgNode": "Die Hintergrundfarbe des Elementes konnte nicht bestimmt werden, da das Element einen Image Node enthält.",
+        "bgOverlap": "Die Hintergrundfarbe des Elementes konnte nicht bestimmt werden, da es von einem anderen Element überlagert wird.",
+        "fgAlpha": "Die Vordergrundfarbe des Elementes konnte aufgrund der Alpha-Transparenz nicht ermittelt werden.",
+        "elmPartiallyObscured": "Die Hintergrundfarbe des Elements konnte nicht bestimmt werden, da es teilweise von anderen Elementen überdeckt wird.",
+        "elmPartiallyObscuring": "Die Hintergrundfarbe des Elements konnte nicht bestimmt werden, da es teilweise andere Elemente überdeckt.",
+        "outsideViewport": "Die Hintergrundfarbe des Elements konnte nicht bestimmt werden, da es sich außerhalb des Viewports befindet.",
+        "equalRatio": "Das Element hat einen 1:1 Kontrast mit der Hintergrundfarbe.",
+        "shortTextContent": "Der Inhalt des Elements ist zu kurz um zu bestimmen ob es sich wirklich um Textinhalt handelt.",
+        "nonBmp": "Das Element enthält ausschließlich Nicht-Text Zeichen.",
+        "pseudoContent": "Die Hintergrundfarbe konnte aufgrund eines pseudo Elementes nicht bestimmt werden."
+      }
+    },
+    "color-contrast-enhanced": {
       "pass": "Das Element hat einen ausreichenden Kontrast von ${data.contrastRatio}.",
       "fail": "Das Element hat einen unzureichenden Kontrast von ${data.contrastRatio} (Vordergrundfarbe: ${data.fgColor}, Hintergrundfarbe: ${data.bgColor}, Schriftgröße: ${data.fontSize}, Schriftstärke: ${data.fontWeight}).",
       "incomplete": {
