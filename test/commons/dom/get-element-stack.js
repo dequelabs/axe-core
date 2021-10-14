@@ -366,8 +366,25 @@ describe('dom.getElementStack', function() {
       axe.testUtils.flatTreeSetup(fixture);
       var target = fixture.querySelector('#target');
       var stack = mapToIDs(getElementStack(target));
-      console.log(stack);
       assert.deepEqual(stack, ['4', 'target', '5', '3', '2', '1', 'fixture']);
+    });
+
+    it('should correctly position children of float elements with position elements', function() {
+      fixture.innerHTML =
+        '<div id="1" style="width: 50px; height: 50px; position: relative;">' +
+        '<div id="2" style="width: 50px; height: 50px; float: left;">' +
+        '<div id="3" style="width: 50px; height: 50px;">' +
+        '<div id="4" style="width: 50px; height: 50px;">' +
+        '<div id="target" style="width: 50px; height: 50px; position: relative;"></div>' +
+        '</div>' +
+        '</div>' +
+        '<div id="5" style="width: 50px; height: 50px; position: absolute; top:0"></div>' +
+        '</div>' +
+        '</div>';
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#target');
+      var stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['5', 'target', '4', '3', '2', '1', 'fixture']);
     });
 
     it('should return empty array for hidden elements', function() {
