@@ -16,7 +16,7 @@ describe('color-contrast shadow dom test', function() {
         '</div>';
     }
   });
-
+  
   describe('violations', function() {
     (shadowSupported ? it : xit)('should find issues in shadow tree', function(
       done
@@ -27,7 +27,6 @@ describe('color-contrast shadow dom test', function() {
         function(err, results) {
           assert.isNull(err);
           assert.lengthOf(results.violations, 1);
-					console.log(results.violations[0].nodes); // tdr 
           assert.lengthOf(results.violations[0].nodes, 2);
           assert.equal(
             results.violations[0].nodes[1].any[0].data.bgColor,
