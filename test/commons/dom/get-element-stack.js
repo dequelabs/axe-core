@@ -59,10 +59,8 @@ describe('dom.getElementStack', function() {
       axe.testUtils.flatTreeSetup(fixture);
       var target = fixture.querySelector('#target');
       var stack = mapToIDs(getElementStack(target));
-      // TODO: according to the browser this should be
-      // [3, target, 2, 1, fixture]. also if you add background
-      // colors the target node shows up halfway between the 3 and 2
-      // but i dont know why
+      // Browsers seem to be buggy, which suggest  [3, target, 2, 1, fixture]
+      // We're following the spec in this.
       // @see https://codepen.io/straker/pen/gOxpJyE
       assert.deepEqual(stack, ['3', '2', 'target', '1', 'fixture']);
     });
