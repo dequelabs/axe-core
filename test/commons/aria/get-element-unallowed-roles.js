@@ -80,6 +80,37 @@ describe('aria.getElementUnallowedRoles', function() {
     assert.include(actual, 'row');
   });
 
+  it('returns true when role is not implicit and allowImplicit is false', function() {
+    var node = document.createElement('div');
+    node.setAttribute('role', 'button');
+    flatTreeSetup(node);
+    var actual = getElementUnallowedRoles(node, false);
+    assert.isEmpty(actual);
+  });
+
+  it('return false with implicit role of row for TR inside table[role=grid] when allowImplicit is set to false', function() {
+    var table = document.createElement('table');
+    table.setAttribute('role', 'grid');
+    var node = document.createElement('tr');
+    node.setAttribute('role', 'row');
+    table.appendChild(node);
+    flatTreeSetup(node);
+    var actual = getElementUnallowedRoles(node, false);
+    assert.isNotEmpty(actual);
+    assert.include(actual, 'row');
+  });
+
+  it('return false with implicit role of row for TR inside of table when allowImplicit is set to false', function() {
+    var table = document.createElement('table');
+    var node = document.createElement('tr');
+    node.setAttribute('role', 'row');
+    table.appendChild(node);
+    flatTreeSetup(node);
+    var actual = getElementUnallowedRoles(node, false);
+    assert.isNotEmpty(actual);
+    assert.include(actual, 'row');
+  });
+
   it('returns true for a SerialVirtualNode of INPUT with type checkbox and aria-pressed attribute', function() {
     var vNode = new axe.SerialVirtualNode({
       nodeName: 'input',
