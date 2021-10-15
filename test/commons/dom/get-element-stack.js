@@ -572,5 +572,20 @@ describe('dom.getElementStack', function() {
       var stack = mapToIDs(getElementStack(target));
       assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
     });
+
+    it('should use correct scroll region parent', function() {
+      fixture.innerHTML =
+        '<div id="1" style="overflow: scroll; height: 50px;">' +
+        '<div id="2" style="overflow: scroll; height: 100px;">' +
+        '<div id="3">' +
+        '<div id="target" style="margin-top: 200px;">text</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#target');
+      var stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
+    });
   });
 });
