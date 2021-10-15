@@ -154,6 +154,18 @@ describe('dom.visuallyContains', function() {
     assert.isFalse(result);
   });
 
+  it('should allow subpixel contains due to rounding', function() {
+    var target = queryFixture(
+      '<div id="parent" style="width: 200px; height: 200px;">' +
+        '<div id="target" style="margin-left: -0.1px; margin-top: -0.9px; width: 200.5px; height: 200.9px">Some text</div>' +
+        '</div>'
+    );
+
+    var parent = fixture.querySelector('#parent');
+    var result = axe.commons.dom.visuallyContains(target.actualNode, parent);
+    assert.isTrue(result);
+  });
+
   (shadowSupported ? it : xit)(
     'should return true when element is visually contained across shadow boundary',
     function() {
