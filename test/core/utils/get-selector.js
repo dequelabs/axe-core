@@ -523,6 +523,20 @@ describe('axe.utils.getSelector', function() {
     assert.equal(axe.utils.getSelector(link2), 'a[href$="1 Seater"]');
   });
 
+  it('should work with special characters in attribute', function() {
+    var div1 = document.createElement('div');
+    div1.setAttribute('data-thing', 'foobar');
+
+    var div2 = document.createElement('div');
+    div2.setAttribute('data-thing', '!@#$%^&*()_+[]\\;\',./{}|:"<>?');
+
+    fixtureSetup([div1, div2]);
+    assert.equal(
+      axe.utils.getSelector(div2),
+      'div[data-thing="!@#$%^&*()_+[]\\\\;\',./{}|:\\"<>?"]'
+    );
+  });
+
   it('should not generate universal selectors', function() {
     var node = document.createElement('div');
     node.setAttribute('role', 'menuitem');
