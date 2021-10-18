@@ -1,5 +1,8 @@
 describe('axe.utils.getSelector', function() {
   'use strict';
+  before(function() {
+    axe.setup();
+  });
   it('should work on namespaced elements', function() {
     var fixture = document.querySelector('#fixture');
     var node = fixture.firstElementChild;
