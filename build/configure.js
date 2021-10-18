@@ -3,12 +3,12 @@
 'use strict';
 
 var clone = require('clone');
-var dot = require('@deque/dot');
+var doT = require('@deque/dot');
 var templates = require('./templates');
 var buildManual = require('./build-manual');
 var entities = new (require('html-entities').AllHtmlEntities)();
 var packageJSON = require('../package.json');
-var dotRegex = /\{\{.+?\}\}/g;
+var doTRegex = /\{\{.+?\}\}/g;
 
 var axeVersion = packageJSON.version.substring(
   0,
@@ -18,7 +18,9 @@ var axeVersion = packageJSON.version.substring(
 var descriptionTableHeader =
   '| Rule ID | Description | Impact | Tags | Issue Type | ACT Rules |\n| :------- | :------- | :------- | :------- | :------- | :------- |\n';
 
-dot.templateSettings.strip = false;
+// prevent striping newline characters from strings (e.g. failure
+// summaries). must be synced with lib/core/imports/index.js
+doT.templateSettings.strip = false;
 
 function getLocale(grunt, options) {
   var localeFile;
@@ -120,17 +122,17 @@ function buildRules(grunt, options, commons, callback) {
           // objects handled later in publish-metadata.js
           if (
             typeof result.messages[key] !== 'object' &&
-            dotRegex.test(result.messages[key])
+            doTRegex.test(result.messages[key])
           ) {
-            result.messages[key] = dot
+            result.messages[key] = doT
               .template(result.messages[key])
               .toString();
           }
         });
       }
       //TODO this is actually failureSummaries, property name should better reflect that
-      if (result.failureMessage && dotRegex.test(result.failureMessage)) {
-        result.failureMessage = dot.template(result.failureMessage).toString();
+      if (result.failureMessage && doTRegex.test(result.failureMessage)) {
+        result.failureMessage = doT.template(result.failureMessage).toString();
       }
       return result;
     }
@@ -150,9 +152,9 @@ function buildRules(grunt, options, commons, callback) {
       summaries.forEach(function(summary) {
         if (
           summary.incompleteFallbackMessage &&
-          dotRegex.test(summary.incompleteFallbackMessage)
+          doTRegex.test(summary.incompleteFallbackMessage)
         ) {
-          result = dot.template(summary.incompleteFallbackMessage).toString();
+          result = doT.template(summary.incompleteFallbackMessage).toString();
         }
       });
       return result;
