@@ -206,7 +206,6 @@ describe('Configure Options', function() {
       iframe.src = '/test/mock/frames/context.html';
       iframe.onload = function() {
         axe.configure(config);
-        iframe.contentWindow.axe.configure(config);
 
         axe.run(
           '#target',
@@ -247,7 +246,6 @@ describe('Configure Options', function() {
       iframe.src = '/test/mock/frames/noHtml-config.html';
       iframe.onload = function() {
         axe.configure(config);
-        iframe.contentWindow.axe.configure(config);
 
         axe.run('#target', {
           runOnly: {
