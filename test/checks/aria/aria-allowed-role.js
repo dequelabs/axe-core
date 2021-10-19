@@ -135,6 +135,82 @@ describe('aria-allowed-role', function() {
     assert.deepEqual(checkContext._data, ['none']);
   });
 
+  it('returns true when img has aria-label and a valid role, role="button"', function() {
+    var vNode = queryFixture(
+      '<img id="target" aria-label="foo" role="button"/>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-role')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNull(checkContext._data, null);
+  });
+
+  it('returns false when img has aria-label and a invalid role, role="alert"', function() {
+    var vNode = queryFixture(
+      '<img id="target" aria-label="foo" role="alert"/>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-role')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, ['alert']);
+  });
+
+  it('returns true when img has aria-labelledby and a valid role, role="button"', function() {
+    var vNode = queryFixture(
+      '<div id="foo">hello world</div>' +
+        '<img id="target" aria-labelledby="foo" role="button"/>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-role')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNull(checkContext._data, null);
+  });
+
+  it('returns false when img has aria-labelledby and a invalid role, role="alert"', function() {
+    var vNode = queryFixture(
+      '<div id="foo">hello world</div>' +
+        '<img id="target" aria-labelledby="foo" role="alert"/>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-role')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, ['alert']);
+  });
+
+  it('returns true when img has title and a valid role, role="button"', function() {
+    var vNode = queryFixture(
+      '<div id="foo">hello world</div>' +
+        '<img id="target" title="foo" role="button"/>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-role')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNull(checkContext._data, null);
+  });
+
+  it('returns false when img has title and a invalid role, role="alert"', function() {
+    var vNode = queryFixture(
+      '<div id="foo">hello world</div>' +
+        '<img id="target" title="foo" role="alert"/>'
+    );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-role')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, ['alert']);
+  });
+
   it('returns true when input of type image and no role', function() {
     var vNode = queryFixture('<input id="target" type="image"/>');
     assert.isTrue(
