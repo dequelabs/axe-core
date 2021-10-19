@@ -102,7 +102,7 @@
     ["#fail-text-2"],
     ["#fail-text-3"],
     ["#fail-text-4"],
-    ["#fail-img-ivalid-role-aria-label"],
+    ["#fail-img-invalid-role-aria-label"],
     ["#fail-img-invalid-role-title"],
     ["#fail-img-invalid-role-aria-labelledby"]
   ],
