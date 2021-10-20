@@ -44,3 +44,82 @@ describe('color.flattenColors', function() {
     assert.equal(flat6.alpha, 0.625);
   });
 });
+
+describe('color.flattenColors blend functions', function() {
+  'use strict';
+
+  var colourOne = new axe.commons.color.Color(216, 22, 22, 1);
+  var colourTwo = new axe.commons.color.Color(114, 129, 114, 0.25);
+
+  it('should flatten colors correctly using blend mode: multiply', function() {
+    var flatten = axe.commons.color.flattenColors(
+      colourTwo,
+      colourOne,
+      'multiply'
+    );
+    assert.equal(flatten.red, 186);
+    assert.equal(flatten.green, 19);
+    assert.equal(flatten.blue, 19);
+    assert.equal(flatten.alpha, 1);
+  });
+
+  it('should flatten colors correctly using blend mode: screen', function() {
+    var flatten = axe.commons.color.flattenColors(
+      colourTwo,
+      colourOne,
+      'screen'
+    );
+    assert.equal(flatten.red, 220);
+    assert.equal(flatten.green, 51);
+    assert.equal(flatten.blue, 48);
+    assert.equal(flatten.alpha, 1);
+  });
+
+  it('should flatten colors correctly using blend mode: darken', function() {
+    var flatten = axe.commons.color.flattenColors(
+      colourTwo,
+      colourOne,
+      'darken'
+    );
+    assert.equal(flatten.red, 191);
+    assert.equal(flatten.green, 22);
+    assert.equal(flatten.blue, 22);
+    assert.equal(flatten.alpha, 1);
+  });
+
+  it('should flatten colors correctly using blend mode: lighten', function() {
+    var flatten = axe.commons.color.flattenColors(
+      colourTwo,
+      colourOne,
+      'lighten'
+    );
+    assert.equal(flatten.red, 216);
+    assert.equal(flatten.green, 49);
+    assert.equal(flatten.blue, 45);
+    assert.equal(flatten.alpha, 1);
+  });
+
+  it('should flatten colors correctly using blend mode: difference', function() {
+    var flatten = axe.commons.color.flattenColors(
+      colourTwo,
+      colourOne,
+      'difference'
+    );
+    assert.equal(flatten.red, 188);
+    assert.equal(flatten.green, 43);
+    assert.equal(flatten.blue, 40);
+    assert.equal(flatten.alpha, 1);
+  });
+
+  it('should flatten colors correctly using blend mode: exclusion', function() {
+    var flatten = axe.commons.color.flattenColors(
+      colourTwo,
+      colourOne,
+      'exclusion'
+    );
+    assert.equal(flatten.red, 196);
+    assert.equal(flatten.green, 49);
+    assert.equal(flatten.blue, 46);
+    assert.equal(flatten.alpha, 1);
+  });
+});
