@@ -103,11 +103,23 @@ describe('color.flattenColors blend functions', function() {
     var flatten = axe.commons.color.flattenColors(
       colourTwo,
       colourOne,
-      'colorDodge'
+      'color-dodge'
     );
     assert.equal(flatten.red, 226);
     assert.equal(flatten.green, 28);
     assert.equal(flatten.blue, 26);
+    assert.equal(flatten.alpha, 1);
+  });
+
+  it('should flatten colors correctly using blend mode: color-burn', function() {
+    var flatten = axe.commons.color.flattenColors(
+      colourTwo,
+      colourOne,
+      'color-burn'
+    );
+    assert.equal(flatten.red, 204);
+    assert.equal(flatten.green, 17);
+    assert.equal(flatten.blue, 17);
     assert.equal(flatten.alpha, 1);
   });
 
