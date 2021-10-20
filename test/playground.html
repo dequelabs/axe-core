@@ -1,8 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
   <title>O hai</title>
+  <style>
+    body {
+      margin: 4rem 2rem;
+    }
 
-  <div class="foo" id="foo">foo</div>
+    #fixture {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    #fixture > div {
+      display: flex;
+      flex-direction: row;
+      border: 1px solid white;
+    }
+
+    #fixture * {
+      width: 100px;
+      height: 100px;
+      flex-shrink: 0;
+    }
+  </style>
+
+  <body>
+    <div id="fixture">
+      <div id="test1">
+        <div style="background-color: rgb(216, 22, 22);">
+          <div
+            style="background-color: rgba(114, 129, 114, 0.25);mix-blend-mode: multiply;"
+          >
+            Hello World
+          </div>
+        </div>
+        <div id="test1-result">Test1 result</div>
+      </div>
+    </div>
+  </body>
 
   <script src="/axe.js"></script>
   <script>
