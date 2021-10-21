@@ -75,6 +75,18 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.alpha, 1);
   });
 
+  it('should flatten colors correctly using blend mode: overlay', function() {
+    var flatten = axe.commons.color.flattenColors(
+      colourTwo,
+      colourOne,
+      'overlay'
+    );
+    assert.equal(flatten.red, 215);
+    assert.equal(flatten.green, 22);
+    assert.equal(flatten.blue, 21);
+    assert.equal(flatten.alpha, 1);
+  });
+
   it('should flatten colors correctly using blend mode: darken', function() {
     var flatten = axe.commons.color.flattenColors(
       colourTwo,
