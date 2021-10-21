@@ -44,7 +44,7 @@ describe('text.subtreeText', function() {
     );
     var children = axe._tree[0].children;
     assert.lengthOf(children, 5);
-    children.forEach(function (embeddedContent) {
+    Array.from(children).forEach(function (embeddedContent) {
       assert.equal(subtreeText(embeddedContent), '');
     });
   });
