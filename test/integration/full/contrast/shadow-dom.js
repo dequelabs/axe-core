@@ -13,12 +13,13 @@ describe('color-contrast shadow dom test', function() {
         '<div><label style="color:#ccc;">Text<input type="text"></label></div>' +
         '<div style="background-color:black; height:20px;">' +
         '<div style="color:#666; position:absolute;">Text</div>' +
-        '</div>';
+        '</div>' +
+        '<div style="background-color:black; color:#888888">Passes WCAG AA, fails WCAG AAA.</div>';
     }
   });
   
   describe('violations', function() {
-    (shadowSupported ? it : xit)('should find issues in shadow tree', function(
+    (shadowSupported ? it : xit)('should find WCAG AA issues in shadow tree', function(
       done
     ) {
       axe.run(
@@ -31,6 +32,32 @@ describe('color-contrast shadow dom test', function() {
           assert.equal(
             results.violations[0].nodes[1].any[0].data.bgColor,
             '#000000'
+          );
+          assert.lengthOf(results.incomplete, 0);
+          done();
+        }
+      );
+    });
+  });
+  
+  describe('violations', function() {
+    (shadowSupported ? it : xit)('should find WCAG AAA issues in shadow tree', function(
+      done
+    ) {
+      axe.run(
+        '#fixture',
+        { runOnly: { type: 'rule', values: ['color-contrast-enhanced'] } },
+        function(err, results) {
+          assert.isNull(err);
+          assert.lengthOf(results.violations, 1);
+          assert.lengthOf(results.violations[0].nodes, 5);
+          assert.equal(
+            results.violations[0].nodes[3].any[0].data.bgColor,
+            '#000000'
+          );
+          assert.equal(
+            results.violations[0].nodes[4].any[0].data.fgColor,
+            '#888888'
           );
           assert.lengthOf(results.incomplete, 0);
           done();
