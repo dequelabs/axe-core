@@ -45,7 +45,7 @@ describe('color.flattenColors', function() {
   });
 });
 
-describe('color.flattenColors blend functions', function() {
+describe('color.flattenColors mix-blend-mode functions', function() {
   'use strict';
 
   var colourOne = new axe.commons.color.Color(216, 22, 22, 1);
@@ -120,6 +120,18 @@ describe('color.flattenColors blend functions', function() {
     assert.equal(flatten.red, 204);
     assert.equal(flatten.green, 17);
     assert.equal(flatten.blue, 17);
+    assert.equal(flatten.alpha, 1);
+  });
+
+  it('should flatten colors correctly using blend mode: hard-light', function() {
+    var flatten = axe.commons.color.flattenColors(
+      colourTwo,
+      colourOne,
+      'hard-light'
+    );
+    assert.equal(flatten.red, 210);
+    assert.equal(flatten.green, 23);
+    assert.equal(flatten.blue, 21);
     assert.equal(flatten.alpha, 1);
   });
 
