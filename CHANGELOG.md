@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.2.4](https://github.com/dequelabs/axe-core/compare/v4.2.3...v4.2.4) (2021-10-22)
+
+### Bug Fixes
+
+- **axe.run:** add option to increase iframe ping timeout ([#3233](https://github.com/dequelabs/axe-core/issues/3233)) ([99a848e](https://github.com/dequelabs/axe-core/commit/99a848e785793782b264aa55cd71f5a35c5677c9))
+
 ### [4.2.3](https://github.com/dequelabs/axe-core/compare/v4.2.2...v4.2.3) (2021-06-22)
 
 ### Bug Fixes
