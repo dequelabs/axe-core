@@ -5,8 +5,8 @@
   "tags": ["cat.tables", "wcag2a", "wcag131", "section508", "section508.22.g"],
   "actIds": ["d0f69e"],
   "metadata": {
-    "description": "Ensure that each table header in a data table refers to data cells",
-    "help": "All th elements and elements with role=columnheader/rowheader must have data cells they describe"
+    "description": "Ensure that <th> elements and elements with role=columnheader/rowheader have data cells they describe",
+    "help": "Table headers in a data table must refer to data cells"
   },
   "all": ["th-has-data-cells"],
   "any": [],

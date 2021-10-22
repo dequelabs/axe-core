@@ -5,7 +5,7 @@
   "tags": ["cat.structure", "experimental", "review-item", "best-practice"],
   "metadata": {
     "description": "Informs users about hidden content.",
-    "help": "Hidden content on the page cannot be analyzed"
+    "help": "Hidden content on the page should be analyzed"
   },
   "all": [],
   "any": ["hidden-content"],
