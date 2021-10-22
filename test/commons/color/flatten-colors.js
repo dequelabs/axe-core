@@ -66,8 +66,8 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.alpha, 1);
 
     var flattenTwo = axe.commons.color.flattenColors(
-      colourThree,
       colourFour,
+      colourThree,
       'multiply'
     );
     assert.equal(flattenTwo.red, 153);
@@ -88,8 +88,8 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.alpha, 1);
 
     var flattenTwo = axe.commons.color.flattenColors(
-      colourThree,
       colourFour,
+      colourThree,
       'screen'
     );
     assert.equal(flattenTwo.red, 221);
@@ -122,8 +122,8 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.alpha, 1);
 
     var flattenTwo = axe.commons.color.flattenColors(
-      colourThree,
       colourFour,
+      colourThree,
       'darken'
     );
     assert.equal(flattenTwo.red, 163);
@@ -144,8 +144,8 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.alpha, 1);
 
     var flattenTwo = axe.commons.color.flattenColors(
-      colourThree,
       colourFour,
+      colourThree,
       'lighten'
     );
     assert.equal(flattenTwo.red, 211);
@@ -166,8 +166,8 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.alpha, 1);
 
     var flattenTwo = axe.commons.color.flattenColors(
-      colourThree,
       colourFour,
+      colourThree,
       'color-dodge'
     );
     assert.equal(flattenTwo.red, 233);
@@ -186,6 +186,16 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.green, 17);
     assert.equal(flatten.blue, 17);
     assert.equal(flatten.alpha, 1);
+
+    var flattenTwo = axe.commons.color.flattenColors(
+      colourFour,
+      colourThree,
+      'color-burn'
+    );
+    assert.equal(flattenTwo.red, 184);
+    assert.equal(flattenTwo.green, 162);
+    assert.equal(flattenTwo.blue, 90);
+    assert.equal(flattenTwo.alpha, 1);
   });
 
   it('should flatten colors correctly using blend mode: hard-light', function() {
@@ -198,6 +208,16 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.green, 23);
     assert.equal(flatten.blue, 21);
     assert.equal(flatten.alpha, 1);
+
+    var flattenTwo = axe.commons.color.flattenColors(
+      colourFour,
+      colourThree,
+      'hard-light'
+    );
+    assert.equal(flattenTwo.red, 201);
+    assert.equal(flattenTwo.green, 209);
+    assert.equal(flattenTwo.blue, 90);
+    assert.equal(flattenTwo.alpha, 1);
   });
 
   it('should flatten colors correctly using blend mode: soft-light', function() {
@@ -210,6 +230,16 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.green, 22);
     assert.equal(flatten.blue, 21);
     assert.equal(flatten.alpha, 1);
+
+    var flattenTwo = axe.commons.color.flattenColors(
+      colourFour,
+      colourThree,
+      'soft-light'
+    );
+    assert.equal(flattenTwo.red, 209);
+    assert.equal(flattenTwo.green, 183);
+    assert.equal(flattenTwo.blue, 154);
+    assert.equal(flattenTwo.alpha, 1);
   });
 
   it('should flatten colors correctly using blend mode: difference', function() {
@@ -222,6 +252,16 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.green, 43);
     assert.equal(flatten.blue, 40);
     assert.equal(flatten.alpha, 1);
+
+    var flattenTwo = axe.commons.color.flattenColors(
+      colourFour,
+      colourThree,
+      'difference'
+    );
+    assert.equal(flattenTwo.red, 154);
+    assert.equal(flattenTwo.green, 128);
+    assert.equal(flattenTwo.blue, 180);
+    assert.equal(flattenTwo.alpha, 1);
   });
 
   it('should flatten colors correctly using blend mode: exclusion', function() {
@@ -234,5 +274,15 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.green, 49);
     assert.equal(flatten.blue, 46);
     assert.equal(flatten.alpha, 1);
+
+    var flattenTwo = axe.commons.color.flattenColors(
+      colourFour,
+      colourThree,
+      'exclusion'
+    );
+    assert.equal(flattenTwo.red, 173);
+    assert.equal(flattenTwo.green, 128);
+    assert.equal(flattenTwo.blue, 180);
+    assert.equal(flattenTwo.alpha, 1);
   });
 });
