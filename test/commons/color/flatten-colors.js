@@ -51,6 +51,9 @@ describe('color.flattenColors mix-blend-mode functions', function() {
   var colourOne = new axe.commons.color.Color(216, 22, 22, 1);
   var colourTwo = new axe.commons.color.Color(114, 129, 114, 0.25);
 
+  var colourThree = new axe.commons.color.Color(211, 162, 180, 1);
+  var colourFour = new axe.commons.color.Color(115, 255, 0, 0.5);
+
   it('should flatten colors correctly using blend mode: multiply', function() {
     var flatten = axe.commons.color.flattenColors(
       colourTwo,
@@ -61,6 +64,16 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.green, 19);
     assert.equal(flatten.blue, 19);
     assert.equal(flatten.alpha, 1);
+
+    var flattenTwo = axe.commons.color.flattenColors(
+      colourThree,
+      colourFour,
+      'multiply'
+    );
+    assert.equal(flattenTwo.red, 153);
+    assert.equal(flattenTwo.green, 162);
+    assert.equal(flattenTwo.blue, 90);
+    assert.equal(flattenTwo.alpha, 1);
   });
 
   it('should flatten colors correctly using blend mode: screen', function() {
@@ -73,6 +86,16 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.green, 51);
     assert.equal(flatten.blue, 48);
     assert.equal(flatten.alpha, 1);
+
+    var flattenTwo = axe.commons.color.flattenColors(
+      colourThree,
+      colourFour,
+      'screen'
+    );
+    assert.equal(flattenTwo.red, 221);
+    assert.equal(flattenTwo.green, 209);
+    assert.equal(flattenTwo.blue, 180);
+    assert.equal(flattenTwo.alpha, 1);
   });
 
   it('should flatten colors correctly using blend mode: overlay', function() {
@@ -97,6 +120,16 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.green, 22);
     assert.equal(flatten.blue, 22);
     assert.equal(flatten.alpha, 1);
+
+    var flattenTwo = axe.commons.color.flattenColors(
+      colourThree,
+      colourFour,
+      'darken'
+    );
+    assert.equal(flattenTwo.red, 163);
+    assert.equal(flattenTwo.green, 162);
+    assert.equal(flattenTwo.blue, 90);
+    assert.equal(flattenTwo.alpha, 1);
   });
 
   it('should flatten colors correctly using blend mode: lighten', function() {
@@ -109,6 +142,16 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.green, 49);
     assert.equal(flatten.blue, 45);
     assert.equal(flatten.alpha, 1);
+
+    var flattenTwo = axe.commons.color.flattenColors(
+      colourThree,
+      colourFour,
+      'lighten'
+    );
+    assert.equal(flattenTwo.red, 211);
+    assert.equal(flattenTwo.green, 209);
+    assert.equal(flattenTwo.blue, 180);
+    assert.equal(flattenTwo.alpha, 1);
   });
 
   it('should flatten colors correctly using blend mode: color-dodge', function() {
@@ -121,6 +164,16 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     assert.equal(flatten.green, 28);
     assert.equal(flatten.blue, 26);
     assert.equal(flatten.alpha, 1);
+
+    var flattenTwo = axe.commons.color.flattenColors(
+      colourThree,
+      colourFour,
+      'color-dodge'
+    );
+    assert.equal(flattenTwo.red, 233);
+    assert.equal(flattenTwo.green, 209);
+    assert.equal(flattenTwo.blue, 180);
+    assert.equal(flattenTwo.alpha, 1);
   });
 
   it('should flatten colors correctly using blend mode: color-burn', function() {
@@ -143,6 +196,18 @@ describe('color.flattenColors mix-blend-mode functions', function() {
     );
     assert.equal(flatten.red, 210);
     assert.equal(flatten.green, 23);
+    assert.equal(flatten.blue, 21);
+    assert.equal(flatten.alpha, 1);
+  });
+
+  it('should flatten colors correctly using blend mode: soft-light', function() {
+    var flatten = axe.commons.color.flattenColors(
+      colourTwo,
+      colourOne,
+      'soft-light'
+    );
+    assert.equal(flatten.red, 215);
+    assert.equal(flatten.green, 22);
     assert.equal(flatten.blue, 21);
     assert.equal(flatten.alpha, 1);
   });
