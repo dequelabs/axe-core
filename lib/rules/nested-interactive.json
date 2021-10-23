@@ -4,8 +4,8 @@
   "tags": ["cat.keyboard", "wcag2a", "wcag412"],
   "actIds": ["307n5z"],
   "metadata": {
-    "description": "Ensure controls are not nested as they are not announced by screen readers",
-    "help": "Interactive controls must not be nested"
+    "description": "Nested interactive controls are not always announced by screen readers or can cause focus problems for screen readers",
+    "help": "Ensure interactive controls are not nested"
   },
   "all": [],
   "any": ["no-focusable-content"],

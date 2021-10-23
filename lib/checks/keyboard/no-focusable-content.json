@@ -7,7 +7,7 @@
       "pass": "Element does not have focusable descendants",
       "fail": {
         "default": "Element has focusable descendants",
-        "notHidden": "Using negative tabindex is not a reliable way of hiding interactive elements"
+        "notHidden": "Using tabindex=-1 on an element inside an interactive control does not prevent a screen reader from focusing the element (even with 'aria-hidden=true')"
       },
       "incomplete": "Could not determine if element has descendants"
     }
