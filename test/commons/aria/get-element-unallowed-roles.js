@@ -14,7 +14,7 @@ describe('aria.getElementUnallowedRoles', function() {
     assert.include(actual, role);
   });
 
-  it('allow type=checkbox and aria-pressed attr on input elm', function() {
+  it('returns empty on type=checkbox and aria-pressed attr on input elm', function() {
     var node = document.createElement('input');
     node.setAttribute('type', 'checkbox');
     node.setAttribute('aria-pressed', '');
@@ -32,7 +32,7 @@ describe('aria.getElementUnallowedRoles', function() {
     assert.isNotEmpty(actual, role);
   });
 
-  it('allow role=menuitemcheckbox with type=button on input elm', function() {
+  it('returns empty on role=menuitemcheckbox with type=button on input elm', function() {
     var node = document.createElement('input');
     var role = 'menuitemcheckbox';
     node.setAttribute('role', role);
@@ -52,7 +52,7 @@ describe('aria.getElementUnallowedRoles', function() {
     assert.include(actual, role);
   });
 
-  it('allow role=menuitemradio and type=radio on input elm', function() {
+  it('returns empty on role=menuitemradio and type=radio on input elm', function() {
     var node = document.createElement('input');
     var role = 'menuitemradio';
     node.setAttribute('role', role);
@@ -71,16 +71,7 @@ describe('aria.getElementUnallowedRoles', function() {
     assert.isEmpty(actual, role);
   });
 
-  it('returns false with implicit role of row for TR when allowImplicit is set to false via options', function() {
-    var node = document.createElement('tr');
-    node.setAttribute('role', 'row');
-    flatTreeSetup(node);
-    var actual = getElementUnallowedRoles(node, false);
-    assert.isNotEmpty(actual);
-    assert.include(actual, 'row');
-  });
-
-  it('allow role=button on div elm when role is not implicit and allowImplicit: false', function() {
+  it('returns empty on role=button on div elm when role is not implicit and allowImplicit: false', function() {
     var node = document.createElement('div');
     node.setAttribute('role', 'button');
     flatTreeSetup(node);
@@ -104,7 +95,7 @@ describe('aria.getElementUnallowedRoles', function() {
     assert.isNotEmpty(actual, 'banner');
   });
 
-  it('allow role=contentinfo on footer elm when allowImplicit:true', function() {
+  it('returns empty on role=contentinfo on footer elm when allowImplicit:true', function() {
     var node = document.createElement('footer');
     node.setAttribute('role', 'contentinfo');
     flatTreeSetup(node);
@@ -112,7 +103,7 @@ describe('aria.getElementUnallowedRoles', function() {
     assert.isEmpty(actual);
   });
 
-  it('allow role=banner on header elm when allowImplicit:true', function() {
+  it('returns empty on role=banner on header elm when allowImplicit:true', function() {
     var node = document.createElement('header');
     node.setAttribute('role', 'banner');
     flatTreeSetup(node);
@@ -120,30 +111,7 @@ describe('aria.getElementUnallowedRoles', function() {
     assert.isEmpty(actual);
   });
 
-  it('return false with implicit role of row for TR inside table[role=grid] when allowImplicit is set to false', function() {
-    var table = document.createElement('table');
-    table.setAttribute('role', 'grid');
-    var node = document.createElement('tr');
-    node.setAttribute('role', 'row');
-    table.appendChild(node);
-    flatTreeSetup(node);
-    var actual = getElementUnallowedRoles(node, false);
-    assert.isNotEmpty(actual);
-    assert.include(actual, 'row');
-  });
-
-  it('return false with implicit role of row for TR inside of table when allowImplicit is set to false', function() {
-    var table = document.createElement('table');
-    var node = document.createElement('tr');
-    node.setAttribute('role', 'row');
-    table.appendChild(node);
-    flatTreeSetup(node);
-    var actual = getElementUnallowedRoles(node, false);
-    assert.isNotEmpty(actual);
-    assert.include(actual, 'row');
-  });
-
-  it('allow type=checkbox and aria-pressed attr on SerialVirtualNode with a input elm', function() {
+  it('returns empty on type=checkbox and aria-pressed attr on SerialVirtualNode with a input elm', function() {
     var vNode = new axe.SerialVirtualNode({
       nodeName: 'input',
       attributes: {
