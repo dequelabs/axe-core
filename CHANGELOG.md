@@ -96,6 +96,12 @@ All notable changes to this project will be documented in this file. See [standa
 - treat input with no role as textbox ([#2929](https://github.com/dequelabs/axe-core/issues/2929)) ([13d909d](https://github.com/dequelabs/axe-core/commit/13d909dd12dc40ab9ed448793aef5031e207d429))
 - **types:** make `evaluate` check optional ([#2902](https://github.com/dequelabs/axe-core/issues/2902)) ([417f572](https://github.com/dequelabs/axe-core/commit/417f5724112e46f128efd5f56da9f891bf1e938c))
 
+### [4.2.4](https://github.com/dequelabs/axe-core/compare/v4.2.3...v4.2.4) (2021-10-22)
+
+### Bug Fixes
+
+- **axe.run:** add option to increase iframe ping timeout ([#3233](https://github.com/dequelabs/axe-core/issues/3233)) ([99a848e](https://github.com/dequelabs/axe-core/commit/99a848e785793782b264aa55cd71f5a35c5677c9))
+
 ### [4.2.3](https://github.com/dequelabs/axe-core/compare/v4.2.2...v4.2.3) (2021-06-22)
 
 ### Bug Fixes
