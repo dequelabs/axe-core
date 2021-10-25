@@ -2,6 +2,7 @@ describe('text.formControlValue', function() {
   var formControlValue = axe.commons.text.formControlValue;
   var queryFixture = axe.testUtils.queryFixture;
   var fixtureSetup = axe.testUtils.fixtureSetup;
+  var injectIntoFixture = axe.testUtils.injectIntoFixture;
   var fixture = document.querySelector('#fixture');
 
   function getNodeType(node) {
@@ -146,6 +147,19 @@ describe('text.formControlValue', function() {
           '  <option value="bar" selected>baz</option>' +
           '</select>'
       );
+      assert.equal(nativeSelectValue(target), 'baz');
+    });
+
+    it('returns the selected option text after selection', function() {
+      injectIntoFixture(
+        '<select id="target">' +
+          '  <option value="foo" selected>foo</option>' +
+          '  <option value="bar">baz</option>' +
+          '</select>'
+      );
+      fixture.querySelector('#target').value = 'bar';
+      var rootNode = axe.setup(fixture);
+      var target = axe.utils.querySelectorAll(rootNode, '#target')[0];
       assert.equal(nativeSelectValue(target), 'baz');
     });
 

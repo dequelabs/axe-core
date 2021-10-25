@@ -323,7 +323,7 @@ describe('aria-required-children', function() {
 
   it('should fail when role does not allow group', function() {
     var params = checkSetup(
-      '<div role="listbox" id="target"><ul role="group"><li role="option">Option</li></ul></div>'
+      '<div role="table" id="target"><ul role="group"><li role="row">Option</li></ul></div>'
     );
     assert.isFalse(
       axe.testUtils
