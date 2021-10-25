@@ -73,7 +73,8 @@
     ["#pass-graphics-document"],
     ["#pass-graphics-object"],
     ["#pass-graphics-symbol"],
-    ["#pass-header-banner"]
+    ["#pass-header-banner"],
+    ["#pass-footer-contentinfo"]
   ],
   "violations": [
     ["#fail-dd-no-role"],
