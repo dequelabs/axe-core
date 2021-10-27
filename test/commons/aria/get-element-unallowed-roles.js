@@ -111,13 +111,13 @@ describe('aria.getElementUnallowedRoles', function() {
     assert.isEmpty(actual);
   });
 
-  it('returns unallowed role=doc-backlink on anchor elm and allowImplicit:false', function() {
+  it('returns empty role=doc-backlink on anchor elm and allowImplicit:false', function() {
     var node = document.createElement('a');
     node.setAttribute('href', '#');
     node.setAttribute('role', 'doc-backlink');
     flatTreeSetup(node);
     var actual = getElementUnallowedRoles(node, false);
-    assert.isNotEmpty(actual, 'doc-backlink');
+    assert.isEmpty(actual);
   });
 
   it('returns empty on role=doc-backlink on anchor elm when allowImplicit:true', function() {
@@ -127,6 +127,22 @@ describe('aria.getElementUnallowedRoles', function() {
     flatTreeSetup(node);
     var actual = getElementUnallowedRoles(node);
     assert.isEmpty(actual);
+  });
+
+  it('returns unallowed role=doc-backlink on anchor elm without href attr and allowImplicit:false', function() {
+    var node = document.createElement('a');
+    node.setAttribute('role', 'doc-backlink');
+    flatTreeSetup(node);
+    var actual = getElementUnallowedRoles(node, false);
+    assert.isNotEmpty(actual, 'doc-backlink');
+  });
+
+  it('returns unallowed role=doc-backlink on anchor elm without href attr and allowImplicit:true', function() {
+    var node = document.createElement('a');
+    node.setAttribute('role', 'doc-backlink');
+    flatTreeSetup(node);
+    var actual = getElementUnallowedRoles(node);
+    assert.isNotEmpty(actual, 'doc-backlink');
   });
 
   it('returns empty on type=checkbox and aria-pressed attr on SerialVirtualNode with a input elm', function() {
