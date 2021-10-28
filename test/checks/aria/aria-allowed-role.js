@@ -159,10 +159,10 @@ describe('aria-allowed-role', function() {
     assert.deepEqual(checkContext._data, ['alert']);
   });
 
-  it('returns true when img has aria-labelledby and a valid role, role="button"', function() {
+  it('returns true when img has aria-labelledby and a valid role, role="menuitem"', function() {
     var vNode = queryFixture(
       '<div id="foo">hello world</div>' +
-        '<img id="target" aria-labelledby="foo" role="button"/>'
+        '<img id="target" aria-labelledby="foo" role="menuitem"/>'
     );
     assert.isTrue(
       axe.testUtils
@@ -172,23 +172,23 @@ describe('aria-allowed-role', function() {
     assert.isNull(checkContext._data, null);
   });
 
-  it('returns false when img has aria-labelledby and a invalid role, role="alert"', function() {
+  it('returns false when img has aria-labelledby and a invalid role, role="rowgroup"', function() {
     var vNode = queryFixture(
       '<div id="foo">hello world</div>' +
-        '<img id="target" aria-labelledby="foo" role="alert"/>'
+        '<img id="target" aria-labelledby="foo" role="rowgroup"/>'
     );
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-allowed-role')
         .call(checkContext, null, null, vNode)
     );
-    assert.deepEqual(checkContext._data, ['alert']);
+    assert.deepEqual(checkContext._data, ['rowgroup']);
   });
 
-  it('returns true when img has title and a valid role, role="button"', function() {
+  it('returns true when img has title and a valid role, role="link"', function() {
     var vNode = queryFixture(
       '<div id="foo">hello world</div>' +
-        '<img id="target" title="foo" role="button"/>'
+        '<img id="target" title="foo" role="link"/>'
     );
     assert.isTrue(
       axe.testUtils
@@ -198,17 +198,17 @@ describe('aria-allowed-role', function() {
     assert.isNull(checkContext._data, null);
   });
 
-  it('returns false when img has title and a invalid role, role="alert"', function() {
+  it('returns false when img has title and a invalid role, role="radiogroup"', function() {
     var vNode = queryFixture(
       '<div id="foo">hello world</div>' +
-        '<img id="target" title="foo" role="alert"/>'
+        '<img id="target" title="foo" role="radiogroup"/>'
     );
     assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-allowed-role')
         .call(checkContext, null, null, vNode)
     );
-    assert.deepEqual(checkContext._data, ['alert']);
+    assert.deepEqual(checkContext._data, ['radiogroup']);
   });
 
   it('returns true when input of type image and no role', function() {
