@@ -104,7 +104,8 @@
     ["#fail-text-4"],
     ["#fail-img-invalid-role-aria-label"],
     ["#fail-img-invalid-role-title"],
-    ["#fail-img-invalid-role-aria-labelledby"]
+    ["#fail-img-invalid-role-aria-labelledby"],
+    ["#fail-img-no-accessible-name-present"]
   ],
   "incomplete": [["#incomplete1"], ["#incomplete2"]]
 }
