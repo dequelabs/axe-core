@@ -57,12 +57,13 @@ describe('matches.accessibleName', function() {
       '<button id="target" aria-labelledby=""></button><div id="foo">hello world</div'
     );
     assert.isFalse(hasAccessibleName(virtualNode, true));
+  });
 
-    // split
-    var virtualNodeTwo = queryFixture(
+  it('should return false when aria-labelledby references an element that does not exist', function() {
+    var virtualNode = queryFixture(
       '<button id="target" aria-labelledby="bar"></button><div id="foo">hello world</div'
     );
-    assert.isFalse(hasAccessibleName(virtualNodeTwo, true));
+    assert.isFalse(hasAccessibleName(virtualNode, true));
   });
 
   it('should return false when aria-labelledby references an elm that does not exist', function() {
