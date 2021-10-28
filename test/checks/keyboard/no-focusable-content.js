@@ -50,6 +50,5 @@ describe('no-focusable-content tests', function() {
     assert.isFalse(check.evaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._data, { messageKey: 'notHidden' });
   });
-  
-  
+
 });
