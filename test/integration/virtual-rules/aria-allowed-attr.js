@@ -55,7 +55,7 @@ describe('aria-allowed-attr virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for non-global attributes and element with no role', function() {
+  it.skip('should fail for non-global attributes and element with no role', function() {
     var results = axe.runVirtualRule('aria-allowed-attr', {
       nodeName: 'div',
       attributes: {
