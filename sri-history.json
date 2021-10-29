@@ -290,5 +290,9 @@
   "4.3.4": {
     "axe.js": "sha256-C62RaRaF4cx65nFcFNMq5qhRPs0K3syB/x32hxSnDFM=",
     "axe.min.js": "sha256-Qw1EkY/ShOt08vZ7tZXSskZI3bQ6HGw9t9F6Rq05MAo="
+  },
+  "4.3.5": {
+    "axe.js": "sha256-pBzsgJIL4mZHcw50O3sj5f1ZYkMYLG659lHq6Qrkuzc=",
+    "axe.min.js": "sha256-PVZfyAKgcOWwy7tmB01H7BVjKLjtFW5QO94AIXxWkcw="
   }
 }
