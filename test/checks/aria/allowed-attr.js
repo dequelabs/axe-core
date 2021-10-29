@@ -59,6 +59,18 @@ describe('aria-allowed-attr', function() {
     assert.isNull(checkContext._data);
   });
 
+  it('should return true for non-global attributes if there is no role', function() {
+    var vNode = queryFixture(
+      '<div id="target" tabindex="1" aria-selected="true" aria-owns="foo"></div>'
+    );
+
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+  });
+
   it('should not report on invalid attributes', function() {
     var vNode = queryFixture(
       '<div role="dialog" id="target" tabindex="1" aria-cats="true"></div>'
