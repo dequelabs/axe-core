@@ -1,46 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <title>O hai</title>
-  <style>
-    body {
-      margin: 4rem 2rem;
-    }
 
-    #fixture {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-
-    #fixture > div {
-      display: flex;
-      flex-direction: row;
-      border: 1px solid white;
-    }
-
-    #fixture * {
-      width: 100px;
-      height: 100px;
-      flex-shrink: 0;
-    }
-  </style>
-
-  <body>
-    <div id="fixture">
-      <div id="test1">
-        <div style="background-color: rgb(211, 162, 180, 1);">
-          <div
-            style="background-color: rgba(115, 255, 0, 0.5);mix-blend-mode:color-dodge"
-          >
-            Steves
-          </div>
-        </div>
-
-        <div id="test1-result" style="background-color: rgba();">
-          Wrench
-        </div>
-      </div>
-    </div>
-  </body>
+  <div class="foo" id="foo">foo</div>
 
   <script src="/axe.js"></script>
   <script>
