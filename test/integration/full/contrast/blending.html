@@ -22,18 +22,18 @@
         margin: 4rem 2rem;
       }
 
-      #fixture {
+      .test-group {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       }
 
-      #fixture > div {
+      .test-group > div {
         display: flex;
         flex-direction: row;
         border: 1px solid white;
       }
 
-      #fixture * {
+      .test-group * {
         width: 100px;
         height: 100px;
         flex-shrink: 0;
@@ -57,128 +57,131 @@
       >
     </p>
     <div id="fixture">
-      <div id="test1">
-        <div style="background-color: rgba(255, 255, 255, 1.0);">
-          <div style="background-color: rgba(0, 128, 0, 0.25);">
-            <div
-              id="test1-target"
-              style="background-color: rgba(255, 0, 0, 0.5);"
-            >
-              Test1
-            </div>
-          </div>
-        </div>
-        <div id="test1-result">Test1 result</div>
-      </div>
-
-      <div id="test2">
-        <div style="background-color: rgba(255, 255, 255, 1.0);">
-          <div
-            id="test2-target"
-            style="background-color: rgba(255, 0, 0, 0.5);"
-          >
-            Test2
-          </div>
-        </div>
-        <div id="test2-result">Test2 result</div>
-      </div>
-
-      <div id="test3">
-        <div style="background-color: rgba(255, 255, 255, 1.0);">
-          <div
-            id="test3-target"
-            style="background-color: rgba(0, 128, 0, 0.25);"
-          >
-            Test3
-          </div>
-        </div>
-        <div id="test3-result">Test3 result</div>
-      </div>
-
-      <div id="test4">
-        <div style="background-color: red;">
-          <div style="background-color: rgba(0, 0, 255, 0.3);">
-            <div
-              id="test4-target"
-              style="background-color: rgba(0, 128, 0, 0.3);"
-            >
-              Test4
-            </div>
-          </div>
-        </div>
-        <div id="test4-result">Test4 result</div>
-      </div>
-
-      <div id="test5">
-        <div style="background-color: red;">
-          <div
-            id="test5-target"
-            style="background-color: rgba(0, 128, 0, 0.3);"
-          >
-            Test5
-          </div>
-        </div>
-        <div id="test5-result">Test5 result</div>
-      </div>
-
-      <div id="test6">
-        <div style="background-color: red;">
-          <div
-            id="test6-target"
-            style="background-color: rgba(0, 0, 255, 0.3);"
-          >
-            Test6
-          </div>
-        </div>
-        <div id="test6-result">Test6 result</div>
-      </div>
-
-      <div id="test7">
-        <div style="background-color: rgba(255, 0, 0, 0.25);">
-          <div style="background-color: rgba(255, 0, 0, 0.25);">
-            <div style="background-color: rgba(0, 255, 0, 0.25);">
+      <h2>Normal blending</h2>
+      <div class="test-group">
+        <div id="test1">
+          <div style="background-color: rgba(255, 255, 255, 1.0);">
+            <div style="background-color: rgba(0, 128, 0, 0.25);">
               <div
-                id="test7-target"
-                style="background-color: rgba(0, 255, 0, 0.25);"
+                id="test1-target"
+                style="background-color: rgba(255, 0, 0, 0.5);"
               >
-                Test7
+                Test1
               </div>
             </div>
           </div>
+          <div id="test1-result">Test1 result</div>
         </div>
-        <div id="test7-result">Test7 result</div>
-      </div>
 
-      <div id="test8">
-        <div style="background-color: rgba(255, 0, 0, 0.25);">
+        <div id="test2">
+          <div style="background-color: rgba(255, 255, 255, 1.0);">
+            <div
+              id="test2-target"
+              style="background-color: rgba(255, 0, 0, 0.5);"
+            >
+              Test2
+            </div>
+          </div>
+          <div id="test2-result">Test2 result</div>
+        </div>
+
+        <div id="test3">
+          <div style="background-color: rgba(255, 255, 255, 1.0);">
+            <div
+              id="test3-target"
+              style="background-color: rgba(0, 128, 0, 0.25);"
+            >
+              Test3
+            </div>
+          </div>
+          <div id="test3-result">Test3 result</div>
+        </div>
+
+        <div id="test4">
+          <div style="background-color: red;">
+            <div style="background-color: rgba(0, 0, 255, 0.3);">
+              <div
+                id="test4-target"
+                style="background-color: rgba(0, 128, 0, 0.3);"
+              >
+                Test4
+              </div>
+            </div>
+          </div>
+          <div id="test4-result">Test4 result</div>
+        </div>
+
+        <div id="test5">
+          <div style="background-color: red;">
+            <div
+              id="test5-target"
+              style="background-color: rgba(0, 128, 0, 0.3);"
+            >
+              Test5
+            </div>
+          </div>
+          <div id="test5-result">Test5 result</div>
+        </div>
+
+        <div id="test6">
+          <div style="background-color: red;">
+            <div
+              id="test6-target"
+              style="background-color: rgba(0, 0, 255, 0.3);"
+            >
+              Test6
+            </div>
+          </div>
+          <div id="test6-result">Test6 result</div>
+        </div>
+
+        <div id="test7">
           <div style="background-color: rgba(255, 0, 0, 0.25);">
-            <div style="background-color: rgba(0, 255, 0, 0.25);">
-              <div style="background-color: rgba(0, 255, 0, 0.10);">
-                <div style="background-color: rgba(0, 0, 255, 0.10);">
-                  <div
-                    id="test8-target"
-                    style="background-color: rgba(0, 0, 255, 0.05);"
-                  >
-                    Test8
+            <div style="background-color: rgba(255, 0, 0, 0.25);">
+              <div style="background-color: rgba(0, 255, 0, 0.25);">
+                <div
+                  id="test7-target"
+                  style="background-color: rgba(0, 255, 0, 0.25);"
+                >
+                  Test7
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="test7-result">Test7 result</div>
+        </div>
+
+        <div id="test8">
+          <div style="background-color: rgba(255, 0, 0, 0.25);">
+            <div style="background-color: rgba(255, 0, 0, 0.25);">
+              <div style="background-color: rgba(0, 255, 0, 0.25);">
+                <div style="background-color: rgba(0, 255, 0, 0.10);">
+                  <div style="background-color: rgba(0, 0, 255, 0.10);">
+                    <div
+                      id="test8-target"
+                      style="background-color: rgba(0, 0, 255, 0.05);"
+                    >
+                      Test8
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div id="test8-result">Test8 result</div>
         </div>
-        <div id="test8-result">Test8 result</div>
-      </div>
 
-      <div id="test9">
-        <div style="background-color: rgba(204, 204, 204, 0.43);">
-          <div
-            id="test9-target"
-            style="background-color: rgba(204, 204, 204, 0.43);"
-          >
-            Test9
+        <div id="test9">
+          <div style="background-color: rgba(204, 204, 204, 0.43);">
+            <div
+              id="test9-target"
+              style="background-color: rgba(204, 204, 204, 0.43);"
+            >
+              Test9
+            </div>
           </div>
+          <div id="test9-result">Test9 result</div>
         </div>
-        <div id="test9-result">Test9 result</div>
       </div>
     </div>
 

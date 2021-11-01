@@ -2,6 +2,7 @@ describe('color-contrast blending test', function() {
   var include = [];
   var resultElms = [];
   var expected = [
+    // normal
     'rgb(223, 112, 96)',
     'rgb(255, 128, 128)',
     'rgb(191, 223, 191)',
@@ -14,7 +15,7 @@ describe('color-contrast blending test', function() {
   ];
 
   var fixture = document.querySelector('#fixture');
-  var clonedFixture = fixture.cloneNode(true);
+  var testGroup = document.querySelector('.test-group');
   [
     'multiply',
     'screen',
@@ -28,7 +29,12 @@ describe('color-contrast blending test', function() {
     'difference',
     'exclusion'
   ].forEach(function(blendMode) {
-    var nodes = clonedFixture.cloneNode(true);
+    var nodes = testGroup.cloneNode(true);
+    var group = testGroup.cloneNode();
+
+    var heading = document.createElement('h2');
+    heading.textContent = blendMode;
+    fixture.appendChild(heading);
 
     Array.from(nodes.children).forEach(function(node, index) {
       var id = node.id;
@@ -44,10 +50,12 @@ describe('color-contrast blending test', function() {
       result.textContent = blendModeIndex + ' result';
 
       target.style.mixBlendMode = blendMode;
-      fixture.appendChild(node);
+      group.appendChild(node);
     });
+
+    fixture.appendChild(group);
   });
-  var testElms = Array.from(document.querySelectorAll('#fixture > div'));
+  var testElms = Array.from(document.querySelectorAll('.test-group > div'));
   testElms.forEach(function(testElm) {
     var id = testElm.id;
     var target = testElm.querySelector('#' + id + '-target');
