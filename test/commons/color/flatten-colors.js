@@ -38,8 +38,8 @@ describe('color.flattenColors', function() {
     assert.equal(flat5.alpha, 1);
 
     var flat6 = axe.commons.color.flattenColors(quarterLightGreen, halfRed);
-    assert.equal(flat6.red, 96);
-    assert.equal(flat6.green, 32);
+    assert.equal(flat6.red, 153);
+    assert.equal(flat6.green, 51);
     assert.equal(flat6.blue, 0);
     assert.equal(flat6.alpha, 0.625);
   });
