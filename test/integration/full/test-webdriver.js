@@ -188,7 +188,10 @@ function start(options) {
     options.browser === 'edge' ? 'MicrosoftEdge' : options.browser;
 
   var testUrls = globby
-    .sync(['test/integration/full/**/*.html', '!**/frames/**/*.html'])
+    .sync([
+      'test/integration/full/**/*.{html,xhtml}',
+      '!**/frames/**/*.{html,xhtml}'
+    ])
     .map(function(url) {
       return 'http://localhost:9876/' + url;
     });
