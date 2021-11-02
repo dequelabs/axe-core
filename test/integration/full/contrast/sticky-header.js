@@ -8,7 +8,7 @@ describe('color-contrast sticky header test', function() {
         { runOnly: { type: 'rule', values: ['color-contrast-enhanced', 'color-contrast'] } },
         function(err, results) {
           assert.isNull(err);
-          assert.lengthOf(results.violations, 0); 
+          assert.lengthOf(results.violations, 0);
           done();
         }
       );
