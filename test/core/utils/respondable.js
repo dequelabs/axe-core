@@ -549,6 +549,21 @@ describe('axe.utils.respondable', function() {
       );
     });
 
+    it('is not called if data is null', function (done) {
+      axe.configure({
+        allowedOrigins: ['<unsafe_all_origins>']
+      });
+      var spy = sinon.spy();
+
+      frameSubscribe('greeting', spy);
+      frameWin.postMessage(null, '*');
+
+      setTimeout(function(){
+        assert.isFalse(spy.called);
+        done();
+      }, 500);
+    });
+
     it('is not called if origin does not match', function(done) {
       axe.configure({
         allowedOrigins: ['http://customOrigin.com']
