@@ -18,13 +18,16 @@
       {
         "size": 1.4
       }
-    ]
+    ],
+    "passLength": 1,
+    "failLength": 0.5
   },
   "metadata": {
     "impact": "serious",
     "messages": {
       "pass": "<p> elements are not styled as headings",
-      "fail": "Heading elements should be used instead of styled p elements"
+      "fail": "Heading elements should be used instead of styled <p> elements",
+      "incomplete": "Unable to determine if <p> elements are styled as headings"
     }
   }
 }

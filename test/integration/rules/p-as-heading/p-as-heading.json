@@ -7,7 +7,8 @@
     ["#passed2"],
     ["#passed3"],
     ["#passed4"],
-    ["#passed5"]
+    ["#passed5"],
+    ["#passed6"]
   ],
   "incomplete": [["#canttell1"], ["#canttell2"]]
 }

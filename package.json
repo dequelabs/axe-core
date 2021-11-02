@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.3.3",
+  "version": "4.3.4",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -94,6 +94,7 @@
     "test:act": "karma start test/act-mapping/karma.config.js",
     "test:act:debug": "npm run test:act -- --no-single-run --browsers=Chrome",
     "test:locales": "mocha test/test-locales.js",
+    "test:virtual-rules": "mocha test/test-virtual-rules.js",
     "test:rule-help-version": "mocha test/test-rule-help-version.js",
     "test:node": "mocha test/node/*.js",
     "version": "echo \"use 'npm run release' to bump axe-core version\" && exit 1",

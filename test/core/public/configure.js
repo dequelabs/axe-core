@@ -573,6 +573,40 @@ describe('axe.configure', function() {
       assert.equal(localeData.incompleteFallbackMessage(), 'failed incomplete');
     });
 
+    it('should not strip newline characters from doT template', function() {
+      axe._load({
+        data: {
+          failureSummaries: {
+            any: {
+              failureMessage: function() {
+                return 'failed any';
+              }
+            }
+          }
+        }
+      });
+
+      axe.configure({
+        locale: {
+          lang: 'lol',
+          failureSummaries: {
+            any: {
+              failureMessage:
+                "Fix any of the following:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+            }
+          }
+        }
+      });
+
+      var audit = axe._audit;
+      var localeData = audit.data;
+
+      assert.equal(
+        localeData.failureSummaries.any.failureMessage(['1', '2', '3']),
+        'Fix any of the following:\n  1\n  2\n  3'
+      );
+    });
+
     describe('only given checks', function() {
       it('should not error', function() {
         assert.doesNotThrow(function() {
