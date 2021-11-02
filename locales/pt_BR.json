@@ -593,7 +593,7 @@
       "pass": "Nenhum elemento focalizável contido no elemento",
       "fail": "Conteúdo focalizável deve ter tabindex='-1' ou ser removido do DOM"
     },
-    "no-focusable-content-for-frame": {
+    "frame-focusable-content": {
       "pass": "O elemento não tem descendentes focalizáveis",
       "fail": "O elemento tem descendentes focalizáveis",
       "incomplete": "Não foi possível determinar se o elemento tem descendentes"
