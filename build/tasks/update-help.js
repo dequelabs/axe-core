@@ -9,7 +9,7 @@ module.exports = function(grunt) {
       var options = this.options({
         version: '1.0.0'
       });
-      var v = options.version.split('.');
+      var v = options.version.replace(/-\w+\.\w+$/, '').split('.');
       v.pop();
       var baseUrl =
         'https://dequeuniversity.com/rules/axe/' + v.join('.') + '/';

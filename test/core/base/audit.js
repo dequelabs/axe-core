@@ -4,7 +4,8 @@ describe('Audit', function() {
 
   var Audit = axe._thisWillBeDeletedDoNotUse.base.Audit;
   var Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
-  var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
+  var _v = axe.version.replace(/-\w+\.\w+$/, '');
+  var ver = _v.substring(0, _v.lastIndexOf('.'));
   var a, getFlattenedTree;
   var isNotCalled = function(err) {
     throw err || new Error('Reject should not be called');
@@ -1287,11 +1288,11 @@ describe('Audit', function() {
 
   describe('Audit#normalizeOptions', function() {
     var axeLog;
-    beforeEach(function () {
+    beforeEach(function() {
       axeLog = axe.log;
     });
-    afterEach(function () {
-      axe.log = axeLog;  
+    afterEach(function() {
+      axe.log = axeLog;
     });
 
     it('returns the options object when it is valid', function() {
@@ -1449,9 +1450,9 @@ describe('Audit', function() {
       });
     });
 
-    it('logs an issue when a tag is unknown', function () {
+    it('logs an issue when a tag is unknown', function() {
       var message = '';
-      axe.log = function (m) {
+      axe.log = function(m) {
         message = m;
       };
       a.normalizeOptions({
@@ -1463,9 +1464,9 @@ describe('Audit', function() {
       assert.include(message, 'Could not find tags');
     });
 
-    it('logs no issues for unknown WCAG level tags', function () {
+    it('logs no issues for unknown WCAG level tags', function() {
       var message = '';
-      axe.log = function (m) {
+      axe.log = function(m) {
         message = m;
       };
       a.normalizeOptions({
@@ -1477,9 +1478,9 @@ describe('Audit', function() {
       assert.isEmpty(message);
     });
 
-    it('logs an issue when a tag is unknown, together with a wcag level tag', function () {
+    it('logs an issue when a tag is unknown, together with a wcag level tag', function() {
       var message = '';
-      axe.log = function (m) {
+      axe.log = function(m) {
         message = m;
       };
       a.normalizeOptions({
