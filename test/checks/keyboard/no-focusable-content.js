@@ -4,9 +4,13 @@ describe('no-focusable-content tests', function() {
   var noFocusableContent = axe.testUtils.getCheckEvaluate(
     'no-focusable-content'
   );
+  var checkSetup = axe.testUtils.checkSetup;
+  var check = checks['no-focusable-content'];
+  var checkContext = new axe.testUtils.MockCheckContext();
 
   afterEach(function() {
     fixture.innerHTML = '';
+    checkContext.reset();
   });
 
   it('should return true if element has no focusable content', function() {
@@ -57,6 +61,15 @@ describe('no-focusable-content tests', function() {
         +'<span tabIndex="0">anyone is able to focus this</span> '
         +'</span>');
     assert.isFalse(noFocusableContent(null, null, vNode));
+  });
+  
+  it('should return false if element has natively focusable content with negative tabindex', function() {
+    var params = checkSetup(
+      '<button id="target"><a href="foo.html" tabindex="-1">Hello</a></button>'
+    );
+    axe.utils.getFlattenedTree(document.documentElement);
+    assert.isFalse(check.evaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, { messageKey: 'notHidden' });
   });
 
 });
