@@ -119,6 +119,16 @@ jobs:
       - run: npm run build
       - run: npm run test:act
 
+  # Run ARIA practices test cases
+  test_aria_practices:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      - run: npm run test:apg
+
   # Test locale files
   test_locales:
     <<: *defaults
@@ -140,7 +150,7 @@ jobs:
       - run: npm run test:virtual-rules
 
   # Run the test suite for nightly builds.
-  test_nightly:
+  test_nightly_chrome:
     <<: *defaults
     <<: *unix_box
     steps:
@@ -154,6 +164,18 @@ jobs:
       - run: |
           CHROME_BIN="$(which google-chrome-beta)" && echo "CHROME_BIN: $CHROME_BIN"
           npm run test -- --browsers Chrome,FirefoxNightly
+
+  # Run the test suite for nightly builds.
+  test_nightly_aria_practices:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      # install ARIA practices
+      - run: npm install w3c/aria-practices#main
+      - run: npm run test:apg
 
   # Test api docs can be built
   build_api_docs:
@@ -269,6 +291,9 @@ workflows:
       - test_act:
           requires:
             - test_unix
+      - test_aria_practices:
+          requires:
+            - test_unix
       - test_locales:
           requires:
             - test_unix
@@ -354,6 +379,9 @@ workflows:
                 - develop
     jobs:
       - dependencies_unix
-      - test_nightly:
+      - test_nightly_chrome:
+          requires:
+            - dependencies_unix
+      - test_nightly_aria_practices:
           requires:
             - dependencies_unix
