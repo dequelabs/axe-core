@@ -5,7 +5,7 @@ const express = require('express');
 const chromedriver = require('chromedriver');
 const AxeBuilder = require('@axe-core/webdriverjs');
 const testListen = require('test-listen');
-const { Webdriver, connectToChromeDriver } = require('./run-server');
+const { getWebdriver, connectToChromeDriver } = require('./run-server');
 const { assert } = require('chai');
 const globby = require('globby');
 
@@ -16,6 +16,7 @@ describe('aria-practices', function () {
   const port = 9515;
   let driver, server, addr, axeSource;
   this.timeout(50000);
+  this.retries(3);
 
   before(async () => {
     const axePath = require.resolve('../../axe.js');
@@ -28,7 +29,7 @@ describe('aria-practices', function () {
     app.use(express.static(apgPath));
     server = createServer(app);
     addr = await testListen(server);
-    driver = new Webdriver();
+    driver = getWebdriver();
   });
 
   after(async () => {
@@ -37,30 +38,24 @@ describe('aria-practices', function () {
     chromedriver.stop();
   });
 
-  // TODO: Figure out which of these need to be addressed
-  //   either in axe-core, or in aria-practices
   const disabledRules = {
     '*': [
       'color-contrast',
-      'heading-order',
-      'list',
-      'scrollable-region-focusable',
-      'region',
-      'page-has-heading-one',
+      'region', // dequelabs/axe-core#3260
+      'heading-order', // APG issues
+      'list', // APG issues
+      'scrollable-region-focusable', // w3c/aria-practices#2114
     ],
-    'index.html': ['landmark-unique'],
-    'button/button_idl.html': ['aria-allowed-attr'],
-    'js/notice.html': ['landmark-one-main'],
-    'listbox/listbox-grouped.html': [
-      'aria-required-children',
-      'aria-required-parent'
-    ],
+    'feed/feedDisplay.html': ['page-has-heading-one'], // APG issue
+    'index.html': ['landmark-unique'], // w3c/aria-practices#2115
+
+    // "page within a page" type thing going on
     'menubar/menubar-navigation.html': [
       'aria-allowed-role',
       'landmark-banner-is-top-level',
       'landmark-contentinfo-is-top-level',
     ],
-    'toolbar/help.html': ['landmark-one-main'],
+    // "page within a page" type thing going on
     'treeview/treeview-navigation.html': [
       'aria-allowed-role',
       'landmark-banner-is-top-level',
@@ -68,8 +63,8 @@ describe('aria-practices', function () {
     ]
   }
 
-  // TODO: this timed out, figure out why
-  const skippedPages = ['link/link.html'];
+  // Not an actual content file
+  const skippedPages = ['js/notice.html'];
 
   festFiles.forEach(filePath => {
     const test = skippedPages.includes(filePath) ? it.skip : it;

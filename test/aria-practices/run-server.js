@@ -2,7 +2,7 @@ const net = require('net');
 const { Builder } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
-const Webdriver = () => {
+const getWebdriver = () => {
   const webdriver = new Builder()
     .setChromeOptions(new chrome.Options().headless())
     .forBrowser('chrome')
@@ -39,5 +39,5 @@ const connectToChromeDriver = (port) => {
   });
 };
 
-module.exports.Webdriver = Webdriver
+module.exports.getWebdriver = getWebdriver
 module.exports.connectToChromeDriver = connectToChromeDriver
