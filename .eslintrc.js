@@ -110,7 +110,16 @@ module.exports = {
       }
     },
     {
+      files: [
+        'test/aria-practices/**/*.js'
+      ],
+      env: {
+        mocha: true
+      }
+    },
+    {
       files: ['test/**/*.js'],
+      excludedFiles: 'test/aria-practices/**/*.js',
       parserOptions: {
         ecmaVersion: 5
       },

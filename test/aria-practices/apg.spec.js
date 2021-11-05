@@ -28,7 +28,7 @@ describe('aria-practices', function () {
     app.use(express.static(apgPath));
     server = createServer(app);
     addr = await testListen(server);
-    driver = Webdriver();
+    driver = new Webdriver();
   });
 
   after(async () => {
