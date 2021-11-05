@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.3.3",
+  "version": "4.3.5",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -94,6 +94,7 @@
     "test:act": "karma start test/act-mapping/karma.config.js",
     "test:act:debug": "npm run test:act -- --no-single-run --browsers=Chrome",
     "test:locales": "mocha test/test-locales.js",
+    "test:virtual-rules": "mocha test/test-virtual-rules.js",
     "test:rule-help-version": "mocha test/test-rule-help-version.js",
     "test:node": "mocha test/node/**/*.spec.js",
     "test:apg": "mocha test/aria-practices/*.js",
@@ -151,12 +152,12 @@
     "karma-mocha": "^2.0.1",
     "karma-mocha-reporter": "^2.2.5",
     "karma-sinon": "^1.0.5",
-    "lint-staged": "^9.2.1",
+    "lint-staged": "^11.2.6",
     "make-dir": "^3.0.0",
     "markdown-table": "^1.1.2",
     "memoizee": "^0.4.14",
     "minami": "^1.2.3",
-    "mocha": "^6.1.2",
+    "mocha": "8.0.1",
     "node-notifier": "^8.0.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.17.1",
@@ -180,13 +181,11 @@
   },
   "lint-staged": {
     "*.{md,json,ts,html}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ],
     "*.js": [
       "eslint --fix",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   }
 }

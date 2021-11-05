@@ -56,7 +56,7 @@ declare namespace axe {
 
   type RunCallback = (error: Error, results: AxeResults) => void;
 
-  type ElementContext = Node | string | ContextObject;
+  type ElementContext = Node | NodeList | string | ContextObject;
 
   interface TestEngine {
     name: string;

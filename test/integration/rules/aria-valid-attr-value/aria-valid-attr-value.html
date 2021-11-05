@@ -51,6 +51,46 @@
   <div aria-posinset="-22" id="violation42">hi</div>
 
   <div aria-setsize="-22" id="violation43">hi</div>
+
+  <div>
+    <input
+      type="text"
+      id="violation44"
+      aria-invalid="true"
+      aria-errormessage="violation44-ref"
+    />
+    <div id="violation44-ref" hidden>Error message 1</div>
+  </div>
+
+  <div>
+    <input
+      type="text"
+      id="violation45"
+      aria-invalid="true"
+      aria-errormessage="violation45-ref"
+    />
+    <div id="violation45-ref" style="display: none">Error message 1</div>
+  </div>
+
+  <div>
+    <input
+      type="text"
+      id="violation46"
+      aria-invalid="true"
+      aria-errormessage="violation46-ref"
+    />
+    <div id="violation46-ref" style="visibility: hidden">Error message 1</div>
+  </div>
+
+  <div>
+    <input
+      type="text"
+      id="violation47"
+      aria-invalid="true"
+      aria-errormessage="violation47-ref"
+    />
+    <div id="violation47-ref" aria-hidden="true">Error message 1</div>
+  </div>
 </div>
 <h2>Possible False Positives</h2>
 <div>
@@ -275,6 +315,35 @@
   <div aria-placeholder="" id="pass184">hi</div>
   <div aria-errormessage="invalidId" id="pass185">hi</div>
   <div aria-errormessage="invalidId" aria-invalid="false" id="pass186">hi</div>
+
+  <div>
+    <input
+      type="text"
+      id="pass187"
+      aria-invalid="true"
+      aria-errormessage="pass68"
+    />
+  </div>
+
+  <div aria-live="assertive" aria-hidden="false" id="pass188">hi</div>
+
+  <div>
+    <input
+      type="text"
+      id="pass189"
+      aria-invalid="true"
+      aria-errormessage="pass188"
+    />
+  </div>
+
+  <div>
+    <input
+      type="text"
+      id="pass190"
+      aria-invalid="false"
+      aria-errormessage="violation44-ref"
+    />
+  </div>
 
   <div id="ref">Hi</div>
   <div id="ref2">Hi2</div>

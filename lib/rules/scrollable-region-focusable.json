@@ -4,8 +4,8 @@
   "tags": ["cat.keyboard", "wcag2a", "wcag211"],
   "actIds": ["0ssw9k"],
   "metadata": {
-    "description": "Elements that have scrollable content must be accessible by keyboard",
-    "help": "Ensure that scrollable region has keyboard access"
+    "description": "Ensure elements that have scrollable content are accessible by keyboard",
+    "help": "Scrollable region must have keyboard access"
   },
   "all": [],
   "any": ["focusable-content", "focusable-element"],
