@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.5](https://github.com/dequelabs/axe-core/compare/v4.3.4...v4.3.5) (2021-10-29)
+
+### Bug Fixes
+
+- **aria-allowed-attr:** revert violation for non-global ARIA attrs on element without role ([#3243](https://github.com/dequelabs/axe-core/issues/3243)) ([e138fd6](https://github.com/dequelabs/axe-core/commit/e138fd6a00a8da6c48a74a614adc5dae8f2044e1))
+
+### [4.3.4](https://github.com/dequelabs/axe-core/compare/v4.3.3...v4.3.4) (2021-10-22)
+
+### Bug Fixes
+
+- **aria-allowed-attr:** check for invalid `aria-attributes` for `role="row"` ([#3160](https://github.com/dequelabs/axe-core/issues/3160)) ([76aa5ec](https://github.com/dequelabs/axe-core/commit/76aa5ec5ac8a311b90974f0dba9cf92594f92019))
+- **aria-allowed-children,aria-allowed-parent:** allow group role in listbox ([#3195](https://github.com/dequelabs/axe-core/issues/3195)) ([d742b29](https://github.com/dequelabs/axe-core/commit/d742b299370afa23645b1292ffc15f753113e05a))
+- **aria-allowed-role:** updates the allowed roles for the wbr element to none and presentation ([#3192](https://github.com/dequelabs/axe-core/issues/3192)) ([66db765](https://github.com/dequelabs/axe-core/commit/66db765a17b5dc0904fcafe83aeb7c3eb5d60c12)), closes [#3177](https://github.com/dequelabs/axe-core/issues/3177)
+- **aria-prohibited-attr:** update metadata message ([#3206](https://github.com/dequelabs/axe-core/issues/3206)) ([f9cf9fa](https://github.com/dequelabs/axe-core/commit/f9cf9fafe10e944be643d642cffda4fc762d0fc5))
+- **axe.configure:** do not remove newline characters from locale doT strings ([#3216](https://github.com/dequelabs/axe-core/issues/3216)) ([5925898](https://github.com/dequelabs/axe-core/commit/59258984c0e52d91342040291fcc6f05ce2f135f))
+- **axe.run:** add option to increase iframe ping timeout ([#3233](https://github.com/dequelabs/axe-core/issues/3233)) ([023f356](https://github.com/dequelabs/axe-core/commit/023f356ae752c559fb3788c84b1937bd2ba047ee))
+- **color-contrast:** account for 0 width scroll regions with children ([#3172](https://github.com/dequelabs/axe-core/issues/3172)) ([ac913a1](https://github.com/dequelabs/axe-core/commit/ac913a11ddd8fd3b242a6ee500773c17fef77011))
+- **color-contrast:** account for elements that do not fill entire bounding size ([#3186](https://github.com/dequelabs/axe-core/issues/3186)) ([84229d4](https://github.com/dequelabs/axe-core/commit/84229d41969907a62876488dc7a8f070542a9fe6))
+- **color-contrast:** correctly apply page background color ([#3207](https://github.com/dequelabs/axe-core/issues/3207)) ([0ea7e1b](https://github.com/dequelabs/axe-core/commit/0ea7e1b881bb06067e98bae8ffe814605404475f))
+- **color-contrast:** correctly compute color-contrast of truncated children ([#3203](https://github.com/dequelabs/axe-core/issues/3203)) ([4adb911](https://github.com/dequelabs/axe-core/commit/4adb9119a8a1cb457db81a40534db103c14bd2a1))
+- **color-contrast:** correctly handle nested scroll regions ([#3212](https://github.com/dequelabs/axe-core/issues/3212)) ([80d91c0](https://github.com/dequelabs/axe-core/commit/80d91c01e46072ae8d36b952dfc264ef6f13eada))
+- **color-contrast:** correctly work with positioned elements without z-index ([#3209](https://github.com/dequelabs/axe-core/issues/3209)) ([0322070](https://github.com/dequelabs/axe-core/commit/03220704c9dfa6f3af8d13800f9861e16552854b))
+- greater consistency of help / description text ([#3204](https://github.com/dequelabs/axe-core/issues/3204)) ([0be12e6](https://github.com/dequelabs/axe-core/commit/0be12e62e5c0b2f1d280a7b17380281a30ae65f0))
+- Separate Level AAA rules from A and best-practices ([#3191](https://github.com/dequelabs/axe-core/issues/3191)) ([7e6e6da](https://github.com/dequelabs/axe-core/commit/7e6e6da379eb2cb852a84c4ce088df7065740b61))
+- **color-contrast:** properly blend multiple alpha colors ([#3193](https://github.com/dequelabs/axe-core/issues/3193)) ([5aa0441](https://github.com/dequelabs/axe-core/commit/5aa0441f2b33f8e1055ac32d981df4f796f7bb88))
+- **is-visible:** do not error if window.Node does not exist ([#3168](https://github.com/dequelabs/axe-core/issues/3168)) ([cf58aea](https://github.com/dequelabs/axe-core/commit/cf58aea086a7bd590838673068d34325b4e9eef7))
+- **label-title-only:** allow hidden labels ([#3183](https://github.com/dequelabs/axe-core/issues/3183)) ([ab636ef](https://github.com/dequelabs/axe-core/commit/ab636efa743ba2cbf1194b87aa27be5aba70989b))
+- **nativeSelectValue:** update selected value on change ([#3154](https://github.com/dequelabs/axe-core/issues/3154)) ([ad584a1](https://github.com/dequelabs/axe-core/commit/ad584a10fc4b6c601c887835d7c879c77dc143d9))
+- **p-as-heading:** `p-as-heading` rule to account for `textContent` length ([#3145](https://github.com/dequelabs/axe-core/issues/3145)) ([e0d4dc6](https://github.com/dequelabs/axe-core/commit/e0d4dc63bdd391a92f833d83b50644934deb7804))
+- **typescript:** allow passing a NodeList to ElementContext ([#3161](https://github.com/dequelabs/axe-core/issues/3161)) ([5f2e517](https://github.com/dequelabs/axe-core/commit/5f2e517c0038397e12c72ef322313443c25e7907))
+- check for hidden elements on `aria-errormessage` ([#3156](https://github.com/dequelabs/axe-core/issues/3156)) ([69b2e33](https://github.com/dequelabs/axe-core/commit/69b2e33b4094512f2ccfd05393b567763bba2e11))
+
 ### [4.3.3](https://github.com/dequelabs/axe-core/compare/v4.3.2...v4.3.3) (2021-08-24)
 
 ### Bug Fixes
@@ -69,6 +101,12 @@ All notable changes to this project will be documented in this file. See [standa
 - **sri-history:** add backported releases ([#3004](https://github.com/dequelabs/axe-core/issues/3004)) ([6eecf34](https://github.com/dequelabs/axe-core/commit/6eecf344751e03170bd70fe076584011b5a6cacb))
 - treat input with no role as textbox ([#2929](https://github.com/dequelabs/axe-core/issues/2929)) ([13d909d](https://github.com/dequelabs/axe-core/commit/13d909dd12dc40ab9ed448793aef5031e207d429))
 - **types:** make `evaluate` check optional ([#2902](https://github.com/dequelabs/axe-core/issues/2902)) ([417f572](https://github.com/dequelabs/axe-core/commit/417f5724112e46f128efd5f56da9f891bf1e938c))
+
+### [4.2.4](https://github.com/dequelabs/axe-core/compare/v4.2.3...v4.2.4) (2021-10-22)
+
+### Bug Fixes
+
+- **axe.run:** add option to increase iframe ping timeout ([#3233](https://github.com/dequelabs/axe-core/issues/3233)) ([99a848e](https://github.com/dequelabs/axe-core/commit/99a848e785793782b264aa55cd71f5a35c5677c9))
 
 ### [4.2.3](https://github.com/dequelabs/axe-core/compare/v4.2.2...v4.2.3) (2021-06-22)
 

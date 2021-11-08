@@ -267,6 +267,10 @@
     "axe.js": "sha256-YpHE4EYgzaX6R5zc08TtcjCwyDoQf2Dczv+W2vhkdEg=",
     "axe.min.js": "sha256-7kmyHEX64EqrQmlKiBetbDbidBg++T1OK7pJ0Ch0tVE="
   },
+  "4.2.4": {
+    "axe.js": "sha256-5COa2/D9CE8AshTHVGhvT0A1FZXaTZy+Kh0x177VAww=",
+    "axe.min.js": "sha256-rsECe0URvW9YH4nley2GHQLI7bC9Ucan8zY9AaZdyrY="
+  },
   "4.3.0": {
     "axe.js": "sha256-V36WfTm/iDPLDQHIKkUfj1lPRPloIKZxS+7syZp7gzw=",
     "axe.min.js": "sha256-zG5ql3CjWawSvMuVGJI9C8OvXR5MZAXK1IhBt83psrA="
@@ -282,5 +286,13 @@
   "4.3.3": {
     "axe.js": "sha256-Zvxy3UIxivqa1hGYQez9LNFxm6JBX826VrkGlH4x6hk=",
     "axe.min.js": "sha256-KqKNp9dAHi8QV4BZv/lB28ZJt3ROsN8Y7vVRbxewSJ8="
+  },
+  "4.3.4": {
+    "axe.js": "sha256-C62RaRaF4cx65nFcFNMq5qhRPs0K3syB/x32hxSnDFM=",
+    "axe.min.js": "sha256-Qw1EkY/ShOt08vZ7tZXSskZI3bQ6HGw9t9F6Rq05MAo="
+  },
+  "4.3.5": {
+    "axe.js": "sha256-pBzsgJIL4mZHcw50O3sj5f1ZYkMYLG659lHq6Qrkuzc=",
+    "axe.min.js": "sha256-PVZfyAKgcOWwy7tmB01H7BVjKLjtFW5QO94AIXxWkcw="
   }
 }
