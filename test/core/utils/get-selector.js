@@ -519,8 +519,10 @@ describe('axe.utils.getSelector', function() {
     var link2 = document.createElement('a');
     link2.setAttribute('href', '1 Seater');
 
+    var expected = 'a[href$="1 Seater"]';
     fixtureSetup([link1, link2]);
-    assert.equal(axe.utils.getSelector(link2), 'a[href$="1 Seater"]');
+    assert.equal(axe.utils.getSelector(link2), expected);
+    assert.isTrue(axe.utils.matchesSelector(link2, expected));
   });
 
   it('should escape certain special characters in attribute', function() {
@@ -530,11 +532,10 @@ describe('axe.utils.getSelector', function() {
     var div2 = document.createElement('div');
     div2.setAttribute('data-thing', '!@#$%^&*()_+[]\\;\',./{}|:"<>?');
 
+    var expected = 'div[data-thing="!@#$%^&*()_+[]\\\\;\',./{}|:\\"<>?"]';
     fixtureSetup([div1, div2]);
-    assert.equal(
-      axe.utils.getSelector(div2),
-      'div[data-thing="!@#$%^&*()_+[]\\\\;\',./{}|:\\"<>?"]'
-    );
+    assert.equal(axe.utils.getSelector(div2), expected);
+    assert.isTrue(axe.utils.matchesSelector(div2, expected));
   });
 
   it('should escape newline characters in attribute', function() {
@@ -544,11 +545,10 @@ describe('axe.utils.getSelector', function() {
     var div2 = document.createElement('div');
     div2.setAttribute('data-thing', '  \n\n\n');
 
+    var expected = 'div[data-thing="  \\a \\a \\a "]';
     fixtureSetup([div1, div2]);
-    assert.equal(
-      axe.utils.getSelector(div2),
-      'div[data-thing="  \\a \\a \\a "]'
-    );
+    assert.equal(axe.utils.getSelector(div2), expected);
+    assert.isTrue(axe.utils.matchesSelector(div2, expected));
   });
 
   it('should not generate universal selectors', function() {
