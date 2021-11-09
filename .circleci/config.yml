@@ -6,8 +6,6 @@ defaults: &defaults
 unix_box: &unix_box
   docker:
     - image: cimg/node:16.13-browsers
-  steps:
-    - browser-tools/install-browser-tools
 
 unix_nightly_box: &unix_nightly_box
   docker:
@@ -44,6 +42,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
@@ -80,6 +79,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
