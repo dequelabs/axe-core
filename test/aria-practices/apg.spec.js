@@ -10,7 +10,7 @@ describe('aria-practices', function () {
   // Use path.resolve rather than require.resolve because APG has no package.json
   const apgPath = path.resolve(__dirname, '../../node_modules/aria-practices/');
   const filePaths = globby.sync(`${apgPath}/examples/**/*.html`)
-  const festFiles = filePaths.map(fileName => fileName.split('/aria-practices/examples/')[1])
+  const testFiles = filePaths.map(fileName => fileName.split('/aria-practices/examples/')[1])
   const port = 9515;
   const addr = `http://localhost:9876/node_modules/aria-practices/`;
   let driver, axeSource;
@@ -61,9 +61,8 @@ describe('aria-practices', function () {
     'toolbar/help.html' // Embedded into another page
   ];
 
-  festFiles.forEach(filePath => {
-    const test = skippedPages.includes(filePath) ? it.skip : it;
-    test(`finds no issue in "${filePath}"`, async () => {
+  testFiles.filter(filePath => !skippedPages.includes(filePath)).forEach(filePath => {
+    it(`finds no issue in "${filePath}"`, async () => {
       await driver.get(`${addr}/examples/${filePath}`);
       
       const builder = new AxeBuilder(driver, axeSource);
