@@ -145,6 +145,42 @@ describe('aria.getElementUnallowedRoles', function() {
     assert.isNotEmpty(actual, 'doc-backlink');
   });
 
+  it('returns empty role=banner on header elm when using axe.configure and allowImplicit:false', function() {
+    axe.configure({
+      standards: {
+        htmlElms: {
+          header: {
+            contentTypes: 'flow',
+            allowedRoles: ['banner']
+          }
+        }
+      }
+    });
+    var node = document.createElement('header');
+    node.setAttribute('role', 'banner');
+    flatTreeSetup(node);
+    var actual = getElementUnallowedRoles(node, false);
+    assert.isEmpty(actual);
+  });
+
+  it('returns empty role=contentinfo on footer elm when using axe.configure and allowImplicit:false', function() {
+    axe.configure({
+      standards: {
+        htmlElms: {
+          footer: {
+            contentTypes: 'flow',
+            allowedRoles: ['contentinfo']
+          }
+        }
+      }
+    });
+    var node = document.createElement('footer');
+    node.setAttribute('role', 'contentinfo');
+    flatTreeSetup(node);
+    var actual = getElementUnallowedRoles(node, false);
+    assert.isEmpty(actual);
+  });
+
   it('returns empty on type=checkbox and aria-pressed attr on SerialVirtualNode with a input elm', function() {
     var vNode = new axe.SerialVirtualNode({
       nodeName: 'input',
