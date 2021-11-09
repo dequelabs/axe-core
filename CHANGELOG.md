@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.5](https://github.com/dequelabs/axe-core/compare/v4.3.4...v4.3.5) (2021-10-29)
+
+### Bug Fixes
+
+- **aria-allowed-attr:** revert violation for non-global ARIA attrs on element without role ([#3243](https://github.com/dequelabs/axe-core/issues/3243)) ([e138fd6](https://github.com/dequelabs/axe-core/commit/e138fd6a00a8da6c48a74a614adc5dae8f2044e1))
+
 ### [4.3.4](https://github.com/dequelabs/axe-core/compare/v4.3.3...v4.3.4) (2021-10-22)
 
 ### Bug Fixes
