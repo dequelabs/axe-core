@@ -75,7 +75,7 @@ jobs:
       - run: npm run eslint
 
   # Run the test suite.
-  test_unix:
+  test_nightly_chrome:
     <<: *defaults
     <<: *unix_box
     steps:
@@ -162,7 +162,7 @@ jobs:
       - run: npm run test:virtual-rules
 
   # Run the test suite for nightly builds.
-  test_nightly_chrome:
+  test_unix:
     <<: *defaults
     <<: *unix_nightly_box
     steps:
