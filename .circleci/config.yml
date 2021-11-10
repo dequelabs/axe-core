@@ -75,7 +75,7 @@ jobs:
       - run: npm run eslint
 
   # Run the test suite.
-  test_nightly_chrome:
+  test_unix:
     <<: *defaults
     <<: *unix_box
     steps:
@@ -162,11 +162,10 @@ jobs:
       - run: npm run test:virtual-rules
 
   # Run the test suite for nightly builds.
-  test_unix:
+  test_nightly_browsers:
     <<: *defaults
     <<: *unix_nightly_box
     steps:
-      # - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
@@ -305,10 +304,9 @@ workflows:
           requires:
             - dependencies_unix
       # Run tests on all commits, but after installing dependencies
-      - test_unix
-          # requires:
-          #   - dependencies_unix
-          #   - lint
+      - test_unix:
+          requires:
+            - lint
       # Run IE/ Windows test on all commits
       - test_win:
           requires:
@@ -407,7 +405,7 @@ workflows:
                 - develop
     jobs:
       - dependencies_unix
-      - test_nightly_chrome:
+      - test_nightly_browsers:
           requires:
             - dependencies_unix
       - test_nightly_aria_practices:
