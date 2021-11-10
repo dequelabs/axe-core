@@ -9,7 +9,7 @@ unix_box: &unix_box
 
 unix_nightly_box: &unix_nightly_box
   docker:
-    - image: cimg/node:lts
+    - image: cimg/node:lts-browsers
 
 win_box: &win_box
   executor:
