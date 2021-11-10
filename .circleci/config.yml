@@ -174,8 +174,16 @@ jobs:
       - run: |
           wget https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb
           sudo apt install ./google-chrome-beta_current_amd64.deb
+          echo "export CHROME_BIN=$(which google-chrome-beta)" >> ~/.bashrc
+      # install Firefox Nightly
       - run: |
-          CHROME_BIN="$(which google-chrome-beta)" && echo "CHROME_BIN: $CHROME_BIN"
+          wget -O firefox-nightly.tar.bz2 "https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US"
+          tar xf firefox-nightly.tar.bz2
+          echo "export FIREFOX_NIGHTLY_BIN=$(pwd)/firefox/firefox-bin" >> ~/.bashrc
+      - run: |
+          source ~/.bashrc
+          echo "CHROME_BIN: $CHROME_BIN"
+          echo "FIREFOX_NIGHTLY_BIN: $FIREFOX_NIGHTLY_BIN"
           npm run test -- --browsers Chrome,FirefoxNightly
 
   # Run the test suite for nightly builds.
