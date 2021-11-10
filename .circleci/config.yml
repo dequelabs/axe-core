@@ -170,16 +170,20 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
-      # install Chrome Beta
-      - run: |
-          wget https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb
-          sudo apt install ./google-chrome-beta_current_amd64.deb
-      # install Firefox Nightly
-      - run: |
-          wget -O firefox-nightly.tar.bz2 "https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US"
-          tar xf firefox-nightly.tar.bz2
-      - run: |
-          FIREFOX_NIGHTLY_BIN="$(pwd)/firefox/firefox-bin" npm run test -- --browsers Chrome,FirefoxNightly
+      - run:
+          name: Install Chrome Beta
+          command: |
+            wget https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb
+            sudo apt install ./google-chrome-beta_current_amd64.deb
+      - run:
+          name: Install Firefox Nightly
+          command: |
+            wget -O firefox-nightly.tar.bz2 "https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US"
+            tar xf firefox-nightly.tar.bz2
+      - run:
+          name: Set Environment Variable
+          command: echo "export FIREFOX_NIGHTLY_BIN=$(pwd)/firefox/firefox-bin" >> $BASH_ENV
+      - run: npm run test -- --browsers Chrome,FirefoxNightly
 
   # Run the test suite for nightly builds.
   test_nightly_aria_practices:
