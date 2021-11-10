@@ -28,42 +28,42 @@ describe('no-focusable-content tests', function() {
     assert.isTrue(noFocusableContent(null, null, vNode));
   });
 
-  it('should return false if element has focusable content', function() {
+  it('should return true if element has content which is focusable and does not have a widget role', function() {
     var vNode = queryFixture(
       '<button id="target"><span tabindex="0">Hello</span></button>'
     );
-    assert.isFalse(noFocusableContent(null, null, vNode));
+    assert.isTrue(noFocusableContent(null, null, vNode));
   });
 
-  it('should return false if element has natively focusable content', function() {
+  it('should return false if element has content which is natively focusable and has a widget role', function() {
     var vNode = queryFixture(
       '<button id="target"><a href="foo.html">Hello</a></button>'
     );
     assert.isFalse(noFocusableContent(null, null, vNode));
   });
 
-  it('should return true on span with tabindex=-1', function() {
+  it('should return true on span with tabindex=-1 (focusable, does not have a widget role)', function() {
     var vNode = queryFixture('<span id="target" role="text"> some text '
         +'<span tabIndex="-1">JavaScript is able to focus this</span> '
         +'</span>');
     assert.isTrue(noFocusableContent(null, null, vNode));
   });
 
-  it('should return true on aria-hidden span with tabindex=-1', function() {
+  it('should return true on aria-hidden span with tabindex=-1 (focusable, does not have a widget role)', function() {
     var vNode = queryFixture('<span id="target" role="text"> some text '
         +'<span tabIndex="-1" aria-hidden="true">JavaScript is able to focus this</span> '
         +'</span>');
     assert.isTrue(noFocusableContent(null, null, vNode));
   });
 
-  it('should return false on span with tabindex=0', function() {
+  it('should return true on nested span with tabindex=0 (focusable, does not have a widget role)', function() {
     var vNode = queryFixture('<span id="target" role="text"> some text '
         +'<span tabIndex="0">anyone is able to focus this</span> '
         +'</span>');
-    assert.isFalse(noFocusableContent(null, null, vNode));
+    assert.isTrue(noFocusableContent(null, null, vNode));
   });
   
-  it('should return false if element has natively focusable content with negative tabindex', function() {
+  it('should return false if element has content which is natively focusable, has a widget role, and has tabindex=-1', function() {
     var params = checkSetup(
       '<button id="target"><a href="foo.html" tabindex="-1">Hello</a></button>'
     );
