@@ -9,7 +9,7 @@ unix_box: &unix_box
 
 unix_nightly_box: &unix_nightly_box
   docker:
-    - image: cimg/node:lts-browsers
+    - image: cimg/node:lts
 
 win_box: &win_box
   executor:
@@ -174,15 +174,16 @@ jobs:
       - run: |
           wget https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb
           sudo apt install ./google-chrome-beta_current_amd64.deb
-          CHROME_BIN="$(which google-chrome-beta)"
-          echo "CHROME_BIN: $CHROME_BIN"
       # install Firefox Nightly
       - run: |
           wget -O firefox-nightly.tar.bz2 "https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US"
           tar xf firefox-nightly.tar.bz2
+      - run: |
+          CHROME_BIN="$(which google-chrome-beta)"
           FIREFOX_NIGHTLY_BIN="$(pwd)/firefox/firefox-bin"
           echo "FIREFOX_NIGHTLY_BIN: $FIREFOX_NIGHTLY_BIN"
-      - run: npm run test -- --browsers Chrome,FirefoxNightly
+          echo "CHROME_BIN: $CHROME_BIN"
+          npm run test -- --browsers Chrome,FirefoxNightly
 
   # Run the test suite for nightly builds.
   test_nightly_aria_practices:
