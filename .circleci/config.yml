@@ -305,7 +305,7 @@ workflows:
           requires:
             - dependencies_unix
       # Run tests on all commits, but after installing dependencies
-      - test_unix:
+      - test_unix
           # requires:
           #   - dependencies_unix
           #   - lint
