@@ -5,7 +5,11 @@ defaults: &defaults
 
 unix_box: &unix_box
   docker:
-    - image: circleci/node:16-browsers
+    - image: cimg/node:16.13-browsers
+
+unix_nightly_box: &unix_nightly_box
+  docker:
+    - image: cimg/node:lts-browsers
 
 win_box: &win_box
   executor:
@@ -15,7 +19,7 @@ win_box: &win_box
 orbs:
   win: circleci/windows@1.0.0
   puppeteer: threetreeslight/puppeteer@0.1.2
-
+  browser-tools: circleci/browser-tools@1.1.0
 
 set_npm_auth: &set_npm_auth
   run: npm config set "//registry.npmjs.org/:_authToken" $NPM_AUTH
@@ -38,6 +42,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
@@ -64,6 +69,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run eslint
@@ -73,6 +79,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
@@ -102,6 +109,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
@@ -112,6 +120,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       # Always run on the latest master branch, regardless of cache
@@ -124,6 +133,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
@@ -134,6 +144,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
@@ -144,32 +155,41 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
       - run: npm run test:virtual-rules
 
   # Run the test suite for nightly builds.
-  test_nightly_chrome:
+  test_nightly_browsers:
     <<: *defaults
-    <<: *unix_box
+    <<: *unix_nightly_box
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
-      # install Chrome Beta
-      - run: |
-          wget https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb
-          sudo apt install ./google-chrome-beta_current_amd64.deb
-      - run: |
-          CHROME_BIN="$(which google-chrome-beta)" && echo "CHROME_BIN: $CHROME_BIN"
-          npm run test -- --browsers Chrome,FirefoxNightly
+      - run:
+          name: Install Chrome Beta
+          command: |
+            wget https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb
+            sudo apt install ./google-chrome-beta_current_amd64.deb
+      - run:
+          name: Install Firefox Nightly
+          command: |
+            wget -O firefox-nightly.tar.bz2 "https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US"
+            tar xf firefox-nightly.tar.bz2
+      - run:
+          name: Set Environment Variable
+          command: echo "export FIREFOX_NIGHTLY_BIN=$(pwd)/firefox/firefox-bin" >> $BASH_ENV
+      - run: npm run test -- --browsers Chrome,FirefoxNightly
 
   # Run the test suite for nightly builds.
   test_nightly_aria_practices:
     <<: *defaults
-    <<: *unix_box
+    <<: *unix_nightly_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
@@ -182,6 +202,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run api-docs
@@ -192,6 +213,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run test:rule-help-version
@@ -201,6 +223,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
@@ -211,6 +234,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
@@ -224,6 +248,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
@@ -251,6 +276,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: .circleci/verify-release.sh post
@@ -260,6 +286,7 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run next-release
@@ -279,7 +306,6 @@ workflows:
       # Run tests on all commits, but after installing dependencies
       - test_unix:
           requires:
-            - dependencies_unix
             - lint
       # Run IE/ Windows test on all commits
       - test_win:
@@ -379,7 +405,7 @@ workflows:
                 - develop
     jobs:
       - dependencies_unix
-      - test_nightly_chrome:
+      - test_nightly_browsers:
           requires:
             - dependencies_unix
       - test_nightly_aria_practices:
