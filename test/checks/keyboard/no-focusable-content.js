@@ -28,9 +28,16 @@ describe('no-focusable-content tests', function() {
     assert.isTrue(noFocusableContent(null, null, vNode));
   });
 
-  it('should return true if element has content which is focusable and does not have a widget role', function() {
+  it('should return true if element has content which is focusable (tabindex=0) and does not have a widget role', function() {
     var vNode = queryFixture(
       '<button id="target"><span tabindex="0">Hello</span></button>'
+    );
+    assert.isTrue(noFocusableContent(null, null, vNode));
+  });
+
+  it('should return true if element has content which is focusable (tabindex=-1) and does not have a widget role', function() {
+    var vNode = queryFixture(
+      '<button id="target"><span tabindex="-1">Hello</span></button>'
     );
     assert.isTrue(noFocusableContent(null, null, vNode));
   });
