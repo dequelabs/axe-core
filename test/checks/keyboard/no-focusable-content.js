@@ -49,6 +49,13 @@ describe('no-focusable-content tests', function() {
     assert.isFalse(noFocusableContent(null, null, vNode));
   });
 
+  it('should return true if element has content which is natively focusable and has a widget role but is disabled', function() {
+    var vNode = queryFixture(
+      '<button id="target"><a href="foo.html" disabled>Hello</a></button>'
+    );
+    assert.isTrue(noFocusableContent(null, null, vNode));
+  });
+
   it('should return true on span with tabindex=-1 (focusable, does not have a widget role)', function() {
     var vNode = queryFixture('<span id="target" role="text"> some text '
         +'<span tabIndex="-1">JavaScript is able to focus this</span> '
