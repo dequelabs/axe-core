@@ -306,9 +306,9 @@ workflows:
             - dependencies_unix
       # Run tests on all commits, but after installing dependencies
       - test_unix:
-          requires:
-            - dependencies_unix
-            - lint
+          # requires:
+          #   - dependencies_unix
+          #   - lint
       # Run IE/ Windows test on all commits
       - test_win:
           requires:
