@@ -215,13 +215,13 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
     assert.isFalse(actual);
   });
 
-  it('returns true if elements implicit role matches the role', function() {
+  it('returns false if elements implicit role matches the role', function() {
     var node = document.createElement('area');
     node.setAttribute('href', '#yay');
     node.setAttribute('role', 'link');
     flatTreeSetup(node);
     var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'link');
-    assert.isTrue(actual);
+    assert.isFalse(actual);
   });
 
   it('returns false if elements implicit role does not match the role', function() {
