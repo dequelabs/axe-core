@@ -74,7 +74,7 @@
     ["#pass-graphics-object"],
     ["#pass-graphics-symbol"],
     ["#pass-header-banner"],
-    ["#pass-footer-contentinfo"]
+    ["#pass-footer-contentinfo"],
     ["#pass-img-valid-role-aria-label"],
     ["#pass-img-valid-role-title"],
     ["#pass-img-valid-role-aria-labelledby"]
