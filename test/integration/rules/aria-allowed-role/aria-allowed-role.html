@@ -219,6 +219,23 @@
 <div id="fail-dpub-4" role="doc-noteref">ok</div>
 <!-- images -->
 <div id="fail-dpub-5" role="doc-cover">ok</div>
+<img role="doc-cover" aria-label="foo" id="pass-img-valid-role-aria-label" />
+<img role="menuitem" title="bar" id="pass-img-valid-role-title" />
+<div id="image-baz">hazaar</div>
+<img
+  role="switch"
+  aria-labelledby="image-baz"
+  id="pass-img-valid-role-aria-labelledby"
+/>
+<img role="text" aria-label="foo" id="fail-img-invalid-role-aria-label" />
+<img role="spinbutton" title="bar" id="fail-img-invalid-role-title" />
+<img
+  role="combobox"
+  aria-labelledby="image-baz"
+  id="fail-img-invalid-role-aria-labelledby"
+/>
+<img role="button" id="fail-img-no-accessible-name-present" />
+
 <!-- listitems -->
 <div id="fail-dpub-6" role="doc-biblioentry">ok</div>
 <div id="fail-dpub-7" role="doc-endnote">ok</div>

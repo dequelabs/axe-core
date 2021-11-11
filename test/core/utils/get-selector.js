@@ -494,8 +494,8 @@ describe('axe.utils.getSelector', function() {
     img2.setAttribute('src', '//deque.com/logo.png');
 
     fixtureSetup([link1, link2, img1, img2]);
-    assert.equal(axe.utils.getSelector(link2), 'a[href$="about\\/"]');
-    assert.equal(axe.utils.getSelector(img2), 'img[src$="logo\\.png"]');
+    assert.equal(axe.utils.getSelector(link2), 'a[href$="about/"]');
+    assert.equal(axe.utils.getSelector(img2), 'img[src$="logo.png"]');
   });
 
   it('should escape href attributes', function() {
@@ -508,8 +508,47 @@ describe('axe.utils.getSelector', function() {
     fixtureSetup([link1, link2]);
     assert.equal(
       axe.utils.getSelector(link2),
-      'a[href="\\/\\/deque\\.com\\/child\\/\\ \\a \\a \\a "]'
+      'a[href="//deque.com/child/ \\a \\a \\a "]'
     );
+  });
+
+  it('should not URL encode or token escape href attribute', function() {
+    var link1 = document.createElement('a');
+    link1.setAttribute('href', '3 Seater');
+
+    var link2 = document.createElement('a');
+    link2.setAttribute('href', '1 Seater');
+
+    var expected = 'a[href$="1 Seater"]';
+    fixtureSetup([link1, link2]);
+    assert.equal(axe.utils.getSelector(link2), expected);
+    assert.isTrue(axe.utils.matchesSelector(link2, expected));
+  });
+
+  it('should escape certain special characters in attribute', function() {
+    var div1 = document.createElement('div');
+    div1.setAttribute('data-thing', 'foobar');
+
+    var div2 = document.createElement('div');
+    div2.setAttribute('data-thing', '!@#$%^&*()_+[]\\;\',./{}|:"<>?');
+
+    var expected = 'div[data-thing="!@#$%^&*()_+[]\\\\;\',./{}|:\\"<>?"]';
+    fixtureSetup([div1, div2]);
+    assert.equal(axe.utils.getSelector(div2), expected);
+    assert.isTrue(axe.utils.matchesSelector(div2, expected));
+  });
+
+  it('should escape newline characters in attribute', function() {
+    var div1 = document.createElement('div');
+    div1.setAttribute('data-thing', 'foobar');
+
+    var div2 = document.createElement('div');
+    div2.setAttribute('data-thing', '  \n\n\n');
+
+    var expected = 'div[data-thing="  \\a \\a \\a "]';
+    fixtureSetup([div1, div2]);
+    assert.equal(axe.utils.getSelector(div2), expected);
+    assert.isTrue(axe.utils.matchesSelector(div2, expected));
   });
 
   it('should not generate universal selectors', function() {
@@ -530,11 +569,8 @@ describe('axe.utils.getSelector', function() {
     node2.setAttribute('href', href2);
     fixtureSetup([node1, node2]);
 
-    assert.include(axe.utils.getSelector(node1), 'mars2\\.html\\?a\\=be_bold');
-    assert.include(
-      axe.utils.getSelector(node2),
-      'mars2\\.html\\?a\\=be_italic'
-    );
+    assert.include(axe.utils.getSelector(node1), 'mars2.html?a=be_bold');
+    assert.include(axe.utils.getSelector(node2), 'mars2.html?a=be_italic');
   });
 
   // shadow DOM v1 - note: v0 is compatible with this code, so no need
