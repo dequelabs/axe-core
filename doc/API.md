@@ -422,7 +422,7 @@ axe.run(
 );
 ```
 
-##### Options Parameter
+``##### Options Parameter
 
 The options parameter is flexible way to configure how `axe.run` operates. The different modes of operation are:
 
@@ -447,6 +447,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `frameWaitTime`    | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out                                              |
 | `preload`          | `true`  | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details) |
 | `performanceTimer` | `false` | Log rule performance metrics to the console                                                                                             |
+| `pingWaitTime`     | `500`   | Time before axe-core considers a frame unresponsive. [See frame messenger for details](frame-messenger.md)                              |
 
 ###### Options Parameter Examples
 
