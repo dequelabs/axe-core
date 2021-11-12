@@ -177,7 +177,7 @@ describe('color-contrast blending test', function() {
   });
 
   before(function(done) {
-    // mix-blend-mode is not support on IE11
+    // mix-blend-mode is not supported on IE11
     // @see https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode
     if (isIE11) {
       this.skip();
