@@ -1,3 +1,5 @@
+var isIE11 = axe.testUtils.isIE11;
+
 describe('color-contrast blending test', function() {
   var include = [];
   var resultElms = [];
@@ -175,29 +177,38 @@ describe('color-contrast blending test', function() {
   });
 
   before(function(done) {
-    axe.run({ include: include }, { runOnly: ['color-contrast'] }, function(
-      err,
-      res
-    ) {
-      assert.isNull(err);
+    // mix-blend-mode is not support on IE11
+    // @see https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode
+    if (isIE11) {
+      this.skip();
+    } else {
+      axe.run({ include: include }, { runOnly: ['color-contrast'] }, function(
+        err,
+        res
+      ) {
+        assert.isNull(err);
 
-      // don't care where the result goes as we just want to
-      // extract the background color for each one
-      var results = []
-        .concat(res.passes)
-        .concat(res.violations)
-        .concat(res.incomplete);
-      results.forEach(function(result) {
-        result.nodes.forEach(function(node) {
-          var bgColor = node.any[0].data.bgColor;
-          var id = node.target[0].substring(0, node.target[0].lastIndexOf('-'));
-          var result = document.querySelector(id + '-result');
-          result.style.backgroundColor = bgColor;
+        // don't care where the result goes as we just want to
+        // extract the background color for each one
+        var results = []
+          .concat(res.passes)
+          .concat(res.violations)
+          .concat(res.incomplete);
+        results.forEach(function(result) {
+          result.nodes.forEach(function(node) {
+            var bgColor = node.any[0].data.bgColor;
+            var id = node.target[0].substring(
+              0,
+              node.target[0].lastIndexOf('-')
+            );
+            var result = document.querySelector(id + '-result');
+            result.style.backgroundColor = bgColor;
+          });
         });
-      });
 
-      done();
-    });
+        done();
+      });
+    }
   });
 
   resultElms.forEach(function(elm, index) {
