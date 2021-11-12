@@ -95,6 +95,7 @@ declare namespace axe {
     frameWaitTime?: number;
     preload?: boolean;
     performanceTimer?: boolean;
+    pingWaitTime?: number;
   }
   interface AxeResults extends EnvironmentData {
     toolOptions: RunOptions;

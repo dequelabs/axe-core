@@ -37,6 +37,42 @@ describe('axe.utils.sendCommandToFrame', function() {
     fixture.appendChild(frame);
   });
 
+  it('adjusts skips ping with options.pingWaitTime=0', function (done) {
+    var frame = document.createElement('iframe');
+    var params = {
+      command: 'rules', 
+      options: { pingWaitTime: 0 }
+    };
+
+    frame.addEventListener('load', function() {
+      var topics = [];
+      frame.contentWindow.addEventListener('message', function (event) {
+        try {
+          topics.push(JSON.parse(event.data).topic)
+        } catch (_) { /* ignore */ }
+      });
+      axe.utils.sendCommandToFrame(
+        frame,
+        params,
+        captureError(function() {
+          try {
+            assert.deepEqual(topics, ['axe.start'])
+            done();
+          } catch (e) {
+            done(e);
+          }
+        }, done),
+        function() {
+          done(new Error('sendCommandToFrame should not error'));
+        }
+      );
+    });
+
+    frame.id = 'level0';
+    frame.src = '../mock/frames/test.html';
+    fixture.appendChild(frame);
+  })
+
   it('should timeout if there is no response from frame', function(done) {
     var orig = window.setTimeout;
     window.setTimeout = function(fn, to) {
