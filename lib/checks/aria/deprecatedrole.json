@@ -4,8 +4,8 @@
   "metadata": {
     "impact": "minor",
     "messages": {
-      "pass": "ARIA role is deprecated",
-      "fail": "The role used deprecated: ${data.values}"
+      "pass": "ARIA role is not deprecated",
+      "fail": "The role used is deprecated: ${data.values}"
     }
   }
 }
