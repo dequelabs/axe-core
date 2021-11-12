@@ -1,0 +1,11 @@
+{
+  "id": "deprecatedrole",
+  "evaluate": "deprecatedrole-evaluate",
+  "metadata": {
+    "impact": "minor",
+    "messages": {
+      "pass": "ARIA role is deprecated",
+      "fail": "The role used deprecated: ${data.values}"
+    }
+  }
+}
