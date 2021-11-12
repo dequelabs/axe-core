@@ -265,7 +265,7 @@ declare namespace axe {
     frameContext: ContextObject;
   }
   interface Utils {
-    getFrameContexts: (context?: ElementContext) => FrameContext[];
+    getFrameContexts: (context?: ElementContext, options?: RunOptions) => FrameContext[];
     shadowSelect: (selector: CrossTreeSelector) => Element | null;
   }
   interface EnvironmentData {
