@@ -186,10 +186,7 @@ User specifies the format of the JSON structure passed to the callback of `axe.r
 
 ```js
 axe.configure({
-  branding: {
-    brand: String,
-    application: String
-  },
+  branding: String,
   reporter: 'option' | Function,
   checks: [Object],
   rules: [Object],
@@ -244,6 +241,8 @@ axe.configure({
   - `allowedOrigins` - Set which origins (URL domains) will communicate test data with. See [allowedOrigins](#allowedorigins).
 
 **Returns:** Nothing
+
+**Note**: The `branding` property accepts a `string`, which sets the application. Passing it an object is deprecated as of axe-core 4.4.0, as is the `branding.brand` property.
 
 ##### Page level rules
 

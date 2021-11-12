@@ -187,10 +187,7 @@ declare namespace axe {
     cssColors?: { [key: string]: number[] };
   }
   interface Spec {
-    branding?: {
-      brand?: string;
-      application?: string;
-    };
+    branding?: string | Branding;
     reporter?: ReporterVersion;
     checks?: Check[];
     rules?: Rule[];
@@ -202,6 +199,13 @@ declare namespace axe {
     allowedOrigins?: string[];
     // Deprecated - do not use.
     ver?: string;
+  }
+  /**
+   * @deprecated Use branding: string instead to set the application key in help URLs
+   */
+  interface Branding {
+    brand?: string;
+    application?: string;
   }
   interface Check {
     id: string;
