@@ -34,7 +34,6 @@ describe('aria-practices', function () {
   const disabledRules = {
     '*': [
       'color-contrast',
-      'region', // dequelabs/axe-core#3260
       'heading-order', // w3c/aria-practices#2119
       'list', // w3c/aria-practices#2118
       'scrollable-region-focusable', // w3c/aria-practices#2114
