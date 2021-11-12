@@ -223,12 +223,4 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
     var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'link');
     assert.isTrue(actual);
   });
-
-  it('returns false if elements implicit role does not match the role', function() {
-    var node = document.createElement('area');
-    node.setAttribute('role', 'link');
-    flatTreeSetup(node);
-    var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'link');
-    assert.isFalse(actual);
-  });
 });
