@@ -112,4 +112,11 @@ describe('axe.utils.processMessage', function() {
       assert.equal(output, 'fallback message');
     });
   });
+
+	describe('prevents infiinte recursion', function() {
+		it('when message and data are empty object', function() {
+			var output = axe.utils.processMessage({}, {});
+			assert.undefined(output);
+		});
+	});
 });
