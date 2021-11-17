@@ -113,8 +113,8 @@ describe('axe.utils.processMessage', function() {
     });
   });
 
-	describe('prevents infiinte recursion', function() {
-		it('when message and data are empty object', function() {
+	describe('message and data are empty object', function() {
+		it('prevents infiinte recursion', function() {
 			var output = axe.utils.processMessage({}, {});
 			assert.equal(output, undefined);
 		});
