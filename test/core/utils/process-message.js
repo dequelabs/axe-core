@@ -116,7 +116,7 @@ describe('axe.utils.processMessage', function() {
 	describe('prevents infiinte recursion', function() {
 		it('when message and data are empty object', function() {
 			var output = axe.utils.processMessage({}, {});
-			assert.undefined(output);
+			assert.equal(output, undefined);
 		});
 	});
 });
