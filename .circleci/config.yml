@@ -324,28 +324,28 @@ workflows:
             - dependencies_win
       - test_examples:
           requires:
-            - test_unix
+            - lint
       - test_act:
           requires:
-            - test_unix
+            - lint
       - test_aria_practices:
           requires:
-            - test_unix
+            - lint
       - test_locales:
           requires:
-            - test_unix
+            - lint
       - test_virtual_rules:
           requires:
-            - test_unix
+            - lint
       - build_api_docs:
           requires:
-            - test_unix
+            - lint
       - test_rule_help_version:
           requires:
-            - test_unix
+            - lint
       - test_node:
           requires:
-            - test_unix
+            - lint
       # Hold for approval
       - hold:
           type: approval

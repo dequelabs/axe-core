@@ -36,8 +36,13 @@
       axe
         .run(axeOptions)
         .then(function(result) {
-          assertResultsCorrect(testcase, result);
-          done();
+          try {
+            assertResultsCorrect(testcase, result);
+            done();
+          } catch (e) {
+            console.log(JSON.stringify(result, null, 2));
+            done(e);
+          }
         })
         .catch(done);
     });
@@ -63,9 +68,6 @@
 
   function assertResultsCorrect(testcase, result) {
     if (testcase.expected !== 'failed') {
-      if (result.violations.length) {
-        console.log(JSON.stringify(result.violations, null, 2));
-      }
       return assert.lengthOf(result.violations, 0);
     }
     var issues = result.violations[0] || result.incomplete[0];
