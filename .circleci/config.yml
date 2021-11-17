@@ -5,7 +5,7 @@ defaults: &defaults
 
 unix_box: &unix_box
   docker:
-    - image: cimg/node:16.13-browsers
+    - image: circleci/node:16.13-browsers
 
 unix_nightly_box: &unix_nightly_box
   docker:
@@ -42,7 +42,6 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
@@ -69,7 +68,6 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run eslint
@@ -79,7 +77,6 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
@@ -109,7 +106,6 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
@@ -120,7 +116,6 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       # Always run on the latest master branch, regardless of cache
@@ -133,7 +128,6 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
@@ -144,7 +138,6 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
@@ -155,7 +148,6 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
@@ -202,7 +194,6 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run api-docs
@@ -213,7 +204,6 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run test:rule-help-version
@@ -223,7 +213,6 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
@@ -234,7 +223,6 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
@@ -248,7 +236,6 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
@@ -276,7 +263,6 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: .circleci/verify-release.sh post
@@ -286,7 +272,6 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run next-release
