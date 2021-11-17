@@ -122,7 +122,6 @@ jobs:
     steps:
       - browser-tools/install-browser-tools
       - checkout
-      - <<: *restore_dependency_cache_unix
       - run: npm run build
       - run: npm run test:act
 
