@@ -63,6 +63,9 @@
 
   function assertResultsCorrect(testcase, result) {
     if (testcase.expected !== 'failed') {
+      if (result.violations.length) {
+        console.log(JSON.stringify(result.violations, null, 2));
+      }
       return assert.lengthOf(result.violations, 0);
     }
     var issues = result.violations[0] || result.incomplete[0];

@@ -123,8 +123,6 @@ jobs:
       - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
-      # Always run on the latest master branch, regardless of cache
-      - run: npm install act-rules/act-rules.github.io#master
       - run: npm run build
       - run: npm run test:act
 
@@ -183,6 +181,19 @@ jobs:
           name: Set Environment Variable
           command: echo "export FIREFOX_NIGHTLY_BIN=$(pwd)/firefox/firefox-bin" >> $BASH_ENV
       - run: npm run test -- --browsers Chrome,FirefoxNightly
+
+  # Run the test suite for nightly builds.
+  test_nightly_act:
+    <<: *defaults
+    <<: *unix_nightly_box
+    steps:
+      - browser-tools/install-browser-tools
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      # install ARIA practices
+      - run: npm install act-rules/act-rules.github.io#master
+      - run: npm run test:act
 
   # Run the test suite for nightly builds.
   test_nightly_aria_practices:
@@ -406,6 +417,9 @@ workflows:
     jobs:
       - dependencies_unix
       - test_nightly_browsers:
+          requires:
+            - dependencies_unix
+      - test_nightly_act:
           requires:
             - dependencies_unix
       - test_nightly_aria_practices:
