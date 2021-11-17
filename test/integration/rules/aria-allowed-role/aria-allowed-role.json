@@ -77,7 +77,9 @@
     ["#pass-footer-contentinfo"],
     ["#pass-img-valid-role-aria-label"],
     ["#pass-img-valid-role-title"],
-    ["#pass-img-valid-role-aria-labelledby"]
+    ["#pass-img-valid-role-aria-labelledby"],
+    ["#pass-imgmap-1"],
+    ["#pass-imgmap-2"]
   ],
   "violations": [
     ["#fail-dd-no-role"],
@@ -107,7 +109,9 @@
     ["#fail-img-invalid-role-aria-label"],
     ["#fail-img-invalid-role-title"],
     ["#fail-img-invalid-role-aria-labelledby"],
-    ["#fail-img-no-accessible-name-present"]
+    ["#fail-img-no-accessible-name-present"],
+    ["#fail-imgmap-1"],
+    ["#fail-imgmap-2"]
   ],
   "incomplete": [["#incomplete1"], ["#incomplete2"]]
 }

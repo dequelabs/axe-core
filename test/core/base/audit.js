@@ -287,6 +287,14 @@ describe('Audit', function() {
       assert.equal(audit.brand, 'axe');
       assert.equal(audit.application, 'thing');
     });
+    it('should change the application when passed a string', function() {
+      var audit = new Audit();
+      assert.equal(audit.brand, 'axe');
+      assert.equal(audit.application, 'axeAPI');
+      audit.setBranding('thing');
+      assert.equal(audit.brand, 'axe');
+      assert.equal(audit.application, 'thing');
+    });
     it('should call _constructHelpUrls', function() {
       var audit = new Audit();
       audit.addRule({
