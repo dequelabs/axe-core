@@ -113,10 +113,10 @@ describe('axe.utils.processMessage', function() {
     });
   });
 
-	describe('message and data are empty object', function() {
-		it('prevents infiinte recursion', function() {
-			var output = axe.utils.processMessage({}, {});
-			assert.equal(output, undefined);
-		});
-	});
+  describe('message and data are empty object', function() {
+    it('prevents infiinte recursion', function() {
+      var output = axe.utils.processMessage({}, {});
+      assert.equal(output, undefined);
+    });
+  });
 });
