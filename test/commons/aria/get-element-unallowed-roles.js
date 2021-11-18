@@ -181,6 +181,14 @@ describe('aria.getElementUnallowedRoles', function() {
     assert.isEmpty(actual);
   });
 
+  it('returns unallowed role=row when when used on TR element and allowImplicit:false', function() {
+    var node = document.createElement('tr');
+    node.setAttribute('role', 'row');
+    flatTreeSetup(node);
+    var actual = getElementUnallowedRoles(node, false);
+    assert.isNotEmpty(actual, 'row');
+  });
+
   it('returns empty on type=checkbox and aria-pressed attr on SerialVirtualNode with a input elm', function() {
     var vNode = new axe.SerialVirtualNode({
       nodeName: 'input',
