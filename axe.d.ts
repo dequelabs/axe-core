@@ -264,13 +264,16 @@ declare namespace axe {
     results: PartialRuleResult[];
     environmentData?: EnvironmentData;
   }
-  type PartialResults = Array<PartialResult | null>
+  type PartialResults = Array<PartialResult | null>;
   interface FrameContext {
     frameSelector: CrossTreeSelector;
     frameContext: ContextObject;
   }
   interface Utils {
-    getFrameContexts: (context?: ElementContext, options?: RunOptions) => FrameContext[];
+    getFrameContexts: (
+      context?: ElementContext,
+      options?: RunOptions
+    ) => FrameContext[];
     shadowSelect: (selector: CrossTreeSelector) => Element | null;
   }
   interface EnvironmentData {

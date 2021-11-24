@@ -110,7 +110,7 @@ The `message` passed to responder may be an `Error`. If axe-core passes an `Erro
 
 When axe-core tests frames, it first sends a ping to that frame, to check that the frame has a compatible version of axe-core in it that can respond to the message. If it gets no response, that frame will be skipped in the test. Axe-core does this to avoid a situation where it waits the full frame timeout, just to find out the frame didn't have axe-core in it in the first place.
 
-In situations where communication between frames can be slow, it may be necessary to increase the ping timeout. This can be done with the `pingWaitTime` option. By default, this is 500ms. This can be configured in the following way: 
+In situations where communication between frames can be slow, it may be necessary to increase the ping timeout. This can be done with the `pingWaitTime` option. By default, this is 500ms. This can be configured in the following way:
 
 ```js
 const results = await axe.run(context, { pingWaitTime: 1000 }));
