@@ -499,6 +499,21 @@ describe('color.getBackgroundColor', function() {
     assert.equal(actual.alpha, 1);
   });
 
+  it('should return null for inline elements with position:absolute', function () {
+    fixture.innerHTML =
+      '<div style="height: 1em; overflow:auto; position: relative">' +
+      '  <br>' +
+      '  <b id="target">' +
+      '    <img style="width:100px; height:16px; position:absolute"> Text' +
+      '  </b>' +
+      '</div>';
+    axe.testUtils.flatTreeSetup(fixture);
+    var target = fixture.querySelector('#target');
+    var actual = axe.commons.color.getBackgroundColor(target);
+    assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgOverlap');
+    assert.isNull(actual);
+  });
+
   it('should ignore inline ancestors of non-overlapping elements', function() {
     fixture.innerHTML =
       '<div style="position:relative;">' +
