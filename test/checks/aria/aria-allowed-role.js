@@ -30,11 +30,11 @@ describe('aria-allowed-role', function() {
     var options = {
       allowImplicit: false
     };
-    var actual = axe.testUtils
+    var outcome = axe.testUtils
       .getCheckEvaluate('aria-allowed-role')
       .call(checkContext, null, options, vNode);
-    var expected = false;
-    assert.equal(actual, expected);
+
+    assert.isFalse(outcome);
     assert.deepEqual(checkContext._data, ['row']);
   });
 

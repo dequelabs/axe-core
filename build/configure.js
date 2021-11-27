@@ -148,16 +148,10 @@ function buildRules(grunt, options, commons, callback) {
     }
 
     function getIncompleteMsg(summaries) {
-      var result = {};
-      summaries.forEach(function(summary) {
-        if (
-          summary.incompleteFallbackMessage &&
-          doTRegex.test(summary.incompleteFallbackMessage)
-        ) {
-          result = doT.template(summary.incompleteFallbackMessage).toString();
-        }
+      var summary = summaries.find(function(summary) {
+        return typeof summary.incompleteFallbackMessage === 'string';
       });
-      return result;
+      return summary ? summary.incompleteFallbackMessage : '';
     }
 
     function replaceFunctions(string) {

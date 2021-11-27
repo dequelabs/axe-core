@@ -4,10 +4,10 @@ describe('deprecatedrole', function() {
   var checkContext = axe.testUtils.MockCheckContext();
   var checkSetup = axe.testUtils.checkSetup;
   var checkEvaluate = axe.testUtils.getCheckEvaluate('deprecatedrole');
-  afterEach(function () {
+  afterEach(function() {
     checkContext.reset();
     axe.reset();
-  })
+  });
 
   it('returns true if applied to a deprecated role', function() {
     axe.configure({
@@ -36,7 +36,9 @@ describe('deprecatedrole', function() {
         }
       }
     });
-    var params = checkSetup('<div id="target" role="doc-fizzbuzz">Contents</div>');
+    var params = checkSetup(
+      '<div id="target" role="doc-fizzbuzz">Contents</div>'
+    );
     assert.isTrue(checkEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._data, 'doc-fizzbuzz');
   });
@@ -57,8 +59,8 @@ describe('deprecatedrole', function() {
     assert.isNull(checkContext._data);
   });
 
-  describe('with fallback roles', function () {
-    it('returns true if the deprecated role is the first valid role', function () {
+  describe('with fallback roles', function() {
+    it('returns true if the deprecated role is the first valid role', function() {
       axe.configure({
         standards: {
           ariaRoles: {
@@ -69,12 +71,14 @@ describe('deprecatedrole', function() {
           }
         }
       });
-      var params = checkSetup('<div id="target" role="foo widget melon button">Contents</div>');
+      var params = checkSetup(
+        '<div id="target" role="foo widget melon button">Contents</div>'
+      );
       assert.isTrue(checkEvaluate.apply(checkContext, params));
       assert.deepEqual(checkContext._data, 'melon');
-    })
+    });
 
-    it('returns false if the deprecated role is not the first valid role', function () {
+    it('returns false if the deprecated role is not the first valid role', function() {
       axe.configure({
         standards: {
           ariaRoles: {
@@ -85,7 +89,9 @@ describe('deprecatedrole', function() {
           }
         }
       });
-      var params = checkSetup('<div id="target" role="button melon widget">Contents</div>');
+      var params = checkSetup(
+        '<div id="target" role="button melon widget">Contents</div>'
+      );
       assert.isFalse(checkEvaluate.apply(checkContext, params));
       assert.isNull(checkContext._data);
     });
