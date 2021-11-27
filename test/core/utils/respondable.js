@@ -336,6 +336,27 @@ describe('axe.utils.respondable', function() {
     }, 'allowedOrigins value "foo.com" is not a valid origin');
   });
 
+  it('does not log error if message is null', function(done) {
+    axe.configure({
+      allowedOrigins: ['<unsafe_all_origins>']
+    });
+    var called = false;
+    frameWin.axe.log = function() {
+      called = true;
+    };
+
+    frameWin.postMessage(null, '*');
+
+    setTimeout(function() {
+      try {
+        assert.isFalse(called);
+        done();
+      } catch (e) {
+        done(e);
+      }
+    }, 500);
+  });
+
   describe('subscribe', function() {
     it('is called with the same topic', function(done) {
       var called = false;

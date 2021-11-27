@@ -5,7 +5,11 @@ defaults: &defaults
 
 unix_box: &unix_box
   docker:
-    - image: circleci/node:10-browsers
+    - image: circleci/node:16.13-browsers
+
+unix_nightly_box: &unix_nightly_box
+  docker:
+    - image: cimg/node:lts-browsers
 
 win_box: &win_box
   executor:
@@ -15,7 +19,7 @@ win_box: &win_box
 orbs:
   win: circleci/windows@1.0.0
   puppeteer: threetreeslight/puppeteer@0.1.2
-
+  browser-tools: circleci/browser-tools@1.1.0
 
 set_npm_auth: &set_npm_auth
   run: npm config set "//registry.npmjs.org/:_authToken" $NPM_AUTH
@@ -119,6 +123,16 @@ jobs:
       - run: npm run build
       - run: npm run test:act
 
+  # Run ARIA practices test cases
+  test_aria_practices:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      - run: npm run test:apg
+
   # Test locale files
   test_locales:
     <<: *defaults
@@ -140,20 +154,40 @@ jobs:
       - run: npm run test:virtual-rules
 
   # Run the test suite for nightly builds.
-  test_nightly:
+  test_nightly_browsers:
     <<: *defaults
-    <<: *unix_box
+    <<: *unix_nightly_box
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
       - run: npm run build
-      # install Chrome Beta
-      - run: |
-          wget https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb
-          sudo apt install ./google-chrome-beta_current_amd64.deb
-      - run: |
-          CHROME_BIN="$(which google-chrome-beta)" && echo "CHROME_BIN: $CHROME_BIN"
-          npm run test -- --browsers Chrome,FirefoxNightly
+      - run:
+          name: Install Chrome Beta
+          command: |
+            wget https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb
+            sudo apt install ./google-chrome-beta_current_amd64.deb
+      - run:
+          name: Install Firefox Nightly
+          command: |
+            wget -O firefox-nightly.tar.bz2 "https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US"
+            tar xf firefox-nightly.tar.bz2
+      - run:
+          name: Set Environment Variable
+          command: echo "export FIREFOX_NIGHTLY_BIN=$(pwd)/firefox/firefox-bin" >> $BASH_ENV
+      - run: npm run test -- --browsers Chrome,FirefoxNightly
+
+  # Run the test suite for nightly builds.
+  test_nightly_aria_practices:
+    <<: *defaults
+    <<: *unix_nightly_box
+    steps:
+      - browser-tools/install-browser-tools
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      # install ARIA practices
+      - run: npm install w3c/aria-practices#main
+      - run: npm run test:apg
 
   # Test api docs can be built
   build_api_docs:
@@ -257,7 +291,6 @@ workflows:
       # Run tests on all commits, but after installing dependencies
       - test_unix:
           requires:
-            - dependencies_unix
             - lint
       # Run IE/ Windows test on all commits
       - test_win:
@@ -267,6 +300,9 @@ workflows:
           requires:
             - test_unix
       - test_act:
+          requires:
+            - test_unix
+      - test_aria_practices:
           requires:
             - test_unix
       - test_locales:
@@ -354,6 +390,9 @@ workflows:
                 - develop
     jobs:
       - dependencies_unix
-      - test_nightly:
+      - test_nightly_browsers:
+          requires:
+            - dependencies_unix
+      - test_nightly_aria_practices:
           requires:
             - dependencies_unix
