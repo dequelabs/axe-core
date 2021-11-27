@@ -115,6 +115,17 @@ describe('axe.utils.checkHelper', function() {
         assert.equal(target.relatedNodes[0].element, fixture.children[0]);
         assert.equal(target.relatedNodes[1].element, fixture.children[1]);
       });
+      it('should noop for non-node-like objects', function() {
+        var target = {},
+          helper = axe.utils.checkHelper(target, noop);
+        var nodes = new axe.SerialVirtualNode({
+          nodeName: 'div'
+        });
+        assert.doesNotThrow(function() {
+          helper.relatedNodes(nodes);
+        });
+        assert.lengthOf(target.relatedNodes, 0);
+      });
     });
   });
 });

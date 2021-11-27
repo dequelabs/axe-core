@@ -234,6 +234,30 @@ describe('aria-valid-attr-value', function() {
     );
   });
 
+  it('should return true on valid aria-labelledby value within img elm', function() {
+    var vNode = queryFixture(
+      '<div id="foo">hello world</div>' +
+        '<img id="target" role="button" aria-labelledby="foo"/>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-valid-attr-value')
+        .call(checkContext, null, null, vNode)
+    );
+  });
+
+  it('should return undefined on invalid aria-labelledby value within img elm', function() {
+    var vNode = queryFixture(
+      '<div id="foo">hello world</div>' +
+        '<img id="target" role="button" aria-labelledby="hazaar"/>'
+    );
+    assert.isUndefined(
+      axe.testUtils
+        .getCheckEvaluate('aria-valid-attr-value')
+        .call(checkContext, null, null, vNode)
+    );
+  });
+
   describe('options', function() {
     it('should exclude supplied attributes', function() {
       var vNode = queryFixture(
