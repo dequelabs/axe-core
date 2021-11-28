@@ -28,17 +28,22 @@ describe('no-focusable-content tests', function() {
     assert.isTrue(noFocusableContent(null, null, vNode));
   });
 
-  it('should return false if element has focusable content', function() {
+  it('should return true if element has content which is focusable (tabindex=0) and does not have a widget role', function() {
     var params = checkSetup(
       '<button id="target"><span tabindex="0">Hello</span></button>'
     );
 
-    assert.isFalse(noFocusableContent.apply(checkContext, params));
-    assert.deepEqual(checkContext._data, null);
-    assert.deepEqual(checkContext._relatedNodes, [params[2].children[0]]);
+    assert.isTrue(noFocusableContent.apply(checkContext, params));
   });
 
-  it('should return false if element has natively focusable content', function() {
+  it('should return true if element has content which has negative tabindex and non-widget role', function() {
+    var vNode = queryFixture(
+      '<button id="target"><span tabindex="-1">Hello</span></button>'
+    );
+    assert.isTrue(noFocusableContent(null, null, vNode));
+  });
+
+  it('should return false if element has content which is natively focusable and has a widget role', function() {
     var params = checkSetup(
       '<button id="target"><a href="foo.html">Hello</a></button>'
     );
@@ -50,7 +55,7 @@ describe('no-focusable-content tests', function() {
 
   it('should add each focusable child as related nodes', function() {
     var params = checkSetup(
-      '<button id="target"><span tabindex="0">Hello</span><a href="foo.html">Hello</a></button>'
+      '<button id="target"><input type="checkbox"><a href="foo.html">Hello</a></button>'
     );
 
     assert.isFalse(noFocusableContent.apply(checkContext, params));
@@ -61,7 +66,7 @@ describe('no-focusable-content tests', function() {
     ]);
   });
 
-  it('should return false if element has natively focusable content with negative tabindex', function() {
+  it('should return false if element has natively focusable widget role content with negative tabindex', function() {
     var params = checkSetup(
       '<button id="target"><a href="foo.html" tabindex="-1">Hello</a></button>'
     );
@@ -71,25 +76,32 @@ describe('no-focusable-content tests', function() {
     assert.deepEqual(checkContext._relatedNodes, [params[2].children[0]]);
   });
 
-  it('should return true on span with tabindex=-1', function() {
+  it('should return true if element has content which is natively focusable and has a widget role but is disabled', function() {
+    var vNode = queryFixture(
+      '<button id="target"><a href="foo.html" disabled>Hello</a></button>'
+    );
+    assert.isTrue(noFocusableContent(null, null, vNode));
+  });
+
+  it('should return true on span with negative tabindex (focusable, does not have a widget role)', function() {
     var vNode = queryFixture('<span id="target" role="text"> some text '
         +'<span tabIndex="-1">JavaScript is able to focus this</span> '
         +'</span>');
     assert.isTrue(noFocusableContent(null, null, vNode));
   });
 
-  it('should return true on aria-hidden span with tabindex=-1', function() {
+  it('should return true on aria-hidden span with negative tabindex (focusable, does not have a widget role)', function() {
     var vNode = queryFixture('<span id="target" role="text"> some text '
         +'<span tabIndex="-1" aria-hidden="true">JavaScript is able to focus this</span> '
         +'</span>');
     assert.isTrue(noFocusableContent(null, null, vNode));
   });
 
-  it('should return false on span with tabindex=0', function() {
+  it('should return true on nested span with tabindex=0 (focusable, does not have a widget role)', function() {
     var vNode = queryFixture('<span id="target" role="text"> some text '
         +'<span tabIndex="0">anyone is able to focus this</span> '
         +'</span>');
-    assert.isFalse(noFocusableContent(null, null, vNode));
+    assert.isTrue(noFocusableContent(null, null, vNode));
   });
 
 });
