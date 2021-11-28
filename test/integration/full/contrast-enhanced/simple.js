@@ -8,12 +8,6 @@ describe('color-contrast shadow dom test', function() {
         { runOnly: { type: 'rule', values: ['color-contrast-enhanced'] } },
         function(err, results) {
           assert.isNull(err);
-          /* 
-          console.log(results.passes.length); // tdr 
-          console.log(results.violations.length); // tdr 
-          console.log(results.incomplete.length); // tdr 
-          console.log(results.incomplete); // tdr 
-          */
           assert.lengthOf(results.passes, 1);
           assert.lengthOf(results.passes[0].nodes, 4);
           assert.lengthOf(results.incomplete, 0);
