@@ -38,7 +38,7 @@ describe('nested-interactive virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for element with content with tabindex=-1', function() {
+  it('should pass for element with non-widget content which has negative tabindex', function() {
     var node = new axe.SerialVirtualNode({
       nodeName: 'button'
     });
