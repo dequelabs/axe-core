@@ -117,6 +117,10 @@
       "description": "Certifique-se de que o contraste entre as cores de primeiro plano e de fundo atenda aos limites de relação de contraste WCAG 2 AA",
       "help": "Os elementos devem ter contraste de cor suficiente"
     },
+    "color-contrast-enhanced": {
+      "description": "Certifique-se de que o contraste entre as cores de primeiro plano e de fundo atenda aos limites de relação de contraste WCAG 2 AAA",
+      "help": "Os elementos devem ter contraste de cor suficiente"
+    },
     "css-orientation-lock": {
       "description": "Certifique-se de que o conteúdo não está bloqueado para nenhuma orientação de tela específica, e que o mesmo seja operável em todas as orientações de tela",
       "help": "CSS Media queries não são usadas para bloquear a orientação de tela"
@@ -526,6 +530,25 @@
       "fail": "O elemento possui semântica inválida para um elemento na ordem de foco."
     },
     "color-contrast": {
+      "pass": "O elemento tem contraste suficiente no valor de ${data.contrastRatio}",
+      "fail": "O elemento tem contraste insuficiente no valor de ${data.contrastRatio} (cor do primeiro plano: ${data.fgColor}, cor de fundo: ${data.bgColor}, tamanho da fonte: ${data.fontSize}, normal/negrito: ${data.fontWeight}). Contraste esperado no valor de ${data.expectedContrastRatio}",
+      "incomplete": {
+        "default": "Impossível determinar o contraste",
+        "bgImage": "A cor de fundo do elemento não pôde ser determinada devido a uma imagem de fundo",
+        "bgGradient": "A cor de fundo do elemento não pôde ser determinada devido a um gradiente de fundo",
+        "imgNode": "A cor de fundo do elemento não pôde ser determinada porque o elemento contém um nó de imagem",
+        "bgOverlap": "A cor de fundo do elemento não pôde ser determinada porque está sobreposta por outro elemento",
+        "fgAlpha": "A cor do primeiro plano do elemento não pôde ser determinada devido à transparência alfa",
+        "elmPartiallyObscured": "A cor de fundo do elemento não pôde ser determinada porque está parcialmente obscurecida por outro elemento",
+        "elmPartiallyObscuring": "A cor de fundo do elemento não pôde ser determinada porque está parcialmente sobreposta a outros elementos",
+        "outsideViewport": "A cor de fundo do elemento não pôde ser determinada porque está fora da 'viewport'",
+        "equalRatio": "O elemento tem um contraste de 1:1 com plano de fundo",
+        "shortTextContent": "O conteúdo do elemento é muito curto para determinar se é conteúdo de texto real",
+        "nonBmp": "O conteúdo do elemento contém apenas caracteres não textuais",
+        "pseudoContent": "A cor de fundo do elemento não pode ser determinada devido a um pseudo-elemento"
+      }
+    },
+    "color-contrast-enhanced": {
       "pass": "O elemento tem contraste suficiente no valor de ${data.contrastRatio}",
       "fail": "O elemento tem contraste insuficiente no valor de ${data.contrastRatio} (cor do primeiro plano: ${data.fgColor}, cor de fundo: ${data.bgColor}, tamanho da fonte: ${data.fontSize}, normal/negrito: ${data.fontWeight}). Contraste esperado no valor de ${data.expectedContrastRatio}",
       "incomplete": {

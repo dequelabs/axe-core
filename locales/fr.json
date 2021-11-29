@@ -117,6 +117,10 @@
       "description": "Vérifier que les contrastes entre le premier plan et l’arrière-plan rencontrent les seuils de contrastes exigés par les WCAG 2 AA",
       "help": "Les éléments doivent avoir un contraste de couleurs suffisant"
     },
+    "color-contrast-enhanced": {
+      "description": "Vérifier que les contrastes entre le premier plan et l’arrière-plan rencontrent les seuils de contrastes exigés par les WCAG 2 AAA",
+      "help": "Les éléments doivent avoir un contraste de couleurs suffisant"
+    },
     "css-orientation-lock": {
       "description": "Vérifier que les contenus ne sont pas limités à une orientation spécifique de l’écran, et que le contenu est utilisable sous toutes les orientations de l’écran",
       "help": "Les CSS Media queries ne sont pas utilisées pour verrouiller l’orientation de l’écran"
@@ -533,6 +537,29 @@
       "fail": "L’élément n’a pas une sémantique valide pour un élément dans l’ordre de tabulation."
     },
     "color-contrast": {
+      "pass": "L’élément a un contraste de couleurs suffisant de ${data.contrastRatio}",
+      "fail": {
+        "default": "L’élément a un contraste de couleurs insuffisant de ${data.contrastRatio} (couleur d’avant plan : ${data.fgColor}, couleur d’arrière plan : ${data.bgColor}, taille de police : ${data.fontSize}, graisse : ${data.fontWeight}). Contraste de couleur attendu : ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "L’élément a un contraste de couleurs insuffisant de ${data.contrastRatio} entre l’avant plan et la couleur de l’ombre de texte (couleur d’avant plan : ${data.fgColor}, couleur de l’ombre de texte : ${data.shadowColor}, taille de police : ${data.fontSize}, graisse: ${data.fontWeight}). Contraste de couleurs attendu : ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "L’élément a un contraste de couleurs insuffisant de ${data.contrastRatio} entre la couleur de l’ombre de texte et l’arrière plan (couleur de l’ombre de texte : ${data.shadowColor}, couleur d’arrière plan : ${data.bgColor}, taille de police : ${data.fontSize}, graisse: ${data.fontWeight}). Contraste de couleurs attendu : ${data.expectedContrastRatio}"
+      },
+      "incomplete": {
+        "default": "Impossible de déterminer le rapport de contraste",
+        "bgImage": "La couleur d’arrière-plan de l’élément n’a pu être déterminée à cause d’une image d’arrière-plan",
+        "bgGradient": "La couleur d’arrière-plan de l’élément n’a pu être déterminée à cause d’un dégradé d’arrière-plan",
+        "imgNode": "La couleur d’arrière-plan de l’élément n’a pu être déterminée, car l’élément contient une balise image",
+        "bgOverlap": "La couleur d’arrière-plan de l’élément n’a pu être déterminée, car un autre élément le chevauche",
+        "fgAlpha": "La couleur du texte de l’élément n’a pu être déterminée à cause d’une opacité réduite",
+        "elmPartiallyObscured": "La couleur d’arrière-plan de l’élément n’a pu être déterminée, car l’élément est partiellement masqué par un autre élément",
+        "elmPartiallyObscuring": "La couleur d’arrière-plan de l’élément n’a pu être déterminée, car il chevauche partiellement un autre élément",
+        "outsideViewport": "La couleur d’arrière-plan de l’élément n’a pu être déterminée, car il est à l’extérieur du viewport",
+        "equalRatio": "L’élément a un rapport de contraste de 1:1 avec son arrière-plan",
+        "shortTextContent": "Le contenu de l’élément est trop court pour déterminer s’il s’agit réellement d’un contenu textuel",
+        "nonBmp": "Le contenu de l’élément contient seulement des caractères non textuels",
+        "pseudoContent": "La couleur d’arrière plan de l’élément n’a pu être déterminée à cause d’un pseudo-élément"
+      }
+    },
+    "color-contrast-enhanced": {
       "pass": "L’élément a un contraste de couleurs suffisant de ${data.contrastRatio}",
       "fail": {
         "default": "L’élément a un contraste de couleurs insuffisant de ${data.contrastRatio} (couleur d’avant plan : ${data.fgColor}, couleur d’arrière plan : ${data.bgColor}, taille de police : ${data.fontSize}, graisse : ${data.fontWeight}). Contraste de couleur attendu : ${data.expectedContrastRatio}",

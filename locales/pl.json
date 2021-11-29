@@ -117,6 +117,10 @@
       "description": "Kontrast między kolorami pierwszego planu i tła spełnia progi kontrastu WCAG 2 AA.",
       "help": "Elementy muszą mieć wystarczający kontrast kolorów."
     },
+    "color-contrast-enhanced": {
+      "description": "Kontrast między kolorami pierwszego planu i tła spełnia progi kontrastu WCAG 2 AAA.",
+      "help": "Elementy muszą mieć wystarczający kontrast kolorów."
+    },
     "css-orientation-lock": {
       "description": "Treść nie jest przypisana do żadnej konkretnej orientacji wyświetlacza i można ją obsługiwać we wszystkich orientacjach wyświetlacza.",
       "help": "Zapytania medialne nie są wykorzystywane do blokowania orientacji wyświetlacza."
@@ -523,6 +527,25 @@
       "fail": "Element w porządku otrzymywania fokusu ma niepoprawną semantykę."
     },
     "color-contrast": {
+      "pass": "Element ma wystarczający kontrast kolorów ${data.contrastRatio}.",
+      "fail": "Element ma niewystarczający kontrast kolorów: ${data.contrastRatio} (foreground color: ${data.fgColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Oczekiwany współczynnik kontrastu:  ${data.expectedContrastRatio}.",
+      "incomplete": {
+        "default": "Nie można określić współczynnika kontrastu.",
+        "bgImage": "Nie można określić koloru tła elementu, ponieważ element ma obraz tła.",
+        "bgGradient": "Nie można określić koloru tła elementu, ponieważ element ma gradientowe tło.",
+        "imgNode": "Nie można określić koloru tła elementu, ponieważ element zawiera węzeł obrazu.",
+        "bgOverlap": "Nie można określić koloru tła elementu, ponieważ nakłada się na niego inny element.",
+        "fgAlpha": "Nie można określić koloru pierwszego planu elementu z powodu przezroczystości alfa.",
+        "elmPartiallyObscured": "Nie można określić koloru tła elementu, ponieważ jest on częściowo zasłonięty przez inny element.",
+        "elmPartiallyObscuring": "Nie można określić koloru tła elementu, ponieważ częściowo nakłada się on na inne elementy.",
+        "outsideViewport": "Nie można określić koloru tła elementu, ponieważ znajduje się on poza obszarem operacyjnym.",
+        "equalRatio": "Element ma współczynnik kontrastu 1:1 z tłem.",
+        "shortTextContent": "Treść elementu jest zbyt krótka, aby określić, czy jest to rzeczywista treść tekstowa.",
+        "nonBmp": "Treść elementu zawiera tylko znaki nietekstowe.",
+        "pseudoContent": "Nie można określić koloru tła elementu, ponieważ jest to pseudoelement."
+      }
+    },
+    "color-contrast-enhanced": {
       "pass": "Element ma wystarczający kontrast kolorów ${data.contrastRatio}.",
       "fail": "Element ma niewystarczający kontrast kolorów: ${data.contrastRatio} (foreground color: ${data.fgColor}, background color: ${data.bgColor}, font size: ${data.fontSize}, font weight: ${data.fontWeight}). Oczekiwany współczynnik kontrastu:  ${data.expectedContrastRatio}.",
       "incomplete": {
