@@ -1,0 +1,14 @@
+{
+  "id": "color-contrast-enhanced",
+  "matches": "color-contrast-matches",
+  "excludeHidden": false,
+  "enabled": false, 
+  "tags": ["cat.color", "wcag2aaa", "wcag146"],
+  "metadata": {
+    "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AAA contrast ratio thresholds",
+    "help": "Elements must have sufficient color contrast"
+  },
+  "all": [],
+  "any": ["color-contrast-enhanced"],
+  "none": []
+}

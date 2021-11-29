@@ -10,10 +10,10 @@
   "all": [],
   "any": [],
   "none": [
-    "fallbackrole", 
-    "invalidrole", 
-    "abstractrole", 
-    "unsupportedrole", 
+    "fallbackrole",
+    "invalidrole",
+    "abstractrole",
+    "unsupportedrole",
     "deprecatedrole"
   ]
 }
