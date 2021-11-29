@@ -200,6 +200,21 @@ describe('color.getBackgroundColor', function() {
     assert.isNull(actual);
   });
 
+  it('should return null if something non-opaque is obscuring it, scrolled out of view', function() {
+    fixture.innerHTML =
+      '<div style="height: 1em; overflow: auto; position: relative;">' +
+      '  <div style="background: rgba(0, 255, 255, 0.7); ' +
+      '    margin-bottom: -1em; height: 1em; position:relative;"></div>' +
+      '  <div id="target">foo</div>' +
+      '</div>';
+    axe.testUtils.flatTreeSetup(fixture);
+    var actual = axe.commons.color.getBackgroundColor(
+      document.getElementById('target')
+    );
+    assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgOverlap');
+    assert.isNull(actual);
+  });
+
   it('should return an actual if something opaque is obscuring it', function() {
     fixture.innerHTML =
       '<div style="width:100%; height: 100px; background: rgba(0, 0, 0, 0.5)"></div>' +
@@ -463,6 +478,40 @@ describe('color.getBackgroundColor', function() {
     assert.equal(actual.green, expected.green);
     assert.equal(actual.blue, expected.blue);
     assert.equal(actual.alpha, expected.alpha);
+  });
+
+  it('handles nested inline elements in the middle of a text', function () {
+    fixture.innerHTML =
+      '<div style="height: 1em; overflow:auto; background: cyan">' +
+      '  <br>' +
+      '  <b id="target">Text <i style="display: inline-block">'+
+      '    <s><img width="100" height="16"></s>' +
+      '  </i></b>' +
+      '</div>';
+
+    var target = fixture.querySelector('#target');
+    var bgNodes = [];
+    axe.testUtils.flatTreeSetup(fixture);
+    var actual = axe.commons.color.getBackgroundColor(target, bgNodes);
+    assert.equal(actual.red, 0);
+    assert.equal(actual.green, 255);
+    assert.equal(actual.blue, 255);
+    assert.equal(actual.alpha, 1);
+  });
+
+  it('should return null for inline elements with position:absolute', function () {
+    fixture.innerHTML =
+      '<div style="height: 1em; overflow:auto; position: relative">' +
+      '  <br>' +
+      '  <b id="target">' +
+      '    <img style="width:100px; height:16px; position:absolute"> Text' +
+      '  </b>' +
+      '</div>';
+    axe.testUtils.flatTreeSetup(fixture);
+    var target = fixture.querySelector('#target');
+    var actual = axe.commons.color.getBackgroundColor(target);
+    assert.equal(axe.commons.color.incompleteData.get('bgColor'), 'bgOverlap');
+    assert.isNull(actual);
   });
 
   it('should ignore inline ancestors of non-overlapping elements', function() {
@@ -1046,7 +1095,7 @@ describe('color.getBackgroundColor', function() {
 
     it('returns the html background when body does not cover the element', function() {
       fixture.innerHTML =
-        '<div id="target" style="position: absolute; top: 1000px;"><label>elm<input></label></div>';
+        '<div id="target" style="position: absolute; top: 1000px;">elm<input></div>';
       document.documentElement.style.background = '#0F0';
       document.body.style.background = '#00F';
 
