@@ -117,6 +117,10 @@
       "description": "전경색과 배경색 사이의 대비가 WCAG 2 AA 명암비 기준치를 충족하는지 확인하세요.",
       "help": "엘리먼트는 반드시 충분한 명도 대비를 가져야 합니다."
     },
+    "color-contrast-enhanced": {
+      "description": "전경색과 배경색 사이의 대비가 WCAG 2 AAA 명암비 기준치를 충족하는지 확인하세요.",
+      "help": "엘리먼트는 반드시 충분한 명도 대비를 가져야 합니다."
+    },
     "css-orientation-lock": {
       "description": "콘텐츠가 특정 디스플레이 방향으로 고정되지 않고, 콘텐츠가 모든 디스플레이 방향에서 사용 가능한지 확인하세요.",
       "help": "CSS 미디어쿼리가 디스플레이 방향을 고정하기 위해 사용되지 않아야 합니다."
@@ -530,6 +534,29 @@
       "fail": "엘리먼트가 초점 순서(focus order)의 엘리먼트에 유효하지 않은 의미론을 가집니다."
     },
     "color-contrast": {
+      "pass": "엘리먼트가 ${data.contrastRatio}의 충분한 명도 대비를 가집니다.",
+      "fail": {
+        "default": "엘리먼트가 ${data.contrastRatio} (전경색: ${data.fgColor}, 배경색: ${data.bgColor}, 글꼴 크기: ${data.fontSize}, 글꼴 두께: ${data.fontWeight})의 불충분한 명도 대비를 가집니다. 기대 명암비: ${data.expectedContrastRatio}",
+        "fgOnShadowColor": "엘리먼트가 전경색과 그림자 색상 (전경색: ${data.fgColor}, 텍스트 그림자 색상: ${data.shadowColor}, 글꼴 크기: ${data.fontSize}, 글꼴 두께: ${data.fontWeight}) 사이에 ${data.contrastRatio}의 불충분한 명도 대비를 가집니다. 기대 명암비: ${data.expectedContrastRatio}",
+        "shadowOnBgColor": "엘리먼트가 그림자 색상과 배경색 (텍스트 그림자 색상: ${data.shadowColor}, 배경색: ${data.bgColor}, 글꼴 크기: ${data.fontSize}, 글꼴 두께: ${data.fontWeight}) 사이에 ${data.contrastRatio}의 불충분한 명도 대비를 가집니다. 기대 명암비: ${data.expectedContrastRatio}"
+      },
+      "incomplete": {
+        "default": "명암비를 확인할 수 없습니다.",
+        "bgImage": "배경 이미지로 인해 엘리먼트의 배경색이 확인될 수 없습니다.",
+        "bgGradient": "배경 그라데이션으로 인해 엘리먼트의 배경색이 확인될 수 없습니다.",
+        "imgNode": "엘리먼트가 이미지 노드를 포함하기 때문에 엘리먼트의 배경색이 확인될 수 없습니다.",
+        "bgOverlap": "다른 엘리먼트로 겹쳐 있기 때문에 엘리먼트의 배경색이 확인될 수 없습니다.",
+        "fgAlpha": "알파 투명도 때문에 엘리먼트의 전경색이 확인될 수 없습니다.",
+        "elmPartiallyObscured": "다른 엘리먼트에 의해 부분적으로 가려 있기 때문에 배경색이 확인될 수 없습니다.",
+        "elmPartiallyObscuring": "다른 엘리먼트에 의해 부분적으로 겹쳐 있기 때문에 배경색이 확인될 수 없습니다.",
+        "outsideViewport": "엘리먼트가 뷰포트 밖에 있기 때문에 엘리먼트의 배경색이 확인될 수 없습니다.",
+        "equalRatio": "엘리먼트가 배경색과 1:1의 명암비를 가집니다.",
+        "shortTextContent": "엘리먼트 콘텐츠가 너무 짧아 실제 텍스트 콘텐츠인지 확인될 수 없습니다.",
+        "nonBmp": "엘리먼트 콘텐츠가 비텍스트 문자만 포함합니다.",
+        "pseudoContent": "가상 엘리먼트로 인해 엘리먼트의 배경색이 확인될 수 없습니다."
+      }
+    },
+    "color-contrast-enhanced": {
       "pass": "엘리먼트가 ${data.contrastRatio}의 충분한 명도 대비를 가집니다.",
       "fail": {
         "default": "엘리먼트가 ${data.contrastRatio} (전경색: ${data.fgColor}, 배경색: ${data.bgColor}, 글꼴 크기: ${data.fontSize}, 글꼴 두께: ${data.fontWeight})의 불충분한 명도 대비를 가집니다. 기대 명암비: ${data.expectedContrastRatio}",
