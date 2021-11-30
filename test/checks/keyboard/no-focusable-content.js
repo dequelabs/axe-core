@@ -43,6 +43,16 @@ describe('no-focusable-content tests', function() {
     assert.isTrue(noFocusableContent(null, null, vNode));
   });
 
+  it('should return false if element has content which has negative tabindex and an explicit widget role', function() {
+    var params = checkSetup(
+      '<button id="target"><span role="link" tabindex="-1">Hello</span></button>'
+    );
+    axe.utils.getFlattenedTree(document.documentElement);
+    assert.isFalse(check.evaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, { messageKey: 'notHidden' });
+    assert.deepEqual(checkContext._relatedNodes, [params[2].children[0]]);
+  });
+
   it('should return false if element has content which is natively focusable and has a widget role', function() {
     var params = checkSetup(
       '<button id="target"><a href="foo.html">Hello</a></button>'
