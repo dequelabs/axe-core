@@ -88,7 +88,7 @@ describe('no-focusable-content tests', function() {
 
   it('should return true if element has content which is natively focusable and has a widget role but is disabled', function() {
     var vNode = queryFixture(
-      '<button id="target"><a href="foo.html" disabled>Hello</a></button>'
+      '<button id="target"><input value="hello" disabled></button>'
     );
     assert.isTrue(noFocusableContent(null, null, vNode));
   });
