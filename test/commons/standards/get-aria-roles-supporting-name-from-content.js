@@ -1,84 +1,63 @@
 describe('standards.getAriaRolesSupportingNameFromContent', function() {
-	var getAriaRolesSupportingNameFromContent =
-		axe.commons.standards.getAriaRolesSupportingNameFromContent;
+  var getAriaRolesSupportingNameFromContent =
+    axe.commons.standards.getAriaRolesSupportingNameFromContent;
 
-	before(function() {
-		axe._load({});
-	});
+  it('should return a list of role names which are named from content', function() {
+    // first remove all namedFromContent
+    var roleNames = Object.keys(axe._audit.standards.ariaRoles);
+    var ariaRoles = {};
+    for (var i = 0; i < roleNames.length; i++) {
+      ariaRoles[roleNames[i]] = { nameFromContent: false };
+    }
 
-	after(function() {
-		axe.reset();
-	});
+    // then turn on a few specific roles
+    ariaRoles.button = { nameFromContent: true };
+    ariaRoles.cell = { nameFromContent: true };
+    ariaRoles.checkbox = { nameFromContent: true };
+    ariaRoles.columnheader = { nameFromContent: true };
 
-	it('should return a list of role names which are named from content', function() {
-		// Source: https://www.w3.org/TR/wai-aria-1.1/#namefromcontent
-		// Source: https://www.w3.org/TR/dpub-aria-1.0/
-		// Note: we have added roles in our spec. also note that
-		// although "tree" is listed as supporting name from content
-		// it's role definition does not list contents in the name from
-		// section (it was removed from the list in WAI ARIA 1.2)
-		var contentRoles = getAriaRolesSupportingNameFromContent();
-		assert.deepEqual(contentRoles, [
-			'button',
-			'cell',
-			'checkbox',
-			'columnheader',
-			'directory',
-			'figure',
-			'gridcell',
-			'heading',
-			'link',
-			'listitem',
-			'menuitem',
-			'menuitemcheckbox',
-			'menuitemradio',
-			'option',
-			'radio',
-			'row',
-			'rowgroup',
-			'rowheader',
-			'section',
-			'sectionhead',
-			'switch',
-			'tab',
-			'table',
-			'term',
-			'tooltip',
-			'treeitem',
-			'doc-backlink',
-			'doc-biblioref',
-			'doc-glossref',
-			'doc-noteref'
-		]);
-	});
+    axe.configure({
+      standards: {
+        ariaRoles: ariaRoles
+      }
+    });
 
-	it('should return configured roles', function() {
-		axe.configure({
-			standards: {
-				ariaRoles: {
-					myRole: {
-						nameFromContent: true
-					}
-				}
-			}
-		});
+    var contentRoles = getAriaRolesSupportingNameFromContent();
+    assert.deepEqual(contentRoles, [
+      'button',
+      'cell',
+      'checkbox',
+      'columnheader'
+    ]);
+  });
 
-		var contentRoles = getAriaRolesSupportingNameFromContent();
-		assert.include(contentRoles, 'myRole');
-	});
+  it('should return configured roles', function() {
+    axe.configure({
+      standards: {
+        ariaRoles: {
+          myRole: {
+            nameFromContent: true
+          }
+        }
+      }
+    });
 
-	it('should not return role that is configured to not be of the type', function() {
-		axe.configure({
-			standards: {
-				ariaRoles: {
-					button: {
-						nameFromContent: false
-					}
-				}
-			}
-		});
+    var contentRoles = getAriaRolesSupportingNameFromContent();
+    assert.include(contentRoles, 'myRole');
+  });
 
-		var contentRoles = getAriaRolesSupportingNameFromContent();
-		assert.notInclude(contentRoles, 'button');
-	});
+  it('should not return role that is configured to not be of the type', function() {
+    axe.configure({
+      standards: {
+        ariaRoles: {
+          button: {
+            nameFromContent: false
+          }
+        }
+      }
+    });
+
+    var contentRoles = getAriaRolesSupportingNameFromContent();
+    assert.notInclude(contentRoles, 'button');
+  });
 });

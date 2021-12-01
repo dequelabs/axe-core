@@ -1,184 +1,299 @@
 describe('aria-allowed-attr', function() {
-	'use strict';
+  'use strict';
 
-	var fixture = document.getElementById('fixture');
-	var flatTreeSetup = axe.testUtils.flatTreeSetup;
-	var checkContext = axe.testUtils.MockCheckContext();
+  var queryFixture = axe.testUtils.queryFixture;
+  var checkContext = axe.testUtils.MockCheckContext();
 
-	afterEach(function() {
-		fixture.innerHTML = '';
-		checkContext.reset();
-		axe.reset();
-	});
+  afterEach(function() {
+    checkContext.reset();
+  });
 
-	it('should detect incorrectly used attributes', function() {
-		var node = document.createElement('div');
-		node.setAttribute('role', 'link');
-		node.id = 'test';
-		node.tabIndex = 1;
-		node.setAttribute('aria-selected', 'true');
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+  it('should detect incorrectly used attributes', function() {
+    var vNode = queryFixture(
+      '<div role="link" id="target" tabindex="1" aria-selected="true"></div>'
+    );
 
-		assert.isFalse(
-			axe.testUtils
-				.getCheckEvaluate('aria-allowed-attr')
-				.call(checkContext, node)
-		);
-		assert.deepEqual(checkContext._data, ['aria-selected="true"']);
-	});
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, ['aria-selected="true"']);
+  });
 
-	it('should not report on required attributes', function() {
-		var node = document.createElement('div');
-		node.setAttribute('role', 'checkbox');
-		node.id = 'test';
-		node.tabIndex = 1;
-		node.setAttribute('aria-checked', 'true');
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+  it('should not report on required attributes', function() {
+    var vNode = queryFixture(
+      '<div role="checkbox" id="target" tabindex="1" aria-checked="true"></div>'
+    );
 
-		assert.isTrue(
-			axe.testUtils
-				.getCheckEvaluate('aria-allowed-attr')
-				.call(checkContext, node)
-		);
-	});
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+  });
 
-	it('should detect incorrectly used attributes - implicit role', function() {
-		var node = document.createElement('a');
-		node.href = '#';
-		node.id = 'test';
-		node.tabIndex = 1;
-		node.setAttribute('aria-selected', 'true');
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+  it('should detect incorrectly used attributes - implicit role', function() {
+    var vNode = queryFixture(
+      '<a href="#" id="target" tabindex="1" aria-selected="true"></a>'
+    );
 
-		assert.isFalse(
-			axe.testUtils
-				.getCheckEvaluate('aria-allowed-attr')
-				.call(checkContext, node)
-		);
-		assert.deepEqual(checkContext._data, ['aria-selected="true"']);
-	});
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, ['aria-selected="true"']);
+  });
 
-	it('should return true if there is no role', function() {
-		var node = document.createElement('div');
-		node.id = 'test';
-		node.tabIndex = 1;
-		node.setAttribute('aria-selected', 'true');
-		node.setAttribute('aria-checked', 'true');
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+  it('should return true for global attributes if there is no role', function() {
+    var vNode = queryFixture(
+      '<div id="target" tabindex="1" aria-busy="true" aria-owns="foo"></div>'
+    );
 
-		assert.isTrue(
-			axe.testUtils
-				.getCheckEvaluate('aria-allowed-attr')
-				.call(checkContext, node)
-		);
-		assert.isNull(checkContext._data);
-	});
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNull(checkContext._data);
+  });
 
-	it('should not report on invalid attributes', function() {
-		var node = document.createElement('div');
-		node.id = 'test';
-		node.tabIndex = 1;
-		node.setAttribute('aria-cats', 'true');
-		node.setAttribute('role', 'dialog');
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+  it.skip('should return false for non-global attributes if there is no role', function() {
+    var vNode = queryFixture(
+      '<div id="target" tabindex="1" aria-selected="true" aria-owns="foo"></div>'
+    );
 
-		assert.isTrue(
-			axe.testUtils
-				.getCheckEvaluate('aria-allowed-attr')
-				.call(checkContext, node)
-		);
-		assert.isNull(checkContext._data);
-	});
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.deepEqual(checkContext._data, ['aria-selected="true"']);
+  });
 
-	it('should not report on allowed attributes', function() {
-		var node = document.createElement('div');
-		node.id = 'test';
-		node.tabIndex = 1;
-		node.setAttribute('role', 'radio');
-		node.setAttribute('aria-required', 'true');
-		node.setAttribute('aria-checked', 'true');
-		fixture.appendChild(node);
-		flatTreeSetup(fixture);
+  it('should return true for non-global attributes if there is no role', function() {
+    var vNode = queryFixture(
+      '<div id="target" tabindex="1" aria-selected="true" aria-owns="foo"></div>'
+    );
 
-		assert.isTrue(
-			axe.testUtils
-				.getCheckEvaluate('aria-allowed-attr')
-				.call(checkContext, node)
-		);
-		assert.isNull(checkContext._data);
-	});
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+  });
 
-	describe('options', function() {
-		it('should allow provided attribute names for a role', function() {
-			axe.configure({
-				standards: {
-					ariaRoles: {
-						mccheddarton: {
-							allowedAttrs: ['aria-checked']
-						}
-					}
-				}
-			});
+  it('should not report on invalid attributes', function() {
+    var vNode = queryFixture(
+      '<div role="dialog" id="target" tabindex="1" aria-cats="true"></div>'
+    );
 
-			fixture.innerHTML =
-				'<div role="mccheddarton" id="target" aria-checked="true" aria-selected="true"></div>';
-			var target = fixture.children[0];
-			flatTreeSetup(fixture);
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNull(checkContext._data);
+  });
 
-			assert.isFalse(
-				axe.testUtils
-					.getCheckEvaluate('aria-allowed-attr')
-					.call(checkContext, target)
-			);
+  it('should not report on allowed attributes', function() {
+    var vNode = queryFixture(
+      '<div role="radio" id="target" tabindex="1" aria-required="true" aria-checked="true"></div>'
+    );
 
-			assert.isTrue(
-				axe.testUtils
-					.getCheckEvaluate('aria-allowed-attr')
-					.call(checkContext, target, {
-						mccheddarton: ['aria-checked', 'aria-selected']
-					})
-			);
-		});
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNull(checkContext._data);
+  });
+  describe('invalid aria-attributes when used on role=row as a descendant of a table or a grid', function() {
+    [
+      'aria-posinset="1"',
+      'aria-setsize="1"',
+      'aria-expanded="true"',
+      'aria-level="1"'
+    ].forEach(function(attrName) {
+      it(
+        'should return false when ' +
+          attrName +
+          ' is used on role=row thats parent is a table',
+        function() {
+          var vNode = queryFixture(
+            ' <div role="table">' +
+              '<div  id="target" role="row" ' +
+              attrName +
+              '></div>' +
+              '</div>'
+          );
+          assert.isFalse(
+            axe.testUtils
+              .getCheckEvaluate('aria-allowed-attr')
+              .call(checkContext, null, null, vNode)
+          );
+          assert.isNotNull(checkContext._data);
+        }
+      );
+    });
 
-		it('should handle multiple roles provided in options', function() {
-			axe.configure({
-				standards: {
-					ariaRoles: {
-						mcheddarton: {
-							allowedAttrs: ['aria-checked']
-						},
-						bagley: {
-							allowedAttrs: ['aria-checked']
-						}
-					}
-				}
-			});
+    [
+      'aria-posinset="1"',
+      'aria-setsize="1"',
+      'aria-expanded="true"',
+      'aria-level="1"'
+    ].forEach(function(attrName) {
+      it(
+        'should return false when ' +
+          attrName +
+          ' is used on role=row thats parent is a grid',
+        function() {
+          var vNode = queryFixture(
+            ' <div role="grid">' +
+              '<div  id="target" role="row" ' +
+              attrName +
+              '></div>' +
+              '</div>'
+          );
+          assert.isFalse(
+            axe.testUtils
+              .getCheckEvaluate('aria-allowed-attr')
+              .call(checkContext, null, null, vNode)
+          );
+          assert.isNotNull(checkContext._data);
+        }
+      );
+    });
+  });
 
-			fixture.innerHTML =
-				'<div role="bagley" id="target" aria-selected="true"></div>';
-			var target = fixture.children[0];
-			var options = {
-				mccheddarton: ['aria-selected'],
-				bagley: ['aria-selected']
-			};
-			flatTreeSetup(fixture);
+  describe('options.invalidRowAttrs on role=row when a descendant of a table or a grid', function() {
+    it('should return false when provided a single aria-attribute is provided for a table', function() {
+      axe.configure({
+        checks: [
+          {
+            id: 'aria-allowed-attr',
+            options: {
+              validTreeRowAttrs: ['aria-posinset']
+            }
+          }
+        ]
+      });
 
-			assert.isFalse(
-				axe.testUtils
-					.getCheckEvaluate('aria-allowed-attr')
-					.call(checkContext, target)
-			);
+      var options = {
+        validTreeRowAttrs: ['aria-posinset']
+      };
+      var vNode = queryFixture(
+        ' <div role="table">' +
+          '<div id="target" role="row" aria-posinset="2"><div role="cell"></div></div>' +
+          '</div>'
+      );
 
-			assert.isTrue(
-				axe.testUtils
-					.getCheckEvaluate('aria-allowed-attr')
-					.call(checkContext, target, options)
-			);
-		});
-	});
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, options, vNode)
+      );
+      assert.isNotNull(checkContext._data);
+    });
+
+    it('should return false when provided a single aria-attribute is provided for a grid', function() {
+      axe.configure({
+        checks: [
+          {
+            id: 'aria-allowed-attr',
+            options: {
+              validTreeRowAttrs: ['aria-level']
+            }
+          }
+        ]
+      });
+
+      var options = {
+        validTreeRowAttrs: ['aria-level']
+      };
+      var vNode = queryFixture(
+        ' <div role="grid">' +
+          '<div id="target" role="row" aria-level="2"><div role="gridcell"></div></div>' +
+          '</div>'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, options, vNode)
+      );
+      assert.isNotNull(checkContext._data);
+    });
+  });
+
+  describe('options', function() {
+    it('should allow provided attribute names for a role', function() {
+      axe.configure({
+        standards: {
+          ariaRoles: {
+            mccheddarton: {
+              allowedAttrs: ['aria-checked']
+            }
+          }
+        }
+      });
+
+      var vNode = queryFixture(
+        '<div role="mccheddarton" id="target" aria-checked="true" aria-selected="true"></div>'
+      );
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, null, vNode)
+      );
+
+      assert.isTrue(
+        axe.testUtils.getCheckEvaluate('aria-allowed-attr').call(
+          checkContext,
+          null,
+          {
+            mccheddarton: ['aria-checked', 'aria-selected']
+          },
+          vNode
+        )
+      );
+    });
+
+    it('should handle multiple roles provided in options', function() {
+      axe.configure({
+        standards: {
+          ariaRoles: {
+            mcheddarton: {
+              allowedAttrs: ['aria-checked']
+            },
+            bagley: {
+              allowedAttrs: ['aria-checked']
+            }
+          }
+        }
+      });
+
+      var vNode = queryFixture(
+        '<div role="bagley" id="target" aria-selected="true"></div>'
+      );
+      var options = {
+        mccheddarton: ['aria-selected'],
+        bagley: ['aria-selected']
+      };
+
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, null, vNode)
+      );
+
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('aria-allowed-attr')
+          .call(checkContext, null, options, vNode)
+      );
+    });
+  });
 });

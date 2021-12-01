@@ -1,6 +1,6 @@
 {
-	"description": "blink test",
-	"rule": "blink",
-	"violations": [["#fail1"], ["#fail2"]],
-	"passes": [["#pass1"]]
+  "description": "blink test",
+  "rule": "blink",
+  "violations": [["#fail1"], ["#fail2"]],
+  "passes": [["#pass1"]]
 }

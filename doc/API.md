@@ -20,8 +20,13 @@
       1. [Results Object](#results-object)
    1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
    1. [API Name: axe.cleanup](#api-name-axecleanup)
+   1. [API Name: axe.setup](#api-name-axesetup)
+   1. [API Name: axe.teardown](#api-name-axeteardown)
+   1. [API Name: axe.frameMessenger](#api-name-axeframemessenger)
+   1. [API name: axe.runPartial / axe.finishRun](#api-name-axerunpartial-/-axefinishrun)
    1. [Virtual DOM Utilities](#virtual-dom-utilities)
       1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
+      1. [API Name: axe.utils.getRule](#api-name-axeutilsgetrule)
    1. [Common Functions](#common-functions)
 1. [Section 3: Example Reference](#section-3-example-reference)
 1. [Section 4: Performance](#section-4-performance)
@@ -75,8 +80,10 @@ The `experimental`, `ACT` and `section508` tags are only added to some rules. Ea
 | ---------------- | ---------------------------------------------------- |
 | `wcag2a`         | WCAG 2.0 Level A                                     |
 | `wcag2aa`        | WCAG 2.0 Level AA                                    |
+| `wcag2aaa`       | WCAG 2.0 Level AAA                                   |
 | `wcag21a`        | WCAG 2.1 Level A                                     |
 | `wcag21aa`       | WCAG 2.1 Level AA                                    |
+| `wcag21aaa`      | WCAG 2.1 Level AAA                                   |
 | `best-practice`  | Common accessibility best practices                  |
 | `wcag***`        | WCAG success criterion e.g. wcag111 maps to SC 1.1.1 |
 | `ACT`            | W3C approved Accessibility Conformance Testing rules |
@@ -179,17 +186,15 @@ User specifies the format of the JSON structure passed to the callback of `axe.r
 
 ```js
 axe.configure({
-	branding: {
-		brand: String,
-		application: String
-	},
-	reporter: 'option' | Function,
-	checks: [Object],
-	rules: [Object],
-	standards: Object,
-	locale: Object,
-	axeVersion: String,
-	disableOtherRules: Boolean
+  branding: String,
+  reporter: 'option' | Function,
+  checks: [Object],
+  rules: [Object],
+  standards: Object,
+  locale: Object,
+  axeVersion: String,
+  disableOtherRules: Boolean,
+  noHtml: Boolean
 });
 ```
 
@@ -232,8 +237,12 @@ axe.configure({
   - `disableOtherRules` - Disables all rules not included in the `rules` property.
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
   - `axeVersion` - Set the compatible version of a custom rule with the current axe version. Compatible versions are all patch and minor updates that are the same as, or newer than those of the `axeVersion` property.
+  - `noHtml` - Disables the HTML output of nodes from rules.
+  - `allowedOrigins` - Set which origins (URL domains) will communicate test data with. See [allowedOrigins](#allowedorigins).
 
 **Returns:** Nothing
+
+**Note**: The `branding` property accepts a `string`, which sets the application. Passing it an object is deprecated as of axe-core 4.4.0, as is the `branding.brand` property.
 
 ##### Page level rules
 
@@ -244,6 +253,20 @@ Page level rules raise violations on the entire document and not on individual n
 - [lib/checks/navigation/heading-order.json](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order.json)
 - [lib/checks/navigation/heading-order-evaluate.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order-evaluate.js)
 - [lib/checks/navigation/heading-order-after.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order-after.js)
+
+##### allowedOrigins
+
+Axe-core will only communicate results to frames of the same origin (the URL domain). To configure axe so that it exchanges results across different origins, you can configure allowedOrigins. This configuration must happen in **every frame**. For example:
+
+```js
+axe.configure({
+  allowedOrigins: ['<same_origin>', 'https://deque.com']
+});
+```
+
+The `allowedOrigins` option has two wildcard options. `<same_origin>` always corresponds to the current domain. If you want to block all frame communication, set `allowedOrigins` to `[]`. To configure axe-core to communicate to all origins, use `<unsafe_all_origins>`. **This is not recommended**. Because this is the only way to test iframes on `file://`, it is recommended to use a localhost server such as [http-server](https://www.npmjs.com/package/http-server) instead.
+
+Use of `allowedOrigins` is not necessary if an alternative [frameMessenger](#api-name-axeframemessenger) is used.
 
 ### API Name: axe.reset
 
@@ -279,14 +302,14 @@ Runs a number of rules against the provided HTML page and returns the resulting 
 
 ```js
 axe.run(context, options, (err, results) => {
-	// ...
+  // ...
 });
 ```
 
 #### Parameters axe.run
 
 - [`context`](#context-parameter): (optional) Defines the scope of the analysis - the part of the DOM that you would like to analyze. This will typically be the `document` or a specific selector such as class name, ID, selector, etc.
-- [`options`](#options-parameter): (optional) Set of options passed into rules or checks, temporarily modifying them. This contrasts with `axe.configure`, which is more permanent.
+- [`options`](#options-parameter): (optional) Set of options that change how `axe.run` works, including what rules will run. To pass options to specific checks, use `axe.configure`.
 - [`callback`](#callback-parameter): (optional) The callback function which receives either null or an [error result](#error-result) as the first parameter, and the [results object](#results-object) when analysis is completed successfully, or undefined if it did not.
 
 ##### Context Parameter
@@ -318,13 +341,13 @@ In most cases, the component arrays will contain only one CSS selector. Multiple
 
 ```js
 axe.run(
-	{
-		include: $fixture[0],
-		exclude: $fixture[0].firstChild
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    include: $fixture[0],
+    exclude: $fixture[0].firstChild
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -332,13 +355,13 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		include: [['#fix']],
-		exclude: [['#fix div']]
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    include: [['#fix']],
+    exclude: [['#fix div']]
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -346,12 +369,12 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		exclude: [['.exclude1'], ['.exclude2']]
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    exclude: [['.exclude1'], ['.exclude2']]
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -359,12 +382,12 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		include: [['#frame', '#fix']]
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    include: [['#frame', '#fix']]
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -372,12 +395,12 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		include: [['#frame1', '#frame2', '#fix']]
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    include: [['#frame1', '#frame2', '#fix']]
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -389,16 +412,16 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		include: [['#header'], ['a'], ['#frame1', '#frame2', '#fix']]
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    include: [['#header'], ['a'], ['#frame1', '#frame2', '#fix']]
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
-##### Options Parameter
+``##### Options Parameter
 
 The options parameter is flexible way to configure how `axe.run` operates. The different modes of operation are:
 
@@ -423,6 +446,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `frameWaitTime`    | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out                                              |
 | `preload`          | `true`  | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details) |
 | `performanceTimer` | `false` | Log rule performance metrics to the console                                                                                             |
+| `pingWaitTime`     | `500`   | Time before axe-core considers a frame unresponsive. [See frame messenger for details](frame-messenger.md)                              |
 
 ###### Options Parameter Examples
 
@@ -432,15 +456,15 @@ To run only WCAG 2.0 Level A rules, specify `options` as:
 
 ```js
 axe.run(
-	{
-		runOnly: {
-			type: 'tag',
-			values: ['wcag2a']
-		}
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    runOnly: {
+      type: 'tag',
+      values: ['wcag2a']
+    }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -448,26 +472,42 @@ To run both WCAG 2.0 Level A and Level AA rules, you must specify both `wcag2a` 
 
 ```js
 axe.run(
-	{
-		runOnly: {
-			type: 'tag',
-			values: ['wcag2a', 'wcag2aa']
-		}
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    runOnly: {
+      type: 'tag',
+      values: ['wcag2a', 'wcag2aa']
+    }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
 Alternatively, runOnly can be passed an array of tags:
 
 ```js
-axe.run({
-	runOnly: ['wcag2a', 'wcag2aa'];
-}, (err, results) => {
-  // ...
-})
+axe.run(
+  {
+    runOnly: ['wcag2a', 'wcag2aa']
+  },
+  (err, results) => {
+    // ...
+  }
+);
+```
+
+If you want to specify just one tag, you can pass in a string.
+
+```js
+axe.run(
+  {
+    runOnly: 'wcag2a'
+  },
+  (err, results) => {
+    // ...
+  }
+);
 ```
 
 2. Run only a specified list of Rules
@@ -476,15 +516,15 @@ If you only want to run certain rules, specify options as:
 
 ```js
 axe.run(
-	{
-		runOnly: {
-			type: 'rule',
-			values: ['ruleId1', 'ruleId2', 'ruleId3']
-		}
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    runOnly: {
+      type: 'rule',
+      values: ['ruleId1', 'ruleId2', 'ruleId3']
+    }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -500,21 +540,34 @@ axe.run({
 })
 ```
 
+If you want to specify just one rule, you can pass in a string.
+
+```js
+axe.run(
+  {
+    runOnly: 'ruleId1'
+  },
+  (err, results) => {
+    // ...
+  }
+);
+```
+
 3. Run all enabled Rules except for a list of rules
 
 The default operation for axe.run is to run all rules except for rules with the "experimental" tag. If certain rules should be disabled from being run, specify `options` as:
 
 ```js
 axe.run(
-	{
-		rules: {
-			'color-contrast': { enabled: false },
-			'valid-lang': { enabled: false }
-		}
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    rules: {
+      'color-contrast': { enabled: false },
+      'valid-lang': { enabled: false }
+    }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -526,19 +579,19 @@ By combining runOnly with type: tags and the rules option, a modified set can be
 
 ```js
 axe.run(
-	{
-		runOnly: {
-			type: 'tag',
-			values: ['wcag2a']
-		},
-		rules: {
-			'color-contrast': { enabled: true },
-			'valid-lang': { enabled: false }
-		}
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    runOnly: {
+      type: 'tag',
+      values: ['wcag2a']
+    },
+    rules: {
+      'color-contrast': { enabled: true },
+      'valid-lang': { enabled: false }
+    }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -554,12 +607,12 @@ Types listed in this option will cause rules that fall under those types to show
 
 ```js
 axe.run(
-	{
-		resultTypes: ['violations', 'incomplete', 'inapplicable']
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    resultTypes: ['violations', 'incomplete', 'inapplicable']
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -573,12 +626,12 @@ The `preload` attribute (defaults to `true`) in options parameter, accepts a `bo
 
 ```js
 axe.run(
-	{
-		preload: true
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    preload: true
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -586,12 +639,12 @@ axe.run(
 
 ```js
 axe.run(
-	{
-		preload: { assets: ['cssom'], timeout: 50000 }
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    preload: { assets: ['cssom'], timeout: 50000 }
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 
@@ -682,8 +735,8 @@ In this example, we will pass the selector for the entire document, pass no opti
 
 ```js
 axe.run(document, function(err, results) {
-	if (err) throw err;
-	console.log(results);
+  if (err) throw err;
+  console.log(results);
 });
 ```
 
@@ -738,17 +791,17 @@ In this example, we pass the selector for the entire document, enable two additi
 
 ```js
 axe.run(
-	document,
-	{
-		rules: {
-			'link-in-text-block': { enabled: true },
-			'p-as-heading': { enabled: true }
-		}
-	},
-	function(err, results) {
-		if (err) throw err;
-		console.log(results);
-	}
+  document,
+  {
+    rules: {
+      'link-in-text-block': { enabled: true },
+      'p-as-heading': { enabled: true }
+    }
+  },
+  function(err, results) {
+    if (err) throw err;
+    console.log(results);
+  }
 );
 ```
 
@@ -760,14 +813,14 @@ This example shows a result object that points to an open shadow DOM element.
 
 ```json
 {
-	"help": "Elements must have sufficient color contrast",
-	"helpUrl": "https://dequeuniversity.com/rules/axe/2.1/color-contrast?application=axeAPI",
-	"id": "color-contrast",
-	"nodes": [
-		{
-			"target": [["header > aria-menu", "li.expanded"]]
-		}
-	]
+  "help": "Elements must have sufficient color contrast",
+  "helpUrl": "https://dequeuniversity.com/rules/axe/2.1/color-contrast?application=axeAPI",
+  "id": "color-contrast",
+  "nodes": [
+    {
+      "target": [["header > aria-menu", "li.expanded"]]
+    }
+  ]
 }
 ```
 
@@ -790,6 +843,36 @@ axe.cleanup(resolve, reject);
 `resolve` and `reject` are functions that will be invoked on success or failure respectively.
 
 `resolve` takes no arguments and `reject` takes a single argument that must be a string or have a toString() method in its prototype.
+
+### API Name: axe.setup
+
+Setup axe-cores internal `VirtualNode` tree and other required properties required to run functions in `axe.commons`.
+
+The signature is:
+
+```js
+axe.setup(DomNode);
+```
+
+`DomNode` - is an optional DOM node to use as the root of the `VirtualNode` tree. Default is `document.documentElement`.
+
+### API Name: axe.teardown
+
+Cleanup the `VirtualNode` tree and internal caches. `axe.run` will call this function at the end of the run so there's no need to call it yourself afterwards.
+
+The signature is:
+
+```js
+axe.teardown();
+```
+
+### API Name: axe.frameMessenger
+
+Set up a alternative communication channel between parent and child frames. By default, axe-core uses `window.postMessage()`. See [frame-messenger.md](frame-messenger.md) for details.
+
+### API name: axe.runPartial / axe.finishRun
+
+Run axe without frame communication. This is the recommended way to run axe in browser drivers such as Selenium and Puppeteer. See [run-partial.md](run-partial.md) for details.
 
 ### Virtual DOM Utilities
 
@@ -819,6 +902,26 @@ axe.utils.querySelectorAll(virtualNode, 'a[href]');
 ##### Returns
 
 An Array of filtered HTML nodes.
+
+#### API Name: axe.utils.getRule
+
+##### Description
+
+Get an axe-core `Rule` instance by ID.
+
+##### Synopsis
+
+```js
+axe.utils.getRule('color-contrast');
+```
+
+##### Parameters
+
+- `ruleId` - The ID of the rule.
+
+##### Returns
+
+An axe-core `Rule` instance.
 
 ### Common Functions
 
@@ -860,7 +963,7 @@ The top-level document or shadow DOM document fragment
 
 ## Section 3: Example Reference
 
-This package contains examples for [jasmine](examples/jasmine), [mocha](examples/mocha), [phantomjs](examples/phantomjs), [qunit](examples/qunit), and [generating HTML from the violations array](examples/html-handlebars.md). Each of these examples is in the [doc/examples](examples) folder. In each folder, there is a README.md file which contains specific information about each example.
+This package contains examples for [jasmine](examples/jasmine), [mocha](examples/mocha), [qunit](examples/qunit), and [generating HTML from the violations array](examples/html-handlebars.md). Each of these examples is in the [doc/examples](examples) folder. In each folder, there is a README.md file which contains specific information about each example.
 
 See [axe-webdriverjs](https://github.com/dequelabs/axe-webdriverjs#axe-webdriverjs) for selenium webdriver javascript examples.
 
@@ -880,12 +983,12 @@ An approach you can take to reducing the time is use the `resultTypes` option. B
 
 ```js
 axe.run(
-	{
-		resultTypes: ['violations']
-	},
-	(err, results) => {
-		// ...
-	}
+  {
+    resultTypes: ['violations']
+  },
+  (err, results) => {
+    // ...
+  }
 );
 ```
 

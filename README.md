@@ -5,11 +5,51 @@
 [![Total npm downloads](https://img.shields.io/npm/dt/axe-core.svg)](https://www.npmjs.com/package/axe-core)
 [![Commits](https://img.shields.io/github/commit-activity/y/dequelabs/axe-core.svg)](https://github.com/dequelabs/axe-core/commits/develop)
 [![GitHub contributors](https://img.shields.io/github/contributors/dequelabs/axe-core.svg)](https://github.com/dequelabs/axe-core/graphs/contributors)
-[![Join our Slack chat](https://img.shields.io/badge/slack-chat-purple.svg?logo=slack)](https://accessibility.deque.com/axe-community)[![Package Quality](http://npm.packagequality.com/shield/axe-core.svg)](http://packagequality.com/#?package=axe-core)
+[![Join our Slack chat](https://img.shields.io/badge/slack-chat-purple.svg?logo=slack)](https://accessibility.deque.com/axe-community)
+[![Package Quality](https://npm.packagequality.com/shield/axe-core.svg)](https://packagequality.com/#?package=axe-core)
 
 Axe is an accessibility testing engine for websites and other HTML-based user interfaces. It's fast, secure, lightweight, and was built to seamlessly integrate with any existing test environment so you can automate accessibility testing alongside your regular functional testing.
 
 [Sign up for axe news](https://hubs.ly/H0fsN0b0) to get the latest on axe features, future releases, and events.
+
+## The Accessibility Rules
+
+Axe-core has different types of rules, for WCAG 2.0 and 2.1 on level A and AA, as well as a number of best practices that help you identify common accessibility practices like ensuring every page has an `h1` heading, and to help you avoid "gotchas" in ARIA like where an ARIA attribute you used will get ignored.
+
+With axe-core, you can find **on average 57% of WCAG issues automatically**. Additionally, axe-core will return elements as "incomplete" where axe-core could not be certain, and manual review is needed.
+
+To catch bugs earlier in the development cycle we recommend using the [axe-linter vscode extension](https://marketplace.visualstudio.com/items?itemName=deque-systems.vscode-axe-linter). To improve test coverage even further we recommend the [intelligent guided tests](https://www.youtube.com/watch?v=AtsX0dPCG_4&feature=youtu.be&ab_channel=DequeSystems) in the [axe Extension](https://www.deque.com/axe/browser-extensions/).
+
+The complete list of rules, grouped WCAG level and best practice, can found in [doc/rule-descriptions.md](./doc/rule-descriptions.md).
+
+## Getting started
+
+First download the package:
+
+```console
+npm install axe-core --save-dev
+```
+
+Now include the javascript file in each of your iframes in your fixtures or test systems:
+
+```html
+<script src="node_modules/axe-core/axe.min.js"></script>
+```
+
+Now insert calls at each point in your tests where a new piece of UI becomes visible or exposed:
+
+```js
+axe
+  .run()
+  .then(results => {
+    if (results.violations.length) {
+      throw new Error('Accessibility issues found');
+    }
+  })
+  .catch(err => {
+    console.error('Something bad happened:', err.message);
+  });
+```
 
 ## Philosophy
 
@@ -30,35 +70,6 @@ Axe was built to reflect how web development actually works. It works with all m
 - Axe supports in-memory fixtures, static fixtures, integration tests and iframes of infinite depth.
 - Axe is highly configurable.
 
-## Getting started
-
-First download the package:
-
-```console
-npm install axe-core --save-dev
-```
-
-Now include the javascript file in each of your iframes in your fixtures or test systems:
-
-```html
-<script src="node_modules/axe-core/axe.min.js"></script>
-```
-
-Now insert calls at each point in your tests where a new piece of UI becomes visible or exposed:
-
-```js
-axe
-	.run()
-	.then(results => {
-		if (results.violations.length) {
-			throw new Error('Accessibility issues found');
-		}
-	})
-	.catch(err => {
-		console.error('Something bad happened:', err.message);
-	});
-```
-
 ## Supported Browsers
 
 The [axe-core API](doc/API.md) fully supports the following browsers:
@@ -67,17 +78,13 @@ The [axe-core API](doc/API.md) fully supports the following browsers:
 - Google Chrome v42 and above
 - Mozilla Firefox v38 and above
 - Apple Safari v7 and above
-- Internet Explorer v9, 10, 11
+- Internet Explorer v11
 
 Support means that we will fix bugs and attempt to test each browser regularly. Only Firefox, Chrome, and Internet Explorer 11 are currently tested on every pull request.
 
 There is limited support for JSDOM. We will attempt to make all rules compatible with JSDOM but where this is not possible, we recommend turning those rules off. Currently the `color-contrast` rule is known not to work with JSDOM.
 
 We can only support environments where features are either natively supported or polyfilled correctly. We do not support the deprecated v0 Shadow DOM implementation.
-
-## The Accessibility Rules
-
-The complete list of rules run by axe-core can be found in [doc/rule-descriptions.md](./doc/rule-descriptions.md).
 
 ## Contents of the API Package
 
@@ -92,7 +99,11 @@ Axe can be built using your local language. To do so, a localization file must b
 
 `grunt build --lang=nl`
 
-This will create a new build for axe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build localized versions, simply pass in `--all-lang` instead.
+or equivalently:
+
+`npm run build -- --lang=nl`
+
+This will create a new build for axe, called `axe.<lang>.js` and `axe.<lang>.min.js`. If you want to build localized versions, simply pass in `--all-lang` instead. If you want to build multiple localized versions (but not all of them), you can pass in a comma-separated list of langages to the `--lang` flag, like `--lang=nl,ja`.
 
 To create a new translation for axe, start by running `grunt translate --lang=<langcode>`. This will create a json file fin the `./locales` directory, with the default English text in it for you to translate. We welcome any localization for axe-core. For details on how to contribute, see the Contributing section below. For details on the message syntax, see [Check Message Template](/docs/check-message-template.md).
 
@@ -102,28 +113,50 @@ Additionally, locale can be applied at runtime by passing a `locale` object to `
 
 ```js
 axe.configure({
-	locale: {
-		lang: 'de',
-		rules: {
-			accesskeys: {
-				help: 'Der Wert des accesskey-Attributes muss einzigartig sein.'
-			}
-			// ...
-		},
-		checks: {
-			abstractrole: {
-				fail: 'Abstrakte ARIA-Rollen dürfen nicht direkt verwendet werden.'
-			},
-			'aria-errormessage': {
-				// Note: doT (https://github.com/olado/dot) templates are supported here.
-				fail:
-					'Der Wert der aria-errormessage ${data.values}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
-			}
-			// ...
-		}
-	}
+  locale: {
+    lang: 'de',
+    rules: {
+      accesskeys: {
+        help: 'Der Wert des accesskey-Attributes muss einzigartig sein.'
+      }
+      // ...
+    },
+    checks: {
+      abstractrole: {
+        fail: 'Abstrakte ARIA-Rollen dürfen nicht direkt verwendet werden.'
+      },
+      'aria-errormessage': {
+        // Note: doT (https://github.com/olado/dot) templates are supported here.
+        fail:
+          'Der Wert der aria-errormessage ${data.values}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
+      }
+      // ...
+    }
+  }
 });
 ```
+
+### Supported Locales
+
+Axe-core supports the following locales. Do note that since locales are contributed by our community, they are not guaranteed to include all translations needed in a release.
+
+- Basque
+- Danish
+- Dutch
+- French
+- German
+- Japanese
+- Korean
+- Polish
+- Portuguese (Brazilian)
+- Spanish
+
+## Updates & Security
+
+Axe-core has a new minor release every 3 to 5 months, which usually introduces new rules and features. We recommend scheduling time to upgrade to these versions. Security updates will be made available for minor version lines up to **18 months old**.
+
+- See [release and support](doc/release-and-support.md) for details on the frequency of releases, long-term support and recommendations on upgrading axe-core.
+- See [backward compatibility](doc/backwards-compatibility-doc.md) for details on the types of changes different releases may introduce.
 
 ## Supported ARIA Roles and Attributes.
 

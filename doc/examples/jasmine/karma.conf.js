@@ -1,29 +1,29 @@
 module.exports = function(config) {
-	config.set({
-		basePath: '',
+  config.set({
+    basePath: '',
 
-		frameworks: ['jasmine'],
+    frameworks: ['jasmine'],
 
-		files: ['spec/**/*.js', 'node_modules/axe-core/axe.js'],
+    files: ['spec/**/*.js', 'node_modules/axe-core/axe.js'],
 
-		exclude: [],
+    exclude: [],
 
-		preprocessors: {},
+    preprocessors: {},
 
-		reporters: ['progress'],
+    reporters: ['progress'],
 
-		port: 9876,
+    port: 9876,
 
-		colors: true,
+    colors: true,
 
-		logLevel: config.LOG_INFO,
+    logLevel: config.LOG_INFO,
 
-		autoWatch: true,
+    autoWatch: true,
 
-		browsers: ['ChromeHeadless'],
+    browsers: ['ChromeHeadless'],
 
-		singleRun: true,
+    singleRun: true,
 
-		concurrency: Infinity
-	});
+    concurrency: Infinity
+  });
 };

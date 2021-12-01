@@ -8,22 +8,22 @@ The example uses handlebars templates but can be easily adapted to other formats
 
 ```js
 function helperItemIterator(items, template) {
-	var out = '';
-	if (items) {
-		for (var i = 0; i < items.length; i++) {
-			out += template(items[i]);
-		}
-	}
-	return out;
+  var out = '';
+  if (items) {
+    for (var i = 0; i < items.length; i++) {
+      out += template(items[i]);
+    }
+  }
+  return out;
 }
 Handlebars.registerHelper('violations', function(items) {
-	return helperItemIterator(items, compiledRowTemplate);
+  return helperItemIterator(items, compiledRowTemplate);
 });
 Handlebars.registerHelper('related', function(items) {
-	return helperItemIterator(items, compiledRelatedNodeTemplate);
+  return helperItemIterator(items, compiledRelatedNodeTemplate);
 });
 Handlebars.registerHelper('reasons', function(items) {
-	return helperItemIterator(items, compiledFailureTemplate);
+  return helperItemIterator(items, compiledFailureTemplate);
 });
 
 // Setup handlebars templates
@@ -36,42 +36,42 @@ compiledFailureTemplate = Handlebars.compile(failureTemplate.innerHTML);
 compiledReasonsTemplate = Handlebars.compile(reasonsTemplate.innerHTML);
 
 function messageFromRelatedNodes(relatedNodes) {
-	var retVal = '';
-	if (relatedNodes.length) {
-		var list = relatedNodes.map(function(node) {
-			return {
-				targetArrayString: JSON.stringify(node.target),
-				targetString: node.target.join(' ')
-			};
-		});
-		retVal += compiledRelatedListTemplate({ relatedNodeList: list });
-	}
-	return retVal;
+  var retVal = '';
+  if (relatedNodes.length) {
+    var list = relatedNodes.map(function(node) {
+      return {
+        targetArrayString: JSON.stringify(node.target),
+        targetString: node.target.join(' ')
+      };
+    });
+    retVal += compiledRelatedListTemplate({ relatedNodeList: list });
+  }
+  return retVal;
 }
 
 function messagesFromArray(nodes) {
-	var list = nodes.map(function(failure) {
-		return {
-			message: failure.message.replace(/</gi, '&lt;').replace(/>/gi, '&gt;'),
-			relatedNodesMessage: messageFromRelatedNodes(failure.relatedNodes)
-		};
-	});
-	return compiledReasonsTemplate({ reasonsList: list });
+  var list = nodes.map(function(failure) {
+    return {
+      message: failure.message.replace(/</gi, '&lt;').replace(/>/gi, '&gt;'),
+      relatedNodesMessage: messageFromRelatedNodes(failure.relatedNodes)
+    };
+  });
+  return compiledReasonsTemplate({ reasonsList: list });
 }
 
 function summary(node) {
-	var retVal = '';
-	if (node.any.length) {
-		retVal += '<h3 class="error-title">Fix any of the following</h3>';
-		retVal += messagesFromArray(node.any);
-	}
+  var retVal = '';
+  if (node.any.length) {
+    retVal += '<h3 class="error-title">Fix any of the following</h3>';
+    retVal += messagesFromArray(node.any);
+  }
 
-	var all = node.all.concat(node.none);
-	if (all.length) {
-		retVal += '<h3 class="error-title">Fix all of the following</h3>';
-		retVal += messagesFromArray(all);
-	}
-	return retVal;
+  var all = node.all.concat(node.none);
+  if (all.length) {
+    retVal += '<h3 class="error-title">Fix all of the following</h3>';
+    retVal += messagesFromArray(all);
+  }
+  return retVal;
 }
 
 /*
@@ -83,18 +83,18 @@ function summary(node) {
  */
 
 if (results.violations.length) {
-	var violations = results.violations.map(function(rule, i) {
-		return {
-			impact: rule.impact,
-			help: rule.help.replace(/</gi, '&lt;').replace(/>/gi, '&gt;'),
-			bestpractice: rule.tags.indexOf('best-practice') !== -1,
-			helpUrl: rule.helpUrl,
-			count: rule.nodes.length,
-			index: i
-		};
-	});
+  var violations = results.violations.map(function(rule, i) {
+    return {
+      impact: rule.impact,
+      help: rule.help.replace(/</gi, '&lt;').replace(/>/gi, '&gt;'),
+      bestpractice: rule.tags.indexOf('best-practice') !== -1,
+      helpUrl: rule.helpUrl,
+      count: rule.nodes.length,
+      index: i
+    };
+  });
 
-	html = compiledTableTemplate({ violationList: violations });
+  html = compiledTableTemplate({ violationList: violations });
 }
 
 /*

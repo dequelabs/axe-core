@@ -1,6 +1,6 @@
 {
-	"type": "any",
-	"metadata": {
-		"failureMessage": "Fix any of the following:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
-	}
+  "type": "any",
+  "metadata": {
+    "failureMessage": "Fix any of the following:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+  }
 }

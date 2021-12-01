@@ -5,7 +5,11 @@ defaults: &defaults
 
 unix_box: &unix_box
   docker:
-    - image: circleci/node:10-browsers
+    - image: circleci/node:16.13-browsers
+
+unix_nightly_box: &unix_nightly_box
+  docker:
+    - image: cimg/node:lts-browsers
 
 win_box: &win_box
   executor:
@@ -15,7 +19,7 @@ win_box: &win_box
 orbs:
   win: circleci/windows@1.0.0
   puppeteer: threetreeslight/puppeteer@0.1.2
-
+  browser-tools: circleci/browser-tools@1.1.0
 
 set_npm_auth: &set_npm_auth
   run: npm config set "//registry.npmjs.org/:_authToken" $NPM_AUTH
@@ -23,14 +27,14 @@ set_npm_auth: &set_npm_auth
 restore_dependency_cache_unix: &restore_dependency_cache_unix
   restore_cache:
     keys:
-      - v8-cache-unix-{{ checksum "package.json" }}
-      - v8-cache-unix-
+      - v9-cache-unix-{{ checksum "package-lock.json" }}
+      - v9-cache-unix-
 
 restore_dependency_cache_win: &restore_dependency_cache_win
   restore_cache:
     keys:
-      - v8-cache-win-{{ checksum "package.json" }}
-      - v8-cache-win-
+      - v9-cache-win-{{ checksum "package-lock.json" }}
+      - v9-cache-win-
 
 jobs:
   # Fetch and cache dependencies.
@@ -43,7 +47,7 @@ jobs:
       - <<: *restore_dependency_cache_unix
       - run: npm ci
       - save_cache:
-          key: v8-cache-unix-{{ checksum "package.json" }}
+          key: v9-cache-unix-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
   dependencies_win:
@@ -55,7 +59,7 @@ jobs:
       - <<: *restore_dependency_cache_win
       - run: npm ci
       - save_cache:
-          key: v8-cache-win-{{ checksum "package.json" }}
+          key: v9-cache-win-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
 
@@ -75,7 +79,10 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
-      - run: npm run test
+      - run: npm run build
+      - run: npm run test -- --browsers Chrome,Firefox
+      - run: npm run test:integration:chrome
+      - run: npm run test:integration:firefox
 
   # Run the test suite in IE in windows
   test_win:
@@ -85,22 +92,14 @@ jobs:
       - checkout
       # npm i or restore cache
       - <<: *restore_dependency_cache_win
+      - run: npm run build
+      - run: npm run test -- --browsers IE
       # install selenium
       - run: |
           choco install selenium-ie-driver --version 3.141.5
           export PATH=/c/tools/selenium:$PATH
           echo $PATH
-      # build `axe`
-      - run: npm run build
-      # get fixtures ready for running tests
-      - run: npx grunt testconfig
-      - run: npx grunt fixture
-      # run IE webdriver tests
-      - run: npx grunt connect test-webdriver:ie
-      # test examples
-      # Note: Jasmine karma-chrome-launcher requires chrome browser
-      - run: choco install googlechrome --ignore-checksums
-      - run: npm run test:examples
+      - run: npm run test:integration:ie
 
   # Run examples under `doc/examples`
   test_examples:
@@ -112,6 +111,28 @@ jobs:
       - run: npm run build
       - run: npm run test:examples
 
+  # Run ACT test cases
+  test_act:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      # Always run on the latest master branch, regardless of cache
+      - run: npm install act-rules/act-rules.github.io#master
+      - run: npm run build
+      - run: npm run test:act
+
+  # Run ARIA practices test cases
+  test_aria_practices:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      - run: npm run test:apg
+
   # Test locale files
   test_locales:
     <<: *defaults
@@ -121,6 +142,52 @@ jobs:
       - <<: *restore_dependency_cache_unix
       - run: npm run build
       - run: npm run test:locales
+
+  # Test virtual rules
+  test_virtual_rules:
+    <<: *defaults
+    <<: *unix_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      - run: npm run test:virtual-rules
+
+  # Run the test suite for nightly builds.
+  test_nightly_browsers:
+    <<: *defaults
+    <<: *unix_nightly_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      - run:
+          name: Install Chrome Beta
+          command: |
+            wget https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb
+            sudo apt install ./google-chrome-beta_current_amd64.deb
+      - run:
+          name: Install Firefox Nightly
+          command: |
+            wget -O firefox-nightly.tar.bz2 "https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang=en-US"
+            tar xf firefox-nightly.tar.bz2
+      - run:
+          name: Set Environment Variable
+          command: echo "export FIREFOX_NIGHTLY_BIN=$(pwd)/firefox/firefox-bin" >> $BASH_ENV
+      - run: npm run test -- --browsers Chrome,FirefoxNightly
+
+  # Run the test suite for nightly builds.
+  test_nightly_aria_practices:
+    <<: *defaults
+    <<: *unix_nightly_box
+    steps:
+      - browser-tools/install-browser-tools
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - run: npm run build
+      # install ARIA practices
+      - run: npm install w3c/aria-practices#main
+      - run: npm run test:apg
 
   # Test api docs can be built
   build_api_docs:
@@ -159,6 +226,7 @@ jobs:
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
+      - run: npm run build
       - run: npm run next-release
       - run: .circleci/verify-release.sh
       - run: npm publish --tag=next
@@ -223,7 +291,6 @@ workflows:
       # Run tests on all commits, but after installing dependencies
       - test_unix:
           requires:
-            - dependencies_unix
             - lint
       # Run IE/ Windows test on all commits
       - test_win:
@@ -232,7 +299,16 @@ workflows:
       - test_examples:
           requires:
             - test_unix
+      - test_act:
+          requires:
+            - test_unix
+      - test_aria_practices:
+          requires:
+            - test_unix
       - test_locales:
+          requires:
+            - test_unix
+      - test_virtual_rules:
           requires:
             - test_unix
       - build_api_docs:
@@ -252,6 +328,7 @@ workflows:
             - test_win
             - test_examples
             - test_locales
+            - test_virtual_rules
             - build_api_docs
             - test_rule_help_version
             - test_node
@@ -266,6 +343,7 @@ workflows:
             - test_unix
             - test_examples
             - test_locales
+            - test_virtual_rules
             - build_api_docs
           filters:
             branches:
@@ -277,6 +355,7 @@ workflows:
             - test_unix
             - test_examples
             - test_locales
+            - test_virtual_rules
             - build_api_docs
             - test_rule_help_version
             - test_node
@@ -300,3 +379,20 @@ workflows:
       - github_release:
           requires:
             - release
+  nightly:
+    triggers:
+      - schedule:
+          # run at 00:00 UTC every day
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - develop
+    jobs:
+      - dependencies_unix
+      - test_nightly_browsers:
+          requires:
+            - dependencies_unix
+      - test_nightly_aria_practices:
+          requires:
+            - dependencies_unix

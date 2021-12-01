@@ -6,7 +6,9 @@
 - [Options](#options)
   - [Global Options](#global-options)
   - [aria-allowed-role](#aria-allowed-role)
+  - [aria-prohibited-attr](#aria-prohibited-attr)
   - [aria-required-children](#aria-required-children)
+  - [aria-required-parent](#aria-required-parent)
   - [aria-roledescription](#aria-roledescription)
   - [color-contrast](#color-contrast)
   - [page-has-heading-one](#page-has-heading-one)
@@ -45,14 +47,14 @@ To customize a check's options, you can use [`axe.configure`](./API.md#api-name-
 ```js
 // configure has-lang check to look at the `hreflang` attribute as well
 axe.configure({
-	checks: [
-		{
-			id: 'has-lang',
-			options: {
-				attributes: ['lang', 'xml:lang', 'hreflang']
-			}
-		}
-	]
+  checks: [
+    {
+      id: 'has-lang',
+      options: {
+        attributes: ['lang', 'xml:lang', 'hreflang']
+      }
+    }
+  ]
 });
 ```
 
@@ -72,6 +74,42 @@ All checks allow these global options:
 | --------------- | :------ | :---------------------------------------------------------------- |
 | `allowImplicit` | `true`  | Allow the explicit role to match the implicit role of the element |
 | `ignoredTags`   | `[]`    | Do not check for allowed roles in the provided HTML elements list |
+
+### aria-prohibited-attr
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th align="left">Default</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>elementsAllowedAriaLabel</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>[
+  "audio",
+  "applet",
+  "canvas",
+  "dl",
+  "embed",
+  "iframe",
+  "input",
+  "label",
+  "meter",
+  "object",
+  "svg",
+  "video"
+]</code></pre>
+        </td>
+      <td align="left">List of element names that without a role, are allowed an `aria-label` and `aria-labelledby` attribute</td>
+    </tr>
+  </tbody>
+</table>
 
 ### aria-required-children
 
@@ -107,6 +145,29 @@ All checks allow these global options:
   </tbody>
 </table>
 
+### aria-required-parent
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th align="left">Default</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>ownGroupRoles</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>['listitem', 'treeitem']</code></pre>
+        </td>
+      <td align="left">List of ARIA roles that when used in a group can have a grand parent with the same role. E.g. <code>list > listitem > group > listitem</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
 ### aria-roledescription
 
 <table>
@@ -138,25 +199,55 @@ All checks allow these global options:
   </tbody>
 </table>
 
+### aria-allowed-attr
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th align="left">Default</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>validTreeRowAttrs</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>[
+  'aria-posinset',
+  'aria-setsize',
+  'aria-expanded',
+  'aria-level',
+]</code></pre>
+        </td>
+      <td align="left">List of ARIA attributes that are not allowed on <code>role=row</code> when a descendant of a table or a grid</td>
+    </tr>
+  </tbody>
+</table>
+
 ### color-contrast
 
-| Option                                                      | Default | Description                                                                                                 |
-| ----------------------------------------------------------- | :------ | :---------------------------------------------------------------------------------------------------------- |
-| `ignoreUnicode`                                             | `true`  | Do not check the color contrast of Unicode characters                                                       |
-| `ignoreLength`                                              | `false` | Do not check the color contrast of short text content                                                       |
-| `boldValue`                                                 | `700`   | The minimum CSS `font-weight` value that designates bold text                                               |
-| `boldTextPt`                                                | `14`    | The minimum CSS `font-size` pt value that designates bold text as being large                               |
-| `largeTextPt`                                               | `18`    | The minimum CSS `font-size` pt value that designates text as being large                                    |
-| `shadowOutlineEmMax`                                        | `0.1`   | The maximum `blur-radius` value (in ems) of the CSS `text-shadow` property. `blur-radius` values greater than this value will be treated as a background color rather than an outline color.                             |
-| `contrastRatio`                                             | N/A     | Contrast ratio options                                                                                      |
-| &nbsp;&nbsp;`contrastRatio.normal`                          | N/A     | Contrast ratio requirements for normal text (non-bold text or text smaller than `largeTextPt`)              |
-| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.expected`     | `4.5`   | The expected contrast ratio for normal text                                                                 |
-| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.minThreshold` | N/A     | The minimum contrast ratio the check will apply to. Contrast ratios less than this value will be ignored    |
-| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.maxThreshold` | N/A     | The maximum contrast ratio the check will apply to. Contrast ratios greater than this value will be ignored |
-| &nbsp;&nbsp;`contrastRatio.large`                           | N/A     | Contrast ratio requirements for large text (bold text or text larger than `largeTextPt`)                    |
-| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.large.expected`      | `4.5`   | The expected contrast contrast ratio for large text                                                         |
-| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.large.minThreshold`  | N/A     | The minimum contrast ratio the check will apply to. Contrast ratios less than this value will be ignored    |
-| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.large.maxThreshold`  | N/A     | The maximum contrast ratio the check will apply to. Contrast ratios greater than this value will be ignored |
+| Option                                                      | Default | Description                                                                                                                                                                                  |
+| ----------------------------------------------------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ignoreUnicode`                                             | `true`  | Do not check the color contrast of Unicode characters                                                                                                                                        |
+| `ignoreLength`                                              | `false` | Do not check the color contrast of short text content                                                                                                                                        |
+| `ignorePseudo`                                              | `false` | Do not mark pseudo elements as Needs Review                                                                                                                                                  |
+| `boldValue`                                                 | `700`   | The minimum CSS `font-weight` value that designates bold text                                                                                                                                |
+| `boldTextPt`                                                | `14`    | The minimum CSS `font-size` pt value that designates bold text as being large                                                                                                                |
+| `largeTextPt`                                               | `18`    | The minimum CSS `font-size` pt value that designates text as being large                                                                                                                     |
+| `shadowOutlineEmMax`                                        | `0.1`   | The maximum `blur-radius` value (in ems) of the CSS `text-shadow` property. `blur-radius` values greater than this value will be treated as a background color rather than an outline color. |
+| `pseudoSizeThreshold`                                       | `0.25`  | Minimum area of the pseudo element, relative to the text element, below which it will be ignored for colot contrast.                                                                         |
+| `contrastRatio`                                             | N/A     | Contrast ratio options                                                                                                                                                                       |
+| &nbsp;&nbsp;`contrastRatio.normal`                          | N/A     | Contrast ratio requirements for normal text (non-bold text or text smaller than `largeTextPt`)                                                                                               |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.expected`     | `4.5`   | The expected contrast ratio for normal text                                                                                                                                                  |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.minThreshold` | N/A     | The minimum contrast ratio the check will apply to. Contrast ratios less than this value will be ignored                                                                                     |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.normal.maxThreshold` | N/A     | The maximum contrast ratio the check will apply to. Contrast ratios greater than this value will be ignored                                                                                  |
+| &nbsp;&nbsp;`contrastRatio.large`                           | N/A     | Contrast ratio requirements for large text (bold text or text larger than `largeTextPt`)                                                                                                     |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.large.expected`      | `4.5`   | The expected contrast contrast ratio for large text                                                                                                                                          |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.large.minThreshold`  | N/A     | The minimum contrast ratio the check will apply to. Contrast ratios less than this value will be ignored                                                                                     |
+| &nbsp;&nbsp;&nbsp;&nbsp;`contrastRatio.large.maxThreshold`  | N/A     | The maximum contrast ratio the check will apply to. Contrast ratios greater than this value will be ignored                                                                                  |
 
 ### page-has-heading-one
 
@@ -354,6 +445,24 @@ h6:not([role]),
         </td>
       <td align="left">Common CSS values used to display `p` elements as `h1-h6` elements determining if a `p` element is being improperly repurposed</td>
     </tr>
+    <tr>
+     <td>
+        <code>passLength</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>"passLength": 1</code></pre>
+        </td>
+      <td align="left">Relative length, if the the candidate heading is X times or greater the length of the candidate paragraph, it will pass.</td>
+      </tr>
+       <tr>
+     <td>
+        <code>faiLength</code>
+      </td>
+      <td align="left">
+        <pre lang=js><code>"failLength": 0.5</code></pre>
+        </td>
+      <td align="left">Relative length, if the the candidate heading is X times or less the length of the candidate paragraph, it can fail.</td>
+      </tr>
   </tbody>
 </table>
 

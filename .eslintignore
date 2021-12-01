@@ -1,4 +1,5 @@
 **/node_modules/*
+**/tmp/*
 
 build/tasks/aria-supported.js
 

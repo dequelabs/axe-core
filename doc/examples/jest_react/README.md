@@ -16,7 +16,7 @@ axe-core in Jest (using JSDOM and Enzyme).
 ## To run the example
 
 - Move to the `doc/examples/jest_react` directory
-- `npm test` to run Jasmine
+- `npm test` to run Jest
 
 You should see output indicating that the tests ran successfully, with zero
 failures.

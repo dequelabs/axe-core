@@ -1,0 +1,15 @@
+{
+  "id": "aria-prohibited-attr",
+  "evaluate": "aria-prohibited-attr-evaluate",
+  "options": {
+    "elementsAllowedAriaLabel": ["applet", "input"]
+  },
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "ARIA attribute is allowed",
+      "fail": "ARIA attribute: ${data.values} is not allowed. Use a different role attribute or element.",
+      "incomplete": "ARIA attribute: ${data.values} is not well supported. Use a different role attribute or element."
+    }
+  }
+}
