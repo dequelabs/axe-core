@@ -287,6 +287,14 @@ describe('Audit', function() {
       assert.equal(audit.brand, 'axe');
       assert.equal(audit.application, 'thing');
     });
+    it('should change the application when passed a string', function() {
+      var audit = new Audit();
+      assert.equal(audit.brand, 'axe');
+      assert.equal(audit.application, 'axeAPI');
+      audit.setBranding('thing');
+      assert.equal(audit.brand, 'axe');
+      assert.equal(audit.application, 'thing');
+    });
     it('should call _constructHelpUrls', function() {
       var audit = new Audit();
       audit.addRule({
@@ -1287,11 +1295,11 @@ describe('Audit', function() {
 
   describe('Audit#normalizeOptions', function() {
     var axeLog;
-    beforeEach(function () {
+    beforeEach(function() {
       axeLog = axe.log;
     });
-    afterEach(function () {
-      axe.log = axeLog;  
+    afterEach(function() {
+      axe.log = axeLog;
     });
 
     it('returns the options object when it is valid', function() {
@@ -1449,9 +1457,9 @@ describe('Audit', function() {
       });
     });
 
-    it('logs an issue when a tag is unknown', function () {
+    it('logs an issue when a tag is unknown', function() {
       var message = '';
-      axe.log = function (m) {
+      axe.log = function(m) {
         message = m;
       };
       a.normalizeOptions({
@@ -1463,9 +1471,9 @@ describe('Audit', function() {
       assert.include(message, 'Could not find tags');
     });
 
-    it('logs no issues for unknown WCAG level tags', function () {
+    it('logs no issues for unknown WCAG level tags', function() {
       var message = '';
-      axe.log = function (m) {
+      axe.log = function(m) {
         message = m;
       };
       a.normalizeOptions({
@@ -1477,9 +1485,9 @@ describe('Audit', function() {
       assert.isEmpty(message);
     });
 
-    it('logs an issue when a tag is unknown, together with a wcag level tag', function () {
+    it('logs an issue when a tag is unknown, together with a wcag level tag', function() {
       var message = '';
-      axe.log = function (m) {
+      axe.log = function(m) {
         message = m;
       };
       a.normalizeOptions({

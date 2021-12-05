@@ -5,7 +5,10 @@
     "impact": "serious",
     "messages": {
       "pass": "Element does not have focusable descendants",
-      "fail": "Element has focusable descendants",
+      "fail": {
+        "default": "Element has focusable descendants",
+        "notHidden": "Using a negative tabindex on an element inside an interactive control does not prevent assistive technologies from focusing the element (even with 'aria-hidden=true')"
+      },
       "incomplete": "Could not determine if element has descendants"
     }
   }

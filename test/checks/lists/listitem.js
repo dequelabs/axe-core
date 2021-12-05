@@ -1,74 +1,81 @@
 describe('listitem', function() {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
   var shadowSupport = axe.testUtils.shadowSupport;
   var checkContext = axe.testUtils.MockCheckContext();
+  var checkSetup = axe.testUtils.checkSetup;
+  var fixtureSetup = axe.testUtils.fixtureSetup;
+  var checkEvaluate = axe.testUtils.getCheckEvaluate('listitem');
 
   afterEach(function() {
-    fixture.innerHTML = '';
     checkContext.reset();
   });
 
   it('should pass if the listitem has a parent <ol>', function() {
-    fixture.innerHTML = '<ol><li id="target">My list item</li></ol>';
-    var target = fixture.querySelector('#target');
-    assert.isTrue(checks.listitem.evaluate.call(checkContext, target));
+    var params = checkSetup('<ol><li id="target">My list item</li></ol>');
+    var result = checkEvaluate.apply(checkContext, params)
+    assert.isTrue(result);
   });
 
   it('should pass if the listitem has a parent <ul>', function() {
-    fixture.innerHTML = '<ul><li id="target">My list item</li></ul>';
-    var target = fixture.querySelector('#target');
-    assert.isTrue(checks.listitem.evaluate.call(checkContext, target));
+    var params = checkSetup('<ul><li id="target">My list item</li></ul>');
+    var result = checkEvaluate.apply(checkContext, params)
+    assert.isTrue(result);
   });
 
   it('should pass if the listitem has a parent role=list', function() {
-    fixture.innerHTML =
-      '<div role="list"><li id="target">My list item</li></div>';
-    var target = fixture.querySelector('#target');
-    assert.isTrue(checks.listitem.evaluate.call(checkContext, target));
+    var params = checkSetup(
+      '<div role="list"><li id="target">My list item</li></div>'
+    );
+    var result = checkEvaluate.apply(checkContext, params)
+    assert.isTrue(result);
   });
 
   it('should pass if the listitem has a parent role=none', function() {
-    fixture.innerHTML =
-      '<ul role="none"><li id="target">My list item</li></ul>';
-    var target = fixture.querySelector('#target');
-    assert.isTrue(checks.listitem.evaluate.call(checkContext, target));
+    var params = checkSetup(
+      '<ul role="none"><li id="target">My list item</li></ul>'
+    );
+    var result = checkEvaluate.apply(checkContext, params)
+    assert.isTrue(result);
   });
 
   it('should pass if the listitem has a parent role=presentation', function() {
-    fixture.innerHTML =
-      '<ul role="presentation"><li id="target">My list item</li></ul>';
-    var target = fixture.querySelector('#target');
-    assert.isTrue(checks.listitem.evaluate.call(checkContext, target));
+    var params = checkSetup(
+      '<ul role="presentation"><li id="target">My list item</li></ul>'
+    );
+    var result = checkEvaluate.apply(checkContext, params)
+    assert.isTrue(result);
   });
 
   it('should fail if the listitem has an incorrect parent', function() {
-    fixture.innerHTML = '<div><li id="target">My list item</li></div>';
-    var target = fixture.querySelector('#target');
-    assert.isFalse(checks.listitem.evaluate.call(checkContext, target));
+    var params = checkSetup('<div><li id="target">My list item</li></div>');
+    var result = checkEvaluate.apply(checkContext, params)
+    assert.isFalse(result);
   });
 
   it('should fail if the listitem has a parent <ol> with changed role', function() {
-    fixture.innerHTML =
-      '<ol role="menubar"><li id="target">My list item</li></ol>';
-    var target = fixture.querySelector('#target');
-    assert.isFalse(checks.listitem.evaluate.call(checkContext, target));
+    var params = checkSetup(
+      '<ol role="menubar"><li id="target">My list item</li></ol>'
+    );
+    var result = checkEvaluate.apply(checkContext, params)
+    assert.isFalse(result);
     assert.equal(checkContext._data.messageKey, 'roleNotValid');
   });
 
   it('should pass if the listitem has a parent <ol> with an invalid role', function() {
-    fixture.innerHTML =
-      '<ol role="invalid-role"><li id="target">My list item</li></ol>';
-    var target = fixture.querySelector('#target');
-    assert.isTrue(checks.listitem.evaluate.call(checkContext, target));
+    var params = checkSetup(
+      '<ol role="invalid-role"><li id="target">My list item</li></ol>'
+    );
+    var result = checkEvaluate.apply(checkContext, params)
+    assert.isTrue(result);
   });
 
   it('should pass if the listitem has a parent <ol> with an abstract role', function() {
-    fixture.innerHTML =
-      '<ol role="section"><li id="target">My list item</li></ol>';
-    var target = fixture.querySelector('#target');
-    assert.isTrue(checks.listitem.evaluate.call(checkContext, target));
+    var params = checkSetup(
+      '<ol role="section"><li id="target">My list item</li></ol>'
+    );
+    var result = checkEvaluate.apply(checkContext, params)
+    assert.isTrue(result);
   });
 
   (shadowSupport.v1 ? it : xit)(
@@ -78,9 +85,11 @@ describe('listitem', function() {
       node.innerHTML = '<li id="target">My list item </li>';
       var shadow = node.attachShadow({ mode: 'open' });
       shadow.innerHTML = '<ul><slot></slot></ul>';
-      fixture.appendChild(node);
+      fixtureSetup(node);
       var target = node.querySelector('#target');
-      assert.isTrue(checks.listitem.evaluate.call(checkContext, target));
+      var virtualTarget = axe.utils.getNodeFromTree(target);
+      var result = checkEvaluate.apply(checkContext, [target, {}, virtualTarget])
+      assert.isTrue(result);
     }
   );
 
@@ -91,9 +100,11 @@ describe('listitem', function() {
       node.innerHTML = '<li id="target">My list item </li>';
       var shadow = node.attachShadow({ mode: 'open' });
       shadow.innerHTML = '<div><slot></slot></div>';
-      fixture.appendChild(node);
+      fixtureSetup(node);
       var target = node.querySelector('#target');
-      assert.isFalse(checks.listitem.evaluate.call(checkContext, target));
+      var virtualTarget = axe.utils.getNodeFromTree(target);
+      var result = checkEvaluate.apply(checkContext, [target, {}, virtualTarget])
+      assert.isFalse(result);
     }
   );
 });

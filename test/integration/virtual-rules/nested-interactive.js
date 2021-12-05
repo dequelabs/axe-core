@@ -38,7 +38,7 @@ describe('nested-interactive virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for element with content with tabindex=-1', function() {
+  it('should pass for element with non-widget content which has negative tabindex', function() {
     var node = new axe.SerialVirtualNode({
       nodeName: 'button'
     });
@@ -74,7 +74,7 @@ describe('nested-interactive virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for element with focusable content', function() {
+  it('should pass for element with non-widget content', function() {
     var node = new axe.SerialVirtualNode({
       nodeName: 'button'
     });
@@ -89,12 +89,12 @@ describe('nested-interactive virtual-rule', function() {
 
     var results = axe.runVirtualRule('nested-interactive', node);
 
-    assert.lengthOf(results.passes, 0);
-    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for element with natively focusable content', function() {
+  it('should fail for element with native widget content', function() {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {

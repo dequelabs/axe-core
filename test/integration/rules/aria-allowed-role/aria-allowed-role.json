@@ -72,7 +72,14 @@
     ["#p-text"],
     ["#pass-graphics-document"],
     ["#pass-graphics-object"],
-    ["#pass-graphics-symbol"]
+    ["#pass-graphics-symbol"],
+    ["#pass-header-banner"],
+    ["#pass-footer-contentinfo"],
+    ["#pass-img-valid-role-aria-label"],
+    ["#pass-img-valid-role-title"],
+    ["#pass-img-valid-role-aria-labelledby"],
+    ["#pass-imgmap-1"],
+    ["#pass-imgmap-2"]
   ],
   "violations": [
     ["#fail-dd-no-role"],
@@ -98,7 +105,13 @@
     ["#fail-text-1"],
     ["#fail-text-2"],
     ["#fail-text-3"],
-    ["#fail-text-4"]
+    ["#fail-text-4"],
+    ["#fail-img-invalid-role-aria-label"],
+    ["#fail-img-invalid-role-title"],
+    ["#fail-img-invalid-role-aria-labelledby"],
+    ["#fail-img-no-accessible-name-present"],
+    ["#fail-imgmap-1"],
+    ["#fail-imgmap-2"]
   ],
   "incomplete": [["#incomplete1"], ["#incomplete2"]]
 }
