@@ -41,6 +41,7 @@ describe('no-focusable-content tests', function() {
       '<button id="target"><span tabindex="-1">Hello</span></button>'
     );
     assert.isTrue(noFocusableContent(null, null, vNode));
+<<<<<<< HEAD
   });
 
   it('should return false if element has content which has negative tabindex and an explicit widget role', function() {
@@ -51,6 +52,8 @@ describe('no-focusable-content tests', function() {
     assert.isFalse(check.evaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._data, { messageKey: 'notHidden' });
     assert.deepEqual(checkContext._relatedNodes, [params[2].children[0]]);
+=======
+>>>>>>> 7e692b4a67fec1f93e362d627b94ca94980bf4f6
   });
 
   it('should return false if element has content which is natively focusable and has a widget role', function() {

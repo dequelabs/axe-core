@@ -85,6 +85,10 @@
       "description": "Lehen planoko eta hondoko koloreen arteko kontrasteak WCAG 2 AA kontrasterako ratioaren mugak betetzen dituela bermatzen du.",
       "help": "Elementuek kolore-kontraste nahikoa izan behar dute"
     },
+    "color-contrast-enhanced": {
+      "description": "Lehen planoko eta hondoko koloreen arteko kontrasteak WCAG 2 AAA kontrasterako ratioaren mugak betetzen dituela bermatzen du.",
+      "help": "Elementuek kolore-kontraste nahikoa izan behar dute"
+    },
     "css-orientation-lock": {
       "description": "Bermatzen du edukia ez dagoela blokeatuta pantailako orientazio espezifiko batean, eta edukia maneiagarria dela pantailako edozein orientabidetan.",
       "help": "'CSS Media query'ak ez dira erabiltzen pantailaren orientazioa blokeatzeko "
@@ -423,6 +427,23 @@
       "fail": "Elementuak foku-ordenan dagoen elementu batentzat baliozkoa ez den semantika bat du.."
     },
     "color-contrast": {
+      "pass": "Elementuak ${data.contrastRatio}-ko kolore-kontraste nahikoa du",
+      "fail": "Elementuaren ${data.contrastRatio}-ko kolore-kontrastea ez da nahikoa (ehen planoaren kolorea: ${data.fgColor}, hondoaren kolorea: ${data.bgColor}, letra-iturriaren tamaina: ${data.fontSize}, letra-iturriaren lodiera: ${data.fontWeight}). Espero den kontraste-ratioa: ${data.expectedContrastRatio}",
+      "incomplete": {
+        "bgImage": "Elementuaren hondoko kolorea ezin izan da zehaztu, hondoko irudi batengatik",
+        "bgGradient": "Elementuaren hondoko kolorea ezin izan da zehaztu hondoko degradatu baten ondorioz",
+        "imgNode": "Elementuaren hondoaren kolorea ezin izan da zehaztu, elementuak irudi-nodo bat duelako.",
+        "bgOverlap": "Hondoko kolorea ezin izan da zehaztu, gainjarritako beste elementu bat duelako",
+        "fgAlpha": "Hondoko kolorea ezin izan da zehaztu alfa gardentasun baten ondorioz",
+        "elmPartiallyObscured": "Hondoaren kolorea ezin izan da zehaztu, beste elementu batek partzialki ezkutatzen duelako",
+        "elmPartiallyObscuring": "Elementuaren hondoaren kolorea ezin izan da zehaztu, beste elementu batzuei partzialki gainjartzen baitzaie.",
+        "outsideViewport": "Elementuaren hondoko kolorea ezin izan da zehaztu, leiho grafikotik kanpo dagoelako ('viewport')",
+        "equalRatio": "Elementuak 1:1 kontraste-ratioa du hondoarekin",
+        "shortTextContent": "Elementuaren edukia laburregia da testu-edukia bera den zehazteko",
+        "default": "Ezinezkoa da kontraste-ratioa zehaztea"
+      }
+    },
+    "color-contrast-enhanced": {
       "pass": "Elementuak ${data.contrastRatio}-ko kolore-kontraste nahikoa du",
       "fail": "Elementuaren ${data.contrastRatio}-ko kolore-kontrastea ez da nahikoa (ehen planoaren kolorea: ${data.fgColor}, hondoaren kolorea: ${data.bgColor}, letra-iturriaren tamaina: ${data.fontSize}, letra-iturriaren lodiera: ${data.fontWeight}). Espero den kontraste-ratioa: ${data.expectedContrastRatio}",
       "incomplete": {
