@@ -1,6 +1,6 @@
 {
   "description": "empty-table-header tests",
   "rule": "empty-table-header",
-  "incomplete": [["#incomplete1"], ["#incomplete2"], ["#incomplete3"]],
+  "violations": [["#fail1"], ["#fail2"], ["#fail3"]],
   "passes": [["#pass1"], ["#pass2"], ["#pass3"]]
 }

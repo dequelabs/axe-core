@@ -4,10 +4,169 @@ We've enacted standards for commits and pull requests to effectively manage the 
 time. We expect all code contributed to follow these standards. If your code doesn't follow them, we
 will kindly ask you to resubmit it in the correct format.
 
+- [Code Guidelines](#code-guidelines)
 - [Git Commits](#git-commits)
 - [Submitting a pull request](#submitting-a-pull-request)
 - [Merging a pull request](#merging-a-pull-request)
 - [Squashing Commits](#squashing-everything-into-one-commit)
+
+## Code Guidelines
+
+### Default Export at Top
+
+When coding using [JavaScipt modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), the `default export` should be at the top of the file right after any import statements and module level variables. This ensures that when you open the file the main code path is the first thing you read.
+
+If you encounter any code that we maintain that does not put the `default export` at the top, you should update the file to do so.
+
+### Return Early / Happy Path Coding
+
+[Return Early Coding](https://medium.com/swlh/return-early-pattern-3d18a41bba8) (also called "[Happy Path Coding](https://medium.com/@matryer/line-of-sight-in-code-186dd7cdea88)") is a coding pattern where you try to keep the main execution flow of the function aligned to a single column edge. Doing so allows someone to quickly scan down the column to see the expected flow or happy path of the function.
+
+In return early coding, the idea is to keep the main execution flow to the left column and use if statements to primarily handle errors or edge cases. This typically means that the function will include many `return` statements instead of the concept of a single return.
+
+In return early coding, we also try to declare variables at the moment they are needed rather than listing them all at the top of the function.
+
+<details>
+  <summary>Example of nested execution flow</summary>
+
+```js
+import path from 'path';
+import { promises as fs } from 'fs';
+
+export default async function validateAxeReport(filePath = '') {
+  let valid;
+  let file;
+  let results;
+
+  if (filePath.trim()) {
+    try {
+      if (!path.isAbsolute(filePath)) {
+        filePath = path.relative(process.cwd(), filePath);
+      }
+      file = await fs.readFile(filePath, 'utf8');
+    } catch (err) {
+      throw new Error(`Unable to read file "${filePath}"`);
+    }
+
+    try {
+      results = JSON.parse(file);
+    } catch (err) {
+      throw new TypeError(`File "${filePath}" is not a valid JSON file`);
+    }
+
+    if (results?.testRunner?.name !== 'axe') {
+      throw new TypeError(`File "${filePath}" is not a valid axe results file`);
+    }
+
+    valid = validateReportStructure(results);
+  } else {
+    throw new SyntaxError('No file path provided');
+  }
+
+  return valid;
+}
+```
+
+</details>
+
+<details>
+  <summary>Example of return early coding</summary>
+
+```js
+import path from 'path';
+import { promises as fs } from 'fs';
+
+export default async function validateAxeReport(filePath = '') {
+  if (!filePath.trim()) {
+    throw new SyntaxError('No file path provided');
+  }
+
+  if (!path.isAbsolute(filePath)) {
+    filePath = path.relative(process.cwd(), filePath);
+  }
+
+  let file;
+  try {
+    file = await fs.readFile(filePath, 'utf8');
+  } catch (err) {
+    throw new Error(`Unable to read file "${filePath}"`);
+  }
+
+  let results;
+  try {
+    results = JSON.parse(file);
+  } catch (err) {
+    throw new TypeError(`File "${filePath}" is not a valid JSON file`);
+  }
+
+  if (results?.testRunner?.name !== 'axe') {
+    throw new TypeError(`File "${filePath}" is not a valid axe results file`);
+  }
+
+  return validateReportStructure(results);
+}
+```
+
+</details>
+
+### Docblock Comments
+
+We use [Docblock comments](https://en.wikipedia.org/wiki/Docblock) in our code. Docblock comments are a way to describe what a function does, its signature, and describe its inputs.
+
+<details>
+  <summary>Example of Docblock comment</summary>
+
+```ts
+/**
+ * Calculate the distance between two points.
+ * @param {number[]} pointA The first point represented by the array [x,y]
+ * @param {number[]} pointB The second point represented by the array [x,y]
+ * @return {number}
+ */
+function distance(pointA, pointB) {
+  return Math.hypot(pointA[0] - pointB[0], pointA[1] - pointB[1]);
+}
+```
+
+</details>
+
+### Tests
+
+All code changes should include tests to validate that the code works as expected. Both unit tests and integration tests (where applicable) should be included in all `fix` and `feat` pull requests. `chore` pull requests do not typically need tests.
+
+#### Integrations Test
+
+All changes that affect a rule should include an integration test. Most rules integration tests can be found in `test/integration/rules`. When updating tests in this directory, you'll need to write the new HTML code to be tested and give the element that should trigger the rule a unique `id`. Then you'll need to update the companion JSON file to add the id to either the `violations` or `passes` array.
+
+For example, if we were updating the `aria-roles` rule to fail when using the `command` role, the changes would look as follows:
+
+`test/integration/rules/aria-roles/aria-roles.html`
+
+```diff
++<div role="command" id="fail-command">fail</div>
+```
+
+`test/integration/rules/aria-roles/aria-roles.json`
+
+```diff
+{
+  "description": "aria-roles tests",
+  "rule": "aria-roles",
+  "violations": [
+     ["#fail1"],
+-    ["#fail2"]
++    ["#fail2"],
++    ["#fail-command"]
+  ]
+}
+```
+
+Notice that the id added to the `violations` array is inside an array. This is because the `violations` and `passes` arrays are axe-core selectors, which follow the format:
+
+- a single string - the string is the CSS selector
+- multiple strings
+  - The last string is the final CSS selector
+  - All other's are the nested structure of iframes inside the document
 
 ## Git Commits
 

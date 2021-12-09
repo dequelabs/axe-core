@@ -6,7 +6,7 @@ const { getWebdriver, connectToChromeDriver } = require('./run-server');
 const { assert } = require('chai');
 const globby = require('globby');
 
-describe('aria-practices', function() {
+describe('aria-practices', function () {
   // Use path.resolve rather than require.resolve because APG has no package.json
   const apgPath = path.resolve(__dirname, '../../node_modules/aria-practices/');
   const filePaths = globby.sync(`${apgPath}/examples/**/*.html`);
@@ -53,8 +53,11 @@ describe('aria-practices', function() {
       'landmark-banner-is-top-level',
       'landmark-contentinfo-is-top-level'
     ],
-    //https://github.com/w3c/aria-practices/issues/2199
-    'button/button_idl.html': ['aria-allowed-attr']
+    // https://github.com/w3c/aria-practices/issues/2199
+    'button/button_idl.html': ['aria-allowed-attr'],
+    // https://github.com/w3c/aria-practices/issues/2285
+    'checkbox/checkbox.html': ['empty-table-header'],
+    'dialog-modal/datepicker-dialog.html': ['empty-table-header']
   };
 
   // Not an actual content file

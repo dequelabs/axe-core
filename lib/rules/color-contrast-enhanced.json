@@ -2,8 +2,9 @@
   "id": "color-contrast-enhanced",
   "matches": "color-contrast-matches",
   "excludeHidden": false,
-  "enabled": false, 
-  "tags": ["cat.color", "wcag2aaa", "wcag146"],
+  "enabled": false,
+  "tags": ["cat.color", "wcag2aaa", "wcag146", "ACT"],
+  "actIds": ["09o5cg"],
   "metadata": {
     "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AAA contrast ratio thresholds",
     "help": "Elements must have sufficient color contrast"

@@ -3,7 +3,8 @@
   "excludeHidden": false,
   "selector": "audio[autoplay], video[autoplay]",
   "matches": "no-autoplay-audio-matches",
-  "tags": ["cat.time-and-media", "wcag2a", "wcag142", "experimental"],
+  "reviewOnFail": true,
+  "tags": ["cat.time-and-media", "wcag2a", "wcag142", "ACT"],
   "actIds": ["80f0bf"],
   "metadata": {
     "description": "Ensures <video> or <audio> elements do not autoplay audio for more than 3 seconds without a control mechanism to stop or mute the audio",

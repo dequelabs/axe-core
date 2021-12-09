@@ -1,7 +1,6 @@
 {
   "id": "video-caption",
   "selector": "video",
-  "excludeHidden": false,
   "tags": [
     "cat.text-alternatives",
     "wcag2a",

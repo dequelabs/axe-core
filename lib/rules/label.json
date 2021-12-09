@@ -6,12 +6,11 @@
     "cat.forms",
     "wcag2a",
     "wcag412",
-    "wcag131",
     "section508",
     "section508.22.n",
     "ACT"
   ],
-  "actIds": ["e086e5", "307n5z"],
+  "actIds": ["e086e5"],
   "metadata": {
     "description": "Ensures every form element has a label",
     "help": "Form elements must have labels"

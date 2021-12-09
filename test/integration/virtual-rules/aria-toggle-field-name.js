@@ -1,5 +1,5 @@
-describe('aria-toggle-field-name virtual-rule', function() {
-  it('should pass for aria-label', function() {
+describe('aria-toggle-field-name virtual-rule', function () {
+  it('should pass for aria-label', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
@@ -16,7 +16,7 @@ describe('aria-toggle-field-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for aria-labelledby', function() {
+  it('should incomplete for aria-labelledby', function () {
     var results = axe.runVirtualRule('aria-toggle-field-name', {
       nodeName: 'div',
       attributes: {
@@ -30,7 +30,7 @@ describe('aria-toggle-field-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should pass for title', function() {
+  it('should pass for title', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
@@ -50,7 +50,7 @@ describe('aria-toggle-field-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for visible text content', function() {
+  it('should pass for visible text content', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
@@ -72,7 +72,39 @@ describe('aria-toggle-field-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete when children are missing', function() {
+  it('should fail for hidden text', function () {
+    var button = new axe.SerialVirtualNode({
+      nodeName: 'div',
+      attributes: {
+        role: 'radio'
+      }
+    });
+
+    var span = new axe.SerialVirtualNode({
+      nodeName: 'span',
+      attributes: {
+        'aria-hidden': true
+      }
+    });
+    span.parent = button;
+    button.children = [span];
+
+    var text = new axe.SerialVirtualNode({
+      nodeName: '#text',
+      nodeType: 3,
+      nodeValue: 'foobar'
+    });
+    text.parent = span;
+    span.children = [text];
+
+    var results = axe.runVirtualRule('aria-toggle-field-name', button);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should incomplete when children are missing', function () {
     var results = axe.runVirtualRule('aria-toggle-field-name', {
       nodeName: 'div',
       attributes: {
@@ -85,7 +117,7 @@ describe('aria-toggle-field-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should fail children contain no visible text', function() {
+  it('should fail children contain no visible text', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
@@ -101,7 +133,7 @@ describe('aria-toggle-field-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when aria-label contains only whitespace', function() {
+  it('should fail when aria-label contains only whitespace', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
@@ -118,7 +150,7 @@ describe('aria-toggle-field-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when aria-label is empty', function() {
+  it('should fail when aria-label is empty', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
@@ -135,7 +167,7 @@ describe('aria-toggle-field-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when title is empty', function() {
+  it('should fail when title is empty', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
@@ -152,7 +184,7 @@ describe('aria-toggle-field-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete if has explicit and implicit label', function() {
+  it('should incomplete if has explicit and implicit label', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {

@@ -1,50 +1,50 @@
 // describes the API used by axe Pro
-describe('external API', function() {
+describe('external API', function () {
   'use strict';
 
-  afterEach(function() {
+  afterEach(function () {
     // setup _tree as needed, always reset
     axe._tree = null;
   });
 
-  describe('axe.commons.text.sanitize', function() {
-    it('must be a function with the signature String -> String', function() {
+  describe('axe.commons.text.sanitize', function () {
+    it('must be a function with the signature String -> String', function () {
       assert.isString(axe.commons.text.sanitize(''));
       assert.isString(axe.commons.text.sanitize('not empty'));
     });
   });
 
-  describe('axe.utils.getBaseLang', function() {
-    it('must be a function with the signature String -> String', function() {
+  describe('axe.utils.getBaseLang', function () {
+    it('must be a function with the signature String -> String', function () {
       assert.isString(axe.utils.getBaseLang(''));
       assert.isString(axe.utils.getBaseLang('not empty'));
     });
   });
 
-  describe('axe.utils.validLangs', function() {
-    it('be a function with the signature * -> [String]', function() {
-      assert.isArray(axe.utils.validLangs());
-      axe.utils.validLangs().forEach(assert.isString);
+  describe('axe.utils.validLangs', function () {
+    it('be a function with the signature * -> [String]', function () {
+      var langs = axe.utils.validLangs();
+      assert.isArray(langs);
+      langs.forEach(assert.isString);
       assert.isArray(axe.utils.validLangs(document));
-      assert.isArray(axe.utils.validLangs({}));
     });
   });
 
-  describe('axe.commons.dom.isVisible', function() {
-    it('must be a function with the signature Element -> Boolean', function() {
+  describe('axe.commons.dom.isVisible', function () {
+    it('must be a function with the signature Element -> Boolean', function () {
       var el = randomNodeInTree(isElement);
       assert.isBoolean(axe.commons.dom.isVisible(el));
       assert.isBoolean(axe.commons.dom.isVisible(randomNodeInTree(isElement)));
     });
   });
 
-  describe('axe.commons.aria.implicitRole', function() {
-    it('must be a function with the signature Element -> String|null', function() {
+  describe('axe.commons.aria.implicitRole', function () {
+    it('must be a function with the signature Element -> String|null', function () {
       axe.utils.getFlattenedTree(document.documentElement);
       var implicitRolesOrNull = getEntries(
         axe.commons.aria.lookupTable.role
       ).reduce(
-        function(roles, entry) {
+        function (roles, entry) {
           var role = entry[0];
           var val = entry[1];
           if (val.implicit) {
@@ -59,13 +59,13 @@ describe('external API', function() {
     });
   });
 
-  describe('axe.commons.aria.lookupTable.role', function() {
-    it('must be an object (dict)', function() {
+  describe('axe.commons.aria.lookupTable.role', function () {
+    it('must be an object (dict)', function () {
       assert.isObject(axe.commons.aria.lookupTable.role);
     });
-    it('must have the signature String -> String {role.type}', function() {
+    it('must have the signature String -> String {role.type}', function () {
       var keys = getKeys(axe.commons.aria.lookupTable.role);
-      var types = getValues(axe.commons.aria.lookupTable.role).map(function(
+      var types = getValues(axe.commons.aria.lookupTable.role).map(function (
         role
       ) {
         return role.type;
@@ -75,8 +75,8 @@ describe('external API', function() {
     });
   });
 
-  describe('axe.utils.getFlattenedTree', function() {
-    it('must be a function with the signature Element -> [vnode]', function() {
+  describe('axe.utils.getFlattenedTree', function () {
+    it('must be a function with the signature Element -> [vnode]', function () {
       assert.isArray(axe.utils.getFlattenedTree(document.body));
       assert.lengthOf(
         axe.utils.getFlattenedTree(randomNodeInTree(isElement)),
@@ -85,27 +85,27 @@ describe('external API', function() {
     });
   });
 
-  describe('axe.utils.getNodeFromTree', function() {
-    it('must be a function with the signature Node -> vnode', function() {
+  describe('axe.utils.getNodeFromTree', function () {
+    it('must be a function with the signature Node -> vnode', function () {
       axe._tree = axe.utils.getFlattenedTree(document.body);
       assert.oneOf(
         axe.utils.getNodeFromTree(randomNodeInTree()),
         flat(axe._tree[0])
       );
     });
-    it('must return null for nodes not in the axe._tree', function() {
+    it('must return null for nodes not in the axe._tree', function () {
       assert.isNull(axe.utils.getNodeFromTree(randomElement()));
     });
   });
 
-  describe('axe.commons.dom.isOpaque', function() {
-    it('must be a function with the signature Element -> Boolean', function() {
+  describe('axe.commons.dom.isOpaque', function () {
+    it('must be a function with the signature Element -> Boolean', function () {
       assert.isBoolean(axe.commons.dom.isOpaque(randomNodeInTree(isElement)));
     });
   });
 
-  describe('axe.commons.text.accessibleTextVirtual', function() {
-    it('must be a function with the signature Element vnode -> String', function() {
+  describe('axe.commons.text.accessibleTextVirtual', function () {
+    it('must be a function with the signature Element vnode -> String', function () {
       axe._tree = axe.utils.getFlattenedTree(document.body);
       var vnode = axe.utils.getNodeFromTree(randomNodeInTree(isElement));
       assert.isString(axe.commons.text.accessibleTextVirtual(vnode));
@@ -134,7 +134,7 @@ function isElement(el) {
 }
 
 function random(fromArr) {
-  return function(filter) {
+  return function (filter) {
     filter = filter || isTrue;
     var arr = fromArr.filter(filter);
     var seed = Math.random();
@@ -155,7 +155,7 @@ function collectNodes() {
   var walker = document.createTreeWalker(
     document,
     NodeFilter.SHOW_ALL,
-    function(node) {
+    function (node) {
       if (!document.body.contains(node)) {
         return NodeFilter.FILTER_SKIP;
       }
@@ -163,14 +163,14 @@ function collectNodes() {
     },
     false
   );
-  var next = function() {
+  var next = function () {
     var value = walker.nextNode();
     return {
       value: value,
       done: !value
     };
   };
-  walker.iterate = function() {
+  walker.iterate = function () {
     return { next: next };
   };
   return walker;
@@ -178,7 +178,7 @@ function collectNodes() {
 
 function flat(tree) {
   var result = [];
-  var insert = function(node) {
+  var insert = function (node) {
     result.push(node);
     (node.children || []).forEach(insert);
   };
@@ -204,13 +204,13 @@ function getEntries(obj) {
 }
 
 function getValues(obj) {
-  return getEntries(obj).map(function(entry) {
+  return getEntries(obj).map(function (entry) {
     return entry[1];
   });
 }
 
 function getKeys(obj) {
-  return getEntries(obj).map(function(entry) {
+  return getEntries(obj).map(function (entry) {
     return entry[0];
   });
 }

@@ -67,5 +67,52 @@
   </div>
 </div>
 
+<div role="list" id="pass10" aria-busy="true"></div>
+<div role="suggestion" id="pass11" aria-busy="true"></div>
+<div role="menu" id="pass12" aria-busy="true"></div>
+<div role="listbox" id="pass13" aria-busy="true"></div>
+
+<div role="list" id="pass14">
+  <script></script>
+  <style></style>
+  <canvas hidden></canvas>
+  <div><div role="listitem">Item 1</div></div>
+  <div role="generic"><div role="listitem">item 2</div></div>
+  <div role="presentation"><div role="listitem">item 2</div></div>
+  <div role="none"><div role="listitem">item 2</div></div>
+</div>
+
+<div role="suggestion" id="fail9">
+  <div aria-busy="true"></div>
+</div>
+<div role="suggestion" id="fail10" aria-busy="false"></div>
+<div role="list" id="fail11">
+  <li>Item 1</li>
+  <span role="link">Item 2</span>
+</div>
+<div role="list" id="fail12">
+  <div aria-live="polite">
+    <div role="listitem">List item 1</div>
+    <div role="listitem">List item 2</div>
+  </div>
+</div>
+<div role="list" id="fail13">
+  <div tabindex="0">
+    <div role="listitem">List item 1</div>
+    <div role="listitem">List item 2</div>
+  </div>
+</div>
+
+<div role="list" id="fail14">
+  <div aria-busy="true"></div>
+</div>
+
 <div role="doc-bibliography" id="inapplicable1"></div>
 <div role="doc-endnotes" id="inapplicable2"></div>
+<div role="radiogroup" id="inapplicable3">
+  <div role="heading" aria-level="2">Heading</div>
+  <ul>
+    <li><div role="radio"></div></li>
+    <li><div role="radio"></div></li>
+  </ul>
+</div>
