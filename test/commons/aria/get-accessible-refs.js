@@ -68,6 +68,18 @@ describe('aria.getAccessibleRefs', function() {
     assert.deepEqual(getAccessibleRefs(node), [ref1, ref2]);
   });
 
+  it('does not break on a custom .children property', function() {
+    setLookup({ 'aria-foo': { type: 'idref' } });
+    fixture.innerHTML = '<div id="ref" aria-foo="foo"></div><i id="foo"></i>';
+    var node = document.getElementById('foo');
+    var ref = document.getElementById('ref');
+    
+    Object.defineProperty(node, 'children', {
+      value: ['#ref']
+    });
+    assert.deepEqual(getAccessibleRefs(node), [ref]);
+  });
+
   (shadowSupport ? it : xit)('works inside shadow DOM', function() {
     setLookup({ 'aria-bar': { type: 'idref' } });
     fixture.innerHTML = '<div id="foo"></div>';
