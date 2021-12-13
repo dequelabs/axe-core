@@ -109,7 +109,7 @@ describe('nested-interactive virtual-rule', function() {
 
     var results = axe.runVirtualRule('nested-interactive', node);
 
-    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
