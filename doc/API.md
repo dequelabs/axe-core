@@ -421,7 +421,7 @@ axe.run(
 );
 ```
 
-``##### Options Parameter
+##### Options Parameter
 
 The options parameter is flexible way to configure how `axe.run` operates. The different modes of operation are:
 
