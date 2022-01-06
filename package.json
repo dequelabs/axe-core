@@ -106,7 +106,7 @@
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "sri-validate": "node build/sri-update --validate",
     "fmt": "prettier --write .*.json *.{json,md,js} **/*.ts './{.circleci,.github,build,doc,lib,locales,test,typings}/**/*.{json,md,js,ts,html}'",
-    "postinstall": "build/postinstall.sh"
+    "postinstall": "sh build/postinstall.sh"
   },
   "devDependencies": {
     "@axe-core/webdriverjs": "^4.2.2",
