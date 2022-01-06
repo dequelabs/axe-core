@@ -46,6 +46,16 @@ jobs:
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
       - run: npm ci
+      # install the version of chromedriver that matches the currently installed version of Chrome
+      - run:
+          name: Install Chromedriver
+          command: |
+            CHROME_VERSION="$(google-chrome --version)"
+            CHROME_VERSION_STRING="$(echo $CHROME_VERSION | sed 's/^Google Chrome //' | sed 's/^Chromium //')"
+            echo "Installed version of Google Chrome is $CHROME_VERSION_STRING"
+            CHROMEDRIVER_RELEASE="${CHROME_VERSION_STRING%%.*}"
+            echo "ChromeDriver $CHROMEDRIVER_RELEASE will be installed"
+            npm install --no-save "chromedriver@$CHROMEDRIVER_RELEASE"
       - save_cache:
           key: v9-cache-unix-{{ checksum "package-lock.json" }}
           paths:
