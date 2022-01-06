@@ -36,6 +36,20 @@ restore_dependency_cache_win: &restore_dependency_cache_win
       - v9-cache-win-{{ checksum "package-lock.json" }}
       - v9-cache-win-
 
+# install the version of chromedriver that matches the currently installed version of Chrome (taken from CircleCI chromedriver script)
+install_chromedriver: &install_chromedriver
+  run:
+    name: Install Chromedriver
+    command: |
+      CHROME_VERSION="$(google-chrome --version)"
+      CHROME_VERSION_STRING="$(echo $CHROME_VERSION | sed 's/^Google Chrome //' | sed 's/^Chromium //')"
+      echo "Installed version of Google Chrome is $CHROME_VERSION_STRING"
+
+      CHROMEDRIVER_RELEASE="${CHROME_VERSION_STRING%%.*}"
+
+      echo "ChromeDriver $CHROMEDRIVER_RELEASE will be installed"
+      npm install --no-save "chromedriver@$CHROMEDRIVER_RELEASE"
+
 jobs:
   # Fetch and cache dependencies.
   dependencies_unix:
@@ -46,16 +60,7 @@ jobs:
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
       - run: npm ci
-      # install the version of chromedriver that matches the currently installed version of Chrome
-      - run:
-          name: Install Chromedriver
-          command: |
-            CHROME_VERSION="$(google-chrome --version)"
-            CHROME_VERSION_STRING="$(echo $CHROME_VERSION | sed 's/^Google Chrome //' | sed 's/^Chromium //')"
-            echo "Installed version of Google Chrome is $CHROME_VERSION_STRING"
-            CHROMEDRIVER_RELEASE="${CHROME_VERSION_STRING%%.*}"
-            echo "ChromeDriver $CHROMEDRIVER_RELEASE will be installed"
-            npm install --no-save "chromedriver@$CHROMEDRIVER_RELEASE"
+      - <<: *install_chromedriver
       - save_cache:
           key: v9-cache-unix-{{ checksum "package-lock.json" }}
           paths:
@@ -176,6 +181,7 @@ jobs:
           command: |
             wget https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb
             sudo apt install ./google-chrome-beta_current_amd64.deb
+      - <<: *install_chromedriver
       - run:
           name: Install Firefox Nightly
           command: |
@@ -295,41 +301,41 @@ workflows:
       - dependencies_unix
       - dependencies_win
       # Run linting
-      - lint:
+      # - lint:
+      #     requires:
+      #       - dependencies_unix
+      # Run tests on all commits, but after installing dependencies
+      - test_nightly_browsers:
           requires:
             - dependencies_unix
-      # Run tests on all commits, but after installing dependencies
-      - test_unix:
-          requires:
-            - lint
       # Run IE/ Windows test on all commits
-      - test_win:
-          requires:
-            - dependencies_win
-      - test_examples:
-          requires:
-            - test_unix
-      - test_act:
-          requires:
-            - test_unix
-      - test_aria_practices:
-          requires:
-            - test_unix
-      - test_locales:
-          requires:
-            - test_unix
-      - test_virtual_rules:
-          requires:
-            - test_unix
-      - build_api_docs:
-          requires:
-            - test_unix
-      - test_rule_help_version:
-          requires:
-            - test_unix
-      - test_node:
-          requires:
-            - test_unix
+      # - test_win:
+      #     requires:
+      #       - dependencies_win
+      # - test_examples:
+      #     requires:
+      #       - test_unix
+      # - test_act:
+      #     requires:
+      #       - test_unix
+      # - test_aria_practices:
+      #     requires:
+      #       - test_unix
+      # - test_locales:
+      #     requires:
+      #       - test_unix
+      # - test_virtual_rules:
+      #     requires:
+      #       - test_unix
+      # - build_api_docs:
+      #     requires:
+      #       - test_unix
+      # - test_rule_help_version:
+      #     requires:
+      #       - test_unix
+      # - test_node:
+      #     requires:
+      #       - test_unix
       # Hold for approval
       - hold:
           type: approval
