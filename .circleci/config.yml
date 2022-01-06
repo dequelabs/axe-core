@@ -37,7 +37,7 @@ restore_dependency_cache_win: &restore_dependency_cache_win
       - v9-cache-win-
 
 # install the version of chromedriver that matches the currently installed version of Chrome (taken from CircleCI chromedriver script)
-install_chromedriver: &install_chromedriver
+install_linux_chromedriver: &install_linux_chromedriver
   run:
     name: Install Chromedriver
     command: |
@@ -60,7 +60,7 @@ jobs:
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
       - run: npm ci
-      - <<: *install_chromedriver
+      - <<: *install_linux_chromedriver
       - save_cache:
           key: v9-cache-unix-{{ checksum "package-lock.json" }}
           paths:
@@ -181,7 +181,7 @@ jobs:
           command: |
             wget https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb
             sudo apt install ./google-chrome-beta_current_amd64.deb
-      - <<: *install_chromedriver
+      - <<: *install_linux_chromedriver
       - run:
           name: Install Firefox Nightly
           command: |
