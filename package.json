@@ -108,7 +108,7 @@
     "fmt": "prettier --write .*.json *.{json,md,js} **/*.ts './{.circleci,.github,build,doc,lib,locales,test,typings}/**/*.{json,md,js,ts,html}'"
   },
   "devDependencies": {
-    "@axe-core/webdriverjs": "^4.2.2",
+    "@axe-core/webdriverjs": "^4.3.2",
     "@babel/core": "^7.5.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.4",
     "@babel/polyfill": "^7.4.4",
