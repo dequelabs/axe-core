@@ -1,7 +1,7 @@
 import * as axe from '../../axe';
 
 var context: any = document;
-var $fixture: any = {};
+var $fixture: NodeList = document.querySelectorAll('div');
 var options = { iframes: false, selectors: false, elementRef: false };
 
 axe.run(context, {}, (error: Error, results: axe.AxeResults) => {
