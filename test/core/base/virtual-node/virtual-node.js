@@ -39,6 +39,16 @@ describe('VirtualNode', function() {
       assert.equal(vNode.props.type, 'text');
     });
 
+    it('should reflect selected property', function() {
+      node = document.createElement('option');
+      var vNode = new VirtualNode(node);
+      assert.equal(vNode.props.selected, false);
+
+      node.selected = true;
+      vNode = new VirtualNode(node);
+      assert.equal(vNode.props.selected, true);
+    });
+
     it('should lowercase type', function() {
       var node = document.createElement('input');
       node.setAttribute('type', 'COLOR');
@@ -149,6 +159,32 @@ describe('VirtualNode', function() {
       it('should return an empty array if there are no attributes', function() {
         var vNode = new VirtualNode(node);
         assert.deepEqual(vNode.attrNames, []);
+      });
+    });
+
+    describe('nodeIndex', function() {
+      it('increments nodeIndex when a parent is passed', function() {
+        var vHtml = new VirtualNode({ nodeName: 'html' });
+        var vHead = new VirtualNode({ nodeName: 'head' }, vHtml);
+        var vTitle = new VirtualNode({ nodeName: 'title' }, vHead);
+        var vBody = new VirtualNode({ nodeName: 'body' }, vHtml);
+
+        assert.equal(vHtml.nodeIndex, 0);
+        assert.equal(vHead.nodeIndex, 1);
+        assert.equal(vTitle.nodeIndex, 2);
+        assert.equal(vBody.nodeIndex, 3);
+      });
+
+      it('resets nodeIndex when no parent is passed', function() {
+        var vHtml = new VirtualNode({ nodeName: 'html' });
+        var vHead = new VirtualNode({ nodeName: 'head' }, vHtml);
+        assert.equal(vHtml.nodeIndex, 0);
+        assert.equal(vHead.nodeIndex, 1);
+
+        vHtml = new VirtualNode({ nodeName: 'html' });
+        vHead = new VirtualNode({ nodeName: 'head' }, vHtml);
+        assert.equal(vHtml.nodeIndex, 0);
+        assert.equal(vHead.nodeIndex, 1);
       });
     });
 

@@ -22,12 +22,12 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
     assert.equal(actual, expected);
   });
 
-  it('returns false for SVG with role alertdialog', function() {
+  it('returns true for SVG with role alertdialog', function() {
     var node = document.createElement('svg');
     var role = 'alertdialog';
     node.setAttribute('role', role);
     flatTreeSetup(node);
-    assert.isFalse(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
+    assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
   it('returns true for OBJECT with role application', function() {
@@ -162,6 +162,38 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
     assert.isFalse(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
   });
 
+  it('returns true when B has role navigation', function() {
+    var node = document.createElement('b');
+    var role = 'navigation';
+    node.setAttribute('role', role);
+    flatTreeSetup(node);
+    assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
+  });
+
+  it('returns true when NAV has role menubar', function() {
+    var node = document.createElement('nav');
+    var role = 'menubar';
+    node.setAttribute('role', role);
+    flatTreeSetup(node);
+    assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
+  });
+
+  it('returns true when NAV has role tablist', function() {
+    var node = document.createElement('nav');
+    var role = 'tablist';
+    node.setAttribute('role', role);
+    flatTreeSetup(node);
+    assert.isTrue(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
+  });
+
+  it('returns false when PROGRESS has role button', function() {
+    var node = document.createElement('progress');
+    var role = 'button';
+    node.setAttribute('role', role);
+    flatTreeSetup(node);
+    assert.isFalse(axe.commons.aria.isAriaRoleAllowedOnElement(node, role));
+  });
+
   it('returns true if given element can have any role', function() {
     var node = document.createElement('div');
     flatTreeSetup(node);
@@ -183,17 +215,9 @@ describe('aria.isAriaRoleAllowedOnElement', function() {
     assert.isFalse(actual);
   });
 
-  it('returns true if elements implicit role matches the role', function() {
+  it('returns false if elements implicit role matches the role', function() {
     var node = document.createElement('area');
     node.setAttribute('href', '#yay');
-    node.setAttribute('role', 'link');
-    flatTreeSetup(node);
-    var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'link');
-    assert.isTrue(actual);
-  });
-
-  it('returns false if elements implicit role does not match the role', function() {
-    var node = document.createElement('area');
     node.setAttribute('role', 'link');
     flatTreeSetup(node);
     var actual = axe.commons.aria.isAriaRoleAllowedOnElement(node, 'link');

@@ -290,14 +290,6 @@ describe('region', function() {
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
   });
 
-  it('treats iframe elements as regions', function() {
-    var checkArgs = checkSetup(
-      '<iframe id="target"></iframe><div role="main">Content</div>'
-    );
-
-    assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
-  });
-
   it('returns the outermost element as the error', function() {
     var checkArgs = checkSetup(
       '<div id="target"><p>This is random content.</p></div><div role="main"><h1 id="mainheader" tabindex="0">Introduction</h1></div>'
@@ -318,6 +310,15 @@ describe('region', function() {
       }
     );
 
+    assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
+  });
+
+  it('should return true when there is a button', function() {
+    // Some pages have a skiplink menu, that opens through a button
+    // ARIA practices is an example of this.
+    var checkArgs = checkSetup(
+      '<button id="target">Skip menu</button><main><h1>Introduction</h1></main>'
+    );
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
   });
 

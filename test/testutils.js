@@ -25,6 +25,30 @@ if (!fixture) {
   document.body.insertBefore(fixture, document.body.firstChild);
 }
 
+// determine which checks are used only in the `none` array of rules
+var noneChecks = [];
+
+function verifyIsNoneCheck(check) {
+  var index = noneChecks.indexOf(check);
+  if (index !== -1) {
+    noneChecks.splice(index, 1);
+  }
+}
+
+axe._audit.rules.forEach(function(rule) {
+  rule.none.forEach(function(check) {
+    check = check.id || check;
+    if (noneChecks.indexOf(check) === -1) {
+      noneChecks.push(check);
+    }
+  });
+});
+
+axe._audit.rules.forEach(function(rule) {
+  rule.any.forEach(verifyIsNoneCheck);
+  rule.all.forEach(verifyIsNoneCheck);
+});
+
 /**
  * Create a check context for mocking/resetting data and relatedNodes in tests
  *
@@ -408,11 +432,61 @@ testUtils.queryFixture = function queryFixture(html, query) {
  * @param {String} checkId - ID of the check
  * @return Function
  */
-testUtils.getCheckEvaluate = function getCheckEvaluate(checkId) {
+testUtils.getCheckEvaluate = function getCheckEvaluate(checkId, testOptions) {
   var check = checks[checkId];
+  testOptions = testOptions || {};
+
   return function evaluateWrapper(node, options, virtualNode, context) {
     var opts = check.getOptions(options);
-    return check.evaluate.call(this, node, opts, virtualNode, context);
+    var result = check.evaluate.call(this, node, opts, virtualNode, context);
+
+    // ensure that every result has a corresponding message
+    if (testOptions.verifyMessage !== false) {
+      var messages = axe._audit.data.checks[checkId].messages;
+      var messageKey = this._data && this._data.messageKey;
+
+      // see how the check is used to know where to find the message
+      // e.g. a check used only in the `none` array of a rule will look at
+      // the messageKey of a passing result in the `fail` messages
+      var keyResult = result;
+      var isNoneCheck = noneChecks.indexOf(checkId) !== -1;
+      if (isNoneCheck) {
+        keyResult = result === true ? false : result === false ? true : result;
+      }
+
+      var key =
+        keyResult === true
+          ? 'pass'
+          : keyResult === false
+          ? 'fail'
+          : 'incomplete';
+      var noneCheckMessage = isNoneCheck
+        ? '. Note that since this check is only used in the "none" array of all rules, the messages use the inverse of the result (e.g. a result of false uses the "pass" messages)'
+        : '';
+
+      assert.exists(
+        messages[key],
+        'Missing "' +
+          key +
+          '" message for check result of ' +
+          result +
+          noneCheckMessage
+      );
+      if (messageKey) {
+        assert.exists(
+          messages[key][messageKey],
+          'Missing ' +
+            key +
+            ' message key "' +
+            messageKey +
+            '" for check result of ' +
+            result +
+            noneCheckMessage
+        );
+      }
+    }
+
+    return result;
   };
 };
 
@@ -428,32 +502,34 @@ testUtils.isIE11 = (function isIE11(navigator) {
 
 axe.testUtils = testUtils;
 
-beforeEach(function() {
-  // reset from axe._load overriding
-  checks = originalChecks;
-  axe._audit = originalAudit;
-  axe._audit.rules = originalRules;
-  commons = axe.commons = originalCommons;
-});
+if (typeof beforeEach !== 'undefined' && typeof afterEach !== 'undefined') {
+  beforeEach(function() {
+    // reset from axe._load overriding
+    checks = originalChecks;
+    axe._audit = originalAudit;
+    axe._audit.rules = originalRules;
+    commons = axe.commons = originalCommons;
+  });
 
-afterEach(function() {
-  axe.teardown();
-  fixture.innerHTML = '';
+  afterEach(function() {
+    axe.teardown();
+    fixture.innerHTML = '';
 
-  // remove all attributes from fixture (otherwise a leftover
-  // style attribute would cause avoid-inline-spacing integration
-  // test to fail with [#fixture] being included in the results)
-  var attrs = fixture.attributes;
-  for (var i = 0; i < attrs.length; i++) {
-    var attrName = attrs[i].name;
-    if (attrName !== 'id') {
-      fixture.removeAttribute(attrs[i].name);
+    // remove all attributes from fixture (otherwise a leftover
+    // style attribute would cause avoid-inline-spacing integration
+    // test to fail with [#fixture] being included in the results)
+    var attrs = fixture.attributes;
+    for (var i = 0; i < attrs.length; i++) {
+      var attrName = attrs[i].name;
+      if (attrName !== 'id') {
+        fixture.removeAttribute(attrs[i].name);
+      }
     }
-  }
 
-  // reset body styles
-  document.body.removeAttribute('style');
-});
+    // reset body styles
+    document.body.removeAttribute('style');
+  });
+}
 
 testUtils.captureError = function captureError(cb, errorHandler) {
   return function() {
@@ -463,4 +539,39 @@ testUtils.captureError = function captureError(cb, errorHandler) {
       errorHandler(e);
     }
   };
+};
+
+testUtils.runPartialRecursive = function runPartialRecursive(
+  context,
+  options,
+  win
+) {
+  options = options || {};
+  win = win || window;
+  var axe = win.axe;
+  var frameContexts = axe.utils.getFrameContexts(context);
+  var promiseResults = [axe.runPartial(context, options)];
+
+  frameContexts.forEach(function(c) {
+    var frame = testUtils.shadowQuerySelector(c.frameSelector, win.document);
+    var frameWin = frame.contentWindow;
+    var frameResults = testUtils.runPartialRecursive(
+      c.frameContext,
+      options,
+      frameWin
+    );
+    promiseResults = promiseResults.concat(frameResults);
+  });
+  return promiseResults;
+};
+
+testUtils.shadowQuerySelector = function shadowQuerySelector(axeSelector, doc) {
+  var elm;
+  doc = doc || document;
+  axeSelector = Array.isArray(axeSelector) ? axeSelector : [axeSelector];
+  axeSelector.forEach(function(selectorStr) {
+    elm = doc && doc.querySelector(selectorStr);
+    doc = elm && elm.shadowRoot;
+  });
+  return elm;
 };

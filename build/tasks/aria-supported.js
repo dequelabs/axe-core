@@ -16,9 +16,8 @@ module.exports = function(grunt) {
        * as `axe` does not exist until grunt task `build:uglify` is complete,
        * hence cannot be required at the top of the file.
        */
-      const langOption = grunt.option('lang');
-      const fileNameSuffix =
-        langOption && langOption.length > 0 ? `.${langOption}` : '';
+      const { langs } = this.options();
+      const fileNameSuffix = langs && langs.length > 0 ? `${langs[0]}` : '';
       const axe = require(`../../axe${fileNameSuffix}`);
       const listType = this.data.listType.toLowerCase();
       const headings = {
@@ -38,16 +37,17 @@ module.exports = function(grunt) {
         attributesMdTableHeader: ['aria-attribute', 'axe-core support']
       };
 
+      const { ariaRoles, ariaAttrs } = axe.utils.getStandards();
       const { diff: rolesTable, notes: rolesFootnotes } = getDiff(
         roles,
-        axe.commons.aria.lookupTable.role,
+        ariaRoles,
         listType
       );
 
       const ariaQueryAriaAttributes = getAriaQueryAttributes();
       const { diff: attributesTable, notes: attributesFootnotes } = getDiff(
         ariaQueryAriaAttributes,
-        axe.commons.aria.lookupTable.attributes,
+        ariaAttrs,
         listType
       );
       const attributesTableMarkdown = mdTable([

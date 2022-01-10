@@ -206,7 +206,6 @@ describe('Configure Options', function() {
       iframe.src = '/test/mock/frames/context.html';
       iframe.onload = function() {
         axe.configure(config);
-        iframe.contentWindow.axe.configure(config);
 
         axe.run(
           '#target',
@@ -247,7 +246,6 @@ describe('Configure Options', function() {
       iframe.src = '/test/mock/frames/noHtml-config.html';
       iframe.onload = function() {
         axe.configure(config);
-        iframe.contentWindow.axe.configure(config);
 
         axe.run('#target', {
           runOnly: {
@@ -260,9 +258,9 @@ describe('Configure Options', function() {
 
       window.addEventListener('message', function(e) {
         var data = JSON.parse(e.data);
-        if (Array.isArray(data.message)) {
+        if (Array.isArray(data.payload)) {
           try {
-            assert.isNull(data.message[0].nodes[0].node.source);
+            assert.isNull(data.payload[0].nodes[0].node.source);
             done();
           } catch (e) {
             done(e);

@@ -21,7 +21,9 @@
    1. [API Name: axe.registerPlugin](#api-name-axeregisterplugin)
    1. [API Name: axe.cleanup](#api-name-axecleanup)
    1. [API Name: axe.setup](#api-name-axesetup)
-   1. [API Name: axe.teardown](#api-name-teardown)
+   1. [API Name: axe.teardown](#api-name-axeteardown)
+   1. [API Name: axe.frameMessenger](#api-name-axeframemessenger)
+   1. [API name: axe.runPartial / axe.finishRun](#api-name-axerunpartial-/-axefinishrun)
    1. [Virtual DOM Utilities](#virtual-dom-utilities)
       1. [API Name: axe.utils.querySelectorAll](#api-name-axeutilsqueryselectorall)
       1. [API Name: axe.utils.getRule](#api-name-axeutilsgetrule)
@@ -78,8 +80,10 @@ The `experimental`, `ACT` and `section508` tags are only added to some rules. Ea
 | ---------------- | ---------------------------------------------------- |
 | `wcag2a`         | WCAG 2.0 Level A                                     |
 | `wcag2aa`        | WCAG 2.0 Level AA                                    |
+| `wcag2aaa`       | WCAG 2.0 Level AAA                                   |
 | `wcag21a`        | WCAG 2.1 Level A                                     |
 | `wcag21aa`       | WCAG 2.1 Level AA                                    |
+| `wcag21aaa`      | WCAG 2.1 Level AAA                                   |
 | `best-practice`  | Common accessibility best practices                  |
 | `wcag***`        | WCAG success criterion e.g. wcag111 maps to SC 1.1.1 |
 | `ACT`            | W3C approved Accessibility Conformance Testing rules |
@@ -182,10 +186,7 @@ User specifies the format of the JSON structure passed to the callback of `axe.r
 
 ```js
 axe.configure({
-  branding: {
-    brand: String,
-    application: String
-  },
+  branding: String,
   reporter: 'option' | Function,
   checks: [Object],
   rules: [Object],
@@ -237,8 +238,11 @@ axe.configure({
   - `locale` - A locale object to apply (at runtime) to all rules and checks, in the same shape as `/locales/*.json`.
   - `axeVersion` - Set the compatible version of a custom rule with the current axe version. Compatible versions are all patch and minor updates that are the same as, or newer than those of the `axeVersion` property.
   - `noHtml` - Disables the HTML output of nodes from rules.
+  - `allowedOrigins` - Set which origins (URL domains) will communicate test data with. See [allowedOrigins](#allowedorigins).
 
 **Returns:** Nothing
+
+**Note**: The `branding` property accepts a `string`, which sets the application. Passing it an object is deprecated as of axe-core 4.4.0, as is the `branding.brand` property.
 
 ##### Page level rules
 
@@ -249,6 +253,20 @@ Page level rules raise violations on the entire document and not on individual n
 - [lib/checks/navigation/heading-order.json](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order.json)
 - [lib/checks/navigation/heading-order-evaluate.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order-evaluate.js)
 - [lib/checks/navigation/heading-order-after.js](https://github.com/dequelabs/axe-core/blob/master/lib/checks/navigation/heading-order-after.js)
+
+##### allowedOrigins
+
+Axe-core will only communicate results to frames of the same origin (the URL domain). To configure axe so that it exchanges results across different origins, you can configure allowedOrigins. This configuration must happen in **every frame**. For example:
+
+```js
+axe.configure({
+  allowedOrigins: ['<same_origin>', 'https://deque.com']
+});
+```
+
+The `allowedOrigins` option has two wildcard options. `<same_origin>` always corresponds to the current domain. If you want to block all frame communication, set `allowedOrigins` to `[]`. To configure axe-core to communicate to all origins, use `<unsafe_all_origins>`. **This is not recommended**. Because this is the only way to test iframes on `file://`, it is recommended to use a localhost server such as [http-server](https://www.npmjs.com/package/http-server) instead.
+
+Use of `allowedOrigins` is not necessary if an alternative [frameMessenger](#api-name-axeframemessenger) is used.
 
 ### API Name: axe.reset
 
@@ -291,7 +309,7 @@ axe.run(context, options, (err, results) => {
 #### Parameters axe.run
 
 - [`context`](#context-parameter): (optional) Defines the scope of the analysis - the part of the DOM that you would like to analyze. This will typically be the `document` or a specific selector such as class name, ID, selector, etc.
-- [`options`](#options-parameter): (optional) Set of options passed into rules or checks, temporarily modifying them. This contrasts with `axe.configure`, which is more permanent.
+- [`options`](#options-parameter): (optional) Set of options that change how `axe.run` works, including what rules will run. To pass options to specific checks, use `axe.configure`.
 - [`callback`](#callback-parameter): (optional) The callback function which receives either null or an [error result](#error-result) as the first parameter, and the [results object](#results-object) when analysis is completed successfully, or undefined if it did not.
 
 ##### Context Parameter
@@ -428,6 +446,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `frameWaitTime`    | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out                                              |
 | `preload`          | `true`  | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details) |
 | `performanceTimer` | `false` | Log rule performance metrics to the console                                                                                             |
+| `pingWaitTime`     | `500`   | Time before axe-core considers a frame unresponsive. [See frame messenger for details](frame-messenger.md)                              |
 
 ###### Options Parameter Examples
 
@@ -468,11 +487,27 @@ axe.run(
 Alternatively, runOnly can be passed an array of tags:
 
 ```js
-axe.run({
-	runOnly: ['wcag2a', 'wcag2aa'];
-}, (err, results) => {
-  // ...
-})
+axe.run(
+  {
+    runOnly: ['wcag2a', 'wcag2aa']
+  },
+  (err, results) => {
+    // ...
+  }
+);
+```
+
+If you want to specify just one tag, you can pass in a string.
+
+```js
+axe.run(
+  {
+    runOnly: 'wcag2a'
+  },
+  (err, results) => {
+    // ...
+  }
+);
 ```
 
 2. Run only a specified list of Rules
@@ -503,6 +538,19 @@ axe.run({
 }, (err, results) => {
   // ...
 })
+```
+
+If you want to specify just one rule, you can pass in a string.
+
+```js
+axe.run(
+  {
+    runOnly: 'ruleId1'
+  },
+  (err, results) => {
+    // ...
+  }
+);
 ```
 
 3. Run all enabled Rules except for a list of rules
@@ -818,6 +866,14 @@ The signature is:
 axe.teardown();
 ```
 
+### API Name: axe.frameMessenger
+
+Set up a alternative communication channel between parent and child frames. By default, axe-core uses `window.postMessage()`. See [frame-messenger.md](frame-messenger.md) for details.
+
+### API name: axe.runPartial / axe.finishRun
+
+Run axe without frame communication. This is the recommended way to run axe in browser drivers such as Selenium and Puppeteer. See [run-partial.md](run-partial.md) for details.
+
 ### Virtual DOM Utilities
 
 Note: If you’re writing rules or checks, you’ll have both the `node` and `virtualNode` passed in.
@@ -907,7 +963,7 @@ The top-level document or shadow DOM document fragment
 
 ## Section 3: Example Reference
 
-This package contains examples for [jasmine](examples/jasmine), [mocha](examples/mocha), [phantomjs](examples/phantomjs), [qunit](examples/qunit), and [generating HTML from the violations array](examples/html-handlebars.md). Each of these examples is in the [doc/examples](examples) folder. In each folder, there is a README.md file which contains specific information about each example.
+This package contains examples for [jasmine](examples/jasmine), [mocha](examples/mocha), [qunit](examples/qunit), and [generating HTML from the violations array](examples/html-handlebars.md). Each of these examples is in the [doc/examples](examples) folder. In each folder, there is a README.md file which contains specific information about each example.
 
 See [axe-webdriverjs](https://github.com/dequelabs/axe-webdriverjs#axe-webdriverjs) for selenium webdriver javascript examples.
 

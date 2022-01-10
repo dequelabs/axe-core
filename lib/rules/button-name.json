@@ -10,6 +10,7 @@
     "section508.22.a",
     "ACT"
   ],
+  "actIds": ["97a4e1", "m6b1q3"],
   "metadata": {
     "description": "Ensures buttons have discernible text",
     "help": "Buttons must have discernible text"

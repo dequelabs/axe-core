@@ -45,14 +45,18 @@ declare namespace axe {
     | 'embedded'
     | 'interactive';
 
+  type BaseSelector = string;
+  type CrossTreeSelector = BaseSelector | BaseSelector[];
+  type CrossFrameSelector = CrossTreeSelector[];
+
   type ContextObject = {
-    include?: string[] | string[][];
-    exclude?: string[] | string[][];
+    include?: BaseSelector | Array<BaseSelector | BaseSelector[]>;
+    exclude?: BaseSelector | Array<BaseSelector | BaseSelector[]>;
   };
 
   type RunCallback = (error: Error, results: AxeResults) => void;
 
-  type ElementContext = Node | string | ContextObject;
+  type ElementContext = Node | NodeList | string | ContextObject;
 
   interface TestEngine {
     name: string;
@@ -78,7 +82,7 @@ declare namespace axe {
     };
   }
   interface RunOptions {
-    runOnly?: RunOnly | TagValue[] | string[];
+    runOnly?: RunOnly | TagValue[] | string[] | string;
     rules?: RuleObject;
     reporter?: ReporterVersion;
     resultTypes?: resultGroups[];
@@ -91,14 +95,10 @@ declare namespace axe {
     frameWaitTime?: number;
     preload?: boolean;
     performanceTimer?: boolean;
+    pingWaitTime?: number;
   }
-  interface AxeResults {
+  interface AxeResults extends EnvironmentData {
     toolOptions: RunOptions;
-    testEngine: TestEngine;
-    testRunner: TestRunner;
-    testEnvironment: TestEnvironment;
-    url: string;
-    timestamp: string;
     passes: Result[];
     violations: Result[];
     incomplete: Result[];
@@ -188,10 +188,7 @@ declare namespace axe {
     cssColors?: { [key: string]: number[] };
   }
   interface Spec {
-    branding?: {
-      brand?: string;
-      application?: string;
-    };
+    branding?: string | Branding;
     reporter?: ReporterVersion;
     checks?: Check[];
     rules?: Rule[];
@@ -200,12 +197,20 @@ declare namespace axe {
     disableOtherRules?: boolean;
     axeVersion?: string;
     noHtml?: boolean;
+    allowedOrigins?: string[];
     // Deprecated - do not use.
     ver?: string;
   }
+  /**
+   * @deprecated Use branding: string instead to set the application key in help URLs
+   */
+  interface Branding {
+    brand?: string;
+    application?: string;
+  }
   interface Check {
     id: string;
-    evaluate: Function | string;
+    evaluate?: Function | string;
     after?: Function | string;
     options?: any;
     matches?: string;
@@ -240,9 +245,48 @@ declare namespace axe {
     helpUrl: string;
     tags: string[];
   }
+  interface SerialDqElement {
+    source: string;
+    nodeIndexes: number[];
+    selector: CrossFrameSelector;
+    xpath: string[];
+    ancestry: CrossFrameSelector;
+  }
+  interface PartialRuleResult {
+    id: string;
+    result: 'inapplicable';
+    pageLevel: boolean;
+    impact: null;
+    nodes: Array<Record<string, unknown>>;
+  }
+  interface PartialResult {
+    frames: SerialDqElement[];
+    results: PartialRuleResult[];
+    environmentData?: EnvironmentData;
+  }
+  type PartialResults = Array<PartialResult | null>;
+  interface FrameContext {
+    frameSelector: CrossTreeSelector;
+    frameContext: ContextObject;
+  }
+  interface Utils {
+    getFrameContexts: (
+      context?: ElementContext,
+      options?: RunOptions
+    ) => FrameContext[];
+    shadowSelect: (selector: CrossTreeSelector) => Element | null;
+  }
+  interface EnvironmentData {
+    testEngine: TestEngine;
+    testRunner: TestRunner;
+    testEnvironment: TestEnvironment;
+    url: string;
+    timestamp: string;
+  }
 
   let version: string;
   let plugins: any;
+  let utils: Utils;
 
   /**
    * Source string to use as an injected script in Selenium
@@ -285,6 +329,27 @@ declare namespace axe {
   function configure(spec: Spec): void;
 
   /**
+   * Run axe in the current window only
+   * @param   {ElementContext} context  Optional The `Context` specification object @see Context
+   * @param   {RunOptions}     options  Optional Options passed into rules or checks, temporarily modifying them.
+   * @returns {Promise<PartialResult>}  Partial result, for use in axe.finishRun.
+   */
+  function runPartial(
+    context: ElementContext,
+    options: RunOptions
+  ): Promise<PartialResult>;
+
+  /**
+   * Create a report from axe.runPartial results
+   * @param   {PartialResult[]}     partialResults  Results from axe.runPartial, calls in different frames on the page.
+   * @param   {RunOptions}     options  Optional Options passed into rules or checks, temporarily modifying them.
+   */
+  function finishRun(
+    partialResults: PartialResults,
+    options: RunOptions
+  ): Promise<AxeResults>;
+
+  /**
    * Searches and returns rules that contain a tag in the list of tags.
    * @param  {Array}  tags  Optional array of tags
    * @return {Array}  Array of rules
@@ -306,6 +371,35 @@ declare namespace axe {
    * Function to clean up plugin configuration in document and its subframes
    */
   function cleanup(): void;
+
+  /**
+   * Set up alternative frame communication
+   */
+  function frameMessenger(frameMessenger: FrameMessenger): void;
+
+  // axe.frameMessenger
+  type FrameMessenger = {
+    open: (topicHandler: TopicHandler) => Close | void;
+    post: (
+      frameWindow: Window,
+      data: TopicData,
+      replyHandler: ReplyHandler
+    ) => boolean | void;
+  };
+  type Close = Function;
+  type TopicHandler = (data: TopicData, responder: Responder) => void;
+  type ReplyHandler = (
+    message: any | Error,
+    keepalive: boolean,
+    responder: Responder
+  ) => void;
+  type Responder = (
+    message: any | Error,
+    keepalive?: boolean,
+    replyHandler?: ReplyHandler
+  ) => void;
+  type TopicData = { topic: string } & ReplyData;
+  type ReplyData = { channelId: string; message: any; keepalive: boolean };
 }
 
 export = axe;

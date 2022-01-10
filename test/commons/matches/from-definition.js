@@ -165,6 +165,20 @@ describe('matches.fromDefinition', function() {
     );
   });
 
+  it('matches a definition with an `accessibleName` property', function() {
+    var virtualNode = queryFixture('<input id="target" aria-label="foo">');
+    assert.isTrue(
+      fromDefinition(virtualNode, {
+        hasAccessibleName: true
+      })
+    );
+    assert.isFalse(
+      fromDefinition(virtualNode, {
+        hasAccessibleName: false
+      })
+    );
+  });
+
   it('returns true when all matching properties return true', function() {
     var virtualNode = queryFixture(
       '<input id="target" value="bar" aria-disabled="true" />'

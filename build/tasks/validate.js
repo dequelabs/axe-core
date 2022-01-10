@@ -206,6 +206,12 @@ function createSchemas() {
           conform: 'must include a category tag'
         }
       },
+      actIds: {
+        type: 'array',
+        items: {
+          type: 'string'
+        }
+      },
       matches: {
         type: 'string',
         required: false,

@@ -25,9 +25,6 @@
 <!-- comma seperated rather than space separated list -->
 <input autocomplete="work,email" id="fail4" />
 
-<!-- inappropriate field type -->
-<input type="number" autocomplete="email" id="fail5" />
-
 <!-- Incorrect element -->
 <button autocomplete="username" id="inapplicable1"></button>
 
@@ -124,6 +121,7 @@
 <input autocomplete="work tel-local-suffix" id="pass60" />
 <input autocomplete="SECTION-foo mobile tel-extension" id="pass61" />
 <input autocomplete="fax email" id="pass62" />
+<input type="username" autocomplete="email" id="pass83" />
 <input autocomplete="pager impp" id="pass63" />
 <input
   autocomplete="off"
@@ -149,12 +147,17 @@
 
 <input autocomplete="one-time-code" id="pass77" />
 
-<input autocomplete="street-address" id="fail6" type="file" />
-<input autocomplete="bday-month" type="month" id="fail7" />
-<input type="NUMBER" autocomplete="email" id="fail8" />
-
 <input autocomplete="cc-number" type="tel" id="pass78" />
 <input autocomplete="cc-exp" type="tel" id="pass79" />
 <input autocomplete="cc-exp-month" type="tel" id="pass80" />
 <input autocomplete="cc-exp-year" type="tel" id="pass81" />
 <input autocomplete="cc-csc" type="tel" id="pass82" />
+
+<!-- Attribute values that contains synonyms of on/off -->
+<input autocomplete="none" id="pass84" />
+<input autocomplete="false" id="pass85" />
+<input autocomplete="true" id="pass86" />
+<input autocomplete="disabled" id="pass87" />
+<input autocomplete="enabled" id="pass88" />
+<input autocomplete="undefined" id="pass89" />
+<input autocomplete="null" id="pass90" />

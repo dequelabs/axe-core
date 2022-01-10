@@ -20,12 +20,14 @@ describe('utils.matches', function() {
 
     it('is case sensitive for XHTML', function() {
       var virtualNode = queryFixture('<H1 id="target">foo</H1>');
+      delete virtualNode._cache.props;
       virtualNode._isXHTML = true;
       assert.isFalse(matches(virtualNode, 'h1'));
     });
 
     it('is case insensitive for HTML, but not for XHTML', function() {
       var virtualNode = queryFixture('<H1 id="target">foo</H1>');
+      delete virtualNode._cache.props;
       virtualNode._isXHTML = true;
       assert.isFalse(matches(virtualNode, 'h1'));
     });

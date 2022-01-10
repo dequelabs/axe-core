@@ -82,41 +82,6 @@ describe('aria-required-children', function() {
     }
   );
 
-  it('should detect multiple missing required children when all required', function() {
-    var params = checkSetup(
-      '<div role="combobox" id="target" aria-expanded="true"><p>Nothing here.</p></div>'
-    );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-    assert.deepEqual(checkContext._data, ['listbox', 'textbox']);
-  });
-
-  it('should detect single missing required child when all required', function() {
-    var params = checkSetup(
-      '<div role="combobox" id="target" aria-expanded="true"><p role="listbox">Nothing here.</p></div>'
-    );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-    assert.deepEqual(checkContext._data, ['textbox']);
-  });
-
-  it('should pass all existing required children when all required', function() {
-    var params = checkSetup(
-      '<div role="combobox" id="target"><p role="listbox">Nothing here.</p><p role="textbox">Textbox</p></div>'
-    );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-  });
-
   it('should pass all existing required children when all required', function() {
     var params = checkSetup(
       '<div id="target" role="menu"><li role="none"></li><li role="menuitem">Item 1</li><div role="menuitemradio">Item 2</div><div role="menuitemcheckbox">Item 3</div></div>'
@@ -161,142 +126,6 @@ describe('aria-required-children', function() {
         .getCheckEvaluate('aria-required-children')
         .apply(checkContext, params)
     );
-  });
-
-  (shadowSupported ? it : xit)(
-    'should pass all existing required children in shadow tree when all required',
-    function() {
-      fixture.innerHTML = '<div role="combobox" id="target"></div>';
-
-      var target = document.querySelector('#target');
-      var shadowRoot = target.attachShadow({ mode: 'open' });
-      shadowRoot.innerHTML =
-        '<p role="listbox">Nothing here.</p><p role="textbox">Textbox</p>';
-
-      axe.testUtils.flatTreeSetup(fixture);
-      var virtualTarget = axe.utils.getNodeFromTree(target);
-
-      var params = [target, undefined, virtualTarget];
-      assert.isTrue(
-        axe.testUtils
-          .getCheckEvaluate('aria-required-children')
-          .apply(checkContext, params)
-      );
-    }
-  );
-
-  it('should pass a native "text" type input with role comboxbox when missing child is role textbox', function() {
-    var params = checkSetup(
-      '<input type="text" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>'
-    );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-  });
-
-  it('should pass a native "search" type input with role comboxbox when missing child is role textbox', function() {
-    var params = checkSetup(
-      '<input type="search" role="combobox" aria-owns="listbox1" id="target"><p role="listbox" id="listbox1">Nothing here.</p>'
-    );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-  });
-
-  it('should pass a native "email" type input with role comboxbox when missing child is role textbox', function() {
-    var params = checkSetup(
-      '<input type="email" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>'
-    );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-  });
-
-  it('should pass a native "url" type input with role comboxbox when missing child is role textbox', function() {
-    var params = checkSetup(
-      '<input type="url" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>'
-    );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-  });
-
-  it('should pass a native "tel" type input with role comboxbox when missing child is role textbox', function() {
-    var params = checkSetup(
-      '<input type="tel" role="combobox" aria-owns="listbox" id="target"><p role="listbox" id="listbox">Nothing here.</p>'
-    );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-  });
-
-  it('should pass a collapsed comboxbox when missing child is role listbox', function() {
-    var params = checkSetup(
-      '<div role="combobox" id="target"><p role="textbox">Textbox</p></div>'
-    );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-  });
-
-  it('should pass an expanded combobox when the required popup role matches', function() {
-    var params = checkSetup(
-      '<div role="combobox" aria-haspopup="grid" aria-expanded="true" id="target"><p role="textbox">Textbox</p><div role="grid"></div></div>'
-    );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-  });
-
-  it('should fail an expanded combobox when the required role is missing on children', function() {
-    var params = checkSetup(
-      '<div role="combobox" aria-haspopup="grid" aria-expanded="true" id="target"><p role="textbox">Textbox</p><div role="listbox"></div></div>'
-    );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-
-    assert.deepEqual(checkContext._data, ['grid']);
-  });
-
-  it('should pass an expanded combobox when the required popup role matches regarless of case', function() {
-    var params = checkSetup(
-      '<div role="combobox" aria-haspopup="gRiD" aria-expanded="true" id="target"><p role="textbox">Textbox</p><div role="grid"></div></div>'
-    );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-  });
-
-  it('should fail when combobox child isnt default listbox', function() {
-    var params = checkSetup(
-      '<div role="combobox" aria-expanded="true" id="target"><p role="textbox">Textbox</p><div role="grid"></div></div>'
-    );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-
-    assert.deepEqual(checkContext._data, ['listbox']);
   });
 
   it('should fail when list does not have required children listitem', function() {
@@ -470,28 +299,6 @@ describe('aria-required-children', function() {
     );
   });
 
-  it('should pass role comboxbox when child is native "search" input type', function() {
-    var params = checkSetup(
-      '<div role="combobox" id="target"><input type="search"><p role="listbox">Textbox</p></div>'
-    );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-  });
-
-  it('should not accept implicit nodes with a different role', function() {
-    var params = checkSetup(
-      '<div role="combobox" id="target"><input type="search" role="spinbutton"><p role="listbox">Textbox</p></div>'
-    );
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('aria-required-children')
-        .apply(checkContext, params)
-    );
-  });
-
   it('should pass when role allows group and group has required child', function() {
     var params = checkSetup(
       '<div role="menu" id="target"><ul role="group"><li role="menuitem">Menuitem</li></ul></div>'
@@ -516,7 +323,7 @@ describe('aria-required-children', function() {
 
   it('should fail when role does not allow group', function() {
     var params = checkSetup(
-      '<div role="listbox" id="target"><ul role="group"><li role="option">Option</li></ul></div>'
+      '<div role="table" id="target"><ul role="group"><li role="row">Option</li></ul></div>'
     );
     assert.isFalse(
       axe.testUtils

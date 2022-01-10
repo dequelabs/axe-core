@@ -4,9 +4,10 @@
   "selector": "audio[autoplay], video[autoplay]",
   "matches": "no-autoplay-audio-matches",
   "tags": ["cat.time-and-media", "wcag2a", "wcag142", "experimental"],
+  "actIds": ["80f0bf"],
   "metadata": {
     "description": "Ensures <video> or <audio> elements do not autoplay audio for more than 3 seconds without a control mechanism to stop or mute the audio",
-    "help": "<video> or <audio> elements do not autoplay audio"
+    "help": "<video> or <audio> elements must not play automatically"
   },
   "preload": true,
   "all": ["no-autoplay-audio"],

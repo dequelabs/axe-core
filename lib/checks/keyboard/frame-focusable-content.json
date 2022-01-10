@@ -1,6 +1,6 @@
 {
   "id": "frame-focusable-content",
-  "evaluate": "no-focusable-content-evaluate",
+  "evaluate": "frame-focusable-content-evaluate",
   "metadata": {
     "impact": "serious",
     "messages": {

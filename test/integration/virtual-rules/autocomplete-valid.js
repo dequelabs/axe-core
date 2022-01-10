@@ -40,18 +40,4 @@ describe('autocomplete-valid virtual-rule', function() {
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
-
-  it('should fail when autocomplete is incorrectly used', function() {
-    var results = axe.runVirtualRule('autocomplete-valid', {
-      nodeName: 'input',
-      attributes: {
-        type: 'color',
-        autocomplete: 'email'
-      }
-    });
-
-    assert.lengthOf(results.passes, 0);
-    assert.lengthOf(results.violations, 1);
-    assert.lengthOf(results.incomplete, 0);
-  });
 });

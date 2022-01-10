@@ -305,6 +305,28 @@ describe('axe.configure', function() {
     assert.isTrue(axe._audit.noHtml);
   });
 
+  it("should allow overriding an audit's allowedOrigins", function() {
+    axe._load({});
+    assert.notDeepEqual(axe._audit.allowedOrigins, ['foo']);
+
+    axe.configure({ allowedOrigins: ['foo'] });
+    assert.deepEqual(axe._audit.allowedOrigins, ['foo']);
+  });
+
+  it('should throw error if allowedOrigins is not an array', function() {
+    axe._load({});
+    assert.throws(function() {
+      axe.configure({ allowedOrigins: 'foo' });
+    });
+  });
+
+  it("should throw error if the origin is '*'", function() {
+    axe._load({});
+    assert.throws(function() {
+      axe.configure({ allowedOrigins: ['foo', '*'] });
+    });
+  });
+
   describe('given a locale object', function() {
     beforeEach(function() {
       axe._load({});
@@ -549,6 +571,40 @@ describe('axe.configure', function() {
         'failed none'
       );
       assert.equal(localeData.incompleteFallbackMessage(), 'failed incomplete');
+    });
+
+    it('should not strip newline characters from doT template', function() {
+      axe._load({
+        data: {
+          failureSummaries: {
+            any: {
+              failureMessage: function() {
+                return 'failed any';
+              }
+            }
+          }
+        }
+      });
+
+      axe.configure({
+        locale: {
+          lang: 'lol',
+          failureSummaries: {
+            any: {
+              failureMessage:
+                "Fix any of the following:{{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
+            }
+          }
+        }
+      });
+
+      var audit = axe._audit;
+      var localeData = audit.data;
+
+      assert.equal(
+        localeData.failureSummaries.any.failureMessage(['1', '2', '3']),
+        'Fix any of the following:\n  1\n  2\n  3'
+      );
     });
 
     describe('only given checks', function() {

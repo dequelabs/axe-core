@@ -10,6 +10,7 @@
     "section508.22.a",
     "ACT"
   ],
+  "actIds": ["c487ae"],
   "metadata": {
     "description": "Ensures links have discernible text",
     "help": "Links must have discernible text"

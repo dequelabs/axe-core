@@ -16,15 +16,17 @@ describe('heading-order-partial-context-with-iframe test', function() {
     });
   });
 
-  describe('violations', function() {
-    it('should find one', function() {
-      assert.lengthOf(results.violations, 1);
-    });
+  it('should find 1 passes', function() {
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.passes[0].nodes, 1);
   });
 
-  describe('passes', function() {
-    it('should find 1', function() {
-      assert.lengthOf(results.passes[0].nodes, 1);
-    });
+  it('should find 1 violation', function() {
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.violations[0].nodes, 1);
+  });
+
+  it('should find 0 incompletes', function() {
+    assert.lengthOf(results.incomplete, 0);
   });
 });

@@ -72,6 +72,12 @@ describe('autocomplete-appropriate', function() {
     assert.isTrue(evaluate.apply(checkContext, params));
   });
 
+  it('returns true if the input type is email and the term is username', function() {
+    var options = {};
+    var params = autocompleteCheckParams('username', 'email', options);
+    assert.isTrue(evaluate.apply(checkContext, params));
+  });
+
   it('returns false if the input type is text and the term maps to an empty array', function() {
     var options = { foo: [] };
     var params = autocompleteCheckParams('foo', 'text', options);

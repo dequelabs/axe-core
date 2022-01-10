@@ -48,6 +48,23 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '2', '1', 'fixture']);
     });
 
+    it('should return stack in DOM order of non-positioned elements with z-index', function() {
+      fixture.innerHTML =
+        '<div id="1" style=";width:40px;height:40px;">' +
+        '<div id="target" style="width:40px;height:40px;z-index:100">hello world</div>' +
+        '</div>' +
+        '<div id="2" style="width:40px;height:40px;margin-top:-33px;">' +
+        '<div id="3" style="width:40px;height:40px;">Some text</div>' +
+        '</div>';
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#target');
+      var stack = mapToIDs(getElementStack(target));
+      // Browsers seem to be buggy, which suggest  [3, target, 2, 1, fixture]
+      // We're following the spec in this.
+      // @see https://codepen.io/straker/pen/gOxpJyE
+      assert.deepEqual(stack, ['3', '2', 'target', '1', 'fixture']);
+    });
+
     it('should should handle positioned elements without z-index', function() {
       // see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/Stacking_without_z-index
       fixture.innerHTML =
@@ -320,6 +337,54 @@ describe('dom.getElementStack', function() {
       assert.deepEqual(stack, ['target', '1', 'fixture']);
     });
 
+    it('should correctly position children of positioned parents', function() {
+      fixture.innerHTML =
+        '<div id="1" style="position: relative; padding: 60px 0;">Some text</div>' +
+        '<section id="2" style="position: relative; padding: 60px 0;">' +
+        '<div id="3" style="margin-top: -120px;">' +
+        '<h3 id="target">Hi, Hello World.</h3>' +
+        '</div>' +
+        '</section>';
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#target');
+      var stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['target', '3', '1', 'fixture']);
+    });
+
+    it('should correctly position siblings with positioned children correctly', function() {
+      fixture.innerHTML =
+        '<div id="1">Some text</div>' +
+        '<div id="2" style="position: absolute; top: 0; left: 0;">Some text</div>' +
+        '<div id="3" style="position: absolute; top: 0; left: 0;">' +
+        '<div id="4" style="position: absolute; top: 0; left: 0;">Some text</div>' +
+        '<div id="5">' +
+        '<div id="target">Some text</div>' +
+        '</div>' +
+        '</div>';
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#target');
+      var stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['4', 'target', '5', '3', '2', '1', 'fixture']);
+    });
+
+    it('should correctly position children of float elements with position elements', function() {
+      fixture.innerHTML =
+        '<div id="1" style="width: 50px; height: 50px; position: relative;">' +
+        '<div id="2" style="width: 50px; height: 50px; float: left;">' +
+        '<div id="3" style="width: 50px; height: 50px;">' +
+        '<div id="4" style="width: 50px; height: 50px;">' +
+        '<div id="target" style="width: 50px; height: 50px; position: relative;"></div>' +
+        '</div>' +
+        '</div>' +
+        '<div id="5" style="width: 50px; height: 50px; position: absolute; top:0"></div>' +
+        '</div>' +
+        '</div>';
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#target');
+      var stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['5', 'target', '4', '3', '2', '1', 'fixture']);
+    });
+
     it('should return empty array for hidden elements', function() {
       fixture.innerHTML =
         '<main id="1">' +
@@ -346,6 +411,46 @@ describe('dom.getElementStack', function() {
       var target = fixture.querySelector('#target');
       var stack = mapToIDs(getElementStack(target));
       assert.deepEqual(stack, []);
+    });
+
+    it('should throw error if element midpoint-x exceeds the grid', function() {
+      fixture.innerHTML = '<div id="target">Hello World</div>';
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#target');
+      var vNode = axe.utils.getNodeFromTree(target);
+      Object.defineProperty(vNode, 'boundingClientRect', {
+        get: function() {
+          return {
+            left: 0,
+            top: 10,
+            width: 10000,
+            height: 10
+          };
+        }
+      });
+      assert.throws(function() {
+        getElementStack(target);
+      }, 'Element midpoint exceeds the grid bounds');
+    });
+
+    it('should throw error if element midpoint-y exceeds the grid', function() {
+      fixture.innerHTML = '<div id="target">Hello World</div>';
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#target');
+      var vNode = axe.utils.getNodeFromTree(target);
+      Object.defineProperty(vNode, 'boundingClientRect', {
+        get: function() {
+          return {
+            left: 0,
+            top: 10,
+            width: 10,
+            height: 10000
+          };
+        }
+      });
+      assert.throws(function() {
+        getElementStack(target);
+      }, 'Element midpoint exceeds the grid bounds');
     });
 
     // IE11 either only supports clip paths defined by url() or not at all,
@@ -527,6 +632,21 @@ describe('dom.getElementStack', function() {
         '</main>';
       document.documentElement.style.height = '5000px';
       document.documentElement.style.overflowY = 'scroll';
+      axe.testUtils.flatTreeSetup(fixture);
+      var target = fixture.querySelector('#target');
+      var stack = mapToIDs(getElementStack(target));
+      assert.deepEqual(stack, ['target', '3', '2', '1', 'fixture']);
+    });
+
+    it('should use correct scroll region parent', function() {
+      fixture.innerHTML =
+        '<div id="1" style="overflow: scroll; height: 50px;">' +
+        '<div id="2" style="overflow: scroll; height: 100px;">' +
+        '<div id="3">' +
+        '<div id="target" style="margin-top: 200px;">text</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
       axe.testUtils.flatTreeSetup(fixture);
       var target = fixture.querySelector('#target');
       var stack = mapToIDs(getElementStack(target));

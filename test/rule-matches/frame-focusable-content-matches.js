@@ -10,7 +10,7 @@ describe('frame-focusable-content-matches', function() {
     var result = rule.matches(null, null, {
       initiator: true,
       focusable: false,
-      boundingClientRect: {
+      size: {
         width: 100,
         height: 100
       }
@@ -22,7 +22,7 @@ describe('frame-focusable-content-matches', function() {
     var result = rule.matches(null, null, {
       initiator: false,
       focusable: true,
-      boundingClientRect: {
+      size: {
         width: 100,
         height: 100
       }
@@ -34,7 +34,7 @@ describe('frame-focusable-content-matches', function() {
     var result = rule.matches(null, null, {
       initiator: false,
       focusable: false,
-      boundingClientRect: {
+      size: {
         width: 1,
         height: 1
       }
@@ -46,7 +46,7 @@ describe('frame-focusable-content-matches', function() {
     var result = rule.matches(null, null, {
       initiator: false,
       focusable: false,
-      boundingClientRect: {
+      size: {
         width: 0,
         height: 0
       }
@@ -58,7 +58,7 @@ describe('frame-focusable-content-matches', function() {
     var result = rule.matches(null, null, {
       initiator: false,
       focusable: false,
-      boundingClientRect: {
+      size: {
         width: 2,
         height: 1
       }

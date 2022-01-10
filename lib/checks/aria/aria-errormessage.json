@@ -7,11 +7,13 @@
       "pass": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique",
       "fail": {
         "singular": "aria-errormessage value `${data.values}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)",
-        "plural": "aria-errormessage values `${data.values}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)"
+        "plural": "aria-errormessage values `${data.values}` must use a technique to announce the message (e.g., aria-live, aria-describedby, role=alert, etc.)",
+        "hidden": "aria-errormessage value `${data.values}` cannot reference a hidden element"
       },
       "incomplete": {
         "singular": "ensure aria-errormessage value `${data.values}` references an existing element",
-        "plural": "ensure aria-errormessage values `${data.values}` reference existing elements"
+        "plural": "ensure aria-errormessage values `${data.values}` reference existing elements",
+        "idrefs": "unable to determine if aria-errormessage element exists on the page: ${data.values}"
       }
     }
   }
