@@ -59,7 +59,7 @@ describe('aria-allowed-attr', function() {
     assert.isNull(checkContext._data);
   });
 
-  it.skip('should return false for non-global attributes if there is no role', function() {
+  it('should return false for non-global attributes if there is no role', function() {
     var vNode = queryFixture(
       '<div id="target" tabindex="1" aria-selected="true" aria-owns="foo"></div>'
     );
@@ -70,18 +70,6 @@ describe('aria-allowed-attr', function() {
         .call(checkContext, null, null, vNode)
     );
     assert.deepEqual(checkContext._data, ['aria-selected="true"']);
-  });
-
-  it('should return true for non-global attributes if there is no role', function() {
-    var vNode = queryFixture(
-      '<div id="target" tabindex="1" aria-selected="true" aria-owns="foo"></div>'
-    );
-
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('aria-allowed-attr')
-        .call(checkContext, null, null, vNode)
-    );
   });
 
   it('should not report on invalid attributes', function() {
@@ -109,6 +97,20 @@ describe('aria-allowed-attr', function() {
     );
     assert.isNull(checkContext._data);
   });
+
+  it('should return undefined for custom element', function() {
+    var vNode = queryFixture(
+      '<my-custom-element id="target" aria-expanded="true"></my-custom-element>'
+    );
+
+    assert.isUndefined(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNotNull(checkContext._data);
+  });
+
   describe('invalid aria-attributes when used on role=row as a descendant of a table or a grid', function() {
     [
       'aria-posinset="1"',
