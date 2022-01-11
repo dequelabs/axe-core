@@ -17,7 +17,7 @@
         "singular": "ARIA attribute is not allowed: ${data.values}",
         "plural": "ARIA attributes are not allowed: ${data.values}"
       },
-      "incomplete": "ARIA attribute is not allowed on custom element: ${data.values}"
+      "incomplete": "Check that there is no problem the ARIA attribute is ignored on this element: ${data.values}"
     }
   }
 }
