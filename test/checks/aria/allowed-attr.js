@@ -98,12 +98,38 @@ describe('aria-allowed-attr', function() {
     assert.isNull(checkContext._data);
   });
 
-  it('should return undefined for custom element', function() {
+  it('should return undefined for custom element that has no role and is not focusable', function() {
     var vNode = queryFixture(
       '<my-custom-element id="target" aria-expanded="true"></my-custom-element>'
     );
 
     assert.isUndefined(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNotNull(checkContext._data);
+  });
+
+  it("should return false for custom element that has a role which doesn't allow the attribute", function() {
+    var vNode = queryFixture(
+      '<my-custom-element role="insertion" id="target" aria-expanded="true"></my-custom-element>'
+    );
+
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNotNull(checkContext._data);
+  });
+
+  it('should return false for custom element that is focusable', function() {
+    var vNode = queryFixture(
+      '<my-custom-element tabindex="1" id="target" aria-expanded="true"></my-custom-element>'
+    );
+
+    assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
