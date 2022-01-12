@@ -327,7 +327,7 @@ By default, `axe.run` will test the entire document. The context object is an op
 The include exclude object is a JSON object with two attributes: include and exclude. Either include or exclude is required. If only `exclude` is specified; include will default to the entire `document`.
 
 - A node, or
-- An array of arrays of [CSS selectors](./developer-guide.md#supported-css-selectors)
+- An array of Nodes or an array of arrays of [CSS selectors](./developer-guide.md#supported-css-selectors)
   - If the nested array contains a single string, that string is the CSS selector
   - If the nested array contains multiple strings
     - The last string is the final CSS selector
