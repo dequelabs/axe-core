@@ -9,25 +9,47 @@ describe('aria-prohibited-attr', function() {
     checkContext.reset();
   });
 
-  it('should return true for prohibited attributes', function() {
+  it('should return true for prohibited attributes and no content', function() {
+    var params = checkSetup(
+      '<div id="target" role="code" aria-hidden="false" aria-label="foo"></div>'
+    );
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      nodeName: 'div',
+      role: 'code',
+      messageKey: 'hasRoleSingular',
+      prohibited: ['aria-label']
+    });
+  });
+
+  it('should return undefined for prohibited attributes and content', function() {
     var params = checkSetup(
       '<div id="target" role="code" aria-hidden="false" aria-label="foo">Contents</div>'
     );
-    assert.isTrue(checkEvaluate.apply(checkContext, params));
-    assert.deepEqual(checkContext._data, ['aria-label']);
+    assert.isUndefined(checkEvaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      nodeName: 'div',
+      role: 'code',
+      messageKey: 'hasRoleSingular',
+      prohibited: ['aria-label']
+    });
   });
 
   it('should return true for multiple prohibited attributes', function() {
     var params = checkSetup(
-      '<div id="target" role="code" aria-hidden="false"  aria-label="foo" aria-labelledby="foo">Contents</div>'
+      '<div id="target" role="code" aria-hidden="false"  aria-label="foo" aria-labelledby="foo"></div>'
     );
     assert.isTrue(checkEvaluate.apply(checkContext, params));
-
-    // attribute order not important
-    assert.sameDeepMembers(checkContext._data, [
-      'aria-label',
-      'aria-labelledby'
-    ]);
+    assert.deepEqual(checkContext._data, {
+      nodeName: 'div',
+      role: 'code',
+      messageKey: 'hasRolePlural',
+      // attribute order not important
+      prohibited: [
+        'aria-label',
+        'aria-labelledby'
+      ]
+    });
   });
 
   it('should return undefined if element has no role and has text content', function() {
@@ -35,6 +57,15 @@ describe('aria-prohibited-attr', function() {
       '<div id="target" aria-label="foo" aria-labelledby="foo">Contents</div>'
     );
     assert.isUndefined(checkEvaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      nodeName: 'div',
+      role: null,
+      messageKey: 'noRolePlural',
+      prohibited: [
+        'aria-label',
+        'aria-labelledby'
+      ]
+    });
   });
 
   it('should return true if element has no role and no text content', function() {
@@ -42,6 +73,15 @@ describe('aria-prohibited-attr', function() {
       '<div id="target" aria-label="foo" aria-labelledby="foo"></div>'
     );
     assert.isTrue(checkEvaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      nodeName: 'div',
+      role: null,
+      messageKey: 'noRolePlural',
+      prohibited: [
+        'aria-label',
+        'aria-labelledby'
+      ]
+    });
   });
 
   it('should return false if all attributes are allowed', function() {
