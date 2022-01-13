@@ -55,7 +55,7 @@ describe('aria-allowed-attr virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it.skip('should fail for non-global attributes and element with no role', function() {
+  it('should fail for non-global attributes and element with no role', function() {
     var results = axe.runVirtualRule('aria-allowed-attr', {
       nodeName: 'div',
       attributes: {
@@ -118,5 +118,18 @@ describe('aria-allowed-attr virtual-rule', function() {
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should incomplete for non-global attributes and custom element', function() {
+    var results = axe.runVirtualRule('aria-allowed-attr', {
+      nodeName: 'custom-elm1',
+      attributes: {
+        'aria-checked': true
+      }
+    });
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 1);
   });
 });
