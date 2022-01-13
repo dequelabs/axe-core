@@ -588,6 +588,36 @@ describe('text.accessibleTextVirtual', function() {
     assert.equal(axe.commons.text.accessibleTextVirtual(target), 'Hello World');
   });
 
+  (!!document.fonts ? it : xit)(
+    'should allow ignoring icon ligatures',
+    function(done) {
+      var materialFont = new FontFace(
+        'Material Icons',
+        'url(https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2)'
+      );
+      materialFont.load().then(function() {
+        document.fonts.add(materialFont);
+
+        fixture.innerHTML =
+          '<button id="target">Hello World<span style="font-family: \'Material Icons\'">delete</span></button>';
+        axe.testUtils.flatTreeSetup(fixture);
+
+        var target = axe.utils.querySelectorAll(axe._tree, 'button')[0];
+        try {
+          assert.equal(
+            axe.commons.text.accessibleTextVirtual(target, {
+              ignoreIconLigature: true
+            }),
+            'Hello World'
+          );
+          done();
+        } catch (err) {
+          done(err);
+        }
+      });
+    }
+  );
+
   (shadowSupport.v1 ? it : xit)(
     'should only find aria-labelledby element in the same context ',
     function() {
