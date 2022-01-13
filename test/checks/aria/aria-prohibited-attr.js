@@ -52,7 +52,20 @@ describe('aria-prohibited-attr', function() {
     });
   });
 
-  it('should return undefined if element has no role and has text content', function() {
+  it('should return undefined if element has no role and has text content (singular)', function() {
+    var params = checkSetup(
+      '<div id="target" aria-label="foo">Contents</div>'
+    );
+    assert.isUndefined(checkEvaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      nodeName: 'div',
+      role: null,
+      messageKey: 'noRoleSingular',
+      prohibited: ['aria-label']
+    });
+  });
+
+  it('should return undefined if element has no role and has text content (plural)', function() {
     var params = checkSetup(
       '<div id="target" aria-label="foo" aria-labelledby="foo">Contents</div>'
     );
@@ -68,7 +81,20 @@ describe('aria-prohibited-attr', function() {
     });
   });
 
-  it('should return true if element has no role and no text content', function() {
+  it('should return true if element has no role and no text content (singular)', function() {
+    var params = checkSetup(
+      '<div id="target" aria-label="foo"></div>'
+    );
+    assert.isTrue(checkEvaluate.apply(checkContext, params));
+    assert.deepEqual(checkContext._data, {
+      nodeName: 'div',
+      role: null,
+      messageKey: 'noRoleSingular',
+      prohibited: ['aria-label']
+    });
+  });
+
+  it('should return true if element has no role and no text content (plural)', function() {
     var params = checkSetup(
       '<div id="target" aria-label="foo" aria-labelledby="foo"></div>'
     );
