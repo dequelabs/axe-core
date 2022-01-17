@@ -33,6 +33,12 @@ describe('is-current-page-link', function() {
     assert.isTrue(isCurrentPageLink(anchor));
   });
 
+  it('should return false for just "#"', function() {
+    var anchor = document.createElement('a');
+    anchor.href = '#';
+    assert.isFalse(isCurrentPageLink(anchor));
+  });
+
   it('should return false for relative links to a different page', function() {
     var anchor = document.createElement('a');
     anchor.href = '/foo/bar/index.html';
