@@ -12,6 +12,7 @@ describe('is-current-page-link', function() {
   it('should return true for hash links', function() {
     var anchor = document.createElement('a');
     anchor.href = '#main';
+    document.body.appendChild(anchor);
     assert.isTrue(isCurrentPageLink(anchor));
   });
 
@@ -60,15 +61,6 @@ describe('is-current-page-link', function() {
   it('should return false for angular router links (#/)', function() {
     var anchor = document.createElement('a');
     anchor.href = '#/main';
-    assert.isFalse(isCurrentPageLink(anchor));
-  });
-
-  it('should take into account page base element', function() {
-    base = document.createElement('base');
-    base.href = 'https://my-page.com';
-    document.head.appendChild(base);
-    var anchor = document.createElement('a');
-    anchor.href = window.location.pathname;
     assert.isFalse(isCurrentPageLink(anchor));
   });
 });
