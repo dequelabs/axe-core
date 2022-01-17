@@ -12,6 +12,7 @@ var domStr =
   '</head>' +
   '<body>' +
   'Hello' +
+  '<a id="skip" href="https://page.com#main">Skip Link</a>' +
   '</body>' +
   '</html>';
 
@@ -56,6 +57,20 @@ describe('jsdom axe-core', function() {
     it('should have an empty allowedOrigins', function() {
       // JSDOM does not have window.location, so there is no default origin
       assert.strictEqual(audit.allowedOrigins.length, 0);
+    });
+  });
+
+  describe('isCurrentPageLink', function() {
+    it('should return null when url is not set', function() {
+      var dom = new jsdom.JSDOM(domStr);
+      var anchor = dom.window.document.getElementById('#skip');
+      assert.strictEqual(axe.commons.dom.isCurrentPageLink(anchor), null);
+    });
+
+    it('should return true when url is set', function() {
+      var dom = new jsdom.JSDOM(domStr, { url: 'https://page.com' });
+      var anchor = dom.window.document.getElementById('#skip');
+      assert.strictEqual(axe.commons.dom.isCurrentPageLink(anchor), null);
     });
   });
 });

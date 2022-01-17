@@ -81,4 +81,21 @@ describe('dom.getElementByReference', function() {
 
     assert.equal(result, expected);
   });
+
+  it('should work with absolute links', function() {
+    var currentPage = window.location.origin + window.location.pathname;
+
+    fixture.innerHTML =
+      '<a id="link" href="' +
+      currentPage +
+      '#target">Hi</a>' +
+      '<a id="target"></a>' +
+      '<a name="target"></a>';
+
+    var node = document.getElementById('link'),
+      expected = document.getElementById('target'),
+      result = axe.commons.dom.getElementByReference(node, 'href');
+
+    assert.equal(result, expected);
+  });
 });
