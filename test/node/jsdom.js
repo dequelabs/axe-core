@@ -61,16 +61,72 @@ describe('jsdom axe-core', function() {
   });
 
   describe('isCurrentPageLink', function() {
+    // because axe only sets the window global when calling axe.run,
+    // we'll have to create a custom rule that calls
+    // isCurrentPageLink to gain access to the middle of a run with
+    // the proper window object
+    afterEach(function() {
+      axe.teardown();
+    });
+
     it('should return null when url is not set', function() {
       var dom = new jsdom.JSDOM(domStr);
-      var anchor = dom.window.document.getElementById('#skip');
-      assert.strictEqual(axe.commons.dom.isCurrentPageLink(anchor), null);
+      var anchor = dom.window.document.getElementById('skip');
+
+      axe.configure({
+        checks: [
+          {
+            id: 'check-current-page-link',
+            evaluate: function() {
+              return axe.commons.dom.isCurrentPageLink(anchor) === null;
+            }
+          }
+        ],
+        rules: [
+          {
+            id: 'check-current-page-link',
+            any: ['check-current-page-link']
+          }
+        ]
+      });
+
+      return axe
+        .run(dom.window.document.documentElement, {
+          runOnly: ['check-current-page-link']
+        })
+        .then(function(results) {
+          assert.strictEqual(results.passes.length, 1);
+        });
     });
 
     it('should return true when url is set', function() {
       var dom = new jsdom.JSDOM(domStr, { url: 'https://page.com' });
-      var anchor = dom.window.document.getElementById('#skip');
-      assert.strictEqual(axe.commons.dom.isCurrentPageLink(anchor), null);
+      var anchor = dom.window.document.getElementById('skip');
+
+      axe.configure({
+        checks: [
+          {
+            id: 'check-current-page-link',
+            evaluate: function() {
+              return axe.commons.dom.isCurrentPageLink(anchor) === true;
+            }
+          }
+        ],
+        rules: [
+          {
+            id: 'check-current-page-link',
+            any: ['check-current-page-link']
+          }
+        ]
+      });
+
+      return axe
+        .run(dom.window.document.documentElement, {
+          runOnly: ['check-current-page-link']
+        })
+        .then(function(results) {
+          assert.strictEqual(results.passes.length, 1);
+        });
     });
   });
 });
