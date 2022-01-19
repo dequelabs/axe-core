@@ -12,6 +12,7 @@ var domStr =
   '</head>' +
   '<body>' +
   'Hello' +
+  '<a id="hash-link" href="#main">Main</a>' +
   '<a id="skip" href="https://page.com#main">Skip Link</a>' +
   '</body>' +
   '</html>';
@@ -69,7 +70,37 @@ describe('jsdom axe-core', function() {
       axe.teardown();
     });
 
-    it('should return null when url is not set', function() {
+    it('should return true if url starts with #', function() {
+      var dom = new jsdom.JSDOM(domStr);
+      var anchor = dom.window.document.getElementById('hash-link');
+
+      axe.configure({
+        checks: [
+          {
+            id: 'check-current-page-link',
+            evaluate: function() {
+              return axe.commons.dom.isCurrentPageLink(anchor) === true;
+            }
+          }
+        ],
+        rules: [
+          {
+            id: 'check-current-page-link',
+            any: ['check-current-page-link']
+          }
+        ]
+      });
+
+      return axe
+        .run(dom.window.document.documentElement, {
+          runOnly: ['check-current-page-link']
+        })
+        .then(function(results) {
+          assert.strictEqual(results.passes.length, 1);
+        });
+    });
+
+    it('should return null for absolute link when url is not set', function() {
       var dom = new jsdom.JSDOM(domStr);
       var anchor = dom.window.document.getElementById('skip');
 
@@ -99,7 +130,7 @@ describe('jsdom axe-core', function() {
         });
     });
 
-    it('should return true when url is set', function() {
+    it('should return true for absolute link when url is set', function() {
       var dom = new jsdom.JSDOM(domStr, { url: 'https://page.com' });
       var anchor = dom.window.document.getElementById('skip');
 
