@@ -178,4 +178,12 @@ describe('label-content-name-mismatch tests', function() {
     var actual = check.evaluate(vNode.actualNode, options, vNode);
     assert.isFalse(actual);
   });
+
+  it('returns true when text contains <br/>', function() {
+    var vNode = queryFixture(
+      '<button id="target" aria-label="button label">button<br>label</button>'
+    );
+    var actual = check.evaluate(vNode.actualNode, options, vNode);
+    assert.isTrue(actual);
+  });
 });

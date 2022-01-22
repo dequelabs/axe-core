@@ -50,8 +50,8 @@ declare namespace axe {
   type CrossFrameSelector = CrossTreeSelector[];
 
   type ContextObject = {
-    include?: BaseSelector | Array<BaseSelector | BaseSelector[]>;
-    exclude?: BaseSelector | Array<BaseSelector | BaseSelector[]>;
+    include?: Node | BaseSelector | Array<Node | BaseSelector | BaseSelector[]>;
+    exclude?: Node | BaseSelector | Array<Node | BaseSelector | BaseSelector[]>;
   };
 
   type RunCallback = (error: Error, results: AxeResults) => void;

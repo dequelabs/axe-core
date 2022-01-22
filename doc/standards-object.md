@@ -20,7 +20,7 @@ The following properties are currently available in axe-core `standards`:
 1.  [ARIA Attrs](#aria-attrs)
 1.  [ARIA Roles](#aria-roles)
 1.  [DPUB Roles](#dpub-roles)
-1.  [Graphics Roles][#graphics-roles]
+1.  [Graphics Roles](#graphics-roles)
 1.  [HTML Elms](#html-elms)
 1.  [CSS Colors](#css-colors)
 
