@@ -117,6 +117,7 @@
     "act-rules.github.io": "github:act-rules/act-rules.github.io#master",
     "aria-practices": "github:w3c/aria-practices#f7de7ec3a53534018237f24cb9e610f26c30c367",
     "aria-query": "^3.0.0",
+    "browser-driver-manager": "^1.0.2",
     "chai": "~4.2.0",
     "chalk": "^4.1.0",
     "chromedriver": "latest",
