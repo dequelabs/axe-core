@@ -46,7 +46,7 @@ jobs:
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
       - run: npm ci
-      - run: npx browser-driver-manager install chromedriver
+      - run: npx browser-driver-manager install chromedriver --verbose
       - save_cache:
           key: v9-cache-unix-{{ checksum "package-lock.json" }}
           paths:
@@ -164,7 +164,7 @@ jobs:
       - run: npm run build
       - run:
           name: Install Chrome and ChromeDriver Beta
-          command: npx browser-driver-manager install chrome=beta chromedriver=beta
+          command: npx browser-driver-manager install chrome=beta chromedriver=beta --verbose
       - run:
           name: Install Firefox Nightly
           command: |
