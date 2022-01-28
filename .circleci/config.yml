@@ -287,7 +287,7 @@ workflows:
       - lint:
           requires:
             - dependencies_unix
-      Run tests on all commits, but after installing dependencies
+      # Run tests on all commits, but after installing dependencies
       - test_unix:
           requires:
             - lint
@@ -319,7 +319,7 @@ workflows:
       - test_node:
           requires:
             - test_unix
-      Hold for approval
+      # Hold for approval
       - hold:
           type: approval
           requires:
