@@ -17,19 +17,6 @@ describe('aria-allowed-role virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it.skip('should pass for element with no role', function() {
-    var results = axe.runVirtualRule('aria-allowed-attr', {
-      nodeName: 'div',
-      attributes: {
-        'aria-checked': true
-      }
-    });
-
-    assert.lengthOf(results.passes, 1);
-    assert.lengthOf(results.violations, 0);
-    assert.lengthOf(results.incomplete, 0);
-  });
-
   it('should fail for unallowed role', function() {
     var results = axe.runVirtualRule('aria-allowed-role', {
       nodeName: 'dd',

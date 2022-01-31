@@ -45,6 +45,18 @@ describe('axe.utils.getScroll', function() {
     assert.isUndefined(actual);
   });
 
+  it('returns undefined when element overflow is clip', function() {
+    var target = queryFixture(
+      '<div id="target" style="height: 200px; width: 200px; overflow: clip">' +
+        '<div style="height: 2000px; width: 100px; background-color: pink;">' +
+        '<p> Content </p>' +
+        '</div>' +
+        '</div>'
+    );
+    var actual = axe.utils.getScroll(target.actualNode);
+    assert.isUndefined(actual);
+  });
+
   it('returns scroll offset when element overflow is auto', function() {
     var target = queryFixture(
       '<div id="target" style="height: 200px; width: 200px; overflow: auto">' +

@@ -46,9 +46,9 @@ describe('aria-allowed-attr', function() {
     assert.deepEqual(checkContext._data, ['aria-selected="true"']);
   });
 
-  it.skip('should return true if there is no role', function() {
+  it('should return true for global attributes if there is no role', function() {
     var vNode = queryFixture(
-      '<div id="target" tabindex="1" aria-selected="true" aria-checked="true"></div>'
+      '<div id="target" tabindex="1" aria-busy="true" aria-owns="foo"></div>'
     );
 
     assert.isTrue(
@@ -59,16 +59,17 @@ describe('aria-allowed-attr', function() {
     assert.isNull(checkContext._data);
   });
 
-  it('should return true for non-global attributes if there is no role', function() {
+  it('should return false for non-global attributes if there is no role', function() {
     var vNode = queryFixture(
       '<div id="target" tabindex="1" aria-selected="true" aria-owns="foo"></div>'
     );
 
-    assert.isTrue(
+    assert.isFalse(
       axe.testUtils
         .getCheckEvaluate('aria-allowed-attr')
         .call(checkContext, null, null, vNode)
     );
+    assert.deepEqual(checkContext._data, ['aria-selected="true"']);
   });
 
   it('should not report on invalid attributes', function() {
@@ -96,6 +97,46 @@ describe('aria-allowed-attr', function() {
     );
     assert.isNull(checkContext._data);
   });
+
+  it('should return undefined for custom element that has no role and is not focusable', function() {
+    var vNode = queryFixture(
+      '<my-custom-element id="target" aria-expanded="true"></my-custom-element>'
+    );
+
+    assert.isUndefined(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNotNull(checkContext._data);
+  });
+
+  it("should return false for custom element that has a role which doesn't allow the attribute", function() {
+    var vNode = queryFixture(
+      '<my-custom-element role="insertion" id="target" aria-expanded="true"></my-custom-element>'
+    );
+
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNotNull(checkContext._data);
+  });
+
+  it('should return false for custom element that is focusable', function() {
+    var vNode = queryFixture(
+      '<my-custom-element tabindex="1" id="target" aria-expanded="true"></my-custom-element>'
+    );
+
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('aria-allowed-attr')
+        .call(checkContext, null, null, vNode)
+    );
+    assert.isNotNull(checkContext._data);
+  });
+
   describe('invalid aria-attributes when used on role=row as a descendant of a table or a grid', function() {
     [
       'aria-posinset="1"',

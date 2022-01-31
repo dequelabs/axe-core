@@ -186,10 +186,7 @@ User specifies the format of the JSON structure passed to the callback of `axe.r
 
 ```js
 axe.configure({
-  branding: {
-    brand: String,
-    application: String
-  },
+  branding: String,
   reporter: 'option' | Function,
   checks: [Object],
   rules: [Object],
@@ -244,6 +241,8 @@ axe.configure({
   - `allowedOrigins` - Set which origins (URL domains) will communicate test data with. See [allowedOrigins](#allowedorigins).
 
 **Returns:** Nothing
+
+**Note**: The `branding` property accepts a `string`, which sets the application. Passing it an object is deprecated as of axe-core 4.4.0, as is the `branding.brand` property.
 
 ##### Page level rules
 
@@ -328,7 +327,7 @@ By default, `axe.run` will test the entire document. The context object is an op
 The include exclude object is a JSON object with two attributes: include and exclude. Either include or exclude is required. If only `exclude` is specified; include will default to the entire `document`.
 
 - A node, or
-- An array of arrays of [CSS selectors](./developer-guide.md#supported-css-selectors)
+- An array of Nodes or an array of arrays of [CSS selectors](./developer-guide.md#supported-css-selectors)
   - If the nested array contains a single string, that string is the CSS selector
   - If the nested array contains multiple strings
     - The last string is the final CSS selector
@@ -447,6 +446,7 @@ Additionally, there are a number or properties that allow configuration of diffe
 | `frameWaitTime`    | `60000` | How long (in milliseconds) axe waits for a response from embedded frames before timing out                                              |
 | `preload`          | `true`  | Any additional assets (eg: cssom) to preload before running rules. [See here for configuration details](#preload-configuration-details) |
 | `performanceTimer` | `false` | Log rule performance metrics to the console                                                                                             |
+| `pingWaitTime`     | `500`   | Time before axe-core considers a frame unresponsive. [See frame messenger for details](frame-messenger.md)                              |
 
 ###### Options Parameter Examples
 

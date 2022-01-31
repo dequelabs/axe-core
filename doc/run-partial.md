@@ -7,9 +7,7 @@ To use these methods, call `axe.runPartial()` in the top window, and in all nest
 This results in code that looks something like the following. The `context` and `options` arguments used are the same as would be passed to `axe.run`. See [API.md](api.md) for details.
 
 ```js
-const partialResults = await Promise.all(
-  runPartialRecursive(context, options)
-)
+const partialResults = await Promise.all(runPartialRecursive(context, options));
 const axeResults = await axe.finishRun(partialResults, options);
 ```
 
@@ -23,12 +21,12 @@ When using `axe.runPartial()` it is important to keep in mind that the `context`
 function runPartialRecursive(context, options = {}, win = window) {
   const { axe, document } = win;
   // Find all frames in context, and determine what context object to use in that frame
-  const frameContexts = axe.utils.getFrameContexts(context);
+  const frameContexts = axe.utils.getFrameContexts(context, options);
   // Run the current context, in the current window.
-  const promiseResults = [ axe.runPartial(context, options) ];
+  const promiseResults = [axe.runPartial(context, options)];
 
   // Loop over all frames in context
-  frameContexts.forEach(({ frameSelector, frameContext }) =>  {
+  frameContexts.forEach(({ frameSelector, frameContext }) => {
     // Find the window of the frame
     const frame = axe.utils.shadowSelect(frameSelector);
     const frameWin = frame.contentWindow;
@@ -37,7 +35,7 @@ function runPartialRecursive(context, options = {}, win = window) {
     promiseResults.push(...frameResults);
   });
   return promiseResults;
-};
+}
 ```
 
 **important**: The order in which these methods are called matters for performance. Internally, axe-core constructs a flattened tree when `axe.utils.getFrameContexts` is called. This is fairly slow, and so should not happen more than once per frame. When `axe.runPartial` is called, that tree will be used if it still exists. Since this tree can get out of sync with the actual DOM, it is important to call `axe.runPartial` immediately after `axe.utils.getFrameContexts`.
@@ -55,7 +53,7 @@ The `axe.finishRun` method does two things: It calls the `after` methods of chec
 //   - frame_1a
 // - frame_2
 // The partial results are passed in the following order:
-axe.finishRun([ top, frame_1, frame_1a, frame_2 ])
+axe.finishRun([top, frame_1, frame_1a, frame_2]);
 ```
 
 If for some reason `axe.runPartial` fails to run, the integration API **must** include `null` in the data in place of the results object, so that axe-core knows to skip over it. If a frame fails to run, results from any descending frames **must be omitted**. To illustrate this, consider the following:
@@ -68,19 +66,19 @@ If for some reason `axe.runPartial` fails to run, the integration API **must** i
 // - frame_2
 
 // If axe.runPartial throws an error, the results must be passed to finishRun like this:
-axe.finishRun([
-  top, null, /* nothing for frame 1a, */ frame_2
-])
+axe.finishRun([top, null, /* nothing for frame 1a, */ frame_2]);
 ```
 
 **important**: Since `axe.finishRun` may have access to cross-origin information, it should only be called in an environment that is known not to have third-party scripts. When using a browser driver, this can for example by done in a blank page.
 
-## axe.utils.getFrameContexts(context): FrameContext[]
+## axe.utils.getFrameContexts(context, options): FrameContext[]
 
 The `axe.utils.getFrameContexts` method takes any valid context, and returns an array of objects. Each object represents a frame that is in the context. The object has the following properties:
 
 - `frameSelector`: This is a CSS selector, or array of CSS selectors in case of nodes in a shadow DOM tree to locate the frame element to be tested.
 - `frameContext`: This is an object is a context object that should be tested in the particular frame.
+
+The `options` object takes the same RunOptions object that axe.run accepts. When the `iframes` property is `false`, it returns an empty array.
 
 ## Custom Rulesets and Reporters
 

@@ -50,8 +50,8 @@ declare namespace axe {
   type CrossFrameSelector = CrossTreeSelector[];
 
   type ContextObject = {
-    include?: BaseSelector | Array<BaseSelector | BaseSelector[]>;
-    exclude?: BaseSelector | Array<BaseSelector | BaseSelector[]>;
+    include?: Node | BaseSelector | Array<Node | BaseSelector | BaseSelector[]>;
+    exclude?: Node | BaseSelector | Array<Node | BaseSelector | BaseSelector[]>;
   };
 
   type RunCallback = (error: Error, results: AxeResults) => void;
@@ -95,6 +95,7 @@ declare namespace axe {
     frameWaitTime?: number;
     preload?: boolean;
     performanceTimer?: boolean;
+    pingWaitTime?: number;
   }
   interface AxeResults extends EnvironmentData {
     toolOptions: RunOptions;
@@ -187,10 +188,7 @@ declare namespace axe {
     cssColors?: { [key: string]: number[] };
   }
   interface Spec {
-    branding?: {
-      brand?: string;
-      application?: string;
-    };
+    branding?: string | Branding;
     reporter?: ReporterVersion;
     checks?: Check[];
     rules?: Rule[];
@@ -202,6 +200,13 @@ declare namespace axe {
     allowedOrigins?: string[];
     // Deprecated - do not use.
     ver?: string;
+  }
+  /**
+   * @deprecated Use branding: string instead to set the application key in help URLs
+   */
+  interface Branding {
+    brand?: string;
+    application?: string;
   }
   interface Check {
     id: string;
@@ -259,13 +264,16 @@ declare namespace axe {
     results: PartialRuleResult[];
     environmentData?: EnvironmentData;
   }
-  type PartialResults = Array<PartialResult | null>
+  type PartialResults = Array<PartialResult | null>;
   interface FrameContext {
     frameSelector: CrossTreeSelector;
     frameContext: ContextObject;
   }
   interface Utils {
-    getFrameContexts: (context?: ElementContext) => FrameContext[];
+    getFrameContexts: (
+      context?: ElementContext,
+      options?: RunOptions
+    ) => FrameContext[];
     shadowSelect: (selector: CrossTreeSelector) => Element | null;
   }
   interface EnvironmentData {

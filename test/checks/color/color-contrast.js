@@ -275,7 +275,7 @@ describe('color-contrast', function() {
   });
 
   it('should return true when a label wraps a text input', function() {
-    fixtureSetup('<label id="target">' + 'My text <input type="text"></label>');
+    fixtureSetup('<label id="target">My text <input type="text"></label>');
     var target = fixture.querySelector('#target');
     var virtualNode = axe.utils.getNodeFromTree(target);
     var result = contrastEvaluate.call(checkContext, target, {}, virtualNode);
@@ -794,21 +794,21 @@ describe('color-contrast', function() {
     });
   });
 
-  describe('with shadowDOM', function() {
-    (shadowSupported ? it : xit)(
-      'returns colors across Shadow DOM boundaries',
-      function() {
-        var params = shadowCheckSetup(
-          '<div id="container" style="background-color:black;"></div>',
-          '<p style="color: #333;" id="target">Text</p>'
-        );
-        var container = fixture.querySelector('#container');
-        var result = contrastEvaluate.apply(checkContext, params);
-        assert.isFalse(result);
-        assert.deepEqual(checkContext._relatedNodes, [container]);
-      }
-    );
+  (shadowSupported ? it : xit)(
+    'returns colors across Shadow DOM boundaries',
+    function() {
+      var params = shadowCheckSetup(
+        '<div id="container" style="background-color:black;"></div>',
+        '<p style="color: #333;" id="target">Text</p>'
+      );
+      var container = fixture.querySelector('#container');
+      var result = contrastEvaluate.apply(checkContext, params);
+      assert.isFalse(result);
+      assert.deepEqual(checkContext._relatedNodes, [container]);
+    }
+  );
 
+  describe('with text-shadow', function() {
     it('passes if thin text shadows have sufficient contrast with the text', function() {
       var params = checkSetup(
         '<div id="target" style="background-color: #666; color:#aaa; ' +
@@ -866,7 +866,7 @@ describe('color-contrast', function() {
           '</div>'
       );
       assert.isFalse(contrastEvaluate.apply(checkContext, params));
-      assert.equal(checkContext._data.messageKey, 'fgOnShadowColor');
+      assert.isNull(checkContext._data.messageKey);
     });
 
     it('fails if text shadows do not have sufficient contrast with the background', function() {
@@ -878,6 +878,26 @@ describe('color-contrast', function() {
       );
       assert.isFalse(contrastEvaluate.apply(checkContext, params));
       assert.equal(checkContext._data.messageKey, 'shadowOnBgColor');
+    });
+
+    it('fails if thick text shadows don\'t have sufficient contrast', function() {
+      var params = checkSetup(
+        '<div id="target" style="background-color: #aaa; color:#666; ' +
+          'text-shadow: 0 0 0.09em #000, 0 0 0.09em #000, 0 0 0.09em #000;">' +
+          '  Hello world' +
+          '</div>'
+      );
+      assert.isTrue(contrastEvaluate.apply(checkContext, params));
+    });
+
+    it('passes if thin text shadows don\'t have sufficient contrast, but the text and background do', function() {
+      var params = checkSetup(
+        '<div id="target" style="background-color: #aaa; color:#666; ' +
+          'text-shadow: 0 0 0.09em #000, 0 0 0.09em #000, 0 0 0.09em #000;">' +
+          '  Hello world' +
+          '</div>'
+      );
+      assert.isTrue(contrastEvaluate.apply(checkContext, params));
     });
   });
 });

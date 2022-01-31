@@ -7,5 +7,16 @@
       "pass": "the autocomplete attribute is correctly formatted",
       "fail": "the autocomplete attribute is incorrectly formatted"
     }
+  },
+  "options": {
+    "stateTerms": [
+      "none",
+      "false",
+      "true",
+      "disabled",
+      "enabled",
+      "undefined",
+      "null"
+    ]
   }
 }

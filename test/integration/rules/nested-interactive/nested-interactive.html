@@ -1,14 +1,18 @@
 <button id="pass1">pass</button>
-<div role="button" id="pass2">pass</div>
-<div role="tab" id="pass3">pass</div>
-<div role="checkbox" id="pass4">pass</div>
-<div role="radio" id="pass5"><span>pass</span></div>
+<button id="pass2"><span tabindex="-1">pass</span></button>
+<div role="button" id="pass3">pass</div>
+<div role="tab" id="pass4">pass</div>
+<div role="checkbox" id="pass5">pass</div>
+<div role="radio" id="pass6"><span>pass</span></div>
+<div role="radio" id="pass7"><span tabindex="-1">pass</span></div>
 
-<button id="fail1"><span tabindex="0">fail</span></button>
-<div role="button" id="fail2"><input /></div>
-<div role="tab" id="fail3"><button id="pass6">fail</button></div>
-<div role="checkbox" id="fail4"><a href="foo.html">fail</a></div>
-<div role="radio" id="fail5"><span tabindex="0">fail</span></div>
+<button id="pass8"><span tabindex="0">pass</span></button>
+<div role="button" id="fail1"><input /></div>
+<div role="tab" id="fail2"><button id="pass9">div fails, button passes</button></div>
+<div role="checkbox" id="fail3"><a href="foo.html">fail</a></div>
+<div role="radio" id="pass10"><span tabindex="0">pass</span></div>
+<div role="radio" id="fail4"><button id="pass11" tabindex="-1">not really hidden</button></div>
+<div role="radio" id="fail5"><button aria-hidden="true" tabindex="-1">not really hidden</button></div>
 
 <a id="ignored1" href="foo.html">ignored</a>
 <span id="ignored2">ignored</span>

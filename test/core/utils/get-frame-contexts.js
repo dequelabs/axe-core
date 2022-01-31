@@ -265,4 +265,18 @@ describe('utils.getFrameContexts', function() {
       assert.deepEqual(frameContext[0].frameContext.exclude, []);
     });
   });
+
+  describe('options.iframes', function() {
+    it('returns a non-empty array with `iframes: true`', function() {
+      fixture.innerHTML = '<iframe></iframe>';
+      var contexts = getFrameContexts({}, { iframes: true });
+      assert.lengthOf(contexts, 1);
+    });
+
+    it('returns an empty array with `iframes: false`', function() {
+      fixture.innerHTML = '<iframe></iframe>';
+      var contexts = getFrameContexts({}, { iframes: false });
+      assert.lengthOf(contexts, 0);
+    });
+  });
 });

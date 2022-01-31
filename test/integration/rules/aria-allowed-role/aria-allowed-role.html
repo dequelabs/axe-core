@@ -219,6 +219,28 @@
 <div id="fail-dpub-4" role="doc-noteref">ok</div>
 <!-- images -->
 <div id="fail-dpub-5" role="doc-cover">ok</div>
+<img role="doc-cover" aria-label="foo" id="pass-img-valid-role-aria-label" />
+<img role="menuitem" title="bar" id="pass-img-valid-role-title" />
+<div id="image-baz">hazaar</div>
+<img
+  role="switch"
+  aria-labelledby="image-baz"
+  id="pass-img-valid-role-aria-labelledby"
+/>
+<img
+	role="radio"
+	aria-label="test"
+	id="pass-img-valid-role-radio"
+>
+<img role="text" aria-label="foo" id="fail-img-invalid-role-aria-label" />
+<img role="spinbutton" title="bar" id="fail-img-invalid-role-title" />
+<img
+  role="combobox"
+  aria-labelledby="image-baz"
+  id="fail-img-invalid-role-aria-labelledby"
+/>
+<img role="button" id="fail-img-no-accessible-name-present" />
+
 <!-- listitems -->
 <div id="fail-dpub-6" role="doc-biblioentry">ok</div>
 <div id="fail-dpub-7" role="doc-endnote">ok</div>
@@ -226,3 +248,21 @@
 <button role="text" id="fail-text-2">ok</button>
 <a href="#" role="text" id="fail-text-3">ok</a>
 <main role="text" id="fail-text-4">ok</main>
+
+<!-- landmarks -->
+<main><header role="banner" id="pass-header-banner">ok</header></main>
+<main><footer role="contentinfo" id="pass-footer-contentinfo">ok</footer></main>
+
+<img usemap="#my-map" />
+<map name="my-map">
+  <area shape="circle" coords="5,5,10" role="button" id="pass-imgmap-1" />
+  <area shape="circle" coords="5,15,10" role="link" id="pass-imgmap-2" />
+  <area
+    shape="circle"
+    coords="15,5,10"
+    href="#"
+    role="button"
+    id="fail-imgmap-1"
+  />
+  <area shape="circle" coords="15,15,10" role="checkbox" id="fail-imgmap-2" />
+</map>
