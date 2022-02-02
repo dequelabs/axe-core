@@ -1,7 +1,7 @@
 {
-  "name": "axe-core",
+  "name": "@daisy/axe-core-for-ace",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.4.0",
+  "version": "4.4.0-canary.1",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -34,10 +34,10 @@
       "url": "http://deque.com/"
     }
   ],
-  "homepage": "https://www.deque.com/axe/",
+  "homepage": "https://github.com/daisy/axe-core/pull/5",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dequelabs/axe-core.git"
+    "url": "https://github.com/daisy/axe-core.git"
   },
   "keywords": [
     "Accessibility",
@@ -55,7 +55,10 @@
     "axe.min.js",
     "axe.d.ts",
     "sri-history.json",
-    "locales/"
+    "locales/",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
   ],
   "standard-version": {
     "scripts": {
@@ -71,6 +74,8 @@
     "api-docs": "jsdoc --configure .jsdoc.json",
     "build": "grunt",
     "eslint": "eslint --color --format stylish '{lib,test,build,doc}/**/*.js' 'Gruntfile.js'",
+    "test:chrome": "npm run test -- --browsers Chrome && npm run test:integration:chrome",
+    "test:firefox": "npm run test -- --browsers Firefox && npm run test:integration:firefox",
     "test": "npm run test:tsc && run-s \"test:unit:* -- {@}\" --",
     "test:tsc": "tsc",
     "test:unit": "karma start test/karma.conf.js",
@@ -186,5 +191,8 @@
       "eslint --fix",
       "prettier --write"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
