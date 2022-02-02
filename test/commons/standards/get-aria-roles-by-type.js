@@ -17,6 +17,10 @@ describe('standards.getAriaRolesByType', function() {
 
     ariaRoles['doc-biblioentry'] = { type: 'structure' };
     ariaRoles['doc-endnote'] = { type: 'structure' };
+
+    // https://www.w3.org/TR/dpub-aria-1.0/#doc-example
+    // ==> (was 'section' now 'figure')
+    // https://www.w3.org/TR/dpub-aria-1.1/#doc-example
     ariaRoles['doc-example'] = { type: 'structure' };
 
     axe.configure({
@@ -33,6 +37,10 @@ describe('standards.getAriaRolesByType', function() {
       'cell',
       'doc-biblioentry',
       'doc-endnote',
+
+      // https://www.w3.org/TR/dpub-aria-1.0/#doc-example
+      // ==> (was 'section' now 'figure')
+      // https://www.w3.org/TR/dpub-aria-1.1/#doc-example
       'doc-example'
     ]);
   });
