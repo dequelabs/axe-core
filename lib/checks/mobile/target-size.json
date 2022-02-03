@@ -7,8 +7,11 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "Target is sufficiently spaced from its neighbors",
-      "fail": "Target is insufficiently spaced from its neighbors"
+      "pass": "Control has sufficient size (${data.width}px width, ${data.height}px height)",
+      "fail": {
+        "default": "Element has insufficient size (${data.width}px width, ${data.height}px height)",
+        "obscured": "Element has insufficient size because it is obscured (smallest space is ${data.width}px width by ${data.height}px height)"
+      }
     }
   }
 }
