@@ -2,6 +2,7 @@ describe('getOffset', function () {
   'use strict';
   var fixtureSetup = axe.testUtils.fixtureSetup;
   var getOffset = axe.commons.math.getOffset;
+  var round = 0.2;
 
   // Return the diagonal of a square of size X, or rectangle of size X * Y
   function getDiagonal(x, y) {
@@ -16,8 +17,8 @@ describe('getOffset', function () {
     );
     var nodeA = fixture.children[0];
     var nodeB = fixture.children[1];
-    assert.equal(getOffset(nodeA, nodeB), 40);
-    assert.equal(getOffset(nodeB, nodeA), 30);
+    assert.closeTo(getOffset(nodeA, nodeB), 40, round);
+    assert.closeTo(getOffset(nodeB, nodeA), 30, round);
   });
 
   it('returns closest horizontal distance for elements horizontally aligned', function () {
@@ -27,8 +28,8 @@ describe('getOffset', function () {
     );
     var nodeA = fixture.children[0];
     var nodeB = fixture.children[1];
-    assert.closeTo(getOffset(nodeA, nodeB), getDiagonal(40, 5), 0.1);
-    assert.equal(getOffset(nodeB, nodeA), 30);
+    assert.closeTo(getOffset(nodeA, nodeB), getDiagonal(40, 5), round);
+    assert.closeTo(getOffset(nodeB, nodeA), 30, round);
   });
 
   it('returns height + spacing for vertically adjacent elms', function () {
@@ -38,8 +39,8 @@ describe('getOffset', function () {
     );
     var nodeA = fixture.children[0];
     var nodeB = fixture.children[1];
-    assert.equal(getOffset(nodeA, nodeB), 40);
-    assert.equal(getOffset(nodeB, nodeA), 30);
+    assert.closeTo(getOffset(nodeA, nodeB), 40, round);
+    assert.closeTo(getOffset(nodeB, nodeA), 30, round);
   });
 
   it('returns closest vertical distance for elements horizontally aligned', function () {
@@ -50,8 +51,8 @@ describe('getOffset', function () {
     var nodeA = fixture.children[0];
     var nodeB = fixture.children[1];
 
-    assert.closeTo(getOffset(nodeA, nodeB), getDiagonal(40, 10), 0.1);
-    assert.equal(getOffset(nodeB, nodeA), 30);
+    assert.closeTo(getOffset(nodeA, nodeB), getDiagonal(40, 10), round);
+    assert.closeTo(getOffset(nodeB, nodeA), 30, round);
   });
 
   it('returns corner to corner distance for diagonal elms', function () {
@@ -61,8 +62,8 @@ describe('getOffset', function () {
     );
     var nodeA = fixture.children[0];
     var nodeB = fixture.children[1];
-    assert.closeTo(getOffset(nodeA, nodeB), getDiagonal(40), 0.1);
-    assert.closeTo(getOffset(nodeB, nodeA), getDiagonal(30), 0.1);
+    assert.closeTo(getOffset(nodeA, nodeB), getDiagonal(40), round);
+    assert.closeTo(getOffset(nodeB, nodeA), getDiagonal(30), round);
   });
 
   it('returns the distance to the edge when elements overlap on an edge', function () {
@@ -73,8 +74,8 @@ describe('getOffset', function () {
     );
     var nodeA = fixture.children[0];
     var nodeB = nodeA.children[0];
-    assert.equal(getOffset(nodeA, nodeB), 30);
-    assert.equal(getOffset(nodeB, nodeA), 30);
+    assert.closeTo(getOffset(nodeA, nodeB), 30, round);
+    assert.closeTo(getOffset(nodeB, nodeA), 30, round);
   });
 
   it('returns the shortest side of the element when an element overlaps on a corner', function () {
@@ -85,8 +86,8 @@ describe('getOffset', function () {
     );
     var nodeA = fixture.children[0];
     var nodeB = nodeA.children[0];
-    assert.closeTo(getOffset(nodeA, nodeB), getDiagonal(30), 0.1);
-    assert.equal(getOffset(nodeB, nodeA), 20);
+    assert.closeTo(getOffset(nodeA, nodeB), getDiagonal(30), round);
+    assert.closeTo(getOffset(nodeB, nodeA), 20, round);
   });
 
   it('returns smallest diagonal if elmA fully covers elmB', function () {
@@ -97,7 +98,7 @@ describe('getOffset', function () {
     );
     var nodeA = fixture.children[0];
     var nodeB = nodeA.children[0];
-    assert.closeTo(getOffset(nodeA, nodeB), getDiagonal(10), 0.1);
-    assert.equal(getOffset(nodeB, nodeA), 10);
+    assert.closeTo(getOffset(nodeA, nodeB), getDiagonal(10), round);
+    assert.closeTo(getOffset(nodeB, nodeA), 10, round);
   });
 });
