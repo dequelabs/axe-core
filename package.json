@@ -59,7 +59,7 @@
   ],
   "standard-version": {
     "scripts": {
-      "postbump": "npm ci && npm run sri-update"
+      "postbump": "npm ci && npm run sri-update && git add doc/rule-descriptions.md"
     },
     "skip": {
       "tag": true
