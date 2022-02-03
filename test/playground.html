@@ -1,35 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <title>O hai</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-    }
-    a { background: green; }
-    b { background: cyan; }
-  </style>
 
-  <div id="fixture"></div>
+  <div class="foo" id="foo">foo</div>
+
   <script src="/axe.js"></script>
-  <script src="/test/testutils.js"></script>
   <script>
-    // var fixture = document.querySelector('#fixture')
-    var fixtureSetup = axe.testUtils.fixtureSetup;
-    var getOffset = axe.commons.math.getOffset;
-
-    window.onload = function () {
-      let offsetA, offsetB;
-      const fixture = fixtureSetup(
-        '<a style="padding:10px; display:inline-block">' + 
-        '<b style="width:20px; height: 20px; display:inline-block">&nbsp;</b>' +
-        '</a>'
-      );
-      const nodeA = fixture.children[0];
-      const nodeB = fixture.children[1] || nodeA.children[0];
-      offsetA = getOffset(nodeA, nodeB);
-      // offsetB = getOffset(nodeB, nodeA);
-      console.log({ offsetA, offsetB })
-    }
+    window.addEventListener('load', function() {
+      axe.run(document, function(err, res) {
+        console.log(res.violations);
+        res.incomplete.forEach(function(issue) {
+          console.log(issue);
+        });
+      });
+    });
   </script>
 </html>

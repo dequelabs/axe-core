@@ -1,4 +1,3 @@
-
 describe('getOffset', function () {
   'use strict';
   var fixtureSetup = axe.testUtils.fixtureSetup;
