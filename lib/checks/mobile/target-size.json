@@ -2,7 +2,7 @@
   "id": "target-size",
   "evaluate": "target-size-evaluate",
   "options": {
-    "minSpacing": 24
+    "minSpacing": 23.95
   },
   "metadata": {
     "impact": "serious",

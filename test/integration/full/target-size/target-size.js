@@ -11,14 +11,24 @@ describe('target-size test', function() {
       axe.run('section', options, function(err, r) {
         assert.isNull(err);
         results = r;
+
+        // Add some highlighting for visually identifying issues.
+        // There are too many test cases to just do this by selector.
+        results.violations[0] && results.violations[0].nodes.forEach(function (node) {
+          node.element.className += ' violations';
+        });
+        results.passes[0] && results.passes[0].nodes.forEach(function (node) {
+          node.element.className += ' passes';
+        });
+        console.log(results);
         done();
       });
     });
   });
 
   it('finds all passing nodes', function () {
-    var passResults = results.passes[0].nodes;
-    var passedElms = document.querySelectorAll('.passed');
+    var passResults = results.passes[0] ? results.passes[0].nodes : [];
+    var passedElms = document.querySelectorAll('section:not([hidden]) div:not([hidden]) .passed');
     passResults.forEach(function(result) {
       assert.include(passedElms, result.element);
     });
@@ -26,8 +36,8 @@ describe('target-size test', function() {
   });
 
   it('finds all failed nodes', function () {
-    var failResults = results.violations[0].nodes;
-    var failedElms = document.querySelectorAll('.failed');
+    var failResults = results.violations[0] ? results.violations[0].nodes : [];
+    var failedElms = document.querySelectorAll('section:not([hidden]) div:not([hidden])  .failed');
     failResults.forEach(function(result) {
       assert.include(failedElms, result.element);
     });
