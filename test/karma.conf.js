@@ -72,7 +72,7 @@ module.exports = function(config) {
       'karma-mocha',
       'karma-chai',
       'karma-sinon',
-      'karma-mocha-reporter',
+      'karma-spec-reporter',
       'karma-chrome-launcher',
       'karma-firefox-launcher',
       'karma-ie-launcher',
@@ -98,7 +98,7 @@ module.exports = function(config) {
       '/axe.js': '/base/axe.js'
     },
     browsers: ['ChromeHeadless'],
-    reporters: ['mocha'],
+    reporters: ['spec'],
     preprocessors: {
       'test/integration/rules/**/*.json': ['integration']
     },
