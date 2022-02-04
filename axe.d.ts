@@ -54,6 +54,11 @@ declare namespace axe {
     exclude?: Node | BaseSelector | Array<Node | BaseSelector | BaseSelector[]>;
   };
 
+  type SerialContextObject = {
+    include?: BaseSelector | Array<BaseSelector | BaseSelector[]>;
+    exclude?: BaseSelector | Array<BaseSelector | BaseSelector[]>;
+  };
+
   type RunCallback = (error: Error, results: AxeResults) => void;
 
   type ElementContext = Node | NodeList | string | ContextObject;
@@ -267,7 +272,7 @@ declare namespace axe {
   type PartialResults = Array<PartialResult | null>;
   interface FrameContext {
     frameSelector: CrossTreeSelector;
-    frameContext: ContextObject;
+    frameContext: SerialContextObject;
   }
   interface Utils {
     getFrameContexts: (

@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.4.0",
+  "version": "4.4.1",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=4"
@@ -59,7 +59,7 @@
   ],
   "standard-version": {
     "scripts": {
-      "postbump": "npm ci && npm run sri-update"
+      "postbump": "npm ci && npm run sri-update && git add doc/rule-descriptions.md"
     },
     "skip": {
       "tag": true

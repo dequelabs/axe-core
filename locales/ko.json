@@ -113,12 +113,12 @@
       "description": "각 페이지에 사용자가 내비게이션을 건너뛰고 콘텐츠로 바로 이동할 수 있는 최소 하나의 메커니즘이 있는지 확인하세요.",
       "help": "페이지에는 반드시 반복 되는 블럭을 건너 뛸 수 있는 수단이 있어야 합니다."
     },
-    "color-contrast": {
-      "description": "전경색과 배경색 사이의 대비가 WCAG 2 AA 명암비 기준치를 충족하는지 확인하세요.",
-      "help": "엘리먼트는 반드시 충분한 명도 대비를 가져야 합니다."
-    },
     "color-contrast-enhanced": {
       "description": "전경색과 배경색 사이의 대비가 WCAG 2 AAA 명암비 기준치를 충족하는지 확인하세요.",
+      "help": "엘리먼트는 반드시 충분한 명도 대비를 가져야 합니다."
+    },
+    "color-contrast": {
+      "description": "전경색과 배경색 사이의 대비가 WCAG 2 AA 명암비 기준치를 충족하는지 확인하세요.",
       "help": "엘리먼트는 반드시 충분한 명도 대비를 가져야 합니다."
     },
     "css-orientation-lock": {
@@ -302,8 +302,8 @@
       "help": "확대/축소 및 크기 조정은 비활성화되지 않아야 합니다."
     },
     "nested-interactive": {
-      "description": "중첩된 인터랙티브 컨트롤은 스크린리더에 의해 낭독되지 않습니다.",
-      "help": "인터랙티브 컨트롤이 중첩되지 않게 하세요."
+      "description": "중첩된 대화형 컨트롤은 스크린리더에 의해 낭독되지 않습니다.",
+      "help": "대화형 컨트롤이 중첩되지 않게 하세요."
     },
     "no-autoplay-audio": {
       "description": "<video>나 <audio> 엘리먼트가 중지 시키거나 오디오를 음소거하는 제어 메커니즘 없이 3초를 초과하여 오디오를 자동 재생하지 않게 하세요.",
@@ -403,7 +403,8 @@
       "fail": {
         "singular": "ARIA 어트리뷰트가 허용되지 않았습니다: ${data.values}",
         "plural": "ARIA 어트리뷰트들이 허용되지 않았습니다: ${data.values}"
-      }
+      },
+      "incomplete": "이 엘리먼트에 ARIA 어트리뷰트가 무시되어도 문제가 없는지 확안하세요: ${data.values}"
     },
     "aria-allowed-role": {
       "pass": "ARIA 역할(role)이 주어진 엘리먼트에 허용되었습니다.",
@@ -420,7 +421,8 @@
       "pass": "aria-errormessage가 존재하고, 지원된 aria-errormessage 기법을 사용하는 스크린리더에 노출되는 엘리먼트를 참조합니다.",
       "fail": {
         "singular": "aria-errormessage 값 `${data.values}`은(는) 반드시 메세지를 낭독하기 위한 기법을 (예를 들어, aria-live, aria-describedby, role=alert 등) 사용해야 합니다.",
-        "plural": "aria-errormessage 값들 `${data.values}`은(는) 반드시 메세지를 낭독하기 위한 기법을 (예를 들어, aria-live, aria-describedby, role=alert 등) 사용해야 합니다."
+        "plural": "aria-errormessage 값들 `${data.values}`은(는) 반드시 메세지를 낭독하기 위한 기법을 (예를 들어, aria-live, aria-describedby, role=alert 등) 사용해야 합니다.",
+        "hidden": "aria-errormessage 값 `${data.values}`은(는) 숨겨진 엘리먼트를 참조할 수 없습니다."
       },
       "incomplete": {
         "singular": "aria-errormessage 값 `${data.values}`이(가) 기존 엘리먼트를 참조하는지 확인하세요.",
@@ -438,8 +440,18 @@
     },
     "aria-prohibited-attr": {
       "pass": "ARIA 어트리뷰트가 혀용되었습니다.",
-      "fail": "ARIA 어트리뷰트가 사용될 수 없습니다, 역할(role) 어트리뷰트를 추가하거나 다른 엘리먼트를 사용하세요: ${data.values}",
-      "incomplete": "ARIA 어트리뷰트가 엘리먼트에 잘 지원되지 않으며 텍스트 콘텐츠가 대신 사용될 것입니다: ${data.values}"
+      "fail": {
+        "hasRolePlural": "${data.prohibited} 어트리뷰트는 \"${data.role}\" 역할(role)과 함께 사용될 수 없습니다.",
+        "hasRoleSingular": "${data.prohibited} 어트리뷰트는 \"${data.role}\" 역할(role)과 함께 사용될 수 없습니다.",
+        "noRolePlural": "${data.prohibited} 어트리뷰트는 유효하지 않은 역할(role)을 가진 ${data.nodeName}에 사용될 수 없습니다.",
+        "noRoleSingular": "${data.prohibited} 어트리뷰트는 유효하지 않은 역할(role)을 가진 ${data.nodeName}에 사용될 수 없습니다."
+      },
+      "incomplete": {
+        "hasRoleSingular": "${data.prohibited} 어트리뷰트는 \"${data.role}\" 역할(role)에서 제대로 지원되지 않습니다.",
+        "hasRolePlural": "${data.prohibited} 어트리뷰트는 \"${data.role}\" 역할(role)에서 제대로 지원되지 않습니다.",
+        "noRoleSingular": "${data.prohibited} 어트리뷰트는 유효한 역할(role) 어트리뷰트가 없는 ${data.nodeName}에서는 제대로 지원되지 않습니다.",
+        "noRolePlural": "${data.prohibited} 어트리뷰트는 유효한 역할(role) 어트리뷰트가 없는 ${data.nodeName}에서는 제대로 지원되지 않습니다."
+      }
     },
     "aria-required-attr": {
       "pass": "모든 필수 ARIA 어트리뷰트가 존재합니다.",
@@ -494,6 +506,10 @@
         "plural": "유효하지 않은 ARIA 어트리뷰트 이름들: ${data.values}"
       }
     },
+    "deprecatedrole": {
+      "pass": "ARIA 역할(role)은 용도 폐기(deprecated) 되지 않았습니다.",
+      "fail": "사용된 역할(role)은 용도 폐기(deprecated) 되었습니다: ${data.values}"
+    },
     "fallbackrole": {
       "pass": "하나의 역할(role) 값만 사용되었습니다.",
       "fail": "폴백 역할(role)들은 구형 브라우저들에서 지원되지 않으므로, 단 하나의 값만 사용해야 합니다.",
@@ -533,7 +549,7 @@
       "pass": "엘리먼트가 초점 순서(focus order)의 엘리먼트에 유효한 의미론을 가집니다.",
       "fail": "엘리먼트가 초점 순서(focus order)의 엘리먼트에 유효하지 않은 의미론을 가집니다."
     },
-    "color-contrast": {
+    "color-contrast-enhanced": {
       "pass": "엘리먼트가 ${data.contrastRatio}의 충분한 명도 대비를 가집니다.",
       "fail": {
         "default": "엘리먼트가 ${data.contrastRatio} (전경색: ${data.fgColor}, 배경색: ${data.bgColor}, 글꼴 크기: ${data.fontSize}, 글꼴 두께: ${data.fontWeight})의 불충분한 명도 대비를 가집니다. 기대 명암비: ${data.expectedContrastRatio}",
@@ -556,7 +572,7 @@
         "pseudoContent": "가상 엘리먼트로 인해 엘리먼트의 배경색이 확인될 수 없습니다."
       }
     },
-    "color-contrast-enhanced": {
+    "color-contrast": {
       "pass": "엘리먼트가 ${data.contrastRatio}의 충분한 명도 대비를 가집니다.",
       "fail": {
         "default": "엘리먼트가 ${data.contrastRatio} (전경색: ${data.fgColor}, 배경색: ${data.bgColor}, 글꼴 크기: ${data.fontSize}, 글꼴 두께: ${data.fontWeight})의 불충분한 명도 대비를 가집니다. 기대 명암비: ${data.expectedContrastRatio}",
@@ -639,7 +655,10 @@
     },
     "no-focusable-content": {
       "pass": "엘리먼트에 초점을 얻을 수 있는(focusable) 후손 항목이 없습니다.",
-      "fail": "엘리먼트에 초점을 얻을 수 있는(focusable) 후손 항목이 있습니다.",
+      "fail": {
+        "default": "엘리먼트에 초점을 얻을 수 있는(focusable) 후손 항목이 있습니다.",
+        "notHidden": "대화형 컨트롤 내부의 엘리먼트에 음수 tabindex를 사용하는 것은 ('aria-hidden=true'인 경우에도) 보조기술에서 엘리먼트가 초점을 얻는 것을 막지 않습니다."
+      },
       "incomplete": "엘리먼트에 후손 항목이 있는지 확인할 수 없습니다."
     },
     "page-has-heading-one": {
@@ -804,7 +823,8 @@
     },
     "p-as-heading": {
       "pass": "<p> 엘리먼트가 제목으로 스타일되지 않았습니다.",
-      "fail": "스타일링된 p 엘리먼트는 제목 엘리먼트 대신 사용되지 않아야 합니다."
+      "fail": "스타일링된 p 엘리먼트는 제목 엘리먼트 대신 사용되지 않아야 합니다.",
+      "incomplete": "<p> 엘리먼트가 제목으로 스타일되었는지 확인할 수 없습니다."
     },
     "region": {
       "pass": "모든 페이지 콘텐츠가 랜드마크에 포함되어 있습니다.",
