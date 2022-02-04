@@ -13,7 +13,7 @@ unix_nightly_box: &unix_nightly_box
 
 win_box: &win_box
   executor:
-    name: win/vs2019
+    name: win/default
     shell: bash.exe
 
 orbs:
