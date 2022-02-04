@@ -191,7 +191,8 @@ All checks allow these global options:
   'radio',
   'combobox',
   'menuitemcheckbox',
-  'menuitemradio'
+  'menuitemradio',
+  'gridcell'
 ]</code></pre>
         </td>
       <td align="left">List of ARIA roles that support the <code>aria-roledescription</code> attribute</td>
@@ -265,13 +266,13 @@ All checks allow these global options:
         <code>selector</code>
       </td>
       <td align="left">
-        <pre lang=css><code>h1:not([role]):not([aria-level]), 
-h1:not([role])[aria-level=1], 
-h2:not([role])[aria-level=1], 
-h3:not([role])[aria-level=1], 
-h4:not([role])[aria-level=1], 
-h5:not([role])[aria-level=1], 
-h6:not([role])[aria-level=1], 
+        <pre lang=css><code>h1:not([role]):not([aria-level]),
+h1:not([role])[aria-level=1],
+h2:not([role])[aria-level=1],
+h3:not([role])[aria-level=1],
+h4:not([role])[aria-level=1],
+h5:not([role])[aria-level=1],
+h6:not([role])[aria-level=1],
 [role=heading][aria-level=1]</code></pre>
         </td>
       <td align="left">Selector used to determine if a page has a level one heading</td>
@@ -401,12 +402,12 @@ th</code></pre>
         <code>selector</code>
       </td>
       <td align="left">
-        <pre lang=css><code>h1:not([role]), 
-h2:not([role]), 
-h3:not([role]), 
-h4:not([role]), 
-h5:not([role]), 
-h6:not([role]), 
+        <pre lang=css><code>h1:not([role]),
+h2:not([role]),
+h3:not([role]),
+h4:not([role]),
+h5:not([role]),
+h6:not([role]),
 [role=heading]</code></pre>
         </td>
       <td align="left">Selector used to determine if a page has a heading</td>
@@ -437,9 +438,9 @@ h6:not([role]),
       </td>
       <td align="left">
         <pre lang=js><code>[
-  { "weight": 150, "italic": true }, 
-  { "weight": 150, "size": 1.15 }, 
-  { "italic": true, "size": 1.15 }, 
+  { "weight": 150, "italic": true },
+  { "weight": 150, "size": 1.15 },
+  { "italic": true, "size": 1.15 },
   { "size": 1.4 }
 ]</code></pre>
         </td>

@@ -9,7 +9,8 @@
       "radio",
       "combobox",
       "menuitemcheckbox",
-      "menuitemradio"
+      "menuitemradio",
+      "gridcell"
     ]
   },
   "metadata": {
