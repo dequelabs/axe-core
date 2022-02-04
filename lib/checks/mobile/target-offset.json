@@ -1,6 +1,6 @@
 {
-  "id": "target-space",
-  "evaluate": "target-space-evaluate",
+  "id": "target-offset",
+  "evaluate": "target-offset-evaluate",
   "options": {
     "minSpacing": 23.95
   },

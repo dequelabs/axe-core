@@ -7,6 +7,6 @@
     "help": "All touch targets must be 24px large, or leave sufficient space"
   },
   "all": [],
-  "any": ["target-size", "target-space"],
+  "any": ["target-size", "target-offset"],
   "none": []
 }
