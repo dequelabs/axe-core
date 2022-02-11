@@ -36,20 +36,6 @@ restore_dependency_cache_win: &restore_dependency_cache_win
       - v9-cache-win-{{ checksum "package-lock.json" }}
       - v9-cache-win-
 
-# install the version of chromedriver that matches the currently installed version of Chrome (taken from CircleCI chromedriver script)
-install_linux_chromedriver: &install_linux_chromedriver
-  run:
-    name: Install Chromedriver
-    command: |
-      CHROME_VERSION="$(google-chrome --version)"
-      CHROME_VERSION_STRING="$(echo $CHROME_VERSION | sed 's/^Google Chrome //' | sed 's/^Chromium //')"
-      echo "Installed version of Google Chrome is $CHROME_VERSION_STRING"
-
-      CHROMEDRIVER_RELEASE="${CHROME_VERSION_STRING%%.*}"
-
-      echo "ChromeDriver $CHROMEDRIVER_RELEASE will be installed"
-      npm install --no-save "chromedriver@$CHROMEDRIVER_RELEASE"
-
 jobs:
   # Fetch and cache dependencies.
   dependencies_unix:
@@ -60,7 +46,7 @@ jobs:
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
       - run: npm ci
-      - <<: *install_linux_chromedriver
+      - run: npx browser-driver-manager install chromedriver --verbose
       - save_cache:
           key: v9-cache-unix-{{ checksum "package-lock.json" }}
           paths:
@@ -177,11 +163,8 @@ jobs:
       - <<: *restore_dependency_cache_unix
       - run: npm run build
       - run:
-          name: Install Chrome Beta
-          command: |
-            wget https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb
-            sudo apt install ./google-chrome-beta_current_amd64.deb
-      - <<: *install_linux_chromedriver
+          name: Install Chrome and ChromeDriver Beta
+          command: npx browser-driver-manager install chrome=beta chromedriver=beta --verbose
       - run:
           name: Install Firefox Nightly
           command: |

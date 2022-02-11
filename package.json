@@ -1,7 +1,7 @@
 {
   "name": "axe-core",
   "description": "Accessibility engine for automated Web UI testing",
-  "version": "4.4.0",
+  "version": "4.4.1",
   "license": "MPL-2.0",
   "engines": {
     "node": ">=12"
@@ -117,6 +117,7 @@
     "act-rules.github.io": "github:act-rules/act-rules.github.io#master",
     "aria-practices": "github:w3c/aria-practices#f7de7ec3a53534018237f24cb9e610f26c30c367",
     "aria-query": "^3.0.0",
+    "browser-driver-manager": "1.0.3",
     "chai": "~4.2.0",
     "chalk": "^4.1.0",
     "chromedriver": "latest",
