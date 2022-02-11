@@ -13,11 +13,11 @@ unix_nightly_box: &unix_nightly_box
 
 win_box: &win_box
   executor:
-    name: win/vs2019
+    name: win/default
     shell: bash.exe
 
 orbs:
-  win: circleci/windows@1.0.0
+  win: circleci/windows@2.2.0
   puppeteer: threetreeslight/puppeteer@0.1.2
   browser-tools: circleci/browser-tools@1.1.0
 
