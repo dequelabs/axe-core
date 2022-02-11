@@ -1,6 +1,4 @@
-// Mocha 9 + IE don't play well with promise.finally(), which runPartial uses
-// This is a very specific problem in that test environment.
-(axe.testUtils.isIE11 ? describe.skip : describe)('run-partial, after-method', function() {
+describe('run-partial, after-method', function() {
   'use strict';
   var ruleName = 'heading-order';
   var runPartialRecursive = axe.testUtils.runPartialRecursive;

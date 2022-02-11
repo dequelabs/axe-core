@@ -1,6 +1,4 @@
-// Mocha 9 + IE don't play well with promise.finally(), which runPartial uses
-// This is a very specific problem in that test environment.
-(axe.testUtils.isIE11 ? describe.skip : describe)('axe.runPartial', function() {
+describe('axe.runPartial', function() {
   var fixture = document.getElementById('fixture');
   var DqElement = axe.utils.DqElement;
   var dqElementKeys = Object.keys(new DqElement(null).toJSON());

@@ -1,8 +1,6 @@
 /* global chai */
 
-// Mocha 9 + IE don't play well with promise.finally(), which runPartial uses
-// This is a very specific problem in that test environment.
-(axe.testUtils.isIE11 ? describe.skip : describe)('isolated-env test', function() {
+describe('isolated-env test', function() {
   'use strict';
   var fixture = document.querySelector('#fixture');
   var isIE11 = axe.testUtils.isIE11;
