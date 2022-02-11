@@ -149,12 +149,12 @@ describe('axe.utils.preload integration test', function() {
         .catch(function(err) {
           assert.isNotNull(err);
           assert.isTrue(err.message.includes('Preload assets timed out'));
-
+          axe.utils.preloadCssom = origPreloadCssom;
           done();
         })
-        .catch(done)
-        .finally(function() {
+        .catch(function (e) {
           axe.utils.preloadCssom = origPreloadCssom;
+          done(e);
         });
     });
   });

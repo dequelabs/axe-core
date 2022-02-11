@@ -25,11 +25,11 @@ describe('UMD window', function() {
       .then(function(values) {
         assert.lengthOf(values, 2);
         assert.equal(values.join(' '), 'Hello World!');
+        done();
       })
       .catch(function() {
         done(new Error('Expected to resolve.'));
-      })
-      .finally(done);
+      });
   });
   it('should reject Promise', function(done) {
     new Promise(function(resolve, reject) {
