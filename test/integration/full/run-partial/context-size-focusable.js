@@ -1,4 +1,6 @@
-describe('run-partial, context-size-focusable', function() {
+// Mocha 9 + IE don't play well with promise.finally(), which runPartial uses
+// This is a very specific problem in that test environment.
+(axe.testUtils.isIE11 ? describe.skip : describe)('run-partial, context-size-focusable', function() {
   'use strict';
   var ruleName = 'frame-focusable-content';
   var runPartialRecursive = axe.testUtils.runPartialRecursive;
