@@ -6,7 +6,7 @@ module.exports = function(config) {
     plugins: [
       'karma-mocha',
       'karma-chai',
-      'karma-mocha-reporter',
+      'karma-spec-reporter',
       'karma-chrome-launcher',
       require('./preprocessor')
     ],
@@ -24,7 +24,7 @@ module.exports = function(config) {
     proxies: {
       '/test-assets': '/base/node_modules/act-rules.github.io/test-assets'
     },
-    reporters: ['mocha'],
+    reporters: ['spec'],
     preprocessors: {
       '**/*.json': ['act']
     },
