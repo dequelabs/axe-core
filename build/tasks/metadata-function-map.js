@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path').posix;
 const glob = require('glob');
 const fs = require('fs');
 
@@ -36,12 +36,11 @@ module.exports = function(grunt) {
         });
 
         outFile += `\nconst metadataFunctionMap = {\n`;
-        Object.keys(map)
+        outFile += Object.keys(map)
           .sort()
-          .forEach(key => {
-            outFile += `  '${key}': ${map[key]},\n`;
-          });
-        outFile += `};\n\nexport default metadataFunctionMap;`;
+          .map(key => `  '${key}': ${map[key]}`)
+          .join(',\n');
+        outFile += `\n};\n\nexport default metadataFunctionMap;`;
 
         fs.writeFileSync(file.dest, outFile, 'utf-8');
       });
