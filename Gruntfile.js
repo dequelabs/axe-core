@@ -106,6 +106,20 @@ module.exports = function(grunt) {
         ]
       }
     },
+    'metadata-function-map': {
+      core: {
+        files: [
+          {
+            expand: true,
+            src: [
+              'lib/checks/**/*-{evaluate,after}.js',
+              'lib/rules/**/*-matches.js'
+            ],
+            dest: 'lib/core/base/metadata-function-map.js'
+          }
+        ]
+      }
+    },
     'aria-supported': {
       data: {
         entry: 'lib/commons/aria/index.js',
@@ -239,6 +253,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'clean:core',
     'validate',
+    'metadata-function-map',
     'esbuild',
     'configure',
     'babel',
