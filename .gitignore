@@ -18,6 +18,8 @@ test/integration/*/index.html
 axe.js
 axe.*.js
 
+# generated src file
+lib/core/base/metadata-function-map.js
 
 # generated jsdoc api docs
 doc/api/*
