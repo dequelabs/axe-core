@@ -488,8 +488,8 @@ testUtils.getCheckEvaluate = function getCheckEvaluate(checkId, testOptions) {
           messages[key][messageKey],
           this._data
         );
-        assert.isFalse(
-          message.includes('${'),
+        assert.isTrue(
+          message.indexOf('${') === -1,
           'Data object missing properties for ' +
             key +
             ' message key "' +
@@ -500,8 +500,8 @@ testUtils.getCheckEvaluate = function getCheckEvaluate(checkId, testOptions) {
         );
       } else {
         var message = axe.utils.processMessage(messages[key], this._data);
-        assert.isFalse(
-          message.includes('${'),
+        assert.isTrue(
+          message.indexOf('${') === -1,
           'Data object missing properties for ' +
             key +
             ' message: "' +
