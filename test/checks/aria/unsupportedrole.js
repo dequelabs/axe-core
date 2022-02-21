@@ -3,7 +3,7 @@ describe('unsupportedrole', function() {
 
   var checkContext = axe.testUtils.MockCheckContext();
   var checkSetup = axe.testUtils.checkSetup;
-  var check = checks['unsupportedrole'];
+  var check = checks.unsupportedrole;
 
   it('should return true if applied to an unsupported role', function() {
     axe.configure({
