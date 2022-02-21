@@ -640,7 +640,7 @@ describe('Audit', function() {
 
     it('should not run rules disabled by the options', function(done) {
       a.run(
-        { include: [document] },
+        { include: [axe.utils.getFlattenedTree()[0]] },
         {
           rules: {
             positive3: {
@@ -1011,7 +1011,7 @@ describe('Audit', function() {
         return false;
       };
       a.run(
-        { include: [document] },
+        { include: [axe.utils.getFlattenedTree()[0]] },
         {},
         function() {
           axe.utils.ruleShouldRun = saved;
@@ -1023,7 +1023,7 @@ describe('Audit', function() {
 
     it('should clear axe._selectCache', function(done) {
       a.run(
-        { include: [document] },
+        { include: [axe.utils.getFlattenedTree()[0]] },
         {
           rules: {}
         },
@@ -1054,7 +1054,7 @@ describe('Audit', function() {
         })
       );
       a.run(
-        { include: [document] },
+        { include: [axe.utils.getFlattenedTree()[0]] },
         {},
         function() {
           assert.ok(success);
@@ -1077,7 +1077,7 @@ describe('Audit', function() {
         callback({});
       };
       a.run(
-        { include: [document] },
+        { include: [axe.utils.getFlattenedTree()[0]] },
         {},
         function() {
           assert.isTrue(called);
@@ -1105,7 +1105,7 @@ describe('Audit', function() {
       options = { rules: {} };
       (options.rules[targetRule.id] = {}).data = 'monkeys';
       a.run(
-        { include: [document] },
+        { include: [axe.utils.getFlattenedTree()[0]] },
         options,
         function() {
           assert.ok(passed);
@@ -1130,7 +1130,10 @@ describe('Audit', function() {
       );
 
       audit.run(
-        { include: [document.body], page: false },
+        {
+          include: [axe.utils.getFlattenedTree(document.body)[0]],
+          page: false
+        },
         {},
         function(results) {
           assert.deepEqual(results, []);
@@ -1221,7 +1224,12 @@ describe('Audit', function() {
         checked = 'options validated';
       };
 
-      a.run({ include: [fixture] }, {}, noop, isNotCalled);
+      a.run(
+        { include: [axe.utils.getFlattenedTree(fixture)[0]] },
+        {},
+        noop,
+        isNotCalled
+      );
       assert.equal(checked, 'options validated');
     });
 
