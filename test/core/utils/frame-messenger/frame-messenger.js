@@ -10,9 +10,6 @@ describe('frame-messenger', function() {
   var postMessage = window.postMessage;
   var captureError = axe.testUtils.captureError;
 
-  this.timeout(1000);
-  this.retries(3);
-
   beforeEach(function(done) {
     respondable = axe.utils.respondable;
     axeVersion = axe.version;
