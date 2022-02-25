@@ -246,7 +246,7 @@ jobs:
   # Create a GitHub release.
   github_release:
     docker:
-      - image: circleci/golang:1.10
+      - image: cimg/go:1.17.1
     steps:
       - checkout
       - run: go get gopkg.in/aktau/github-release.v0
