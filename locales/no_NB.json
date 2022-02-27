@@ -3,7 +3,7 @@
   "rules": {
     "accesskeys": {
       "description": "",
-      "help": "Verdien for attributten 'accesskey' skal være unik"
+      "help": "Verdien for attributtet 'accesskey' skal være unik"
     },
     "area-alt": {
       "description": "",
@@ -15,7 +15,7 @@
     },
     "aria-allowed-role": {
       "description": "",
-      "help": "ARIA-attributten 'role' skal være passende for elementet"
+      "help": "ARIA-attributtet 'role' skal være passende for elementet"
     },
     "aria-hidden-body": {
       "description": "",
@@ -31,7 +31,7 @@
     },
     "aria-required-attr": {
       "description": "",
-      "help": "Påkrevde ARIA-attributter skal være angivet"
+      "help": "Påkrevde ARIA-attributter skal være angitt"
     },
     "aria-required-children": {
       "description": "",
@@ -51,7 +51,7 @@
     },
     "aria-toggle-field-name": {
       "description": "",
-      "help": "ARIA avkrysningsfelter skal ha et tilgjengelig navn"
+      "help": "ARIA avkrysningsboks skal ha et tilgjengelig navn"
     },
     "aria-valid-attr-value": {
       "description": "",
@@ -67,7 +67,7 @@
     },
     "autocomplete-valid": {
       "description": "",
-      "help": "Attributten 'autocomplete' skal benyttes korrekt"
+      "help": "Attributtet 'autocomplete' skal benyttes korrekt"
     },
     "avoid-inline-spacing": {
       "description": "",
@@ -83,7 +83,7 @@
     },
     "bypass": {
       "description": "",
-      "help": "Sider skal ha en metode for å hoppe over repetativt innhold"
+      "help": "Sider skal ha en metode for å hoppe over innhold som gjentas på flere websider"
     },
     "color-contrast": {
       "description": "",
@@ -111,15 +111,15 @@
     },
     "duplicate-id-active": {
       "description": "",
-      "help": "'id'-attributten for aktive elementer skal være unik"
+      "help": "'id'-attributtet for aktive elementer skal være unik"
     },
     "duplicate-id-aria": {
       "description": "",
-      "help": "'id'-attributten brukt på ARIA-elementer og -labels skal være unik"
+      "help": "'id'-attributtet brukt på ARIA-elementer og -labels skal være unik"
     },
     "duplicate-id": {
       "description": "",
-      "help": "Verdien for 'id'-attributten skal være unik"
+      "help": "Verdien for 'id'-attributtet skal være unik"
     },
     "empty-heading": {
       "description": "",
@@ -147,7 +147,7 @@
     },
     "heading-order": {
       "description": "",
-      "help": "Overksriftsnivåer bør kun endres sekventielt"
+      "help": "Rekkefølgen på overskriftsnivåene skal være korrekt"
     },
     "hidden-content": {
       "description": "",
@@ -159,11 +159,11 @@
     },
     "html-lang-valid": {
       "description": "",
-      "help": "<html> elementet skal ha en korrekt verdi for 'lang'-attributten"
+      "help": "<html> elementet skal ha en korrekt verdi for 'lang'-attributtet"
     },
     "html-xml-lang-mismatch": {
       "description": "",
-      "help": "<html> elementer med 'lang' og 'xml:lang' skal ha det samme basespråk"
+      "help": "<html> elementer med 'lang' og 'xml:lang' skal ha samme språk / dialekt"
     },
     "image-alt": {
       "description": "",
@@ -187,43 +187,43 @@
     },
     "label-title-only": {
       "description": "",
-      "help": "Form-elementer bør ha en synlig label"
+      "help": "Skjemaalement skal ha en synlig ledetekst"
     },
     "label": {
       "description": "",
-      "help": "Form-elementer skal ha labels"
+      "help": "Alle skjemaelement skal ha en tilknyttet ledetekst eller instruksjon"
     },
     "landmark-banner-is-top-level": {
       "description": "",
-      "help": "Et 'banner'-landmark skal ikke være inne i et annet landmark"
+      "help": "Et 'banner'-landemerke skal ikke være inne i et annet landemerke"
     },
     "landmark-complementary-is-top-level": {
       "description": "",
-      "help": "Et 'aside'- eller 'complimentary'-landmark skal ikke være inne i et annet landmark"
+      "help": "Et 'aside'- eller 'complimentary'-landemerke skal ikke være inne i et annet landemerke"
     },
     "landmark-contentinfo-is-top-level": {
       "description": "",
-      "help": "Et 'contentinfo'-landmark skal ikke være inne i et annet landmark"
+      "help": "Et 'contentinfo'-landemerke skal ikke være inne i et annet landemerke"
     },
     "landmark-main-is-top-level": {
       "description": "",
-      "help": "Et 'main'-landmark skal ikke være inne i et annet landmark"
+      "help": "Et 'main'-landemerke skal ikke være inne i et annet landemerke"
     },
     "landmark-no-duplicate-banner": {
       "description": "",
-      "help": "Dokumentet skal ikke ha mer enn ett 'banner'-landmark"
+      "help": "Dokumentet skal ikke ha mer enn ett 'banner'-landemerke"
     },
     "landmark-no-duplicate-contentinfo": {
       "description": "",
-      "help": "Dokumentet skal ikke ha mer enn ett 'contentinfo'-landmark"
+      "help": "Dokumentet skal ikke ha mer enn ett 'contentinfo'-landemerke"
     },
     "landmark-one-main": {
       "description": "",
-      "help": "Dokumentet skal ha ett 'main'-landmark"
+      "help": "Dokumentet skal ha ett 'main'-landemerke"
     },
     "landmark-unique": {
       "description": "",
-      "help": "Sikre at landmarks er unike"
+      "help": "Sikre at landemerker er unike"
     },
     "link-in-text-block": {
       "description": "",
@@ -263,7 +263,7 @@
     },
     "p-as-heading": {
       "description": "",
-      "help": "Fremhevelse med fet, kursiv og skriftstørrelse (font-size) skal ikke brukes til at style <p> elementer som en overskrift"
+      "help": "Fremhevelse med fet, kursiv og skriftstørrelse (font-size) skal ikke brukes til å 'style' <p> elementer som en overskrift"
     },
     "page-has-heading-one": {
       "description": "",
@@ -271,7 +271,7 @@
     },
     "region": {
       "description": "",
-      "help": "Alt innholdet på siden skal være inne i landmarks"
+      "help": "Alt innholdet på siden skal være inne i landemerker"
     },
     "role-img-alt": {
       "description": "",
@@ -279,7 +279,7 @@
     },
     "scope-attr-valid": {
       "description": "",
-      "help": "'scope'-attributten skal brukes korrekt i tabeller"
+      "help": "'scope'-attributtet skal brukes korrekt i tabeller"
     },
     "scrollable-region-focusable": {
       "description": "",
@@ -295,23 +295,23 @@
     },
     "tabindex": {
       "description": "",
-      "help": "Elementer bør ikke ha et 'tabindex' høyere end 0"
+      "help": "Elementer bør ikke ha et 'tabindex' høyere enn 0"
     },
     "table-duplicate-name": {
       "description": "",
-      "help": "Elementet <caption> bør ikke inneholde samme tekst som 'summary'-attributten"
+      "help": "Elementet <caption> bør ikke inneholde samme tekst som 'summary'-attributtet"
     },
     "table-fake-caption": {
       "description": "",
-      "help": "Data- eller overskrifts-celler bør ikke brukes til at beskrive innholdetet av en data-tabell"
+      "help": "Data- eller overskrifts-celler bør ikke brukes til å beskrive innholdet av en data-tabell"
     },
     "td-has-header": {
       "description": "",
-      "help": "Alle ikke-tomme <td> elementer i en tabel større end 3x3 bør ha en tabelloverskrift (<th>)"
+      "help": "Alle ikke-tomme <td> elementer i en tabel større enn 3x3 bør ha en tabelloverskrift (<th>)"
     },
     "td-headers-attr": {
       "description": "",
-      "help": "Alle celler i en tabel, som  bruker 'header'-attributten skal kun referere til andre celler i samme tabel"
+      "help": "Alle celler i en tabel, som  bruker 'header'-attributtet skal kun referere til andre celler i samme tabel"
     },
     "th-has-data-cells": {
       "description": "",
@@ -319,7 +319,7 @@
     },
     "valid-lang": {
       "description": "",
-      "help": "'lang'-attributten skal ha en korrekt verdi"
+      "help": "'lang'-attributtet skal ha en korrekt verdi"
     },
     "video-caption": {
       "description": "",
@@ -332,21 +332,21 @@
       "fail": "Abstrakte roller bør ikke brukes"
     },
     "aria-allowed-attr": {
-      "pass": "ARIA-attribut er brukt korrekt for den angitte rolle",
+      "pass": "ARIA-attributt er brukt korrekt for den angitte rolle",
       "fail": {
-        "singular": "ARIA-attributterne er ikke tillatt: ${data.values}",
-        "plural": "ARIA-attribut er ikke tillatt: ${data.values}"
+        "singular": "ARIA-attributtet er ikke tillatt: ${data.values}",
+        "plural": "ARIA-attributtene er ikke tillatt: ${data.values}"
       }
     },
     "aria-allowed-role": {
       "pass": "ARIA-rollen er tillatt for det gitte element",
       "fail": {
-        "singular": "ARIA-rollerne ${data.values} er ikke tillatt for det gitte element",
-        "plural": "ARIA-rollen ${data.values} er ikke tillatt for det gitte element"
+        "singular": "ARIA-rollen ${data.values} er ikke tillatt for det gitte element",
+        "plural": "ARIA-rollene ${data.values} er ikke tillatt for det gitte element"
       },
       "incomplete": {
-        "singular": "ARIA-rollerne ${data.values} skal være fjernet når elementet er synlig, da de ikke er tillatt for elementet",
-        "plural": "ARIA-rollen ${data.values} skal være fjernet når elementet er synlig, da det ikke er tillatt for elementet"
+        "singular": "ARIA-rollen ${data.values} skal være fjernet når elementet er synlig, da de ikke er tillatt for elementet",
+        "plural": "ARIA-rollene ${data.values} skal være fjernet når elementet er synlig, da det ikke er tillatt for elementet"
       }
     },
     "aria-hidden-body": {
@@ -361,8 +361,8 @@
     "aria-errormessage": {
       "pass": "Bruker en understøttet 'aria-errormessage'-metode",
       "fail": {
-        "singular": "'aria-errormessage'-verdier ${data.values}` bør bruke en metode for å annonsere beskeden (fx 'aria-live', 'aria-describedby', 'role=alert', osv.)",
-        "plural": "'aria-errormessage'-verdi ${data.values}` bør bruke en metode for å annonsere beskeden (fx 'aria-live', 'aria-describedby', 'role=alert', osv.)"
+        "singular": "'aria-errormessage'-verdi ${data.values}` bør bruke en metode for å annonsere beskeden (f.eks. 'aria-live', 'aria-describedby', 'role=alert', osv.)",
+        "plural": "'aria-errormessage'-verdier ${data.values}` bør bruke en metode for å annonsere beskeden (f.eks. 'aria-live', 'aria-describedby', 'role=alert', osv.)"
       }
     },
     "has-widget-role": {
@@ -374,61 +374,61 @@
       "fail": "Rollen skal være en av de mulige ARIA-roller"
     },
     "no-implicit-explicit-label": {
-      "pass": "Der er uoverensstemmelse mellem <label> og det tilgjengelige navn",
+      "pass": "Der er uoverensstemmelse mellom <label> og det tilgjengelige navn",
       "incomplete": "Sjekk at <label> elementet ikke behøver å være en del av ${data}-feltets navn"
     },
     "aria-required-attr": {
       "pass": "Alle påkrevde ARIA-attributter er tilstede",
       "fail": {
-        "singular": "Påkrevde ARIA-attributter er ikke til stede: ${data.values}",
-        "plural": "Påkrevde ARIA-attribut er ikke til stede: ${data.values}"
+        "singular": "Påkrevd ARIA-attributt er ikke til stede: ${data.values}",
+        "plural": "Påkrevde ARIA-attributter er ikke til stede: ${data.values}"
       }
     },
     "aria-required-children": {
       "pass": "Påkrevde ARIA-under-elementer er til stede",
       "fail": {
-        "singular": "Påkrevde ARIA-under-elementers rolle er ikke til stede: ${data.values}",
-        "plural": "Påkrevde ARIA-under-elements rolle er ikke til stede: ${data.values}"
+        "singular": "Påkrevd ARIA-under-element sin rolle er ikke til stede: ${data.values}",
+        "plural": "Påkrevde ARIA-under-elementer sine roller er ikke til stede: ${data.values}"
       },
       "incomplete": {
-        "singular": "Forventer at ARIA under-elementers rolle blir lagt til: ${data.values}",
-        "plural": "Forventer at ARIA under-elements rolle blir lagt til: ${data.values}"
+        "singular": "Forventer at ARIA under-element sin rolle blir lagt til: ${data.values}",
+        "plural": "Forventer at ARIA under-elementer sine roller blir lagt til: ${data.values}"
       }
     },
     "aria-required-parent": {
       "pass": "Påkrevde ARIA-over-elements rolle er til stede",
       "fail": {
-        "singular": "Påkrevde ARIA-over-elementers rolle er ikke til stede: ${data.values}",
-        "plural": "Påkrevde ARIA-over-elements rolle er ikke til stede: ${data.values}"
+        "singular": "Påkrevd ARIA-over-element sin rolle er ikke til stede: ${data.values}",
+        "plural": "Påkrevde ARIA-over-elementer sine roller er ikke til stede: ${data.values}"
       }
     },
     "aria-unsupported-attr": {
-      "pass": "ARIA-attribut er understøttet",
-      "fail": "ARIA-attribut er ikke bredt understøttet i skjermlesere og tilgjengelighetsteknologier:  ${data.values}"
+      "pass": "ARIA-attributt er understøttet",
+      "fail": "ARIA-attributt er ikke bredt understøttet i skjermlesere og tilgjengelighetsteknologier:  ${data.values}"
     },
     "unsupportedrole": {
       "pass": "ARIA rollen er understøttet",
       "fail": "Den brukte rolle er ikke bredt understøttet i skjermlesere og tilgjengelighetsteknologier:  ${data.values}"
     },
     "aria-valid-attr-value": {
-      "pass": "ARIA-attributverdien er valid",
+      "pass": "ARIA-attributverdien er gyldig",
       "fail": {
-        "singular": "Ikke-korrekt ARIA-attributverdier: ${data.values}",
-        "plural": "Ikke-korrekt ARIA-attributverdi: ${data.values}"
+        "singular": "Ugyldig ARIA-attributtverdi: ${data.values}",
+        "plural": "Ugyldige ARIA-attributtverdier: ${data.values}"
       },
       "incomplete": {
-        "singular": "Kunne ikke finne ARIA-attributternes element 'id' på siden: ${data.values}",
-        "plural": "Kunne ikke finne ARIA-attributtens element 'id' på siden: ${data.values}"
+        "singular": "Kunne ikke finne ARIA-attributtet sitt element 'id' på siden: ${data.values}",
+        "plural": "Kunne ikke finne ARIA-attributtene sine element 'id' på siden: ${data.values}"
       }
     },
     "aria-valid-attr": {
       "pass": {
-        "singular": "ARIA-attributnavnene er korrekt",
-        "plural": "ARIA-attributnavnet er korrekt"
+        "singular": "ARIA-attributnavnet er korrekt",
+        "plural": "ARIA-attributnavnene er korrekt"
       },
       "fail": {
-        "singular": "Ikke-korrekt ARIA-attributnavne: ${data.values}",
-        "plural": "Ikke-korrekt ARIA-attributnavn: ${data.values}"
+        "singular": "Ugyldig ARIA-attributtnavn: ${data.values}",
+        "plural": "Ugyldige ARIA-attributtnavn: ${data.values}"
       }
     },
     "valid-scrollable-semantics": {
@@ -441,14 +441,14 @@
       "incomplete": {
         "bgImage": "Elementets bakgrunnsfarge kunne ikke detekteres på grunn av et bakgrunnsbildet",
         "bgGradient": "Elementets bakgrunnsfarge kunne ikke detekteres på grunn av en bakgrunnsgradient",
-        "imgNode": "Elementets bakgrunnsfarge kunne ikke detekteres, fordi elementet inneholder et Bildeelement",
+        "imgNode": "Elementets bakgrunnsfarge kunne ikke detekteres, fordi elementet inneholder et bildeelement",
         "bgOverlap": "Elementets bakgrunnsfarge kunne ikke detekteres, fordi det er overlappet av et annet element",
         "fgAlpha": "Elementets forgrunnsfarge kunne ikke detekteres på grunn av dets gjennomsiktighet",
         "elmPartiallyObscured": "Elementets bakgrunnsfarge kunne ikke detekteres, fordi det er delvist dekket av et annet element",
         "elmPartiallyObscuring": "Elementets bakgrunnsfarge kunne ikke detekteres, fordi det delvist dekker et annet element",
         "outsideViewport": "Elementets bakgrunnsfarge kunne ikke detekteres, fordi det er utenfor sidens 'viewport'",
         "equalRatio": "Elementet har et 1:1-kontrastforhold med bakgrunnen",
-        "shortTextContent": "Elementets innholde er for kort til at kunne avgjøre om inneholdet faktisk ER tekst",
+        "shortTextContent": "Elementets innhold er for kort til å kunne avgjøre om innholdet faktisk er tekst",
         "default": "Kan ikke regne ut kontrastforhold"
       }
     },
@@ -458,20 +458,20 @@
       "incomplete": {
         "bgImage": "Elementets bakgrunnsfarge kunne ikke detekteres på grunn av et bakgrunnsbilde",
         "bgGradient": "Elementets bakgrunnsfarge kunne ikke detekteres på grunn av en bakgrunnsgradient",
-        "imgNode": "Elementets bakgrunnsfarge kunne ikke detekteres, fordi elementet inneholder et Bildeelement",
+        "imgNode": "Elementets bakgrunnsfarge kunne ikke detekteres, fordi elementet inneholder et bildeelement",
         "bgOverlap": "Elementets bakgrunnsfarge kunne ikke detekteres, fordi det er overlappet av et annet element",
         "fgAlpha": "Elementets forgrunnsfarge kunne ikke detekteres på grunn av dets gjennomsiktighet",
         "elmPartiallyObscured": "Elementets bakgrunnsfarge kunne ikke detekteres, fordi det er delvist dekket av et annet element",
         "elmPartiallyObscuring": "Elementets bakgrunnsfarge kunne ikke detekteres, fordi det delvist dekker et annet element",
         "outsideViewport": "Elementets bakgrunnsfarge kunne ikke detekteres, fordi det er utenfor sidens 'viewport'",
         "equalRatio": "Elementet har et 1:1-kontrastforhold med bakgrunnen",
-        "shortTextContent": "Elementets innholdet er for kort til at kunne avgjøre om inneholdet faktisk ER tekst",
+        "shortTextContent": "Elementets innhold er for kort til å kunne avgjøre om innholdet faktisk er tekst",
         "default": "Kan ikke regne ut kontrastforhold"
       }
     },
     "link-in-text-block": {
       "pass": "Lenker kan adskilles fra den omkringliggende tekst på annen måte enn med farge",
-      "fail": "Lenker bør skille sig ud fra den omkringliggende tekst på annen måte enn med farge",
+      "fail": "Lenker bør skille seg ut fra den omkringliggende tekst på annen måte enn med farge",
       "incomplete": {
         "bgContrast": "Elementets kontrastforhold kunne ikke detekteres. Sjekk for spesifikk 'hover'/'focus' styling",
         "bgImage": "Elementets kontrastforhold kunne ikke detekteres på grunn av et bakgrunnsbilde",
@@ -486,12 +486,12 @@
       "fail": "'autocomplete'-verdien er ikke passende for denne type input"
     },
     "autocomplete-valid": {
-      "pass": "'autocomplete'-attributten er korrekt formateret",
-      "fail": "'autocomplete'-attributten er forkert formateret"
+      "pass": "'autocomplete'-attributtet er korrekt formatert",
+      "fail": "'autocomplete'-attributtet er ikke formatert korrekt"
     },
     "accesskeys": {
       "pass": "'Accesskey' attributtverdien er unik",
-      "fail": "Dokumentet har flere elementer med den samme 'accesskey'-attributt"
+      "fail": "Dokumentet har flere elementer med den samme 'accesskey'-attributtet"
     },
     "focusable-content": {
       "pass": "Elementet inneholder fokuserbare elementer",
@@ -514,47 +514,47 @@
       "fail": "Fokuserbart innholdet bør ha tabindex='-1' eller fjernes fra sidens DOM"
     },
     "landmark-is-top-level": {
-      "pass": "${data.role} landmark er på det øverste nivå.",
-      "fail": "${data.role} landmark er innholdet i et annet landmark."
+      "pass": "${data.role} landemerke er på det øverste nivå.",
+      "fail": "${data.role} landemerke er innholdet i et annet landemerke."
     },
     "page-has-heading-one": {
       "pass": "Siden har minst én overskrift på nivå 1",
       "fail": "Siden skal ha minst én overskrift på nivå 1"
     },
     "page-has-main": {
-      "pass": "Dokumentet har minst ét 'main'-landmark",
-      "fail": "Dokumentet har ikke et 'main'-landmark"
+      "pass": "Dokumentet har minst ét 'main'-landemerke",
+      "fail": "Dokumentet har ikke et 'main'-landemerke"
     },
     "page-no-duplicate-banner": {
-      "pass": "Dokumentet har ikke mer enn ett 'banner'-landmark",
-      "fail": "Dokumentet har mer enn ett 'banner-'landmark"
+      "pass": "Dokumentet har ikke mer enn ett 'banner'-landemerke",
+      "fail": "Dokumentet har mer enn ett 'banner-'landemerke"
     },
     "page-no-duplicate-contentinfo": {
-      "pass": "Dokumentet har ikke mer enn ett 'contentinfo'-landmark",
-      "fail": "Dokumentet har mer enn ett 'contentinfo'-landmark"
+      "pass": "Dokumentet har ikke mer enn ett 'contentinfo'-landemerke",
+      "fail": "Dokumentet har mer enn ett 'contentinfo'-landemerke"
     },
     "page-no-duplicate-main": {
-      "pass": "Dokumentet har ikke mer enn ett 'main'-landmark",
-      "fail": "Dokumentet har mer enn ett 'main'-landmark"
+      "pass": "Dokumentet har ikke mer enn ett 'main'-landemerke",
+      "fail": "Dokumentet har mer enn ett 'main'-landemerke"
     },
     "tabindex": {
-      "pass": "Elementet har ikke et 'tabindex' større end 0",
-      "fail": "Elementet har et 'tabindex' større end 0"
+      "pass": "Elementet har ikke et 'tabindex' større enn 0",
+      "fail": "Elementet har et 'tabindex' større enn 0"
     },
     "alt-space-value": {
       "pass": "Elementet har en alt-attributt med gyldig verdi",
       "fail": "Elementet har en alt-attributt som kun inneholder et mellomrom, som ikke ignoreres av alle skjermlesere"
     },
     "duplicate-img-label": {
-      "pass": "Elementet duplikerer ikke den eksisterende tekst fra <img> elementets alt-tekst",
-      "fail": "Elementet inneholder et <img> element med alt-tekst, som duplikerer den eksisterende tekst"
+      "pass": "Elementet duplisere ikke den eksisterende tekst fra <img> elementets alt-tekst",
+      "fail": "Elementet inneholder et <img> element med alt-tekst, som duplisere den eksisterende tekst"
     },
     "explicit-label": {
       "pass": "Form-elementet har en eksplisitt <label>",
       "fail": "Form-elementet har ikke en eksplisitt <label>"
     },
     "help-same-as-label": {
-      "pass": "Hjelpeteksten ('title' eller 'aria-describedby') duplikerer ikke label-teksten",
+      "pass": "Hjelpeteksten ('title' eller 'aria-describedby') duplisere ikke label-teksten",
       "fail": "Hjelpeteksten ('title' eller 'aria-describedby') er den samme som label-teksten"
     },
     "hidden-explicit-label": {
@@ -574,24 +574,24 @@
       "incomplete": "Flere label-elementer er ikke bredt understøttet i tilgjengelighetsteknologier. Sørg for at det første label-element inneholder all nødvendige informasjon."
     },
     "title-only": {
-      "pass": "Form-elementet bruker ikke utelukkende 'title'-attributten som label",
-      "fail": "Kun 'title'-attributten er brukt som label for form-elementet"
+      "pass": "Form-elementet bruker ikke utelukkende 'title'-attributtet som label",
+      "fail": "Kun 'title'-attributtet er brukt som label for form-elementet"
     },
     "landmark-is-unique": {
-      "pass": "Landmarks skal ha en unik rolle eller 'role'/'label'/'title'-attribut-kombinasjon (som tilgjengelig navn)",
-      "fail": "Et landmark skal ha en unik 'aria-label', 'aria-labelledby', eller 'title' for at gjøre landmarks adskillelige"
+      "pass": "Landemerker skal ha en unik rolle eller 'role'/'label'/'title'-attribut-kombinasjon (som tilgjengelig navn)",
+      "fail": "Et landemerke skal ha en unik 'aria-label', 'aria-labelledby', eller 'title' for at gjøre landemerker atskillelige"
     },
     "has-lang": {
       "pass": "<html> elementet har en 'lang'-attributt",
       "fail": "<html> elementet har ikke en 'lang'-attributt"
     },
     "valid-lang": {
-      "pass": "'lang'-attributtens verdi er inkluderet i listen over godkjente språk",
-      "fail": "'lang'-attributtens verdi er ikke inkluderet i listen over godkjente språk"
+      "pass": "'lang'-attributtet sin verdi er inkluderet i listen over godkjente språk",
+      "fail": "'lang'-attributtet sin verdi er ikke inkluderet i listen over godkjente språk"
     },
     "xml-lang-mismatch": {
-      "pass": "Attributterne 'lang' og 'xml:lang' har samme basisspråk",
-      "fail": "Attributterne 'lang' og 'xml:lang' har ikke samme basisspråk"
+      "pass": "Attributtene 'lang' og 'xml:lang' har samme språk / dialekt",
+      "fail": "Attributtene 'lang' og 'xml:lang' har ikke samme språk / dialekt"
     },
     "dlitem": {
       "pass": "Beskrivelsesliste-elementet har et <dl>-over-element",
@@ -602,12 +602,12 @@
       "fail": "Elementet i listen har ikke et <ul>, <ol> eller 'role=\"list\"'-over-element"
     },
     "only-dlitems": {
-      "pass": "Elementet i listen har kun direkte under-elementer, som er tilladt i <dt> eller <dd> elementer",
-      "fail": "Elementet i listen har direkte under-elementer, som ikke er tilladt inde i <dt> eller <dd> elementer"
+      "pass": "Elementet i listen har kun direkte under-elementer, som er tillatt i <dt> eller <dd> elementer",
+      "fail": "Elementet i listen har direkte under-elementer, som ikke er tillatt inde i <dt> eller <dd> elementer"
     },
     "only-listitems": {
-      "pass": "Elementet i listen har kun direkte under-elementer, som er tilladt i <li> elementer",
-      "fail": "Elementet i listen har direkte under-elementer, som ikke er tilladt inde i <li> elementer"
+      "pass": "Elementet i listen har kun direkte under-elementer, som er tillatt i <li> elementer",
+      "fail": "Elementet i listen har direkte under-elementer, som ikke er tillatt inne i <li> elementer"
     },
     "structured-dlitems": {
       "pass": "Det ikke-tomme elementet har både <dt> og <dd> elementer",
@@ -620,11 +620,11 @@
     "frame-tested": {
       "pass": "Denne <iframe> ble testet av axe-core",
       "fail": "Denne <iframe> kunne ikke testes av axe-core",
-      "incomplete": "Denne <iframe> er enda ikke bke testet av axe-core"
+      "incomplete": "Denne <iframe> er enda ikke testet av axe-core"
     },
     "css-orientation-lock": {
       "pass": "Skjermen kan styres, og sidens skjermretning er ikke låst med med 'css-orientation-lock'",
-      "fail": "Skjermretningen ('css-orientation-lock') er låst, hvilket gjør sidevisning vanskelig at styre på skjermen",
+      "fail": "Skjermretningen ('css-orientation-lock') er låst, hvilket gjør sidevisning vanskelig å styre på skjermen",
       "incomplete": "Det kan ikke detekteres om skjermretning er låst (med 'css-orientation-lock')"
     },
     "meta-viewport-large": {
@@ -648,8 +648,8 @@
       "fail": "Ingen passende 'skip link' funnet"
     },
     "landmark": {
-      "pass": "Siden har en 'landmark' region",
-      "fail": "Siden har ikke en 'landmark' region"
+      "pass": "Siden har en 'landemerke' region",
+      "fail": "Siden har ikke en 'landemerke' region"
     },
     "meta-refresh": {
       "pass": "<meta>-tagget oppdaterer ikke siden med det samme",
@@ -660,8 +660,8 @@
       "fail": "Overskrifts-elementer (<h1>, <h2>, osv.) bør brukes i stedet for stylet <p> elementer"
     },
     "region": {
-      "pass": "Alt innholdet på siden er lagt inn under landmarks",
-      "fail": "Deler av sidens innholdet er ikke lagt inn under et landmark"
+      "pass": "Alt innholdet på siden er lagt inn under landemerker",
+      "fail": "Deler av sidens innholdet er ikke lagt inn under et landemerke"
     },
     "skip-link": {
       "pass": "Elementet som 'skip link' refererer til, eksisterer",
@@ -681,16 +681,16 @@
       "fail": "Dokumentet har flere elementer referert med ARIA med den samme 'id'-attributten: ${data}"
     },
     "duplicate-id": {
-      "pass": "Dokumentet har ingen statiske elementer som deler den samme 'id'-attributten",
-      "fail": "Dokumentet har flere statiske elementer med den samme 'id'-attributten"
+      "pass": "Dokumentet har ingen statiske elementer som deler den samme 'id'-attributtet",
+      "fail": "Dokumentet har flere statiske elementer med den samme 'id'-attributtet"
     },
     "aria-label": {
-      "pass": "'aria-label'-attribut er til stede og er ikke tom",
-      "fail": "'aria-label'-attribut eksisterer ikke eller er tom"
+      "pass": "'aria-label'-attributt er til stede og er ikke tomt",
+      "fail": "'aria-label'-attributt eksisterer ikke eller er tomt"
     },
     "aria-labelledby": {
-      "pass": "'aria-labelledby'-attribut eksisterer og refererer elementer som er synlige for skjermlesere",
-      "fail": "'aria-labelledby'-attribut eksisterer ikke, eller refererer elementer, som ikke eksisterer - eller refererer til elementer, som er tomme"
+      "pass": "'aria-labelledby'-attributt eksisterer og refererer elementer som er synlige for skjermlesere",
+      "fail": "'aria-labelledby'-attributt eksisterer ikke, eller refererer elementer, som ikke eksisterer - eller refererer til elementer, som er tomme"
     },
     "avoid-inline-spacing": {
       "pass": "Ingen inline styling med '!important', som påvirker tekst-mellomrom-avstand er spesifisert",
@@ -725,54 +725,54 @@
     },
     "non-empty-alt": {
       "pass": "Elementet har 'alt'-attributt med innhold",
-      "fail": "Elementet har ingen 'alt'-attributt, eller 'alt'-attributten er tom"
+      "fail": "Elementet har ingen 'alt'-attributt, eller 'alt'-attributtet er tomt"
     },
     "non-empty-if-present": {
       "pass": {
         "default": "Elementet har ikke en 'value'-attributt",
         "has-label": "Elementet har en 'verdi'-attributt med innhold"
       },
-      "fail": "Elementet har en 'value'-attributt, og 'verdi'-attributten er tom"
+      "fail": "Elementet har en 'value'-attributt, og 'verdi'-attributtet er tomt"
     },
     "non-empty-title": {
       "pass": "Elementet har en 'title'-attributt",
-      "fail": "Elementet har ingen 'title'-attributt, eller 'title'-attributten er tom"
+      "fail": "Elementet har ingen 'title'-attributt, eller 'title'-attributtet er tomt"
     },
     "non-empty-value": {
       "pass": "Elementet har 'value'-attributt med innholdet",
-      "fail": "Elementet har ingen 'value'-attributt, eller 'value'-attributten er tom"
+      "fail": "Elementet har ingen 'value'-attributt, eller 'value'-attributtet er tomt"
     },
     "role-none": {
-      "pass": "Elementets standard semantikk ble overskrevet med attributten 'role=\"none\"'",
-      "fail": "Elementets standard semantikk ble ikke overskrevet med attributten 'role=\"none\"'"
+      "pass": "Elementets standard semantikk ble overskrevet med attributtet 'role=\"none\"'",
+      "fail": "Elementets standard semantikk ble ikke overskrevet med attributtet 'role=\"none\"'"
     },
     "role-presentation": {
-      "pass": "Elementets standard semantikk ble overskrevet med attributten 'role=\"presentation\"'",
-      "fail": "Elementets standard semantikk ble ikke overskrevet med attributten 'role=\"presentation\"'"
+      "pass": "Elementets standard semantikk ble overskrevet med attributtet 'role=\"presentation\"'",
+      "fail": "Elementets standard semantikk ble ikke overskrevet med attributtet 'role=\"presentation\"'"
     },
     "caption-faked": {
-      "pass": "Den første række i tabellen er ikke brukt som en beskrivelse ('caption')",
-      "fail": "Det første element i tabellen bør være en beskrivelse (<caption>) i stedet for en celle"
+      "pass": "Den første raden i tabellen er ikke brukt som en beskrivelse ('caption')",
+      "fail": "Det første elementet i tabellen bør være en beskrivelse (<caption>) i stedet for en celle"
     },
     "html5-scope": {
-      "pass": "'Scope'-attributten bør kun brukes på tabellens header-elementer (<th>)",
-      "fail": "'Scope'-attributten bør kun brukes på tabellens header-elementer (<th>)"
+      "pass": "'Scope'-attributtet bør kun brukes på tabellens header-elementer (<th>)",
+      "fail": "'Scope'-attributtet bør kun brukes på tabellens header-elementer (<th>)"
     },
     "same-caption-summary": {
-      "pass": "innholdetet av 'summary'-attributten og <caption> elementet er ikke identisk",
-      "fail": "innholdetet av 'summary'-attributten og <caption> elementet er identisk"
+      "pass": "innholdet av 'summary'-attributtet og <caption> elementet er ikke identisk",
+      "fail": "innholdet av 'summary'-attributtet og <caption> elementet er identisk"
     },
     "scope-value": {
-      "pass": "'scope'-attributten brukes korrekt",
-      "fail": "Verdien av 'scope'-attributten skal kun være 'row' eller 'col'"
+      "pass": "'scope'-attributtet brukes korrekt",
+      "fail": "Verdien av 'scope'-attributtet skal kun være 'row' eller 'col'"
     },
     "td-has-header": {
       "pass": "Alle data-celler med innhold har en tabell-header",
       "fail": "Noen data-celler med innhold har ikke tabell-headers"
     },
     "td-headers-attr": {
-      "pass": "Header-attributten brukes kun til å referere til andre celler i den samme tabel",
-      "fail": "Header-attributten brukes ikke kun til å referere til andre celler i den samme tabel"
+      "pass": "Header-attributtet brukes kun til å referere til andre celler i den samme tabel",
+      "fail": "Header-attributtet brukes ikke kun til å referere til andre celler i den samme tabel"
     },
     "th-has-data-cells": {
       "pass": "Alle tabellens header-celler refererer til data-celler",
