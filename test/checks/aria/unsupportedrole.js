@@ -25,7 +25,7 @@ describe('unsupportedrole', function() {
       '<div id="target" role="mccheddarton">Contents</div>'
     );
     assert.isTrue(check.evaluate.apply(checkContext, params));
-    assert.deepEqual(checkContext._data, ["mccheddarton"]);
+    assert.deepEqual(checkContext._data, "mccheddarton");
   });
 
   it('should return false if applied to a supported role', function() {
@@ -60,7 +60,7 @@ describe('unsupportedrole', function() {
       '<div id="target" role="doc-abstract">Contents</div>'
     );
     assert.isTrue(check.evaluate.apply(checkContext, params));
-    assert.deepEqual(checkContext._data, ["doc-abstract"]);
+    assert.deepEqual(checkContext._data, "doc-abstract");
   });
 
   it('should return true if applied to an unsupported fallback role', function() {
@@ -79,7 +79,7 @@ describe('unsupportedrole', function() {
       '<div id="target" role="unsupported alert">Contents</div>'
     );
     assert.isTrue(check.evaluate.apply(checkContext, params));
-    assert.deepEqual(checkContext._data, ["alert"]);
+    assert.deepEqual(checkContext._data, "alert");
   });
 
 });
