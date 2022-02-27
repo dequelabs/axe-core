@@ -538,8 +538,8 @@
       "fail": "Dokumentet har mer enn ett 'main'-landemerke"
     },
     "tabindex": {
-      "pass": "Elementet har ikke et 'tabindex' større enn 0",
-      "fail": "Elementet har et 'tabindex' større enn 0"
+      "pass": "Elementet har ikke en 'tabindex' som er større enn 0",
+      "fail": "Elementet har en 'tabindex' som er større enn 0"
     },
     "alt-space-value": {
       "pass": "Elementet har en alt-attributt med gyldig verdi",
@@ -578,8 +578,8 @@
       "fail": "Kun 'title'-attributtet er brukt som label for form-elementet"
     },
     "landmark-is-unique": {
-      "pass": "Landemerker skal ha en unik rolle eller 'role'/'label'/'title'-attribut-kombinasjon (som tilgjengelig navn)",
-      "fail": "Et landemerke skal ha en unik 'aria-label', 'aria-labelledby', eller 'title' for at gjøre landemerker atskillelige"
+      "pass": "Landemerker skal ha en unik rolle eller 'role'/'label'/'title'-attributtkombinasjon (som tilgjengelig navn)",
+      "fail": "Et landemerke skal ha en unik 'aria-label', 'aria-labelledby', eller 'title' for å gjøre landemerker atskillelige"
     },
     "has-lang": {
       "pass": "<html> elementet har en 'lang'-attributt",
