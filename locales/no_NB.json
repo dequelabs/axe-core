@@ -95,11 +95,11 @@
     },
     "css-orientation-lock": {
       "description": "",
-      "help": "'CSS Media queries' bør ikke brukes til at låse skjermretningen ('orientation')"
+      "help": "'CSS Media queries' skal ikke brukes til å låse skjermretningen ('orientation')"
     },
     "definition-list": {
       "description": "",
-      "help": "<dl> elementer skal kun direkte inneholde velsorterede <dt> og <dd> grupper, <script> eller <template> elementer"
+      "help": "<dl> elementer skal kun direkte inneholde velsorterte <dt> og <dd> grupper, <script> eller <template> elementer"
     },
     "dlitem": {
       "description": "",
@@ -115,7 +115,7 @@
     },
     "duplicate-id-aria": {
       "description": "",
-      "help": "'id'-attributtet brukt på ARIA-elementer og -labels skal være unik"
+      "help": "'id'-attributtet brukt på ARIA-elementer og -labels skal være unikt"
     },
     "duplicate-id": {
       "description": "",
@@ -127,11 +127,11 @@
     },
     "focus-order-semantics": {
       "description": "",
-      "help": "Elementer i fokus-rekkefølgen bør ha en 'role'-attributt, som er passende for det interaktive innholdet"
+      "help": "Elementer i fokus-rekkefølgen skal ha en 'role'-attributt, som er passende for det interaktive innholdet"
     },
     "form-field-multiple-labels": {
       "description": "",
-      "help": "Form-feltet bør ikke ha flere label-elementer"
+      "help": "Form-feltet skal ikke ha flere label-elementer"
     },
     "frame-tested": {
       "description": "",
@@ -151,7 +151,7 @@
     },
     "hidden-content": {
       "description": "",
-      "help": "Skjult innholdet på siden kan ikke analyseres"
+      "help": "Skjult innhold på siden kan ikke analyseres"
     },
     "html-has-lang": {
       "description": "",
@@ -171,7 +171,7 @@
     },
     "image-redundant-alt": {
       "description": "",
-      "help": "Alternativ tekst til bilder (alt-tekst) bør ikke gjentas som brødtekst"
+      "help": "Alternativ tekst til bilder (alt-tekst) skal ikke gjentas som brødtekst"
     },
     "input-button-name": {
       "description": "",
@@ -251,7 +251,7 @@
     },
     "meta-viewport-large": {
       "description": "",
-      "help": "Brukere bør kunne zoome og skalere tekst op til 500%"
+      "help": "Brukere skal kunne zoome og skalere tekst opp til 500%"
     },
     "meta-viewport": {
       "description": "",
@@ -295,19 +295,19 @@
     },
     "tabindex": {
       "description": "",
-      "help": "Elementer bør ikke ha et 'tabindex' høyere enn 0"
+      "help": "Elementer skal ikke ha et 'tabindex' høyere enn 0"
     },
     "table-duplicate-name": {
       "description": "",
-      "help": "Elementet <caption> bør ikke inneholde samme tekst som 'summary'-attributtet"
+      "help": "Elementet <caption> skal ikke inneholde samme tekst som 'summary'-attributtet"
     },
     "table-fake-caption": {
       "description": "",
-      "help": "Data- eller overskrifts-celler bør ikke brukes til å beskrive innholdet av en data-tabell"
+      "help": "Data- eller overskrifts-celler skal ikke brukes til å beskrive innholdet av en data-tabell"
     },
     "td-has-header": {
       "description": "",
-      "help": "Alle ikke-tomme <td> elementer i en tabel større enn 3x3 bør ha en tabelloverskrift (<th>)"
+      "help": "Alle ikke-tomme <td> elementer i en tabel større enn 3x3 skal ha en tabelloverskrift (<th>)"
     },
     "td-headers-attr": {
       "description": "",
@@ -329,7 +329,7 @@
   "checks": {
     "abstractrole": {
       "pass": "Abstrakte roller er ikke brukt",
-      "fail": "Abstrakte roller bør ikke brukes"
+      "fail": "Abstrakte roller skal ikke brukes"
     },
     "aria-allowed-attr": {
       "pass": "ARIA-attributt er brukt korrekt for den angitte rolle",
@@ -351,7 +351,7 @@
     },
     "aria-hidden-body": {
       "pass": "Kunne ikke finne noen 'aria-hidden'-attributt i dokumentets <body> element",
-      "fail": "'aria-hidden=true' bør ikke brukes på dokumentets <body> element"
+      "fail": "'aria-hidden=true' skal ikke brukes på dokumentets <body> element"
     },
     "aria-roledescription": {
       "pass": "'aria-roledescription' brukes på en understøttet semantisk rolle",
@@ -361,8 +361,8 @@
     "aria-errormessage": {
       "pass": "Bruker en understøttet 'aria-errormessage'-metode",
       "fail": {
-        "singular": "'aria-errormessage'-verdi ${data.values}` bør bruke en metode for å annonsere beskeden (f.eks. 'aria-live', 'aria-describedby', 'role=alert', osv.)",
-        "plural": "'aria-errormessage'-verdier ${data.values}` bør bruke en metode for å annonsere beskeden (f.eks. 'aria-live', 'aria-describedby', 'role=alert', osv.)"
+        "singular": "'aria-errormessage'-verdi ${data.values}` skal bruke en metode for å annonsere beskeden (f.eks. 'aria-live', 'aria-describedby', 'role=alert', osv.)",
+        "plural": "'aria-errormessage'-verdier ${data.values}` skal bruke en metode for å annonsere beskeden (f.eks. 'aria-live', 'aria-describedby', 'role=alert', osv.)"
       }
     },
     "has-widget-role": {
@@ -374,7 +374,7 @@
       "fail": "Rollen skal være en av de mulige ARIA-roller"
     },
     "no-implicit-explicit-label": {
-      "pass": "Der er uoverensstemmelse mellom <label> og det tilgjengelige navn",
+      "pass": "Det er uoverensstemmelse mellom <label> og det tilgjengelige navnet",
       "incomplete": "Sjekk at <label> elementet ikke behøver å være en del av ${data}-feltets navn"
     },
     "aria-required-attr": {
@@ -471,7 +471,7 @@
     },
     "link-in-text-block": {
       "pass": "Lenker kan adskilles fra den omkringliggende tekst på annen måte enn med farge",
-      "fail": "Lenker bør skille seg ut fra den omkringliggende tekst på annen måte enn med farge",
+      "fail": "Lenker må skille seg ut fra den omkringliggende tekst på annen måte enn med farge",
       "incomplete": {
         "bgContrast": "Elementets kontrastforhold kunne ikke detekteres. Sjekk for spesifikk 'hover'/'focus' styling",
         "bgImage": "Elementets kontrastforhold kunne ikke detekteres på grunn av et bakgrunnsbilde",
@@ -495,15 +495,15 @@
     },
     "focusable-content": {
       "pass": "Elementet inneholder fokuserbare elementer",
-      "fail": "Elementet bør ha fokuserbart innholdet"
+      "fail": "Elementet skal ha fokuserbart innhold"
     },
     "focusable-disabled": {
       "pass": "Ingen fokuserbare elementer inne i elementet",
-      "fail": "Fokuserbart innholdet bør slås fra eller fjernes fra sidens DOM"
+      "fail": "Fokuserbart innhold skal slås av eller fjernes fra sidens DOM"
     },
     "focusable-element": {
       "pass": "Elementet er fokuserbart",
-      "fail": "Elementet bør være fokuserbart"
+      "fail": "Elementet skal være fokuserbart"
     },
     "focusable-no-name": {
       "pass": "Elementet er ikke i sidens tabulerings-rekkefølge ('tab order') eller har tilgjengelig tekst",
@@ -511,7 +511,7 @@
     },
     "focusable-not-tabbable": {
       "pass": "Ingen fokuserbare elementer inne i element",
-      "fail": "Fokuserbart innholdet bør ha tabindex='-1' eller fjernes fra sidens DOM"
+      "fail": "Fokuserbart innholdet skal ha tabindex='-1' eller fjernes fra sidens DOM"
     },
     "landmark-is-top-level": {
       "pass": "${data.role} landemerke er på det øverste nivå.",
@@ -657,7 +657,7 @@
     },
     "p-as-heading": {
       "pass": "<p> elementer er ikke stylet som en overskrift",
-      "fail": "Overskrifts-elementer (<h1>, <h2>, osv.) bør brukes i stedet for stylet <p> elementer"
+      "fail": "Overskrifts-elementer (<h1>, <h2>, osv.) skal brukes i stedet for stylet <p> elementer"
     },
     "region": {
       "pass": "Alt innholdet på siden er lagt inn under landemerker",
@@ -665,7 +665,7 @@
     },
     "skip-link": {
       "pass": "Elementet som 'skip link' refererer til, eksisterer",
-      "incomplete": "Element som 'skip link' refererer til, bør bli synlig ved aktivering",
+      "incomplete": "Element som 'skip link' refererer til, skal bli synlig ved aktivering",
       "fail": "Manglende 'skip link' 'target'-attributt"
     },
     "unique-frame-title": {
@@ -752,11 +752,11 @@
     },
     "caption-faked": {
       "pass": "Den første raden i tabellen er ikke brukt som en beskrivelse ('caption')",
-      "fail": "Det første elementet i tabellen bør være en beskrivelse (<caption>) i stedet for en celle"
+      "fail": "Det første elementet i tabellen skal være en beskrivelse (<caption>) i stedet for en celle"
     },
     "html5-scope": {
-      "pass": "'Scope'-attributtet bør kun brukes på tabellens header-elementer (<th>)",
-      "fail": "'Scope'-attributtet bør kun brukes på tabellens header-elementer (<th>)"
+      "pass": "'Scope'-attributtet skal kun brukes på tabellens header-elementer (<th>)",
+      "fail": "'Scope'-attributtet skal kun brukes på tabellens header-elementer (<th>)"
     },
     "same-caption-summary": {
       "pass": "innholdet av 'summary'-attributtet og <caption> elementet er ikke identisk",
