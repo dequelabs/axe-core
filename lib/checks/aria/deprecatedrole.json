@@ -5,7 +5,7 @@
     "impact": "minor",
     "messages": {
       "pass": "ARIA role is not deprecated",
-      "fail": "The role used is deprecated: ${data.values}"
+      "fail": "The role used is deprecated: ${data}"
     }
   }
 }
