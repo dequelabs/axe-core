@@ -483,6 +483,31 @@ testUtils.getCheckEvaluate = function getCheckEvaluate(checkId, testOptions) {
             result +
             noneCheckMessage
         );
+
+        var message = axe.utils.processMessage(
+          messages[key][messageKey],
+          this._data
+        );
+        assert.isTrue(
+          message.indexOf('${') === -1,
+          'Data object missing properties for ' +
+            key +
+            ' message key "' +
+            messageKey +
+            '": "' +
+            message +
+            '"'
+        );
+      } else {
+        var message = axe.utils.processMessage(messages[key], this._data);
+        assert.isTrue(
+          message.indexOf('${') === -1,
+          'Data object missing properties for ' +
+            key +
+            ' message: "' +
+            message +
+            '"'
+        );
       }
     }
 
