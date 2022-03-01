@@ -40,7 +40,19 @@ describe('isolated-env test', function() {
       return this.skip();
     }
 
-    axe.testUtils.awaitNestedLoad(function() {
+    var nestedLoadPromise = new Promise(function(resolve) {
+      axe.testUtils.awaitNestedLoad(resolve);
+    });
+
+    var isloadedPromise = new Promise(function(resolve) {
+      window.addEventListener('message', function(msg) {
+        if (msg.data === 'axe-loaded') {
+          resolve();
+        }
+      });
+    });
+
+    Promise.all([nestedLoadPromise, isloadedPromise]).then(function() {
       win = fixture.querySelector('#isolated-frame').contentWindow;
       var focusableFrame = fixture.querySelector('#focusable-iframe');
 
@@ -53,8 +65,7 @@ describe('isolated-env test', function() {
         size: { width: 10, height: 10 }
       });
 
-      var promises = [axe.runPartial(), iframePromise];
-      Promise.all(promises)
+      Promise.all([axe.runPartial(), iframePromise])
         .then(function(r) {
           origPartialResults = r;
           done();
