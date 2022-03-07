@@ -436,7 +436,7 @@
       "fail": "Elementet har ikke korrekt semantikk for et element i fokus-rekkefølgen."
     },
     "color-contrast": {
-      "pass": "Elementet har stor fargekontrast. Den er ${data.contrastRatio}",
+      "pass": "Elementet har tilstrekkelig fargekontrast. Den er ${data.contrastRatio}",
       "fail": "Elementet har ikke god nok fargekontrast. Den er ${data.contrastRatio} (forgrunnsfarge: ${data.fgColor}, bakgrunnsfarge: ${data.bgColor}, tekststørrelse: ${data.fontSize}, teksttykkelse: ${data.fontWeight}). Forventet kontrastforhold er ${data.expectedContrastRatio}",
       "incomplete": {
         "bgImage": "Elementets bakgrunnsfarge kunne ikke detekteres på grunn av et bakgrunnsbildet",
