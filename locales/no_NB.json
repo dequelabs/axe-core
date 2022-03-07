@@ -147,7 +147,7 @@
     },
     "heading-order": {
       "description": "",
-      "help": "Rekkefølgen på overskriftsnivåene skal være korrekt"
+      "help": "Rekkefølgen for overksriftsnivåer skal være semtantisk korrekt"
     },
     "hidden-content": {
       "description": "",
