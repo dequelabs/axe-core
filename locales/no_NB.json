@@ -59,7 +59,7 @@
     },
     "aria-valid-attr": {
       "description": "",
-      "help": "ARIA-attributter skal ha et korrekt navn"
+      "help": "ARIA-attributter skal ha et gyldig navn"
     },
     "audio-caption": {
       "description": "",
