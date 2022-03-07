@@ -171,7 +171,7 @@
     },
     "image-redundant-alt": {
       "description": "",
-      "help": "Alternativ tekst til bilder (alt-tekst) skal ikke gjentas som brødtekst"
+      "help": "Alternativ tekst til bilder (alt-tekst) skal ikke gjentas som tekst"
     },
     "input-button-name": {
       "description": "",
