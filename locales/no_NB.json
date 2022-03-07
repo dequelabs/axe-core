@@ -55,7 +55,7 @@
     },
     "aria-valid-attr-value": {
       "description": "",
-      "help": "ARIA-attributter skal ha en korrekt verdi"
+      "help": "ARIA-attributter skal ha en gyldig verdi"
     },
     "aria-valid-attr": {
       "description": "",
