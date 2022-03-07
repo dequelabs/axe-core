@@ -31,7 +31,7 @@
     },
     "aria-required-attr": {
       "description": "",
-      "help": "Påkrevde ARIA-attributter skal være angitt"
+      "help": "Alle påkrevde ARIA-attributter skal være angitt i henhold til elementets rolle"
     },
     "aria-required-children": {
       "description": "",
