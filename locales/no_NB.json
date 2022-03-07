@@ -793,5 +793,5 @@
       "failureMessage": "Rett alle de følgende: {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
     }
   },
-  "incompleteFallbackMessage": "axe kunne ikke gi en årsak. Tid for å finne frem utviklingsverktøyet ditt!"
+  "incompleteFallbackMessage": "axe kunne ikke finne årsaken. Tid for å finne frem utviklerverktøyet(element inspector)!"
 }
