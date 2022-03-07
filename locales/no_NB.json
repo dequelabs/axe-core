@@ -159,7 +159,7 @@
     },
     "html-lang-valid": {
       "description": "",
-      "help": "<html> elementet skal ha en korrekt verdi for 'lang'-attributtet"
+      "help": "<html> elementet skal ha en gyldig verdi for 'lang'-attributtet"
     },
     "html-xml-lang-mismatch": {
       "description": "",
