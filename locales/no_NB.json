@@ -587,7 +587,7 @@
     },
     "valid-lang": {
       "pass": "'lang'-attributtet sin verdi er inkluderet i listen over godkjente språk",
-      "fail": "'lang'-attributtet sin verdi er ikke inkluderet i listen over godkjente språk"
+      "fail": "'lang'-attributtet sin verdi er ikke inkluderet i listen over gyldige språk"
     },
     "xml-lang-mismatch": {
       "pass": "Attributtene 'lang' og 'xml:lang' har samme språk / dialekt",
