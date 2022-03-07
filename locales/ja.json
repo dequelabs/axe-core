@@ -483,9 +483,9 @@
         "plural": "無効なARIA属性値です: ${data.values}"
       },
       "incomplete": {
-        "noId": "ARIA 属性で指定されている要素の ID がページ上に存在しません: ${data.needsReview}",
+        "noId": "ARIA属性で指定されている要素のIDがページ上に存在しません: ${data.needsReview}",
         "ariaCurrent": "ARIA 属性値が無効であるため、\"aria-current=true\" として扱われます: ${data.needsReview}",
-        "idrefs": "ARIA 属性で指定されている要素の ID がページ上に存在するかどうか判定できません: ${data.needsReview}"
+        "idrefs": "ARIA属性で指定されている要素のIDがページ上に存在するかどうか判定できません: ${data.needsReview}"
       }
     },
     "aria-valid-attr": {
