@@ -107,7 +107,7 @@
     },
     "document-title": {
       "description": "",
-      "help": "Dokumenter skal ha et <title> element for å bidra til enkel navigation"
+      "help": "Dokumenter skal ha et <title> element med en verdi som ikke er tom"
     },
     "duplicate-id-active": {
       "description": "",
