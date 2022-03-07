@@ -319,7 +319,7 @@
     },
     "valid-lang": {
       "description": "",
-      "help": "'lang'-attributtet skal ha en korrekt verdi"
+      "help": "'lang'-attributtet skal ha en gyldig verdi"
     },
     "video-caption": {
       "description": "",
