@@ -453,7 +453,7 @@
       }
     },
     "color-contrast-enhanced": {
-      "pass": "Elementet har stor fargekontrast, den er ${data.contrastRatio}",
+      "pass": "Elementet har tilstrekkelig fargekontrast, den er ${data.contrastRatio}",
       "fail": "Elementet har ikke nok fargekontrast, den er ${data.contrastRatio} (forgrunnsfarge: ${data.fgColor}, bakgrunnsfarge: ${data.bgColor}, tekststørrelse: ${data.fontSize}, teksttykkelse: ${data.fontWeight}). Forventet kontrastforhold er ${data.expectedContrastRatio}",
       "incomplete": {
         "bgImage": "Elementets bakgrunnsfarge kunne ikke detekteres på grunn av et bakgrunnsbilde",
