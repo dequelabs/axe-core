@@ -645,8 +645,8 @@
     "no-focusable-content": {
       "pass": "要素の子孫にフォーカス可能なものはありません",
       "fail": {
-        "default": "Element has focusable descendants",
-        "notHidden": "Using a negative tabindex on an element inside an interactive control does not prevent assistive technologies from focusing the element (even with 'aria-hidden=true')"
+        "default": "要素の子孫にフォーカス可能なものがあります",
+        "notHidden": "インタラクティブなコントロールの内側の要素に負の tabindex を指定しても、（'aria-hidden=true' が指定されている場合も）支援技術がその要素にフォーカスできないようにはなりません"
       },
       "incomplete": "要素に子孫があるか判定できませんでした"
     },
