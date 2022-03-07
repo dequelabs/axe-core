@@ -83,7 +83,7 @@
     },
     "bypass": {
       "description": "",
-      "help": "Sider skal ha en metode for å hoppe over innhold som gjentas på flere websider"
+      "help": "Sider skal ha en metode for å hoppe over navigasjon og komme direkte til innholdet"
     },
     "color-contrast": {
       "description": "",
