@@ -565,8 +565,8 @@
       "pass": "要素には${data.contrastRatio}の十分なコントラスト比があります",
       "fail": {
         "default": "要素のコントラスト比が不十分です ${data.contrastRatio}（前景色: ${data.fgColor}、背景色: ${data.bgColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします",
-        "fgOnShadowColor": "要素の前景色と陰（text-shadow）の色のコントラスト比が不十分です ${data.contrastRatio}（前景色: ${data.fgColor}、陰（text-shadow）の色: ${data.shadowColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします",
-        "shadowOnBgColor": "要素の陰（text-shadow）の色と背景色のコントラスト比が不十分です ${data.contrastRatio}（陰（text-shadow）の色: ${data.shadowColor}、背景色: ${data.bgColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします"
+        "fgOnShadowColor": "要素の前景色と影（text-shadow）の色のコントラスト比が不十分です ${data.contrastRatio}（前景色: ${data.fgColor}、影（text-shadow）の色: ${data.shadowColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします",
+        "shadowOnBgColor": "要素の影（text-shadow）の色と背景色のコントラスト比が不十分です ${data.contrastRatio}（影（text-shadow）の色: ${data.shadowColor}、背景色: ${data.bgColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします"
       },
       "incomplete": {
         "default": "コントラスト比を判定できません",
