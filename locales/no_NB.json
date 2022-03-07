@@ -437,7 +437,7 @@
     },
     "color-contrast": {
       "pass": "Elementet har stor fargekontrast. Den er ${data.contrastRatio}",
-      "fail": "Elementet har ikke nok fargekontrast. Den er ${data.contrastRatio} (forgrunnsfarge: ${data.fgColor}, bakgrunnsfarge: ${data.bgColor}, tekststørrelse: ${data.fontSize}, teksttykkelse: ${data.fontWeight}). Forventet kontrastforhold er ${data.expectedContrastRatio}",
+      "fail": "Elementet har ikke god nok fargekontrast. Den er ${data.contrastRatio} (forgrunnsfarge: ${data.fgColor}, bakgrunnsfarge: ${data.bgColor}, tekststørrelse: ${data.fontSize}, teksttykkelse: ${data.fontWeight}). Forventet kontrastforhold er ${data.expectedContrastRatio}",
       "incomplete": {
         "bgImage": "Elementets bakgrunnsfarge kunne ikke detekteres på grunn av et bakgrunnsbildet",
         "bgGradient": "Elementets bakgrunnsfarge kunne ikke detekteres på grunn av en bakgrunnsgradient",
