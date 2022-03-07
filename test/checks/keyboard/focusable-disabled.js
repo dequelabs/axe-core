@@ -185,4 +185,28 @@ describe('focusable-disabled', function() {
     var actual = check.evaluate.apply(checkContext, params);
     assert.isTrue(actual);
   });
+
+  it('returns undefined when the control has onfocus', function () {
+    var params = checkSetup(
+      '<button aria-hidden="true" id="target" onfocus="redirectFocus()">Button</button>'
+    );
+    assert.isUndefined(check.evaluate.apply(checkContext, params));
+  });
+
+  it('returns undefined when all focusable controls have onfocus events', function () {
+    var params = checkSetup('<div aria-hidden="true" id="target">' +
+      '  <button onfocus="redirectFocus()">button</button>' +
+      '</div>'
+    );
+    assert.isUndefined(check.evaluate.apply(checkContext, params));
+  });
+
+  it('returns false when some, but not all focusable controls have onfocus events', function () {
+    var params = checkSetup('<div aria-hidden="true" id="target">' +
+      '  <button onfocus="redirectFocus()">button</button>' +
+      '  <button>button</button>' +
+      '</div>'
+    );
+    assert.isFalse(check.evaluate.apply(checkContext, params));
+  });
 });
