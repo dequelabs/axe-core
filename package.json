@@ -114,7 +114,7 @@
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.5.4",
     "@deque/dot": "^1.1.5",
-    "act-rules.github.io": "github:act-rules/act-rules.github.io#master",
+    "act-rules.github.io": "github:act-rules/act-rules.github.io#a5d7336e020fd04fd429f94c651102f8ab255f01",
     "aria-practices": "github:w3c/aria-practices#f7de7ec3a53534018237f24cb9e610f26c30c367",
     "aria-query": "^3.0.0",
     "browser-driver-manager": "1.0.3",
