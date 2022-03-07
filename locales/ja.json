@@ -502,7 +502,7 @@
     "fallbackrole": {
       "pass": "1つのロール値のみ使用されています",
       "fail": "古いブラウザーではフォールバックロールがサポートされていないため、ロール値は1つのみ使用します",
-      "incomplete": "role の値 'presentation' と 'none' は同義なので、どちらか一方のみを使用します。"
+      "incomplete": "'presentation' と 'none' のロールは同義なので、どちらか一方のみを使用します。"
     },
     "has-global-aria-attribute": {
       "pass": {
