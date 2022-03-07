@@ -119,7 +119,6 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
-      # Always run on the latest master branch, regardless of cache
       - run: npm run build
       - run: npm run test:act
 
