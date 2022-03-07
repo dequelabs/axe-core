@@ -3,7 +3,7 @@
   "rules": {
     "accesskeys": {
       "description": "",
-      "help": "Verdien for attributtet 'accesskey' skal være unik"
+      "help": "Verdien for hver 'accesskey' attributt skal være unik"
     },
     "area-alt": {
       "description": "",
