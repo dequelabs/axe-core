@@ -113,12 +113,12 @@
       "description": "各ページに少なくとも1つ、ユーザーがナビゲーション部分をスキップして直接本文へ移動できるメカニズムが存在することを確認します",
       "help": "ページには繰り返されるブロックをスキップする手段が存在しなければなりません"
     },
-    "color-contrast": {
-      "description": "前景色と背景色のコントラストがWCAG 2のAAコントラスト比のしきい値を満たすことを確認します",
-      "help": "要素には十分な色のコントラストがなければなりません"
-    },
     "color-contrast-enhanced": {
       "description": "前景色と背景色のコントラストがWCAG 2のAAAコントラスト比のしきい値を満たすことを確認します",
+      "help": "要素には十分な色のコントラストがなければなりません"
+    },
+    "color-contrast": {
+      "description": "前景色と背景色のコントラストがWCAG 2のAAコントラスト比のしきい値を満たすことを確認します",
       "help": "要素には十分な色のコントラストがなければなりません"
     },
     "css-orientation-lock": {
@@ -420,16 +420,22 @@
       "pass": "サポートされているaria-errormessageの技術を使用しています",
       "fail": {
         "singular": "aria-errormessage の値 `${data.values}` はメッセージを通知する方法を使用しなければなりません (例えば、aria-live、aria-describedby、role=alert等)",
-        "plural": "aria-errormessage の値 `${data.values}` はメッセージを通知する方法を使用しなければなりません (例えば、aria-live、aria-describedby、role=alert等)"
+        "plural": "aria-errormessage の値 `${data.values}` はメッセージを通知する方法を使用しなければなりません (例えば、aria-live、aria-describedby、role=alert等)",
+        "hidden": "aria-errormessage の値 `${data.values}` は隠れている要素を参照することはできません"
       },
       "incomplete": {
         "singular": "aria-errormessageの値 `${data.values}` は存在する要素を参照していることを確認しましょう",
-        "plural": "aria-errormessageの値 `${data.values}` は存在する要素を参照していることを確認しましょう"
+        "plural": "aria-errormessageの値 `${data.values}` は存在する要素を参照していることを確認しましょう",
+        "idrefs": "aria-errormessage 要素がページ上に存在するかどうか判定できません: ${data.values}"
       }
     },
     "aria-hidden-body": {
       "pass": "ドキュメント本体にaria-hidden属性は存在していません",
       "fail": "aria-hidden=trueはドキュメント本体に存在してはなりません"
+    },
+    "aria-level": {
+      "pass": "aria-level の値は有効です",
+      "incomplete": "6より大きい aria-level の値は、どのスクリーンリーダーとブラウザーの組み合わせでもサポートされていません"
     },
     "aria-prohibited-attr": {
       "pass": "ARIA属性は使用できます",
@@ -477,8 +483,9 @@
         "plural": "無効なARIA属性値です: ${data.values}"
       },
       "incomplete": {
-        "noId": "ARIA 属性の要素IDがページ上に存在しません: ${data.needsReview}",
-        "ariaCurrent": "ARIA 属性値が無効であるため、\"aria-current=true\" として扱われます: ${data.needsReview}"
+        "noId": "ARIA属性で指定されている要素のIDがページ上に存在しません: ${data.needsReview}",
+        "ariaCurrent": "ARIA 属性値が無効であるため、\"aria-current=true\" として扱われます: ${data.needsReview}",
+        "idrefs": "ARIA属性で指定されている要素のIDがページ上に存在するかどうか判定できません: ${data.needsReview}"
       }
     },
     "aria-valid-attr": {
@@ -488,9 +495,14 @@
         "plural": "無効なARIA属性名です: ${data.values}"
       }
     },
+    "deprecatedrole": {
+      "pass": "推奨されていないARIAロールではありません",
+      "fail": "非推奨のロールが使用されています: ${data.values}"
+    },
     "fallbackrole": {
       "pass": "1つのロール値のみ使用されています",
-      "fail": "古いブラウザーではフォールバックロールがサポートされていないため、ロール値は1つのみ使用します"
+      "fail": "古いブラウザーではフォールバックロールがサポートされていないため、ロール値は1つのみ使用します",
+      "incomplete": "'presentation' と 'none' のロールは同義なので、どちらか一方のみを使用します。"
     },
     "has-global-aria-attribute": {
       "pass": {
@@ -526,9 +538,13 @@
       "pass": "要素はフォーカス順序に含まれる要素に対して有効なセマンティクスを持ちます",
       "fail": "要素はフォーカス順序に含まれる要素に対して無効なセマンティクスを持ちます"
     },
-    "color-contrast": {
+    "color-contrast-enhanced": {
       "pass": "要素には${data.contrastRatio}の十分なコントラスト比があります",
-      "fail": "要素のコントラスト比が不十分です ${data.contrastRatio}（前景色: ${data.fgColor}、背景色: ${data.bgColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします",
+      "fail": {
+        "default": "要素のコントラスト比が不十分です ${data.contrastRatio}（前景色: ${data.fgColor}、背景色: ${data.bgColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします",
+        "fgOnShadowColor": "要素の前景色と影（text-shadow）の色のコントラスト比が不十分です ${data.contrastRatio}（前景色: ${data.fgColor}、影（text-shadow）の色: ${data.shadowColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします",
+        "shadowOnBgColor": "要素の影（text-shadow）の色と背景色のコントラスト比が不十分です ${data.contrastRatio}（影（text-shadow）の色: ${data.shadowColor}、背景色: ${data.bgColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします"
+      },
       "incomplete": {
         "default": "コントラスト比を判定できません",
         "bgImage": "背景画像のため、要素の背景色を判定できません",
@@ -545,9 +561,13 @@
         "pseudoContent": "擬似要素のため、要素の背景色を判定することができませんでした"
       }
     },
-    "color-contrast-enhanced": {
+    "color-contrast": {
       "pass": "要素には${data.contrastRatio}の十分なコントラスト比があります",
-      "fail": "要素のコントラスト比が不十分です ${data.contrastRatio}（前景色: ${data.fgColor}、背景色: ${data.bgColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします",
+      "fail": {
+        "default": "要素のコントラスト比が不十分です ${data.contrastRatio}（前景色: ${data.fgColor}、背景色: ${data.bgColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします",
+        "fgOnShadowColor": "要素の前景色と影（text-shadow）の色のコントラスト比が不十分です ${data.contrastRatio}（前景色: ${data.fgColor}、影（text-shadow）の色: ${data.shadowColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします",
+        "shadowOnBgColor": "要素の影（text-shadow）の色と背景色のコントラスト比が不十分です ${data.contrastRatio}（影（text-shadow）の色: ${data.shadowColor}、背景色: ${data.bgColor}、フォントサイズ: ${data.fontSize}、フォントの太さ: ${data.fontWeight}）。コントラスト比${data.expectedContrastRatio}を必要とします"
+      },
       "incomplete": {
         "default": "コントラスト比を判定できません",
         "bgImage": "背景画像のため、要素の背景色を判定できません",
@@ -624,7 +644,10 @@
     },
     "no-focusable-content": {
       "pass": "要素の子孫にフォーカス可能なものはありません",
-      "fail": "要素の子孫にフォーカス可能なものがあります",
+      "fail": {
+        "default": "要素の子孫にフォーカス可能なものがあります",
+        "notHidden": "インタラクティブなコントロールの内側の要素に負の tabindex を指定しても、（'aria-hidden=true' が指定されている場合も）支援技術がその要素にフォーカスできないようにはなりません"
+      },
       "incomplete": "要素に子孫があるか判定できませんでした"
     },
     "page-has-heading-one": {
@@ -789,7 +812,8 @@
     },
     "p-as-heading": {
       "pass": "<p>要素が見出しとしてスタイル付けされていません",
-      "fail": "スタイル付けされたp要素ではなく、見出し要素を使用すべきです"
+      "fail": "スタイル付けされたp要素ではなく、見出し要素を使用すべきです",
+      "incomplete": "<p> 要素に見出しのスタイル付けがされているかどうか判定できません"
     },
     "region": {
       "pass": "ページのすべてのコンテンツがランドマークに含まれています",

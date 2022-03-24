@@ -80,7 +80,9 @@
     ["#pass-img-valid-role-aria-labelledby"],
     ["#pass-img-valid-role-radio"],
     ["#pass-imgmap-1"],
-    ["#pass-imgmap-2"]
+    ["#pass-imgmap-2"],
+    ["#pass-navnone-1"],
+    ["#pass-navnone-2"]
   ],
   "violations": [
     ["#fail-dd-no-role"],
