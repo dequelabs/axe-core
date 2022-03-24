@@ -7,7 +7,7 @@
   "actIds": ["6cfa84"],
   "metadata": {
     "description": "Ensures aria-hidden elements do not contain focusable elements",
-    "help": "ARIA hidden element must not contain focusable elements"
+    "help": "ARIA hidden element must not be focusable or contain focusable elements"
   },
   "all": [
     "focusable-modal-open",
