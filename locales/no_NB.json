@@ -3,7 +3,7 @@
   "rules": {
     "accesskeys": {
       "description": "",
-      "help": "Verdien for attributtet 'accesskey' skal være unik"
+      "help": "Verdien for hver 'accesskey' attributt skal være unik"
     },
     "area-alt": {
       "description": "",
@@ -31,7 +31,7 @@
     },
     "aria-required-attr": {
       "description": "",
-      "help": "Påkrevde ARIA-attributter skal være angitt"
+      "help": "Alle påkrevde ARIA-attributter skal være angitt i henhold til elementets rolle"
     },
     "aria-required-children": {
       "description": "",
@@ -55,11 +55,11 @@
     },
     "aria-valid-attr-value": {
       "description": "",
-      "help": "ARIA-attributter skal ha en korrekt verdi"
+      "help": "ARIA-attributter skal ha en gyldig verdi"
     },
     "aria-valid-attr": {
       "description": "",
-      "help": "ARIA-attributter skal ha et korrekt navn"
+      "help": "ARIA-attributter skal ha et gyldig navn"
     },
     "audio-caption": {
       "description": "",
@@ -83,7 +83,7 @@
     },
     "bypass": {
       "description": "",
-      "help": "Sider skal ha en metode for å hoppe over innhold som gjentas på flere websider"
+      "help": "Sider skal ha en metode for å hoppe over navigasjon og komme direkte til innholdet"
     },
     "color-contrast": {
       "description": "",
@@ -107,7 +107,7 @@
     },
     "document-title": {
       "description": "",
-      "help": "Dokumenter skal ha et <title> element for å bidra til enkel navigation"
+      "help": "Dokumenter skal ha et <title> element med en verdi som ikke er tom"
     },
     "duplicate-id-active": {
       "description": "",
@@ -147,7 +147,7 @@
     },
     "heading-order": {
       "description": "",
-      "help": "Rekkefølgen på overskriftsnivåene skal være korrekt"
+      "help": "Rekkefølgen for overksriftsnivåer skal være semtantisk korrekt"
     },
     "hidden-content": {
       "description": "",
@@ -159,7 +159,7 @@
     },
     "html-lang-valid": {
       "description": "",
-      "help": "<html> elementet skal ha en korrekt verdi for 'lang'-attributtet"
+      "help": "<html> elementet skal ha en gyldig verdi for 'lang'-attributtet"
     },
     "html-xml-lang-mismatch": {
       "description": "",
@@ -171,7 +171,7 @@
     },
     "image-redundant-alt": {
       "description": "",
-      "help": "Alternativ tekst til bilder (alt-tekst) skal ikke gjentas som brødtekst"
+      "help": "Alternativ tekst til bilder (alt-tekst) skal ikke gjentas som tekst"
     },
     "input-button-name": {
       "description": "",
@@ -319,7 +319,7 @@
     },
     "valid-lang": {
       "description": "",
-      "help": "'lang'-attributtet skal ha en korrekt verdi"
+      "help": "'lang'-attributtet skal ha en gyldig verdi"
     },
     "video-caption": {
       "description": "",
@@ -436,8 +436,8 @@
       "fail": "Elementet har ikke korrekt semantikk for et element i fokus-rekkefølgen."
     },
     "color-contrast": {
-      "pass": "Elementet har stor fargekontrast. Den er ${data.contrastRatio}",
-      "fail": "Elementet har ikke nok fargekontrast. Den er ${data.contrastRatio} (forgrunnsfarge: ${data.fgColor}, bakgrunnsfarge: ${data.bgColor}, tekststørrelse: ${data.fontSize}, teksttykkelse: ${data.fontWeight}). Forventet kontrastforhold er ${data.expectedContrastRatio}",
+      "pass": "Elementet har tilstrekkelig fargekontrast. Den er ${data.contrastRatio}",
+      "fail": "Elementet har ikke god nok fargekontrast. Den er ${data.contrastRatio} (forgrunnsfarge: ${data.fgColor}, bakgrunnsfarge: ${data.bgColor}, tekststørrelse: ${data.fontSize}, teksttykkelse: ${data.fontWeight}). Forventet kontrastforhold er ${data.expectedContrastRatio}",
       "incomplete": {
         "bgImage": "Elementets bakgrunnsfarge kunne ikke detekteres på grunn av et bakgrunnsbildet",
         "bgGradient": "Elementets bakgrunnsfarge kunne ikke detekteres på grunn av en bakgrunnsgradient",
@@ -453,8 +453,8 @@
       }
     },
     "color-contrast-enhanced": {
-      "pass": "Elementet har stor fargekontrast, den er ${data.contrastRatio}",
-      "fail": "Elementet har ikke nok fargekontrast, den er ${data.contrastRatio} (forgrunnsfarge: ${data.fgColor}, bakgrunnsfarge: ${data.bgColor}, tekststørrelse: ${data.fontSize}, teksttykkelse: ${data.fontWeight}). Forventet kontrastforhold er ${data.expectedContrastRatio}",
+      "pass": "Elementet har tilstrekkelig fargekontrast, den er ${data.contrastRatio}",
+      "fail": "Elementet har ikke god nok fargekontrast, den er ${data.contrastRatio} (forgrunnsfarge: ${data.fgColor}, bakgrunnsfarge: ${data.bgColor}, tekststørrelse: ${data.fontSize}, teksttykkelse: ${data.fontWeight}). Forventet kontrastforhold er ${data.expectedContrastRatio}",
       "incomplete": {
         "bgImage": "Elementets bakgrunnsfarge kunne ikke detekteres på grunn av et bakgrunnsbilde",
         "bgGradient": "Elementets bakgrunnsfarge kunne ikke detekteres på grunn av en bakgrunnsgradient",
@@ -587,7 +587,7 @@
     },
     "valid-lang": {
       "pass": "'lang'-attributtet sin verdi er inkluderet i listen over godkjente språk",
-      "fail": "'lang'-attributtet sin verdi er ikke inkluderet i listen over godkjente språk"
+      "fail": "'lang'-attributtet sin verdi er ikke inkluderet i listen over gyldige språk"
     },
     "xml-lang-mismatch": {
       "pass": "Attributtene 'lang' og 'xml:lang' har samme språk / dialekt",
@@ -793,5 +793,5 @@
       "failureMessage": "Rett alle de følgende: {{~it:value}}\n  {{=value.split('\\n').join('\\n  ')}}{{~}}"
     }
   },
-  "incompleteFallbackMessage": "axe kunne ikke gi en årsak. Tid for å finne frem utviklingsverktøyet ditt!"
+  "incompleteFallbackMessage": "axe kunne ikke finne årsaken. Tid for å finne frem utviklerverktøyet(element inspector)!"
 }
