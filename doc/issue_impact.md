@@ -2,6 +2,8 @@
 
 Axe-core assigns an impact according to our assessment of the likely impact of an issue on a user with a disability that would be affected by this issue. In any given context the actual impact for the user could be lower; in some instances, it could be higher. For this reason, we encourage users of tools to evaluate each individual issue and assess the impact in the context of their application or content.
 
+For a list of each rule and their associated impacts, see [rule-descriptions.md](./rule-descriptions.md)
+
 ## Definitions
 
 ### Minor
