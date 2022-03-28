@@ -151,7 +151,7 @@
     },
     "hidden-content": {
       "description": "",
-      "help": "Skjult innhold på siden kan ikke analyseres"
+      "help": "Skjult innhold på siden kunne ikke analyseres"
     },
     "html-has-lang": {
       "description": "",
