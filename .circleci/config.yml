@@ -181,6 +181,7 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - browser-tools/install-browser-tools
+      - npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
       # install ACT rules
       - run: npm install act-rules/act-rules.github.io#master
@@ -194,6 +195,7 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - browser-tools/install-browser-tools
+      - npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
       # install ARIA practices
       - run: npm install w3c/aria-practices#main
