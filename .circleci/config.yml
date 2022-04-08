@@ -297,114 +297,104 @@ workflows:
   version: 2
   build:
     jobs:
+      # install deps
       - dependencies_unix
-      - test_nightly_browsers:
+      - dependencies_win
+      # Run linting
+      - lint:
           requires:
             - dependencies_unix
-      - test_nightly_act:
+      # Run tests on all commits, but after installing dependencies
+      - test_unix:
+          requires:
+            - lint
+      # Run IE/ Windows test on all commits
+      - test_win:
+          requires:
+            - dependencies_win
+      - test_examples:
+          requires:
+            - test_unix
+      - test_act:
+          requires:
+            - test_unix
+      - test_aria_practices:
+          requires:
+            - test_unix
+      - test_locales:
+          requires:
+            - test_unix
+      - test_virtual_rules:
+          requires:
+            - test_unix
+      - build_api_docs:
+          requires:
+            - test_unix
+      - test_rule_help_version:
+          requires:
+            - test_unix
+      - test_node:
+          requires:
+            - test_unix
+      # Hold for approval
+      - hold:
+          type: approval
+          requires:
+            - test_unix
+            - test_win
+            - test_examples
+            - test_locales
+            - test_virtual_rules
+            - build_api_docs
+            - test_rule_help_version
+            - test_node
+          filters:
+            branches:
+              only:
+                - master
+      # Run a next release on "develop" commits, but only after the tests pass and dependencies are installed
+      - next_release:
           requires:
             - dependencies_unix
-      - test_nightly_aria_practices:
+            - test_unix
+            - test_examples
+            - test_locales
+            - test_virtual_rules
+            - build_api_docs
+          filters:
+            branches:
+              only: develop
+      # Run a production release on "master" commits, but only after the tests pass and dependencies are installed
+      - release:
           requires:
             - dependencies_unix
-      # # install deps
-      # - dependencies_unix
-      # - dependencies_win
-      # # Run linting
-      # - lint:
-      #     requires:
-      #       - dependencies_unix
-      # # Run tests on all commits, but after installing dependencies
-      # - test_unix:
-      #     requires:
-      #       - lint
-      # # Run IE/ Windows test on all commits
-      # - test_win:
-      #     requires:
-      #       - dependencies_win
-      # - test_examples:
-      #     requires:
-      #       - test_unix
-      # - test_act:
-      #     requires:
-      #       - test_unix
-      # - test_aria_practices:
-      #     requires:
-      #       - test_unix
-      # - test_locales:
-      #     requires:
-      #       - test_unix
-      # - test_virtual_rules:
-      #     requires:
-      #       - test_unix
-      # - build_api_docs:
-      #     requires:
-      #       - test_unix
-      # - test_rule_help_version:
-      #     requires:
-      #       - test_unix
-      # - test_node:
-      #     requires:
-      #       - test_unix
-      # # Hold for approval
-      # - hold:
-      #     type: approval
-      #     requires:
-      #       - test_unix
-      #       - test_win
-      #       - test_examples
-      #       - test_locales
-      #       - test_virtual_rules
-      #       - build_api_docs
-      #       - test_rule_help_version
-      #       - test_node
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
-      # # Run a next release on "develop" commits, but only after the tests pass and dependencies are installed
-      # - next_release:
-      #     requires:
-      #       - dependencies_unix
-      #       - test_unix
-      #       - test_examples
-      #       - test_locales
-      #       - test_virtual_rules
-      #       - build_api_docs
-      #     filters:
-      #       branches:
-      #         only: develop
-      # # Run a production release on "master" commits, but only after the tests pass and dependencies are installed
-      # - release:
-      #     requires:
-      #       - dependencies_unix
-      #       - test_unix
-      #       - test_examples
-      #       - test_locales
-      #       - test_virtual_rules
-      #       - build_api_docs
-      #       - test_rule_help_version
-      #       - test_node
-      #       - hold
-      #     filters:
-      #       branches:
-      #         only: master
-      # # Verify releases have all required files
-      # - verify_release:
-      #     requires:
-      #       - release
-      #     filters:
-      #       branches:
-      #         only: master
-      # - verify_next_release:
-      #     requires:
-      #       - next_release
-      #     filters:
-      #       branches:
-      #         only: develop
-      # - github_release:
-      #     requires:
-      #       - release
+            - test_unix
+            - test_examples
+            - test_locales
+            - test_virtual_rules
+            - build_api_docs
+            - test_rule_help_version
+            - test_node
+            - hold
+          filters:
+            branches:
+              only: master
+      # Verify releases have all required files
+      - verify_release:
+          requires:
+            - release
+          filters:
+            branches:
+              only: master
+      - verify_next_release:
+          requires:
+            - next_release
+          filters:
+            branches:
+              only: develop
+      - github_release:
+          requires:
+            - release
   nightly:
     triggers:
       - schedule:
