@@ -181,11 +181,13 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - browser-tools/install-browser-tools
+      # install ACT rules
+      # install first as for some reason installing a single package
+      # also re-installs all repo dependencies as well
+      - run: npm install act-rules/act-rules.github.io#master
       - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
-      # install ACT rules
-      - run: npm install act-rules/act-rules.github.io#master
-      - run: npm run test:apg
+      - run: npm run test:act
 
   # Run the test suite for nightly builds.
   test_nightly_aria_practices:
@@ -195,10 +197,12 @@ jobs:
       - checkout
       - <<: *restore_dependency_cache_unix
       - browser-tools/install-browser-tools
+      # install ARIA practices
+      # install first as for some reason installing a single package
+      # also re-installs all repo dependencies as well
+      - run: npm install w3c/aria-practices#main
       - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
-      # install ARIA practices
-      - run: npm install w3c/aria-practices#main
       - run: npm run test:apg
 
   # Test api docs can be built
