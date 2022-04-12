@@ -5,6 +5,8 @@ describe('aria-valid-attr-value', function() {
   var queryFixture = axe.testUtils.queryFixture;
   var checkContext = axe.testUtils.MockCheckContext();
   var fixtureSetup = axe.testUtils.fixtureSetup;
+  var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
+  var shadowSupported = axe.testUtils.shadowSupport.v1;
 
   afterEach(function() {
     fixture.innerHTML = '';
@@ -210,7 +212,30 @@ describe('aria-valid-attr-value', function() {
         .getCheckEvaluate('aria-valid-attr-value')
         .call(checkContext, null, null, vNode)
     );
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'noId',
+      needsReview: 'aria-describedby="test"'
+    });
   });
+
+  (shadowSupported ? it : xit)(
+    'should return undefined on aria-describedby when the element is in a different shadow tree',
+    function() {
+      var params = shadowCheckSetup(
+        '<div></div>',
+        '<button id="target" aria-describedby="test">Button</button>'
+      );
+      assert.isUndefined(
+        axe.testUtils
+          .getCheckEvaluate('aria-valid-attr-value')
+          .apply(checkContext, params)
+      );
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'noIdShadow',
+        needsReview: 'aria-describedby="test"'
+      });
+    }
+  );
 
   it('should return undefined on aria-labelledby when the element is not in the DOM', function() {
     var vNode = queryFixture(
@@ -221,7 +246,30 @@ describe('aria-valid-attr-value', function() {
         .getCheckEvaluate('aria-valid-attr-value')
         .call(checkContext, null, null, vNode)
     );
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'noId',
+      needsReview: 'aria-labelledby="test"'
+    });
   });
+
+  (shadowSupported ? it : xit)(
+    'should return undefined on aria-labelledby when the element is in a different shadow tree',
+    function() {
+      var params = shadowCheckSetup(
+        '<div></div>',
+        '<button id="target" aria-labelledby="test">Button</button>'
+      );
+      assert.isUndefined(
+        axe.testUtils
+          .getCheckEvaluate('aria-valid-attr-value')
+          .apply(checkContext, params)
+      );
+      assert.deepEqual(checkContext._data, {
+        messageKey: 'noIdShadow',
+        needsReview: 'aria-labelledby="test"'
+      });
+    }
+  );
 
   it('should return undefined on aria-current with invalid value', function() {
     var vNode = queryFixture(
