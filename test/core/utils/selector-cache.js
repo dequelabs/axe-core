@@ -57,6 +57,7 @@ describe('utils.selector-cache', function() {
   describe('getNodesMatchingExpression', function() {
     var tree;
     var spanVNode;
+    var headingVNode;
 
     function createTree() {
       var parent = document.createElement('section');
@@ -80,12 +81,17 @@ describe('utils.selector-cache', function() {
     }
 
     beforeEach(function() {
+      var heading = document.createElement('h1');
+      headingVNode = new axe.VirtualNode(heading, vNode);
+
       var span = document.createElement('span');
       span.setAttribute('class', 'bar');
       span.setAttribute('id', 'notTarget');
       span.setAttribute('aria-labelledby', 'target');
-      spanVNode = new axe.VirtualNode(span, vNode);
-      vNode.children.push(spanVNode);
+      spanVNode = new axe.VirtualNode(span, headingVNode);
+
+      vNode.children.push(headingVNode);
+      headingVNode.children.push(spanVNode);
       tree = [vNode];
     });
 
@@ -99,6 +105,7 @@ describe('utils.selector-cache', function() {
       var expression = convertSelector('*');
       assert.deepEqual(getNodesMatchingExpression(tree, expression), [
         vNode,
+        headingVNode,
         spanVNode
       ]);
     });
@@ -134,7 +141,7 @@ describe('utils.selector-cache', function() {
     });
 
     it('should return an empty array if selector does not match', function() {
-      var expression = convertSelector('h1');
+      var expression = convertSelector('main');
       assert.lengthOf(getNodesMatchingExpression(tree, expression), 0);
     });
 
@@ -154,10 +161,15 @@ describe('utils.selector-cache', function() {
     });
 
     it('should return nodes for direct child combinator selector', function() {
-      var expression = convertSelector('div > span');
+      var expression = convertSelector('div > h1');
       assert.deepEqual(getNodesMatchingExpression(tree, expression), [
-        spanVNode
+        headingVNode
       ]);
+    });
+
+    it('should not return nodes for direct child combinator selector that does not match', function() {
+      var expression = convertSelector('div > span');
+      assert.lengthOf(getNodesMatchingExpression(tree, expression), 0);
     });
 
     it('should return nodes for attribute value selector', function() {
