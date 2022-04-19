@@ -5,6 +5,7 @@ describe('utils.selector-cache', function() {
   var getNodesMatchingExpression =
     axe._thisWillBeDeletedDoNotUse.utils.getNodesMatchingExpression;
   var convertSelector = axe.utils.convertSelector;
+  var shadowSupported = axe.testUtils.shadowSupport.v1;
 
   var vNode;
   beforeEach(function() {
@@ -105,14 +106,20 @@ describe('utils.selector-cache', function() {
       assert.deepEqual(getNodesMatchingExpression(tree, expression), [vNode]);
     });
 
-    it('should only return nodes matching shadowId when matching by id', function() {
-      fixture.innerHTML =
-        '<div id="target"></div><div data-shadow><div id="target"></div></div>';
-      var tree = createTree();
-      var expression = convertSelector('#target');
-      var expected = [tree[0].children[0]];
-      assert.deepEqual(getNodesMatchingExpression(tree, expression), expected);
-    });
+    (shadowSupported ? it : xit)(
+      'should only return nodes matching shadowId when matching by id',
+      function() {
+        fixture.innerHTML =
+          '<div id="target"></div><div data-shadow><div id="target"></div></div>';
+        var tree = createTree();
+        var expression = convertSelector('#target');
+        var expected = [tree[0].children[0]];
+        assert.deepEqual(
+          getNodesMatchingExpression(tree, expression),
+          expected
+        );
+      }
+    );
 
     it('should return a list of matching nodes by class', function() {
       var expression = convertSelector('.foo');
