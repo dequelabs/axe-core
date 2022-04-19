@@ -12,35 +12,31 @@ describe('utils.selector-cache', function() {
     vNode = new axe.VirtualNode(fixture.firstChild);
   });
 
-  afterEach(function() {
-    fixture.innerHTML = '';
-  });
-
   describe('cacheNodeSelectors', function() {
     it('should add the node to the global selector', function() {
-      cacheNodeSelectors(vNode);
+      cacheNodeSelectors(vNode, {});
       assert.deepEqual(vNode._selectorMap['*'], [vNode]);
     });
 
     it('should add the node to the nodeName', function() {
-      cacheNodeSelectors(vNode);
+      cacheNodeSelectors(vNode, {});
       assert.deepEqual(vNode._selectorMap.div, [vNode]);
     });
 
     it('should add the node to all attribute selectors', function() {
-      cacheNodeSelectors(vNode);
+      cacheNodeSelectors(vNode, {});
       assert.deepEqual(vNode._selectorMap['[id]'], [vNode]);
       assert.deepEqual(vNode._selectorMap['[class]'], [vNode]);
       assert.deepEqual(vNode._selectorMap['[aria-label]'], [vNode]);
     });
 
     it('should add the node to the id map', function() {
-      cacheNodeSelectors(vNode);
+      cacheNodeSelectors(vNode, {});
       assert.deepEqual(vNode._selectorMap[' [idsMap]'].target, [vNode]);
     });
 
     it('should not add the node to selectors it does not match', function() {
-      cacheNodeSelectors(vNode);
+      cacheNodeSelectors(vNode, {});
       assert.isUndefined(vNode._selectorMap['[for]']);
       assert.isUndefined(vNode._selectorMap.h1);
     });
@@ -48,7 +44,7 @@ describe('utils.selector-cache', function() {
     it('should ignore non-element nodes', function() {
       fixture.innerHTML = 'Hello';
       vNode = new axe.VirtualNode(fixture.firstChild);
-      cacheNodeSelectors(vNode);
+      cacheNodeSelectors(vNode, {});
 
       assert.isUndefined(vNode._selectorMap);
     });
@@ -60,39 +56,28 @@ describe('utils.selector-cache', function() {
     var headingVNode;
 
     function createTree() {
-      var parent = document.createElement('section');
-      var parentVNode = new axe.VirtualNode(parent);
-      tree = [parentVNode];
-      var nodes = [];
-
       for (var i = 0; i < fixture.children.length; i++) {
         var child = fixture.children[i];
         var isShadow = child.hasAttribute('data-shadow');
-        var childVNode = new axe.VirtualNode(
-          child,
-          parentVNode,
-          isShadow ? i : undefined
-        );
-        parentVNode.children.push(child);
-        nodes.push(childVNode);
+        var html = child.innerHTML;
+        if (isShadow) {
+          var shadowRoot = child.attachShadow({ mode: 'open' });
+          shadowRoot.innerHTML = html;
+          child.innerHTML = '';
+        }
       }
 
-      return nodes;
+      return axe.utils.getFlattenedTree(fixture);
     }
 
     beforeEach(function() {
-      var heading = document.createElement('h1');
-      headingVNode = new axe.VirtualNode(heading, vNode);
+      fixture.firstChild.innerHTML =
+        '<h1><span class="bar" id="not-target" aria-labelledby="target"></span></h1>';
+      tree = axe.utils.getFlattenedTree(fixture.firstChild);
 
-      var span = document.createElement('span');
-      span.setAttribute('class', 'bar');
-      span.setAttribute('id', 'notTarget');
-      span.setAttribute('aria-labelledby', 'target');
-      spanVNode = new axe.VirtualNode(span, headingVNode);
-
-      vNode.children.push(headingVNode);
-      headingVNode.children.push(spanVNode);
-      tree = [vNode];
+      vNode = tree[0];
+      headingVNode = vNode.children[0];
+      spanVNode = headingVNode.children[0];
     });
 
     it('should return undefined if the cache is not primed', function() {
@@ -122,12 +107,11 @@ describe('utils.selector-cache', function() {
 
     it('should only return nodes matching shadowId when matching by id', function() {
       fixture.innerHTML =
-        '<div id="target"></div><div id="target" data-shadow></div>';
-      var nodes = createTree();
+        '<div id="target"></div><div data-shadow><div id="target"></div></div>';
+      var tree = createTree();
       var expression = convertSelector('#target');
-      assert.deepEqual(getNodesMatchingExpression(tree, expression), [
-        nodes[0]
-      ]);
+      var expected = [tree[0].children[0]];
+      assert.deepEqual(getNodesMatchingExpression(tree, expression), expected);
     });
 
     it('should return a list of matching nodes by class', function() {
@@ -145,12 +129,18 @@ describe('utils.selector-cache', function() {
       assert.lengthOf(getNodesMatchingExpression(tree, expression), 0);
     });
 
+    it('should return an empty array for complex selector that does not match', function() {
+      var expression = convertSelector('span.missingClass[id]');
+      assert.lengthOf(getNodesMatchingExpression(tree, expression), 0);
+    });
+
     it('should return nodes for each expression', function() {
       fixture.innerHTML =
-        '<div role="button" aria-label="other"></div><span id="foo"></span>';
-      var nodes = createTree();
-      var expression = convertSelector('[role], [id]');
-      assert.deepEqual(getNodesMatchingExpression(tree, expression), nodes);
+        '<div role="button"></div><span aria-label="other"></span>';
+      var tree = createTree();
+      var expression = convertSelector('[role], [aria-label]');
+      var expected = [tree[0].children[0], tree[0].children[1]];
+      assert.deepEqual(getNodesMatchingExpression(tree, expression), expected);
     });
 
     it('should return nodes for child combinator selector', function() {
@@ -189,9 +179,10 @@ describe('utils.selector-cache', function() {
 
     it('should remove duplicates', function() {
       fixture.innerHTML = '<div role="button" aria-label="other"></div>';
-      var nodes = createTree();
-      var expression = convertSelector('div, [aria-label]');
-      assert.deepEqual(getNodesMatchingExpression(tree, expression), nodes);
+      var tree = createTree();
+      var expression = convertSelector('div[role], [aria-label]');
+      var expected = [tree[0].children[0]];
+      assert.deepEqual(getNodesMatchingExpression(tree, expression), expected);
     });
 
     it('should sort nodes by added order', function() {
@@ -206,7 +197,7 @@ describe('utils.selector-cache', function() {
         '<span id="id7"></span>' +
         '<div id="id8"></div>' +
         '<span id="id9"></span>';
-      createTree();
+      tree = createTree();
 
       var expression = convertSelector('div, span');
       var nodes = getNodesMatchingExpression(tree, expression);
@@ -216,6 +207,7 @@ describe('utils.selector-cache', function() {
       }
 
       assert.deepEqual(ids, [
+        'fixture',
         'id0',
         'id1',
         'id2',
@@ -232,7 +224,7 @@ describe('utils.selector-cache', function() {
     it('should filter nodes', function() {
       fixture.innerHTML =
         '<div role="button" aria-label="other"></div><div></div>';
-      var nodes = createTree();
+      var tree = createTree();
 
       function filter(node) {
         return node.hasAttr('role');
@@ -242,13 +234,21 @@ describe('utils.selector-cache', function() {
         tree,
         convertSelector('div, [aria-label]')
       );
+      var nonFilteredExpected = [
+        tree[0],
+        tree[0].children[0],
+        tree[0].children[1]
+      ];
+
       var filteredNodes = getNodesMatchingExpression(
         tree,
         convertSelector('div, [aria-label]'),
         filter
       );
-      assert.deepEqual(nonFilteredNodes, nodes);
-      assert.deepEqual(filteredNodes, [nodes[0]]);
+      var filteredExpected = [tree[0].children[0]];
+
+      assert.deepEqual(nonFilteredNodes, nonFilteredExpected);
+      assert.deepEqual(filteredNodes, filteredExpected);
     });
   });
 });
