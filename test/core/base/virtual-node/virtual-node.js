@@ -81,13 +81,6 @@ describe('VirtualNode', function() {
       assert.equal(vNode.props.nodeName, 'foobar');
     });
 
-    it('should not add selectorMap to non-root element', function() {
-      node.setAttribute('data-foo', 'bar');
-      var vNode = new VirtualNode(node, new VirtualNode(node.cloneNode()));
-
-      assert.notExists(vNode._selectorMap);
-    });
-
     describe('attr', function() {
       it('should return the value of the given attribute', function() {
         node.setAttribute('data-foo', 'bar');
