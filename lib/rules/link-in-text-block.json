@@ -6,7 +6,7 @@
   "tags": ["cat.color", "experimental", "wcag2a", "wcag141"],
   "metadata": {
     "description": "Ensure links are distinguished from surrounding text in a way that does not rely on color",
-    "help": "Links must be distinguishable without relying on color"
+    "help": "Links must be distinguishable without relying on color. Sufficient color contrast ratio of 3:1 is necessary to distinguish link text color from surrounding text color."
   },
   "all": ["link-in-text-block"],
   "any": [],
