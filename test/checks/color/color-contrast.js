@@ -408,7 +408,6 @@ describe('color-contrast', function() {
       );
 
       assert.isUndefined(contrastEvaluate.apply(checkContext, params));
-      console.log(checkContext._data);
       assert.deepEqual(checkContext._data, {
         fontSize: '12.0pt (16px)',
         fontWeight: 'normal',
