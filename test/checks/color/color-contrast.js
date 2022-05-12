@@ -408,8 +408,12 @@ describe('color-contrast', function() {
       );
 
       assert.isUndefined(contrastEvaluate.apply(checkContext, params));
+      console.log(checkContext._data);
       assert.deepEqual(checkContext._data, {
-        messageKey: 'pseudoContent'
+        fontSize: '12.0pt (16px)',
+        fontWeight: 'normal',
+        messageKey: 'pseudoContent',
+        expectedContrastRatio: '4.5:1'
       });
       assert.equal(
         checkContext._relatedNodes[0],
@@ -425,7 +429,10 @@ describe('color-contrast', function() {
 
       assert.isUndefined(contrastEvaluate.apply(checkContext, params));
       assert.deepEqual(checkContext._data, {
-        messageKey: 'pseudoContent'
+        fontSize: '12.0pt (16px)',
+        fontWeight: 'normal',
+        messageKey: 'pseudoContent',
+        expectedContrastRatio: '4.5:1'
       });
       assert.equal(
         checkContext._relatedNodes[0],
@@ -449,7 +456,10 @@ describe('color-contrast', function() {
 
       assert.isUndefined(contrastEvaluate.apply(checkContext, params));
       assert.deepEqual(checkContext._data, {
-        messageKey: 'pseudoContent'
+        fontSize: '12.0pt (16px)',
+        fontWeight: 'normal',
+        messageKey: 'pseudoContent',
+        expectedContrastRatio: '4.5:1'
       });
       assert.equal(
         checkContext._relatedNodes[0],
@@ -880,7 +890,7 @@ describe('color-contrast', function() {
       assert.equal(checkContext._data.messageKey, 'shadowOnBgColor');
     });
 
-    it('fails if thick text shadows don\'t have sufficient contrast', function() {
+    it("fails if thick text shadows don't have sufficient contrast", function() {
       var params = checkSetup(
         '<div id="target" style="background-color: #aaa; color:#666; ' +
           'text-shadow: 0 0 0.09em #000, 0 0 0.09em #000, 0 0 0.09em #000;">' +
@@ -890,7 +900,7 @@ describe('color-contrast', function() {
       assert.isTrue(contrastEvaluate.apply(checkContext, params));
     });
 
-    it('passes if thin text shadows don\'t have sufficient contrast, but the text and background do', function() {
+    it("passes if thin text shadows don't have sufficient contrast, but the text and background do", function() {
       var params = checkSetup(
         '<div id="target" style="background-color: #aaa; color:#666; ' +
           'text-shadow: 0 0 0.09em #000, 0 0 0.09em #000, 0 0 0.09em #000;">' +
