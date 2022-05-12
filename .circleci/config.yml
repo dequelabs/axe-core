@@ -13,11 +13,11 @@ unix_nightly_box: &unix_nightly_box
 
 win_box: &win_box
   executor:
-    name: win/vs2019
+    name: win/default
     shell: bash.exe
 
 orbs:
-  win: circleci/windows@1.0.0
+  win: circleci/windows@2.2.0
   puppeteer: threetreeslight/puppeteer@0.1.2
   browser-tools: circleci/browser-tools@1.1.0
 
@@ -36,20 +36,6 @@ restore_dependency_cache_win: &restore_dependency_cache_win
       - v9-cache-win-{{ checksum "package-lock.json" }}
       - v9-cache-win-
 
-# install the version of chromedriver that matches the currently installed version of Chrome (taken from CircleCI chromedriver script)
-install_linux_chromedriver: &install_linux_chromedriver
-  run:
-    name: Install Chromedriver
-    command: |
-      CHROME_VERSION="$(google-chrome --version)"
-      CHROME_VERSION_STRING="$(echo $CHROME_VERSION | sed 's/^Google Chrome //' | sed 's/^Chromium //')"
-      echo "Installed version of Google Chrome is $CHROME_VERSION_STRING"
-
-      CHROMEDRIVER_RELEASE="${CHROME_VERSION_STRING%%.*}"
-
-      echo "ChromeDriver $CHROMEDRIVER_RELEASE will be installed"
-      npm install --no-save "chromedriver@$CHROMEDRIVER_RELEASE"
-
 jobs:
   # Fetch and cache dependencies.
   dependencies_unix:
@@ -60,7 +46,7 @@ jobs:
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
       - run: npm ci
-      - <<: *install_linux_chromedriver
+      - run: npx browser-driver-manager install chromedriver --verbose
       - save_cache:
           key: v9-cache-unix-{{ checksum "package-lock.json" }}
           paths:
@@ -133,8 +119,6 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
-      # Always run on the latest master branch, regardless of cache
-      - run: npm install act-rules/act-rules.github.io#master
       - run: npm run build
       - run: npm run test:act
 
@@ -177,11 +161,8 @@ jobs:
       - <<: *restore_dependency_cache_unix
       - run: npm run build
       - run:
-          name: Install Chrome Beta
-          command: |
-            wget https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb
-            sudo apt install ./google-chrome-beta_current_amd64.deb
-      - <<: *install_linux_chromedriver
+          name: Install Chrome and ChromeDriver Beta
+          command: npx browser-driver-manager install chrome=beta chromedriver=beta --verbose
       - run:
           name: Install Firefox Nightly
           command: |
@@ -193,16 +174,35 @@ jobs:
       - run: npm run test -- --browsers Chrome,FirefoxNightly
 
   # Run the test suite for nightly builds.
+  test_nightly_act:
+    <<: *defaults
+    <<: *unix_nightly_box
+    steps:
+      - checkout
+      - <<: *restore_dependency_cache_unix
+      - browser-tools/install-browser-tools
+      # install ACT rules
+      # install first as for some reason installing a single package
+      # also re-installs all repo dependencies as well
+      - run: npm install act-rules/act-rules.github.io#master
+      - run: npx browser-driver-manager install chromedriver --verbose
+      - run: npm run build
+      - run: npm run test:act
+
+  # Run the test suite for nightly builds.
   test_nightly_aria_practices:
     <<: *defaults
     <<: *unix_nightly_box
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
-      - run: npm run build
+      - browser-tools/install-browser-tools
       # install ARIA practices
+      # install first as for some reason installing a single package
+      # also re-installs all repo dependencies as well
       - run: npm install w3c/aria-practices#main
+      - run: npx browser-driver-manager install chromedriver --verbose
+      - run: npm run build
       - run: npm run test:apg
 
   # Test api docs can be built
@@ -263,7 +263,7 @@ jobs:
   # Create a GitHub release.
   github_release:
     docker:
-      - image: circleci/golang:1.10
+      - image: cimg/go:1.17.1
     steps:
       - checkout
       - run: go get gopkg.in/aktau/github-release.v0
@@ -407,6 +407,9 @@ workflows:
     jobs:
       - dependencies_unix
       - test_nightly_browsers:
+          requires:
+            - dependencies_unix
+      - test_nightly_act:
           requires:
             - dependencies_unix
       - test_nightly_aria_practices:
