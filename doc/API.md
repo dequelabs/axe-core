@@ -154,7 +154,7 @@ In this example, we pass in the WCAG 2 A and AA tags into `axe.getRules` to retr
       "section508",
       "section508.22.a"
     ],
-    actIds: ['abc123']
+    actIds: ['c487ae']
   },
   {
     description: "Ensures ARIA attributes are allowed for an element's role",
