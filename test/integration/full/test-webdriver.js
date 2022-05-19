@@ -191,6 +191,9 @@ function start(options) {
     .sync([
       'test/integration/full/**/*.{html,xhtml}',
       '!**/frames/**/*.{html,xhtml}'
+      // 'test/integration/full/**/*__.xhtml',
+      // 'test/integration/full/**/*.html',
+      // '!**/frames/**/*.html'
     ])
     .map(function(url) {
       return 'http://localhost:9876/' + url;

@@ -15,6 +15,14 @@ describe('standards.getAriaRolesByType', function() {
     ariaRoles.caption = { type: 'structure' };
     ariaRoles.cell = { type: 'structure' };
 
+    ariaRoles['doc-biblioentry'] = { type: 'structure' };
+    ariaRoles['doc-endnote'] = { type: 'structure' };
+
+    // https://www.w3.org/TR/dpub-aria-1.0/#doc-example
+    // ==> (was 'section' now 'figure')
+    // https://www.w3.org/TR/dpub-aria-1.1/#doc-example
+    ariaRoles['doc-example'] = { type: 'structure' };
+
     axe.configure({
       standards: {
         ariaRoles: ariaRoles
@@ -26,7 +34,14 @@ describe('standards.getAriaRolesByType', function() {
       'article',
       'blockquote',
       'caption',
-      'cell'
+      'cell',
+      'doc-biblioentry',
+      'doc-endnote',
+
+      // https://www.w3.org/TR/dpub-aria-1.0/#doc-example
+      // ==> (was 'section' now 'figure')
+      // https://www.w3.org/TR/dpub-aria-1.1/#doc-example
+      'doc-example'
     ]);
   });
 

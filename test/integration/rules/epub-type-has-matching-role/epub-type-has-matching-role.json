@@ -1,0 +1,15 @@
+{
+  "description": "epub-type-has-matching-role test",
+  "rule": "epub-type-has-matching-role",
+  "violations": [["#fail1"], ["#fail2"], ["#fail3"]],
+  "passes": [
+    ["section"],
+    ["#pass2"],
+    ["#pass3"],
+    ["#pass4"],
+    ["#pass6"],
+    ["#pass5"],
+    ["#id-landmarks"],
+    ["#pass0"]
+  ]
+}

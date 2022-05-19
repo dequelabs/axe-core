@@ -30,3 +30,4 @@ typings/axe-core/axe-core-tests.js
 # doc
 doc/rule-descriptions.*.md
 
+.history
