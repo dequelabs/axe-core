@@ -68,6 +68,7 @@
 | [valid-lang](https://dequeuniversity.com/rules/axe/4.4/valid-lang?application=RuleDescription)                                   | Ensures lang attributes have valid values                                                                                                             | Serious                  | cat.language, wcag2aa, wcag312                                                             | failure                    |                                                                                                        |
 | [video-caption](https://dequeuniversity.com/rules/axe/4.4/video-caption?application=RuleDescription)                             | Ensures &lt;video&gt; elements have captions                                                                                                          | Critical                 | cat.text-alternatives, wcag2a, wcag122, section508, section508.22.a                        | needs&nbsp;review          | [eac66b](https://act-rules.github.io/rules/eac66b)                                                     |
 
+
 ## WCAG 2.1 Level A & AA Rules
 
 | Rule ID                                                                                                            | Description                                                                                   | Impact  | Tags                              | Issue Type | ACT Rules                                          |
