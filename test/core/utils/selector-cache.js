@@ -15,39 +15,45 @@ describe('utils.selector-cache', function() {
 
   describe('cacheNodeSelectors', function() {
     it('should add the node to the global selector', function() {
-      cacheNodeSelectors(vNode, {});
-      assert.deepEqual(vNode._selectorMap['*'], [vNode]);
+      var map = {};
+      cacheNodeSelectors(vNode, map);
+      assert.deepEqual(map['*'], [vNode]);
     });
 
     it('should add the node to the nodeName', function() {
-      cacheNodeSelectors(vNode, {});
-      assert.deepEqual(vNode._selectorMap.div, [vNode]);
+      var map = {};
+      cacheNodeSelectors(vNode, map);
+      assert.deepEqual(map.div, [vNode]);
     });
 
     it('should add the node to all attribute selectors', function() {
-      cacheNodeSelectors(vNode, {});
-      assert.deepEqual(vNode._selectorMap['[id]'], [vNode]);
-      assert.deepEqual(vNode._selectorMap['[class]'], [vNode]);
-      assert.deepEqual(vNode._selectorMap['[aria-label]'], [vNode]);
+      var map = {};
+      cacheNodeSelectors(vNode, map);
+      assert.deepEqual(map['[id]'], [vNode]);
+      assert.deepEqual(map['[class]'], [vNode]);
+      assert.deepEqual(map['[aria-label]'], [vNode]);
     });
 
     it('should add the node to the id map', function() {
-      cacheNodeSelectors(vNode, {});
-      assert.deepEqual(vNode._selectorMap[' [idsMap]'].target, [vNode]);
+      var map = {};
+      cacheNodeSelectors(vNode, map);
+      assert.deepEqual(map[' [idsMap]'].target, [vNode]);
     });
 
     it('should not add the node to selectors it does not match', function() {
-      cacheNodeSelectors(vNode, {});
-      assert.isUndefined(vNode._selectorMap['[for]']);
-      assert.isUndefined(vNode._selectorMap.h1);
+      var map = {};
+      cacheNodeSelectors(vNode, map);
+      assert.isUndefined(map['[for]']);
+      assert.isUndefined(map.h1);
     });
 
     it('should ignore non-element nodes', function() {
+      var map = {};
       fixture.innerHTML = 'Hello';
       vNode = new axe.VirtualNode(fixture.firstChild);
-      cacheNodeSelectors(vNode, {});
+      cacheNodeSelectors(vNode, map);
 
-      assert.isUndefined(vNode._selectorMap);
+      assert.lengthOf(Object.keys(map), 0);
     });
   });
 
@@ -138,6 +144,11 @@ describe('utils.selector-cache', function() {
 
     it('should return an empty array for complex selector that does not match', function() {
       var expression = convertSelector('span.missingClass[id]');
+      assert.lengthOf(getNodesMatchingExpression(tree, expression), 0);
+    });
+
+    it('should return an empty array for a non-complex selector that does not match', function() {
+      var expression = convertSelector('div#not-target[id]');
       assert.lengthOf(getNodesMatchingExpression(tree, expression), 0);
     });
 
