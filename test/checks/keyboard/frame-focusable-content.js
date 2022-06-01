@@ -45,13 +45,6 @@ describe('frame-focusable-content tests', function() {
     assert.isTrue(frameFocusableContent(null, null, vNode));
   });
 
-  it('should return false if element is natively focusable but has tabindex', function() {
-    var vNode = queryFixture(
-      '<div id="target"><button tabindex>Hello</button></div>'
-    );
-    assert.isFalse(frameFocusableContent(null, null, vNode));
-  });
-
   it('should return false if element is natively focusable but has tabindex=0', function() {
     var vNode = queryFixture(
       '<div id="target"><button tabindex="0">Hello</button></div>'
