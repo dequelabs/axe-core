@@ -3,7 +3,8 @@
   "evaluate": "has-descendant-evaluate",
   "after": "has-descendant-after",
   "options": {
-    "selector": "main:not([role]), [role='main']"
+    "selector": "main:not([role]), [role='main']",
+    "passForModal": true
   },
   "metadata": {
     "impact": "moderate",

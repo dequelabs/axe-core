@@ -3,7 +3,8 @@
   "evaluate": "has-descendant-evaluate",
   "after": "has-descendant-after",
   "options": {
-    "selector": "h1:not([role], [aria-level]), :is(h1, h2, h3, h4, h5, h6):not([role])[aria-level=1], [role=heading][aria-level=1]"
+    "selector": "h1:not([role], [aria-level]), :is(h1, h2, h3, h4, h5, h6):not([role])[aria-level=1], [role=heading][aria-level=1]",
+    "passForModal": true
   },
   "metadata": {
     "impact": "moderate",
