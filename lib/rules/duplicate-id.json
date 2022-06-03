@@ -4,6 +4,7 @@
   "matches": "duplicate-id-misc-matches",
   "excludeHidden": false,
   "tags": ["cat.parsing", "wcag2a", "wcag411"],
+  "actIds": ["3ea0c8"],
   "metadata": {
     "description": "Ensures every id attribute value is unique",
     "help": "id attribute value must be unique"

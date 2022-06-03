@@ -9,6 +9,7 @@
     "wcag224",
     "wcag325"
   ],
+  "actIds": ["bc659a"],
   "metadata": {
     "description": "Ensures <meta http-equiv=\"refresh\"> is not used",
     "help": "Timed refresh must not exist"

@@ -3,6 +3,7 @@
   "selector": "h1, h2, h3, h4, h5, h6, [role=\"heading\"]",
   "matches": "heading-matches",
   "tags": ["cat.name-role-value", "best-practice"],
+  "actIds": ["ffd0e9"],
   "impact": "minor",
   "metadata": {
     "description": "Ensures headings have discernible text",
