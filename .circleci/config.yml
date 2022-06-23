@@ -42,10 +42,10 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
-      - browser-tools/install-browser-tools
       - run: npm ci
       - run: npx browser-driver-manager install chromedriver --verbose
       - save_cache:
@@ -79,9 +79,9 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
-      - browser-tools/install-browser-tools
       - run: npm run build
       - run: npm run test -- --browsers Chrome,Firefox
       - run: npm run test:integration:chrome
@@ -109,9 +109,9 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
-      - browser-tools/install-browser-tools
       - run: npm run build
       - run: npm run test:examples
 
@@ -120,9 +120,9 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
-      - browser-tools/install-browser-tools
       - run: npm run build
       - run: npm run test:act
 
@@ -131,9 +131,9 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
-      - browser-tools/install-browser-tools
       - run: npm run build
       - run: npm run test:apg
 
@@ -142,9 +142,9 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
-      - browser-tools/install-browser-tools
       - run: npm run build
       - run: npm run test:locales
 
@@ -153,9 +153,9 @@ jobs:
     <<: *defaults
     <<: *unix_box
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
-      - browser-tools/install-browser-tools
       - run: npm run build
       - run: npm run test:virtual-rules
 
