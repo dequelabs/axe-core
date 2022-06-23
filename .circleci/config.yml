@@ -45,6 +45,7 @@ jobs:
       - checkout
       - <<: *set_npm_auth
       - <<: *restore_dependency_cache_unix
+      - browser-tools/install-browser-tools
       - run: npm ci
       - run: npx browser-driver-manager install chromedriver --verbose
       - save_cache:
