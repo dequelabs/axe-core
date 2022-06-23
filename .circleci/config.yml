@@ -82,6 +82,7 @@ jobs:
       - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
       - run: npm run test -- --browsers Chrome,Firefox
       - run: npm run test:integration:chrome
@@ -112,6 +113,7 @@ jobs:
       - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
       - run: npm run test:examples
 
@@ -123,6 +125,7 @@ jobs:
       - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
       - run: npm run test:act
 
@@ -134,6 +137,7 @@ jobs:
       - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
       - run: npm run test:apg
 
@@ -145,6 +149,7 @@ jobs:
       - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
       - run: npm run test:locales
 
@@ -156,6 +161,7 @@ jobs:
       - browser-tools/install-browser-tools
       - checkout
       - <<: *restore_dependency_cache_unix
+      - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
       - run: npm run test:virtual-rules
 
