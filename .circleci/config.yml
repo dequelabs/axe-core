@@ -5,7 +5,7 @@ defaults: &defaults
 
 unix_box: &unix_box
   docker:
-    - image: circleci/node:16.13-browsers
+    - image: cimg/node:16.14-browsers
 
 unix_nightly_box: &unix_nightly_box
   docker:
@@ -80,6 +80,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
+      - browser-tools/install-browser-tools
       - run: npm run build
       - run: npm run test -- --browsers Chrome,Firefox
       - run: npm run test:integration:chrome
@@ -109,6 +110,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
+      - browser-tools/install-browser-tools
       - run: npm run build
       - run: npm run test:examples
 
@@ -119,6 +121,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
+      - browser-tools/install-browser-tools
       - run: npm run build
       - run: npm run test:act
 
@@ -129,6 +132,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
+      - browser-tools/install-browser-tools
       - run: npm run build
       - run: npm run test:apg
 
@@ -139,6 +143,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
+      - browser-tools/install-browser-tools
       - run: npm run build
       - run: npm run test:locales
 
@@ -149,6 +154,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_dependency_cache_unix
+      - browser-tools/install-browser-tools
       - run: npm run build
       - run: npm run test:virtual-rules
 
