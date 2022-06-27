@@ -33,7 +33,7 @@ describe('no-negative-tabindex-matches', function() {
     assert.isTrue(actual);
   });
 
-  it('returns false for nodes with an invalid tabindex', function() {
+  it('returns false for nodes with a negative tabindex', function() {
     var vNode = queryFixture('<div id="target" tabindex="-10"></div>');
     var actual = rule.matches(null, vNode);
     assert.isFalse(actual);
