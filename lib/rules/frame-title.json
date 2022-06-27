@@ -1,6 +1,7 @@
 {
   "id": "frame-title",
   "selector": "frame, iframe",
+  "matches": "no-negative-tabindex-matches",
   "tags": [
     "cat.text-alternatives",
     "wcag2a",
