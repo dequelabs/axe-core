@@ -233,6 +233,7 @@ declare namespace axe {
     none?: string[];
     tags?: string[];
     matches?: string;
+    reviewOnFail?: boolean;
   }
   interface AxePlugin {
     id: string;
