@@ -154,14 +154,14 @@ For example, if we were updating the `aria-roles` rule to fail when using the `c
   "rule": "aria-roles",
   "violations": [
      ["#fail1"],
--     ["#fail2"]
-+     ["#fail2"],
-+     ["#fail-command"]
+-    ["#fail2"]
++    ["#fail2"],
++    ["#fail-command"]
   ]
 }
 ```
 
-Note that the id added to the `violations` array is inside and array. This is because the `violations` and `passes` arrays use an axe-core selector which follows the format:
+Note that the id added to the `violations` array is inside an array. This is because the `violations` and `passes` arrays are axe-core selectors, which follow the format:
 
 - a single string - the string is the CSS selector
 - multiple strings
