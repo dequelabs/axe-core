@@ -111,7 +111,7 @@ export default async function validateAxeReport(filePath = '') {
 
 ### Docblock Comments
 
-We use [Docblock comments](https://en.wikipedia.org/wiki/Docblock) in our code. Docblock comments are a way to describe what a function does, it's signature, and describe it's inputs.
+We use [Docblock comments](https://en.wikipedia.org/wiki/Docblock) in our code. Docblock comments are a way to describe what a function does, its signature, and describe its inputs.
 
 <details>
   <summary>Example of Docblock comment</summary>
