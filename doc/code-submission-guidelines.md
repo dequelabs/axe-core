@@ -161,7 +161,7 @@ For example, if we were updating the `aria-roles` rule to fail when using the `c
 }
 ```
 
-Note that the id added to the `violations` array is inside an array. This is because the `violations` and `passes` arrays are axe-core selectors, which follow the format:
+Notice that the id added to the `violations` array is inside an array. This is because the `violations` and `passes` arrays are axe-core selectors, which follow the format:
 
 - a single string - the string is the CSS selector
 - multiple strings
