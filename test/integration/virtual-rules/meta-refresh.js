@@ -3,7 +3,7 @@ describe('meta-refresh virtual-rule', function() {
     var results = axe.runVirtualRule('meta-refresh', {
       nodeName: 'meta',
       attributes: {
-        'http-equiv': 'refresh',
+        'http-equiv': 'refresh'
       }
     });
 
