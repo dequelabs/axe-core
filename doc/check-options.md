@@ -25,6 +25,7 @@
   - [css-orientation-lock](#css-orientation-lock)
   - [meta-viewport-large](#meta-viewport-large)
   - [meta-viewport](#meta-viewport)
+  - [meta-refresh](#meta-refresh)
   - [header-present](#header-present)
   - [landmark](#landmark)
   - [p-as-heading](#p-as-heading)
@@ -384,6 +385,13 @@ th</code></pre>
 | Option         | Default | Description                                                                                  |
 | -------------- | :------ | :------------------------------------------------------------------------------------------- |
 | `scaleMinimum` | `2`     | The `scale-maximum` CSS value the check applies to. Values above this number will be ignored |
+
+### meta-refresh
+
+| Option     | Default | Description                                                                         |
+| ---------- | :------ | :---------------------------------------------------------------------------------- |
+| `minDelay` | `0`     | Passes if the redirect is equal or less than this. Can be set to `false` to disable |
+| `maxDelay` | `7200`  | Passes if the redirect is greater than this. Can be set to `false` to disable       |
 
 ### header-present
 

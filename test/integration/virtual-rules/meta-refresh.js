@@ -1,15 +1,16 @@
 describe('meta-refresh virtual-rule', function() {
-  it('should pass missing content', function() {
+  it('should be inapplicable for missing content', function() {
     var results = axe.runVirtualRule('meta-refresh', {
       nodeName: 'meta',
       attributes: {
-        'http-equiv': 'refresh'
+        'http-equiv': 'refresh',
       }
     });
 
-    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
+    assert.lengthOf(results.inapplicable, 1);
   });
 
   it('should pass for content=0', function() {

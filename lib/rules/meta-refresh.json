@@ -1,6 +1,6 @@
 {
   "id": "meta-refresh",
-  "selector": "meta[http-equiv=\"refresh\"]",
+  "selector": "meta[http-equiv=\"refresh\"][content]",
   "excludeHidden": false,
   "tags": [
     "cat.time-and-media",
