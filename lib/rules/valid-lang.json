@@ -1,7 +1,6 @@
 {
   "id": "valid-lang",
   "selector": "[lang]:not(html), [xml\\:lang]:not(html)",
-  "matches": "has-lang-text-matches",
   "tags": ["cat.language", "wcag2aa", "wcag312", "ACT"],
   "actIds": ["de46e4"],
   "metadata": {
