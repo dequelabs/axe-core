@@ -1,6 +1,10 @@
 {
   "id": "meta-refresh",
   "evaluate": "meta-refresh-evaluate",
+  "options": {
+    "minDelay": 0,
+    "maxDelay": 72000
+  },
   "metadata": {
     "impact": "critical",
     "messages": {
