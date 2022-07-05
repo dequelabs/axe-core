@@ -1,0 +1,19 @@
+{
+  "id": "important-line-height",
+  "evaluate": "important-css-property-evaluate",
+  "options": {
+    "multiLineOnly": true,
+    "cssProperty": "line-height",
+    "minValue": 1.5
+  },
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "No inline styles with '!important' that affect text spacing has been specified",
+      "fail": {
+        "singular": "Remove '!important' from inline style ${data.values}, as overriding this is not supported by most browsers",
+        "plural": "Remove '!important' from inline styles ${data.values}, as overriding this is not supported by most browsers"
+      }
+    }
+  }
+}
