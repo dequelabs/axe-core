@@ -116,7 +116,7 @@
     "@deque/dot": "^1.1.5",
     "act-rules.github.io": "github:act-rules/act-rules.github.io#a759e99f",
     "aria-practices": "github:w3c/aria-practices#c1a34c4e",
-    "aria-query": "^3.0.0",
+    "aria-query": "^5.0.0",
     "browser-driver-manager": "1.0.3",
     "chai": "~4.2.0",
     "chalk": "^4.1.0",
