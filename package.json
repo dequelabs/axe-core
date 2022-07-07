@@ -105,7 +105,8 @@
     "next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "sri-validate": "node build/sri-update --validate",
-    "fmt": "prettier --write .*.json *.{json,md,js} **/*.ts './{.circleci,.github,build,doc,lib,locales,test,typings}/**/*.{json,md,js,ts,html}'"
+    "fmt": "prettier --write .*.json *.{json,md,js} **/*.ts './{.circleci,.github,build,doc,lib,locales,test,typings}/**/*.{json,md,js,ts,html}'",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@axe-core/webdriverjs": "^4.4.3",
@@ -142,7 +143,7 @@
     "grunt-contrib-watch": "^1.1.0",
     "html-entities": "1.x",
     "http-server": "^14.1.1",
-    "husky": "4.x",
+    "husky": "^8.0.0",
     "jquery": "^3.6.0",
     "jsdoc": "^3.6.10",
     "jsdom": "^20.0.0",
@@ -174,11 +175,6 @@
     "typescript": "^4.7.4",
     "uglify-js": "^3.16.2",
     "weakmap-polyfill": "^2.0.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "grunt configure && lint-staged"
-    }
   },
   "lint-staged": {
     "*.{md,json,ts,html}": [
