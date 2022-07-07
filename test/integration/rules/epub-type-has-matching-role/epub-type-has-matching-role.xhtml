@@ -13,7 +13,7 @@
     <h1>Loomings</h1>
     <p>Call me Ishmael.</p>
     
-    <section epub:type="cover">
+    <section id="sec" epub:type="cover">
         <img src="image_001.jpg" alt="A beautiful cover" role="doc-cover"/>
     </section>
     
@@ -38,13 +38,38 @@
     <div id="fail2" epub:type="notice" role="doc-tip">notice</div>
     <!-- fail #3: missing role for a type in a list -->
     <div id="fail3" epub:type="foo:bar notice">notice</div>
-    
+
     <nav epub:type="landmarks" id="id-landmarks">
         <ol>
         <!-- pass: epub:type/ARIA mapping shouldn't be checked in the landmarks nav -->
         <li><a id="pass0" href="content.xhtml" epub:type="chapter">content</a></li>
         </ol>
     </nav>
-    
+
+    <section id="ok1" role="doc-bibliography" epub:type="bibliography">
+        <ul>
+        <!-- <li id="deprecated1" role="doc-biblioentry"></li> -->
+        <li id="deprecated1_" epub:type="biblioentry"></li>
+        </ul>
+    </section>
+    <section id="ok2" role="doc-bibliography" epub:type="bibliography">
+        <ul>
+        <!-- <li><p id="deprecated2" role="doc-biblioentry"></p></li> -->
+        <li><p id="deprecated2_" epub:type="biblioentry"></p></li>
+        </ul>
+    </section>
+    <section id="ok3" role="doc-endnotes" epub:type="endnotes">
+        <ul>
+        <!-- <li id="deprecated3" role="doc-endnote"></li> -->
+        <li id="deprecated3_" epub:type="endnote"></li>
+        </ul>
+    </section>
+    <section id="ok4" role="doc-endnotes" epub:type="endnotes">
+        <ul>
+        <!-- <li><p id="deprecated4" role="doc-endnote"></p></li> -->
+        <li><p id="deprecated4_" epub:type="endnote"></p></li>
+        </ul>
+    </section>
+                
 </body>
 </html>
