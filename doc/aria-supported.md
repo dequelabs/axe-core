@@ -10,4 +10,3 @@ For a detailed description about how accessibility support is decided, see [How 
 
 | aria-attribute | axe-core support |
 | -------------- | ---------------- |
-
