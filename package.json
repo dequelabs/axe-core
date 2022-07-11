@@ -4,7 +4,7 @@
   "version": "4.4.2",
   "license": "MPL-2.0",
   "engines": {
-    "node": ">=12"
+    "node": ">=4"
   },
   "contributors": [
     {
