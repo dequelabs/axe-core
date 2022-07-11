@@ -132,7 +132,7 @@
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-mocha-no-only": "^1.1.1",
-    "execa": "^6.1.0",
+    "execa": "5.x",
     "globby": "^10.0.0",
     "grunt": "^1.5.3",
     "grunt-babel": "^8.0.0",
