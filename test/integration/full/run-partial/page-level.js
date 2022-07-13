@@ -33,6 +33,12 @@ describe('run-partial, page-level', function() {
         assert.lengthOf(axeRunPartialResult.passes, 0);
 
         axeRunPartialResult.timestamp = axeRunResult.timestamp;
+
+        // it appears the selenium webdriver browser message "Chrome is being controlled by
+        // automated software" changes the window height when it appears
+        // between running the two axe runs
+        axeRunPartialResult.testEnvironment = axeRunResult.testEnvironment;
+
         assert.deepEqual(axeRunPartialResult, axeRunResult);
         done();
       })
