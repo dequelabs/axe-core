@@ -86,7 +86,7 @@
     "integration:apg": "mocha test/aria-practices/*.spec.js",
     "integration:chrome": "npm run integration -- browser=Chrome",
     "integration:firefox": "npm run integration -- browser=Firefox",
-    "integration:ie": "npm run integration -- browser=IE",
+    "integration:ie": "npm run integration -- browser=\"Internet Explorer\"",
     "test:integration": "npm run test:integration:chrome",
     "test:integration:chrome": "start-server-and-test 9876 integration:chrome",
     "test:integration:firefox": "start-server-and-test 9876 integration:firefox",
