@@ -148,6 +148,13 @@ module.exports = function(grunt) {
       }
     },
     'add-locale': {
+      template: {
+        options: {
+          lang: 'xyz'
+        },
+        src: ['tmp/core/core.js'],
+        dest: './locales/_template.json'
+      },
       newLang: {
         options: {
           lang: grunt.option('lang')
@@ -249,7 +256,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('translate', ['validate', 'esbuild', 'add-locale']);
+  grunt.registerTask('translate', ['validate', 'esbuild', 'add-locale:newLang']);
   grunt.registerTask('build', [
     'clean:core',
     'validate',
@@ -260,7 +267,8 @@ module.exports = function(grunt) {
     'concat:engine',
     'uglify',
     'aria-supported',
-    'bytesize'
+    'add-locale:template',
+    'bytesize',
   ]);
   grunt.registerTask('default', ['build']);
   grunt.registerTask('dev', ['watch']);
