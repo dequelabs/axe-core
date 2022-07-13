@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.4.3](https://github.com/dequelabs/axe-core/compare/v4.4.2...v4.4.3) (2022-07-13)
+
+### Bug Fixes
+
+- **aria-required-parent:** allow nested group and presentational roles ([#3492](https://github.com/dequelabs/axe-core/issues/3492)) ([fc17062](https://github.com/dequelabs/axe-core/commit/fc17062236aef65b3efdd55d938c040b2ec3011d))
+- **axe.d.ts:** updates type definition for Rule to add reviewOnFail ([#3521](https://github.com/dequelabs/axe-core/issues/3521)) ([b690afe](https://github.com/dequelabs/axe-core/commit/b690afedd087d5e3b02e46fda7b0323237a9dd16))
+- Continue supporting Node >=4 ([#3538](https://github.com/dequelabs/axe-core/issues/3538)) ([a6c1cea](https://github.com/dequelabs/axe-core/commit/a6c1ceaae9fde7321aea46825beed28830394792)), closes [#3537](https://github.com/dequelabs/axe-core/issues/3537)
+- **frame-focusable-content:** don't fail for elements with negative tabindex ([#3493](https://github.com/dequelabs/axe-core/issues/3493)) ([3b0b678](https://github.com/dequelabs/axe-core/commit/3b0b6783b5a3b1279d47cbf6d0476d797dc1fd13))
+- **frame-title:** ignore frames with negative tabindex ([94b6239](https://github.com/dequelabs/axe-core/commit/94b62392a8fef38c6c096fd01ace8f6b0773b2a2))
+- **meta-refresh:** Add WCAG's 20-hour exception ([#3525](https://github.com/dequelabs/axe-core/issues/3525)) ([c00bdd0](https://github.com/dequelabs/axe-core/commit/c00bdd023883a89f93752778aff76dccac415f15))
+- **page-has-heading-one,landmark-one-main:** do not fail if modal is open ([#3501](https://github.com/dequelabs/axe-core/issues/3501)) ([399dc94](https://github.com/dequelabs/axe-core/commit/399dc94548556a7027be0702d2d1b29d8a0f6c51))
+- **utils:** greatly improve the speed of querySelectorAll ([#3423](https://github.com/dequelabs/axe-core/issues/3423)) ([4e52f9e](https://github.com/dequelabs/axe-core/commit/4e52f9ed5359eea5977131a4ffda033f01588f28))
+- **valid-lang:** ignore lang on elements with no text ([#3523](https://github.com/dequelabs/axe-core/issues/3523)) ([a2bc1cb](https://github.com/dequelabs/axe-core/commit/a2bc1cbda3ae2210ebf4fdbe258d4ac4dd5d1593))
+
 ### [4.4.2](https://github.com/dequelabs/axe-core/compare/v4.4.1...v4.4.2) (2022-05-12)
 
 ### Bug Fixes
