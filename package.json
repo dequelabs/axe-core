@@ -167,7 +167,7 @@
     "proxyquire": "^2.1.3",
     "revalidator": "~0.3.1",
     "selenium-webdriver": "4.3.0",
-    "sinon": "10.x",
+    "sinon": "9.x",
     "sri-toolbox": "^0.2.0",
     "standard-version": "^9.5.0",
     "start-server-and-test": "^1.14.0",
