@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.4.3](https://github.com/dequelabs/axe-core/compare/v4.4.2...v4.4.3) (2022-07-13)
+
+### Bug Fixes
+
+- **axe.d.ts:** updates type definition for Rule to add reviewOnFail ([#3521](https://github.com/dequelabs/axe-core/issues/3521)) ([afb2478](https://github.com/dequelabs/axe-core/commit/afb247844e697475f5bf81fd7b03ed30c2c65830))
+- Continue supporting Node >=4 ([#3538](https://github.com/dequelabs/axe-core/issues/3538)) ([da7923b](https://github.com/dequelabs/axe-core/commit/da7923bd5bcaa71f52f6b4e6b8eece1ea12c1c2a)), closes [#3537](https://github.com/dequelabs/axe-core/issues/3537)
+
 ### [4.4.2](https://github.com/dequelabs/axe-core/compare/v4.4.1...v4.4.2) (2022-05-12)
 
 ### Bug Fixes
