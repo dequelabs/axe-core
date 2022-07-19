@@ -1,7 +1,7 @@
 {
   "id": "avoid-inline-spacing",
   "selector": "[style]",
-  "matches": "has-visible-text-matches",
+  "matches": "is-visible-matches",
   "tags": ["cat.structure", "wcag21aa", "wcag1412", "ACT"],
   "actIds": ["24afc2", "9e45ec", "78fd32"],
   "metadata": {
