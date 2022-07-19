@@ -2,6 +2,7 @@ describe('inline-style-property tests', function() {
   'use strict';
   var fixture = document.getElementById('fixture');
   var checkSetup = axe.testUtils.checkSetup;
+  var isIE11 = axe.testUtils.isIE11;
 
   afterEach(function() {
     fixture.innerHTML = '';
@@ -107,8 +108,8 @@ describe('inline-style-property tests', function() {
           minValue: 0.12
         });
       });
-  
-      it('is false when `initial` (meaning `normal`) is used along with !important', function () {
+
+      (isIE11 ? xit : it)('is false when `initial` (meaning `normal`) is used along with !important', function () {
         var params = checkSetup(
           '<p style="letter-spacing: initial !important" id="target">Hello world</p>'
         );
@@ -133,7 +134,7 @@ describe('inline-style-property tests', function() {
         });
       });
 
-      it('is true when `unset` is used along with !important', function () {
+      (isIE11 ? xit : it)('is true when `unset` is used along with !important', function () {
         var params = checkSetup(
           '<p style="letter-spacing: 0.1em">' +
           '<span style="letter-spacing: unset !important;" id="target">Hello world</span</p>'
@@ -221,7 +222,7 @@ describe('inline-style-property tests', function() {
       assert.isNull(checkContext._data);
     });
 
-    it('is false when below 1.5em and !important', function () {
+    (isIE11 ? xit : it)('is false when below 1.5em and !important', function () {
       var params = checkSetup(
         '<p style="line-height: 1.2em !important; max-width: 200px;" id="target">' + 
         '	The toy brought back fond memories of being lost in the rain forest.'+
