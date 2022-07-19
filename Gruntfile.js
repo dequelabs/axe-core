@@ -1,7 +1,7 @@
 /*eslint
 camelcase: ["error", {"properties": "never"}]
 */
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   'use strict';
 
   grunt.loadNpmTasks('grunt-babel');
@@ -14,13 +14,13 @@ module.exports = function(grunt) {
 
   var langs;
   if (grunt.option('lang')) {
-    langs = (grunt.option('lang') || '').split(/[,;]/g).map(function(lang) {
+    langs = (grunt.option('lang') || '').split(/[,;]/g).map(function (lang) {
       lang = lang.trim();
       return lang !== 'en' ? '.' + lang : '';
     });
   } else if (grunt.option('all-lang')) {
     var localeFiles = require('fs').readdirSync('./locales');
-    langs = localeFiles.map(function(file) {
+    langs = localeFiles.map(function (file) {
       return '.' + file.replace('.json', '');
     });
     langs.unshift(''); // Add default
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
   }
 
   // run tests only for affected files instead of all tests
-  grunt.event.on('watch', function(action, filepath) {
+  grunt.event.on('watch', function (action, filepath) {
     grunt.config.set('watch.file', filepath);
   });
 
@@ -80,7 +80,7 @@ module.exports = function(grunt) {
           process: true
         },
         coreFiles: ['tmp/core/index.js', 'tmp/core/**/*.js'],
-        files: langs.map(function(lang, i) {
+        files: langs.map(function (lang, i) {
           return {
             src: [
               'lib/intro.stub',
@@ -136,7 +136,7 @@ module.exports = function(grunt) {
         options: {
           tags: grunt.option('tags')
         },
-        files: langs.map(function(lang) {
+        files: langs.map(function (lang) {
           return {
             src: [''],
             dest: {
@@ -177,7 +177,7 @@ module.exports = function(grunt) {
     },
     uglify: {
       beautify: {
-        files: langs.map(function(lang, i) {
+        files: langs.map(function (lang, i) {
           return {
             src: ['<%= concat.engine.files[' + i + '].dest %>'],
             dest: '<%= concat.engine.files[' + i + '].dest %>'
@@ -199,7 +199,7 @@ module.exports = function(grunt) {
         }
       },
       minify: {
-        files: langs.map(function(lang, i) {
+        files: langs.map(function (lang, i) {
           return {
             src: ['<%= concat.engine.files[' + i + '].dest %>'],
             dest: './axe' + lang + '.min.js'
@@ -242,7 +242,7 @@ module.exports = function(grunt) {
     },
     bytesize: {
       all: {
-        src: langs.map(function(lang) {
+        src: langs.map(function (lang) {
           return ['./axe' + lang + '.js', './axe' + lang + '.min.js'];
         })
       }
