@@ -1,6 +1,6 @@
 {
   "id": "important-word-spacing",
-  "evaluate": "important-css-property-evaluate",
+  "evaluate": "inline-style-property-evaluate",
   "options": {
     "cssProperty": "word-spacing",
     "minValue": 0.16
@@ -8,11 +8,8 @@
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "No inline styles with '!important' that affect text spacing has been specified",
-      "fail": {
-        "singular": "Remove '!important' from inline style ${data.values}, as overriding this is not supported by most browsers",
-        "plural": "Remove '!important' from inline styles ${data.values}, as overriding this is not supported by most browsers"
-      }
+      "pass": "word-spacing in the style attribute is not set to !important, or meets the minimum",
+      "fail": "word-spacing in the style attribute must not use !important, or be at ${data.minValue} (received ${data.value})"
     }
   }
 }

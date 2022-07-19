@@ -1,4 +1,4 @@
-describe('important-css-property tests', function() {
+describe('inline-style-property tests', function() {
   'use strict';
   var fixture = document.getElementById('fixture');
   var checkSetup = axe.testUtils.checkSetup;
@@ -27,7 +27,10 @@ describe('important-css-property tests', function() {
       );
       var result = checkEvaluate.apply(checkContext, params);
       assert.isFalse(result);
-      assert.deepEqual(checkContext._data, { value: 0.1 });
+      assert.deepEqual(checkContext._data, {
+        value: 0.1,
+        minValue: 0.12
+      });
     });
 
     it('is true when !important is not used', function () {
@@ -45,7 +48,10 @@ describe('important-css-property tests', function() {
       );
       var result = checkEvaluate.apply(checkContext, params);
       assert.isTrue(result);
-      assert.deepEqual(checkContext._data, { value: 0.15 });
+      assert.deepEqual(checkContext._data, {
+        value: 0.15,
+        minValue: 0.12
+      });
     });
 
     it('uses the highest priority value if multiple are set', function () {
@@ -57,7 +63,10 @@ describe('important-css-property tests', function() {
       var params = checkSetup('<p style="' + style + '" id="target">Hello world</p>');
       var result = checkEvaluate.apply(checkContext, params);
       assert.isFalse(result);
-      assert.deepEqual(checkContext._data, { value: 0.1 });
+      assert.deepEqual(checkContext._data, {
+        value: 0.1,
+        minValue: 0.12
+      });
     });
 
     describe('handles different font-sizes', function () {
@@ -67,7 +76,10 @@ describe('important-css-property tests', function() {
         );
         var result = checkEvaluate.apply(checkContext, params);
         assert.isTrue(result);
-        assert.deepEqual(checkContext._data, { value: 0.15 });
+        assert.deepEqual(checkContext._data, {
+          value: 0.15,
+          minValue: 0.12
+        });
       });
       
       it('is false when the font is 0.10 time the spacing', function () {
@@ -76,9 +88,12 @@ describe('important-css-property tests', function() {
         );
         var result = checkEvaluate.apply(checkContext, params);
         assert.isFalse(result);
-        assert.deepEqual(checkContext._data, { value: 0.1 });
+        assert.deepEqual(checkContext._data, {
+          value: 0.1,
+          minValue: 0.12
+        });
       });
-    })
+    });
 
     describe('with non-number values', function () {
       it('is false when `normal` (which is 0) is used along with !important', function () {
@@ -87,7 +102,10 @@ describe('important-css-property tests', function() {
         );
         var result = checkEvaluate.apply(checkContext, params);
         assert.isFalse(result);
-        assert.deepEqual(checkContext._data, { value: 0 });
+        assert.deepEqual(checkContext._data, {
+          value: 0,
+          minValue: 0.12
+        });
       });
   
       it('is false when `initial` (meaning `normal`) is used along with !important', function () {
@@ -96,7 +114,10 @@ describe('important-css-property tests', function() {
         );
         var result = checkEvaluate.apply(checkContext, params);
         assert.isFalse(result);
-        assert.deepEqual(checkContext._data, { value: 0 });
+        assert.deepEqual(checkContext._data, {
+          value: 0,
+          minValue: 0.12
+        });
       });
 
       it('is true when `inherited` is used along with !important', function () {
@@ -106,7 +127,10 @@ describe('important-css-property tests', function() {
         );
         var result = checkEvaluate.apply(checkContext, params);
         assert.isTrue(result);
-        assert.deepEqual(checkContext._data, { value: 'inherit' });
+        assert.deepEqual(checkContext._data, {
+          value: 'inherit',
+          minValue: 0.12
+        });
       });
 
       it('is true when `unset` is used along with !important', function () {
@@ -116,9 +140,12 @@ describe('important-css-property tests', function() {
         );
         var result = checkEvaluate.apply(checkContext, params);
         assert.isTrue(result);
-        assert.deepEqual(checkContext._data, { value: 'unset' });
+        assert.deepEqual(checkContext._data, {
+          value: 'unset',
+          minValue: 0.12
+        });
       });
-    })
+    });
   });
 
   describe('important-word-spacing check', function () {
@@ -150,7 +177,10 @@ describe('important-css-property tests', function() {
       );
       var result = checkEvaluate.apply(checkContext, params);
       assert.isFalse(result);
-      assert.deepEqual(checkContext._data, { value: 0.1 });
+      assert.deepEqual(checkContext._data, {
+        value: 0.1,
+        minValue: 0.16
+      });
     });
 
     it('is true when 0.16em and !important', function () {
@@ -159,7 +189,10 @@ describe('important-css-property tests', function() {
       );
       var result = checkEvaluate.apply(checkContext, params);
       assert.isTrue(result);
-      assert.deepEqual(checkContext._data, { value: 0.16 });
+      assert.deepEqual(checkContext._data, {
+        value: 0.16,
+        minValue: 0.16
+      });
     });
   });
 
@@ -196,7 +229,10 @@ describe('important-css-property tests', function() {
       );
       var result = checkEvaluate.apply(checkContext, params);
       assert.isFalse(result);
-      assert.deepEqual(checkContext._data, { value: 1.2 });
+      assert.deepEqual(checkContext._data, {
+        value: 1.2,
+        minValue: 1.5
+      });
     });
 
     it('is true when 1.5em and !important', function () {
@@ -207,7 +243,10 @@ describe('important-css-property tests', function() {
       );
       var result = checkEvaluate.apply(checkContext, params);
       assert.isTrue(result);
-      assert.deepEqual(checkContext._data, { value: 1.5 });
+      assert.deepEqual(checkContext._data, {
+        value: 1.5,
+        minValue: 1.5
+      });
     });
 
     it('is true for single line texts', function () {
@@ -219,6 +258,85 @@ describe('important-css-property tests', function() {
       var result = checkEvaluate.apply(checkContext, params);
       assert.isTrue(result);
       assert.isNull(checkContext._data);
+    });
+  });
+
+
+  describe('With options configured for font-size', function () {
+    var checkEvaluate = axe.testUtils.getCheckEvaluate('important-letter-spacing');
+    var checkContext = axe.testUtils.MockCheckContext();
+    var options = {
+      cssProperty: 'font-size',
+      minValue: 16,
+      maxValue: 48,
+      absoluteValues: true,
+      noImportant: false
+    }
+
+    afterEach(function() {
+      checkContext.reset();
+    });
+
+    it('is false when !important and below the minValue', function () {
+      var params = checkSetup(
+        '<p style="font-size: 12px !important" id="target">Hello world</p>', options
+      );
+      var result = checkEvaluate.apply(checkContext, params);
+      assert.isFalse(result);
+      assert.deepEqual(checkContext._data, {
+        value: 12,
+        minValue: 16,
+        maxValue: 48
+      });
+    });
+
+    it('is false when !important and above the maxValue', function () {
+      var params = checkSetup(
+        '<p style="font-size: 49px !important" id="target">Hello world</p>', options
+      );
+      var result = checkEvaluate.apply(checkContext, params);
+      assert.isFalse(result);
+      assert.deepEqual(checkContext._data, {
+        value: 49,
+        minValue: 16,
+        maxValue: 48
+      });
+    });
+
+    it('is true when not !important', function () {
+      var params = checkSetup(
+        '<p style="font-size: 12px" id="target">Hello world</p>', options
+      );
+      var result = checkEvaluate.apply(checkContext, params);
+      assert.isTrue(result);
+      assert.isNull(checkContext._data);
+    });
+
+    it('is false when not !important and {noImportant: true}', function () {
+      var opt = Object.assign({}, options, { noImportant: true });
+      var params = checkSetup(
+        '<p style="font-size: 12px" id="target">Hello world</p>', opt
+      );
+      var result = checkEvaluate.apply(checkContext, params);
+      assert.isFalse(result);
+      assert.deepEqual(checkContext._data, {
+        value: 12,
+        minValue: 16,
+        maxValue: 48
+      });
+    });
+
+    it('is true when above the minValue', function () {
+      var params = checkSetup(
+        '<p style="font-size: 16px !important" id="target">Hello world</p>', options
+      );
+      var result = checkEvaluate.apply(checkContext, params);
+      assert.isTrue(result);
+      assert.deepEqual(checkContext._data, {
+        value: 16,
+        minValue: 16,
+        maxValue: 48
+      });
     });
   });
 });
