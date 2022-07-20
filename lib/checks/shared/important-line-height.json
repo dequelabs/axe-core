@@ -10,7 +10,7 @@
     "impact": "serious",
     "messages": {
       "pass": "line-height in the style attribute is not set to !important, or meets the minimum",
-      "fail": "line-height in the style attribute must not use !important, or be at ${data.minValue} (received ${data.value})"
+      "fail": "line-height in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
     }
   }
 }
