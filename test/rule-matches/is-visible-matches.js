@@ -1,9 +1,8 @@
-describe('label-matches', function() {
+describe('is-visible-matches', function() {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
-  var queryFixture = axe.testUtils.queryFixture;
   var rule;
+  var fixture = document.getElementById('fixture');
 
   beforeEach(function() {
     fixture.innerHTML = '';
