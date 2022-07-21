@@ -4,7 +4,7 @@ Rule Integration tests take an HTML snippet file and runs an axe-core rule again
 
 To run the rule integration tests, run `npm run test:unit:integration`. You can run and debug the tests in a non-headless browser by running `npm run test:debug -- testDirs=integration`.
 
-When the tests are run, each JSON file is converted into a test suite file using [Karmas preprocessor](https://karma-runner.github.io/0.10/config/preprocessors.html) and [runner.js](./runner.js) as the test suite template. 
+When the tests are run, each JSON file is converted into a test suite file using [Karmas preprocessor](https://karma-runner.github.io/latest/config/preprocessors.html) and [runner.js](./runner.js) as the test suite template. 
 
 The JSON file for a rule integration test contains the following information:
 
