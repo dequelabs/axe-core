@@ -60,7 +60,7 @@ You can scope which set of tests to run through various npm scripts:
 - `npm run test:unit:virtual-rules` - Run only [virtual rule tests](../test/integration/virtual-rules)
 - `npm run test:unit:api` - Run only [api tests](../test/integration/api)
 
-There are also a set of tests that are no considered unit tests that you can run through various npm scripts as well:
+There are also a set of tests that are not considered unit tests that you can run through various npm scripts:
 
 - `npm run test:act` - Run the [act tests](../test/act-mapping)
 - `npm run test:apg` - Run the [aria-practices tests](../test/aria-practices)
