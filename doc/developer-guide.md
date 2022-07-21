@@ -7,6 +7,7 @@ Axe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities fo
 1. [Getting Started](#getting-started)
    1. [Environment Pre-requisites](#environment-pre-requisites)
    1. [Building axe.js](#building-axejs)
+   1. [Watching for Changes](#watching-for-changes)
    1. [Running Tests](#running-tests)
    1. [API Reference](#api-reference)
    1. [Supported CSS Selectors](#supported-css-selectors)
@@ -37,18 +38,45 @@ Axe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities fo
 
 To build axe.js, simply run `npm run build` in the root folder of the axe-core repository. axe.js and axe.min.js are placed into the root folder.
 
+## Watching for Changes
+
+You can watch for changes and automatically build axe and run relevant tests using `npm run develop`. Once run, any changes to files inside the [lib directory](../lib) will rebuild axe. After axe is built, it will try to run the relevant tests for the files changed. If you change a file inside the [test directory](../test) it will run the tests for the file changed.
+
+There is one exception to automatically run tests for changed files. Changes to files in the [full integration test directory](../test/integration/full) will not run the tests. This is because these tests require the browser to navigate to the page directly, which is something Mocha / Karma does not support.
+
+**Note:** We are still working on improving knowing which tests are relevant to the changed file so this may not correctly run tests every time. In these cases you should run the tests manually.
+
 ### Running Tests
 
-To run all tests from the command line you can run `npm test`, which will run all unit and integration tests using headless chrome and Selenium Webdriver.
+To run all tests from the command line you can run `npm test`, which will run all unit and integration tests using headless Chrome. Having axe built and up-to-date is required in order to run tests. If you update files inside the [lib directory](../lib) you will need to rebuild axe before running tests.
 
-You can also load tests in any supported browser, which is helpful for debugging. Tests require a local server to run, you must first start a local server to serve files. You can use Grunt to start one by running `npm start`. Once your local server is running you can load the following pages in any browser to run tests:
+You can scope which set of tests to run through various npm scripts: 
 
-1. [Core Tests](../test/core/)
-2. [Commons Tests](../test/commons/)
-3. [Check Tests](../test/checks/)
-4. [Rule Matches](../test/rule-matches/)
-5. [Integration Tests](../test/integration/rules/)
-6. There are additional tests located in [test/integration/full/](../test/integration/full/) for tests that need to be run against their own document.
+- `npm run test:unit:core` - Run only [core tests](../test/core/)
+- `npm run test:unit:commons` - Run only [commons tests](../test/commons/)
+- `npm run test:unit:checks` - Run only [check tests](../test/checks/)
+- `npm run test:unit:rule-matches` - Run only [rule matches](../test/rule-matches/)
+- `npm run test:unit:integration` - Run only [integration rule tests](../test/integration/rules/)
+- `npm run test:unit:virtual-rules` - Run only [virtual rule tests](../test/integration/virtual-rules)
+- `npm run test:unit:api` - Run only [api tests](../test/integration/api)
+
+Additionally, you can [watch for changes](#watching-for-changes) to files and automatically run the relevant tests.
+
+If you need to debug a test in the browser, you can run `npm run test:debug` which will run the Karma tests in Chrome. You can scope which set of tests to run by passing the `testDirs` argument. Supported values are:
+
+- `core`
+- `commons`
+- `checks`
+- `rule-matches`
+- `integration`
+- `virtual-rules`
+- `api`
+
+Example:
+
+- `npm run test:debug -- testDirs=core`
+
+Lastly, you can run the [integration full tests](../test/integration/full) by starting a local server by running `npm start`. Once started, you can open any supported browser and navigate to any test in the integration full tests directory.
 
 ### API Reference
 
