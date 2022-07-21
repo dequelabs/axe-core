@@ -1,0 +1,5 @@
+{
+  "id": "5c01ea",
+  "title": "Aria attributes are used validly on elements depending on their semantic role",
+  "axeRules": ["aria-allowed-attr"]
+}
