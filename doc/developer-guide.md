@@ -60,6 +60,15 @@ You can scope which set of tests to run through various npm scripts:
 - `npm run test:unit:virtual-rules` - Run only [virtual rule tests](../test/integration/virtual-rules)
 - `npm run test:unit:api` - Run only [api tests](../test/integration/api)
 
+There are also a set of tests that are no considered unit tests that you can run through various npm scripts as well:
+
+- `npm run test:act` - Run the [act tests](../test/act-mapping)
+- `npm run test:apg` - Run the [aria-practices tests](../test/aria-practices)
+- `npm run test:examples` - Run the [example tests](../doc/examples)
+- `npm run test:locales` - Run the [local tests](../test/test-locales.js)
+- `npm run test:node` - Run the [node tests](../test/node)
+- `npm run test:tsc` - Run the [typescript tests](../typeings/axe-core)
+
 Additionally, you can [watch for changes](#watching-for-changes) to files and automatically run the relevant tests.
 
 If you need to debug a test in a non-headless browser, you can run `npm run test:debug` which will run the Karma tests in non-headless Chrome. You can also navigate to the newly opened page using any supported browser. 
