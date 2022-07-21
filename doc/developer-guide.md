@@ -42,7 +42,7 @@ To build axe.js, simply run `npm run build` in the root folder of the axe-core r
 
 You can watch for changes and automatically build axe and run relevant tests using `npm run develop`. Once run, any changes to files inside the [lib directory](../lib) will rebuild axe. After axe is built, it will try to run the relevant tests for the files changed. If you change a file inside the [test directory](../test) it will run the tests for the file changed.
 
-There is one exception to automatically run tests for changed files. Changes to files in the [full integration test directory](../test/integration/full) will not run the tests. This is because these tests require the browser to navigate to the page directly, which is something Mocha / Karma does not support.
+Changes to files in the [full integration test directory](../test/integration/full) will not run the tests. This is because these tests require the browser to navigate to the page directly, which is something Mocha / Karma does not support.
 
 **Note:** We are still working on improving knowing which tests are relevant to the changed file so this may not correctly run tests every time. In these cases you should run the tests manually. If you encounter a test that does not run when a relevant file is changed, please [open an issue](https://github.com/dequelabs/axe-core/issues).
 
