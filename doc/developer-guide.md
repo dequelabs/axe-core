@@ -62,7 +62,9 @@ You can scope which set of tests to run through various npm scripts:
 
 Additionally, you can [watch for changes](#watching-for-changes) to files and automatically run the relevant tests.
 
-If you need to debug a test in the browser, you can run `npm run test:debug` which will run the Karma tests in Chrome. You can scope which set of tests to run by passing the `testDirs` argument. Supported values are:
+If you need to debug a test in a non-headless browser, you can run `npm run test:debug` which will run the Karma tests in non-headless Chrome. You can also navigate to the newly opened page using any supported browser. 
+
+You can scope which set of tests to debug by passing the `testDirs` argument. Supported values are:
 
 - `core`
 - `commons`
