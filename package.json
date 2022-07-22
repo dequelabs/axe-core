@@ -124,7 +124,7 @@
     "chromedriver": "latest",
     "clone": "^2.1.2",
     "conventional-commits-parser": "^3.2.4",
-    "core-js": "^3.23.4",
+    "core-js": "^3.23.5",
     "css-selector-parser": "^1.4.1",
     "emoji-regex": "10.1.0",
     "es6-promise": "^4.2.8",
