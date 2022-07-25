@@ -400,6 +400,19 @@ describe('color-contrast', function() {
     });
   });
 
+  // IE11 does not support the details element
+  (isIE11 ? xit : it)('should not return undefined (overlapping element) for closed details element', function() {
+    var params = checkSetup(
+      '<details>' +
+      '<summary>Summary</summary>' +
+      '<span style="position:relative">Some text</span>' +
+      '</details>' +
+      '<button id="target">A blue button</button>'
+    );
+
+    assert.isTrue(contrastEvaluate.apply(checkContext, params));
+  });
+
   describe('with pseudo elements', function() {
     it('should return undefined if :before pseudo element has a background color', function() {
       var params = checkSetup(

@@ -338,6 +338,19 @@ describe('dom.isVisible', function() {
       assert.isTrue(actual);
     });
 
+    // IE11 does not support details element
+    (isIE11 ? it.skip : it)('should return false for closed details element', function() {
+      fixture.innerHTML = '<details><summary>Details element</summary><div id="target">Hidden</div>'
+      var el = document.getElementById('target');
+        assert.isFalse(axe.commons.dom.isVisible(el));
+    });
+
+    it('should return true for open details element', function() {
+      fixture.innerHTML = '<details open><summary>Details element</summary><div id="target">Visible</div>'
+      var el = document.getElementById('target');
+        assert.isTrue(axe.commons.dom.isVisible(el));
+    });
+
     // IE11 either only supports clip paths defined by url() or not at all,
     // MDN and caniuse.com give different results...
     (isIE11 ? it.skip : it)(
