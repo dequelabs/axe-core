@@ -14,4 +14,4 @@ The JSON file for a rule integration test contains the following information:
 - `passes` array(optional). List of axe-core selectors of nodes that should return as Passes
 - `incomplete` array(optional). List of axe-core selectors of nodes that should return as Needs Review
 
-The JSON file should have at least one of the `violations`, `passes`, or `incomplete` arrays. Incomplete results are not listed as the test will fail if any node is found in one of the 3 arrays that is not explicitly listed.
+The JSON file should have at least one of the `violations`, `passes`, or `incomplete` arrays. Inapplicable results are not listed as the test will fail if any node is found in one of the 3 arrays that is not explicitly listed.
