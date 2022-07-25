@@ -56,7 +56,7 @@ You can scope which set of tests to run through various npm scripts:
 - `npm run test:unit:commons` - Run only [commons tests](../test/commons/)
 - `npm run test:unit:checks` - Run only [check tests](../test/checks/)
 - `npm run test:unit:rule-matches` - Run only [rule matches](../test/rule-matches/)
-- `npm run test:unit:integration` - Run only [integration rule tests](../test/integration/rules/)
+- `npm run test:unit:integration` - Run only [rule integration tests](../test/integration/rules/)
 - `npm run test:unit:virtual-rules` - Run only [virtual rule tests](../test/integration/virtual-rules)
 - `npm run test:unit:api` - Run only [api tests](../test/integration/api)
 
@@ -87,7 +87,7 @@ Example:
 
 - `npm run test:debug -- testDirs=core`
 
-Lastly, you can run the [integration full tests](../test/integration/full) by starting a local server by running `npm start`. Once started, you can open any supported browser and navigate to any test in the integration full tests directory.
+Lastly, you can run the [full integration tests](../test/integration/full) by starting a local server by running `npm start`. Once started, you can open any supported browser and navigate to any test in the full integration tests directory.
 
 ### API Reference
 
