@@ -1,8 +1,5 @@
 /* global axe, checks */
 
-import { Context } from 'mocha';
-import AbstractVirtualNode from '../lib/core/base/virtual-node/abstract-virtual-node';
-
 // Let the user know they need to disable their axe/attest extension before running the tests.
 if (window.__AXE_EXTENSION__) {
   throw new Error(
