@@ -117,6 +117,9 @@ function runTestUrls(driver, isMobile, urls, errors) {
  * Build web driver depends whether REMOTE_SELENIUM_URL is set
  */
 function buildWebDriver(browser) {
+  // Pinned to selenium-webdriver@4.3.0
+  // https://github.com/SeleniumHQ/selenium/pull/10796/files#diff-6c87d95a2288e92e15a6bb17710c763c01c2290e679beb26220858f3218b6a62L260
+
   var capabilities;
   var mobileBrowser = browser.split('-mobile');
 
@@ -223,16 +226,10 @@ function start(options) {
     return process.exit();
   }
 
-  // Give driver timeout options for scripts
-  driver
-    .manage()
-    .timeouts()
-    .setScriptTimeout(!isMobile ? 60000 * 5 : 60000 * 10);
-  // allow to wait for page load implicitly
-  driver
-    .manage()
-    .timeouts()
-    .implicitlyWait(50000);
+  driver.manage().setTimeouts({
+    pageLoad: 50000,
+    script: !isMobile ? 60000 * 5 : 60000 * 10
+  });
 
   // Test all pages
   runTestUrls(driver, isMobile, testUrls)

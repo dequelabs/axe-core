@@ -8,6 +8,5 @@ For a detailed description about how accessibility support is decided, see [How 
 
 ## Attributes
 
-| aria-attribute   | axe-core support |
-| ---------------- | ---------------- |
-| aria-describedat | No               |
+| aria-attribute | axe-core support |
+| -------------- | ---------------- |
