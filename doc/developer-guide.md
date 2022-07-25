@@ -44,7 +44,7 @@ You can watch for changes and automatically build axe and run relevant tests usi
 
 Changes to files in the [full integration test directory](../test/integration/full) will not run the tests. This is because these tests require the browser to navigate to the page directly, which is something Mocha / Karma does not support.
 
-**Note:** We are still working on improving knowing which tests are relevant to the changed file so this may not correctly run tests every time. In these cases you should run the tests manually. If you encounter a test that does not run when a relevant file is changed, please [open an issue](https://github.com/dequelabs/axe-core/issues).
+**Note:** We are still working on knowing which tests are relevant to the changed file so this may not correctly run tests every time. In these cases you should run the tests manually. If you encounter a test that does not run when a relevant file is changed, please [open an issue](https://github.com/dequelabs/axe-core/issues).
 
 ### Running Tests
 
