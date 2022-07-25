@@ -10,7 +10,7 @@
     "section508",
     "section508.22.a"
   ],
-  "actIds": ["c3232f", "e7aa44"],
+  "actIds": ["2eb176", "afb423"],
   "metadata": {
     "description": "Ensures <audio> elements have captions",
     "help": "<audio> elements must have a captions track"

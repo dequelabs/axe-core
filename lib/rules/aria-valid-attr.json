@@ -2,6 +2,7 @@
   "id": "aria-valid-attr",
   "matches": "aria-has-attr-matches",
   "tags": ["cat.aria", "wcag2a", "wcag412"],
+  "actIds": ["5f99a7"],
   "metadata": {
     "description": "Ensures attributes that begin with aria- are valid ARIA attributes",
     "help": "ARIA attributes must conform to valid names"

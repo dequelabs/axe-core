@@ -93,6 +93,13 @@ describe('no-focusable-content tests', function() {
     assert.isTrue(noFocusableContent(null, null, vNode));
   });
 
+  it('should return false if "disabled" is specified on an element which doesn\'t allow it', function() {
+    var params = checkSetup(
+      '<button id="target"><a href="foo.html" disabled>Hello</a></button>'
+    );
+    assert.isFalse(noFocusableContent.apply(checkContext, params));
+  });
+
   it('should return true on span with negative tabindex (focusable, does not have a widget role)', function() {
     var vNode = queryFixture('<span id="target" role="text"> some text '
         +'<span tabIndex="-1">JavaScript is able to focus this</span> '

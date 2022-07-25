@@ -106,6 +106,20 @@ module.exports = function(grunt) {
         ]
       }
     },
+    'metadata-function-map': {
+      core: {
+        files: [
+          {
+            expand: true,
+            src: [
+              'lib/checks/**/*-{evaluate,after}.js',
+              'lib/rules/**/*-matches.js'
+            ],
+            dest: 'lib/core/base/metadata-function-map.js'
+          }
+        ]
+      }
+    },
     'aria-supported': {
       data: {
         entry: 'lib/commons/aria/index.js',
@@ -134,6 +148,13 @@ module.exports = function(grunt) {
       }
     },
     'add-locale': {
+      template: {
+        options: {
+          lang: 'xyz'
+        },
+        src: ['tmp/core/core.js'],
+        dest: './locales/_template.json'
+      },
       newLang: {
         options: {
           lang: grunt.option('lang')
@@ -235,17 +256,19 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('translate', ['validate', 'esbuild', 'add-locale']);
+  grunt.registerTask('translate', ['validate', 'esbuild', 'add-locale:newLang']);
   grunt.registerTask('build', [
     'clean:core',
     'validate',
+    'metadata-function-map',
     'esbuild',
     'configure',
     'babel',
     'concat:engine',
     'uglify',
     'aria-supported',
-    'bytesize'
+    'add-locale:template',
+    'bytesize',
   ]);
   grunt.registerTask('default', ['build']);
   grunt.registerTask('dev', ['watch']);

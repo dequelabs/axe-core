@@ -144,4 +144,29 @@ describe('focusable-not-tabbable', function() {
     var actual = check.evaluate.apply(checkContext, params);
     assert.isTrue(actual);
   });
+
+  it('returns undefined when the control has onfocus', function () {
+    var params = checkSetup(
+      '<a href="/" aria-hidden="true" id="target" onfocus="redirectFocus()">Link</a>'
+    );
+    assert.isUndefined(check.evaluate.apply(checkContext, params));
+  });
+
+  it('returns undefined when all focusable controls have onfocus events', function () {
+    var params = checkSetup('<div aria-hidden="true" id="target">' +
+      '  <a href="/" onfocus="redirectFocus()">First link</a>' +
+      '  <a href="/" onfocus="redirectFocus()">Second link</a>' +
+      '</div>'
+    );
+    assert.isUndefined(check.evaluate.apply(checkContext, params));
+  });
+
+  it('returns false when some, but not all focusable controls have onfocus events', function () {
+    var params = checkSetup('<div aria-hidden="true" id="target">' +
+      '  <a href="/" onfocus="redirectFocus()">First link</a>' +
+      '  <a href="/"">Second link</a>' +
+      '</div>'
+    );
+    assert.isFalse(check.evaluate.apply(checkContext, params));
+  });
 });

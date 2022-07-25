@@ -1,7 +1,7 @@
 {
   "id": "autocomplete-valid",
   "matches": "autocomplete-matches",
-  "tags": ["cat.forms", "wcag21aa", "wcag135"],
+  "tags": ["cat.forms", "wcag21aa", "wcag135", "ACT"],
   "actIds": ["73f2c2"],
   "metadata": {
     "description": "Ensure the autocomplete attribute is correct and suitable for the form field",

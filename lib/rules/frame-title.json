@@ -1,14 +1,15 @@
 {
   "id": "frame-title",
   "selector": "frame, iframe",
+  "matches": "no-negative-tabindex-matches",
   "tags": [
     "cat.text-alternatives",
     "wcag2a",
-    "wcag241",
     "wcag412",
     "section508",
     "section508.22.i"
   ],
+  "actIds": ["cae760"],
   "metadata": {
     "description": "Ensures <iframe> and <frame> elements have an accessible name",
     "help": "Frames must have an accessible name"

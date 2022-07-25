@@ -16,7 +16,8 @@ describe('axe.getRules', function() {
         {
           id: 'awesomeRule2',
           any: [],
-          tags: ['tag1', 'tag2']
+          tags: ['tag1', 'tag2'],
+          actIds: ['abc123', 'xyz789']
         }
       ],
       data: {
@@ -63,6 +64,7 @@ describe('axe.getRules', function() {
         '/awesomeRule2?application=axeAPI'
     );
     assert.deepEqual(retValue[1].tags, ['tag1', 'tag2']);
+    assert.deepEqual(retValue[1].actIds, ['abc123', 'xyz789']);
 
     retValue = axe.getRules(['tag2']);
     assert.isArray(retValue);
@@ -77,6 +79,7 @@ describe('axe.getRules', function() {
         '/awesomeRule2?application=axeAPI'
     );
     assert.deepEqual(retValue[0].tags, ['tag1', 'tag2']);
+    assert.deepEqual(retValue[0].actIds, ['abc123', 'xyz789']);
   });
 
   it('should not return nothing', function() {
@@ -108,6 +111,7 @@ describe('axe.getRules', function() {
         '/awesomeRule2?application=axeAPI'
     );
     assert.deepEqual(retValue[1].tags, ['tag1', 'tag2']);
+    assert.deepEqual(retValue[1].actIds, ['abc123', 'xyz789']);
   });
 
   it('should return all rules if given empty array', function() {
@@ -133,5 +137,6 @@ describe('axe.getRules', function() {
         '/awesomeRule2?application=axeAPI'
     );
     assert.deepEqual(retValue[1].tags, ['tag1', 'tag2']);
+    assert.deepEqual(retValue[1].actIds, ['abc123', 'xyz789']);
   });
 });

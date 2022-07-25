@@ -107,6 +107,11 @@ describe('axe.utils.getFlattenedTree', function() {
     assert.equal(vNode.children[1].children[0].props.nodeName, 's');
   });
 
+  it('should add selectorMap to root element', function() {
+    var tree = axe.utils.getFlattenedTree();
+    assert.exists(tree[0]._selectorMap);
+  });
+
   if (shadowSupport.v0) {
     describe('shadow DOM v0', function() {
       beforeEach(function() {
