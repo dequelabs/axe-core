@@ -400,6 +400,18 @@ describe('color-contrast', function() {
     });
   });
 
+  it('should return true for floating element whose position exactly equals the midpoint of the container', function() {
+    var params = checkSetup(
+      '<div>' +
+        '<div style="width: 83.33%;float: left;" id="target">' +
+        '<h4>Foo</h4>' +
+        'Bar' +
+        '<div>'
+    );
+
+    assert.isTrue(contrastEvaluate.apply(checkContext, params));
+  });
+
   describe('with pseudo elements', function() {
     it('should return undefined if :before pseudo element has a background color', function() {
       var params = checkSetup(
