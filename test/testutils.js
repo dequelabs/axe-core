@@ -431,7 +431,7 @@ testUtils.queryFixture = function queryFixture(html, query) {
     vNode,
     'Node does not exist in query `' +
       query +
-      '`. This is usually fixed by adding the default target (`id="target"`) to your html parameter'
+      '`. This is usually fixed by adding the default target (`id="target"`) to your html parameter. If you do not intend on querying the fixture for #target, consider using `axe.testUtils.fixtureSetup()` instead.'
   );
   return axe.utils.querySelectorAll(rootNode, query || '#target')[0];
 };
