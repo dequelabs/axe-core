@@ -416,11 +416,10 @@ describe('text.formControlValue', function () {
     });
 
     it('returns `` for elements without role=combobox', function () {
-      fixtureSetup('<div role="combobox">' + comboboxContent + '</div>');
-      var target = axe.utils.querySelectorAll(
-        axe._tree[0],
+      var target = queryFixture(
+        '<div role="combobox">' + comboboxContent + '</div>',
         '[role=listbox]'
-      )[0];
+      );
       assert.equal(ariaComboboxValue(target), '');
     });
 
