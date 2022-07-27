@@ -1,4 +1,4 @@
-describe.only('color-contrast', function() {
+describe('color-contrast', function() {
   'use strict';
 
   var fixture = document.getElementById('fixture');
