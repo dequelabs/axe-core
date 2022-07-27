@@ -416,7 +416,7 @@ testUtils.assertStylesheet = function assertStylesheet(
   }
 };
 
-/*
+/**
  * Injecting content into a fixture and return queried element within fixture
  *
  * @param {String|Node} content to go into the fixture (html or DOM node)
