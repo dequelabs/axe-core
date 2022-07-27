@@ -421,7 +421,7 @@ testUtils.assertStylesheet = function assertStylesheet(
  *
  * @param {String|Node} html - content to go into the fixture (html or DOM node)
  * @param {String} [query=#target] - the CSS selector query to find target DOM node
- * @return HTMLElement
+ * @return {VirtualNode}
  */
 testUtils.queryFixture = function queryFixture(html, query) {
   query = query || '#target';
@@ -433,7 +433,7 @@ testUtils.queryFixture = function queryFixture(html, query) {
       query +
       '`. This is usually fixed by adding the default target (`id="target"`) to your html parameter. If you do not intend on querying the fixture for #target, consider using `axe.testUtils.fixtureSetup()` instead.'
   );
-  return axe.utils.querySelectorAll(rootNode, query || '#target')[0];
+  return vNode;
 };
 
 /**
