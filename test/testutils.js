@@ -452,7 +452,6 @@ testUtils.getCheckEvaluate = function getCheckEvaluate(checkId, testOptions) {
    * @param {*} options
    * @param {VirtualNode} virtualNode
    * @param {Context} context
-   * @returns {Boolean|undefined}
    */
   var evaluateWrapper = function (node, options, virtualNode, context) {
     var opts = check.getOptions(options);
