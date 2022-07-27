@@ -1,31 +1,31 @@
-describe('run-partial, context-size-focusable', function() {
+describe('run-partial, context-size-focusable', function () {
   'use strict';
   var ruleName = 'frame-focusable-content';
   var runPartialRecursive = axe.testUtils.runPartialRecursive;
   var clone = axe.utils.clone;
 
-  beforeEach(function(done) {
+  beforeEach(function (done) {
     axe.testUtils.awaitNestedLoad(done);
   });
 
-  it('gives the same passed results as axe.run when context.size and context.focusable are used', function(done) {
+  it('gives the same passed results as axe.run when context.size and context.focusable are used', function (done) {
     var options = { runOnly: ruleName };
     var context = {
       exclude: [['#fail1'], ['#fail2', 'iframe']]
     };
 
     Promise.all(runPartialRecursive(clone(context), options))
-      .then(function(partialResults) {
+      .then(function (partialResults) {
         return Promise.all([
           axe.finishRun(partialResults, options),
           axe.run(clone(context), options)
         ]);
       })
-      .then(function(results) {
+      .then(function (results) {
         var axeRunPartialResult = results[0];
         var axeRunResult = results[1];
         assert.lengthOf(axeRunPartialResult.violations, 0);
-
+        axeRunPartialResult.testEnvironment = axeRunResult.testEnvironment;
         axeRunPartialResult.timestamp = axeRunResult.timestamp;
         assert.deepEqual(axeRunPartialResult, axeRunResult);
         done();
@@ -33,16 +33,16 @@ describe('run-partial, context-size-focusable', function() {
       .catch(done);
   });
 
-  it('gives the same failed results as axe.run when context.size and context.focusable are used', function(done) {
+  it('gives the same failed results as axe.run when context.size and context.focusable are used', function (done) {
     var options = { runOnly: ruleName };
     Promise.all(runPartialRecursive({ exclude: [] }, options))
-      .then(function(partialResults) {
+      .then(function (partialResults) {
         return Promise.all([
           axe.finishRun(partialResults, options),
           axe.run({ exclude: [] }, options)
         ]);
       })
-      .then(function(results) {
+      .then(function (results) {
         var axeRunPartialResult = results[0];
         var axeRunResult = results[1];
 
