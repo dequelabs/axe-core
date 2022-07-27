@@ -3,7 +3,6 @@ describe('heading-order', function () {
 
   var checkContext = axe.testUtils.MockCheckContext();
   var queryFixture = axe.testUtils.queryFixture;
-  var fixtureSetup = axe.testUtils.fixtureSetup;
 
   afterEach(function () {
     checkContext.reset();
@@ -119,7 +118,7 @@ describe('heading-order', function () {
   });
 
   it('should ignore aria-level on iframe when not used with role=heading', function () {
-    var vNode = fixtureSetup('<iframe aria-level="2"></iframe>');
+    var vNode = queryFixture('<iframe aria-level="2" id="target"></iframe>');
     axe.testUtils
       .getCheckEvaluate('heading-order')
       .call(checkContext, null, {}, vNode, { initiator: true });
