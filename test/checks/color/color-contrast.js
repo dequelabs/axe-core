@@ -1,4 +1,4 @@
-describe('color-contrast', function() {
+describe.only('color-contrast', function() {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -404,7 +404,7 @@ describe('color-contrast', function() {
     var params = checkSetup(
       '<div>' +
         '<div style="width: 83.33%;float: left;" id="target">' +
-        '<h4>Foo</h4>' +
+        '<h4 id="debugNode">Foo</h4>' +
         'Bar' +
         '<div>'
     );
