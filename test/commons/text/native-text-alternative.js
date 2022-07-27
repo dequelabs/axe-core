@@ -22,8 +22,7 @@ describe('text.nativeTextAlternative', function () {
   });
 
   it('returns `` when no accessible text method returned something', function () {
-    fixtureSetup('<div class="baz">baz</div>');
-    var div = axe.utils.querySelectorAll(axe._tree[0], '.baz')[0];
+    var div = queryFixture('<div id="target">baz</div>');
     assert.equal(nativeTextAlternative(div), '');
   });
 
