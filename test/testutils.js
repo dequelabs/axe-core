@@ -419,8 +419,8 @@ testUtils.assertStylesheet = function assertStylesheet(
 /**
  * Injecting content into a fixture and return queried element within fixture
  *
- * @param {String?} query - the CSS selector query to find target DOM node
  * @param {String|Node} html - content to go into the fixture (html or DOM node)
+ * @param {String} [query=#target] - the CSS selector query to find target DOM node
  * @return HTMLElement
  */
 testUtils.queryFixture = function queryFixture(html, query) {
