@@ -183,6 +183,7 @@
     "*.js": [
       "eslint --fix",
       "prettier --write"
-    ]
+    ],
+    "!(./husky)**/*": []
   }
 }
