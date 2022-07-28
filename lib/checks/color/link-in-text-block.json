@@ -5,10 +5,14 @@
     "impact": "serious",
     "messages": {
       "pass": "Links can be distinguished from surrounding text in some way other than by color",
-      "fail": "Links need to be distinguished from surrounding text in some way other than by color",
+      "fail": {
+        "default": "Links need to be distinguished from surrounding text in some way other than by color",
+        "fgContrast": "Element has insufficient color contrast of ${data.contrastRatio} (link color: ${data.nodeColor}, parent color: ${data.parentColor}. Expected contrast ratio of 3.0.",
+        "bgContrast": "Element has insufficient background color contrast of ${data.contrastRatio} (link background color: ${data.nodeBackgroundColor}, parent background color: ${data.parentBackgroundColor}. Expected contrast ratio of 3.0."
+      },
       "incomplete": {
-        "default": "Unable to determine contrast ratio",
-        "bgContrast": "Element's contrast ratio could not be determined. Check for a distinct hover/focus style",
+        "default": "Element's foreground contrast ratio could not be determined",
+        "bgContrast": "Element's background contrast ratio could not be determined",
         "bgImage": "Element's contrast ratio could not be determined due to a background image",
         "bgGradient": "Element's contrast ratio could not be determined due to a background gradient",
         "imgNode": "Element's contrast ratio could not be determined because element contains an image node",
