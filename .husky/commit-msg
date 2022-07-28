@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# PLAYGROUND_FILE_IS_STAGED="$(git status -s | grep -e '^M  test/playground.html$')"
+# MISSING_PLAYGROUND_COMMIT_ACK="$(grep -v -e 'playground-commit-is-ok' "$1")"
+
+# if [[ $PLAYGROUND_FILE_IS_STAGED && $MISSING_PLAYGROUND_COMMIT_ACK ]] ; then
+#     echo "test/playground.html is staged..." 1>&2
+#     echo "This is usually by mistake so the commit-msg script canceled your commit." 1>&2
+#     echo "You can disable this check by appending your commit with the following message on its own line:" 1>&2
+#     echo "   playground-commit-is-ok" 1>&2
+#     exit 1
+# fi

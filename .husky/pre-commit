@@ -1,10 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-if git status -s | egrep '^M  test/playground.html$' > /dev/null 2>&1 ; then
-    echo "test/playground.html is staged. If you meant to do this, carefully bypass this check with \`git commit --no-verify\`";
-    exit 1
-fi
-
 npx grunt configure
 npx lint-staged
