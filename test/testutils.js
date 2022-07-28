@@ -287,11 +287,11 @@ testUtils.awaitNestedLoad = function awaitNestedLoad(win, cb, errCb) {
   // Complete (don't pass the args on to the callback)
   q.then(function () {
     cb();
-  }).catch(function (err) {
-    if (errCb) {
-      errCb(err);
-    }
   });
+
+  if (errCb) {
+    q.catch(errCb);
+  }
 };
 
 /**
