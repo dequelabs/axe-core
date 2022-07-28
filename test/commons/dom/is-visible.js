@@ -18,13 +18,6 @@ describe('dom.isVisible', function() {
   });
 
   describe('default usage', function() {
-    // Firefox returns `null` if accessed inside a hidden iframe
-    it('should return false if computedStyle return null for whatever reason', function() {
-      computedStyleStub = sinon.stub(window, 'getComputedStyle').returns(null);
-      var el = document.createElement('div');
-      assert.isFalse(axe.commons.dom.isVisible(el));
-    });
-
     it('should return true on statically-positioned, visible elements', function() {
       fixture.innerHTML = '<div id="target">Hello!</div>';
       var el = document.getElementById('target');
@@ -417,13 +410,6 @@ describe('dom.isVisible', function() {
   });
 
   describe('screen readers', function() {
-    // Firefox returns `null` if accessed inside a hidden iframe
-    it('should return false if computedStyle return null for whatever reason', function() {
-      computedStyleStub = sinon.stub(window, 'getComputedStyle').returns(null);
-      var el = document.createElement('div');
-      assert.isFalse(axe.commons.dom.isVisible(el, true));
-    });
-
     it('should return true on staticly-positioned, visible elements', function() {
       fixture.innerHTML = '<div id="target">Hello!</div>';
       var el = document.getElementById('target');
