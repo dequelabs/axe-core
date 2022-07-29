@@ -15,7 +15,33 @@ describe('no-focusable-content virtual-rule', function () {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should pass if element has no focusable content', function () {
+  it('should pass if element has no focusable descendants', function () {
+    var node = new axe.SerialVirtualNode({
+      nodeName: 'div',
+      attributes: {
+        role: 'text'
+      }
+    });
+    var child = new axe.SerialVirtualNode({
+      nodeName: 'span'
+    });
+    var grandchild = new axe.SerialVirtualNode({
+      nodeName: '#text',
+      nodeType: 3,
+      nodeValue: 'hello'
+    });
+
+    child.children = [grandchild];
+    node.children = [child];
+
+    var results = axe.runVirtualRule('aria-text', node);
+
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  xit('should be undefined if the node type ', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
@@ -43,7 +69,6 @@ describe('no-focusable-content virtual-rule', function () {
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
-
   //   xit('should pass if the element is empty', function () {
   //     var node = new axe.SerialVirtualNode({
   //       nodeName: 'button'
