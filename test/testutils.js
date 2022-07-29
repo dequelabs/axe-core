@@ -422,28 +422,46 @@ testUtils.assertStylesheet = function assertStylesheet(
   }
 };
 
-/*
+/**
  * Injecting content into a fixture and return queried element within fixture
  *
- * @param {String|Node} content to go into the fixture (html or DOM node)
- * @return HTMLElement
+ * @param {String|Node} html - content to go into the fixture (html or DOM node)
+ * @param {String} [query=#target] - the CSS selector query to find target DOM node
+ * @return {VirtualNode}
  */
 testUtils.queryFixture = function queryFixture(html, query) {
+  query = query || '#target';
   var rootNode = testUtils.fixtureSetup(html);
-  return axe.utils.querySelectorAll(rootNode, query || '#target')[0];
+  var vNode = axe.utils.querySelectorAll(rootNode, query)[0];
+  assert.exists(
+    vNode,
+    'Node does not exist in query `' +
+      query +
+      '`. This is usually fixed by adding the default target (`id="target"`) to your html parameter. If you do not intend on querying the fixture for #target, consider using `axe.testUtils.fixtureSetup()` instead.'
+  );
+  return vNode;
 };
 
 /**
  * Return the checks evaluate method and apply default options
- * @param {String} checkId - ID of the check
- * @return Function
+ * @param {string} checkId - ID of the check
+ * @param {} testOptions - Options for the test
+ * @returns {evaluateWrapper} evaluateWrapper - Check evaluation wrapper
  */
 testUtils.getCheckEvaluate = function getCheckEvaluate(checkId, testOptions) {
   var check = checks[checkId];
   testOptions = testOptions || {};
 
-  return function evaluateWrapper(node, options, virtualNode, context) {
+  /**
+   * Wraps a check for evaluation using .call()
+   * @param {HTMLElement} node
+   * @param {*} options
+   * @param {VirtualNode} virtualNode
+   * @param {Context} context
+   */
+  var evaluateWrapper = function (node, options, virtualNode, context) {
     var opts = check.getOptions(options);
+
     var result = check.evaluate.call(this, node, opts, virtualNode, context);
 
     // ensure that every result has a corresponding message
@@ -519,6 +537,7 @@ testUtils.getCheckEvaluate = function getCheckEvaluate(checkId, testOptions) {
 
     return result;
   };
+  return evaluateWrapper;
 };
 
 /**
