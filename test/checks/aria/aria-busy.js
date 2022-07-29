@@ -14,7 +14,14 @@ describe('aria-busy', function() {
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
-  it('should return true if aria-busy tag on element', function() {
+  it('should return false if aria-busy is set to false', function() {
+    var params = checkSetup(
+      '<div id="target" role="list" aria-busy="false"></div>'
+    );
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
+  });
+
+  it('should return true if aria-busy is set to true', function() {
     var params = checkSetup(
       '<div id="target" role="list" aria-busy="true"></div>'
     );
