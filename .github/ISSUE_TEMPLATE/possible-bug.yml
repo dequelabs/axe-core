@@ -1,0 +1,57 @@
+name: Report an issue
+description: Report a bug or an issue that you've encountered.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting an issue to one of our products. Please provide all necessary information to reproduce the issue. Without adequate details, your issue may be closed without investigation.
+
+        Issues can be reported for axe-core, [axe Extension](https://www.deque.com/axe/browser-extensions/), and [axe Linter](https://marketplace.visualstudio.com/items?itemName=deque-systems.vscode-axe-linter). If you're having an issue with one of our npm integrations (e.g. `@axe-core/webdriverjs`), please open an issue in https://github.com/dequelabs/axe-core-npm.
+  - type: dropdown
+    id: product
+    attributes:
+      label: Product
+      description: Which product did you encounter the issue?
+      options:
+        - axe-core
+        - axe Extension
+        - axe Linter
+    validations:
+      required: true
+  - type: checkboxes
+    id: latest-axe
+    attributes:
+      label: Lastest Version
+      options:
+        - label: I have tested the issue with the latest version of the product
+          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Issue Description
+      description: Please include a description of the issue and a page or code snippet where it can be reproduced.
+      value: |
+        #### Expectation
+        Describe what you expected the product to do.
+
+        #### Actual
+        Describe what the product actually does.
+
+        #### How to Reproduce
+        Provide a code sample or link to a webpage that reproduces the issue. Without this, your issue may be closed without investigation.
+
+        #### Additional context
+        Any thing else we should know about the issue?
+    validations:
+      required: true
+  - type: textarea
+    id: product-versions
+    attributes:
+      label: Product Versions
+      description: If applicable, please provide any additional information about the versions of products, browsers, or assistive technologies.
+      render: bash
+      value: |
+        axe-core version: X.Y.Z
+        axe Exension version: X.Y.Z
+        axe Linter version: X.Y.Z
+        Browser and Assistive Technology versions:
