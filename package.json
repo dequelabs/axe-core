@@ -106,7 +106,9 @@
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "sri-validate": "node build/sri-update --validate",
     "fmt": "prettier --write .*.json *.{json,md,js} **/*.ts './{.circleci,.github,build,doc,lib,locales,test,typings}/**/*.{json,md,js,ts,html}'",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prebuild": "node ./check-node-version.js",
+    "pretest": "node ./check-node-version.js"
   },
   "devDependencies": {
     "@axe-core/webdriverjs": "^4.4.3",
