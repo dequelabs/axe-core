@@ -7,7 +7,6 @@ describe('no-focusable-content virtual-rule', function () {
           role: 'text'
         }
       });
-      delete node.children; // not strictly required, but makes the test more explicit
 
       var results = axe.runVirtualRule('aria-text', node);
 
@@ -135,8 +134,7 @@ describe('no-focusable-content virtual-rule', function () {
       assert.lengthOf(results.incomplete, 0);
     });
 
-    //TODO help?! Why is this incomplete and not passing? It seems to match the html integration test
-    xit('HELP? should pass when an anchor has no href and has implicit role of link', function () {
+    it('should pass when an anchor has no href and has implicit role of link', function () {
       var node = new axe.SerialVirtualNode({
         nodeName: 'div',
         attributes: {
@@ -149,8 +147,7 @@ describe('no-focusable-content virtual-rule', function () {
           tabindex: '-1'
         }
       });
-
-      child.parent = node;
+      child.children = [];
       node.children = [child];
 
       var results = axe.runVirtualRule('aria-text', node);
@@ -159,12 +156,6 @@ describe('no-focusable-content virtual-rule', function () {
       assert.lengthOf(results.incomplete, 0);
       assert.lengthOf(results.passes, 1);
     });
-  });
-  describe('internal state', function () {
-    //TODO do I need to test this in integration at all? If so, what does this mean?
-    xit('HELP? should set this.data');
-
-    xit('HELP? should set this.relatedNodes');
   });
 
   describe('handles error conditions', function () {
