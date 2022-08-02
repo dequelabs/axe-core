@@ -110,29 +110,33 @@ describe('no-focusable-content virtual-rule', function () {
       assert.lengthOf(results.violations, 1);
       assert.lengthOf(results.incomplete, 0);
     });
-  });
 
-  describe('handles error conditions', function () {
-    it('should incomplete when vNode has no children and is type 1', function () {
+    it('should fail when tabIndex is negative', function () {
       var node = new axe.SerialVirtualNode({
         nodeName: 'div',
         attributes: {
-          role: 'text',
-          nodeType: 1
+          role: 'text'
+        }
+      });
+      var child = new axe.SerialVirtualNode({
+        nodeName: 'a',
+        attributes: {
+          tabindex: '-1',
+          href: '#'
         }
       });
 
+      node.children = [child];
+
       var results = axe.runVirtualRule('aria-text', node);
 
-      assert.lengthOf(results.violations, 0);
-      assert.lengthOf(results.incomplete, 1);
       assert.lengthOf(results.passes, 0);
+      assert.lengthOf(results.violations, 1);
+      assert.lengthOf(results.incomplete, 0);
     });
-  });
 
-  describe('special edge cases', function () {
     //TODO help?! Why is this incomplete and not passing? It seems to match the html integration test
-    xit('should pass when an anchor has no href and has implicit role of link', function () {
+    xit('HELP? should pass when an anchor has no href and has implicit role of link', function () {
       var node = new axe.SerialVirtualNode({
         nodeName: 'div',
         attributes: {
@@ -156,30 +160,28 @@ describe('no-focusable-content virtual-rule', function () {
       assert.lengthOf(results.passes, 1);
     });
   });
+  describe('internal state', function () {
+    //TODO do I need to test this in integration at all? If so, what does this mean?
+    xit('HELP? should set this.data');
 
-  describe('when author uses unreliable hiding strategies', function () {
-    it('should fail when tabIndex is negative', function () {
+    xit('HELP? should set this.relatedNodes');
+  });
+
+  describe('handles error conditions', function () {
+    it('should incomplete when vNode has no children and is type 1', function () {
       var node = new axe.SerialVirtualNode({
         nodeName: 'div',
         attributes: {
-          role: 'text'
+          role: 'text',
+          nodeType: 1
         }
       });
-      var child = new axe.SerialVirtualNode({
-        nodeName: 'a',
-        attributes: {
-          tabindex: '-1',
-          href: '#'
-        }
-      });
-
-      node.children = [child];
 
       var results = axe.runVirtualRule('aria-text', node);
 
+      assert.lengthOf(results.violations, 0);
+      assert.lengthOf(results.incomplete, 1);
       assert.lengthOf(results.passes, 0);
-      assert.lengthOf(results.violations, 1);
-      assert.lengthOf(results.incomplete, 0);
     });
 
     it('should fail when tabIndex is NaN', function () {
