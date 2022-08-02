@@ -7,7 +7,7 @@ describe('no-focusable-content virtual-rule', function () {
           role: 'text'
         }
       });
-      node.children = null; // not needed, but makes the test more explicit
+      delete node.children; // not strictly required, but makes the test more explicit
 
       var results = axe.runVirtualRule('aria-text', node);
 
@@ -79,7 +79,7 @@ describe('no-focusable-content virtual-rule', function () {
       var child = new axe.SerialVirtualNode({
         nodeName: 'a',
         attributes: {
-          tabIndex: '-1'
+          tabindex: '-1'
         }
       });
 
