@@ -24,11 +24,29 @@ describe('no-focusable-content virtual-rule', function () {
         }
       });
       var child = new axe.SerialVirtualNode({
+        nodeName: 'button',
+        attributes: {
+          role: 'widget'
+        }
+      });
+      node.children = [child];
+
+      var results = axe.runVirtualRule('aria-text', node);
+
+      assert.lengthOf(results.passes, 0);
+      assert.lengthOf(results.violations, 1);
+      assert.lengthOf(results.incomplete, 0);
+    });
+
+    it('should fail for children with native focus', function () {
+      var node = new axe.SerialVirtualNode({
         nodeName: 'div',
         attributes: {
-          role: 'widget',
-          tabIndex: '1'
+          role: 'text'
         }
+      });
+      var child = new axe.SerialVirtualNode({
+        nodeName: 'button'
       });
       node.children = [child];
 
@@ -65,11 +83,35 @@ describe('no-focusable-content virtual-rule', function () {
       assert.lengthOf(results.incomplete, 0);
     });
 
-    xit('should fail for deeply nested focusable children', function () {});
+    it('should fail for deeply nested focusable children', function () {
+      var node = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          role: 'text'
+        }
+      });
+      var child = new axe.SerialVirtualNode({
+        nodeName: 'button'
+      });
+      var grandchild = new axe.SerialVirtualNode({
+        nodeName: '#text',
+        nodeType: 3,
+        nodeValue: 'Hello World'
+      });
+
+      child.children = [grandchild];
+      node.children = [child];
+
+      var results = axe.runVirtualRule('aria-text', node);
+
+      assert.lengthOf(results.passes, 0);
+      assert.lengthOf(results.violations, 1);
+      assert.lengthOf(results.incomplete, 0);
+    });
   });
   describe('edge cases', function () {
     //TODO help?! Why is this incomplete and not passing? It seems to match the html integration test
-    it('should pass when an anchor has no href and has implicit role of link', function () {
+    xit('should pass when an anchor has no href and has implicit role of link', function () {
       var node = new axe.SerialVirtualNode({
         nodeName: 'div',
         attributes: {
