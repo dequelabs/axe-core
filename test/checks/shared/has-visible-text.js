@@ -1,14 +1,10 @@
 describe('has-visible-text', function () {
   'use strict';
 
-  // var fixture = document.getElementById('fixture');
   var checkSetup = axe.testUtils.checkSetup;
-  // var queryFixture = axe.testUtils.queryFixture;
   var checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function () {
-    // fixture.innerHTML = '';
-    axe._tree = undefined;
     checkContext.reset();
   });
 
