@@ -91,14 +91,16 @@ describe('no-focusable-content virtual-rule', function () {
         }
       });
       var child = new axe.SerialVirtualNode({
-        nodeName: 'button'
+        nodeName: 'div'
       });
       var grandchild = new axe.SerialVirtualNode({
-        nodeName: '#text',
-        nodeType: 3,
-        nodeValue: 'Hello World'
+        nodeName: 'div'
       });
-
+      var greatgrandchild = new axe.SerialVirtualNode({
+        nodeName: 'button'
+      });
+      greatgrandchild.parent = grandchild;
+      grandchild.children = [greatgrandchild];
       child.children = [grandchild];
       node.children = [child];
 
@@ -109,7 +111,26 @@ describe('no-focusable-content virtual-rule', function () {
       assert.lengthOf(results.incomplete, 0);
     });
   });
-  describe('edge cases', function () {
+
+  describe('handles error conditions', function () {
+    it('should incomplete when vNode has no children and is type 1', function () {
+      var node = new axe.SerialVirtualNode({
+        nodeName: 'div',
+        attributes: {
+          role: 'text',
+          nodeType: 1
+        }
+      });
+
+      var results = axe.runVirtualRule('aria-text', node);
+
+      assert.lengthOf(results.violations, 0);
+      assert.lengthOf(results.incomplete, 1);
+      assert.lengthOf(results.passes, 0);
+    });
+  });
+
+  describe('special edge cases', function () {
     //TODO help?! Why is this incomplete and not passing? It seems to match the html integration test
     xit('should pass when an anchor has no href and has implicit role of link', function () {
       var node = new axe.SerialVirtualNode({
@@ -186,35 +207,3 @@ describe('no-focusable-content virtual-rule', function () {
     });
   });
 });
-//   xit('should pass if the element is empty', function () {
-//     var node = new axe.SerialVirtualNode({
-//       nodeName: 'button'
-//     });
-
-//     node.children = [];
-//     node.parent = null;
-
-//     var results = axe.runVirtualRule('aria-text', node);
-
-//     assert.lengthOf(results.passes, 1);
-//     assert.lengthOf(results.violations, 0);
-//     assert.lengthOf(results.incomplete, 0);
-//   });
-
-//   xit('should pass if element only has text content', function () {
-//     var node = new axe.SerialVirtualNode({
-//       nodeName: 'button'
-//     });
-//     var child = new axe.SerialVirtualNode({
-//       nodeName: '#text',
-//       nodeType: 3,
-//       nodeValue: 'Hello World'
-//     });
-//     node.children = [child];
-
-//     var results = axe.runVirtualRule('aria-text', node);
-
-//     assert.lengthOf(results.passes, 1);
-//     assert.lengthOf(results.violations, 0);
-//     assert.lengthOf(results.incomplete, 0);
-//   });
