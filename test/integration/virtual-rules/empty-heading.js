@@ -10,12 +10,8 @@ describe('empty-heading virtual-rule', function () {
       nodeValue: 'OK',
       attributes: {}
     });
-    // child.parent = node;
+
     node.children = [child];
-    // console.log('---------------------');
-    // console.log(JSON.stringify(node));
-    assert.instanceOf(node, axe.SerialVirtualNode);
-    // assert.typeOf(node.hasAttribute, 'function');
 
     var results = axe.runVirtualRule('empty-heading', node);
 
