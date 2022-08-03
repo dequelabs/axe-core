@@ -20,7 +20,7 @@ fs.readFile(path.join(__dirname, '.nvmrc'), 'utf-8', function (err, data) {
     process.exit();
   }
 
-  console.log(
+  console.error(
     '' +
       'Error: You are using Node.js version ' +
       currentVersion +
