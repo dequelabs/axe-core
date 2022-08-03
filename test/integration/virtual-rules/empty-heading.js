@@ -1,4 +1,4 @@
-describe('has-visible-text virtual-rule', function () {
+describe('empty-heading virtual-rule', function () {
   it('should pass with text', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'h1',
@@ -7,17 +7,16 @@ describe('has-visible-text virtual-rule', function () {
     var child = new axe.SerialVirtualNode({
       nodeName: '#text',
       nodeType: 3,
-      nodeValue: 'OK'
+      nodeValue: 'OK',
+      attributes: {}
     });
+    // child.parent = node;
+    node.children = [child];
+    // console.log('---------------------');
+    // console.log(JSON.stringify(node));
+    assert.instanceOf(node, axe.SerialVirtualNode);
+    // assert.typeOf(node.hasAttribute, 'function');
 
-    child.parent = node;
-    // node.children = [child];
-
-    // console.log('Hello');
-    // console.log({ thing: 'bar' });
-    // var ns = JSON.stringify(node);
-    // console.log(ns);
-    // console.log(node);
     var results = axe.runVirtualRule('empty-heading', node);
 
     assert.lengthOf(results.violations, 0);
