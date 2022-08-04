@@ -78,8 +78,31 @@ describe('empty-heading virtual-rule', function () {
       assert.lengthOf(results.incomplete, 0);
     });
 
-    xit('should pass on implicit role', function () {
-      //TODO
+    it('should pass on explicit role', function () {
+      var results = axe.runVirtualRule('empty-heading', {
+        nodeName: 'span',
+        attributes: {
+          role: 'heading',
+          title: 'foobar'
+        }
+      });
+
+      assert.lengthOf(results.passes, 1);
+      assert.lengthOf(results.violations, 0);
+      assert.lengthOf(results.incomplete, 0);
+    });
+
+    it('should pass on implicit role', function () {
+      var results = axe.runVirtualRule('empty-heading', {
+        nodeName: 'h1',
+        attributes: {
+          title: 'foobar'
+        }
+      });
+
+      assert.lengthOf(results.passes, 1);
+      assert.lengthOf(results.violations, 0);
+      assert.lengthOf(results.incomplete, 0);
     });
   });
 
