@@ -119,14 +119,18 @@ describe('empty-heading virtual-rule', function () {
       assert.lengthOf(results.incomplete, 1);
     });
   });
+
   describe('non-empty-title checks', function () {
     it('should fail when title is empty', function () {
-      var results = axe.runVirtualRule('empty-heading', {
+      var node = new axe.SerialVirtualNode({
         nodeName: 'h1',
         attributes: {
-          title: ''
+          'aria-label': ''
         }
       });
+      node.children = [];
+
+      var results = axe.runVirtualRule('empty-heading', node);
 
       assert.lengthOf(results.passes, 0);
       assert.lengthOf(results.violations, 1);
