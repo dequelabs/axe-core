@@ -330,7 +330,10 @@
     opacity: 0;
   }
 </style>
-<button style="position: relative; padding: 0 16px; height: 39px">
+<!-- IE11 default background for button is a gradient so we need to override that otherwise this will incomplete with "bgGradient" message -->
+<button
+  style="position: relative; padding: 0 16px; height: 39px; background: #eee"
+>
   <span id="pass11">Button</span>
   <span
     class="pseudo"
