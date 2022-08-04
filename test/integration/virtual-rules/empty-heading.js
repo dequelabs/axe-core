@@ -65,8 +65,17 @@ describe('empty-heading virtual-rule', function () {
       assert.lengthOf(results.passes, 0, 'should have 0 passed');
     });
 
-    xit('should pass on explicit role', function () {
-      //TODO
+    it('should pass for title', function () {
+      var results = axe.runVirtualRule('empty-heading', {
+        nodeName: 'h1',
+        attributes: {
+          title: 'it has a title'
+        }
+      });
+
+      assert.lengthOf(results.passes, 1);
+      assert.lengthOf(results.violations, 0);
+      assert.lengthOf(results.incomplete, 0);
     });
 
     xit('should pass on implicit role', function () {
