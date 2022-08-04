@@ -153,7 +153,6 @@ describe('empty-heading virtual-rule', function () {
       var results = axe.runVirtualRule('empty-heading', {
         nodeName: 'h1',
         attributes: {
-          type: 'button',
           title: ''
         }
       });
