@@ -33,37 +33,6 @@ describe('empty-heading virtual-rule', function () {
       assert.lengthOf(results.passes, 0);
     });
 
-    it('should fail with no visible text', function () {
-      var heading = new axe.SerialVirtualNode({
-        nodeName: 'h1',
-        attributes: {}
-      });
-      var span = new axe.SerialVirtualNode({
-        nodeName: 'span',
-        attributes: {
-          hidden: true
-        },
-        hidden: true
-      });
-      var text = new axe.SerialVirtualNode({
-        nodeName: '#text',
-        nodeType: 3,
-        nodeValue: 'Hidden Text',
-        attributes: {
-          hidden: true
-        },
-        hidden: true
-      });
-      span.children = [text];
-      heading.children = [span];
-
-      var results = axe.runVirtualRule('empty-heading', heading);
-
-      assert.lengthOf(results.violations, 1, 'should have 1 violation');
-      assert.lengthOf(results.incomplete, 0, 'should have 0 incompletes');
-      assert.lengthOf(results.passes, 0, 'should have 0 passed');
-    });
-
     it('should pass for title', function () {
       var results = axe.runVirtualRule('empty-heading', {
         nodeName: 'h1',
