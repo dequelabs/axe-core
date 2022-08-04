@@ -57,7 +57,6 @@ describe('empty-heading virtual-rule', function () {
       span.children = [text];
       heading.children = [span];
 
-      debugNode(heading);
       var results = axe.runVirtualRule('empty-heading', heading);
 
       assert.lengthOf(results.violations, 1, 'should have 1 violation');
@@ -163,7 +162,3 @@ describe('empty-heading virtual-rule', function () {
     });
   });
 });
-
-var debugNode = function (node) {
-  console.debug(JSON.stringify(node, null, 2));
-};
