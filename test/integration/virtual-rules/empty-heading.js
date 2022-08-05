@@ -131,13 +131,16 @@ describe('empty-heading virtual-rule', function () {
   });
 
   it('should fail in order to account for presentation conflict resolution', function () {
-    var results = new axe.runVirtualRule('empty-heading', {
+    var node = new axe.SerialVirtualNode({
       nodeName: 'h1',
       attributes: {
         role: 'none',
         'aria-label': ''
       }
     });
+    node.children = [];
+
+    var results = axe.runVirtualRule('empty-heading', node);
 
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
