@@ -43,4 +43,9 @@ describe('heading-matches', function () {
     var vNode = queryFixture('<h1 role="widget" id="target"></h1>');
     assert.isTrue(rule.matches(null, vNode));
   });
+
+  it('should return true on headings with explicit role="none" and an empty aria-label to account for presentation conflict resolution', function () {
+    var vNode = queryFixture('<h1 aria-label="" role="none" id="target"></h1>');
+    assert.isTrue(rule.matches(null, vNode));
+  });
 });
