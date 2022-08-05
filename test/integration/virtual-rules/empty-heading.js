@@ -129,4 +129,18 @@ describe('empty-heading virtual-rule', function () {
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
+
+  it('should fail in order to account for presentation conflict resolution', function () {
+    var results = new axe.runVirtualRule('empty-heading', {
+      nodeName: 'h1',
+      attributes: {
+        role: 'none',
+        'aria-label': ''
+      }
+    });
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
 });
