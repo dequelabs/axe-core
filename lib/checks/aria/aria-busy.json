@@ -1,0 +1,11 @@
+{
+  "id": "aria-busy",
+  "evaluate": "aria-busy-evaluate",
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "Element has an aria-busy attribute",
+      "fail": "Element has no aria-busy=\"true\" attribute"
+    }
+  }
+}
