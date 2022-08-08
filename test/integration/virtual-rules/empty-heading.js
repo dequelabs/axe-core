@@ -118,7 +118,7 @@ describe('empty-heading virtual-rule', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'h1',
       attributes: {
-        'aria-label': ''
+        title: ''
       }
     });
     node.children = [];
