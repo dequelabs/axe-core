@@ -22,7 +22,7 @@ describe('inline-style-property tests', function() {
       assert.isNull(checkContext._data);
     });
 
-    it('is false letter-spacing greater than 0.15em and !important', function () {
+    it('is false when letter-spacing is less than 0.12em and !important', function () {
       var params = checkSetup(
         '<p style="letter-spacing: 0.1em !important" id="target">Hello world</p>'
       );
@@ -43,7 +43,7 @@ describe('inline-style-property tests', function() {
       assert.isNull(checkContext._data);
     });
 
-    it('is true letter-spacing is 0.15 times the font-size', function () {
+    it('is true when letter-spacing is 0.15 times the font-size', function () {
       var params = checkSetup(
         '<p style="letter-spacing: 0.15em !important" id="target">Hello world</p>'
       );
@@ -83,7 +83,7 @@ describe('inline-style-property tests', function() {
         });
       });
       
-      it('is false when the font is 0.10 time the spacing', function () {
+      it('is false when the font is 0.10 times the spacing', function () {
         var params = checkSetup(
           '<p style="font-size: 30px; letter-spacing: 3px !important" id="target">Hello world</p>'
         );
