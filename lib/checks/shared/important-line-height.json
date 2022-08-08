@@ -4,7 +4,8 @@
   "options": {
     "multiLineOnly": true,
     "cssProperty": "line-height",
-    "minValue": 1.5
+    "minValue": 1.5,
+    "normalValue": 1
   },
   "metadata": {
     "impact": "serious",

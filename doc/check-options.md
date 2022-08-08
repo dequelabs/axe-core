@@ -32,6 +32,7 @@
   - [avoid-inline-spacing](#avoid-inline-spacing)
   - [scope-value](#scope-value)
   - [region](#region)
+  - [inline-style-property](#inline-style-property)
 
 ## How Checks Work
 
@@ -491,3 +492,23 @@ h6:not([role]),
 | Option          | Default                                        | Description                                                                 |
 | --------------- | :--------------------------------------------- | :-------------------------------------------------------------------------- |
 | `regionMatcher` | <pre lang=css>dialog, [role=dialog], svg</pre> | A matcher object or CSS selector to allow elements to be treated as regions |
+
+### inline-style-property-evaluate
+
+This evaluate method is used in the following checks. Default vary between checks
+
+- important-letter-spacing
+- important-word-spacing
+- important-line-height
+
+| Option           | Description                                                                   |
+| ---------------- | :---------------------------------------------------------------------------- |
+| `cssProperty`    | Which property to check the value of, for example letter-spacing or font-size |
+| `absoluteValues` | Whether or not to calculate value in pixels (true) or in em (false)           |
+| `noImportant`    | While false, the check returns `true` except if !important is used            |
+| `multiLineOnly`  | If true,                                                                      |
+| `minValue`       | Returns `false` when the value is less than `minValue`                        |
+| `maxValue`       | Returns `false` when the value is more than `maxValue`                        |
+| `normalValue`    | The value to use when `normal` is set, defaults to `0`                        |
+
+If `minValue` and `maxValue` are both undefined, the check returns `false` if the property is used with !important. If done along with `noImportant: true`, the check returns false if the property is set at all in the style attribute.
