@@ -1,4 +1,4 @@
-describe('no-focusable-content virtual-rule', function () {
+describe('aria-text virtual-rule', function () {
   it('should incomplete for element with undefined children', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
