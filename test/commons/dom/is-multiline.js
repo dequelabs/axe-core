@@ -1,5 +1,5 @@
-describe('text.isMultiline', function() {
-  var isMultiline = axe.commons.text.isMultiline;
+describe('dom.isMultiline', function() {
+  var isMultiline = axe.commons.dom.isMultiline;
   var fixture = document.querySelector('#fixture');
 
   afterEach(function() {
