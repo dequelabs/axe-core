@@ -1,6 +1,6 @@
 name: Ask a question
 description: General questions for us, the product, or why things are the way they are.
-labels: ['question']
+labels: ['question', 'ungroomed']
 body:
   - type: markdown
     attributes:

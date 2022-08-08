@@ -1,6 +1,6 @@
 name: Request a feature
 description: Request an enhancement, improvement, or new rule.
-labels: ['feat']
+labels: ['feat', 'ungroomed']
 body:
   - type: markdown
     attributes:

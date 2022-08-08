@@ -1,6 +1,6 @@
 name: Improve our documentation
 description: Report issues in our documentation or things we could document better.
-labels: ['docs']
+labels: ['docs', 'ungroomed']
 body:
   - type: markdown
     attributes:

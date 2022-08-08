@@ -1,5 +1,6 @@
 name: Report an issue
 description: Report a bug or an issue that you've encountered.
+labels: ['ungroomed']
 body:
   - type: markdown
     attributes:
