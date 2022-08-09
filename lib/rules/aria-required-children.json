@@ -9,6 +9,6 @@
     "help": "Certain ARIA roles must contain particular children"
   },
   "all": [],
-  "any": ["aria-required-children"],
+  "any": ["aria-required-children", "aria-busy"],
   "none": []
 }

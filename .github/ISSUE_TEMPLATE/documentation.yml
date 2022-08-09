@@ -1,0 +1,25 @@
+name: Improve our documentation
+description: Report issues in our documentation or things we could document better.
+labels: ['docs', 'ungroomed']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Documentation reports can be made for axe-core, [axe Extension](https://www.deque.com/axe/browser-extensions/), and [axe Linter](https://marketplace.visualstudio.com/items?itemName=deque-systems.vscode-axe-linter). If you have a documentation report for one of our npm integrations (e.g. `@axe-core/webdriverjs`), please open an issue in https://github.com/dequelabs/axe-core-npm.
+  - type: dropdown
+    id: product
+    attributes:
+      label: Product
+      description: Which product is the documentation report for?
+      options:
+        - axe-core
+        - axe Extension
+        - axe Linter
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
