@@ -400,18 +400,6 @@ describe('color-contrast', function () {
     });
   });
 
-  it('should return true for element which exactly overlaps midpoint of another element', function () {
-    var params = checkSetup(
-      '<div>' +
-        '<div id="target">' +
-        '<h4>Foo</h4>' +
-        'Bar' +
-        '</div>'
-    );
-
-    assert.isTrue(contrastEvaluate.apply(checkContext, params));
-  });
-
   describe('with pseudo elements', function () {
     it('should return undefined if :before pseudo element has a background color', function () {
       var params = checkSetup(
