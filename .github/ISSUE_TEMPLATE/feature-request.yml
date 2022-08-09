@@ -1,0 +1,26 @@
+name: Request a feature
+description: Request an enhancement, improvement, or new rule.
+labels: ['feat', 'ungroomed']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Feature requests can be made for axe-core, [axe Extension](https://www.deque.com/axe/browser-extensions/), and [axe Linter](https://marketplace.visualstudio.com/items?itemName=deque-systems.vscode-axe-linter). If you have a feature request for one of our npm integrations (e.g. `@axe-core/webdriverjs`), please open an issue in https://github.com/dequelabs/axe-core-npm.
+  - type: dropdown
+    id: product
+    attributes:
+      label: Product
+      description: Which product is the feature for?
+      options:
+        - axe-core
+        - axe Extension
+        - axe Linter
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: What do you wish the product did? If the feature is about adding a new rule to axe-core, please follow our [rule template](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-proposal.md).
+    validations:
+      required: true
