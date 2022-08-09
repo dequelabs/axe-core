@@ -1,8 +1,4 @@
 describe('presentation-role-conflict virtual-rule', function () {
-  // "none": ["is-element-focusable", "has-global-aria-attribute"]
-  // return getImplicitRole(virtualNode, { chromium: true }) !== null;
-  // "selector": "[role=\"none\"], [role=\"presentation\"]",
-
   it('should fail when role is presentation and aria-label is present', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'li',
