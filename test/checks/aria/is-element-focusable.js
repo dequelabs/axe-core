@@ -1,41 +1,21 @@
-describe('is-element-focusable', function() {
+describe('is-element-focusable', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
+  var checkSetup = axe.testUtils.checkSetup;
   var checkContext = axe.testUtils.MockCheckContext();
+  var isFocusable = axe.testUtils.getCheckEvaluate('is-element-focusable');
 
-  afterEach(function() {
-    fixture.innerHTML = '';
+  afterEach(function () {
     checkContext.reset();
   });
 
-  it('should return true for div with a tabindex', function() {
-    var node = document.createElement('div');
-    node.id = 'target';
-    node.tabIndex = 1;
-    fixture.appendChild(node);
-    axe._tree = axe.utils.getFlattenedTree(fixture);
-    var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
-
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('is-element-focusable')
-        .call(checkContext, node, {}, virtualNode)
-    );
+  it('should return true for div with a tabindex', function () {
+    var params = checkSetup('<div tabIndex="1" id="target"></div>');
+    assert.isTrue(isFocusable.apply(checkContext, params));
   });
 
-  it('should return false for natively unfocusable element', function() {
-    var node = document.createElement('span');
-    node.id = 'target';
-    node.role = 'link';
-    node.href = '#';
-    fixture.appendChild(node);
-    axe._tree = axe.utils.getFlattenedTree(fixture);
-    var virtualNode = axe.utils.getNodeFromTree(axe._tree[0], node);
-    assert.isFalse(
-      axe.testUtils
-        .getCheckEvaluate('is-element-focusable')
-        .call(checkContext, node, {}, virtualNode)
-    );
+  it('should return false for natively unfocusable element', function () {
+    var params = checkSetup('<span role="link" href="#" id="target"></span>');
+    assert.isFalse(isFocusable.apply(checkContext, params));
   });
 });
