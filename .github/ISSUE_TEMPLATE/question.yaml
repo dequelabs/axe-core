@@ -1,0 +1,25 @@
+name: Ask a question
+description: General questions for us, the product, or why things are the way they are.
+labels: ['question', 'ungroomed']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Questions can be asked for axe-core, [axe Extension](https://www.deque.com/axe/browser-extensions/), and [axe Linter](https://marketplace.visualstudio.com/items?itemName=deque-systems.vscode-axe-linter). If you have a question about one of our npm integrations (e.g. `@axe-core/webdriverjs`), please open an issue in https://github.com/dequelabs/axe-core-npm.
+  - type: dropdown
+    id: product
+    attributes:
+      label: Product
+      description: Which product is the question for?
+      options:
+        - axe-core
+        - axe Extension
+        - axe Linter
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+    validations:
+      required: true

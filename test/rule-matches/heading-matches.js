@@ -1,76 +1,51 @@
-describe('heading-matches', function() {
+describe('heading-matches', function () {
   'use strict';
-
-  var fixture = document.getElementById('fixture');
-  var flatTreeSetup = axe.testUtils.flatTreeSetup;
+  var queryFixture = axe.testUtils.queryFixture;
+  var fixtureSetup = axe.testUtils.fixtureSetup;
   var rule;
 
-  beforeEach(function() {
+  beforeEach(function () {
     rule = axe.utils.getRule('empty-heading');
   });
 
-  afterEach(function() {
-    fixture.innerHTML = '';
-  });
-
-  it('is a function', function() {
+  it('is a function', function () {
     assert.isFunction(rule.matches);
   });
 
-  it('should return false on elements that are not headings', function() {
-    var div = document.createElement('div');
-    fixture.appendChild(div);
-    flatTreeSetup(fixture);
-    assert.isFalse(rule.matches(div));
+  it('should return false on elements that are not headings', function () {
+    var vNode = fixtureSetup('<div></div>');
+    assert.isFalse(rule.matches(null, vNode));
   });
 
-  it('should return true on elements with "heading" in the role', function() {
-    var div = document.createElement('div');
-    div.setAttribute('role', 'heading');
-    fixture.appendChild(div);
-    flatTreeSetup(fixture);
-    assert.isTrue(rule.matches(div));
-
-    div.setAttribute('role', 'slider heading');
-    assert.isTrue(rule.matches(div));
+  it('should return true on elements with role="heading"', function () {
+    var vNode = queryFixture('<div role="heading" id="target"></div>');
+    assert.isTrue(rule.matches(null, vNode));
   });
 
-  it('should return true on regular headings without roles', function() {
-    var h1 = document.createElement('h1');
-    var h2 = document.createElement('h2');
-    var h3 = document.createElement('h3');
-
-    fixture.appendChild(h1);
-    fixture.appendChild(h2);
-    fixture.appendChild(h3);
-
-    flatTreeSetup(fixture);
-    assert.isTrue(rule.matches(h1));
-    assert.isTrue(rule.matches(h2));
-    assert.isTrue(rule.matches(h3));
+  it('should return true on regular headings without roles', function () {
+    for (var i = 1; i <= 6; i++) {
+      var vNode = queryFixture('<h' + i + ' id="target"></h' + i + '>');
+      assert.isTrue(rule.matches(null, vNode));
+    }
   });
 
-  it('should return false on headings with their role changes', function() {
-    var h1 = document.createElement('h1');
-    h1.setAttribute('role', 'banner');
-    fixture.appendChild(h1);
-    flatTreeSetup(fixture);
-    assert.isFalse(rule.matches(h1));
+  it('should return false on headings with their role changes', function () {
+    var vNode = queryFixture('<h1 role="banner" id="target"></h1>');
+    assert.isFalse(rule.matches(null, vNode));
   });
 
-  it('should return true on headings with their role changes to an invalid role', function() {
-    var h1 = document.createElement('h1');
-    h1.setAttribute('role', 'bruce');
-    fixture.appendChild(h1);
-    flatTreeSetup(fixture);
-    assert.isTrue(rule.matches(h1));
+  it('should return true on headings with their role changes to an invalid role', function () {
+    var vNode = queryFixture('<h1 role="bruce" id="target"></h1>');
+    assert.isTrue(rule.matches(null, vNode));
   });
 
-  it('should return true on headings with their role changes to an abstract role', function() {
-    var h1 = document.createElement('h1');
-    h1.setAttribute('role', 'widget');
-    fixture.appendChild(h1);
-    flatTreeSetup(fixture);
-    assert.isTrue(rule.matches(h1));
+  it('should return true on headings with their role changes to an abstract role', function () {
+    var vNode = queryFixture('<h1 role="widget" id="target"></h1>');
+    assert.isTrue(rule.matches(null, vNode));
+  });
+
+  it('should return true on headings with explicit role="none" and an empty aria-label to account for presentation conflict resolution', function () {
+    var vNode = queryFixture('<h1 aria-label="" role="none" id="target"></h1>');
+    assert.isTrue(rule.matches(null, vNode));
   });
 });
