@@ -22,9 +22,10 @@ describe('aria-text virtual-rule', function () {
       }
     });
     var child = new axe.SerialVirtualNode({
-      nodeName: 'button',
+      nodeName: 'div',
       attributes: {
-        role: 'widget'
+        role: 'button',
+        tabindex: 0
       }
     });
     node.children = [child];
