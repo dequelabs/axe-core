@@ -455,7 +455,10 @@ describe('dom.getElementStack', function () {
 
     it('should ignore element which exactly overlaps midpoint of target element', function () {
       fixture.innerHTML =
-        '<div id="target">' + '<h4 id="1">Foo</h4>' + 'Bar' + '</div>';
+        '<div id="target">' +
+        '<h4 id="1" style="margin: 0;">Foo</h4>' +
+        'Bar' +
+        '</div>';
 
       axe.testUtils.flatTreeSetup(fixture);
       var target = fixture.querySelector('#target');
