@@ -614,8 +614,8 @@
     "link-in-text-block": {
       "pass": "Links can be distinguished from surrounding text in some way other than by color",
       "fail": {
-        "fgContrast": "The link has insufficient color contrast of ${data.contrastRatio}:1 with the surrounding text. (Minimum contrast is 3:1, link text: ${data.nodeColor}, surrounding text: ${data.parentColor})",
-        "bgContrast": "The link background has insufficient color contrast of ${data.contrastRatio} (Minimum contrast is 3:1, link background color: ${data.nodeBackgroundColor}, surrounding background color: ${data.parentBackgroundColor})"
+        "fgContrast": "The link has insufficient color contrast of ${data.contrastRatio}:1 with the surrounding text. (Minimum contrast is ${data.requiredContrastRatio}:1, link text: ${data.nodeColor}, surrounding text: ${data.parentColor})",
+        "bgContrast": "The link background has insufficient color contrast of ${data.contrastRatio} (Minimum contrast is ${data.requiredContrastRatio}:1, link background color: ${data.nodeBackgroundColor}, surrounding background color: ${data.parentBackgroundColor})"
       },
       "incomplete": {
         "default": "Element's foreground contrast ratio could not be determined",
