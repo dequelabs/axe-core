@@ -70,7 +70,7 @@ describe('link-in-text-block', function () {
   }
 
   function getLinkElm(linkStyle, paragraphStyle) {
-    // Get a random id and build the style string
+    // Get a random id and build the style strings
     var linkId = 'linkid-' + Math.floor(Math.random() * 100000);
     var parId = 'parid-' + Math.floor(Math.random() * 100000);
 

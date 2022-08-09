@@ -6,9 +6,8 @@
     "messages": {
       "pass": "Links can be distinguished from surrounding text in some way other than by color",
       "fail": {
-        "default": "Links need to be distinguished from surrounding text in some way other than by color",
-        "fgContrast": "Element has insufficient color contrast with parent text block of ${data.contrastRatio} (link color: ${data.nodeColor}, parent color: ${data.parentColor}). Expected contrast ratio of 3.0.",
-        "bgContrast": "Element's background has insufficient color contrast of ${data.contrastRatio} (link background color: ${data.nodeBackgroundColor}, parent background color: ${data.parentBackgroundColor}) with background of text block. Expected contrast ratio of 3.0."
+        "fgContrast": "The link has insufficient color contrast of ${data.contrastRatio}:1 with the surrounding text. (Minimum contrast is 3:1, link text: ${data.nodeColor}, surrounding text: ${data.parentColor})",
+        "bgContrast": "The link background has insufficient color contrast of ${data.contrastRatio} (Minimum contrast is 3:1, link background color: ${data.nodeBackgroundColor}, surrounding background color: ${data.parentBackgroundColor})"
       },
       "incomplete": {
         "default": "Element's foreground contrast ratio could not be determined",
