@@ -404,7 +404,7 @@ describe('color-contrast', function () {
     var params = checkSetup(
       '<div>' +
         '<div id="target">' +
-        '<h4 id="debugNode">Foo</h4>' +
+        '<h4>Foo</h4>' +
         'Bar' +
         '</div>'
     );
