@@ -227,6 +227,25 @@ describe('link-in-text-block', function () {
       assert.equal(checkContext._data.messageKey, 'fgContrast');
     });
 
+    it('returns false with fgContrast key if nodes have insufficient foreground contrast and insufficient background color', function () {
+      var linkElm = getLinkElm(
+        {
+          color: 'black',
+          backgroundColor: 'white'
+        },
+        {
+          color: '#100',
+          backgroundColor: '#F0F0F0'
+        }
+      );
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('link-in-text-block')
+          .call(checkContext, linkElm)
+      );
+      assert.equal(checkContext._data.messageKey, 'fgContrast');
+    });
+
     it('returns false with bgContrast key if nodes have same foreground color and insufficient background contrast', function () {
       var linkElm = getLinkElm(
         {
@@ -234,7 +253,7 @@ describe('link-in-text-block', function () {
           backgroundColor: 'white'
         },
         {
-          color: '#000',
+          color: 'black',
           backgroundColor: '#F0F0F0'
         }
       );
