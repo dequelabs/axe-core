@@ -12,5 +12,6 @@
     ["#pass-different-size"],
     ["#pass-background-color"],
     ["#pass-text-color"]
-  ]
+  ],
+  "incomplete": [["#incomplete-low-contrast-parent-has-gradient"]]
 }
