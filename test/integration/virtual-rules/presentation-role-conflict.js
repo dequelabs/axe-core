@@ -60,7 +60,6 @@ describe('presentation-role-conflict virtual-rule', function () {
     assert.lengthOf(results.inapplicable, 1);
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);
-    assert.lengthOf(results.incomplete, 0);
   });
 
   it('should inapplicable when implicit role is presentation', function () {
