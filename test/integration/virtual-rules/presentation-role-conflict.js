@@ -78,44 +78,51 @@ describe('presentation-role-conflict virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('TBI should set messageKey if not focusable and has global aria', function () {
+  it('should fail if element has native focusability', function () {
     var node = new axe.SerialVirtualNode({
-      nodeName: 'h1',
-      attributes: {}
+      nodeName: 'a',
+      attributes: {
+        role: 'presentation',
+        href: '#'
+      }
     });
 
     var results = axe.runVirtualRule('presentation-role-conflict', node);
 
-    assert.lengthOf(results.inapplicable, 1);
-    //TODO assert message key/role
     assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should pass if element has native focusability but is disabled', function () {
+    var node = new axe.SerialVirtualNode({
+      nodeName: 'button',
+      attributes: {
+        role: 'presentation',
+        disabled: 'disabled'
+      }
+    });
+
+    var results = axe.runVirtualRule('presentation-role-conflict', node);
+
+    assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  xit('TBI should set messageKey if no global aria and it is focusable', function () {
+  it('should fail if element is focusable with tabIndex', function () {
     var node = new axe.SerialVirtualNode({
-      nodeName: 'div',
-      attributes: {}
+      nodeName: 'svg',
+      attributes: {
+        role: 'presentation',
+        tabindex: 1
+      }
     });
 
     var results = axe.runVirtualRule('presentation-role-conflict', node);
 
     assert.lengthOf(results.passes, 0);
-    assert.lengthOf(results.violations, 0);
-    assert.lengthOf(results.incomplete, 0);
-  });
-
-  xit('TBI should set messageKey if it has both global aria and is focusable', function () {
-    var node = new axe.SerialVirtualNode({
-      nodeName: 'div',
-      attributes: {}
-    });
-
-    var results = axe.runVirtualRule('presentation-role-conflict', node);
-
-    assert.lengthOf(results.passes, 0);
-    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
   });
 });
