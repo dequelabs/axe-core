@@ -60,32 +60,20 @@ describe('presentation-role-conflict virtual-rule', function () {
     assert.lengthOf(results.inapplicable, 1);
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 0);
-  });
-
-  it('should inapplicable when implicit role is presentation', function () {
-    var node = new axe.SerialVirtualNode({
-      nodeName: 'div',
-      attributes: {}
-    });
-
-    var results = axe.runVirtualRule('presentation-role-conflict', node);
-
-    assert.lengthOf(results.inapplicable, 1);
-    assert.lengthOf(results.passes, 0);
-    assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  //TODO this method name is strange, rename before merging -evaluate:15
-  it('should ?? when explicit role is not presentation or none', function () {
+  it('should pass for element with implicit role in chromium', function () {
     var node = new axe.SerialVirtualNode({
-      nodeName: 'div',
-      attributes: {}
+      nodeName: 'svg',
+      attributes: {
+        role: 'presentation'
+      }
     });
 
     var results = axe.runVirtualRule('presentation-role-conflict', node);
 
-    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
