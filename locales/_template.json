@@ -421,6 +421,10 @@
         "plural": "ARIA roles ${data.values} must be removed when the element is made visible, as they are not allowed for the element"
       }
     },
+    "aria-busy": {
+      "pass": "Element has an aria-busy attribute",
+      "fail": "Element has no aria-busy=\"true\" attribute"
+    },
     "aria-errormessage": {
       "pass": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique",
       "fail": {
@@ -902,6 +906,18 @@
       "pass": "Element has text that is visible to screen readers",
       "fail": "Element does not have text that is visible to screen readers",
       "incomplete": "Unable to determine if element has children"
+    },
+    "important-letter-spacing": {
+      "pass": "Letter-spacing in the style attribute is not set to !important, or meets the minimum",
+      "fail": "letter-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
+    },
+    "important-line-height": {
+      "pass": "line-height in the style attribute is not set to !important, or meets the minimum",
+      "fail": "line-height in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
+    },
+    "important-word-spacing": {
+      "pass": "word-spacing in the style attribute is not set to !important, or meets the minimum",
+      "fail": "word-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
     },
     "is-on-screen": {
       "pass": "Element is not visible",
