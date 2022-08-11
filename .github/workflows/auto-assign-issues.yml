@@ -4,7 +4,7 @@ on:
   issues:
     types: [opened]
 env:
-  MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
 
 jobs:
   assign_one_project:
@@ -14,5 +14,5 @@ jobs:
       - name: Auto assign axe-core integration issues to Axe API team project board
         uses: srggrs/assign-one-project-github-action@1.2.1
         with:
-          project: 'https://github.com/orgs/dequelabs/projects/66'
+          project: https://github.com/orgs/dequelabs/projects/66
           column_name: 'Ungroomed'
