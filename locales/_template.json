@@ -890,6 +890,10 @@
       "fail": "Element does not have inner text that is visible to screen readers",
       "incomplete": "Unable to determine if element has children"
     },
+    "doc-has-single-title": {
+      "pass": "Document has only one <title> element",
+      "fail": "Document does not have only one <title> element"
+    },
     "doc-has-title": {
       "pass": "Document has a non-empty <title> element",
       "fail": "Document does not have a non-empty <title> element"
