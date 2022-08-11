@@ -455,8 +455,8 @@ describe('dom.getElementStack', function () {
 
     it('should ignore element which exactly overlaps midpoint of target element', function () {
       fixture.innerHTML =
-        '<div id="target">' +
-        '<h4 id="1" style="margin: 0;">Foo</h4>' +
+        '<div id="target" style="width: 100%; height: 50px;">' +
+        '<h4 id="1" style="margin: 0; width: 100%; height: 25px;">Foo</h4>' +
         'Bar' +
         '</div>';
 
