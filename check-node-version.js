@@ -1,42 +1,31 @@
 #! /usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
+const currentVersion = process.version.replace('v', '');
 
-fs.readFile(path.join(__dirname, '.nvmrc'), 'utf-8', function (err, data) {
-  if (err) {
-    throw err;
-  }
+const minimumVersionMajor = 12;
+const currentVersionMajor = parseInt(currentVersion.split('.')[0]);
 
-  const minimumVersion = data.trim();
-  const currentVersion = process.version.replace('v', '');
+const usesMinimumVersion = currentVersionMajor >= minimumVersionMajor;
 
-  const minimumVersionMajor = parseInt(minimumVersion.split('.')[0]);
-  const currentVersionMajor = parseInt(currentVersion.split('.')[0]);
+if (usesMinimumVersion) {
+  process.exit();
+}
 
-  const usesMinimumVersion = currentVersionMajor >= minimumVersionMajor;
+console.error(
+  '' +
+    'Error: You are using Node.js version ' +
+    currentVersion +
+    ', but you need ' +
+    'Node.js version ' +
+    minimumVersionMajor +
+    ' or higher to build and/or test axe-core.' +
+    '\n\n' +
+    'Install Node.js version ' +
+    minimumVersion +
+    ' or higher and try again.' +
+    '\n\n' +
+    'You can use nvm (https://github.com/creationix/nvm) to update your Node.js version ' +
+    ''
+);
 
-  if (usesMinimumVersion) {
-    process.exit();
-  }
-
-  console.error(
-    '' +
-      'Error: You are using Node.js version ' +
-      currentVersion +
-      ', but you need ' +
-      'Node.js version ' +
-      minimumVersion +
-      ' or higher to build and/or test axe-core.' +
-      '\n\n' +
-      'Install Node.js version ' +
-      minimumVersion +
-      ' or higher and try again.' +
-      '\n\n' +
-      'You can use nvm (https://github.com/creationix/nvm) to update your Node.js version ' +
-      " or run 'nvm use'." +
-      ''
-  );
-
-  process.exit(1);
-});
+process.exit(1);
