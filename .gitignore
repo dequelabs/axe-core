@@ -3,7 +3,6 @@ node_modules
 npm-shrinkwrap.json
 doc/examples/*/package-lock.json
 .DS_Store
-.vscode
 .idea
 
 # tmp - `dev` time generated assets
