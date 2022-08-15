@@ -39,7 +39,7 @@ describe('axe._cache', function () {
   });
 
   it('should accept callbacks that return primitive types as default value', function () {
-    var primitives = [12345, '12345', false, null, undefined];
+    var primitives = [12345, 'foo', false, null, undefined];
 
     for (var i = 0; i < primitives.length; i++) {
       var testCase = primitives[i];
