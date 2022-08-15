@@ -64,6 +64,15 @@ describe('axe._cache', function () {
     );
   });
 
+  it('should not re-calculate the default value after multiple `set()` calls', function () {
+    axe._cache.get('Foo', 12345);
+
+    assert.strictEqual(
+      typeof axe._cache.get('Foo', 'should not be set to a string'),
+      'number'
+    );
+  });
+
   it('should not re-calculate the default value when it is set to `undefined`', function () {
     axe._cache.get('Foo', undefined);
     assert.strictEqual(
