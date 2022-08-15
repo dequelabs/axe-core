@@ -64,7 +64,7 @@ describe('axe._cache', function () {
     );
   });
 
-  it('should not re-calculate the default value after multiple `set()` calls', function () {
+  it('should not re-calculate the default value for second `get()` call', function () {
     axe._cache.get('Foo', 12345);
 
     assert.strictEqual(
