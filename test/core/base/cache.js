@@ -76,8 +76,8 @@ describe('axe._cache', function () {
   it('should not re-calculate the default value when it is set to `undefined`', function () {
     axe._cache.get('Foo', undefined);
     assert.strictEqual(
-      typeof axe._cache.get('Foo', 'should not be set'),
-      'string'
+      typeof axe._cache.get('Foo', 'should not be set to a string'),
+      'undefined'
     );
   });
 
