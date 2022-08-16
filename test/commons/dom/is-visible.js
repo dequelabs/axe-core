@@ -1,4 +1,4 @@
-describe('dom.isVisible', function() {
+describe('dom.isVisible', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -7,7 +7,7 @@ describe('dom.isVisible', function() {
   var shadowSupported = axe.testUtils.shadowSupport.v1;
   var computedStyleStub;
 
-  afterEach(function() {
+  afterEach(function () {
     document.getElementById('fixture').innerHTML = '';
     axe._tree = undefined;
 
@@ -17,22 +17,22 @@ describe('dom.isVisible', function() {
     }
   });
 
-  describe('default usage', function() {
+  describe('default usage', function () {
     // Firefox returns `null` if accessed inside a hidden iframe
-    it('should return false if computedStyle return null for whatever reason', function() {
+    it('should return false if computedStyle return null for whatever reason', function () {
       computedStyleStub = sinon.stub(window, 'getComputedStyle').returns(null);
       var el = document.createElement('div');
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
-    it('should return true on statically-positioned, visible elements', function() {
+    it('should return true on statically-positioned, visible elements', function () {
       fixture.innerHTML = '<div id="target">Hello!</div>';
       var el = document.getElementById('target');
 
       assert.isTrue(axe.commons.dom.isVisible(el));
     });
 
-    it('should return true on absolutely positioned elements that are on-screen', function() {
+    it('should return true on absolutely positioned elements that are on-screen', function () {
       fixture.innerHTML =
         '<div id="target" style="position: absolute; left: 10px; right: 10px">hi</div>';
       var el = document.getElementById('target');
@@ -40,7 +40,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el));
     });
 
-    it('should respect position: fixed', function() {
+    it('should respect position: fixed', function () {
       fixture.innerHTML =
         '<div id="target" style="position:fixed; bottom: 0; left: 0;">StickySticky</div>';
       var el = document.getElementById('target');
@@ -48,7 +48,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el));
     });
 
-    it('should properly calculate offsets according the offsetParent', function() {
+    it('should properly calculate offsets according the offsetParent', function () {
       fixture.innerHTML =
         '<div style="position: absolute; top: 400px; left: 400px;">' +
         '<div id="target" style="position: absolute; top: -400px; left: -400px">Hi</div>' +
@@ -57,32 +57,32 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el));
     });
 
-    it('should return false if moved offscreen with left', function() {
+    it('should return false if moved offscreen with left', function () {
       fixture.innerHTML =
         '<div id="target" style="position: absolute; left: -9999px">Hi</div>';
       var el = document.getElementById('target');
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
-    it('should return false if moved offscreen with top', function() {
+    it('should return false if moved offscreen with top', function () {
       fixture.innerHTML =
         '<div id="target" style="position: absolute; top: -9999px">Hi</div>';
       var el = document.getElementById('target');
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
-    it('should return false on detached elements', function() {
+    it('should return false on detached elements', function () {
       var el = document.createElement('div');
       el.innerHTML = 'I am not visible because I am detached!';
 
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
-    it('should return true on a document', function() {
+    it('should return true on a document', function () {
       assert.isTrue(axe.commons.dom.isVisible(document));
     });
 
-    it('should return false on STYLE tag', function() {
+    it('should return false on STYLE tag', function () {
       var vNode = queryFixture(
         '<style id="target"> @import "https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"; .green { background-color: green; } </style>'
       );
@@ -90,7 +90,7 @@ describe('dom.isVisible', function() {
       assert.isFalse(actual);
     });
 
-    it('should return false on NOSCRIPT tag', function() {
+    it('should return false on NOSCRIPT tag', function () {
       var vNode = queryFixture(
         '<noscript id="target"><p class="invisible"><img src="/piwik/piwik.php?idsite=1" alt="" /></p></noscript>'
       );
@@ -98,7 +98,7 @@ describe('dom.isVisible', function() {
       assert.isFalse(actual);
     });
 
-    it('should return false on TEMPLATE tag', function() {
+    it('should return false on TEMPLATE tag', function () {
       var vNode = queryFixture(
         '<template id="target"><div>Name:</div></template>'
       );
@@ -106,7 +106,7 @@ describe('dom.isVisible', function() {
       assert.isFalse(actual);
     });
 
-    it('should return true if positioned statically but top/left is set', function() {
+    it('should return true if positioned statically but top/left is set', function () {
       fixture.innerHTML =
         '<div id="target" style="top: -9999px; left: -9999px;' +
         'right: -9999px; bottom: -9999px;">Hi</div>';
@@ -114,7 +114,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el));
     });
 
-    it('should not be affected by `aria-hidden`', function() {
+    it('should not be affected by `aria-hidden`', function () {
       fixture.innerHTML =
         '<div id="target" aria-hidden="true">Hidden from screen readers</div>';
 
@@ -122,7 +122,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el));
     });
 
-    it('should not calculate position on parents', function() {
+    it('should not calculate position on parents', function () {
       fixture.innerHTML =
         '<div style="position: absolute; top: -400px; left: -400px;">' +
         '<div id="target" style="position: absolute; top: 500px; left: 500px">Hi</div>' +
@@ -132,7 +132,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el));
     });
 
-    it('should know how `visibility` works', function() {
+    it('should know how `visibility` works', function () {
       fixture.innerHTML =
         '<div style="visibility: hidden;">' +
         '<div id="target" style="visibility: visible;">Hi</div>' +
@@ -142,7 +142,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el));
     });
 
-    it('should detect clip rect hidden text technique', function() {
+    it('should detect clip rect hidden text technique', function () {
       var el,
         clip =
           'clip: rect(1px 1px 1px 1px);' +
@@ -157,7 +157,7 @@ describe('dom.isVisible', function() {
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
-    it('should detect clip rect hidden text technique using position: fixed', function() {
+    it('should detect clip rect hidden text technique using position: fixed', function () {
       var el,
         clip =
           'clip: rect(1px 1px 1px 1px);' +
@@ -172,7 +172,7 @@ describe('dom.isVisible', function() {
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
-    it('should detect when clip is not applied because of positioning', function() {
+    it('should detect when clip is not applied because of positioning', function () {
       var el,
         clip =
           'clip: rect(1px 1px 1px 1px);' +
@@ -186,7 +186,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el));
     });
 
-    it('should detect clip rect hidden text technique on parent', function() {
+    it('should detect clip rect hidden text technique on parent', function () {
       var el,
         clip =
           'clip: rect(1px 1px 1px 1px);' +
@@ -202,7 +202,7 @@ describe('dom.isVisible', function() {
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
-    it('should detect when clip is not applied because of positioning on parent', function() {
+    it('should detect when clip is not applied because of positioning on parent', function () {
       var el,
         clip =
           'clip: rect(1px 1px 1px 1px);' +
@@ -217,7 +217,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el));
     });
 
-    it('should detect poorly hidden clip rects', function() {
+    it('should detect poorly hidden clip rects', function () {
       var el,
         clip =
           'clip: rect(5px 1px 1px 5px);' +
@@ -232,28 +232,28 @@ describe('dom.isVisible', function() {
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
-    it('should return false for display: none', function() {
+    it('should return false for display: none', function () {
       fixture.innerHTML = '<div id="target" style="display: none">Hello!</div>';
       var el = document.getElementById('target');
 
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
-    it('should return false for opacity: 0', function() {
+    it('should return false for opacity: 0', function () {
       fixture.innerHTML = '<div id="target" style="opacity: 0">Hello!</div>';
       var el = document.getElementById('target');
 
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
-    it('should return false for opacity: 0', function() {
+    it('should return false for opacity: 0', function () {
       fixture.innerHTML = '<div id="target" style="opacity: 0">Hello!</div>';
       var el = document.getElementById('target');
 
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
-    it('should return false for 0 height scrollable region', function() {
+    it('should return false for 0 height scrollable region', function () {
       fixture.innerHTML =
         '<div style="overflow: scroll; height: 0"><div id="target">Hello!</div></div>';
       var el = document.getElementById('target');
@@ -261,7 +261,7 @@ describe('dom.isVisible', function() {
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
-    it('should return false for 0 width scrollable region', function() {
+    it('should return false for 0 width scrollable region', function () {
       fixture.innerHTML =
         '<div style="overflow: scroll; width: 0"><div id="target">Hello!</div></div>';
       var el = document.getElementById('target');
@@ -269,7 +269,7 @@ describe('dom.isVisible', function() {
       assert.isFalse(axe.commons.dom.isVisible(el));
     });
 
-    it('returns false for `AREA` without closest `MAP` element', function() {
+    it('returns false for `AREA` without closest `MAP` element', function () {
       var vNode = queryFixture(
         '<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>'
       );
@@ -277,7 +277,7 @@ describe('dom.isVisible', function() {
       assert.isFalse(actual);
     });
 
-    it('returns false for `AREA` with closest `MAP` with no name attribute', function() {
+    it('returns false for `AREA` with closest `MAP` with no name attribute', function () {
       var vNode = queryFixture(
         '<map>' +
           '<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
@@ -289,7 +289,7 @@ describe('dom.isVisible', function() {
 
     (shadowSupported ? it : xit)(
       'returns false for `AREA` element that is inside shadowDOM',
-      function() {
+      function () {
         fixture.innerHTML = '<div id="container"></div>';
         var container = fixture.querySelector('#container');
         var shadow = container.attachShadow({ mode: 'open' });
@@ -305,7 +305,7 @@ describe('dom.isVisible', function() {
       }
     );
 
-    it('returns false for `AREA` with closest `MAP` with name but not referred by an `IMG` usemap attribute', function() {
+    it('returns false for `AREA` with closest `MAP` with name but not referred by an `IMG` usemap attribute', function () {
       var vNode = queryFixture(
         '<map name="infographic">' +
           '<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
@@ -316,7 +316,7 @@ describe('dom.isVisible', function() {
       assert.isFalse(actual);
     });
 
-    it('returns false for `AREA` with `MAP` and used in `IMG` which is not visible', function() {
+    it('returns false for `AREA` with `MAP` and used in `IMG` which is not visible', function () {
       var vNode = queryFixture(
         '<map name="infographic">' +
           '<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
@@ -327,7 +327,7 @@ describe('dom.isVisible', function() {
       assert.isFalse(actual);
     });
 
-    it('returns true for `AREA` with `MAP` and used in `IMG` which is visible', function() {
+    it('returns true for `AREA` with `MAP` and used in `IMG` which is visible', function () {
       var vNode = queryFixture(
         '<map name="infographic">' +
           '<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
@@ -338,24 +338,74 @@ describe('dom.isVisible', function() {
       assert.isTrue(actual);
     });
 
-    // IE11 does not support details element
-    (isIE11 ? it.skip : it)('should return false for closed details element', function() {
-      fixture.innerHTML = '<details><summary>Details element</summary><div id="target">Hidden</div>'
-      var el = document.getElementById('target');
-        assert.isFalse(axe.commons.dom.isVisible(el));
-    });
+    describe('details', function () {
+      it('should return true for element in open details', function () {
+        fixture.innerHTML =
+          '<details open>' +
+          '<summary>Summary node</summary>' +
+          '<div id="target">Hello World</div>';
+        ('</details>');
 
-    it('should return true for open details element', function() {
-      fixture.innerHTML = '<details open><summary>Details element</summary><div id="target">Visible</div>'
-      var el = document.getElementById('target');
+        var el = document.getElementById('target');
         assert.isTrue(axe.commons.dom.isVisible(el));
+      });
+
+      (isIE11 ? xit : it)(
+        'should return false for element in closed details',
+        function () {
+          fixture.innerHTML =
+            '<details>' +
+            '<summary>Summary node</summary>' +
+            '<div id="target">Hello World</div>';
+          ('</details>');
+
+          var el = document.getElementById('target');
+          assert.isFalse(axe.commons.dom.isVisible(el));
+        }
+      );
+
+      (isIE11 ? xit : it)(
+        'should return true for summary element in closed details',
+        function () {
+          fixture.innerHTML =
+            '<details>' +
+            '<summary id="target">Summary node</summary>' +
+            '<div>Hello World</div>';
+          ('</details>');
+
+          var el = document.getElementById('target');
+          assert.isTrue(axe.commons.dom.isVisible(el));
+        }
+      );
+
+      it('should return false for hidden summary element in open details', function () {
+        fixture.innerHTML =
+          '<details open>' +
+          '<summary id="target" style="display: none">Summary node</summary>' +
+          '<div>Hello World</div>';
+        ('</details>');
+
+        var el = document.getElementById('target');
+        assert.isFalse(axe.commons.dom.isVisible(el));
+      });
+
+      it('should return false for hidden summary element in closed details', function () {
+        fixture.innerHTML =
+          '<details>' +
+          '<summary id="target" style="display: none">Summary node</summary>' +
+          '<div>Hello World</div>';
+        ('</details>');
+
+        var el = document.getElementById('target');
+        assert.isFalse(axe.commons.dom.isVisible(el));
+      });
     });
 
     // IE11 either only supports clip paths defined by url() or not at all,
     // MDN and caniuse.com give different results...
     (isIE11 ? it.skip : it)(
       'should detect clip-path hidden text technique',
-      function() {
+      function () {
         fixture.innerHTML =
           '<div id="target" style="clip-path: inset(50%);">Hi</div>';
 
@@ -366,7 +416,7 @@ describe('dom.isVisible', function() {
 
     (isIE11 ? it.skip : it)(
       'should detect clip-path hidden text technique on parent',
-      function() {
+      function () {
         fixture.innerHTML =
           '<div style="clip-path: circle(0%);">' +
           '<div id="target">Hi</div>' +
@@ -379,7 +429,7 @@ describe('dom.isVisible', function() {
 
     (shadowSupported ? it : xit)(
       'should correctly handle visible slotted elements',
-      function() {
+      function () {
         function createContentSlotted() {
           var group = document.createElement('div');
           group.innerHTML = '<div id="target">Stuff<slot></slot></div>';
@@ -400,7 +450,7 @@ describe('dom.isVisible', function() {
     );
     (shadowSupported ? it : xit)(
       'should correctly handle hidden slotted elements',
-      function() {
+      function () {
         function createContentSlotted() {
           var group = document.createElement('div');
           group.innerHTML =
@@ -420,7 +470,7 @@ describe('dom.isVisible', function() {
         assert.isFalse(axe.commons.dom.isVisible(el.actualNode));
       }
     );
-    it('should return false if element is visually hidden using position absolute, overflow hidden, and a very small height', function() {
+    it('should return false if element is visually hidden using position absolute, overflow hidden, and a very small height', function () {
       fixture.innerHTML =
         '<div id="target" style="position:absolute; height: 1px; overflow: hidden;">StickySticky</div>';
       var el = document.getElementById('target');
@@ -429,22 +479,22 @@ describe('dom.isVisible', function() {
     });
   });
 
-  describe('screen readers', function() {
+  describe('screen readers', function () {
     // Firefox returns `null` if accessed inside a hidden iframe
-    it('should return false if computedStyle return null for whatever reason', function() {
+    it('should return false if computedStyle return null for whatever reason', function () {
       computedStyleStub = sinon.stub(window, 'getComputedStyle').returns(null);
       var el = document.createElement('div');
       assert.isFalse(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should return true on staticly-positioned, visible elements', function() {
+    it('should return true on staticly-positioned, visible elements', function () {
       fixture.innerHTML = '<div id="target">Hello!</div>';
       var el = document.getElementById('target');
 
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should return true on absolutely positioned elements that are on-screen', function() {
+    it('should return true on absolutely positioned elements that are on-screen', function () {
       fixture.innerHTML =
         '<div id="target" style="position: absolute; left: 10px; right: 10px">hi</div>';
       var el = document.getElementById('target');
@@ -452,7 +502,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should respect position: fixed', function() {
+    it('should respect position: fixed', function () {
       fixture.innerHTML =
         '<div id="target" style="position:fixed; bottom: 0; left: 0;">StickySticky</div>';
       var el = document.getElementById('target');
@@ -460,7 +510,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should properly calculate offsets according the offsetParent', function() {
+    it('should properly calculate offsets according the offsetParent', function () {
       fixture.innerHTML =
         '<div style="position: absolute; top: 400px; left: 400px;">' +
         '<div id="target" style="position: absolute; top: -400px; left: -400px">Hi</div>' +
@@ -469,53 +519,53 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should return true if moved offscreen with left', function() {
+    it('should return true if moved offscreen with left', function () {
       fixture.innerHTML =
         '<div id="target" style="position: absolute; left: -9999px">Hi</div>';
       var el = document.getElementById('target');
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should return true if moved offscreen with top', function() {
+    it('should return true if moved offscreen with top', function () {
       fixture.innerHTML =
         '<div id="target" style="position: absolute; top: -9999px">Hi</div>';
       var el = document.getElementById('target');
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should return true if moved offscreen with right', function() {
+    it('should return true if moved offscreen with right', function () {
       fixture.innerHTML =
         '<div id="target" style="position: absolute; right: -9999px">Hi</div>';
       var el = document.getElementById('target');
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should return true if moved offscreen with bottom', function() {
+    it('should return true if moved offscreen with bottom', function () {
       fixture.innerHTML =
         '<div id="target" style="position: absolute; bottom: -9999px">Hi</div>';
       var el = document.getElementById('target');
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should return true if text is moved offscreen with text-indent', function() {
+    it('should return true if text is moved offscreen with text-indent', function () {
       fixture.innerHTML =
         '<div id="target" style="text-indent: -9999px">Hi</div>';
       var el = document.getElementById('target');
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should return false on detached elements', function() {
+    it('should return false on detached elements', function () {
       var el = document.createElement('div');
       el.innerHTML = 'I am not visible because I am detached!';
 
       assert.isFalse(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should return true on a document', function() {
+    it('should return true on a document', function () {
       assert.isTrue(axe.commons.dom.isVisible(document, true));
     });
 
-    it('should return true if positioned staticly but top/left is set', function() {
+    it('should return true if positioned staticly but top/left is set', function () {
       fixture.innerHTML =
         '<div id="target" style="top: -9999px; left: -9999px;' +
         'right: -9999px; bottom: -9999px;">Hi</div>';
@@ -523,7 +573,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should return false if `aria-hidden` is set', function() {
+    it('should return false if `aria-hidden` is set', function () {
       fixture.innerHTML =
         '<div id="target" aria-hidden="true">Hidden from screen readers</div>';
 
@@ -531,7 +581,7 @@ describe('dom.isVisible', function() {
       assert.isFalse(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should return false if `aria-hidden` is set on parent', function() {
+    it('should return false if `aria-hidden` is set on parent', function () {
       fixture.innerHTML =
         '<div aria-hidden="true"><div id="target">Hidden from screen readers</div></div>';
 
@@ -539,7 +589,7 @@ describe('dom.isVisible', function() {
       assert.isFalse(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should not calculate position on parents', function() {
+    it('should not calculate position on parents', function () {
       fixture.innerHTML =
         '<div style="position: absolute; top: -400px; left: -400px;">' +
         '<div id="target" style="position: absolute; top: 500px; left: 500px">Hi</div>' +
@@ -549,7 +599,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should know how `visibility` works', function() {
+    it('should know how `visibility` works', function () {
       fixture.innerHTML =
         '<div style="visibility: hidden;">' +
         '<div id="target" style="visibility: visible;">Hi</div>' +
@@ -559,7 +609,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should detect clip rect hidden text technique', function() {
+    it('should detect clip rect hidden text technique', function () {
       var el,
         clip =
           'clip: rect(1px 1px 1px 1px);' +
@@ -574,7 +624,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should detect even when clip is not applied because of positioning', function() {
+    it('should detect even when clip is not applied because of positioning', function () {
       var el,
         clip =
           'clip: rect(1px 1px 1px 1px);' +
@@ -588,7 +638,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should detect clip rect hidden text technique on parent', function() {
+    it('should detect clip rect hidden text technique on parent', function () {
       var el,
         clip =
           'clip: rect(1px 1px 1px 1px);' +
@@ -604,7 +654,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should detect even when clip is not applied because of positioning on parent', function() {
+    it('should detect even when clip is not applied because of positioning on parent', function () {
       var el,
         clip =
           'clip: rect(1px 1px 1px 1px);' +
@@ -619,7 +669,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should detect poorly hidden clip rects', function() {
+    it('should detect poorly hidden clip rects', function () {
       var el,
         clip =
           'clip: rect(5px 1px 1px 5px);' +
@@ -634,7 +684,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should detect clip-path hidden text technique', function() {
+    it('should detect clip-path hidden text technique', function () {
       fixture.innerHTML =
         '<div id="target" style="clip-path: inset(50%);">Hi</div>';
 
@@ -642,7 +692,7 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(el, true));
     });
 
-    it('should detect clip-path hidden text technique on parent', function() {
+    it('should detect clip-path hidden text technique on parent', function () {
       fixture.innerHTML =
         '<div style="clip-path: circle(0%);">' +
         '<div id="target">Hi</div>' +
@@ -653,15 +703,15 @@ describe('dom.isVisible', function() {
     });
   });
 
-  describe('SerialVirtualNode', function() {
-    it('should return true on statically-positioned, visible elements', function() {
+  describe('SerialVirtualNode', function () {
+    it('should return true on statically-positioned, visible elements', function () {
       var vNode = new axe.SerialVirtualNode({
         nodeName: 'div'
       });
       assert.isTrue(axe.commons.dom.isVisible(vNode));
     });
 
-    it('should return false on STYLE tag', function() {
+    it('should return false on STYLE tag', function () {
       var vNode = new axe.SerialVirtualNode({
         nodeName: 'style'
       });
@@ -669,7 +719,7 @@ describe('dom.isVisible', function() {
       assert.isFalse(actual);
     });
 
-    it('should return false on NOSCRIPT tag', function() {
+    it('should return false on NOSCRIPT tag', function () {
       var vNode = new axe.SerialVirtualNode({
         nodeName: 'noscript'
       });
@@ -677,7 +727,7 @@ describe('dom.isVisible', function() {
       assert.isFalse(actual);
     });
 
-    it('should return false on TEMPLATE tag', function() {
+    it('should return false on TEMPLATE tag', function () {
       var vNode = new axe.SerialVirtualNode({
         nodeName: 'template'
       });
@@ -685,7 +735,7 @@ describe('dom.isVisible', function() {
       assert.isFalse(actual);
     });
 
-    it('should not be affected by `aria-hidden`', function() {
+    it('should not be affected by `aria-hidden`', function () {
       var vNode = new axe.SerialVirtualNode({
         nodeName: 'div',
         attributes: {
@@ -695,8 +745,8 @@ describe('dom.isVisible', function() {
       assert.isTrue(axe.commons.dom.isVisible(vNode));
     });
 
-    describe('screen readers', function() {
-      it('should return false if `aria-hidden` is set', function() {
+    describe('screen readers', function () {
+      it('should return false if `aria-hidden` is set', function () {
         var vNode = new axe.SerialVirtualNode({
           nodeName: 'div',
           attributes: {
@@ -706,7 +756,7 @@ describe('dom.isVisible', function() {
         assert.isFalse(axe.commons.dom.isVisible(vNode, true));
       });
 
-      it('should return false if `aria-hidden` is set on parent', function() {
+      it('should return false if `aria-hidden` is set on parent', function () {
         var vNode = new axe.SerialVirtualNode({
           nodeName: 'div'
         });
