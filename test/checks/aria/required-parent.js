@@ -243,6 +243,17 @@ describe('aria-required-parent', function() {
     );
   });
 
+  it('should pass for multiple group and presentational roles', function() {
+    var params = checkSetup(
+      '<div role="list"><div role="none"><div role="group"><div role="none"><div role="group"><div role="listitem" id="target">Nothing here.</div></div></div></div></div></div>'
+    );
+    assert.isTrue(
+      axe.testUtils
+        .getCheckEvaluate('aria-required-parent')
+        .apply(checkContext, params)
+    );
+  });
+
   (shadowSupported ? it : xit)(
     'should pass when required parent is present across shadow boundary',
     function() {

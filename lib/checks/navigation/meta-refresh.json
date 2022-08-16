@@ -1,11 +1,15 @@
 {
   "id": "meta-refresh",
   "evaluate": "meta-refresh-evaluate",
+  "options": {
+    "minDelay": 0,
+    "maxDelay": 72000
+  },
   "metadata": {
     "impact": "critical",
     "messages": {
       "pass": "<meta> tag does not immediately refresh the page",
-      "fail": "<meta> tag forces timed refresh of page"
+      "fail": "<meta> tag forces timed refresh of page (less than 20 hours)"
     }
   }
 }

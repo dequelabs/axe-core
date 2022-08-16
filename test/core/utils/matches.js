@@ -2,6 +2,7 @@ describe('utils.matches', function() {
   var matches = axe.utils.matches;
   var fixture = document.querySelector('#fixture');
   var queryFixture = axe.testUtils.queryFixture;
+  var convertSelector = axe._thisWillBeDeletedDoNotUse.utils.convertSelector;
 
   afterEach(function() {
     fixture.innerHTML = '';
@@ -320,6 +321,23 @@ describe('utils.matches', function() {
       assert.throws(function() {
         matches(virtualNode, 'div ~ h1');
       });
+    });
+  });
+
+  describe('convertSelector', function() {
+    it('should set type to attrExist for attribute selector', function() {
+      var expression = convertSelector('[disabled]');
+      assert.equal(expression[0][0].attributes[0].type, 'attrExist');
+    });
+
+    it('should set type to attrValue for attribute value selector', function() {
+      var expression = convertSelector('[aria-pressed="true"]');
+      assert.equal(expression[0][0].attributes[0].type, 'attrValue');
+    });
+
+    it('should set type to attrValue for empty attribute value selector', function() {
+      var expression = convertSelector('[aria-pressed=""]');
+      assert.equal(expression[0][0].attributes[0].type, 'attrValue');
     });
   });
 });

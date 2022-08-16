@@ -233,6 +233,7 @@ declare namespace axe {
     none?: string[];
     tags?: string[];
     matches?: string;
+    reviewOnFail?: boolean;
   }
   interface AxePlugin {
     id: string;
@@ -249,6 +250,7 @@ declare namespace axe {
     help: string;
     helpUrl: string;
     tags: string[];
+    actIds?: string[];
   }
   interface SerialDqElement {
     source: string;
