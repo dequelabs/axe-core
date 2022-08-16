@@ -96,4 +96,18 @@ describe('axe._cache', function () {
   it('should return undefined for key lookup miss when no default value is provided', function () {
     assert.strictEqual(typeof axe._cache.get('foo'), 'undefined');
   });
+
+  it('should throw if there are too many arguments', function () {
+    function fn() {
+      axe._cache.get('foo', 'bar', 'baz');
+    }
+    assert.throws(fn);
+  });
+
+  it('should throw if there are no arguments', function () {
+    function fn() {
+      axe._cache.get();
+    }
+    assert.throws(fn);
+  });
 });
