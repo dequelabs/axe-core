@@ -175,7 +175,7 @@
     },
     "frame-title-unique": {
       "description": "Ensures <iframe> and <frame> elements contain a unique title attribute",
-      "help": "Frames should have a unique title attribute"
+      "help": "Frames must have a unique title attribute"
     },
     "frame-title": {
       "description": "Ensures <iframe> and <frame> elements have an accessible name",
