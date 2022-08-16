@@ -343,8 +343,8 @@ describe('dom.isVisible', function () {
         fixture.innerHTML =
           '<details open>' +
           '<summary>Summary node</summary>' +
-          '<div id="target">Hello World</div>';
-        ('</details>');
+          '<div id="target">Hello World</div>' +
+          '</details>';
 
         var el = document.getElementById('target');
         assert.isTrue(axe.commons.dom.isVisible(el));
@@ -356,8 +356,8 @@ describe('dom.isVisible', function () {
           fixture.innerHTML =
             '<details>' +
             '<summary>Summary node</summary>' +
-            '<div id="target">Hello World</div>';
-          ('</details>');
+            '<div id="target">Hello World</div>' +
+            '</details>';
 
           var el = document.getElementById('target');
           assert.isFalse(axe.commons.dom.isVisible(el));
@@ -370,8 +370,8 @@ describe('dom.isVisible', function () {
           fixture.innerHTML =
             '<details>' +
             '<summary id="target">Summary node</summary>' +
-            '<div>Hello World</div>';
-          ('</details>');
+            '<div>Hello World</div>' +
+            '</details>';
 
           var el = document.getElementById('target');
           assert.isTrue(axe.commons.dom.isVisible(el));
@@ -382,8 +382,8 @@ describe('dom.isVisible', function () {
         fixture.innerHTML =
           '<details open>' +
           '<summary id="target" style="display: none">Summary node</summary>' +
-          '<div>Hello World</div>';
-        ('</details>');
+          '<div>Hello World</div>' +
+          '</details>';
 
         var el = document.getElementById('target');
         assert.isFalse(axe.commons.dom.isVisible(el));
@@ -393,8 +393,8 @@ describe('dom.isVisible', function () {
         fixture.innerHTML =
           '<details>' +
           '<summary id="target" style="display: none">Summary node</summary>' +
-          '<div>Hello World</div>';
-        ('</details>');
+          '<div>Hello World</div>' +
+          '</details>';
 
         var el = document.getElementById('target');
         assert.isFalse(axe.commons.dom.isVisible(el));

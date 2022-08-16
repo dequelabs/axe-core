@@ -80,8 +80,8 @@ describe('axe.utils.isHidden', function () {
       fixture.innerHTML =
         '<details open>' +
         '<summary>Summary node</summary>' +
-        '<div id="target">Hell World</div>';
-      ('</details>');
+        '<div id="target">Hell World</div>' +
+        '</details>';
 
       var el = document.getElementById('target');
       assert.isFalse(axe.utils.isHidden(el));
@@ -93,8 +93,8 @@ describe('axe.utils.isHidden', function () {
         fixture.innerHTML =
           '<details>' +
           '<summary>Summary node</summary>' +
-          '<div id="target">Hell World</div>';
-        ('</details>');
+          '<div id="target">Hell World</div>' +
+          '</details>';
 
         var el = document.getElementById('target');
         assert.isTrue(axe.utils.isHidden(el));
@@ -107,8 +107,8 @@ describe('axe.utils.isHidden', function () {
         fixture.innerHTML =
           '<details>' +
           '<summary id="target">Summary node</summary>' +
-          '<div>Hell World</div>';
-        ('</details>');
+          '<div>Hell World</div>' +
+          '</details>';
 
         var el = document.getElementById('target');
         assert.isFalse(axe.utils.isHidden(el));
@@ -119,8 +119,8 @@ describe('axe.utils.isHidden', function () {
       fixture.innerHTML =
         '<details open>' +
         '<summary id="target" style="display: none">Summary node</summary>' +
-        '<div>Hell World</div>';
-      ('</details>');
+        '<div>Hell World</div>' +
+        '</details>';
 
       var el = document.getElementById('target');
       assert.isTrue(axe.utils.isHidden(el));
@@ -130,8 +130,8 @@ describe('axe.utils.isHidden', function () {
       fixture.innerHTML =
         '<details>' +
         '<summary id="target" style="display: none">Summary node</summary>' +
-        '<div>Hell World</div>';
-      ('</details>');
+        '<div>Hell World</div>' +
+        '</details>';
 
       var el = document.getElementById('target');
       assert.isTrue(axe.utils.isHidden(el));
