@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.4.3](https://github.com/dequelabs/axe-core/compare/v4.4.2...v4.4.3) (2022-07-13)
+
+### Bug Fixes
+
+- **axe.d.ts:** updates type definition for Rule to add reviewOnFail ([#3521](https://github.com/dequelabs/axe-core/issues/3521)) ([afb2478](https://github.com/dequelabs/axe-core/commit/afb247844e697475f5bf81fd7b03ed30c2c65830))
+- Continue supporting Node >=4 ([#3538](https://github.com/dequelabs/axe-core/issues/3538)) ([da7923b](https://github.com/dequelabs/axe-core/commit/da7923bd5bcaa71f52f6b4e6b8eece1ea12c1c2a)), closes [#3537](https://github.com/dequelabs/axe-core/issues/3537)
+
+### [4.4.2](https://github.com/dequelabs/axe-core/compare/v4.4.1...v4.4.2) (2022-05-12)
+
+### Bug Fixes
+
+- **aria-hidden-focusable:** report incomplete with onfocus ([#3407](https://github.com/dequelabs/axe-core/issues/3407)) ([6755e89](https://github.com/dequelabs/axe-core/commit/6755e8961389ba2fcf87c7877737482b819a0553))
+- **aria-hidden-focus:** Update rule help & description ([#3422](https://github.com/dequelabs/axe-core/issues/3422)) ([7cfb4b1](https://github.com/dequelabs/axe-core/commit/7cfb4b1c468231022838bbbe9edef69fa50de891))
+- **aria-valid-attr-value:** add note about element id being in a different shadow DOM tree ([#3421](https://github.com/dequelabs/axe-core/issues/3421)) ([24f74df](https://github.com/dequelabs/axe-core/commit/24f74df8474cfd4f602cb368563955ff42cc2870))
+- **color-contrast:** consistently return color contrast information in the data object for pseudo elements ([#3453](https://github.com/dequelabs/axe-core/issues/3453)) ([1a9d95e](https://github.com/dequelabs/axe-core/commit/1a9d95effeaca26e2d7cf7aa867e6a76f8cf50ad))
+- **deprecatedrole,color-contrast:** fix message to properly include deprecated role, improve color-contrast pass messages ([#3387](https://github.com/dequelabs/axe-core/issues/3387)) ([650e503](https://github.com/dequelabs/axe-core/commit/650e5037dc1f8908897e834ee1ab3aa8e87ac1e7))
+- **html-elms:** update role allowances for nav element ([#3402](https://github.com/dequelabs/axe-core/issues/3402)) ([8aa816a](https://github.com/dequelabs/axe-core/commit/8aa816a15fbd667ee2bf8256a984dcc8aa7c0392)), closes [#3401](https://github.com/dequelabs/axe-core/issues/3401)
+- **standards:** fix address typo in html-elms.js ([#3418](https://github.com/dequelabs/axe-core/issues/3418)) ([f235cc7](https://github.com/dequelabs/axe-core/commit/f235cc7069734096df8db434d4c1e68f11fcc88d)), closes [#3417](https://github.com/dequelabs/axe-core/issues/3417)
+
 ## [4.4.1](https://github.com/dequelabs/axe-core/compare/v4.4.0...v4.4.1) (2022-02-03)
 
 ### Bug Fixes

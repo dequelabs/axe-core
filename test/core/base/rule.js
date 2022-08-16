@@ -1875,6 +1875,7 @@ describe('Rule', function() {
         assert.equal(new Rule(spec).matches(), 'blah');
       });
     });
+
     describe('.tags', function() {
       it('should be set', function() {
         var spec = {
@@ -1886,6 +1887,20 @@ describe('Rule', function() {
       it('should default to empty array', function() {
         var spec = {};
         assert.deepEqual(new Rule(spec).tags, []);
+      });
+    });
+
+    describe('.actIds', function() {
+      it('should be set', function() {
+        var spec = {
+          actIds: ['abc123', 'xyz789']
+        };
+        assert.deepEqual(new Rule(spec).actIds, spec.actIds);
+      });
+
+      it('should default to undefined', function() {
+        var spec = {};
+        assert.isUndefined(new Rule(spec).actIds);
       });
     });
   });

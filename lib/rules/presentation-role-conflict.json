@@ -2,7 +2,8 @@
   "id": "presentation-role-conflict",
   "matches": "has-implicit-chromium-role-matches",
   "selector": "[role=\"none\"], [role=\"presentation\"]",
-  "tags": ["cat.aria", "best-practice"],
+  "tags": ["cat.aria", "best-practice", "ACT"],
+  "actIds": ["46ca7f"],
   "metadata": {
     "description": "Flags elements whose role is none or presentation and which cause the role conflict resolution to trigger.",
     "help": "Elements of role none or presentation should be flagged"
