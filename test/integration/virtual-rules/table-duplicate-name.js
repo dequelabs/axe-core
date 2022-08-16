@@ -1,8 +1,23 @@
 describe('table-duplicate-name virtual-rule', function () {
+  it('should incomplete on table element with children undefined', function () {
+    var tableNode = new axe.SerialVirtualNode({
+      nodeName: 'table'
+    });
+    tableNode.children = undefined;
+
+    var results = axe.runVirtualRule('table-duplicate-name', tableNode);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 1);
+  });
+
   it('should pass on table element', function () {
     var tableNode = new axe.SerialVirtualNode({
       nodeName: 'table'
     });
+
+    tableNode.children = [];
 
     var results = axe.runVirtualRule('table-duplicate-name', tableNode);
 
@@ -18,6 +33,7 @@ describe('table-duplicate-name virtual-rule', function () {
         summary: ''
       }
     });
+    tableNode.children = [];
 
     var results = axe.runVirtualRule('table-duplicate-name', tableNode);
 
