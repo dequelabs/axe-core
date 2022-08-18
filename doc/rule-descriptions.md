@@ -115,7 +115,7 @@ Rules that do not necessarily conform to WCAG success criterion but are industry
 
 ## WCAG 2.0 and 2.1 level AAA rules
 
-Rules that check for conformance to WCAG AAA success criteria that can be fully automated.
+Rules that check for conformance to WCAG AAA success criteria that can be fully automated. These are disabled by default in axe-core.
 
 | Rule ID                                                                                                                            | Description                                                                                              | Impact  | Tags                                           | Issue Type                 | ACT Rules                                          |
 | :--------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------- | :------ | :--------------------------------------------- | :------------------------- | :------------------------------------------------- |
@@ -125,7 +125,7 @@ Rules that check for conformance to WCAG AAA success criteria that can be fully 
 
 ## Experimental Rules
 
-Rules we are still testing and developing. They are not enabled by default in axe-core, but are enabled for the axe browser extensions.
+Rules we are still testing and developing. They are disabled by default in axe-core, but are enabled for the axe browser extensions.
 
 | Rule ID                                                                                                                          | Description                                                                                                                | Impact   | Tags                                                                   | Issue Type                 | ACT Rules                                          |
 | :------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------- | :------- | :--------------------------------------------------------------------- | :------------------------- | :------------------------------------------------- |
@@ -140,6 +140,6 @@ Rules we are still testing and developing. They are not enabled by default in ax
 
 ## Deprecated Rules
 
-Deprecated rules are not enabled by default and will be removed in the next major release.
+Deprecated rules are disabled by default and will be removed in the next major release.
 
 _There are no matching rules_
