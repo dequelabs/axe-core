@@ -34,17 +34,14 @@ function getLocale(grunt, options) {
 }
 
 function makeHeaderLink(title) {
-  return title
-    .replace(/ /g, '-')
-    .replace(/[\.&]/g, '')
-    .toLowerCase();
+  return title.replace(/ /g, '-').replace(/[\.&]/g, '').toLowerCase();
 }
 
 function buildRules(grunt, options, commons, callback) {
   var axeImpact = Object.freeze(['minor', 'moderate', 'serious', 'critical']); // TODO: require('../axe') does not work if grunt configure is moved after uglify, npm test breaks with undefined. Complicated grunt concurrency issue.
   var locale = getLocale(grunt, options);
   options.getFiles = false;
-  buildManual(grunt, options, commons, function(result) {
+  buildManual(grunt, options, commons, function (result) {
     var metadata = {
       rules: {},
       checks: {}
@@ -67,19 +64,19 @@ function buildRules(grunt, options, commons, callback) {
       wcag2aaa: {
         title: 'WCAG 2.0 and 2.1 level AAA rules',
         intro:
-          'Rules that check for conformance to WCAG AAA success criteria that can be fully automated.',
+          'Rules that check for conformance to WCAG AAA success criteria that can be fully automated. These are disabled by default in axe-core.',
         rules: []
       },
       experimental: {
         title: 'Experimental Rules',
         intro:
-          'Rules we are still testing and developing. They are not enabled by default in axe-core, but are enabled for the axe browser extensions.',
+          'Rules we are still testing and developing. They are disabled by default in axe-core, but are enabled for the axe browser extensions.',
         rules: []
       },
       deprecated: {
         title: 'Deprecated Rules',
         intro:
-          'Deprecated rules are not enabled by default and will be removed in the next major release.',
+          'Deprecated rules are disabled by default and will be removed in the next major release.',
         rules: []
       }
     };
@@ -99,7 +96,7 @@ function buildRules(grunt, options, commons, callback) {
     // Translate checks before parsing them so that translations
     // get applied to the metadata object
     if (locale && locale.checks) {
-      checks.forEach(function(check) {
+      checks.forEach(function (check) {
         if (locale.checks[check.id] && check.metadata) {
           check.metadata.messages = locale.checks[check.id];
         }
@@ -117,7 +114,7 @@ function buildRules(grunt, options, commons, callback) {
       var result = clone(data) || {};
 
       if (result.messages) {
-        Object.keys(result.messages).forEach(function(key) {
+        Object.keys(result.messages).forEach(function (key) {
           // only convert to templated function for strings
           // objects handled later in publish-metadata.js
           if (
@@ -139,7 +136,7 @@ function buildRules(grunt, options, commons, callback) {
 
     function createFailureSummaryObject(summaries) {
       var result = {};
-      summaries.forEach(function(summary) {
+      summaries.forEach(function (summary) {
         if (summary.type) {
           result[summary.type] = parseMetaData(summary, 'failureSummaries');
         }
@@ -148,7 +145,7 @@ function buildRules(grunt, options, commons, callback) {
     }
 
     function getIncompleteMsg(summaries) {
-      var summary = summaries.find(function(summary) {
+      var summary = summaries.find(function (summary) {
         return typeof summary.incompleteFallbackMessage === 'string';
       });
       return summary ? summary.incompleteFallbackMessage : '';
@@ -158,16 +155,17 @@ function buildRules(grunt, options, commons, callback) {
       return string
         .replace(
           /"(evaluate|after|gather|matches|source|commons)":\s*("[^"]+?.js")/g,
-          function(m, p1, p2) {
+          function (m, p1, p2) {
             return m.replace(p2, getSource(p2.replace(/^"|"$/g, ''), p1));
           }
         )
-        .replace(/"(function anonymous\([\s\S]+?\) {)([\s\S]+?)(})"/g, function(
-          m
-        ) {
-          return JSON.parse(m);
-        })
-        .replace(/"(\(function \(\) {)([\s\S]+?)(}\)\(\))"/g, function(m) {
+        .replace(
+          /"(function anonymous\([\s\S]+?\) {)([\s\S]+?)(})"/g,
+          function (m) {
+            return JSON.parse(m);
+          }
+        )
+        .replace(/"(\(function \(\) {)([\s\S]+?)(}\)\(\))"/g, function (m) {
           return JSON.parse(m);
         });
     }
@@ -181,7 +179,7 @@ function buildRules(grunt, options, commons, callback) {
     }
 
     function findCheck(checks, id) {
-      return checks.filter(function(check) {
+      return checks.filter(function (check) {
         if (check.id === id) {
           return true;
         }
@@ -196,7 +194,7 @@ function buildRules(grunt, options, commons, callback) {
     }
 
     function parseChecks(collection) {
-      return collection.map(function(check) {
+      return collection.map(function (check) {
         var c = {};
         var id = typeof check === 'string' ? check : check.id;
         var definition = clone(findCheck(checks, id));
@@ -215,7 +213,7 @@ function buildRules(grunt, options, commons, callback) {
     }
 
     function traverseChecks(checkCollection, predicate, startValue) {
-      return checkCollection.reduce(function(out, check) {
+      return checkCollection.reduce(function (out, check) {
         var id = typeof check === 'string' ? check : check.id;
         var definition = clone(findCheck(checks, id));
         if (!definition) {
@@ -234,7 +232,7 @@ function buildRules(grunt, options, commons, callback) {
       }
 
       function getUniqueArr(arr) {
-        return arr.filter(function(value, index, self) {
+        return arr.filter(function (value, index, self) {
           return self.indexOf(value) === index;
         });
       }
@@ -266,7 +264,7 @@ function buildRules(grunt, options, commons, callback) {
         .concat(allUniqueImpactsForRuleTypeNone);
       var cumulativeScores = getUniqueArr(cumulativeImpacts).sort(); //order lowest to highest
 
-      return cumulativeScores.reduce(function(out, cV) {
+      return cumulativeScores.reduce(function (out, cV) {
         return out.length
           ? out + ', ' + capitalize(axeImpact[cV])
           : capitalize(axeImpact[cV]);
@@ -320,7 +318,7 @@ function buildRules(grunt, options, commons, callback) {
       return actLinks.join(', ');
     }
 
-    rules.map(function(rule) {
+    rules.map(function (rule) {
       var impact = parseImpactForRule(rule);
       var canFail = parseFailureForRule(rule);
       var canIncomplete = parseIncompleteForRule(rule);
@@ -366,7 +364,7 @@ function buildRules(grunt, options, commons, callback) {
         actLinks
       ]);
       if (tags.length) {
-        rule.enabled = !!rule.tags.filter(function(t) {
+        rule.enabled = !!rule.tags.filter(function (t) {
           return tags.indexOf(t) !== -1;
         }).length;
       }
@@ -387,7 +385,7 @@ ${
     ? descriptionTableHeader
     : '_There are no matching rules_'
 }${description.rules
-          .map(function(row) {
+          .map(function (row) {
             return '| ' + row.join(' | ') + ' |';
           })
           .join('\n')}`;
