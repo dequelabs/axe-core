@@ -1,0 +1,14 @@
+{
+  "id": "target-offset",
+  "evaluate": "target-offset-evaluate",
+  "options": {
+    "minSpacing": 23.95
+  },
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "Target is sufficiently spaced from its neighbours",
+      "fail": "Target is insufficiently spaced from its neighbours"
+    }
+  }
+}
