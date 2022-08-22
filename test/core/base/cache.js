@@ -62,15 +62,6 @@ describe('axe._cache', function () {
       assert.isTrue(spy.calledOnce);
     });
 
-    it('should not re-calculate for second `get()` call', function () {
-      axe._cache.get('Foo', 12345);
-
-      assert.equal(
-        axe._cache.get('Foo', 'should not be set to a string'),
-        12345
-      );
-    });
-
     it('should not re-calculate when set to `undefined`', function () {
       axe._cache.get('Foo', undefined);
       assert.isUndefined(
