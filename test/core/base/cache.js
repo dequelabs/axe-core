@@ -1,10 +1,6 @@
 describe('axe._cache', function () {
   'use strict';
 
-  beforeEach(function () {
-    axe._cache.clear();
-  });
-
   it('should set items from the cache without error', function () {
     function fn() {
       axe._cache.set('foo', 'bar');
