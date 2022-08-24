@@ -3,7 +3,7 @@ name: Update generated files
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   update_genereated_files:
@@ -27,6 +27,6 @@ jobs:
           git checkout -b $branch_name
           git commit -m "chore: sync generated files"
           git push origin $branch_name
-          gh pr create --base main --head $branch_name --title "chore: sync generated files" --body ""
+          gh pr create --base develop --head $branch_name --title "chore: sync generated files" --body ""
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
