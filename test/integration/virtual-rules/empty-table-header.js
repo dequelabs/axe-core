@@ -27,12 +27,7 @@ describe('empty-table-header virtual-rule', function () {
 
     var results = axe.runVirtualRule('empty-table-header', tableNode);
 
-    //TODO remove assert message
-    assert.lengthOf(
-      results.passes,
-      1,
-      results.incomplete[0].nodes[0].any[0].message
-    );
+    assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
