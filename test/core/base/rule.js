@@ -1663,69 +1663,147 @@ describe('Rule', function () {
       });
     });
 
-    it('should mark checks as incomplete if reviewOnFail is set to true', function () {
-      var rule = new Rule(
-        {
-          id: 'cats',
-          reviewOnFail: true,
-          all: ['cats'],
-          any: ['cats'],
-          none: ['dogs']
-        },
-        {
-          checks: {
-            cats: new Check({
-              id: 'cats',
-              enabled: true,
-              after: function (results) {
-                results[0].result = false;
-                return results;
-              }
-            }),
-            dogs: new Check({
-              id: 'dogs',
-              enabled: true,
-              after: function (results) {
-                results[0].result = true;
-                return results;
-              }
-            })
-          }
-        }
-      );
-
-      var result = rule.after(
-        {
-          id: 'cats',
-          nodes: [
-            {
-              any: [
-                {
-                  id: 'cats',
-                  result: false
+    describe('after', function () {
+      it('should mark checks as incomplete if reviewOnFail is set to true for all', function () {
+        var rule = new Rule(
+          {
+            id: 'cats',
+            reviewOnFail: true,
+            all: ['cats'],
+            any: [],
+            none: []
+          },
+          {
+            checks: {
+              cats: new Check({
+                id: 'cats',
+                enabled: true,
+                after: function (results) {
+                  results[0].result = false;
+                  return results;
                 }
-              ],
-              none: [
-                {
-                  id: 'dogs',
-                  result: true
-                }
-              ],
-              all: [
-                {
-                  id: 'cats',
-                  result: false
-                }
-              ]
+              })
             }
-          ]
-        },
-        { checks: { cats: { options: { dogs: true } } } }
-      );
+          }
+        );
 
-      assert.isUndefined(result.nodes[0].all[0].result);
-      assert.isUndefined(result.nodes[0].any[0].result);
-      assert.isUndefined(result.nodes[0].none[0].result);
+        var result = rule.after(
+          {
+            id: 'cats',
+            nodes: [
+              {
+                any: [],
+                none: [],
+                all: [
+                  {
+                    id: 'cats',
+                    result: true
+                  }
+                ]
+              }
+            ]
+          },
+          { checks: { cats: { options: {} } } }
+        );
+
+        assert.isEmpty(result.nodes[0].any);
+        assert.isEmpty(result.nodes[0].none);
+        assert.isUndefined(result.nodes[0].all[0].result);
+      });
+
+      it('should mark checks as incomplete if reviewOnFail is set to true for any', function () {
+        var rule = new Rule(
+          {
+            id: 'cats',
+            reviewOnFail: true,
+            all: [],
+            any: ['cats'],
+            none: []
+          },
+          {
+            checks: {
+              cats: new Check({
+                id: 'cats',
+                enabled: true,
+                after: function (results) {
+                  results[0].result = false;
+                  return results;
+                }
+              })
+            }
+          }
+        );
+
+        var result = rule.after(
+          {
+            id: 'cats',
+            nodes: [
+              {
+                any: [
+                  {
+                    id: 'cats',
+                    result: true
+                  }
+                ],
+                none: [],
+                all: []
+              }
+            ]
+          },
+          { checks: { cats: { options: {} } } }
+        );
+
+        assert.isUndefined(result.nodes[0].any[0].result);
+        assert.isEmpty(result.nodes[0].none);
+        assert.isEmpty(result.nodes[0].all);
+      });
+
+      it('should mark checks as incomplete if reviewOnFail is set to true for none', function () {
+        var rule = new Rule(
+          {
+            id: 'cats',
+            reviewOnFail: true,
+            all: [],
+            any: [],
+            none: ['cats']
+          },
+          {
+            checks: {
+              cats: new Check({
+                id: 'cats',
+                enabled: true,
+                after: function (results) {
+                  results[0].result = true;
+                  return results;
+                }
+              })
+            }
+          }
+        );
+
+        var result = rule.after(
+          {
+            id: 'cats',
+            nodes: [
+              {
+                any: [],
+                none: [
+                  {
+                    id: 'cats',
+                    result: false
+                  }
+                ],
+                all: []
+              }
+            ]
+          },
+          { checks: { cats: { options: {} } } }
+        );
+
+        assert.isEmpty(result.nodes[0].any);
+        assert.isUndefined(result.nodes[0].none[0].result);
+        assert.isEmpty(result.nodes[0].all);
+      });
     });
   });
 
