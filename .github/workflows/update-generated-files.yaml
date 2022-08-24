@@ -1,0 +1,32 @@
+name: Update generated files
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update_genereated_files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Build
+        run: npm run build
+
+      - name: Create pull pull-requests
+        run: |
+          git status
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          branch_name="sync-generated-files-$(date +"%Y-%m-%dT%H-%M-%S%z")"
+          git add .
+          git checkout -b $branch_name
+          git commit -m "chore: sync generated files"
+          git push origin $branch_name
+          gh pr create --base main --head $branch_name --title "chore: sync generated files" --body ""
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
