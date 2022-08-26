@@ -85,7 +85,7 @@ describe('dom.isInTabOrder', function () {
 
   it('should return false for non-element nodes', function () {
     var target = queryFixture('<span id="target">Hello World</span>');
-    assert.isFalse(isInTabOrder(target));
+    assert.isFalse(isInTabOrder(target.children[0]));
   });
 
   it('should return false for natively focusable hidden element', function () {
