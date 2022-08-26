@@ -127,7 +127,7 @@ describe('empty-table-header virtual-rule', function () {
 
   it('should fail if table header has no child nodes', function () {
     var node = new axe.SerialVirtualNode({
-      nodeName: 'td',
+      nodeName: 'th',
       attributes: {
         role: 'rowheader'
       }
