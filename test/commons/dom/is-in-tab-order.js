@@ -87,4 +87,14 @@ describe('dom.isInTabOrder', function () {
     var target = queryFixture('<span id="target">Hello World</span>');
     assert.isFalse(isInTabOrder(target));
   });
+
+  it('should return false natively focusable hidden element', function () {
+    var target = queryFixture('<button id="target" hidden></button>');
+    assert.isTrue(isInTabOrder(target));
+  });
+
+  it('should return false hidden element with tabindex 1', function () {
+    var target = queryFixture('<div id="target" tabindex="1" hidden></div>');
+    assert.isTrue(isInTabOrder(target));
+  });
 });
