@@ -464,14 +464,6 @@ describe('is-focusable', function () {
 
       assert.isFalse(axe.commons.dom.isNativelyFocusable(el));
     });
-
-    it('should return true for iframe', function () {
-      fixture.innerHTML = '<iframe id="target"></iframe>';
-      var el = document.getElementById('target');
-      flatTreeSetup(fixture);
-
-      assert.isTrue(axe.commons.dom.isNativelyFocusable(el));
-    });
   });
 
   describe('dom.insertedIntoFocusOrder', function () {
