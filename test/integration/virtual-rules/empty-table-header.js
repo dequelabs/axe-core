@@ -61,7 +61,6 @@ describe('empty-table-header virtual-rule', function () {
     trNode.children = [thNode];
     tableNode.children = [trNode];
     var results = axe.runVirtualRule('empty-table-header', thNode);
-    console.debug(JSON.stringify(results, null, 2));
 
     assert.lengthOf(results.passes, 1);
     assert.lengthOf(results.violations, 0);
