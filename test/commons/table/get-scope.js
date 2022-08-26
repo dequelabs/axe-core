@@ -1,4 +1,4 @@
-describe('table.getScope', function() {
+describe('table.getScope', function () {
   'use strict';
 
   function $id(id) {
@@ -6,13 +6,9 @@ describe('table.getScope', function() {
   }
 
   var fixture = $id('fixture');
+  var fixtureSetup = axe.testUtils.fixtureSetup;
 
-  afterEach(function() {
-    fixture.innerHTML = '';
-    axe._tree = undefined;
-  });
-
-  it('returns false for TD without scope attribute', function() {
+  it('returns false for TD without scope attribute', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr><td></td><td id="target">1</td></tr>' +
@@ -20,25 +16,33 @@ describe('table.getScope', function() {
       '</table>';
 
     var target = $id('target');
+    fixtureSetup();
     assert.equal(axe.commons.table.getScope(target), false);
   });
 
-  it('throws if it is not passed a data cell', function() {
-    assert.throws(function() {
+  it('throws if it is not passed a data cell', function () {
+    assert.throws(function () {
       axe.commons.table.getScope();
-    });
+    }, TypeError);
 
-    assert.throws(function() {
-      axe.commons.table.getScope(document.createElement('tr'));
-    });
+    var node = document.createElement('tr');
+    axe.utils.getFlattenedTree(node);
 
-    assert.doesNotThrow(function() {
-      axe.commons.table.getScope(document.createElement('td'));
+    assert.throws(function () {
+      axe.commons.table.getScope(node);
+    }, TypeError);
+  });
+
+  it('does not throw if it is passed a data cell', function () {
+    var node = document.createElement('td');
+    axe.utils.getFlattenedTree(node);
+    assert.doesNotThrow(function () {
+      axe.commons.table.getScope(node);
     });
   });
 
-  describe('auto scope', function() {
-    it('return `auto` with implicit row and col scope', function() {
+  describe('auto scope', function () {
+    it('return `auto` with implicit row and col scope', function () {
       fixture.innerHTML =
         '<table>' +
         '<tr><th id="target">1</th><td>ok</td></tr>' +
@@ -50,7 +54,7 @@ describe('table.getScope', function() {
       assert.equal(axe.commons.table.getScope(target), 'auto');
     });
 
-    it('return `auto` with implicit row and col scope, not in the first column', function() {
+    it('return `auto` with implicit row and col scope, not in the first column', function () {
       fixture.innerHTML =
         '<table>' +
         '<tr><td></td><th id="target">1</th></tr>' +
@@ -62,7 +66,7 @@ describe('table.getScope', function() {
       assert.equal(axe.commons.table.getScope(target), 'auto');
     });
 
-    it('return `auto` with implicit row and col scope, not in the first row', function() {
+    it('return `auto` with implicit row and col scope, not in the first row', function () {
       fixture.innerHTML =
         '<table>' +
         '<tr><td></td><th>1</th></tr>' +
@@ -75,8 +79,8 @@ describe('table.getScope', function() {
     });
   });
 
-  describe('col scope', function() {
-    it('returns `col` with explicit col scope on TH', function() {
+  describe('col scope', function () {
+    it('returns `col` with explicit col scope on TH', function () {
       fixture.innerHTML =
         '<table>' +
         '<tr><td></td><th id="target" scope="col">1</th></tr>' +
@@ -84,10 +88,11 @@ describe('table.getScope', function() {
         '</table>';
 
       var target = $id('target');
+      fixtureSetup();
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
 
-    it('returns `col` with explicit col scope on TD', function() {
+    it('returns `col` with explicit col scope on TD', function () {
       fixture.innerHTML =
         '<table>' +
         '<tr><td></td><td id="target" scope="col">1</td></tr>' +
@@ -95,10 +100,11 @@ describe('table.getScope', function() {
         '</table>';
 
       var target = $id('target');
+      fixtureSetup();
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
 
-    it('returns `col` with role = columnheader on TD', function() {
+    it('returns `col` with role = columnheader on TD', function () {
       fixture.innerHTML =
         '<table>' +
         '<tr><td></td><td id="target" scope="row" role="columnheader">1</td></tr>' +
@@ -106,10 +112,11 @@ describe('table.getScope', function() {
         '</table>';
 
       var target = $id('target');
+      fixtureSetup();
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
 
-    it('returns `col` when part of a row of all TH elements', function() {
+    it('returns `col` when part of a row of all TH elements', function () {
       fixture.innerHTML =
         '<table>' +
         '<tr><th></th><th id="target">1</th></tr>' +
@@ -121,7 +128,7 @@ describe('table.getScope', function() {
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
 
-    it('returns `col` when part of both a row and a column of all TH elements', function() {
+    it('returns `col` when part of both a row and a column of all TH elements', function () {
       fixture.innerHTML =
         '<table>' +
         '<tr><th id="target">1</th><th></th></tr>' +
@@ -133,7 +140,7 @@ describe('table.getScope', function() {
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
 
-    it('understands colspan on the table', function() {
+    it('understands colspan on the table', function () {
       fixture.innerHTML =
         '<table>' +
         '<tr> <th colspan="2"></th> </tr>' +
@@ -145,7 +152,7 @@ describe('table.getScope', function() {
       assert.equal(axe.commons.table.getScope(target), 'col');
     });
 
-    it('understands colspan on the cell', function() {
+    it('understands colspan on the cell', function () {
       fixture.innerHTML =
         '<table>' +
         '<tr> <th id="target" colspan="2"></th> </tr>' +
@@ -157,8 +164,8 @@ describe('table.getScope', function() {
     });
   });
 
-  describe('row scope', function() {
-    it('returns `row` with explicit row scope on TH', function() {
+  describe('row scope', function () {
+    it('returns `row` with explicit row scope on TH', function () {
       fixture.innerHTML =
         '<table>' +
         '<tr><td></td><th>1</th></tr>' +
@@ -166,10 +173,11 @@ describe('table.getScope', function() {
         '</table>';
 
       var target = $id('target');
+      fixtureSetup();
       assert.equal(axe.commons.table.getScope(target), 'row');
     });
 
-    it('returns `row` with explicit row scope on TD', function() {
+    it('returns `row` with explicit row scope on TD', function () {
       fixture.innerHTML =
         '<table>' +
         '<tr><td></td><td>1</td></tr>' +
@@ -177,10 +185,11 @@ describe('table.getScope', function() {
         '</table>';
 
       var target = $id('target');
+      fixtureSetup();
       assert.equal(axe.commons.table.getScope(target), 'row');
     });
 
-    it('returns `row` with role = rowheader on TD', function() {
+    it('returns `row` with role = rowheader on TD', function () {
       fixture.innerHTML =
         '<table>' +
         '<tr><td></td><td>1</td></tr>' +
@@ -188,10 +197,11 @@ describe('table.getScope', function() {
         '</table>';
 
       var target = $id('target');
+      fixtureSetup();
       assert.equal(axe.commons.table.getScope(target), 'row');
     });
 
-    it('returns `row` when part of a column of all TH elements', function() {
+    it('returns `row` when part of a column of all TH elements', function () {
       fixture.innerHTML =
         '<table>' +
         '<tr><th></th><td>1</td></tr>' +
@@ -203,7 +213,7 @@ describe('table.getScope', function() {
       assert.equal(axe.commons.table.getScope(target), 'row');
     });
 
-    it('understands rowspan in the table', function() {
+    it('understands rowspan in the table', function () {
       fixture.innerHTML =
         '<table>' +
         '<tr> <th rowspan="2"></th> <th></th> <th></th> </tr>' +
@@ -214,7 +224,7 @@ describe('table.getScope', function() {
       assert.equal(axe.commons.table.getScope(target), 'row');
     });
 
-    it('understands rowspan on the cell', function() {
+    it('understands rowspan on the cell', function () {
       fixture.innerHTML =
         '<table>' +
         '<tr> <th></th> <th></th> </tr>' +
@@ -227,7 +237,7 @@ describe('table.getScope', function() {
     });
   });
 
-  it('does not throw on empty rows', function() {
+  it('does not throw on empty rows', function () {
     fixture.innerHTML =
       '<table>' +
       '<tr> </tr>' +
