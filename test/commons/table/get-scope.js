@@ -77,6 +77,14 @@ describe('table.getScope', function () {
       axe.testUtils.flatTreeSetup(fixture.firstChild);
       assert.equal(axe.commons.table.getScope(target), 'auto');
     });
+
+    it('return `auto` without an actualNode or in the tree', function () {
+      var serialNode = new axe.SerialVirtualNode({
+        nodeName: 'th'
+      });
+
+      assert.equal(axe.commons.table.getScope(serialNode), 'auto');
+    });
   });
 
   describe('col scope', function () {
