@@ -1,4 +1,17 @@
 describe('empty-table-header virtual-rule', function () {
+  it('should incomplete when children are missing', function () {
+    var thNode = new axe.SerialVirtualNode({
+      nodeName: 'th'
+    });
+    thNode.children = [];
+
+    var results = axe.runVirtualRule('empty-table-header', thNode);
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 0);
+    assert.lengthOf(results.incomplete, 1);
+  });
+
   it('should pass with a table header', function () {
     var tableNode = new axe.SerialVirtualNode({
       nodeName: 'table'
