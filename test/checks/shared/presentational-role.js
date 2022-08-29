@@ -64,9 +64,21 @@ describe('presentational-role', function () {
     assert.deepEqual(checkContext._data.messageKey, 'both');
   });
 
-  it('should return false for iframe element with title', function () {
+  it('should return false for iframe element with role=none and title', function () {
     var vNode = queryFixture(
-      '<iframe id="target" role="none" title=""></iframe>'
+      '<iframe id="target" role="none" title="  "></iframe>'
+    );
+
+    assert.isFalse(checkEvaluate.call(checkContext, null, null, vNode));
+    assert.deepEqual(checkContext._data, {
+      messageKey: 'iframe',
+      nodeName: 'iframe'
+    });
+  });
+
+  it('should return false for iframe element with role=presentation and title', function () {
+    var vNode = queryFixture(
+      '<iframe id="target" role="presentation" title=""></iframe>'
     );
 
     assert.isFalse(checkEvaluate.call(checkContext, null, null, vNode));
