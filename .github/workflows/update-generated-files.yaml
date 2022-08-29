@@ -18,7 +18,9 @@ jobs:
           fetch-depth: 0
 
       - name: Build
-        run: npm run build
+        run: |
+          npm install
+          npm run build
 
       - name: Check for changes
         id: changes
