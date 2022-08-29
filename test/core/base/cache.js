@@ -82,12 +82,15 @@ describe('axe._cache', function () {
             return null;
           })
         );
-        assert.deepEqual(
+
+        var obj = { foo: 'bar' };
+        assert.equal(
           axe._cache.get('object', function () {
-            return { foo: 'bar' };
+            return obj;
           }),
-          { foo: 'bar' }
+          obj
         );
+
         assert.sameOrderedMembers(
           axe._cache.get('array', function () {
             return [1, 2, 3];
