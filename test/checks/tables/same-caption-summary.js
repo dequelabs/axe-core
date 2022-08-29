@@ -1,20 +1,18 @@
-describe('same-caption-summary', function() {
+describe('same-caption-summary', function () {
   'use strict';
 
-  var fixture = document.getElementById('fixture');
   var checkSetup = axe.testUtils.checkSetup;
   var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
   var shadowSupport = axe.testUtils.shadowSupport;
 
   var checkContext = axe.testUtils.MockCheckContext();
 
-  afterEach(function() {
-    fixture.innerHTML = '';
+  afterEach(function () {
     checkContext.reset();
     axe._tree = undefined;
   });
 
-  it('should return false there is no caption', function() {
+  it('should return false there is no caption', function () {
     var params = checkSetup(
       '<table summary="hi" id="target"><tr><td></td></tr></table>'
     );
@@ -26,7 +24,7 @@ describe('same-caption-summary', function() {
     );
   });
 
-  it('should return false there is no summary', function() {
+  it('should return false there is no summary', function () {
     var params = checkSetup(
       '<table id="target"><caption>Hi</caption><tr><td></td></tr></table>'
     );
@@ -38,7 +36,7 @@ describe('same-caption-summary', function() {
     );
   });
 
-  it('should return false if summary and caption are different', function() {
+  it('should return false if summary and caption are different', function () {
     var params = checkSetup(
       '<table summary="bye" id="target"><caption>Hi</caption><tr><td></td></tr></table>'
     );
@@ -50,7 +48,7 @@ describe('same-caption-summary', function() {
     );
   });
 
-  it('should return true if summary and caption are the same', function() {
+  it('should return true if summary and caption are the same', function () {
     var params = checkSetup(
       '<table summary="Hi" id="target"><caption>Hi</caption><tr><td></td></tr></table>'
     );
@@ -62,7 +60,7 @@ describe('same-caption-summary', function() {
     );
   });
 
-  it('should return true if summary and caption are the same with mixed casing', function() {
+  it('should return true if summary and caption are the same with mixed casing', function () {
     var params = checkSetup(
       '<table summary="My Table" id="target">' +
         '<caption> my table </caption>' +
@@ -84,7 +82,7 @@ describe('same-caption-summary', function() {
 
   (shadowSupport.v1 ? it : xit)(
     'should match slotted caption elements',
-    function() {
+    function () {
       var params = shadowCheckSetup(
         '<div>' +
           '<span slot="caption">Caption</span>' +
