@@ -159,6 +159,14 @@ describe('axe._cache', function () {
         axe._cache.set('foo', 'bar');
         assert.equal(axe._cache.get('foo'), 'bar');
       });
+
+      it('should set value after calling with undefined', function () {
+        axe._cache.get('foo');
+        axe._cache.get('foo', function () {
+          return 'value';
+        });
+        assert.equal(axe._cache.get('foo'), 'value');
+      });
     });
   });
 
