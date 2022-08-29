@@ -93,11 +93,12 @@ describe('axe._cache', function () {
           obj
         );
 
+        var arr = [1, 2, 3];
         assert.sameOrderedMembers(
           axe._cache.get('array', function () {
-            return [1, 2, 3];
+            return arr;
           }),
-          [1, 2, 3]
+          arr
         );
       });
 
