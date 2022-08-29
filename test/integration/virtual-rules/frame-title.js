@@ -38,7 +38,7 @@ describe('frame-title virtual-rule', function () {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for role=presentation', function () {
+  it('should pass for role=presentation', function () {
     var results = axe.runVirtualRule('frame-title', {
       nodeName: 'iframe',
       attributes: {
@@ -46,12 +46,12 @@ describe('frame-title virtual-rule', function () {
       }
     });
 
-    assert.lengthOf(results.passes, 0);
-    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for role=none', function () {
+  it('should pass for role=none', function () {
     var results = axe.runVirtualRule('frame-title', {
       nodeName: 'iframe',
       attributes: {
@@ -59,8 +59,8 @@ describe('frame-title virtual-rule', function () {
       }
     });
 
-    assert.lengthOf(results.passes, 0);
-    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
 
@@ -81,6 +81,34 @@ describe('frame-title virtual-rule', function () {
     var results = axe.runVirtualRule('frame-title', {
       nodeName: 'iframe',
       attributes: {
+        title: ''
+      }
+    });
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should fail for role=presentation and title', function () {
+    var results = axe.runVirtualRule('frame-title', {
+      nodeName: 'iframe',
+      attributes: {
+        role: 'presentation',
+        title: ''
+      }
+    });
+
+    assert.lengthOf(results.passes, 0);
+    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.incomplete, 0);
+  });
+
+  it('should fail for role=none and title', function () {
+    var results = axe.runVirtualRule('frame-title', {
+      nodeName: 'iframe',
+      attributes: {
+        role: 'none',
         title: ''
       }
     });
