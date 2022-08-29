@@ -11,10 +11,8 @@ describe('axe._cache', function () {
 
     // undefined is a valid result type of a potentially expensive operation in axe-core
     it('should set `undefined` without error', function () {
-      axe._cache.set('foo', undefined);
-
       function fn() {
-        assert.isUndefined(axe._cache.get('foo'));
+        axe._cache.set('foo', undefined);
       }
       assert.doesNotThrow(fn);
     });
