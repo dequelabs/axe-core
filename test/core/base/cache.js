@@ -9,9 +9,11 @@ describe('axe._cache', function () {
       assert.doesNotThrow(fn);
     });
 
+    // undefined is a valid result type of a potentially expensive operation in axe-core
     it('should set `undefined` without error', function () {
+      axe._cache.set('foo', undefined);
+
       function fn() {
-        axe._cache.set('foo', undefined);
         assert.isUndefined(axe._cache.get('foo'));
       }
       assert.doesNotThrow(fn);
@@ -52,7 +54,7 @@ describe('axe._cache', function () {
       assert.isUndefined(axe._cache.get('foo'));
     });
 
-    describe('with default value', function () {
+    describe('with creator function', function () {
       it('should set and return primitive types', function () {
         assert.equal(
           axe._cache.get('integer', function () {
@@ -106,13 +108,20 @@ describe('axe._cache', function () {
         assert.throws(fn, TypeError);
       });
 
-      it('should throw TypeError when creator returns `undefined`', function () {
-        function fn() {
-          axe._cache.get('foo', function () {
-            return undefined;
-          });
-        }
-        assert.throw(fn);
+      it('should throw if creator is not valid, even if key exists', function () {
+        axe._cache.set('foo', function () {
+          return 'bar';
+        });
+        assert.throws(function () {
+          axe._cache.get('foo', 'baz');
+        }, TypeError);
+      });
+
+      it('should not execute creator if key already exists', function () {
+        var spy = sinon.spy();
+        axe._cache.set('foo', spy);
+        axe._cache.get('foo', spy);
+        assert.isFalse(spy.called);
       });
 
       it('creator should evaluate once', function () {
@@ -125,20 +134,21 @@ describe('axe._cache', function () {
         assert.isTrue(spy.calledOnce);
       });
 
-      it('should not re-calculate when set to `undefined`', function () {
-        axe._cache.get('Foo', function () {
-          return false;
+      it('should not re-evaluate when return is `undefined`', function () {
+        var spy = sinon.spy(function () {
+          return undefined;
         });
-        assert.isBoolean(
-          axe._cache.get('Foo', function () {
-            return 'should not be set to a string because Foo is in the cache';
-          })
-        );
+        axe._cache.get('foo', spy);
+        axe._cache.get('foo', spy);
+        axe._cache.get('foo', spy);
+        assert.isTrue(spy.calledOnce);
       });
 
       it('should not override a value from `set()`', function () {
         axe._cache.set('foo', 'bar');
-        axe._cache.get('foo', 'baz');
+        axe._cache.get('foo', function () {
+          return 'baz';
+        });
         assert.equal(axe._cache.get('foo'), 'bar');
       });
 
