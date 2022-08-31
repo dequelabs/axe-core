@@ -1,6 +1,7 @@
 describe('dom.isVisibleForScreenreader', function() {
   'use strict';
 
+  var fixture = document.querySelector('#fixture');
   var queryFixture = axe.testUtils.queryFixture
   var shadowSupported = axe.testUtils.shadowSupport.v1;
   var isVisibleForScreenreader = axe.commons.dom.isVisibleForScreenreader;
