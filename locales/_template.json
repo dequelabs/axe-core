@@ -816,14 +816,14 @@
       "fail": "${data} on <meta> tag disables zooming on mobile devices"
     },
     "target-offset": {
-      "pass": "Target is sufficiently spaced from its neighbours",
-      "fail": "Target is insufficiently spaced from its neighbours"
+      "pass": "Target is sufficiently offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)",
+      "fail": "Target is insufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)"
     },
     "target-size": {
-      "pass": "Control has sufficient size (${data.width}px width, ${data.height}px height)",
+      "pass": "Control has sufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSpacing}px by ${data.minSpacing}px)",
       "fail": {
-        "default": "Element has insufficient size (${data.width}px width, ${data.height}px height)",
-        "obscured": "Element has insufficient size because it is obscured (smallest space is ${data.width}px width by ${data.height}px height)"
+        "default": "Element has insufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSpacing}px by ${data.minSpacing}px)",
+        "obscured": "Element has insufficient size because it is obscured (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSpacing}px by ${data.minSpacing}px)"
       }
     },
     "header-present": {

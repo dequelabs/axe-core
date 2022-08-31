@@ -22,7 +22,11 @@ describe('target-size tests', function () {
           '">x</button>'
       );
       assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
-      assert.deepEqual(checkContext._data, { width: 20, height: 30 });
+      assert.deepEqual(checkContext._data, {
+        minSpacing: 24,
+        width: 20,
+        height: 30
+      });
     }
   );
 
@@ -34,6 +38,7 @@ describe('target-size tests', function () {
     );
     assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
     assert.deepEqual(checkContext._data, {
+      minSpacing: 24,
       width: 40,
       height: 30
     });
@@ -49,7 +54,11 @@ describe('target-size tests', function () {
         '">x</button>'
     );
     assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
-    assert.deepEqual(checkContext._data, { width: 30, height: 30 });
+    assert.deepEqual(checkContext._data, {
+      minSpacing: 24,
+      width: 30,
+      height: 30
+    });
   });
 
   it('returns false for obscured targets with insufficient space', function () {
@@ -67,6 +76,7 @@ describe('target-size tests', function () {
     assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
     assert.deepEqual(checkContext._data, {
       messageKey: 'obscured',
+      minSpacing: 24,
       width: 20,
       height: 30
     });
@@ -88,6 +98,7 @@ describe('target-size tests', function () {
     assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
     assert.deepEqual(checkContext._data, {
       messageKey: 'obscured',
+      minSpacing: 24,
       width: 20,
       height: 30
     });
