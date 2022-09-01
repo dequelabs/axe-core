@@ -127,7 +127,8 @@ axe.configure({
       },
       'aria-errormessage': {
         // Note: doT (https://github.com/olado/dot) templates are supported here.
-        fail: 'Der Wert der aria-errormessage ${data.values}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
+        fail:
+          'Der Wert der aria-errormessage ${data.values}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
       }
       // ...
     }
