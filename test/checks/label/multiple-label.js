@@ -4,6 +4,7 @@ describe('multiple-label', function() {
   var fixture = document.getElementById('fixture');
   var shadowSupported = axe.testUtils.shadowSupport.v1;
   var checkContext = axe.testUtils.MockCheckContext();
+  var fixtureSetup = axe.testUtils.fixtureSetup;
 
   afterEach(function() {
     fixture.innerHTML = '';
@@ -13,6 +14,7 @@ describe('multiple-label', function() {
   it('should return undefined if there are multiple implicit labels', function() {
     fixture.innerHTML =
       '<label id="l2"><label id="l1"><input type="text" id="target"></label></label>';
+    fixtureSetup();
     var target = fixture.querySelector('#target');
     var l1 = fixture.querySelector('#l1');
     var l2 = fixture.querySelector('#l2');
@@ -27,6 +29,7 @@ describe('multiple-label', function() {
   it('should return false if there is only one implicit label', function() {
     fixture.innerHTML =
       '<label id="l1"><input type="text" id="target"></label>';
+    fixtureSetup();
     var target = fixture.querySelector('#target');
     var l1 = fixture.querySelector('#l1');
     assert.isFalse(
@@ -43,6 +46,7 @@ describe('multiple-label', function() {
       '<label id="l2" for="target">Bar</label>' +
       '<label id="l3" for="target">Bat</label>' +
       '<input type="text" id="target">';
+    fixtureSetup();
     var target = fixture.querySelector('#target');
     var l1 = fixture.querySelector('#l1');
     var l2 = fixture.querySelector('#l2');
@@ -58,6 +62,7 @@ describe('multiple-label', function() {
   it('should return false if there is only one explicit label', function() {
     fixture.innerHTML =
       '<label id="l1" for="target">Foo</label><input type="text" id="target">';
+    fixtureSetup();
     var target = fixture.querySelector('#target');
     var l1 = fixture.querySelector('#l1');
     assert.isFalse(
@@ -73,6 +78,7 @@ describe('multiple-label', function() {
       '<label for="test-input2" id="l1">label one</label>' +
       '<label for="test-input2" style="display:none" id="lnone">label two</label>' +
       '<input id="test-input2" type="text">';
+    fixtureSetup();
     var target = fixture.querySelector('#test-input2');
     var l1 = fixture.querySelector('#l1');
     assert.isFalse(
@@ -89,6 +95,7 @@ describe('multiple-label', function() {
       '<label for="me" style="display:none;" id="l2">hidden</label>' +
       '<label for="me" id="l3">visible</label>' +
       '<input id="me" type="text">';
+    fixtureSetup();
     var target = fixture.querySelector('#me');
     var l1 = fixture.querySelector('#l1');
     var l3 = fixture.querySelector('#l3');
@@ -103,6 +110,7 @@ describe('multiple-label', function() {
   it('should return undefined if there are implicit and explicit labels', function() {
     fixture.innerHTML =
       '<label id="l1" for="target">Foo</label><label id="l2"><input type="text" id="target"></label>';
+    fixtureSetup();
     var target = fixture.querySelector('#target');
     var l1 = fixture.querySelector('#l1');
     var l2 = fixture.querySelector('#l2');
@@ -117,6 +125,7 @@ describe('multiple-label', function() {
   it('should return false if there an implicit label uses for attribute', function() {
     fixture.innerHTML =
       '<label for="target">Foo<input type="text" id="target"></label>';
+    fixtureSetup();
     var target = fixture.querySelector('#target');
     assert.isFalse(
       axe.testUtils
@@ -133,6 +142,7 @@ describe('multiple-label', function() {
     fixture.innerHTML += '<label for="A">Dear</label>';
     fixture.innerHTML += '<label for="A">Aunt</label>';
     fixture.innerHTML += '<label for="A">Sally</label>';
+    fixtureSetup();
     var target = fixture.querySelector('#A');
     assert.isUndefined(
       axe.testUtils
@@ -149,6 +159,7 @@ describe('multiple-label', function() {
     fixture.innerHTML += '<label for="B" aria-hidden="true">Dear</label>';
     fixture.innerHTML += '<label for="B" aria-hidden="true">Aunt</label>';
     fixture.innerHTML += '<label for="B" aria-hidden="true">Sally</label>';
+    fixtureSetup();
     var target = fixture.querySelector('#B');
     assert.isUndefined(
       axe.testUtils
@@ -161,6 +172,7 @@ describe('multiple-label', function() {
     fixture.innerHTML = '<input type="checkbox" id="D" aria-labelledby="E"/>';
     fixture.innerHTML += '<label for="D" aria-hidden="true">Please</label>';
     fixture.innerHTML += '<label for="D" id="E">Excuse</label>';
+    fixtureSetup();
     var target = fixture.querySelector('#D');
     assert.isFalse(
       axe.testUtils
@@ -174,6 +186,7 @@ describe('multiple-label', function() {
     fixture.innerHTML +=
       '<label for="F" id="G" aria-hidden="true">Please</label>';
     fixture.innerHTML += '<label for="F" id="H">Excuse</label>';
+    fixtureSetup();
     var target = fixture.querySelector('#F');
     assert.isFalse(
       axe.testUtils
@@ -186,6 +199,7 @@ describe('multiple-label', function() {
     fixture.innerHTML = '<input type="checkbox" id="I"/>';
     fixture.innerHTML += '<label for="I" style="display:none">Please</label>';
     fixture.innerHTML += '<label for="I" >Excuse</label>';
+    fixtureSetup();
     var target = fixture.querySelector('#I');
     assert.isFalse(
       axe.testUtils
@@ -203,6 +217,7 @@ describe('multiple-label', function() {
     fixture.innerHTML += '<label for="J" id="N">Dear</label>';
     fixture.innerHTML += '<label for="J" id="O">Aunt</label>';
     fixture.innerHTML += '<label for="J" id="P">Sally</label>';
+    fixtureSetup();
     var target = fixture.querySelector('#J');
     assert.isUndefined(
       axe.testUtils
@@ -215,6 +230,7 @@ describe('multiple-label', function() {
     fixture.innerHTML = '<input type="checkbox" id="Q"/>';
     fixture.innerHTML += '<label for="Q" aria-hidden="true"></label>';
     fixture.innerHTML += '<label for="Q" >Excuse</label>';
+    fixtureSetup();
     var target = fixture.querySelector('#Q');
     assert.isUndefined(
       axe.testUtils
@@ -232,6 +248,7 @@ describe('multiple-label', function() {
       shadowRoot.innerHTML =
         '<input id="myinput" /><label for="myinput">normal</label>';
       var shadowTarget = target.shadowRoot;
+      fixtureSetup();
       assert.isFalse(
         axe.testUtils
           .getCheckEvaluate('multiple-label')
@@ -250,6 +267,7 @@ describe('multiple-label', function() {
       innerHTML += '<label for="D" aria-hidden="true">Please</label>';
       innerHTML += '<label for="D" id="E">Excuse</label>';
       shadowRoot.innerHTML = innerHTML;
+      fixtureSetup();
       var shadowTarget = target.shadowRoot;
       assert.isFalse(
         axe.testUtils
@@ -269,6 +287,7 @@ describe('multiple-label', function() {
       innerHTML += '<label for="Q" aria-hidden="true"></label>';
       innerHTML += '<label for="Q" >Excuse</label>';
       shadowRoot.innerHTML = innerHTML;
+      fixtureSetup();
       var shadowTarget = target.shadowRoot;
       assert.isUndefined(
         axe.testUtils
