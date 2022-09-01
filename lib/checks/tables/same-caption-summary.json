@@ -5,7 +5,8 @@
     "impact": "minor",
     "messages": {
       "pass": "Content of summary attribute and <caption> are not duplicated",
-      "fail": "Content of summary attribute and <caption> element are identical"
+      "fail": "Content of summary attribute and <caption> element are identical",
+      "incomplete": "Unable to determine if <table> element has a caption"
     }
   }
 }

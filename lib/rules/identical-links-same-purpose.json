@@ -2,6 +2,7 @@
   "id": "identical-links-same-purpose",
   "selector": "a[href], area[href], [role=\"link\"]",
   "excludeHidden": false,
+  "enabled": false,
   "matches": "identical-links-same-purpose-matches",
   "tags": ["cat.semantics", "wcag2aaa", "wcag249"],
   "actIds": ["b20e66"],

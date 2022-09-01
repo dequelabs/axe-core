@@ -175,7 +175,7 @@
     },
     "frame-title-unique": {
       "description": "Ensures <iframe> and <frame> elements contain a unique title attribute",
-      "help": "Frames should have a unique title attribute"
+      "help": "Frames must have a unique title attribute"
     },
     "frame-title": {
       "description": "Ensures <iframe> and <frame> elements have an accessible name",
@@ -421,6 +421,10 @@
         "plural": "ARIA roles ${data.values} must be removed when the element is made visible, as they are not allowed for the element"
       }
     },
+    "aria-busy": {
+      "pass": "Element has an aria-busy attribute",
+      "fail": "Element has no aria-busy=\"true\" attribute"
+    },
     "aria-errormessage": {
       "pass": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique",
       "fail": {
@@ -468,7 +472,8 @@
       "pass": "Required ARIA children are present",
       "fail": {
         "singular": "Required ARIA child role not present: ${data.values}",
-        "plural": "Required ARIA children role not present: ${data.values}"
+        "plural": "Required ARIA children role not present: ${data.values}",
+        "unallowed": "Element has children which are not allowed (see related nodes)"
       },
       "incomplete": {
         "singular": "Expecting ARIA child role to be added: ${data.values}",
@@ -903,6 +908,18 @@
       "fail": "Element does not have text that is visible to screen readers",
       "incomplete": "Unable to determine if element has children"
     },
+    "important-letter-spacing": {
+      "pass": "Letter-spacing in the style attribute is not set to !important, or meets the minimum",
+      "fail": "letter-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
+    },
+    "important-line-height": {
+      "pass": "line-height in the style attribute is not set to !important, or meets the minimum",
+      "fail": "line-height in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
+    },
+    "important-word-spacing": {
+      "pass": "word-spacing in the style attribute is not set to !important, or meets the minimum",
+      "fail": "word-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
+    },
     "is-on-screen": {
       "pass": "Element is not visible",
       "fail": "Element is visible"
@@ -977,7 +994,8 @@
     },
     "same-caption-summary": {
       "pass": "Content of summary attribute and <caption> are not duplicated",
-      "fail": "Content of summary attribute and <caption> element are identical"
+      "fail": "Content of summary attribute and <caption> element are identical",
+      "incomplete": "Unable to determine if <table> element has a caption"
     },
     "scope-value": {
       "pass": "Scope attribute is used correctly",

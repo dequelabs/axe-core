@@ -1,0 +1,15 @@
+{
+  "id": "important-letter-spacing",
+  "evaluate": "inline-style-property-evaluate",
+  "options": {
+    "cssProperty": "letter-spacing",
+    "minValue": 0.12
+  },
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "Letter-spacing in the style attribute is not set to !important, or meets the minimum",
+      "fail": "letter-spacing in the style attribute must not use !important, or be at ${data.minValue}em (current ${data.value}em)"
+    }
+  }
+}
