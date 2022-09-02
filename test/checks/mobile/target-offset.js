@@ -11,9 +11,9 @@ describe('target-offset tests', function () {
 
   it('returns true when there are no other nearby targets', function () {
     var checkArgs = checkSetup(
-      '<button id="target" style="' +
+      '<a href="#" id="target" style="' +
         'display: inline-block; width:16px; height:16px;' +
-        '">x</button>'
+        '">x</a>'
     );
 
     assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
@@ -23,12 +23,12 @@ describe('target-offset tests', function () {
 
   it('returns true when the offset is 24px', function () {
     var checkArgs = checkSetup(
-      '<button id="target" style="' +
+      '<a href="#" id="target" style="' +
         'display: inline-block; width:16px; height:16px; margin-right: 8px' +
-        '">x</button>' +
-        '<button style="' +
+        '">x</a>' +
+        '<a href="#" style="' +
         'display: inline-block; width:16px; height:16px;' +
-        '">x</button>'
+        '">x</a>'
     );
 
     assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
@@ -38,12 +38,12 @@ describe('target-offset tests', function () {
 
   it('returns false when the offset is 23px', function () {
     var checkArgs = checkSetup(
-      '<button id="target" style="' +
+      '<a href="#" id="target" style="' +
         'display: inline-block; width:16px; height:16px; margin-right: 7px' +
-        '">x</button>' +
-        '<button style="' +
+        '">x</a>' +
+        '<a href="#" style="' +
         'display: inline-block; width:16px; height:16px;' +
-        '">x</button>'
+        '">x</a>'
     );
 
     assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
@@ -53,9 +53,9 @@ describe('target-offset tests', function () {
 
   it('ignores non-widget elements as neighbors', function () {
     var checkArgs = checkSetup(
-      '<button id="target" style="' +
+      '<a href="#" id="target" style="' +
         'display: inline-block; width:16px; height:16px; margin-right: 7px' +
-        '">x</button>' +
+        '">x</a>' +
         '<div style="' +
         'display: inline-block; width:16px; height:16px;' +
         '">x</div>'

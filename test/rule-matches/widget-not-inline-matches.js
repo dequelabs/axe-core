@@ -13,14 +13,6 @@ describe('widget-not-inline-matches', function () {
     assert.isTrue(rule.matches(node, vNode));
   });
 
-  it('returns true for non-native widgets', function () {
-    var vNode = queryFixture(
-      '<div role="button" tabindex="0" id="target"></div>'
-    );
-    var node = vNode.actualNode;
-    assert.isTrue(rule.matches(node, vNode));
-  });
-
   it('returns false for non-widget elements', function () {
     var vNode = queryFixture('<div role="banner" id="target"></div>');
     var node = vNode.actualNode;
@@ -37,6 +29,46 @@ describe('widget-not-inline-matches', function () {
     var vNode = queryFixture('<div role="button" id="target"></div>');
     var node = vNode.actualNode;
     assert.isFalse(rule.matches(node, vNode));
+  });
+
+  describe('non-native components', function () {
+    it('returns true for a tabbable button', function () {
+      var vNode = queryFixture(
+        '<div role="button" tabindex="0" id="target"></div>'
+      );
+      var node = vNode.actualNode;
+      assert.isTrue(rule.matches(node, vNode));
+    });
+
+    it('returns false for a non-tabbable button (widgets)', function () {
+      var vNode = queryFixture('<div role="button" id="target"></div>');
+      var node = vNode.actualNode;
+      assert.isFalse(rule.matches(node, vNode));
+    });
+
+    it('returns false for a non-tabbable button (widgets)', function () {
+      var vNode = queryFixture(
+        '<div role="option" tabindex="0" id="target"></div>'
+      );
+      var node = vNode.actualNode;
+      assert.isFalse(rule.matches(node, vNode));
+    });
+
+    it('returns true for a listbox (component)', function () {
+      var vNode = queryFixture(
+        '<div role="listbox" tabindex="0" id="target"></div>'
+      );
+      var node = vNode.actualNode;
+      assert.isTrue(rule.matches(node, vNode));
+    });
+
+    it('returns true for a combobox (component)', function () {
+      var vNode = queryFixture(
+        '<div role="combobox" tabindex="0" id="target"></div>'
+      );
+      var node = vNode.actualNode;
+      assert.isTrue(rule.matches(node, vNode));
+    });
   });
 
   describe('inline components', function () {
