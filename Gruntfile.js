@@ -253,10 +253,26 @@ module.exports = function (grunt) {
           return ['./axe' + lang + '.js', './axe' + lang + '.min.js'];
         })
       }
+    },
+    prettier: {
+      genearted: {
+        files: [
+          {
+            expand: true,
+            cwd: '.',
+            src: ['./locales/_template.json', './doc/rule-descriptions.md']
+          }
+        ]
+      }
     }
   });
 
-  grunt.registerTask('translate', ['validate', 'esbuild', 'add-locale:newLang']);
+  grunt.registerTask('translate', [
+    'validate',
+    'esbuild',
+    'add-locale:newLang',
+    'prettier'
+  ]);
   grunt.registerTask('build', [
     'clean:core',
     'validate',
@@ -268,7 +284,8 @@ module.exports = function (grunt) {
     'uglify',
     'aria-supported',
     'add-locale:template',
-    'bytesize',
+    'prettier',
+    'bytesize'
   ]);
   grunt.registerTask('default', ['build']);
   grunt.registerTask('dev', ['watch']);
