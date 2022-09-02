@@ -107,8 +107,8 @@
     "sri-validate": "node build/sri-update --validate",
     "fmt": "prettier --write .*.json *.{json,md,js} **/*.ts './{.circleci,.github,build,doc,lib,locales,test,typings}/**/*.{json,md,js,ts,html}'",
     "prepare": "husky install",
-    "prebuild": "node ./check-node-version.js",
-    "pretest": "node ./check-node-version.js"
+    "prebuild": "node ./build/check-node-version.js",
+    "pretest": "node ./build/check-node-version.js"
   },
   "devDependencies": {
     "@axe-core/webdriverjs": "^4.4.3",
