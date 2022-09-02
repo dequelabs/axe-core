@@ -21,7 +21,7 @@ console.error(
     ' or higher to build and/or test axe-core.' +
     '\n\n' +
     'Install Node.js version ' +
-    minimumVersion +
+    minimumVersionMajor +
     ' or higher and try again.' +
     '\n\n' +
     'You can use nvm (https://github.com/creationix/nvm) to update your Node.js version ' +
