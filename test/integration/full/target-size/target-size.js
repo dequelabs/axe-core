@@ -4,8 +4,9 @@ describe('target-size test', function () {
 
   before(function (done) {
     axe.testUtils.awaitNestedLoad(function () {
-      // Make all links focusable, otherwise the rule won't run
-      document.querySelectorAll('[role="link"]').forEach(function (link) {
+      // Add necessary markup for axe to recognize these as components:
+      document.querySelectorAll('section span').forEach(function (link) {
+        link.setAttribute('role', 'link');
         link.setAttribute('tabindex', '0');
       });
 
