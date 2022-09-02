@@ -10,9 +10,7 @@ module.exports = function (grunt) {
       files.forEach(file => {
         const src = Array.isArray(file.src) ? file.src : [file.src];
 
-        src.forEach(entry => {
-          execSync(`npx prettier --write ${entry}`, { stdio: 'inherit' });
-        });
+        execSync(`npx prettier --write ${src.join(' ')}`, { stdio: 'inherit' })
       });
     }
   );
