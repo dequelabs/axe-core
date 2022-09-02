@@ -4,6 +4,11 @@ describe('target-size test', function () {
 
   before(function (done) {
     axe.testUtils.awaitNestedLoad(function () {
+      // Make all links focusable, otherwise the rule won't run
+      document.querySelectorAll('[role="link"]').forEach(function (link) {
+        link.setAttribute('tabindex', '0');
+      });
+
       var options = {
         runOnly: ['target-size'],
         elementRef: true
