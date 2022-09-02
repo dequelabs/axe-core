@@ -68,15 +68,15 @@ describe('target-offset tests', function () {
 
   it('sets all elements that are too close as related nodes', function () {
     var checkArgs = checkSetup(
-      '<button id="left" style="' +
+      '<a href="#" id="left" style="' +
         'display: inline-block; width:16px; height:16px;' +
-        '">x</button>' +
-        '<button id="target" style="' +
+        '">x</a>' +
+        '<a href="#" id="target" style="' +
         'display: inline-block; width:16px; height:16px; margin-right: 4px' +
-        '">x</button>' +
-        '<button id="right" style="' +
+        '">x</a>' +
+        '<a href="#" id="right" style="' +
         'display: inline-block; width:16px; height:16px;' +
-        '">x</button>'
+        '">x</a>'
     );
     assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
     assert.equal(checkContext._data.minOffset, 24);
