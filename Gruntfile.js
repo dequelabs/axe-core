@@ -255,7 +255,7 @@ module.exports = function (grunt) {
       }
     },
     prettier: {
-      genearted: {
+      generated: {
         files: [
           {
             expand: true,
