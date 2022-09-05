@@ -2,8 +2,12 @@ var path = require('path');
 var fs = require('fs');
 var template = fs.readFileSync(path.resolve(__dirname, 'runner.js'), 'utf-8');
 
-var actRepoDir = 'node_modules/act-rules.github.io/';
-var testcaseFilePath = path.resolve(actRepoDir, 'testcases.json');
+var actRepoDir = 'node_modules/wcag-act-rules/';
+var testcaseRootDir = path.resolve(
+  actRepoDir,
+  'content-assets/wcag-act-rules/'
+);
+var testcaseFilePath = path.resolve(testcaseRootDir, 'testcases.json');
 var testcaseContent = require(testcaseFilePath);
 var testcases = testcaseContent.testcases;
 
@@ -12,7 +16,7 @@ createActPreprocessor.$inject = ['logger'];
 function createActPreprocessor(logger) {
   var log = logger.create('preprocessor.act');
 
-  return function(actRuleJson, file, done) {
+  return function (actRuleJson, file, done) {
     try {
       log.debug('Processing "%s".', file.originalPath);
       file.path = file.originalPath.replace(/\.json$/, '.js');
@@ -37,11 +41,11 @@ module.exports = {
 function applyTestCases(actRule) {
   actRule = Object.assign({}, actRule);
 
-  actRule.testcases = testcases.filter(function(testcase) {
+  actRule.testcases = testcases.filter(function (testcase) {
     return testcase.ruleId === actRule.id;
   });
-  actRule.testcases.forEach(function(testcase) {
-    var testcasePath = path.resolve(actRepoDir, testcase.relativePath);
+  actRule.testcases.forEach(function (testcase) {
+    var testcasePath = path.resolve(testcaseRootDir, testcase.relativePath);
     testcase.html = fs.readFileSync(testcasePath, 'utf-8');
   });
 
