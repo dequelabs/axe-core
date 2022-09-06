@@ -108,7 +108,8 @@
     "fmt": "prettier --write .*.json *.{json,md,js} **/*.ts './{.circleci,.github,build,doc,lib,locales,test,typings}/**/*.{json,md,js,ts,html}'",
     "prepare": "husky install",
     "prebuild": "node ./build/check-node-version.js",
-    "pretest": "node ./build/check-node-version.js"
+    "pretest": "node ./build/check-node-version.js",
+    "postbuild": "prettier --write ./locales/_template.json ./doc/rule-descriptions.md"
   },
   "devDependencies": {
     "@axe-core/webdriverjs": "^4.4.3",
