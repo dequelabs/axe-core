@@ -55,8 +55,8 @@ describe('dom.isVisibleOnScreen', function () {
   it('should return false on detached elements', function () {
     var el = document.createElement('div');
     el.innerHTML = 'I am not visible because I am detached!';
-    var vNode = new axe.VirtualNode(el);
-    assert.isFalse(isVisibleOnScreen(vNode));
+    axe.testUtils.flatTreeSetup(el);
+    assert.isFalse(isVisibleOnScreen(el));
   });
 
   it('should return true on body', function () {

@@ -80,8 +80,8 @@ describe('dom.isHiddenForEveryone', function () {
   it('should return true on detached elements', function () {
     var el = document.createElement('div');
     el.innerHTML = 'I am not visible because I am detached!';
-    var vNode = new axe.VirtualNode(el);
-    var actual = isHiddenForEveryone(vNode);
+    axe.testUtils.flatTreeSetup(el);
+    var actual = isHiddenForEveryone(el);
     assert.isTrue(actual);
   });
 
