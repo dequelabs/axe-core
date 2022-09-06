@@ -9,7 +9,6 @@ describe('axe._cache', function () {
       assert.doesNotThrow(fn);
     });
 
-    // undefined is a valid result type of a potentially expensive operation in axe-core
     it('should set `undefined` without error', function () {
       function fn() {
         axe._cache.set('foo', undefined);
@@ -17,27 +16,27 @@ describe('axe._cache', function () {
       assert.doesNotThrow(fn);
     });
 
-    it('should throw TypeError for non-string keys', function () {
+    it('should throw for non-string keys', function () {
       assert.throws(function () {
         axe._cache.set(1, 'bar');
-      }, TypeError);
+      });
       assert.throws(function () {
         axe._cache.set({}, 'bar');
-      }, TypeError);
+      });
       assert.throws(function () {
         axe._cache.set(null, 'bar');
-      }, TypeError);
+      });
       assert.throws(function () {
         axe._cache.set(function () {
           return;
         }, 'bar');
-      }, TypeError);
+      });
     });
 
-    it('should throw TypeError for empty string keys', function () {
+    it('should throw for empty string keys', function () {
       assert.throws(function () {
         axe._cache.set('', 'bar');
-      }, TypeError);
+      });
     });
   });
 
@@ -92,7 +91,7 @@ describe('axe._cache', function () {
         );
 
         var arr = [1, 2, 3];
-        assert.sameOrderedMembers(
+        assert.equal(
           axe._cache.get('array', function () {
             return arr;
           }),
@@ -100,42 +99,32 @@ describe('axe._cache', function () {
         );
       });
 
-      it('should throw TypeError when creator is not a function', function () {
+      it('should throw when creator is not a function', function () {
         function fn() {
           axe._cache.get('foo', 'bar');
         }
-        assert.throws(fn, TypeError);
+        assert.throws(fn);
       });
 
-      it('should throw if creator is not valid, even if key exists', function () {
-        axe._cache.set('foo', function () {
-          return 'bar';
-        });
-        assert.throws(function () {
-          axe._cache.get('foo', 'baz');
-        }, TypeError);
+      it('should throw when creator function returns `undefined`', function () {
+        function fn() {
+          axe._cache.get('foo', function () {
+            return undefined;
+          });
+        }
+        assert.throws(fn);
       });
 
-      it('should not execute creator if key already exists', function () {
+      it('should not evaluate creator if key already exists', function () {
         var spy = sinon.spy();
         axe._cache.set('foo', spy);
         axe._cache.get('foo', spy);
-        assert.isFalse(spy.called);
+        assert.isFalse(spy.calledOnce);
       });
 
-      it('creator should evaluate once', function () {
+      it('should evaluate creator once', function () {
         var spy = sinon.spy(function () {
           return true;
-        });
-        axe._cache.get('foo', spy);
-        axe._cache.get('foo', spy);
-        axe._cache.get('foo', spy);
-        assert.isTrue(spy.calledOnce);
-      });
-
-      it('should not re-evaluate when return is `undefined`', function () {
-        var spy = sinon.spy(function () {
-          return undefined;
         });
         axe._cache.get('foo', spy);
         axe._cache.get('foo', spy);
