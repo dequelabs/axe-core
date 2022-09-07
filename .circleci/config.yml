@@ -52,18 +52,6 @@ jobs:
           key: v9-cache-unix-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
-  dependencies_win:
-    <<: *defaults
-    <<: *win_box
-    steps:
-      - checkout
-      - <<: *set_npm_auth
-      - <<: *restore_dependency_cache_win
-      - run: npm ci
-      - save_cache:
-          key: v9-cache-win-{{ checksum "package-lock.json" }}
-          paths:
-            - node_modules
 
   # Run ESLINT
   lint:
@@ -87,23 +75,6 @@ jobs:
       - run: npm run test -- --browsers Chrome,Firefox
       - run: npm run test:integration:chrome
       - run: npm run test:integration:firefox
-
-  # Run the test suite in IE in windows
-  test_win:
-    <<: *defaults
-    <<: *win_box
-    steps:
-      - checkout
-      # npm i or restore cache
-      - <<: *restore_dependency_cache_win
-      - run: npm run build
-      - run: npm run test -- --browsers IE
-      # install selenium
-      - run: |
-          choco install selenium-ie-driver --version 3.141.5
-          export PATH=/c/tools/selenium:$PATH
-          echo $PATH
-      - run: npm run test:integration:ie
 
   # Run examples under `doc/examples`
   test_examples:
@@ -312,7 +283,6 @@ workflows:
     jobs:
       # install deps
       - dependencies_unix
-      - dependencies_win
       # Run linting
       - lint:
           requires:
@@ -321,10 +291,6 @@ workflows:
       - test_unix:
           requires:
             - lint
-      # Run IE/ Windows test on all commits
-      - test_win:
-          requires:
-            - dependencies_win
       - test_examples:
           requires:
             - test_unix
@@ -354,7 +320,6 @@ workflows:
           type: approval
           requires:
             - test_unix
-            - test_win
             - test_examples
             - test_locales
             - test_virtual_rules

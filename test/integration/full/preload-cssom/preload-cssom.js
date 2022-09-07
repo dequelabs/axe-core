@@ -1,5 +1,5 @@
 /* global axe */
-describe('preload cssom integration test', function() {
+describe('preload cssom integration test', function () {
   'use strict';
 
   // axe-core preload timeout is set to 10s so we need a
@@ -8,17 +8,14 @@ describe('preload cssom integration test', function() {
   this.timeout(15000);
 
   var shadowSupported = axe.testUtils.shadowSupport.v1;
-  var isIE11 = axe.testUtils.isIE11;
   var styleSheets = {
     crossOriginLinkHref: {
       id: 'crossOriginLinkHref',
-      href:
-        'https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
+      href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
     },
     crossOriginLinkHrefMediaPrint: {
       id: 'crossOriginLinkHrefMediaPrint',
-      href:
-        'https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css',
+      href: 'https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css',
       mediaPrint: true
     },
     styleTag: {
@@ -49,8 +46,8 @@ describe('preload cssom integration test', function() {
   var stylesForPage;
   var nestedFrame;
 
-  before(function(done) {
-    axe.testUtils.awaitNestedLoad(function() {
+  before(function (done) {
+    axe.testUtils.awaitNestedLoad(function () {
       nestedFrame = document.getElementById('frame1').contentDocument;
       done();
     });
@@ -59,10 +56,10 @@ describe('preload cssom integration test', function() {
   function attachStylesheets(options, callback) {
     axe.testUtils
       .addStyleSheets(options.styles, options.root)
-      .then(function() {
+      .then(function () {
         callback();
       })
-      .catch(function(error) {
+      .catch(function (error) {
         callback(new Error('Could not load stylesheets for testing. ' + error));
       });
   }
@@ -73,11 +70,11 @@ describe('preload cssom integration test', function() {
     }
     axe.testUtils
       .removeStyleSheets(stylesForPage)
-      .then(function() {
+      .then(function () {
         done();
         stylesForPage = undefined;
       })
-      .catch(function(err) {
+      .catch(function (err) {
         done(err);
         stylesForPage = undefined;
       });
@@ -89,19 +86,19 @@ describe('preload cssom integration test', function() {
   }
 
   function commonTestsForRootNodeAndNestedFrame(root) {
-    it('returns cross-origin stylesheet', function(done) {
+    it('returns cross-origin stylesheet', function (done) {
       stylesForPage = [styleSheets.crossOriginLinkHref];
       attachStylesheets(
         {
           root: root,
           styles: stylesForPage
         },
-        function(err) {
+        function (err) {
           if (err) {
             done(err);
           }
           getPreloadCssom(root)
-            .then(function(sheets) {
+            .then(function (sheets) {
               assert.lengthOf(sheets, 1);
               var sheetData = sheets[0].sheet;
               axe.testUtils.assertStylesheet(
@@ -112,7 +109,7 @@ describe('preload cssom integration test', function() {
               );
               done();
             })
-            .catch(function() {
+            .catch(function () {
               done(new Error('Expected getPreload to resolve.'));
             });
         },
@@ -120,23 +117,23 @@ describe('preload cssom integration test', function() {
       );
     });
 
-    it('returns no stylesheets when cross-origin stylesheets are of media=print', function(done) {
+    it('returns no stylesheets when cross-origin stylesheets are of media=print', function (done) {
       stylesForPage = [styleSheets.crossOriginLinkHrefMediaPrint];
       attachStylesheets(
         {
           root: root,
           styles: stylesForPage
         },
-        function(err) {
+        function (err) {
           if (err) {
             done(err);
           }
           getPreloadCssom(root)
-            .then(function(sheets) {
+            .then(function (sheets) {
               assert.lengthOf(sheets, 0);
               done();
             })
-            .catch(function() {
+            .catch(function () {
               done(new Error('Expected getPreload to resolve.'));
             });
         },
@@ -144,7 +141,7 @@ describe('preload cssom integration test', function() {
       );
     });
 
-    it('throws if cross-origin stylesheet fail to load', function(done) {
+    it('throws if cross-origin stylesheet fail to load', function (done) {
       stylesForPage = [
         {
           id: 'nonExistingStylesheet',
@@ -156,15 +153,15 @@ describe('preload cssom integration test', function() {
           root: root,
           styles: stylesForPage
         },
-        function(err) {
+        function (err) {
           if (err) {
             done(err);
           }
           getPreloadCssom(root)
-            .then(function() {
+            .then(function () {
               done(new Error('Expected getPreload to reject.'));
             })
-            .catch(function(err) {
+            .catch(function (err) {
               assert.isDefined(err);
               done();
             });
@@ -174,31 +171,31 @@ describe('preload cssom integration test', function() {
     });
   }
 
-  describe('tests for root (document)', function() {
+  describe('tests for root (document)', function () {
     var shadowFixture;
 
-    beforeEach(function() {
+    beforeEach(function () {
       var shadowNode = document.createElement('div');
       shadowNode.id = 'shadow-fixture';
       document.body.appendChild(shadowNode);
       shadowFixture = document.getElementById('shadow-fixture');
     });
 
-    afterEach(function(done) {
+    afterEach(function (done) {
       if (shadowFixture) {
         document.body.removeChild(shadowFixture);
       }
       detachStylesheets(done);
     });
 
-    it('returns stylesheets defined via <style> tag', function(done) {
+    it('returns stylesheets defined via <style> tag', function (done) {
       stylesForPage = [styleSheets.styleTag];
-      attachStylesheets({ styles: stylesForPage }, function(err) {
+      attachStylesheets({ styles: stylesForPage }, function (err) {
         if (err) {
           done(err);
         }
         getPreloadCssom()
-          .then(function(sheets) {
+          .then(function (sheets) {
             assert.lengthOf(sheets, 1);
             var sheetData = sheets[0].sheet;
             axe.testUtils.assertStylesheet(
@@ -208,22 +205,22 @@ describe('preload cssom integration test', function() {
             );
             done();
           })
-          .catch(function() {
+          .catch(function () {
             done(new Error('Expected getPreload to resolve.'));
           });
       });
     });
 
-    it('returns stylesheets with in same-origin', function(done) {
+    it('returns stylesheets with in same-origin', function (done) {
       stylesForPage = [styleSheets.styleTagWithOneImport];
-      attachStylesheets({ styles: stylesForPage }, function(err) {
+      attachStylesheets({ styles: stylesForPage }, function (err) {
         if (err) {
           done(err);
         }
         getPreloadCssom()
-          .then(function(sheets) {
+          .then(function (sheets) {
             assert.lengthOf(sheets, 1);
-            var nonCrossOriginSheets = sheets.filter(function(s) {
+            var nonCrossOriginSheets = sheets.filter(function (s) {
               return !s.isCrossOrigin;
             });
             assert.lengthOf(nonCrossOriginSheets, 1);
@@ -234,7 +231,7 @@ describe('preload cssom integration test', function() {
             );
             done();
           })
-          .catch(function() {
+          .catch(function () {
             done(new Error('Expected getPreload to resolve.'));
           });
       });
@@ -242,7 +239,7 @@ describe('preload cssom integration test', function() {
 
     (shadowSupported ? it : xit)(
       'returns styles from shadow DOM (handles @import in <style>)',
-      function(done) {
+      function (done) {
         var shadow = shadowFixture.attachShadow({ mode: 'open' });
         shadow.innerHTML =
           '<style>' +
@@ -253,13 +250,13 @@ describe('preload cssom integration test', function() {
           '</style>' +
           '<div class="initialism">Some text</div>';
         getPreloadCssom(shadowFixture)
-          .then(function(sheets) {
+          .then(function (sheets) {
             assert.lengthOf(sheets, 2);
             var nonCrossOriginSheetsWithInShadowDOM = sheets
-              .filter(function(s) {
+              .filter(function (s) {
                 return !s.isCrossOrigin;
               })
-              .filter(function(s) {
+              .filter(function (s) {
                 return s.shadowId;
               });
             axe.testUtils.assertStylesheet(
@@ -271,7 +268,7 @@ describe('preload cssom integration test', function() {
             );
             done();
           })
-          .catch(function() {
+          .catch(function () {
             done(new Error('Expected getPreload to resolve.'));
           });
       }
@@ -279,7 +276,7 @@ describe('preload cssom integration test', function() {
 
     (shadowSupported ? it : xit)(
       'returns styles from base document and shadow DOM with right priority',
-      function(done) {
+      function (done) {
         var shadow = shadowFixture.attachShadow({ mode: 'open' });
         shadow.innerHTML =
           '<style>' +
@@ -290,15 +287,15 @@ describe('preload cssom integration test', function() {
 
         // sheet appended to root document
         stylesForPage = [styleSheets.styleTag];
-        attachStylesheets({ styles: stylesForPage }, function(err) {
+        attachStylesheets({ styles: stylesForPage }, function (err) {
           if (err) {
             done(err);
           }
           getPreloadCssom(shadowFixture)
-            .then(function(sheets) {
+            .then(function (sheets) {
               assert.lengthOf(sheets, 2);
 
-              var shadowDomStyle = sheets.filter(function(s) {
+              var shadowDomStyle = sheets.filter(function (s) {
                 return s.shadowId;
               })[0];
               axe.testUtils.assertStylesheet(
@@ -307,7 +304,7 @@ describe('preload cssom integration test', function() {
                 '.style-from-base-css { font-size: 100%; }'
               );
 
-              var rootDocumentStyle = sheets.filter(function(s) {
+              var rootDocumentStyle = sheets.filter(function (s) {
                 return !s.shadowId;
               })[0];
               assert.isAbove(
@@ -316,25 +313,25 @@ describe('preload cssom integration test', function() {
               );
               done();
             })
-            .catch(function() {
+            .catch(function () {
               done(new Error('Expected getPreload to resolve.'));
             });
         });
       }
     );
 
-    it('returns styles from various @import(ed) styles from an @import(ed) stylesheet', function(done) {
+    it('returns styles from various @import(ed) styles from an @import(ed) stylesheet', function (done) {
       stylesForPage = [
         styleSheets.styleTagWithMultipleImports // this imports 2 other stylesheets
       ];
-      attachStylesheets({ styles: stylesForPage }, function(err) {
+      attachStylesheets({ styles: stylesForPage }, function (err) {
         if (err) {
           done(err);
         }
         getPreloadCssom()
-          .then(function(sheets) {
+          .then(function (sheets) {
             assert.lengthOf(sheets, 2);
-            var nonCrossOriginSheets = sheets.filter(function(s) {
+            var nonCrossOriginSheets = sheets.filter(function (s) {
               return !s.isCrossOrigin;
             });
             assert.lengthOf(nonCrossOriginSheets, 2);
@@ -350,22 +347,22 @@ describe('preload cssom integration test', function() {
             );
             done();
           })
-          .catch(function() {
+          .catch(function () {
             done(new Error('Expected getPreload to resolve.'));
           });
       });
     });
 
-    it('returns style from nested @import (3 levels deep)', function(done) {
+    it('returns style from nested @import (3 levels deep)', function (done) {
       stylesForPage = [styleSheets.styleTagWithNestedImports];
-      attachStylesheets({ styles: stylesForPage }, function(err) {
+      attachStylesheets({ styles: stylesForPage }, function (err) {
         if (err) {
           done(err);
         }
         getPreloadCssom()
-          .then(function(sheets) {
+          .then(function (sheets) {
             assert.lengthOf(sheets, 1);
-            var nonCrossOriginSheets = sheets.filter(function(s) {
+            var nonCrossOriginSheets = sheets.filter(function (s) {
               return !s.isCrossOrigin;
             });
             assert.lengthOf(nonCrossOriginSheets, 1);
@@ -376,20 +373,20 @@ describe('preload cssom integration test', function() {
             );
             done();
           })
-          .catch(function() {
+          .catch(function () {
             done(new Error('Expected getPreload to resolve.'));
           });
       });
     });
 
-    it('returns style from cyclic @import (exits recursion successfully)', function(done) {
+    it('returns style from cyclic @import (exits recursion successfully)', function (done) {
       stylesForPage = [styleSheets.styleTagWithCyclicImports];
-      attachStylesheets({ styles: stylesForPage }, function(err) {
+      attachStylesheets({ styles: stylesForPage }, function (err) {
         if (err) {
           done(err);
         }
         getPreloadCssom()
-          .then(function(sheets) {
+          .then(function (sheets) {
             assert.lengthOf(sheets, 1);
             axe.testUtils.assertStylesheet(
               sheets[0].sheet,
@@ -398,20 +395,20 @@ describe('preload cssom integration test', function() {
             );
             done();
           })
-          .catch(function() {
+          .catch(function () {
             done(new Error('Expected getPreload to resolve.'));
           });
       });
     });
 
-    it('returns style from cyclic @import which only imports one cross-origin stylesheet', function(done) {
+    it('returns style from cyclic @import which only imports one cross-origin stylesheet', function (done) {
       stylesForPage = [styleSheets.styleTagWithCyclicCrossOriginImports];
-      attachStylesheets({ styles: stylesForPage }, function(err) {
+      attachStylesheets({ styles: stylesForPage }, function (err) {
         if (err) {
           done(err);
         }
         getPreloadCssom()
-          .then(function(sheets) {
+          .then(function (sheets) {
             assert.lengthOf(sheets, 1);
             axe.testUtils.assertStylesheet(
               sheets[0].sheet,
@@ -420,7 +417,7 @@ describe('preload cssom integration test', function() {
             );
             done();
           })
-          .catch(function() {
+          .catch(function () {
             done(new Error('Expected getPreload to resolve.'));
           });
       });
@@ -429,23 +426,17 @@ describe('preload cssom integration test', function() {
     commonTestsForRootNodeAndNestedFrame();
   });
 
-  describe('tests for nested document', function() {
-    before(function() {
-      if (!nestedFrame || isIE11) {
-        this.skip();
-      }
-    });
-
-    afterEach(function(done) {
+  describe('tests for nested document', function () {
+    afterEach(function (done) {
       detachStylesheets(done);
     });
 
-    it('returns styles defined using <style> tag', function(done) {
+    it('returns styles defined using <style> tag', function (done) {
       getPreloadCssom(nestedFrame)
-        .then(function(sheets) {
+        .then(function (sheets) {
           assert.lengthOf(sheets, 2);
 
-          var nonCrossOriginSheet = sheets.filter(function(s) {
+          var nonCrossOriginSheet = sheets.filter(function (s) {
             return !s.isCrossOrigin;
           })[0].sheet;
           axe.testUtils.assertStylesheet(
@@ -455,7 +446,7 @@ describe('preload cssom integration test', function() {
           );
           done();
         })
-        .catch(function() {
+        .catch(function () {
           done(new Error('Expected getPreload to resolve.'));
         });
     });

@@ -3,7 +3,6 @@ describe('dom.isInTabOrder', function () {
 
   var queryFixture = axe.testUtils.queryFixture;
   var isInTabOrder = axe.commons.dom.isInTabOrder;
-  var isIE11 = axe.testUtils.isIE11;
 
   it('should return false for presentation element with negative tabindex', function () {
     var target = queryFixture('<div id="target" tabindex="-1"></div>');
@@ -50,14 +49,10 @@ describe('dom.isInTabOrder', function () {
     assert.isTrue(isInTabOrder(target));
   });
 
-  // IE11 returns a negative tabindex for elements with tabindex set to an empty string, rather than create false positives, skip it
-  (isIE11 ? xit : it)(
-    'should return true for natively focusable element with tabindex set to empty string',
-    function () {
-      var target = queryFixture('<button id="target" tabindex=""></button>');
-      assert.isTrue(isInTabOrder(target));
-    }
-  );
+  it('should return true for natively focusable element with tabindex set to empty string', function () {
+    var target = queryFixture('<button id="target" tabindex=""></button>');
+    assert.isTrue(isInTabOrder(target));
+  });
 
   it('should return true for natively focusable element with tabindex set to non-parseable value', function () {
     var target = queryFixture(
