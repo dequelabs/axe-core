@@ -105,7 +105,7 @@
     "next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "sri-validate": "node build/sri-update --validate",
-    "fmt": "prettier --write .*.json *.{json,md,js} **/*.ts './{.circleci,.github,build,doc,lib,locales,test,typings}/**/*.{json,md,js,ts,html}'",
+    "fmt": "prettier --write .",
     "prepare": "husky install",
     "prebuild": "node ./build/check-node-version.js",
     "pretest": "node ./build/check-node-version.js",
