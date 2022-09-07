@@ -299,15 +299,14 @@
     hi
   </div>
 
+  <!-- Allowed empty -->
   <div aria-activedescendant="" id="pass171">hi</div>
   <div aria-current="" id="pass172">hi</div>
-  <div aria-invalid="" id="pass173">hi</div>
   <div aria-controls="" id="pass174">hi</div>
   <div aria-describedby="" id="pass175">hi</div>
   <div aria-errormessage="" id="pass176" aria-invalid="true">hi</div>
   <div aria-flowto="" id="pass177">hi</div>
   <div aria-haspopup="" id="pass178">hi</div>
-  <div aria-invalid="" id="pass179">hi</div>
   <div aria-keyshortcuts="" id="pass180">hi</div>
   <div aria-label="" id="pass181">hi</div>
   <div aria-labelledby="" id="pass182">hi</div>
@@ -353,4 +352,7 @@
   <div aria-labelledby="stuff" id="incomplete3">hi</div>
   <div aria-level="22" id="incomplete4">hi</div>
   <div aria-level="+22" id="incomplete5">hi</div>
+  <div role="checkbox" id="incomplete6" aria-checked>I'm not checked</div>
+  <div role="textbox" id="incomplete7" aria-invalid="">I'm actually valid</div>
+  <div role="textbox" id="incomplete8" aria-hidden>I'm not really gone</div>
 </div>
