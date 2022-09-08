@@ -11,13 +11,7 @@ unix_nightly_box: &unix_nightly_box
   docker:
     - image: cimg/node:lts-browsers
 
-win_box: &win_box
-  executor:
-    name: win/default
-    shell: bash.exe
-
 orbs:
-  win: circleci/windows@2.2.0
   puppeteer: threetreeslight/puppeteer@0.1.2
   browser-tools: circleci/browser-tools@1.1.0
 
@@ -29,12 +23,6 @@ restore_dependency_cache_unix: &restore_dependency_cache_unix
     keys:
       - v9-cache-unix-{{ checksum "package-lock.json" }}
       - v9-cache-unix-
-
-restore_dependency_cache_win: &restore_dependency_cache_win
-  restore_cache:
-    keys:
-      - v9-cache-win-{{ checksum "package-lock.json" }}
-      - v9-cache-win-
 
 jobs:
   # Fetch and cache dependencies.
