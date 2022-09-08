@@ -540,16 +540,6 @@ testUtils.getCheckEvaluate = function getCheckEvaluate(checkId, testOptions) {
   return evaluateWrapper;
 };
 
-/**
- * Test function for detecting IE11 user agent string
- *
- * @param {Object} navigator The navigator object of the current browser
- * @return {boolean}
- */
-testUtils.isIE11 = (function isIE11(navigator) {
-  return navigator.userAgent.indexOf('Trident/7') !== -1;
-})(navigator);
-
 axe.testUtils = testUtils;
 
 if (typeof beforeEach !== 'undefined' && typeof afterEach !== 'undefined') {
