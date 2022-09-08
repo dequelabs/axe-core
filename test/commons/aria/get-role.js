@@ -87,7 +87,7 @@ describe('aria.getRole', function () {
 
   it('handles focusable element with role="none"', function () {
     fixture.innerHTML = '<button id="target" role="none"></button>';
-    flatTreeSetup(node);
+    flatTreeSetup(fixture);
     var node = fixture.querySelector('#target');
     assert.equal(aria.getRole(node), 'button');
   });
