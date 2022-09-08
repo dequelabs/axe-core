@@ -129,19 +129,6 @@ describe('dom.isHiddenForEveryone', function () {
     assert.isTrue(actual);
   });
 
-  // `display` test
-  it('should return true for if parent of element set to `display:none`', function () {
-    var vNode = queryFixture(
-      '<div style="display:none">' +
-        '<div style="display:block">' +
-        '<p id="target">I am not visible</p>' +
-        '</div>' +
-        '</div>'
-    );
-    var actual = isHiddenForEveryone(vNode);
-    assert.isTrue(actual);
-  });
-
   it('should return true for if parent of element set to `display:none`', function () {
     var vNode = queryFixture(
       '<div style="display:none">' +

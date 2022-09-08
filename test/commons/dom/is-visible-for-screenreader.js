@@ -1,8 +1,8 @@
-describe('dom.isVisibleForScreenreader', function() {
+describe('dom.isVisibleForScreenreader', function () {
   'use strict';
 
   var fixture = document.querySelector('#fixture');
-  var queryFixture = axe.testUtils.queryFixture
+  var queryFixture = axe.testUtils.queryFixture;
   var shadowSupported = axe.testUtils.shadowSupport.v1;
   var isVisibleForScreenreader = axe.commons.dom.isVisibleForScreenreader;
 
@@ -21,56 +21,71 @@ describe('dom.isVisibleForScreenreader', function() {
     div.appendChild(createContentHidden());
   }
 
-  // TODO: what should this return?
-  // it('should return false on detached elements', function() {
-  //   var el = document.createElement('div');
-  //   el.innerHTML = 'I am not visible because I am detached!';
+  it('should return false on detached elements', function () {
+    var el = document.createElement('div');
+    el.innerHTML = 'I am not visible because I am detached!';
+    axe.testUtils.flatTreeSetup(el);
+    assert.isFalse(isVisibleForScreenreader(el));
+  });
 
-  //   assert.isTrue(axe.utils.isHidden(el));
-  // });
+  it('should return true on body', function () {
+    axe.testUtils.flatTreeSetup(document.body);
+    var actual = isVisibleForScreenreader(document.body);
+    assert.isTrue(actual);
+  });
 
-  it('should return true for visible element', function() {
-    var vNode = queryFixture(
-      '<div id="target">Visible</div>');
+  it('should return true on html', function () {
+    axe.testUtils.flatTreeSetup(document.documentElement);
+    var actual = isVisibleForScreenreader(document.documentElement);
+    assert.isTrue(actual);
+  });
+
+  it('should return true for visible element', function () {
+    var vNode = queryFixture('<div id="target">Visible</div>');
     assert.isTrue(isVisibleForScreenreader(vNode));
   });
 
-  it('should return true for visible area element', function() {
+  it('should return true for visible area element', function () {
     var vNode = queryFixture(
       '<map name="map">' +
         '<area id="target" href="#" />' +
-      '</map>' +
-      '<img usemap="#map" src="img.png" />');
+        '</map>' +
+        '<img usemap="#map" src="img.png" />'
+    );
     assert.isTrue(isVisibleForScreenreader(vNode));
   });
 
-  it('should return false if `aria-hidden` is set', function() {
+  it('should return false if `aria-hidden` is set', function () {
     var vNode = queryFixture(
-      '<div id="target" aria-hidden="true">Hidden from screen readers</div>');
+      '<div id="target" aria-hidden="true">Hidden from screen readers</div>'
+    );
     assert.isFalse(isVisibleForScreenreader(vNode));
   });
 
-  it('should return false if `display: none` is set', function() {
+  it('should return false if `display: none` is set', function () {
     var vNode = queryFixture(
-      '<div id="target" style="display: none">Hidden from screen readers</div>');
+      '<div id="target" style="display: none">Hidden from screen readers</div>'
+    );
     assert.isFalse(isVisibleForScreenreader(vNode));
   });
 
-  it('should return false if `aria-hidden` is set on parent', function() {
+  it('should return false if `aria-hidden` is set on parent', function () {
     var vNode = queryFixture(
-      '<div aria-hidden="true"><div id="target">Hidden from screen readers</div></div>');
+      '<div aria-hidden="true"><div id="target">Hidden from screen readers</div></div>'
+    );
     assert.isFalse(isVisibleForScreenreader(vNode));
   });
 
-  it('should know how `visibility` works', function() {
+  it('should know how `visibility` works', function () {
     var vNode = queryFixture(
       '<div style="visibility: hidden;">' +
-      '<div id="target" style="visibility: visible;">Hi</div>' +
-      '</div>');
+        '<div id="target" style="visibility: visible;">Hi</div>' +
+        '</div>'
+    );
     assert.isTrue(isVisibleForScreenreader(vNode));
   });
 
-  it('returns false for `AREA` without closest `MAP` element', function() {
+  it('returns false for `AREA` without closest `MAP` element', function () {
     var vNode = queryFixture(
       '<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>'
     );
@@ -78,7 +93,7 @@ describe('dom.isVisibleForScreenreader', function() {
     assert.isFalse(actual);
   });
 
-  it('returns false for `AREA` with closest `MAP` with no name attribute', function() {
+  it('returns false for `AREA` with closest `MAP` with no name attribute', function () {
     var vNode = queryFixture(
       '<map>' +
         '<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
@@ -90,7 +105,7 @@ describe('dom.isVisibleForScreenreader', function() {
 
   (shadowSupported ? it : xit)(
     'returns false for `AREA` element that is inside shadowDOM',
-    function() {
+    function () {
       fixture.innerHTML = '<div id="container"></div>';
       var container = fixture.querySelector('#container');
       var shadow = container.attachShadow({ mode: 'open' });
@@ -106,7 +121,7 @@ describe('dom.isVisibleForScreenreader', function() {
     }
   );
 
-  it('returns false for `AREA` with closest `MAP` with name but not referred by an `IMG` usemap attribute', function() {
+  it('returns false for `AREA` with closest `MAP` with name but not referred by an `IMG` usemap attribute', function () {
     var vNode = queryFixture(
       '<map name="infographic">' +
         '<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
@@ -117,7 +132,7 @@ describe('dom.isVisibleForScreenreader', function() {
     assert.isFalse(actual);
   });
 
-  it('returns false for `AREA` with `MAP` and used in `IMG` which is not visible', function() {
+  it('returns false for `AREA` with `MAP` and used in `IMG` which is not visible', function () {
     var vNode = queryFixture(
       '<map name="infographic">' +
         '<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
@@ -128,7 +143,7 @@ describe('dom.isVisibleForScreenreader', function() {
     assert.isFalse(actual);
   });
 
-  it('returns true for `AREA` with `MAP` and used in `IMG` which is visible', function() {
+  it('returns true for `AREA` with `MAP` and used in `IMG` which is visible', function () {
     var vNode = queryFixture(
       '<map name="infographic">' +
         '<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
@@ -141,7 +156,7 @@ describe('dom.isVisibleForScreenreader', function() {
 
   (shadowSupported ? it : xit)(
     'not hidden: should work when the element is inside shadow DOM',
-    function() {
+    function () {
       var tree, node;
       // shadow DOM v1 - note: v0 is compatible with this code, so no need
       // to specifically test this
@@ -155,7 +170,7 @@ describe('dom.isVisibleForScreenreader', function() {
 
   (shadowSupported ? it : xit)(
     'hidden: should work when the element is inside shadow DOM',
-    function() {
+    function () {
       var tree, node;
       // shadow DOM v1 - note: v0 is compatible with this code, so no need
       // to specifically test this
@@ -169,7 +184,7 @@ describe('dom.isVisibleForScreenreader', function() {
 
   (shadowSupported ? it : xit)(
     'should work with hidden slotted elements',
-    function() {
+    function () {
       function createContentSlotted() {
         var group = document.createElement('div');
         group.innerHTML =
@@ -190,8 +205,8 @@ describe('dom.isVisibleForScreenreader', function() {
     }
   );
 
-  describe('SerialVirtualNode', function() {
-    it('should return false if `aria-hidden` is set', function() {
+  describe('SerialVirtualNode', function () {
+    it('should return false if `aria-hidden` is set', function () {
       var vNode = new axe.SerialVirtualNode({
         nodeName: 'div',
         attributes: {
@@ -201,7 +216,7 @@ describe('dom.isVisibleForScreenreader', function() {
       assert.isFalse(isVisibleForScreenreader(vNode));
     });
 
-    it('should return false if `aria-hidden` is set on parent', function() {
+    it('should return false if `aria-hidden` is set on parent', function () {
       var vNode = new axe.SerialVirtualNode({
         nodeName: 'div'
       });
