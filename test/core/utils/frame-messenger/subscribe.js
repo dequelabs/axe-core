@@ -1,8 +1,8 @@
 function afterMessage(win, callback) {
-  var handler = function() {
+  var handler = function () {
     win.removeEventListener('message', handler);
     // Wait one more tick for stuff to resolve
-    setTimeout(function() {
+    setTimeout(function () {
       callback();
     }, 10);
   };
@@ -11,7 +11,7 @@ function afterMessage(win, callback) {
 
 function once(callback) {
   var called = false;
-  return function() {
+  return function () {
     if (!called) {
       callback.apply(this, arguments);
     }
@@ -19,7 +19,7 @@ function once(callback) {
   };
 }
 
-describe('frame-messenger', function() {
+describe('frame-messenger', function () {
   var fixture,
     axeVersion,
     axeApplication,
@@ -30,10 +30,9 @@ describe('frame-messenger', function() {
     axeLog;
   var postMessage = window.postMessage;
   var captureError = axe.testUtils.captureError;
-  var isIE11 = axe.testUtils.isIE11;
   var shadowSupported = axe.testUtils.shadowSupport.v1;
 
-  beforeEach(function(done) {
+  beforeEach(function (done) {
     respondable = axe.utils.respondable;
     axeVersion = axe.version;
     axeLog = axe.log;
@@ -41,7 +40,7 @@ describe('frame-messenger', function() {
 
     frame = document.createElement('iframe');
     frame.src = '../mock/frames/test.html';
-    frame.addEventListener('load', function() {
+    frame.addEventListener('load', function () {
       frameWin = frame.contentWindow;
       frameSubscribe = frameWin.axe.utils.respondable.subscribe;
       done();
@@ -52,7 +51,7 @@ describe('frame-messenger', function() {
     fixture.appendChild(frame);
   });
 
-  afterEach(function() {
+  afterEach(function () {
     axe.version = axeVersion;
     axe._audit.application = axeApplication;
     axe.log = axeLog;
@@ -60,176 +59,169 @@ describe('frame-messenger', function() {
     window.postMessage = postMessage;
   });
 
-  describe('subscribe', function() {
-    it('is called with the same topic', function(done) {
+  describe('subscribe', function () {
+    it('is called with the same topic', function (done) {
       var called = false;
-      frameSubscribe('greeting', function() {
+      frameSubscribe('greeting', function () {
         called = true;
       });
       respondable(frameWin, 'greeting');
       afterMessage(
         frameWin,
-        captureError(function() {
+        captureError(function () {
           assert.isTrue(called);
           done();
         }, done)
       );
     });
 
-    (shadowSupported ? it : xit)('works with frames in shadow DOM', function(
-      done
-    ) {
-      fixture.innerHTML = '<div id="shadow-root"></div>';
-      var shadowRoot = fixture
-        .querySelector('#shadow-root')
-        .attachShadow({ mode: 'open' });
-      frame = document.createElement('iframe');
-      frame.src = '../mock/frames/test.html';
+    (shadowSupported ? it : xit)(
+      'works with frames in shadow DOM',
+      function (done) {
+        fixture.innerHTML = '<div id="shadow-root"></div>';
+        var shadowRoot = fixture
+          .querySelector('#shadow-root')
+          .attachShadow({ mode: 'open' });
+        frame = document.createElement('iframe');
+        frame.src = '../mock/frames/test.html';
 
-      frame.addEventListener('load', function() {
-        var called = false;
-        frameWin = frame.contentWindow;
-        frameSubscribe = frameWin.axe.utils.respondable.subscribe;
+        frame.addEventListener('load', function () {
+          var called = false;
+          frameWin = frame.contentWindow;
+          frameSubscribe = frameWin.axe.utils.respondable.subscribe;
 
-        frameSubscribe('greeting', function(msg) {
-          assert.equal(msg, 'hello');
-          called = true;
+          frameSubscribe('greeting', function (msg) {
+            assert.equal(msg, 'hello');
+            called = true;
+          });
+          respondable(frameWin, 'greeting', 'hello');
+          afterMessage(
+            frameWin,
+            captureError(function () {
+              assert.isTrue(called);
+              done();
+            }, done)
+          );
         });
-        respondable(frameWin, 'greeting', 'hello');
-        afterMessage(
-          frameWin,
-          captureError(function() {
-            assert.isTrue(called);
-            done();
-          }, done)
-        );
-      });
-      shadowRoot.appendChild(frame);
-    });
+        shadowRoot.appendChild(frame);
+      }
+    );
 
-    it('is not called on a different topic', function(done) {
+    it('is not called on a different topic', function (done) {
       var called = false;
-      frameSubscribe('otherTopic', function() {
+      frameSubscribe('otherTopic', function () {
         called = true;
       });
       respondable(frameWin, 'greeting');
       afterMessage(
         frameWin,
-        captureError(function() {
+        captureError(function () {
           assert.isFalse(called);
           done();
         }, done)
       );
     });
 
-    it('is not called for different axe-core versions', function(done) {
+    it('is not called for different axe-core versions', function (done) {
       var called = false;
       axe.version = '1.0.0';
-      frameSubscribe('greeting', function() {
+      frameSubscribe('greeting', function () {
         called = true;
       });
       respondable(frameWin, 'greeting');
       afterMessage(
         frameWin,
-        captureError(function() {
+        captureError(function () {
           assert.isFalse(called);
           done();
         }, done)
       );
     });
 
-    it('is not called with the "x.y.z" wildcard', function(done) {
+    it('is not called with the "x.y.z" wildcard', function (done) {
       var called = false;
       axe.version = 'x.y.z';
-      frameSubscribe('greeting', function() {
+      frameSubscribe('greeting', function () {
         called = true;
       });
       respondable(frameWin, 'greeting');
       afterMessage(
         frameWin,
-        captureError(function() {
+        captureError(function () {
           assert.isFalse(called);
           done();
         }, done)
       );
     });
 
-    it('is not called for different applications', function(done) {
+    it('is not called for different applications', function (done) {
       var called = false;
       axe._audit.application = 'Coconut';
-      frameSubscribe('greeting', function() {
+      frameSubscribe('greeting', function () {
         called = true;
       });
       respondable(frameWin, 'greeting');
       afterMessage(
         frameWin,
-        captureError(function() {
+        captureError(function () {
           assert.isFalse(called);
           done();
         }, done)
       );
     });
 
-    it('logs errors passed to respondable, rather than passing them on', function(done) {
-      axe.log = captureError(function(e) {
+    it('logs errors passed to respondable, rather than passing them on', function (done) {
+      axe.log = captureError(function (e) {
         assert.equal(e.message, 'expected message');
         done();
       }, done);
 
-      frameSubscribe('greeting', function() {
+      frameSubscribe('greeting', function () {
         done(new Error('subscribe should not be called'));
       });
       respondable(frameWin, 'greeting', new Error('expected message'));
     });
 
-    (isIE11 ? it.skip : it)(
-      // In IE win.parent is read-only
-      'throws if frame.parent is not the window',
-      function() {
-        frameWin.parent = frameWin;
-        assert.throws(function() {
-          respondable(frameWin, 'greeting');
-        });
-      }
-    );
-
-    (isIE11 ? it.skip : it)(
-      // In IE win.parent is read-only
-      'is not called when the source is not a frame in the page',
-      function(done) {
-        var doneOnce = once(done);
-        var called = false;
-        frameWin.axe.log = function() {
-          called = true;
-        };
-
-        frameSubscribe('greeting', function() {
-          doneOnce(new Error('subscribe should not be called'));
-        });
+    it('throws if frame.parent is not the window', function () {
+      frameWin.parent = frameWin;
+      assert.throws(function () {
         respondable(frameWin, 'greeting');
-        // Swap parent after the message is sent, but before it is received:
-        frameWin.parent = frameWin;
+      });
+    });
 
-        setTimeout(
-          captureError(function() {
-            assert.isTrue(called);
-            doneOnce();
-          }, doneOnce),
-          100
-        );
-      }
-    );
+    it('is not called when the source is not a frame in the page', function (done) {
+      var doneOnce = once(done);
+      var called = false;
+      frameWin.axe.log = function () {
+        called = true;
+      };
 
-    it('throws when targeting itself', function() {
-      assert.throws(function() {
+      frameSubscribe('greeting', function () {
+        doneOnce(new Error('subscribe should not be called'));
+      });
+      respondable(frameWin, 'greeting');
+      // Swap parent after the message is sent, but before it is received:
+      frameWin.parent = frameWin;
+
+      setTimeout(
+        captureError(function () {
+          assert.isTrue(called);
+          doneOnce();
+        }, doneOnce),
+        100
+      );
+    });
+
+    it('throws when targeting itself', function () {
+      assert.throws(function () {
         respondable(window, 'greeting');
       });
-      assert.throws(function() {
+      assert.throws(function () {
         frameWin.respondable(frameWin, 'greeting');
       });
     });
 
-    it('throws when targeting a window that is not a frame in the page', function() {
+    it('throws when targeting a window that is not a frame in the page', function () {
       var blankPage = window.open('');
       var frameCopy = window.open(frameWin.location.href);
 
@@ -239,22 +231,22 @@ describe('frame-messenger', function() {
       }
 
       // Cleanup
-      setTimeout(function() {
+      setTimeout(function () {
         blankPage.close();
         frameCopy.close();
       });
 
-      assert.throws(function() {
+      assert.throws(function () {
         respondable(blankPage, 'greeting');
       });
-      assert.throws(function() {
+      assert.throws(function () {
         respondable(frameCopy, 'greeting');
       });
     });
 
-    it('is not triggered by "repeaters"', function(done) {
+    it('is not triggered by "repeaters"', function (done) {
       var calls = 0;
-      frameSubscribe('greeting', function() {
+      frameSubscribe('greeting', function () {
         calls++;
       });
       // Repeat fire the event
@@ -265,7 +257,7 @@ describe('frame-messenger', function() {
 
       respondable(frameWin, 'greeting', 'hello');
       setTimeout(
-        captureError(function() {
+        captureError(function () {
           assert.equal(calls, 1);
           done();
         }, done),
@@ -273,7 +265,7 @@ describe('frame-messenger', function() {
       );
     });
 
-    it('is not called if origin does not match', function(done) {
+    it('is not called if origin does not match', function (done) {
       axe.configure({
         allowedOrigins: ['http://customOrigin.com']
       });
@@ -282,13 +274,13 @@ describe('frame-messenger', function() {
       frameSubscribe('greeting', spy);
       respondable(frameWin, 'greeting', 'hello');
 
-      setTimeout(function() {
+      setTimeout(function () {
         assert.isFalse(spy.called);
         done();
       }, 500);
     });
 
-    it('is called if origin is <unsafe_all_origins>', function(done) {
+    it('is called if origin is <unsafe_all_origins>', function (done) {
       axe.configure({
         allowedOrigins: ['<unsafe_all_origins>']
       });
@@ -297,7 +289,7 @@ describe('frame-messenger', function() {
       frameSubscribe('greeting', spy);
       respondable(frameWin, 'greeting', 'hello');
 
-      setTimeout(function() {
+      setTimeout(function () {
         assert.isTrue(spy.called);
         done();
       }, 500);

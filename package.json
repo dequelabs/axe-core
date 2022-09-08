@@ -86,11 +86,9 @@
     "integration:apg": "mocha test/aria-practices/*.spec.js",
     "integration:chrome": "npm run integration -- browser=Chrome",
     "integration:firefox": "npm run integration -- browser=Firefox",
-    "integration:ie": "npm run integration -- browser=\"Internet Explorer\"",
     "test:integration": "npm run test:integration:chrome",
     "test:integration:chrome": "start-server-and-test 9876 integration:chrome",
     "test:integration:firefox": "start-server-and-test 9876 integration:firefox",
-    "test:integration:ie": "start-server-and-test 9876 integration:ie",
     "test:examples": "node ./doc/examples/test-examples",
     "test:act": "karma start test/act-mapping/karma.config.js",
     "test:act:debug": "npm run test:act -- --no-single-run --browsers=Chrome",
@@ -105,10 +103,11 @@
     "next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "sri-validate": "node build/sri-update --validate",
-    "fmt": "prettier --write .*.json *.{json,md,js} **/*.ts './{.circleci,.github,build,doc,lib,locales,test,typings}/**/*.{json,md,js,ts,html}'",
+    "fmt": "prettier --write .",
     "prepare": "husky install",
     "prebuild": "node ./build/check-node-version.js",
-    "pretest": "node ./build/check-node-version.js"
+    "pretest": "node ./build/check-node-version.js",
+    "postbuild": "prettier --write ./locales/_template.json ./doc/rule-descriptions.md"
   },
   "devDependencies": {
     "@axe-core/webdriverjs": "^4.4.3",

@@ -1,4 +1,4 @@
-describe('dom.hasLangText', function() {
+describe('dom.hasLangText', function () {
   'use strict';
   var hasLangText = axe.commons.dom.hasLangText;
   var fixture = document.getElementById('fixture');
@@ -23,6 +23,24 @@ describe('dom.hasLangText', function() {
     tree = axe.utils.getFlattenedTree(fixture);
     var target = axe.utils.querySelectorAll(tree, '#target')[0];
     assert.isFalse(hasLangText(target));
+  });
+
+  it('returns true when the element has nested text is aria-hidden', function () {
+    fixture.innerHTML =
+      '<div id="target"> <span aria-hidden="true"> text </span> </div>';
+    tree = axe.utils.getFlattenedTree(fixture);
+    var target = axe.utils.querySelectorAll(tree, '#target')[0];
+    assert.isTrue(hasLangText(target));
+  });
+
+  it('returns true when the element has nested text is off screen', function () {
+    fixture.innerHTML =
+      '<div id="target">' +
+      '  <span style="position: absolute; top:-99em;"> text </span> ' +
+      '</div>';
+    tree = axe.utils.getFlattenedTree(fixture);
+    var target = axe.utils.querySelectorAll(tree, '#target')[0];
+    assert.isTrue(hasLangText(target));
   });
 
   it('returns false when the element has an empty text node as its content', function () {

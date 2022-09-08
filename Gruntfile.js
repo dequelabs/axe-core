@@ -256,7 +256,11 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('translate', ['validate', 'esbuild', 'add-locale:newLang']);
+  grunt.registerTask('translate', [
+    'validate',
+    'esbuild',
+    'add-locale:newLang'
+  ]);
   grunt.registerTask('build', [
     'clean:core',
     'validate',
@@ -268,7 +272,7 @@ module.exports = function (grunt) {
     'uglify',
     'aria-supported',
     'add-locale:template',
-    'bytesize',
+    'bytesize'
   ]);
   grunt.registerTask('default', ['build']);
   grunt.registerTask('dev', ['watch']);
