@@ -71,10 +71,7 @@ module.exports = {
   overrides: [
     {
       files: ['lib/**/*.js'],
-      excludedFiles: [
-        'lib/core/reporters/**/*.js',
-        'lib/**/*-after.js'
-      ],
+      excludedFiles: ['lib/core/reporters/**/*.js', 'lib/**/*-after.js'],
       parserOptions: {
         sourceType: 'module'
       },
@@ -94,10 +91,7 @@ module.exports = {
     },
     {
       // after functions and reporters will not be run inside the same context as axe.run so should not access browser globals that require context specific information (window.location, window.getComputedStyles, etc.)
-      files: [
-        'lib/**/*-after.js',
-        'lib/core/reporters/**/*.js'
-      ],
+      files: ['lib/**/*-after.js', 'lib/core/reporters/**/*.js'],
       parserOptions: {
         sourceType: 'module'
       },
@@ -110,9 +104,7 @@ module.exports = {
       }
     },
     {
-      files: [
-        'test/aria-practices/**/*.js'
-      ],
+      files: ['test/aria-practices/**/*.js'],
       env: {
         mocha: true
       }
@@ -120,12 +112,9 @@ module.exports = {
     {
       files: ['test/**/*.js'],
       excludedFiles: 'test/aria-practices/**/*.js',
-      parserOptions: {
-        ecmaVersion: 5
-      },
       env: {
         browser: true,
-        es6: false,
+        es6: true,
         mocha: true
       },
       globals: {
