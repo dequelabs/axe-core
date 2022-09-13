@@ -1,6 +1,7 @@
-<p><a href="#" id="ignore1">Link text 1</a></p>
+<h1>General applicability tests</h1>
+<p><a href="#" id="ignore1">Link text</a></p>
 <ul>
-  <li><a href="#" id="ignore2">Link text 2</a></li>
+  <li><a href="#" id="ignore2">Link text</a></li>
 </ul>
 <p>paragraph <a id="ignore3">Link</a></p>
 <p>paragraph <a href="#" id="ignore4"> </a></p>
@@ -8,7 +9,7 @@
   paragraph <a href="#" id="ignore5"><img src="" alt="some text" /> </a>
 </p>
 
-<p style="display:none;">
+<p style="display: none">
   paragraph
   <a style="" href="#" id="ignore6">Link text</a>
 </p>
@@ -25,19 +26,107 @@
   <a href="#" id="ignore9">Link text</a>
 </p>
 
-<p style="color:black">
-  paragraph of text
-  <a style="" href="#" id="pass1">Link</a>
+<h1>Default styling tests</h1>
+
+<p style="color: black">
+  paragraph of text (default)
+  <a style="" href="#" id="pass-default-styling">Link text</a>
 </p>
 
 <p aria-hidden="true">
-  paragraph of text
-  <a style="" href="#" id="pass2">Link text</a>
+  paragraph of text (default + aria-hidden)
+  <a style="" href="#" id="pass-default-styling-aria-hidden">Link text</a>
 </p>
 
-<p style="color:black">
-  paragraph of text
-  <a style="text-decoration:none; color:blue" href="#" id="fail1"> Link text</a>
-  <br />
-  <a href="#" id="ignore10">Link!</a>
+<h1>Non-color change tests</h1>
+
+<p style="color: black">
+  paragraph of text (pass: link is bolder than paragraph)
+  <a
+    style="text-decoration: none; font-weight: bolder; color: black"
+    href="#"
+    id="pass-different-weight"
+  >
+    Link text</a
+  >
+</p>
+
+<p style="color: black">
+  paragraph of text (pass: link is larger that paragraph)
+  <a
+    style="text-decoration: none; font-size: larger; color: black"
+    href="#"
+    id="pass-different-size"
+  >
+    Link text</a
+  >
+</p>
+
+<h1>Color change tests</h1>
+<b
+  >Note that these tests limit changes to one variable per test. No attempt is
+  made to<br />
+  provide good color contrast <i>within the link</i>. We leave that to the
+  <i>color-contrast</i> rule</b
+>
+
+<p style="color: black; background-color: white">
+  paragraph of text (pass: background color has sufficient contrast against
+  paragraph)
+  <a
+    style="text-decoration: none; color: blue; background-color: black"
+    href="#"
+    id="pass-background-color"
+  >
+    Link text</a
+  >
+</p>
+
+<p style="color: black">
+  paragraph of text (pass: text color has sufficient contrast against paragraph)
+  <a
+    style="text-decoration: none; color: lightblue"
+    href="#"
+    id="pass-text-color"
+  >
+    Link text</a
+  >
+</p>
+
+<p style="color: black">
+  paragraph of text (fail: text color has insufficient contrast against
+  paragraph)
+  <a
+    style="text-decoration: none; color: blue"
+    href="#"
+    id="fail-insufficient-text-contrast"
+  >
+    Link text</a
+  >
+</p>
+
+<p style="color: black">
+  paragraph of text (fail: background color has insufficient contrast against
+  paragraph)
+  <a
+    style="text-decoration: none; color: black; background-color: pink"
+    href="#"
+    id="fail-insufficient-background-contrast"
+  >
+    Link text</a
+  >
+</p>
+
+<h1>Incomplete tests</h1>
+
+<p style="color: black; background-image: linear-gradient(red, yellow)">
+  paragraph of text (incomplete: link has insufficient text contrast and
+  paragraph has a background gradient)
+  <a
+    style="text-decoration: none; color: black"
+    href="#"
+    id="incomplete-low-contrast-parent-has-gradient"
+  >
+    Link test</a
+  >
 </p>
