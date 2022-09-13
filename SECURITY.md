@@ -2,7 +2,7 @@
 
 Deque takes the security of our software products and services seriously, which includes all source code repositories managed through our GitHub organization [Dequelabs](https://github.com/dequelabs).
 
-If you believe you have found a security vulnerability in any Deuqe-owned repository that meets [Deque's definition of a security vulnerability](https://aka.ms/opensource/security/definition), please report it to us as described below.
+If you believe you have found a security vulnerability in any Deque-owned repository that meets [Deque's definition of a security vulnerability](https://aka.ms/opensource/security/definition), please report it to us as described below.
 
 ## Reporting Security Issues
 
