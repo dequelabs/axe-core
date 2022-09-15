@@ -2,15 +2,15 @@
   "id": "target-size",
   "evaluate": "target-size-evaluate",
   "options": {
-    "minSpacing": 24
+    "minSize": 24
   },
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "Control has sufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSpacing}px by ${data.minSpacing}px)",
+      "pass": "Control has sufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)",
       "fail": {
-        "default": "Element has insufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSpacing}px by ${data.minSpacing}px)",
-        "obscured": "Element has insufficient size because it is obscured (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSpacing}px by ${data.minSpacing}px)"
+        "default": "Element has insufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)",
+        "obscured": "Element has insufficient size because it is obscured (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)"
       }
     }
   }

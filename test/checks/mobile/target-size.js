@@ -14,7 +14,7 @@ describe('target-size tests', function () {
 
   // IE cannot count
   (isIE11 ? xit : it)(
-    'returns false for targets smaller than minSpacing',
+    'returns false for targets smaller than minSize',
     function () {
       var checkArgs = checkSetup(
         '<button id="target" style="' +
@@ -23,14 +23,14 @@ describe('target-size tests', function () {
       );
       assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
       assert.deepEqual(checkContext._data, {
-        minSpacing: 24,
+        minSize: 24,
         width: 20,
         height: 30
       });
     }
   );
 
-  it('returns true for unobscured targets larger than minSpacing', function () {
+  it('returns true for unobscured targets larger than minSize', function () {
     var checkArgs = checkSetup(
       '<button id="target" style="' +
         'display: inline-block; width:40px; height:30px;' +
@@ -38,7 +38,7 @@ describe('target-size tests', function () {
     );
     assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
     assert.deepEqual(checkContext._data, {
-      minSpacing: 24,
+      minSize: 24,
       width: 40,
       height: 30
     });
@@ -55,7 +55,7 @@ describe('target-size tests', function () {
     );
     assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
     assert.deepEqual(checkContext._data, {
-      minSpacing: 24,
+      minSize: 24,
       width: 30,
       height: 30
     });
@@ -76,7 +76,7 @@ describe('target-size tests', function () {
     assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
     assert.deepEqual(checkContext._data, {
       messageKey: 'obscured',
-      minSpacing: 24,
+      minSize: 24,
       width: 20,
       height: 30
     });
@@ -98,7 +98,7 @@ describe('target-size tests', function () {
     assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
     assert.deepEqual(checkContext._data, {
       messageKey: 'obscured',
-      minSpacing: 24,
+      minSize: 24,
       width: 20,
       height: 30
     });
