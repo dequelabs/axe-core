@@ -3,7 +3,6 @@
 describe('isolated-env test', function () {
   'use strict';
   var fixture = document.querySelector('#fixture');
-  var isIE11 = axe.testUtils.isIE11;
   var origPartialResults;
   var partialResults;
   var win;
@@ -36,10 +35,6 @@ describe('isolated-env test', function () {
   }
 
   before(function (done) {
-    if (isIE11) {
-      return this.skip();
-    }
-
     var nestedLoadPromise = new Promise(function (resolve, reject) {
       axe.testUtils.awaitNestedLoad(resolve, reject);
     });

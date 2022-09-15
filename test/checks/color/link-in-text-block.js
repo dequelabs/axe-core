@@ -1,4 +1,4 @@
-describe('link-in-text-block', function() {
+describe('link-in-text-block', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -7,7 +7,7 @@ describe('link-in-text-block', function() {
 
   var checkContext = axe.testUtils.MockCheckContext();
 
-  before(function() {
+  before(function () {
     styleElm = document.createElement('style');
     document.head.appendChild(styleElm);
   });
@@ -17,17 +17,17 @@ describe('link-in-text-block', function() {
     textDecoration: 'none'
   };
 
-  beforeEach(function() {
+  beforeEach(function () {
     createStyleString('p', defaultStyle);
   });
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     styleElm.innerHTML = '';
     checkContext.reset();
   });
 
-  after(function() {
+  after(function () {
     styleElm.parentNode.removeChild(styleElm);
   });
 
@@ -47,12 +47,12 @@ describe('link-in-text-block', function() {
     }
 
     var cssLines = Object.keys(styleObj)
-      .map(function(prop) {
+      .map(function (prop) {
         // Make camelCase prop dash separated
         var cssPropName = prop
           .trim()
           .split(/(?=[A-Z])/g)
-          .reduce(function(prop, propPiece) {
+          .reduce(function (prop, propPiece) {
             if (!prop) {
               return propPiece;
             } else {
@@ -70,7 +70,7 @@ describe('link-in-text-block', function() {
   }
 
   function getLinkElm(linkStyle, paragraphStyle) {
-    // Get a random id and build the style string
+    // Get a random id and build the style strings
     var linkId = 'linkid-' + Math.floor(Math.random() * 100000);
     var parId = 'parid-' + Math.floor(Math.random() * 100000);
 
@@ -89,30 +89,14 @@ describe('link-in-text-block', function() {
     return document.getElementById(linkId);
   }
 
-  it('returns true if links have the exact same color', function() {
-    var linkElm = getLinkElm(
-      {
-        color: 'black'
-      },
-      {
-        color: '#000'
-      }
-    );
-    assert.isTrue(
-      axe.testUtils
-        .getCheckEvaluate('link-in-text-block')
-        .call(checkContext, linkElm)
-    );
-  });
-
-  describe('link default state', function() {
-    beforeEach(function() {
+  describe('link default state', function () {
+    beforeEach(function () {
       createStyleString('a', {
-        color: '#100' // insufficeint contrast
+        color: '#100' // insufficient contrast
       });
     });
 
-    it('passes the selected node and closest ancestral block element', function() {
+    it('passes the selected node and closest ancestral block element', function () {
       fixture.innerHTML =
         '<div> <span style="display:block; color: #100" id="parent">' +
         '	<p style="display:inline"><a href="" id="link">' +
@@ -123,39 +107,46 @@ describe('link-in-text-block', function() {
       axe.testUtils.flatTreeSetup(fixture);
       var linkElm = document.getElementById('link');
 
-      assert.isTrue(
+      assert.isFalse(
         axe.testUtils
           .getCheckEvaluate('link-in-text-block')
           .call(checkContext, linkElm)
       );
+      assert.equal(checkContext._data.messageKey, 'fgContrast');
     });
 
     (shadowSupport.v1 ? it : xit)(
       'works with the block outside the shadow tree',
-      function() {
+      function () {
         var parentElm = document.createElement('div');
-        parentElm.setAttribute('style', 'color:#100;');
+        parentElm.setAttribute(
+          'style',
+          'color:#100; background-color:#FFFFFF;'
+        );
         var shadow = parentElm.attachShadow({ mode: 'open' });
-        shadow.innerHTML = '<a href="" style="color:#100;">Link</a>';
+        shadow.innerHTML =
+          '<a href="" style="color:#000; background-color:#FFFFFF; text-decoration:none;">Link</a>';
         var linkElm = shadow.querySelector('a');
         fixture.appendChild(parentElm);
 
         axe.testUtils.flatTreeSetup(fixture);
 
-        assert.isTrue(
+        assert.isFalse(
           axe.testUtils
             .getCheckEvaluate('link-in-text-block')
             .call(checkContext, linkElm)
         );
+        assert.equal(checkContext._data.messageKey, 'fgContrast');
       }
     );
 
     (shadowSupport.v1 ? it : xit)(
       'works with the link inside the shadow tree slot',
-      function() {
+      function () {
         var div = document.createElement('div');
-        div.setAttribute('style', 'color:#100;');
-        div.innerHTML = '<a href="" style="color:#100;">Link</a>';
+        div.setAttribute('style', 'color:#100; background-color:#FFFFFF;');
+        div.innerHTML =
+          '<a href="" style="color:#000;background-color:#FFFFFF;">Link</a>';
         var shadow = div.attachShadow({ mode: 'open' });
         shadow.innerHTML = '<p><slot></slot></p>';
         fixture.appendChild(div);
@@ -163,92 +154,24 @@ describe('link-in-text-block', function() {
         axe.testUtils.flatTreeSetup(fixture);
         var linkElm = div.querySelector('a');
 
-        assert.isTrue(
+        assert.isFalse(
           axe.testUtils
             .getCheckEvaluate('link-in-text-block')
             .call(checkContext, linkElm)
         );
+        assert.equal(checkContext._data.messageKey, 'fgContrast');
       }
     );
   });
 
-  describe('links distinguished through color', function() {
-    beforeEach(function() {
+  describe('links distinguished through color', function () {
+    beforeEach(function () {
       createStyleString('a:active, a:focus', {
         textDecoration: 'underline'
       });
     });
 
-    it('returns undefined if text contrast >= 3:0', function() {
-      var linkElm = getLinkElm(
-        {
-          color: 'cyan'
-        },
-        {
-          color: 'black'
-        }
-      );
-      assert.isUndefined(
-        axe.testUtils
-          .getCheckEvaluate('link-in-text-block')
-          .call(checkContext, linkElm)
-      );
-    });
-
-    it('returns false if text contrast < 3:0', function() {
-      var linkElm = getLinkElm(
-        {
-          color: '#000010'
-        },
-        {
-          color: '#000000'
-        }
-      );
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('link-in-text-block')
-          .call(checkContext, linkElm)
-      );
-    });
-
-    it('returns undefined if background contrast >= 3:0', function() {
-      var linkElm = getLinkElm(
-        {
-          color: '#000010',
-          backgroundColor: 'purple'
-        },
-        {
-          color: '#000000',
-          backgroundColor: 'white'
-        }
-      );
-      assert.isUndefined(
-        axe.testUtils
-          .getCheckEvaluate('link-in-text-block')
-          .call(checkContext, linkElm)
-      );
-      assert.equal(checkContext._data.messageKey, 'bgContrast');
-    });
-
-    it('returns false if background contrast < 3:0', function() {
-      var linkElm = getLinkElm(
-        {
-          color: '#000010',
-          backgroundColor: '#FFE'
-        },
-        {
-          color: '#000000',
-          backgroundColor: '#FFF'
-        }
-      );
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('link-in-text-block')
-          .call(checkContext, linkElm)
-      );
-    });
-
-    it('returns undefined if the background contrast can not be determined', function() {
+    it('returns undefined if the background contrast can not be determined', function () {
       var linkElm = getLinkElm(
         {},
         {
@@ -266,26 +189,119 @@ describe('link-in-text-block', function() {
           .call(checkContext, linkElm)
       );
       assert.equal(checkContext._data.messageKey, 'bgImage');
+      assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
     });
-  });
 
-  it('returns relatedNodes with undefined', function() {
-    var linkElm = getLinkElm(
-      {},
-      {
-        color: '#000010',
-        backgroundImage:
-          'url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)'
-      },
-      {
-        color: '#000000'
-      }
-    );
-    assert.isUndefined(
-      axe.testUtils
-        .getCheckEvaluate('link-in-text-block')
-        .call(checkContext, linkElm)
-    );
-    assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
+    it('returns false with fgContrast key if nodes have same foreground color and same background color', function () {
+      var linkElm = getLinkElm(
+        {
+          color: 'black'
+        },
+        {
+          color: '#000'
+        }
+      );
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('link-in-text-block')
+          .call(checkContext, linkElm)
+      );
+      assert.equal(checkContext._data.messageKey, 'fgContrast');
+      assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
+    });
+
+    it('returns false with fgContrast key if nodes have insufficient foreground contrast and same background color', function () {
+      var linkElm = getLinkElm(
+        {
+          color: 'black'
+        },
+        {
+          color: '#100'
+        }
+      );
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('link-in-text-block')
+          .call(checkContext, linkElm)
+      );
+      assert.equal(checkContext._data.messageKey, 'fgContrast');
+    });
+
+    it('returns false with fgContrast key if nodes have insufficient foreground contrast and insufficient background color', function () {
+      var linkElm = getLinkElm(
+        {
+          color: 'black',
+          backgroundColor: 'white'
+        },
+        {
+          color: '#100',
+          backgroundColor: '#F0F0F0'
+        }
+      );
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('link-in-text-block')
+          .call(checkContext, linkElm)
+      );
+      assert.equal(checkContext._data.messageKey, 'fgContrast');
+    });
+
+    it('returns false with bgContrast key if nodes have same foreground color and insufficient background contrast', function () {
+      var linkElm = getLinkElm(
+        {
+          color: 'black',
+          backgroundColor: 'white'
+        },
+        {
+          color: 'black',
+          backgroundColor: '#F0F0F0'
+        }
+      );
+      assert.isFalse(
+        axe.testUtils
+          .getCheckEvaluate('link-in-text-block')
+          .call(checkContext, linkElm)
+      );
+      assert.equal(checkContext._data.messageKey, 'bgContrast');
+      assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
+    });
+
+    it('returns true if nodes have sufficient foreground contrast and insufficient background contrast', function () {
+      var linkElm = getLinkElm(
+        {
+          color: 'black',
+          backgroundColor: 'white'
+        },
+        {
+          color: '#606060',
+          backgroundColor: '#F0F0F0'
+        }
+      );
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('link-in-text-block')
+          .call(checkContext, linkElm)
+      );
+      assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
+    });
+
+    it('returns true if nodes have insufficient foreground contrast and sufficient background contrast', function () {
+      var linkElm = getLinkElm(
+        {
+          color: 'black',
+          backgroundColor: 'white'
+        },
+        {
+          color: '#100',
+          backgroundColor: '#808080'
+        }
+      );
+      assert.isTrue(
+        axe.testUtils
+          .getCheckEvaluate('link-in-text-block')
+          .call(checkContext, linkElm)
+      );
+      assert.equal(checkContext._relatedNodes[0], linkElm.parentNode);
+    });
   });
 });

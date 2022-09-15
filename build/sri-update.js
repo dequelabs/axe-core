@@ -7,13 +7,14 @@
  *
  * When running `npm run release`, this script will execute and
  * update sri-history.json with the SRIs of axe{.*}.js.
+ * @deprecated
  */
 var path = require('path');
 var fs = require('fs');
 var sriToolbox = require('sri-toolbox');
 
 // Check if we should be validating or updating
-var validate = process.argv.some(function(arg) {
+var validate = process.argv.some(function (arg) {
   return arg === '--validate';
 });
 
@@ -27,11 +28,11 @@ if (typeof axeHistory[axeVersion] !== 'object') {
 var versionSRIs = axeHistory[axeVersion];
 
 // List all axe files (including minified and localized axe files)
-var axeFiles = fs.readdirSync(root).filter(function(file) {
+var axeFiles = fs.readdirSync(root).filter(function (file) {
   return file.match(/^axe(\.[a-z.-]+)?\.js$/);
 });
 
-axeFiles.forEach(function(axeFile) {
+axeFiles.forEach(function (axeFile) {
   var axeSource = fs.readFileSync(path.join(root, axeFile), 'utf-8');
   var axeIntegrity = sriToolbox.generate({ algorithms: ['sha256'] }, axeSource);
 

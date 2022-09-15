@@ -175,7 +175,7 @@
     },
     "frame-title-unique": {
       "description": "Ensures <iframe> and <frame> elements contain a unique title attribute",
-      "help": "Frames should have a unique title attribute"
+      "help": "Frames must have a unique title attribute"
     },
     "frame-title": {
       "description": "Ensures <iframe> and <frame> elements have an accessible name",
@@ -510,7 +510,8 @@
         "noId": "ARIA attribute element ID does not exist on the page: ${data.needsReview}",
         "noIdShadow": "ARIA attribute element ID does not exist on the page or is a descendant of a different shadow DOM tree: ${data.needsReview}",
         "ariaCurrent": "ARIA attribute value is invalid and will be treated as \"aria-current=true\": ${data.needsReview}",
-        "idrefs": "Unable to determine if ARIA attribute element ID exists on the page: ${data.needsReview}"
+        "idrefs": "Unable to determine if ARIA attribute element ID exists on the page: ${data.needsReview}",
+        "empty": "ARIA attribute value is ignored while empty: ${data.needsReview}"
       }
     },
     "aria-valid-attr": {
@@ -612,12 +613,19 @@
         "pseudoContent": "Element's background color could not be determined due to a pseudo element"
       }
     },
+    "link-in-text-block-style": {
+      "pass": "Links can be distinguished from surrounding text by visual styling",
+      "fail": "The link has no styling (such as underline) to distinguish it from the surrounding text"
+    },
     "link-in-text-block": {
       "pass": "Links can be distinguished from surrounding text in some way other than by color",
-      "fail": "Links need to be distinguished from surrounding text in some way other than by color",
+      "fail": {
+        "fgContrast": "The link has insufficient color contrast of ${data.contrastRatio}:1 with the surrounding text. (Minimum contrast is ${data.requiredContrastRatio}:1, link text: ${data.nodeColor}, surrounding text: ${data.parentColor})",
+        "bgContrast": "The link background has insufficient color contrast of ${data.contrastRatio} (Minimum contrast is ${data.requiredContrastRatio}:1, link background color: ${data.nodeBackgroundColor}, surrounding background color: ${data.parentBackgroundColor})"
+      },
       "incomplete": {
-        "default": "Unable to determine contrast ratio",
-        "bgContrast": "Element's contrast ratio could not be determined. Check for a distinct hover/focus style",
+        "default": "Element's foreground contrast ratio could not be determined",
+        "bgContrast": "Element's background contrast ratio could not be determined",
         "bgImage": "Element's contrast ratio could not be determined due to a background image",
         "bgGradient": "Element's contrast ratio could not be determined due to a background gradient",
         "imgNode": "Element's contrast ratio could not be determined because element contains an image node",
@@ -980,7 +988,8 @@
         "default": "Element's default semantics were not overridden with role=\"none\" or role=\"presentation\"",
         "globalAria": "Element's role is not presentational because it has a global ARIA attribute",
         "focusable": "Element's role is not presentational because it is focusable",
-        "both": "Element's role is not presentational because it has a global ARIA attribute and is focusable"
+        "both": "Element's role is not presentational because it has a global ARIA attribute and is focusable",
+        "iframe": "Using the \"title\" attribute on an ${data.nodeName} element with a presentational role behaves inconsistently between screen readers"
       }
     },
     "role-none": {

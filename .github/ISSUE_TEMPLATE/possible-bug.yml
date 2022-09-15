@@ -27,7 +27,7 @@ body:
   - type: checkboxes
     id: latest-axe
     attributes:
-      label: Lastest Version
+      label: Latest Version
       options:
         - label: I have tested the issue with the latest version of the product
           required: true
