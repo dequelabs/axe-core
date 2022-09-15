@@ -5,30 +5,25 @@ describe('target-size tests', function () {
   var checkSetup = axe.testUtils.checkSetup;
   var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
   var shadowSupport = axe.testUtils.shadowSupport.v1;
-  var isIE11 = axe.testUtils.isIE11;
   var check = checks['target-size'];
 
   afterEach(function () {
     checkContext.reset();
   });
 
-  // IE cannot count
-  (isIE11 ? xit : it)(
-    'returns false for targets smaller than minSize',
-    function () {
-      var checkArgs = checkSetup(
-        '<button id="target" style="' +
-          'display: inline-block; width:20px; height:30px;' +
-          '">x</button>'
-      );
-      assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
-      assert.deepEqual(checkContext._data, {
-        minSize: 24,
-        width: 20,
-        height: 30
-      });
-    }
-  );
+  it('returns false for targets smaller than minSize', function () {
+    var checkArgs = checkSetup(
+      '<button id="target" style="' +
+        'display: inline-block; width:20px; height:30px;' +
+        '">x</button>'
+    );
+    assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
+    assert.deepEqual(checkContext._data, {
+      minSize: 24,
+      width: 20,
+      height: 30
+    });
+  });
 
   it('returns true for unobscured targets larger than minSize', function () {
     var checkArgs = checkSetup(
