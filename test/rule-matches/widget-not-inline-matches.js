@@ -46,14 +46,6 @@ describe('widget-not-inline-matches', function () {
       assert.isFalse(rule.matches(node, vNode));
     });
 
-    it('returns false for a non-tabbable button (widgets)', function () {
-      var vNode = queryFixture(
-        '<div role="option" tabindex="0" id="target"></div>'
-      );
-      var node = vNode.actualNode;
-      assert.isFalse(rule.matches(node, vNode));
-    });
-
     it('returns true for a listbox (component)', function () {
       var vNode = queryFixture(
         '<div role="listbox" tabindex="0" id="target"></div>'
