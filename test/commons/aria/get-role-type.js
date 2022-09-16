@@ -5,13 +5,6 @@ describe('aria.getRoleType', function () {
 
   before(function () {
     axe._load({});
-  });
-
-  afterEach(function () {
-    axe.reset();
-  });
-
-  it('should return the type from the lookup table', function () {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -21,6 +14,13 @@ describe('aria.getRoleType', function () {
         }
       }
     });
+  });
+
+  afterEach(function () {
+    axe.reset();
+  });
+
+  it('should return the type from the lookup table', function () {
     assert.equal(getRoleType('cats'), 'stuff');
   });
 
@@ -30,15 +30,6 @@ describe('aria.getRoleType', function () {
 
   it('returns the type from the role of a virtual node', function () {
     var vNode = queryFixture('<span id="target" role="cats"></span>');
-    axe.configure({
-      standards: {
-        ariaRoles: {
-          cats: {
-            type: 'stuff'
-          }
-        }
-      }
-    });
     assert.equal(getRoleType(vNode), 'stuff');
   });
 
@@ -46,15 +37,6 @@ describe('aria.getRoleType', function () {
     var domNode = queryFixture(
       '<span id="target" role="cats"></span>'
     ).actualNode;
-    axe.configure({
-      standards: {
-        ariaRoles: {
-          cats: {
-            type: 'stuff'
-          }
-        }
-      }
-    });
     assert.equal(getRoleType(domNode), 'stuff');
   });
 });
