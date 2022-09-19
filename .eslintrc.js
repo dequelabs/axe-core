@@ -104,14 +104,17 @@ module.exports = {
       }
     },
     {
-      files: ['test/aria-practices/**/*.js'],
+      files: ['test/act-rules/**/*.js', 'test/aria-practices/**/*.js'],
       env: {
         mocha: true
       }
     },
     {
       files: ['test/**/*.js'],
-      excludedFiles: 'test/aria-practices/**/*.js',
+      excludedFiles: ['test/act-rules/**/*.js', 'test/aria-practices/**/*.js'],
+      parserOptions: {
+        ecmaVersion: 5
+      },
       env: {
         browser: true,
         es6: false,
