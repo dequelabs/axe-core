@@ -112,9 +112,6 @@ module.exports = {
     {
       files: ['test/**/*.js'],
       excludedFiles: ['test/act-rules/**/*.js', 'test/aria-practices/**/*.js'],
-      parserOptions: {
-        ecmaVersion: 5
-      },
       env: {
         browser: true,
         es6: false,
