@@ -156,7 +156,7 @@ jobs:
       # install ACT rules
       # install first as for some reason installing a single package
       # also re-installs all repo dependencies as well
-      - run: npm install act-rules/act-rules.github.io#master
+      - run: npm install w3c/wcag-act-rules#main
       - run: npx browser-driver-manager install chromedriver --verbose
       - run: npm run build
       - run: npm run test:act
