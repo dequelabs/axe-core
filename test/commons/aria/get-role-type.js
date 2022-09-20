@@ -3,7 +3,7 @@ describe('aria.getRoleType', function () {
   var queryFixture = axe.testUtils.queryFixture;
   var getRoleType = axe.commons.aria.getRoleType;
 
-  before(function () {
+  beforeEach(function () {
     axe._load({});
     axe.configure({
       standards: {
@@ -25,7 +25,7 @@ describe('aria.getRoleType', function () {
   });
 
   it('should return null if role is not found in the lookup table', function () {
-    assert.isNull(getRoleType('cats'));
+    assert.isNull(getRoleType('dogs'));
   });
 
   it('returns the type from the role of a virtual node', function () {
