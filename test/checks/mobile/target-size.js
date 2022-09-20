@@ -62,12 +62,7 @@ describe('target-size tests', function () {
           '">x</a>'
       );
       assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
-      assert.deepEqual(checkContext._data, {
-        messageKey: 'obscured',
-        minSize: 24,
-        width: 20,
-        height: 20
-      });
+      assert.deepEqual(checkContext._data, { messageKey: 'obscured' });
     });
 
     it('ignores obscuring element has pointer-events:none', function () {
