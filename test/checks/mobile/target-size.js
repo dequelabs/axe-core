@@ -125,7 +125,7 @@ describe('target-size tests', function () {
     });
 
     describe('by a focusable widget', function () {
-      it('returns true for obscured targets with insufficient space', function () {
+      it('returns true for obscured targets with sufficient space', function () {
         var checkArgs = checkSetup(
           '<button id="target" style="' +
             'display: inline-block; width:40px; height:30px;' +
