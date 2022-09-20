@@ -130,7 +130,7 @@ describe('dom.isOffscreen', function () {
     assert.isFalse(axe.commons.dom.isOffscreen(viz));
   });
 
-  it('should return undefined if actual ndoe is undefined', () => {
+  it('should return undefined if actual ndoe is undefined', function () {
     assert.isUndefined(axe.commons.dom.isOffscreen());
   });
 
