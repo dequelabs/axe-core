@@ -66,6 +66,21 @@ describe('target-offset tests', function () {
     assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
   });
 
+  it('ignores non-tabbable widget elements as neighbors', function () {
+    var checkArgs = checkSetup(
+      '<a href="#" id="target" style="' +
+        'display: inline-block; width:16px; height:16px; margin-right: 7px' +
+        '">x</a>' +
+        '<button disabled style="' +
+        'display: inline-block; width:16px; height:16px;' +
+        '">x</button>'
+    );
+
+    assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
+    assert.equal(checkContext._data.minOffset, 24);
+    assert.closeTo(checkContext._data.closestOffset, 24, 0.2);
+  });
+
   it('sets all elements that are too close as related nodes', function () {
     var checkArgs = checkSetup(
       '<a href="#" id="left" style="' +
