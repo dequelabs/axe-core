@@ -2,14 +2,69 @@
 <html lang="en">
   <title>O hai</title>
 
-  <div class="foo" id="foo">foo</div>
+  <main>
+    <h1>hello</h1>
+    <div
+      id="1"
+      style="overflow: hidden; width: 400px; height: 400px; background: red"
+    >
+      <div>
+        <div>
+          <div
+            id="2"
+            style="
+              overflow: hidden;
+              width: 200px;
+              height: 200px;
+              background: blue;
+            "
+          >
+            <div>
+              <div
+                id="3"
+                style="
+                  overflow: hidden;
+                  width: 100px;
+                  height: 100px;
+                  background: yellow;
+                "
+              >
+                <!-- <button id="target" style="background: grey; color: white">Hello</button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .container {
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+      }
+      .foo * {
+        width: 200px;
+        height: 200px;
+      }
+      #two {
+        color: #eee;
+      }
+    </style>
+    <div class="container">
+      <div class="foo" id="foo">
+        <div id="one">hello</div>
+        <div id="two">goodbye</div>
+      </div>
+    </div>
+  </main>
 
   <script src="/axe.js"></script>
   <script>
-    window.addEventListener('load', function() {
-      axe.run(document, function(err, res) {
+    window.addEventListener('load', function () {
+      axe.run(document, function (err, res) {
         console.log(res.violations);
-        res.incomplete.forEach(function(issue) {
+        res.incomplete.forEach(function (issue) {
           console.log(issue);
         });
       });
