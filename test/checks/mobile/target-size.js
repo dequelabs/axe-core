@@ -6,6 +6,12 @@ describe('target-size tests', function () {
   var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
   var check = checks['target-size'];
 
+  function elmIds(elms) {
+    return Array.from(elms).map(function (elm) {
+      return '#' + elm.id;
+    });
+  }
+
   afterEach(function () {
     checkContext.reset();
   });
@@ -44,12 +50,13 @@ describe('target-size tests', function () {
         '<a href="#" id="target" style="' +
           'display: inline-block; width:20px; height:20px;' +
           '">x</a>' +
-          '<div style="' +
+          '<div id="obscurer" style="' +
           'display: inline-block; width:20px; height:20px; margin-left: -20px;' +
           '">x</div>'
       );
       assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
       assert.deepEqual(checkContext._data, { messageKey: 'obscured' });
+      assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
     });
 
     it('returns true when obscured by another focusable widget', function () {
@@ -57,12 +64,13 @@ describe('target-size tests', function () {
         '<a href="#" id="target" style="' +
           'display: inline-block; width:20px; height:20px;' +
           '">x</a>' +
-          '<a href="#" style="' +
+          '<a href="#" id="obscurer" style="' +
           'display: inline-block; width:20px; height:20px; margin-left: -20px;' +
           '">x</a>'
       );
       assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
       assert.deepEqual(checkContext._data, { messageKey: 'obscured' });
+      assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
     });
 
     it('ignores obscuring element has pointer-events:none', function () {
@@ -89,7 +97,7 @@ describe('target-size tests', function () {
         '<button id="target" style="' +
           'display: inline-block; width:40px; height:30px; margin-left:30px;' +
           '">x</button>' +
-          '<button style="' +
+          '<button id="obscurer" style="' +
           'display: inline-block; width:40px; height:30px; margin-left: -10px;' +
           '">x</button>' +
           '<span tabindex="0" style="' +
@@ -102,6 +110,7 @@ describe('target-size tests', function () {
         width: 30,
         height: 30
       });
+      assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
     });
 
     it('returns true for non-focusable widgets', function () {
@@ -109,7 +118,7 @@ describe('target-size tests', function () {
         '<button id="target" style="' +
           'display: inline-block; width:40px; height:30px; margin-left:30px;' +
           '">x</button>' +
-          '<button style="' +
+          '<button id="obscurer" style="' +
           'display: inline-block; width:40px; height:30px; margin-left: -10px;' +
           '">x</button>' +
           '<button disabled style="' +
@@ -122,6 +131,7 @@ describe('target-size tests', function () {
         width: 30,
         height: 30
       });
+      assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
     });
 
     describe('by a focusable widget', function () {
@@ -130,7 +140,7 @@ describe('target-size tests', function () {
           '<button id="target" style="' +
             'display: inline-block; width:40px; height:30px;' +
             '">x</button>' +
-            '<button style="' +
+            '<button id="obscurer" style="' +
             'display: inline-block; width:40px; height:30px; margin-left: -10px;' +
             '">x</button>'
         );
@@ -140,6 +150,7 @@ describe('target-size tests', function () {
           width: 30,
           height: 30
         });
+        assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
       });
 
       it('returns false for obscured targets with insufficient space', function () {
@@ -147,10 +158,10 @@ describe('target-size tests', function () {
           '<button id="target" style="' +
             'display: inline-block; width:40px; height:30px; margin-left:30px;' +
             '">x</button>' +
-            '<button style="' +
+            '<button id="obscurer1" style="' +
             'display: inline-block; width:40px; height:30px; margin-left: -10px;' +
             '">x</button>' +
-            '<button style="' +
+            '<button id="obscurer2" style="' +
             'display: inline-block; width:40px; height:30px; margin-left: -100px;' +
             '">x</button>'
         );
@@ -161,6 +172,10 @@ describe('target-size tests', function () {
           width: 20,
           height: 30
         });
+        assert.deepEqual(elmIds(checkContext._relatedNodes), [
+          '#obscurer1',
+          '#obscurer2'
+        ]);
       });
     });
   });
@@ -168,10 +183,10 @@ describe('target-size tests', function () {
   it('works across shadow boundaries', function () {
     var checkArgs = shadowCheckSetup(
       '<span id="shadow"></span>' +
-        '<button style="' +
+        '<button id="obscurer1" style="' +
         'display: inline-block; width:40px; height:30px; margin-left: -10px;' +
         '">x</button>' +
-        '<button style="' +
+        '<button id="obscurer2" style="' +
         'display: inline-block; width:40px; height:30px; margin-left: -100px;' +
         '">x</button>',
       '<button id="target" style="' +
@@ -185,5 +200,9 @@ describe('target-size tests', function () {
       width: 20,
       height: 30
     });
+    assert.deepEqual(elmIds(checkContext._relatedNodes), [
+      '#obscurer1',
+      '#obscurer2'
+    ]);
   });
 });

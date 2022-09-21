@@ -28,6 +28,14 @@ describe('aria.getRoleType', function () {
     assert.isNull(getRoleType('dogs'));
   });
 
+  it('should return null when passed null', function () {
+    assert.isNull(getRoleType(null));
+  });
+
+  it('should return null when passed undefined', function () {
+    assert.isNull(getRoleType(undefined));
+  });
+
   it('returns the type from the role of a virtual node', function () {
     var vNode = queryFixture('<span id="target" role="cats"></span>');
     assert.equal(getRoleType(vNode), 'stuff');
