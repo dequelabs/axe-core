@@ -2,7 +2,7 @@ describe('accesskeys', function() {
   'use strict';
 
   var fixture = document.getElementById('fixture');
-
+  var fixtureSetup = axe.testUtils.fixtureSetup;
   var checkContext = axe.testUtils.MockCheckContext();
 
   afterEach(function() {
@@ -12,6 +12,7 @@ describe('accesskeys', function() {
 
   it('should return true and record accesskey', function() {
     fixture.innerHTML = '<div id="target" accesskey="A"></div>';
+    fixtureSetup();
     var node = fixture.querySelector('#target');
     assert.isTrue(checks.accesskeys.evaluate.call(checkContext, node));
 

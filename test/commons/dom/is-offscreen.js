@@ -1,14 +1,14 @@
-describe('dom.isOffscreen', function() {
+describe('dom.isOffscreen', function () {
   'use strict';
   var fixture = document.getElementById('fixture');
   var shadowSupport = axe.testUtils.shadowSupport;
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     document.body.style.direction = 'ltr';
   });
 
-  it('should detect elements positioned outside the left edge', function() {
+  it('should detect elements positioned outside the left edge', function () {
     fixture.innerHTML =
       '<div id="target" style="position: absolute; width: 50px; left: -51px;">Offscreen?</div>';
     var el = document.getElementById('target');
@@ -16,7 +16,7 @@ describe('dom.isOffscreen', function() {
     assert.isTrue(axe.commons.dom.isOffscreen(el));
   });
 
-  it('should detect elements positioned to but not beyond the left edge', function() {
+  it('should detect elements positioned to but not beyond the left edge', function () {
     fixture.innerHTML =
       '<div id="target" style="position: absolute; width: 50px; left: -50px;">Offscreen?</div>';
     var el = document.getElementById('target');
@@ -24,7 +24,7 @@ describe('dom.isOffscreen', function() {
     assert.isTrue(axe.commons.dom.isOffscreen(el));
   });
 
-  it('should not detect elements at the left edge with a zero width', function() {
+  it('should not detect elements at the left edge with a zero width', function () {
     fixture.innerHTML =
       '<div id="target" style="width: 0px; left: 0px;"></div>';
     var el = document.getElementById('target');
@@ -32,14 +32,14 @@ describe('dom.isOffscreen', function() {
     assert.isFalse(axe.commons.dom.isOffscreen(el));
   });
 
-  it('should detect elements positioned outside the top edge', function() {
+  it('should detect elements positioned outside the top edge', function () {
     fixture.innerHTML =
       '<div id="target" style="position: absolute; height: 50px; top: -51px;">Offscreen?</div>';
     var el = document.getElementById('target');
     assert.isTrue(axe.commons.dom.isOffscreen(el));
   });
 
-  it('should never detect elements positioned outside the bottom edge', function() {
+  it('should never detect elements positioned outside the bottom edge', function () {
     fixture.innerHTML =
       '<div id="target" style="position: absolute; height: 50px; bottom: -501px;">Offscreen?</div>';
     var el = document.getElementById('target');
@@ -47,7 +47,7 @@ describe('dom.isOffscreen', function() {
     assert.isFalse(axe.commons.dom.isOffscreen(el));
   });
 
-  it('should detect elements positioned that bleed inside the left edge', function() {
+  it('should detect elements positioned that bleed inside the left edge', function () {
     fixture.innerHTML =
       '<div id="target" style="position: absolute; width: 50px; left: -49px;">Offscreen?</div>';
     var el = document.getElementById('target');
@@ -55,7 +55,7 @@ describe('dom.isOffscreen', function() {
     assert.isFalse(axe.commons.dom.isOffscreen(el));
   });
 
-  it('should detect elements positioned outside the right edge', function() {
+  it('should detect elements positioned outside the right edge', function () {
     fixture.innerHTML =
       '<div id="target" style="position: absolute; width: 50px; right: -49px;">Offscreen?</div>';
     var el = document.getElementById('target');
@@ -63,7 +63,7 @@ describe('dom.isOffscreen', function() {
     assert.isFalse(axe.commons.dom.isOffscreen(el));
   });
 
-  it('should detect elements positioned outside the top edge', function() {
+  it('should detect elements positioned outside the top edge', function () {
     fixture.innerHTML =
       '<div id="target" style="position: absolute; height: 50px; top: -49px;">Offscreen?</div>';
     var el = document.getElementById('target');
@@ -71,7 +71,7 @@ describe('dom.isOffscreen', function() {
     assert.isFalse(axe.commons.dom.isOffscreen(el));
   });
 
-  it('should detect elements positioned outside the bottom edge', function() {
+  it('should detect elements positioned outside the bottom edge', function () {
     fixture.innerHTML =
       '<div id="target" style="position: absolute; height: 50px; bottom: -49px;">Offscreen?</div>';
     var el = document.getElementById('target');
@@ -79,7 +79,7 @@ describe('dom.isOffscreen', function() {
     assert.isFalse(axe.commons.dom.isOffscreen(el));
   });
 
-  it('should detect elements that are made off-screen by a parent', function() {
+  it('should detect elements that are made off-screen by a parent', function () {
     fixture.innerHTML =
       '<div id="target" style="position: absolute; width: 50px; left: -51px;">' +
       '<div id="target">Offscreen?</div>' +
@@ -90,7 +90,7 @@ describe('dom.isOffscreen', function() {
     assert.isTrue(axe.commons.dom.isOffscreen(el));
   });
 
-  it('should NOT detect elements positioned outside the right edge on LTR documents', function() {
+  it('should NOT detect elements positioned outside the right edge on LTR documents', function () {
     fixture.innerHTML =
       '<div id="target" style="position: absolute; width: 50px; right: -51px;">Offscreen?</div>';
     var el = document.getElementById('target');
@@ -98,7 +98,7 @@ describe('dom.isOffscreen', function() {
     assert.isFalse(axe.commons.dom.isOffscreen(el));
   });
 
-  it('should detect elements positioned outside the right edge on RTL documents', function() {
+  it('should detect elements positioned outside the right edge on RTL documents', function () {
     document.body.style.direction = 'rtl';
     fixture.innerHTML =
       '<div id="target" style="position: absolute; width: 50px; right: -151px;">Offscreen?</div>';
@@ -107,7 +107,7 @@ describe('dom.isOffscreen', function() {
     assert.isTrue(axe.commons.dom.isOffscreen(el));
   });
 
-  it('should NOT detect elements positioned outside the left edge on RTL documents', function() {
+  it('should NOT detect elements positioned outside the left edge on RTL documents', function () {
     document.body.style.direction = 'rtl';
     fixture.innerHTML =
       '<div id="target" style="position: absolute; width: 50px; left: -51px;">Offscreen?</div>';
@@ -116,7 +116,7 @@ describe('dom.isOffscreen', function() {
     assert.isFalse(axe.commons.dom.isOffscreen(el));
   });
 
-  it('should not detect elements positioned because of a scroll', function() {
+  it('should not detect elements positioned because of a scroll', function () {
     fixture.innerHTML =
       '<div id="scrollable" style="max-height:20px;overflow:scroll">' +
       '<div id="visible">goobye</div>' +
@@ -130,9 +130,13 @@ describe('dom.isOffscreen', function() {
     assert.isFalse(axe.commons.dom.isOffscreen(viz));
   });
 
+  it('should return undefined if actual ndoe is undefined', function () {
+    assert.isUndefined(axe.commons.dom.isOffscreen());
+  });
+
   (shadowSupport.v1 ? it : xit)(
     'should detect on screen shadow nodes',
-    function() {
+    function () {
       fixture.innerHTML = '<div></div>';
       var shadow = fixture.querySelector('div').attachShadow({ mode: 'open' });
       shadow.innerHTML = '<div id="target">Offscreen?</div>';
@@ -144,7 +148,7 @@ describe('dom.isOffscreen', function() {
 
   (shadowSupport.v1 ? it : xit)(
     'should detect off screen shadow nodes',
-    function() {
+    function () {
       fixture.innerHTML = '<div></div>';
       var shadow = fixture.querySelector('div').attachShadow({ mode: 'open' });
       shadow.innerHTML =
