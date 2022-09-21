@@ -172,7 +172,7 @@ describe('focusable-not-tabbable', function () {
     assert.isFalse(check.evaluate.apply(checkContext, params));
   });
 
-  it('returns false when control has 0 width and height and pointer events: none (focus trap bumper)', () => {
+  it('returns undefined when control has 0 width and height and pointer events: none (focus trap bumper)', () => {
     var params = checkSetup(
       '<div id="target" aria-hidden="true" tabindex="0" style="pointer-events: none"></div>'
     );
