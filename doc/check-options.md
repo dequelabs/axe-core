@@ -31,6 +31,8 @@
   - [p-as-heading](#p-as-heading)
   - [avoid-inline-spacing](#avoid-inline-spacing)
   - [scope-value](#scope-value)
+  - [target-offset](#target-offset)
+  - [target-size](#target-size)
   - [region](#region)
   - [inline-style-property](#inline-style-property)
 
@@ -486,6 +488,18 @@ h6:not([role]),
 | Option   | Default                                                   | Description                |
 | -------- | :-------------------------------------------------------- | :------------------------- |
 | `values` | <pre lang=js>['row', 'col', 'rowgroup', 'colgroup']</pre> | List of valid scope values |
+
+### target-offset
+
+| Option      | Default | Description                                                                                                |
+| ----------- | :------ | :--------------------------------------------------------------------------------------------------------- |
+| `minOffset` | `24`    | Minimum space required from the farthest edge of the target, to the closest edge of the neighboring target |
+
+### target-size
+
+| Option    | Default | Description                                                                                              |
+| --------- | :------ | :------------------------------------------------------------------------------------------------------- |
+| `minSize` | `24`    | Minimum width and height a component should have, that is not obscured by some other interactive element |
 
 ### region
 
