@@ -214,7 +214,7 @@ describe('focusable-disabled', function () {
 
   it('returns undefined when control has 0 width and height and pointer events: none (focus trap bumper)', () => {
     var params = checkSetup(
-      '<div id="target" aria-hidden="true" tabindex="0" style="pointer-events: none"></div>'
+      '<button id="target" aria-hidden="true" style="pointer-events: none; width: 0; height: 0; margin: 0; padding: 0; border: 0"></button>'
     );
     assert.isUndefined(check.evaluate.apply(checkContext, params));
   });
