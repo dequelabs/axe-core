@@ -121,7 +121,7 @@ describe('utils.matches', function () {
       assert.isTrue(matches(virtualNode, '[foo~="baz"]'));
     });
 
-    it('returns true if attribute matches not having value', function () {
+    it('returns true if attribute matches having an empty value', function () {
       var virtualNode = queryFixture(
         '<span id="target" foo="" bar="foo" baz="bar"></span>'
       );
