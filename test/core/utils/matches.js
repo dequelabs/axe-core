@@ -128,6 +128,13 @@ describe('utils.matches', function () {
       assert.isTrue(matches(virtualNode, '[foo=""]'));
     });
 
+    it('returns true if attribute matches not having value', function () {
+      var virtualNode = queryFixture(
+        '<span id="target" foo bar="foo" baz="bar"></span>'
+      );
+      assert.isTrue(matches(virtualNode, '[foo=""]'));
+    });
+
     it('returns false if attribute should not have value', function () {
       var virtualNode = queryFixture(
         '<span id="target" foo="bar baz" bar="foo" baz="bar"></span>'
