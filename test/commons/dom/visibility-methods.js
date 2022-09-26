@@ -172,86 +172,99 @@ describe('dom.visibility-methods', function () {
   });
 
   describe('overflowHidden', function () {
-    it('should return true for element with "overflow:hidden" and "width:0`', function () {
+    it('should return true for element with "overflow:hidden" and small width', function () {
       var vNode = queryFixture(
-        '<div id="target" style="position: absolute; overflow: hidden; width: 0">overflow hidden</div>'
+        '<div id="target" style="overflow: hidden; width: 1px;">Hello world</div>'
       );
       assert.isTrue(overflowHidden(vNode));
     });
 
-    it('should return true for element with "overflow:hidden" and "height:0`', function () {
+    it('should return true for element with "overflow:hidden" and small height', function () {
       var vNode = queryFixture(
-        '<div id="target" style="position: absolute; overflow: hidden; height: 0">overflow hidden</div>'
+        '<div id="target" style="overflow: hidden; height: 1px;">Hello world</div>'
       );
       assert.isTrue(overflowHidden(vNode));
     });
 
-    it('should return true for element with "overflow:hidden" and "width:1`', function () {
+    it('should return true for parent with "overflow: hidden" and element outside parent rect', function () {
       var vNode = queryFixture(
-        '<div id="target" style="position: absolute; overflow: hidden; width: 1px">overflow hidden</div>'
+        '<div style="overflow: hidden; width: 50px;">' +
+          '<div id="target" style="margin-left: 100px;">Hello world</div>' +
+          '</div>'
       );
       assert.isTrue(overflowHidden(vNode));
     });
 
-    it('should return true for element with "overflow:hidden" and "height:1`', function () {
+    it('should return true for ancestor with "overflow: hidden" and element outside ancestor rect', function () {
       var vNode = queryFixture(
-        '<div id="target" style="position: absolute; overflow: hidden; height: 1px">overflow hidden</div>'
+        '<div style="overflow: hidden; width: 50px;">' +
+          '<div>' +
+          '<div>' +
+          '<div id="target" style="margin-left: 100px;">Hello world</div>' +
+          '</div>' +
+          '</div>' +
+          '</div>'
       );
       assert.isTrue(overflowHidden(vNode));
     });
 
-    it('should return true for element with "overflow:hidden" and width > 1', function () {
+    it('should return true for multiple ancestors with "overflow: hidden" and element outside one ancestor rect', function () {
       var vNode = queryFixture(
-        '<div id="target" style="position: absolute; overflow: hidden; width: 2px">overflow hidden</div>'
+        '<div style="overflow: hidden; width: 50px;">' +
+          '<div>' +
+          '<div style="overflow: hidden; width: 500px">' +
+          '<div id="target" style="margin-left: 100px;">Hello world</div>' +
+          '</div>' +
+          '</div>' +
+          '</div>'
+      );
+      assert.isTrue(overflowHidden(vNode));
+    });
+
+    it('should return true for element barely inside "overflow: hidden" parent using floating point', () => {
+      var vNode = queryFixture(
+        '<div style="overflow: hidden; width: 50.5px;">' +
+          '<div id="target" style="margin-left: 50px;">Hello world</div>' +
+          '</div>'
+      );
+      assert.isTrue(overflowHidden(vNode));
+    });
+
+    it('should return false for element with "overflow:hidden" and width larger than 1px', function () {
+      var vNode = queryFixture(
+        '<div id="target" style="overflow: hidden; width: 2px;">Hello world</div>'
       );
       assert.isFalse(overflowHidden(vNode));
     });
 
-    it('should return true for element with "overflow:hidden" and height > 1', function () {
+    it('should return false for element with "overflow:hidden" and height larger than 1px', function () {
       var vNode = queryFixture(
-        '<div id="target" style="position: absolute; overflow: hidden; height: 2px">overflow hidden</div>'
+        '<div id="target" style="overflow: hidden; height: 2px;">Hello world</div>'
       );
       assert.isFalse(overflowHidden(vNode));
     });
 
-    it('should return false for element with "position:fixed`', function () {
+    it('should return false for element with just "overflow:hidden"', function () {
       var vNode = queryFixture(
-        '<div id="target" style="position: fixed; overflow: hidden; width: 0">overflow hidden</div>'
+        '<div id="target" style="overflow: hidden;">Hello world</div>'
       );
       assert.isFalse(overflowHidden(vNode));
     });
 
-    it('should return false for element with "position:relative`', function () {
-      var vNode = queryFixture(
-        '<div id="target" style="position: relative; overflow: hidden; width: 0">overflow hidden</div>'
-      );
+    it('should return false for element without "overflow:hidden"', function () {
+      var vNode = queryFixture('<div id="target">Hello world</div>');
       assert.isFalse(overflowHidden(vNode));
     });
 
-    it('should return false for element without position', function () {
+    it('should return false for multiple ancestors with "overflow: hidden" and element is inside all ancestor rects', function () {
       var vNode = queryFixture(
-        '<div id="target" style="overflow: hidden; width: 0">overflow hidden</div>'
-      );
-      assert.isFalse(overflowHidden(vNode));
-    });
-
-    it('should return false for element with "overflow:visible`', function () {
-      var vNode = queryFixture(
-        '<div id="target" style="position: absolute; overflow: visible; width: 0">overflow hidden</div>'
-      );
-      assert.isFalse(overflowHidden(vNode));
-    });
-
-    it('should return false for element with "overflow:auto`', function () {
-      var vNode = queryFixture(
-        '<div id="target" style="position: absolute; overflow: auto; width: 0">overflow hidden</div>'
-      );
-      assert.isFalse(overflowHidden(vNode));
-    });
-
-    it('should return false for element without overflow', function () {
-      var vNode = queryFixture(
-        '<div id="target" style="position: absolute; width: 0">overflow hidden</div>'
+        '<div style="overflow: hidden; width: 101px;">' +
+          '<div>' +
+          '<div style="overflow: hidden; width: 500px">' +
+          '<div id="target" style="margin-left: 100px;">Hello world</div>' +
+          '</div>' +
+          '</div>' +
+          '</div>'
       );
       assert.isFalse(overflowHidden(vNode));
     });

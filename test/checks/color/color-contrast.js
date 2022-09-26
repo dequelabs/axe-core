@@ -895,5 +895,31 @@ describe('color-contrast', function () {
       );
       assert.isTrue(contrastEvaluate.apply(checkContext, params));
     });
+
+    it('passes for element outside overflow:hidden', function () {
+      var params = checkSetup(`
+        <style>
+          .container {
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+          }
+          .foo * {
+            width: 200px;
+            height: 200px;
+          }
+          #target {
+            color: #eee;
+          }
+        </style>
+        <div class="container">
+          <div class="foo" id="foo">
+            <div id="one">hello</div>
+            <div id="target">goodbye</div>
+          </div>
+        </div>
+      `);
+      assert.isTrue(contrastEvaluate.apply(checkContext, params));
+    });
   });
 });
