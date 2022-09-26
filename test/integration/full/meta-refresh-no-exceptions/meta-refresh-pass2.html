@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf8" />
-    <title>Meta-refresh-no-exceptions fail 2</title>
-    <!-- Greater than 20 hour is still not allowed at Level AAA -->
-    <meta http-equiv="refresh" content="90000; https://deque.com/">
+    <title>Meta-refresh-no-exceptions pass 2</title>
+    <!-- "-10" is not valid, this will be ignored -->
+    <meta http-equiv="refresh" content="-10 https://deque.com/" />
     <link
       rel="stylesheet"
       type="text/css"
@@ -23,7 +23,7 @@
   </head>
   <body>
     <div id="mocha"></div>
-    <script src="meta-refresh-fail.js"></script>
+    <script src="meta-refresh-pass.js"></script>
     <script src="/test/integration/adapter.js"></script>
   </body>
 </html>
