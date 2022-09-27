@@ -10,11 +10,5 @@
   },
   "all": [],
   "any": [],
-  "none": [
-    "fallbackrole",
-    "invalidrole",
-    "abstractrole",
-    "unsupportedrole",
-    "deprecatedrole"
-  ]
+  "none": ["invalidrole", "abstractrole", "unsupportedrole", "deprecatedrole"]
 }
