@@ -40,6 +40,14 @@ describe('widget-not-inline-matches', function () {
       assert.isTrue(rule.matches(node, vNode));
     });
 
+    it('returns false for button with tabindex="-1"', function () {
+      var vNode = queryFixture(
+        '<div role="button" tabindex="-1" id="target"></div>'
+      );
+      var node = vNode.actualNode;
+      assert.isFalse(rule.matches(node, vNode));
+    });
+
     it('returns false for a non-tabbable button (widgets)', function () {
       var vNode = queryFixture('<div role="button" id="target"></div>');
       var node = vNode.actualNode;
