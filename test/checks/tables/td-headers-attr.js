@@ -123,4 +123,14 @@ describe('td-headers-attr', function () {
     var node = fixture.querySelector('table');
     assert.isTrue(check.call(checkContext, node));
   });
+
+  it('returns true if td[headers] has aria-hidden=true', function () {
+    fixtureSetup(
+      '<table>' +
+        '  <tr> <th>Hello</th> <td headers="h1" aria-hidden="true">goodbye</td> </tr>' +
+        '</table>'
+    );
+    var node = fixture.querySelector('table');
+    assert.isTrue(check.call(checkContext, node));
+  });
 });
