@@ -1,3 +1,5 @@
+var execSync = require('child_process').execSync;
+
 /*eslint
 camelcase: ["error", {"properties": "never"}]
 */
@@ -231,7 +233,7 @@ module.exports = function (grunt) {
       axe: {
         options: { spawn: false },
         files: ['lib/**/*', 'Gruntfile.js'],
-        tasks: ['build', 'notify', 'test']
+        tasks: ['build', 'prettier', 'notify', 'test']
       },
       tests: {
         options: { spawn: false },
@@ -256,7 +258,16 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('translate', ['validate', 'esbuild', 'add-locale:newLang']);
+  grunt.registerTask('prettier', '', function () {
+    const results = execSync('npm run postbuild');
+    grunt.log.writeln(results);
+  });
+
+  grunt.registerTask('translate', [
+    'validate',
+    'esbuild',
+    'add-locale:newLang'
+  ]);
   grunt.registerTask('build', [
     'clean:core',
     'validate',
@@ -268,7 +279,8 @@ module.exports = function (grunt) {
     'uglify',
     'aria-supported',
     'add-locale:template',
-    'bytesize',
+    'prettier',
+    'bytesize'
   ]);
   grunt.registerTask('default', ['build']);
   grunt.registerTask('dev', ['watch']);

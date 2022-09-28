@@ -1,7 +1,7 @@
 {
   "description": "valid-lang test",
   "rule": "valid-lang",
-  "violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"]],
+  "violations": [["#fail1"], ["#fail2"], ["#fail3"], ["#fail4"], ["#fail5"]],
   "passes": [
     ["#pass1"],
     ["#pass2"],

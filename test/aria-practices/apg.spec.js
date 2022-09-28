@@ -6,7 +6,7 @@ const { getWebdriver, connectToChromeDriver } = require('./run-server');
 const { assert } = require('chai');
 const globby = require('globby');
 
-describe('aria-practices', function() {
+describe('aria-practices', function () {
   // Use path.resolve rather than require.resolve because APG has no package.json
   const apgPath = path.resolve(__dirname, '../../node_modules/aria-practices/');
   const filePaths = globby.sync(`${apgPath}/examples/**/*.html`);
@@ -36,6 +36,7 @@ describe('aria-practices', function() {
   const disabledRules = {
     '*': [
       'color-contrast',
+      'target-size',
       'heading-order', // w3c/aria-practices#2119
       'list', // w3c/aria-practices#2118
       'scrollable-region-focusable' // w3c/aria-practices#2114

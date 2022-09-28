@@ -84,15 +84,14 @@
     "test:unit:virtual-rules": "npm run test:unit -- testDirs=virtual-rules",
     "integration": "node test/integration/full/test-webdriver.js",
     "integration:apg": "mocha test/aria-practices/*.spec.js",
+    "integration:act": "mocha test/act-rules/*.spec.js",
     "integration:chrome": "npm run integration -- browser=Chrome",
     "integration:firefox": "npm run integration -- browser=Firefox",
-    "integration:ie": "npm run integration -- browser=\"Internet Explorer\"",
     "test:integration": "npm run test:integration:chrome",
     "test:integration:chrome": "start-server-and-test 9876 integration:chrome",
     "test:integration:firefox": "start-server-and-test 9876 integration:firefox",
-    "test:integration:ie": "start-server-and-test 9876 integration:ie",
     "test:examples": "node ./doc/examples/test-examples",
-    "test:act": "karma start test/act-mapping/karma.config.js",
+    "test:act": "start-server-and-test 9876 integration:act",
     "test:act:debug": "npm run test:act -- --no-single-run --browsers=Chrome",
     "test:apg": "start-server-and-test 9876 integration:apg",
     "test:locales": "mocha test/test-locales.js",
@@ -105,8 +104,11 @@
     "next-release": "standard-version --scripts.prebump=./build/next-version.js --skip.commit=true --skip.tag=true",
     "sri-update": "grunt build && node build/sri-update && git add sri-history.json",
     "sri-validate": "node build/sri-update --validate",
-    "fmt": "prettier --write .*.json *.{json,md,js} **/*.ts './{.circleci,.github,build,doc,lib,locales,test,typings}/**/*.{json,md,js,ts,html}'",
-    "prepare": "husky install"
+    "fmt": "prettier --write .",
+    "prepare": "husky install",
+    "prebuild": "node ./build/check-node-version.js",
+    "pretest": "node ./build/check-node-version.js",
+    "postbuild": "prettier --write ./locales/_template.json ./doc/rule-descriptions.md"
   },
   "devDependencies": {
     "@axe-core/webdriverjs": "^4.4.3",
@@ -115,7 +117,6 @@
     "@babel/preset-env": "^7.18.6",
     "@babel/runtime-corejs3": "^7.18.6",
     "@deque/dot": "^1.1.5",
-    "act-rules.github.io": "github:act-rules/act-rules.github.io#a759e99f",
     "aria-practices": "github:w3c/aria-practices#edbf534",
     "aria-query": "^5.0.0",
     "browser-driver-manager": "1.0.4",
@@ -174,6 +175,7 @@
     "typedarray": "^0.0.6",
     "typescript": "^4.7.4",
     "uglify-js": "^3.16.2",
+    "wcag-act-rules": "github:w3c/wcag-act-rules#a60a4e62f2",
     "weakmap-polyfill": "^2.0.4"
   },
   "lint-staged": {

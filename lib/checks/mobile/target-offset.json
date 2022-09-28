@@ -1,0 +1,14 @@
+{
+  "id": "target-offset",
+  "evaluate": "target-offset-evaluate",
+  "options": {
+    "minOffset": 24
+  },
+  "metadata": {
+    "impact": "serious",
+    "messages": {
+      "pass": "Target has sufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)",
+      "fail": "Target has insufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)"
+    }
+  }
+}

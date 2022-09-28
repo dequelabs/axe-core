@@ -1,0 +1,64 @@
+<style>
+  /* Ensure sufficient space between tests */
+  p {
+    margin: 30px;
+  }
+</style>
+
+<p>
+  <button id="pass1" style="display: inline-block; margin-right: 20px">
+    x
+  </button>
+  <select id="pass2">
+    <option>opt 1</option>
+    <option>opt 2</option>
+  </select>
+  <textarea id="pass3"></textarea>
+</p>
+
+<!-- Failed examples -->
+<p>
+  <button id="fail1">x</button
+  ><span role="button" tabindex="0" id="fail2">x</span>
+</p>
+
+<ul>
+  <li><a href="#" id="fail3">Item1</a></li>
+  <li><a href="#" id="fail4">Item2</a></li>
+</ul>
+
+<p>
+  <input type="checkbox" id="fail5" /><input type="checkbox" id="fail6" /><input
+    type="text"
+    id="pass-adjacent"
+  />
+</p>
+
+<!-- Inapplicable -->
+<p>
+  The quick <a href="#" id="inapplicable1">brown</a><br />
+  fox jumped <a href="#" id="inapplicable2">over</a> the lazy dog.
+</p>
+<ul>
+  <li>Inapplicable <a href="#" id="inapplicable3">Item 1</a></li>
+  <li>Inapplicable <a href="#" id="inapplicable4">Item 2</a></li>
+</ul>
+
+<svg>
+  <a href="#" id="inapplicable5"><text y="15">Hello</text></a>
+  <circle
+    tabindex="0"
+    role="button"
+    cx="50"
+    cy="50"
+    r="40"
+    stroke="black"
+    stroke-width="3"
+    fill="red"
+  />
+</svg>
+
+<img usemap="#imagemap" src="#" alt="" />
+<map name="imagemap">
+  <area id="inapplicable6" shape="circle" coords="75 75 75" href="#" />
+</map>

@@ -78,9 +78,9 @@ The [axe-core API](doc/API.md) fully supports the following browsers:
 - Google Chrome v42 and above
 - Mozilla Firefox v38 and above
 - Apple Safari v7 and above
-- Internet Explorer v11
+- Internet Explorer v11 (DEPRECATED)
 
-Support means that we will fix bugs and attempt to test each browser regularly. Only Firefox, Chrome, and Internet Explorer 11 are currently tested on every pull request.
+Support means that we will fix bugs and attempt to test each browser regularly. Only Chrome and Firefox are currently tested on every pull request.
 
 There is limited support for JSDOM. We will attempt to make all rules compatible with JSDOM but where this is not possible, we recommend turning those rules off. Currently the `color-contrast` rule is known not to work with JSDOM.
 
@@ -127,8 +127,7 @@ axe.configure({
       },
       'aria-errormessage': {
         // Note: doT (https://github.com/olado/dot) templates are supported here.
-        fail:
-          'Der Wert der aria-errormessage ${data.values}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
+        fail: 'Der Wert der aria-errormessage ${data.values}` muss eine Technik verwenden, um die Message anzukündigen (z. B., aria-live, aria-describedby, role=alert, etc.).'
       }
       // ...
     }

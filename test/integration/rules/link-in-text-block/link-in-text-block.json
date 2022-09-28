@@ -1,6 +1,17 @@
 {
   "description": "link-in-text-block tests",
   "rule": "link-in-text-block",
-  "violations": [["#fail1"]],
-  "passes": [["#pass1"], ["#pass2"]]
+  "violations": [
+    ["#fail-insufficient-text-contrast"],
+    ["#fail-insufficient-background-contrast"]
+  ],
+  "passes": [
+    ["#pass-default-styling"],
+    ["#pass-default-styling-aria-hidden"],
+    ["#pass-different-weight"],
+    ["#pass-different-size"],
+    ["#pass-background-color"],
+    ["#pass-text-color"]
+  ],
+  "incomplete": [["#incomplete-low-contrast-parent-has-gradient"]]
 }

@@ -13,7 +13,7 @@ We currently test the following AT combinations for support
 
 1. VoiceOver and Safari on OS X
 1. VoiceOver and Safari on iOS
-1. JAWS and IE11 on Windows
+1. JAWS and IE11 on Windows (DEPRECATED)
 1. JAWS and Chrome on Windows
 1. NVDA and Firefox on Windows
 1. Talkback and Chrome on Android

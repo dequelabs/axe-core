@@ -175,7 +175,7 @@
     },
     "frame-title-unique": {
       "description": "Ensures <iframe> and <frame> elements contain a unique title attribute",
-      "help": "Frames should have a unique title attribute"
+      "help": "Frames must have a unique title attribute"
     },
     "frame-title": {
       "description": "Ensures <iframe> and <frame> elements have an accessible name",
@@ -373,6 +373,10 @@
       "description": "Ensure that tables with a caption use the <caption> element.",
       "help": "Data or header cells must not be used to give caption to a data table."
     },
+    "target-size": {
+      "description": "Ensure touch target have sufficient size and space",
+      "help": "All touch targets must be 24px large, or leave sufficient space"
+    },
     "td-has-header": {
       "description": "Ensure that each non-empty data cell in a <table> larger than 3 by 3  has one or more table headers",
       "help": "Non-empty <td> elements in larger <table> must have an associated table header"
@@ -472,7 +476,8 @@
       "pass": "Required ARIA children are present",
       "fail": {
         "singular": "Required ARIA child role not present: ${data.values}",
-        "plural": "Required ARIA children role not present: ${data.values}"
+        "plural": "Required ARIA children role not present: ${data.values}",
+        "unallowed": "Element has children which are not allowed (see related nodes)"
       },
       "incomplete": {
         "singular": "Expecting ARIA child role to be added: ${data.values}",
@@ -505,7 +510,8 @@
         "noId": "ARIA attribute element ID does not exist on the page: ${data.needsReview}",
         "noIdShadow": "ARIA attribute element ID does not exist on the page or is a descendant of a different shadow DOM tree: ${data.needsReview}",
         "ariaCurrent": "ARIA attribute value is invalid and will be treated as \"aria-current=true\": ${data.needsReview}",
-        "idrefs": "Unable to determine if ARIA attribute element ID exists on the page: ${data.needsReview}"
+        "idrefs": "Unable to determine if ARIA attribute element ID exists on the page: ${data.needsReview}",
+        "empty": "ARIA attribute value is ignored while empty: ${data.needsReview}"
       }
     },
     "aria-valid-attr": {
@@ -607,12 +613,19 @@
         "pseudoContent": "Element's background color could not be determined due to a pseudo element"
       }
     },
+    "link-in-text-block-style": {
+      "pass": "Links can be distinguished from surrounding text by visual styling",
+      "fail": "The link has no styling (such as underline) to distinguish it from the surrounding text"
+    },
     "link-in-text-block": {
       "pass": "Links can be distinguished from surrounding text in some way other than by color",
-      "fail": "Links need to be distinguished from surrounding text in some way other than by color",
+      "fail": {
+        "fgContrast": "The link has insufficient color contrast of ${data.contrastRatio}:1 with the surrounding text. (Minimum contrast is ${data.requiredContrastRatio}:1, link text: ${data.nodeColor}, surrounding text: ${data.parentColor})",
+        "bgContrast": "The link background has insufficient color contrast of ${data.contrastRatio} (Minimum contrast is ${data.requiredContrastRatio}:1, link background color: ${data.nodeBackgroundColor}, surrounding background color: ${data.parentBackgroundColor})"
+      },
       "incomplete": {
-        "default": "Unable to determine contrast ratio",
-        "bgContrast": "Element's contrast ratio could not be determined. Check for a distinct hover/focus style",
+        "default": "Element's foreground contrast ratio could not be determined",
+        "bgContrast": "Element's background contrast ratio could not be determined",
         "bgImage": "Element's contrast ratio could not be determined due to a background image",
         "bgGradient": "Element's contrast ratio could not be determined due to a background gradient",
         "imgNode": "Element's contrast ratio could not be determined because element contains an image node",
@@ -810,6 +823,20 @@
       "pass": "<meta> tag does not disable zooming on mobile devices",
       "fail": "${data} on <meta> tag disables zooming on mobile devices"
     },
+    "target-offset": {
+      "pass": "Target has sufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)",
+      "fail": "Target has insufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)"
+    },
+    "target-size": {
+      "pass": {
+        "default": "Control has sufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)",
+        "obscured": "Control is ignored because it is fully obscured and thus not clickable"
+      },
+      "fail": {
+        "default": "Element has insufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)",
+        "partiallyObscured": "Element has insufficient size because it is partially obscured (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)"
+      }
+    },
     "header-present": {
       "pass": "Page has a heading",
       "fail": "Page does not have a heading"
@@ -964,7 +991,8 @@
         "default": "Element's default semantics were not overridden with role=\"none\" or role=\"presentation\"",
         "globalAria": "Element's role is not presentational because it has a global ARIA attribute",
         "focusable": "Element's role is not presentational because it is focusable",
-        "both": "Element's role is not presentational because it has a global ARIA attribute and is focusable"
+        "both": "Element's role is not presentational because it has a global ARIA attribute and is focusable",
+        "iframe": "Using the \"title\" attribute on an ${data.nodeName} element with a presentational role behaves inconsistently between screen readers"
       }
     },
     "role-none": {
@@ -993,7 +1021,8 @@
     },
     "same-caption-summary": {
       "pass": "Content of summary attribute and <caption> are not duplicated",
-      "fail": "Content of summary attribute and <caption> element are identical"
+      "fail": "Content of summary attribute and <caption> element are identical",
+      "incomplete": "Unable to determine if <table> element has a caption"
     },
     "scope-value": {
       "pass": "Scope attribute is used correctly",

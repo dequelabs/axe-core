@@ -1,28 +1,23 @@
-describe('landmark-no-duplicate-main test failure', function() {
+describe('landmark-no-duplicate-main test failure', function () {
   'use strict';
 
   var results;
-  var isIE11 = axe.testUtils.isIE11;
 
-  before(function(done) {
-    if (isIE11) {
-      this.skip();
-    } else {
-      axe.testUtils.awaitNestedLoad(function() {
-        axe.run(
-          { runOnly: { type: 'rule', values: ['no-autoplay-audio'] } },
-          function(err, r) {
-            assert.isNull(err);
-            results = r;
-            done();
-          }
-        );
-      });
-    }
+  before(function (done) {
+    axe.testUtils.awaitNestedLoad(function () {
+      axe.run(
+        { runOnly: { type: 'rule', values: ['no-autoplay-audio'] } },
+        function (err, r) {
+          assert.isNull(err);
+          results = r;
+          done();
+        }
+      );
+    });
   });
 
-  describe('passes', function() {
-    it('should find 5', function() {
+  describe('passes', function () {
+    it('should find 5', function () {
       assert.isDefined(results.passes);
 
       var passNodes = results.passes[0].nodes;
@@ -35,16 +30,16 @@ describe('landmark-no-duplicate-main test failure', function() {
     });
   });
 
-  it('should find 0 violations', function() {
+  it('should find 0 violations', function () {
     assert.lengthOf(results.violations, 0);
   });
 
-  it('should find 0 inapplicable', function() {
+  it('should find 0 inapplicable', function () {
     assert.lengthOf(results.inapplicable, 0);
   });
 
-  describe('incomplete', function() {
-    it('should find 4', function() {
+  describe('incomplete', function () {
+    it('should find 4', function () {
       assert.isDefined(results.incomplete);
 
       var incompleteNodes = results.incomplete[0].nodes;

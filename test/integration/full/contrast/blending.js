@@ -1,6 +1,4 @@
-var isIE11 = axe.testUtils.isIE11;
-
-describe('color-contrast blending test', function() {
+describe('color-contrast blending test', function () {
   var include = [];
   var resultElms = [];
   var expected = [
@@ -140,7 +138,7 @@ describe('color-contrast blending test', function() {
     'soft-light',
     'difference',
     'exclusion'
-  ].forEach(function(blendMode) {
+  ].forEach(function (blendMode) {
     var nodes = testGroup.cloneNode(true);
     var group = testGroup.cloneNode();
 
@@ -148,7 +146,7 @@ describe('color-contrast blending test', function() {
     heading.textContent = blendMode;
     fixture.appendChild(heading);
 
-    Array.from(nodes.children).forEach(function(node, index) {
+    Array.from(nodes.children).forEach(function (node, index) {
       var id = node.id;
       var target = node.querySelector('#' + id + '-target');
       var result = node.querySelector('#' + id + '-result');
@@ -168,7 +166,7 @@ describe('color-contrast blending test', function() {
     fixture.appendChild(group);
   });
   var testElms = Array.from(document.querySelectorAll('.test-group > div'));
-  testElms.forEach(function(testElm) {
+  testElms.forEach(function (testElm) {
     var id = testElm.id;
     var target = testElm.querySelector('#' + id + '-target');
     var result = testElm.querySelector('#' + id + '-result');
@@ -176,16 +174,11 @@ describe('color-contrast blending test', function() {
     resultElms.push(result);
   });
 
-  before(function(done) {
-    // mix-blend-mode is not supported on IE11
-    // @see https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode
-    if (isIE11) {
-      this.skip();
-    } else {
-      axe.run({ include: include }, { runOnly: ['color-contrast'] }, function(
-        err,
-        res
-      ) {
+  before(function (done) {
+    axe.run(
+      { include: include },
+      { runOnly: ['color-contrast'] },
+      function (err, res) {
         assert.isNull(err);
 
         // don't care where the result goes as we just want to
@@ -194,8 +187,8 @@ describe('color-contrast blending test', function() {
           .concat(res.passes)
           .concat(res.violations)
           .concat(res.incomplete);
-        results.forEach(function(result) {
-          result.nodes.forEach(function(node) {
+        results.forEach(function (result) {
+          result.nodes.forEach(function (node) {
             var bgColor = node.any[0].data.bgColor;
             var id = node.target[0].substring(
               0,
@@ -207,12 +200,12 @@ describe('color-contrast blending test', function() {
         });
 
         done();
-      });
-    }
+      }
+    );
   });
 
-  resultElms.forEach(function(elm, index) {
-    it('produces the correct blended color for ' + elm.id, function() {
+  resultElms.forEach(function (elm, index) {
+    it('produces the correct blended color for ' + elm.id, function () {
       var style = window.getComputedStyle(elm);
       assert.equal(style.getPropertyValue('background-color'), expected[index]);
     });

@@ -1,19 +1,17 @@
-describe('only-dlitems', function() {
+describe('only-dlitems', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
   var checkSetup = axe.testUtils.checkSetup;
   var shadowSupport = axe.testUtils.shadowSupport;
-  var isIE11 = axe.testUtils.isIE11;
-
   var checkContext = axe.testUtils.MockCheckContext();
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     checkContext.reset();
   });
 
-  it('should return false if the list has no contents', function() {
+  it('should return false if the list has no contents', function () {
     var checkArgs = checkSetup('<dl id="target"></dl>');
 
     assert.isFalse(
@@ -23,7 +21,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return true if the list has non-dd/dt contents', function() {
+  it('should return true if the list has non-dd/dt contents', function () {
     var checkArgs = checkSetup('<dl id="target"><p>Not a list</p></dl>');
 
     assert.isTrue(
@@ -34,7 +32,7 @@ describe('only-dlitems', function() {
     assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('p')]);
   });
 
-  it('should return true if the list has non-dd content through role change', function() {
+  it('should return true if the list has non-dd content through role change', function () {
     var checkArgs = checkSetup(
       '<dl id="target"><dd role="menuitem">Not a list</dd></dl>'
     );
@@ -46,7 +44,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return true if the list has non-dt content through role change', function() {
+  it('should return true if the list has non-dt content through role change', function () {
     var checkArgs = checkSetup(
       '<dl id="target"><dt role="menuitem">Not a list</dt></dl>'
     );
@@ -58,7 +56,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return false if the list has only a dd', function() {
+  it('should return false if the list has only a dd', function () {
     var checkArgs = checkSetup('<dl id="target"><dd>A list</dd></dl>');
 
     assert.isFalse(
@@ -68,7 +66,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return true if <link> is used along side dt with its role changed', function() {
+  it('should return true if <link> is used along side dt with its role changed', function () {
     var checkArgs = checkSetup(
       '<dl id="target"><link rel="stylesheet" href="theme.css"><dt role="menuitem">A list</dt></dl>'
     );
@@ -79,7 +77,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return false if the list has only a dt', function() {
+  it('should return false if the list has only a dt', function () {
     var checkArgs = checkSetup('<dl id="target"><dt>A list</dt></dl>');
 
     assert.isFalse(
@@ -89,7 +87,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return false if the list has dt and dd with child content', function() {
+  it('should return false if the list has dt and dd with child content', function () {
     var checkArgs = checkSetup(
       '<dl id="target"><dt><p>An item</p></dt><dd>A list</dd></dl>'
     );
@@ -101,7 +99,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return false if the list has dt and dd', function() {
+  it('should return false if the list has dt and dd', function () {
     var checkArgs = checkSetup(
       '<dl id="target"><dt>An item</dt><dd>A list</dd></dl>'
     );
@@ -113,7 +111,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return false if the list has dt, dd and a comment', function() {
+  it('should return false if the list has dt, dd and a comment', function () {
     var checkArgs = checkSetup(
       '<dl id="target"><dt>An item</dt><dd>A list</dd><!-- foo --></dl>'
     );
@@ -125,7 +123,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return true if the list has a dt and dd with other content', function() {
+  it('should return true if the list has a dt and dd with other content', function () {
     var checkArgs = checkSetup(
       '<dl id="target"><dt>Item one</dt><dd>Description</dd><p>Not a list</p></dl>'
     );
@@ -138,7 +136,7 @@ describe('only-dlitems', function() {
     assert.deepEqual(checkContext._relatedNodes, [fixture.querySelector('p')]);
   });
 
-  it('should return true if the list has a textNode as a child', function() {
+  it('should return true if the list has a textNode as a child', function () {
     var checkArgs = checkSetup(
       '<dl id="target"><!--hi--><dt>hi</dt>hello<dd>hi</dd></dl>'
     );
@@ -151,23 +149,19 @@ describe('only-dlitems', function() {
     assert.deepEqual(checkContext._relatedNodes, []);
   });
 
-  // This currently breaks in IE11
-  (isIE11 ? it.skip : it)(
-    'should return false if <link> is used along side dt',
-    function() {
-      var checkArgs = checkSetup(
-        '<dl id="target"><link rel="stylesheet" href="theme.css"><dt>A list</dt></dl>'
-      );
+  it('should return false if <link> is used along side dt', function () {
+    var checkArgs = checkSetup(
+      '<dl id="target"><link rel="stylesheet" href="theme.css"><dt>A list</dt></dl>'
+    );
 
-      assert.isFalse(
-        axe.testUtils
-          .getCheckEvaluate('only-dlitems')
-          .apply(checkContext, checkArgs)
-      );
-    }
-  );
+    assert.isFalse(
+      axe.testUtils
+        .getCheckEvaluate('only-dlitems')
+        .apply(checkContext, checkArgs)
+    );
+  });
 
-  it('should return false if <meta> is used along side dt', function() {
+  it('should return false if <meta> is used along side dt', function () {
     var checkArgs = checkSetup(
       '<dl id="target"><meta name="description" content=""><dt>A list</dt></dl>'
     );
@@ -179,7 +173,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return false if <script> is used along side dt', function() {
+  it('should return false if <script> is used along side dt', function () {
     var checkArgs = checkSetup(
       '<dl id="target"><script src="script.js"></script><dt>A list</dt></dl>'
     );
@@ -191,7 +185,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return false if <style> is used along side dt', function() {
+  it('should return false if <style> is used along side dt', function () {
     var checkArgs = checkSetup(
       '<dl id="target"><style></style><dt>A list</dt></dl>'
     );
@@ -203,7 +197,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return false if <template> is used along side dt', function() {
+  it('should return false if <template> is used along side dt', function () {
     var checkArgs = checkSetup(
       '<dl id="target"><template></template><dt>A list</dt></dl>'
     );
@@ -215,7 +209,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return false if the list has dt and dd inside a div group', function() {
+  it('should return false if the list has dt and dd inside a div group', function () {
     var checkArgs = checkSetup(
       '<dl id="target"><div><dt>An item</dt><dd>A list</dd></div></dl>'
     );
@@ -226,7 +220,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return true if the list has dt and dd inside a div group with a role', function() {
+  it('should return true if the list has dt and dd inside a div group with a role', function () {
     var checkArgs = checkSetup(
       '<dl id="target"><div role="listitem"><dt>An item</dt><dd>A list</dd></div></dl>'
     );
@@ -237,7 +231,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return true if the list mixed items inside a div group with a role', function() {
+  it('should return true if the list mixed items inside a div group with a role', function () {
     var checkArgs = checkSetup(
       '<dl id="target"><div><dt>An item</dt><dd>A list</dd><p>Not a list</p></div></dl>'
     );
@@ -248,7 +242,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return false if there is an empty div', function() {
+  it('should return false if there is an empty div', function () {
     var checkArgs = checkSetup('<dl id="target"><div></div></dl>');
     assert.isFalse(
       axe.testUtils
@@ -257,7 +251,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('returns false if there are display:none elements that normally would not be allowed', function() {
+  it('returns false if there are display:none elements that normally would not be allowed', function () {
     var checkArgs = checkSetup(
       '<dl id="target"> <dt>An item</dt> <dd>A list</dd> <h1 style="display:none">heading</h1> </dl>'
     );
@@ -268,7 +262,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return true if there is a div with text', function() {
+  it('should return true if there is a div with text', function () {
     var checkArgs = checkSetup('<dl id="target"><div>text</div></dl>');
     assert.isTrue(
       axe.testUtils
@@ -277,7 +271,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('returns false if there are visibility:hidden elements that normally would not be allowed', function() {
+  it('returns false if there are visibility:hidden elements that normally would not be allowed', function () {
     var checkArgs = checkSetup(
       '<dl id="target"> <dt>An item</dt> <dd>A list</dd> <h1 style="visibility:hidden">heading</h1> </dl>'
     );
@@ -288,7 +282,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('should return true if there is a div with non-dd / dt elements', function() {
+  it('should return true if there is a div with non-dd / dt elements', function () {
     var checkArgs = checkSetup('<dl id="target"><div> <p>text</p> </div></dl>');
     assert.isTrue(
       axe.testUtils
@@ -297,7 +291,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('returns false if there are aria-hidden=true elements that normally would not be allowed', function() {
+  it('returns false if there are aria-hidden=true elements that normally would not be allowed', function () {
     var checkArgs = checkSetup(
       '<dl id="target"> <dt>An item</dt> <dd>A list</dd> <h1 aria-hidden="true">heading</h1> </dl>'
     );
@@ -308,7 +302,7 @@ describe('only-dlitems', function() {
     );
   });
 
-  it('returns true if there are aria-hidden=false elements that normally would not be allowed', function() {
+  it('returns true if there are aria-hidden=false elements that normally would not be allowed', function () {
     var checkArgs = checkSetup(
       '<dl id="target"> <dt>An item</dt> <dd>A list</dd> <h1 aria-hidden="false">heading</h1> </dl>'
     );
@@ -321,7 +315,7 @@ describe('only-dlitems', function() {
 
   (shadowSupport.v1 ? it : xit)(
     'should return false in a shadow DOM pass',
-    function() {
+    function () {
       var node = document.createElement('div');
       node.innerHTML = '<dt>My list item </dt>';
       var shadow = node.attachShadow({ mode: 'open' });
@@ -338,7 +332,7 @@ describe('only-dlitems', function() {
 
   (shadowSupport.v1 ? it : xit)(
     'should return true in a shadow DOM fail',
-    function() {
+    function () {
       var node = document.createElement('div');
       node.innerHTML = '<p>Not a list</p>';
       var shadow = node.attachShadow({ mode: 'open' });
