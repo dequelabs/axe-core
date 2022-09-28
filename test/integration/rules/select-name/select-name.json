@@ -7,7 +7,10 @@
     ["#fail3"],
     ["#fail4"],
     ["#fail5"],
-    ["#fail6"]
+    ["#fail6"],
+    ["#fail7"],
+    ["#fail8"],
+    ["#fail9"]
   ],
   "passes": [
     ["#pass1"],
