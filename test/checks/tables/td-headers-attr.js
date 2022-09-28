@@ -1,15 +1,15 @@
-describe('td-headers-attr', function() {
+describe('td-headers-attr', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
   var checkContext = axe.testUtils.MockCheckContext();
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     checkContext.reset();
   });
 
-  it('returns true no headers attribute is present', function() {
+  it('returns true no headers attribute is present', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <th>hi</th> <td>hello</td> </tr>' +
@@ -22,7 +22,7 @@ describe('td-headers-attr', function() {
     );
   });
 
-  it('returns true if a valid header is present', function() {
+  it('returns true if a valid header is present', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <th id="hi">hello</th> </tr>' +
@@ -35,7 +35,7 @@ describe('td-headers-attr', function() {
     );
   });
 
-  it('returns true if multiple valid headers are present', function() {
+  it('returns true if multiple valid headers are present', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <th id="hi1">hello</th> <th id="hi2">hello</th> </tr>' +
@@ -48,7 +48,7 @@ describe('td-headers-attr', function() {
     );
   });
 
-  it('returns true with an empty header', function() {
+  it('returns true with an empty header', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <th id="hi1"></th> </tr>' +
@@ -61,7 +61,7 @@ describe('td-headers-attr', function() {
     );
   });
 
-  it('returns undefined if headers is empty', function() {
+  it('returns undefined if headers is empty', function () {
     fixture.innerHTML =
       '<table>' +
       '  <tr> <th id="hi"> </th> </tr>' +
@@ -74,7 +74,7 @@ describe('td-headers-attr', function() {
     );
   });
 
-  it('returns false if the header is a table cell', function() {
+  it('returns false if the header is a table cell', function () {
     var node;
 
     fixture.innerHTML =
@@ -109,7 +109,7 @@ describe('td-headers-attr', function() {
     );
   });
 
-  it('returns false if the header refers to the same cell', function() {
+  it('returns false if the header refers to the same cell', function () {
     fixture.innerHTML =
       '<table id="hi">' +
       '  <tr> <th>hello</th> </tr>' +

@@ -1,6 +1,7 @@
 {
   "id": "td-headers-attr",
   "selector": "table",
+  "matches": "table-or-grid-role-matches",
   "tags": ["cat.tables", "wcag2a", "wcag131", "section508", "section508.22.g"],
   "actIds": ["a25f45"],
   "metadata": {
