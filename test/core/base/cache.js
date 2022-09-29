@@ -117,9 +117,9 @@ describe('axe._cache', function () {
 
       it('should not evaluate creator if key already exists', function () {
         var spy = sinon.spy();
-        axe._cache.set('foo', spy);
+        axe._cache.set('foo', 'bar');
         axe._cache.get('foo', spy);
-        assert.isFalse(spy.calledOnce);
+        assert.isTrue(spy.notCalled);
       });
 
       it('should evaluate creator once', function () {
