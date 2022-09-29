@@ -119,10 +119,27 @@ describe('multiple-label', function () {
     assert.deepEqual(checkContext._relatedNodes, [l1, l3]);
   });
 
-  it('should return undefined if there are multiple explicit labels and one is visually', function () {
+  it('should return undefined if there are multiple explicit labels and one is visually hidden', function () {
     fixtureSetup(
       '<label for="me" id="l1">visible</label>' +
         '<label for="me" id="l2" style="opacity: 0">visible</label>' +
+        '<input id="me" type="text">'
+    );
+    var target = fixture.querySelector('#me');
+    var l1 = fixture.querySelector('#l1');
+    var l2 = fixture.querySelector('#l2');
+    assert.isUndefined(
+      axe.testUtils
+        .getCheckEvaluate('multiple-label')
+        .call(checkContext, target)
+    );
+    assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
+  });
+
+  it('should return undefined if there are multiple explicit labels and one is screen reader hidden', function () {
+    fixtureSetup(
+      '<label for="me" id="l1">visible</label>' +
+        '<label for="me" id="l2" aria-hidden="true">visible</label>' +
         '<input id="me" type="text">'
     );
     var target = fixture.querySelector('#me');
