@@ -22,6 +22,15 @@ describe('explicit-label', () => {
     assert.isFalse(checkEvaluate.apply(checkContext, params));
   });
 
+  it('returns false if an empty label is present that uses aria-labelledby', () => {
+    const params = checkSetup(
+      '<input type="text" id="target">' +
+        '<label for="target" aria-labelledby="lbl"></label>' +
+        '<span id="lbl">aria label</span>'
+    );
+    assert.isFalse(checkEvaluate.apply(checkContext, params));
+  });
+
   it('returns true if a non-empty label is present', () => {
     const params = checkSetup(
       '<label for="target">Text</label><input type="text" id="target">'
