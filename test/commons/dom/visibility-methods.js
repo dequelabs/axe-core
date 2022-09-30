@@ -107,7 +107,7 @@ describe('dom.visibility-methods', () => {
     () => {
       it('should return true for element with "content-visibility:hidden` ancestor', () => {
         const vNode = queryFixture(
-          '<div id="target" style="content-visibility: hidden;">'
+          '<div id="target" style="content-visibility: hidden;"></div>'
         );
         assert.isTrue(contentVisibiltyHidden(vNode, { isAncestor: true }));
       });
