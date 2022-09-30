@@ -5,6 +5,7 @@ describe('dom.isHiddenForEveryone', function () {
   var shadowSupported = axe.testUtils.shadowSupport.v1;
   var isHiddenForEveryone = axe.commons.dom.isHiddenForEveryone;
   var queryFixture = axe.testUtils.queryFixture;
+  var contentVisibilitySupported = CSS.supports('content-visibility: hidden');
 
   function createContentSlotted(mainProps, targetProps) {
     var group = document.createElement('div');
@@ -284,6 +285,26 @@ describe('dom.isHiddenForEveryone', function () {
       var vNode = axe.utils.querySelectorAll(tree, 'p')[0];
       var actual = isHiddenForEveryone(vNode);
       assert.isFalse(actual);
+    }
+  );
+
+  (contentVisibilitySupported ? it : xit)(
+    'should return true for `content-visibility: hidden` parent',
+    () => {
+      const vNode = queryFixture(
+        '<div style="content-visibility: hidden"><div id="target">Hidden</div></div>'
+      );
+      assert.isTrue(isHiddenForEveryone(vNode));
+    }
+  );
+
+  (contentVisibilitySupported ? it : xit)(
+    'should return false for `content-visibility: hidden`',
+    () => {
+      const vNode = queryFixture(
+        '<div id="target" style="content-visibility: hidden" id=></div>'
+      );
+      assert.isFalse(isHiddenForEveryone(vNode));
     }
   );
 
