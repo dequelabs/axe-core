@@ -302,7 +302,7 @@ describe('dom.isHiddenForEveryone', function () {
     'should return false for `content-visibility: hidden`',
     () => {
       const vNode = queryFixture(
-        '<div id="target" style="content-visibility: hidden" id=></div>'
+        '<div id="target" style="content-visibility: hidden"></div>'
       );
       assert.isFalse(isHiddenForEveryone(vNode));
     }
