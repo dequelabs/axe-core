@@ -86,6 +86,21 @@ describe('multiple-label', function () {
     assert.deepEqual(checkContext._relatedNodes, [l1]);
   });
 
+  it('should return undefined if there are multiple implicit labels and one is visually hidden', function () {
+    fixtureSetup(
+      '<label id="l2"><label id="l1" style="opacity: 0"><input type="text" id="target"></label></label>'
+    );
+    var target = fixture.querySelector('#target');
+    var l1 = fixture.querySelector('#l1');
+    var l2 = fixture.querySelector('#l2');
+    assert.isUndefined(
+      axe.testUtils
+        .getCheckEvaluate('multiple-label')
+        .call(checkContext, target)
+    );
+    assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
+  });
+
   it('should return undefined if there are multiple explicit labels but some are hidden', function () {
     fixtureSetup(
       '<label for="me" id="l1">visible</label>' +
@@ -102,6 +117,40 @@ describe('multiple-label', function () {
         .call(checkContext, target)
     );
     assert.deepEqual(checkContext._relatedNodes, [l1, l3]);
+  });
+
+  it('should return undefined if there are multiple explicit labels and one is visually hidden', function () {
+    fixtureSetup(
+      '<label for="me" id="l1">visible</label>' +
+        '<label for="me" id="l2" style="opacity: 0">visible</label>' +
+        '<input id="me" type="text">'
+    );
+    var target = fixture.querySelector('#me');
+    var l1 = fixture.querySelector('#l1');
+    var l2 = fixture.querySelector('#l2');
+    assert.isUndefined(
+      axe.testUtils
+        .getCheckEvaluate('multiple-label')
+        .call(checkContext, target)
+    );
+    assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
+  });
+
+  it('should return undefined if there are multiple explicit labels and one is screen reader hidden', function () {
+    fixtureSetup(
+      '<label for="me" id="l1">visible</label>' +
+        '<label for="me" id="l2" aria-hidden="true">visible</label>' +
+        '<input id="me" type="text">'
+    );
+    var target = fixture.querySelector('#me');
+    var l1 = fixture.querySelector('#l1');
+    var l2 = fixture.querySelector('#l2');
+    assert.isUndefined(
+      axe.testUtils
+        .getCheckEvaluate('multiple-label')
+        .call(checkContext, target)
+    );
+    assert.deepEqual(checkContext._relatedNodes, [l1, l2]);
   });
 
   it('should return undefined if there are implicit and explicit labels', function () {
