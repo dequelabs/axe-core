@@ -399,6 +399,32 @@ describe('color-contrast', function () {
     });
   });
 
+  it('passes for element outside overflow:hidden', function () {
+    var params = checkSetup(`
+      <style>
+        .container {
+          width: 200px;
+          height: 200px;
+          overflow: hidden;
+        }
+        .foo * {
+          width: 200px;
+          height: 200px;
+        }
+        #target {
+          color: #eee;
+        }
+      </style>
+      <div class="container">
+        <div class="foo" id="foo">
+          <div id="one">hello</div>
+          <div id="target">goodbye</div>
+        </div>
+      </div>
+    `);
+    assert.isTrue(contrastEvaluate.apply(checkContext, params));
+  });
+
   describe('with pseudo elements', function () {
     it('should return undefined if :before pseudo element has a background color', function () {
       var params = checkSetup(
@@ -893,32 +919,6 @@ describe('color-contrast', function () {
           '  Hello world' +
           '</div>'
       );
-      assert.isTrue(contrastEvaluate.apply(checkContext, params));
-    });
-
-    it('passes for element outside overflow:hidden', function () {
-      var params = checkSetup(`
-        <style>
-          .container {
-            width: 200px;
-            height: 200px;
-            overflow: hidden;
-          }
-          .foo * {
-            width: 200px;
-            height: 200px;
-          }
-          #target {
-            color: #eee;
-          }
-        </style>
-        <div class="container">
-          <div class="foo" id="foo">
-            <div id="one">hello</div>
-            <div id="target">goodbye</div>
-          </div>
-        </div>
-      `);
       assert.isTrue(contrastEvaluate.apply(checkContext, params));
     });
   });
