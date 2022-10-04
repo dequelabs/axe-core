@@ -178,15 +178,26 @@ describe('target-size tests', function () {
         ]);
       });
 
-      it('returns true if the obscuring widget is a descendant', function () {
-        var checkArgs = checkSetup(
-          `<a role="link" aria-label="play" tabindex="0" style="display:inline-block" id="target">
-            <button tabindex="-1" style="margin:1px; line-height:20px">Play</button>
-          </a>`
-        );
-        const out = check.evaluate.apply(checkContext, checkArgs);
-        console.log(checkContext._data);
-        assert.isTrue(out);
+      describe('that is a descendant', () => {
+        it('returns false if the widget is tabbable', function () {
+          var checkArgs = checkSetup(
+            `<a role="link" aria-label="play" tabindex="0" style="display:inline-block" id="target">
+              <button style="margin:1px; line-height:20px">Play</button>
+            </a>`
+          );
+          const out = check.evaluate.apply(checkContext, checkArgs);
+          assert.isFalse(out);
+        });
+
+        it('returns true if the widget is not tabbable', function () {
+          var checkArgs = checkSetup(
+            `<a role="link" aria-label="play" tabindex="0" style="display:inline-block" id="target">
+              <button tabindex="-1" style="margin:1px; line-height:20px">Play</button>
+            </a>`
+          );
+          const out = check.evaluate.apply(checkContext, checkArgs);
+          assert.isTrue(out);
+        });
       });
     });
   });
