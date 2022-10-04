@@ -2,7 +2,7 @@
   "id": "meta-refresh-no-exceptions",
   "evaluate": "meta-refresh-evaluate",
   "options": {
-    "minDelay": 0,
+    "minDelay": 72000,
     "maxDelay": false
   },
   "metadata": {
