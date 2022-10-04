@@ -1,9 +1,20 @@
-describe('object-alt virtual-rule', function() {
-  it('should pass for aria-label', function() {
+describe('object-alt virtual-rule', function () {
+  const data = `data:text/html,Object%20content`;
+
+  it('is inapplicable when the object has no data attribute', function () {
+    var results = axe.runVirtualRule('object-alt', {
+      nodeName: 'object',
+      attributes: {}
+    });
+    assert.lengthOf(results.inapplicable, 1);
+  });
+
+  it('should pass for aria-label', function () {
     var results = axe.runVirtualRule('object-alt', {
       nodeName: 'object',
       attributes: {
-        'aria-label': 'foobar'
+        'aria-label': 'foobar',
+        data
       }
     });
 
@@ -12,11 +23,12 @@ describe('object-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for aria-labelledby', function() {
+  it('should incomplete for aria-labelledby', function () {
     var results = axe.runVirtualRule('object-alt', {
       nodeName: 'object',
       attributes: {
-        'aria-labelledby': 'foobar'
+        'aria-labelledby': 'foobar',
+        data
       }
     });
 
@@ -25,11 +37,12 @@ describe('object-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should pass for title', function() {
+  it('should pass for title', function () {
     var results = axe.runVirtualRule('object-alt', {
       nodeName: 'object',
       attributes: {
-        title: 'foobar'
+        title: 'foobar',
+        data
       }
     });
 
@@ -38,11 +51,12 @@ describe('object-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for role=presentation', function() {
+  it('should pass for role=presentation', function () {
     var results = axe.runVirtualRule('object-alt', {
       nodeName: 'object',
       attributes: {
-        role: 'presentation'
+        role: 'presentation',
+        data
       }
     });
 
@@ -51,11 +65,12 @@ describe('object-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for role=none', function() {
+  it('should pass for role=none', function () {
     var results = axe.runVirtualRule('object-alt', {
       nodeName: 'object',
       attributes: {
-        role: 'none'
+        role: 'none',
+        data
       }
     });
 
@@ -64,9 +79,10 @@ describe('object-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for visible text content', function() {
+  it('should fail for visible text content', function () {
     var node = new axe.SerialVirtualNode({
-      nodeName: 'object'
+      nodeName: 'object',
+      attributes: { data }
     });
     var child = new axe.SerialVirtualNode({
       nodeName: '#text',
@@ -82,10 +98,10 @@ describe('object-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when alt and children are missing', function() {
+  it('should fail when alt and children are missing', function () {
     var results = axe.runVirtualRule('object-alt', {
       nodeName: 'object',
-      attributes: {}
+      attributes: { data }
     });
 
     assert.lengthOf(results.passes, 0);
@@ -93,9 +109,10 @@ describe('object-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail children contain no visible text', function() {
+  it('should fail children contain no visible text', function () {
     var node = new axe.SerialVirtualNode({
-      nodeName: 'object'
+      nodeName: 'object',
+      attributes: { data }
     });
     node.children = [];
 
@@ -106,11 +123,12 @@ describe('object-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when alt contains only whitespace', function() {
+  it('should fail when alt contains only whitespace', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'object',
       attributes: {
-        alt: ' \t   \n   '
+        alt: ' \t   \n   ',
+        data
       }
     });
     node.children = [];
@@ -122,11 +140,12 @@ describe('object-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when aria-label is empty', function() {
+  it('should fail when aria-label is empty', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'object',
       attributes: {
-        'aria-label': ''
+        'aria-label': '',
+        data
       }
     });
     node.children = [];
@@ -138,11 +157,12 @@ describe('object-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when title is empty', function() {
+  it('should fail when title is empty', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'object',
       attributes: {
-        title: ''
+        title: '',
+        data
       }
     });
     node.children = [];
