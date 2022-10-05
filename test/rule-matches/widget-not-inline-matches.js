@@ -39,12 +39,12 @@ describe('widget-not-inline-matches', () => {
       assert.isTrue(rule.matches(node, vNode));
     });
 
-    it('returns false for button with tabindex="-1"', () => {
+    it('returns true for button with tabindex="-1"', () => {
       const vNode = queryFixture(
         '<div role="button" tabindex="-1" id="target"></div>'
       );
       const node = vNode.actualNode;
-      assert.isFalse(rule.matches(node, vNode));
+      assert.isTrue(rule.matches(node, vNode));
     });
 
     it('returns false for a non-tabbable button (widgets)', () => {
@@ -173,7 +173,7 @@ describe('widget-not-inline-matches', () => {
     });
 
     describe('that is not in the tab order', () => {
-      it('is false when the target is in the tab order', () => {
+      it('is true when the target is in the tab order', () => {
         const vNode = queryFixture(`
           <span role="link" tabindex="-1">
             Link text
@@ -183,14 +183,14 @@ describe('widget-not-inline-matches', () => {
         assert.isTrue(rule.matches(node, vNode));
       });
 
-      it('is false when the target is not in the tab order', () => {
+      it('is true when the target is not in the tab order', () => {
         const vNode = queryFixture(`
           <span role="link" tabindex="-1">
             Link text
             <a href="#" id="target" tabindex="-1">Nested link</a>
           </span>`);
         const node = vNode.actualNode;
-        assert.isFalse(rule.matches(node, vNode));
+        assert.isTrue(rule.matches(node, vNode));
       });
     });
   });

@@ -7,7 +7,15 @@
     ["#fail3"],
     ["#fail4"],
     ["#fail5"],
-    ["#fail6"]
+    ["#fail6"],
+    ["#fail7"]
   ],
-  "passes": [["#pass1"], ["#pass2"], ["#pass3"], ["#pass4"], ["#pass-adjacent"]]
+  "passes": [
+    ["#pass1"],
+    ["#pass2"],
+    ["#pass3"],
+    ["#pass4"],
+    ["#pass5"],
+    ["#pass-adjacent"]
+  ]
 }

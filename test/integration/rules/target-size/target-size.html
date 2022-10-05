@@ -13,9 +13,12 @@
     <option>opt 1</option>
     <option>opt 2</option>
   </select>
-  <textarea id="pass3"></textarea>
+  <textarea id="pass3" tabindex="-1">
+    Test elements with tabindex="-1".
+  </textarea>
 </p>
 
+<!-- Nested controls-->
 <p>
   <a
     role="link"
@@ -31,6 +34,12 @@
     >
       Play
     </button>
+  </a>
+</p>
+
+<p>
+  <a role="link" tabindex="0" id="pass5">
+    Wide link <button id="fail7">y</button>
   </a>
 </p>
 
