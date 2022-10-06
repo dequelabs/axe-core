@@ -42,6 +42,18 @@ describe('scrollable-region-focusable-matches', function () {
     assert.isFalse(actual);
   });
 
+  it('returns false when the scrollable content is aria-disabled="true" and not focusable', function () {
+    var target = queryFixture(
+      '<select id="target" size="2" name="select" aria-disabled="true">' +
+        '<option value="First">First</option>' +
+        '<option value="Second">Second</option>' +
+        '<option value="Third">Third</option>' +
+        '</select>'
+    );
+    var actual = rule.matches(target.actualNode, target);
+    assert.isFalse(actual);
+  });
+
   it('returns true when the scrollable content is not disabled and focusable', function () {
     var target = queryFixture(
       '<select id="target" size="2" name="select">' +
