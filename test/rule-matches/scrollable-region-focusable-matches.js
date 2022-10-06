@@ -32,7 +32,7 @@ describe('scrollable-region-focusable-matches', function () {
 
   it('returns false when the scrollable content is disabled="true" and not focusable', function () {
     var target = queryFixture(
-      '<select id="target" size="2" name="select" disabled="disabled">' +
+      '<select id="target" size="2" name="select" disabled="true">' +
         '<option value="First">First</option>' +
         '<option value="Second">Second</option>' +
         '<option value="Third">Third</option>' +
