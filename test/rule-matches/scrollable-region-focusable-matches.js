@@ -56,7 +56,7 @@ describe('scrollable-region-focusable-matches', function () {
 
   it('returns false when the scrollable parent is disabled one child element has aria-disabled="false"', function () {
     var target = queryFixture(
-      '<fieldset id="target" disabled>' +
+      '<fieldset id="target" disabled style="height: 5px; overflow: auto">' +
         '<legend>Do you like receiving wrenches?</legend>' +
         '<input type="checkbox" id="chbx" name="agree" value="Yes!" aria-disabled="false"/>' +
         '<label for="chbx">Well, yes of course!</label>' +
