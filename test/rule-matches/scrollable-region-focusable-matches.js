@@ -54,6 +54,18 @@ describe('scrollable-region-focusable-matches', function () {
     assert.isFalse(actual);
   });
 
+  it('returns false when the scrollable parent is disabled one child element has aria-disabled="false"', function () {
+    var target = queryFixture(
+      '<fieldset id="target" disabled>' +
+        '<legend>Do you like receiving wrenches?</legend>' +
+        '<input type="checkbox" id="chbx" name="agree" value="Yes!" aria-disabled="false"/>' +
+        '<label for="chbx">Well, yes of course!</label>' +
+        '</fieldset>'
+    );
+    var actual = rule.matches(target.actualNode, target);
+    assert.isFalse(actual);
+  });
+
   it('returns true when the scrollable content is not disabled and focusable', function () {
     var target = queryFixture(
       '<select id="target" size="2" name="select">' +
