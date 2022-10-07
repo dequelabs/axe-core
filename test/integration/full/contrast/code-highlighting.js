@@ -42,7 +42,7 @@ describe('color-contrast code highlighting test', function () {
   });
 
   describe('incomplete', function () {
-    it('should no incomplete', function () {
+    it('should find 0 incomplete', function () {
       assert.lengthOf(results.incomplete, 0);
     });
   });
