@@ -58,7 +58,9 @@ describe('aria-practices', function () {
     'button/button_idl.html': ['aria-allowed-attr'],
     // https://github.com/w3c/aria-practices/issues/2285
     'checkbox/checkbox.html': ['empty-table-header'],
-    'dialog-modal/datepicker-dialog.html': ['empty-table-header']
+    'dialog-modal/datepicker-dialog.html': ['empty-table-header'],
+    // https://github.com/w3c/aria-practices/issues/2505
+    'landmarks/search.html': ['link-in-text-block']
   };
 
   // Not an actual content file
