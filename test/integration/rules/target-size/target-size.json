@@ -8,7 +8,8 @@
     ["#fail4"],
     ["#fail5"],
     ["#fail6"],
-    ["#fail7"]
+    ["#fail7"],
+    ["#fail-fixed"]
   ],
   "passes": [
     ["#pass1"],
@@ -19,7 +20,8 @@
     ["#pass6"],
     ["#pass7"],
     ["#pass8"],
-    ["#pass-adjacent"]
+    ["#pass-adjacent"],
+    ["#pass-fixed"]
   ],
   "incomplete": [
     ["#incomplete1"],
