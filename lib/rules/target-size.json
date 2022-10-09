@@ -1,6 +1,7 @@
 {
   "id": "target-size",
   "selector": "*",
+  "enabled": false,
   "matches": "widget-not-inline-matches",
   "tags": ["wcag22aa", "sc258", "cat.sensory-and-visual-cues"],
   "metadata": {
