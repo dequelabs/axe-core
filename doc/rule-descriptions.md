@@ -4,8 +4,9 @@
 
 - [WCAG 2.0 Level A & AA Rules](#wcag-20-level-a--aa-rules)
 - [WCAG 2.1 Level A & AA Rules](#wcag-21-level-a--aa-rules)
+- [WCAG 2.2 Level A & AA Rules](#wcag-22-level-a--aa-rules)
 - [Best Practices Rules](#best-practices-rules)
-- [WCAG 2.0 and 2.1 level AAA rules](#wcag-20-and-21-level-aaa-rules)
+- [WCAG 2.x level AAA rules](#wcag-2x-level-aaa-rules)
 - [Experimental Rules](#experimental-rules)
 - [Deprecated Rules](#deprecated-rules)
 
@@ -72,11 +73,18 @@
 
 ## WCAG 2.1 Level A & AA Rules
 
-| Rule ID                                                                                                            | Description                                                                                   | Impact  | Tags                                         | Issue Type | ACT Rules                                                                                                                                                  |
-| :----------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------- | :------ | :------------------------------------------- | :--------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [autocomplete-valid](https://dequeuniversity.com/rules/axe/4.4/autocomplete-valid?application=RuleDescription)     | Ensure the autocomplete attribute is correct and suitable for the form field                  | Serious | cat.forms, wcag21aa, wcag135, ACT            | failure    | [73f2c2](https://act-rules.github.io/rules/73f2c2)                                                                                                         |
-| [avoid-inline-spacing](https://dequeuniversity.com/rules/axe/4.4/avoid-inline-spacing?application=RuleDescription) | Ensure that text spacing set through style attributes can be adjusted with custom stylesheets | Serious | cat.structure, wcag21aa, wcag1412, ACT       | failure    | [24afc2](https://act-rules.github.io/rules/24afc2), [9e45ec](https://act-rules.github.io/rules/9e45ec), [78fd32](https://act-rules.github.io/rules/78fd32) |
-| [target-size](https://dequeuniversity.com/rules/axe/4.4/target-size?application=RuleDescription)                   | Ensure touch target have sufficient size and space                                            | Serious | wcag22aa, sc258, cat.sensory-and-visual-cues | failure    |                                                                                                                                                            |
+| Rule ID                                                                                                            | Description                                                                                   | Impact  | Tags                                   | Issue Type | ACT Rules                                                                                                                                                  |
+| :----------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------- | :------ | :------------------------------------- | :--------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [autocomplete-valid](https://dequeuniversity.com/rules/axe/4.4/autocomplete-valid?application=RuleDescription)     | Ensure the autocomplete attribute is correct and suitable for the form field                  | Serious | cat.forms, wcag21aa, wcag135, ACT      | failure    | [73f2c2](https://act-rules.github.io/rules/73f2c2)                                                                                                         |
+| [avoid-inline-spacing](https://dequeuniversity.com/rules/axe/4.4/avoid-inline-spacing?application=RuleDescription) | Ensure that text spacing set through style attributes can be adjusted with custom stylesheets | Serious | cat.structure, wcag21aa, wcag1412, ACT | failure    | [24afc2](https://act-rules.github.io/rules/24afc2), [9e45ec](https://act-rules.github.io/rules/9e45ec), [78fd32](https://act-rules.github.io/rules/78fd32) |
+
+## WCAG 2.2 Level A & AA Rules
+
+These rules are disabled by default, until WCAG 2.2 is more widely adopted and required.
+
+| Rule ID                                                                                          | Description                                        | Impact  | Tags                                         | Issue Type | ACT Rules |
+| :----------------------------------------------------------------------------------------------- | :------------------------------------------------- | :------ | :------------------------------------------- | :--------- | :-------- |
+| [target-size](https://dequeuniversity.com/rules/axe/4.4/target-size?application=RuleDescription) | Ensure touch target have sufficient size and space | Serious | wcag22aa, sc258, cat.sensory-and-visual-cues | failure    |           |
 
 ## Best Practices Rules
 
@@ -114,7 +122,7 @@ Rules that do not necessarily conform to WCAG success criterion but are industry
 | [tabindex](https://dequeuniversity.com/rules/axe/4.4/tabindex?application=RuleDescription)                                                       | Ensures tabindex attribute values are not greater than 0                                                                                       | Serious            | cat.keyboard, best-practice                     | failure                    |                                                    |
 | [table-duplicate-name](https://dequeuniversity.com/rules/axe/4.4/table-duplicate-name?application=RuleDescription)                               | Ensure the &lt;caption&gt; element does not contain the same text as the summary attribute                                                     | Minor              | cat.tables, best-practice                       | failure, needs&nbsp;review |                                                    |
 
-## WCAG 2.0 and 2.1 level AAA rules
+## WCAG 2.x level AAA rules
 
 Rules that check for conformance to WCAG AAA success criteria that can be fully automated. These are disabled by default in axe-core.
 
