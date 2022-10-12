@@ -22,7 +22,7 @@ describe('aria-required-children', function () {
         .getCheckEvaluate('aria-required-children')
         .apply(checkContext, params)
     );
-    assert.deepEqual(checkContext._data, ['group', 'listitem']);
+    assert.deepEqual(checkContext._data, ['listitem']);
   });
 
   (shadowSupported ? it : xit)(
@@ -43,7 +43,7 @@ describe('aria-required-children', function () {
           .getCheckEvaluate('aria-required-children')
           .apply(checkContext, params)
       );
-      assert.deepEqual(checkContext._data, ['group', 'listitem']);
+      assert.deepEqual(checkContext._data, ['listitem']);
     }
   );
 
@@ -138,7 +138,7 @@ describe('aria-required-children', function () {
         .apply(checkContext, params)
     );
 
-    assert.deepEqual(checkContext._data, ['group', 'listitem']);
+    assert.deepEqual(checkContext._data, ['listitem']);
   });
 
   it('should fail when list has intermediate child with role that is not a required role', function () {
@@ -361,7 +361,7 @@ describe('aria-required-children', function () {
 
   it('should fail when role does not allow group', function () {
     var params = checkSetup(
-      '<div role="table" id="target"><ul role="group"><li role="row">Option</li></ul></div>'
+      '<div role="list" id="target"><ul role="group"><li role="listitem">Item</li></ul></div>'
     );
     assert.isFalse(
       axe.testUtils
