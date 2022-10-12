@@ -303,7 +303,7 @@
     },
     "meta-viewport": {
       "description": "Ensures <meta name=\"viewport\"> does not disable text scaling and zooming",
-      "help": "Zooming and scaling should not be disabled"
+      "help": "Zooming and scaling must not be disabled"
     },
     "nested-interactive": {
       "description": "Ensures interactive controls are not nested as they are not always announced by screen readers or can cause focus problems for assistive technologies",
@@ -326,8 +326,8 @@
       "help": "Page should contain a level-one heading"
     },
     "presentation-role-conflict": {
-      "description": "Flags elements whose role is none or presentation and which cause the role conflict resolution to trigger.",
-      "help": "Elements of role none or presentation should be flagged"
+      "description": "Elements marked as presentational should not have global ARIA or tabindex to ensure all screen readers ignore them",
+      "help": "Ensure elements marked as presentational are consistently ignored"
     },
     "region": {
       "description": "Ensures all page content is contained by landmarks",
