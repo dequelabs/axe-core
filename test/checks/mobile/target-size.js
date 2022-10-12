@@ -193,7 +193,7 @@ describe('target-size tests', function () {
           ]);
         });
 
-        it('returns undefined if if the target is not tabbable', function () {
+        it('returns undefined if the target is not tabbable', function () {
           var checkArgs = checkSetup(
             '<button id="target" tabindex="-1" style="' +
               'display: inline-block; width:40px; height:30px; margin-left:30px;' +
@@ -218,7 +218,7 @@ describe('target-size tests', function () {
           ]);
         });
 
-        it('returns undefined if if the obscuring node is not tabbable', function () {
+        it('returns undefined if the obscuring node is not tabbable', function () {
           var checkArgs = checkSetup(
             '<button id="target" style="' +
               'display: inline-block; width:40px; height:30px; margin-left:30px;' +

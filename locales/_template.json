@@ -827,8 +827,8 @@
       "pass": "Target has sufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)",
       "fail": "Target has insufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)",
       "incomplete": {
-        "default": "Potential target has insufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px)",
-        "nonTabbableNeighbor": "Target has insufficient offset from a potential other target (${data.closestOffset}px should be at least ${data.minOffset}px)"
+        "default": "Element with negative tabindex has insufficient offset from its closest neighbor (${data.closestOffset}px should be at least ${data.minOffset}px). Is this a target?",
+        "nonTabbableNeighbor": "Target has insufficient offset from a neighbor with negative tabindex (${data.closestOffset}px should be at least ${data.minOffset}px). Is the neighbor a target?"
       }
     },
     "target-size": {
@@ -841,9 +841,9 @@
         "partiallyObscured": "Target has insufficient size because it is partially obscured (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)"
       },
       "incomplete": {
-        "default": "Possible target has insufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)",
-        "partiallyObscured": "Possible target has insufficient size because it is partially obscured (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)",
-        "partiallyObscuredNonTabbable": "Target has insufficient size because it is partially obscured by a potential second target (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px)"
+        "default": "Element with negative tabindex has insufficient size (${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px). Is this a target?",
+        "partiallyObscured": "Element with negative tabindex has insufficient size because it is partially obscured (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px). Is this a target?",
+        "partiallyObscuredNonTabbable": "Target has insufficient size because it is partially obscured by a neighbor with negative tabindex (smallest space is ${data.width}px by ${data.height}px, should be at least ${data.minSize}px by ${data.minSize}px). Is the neighbor a target?"
       }
     },
     "header-present": {
