@@ -183,19 +183,16 @@ testUtils.checkSetup = function (content, options, target) {
 };
 
 /**
- * Create check arguments with Shadow DOM. Target can be inside or outside of Shadow DOM, queried by
- * adding `id="target"` to a fragment. Or specify a custom selector as the `targetSelector` argument.
+ * Create a shadow DOM tree on #shadow and setup axe for it, returning #target
  *
  * @param Node|String 	Stuff to go into the fixture (html string or DOM Node)
  * @param Node|String 	Stuff to go into the shadow boundary (html or node)
- * @param Object				Options argument for the check (optional, default: {})
  * @param String				Target selector for the check, can be inside or outside of Shadow DOM (optional, default: '#target')
- * @return Array
+ * @return VirtualNode
  */
-testUtils.shadowCheckSetup = function (
+testUtils.queryShadowFixture = function (
   content,
   shadowContent,
-  options,
   targetSelector
 ) {
   'use strict';
@@ -203,11 +200,6 @@ testUtils.shadowCheckSetup = function (
   // Normalize target, allow it to be the provided string or use '#target' to query composed tree
   if (typeof targetSelector !== 'string') {
     targetSelector = '#target';
-  }
-
-  // Normalize the object params
-  if (typeof options !== 'object') {
-    options = {};
   }
 
   var fixture = testUtils.injectIntoFixture(content);
@@ -237,7 +229,34 @@ testUtils.shadowCheckSetup = function (
 
   // query the composed tree AFTER shadowDOM has been attached
   axe.setup(fixture);
-  var node = axe.utils.getNodeFromTree(targetCandidate);
+  return axe.utils.getNodeFromTree(targetCandidate);
+};
+
+/**
+ * Create check arguments with Shadow DOM. Target can be inside or outside of Shadow DOM, queried by
+ * adding `id="target"` to a fragment. Or specify a custom selector as the `targetSelector` argument.
+ *
+ * @param Node|String 	Stuff to go into the fixture (html string or DOM Node)
+ * @param Node|String 	Stuff to go into the shadow boundary (html or node)
+ * @param Object				Options argument for the check (optional, default: {})
+ * @param String				Target selector for the check, can be inside or outside of Shadow DOM (optional, default: '#target')
+ * @return Array
+ */
+testUtils.shadowCheckSetup = function (
+  content,
+  shadowContent,
+  options,
+  targetSelector
+) {
+  // Normalize the object params
+  if (typeof options !== 'object') {
+    options = {};
+  }
+  var node = testUtils.queryShadowFixture(
+    content,
+    shadowContent,
+    targetSelector
+  );
   return [node.actualNode, options, node];
 };
 

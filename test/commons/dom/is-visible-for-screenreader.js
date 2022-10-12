@@ -1,10 +1,10 @@
-describe('dom.isVisibleForScreenreader', function () {
+describe('dom.isVisibleToScreenReaders', function () {
   'use strict';
 
   var fixture = document.querySelector('#fixture');
   var queryFixture = axe.testUtils.queryFixture;
   var shadowSupported = axe.testUtils.shadowSupport.v1;
-  var isVisibleForScreenreader = axe.commons.dom.isVisibleForScreenreader;
+  var isVisibleToScreenReaders = axe.commons.dom.isVisibleToScreenReaders;
 
   function createContentHidden() {
     var group = document.createElement('div');
@@ -25,24 +25,24 @@ describe('dom.isVisibleForScreenreader', function () {
     var el = document.createElement('div');
     el.innerHTML = 'I am not visible because I am detached!';
     axe.testUtils.flatTreeSetup(el);
-    assert.isFalse(isVisibleForScreenreader(el));
+    assert.isFalse(isVisibleToScreenReaders(el));
   });
 
   it('should return true on body', function () {
     axe.testUtils.flatTreeSetup(document.body);
-    var actual = isVisibleForScreenreader(document.body);
+    var actual = isVisibleToScreenReaders(document.body);
     assert.isTrue(actual);
   });
 
   it('should return true on html', function () {
     axe.testUtils.flatTreeSetup(document.documentElement);
-    var actual = isVisibleForScreenreader(document.documentElement);
+    var actual = isVisibleToScreenReaders(document.documentElement);
     assert.isTrue(actual);
   });
 
   it('should return true for visible element', function () {
     var vNode = queryFixture('<div id="target">Visible</div>');
-    assert.isTrue(isVisibleForScreenreader(vNode));
+    assert.isTrue(isVisibleToScreenReaders(vNode));
   });
 
   it('should return true for visible area element', function () {
@@ -52,28 +52,28 @@ describe('dom.isVisibleForScreenreader', function () {
         '</map>' +
         '<img usemap="#map" src="img.png" />'
     );
-    assert.isTrue(isVisibleForScreenreader(vNode));
+    assert.isTrue(isVisibleToScreenReaders(vNode));
   });
 
   it('should return false if `aria-hidden` is set', function () {
     var vNode = queryFixture(
       '<div id="target" aria-hidden="true">Hidden from screen readers</div>'
     );
-    assert.isFalse(isVisibleForScreenreader(vNode));
+    assert.isFalse(isVisibleToScreenReaders(vNode));
   });
 
   it('should return false if `display: none` is set', function () {
     var vNode = queryFixture(
       '<div id="target" style="display: none">Hidden from screen readers</div>'
     );
-    assert.isFalse(isVisibleForScreenreader(vNode));
+    assert.isFalse(isVisibleToScreenReaders(vNode));
   });
 
   it('should return false if `aria-hidden` is set on parent', function () {
     var vNode = queryFixture(
       '<div aria-hidden="true"><div id="target">Hidden from screen readers</div></div>'
     );
-    assert.isFalse(isVisibleForScreenreader(vNode));
+    assert.isFalse(isVisibleToScreenReaders(vNode));
   });
 
   it('should know how `visibility` works', function () {
@@ -82,14 +82,14 @@ describe('dom.isVisibleForScreenreader', function () {
         '<div id="target" style="visibility: visible;">Hi</div>' +
         '</div>'
     );
-    assert.isTrue(isVisibleForScreenreader(vNode));
+    assert.isTrue(isVisibleToScreenReaders(vNode));
   });
 
   it('returns false for `AREA` without closest `MAP` element', function () {
     var vNode = queryFixture(
       '<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>'
     );
-    var actual = isVisibleForScreenreader(vNode);
+    var actual = isVisibleToScreenReaders(vNode);
     assert.isFalse(actual);
   });
 
@@ -99,7 +99,7 @@ describe('dom.isVisibleForScreenreader', function () {
         '<area id="target" role="link" shape="circle" coords="130,136,60" aria-label="MDN"/>' +
         '</map>'
     );
-    var actual = isVisibleForScreenreader(vNode);
+    var actual = isVisibleToScreenReaders(vNode);
     assert.isFalse(actual);
   });
 
@@ -116,7 +116,7 @@ describe('dom.isVisibleForScreenreader', function () {
       axe.testUtils.flatTreeSetup(fixture);
 
       var target = shadow.querySelector('#target');
-      var actual = isVisibleForScreenreader(target);
+      var actual = isVisibleToScreenReaders(target);
       assert.isFalse(actual);
     }
   );
@@ -128,7 +128,7 @@ describe('dom.isVisibleForScreenreader', function () {
         '</map>' +
         '<img usemap="#infographic-wrong-name" alt="MDN infographic" />'
     );
-    var actual = isVisibleForScreenreader(vNode);
+    var actual = isVisibleToScreenReaders(vNode);
     assert.isFalse(actual);
   });
 
@@ -139,7 +139,7 @@ describe('dom.isVisibleForScreenreader', function () {
         '</map>' +
         '<img usemap="#infographic" alt="MDN infographic" style="display:none"/>'
     );
-    var actual = isVisibleForScreenreader(vNode);
+    var actual = isVisibleToScreenReaders(vNode);
     assert.isFalse(actual);
   });
 
@@ -150,7 +150,7 @@ describe('dom.isVisibleForScreenreader', function () {
         '</map>' +
         '<img usemap="#infographic" alt="MDN infographic" />'
     );
-    var actual = isVisibleForScreenreader(vNode);
+    var actual = isVisibleToScreenReaders(vNode);
     assert.isTrue(actual);
   });
 
@@ -164,7 +164,7 @@ describe('dom.isVisibleForScreenreader', function () {
       makeShadowTreeHidden(fixture.firstChild);
       tree = axe.utils.getFlattenedTree(fixture.firstChild);
       node = axe.utils.querySelectorAll(tree, 'input')[0];
-      assert.isTrue(isVisibleForScreenreader(node));
+      assert.isTrue(isVisibleToScreenReaders(node));
     }
   );
 
@@ -178,7 +178,7 @@ describe('dom.isVisibleForScreenreader', function () {
       makeShadowTreeHidden(fixture.firstChild);
       tree = axe.utils.getFlattenedTree(fixture.firstChild);
       node = axe.utils.querySelectorAll(tree, 'input')[0];
-      assert.isFalse(isVisibleForScreenreader(node));
+      assert.isFalse(isVisibleToScreenReaders(node));
     }
   );
 
@@ -201,7 +201,7 @@ describe('dom.isVisibleForScreenreader', function () {
       makeShadowTree(fixture.firstChild);
       var tree = axe.utils.getFlattenedTree(fixture.firstChild);
       var vNode = axe.utils.querySelectorAll(tree, 'a')[0];
-      assert.isFalse(isVisibleForScreenreader(vNode));
+      assert.isFalse(isVisibleToScreenReaders(vNode));
     }
   );
 
@@ -213,7 +213,7 @@ describe('dom.isVisibleForScreenreader', function () {
           'aria-hidden': true
         }
       });
-      assert.isFalse(isVisibleForScreenreader(vNode));
+      assert.isFalse(isVisibleToScreenReaders(vNode));
     });
 
     it('should return false if `aria-hidden` is set on parent', function () {
@@ -228,7 +228,7 @@ describe('dom.isVisibleForScreenreader', function () {
       });
       parentVNode.children = [vNode];
       vNode.parent = parentVNode;
-      assert.isFalse(isVisibleForScreenreader(vNode));
+      assert.isFalse(isVisibleToScreenReaders(vNode));
     });
   });
 });

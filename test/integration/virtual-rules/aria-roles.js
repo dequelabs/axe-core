@@ -1,5 +1,5 @@
-describe('aria-roles virtual-rule', function() {
-  it('should pass for valid role', function() {
+describe('aria-roles virtual-rule', function () {
+  it('should pass for valid role', function () {
     var results = axe.runVirtualRule('aria-roles', {
       nodeName: 'div',
       attributes: {
@@ -12,7 +12,7 @@ describe('aria-roles virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for abstract role', function() {
+  it('should fail for abstract role', function () {
     var results = axe.runVirtualRule('aria-roles', {
       nodeName: 'div',
       attributes: {
@@ -25,7 +25,7 @@ describe('aria-roles virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for invalid role', function() {
+  it('should fail for invalid role', function () {
     var results = axe.runVirtualRule('aria-roles', {
       nodeName: 'div',
       attributes: {
@@ -38,20 +38,20 @@ describe('aria-roles virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for fallback role', function() {
+  it('should pass for fallback role', function () {
     var results = axe.runVirtualRule('aria-roles', {
       nodeName: 'div',
       attributes: {
-        role: 'button alert'
+        role: 'presentation none'
       }
     });
 
-    assert.lengthOf(results.passes, 0);
-    assert.lengthOf(results.violations, 1);
+    assert.lengthOf(results.passes, 1);
+    assert.lengthOf(results.violations, 0);
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for unsupported role', function() {
+  it('should fail for unsupported role', function () {
     axe.configure({
       standards: {
         ariaRoles: {
