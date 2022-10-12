@@ -16,6 +16,15 @@
     ["#pass3"],
     ["#pass4"],
     ["#pass5"],
+    ["#pass6"],
+    ["#pass7"],
+    ["#pass8"],
     ["#pass-adjacent"]
+  ],
+  "incomplete": [
+    ["#incomplete1"],
+    ["#incomplete2"],
+    ["#incomplete3"],
+    ["#incomplete4"]
   ]
 }

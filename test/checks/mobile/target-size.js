@@ -30,6 +30,20 @@ describe('target-size tests', function () {
     });
   });
 
+  it('returns undefined for non-tabbable targets smaller than minSize', function () {
+    var checkArgs = checkSetup(
+      '<button id="target" tabindex="-1" style="' +
+        'display: inline-block; width:20px; height:30px;' +
+        '">x</button>'
+    );
+    assert.isUndefined(check.evaluate.apply(checkContext, checkArgs));
+    assert.deepEqual(checkContext._data, {
+      minSize: 24,
+      width: 20,
+      height: 30
+    });
+  });
+
   it('returns true for unobscured targets larger than minSize', function () {
     var checkArgs = checkSetup(
       '<button id="target" style="' +
@@ -153,29 +167,103 @@ describe('target-size tests', function () {
         assert.deepEqual(elmIds(checkContext._relatedNodes), ['#obscurer']);
       });
 
-      it('returns false for obscured targets with insufficient space', function () {
-        var checkArgs = checkSetup(
-          '<button id="target" style="' +
-            'display: inline-block; width:40px; height:30px; margin-left:30px;' +
-            '">x</button>' +
-            '<button id="obscurer1" style="' +
-            'display: inline-block; width:40px; height:30px; margin-left: -10px;' +
-            '">x</button>' +
-            '<button id="obscurer2" style="' +
-            'display: inline-block; width:40px; height:30px; margin-left: -100px;' +
-            '">x</button>'
-        );
-        assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
-        assert.deepEqual(checkContext._data, {
-          messageKey: 'partiallyObscured',
-          minSize: 24,
-          width: 20,
-          height: 30
+      describe('for obscured targets with insufficient space', () => {
+        it('returns false if all elements are tabbable', function () {
+          var checkArgs = checkSetup(
+            '<button id="target" style="' +
+              'display: inline-block; width:40px; height:30px; margin-left:30px;' +
+              '">x</button>' +
+              '<button id="obscurer1" style="' +
+              'display: inline-block; width:40px; height:30px; margin-left: -10px;' +
+              '">x</button>' +
+              '<button id="obscurer2" style="' +
+              'display: inline-block; width:40px; height:30px; margin-left: -100px;' +
+              '">x</button>'
+          );
+          assert.isFalse(check.evaluate.apply(checkContext, checkArgs));
+          assert.deepEqual(checkContext._data, {
+            messageKey: 'partiallyObscured',
+            minSize: 24,
+            width: 20,
+            height: 30
+          });
+          assert.deepEqual(elmIds(checkContext._relatedNodes), [
+            '#obscurer1',
+            '#obscurer2'
+          ]);
         });
-        assert.deepEqual(elmIds(checkContext._relatedNodes), [
-          '#obscurer1',
-          '#obscurer2'
-        ]);
+
+        it('returns undefined if the target is not tabbable', function () {
+          var checkArgs = checkSetup(
+            '<button id="target" tabindex="-1" style="' +
+              'display: inline-block; width:40px; height:30px; margin-left:30px;' +
+              '">x</button>' +
+              '<button id="obscurer1" style="' +
+              'display: inline-block; width:40px; height:30px; margin-left: -10px;' +
+              '">x</button>' +
+              '<button id="obscurer2" style="' +
+              'display: inline-block; width:40px; height:30px; margin-left: -100px;' +
+              '">x</button>'
+          );
+          assert.isUndefined(check.evaluate.apply(checkContext, checkArgs));
+          assert.deepEqual(checkContext._data, {
+            messageKey: 'partiallyObscured',
+            minSize: 24,
+            width: 20,
+            height: 30
+          });
+          assert.deepEqual(elmIds(checkContext._relatedNodes), [
+            '#obscurer1',
+            '#obscurer2'
+          ]);
+        });
+
+        it('returns undefined if the obscuring node is not tabbable', function () {
+          var checkArgs = checkSetup(
+            '<button id="target" style="' +
+              'display: inline-block; width:40px; height:30px; margin-left:30px;' +
+              '">x</button>' +
+              '<button id="obscurer1" tabindex="-1" style="' +
+              'display: inline-block; width:40px; height:30px; margin-left: -10px;' +
+              '">x</button>' +
+              '<button id="obscurer2" style="' +
+              'display: inline-block; width:40px; height:30px; margin-left: -100px;' +
+              '">x</button>'
+          );
+          assert.isUndefined(check.evaluate.apply(checkContext, checkArgs));
+          assert.deepEqual(checkContext._data, {
+            messageKey: 'partiallyObscuredNonTabbable',
+            minSize: 24,
+            width: 20,
+            height: 30
+          });
+          assert.deepEqual(elmIds(checkContext._relatedNodes), [
+            '#obscurer1',
+            '#obscurer2'
+          ]);
+        });
+      });
+
+      describe('that is a descendant', () => {
+        it('returns false if the widget is tabbable', function () {
+          var checkArgs = checkSetup(
+            `<a role="link" aria-label="play" tabindex="0" style="display:inline-block" id="target">
+              <button style="margin:1px; line-height:20px">Play</button>
+            </a>`
+          );
+          const out = check.evaluate.apply(checkContext, checkArgs);
+          assert.isFalse(out);
+        });
+
+        it('returns true if the widget is not tabbable', function () {
+          var checkArgs = checkSetup(
+            `<a role="link" aria-label="play" tabindex="0" style="display:inline-block" id="target">
+              <button tabindex="-1" style="margin:1px; line-height:20px">Play</button>
+            </a>`
+          );
+          const out = check.evaluate.apply(checkContext, checkArgs);
+          assert.isTrue(out);
+        });
       });
 
       describe('that is a descendant', () => {
