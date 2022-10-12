@@ -19,7 +19,7 @@ const testCaseJsonPath = path.resolve(
 const addr = `http://localhost:9876/node_modules/wcag-act-rules/content-assets/wcag-act-rules/`;
 const testCaseJson = require(testCaseJsonPath);
 
-module.exports = ({ id, title, axeRules }) => {
+module.exports = ({ id, title, axeRules, skipTests = [] }) => {
   describe(`${title} (${id})`, function () {
     const testcases = testCaseJson.testcases.filter(
       ({ ruleId }) => ruleId === id
@@ -41,7 +41,10 @@ module.exports = ({ id, title, axeRules }) => {
     });
 
     testcases.forEach(testcase => {
-      const shouldRun = testcase.relativePath.match(/\.(xhtml|html?)$/);
+      const shouldRun =
+        testcase.relativePath.match(/\.(xhtml|html?)$/) &&
+        !skipTests.includes(testcase.testcaseId);
+
       (shouldRun ? it : xit)(testcase.testcaseTitle, async () => {
         await driver.get(`${addr}/${testcase.relativePath}`);
         const builder = new AxeBuilder(driver, axeSource);
