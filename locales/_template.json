@@ -326,8 +326,8 @@
       "help": "Page should contain a level-one heading"
     },
     "presentation-role-conflict": {
-      "description": "Flags elements whose role is none or presentation and which cause the role conflict resolution to trigger.",
-      "help": "Elements of role none or presentation should be flagged"
+      "description": "Elements marked as presentational should not have global ARIA or tabindex to ensure all screen readers ignore them",
+      "help": "Ensure elements marked as presentational are consistently ignored"
     },
     "region": {
       "description": "Ensures all page content is contained by landmarks",
