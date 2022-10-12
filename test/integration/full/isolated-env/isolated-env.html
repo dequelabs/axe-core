@@ -80,7 +80,10 @@
           <circle cx="50" cy="50" r="40" fill="yellow"></circle>
         </svg>
         <div lang="en">English</div>
-        <object title="This object has text"></object>
+        <object
+          title="This object has text"
+          data="data:text/html,Object%20content"
+        ></object>
         <li role="presentation" aria-label="My Heading">Hello</li>
         <div role="img" aria-label="blah"></div>
         <div style="overflow-y: scroll; height: 5px">
@@ -120,6 +123,7 @@
         src="frames/focusable.html"
         tabindex="-1"
       ></iframe>
+      <p>Paragraph with a <a href="#">link</a>.</p>
     </div>
     <div id="mocha"></div>
     <script src="/test/testutils.js"></script>

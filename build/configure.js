@@ -55,6 +55,12 @@ function buildRules(grunt, options, commons, callback) {
         title: 'WCAG 2.1 Level A & AA Rules',
         rules: []
       },
+      wcag22: {
+        title: 'WCAG 2.2 Level A & AA Rules',
+        intro:
+          'These rules are disabled by default, until WCAG 2.2 is more widely adopted and required.',
+        rules: []
+      },
       bestPractice: {
         title: 'Best Practices Rules',
         intro:
@@ -62,7 +68,7 @@ function buildRules(grunt, options, commons, callback) {
         rules: []
       },
       wcag2aaa: {
-        title: 'WCAG 2.0 and 2.1 level AAA rules',
+        title: 'WCAG 2.x level AAA rules',
         intro:
           'Rules that check for conformance to WCAG AAA success criteria that can be fully automated. These are disabled by default in axe-core.',
         rules: []
@@ -341,8 +347,10 @@ function buildRules(grunt, options, commons, callback) {
         rules = descriptions.bestPractice.rules;
       } else if (rule.tags.find(tag => tag.startsWith('wcag2a'))) {
         rules = descriptions.wcag20.rules;
-      } else {
+      } else if (rule.tags.find(tag => tag.startsWith('wcag21a'))) {
         rules = descriptions.wcag21.rules;
+      } else {
+        rules = descriptions.wcag22.rules;
       }
 
       var issueType = [];

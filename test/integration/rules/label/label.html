@@ -11,15 +11,15 @@
   <input type="text" aria-labelledby="label" id="pass4" />
   <textarea aria-labelledby="label" id="pass6"></textarea>
   <div id="label">Label</div>
-  <label>Label <input type="text" id="pass7"/></label>
+  <label>Label <input type="text" id="pass7" /></label>
   <label>Label <textarea id="pass9"></textarea></label>
 
-  <label><input type="text" id="fail4"/></label>
+  <label><input type="text" id="fail4" /></label>
   <label><textarea id="fail6"></textarea></label>
   <label for="fail7"></label><input type="text" id="fail7" />
   <label for="fail9"></label><textarea id="fail9"></textarea>
 
-  <label for="fail11" style="display: none;">Text</label
+  <label for="fail11" style="display: none">Text</label
   ><input type="text" id="fail11" /> <label for="pass10">Label</label
   ><input type="text" id="pass10" /> <label for="pass12">Label</label
   ><textarea id="pass12"></textarea>
@@ -28,7 +28,7 @@
   <textarea id="pass15" title="Label"></textarea>
 
   <label
-    ><label><input type="text" id="fail22"/></label
+    ><label><input type="text" id="fail22" /></label
   ></label>
 
   <div>
@@ -52,9 +52,7 @@
   </div>
 
   <div>
-    <label for="pass-gh1176" style="display:none">
-      Hello world
-    </label>
+    <label for="pass-gh1176" style="display: none"> Hello world </label>
     <input id="pass-gh1176" title="Hi" />
   </div>
 
@@ -63,4 +61,11 @@
 
   <div id="hiddenlabel" aria-hidden="true">Hidden label</div>
   <input type="text" id="pass18" aria-labelledby="hiddenlabel" />
+
+  <label> <input id="fail28" value="val" /></label>
+  <label for="fail29"> <input id="fail29" value="val" /></label>
+  <div id="lbl-f30">
+    <input id="fail30" value="val" aria-labelledby="lbl-f30" />
+  </div>
+  <label><textarea id="fail31"> value</textarea></label>
 </form>

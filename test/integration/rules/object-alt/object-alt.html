@@ -1,18 +1,75 @@
-<object id="pass1" title="This object has text"></object>
-<object id="pass2" aria-label="this object has text"></object>
-<span id="label1">this object has text</span>
-<object id="pass3" aria-labelledby="label1"></object>
-<object id="pass4" role="presentation"></object>
-<object id="pass5" role="none"></object>
+<object
+  id="pass1"
+  title="This object has text"
+  data="data:text/html,Object%20content"
+></object>
+<object
+  id="pass2"
+  aria-label="this object has text"
+  data="data:text/html,Object%20content"
+></object>
+<span id="label1" data="data:text/html,Object%20content"
+  >this object has text</span
+>
+<object
+  id="pass3"
+  aria-labelledby="label1"
+  data="data:text/html,Object%20content"
+></object>
+<object
+  id="pass4"
+  role="presentation"
+  data="data:text/html,Object%20content"
+></object>
+<object id="pass5" role="none" data="data:text/html,Object%20content"></object>
 
-<object id="violation1"></object>
-<object id="violation2"><div></div></object>
-<object id="violation3">This object has text.</object>
-<object id="violation4" role="none" tabindex="0"></object>
-<object id="violation5" role="presentation" tabindex="0"></object>
-<object id="violation6" role="none" aria-live="assertive"></object>
-<object id="violation7" role="presentation" aria-live="assertive"></object>
+<object id="violation1" data="data:text/html,Object%20content"></object>
+<object id="violation2" data="data:text/html,Object%20content">
+  <div></div>
+</object>
+<object id="violation3" data="data:text/html,Object%20content">
+  This object has text.
+</object>
+<object
+  id="violation4"
+  role="none"
+  tabindex="0"
+  data="data:text/html,Object%20content"
+></object>
+<object
+  id="violation5"
+  role="presentation"
+  tabindex="0"
+  data="data:text/html,Object%20content"
+></object>
+<object
+  id="violation6"
+  role="none"
+  aria-live="assertive"
+  data="data:text/html,Object%20content"
+></object>
+<object
+  id="violation7"
+  role="presentation"
+  aria-live="assertive"
+  data="data:text/html,Object%20content"
+></object>
+<object
+  id="violation8"
+  role="img"
+  data="data:text/html,Object%20content"
+></object>
+<object
+  id="violation9"
+  role="separator"
+  tabindex="0"
+  data="data:text/html,Object%20content"
+></object>
 
-<object id="violation8" role="img"></object>
-<object id="violation9" role="separator" tabindex="0"></object>
-<object id="inapplicable1" role="separator"></object>
+<object id="inapplicable1"><!-- no data attribute --></object>
+<object id="inapplicable2" data="">Fallback content</object>
+<object
+  id="inapplicable3"
+  role="separator"
+  data="data:text/html,Object%20content"
+></object>
