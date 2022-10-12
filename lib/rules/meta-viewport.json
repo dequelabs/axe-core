@@ -3,11 +3,11 @@
   "selector": "meta[name=\"viewport\"]",
   "matches": "is-initiator-matches",
   "excludeHidden": false,
-  "tags": ["cat.sensory-and-visual-cues", "best-practice", "ACT"],
+  "tags": ["cat.sensory-and-visual-cues", "wcag2aa", "wcag144", "ACT"],
   "actIds": ["b4f0c3"],
   "metadata": {
     "description": "Ensures <meta name=\"viewport\"> does not disable text scaling and zooming",
-    "help": "Zooming and scaling should not be disabled"
+    "help": "Zooming and scaling must not be disabled"
   },
   "all": [],
   "any": ["meta-viewport"],
