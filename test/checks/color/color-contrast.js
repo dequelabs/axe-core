@@ -723,6 +723,25 @@ describe('color-contrast', function () {
       assert.deepEqual(checkContext._relatedNodes, []);
     });
 
+    it('should not report incomplete when  options.contrastRatio.normal.minThreshold is set', function () {
+      var params = checkSetup(
+        `
+        <p id="target" style="color: #666; background: linear-gradient(to right, #FFF, #0FF); width: 300px">
+          Some text in English
+        </p>`,
+        {
+          contrastRatio: {
+            normal: {
+              minThreshold: 3
+            }
+          }
+        }
+      );
+
+      assert.isTrue(contrastEvaluate.apply(checkContext, params));
+      assert.isUndefined(checkContext._data.messageKey);
+    });
+
     it('should support options.contrastRatio.normal.maxThreshold', function () {
       var params = checkSetup(
         '<div style="color: #999; background-color: white; font-size: 14pt; font-weight: 100" id="target">' +
@@ -738,6 +757,25 @@ describe('color-contrast', function () {
 
       assert.isTrue(contrastEvaluate.apply(checkContext, params));
       assert.deepEqual(checkContext._relatedNodes, []);
+    });
+
+    it('should not report incomplete when  options.contrastRatio.normal.maxThreshold is set', function () {
+      var params = checkSetup(
+        `
+        <p id="target" style="color: #666; background: linear-gradient(to right, #FFF, #0FF); width: 300px">
+          Some text in English
+        </p>`,
+        {
+          contrastRatio: {
+            normal: {
+              maxThreshold: 2
+            }
+          }
+        }
+      );
+
+      assert.isTrue(contrastEvaluate.apply(checkContext, params));
+      assert.isUndefined(checkContext._data.messageKey);
     });
 
     it('should support options.contrastRatio.large.expected', function () {
@@ -774,6 +812,25 @@ describe('color-contrast', function () {
       assert.deepEqual(checkContext._relatedNodes, []);
     });
 
+    it('should not report incomplete when  options.contrastRatio.large.minThreshold is set', function () {
+      var params = checkSetup(
+        `
+        <p id="target" style="color: #666; background: linear-gradient(to right, #FFF, #0FF); width: 300px; font-size: 18pt;">
+          Some text in English
+        </p>`,
+        {
+          contrastRatio: {
+            large: {
+              minThreshold: 2
+            }
+          }
+        }
+      );
+
+      assert.isTrue(contrastEvaluate.apply(checkContext, params));
+      assert.isUndefined(checkContext._data.messageKey);
+    });
+
     it('should support options.contrastRatio.large.maxThreshold', function () {
       var params = checkSetup(
         '<div style="color: #ccc; background-color: white; font-size: 18pt; font-weight: 100" id="target">' +
@@ -789,6 +846,25 @@ describe('color-contrast', function () {
 
       assert.isTrue(contrastEvaluate.apply(checkContext, params));
       assert.deepEqual(checkContext._relatedNodes, []);
+    });
+
+    it('should not report incomplete when  options.contrastRatio.large.maxThreshold is set', function () {
+      var params = checkSetup(
+        `
+        <p id="target" style="color: #666; background: linear-gradient(to right, #FFF, #0FF); width: 300px; font-size: 18pt;">
+          Some text in English
+        </p>`,
+        {
+          contrastRatio: {
+            large: {
+              maxThreshold: 2
+            }
+          }
+        }
+      );
+
+      assert.isTrue(contrastEvaluate.apply(checkContext, params));
+      assert.isUndefined(checkContext._data.messageKey);
     });
 
     it('should ignore pseudo element with options.ignorePseudo', function () {
