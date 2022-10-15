@@ -3,6 +3,9 @@
   p {
     margin: 30px;
   }
+  img {
+    vertical-align: bottom;
+  }
 </style>
 
 <!-- These fall on top of the elements immediately below it 
@@ -95,6 +98,51 @@ this should not effect their outcome -->
     style="display: inline-block; margin-left: -1em"
     >Wide link</a
   >
+</p>
+
+<p>
+  <!-- These links touch, images overflow on the left and right -->
+  <a href="#" id="incomplete5"
+    >&nbsp;
+    <img
+      src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C"
+      width="50"
+      height="33"
+      alt="M1"
+      style="float: left"
+    />
+  </a>
+  <a href="#" id="incomplete6"
+    >&nbsp;
+    <img
+      src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C"
+      width="50"
+      height="33"
+      alt="M4"
+      style="position: absolute"
+    />
+  </a>
+</p>
+
+<p>
+  <!-- These links touch, images overflow on the top and bottom -->
+  <a href="#" id="incomplete7">
+    <img
+      src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C"
+      width="50"
+      height="33"
+      alt="M3"
+    />
+  </a>
+  <br />
+  <a href="#" id="incomplete8" style="display: inline-block; height: 18px">
+    <img
+      src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C"
+      width="50"
+      height="33"
+      alt="M2"
+    />
+  </a>
 </p>
 
 <!-- Inapplicable -->

@@ -290,6 +290,68 @@ describe('target-size tests', function () {
     });
   });
 
+  describe('with overflowing content', function () {
+    it('returns undefined target is too small', () => {
+      var checkArgs = checkSetup(
+        '<a href="#" id="target"><img width="24" height="24"></a>'
+      );
+      assert.isUndefined(check.evaluate.apply(checkContext, checkArgs));
+      assert.deepEqual(checkContext._data, {
+        minSize: 24,
+        messageKey: 'contentOverflow'
+      });
+    });
+
+    it('returns true if target has sufficient size', () => {
+      var checkArgs = checkSetup(
+        '<a href="#" id="target" style="font-size:24px;"><img width="24" height="24"></a>'
+      );
+      assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
+    });
+
+    describe('and partially obscured', () => {
+      it('is undefined when unobscured area is too small', () => {
+        var checkArgs = checkSetup(
+          '<a href="#" id="target" style="font-size:24px;">' +
+            '  <img width="24" height="36" style="vertical-align: bottom;">' +
+            '</a><br>' +
+            '<a href="" style="margin-top:-10px; position:absolute; width:24px;">&nbsp;</a>'
+        );
+        assert.isUndefined(check.evaluate.apply(checkContext, checkArgs));
+        assert.deepEqual(checkContext._data, {
+          minSize: 24,
+          messageKey: 'contentOverflow'
+        });
+      });
+
+      it('is true when unobscured area is sufficient', () => {
+        var checkArgs = checkSetup(
+          '<a href="#" id="target" style="font-size:24px;">' +
+            '  <img width="24" height="36" style="vertical-align: bottom;">' +
+            '</a><br>' +
+            '<a href="" style="margin-top:-2px; position:absolute; width:24px;">&nbsp;</a>'
+        );
+        assert.isTrue(check.evaluate.apply(checkContext, checkArgs));
+      });
+    });
+
+    describe('and fully obscured', () => {
+      it('is undefined', () => {
+        var checkArgs = checkSetup(
+          '<a href="#" id="target" style="font-size:24px;">' +
+            '  <img width="24" height="36" style="vertical-align: bottom;">' +
+            '</a><br>' +
+            '<a href="" style="margin-top:-40px; position:absolute; width:100px; height:100px;">&nbsp;</a>'
+        );
+        assert.isUndefined(check.evaluate.apply(checkContext, checkArgs));
+        assert.deepEqual(checkContext._data, {
+          minSize: 24,
+          messageKey: 'contentOverflow'
+        });
+      });
+    });
+  });
+
   it('works across shadow boundaries', function () {
     var checkArgs = shadowCheckSetup(
       '<span id="shadow"></span>' +
