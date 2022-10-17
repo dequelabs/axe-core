@@ -4,20 +4,20 @@ var execSync = require('child_process').execSync;
 camelcase: ["error", {"properties": "never"}]
 */
 module.exports = function (grunt) {
-  'use strict';
+        'use strict';
 
-  grunt.loadNpmTasks('grunt-babel');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-bytesize');
-  grunt.loadTasks('build/tasks');
+  grunt.loadNpmTasks('grunt-babel')
+  grunt.loadNpmTasks('grunt-contrib-clean')
+  grunt.loadNpmTasks('grunt-contrib-concat')
+  grunt.loadNpmTasks('grunt-contrib-uglify')
+  grunt.loadNpmTasks('grunt-contrib-watch')
+  grunt.loadNpmTasks('grunt-bytesize')
+  grunt.loadTasks('build/tasks')
 
   var langs;
-  if (grunt.option('lang')) {
-    langs = (grunt.option('lang') || '').split(/[,;]/g).map(function (lang) {
-      lang = lang.trim();
+  if (grunt.option("lang")) {
+    langs    =     (grunt.option('lang') || '').split(/[,;]/g).map(function (lang) {
+             lang = lang.trim();
       return lang !== 'en' ? '.' + lang : '';
     });
   } else if (grunt.option('all-lang')) {
