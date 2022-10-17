@@ -1,7 +1,7 @@
-describe('color.getContrast', function() {
+describe('color.getContrast', function () {
   'use strict';
 
-  it('should calculate contrast sensibly', function() {
+  it('should calculate contrast sensibly', function () {
     var black = new axe.commons.color.Color(0, 0, 0, 1);
     var transparent = new axe.commons.color.Color(0, 0, 0, 0);
     var white = new axe.commons.color.Color(255, 255, 255, 1);

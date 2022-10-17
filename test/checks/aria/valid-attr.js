@@ -1,14 +1,14 @@
-describe('aria-valid-attr', function() {
+describe('aria-valid-attr', function () {
   'use strict';
 
   var queryFixture = axe.testUtils.queryFixture;
   var checkContext = axe.testUtils.MockCheckContext();
 
-  afterEach(function() {
+  afterEach(function () {
     checkContext.reset();
   });
 
-  it('should return false if any invalid ARIA attributes are found', function() {
+  it('should return false if any invalid ARIA attributes are found', function () {
     var vNode = queryFixture(
       '<div id="target" tabindex="1" aria-cats="true" aria-dogs="true"></div>'
     );
@@ -20,7 +20,7 @@ describe('aria-valid-attr', function() {
     assert.deepEqual(checkContext._data, ['aria-cats', 'aria-dogs']);
   });
 
-  it('should return true if no invalid ARIA attributes are found', function() {
+  it('should return true if no invalid ARIA attributes are found', function () {
     var vNode = queryFixture(
       '<div id="target" tabindex="1" aria-selected="true"></div>'
     );
@@ -32,7 +32,7 @@ describe('aria-valid-attr', function() {
     assert.isNull(checkContext._data);
   });
 
-  it('should return true for unsupported ARIA attributes', function() {
+  it('should return true for unsupported ARIA attributes', function () {
     axe.configure({
       standards: {
         ariaAttrs: {
@@ -54,8 +54,8 @@ describe('aria-valid-attr', function() {
     assert.isNull(checkContext._data);
   });
 
-  describe('options', function() {
-    it('should exclude provided attribute names', function() {
+  describe('options', function () {
+    it('should exclude provided attribute names', function () {
       var vNode = queryFixture(
         '<div id="target" aria-bats="cat" aria-puppies="2"></div>'
       );

@@ -1,12 +1,12 @@
 /* global module */
-describe('UMD module.export', function() {
+describe('UMD module.export', function () {
   'use strict';
 
-  it('registers axe to module.exports', function() {
+  it('registers axe to module.exports', function () {
     assert.strictEqual(module.exports, axe);
   });
 
-  it('does not use `require` functions', function() {
+  it('does not use `require` functions', function () {
     var result;
     var requireRegex = /[^.]require\(([^\)])\)/g;
 
@@ -22,7 +22,7 @@ describe('UMD module.export', function() {
     }
   });
 
-  it('should include doT', function() {
+  it('should include doT', function () {
     var doT = axe.imports.doT;
     assert(doT, 'doT is registered on axe.imports');
     assert.equal(doT.name, 'doT');

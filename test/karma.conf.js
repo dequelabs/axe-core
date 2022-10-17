@@ -13,7 +13,7 @@ var testDirs = [
 var testFiles = [];
 var args = process.argv.slice(2);
 
-args.forEach(function(arg) {
+args.forEach(function (arg) {
   // pattern: testDir=commons,core
   var parts = arg.split('=');
   if (parts[0] === 'testDirs') {
@@ -27,7 +27,7 @@ args.forEach(function(arg) {
 
 var testPaths = [];
 if (testFiles.length) {
-  testPaths = testFiles.map(function(file) {
+  testPaths = testFiles.map(function (file) {
     var basename = path.basename(file);
     var extname = path.extname(file);
 
@@ -52,7 +52,7 @@ if (testFiles.length) {
     }
   });
 } else if (testDirs.length) {
-  testPaths = testDirs.map(function(dir) {
+  testPaths = testDirs.map(function (dir) {
     if (dir === 'integration') {
       return path.join('test', dir, '**/*.json');
     }
@@ -63,7 +63,7 @@ if (testFiles.length) {
   });
 }
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     basePath: '../',
     singleRun: true,

@@ -1,21 +1,21 @@
-describe('frame-tested', function() {
+describe('frame-tested', function () {
   'use strict';
 
   var checkEvaluate = axe.testUtils.getCheckEvaluate('frame-tested');
   var frameTestedAfter = checks['frame-tested'].after;
 
-  describe('evaluate', function() {
-    it('returns undefined', function() {
+  describe('evaluate', function () {
+    it('returns undefined', function () {
       assert.isUndefined(checkEvaluate());
     });
 
-    it('returns false if passed isViolation:true', function() {
+    it('returns false if passed isViolation:true', function () {
       assert.isFalse(checkEvaluate(null, { isViolation: true }));
     });
   });
 
-  describe('after', function() {
-    it('changes result to true if frame has been tested', function() {
+  describe('after', function () {
+    it('changes result to true if frame has been tested', function () {
       var results = [
         {
           result: undefined,
@@ -63,7 +63,7 @@ describe('frame-tested', function() {
       ]);
     });
 
-    it('does not change result when iframe has not been tested', function() {
+    it('does not change result when iframe has not been tested', function () {
       var results = [
         {
           result: undefined,
@@ -116,7 +116,7 @@ describe('frame-tested', function() {
       ]);
     });
 
-    it('works with shadow DOM', function() {
+    it('works with shadow DOM', function () {
       var results = [
         {
           result: undefined,
@@ -158,7 +158,7 @@ describe('frame-tested', function() {
       ]);
     });
 
-    it('works with nested shadow DOM and iframes', function() {
+    it('works with nested shadow DOM and iframes', function () {
       var results = [
         {
           result: undefined,

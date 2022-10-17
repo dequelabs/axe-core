@@ -1,4 +1,4 @@
-describe('p-as-heading', function() {
+describe('p-as-heading', function () {
   'use strict';
   var fixture = document.getElementById('fixture');
   var checkSetup = axe.testUtils.checkSetup;
@@ -11,13 +11,13 @@ describe('p-as-heading', function() {
     margins: [{ weight: 100 }, { italic: true }, { size: 1.2 }]
   };
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     checkContext.reset();
     axe._tree = undefined;
   });
 
-  it('returns true if the styles are identical', function() {
+  it('returns true if the styles are identical', function () {
     var params = checkSetup(
       '<p id="target">elm 1</p> <p>elm 2</p>',
       testOptions
@@ -27,14 +27,14 @@ describe('p-as-heading', function() {
     );
   });
 
-  it('returns true if there is no p element following it', function() {
+  it('returns true if there is no p element following it', function () {
     var params = checkSetup('<p id="target">lone elm</p>', testOptions);
     assert.isTrue(
       axe.testUtils.getCheckEvaluate('p-as-heading').apply(checkContext, params)
     );
   });
 
-  it('returns false if the font-weight is heavier', function() {
+  it('returns false if the font-weight is heavier', function () {
     var params = checkSetup(
       '<p id="target" style="font-weight:bold">elm 1</p>' + '<p>elm 2elm 2</p>',
       testOptions
@@ -44,7 +44,7 @@ describe('p-as-heading', function() {
     );
   });
 
-  it('returns false if the font-size is bigger', function() {
+  it('returns false if the font-size is bigger', function () {
     var params = checkSetup(
       '<p id="target" style="font-size:150%">elm 1</p> <p>elm 2elm 2</p>',
       testOptions
@@ -54,7 +54,7 @@ describe('p-as-heading', function() {
     );
   });
 
-  it('returns false if the fake heading is italic and the text is not', function() {
+  it('returns false if the fake heading is italic and the text is not', function () {
     var params = checkSetup(
       '<p id="target" style="font-style:italic">elm 1</p> <p>elm 2elm 2</p>',
       testOptions
@@ -64,7 +64,7 @@ describe('p-as-heading', function() {
     );
   });
 
-  it('returns true if both texts are bold, italic and larger', function() {
+  it('returns true if both texts are bold, italic and larger', function () {
     var params = checkSetup(
       '<p id="target" style="font-weight:bold; font-size:120%; font-style:italic">elm 1</p>' +
         '<p style="font: italic bold 120% bold">elm 2elm 2</p>',
@@ -75,7 +75,7 @@ describe('p-as-heading', function() {
     );
   });
 
-  it('considers styles of elements inside the paragraph', function() {
+  it('considers styles of elements inside the paragraph', function () {
     var params = checkSetup(
       '<p id="target"><b>elm 1</b></p> <p>elm 2elm 2</p>',
       testOptions
@@ -85,7 +85,7 @@ describe('p-as-heading', function() {
     );
   });
 
-  it('ignores empty child element for style', function() {
+  it('ignores empty child element for style', function () {
     var params = checkSetup(
       '<p id="target"><span> </span><b>elm 1</b></p> <p>elm 2elm 2</p>',
       testOptions
@@ -95,7 +95,7 @@ describe('p-as-heading', function() {
     );
   });
 
-  it('considers styles of elements that do not contain all the text', function() {
+  it('considers styles of elements that do not contain all the text', function () {
     var params = checkSetup(
       '<p id="target"><b>elm</b> 1</p> <p>elm 2elm 2</p>',
       testOptions
@@ -105,7 +105,7 @@ describe('p-as-heading', function() {
     );
   });
 
-  it('returns undefined instead of false if the element is inside a blockquote', function() {
+  it('returns undefined instead of false if the element is inside a blockquote', function () {
     var params = checkSetup(
       '<blockquote>' +
         '<p style="font-weight:bold" id="target">elm 1</p> <p>elm 2elm 2</p>' +
@@ -117,7 +117,7 @@ describe('p-as-heading', function() {
     );
   });
 
-  it('returns true over undefined from within a blockquote', function() {
+  it('returns true over undefined from within a blockquote', function () {
     var params = checkSetup(
       '<blockquote>' +
         '<p id="target">elm 1</p> <p>elm 2elm 2</p>' +
@@ -129,7 +129,7 @@ describe('p-as-heading', function() {
     );
   });
 
-  it('returns undefined if a previous sibling has a similar font-weight', function() {
+  it('returns undefined if a previous sibling has a similar font-weight', function () {
     var params = checkSetup(
       '<p><b>elm 1</b></p>' +
         '<p id="target"><b>elm 2</b></p>' +
@@ -141,7 +141,7 @@ describe('p-as-heading', function() {
     );
   });
 
-  it('returns true if the heading is greater than the paragraph', function() {
+  it('returns true if the heading is greater than the paragraph', function () {
     var params = checkSetup(
       '<p id="target">elm1elm1</p>' + '<p>elm2</p>',
       testOptions
@@ -151,7 +151,7 @@ describe('p-as-heading', function() {
     );
   });
 
-  it('returns undefined if the heading is twice as long but not greater than the length of the pararaph', function() {
+  it('returns undefined if the heading is twice as long but not greater than the length of the pararaph', function () {
     var params = checkSetup(
       '<p id="target" style="font-weight:bold">elm1elm</p>' + '<p>elm2elm2</p>',
       testOptions
@@ -161,8 +161,8 @@ describe('p-as-heading', function() {
     );
   });
 
-  describe('options.passLength and options.failLength', function() {
-    it('returns true if the heading is greater than the paragraph using options.passLength', function() {
+  describe('options.passLength and options.failLength', function () {
+    it('returns true if the heading is greater than the paragraph using options.passLength', function () {
       var options = {
         margins: [{ weight: 100 }, { italic: true }, { size: 1.2 }],
         passLength: 2
@@ -179,7 +179,7 @@ describe('p-as-heading', function() {
       );
     });
 
-    it('returns undefined if the heading is twice as long but not greater than the length of the pararaph using options.failLength ', function() {
+    it('returns undefined if the heading is twice as long but not greater than the length of the pararaph using options.failLength ', function () {
       var options = {
         margins: [{ weight: 100 }, { italic: true }, { size: 1.2 }],
         failLength: 0.6
@@ -197,8 +197,8 @@ describe('p-as-heading', function() {
     });
   });
 
-  describe('option.margin', function() {
-    it('passes if no margins are set', function() {
+  describe('option.margin', function () {
+    it('passes if no margins are set', function () {
       var options = {};
 
       var params = checkSetup(
@@ -212,7 +212,7 @@ describe('p-as-heading', function() {
       );
     });
 
-    it('takes an array of margins', function() {
+    it('takes an array of margins', function () {
       var options = {
         margins: [{ size: 1.2 }]
       };
@@ -228,7 +228,7 @@ describe('p-as-heading', function() {
       );
     });
 
-    it('returns false if all values in the margin are passed', function() {
+    it('returns false if all values in the margin are passed', function () {
       var options = {
         margins: [{ size: 1.2, weight: 100 }]
       };
@@ -245,7 +245,7 @@ describe('p-as-heading', function() {
       );
     });
 
-    it('returns true if any of the values is not passed', function() {
+    it('returns true if any of the values is not passed', function () {
       var options = {
         margins: [{ size: 1.2, weight: 100 }]
       };
@@ -261,7 +261,7 @@ describe('p-as-heading', function() {
       );
     });
 
-    it('returns false if any of the margins is passed', function() {
+    it('returns false if any of the margins is passed', function () {
       var options = {
         margins: [{ size: 1.2, weight: 100 }, { size: 1.5 }, { italic: true }]
       };
@@ -278,7 +278,7 @@ describe('p-as-heading', function() {
       );
     });
 
-    it('returns true if none of the set margins is passed', function() {
+    it('returns true if none of the set margins is passed', function () {
       /*eslint indent: 0*/
       var options = {
         margins: [
@@ -302,7 +302,7 @@ describe('p-as-heading', function() {
 
   (shadowSupported ? it : xit)(
     'returns undefined instead of false if the element is inside a blockquote in light dom',
-    function() {
+    function () {
       var params = shadowCheckSetup(
         '<blockquote></blockquote>',
         '<p style="font-weight:bold" id="target">elm 1</p> <p>elm 2</p>',
@@ -318,7 +318,7 @@ describe('p-as-heading', function() {
 
   (shadowSupported ? it : xit)(
     'returns true over undefined from within a blockquote in light dom',
-    function() {
+    function () {
       var params = shadowCheckSetup(
         '<blockquote></blockquote>',
         '<p id="target">elm 1</p> <p>elm 2</p>',

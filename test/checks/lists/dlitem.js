@@ -1,21 +1,21 @@
-describe('dlitem', function() {
+describe('dlitem', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
   var checkSetup = axe.testUtils.checkSetup;
   var shadowSupport = axe.testUtils.shadowSupport;
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
   });
 
-  it('should pass if the dlitem has a parent <dl>', function() {
+  it('should pass if the dlitem has a parent <dl>', function () {
     var checkArgs = checkSetup('<dl><dt id="target">My list item</dt></dl>');
 
     assert.isTrue(checks.dlitem.evaluate.apply(null, checkArgs));
   });
 
-  it('should fail if the dt element has an incorrect parent', function() {
+  it('should fail if the dt element has an incorrect parent', function () {
     var checkArgs = checkSetup(
       '<video><dt id="target">My list item</dt></video>'
     );
@@ -23,51 +23,51 @@ describe('dlitem', function() {
     assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
   });
 
-  it('should pass if the dt element has a parent <dl> with role="list"', function() {
+  it('should pass if the dt element has a parent <dl> with role="list"', function () {
     var checkArgs = checkSetup(
       '<dl role="list"><dt id="target">My list item</dt></dl>'
     );
     assert.isTrue(checks.dlitem.evaluate.apply(null, checkArgs));
   });
 
-  it('should pass if the dt element has a parent <dl> with role="presentation"', function() {
+  it('should pass if the dt element has a parent <dl> with role="presentation"', function () {
     var checkArgs = checkSetup(
       '<dl role="presentation"><dt id="target">My list item</dt></dl>'
     );
     assert.isTrue(checks.dlitem.evaluate.apply(null, checkArgs));
   });
 
-  it('should fail if the dt element has a parent <dl> with a changed role', function() {
+  it('should fail if the dt element has a parent <dl> with a changed role', function () {
     var checkArgs = checkSetup(
       '<dl role="menubar"><dt id="target">My list item<</dt>/dl>'
     );
     assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
   });
 
-  it('should pass if the dt element has a parent <dl> with an abstract role', function() {
+  it('should pass if the dt element has a parent <dl> with an abstract role', function () {
     var checkArgs = checkSetup(
       '<dl role="section"><dt id="target">My list item</dt></dl>'
     );
     assert.isTrue(checks.dlitem.evaluate.apply(null, checkArgs));
   });
 
-  it('should pass if the dt element has a parent <dl> with an invalid role', function() {
+  it('should pass if the dt element has a parent <dl> with an invalid role', function () {
     var checkArgs = checkSetup(
       '<dl role="invalid-role"><dt id="target">My list item</dt></dl>'
     );
     assert.isTrue(checks.dlitem.evaluate.apply(null, checkArgs));
   });
 
-  it('should fail if the dt element has a parent <dl> with a changed role', function() {
+  it('should fail if the dt element has a parent <dl> with a changed role', function () {
     var checkArgs = checkSetup(
       '<dl role="menubar"><dt id="target">My list item</dt></dl>'
     );
     assert.isFalse(checks.dlitem.evaluate.apply(null, checkArgs));
   });
 
-  it('returns true if the dd/dt is in a div with a dl as grandparent', function() {
+  it('returns true if the dd/dt is in a div with a dl as grandparent', function () {
     var nodeNames = ['dd', 'dt'];
-    nodeNames.forEach(function(nodeName) {
+    nodeNames.forEach(function (nodeName) {
       var checkArgs = checkSetup(
         '<dl><div><' +
           nodeName +
@@ -79,9 +79,9 @@ describe('dlitem', function() {
     });
   });
 
-  it('returns false if the dd/dt is in a div with a role with a dl as grandparent with a list role', function() {
+  it('returns false if the dd/dt is in a div with a role with a dl as grandparent with a list role', function () {
     var nodeNames = ['dd', 'dt'];
-    nodeNames.forEach(function(nodeName) {
+    nodeNames.forEach(function (nodeName) {
       var checkArgs = checkSetup(
         '<dl><div role="list"><' +
           nodeName +
@@ -93,9 +93,9 @@ describe('dlitem', function() {
     });
   });
 
-  it('returns false if the dd/dt is in a div[role=presentation] with a dl as grandparent', function() {
+  it('returns false if the dd/dt is in a div[role=presentation] with a dl as grandparent', function () {
     var nodeNames = ['dd', 'dt'];
-    nodeNames.forEach(function(nodeName) {
+    nodeNames.forEach(function (nodeName) {
       var checkArgs = checkSetup(
         '<dl><div role="presentation"><' +
           nodeName +
@@ -107,9 +107,9 @@ describe('dlitem', function() {
     });
   });
 
-  it('returns false if the dd/dt is in a div[role=none] with a dl as grandparent', function() {
+  it('returns false if the dd/dt is in a div[role=none] with a dl as grandparent', function () {
     var nodeNames = ['dd', 'dt'];
-    nodeNames.forEach(function(nodeName) {
+    nodeNames.forEach(function (nodeName) {
       var checkArgs = checkSetup(
         '<dl><div role="none"><' +
           nodeName +
@@ -123,7 +123,7 @@ describe('dlitem', function() {
 
   (shadowSupport.v1 ? it : xit)(
     'should return true in a shadow DOM pass',
-    function() {
+    function () {
       var node = document.createElement('div');
       node.innerHTML = '<dt>My list item </dt>';
       var shadow = node.attachShadow({ mode: 'open' });
@@ -136,7 +136,7 @@ describe('dlitem', function() {
 
   (shadowSupport.v1 ? it : xit)(
     'should return false in a shadow DOM fail',
-    function() {
+    function () {
       var node = document.createElement('div');
       node.innerHTML = '<dt>My list item </dt>';
       var shadow = node.attachShadow({ mode: 'open' });
@@ -149,7 +149,7 @@ describe('dlitem', function() {
 
   (shadowSupport.v1 ? it : xit)(
     'should return true when the item is grouped in dl > div in a shadow DOM',
-    function() {
+    function () {
       var node = document.createElement('div');
       node.innerHTML = '<dt>My list item </dt>';
       var shadow = node.attachShadow({ mode: 'open' });

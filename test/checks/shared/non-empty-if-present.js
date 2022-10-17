@@ -1,4 +1,4 @@
-describe('non-empty-if-present', function() {
+describe('non-empty-if-present', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -11,12 +11,12 @@ describe('non-empty-if-present', function() {
   var checkContext = axe.testUtils.MockCheckContext();
   var queryFixture = axe.testUtils.queryFixture;
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     checkContext.reset();
   });
 
-  it('should return false if a value is present', function() {
+  it('should return false if a value is present', function () {
     var vNode = queryFixture(
       '<input id="target" type="submit" value="woohoo" />'
     );
@@ -31,7 +31,7 @@ describe('non-empty-if-present', function() {
 
   (isEdgeOrIe ? xit : it)(
     'should return true if a value is not present',
-    function() {
+    function () {
       var vNode = queryFixture('<input id="target" type="submit" />');
 
       assert.isTrue(
@@ -43,7 +43,7 @@ describe('non-empty-if-present', function() {
     }
   );
 
-  it('should return false if an value is present, but empty', function() {
+  it('should return false if an value is present, but empty', function () {
     var vNode = queryFixture('<input id="target" type="submit" value="" />');
 
     assert.isFalse(
@@ -53,7 +53,7 @@ describe('non-empty-if-present', function() {
     );
   });
 
-  it('should return false if the element is not a submit or reset input', function() {
+  it('should return false if the element is not a submit or reset input', function () {
     var vNode = queryFixture('<input id="target" type="text" />');
     assert.isFalse(
       axe.testUtils

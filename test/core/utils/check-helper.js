@@ -1,31 +1,31 @@
-describe('axe.utils.checkHelper', function() {
+describe('axe.utils.checkHelper', function () {
   'use strict';
 
   var DqElement = axe.utils.DqElement;
   function noop() {}
 
-  it('should be a function', function() {
+  it('should be a function', function () {
     assert.isFunction(axe.utils.checkHelper);
   });
 
-  it('should accept 4 named parameters', function() {
+  it('should accept 4 named parameters', function () {
     assert.lengthOf(axe.utils.checkHelper, 4);
   });
 
-  it('should return an object', function() {
+  it('should return an object', function () {
     assert.isObject(axe.utils.checkHelper());
   });
 
-  describe('return value', function() {
-    describe('async', function() {
-      it('should set isAsync property on returned object to `true` when called', function() {
+  describe('return value', function () {
+    describe('async', function () {
+      it('should set isAsync property on returned object to `true` when called', function () {
         var target = {},
           helper = axe.utils.checkHelper(target, noop);
 
         helper.async();
         assert.isTrue(helper.isAsync);
       });
-      it('should call the third parameter of `axe.utils.checkHelper` when invoked', function() {
+      it('should call the third parameter of `axe.utils.checkHelper` when invoked', function () {
         function fn() {
           success = true;
         }
@@ -38,7 +38,7 @@ describe('axe.utils.checkHelper', function() {
         assert.isTrue(success);
       });
 
-      it('should call the fourth parameter of `axe.utils.checkHelper` when returning an error', function() {
+      it('should call the fourth parameter of `axe.utils.checkHelper` when returning an error', function () {
         var success = false;
         function reject(e) {
           success = true;
@@ -52,8 +52,8 @@ describe('axe.utils.checkHelper', function() {
         assert.isTrue(success);
       });
     });
-    describe('data', function() {
-      it('should set data property on target when called', function() {
+    describe('data', function () {
+      it('should set data property on target when called', function () {
         var target = {},
           expected = { monkeys: 'bananas' },
           helper = axe.utils.checkHelper(target, noop);
@@ -63,12 +63,12 @@ describe('axe.utils.checkHelper', function() {
         assert.equal(target.data, expected);
       });
     });
-    describe('relatedNodes', function() {
+    describe('relatedNodes', function () {
       var fixture = document.getElementById('fixture');
-      afterEach(function() {
+      afterEach(function () {
         fixture.innerHTML = '';
       });
-      it('should accept NodeList', function() {
+      it('should accept NodeList', function () {
         fixture.innerHTML = '<div id="t1"></div><div id="t2"></div>';
         var target = {},
           helper = axe.utils.checkHelper(target, noop);
@@ -79,7 +79,7 @@ describe('axe.utils.checkHelper', function() {
         assert.equal(target.relatedNodes[0].element, fixture.children[0]);
         assert.equal(target.relatedNodes[1].element, fixture.children[1]);
       });
-      it('should accept a single Node', function() {
+      it('should accept a single Node', function () {
         fixture.innerHTML = '<div id="t1"></div><div id="t2"></div>';
         var target = {},
           helper = axe.utils.checkHelper(target, noop);
@@ -88,7 +88,7 @@ describe('axe.utils.checkHelper', function() {
         assert.instanceOf(target.relatedNodes[0], DqElement);
         assert.equal(target.relatedNodes[0].element, fixture.firstChild);
       });
-      it('should accept an Array', function() {
+      it('should accept an Array', function () {
         fixture.innerHTML = '<div id="t1"></div><div id="t2"></div>';
         var target = {},
           helper = axe.utils.checkHelper(target, noop);
@@ -99,7 +99,7 @@ describe('axe.utils.checkHelper', function() {
         assert.equal(target.relatedNodes[0].element, fixture.children[0]);
         assert.equal(target.relatedNodes[1].element, fixture.children[1]);
       });
-      it('should accept an array-like Object', function() {
+      it('should accept an array-like Object', function () {
         fixture.innerHTML = '<div id="t1"></div><div id="t2"></div>';
         var target = {},
           helper = axe.utils.checkHelper(target, noop);
@@ -115,13 +115,13 @@ describe('axe.utils.checkHelper', function() {
         assert.equal(target.relatedNodes[0].element, fixture.children[0]);
         assert.equal(target.relatedNodes[1].element, fixture.children[1]);
       });
-      it('should noop for non-node-like objects', function() {
+      it('should noop for non-node-like objects', function () {
         var target = {},
           helper = axe.utils.checkHelper(target, noop);
         var nodes = new axe.SerialVirtualNode({
           nodeName: 'div'
         });
-        assert.doesNotThrow(function() {
+        assert.doesNotThrow(function () {
           helper.relatedNodes(nodes);
         });
         assert.lengthOf(target.relatedNodes, 0);

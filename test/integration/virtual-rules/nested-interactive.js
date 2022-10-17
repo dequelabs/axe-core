@@ -1,5 +1,5 @@
-describe('nested-interactive virtual-rule', function() {
-  it('should pass for element without focusable content', function() {
+describe('nested-interactive virtual-rule', function () {
+  it('should pass for element without focusable content', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'button'
     });
@@ -17,7 +17,7 @@ describe('nested-interactive virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for aria element without focusable content', function() {
+  it('should pass for aria element without focusable content', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
@@ -38,7 +38,7 @@ describe('nested-interactive virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for element with non-widget content which has negative tabindex', function() {
+  it('should pass for element with non-widget content which has negative tabindex', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'button'
     });
@@ -58,7 +58,7 @@ describe('nested-interactive virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for empty element without', function() {
+  it('should pass for empty element without', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
@@ -74,7 +74,7 @@ describe('nested-interactive virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for element with non-widget content', function() {
+  it('should pass for element with non-widget content', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'button'
     });
@@ -94,7 +94,7 @@ describe('nested-interactive virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for element with native widget content', function() {
+  it('should fail for element with native widget content', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
@@ -114,7 +114,7 @@ describe('nested-interactive virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should return incomplete if element has undefined children', function() {
+  it('should return incomplete if element has undefined children', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'button'
     });
@@ -126,7 +126,7 @@ describe('nested-interactive virtual-rule', function() {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should return incomplete if descendant has undefined children', function() {
+  it('should return incomplete if descendant has undefined children', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'button'
     });

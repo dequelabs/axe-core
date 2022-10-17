@@ -1,21 +1,21 @@
-describe('standards.getElementSpec', function() {
+describe('standards.getElementSpec', function () {
   var getElementSpec = axe.commons.standards.getElementSpec;
   var queryFixture = axe.testUtils.queryFixture;
   var fixture = document.querySelector('#fixture');
 
-  before(function() {
+  before(function () {
     axe._load({});
   });
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
   });
 
-  after(function() {
+  after(function () {
     axe.reset();
   });
 
-  it('should return a spec for an element without variants', function() {
+  it('should return a spec for an element without variants', function () {
     axe.configure({
       standards: {
         htmlElms: {
@@ -34,13 +34,13 @@ describe('standards.getElementSpec', function() {
     });
   });
 
-  it('should return empty object if passed an invalid element', function() {
+  it('should return empty object if passed an invalid element', function () {
     var vNode = queryFixture('<foo-bar id="target"></foo-bar>');
     assert.deepEqual(getElementSpec(vNode), {});
   });
 
-  describe('variants', function() {
-    before(function() {
+  describe('variants', function () {
+    before(function () {
       axe.configure({
         standards: {
           htmlElms: {
@@ -66,19 +66,19 @@ describe('standards.getElementSpec', function() {
       });
     });
 
-    it('should return top level properties', function() {
+    it('should return top level properties', function () {
       var vNode = queryFixture('<abbr id="target" controls></abbr>');
       var spec = getElementSpec(vNode);
       assert.equal(spec.allowedRoles, false);
     });
 
-    it('should return properties from matching variant', function() {
+    it('should return properties from matching variant', function () {
       var vNode = queryFixture('<abbr id="target" controls></abbr>');
       var spec = getElementSpec(vNode);
       assert.equal(spec.customProp, 'controls');
     });
 
-    it('should return all properties from matching variants', function() {
+    it('should return all properties from matching variants', function () {
       var vNode = queryFixture(
         '<abbr id="target" controls aria-label="foo"></abbr>'
       );
@@ -87,14 +87,14 @@ describe('standards.getElementSpec', function() {
       assert.equal(spec.anotherProp, 'label');
     });
 
-    it('should return default props in no variants match', function() {
+    it('should return default props in no variants match', function () {
       var vNode = queryFixture('<abbr id="target"></abbr>');
       var spec = getElementSpec(vNode);
       assert.equal(spec.customProp, 'default');
       assert.equal(spec.anotherProp, 'default');
     });
 
-    it('should return default props that were not part of other matches', function() {
+    it('should return default props that were not part of other matches', function () {
       var vNode = queryFixture('<abbr id="target" controls></abbr>');
       var spec = getElementSpec(vNode);
       assert.equal(spec.customProp, 'controls');

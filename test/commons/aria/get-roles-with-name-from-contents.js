@@ -1,15 +1,15 @@
-describe('aria.getRolesWithNameFromContents', function() {
+describe('aria.getRolesWithNameFromContents', function () {
   'use strict';
 
-  before(function() {
+  before(function () {
     axe._load({});
   });
 
-  afterEach(function() {
+  afterEach(function () {
     axe.reset();
   });
 
-  it('should return array if nameFrom contents is found in the lookup table', function() {
+  it('should return array if nameFrom contents is found in the lookup table', function () {
     axe.configure({
       standards: {
         ariaRoles: {

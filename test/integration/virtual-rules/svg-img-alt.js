@@ -1,5 +1,5 @@
-describe('svg-img-alt virtual-rule', function() {
-  it('should pass for aria-label', function() {
+describe('svg-img-alt virtual-rule', function () {
+  it('should pass for aria-label', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'svg',
       attributes: {
@@ -15,7 +15,7 @@ describe('svg-img-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for aria-labelledby', function() {
+  it('should incomplete for aria-labelledby', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'svg',
       attributes: {
@@ -31,7 +31,7 @@ describe('svg-img-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should pass for title', function() {
+  it('should pass for title', function () {
     var parent = new axe.SerialVirtualNode({
       nodeName: 'svg'
     });
@@ -56,7 +56,7 @@ describe('svg-img-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for title element', function() {
+  it('should pass for title element', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'svg',
       attributes: {
@@ -83,7 +83,7 @@ describe('svg-img-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete when aria-label and children are missing', function() {
+  it('should incomplete when aria-label and children are missing', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'svg',
       attributes: {
@@ -98,7 +98,7 @@ describe('svg-img-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should fail when aria-label contains only whitespace', function() {
+  it('should fail when aria-label contains only whitespace', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'svg',
       attributes: {
@@ -115,7 +115,7 @@ describe('svg-img-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when aria-label is empty', function() {
+  it('should fail when aria-label is empty', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'svg',
       attributes: {
@@ -132,7 +132,7 @@ describe('svg-img-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when title is empty', function() {
+  it('should fail when title is empty', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'svg',
       attributes: {
@@ -149,7 +149,7 @@ describe('svg-img-alt virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete when title element has missing children', function() {
+  it('should incomplete when title element has missing children', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'svg',
       attributes: {

@@ -1,4 +1,4 @@
-describe('focusable-content tests', function() {
+describe('focusable-content tests', function () {
   'use strict';
 
   var check;
@@ -8,17 +8,17 @@ describe('focusable-content tests', function() {
   var checkContext = axe.testUtils.MockCheckContext();
   var checkSetup = axe.testUtils.checkSetup;
 
-  before(function() {
+  before(function () {
     check = checks['focusable-content'];
   });
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     axe._tree = undefined;
     checkContext.reset();
   });
 
-  it('returns false when there are no focusable content elements (content element `div` is not focusable)', function() {
+  it('returns false when there are no focusable content elements (content element `div` is not focusable)', function () {
     var params = checkSetup(
       '<div id="target">' + '<div> Content </div>' + '</div>'
     );
@@ -26,7 +26,7 @@ describe('focusable-content tests', function() {
     assert.isFalse(actual);
   });
 
-  it('returns false when content element is taken out of focusable order (tabindex = -1)', function() {
+  it('returns false when content element is taken out of focusable order (tabindex = -1)', function () {
     var params = checkSetup(
       '<div id="target">' + '<input type="text" tabindex="-1">' + '</div>'
     );
@@ -34,7 +34,7 @@ describe('focusable-content tests', function() {
     assert.isFalse(actual);
   });
 
-  it('returns false when element is focusable (only checks if contents are focusable)', function() {
+  it('returns false when element is focusable (only checks if contents are focusable)', function () {
     var params = checkSetup(
       '<div id="target" tabindex="0">' +
         '<p style="height: 200px;"></p>' +
@@ -44,7 +44,7 @@ describe('focusable-content tests', function() {
     assert.isFalse(actual);
   });
 
-  it('returns false when all content elements are not focusable', function() {
+  it('returns false when all content elements are not focusable', function () {
     var params = checkSetup(
       '<div id="target">' +
         '<input type="text" tabindex="-1">' +
@@ -56,7 +56,7 @@ describe('focusable-content tests', function() {
     assert.isFalse(actual);
   });
 
-  it('returns true when one deeply nested content element is focusable', function() {
+  it('returns true when one deeply nested content element is focusable', function () {
     var params = checkSetup(
       '<div id="target">' +
         '<div style="height: 200px"> ' +
@@ -70,7 +70,7 @@ describe('focusable-content tests', function() {
     assert.isTrue(actual);
   });
 
-  it('returns true when content element can be focused', function() {
+  it('returns true when content element can be focused', function () {
     var params = checkSetup(
       '<div id="target">' + '<input type="text">' + '</div>'
     );
@@ -78,7 +78,7 @@ describe('focusable-content tests', function() {
     assert.isTrue(actual);
   });
 
-  it('returns true when any one of the many content elements can be focused', function() {
+  it('returns true when any one of the many content elements can be focused', function () {
     var params = checkSetup(
       '<div id="target">' +
         '<input type="text" tabindex="-1">' +
@@ -91,14 +91,14 @@ describe('focusable-content tests', function() {
     assert.isTrue(actual);
   });
 
-  describe('shadowDOM - focusable content', function() {
-    before(function() {
+  describe('shadowDOM - focusable content', function () {
+    before(function () {
       if (!shadowSupported) {
         this.skip();
       }
     });
 
-    it('returns true when content element can be focused', function() {
+    it('returns true when content element can be focused', function () {
       fixtureSetup('<div id="target">' + '</div>');
       var node = fixture.querySelector('#target');
       var shadow = node.attachShadow({ mode: 'open' });
@@ -110,7 +110,7 @@ describe('focusable-content tests', function() {
       assert.isTrue(actual);
     });
 
-    it('returns false when no focusable content', function() {
+    it('returns false when no focusable content', function () {
       fixtureSetup('<div id="target">' + '</div>');
       var node = fixture.querySelector('#target');
       var shadow = node.attachShadow({ mode: 'open' });

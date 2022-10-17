@@ -69,11 +69,7 @@ const validateGetCheckName = async input => {
   });
   // cannot use `fs.existsSync` here, as we do not know which category of checks to look under
   const axeChecksFileNames = checkSpecs.map(
-    f =>
-      f
-        .replace('.json', '')
-        .split('/')
-        .reverse()[0]
+    f => f.replace('.json', '').split('/').reverse()[0]
   );
   if (axeChecksFileNames.includes(checkName)) {
     throw new Error('CHECK name conflicts with an existing filename.');

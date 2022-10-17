@@ -1,16 +1,16 @@
-describe('abstractrole', function() {
+describe('abstractrole', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
   var queryFixture = axe.testUtils.queryFixture;
   var checkContext = axe.testUtils.MockCheckContext();
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     checkContext.reset();
   });
 
-  it('should return false if applied to a concrete role', function() {
+  it('should return false if applied to a concrete role', function () {
     var virtualNode = queryFixture(
       '<div id="target" role="alert">Contents</div>'
     );
@@ -25,7 +25,7 @@ describe('abstractrole', function() {
     assert.isNull(checkContext._data);
   });
 
-  it('should return false if applied to a nonsensical role', function() {
+  it('should return false if applied to a nonsensical role', function () {
     var virtualNode = queryFixture(
       '<div id="target" role="foo">Contents</div>'
     );
@@ -40,7 +40,7 @@ describe('abstractrole', function() {
     assert.isNull(checkContext._data);
   });
 
-  it('should return true if applied to an abstract role', function() {
+  it('should return true if applied to an abstract role', function () {
     var virtualNode = queryFixture(
       '<div id="target" role="widget">Contents</div>'
     );
@@ -55,7 +55,7 @@ describe('abstractrole', function() {
     assert.deepEqual(checkContext._data, ['widget']);
   });
 
-  it('should return false if applied to multiple concrete roles', function() {
+  it('should return false if applied to multiple concrete roles', function () {
     var virtualNode = queryFixture(
       '<div id="target" role="alert button">Contents</div>'
     );
@@ -70,7 +70,7 @@ describe('abstractrole', function() {
     assert.isNull(checkContext._data);
   });
 
-  it('should return true if applied to at least one abstract role', function() {
+  it('should return true if applied to at least one abstract role', function () {
     var virtualNode = queryFixture(
       '<div id="target" role="alert widget structure">Contents</div>'
     );
