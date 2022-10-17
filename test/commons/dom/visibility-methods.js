@@ -10,7 +10,8 @@ describe('dom.visibility-methods', () => {
     scrollHidden,
     overflowHidden,
     clipHidden,
-    areaHidden
+    areaHidden,
+    detailsHidden
   } = axe._thisWillBeDeletedDoNotUse.commons.dom;
   const contentVisibilitySupported = CSS.supports('content-visibility: hidden');
 
@@ -431,6 +432,63 @@ describe('dom.visibility-methods', () => {
           return true;
         })
       );
+    });
+  });
+
+  describe('detailsHidden', () => {
+    it('should return true for closed details ancestor', () => {
+      const vNode = queryFixture(`
+        <details>
+          <summary>Hello World</summary>
+          <p id="target">Hidden</p>
+        </details>
+      `);
+
+      assert.isTrue(detailsHidden(vNode));
+    });
+
+    it('should return false for closed details', () => {
+      const vNode = queryFixture(`
+        <details id="target">
+          <summary>Hello World</summary>
+          <p>Hidden</p>
+        </details>
+      `);
+
+      assert.isFalse(detailsHidden(vNode, { isAncestor: false }));
+    });
+
+    it('should return false for summary in closed details', () => {
+      const vNode = queryFixture(`
+        <details>
+          <summary id="target">Hello World</summary>
+          <p>Hidden</p>
+        </details>
+      `);
+
+      assert.isFalse(detailsHidden(vNode, { isAncestor: false }));
+    });
+
+    it('should return false for summary in open details', () => {
+      const vNode = queryFixture(`
+        <details open>
+          <summary id="target">Hello World</summary>
+          <p>Hidden</p>
+        </details>
+      `);
+
+      assert.isFalse(detailsHidden(vNode, { isAncestor: false }));
+    });
+
+    it('should return false for open details ancestor', () => {
+      const vNode = queryFixture(`
+        <details open>
+          <summary>Hello World</summary>
+          <p id="target">Hidden</p>
+        </details>
+      `);
+
+      assert.isFalse(detailsHidden(vNode));
     });
   });
 });
