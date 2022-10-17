@@ -436,7 +436,7 @@ describe('dom.visibility-methods', () => {
   });
 
   describe('detailsHidden', () => {
-    it('should return true for closed details ancestor', () => {
+    it('should return true for closed details parent', () => {
       const vNode = queryFixture(`
         <details>
           <summary>Hello World</summary>
@@ -480,7 +480,7 @@ describe('dom.visibility-methods', () => {
       assert.isFalse(detailsHidden(vNode, { isAncestor: false }));
     });
 
-    it('should return false for open details ancestor', () => {
+    it('should return false for open details parent', () => {
       const vNode = queryFixture(`
         <details open>
           <summary>Hello World</summary>
@@ -489,6 +489,18 @@ describe('dom.visibility-methods', () => {
       `);
 
       assert.isFalse(detailsHidden(vNode));
+    });
+
+    it('should return true for not first summary in closed details', () => {
+      const vNode = queryFixture(`
+        <details>
+          <summary>Hello World</summary>
+          <summary id="target">Not a summary</summary>
+          <p>Hidden</p>
+        </details>
+      `);
+
+      assert.isTrue(detailsHidden(vNode));
     });
   });
 });

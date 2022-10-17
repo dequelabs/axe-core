@@ -248,48 +248,84 @@ describe('dom.isHiddenForEveryone', () => {
     assert.isTrue(actual);
   });
 
-  it('should return true for element in closed details', () => {
-    const vNode = queryFixture(`
-      <details>
-        <summary>Hello World</summary>
-        <p id="target">Hidden</p>
-      </details>
-    `);
-    const actual = isHiddenForEveryone(vNode);
-    assert.isTrue(actual);
-  });
+  describe('details', () => {
+    it('should return true for element in closed details', () => {
+      const vNode = queryFixture(`
+        <details>
+          <summary>Hello World</summary>
+          <p id="target">Hidden</p>
+        </details>
+      `);
+      const actual = isHiddenForEveryone(vNode);
+      assert.isTrue(actual);
+    });
 
-  it('should return false for closed details', () => {
-    const vNode = queryFixture(`
-      <details id="target">
-        <summary>Hello World</summary>
-        <p>Hidden</p>
-      </details>
-    `);
-    const actual = isHiddenForEveryone(vNode);
-    assert.isFalse(actual);
-  });
+    it('should return false for closed details', () => {
+      const vNode = queryFixture(`
+        <details id="target">
+          <summary>Hello World</summary>
+          <p>Hidden</p>
+        </details>
+      `);
+      const actual = isHiddenForEveryone(vNode);
+      assert.isFalse(actual);
+    });
 
-  it('should return false for summary element closed details', () => {
-    const vNode = queryFixture(`
-      <details>
-        <summary id="target">Hello World</summary>
-        <p>Hidden</p>
-      </details>
-    `);
-    const actual = isHiddenForEveryone(vNode);
-    assert.isFalse(actual);
-  });
+    it('should return false for summary element closed details', () => {
+      const vNode = queryFixture(`
+        <details>
+          <summary id="target">Hello World</summary>
+          <p>Hidden</p>
+        </details>
+      `);
+      const actual = isHiddenForEveryone(vNode);
+      assert.isFalse(actual);
+    });
 
-  it('should return false for element in open details', () => {
-    const vNode = queryFixture(`
-      <details open>
-        <summary">Hello World</summary>
-        <p id="target">Hidden</p>
-      </details>
-    `);
-    const actual = isHiddenForEveryone(vNode);
-    assert.isFalse(actual);
+    it('should return false for element in open details', () => {
+      const vNode = queryFixture(`
+        <details open>
+          <summary>Hello World</summary>
+          <p id="target">Hidden</p>
+        </details>
+      `);
+      const actual = isHiddenForEveryone(vNode);
+      assert.isFalse(actual);
+    });
+
+    it('should return true for grandchild element in closed details', () => {
+      const vNode = queryFixture(`
+        <details>
+          <summary>Hello World</summary>
+          <div><p id="target">Hidden</p></div>
+        </details>
+      `);
+      const actual = isHiddenForEveryone(vNode);
+      assert.isTrue(actual);
+    });
+
+    it('should return true for grandchild summary in close details', () => {
+      const vNode = queryFixture(`
+        <details>
+          <div><summary id="target">Hello World</summary></div>
+          <div><p>Hidden</p></div>
+        </details>
+      `);
+      const actual = isHiddenForEveryone(vNode);
+      assert.isTrue(actual);
+    });
+
+    it('should return true not first summary in close details', () => {
+      const vNode = queryFixture(`
+        <details>
+          <summary>Hello World</summary>
+          <summary id="target">Not summary</summary>
+          <div><p>Hidden</p></div>
+        </details>
+      `);
+      const actual = isHiddenForEveryone(vNode);
+      assert.isTrue(actual);
+    });
   });
 
   (shadowSupported ? it : it.skip)(
@@ -357,6 +393,20 @@ describe('dom.isHiddenForEveryone', () => {
       const vNode = new axe.SerialVirtualNode({
         nodeName: 'div'
       });
+      const actual = isHiddenForEveryone(vNode);
+      assert.isFalse(actual);
+    });
+
+    it('should return false for element in closed details', () => {
+      const vNode = new axe.SerialVirtualNode({
+        nodeName: 'div'
+      });
+      const detailsVNode = new axe.SerialVirtualNode({
+        nodeName: 'details'
+      });
+      vNode.parent = detailsVNode;
+      detailsVNode.children = [vNode];
+
       const actual = isHiddenForEveryone(vNode);
       assert.isFalse(actual);
     });
