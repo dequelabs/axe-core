@@ -1,5 +1,5 @@
 describe('list virtual-rule', () => {
-  it('passes when there is an invalid child nodes', () => {
+  it('passes when there are no invalid child nodes', () => {
     const ul = new axe.SerialVirtualNode({ nodeName: 'ul' });
     const li = new axe.SerialVirtualNode({ nodeName: 'li' });
     ul.children = [li];
@@ -11,7 +11,7 @@ describe('list virtual-rule', () => {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('fails when there is an invalid child nodes', () => {
+  it('fails when there is an invalid child node', () => {
     const ul = new axe.SerialVirtualNode({ nodeName: 'ul' });
     const span = new axe.SerialVirtualNode({
       nodeName: 'span',

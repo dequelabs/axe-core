@@ -1,5 +1,5 @@
 describe('definition-list virtual-rule', () => {
-  it('passes when there is an invalid child nodes', () => {
+  it('passes when there are no invalid child nodes', () => {
     const dl = new axe.SerialVirtualNode({ nodeName: 'dl' });
     const dt = new axe.SerialVirtualNode({ nodeName: 'dt' });
     const dd = new axe.SerialVirtualNode({ nodeName: 'dd' });
@@ -22,7 +22,6 @@ describe('definition-list virtual-rule', () => {
     dd2.parent = dl;
 
     const results = axe.runVirtualRule('definition-list', dl);
-    console.log(JSON.stringify(results.violations, null, 2));
     assert.lengthOf(results.passes, 0);
     assert.lengthOf(results.violations, 1);
     assert.lengthOf(results.incomplete, 0);
