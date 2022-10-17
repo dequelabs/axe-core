@@ -1,5 +1,5 @@
-describe('tabindex virtual-rule', function() {
-  it('should pass for tabindex = 0', function() {
+describe('tabindex virtual-rule', function () {
+  it('should pass for tabindex = 0', function () {
     var node = {
       nodeName: 'div',
       attributes: {
@@ -14,7 +14,7 @@ describe('tabindex virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should pass for tabindex = -1', function() {
+  it('should pass for tabindex = -1', function () {
     var node = {
       nodeName: 'div',
       attributes: {
@@ -29,7 +29,7 @@ describe('tabindex virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail for tabindex > 0', function() {
+  it('should fail for tabindex > 0', function () {
     var node = {
       nodeName: 'div',
       attributes: {

@@ -1,7 +1,7 @@
-describe('axe.utils.getCheckOption', function() {
+describe('axe.utils.getCheckOption', function () {
   'use strict';
 
-  it('should prefer options from rules', function() {
+  it('should prefer options from rules', function () {
     assert.deepEqual(
       axe.utils.getCheckOption(
         {
@@ -36,7 +36,7 @@ describe('axe.utils.getCheckOption', function() {
       }
     );
   });
-  it('should fallback to global check options if not defined on the rule', function() {
+  it('should fallback to global check options if not defined on the rule', function () {
     assert.deepEqual(
       axe.utils.getCheckOption(
         {
@@ -71,7 +71,7 @@ describe('axe.utils.getCheckOption', function() {
     );
   });
 
-  it('should prefer fallback to global check options if not defined on the rule', function() {
+  it('should prefer fallback to global check options if not defined on the rule', function () {
     assert.deepEqual(
       axe.utils.getCheckOption(
         {
@@ -97,7 +97,7 @@ describe('axe.utils.getCheckOption', function() {
     );
   });
 
-  it('should otherwise use the check', function() {
+  it('should otherwise use the check', function () {
     assert.deepEqual(
       axe.utils.getCheckOption(
         {
@@ -116,7 +116,7 @@ describe('axe.utils.getCheckOption', function() {
     );
   });
 
-  it('passes absolutePaths option along', function() {
+  it('passes absolutePaths option along', function () {
     assert.deepEqual(
       axe.utils.getCheckOption(
         {

@@ -1,5 +1,5 @@
-describe('aria-dialog-name virtual-rule', function() {
-  it('should pass for aria-label', function() {
+describe('aria-dialog-name virtual-rule', function () {
+  it('should pass for aria-label', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
@@ -16,7 +16,7 @@ describe('aria-dialog-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should incomplete for aria-labelledby', function() {
+  it('should incomplete for aria-labelledby', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
@@ -33,7 +33,7 @@ describe('aria-dialog-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 1);
   });
 
-  it('should pass for title', function() {
+  it('should pass for title', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
@@ -53,7 +53,7 @@ describe('aria-dialog-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when aria-label contains only whitespace', function() {
+  it('should fail when aria-label contains only whitespace', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {
@@ -70,7 +70,7 @@ describe('aria-dialog-name virtual-rule', function() {
     assert.lengthOf(results.incomplete, 0);
   });
 
-  it('should fail when title is empty', function() {
+  it('should fail when title is empty', function () {
     var node = new axe.SerialVirtualNode({
       nodeName: 'div',
       attributes: {

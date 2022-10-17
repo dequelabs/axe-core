@@ -1,13 +1,13 @@
-describe('matches.attributes', function() {
+describe('matches.attributes', function () {
   var attributes = axe.commons.matches.attributes;
   var fixture = document.querySelector('#fixture');
   var queryFixture = axe.testUtils.queryFixture;
 
-  beforeEach(function() {
+  beforeEach(function () {
     fixture.innerHTML = '';
   });
 
-  it('returns true if all attributes match', function() {
+  it('returns true if all attributes match', function () {
     var virtualNode = queryFixture(
       '<span id="target" foo="baz" bar="foo" baz="bar"></span>'
     );
@@ -20,7 +20,7 @@ describe('matches.attributes', function() {
     );
   });
 
-  it('returns false if some attributes do not match', function() {
+  it('returns false if some attributes do not match', function () {
     var virtualNode = queryFixture(
       '<span id="target" foo="baz" bar="foo" baz="bar"></span>'
     );
@@ -33,7 +33,7 @@ describe('matches.attributes', function() {
     );
   });
 
-  it('returns false if any attributes are missing', function() {
+  it('returns false if any attributes are missing', function () {
     var virtualNode = queryFixture(
       '<span id="target" foo="baz" baz="bar"></span>'
     );
@@ -46,7 +46,7 @@ describe('matches.attributes', function() {
     );
   });
 
-  it('works with actual nodes', function() {
+  it('works with actual nodes', function () {
     var virtualNode = queryFixture(
       '<span id="target" foo="baz" bar="foo" baz="bar"></span>'
     );
@@ -59,7 +59,7 @@ describe('matches.attributes', function() {
     );
   });
 
-  it('works with SerialVirtualNode', function() {
+  it('works with SerialVirtualNode', function () {
     var serialNode = new axe.SerialVirtualNode({
       nodeName: 'span',
       attributes: {

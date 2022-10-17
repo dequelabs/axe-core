@@ -1,15 +1,15 @@
-describe('standards.getGlobalAriaAttrs', function() {
+describe('standards.getGlobalAriaAttrs', function () {
   var getGlobalAriaAttrs = axe.commons.standards.getGlobalAriaAttrs;
 
-  before(function() {
+  before(function () {
     axe._load({});
   });
 
-  after(function() {
+  after(function () {
     axe.reset();
   });
 
-  it('should return global attrs', function() {
+  it('should return global attrs', function () {
     // Source: https://www.w3.org/TR/wai-aria-1.1/#global_states
     var globalAttrs = getGlobalAriaAttrs();
     assert.deepEqual(globalAttrs, [
@@ -37,7 +37,7 @@ describe('standards.getGlobalAriaAttrs', function() {
     ]);
   });
 
-  it('should return configured global attrs', function() {
+  it('should return configured global attrs', function () {
     axe.configure({
       standards: {
         ariaAttrs: {
@@ -52,7 +52,7 @@ describe('standards.getGlobalAriaAttrs', function() {
     assert.include(globalAttrs, 'myAttr');
   });
 
-  it('should not return global attr that is configured to not be global', function() {
+  it('should not return global attr that is configured to not be global', function () {
     axe.configure({
       standards: {
         ariaAttrs: {

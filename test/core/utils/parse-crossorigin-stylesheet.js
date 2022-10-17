@@ -1,22 +1,22 @@
-describe('axe.utils.parseCrossOriginStylesheet', function() {
+describe('axe.utils.parseCrossOriginStylesheet', function () {
   'use strict';
 
   var dynamicDoc;
   var convertDataToStylesheet;
 
-  beforeEach(function() {
+  beforeEach(function () {
     dynamicDoc = document.implementation.createHTMLDocument(
       'Dynamic document for testing axe.utils.parseCrossOriginStylesheet'
     );
     convertDataToStylesheet = axe.utils.getStyleSheetFactory(dynamicDoc);
   });
 
-  afterEach(function() {
+  afterEach(function () {
     dynamicDoc = undefined;
     convertDataToStylesheet = undefined;
   });
 
-  it('returns cross-origin stylesheet', function(done) {
+  it('returns cross-origin stylesheet', function (done) {
     var importUrl =
       'https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css';
     var options = {
@@ -37,7 +37,7 @@ describe('axe.utils.parseCrossOriginStylesheet', function() {
         importedUrls,
         isCrossOriginRequest
       )
-      .then(function(data) {
+      .then(function (data) {
         assert.isDefined(data);
         assert.isDefined(data.sheet);
 
@@ -54,12 +54,12 @@ describe('axe.utils.parseCrossOriginStylesheet', function() {
         );
         done();
       })
-      .catch(function(err) {
+      .catch(function (err) {
         done(err);
       });
   });
 
-  it('rejects when given url to fetch is not found', function(done) {
+  it('rejects when given url to fetch is not found', function (done) {
     this.timeout(axe.constants.preload.timeout + 1000);
 
     var importUrl =
@@ -81,12 +81,12 @@ describe('axe.utils.parseCrossOriginStylesheet', function() {
         importedUrls,
         isCrossOriginRequest
       )
-      .then(function() {
+      .then(function () {
         done(
           new Error('Expected axe.utils.parseCrossOriginStylesheet to reject.')
         );
       })
-      .catch(function(err) {
+      .catch(function (err) {
         assert.isNotNull(err);
         done();
       });

@@ -1,9 +1,9 @@
-describe('aria.getOwnedVirtual', function() {
+describe('aria.getOwnedVirtual', function () {
   'use strict';
   var aria = axe.commons.aria;
   var fixtureSetup = axe.testUtils.fixtureSetup;
 
-  it('returns a list of children in order', function() {
+  it('returns a list of children in order', function () {
     fixtureSetup(
       '<div id="target">' +
         '<h1>heading 1</h1>' +
@@ -19,7 +19,7 @@ describe('aria.getOwnedVirtual', function() {
     assert.equal(owned[2].actualNode.nodeName.toUpperCase(), 'H3');
   });
 
-  it('adds aria-owned reffed elements to the children', function() {
+  it('adds aria-owned reffed elements to the children', function () {
     fixtureSetup(
       '<div id="target" aria-owns="hdr3 hdr4">' +
         '<h1>heading 1</h1>' +
@@ -37,7 +37,7 @@ describe('aria.getOwnedVirtual', function() {
     assert.equal(owned[3].actualNode.nodeName.toUpperCase(), 'H4');
   });
 
-  it('ignores whitespace-only aria-owned', function() {
+  it('ignores whitespace-only aria-owned', function () {
     fixtureSetup(
       '<div id="target" aria-owns="  ">' +
         '<h1>heading 1</h1>' +
@@ -53,7 +53,7 @@ describe('aria.getOwnedVirtual', function() {
     assert.equal(owned[2].actualNode.nodeName.toUpperCase(), 'H3');
   });
 
-  it('ignores broken aria-owned refs', function() {
+  it('ignores broken aria-owned refs', function () {
     fixtureSetup(
       '<div id="target" aria-owns="nonexisting reference">' +
         '<h1>heading 1</h1>' +
@@ -69,7 +69,7 @@ describe('aria.getOwnedVirtual', function() {
     assert.equal(owned[2].actualNode.nodeName.toUpperCase(), 'H3');
   });
 
-  it('includes text nodes', function() {
+  it('includes text nodes', function () {
     fixtureSetup(
       '<div id="target" aria-owns="nonexisting reference">' +
         'text 1' +
@@ -90,7 +90,7 @@ describe('aria.getOwnedVirtual', function() {
     assert.equal(owned[4].actualNode.textContent, ' \t\n');
   });
 
-  it('returns an empty array if there are no owned elements', function() {
+  it('returns an empty array if there are no owned elements', function () {
     fixtureSetup('<div id="target" aria-owns="nonexisting reference"></div>');
     var target = axe.utils.querySelectorAll(axe._tree[0], '#target')[0];
     var owned = aria.getOwnedVirtual(target);

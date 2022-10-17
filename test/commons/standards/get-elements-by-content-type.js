@@ -1,21 +1,21 @@
-describe('standards.getElementsByContentType', function() {
+describe('standards.getElementsByContentType', function () {
   var getElementsByContentType = axe.commons.standards.getElementsByContentType;
 
-  before(function() {
+  before(function () {
     axe._load({});
   });
 
-  after(function() {
+  after(function () {
     axe.reset();
   });
 
-  it('should return a list of node names by content type', function() {
+  it('should return a list of node names by content type', function () {
     // Source: https://html.spec.whatwg.org/multipage/dom.html#sectioning-content
     var sectioningContent = getElementsByContentType('sectioning');
     assert.deepEqual(sectioningContent, ['article', 'aside', 'nav', 'section']);
   });
 
-  it('should return a default variants', function() {
+  it('should return a default variants', function () {
     // Source: https://html.spec.whatwg.org/multipage/dom.html#embedded-content-2
     var sectioningContent = getElementsByContentType('embedded');
     assert.deepEqual(sectioningContent, [
@@ -31,7 +31,7 @@ describe('standards.getElementsByContentType', function() {
     ]);
   });
 
-  it('should return configured roles', function() {
+  it('should return configured roles', function () {
     axe.configure({
       standards: {
         htmlElms: {
@@ -46,7 +46,7 @@ describe('standards.getElementsByContentType', function() {
     assert.include(structureRoles, 'myElm');
   });
 
-  it('should not return role that is configured to not be of the type', function() {
+  it('should not return role that is configured to not be of the type', function () {
     axe.configure({
       standards: {
         htmlElms: {

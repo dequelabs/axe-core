@@ -1,7 +1,7 @@
-describe('axe.utils.getCheckMessage', function() {
+describe('axe.utils.getCheckMessage', function () {
   var getCheckMessage = axe.utils.getCheckMessage;
 
-  beforeEach(function() {
+  beforeEach(function () {
     axe._audit = {
       data: {
         checks: {
@@ -17,26 +17,26 @@ describe('axe.utils.getCheckMessage', function() {
     };
   });
 
-  afterEach(function() {
+  afterEach(function () {
     axe._audit = undefined;
   });
 
-  it('should return the pass message', function() {
+  it('should return the pass message', function () {
     assert.equal(getCheckMessage('my-check', 'pass'), 'Pass message');
   });
 
-  it('should return the fail message', function() {
+  it('should return the fail message', function () {
     assert.equal(getCheckMessage('my-check', 'fail'), 'Fail message');
   });
 
-  it('should return the incomplete message', function() {
+  it('should return the incomplete message', function () {
     assert.equal(
       getCheckMessage('my-check', 'incomplete'),
       'Incomplete message'
     );
   });
 
-  it('should handle data', function() {
+  it('should handle data', function () {
     axe._audit.data.checks['my-check'].messages.pass =
       'Pass message with ${data.message}';
     assert.equal(
@@ -45,14 +45,14 @@ describe('axe.utils.getCheckMessage', function() {
     );
   });
 
-  it('should error when check does not exist', function() {
-    assert.throws(function() {
+  it('should error when check does not exist', function () {
+    assert.throws(function () {
       getCheckMessage('invalid-check', 'pass');
     });
   });
 
-  it('should error when check message does not exist', function() {
-    assert.throws(function() {
+  it('should error when check message does not exist', function () {
+    assert.throws(function () {
       getCheckMessage('invalid-check', 'invalid');
     });
   });

@@ -2,7 +2,7 @@
   "id": "color-contrast-enhanced",
   "matches": "color-contrast-matches",
   "excludeHidden": false,
-  "enabled": false, 
+  "enabled": false,
   "tags": ["cat.color", "wcag2aaa", "wcag146", "ACT"],
   "actIds": ["09o5cg"],
   "metadata": {

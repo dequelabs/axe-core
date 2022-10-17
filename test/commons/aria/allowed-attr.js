@@ -1,17 +1,17 @@
-describe('aria.allowedAttr', function() {
+describe('aria.allowedAttr', function () {
   'use strict';
 
   var globalAttrs;
-  before(function() {
+  before(function () {
     axe._load({});
     globalAttrs = axe.commons.standards.getGlobalAriaAttrs();
   });
 
-  afterEach(function() {
+  afterEach(function () {
     axe.reset();
   });
 
-  it('should returned the attributes property for the proper role', function() {
+  it('should returned the attributes property for the proper role', function () {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -28,7 +28,7 @@ describe('aria.allowedAttr', function() {
     );
   });
 
-  it('should also check required attributes', function() {
+  it('should also check required attributes', function () {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -46,7 +46,7 @@ describe('aria.allowedAttr', function() {
     );
   });
 
-  it('should return an array with globally allowed attributes', function() {
+  it('should return an array with globally allowed attributes', function () {
     assert.deepEqual(axe.commons.aria.allowedAttr('cats'), globalAttrs);
   });
 });

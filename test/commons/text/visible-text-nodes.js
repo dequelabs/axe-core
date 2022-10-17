@@ -1,4 +1,4 @@
-describe('text.visibleTextNodes', function() {
+describe('text.visibleTextNodes', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -6,11 +6,11 @@ describe('text.visibleTextNodes', function() {
   var shadowSupported = axe.testUtils.shadowSupport.v1;
   var visibleTextNodes = axe.commons.text.visibleTextNodes;
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
   });
 
-  it('should handle multiple text nodes to a single parent', function() {
+  it('should handle multiple text nodes to a single parent', function () {
     var vNode = queryFixture(
       '<div id="target">Hello<span>Hi</span>Goodbye</div>'
     );
@@ -21,7 +21,7 @@ describe('text.visibleTextNodes', function() {
     assert.equal(nodes[2].actualNode.nodeValue, 'Goodbye');
   });
 
-  it('should handle recursive calls', function() {
+  it('should handle recursive calls', function () {
     var vNode = queryFixture(
       '<div id="target">Hello<span><span>Hi</span></span></div>'
     );
@@ -31,7 +31,7 @@ describe('text.visibleTextNodes', function() {
     assert.equal(nodes[1].actualNode.nodeValue, 'Hi');
   });
 
-  it('should not return elements with visibility: hidden', function() {
+  it('should not return elements with visibility: hidden', function () {
     var vNode = queryFixture(
       '<div id="target">Hello<span style="visibility: hidden;">Hi</span></div>'
     );
@@ -40,7 +40,7 @@ describe('text.visibleTextNodes', function() {
     assert.equal(nodes[0].actualNode.nodeValue, 'Hello');
   });
 
-  it('should know how visibility works', function() {
+  it('should know how visibility works', function () {
     var vNode = queryFixture(
       '<div id="target">Hello<span style="visibility: hidden;">' +
         '<span style="visibility: visible;">Hi</span>' +
@@ -52,7 +52,7 @@ describe('text.visibleTextNodes', function() {
     assert.equal(nodes[1].actualNode.nodeValue, 'Hi');
   });
 
-  it('should not return elements with display: none', function() {
+  it('should not return elements with display: none', function () {
     var vNode = queryFixture(
       '<div id="target">Hello<span style="display: none;">Hi</span></div>'
     );
@@ -61,7 +61,7 @@ describe('text.visibleTextNodes', function() {
     assert.equal(nodes[0].actualNode.nodeValue, 'Hello');
   });
 
-  it('should ignore script and style tags', function() {
+  it('should ignore script and style tags', function () {
     var vNode = queryFixture(
       '<div id="target"><script> // hello </script><style> /*hello */</style>' +
         'Hello</div>'
@@ -71,7 +71,7 @@ describe('text.visibleTextNodes', function() {
     assert.equal(nodes[0].actualNode.nodeValue, 'Hello');
   });
 
-  it('should not take into account position of parents', function() {
+  it('should not take into account position of parents', function () {
     var vNode = queryFixture(
       '<div id="target">' +
         '<div style="position: absolute; top: -9999px;">' +
@@ -86,7 +86,7 @@ describe('text.visibleTextNodes', function() {
 
   (shadowSupported ? it : xit)(
     'should correctly handle slotted elements',
-    function() {
+    function () {
       function createContentSlotted() {
         var group = document.createElement('div');
         group.innerHTML = '<div id="target">Stuff<slot></slot></div>';

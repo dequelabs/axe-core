@@ -1,8 +1,8 @@
-describe('utils.clone', function() {
+describe('utils.clone', function () {
   'use strict';
   var clone = axe.utils.clone;
 
-  it('should clone an object', function() {
+  it('should clone an object', function () {
     var obj = {
       cats: true,
       dogs: 2,
@@ -19,7 +19,7 @@ describe('utils.clone', function() {
     assert.deepEqual(c.fish, [0, 1, 2]);
   });
 
-  it('should clone nested objects', function() {
+  it('should clone nested objects', function () {
     var obj = {
       cats: {
         fred: 1,
@@ -54,12 +54,12 @@ describe('utils.clone', function() {
     assert.deepEqual(c.fish, [0, 1, 2]);
   });
 
-  it('should clone objects with methods', function() {
+  it('should clone objects with methods', function () {
     var obj = {
-      cats: function() {
+      cats: function () {
         return 'meow';
       },
-      dogs: function() {
+      dogs: function () {
         return 'woof';
       }
     };
@@ -68,23 +68,23 @@ describe('utils.clone', function() {
     assert.strictEqual(obj.cats, c.cats);
     assert.strictEqual(obj.dogs, c.dogs);
 
-    obj.cats = function() {};
-    obj.dogs = function() {};
+    obj.cats = function () {};
+    obj.dogs = function () {};
 
     assert.notStrictEqual(obj.cats, c.cats);
     assert.notStrictEqual(obj.dogs, c.dogs);
   });
 
-  it('should clone prototypes', function() {
+  it('should clone prototypes', function () {
     function Cat(name) {
       this.name = name;
     }
 
-    Cat.prototype.meow = function() {
+    Cat.prototype.meow = function () {
       return 'meow';
     };
 
-    Cat.prototype.bark = function() {
+    Cat.prototype.bark = function () {
       return 'cats dont bark';
     };
 

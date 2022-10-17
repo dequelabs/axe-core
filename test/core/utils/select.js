@@ -1,4 +1,4 @@
-describe('axe.utils.select', function() {
+describe('axe.utils.select', function () {
   'use strict';
 
   function $id(id) {
@@ -7,21 +7,21 @@ describe('axe.utils.select', function() {
 
   var fixture = document.getElementById('fixture');
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     axe._selectCache = undefined;
   });
 
-  it('should be a function', function() {
+  it('should be a function', function () {
     assert.isFunction(axe.utils.select);
   });
 
-  it('should return an array', function() {
+  it('should return an array', function () {
     assert.isArray(axe.utils.select('div', { include: [] }));
   });
 
-  describe('selector', function() {
-    it('should accept a selector', function() {
+  describe('selector', function () {
+    it('should accept a selector', function () {
       var div = document.createElement('div');
       div.id = 'monkeys';
       fixture.appendChild(div);
@@ -34,8 +34,8 @@ describe('axe.utils.select', function() {
     });
   });
 
-  describe('context', function() {
-    it('should include', function() {
+  describe('context', function () {
+    it('should include', function () {
       fixture.innerHTML =
         '<div id="monkeys"><div id="bananas" class="bananas"></div></div>';
 
@@ -46,7 +46,7 @@ describe('axe.utils.select', function() {
       assert.deepEqual([result[0].actualNode], [$id('bananas')]);
     });
 
-    it('should exclude', function() {
+    it('should exclude', function () {
       fixture.innerHTML =
         '<div id="monkeys"><div id="bananas" class="bananas"></div></div>';
 
@@ -58,7 +58,7 @@ describe('axe.utils.select', function() {
       assert.deepEqual(result, []);
     });
 
-    it('should pick the deepest exclude/include - exclude winning', function() {
+    it('should pick the deepest exclude/include - exclude winning', function () {
       fixture.innerHTML =
         '<div id="include1">' +
         '	<div id="exclude1">' +
@@ -84,7 +84,7 @@ describe('axe.utils.select', function() {
       assert.deepEqual(result, []);
     });
 
-    it('should pick the deepest exclude/include - include winning', function() {
+    it('should pick the deepest exclude/include - include winning', function () {
       fixture.innerHTML =
         '<div id="include1">' +
         '	<div id="exclude1">' +
@@ -114,7 +114,7 @@ describe('axe.utils.select', function() {
     });
   });
 
-  it('should only contain unique elements', function() {
+  it('should only contain unique elements', function () {
     fixture.innerHTML =
       '<div id="monkeys"><div id="bananas" class="bananas"></div></div>';
     var tree = axe.utils.getFlattenedTree($id('fixture'))[0];
@@ -127,7 +127,7 @@ describe('axe.utils.select', function() {
     assert.equal(result[0].actualNode, $id('bananas'));
   });
 
-  it('should not return duplicates on overlapping includes', function() {
+  it('should not return duplicates on overlapping includes', function () {
     fixture.innerHTML =
       '<div id="zero"><div id="one"><div id="target1" class="bananas"></div></div>' +
       '<div id="two"><div id="target2" class="bananas"></div></div></div>';
@@ -140,7 +140,7 @@ describe('axe.utils.select', function() {
     });
 
     assert.deepEqual(
-      result.map(function(n) {
+      result.map(function (n) {
         return n.actualNode;
       }),
       [$id('target1'), $id('target2')]
@@ -148,7 +148,7 @@ describe('axe.utils.select', function() {
     assert.equal(result.length, 2);
   });
 
-  it('should return the cached result if one exists', function() {
+  it('should return the cached result if one exists', function () {
     fixture.innerHTML =
       '<div id="zero"><div id="one"><div id="target1" class="bananas"></div></div>' +
       '<div id="two"><div id="target2" class="bananas"></div></div></div>';

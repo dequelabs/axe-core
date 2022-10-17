@@ -1,8 +1,8 @@
-describe('standards.getAriaRolesSupportingNameFromContent', function() {
+describe('standards.getAriaRolesSupportingNameFromContent', function () {
   var getAriaRolesSupportingNameFromContent =
     axe.commons.standards.getAriaRolesSupportingNameFromContent;
 
-  it('should return a list of role names which are named from content', function() {
+  it('should return a list of role names which are named from content', function () {
     // first remove all namedFromContent
     var roleNames = Object.keys(axe._audit.standards.ariaRoles);
     var ariaRoles = {};
@@ -31,7 +31,7 @@ describe('standards.getAriaRolesSupportingNameFromContent', function() {
     ]);
   });
 
-  it('should return configured roles', function() {
+  it('should return configured roles', function () {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -46,7 +46,7 @@ describe('standards.getAriaRolesSupportingNameFromContent', function() {
     assert.include(contentRoles, 'myRole');
   });
 
-  it('should not return role that is configured to not be of the type', function() {
+  it('should not return role that is configured to not be of the type', function () {
     axe.configure({
       standards: {
         ariaRoles: {

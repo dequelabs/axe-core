@@ -1,11 +1,11 @@
-describe('dom.findElmsInContext', function() {
+describe('dom.findElmsInContext', function () {
   'use strict';
 
   var shadowSupport = axe.testUtils.shadowSupport;
   var fixtureSetup = axe.testUtils.fixtureSetup;
   var findElmsInContext = axe.commons.dom.findElmsInContext;
 
-  it('returns an array or elements in the same context', function() {
+  it('returns an array or elements in the same context', function () {
     var rootNode = fixtureSetup(
       '<b name="foo">1</b>' +
         '<b name="foo">2</b>' +
@@ -26,7 +26,7 @@ describe('dom.findElmsInContext', function() {
 
   (shadowSupport.v1 ? it : xit)(
     'ignores elements inside shadow tree',
-    function() {
+    function () {
       var node = document.createElement('div');
       node.innerHTML = '<b name="foo">1</b>';
       var shadow = node.attachShadow({ mode: 'open' });
@@ -46,7 +46,7 @@ describe('dom.findElmsInContext', function() {
 
   (shadowSupport.v1 ? it : xit)(
     'can search elements limited to the shadow tree',
-    function() {
+    function () {
       var node = document.createElement('div');
       node.innerHTML = '<b name="foo">1</b>';
       var shadow = node.attachShadow({ mode: 'open' });

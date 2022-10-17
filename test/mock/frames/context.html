@@ -26,17 +26,17 @@
         checks: [
           {
             id: 'has-target',
-            evaluate: function() {
+            evaluate: function () {
               return true;
             }
           },
           {
             id: 'first-div',
-            evaluate: function(node) {
+            evaluate: function (node) {
               this.relatedNodes([node]);
               return false;
             },
-            after: function(results) {
+            after: function (results) {
               if (results.length) {
                 results[0].result = true;
               }

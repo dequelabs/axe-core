@@ -1,5 +1,5 @@
 var shadowSupported = axe.testUtils.shadowSupport.v1;
-var testSuite = (shadowSupported ? describe : describe.skip)
+var testSuite = shadowSupported ? describe : describe.skip;
 
 testSuite('utils.shadowSelect', function () {
   var shadowSelect = axe.utils.shadowSelect;
@@ -46,7 +46,7 @@ testSuite('utils.shadowSelect', function () {
     });
 
     it('returns null if the node does not exist in the shadow tree', function () {
-      var shadowRoot = appendShadowTree(fixture, 'div')
+      var shadowRoot = appendShadowTree(fixture, 'div');
       shadowRoot.innerHTML = '<b class="hello"></b>';
       assert.isNull(shadowSelect(['#fixture > div', '.goodbye']));
     });
@@ -80,10 +80,10 @@ testSuite('utils.shadowSelect', function () {
       root.innerHTML = '<b class="hello"></b><i class="hello"></i>';
 
       var node = shadowSelect([
-        '#fixture > article', 
-        'section', 
-        'div', 
-        'p', 
+        '#fixture > article',
+        'section',
+        'div',
+        'p',
         '.hello'
       ]);
       assert.equal(node.nodeName.toLowerCase(), 'b');
