@@ -502,5 +502,15 @@ describe('dom.visibility-methods', () => {
 
       assert.isTrue(detailsHidden(vNode));
     });
+
+    it('should return false for element not in details', () => {
+      const vNode = queryFixture(`
+        <div>
+          <div id="target">Hello World</div>
+        </div>
+      `);
+
+      assert.isFalse(detailsHidden(vNode));
+    });
   });
 });

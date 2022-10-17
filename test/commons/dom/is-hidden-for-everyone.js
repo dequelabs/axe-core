@@ -315,7 +315,7 @@ describe('dom.isHiddenForEveryone', () => {
       assert.isTrue(actual);
     });
 
-    it('should return true not first summary in close details', () => {
+    it('should return true for not first summary in close details', () => {
       const vNode = queryFixture(`
         <details>
           <summary>Hello World</summary>
