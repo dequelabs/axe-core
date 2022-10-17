@@ -122,7 +122,6 @@ describe('only-listitems', () => {
     );
 
     assert.isTrue(checkEvaluate.apply(checkContext, checkArgs));
-    console.log(checkContext._data);
     assert.deepEqual(checkContext._data, {
       values: '[role=menuitem]'
     });
