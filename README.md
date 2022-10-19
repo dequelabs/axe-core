@@ -144,8 +144,10 @@ Axe-core supports the following locales. Do note that since locales are contribu
 - Dutch
 - French
 - German
+- Hebrew
 - Japanese
 - Korean
+- Norwegian (Bokmål)
 - Polish
 - Portuguese (Brazilian)
 - Spanish
