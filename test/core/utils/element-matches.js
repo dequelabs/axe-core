@@ -1,10 +1,10 @@
-describe('utils.matchesSelector', function() {
+describe('utils.matchesSelector', function () {
   'use strict';
   var matchesSelector = axe.utils.matchesSelector;
 
   function mockMethod(method, returnValue) {
     var result = {};
-    result[method] = function() {
+    result[method] = function () {
       return returnValue;
     };
     result.ownerDocument = {
@@ -14,12 +14,12 @@ describe('utils.matchesSelector', function() {
         }
       }
     };
-    result.ownerDocument.defaultView.Element.prototype[method] = function() {};
+    result.ownerDocument.defaultView.Element.prototype[method] = function () {};
 
     return result;
   }
 
-  it('should check the prototype of the Element object for matching methods', function() {
+  it('should check the prototype of the Element object for matching methods', function () {
     assert.equal(matchesSelector(mockMethod('matches', 'test1')), 'test1');
     assert.equal(
       matchesSelector(mockMethod('matchesSelector', 'test2')),
@@ -39,7 +39,7 @@ describe('utils.matchesSelector', function() {
     );
   });
 
-  it('should actually work', function() {
+  it('should actually work', function () {
     var target,
       fixture = document.getElementById('fixture');
 
@@ -50,7 +50,7 @@ describe('utils.matchesSelector', function() {
     fixture.innerHTML = '';
   });
 
-  it('should return false if the element does not have a matching method', function() {
+  it('should return false if the element does not have a matching method', function () {
     var target,
       fixture = document.getElementById('fixture');
 

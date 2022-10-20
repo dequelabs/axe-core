@@ -1,29 +1,29 @@
-describe('matches.fromDefinition', function() {
+describe('matches.fromDefinition', function () {
   var fromDefinition = axe.commons.matches.fromDefinition;
   var fixture = document.querySelector('#fixture');
   var queryFixture = axe.testUtils.queryFixture;
 
-  beforeEach(function() {
+  beforeEach(function () {
     fixture.innerHTML = '';
   });
 
-  it('applies a css selector when the matcher is a string', function() {
+  it('applies a css selector when the matcher is a string', function () {
     var virtualNode = queryFixture('<div id="target">foo</div>');
     assert.isTrue(fromDefinition(virtualNode, '#fixture > div'));
     assert.isFalse(fromDefinition(virtualNode, '#fixture > span'));
   });
 
-  it('matches a definition with a `nodeName` property', function() {
+  it('matches a definition with a `nodeName` property', function () {
     var virtualNode = queryFixture('<div id="target">foo</div>');
     var matchers = [
       'div',
       ['div', 'span'],
       /div/,
-      function(nodeName) {
+      function (nodeName) {
         return nodeName === 'div';
       }
     ];
-    matchers.forEach(function(matcher) {
+    matchers.forEach(function (matcher) {
       assert.isTrue(
         fromDefinition(virtualNode, {
           nodeName: matcher
@@ -37,17 +37,17 @@ describe('matches.fromDefinition', function() {
     );
   });
 
-  it('matches a definition with an `attributes` property', function() {
+  it('matches a definition with an `attributes` property', function () {
     var virtualNode = queryFixture('<div id="target" foo="bar">foo</div>');
     var matchers = [
       'bar',
       ['bar', 'baz'],
       /bar/,
-      function(attributeName) {
+      function (attributeName) {
         return attributeName === 'bar';
       }
     ];
-    matchers.forEach(function(matcher) {
+    matchers.forEach(function (matcher) {
       assert.isTrue(
         fromDefinition(virtualNode, {
           attributes: {
@@ -65,17 +65,17 @@ describe('matches.fromDefinition', function() {
     );
   });
 
-  it('matches a definition with a `properties` property', function() {
+  it('matches a definition with a `properties` property', function () {
     var virtualNode = queryFixture('<input id="target" />');
     var matchers = [
       'text',
       ['text', 'password'],
       /text/,
-      function(type) {
+      function (type) {
         return type === 'text';
       }
     ];
-    matchers.forEach(function(matcher) {
+    matchers.forEach(function (matcher) {
       assert.isTrue(
         fromDefinition(virtualNode, {
           properties: {
@@ -93,17 +93,17 @@ describe('matches.fromDefinition', function() {
     );
   });
 
-  it('matches a definition with an `explicitRole` property', function() {
+  it('matches a definition with an `explicitRole` property', function () {
     var virtualNode = queryFixture('<span id="target" role="textbox"></span>');
     var matchers = [
       'textbox',
       ['textbox', 'combobox'],
       /textbox/,
-      function(attributeName) {
+      function (attributeName) {
         return attributeName === 'textbox';
       }
     ];
-    matchers.forEach(function(matcher) {
+    matchers.forEach(function (matcher) {
       assert.isTrue(
         fromDefinition(virtualNode, {
           explicitRole: matcher
@@ -117,17 +117,17 @@ describe('matches.fromDefinition', function() {
     );
   });
 
-  it('matches a definition with an `implicitRole` property', function() {
+  it('matches a definition with an `implicitRole` property', function () {
     var virtualNode = queryFixture('<input id="target">');
     var matchers = [
       'textbox',
       ['textbox', 'combobox'],
       /textbox/,
-      function(attributeName) {
+      function (attributeName) {
         return attributeName === 'textbox';
       }
     ];
-    matchers.forEach(function(matcher) {
+    matchers.forEach(function (matcher) {
       assert.isTrue(
         fromDefinition(virtualNode, {
           implicitRole: matcher
@@ -141,17 +141,17 @@ describe('matches.fromDefinition', function() {
     );
   });
 
-  it('matches a definition with an `semanticRole` property', function() {
+  it('matches a definition with an `semanticRole` property', function () {
     var virtualNode = queryFixture('<input id="target">');
     var matchers = [
       'textbox',
       ['textbox', 'combobox'],
       /textbox/,
-      function(attributeName) {
+      function (attributeName) {
         return attributeName === 'textbox';
       }
     ];
-    matchers.forEach(function(matcher) {
+    matchers.forEach(function (matcher) {
       assert.isTrue(
         fromDefinition(virtualNode, {
           semanticRole: matcher
@@ -165,7 +165,7 @@ describe('matches.fromDefinition', function() {
     );
   });
 
-  it('matches a definition with an `accessibleName` property', function() {
+  it('matches a definition with an `accessibleName` property', function () {
     var virtualNode = queryFixture('<input id="target" aria-label="foo">');
     assert.isTrue(
       fromDefinition(virtualNode, {
@@ -179,7 +179,7 @@ describe('matches.fromDefinition', function() {
     );
   });
 
-  it('returns true when all matching properties return true', function() {
+  it('returns true when all matching properties return true', function () {
     var virtualNode = queryFixture(
       '<input id="target" value="bar" aria-disabled="true" />'
     );
@@ -197,7 +197,7 @@ describe('matches.fromDefinition', function() {
     );
   });
 
-  it('returns false when some matching properties return false', function() {
+  it('returns false when some matching properties return false', function () {
     var virtualNode = queryFixture(
       '<input id="target" value="bar" aria-disabled="true" />'
     );
@@ -211,14 +211,14 @@ describe('matches.fromDefinition', function() {
     );
   });
 
-  describe('with actual nodes', function() {
-    it('matches using a string', function() {
+  describe('with actual nodes', function () {
+    it('matches using a string', function () {
       var virtualNode = queryFixture('<div id="target">foo</div>');
       assert.isTrue(fromDefinition(virtualNode.actualNode, 'div'));
       assert.isFalse(fromDefinition(virtualNode.actualNode, 'span'));
     });
 
-    it('matches nodeName', function() {
+    it('matches nodeName', function () {
       var virtualNode = queryFixture('<div id="target">foo</div>');
       assert.isTrue(
         fromDefinition(virtualNode.actualNode, {
@@ -232,7 +232,7 @@ describe('matches.fromDefinition', function() {
       );
     });
 
-    it('matches attributes', function() {
+    it('matches attributes', function () {
       var virtualNode = queryFixture('<div id="target" foo="bar">foo</div>');
       assert.isTrue(
         fromDefinition(virtualNode.actualNode, {
@@ -250,7 +250,7 @@ describe('matches.fromDefinition', function() {
       );
     });
 
-    it('matches properties', function() {
+    it('matches properties', function () {
       var virtualNode = queryFixture('<input id="target" value="foo" />');
       assert.isTrue(
         fromDefinition(virtualNode.actualNode, {
@@ -269,8 +269,8 @@ describe('matches.fromDefinition', function() {
     });
   });
 
-  describe('with SerialVirtualNode', function() {
-    it('matches using a string', function() {
+  describe('with SerialVirtualNode', function () {
+    it('matches using a string', function () {
       var serialNode = new axe.SerialVirtualNode({
         nodeName: 'div',
         attributes: {
@@ -281,7 +281,7 @@ describe('matches.fromDefinition', function() {
       assert.isFalse(fromDefinition(serialNode, 'span'));
     });
 
-    it('matches nodeName', function() {
+    it('matches nodeName', function () {
       var serialNode = new axe.SerialVirtualNode({
         nodeName: 'div',
         attributes: {
@@ -300,7 +300,7 @@ describe('matches.fromDefinition', function() {
       );
     });
 
-    it('matches attributes', function() {
+    it('matches attributes', function () {
       var serialNode = new axe.SerialVirtualNode({
         nodeName: 'div',
         attributes: {
@@ -324,7 +324,7 @@ describe('matches.fromDefinition', function() {
       );
     });
 
-    it('matches properties', function() {
+    it('matches properties', function () {
       var serialNode = new axe.SerialVirtualNode({
         nodeName: 'input',
         id: 'target'
@@ -346,13 +346,13 @@ describe('matches.fromDefinition', function() {
     });
   });
 
-  describe('with a `condition` property', function() {
-    it('calls condition and uses its return value as a matcher', function() {
+  describe('with a `condition` property', function () {
+    it('calls condition and uses its return value as a matcher', function () {
       var virtualNode = queryFixture('<div id="target">foo</div>');
       var called = false;
       assert.isTrue(
         fromDefinition(virtualNode, {
-          condition: function(node) {
+          condition: function (node) {
             assert.deepEqual(node, virtualNode);
             called = true;
             return true;
@@ -361,7 +361,7 @@ describe('matches.fromDefinition', function() {
       );
       assert.isFalse(
         fromDefinition(virtualNode, {
-          condition: function() {
+          condition: function () {
             return false;
           }
         })
@@ -369,7 +369,7 @@ describe('matches.fromDefinition', function() {
       assert.isTrue(called);
     });
 
-    it('uses the return value as a matcher', function() {
+    it('uses the return value as a matcher', function () {
       var returnVal = 'true';
       function condition() {
         return returnVal;
@@ -389,8 +389,8 @@ describe('matches.fromDefinition', function() {
     });
   });
 
-  describe('with an `array` of definitions', function() {
-    it('returns true if any definition in the array matches', function() {
+  describe('with an `array` of definitions', function () {
+    it('returns true if any definition in the array matches', function () {
       var virtualNode = queryFixture('<div id="target">foo</div>');
       assert.isTrue(
         fromDefinition(virtualNode, [
@@ -401,7 +401,7 @@ describe('matches.fromDefinition', function() {
       );
     });
 
-    it('returns false if none definition in the array matches', function() {
+    it('returns false if none definition in the array matches', function () {
       var virtualNode = queryFixture('<input id="target" />');
       assert.isFalse(
         fromDefinition(virtualNode, [

@@ -23,14 +23,14 @@ In order to create such a plugin, we need to implement the "run" function for th
 ```js
 axe.registerPlugin({
   id: 'doStuff',
-  run: function(id, action, options, callback) {
+  run: function (id, action, options, callback) {
     var frames;
     var q = axe.utils.queue();
     var that = this;
     frames = axe.utils.toArray(document.querySelectorAll('iframe, frame'));
 
-    frames.forEach(function(frame) {
-      q.defer(function(done) {
+    frames.forEach(function (frame) {
+      q.defer(function (done) {
         axe.utils.sendCommandToFrame(
           frame,
           {
@@ -39,7 +39,7 @@ axe.registerPlugin({
             parameter: id,
             action: action
           },
-          function() {
+          function () {
             done();
           }
         );
@@ -47,7 +47,7 @@ axe.registerPlugin({
     });
 
     if (!options.context.length) {
-      q.defer(function(done) {
+      q.defer(function (done) {
         that._registry[id][action].call(
           that._registry[id],
           document,
@@ -61,7 +61,7 @@ axe.registerPlugin({
   commands: [
     {
       id: 'run-doStuff',
-      callback: function(data, callback) {
+      callback: function (data, callback) {
         return axe.plugins.doStuff.run(
           data.parameter,
           data.action,
@@ -100,16 +100,16 @@ Lets implement a basic plugin instance to see how this works. This instance will
 var highlight = {
   id: 'highlight',
   highlighter: new Highlighter(),
-  run: function(contextNode, options, done) {
+  run: function (contextNode, options, done) {
     var that = this;
     Array.prototype.slice
       .call(contextNode.querySelectorAll(options.selector))
-      .forEach(function(node) {
+      .forEach(function (node) {
         that.highlighter.highlight(node, options);
       });
     done();
   },
-  cleanup: function(done) {
+  cleanup: function (done) {
     this.highlighter.clear();
     done();
   }

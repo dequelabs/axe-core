@@ -1,14 +1,14 @@
 @media screen and (min-width: 20px) and (max-width: 2300px) and (orientation: portrait) {
-	.thatDiv {
-		transform: rotate(90deg);
-	}
+  .thatDiv {
+    transform: rotate(90deg);
+  }
 }
 
 @media screen and (min-width: 10px) and (max-width: 3000px) and (orientation: landscape) {
-	html {
-		transform: rotateZ(0, 0, 1, 1.5708rad);
-	}
-	.someDiv {
-		transform: matrix3d(0,-1,0.00,0,1.00,0,0.00,0,0,0,1,0,0,0,0,1);
-	}
+  html {
+    transform: rotateZ(0, 0, 1, 1.5708rad);
+  }
+  .someDiv {
+    transform: matrix3d(0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
 }

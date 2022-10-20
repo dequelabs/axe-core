@@ -1,4 +1,4 @@
-describe('focusable-no-name', function() {
+describe('focusable-no-name', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -8,13 +8,13 @@ describe('focusable-no-name', function() {
 
   var checkContext = axe.testUtils.MockCheckContext();
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     axe._tree = undefined;
     checkContext.reset();
   });
 
-  it('should pass if tabindex < 0', function() {
+  it('should pass if tabindex < 0', function () {
     var params = checkSetup('<a href="#" tabindex="-1" id="target"></a>');
     assert.isFalse(
       axe.testUtils
@@ -23,7 +23,7 @@ describe('focusable-no-name', function() {
     );
   });
 
-  it('should pass element is not natively focusable', function() {
+  it('should pass element is not natively focusable', function () {
     var params = checkSetup('<span role="link" href="#" id="target"></span>');
     assert.isFalse(
       axe.testUtils
@@ -32,7 +32,7 @@ describe('focusable-no-name', function() {
     );
   });
 
-  it('should fail if element is tabbable with no name - native', function() {
+  it('should fail if element is tabbable with no name - native', function () {
     var params = checkSetup('<a href="#" id="target"></a>');
     assert.isTrue(
       axe.testUtils
@@ -41,7 +41,7 @@ describe('focusable-no-name', function() {
     );
   });
 
-  it('should fail if element is tabbable with no name - ARIA', function() {
+  it('should fail if element is tabbable with no name - ARIA', function () {
     var params = checkSetup(
       '<span tabindex="0" role="link" id="target" href="#"></spam>'
     );
@@ -52,7 +52,7 @@ describe('focusable-no-name', function() {
     );
   });
 
-  it('should pass if the element is tabbable but has an accessible name', function() {
+  it('should pass if the element is tabbable but has an accessible name', function () {
     var params = checkSetup('<a href="#" title="Hello" id="target"></a>');
     assert.isFalse(
       axe.testUtils
@@ -63,7 +63,7 @@ describe('focusable-no-name', function() {
 
   (shadowSupport.v1 ? it : xit)(
     'should pass if the content is passed in with shadow DOM',
-    function() {
+    function () {
       var params = shadowCheckSetup(
         '<div>Content!</div>',
         '<a href="#" id="target"><slot></slot></a>'
@@ -77,8 +77,8 @@ describe('focusable-no-name', function() {
     }
   );
 
-  describe('Serial Virtual Node', function() {
-    it('should pass if tabindex < 0', function() {
+  describe('Serial Virtual Node', function () {
+    it('should pass if tabindex < 0', function () {
       var serialNode = new axe.SerialVirtualNode({
         nodeName: 'a',
         attributes: {
@@ -96,7 +96,7 @@ describe('focusable-no-name', function() {
       );
     });
 
-    it('should pass element is not natively focusable', function() {
+    it('should pass element is not natively focusable', function () {
       var serialNode = new axe.SerialVirtualNode({
         nodeName: 'span',
         attributes: {
@@ -114,7 +114,7 @@ describe('focusable-no-name', function() {
       );
     });
 
-    it('should fail if element is tabbable with no name - native', function() {
+    it('should fail if element is tabbable with no name - native', function () {
       var serialNode = new axe.SerialVirtualNode({
         nodeName: 'a',
         attributes: {
@@ -132,7 +132,7 @@ describe('focusable-no-name', function() {
       );
     });
 
-    it('should return undefined if element is tabbable with no name nor children - native', function() {
+    it('should return undefined if element is tabbable with no name nor children - native', function () {
       var serialNode = new axe.SerialVirtualNode({
         nodeName: 'a',
         attributes: {
@@ -149,7 +149,7 @@ describe('focusable-no-name', function() {
       );
     });
 
-    it('should pass if the element is tabbable but has an accessible name', function() {
+    it('should pass if the element is tabbable but has an accessible name', function () {
       var serialNode = new axe.SerialVirtualNode({
         nodeName: 'a',
         attributes: {

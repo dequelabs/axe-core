@@ -1,16 +1,16 @@
-describe('color.getForegroundColor', function() {
+describe('color.getForegroundColor', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
   var shadowSupported = axe.testUtils.shadowSupport.v1;
 
-  afterEach(function() {
+  afterEach(function () {
     document.getElementById('fixture').innerHTML = '';
     axe.commons.color.incompleteData.clear();
     document.body.scrollTop = 0;
   });
 
-  it('should return the blended color if it has alpha set', function() {
+  it('should return the blended color if it has alpha set', function () {
     fixture.innerHTML =
       '<div style="height: 40px; background-color: #800000;">' +
       '<div id="target" style="height: 40px; color: rgba(0, 0, 128, 0.5);' +
@@ -27,7 +27,7 @@ describe('color.getForegroundColor', function() {
     assert.closeTo(actual.alpha, expected.alpha, 0.1);
   });
 
-  it('should return the blended color if it has opacity set', function() {
+  it('should return the blended color if it has opacity set', function () {
     fixture.innerHTML =
       '<div style="height: 40px; background-color: #800000;">' +
       '<div id="target" style="height: 40px; color: #000080;' +
@@ -44,7 +44,7 @@ describe('color.getForegroundColor', function() {
     assert.equal(actual.alpha, expected.alpha);
   });
 
-  it('should take into account parent opacity tree', function() {
+  it('should take into account parent opacity tree', function () {
     fixture.innerHTML =
       '<div style="background-color: #fafafa">' +
       '<div style="height: 40px; opacity: 0.6">' +
@@ -61,7 +61,7 @@ describe('color.getForegroundColor', function() {
     assert.closeTo(actual.alpha, expected.alpha, 0.1);
   });
 
-  it('should take into account entire parent opacity tree', function() {
+  it('should take into account entire parent opacity tree', function () {
     fixture.innerHTML =
       '<div style="background-color: #fafafa">' +
       '<div style="height: 40px; opacity: 0.75">' +
@@ -79,7 +79,7 @@ describe('color.getForegroundColor', function() {
     assert.closeTo(actual.alpha, expected.alpha, 0.1);
   });
 
-  it('should return null if containing parent has a background image and is non-opaque', function() {
+  it('should return null if containing parent has a background image and is non-opaque', function () {
     fixture.innerHTML =
       '<div style="height: 40px; width: 30px;' +
       'background-color: #800000; background-image: url(image.png);">' +
@@ -92,7 +92,7 @@ describe('color.getForegroundColor', function() {
     assert.isNull(actual);
   });
 
-  it('should return the fgcolor if it is solid', function() {
+  it('should return the fgcolor if it is solid', function () {
     fixture.innerHTML =
       '<div style="height: 40px; width: 30px; background-color: red;">' +
       '<div id="target" style="height: 20px; width: 15px; color: #000080; background-color: green;">' +
@@ -107,7 +107,7 @@ describe('color.getForegroundColor', function() {
     assert.equal(actual.alpha, expected.alpha);
   });
 
-  it('should not recalculate bgColor if passed in', function() {
+  it('should not recalculate bgColor if passed in', function () {
     fixture.innerHTML =
       '<div style="height: 40px; background-color: #000000;">' +
       '<div id="target" style="height: 40px; color: rgba(0, 0, 128, 0.5);">' +
@@ -124,7 +124,7 @@ describe('color.getForegroundColor', function() {
     assert.closeTo(actual.alpha, expected.alpha, 0.1);
   });
 
-  it('should return text shadow color if foreground is transparent', function() {
+  it('should return text shadow color if foreground is transparent', function () {
     fixture.innerHTML =
       '<div style="height: 40px; width: 120px; background-color: white;">' +
       '<div id="target" style="height: 20px; width: 120px; color: rgba(0,0,0,0); text-shadow: 0 0 0 rgba(32, 32, 64, 1)">' +
@@ -140,7 +140,7 @@ describe('color.getForegroundColor', function() {
     assert.equal(actual.alpha, expected.alpha);
   });
 
-  it('should return a mix of colors if there is a shadow, foreground with alpha < 1, and background color', function() {
+  it('should return a mix of colors if there is a shadow, foreground with alpha < 1, and background color', function () {
     fixture.innerHTML =
       '<div style="height: 40px; width: 120px; background-color: white;">' +
       '<div id="target" style="height: 20px; width: 120px; color: rgba(128, 0, 0, .5); text-shadow: 0 0 0 rgba(32, 32, 64, 1)">' +
@@ -167,7 +167,7 @@ describe('color.getForegroundColor', function() {
 
   (shadowSupported ? it : xit)(
     'should return the fgcolor from inside of Shadow DOM',
-    function() {
+    function () {
       fixture.innerHTML =
         '<div id="container" style="height: 40px; width: 30px; background-color: red;">' +
         '</div>';

@@ -1,23 +1,23 @@
 /* global sinon */
 
 // TODO: remove when tests are fixed
-describe('frame-wait-time optin', function() {
-  it('works', function() {
+describe('frame-wait-time optin', function () {
+  it('works', function () {
     assert.isTrue(true);
   });
 });
 
-describe.skip('frame-wait-time option', function() {
+describe.skip('frame-wait-time option', function () {
   'use strict';
   var spy;
   var respondable = axe.utils.respondable;
 
-  before(function(done) {
+  before(function (done) {
     // Fix Function#name on browsers that do not support it (IE):
     // @see https://stackoverflow.com/a/17056530
     if (!function f() {}.name) {
       Object.defineProperty(Function.prototype, 'name', {
-        get: function() {
+        get: function () {
           var name = (this.toString().match(/^function\s*([^\s(]+)/) || [])[1];
           // For better performance only parse once, and then cache the
           // result through a new accessor for repeated access.
@@ -27,22 +27,22 @@ describe.skip('frame-wait-time option', function() {
       });
     }
 
-    axe.testUtils.awaitNestedLoad(function() {
+    axe.testUtils.awaitNestedLoad(function () {
       done();
     });
   });
 
-  beforeEach(function() {
+  beforeEach(function () {
     // prevent test from running axe inside the iframe multiple times
-    axe.utils.respondable = function(a, b, c, d, callback) {
-      setTimeout(function() {
+    axe.utils.respondable = function (a, b, c, d, callback) {
+      setTimeout(function () {
         callback();
       }, 50);
     };
     spy = sinon.spy(window, 'setTimeout');
   });
 
-  afterEach(function() {
+  afterEach(function () {
     axe.utils.respondable = respondable;
     spy.restore();
   });
@@ -61,8 +61,8 @@ describe.skip('frame-wait-time option', function() {
     return timeoutCall;
   }
 
-  describe('when set', function() {
-    it('should modify the default frame timeout', function(done) {
+  describe('when set', function () {
+    it('should modify the default frame timeout', function (done) {
       var opts = {
         frameWaitTime: 1,
         runOnly: {
@@ -70,7 +70,7 @@ describe.skip('frame-wait-time option', function() {
           values: ['html-has-lang']
         }
       };
-      axe.run('#frame', opts, function() {
+      axe.run('#frame', opts, function () {
         var timeoutCall = getTimeoutCall();
         assert.exists(timeoutCall, 'FrameTimeout not called');
         assert.equal(timeoutCall.args[1], 1);
@@ -79,9 +79,9 @@ describe.skip('frame-wait-time option', function() {
     });
   });
 
-  describe('when not set', function() {
-    it('should use the default frame timeout', function(done) {
-      axe.run('#frame', function() {
+  describe('when not set', function () {
+    it('should use the default frame timeout', function (done) {
+      axe.run('#frame', function () {
         var timeoutCall = getTimeoutCall();
         assert.exists(timeoutCall, 'FrameTimeout not called');
         assert.equal(timeoutCall.args[1], 60000);

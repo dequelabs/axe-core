@@ -14,7 +14,7 @@ axe.run(context, {}, (error: Error, results: axe.AxeResults) => {
   console.log(results.violations.length);
   console.log(results.violations[0].nodes[0].failureSummary);
 });
-axe.run().then(function(done: any) {
+axe.run().then(function (done: any) {
   done();
 });
 // additional configuration options
@@ -92,11 +92,11 @@ axe.run(context, someRulesConfig, (error: Error, results: axe.AxeResults) => {
 });
 
 // just context
-axe.run(context).then(function(done: any) {
+axe.run(context).then(function (done: any) {
   done();
 });
 // just options
-axe.run(options).then(function(done: any) {
+axe.run(options).then(function (done: any) {
   done();
 });
 // just callback
@@ -112,7 +112,7 @@ axe.run(options, (error: Error, results: axe.AxeResults) => {
   console.log(error || results);
 });
 // context and options
-axe.run(context, options).then(function(done: any) {
+axe.run(context, options).then(function (done: any) {
   done();
 });
 // context, options, and callback
@@ -130,7 +130,7 @@ var spec: axe.Spec = {
   checks: [
     {
       id: 'custom-check',
-      evaluate: function() {
+      evaluate: function () {
         return true;
       }
     }

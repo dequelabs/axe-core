@@ -1,11 +1,16 @@
 {
   "id": "only-dlitems",
-  "evaluate": "only-dlitems-evaluate",
+  "evaluate": "invalid-children-evaluate",
+  "options": {
+    "validRoles": ["definition", "term", "listitem"],
+    "validNodeNames": ["dt", "dd"],
+    "divGroups": true
+  },
   "metadata": {
     "impact": "serious",
     "messages": {
-      "pass": "List element only has direct children that are allowed inside <dt> or <dd> elements",
-      "fail": "List element has direct children that are not allowed inside <dt> or <dd> elements"
+      "pass": "dl element only has direct children that are allowed inside; <dt>, <dd>, or <div> elements",
+      "fail": "dl element has direct children that are not allowed: ${data.values}"
     }
   }
 }

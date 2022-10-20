@@ -20,15 +20,26 @@
     </script>
   </head>
   <body>
-    <div id="fixture" style="width: 100%; position: relative;">
+    <div id="fixture" style="width: 100%; position: relative">
       <div
         id="parent"
-        style="height: 40px; width: 30px;
-		 background-color: white; position: relative; z-index: 5"
+        style="
+          height: 40px;
+          width: 30px;
+          background-color: white;
+          position: relative;
+          z-index: 5;
+        "
       >
         <div
           id="shifted"
-          style="position: absolute; top: -10px; height: 40px;width: 35px; z-index: 15;"
+          style="
+            position: absolute;
+            top: -10px;
+            height: 40px;
+            width: 35px;
+            z-index: 15;
+          "
         >
           <img src="some-img.png" width="35" height="40" />
         </div>
@@ -40,7 +51,7 @@
           Text
         </div>
       </div>
-      <div style="background-image:linear-gradient(red, orange); color:#fff;">
+      <div style="background-image: linear-gradient(red, orange); color: #fff">
         Text over gradient
       </div>
 
@@ -56,7 +67,11 @@
       </style>
       <button
         id="pseudoOnButton"
-        style="position: relative; background-color: transparent; color: #ffffaa"
+        style="
+          position: relative;
+          background-color: transparent;
+          color: #ffffaa;
+        "
       >
         Button with ::before
       </button>

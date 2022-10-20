@@ -1,13 +1,13 @@
-describe('matches.properties', function() {
+describe('matches.properties', function () {
   var properties = axe.commons.matches.properties;
   var fixture = document.querySelector('#fixture');
   var queryFixture = axe.testUtils.queryFixture;
 
-  beforeEach(function() {
+  beforeEach(function () {
     fixture.innerHTML = '';
   });
 
-  it('returns true if all properties match', function() {
+  it('returns true if all properties match', function () {
     var virtualNode = queryFixture('<input type="text" id="target"></input>');
 
     assert.isTrue(
@@ -19,7 +19,7 @@ describe('matches.properties', function() {
     );
   });
 
-  it('returns false if some properties do not match', function() {
+  it('returns false if some properties do not match', function () {
     var virtualNode = queryFixture('<input type="text" id="target"></input>');
 
     assert.isFalse(
@@ -31,7 +31,7 @@ describe('matches.properties', function() {
     );
   });
 
-  it('returns false if any properties are missing', function() {
+  it('returns false if any properties are missing', function () {
     var virtualNode = queryFixture('<h1 id="target">foo</h1>');
 
     assert.isFalse(
@@ -43,7 +43,7 @@ describe('matches.properties', function() {
     );
   });
 
-  it('works with actual nodes', function() {
+  it('works with actual nodes', function () {
     var virtualNode = queryFixture('<input type="text" id="target"></input>');
 
     assert.isTrue(
@@ -55,7 +55,7 @@ describe('matches.properties', function() {
     );
   });
 
-  it('works with SerialVirtualNode', function() {
+  it('works with SerialVirtualNode', function () {
     var serialNode = new axe.SerialVirtualNode({
       nodeName: 'input',
       type: 'text',

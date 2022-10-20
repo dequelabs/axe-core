@@ -1,9 +1,9 @@
-describe('aria.arialabelledbyText', function() {
+describe('aria.arialabelledbyText', function () {
   'use strict';
   var aria = axe.commons.aria;
   var queryFixture = axe.testUtils.queryFixture;
 
-  it('returns the accessible name of the aria-labelledby references', function() {
+  it('returns the accessible name of the aria-labelledby references', function () {
     var target = queryFixture(
       '<div role="heading" id="target" aria-labelledby="foo"></div>' +
         '<div id="foo">Foo text</div>'
@@ -12,7 +12,7 @@ describe('aria.arialabelledbyText', function() {
     assert.equal(accName, 'Foo text');
   });
 
-  it('works with virtual nodes', function() {
+  it('works with virtual nodes', function () {
     var target = queryFixture(
       '<div role="heading" id="target" aria-labelledby="foo"></div>' +
         '<div id="foo">Foo text</div>'
@@ -21,7 +21,7 @@ describe('aria.arialabelledbyText', function() {
     assert.equal(accName, 'Foo text');
   });
 
-  it('returns references in order', function() {
+  it('returns references in order', function () {
     var target = queryFixture(
       '<div role="heading" id="target" aria-labelledby="bar baz foo"></div>' +
         '<div id="foo">Foo</div>' +
@@ -32,13 +32,13 @@ describe('aria.arialabelledbyText', function() {
     assert.equal(accName, 'Bar Baz Foo');
   });
 
-  it('returns "" if the node is not an element', function() {
+  it('returns "" if the node is not an element', function () {
     var target = queryFixture('<div id="target">foo</div>');
     var accName = aria.arialabelledbyText(target.actualNode.firstChild);
     assert.equal(accName, '');
   });
 
-  it('returns "" with context.inLabelledByContext: true', function() {
+  it('returns "" with context.inLabelledByContext: true', function () {
     var target = queryFixture(
       '<div role="heading" id="target" aria-labelledby="foo"></div>' +
         '<div id="foo">Foo text</div>'
@@ -49,7 +49,7 @@ describe('aria.arialabelledbyText', function() {
     assert.equal(accName, '');
   });
 
-  it('returns "" with context.inControlContext: true', function() {
+  it('returns "" with context.inControlContext: true', function () {
     var target = queryFixture(
       '<div role="heading" id="target" aria-labelledby="foo"></div>' +
         '<div id="foo">Foo text</div>'
@@ -60,7 +60,7 @@ describe('aria.arialabelledbyText', function() {
     assert.equal(accName, '');
   });
 
-  it('returns content of a aria-hidden reference', function() {
+  it('returns content of a aria-hidden reference', function () {
     var target = queryFixture(
       '<div role="heading" id="target" aria-labelledby="foo"></div>' +
         '<div id="foo" aria-hidden="true">Foo text</div>'
@@ -69,7 +69,7 @@ describe('aria.arialabelledbyText', function() {
     assert.equal(accName, 'Foo text');
   });
 
-  it('returns content of a `display:none` reference', function() {
+  it('returns content of a `display:none` reference', function () {
     var target = queryFixture(
       '<div role="heading" id="target" aria-labelledby="foo"></div>' +
         '<div id="foo" style="display:none">Foo text</div>'
@@ -78,7 +78,7 @@ describe('aria.arialabelledbyText', function() {
     assert.equal(accName, 'Foo text');
   });
 
-  it('returns does not return hidden content of a visible reference', function() {
+  it('returns does not return hidden content of a visible reference', function () {
     var target = queryFixture(
       '<div role="heading" id="target" aria-labelledby="foo"></div>' +
         '<div id="foo"><div style="display:none">Foo text</div></div>'
@@ -87,7 +87,7 @@ describe('aria.arialabelledbyText', function() {
     assert.equal(accName, '');
   });
 
-  it('does not follow more than one aria-labelledy reference', function() {
+  it('does not follow more than one aria-labelledy reference', function () {
     var target = queryFixture(
       '<div role="heading" id="target" aria-labelledby="foo"></div>' +
         '<div id="foo"><div aria-labelledby="bar" role="heading"></div></div>' +
@@ -99,7 +99,7 @@ describe('aria.arialabelledbyText', function() {
     assert.equal(accName, '');
   });
 
-  it('preserves spacing', function() {
+  it('preserves spacing', function () {
     var target = queryFixture(
       '<div role="heading" id="target" aria-labelledby="foo"></div>' +
         '<div id="foo"> \t Foo \n text \t </div>'

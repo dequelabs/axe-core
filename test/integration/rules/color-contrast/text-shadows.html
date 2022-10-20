@@ -754,25 +754,25 @@
 <script>
   // Script added for testing purposes, does not run in automated tests
   if (window.top == window.self) {
-    axe.run({ runOnly: ['color-contrast'], elementRef: true }, function(
-      err,
-      res
-    ) {
-      console.log(res);
-      /*
+    axe.run(
+      { runOnly: ['color-contrast'], elementRef: true },
+      function (err, res) {
+        console.log(res);
+        /*
 			All these test cases are on the edge of pass and fail. If we ever revisit them, these are the ones could be improved on:
 			- False negatives:
 				- b3-r1-i1
 				- b4-r1-i1, b4-r2-i1
 				- b8-r1-i1, b8-r5-i1
 			*/
-      ['violations', 'incomplete', 'passes'].forEach(key => {
-        if (res[key][0]) {
-          res[key][0].nodes.forEach(({ element }) => {
-            element.classList.add(key);
-          });
-        }
-      });
-    });
+        ['violations', 'incomplete', 'passes'].forEach(key => {
+          if (res[key][0]) {
+            res[key][0].nodes.forEach(({ element }) => {
+              element.classList.add(key);
+            });
+          }
+        });
+      }
+    );
   }
 </script>

@@ -1,4 +1,4 @@
-describe('internal-link-present', function() {
+describe('internal-link-present', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -7,13 +7,13 @@ describe('internal-link-present', function() {
   var shadowCheckSetup = axe.testUtils.shadowCheckSetup;
   var queryFixture = axe.testUtils.queryFixture;
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     axe._tree = undefined;
     checkContext.reset();
   });
 
-  it('should return true when an internal link is found', function() {
+  it('should return true when an internal link is found', function () {
     var vNode = queryFixture('<div id="target"><a href="#haha">hi</a></div>');
     assert.isTrue(
       axe.testUtils
@@ -22,7 +22,7 @@ describe('internal-link-present', function() {
     );
   });
 
-  it('should return false when a hashbang URL was used', function() {
+  it('should return false when a hashbang URL was used', function () {
     var vNode = queryFixture('<div id="target"><a href="#!foo">hi</a></div>');
     assert.isFalse(
       axe.testUtils
@@ -31,7 +31,7 @@ describe('internal-link-present', function() {
     );
   });
 
-  it('should return false when a hash route URL was used', function() {
+  it('should return false when a hash route URL was used', function () {
     var vNode = queryFixture('<div id="target"><a href="#/home">hi</a></div>');
     assert.isFalse(
       axe.testUtils
@@ -40,7 +40,7 @@ describe('internal-link-present', function() {
     );
   });
 
-  it('should return false when a hashbang + slash route URL was used', function() {
+  it('should return false when a hashbang + slash route URL was used', function () {
     var vNode = queryFixture('<div id="target"><a href="#!/home">hi</a></div>');
     assert.isFalse(
       axe.testUtils
@@ -49,7 +49,7 @@ describe('internal-link-present', function() {
     );
   });
 
-  it('should otherwise return false', function() {
+  it('should otherwise return false', function () {
     var vNode = queryFixture(
       '<div id="target"><a href="http://www.deque.com/#haha">hi</a></div>'
     );
@@ -62,12 +62,12 @@ describe('internal-link-present', function() {
 
   (shadowSupported ? it : xit)(
     'should return true when internal link is found in shadow dom',
-    function() {
+    function () {
       var params = shadowCheckSetup(
-        '<div id="target"></div>', 
+        '<div id="target"></div>',
         '<a href="#haha">hi</a>'
       );
-	  var vNode = params[2];
+      var vNode = params[2];
       assert.isTrue(
         axe.testUtils
           .getCheckEvaluate('internal-link-present')

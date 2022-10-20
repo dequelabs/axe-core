@@ -1,4 +1,4 @@
-describe('axe.utils.getShadowSelector', function() {
+describe('axe.utils.getShadowSelector', function () {
   var fixture = document.getElementById('fixture');
   var shadowTest = axe.testUtils.shadowSupport.v1 ? it : xit;
   var getShadowSelector = axe.utils.getShadowSelector;
@@ -7,11 +7,11 @@ describe('axe.utils.getShadowSelector', function() {
     return node.nodeName.toLowerCase();
   }
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
   });
 
-  it('returns generated output for light DOM nodes', function() {
+  it('returns generated output for light DOM nodes', function () {
     var h1 = document.createElement('h1');
     fixture.appendChild(h1);
 
@@ -19,7 +19,7 @@ describe('axe.utils.getShadowSelector', function() {
     assert.equal(selector, 'h1');
   });
 
-  it('passes node and options to generator', function() {
+  it('passes node and options to generator', function () {
     var called = false;
     var node = document.createElement('h1');
     var options = { hello: 'world' };
@@ -33,7 +33,7 @@ describe('axe.utils.getShadowSelector', function() {
     assert.isTrue(called);
   });
 
-  it('passes am empty object if no options are provided', function() {
+  it('passes am empty object if no options are provided', function () {
     var called = false;
     var node = document.createElement('h1');
     function generator(_, arg2) {
@@ -45,7 +45,7 @@ describe('axe.utils.getShadowSelector', function() {
     assert.isTrue(called);
   });
 
-  shadowTest('returns the output of the generator for light DOM', function() {
+  shadowTest('returns the output of the generator for light DOM', function () {
     fixture.innerHTML = '<div><h1>Hello world</h1></div>';
     var div = fixture.querySelector('div');
     var h1 = fixture.querySelector('h1');
@@ -57,7 +57,7 @@ describe('axe.utils.getShadowSelector', function() {
 
   shadowTest(
     'returns an array of outputs for each shadow tree host',
-    function() {
+    function () {
       var node = document.createElement('section');
       fixture.appendChild(node);
 

@@ -29,9 +29,7 @@ if (ignoreCommits) {
 }
 
 // don't run on master or develop branch
-const currentBranch = execSync('git branch --show-current')
-  .toString()
-  .trim();
+const currentBranch = execSync('git branch --show-current').toString().trim();
 if (['develop', 'master'].includes(currentBranch)) {
   console.error(
     `Please run the script on a release branch and not the ${currentBranch} branch`
@@ -60,20 +58,15 @@ function getCommits(branch) {
     const hash = commit.substring(0, 8);
     const msg = commit.substring(commit.indexOf('\n\n')).trim();
 
-    const {
-      type,
-      scope,
-      subject,
-      merge,
-      notes
-    } = conventionalCommitsParser.sync(msg, {
-      // parse merge commits
-      mergePattern: /^Merge pull request #(\d+) from (.*)$/,
-      mergeCorrespondence: ['id', 'source'],
+    const { type, scope, subject, merge, notes } =
+      conventionalCommitsParser.sync(msg, {
+        // parse merge commits
+        mergePattern: /^Merge pull request #(\d+) from (.*)$/,
+        mergeCorrespondence: ['id', 'source'],
 
-      // allow comma in scope
-      headerPattern: /^(\w*)(?:\(([\w\$\.\-\*, ]*)\))?\: (.*)$/
-    });
+        // allow comma in scope
+        headerPattern: /^(\w*)(?:\(([\w\$\.\-\*, ]*)\))?\: (.*)$/
+      });
 
     const isBreakingChange = notes.some(
       note => note.title === 'BREAKING CHANGE'

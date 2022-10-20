@@ -1,16 +1,16 @@
-describe('aria.implicitNodes', function() {
+describe('aria.implicitNodes', function () {
   'use strict';
 
   var orig;
-  beforeEach(function() {
+  beforeEach(function () {
     orig = axe.commons.aria.lookupTable.role;
   });
 
-  afterEach(function() {
+  afterEach(function () {
     axe.commons.aria.lookupTable.role = orig;
   });
 
-  it('should return the implicit property for the proper role', function() {
+  it('should return the implicit property for the proper role', function () {
     axe.commons.aria.lookupTable.role = {
       cats: {
         implicit: 'yes'
@@ -19,7 +19,7 @@ describe('aria.implicitNodes', function() {
     assert.equal(axe.commons.aria.implicitNodes('cats'), 'yes');
   });
 
-  it('should return null if there are no implicit roles', function() {
+  it('should return null if there are no implicit roles', function () {
     axe.commons.aria.lookupTable.role = {};
     var result = axe.commons.aria.implicitNodes('cats');
 

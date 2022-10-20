@@ -1,8 +1,8 @@
-describe('utils.escapeSelector', function() {
+describe('utils.escapeSelector', function () {
   'use strict';
   var escapeSelector = axe.utils.escapeSelector;
 
-  it('leaves characters that do not need to escape alone', function() {
+  it('leaves characters that do not need to escape alone', function () {
     assert.equal(escapeSelector('a0b'), 'a0b');
     assert.equal(escapeSelector('a1b'), 'a1b');
     assert.equal(escapeSelector('a2b'), 'a2b');
@@ -24,13 +24,13 @@ describe('utils.escapeSelector', function() {
     );
   });
 
-  it('escapes null characters', function() {
+  it('escapes null characters', function () {
     assert.equal(escapeSelector('\0'), '\uFFFD');
     assert.equal(escapeSelector('a\0'), 'a\uFFFD');
     assert.equal(escapeSelector('a\0b'), 'a\uFFFDb');
   });
 
-  it('stringifies non-string characters', function() {
+  it('stringifies non-string characters', function () {
     assert.equal(escapeSelector(), 'undefined');
     assert.equal(escapeSelector(true), 'true');
     assert.equal(escapeSelector(false), 'false');
@@ -38,7 +38,7 @@ describe('utils.escapeSelector', function() {
     assert.equal(escapeSelector(''), '');
   });
 
-  it('escapes strings starting with a number', function() {
+  it('escapes strings starting with a number', function () {
     assert.equal(escapeSelector('0a'), '\\30 a');
     assert.equal(escapeSelector('1a'), '\\31 a');
     assert.equal(escapeSelector('2a'), '\\32 a');
@@ -51,13 +51,13 @@ describe('utils.escapeSelector', function() {
     assert.equal(escapeSelector('9a'), '\\39 a');
   });
 
-  it('only escapes "-" when before a number, or on its own', function() {
+  it('only escapes "-" when before a number, or on its own', function () {
     assert.equal(escapeSelector('-123'), '-\\31 23');
     assert.equal(escapeSelector('-'), '\\-');
     assert.equal(escapeSelector('--a'), '--a');
   });
 
-  it('escapes characters staring with a negative number', function() {
+  it('escapes characters staring with a negative number', function () {
     assert.equal(escapeSelector('-0a'), '-\\30 a');
     assert.equal(escapeSelector('-1a'), '-\\31 a');
     assert.equal(escapeSelector('-2a'), '-\\32 a');
@@ -70,7 +70,7 @@ describe('utils.escapeSelector', function() {
     assert.equal(escapeSelector('-9a'), '-\\39 a');
   });
 
-  it('escapes hex character codes', function() {
+  it('escapes hex character codes', function () {
     assert.equal(escapeSelector('\x80\x2D\x5F\xA9'), '\x80\x2D\x5F\xA9');
     assert.equal(escapeSelector('\xA0\xA1\xA2'), '\xA0\xA1\xA2');
 

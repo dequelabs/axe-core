@@ -1,22 +1,22 @@
-describe('dom.isMultiline', function() {
+describe('dom.isMultiline', function () {
   var isMultiline = axe.commons.dom.isMultiline;
   var fixture = document.querySelector('#fixture');
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
   });
 
-  it('returns false if there is a single line', function() {
+  it('returns false if there is a single line', function () {
     fixture.innerHTML = '<p>hello</p>';
     assert.isFalse(isMultiline(fixture.firstChild));
   });
 
-  it('returns true if there are two lines', function() {
+  it('returns true if there are two lines', function () {
     fixture.innerHTML = '<p>hello <br> world</p>';
     assert.isTrue(isMultiline(fixture.firstChild));
   });
 
-  it('handles single-line texts with varying font-sizes', function() {
+  it('handles single-line texts with varying font-sizes', function () {
     fixture.innerHTML =
       '<p>' +
       '  <span style="font-size: 12px">small</span> ' +
@@ -26,8 +26,8 @@ describe('dom.isMultiline', function() {
     assert.isFalse(isMultiline(fixture.firstChild));
   });
 
-  describe('with non-text elements', function() {
-    it('is true when on a multiple lines', function() {
+  describe('with non-text elements', function () {
+    it('is true when on a multiple lines', function () {
       fixture.innerHTML =
         '<p>' +
         '  <input /><br>' +
@@ -37,7 +37,7 @@ describe('dom.isMultiline', function() {
       assert.isTrue(isMultiline(fixture.firstChild));
     });
 
-    it('is false when on a single line', function() {
+    it('is false when on a single line', function () {
       fixture.innerHTML =
         '<p>' +
         '  <span style="font-size: 12px">Hello</span> ' +

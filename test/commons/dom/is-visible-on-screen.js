@@ -381,9 +381,18 @@ describe('dom.isVisibleOnScreen', function () {
       assert.isFalse(isVisibleOnScreen(el.actualNode));
     }
   );
-  it('should return false if element is visually hidden using position absolute, overflow hidden, and a very small height', function () {
+
+  it('should return false for screen reader only technique', function () {
     var vNode = queryFixture(
-      '<div id="target" style="position:absolute; height: 1px; overflow: hidden;">StickySticky</div>'
+      '<div id="target" style="position: absolute; width: 1px; height: 1x; margin: -1px; padding: 0; border: 0; overflow: hidden;">Visually Hidden</div>'
+    );
+
+    assert.isFalse(isVisibleOnScreen(vNode));
+  });
+
+  it('should return false for element outside "overflow:hidden"', function () {
+    var vNode = queryFixture(
+      '<div style="overflow: hidden; height: 100px;"><div id="target" style="margin-top: 200px;">Visually Hidden</div></div>'
     );
 
     assert.isFalse(isVisibleOnScreen(vNode));

@@ -1,4 +1,4 @@
-describe('no-implicit-explicit-label', function() {
+describe('no-implicit-explicit-label', function () {
   'use strict';
 
   var fixture = document.getElementById('fixture');
@@ -6,12 +6,12 @@ describe('no-implicit-explicit-label', function() {
   var check = checks['no-implicit-explicit-label'];
   var checkContext = axe.testUtils.MockCheckContext();
 
-  afterEach(function() {
+  afterEach(function () {
     fixture.innerHTML = '';
     checkContext.reset();
   });
 
-  it('returns false when there is no label text or accessible text', function() {
+  it('returns false when there is no label text or accessible text', function () {
     var vNode = queryFixture(
       '<div id="target" role="searchbox" contenteditable="true"></div>'
     );
@@ -19,7 +19,7 @@ describe('no-implicit-explicit-label', function() {
     assert.isFalse(actual);
   });
 
-  it('returns undefined when there is no accessible text', function() {
+  it('returns undefined when there is no accessible text', function () {
     var vNode = queryFixture(
       '<label for="target">Choose currency:</label><div id="target" role="searchbox" contenteditable="true"></div>'
     );
@@ -27,7 +27,7 @@ describe('no-implicit-explicit-label', function() {
     assert.isUndefined(actual);
   });
 
-  it('returns undefined when accessible text does not contain label text', function() {
+  it('returns undefined when accessible text does not contain label text', function () {
     var vNode = queryFixture(
       '<label for="target">Choose country:</label><div id="target" aria-label="country" role="combobox">England</div>'
     );
@@ -35,7 +35,7 @@ describe('no-implicit-explicit-label', function() {
     assert.isUndefined(actual);
   });
 
-  it('returns false when accessible text contains label text', function() {
+  it('returns false when accessible text contains label text', function () {
     var vNode = queryFixture(
       '<label for="target">Country</label><div id="target" aria-label="Choose country" role="combobox">England</div>'
     );
@@ -43,8 +43,8 @@ describe('no-implicit-explicit-label', function() {
     assert.isFalse(actual);
   });
 
-  describe('SerialVirtualNode', function() {
-    it('should return false if there is no parent', function() {
+  describe('SerialVirtualNode', function () {
+    it('should return false if there is no parent', function () {
       var serialNode = new axe.SerialVirtualNode({
         nodeName: 'div',
         attributes: {
@@ -58,7 +58,7 @@ describe('no-implicit-explicit-label', function() {
       assert.isFalse(actual);
     });
 
-    it('should return undefined if incomplete tree', function() {
+    it('should return undefined if incomplete tree', function () {
       var serialNode = new axe.SerialVirtualNode({
         nodeName: 'div',
         attributes: {

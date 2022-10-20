@@ -1,11 +1,11 @@
-describe('aria.isValidRole', function() {
+describe('aria.isValidRole', function () {
   'use strict';
 
-  afterEach(function() {
+  afterEach(function () {
     axe.reset();
   });
 
-  it('should return true if role is found in the lookup table', function() {
+  it('should return true if role is found in the lookup table', function () {
     axe.configure({
       standards: {
         ariaRoles: {
@@ -16,15 +16,15 @@ describe('aria.isValidRole', function() {
     assert.isTrue(axe.commons.aria.isValidRole('cats'));
   });
 
-  it('should return false if role is not found in the lookup table', function() {
+  it('should return false if role is not found in the lookup table', function () {
     assert.isFalse(axe.commons.aria.isValidRole('cats'));
   });
 
-  it('returns false for abstract roles by default', function() {
+  it('returns false for abstract roles by default', function () {
     assert.isFalse(axe.commons.aria.isValidRole('input'));
   });
 
-  it('returns true for abstract roles with { allowAbstract: true } ', function() {
+  it('returns true for abstract roles with { allowAbstract: true } ', function () {
     assert.isTrue(
       axe.commons.aria.isValidRole('input', { allowAbstract: true })
     );

@@ -1,4 +1,4 @@
-describe('css-orientation-lock tests', function() {
+describe('css-orientation-lock tests', function () {
   'use strict';
 
   var checkContext = axe.testUtils.MockCheckContext();
@@ -7,7 +7,7 @@ describe('css-orientation-lock tests', function() {
     'Dynamic document for CSS Orientation Lock tests'
   );
 
-  afterEach(function() {
+  afterEach(function () {
     checkContext.reset();
   });
 
@@ -19,19 +19,19 @@ describe('css-orientation-lock tests', function() {
     return style.sheet;
   }
 
-  it('returns undefined when CSSOM is undefined', function() {
+  it('returns undefined when CSSOM is undefined', function () {
     var actual = check.evaluate.call(checkContext, document);
     assert.isUndefined(actual);
   });
 
-  it('returns undefined when CSSOM is empty', function() {
+  it('returns undefined when CSSOM is empty', function () {
     var actual = check.evaluate.call(checkContext, document, {}, undefined, {
       cssom: [] // pass context with cssom as empty
     });
     assert.isUndefined(actual);
   });
 
-  it('returns true when CSSOM has no rules', function() {
+  it('returns true when CSSOM has no rules', function () {
     var actual = check.evaluate.call(checkContext, document, {}, undefined, {
       cssom: [
         {
@@ -43,7 +43,7 @@ describe('css-orientation-lock tests', function() {
     assert.isTrue(actual);
   });
 
-  it('returns true when CSSOM has no CSS media features', function() {
+  it('returns true when CSSOM has no CSS media features', function () {
     var actual = check.evaluate.call(checkContext, document, {}, undefined, {
       cssom: [
         {
@@ -55,7 +55,7 @@ describe('css-orientation-lock tests', function() {
     assert.isTrue(actual);
   });
 
-  it('returns true when CSSOM has no CSS media features targeting orientation', function() {
+  it('returns true when CSSOM has no CSS media features targeting orientation', function () {
     var actual = check.evaluate.call(checkContext, document, {}, undefined, {
       cssom: [
         {
@@ -73,7 +73,7 @@ describe('css-orientation-lock tests', function() {
     assert.isTrue(actual);
   });
 
-  it('returns true when CSSOM has empty Orientation CSS media features', function() {
+  it('returns true when CSSOM has empty Orientation CSS media features', function () {
     var actual = check.evaluate.call(checkContext, document, {}, undefined, {
       cssom: [
         {
@@ -91,7 +91,7 @@ describe('css-orientation-lock tests', function() {
     assert.isTrue(actual);
   });
 
-  it('returns true when CSSOM has Orientation CSS media features that does not target transform property', function() {
+  it('returns true when CSSOM has Orientation CSS media features that does not target transform property', function () {
     var actual = check.evaluate.call(checkContext, document, {}, undefined, {
       cssom: [
         {
@@ -105,7 +105,7 @@ describe('css-orientation-lock tests', function() {
     assert.isTrue(actual);
   });
 
-  it('returns true when CSSOM has Orientation CSS media features with transform property and transformation function of translateX, which does not affect rotation', function() {
+  it('returns true when CSSOM has Orientation CSS media features with transform property and transformation function of translateX, which does not affect rotation', function () {
     var actual = check.evaluate.call(checkContext, document, {}, undefined, {
       cssom: [
         {
@@ -119,7 +119,7 @@ describe('css-orientation-lock tests', function() {
     assert.isTrue(actual);
   });
 
-  it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of rotate, which affects rotation but does not lock orientation (rotate(180deg))', function() {
+  it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of rotate, which affects rotation but does not lock orientation (rotate(180deg))', function () {
     var actual = check.evaluate.call(checkContext, document, {}, undefined, {
       cssom: [
         {
@@ -134,7 +134,7 @@ describe('css-orientation-lock tests', function() {
     assert.isTrue(actual);
   });
 
-  it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of rotate, which affects rotation but does not lock orientation (rotate(-178deg))', function() {
+  it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of rotate, which affects rotation but does not lock orientation (rotate(-178deg))', function () {
     var actual = check.evaluate.call(
       checkContext,
       document,
@@ -155,7 +155,7 @@ describe('css-orientation-lock tests', function() {
     assert.isTrue(actual);
   });
 
-  it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of rotateZ, which affects rotation but does not lock orientation (rotateZ(1turn))', function() {
+  it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of rotateZ, which affects rotation but does not lock orientation (rotateZ(1turn))', function () {
     var actual = check.evaluate.call(checkContext, document, {}, undefined, {
       cssom: [
         {
@@ -170,7 +170,7 @@ describe('css-orientation-lock tests', function() {
     assert.isTrue(actual);
   });
 
-  it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of rotate3d, which affects rotation but does not lock orientation (rotate3d(0,0,0,400grad))', function() {
+  it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of rotate3d, which affects rotation but does not lock orientation (rotate3d(0,0,0,400grad))', function () {
     var actual = check.evaluate.call(checkContext, document, {}, undefined, {
       cssom: [
         {
@@ -186,7 +186,7 @@ describe('css-orientation-lock tests', function() {
     assert.isTrue(actual);
   });
 
-  it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of matrix3d, which affects rotation but does not lock orientation (matrix3d(-1,0,0.00,0,0.00,-1,0.00,0,0,0,1,0,0,0,0,1))', function() {
+  it('returns true when CSSOM has Orientation CSS media features with transform property and tranformation function of matrix3d, which affects rotation but does not lock orientation (matrix3d(-1,0,0.00,0,0.00,-1,0.00,0,0,0,1,0,0,0,0,1))', function () {
     var actual = check.evaluate.call(checkContext, document, {}, undefined, {
       cssom: [
         {
@@ -202,7 +202,7 @@ describe('css-orientation-lock tests', function() {
     assert.isTrue(actual);
   });
 
-  it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of rotate, which affects rotation and locks orientation (rotate(270deg))', function() {
+  it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of rotate, which affects rotation and locks orientation (rotate(270deg))', function () {
     var actual = check.evaluate.call(checkContext, document, {}, undefined, {
       cssom: [
         {
@@ -217,7 +217,7 @@ describe('css-orientation-lock tests', function() {
     assert.isFalse(actual);
   });
 
-  it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of rotate3d, which affects rotation and locks orientation (rotate3d(0,0,1,90deg))', function() {
+  it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of rotate3d, which affects rotation and locks orientation (rotate3d(0,0,1,90deg))', function () {
     var actual = check.evaluate.call(checkContext, document, {}, undefined, {
       cssom: [
         {
@@ -233,7 +233,7 @@ describe('css-orientation-lock tests', function() {
     assert.isFalse(actual);
   });
 
-  it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of rotate3d, which affects rotation and locks orientation (rotate3d(0,0,1,93deg))', function() {
+  it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of rotate3d, which affects rotation and locks orientation (rotate3d(0,0,1,93deg))', function () {
     var actual = check.evaluate.call(
       checkContext,
       document,
@@ -255,7 +255,7 @@ describe('css-orientation-lock tests', function() {
     assert.isFalse(actual);
   });
 
-  it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of rotate3d, which affects rotation and locks orientation (rotate3d(0,0,1,1.5708rad))', function() {
+  it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of rotate3d, which affects rotation and locks orientation (rotate3d(0,0,1,1.5708rad))', function () {
     var actual = check.evaluate.call(checkContext, document, {}, undefined, {
       cssom: [
         {
@@ -270,7 +270,7 @@ describe('css-orientation-lock tests', function() {
     assert.isFalse(actual);
   });
 
-  it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of matrix, which affects rotation and locks orientation (matrix(0.00,1.00,-1.00,0.00,0,0))', function() {
+  it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of matrix, which affects rotation and locks orientation (matrix(0.00,1.00,-1.00,0.00,0,0))', function () {
     var actual = check.evaluate.call(checkContext, document, {}, undefined, {
       cssom: [
         {
@@ -286,7 +286,7 @@ describe('css-orientation-lock tests', function() {
     assert.isFalse(actual);
   });
 
-  it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of matrix3d, which affects rotation and locks orientation (matrix3d(0,-1,0.00,0,1.00,0,0.00,0,0,0,1,0,0,0,0,1);)', function() {
+  it('returns false when CSSOM has Orientation CSS media features with transform property and transformation function of matrix3d, which affects rotation and locks orientation (matrix3d(0,-1,0.00,0,1.00,0,0.00,0,0,0,1,0,0,0,0,1);)', function () {
     var actual = check.evaluate.call(checkContext, document, {}, undefined, {
       cssom: [
         {
