@@ -1,29 +1,31 @@
-describe('css-orientation-lock passes test', function () {
+describe('css-orientation-lock passes test', function() {
   'use strict';
 
   var shadowSupported = axe.testUtils.shadowSupport.v1;
 
   var styleSheets = [
     {
-      href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
+      href:
+        'https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
     },
     {
-      text: '@media screen and (min-width: 10px) and (max-width: 3000px) {	html { width: 100vh; } }'
+      text:
+        '@media screen and (min-width: 10px) and (max-width: 3000px) {	html { width: 100vh; } }'
     }
   ];
 
-  before(function (done) {
+  before(function(done) {
     axe.testUtils
       .addStyleSheets(styleSheets)
-      .then(function () {
+      .then(function() {
         done();
       })
-      .catch(function (error) {
+      .catch(function(error) {
         done(new Error('Could not load stylesheets for testing. ' + error));
       });
   });
 
-  it('returns PASSES when page has STYLE with MEDIA rules (not orientation)', function (done) {
+  it('returns PASSES when page has STYLE with MEDIA rules (not orientation)', function(done) {
     // the sheets included in the html, have styles for transform and rotate, hence the violation
     axe.run(
       {
@@ -32,7 +34,7 @@ describe('css-orientation-lock passes test', function () {
           values: ['css-orientation-lock']
         }
       },
-      function (err, res) {
+      function(err, res) {
         assert.isNull(err);
         assert.isDefined(res);
 
@@ -49,7 +51,7 @@ describe('css-orientation-lock passes test', function () {
 
   (shadowSupported ? it : xit)(
     'returns PASSES whilst also accommodating shadowDOM styles with MEDIA rules (not orientation)',
-    function (done) {
+    function(done) {
       // here although media styles are pumped into shadow dom
       // they are not orientation locks, so returns as passes
       var fixture = document.getElementById('shadow-fixture');
@@ -66,7 +68,7 @@ describe('css-orientation-lock passes test', function () {
             values: ['css-orientation-lock']
           }
         },
-        function (err, res) {
+        function(err, res) {
           assert.isNull(err);
           assert.isDefined(res);
 

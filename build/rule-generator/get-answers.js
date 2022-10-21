@@ -41,11 +41,13 @@ const getAnswers = async () => {
   }
 
   // answers if TEST files to be created
-  const { getIsUnitTestAssets, getIsIntegrationTestAssets } =
-    await inquirer.prompt([
-      questions.getIsUnitTestAssets,
-      questions.getIsIntegrationTestAssets
-    ]);
+  const {
+    getIsUnitTestAssets,
+    getIsIntegrationTestAssets
+  } = await inquirer.prompt([
+    questions.getIsUnitTestAssets,
+    questions.getIsIntegrationTestAssets
+  ]);
 
   return {
     ruleName: getRuleName.toLowerCase(),

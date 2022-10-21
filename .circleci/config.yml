@@ -365,7 +365,7 @@ workflows:
     triggers:
       - schedule:
           # run at 00:00 UTC every day
-          cron: '0 0 * * *'
+          cron: "0 0 * * *"
           filters:
             branches:
               only:

@@ -14,11 +14,11 @@ jobs:
         uses: andymckay/labeler@1.0.4
         if: contains(toJson(github.event.issue.body), '### Product\n\naxe Extension\n\n')
         with:
-          add-labels: 'extension'
+          add-labels: "extension"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Label Linting Issues
         uses: andymckay/labeler@1.0.4
         if: contains(toJson(github.event.issue.body), '### Product\n\naxe Linter\n\n')
         with:
-          add-labels: 'linting'
+          add-labels: "linting"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
