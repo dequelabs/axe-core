@@ -24,10 +24,10 @@ describe('dom.getVisibleTextRects', () => {
       const rectA = rectAs[index];
       const rectB = rectBs[index];
 
-      assert.approximately(rectA.left, rectB.left, 0.5);
-      assert.approximately(rectA.top, rectB.top, 0.5);
-      assert.approximately(rectA.width, rectB.width, 0.5);
-      assert.approximately(rectA.height, rectB.height, 0.5);
+      assert.approximately(rectA.left, rectB.left, 1);
+      assert.approximately(rectA.top, rectB.top, 1);
+      assert.approximately(rectA.width, rectB.width, 1);
+      assert.approximately(rectA.height, rectB.height, 1);
     });
   }
 
