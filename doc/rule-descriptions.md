@@ -84,9 +84,9 @@
 
 These rules are disabled by default, until WCAG 2.2 is more widely adopted and required.
 
-| Rule ID                                                                                          | Description                                        | Impact  | Tags                                         | Issue Type                 | ACT Rules |
-| :----------------------------------------------------------------------------------------------- | :------------------------------------------------- | :------ | :------------------------------------------- | :------------------------- | :-------- |
-| [target-size](https://dequeuniversity.com/rules/axe/4.5/target-size?application=RuleDescription) | Ensure touch target have sufficient size and space | Serious | wcag22aa, sc258, cat.sensory-and-visual-cues | failure, needs&nbsp;review |           |
+| Rule ID                                                                                          | Description                                        | Impact  | Tags                                           | Issue Type                 | ACT Rules |
+| :----------------------------------------------------------------------------------------------- | :------------------------------------------------- | :------ | :--------------------------------------------- | :------------------------- | :-------- |
+| [target-size](https://dequeuniversity.com/rules/axe/4.5/target-size?application=RuleDescription) | Ensure touch target have sufficient size and space | Serious | wcag22aa, wcag258, cat.sensory-and-visual-cues | failure, needs&nbsp;review |           |
 
 ## Best Practices Rules
 
